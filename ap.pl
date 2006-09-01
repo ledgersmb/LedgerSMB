@@ -1,2 +1,2 @@
 #!/usr/bin/perl
-eval { require "menu.pl"; };
+require "menu.pl";

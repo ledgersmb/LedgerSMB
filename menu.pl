@@ -72,7 +72,7 @@ if ($@) {
 	$form->{callback} = "";
 	$msg1 = $locale->text('You are logged out!');
 	$msg2 = $locale->text('Login');
-	$form->redirect("$msg1 <p><a href=login.pl target=_top>$msg2</a>");
+	$form->redirect("$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
 }
 
 # locale messages
