@@ -5,7 +5,7 @@
 # See COPYRIGHT file for copyright information
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
@@ -16,30 +16,25 @@
 $menufile = "menu.ini";
 use LedgerSMB::Menu;
 
-
 1;
 # end of main
 
 
 sub display {
 
-  $menuwidth = ($ENV{HTTP_USER_AGENT} =~ /links/i) ? "240" : "155";
-  $menuwidth = $myconfig{menuwidth} if $myconfig{menuwidth};
+	$menuwidth = ($ENV{HTTP_USER_AGENT} =~ /links/i) ? "240" : "155";
+	$menuwidth = $myconfig{menuwidth} if $myconfig{menuwidth};
 
-  $form->header(!$form->{duplicate});
+	$form->header(!$form->{duplicate});
 
-  print qq|
-
-<frameset cols="$menuwidth,*" border="1">
-
-  <frame name="acc_menu" src="$form->{script}?login=$form->{login}&sessionid=$form->{sessionid}&action=acc_menu&path=$form->{path}&js=$form->{js}">
-  <frame name="main_window" src="am.pl?login=$form->{login}&sessionid=$form->{sessionid}&action=$form->{main}&path=$form->{path}">
-
-</frameset>
-
-</body>
-</html>
-|;
+	print qq|
+	<frameset cols="$menuwidth,*" border="1">
+		<frame name="acc_menu" src="$form->{script}?login=$form->{login}&sessionid=$form->{sessionid}&action=acc_menu&path=$form->{path}&js=$form->{js}" />
+		<frame name="main_window" src="am.pl?login=$form->{login}&sessionid=$form->{sessionid}&action=$form->{main}&path=$form->{path}" />
+	</frameset>
+	</body>
+	</html>
+	|;
 
 }
 
@@ -47,208 +42,203 @@ sub display {
 
 sub acc_menu {
 
-  my $menu = new Menu "$menufile";
-  $menu->add_file("custom_$menufile") if -f "custom_$menufile";
-  $menu->add_file("$form->{login}_$menufile") if -f "$form->{login}_$menufile";
-  
-  $form->{title} = $locale->text('Accounting Menu');
+	my $menu = new Menu "$menufile";
+	$menu->add_file("custom_$menufile") if -f "custom_$menufile";
+	$menu->add_file("$form->{login}_$menufile") if -f "$form->{login}_$menufile";
 
-  $form->header;
+	$form->{title} = $locale->text('Accounting Menu');
 
-  print qq|
-<script type="text/javascript">
-function SwitchMenu(obj) {
-  if (document.getElementById) {
-    var el = document.getElementById(obj);
-    var ar = document.getElementById("cont").getElementsByTagName("DIV");
+	$form->header;
 
-    if (el.style.display == "none") {
-      el.style.display = "block"; //display the block of info
-    } else {
-      el.style.display = "none";
-    }
-  }
-}
+	print q|
+	<script type="text/javascript">
 
-function ChangeClass(menu, newClass) {
-  if (document.getElementById) {
-    document.getElementById(menu).className = newClass;
-  }
-}
-document.onselectstart = new Function("return false");
-</script>
+		function SwitchMenu(obj) {
+			if (document.getElementById) {
+				var el = document.getElementById(obj);
+				var ar = document.getElementById("cont").getElementsByTagName("DIV");
 
-<body class=menu>
+				if (el.style.display == "none") {
+					el.style.display = "block"; //display the block of info
+				} else {
+					el.style.display = "none";
+				}
+			}		
+		}
 
-<img class="cornderlogo" src="ledger-smb_small.png" width="100" height="50" border="1" />
-|;
+		function ChangeClass(menu, newClass) {
+			if (document.getElementById) {
+				document.getElementById(menu).className = newClass;
+			}
+		}
 
-  if ($form->{js}) {
-    &js_menu($menu);
-  } else {
-    &section_menu($menu);
-  }
+		document.onselectstart = new Function("return false");
+	</script>
 
-  print qq|
-</body>
-</html>
-|;
+	<body class="menu">
+	<img class="cornderlogo" src="ledger-smb_small.png" width="100" height="50" border="1" />
+	|;
+
+	if ($form->{js}) {
+		&js_menu($menu);
+	} else {
+		&section_menu($menu);
+	}
+
+	print q|
+	</body>
+	</html>
+	|;
 
 }
 
 
 sub section_menu {
-  my ($menu, $level) = @_;
 
-  # build tiered menus
-  my @menuorder = $menu->access_control(\%myconfig, $level);
+	my ($menu, $level) = @_;
 
-  while (@menuorder) {
-    $item = shift @menuorder;
-    $label = $item;
-    $label =~ s/$level--//g;
+	# build tiered menus
+	my @menuorder = $menu->access_control(\%myconfig, $level);
 
-    my $spacer = "&nbsp;" x (($item =~ s/--/--/g) * 2);
+	while (@menuorder) {
+		$item = shift @menuorder;
+		$label = $item;
+		$label =~ s/$level--//g;
 
-    $label =~ s/.*--//g;
-    $label = $locale->text($label);
-    $label =~ s/ /&nbsp;/g if $label !~ /<img /i;
+		my $spacer = "&nbsp;" x (($item =~ s/--/--/g) * 2);
 
-    $menu->{$item}{target} = "main_window" unless $menu->{$item}{target};
-    
-    if ($menu->{$item}{submenu}) {
+		$label =~ s/.*--//g;
+		$label = $locale->text($label);
+		$label =~ s/ /&nbsp;/g if $label !~ /<img /i;
 
-      $menu->{$item}{$item} = !$form->{$item};
+		$menu->{$item}{target} = "main_window" unless $menu->{$item}{target};
 
-      if ($form->{level} && $item =~ $form->{level}) {
+		if ($menu->{$item}{submenu}) {
 
-        # expand menu
-	print qq|<br>\n$spacer|.$menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a>|;
+			$menu->{$item}{$item} = !$form->{$item};
 
-	# remove same level items
-	map { shift @menuorder } grep /^$item/, @menuorder;
-	
-	&section_menu($menu, $item);
+			if ($form->{level} && $item =~ $form->{level}) {
 
-	print qq|<br>\n|;
+				# expand menu
+				print qq|<br />\n$spacer|.$menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a>|;
 
-      } else {
+				# remove same level items
+				map { shift @menuorder } grep /^$item/, @menuorder;
 
-	print qq|<br>\n$spacer|.$menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label&nbsp;...</a>|;
+				&section_menu($menu, $item);
 
-        # remove same level items
-	map { shift @menuorder } grep /^$item/, @menuorder;
+				print qq|<br />\n|;
 
-      }
-      
-    } else {
-    
-      if ($menu->{$item}{module}) {
+			} else {
 
-	print qq|<br>\n$spacer|.$menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a>|;
-	
-      } else {
+			print qq|<br />\n$spacer|.$menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label&nbsp;...</a>|;
 
-        $form->{tag}++;
-	print qq|<a name="id$form->{tag}"></a>
-	<p><b>$label</b>|;
-	
-	&section_menu($menu, $item);
+			# remove same level items
+			map { shift @menuorder } grep /^$item/, @menuorder;
 
-	print qq|<br>\n|;
+			}
 
-      }
-    }
-  }
+		} else {
+
+			if ($menu->{$item}{module}) {
+
+				print qq|<br />\n$spacer|.$menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a>|;
+
+			} else {
+
+				$form->{tag}++;
+				print qq|<a name="id$form->{tag}"></a><p><b>$label</b></p>|;
+
+				&section_menu($menu, $item);
+
+				print qq|<br />\n|;
+
+			}
+		}
+	}
 }
 
 
-
 sub js_menu {
-  my ($menu, $level) = @_;
 
- print qq|
-	<div id="cont">
-	|;
+	my ($menu, $level) = @_;
 
-  # build tiered menus
-  my @menuorder = $menu->access_control(\%myconfig, $level);
+	print qq| <div id="cont"> |;
 
-  while (@menuorder){
-    $i++;
-    $item = shift @menuorder;
-    $label = $item;
-    $label =~ s/.*--//g;
-    $label = $locale->text($label);
+	# build tiered menus
+	my @menuorder = $menu->access_control(\%myconfig, $level);
 
-    $menu->{$item}{target} = "main_window" unless $menu->{$item}{target};
+	while (@menuorder){
+		$i++;
+		$item = shift @menuorder;
+		$label = $item;
+		$label =~ s/.*--//g;
+		$label = $locale->text($label);
 
-    if ($menu->{$item}{submenu}) {
-      
-	$display = "display: none;" unless $level eq ' ';
+		$menu->{$item}{target} = "main_window" unless $menu->{$item}{target};
 
-	print qq|
-<div id="menu$i" class="menuOut" onclick="SwitchMenu('sub$i')" onmouseover="ChangeClass('menu$i','menuOver')" onmouseout="ChangeClass('menu$i','menuOut')">$label</div>
-	<div class="submenu" id="sub$i" style="$display">|;
-	
-	# remove same level items
-	map { shift @menuorder } grep /^$item/, @menuorder;
+		if ($menu->{$item}{submenu}) {
 
-	&js_menu($menu, $item);
-	
-	print qq|
+			$display = "display: none;" unless $level eq ' ';
 
-		</div>
-		|;
+			print qq|
+			<div id="menu$i" class="menuOut" onclick="SwitchMenu('sub$i')" onmouseover="ChangeClass('menu$i','menuOver')" onmouseout="ChangeClass('menu$i','menuOut')">$label</div>
+			<div class="submenu" id="sub$i" style="$display">|;
 
-    } else {
+			# remove same level items
+			map { shift @menuorder } grep /^$item/, @menuorder;
 
-      if ($menu->{$item}{module}) {
-	if ($level eq "") {
-	  print qq|<div id="menu$i" class="menuOut" onmouseover="ChangeClass('menu$i','menuOver')" onmouseout="ChangeClass('menu$i','menuOut')"> |. 
-	  $menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a></div>|;
+			&js_menu($menu, $item);
 
-	  # remove same level items
-	  map { shift @menuorder } grep /^$item/, @menuorder;
+			print qq|
 
-          &js_menu($menu, $item);
+			</div>
+			|;
 
-	} else {
-	
-	  print qq|<div class="submenu"> |.
-          $menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a></div>|;
+		} else {
+
+			if ($menu->{$item}{module}) {
+
+				if ($level eq "") {
+					print qq|<div id="menu$i" class="menuOut" onmouseover="ChangeClass('menu$i','menuOver')" onmouseout="ChangeClass('menu$i','menuOut')"> |. 
+							 $menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a></div>|;
+
+					# remove same level items
+					map { shift @menuorder } grep /^$item/, @menuorder;
+
+					&js_menu($menu, $item);
+
+				} else {
+
+					print qq|<div class="submenu"> |.
+							$menu->menuitem(\%myconfig, \%$form, $item, $level).qq|$label</a></div>|;
+				}
+
+			} else {
+
+				$display = "display: none;" unless $item eq ' ';
+
+				print qq|
+					<div id="menu$i" class="menuOut" onclick="SwitchMenu('sub$i')" onmouseover="ChangeClass('menu$i','menuOver')" onmouseout="ChangeClass('menu$i','menuOut')">$label</div>
+					<div class="submenu" id="sub$i" style="$display">|;
+
+				&js_menu($menu, $item);
+
+				print qq| </div> |;
+
+			}
+
+		}
+
 	}
 
-      } else {
-
-	$display = "display: none;" unless $item eq ' ';
-
-	print qq|
-<div id="menu$i" class="menuOut" onclick="SwitchMenu('sub$i')" onmouseover="ChangeClass('menu$i','menuOver')" onmouseout="ChangeClass('menu$i','menuOut')">$label</div>
-	<div class="submenu" id="sub$i" style="$display">|;
-	
-	&js_menu($menu, $item);
-	
-	print qq|
-
-		</div>
-		|;
-
-      }
-
-    }
-
-  }
-
-  print qq|
-	</div>
-	|;
+	print qq| </div> |;
 }
 
 
 sub menubar {
 
-  1;
+1;
 
 }
 
