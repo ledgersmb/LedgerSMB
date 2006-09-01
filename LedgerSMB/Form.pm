@@ -238,11 +238,6 @@ sub header {
 			$stylesheet = qq|<link rel="stylesheet" href="css/$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
 		}
 
-		if ($self->{favicon} && (-f "$self->{favicon}")) {
-			$favicon = qq|<link rel="icon" href="$self->{favicon}" type="image/x-icon" />
-						  <link rel="shortcut icon" href="$self->{favicon}" type="image/x-icon" />\n|;
-		}
-
 		if ($self->{charset}) {
 			$charset = qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}" />\n|;
 		}
@@ -259,7 +254,7 @@ sub header {
 	<title>$self->{titlebar}</title>
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
-	$favicon
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	$stylesheet
 	$charset
 	<meta name="robots" content="noindex,nofollow" />
