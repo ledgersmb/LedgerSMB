@@ -329,12 +329,12 @@ sub login {
 
 sub logout {
 
-  $form->{callback} = "$form->{script}?path=$form->{path}&login=$form->{login}";
+	$form->{callback} = "$form->{script}?path=$form->{path}&login=$form->{login}";
+	$form->{endsession} = 1;
+	#delete the cookie in the browser manually (can't use session_destroy here unfortunately)
+	print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
 
-  $form->{endsession} = 1;
-  
-  $form->redirect;
-
+	$form->redirect;
 }
 
 
