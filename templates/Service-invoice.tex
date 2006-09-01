@@ -1,0 +1,155 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telephone & <%tel%>\\
+    Facsimile & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 37%>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}p{\descrwidth}@{\extracolsep\fill}rlrr@{}}
+  \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Amount} \\
+  & carried forward from <%lastpage%> & & & & <%sumcarriedforward%> \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{2cm}
+
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+
+\vspace{3.5cm}
+
+\textbf{I N V O I C E}
+\hfill
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Date} & <%invdate%> \\
+  \textbf{Number} & <%invnumber%> \\
+  \textbf{Customer} & <%customer_id%>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}p{\descrwidth}@{\extracolsep\fill}rlrr@{}}
+  \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Amount} \\
+<%foreach number%>
+  <%description%> & <%qty%> &
+    <%unit%> & <%sellprice%> & <%linetotal%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<%subtotal%>} \\
+<%foreach tax%>
+  <%taxdescription%> on <%taxbase%> & <%tax%> \\
+<%end tax%>
+<%if paid%>
+  \textbf{Paid} & - <%paid%> \\
+<%end paid%>
+  \hline
+  \textbf{Balance Owing} & \textbf{<%total%>} \\
+
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  All prices in \textbf{<%currency%>} funds.
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\vfill
+\centerline{\textbf{Thank You for your valued business!}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+Payment due NET <%terms%> Days from date of Invoice. Interest on overdue
+amounts will acrue at the rate of 1.5\% per month starting <%duedate%>
+until paid in full.
+}
+
+\end{document}
+
+

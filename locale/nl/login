@@ -1,0 +1,25 @@
+$self{texts} = {
+  'Access Denied!'              => 'Toegang Geweigerd!',
+  'Company'                     => 'Bedrijf',
+  'Continue'                    => 'Verder',
+  'Dataset is newer than version!' => 'Dataset is nieuwer dan de versie!',
+  'Incorrect Dataset version!'  => 'Dataset heeft verkeerde versie!',
+  'Login'                       => 'Aanmelden',
+  'Name'                        => 'Naam',
+  'Password'                    => 'Wachtwoord',
+  'Upgrading to Version'        => 'Opwaarderen naar Versie',
+  'Version'                     => 'Versie',
+  'You did not enter a name!'   => 'U heeft geen gebruikersnaam gegeven!',
+  'done'                        => 'gebeurd',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'aanmelden'                   => 'login',
+};
+
+1;
+

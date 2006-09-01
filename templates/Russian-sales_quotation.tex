@@ -1,0 +1,157 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-1.9cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.7cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{
+  \parbox[b]{.42\textwidth}{
+    <%company%>
+    
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telephone & <%tel%>\\
+  Facsimile & <%fax%>
+  \end{tabular}
+
+  \rule[1.5ex]{\textwidth}{0.5pt}
+}
+
+
+<%pagebreak 65 27 48%>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \end{tabularx}
+
+\newpage
+
+\markboth{<%company%>\hfill <%quonumber%>}{<%company%>\hfill <%quonumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\
+  & carried forward from <%lastpage%> & & & & & <%sumcarriedforward%> \\
+<%end pagebreak%>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.45\textwidth}{
+
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%country%>
+
+\vspace{0.3cm}
+
+<%contact%>
+
+\vspace{0.2cm}
+
+<%if customerphone%>
+Tel: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+}
+
+\vspace{1cm}
+
+\textbf{Q U O T A T I O N}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
+  \textbf{Quotation \#} & \textbf{Date} & \textbf{Valid until} & \textbf{Contact} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5ex]
+  \hline
+  <%quonumber%> & <%quodate%> & <%reqdate%> & <%employee%> & <%shippingpoint%> & <%shipvia%> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%sellprice%> & <%discountrate%> & <%linetotal%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  Subtotal & <%subtotal%> \\
+<%foreach tax%>
+  <%taxdescription%> on <%taxbase%> & <%tax%>\\
+<%end tax%>
+  \hline
+  Total & <%quototal%>\\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  All prices in \textbf{<%currency%>}.
+
+\vspace{12pt}
+
+<%notes%>
+
+}
+
+\vfill
+
+\end{document}
+
+

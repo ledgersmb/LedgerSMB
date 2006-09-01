@@ -1,0 +1,20 @@
+$self{texts} = {
+  'Company'                     => 'Perusahaan',
+  'Continue'                    => 'Lanjut',
+  'Dataset is newer than version!' => 'Dataset lebih baru daripada versi!',
+  'Incorrect Dataset version!'  => 'Versi Dataset tidak benar!',
+  'Name'                        => 'Nama',
+  'Version'                     => 'Versi',
+  'You did not enter a name!'   => 'Anda tidak memasukkan nama!',
+  'done'                        => 'selesai',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+};
+
+1;
+

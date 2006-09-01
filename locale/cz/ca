@@ -1,0 +1,51 @@
+$self{charset} = 'ISO-8859-2';
+
+$self{texts} = {
+  'Account'                     => 'Úèet',
+  'Apr'                         => 'Dub',
+  'April'                       => 'Duben',
+  'Aug'                         => 'Srp',
+  'August'                      => 'Srpen',
+  'Chart of Accounts'           => 'Úètovı rozvrh',
+  'Credit'                      => 'Dal',
+  'Date'                        => 'Datum',
+  'Debit'                       => 'Má dáti',
+  'Dec'                         => 'Pro',
+  'December'                    => 'Prosinec',
+  'Description'                 => 'Popis',
+  'Feb'                         => 'Úno',
+  'February'                    => 'Únor',
+  'From'                        => 'z',
+  'GIFI'                        => 'Úètovací øetìzec',
+  'Include in Report'           => 'Zahrnovat v sestavì',
+  'Jan'                         => 'Led',
+  'January'                     => 'Leden',
+  'Jul'                         => 'Èec',
+  'July'                        => 'Èervenec',
+  'Jun'                         => 'Èer',
+  'June'                        => 'Èerven',
+  'List Transactions'           => 'Vypsat transakce',
+  'Mar'                         => 'Bøe',
+  'March'                       => 'Bøezen',
+  'May'                         => 'Kvìten',
+  'May '                        => 'Kvì',
+  'Nov'                         => 'Lis',
+  'November'                    => 'Listopad',
+  'Oct'                         => 'Øíj',
+  'October'                     => 'Øíjen',
+  'Sep'                         => 'Záø',
+  'September'                   => 'Záøí',
+  'Subtotal'                    => 'Mezisouèet',
+  'To'                          => 'do',
+};
+
+$self{subs} = {
+  'ca_subtotal'                 => 'ca_subtotal',
+  'chart_of_accounts'           => 'chart_of_accounts',
+  'list'                        => 'list',
+  'list_transactions'           => 'list_transactions',
+  'vypsat_transakce'            => 'list_transactions',
+};
+
+1;
+

@@ -1,0 +1,25 @@
+$self{texts} = {
+  'Access Denied!'              => 'Fel kod eller användarnamn!',
+  'Company'                     => 'Företag',
+  'Continue'                    => 'Fortsätt',
+  'Dataset is newer than version!' => 'Dataset är nyare än programversionen',
+  'Incorrect Dataset version!'  => 'Felaktig databasversion',
+  'Login'                       => 'Logga in',
+  'Name'                        => 'Namn',
+  'Password'                    => 'Lösenord',
+  'Upgrading to Version'        => 'Uppgradera till version',
+  'Version'                     => 'Version',
+  'You did not enter a name!'   => 'Du skrev inte in något namn',
+  'done'                        => 'Färdigt',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'logga_in'                    => 'login',
+};
+
+1;
+

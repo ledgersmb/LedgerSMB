@@ -1,0 +1,34 @@
+$self{texts} = {
+  'Account'                     => 'Konto',
+  'Amount'                      => 'Belopp',
+  'Continue'                    => 'Fortsätt',
+  'Date'                        => 'Datum',
+  'Memo'                        => 'Anteckning',
+  'Nothing to print!'           => 'Inget att skriva',
+  'PDF'                         => 'PDF',
+  'Postscript'                  => 'Postscript',
+  'Printed'                     => 'Utskriven',
+  'Scheduled'                   => 'Schemalagd',
+  'Screen'                      => 'Skärm',
+  'Select a Printer!'           => 'Välj skrivare',
+  'Select payment'              => 'Välj betalningssätt',
+  'Select postscript or PDF!'   => 'Välj Postscript eller PDF',
+  'Source'                      => 'Källa',
+};
+
+$self{subs} = {
+  'customer_details'            => 'customer_details',
+  'payment_selected'            => 'payment_selected',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_check'                 => 'print_check',
+  'print_options'               => 'print_options',
+  'print_receipt'               => 'print_receipt',
+  'print_transaction'           => 'print_transaction',
+  'select_payment'              => 'select_payment',
+  'vendor_details'              => 'vendor_details',
+  'fortsätt'                    => 'continue',
+};
+
+1;
+

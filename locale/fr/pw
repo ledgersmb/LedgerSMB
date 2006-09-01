@@ -1,0 +1,13 @@
+$self{texts} = {
+  'Continue'                    => 'Continuer',
+  'Password'                    => 'Mot de passe',
+  'Session expired!'            => 'Session terminée!',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'continuer'                   => 'continue',
+};
+
+1;
+

@@ -1,0 +1,50 @@
+$self{charset} = 'ISO-8859-7';
+
+$self{texts} = {
+  'Account'                     => 'Λογαριασμός',
+  'Apr'                         => 'Απρ',
+  'April'                       => 'Απρίλιος',
+  'Aug'                         => 'Αυγ',
+  'August'                      => 'Αύγουστος',
+  'Balance'                     => 'Ισοζύγιο',
+  'Chart of Accounts'           => 'Γράφημα των Κωδικών',
+  'Credit'                      => 'Πίστωση',
+  'Current'                     => 'Τρέχων',
+  'Date'                        => 'Ημερομηνία',
+  'Debit'                       => 'Χρέος',
+  'Dec'                         => 'Δεκ',
+  'December'                    => 'Δεκέμβριος',
+  'Department'                  => 'Τμήμα',
+  'Description'                 => 'Περιγραφή',
+  'Feb'                         => 'Φεβ',
+  'February'                    => 'Φεβρουάριος',
+  'From'                        => 'Από',
+  'Jan'                         => 'Ιάν',
+  'January'                     => 'Ιανουάριος',
+  'Jul'                         => 'Ιούλ',
+  'July'                        => 'Ιούλιος',
+  'Jun'                         => 'Ιούν',
+  'June'                        => 'Ιούνιος',
+  'List Transactions'           => 'Λίστα Κινήσεων',
+  'Mar'                         => 'Μαρ',
+  'March'                       => 'Μάρτιος',
+  'May'                         => 'Μάϊος',
+  'May '                        => 'Μάϊος',
+  'Month'                       => 'Μήνας',
+  'Nov'                         => 'Νοέ',
+  'November'                    => 'Νοέμβριος',
+  'Oct'                         => 'Οκτ',
+  'October'                     => 'Οκτώβριος',
+  'Project Number'              => 'Αριθμός έργου',
+};
+
+$self{subs} = {
+  'ca_subtotal'                 => 'ca_subtotal',
+  'chart_of_accounts'           => 'chart_of_accounts',
+  'list'                        => 'list',
+  'list_transactions'           => 'list_transactions',
+  'Λίστα_Κινήσεων'              => 'list_transactions',
+};
+
+1;
+

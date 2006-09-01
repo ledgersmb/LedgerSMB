@@ -1,0 +1,131 @@
+\documentclass[10pt,letterpaper,oneside,onecolumn]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-1.9cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.7cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{%
+  \parbox[b]{.42\textwidth}{%
+    <%company%>
+   
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telephone & <%tel%>\\
+  Facsimile & <%fax%>
+  \end{tabular}
+
+  \rule[1.5em]{\textwidth}{0.5pt}
+}
+
+\centerline{\textbf{A R} \hspace{0.3cm} \textbf{T R A N S A C T I O N}}
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%country%>
+
+\vspace{0.3cm}
+
+<%if contact%>
+<%contact%>
+<%end contact%>
+
+\vspace{0.2cm}
+
+<%if customerphone%>
+Tel: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+}
+\hfill
+\begin{tabular}[t]{ll}
+  \textbf{Invoice \#} & <%invnumber%> \\
+  \textbf{Date} & <%invdate%> \\
+  \textbf{Due} & <%duedate%> \\
+  \textbf{Order \#} & <%ordnumber%> \\
+  \textbf{Employee} & <%employee%> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabularx}{.5\textwidth}[t]{@{}llrl@{}}
+<%foreach amount%>
+  <%accno%> & <%account%> & <%amount%> & <%projectnumber%> \\
+<%end amount%>
+
+  \multicolumn{2}{r}{\textbf{Subtotal}} & <%subtotal%> & \\
+<%foreach tax%>
+  \multicolumn{2}{r}{\textbf{<%taxdescription%> @ <%taxrate%> \%}} & <%tax%> & \\
+<%end tax%>
+
+  \multicolumn{2}{r}{\textbf{Total}} & <%invtotal%> & \\
+  
+\end{tabularx}
+<%notes%>
+
+\vspace{0.3cm}
+
+<%text_amount%> ***** <%decimal%>/100 <%currency%>
+
+\vspace{0.3cm}
+
+<%if paid%>
+\begin{tabular}{@{}llllr@{}}
+  \multicolumn{5}{c}{\textbf{Payments}} \\
+  \hline
+  \textbf{Date} & & \textbf{Source} & \textbf{Memo} & \textbf{Amount} \\
+<%end paid%>
+<%foreach payment%>
+  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%paymentmemo%> & <%payment%> \\
+<%end payment%>
+<%if paid%>
+\end{tabular}
+<%end paid%>
+
+\vspace{0.5cm}
+
+<%foreach tax%>
+\textbf{\small{<%taxdescription%> Registration <%taxnumber%>}} \\
+<%end tax%>
+  
+\end{document}
+

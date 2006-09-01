@@ -1,0 +1,108 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=-3cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+<%include letterhead.tex%>
+
+ 
+<%pagebreak 65 27 37%>
+\end{tabularx}
+
+\newpage
+
+\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+
+\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
+  \textbf{Item} & \textbf{Number} & \textbf{Description} &
+  \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
+
+<%end pagebreak%>
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+  \textbf{Ship To}
+} \hfill
+
+\vspace{0.3cm}
+
+\parbox[t]{.5\textwidth}{
+  
+<%shiptoname%>
+
+<%shiptoaddress1%>
+
+<%shiptoaddress2%>
+
+<%shiptocity%>
+<%if shiptostate%>
+\hspace{-0.1cm}, <%shiptostate%>
+<%end shiptostate%>
+<%shiptozipcode%>
+
+<%shiptocountry%>
+}
+\parbox[t]{.5\textwidth}{
+  <%shiptocontact%>
+
+  <%if shiptophone%>
+  Tel: <%shiptophone%>
+  <%end shiptophone%>
+
+  <%if shiptofax%>
+  Fax: <%shiptofax%>
+  <%end shiptofax%>
+
+  <%shiptoemail%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{P I C K} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
+  \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
+  & \textbf{Warehouse} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  \hline
+  <%invnumber%> & <%ordnumber%>
+  <%if shippingdate%>
+  & <%shippingdate%>
+  <%end shippingdate%>
+  <%if not shippingdate%>
+  & <%transdate%>
+  <%end shippingdate%>
+  & <%employee%> & <%warehouse%> & <%shippingpoint%> & <%shipvia%> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
+  \textbf{Item} & \textbf{Number} & \textbf{Description} &
+  \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
+<%foreach number%>
+  <%runningnumber%> & <%number%> & <%description%> &
+  <%qty%> & [\hspace{1cm}] & <%unit%> & <%bin%> \\
+<%end number%>
+\end{tabularx}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+}
+
+\end{document}
+

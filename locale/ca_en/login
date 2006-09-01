@@ -1,0 +1,12 @@
+$self{texts} = {
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+};
+
+1;
+

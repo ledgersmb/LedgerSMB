@@ -1,0 +1,81 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin2]{inputenc}
+\setlength{\voffset}{0.4cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.0cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+
+\fontfamily{cmss}\fontsize{9pt}{9pt}\selectfont
+
+\parbox[t]{12cm}{
+  <%company%>
+
+  <%address%>}
+\hfill
+\parbox[t]{6cm}{\hfill <%source%>}
+
+\vspace*{0.6cm}
+
+<%text_amount%> \dotfill <%decimal%>/100 \makebox[0.5cm]{\hfill}
+
+\vspace{0.5cm}
+
+\hfill <%datepaid%> \makebox[2cm]{\hfill} <%amount%>
+
+\vspace{0.5cm}
+
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+
+\vspace{1.8cm}
+
+<%notes%>
+
+\vspace{0.8cm}
+
+<%company%>
+
+\vspace{0.5cm}
+
+<%name%> \hfill <%datepaid%> \hfill <%source%>
+
+\vspace{0.5cm}
+\begin{tabularx}{\textwidth}{lXrr@{}}
+\textbf{Számlaszám} & \textbf{Telj. dátuma}
+  & \textbf{Esedékes} & \textbf{Kifizetett} \\
+<%foreach invnumber%>
+<%invnumber%> & <%invdate%> \dotfill
+  & <%due%> & <%paid%> \\
+<%end invnumber%>
+\end{tabularx}
+
+\vfill
+
+\end{document}
+
+
+

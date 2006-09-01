@@ -1,0 +1,118 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telefon & <%tel%>\\
+    Telefax & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 37%>
+\end{tabular*}
+
+\newpage
+
+\markright{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
+  \textbf{Nummer} & \textbf{Artikel} & \textbf{Anz} &
+    \textbf{Einh} & \textbf{Steige} \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{2cm}
+
+<%shiptoname%>
+
+<%shiptoaddr1%>
+
+<%shiptoaddr2%>
+
+<%shiptoaddr3%>
+
+<%shiptoaddr4%>
+
+\vspace{3.5cm}
+
+\textbf{P A C K I N G} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+
+\hfill
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Datum} & <%invdate%> \\
+  \textbf{Nummer} & <%invnumber%> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
+  \textbf{Nummer} & \textbf{Artikel} & \textbf{Anz} &
+    \textbf{Einh} & \textbf{Steige} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%bin%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+Beschädigte Waren und Waren ohne Rückgabenummer werden nicht
+entgegengenommen. Lagerkosten werden mit 10\% berrechnet.
+Waren müssen ausreichended verpackt und versichert sein.
+}
+
+\end{document}
+

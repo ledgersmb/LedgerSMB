@@ -1,0 +1,78 @@
+
+<body bgcolor=ffffff>
+
+<h2 align=center>
+<%company%>
+<br><%address%>
+
+<p>D R I F T K O S T N A D
+<br><%period%>
+</h2>
+
+
+<table width=100% border=0>
+<tr>
+  <th width=400 align=left colspan=2><br></th>
+  <th><%this_period%></th>
+  <th><%last_period%></th>
+</tr>
+
+<tr>
+  <th align=left colspan=2>INTÄKTER<br><hr width=300 size=5 align=left noshade></th>
+</tr>
+
+<%foreach income_account%>
+<tr>
+  <td width=4> </td>
+  <td><%income_account%></td>
+  <td align=right><%income_this_period%></td>
+  <td align=right><%income_last_period%></td>
+</tr>
+<%end income_account%>
+
+<tr>
+  <td colspan=2> </td>
+  <td><hr noshade size=1></td>
+  <td><hr noshade size=1></td>
+</tr>
+
+<tr valign=top>
+  <td> </td>
+  <th align=left>Totala intäkter</th>
+  <td align=right><%total_income_this_period%><hr noshade size=2></td>
+  <td align=right><%total_income_last_period%><hr noshade size=2></td>
+</tr>
+
+<tr>
+  <th align=left colspan=2>UTGIFTER<br><hr width=300 size=5 align=left noshade></th>
+</tr>
+
+<%foreach expense_account%>
+<tr>
+  <td> </td>
+  <td><%expense_account%></td>
+  <td align=right><%expenses_this_period%></td>
+  <td align=right><%expenses_last_period%></td>
+</tr>
+<%end expense_account%>
+
+<tr>
+  <td colspan=2> </td>
+  <td><hr noshade size=1></td>
+  <td><hr noshade size=1></td>
+</tr>
+
+<tr valign=top>
+  <td> </td>
+  <th align=left>Totala utgifter</th>
+  <td align=right><%total_expenses_this_period%><br><hr noshade size=2</td>
+  <td align=right><%total_expenses_last_period%><br><hr noshade size=2</td>
+</tr>
+
+<tr valign=top>
+  <th align=left colspan=2>RESULTAT</th>
+  <td align=right><%total_this_period%><br><hr noshade size=2></td>
+  <td align=right><%total_last_period%><br><hr noshade size=2></td>
+</tr>
+
+</table>

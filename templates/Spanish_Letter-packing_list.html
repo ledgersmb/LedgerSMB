@@ -1,0 +1,155 @@
+<head>
+  <title>Albarán de Instalaciones Industriales San José</title>
+</head>
+
+<body bgcolor="ffffff">
+    <!-- Cabecera -->
+    <table width="100%">
+	<tr valign=bottom>
+	  <td width="10">&nbsp;</td>
+	  <td>  
+	    <table width=100%>
+		<tr>
+		  <th colspan="5"> </th>
+		  <th align="left">
+		    <h4>A L B A R Á N</h4>
+		  </th>
+		</tr>
+		
+		<tr>
+		  <td colspan="6"> </td>
+		</tr>
+		
+		<tr>
+		  <td colspan="5"> </td>
+		  <td align="left"><%name%></td>
+		</tr>
+		
+		<tr>
+		  <td>Número</td>
+		  <td>Factura</td>
+		  <td>Fecha</td>
+		  <td>Cód. Cliente</td> 
+		  <td width="10%"> </td>
+		  <td><%address1%></td>
+		</tr>
+		<tr>
+		  <td><b><%ordnumber%></b></td>
+		  <td><b><%invnumber%></b></td>
+		  <td><b><%invdate%></b></td>
+		  <td><b><%customer_id%></b></td>
+		  <td> </td>
+		  <td><%addr2%></td>
+		</tr>
+		<tr>
+		  <td colspan="5">
+		  <td><%city%> <%state%> <%zipcode%></td>
+		</tr>
+		<tr>
+		  <td colspan="5">
+		  <td><%addr4%></td>
+		</tr>
+	    </table>
+    </table>	    
+
+    <!-- Cuerpo -->
+    <table width=100% cellspacing=0 cellpadding=0>
+	<tr>
+	  <td>
+	    <table width=100%>
+		<tr bgcolor=000000>
+		  <!--      <th align=left><font color=ffffff>Número</th> -->
+		  <!--      <th><font color=ffffff>Cant.</th> -->
+		  <th align="left"><font color="ffffff">Cant.</th>
+		  <th align="left"><font color="ffffff">Descripción</th>
+		  <th align="left"><font color="ffffff">Precio</th>
+		  <!--  <th align="left"><font color="ffffff">Dto.</th> -->
+		  <th align="left"><font color="ffffff">Importe</th>
+		</tr>
+
+		<tr>
+		  <td colspan="4"><hr noshade></td>
+		</tr>    
+		
+<%foreach number%>
+	<tr valign=top>
+	  <!--      <td><%number%></td> -->
+	  <!--      <td><%unit%></td> -->
+	  <td align="right"><%qty%></td> 
+	  <td align="left"><%description%></td>
+	  <td align="right"><%sellprice%></td>
+	  <!--      <td align=right><%discount%></td> -->
+	  <td align="right"><%linetotal%></td>
+	</tr>
+<%end number%>
+    
+    <tr>
+      <td colspan="4"><hr noshade></td>
+    </tr>    
+  </table>
+    
+    <!-- Subtotales, impuestos y totales -->
+    <table width="100%">
+    <tr>
+<%if taxincluded%>
+    <th align=right>Total</th>
+    <td align=right><%invtotal%></td>
+<%end taxincluded%>
+<%if not taxincluded%>
+    <th align="right">Base imponible</th>
+    <td align="right"><%subtotal%> &euro;</td>
+<%end taxincluded%>
+    </tr>
+
+<%foreach tax%>
+    <tr>
+      <th align="right">IVA (<%taxrate%>%) sobre <%taxbase%>:</th>
+      <td align="right"><%tax%> &euro;</td>
+    </tr>
+<%end tax%>
+    
+<%if paid%>
+    <tr>
+      <th align="right">Pagado:</th>
+      <td align="right"><%paid%> &euro;</td>
+    </tr>
+<%end paid%>
+    
+    <tr>
+      <td>&nbsp;</td>
+      <td><hr noshade></td>
+    </tr>
+
+    <tr>
+      <th align="right">Total:</th>
+      <th align="right"><%invtotal%> &euro;</th>
+    </tr>
+    
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+    
+    </table>
+
+
+    <!-- Pie -->
+    <table width="100%">
+	<tr valign=top>
+<%if notes%>
+	  <td>Notas</td>
+	  <td><%notes%></td>
+<%end notes%>
+  </tr>
+    
+<%if taxincluded%>
+    <tr>
+      <th colspan="2" align="left"><font size=-2>Los precios incluyen impuestos.</th>
+    </tr>
+<%end taxincluded%>
+    
+  </table>
+
+
+</body>
+</html>
+

@@ -1,0 +1,235 @@
+\documentclass[10pt,letterpaper,oneside,onecolumn]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-1.9cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.7cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\newsavebox{\ftr}
+\sbox{\ftr}{
+  \parbox{\textwidth}{
+  \tiny
+  \rule[1.5em]{\textwidth}{0.5pt}
+Payment due NET <%terms%> Days from date of Invoice. Interest on overdue amounts will acrue at the rate of 12\% per annum starting from <%duedate%> until paid in full. Items returned are subject to a 10\% restocking charge.
+A return authorization must be obtained from <%company%> before goods are returned. Returns must be shipped prepaid and properly insured.
+<%company%> will not be responsible for damages during transit.
+  }
+}
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{%
+  \parbox[b]{.42\textwidth}{%
+    <%company%>
+   
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telephone & <%tel%>\\
+  Facsimile & <%fax%>
+  \end{tabular}
+
+  \rule[1.5em]{\textwidth}{0.5pt}
+}
+
+
+<%pagebreak 65 27 37%>
+\end{tabularx}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \end{tabularx}
+
+\newpage
+
+\markboth{<%company%>\hfill <%invnumber%>}{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabularx}{\textwidth}{@{}rlXlrlrrr@{}}
+  \textbf{Pos} & \textbf{Number} & \textbf{Description} & & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\ [0.5em]
+  & carried forward from page <%lastpage%> & & & & & & <%sumcarriedforward%> \\ [0.5em]
+<%end pagebreak%>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.6\textwidth}{
+\textbf{To}
+\vspace{0.7cm}
+
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%country%>
+
+\vspace{0.3cm}
+
+<%if contact%>
+<%contact%>
+\vspace{0.2cm}
+<%end contact%>
+
+<%if customerphone%>
+Tel: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+}
+\parbox[t]{.4\textwidth}{
+\textbf{Ship To}
+\vspace{0.7cm}
+
+<%shiptoname%>
+
+<%shiptoaddress1%>
+
+<%shiptoaddress2%>
+
+<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+
+<%shiptocountry%>
+
+\vspace{0.3cm}
+
+<%if shiptocontact%>
+<%shiptocontact%>
+\vspace{0.2cm}
+<%end shiptocontact%>
+
+<%if shiptophone%>
+Tel: <%shiptophone%>
+<%end shiptophone%>
+
+<%if shiptofax%>
+Fax: <%shiptofax%>
+<%end shiptofax%>
+
+<%shiptoemail%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{I N V O I C E}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
+  \textbf{Invoice \#} & \textbf{Date} & \textbf{Due} & \textbf{Order \#}
+  & \textbf{Salesperson} & \textbf{Shipping Point} &
+  \textbf{Ship via} \\ [0.5em]
+  \hline
+  <%invnumber%> & <%invdate%> & <%duedate%> & <%ordnumber%> & <%employee%>
+  & <%shippingpoint%> & <%shipvia%> \\
+  \hline
+\end{tabularx}
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{@{}rlXlrlrrr@{}}
+  \textbf{Pos} & \textbf{Number} & \textbf{Description} & & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\ [0.5em]
+<%foreach number%>
+  <%runningnumber%> & <%number%> & <%description%> & <%deliverydate%> &
+  <%qty%> & <%unit%> & <%sellprice%> & <%discountrate%> & <%linetotal%> \\
+<%end number%>
+\end{tabularx}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  Subtotal & <%subtotal%> \\
+<%foreach tax%>
+  <%taxdescription%> on <%taxbase%> & <%tax%> \\
+<%end tax%>
+<%if paid%>
+  Paid & - <%paid%> \\
+<%end paid%>
+  \hline
+<%if total%>
+  Balance Due & <%total%>
+<%end total%>
+\end{tabularx}
+
+\vspace{0.3cm}
+
+<%text_amount%> ***** <%decimal%>/100
+\hfill
+All prices in \textbf{<%currency%>}.
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\vfill
+
+<%if paid%>
+\begin{tabularx}{10cm}{@{}lXlr@{}}
+  \textbf{Payments} & & & \\
+  \hline
+  \textbf{Date} & & \textbf{Source} & \textbf{Amount} \\
+<%end paid%>
+<%foreach payment%>
+  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
+<%end payment%>
+<%if paid%>
+\end{tabularx}
+<%end paid%>
+
+\vspace{1cm}
+
+\centerline{\textbf{Thank You for your valued business!}}
+
+\rule{\textwidth}{0.5pt}
+
+\usebox{\ftr}
+
+\end{document}
+

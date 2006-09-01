@@ -1,0 +1,47 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Account'                     => 'Cuenta',
+  'Accounting Menu'             => 'Menú general',
+  'Confirm!'                    => 'Confirmar',
+  'Continue'                    => 'Continuar',
+  'Current'                     => 'Actual',
+  'Customer'                    => 'Cliente',
+  'Date'                        => 'Fecha',
+  'Employee'                    => 'Colaborador/Empleado',
+  'From'                        => 'Desde',
+  'ID'                          => 'ID',
+  'Invoice'                     => 'Factura',
+  'Invoice Number'              => 'Número de factura',
+  'Order'                       => 'Orden',
+  'Order Number'                => 'Número de orden',
+  'Print'                       => 'Imprimir',
+  'Purchase Orders'             => 'Pedidos',
+  'Sales Orders'                => 'Presupuestos',
+  'Select all'                  => 'Guardar todo',
+  'To'                          => 'Hasta ',
+  'Vendor'                      => 'Proveedor',
+  'Yes'                         => 'Si',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'continue'                    => 'continue',
+  'display'                     => 'display',
+  'js_menu'                     => 'js_menu',
+  'list_spool'                  => 'list_spool',
+  'menubar'                     => 'menubar',
+  'print'                       => 'print',
+  'remove'                      => 'remove',
+  'search'                      => 'search',
+  'section_menu'                => 'section_menu',
+  'select_all'                  => 'select_all',
+  'yes'                         => 'yes',
+  'continuar'                   => 'continue',
+  'imprimir'                    => 'print',
+  'guardar_todo'                => 'select_all',
+  'si'                          => 'yes',
+};
+
+1;
+

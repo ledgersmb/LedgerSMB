@@ -1,0 +1,11 @@
+Upgrading to version 2.2.7
+
+1. install LedgerSMB over top
+   # cd /usr/local
+   # tar zxvf sql-ledger-2.2.7.tar.gz
+
+2. fix permissions
+   # chown -R nobody:nogroup *
+   # chmod 711 templates users
+
+Note: replace nobody:nogroup with your web server user and group

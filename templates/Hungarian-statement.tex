@@ -1,0 +1,141 @@
+\documentclass[twoside]{article}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin2]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+
+      <%address%>}\hfill
+    \begin{tabular}[b]{rrr@{}}
+    Tel & <%tel%>\\
+    Fax & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%statementdate%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 48%>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Részösszeg} & \textbf{<%sumcarriedforward%>} \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<%company%>\hfill <%statementdate%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep\fill}ccrrrr@{}}
+  \textbf{Számla \#} & \textbf{Dátum} & \textbf{Esedékesség} &
+  \textbf{0-30} & \textbf{30} & \textbf{60} & \textbf{90+} \\
+  folytatás az elõzõ oldalról: <%lastpage%> & & & & & & <%sumcarriedforward%> \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{1.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{10.5cm}{
+  
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+
+}
+\parbox[t]{7.5cm}{
+<%if customerphone%>
+Tel: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{K I M U T A T Á S} \hfill
+
+\hfill <%statementdate%>
+
+\vspace{2cm}
+
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep\fill}ccrrrr@{}}
+  \textbf{Számla \#} & \textbf{Dátum} & \textbf{Esedékesség} &
+  \textbf{Nem lejárt} & \textbf{30} & \textbf{60} & \textbf{90+} \\
+<%foreach invnumber%>
+  <%invnumber%> & <%invdate%> & <%duedate%> &
+  <%c0%> & <%c30%> & <%c60%> & <%c90%> \\
+<%end invnumber%>
+\textbf{Összesen} & & & <%c0total%> & <%c30total%> & <%c60total%> & <%c90total%>
+\end{tabular*}
+\rule{\textwidth}{1pt}
+
+\vspace{1cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Nyitott tételek összesen} & <%total%>
+\end{tabularx}
+
+\vfill
+
+Kérjük a fizetendõ összeget a <%company%> bankszámlájára átutalni szíveskedjenek.
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+}
+
+\end{document}
+

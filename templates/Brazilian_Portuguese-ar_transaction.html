@@ -1,0 +1,237 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+  <tr>
+    <td width=10>&nbsp;</td>
+
+    <td>
+      <table width=100%>
+        <tr>
+          <td>
+            <h4>
+            <%company%>
+        <br><%address%>
+            </h4>
+          </td>
+
+          <th><img src=http://www.sql-ledger.org/images/sql-ledger.png border=0 width=80 height=58></th>
+
+          <td align=right>
+            <h4>
+            Tel: <%tel%>
+        <br>Fax: <%fax%>
+            </h4>
+          </td>
+        </tr>
+
+        <tr>
+          <th colspan=3>
+	    <hr noshade><br>
+            <h4>T R A N S A Ç Ã O  -  C R</h4>
+          </th>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% callspacing=0 cellpadding=0>
+        <tr valign=top>
+          <td><%name%>
+          <br><%address1%>
+	  <%if address2%>
+          <br><%address2%>
+	  <%end address2%>
+          <br><%city%> <%state%> <%zipcode%>
+	  <%if country%>
+	  <br><%country%>
+	  <%end country%>
+          <br>
+
+          <%if contact%>
+          <br><%contact%>
+          <br>
+          <%end contact%>
+
+          <%if customerphone%>
+          <br>Tel: <%customerphone%>
+          <%end customerphone%>
+
+          <%if customerfax%>
+          <br>Fax: <%customerfax%>
+          <%end customerfax%>
+
+          <%if email%>
+          <br><%email%>
+          <%end email%>
+          </td>
+   
+	  <td align=right>
+	    <table>
+	      <tr>
+		<th align=left nowrap>Fatura #</th>
+		<td><%invnumber%></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Data</th>
+		<td><%invdate%></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Vencimento</th>
+		<td><%duedate%></td>
+	      </tr>
+	      <tr>
+		<th align=left>Pedido #</th>
+		<td><%ordnumber%>&nbsp;</td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Vendedor</th>
+		<td><%employee%>&nbsp;</td>
+	      </tr>
+	    </table>
+	  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  
+    <td>
+      <table width=100%>
+        <tr valign=top>
+	  <td width=50%>
+	    <table>
+	      <%foreach account%>
+	      <tr valign=top>
+		<td><%accno%></td>
+		<td><%account%></td>
+		<td align=right><%amount%></td>
+		<td><%projectnumber%></td>
+	      </tr>
+	      <%end account%>
+
+	      <tr>
+		<%if taxincluded%>
+		<th colspan=2 align=right>Total</th>
+		<td align=right><%invtotal%></td>
+		<%end taxincluded%>
+
+		<%if not taxincluded%>
+		<th colspan=2 align=right>Subtotal</th>
+		<td align=right><%subtotal%></td>
+		<%end taxincluded%>
+	      </tr>
+
+	      <%foreach tax%>
+	      <tr>
+		<th colspan=2 align=right><%taxdescription%> @ <%taxrate%> %</th>
+		<td align=right><%tax%></td>
+	      </tr>
+	      <%end tax%>
+	      
+	      <%if not taxincluded%>
+		<th colspan=2 align=right>Total</th>
+		<td align=right><%invtotal%></td>
+	      <%end taxincluded%>
+
+	    </table>
+	  </td>
+	  <td width=50%>
+	    <%notes%>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  <tr>
+    <td>&nbsp;</td>
+    
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <%text_amount%> ***** <%decimal%>/100 <%currency%>
+    </td>
+  </tr>
+
+  <%if paid%>
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table>
+        <tr>
+          <th>Pagamentos</th>
+        </tr>
+
+        <tr>
+          <td>
+          <hr noshade>
+          </td>
+        </tr>
+
+	<tr>
+	  <td>
+	    <table>
+	      <tr>
+		<th align=left>Data</th>
+		<th align=left>Conta</th>
+		<th align=left>Fonte</th>
+		<th align=left>Obs.</th>
+		<th align=left>Valor</th>
+	      </tr>
+  <%end paid%>
+
+        <%foreach payment%>
+	      <tr>
+		<td><%paymentdate%></td>
+		<td><%paymentaccount%></td>
+		<td><%paymentsource%></td>
+		<td><%paymentmemo%></td>
+		<td><%payment%></td>
+	      </tr>
+        <%end payment%>
+
+  <%if paid%>
+	    </table>
+	  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <%end paid%>
+
+  <tr height=10></tr>
+
+  <%foreach tax%>
+  <tr>
+    <td>&nbsp;</td>
+
+    <th colspan=9 align=left><font size=-2><%taxdescription%> Registro <%taxnumber%></th>
+  </tr>
+  <%end tax%>
+
+  <%if taxincluded%>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <th colspan=3 align=left><font size=-2>Os impostos estão incluídos nos preços.</th>
+  </tr>
+  <%end taxincluded%>
+
+</table>
+
+</body>
+</html>
+

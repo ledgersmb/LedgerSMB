@@ -1,0 +1,61 @@
+Upgrading from version 1.6 to 1.8
+
+1. make a backup copy of your databases and SQL-Ledger, just in case!
+   $ cd /usr/local/www/sql-ledger
+   $ pg_dump database > db.out
+   $ tar cvf ~/sql-ledger.tar .
+   
+2. install LedgerSMB over top of your old installation
+   $ cd /usr/local/www
+   $ tar zxvf sql-ledger-1.8.0.tar.gz
+   
+3. change the tables to the new layout
+   $ cd sql-ledger/sql
+   $ psql database < upgrade-1.6-1.8.sql
+
+4. copy the new master templates to your template directory
+   $ cd ../templates
+
+   $ cp Default-email_purchase_order.html your_template_dir/email_purchase_order.html
+   $ cp Default-purchase_order.html your_template_dir/purchase_order.html
+   $ cp Default-email_sales_order.html your_template_dir/email_sales_order.html
+   $ cp Default-sales_order.html your_template_dir/sales_order.html
+ 
+5. Two new accounts were hopefully added to your chart of accounts
+   One account for Foreign Exchange Gains and one for
+   Foreign Exchange Losses
+   edit and change to suit your COA. You can safely change
+   the account number too.
+      
+6. Edit your preferences
+
+   In field 'Stylesheet' enter -> sql-ledger.css
+   Stylesheet is in the css directory
+
+   Add your foreign currencies in the Currencies field
+   The first currency in the list is your default
+   i.e CDN:USD:EUR:YEN
+   If you used a nativecurr than it should be listed in the
+   new currencies field.
+
+7. <%nativecurr%> has changed to <%currency%>
+   edit all your templates and change nativecurr to currency
+
+8. I also added four more variables which can be used in your templates.
+   <%contact%>, <%shiptocontact%>, <%shiptophone%>, <%shiptofax%>
+   
+9. Nameing convention for templates has changed from an
+   underscore to a minus sign. If you designed your own
+   master templates rename the templates from
+   industry_invoice.html to industry-invoice.html,
+   industry_packing_list.html to industry-packing_list.html, etc.
+   The minus sign is used to separate the name and list them in
+   the setup screen.
+   
+   This change only applies to the master templates in the
+   templates root directory NOT the individual templates which
+   are used by users.
+
+It looks more than it really is. Steps 1 to 4 are important,
+the rest is for fine tuning and info.
+

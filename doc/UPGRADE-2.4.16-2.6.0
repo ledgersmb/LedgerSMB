@@ -1,0 +1,19 @@
+Upgrading from version 2.4 to 2.6
+
+1. install LedgerSMB over top
+   # cd /usr/local
+   # tar zxvf sql-ledger-2.6.x.tar.gz
+
+2. fix permissions
+   # chown -hR nobody:nogroup *
+   # chmod 711 templates users css spool
+
+Note: replace nobody:nogroup with your web server user and group
+
+3. Copy the new templates to your private template directory
+
+   $ cp Default-timecard.html your_template_dir/timecard.html
+   $ cp Default-timecard.tex your_template_dir/timecard.tex
+
+4. log in
+

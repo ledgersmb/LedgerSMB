@@ -1,0 +1,161 @@
+#=====================================================================
+# LedgerSMB Small Medium Business Accounting
+# Copyright (C) 2002
+#
+#  Author: Dieter Simader
+#   Email: dsimader@sql-ledger.org
+#     Web: http://sourceforge.net/projects/ledger-smb/
+#
+#  Contributors: Paul Tammes <finance@bermuda-holding.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#======================================================================
+#
+# this is a variation of the Lingua package
+# written for check and receipt printing
+# it returns a properly formatted text string
+# for a number up to 10**12
+
+sub init {
+  my $self = shift;
+
+  %{ $self->{numbername} } =
+                   (0 => 'nul',
+                    1 => 'een',
+                    2 => 'twee',
+	            3 => 'drie',
+		    4 => 'vier',
+		    5 => 'vijf',
+		    6 => 'zes',
+		    7 => 'zeven',
+		    8 => 'acht',
+		    9 => 'negen',
+		   10 => 'tien',
+		   11 => 'elf',
+		   12 => 'twalf',
+		   13 => 'dertien',
+		   14 => 'veertien',
+		   15 => 'vijftien',
+		   16 => 'zestien',
+		   17 => 'zeventien',
+		   18 => 'achtien',
+		   19 => 'negentien',
+		   20 => 'twintig',
+		   30 => 'dertig',
+		   40 => 'veertig',
+		   50 => 'vijftig',
+		   60 => 'zestig',
+		   70 => 'zeventig',
+		   80 => 'tachtig',
+		   90 => 'negentig',
+                10**2 => 'honderd',
+                10**3 => 'duizend',
+		10**6 => 'miljoen',
+		10**9 => 'miljard',
+	       10**12 => 'biljoen'
+		);
+
+}
+
+
+sub num2text {
+  my ($self, $amount) = @_;
+
+  return $self->{numbername}{0} unless $amount;
+
+  my @textnumber = ('**');
+
+  # split amount into chunks of 3
+  my @num = reverse split //, abs($amount);
+  my @numblock = ();
+  my ($i, $appendn);
+  my @a = ();
+
+  while (@num) {
+    @a = ();
+    for (1 .. 3) {
+      push @a, shift @num;
+    }
+    push @numblock, join / /, reverse @a;
+  }
+  
+  
+  while (@numblock) {
+
+    $i = $#numblock;
+    @num = split //, $numblock[$i];
+    
+    $numblock[$i] *= 1;
+    
+    if ($numblock[$i] == 0) {
+      pop @numblock;
+      next;
+    }
+   
+    if ($numblock[$i] > 99) {
+      # the one from hundreds
+      push @textnumber, $self->{numbername}{$num[0]};
+     
+      # add hundred designation
+      push @textnumber, $self->{numbername}{10**2};
+
+      # reduce numblock
+      $numblock[$i] -= $num[0] * 100;
+    }
+    
+    if ($numblock[$i] > 9) {
+      # tens
+      push @textnumber, $self->format_ten($numblock[$i]);
+    } else {
+      # ones
+      push @textnumber, $self->{numbername}{$numblock[$i]};
+    }
+    
+    # add thousand, million
+    if ($i) {
+      $amount = 10**($i * 3);
+      push @textnumber, $self->{numbername}{$amount};
+    }
+    
+    pop @numblock;
+    
+  }
+
+  push @textnumber, '**';
+  join '', @textnumber;
+
+}
+
+
+sub format_ten {
+  my ($self, $amount) = @_;
+  
+  my $textnumber = "";
+  my @num = split //, $amount;
+
+  if ($amount > 20) {
+    # reverse one and ten and glue together with 'en'
+    $amount = $num[0] * 10;
+    $textnumber = $self->{numbername}{$num[1]}.'en'.$self->{numbername}{$amount}; 
+  } else {
+    $textnumber = $self->{numbername}{$amount};
+  }
+  
+  $textnumber;
+  
+}
+
+
+1;
+

@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
+
+<html>
+
+<head>
+
+<title>A2A <%invnumber%> <%name%></title>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-15">
+
+</head>
+
+<body bgcolor="ffffff">
+
+<table width="100%">
+<tr valign=bottom>
+  <td width=10>&nbsp;</td>
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <%company%>
+      <br><%address%>
+      </h4>
+    </td>
+
+    <td align=right>
+      <h4>
+      Tél&nbsp;: <%tel%>
+      <br>Fax&nbsp;: <%fax%>
+      </h4>
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan=3>
+      <h4>F A C T U R E</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width="100%" cellspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Date de facture</th><td width=10>&nbsp;</td><td><%invdate%></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Date d'échéance</th><td width=10>&nbsp;</td><td><%duedate%></td>
+    </tr>
+
+    <tr>
+      <th align=right>N° de facture</th><td>&nbsp;</td><td><%invnumber%></td></tr>
+    </tr>
+  
+<!--
+    <tr>
+      <th align=right>Correspondant</th><td>&amp;nbsp;</td><td><%employee%></td>
+    </tr>
+-->
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor="000000">
+      <th align=left><font color=ffffff>Adresse de facturation</font></th>
+      <th align=left><font color=ffffff>Adresse d'envoi</font></th>
+    </tr>
+
+<!--
+     d'autres variables pouvant être utilisées ici :
+     contact, shiptocontact, shiptophone, shiptofax
+-->
+
+    <tr valign=top>
+      <td><%name%>
+      <br><%address1%>
+      <%if address2%>
+<br><%address2%>
+<%end address2%>
+      <br><%city%> <%state%> <%zipcode%>
+      <%if country%>
+<%country%>
+<%end country%>
+      </td>
+      
+      <td><%shiptoname%>
+      <br><%shiptoaddress1%>
+      <%if shiptoaddress2%>
+<br><%shiptoaddress2%>
+<%end shiptoaddress2%>
+      <br><%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+      <%if shiptocountry%>
+<%shiptocountry%>
+<%end shiptocountry%>
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor="000000">
+<!--      <th align=right><font color="ffffff">N°</font></th>  -->
+      <th align=left><font color="ffffff">N°</font></th>
+      <th align=left><font color="ffffff">Description</font></th>
+      <th><font color="ffffff">Qté</font></th>
+      <th>&nbsp;</th>
+      <th><font color="ffffff">Prix</font></th>
+      <th><font color="ffffff">Remise</font></th>
+      <th><font color="ffffff">Montant</font></th>
+    </tr>
+
+<%foreach number%>
+    <tr valign=top>
+<!--      <td align=right><%runningnumber%>.</td>
+veuillez adapter le colspan si vous comptez inclure ce poste.
+ceci permettra de décaler le poste sous-total vers la gauche.
+-->
+      <td><%number%></td>
+      <td><%description%></td>
+      <td align=right><%qty%></td>
+      <td><%unit%></td>
+      <td align=right><%sellprice%></td>
+      <td align=right><%discount%></td>
+      <td align=right><%linetotal%></td>
+    </tr>
+<%end number%>
+
+<!--
+vous pouvez également utiliser netprice à la place de sellprice
+si vous ne voulez pas afficher la remise
+netprice = sellprice - discount
+to show the percentage for a discount use <%discountrate%>
+-->
+
+    <tr>
+      <td colspan=7><hr noshade></td>
+    </tr>
+    
+    <tr>
+<%if taxincluded%>
+      <th colspan=5 align=right>Total</th>
+      <td colspan=2 align=right><%invtotal%></td>
+<%end taxincluded%>
+<%if not taxincluded%>
+      <th colspan=5 align=right>Sous-total</th>
+      <td colspan=2 align=right><%subtotal%></td>
+<%end taxincluded%>
+    </tr>
+
+<%foreach tax%>
+    <tr>
+      <th colspan=5 align=right><%taxdescription%></th>
+      <td colspan=2 align=right><%tax%></td>
+    </tr>
+<%end tax%>
+
+<%if paid%>
+    <tr>
+      <th colspan=5 align=right>Déjà payé</th>
+      <td colspan=2 align=right>- <%paid%></td>
+    </tr>
+<%end paid%>
+
+    <tr>
+      <td colspan=3>&nbsp;</td>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    <tr>
+      <td colspan=3>À régler dans <b><%terms%></b> jours au plus tard.</td>
+      <th colspan=2 align=right>Solde à régler</th>
+      <th colspan=2 align=right><%total%></th>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<%if notes%>
+      <td>À noter&nbsp;:</td>
+      <td><%notes%></td>
+<%end notes%>
+      <td align=right>
+      Tous prix indiqués en <b><%currency%></b>
+      <br><%shippingpoint%>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<%if paid%>
+<tr>
+  <td colspan=7>
+    <table width="60%">
+      <tr>
+        <th align=left>Détail règlements</th>
+      </tr>
+      <tr>
+        <td colspan=4>
+	  <hr noshade>
+	</td>
+      </tr>
+      <tr>
+        <th align=left>Date</th>
+	<th align=left>Compte</th>
+	<th align=left>Source</th>
+	<th align=left>Montant</th>
+      </tr>
+<%end paid%>
+
+<%foreach payment%>
+      <tr>
+        <td><%paymentdate%></td>
+	<td><%paymentaccount%></td>
+	<td><%paymentsource%></td>
+	<td><%payment%></td>
+      </tr>
+<%end payment%>
+
+<%if paid%>
+    </table>
+  </td>
+</tr>
+
+<tr>
+  <td>&nbsp;</td>
+</tr>
+<%end paid%>
+
+<tr>
+  <th colspan=7>
+  <!-- <br>Merci beaucoup&amp;nbsp;! -->
+  </th>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+    <td><font size=-3>
+    &nbsp;
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+<!-- <%foreach tax%>
+  <tr>
+   <th colspan=7 align=left><font size=-2><%taxdescription%> Numéro de TVA <%taxnumber%></font></th>
+  </tr>
+<%end tax%> -->
+
+<%if taxincluded%>
+  <tr>
+    <th colspan=7 align=left><font size=-2>Les taxes affichés sont inclus dans le prix.</font></th>
+  </tr>
+<%end taxincluded%>
+
+<!-- business number
+  <tr>
+    <th colspan=7 align=left><font size=-2>Régistre de Commerce&amp;nbsp;: <%businessnumber%></font></th>
+  </tr>
+-->
+
+<!-- information banquaire -->
+  <tr><td>
+  <h6><center>N° TVA&nbsp;: &nbsp;&nbsp;Banque&nbsp;: &nbsp;&nbsp;N° de compte&nbsp;: &nbsp;&nbsp;Code SWIFT&nbsp;: </center>
+  </h6>
+    </td>
+  </tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>

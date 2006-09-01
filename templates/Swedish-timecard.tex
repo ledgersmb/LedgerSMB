@@ -1,0 +1,71 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=-1cm,left=2cm,right=1cm]{geometry}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{%
+  \parbox[b]{.42\textwidth}{%
+    <%company%>
+   
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Tel: & <%tel%>\\
+  Fax: & <%fax%>
+  \end{tabular}
+
+  \rule[1.5em]{\textwidth}{0.5pt}
+}
+
+\centerline{\textbf{T I D}\hspace{0.5cm}\textbf{K O R T}}
+
+\vspace*{0.5cm}
+
+\begin{tabular}[t]{ll}
+  \textbf{Anstäld} & <%employee%> \\
+  \textbf{ID} & <%employee_id%> \\
+\end{tabular}
+\hfill
+\begin{tabular}[t]{ll}
+  \textbf{Kort ID} & <%id%> \\
+  \textbf{Datum Arbetat} & <%transdate%> \\
+  \textbf{Tid In} & <%checkedin%> \\
+  \textbf{Tid ut} & <%checkedout%> \\
+  \textbf{Timmar Arbetat} & <%qty%> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}[b]{ll}
+  \textbf{Project/Jobb \#} & <%projectnumber%> \\
+  \textbf{Beskrivning} & <%projectdescription%> \\
+  \textbf{Arbete/Service kod} & <%partnumber%> \\
+  \textbf{Beskrivning} & <%description%> \\
+\end{tabular}
+\hfill
+\begin{tabular}[b]{lr}
+  \textbf{Enhetspris} & <%sellprice%> \\
+  \textbf{Totalt} & <%total%> \\
+\end{tabular}
+  
+\vspace{0.3cm}
+
+<%notes%>
+ 
+\end{document}
+
+

@@ -1,0 +1,14 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Continue'                    => 'تابع',
+  'Password'                    => 'كلمة السر',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'تابع'                    => 'continue',
+};
+
+1;
+

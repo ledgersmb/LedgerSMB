@@ -1,0 +1,252 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+<tr valign=bottom>
+  <td width=10>&nbsp;</td>
+  <td>
+  
+  <table width=100%>
+  <tr>
+    <td>
+      <h4>
+      <%company%>
+      <br><%address%>
+      </h4>
+    </td>
+
+    <td><img src=http://www.sql-ledger.org/images/sql-ledger.png border=0 width=80 height=58>
+    </td>
+
+    <td align=right>
+      <h4>
+      Tel: <%tel%>
+      <br>Fax: <%fax%>
+      </h4>
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan=3>
+      <h4>O R D E M  &nbsp;&nbsp;  D E  &nbsp;&nbsp; C O M P R A</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0>
+    
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+      <th align=left width=50%><font color=ffffff>Para:</th>
+      <th align=left width=50%><font color=ffffff>Enviar para:</th>
+    </tr>
+
+    <tr valign=top>
+      <td><%name%>
+      <br><%address1%>
+      <%if address2%>
+      <br><%address2%>
+      <%end address2%>
+      <br><%city%> <%state%> <%zipcode%>
+      <%if country%>
+      <br><%country%>
+      <%end country%>
+<br>
+<%if contact%>
+<br>A?C: <%contact%>
+<%end contact%>
+<%if vendorphone%>
+<br>Tel: <%vendorphone%>
+<%end vendorphone%>
+<%if vendorfax%>
+<br>Fax: <%vendorfax%>
+<%end vendorfax%>
+      </td>
+
+      <td><%shiptoname%>
+      <br><%shiptoaddress1%>
+      <%if shiptoaddress2%>
+      <br><%shiptoaddress2%>
+      <%end shiptoaddress2%>
+      <br><%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+      <%if shiptocountry%>
+      <br><%shiptocountry%>
+      <%end shiptocountry%>
+<br>
+<%if shiptocontact%>
+<br>A/C: <%shiptocontact%>
+<%end shiptocontact%>
+<%if shiptophone%>
+<br>Tel: <%shiptophone%>
+<%end shiptophone%>
+<%if shiptofax%>
+<br>Fax: <%shiptofax%>
+<%end shiptofax%>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr><td>&nbsp;</td></tr>
+  
+  <tr>
+    <td colspan=2>
+    <table width=100% border=1>
+    <tr>
+      <th width=17% align=left>Pedido #</th>
+      <th width=17% align=left>Data</th>
+      <th width=17% align=left>Requerido para</th>
+      <th width=17% align=left>Contato</th>
+      <th width=17% align=left>Local do despacho</th>
+      <th width=15% align=left>Enviar por</th>
+    </tr>
+
+    <tr>
+      <td><%ordnumber%></td>
+      <td><%orddate%></td>
+      <td><%reqdate%></td>
+      <td><%employee%></td>
+      <td><%shippingpoint%>&nbsp;</td>
+      <td><%shipvia%>&nbsp;</td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+ 
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+<!--      <th align=right><font color=ffffff>No.</th>  -->
+      <th align=left><font color=ffffff>Número</th>
+      <th align=left><font color=ffffff>Descrição</th>
+      <th><font color=ffffff>Qtd</th>
+      <th>&nbsp;</th>
+      <th><font color=ffffff>Preço</th>
+      <th><font color=ffffff>%</th>
+      <th><font color=ffffff>Total</th>
+    </tr>
+
+<%foreach number%>
+    <tr valign=top>
+<!--      <td align=right><%runningnumber%>.</td>
+other per line item variables available <%reqdate%>
+adjust the colspan if you include this to shift subtotal one to the right
+-->
+      <td><%number%></td>
+      <td><%description%></td>
+      <td align=right><%qty%></td>
+      <td><%unit%></td>
+      <td align=right><%sellprice%></td>
+      <td align=right><%discountrate%></th>
+      <td align=right><%linetotal%></td>
+    </tr>
+<%end number%>
+
+    <tr>
+      <td colspan=7><hr noshade></td>
+    </tr>
+    
+    <tr>
+<%if taxincluded%>
+      <th colspan=6 align=right>Total</th>
+      <th colspan=1 align=right><%ordtotal%></th>
+<%end taxincluded%>
+     
+<%if not taxincluded%>
+      <th colspan=6 align=right>Subtotal</th>
+      <td colspan=1 align=right><%subtotal%></td>
+<%end taxincluded%>
+    </tr>
+
+<%foreach tax%>
+    <tr>
+      <th colspan=6 align=right><%taxdescription%> em <%taxbase%> @ <%taxrate%> %</th>
+      <td colspan=1 align=right><%tax%></td>
+    </tr>
+<%end tax%>
+
+    <tr>
+      <td colspan=3>&nbsp;</td>
+      <td colspan=4><hr noshade></td>
+    </tr>
+    
+<%if not taxincluded%>
+      <th colspan=6 align=right>Total</th>
+      <td colspan=1 align=right><%ordtotal%></td>
+<%end taxincluded%>
+
+<%if terms%>
+    <tr>
+      <td colspan=3>Termos <b><%terms%></b> dias</td>
+      <th colspan=3 align=right>Total</th>
+      <th colspan=1 align=right><%ordtotal%></th>
+    </tr>
+<%end terms%>
+
+<%if taxincluded%>
+    <tr>
+      <td colspan=2>Imposto incluso</td>
+    </tr>
+<%end taxincluded%>
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    
+<%if ordtotal%>
+    <tr>
+      <td colspan=7 align=right>
+      Todos os preços em <b><%currency%></b> 
+      </td>
+    </tr>
+<%end ordtotal%>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width=100%>
+<%if notes%>
+    <tr valign=top>
+      <td>Observações</td>
+      <td><%notes%></td>
+    </tr>
+<%end notes%>
+
+  </table>
+  </td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+  
+<tr>
+  <td>
+  <table width=100%>
+  <tr valign=top>
+    <td width=70%>&nbsp;</td>
+
+    <td width=30%>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

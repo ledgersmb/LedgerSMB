@@ -1,0 +1,50 @@
+$self{charset} = 'ISO-8859-9';
+
+$self{texts} = {
+  'Account'                     => 'Hesap',
+  'Apr'                         => 'Nis',
+  'April'                       => 'Nisan',
+  'Aug'                         => 'Ağu',
+  'August'                      => 'Ağustos',
+  'Chart of Accounts'           => 'Hesap Planı',
+  'Credit'                      => 'Alacak',
+  'Date'                        => 'Tarih',
+  'Debit'                       => 'Borç',
+  'Dec'                         => 'Ara',
+  'December'                    => 'Aralık',
+  'Description'                 => 'Açıklama',
+  'Feb'                         => 'Şub',
+  'February'                    => 'Şubat',
+  'From'                        => 'Başlangıç',
+  'Include in Report'           => 'Raporla',
+  'Jan'                         => 'Oca',
+  'January'                     => 'Ocak',
+  'Jul'                         => 'Tem',
+  'July'                        => 'Temmuz',
+  'Jun'                         => 'Haz',
+  'June'                        => 'Haziran',
+  'List Transactions'           => 'İşlemleri Listele',
+  'Mar'                         => 'Mar',
+  'March'                       => 'Mart',
+  'May'                         => 'May',
+  'May '                        => 'Mayıs',
+  'Nov'                         => 'Kas',
+  'November'                    => 'Kasım',
+  'Oct'                         => 'Eki',
+  'October'                     => 'Ekim',
+  'Sep'                         => 'Eyl',
+  'September'                   => 'Eylül',
+  'Subtotal'                    => 'Aratoplam',
+  'To'                          => 'Bitiş',
+};
+
+$self{subs} = {
+  'ca_subtotal'                 => 'ca_subtotal',
+  'chart_of_accounts'           => 'chart_of_accounts',
+  'list'                        => 'list',
+  'list_transactions'           => 'list_transactions',
+  'İşlemleri_listele'           => 'list_transactions',
+};
+
+1;
+

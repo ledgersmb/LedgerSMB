@@ -1,0 +1,12 @@
+Upgrading from version 2.0.9 to 2.2.0
+
+1. backup your datasets. Always a good idea!
+
+2. install LedgerSMB over top of your old installation
+   $ cd /usr/local
+   $ tar zxvf sql-ledger-2.2.0.tar.gz
+
+3. copy Default-pos_invoice.txt to
+   templates/your_private_directory/pos_invoice.txt
+   and edit to suit.
+

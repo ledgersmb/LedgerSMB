@@ -1,0 +1,29 @@
+# module hr
+# add the missing texts and run locales.pl to rebuild
+
+$missing = {
+  'Above'                       => '',
+  'Add Deduction'               => '',
+  'After Deduction'             => '',
+  'Allowances'                  => '',
+  'Based on'                    => '',
+  'Before Deduction'            => '',
+  'Below'                       => '',
+  'DOB'                         => '',
+  'Deduct after'                => '',
+  'Deduction deleted!'          => '',
+  'Deduction saved!'            => '',
+  'Deductions'                  => '',
+  'Edit Deduction'              => '',
+  'Employee pays'               => '',
+  'Employer pays'               => '',
+  'Exempt age <'                => '',
+  'Maximum'                     => '',
+  'Payroll Deduction'           => '',
+  'Pos'                         => '',
+  'Rate missing!'               => '',
+  'S'                           => '',
+  'SSN'                         => '',
+};
+
+1;

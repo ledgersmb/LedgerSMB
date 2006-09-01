@@ -1,0 +1,12 @@
+$self{texts} = {
+};
+
+$self{subs} = {
+  'ca_subtotal'                 => 'ca_subtotal',
+  'chart_of_accounts'           => 'chart_of_accounts',
+  'list'                        => 'list',
+  'list_transactions'           => 'list_transactions',
+};
+
+1;
+

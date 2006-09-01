@@ -1,0 +1,34 @@
+$self{texts} = {
+  'Account'                     => 'Cuenta',
+  'Amount'                      => 'Monto',
+  'Continue'                    => 'Continuar',
+  'Date'                        => 'Fecha',
+  'Memo'                        => 'Memo',
+  'Nothing to print!'           => '¡No hay nada que imprimir!',
+  'PDF'                         => 'PDF',
+  'Postscript'                  => 'Postscript',
+  'Printed'                     => 'Impreso',
+  'Scheduled'                   => 'Programada',
+  'Screen'                      => 'Pantalla',
+  'Select a Printer!'           => '¡Seleccione una impresora!',
+  'Select payment'              => '¡Seleccione Pago!',
+  'Select postscript or PDF!'   => '¡Seleccione postscript o PDF!',
+  'Source'                      => 'Cheque N°',
+};
+
+$self{subs} = {
+  'customer_details'            => 'customer_details',
+  'payment_selected'            => 'payment_selected',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_check'                 => 'print_check',
+  'print_options'               => 'print_options',
+  'print_receipt'               => 'print_receipt',
+  'print_transaction'           => 'print_transaction',
+  'select_payment'              => 'select_payment',
+  'vendor_details'              => 'vendor_details',
+  'continuar'                   => 'continue',
+};
+
+1;
+

@@ -1,0 +1,114 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=-3cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+<%include letterhead.tex%>
+
+ 
+<%pagebreak 65 27 37%>
+\end{tabularx}
+
+\newpage
+
+\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+
+\begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
+  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
+<%end pagebreak%>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+\textbf{From}
+\vspace{0.3cm}
+
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%>
+<%if state%>
+\hspace{-0.1cm}, <%state%>
+<%end state%>
+<%zipcode%>
+
+<%country%>
+}
+\parbox[t]{.5\textwidth}{
+\textbf{Ship To}
+\vspace{0.3cm}
+
+<%shiptoname%>
+
+<%shiptoaddress1%>
+
+<%shiptoaddress2%>
+
+<%shiptocity%>
+<%if shiptostate%>
+\hspace{-0.1cm}, <%shiptostate%>
+<%end shiptostate%>
+<%shiptozipcode%>
+
+<%shiptocountry%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{B I N} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
+  \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
+  <%if warehouse%>
+  & \textbf{Warehouse}
+  <%end warehouse%>
+  & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  \hline
+  
+  <%ordnumber%>
+  <%if shippingdate%>
+  & <%shippingdate%>
+  <%end shippingdate%>
+  <%if not shippingdate%>
+  & <%orddate%>
+  <%end shippingdate%>
+  & <%employee%>
+  <%if warehouse%>
+  & <%warehouse%>
+  <%end warehouse%>
+  & <%shippingpoint%> & <%shipvia%> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+  
+\begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
+  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
+
+<%foreach number%>
+  <%runningnumber%> & <%number%> & <%description%> & <%serialnumber%> &
+  <%deliverydate%> & <%qty%> & <%ship%> & <%unit%> & <%bin%> \\
+<%end number%>
+\end{tabularx}
+
+
+\rule{\textwidth}{2pt}
+
+\end{document}
+

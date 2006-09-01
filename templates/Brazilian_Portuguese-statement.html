@@ -1,0 +1,135 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+  <tr>
+    <td width=10>&nbsp;</td>
+    <td>
+      <table width=100%>
+	<tr>
+	  <td>
+	    <h4>
+	    <%company%>
+	    <br><%address%>
+	    </h4>
+	  </td>
+	  <th><img src=http://www.sql-ledger.org/images/sql-ledger.png border=0 width=80 height=58></th>
+	  <td align=right>
+	  <h4>
+	  Tel: <%tel%>
+	  <br>Fax: <%fax%>
+	  </h4>
+	  </td>
+	</tr>
+	<tr>
+	  <th colspan=3><h4>D E C L A R A Ç Ã O</h4></th>
+	</tr>
+	<tr>
+	  <td colspan=3 align=right><%statementdate%></td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <table width=100%>
+	<tr valign=top>
+	  <td><%name%>
+	  <br><%address1%>
+	  <%if address2%>
+	  <br><%address2%>
+	  <%end address2%>
+	  <br><%city%> <%state%> <%zipcode%>
+	  <%if country%>
+	  <br><%country%>
+	  <%end country%>
+	  <br>
+<%if customerphone%>
+	  <br>Tel: <%customerphone%>
+<%end customerphone%>
+<%if customerfax%>
+	  <br>Fax: <%customerfax%>
+<%end customerfax%>
+<%if email%>
+	  <br><%email%>
+<%end email%>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr height=10></tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <table width=100%>
+        <tr>
+	  <th align=left>Fatura #</th>
+ <th align=left>Pedido #</th>
+<th align=left>Notas</th>
+	  <th width=10%>Data</th>
+	  <th width=10%>Vencimento</th>
+	  <th width=10%>Atual</th>
+	  <th width=10%>30</th>
+	  <th width=10%>60</th>
+	  <th width=10%>90+</th>
+	</tr>
+<%foreach invnumber%>
+	<tr>
+	  <td><%invnumber%></td>
+<td><%ordnumber%></td>
+<td><%notes%></td>
+	  <td><%invdate%></td>
+	  <td><%duedate%></td>
+	  <td align=right><%c0%></td>
+	  <td align=right><%c30%></td>
+	  <td align=right><%c60%></td>
+	  <td align=right><%c90%></td>
+	</tr>
+<%end invnumber%>
+        <tr>
+	  <td colspan=9><hr size=1></td>
+	</tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <th align=right><%c0total%></td>
+	  <th align=right><%c30total%></td>
+	  <th align=right><%c60total%></td>
+	  <th align=right><%c90total%></td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr height=10></tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td align=right>
+      <table width=50%>
+        <tr>
+	  <th>Total Pendente</th>
+          <th align=right><%total%></th>
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><hr noshade></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Favor emitir cheque nominal a <b><%company%></b>.
+    </td>
+  </tr>
+
+</table>
+
+</body>
+</html>
+
+

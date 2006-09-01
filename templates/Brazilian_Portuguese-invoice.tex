@@ -1,0 +1,217 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[top=2cm,bottom=-1cm,left=2cm,right=1cm]{geometry}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telefone & <%tel%>\\
+    Fax & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 37%>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Disc} & \textbf{Amount} \\
+  & carried forward from page <%lastpage%> & & & & & <%sumcarriedforward%> \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+  \parbox[t]{10.5cm}{
+  \textbf{To}
+  \vspace{0.5cm}
+
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+
+\vspace{0.3cm}
+
+%<%if contact%>
+%Attn: <%contact%>
+%\vspace{0.3cm}
+%<%end contact%>
+\vspace{0.5cm}
+
+<%if customerphone%>
+Tel: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+}
+\parbox[t]{7.5cm}{
+\textbf{Ship To}
+\vspace{0.5cm}
+
+<%shiptoname%>
+
+<%shiptoaddress1%>
+
+<%if shiptoaddress2%>
+<%shiptoaddress2%>
+<%end shiptoaddress2%>
+
+<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+
+<%if shiptocountry%>
+<%shiptocountry%>
+<%end shiptocountry%>
+
+\vspace{0.3cm}
+
+\vspace{0.3cm}
+
+<%if shiptocontact%>
+Attn: <%shiptocontact%>
+\vspace{0.3cm}
+<%end shiptocontact%>
+
+<%if shiptophone%>
+Tel: <%shiptophone%>
+<%end shiptophone%>
+
+<%if shiptofax%>
+Fax: <%shiptofax%>
+<%end shiptofax%>
+
+<%shiptoemail%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{F A T U R A}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Data} & <%invdate%> \\
+  \textbf{Número} & <%invnumber%> \\
+  \textbf{Pedido} & <%ordnumber%> \\
+  \textbf{Produto} & <%employee%>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Número} & \textbf{Descrição} & \textbf{Quant.} &
+    \textbf{Unid.} & \textbf{Preço} & \textbf{Disc.} & \textbf{Total} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<%subtotal%>} \\
+<%foreach tax%>
+  <%taxdescription%> em <%taxbase%> & <%tax%> \\
+<%end tax%>
+<%if paid%>
+  \textbf{Pago} & - <%paid%> \\
+<%end paid%>
+  \hline
+  \textbf{Pendente} & \textbf{<%total%>} \\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  Preços em \textbf{<%currency%>}.
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\vfill
+
+<%if paid%>
+\begin{tabularx}{10cm}{@{}lXlr@{}}
+  \textbf{Pagamentos} & & & \\
+  \hline
+  \textbf{Data} & \textbf{Conta} & \textbf{Origem} & \textbf{Total} \\
+<%end paid%>
+<%foreach payment%>
+  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
+<%end payment%>
+<%if paid%>
+\end{tabularx}
+<%end paid%>
+
+\vspace{1cm}
+
+\centerline{\textbf{Obrigado por estarmos fazendo negócio!}}
+
+\end{document}
+

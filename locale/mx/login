@@ -1,0 +1,24 @@
+$self{texts} = {
+  'Company'                     => 'Empresa',
+  'Continue'                    => 'Continuar',
+  'Dataset is newer than version!' => '¡El conjunto de datos es mas reciente que la versión del programa!',
+  'Incorrect Dataset version!'  => '¡La Versión del conjunto de datos es incorrecta!',
+  'Login'                       => 'Entrada al sistema',
+  'Name'                        => 'Nombre',
+  'Password'                    => 'Contraseña',
+  'Upgrading to Version'        => 'Actualizando a versión',
+  'Version'                     => 'Versión',
+  'You did not enter a name!'   => '¡No ingresó un nombre!',
+  'done'                        => 'listo',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'entrada_al_sistema'          => 'login',
+};
+
+1;
+

@@ -1,0 +1,126 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+<tr>
+  <td width=10>
+  </td> 
+  <td>
+  
+  <table width=100%>
+  <tr>
+    <td>
+      <h4>
+      <%company%>
+      <br><%address%>
+      </h4>
+    </td>
+
+    <th colspan=2>
+      <h4 align=center>L I S T A &nbsp;&nbsp; E T I C H E T T E</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Data</th><td width=10> </td><td><%invdate%></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Numero</th><td></td><td><%invnumber%></td></tr>
+    </tr>
+  
+    <tr>
+      <td> 
+      </td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Inviare a:</th>
+    </tr>
+
+    <tr>
+      <td><%shiptoname%>
+      <br><%shiptoaddr1%>
+      <br><%shiptoaddr2%>
+      <br><%shiptoaddr3%>
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Numero</th>
+      <th align=left><font color=ffffff>Descrizione</th>
+      <th><font color=ffffff>Quantit&agrave;</th>
+      <th>&nbsp;</th>
+    </tr>
+
+<%foreach number%>
+    <tr valign=top>
+      <td><%number%></td>
+      <td><%description%></td>
+      <td align=right><%qty%></td>
+      <td><%unit%></td>
+    </tr>
+<%end number%>
+
+    <tr>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width=100%>
+    <tr valign=top>
+      <td>Note</td>
+      <td><%notes%></td>
+      <td align=right>
+      <%shippingpoint%>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+
+
+

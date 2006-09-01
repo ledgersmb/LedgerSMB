@@ -1,0 +1,144 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.7cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{
+  \parbox[b]{.42\textwidth}{
+    <%company%>
+    
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telefon & <%tel%>\\
+  Fax & <%fax%>
+  \end{tabular}
+
+  \rule[1.5ex]{\textwidth}{0.5pt}
+}
+
+ 
+<%pagebreak 65 27 37%>
+\end{tabularx}
+
+\newpage
+
+\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
+  \textbf{Pos} & \textbf{Nummer} & \textbf{Beskrivning} &
+  \textbf{Antal} & \textbf{Frakt} & & \textbf{Box} \\
+
+<%end pagebreak%>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.5\textwidth}{
+  \textbf{Ship To}
+} \hfill
+
+\vspace{0.7cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.5\textwidth}{
+  
+<%shiptoname%>
+
+<%shiptoaddress1%>
+
+<%shiptoaddress2%>
+
+<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+
+<%shiptocountry%>
+}
+\parbox[t]{.4\textwidth}{
+  <%shiptocontact%>
+
+  <%if shiptophone%>
+  Tel: <%shiptophone%>
+  <%end shiptophone%>
+
+  <%if shiptofax%>
+  Fax: <%shiptofax%>
+  <%end shiptofax%>
+
+  <%shiptoemail%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{P L O C K} \parbox{0.3cm}{\hfill} \textbf{L I S T A}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
+  \textbf{Faktura \#} & \textbf{Order \#} & \textbf{Datum} & \textbf{Kontakt}
+  & \textbf{lager} & \textbf{Destination} & \textbf{Fraktas via} \\ [0.5em]
+  \hline
+  <%invnumber%> & <%ordnumber%>
+  <%if shippingdate%>
+  & <%shippingdate%>
+  <%end shippingdate%>
+  <%if not shippingdate%>
+  & <%transdate%>
+  <%end shippingdate%>
+  & <%employee%>
+  <%if warehouse%>
+  & <%warehouse%>
+  <%end warehouse%>
+  & <%shippingpoint%> & <%shipvia%> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
+  \textbf{Pos} & \textbf{Nummer} & \textbf{Beskrivning} &
+  \textbf{Antal} & \textbf{Frakt} & & \textbf{Box} \\
+<%foreach number%>
+  <%runningnumber%> & <%number%> & <%description%> &
+  <%qty%> & [\hspace{1cm}] & <%unit%> & <%bin%> \\
+<%end number%>
+\end{tabularx}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+}
+
+\end{document}
+

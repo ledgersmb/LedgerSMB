@@ -1,0 +1,20 @@
+Upgrading to Version 2.0.0
+
+1. install LedgerSMB over top of your old installation
+   $ cd /usr/local
+   $ tar zxvf sql-ledger-2.0.0.tar.gz
+
+2. load admin.pl and update the tables
+
+   You will not be able to log in until the tables are up to date.
+
+3. copy the new templates to your personal template directory
+
+   $ cd templates
+   $ cp Default-check.tex dir/check.tex
+   $ cp Default-receipt.tex dir/receipt.tex
+   $ cp Default-statement.html dir/statement.html
+   $ cp Default-statement.tex dir/statement.tex
+
+   replace 'dir' with your directory name
+

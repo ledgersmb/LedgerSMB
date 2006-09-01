@@ -1,0 +1,110 @@
+\documentclass[english,twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\usepackage{babel}
+\usepackage{graphicx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-1.9cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.7cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{%
+  \parbox[b]{.42\textwidth}{%
+    <%company%>
+
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telephone & <%tel%>\\
+  Facsimile & <%fax%>
+  \end{tabular}
+
+  \rule[1.5em]{\textwidth}{0.5pt}
+}
+
+  
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.45\textwidth}{
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%country%>
+}
+\parbox[t]{.45\textwidth}{
+<%if customerphone%>
+Tel: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{S T A T E M E N T} \hfill \textbf{<%statementdate%>}
+
+\vspace{2cm}
+
+\begin{tabularx}{\textwidth}{|llXccrrrr|}
+  \hline
+  \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Notes} &
+  \textbf{Date} & \textbf{Due} &
+  \textbf{Current} & \textbf{30} & \textbf{60} & \textbf{90+} \\
+  \hline
+<%foreach invnumber%>
+  <%invnumber%> & <%ordnumber%> & <%notes%> & <%invdate%> & <%duedate%> &
+  <%c0%> & <%c30%> & <%c60%> & <%c90%> \\
+<%end invnumber%>
+  \multicolumn{9}{|l|}{\mbox{}} \\
+  \hline
+  \textbf{Subtotal} & & & & & <%c0total%> & <%c30total%> & <%c60total%> & <%c90total%> \\
+  \hline
+\end{tabularx}
+
+\vspace{0.5cm}
+
+\hfill
+\begin{tabularx}{.4\textwidth}{Xr@{}}
+  \textbf{Total outstanding} & \textbf{<%total%>}
+\end{tabularx}
+
+\vfill
+
+Please make check payable to <%company%>
+
+\end{document}
+
+

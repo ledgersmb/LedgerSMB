@@ -1,0 +1,201 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+<tr valign=bottom>
+  <td width=10>&nbsp;</td>
+  <td>
+  
+  <table width=100%>
+  <tr>
+    <td>
+      <h4>
+      <%company%>
+      <br><%address%>
+      </h4>
+    </td>
+
+    <td align=right>
+      <h4>
+      Telefon: <%tel%>
+      <br>Telefax: <%fax%>
+      </h4>
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan=3>
+      <h4>I N K Ö P S &nbsp;&nbsp; O R D E R</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Order datum</th><td width=10>&nbsp;</td><td><%orddate%></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Leverans innan</th><td width=10>&nbsp;</td><td><%reqdate%></td>
+    </tr>
+
+    <tr>
+      <th align=right>Ordernr.</th><td>&nbsp;</td><td><%ordnumber%></td></tr>
+    </tr>
+  
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>To:</th>
+    </tr>
+
+    <tr>
+      <td><%name%>
+      <br><%address1%>
+      <%if address2%>
+<br><%address2%>
+<%end address2%>
+      <br><%city%> <%state%> <%zipcode%>
+      <%if country%>
+<%country%>
+<%end country%>
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+<!--      <th align=right><font color=ffffff>No.</th>  -->
+      <th align=left><font color=ffffff>Nummer</th>
+      <th align=left><font color=ffffff>Beskrivning</th>
+      <th><font color=ffffff>Ant.</th>
+      <th>&nbsp;</th>
+      <th><font color=ffffff>Pris</th>
+      <th><font color=ffffff>Sum</th>
+    </tr>
+
+<%foreach number%>
+    <tr valign=top>
+<!--      <td align=right><%runningnumber%>.</td>
+adjust the colspan if you include this to shift subtotal one to the right
+-->
+      <td><%number%></td>
+      <td><%description%></td>
+      <td align=right><%qty%></td>
+      <td><%unit%></td>
+      <td align=right><%sellprice%></td>
+      <td align=right><%linetotal%></td>
+    </tr>
+<%end number%>
+
+    <tr>
+      <td colspan=6><hr noshade></td>
+    </tr>
+    
+    <tr>
+      <th colspan=4 align=right>Pris ex moms</th>
+      <td colspan=2 align=right><%subtotal%></td>
+    </tr>
+
+<%foreach tax%>
+    <tr>
+      <th colspan=4 align=right><%taxdescription%> @ <%taxrate%> %</th>
+      <td colspan=2 align=right><%tax%></td>
+    </tr>
+<%end tax%>
+
+    <tr>
+      <td colspan=2>&nbsp;</td>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    <tr>
+      <td colspan=2>Betalingsfrist <b><%terms%></b> dagar</td>
+      <th colspan=2 align=right>Total</th>
+      <th colspan=2 align=right><%total%></th>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width=100%>
+    <tr valign=top>
+<%if notes%>
+      <td>Note</td>
+      <td><pre><%notes%></pre></td>
+<%end notes%>
+      <td align=right>
+      Alle priser i valuta <b><%currency%></b>
+      <br><%shippingpoint%>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+  
+<tr>
+  <td>
+  <table width=100%>
+  <tr valign=top>
+    <td><font size=-3>
+
+Betalning skall ske innan <%terms%> dagar från
+fakturadatum. Påminnelseränta räknas med 1.5% per månad från
+fakturadatum. Till desss att det fulla beloppet är betalt.
+
+Vid retur belastas 10% returvärdet. Retur av varor måste
+forhandsgodkännas av <%company%> för att därefter sändas. Varoreturer måste
+sändas förbetalt och med tillräcklig försäkring. <%company%> är
+inte ansvarig for transportskador.
+
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

@@ -1,0 +1,84 @@
+Upgrading to version 2.4.0
+
+1. install LedgerSMB over top
+   # cd /usr/local
+   # tar zxvf sql-ledger-2.4.0.tar.gz
+
+2. fix permissions
+   # chown -hR nobody:nogroup *
+   # chmod 711 templates users spool
+
+replace nobody:nogroup with your web server user and group
+
+3. install the plpgsql language compiler for PostgreSQL
+   # createlang plpgsql <dataset>
+
+4. install plpgsql in template1
+   # createlang plpgsql template1
+
+5. Edit your templates! The old address fields are obsolete.
+
+The new fields are:
+  address1
+  address2
+  city
+  state
+  zipcode
+  country
+
+The same applies to the "shipto" addresses.
+
+Before you log in edit Pg-upgrade-2.3.4-2.3.5.sql and change the
+way addresses are rewritten if you don't want US style addresses.
+
+North-american addresses are usually in the form of
+
+Five Star Stables
+123 Horsehoe Blvd.
+Sweetgrass, MT 19867
+U.S.A
+
+addr1 --> address1
+addr2 --> city
+addr3 --> country
+addr4 --> state
+
+addr4 was put into the state field to bring the field forward
+to the new layout. To check if there is something in the field run
+a report and sort by the "State" field.
+
+Either edit the records or run the SQL queries below to take them apart.
+
+If you have anything in the "state" field change the records to match
+the others before you run the following queries.
+
+dbname=# update customer set state = substr(city,strpos(city,' ')+1);
+dbname=# update customer set zipcode = substr(state,strpos(state,' ')+1);
+dbname=# update customer set state = substr(state,1,strpos(state,' ')-1);
+dbname=# update customer set city = substr(city,1,strpos(city,',')-1);
+
+do the same with the vendor and shipto table.
+
+6. create a new set of templates
+
+  * load admin.pl and edit one of the user's
+  * in the "New Templates" field enter "new" and save the user
+  * go back in your browser so you have the same screen again
+    as before
+  * change the template directory back to what it was before
+    the change and save the user
+    
+  * drop into a shell window
+  * cd to sql-ledger/templates/new
+  * copy the additional templates to your private template directory
+  
+7. Printers
+
+printer setup has changed to multiple printers which allow
+users to choose a printer. Printers can be defined in ledger-smb.conf
+
+
+Oracle and DB2:
+===============
+There is no upgrade available for Oracle and DB2 yet.
+

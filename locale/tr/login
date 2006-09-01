@@ -1,0 +1,22 @@
+$self{charset} = 'ISO-8859-9';
+
+$self{texts} = {
+  'Company'                     => 'Þirket',
+  'Continue'                    => 'Devam',
+  'Login'                       => 'Giriþ',
+  'Name'                        => 'Ýsim',
+  'Password'                    => 'Þifre',
+  'Version'                     => 'Versiyon',
+  'You did not enter a name!'   => 'Ýsim girmediniz!',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'giriþ'                       => 'login',
+};
+
+1;
+

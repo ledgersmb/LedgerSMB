@@ -1,0 +1,27 @@
+$self{charset} = 'ISO-8859-2';
+
+$self{texts} = {
+  'Access Denied!'              => 'Hozzáférés megtagadva!',
+  'Company'                     => 'Társaság',
+  'Continue'                    => 'Folytatás',
+  'Dataset is newer than version!' => 'A Cégadatbázis verziója újabb, mint a programé!',
+  'Incorrect Dataset version!'  => 'Érvénytelen adatbázisverzió!',
+  'Login'                       => 'Belépés',
+  'Name'                        => 'Név',
+  'Password'                    => 'Jelszó',
+  'Upgrading to Version'        => 'Verzió karbantartás',
+  'Version'                     => 'Verzió',
+  'You did not enter a name!'   => 'Nem írt be nevet!',
+  'done'                        => 'elvégezve',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'belépés'                     => 'login',
+};
+
+1;
+

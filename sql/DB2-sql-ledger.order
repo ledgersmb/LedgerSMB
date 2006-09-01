@@ -1,0 +1,5 @@
+db2 -td@ -vf DB2-create.sql
+db2 -td@ -vf DB2-set.sql
+db2 -td@ -vf DB2-tables.sql
+db2 -td@ -vf DB2-indices.sql
+db2 -tvf Default-chart.sql

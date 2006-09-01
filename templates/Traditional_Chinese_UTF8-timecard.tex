@@ -1,0 +1,52 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=-3cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+<%include letterhead.tex%>
+
+\centerline{\textbf{T I M E}\hspace{0.5cm}\textbf{C A R D}}
+
+\vspace*{0.5cm}
+
+\begin{tabular}[t]{ll}
+  \textbf{Employee} & <%employee%> \\
+  \textbf{ID} & <%employee_id%> \\
+\end{tabular}
+\hfill
+\begin{tabular}[t]{ll}
+  \textbf{Card ID} & <%id%> \\
+  \textbf{Date} & <%transdate%> \\
+  \textbf{In} & <%checkedin%> \\
+  \textbf{Out} & <%checkedout%> \\
+  \textbf{Hours} & <%qty%> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}[b]{ll}
+  \textbf{Job/Project \#} & <%projectnumber%> \\
+  \textbf{Description} & <%projectdescription%> \\
+  \textbf{Labor/Service Code} & <%partnumber%> \\
+  \textbf{Description} & <%description%> \\
+\end{tabular}
+\hfill
+\begin{tabular}[b]{lr}
+  \textbf{Rate} & <%sellprice%> \\
+  \textbf{Total} & <%total%> \\
+\end{tabular}
+  
+\vspace{0.3cm}
+
+<%notes%>
+ 
+\end{document}
+

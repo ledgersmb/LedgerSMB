@@ -1,0 +1,4 @@
+ATTACH TO db2inst1@
+! db2set DB2DBDFT=LEDGER@
+! db2empfa LEDGER@
+DETACH@

@@ -1,0 +1,230 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+<tr>
+  <td width=10>
+  </td> 
+  <td>
+  
+  <table width=100%>
+  <tr>
+    <td>
+      <h4>
+      <%company%>
+      <br><%address%>
+      <br>Tel/Fax <%tel%> / <%fax%>
+      </h4>
+    </td>
+
+    <th colspan=2>
+      <h4 align=center>I N V O I C E</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Date</th><td width=10> </td><td><%invdate%></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Number</th><td></td><td><%invnumber%></td></tr>
+    </tr>
+
+<!-- prepared by: <%username%>
+-->
+
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>To:</th>
+    </tr>
+
+    <tr>
+      <td><%name%>
+      <br><%address1%>
+      <%if address2%>
+<br><%address2%>
+<%end address2%>
+      <br><%city%> <%state%> <%zipcode%>
+      <%if country%>
+<%country%>
+<%end country%>
+      </td>
+      
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width=100%>
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Description</th>
+      <th>&nbsp;</th>
+      <th><font color=ffffff>Amount</th>
+    </tr>
+
+<%foreach number%>
+    <tr valign=top>
+      <td><%description%></td>
+      <td>&nbsp;</td>
+      <td align=right><%linetotal%></td>
+    </tr>
+<%end number%>
+
+    <tr>
+      <td colspan=3><hr noshade></td>
+    </tr>
+    
+    <tr>
+<%if taxincluded%>
+      <td>&nbsp;</td>
+      <th align=right>Total</th>
+      <td align=right><%invtotal%></td>
+<%end taxincluded%>
+<%if not taxincluded%>
+      <td>&nbsp;</td>
+      <th align=right>Subtotal</th>
+      <td align=right><%subtotal%></td>
+<%end taxincluded%>
+    </tr>
+
+<%foreach tax%>
+    <tr>
+      <th colspan=2 align=right><%taxdescription%></th>
+      <td align=right><%tax%></td>
+    </tr>
+<%end tax%>
+
+<!--
+  <%taxbase%> = total netamount for each tax bracket
+  <%taxrate%> = taxrate in percent
+-->
+     
+<%if paid%>
+    <tr>
+      <td>&nbsp;</td>
+      <th align=right>Paid</th>
+      <td align=right><%paid%></td>
+    </tr>
+<%end paid%>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan=2><hr noshade></td>
+    </tr>
+
+    <tr>
+      <td>
+<%if terms%>
+Terms &nbsp;Net <b><%terms%></b> days
+<%end terms%>
+</td>
+      <th align=right>Total</th>
+      <th align=right><%total%></th>
+    </tr>
+    
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<%if notes%>
+<tr>
+  <td>
+  <table width=100%>
+    <tr valign=top>
+      <td>Notes</td>
+      <td><pre><%notes%></pre></td>
+      <td align=right>
+      &nbsp;
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+<%end notes%>
+
+<tr><td>&nbsp;</td></tr>
+  
+<tr>
+  <th colspan=3>
+  Please make check payable to <%company%>
+  <br>Thank you for your valued business!
+  </th>
+</tr>
+
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+  <td>
+  <table width=100%>
+  <tr valign=top>
+    <td><font size=-3>
+    Payment due NET <%terms%> Days from date of Invoice.
+    Interest on overdue amounts will acrue at the rate of 1.5% per month
+    from due date until paid in full.
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+<%foreach tax%>
+    <tr>
+      <th colspan=3 align=left><font size=-2><%taxdescription%> Registration <%taxnumber%></th>
+    </tr>
+<%end tax%>
+
+<!--
+  %username% = user name
+  %businessnumber% = business number
+-->
+
+<!-- banking information
+    <tr>
+      <th colspan=3 align=left><font size=-2>Banking Information:
+      <br>Bank
+      <br>Transit No.
+      <br>Account No.
+      </th>
+    </tr>
+-->
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

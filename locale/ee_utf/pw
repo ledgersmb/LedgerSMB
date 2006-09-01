@@ -1,0 +1,15 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Continue'                    => 'Jätka',
+  'Password'                    => 'Parool',
+  'Session expired!'            => 'Sessioon aegunud!',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'jätka'                      => 'continue',
+};
+
+1;
+

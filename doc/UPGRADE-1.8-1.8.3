@@ -1,0 +1,23 @@
+Upgrading from version 1.8.(0-2) to 1.8.3
+
+1. install LedgerSMB over top of your old installation
+   $ cd /usr/local
+   $ tar zxvf sql-ledger-1.8.3.tar.gz
+
+2. copy ledger-smb.conf.default to ledger-smb.conf
+   $ cp ledger-smb.conf.default ledger-smb.conf
+
+   if you modified ledger-smb.conf merge the changes from the
+   .default file rather than copying over top.
+
+3. copy the new master templates to your template directory
+   $ cd ../templates
+
+   $ cp Default-invoice.tex your_template_dir/invoice.tex
+   $ cp Default-packing_list.tex your_template_dir/packing_list.tex
+   $ cp Default-purchase_order.tex your_template_dir/purchase_order.tex
+   $ cp Default-sales_order.tex your_template_dir/sales_order.tex
+ 
+4. edit ledger-smb.conf
+   instructions are in the file
+

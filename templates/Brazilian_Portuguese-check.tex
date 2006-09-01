@@ -1,0 +1,65 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[top=2cm,bottom=-1cm,left=2cm,right=1cm]{geometry}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+
+\fontfamily{cmss}\fontsize{9pt}{9pt}\selectfont
+
+\parbox[t]{12cm}{
+  <%company%>
+
+  <%address%>}
+\hfill
+\parbox[t]{6cm}{\hfill <%source%>}
+
+\vspace*{0.6cm}
+
+<%text_amount%> \dotfill <%decimal%>/100 \makebox[0.5cm]{\hfill}
+
+\vspace{0.5cm}
+
+\hfill <%datepaid%> \makebox[2cm]{\hfill} <%amount%>
+
+\vspace{0.5cm}
+
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+
+\vspace{2.8cm}
+
+<%company%>
+
+\vspace{0.5cm}
+
+<%name%> \hfill <%datepaid%> \hfill <%source%>
+
+\vspace{0.5cm}
+\begin{tabularx}{\textwidth}{lXrr@{}}
+\textbf{Número da Fatura} & \textbf{Data da Fatura}
+  & \textbf{Prazo} & \textbf{Aplicação} \\
+<%foreach invnumber%>
+<%invnumber%> & <%invdate%> \dotfill
+  & <%due%> & <%paid%> \\
+<%end invnumber%>
+\end{tabularx}
+
+\vfill
+
+\end{document}
+

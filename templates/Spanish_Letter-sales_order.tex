@@ -1,0 +1,111 @@
+\documentclass[letterpaper,oneside]{article}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+%\usepackage{marvosym}  % Euro \EUR
+\usepackage{fancyhdr}
+\setlength{\topmargin}{0cm}
+\setlength{\topskip}{0cm}
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{0.5cm}
+\setlength{\textheight}{24.2cm}
+\setlength{\textwidth}{19cm}
+\setlength{\oddsidemargin}{-1.4cm}
+\setlength{\evensidemargin}{-1.4cm}
+\setlength{\footskip}{1cm}
+
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{13.0cm}
+
+\newsavebox{\hdr}
+
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\sbox{\hdr}{
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{2.2cm}
+
+\begin{tabular}[t]{p{1.7cm}p{2.4cm}p{1.7cm}}\\
+\centering{Número} & \centering{Fecha} & C. Cliente\\
+\centering{<%ordnumber%>} & \centering{<%orddate%>} & \centering{<%vendor_id%>}
+\end{tabular}
+\end{minipage}
+
+\begin{minipage}[t]{0.4\linewidth}
+\textbf{P E D I D O} 
+\vspace{1cm}
+
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+\end{minipage}
+
+}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0cm}
+\renewcommand{\footrulewidth}{0cm}
+\cfoot{\thepage}
+%\markboth{\usebox{\hdr}}{\usebox{\hdr}}
+%\thispagestyle{empty}     %use this with letterhead paper
+
+<%pagebreak 65 27 37%>
+\end{tabular*}
+\newpage
+\usebox{\hdr}
+%\markboth{\usebox{\hdr}}{\usebox{\hdr}}
+\vspace{0.5cm}
+
+\begin{tabular*}{\textwidth}{rp{\descrwidth}rr}
+  \textbf{Cant.} & \textbf{Descripción} & \textbf{Precio} & \textbf{Importe} \\ \hline
+<%end pagebreak%>
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\usebox{\hdr}
+\vspace{0.5cm}
+
+\begin{tabular*}{\textwidth}{rp{\descrwidth}rr}
+  \textbf{Cant.} & \textbf{Descripción} & \textbf{Precio} & \textbf{Importe} \\ \hline
+<%foreach number%>
+  <%qty%> & <%description%> & <%sellprice%> & <%linetotal%> \\
+<%end number%>
+\end{tabular*}
+
+\parbox{\textwidth}{
+\vspace{12pt}
+<%if notes%>
+  <%notes%>
+<%end if%>
+}
+
+\vfill
+
+\begin{flushright}
+\begin{tabularx}{10cm}{Xr@{}}
+  \textbf{Base imponible} & \textbf{<%subtotal%>} \\
+<%foreach tax%>
+  IVA (<%taxrate%>\%) sobre <%taxbase%> & <%tax%> \\
+<%end tax%>
+  \hline
+  \textbf{Total} & \textbf{<%ordtotal%>} \\
+\end{tabularx}
+\end{flushright}
+
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\end{document}
+

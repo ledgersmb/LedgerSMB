@@ -1,0 +1,195 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-1.9cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.7cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{
+  \parbox[b]{.42\textwidth}{
+    <%company%>
+    
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telephone & <%tel%>\\
+  Facsimile & <%fax%>
+  \end{tabular}
+
+  \rule[1.5ex]{\textwidth}{0.5pt}
+}
+  
+
+<%pagebreak 65 27 48%>
+\end{tabularx}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  Subtotal & <%sumcarriedforward%> \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<%company%>\hfill <%ordnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabularx}{\textwidth}{@{}lXrlrr@{}}
+  \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Amount} \\
+  & carried forward from <%lastpage%> & & & & <%sumcarriedforward%> \\
+<%end pagebreak%>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.45\textwidth}{
+\textbf{To}
+\vspace{0.5cm}
+  
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%country%>
+
+\vspace{0.3cm}
+
+<%if contact%>
+Attn: <%contact%>
+\vspace{0.3cm}
+<%end contact%>
+
+<%if vendorphone%>
+Tel: <%vendorphone%>
+<%end vendorphone%>
+
+<%if vendorfax%>
+Fax: <%vendorfax%>
+<%end vendorfax%>
+
+<%email%>
+}
+\parbox[t]{.45\textwidth}{
+\textbf{Ship To}
+\vspace{0.5cm}
+
+<%shiptoname%>
+
+<%shiptoaddress1%>
+
+<%shiptoaddress2%>
+
+<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+
+<%shiptocountry%>
+
+\vspace{0.3cm}
+
+<%if shiptocontact%>
+Attn: <%shiptocontact%>
+\vspace{0.3cm}
+<%end shiptocontact%>
+
+<%if shiptophone%>
+Tel: <%shiptophone%>
+<%end shiptophone%>
+
+<%if shiptofax%>
+Fax: <%shiptofax%>
+<%end shiptofax%>
+
+<%shiptoemail%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{P U R C H A S E} \parbox{0.3cm}{\hfill} \textbf{O R D E R}
+\hfill
+
+\vspace{1cm}
+\begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
+  \textbf{Order \#} & \textbf{Date} & \textbf{Required by} & \textbf{Contact} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5ex]
+  \hline
+  <%ordnumber%> & <%orddate%> & <%reqdate%> & <%employee%> & <%shippingpoint%> & <%shipvia%> \\
+  \hline
+\end{tabularx}
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{@{}lXrlrr@{}}
+  \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} & \textbf{Price} & \textbf{Amount} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%sellprice%> & <%linetotal%> \\
+<%end number%>
+\end{tabularx}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  Subtotal & <%subtotal%> \\
+<%foreach tax%>
+  <%taxdescription%> on <%taxbase%> & <%tax%>\\
+<%end tax%>
+  \hline
+  Total & <%ordtotal%>\\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  All prices in \textbf{<%currency%>}.
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+%\footnotetext[1]{\tiny }
+
+\end{document}
+

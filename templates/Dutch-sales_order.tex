@@ -1,0 +1,141 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telefoon & <%tel%>\\
+    Fax & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%ordnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 48%>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotaal} & \textbf{<%sumcarriedforward%>} \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<%company%>\hfill <%ordnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Nummer} & \textbf{Omschrijving} & \textbf{Aantal} &
+    \textbf{Eenheid} & \textbf{Prijs} & \textbf{Korting} & \textbf{Bedrag} \\
+  & Transport van <%lastpage%> & & & & & <%sumcarriedforward%> \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{2cm}
+
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+
+\vspace{3.5cm}
+
+\textbf{V E R K O O P} \parbox{0.3cm}{\hfill} \textbf{B E S T E L L I N G}
+\hfill
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Bestel Datum} & <%orddate%> \\
+<%if reqdate%>
+  \textbf{Gewenste Leverdatum} & <%reqdate%> \\
+<%end reqdate%>
+  \textbf{Bestel Nummer} & <%ordnumber%>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Nummer} & \textbf{Omschrijving} & \textbf{Aantal} &
+    \textbf{Eenheid} & \textbf{Prijs} & \textbf{Korting} & \textbf{Bedrag} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotaal} & \textbf{<%subtotal%>} \\
+<%foreach tax%>
+  <%taxdescription%> over <%taxbase%> & <%tax%>\\
+<%end tax%>
+  \hline
+  \textbf{Totaal} & \textbf{<%ordtotal%>}\\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  Alle prijzen in \textbf{<%currency%>}.
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\end{document}
+

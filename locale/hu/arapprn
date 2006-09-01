@@ -1,0 +1,36 @@
+$self{charset} = 'ISO-8859-2';
+
+$self{texts} = {
+  'Account'                     => 'Számla',
+  'Amount'                      => 'Összeg',
+  'Continue'                    => 'Folytatás',
+  'Date'                        => 'Dátum',
+  'Memo'                        => 'Memo',
+  'Nothing to print!'           => 'Nincs mit nyomtatni!',
+  'PDF'                         => 'PDF',
+  'Postscript'                  => 'Postscript',
+  'Printed'                     => 'Kinyomtatva',
+  'Scheduled'                   => 'Ütemezve',
+  'Screen'                      => 'Képernyõre',
+  'Select a Printer!'           => 'Válasszon Nyomtatót',
+  'Select payment'              => 'Válasszon fizetési módot',
+  'Select postscript or PDF!'   => 'Válassza ki a postscript vagy a PDF formátumot!',
+  'Source'                      => 'Bizonylatszám',
+};
+
+$self{subs} = {
+  'customer_details'            => 'customer_details',
+  'payment_selected'            => 'payment_selected',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_check'                 => 'print_check',
+  'print_options'               => 'print_options',
+  'print_receipt'               => 'print_receipt',
+  'print_transaction'           => 'print_transaction',
+  'select_payment'              => 'select_payment',
+  'vendor_details'              => 'vendor_details',
+  'folytatás'                   => 'continue',
+};
+
+1;
+

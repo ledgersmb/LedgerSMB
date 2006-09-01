@@ -1,0 +1,26 @@
+$self{charset} = 'ISO-8859-13';
+
+$self{texts} = {
+  'Company'                     => 'Uzòçmums',
+  'Continue'                    => 'Turpinât',
+  'Dataset is newer than version!' => 'Datukopa ir jaunâka par versiju!',
+  'Incorrect Dataset version!'  => 'Nepareiza datukopas versija!',
+  'Login'                       => 'Pieteikties',
+  'Name'                        => 'Nosaukums',
+  'Password'                    => 'Parole',
+  'Upgrading to Version'        => 'Uzlabot lîdz versijai',
+  'Version'                     => 'Versija',
+  'You did not enter a name!'   => 'Nav ievadîts vârds',
+  'done'                        => 'izdarîts',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'pieteikties'                 => 'login',
+};
+
+1;
+

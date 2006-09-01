@@ -1,0 +1,39 @@
+$self{texts} = {
+  'Account'                     => 'Compta',
+  'Accounting Menu'             => 'Menú Comptable',
+  'Confirm!'                    => 'Confirmar!',
+  'Continue'                    => 'Continuar',
+  'Customer'                    => 'Client',
+  'Date'                        => 'Data',
+  'From'                        => 'De',
+  'ID'                          => 'ID',
+  'Invoice'                     => 'Factura',
+  'Invoice Number'              => 'Núm Fra.',
+  'Order'                       => 'Ordre',
+  'Order Number'                => 'Número Ordre',
+  'Purchase Orders'             => 'Ordres de Compra',
+  'Sales Orders'                => 'Pressupostos',
+  'To'                          => 'Fins',
+  'Vendor'                      => 'Proveïdor',
+  'Yes'                         => 'Sí',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'continue'                    => 'continue',
+  'display'                     => 'display',
+  'js_menu'                     => 'js_menu',
+  'list_spool'                  => 'list_spool',
+  'menubar'                     => 'menubar',
+  'print'                       => 'print',
+  'remove'                      => 'remove',
+  'search'                      => 'search',
+  'section_menu'                => 'section_menu',
+  'select_all'                  => 'select_all',
+  'yes'                         => 'yes',
+  'continuar'                   => 'continue',
+  'sí'                          => 'yes',
+};
+
+1;
+

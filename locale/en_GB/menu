@@ -1,0 +1,25 @@
+$self{texts} = {
+  'AP'                          => 'Purchases',
+  'AP Aging'                    => 'Creditor Aging',
+  'AP Transaction'              => 'Purchase Transaction',
+  'AR'                          => 'Sales',
+  'AR Aging'                    => 'Debtor Aging',
+  'AR Transaction'              => 'Sales Transaction',
+  'Add Customer'                => 'Add Debtor',
+  'Add Vendor'                  => 'Add Creditor',
+  'Check'                       => 'Cheque',
+  'Customers'                   => 'Debtors',
+  'Vendor Invoice'              => 'Creditor Invoice',
+  'Vendors'                     => 'Creditors',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'display'                     => 'display',
+  'js_menu'                     => 'js_menu',
+  'menubar'                     => 'menubar',
+  'section_menu'                => 'section_menu',
+};
+
+1;
+

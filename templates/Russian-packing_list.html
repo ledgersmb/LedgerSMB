@@ -1,0 +1,153 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+  <tr>
+    <td width=10>&nbsp;</td>
+    
+    <td>
+      <table width=100%>
+	<tr>
+	  <td>
+	  <h4>
+	  <%company%>
+	  <br><%address%>
+	  </h4>
+	  </td>
+
+	  <th></th>
+
+	  <td align=right>
+	  <h4>
+	  Тел: <%tel%>
+	  <br>Факс: <%fax%>
+	  </h4>
+	  </td>
+	</tr>
+
+	<tr>
+	  <th colspan=3>
+	    <h4>СПИСОК &nbsp;&nbsp;ДЛЯ&nbsp;&nbsp;ВЫБОРА</h4>
+	  </th>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% callspacing=0 cellpadding=0>
+        <tr bgcolor=000000>
+	  <th width=50% align=left><font color=ffffff>Ship To:</th>
+	  <th width=50%>&nbsp;</th>
+	</tr>
+
+	<tr valign=top>
+	  <td><%shiptoname%>
+	  <br><%shiptoaddress1%>
+	  <%if shiptoaddress2%>
+	  <br><%shiptoaddress2%>
+	  <%end shiptoaddress2%>
+	  <br><%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+	  <%if shiptocountry%>
+	  <br><%shiptocountry%>
+	  <%end shiptocountry%>
+	  </td>
+
+	  <td>
+	  <%if shiptocontact%>
+	  <br>Сонтакт: <%shiptocontact%>
+	  <%end shiptocontact%>
+
+	  <%if shiptophone%>
+	  <br>Тел: <%shiptophone%>
+	  <%end shiptophone%>
+
+	  <%if shiptofax%>
+	  <br>Факс: <%shiptofax%>
+	  <%end shiptofax%>
+
+	  <%shiptoemail%>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% border=1>
+        <tr>
+	  <th width=15% align=left>Счет No</th>
+	  <th width=15% align=left>Заказ No</th>
+	  <th width=10% align=left>Дата доставки</th>
+	  <th width=10% align=left>Дата проводки</th>
+	  <th width=15% align=left nowrap>Контакт</th>
+	  <th width=15% align=left>Склад</th>
+	  <th width=10% align=left>Доставка в</th>
+	  <th width=10% align=left>Доставка через</th>
+	</tr>
+
+        <tr>
+	  <td><%invnumber%>&nbsp;</td>
+	  <td><%ordnumber%>&nbsp;</td>
+          <%if shippingdate%>
+	  <td><%shippingdate%></td>
+          <%end shippingdate%>
+
+	  <%if not shippingdate%>
+	  <td><%transdate%></td>
+	  <%end shippingdate%>
+
+	  <td><%employee%>&nbsp;</td>
+	  <td><%warehouse%>&nbsp;</td>
+	  <td><%shippingpoint%>&nbsp;</td>
+	  <td><%shipvia%>&nbsp;</td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width=100%>
+	<tr bgcolor=000000>
+	  <th align=left><font color=ffffff>Поз.</th>
+	  <th align=left><font color=ffffff>Код</th>
+	  <th align=left><font color=ffffff>Описание</th>
+	  <th><font color=ffffff>К-во</th>
+	  <th><font color=ffffff>Доставка</th>
+	  <th><font color=ffffff>Ед. изм.</th>
+	  <th><font color=ffffff>"Bin"</th>
+	</tr>
+
+        <%foreach number%>
+	<tr valign=top>
+	  <td><%runningnumber%>
+	  <td><%number%></td>
+	  <td><%description%></td>
+	  <td align=right><%qty%></td>
+	  <td align=right>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+	  <td><%unit%></td>
+	  <td align=right><%bin%></td>
+	</tr>
+	<%end number%>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td><hr noshade></td>
+  </tr>
+
+</table>

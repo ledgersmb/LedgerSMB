@@ -1,0 +1,40 @@
+$self{charset} = 'ISO-8859-9';
+
+$self{texts} = {
+  'Account'                     => 'Hesap',
+  'Accounting Menu'             => 'Muhasebe Menüsü',
+  'Confirm!'                    => 'Onayla!',
+  'Continue'                    => 'Devam',
+  'Customer'                    => 'Alıcı',
+  'Date'                        => 'Tarih',
+  'From'                        => 'Başlangıç',
+  'Invoice'                     => 'Fatura',
+  'Invoice Number'              => 'Fatura No',
+  'Order'                       => 'Sipariş',
+  'Order Number'                => 'Sipariş No',
+  'Purchase Orders'             => 'Satınalma Siparişleri',
+  'Sales Orders'                => 'Satış Siparişleri',
+  'To'                          => 'Bitiş',
+  'Vendor'                      => 'Satıcı',
+  'Yes'                         => 'Evet',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'continue'                    => 'continue',
+  'display'                     => 'display',
+  'js_menu'                     => 'js_menu',
+  'list_spool'                  => 'list_spool',
+  'menubar'                     => 'menubar',
+  'print'                       => 'print',
+  'remove'                      => 'remove',
+  'search'                      => 'search',
+  'section_menu'                => 'section_menu',
+  'select_all'                  => 'select_all',
+  'yes'                         => 'yes',
+  'devam'                       => 'continue',
+  'evet'                        => 'yes',
+};
+
+1;
+

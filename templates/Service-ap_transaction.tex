@@ -1,0 +1,126 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[top=2cm,bottom=-1cm,left=2cm,right=1cm]{geometry}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\parbox{\textwidth}{%
+  \parbox[b]{.42\textwidth}{%
+    <%company%>
+   
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{sql-ledger}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Tel: & <%tel%>\\
+  Fax: & <%fax%>
+  \end{tabular}
+
+  \rule[1.5em]{\textwidth}{0.5pt}
+}
+
+\centerline{\textbf{A P} \hspace{0.3cm} \textbf{T R A N S A C T I O N}}
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%>
+<%if state>
+, <%state%>
+<%end state%> <%zipcode%>
+
+<%country%>
+
+\vspace{0.3cm}
+
+<%if contact%>
+<%contact%>
+<%end contact%>
+
+\vspace{0.2cm}
+
+<%if vendorphone%>
+Tel: <%vendorphone%>
+<%end vendorphone%>
+
+<%if vendorfax%>
+Fax: <%vendorfax%>
+<%end vendorfax%>
+
+<%email%>
+
+<%if vendortaxnumber%>
+Tax Number: <%vendortaxnumber%>
+<%end vendortaxnumber%>
+}
+\hfill
+\begin{tabular}[t]{ll}
+  \textbf{Invoice \#} & <%invnumber%> \\
+  \textbf{Date} & <%invdate%> \\
+  \textbf{Due} & <%duedate%> \\
+  <%if ponumber%>
+    \textbf{PO \#} & <%ponumber%> \\
+  <%end ponumber%>
+  <%if ordnumber%>
+    \textbf{Order \#} & <%ordnumber%> \\
+  <%end ordnumber%>
+  \textbf{Employee} & <%employee%> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}[t]{@{}llrX@{\hspace{1cm}}l@{}}
+<%foreach amount%>
+  <%accno%> & <%account%> & <%amount%> & <%description%> & <%projectnumber%> \\
+<%end amount%>
+
+  \multicolumn{2}{r}{\textbf{Subtotal}} & <%subtotal%> & \\
+<%foreach tax%>
+  \multicolumn{2}{r}{\textbf{<%taxdescription%> @ <%taxrate%> \%}} & <%tax%> & \\
+<%end tax%>
+
+  \multicolumn{2}{r}{\textbf{Total}} & <%invtotal%> & \\
+  
+\end{tabularx}
+
+\vspace{0.3cm}
+
+<%text_amount%> ***** <%decimal%>/100 <%currency%>
+
+<%if notes%>
+\vspace{0.3cm}
+<%notes%>
+<%end notes%>
+
+\vspace{0.3cm}
+
+<%if paid_1%>
+\begin{tabular}{@{}llllr@{}}
+  \multicolumn{5}{c}{\textbf{Payments}} \\
+  \hline
+  \textbf{Date} & & \textbf{Source} & \textbf{Memo} & \textbf{Amount} \\
+<%end paid_1%>
+<%foreach payment%>
+  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%paymentmemo%> & <%payment%> \\
+<%end payment%>
+<%if paid_1%>
+\end{tabular}
+<%end paid_1%>
+
+\end{document}
+

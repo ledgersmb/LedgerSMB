@@ -1,0 +1,125 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage[frenchb]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Téléphone & <%tel%>\\
+    Télécopieur & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 37%>
+\end{tabular*}
+
+\newpage
+
+\markright{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
+  \textbf{Numéro} & \textbf{Description} & \textbf{Qté} &
+    \textbf{Unité} & \textbf{Bin} \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{2cm}
+
+<%shiptoname%>
+
+<%shiptoaddr1%>
+
+<%shiptoaddr2%>
+
+<%shiptoaddr3%>
+
+<%shiptoaddr4%>
+
+\vspace{3.5cm}
+
+\textbf{L I S T E} \parbox{0.3cm}{\hfill} \textbf{D E}
+\parbox{0.3cm}{\hfill} \textbf{P A Q U E T A G E}
+
+\hfill
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Date de facture} & <%invdate%> \\
+  \textbf{Numéro de facture} & <%invnumber%> \\
+  \textbf{Numéro de client} & <%customer_id%>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
+  \textbf{Numéro} & \textbf{Description} & \textbf{Qté} &
+    \textbf{Unité} & \textbf{Bin} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%bin%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\vfill
+\centerline{\textbf{Merci de faire affaire avec nous!}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+Les éléments retournés seront sujets à un supplément de remmagasinnage de
+10\%. Une autorisation de renvoi doit être obtenue au préalable auprès de
+<%company%>. Les frais de transports et d'assurance sur les éléments
+retournés devront être couvert par le client de façon appropriée.
+<%company%> ne peut être tenue responsable des dommages survenus pendant
+le transit.}
+
+\end{document}
