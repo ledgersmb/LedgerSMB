@@ -153,7 +153,7 @@ sub error {
 			$self->header;
 		}
 
-		print qq|<body><h2 class="error:>Error!</h2> <p><b>$self->{msg}</b></body>|;
+		print qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
 
 		exit;
 
