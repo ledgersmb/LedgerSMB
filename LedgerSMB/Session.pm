@@ -124,7 +124,13 @@ sub session_create {
 }
 
 sub session_destroy {
-	my ($form) = @_;
+
+	# Under the current architecture, this function is a bit problematic
+	# %myconfig is often not defined when this function needs to be called.
+	# which means that the db connection parameters are not available.
+	# moving user prefs and the session table into a central db will solve this issue
+
+	my ($form, %myconfig) = @_;
 
 	my $login = $form->{login};
 	$login =~ s/[^a-zA-Z0-9@.-]//g;
