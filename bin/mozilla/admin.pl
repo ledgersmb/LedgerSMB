@@ -129,9 +129,9 @@ sub login {
 sub logout {
 
   $form->{callback} = "$form->{script}?path=$form->{path}&endsession=1";
-  $form->redirect($locale->text('You are logged out'));
   unlink "$userspath/adminhash";
   print qq|Set-Cookie: LedgerSMB=; path=/;\n|; 
+  $form->redirect($locale->text('You are logged out'));
 
 }
 
