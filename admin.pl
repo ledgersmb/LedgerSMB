@@ -2,10 +2,8 @@
 #
 ######################################################################
 # LedgerSMB Accounting and ERP
-# Copyright (C) 2001
+# Copyright (C) 2006
 #
-#  Author: Dieter Simader
-#   Email: dsimader@sql-ledger.org
 #     Web: http://sourceforge.net/projects/ledger-smb/
 #
 #  Contributors:

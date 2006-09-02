@@ -28,7 +28,7 @@ $form->{charset} = $locale->{charset};
 eval { require DBI; };
 $form->error($locale->text('DBI not installed!')) if ($@);
 
-$form->{stylesheet} = "sql-ledger.css";
+$form->{stylesheet} = "ledger-smb.css";
 $form->{favicon} = "favicon.ico";
 $form->{timeout} = 600;
 
@@ -144,8 +144,8 @@ sub add_user {
   $form->{Oracle_dbport} = '1521';
   $form->{Oracle_dbhost} = `hostname`;
 
-  if (-f "css/sql-ledger.css") {
-    $myconfig->{stylesheet} = "sql-ledger.css";
+  if (-f "css/ledger-smb.css") {
+    $myconfig->{stylesheet} = "ledger-smb.css";
   }
   $myconfig->{vclimit} = 1000;
   $myconfig->{menuwidth} = 155;
@@ -1109,7 +1109,7 @@ sub dbdriver_defaults {
 
   # load some defaults for the selected driver
   %driverdefaults = ( 'Pg' => { dbport => '',
-                                dbuser => 'sql-ledger',
+                                dbuser => 'ledger-smb',
 		             dbdefault => 'template1',
 				dbhost => '',
 			 connectstring => $locale->text('Connect to')

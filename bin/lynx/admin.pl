@@ -1,23 +1,12 @@
 #=====================================================================
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2002
+# LedgerSMB 
+# Small Medium Business Accounting software
+# 
+# See COPYRIGHT file for copyright information
+#======================================================================
 #
-#  Author: DWS Systems Inc.
-#     Web: http://sourceforge.net/projects/ledger-smb/
+# This file has NOT undergone whitespace cleanup.
 #
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #======================================================================
 #
 # setup module
@@ -27,8 +16,8 @@
 
 $menufile = "menu.ini";
 
-use SL::Form;
-use SL::User;
+use LedgerSMB::Form;
+use LedgerSMB::User;
 
 
 $form = new Form;
@@ -39,7 +28,7 @@ $form->{charset} = $locale->{charset};
 eval { require DBI; };
 $form->error($locale->text('DBI not installed!')) if ($@);
 
-$form->{stylesheet} = "sql-ledger.css";
+$form->{stylesheet} = "ledger-smb.css";
 $form->{favicon} = "favicon.ico";
 $form->{timeout} = 600;
 
@@ -66,7 +55,7 @@ if ($form->{action}) {
   # create memberfile
   if (! -f $memberfile) {
     open(FH, ">$memberfile") or $form->error("$memberfile : $!");
-    print FH qq|# LedgerSMB Small Medium Business Accounting members
+    print FH qq|# LedgerSMB Accounting members
 
 [root login]
 password=
@@ -102,7 +91,7 @@ function sf(){
 
 <div align=center>
 
-<a href="http://sourceforge.net/projects/ledger-smb/"><img src=ledger-smb.png border=0></a>
+<a href="http://sourceforge.net/projects/ledger-smb/"><img src="ledger-smb.png" width="200" height="100" border="0"></a>
 <h1 class=login>|.$locale->text('Version').qq| $form->{version}<p>|.$locale->text('Administration').qq|</h1>
 
 <form method=post action="$form->{script}" name=admin>
@@ -119,7 +108,7 @@ function sf(){
 
 </form>
 
-<a href=http://sourceforge.net/projects/ledger-smb/>LedgerSMB |.$locale->text('website').qq|</a>
+<a href="http://sourceforge.net/projects/ledger-smb/">LedgerSMB |.$locale->text('website').qq|</a>
 
 </div>
 
@@ -140,6 +129,8 @@ sub login {
 sub logout {
 
   $form->{callback} = "$form->{script}?path=$form->{path}&endsession=1";
+  unlink "$userspath/adminhash";
+  print qq|Set-Cookie: LedgerSMB=; path=/;\n|; 
   $form->redirect($locale->text('You are logged out'));
 
 }
@@ -153,8 +144,8 @@ sub add_user {
   $form->{Oracle_dbport} = '1521';
   $form->{Oracle_dbhost} = `hostname`;
 
-  if (-f "css/sql-ledger.css") {
-    $myconfig->{stylesheet} = "sql-ledger.css";
+  if (-f "css/ledger-smb.css") {
+    $myconfig->{stylesheet} = "ledger-smb.css";
   }
   $myconfig->{vclimit} = 1000;
   $myconfig->{menuwidth} = 155;
@@ -1036,8 +1027,15 @@ sub change_password {
 
 }
 
+sub get_hash {
+  use Digest::MD5;
+  $form->{hash} = Digest::MD5::md5_hex rand();  
+  
+}
 
 sub check_password {
+
+
 
   $root = new User "$memberfile", "root login";
 
@@ -1050,12 +1048,29 @@ sub check_password {
 	&getpassword;
 	exit;
       }
+
+      &get_hash;
+      
+      open(HASHFILE, "> $userspath/adminhash") 
+		|| $form->error("Can't Open Hashfile: $!");
+      print HASHFILE $form->{hash}; 
+
+      print qq|Set-Cookie: LedgerSMB=$form->{hash}; path=/;\n|;
+
     } else {
       if ($ENV{HTTP_USER_AGENT}) {
 	$ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-	%cookie = split /[=;]/, $ENV{HTTP_COOKIE};
-	$cookie = ($form->{path} eq 'bin/lynx') ? $cookie{login} : $cookie{"SQL-Ledger-root login"};
-	if (! $cookie || $cookie ne $form->{sessionid}) {
+	%cookie = split /[=;]/, $ENV{HTTP_COOKIE}; # Changeme to %cookies
+	$cookie = ($form->{path} eq 'bin/lynx') ? $cookie{login} : $cookie{"LedgerSMB-root login"};
+
+	open (HASHFILE, "< $userspath/adminhash") || $form->error("Can't Open Hashfile: $!");
+
+	chomp($form->{hash} = <HASHFILE>);
+
+	%cookies = split /[=;]/, $ENV{HTTP_COOKIE};
+        
+	if (! $cookie || $cookie ne $form->{sessionid} || 
+		$form->{hash} ne $cookies{LedgerSMB}) {
 	  &getpassword;
 	  exit;
 	}
@@ -1094,7 +1109,7 @@ sub dbdriver_defaults {
 
   # load some defaults for the selected driver
   %driverdefaults = ( 'Pg' => { dbport => '',
-                                dbuser => 'sql-ledger',
+                                dbuser => 'ledger-smb',
 		             dbdefault => 'template1',
 				dbhost => '',
 			 connectstring => $locale->text('Connect to')
@@ -1608,5 +1623,6 @@ sub lock_system {
   $form->redirect($locale->text('Lockfile created!'));
 
 }
+
 
 

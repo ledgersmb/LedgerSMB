@@ -1,13 +1,7 @@
 ######################################################################
 # LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2000
+# Copyright (c) 2006
 #
-#  Author: Dieter Simader
-#   Email: dsimader@sql-ledger.org
-#     Web: http://sourceforge.net/projects/ledger-smb/
-#
-#  Contributors: Christopher Browne <cbrowne@acm.org>
-#                Tony Fraser <tony@sybaspace.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -1,0 +1,58 @@
+Near immediate items (release-delaying?).  * indicates completed.
+- *project  name
+- *revision control
+- *add not null constraint to acc_trans.chart_id
+- *Change acc_trans.amount to NUMERIC
+- *Update SL-Basic.tex tarball to be the new manual for LedgerSMB
+- *coding standard
+- *fix the session security problem in the main application
+- *Tightened browser caching rules so that the back button is no problem.
+- *hosting, Sourceforge import SVN (almost done)
+- *solve security problem for admin.pl (central db?)  (Pending testing)
+	Suggest starting with a simple server-side cookie.  Then when we
+	add authentication abstraction, this problem can be permanently
+	solved in a modular fashion.
+- * finish removing references to sql-ledger 
+- write upgrade/crossgrade script from SL -> LedgerSMB 
+	Database script is done.  Just untar over the top?
+	If so, then this is done.
+- write press release
+- *write SL List announcement
+- SPI membership
+- *CONTRIBUTORS/AUTHORS file.
+- Delete setup.pl file for released versions. (not in SVN).
+- Test db upgrade
+
+Short term items
+- update setup.pl, which has a lot of SL specific code.
+- make utf-8 default
+- Add protection against duplicate id values.
+- Prevent printing without posting. 
+- Add last cost field to laber/overhead creation screen.
+- drop lynx support? (no, not short term anyway)
+    I think it is better to abandon Lynx support than drop it.
+- drop Oracle support? (ibidem)
+    Oracle support is already largely abandoned.  Not sure if we should
+    the code though...
+- code cleanup (move to established coding standards, not structural yet)
+- xhtml compliant code
+- attract developers/documentation
+- central default database (maybe authentication abstraction here?)
+- Integrate a sales data report.
+- Batch printing for cheques.
+- Bundle script for generating email reports when parts are low.
+- Fix reconcilliation summary report.
+- Remove Dieter's sessionid timestamp since it serves no purpose.
+- authentication abstraction for Kerberos, LDAP authentication, and the like.
+- Authentication module for PostgreSQL databases.
+
+Medium-longer term
+- Port SL-POS functionality into the fork.
+- published API
+- Command-line wrapper that is easy to use....
+- SOAP or HTTP based interfaces (OpenLedger?)
+- Credit Card Processing
+- Tighten up integrity controls in schema by replacing the insert/update with
+  a single insert and adding foreign keys.
+- Fix printing for Windows. 
+- Portable Data Terminal integration.

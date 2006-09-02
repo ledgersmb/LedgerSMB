@@ -4,9 +4,6 @@
 # LedgerSMB Accounting and ERP
 # Copyright (C) 2006
 #
-#  For Copyright information, see CONTRIBUTORS file
-#
-#  Contributors:
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
