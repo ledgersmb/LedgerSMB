@@ -192,28 +192,28 @@ read the interactive documentation for procedural languages.
 </ol>
 
 
-<p><li><h4>The requested URL /sql-ledger/admin.pl was not found</h4>
+<p><li><h4>The requested URL /ledger-smb/admin.pl was not found</h4>
 Your webserver doesn't know where to find the script. Most commonly this
 is from distributions hiding webserver configuration files in different
 locations or files and setup.pl wasn't able to configure the location for
 you. Find out which file (httpd.conf, httpdcommon.conf, ...)
 controls your webserver configuration and add
 <pre>
-  # SQL-Ledger
-  Include /etc/httpd/sql-ledger-httpd.conf</pre>
+  # LedgerSMB
+  Include /etc/httpd/ledger-smb-httpd.conf</pre>
 
-Create a file 'sql-ledger-httpd.conf' in /etc/httpd and copy the next part
+Create a file 'ledger-smb-httpd.conf' in /etc/httpd and copy the next part
 into the file.
 
 <pre>
   AddHandler cgi-script .pl
   AddDefaultCharset On
-  Alias /sql-ledger /var/www/sql-ledger/
-  &lt;Directory /var/www/sql-ledger&gt;
+  Alias /ledger-smb /var/www/ledger-smb/
+  &lt;Directory /var/www/ledger-smb&gt;
     Options ExecCGI Includes FollowSymlinks
   &lt;/Directory&gt;
 
-  &lt;Directory /var/www/sql-ledger/users&gt;
+  &lt;Directory /var/www/ledger-smb/users&gt;
     Order Deny,Allow
     Deny from All
   &lt;/Directory&gt;</pre>
@@ -251,11 +251,11 @@ SL/Form.pm and change the number (44) on line 84.
   }</pre>
 
 
-<p><li><h4>IDENT Authentication failed for user "sql-ledger"</h4>
+<p><li><h4>IDENT Authentication failed for user "sledger-smb"</h4>
 Edit pg_hba.conf and change authentication to
 
 <pre>
-  local           all        all           trust</pre>
+  local           all        all           MD5</pre>
 
 The file is in the 'data' directory of your postgresql installation.
 This is different with every distribution so look for it.
@@ -307,11 +307,11 @@ Unfortunately with all that power there is also a steep learning curve.
 <p><li><h4>W3M</h4>
 pass terminal=mozilla when you start w3m
 <pre>
-  $ w3m -F http://localhost/sql-ledger/login.pl?terminal=mozilla</pre>
+  $ w3m -F http://localhost/ledger-smb/login.pl?terminal=mozilla</pre>
 
 To use without frames
 <pre>
-  $ w3m http://localhost/sql-ledger/login.pl?terminal=lynx</pre>
+  $ w3m http://localhost/ledger-smb/login.pl?terminal=lynx</pre>
 
 <p><li><h4>PDF option disappeared</h4>
 Edit ledger-smb.conf and set $latex = 1;
@@ -325,16 +325,17 @@ the internal defaults are used which turn off $latex, hence no PDF option.
 or Oracle, DBI and the appropriate DBD
 module
 <br>if you can't compile DBD-Pg here is a precompiled
-<a href=http://www.edmund-mergl.de/export/>DBD-Pg module</a>
-<li>download the latest version of <a href=/cgi-bin/nav.pl?page=source/index.html&title=Download>SQL-Ledger</a>
-<li>extract the files to c:\apache\sql-ledger
+<a href=http://http://pgfoundry.org/projects/dbdpgppm/>DBD-Pg module</a>
+<li>download the latest version of <a 
+	href=http://ledger-smb.sourceforge.net>LedgerSMB</a>
+<li>extract the files to c:\apache\ledger-smb
 <li>run 'perl shebang' to change the first line of the scripts. If perl
 is not in c:\perl\bin' change '#!c:\\perl\\bin\\perl' to the location where
 your perl binary is.
 <li>edit c:\apache\conf\httpd.conf and add
 <pre>
-Alias /sql-ledger "c:/apache/sql-ledger/"
-&lt;Directory "c:/apache/sql-ledger"&gt;
+Alias /ledger-smb "c:/apache/ledger-smb/"
+&lt;Directory "c:/apache/ledger-smb"&gt;
   AllowOverride All
   AddHandler cgi-script .pl
   AddDefaultCharset On
@@ -343,7 +344,7 @@ Alias /sql-ledger "c:/apache/sql-ledger/"
   Allow from All
 &lt;/Directory&gt;
 
-&lt;Directory "c:/apache/sql-ledger/users"&gt;
+&lt;Directory "c:/apache/ledger-smb/users"&gt;
   Order Deny,Allow
   Deny from All
 &lt;/Directory&gt;
@@ -351,49 +352,10 @@ Alias /sql-ledger "c:/apache/sql-ledger/"
 
 <li>start Apache
 <li>start Postgres|Oracle|DB2
-<li>connect to http://localhost/sql-ledger/admin.pl and set up users
+<li>connect to http://localhost/ledger-smb/admin.pl and set up users
 and datasets
-<li>connect to http://localhost/sql-ledger/login.pl and login
+<li>connect to http://localhost/ledger-smb/login.pl and login
 
-</ul>
-
-<p><li><h4>Installation on Windows /w cygwin</h4>
-<ul>
-<li>install <a href=http://sources.redhat.com/cygwin/>cygwin</a>
-Apache, perl, postgres, gcc and lynx
-<li>install <a href=http://search.cpan.org/search?module=DBI>DBI</a>
-<li>tar zxvf DBI-1.30.tar.gz
-<li>cd DBI-1.30
-<li>perl Makefile.PL
-<li>make install
-<li>install <a href=http://search.cpan.org/search?dist=DBD-Pg>DBD-Pg</a>
-<li>tar -zxvf DBD-Pg-1.13.tar.gz
-<li>export POSTGRES_INCLUDE=/usr/include/postgresql
-<li>export POSTGRES_LIB=/usr/lib/postgresql
-<li>cd DBD-Pg-1.13
-<li>perl Makefile.PL
-<li>make install
-<li>edit /etc/apache/httpd.conf and add
-<pre>
-AddHandler cgi-script .pl
-AddDefaultCharset On
-Alias /sql-ledger /var/www/sql-ledger/
-&lt;Directory /var/www/sql-ledger&gt;
-  Options +ExecCGI
-&lt;/Directory&gt;
-
-&lt;Directory /var/www/sql-ledger/users&gt;
-  Order Deny,Allow
-  Deny from All
-&lt/Directory&gt;
-</pre>
-<li>install SQL-Ledger
-<li>cd /var/www
-<li>mkdir sql-ledger
-<li>download <a href=/cgi-bin/download.pl?setup.pl>setup.pl</a> and save the file
-in /var/www/sql-ledger
-<li>cd /var/www/sql-ledger
-<li>perl setup.pl
 </ul>
 
 <p><li><h4>What do I enter for the language</h4>
@@ -516,11 +478,6 @@ assembly you simply return the parts to inventory by entering a negative
 quantity for the number of assemblies to stock.
 
 
-<p><li><h4>customizing SQL-Ledger</h4>
-The <a href=/cgi-bin/nav.pl?page=feature/api.html&title=Application%20Interface>application interface</a>
-consists of a global and private interface.
-
-
 <p><li><h4>DBD-Pg not installed</h4>
 
 Most modern distributions now package DBD-Pg. If it is
@@ -570,7 +527,7 @@ in your httpd.conf file.
 the frontend script couldn't figure out which browser you are using
 <p>include the terminal variable on the URL
 <pre>
-  http://localhost/sql-ledger/login.pl?terminal=lynx</pre>
+  http://localhost/ledger-smb/login.pl?terminal=lynx</pre>
 Valid terminal variables are lynx, mozilla and js
 
 
@@ -600,7 +557,7 @@ access tables owned by joe.
 
 Enable Includes and FollowSymlinks Options in your httpd.conf file
 <pre>
-  &lt;Directory /usr/local/sql-ledger&gt;
+  &lt;Directory /usr/local/ledger-smb&gt;
     Options ExecCGI Includes FollowSymlinks
   &lt;/Directory&gt;
 </pre>
@@ -654,15 +611,15 @@ SQL server.
   Typical setups:
   
   /usr/local/vh/www                   <- DocumentRoot for virtual host
-  /usr/local/vh/sql-ledger            <- Alias for sql-ledger
+  /usr/local/vh/ledger-smb            <- Alias for ledger-smb
   /usr/local/vh/users                 <- users directory out of reach
 
 <hr width=60% align=left>
   /usr/local/vh/www                   <- DocumentRoot for virtual host
-  /usr/local/vh/www/sql-ledger        <- Alias for sql-ledger
-  /usr/local/vh/www/sql-ledger/users  <- users configuration files and tmp space
+  /usr/local/vh/www/ledger-smb        <- Alias for ledger-smb
+  /usr/local/vh/www/ledger-smb/users  <- users configuration files and tmp space
 
-  &lt;Directory /usr/local/vh/www/sql-ledger/users&gt;  <- disable webserver access
+  &lt;Directory /usr/local/vh/www/ledger-smb/users&gt;  <- disable webserver access
     Order Deny,Allow                                 for users directory
     Deny from All
   &lt;/Directory&gt;

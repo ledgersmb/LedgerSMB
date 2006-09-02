@@ -69,49 +69,23 @@ Some of the translation files are not 100% complete.
 If strings are missing, English is used instead.
 
 
-INSTALLATION WITH setup.pl:
----------------------------
-Make a directory
-
-  mkdir /usr/local/sql-ledger
-
-Copy setup.pl to /usr/local/sql-ledger
-
-run setup.pl as root and follow the prompts.
-
-  perl setup.pl
-
-Go to the next step, "PREPARE YOUR SQL DATABASE SERVER".
-
-NOTE: If you are behind a firewall and cannot download
-the code with setup.pl, download the source code and
-pass the filename as an argument on the command line.
-
-  perl setup.pl sql-ledger-2.6.x.tar.gz
-
-VERY IMPORTANT: setup.pl tries to figure out your system
-but it will not succeed if your distribution decided
-to "hide" configuration files for your web server in some
-other file.
-
-
-INSTALLATION WITHOUT setup.pl:
+INSTALLATION 
 ------------------------------
 unpack the tar.gz file in /usr/local
 
-  tar xzvf sql-ledger-2.6.x.tar.gz
+  tar xzvf ledger-smb-2.6.x.tar.gz
 
-you should now have everything in /usr/local/sql-ledger
+you should now have everything in /usr/local/ledger-smb
 
 rename ledger-smb.conf.default to ledger-smb.conf
 
 edit ledger-smb.conf
 
-create a file sql-ledger-httpd.conf in the same location
+create a file ledger-smb-httpd.conf in the same location
 where your httpd.conf is and copy the next section into the file
 
-  Alias /sql-ledger /usr/local/sql-ledger/
-  <Directory /usr/local/sql-ledger>
+  Alias /ledger-smb /usr/local/ledger-smb/
+  <Directory /usr/local/ledger-smb>
     AllowOverride All
     AddHandler cgi-script .pl
     AddDefaultCharset On
@@ -120,37 +94,37 @@ where your httpd.conf is and copy the next section into the file
     Allow from All
   </Directory>
 
-  <Directory /usr/local/sql-ledger/users>
+  <Directory /usr/local/ledger-smb/users>
     Order Deny,Allow
     Deny from All
   </Directory>
 
 edit httpd.conf and add
 
-  # SQL-Ledger
-  Include /config_directory/sql-ledger-httpd.conf
+  # LedgerSMB
+  Include /config_directory/ledger-smb-httpd.conf
 
 Note: use an absolute or relative path to include
 the configuration in your httpd.conf file.
 
-i.e. /etc/httpd/sql-ledger-httpd.conf
-     etc/apache2/sql-ledger-httpd.conf
+i.e. /etc/httpd/ledger-smb-httpd.conf
+     etc/apache2/ledger-smb-httpd.conf
      
 restart your web server.
 
 
-Note: /usr/local/sql-ledger is only a suggested
+Note: /usr/local/ledger-smb is only a suggested
 path, you can install in any directory.
 
 Some versions of Apache 2.0 use a conf directory for
 configuration files. If this is the case copy
-sql-ledger-httpd.conf into this directory and leave
+ledger-smb-httpd.conf into this directory and leave
 httpd.conf as is.
 
 
 SET PERMISSION:
 ---------------
-change directory to /usr/local/sql-ledger
+change directory to /usr/local/ledger-smb
 
 # chown -hR nobody:nogroup users templates css spool
 
@@ -164,8 +138,8 @@ If you do not have access to the server's configuration
 files install LedgerSMB in userspace by ftp'ing all the
 files to your server.
 
-a) untar sql-ledger in your private_html directory
-b) turn on script execution for the folder sql-ledger
+a) untar ledger-smb in your private_html directory
+b) turn on script execution for the folder ledger-smb
 You can control this with an .htaccess file
 
   Options +ExecCGI
@@ -176,7 +150,7 @@ c) protect the users directory with an .htpasswd file
 AuthGroupFile /dev/null
 AuthName "Unauthorized"
 AuthType Basic
-AuthUserFile /home/host.domain/private_html/sql-ledger/users/.htpasswd
+AuthUserFile /home/host.domain/private_html/ledger-smb/users/.htpasswd
 require valid-user
 
 d) protect the templates directory with an .htpasswd file
@@ -184,7 +158,7 @@ d) protect the templates directory with an .htpasswd file
 AuthGroupFile /dev/null
 AuthName "Templates"
 AuthType Basic
-AuthUserFile /home/host.domain/private_html/sql-ledger/templates/.htpasswd
+AuthUserFile /home/host.domain/private_html/ledger-smb/templates/.htpasswd
 require valid-user
 
 e) set up your PostgreSQL database and the tables.
@@ -195,7 +169,7 @@ some other tools like pgadmin.
 1) create a database user or use an assigned database user
 2) create a blank database or use one which was created for you
 3) load your web browser and connect to
-http://host.domain.com/private_html/sql-ledger/admin.pl
+http://host.domain.com/private_html/ledger-smb/admin.pl
 to create the tables.
 
 There is no password so just hit the Enter key or click
@@ -228,15 +202,15 @@ PREPARE YOUR SQL DATABASE SERVER:
   PostgreSQL:
   -----------
   add one database user with create database privileges
-  to manage the datasets and tables for SQL-Ledger
+  to manage the datasets and tables for LedgerSMB
   
   # su postgres
-  $ createuser -d sql-ledger
+  $ createuser -d ledger-smb
   Shall the new user be allowed to create databases? (y/n) y
   Shall the new user be allowed to create more new users? (y/n) n
   
   if you use passwords to access postgres use this command
-  $ createuser -d -P sql-ledger
+  $ createuser -d -P ledger-smb
 
   Install PL/PGSQL in template1 if it has not been installed yet
 
@@ -247,7 +221,7 @@ PREPARE YOUR SQL DATABASE SERVER:
 SET UP A DATABASE AND TABLES:
 -----------------------------
 Load your web browser and connect to
-http://localhost/sql-ledger/admin.pl
+http://localhost/ledger-smb/admin.pl
 
 Select the "Database Administration" link,
 enter the user you created in the previous step.
@@ -259,7 +233,7 @@ lowercase letters only!) and select one of the
 Chart of Accounts and click on Continue.
 
 You cannot manage any other datasets from this
-interface, only the datasets used by SQL-Ledger.
+interface, only the datasets used by LedgerSMB
 
 POSTGRESQL: template1 is only used to query
 the server, none of the information stored
@@ -271,7 +245,7 @@ own, template1 is only a default.
 SET UP A USER:
 -------------
 Load your web browser and connect to
-http://localhost/sql-ledger/admin.pl
+http://localhost/ledger-smb/admin.pl
 
 Click on "Add User". In the Database
 section select the driver and enter
@@ -281,7 +255,7 @@ the user you used to create the dataset.
 LOAD THE ACCOUNTING PROGRAM:
 ----------------------------
 Load your web browser and connect to
-http://localhost/sql-ledger/login.pl
+http://localhost/ledger-smb/login.pl
 
 
 UPGRADING TO A NEWER VERSION:
@@ -311,7 +285,7 @@ INSTALLATION CHECKLIST:
 2. change permission for the users, templates, css and spool directory
 3. edit httpd.conf
 4. edit ledger-smb.conf
-5. add the database user sql-ledger
+5. add the database user ledger-smb
 6. load admin.pl
 7. create datasets for companies
 8. add users
@@ -323,20 +297,20 @@ INSTALLATION CHECKLIST:
       Host:     for local connections leave blank
       Dataset:  the dataset created in step 7
       Port:     for local connections leave blank
-      User:     sql-ledger
-      Password: password for sql-ledger
+      User:     ledger-smb
+      Password: password for ledger-smb
 
 
 IF SOMETHING DOESN'T WORK:
 --------------------------
-There is a FAQ at http://sourceforge.net/projects/ledger-smb//misc/faq.html
+There is a FAQ at http://sourceforge.net/projects/ledger-smb/
 or see the one included in the doc directory.
 
 There are also several mailing lists at
-http://sourceforge.net/projects/ledger-smb//misc/mailinglist.html
+http://sourceforge.net/projects/ledger-smb/
 where you can seek free help.
 
-For commercial support see http://www.sql-ledger.com
+For commercial support see http://sourceforge.net/projects/ledger-smb/
 
 =====================================================================
 June 14, 2006
