@@ -8,29 +8,33 @@ Near immediate items (release-delaying?).  * indicates completed.
 - *fix the session security problem in the main application
 - *Tightened browser caching rules so that the back button is no problem.
 - *hosting, Sourceforge import SVN (almost done)
-- *solve security problem for admin.pl (central db?)  (Pending testing)
+- *solve security problem for admin.pl (central db?)  
 	Suggest starting with a simple server-side cookie.  Then when we
 	add authentication abstraction, this problem can be permanently
 	solved in a modular fashion.
 - * finish removing references to sql-ledger 
-- write upgrade/crossgrade script from SL -> LedgerSMB 
+- write upgrade/crossgrade script from SL -> LedgerSMB (mostly done)
 	Database script is done.  Just untar over the top?
 	If so, then this is done.
 - write press release
 - *write SL List announcement
-- SPI membership
+- SPI membership (Just time the request to Josh for proposal)
 - *CONTRIBUTORS/AUTHORS file.
 - Delete setup.pl file for released versions. (not in SVN).
-- Test db upgrade
+- Run final tests on applications
+  - crossgrade script-- missing SL directory unlink logic.
+  - *templates
+  - db upgrade (not working)
+- *Fix printing bug with LaTeX templates.  Error:
+	Quantifier follows nothing in regex; 
+	marked by <-- HERE in m/? <-- HERE / at LedgerSMB/Form.pm line 1107.
 
-Short term items
+Higher priorities
 - update setup.pl, which has a lot of SL specific code.
 - make utf-8 default
-- Add protection against duplicate id values.
+- Add protection against duplicate id values. 
 - Prevent printing without posting. 
 - Add last cost field to laber/overhead creation screen.
-- drop lynx support? (no, not short term anyway)
-    I think it is better to abandon Lynx support than drop it.
 - drop Oracle support? (ibidem)
     Oracle support is already largely abandoned.  Not sure if we should
     the code though...
@@ -45,6 +49,8 @@ Short term items
 - Remove Dieter's sessionid timestamp since it serves no purpose.
 - authentication abstraction for Kerberos, LDAP authentication, and the like.
 - Authentication module for PostgreSQL databases.
+- Account transactions available from Balance Sheets and Income Statements via 
+links.
 
 Medium-longer term
 - Port SL-POS functionality into the fork.
@@ -56,3 +62,9 @@ Medium-longer term
   a single insert and adding foreign keys.
 - Fix printing for Windows. 
 - Portable Data Terminal integration.
+- Merge web directories so that maintaining frames and no-frames browsers 
+  is not a problem.
+- Move to a template-based display system with main application logic being in
+  a separate Perl module.
+- Convert to use persistant database connections.
+- Basic payroll module

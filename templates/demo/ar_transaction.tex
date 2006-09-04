@@ -1,18 +1,32 @@
 \documentclass{scrartcl}
 \usepackage[latin1]{inputenc}
 \usepackage{tabularx}
-\usepackage[letterpaper,top=2cm,bottom=-3cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage[top=2cm,bottom=-1cm,left=2cm,right=1cm]{geometry}
 \usepackage{graphicx}
 \setlength{\parindent}{0pt}
 
 \begin{document}
 
-\pagestyle{myheadings}
-\thispagestyle{empty}
+\pagestyle{empty}
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
-<%include letterhead.tex%>
+\parbox{\textwidth}{%
+  \parbox[b]{.42\textwidth}{%
+    <%company%>
+   
+    <%address%>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{ledger-smb}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Tel: & <%tel%>\\
+  Fax: & <%fax%>
+  \end{tabular}
+
+  \rule[1.5em]{\textwidth}{0.5pt}
+}
 
 \centerline{\textbf{A R} \hspace{0.3cm} \textbf{T R A N S A C T I O N}}
 
@@ -27,7 +41,7 @@
 
 <%city%>
 <%if state%>
-\hspace{-0.1cm}, <%state%>
+, <%state%>
 <%end state%>
 <%zipcode%>
 
@@ -37,8 +51,9 @@
 
 <%if contact%>
 <%contact%>
-\vspace{0.2cm}
 <%end contact%>
+
+\vspace{0.2cm}
 
 <%if customerphone%>
 Tel: <%customerphone%>

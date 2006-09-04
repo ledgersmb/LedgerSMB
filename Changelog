@@ -1,0 +1,11 @@
+Changelog for LedgerSMB v 2.6.17
+
+(Changes relative to the pre-fork SQL-Ledger 2.6.17)
+
+* Corrected sessionid security hole allowing bypass of login to main application
+* Corrected sessionid security hole allowing one to list logins and more.
+* Changed acc_trans.amount to NUMERIC
+* Tightened browser caching rules to prevent problems with back button.
+* Added an open content manual to the main distribution.
+* New logo. 
+* Began whitespace reformatting of main application.
