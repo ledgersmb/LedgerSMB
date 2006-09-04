@@ -1,0 +1,59 @@
+RELEASE NOTES
+LedgerSMB 2.6.17
+
+1:  Welcome to LedgerSMB
+
+LedgerSMB is an accounting and ERP program initially aimed at small to midsize
+businesses.  Currently the financials and supply chain management modules are
+fairly complete, while other modules such as project management exist in a
+rudamentary form.  The initial features are identical to SQL-Ledger 2.6.17 from
+which it was derived, but it is expected that the feature set will diverge over
+time.
+
+2:  Differences between LedgerSMB and SQL-Ledger(TM)
+
+2.1: Login name restrictions
+Logins in SQL-Ledger can contain any printable characters.  In LedgerSMB these
+are restricted to alphanumeric characters and the symbols ., @, _, and -.
+
+2.2: Session handling
+SQL-Ledger as of 2.6.17 uses session tokens for authentication.  These tokens
+are based on the current timestamp and therefore insecure.  Furthermore, these
+tokens are not tracked on the server, so one can easily forge credentials for
+either the main application or the administrative interface.
+
+LedgerSMB stores the sessions in the database.  These are generated as md5 sums
+of random numbers and are believed to be reasonably secure.  The sessions time
+out after a period of inactivity.  As of the initial release both
+SQL-Ledger-style session ID's and the newer version are required to access the
+application.  In future versions, the SQL-Ledger style session ID's will 
+probably be removed.
+
+2.3: Database Changes
+Under certain circumstances where the Chart of Accounts is improperly modified,
+it is possible to post transactions such that a portion of the transaction is
+put into a NULL account.  LedgerSMB does not allow NULL values in the chart id
+field of the transaction.
+
+Also, the transaction amount has been changed from FLOAT to NUMERIC so that
+arbitrary precision mathematics can be used in third party reports.  This ought
+to also allow SQL-Ledger to properly scale up better as SUM operations on
+floating points are unsafe for large numbers of records where accounting data is
+involved.
+
+3:  Roadmap
+The project has no defined roadmap but rather a list of tasks and objectives
+outlined in the TODO list.   There are many projects here and there are always
+room for new ideas.
+
+4:  Get Involved
+Contributors should start by joining the LedgerSMB users and devel lists.  Code
+contributions at the moment must be committed by either project maintainer and
+should be submitted either using the patches interface at Sourceforge or the
+devel mailing lists.
+
+Additionally, we can use help in QA, documentation, advocacy, and many other
+places. 
+
+SQL-Ledger is a registered trademark of DWS systems and is not affiliated with 
+this project or its members in any way.
