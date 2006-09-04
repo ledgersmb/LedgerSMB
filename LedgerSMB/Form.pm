@@ -43,7 +43,7 @@ sub new {
 	$self->{menubar} = 1 if $self->{path} =~ /lynx/i;
 
 	$self->{version} = "2.6.17";
-	$self->{dbversion} = "2.6.12";
+	$self->{dbversion} = "2.6.17";
 
 	bless $self, $type;
 

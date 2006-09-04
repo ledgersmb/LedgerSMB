@@ -16,41 +16,47 @@ Near immediate items (release-delaying?).  * indicates completed.
 - write upgrade/crossgrade script from SL -> LedgerSMB (mostly done)
 	Database script is done.  Just untar over the top?
 	If so, then this is done.
-- write press release
+- *write press release
 - *write SL List announcement
-- SPI membership (Just time the request to Josh for proposal)
 - *CONTRIBUTORS/AUTHORS file.
 - Delete setup.pl file for released versions. (not in SVN).
 - Run final tests on applications
   - crossgrade script-- missing SL directory unlink logic.
   - *templates
-  - db upgrade (not working)
+  - *db upgrade 
 - *Fix printing bug with LaTeX templates.  Error:
 	Quantifier follows nothing in regex; 
 	marked by <-- HERE in m/? <-- HERE / at LedgerSMB/Form.pm line 1107.
 
 Higher priorities
+- Move all other floats to NUMERICs in the database schemas.
 - update setup.pl, which has a lot of SL specific code.
 - make utf-8 default
 - Add protection against duplicate id values. 
+    Chris Travers has a fix that will be applied in the next version but will
+    require some extensive testing.
+- Batch printing of Checks
+    Chris Travers has done this work for another customer for 2.6.15 and can 
+    move this code over quickly.
 - Prevent printing without posting. 
 - Add last cost field to laber/overhead creation screen.
 - drop Oracle support? (ibidem)
     Oracle support is already largely abandoned.  Not sure if we should
-    the code though...
+    drop the code though...
 - code cleanup (move to established coding standards, not structural yet)
 - xhtml compliant code
-- attract developers/documentation
 - central default database (maybe authentication abstraction here?)
 - Integrate a sales data report.
-- Batch printing for cheques.
+    Available as a diff at http://www.metatrontech.com/projects/
 - Bundle script for generating email reports when parts are low.
+    To be included in next version.  Work is already done.
 - Fix reconcilliation summary report.
 - Remove Dieter's sessionid timestamp since it serves no purpose.
 - authentication abstraction for Kerberos, LDAP authentication, and the like.
 - Authentication module for PostgreSQL databases.
 - Account transactions available from Balance Sheets and Income Statements via 
 links.
+- Replace the defaults table with one that is more normalized.
 
 Medium-longer term
 - Port SL-POS functionality into the fork.
@@ -68,3 +74,4 @@ Medium-longer term
   a separate Perl module.
 - Convert to use persistant database connections.
 - Basic payroll module
+- Multiple Shipto's associated with customers/vendors.

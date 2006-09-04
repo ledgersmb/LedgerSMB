@@ -14,7 +14,7 @@ time.
 
 2.1: Login name restrictions
 Logins in SQL-Ledger can contain any printable characters.  In LedgerSMB these
-are restricted to alphanumeric characters and the symbols ., @, _, and -.
+are restricted to alphanumeric characters and the symbols ., @, and -.
 
 2.2: Session handling
 SQL-Ledger as of 2.6.17 uses session tokens for authentication.  These tokens

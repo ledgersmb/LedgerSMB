@@ -70,7 +70,7 @@ CREATE TABLE defaults (
   glnumber text,
   projectnumber text
 );
-INSERT INTO defaults (version) VALUES ('2.6.12');
+INSERT INTO defaults (version) VALUES ('2.6.17');
 --
 CREATE TABLE acc_trans (
   trans_id int,

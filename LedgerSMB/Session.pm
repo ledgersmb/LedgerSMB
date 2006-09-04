@@ -53,7 +53,7 @@ sub session_check {
 		my ($sessionLogin) = $checkQuery->fetchrow_array;
 
 		my $login = $form->{login};
-		$login =~ s/[^a-zA-Z0-9@_.-]//g;
+		$login =~ s/[^a-zA-Z0-9@.-]//g;
 
 		if($sessionLogin eq $login){
 			$updateAge->execute($sessionid) || $form->dberror('Updating session age: ');
@@ -94,7 +94,7 @@ sub session_create {
 	# this is assuming that $form->{login} is safe, which might be a bad assumption
 	# so, I'm going to remove some chars, which might make previously valid logins invalid
 	my $login = $form->{login};
-	$login =~ s/[^a-zA-Z0-9@._-]//g;
+	$login =~ s/[^a-zA-Z0-9@.-]//g;
 
 	#delete any existing stale sessions with this login if they exist
 	if (!$myconfig{timeout}){
