@@ -6,14 +6,14 @@ message: Hello,
 
 I've created a new stylesheet more based on the color blue,
 and am pasting it below in case it's useful as a possible
-alternate (sql-ledger_blue.css)
+alternate (ledger-smb-blue.css)
 
 Regards,
 --Ed Rozenberg
 
 ================
 
-/* stylesheet for sql-ledger */
+/* stylesheet for ledger-smb */
 
 /* general stuff */
 A:link { color: #a0522d; text-decoration: none; }
