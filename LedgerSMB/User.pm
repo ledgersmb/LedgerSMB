@@ -93,9 +93,8 @@ sub login {
       }
     }
     
-    unless (-f "$userspath/$self->{login}.conf") {
-      $self->create_config("$userspath/$self->{login}.conf");
-    }
+	#there shouldn't be any harm in always doing this. It might even un-bork things.
+  	$self->create_config("$userspath/$self->{login}.conf");
     
     do "$userspath/$self->{login}.conf";
     $myconfig{dbpasswd} = unpack 'u', $myconfig{dbpasswd};
@@ -746,6 +745,8 @@ sub create_config {
   foreach $key (sort @config) {
     $self->{$key} =~ s/\\/\\\\/g;
     $self->{$key} =~ s/'/\\'/g;
+	#remaining conversion from SL
+    $self->{$key} =~ s/sql-ledger.css/ledger-smb.css/g;
     print CONF qq|  $key => '$self->{$key}',\n|;
   }
 
@@ -758,109 +759,116 @@ sub create_config {
 
 
 sub save_member {
-  my ($self, $memberfile, $userspath) = @_;
 
-  # format dbconnect and dboptions string
-  &dbconnect_vars($self, $self->{dbname});
-  
-  $self->error("$memberfile locked!") if (-f "${memberfile}.LCK");
-  open(FH, ">${memberfile}.LCK") or $self->error("${memberfile}.LCK : $!");
-  close(FH);
-  
-  if (! open(CONF, "+<$memberfile")) {
-    unlink "${memberfile}.LCK";
-    $self->error("$memberfile : $!");
-  }
-  
-  @config = <CONF>;
-  
-  seek(CONF, 0, 0);
-  truncate(CONF, 0);
-  
-  while ($line = shift @config) {
-    last if ($line =~ /^\[$self->{login}\]/);
-    print CONF $line;
-  }
+	my ($self, $memberfile, $userspath) = @_;
 
-  # remove everything up to next login or EOF
-  while ($line = shift @config) {
-    last if ($line =~ /^\[/);
-  }
+	# format dbconnect and dboptions string
+	&dbconnect_vars($self, $self->{dbname});
 
-  # this one is either the next login or EOF
-  print CONF $line;
+	$self->error("$memberfile locked!") if (-f "${memberfile}.LCK");
+	open(FH, ">${memberfile}.LCK") or $self->error("${memberfile}.LCK : $!");
+	close(FH);
 
-  while ($line = shift @config) {
-    print CONF $line;
-  }
+	if (! open(CONF, "+<$memberfile")) {
+		unlink "${memberfile}.LCK";
+		$self->error("$memberfile : $!");
+	}
 
-  print CONF qq|[$self->{login}]\n|;
-  
-  if ($self->{packpw}) {
-    $self->{dbpasswd} = pack 'u', $self->{dbpasswd};
-    chop $self->{dbpasswd};
-  }
-  
-  if ($self->{password} ne $self->{old_password}) {
-    $self->{password} = crypt $self->{password}, substr($self->{login}, 0, 2) if $self->{password};
-  }
-  
-  if ($self->{'root login'}) {
-    @config = qw(password);
-  } else {
-    @config = &config_vars;
-  }
- 
-  # replace \r\n with \n
-  for (qw(address signature)) { $self->{$_} =~ s/\r?\n/\\n/g }
+	@config = <CONF>;
 
-  for (sort @config) { print CONF qq|$_=$self->{$_}\n| }
+	seek(CONF, 0, 0);
+	truncate(CONF, 0);
 
-  print CONF "\n";
-  close CONF;
-  unlink "${memberfile}.LCK";
-  
-  # create conf file
-  if (! $self->{'root login'}) {
-    $self->create_config("$userspath/$self->{login}.conf");
+	while ($line = shift @config) {
+		last if ($line =~ /^\[$self->{login}\]/);
+		#remaining conversion from SL
+		$line =~ s/sql-ledger.css/ledger-smb.css/g;
+		print CONF $line;
+	}
 
-    $self->{dbpasswd} =~ s/\\'/'/g;
-    $self->{dbpasswd} =~ s/\\\\/\\/g;
-    $self->{dbpasswd} = unpack 'u', $self->{dbpasswd};
-    
-    # check if login is in database
-    my $dbh = DBI->connect($self->{dbconnect}, $self->{dbuser}, $self->{dbpasswd}, {AutoCommit => 0}) or $self->error($DBI::errstr);
-    
-    # add login to employee table if it does not exist
-    my $login = $self->{login};
-    $login =~ s/@.*//;
-    my $query = qq|SELECT id FROM employee WHERE login = '$login'|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute;
+	# remove everything up to next login or EOF
+	while ($line = shift @config) {
+		last if ($line =~ /^\[/);
+	}
 
-    my ($id) = $sth->fetchrow_array;
-    $sth->finish;
+	# this one is either the next login or EOF
+	print CONF $line;
 
-    if ($id) {
-      $query = qq|UPDATE employee SET
-                  role = '$self->{role}',
-		  email = '$self->{email}',
-		  name = '$self->{name}'
-                  WHERE login = '$login'|;
+	while ($line = shift @config) {
+		print CONF $line;
+	}
 
-    } else {
-      my ($employeenumber) = Form::update_defaults("", \%$self, "employeenumber", $dbh);
-      $query = qq|INSERT INTO employee (login, employeenumber, name, workphone,
-                  role, email, sales)
-		  VALUES ('$login', '$employeenumber', '$self->{name}',
-		  '$self->{tel}', '$self->{role}', '$self->{email}', '1')|;
-    }
-    
-    $dbh->do($query);
-    $dbh->commit;
-    $dbh->disconnect;
+	print CONF qq|[$self->{login}]\n|;
 
-  }
+	if ($self->{packpw}) {
+		$self->{dbpasswd} = pack 'u', $self->{dbpasswd};
+		chop $self->{dbpasswd};
+	}
+
+	if ($self->{password} ne $self->{old_password}) {
+		$self->{password} = crypt $self->{password}, substr($self->{login}, 0, 2) if $self->{password};
+	}
+
+	if ($self->{'root login'}) {
+		@config = qw(password);
+	} else {
+		@config = &config_vars;
+	}
+
+	# replace \r\n with \n
+	for (qw(address signature)) { $self->{$_} =~ s/\r?\n/\\n/g }
+
+	for (sort @config) {
+		print CONF qq|$_=$self->{$_}\n| 
+	}
+
+	print CONF "\n";
+	close CONF;
+	unlink "${memberfile}.LCK";
+
+	# create conf file
+	if (! $self->{'root login'}) {
+
+		$self->create_config("$userspath/$self->{login}.conf");
+
+		$self->{dbpasswd} =~ s/\\'/'/g;
+		$self->{dbpasswd} =~ s/\\\\/\\/g;
+		$self->{dbpasswd} = unpack 'u', $self->{dbpasswd};
+
+		# check if login is in database
+		my $dbh = DBI->connect($self->{dbconnect}, $self->{dbuser}, $self->{dbpasswd}, {AutoCommit => 0}) or $self->error($DBI::errstr);
+
+		# add login to employee table if it does not exist
+		my $login = $self->{login};
+		$login =~ s/@.*//;
+		my $query = qq|SELECT id FROM employee WHERE login = '$login'|;
+		my $sth = $dbh->prepare($query);
+		$sth->execute;
+
+		my ($id) = $sth->fetchrow_array;
+		$sth->finish;
+
+		if ($id) {
+
+			$query = qq|UPDATE employee SET
+			role = '$self->{role}',
+			email = '$self->{email}',
+			name = '$self->{name}'
+			WHERE login = '$login'|;
+
+		} else {
+
+			my ($employeenumber) = Form::update_defaults("", \%$self, "employeenumber", $dbh);
+			$query = qq|INSERT INTO employee (login, employeenumber, name, workphone, role, email, sales)
+						VALUES ('$login', '$employeenumber', '$self->{name}',
+								'$self->{tel}', '$self->{role}', '$self->{email}', '1')|;
+		}
+
+		$dbh->do($query);
+		$dbh->commit;
+		$dbh->disconnect;
+
+	}
 
 }
 
