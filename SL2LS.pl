@@ -10,6 +10,28 @@ while ($line = <SL>){
   print LS $line;
 }
 
-unlink sql-ledger.conf;
+unlink "sql-ledger.conf";
+unlink "setup.pl";
 
 #TODO:  Move/Delete the SL directory
+
+&recursive_unlink("SL");
+
+sub recursive_unlink {
+	($dir) = shift @_;
+	print "Recursively deleting $dir\n";
+	opendir (DIR, $dir);
+	while ($file = readdir DIR){
+		if ($file !~ /^\.+$/){
+			$file = "$dir/$file";
+			if (-f $file){
+				unlink $file;
+			} elsif (-d $file){
+				&recursive_unlink("$file");
+			}
+		}
+	}
+	closedir(DIR);
+	print "Removing $dir\n"; 
+	rmdir $dir;
+}

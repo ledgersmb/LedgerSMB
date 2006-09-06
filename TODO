@@ -19,7 +19,7 @@ Near immediate items (release-delaying?).  * indicates completed.
 - *write press release
 - *write SL List announcement
 - *CONTRIBUTORS/AUTHORS file.
-- Delete setup.pl file for released versions. (not in SVN).
+- *Delete setup.pl file for released versions. (not in SVN). (via the SL2LS.pl)
 - Run final tests on applications
   - crossgrade script-- missing SL directory unlink logic.
   - *templates
@@ -30,6 +30,8 @@ Near immediate items (release-delaying?).  * indicates completed.
 
 Higher priorities
 - Move all other floats to NUMERICs in the database schemas.
+- Create a new naming system that allows us to track db schema changes between
+    different versions of SQL-Ledger and LedgerSMB and 
 - update setup.pl, which has a lot of SL specific code.
 - make utf-8 default
 - Add protection against duplicate id values. 
@@ -40,9 +42,9 @@ Higher priorities
     move this code over quickly.
 - Prevent printing without posting. 
 - Add last cost field to laber/overhead creation screen.
-- drop Oracle support? (ibidem)
+- drop Oracle support? 
     Oracle support is already largely abandoned.  Not sure if we should
-    drop the code though...
+    drop the code though... Chris Travers
 - code cleanup (move to established coding standards, not structural yet)
 - xhtml compliant code
 - central default database (maybe authentication abstraction here?)
@@ -57,8 +59,13 @@ Higher priorities
 - Account transactions available from Balance Sheets and Income Statements via 
 links.
 - Replace the defaults table with one that is more normalized.
+- Fix printing for Windows. 
+  This turns out to be incredibly trivial.
+- Make batch printing more readible.
 
 Medium-longer term
+- Database schema cleanup/rewrite
+- Move all config information onto the Form object.
 - Port SL-POS functionality into the fork.
 - published API
 - Command-line wrapper that is easy to use....
@@ -66,10 +73,12 @@ Medium-longer term
 - Credit Card Processing
 - Tighten up integrity controls in schema by replacing the insert/update with
   a single insert and adding foreign keys.
-- Fix printing for Windows. 
 - Portable Data Terminal integration.
 - Merge web directories so that maintaining frames and no-frames browsers 
   is not a problem.
+	No-frame browsers are important in some areas where screen resolution
+	is limited and text-based keyboard entry is used.  I don't think
+	support should be dropped for these browsers-- Chris Travers.
 - Move to a template-based display system with main application logic being in
   a separate Perl module.
 - Convert to use persistant database connections.
