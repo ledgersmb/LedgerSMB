@@ -2,12 +2,14 @@
 #
 ######################################################################
 # LedgerSMB Small Medium Business Accounting Software Installer
-# Copyright (c) 2002, Dieter Simader
+# Portions Copyright (c) 2002, Dieter Simader
 #
 #     Web: http://sourceforge.net/projects/ledger-smb/
 #
 #######################################################################
 
+#  This script is awaiting rewriting to work with LedgerSMB
+#
 print "This script should not be used with LedgerSMB in this release.\n\n";
 exit;
 
