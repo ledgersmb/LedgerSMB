@@ -8,6 +8,9 @@
 #
 #######################################################################
 
+print "This script should not be used with LedgerSMB in this release.\n\n";
+exit;
+
 $| = 1;
 
 if ($ENV{HTTP_USER_AGENT}) {

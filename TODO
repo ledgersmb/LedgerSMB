@@ -13,15 +13,15 @@ Near immediate items (release-delaying?).  * indicates completed.
 	add authentication abstraction, this problem can be permanently
 	solved in a modular fashion.
 - * finish removing references to sql-ledger 
-- write upgrade/crossgrade script from SL -> LedgerSMB (mostly done)
+- *write upgrade/crossgrade script from SL -> LedgerSMB (mostly done)
 	Database script is done.  Just untar over the top?
 	If so, then this is done.
 - *write press release
 - *write SL List announcement
 - *CONTRIBUTORS/AUTHORS file.
 - *Delete setup.pl file for released versions. (not in SVN). (via the SL2LS.pl)
-- Run final tests on applications
-  - crossgrade script-- missing SL directory unlink logic.
+- *Run final tests on applications
+  - *crossgrade script-- missing SL directory unlink logic.
   - *templates
   - *db upgrade 
 - *Fix printing bug with LaTeX templates.  Error:
