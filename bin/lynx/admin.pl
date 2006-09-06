@@ -1063,6 +1063,14 @@ sub check_password {
 	%cookie = split /[=;]/, $ENV{HTTP_COOKIE}; # Changeme to %cookies
 	$cookie = ($form->{path} eq 'bin/lynx') ? $cookie{login} : $cookie{"LedgerSMB-root login"};
 
+	#fixes problem with first login and such
+	if (!(-f "$userspath/adminhash")) {
+      &get_hash;
+      open(HASHFILE, "> $userspath/adminhash") || $form->error("Can't Open Hashfile: $!");
+      print HASHFILE $form->{hash}; 
+	  close(HASHFILE);
+	}	
+
 	open (HASHFILE, "< $userspath/adminhash") || $form->error("Can't Open Hashfile: $!");
 
 	chomp($form->{hash} = <HASHFILE>);
