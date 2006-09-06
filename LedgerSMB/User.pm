@@ -746,7 +746,7 @@ sub create_config {
     $self->{$key} =~ s/\\/\\\\/g;
     $self->{$key} =~ s/'/\\'/g;
 	#remaining conversion from SL
-    $self->{$key} =~ s/sql-ledger.css/ledger-smb.css/g;
+    $self->{$key} =~ s/sql-ledger([^.]*)\.css/ledger-smb$1.css/g;
     print CONF qq|  $key => '$self->{$key}',\n|;
   }
 
@@ -782,7 +782,7 @@ sub save_member {
 	while ($line = shift @config) {
 		last if ($line =~ /^\[$self->{login}\]/);
 		#remaining conversion from SL
-		$line =~ s/sql-ledger.css/ledger-smb.css/g;
+		$line =~ s/sql-ledger([^.]*)\.css/ledger-smb$1.css/g;
 		print CONF $line;
 	}
 
