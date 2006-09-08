@@ -3,8 +3,12 @@
 # Simple script.  Right now, all that needs to be done is that the SL directory
 # needs to be deleted and the sql-ledger.conf needs to be renamed.
 
-open (SL, "< sql-ledger.conf");
-open (LS, "> ledger-smb.conf");
+$filedie = "To install manually:
+rename the sql-ledger.conf to ledger-smb.conf
+Delete the SL directory (optional but HIGHLY recommended)\n";
+open (SL, "< sql-ledger.conf") || die (
+open (LS, "> ledger-smb.conf") || die {
+"Could not open ledger-smb.conf: $! \n $filedie");
 
 while ($line = <SL>){
   print LS $line;
