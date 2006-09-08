@@ -15,6 +15,67 @@
 
 package RP;
 
+sub inventory_activity {
+  my ($self, $myconfig, $form) = @_;
+  ($form->{fromdate}, $form->{todate}) = $form->from_to($form->{fromyear}, $form->{frommonth}, $form->{interval}) if $form->{fromyear} && $form->{frommonth};
+
+
+  unless ($form->{sort_col}){
+    $form->{sort_col} = 'partnumber';
+  }
+
+  my $dbh = $form->dbconnect($myconfig) || $form->dberror();
+
+  my $where = '';
+  if ($form->{fromdate}){
+     $where .= "AND coalesce(ar.duedate, ap.duedate) >= ".$dbh->quote($form->{fromdate});
+  }
+  if ($form->{todate}){
+     $where .= "AND coalesce(ar.duedate, ap.duedate) < ".$dbh->quote($form->{todate}). " ";
+  }
+  if ($form->{partnumber}){
+    $where .= qq|AND p.partnumber ILIKE '%|.$form->{partnumber}.qq|%' |; 
+  }
+  if ($form->{description}){
+    $where .= q|AND p.description ILIKE '%|.$form->{description}.q|%' |;
+  }
+  $where =~ s/^AND/WHERE/;
+
+  my $query = qq|
+	SELECT min(p.description) AS description, 
+		min(p.partnumber) AS partnumber, sum(
+			CASE WHEN i.qty > 0 THEN i.qty ELSE 0 END
+		) AS sold, sum (
+			CASE WHEN i.qty > 0 THEN i.sellprice * i.qty ELSE 0 END
+		) AS revenue, sum(
+			CASE WHEN i.qty < 0 THEN i.qty * -1 ELSE 0 END
+		) AS received, sum(
+			CASE WHEN i.qty < 0 THEN i.sellprice * i.qty * -1
+			ELSE 0 END
+		) as expenses, min(p.id) as id
+	FROM invoice i
+	INNER JOIN parts p ON (i.parts_id = p.id)
+	LEFT JOIN ar ON (ar.id = i.trans_id)
+	LEFT JOIN ap ON (ap.id = i.trans_id)
+        $where
+	GROUP BY i.parts_id
+	ORDER BY $form->{sort_col}
+  |;
+  my $sth = $dbh->prepare($query) || $form->dberror($query);
+  $sth->execute() || $form->dberror($query);
+  @cols = qw(description sold revenue partnumber received expense);
+  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+    $ref->{net_income} = $ref->{revenue} - $ref->{expense}; 
+    map {$ref->{$_} =~ s/^\s*//} @cols;
+    map {$ref->{$_} =~ s/\s*$//} @cols;
+    push @{$form->{TB}}, $ref;
+  }
+  $sth->finish;
+  $dbh->disconnect;
+    
+}
+
+
 
 sub yearend_statement {
   my ($self, $myconfig, $form) = @_;

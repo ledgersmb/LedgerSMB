@@ -1,4 +1,9 @@
+* indicates items which will make the next release
+% are tasks that are good for helping get up to speed in the code.
+
 Higher priorities
+- Fix the db upgrade routine so that it can be safely used between software 
+  versions
 - Move all other floats to NUMERICs in the database schemas.
 - Create a new naming system that allows us to track db schema changes between
     different versions of SQL-Ledger and LedgerSMB and 
@@ -15,10 +20,11 @@ Higher priorities
 - drop Oracle support? 
     Oracle support is already largely abandoned.  Not sure if we should
     drop the code though... Chris Travers
-- code cleanup (move to established coding standards, not structural yet)
-- xhtml compliant code
+- %code cleanup (move to established coding standards, not structural yet) 
+	In Progress
+- %xhtml compliant code
 - central default database (maybe authentication abstraction here?)
-- Integrate a sales data report.
+- * Integrate a sales data report.
     Available as a diff at http://www.metatrontech.com/projects/
 - Bundle script for generating email reports when parts are low.
     To be included in next version.  Work is already done.
@@ -26,7 +32,7 @@ Higher priorities
 - Remove Dieter's sessionid timestamp since it serves no purpose.
 - authentication abstraction for Kerberos, LDAP authentication, and the like.
 - Authentication module for PostgreSQL databases.
-- Account transactions available from Balance Sheets and Income Statements via 
+- %Account transactions available from Balance Sheets and Income Statements via 
 links.
 - Replace the defaults table with one that is more normalized.
 - Fix printing for Windows. 
@@ -41,10 +47,10 @@ Medium-longer term
 - Command-line wrapper that is easy to use....
 - SOAP or HTTP based interfaces (OpenLedger?)
 - Credit Card Processing
-- Tighten up integrity controls in schema by replacing the insert/update with
+- %Tighten up integrity controls in schema by replacing the insert/update with
   a single insert and adding foreign keys.
 - Portable Data Terminal integration.
-- Merge web directories so that maintaining frames and no-frames browsers 
+- %Merge web directories so that maintaining frames and no-frames browsers 
   is not a problem.
 	No-frame browsers are important in some areas where screen resolution
 	is limited and text-based keyboard entry is used.  I don't think
@@ -54,3 +60,7 @@ Medium-longer term
 - Convert to use persistant database connections.
 - Basic payroll module
 - Multiple Shipto's associated with customers/vendors.
+- Enforce transaction safety and protect against lost updates when editing 
+  transactions
+- %Add a javascript calendar to all date fields.  Must not cause problems when
+  Javascript is not available.

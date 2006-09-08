@@ -619,6 +619,10 @@ sub transactions {
 			$form->{open} = $form->{closed} = 0;
 		}
 	}
+        if ($form->{partsid}){
+		$where .= " AND a.id IN (select trans_id FROM invoice
+			WHERE parts_id = $form->{partsid})";
+	}
 
 	for (qw(ponumber shipvia notes)) {
 		if ($form->{$_}) {

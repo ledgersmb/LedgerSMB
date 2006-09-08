@@ -77,6 +77,7 @@ sub report {
 	     receipts		=> { title => 'Receipts', vc => 'customer' },
 	     payments		=> { title => 'Payments' },
 	     projects		=> { title => 'Project Transactions' },
+	     inv_activity	=> { title => 'Inventory Activity'},
 	   );
   
   $form->{title} = $locale->text($report{$form->{report}}->{title});
@@ -209,6 +210,36 @@ sub report {
 |;
   }
 
+  if ($form->{report} eq "inv_activity"){
+        $gifi = '';
+        print qq|
+       <input type=hidden name=nextsub value=generate_inv_activity>
+	<tr>
+	  <th align=right>|.$locale->text('From').qq|</th>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <th align=right>|.$locale->text('To').qq|</th>
+	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	</tr>
+       <tr>
+	  <th align=right>|.$locale->text('Period').qq|</th>
+	  <td colspan=3>
+	  <select name=frommonth>$form->{selectaccountingmonth}</select>
+	  <select name=fromyear>$form->{selectaccountingyear}</select>
+	  <input name=interval class=radio type=radio value=0 checked>|.$locale->text('Current').qq|
+	  <input name=interval class=radio type=radio value=1>|.$locale->text('Month').qq|
+	  <input name=interval class=radio type=radio value=3>|.$locale->text('Quarter').qq|
+	  <input name=interval class=radio type=radio value=12>|.$locale->text('Year').qq|
+	  </td>
+	</tr>
+        </table>
+        <table>
+          <tr>
+            <th>|.$locale->text("Part Number").qq|</th>
+            <td><input name=partnumber></td>
+            <th>|.$locale->text('Description').qq|</th>
+            <td><input type=text name=description></td>
+          </tr>|;
+  }
   if ($form->{report} eq "income_statement") {
     print qq|
 	$project
@@ -733,6 +764,152 @@ $gifi
 
 
 sub continue { &{$form->{nextsub}} };
+
+sub generate_inv_activity {
+  $form->header;
+
+  RP->inventory_activity(\%myconfig, \%$form);
+
+  $title = $form->escape($form->{title});
+  
+#  if ($form->{department}) {
+#    ($department) = split /--/, $form->{department};
+#    $options = $locale->text('Department')." : $department<br>";
+#    $department = $form->escape($form->{department});
+#  }
+##  if ($form->{projectnumber}) {
+#    ($projectnumber) = split /--/, $form->{projectnumber};
+#    $options .= $locale->text('Project Number')." : $projectnumber<br>";
+#    $projectnumber = $form->escape($form->{projectnumber});
+#  }
+
+  # if there are any dates
+  if ($form->{fromdate} || $form->{todate}) {
+    if ($form->{fromdate}) {
+      $fromdate = $locale->date(\%myconfig, $form->{fromdate}, 1);
+    }
+    if ($form->{todate}) {
+      $todate = $locale->date(\%myconfig, $form->{todate}, 1);
+    }
+    
+    $form->{period} = "$fromdate - $todate";
+  } else {
+    $form->{period} = $locale->date(\%myconfig, $form->current_date(\%myconfig), 1);
+
+  }
+  $options .= $form->{period};
+
+  @column_index = qw(partnumber description sold revenue received expense);
+
+  $href = qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&department=$department&projectnumber=$projectnumber&project_id=$form->{project_id}&title=$title&nextsub=$form->{nextsub}|;
+
+  $column_header{partnumber} = qq|
+	<th class=listheading><a class=listheading href="$href&sort_col=partnumber">|
+		.$locale->text('Part Number').qq|</a></th>|;
+  $column_header{description} = qq|
+	<th class=listheading><a class=listheading href="$href&sort_col=description">|
+		.$locale->text('Description').qq|</a></th>|;
+  $column_header{sold} = qq|
+	<th class=listheading><a class=listheading href="$href&sort_col=sold">|
+		.$locale->text('Sold').qq|</a></th>|;
+  $column_header{revenue} = qq|
+	<th class=listheading><a class=listheading href="$href&sort_col=revenue">|
+		.$locale->text('Revenue').qq|</a></th>|;
+  $column_header{received} = qq|
+	<th class=listheading><a class=listheading href="$href&sort_col=received">|
+		.$locale->text('Received').qq|</a></th>|;
+  $column_header{expense} = qq|
+	<th class=listheading><a class=listheading href="$href&sort_col=expense">|
+		.$locale->text('Expense').qq|</a></th>|;
+
+
+
+  print qq|
+<body>
+
+<table width=100%>
+  <tr>
+    <th class=listtop>$form->{title}</th>
+  </tr>
+  <tr height="5"></tr>
+  <tr>
+    <td>$options</td>
+  </tr>
+  <tr>
+    <td>
+      <table width=100%>
+	<tr>|;
+
+  map { print "$column_header{$_}\n" } @column_index;
+
+  print qq|
+        </tr>
+|;
+
+
+ 
+  if ($form->{sort_col} eq 'qty' || $form->{sort_col} eq 'revenue'){
+    $form->{sort_type} = 'numeric';
+  } 
+  $i = 0;
+  $cols = "l_transdate=Y&l_name=Y&l_invnumber=Y&summary=1";
+  $dates= "transdatefrom=$form->{fromdate}&transdateto=$form->{todate}&year=$form->{fromyear}&month=$form->{frommonth}&interval=$form->{interval}";
+  $base="path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+
+  $form->{callback} = "rp.pl?action=continue&$base";
+  $form->{callback} = $form->escape($form->{callback});
+  $callback = "callback=$form->{callback}";
+  # sort the whole thing by account numbers and display
+  foreach $ref (@{ $form->{TB} }) {
+    $description = $form->escape($ref->{description});
+    $i = $i % 2; 
+
+    $pnumhref="ic.pl?action=edit&id=$ref->{id}&$base&callback=$form->{callback}";
+    $soldhref="ar.pl?action=transactions&partsid=$ref->{id}&$base&$cols&$dates&$callback";
+    $rechref="ap.pl?action=transactions&partsid=$ref->{id}&$base&$cols&$dates&callback=$form->{callback}";    
+
+    $ml = ($ref->{category} =~ /(A|E)/) ? -1 : 1;
+    
+    $debit = $form->format_amount(\%myconfig, $ref->{debit}, 2, "&nbsp;");
+    $credit = $form->format_amount(\%myconfig, $ref->{credit}, 2, "&nbsp;");
+    $begbalance = $form->format_amount(\%myconfig, $ref->{balance} * $ml, 2, "&nbsp;");
+    $endbalance = $form->format_amount(\%myconfig, ($ref->{balance} + $ref->{amount}) * $ml, 2, "&nbsp;");
+
+    $ref->{partnumber} = qq|<a href="$pnumhref">$ref->{partnumber}</a>|;
+    $ref->{sold} = qq|<a href="$soldhref">$ref->{sold}</a>|;
+    $ref->{received} = qq|<a href="$rechref">$ref->{received}<a/>|;
+    map { $column_data{$_} = "<td>&nbsp;</td>" } 
+		@column_index;
+   
+    
+
+    print qq|
+      <tr class=listrow$i>
+      |;
+    map { print "<td>$ref->{$_}</td>\n" } @column_index;
+    
+    print qq|
+      </tr>
+|;
+  ++$i;
+  }
+
+
+  print qq|
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size=3 noshade></td>
+  </tr>
+</table>
+
+</body>
+</html>
+|;
+
+}
 
 
 sub generate_income_statement {
