@@ -1,4 +1,7 @@
+-- linuxpoet:
 -- adding primary key to acc_trans
+-- We are using standard postgresql names for the sequence for consistency as we move forward
+-- Do everything in a transaction in case it blows up
 
 BEGIN;
 LOCK acc_trans in EXCLUSIVE mode;
