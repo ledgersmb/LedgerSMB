@@ -451,9 +451,7 @@ sub assembly_details {
   my $sortorder = "";
 
   if ($form->{grouppartsgroup}) {
-    $sortorder = qq|ORDER BY pg.partsgroup, a.$oid|;
-  } else {
-    $sortorder = qq|ORDER BY a.$oid|;
+    $sortorder = qq|ORDER BY pg.partsgroup|;
   }
   
   my $query = qq|SELECT p.partnumber, p.description, p.unit, a.qty,

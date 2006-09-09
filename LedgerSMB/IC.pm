@@ -63,7 +63,7 @@ sub get_part {
 		JOIN assembly a ON (a.parts_id = p.id)
 		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 		WHERE a.id = $form->{id}
-		ORDER BY $oid{$myconfig->{dbdriver}}|;
+    |;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -1390,7 +1390,7 @@ sub include_assembly {
 
   my @a = qw(partnumber description bin);
   if ($form->{sort} eq 'partnumber') {
-    $sortorder = "$oid{$myconfig->{dbdriver}}";
+    $sortorder = "TRUE";
   } else {
     @a = grep !/$form->{sort}/, @a;
     $sortorder = "$form->{sort} $form->{direction}, ". join ',', @a;

@@ -626,7 +626,7 @@ sub retrieve {
     $sth->finish;
     for (qw(printed emailed queued)) { $form->{$_} =~ s/ +$//g }
 
-    my %oid = ( 'Pg'		=> 'TRUE',
+    my %oid = ( 'Pg'		=> 'id',
                 'Oracle'	=> 'rowid',
 		'DB2'		=> '1=1'
 	      );
@@ -1607,8 +1607,8 @@ sub adj_onhand {
 sub adj_inventory {
   my ($dbh, $myconfig, $form) = @_;
 
-  my %oid = ( 'Pg'	=> 'TRUE',
-              'PgPP'	=> 'TRUE',
+  my %oid = ( 'Pg'	=> 'id',
+              'PgPP'	=> 'id',
               'Oracle'	=> 'rowid',
 	      'DB2'	=> '1=1'
 	    );
@@ -1620,7 +1620,7 @@ sub adj_inventory {
   my $sth = $dbh->prepare($query);
   $sth->execute || $form->dberror($query);
 
-  $query = qq|SELECT $oid{$myconfig->{dbdriver}} AS oid, qty,
+  $query = qq|SELECT qty,
                      (SELECT SUM(qty) FROM inventory
                       WHERE trans_id = $form->{id}
 		      AND orderitems_id = ?) AS total
