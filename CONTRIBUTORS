@@ -1,7 +1,19 @@
 Copyright of individual lines of code may be owned in part by the contributors.
 
 Dieter Simader <dsimader @ sql-ledger.com>
+Original author of SQL-Ledger, on which LedgerSMB is based.
+
 Chris Travers <chris @ metatrontech.com>
+Wrote the inventory activity report, helped with the session handling fix, 
+and other tasks.
+
 Christopher Murtagh <christopher.murtagh @ gmail.com>
+Wrote the session handling fix, has begun reformatting the files to fit the
+current coding standards, and other contributions.
+
+Joshua Drake <jd @ commandprompt . com>
+Contributed database fixes.
+
 Christopher Browne <cbrowne @ acm.org>
 Tony Fraser <tony @ sybaspace.com>
+Both of the above are mentioned as contributors to a single file in SQL-Ledger.

@@ -1249,10 +1249,16 @@ sub print_payment {
   for (qw(company address)) { $form->{$_} = $myconfig{$_} }
   $form->{address} =~ s/\\n/\n/g;
 
-  @a = qw(name company address text_amount text_decimal address1 address2 city state zipcode country memo);
+  @a = qw(rowcount name company address text_amount text_decimal address1 address2 city state zipcode country memo);
 
   %temp = ();
   for (@a) { $temp{$_} = $form->{$_} }
+
+  if (scalar @{$form->{invnumber}} > $check_max_invoices) {
+    $#{$form->{invnumber}} = $check_max_invoices - 1;
+    $form->{invnumbers_maxed} = 1;
+    $form->{message} = $locale->text("Please see attatched report for list of invoices paid.");
+  }
 
   $form->format_string(@a);
 
