@@ -18,10 +18,6 @@ $sendmail = "| /usr/sbin/sendmail -t";
 # set language for login and admin
 $language = "";
 
-# Oracle
-#$sid = "T80509";
-#$ENV{"ORACLE_HOME"} = "/usr/local/oracle";
-
 # if you have latex installed set to 1
 $latex = 1;
 

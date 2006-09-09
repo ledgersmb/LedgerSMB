@@ -18,8 +18,7 @@ Higher priorities
 - Prevent printing without posting. 
 - Add last cost field to laber/overhead creation screen.
 - drop Oracle support? 
-    Oracle support is already largely abandoned.  Not sure if we should
-    drop the code though... Chris Travers
+  Removed all of the Oracle sql. Removed some Oracle code from perl. Joshua Drake
 - %code cleanup (move to established coding standards, not structural yet) 
 	In Progress
 - %xhtml compliant code
