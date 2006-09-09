@@ -42,8 +42,7 @@ sub get_part {
   for (keys %$ref) { $form->{$_} = $ref->{$_} }
   $sth->finish;
   
-  my %oid = ('Pg'	=> 'a.oid',
-             'PgPP'	=> 'a.oid',
+  my %oid = ('Pg'	=> 'TRUE',
              'Oracle'	=> 'a.rowid',
 	     'DB2'	=> '1=1'
 	    );
@@ -1384,8 +1383,7 @@ sub include_assembly {
  
   $form->{$id} = 1;
 
-  my %oid = ('Pg'	=> 'a.oid',
-             'PgPP'	=> 'a.oid',
+  my %oid = ('Pg'	=> 'TRUE',
              'Oracle'	=> 'a.rowid',
 	     'DB2'	=> '1=1'
 	    );

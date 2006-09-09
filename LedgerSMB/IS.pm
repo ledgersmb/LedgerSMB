@@ -46,8 +46,7 @@ sub invoice_details {
   my $translation;
   my $partsgroup;
   
-  my %oid = ( 'Pg'	=> 'oid',
-              'PgPP'	=> 'oid',
+  my %oid = ( 'Pg'	=> 'TRUE',
               'Oracle'	=> 'rowid',
 	      'DB2'	=> '1=1'
 	    );

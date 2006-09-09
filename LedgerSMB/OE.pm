@@ -626,8 +626,7 @@ sub retrieve {
     $sth->finish;
     for (qw(printed emailed queued)) { $form->{$_} =~ s/ +$//g }
 
-    my %oid = ( 'Pg'		=> 'oid',
-                'PgPP'		=> 'oid',
+    my %oid = ( 'Pg'		=> 'TRUE',
                 'Oracle'	=> 'rowid',
 		'DB2'		=> '1=1'
 	      );
@@ -930,8 +929,8 @@ sub order_details {
   my $translation;
   my $partsgroup;
 
-  my %oid = ( 'Pg'	=> 'oid',
-              'PgPP'	=> 'oid',
+  my %oid = ( 'Pg'	=> 'TRUE',
+              'PgPP'	=> 'TRUE',
               'Oracle'	=> 'rowid',
 	      'DB2'	=> '1=1'
 	    );
@@ -1608,8 +1607,8 @@ sub adj_onhand {
 sub adj_inventory {
   my ($dbh, $myconfig, $form) = @_;
 
-  my %oid = ( 'Pg'	=> 'oid',
-              'PgPP'	=> 'oid',
+  my %oid = ( 'Pg'	=> 'TRUE',
+              'PgPP'	=> 'TRUE',
               'Oracle'	=> 'rowid',
 	      'DB2'	=> '1=1'
 	    );
