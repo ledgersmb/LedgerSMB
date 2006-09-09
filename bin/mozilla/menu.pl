@@ -29,10 +29,9 @@ sub display {
 
 	print qq|
 	<frameset cols="$menuwidth,*" border="1">
-		<frame name="acc_menu" src="$form->{script}?login=$form->{login}&sessionid=$form->{sessionid}&action=acc_menu&path=$form->{path}&js=$form->{js}" />
-		<frame name="main_window" src="am.pl?login=$form->{login}&sessionid=$form->{sessionid}&action=$form->{main}&path=$form->{path}" />
+		<frame name="acc_menu" src="$form->{script}?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;action=acc_menu&amp;path=$form->{path}&amp;js=$form->{js}" />
+		<frame name="main_window" src="am.pl?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;action=$form->{main}&amp;path=$form->{path}" />
 	</frameset>
-	</body>
 	</html>
 	|;
 
@@ -48,15 +47,12 @@ sub acc_menu {
 
 	$form->{title} = $locale->text('Accounting Menu');
 
-	$form->header;
-
-	print q|
+	my $headeradd = q|
 	<script type="text/javascript">
 
 		function SwitchMenu(obj) {
 			if (document.getElementById) {
 				var el = document.getElementById(obj);
-				var ar = document.getElementById("cont").getElementsByTagName("DIV");
 
 				if (el.style.display == "none") {
 					el.style.display = "block"; //display the block of info
@@ -73,10 +69,12 @@ sub acc_menu {
 		}
 
 		document.onselectstart = new Function("return false");
-	</script>
+	</script>|;
+	$form->header(undef, $headeradd);
+	print q|
 
 	<body class="menu">
-	<img class="cornderlogo" src="ledger-smb_small.png" width="100" height="50" border="1" />
+	<img class="cornderlogo" src="ledger-smb_small.png" width="100" height="50" border="1" alt="ledger-smb" />
 	|;
 
 	if ($form->{js}) {
@@ -163,7 +161,7 @@ sub js_menu {
 
 	my ($menu, $level) = @_;
 
-	print qq| <div id="cont"> |;
+	print qq| <div id="div_$menu_$level"> |;
 
 	# build tiered menus
 	my @menuorder = $menu->access_control(\%myconfig, $level);
