@@ -88,7 +88,7 @@ sub login_screen {
 	// End -->
 	</script>|;
 
-	$form->header(1, $headeradd)
+	$form->header(1, $headeradd);
 
 	print qq|
 
