@@ -75,10 +75,8 @@ password=
 sub adminlogin {
 
   $form->{title} = qq|LedgerSMB $form->{version} |.$locale->text('Administration');
-  
-  $form->header;
-  
-    print qq|
+
+  $myheaderadd = qq|  
 <script language="JavaScript" type="text/javascript">
 <!--
 function sf(){
@@ -86,12 +84,15 @@ function sf(){
 }
 // End -->
 </script>
+  |;
+  $form->header(undef, $headeradd);
 
+  print qq|
 <body class=admin onload="sf()">
 
 <div align=center>
 
-<a href="http://sourceforge.net/projects/ledger-smb/"><img src="ledger-smb.png" width="200" height="100" border="0"></a>
+<a href="http://sourceforge.net/projects/ledger-smb/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo"></a>
 <h1 class=login>|.$locale->text('Version').qq| $form->{version}<p>|.$locale->text('Administration').qq|</h1>
 
 <form method=post action="$form->{script}" name=admin>

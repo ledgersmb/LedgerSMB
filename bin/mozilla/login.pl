@@ -59,7 +59,6 @@ sub login_screen {
 	$form->{favicon} = "favicon.ico";
 
 	$form->{endsession} = 1;
-	$form->header(1);
 
 	if ($form->{login}) {
 		$sf = q|function sf() { document.login.password.focus(); }|;
@@ -67,7 +66,7 @@ sub login_screen {
 		$sf = q|function sf() { document.login.login.focus(); }|;
 	}
 
-	print qq|
+	my $headeradd = qq|
 	<script language="JavaScript" type="text/javascript">
 	<!--
 		var agt = navigator.userAgent.toLowerCase();
@@ -89,6 +88,8 @@ sub login_screen {
 	// End -->
 	</script>|;
 
+	$form->header(1, $headeradd)
+
 	print qq|
 
 <body class="login" onload="jsp(); sf();">
@@ -97,7 +98,7 @@ sub login_screen {
 		<table class="login" border="3" cellpadding="20">
 			<tr>
 				<td class="login" align="center">
-					<a href="http://sourceforge.net/projects/ledger-smb/" target="_top"><img src="ledger-smb.png" width="200" heith="100" border="0" /></a>
+					<a href="http://sourceforge.net/projects/ledger-smb/" target="_top"><img src="ledger-smb.png" width="200" heith="100" border="0" alt="LedgerSMB Logo" /></a>
 					<h1 class="login" align="center">|.$locale->text('Version').qq| $form->{version}</h1>
 					<p>
 					<form method="post" action="$form->{script}" name="login">
@@ -149,7 +150,7 @@ sub selectdataset {
 	<table class="login" border="3" cellpadding="20">
 		<tr>
 			<td class="login" align="center">
-				<a href="http://sourceforge.net/projects/ledger-smb/" target="_top"><img src="ledger-smb.png" width="100" heith="100" border="0" /></a>
+				<a href="http://sourceforge.net/projects/ledger-smb/" target="_top"><img src="ledger-smb.png" width="100" heith="100" border="0" alt="LedgerSMB Logo" /></a>
 				<h1 class="login" align="center">|.$locale->text('Version').qq| $form->{version}</h1>
 				<p>
 				<form method="post" action="$form->{script}">
@@ -255,6 +256,7 @@ sub login {
 			$form->{$form->{dbupdate}} = 1;
 
 			$form->header;
+			print qq|<body>|;
 			print $locale->text('Upgrading to Version')." $form->{version} ... ";
 
 			# required for Oracle
@@ -267,7 +269,8 @@ sub login {
 
 			print $locale->text('done');
 
-			print "<p><a href=\"menu.pl?login=$form->{login}&sessionid=$form->{sessionid}&path=$form->{path}&action=display&main=company_logo&js=$form->{js}>\"".$locale->text('Continue')."</a>";
+			print "<p><a href=\"menu.pl?login=$form->{login}&sessionid=$form->{sessionid}&path=$form->{path}&action=display&main=company_logo&js=$form->{js}>\">".$locale->text('Continue')."</a>";
+			print qq|</body>|;
 			exit;
 		}
 

@@ -2,7 +2,10 @@
 # LedgerSMB 
 # Small Medium Business Accounting software
 # 
-# See COPYRIGHT file for copyright information
+# See COPYRIGHT file for current copyright information
+#
+# Original Author and copyright holder:
+# Dieter Simader dsmimader@sql-ledger.com
 #======================================================================
 #
 # This file has NOT undergone whitespace cleanup.
@@ -123,7 +126,25 @@ $self->{message}
 sub encode_base64 ($;$) {
 
   # this code is from the MIME-Base64-2.12 package
-  # Copyright 1995-1999,2001 Gisle Aas <gisle@ActiveState.com>
+
+# Copyright (C) 2006
+# This work contains copyrighted information from a number of sources all used
+# with permission.
+#
+# This file contains source code included with or based on SQL-Ledger which
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
+# under the GNU General Public License version 2 or, at your option, any later 
+# version.  For a full list including contact information of contributors, 
+# maintainers, and copyright holders, see the CONTRIBUTORS file.
+#
+# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+# Copyright (C) 2002
+#
+#  Author: DWS Systems Inc.
+#     Web: http://www.sql-ledger.org
+#
+# Contributors:
+#
 
   my $res = "";
   my $eol = $_[1];

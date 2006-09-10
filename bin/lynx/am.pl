@@ -1,23 +1,12 @@
 #=====================================================================
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2001
+# LedgerSMB 
+# Small Medium Business Accounting software
+# 
+# See COPYRIGHT file for copyright information
+#======================================================================
 #
-#  Author: DWS Systems Inc.
-#     Web: http://sourceforge.net/projects/ledger-smb/
+# This file has NOT undergone whitespace cleanup.
 #
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #======================================================================
 #
 # administration
@@ -25,12 +14,12 @@
 #======================================================================
 
 
-use SL::AM;
-use SL::CA;
-use SL::Form;
-use SL::User;
-use SL::RP;
-use SL::GL;
+use LedgerSMB::AM;
+use LedgerSMB::CA;
+use LedgerSMB::Form;
+use LedgerSMB::User;
+use LedgerSMB::RP;
+use LedgerSMB::GL;
 
 
 1;
@@ -124,15 +113,15 @@ sub account_header {
     <td>
       <table>
 	<tr>
-	  <th align=right>|.$locale->text('Account Number').qq|</th>
+	  <th align="right">|.$locale->text('Account Number').qq|</th>
 	  <td><input name=accno size=20 value="$form->{accno}"></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Description').qq|</th>
+	  <th align="right">|.$locale->text('Description').qq|</th>
 	  <td><input name=description size=40 value="$form->{description}"></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Account Type').qq|</th>
+	  <th align="right">|.$locale->text('Account Type').qq|</th>
 	  <td>
 	    <table>
 	      <tr valign=top>
@@ -216,7 +205,7 @@ if ($form->{charttype} eq "A") {
 
 print qq|
         <tr>
-	  <th align=right>|.$locale->text('GIFI').qq|</th>
+	  <th align="right">|.$locale->text('GIFI').qq|</th>
 	  <td><input name=gifi_accno size=9 value=$form->{gifi_accno}></td>
 	</tr>
       </table>
@@ -327,8 +316,8 @@ sub list_account {
   <tr>
     <th class=listtop colspan=$colspan>$form->{title}</th>
   </tr>
-  <tr height=5></tr>
-  <tr class=listheading>
+  <tr height="5"></tr>
+  <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -357,11 +346,11 @@ sub list_account {
     $gifi_accno = $form->escape($ca->{gifi_accno});
     
     if ($ca->{charttype} eq "H") {
-      print qq|<tr class=listheading>|;
+      print qq|<tr class="listheading">|;
 
-      $column_data{accno} = qq|<th><a class=listheading href=$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ca->{accno}</a></th>|;
-      $column_data{gifi_accno} = qq|<th class=listheading><a href=$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ca->{gifi_accno}</a>&nbsp;</th>|;
-      $column_data{description} = qq|<th class=listheading>$ca->{description}&nbsp;</th>|;
+      $column_data{accno} = qq|<th><a class="listheading" href="$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{accno}</a></th>|;
+      $column_data{gifi_accno} = qq|<th class="listheading"><a href="$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{gifi_accno}</a>&nbsp;</th>|;
+      $column_data{description} = qq|<th class="listheading">$ca->{description}&nbsp;</th>|;
       $column_data{debit} = qq|<th>&nbsp;</th>|;
       $column_data{credit} = qq| <th>&nbsp;</th>|;
       $column_data{link} = qq|<th>&nbsp;</th>|;
@@ -369,12 +358,12 @@ sub list_account {
     } else {
       $i++; $i %= 2;
       print qq|
-<tr valign=top class=listrow$i>|;
-      $column_data{accno} = qq|<td><a href=$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ca->{accno}</a></td>|;
-      $column_data{gifi_accno} = qq|<td><a href=$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ca->{gifi_accno}</a>&nbsp;</td>|;
+<tr valign=top class="listrow$i">|;
+      $column_data{accno} = qq|<td><a href="$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{accno}</a></td>|;
+      $column_data{gifi_accno} = qq|<td><a href="$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{gifi_accno}</a>&nbsp;</td>|;
       $column_data{description} = qq|<td>$ca->{description}&nbsp;</td>|;
-      $column_data{debit} = qq|<td align=right>$ca->{debit}</td>|;
-      $column_data{credit} = qq|<td align=right>$ca->{credit}</td>|;
+      $column_data{debit} = qq|<td align="right">$ca->{debit}</td>|;
+      $column_data{credit} = qq|<td align="right">$ca->{credit}</td>|;
       $column_data{link} = qq|<td>$ca->{link}&nbsp;</td>|;
       
     }
@@ -385,7 +374,7 @@ sub list_account {
   }
   
   print qq|
-  <tr><td colspan=$colspan><hr size=3 noshade></td></tr>
+  <tr><td colspan="$colspan"><hr size="3" noshade /></td></tr>
 </table>
 
 </body>
@@ -428,8 +417,8 @@ sub list_gifi {
 
   @column_index = qw(accno description);
 
-  $column_header{accno} = qq|<th class=listheading>|.$locale->text('GIFI').qq|</a></th>|;
-  $column_header{description} = qq|<th class=listheading>|.$locale->text('Description').qq|</a></th>|;
+  $column_header{accno} = qq|<th class="listheading">|.$locale->text('GIFI').qq|</a></th>|;
+  $column_header{description} = qq|<th class="listheading">|.$locale->text('Description').qq|</a></th>|;
 
 
   $form->header;
@@ -443,7 +432,7 @@ sub list_gifi {
     <th class=listtop colspan=$colspan>$form->{title}</th>
   </tr>
   <tr height="5"></tr>
-  <tr class=listheading>
+  <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -540,11 +529,11 @@ sub gifi_header {
     <td>
       <table>
 	<tr>
-	  <th align=right>|.$locale->text('GIFI').qq|</th>
+	  <th align="right">|.$locale->text('GIFI').qq|</th>
 	  <td><input name=accno size=20 value="$form->{accno}"></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Description').qq|</th>
+	  <th align="right">|.$locale->text('Description').qq|</th>
 	  <td><input name=description size=60 value="$form->{description}"></td>
 	</tr>
       </table>
@@ -674,9 +663,9 @@ sub list_department {
 
   @column_index = qw(description cost profit);
 
-  $column_header{description} = qq|<th width=90%><a class=listheading href=$href>|.$locale->text('Description').qq|</a></th>|;
-  $column_header{cost} = qq|<th class=listheading nowrap>|.$locale->text('Cost Center').qq|</th>|;
-  $column_header{profit} = qq|<th class=listheading nowrap>|.$locale->text('Profit Center').qq|</th>|;
+  $column_header{description} = qq|<th width=90%><a class="listheading" href=$href>|.$locale->text('Description').qq|</a></th>|;
+  $column_header{cost} = qq|<th class="listheading" nowrap>|.$locale->text('Cost Center').qq|</th>|;
+  $column_header{profit} = qq|<th class="listheading" nowrap>|.$locale->text('Profit Center').qq|</th>|;
 
   $form->header;
 
@@ -691,7 +680,7 @@ sub list_department {
   <tr>
     <td>
       <table width=100%>
-        <tr class=listheading>
+        <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -791,7 +780,7 @@ sub department_header {
   </tr>
   <tr height="5"></tr>
   <tr>
-    <th align=right>|.$locale->text('Description').qq|</th>
+    <th align="right">|.$locale->text('Description').qq|</th>
     <td>$description</td>
   </tr>
   <tr>
@@ -867,8 +856,8 @@ sub list_business {
 
   @column_index = qw(description discount);
 
-  $column_header{description} = qq|<th width=90%><a class=listheading href=$href>|.$locale->text('Description').qq|</a></th>|;
-  $column_header{discount} = qq|<th class=listheading>|.$locale->text('Discount').qq| %</th>|;
+  $column_header{description} = qq|<th width=90%><a class="listheading" href=$href>|.$locale->text('Description').qq|</a></th>|;
+  $column_header{discount} = qq|<th class="listheading">|.$locale->text('Discount').qq| %</th>|;
 
   $form->header;
 
@@ -883,7 +872,7 @@ sub list_business {
   <tr>
     <td>
       <table width=100%>
-        <tr class=listheading>
+        <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -903,7 +892,7 @@ sub list_business {
    $discount = $form->format_amount(\%myconfig, $ref->{discount} * 100, 2, "&nbsp");
    
    $column_data{description} = qq|<td><a href=$form->{script}?action=edit_business&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{description}</td>|;
-   $column_data{discount} = qq|<td align=right>$discount</td>|;
+   $column_data{discount} = qq|<td align="right">$discount</td>|;
    
    for (@column_index) { print "$column_data{$_}\n" }
 
@@ -977,11 +966,11 @@ sub business_header {
     <td>
       <table>
 	<tr>
-	  <th align=right>|.$locale->text('Type of Business').qq|</th>
+	  <th align="right">|.$locale->text('Type of Business').qq|</th>
 	  <td><input name=description size=30 value="$form->{description}"></td>
 	<tr>
 	<tr>
-	  <th align=right>|.$locale->text('Discount').qq| %</th>
+	  <th align="right">|.$locale->text('Discount').qq| %</th>
 	  <td><input name=discount size=5 value=$form->{discount}></td>
 	</tr>
       </table>
@@ -1060,8 +1049,8 @@ sub list_sic {
 
   @column_index = $form->sort_columns(qw(code description));
 
-  $column_header{code} = qq|<th><a class=listheading href=$href&sort=code>|.$locale->text('Code').qq|</a></th>|;
-  $column_header{description} = qq|<th><a class=listheading href=$href&sort=description>|.$locale->text('Description').qq|</a></th>|;
+  $column_header{code} = qq|<th><a class="listheading" href=$href&sort=code>|.$locale->text('Code').qq|</a></th>|;
+  $column_header{description} = qq|<th><a class="listheading" href=$href&sort=description>|.$locale->text('Description').qq|</a></th>|;
 
   $form->header;
 
@@ -1076,7 +1065,7 @@ sub list_sic {
   <tr>
     <td>
       <table width=100%>
-        <tr class=listheading>
+        <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -1091,7 +1080,7 @@ sub list_sic {
     
     if ($ref->{sictype} eq 'H') {
       print qq|
-        <tr valign=top class=listheading>
+        <tr valign=top class="listheading">
 |;
       $column_data{code} = qq|<th><a href=$form->{script}?action=edit_sic&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{code}</th>|;
       $column_data{description} = qq|<th>$ref->{description}</th>|;
@@ -1175,7 +1164,7 @@ sub sic_header {
   </tr>
   <tr height="5"></tr>
   <tr>
-    <th align=right>|.$locale->text('Code').qq|</th>
+    <th align="right">|.$locale->text('Code').qq|</th>
     <td><input name=code size=10 value="$form->{code}"></td>
   <tr>
   <tr>
@@ -1183,7 +1172,7 @@ sub sic_header {
     <th align=left><input name=sictype class=checkbox type=checkbox value="H" $checked> |.$locale->text('Heading').qq|</th>
   <tr>
   <tr>
-    <th align=right>|.$locale->text('Description').qq|</th>
+    <th align="right">|.$locale->text('Description').qq|</th>
     <td><input name=description size=60 value="$form->{description}"></td>
   </tr>
     <td colspan=2><hr size=3 noshade></td>
@@ -1258,8 +1247,8 @@ sub list_language {
 
   @column_index = $form->sort_columns(qw(code description));
 
-  $column_header{code} = qq|<th><a class=listheading href=$href&sort=code>|.$locale->text('Code').qq|</a></th>|;
-  $column_header{description} = qq|<th><a class=listheading href=$href&sort=description>|.$locale->text('Description').qq|</a></th>|;
+  $column_header{code} = qq|<th><a class="listheading" href=$href&sort=code>|.$locale->text('Code').qq|</a></th>|;
+  $column_header{description} = qq|<th><a class="listheading" href=$href&sort=description>|.$locale->text('Description').qq|</a></th>|;
 
   $form->header;
 
@@ -1274,7 +1263,7 @@ sub list_language {
   <tr>
     <td>
       <table width=100%>
-        <tr class=listheading>
+        <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -1361,11 +1350,11 @@ sub language_header {
   </tr>
   <tr height="5"></tr>
   <tr>
-    <th align=right>|.$locale->text('Code').qq|</th>
+    <th align="right">|.$locale->text('Code').qq|</th>
     <td><input name=code size=10 value="$form->{code}"></td>
   <tr>
   <tr>
-    <th align=right>|.$locale->text('Description').qq|</th>
+    <th align="right">|.$locale->text('Description').qq|</th>
     <td><input name=description size=60 value="$form->{description}"></td>
   </tr>
     <td colspan=2><hr size=3 noshade></td>
@@ -1502,8 +1491,8 @@ sub list_templates {
 
   @column_index = $form->sort_columns(qw(code description));
 
-  $column_header{code} = qq|<th><a class=listheading href=$href&sort=code>|.$locale->text('Code').qq|</a></th>|;
-  $column_header{description} = qq|<th><a class=listheading href=$href&sort=description>|.$locale->text('Description').qq|</a></th>|;
+  $column_header{code} = qq|<th><a class="listheading" href=$href&sort=code>|.$locale->text('Code').qq|</a></th>|;
+  $column_header{description} = qq|<th><a class="listheading" href=$href&sort=description>|.$locale->text('Description').qq|</a></th>|;
 
   $form->header;
 
@@ -1518,7 +1507,7 @@ sub list_templates {
   <tr>
     <td>
       <table width=100%>
-        <tr class=listheading>
+        <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -1722,40 +1711,40 @@ sub defaults {
     <td>
       <table>
 	<tr>
-	  <th align=right>|.$locale->text('Business Number').qq|</th>
+	  <th align="right">|.$locale->text('Business Number').qq|</th>
 	  <td><input name=businessnumber size=25 value="$form->{businessnumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Weight Unit').qq|</th>
+	  <th align="right">|.$locale->text('Weight Unit').qq|</th>
 	  <td><input name=weightunit size=5 value="$form->{weightunit}"></td>
 	</tr>
       </table>
     </td>
   </tr>
   <tr>
-    <th class=listheading>|.$locale->text('Last Numbers & Default Accounts').qq|</th>
+    <th class="listheading">|.$locale->text('Last Numbers & Default Accounts').qq|</th>
   </tr>
   <tr>
     <td>
       <table>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Inventory').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Inventory').qq|</th>
 	  <td><select name=IC>$form->{account}{IC}</select></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Income').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Income').qq|</th>
 	  <td><select name=IC_income>$form->{account}{IC_income}</select></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Expense').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Expense').qq|</th>
 	  <td><select name=IC_expense>$form->{account}{IC_expense}</select></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Foreign Exchange Gain').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Foreign Exchange Gain').qq|</th>
 	  <td><select name=FX_gain>$form->{account}{FX_gain}</select></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Foreign Exchange Loss').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Foreign Exchange Loss').qq|</th>
 	  <td><select name=FX_loss>$form->{account}{FX_loss}</select></td>
 	</tr>
       </table>
@@ -1773,51 +1762,51 @@ sub defaults {
     <td>
       <table>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('GL Reference Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('GL Reference Number').qq|</th>
 	  <td><input name=glnumber size=40 value="$form->{glnumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Sales Invoice/AR Transaction Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Sales Invoice/AR Transaction Number').qq|</th>
 	  <td><input name=sinumber size=40 value="$form->{sinumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Sales Order Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Sales Order Number').qq|</th>
 	  <td><input name=sonumber size=40 value="$form->{sonumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Vendor Invoice/AP Transaction Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Vendor Invoice/AP Transaction Number').qq|</th>
 	  <td><input name=vinumber size=40 value="$form->{vinumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Purchase Order Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Purchase Order Number').qq|</th>
 	  <td><input name=ponumber size=40 value="$form->{ponumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Sales Quotation Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Sales Quotation Number').qq|</th>
 	  <td><input name=sqnumber size=40 value="$form->{sqnumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('RFQ Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('RFQ Number').qq|</th>
 	  <td><input name=rfqnumber size=40 value="$form->{rfqnumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Part Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Part Number').qq|</th>
 	  <td><input name=partnumber size=40 value="$form->{partnumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Job/Project Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Job/Project Number').qq|</th>
 	  <td><input name=projectnumber size=40 value="$form->{projectnumber}"></td>
         </tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Employee Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Employee Number').qq|</th>
 	  <td><input name=employeenumber size=40 value="$form->{employeenumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Customer Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Customer Number').qq|</th>
 	  <td><input name=customernumber size=40 value="$form->{customernumber}"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>|.$locale->text('Vendor Number').qq|</th>
+	  <th align="right" nowrap>|.$locale->text('Vendor Number').qq|</th>
 	  <td><input name=vendornumber size=40 value="$form->{vendornumber}"></td>
 	</tr>
       </table>
@@ -1906,7 +1895,7 @@ sub display_taxes {
     
     print qq|
 	<tr>
-	  <th align=right>|;
+	  <th align="right">|;
 	  
     if ($form->{"taxdescription_$i"} eq $sametax) {
       print "";
@@ -2053,7 +2042,7 @@ sub config {
 
     $printer = qq|
 	      <tr>
-		<th align=right>|.$locale->text('Printer').qq|</th>
+		<th align="right">|.$locale->text('Printer').qq|</th>
 		<td><select name=printer>$selectprinter</select></td>
 	      </tr>
 |;
@@ -2081,31 +2070,31 @@ sub config {
 	  <td>
 	    <table>
 	      <tr>
-		<th align=right>|.$locale->text('Name').qq|</th>
+		<th align="right">|.$locale->text('Name').qq|</th>
 		<td><input name=name size=20 value="$myconfig{name}"></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('E-mail').qq|</th>
+		<th align="right">|.$locale->text('E-mail').qq|</th>
 		<td><input name=email size=35 value="$myconfig{email}"></td>
 	      </tr>
 	      <tr valign=top>
-		<th align=right>|.$locale->text('Signature').qq|</th>
+		<th align="right">|.$locale->text('Signature').qq|</th>
 		<td><textarea name=signature rows=3 cols=35>$myconfig{signature}</textarea></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Phone').qq|</th>
+		<th align="right">|.$locale->text('Phone').qq|</th>
 		<td><input name=tel size=14 value="$myconfig{tel}"></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Fax').qq|</th>
+		<th align="right">|.$locale->text('Fax').qq|</th>
 		<td><input name=fax size=14 value="$myconfig{fax}"></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Company').qq|</th>
+		<th align="right">|.$locale->text('Company').qq|</th>
 		<td><input name=company size=35 value="$myconfig{company}"></td>
 	      </tr>
 	      <tr valign=top>
-		<th align=right>|.$locale->text('Address').qq|</th>
+		<th align="right">|.$locale->text('Address').qq|</th>
 		<td><textarea name=address rows=4 cols=35>$myconfig{address}</textarea></td>
 	      </tr>
 	    </table>
@@ -2113,39 +2102,39 @@ sub config {
 	  <td>
 	    <table>
 	      <tr>
-		<th align=right>|.$locale->text('Password').qq|</th>
+		<th align="right">|.$locale->text('Password').qq|</th>
 		<td><input type=password name=new_password size=10 value=$myconfig{password}></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Confirm').qq|</th>
+		<th align="right">|.$locale->text('Confirm').qq|</th>
 		<td><input type=password name=confirm_password size=10></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Date Format').qq|</th>
+		<th align="right">|.$locale->text('Date Format').qq|</th>
 		<td><select name=dateformat>$dateformat</select></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Number Format').qq|</th>
+		<th align="right">|.$locale->text('Number Format').qq|</th>
 		<td><select name=numberformat>$numberformat</select></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Dropdown Limit').qq|</th>
+		<th align="right">|.$locale->text('Dropdown Limit').qq|</th>
 		<td><input name=vclimit size=10 value="$myconfig{vclimit}"></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Menu Width').qq|</th>
+		<th align="right">|.$locale->text('Menu Width').qq|</th>
 		<td><input name=menuwidth size=10 value="$myconfig{menuwidth}"></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Language').qq|</th>
+		<th align="right">|.$locale->text('Language').qq|</th>
 		<td><select name=countrycode>$countrycodes</select></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Session Timeout').qq|</th>
+		<th align="right">|.$locale->text('Session Timeout').qq|</th>
 		<td><input name=timeout size=10 value="$myconfig{timeout}"></td>
 	      </tr>
 	      <tr>
-		<th align=right>|.$locale->text('Stylesheet').qq|</th>
+		<th align="right">|.$locale->text('Stylesheet').qq|</th>
 		<td><select name=usestylesheet>$selectstylesheet</select></td>
 	      </tr>
 	      $printer
@@ -2275,19 +2264,19 @@ sub audit_control {
     <td>
       <table>
 	<tr>
-	  <th align=right>|.$locale->text('Enforce transaction reversal for all dates').qq|</th>
+	  <th align="right">|.$locale->text('Enforce transaction reversal for all dates').qq|</th>
 	  <td><input name=revtrans class=radio type=radio value="1" $checked{revtransY}> |.$locale->text('Yes').qq| <input name=revtrans class=radio type=radio value="0" $checked{revtransN}> |.$locale->text('No').qq|</td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Close Books up to').qq|</th>
+	  <th align="right">|.$locale->text('Close Books up to').qq|</th>
 	  <td><input name=closedto size=11 title="$myconfig{dateformat}" value=$form->{closedto}></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Activate Audit trail').qq|</th>
+	  <th align="right">|.$locale->text('Activate Audit trail').qq|</th>
 	  <td><input name=audittrail class=radio type=radio value="1" $checked{audittrailY}> |.$locale->text('Yes').qq| <input name=audittrail class=radio type=radio value="0" $checked{audittrailN}> |.$locale->text('No').qq|</td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Remove Audit trail up to').qq|</th>
+	  <th align="right">|.$locale->text('Remove Audit trail up to').qq|</th>
 	  <td><input name=removeaudittrail size=11 title="$myconfig{dateformat}"></td>
 	</tr>
       </table>
@@ -2385,7 +2374,7 @@ sub list_warehouse {
 
   @column_index = qw(description);
 
-  $column_header{description} = qq|<th width=100%><a class=listheading href=$href>|.$locale->text('Description').qq|</a></th>|;
+  $column_header{description} = qq|<th width=100%><a class="listheading" href=$href>|.$locale->text('Description').qq|</a></th>|;
 
   $form->header;
 
@@ -2400,7 +2389,7 @@ sub list_warehouse {
   <tr>
     <td>
       <table width=100%>
-        <tr class=listheading>
+        <tr class="listheading">
 |;
 
   for (@column_index) { print "$column_header{$_}\n" }
@@ -2494,7 +2483,7 @@ sub warehouse_header {
   </tr>
   <tr height="5"></tr>
   <tr>
-    <th align=right>|.$locale->text('Description').qq|</th>
+    <th align="right">|.$locale->text('Description').qq|</th>
     <td>$description</td>
   </tr>
   <tr>
@@ -2549,23 +2538,23 @@ sub yearend {
     <td>
       <table>
 	<tr>
-	  <th align=right>|.$locale->text('Yearend').qq|</th>
+	  <th align="right">|.$locale->text('Yearend').qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}" value=$todate></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Reference').qq|</th>
+	  <th align="right">|.$locale->text('Reference').qq|</th>
 	  <td><input name=reference size=20 value="|.$locale->text('Yearend').qq|"></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Description').qq|</th>
+	  <th align="right">|.$locale->text('Description').qq|</th>
 	  <td><textarea name=description rows=3 cols=50 wrap=soft></textarea></td>
 	</tr>
 	<tr>
-	  <th align=right>|.$locale->text('Retained Earnings').qq|</th>
+	  <th align="right">|.$locale->text('Retained Earnings').qq|</th>
 	  <td><select name=accno>$chart</select></td>
 	</tr>
 	<tr>
-          <th align=right>|.$locale->text('Method').qq|</th>
+          <th align="right">|.$locale->text('Method').qq|</th>
           <td><input name=method class=radio type=radio value=accrual checked>&nbsp;|.$locale->text('Accrual').qq|&nbsp;<input name=method class=radio type=radio value=cash>&nbsp;|.$locale->text('Cash').qq|</td>
         </tr>
       </table>
@@ -2657,8 +2646,8 @@ sub company_logo {
 
 </pre>
 <center>
-<a href="http://sourceforge.net/projects/ledger-smb/" target=_blank><img src=ledger-smb.png border=0></a>
-<h1 class=login>|.$locale->text('Version').qq| $form->{version}</h1>
+<a href="http://sourceforge.net/projects/ledger-smb/" target="_blank"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
+<h1 class="login">|.$locale->text('Version').qq| $form->{version}</h1>
 
 <p>
 |.$locale->text('Licensed to').qq|
@@ -2671,15 +2660,15 @@ $myconfig{company}
 <p>
 <table border=0>
   <tr>
-    <th align=right>|.$locale->text('User').qq|</th>
+    <th align="right">|.$locale->text('User').qq|</th>
     <td>$myconfig{name}</td>
   </tr>
   <tr>
-    <th align=right>|.$locale->text('Dataset').qq|</th>
+    <th align="right">|.$locale->text('Dataset').qq|</th>
     <td>$myconfig{dbname}</td>
   </tr>
   <tr>
-    <th align=right>|.$locale->text('Database Host').qq|</th>
+    <th align="right">|.$locale->text('Database Host').qq|</th>
     <td>$myconfig{dbhost}</td>
   </tr>
 </table>
@@ -2724,18 +2713,18 @@ sub recurring_transactions {
   
   push @column_index, qw(nextdate enddate id amount curr repeat howmany recurringemail recurringprint);
 
-  $column_header{reference} = "<th><a class=listheading href=$href&sort=reference>".$locale->text('Reference').qq"</a></th>";
-  $column_header{ndx} = "<th class=listheading>&nbsp;</th>";
-  $column_header{id} = "<th class=listheading>".$locale->text('ID')."</th>";
-  $column_header{description} = "<th class=listheading>".$locale->text('Description')."</th>";
-  $column_header{nextdate} = "<th><a class=listheading href=$href&sort=nextdate>".$locale->text('Next')."</a></th>";
-  $column_header{enddate} = "<th><a class=listheading href=$href&sort=enddate>".$locale->text('Ends')."</a></th>";
-  $column_header{amount} = "<th class=listheading>".$locale->text('Amount')."</th>";
-  $column_header{curr} = "<th class=listheading>&nbsp;</th>";
-  $column_header{repeat} = "<th class=listheading>".$locale->text('Every')."</th>";
-  $column_header{howmany} = "<th class=listheading>".$locale->text('Times')."</th>";
-  $column_header{recurringemail} = "<th class=listheading>".$locale->text('E-mail')."</th>";
-  $column_header{recurringprint} = "<th class=listheading>".$locale->text('Print')."</th>";
+  $column_header{reference} = qq|<th><a class="listheading" href="$href&sort=reference">|.$locale->text('Reference').q|</a></th>|;
+  $column_header{ndx} = q|<th class="listheading">&nbsp;</th>|;
+  $column_header{id} = q|<th class="listheading">|.$locale->text('ID').q|</th>|;
+  $column_header{description} = q|<th class="listheading">|.$locale->text('Description').q|</th>|;
+  $column_header{nextdate} = qq|<th><a class="listheading" href="$href&sort=nextdate">|.$locale->text('Next').q|</a></th>|;
+  $column_header{enddate} = qq|<th><a class="listheading" href="$href&sort=enddate">|.$locale->text('Ends').q|</a></th>|;
+  $column_header{amount} = q|<th class="listheading">|.$locale->text('Amount').q|</th>|;
+  $column_header{curr} = q|<th class="listheading">&nbsp;</th>|;
+  $column_header{repeat} = q|<th class="listheading">|.$locale->text('Every').q|</th>|;
+  $column_header{howmany} = q|<th class="listheading">|.$locale->text('Times').q|</th>|;
+  $column_header{recurringemail} = q|<th class="listheading">|.$locale->text('E-mail').q|</th>|;
+  $column_header{recurringprint} = q|<th class="listheading">|.$locale->text('Print').q|</th>|;
 
 print qq|
 <body>
@@ -2750,7 +2739,7 @@ print qq|
   <tr>
     <td>
       <table width=100%>
-        <tr class=listheading>
+        <tr class="listheading">
 |;
 
   for (@column_index) { print "\n$column_header{$_}" }
@@ -2774,7 +2763,7 @@ print qq|
   foreach $transaction (sort keys %{ $form->{transactions} }) {
     print qq|
         <tr>
-	  <th class=listheading colspan=$colspan>$tr{$transaction}</th>
+	  <th class="listheading" colspan=$colspan>$tr{$transaction}</th>
 	</tr>
 |;
     
@@ -2817,11 +2806,11 @@ print qq|
 	$type = ($ref->{vc} eq 'customer') ? "sales_order" : "purchase_order";
       }
 
-      $column_data{id} = qq|<td><a href=$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$type&readonly=1>$ref->{id}</a></td>|;
+      $column_data{id} = qq|<td><a href="$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$type&readonly=1">$ref->{id}</a></td>|;
       
-      $column_data{repeat} = "<td align=right nowrap>$repeat</td>";
-      $column_data{howmany} = "<td align=right nowrap>".$form->format_amount(\%myconfig, $ref->{howmany})."</td>";
-      $column_data{amount} = "<td align=right nowrap>".$form->format_amount(\%myconfig, $ref->{amount}, 2)."</td>";
+      $column_data{repeat} = qq|<td align="right" nowrap>$repeat</td>|;
+      $column_data{howmany} = qq|<td align="right" nowrap>|.$form->format_amount(\%myconfig, $ref->{howmany})."</td>";
+      $column_data{amount} = qq|<td align="right" nowrap>|.$form->format_amount(\%myconfig, $ref->{amount}, 2)."</td>";
       
       $column_data{recurringemail} = "<td nowrap>";
       @f = split /:/, $ref->{recurringemail};

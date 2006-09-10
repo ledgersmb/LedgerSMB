@@ -1,6 +1,32 @@
 ######################################################################
 # LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2006
+
+# Copyright (C) 2006
+# This work contains copyrighted information from a number of sources all used
+# with permission.
+#
+# This file contains source code included with or based on SQL-Ledger which
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
+# under the GNU General Public License version 2 or, at your option, any later 
+# version.  For a full list including contact information of contributors, 
+# maintainers, and copyright holders, see the CONTRIBUTORS file.
+#
+# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+# Copyright (c) 2000
+#
+#  Author: Dieter Simader
+#   Email: dsimader@sql-ledger.org
+#     Web: http://www.sql-ledger.org
+#
+#  Contributors: Christopher Browne <cbrowne@acm.org>
+#                Tony Fraser <tony@sybaspace.com>
+#
+#
+# Portions Copyright (c) 2000
+#
+#  Author: Dieter Simader
+#   Email: dsimader@sql-ledger.org
+#     Web: http://www.sql-ledger.org
 #
 #
 # This program is free software; you can redistribute it and/or modify
