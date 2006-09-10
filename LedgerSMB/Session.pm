@@ -2,7 +2,14 @@
 # LedgerSMB 
 # Small Medium Business Accounting software
 # 
-# See COPYRIGHT file for copyright information
+#
+# Copyright (C) 2006
+# This work contains copyrighted information from a number of sources all used
+# with permission.  It is released under the GNU General Public License 
+# Version 2 or, at your option, any later version.  See COPYRIGHT file for 
+# details.
+#
+#
 #======================================================================
 #
 # This file has undergone whitespace cleanup.

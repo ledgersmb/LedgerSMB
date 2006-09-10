@@ -2,7 +2,26 @@
 # LedgerSMB 
 # Small Medium Business Accounting software
 # 
-# See COPYRIGHT file for copyright information
+# Copyright (C) 2006
+# This work contains copyrighted information from a number of sources all used
+# with permission.
+#
+# This file contains source code included with or based on SQL-Ledger which
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
+# maintainers, and copyright holders, see the CONTRIBUTORS file.
+#
+# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+# Copyright (C) 2000
+#
+#  Author: DWS Systems Inc.
+#     Web: http://www.sql-ledger.org
+#
+# Contributors: Thomas Bayen <bayen@gmx.de>
+#               Antti Kaihola <akaihola@siba.fi>
+#               Moritz Bunkus (tex)
+#               Jim Rawlings <jim@your-dba.com> (DB2)
 #======================================================================
 #
 # This file has undergone whitespace cleanup.
@@ -226,7 +245,7 @@ sub isblank {
 
 sub header {
 
-	my ($self, $init) = @_;
+	my ($self, $init, $headeradd) = @_;
 
 	return if $self->{header};
 
@@ -258,6 +277,7 @@ sub header {
 	$stylesheet
 	$charset
 	<meta name="robots" content="noindex,nofollow" />
+        $headeradd
 </head>
 
 		$self->{pre} \n|;

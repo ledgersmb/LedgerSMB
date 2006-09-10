@@ -18,19 +18,20 @@ sub getpassword {
   my ($s) = @_;
 
   $form->{endsession} = 1;
-  $form->header;
 
   $sessionexpired = qq|<b><font color=red><blink>|.$locale->text('Session expired!').qq|</blink></font></b><p>| if $s;
   
-  print qq|
+  my $headeradd = qq|
 <script language="JavaScript" type="text/javascript">
 <!--
 function sf(){
     document.pw.password.focus();
 }
 // End -->
-</script>
+</script>|;
 
+  $form->header(undef, $headeradd);
+  print qq|
 <body onload="sf()">
 
   $sessionexpired

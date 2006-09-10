@@ -2,7 +2,24 @@
 # LedgerSMB 
 # Small Medium Business Accounting software
 # 
-# See COPYRIGHT file for copyright information
+# Copyright (C) 2006
+# This work contains copyrighted information from a number of sources all used
+# with permission.
+#
+# This file contains source code included with or based on SQL-Ledger which
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
+# maintainers, and copyright holders, see the CONTRIBUTORS file.
+#
+# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+# Copyright (C) 2002
+#
+#  Author: DWS Systems Inc.
+#     Web: http://www.sql-ledger.org
+#
+#  Contributors: Tony Fraser <tony@sybaspace.com>
+#
 #======================================================================
 #
 # This file has NOT undergone whitespace cleanup.
@@ -27,7 +44,7 @@ sub menuitem {
   my $target = ($self->{$item}{target}) ? $self->{$item}{target} : "";
 
   my $level = $form->escape($item);
-  my $str = qq|<a style="display:block;" href="$module?path=$form->{path}&action=$action&level=$level&login=$form->{login}&timeout=$form->{timeout}&sessionid=$form->{sessionid}&js=$form->{js}|;
+  my $str = qq|<a style="display:block;" href="$module?path=$form->{path}&amp;action=$action&amp;level=$level&amp;login=$form->{login}&amp;timeout=$form->{timeout}&amp;sessionid=$form->{sessionid}&amp;js=$form->{js}|;
 
   my @vars = qw(module action target href);
   
@@ -42,7 +59,7 @@ sub menuitem {
  
   # add other params
   foreach my $key (keys %{ $self->{$item} }) {
-    $str .= "&".$form->escape($key)."=";
+    $str .= "&amp;".$form->escape($key)."=";
     ($value, $conf) = split /=/, $self->{$item}{$key}, 2;
     $value = "$myconfig->{$value}$conf" if $self->{$item}{$key} =~ /=/;
     
