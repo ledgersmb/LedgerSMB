@@ -1,4 +1,20 @@
 <ul>
+<p><li><h4>Error on converting from SQL-Ledger: 
+ERROR: column "chart_id" contains null values</h4>
+SQL-Ledger does not enforce a NOT NULL constraint on the chart_id field in the 
+acc_trans table.  Consequently, it is possible in cirtain circumstances to 
+insert transactions into the database with invalid information including NULL 
+chart_id's.  When this occurs, normally the Chart of Accounts and Trial Balance 
+will fail to balance.  So this is a serious problem with data integrity.
+LedgerSMB prevents this by adding the NOT NULL constraing but this can cause
+prevent people from migrating when they have invalid data in their databases.
+<br/><br/>
+If you get an error like this the first thing to do is seek technical support
+whether or not you wish to continue the migration.  In general the providers of
+support for LedgerSMB and SQL-Ledger will all be able to help.  Unfortunately
+because this problem involves information loss, no solution can be automated
+without invalidating your accounting information.
+</li></p>
 <p><li><h4>PostgreSQL 8.x</h4>
 PostgreSQL added a restriction in v8.x that a sequence cannot be dropped
 after if it is referenced by a table. However backups created with
