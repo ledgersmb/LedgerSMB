@@ -16,7 +16,6 @@ while ($line = <SL>){
 }
 
 unlink "sql-ledger.conf";
-unlink "setup.pl";
 
 #TODO:  Move/Delete the SL directory
 
