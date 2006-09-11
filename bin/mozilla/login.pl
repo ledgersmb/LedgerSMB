@@ -290,7 +290,7 @@ sub login {
 
 			print $locale->text('done');
 
-			print "<p><a href=\"menu.pl?login=$form->{login}&sessionid=$form->{sessionid}&path=$form->{path}&action=display&main=company_logo&js=$form->{js}>\">".$locale->text('Continue')."</a>";
+			print "<p><a href=\"menu.pl?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;path=$form->{path}&amp;action=display&amp;main=company_logo&amp;js=$form->{js}>\">".$locale->text('Continue')."</a>";
 			print qq|</body>|;
 			exit;
 		}
