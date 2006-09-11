@@ -1,7 +1,7 @@
 Copyright of individual lines of code may be owned in part or whole by the 
 individual contributors.
 
-Current Authors of LedgerSMB:
+Current Core Maintainers of LedgerSMB:
 ==================================
 Chris Travers <chris @ metatrontech.com>
 Wrote the inventory activity report, helped with the session handling fix, 
@@ -14,6 +14,10 @@ current coding standards, and other contributions.
 Joshua Drake <jd @ commandprompt . com>
 Contributed database fixes.
 
+Other Contributors:
+========================
+Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
+the setup.diff.
 
 Original Authors of SQL-Ledger:
 ===================================
