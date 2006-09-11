@@ -75,7 +75,7 @@ INSERT INTO defaults (version) VALUES ('2.6.17');
 CREATE TABLE acc_trans (
   trans_id int,
   chart_id int NOT NULL,
-  amount float,
+  amount numeric(10,2),
   transdate date DEFAULT current_date,
   source text,
   cleared bool DEFAULT 'f',
@@ -90,11 +90,11 @@ CREATE TABLE invoice (
   trans_id int,
   parts_id int,
   description text,
-  qty float4,
-  allocated float4,
-  sellprice float,
-  fxsellprice float,
-  discount float4,
+  qty integer,
+  allocated integer,
+  sellprice numeric(10,2),
+  fxsellprice numeric(10,2),
+  discount float4, -- jd: check into this
   assemblyitem bool DEFAULT 'f',
   unit varchar(5),
   project_id int,
@@ -117,9 +117,9 @@ CREATE TABLE customer (
   fax varchar(20),
   email text,
   notes text,
-  discount float4,
+  discount numeric, 
   taxincluded bool default 'f',
-  creditlimit float default 0,
+  creditlimit numeric(10,2) default 0,
   terms int2 default 0,
   customernumber varchar(32),
   cc text,
@@ -143,17 +143,17 @@ CREATE TABLE parts (
   partnumber text,
   description text,
   unit varchar(5),
-  listprice float,
-  sellprice float,
-  lastcost float,
+  listprice numeric(10,2),
+  sellprice numeric(10,2),
+  lastcost numeric(10,2),
   priceupdate date DEFAULT current_date,
-  weight float4,
-  onhand float4 DEFAULT 0,
+  weight numeric,
+  onhand numeric DEFAULT 0,
   notes text,
   makemodel bool DEFAULT 'f',
   assembly bool DEFAULT 'f',
   alternate bool DEFAULT 'f',
-  rop float4,
+  rop float4, -- jd: what is this
   inventory_accno_id int,
   income_accno_id int,
   expense_accno_id int,
@@ -165,13 +165,13 @@ CREATE TABLE parts (
   microfiche text,
   partsgroup_id int,
   project_id int,
-  avgcost float
+  avgcost numeric(10,2)
 );
 --
 CREATE TABLE assembly (
   id int,
   parts_id int,
-  qty float,
+  qty numeric,
   bom bool,
   adj bool
 ) WITH OIDS;
@@ -182,9 +182,9 @@ CREATE TABLE ar (
   transdate date DEFAULT current_date,
   customer_id int,
   taxincluded bool,
-  amount float,
-  netamount float,
-  paid float,
+  amount numeric(10,2),
+  netamount numeric(10,2),
+  paid numeric(10,2),
   datepaid date,
   duedate date,
   invoice bool DEFAULT 'f',
@@ -209,9 +209,9 @@ CREATE TABLE ap (
   transdate date DEFAULT current_date,
   vendor_id int,
   taxincluded bool DEFAULT 'f',
-  amount float,
-  netamount float,
-  paid float,
+  amount numeric(10,2),
+  netamount numeric(10,2),
+  paid numeric(10,2),
   datepaid date,
   duedate date,
   invoice bool DEFAULT 'f',
@@ -237,7 +237,7 @@ CREATE TABLE partstax (
 --
 CREATE TABLE tax (
   chart_id int,
-  rate float,
+  rate numeric,
   taxnumber text,
   validto date
 );
@@ -258,8 +258,8 @@ CREATE TABLE oe (
   transdate date default current_date,
   vendor_id int,
   customer_id int,
-  amount float8,
-  netamount float8,
+  amount numeric(10,2),
+  netamount numeric(10,2),
   reqdate date,
   taxincluded bool,
   shippingpoint text,
@@ -282,13 +282,13 @@ CREATE TABLE orderitems (
   trans_id int,
   parts_id int,
   description text,
-  qty float4,
-  sellprice float8,
-  discount float4,
+  qty numeric,
+  sellprice numeric(10,2),
+  discount numeric,
   unit varchar(5),
   project_id int,
   reqdate date,
-  ship float4,
+  ship numeric,
   serialnumber text,
   notes text
 ) WITH OIDS;
@@ -296,8 +296,8 @@ CREATE TABLE orderitems (
 CREATE TABLE exchangerate (
   curr char(3),
   transdate date,
-  buy float8,
-  sell float8
+  buy numeric,
+  sell numeric
 );
 --
 create table employee (
@@ -364,8 +364,8 @@ CREATE TABLE vendor (
   business_id int,
   taxnumber varchar(32),
   sic_code varchar(6),
-  discount float4,
-  creditlimit float default 0,
+  discount numeric,
+  creditlimit numeric default 0,
   iban varchar(34),
   bic varchar(11),
   employee_id int,
@@ -383,8 +383,8 @@ CREATE TABLE project (
   startdate date,
   enddate date,
   parts_id int,
-  production float default 0,
-  completed float default 0,
+  production numeric default 0,
+  completed numeric default 0,
   customer_id int
 );
 --
@@ -417,7 +417,7 @@ CREATE TABLE dpt_trans (
 CREATE TABLE business (
   id int default nextval('id'),
   description text,
-  discount float4
+  discount numeric
 );
 --
 -- SIC
@@ -437,7 +437,7 @@ CREATE TABLE inventory (
   parts_id int,
   trans_id int,
   orderitems_id int,
-  qty float4,
+  qty numeric,
   shippingdate date,
   employee_id int
 ) WITH OIDS;
@@ -452,7 +452,7 @@ CREATE TABLE partsvendor (
   parts_id int,
   partnumber text,
   leadtime int2,
-  lastcost float,
+  lastcost numeric(10,2),
   curr char(3)
 );
 --
@@ -465,8 +465,8 @@ CREATE TABLE partscustomer (
   parts_id int,
   customer_id int,
   pricegroup_id int,
-  pricebreak float4,
-  sellprice float,
+  pricebreak numeric,
+  sellprice numeric(10,2),
   validfrom date,
   validto date,
   curr char(3)
@@ -524,10 +524,10 @@ CREATE TABLE jcitems (
   project_id int,
   parts_id int,
   description text,
-  qty float4,
-  allocated float4,
-  sellprice float8,
-  fxsellprice float8,
+  qty numeric,
+  allocated numeric,
+  sellprice numeric(10,2),
+  fxsellprice numeric(10,2),
   serialnumber text,
   checkedin timestamp with time zone,
   checkedout timestamp with time zone,
