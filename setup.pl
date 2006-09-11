@@ -31,17 +31,18 @@ if (!$@){
 
 $| = 1;
 
+#not sure how safe this is. If the browser sends a blank HTTP_USER_AGENT
+#will this script destroy part of the install? 
+#This script should probably be made inaccessible via HTTP until this feature is working
 if ($ENV{HTTP_USER_AGENT}) {
-  print "
-This does not work yet!
-use $0 from the command line";
-  exit;
+	print "Content-type: text/html\n\nThis does not work yet! use $0 from the command line";
+	exit;
 }
 
 # Make sure they have the required perl modules installed.
-my @req_modules=(qw(DBI 
-	DBD::Pg 
-));
+# bin/mozilla/admin.pl needs Digest::MD5 for session handling
+my @req_modules=(qw(DBI DBD::Pg Digest::MD5 ));
+
 foreach my $module(@req_modules){
   print "Checking for: $module ...\t";
   my @results=&check_module($module);
