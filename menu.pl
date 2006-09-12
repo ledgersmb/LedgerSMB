@@ -102,10 +102,7 @@ $SIG{__DIE__} = sub { $form->error($_[0]) };
 $myconfig{dbpasswd} = unpack 'u', $myconfig{dbpasswd};
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout) unless ($form->{type} eq 'preferences');
 
-$form->{path} =~ s/\.\.\///g;
-if ($form->{path} !~ /^bin\//) {
-	$form->error($locale->text('Invalid path!')."\n");
-}
+if ($form{path} ne 'bin/lynx'){ $form{path} = 'bin/mozilla';}	
 
 # did sysadmin lock us out
 if (-f "$userspath/nologin") {
