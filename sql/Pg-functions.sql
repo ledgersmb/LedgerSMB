@@ -252,3 +252,19 @@ END;
 ' language 'plpgsql';
 -- end function
 --
+CREATE OR REPLACE FUNCTION trigger_parts_short() RETURNS TRIGGER
+AS
+'
+
+CREATE OR REPLACE FUNCTION trigger_parts_short() RETURNS TRIGGER
+AS
+BEGIN
+  IF NEW.onhand >= NEW.rop THEN
+    NOTIFY parts_short;
+  END IF;
+  RETURN NEW;
+END;
+' LANGUAGE PLPGSQL;
+
+CREATE TRIGGER parts_short AFTER UPDATE ON parts 
+FOR EACH ROW EXECUTE PROCEDURE trigger_parts_short();
