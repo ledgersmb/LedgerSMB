@@ -1,6 +1,8 @@
 #=====================================================================
 # LedgerSMB 
 # Small Medium Business Accounting software
+# http://sourceforge.net/projects/ledger-smb/
+#
 # 
 # See COPYRIGHT file for copyright information
 #======================================================================

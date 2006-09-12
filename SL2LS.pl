@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# http://sourceforge.net/projects/ledger-smb/
+#
 # Simple script.  Right now, all that needs to be done is that the SL directory
 # needs to be deleted and the sql-ledger.conf needs to be renamed.
 
