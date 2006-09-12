@@ -62,17 +62,16 @@ $| = 1;
 
 eval { require "ledger-smb.conf"; };
 
-
 if ($ENV{CONTENT_LENGTH}) {
-  read(STDIN, $_, $ENV{CONTENT_LENGTH});
+	read(STDIN, $_, $ENV{CONTENT_LENGTH});
 }
 
 if ($ENV{QUERY_STRING}) {
-  $_ = $ENV{QUERY_STRING};
+	$_ = $ENV{QUERY_STRING};
 }
 
 if ($ARGV[0]) {
-  $_ = $ARGV[0];
+	$_ = $ARGV[0];
 }
 
 
@@ -88,60 +87,32 @@ $script = substr($0, $pos + 1);
 
 
 if (-e "$userspath/nologin" && $script ne 'admin.pl') {
-  print "Content-Type: text/html\n\n<html><body><strong>" if $ENV{HTTP_USER_AGENT};
-  print "\nLogin disabled!\n";
-  print "\n</strong></body></html>" if $ENV{HTTP_USER_AGENT};
-  exit;
+	print "Content-Type: text/html\n\n<html><body><strong>";
+	print "\nLogin disabled!\n";
+	print "\n</strong></body></html>";
+	exit;
 }
 
 
 if ($form{path}) {
-  $form{path} =~ s/%2f/\//gi;
-  $form{path} =~ s/\.\.\///g;
 
-  if ($form{path} !~ /^bin\//) {
-    print "Content-Type: text/html\n\n<html><body><strong>" if $ENV{HTTP_USER_AGENT};
-    print "\nInvalid path!\n";
-	print "\n</strong></body></html>" if $ENV{HTTP_USER_AGENT};
-    exit;
-  }
+	if ($form{path} ne 'bin/lynx'){ $form{path} = 'bin/mozilla';}	
 
+	$ARGV[0] = "$_&script=$script";
+	require "$form{path}/$script";
 
-  $ARGV[0] = "$_&script=$script";
-  require "$form{path}/$script";
 } else {
 
-  if (!$form{terminal}) {
-    if ($ENV{HTTP_USER_AGENT}) {
-      # web browser
-      $form{terminal} = "lynx";
-      if ($ENV{HTTP_USER_AGENT} !~ /lynx/i) {
-	$form{terminal} = "mozilla";
-      }
-    } else {
-      if ($ENV{TERM} =~ /xterm/) {
-	$form{terminal} = "xterm";
-      }
-      if ($ENV{TERM} =~ /(console|linux|vt.*)/i) {
-	$form{terminal} = "console";
-      }
-    }
-  }
+	$form{terminal} = "lynx";
 
+	if ($ENV{HTTP_USER_AGENT} !~ /lynx/i) {
+		$form{terminal} = "mozilla";
+	}
 
-  if ($form{terminal}) {
+	$ARGV[0] = "path=bin/$form{terminal}&script=$script";
+	map { $ARGV[0] .= "&${_}=$form{$_}" } keys %form;
 
-    $ARGV[0] = "path=bin/$form{terminal}&script=$script";
-    map { $ARGV[0] .= "&${_}=$form{$_}" } keys %form;
-
-    require "bin/$form{terminal}/$script";
-    
-  } else {
-
-    print "Content-Type: text/html\n\n<html><body><strong>" if $ENV{HTTP_USER_AGENT};
-    print qq|\nUnknown terminal\n|;
-	print "\n</strong></body></html>" if $ENV{HTTP_USER_AGENT};
-  }
+	require "bin/$form{terminal}/$script";
 
 }
 
