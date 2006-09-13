@@ -72,6 +72,9 @@ sub menuitem {
   if ($target) {
     $str .= qq|" target="$target"|;
   }
+  else{
+	$str .= '"';
+  }
   
   $str .= qq|>|;
   
