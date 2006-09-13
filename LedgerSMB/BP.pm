@@ -49,7 +49,9 @@ sub get_vc {
 				 bin_list => ['oe'],
 				 sales_quotation => ['oe'],
 				 request_quotation => ['oe'],
-				 timecard => ['jcitems'],);
+				 timecard => ['jcitems'],
+				 check => ['ar'],
+		);
 
 	my $query = "";
 	my $sth;
@@ -123,7 +125,9 @@ sub get_spoolfiles {
 				 bin_list => ['oe'],
 				 sales_quotation => ['oe'],
 				 request_quotation => ['oe'],
-				 timecard => ['jc'],);
+				 timecard => ['jc'],
+				 check => ['ar'],
+		);
 
 	($form->{transdatefrom}, $form->{transdateto}) = $form->from_to($form->{year}, $form->{month}, $form->{interval}) if $form->{year} && $form->{month};
 

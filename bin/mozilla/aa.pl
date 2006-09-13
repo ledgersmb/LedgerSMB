@@ -963,6 +963,10 @@ sub post {
   }
 
   if (AA->post_transaction(\%myconfig, \%$form)) {
+    $form->update_status(\%myconfig);
+    if ($form->{printandpost}){
+      &{ "print_$form->{formname}" }($old_form, 1);
+    }
     $form->redirect($locale->text('Transaction posted!'));
   } else {
     $form->error($locale->text('Cannot post transaction!'));

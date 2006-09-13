@@ -1,4 +1,14 @@
-Changelog for LedgerSMB v 2.6.17
+Changelog for LedgerSMV 1.1.0
+
+* 
+* Warnings are printed when check stub is truncated
+* Protection against duplicate transaction id's.
+* FLOAT datatypes removed from database
+* Sales Data Report added
+* SL2LS.pl now dies if it cannot open the files.
+* Corrected directory transversal bug
+
+Changelog for LedgerSMB v 1.0.0
 
 (Changes relative to the pre-fork SQL-Ledger 2.6.17)
 

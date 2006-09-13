@@ -83,6 +83,7 @@ sub search {
              sales_quotation => { title => 'Quotations', name => 'Customer' },
              request_quotation => { title => 'RFQs', name => 'Vendor' },
              timecard => { title => 'Time Cards', name => 'Employee' },
+	     check => {title => 'Check', name => 'Vendor'},
 	   );
 
   $label{invoice}{invnumber} = qq|

@@ -46,7 +46,7 @@
 #======================================================================
 
 use LedgerSMB::PE;
-use Ledger::IR;
+use LedgerSMB::IR;
 
 require "$form->{path}/arap.pl";
 require "$form->{path}/arapprn.pl";

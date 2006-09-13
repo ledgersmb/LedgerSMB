@@ -105,8 +105,21 @@ sub print {
     }
     
   }
+  if ($filename = $queued{$form->{formname}}) {
+    $form->{queued} =~ s/$form->{formname} $filename//;
+    unlink "$spool/$filename";
+    $filename =~ s/\..*$//g;
+  } else {
+    $filename = time;
+    $filename .= $$;
+  }
 
-  &{ "print_$form->{formname}" }($old_form, 1);
+  if ($form->{printandpost}){
+    &post;
+  } else {
+    &{ "print_$form->{formname}" }($old_form, 1);
+  }
+
 
 }
 
@@ -177,8 +190,27 @@ sub print_check {
   if ($form->{format} =~ /(postscript|pdf)/) {
     $form->{IN} =~ s/html$/tex/;
   }
+  if ($form->{media} eq 'queue') {
 
-  if ($form->{media} !~ /(screen)/) {
+    # save status
+    $form->update_status(\%myconfig);
+
+    $old_form->{queued} = $form->{queued};
+
+    %audittrail = ( tablename   => ($order) ? 'oe' : lc $ARAP,
+                    reference   => $form->{"${inv}number"},
+                   formname    => $form->{formname},
+                   action      => 'queued',
+                   id          => $form->{id} );
+
+    $old_form->{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
+  }
+
+  if ($form->{media} !~ /(screen|queue)/) {
+
+    %queued = split / /, $form->{queued};
+
+
     $form->{OUT} = "| $printer{$form->{media}}";
     
     if ($form->{printed} !~ /$form->{formname}/) {
@@ -363,8 +395,39 @@ sub print_transaction {
   if ($form->{format} =~ /(postscript|pdf)/) {
     $form->{IN} =~ s/html$/tex/;
   }
+  if ($form->{media} eq 'queue') {
+    %queued = split / /, $form->{queued};
 
-  if ($form->{media} !~ /(screen)/) {
+    if ($filename = $queued{$form->{formname}}) {
+      $form->{queued} =~ s/$form->{formname} $filename//;
+      unlink "$spool/$filename";
+      $filename =~ s/\..*$//g;
+    } else {
+      $filename = time;
+      $filename .= $$;
+    }
+
+    $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
+    $form->{OUT} = ">$spool/$filename";
+
+    $form->{queued} .= " $form->{formname} $filename";
+    $form->{queued} =~ s/^ //;
+
+    # save status
+    $form->update_status(\%myconfig);
+
+    $old_form->{queued} = $form->{queued};
+
+    %audittrail = ( tablename   => ($order) ? 'oe' : lc $ARAP,
+                    reference   => $form->{"${inv}number"},
+                   formname    => $form->{formname},
+                   action      => 'queued',
+                   id          => $form->{id} );
+
+    $old_form->{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
+  }
+
+  if ($form->{media} !~ /(queue|screen)/) {
     $form->{OUT} = "| $printer{$form->{media}}";
     
     if ($form->{printed} !~ /$form->{formname}/) {
@@ -556,6 +619,7 @@ sub print_options {
     $form->{selectformat} .= qq|
             <option value="postscript">|.$locale->text('Postscript').qq|
 	    <option value="pdf">|.$locale->text('PDF');
+    $media .= qq|<option value="queue">|.$locale->text('Queue');
   }
 
   $format = qq|<select name=format>$form->{selectformat}</select>|;
