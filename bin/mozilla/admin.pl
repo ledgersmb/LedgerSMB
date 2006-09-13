@@ -314,7 +314,6 @@ sub list_users {
 }
 
 
-
 sub form_header {
 
 	# if there is a login, get user
@@ -663,9 +662,10 @@ sub form_header {
 		$acsheading =~ s/ /&nbsp;/g;
 
 		$acsheading = qq|
-			<th align="left" nowrap="nowrap"><input name="$item" class="checkbox" type="checkbox" value="1" $checked  />&nbsp;$acsheading</th>\n|;
+			<td align="left" nowrap="nowrap" style="background-color: #C7E9F7" colspan="2">                    
+                        <input name="$item" class="checkbox" type="checkbox" value="1" $checked  />&nbsp;$acsheading</td><tr><td>\n|;
 			$menuitems .= "$item;";
-			$acsdata = "<td>";
+			$acsdata = "<td style=\"background-color: #F0F0F0\">";
 
 		foreach $item (@{ $acs{$key} }) {
 
