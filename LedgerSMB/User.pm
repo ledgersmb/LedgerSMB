@@ -289,45 +289,6 @@ sub dbsources {
     }
   }
 
-  if ($form->{dbdriver} eq 'Oracle') {
-    if ($form->{only_acc_db}) {
-      $query = qq|SELECT owner FROM dba_objects
-		  WHERE object_name = 'DEFAULTS'
-		  AND object_type = 'TABLE'|;
-    } else {
-      $query = qq|SELECT username FROM dba_users|;
-    }
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while (my ($db) = $sth->fetchrow_array) {
-      push @dbsources, $db;
-    }
-  }
-
-
-# JJR
-  if ($form->{dbdriver} eq 'DB2') {
-    if ($form->{only_acc_db}) {
-      $query = qq|SELECT tabschema FROM syscat.tables WHERE tabname = 'DEFAULTS'|;
-    } else {
-      $query = qq|SELECT DISTINCT schemaname FROM syscat.schemata WHERE definer != 'SYSIBM' AND schemaname != 'NULLID'|;
-    }
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while (my ($db) = $sth->fetchrow_array) {
-      push @dbsources, $db;
-    }
-  }
-# End JJR
-
-# the above is not used but leave it in for future reference
-# DS, Oct. 28, 2003
-
-  
   $sth->finish;
   $dbh->disconnect;
   
@@ -339,8 +300,7 @@ sub dbsources {
 sub dbcreate {
   my ($self, $form) = @_;
 
-  my %dbcreate = ( 'Pg' => qq|CREATE DATABASE "$form->{db}"|,
-               'Oracle' => qq|CREATE USER "$form->{db}" DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP IDENTIFIED BY "$form->{db}"|);
+  my %dbcreate = ( 'Pg' => qq|CREATE DATABASE "$form->{db}"| );
 
   $dbcreate{Pg} .= " WITH ENCODING = '$form->{encoding}'" if $form->{encoding};
   
@@ -349,24 +309,19 @@ sub dbcreate {
   my $dbh = DBI->connect($form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) or $form->dberror;
   my $query = qq|$dbcreate{$form->{dbdriver}}|;
   $dbh->do($query) || $form->dberror($query);
+    
+  # JD: We need to check for plpgsql, if it isn't there create it, if we can't error
+  # Good chance I will have to do this twice as I get used to the way the code is
+  # structured
 
-  if ($form->{dbdriver} eq 'Oracle') {
-    $query = qq|GRANT CONNECT,RESOURCE TO "$form->{db}"|;
-    $dbh->do($query) || $form->dberror($query);
-  }
-  $dbh->disconnect;
-
-
-  # setup variables for the new database
-  if ($form->{dbdriver} eq 'Oracle') {
-    $form->{dbuser} = $form->{db};
-    $form->{dbpasswd} = $form->{db};
-  }
+  my %langcreate = ( 'Pg' => qq|CREATE LANGUAGE plpgsql|);
+  my $query = qq|$langcreate{$form->{dbdriver}}|;
+  $dbh->do($query) || $form->dberror($query);
   
-  
+  #Reassign for the work below
+
   &dbconnect_vars($form, $form->{db});
   
-  $dbh = DBI->connect($form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) or $form->dberror;
   
   # create the tables
   my $dbdriver = ($form->{dbdriver} =~ /Pg/) ? 'Pg' : $form->{dbdriver};
@@ -390,7 +345,7 @@ sub dbcreate {
   # create indices
   $filename = qq|sql/${dbdriver}-indices.sql|;
   $self->process_query($form, $dbh, $filename);
-
+ 
   # create custom tables and functions
   my $item;
   foreach $item (qw(tables functions)) {
