@@ -61,6 +61,9 @@ if (-f "$form->{path}/custom_$form->{script}") {
 }
 
 
+
+
+
 if ($form->{action}) {
 
 	&check_password unless $form->{action} eq 'logout';
@@ -76,11 +79,17 @@ if ($form->{action}) {
 		open(FH, ">$memberfile") or $form->error("$memberfile : $!");
 		print FH qq|# LedgerSMB Accounting members
 
-		[root login]
-		password=
-
-		|;
+[root login]
+password=
+|;
 		close FH;
+	}
+
+	$root = new User "$memberfile", "root login";
+
+	unless($root && $root->{password}) { 
+		 &setup_initial_password();
+		 exit;
 	}
 
 	&adminlogin;
@@ -89,6 +98,42 @@ if ($form->{action}) {
 1;
 # end
 
+
+sub setup_initial_password {
+	
+
+	$form->header();
+	print qq|
+	<body class="admin" onload="sf()">
+	<div align="center">
+		<a href="http://sourceforge.net/projects/ledger-smb/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
+		<h1 class="login">|.$locale->text('Version').qq| $form->{version} <br />|.$locale->text('Administration').qq|</h1>
+		
+		<fieldset><legend>Change password</legend>
+		<p>This is your first time logging into LedgerSMB.  Please set your administrative password</p>
+		
+		<form method="post" action="$form->{script}" name="admin">
+						<table>
+						<tr>
+							<th align="right">|.$locale->text('Password').qq|</th>
+							<td><input type="password" name="new_password" /></td>
+						</tr>
+						<tr>
+							<th align="right">|.$locale->text('Confirm').qq|</th>
+							<td><input type="password" name="confirm_password" /></td>
+						</tr>
+					</table>
+		<input type="hidden" name="path" value="$form->{path}" />
+		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
+		<p><input type="submit" class="submit" name="action" value="|.$locale->text('Change Password').qq|" /></p>
+		</form>
+
+		<a href="http://sourceforge.net/projects/ledger-smb/">LedgerSMB |.$locale->text('website').qq|</a>
+	</div>
+	</body>
+	</html>
+|;	
+}
 
 sub adminlogin {
 
