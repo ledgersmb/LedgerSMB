@@ -1136,7 +1136,6 @@ sub dbselect_source {
 	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 	<br />
 	<input type="submit" class="submit" name="action" value="|.$locale->text('Create Dataset').qq|" />
-	<input type="submit" class="submit" name="action" value="|.$locale->text('Update Dataset').qq|" />
 	<input type="submit" class="submit" name="action" value="|.$locale->text('Delete Dataset').qq|" />
 	</form>
 	<p>|.$locale->text('This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!')
