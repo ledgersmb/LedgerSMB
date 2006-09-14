@@ -206,7 +206,7 @@ sub print_check {
     # save status
     $form->update_status(\%myconfig);
 
-    $old_form->{queued} = $form->{queued};
+    $form->{queued} = $form->{queued};
 
     %audittrail = ( tablename   => ($order) ? 'oe' : lc $ARAP,
                     reference   => $form->{"${inv}number"},
@@ -214,12 +214,11 @@ sub print_check {
                    action      => 'queued',
                    id          => $form->{id} );
 
-    $old_form->{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
-    $filename .= ($old_form->{format} eq 'postscript') ? '.ps' : '.pdf';
-    $old_form->{OUT} = ">$spool/$filename";
+    $form->{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
+    $form->{OUT} = ">$spool/$filename";
 
-    $old_form->{queued} .= " $form->{formname} $filename";
-    $old_form->{queued} =~ s/^ //;
+    $form->{queued} .= " $form->{formname} $filename";
+    $form->{queued} =~ s/^ //;
   }
 
   if ($form->{media} !~ /(screen|queue)/) {
