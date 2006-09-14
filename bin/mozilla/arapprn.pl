@@ -114,6 +114,17 @@ sub print {
     $filename .= $$;
   }
 
+  $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
+  $form->{OUT} = ">$spool/$filename";
+
+  $form->{queued} .= " $form->{formname} $filename";
+  $form->{queued} =~ s/^ //;
+  $printform = new Form;
+  for (keys %$form){
+    $printform->{$_} = $form->{$_};
+  }
+
+
   if ($form->{printandpost}){
     &post;
   } else {
@@ -204,6 +215,11 @@ sub print_check {
                    id          => $form->{id} );
 
     $old_form->{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
+    $filename .= ($old_form->{format} eq 'postscript') ? '.ps' : '.pdf';
+    $old_form->{OUT} = ">$spool/$filename";
+
+    $old_form->{queued} .= " $form->{formname} $filename";
+    $old_form->{queued} =~ s/^ //;
   }
 
   if ($form->{media} !~ /(screen|queue)/) {
