@@ -19,7 +19,11 @@ Other Contributors:
 Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
 the setup.diff.
 
-Angus Carr <apcarr @ users.sourceforge.net> Has provided some corrections to the documentation.
+Angus Carr <apcarr @ users.sourceforge.net> Has provided some corrections to 
+the documentation.
+
+Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
+the password change in the admin.pl
 
 Original Authors of SQL-Ledger:
 ===================================
