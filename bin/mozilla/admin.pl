@@ -167,6 +167,9 @@ sub adminlogin {
 		<input type="hidden" name="path" value="$form->{path}" />
 		</form>
 
+		<p><a href="login.pl">Normal login</a></p>
+
+
 		<a href="http://sourceforge.net/projects/ledger-smb/">LedgerSMB |.$locale->text('website').qq|</a>
 	</div>
 	</body>

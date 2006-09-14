@@ -150,6 +150,7 @@ sub login_screen {
 				</td>
 			</tr>
 		</table>
+	<p><a href="admin.pl">Administration login</a></p>
 	</center>
 </body>
 </html>|;
