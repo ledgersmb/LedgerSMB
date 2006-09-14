@@ -6,10 +6,10 @@
 # needs to be deleted and the sql-ledger.conf needs to be renamed.
 
 $filedie = "To install manually:\n" .
-	"rename the sql-ledger.conf to ledger-smb.conf\n ".
-	"Delete the SL directory (optional but HIGHLY recommended)\n";
+	" Rename the sql-ledger.conf to ledger-smb.conf\n".
+	" Delete the SL directory (optional but HIGHLY recommended)\n";
 open (SL, "< sql-ledger.conf") || die (
-	"Could not open sql-ledger.conf: $! \n $filedie");
+	"Could not open sql-ledger.conf: $! \n\n $filedie");
 open (LS, "> ledger-smb.conf") || die (
 	"Could not open ledger-smb.conf: $! \n $filedie");
 
