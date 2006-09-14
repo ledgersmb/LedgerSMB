@@ -1,12 +1,18 @@
-Changelog for LedgerSMV 1.1.0
+Changelog for LedgerSMB 1.1.0
 
-* 
+* Utility included for near-real-time parts short email notifications.
+* DB Updates now use one transaction per update file.
+* Fixed Lynx support
+* Batch printing now available for checks
 * Warnings are printed when check stub is truncated
 * Protection against duplicate transaction id's.
 * FLOAT datatypes removed from database
 * Sales Data Report added
 * SL2LS.pl now dies if it cannot open the files.
 * Corrected directory transversal bug
+
+Changelog for LedgerSMB v 1.0.0p1
+* Fixed directory transversal/arbitrary code execution vulnerability.
 
 Changelog for LedgerSMB v 1.0.0
 
