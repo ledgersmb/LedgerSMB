@@ -1,5 +1,7 @@
 Changelog for LedgerSMB 1.1.0
 
+* Links between admin and login pages
+* One is required to change the admin password when it is blank (on first login etc).
 * Utility included for near-real-time parts short email notifications.
 * DB Updates now use one transaction per update file.
 * Fixed Lynx support
@@ -8,8 +10,7 @@ Changelog for LedgerSMB 1.1.0
 * Protection against duplicate transaction id's.
 * FLOAT datatypes removed from database
 * Sales Data Report added
-* SL2LS.pl now dies if it cannot open the files.
-* Corrected directory transversal bug
+* SL2LS.pl now dies if it cannot open the files with instructions on how to proceed manually
 
 Changelog for LedgerSMB v 1.0.0p1
 * Fixed directory transversal/arbitrary code execution vulnerability.
