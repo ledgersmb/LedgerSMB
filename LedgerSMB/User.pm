@@ -613,7 +613,7 @@ sub dbupdate {
     $db =~ s/^db//;
     &dbconnect_vars($form, $db);
     
-    my $dbh = DBI->connect($form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) or $form->dberror;
+    my $dbh = DBI->connect($form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}, {AutoCommit => 0}) or $form->dberror;
 
     # check version
     $query = qq|SELECT version FROM defaults|;
@@ -644,7 +644,7 @@ sub dbupdate {
 
       # apply upgrade
       $self->process_query($form, $dbh, "sql/$upgradescript");
-
+      $dbh->commit;
       $version = $maxdb;
  
     }
