@@ -150,7 +150,8 @@ sub login_screen {
 				</td>
 			</tr>
 		</table>
-	<p><a href="admin.pl">Administration login</a></p>
+	<p><a href="admin.pl"
+		>|.$locale->text("Administrative login").qq|</a></p>
 	</center>
 </body>
 </html>|;
