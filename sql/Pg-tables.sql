@@ -74,7 +74,7 @@ INSERT INTO defaults (version) VALUES ('2.6.17');
 --
 CREATE TABLE acc_trans (
   trans_id int,
-  chart_id int NOT NULL,
+  chart_id int NOT NULL REFERENCES chart (id),
   amount numeric(10,2),
   transdate date DEFAULT current_date,
   source text,
