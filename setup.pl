@@ -174,7 +174,7 @@ if (!$newinstall) {
 }
 
 if ($version && $latest_version) {
-  if ($version lt $latest_version) {
+  if ($version ne $latest_version) {
     $install .= "\n(u)pgrade to $latest_version\n";
   }
 }
