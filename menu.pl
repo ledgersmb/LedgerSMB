@@ -64,6 +64,9 @@ use LedgerSMB::Session;
 
 eval { require "ledger-smb.conf"; };
 
+# for custom preprocessing logic
+eval { require "custom.pl"; };
+
 $form = new Form;
 
   
