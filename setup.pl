@@ -36,14 +36,15 @@ $| = 1;
 #not sure how safe this is. If the browser sends a blank HTTP_USER_AGENT
 #will this script destroy part of the install? 
 #This script should probably be made inaccessible via HTTP until this feature is working
-if ($ENV{HTTP_USER_AGENT}) {
+if (($ENV{HTTP_USER_AGENT})||($ENV{HTTP_HOST})) {
 	print "Content-type: text/html\n\nThis does not work yet! use $0 from the command line";
 	exit;
 }
 
 # Make sure they have the required perl modules installed.
 # bin/mozilla/admin.pl needs Digest::MD5 for session handling
-my @req_modules=(qw(DBI DBD::Pg Digest::MD5 ));
+# HTML:LinkExtor is used by the setup program.
+my @req_modules=(qw(DBI DBD::Pg Digest::MD5 HTML::LinkExtor));
 
 foreach my $module(@req_modules){
   print "Checking for: $module ...\t";
@@ -70,12 +71,15 @@ foreach my $module(@req_modules){
   }
 }
 
+use HTML::LinkExtor;
+
+
 $lynx = `lynx -version`;      # if LWP is not installed use lynx
 $gzip = `gzip -V 2>&1`;            # gz decompression utility
 $tar = `tar --version 2>&1`;       # tar archiver
 $latex = `latex -version`;
 
-%checkversion = ( www => 3, abacus => 4, pluto => 5, neptune => 8 );
+my $versionurl ='http://prdownloads.sourceforge.net/ledger-smb';
 
 %source = (
 	    1 => { url => "http://voxel.dl.sourceforge.net/sourceforge/ledger-smb", site => "New York, U.S.A", locale => 'us' },
@@ -113,7 +117,6 @@ perl $0 <filename>\n";
 if ($filename) {
   # extract version
   die "Not a Ledger-SMB archive\n" if ($filename !~ /^ledger-smb/);
-  
   $version = $filename;
   $version =~ s/ledger-smb-(\d+\.\d+\.\d+).*$/$1/;
 
@@ -272,36 +275,26 @@ sub get_latest_version {
     print "skipping, filename supplied\n";
     return;
   }
-
+  my $urlresult = '';
   if ($lwp) {
-    foreach $source (qw(pluto www abacus neptune)) {
-      $url = $source{$checkversion{$source}}{url};
-      print "\n$source{$checkversion{$source}}{site} ... ";
-
-      $latest_version = LWP::Simple::get("$url/latest_version");
-      
-      if ($latest_version) {
-	last;
-      } else {
-	print "not found";
-      }
+    if ($urlresult = LWP::Simple::get("$versionurl")){
+      $latest_version = parse_links($urlresult);
+      last;
+    } else {
+      print "not found"; 
     }
   } else {
     if (!$lynx) {
       print "\nYou must have either lynx or LWP installed";
       exit 1;
     }
-
-    foreach $source (qw(pluto www abacus neptune)) {
-      $url = $source{$checkversion{$source}}{url};
-      print "\n$source{$checkversion{$source}}{site} ... ";
-      $ok = `lynx -dump -head $url/latest_version`;
-      if ($ok = ($ok =~ s/HTTP.*?200 //)) {
-	$latest_version = `lynx -dump $url/latest_version`;
-	last;
-      } else {
-	print "not found";
-      }
+    $ok = `lynx -dump -head $versionurl`;
+    if ($ok = ($ok =~ s/HTTP.*?200 //)) {
+      $urlresult = `lynx -dump $versionurl`;
+      $latest_version = parse_links($urlresult);
+      last;
+    } else {
+      print "not found";
     }
     die unless $ok;
   }
@@ -313,6 +306,28 @@ sub get_latest_version {
 
 }
 
+my @versions = ();
+sub parse_links{
+    # Take the html retrieved by lwp or lynx and look for the version numbers.
+    my $text = shift;
+    my $version = '';
+    my $p = HTML::LinkExtor->new(\&cb);
+    $p->parse($text) or die;
+    foreach (@versions){
+        my ($chkversion) = $_ =~ /^\/ledger-smb\/ledger-smb-(\d{1,3}\.\d{1,3}\.\d{1,3})\.tar\.gz$/;
+        $version = $chkversion if ($chkversion gt $version);
+    }
+    return $version;
+}
+
+sub cb {
+    # Callback function for LinkExtor
+    my($tag, %attr) = @_;
+    return if $tag ne 'a';
+    return unless $attr{href} =~ /^\/ledger-smb\/ledger-smb-\d{1,3}\.\d{1,3}\.\d{1,3}\.tar\.gz$/;
+    push(@versions, values %attr);
+
+}
 
 sub get_source_code {
 
