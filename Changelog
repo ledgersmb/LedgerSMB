@@ -6,11 +6,14 @@ Database
 * DB Updates now use one transaction per update file.
 * FLOAT datatypes removed from database
 * Protection against duplicate transaction id's.
+* Added foreign key constraint to acc_trans.chart_id
 
 Security
 * One is required to change the admin password when it is blank (on first login etc).
 
 Usability
+* Setup.pl use is now experimentally supported
+* Disabled editing sub-assemblies in one area where it is unsafe.
 * Utility included for near-real-time parts short email notifications.
 * Fixed Lynx support
 * Batch printing now available for checks

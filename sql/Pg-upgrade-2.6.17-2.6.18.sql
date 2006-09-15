@@ -11,6 +11,9 @@ ALTER TABLE acc_trans ALTER COLUMN entry_id SET DEFAULT nextval('acctrans_entry_
 UPDATE acc_trans SET entry_id = nextval('acctrans_entry_id_seq');
 ALTER TABLE acc_trans ADD PRIMARY key (entry_id);
 
+-- We should probably add a foreign key to chart.id
+ALTER TABLE acc_trans ADD FOREIGN KEY (chart_id) REFERENCES chart (id);
+
 -- Start changing floats
 ALTER TABLE acc_trans ALTER COLUMN amount TYPE numeric(10,2);
 
@@ -219,6 +222,7 @@ DO ALSO INSERT INTO id_tracker (id, table_name) VALUES (new.id, 'employee');
 
 CREATE RULE warehouse_id_track_u AS ON update TO warehouse 
 DO ALSO UPDATE id_tracker SET id = new.id WHERE id = old.id;
+
 
 COMMIT;
 
