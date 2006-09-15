@@ -1,10 +1,10 @@
 Changelog for LedgerSMB 1.1.0
 
 Database
+* Added utility to partially recover from SQL-Ledger data corruption issues.
 * Primary Key added to acc_trans table
 * DB Updates now use one transaction per update file.
 * FLOAT datatypes removed from database
-* Links between admin and login pages
 * Protection against duplicate transaction id's.
 
 Security
@@ -17,6 +17,7 @@ Usability
 * Warnings are printed when check stub is truncated
 * Sales Data Report added
 * SL2LS.pl now dies if it cannot open the files with instructions on how to proceed manually
+* Links between admin and login pages
 
 Changelog for LedgerSMB v 1.0.0p1
 * Fixed directory transversal/arbitrary code execution vulnerability.
