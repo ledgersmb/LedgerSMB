@@ -767,6 +767,7 @@ sub form_footer {
 	$button{'Delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
       }
     }
+    %button = () if $form->{isassemblyitem} && $form->{item} eq 'assembly';
     
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
     

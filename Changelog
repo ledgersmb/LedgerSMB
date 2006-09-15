@@ -1,14 +1,20 @@
 Changelog for LedgerSMB 1.1.0
 
-* Links between admin and login pages
-* One is required to change the admin password when it is blank (on first login etc).
-* Utility included for near-real-time parts short email notifications.
+Database
+* Primary Key added to acc_trans table
 * DB Updates now use one transaction per update file.
+* FLOAT datatypes removed from database
+* Links between admin and login pages
+* Protection against duplicate transaction id's.
+
+Security
+* One is required to change the admin password when it is blank (on first login etc).
+
+Usability
+* Utility included for near-real-time parts short email notifications.
 * Fixed Lynx support
 * Batch printing now available for checks
 * Warnings are printed when check stub is truncated
-* Protection against duplicate transaction id's.
-* FLOAT datatypes removed from database
 * Sales Data Report added
 * SL2LS.pl now dies if it cannot open the files with instructions on how to proceed manually
 
