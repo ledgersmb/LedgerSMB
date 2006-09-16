@@ -4,5 +4,5 @@ GOTO printname
 gsprint -name %1 - > NUL
 GOTO end
 :printdefault
-gspring -noprinter - > NUL 
+gsprint -noprinter - > NUL 
 :end
