@@ -12,6 +12,7 @@ Security
 * One is required to change the admin password when it is blank (on first login etc).
 
 Usability
+* We now support adding custom automation into a custom.pl
 * Setup.pl use is now experimentally supported
 * Disabled editing sub-assemblies in one area where it is unsafe.
 * Utility included for near-real-time parts short email notifications.
@@ -21,6 +22,7 @@ Usability
 * Sales Data Report added
 * SL2LS.pl now dies if it cannot open the files with instructions on how to proceed manually
 * Links between admin and login pages
+* Experimental support for Windows printing
 
 Changelog for LedgerSMB v 1.0.0p1
 * Fixed directory transversal/arbitrary code execution vulnerability.
