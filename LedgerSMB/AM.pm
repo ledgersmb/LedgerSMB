@@ -1513,14 +1513,14 @@ sub backup {
 	$myconfig->{dbhost} = 'localhost' unless $myconfig->{dbhost};
 
 	print OUT qq|-- LedgerSMB Backup
-				 -- Dataset: $myconfig->{dbname}
-				 -- Version: $form->{dbversion}
-				 -- Host: $myconfig->{dbhost}
-				 -- Login: $form->{login}
-				 -- User: $myconfig->{name}
-				 -- Date: $today
-				 --
-				|;
+--				 Dataset: $myconfig->{dbname}
+--				 Version: $form->{dbversion}
+-- 				 Host: $myconfig->{dbhost}
+-- 				 Login: $form->{login}
+--				 User: $myconfig->{name}
+--				 Date: $today
+--
+|;
 
 
 	@tables = grep !/^temp/, @tables;
