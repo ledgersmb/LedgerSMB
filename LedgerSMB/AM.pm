@@ -1569,10 +1569,9 @@ sub backup {
 	print OUT @schema;
 	print OUT "\n";
 
-	print OUT qq|-- set options
-				 $myconfig->{dboptions};
-				 --
-				|;
+	print OUT qq|-- set options| .
+				 qq|$myconfig->{dboptions};| .
+				 qq|--|;
 
 	my $query;
 	my $sth;
@@ -1659,10 +1658,8 @@ sub backup {
 		open(IN, "$tmpfile") or $form->error("$tmpfile : $!");
 		open(OUT, ">-") or $form->error("STDOUT : $!");
 
-		print OUT qq|Content-Type: application/file;
-		Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"
-
-		|;
+		print OUT qq|Content-Type: application/file;\n| .
+		qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n|;
 		binmode(IN);
 		binmode(OUT);
 
