@@ -889,8 +889,8 @@ sub parse_template {
 				} else {
 
 					# launch application
-					print qq|Content-Type: application/$self->{format}
-					Content-Disposition: attachment; filename="$self->{tmpfile}"\n\n|;
+					print qq|Content-Type: application/$self->{format}\n|.
+						  qq|Content-Disposition: attachment; filename="$self->{tmpfile}"\n\n|;
 
 					unless (open(OUT, ">-")) {
 						$err = $!;
