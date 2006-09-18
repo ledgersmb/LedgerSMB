@@ -8,7 +8,7 @@
 \tableofcontents
 
 \section{Introduction}
-Consistant coding style contributes to readability of code.  This contributes in
+Consistent coding style contributes to readability of code.  This contributes in
 turn to fewer bugs and easier debugging.
 
 While consultants which implement custom solutions for their customers are not
@@ -19,7 +19,7 @@ accepted in the main source tree.
 \section{File Organization and Whitespace}
 
 Files should be organized according to three principles: atomicity, performance,
-and readibility.  While there is no maximum file size, there is no reason to
+and readability.  While there is no stated maximum file size, there is no reason to
 group large amounts of code together when only a small subset of that code will
 be executed on any given run of the program.  Similarly, core API for a single
 data structure entity may be grouped together even if each run may touch only a
@@ -39,17 +39,19 @@ avoided.
 
 \section{Comments}
 
-In an ideal world, the code should be sufficiently readible to be entirely
-understandable without comments.  Unfortunately such an ideal is rarely
-attained.  Comments should be used to annotate code and add information that is
-not already a part of code or programming logic itself.  
+In an ideal world, the code should be sufficiently readable to be
+entirely understandable without comments.  Unfortunately, this sort of
+ideal is seldom attained.  Comments should be used to annotate code
+and add information that is not already a part of code or programming
+logic itself.
 
-Comments may include arguments and return values of functions (for easy
-reference), a summary as to why a particular design choice was made, or a note
-to alert future programmers that a particular chunk of code deserves additional
-attention.  Comments should not, however generaly tell what the program is doing
-or how it does that.  If such comments are required, it is a good indication
-that a block of code requires rewriting.
+Comments may include arguments and return values of functions (for
+easy reference), a summary as to why a particular design choice was
+made, or a note to alert future programmers that a particular chunk of
+code deserves additional attention.  Comments should not, however,
+merely indicate what the program is doing or how it does something.
+If such comments are required, that is a good indication that a block
+of code requires rewriting.
 
 Additionally it is a good idea to provide a brief description at the top of each
 file describing, in general terms, what its function is.
@@ -59,8 +61,8 @@ file describing, in general terms, what its function is.
 Functions should be atomic.  While there is no maximum length to functions, long
 functions may be an indication that a function may be non-atomic.
 
-In general, when more than one line of code is being copied and pasted, it 
-should instead be moved  into its own function where it can be called by all 
-entry points.
+In general, when more than one line of code is being copied and
+pasted, it should instead be moved into its own function where it can
+be called by all entry points.
 
 \end{document}

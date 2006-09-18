@@ -37,7 +37,7 @@ field of the transaction.
 
 Also, the transaction amount has been changed from FLOAT to NUMERIC so that
 arbitrary precision mathematics can be used in third party reports.  This ought
-to also allow SQL-Ledger to properly scale up better as SUM operations on
+to also allow LedgerSMB to properly scale up better as SUM operations on
 floating points are unsafe for large numbers of records where accounting data is
 involved.
 

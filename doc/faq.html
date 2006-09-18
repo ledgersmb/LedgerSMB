@@ -9,12 +9,15 @@ will fail to balance.  So this is a serious problem with data integrity.
 LedgerSMB prevents this by adding the NOT NULL constraing but this can cause
 prevent people from migrating when they have invalid data in their databases.
 <br/><br/>
-If you get an error like this the first thing to do is seek technical support
-whether or not you wish to continue the migration.  In general the providers of
-support for LedgerSMB and SQL-Ledger will all be able to help.  Unfortunately
-because this problem involves information loss, no solution can be automated
-without invalidating your accounting information.
-</li></p>
+
+If you encounter an error like this, the first thing to do is seek
+technical support, regardless of whether or not you wish to continue
+the migration.  In general the providers of support for LedgerSMB and
+SQL-Ledger should all be able to be of some assistance.
+Unfortunately, since this problem involves information loss, no
+solution can be automated without invalidating your accounting
+information.  </li></p>
+
 <p><li><h4>PostgreSQL 8.x</h4>
 PostgreSQL added a restriction in v8.x that a sequence cannot be dropped
 after if it is referenced by a table. However backups created with
@@ -50,17 +53,20 @@ SELECT SETVAL('jcitemsid', 53);
 </pre>
 
 
-<p><li><h4>PostgreSQL template1</h4>
-template1 is a template to build new databases
-from. Anything you put into template1 will be copied to a new database.
-So when you try to create a new dataset, the tables are already created from
-template1 and when LedgerSMB tries to create them you'll get an error that
-the tables already exist.
+<p><li><h4>PostgreSQL template1</h4> 
+
+<tt>template1</tt> is a template that new databases are built from, by
+default. Anything you put into <tt>template1</tt> will be copied to a
+new database.  Thus, when you try to create a new dataset, the tables
+are already drawn in from <tt>template1</tt> so that when LedgerSMB
+tries to create them, you will receive an error message indicating
+that the tables already exist.
 
 
 <p><li><h4>PostgreSQL 8.0+</h4>
-To use LedgerSMB with 8.0+ you have to modify Pg-tables.sql The file
-is in the sql directory.
+
+To use LedgerSMB with PostgreSQL 8.0+ you have to modify
+<tt>Pg-tables.sql</tt>. This file is in the sql directory.
 
 <pre>
 CREATE TABLE orderitems (
@@ -101,10 +107,10 @@ This change is only required for LedgerSMB versions 2.6.3 and below.
 
 <p>If you already built a dataset without this change you will get
 an error when you try to save a PO or assembly.
+
 <p>"ERROR: column "oid" does not exist"
 
 <p>Drop the tables and rebuild WITH OIDS.
-
 
 <p><li><h4>Japanese characters</h4>
 modify apache so that EUC_JP is the main additional language.
@@ -141,10 +147,10 @@ AR and AP account. Then edit all your transactions and repost.
 <p><li><h4>SELinux</h4>
 <a href=http://fedora.redhat.com/docs/selinux-faq-fc3/index.html>http://fedora.redhat.com/docs/selinux-faq-fc3/index.html</a>
 
-<p>modify /etc/selinux/conf and set SELINUX=permissive
+<p>modify <tt>/etc/selinux/conf</tt> and set <tt>SELINUX=permissive</tt>
 
-<p>use audit2allow and add the following to policy.conf,
-then run "make reload"
+<p>use <tt>audit2allow</tt>, add the following to
+<tt>policy.conf</tt>, then run <tt>make reload</tt>
 
 <p>#line 83
 <br>allow httpd_sys_script_t port_type:{ tcp_socket udp_socket } { send_msg
@@ -158,8 +164,8 @@ recv_msg };
 
 
 <p><li><h4>session timeouts</h4>
-If you get frequent timeouts or can't even log in synchronize
-the clocks from the server and workstation.
+If you get frequent timeouts or can't even log in, synchronize
+the clocks between the server and workstation.
 
 
 <p><li><h4>lineitems not printing</h4>
@@ -180,26 +186,27 @@ encoding when you set up a new dataset.
 <p><li><h4>characterset problems</h4>
 If you have problems displaying the correct characterset try adding
 <pre>
-  AddDefaultCharset On</pre>
-in your httpd.conf file.
+AddDefaultCharset On</pre>
+in your <tt>httpd.conf</tt> file.
 
 <p><li><h4>About installation</h4>
 The easiest is to use the setup.pl script as root.
 You don't need to know very much about your system, just login as root,
 run 'perl setup.pl' and follow the prompts.
 <p>setup.pl does not check for missing software packages and it is your
-responsibilite to make sure you have the required software
+responsibility to make sure you have the required software
 installed either from source or from a package.
 
-<p>Requirements are clearly indicated in the README file and on the
-download page.
+<p>Requirements are clearly indicated in the <tt>README</tt> file and
+on the download page.
 
 
 <p><li><h4>cannot create function</h4>
 <ol>
-<li>either run createlang and install the plpgsql language handler or
-install yourself. For more information how to do that, visit
-<a href=http://www.postgresql.org/docs/>PostgreSQL</a> and
+
+<li>either run <tt>createlang plpgsql</tt> to install the plpgsql
+language handler or install yourself. For more information how to do
+that, visit <a href=http://www.postgresql.org/docs/>PostgreSQL</a> and
 read the interactive documentation for procedural languages.
 
 <li>load admin.pl
@@ -210,9 +217,9 @@ read the interactive documentation for procedural languages.
 
 <p><li><h4>The requested URL /ledger-smb/admin.pl was not found</h4>
 Your webserver doesn't know where to find the script. Most commonly this
-is from distributions hiding webserver configuration files in different
-locations or files and setup.pl wasn't able to configure the location for
-you. Find out which file (httpd.conf, httpdcommon.conf, ...)
+results when distributions hide webserver configuration files in unexpected
+locations so that <tt>setup.pl</tt> wasn't able to configure the location for
+you. Find out which file (<tt>httpd.conf</tt>, <tt>httpdcommon.conf</tt>, ...)
 controls your webserver configuration and add
 <pre>
   # LedgerSMB
@@ -282,15 +289,16 @@ This is different with every distribution so look for it.
 fancy word for a local machine.
 'localhost' is a host like any other host on a network.
 A 'local' entry in pg_hba.conf will allow socket connections ONLY and
-not allow a host connection. If you then try to connect to 'localhost'
-postgres will come back with an authentication error.
+not allow a host connection. If you then try to connect to 'localhost',
+PostgreSQL will come back with an authentication error.
 
-<p>So, forget you ever heard there is such a thing as 'localhost' and leave
+<p>So, if the database resides on the same server as the web server,
+forget you ever heard there is such a thing as 'localhost' and leave
 the Host portion blank.
 
-<p><b>WARNING!</b> DO NOT just put a 'host  all all trust' in pg_hba.conf
-unless you know what you are doing.
-
+<p><b>WARNING!</b> DO NOT just put a 'host all all trust' in
+pg_hba.conf unless you know what you are doing; that can introduce a
+pretty huge security hole.
 
 <p><li><h4>DBD-Pg for Mandrake 9.0</h4>
 Mandrake did not package a compiled DBD-Pg package again, so install DBD-Pg
@@ -315,10 +323,9 @@ pagebreak block which must be commented out.
 When you are done with the changes
 replace << and >> with <% and %> and uncomment the pagebreak block.
 
-<p>LaTeX is difficult but it also offers a much superior environment
-to produce professionally looking forms in postscript and PDF format.
-Unfortunately with all that power there is also a steep learning curve.
-
+<p>LaTeX is somewhat complex to learn, initially, but offers a much
+superior environment to produce professional-looking forms in
+postscript and PDF format.
 
 <p><li><h4>W3M</h4>
 pass terminal=mozilla when you start w3m
