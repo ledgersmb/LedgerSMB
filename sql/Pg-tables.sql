@@ -75,7 +75,7 @@ INSERT INTO defaults (version) VALUES ('2.6.17');
 CREATE TABLE acc_trans (
   trans_id int,
   chart_id int NOT NULL REFERENCES chart (id),
-  amount numeric(10,2),
+  amount NUMERIC,
   transdate date DEFAULT current_date,
   source text,
   cleared bool DEFAULT 'f',
@@ -92,8 +92,8 @@ CREATE TABLE invoice (
   description text,
   qty integer,
   allocated integer,
-  sellprice numeric(10,2),
-  fxsellprice numeric(10,2),
+  sellprice NUMERIC,
+  fxsellprice NUMERIC,
   discount float4, -- jd: check into this
   assemblyitem bool DEFAULT 'f',
   unit varchar(5),
@@ -119,7 +119,7 @@ CREATE TABLE customer (
   notes text,
   discount numeric, 
   taxincluded bool default 'f',
-  creditlimit numeric(10,2) default 0,
+  creditlimit NUMERIC default 0,
   terms int2 default 0,
   customernumber varchar(32),
   cc text,
@@ -143,9 +143,9 @@ CREATE TABLE parts (
   partnumber text,
   description text,
   unit varchar(5),
-  listprice numeric(10,2),
-  sellprice numeric(10,2),
-  lastcost numeric(10,2),
+  listprice NUMERIC,
+  sellprice NUMERIC,
+  lastcost NUMERIC,
   priceupdate date DEFAULT current_date,
   weight numeric,
   onhand numeric DEFAULT 0,
@@ -165,7 +165,7 @@ CREATE TABLE parts (
   microfiche text,
   partsgroup_id int,
   project_id int,
-  avgcost numeric(10,2)
+  avgcost NUMERIC
 );
 --
 CREATE TABLE assembly (
@@ -182,9 +182,9 @@ CREATE TABLE ar (
   transdate date DEFAULT current_date,
   customer_id int,
   taxincluded bool,
-  amount numeric(10,2),
-  netamount numeric(10,2),
-  paid numeric(10,2),
+  amount NUMERIC,
+  netamount NUMERIC,
+  paid NUMERIC,
   datepaid date,
   duedate date,
   invoice bool DEFAULT 'f',
@@ -209,9 +209,9 @@ CREATE TABLE ap (
   transdate date DEFAULT current_date,
   vendor_id int,
   taxincluded bool DEFAULT 'f',
-  amount numeric(10,2),
-  netamount numeric(10,2),
-  paid numeric(10,2),
+  amount NUMERIC,
+  netamount NUMERIC,
+  paid NUMERIC,
   datepaid date,
   duedate date,
   invoice bool DEFAULT 'f',
@@ -258,8 +258,8 @@ CREATE TABLE oe (
   transdate date default current_date,
   vendor_id int,
   customer_id int,
-  amount numeric(10,2),
-  netamount numeric(10,2),
+  amount NUMERIC,
+  netamount NUMERIC,
   reqdate date,
   taxincluded bool,
   shippingpoint text,
@@ -283,7 +283,7 @@ CREATE TABLE orderitems (
   parts_id int,
   description text,
   qty numeric,
-  sellprice numeric(10,2),
+  sellprice NUMERIC,
   discount numeric,
   unit varchar(5),
   project_id int,
@@ -452,7 +452,7 @@ CREATE TABLE partsvendor (
   parts_id int,
   partnumber text,
   leadtime int2,
-  lastcost numeric(10,2),
+  lastcost NUMERIC,
   curr char(3)
 );
 --
@@ -466,7 +466,7 @@ CREATE TABLE partscustomer (
   customer_id int,
   pricegroup_id int,
   pricebreak numeric,
-  sellprice numeric(10,2),
+  sellprice NUMERIC,
   validfrom date,
   validto date,
   curr char(3)
@@ -526,8 +526,8 @@ CREATE TABLE jcitems (
   description text,
   qty numeric,
   allocated numeric,
-  sellprice numeric(10,2),
-  fxsellprice numeric(10,2),
+  sellprice NUMERIC,
+  fxsellprice NUMERIC,
   serialnumber text,
   checkedin timestamp with time zone,
   checkedout timestamp with time zone,
@@ -673,3 +673,14 @@ DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'employe
 CREATE RULE warehouse_id_track_u AS ON update TO warehouse 
 DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
 
+CREATE TABLE custom_table_catalog (
+table_id SERIAL PRIMARY KEY,
+extends TEXT,
+table_name TEXT
+);
+
+CREATE TABLE custom_field_catalog (
+field_id SERIAL PRIMARY KEY,
+table_id INT REFERENCES custom_table_catalog,
+field_name TEXT
+);
