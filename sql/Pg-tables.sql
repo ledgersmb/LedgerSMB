@@ -35,7 +35,8 @@ CREATE TABLE chart (
   category char(1),
   link text,
   gifi_accno text,
-  contra bool DEFAULT 'f'
+  contra bool DEFAULT 'f',
+  PRIMARY KEY (id)
 );
 --
 CREATE TABLE gifi (

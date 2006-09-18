@@ -1,6 +1,8 @@
 Changelog for LedgerSMB 1.1.0
 
 Database
+* Added add_custom_field and drop_custom_field functions.
+	-- will be more integrated into API next version
 * Added utility to partially recover from SQL-Ledger data corruption issues.
 * Primary Key added to acc_trans table
 * DB Updates now use one transaction per update file.
