@@ -1,3 +1,4 @@
+@echo off
 IF X%1==X GOTO printdefault
 GOTO printname
 :printname
