@@ -10,6 +10,7 @@ Database
 * Protection against duplicate transaction id's.
 * Added foreign key constraint to acc_trans.chart_id
 * Database backups now use pg_dump
+* Database creation routines now attempt to add plpgsql to the db if not there.
 
 Security
 * One is required to change the admin password when it is blank (on first login etc).
