@@ -25,12 +25,17 @@ the documentation.
 Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
 the password change in the admin.pl
 
+Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
+documentation.
+
+Seneca Cunningham <tentra @ gmail.com> provided some bug fixes to the upgrade
+from 1.0.0 to 1.1.0
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
 Original author of SQL-Ledger, on which LedgerSMB is based.  He also owns DWS
 Systems, Inc.
 
-Christopher Browne <cbrowne @ acm.org>
 Tony Fraser <tony @ sybaspace.com>
 Both of the above are mentioned as contributors to a single file in SQL-Ledger.

@@ -1392,251 +1392,24 @@ sub backup {
 	open(OUT, "$form->{OUT}") or $form->error("$form->{OUT} : $!");
 
 	# get sequences, functions and triggers
-	my @tables = ();
-	my @sequences = ();
-	my @functions = ();
-	my @triggers = ();
-	my @schema = ();
-
-	# get dbversion from -tables.sql
-	my $file = "$myconfig->{dbdriver}-tables.sql";
-
-	open(FH, "sql/$file") or $form->error("sql/$file : $!");
-
-	my @a = <FH>;
-	close(FH);
-
-	@dbversion = grep /defaults \(version\)/, @a;
-
-	$dbversion = "@dbversion";
-	$dbversion =~ /(\d+\.\d+\.\d+)/;
-	$dbversion = User::calc_version($1);
-
-	opendir SQLDIR, "sql/." or $form->error($!);
-	@a = grep /$myconfig->{dbdriver}-upgrade-.*?\.sql$/, readdir SQLDIR;
-	closedir SQLDIR;
-
-	my $mindb;
-	my $maxdb;
-
-	foreach my $line (@a) {
-
-		$upgradescript = $line;
-		$line =~ s/(^$myconfig->{dbdriver}-upgrade-|\.sql$)//g;
-
-		($mindb, $maxdb) = split /-/, $line;
-		$mindb = User::calc_version($mindb);
-
-		next if $mindb < $dbversion;
-
-		$maxdb = User::calc_version($maxdb);
-
-		$upgradescripts{$maxdb} = $upgradescript;
-	}
-
-
-	$upgradescripts{$dbversion} = "$myconfig->{dbdriver}-tables.sql";
-	$upgradescripts{functions} = "$myconfig->{dbdriver}-functions.sql";
-
-	if (-f "sql/$myconfig->{dbdriver}-custom_tables.sql") {
-		$upgradescripts{customtables} = "$myconfig->{dbdriver}-custom_tables.sql";
-	}
-
-	if (-f "sql/$myconfig->{dbdriver}-custom_functions.sql") {
-		$upgradescripts{customfunctions} = "$myconfig->{dbdriver}-custom_functions.sql";
-	}
-
-	foreach my $key (sort keys %upgradescripts) {
-
-		$file = $upgradescripts{$key};
-
-		open(FH, "sql/$file") or $form->error("sql/$file : $!");
-
-		push @schema, qq|-- $file\n|;
-
-		while (<FH>) {
-
-			if (/create table (\w+)/i) {
-				push @tables, $1;
-			}
-
-			if (/create sequence (\w+)/i) {
-				push @sequences, $1;
-				next;
-			}
-
-			if (/end function/i) {
-				push @functions, $_;
-				$function = 0;
-				$temp = 0;
-				next;
-			}
-
-			if (/create function /i) {
-				$function = 1;
-			}
-
-			if ($function) {
-				push @functions, $_;
-				next;
-			}
-
-			if (/end trigger/i) {
-				push @triggers, $_;
-				$trigger = 0;
-				next;
-			}
-
-			if (/create trigger/i) {
-				$trigger = 1;
-			}
-
-			if ($trigger) {
-				push @triggers, $_;
-				next;
-			}
-
-			push @schema, $_ if $_ !~ /^(insert|--)/i;
-
-		}
-
-		close(FH);
-
-	}
-
-
-	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
 
 	my $today = scalar localtime;
 
 	$myconfig->{dbhost} = 'localhost' unless $myconfig->{dbhost};
 
-	print OUT qq|-- LedgerSMB Backup
---				 Dataset: $myconfig->{dbname}
---				 Version: $form->{dbversion}
--- 				 Host: $myconfig->{dbhost}
--- 				 Login: $form->{login}
---				 User: $myconfig->{name}
---				 Date: $today
---
-|;
-
-
-	@tables = grep !/^temp/, @tables;
+	$ENV{PGPASSWD} = $myconfig->{dbpasswd};
 	# drop tables and sequences
-	for (@tables) { print OUT qq|DROP TABLE $_;\n| }
-
-	print OUT "--\n";
-
-	# triggers and index files are dropped with the tables
-
-	# drop functions
-	foreach $item (@functions) {
-		if ($item =~ /create function (.*\))/i) {
-			print OUT qq|DROP FUNCTION $1;\n|;
-		}
-	}
-
-	# create sequences
-	foreach $item (@sequences) {
-
-		if ($myconfig->{dbdriver} eq 'DB2') {
-			$query = qq|SELECT NEXTVAL FOR $item FROM sysibm.sysdummy1|;
-		} else {
-			$query = qq|SELECT last_value FROM $item|;
-		}
-
-		my ($id) = $dbh->selectrow_array($query);
-
-		if ($myconfig->{dbdriver} eq 'DB2') {
-			print OUT qq|DROP SEQUENCE $item RESTRICT
-						 CREATE SEQUENCE $item AS INTEGER START WITH $id INCREMENT BY 1 MAXVALUE 2147483647 MINVALUE 1 CACHE 5;\n|;
-		} else {
-			if ($myconfig->{dbdriver} eq 'Pg') {
-				print OUT qq|CREATE SEQUENCE $item;
-							 SELECT SETVAL('$item', $id, FALSE);\n|;
-			} else {
-				print OUT qq|DROP SEQUENCE $item
-							 CREATE SEQUENCE $item START $id;\n|;
-			}
-		}
-	}
-
-	print OUT "--\n";
-
-	# add schema
-	print OUT @schema;
-	print OUT "\n";
-
-	print OUT qq|-- set options| .
-				 qq|$myconfig->{dboptions};| .
-				 qq|--|;
-
-	my $query;
-	my $sth;
-	my @arr;
-	my $fields;
-
-	foreach $table (@tables) {
-
-		$query = qq|SELECT * FROM $table|;
-		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
-
-		$query = qq|INSERT INTO $table (|;
-		$query .= join ',', (map { $sth->{NAME}->[$_] } (0 .. $sth->{NUM_OF_FIELDS} - 1));
-		$query .= qq|) VALUES|;
-
-		while (@arr = $sth->fetchrow_array) {
-
-			$fields = "(";
-
-			$fields .= join ',', map { $dbh->quote($_) } @arr;
-			$fields .= ")";
-
-			print OUT qq|$query $fields;\n|;
-		}
-
-		$sth->finish;
-	}
-
-	print OUT "--\n";
-
-	# functions
-	for (@functions) { print OUT $_ }
-
-	# triggers
-	for (@triggers) { print OUT $_ }
-
-	# add the index files
-	open(FH, "sql/$myconfig->{dbdriver}-indices.sql");
-	@a = <FH>;
-	close(FH);
-	print OUT @a;
-
-	close(OUT);
-
-	$dbh->disconnect;
 
 	# compress backup if gzip defined
 	my $suffix = "";
 
-	if ($gzip) {
-		my @args = split / /, $gzip;
-		my @s = @args;
-
-		push @args, "$tmpfile";
-		system(@args) == 0 or $form->error("$args[0] : $?");
-
-		shift @s;
-		my %s = @s;
-		$suffix = ${-S} || ".gz";
-		$tmpfile .= $suffix;
-	}
-
 	if ($form->{media} eq 'email') {
-
+		if ($gzip){
+			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | $gzip`;
+		} else {
+			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
+		}
+		close OUT;
 		use LedgerSMB::Mailer;
 		$mail = new Mailer;
 
@@ -1659,16 +1432,12 @@ sub backup {
 		open(OUT, ">-") or $form->error("STDOUT : $!");
 
 		print OUT qq|Content-Type: application/file;\n| .
-		qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n|;
-		binmode(IN);
-		binmode(OUT);
-
-		while (<IN>) {
-			print OUT $_;
+		qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
+		if ($gzip){
+			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | $gzip`;
+		} else {
+			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
 		}
-
-		close(IN);
-		close(OUT);
 
 	}
 
