@@ -1165,13 +1165,18 @@ sub dbselect_source {
 									<tr>
 										<th align="right">|.$locale->text('User').qq|</th>
 										<td><input name="dbuser" size="10" value="$form->{dbuser}" /></td>
-										<th align="right">|.$locale->text('Password').qq|</th>
-										<td><input type="password" name="dbpasswd" size="10" /></td>
+<th align="right">|.$locale->text('Password').qq|</th>				
+<td><input type="password" name="dbpasswd" size="10" /></td>
 									</tr>
 									<tr>
 										<th align="right">$form->{connectstring}</th>
 										<td colspan="3"><input name="dbdefault" size="10" value="$form->{dbdefault}" /></td>
 									</tr>
+<th align="right">|.$locale->text("Superuser").qq|</th>
+ <td><input name="dbsuperuser" size="10" value="$form->{dbsuperuser}" /></td>
+<th align="right">|.$locale->text('Password').qq|</th>				
+<td><input type="password" name="dbsuperpasswd" size="10" /></td>
+
 								</table>
 							</td>
 						</tr>
@@ -1317,7 +1322,7 @@ sub create_dataset {
 	</table>
 	|;
 
-	$form->hide_form(qw(dbdriver dbuser dbhost dbport dbpasswd dbdefault path sessionid));
+	$form->hide_form(qw(dbdriver dbsuperuser dbsuperpasswd dbuser dbhost dbport dbpasswd dbdefault path sessionid));
 
 	print qq|
 	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}" />

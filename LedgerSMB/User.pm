@@ -308,23 +308,36 @@ sub dbcreate {
   &dbconnect_vars($form, $form->{dbdefault});
   # The below line connects to Template1 or another template file in order
   # to create the db.  One must disconnect and reconnect later.
-  my $dbh = DBI->connect($form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) or $form->dberror;
+  my $superdbh = DBI->connect(
+	$form->{dbconnect}, 
+	$form->{dbsuperuser}, 
+	$form->{dbsuperpasswd}
+  ) or $form->dberror;
   my $query = qq|$dbcreate{$form->{dbdriver}}|;
-  $dbh->do($query) || $form->dberror($query);
+  $superdbh->do($query) || $form->dberror($query);
     
-  $dbh->disconnect;  
+  $superdbh->disconnect;  
   #Reassign for the work below
 
   &dbconnect_vars($form, $form->{db});
   
-  my $dbh = DBI->connect($form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) or $form->dberror;
+  my $dbh = DBI->connect(
+	$form->{dbconnect}, 
+	$form->{dbuser}, 
+	$form->{dbpasswd}
+  ) or $form->dberror;
+  my $superdbh = DBI->connect(
+	$form->{dbconnect}, 
+	$form->{dbsuperuser}, 
+	$form->{dbsuperpasswd}
+  ) or $form->dberror;
   # JD: We need to check for plpgsql, if it isn't there create it, if we can't error
   # Good chance I will have to do this twice as I get used to the way the code is
   # structured
 
   my %langcreate = ( 'Pg' => qq|CREATE LANGUAGE plpgsql|);
   my $query = qq|$langcreate{$form->{dbdriver}}|;
-  $dbh->do($query) || $form->dberror($query);
+  $superdbh->do($query);
   
   # create the tables
   my $dbdriver = ($form->{dbdriver} =~ /Pg/) ? 'Pg' : $form->{dbdriver};
