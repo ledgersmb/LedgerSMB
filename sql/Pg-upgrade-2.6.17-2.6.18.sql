@@ -1,3 +1,4 @@
+ALTER TABLE chart ADD PRIMARY KEY (id);
 -- linuxpoet:
 -- adding primary key to acc_trans
 -- We are using standard postgresql names for the sequence for consistency as we move forward
@@ -110,7 +111,7 @@ DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'ap');
 CREATE RULE ap_id_track_u AS ON update TO ap 
 DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
 
-insert into transaction_ledger (id, table_name) SELECT id, 'ar' FROM ap;
+insert into transaction_ledger (id, table_name) SELECT id, 'ar' FROM ar;
 
 CREATE RULE ar_id_track_i AS ON insert TO ar 
 DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'ar');
@@ -246,8 +247,13 @@ BEGIN
 	EXECUTE ''SELECT TABLE_ID FROM custom_table_catalog 
 		WHERE extends = '''''' || table_name || '''''' '';
 	IF NOT FOUND THEN
-		INSERT INTO custom_table_catalog (extends) VALUES (table_name);
-		EXECUTE ''CREATE TABLE custom_''||table_name || '' ()'';
+		BEGIN
+			INSERT INTO custom_table_catalog (extends) VALUES (table_name);
+			EXECUTE ''CREATE TABLE custom_''||table_name || 
+				'' (row_id INT)'';
+		EXCEPTION WHEN duplicate_table THEN
+			-- do nothing
+		END;
 	END IF;
 	EXECUTE ''INSERT INTO custom_field_catalog (field_name, table_id)
 	VALUES ( '''''' || new_field_name ||'''''', (SELECT table_id FROM custom_table_catalog
@@ -270,7 +276,7 @@ BEGIN
 		table_id = (SELECT table_id FROM custom_table_catalog 
 			WHERE extends = table_name);
 	EXECUTE ''ALTER TABLE custom_'' || table_name || 
-		'' DROP COLUMN '' || field_name;
+		'' DROP COLUMN '' || custom_field_name;
 	RETURN TRUE;	
 END;
 ' LANGUAGE PLPGSQL;

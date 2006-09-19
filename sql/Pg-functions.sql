@@ -281,8 +281,14 @@ BEGIN
 	EXECUTE ''SELECT TABLE_ID FROM custom_table_catalog 
 		WHERE extends = '''''' || table_name || '''''' '';
 	IF NOT FOUND THEN
-		INSERT INTO custom_table_catalog (extends) VALUES (table_name);
-		EXECUTE ''CREATE TABLE custom_''||table_name || '' ()'';
+		BEGIN
+			INSERT INTO custom_table_catalog (extends) 
+				VALUES (table_name);
+			EXECUTE ''CREATE TABLE custom_''||table_name || 
+				'' (row_id INT)'';
+		EXCEPTION WHEN duplicate_table THEN
+			-- do nothing
+		END;
 	END IF;
 	EXECUTE ''INSERT INTO custom_field_catalog (field_name, table_id)
 	VALUES ( '''''' || new_field_name ||'''''', (SELECT table_id FROM custom_table_catalog
@@ -305,7 +311,7 @@ BEGIN
 		table_id = (SELECT table_id FROM custom_table_catalog 
 			WHERE extends = table_name);
 	EXECUTE ''ALTER TABLE custom_'' || table_name || 
-		'' DROP COLUMN '' || field_name;
+		'' DROP COLUMN '' || custom_field_name;
 	RETURN TRUE;	
 END;
 ' LANGUAGE PLPGSQL;
