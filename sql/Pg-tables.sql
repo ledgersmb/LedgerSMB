@@ -549,130 +549,130 @@ last_used TIMESTAMP default now()
 );
 
 
-create table transaction_ledger (
+create table transactions (
   id int PRIMARY KEY,
   table_name text
 );
 
-insert into transaction_ledger (id, table_name) SELECT id, 'ap' FROM ap;
+insert into transactions (id, table_name) SELECT id, 'ap' FROM ap;
 
 CREATE RULE ap_id_track_i AS ON insert TO ap 
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'ap');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'ap');
 
 CREATE RULE ap_id_track_u AS ON update TO ap 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-insert into transaction_ledger (id, table_name) SELECT id, 'ar' FROM ap;
+insert into transactions (id, table_name) SELECT id, 'ar' FROM ap;
 
 CREATE RULE ar_id_track_i AS ON insert TO ar 
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'ar');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'ar');
 
 CREATE RULE ar_id_track_u AS ON update TO ar 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'business' FROM business;
+INSERT INTO transactions (id, table_name) SELECT id, 'business' FROM business;
 
 CREATE RULE business_id_track_i AS ON insert TO business 
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'business');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'business');
 
 CREATE RULE business_id_track_u AS ON update TO business 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'chart' FROM chart;
+INSERT INTO transactions (id, table_name) SELECT id, 'chart' FROM chart;
 
 CREATE RULE chart_id_track_i AS ON insert TO chart 
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'chart');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'chart');
 
 CREATE RULE chart_id_track_u AS ON update TO chart 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'customer' FROM customer;
+INSERT INTO transactions (id, table_name) SELECT id, 'customer' FROM customer;
 
 CREATE RULE customer_id_track_i AS ON insert TO customer
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'customer');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'customer');
 
 CREATE RULE customer_id_track_u AS ON update TO customer 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'department' FROM department;
+INSERT INTO transactions (id, table_name) SELECT id, 'department' FROM department;
 
 CREATE RULE department_id_track_i AS ON insert TO department
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'department');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'department');
 
 CREATE RULE department_id_track_u AS ON update TO department 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'employee' FROM employee;
+INSERT INTO transactions (id, table_name) SELECT id, 'employee' FROM employee;
 
 CREATE RULE employee_id_track_i AS ON insert TO employee
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'employee');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'employee');
 
 CREATE RULE employee_id_track_u AS ON update TO employee
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'gl' FROM gl;
+INSERT INTO transactions (id, table_name) SELECT id, 'gl' FROM gl;
 
 CREATE RULE gl_id_track_i AS ON insert TO gl
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'gl');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'gl');
 
 CREATE RULE gl_id_track_u AS ON update TO gl 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'oe' FROM oe;
+INSERT INTO transactions (id, table_name) SELECT id, 'oe' FROM oe;
 
 CREATE RULE oe_id_track_i AS ON insert TO oe
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'oe');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'oe');
 
 CREATE RULE oe_id_track_u AS ON update TO oe 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'parts' FROM parts;
+INSERT INTO transactions (id, table_name) SELECT id, 'parts' FROM parts;
 
 CREATE RULE parts_id_track_i AS ON insert TO parts
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'parts');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'parts');
 
 CREATE RULE parts_id_track_u AS ON update TO parts 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'partsgroup' FROM partsgroup;
+INSERT INTO transactions (id, table_name) SELECT id, 'partsgroup' FROM partsgroup;
 
 CREATE RULE partsgroup_id_track_i AS ON insert TO partsgroup
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'partsgroup');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'partsgroup');
 
 CREATE RULE partsgroup_id_track_u AS ON update TO partsgroup 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'pricegroup' FROM pricegroup;
+INSERT INTO transactions (id, table_name) SELECT id, 'pricegroup' FROM pricegroup;
 
 CREATE RULE pricegroup_id_track_i AS ON insert TO pricegroup
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'pricegroup');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'pricegroup');
 
 CREATE RULE pricegroup_id_track_u AS ON update TO pricegroup 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'project' FROM project;
+INSERT INTO transactions (id, table_name) SELECT id, 'project' FROM project;
 
 CREATE RULE project_id_track_i AS ON insert TO project
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'project');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'project');
 
 CREATE RULE project_id_track_u AS ON update TO project 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'vendor' FROM vendor;
+INSERT INTO transactions (id, table_name) SELECT id, 'vendor' FROM vendor;
 
 CREATE RULE vendor_id_track_i AS ON insert TO vendor
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'vendor');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'vendor');
 
 CREATE RULE employee_id_track_u AS ON update TO vendor 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transaction_ledger (id, table_name) SELECT id, 'warehouse' FROM warehouse;
+INSERT INTO transactions (id, table_name) SELECT id, 'warehouse' FROM warehouse;
 
 CREATE RULE warehouse_id_track_i AS ON insert TO warehouse
-DO ALSO INSERT INTO transaction_ledger (id, table_name) VALUES (new.id, 'employee');
+DO ALSO INSERT INTO transactions (id, table_name) VALUES (new.id, 'employee');
 
 CREATE RULE warehouse_id_track_u AS ON update TO warehouse 
-DO ALSO UPDATE transaction_ledger SET id = new.id WHERE id = old.id;
+DO ALSO UPDATE transactions SET id = new.id WHERE id = old.id;
 
 CREATE TABLE custom_table_catalog (
 table_id SERIAL PRIMARY KEY,
