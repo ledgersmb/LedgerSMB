@@ -201,6 +201,11 @@ is designed with the idea that each dataset will represent exactly
 one company. If a customer is working with multiple companies, he/she
 must create a dataset to for each.
 
+When creating a dataset, the application asks for both a username and a 
+superusername.  If the superuser's information is not filled in, Ledger-SMB will
+attempt to populate an existing dataset, but if this information is filled in,
+the progam will log into the PostgreSQL cluster with the superusername and
+password, create the database, and attempt to add Plpgsql to it.
 
 \subsection{How to Create a User}
 

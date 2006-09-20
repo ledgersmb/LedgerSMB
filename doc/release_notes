@@ -1,5 +1,7 @@
 RELEASE NOTES
-LedgerSMB 2.6.17
+LedgerSMB 1.1.0
+
+
 
 1:  Welcome to LedgerSMB
 
@@ -7,16 +9,81 @@ LedgerSMB is an accounting and ERP program initially aimed at small to midsize
 businesses.  Currently the financials and supply chain management modules are
 fairly complete, while other modules such as project management exist in a
 rudamentary form.  The initial features are identical to SQL-Ledger 2.6.17 from
-which it was derived, but it is expected that the feature set will diverge over
-time.
+which it was derived, but the feature set is starting to diverge rapidly.
 
-2:  Differences between LedgerSMB and SQL-Ledger(TM)
+1.1 System Requirements:
 
-2.1: Login name restrictions
+* Perl 5.6 and higher (prefer 5.8).
+* Apache, IIS, or other web server that supports CGI.
+* PostgreSQL 8.0 or higher.  7.3 and 7.4 could be supported with some effort but
+will not work out of the box.
+* Any operating system that supports the above environment.
+
+2:  What's New in 1.1.0?
+
+2.1: Database changes:
+LedgerSMB 1.1 allows more flexibility in dataset creation. We now offer the
+ability to create the dataset and language with a different user than is used to
+populate the database.  If the superuser field is left blank, it will try to
+populate an existing database, while if this field is filled in, it will try to
+create the database with this account and add plpgsql to it (if the language
+already exists, it will skip over that part).
+
+Database backups now use pg_dump.  Some time ago, there were problems which
+resulted in sequences not being restored properly but these have been resolved
+in every version of PostgreSQL that we support.  The backup code is now more
+robust and simple than it was in previous versions.
+
+A foreign key constraint was added to acc_trans.chart_id, and primary keys were
+added to the acc_trans and chart tables.  These changes further tighten the data
+integrity controls and prevents invalid data from being entered into the 
+database.  Also, some database schema changes were added to prevent against
+duplicate (and ambiguous) transaction id's.
+
+Finally, a standard means was added to extend the SQL-Ledger database schema.
+To add a custom field to a table, use the following function:
+add_custom_field(tablename, fieldname, datatype);
+
+For example:
+select add_cutom_field('ap', 'milage_start', 'numeric');
+
+To drop a custom field, use drop_custom_field(tablename, fieldname).  For
+example:
+select drop_custom_field('ap', 'milage_start');
+
+2.2:  Security
+Previous versions installed the software with a blank admin password.  This
+password would often be left at its default, and when this happened, the
+application would not check the supplied password at all.  To correct this
+problem, we have insituted a routine to require a password check when the admin
+password is blank.
+
+2.3:  Usability Changes
+The Sales Data report from Metatron Technology Consulting was added to this
+release of LedgerSMB.  This report allows you to track sales and purchases in a
+given date range by good or service, and drill down into the AR and AP invoices
+in that time period that contain those items.
+
+Several changes have been made to check handling.  These include notices printed
+on check stubs when the number of invoices exceeds a user defined number.  Also,
+batch printing is now available for checks.
+
+It is now possible (though still difficult) to print directly to a printer from
+a Windows server.
+
+3:  Known Issues
+Reposting invoices is known to cause inaccuracies cost of goods sold and
+inventory accounts.  This problem has been confirmed to affect SQL-Ledger 2.6.x 
+as well and is caused by problems involving the de-allocation and trasaction
+reversal routines.  It will be corrected in an upcoming release.
+
+4:  Differences between LedgerSMB and SQL-Ledger(TM)
+
+4.1: Login name restrictions
 Logins in SQL-Ledger can contain any printable characters.  In LedgerSMB these
 are restricted to alphanumeric characters and the symbols ., @, and -.
 
-2.2: Session handling
+4.2: Session handling
 SQL-Ledger as of 2.6.17 uses session tokens for authentication.  These tokens
 are based on the current timestamp and therefore insecure.  Furthermore, these
 tokens are not tracked on the server, so one can easily forge credentials for
@@ -29,7 +96,7 @@ SQL-Ledger-style session ID's and the newer version are required to access the
 application.  In future versions, the SQL-Ledger style session ID's will 
 probably be removed.
 
-2.3: Database Changes
+4.3: Database Changes
 Under certain circumstances where the Chart of Accounts is improperly modified,
 it is possible to post transactions such that a portion of the transaction is
 put into a NULL account.  LedgerSMB does not allow NULL values in the chart id
@@ -37,16 +104,16 @@ field of the transaction.
 
 Also, the transaction amount has been changed from FLOAT to NUMERIC so that
 arbitrary precision mathematics can be used in third party reports.  This ought
-to also allow LedgerSMB to properly scale up better as SUM operations on
+to also allow SQL-Ledger to properly scale up better as SUM operations on
 floating points are unsafe for large numbers of records where accounting data is
 involved.
 
-3:  Roadmap
+5:  Roadmap
 The project has no defined roadmap but rather a list of tasks and objectives
 outlined in the TODO list.   There are many projects here and there are always
 room for new ideas.
 
-4:  Get Involved
+6:  Get Involved
 Contributors should start by joining the LedgerSMB users and devel lists.  Code
 contributions at the moment must be committed by either project maintainer and
 should be submitted either using the patches interface at Sourceforge or the

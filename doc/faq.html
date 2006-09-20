@@ -1,4 +1,23 @@
 <ul>
+<li><h4>Printing to a Printer from a Windows Server</h4><p>
+There are several obstacles to printing from a web appliction that was written 
+for Linux or UNIX in Windows. 
+These include:</p><ul>
+<li>Lack of Postscript support in the printing subsystem.  To resolve this, you
+    must install Ghostscript and Gsview.  The latter package provides a utility
+    called gsprint that will allow you to print Postscript on your Windows 
+    printer.</li>
+<li>The fact that most Windows software, including gsprint, tends to print 
+    output that will cause the web server to crash.  The winprint.bat included
+    with this distribution corrects this problem.  To use the winprint.bat 
+    solution, configure your printers in your ledger-smb.conf as 
+    "winprint.bat printer-name."  If you omit the printer name, the default
+    printer will be used.</li>
+<li>Windows does not allow you to set up system printers that all users can 
+    access.  Thus the web server often doesn't have access to the printers you
+    have set up.  To correct this issue, follow the steps at 
+    <a href="http://support.microsoft.com/kb/q184291/">
+    http://support.microsoft.com/kb/q184291/</a>.</li></ul></li>
 <p><li><h4>Error on converting from SQL-Ledger: 
 ERROR: column "chart_id" contains null values</h4>
 SQL-Ledger does not enforce a NOT NULL constraint on the chart_id field in the 
