@@ -75,7 +75,8 @@ a Windows server.
 Reposting invoices is known to cause inaccuracies cost of goods sold and
 inventory accounts.  This problem has been confirmed to affect SQL-Ledger 2.6.x 
 as well and is caused by problems involving the de-allocation and trasaction
-reversal routines.  It will be corrected in an upcoming release.
+reversal routines.  It will be corrected in an upcoming release as we continue
+to re-engineer the application.
 
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 
