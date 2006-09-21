@@ -58,7 +58,7 @@ CREATE TABLE defaults (
   version varchar(8),
   curr text,
   closedto date,
-  revtrans bool DEFAULT 'f',
+  revtrans bool DEFAULT 't',
   ponumber text,
   sqnumber text,
   rfqnumber text,
