@@ -249,15 +249,13 @@ BEGIN
 
 RETURN v_cost;
 END;
-' language 'plpgsql';
+' language plpgsql;
 -- end function
 --
-CREATE OR REPLACE FUNCTION trigger_parts_short() RETURNS TRIGGER
-AS
-'
 
 CREATE OR REPLACE FUNCTION trigger_parts_short() RETURNS TRIGGER
 AS
+'
 BEGIN
   IF NEW.onhand >= NEW.rop THEN
     NOTIFY parts_short;

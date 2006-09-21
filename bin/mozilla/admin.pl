@@ -594,7 +594,7 @@ sub form_header {
 					<table>
 						<tr>|;
 
-		$checked = "";
+		$checked = "checked";
 
 		if ($myconfig->{dbdriver} eq $item) {
 
