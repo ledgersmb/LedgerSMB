@@ -1,6 +1,6 @@
 #=====================================================================
 # LedgerSMB Small Medium Business Accounting
-# http://sourceforge.net/projects/ledger-smb/
+# http://www.ledgersmb.org/
 #
 
 # Copyright (C) 2006
@@ -22,7 +22,7 @@
 #
 #
 #  Author: DWS Systems Inc.
-#     Web: http://sourceforge.net/projects/ledger-smb/
+#     Web: http://www.ledgersmb.org/
 #
 #
 # This program is free software; you can redistribute it and/or modify

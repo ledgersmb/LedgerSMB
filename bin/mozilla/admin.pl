@@ -1,7 +1,7 @@
 #=====================================================================
 # LedgerSMB 
 # Small Medium Business Accounting software
-# http://sourceforge.net/projects/ledger-smb/
+# http://www.ledgersmb.org/
 #
 # 
 # Copyright (C) 2006
@@ -106,7 +106,7 @@ sub setup_initial_password {
 	print qq|
 	<body class="admin" onload="sf()">
 	<div align="center">
-		<a href="http://sourceforge.net/projects/ledger-smb/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
+		<a href="http://www.ledgersmb.org/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
 		<h1 class="login">|.$locale->text('Version').qq| $form->{version} <br />|.$locale->text('Administration').qq|</h1>
 		
 		<fieldset><legend>Change password</legend>
@@ -128,7 +128,7 @@ sub setup_initial_password {
 		<p><input type="submit" class="submit" name="action" value="|.$locale->text('Change Password').qq|" /></p>
 		</form>
 
-		<a href="http://sourceforge.net/projects/ledger-smb/">LedgerSMB |.$locale->text('website').qq|</a>
+		<a href="http://www.ledgersmb.org/">LedgerSMB |.$locale->text('website').qq|</a>
 	</div>
 	</body>
 	</html>
@@ -153,7 +153,7 @@ sub adminlogin {
 	print qq|
 	<body class="admin" onload="sf()">
 	<div align="center">
-		<a href="http://sourceforge.net/projects/ledger-smb/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
+		<a href="http://www.ledgersmb.org/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
 		<h1 class="login">|.$locale->text('Version').qq| $form->{version} <br />|.$locale->text('Administration').qq|</h1>
 		<form method="post" action="$form->{script}" name="admin">
 		<table>
@@ -171,7 +171,7 @@ sub adminlogin {
 			>|.$locale->text("Application Login").qq|</a></p>
 
 
-		<a href="http://sourceforge.net/projects/ledger-smb/">LedgerSMB |.$locale->text('website').qq|</a>
+		<a href="http://www.ledgersmb.org/">LedgerSMB |.$locale->text('website').qq|</a>
 	</div>
 	</body>
 	</html>
