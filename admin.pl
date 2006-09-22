@@ -2,7 +2,7 @@
 #
 ######################################################################
 # LedgerSMB Accounting and ERP
-# http://sourceforge.net/projects/ledger-smb/
+# http://www.ledgersmb.org/
 #
 # Copyright (C) 2006
 # This work contains copyrighted information from a number of sources all used
@@ -24,7 +24,7 @@
 #  Contributors:
 #
 #
-#     Web: http://sourceforge.net/projects/ledger-smb/
+#     Web: http://www.ledgersmb.org/
 #
 #  Contributors:
 #

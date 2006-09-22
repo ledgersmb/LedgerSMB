@@ -2,7 +2,7 @@
 #
 ######################################################################
 # LedgerSMB Small Medium Business Accounting Software Installer
-# http://sourceforge.net/projects/ledger-smb/
+# http://www.ledgersmb.org/
 #
 
 # Copyright (C) 2006
