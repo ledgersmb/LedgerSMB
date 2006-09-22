@@ -1261,6 +1261,25 @@ sub print_button {
 
 # Database routines used throughout
 
+sub db_init {
+	my ($self, $myconfig) = @_;
+	$self->{dbh} = $self->dbconnect_noauto($myconfig);
+
+	my $query = 
+		"SELECT t.extends, 
+			coalesce (t.table_name, 'custom_' || extends) 
+			|| ':' || f.field_name as field_def
+		FROM custom_table_catalog t
+		JOIN custom_field_catalog f USING (table_id)";
+	my $sth = $self->{dbh}->prepare($query);
+	$sth->execute;
+	my $ref;
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)){
+		push @{$self->{custom_db_fields}{$ref->{extends}}},
+			$ref->{field_def};
+	}
+}
+
 sub dbconnect {
 
 	my ($self, $myconfig) = @_;
