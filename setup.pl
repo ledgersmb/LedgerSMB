@@ -279,7 +279,6 @@ sub get_latest_version {
   if ($lwp) {
     if ($urlresult = LWP::Simple::get("$versionurl")){
       $latest_version = parse_links($urlresult);
-      last;
     } else {
       print "not found"; 
     }
@@ -292,7 +291,6 @@ sub get_latest_version {
     if ($ok = ($ok =~ s/HTTP.*?200 //)) {
       $urlresult = `lynx -dump $versionurl`;
       $latest_version = parse_links($urlresult);
-      last;
     } else {
       print "not found";
     }
