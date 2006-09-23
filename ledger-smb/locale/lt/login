@@ -1,0 +1,23 @@
+$self{charset} = 'ISO-8859-13';
+
+$self{texts} = {
+  'Company'                     => 'Firma',
+  'Continue'                    => 'Tæsti',
+  'Incorrect Dataset version!'  => 'Neteisinga duomenø aibës versija!',
+  'Login'                       => 'Prisijungimas',
+  'Name'                        => 'Vardas',
+  'Password'                    => 'Slaptaþodis',
+  'Version'                     => 'Versija',
+  'You did not enter a name!'   => 'Neávedëte vardo!',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'prisijungimas'               => 'login',
+};
+
+1;
+

@@ -1,0 +1,14 @@
+$self{charset} = 'ISO-8859-9';
+
+$self{texts} = {
+  'Continue'                    => 'Devam',
+  'Password'                    => 'Þifre',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'devam'                       => 'continue',
+};
+
+1;
+

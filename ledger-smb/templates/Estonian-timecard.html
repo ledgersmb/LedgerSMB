@@ -1,0 +1,125 @@
+<body bgcolor=ffffff>
+
+<table width=100%>
+
+  <%include letterhead.html%>
+  
+  <tr>
+    <td width=10>&nbsp;</td>
+
+    <th colspan=3>
+      <h4>AJAKAART</h4>
+    </th>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% callspacing=0 cellpadding=0>
+        <tr valign=top>
+	  <td>
+	    <table>
+	      <tr>
+		<th align=left>TÃ¶Ã¶taja</th>
+		<td><%employee%></td>
+	      </tr>
+	      <tr>
+		<th align=left>TÃ¶Ã¶taja Kood</th>
+		<td><%employee_id%></td>
+	      </tr>
+	    </table>
+	  </td>
+   
+	  <td align=right>
+	    <table>
+	      <tr>
+		<th align=left nowrap>Kaardi Kood</th>
+		<td><%id%></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>KuupÃ€ev</th>
+		<td><%transdate%></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Algus</th>
+		<td><%checkedin%></td>
+	      </tr>
+              <tr>
+                <th align=left>LÃµpp</th>
+		<td><%checkedout%></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Tundi</th>
+		<td><%qty%></td>
+	      </tr>
+	    </table>
+	  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  
+    <td>
+      <table width=100%>
+        <tr valign=bottom>
+	  <td>
+	    <table>
+	      <tr valign=top>
+	        <th align=left>TÃ¶Ã¶ÃŒlesanne/Projekt #</th>
+		<td><%projectnumber%></td>
+	      </tr>
+	      <tr>
+	        <th align=left>Kirjeldus</th>
+		<td><%projectdescription%></td>
+	      </tr>
+	      <tr valign=top>
+	        <th align=left>TÃ¶Ã¶/Teenuse Kood</th>
+		<td><%partnumber%></td>
+	      </tr>
+	      <tr>
+	        <th align=left>Kirjeldus</th>
+		<td><%description%></td>
+	      </tr>
+	    </table>
+	  </td>
+	  <td align=right>
+	    <table>
+	      <tr>
+	        <th align=right>Tariif</th>
+		<td><%sellprice%></td>
+	      </tr>
+	      <tr>
+		<th align=right>Kokku</th>
+		<td><%total%></td>
+	      </tr>
+	    </table>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <%if notes%>
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <%notes%>
+    </td>
+  </tr>
+  <%end notes%>
+
+</table>
+
+</body>
+</html>
+
+

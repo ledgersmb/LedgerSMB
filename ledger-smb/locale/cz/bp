@@ -1,0 +1,41 @@
+$self{charset} = 'ISO-8859-2';
+
+$self{texts} = {
+  'Account'                     => 'Úèet',
+  'Accounting Menu'             => 'Menu úèetnictví',
+  'Confirm!'                    => 'Podtvrïte!',
+  'Continue'                    => 'Pokraèování',
+  'Customer'                    => 'Odbìratel',
+  'Date'                        => 'Datum',
+  'From'                        => 'z',
+  'ID'                          => 'ID',
+  'Invoice'                     => 'Faktura',
+  'Invoice Number'              => 'Èíslo faktury',
+  'Order'                       => 'Objednávka',
+  'Order Number'                => 'Objednávka èíslo',
+  'Purchase Orders'             => 'Vystavené objednávky',
+  'Sales Orders'                => 'Pøijaté objednávky',
+  'To'                          => 'do',
+  'Vendor'                      => 'Dodavatel',
+  'Yes'                         => 'Ano',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'continue'                    => 'continue',
+  'display'                     => 'display',
+  'js_menu'                     => 'js_menu',
+  'list_spool'                  => 'list_spool',
+  'menubar'                     => 'menubar',
+  'print'                       => 'print',
+  'remove'                      => 'remove',
+  'search'                      => 'search',
+  'section_menu'                => 'section_menu',
+  'select_all'                  => 'select_all',
+  'yes'                         => 'yes',
+  'pokraèování'                 => 'continue',
+  'ano'                         => 'yes',
+};
+
+1;
+

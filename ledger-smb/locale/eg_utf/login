@@ -1,0 +1,24 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Company'                     => 'شركة',
+  'Continue'                    => 'تابع',
+  'Incorrect Dataset version!'  => 'نسخة غير صحيحة من مجموعة البيانات',
+  'Login'                       => 'دخول',
+  'Name'                        => 'الاسم',
+  'Password'                    => 'كلمة السر',
+  'Version'                     => 'نسخة',
+  'You did not enter a name!'   => 'لم يتم ادخال الاسم',
+  'done'                        => 'نفذ',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'دخول'                    => 'login',
+};
+
+1;
+

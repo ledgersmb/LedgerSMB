@@ -1,0 +1,23 @@
+$self{charset} = 'ISO-8859-2';
+
+$self{texts} = {
+  'Company'                     => 'Firma',
+  'Continue'                    => 'Pokraèování',
+  'Incorrect Dataset version!'  => '©patná verze dat!',
+  'Login'                       => 'U¾ivatelské jméno',
+  'Name'                        => 'Jméno',
+  'Password'                    => 'Heslo',
+  'Version'                     => 'Verze',
+  'You did not enter a name!'   => 'Nezadal jste jméno!',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'u¾ivatelské_jméno'           => 'login',
+};
+
+1;
+

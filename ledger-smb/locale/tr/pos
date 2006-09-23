@@ -1,0 +1,51 @@
+$self{charset} = 'ISO-8859-9';
+
+$self{texts} = {
+  'Accounting Menu'             => 'Muhasebe Menüsü',
+  'Amount'                      => 'Miktar',
+  'Continue'                    => 'Devam',
+  'Credit Limit'                => 'Kredi Limiti',
+  'Currency'                    => 'Para Birimi',
+  'Customer'                    => 'Alýcý',
+  'Delete'                      => 'Sil',
+  'Description'                 => 'Açýklama',
+  'Exchange Rate'               => 'Döviz Kuru',
+  'From'                        => 'Baþlangýç',
+  'Language'                    => 'Dil',
+  'Number'                      => 'Numara',
+  'Price'                       => 'Fiyat',
+  'Qty'                         => 'Adet',
+  'Record in'                   => 'Kaydet',
+  'Source'                      => 'Kaynak',
+  'Subtotal'                    => 'Aratoplam',
+  'Tax Included'                => 'Vergi Dahil',
+  'To'                          => 'Bitiþ',
+  'Total'                       => 'Toplam',
+  'Unit'                        => 'Birim',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'add'                         => 'add',
+  'display'                     => 'display',
+  'display_row'                 => 'display_row',
+  'edit'                        => 'edit',
+  'form_footer'                 => 'form_footer',
+  'form_header'                 => 'form_header',
+  'js_menu'                     => 'js_menu',
+  'lookup_partsgroup'           => 'lookup_partsgroup',
+  'menubar'                     => 'menubar',
+  'openinvoices'                => 'openinvoices',
+  'post'                        => 'post',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_form'                  => 'print_form',
+  'print_options'               => 'print_options',
+  'receipts'                    => 'receipts',
+  'section_menu'                => 'section_menu',
+  'devam'                       => 'continue',
+  'sil'                         => 'delete',
+};
+
+1;
+

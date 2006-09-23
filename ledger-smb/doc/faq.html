@@ -1,0 +1,706 @@
+<ul>
+<li><h4>Printing to a Printer from a Windows Server</h4><p>
+There are several obstacles to printing from a web appliction that was written 
+for Linux or UNIX in Windows. 
+These include:</p><ul>
+<li>Lack of Postscript support in the printing subsystem.  To resolve this, you
+    must install Ghostscript and Gsview.  The latter package provides a utility
+    called gsprint that will allow you to print Postscript on your Windows 
+    printer.</li>
+<li>The fact that most Windows software, including gsprint, tends to print 
+    output that will cause the web server to crash.  The winprint.bat included
+    with this distribution corrects this problem.  To use the winprint.bat 
+    solution, configure your printers in your ledger-smb.conf as 
+    "winprint.bat printer-name."  If you omit the printer name, the default
+    printer will be used.</li>
+<li>Windows does not allow you to set up system printers that all users can 
+    access.  Thus the web server often doesn't have access to the printers you
+    have set up.  To correct this issue, follow the steps at 
+    <a href="http://support.microsoft.com/kb/q184291/">
+    http://support.microsoft.com/kb/q184291/</a>.</li></ul></li>
+<p><li><h4>Error on converting from SQL-Ledger: 
+ERROR: column "chart_id" contains null values</h4>
+SQL-Ledger does not enforce a NOT NULL constraint on the chart_id field in the 
+acc_trans table.  Consequently, it is possible in cirtain circumstances to 
+insert transactions into the database with invalid information including NULL 
+chart_id's.  When this occurs, normally the Chart of Accounts and Trial Balance 
+will fail to balance.  So this is a serious problem with data integrity.
+LedgerSMB prevents this by adding the NOT NULL constraing but this can cause
+prevent people from migrating when they have invalid data in their databases.
+<br/><br/>
+
+If you encounter an error like this, the first thing to do is seek
+technical support, regardless of whether or not you wish to continue
+the migration.  In general the providers of support for LedgerSMB and
+SQL-Ledger should all be able to be of some assistance.
+Unfortunately, since this problem involves information loss, no
+solution can be automated without invalidating your accounting
+information.  </li></p>
+
+<p><li><h4>PostgreSQL 8.x</h4>
+PostgreSQL added a restriction in v8.x that a sequence cannot be dropped
+after if it is referenced by a table. However backups created with
+LedgerSMB v2.6.13 and earlier have a DROP SEQUENCE step in the backup
+which will fail. To fix this edit the backup before restoring on a 8.x
+system.
+
+<p>This typically looks like this:
+<pre>
+DROP SEQUENCE id ;
+CREATE SEQUENCE id START 10579;
+--
+DROP SEQUENCE invoiceid ;
+CREATE SEQUENCE invoiceid START 11096;
+--
+DROP SEQUENCE orderitemsid ;
+CREATE SEQUENCE orderitemsid START 178;
+--
+DROP SEQUENCE jcitemsid ;
+CREATE SEQUENCE jcitemsid START 53;
+</pre>
+
+<p>Change it to:
+<pre>
+CREATE SEQUENCE id;
+SELECT SETVAL('id', 10579);
+CREATE SEQUENCE invoiceid;
+SELECT SETVAL('invoiceid', 11096);
+CREATE SEQUENCE orderitemsid;
+SELECT SETVAL('orderitemsid', 178);
+CREATE SEQUENCE jcitemsid;
+SELECT SETVAL('jcitemsid', 53);
+</pre>
+
+
+<p><li><h4>PostgreSQL template1</h4> 
+
+<tt>template1</tt> is a template that new databases are built from, by
+default. Anything you put into <tt>template1</tt> will be copied to a
+new database.  Thus, when you try to create a new dataset, the tables
+are already drawn in from <tt>template1</tt> so that when LedgerSMB
+tries to create them, you will receive an error message indicating
+that the tables already exist.
+
+
+<p><li><h4>PostgreSQL 8.0+</h4>
+
+To use LedgerSMB with PostgreSQL 8.0+ you have to modify
+<tt>Pg-tables.sql</tt>. This file is in the sql directory.
+
+<pre>
+CREATE TABLE orderitems (
+  trans_id int,
+  parts_id int,
+  description text,
+  qty float4,
+  sellprice float8,
+  discount float4,
+  unit varchar(5),
+  project_id int,
+  reqdate date,
+  ship float4,
+  serialnumber text,
+  id int default nextval('orderitemsid')
+) WITH OIDS;
+
+CREATE TABLE inventory (
+  warehouse_id int,
+  parts_id int,
+  trans_id int,
+  orderitems_id int,
+  qty float4,
+  shippingdate date,
+  employee_id int
+) WITH OIDS;
+
+CREATE TABLE assembly (
+  id int,
+  parts_id int,
+  qty float,
+  bom bool,
+  adj bool
+) WITH OIDS;
+</pre>
+
+This change is only required for LedgerSMB versions 2.6.3 and below.
+
+<p>If you already built a dataset without this change you will get
+an error when you try to save a PO or assembly.
+
+<p>"ERROR: column "oid" does not exist"
+
+<p>Drop the tables and rebuild WITH OIDS.
+
+<p><li><h4>Japanese characters</h4>
+modify apache so that EUC_JP is the main additional language.
+<br>comment out all unrelated languages except, UTF_8 shift jis, EUC_JP
+<br>restart apache
+<br>Fire up psql and do the encoding as per the table:-
+<br>Table 5-2. Postgres Client/Server Character Set Encodings
+
+<p>Server Encoding Available Client Encodings
+<br>EUC_JP EUC_JP, SJIS
+<br>EUC_TW EUC_TW, BIG5
+<br>LATIN2 LATIN2, WIN1250
+<br>LATIN5 LATIN5, WIN, ALT
+<br>MULE_INTERNAL EUC_JP, SJIS, EUC_KR, EUC_CN, EUC_TW, BIG5, LATIN1 to LATIN5, WIN, ALT, WIN1250
+
+<p>Create the dataset from admin.pl, now the Japanese shows up in multibyte encoding
+
+<p>Now you can write in Hiragana, Katakana, Kanji and English
+
+
+<p><li><h4>Error posting a check/receipt</h4>
+<pre>
+DBD::Pg::db do failed: ERROR: syntax error at or near "," at character 114
+Error!
+INSERT INTO acc_trans (trans_id, chart_id, transdate,amount)
+VALUES (13314, , '03-22-2005',1.00 * 1)
+ERROR: syntax error at or near "," at character 114 </pre>
+This error is caused by a transaction which does not have links to
+an AR/AP account.
+<br>set up your chart of accounts properly and create at least one
+AR and AP account. Then edit all your transactions and repost.
+
+
+<p><li><h4>SELinux</h4>
+<a href=http://fedora.redhat.com/docs/selinux-faq-fc3/index.html>http://fedora.redhat.com/docs/selinux-faq-fc3/index.html</a>
+
+<p>modify <tt>/etc/selinux/conf</tt> and set <tt>SELINUX=permissive</tt>
+
+<p>use <tt>audit2allow</tt>, add the following to
+<tt>policy.conf</tt>, then run <tt>make reload</tt>
+
+<p>#line 83
+<br>allow httpd_sys_script_t port_type:{ tcp_socket udp_socket } { send_msg
+recv_msg };
+<br>allow httpd_sys_script_t sysctl_kernel_t:dir search;
+<br>allow httpd_sys_script_t sysctl_t:dir search;
+<br>allow httpd_sys_script_t tmp_t:sock_file write;
+<br>allow httpd_sys_script_t httpd_sys_content_t:lnk_file read;
+<br>allow httpd_sys_script_t sysctl_kernel_t:file read;
+<br>allow httpd_sys_script_t unconfined_t:unix_stream_socket connectto;
+
+
+<p><li><h4>session timeouts</h4>
+If you get frequent timeouts or can't even log in, synchronize
+the clocks between the server and workstation.
+
+
+<p><li><h4>lineitems not printing</h4>
+Templates designed on a UNIX platform don't work on a DOS platform.
+To make them work load the template either with the builtin template editor
+or a text editor and save. Templates designed on a Windows platform have the
+same problem and won't work on a UNIX platform. Once you strip the ^M's
+the'll work just fine.
+
+
+<p><li><h4>UTF-8 character encoding</h4>
+Most of the translations are in ISO format. To convert the translations
+change directory to locale/cc and convert the files with iconv to UTF-8.
+You should also convert the COAs too and make sure you select UTF-8
+encoding when you set up a new dataset.
+
+
+<p><li><h4>characterset problems</h4>
+If you have problems displaying the correct characterset try adding
+<pre>
+AddDefaultCharset On</pre>
+in your <tt>httpd.conf</tt> file.
+
+<p><li><h4>About installation</h4>
+The easiest is to use the setup.pl script as root.
+You don't need to know very much about your system, just login as root,
+run 'perl setup.pl' and follow the prompts.
+<p>setup.pl does not check for missing software packages and it is your
+responsibility to make sure you have the required software
+installed either from source or from a package.
+
+<p>Requirements are clearly indicated in the <tt>README</tt> file and
+on the download page.
+
+
+<p><li><h4>cannot create function</h4>
+<ol>
+
+<li>either run <tt>createlang plpgsql</tt> to install the plpgsql
+language handler or install yourself. For more information how to do
+that, visit <a href=http://www.postgresql.org/docs/>PostgreSQL</a> and
+read the interactive documentation for procedural languages.
+
+<li>load admin.pl
+<li>unlock the system
+<li>login
+</ol>
+
+
+<p><li><h4>The requested URL /ledger-smb/admin.pl was not found</h4>
+Your webserver doesn't know where to find the script. Most commonly this
+results when distributions hide webserver configuration files in unexpected
+locations so that <tt>setup.pl</tt> wasn't able to configure the location for
+you. Find out which file (<tt>httpd.conf</tt>, <tt>httpdcommon.conf</tt>, ...)
+controls your webserver configuration and add
+<pre>
+  # LedgerSMB
+  Include /etc/httpd/ledger-smb-httpd.conf</pre>
+
+Create a file 'ledger-smb-httpd.conf' in /etc/httpd and copy the next part
+into the file.
+
+<pre>
+  AddHandler cgi-script .pl
+  AddDefaultCharset On
+  Alias /ledger-smb /var/www/ledger-smb/
+  &lt;Directory /var/www/ledger-smb&gt;
+    Options ExecCGI Includes FollowSymlinks
+  &lt;/Directory&gt;
+
+  &lt;Directory /var/www/ledger-smb/users&gt;
+    Order Deny,Allow
+    Deny from All
+  &lt;/Directory&gt;</pre>
+replace '/etc/httpd' and '/var/www' with the appropriate directories.
+
+
+<p><li><h4>users/members : Permission denied</h4>
+Your webserver must have write access to the users directory.
+If your server runs as user/group 'apache:apache' then set the
+users directory to owner/group apache:apache.
+<pre>
+  # chown -R apache:apache users</pre>
+
+
+<p><li><h4>Dataset newer than version</h4>
+You are trying to use an older version with a dataset which was
+created with a newer version.
+
+
+<p><li><h4>PDF option not working</h4>
+Check if you have latex and pdflatex installed.
+
+
+<p><li><h4>Apache 2.0 "error 500"</h4>
+Some of the early versions of Apache 2.0 (< patchlevel 44) had a rewrite engine
+which decoded escaped strings. This created a lot of problems and I worked
+around it by escaping strings twice.
+If you get a server 500 error 'filename too long' or if collapsed menus
+don't expand you may have to adjusted the following code in
+SL/Form.pm and change the number (44) on line 84.
+<pre>
+  # for Apache 2 we escape strings twice
+  if (($ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/) && !$beenthere) {
+    $str = $self->escape($str, 1) if $2 < 44;
+  }</pre>
+
+
+<p><li><h4>IDENT Authentication failed for user "sledger-smb"</h4>
+Edit pg_hba.conf and change authentication to
+
+<pre>
+  local           all        all           MD5</pre>
+
+The file is in the 'data' directory of your postgresql installation.
+This is different with every distribution so look for it.
+<pre>
+  # find / -name 'pg_hba.conf'</pre>
+
+<p>Some people can't read and seem to think 'localhost' is just some
+fancy word for a local machine.
+'localhost' is a host like any other host on a network.
+A 'local' entry in pg_hba.conf will allow socket connections ONLY and
+not allow a host connection. If you then try to connect to 'localhost',
+PostgreSQL will come back with an authentication error.
+
+<p>So, if the database resides on the same server as the web server,
+forget you ever heard there is such a thing as 'localhost' and leave
+the Host portion blank.
+
+<p><b>WARNING!</b> DO NOT just put a 'host all all trust' in
+pg_hba.conf unless you know what you are doing; that can introduce a
+pretty huge security hole.
+
+<p><li><h4>DBD-Pg for Mandrake 9.0</h4>
+Mandrake did not package a compiled DBD-Pg package again, so install DBD-Pg
+from the source package.
+Install perl-DBD-Pg-1.01-4mdk.i586.rpm from the 'contrib' area.
+(Mandrake / 9.0 / contrib / RPMS)
+
+
+<p><li><h4>LaTeX error</h4>
+If for some reason LaTeX produces an error message check for strange
+characters in your account description and parts description
+and use \usepackage[latin1]{inputenc} in the preamble.
+
+
+<p><li><h4>LaTeX templates</h4>
+If you don't want to edit tex code by hand,
+you could use Lyx, Abiword, or any WYSIWYG editor capable of exporting
+latex code.
+To do that you must change the tokens for the variables <% and %> to something
+like << and >>. % is the comment character in tex. There is also a
+pagebreak block which must be commented out.
+When you are done with the changes
+replace << and >> with <% and %> and uncomment the pagebreak block.
+
+<p>LaTeX is somewhat complex to learn, initially, but offers a much
+superior environment to produce professional-looking forms in
+postscript and PDF format.
+
+<p><li><h4>W3M</h4>
+pass terminal=mozilla when you start w3m
+<pre>
+  $ w3m -F http://localhost/ledger-smb/login.pl?terminal=mozilla</pre>
+
+To use without frames
+<pre>
+  $ w3m http://localhost/ledger-smb/login.pl?terminal=lynx</pre>
+
+<p><li><h4>PDF option disappeared</h4>
+Edit ledger-smb.conf and set $latex = 1;
+<br>ledger-smb.conf is perl code, check if it compiles, if it does not,
+the internal defaults are used which turn off $latex, hence no PDF option.
+
+<p><li><h4>Installation on Windows (WIN32)</h4>
+<ul>
+<li>install Apache, perl,
+<a href=http://techdocs.postgresql.org/guides/InstallingOnWindows>Postgres</a>
+or Oracle, DBI and the appropriate DBD
+module
+<br>if you can't compile DBD-Pg here is a precompiled
+<a href=http://http://pgfoundry.org/projects/dbdpgppm/>DBD-Pg module</a>
+<li>download the latest version of <a 
+	href="http://www.ledgersmb.org/download/">LedgerSMB</a>
+<li>extract the files to c:\apache\ledger-smb
+<li>run 'perl shebang' to change the first line of the scripts. If perl
+is not in c:\perl\bin' change '#!c:\\perl\\bin\\perl' to the location where
+your perl binary is.
+<li>edit c:\apache\conf\httpd.conf and add
+<pre>
+Alias /ledger-smb "c:/apache/ledger-smb/"
+&lt;Directory "c:/apache/ledger-smb"&gt;
+  AllowOverride All
+  AddHandler cgi-script .pl
+  AddDefaultCharset On
+  Options +ExecCGI
+  Order Allow,Deny
+  Allow from All
+&lt;/Directory&gt;
+
+&lt;Directory "c:/apache/ledger-smb/users"&gt;
+  Order Deny,Allow
+  Deny from All
+&lt;/Directory&gt;
+</pre>
+
+<li>start Apache
+<li>start Postgres|Oracle|DB2
+<li>connect to http://localhost/ledger-smb/admin.pl and set up users
+and datasets
+<li>connect to http://localhost/ledger-smb/login.pl and login
+
+</ul>
+
+<p><li><h4>What do I enter for the language</h4>
+If you use English, nothing, if you want to use a foreign language for
+the login screen and admin stuff enter the language code, this is the
+directory in the locale directory.
+
+
+<p><li><h4>printing to a printer</h4>
+Printers are defined in ledger-smb.conf
+
+<pre>
+%printer = ( 'Default' => 'lpr', 'Color' => 'lpr -PEpson' );</pre>
+
+Check in your /etc/printcap file for the names of available printers.
+
+<p>If you have LaTeX installed set
+<pre>
+  $latex = 1</pre> in ledger-smb.conf
+
+<p>To send the document to the printer check the "Postscript" or "PDF" format,
+enter the number of copies and click on the "Print" button.
+
+<p>The printer you enter in your preferences is the default printer.
+You can choose any other available printer. This makes it possible
+to print from anywhere on the network to any printer.
+
+<p>Note: html format is for screen preview. Use the "Print" option from your
+browser to print to a printer.
+
+
+<p><li><h4>Using samba to send printjobs to a printer attached to a Windows XP workstation</h4>
+The next part applies to roll your own print filters only. If you use CUPS or
+LPRng your milage may vary but you can still use this as a guide how it works.
+I use the printer 'Epson' as an example which is
+attached to a XP workstation called Raven.
+
+<pre>
+/etc/printcap entry on the server which runs lpd
+ 
+epson:Epson\
+  :sh:\
+  :lp=/dev/null:\
+  :sd=/var/spool/output/epson:\
+  :if=/usr/libexec/lpr/epson/prnfilter:\
+
+# end of entry in /etc/printcap
+
+
+# prnfilter shell script
+#!/bin/sh
+# Filter for Epson Stylus
+
+PATH="$PATH:/usr/local/bin"
+
+#read first_line
+read tmp
+first_line=`echo $tmp | cut -b1-2 | sed -n '1p'`
+
+first_chr=`expr "$first_line" : '\(.\)'`
+first_two=`expr "$first_line" : '\(..\)'`
+rewindstdin
+
+if [ "$first_two" = "%!" ]; then # Postscript file
+  gs @st640p.upp -dSAFER -dNOPAUSE -q -sOutputFile=/tmp/$$ -
+else
+  # text file
+  cat &gt; /tmp/$$
+  echo -n "^L" &gt;&gt; /tmp/$$
+  smbclient '\\Raven\Epson' "" -c 'printmode text'
+fi
+
+smbclient '\\Raven\Epson' "" -P -c "print /tmp/$$"
+rm /tmp/$$
+
+# EOF
+
+
+rewindstdin is a small program to rewind the filehandle for STDIN
+save the next part up to EOF to a file rewindstdin.c and compile
+
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+extern int errno;
+main()
+{
+  if( lseek(0,0,0) == 0 ){
+    errno = 0;
+  }
+  return( errno );
+}
+
+# EOF
+
+compile to an executable
+
+gcc -o /usr/local/bin/rewindstdin rewindstdin.c
+</pre>
+
+
+<p><li><h4>beginning balances</h4>
+Add a GL Journal entry and enter the beginning balance for your accounts.
+Beginning balances are the balances from your last balance sheet. If you also
+add open invoices to account for COGS for inventory, add the invoices
+and make the appropriate adjustments.
+
+
+<p><li><h4>establish a beginning inventory</h4>
+add the parts with a vendor invoice. Use the <b>real cost</b> for the items,
+not zero. If you use zero cost then the cost of goods will be zero when you
+sell the item.
+
+
+<p><li><h4>Assemblies</h4>
+Assemblies are manufactured goods assembled from parts, services and
+assemblies.  Because you do not buy assemblies you 'stock assemblies' by
+adding assembled units to your inventory. The quantity for individual parts 
+is reduced and the quantity for the assembly increased. To disassemble an
+assembly you simply return the parts to inventory by entering a negative
+quantity for the number of assemblies to stock.
+
+
+<p><li><h4>DBD-Pg not installed</h4>
+
+Most modern distributions now package DBD-Pg. If it is
+not packaged follow this recipe to get it working.
+
+<ul>
+  <li>check if you have the header files for PostgreSQL
+  <br>$ find / -name 'libpq-fe.h'
+  <br>if nothing shows up install the development package for PostgreSQL
+  <li>download and untar DBD-Pg
+  <li>set the environment variables POSTGRES_LIB and POSTGRES_INCLUDE
+  <li>cd to DBD-Pg directory
+  <br>as ordinary user
+  <br>$ perl Makefile.PL
+  <br>$ make
+  <br>$ make test
+  <br>if all went well su to root
+  <br># make install
+  <li>remove DBD-Pg
+</ul>
+
+
+<p><li><h4>login.pl has compilation error</h4>
+
+This could be because of a missing configuration file in the users directory
+
+<p>check the permission for the users directory. The directory must be
+set writeable for the webserver. If your webserver runs ias user/group
+nobody.nogroup set the directory to
+<pre>
+drwx--x--x   2 nobody   nogroup    1024 May 26 16:49 users
+
+or
+
+drwxrwx--x   2 johndoe  nogroup    1024 May 26 16:49 users</pre>
+
+
+<p><li><h4>script not executing, shows in browser instead</h4>
+
+Add
+<pre>
+  AddHandler cgi-script .pl</pre>
+in your httpd.conf file.
+
+
+<p><li><h4>unknown terminal!</h4>
+the frontend script couldn't figure out which browser you are using
+<p>include the terminal variable on the URL
+<pre>
+  http://localhost/ledger-smb/login.pl?terminal=lynx</pre>
+Valid terminal variables are lynx, mozilla and js
+
+
+<p><li><h4>permission denied</h4>
+
+Check if your web server has write permission to write to the following
+files and directories:
+<pre>
+  users/
+  templates/
+  users/members
+
+  # chown nobody:nogroup users templates users/members
+</pre>
+
+
+<p><li><h4>permission denied to access tables</h4>
+The user you entered in the "Database section" must be a valid
+database user who has rights to access the tables.
+
+<p>If the tables are owned by 'joe' and you enter 'mary' as the dba
+you might run into this problem if mary doesn't have the rights to
+access tables owned by joe.
+
+
+<p><li><h4>html and graphics files don't show up on screen</h4>
+
+Enable Includes and FollowSymlinks Options in your httpd.conf file
+<pre>
+  &lt;Directory /usr/local/ledger-smb&gt;
+    Options ExecCGI Includes FollowSymlinks
+  &lt;/Directory&gt;
+</pre>
+
+
+<p><li><h4>switch display to a foreign language</h4>
+
+Load your preferences and select the language.
+<br>Language selection is in accordance to 
+<a href=http://www.unece.org/cefact/locode/service/main.htm>
+ISO 3166-1</a> standards.
+
+
+<p><li><h4>Text shows in English when I use a foreign language</h4>
+
+This is because the corresponding hash entry is missing.
+Add the missing text in the locale/cc/all or locale/cc/missing
+file and run 'perl locales.pl' from the command line to rebuild
+the individual files.
+
+<br>cc refers to the country code.
+
+
+<p><li><h4>switch to a foreign language for the login and admin screen</h4>
+
+Edit ledger-smb.conf and enter the code for the $language variable
+<pre>
+  $language = "de";</pre>
+
+<p>This is a global change and applies to all logins, individual settings
+may be changed by setting the language in your Preferences.
+
+
+</ul>
+
+<p>
+<hr>
+<a name=security>
+<h1>LedgerSMB security</h1>
+</a>
+
+<ul>
+<li>The security features built into LedgerSMB provide encrypted passwords
+and access control which makes it fairly safe out of the box to run even in
+front of a firewall.
+Some precautions which are out of our control must be taken though.
+It matters where you install SL and how you configure your web server and
+SQL server.
+
+<pre>
+  Typical setups:
+  
+  /usr/local/vh/www                   <- DocumentRoot for virtual host
+  /usr/local/vh/ledger-smb            <- Alias for ledger-smb
+  /usr/local/vh/users                 <- users directory out of reach
+
+<hr width=60% align=left>
+  /usr/local/vh/www                   <- DocumentRoot for virtual host
+  /usr/local/vh/www/ledger-smb        <- Alias for ledger-smb
+  /usr/local/vh/www/ledger-smb/users  <- users configuration files and tmp space
+
+  &lt;Directory /usr/local/vh/www/ledger-smb/users&gt;  <- disable webserver access
+    Order Deny,Allow                                 for users directory
+    Deny from All
+  &lt;/Directory&gt;
+
+</pre>
+
+The location for the users directory can be specified in ledger-smb.conf
+
+<p><li>Set permission for the users and templates directory to 711
+
+<p><li>If you do not want anyone to change the templates with the built-in
+editor set the files in templates/directory/ to read only or disable
+the menu item to edit the templates.
+
+<p><li>You can set up a read-only environment if you disable the menu items
+to add data. i.e 'Add Transaction' if unchecked you will not be able to add
+a transaction or repost a transaction. You may look at it but nothing else.
+
+<p><li>There are various settings for audit control and you may disable
+reposting entirely or up to a certain date. And with the audit trail enabled
+you can keep tab of who is doing what.
+
+<p><li>For PostgreSQL you may also set who has access to the server in the file
+pg_hba.conf
+<br>Authentication crypt does not work because not all SQL servers
+accept encrypted passwords.
+
+<p><li>in addition you can secure the tables from unauthorized access by
+setting up a different database user and GRANT rights. For instance,
+users without DELETE rights will still be able to use the program, change
+customers and vendors, add transactions but will not be able to delete or
+repost transactions.
+<br>To lock all the tables to create a RO system GRANT SELECT rights only.
+
+<p><li>Other security options include a secure shell, your webserver's
+authentication system, SSL, encrypted tunnels, ...
+
+</ul>
+
+</BODY>
+</HTML>
+

@@ -1,0 +1,171 @@
+<body bgcolor=ffffff>
+
+<table width=640>
+       <tr>
+           <td>  </td>
+          <td align=center>
+
+<table width=90%>
+       <tr>
+           <td align=center>
+<font size=1>
+ Внимание! Оплата данного счета означает
+согласие с условиями поставки товара.
+Уведомление об оплате обязательно,
+в противном случае не гарантируется
+наличие товара на складе. Товар
+отпускается по факту прихода денег
+на р/с Поставщика, самовывозом.
+</font>
+          </td>
+        </tr>
+       </table>
+
+          </td>
+        </tr>
+       <tr>
+           <th colspan=3>
+Образец заполнения платежного поручения
+          </th>
+      </tr>
+          <tr>
+         <td>  </td>
+        <td>
+
+<table width=100% border=1 cellpadding=3 cellspacing=0>
+       <tr>
+           <td>
+Получатель<br>
+<%company%>
+          </td>
+           <td width=1%>
+_______<br>
+Сч. No
+          </td>
+           <td width=1%>
+<br>
+40802810701010000976 
+          </td>
+        </tr>
+       <tr>
+           <td>
+Банк получателя<br>
+ОАО "НБД-Банк" г. Н.Новгород
+          </td>
+             <td>
+<u><nobr>
+БИК___</u><br>
+Сч. No
+          </td>
+           <td>
+42202705<br>
+30101810400000000705
+          </td>
+      </tr>
+       </table>
+
+
+          </td>
+        </tr>
+       <tr>
+           <td>  </td>
+          <td colspan=3>
+<br>
+            <h3>СЧЕТ  N 000<%ordnumber%>   от <%orddate%></h3>
+<hr>
+          </th>
+        </tr>
+  <tr>
+    <td width=10> </td>
+
+    <td>
+      <table width=100%>
+        <tr>
+          <td>
+            Поставщик: <b><%company%></b>
+        <br>Покупатель:<b> <%name%></b>
+             </td>
+        </tr>
+
+       </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> </td>
+  
+    <td>
+      <table border=1  width=100% cellpadding=2 cellspacing=0>
+        <tr>
+          <th>No.</th>
+          <th width=90%>Товар</th>
+          <th>Кол-во</th>
+          <th>Ед.</th>
+          <th>Цена</th>
+          <th>Сумма</th>
+        </tr>
+
+         <%foreach number%>
+        <tr valign=top>
+           <td align=right><%runningnumber%></td>
+           <td><%description%></td>
+          <td align=right><%qty%></td>
+          <td align=center>шт.</td>
+          <td align=right><%sellprice%></td>
+          <td align=right><%linetotal%></td>
+         </tr>
+        <%end number%>
+
+        <tr>
+          <th colspan=5 align=right>Итого:</th>
+          <th align=right><%subtotal%></th>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+        </tr>
+         <tr>
+        <td>  </td>
+        <td>
+        </tr>
+
+         <tr>
+        <td>  </td>
+        <td>
+
+       <table width=100%>
+         <tr>
+        <td colspan=2>
+<nobr>Всего наименований ___, на сумму <%subtotal%> руб.
+ </td>
+        </tr>
+         <tr>
+        <th colspan=2 align=left>
+ <%text_amount%>
+ </th>
+        </tr>
+            <tr>
+        <th colspan=2>
+<hr height=1>
+ </th>
+        </tr>
+          <tr>
+        <th width=50% align=left>
+<nobr>Руководитель ______________________________
+ </th>
+        <th align=right>
+<nobr>Бухгалтер ______________________________
+        </th>
+        </tr>
+        </table>
+  
+  </td>
+  </tr>
+      </table>
+
+</table>
+
+</body>
+</html>

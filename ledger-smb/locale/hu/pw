@@ -1,0 +1,15 @@
+$self{charset} = 'ISO-8859-2';
+
+$self{texts} = {
+  'Continue'                    => 'Folytatás',
+  'Password'                    => 'Jelszó',
+  'Session expired!'            => 'Lejárt az idõ!',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'folytatás'                   => 'continue',
+};
+
+1;
+

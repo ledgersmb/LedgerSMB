@@ -1,0 +1,36 @@
+$self{charset} = 'ISO-8859-15';
+
+$self{texts} = {
+  'Account'                     => 'Konto',
+  'Amount'                      => 'Summa',
+  'Continue'                    => 'Edasi',
+  'Date'                        => 'Kuupäev',
+  'Memo'                        => 'Memo',
+  'Nothing to print!'           => 'Pole midagi trükkida!',
+  'PDF'                         => 'PDF',
+  'Postscript'                  => 'Postscript',
+  'Printed'                     => 'Trükitud',
+  'Scheduled'                   => 'Planeeritud',
+  'Screen'                      => 'Ekraan',
+  'Select a Printer!'           => 'Vali Printer',
+  'Select payment'              => 'Vali makse',
+  'Select postscript or PDF!'   => 'Vali kas postscript või PDF',
+  'Source'                      => 'Allikas',
+};
+
+$self{subs} = {
+  'customer_details'            => 'customer_details',
+  'payment_selected'            => 'payment_selected',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_check'                 => 'print_check',
+  'print_options'               => 'print_options',
+  'print_receipt'               => 'print_receipt',
+  'print_transaction'           => 'print_transaction',
+  'select_payment'              => 'select_payment',
+  'vendor_details'              => 'vendor_details',
+  'edasi'                       => 'continue',
+};
+
+1;
+

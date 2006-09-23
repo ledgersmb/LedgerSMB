@@ -1,0 +1,15 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Continue'                    => 'Weiter',
+  'Password'                    => 'Passwort',
+  'Session expired!'            => 'Sitzungsdauer abgelaufen!',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'weiter'                      => 'continue',
+};
+
+1;
+

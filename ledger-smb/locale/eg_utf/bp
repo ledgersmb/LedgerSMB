@@ -1,0 +1,54 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Account'                     => 'حساب',
+  'Accounting Menu'             => 'قائمة الحسابات',
+  'Confirm!'                    => 'تاكيد',
+  'Continue'                    => 'تابع',
+  'Current'                     => 'الحالي',
+  'Customer'                    => 'العميل',
+  'Date'                        => 'التاريخ',
+  'Employee'                    => 'الموظف',
+  'From'                        => 'من',
+  'ID'                          => 'البطاقة الشخصية',
+  'Invoice'                     => 'فاتورة',
+  'Invoice Number'              => 'رقم الفاتورة',
+  'Order'                       => 'امر',
+  'Order Number'                => 'رقم الامر',
+  'Packing Lists'               => 'قوائم تعبئة',
+  'Print'                       => 'طباعة',
+  'Purchase Orders'             => 'اوامر شراء',
+  'Quotation'                   => 'عروض اسعار للعملاء',
+  'Quotation Number'            => 'رقم عرض السعر',
+  'Quotations'                  => 'عروض اسعار',
+  'RFQs'                        => 'عروض اسعار موردين',
+  'Sales Invoices'              => 'فواتير المبيعات',
+  'Sales Orders'                => 'اوامر بيع',
+  'Select all'                  => 'اختر الكل',
+  'To'                          => 'إلى',
+  'Vendor'                      => 'المورد',
+  'Yes'                         => 'نعم',
+  'done'                        => 'نفذ',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'continue'                    => 'continue',
+  'display'                     => 'display',
+  'js_menu'                     => 'js_menu',
+  'list_spool'                  => 'list_spool',
+  'menubar'                     => 'menubar',
+  'print'                       => 'print',
+  'remove'                      => 'remove',
+  'search'                      => 'search',
+  'section_menu'                => 'section_menu',
+  'select_all'                  => 'select_all',
+  'yes'                         => 'yes',
+  'تابع'                    => 'continue',
+  'طباعة'                  => 'print',
+  'اختر_الكل'           => 'select_all',
+  'نعم'                      => 'yes',
+};
+
+1;
+

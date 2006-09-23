@@ -1,0 +1,140 @@
+#=====================================================================
+# LedgerSMB Small Medium Business Accounting
+# Copyright (C) 2003
+#
+#  Author: Dieter Simader
+#   Email: dsimader@sql-ledger.org
+#     Web: http://www.ledgersmb.org/
+#
+#  Contributors: Mario R. Pizzolanti <mario@zavood.ee>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#======================================================================
+#
+# written for check and receipt printing
+# it returns a properly formatted text string
+# for a number up to 10**9
+
+sub init {
+  my $self = shift;
+
+  %{ $self->{numbername} } =
+                   (0 => 'null',
+                    1 => 'üks',
+                    2 => 'kaks',
+	            3 => 'kolm',
+		    4 => 'neli',
+		    5 => 'viis',
+		    6 => 'kuus',
+		    7 => 'seitse',
+		    8 => 'kaheksa',
+		    9 => 'üheksa',
+		   10 => 'kümme',
+                10**2 => 'sada',
+                10**3 => 'tuhat',
+		10**6 => 'miljon',
+		10**9 => 'miljard',
+	       10**12 => 'biljon'
+		);
+
+}
+
+
+sub num2text {
+  my ($self, $amount) = @_;
+
+  return $self->{numbername}{0} unless $amount;
+
+  my @textnumber = ();
+
+  # split amount into chunks of 3
+  my @num = reverse split //, abs($amount);
+  my @numblock = ();
+  my ($i, $appendit);
+  my @a = ();
+
+  while (@num) {
+    @a = ();
+    for (1 .. 3) {
+      push @a, shift @num;
+    }
+    push @numblock, join / /, reverse @a;
+  }
+  
+  while (@numblock) {
+
+    $i = $#numblock;
+    $numblock[$i] *= 1;
+    @num = split //, $numblock[$i];
+    
+    $appendit = "it";
+    $hundred = 0;
+    
+    if ($numblock[$i] == 0) {
+      pop @numblock;
+      next;
+    }
+   
+    if ($numblock[$i] > 99) {
+      # the one from hundreds
+      push @textnumber, "$self->{numbername}{$num[0]}$self->{numbername}{10**2}";
+      # reduce numblock
+      $numblock[$i] -= $num[0] * 100;
+      @num = split //, $numblock[$i];
+      $hundred = 1;
+    }
+    
+    if ($numblock[$i] > 19) {
+      # 20 - 99
+      push @textnumber, "$self->{numbername}{$num[0]}kümmend";
+      @num = split //, $numblock[$i];
+      push @textnumber, $self->{numbername}{$num[1]} if $num[1] > 0;
+      
+    } elsif ($numblock[$i] > 10) {
+      # 11 - 19
+      if ($hundred) {
+	@num = split //, $numblock[$i];
+      }
+      $num = $num[1];
+	
+      push @textnumber, "$self->{numbername}{$num}teist";
+      
+    } elsif ($numblock[$i] > 1) {
+      # ones
+      push @textnumber, $self->{numbername}{$numblock[$i]};
+      
+    } elsif ($numblock[$i] == 1) {
+      push @textnumber, $self->{numbername}{$num[0]};
+      $appendit = "";
+      
+    }
+    
+    # add thousand, million
+    if ($i) {
+      $amount = 10**($i * 3);
+      $appendit = ($i == 1) ? "" : $appendit;
+      push @textnumber, "$self->{numbername}{$amount}$appendit";
+    }
+    
+    pop @numblock;
+    
+  }
+
+  join ' ', @textnumber;
+
+}
+
+
+1;
+

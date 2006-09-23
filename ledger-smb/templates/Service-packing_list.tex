@@ -1,0 +1,120 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telephone & <%tel%>\\
+    Facsimile & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 37%>
+\end{tabular*}
+
+\newpage
+
+\markright{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}p{\descrwidth}@{\extracolsep\fill}rl@{}}
+  \textbf{Description} & \textbf{Qt'y} &
+    \textbf{Unit} \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{2cm}
+
+<%shiptoname%>
+
+<%shiptoaddr1%>
+
+<%shiptoaddr2%>
+
+<%shiptoaddr3%>
+
+<%shiptoaddr4%>
+
+\vspace{3.5cm}
+
+\textbf{P A C K I N G} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+
+\hfill
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Date} & <%invdate%> \\
+  \textbf{Number} & <%invnumber%> \\
+  \textbf{Customer} & <%customer_id%>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}p{\descrwidth}@{\extracolsep\fill}rl@{}}
+  \textbf{Description} & \textbf{Qt'y} & \textbf{Unit} \\
+<%foreach number%>
+  <%description%> & <%qty%> & <%unit%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+%\vfill
+%\centerline{\textbf{Thank You for your valued business!}}
+
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+%\footnotetext[1]{\tiny
+%Items returned are subject to a 10\% restocking charge.
+%A return authorization must be obtained from <%company%> before goods are
+%returned. Returns must be shipped prepaid and properly insured.
+%<%company%> will not be responsible for damages during transit.}
+
+\end{document}
+

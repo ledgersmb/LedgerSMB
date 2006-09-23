@@ -1,0 +1,189 @@
+/* stylesheet for ledger-smb */
+
+/* general stuff */
+A:link { color: #a0522d; text-decoration: none; }
+A:visited { color: #a0522d; text-decoration: none; }
+A:active { color: #a0522d; text-decoration: underline; }
+A:hover { color: white;
+  background-color: #bbbbbb;
+  text-decoration: none;
+}
+
+body {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+  background-color: white;
+  color: black
+}
+
+td {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+th {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+/* login and admin */
+.login {
+  font-family: Verdana, Arial, Helvetica;
+}
+body.login {
+  background: red;
+  color: black;
+}
+h1.login {
+  font-size: 18pt;
+}
+table.login {
+  background-color: white;
+  padding: 20px;
+}
+td.login {
+  text-align: center;
+}
+th.login {
+  text-align: right;
+}
+
+body.admin {
+  background-color: red;
+  color: black;
+}
+
+body.menu {
+  background-color: red;
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 12pt;
+  color: black;
+}
+
+.menuOut {
+  cursor: pointer;
+  background-color: red;
+  font-size: 12px;
+  color: #000000;
+  border: 0px solid red;
+  padding: 2px;
+  text-align: left;
+}
+
+.menuOver {
+  cursor: pointer;
+  background-color: #5a7d9b;
+  font-size: 12px;
+  color: #ffffff;
+  border: 0px solid red;
+  padding: 2px;
+  text-align: left;
+}
+
+.submenu {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 12px;
+  padding-left: 5px;
+}
+
+.menuOut a {
+  cursor: pointer;
+  margin: 0px;
+  background-color: red;
+  font-size: 12px;
+  color: #840000;
+  border: 0px solid #000000;
+  padding: 0px;
+  text-align: left;
+}
+
+.menuOver a {
+  cursor: pointer;
+  margin: 0px;
+  background-color: #5a7d9b;
+  font-size: 12px;
+  color: #ffffff;
+  border: 0px solid #000000;
+  padding: 0px;
+  text-align: left;
+}
+
+.submenu a {
+  color: #840000;
+  text-decoration: none;
+}
+
+.submenu a:hover {
+  color: #840000;
+  text-decoration: none;
+}
+
+.listtop { font-size: 10pt; background-color: red; color: black; border: 1px solid #000000 }
+.listheading { font-size: 10pt; background-color: red; color: black; border: 1px solid #000000 }
+A.listheading:link, A.listheading:active, A.listheading:visited {
+  color: black;
+  text-decoration: none; }
+.listrow1 { font-size: 10pt; background-color: #e6e6fa; color: black; vertical-align: top; }
+.listrow0 { font-size: 10pt; background-color: #ffe4e1; color: black; vertical-align: top; }
+.listsubtotal { font-size: 10pt; background-color: #5a7d9b; color: white; }
+.listtotal { font-size: 10pt; background-color: black; color: white; }
+
+textarea {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+input {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+select {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+.submit {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+  color: #000080;
+}
+
+.checkbox, .radio {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+.plus0 {    /* font color for negative numbers */
+  color: red;
+}
+
+.plus1 {
+  color: green;
+}
+
+h2.confirm {
+  color: blue;
+  font-size: 14pt;
+}
+
+h2.error {
+  color: red;
+  font-size: 14pt;
+}
+
+
+/* media stuff */
+
+@media screen {
+  .noscreen {   /* items with this class won't display */
+    display: none;
+  }
+}
+
+@media print {
+  .noprint {   /* items with this class won't print */
+    display: none;
+  }
+}
+

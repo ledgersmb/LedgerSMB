@@ -1,0 +1,28 @@
+$self{texts} = {
+  'Account'                     => 'Reikningur',
+  'Amount'                      => 'Upphæð',
+  'Continue'                    => 'Áfram',
+  'Date'                        => 'Dagsetning',
+  'PDF'                         => 'PDF',
+  'Postscript'                  => 'Postscript',
+  'Screen'                      => 'Skjá',
+  'Select postscript or PDF!'   => 'Veljið postscript eða PDF',
+  'Source'                      => 'Frálag',
+};
+
+$self{subs} = {
+  'customer_details'            => 'customer_details',
+  'payment_selected'            => 'payment_selected',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_check'                 => 'print_check',
+  'print_options'               => 'print_options',
+  'print_receipt'               => 'print_receipt',
+  'print_transaction'           => 'print_transaction',
+  'select_payment'              => 'select_payment',
+  'vendor_details'              => 'vendor_details',
+  'Áfram'                       => 'continue',
+};
+
+1;
+

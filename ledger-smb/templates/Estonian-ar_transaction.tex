@@ -1,0 +1,118 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=-3cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+<%include letterhead.tex%>
+
+\centerline{\textbf{A R} \hspace{0.3cm} \textbf{T R A N S A C T I O N}}
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+<%name%>
+
+<%address1%>
+
+<%address2%>
+
+<%city%>
+<%if state%>
+\hspace{-0.1cm}, <%state%>
+<%end state%>
+<%zipcode%>
+
+<%country%>
+
+\vspace{0.3cm}
+
+<%if contact%>
+<%contact%>
+\vspace{0.2cm}
+<%end contact%>
+
+<%if customerphone%>
+Tel: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+
+<%if customertaxnumber%>
+Tax Number: <%customertaxnumber%>
+<%end customertaxnumber%>
+}
+\hfill
+\begin{tabular}[t]{ll}
+  \textbf{Invoice \#} & <%invnumber%> \\
+  \textbf{Date} & <%invdate%> \\
+  \textbf{Due} & <%duedate%> \\
+  <%if ponumber%>
+    \textbf{PO \#} & <%ponumber%> \\
+  <%end ponumber%>
+  <%if ordnumber%>
+    \textbf{Order \#} & <%ordnumber%> \\
+  <%end ordnumber%>
+  \textbf{Employee} & <%employee%> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}[t]{@{}llrX@{\hspace{1cm}}l@{}}
+<%foreach amount%>
+  <%accno%> & <%account%> & <%amount%> & <%description%> & <%projectnumber%> \\
+<%end amount%>
+
+  \multicolumn{2}{r}{\textbf{Subtotal}} & <%subtotal%> & \\
+<%foreach tax%>
+  \multicolumn{2}{r}{\textbf{<%taxdescription%> @ <%taxrate%> \%}} & <%tax%> & \\
+<%end tax%>
+
+  \multicolumn{2}{r}{\textbf{Total}} & <%invtotal%> & \\
+  
+\end{tabularx}
+
+\vspace{0.3cm}
+
+<%text_amount%> ***** <%decimal%>/100 <%currency%>
+
+<%if notes%>
+\vspace{0.3cm}
+<%notes%>
+<%end notes%>
+
+\vspace{0.3cm}
+
+<%if paid_1%>
+\begin{tabular}{@{}lllr@{}}
+  \multicolumn{5}{c}{\textbf{Payments}} \\
+  \hline
+  \textbf{Date} & & \textbf{Source} & \textbf{Amount} \\
+<%end paid_1%>
+<%foreach payment%>
+  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
+<%end payment%>
+<%if paid_1%>
+\end{tabular}
+<%end paid_1%>
+
+\vspace{0.5cm}
+
+<%foreach tax%>
+\textbf{\scriptsize <%taxdescription%> Registration <%taxnumber%>} \\
+<%end tax%>
+  
+\end{document}
+

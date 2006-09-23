@@ -1,0 +1,152 @@
+
+<body bgcolor=ffffff>
+
+<table width=640>
+       <tr>
+           <td>&nbsp; </td>
+          <td align=right>
+
+<table width=50%>
+       <tr>
+           <td align=right>
+<font size=1>
+            Приложение N 1
+к Правилам ведения журналов
+учета полученных и
+выставленных счетов-фактур,
+книг покупок и книг продаж при
+расчетах по налогу на
+добавленныую стоимость,
+утвержденным постановлением
+Правительства
+Российской Федерации
+от 2 декабря 2000 г. N 914
+(в редакции постановления
+Правительства Российской Федерации
+от 15 марта 2001 г. N 189)
+</font>
+          </td>
+        </tr>
+       </table>
+
+          </td>
+        </tr>
+       <tr>
+           <td>&nbsp; </td>
+          <td colspan=3>
+            <h3>СЧЕТ-ФАКТУРА  N 000<%invnumber%>   от <%invdate%></h3>
+          </th>
+        </tr>
+  <tr>
+    <td width=10>&nbsp;</td>
+
+    <td>
+      <table width=100%>
+        <tr>
+          <td>
+            Продавец: <%company%>
+        <br>Адрес: <%address%>
+        <br>Идентификационный номер продавца (ИНН): &nbsp;
+        <br>Грузоотправитель и его адрес: Он же
+        <br>Грузополучатель и его адрес: <%shiptoname%>
+        <br>К платежно-расчетному документу: &nbsp; от  &nbsp;
+        <br>Получатель: <%name%>
+        <br>Адрес: <%address1%>
+        <br>Идентификационный номер покупателя (ИНН): &nbsp;
+             </td>
+        </tr>
+
+       </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  
+    <td>
+      <table border=1  width=100% cellpadding=2 cellspacing=0>
+        <tr>
+          <td align=center width=90%><font size=1>Наименование товара (описание  выполненных работ, оказанных услуг)</font></td>
+          <td align=center><font size=1>Еди- ница<br>из-<br>ме-<br>ре-<br>ния</font></td>
+          <td align=center><font size=1>Ко-<br>ли-<br>чес-<br>тво</font></td>
+          <td align=center><font size=1>Цена (тариф) за единицу измерения</font></td>
+          <td align=center><font size=1>Стоимость товаров (работ, услуг), всего без налога</font></td>
+          <td align=center><font size=1>В том числе акциз</font></td>
+          <td  align=center><font size=1>Нало- говая ставка</font></td>
+          <td  align=center><font size=1>Сумма налога</font></td>
+          <td align=center><font size=1>Стоимость товаров (работ, услуг), всего с учетом налога</font></td>
+          <td  align=center><font size=1>Страна<br>проис<br>хож-<br>дения</font></td>
+          <td  align=center><font size=1>Номер грузовой тамо-<br>женной декла-<br>рации</font></td>
+        </tr>
+
+         <tr>
+          <td align=center>1</td>
+          <td align=center>2</td>
+          <td align=center>3</td>
+          <td align=center>4</td>
+          <td align=center>5</td>
+          <td align=center>6</td>
+          <td align=center>7</td>
+          <td align=center>8</td>
+          <td align=center>9</td>
+          <td align=center>10</td>
+          <td align=center>11</td>
+        </tr>
+
+        <%foreach number%>
+        <tr valign=top>
+           <td><font size=1><%description%></font></td>
+          <td align=center>шт.</td>
+          <td align=right><%qty%></td>
+          <td align=right><%sellprice%></td>
+          <td align=right><%linetotal%></td>
+          <td align=right>&nbsp;</td>
+          <td align=right>&nbsp;</td>
+          <td align=right>&nbsp;</td>
+          <td align=right><%linetotal%></td>
+          <td><font size=1>&nbsp;</font></td>
+          <td align=right><font size=1>&nbsp;</font></td>
+        </tr>
+        <%end number%>
+
+        <tr>
+          <th colspan=7 align=right>Всего к оплате</th>
+          <td align=right>&nbsp;</td>
+          <td align=right><%subtotal%></td>
+          <td colspan=2>&nbsp;</td>
+        </tr>
+
+ 
+      </table>
+    </td>
+  </tr>
+
+        </tr>
+         <tr>
+        <td>&nbsp; </td>
+        <td>
+        </tr>
+
+         <tr>
+        <td>&nbsp; </td>
+        <td>
+
+       <table width=100%>
+         <tr>
+        <td width=50%>
+<nobr>Руководитель организации ____________________
+ </td>
+        <td align=right>
+<nobr>Главный бухгалтер ____________________
+        </tr>
+        </table>
+  
+  </td>
+  </tr>
+      </table>
+
+</table>
+
+</body>
+</html>
+

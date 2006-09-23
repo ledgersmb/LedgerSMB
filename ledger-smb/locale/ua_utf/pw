@@ -1,0 +1,15 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Continue'                    => 'Продовжити',
+  'Password'                    => 'Пароль',
+  'Session expired!'            => 'Сеанс застарів!',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'Продовжити'        => 'continue',
+};
+
+1;
+

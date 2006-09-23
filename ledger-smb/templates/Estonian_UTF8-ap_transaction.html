@@ -1,0 +1,232 @@
+
+<body bgcolor=ffffff>
+
+<table width=100%>
+
+  <%include letterhead.html%>
+  
+  <tr>
+    <td width=10>&nbsp;</td>
+
+    <th colspan=3>
+      <h4>OstuReskontro - T E H I N G</h4>
+    </th>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% callspacing=0 cellpadding=0>
+        <tr valign=top>
+          <td><%name%>
+          <br><%address1%>
+	  <%if address2%>
+          <br><%address2%>
+	  <%end address2%>
+          <br><%city%>
+	  <%if state%>
+	  , <%state%>
+	  <%end state%>
+	  <%zipcode%>
+	  <%if country%>
+	  <br><%country%>
+	  <%end country%>
+          <br>
+
+          <%if contact%>
+          <br><%contact%>
+          <br>
+          <%end contact%>
+
+          <%if vendorphone%>
+          <br>Tel: <%vendorphone%>
+          <%end vendorphone%>
+
+          <%if vendorfax%>
+          <br>Faks: <%vendorfax%>
+          <%end vendorfax%>
+
+          <%if email%>
+          <br><%email%>
+          <%end email%>
+
+          <%if vendortaxnumber%>
+          <p>Käibemaksukohuslane NR: <%vendortaxnumber%>
+          <%end vendortaxnumber%>
+          </td>
+   
+	  <td align=right>
+	    <table>
+	      <tr>
+		<th align=left nowrap>Arve NR. #</th>
+		<td><%invnumber%></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Kuupäev</th>
+		<td><%invdate%></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Tasuda</th>
+		<td><%duedate%></td>
+	      </tr>
+	      <%if ponumber%>
+              <tr>
+                <th align=left>Hanketellimus NR. #</th>
+		<td><%ponumber%>&nbsp;</td>
+	      </tr>
+	      <%end ponumber%>
+	      <%if ordnumber%>
+	      <tr>
+		<th align=left>Tellimus NR. #</th>
+		<td><%ordnumber%>&nbsp;</td>
+	      </tr>
+	      <%end ordnumber%>
+	      <tr>
+		<th align=left nowrap>Töötaja</th>
+		<td><%employee%>&nbsp;</td>
+	      </tr>
+	    </table>
+	  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  
+    <td>
+      <table>
+	<%foreach account%>
+	<tr valign=top>
+	  <td><%accno%></td>
+	  <td><%account%></td>
+	  <td width=10> </td>
+	  <td align=right><%amount%></td>
+	  <td width=10> </td>
+	  <td><%description%></td>
+	  <td width=10> </td>
+	  <td><%projectnumber%></td>
+	</tr>
+	<%end account%>
+
+	<tr>
+	  <%if taxincluded%>
+	  <th colspan=2 align=right>Kokku</th>
+	  <td width=10> </td>
+	  <td align=right><%invtotal%></td>
+	  <%end taxincluded%>
+
+	  <%if not taxincluded%>
+	  <th colspan=2 align=right>Vahesumma</th>
+	  <td width=10> </td>
+	  <td align=right><%subtotal%></td>
+	  <%end taxincluded%>
+	</tr>
+
+	<%foreach tax%>
+	<tr>
+	  <th colspan=2 align=right><%taxdescription%> @ <%taxrate%> %</th>
+	  <td width=10> </td>
+	  <td align=right><%tax%></td>
+	</tr>
+	<%end tax%>
+	
+	<%if not taxincluded%>
+	<tr>
+	  <th colspan=2 align=right>Kokku</th>
+	  <td width=10> </td>
+	  <td align=right><%invtotal%></td>
+	</tr>
+	<%end taxincluded%>
+      </table>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <%text_amount%> ***** <%decimal%>/100 <%currency%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <%notes%>
+    </td>
+  </tr>
+
+  <%if paid_1%>
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table>
+        <tr>
+          <th>Maksed</th>
+        </tr>
+
+        <tr>
+          <td>
+          <hr noshade>
+          </td>
+        </tr>
+
+	<tr>
+	  <td>
+	    <table>
+	      <tr>
+		<th>Kuupäev</th>
+		<th>&nbsp;</th>
+		<th>Alus</th>
+		<th>Memo</th>
+		<th>Summa</th>
+	      </tr>
+  <%end paid_1%>
+
+        <%foreach payment%>
+	      <tr>
+		<td><%paymentdate%></td>
+		<td><%paymentaccount%></td>
+		<td><%paymentsource%></td>
+		<td><%paymentmemo%></td>
+		<td align=right><%payment%></td>
+	      </tr>
+        <%end payment%>
+
+  <%if paid_1%>
+	    </table>
+	  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <%end paid_1%>
+
+  <tr height=10></tr>
+
+  <%if taxincluded%>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <th colspan=3 align=left><font size=-2>Hinnad sisaldavad käibemaksu.</th>
+  </tr>
+  <%end taxincluded%>
+
+</table>
+
+</body>
+</html>
+
+
+
+
+

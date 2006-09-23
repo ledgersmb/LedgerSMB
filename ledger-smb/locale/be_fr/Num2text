@@ -1,0 +1,202 @@
+#=====================================================================
+# LedgerSMB Small Medium Business Accounting
+# Copyright (C) 2002
+#
+#  Author: Dieter Simader
+#   Email: dsimader@sql-ledger.org
+#     Web: http://www.ledgersmb.org/
+#
+#  Contributors: Bruno Leveque <bruno.leveque@net6d.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#=====================================================================
+#
+# this is the french code for printing numbers in text
+#
+#=====================================================================
+
+
+sub init {
+  my $self = shift;
+
+  %{ $self->{numbername} } =
+                   (0 => 'Zéro',
+                    1 => 'Un',
+                    2 => 'Deux',
+	            3 => 'Trois',
+		    4 => 'Quatre',
+		    5 => 'Cinq',
+		    6 => 'Six',
+		    7 => 'Sept',
+		    8 => 'Huit',
+		    9 => 'Neuf',
+		   10 => 'Dix',
+		   11 => 'Onze',
+		   12 => 'Douze',
+		   13 => 'Treize',
+		   14 => 'Quatorze',
+		   15 => 'Quinze',
+		   16 => 'Seize',
+		   17 => 'Dix-sept',
+		   18 => 'Dix-huit',
+		   19 => 'Dix-neuf',
+		   20 => 'Vingt',
+		   30 => 'Trente',
+		   40 => 'Quarante',
+		   50 => 'Cinquante',
+		   60 => 'Soixante',
+		   70 => 'Septante',
+		   80 => 'Quatre-vingt',
+		   90 => 'Nonante',
+                10**2 => 'Cent',
+                10**3 => 'Mille',
+		10**6 => 'Million',
+		10**9 => 'Milliard',
+	       10**12 => 'Billion',
+		);
+
+}
+
+
+sub num2text {
+  my ($self, $amount) = @_;
+
+  return $self->{numbername}{0} unless $amount;
+
+  my @textnumber = ();
+
+  # split amount into chunks of 3
+  my @num = reverse split //, abs($amount);
+  my @numblock = ();
+  my @a;
+  my $i;
+
+  while (@num) {
+    @a = ();
+    for (1 .. 3) {
+      push @a, shift @num;
+    }
+    push @numblock, join / /, reverse @a;
+  }
+    
+  my $cent=0;
+
+  while (@numblock) {
+
+    $i = $#numblock;
+    @num = split //, $numblock[$i];
+    
+    if ($numblock[$i] == 0) {
+      pop @numblock;
+      next;
+    }
+   
+    if ($numblock[$i] > 99) {
+      $cent=1;
+
+      # the one from hundreds
+
+      if ($num[0] > 1) {
+        push @textnumber, $self->{numbername}{$num[0]};
+      }
+     
+      # reduce numblock
+      $numblock[$i] -= $num[0] * 100;
+
+      # add hundred designation
+      if ($num[0] > 1) {
+        if($numblock[$i] > 0) {
+            push @textnumber, $self->{numbername}{10**2};
+        } else {
+          push @textnumber, "$self->{numbername}{10**2}s";
+        }
+      } else {
+        push @textnumber, $self->{numbername}{10**2};
+      }
+      
+    }
+    
+    $numblock[$i] *= 1;
+    
+    if ($numblock[$i] > 9) {
+      # tens
+      push @textnumber, $self->format_ten($numblock[$i]);
+    } elsif ($numblock[$i] > 0) {
+      # ones
+      if ($i == 1) {
+          if ($cent == 1) {
+            push @textnumber, $self->{numbername}{$numblock[$i]};
+          } 
+          $cent = 0;
+      } else {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    }
+    
+    # add thousand, million
+    if ($i) {
+      $num = 10**($i * 3);
+      if ($i == 1) {
+        push @textnumber, $self->{numbername}{$num};
+      } elsif ($numblock[$i] > 1) {
+        push @textnumber, "$self->{numbername}{$num}s";
+      } else {
+        push @textnumber, "$self->{numbername}{$num}";
+      }
+    }
+      
+    pop @numblock;
+    
+  }
+
+  join ' ', @textnumber;
+
+}
+
+
+sub format_ten {
+  my ($self, $amount) = @_;
+  
+  my $textnumber = "";
+  my @num = split //, $amount;
+
+  if ($amount > 20) {
+    if ($num[0] == 8) {
+      if ($num[1] > 0) {
+        $textnumber = $self->{numbername}{$num[0]*10};
+      } else {
+        $textnumber = "$self->{numbername}{$num[0]*10}s";
+      }
+    } else {
+      $textnumber = $self->{numbername}{$num[0]*10};
+
+      $textnumber .= " et" if ($num[1] == 1);
+
+
+    }
+    $amount = $num[1];
+  } else {
+    $textnumber = "$self->{numbername}{$amount}";
+    $amount = 0;
+  }
+
+  $textnumber .= " ".$self->{numbername}{$amount} if $amount;
+
+  $textnumber;
+  
+}
+
+
+1;
+

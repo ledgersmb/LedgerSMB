@@ -1,0 +1,280 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                                           %%%
+%%%      Szamla - LaTeX sablon v. 1.01        %%%
+%%%  Kovacs Laszlo -- lakovacs@inf.unideb.hu  %%%
+%%%                                           %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% 2003.10.31.
+%%%
+%%%
+
+
+\documentclass[twoside]{article}
+%\documentclass[twoside]{scrartcl}
+% \usepackage[frame]{xy}
+\usepackage{tabularx}
+%\usepackage{graphicx}
+\usepackage[latin2]{inputenc}
+
+
+
+\setlength{\voffset}{-0.5cm}
+\setlength{\hoffset}{-2.5cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+
+
+\newcommand{\PAR}[1]{\texttt{\upshape <\%#1\%>}\typeout{#1}}
+
+
+\begin{document}
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+
+\newsavebox{\headright}
+\sbox{\headright}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+  \parbox{\textwidth}{
+   \begin{center}
+%     \includegraphics[scale=1.0]{/tmp/logo_04.eps} \\[.3cm]
+     {\large\bfseries SZÁMLA} \\
+   \end{center}
+
+   \mbox{}\hfill <%copysum%>  \\
+   \mbox{}\hfill <%copynumber%>
+  }
+}
+
+\newsavebox{\headleft}
+\sbox{\headleft}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+  \parbox{\textwidth}{
+%  \includegraphics[scale=.5]{/tmp/logo_04.eps} 
+  \hfill <%invnumber%>\\[-3mm]
+  \rule{\textwidth}{.5pt}
+  }
+}
+
+
+
+\markboth{}{\usebox{\headright}}
+
+\pagestyle{myheadings}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\fontshape{n}\selectfont
+
+
+<%pagebreak 65 27 48%>
+\end{tabularx}
+}
+
+\rule{\textwidth}{1.5pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{X@{ }r@{}}
+  \textbf{Részösszeg} & <%sumcarriedforward%> \cr
+  \end{tabularx}
+
+\newpage
+
+\markboth{\usebox{\headleft}}{\usebox{\headleft}}
+
+\mbox{}\vspace{.5cm}
+
+\rule{\textwidth}{1.5pt}
+
+\vspace{.3cm}
+
+{\scriptsize
+\begin{tabularx}{\textwidth}{>{\hsize=0.4cm\centering}X@{\ }
+            >{\hsize=0.9cm\raggedleft}X@{\ }
+            >{\hsize=1.9cm\raggedleft}X@{\ }
+            >{\hsize=2.9cm\raggedleft}X@{\ }
+            >{\hsize=1.9cm\centering}X@{\ }
+            >{\hsize=0.9cm\centering}X@{\ }
+            >{\hsize=0.5cm\centering}X@{\ }
+            >{\hsize=2.0cm\raggedleft}X@{\ }
+            >{\hsize=2.0cm\raggedleft}X@{\ }
+            >{\hsize=0.8cm\raggedleft}X@{\ }
+            >{\hsize=2.0cm\raggedleft}X@{\ }
+            >{\hsize=2.0cm\raggedleft}X@{}
+           }
+  \textbf{no} & \textbf{Márka} & \textbf{Áru} & \centering\textbf{Megnevezés} &
+  \textbf{VTSZ} & \textbf{Menny.} & \textbf{u} & 
+  \textbf{Nettó egységár} & \textbf{Nettó összeg} & \textbf{ÁFA\%} & 
+  \textbf{ÁFA összeg} & \textbf{Bruttó összeg}
+  \cr
+  & & \textbf{elõzõ oldalról} &
+  & & &
+  & & & 
+  & & <%sumcarriedforward%>
+  \cr
+<%end pagebreak%>
+
+\mbox{}\vspace{3.5cm}
+
+\rule{\textwidth}{1.5pt}
+
+\vspace{3mm}
+
+\hbox to\hsize{
+\begin{minipage}[t]{9.5cm}
+\textbf{Eladó:} \\
+<%company%>\\
+<%address%>\\
+Adószám: <%businessnumber%>\\
+tel: <%tel%>\\
+fax: <%fax%>
+\end{minipage}
+\hfill \
+\begin{minipage}[t]{9.5cm}
+\textbf{Vevõ:} \\
+<%name%>\\
+<%address1%>\\
+<%if address2%>
+<%address2%>
+<%end address2%>\\
+<%city%> <%state%> <%zipcode%>\\
+<%if country%>
+<%country%>
+<%end country%>
+\end{minipage}
+}
+
+
+\vspace{5mm}
+
+\rule{\textwidth}{1.5pt}
+
+\vspace{3mm}
+
+\hspace{-3mm}
+\begin{tabularx}{\textwidth}{>{\hsize=2.1cm\centering}X@{\ }
+                             >{\hsize=2.8cm\centering}X@{\ }
+                             >{\hsize=2.8cm\centering}X@{\ }
+                             >{\hsize=2.8cm\centering}X@{\ }
+                             >{\hsize=3.4cm\centering}X@{\ }
+                             >{\hsize=2.5cm\centering}X@{\ }
+                             >{\hsize=2.0cm\raggedleft}X@{}}
+  \textbf{Fizetési mód} & \textbf{Telj.~dátuma} & \textbf{Számla kelte} &
+  \textbf{Esedékesség} & \textbf{Megrendelés} & \textbf{Kiállította} & \textbf{Sorszám} 
+  \cr
+  <%shippingpoint%> & <%invdate%> & <%crdate%> &
+  <%duedate%> & <%ordnumber%> & <%employee%> & <%invnumber%>
+\end{tabularx}
+
+
+\vspace{5mm}
+
+\rule{\textwidth}{1.5pt}
+
+\vspace{3mm}
+
+\hspace{-3mm}
+{\scriptsize
+\begin{tabularx}{\textwidth}{>{\hsize=0.4cm\centering}X@{\ }
+                             >{\hsize=0.9cm\raggedright}X@{\ }
+                             >{\hsize=1.9cm\raggedright}X@{\ }
+                             >{\hsize=2.9cm\raggedright}X@{\ }
+                             >{\hsize=1.9cm\centering}X@{\ }
+                             >{\hsize=0.9cm\raggedleft}X@{\ }
+                             >{\hsize=0.5cm\centering}X@{\ }
+                             >{\hsize=2.0cm\raggedleft}X@{\ }
+                             >{\hsize=2.0cm\raggedleft}X@{\ }
+                             >{\hsize=0.8cm\raggedleft}X@{\ }
+                             >{\hsize=2.0cm\raggedleft}X@{\ }
+                             >{\hsize=2.0cm\raggedleft}X@{}
+                             }
+  \centering\textbf{sz.} & \raggedright\textbf{Márka} & \raggedright\textbf{Áru} & \raggedright\textbf{Megnevezés} &
+  \centering\textbf{VTSZ} & \raggedleft\textbf{Menny.} & \centering\textbf{egys.} & 
+  \raggedleft\textbf{Nettó egységár} & \raggedleft\textbf{Nettó összeg} & \raggedright\textbf{ÁFA\%} & 
+  \raggedleft\textbf{ÁFA összeg} & \raggedleft\textbf{Bruttó összeg}
+  \cr
+<%foreach number%>
+  <%runningnumber%> & <%partsgroup%> & <%number%> & <%description%> &
+  <%bin%> & <%qty%> & <%unit%> &
+  <%netprice%> & <%linetotal%> & <%linetaxrate%> & 
+  <%taxamount%> & <%linetotal2%> 
+  \cr
+<%end number%>
+\end{tabularx}
+}
+
+\rule{\textwidth}{1.5pt}
+
+\hbox to\hsize{
+\hspace{8.4cm}
+\begin{minipage}[t]{11cm}
+
+\rule{10.6cm}{1.5pt}
+
+\vspace{.2cm}
+
+\begin{tabularx}{10cm}{>{\hsize=7cm\raggedleft}X>{\hsize=3cm\raggedleft}X}
+%\textbf{Total} & <%invtotal%> \cr
+\textbf{Nettó összesen} & <%subtotal%> \cr
+<%foreach tax%>
+\textbf{Alap:} <%taxbase%> \textbf{ráta:} <%taxrate%> & <%tax%> \cr
+<%end tax%>
+<%if paid%>
+\textbf{Fizetve:} & -<%paid%>
+<%end paid%>
+\end{tabularx}
+
+\rule{10.6cm}{1.5pt}
+\begin{tabularx}{10cm}{>{\hsize=7cm\raggedleft}X>{\hsize=3cm\raggedleft}X}
+\textbf{A számla végösszege} & <%total%> \textbf{Ft}
+\end{tabularx}
+
+\end{minipage}
+}
+
+
+\vfill
+\vspace{1cm}
+<%if notes%>
+\textbf{Megjegyzés:} <%notes%>
+\vspace{1cm}
+<%end if%>
+
+
+<%if paid%>
+\textbf{Fizetések:}
+
+\rule{12cm}{1.5pt}
+
+\vspace{.2cm}
+
+\begin{tabularx}{12cm}{@{}>{\hsize=2.9cm\centering}X@{\ }
+                       >{\hsize=2.9cm\centering}X@{\ }
+                       >{\hsize=2.9cm\centering}X@{\ }
+                       >{\hsize=2.9cm\raggedleft}X@{}}
+  \textbf{Dátum} & \textbf{Számla} & \textbf{Bizonylatszám} & \textbf{Összeg} 
+  \cr
+<%end paid%>
+<%foreach payment%>
+  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> 
+  \cr
+<%end payment%>  
+<%if paid%>
+\end{tabularx}
+<%end paid%>  
+
+\vspace{1cm}
+
+<%intnotes%>
+
+\end{document}
+
+
+

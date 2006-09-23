@@ -1,0 +1,21 @@
+$self{texts} = {
+  'Company'                     => 'Fyritæki',
+  'Continue'                    => 'Áfram',
+  'Incorrect Dataset version!'  => 'Röng útgáfa af gagnasfni!',
+  'Login'                       => 'Tengjast',
+  'Name'                        => 'Nafn',
+  'Password'                    => 'Aðgangsorð',
+  'Version'                     => 'Útgáfa',
+  'You did not enter a name!'   => 'Þú gafst ekki upp nafn',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'tengjast'                    => 'login',
+};
+
+1;
+

@@ -1,0 +1,236 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{18cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Tel & <%tel%>\\
+    Fax & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 48%>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Totale riga} & \textbf{<%sumcarriedforward%>} \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Codice} & \textbf{Descrizione} & \textbf{Quantita'} &
+    \textbf{Unita'} & \textbf{Prezzo} & \textbf{Sc.} & \textbf{Totale righe} \\
+  & carried forward from page <%lastpage%> & & & & & <%sumcarriedforward%> \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+  \parbox[t]{10.5cm}{
+  \textbf{Sede legale:}
+  \vspace{0.5cm}
+
+<%name%>
+
+<%address1%>
+
+<%if address2%>
+<%address2%>
+<%end address2%>
+
+<%city%> <%state%> <%zipcode%>
+
+<%if country%>
+<%country%>
+<%end country%>
+
+\vspace{0.3cm}
+
+%<%if contact%>
+%Attn: <%contact%>
+%\vspace{0.3cm}
+%<%end contact%>
+\vspace{0.5cm}
+
+<%if customerphone%>
+Telefono: <%customerphone%>
+<%end customerphone%>
+
+<%if customerfax%>
+Fax: <%customerfax%>
+<%end customerfax%>
+
+<%email%>
+}
+\parbox[t]{7.5cm}{
+\textbf{Inviare fatttura a:}
+\vspace{0.5cm}
+
+<%shiptoname%>
+
+<%shiptoaddress1%>
+
+<%if shiptoaddress2%>
+<%shiptoaddress2%>
+<%end shiptoaddress2%>
+
+<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+
+<%if shiptocountry%>
+<%shiptocountry%>
+<%end shiptocountry%>
+
+\vspace{0.3cm}
+
+\vspace{0.3cm}
+
+<%if shiptocontact%>
+Attn: <%shiptocontact%>
+\vspace{0.3cm}
+<%end shiptocontact%>
+
+<%if shiptophone%>
+Tel: <%shiptophone%>
+<%end shiptophone%>
+
+<%if shiptofax%>
+Fax: <%shiptofax%>
+<%end shiptofax%>
+
+<%shiptoemail%>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{FATTURA}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Data fattura} & <%invdate%> \\
+  \textbf{Numero fattura} & <%invnumber%> \\
+  \textbf{Ordine} & <%ordnumber%>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Codice} & \textbf{Descrizione} & \textbf{Qt\`a} &
+    \textbf{Un.} & \textbf{Prezzo} & \textbf{Sc.} & \textbf{Tot. riga} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Totale righe} & \textbf{<%subtotal%>} \\
+<%foreach tax%>
+  <%taxdescription%>: <%taxrate%>\% & <%tax%>\\
+<%end tax%>
+<%if paid%>
+  \textbf{Pagato} & - <%paid%> \\
+<%end paid%>
+  \hline
+  \textbf{Totale da pagare} & \textbf{<%total%>} \\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  Tutti i prezzi sono espressi in valuta \textbf{<%currency%>}.
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\vfill
+
+<%if paid%>
+\begin{tabularx}{10cm}{@{}lXlr@{}}
+  \textbf{Pagamenti} & & & \\
+  \hline
+  \textbf{Data} & \textbf{Conto} & \textbf{Documento di riferimento} & \textbf{Importo} \\
+<%end paid%>
+<%foreach payment%>
+  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
+<%end payment%>
+<%if paid%>
+\end{tabularx}
+<%end paid%>
+
+\vspace{1cm}
+
+%\centerline{\textbf{Grazie per averci scelto!}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+Per i pagamenti successivi alla scadenza della fattura sara'
+addebitato l'interesse legale, aumentato di due punti percentuali, fino al
+pagamento completo.
+}
+
+\end{document}
+
+
+

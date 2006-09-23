@@ -1,0 +1,54 @@
+$self{charset} = 'ISO-8859-5';
+
+$self{texts} = {
+  'Account'                     => 'Рахунок',
+  'Apr'                         => 'кв╕тня',
+  'April'                       => 'Кв╕тень',
+  'Aug'                         => 'серпня',
+  'August'                      => 'Серпень',
+  'Balance'                     => 'Баланс',
+  'Chart of Accounts'           => 'План Рахунк╕в',
+  'Credit'                      => 'Кредит',
+  'Current'                     => 'Поточний',
+  'Date'                        => 'Дата',
+  'Debit'                       => 'Дебит',
+  'Dec'                         => 'грудня',
+  'December'                    => 'Грудень',
+  'Description'                 => 'Опис',
+  'Feb'                         => 'лютого',
+  'February'                    => 'Лютий',
+  'From'                        => 'В╕д/З',
+  'GIFI'                        => 'GIFI',
+  'Include in Report'           => 'Додати до Зв╕ту',
+  'Jan'                         => 'с╕чня',
+  'January'                     => 'с╕чень',
+  'Jul'                         => 'липня',
+  'July'                        => 'Липень',
+  'Jun'                         => 'червня',
+  'June'                        => 'Червень',
+  'List Transactions'           => 'Список Проводок',
+  'Mar'                         => 'березня',
+  'March'                       => 'Березень',
+  'May'                         => 'травня',
+  'May '                        => 'Травень',
+  'Nov'                         => 'листопада',
+  'November'                    => 'Листопад',
+  'Oct'                         => 'жовтня',
+  'October'                     => 'Жовтень',
+  'Reference'                   => 'Зсилка',
+  'Sep'                         => 'вересня',
+  'September'                   => 'Вересень',
+  'Subtotal'                    => 'П╕дсумок по розд╕лу',
+  'To'                          => 'До',
+};
+
+$self{subs} = {
+  'ca_subtotal'                 => 'ca_subtotal',
+  'chart_of_accounts'           => 'chart_of_accounts',
+  'list'                        => 'list',
+  'list_transactions'           => 'list_transactions',
+  'Список_Проводок'             => 'list_transactions',
+};
+
+1;
+

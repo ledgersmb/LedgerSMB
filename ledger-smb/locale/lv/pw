@@ -1,0 +1,14 @@
+$self{charset} = 'ISO-8859-13';
+
+$self{texts} = {
+  'Continue'                    => 'Turpinât',
+  'Password'                    => 'Parole',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'turpinât'                    => 'continue',
+};
+
+1;
+

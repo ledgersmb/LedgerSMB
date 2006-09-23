@@ -1,0 +1,48 @@
+<%company align=center width=40%>
+<%address align=center width=40%>
+
+ Kassza: <%till align=left width=3%>        Telefon#: <%tel%>
+  Eladó: <%employee%>
+Inv No/Date: <%invnumber%> / <%invdate%>
+Printed: <%dateprinted%>
+
+Menny Név                         Összeg
+<%foreach number%>
+<%qty align=right width=5%> <%description align=left width=24 offset=6%> <%linetotal align=right width=9%>
+      <%number%> @ <%sellprice%>/<%unit%>
+<%end number%>
+
+      Tételszám: <%rowcount%>
+<%if taxincluded%>
+                         ---------------
+                       Bruttó: <%invtotal align=right width=9%>
+<%end taxincluded%>
+<%if not taxincluded%>
+                            ------------
+                        Nettó: <%subtotal align=right width=9%>
+<%end taxincluded%>
+<%foreach tax%>
+<%taxdescription align=right width=23%> @ <%taxrate align=right width=2%>%: <%tax align=right width=9%>
+<%end tax%>
+                       Bruttó: <%invtotal align=right width=9%>
+<%foreach payment%>
+<%paymentaccount align=right width=29%>: <%payment align=right width=9%> <%currency%>
+<%end payment%>
+<%if change%>
+                   Visszajáró: <%change align=right width=9%>
+<%end change%>
+<%if total%>
+                    Fizetendõ: <%total align=right width=9%>
+<%end total%>
+<%if discount%>
+
+<%discount%> % Engedmény levonva
+<%end discount%>
+
+   Köszönjük a vásárlást!
+
+<%if taxincluded%>
+A végösszeg bruttóban értendõ
+<%end taxincluded%>
+
+

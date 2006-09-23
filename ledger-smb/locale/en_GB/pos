@@ -1,0 +1,28 @@
+$self{texts} = {
+  'Customer'                    => 'Debtor',
+  'Customer missing!'           => 'Debtor missing!',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'add'                         => 'add',
+  'display'                     => 'display',
+  'display_row'                 => 'display_row',
+  'edit'                        => 'edit',
+  'form_footer'                 => 'form_footer',
+  'form_header'                 => 'form_header',
+  'js_menu'                     => 'js_menu',
+  'lookup_partsgroup'           => 'lookup_partsgroup',
+  'menubar'                     => 'menubar',
+  'openinvoices'                => 'openinvoices',
+  'post'                        => 'post',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_form'                  => 'print_form',
+  'print_options'               => 'print_options',
+  'receipts'                    => 'receipts',
+  'section_menu'                => 'section_menu',
+};
+
+1;
+

@@ -1,0 +1,54 @@
+$self{charset} = 'ISO-8859-2';
+
+$self{texts} = {
+  'Accounting Menu'             => 'Menu úèetnictví',
+  'Amount'                      => 'Èástka',
+  'Continue'                    => 'Pokraèování',
+  'Credit Limit'                => 'Úvìrový limit',
+  'Currency'                    => 'Mìna',
+  'Customer'                    => 'Odbìratel',
+  'Delete'                      => 'Vymazat',
+  'Description'                 => 'Popis',
+  'Exchange Rate'               => 'Mìnový kurz',
+  'From'                        => 'z',
+  'Language'                    => 'Jazyk',
+  'Number'                      => 'Èíslo',
+  'Open'                        => 'Otevøené',
+  'Price'                       => 'Cena',
+  'Qty'                         => 'Mno¾ství',
+  'Record in'                   => 'Zaúètovat do',
+  'Remaining'                   => 'Zbývá',
+  'Screen'                      => 'Na obrazovku',
+  'Source'                      => 'Zdroj',
+  'Subtotal'                    => 'Mezisouèet',
+  'Tax Included'                => 'Cena vèetnì danì',
+  'To'                          => 'do',
+  'Total'                       => 'Celkem',
+  'Unit'                        => 'Jednotka',
+};
+
+$self{subs} = {
+  'acc_menu'                    => 'acc_menu',
+  'add'                         => 'add',
+  'display'                     => 'display',
+  'display_row'                 => 'display_row',
+  'edit'                        => 'edit',
+  'form_footer'                 => 'form_footer',
+  'form_header'                 => 'form_header',
+  'js_menu'                     => 'js_menu',
+  'lookup_partsgroup'           => 'lookup_partsgroup',
+  'menubar'                     => 'menubar',
+  'openinvoices'                => 'openinvoices',
+  'post'                        => 'post',
+  'print'                       => 'print',
+  'print_and_post'              => 'print_and_post',
+  'print_form'                  => 'print_form',
+  'print_options'               => 'print_options',
+  'receipts'                    => 'receipts',
+  'section_menu'                => 'section_menu',
+  'pokraèování'                 => 'continue',
+  'vymazat'                     => 'delete',
+};
+
+1;
+

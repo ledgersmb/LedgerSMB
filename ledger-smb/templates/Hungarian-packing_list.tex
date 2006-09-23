@@ -1,0 +1,122 @@
+\documentclass[twoside]{article}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin2]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <%company%>
+      
+      <%address%>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telefon & <%tel%>\\
+    Fax & <%fax%>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<%pagebreak 65 27 48%>
+\end{tabular*}
+
+\newpage
+
+\markright{<%company%>\hfill <%invnumber%>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
+  \textbf{Szám} & \textbf{Szöveges leírás} & \textbf{Menny.} &
+    \textbf{egys.} & \textbf{Bin} \\
+<%end pagebreak%>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{2cm}
+
+<%shiptoname%>
+
+<%shiptoaddr1%>
+
+<%shiptoaddr2%>
+
+<%shiptoaddr3%>
+
+<%shiptoaddr4%>
+
+\vspace{3.5cm}
+
+\textbf{S Z Á L L I T Ó} \parbox{0.3cm}{\hfill} \textbf{L E V É L}
+
+\hfill
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Dátum} & <%invdate%> \\
+  \textbf{Szám} & <%invnumber%> \\
+  \textbf{Vevõ} & <%customer_id%>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
+  \textbf{Szám} & \textbf{Szöveges leírás} & \textbf{Menny.} &
+    \textbf{egys.} & \textbf{Bin} \\
+<%foreach number%>
+  <%number%> & <%description%> & <%qty%> &
+    <%unit%> & <%bin%> \\
+<%end number%>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{12pt}
+
+<%if notes%>
+  <%notes%>
+<%end if%>
+
+}
+
+\vfill
+\centerline{\textbf{Köszönjük az együttmûködést!}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+A visszaszállított áruk után 10\% újraraktározási díjat kell fizetni.
+Engedélyt a visszaszállításra csak a <%company%> adhat ki. A visszárut
+csak elõre kifizetve és biztosítva lehet visszaszállítani. <%company%>
+nem tehetõ felelõssé a visszaszállítás során keletkezett kárért.
+}
+\end{document}
+

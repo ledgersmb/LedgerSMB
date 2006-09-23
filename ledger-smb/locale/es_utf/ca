@@ -1,0 +1,54 @@
+$self{charset} = 'UTF-8';
+
+$self{texts} = {
+  'Account'                     => 'Cuenta',
+  'Apr'                         => 'Abr',
+  'April'                       => 'Abril',
+  'Aug'                         => 'Ago',
+  'August'                      => 'Agosto',
+  'Balance'                     => 'Balance',
+  'Chart of Accounts'           => 'Cuadro de cuentas',
+  'Credit'                      => 'Crédito',
+  'Current'                     => 'Actual',
+  'Date'                        => 'Fecha',
+  'Debit'                       => 'Débito',
+  'Dec'                         => 'Dic',
+  'December'                    => 'Diciembre',
+  'Description'                 => 'Descripción',
+  'Feb'                         => 'Feb',
+  'February'                    => 'Febrero',
+  'From'                        => 'Desde',
+  'GIFI'                        => 'Código GIFI',
+  'Include in Report'           => 'Incluir en informe',
+  'Jan'                         => 'Ene',
+  'January'                     => 'Enero',
+  'Jul'                         => 'Jul',
+  'July'                        => 'Julio',
+  'Jun'                         => 'Jun',
+  'June'                        => 'Junio',
+  'List Transactions'           => 'Listar transacciones',
+  'Mar'                         => 'Mar',
+  'March'                       => 'Marzo',
+  'May'                         => 'May',
+  'May '                        => 'Mayo',
+  'Nov'                         => 'Nov',
+  'November'                    => 'Noviembre',
+  'Oct'                         => 'Oct',
+  'October'                     => 'Octubre',
+  'Reference'                   => 'Referencia',
+  'Sep'                         => 'Sep',
+  'September'                   => 'Septiembre',
+  'Subtotal'                    => 'Subtotal',
+  'To'                          => 'Hasta ',
+};
+
+$self{subs} = {
+  'ca_subtotal'                 => 'ca_subtotal',
+  'chart_of_accounts'           => 'chart_of_accounts',
+  'list'                        => 'list',
+  'list_transactions'           => 'list_transactions',
+  'listar_transacciones'        => 'list_transactions',
+};
+
+1;
+

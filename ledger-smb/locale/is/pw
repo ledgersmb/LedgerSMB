@@ -1,0 +1,12 @@
+$self{texts} = {
+  'Continue'                    => 'Áfram',
+  'Password'                    => 'Aðgangsorð',
+};
+
+$self{subs} = {
+  'getpassword'                 => 'getpassword',
+  'Áfram'                       => 'continue',
+};
+
+1;
+

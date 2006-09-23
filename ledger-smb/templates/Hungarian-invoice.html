@@ -1,0 +1,303 @@
+
+<body bgcolor=ffffff>
+
+<table width=100% >
+<tr valign=bottom>
+  <td width=10>&nbsp;</td>
+  <td>
+  
+  <table width=100% >
+  <tr>
+    <td align=center><!--<img src=logo.jpg>--><br>&nbsp;<br>
+     <font size=3><B> SZÁMLA</B></font>
+    </td>
+  </tr>
+
+  <tr>
+    <td align=right>
+    <!-- <%copysum%> -->
+    </td>
+  </tr>
+  <tr>
+    <td align=right>
+       Másolat
+ </td>
+  </tr>
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0 >
+<tr>
+  <td><hr noshade></td>
+</tr>
+ 
+  <tr>
+    <td>
+    <table width=100% >
+    <tr >
+      <th align=left width=50%>Eladó:</th>
+      <th align=left width=50%>Vevõ:</th> 
+    </tr>
+    <tr valign=top>
+      <td><%company%>
+      <br><%address%>
+      <br>Adószám:<%businessnumber%>
+      <br>tel:<%tel%>  
+      <br>fax:<%fax%>        
+      </td>
+ 
+
+      <td><%name%>
+      <br><%address1%>
+      <%if address2%>
+<br><%address2%>
+<%end address2%>
+      <br><%city%> <%state%> <%zipcode%>
+      <%if country%>
+<%country%>
+<%end country%>
+      </td>
+      
+    </tr>
+    </table>
+    </td>
+  </tr>
+<tr>
+  <td><hr noshade></td>
+</tr>
+
+<tr>
+<td>
+    <table width=100%>
+    <tr>
+      <th>Fizetési mód</th>
+      <th>Telj. dátuma</th>
+      <th>Számla kelte</th>
+      <th>Esedékesség</th>
+      <th>Megrendelés</th>
+      <th>Kiállította</th>
+      <th>Sorszám</th>
+    </tr>
+    <tr>
+    <td align=center><%shippingpoint%></td>
+    <td align=center><%invdate%></td>    
+    <td align=center><%crdate%></td>        
+    <td align=center><%duedate%></td>        
+    <td align=center><%ordnumber%></td>    
+    <td align=center><%employee%></td>    
+    <td align=center><font size=2><%invnumber%></font></td>    
+    </tr>
+    </table>
+<td>
+<tr>
+<tr>
+  <td><hr noshade></td>
+</tr>
+  
+  <tr >
+    <td height=470 valign=top>
+    <table width=100% >
+    <tr>
+      <th align=right>&nbsp;</th>  
+      <th align=left>Áru</th>
+      <th align=left>Megnevezés</th>
+      <th align=left nowrap>VTSZ</th>
+      <th>Menny.</th>
+      <th>&nbsp;</th>
+      <th align=right>Nettó egységár</th>
+<!--      <th><font color=ffffff>Disc</th> -->
+      <th align=right>Nettó összeg</th>
+      <th align=right>ÁFA%</th>
+      <th align=right>ÁFA összeg</th>
+      <th align=right>Bruttó összeg</th>
+    </tr>
+
+<%foreach number%>
+    <tr valign=top>
+      <td align=center><%runningnumber%>.</td>
+      <td nowrap align=left><%number%></td>
+      <td nowrap align=left><%description%></td>
+      <td nowrap align=center><%bin%></td>
+      <td align=center><%qty%></td>
+      <td align=center><%unit%></td>
+      <td align=right><%netprice%></td>
+<!--      <td align=right><%discount%></td>  -->
+      <td align=right><%linetotal%></td>
+      <td align=right><%linetaxrate%></td>
+      <td align=right><%taxamount%></td>
+      <td align=right><%linetotal2%></td>
+    </tr>
+<%end number%>
+
+<!--
+you can also use netprice instead of sellprice if you
+don't want to show the discount
+netprice = sellprice - discount
+to show the percentage for a discount use <%discountrate%>
+-->
+
+    <tr>
+      <td colspan=11><hr noshade></td>
+    </tr>
+    
+    <tr>
+<%if taxincluded%>
+      <th colspan=9 align=right>Total</th>
+      <td colspan=2 align=right><%invtotal%></td>
+<%end taxincluded%>
+<%if not taxincluded%>
+      <th colspan=9 align=right>Nettó összesen</th>
+      <td colspan=2 align=right><%subtotal%></td>
+<%end taxincluded%>
+    </tr>
+
+<%foreach tax%>
+    <tr>
+      <th colspan=9 align=right>alap: <%taxbase%> ráta: <%taxrate%> %</th>
+      <td colspan=2 align=right><%tax%></td>
+    </tr>
+<%end tax%>
+
+<%if paid%>
+    <tr>
+      <th colspan=9 align=right>Fizetve</th>
+      <td colspan=2 align=right>- <%paid%></td>
+    </tr>
+<%end paid%>
+
+    <tr>
+      <td colspan=6>&nbsp;</td>
+      <td colspan=5><hr noshade></td>
+    </tr>
+
+    <tr>
+<!--      <td colspan=6>Fizetési határidõ: <b><%terms%></b> nap</td> -->
+      <th colspan=9 align=right>A számla végösszege:</th>
+      <th colspan=2 align=right><%total%>&nbsp;Ft</th>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width=100% >
+    <tr valign=top>
+<%if notes%>
+      <td><b>Megjegyzés:</b>&nbsp;<%notes%></td>
+      <td ></td>
+<%end notes%>
+      <td align=right>
+<!--      All prices in <b><%currency%></b> Funds -->
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<%if paid%>
+<tr>
+  <td colspan=7>
+    <table width=60% >
+      <tr>
+        <th align=left>Fizetések</th>
+      </tr>
+      <tr>
+        <td colspan=4>
+	  <hr noshade>
+	</td>
+      </tr>
+      <tr>
+        <th align=left>Dátum</th>
+	<th align=left>Számla</th>
+	<th align=left>Bizonylatszám</th>
+	<th align=left>Összeg</th>
+      </tr>
+<%end paid%>
+
+<%foreach payment%>
+      <tr>
+        <td><%paymentdate%></td>
+	<td><%paymentaccount%></td>
+	<td><%paymentsource%></td>
+	<td><%payment%></td>
+      </tr>
+<%end payment%>
+
+<%if paid%>
+    </table>
+  </td>
+</tr>
+
+<tr>
+  <td>&nbsp;</td>
+</tr>
+<%end paid%>
+
+<tr>
+  <th colspan=7>
+<!--  <br>Thank you for your valued business! -->
+  </th>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+  <td>
+  <table width=100% >
+  <tr valign=top>
+  <td><font size=-3>
+<%intnotes%>
+    </font>
+
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+<%foreach tax%>
+  <tr>
+<!--    <th colspan=7 align=left><font size=-2><%taxdescription%> Registration <%taxnumber%></th> -->
+  </tr>
+<%end tax%>
+
+<%if taxincluded%>
+  <tr>
+    <th colspan=7 align=left><font size=-2>Taxes shown are included in price.</th>
+  </tr>
+<%end taxincluded%>
+
+
+
+
+<!-- banking information
+  <tr>
+    <th colspan=7 align=left>Banking Information:
+    <br>Bank
+    <br>Transit No.
+    <br>Account No.
+    </td>
+  </tr>
+-->
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

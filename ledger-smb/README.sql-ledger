@@ -1,0 +1,15 @@
+README for SQL-Ledger Users
+===============================
+
+LedgerSMB is largely a drop-in replacement for SQL-Ledger.  The initial release
+includes a number of security and data integrity improvements, and future
+versions will likely add new features as well.
+
+To convert an existing SQL-Ledger installation to LedgerSMB, copy the files from
+the tarball over your existing SQL-Ledger directory and run the SL2LS.pl script.
+This script will rename some files, delete others, and pretty soon you will have
+a working LedgerSMB installation.
+
+The database will be updated on first login.
+
+You will also want to migrate your configuration by running the SL2LS.pl script included in this directory.
