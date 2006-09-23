@@ -94,6 +94,7 @@ BEGIN
   RETURN NEW;
 END;
 ' LANGUAGE PLPGSQL;
+-- end function
 
 CREATE TRIGGER parts_short AFTER UPDATE ON parts 
 FOR EACH ROW EXECUTE PROCEDURE trigger_parts_short();
@@ -263,6 +264,7 @@ BEGIN
 	RETURN TRUE;
 END;
 ' LANGUAGE PLPGSQL;
+-- end function
 
 CREATE OR REPLACE FUNCTION drop_custom_field (VARCHAR, VARCHAR) 
 RETURNS BOOL AS
@@ -280,5 +282,6 @@ BEGIN
 	RETURN TRUE;	
 END;
 ' LANGUAGE PLPGSQL;
+-- end function
 
 UPDATE defaults SET version = '2.6.18';

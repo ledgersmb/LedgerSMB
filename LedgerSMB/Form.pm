@@ -1280,6 +1280,32 @@ sub db_init {
 	}
 }
 
+sub get_custom_queries {
+	my ($self, $tablename) = @_;
+	my @rc;
+	my %temphash;
+	my @elements;
+	my $query;
+	for (@{$self->{custom_db_fields}{$tablename}}){
+		@elements = split (/:/, $_);
+		push @{$temphash{$elements[0]}}, $elements[1];
+	}
+	for (keys %temphash){
+		$query = "SELECT ";
+		my $first = 1;
+		for (@{$temphash{$_}}){
+			$query .= "$_";
+			if ($first == 0){
+				$query .= ", "
+			}
+			$first = 0;
+		}
+		$query .= " FROM $_ WHERE field_id = ?";
+		push @rc, $query;
+	}
+	@rc;
+}
+
 sub dbconnect {
 
 	my ($self, $myconfig) = @_;
