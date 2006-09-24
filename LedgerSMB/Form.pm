@@ -1304,6 +1304,7 @@ sub get_custom_queries {
 	}
 	for (keys %temphash){
 		my @data;
+		my $ins_values;
 		$query = "$query_type ";
 		if ($query_type eq 'UPDATE'){
 			$query .= " $_ SET ";
@@ -1316,20 +1317,24 @@ sub get_custom_queries {
 			if ($query_type eq 'UPDATE'){
 				$query .= '= ?';
 			}	
-			my $ins_values .= "?, ";
-			if ($first == 0){
-				$query .= ", ";
-			}
+			$ins_values .= "?, ";
+			$query .= ", ";
 			$first = 0;
-			if ($query_type eq 'UPDATE' or $query_type eq 'INERT'){
-				push @data, $form->{$_ . $linenum}; 
+			if ($query_type eq 'UPDATE' or $query_type eq 'INSERT'){
+				push @data, $self->{"$_$linenum"}; 
 			}
+		}
+		if ($query_type ne 'INSERT'){
+			$query =~ s/, $//;
 		}
 		if ($query_type eq 'SELECT'){
 			$query .= " FROM $_";
 		}
 		if ($query_type eq 'SELECT' or $query_type eq 'UPDATE'){
 			$query .= " WHERE field_id = ?";
+		}
+		if ($query_type eq 'INSERT'){
+			$query .= " field_id) VALUES ($ins_values ?)";
 		}
 		if ($query_type eq 'SELECT'){
 			push @rc, [ $query ];

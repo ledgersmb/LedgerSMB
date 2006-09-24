@@ -250,25 +250,36 @@ sub post_transaction {
 
 	$form->{invnumber} = $form->update_defaults($myconfig, $invnumber) unless $form->{invnumber};
 
-	$query = qq|UPDATE $table SET invnumber = |.$dbh->quote($form->{invnumber}).qq|,
-								  ordnumber = |.$dbh->quote($form->{ordnumber}).qq|,
-								  transdate = '$form->{transdate}',
-								  $form->{vc}_id = $form->{"$form->{vc}_id"},
-								  taxincluded = '$form->{taxincluded}',
-								  amount = $invamount,
-								  duedate = '$form->{duedate}',
-								  paid = $paid,
-								  datepaid = $datepaid,
-								  netamount = $invnetamount,
-								  curr = '$form->{currency}',
-								  notes = |.$dbh->quote($form->{notes}).qq|,
-								  department_id = $form->{department_id},
-								  employee_id = $form->{employee_id},
-								  ponumber = |.$dbh->quote($form->{ponumber}).qq|
-							WHERE id = $form->{id}|;
+	$query = qq|
+		UPDATE $table 
+		SET invnumber = |.$dbh->quote($form->{invnumber}).qq|,
+			ordnumber = |.$dbh->quote($form->{ordnumber}).qq|,
+			transdate = '$form->{transdate}',
+			$form->{vc}_id = $form->{"$form->{vc}_id"},
+			taxincluded = '$form->{taxincluded}',
+			amount = $invamount,
+			duedate = '$form->{duedate}',
+			paid = $paid,
+			datepaid = $datepaid,
+			netamount = $invnetamount,
+			curr = '$form->{currency}',
+			notes = |.$dbh->quote($form->{notes}).qq|,
+			department_id = $form->{department_id},
+			employee_id = $form->{employee_id},
+			ponumber = |.$dbh->quote($form->{ponumber}).qq|
+		WHERE id = $form->{id}
+	|;
 
 	$dbh->do($query) || $form->dberror($query);
 
+	@queries = $form->get_custom_queries($table, 'INSERT');
+	for (@queries){
+		$query = shift (@{$_});
+		$sth = $dbh->prepare($query) || $form->db_error($query);
+		$sth->execute(@{$_}, $form->{id})|| $form->dberror($query);;
+		$sth->finish;
+		$did_insert = 1;
+	}
 	# update exchangerate
 	my $buy = $form->{exchangerate};
 	my $sell = 0;

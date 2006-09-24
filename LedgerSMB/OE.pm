@@ -261,6 +261,7 @@ sub save {
     }
   }
  
+  my $did_insert = 0;
   if (! $form->{id}) {
     
     my $uid = localtime;
@@ -276,7 +277,15 @@ sub save {
     $sth->execute || $form->dberror($query);
     ($form->{id}) = $sth->fetchrow_array;
     $sth->finish;
-    
+    @queries = $form->get_custom_queries('oe', 'INSERT');
+
+    for (@queries){
+	$query = shift (@{$_});
+	$sth = $dbh->prepare($query) || $form->db_error($query);
+	$sth->execute(@{$_}, $form->{id})|| $form->dberror($query);;
+	$sth->finish;
+	$did_insert = 1;
+    }
   }
 
   my $amount;
@@ -450,6 +459,18 @@ sub save {
 	      terms = $form->{terms}
               WHERE id = $form->{id}|;
   $dbh->do($query) || $form->dberror($query);
+
+  if (!$did_insert){
+	@queries = $form->get_custom_queries('oe', 'UPDATE');
+	for (@queries){
+		my $query = shift @{$_};
+		$sth = $dbh->prepare($query);
+		$sth->execute (@{$_}, $form->{id});
+		$sth->finish;
+	}
+  }
+
+
 
   $form->{ordtotal} = $amount;
 
@@ -644,10 +665,6 @@ sub retrieve {
     $sth->finish;
     for (qw(printed emailed queued)) { $form->{$_} =~ s/ +$//g }
 
-    my %oid = ( 'Pg'		=> 'id',
-                'Oracle'	=> 'rowid',
-		'DB2'		=> '1=1'
-	      );
 
     # retrieve individual items
     $query = qq|SELECT o.id AS orderitems_id,
@@ -665,7 +682,7 @@ sub retrieve {
 		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 		LEFT JOIN translation t ON (t.trans_id = p.partsgroup_id AND t.language_code = '$form->{language_code}')
 		WHERE o.trans_id = $form->{id}
-                ORDER BY o.$oid{$myconfig->{dbdriver}}|;
+                ORDER BY o.id|;
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
@@ -727,6 +744,17 @@ sub retrieve {
     # get recurring transaction
     $form->get_recurring($dbh);
 
+    @queries = $form->get_custom_queries('oe', 'SELECT');
+    for (@queries){
+	$query = shift @{$_};
+	$sth = $form->{dbh}->prepare($query);
+	$sth->execute($form->{id});
+	$ref = $sth->fetchrow_hashref(NAME_lc);
+	for (keys %{$ref}){
+		$form->{$_} = $ref->{$_};
+	}
+    }
+    $form->{dbh}->commit;
   } else {
 
     # get last name used
