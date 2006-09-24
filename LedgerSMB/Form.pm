@@ -62,7 +62,7 @@ sub new {
 
 	$self->{menubar} = 1 if $self->{path} =~ /lynx/i;
 
-	$self->{version} = "1.1.0";
+	$self->{version} = "1.1.1";
 	$self->{dbversion} = "2.6.18";
 
 	bless $self, $type;
@@ -1281,30 +1281,66 @@ sub db_init {
 }
 
 sub get_custom_queries {
-	my ($self, $tablename) = @_;
+	my ($self, $tablename, $query_type, $linenum) = @_;
+	if ($query_type !~ /^(select|insert|update)$/i){
+		$self->error($locale->text(
+			"Passed incorrect query type to get_cutstom_queries."
+		));
+	}
 	my @rc;
 	my %temphash;
+	my @templist;
 	my @elements;
 	my $query;
+	my $ins_values;
+	if ($linenum){
+		$linenum = "_$linenum";
+	}
+
+	$query_type = uc($query_type);
 	for (@{$self->{custom_db_fields}{$tablename}}){
 		@elements = split (/:/, $_);
 		push @{$temphash{$elements[0]}}, $elements[1];
 	}
 	for (keys %temphash){
-		$query = "SELECT ";
+		my @data;
+		$query = "$query_type ";
+		if ($query_type eq 'UPDATE'){
+			$query .= " $_ SET ";
+		} elsif ($query_type eq 'INSERT'){
+			$query .= " INTO $_ (";
+		}
 		my $first = 1;
 		for (@{$temphash{$_}}){
 			$query .= "$_";
+			if ($query_type eq 'UPDATE'){
+				$query .= '= ?';
+			}	
+			my $ins_values .= "?, ";
 			if ($first == 0){
-				$query .= ", "
+				$query .= ", ";
 			}
 			$first = 0;
+			if ($query_type eq 'UPDATE' or $query_type eq 'INERT'){
+				push @data, $form->{$_ . $linenum}; 
+			}
 		}
-		$query .= " FROM $_ WHERE field_id = ?";
-		push @rc, $query;
+		if ($query_type eq 'SELECT'){
+			$query .= " FROM $_";
+		}
+		if ($query_type eq 'SELECT' or $query_type eq 'UPDATE'){
+			$query .= " WHERE field_id = ?";
+		}
+		if ($query_type eq 'SELECT'){
+			push @rc, [ $query ];
+		} else {
+			unshift (@data, $query);
+			push @rc, [ @data ];
+		}
 	}
 	@rc;
 }
+
 
 sub dbconnect {
 
