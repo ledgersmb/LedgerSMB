@@ -27,43 +27,43 @@
 
 \parbox{\textwidth}{
   \parbox[b]{.42\textwidth}{
-    <%company%>
+    <?lsmb company ?>
     
-    <%address%>
+    <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
     \includegraphics[scale=0.3]{ledger-smb}
   }\hfill
   \begin{tabular}[b]{rr@{}}
-  Telephone & <%tel%>\\
-  Facsimile & <%fax%>
+  Telephone & <?lsmb tel ?>\\
+  Facsimile & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5ex]{\textwidth}{0.5pt}
 }
     
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabularx}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{pris ex moms} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{pris ex moms} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabularx}{\textwidth}{@{}lXrlrr@{}}
   \textbf{Nummer} & \textbf{Beskrivning} & \textbf{Antal} &
     \textbf{Enhet} & \textbf{Pris} & \textbf{Utökning} \\
-  & carried forward from <%lastpage%> & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & carried forward from <?lsmb lastpage ?> & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
@@ -73,63 +73,63 @@
 \textbf{To}
 \vspace{0.7cm}
   
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 
 \vspace{0.3cm}
 
-<%if contact%>
-<%contact%>
+<?lsmb if contact ?>
+<?lsmb contact ?>
 \vspace{0.2cm}
-<%end contact%>
+<?lsmb end contact ?>
 
-<%if vendorphone%>
-Tel: <%vendorphone%>
-<%end vendorphone%>
+<?lsmb if vendorphone ?>
+Tel: <?lsmb vendorphone ?>
+<?lsmb end vendorphone ?>
 
-<%if vendorfax%>
-Fax: <%vendorfax%>
-<%end vendorfax%>
+<?lsmb if vendorfax ?>
+Fax: <?lsmb vendorfax ?>
+<?lsmb end vendorfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \parbox[t]{.45\textwidth}{
 \textbf{Ship To}
 \vspace{0.7cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%shiptoaddress2%>
+<?lsmb shiptoaddress2 ?>
 
-<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
 
-<%shiptocountry%>
+<?lsmb shiptocountry ?>
 
 \vspace{0.3cm}
 
-<%if shiptocontact%>
-<%shiptocontact%>
+<?lsmb if shiptocontact ?>
+<?lsmb shiptocontact ?>
 \vspace{0.2cm}
-<%end shiptocontact%>
+<?lsmb end shiptocontact ?>
 
-<%if shiptophone%>
-Tel: <%shiptophone%>
-<%end shiptophone%>
+<?lsmb if shiptophone ?>
+Tel: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
 
-<%if shiptofax%>
-Fax: <%shiptofax%>
-<%end shiptofax%>
+<?lsmb if shiptofax ?>
+Fax: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
 
-<%shiptoemail%>
+<?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -143,7 +143,7 @@ Fax: <%shiptofax%>
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{RFQ \#} & \textbf{Datum} & \textbf{Begärd av} & \textbf{Kontakt} & \textbf{Destination} & \textbf{Fraktas via} \\ [0.5ex]
   \hline
-  <%quonumber%> & <%quodate%> & <%reqdate%> & <%employee%> & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb quonumber ?> & <?lsmb quodate ?> & <?lsmb reqdate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
 
@@ -156,9 +156,9 @@ Var vänlig ange pris och beräknad fraktid på dessa varor:
 \begin{tabularx}{\textwidth}{@{}lXrllrr@{}}
   \textbf{Nummer} & \textbf{Beskrivning} & \textbf{Antal} & &
   \textbf{Leverans} & \textbf{Enhets pris} & \textbf{Utökat} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> & <%unit%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> & <?lsmb unit ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 
@@ -167,7 +167,7 @@ Var vänlig ange pris och beräknad fraktid på dessa varor:
 
 \hfill
 
-<%notes%>
+<?lsmb notes ?>
 
 }
 

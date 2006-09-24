@@ -11,19 +11,19 @@
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
-<%include letterhead.tex%>
+<?lsmb include letterhead.tex ?>
 
  
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
   \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
@@ -32,37 +32,37 @@
 \textbf{From}
 \vspace{0.3cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%>
-<%if state%>
-\hspace{-0.1cm}, <%state%>
-<%end state%>
-<%zipcode%>
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 }
 \parbox[t]{.5\textwidth}{
 \textbf{Ship To}
 \vspace{0.3cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%shiptoaddress2%>
+<?lsmb shiptoaddress2 ?>
 
-<%shiptocity%>
-<%if shiptostate%>
-\hspace{-0.1cm}, <%shiptostate%>
-<%end shiptostate%>
-<%shiptozipcode%>
+<?lsmb shiptocity ?>
+<?lsmb if shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?>
+<?lsmb end shiptostate ?>
+<?lsmb shiptozipcode ?>
 
-<%shiptocountry%>
+<?lsmb shiptocountry ?>
 }
 \hfill
 
@@ -75,24 +75,24 @@
 
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
-  <%if warehouse%>
+  <?lsmb if warehouse ?>
   & \textbf{Warehouse}
-  <%end warehouse%>
+  <?lsmb end warehouse ?>
   & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
   \hline
   
-  <%ordnumber%>
-  <%if shippingdate%>
-  & <%shippingdate%>
-  <%end shippingdate%>
-  <%if not shippingdate%>
-  & <%orddate%>
-  <%end shippingdate%>
-  & <%employee%>
-  <%if warehouse%>
-  & <%warehouse%>
-  <%end warehouse%>
-  & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb ordnumber ?>
+  <?lsmb if shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb end shippingdate ?>
+  <?lsmb if not shippingdate ?>
+  & <?lsmb orddate ?>
+  <?lsmb end shippingdate ?>
+  & <?lsmb employee ?>
+  <?lsmb if warehouse ?>
+  & <?lsmb warehouse ?>
+  <?lsmb end warehouse ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
   
@@ -101,10 +101,10 @@
 \begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
   \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
 
-<%foreach number%>
-  <%runningnumber%> & <%number%> & <%description%> & <%serialnumber%> &
-  <%deliverydate%> & <%qty%> & <%ship%> & <%unit%> & <%bin%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb serialnumber ?> &
+  <?lsmb deliverydate ?> & <?lsmb qty ?> & <?lsmb ship ?> & <?lsmb unit ?> & <?lsmb bin ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 

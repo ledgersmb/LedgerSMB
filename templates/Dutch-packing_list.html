@@ -1,18 +1,18 @@
 
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
 <tr>
   <td width=10>
   </td> 
   <td>
   
-  <table width=100%>
+  <table width=100 ?>
   <tr>
     <td>
       <h4>
-      <%company%>
-      <br><%address%>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
       </h4>
     </td>
 
@@ -30,11 +30,11 @@
     <td align=right>
     <table>
     <tr>
-      <th align=right>Factuurdatum</th><td width=10> </td><td><%invdate%></td>
+      <th align=right>Factuurdatum</th><td width=10> </td><td><?lsmb invdate ?></td>
     </tr>
   
     <tr>
-      <th align=right>Factuurnummer</th><td></td><td><%invnumber%></td></tr>
+      <th align=right>Factuurnummer</th><td></td><td><?lsmb invnumber ?></td></tr>
     </tr>
   
     <tr>
@@ -47,16 +47,16 @@
 
   <tr>
     <td>
-    <table width=100%>
+    <table width=100 ?>
     <tr bgcolor=000000>
       <th align=left><font color=ffffff>Verzendadres:</th>
     </tr>
 
     <tr>
-      <td><%shiptoname%>
-      <br><%shiptoaddr1%>
-      <br><%shiptoaddr2%>
-      <br><%shiptoaddr3%>
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddr1 ?>
+      <br><?lsmb shiptoaddr2 ?>
+      <br><?lsmb shiptoaddr3 ?>
       </td>
     </tr>
     </table>
@@ -70,7 +70,7 @@
   
   <tr>
     <td>
-    <table width=100%>
+    <table width=100 ?>
     <tr bgcolor=000000>
       <th align=left><font color=ffffff>Artikelnummer</th>
       <th align=left><font color=ffffff>Omschrijving</th>
@@ -78,14 +78,14 @@
       <th>&nbsp;</th>
     </tr>
 
-<%foreach number%>
+<?lsmb foreach number ?>
     <tr valign=top>
-      <td><%number%></td>
-      <td><%description%></td>
-      <td align=right><%qty%></td>
-      <td><%unit%></td>
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=right><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
     </tr>
-<%end number%>
+<?lsmb end number ?>
 
     <tr>
       <td colspan=4><hr noshade></td>
@@ -97,14 +97,14 @@
 
 <tr>
   <td>
-  <table width=100%>
+  <table width=100 ?>
     <tr valign=top>
-<%if notes%>
+<?lsmb if notes ?>
       <td>Opmerkingen</td>
-      <td><pre><%notes%></pre></td>
-<%end notes%>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
       <td align=right>
-      <%shippingpoint%>
+      <?lsmb shippingpoint ?>
       </td>
     </tr>
 

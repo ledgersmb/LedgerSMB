@@ -1,9 +1,9 @@
 
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
 
-  <%include letterhead.html%>
+  <?lsmb include letterhead.html ?>
   
   <tr>
     <td width=10>&nbsp;</td> 
@@ -20,39 +20,39 @@
       <table width=100% cellspacing=0 cellpadding=0>
 	<tr bgcolor=000000>
 	  <th width=50% align=left><font color=ffffff>Kellele:</th>
-	  <th width=50%>&nbsp;</th>
+	  <th width=50 ?>&nbsp;</th>
 	</tr>
 
 	<tr valign=top>
-	  <td><%shiptoname%>
-	  <br><%shiptoaddress1%>
-	  <%if shiptoaddress2%>
-	  <br><%shiptoaddress2%>
-	  <%end shiptoaddress2%>
-	  <br><%shiptocity%>
-	  <%if shiptostate%>
-	  , <%shiptostate%>
-	  <%end shiptostate%>
-	  <%shiptozipcode%>
-	  <%if shiptocountry%>
-	  <br><%shiptocountry%>
-	  <%end shiptocountry%>
+	  <td><?lsmb shiptoname ?>
+	  <br><?lsmb shiptoaddress1 ?>
+	  <?lsmb if shiptoaddress2 ?>
+	  <br><?lsmb shiptoaddress2 ?>
+	  <?lsmb end shiptoaddress2 ?>
+	  <br><?lsmb shiptocity ?>
+	  <?lsmb if shiptostate ?>
+	  , <?lsmb shiptostate ?>
+	  <?lsmb end shiptostate ?>
+	  <?lsmb shiptozipcode ?>
+	  <?lsmb if shiptocountry ?>
+	  <br><?lsmb shiptocountry ?>
+	  <?lsmb end shiptocountry ?>
 	  </td>
 	
 	  <td>
-	  <%if shiptocontact%>
-	  <br>Attn: <%shiptocontact%>
-	  <%end shiptocontact%>
+	  <?lsmb if shiptocontact ?>
+	  <br>Attn: <?lsmb shiptocontact ?>
+	  <?lsmb end shiptocontact ?>
 	  
-	  <%if shiptophone%>
-	  <br>Tel: <%shiptophone%>
-	  <%end shiptophone%>
+	  <?lsmb if shiptophone ?>
+	  <br>Tel: <?lsmb shiptophone ?>
+	  <?lsmb end shiptophone ?>
 	  
-	  <%if shiptofax%>
-	  <br>Faks: <%shiptofax%>
-	  <%end shiptofax%>
+	  <?lsmb if shiptofax ?>
+	  <br>Faks: <?lsmb shiptofax ?>
+	  <?lsmb end shiptofax ?>
 
-	  <%shiptoemail%>
+	  <?lsmb shiptoemail ?>
 	  </td>
 	</tr>
       </table>
@@ -71,33 +71,33 @@
 	  <th width=17% align=left>Tellimus #</th>
 	  <th width=17% align=left>KuupÃ€ev</th>
 	  <th width=17% align=left nowrap>Kontakt</th>
-	  <%if warehouse%>
+	  <?lsmb if warehouse ?>
 	  <th width=17% align=left>Kaubaladu</th>
-	  <%end warehouse%>
+	  <?lsmb end warehouse ?>
 	  <th width=17% align=left>Saadetise sihtpunkt</th>
 	  <th width=15% align=left>Tarveviis</th>
 	</tr>
 
         <tr>
-	  <td><%invnumber%>&nbsp;</td>
-	  <td><%ordnumber%>&nbsp;</td>
+	  <td><?lsmb invnumber ?>&nbsp;</td>
+	  <td><?lsmb ordnumber ?>&nbsp;</td>
 	  
-	  <%if shippingdate%>
-	  <td><%shippingdate%></td>
-	  <%end shippingdate%>
+	  <?lsmb if shippingdate ?>
+	  <td><?lsmb shippingdate ?></td>
+	  <?lsmb end shippingdate ?>
 	  
-	  <%if not shippingdate%>
-	  <td><%transdate%></td>
-	  <%end shippingdate%>
+	  <?lsmb if not shippingdate ?>
+	  <td><?lsmb transdate ?></td>
+	  <?lsmb end shippingdate ?>
   
-          <td><%employee%>&nbsp;</td>
+          <td><?lsmb employee ?>&nbsp;</td>
 	  
-	  <%if warehouse%>
-	  <td><%warehouse%>&nbsp;</td>
-	  <%end warehouse%>
+	  <?lsmb if warehouse ?>
+	  <td><?lsmb warehouse ?>&nbsp;</td>
+	  <?lsmb end warehouse ?>
 
-	  <td><%shippingpoint%>&nbsp;</td>
-	  <td><%shipvia%>&nbsp;</td>
+	  <td><?lsmb shippingpoint ?>&nbsp;</td>
+	  <td><?lsmb shipvia ?>&nbsp;</td>
 	</tr>
       </table>
     </td>
@@ -107,7 +107,7 @@
     <td>&nbsp;</td>
 
     <td>
-      <table width=100%>
+      <table width=100 ?>
 	<tr bgcolor=000000>
 	  <th align=left><font color=ffffff>AR.</th>
 	  <th align=left><font color=ffffff>Number</th>
@@ -119,18 +119,18 @@
 	  <th>&nbsp;</th>
 	</tr>
 
-	<%foreach number%>
+	<?lsmb foreach number ?>
 	<tr valign=top>
-	  <td><%runningnumber%></td>
-	  <td><%number%></td>
-	  <td><%description%></td>
-	  <td><%serialnumber%></td>
-	  <td><%deliverydate%></td>
-	  <td align=right><%qty%></td>
-	  <td align=right><%ship%></td>
-	  <td><%unit%></td>
+	  <td><?lsmb runningnumber ?></td>
+	  <td><?lsmb number ?></td>
+	  <td><?lsmb description ?></td>
+	  <td><?lsmb serialnumber ?></td>
+	  <td><?lsmb deliverydate ?></td>
+	  <td align=right><?lsmb qty ?></td>
+	  <td align=right><?lsmb ship ?></td>
+	  <td><?lsmb unit ?></td>
 	</tr>
-	<%end number%>
+	<?lsmb end number ?>
 
       </table>
     </td>
@@ -142,36 +142,36 @@
     <td><hr noshade></td>
   </tr>
 
-  <%if notes%>
+  <?lsmb if notes ?>
   <tr>
     <td>&nbsp;</td>
     
     <td>
-      <table width=100%>
+      <table width=100 ?>
 	<tr valign=top>
 	  <td>Notes</td>
-	  <td><%notes%></td>
+	  <td><?lsmb notes ?></td>
 	</tr>
       </table>
     </td>
   </tr>
-  <%end notes%>
+  <?lsmb end notes ?>
 
   <tr>
     <td>&nbsp;</td>
     
     <td>
-      <table width=100%>
+      <table width=100 ?>
 	<tr valign=top>
-	  <td width=70%><font size=-3>
+	  <td width=70 ?><font size=-3>
 	  Items returned are subject to
 	  a 10% restocking charge. A return authorization must be obtained
-	  from <%company%> before goods are returned. Returns must be shipped
-	  prepaid and properly insured. <%company%> will not be responsible
+	  from <?lsmb company ?> before goods are returned. Returns must be shipped
+	  prepaid and properly insured. <?lsmb company ?> will not be responsible
 	  for damages during transit.
 	  </font>
 	  </td>
-	  <td width=30%>
+	  <td width=30 ?>
 	  X <hr noshade>
 	  </td>
 	</tr>

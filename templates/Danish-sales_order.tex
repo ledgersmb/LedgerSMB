@@ -27,12 +27,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Tlf. & <%tel%>\\
-    Fax & <%fax%>
+    Tlf. & <?lsmb tel ?>\\
+    Fax & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -41,62 +41,62 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%ordnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Subtotal} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%ordnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Antal} &
     \textbf{Enhed} & \textbf{Pris} & \textbf{Rabat} & \textbf{Beløb} \\
-  & Overført fra side <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & Overført fra side <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{3.5cm}
 
 \textbf{S A L G S O R D R E}
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Ordredato} & <%orddate%> \\
-<%if reqdate%>
-  \textbf{Ønsket leveringsdato} & <%reqdate%> \\
-<%end reqdate%>
-  \textbf{Ordrenummer} & <%ordnumber%>
+  \textbf{Ordredato} & <?lsmb orddate ?> \\
+<?lsmb if reqdate ?>
+  \textbf{Ønsket leveringsdato} & <?lsmb reqdate ?> \\
+<?lsmb end reqdate ?>
+  \textbf{Ordrenummer} & <?lsmb ordnumber ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -104,10 +104,10 @@
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Varenummer} & \textbf{Beskrivelse} & \textbf{Antal} &
     \textbf{Enhed} & \textbf{Pris} & \textbf{Rabat} & \textbf{Beløb} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -118,24 +118,24 @@
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Subtotal} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%> på <%taxbase%> & <%tax%>\\
-<%end tax%>
+  \textbf{Subtotal} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> på <?lsmb taxbase ?> & <?lsmb tax ?>\\
+<?lsmb end tax ?>
   \hline
-  \textbf{Total} & \textbf{<%ordtotal%>}\\
+  \textbf{Total} & \textbf{<?lsmb ordtotal ?>}\\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  Alle priser i \textbf{<%currency%>}.
+  Alle priser i \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 

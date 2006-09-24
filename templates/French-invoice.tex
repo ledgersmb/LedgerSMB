@@ -26,12 +26,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Téléphone & <%tel%>\\
-    Télécopieur & <%fax%>
+    Téléphone & <?lsmb tel ?>\\
+    Télécopieur & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -40,60 +40,60 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Sous-total} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Sous-total} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Numéro} & \textbf{Description} & \textbf{Qté} &
     \textbf{Unité} & \textbf{Prix} & \textbf{Remise} & \textbf{Montant} \\
-  & reporté de la page <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & reporté de la page <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{3.5cm}
 
 \textbf{F A C T U R E}
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Date de facturation} & <%invdate%> \\
-  \textbf{Numéro de facture} & <%invnumber%> \\
-  \textbf{Numéro de client} & <%customer_id%>
+  \textbf{Date de facturation} & <?lsmb invdate ?> \\
+  \textbf{Numéro de facture} & <?lsmb invnumber ?> \\
+  \textbf{Numéro de client} & <?lsmb customer_id ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -101,10 +101,10 @@
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Numéro} & \textbf{Description} & \textbf{Qté} &
     \textbf{Unité} & \textbf{Prix} & \textbf{Remise} & \textbf{Montant} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -115,24 +115,24 @@
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Sous-total} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%> de <%taxbase%> & <%tax%>\\
-<%end tax%>
+  \textbf{Sous-total} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> de <?lsmb taxbase ?> & <?lsmb tax ?>\\
+<?lsmb end tax ?>
   \hline
-  \textbf{Total} & \textbf{<%total%>}\\
+  \textbf{Total} & \textbf{<?lsmb total ?>}\\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  Tous les prix indiqués sont en \textbf{<%currency%>}.
+  Tous les prix indiqués sont en \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 
@@ -142,14 +142,14 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 \footnotetext[1]{\tiny
-Le paiement doit être acquitté au plus tard <%terms%> jours à partir de
+Le paiement doit être acquitté au plus tard <?lsmb terms ?> jours à partir de
 la date de facturation. Des intérêts seront perçus à raison de 1.5\% par
-mois après <%duedate%> jusqu'à ce que le paiement soit complet. Les
+mois après <?lsmb duedate ?> jusqu'à ce que le paiement soit complet. Les
 éléments retournés seront sujets à un supplément de remmagasinnage de
 10\%. Une autorisation de renvoi doit être obtenue au préalable auprès de
-<%company%>. Les frais de transports et d'assurance sur les éléments
+<?lsmb company ?>. Les frais de transports et d'assurance sur les éléments
 retournés devront être couvert par le client de façon appropriée.
-<%company%> ne peut être tenue responsable des dommages survenus pendant
+<?lsmb company ?> ne peut être tenue responsable des dommages survenus pendant
 le transit.}
 
 \end{document}

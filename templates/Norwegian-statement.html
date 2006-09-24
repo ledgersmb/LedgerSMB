@@ -1,23 +1,23 @@
 
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
   <tr>
     <td width=10>&nbsp;</td>
     <td>
-      <table width=100%>
+      <table width=100 ?>
 	<tr>
 	  <td>
 	    <h4>
-	    <%company%>
-	    <br><%address%>
+	    <?lsmb company ?>
+	    <br><?lsmb address ?>
 	    </h4>
 	  </td>
 	  <th><img src=http://www.ledger-smb.org/images/ledger-smb.png border=0 width=80 height=58></th>
 	  <td align=right>
 	  <h4>
-	  Telefon: <%tel%>
-	  <br>Telefaks: <%fax%>
+	  Telefon: <?lsmb tel ?>
+	  <br>Telefaks: <?lsmb fax ?>
 	  </h4>
 	  </td>
 	</tr>
@@ -25,7 +25,7 @@
 	  <th colspan=3><h4>O V E R S I K T</h4></th>
 	</tr>
 	<tr>
-	  <td colspan=3 align=right><%statementdate%></td>
+	  <td colspan=3 align=right><?lsmb statementdate ?></td>
 	</tr>
       </table>
     </td>
@@ -33,27 +33,27 @@
   <tr>
     <td>&nbsp;</td>
     <td>
-      <table width=100%>
+      <table width=100 ?>
 	<tr valign=top>
-	  <td><%name%>
-	  <br><%address1%>
-	  <%if address2%>
-<br><%address2%>
-<%end address2%>
-	  <br><%city%> <%state%> <%zipcode%>
-	  <%if country%>
-<%country%>
-<%end country%>
+	  <td><?lsmb name ?>
+	  <br><?lsmb address1 ?>
+	  <?lsmb if address2 ?>
+<br><?lsmb address2 ?>
+<?lsmb end address2 ?>
+	  <br><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+	  <?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 	  <br>
-<%if customerphone%>
-	  <br>Telefon: <%customerphone%>
-<%end customerphone%>
-<%if customerfax%>
-	  <br>Telefaks: <%customerfax%>
-<%end customerfax%>
-<%if email%>
-	  <br><%email%>
-<%end email%>
+<?lsmb if customerphone ?>
+	  <br>Telefon: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
+<?lsmb if customerfax ?>
+	  <br>Telefaks: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
+<?lsmb if email ?>
+	  <br><?lsmb email ?>
+<?lsmb end email ?>
 	  </td>
 	</tr>
       </table>
@@ -63,27 +63,27 @@
   <tr>
     <td>&nbsp;</td>
     <td>
-      <table width=100%>
+      <table width=100 ?>
         <tr>
 	  <th align=left>Faktura #</th>
-	  <th width=15%>Dato</th>
-	  <th width=15%>Betalingsfrist</th>
-	  <th width=10%>Nåværende</th>
-	  <th width=10%>30</th>
-	  <th width=10%>60</th>
-	  <th width=10%>90+</th>
+	  <th width=15 ?>Dato</th>
+	  <th width=15 ?>Betalingsfrist</th>
+	  <th width=10 ?>Nåværende</th>
+	  <th width=10 ?>30</th>
+	  <th width=10 ?>60</th>
+	  <th width=10 ?>90+</th>
 	</tr>
-<%foreach invnumber%>
+<?lsmb foreach invnumber ?>
 	<tr>
-	  <td><%invnumber%></td>
-	  <td><%invdate%></td>
-	  <td><%duedate%></td>
-	  <td align=right><%c0%></td>
-	  <td align=right><%c30%></td>
-	  <td align=right><%c60%></td>
-	  <td align=right><%c90%></td>
+	  <td><?lsmb invnumber ?></td>
+	  <td><?lsmb invdate ?></td>
+	  <td><?lsmb duedate ?></td>
+	  <td align=right><?lsmb c0 ?></td>
+	  <td align=right><?lsmb c30 ?></td>
+	  <td align=right><?lsmb c60 ?></td>
+	  <td align=right><?lsmb c90 ?></td>
 	</tr>
-<%end invnumber%>
+<?lsmb end invnumber ?>
         <tr>
 	  <td colspan=7><hr size=1></td>
 	</tr>
@@ -91,10 +91,10 @@
 	  <td>&nbsp;</td>
 	  <td>&nbsp;</td>
 	  <td>&nbsp;</td>
-	  <th align=right><%c0total%></td>
-	  <th align=right><%c30total%></td>
-	  <th align=right><%c60total%></td>
-	  <th align=right><%c90total%></td>
+	  <th align=right><?lsmb c0total ?></td>
+	  <th align=right><?lsmb c30total ?></td>
+	  <th align=right><?lsmb c60total ?></td>
+	  <th align=right><?lsmb c90total ?></td>
 	</tr>
       </table>
     </td>
@@ -103,10 +103,10 @@
   <tr>
     <td>&nbsp;</td>
     <td align=right>
-      <table width=50%>
+      <table width=50 ?>
         <tr>
 	  <th>Totalt utestående</th>
-          <th align=right><%total%></th>
+          <th align=right><?lsmb total ?></th>
 	</tr>
       </table>
     </td>

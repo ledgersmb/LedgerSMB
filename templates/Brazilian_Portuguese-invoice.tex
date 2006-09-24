@@ -15,12 +15,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Telefone & <%tel%>\\
-    Fax & <%fax%>
+    Telefone & <?lsmb tel ?>\\
+    Fax & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -29,32 +29,32 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Subtotal} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
     \textbf{Unit} & \textbf{Price} & \textbf{Disc} & \textbf{Amount} \\
-  & carried forward from page <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & carried forward from page <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
@@ -66,74 +66,74 @@
   \textbf{To}
   \vspace{0.5cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{0.3cm}
 
-%<%if contact%>
-%Attn: <%contact%>
+%<?lsmb if contact ?>
+%Attn: <?lsmb contact ?>
 %\vspace{0.3cm}
-%<%end contact%>
+%<?lsmb end contact ?>
 \vspace{0.5cm}
 
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \parbox[t]{7.5cm}{
 \textbf{Ship To}
 \vspace{0.5cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%if shiptoaddress2%>
-<%shiptoaddress2%>
-<%end shiptoaddress2%>
+<?lsmb if shiptoaddress2 ?>
+<?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
 
-<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
 
-<%if shiptocountry%>
-<%shiptocountry%>
-<%end shiptocountry%>
-
-\vspace{0.3cm}
+<?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
 
 \vspace{0.3cm}
 
-<%if shiptocontact%>
-Attn: <%shiptocontact%>
 \vspace{0.3cm}
-<%end shiptocontact%>
 
-<%if shiptophone%>
-Tel: <%shiptophone%>
-<%end shiptophone%>
+<?lsmb if shiptocontact ?>
+Attn: <?lsmb shiptocontact ?>
+\vspace{0.3cm}
+<?lsmb end shiptocontact ?>
 
-<%if shiptofax%>
-Fax: <%shiptofax%>
-<%end shiptofax%>
+<?lsmb if shiptophone ?>
+Tel: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
 
-<%shiptoemail%>
+<?lsmb if shiptofax ?>
+Fax: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
+
+<?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -145,10 +145,10 @@ Fax: <%shiptofax%>
 \vspace{1cm}
 
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Data} & <%invdate%> \\
-  \textbf{Número} & <%invnumber%> \\
-  \textbf{Pedido} & <%ordnumber%> \\
-  \textbf{Produto} & <%employee%>
+  \textbf{Data} & <?lsmb invdate ?> \\
+  \textbf{Número} & <?lsmb invnumber ?> \\
+  \textbf{Pedido} & <?lsmb ordnumber ?> \\
+  \textbf{Produto} & <?lsmb employee ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -156,10 +156,10 @@ Fax: <%shiptofax%>
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Número} & \textbf{Descrição} & \textbf{Quant.} &
     \textbf{Unid.} & \textbf{Preço} & \textbf{Disc.} & \textbf{Total} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -170,44 +170,44 @@ Fax: <%shiptofax%>
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Subtotal} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%> em <%taxbase%> & <%tax%> \\
-<%end tax%>
-<%if paid%>
-  \textbf{Pago} & - <%paid%> \\
-<%end paid%>
+  \textbf{Subtotal} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> em <?lsmb taxbase ?> & <?lsmb tax ?> \\
+<?lsmb end tax ?>
+<?lsmb if paid ?>
+  \textbf{Pago} & - <?lsmb paid ?> \\
+<?lsmb end paid ?>
   \hline
-  \textbf{Pendente} & \textbf{<%total%>} \\
+  \textbf{Pendente} & \textbf{<?lsmb total ?>} \\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  Preços em \textbf{<%currency%>}.
+  Preços em \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 
 \vfill
 
-<%if paid%>
+<?lsmb if paid ?>
 \begin{tabularx}{10cm}{@{}lXlr@{}}
   \textbf{Pagamentos} & & & \\
   \hline
   \textbf{Data} & \textbf{Conta} & \textbf{Origem} & \textbf{Total} \\
-<%end paid%>
-<%foreach payment%>
-  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
-<%end payment%>
-<%if paid%>
+<?lsmb end paid ?>
+<?lsmb foreach payment ?>
+  <?lsmb paymentdate ?> & <?lsmb paymentaccount ?> & <?lsmb paymentsource ?> & <?lsmb payment ?> \\
+<?lsmb end payment ?>
+<?lsmb if paid ?>
 \end{tabularx}
-<%end paid%>
+<?lsmb end paid ?>
 
 \vspace{1cm}
 

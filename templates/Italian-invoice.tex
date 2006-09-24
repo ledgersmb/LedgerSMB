@@ -25,12 +25,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Tel & <%tel%>\\
-    Fax & <%fax%>
+    Tel & <?lsmb tel ?>\\
+    Fax & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -39,32 +39,32 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Totale riga} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Totale riga} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Codice} & \textbf{Descrizione} & \textbf{Quantita'} &
     \textbf{Unita'} & \textbf{Prezzo} & \textbf{Sc.} & \textbf{Totale righe} \\
-  & carried forward from page <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & carried forward from page <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
@@ -76,74 +76,74 @@
   \textbf{Sede legale:}
   \vspace{0.5cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{0.3cm}
 
-%<%if contact%>
-%Attn: <%contact%>
+%<?lsmb if contact ?>
+%Attn: <?lsmb contact ?>
 %\vspace{0.3cm}
-%<%end contact%>
+%<?lsmb end contact ?>
 \vspace{0.5cm}
 
-<%if customerphone%>
-Telefono: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Telefono: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \parbox[t]{7.5cm}{
 \textbf{Inviare fatttura a:}
 \vspace{0.5cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%if shiptoaddress2%>
-<%shiptoaddress2%>
-<%end shiptoaddress2%>
+<?lsmb if shiptoaddress2 ?>
+<?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
 
-<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
 
-<%if shiptocountry%>
-<%shiptocountry%>
-<%end shiptocountry%>
-
-\vspace{0.3cm}
+<?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
 
 \vspace{0.3cm}
 
-<%if shiptocontact%>
-Attn: <%shiptocontact%>
 \vspace{0.3cm}
-<%end shiptocontact%>
 
-<%if shiptophone%>
-Tel: <%shiptophone%>
-<%end shiptophone%>
+<?lsmb if shiptocontact ?>
+Attn: <?lsmb shiptocontact ?>
+\vspace{0.3cm}
+<?lsmb end shiptocontact ?>
 
-<%if shiptofax%>
-Fax: <%shiptofax%>
-<%end shiptofax%>
+<?lsmb if shiptophone ?>
+Tel: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
 
-<%shiptoemail%>
+<?lsmb if shiptofax ?>
+Fax: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
+
+<?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -155,9 +155,9 @@ Fax: <%shiptofax%>
 \vspace{1cm}
 
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Data fattura} & <%invdate%> \\
-  \textbf{Numero fattura} & <%invnumber%> \\
-  \textbf{Ordine} & <%ordnumber%>
+  \textbf{Data fattura} & <?lsmb invdate ?> \\
+  \textbf{Numero fattura} & <?lsmb invnumber ?> \\
+  \textbf{Ordine} & <?lsmb ordnumber ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -165,10 +165,10 @@ Fax: <%shiptofax%>
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Codice} & \textbf{Descrizione} & \textbf{Qt\`a} &
     \textbf{Un.} & \textbf{Prezzo} & \textbf{Sc.} & \textbf{Tot. riga} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -179,44 +179,44 @@ Fax: <%shiptofax%>
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Totale righe} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%>: <%taxrate%>\% & <%tax%>\\
-<%end tax%>
-<%if paid%>
-  \textbf{Pagato} & - <%paid%> \\
-<%end paid%>
+  \textbf{Totale righe} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?>: <?lsmb taxrate ?>\% & <?lsmb tax ?>\\
+<?lsmb end tax ?>
+<?lsmb if paid ?>
+  \textbf{Pagato} & - <?lsmb paid ?> \\
+<?lsmb end paid ?>
   \hline
-  \textbf{Totale da pagare} & \textbf{<%total%>} \\
+  \textbf{Totale da pagare} & \textbf{<?lsmb total ?>} \\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  Tutti i prezzi sono espressi in valuta \textbf{<%currency%>}.
+  Tutti i prezzi sono espressi in valuta \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 
 \vfill
 
-<%if paid%>
+<?lsmb if paid ?>
 \begin{tabularx}{10cm}{@{}lXlr@{}}
   \textbf{Pagamenti} & & & \\
   \hline
   \textbf{Data} & \textbf{Conto} & \textbf{Documento di riferimento} & \textbf{Importo} \\
-<%end paid%>
-<%foreach payment%>
-  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
-<%end payment%>
-<%if paid%>
+<?lsmb end paid ?>
+<?lsmb foreach payment ?>
+  <?lsmb paymentdate ?> & <?lsmb paymentaccount ?> & <?lsmb paymentsource ?> & <?lsmb payment ?> \\
+<?lsmb end payment ?>
+<?lsmb if paid ?>
 \end{tabularx}
-<%end paid%>
+<?lsmb end paid ?>
 
 \vspace{1cm}
 

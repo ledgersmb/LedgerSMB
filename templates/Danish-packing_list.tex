@@ -27,12 +27,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Tlf. & <%tel%>\\
-    Fax & <%fax%>
+    Tlf. & <?lsmb tel ?>\\
+    Fax & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -41,39 +41,39 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabular*}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
   \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Antal} &
     \textbf{Enhed} & \textbf{Varelager} \\
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddr1%>
+<?lsmb shiptoaddr1 ?>
 
-<%shiptoaddr2%>
+<?lsmb shiptoaddr2 ?>
 
-<%shiptoaddr3%>
+<?lsmb shiptoaddr3 ?>
 
-<%shiptoaddr4%>
+<?lsmb shiptoaddr4 ?>
 
 \vspace{3.5cm}
 
@@ -81,9 +81,9 @@
 
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Dato} & <%invdate%> \\
-  \textbf{Nummer} & <%invnumber%> \\
-  \textbf{Kunde} & <%customer_id%>
+  \textbf{Dato} & <?lsmb invdate ?> \\
+  \textbf{Nummer} & <?lsmb invnumber ?> \\
+  \textbf{Kunde} & <?lsmb customer_id ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -91,10 +91,10 @@
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
   \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Antal} &
     \textbf{Enhed} & \textbf{Varelager} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%bin%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb bin ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -103,9 +103,9 @@
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 
@@ -116,8 +116,8 @@
 
 \footnotetext[1]{\tiny
 Returnerede varer modregnes 10\% i ekspeditionsgebyr.
-Et returnummer skal tildeles af <%company%> før varer returneres.
+Et returnummer skal tildeles af <?lsmb company ?> før varer returneres.
 Returvarer skal forsendes forudbetalt og forsvarligt forsikret.
-<%company%> kan ikke drages til ansvar for skade under transport.}
+<?lsmb company ?> kan ikke drages til ansvar for skade under transport.}
 
 \end{document}

@@ -29,16 +29,16 @@
 
 \parbox{\textwidth}{%
   \parbox[b]{.42\textwidth}{%
-    <%company%>
+    <?lsmb company ?>
 
-    <%address%>
+    <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
     \includegraphics[scale=0.3]{ledger-smb}
   }\hfill
   \begin{tabular}[b]{rr@{}}
-  Telephone & <%tel%>\\
-  Facsimile & <%fax%>
+  Telephone & <?lsmb tel ?>\\
+  Facsimile & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5em]{\textwidth}{0.5pt}
@@ -49,32 +49,32 @@
 
 \parbox[t]{1cm}{\hfill}
 \parbox[t]{.45\textwidth}{
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 }
 \parbox[t]{.45\textwidth}{
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \hfill
 
 \vspace{1cm}
 
-\textbf{S T A T E M E N T} \hfill \textbf{<%statementdate%>}
+\textbf{S T A T E M E N T} \hfill \textbf{<?lsmb statementdate ?>}
 
 \vspace{2cm}
 
@@ -84,13 +84,13 @@ Fax: <%customerfax%>
   \textbf{Date} & \textbf{Due} &
   \textbf{Current} & \textbf{30} & \textbf{60} & \textbf{90+} \\
   \hline
-<%foreach invnumber%>
-  <%invnumber%> & <%ordnumber%> & <%notes%> & <%invdate%> & <%duedate%> &
-  <%c0%> & <%c30%> & <%c60%> & <%c90%> \\
-<%end invnumber%>
+<?lsmb foreach invnumber ?>
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?> & <?lsmb notes ?> & <?lsmb invdate ?> & <?lsmb duedate ?> &
+  <?lsmb c0 ?> & <?lsmb c30 ?> & <?lsmb c60 ?> & <?lsmb c90 ?> \\
+<?lsmb end invnumber ?>
   \multicolumn{9}{|l|}{\mbox{}} \\
   \hline
-  \textbf{Subtotal} & & & & & <%c0total%> & <%c30total%> & <%c60total%> & <%c90total%> \\
+  \textbf{Subtotal} & & & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?> \\
   \hline
 \end{tabularx}
 
@@ -98,12 +98,12 @@ Fax: <%customerfax%>
 
 \hfill
 \begin{tabularx}{.4\textwidth}{Xr@{}}
-  \textbf{Total outstanding} & \textbf{<%total%>}
+  \textbf{Total outstanding} & \textbf{<?lsmb total ?>}
 \end{tabularx}
 
 \vfill
 
-Please make check payable to <%company%>
+Please make check payable to <?lsmb company ?>
 
 \end{document}
 

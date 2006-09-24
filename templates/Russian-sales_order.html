@@ -5,7 +5,7 @@
            <td>  </td>
           <td align=center>
 
-<table width=90%>
+<table width=90 ?>
        <tr>
            <td align=center>
 <font size=1>
@@ -36,13 +36,13 @@
        <tr>
            <td>
 Получатель<br>
-<%company%>
+<?lsmb company ?>
           </td>
-           <td width=1%>
+           <td width=1 ?>
 _______<br>
 Сч. No
           </td>
-           <td width=1%>
+           <td width=1 ?>
 <br>
 40802810701010000976 
           </td>
@@ -71,7 +71,7 @@ _______<br>
            <td>  </td>
           <td colspan=3>
 <br>
-            <h3>СЧЕТ  N 000<%ordnumber%>   от <%orddate%></h3>
+            <h3>СЧЕТ  N 000<?lsmb ordnumber ?>   от <?lsmb orddate ?></h3>
 <hr>
           </th>
         </tr>
@@ -79,11 +79,11 @@ _______<br>
     <td width=10> </td>
 
     <td>
-      <table width=100%>
+      <table width=100 ?>
         <tr>
           <td>
-            Поставщик: <b><%company%></b>
-        <br>Покупатель:<b> <%name%></b>
+            Поставщик: <b><?lsmb company ?></b>
+        <br>Покупатель:<b> <?lsmb name ?></b>
              </td>
         </tr>
 
@@ -98,27 +98,27 @@ _______<br>
       <table border=1  width=100% cellpadding=2 cellspacing=0>
         <tr>
           <th>No.</th>
-          <th width=90%>Товар</th>
+          <th width=90 ?>Товар</th>
           <th>Кол-во</th>
           <th>Ед.</th>
           <th>Цена</th>
           <th>Сумма</th>
         </tr>
 
-         <%foreach number%>
+         <?lsmb foreach number ?>
         <tr valign=top>
-           <td align=right><%runningnumber%></td>
-           <td><%description%></td>
-          <td align=right><%qty%></td>
+           <td align=right><?lsmb runningnumber ?></td>
+           <td><?lsmb description ?></td>
+          <td align=right><?lsmb qty ?></td>
           <td align=center>шт.</td>
-          <td align=right><%sellprice%></td>
-          <td align=right><%linetotal%></td>
+          <td align=right><?lsmb sellprice ?></td>
+          <td align=right><?lsmb linetotal ?></td>
          </tr>
-        <%end number%>
+        <?lsmb end number ?>
 
         <tr>
           <th colspan=5 align=right>Итого:</th>
-          <th align=right><%subtotal%></th>
+          <th align=right><?lsmb subtotal ?></th>
         </tr>
 
       </table>
@@ -135,15 +135,15 @@ _______<br>
         <td>  </td>
         <td>
 
-       <table width=100%>
+       <table width=100 ?>
          <tr>
         <td colspan=2>
-<nobr>Всего наименований ___, на сумму <%subtotal%> руб.
+<nobr>Всего наименований ___, на сумму <?lsmb subtotal ?> руб.
  </td>
         </tr>
          <tr>
         <th colspan=2 align=left>
- <%text_amount%>
+ <?lsmb text_amount ?>
  </th>
         </tr>
             <tr>

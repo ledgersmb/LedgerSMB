@@ -8,7 +8,7 @@
 	<tr valign=bottom>
 	  <td width="10">&nbsp;</td>
 	  <td>  
-	    <table width=100%>
+	    <table width=100 ?>
 		<tr>
 		  <th colspan="4"> </th>
 		  <th align="left">
@@ -22,7 +22,7 @@
 		
 		<tr>
 		  <td colspan="4"> </td>
-		  <td align="left"><%name%></td>
+		  <td align="left"><?lsmb name ?></td>
 		</tr>
 		
 		<tr>
@@ -30,22 +30,22 @@
 		  <td>Fecha</td>
 		  <td>Cód. Cliente</td> 
 		  <td width="10%"> </td>
-		  <td><%address1%></td>
+		  <td><?lsmb address1 ?></td>
 		</tr>
 		<tr>
-		  <td><b><%ordnumber%></b></td>
-		  <td><b><%orddate%></b></td>
-		  <td><b><%customer_id%></b></td>
+		  <td><b><?lsmb ordnumber ?></b></td>
+		  <td><b><?lsmb orddate ?></b></td>
+		  <td><b><?lsmb customer_id ?></b></td>
 		  <td> </td>
-		  <td><%addr2%></td>
+		  <td><?lsmb addr2 ?></td>
 		</tr>
 		<tr>
 		  <td colspan="4">
-		  <td><%city%> <%state%> <%zipcode%></td>
+		  <td><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?></td>
 		</tr>
 		<tr>
 		  <td colspan="4">
-		  <td><%addr4%></td>
+		  <td><?lsmb addr4 ?></td>
 		</tr>
 	    </table>
     </table>	    
@@ -54,7 +54,7 @@
     <table width=100% cellspacing=0 cellpadding=0>
 	<tr>
 	  <td>
-	    <table width=100%>
+	    <table width=100 ?>
 		<tr bgcolor=000000>
 		  <!--      <th align=left><font color=ffffff>Número</th> -->
 		  <!--      <th><font color=ffffff>Cant.</th> -->
@@ -69,17 +69,17 @@
 		  <td colspan="4"><hr noshade></td>
 		</tr>    
 		
-<%foreach number%>
+<?lsmb foreach number ?>
 	<tr valign=top>
-	  <!--      <td><%number%></td> -->
-	  <!--      <td><%unit%></td> -->
-	  <td align="right"><%qty%></td> 
-	  <td align="left"><%description%></td>
-	  <td align="right"><%sellprice%></td>
-	  <!--      <td align=right><%discount%></td> -->
-	  <td align="right"><%linetotal%></td>
+	  <!--      <td><?lsmb number ?></td> -->
+	  <!--      <td><?lsmb unit ?></td> -->
+	  <td align="right"><?lsmb qty ?></td> 
+	  <td align="left"><?lsmb description ?></td>
+	  <td align="right"><?lsmb sellprice ?></td>
+	  <!--      <td align=right><?lsmb discount ?></td> -->
+	  <td align="right"><?lsmb linetotal ?></td>
 	</tr>
-<%end number%>
+<?lsmb end number ?>
     
     <tr>
       <td colspan="4"><hr noshade></td>
@@ -89,29 +89,29 @@
     <!-- Subtotales, impuestos y totales -->
     <table width="100%">
     <tr>
-<%if taxincluded%>
+<?lsmb if taxincluded ?>
     <th align=right>Total</th>
-    <td align=right><%ordtotal%></td>
-<%end taxincluded%>
-<%if not taxincluded%>
+    <td align=right><?lsmb ordtotal ?></td>
+<?lsmb end taxincluded ?>
+<?lsmb if not taxincluded ?>
     <th align="right">Base imponible</th>
-    <td align="right"><%subtotal%> &euro;</td>
-<%end taxincluded%>
+    <td align="right"><?lsmb subtotal ?> &euro;</td>
+<?lsmb end taxincluded ?>
     </tr>
 
-<%foreach tax%>
+<?lsmb foreach tax ?>
     <tr>
-      <th align="right">IVA (<%taxrate%>%) sobre <%taxbase%>:</th>
-      <td align="right"><%tax%> &euro;</td>
+      <th align="right">IVA (<?lsmb taxrate ?>%) sobre <?lsmb taxbase ?>:</th>
+      <td align="right"><?lsmb tax ?> &euro;</td>
     </tr>
-<%end tax%>
+<?lsmb end tax ?>
     
-<%if paid%>
+<?lsmb if paid ?>
     <tr>
       <th align="right">Pagado:</th>
-      <td align="right"><%paid%> &euro;</td>
+      <td align="right"><?lsmb paid ?> &euro;</td>
     </tr>
-<%end paid%>
+<?lsmb end paid ?>
     
     <tr>
       <td>&nbsp;</td>
@@ -120,7 +120,7 @@
 
     <tr>
       <th align="right">Total:</th>
-      <th align="right"><%ordtotal%> &euro;</th>
+      <th align="right"><?lsmb ordtotal ?> &euro;</th>
     </tr>
     
     <tr>
@@ -133,17 +133,17 @@
     <!-- Pie -->
     <table width="100%">
 	<tr valign=top>
-<%if notes%>
+<?lsmb if notes ?>
 	  <td>Notas</td>
-	  <td><%notes%></td>
-<%end notes%>
+	  <td><?lsmb notes ?></td>
+<?lsmb end notes ?>
   </tr>
     
-<%if taxincluded%>
+<?lsmb if taxincluded ?>
     <tr>
       <th colspan="2" align="left"><font size=-2>Los precios incluyen impuestos.</th>
     </tr>
-<%end taxincluded%>
+<?lsmb end taxincluded ?>
     
   </table>
 

@@ -25,12 +25,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
 
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rrr@{}}
-    Tel & <%tel%>\\
-    Fax & <%fax%>
+    Tel & <?lsmb tel ?>\\
+    Fax & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -39,7 +39,7 @@
 
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%statementdate%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb statementdate ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
@@ -51,48 +51,48 @@
 \parbox[t]{1cm}{\hfill}
 \parbox[t]{10.5cm}{
   
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 }
 \parbox[t]{7.5cm}{
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \hfill
 
 \vspace{1cm}
 
-\textbf{S T A T E M E N T} \hfill \textbf{<%statementdate%>}
+\textbf{S T A T E M E N T} \hfill \textbf{<?lsmb statementdate ?>}
 
 \vspace{2cm}
 
 \begin{tabular*}{\textwidth}{@{}ll@{\extracolsep\fill}ccrrrr@{}}
   \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Due} &
   \textbf{Current} & \textbf{30} & \textbf{60} & \textbf{90+} \\
-<%foreach invnumber%>
-  <%invnumber%> & <%ordnumber%> & <%invdate%> & <%duedate%> &
-  <%c0%> & <%c30%> & <%c60%> & <%c90%> \\
-<%end invnumber%>
-\textbf{Subtotal} & & & & <%c0total%> & <%c30total%> & <%c60total%> & <%c90total%>
+<?lsmb foreach invnumber ?>
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?> & <?lsmb invdate ?> & <?lsmb duedate ?> &
+  <?lsmb c0 ?> & <?lsmb c30 ?> & <?lsmb c60 ?> & <?lsmb c90 ?> \\
+<?lsmb end invnumber ?>
+\textbf{Subtotal} & & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?>
 \end{tabular*}
 \rule{\textwidth}{1pt}
 
@@ -100,12 +100,12 @@ Fax: <%customerfax%>
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Total outstanding} & <%total%>
+  \textbf{Total outstanding} & <?lsmb total ?>
 \end{tabularx}
 
 \vfill
 
-Please make check payable to <%company%>
+Please make check payable to <?lsmb company ?>
 
 \end{document}
 

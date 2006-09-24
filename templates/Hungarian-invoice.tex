@@ -34,7 +34,7 @@
 \renewcommand{\baselinestretch}{1}
 
 
-\newcommand{\PAR}[1]{\texttt{\upshape <\%#1\%>}\typeout{#1}}
+\newcommand{\PAR}[1]{\texttt{\upshape <\%#1\ ?>}\typeout{#1}}
 
 
 \begin{document}
@@ -50,8 +50,8 @@
      {\large\bfseries SZÁMLA} \\
    \end{center}
 
-   \mbox{}\hfill <%copysum%>  \\
-   \mbox{}\hfill <%copynumber%>
+   \mbox{}\hfill <?lsmb copysum ?>  \\
+   \mbox{}\hfill <?lsmb copynumber ?>
   }
 }
 
@@ -60,7 +60,7 @@
   \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
   \parbox{\textwidth}{
 %  \includegraphics[scale=.5]{/tmp/logo_04.eps} 
-  \hfill <%invnumber%>\\[-3mm]
+  \hfill <?lsmb invnumber ?>\\[-3mm]
   \rule{\textwidth}{.5pt}
   }
 }
@@ -74,7 +74,7 @@
 \fontfamily{cmss}\fontsize{10pt}{12pt}\fontshape{n}\selectfont
 
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabularx}
 }
 
@@ -82,7 +82,7 @@
   
   \hfill
   \begin{tabularx}{7cm}{X@{ }r@{}}
-  \textbf{Részösszeg} & <%sumcarriedforward%> \cr
+  \textbf{Részösszeg} & <?lsmb sumcarriedforward ?> \cr
   \end{tabularx}
 
 \newpage
@@ -117,9 +117,9 @@
   & & \textbf{elõzõ oldalról} &
   & & &
   & & & 
-  & & <%sumcarriedforward%>
+  & & <?lsmb sumcarriedforward ?>
   \cr
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 \mbox{}\vspace{3.5cm}
 
@@ -130,24 +130,24 @@
 \hbox to\hsize{
 \begin{minipage}[t]{9.5cm}
 \textbf{Eladó:} \\
-<%company%>\\
-<%address%>\\
-Adószám: <%businessnumber%>\\
-tel: <%tel%>\\
-fax: <%fax%>
+<?lsmb company ?>\\
+<?lsmb address ?>\\
+Adószám: <?lsmb businessnumber ?>\\
+tel: <?lsmb tel ?>\\
+fax: <?lsmb fax ?>
 \end{minipage}
 \hfill \
 \begin{minipage}[t]{9.5cm}
 \textbf{Vevõ:} \\
-<%name%>\\
-<%address1%>\\
-<%if address2%>
-<%address2%>
-<%end address2%>\\
-<%city%> <%state%> <%zipcode%>\\
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb name ?>\\
+<?lsmb address1 ?>\\
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>\\
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>\\
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 \end{minipage}
 }
 
@@ -169,8 +169,8 @@ fax: <%fax%>
   \textbf{Fizetési mód} & \textbf{Telj.~dátuma} & \textbf{Számla kelte} &
   \textbf{Esedékesség} & \textbf{Megrendelés} & \textbf{Kiállította} & \textbf{Sorszám} 
   \cr
-  <%shippingpoint%> & <%invdate%> & <%crdate%> &
-  <%duedate%> & <%ordnumber%> & <%employee%> & <%invnumber%>
+  <?lsmb shippingpoint ?> & <?lsmb invdate ?> & <?lsmb crdate ?> &
+  <?lsmb duedate ?> & <?lsmb ordnumber ?> & <?lsmb employee ?> & <?lsmb invnumber ?>
 \end{tabularx}
 
 
@@ -200,13 +200,13 @@ fax: <%fax%>
   \raggedleft\textbf{Nettó egységár} & \raggedleft\textbf{Nettó összeg} & \raggedright\textbf{ÁFA\%} & 
   \raggedleft\textbf{ÁFA összeg} & \raggedleft\textbf{Bruttó összeg}
   \cr
-<%foreach number%>
-  <%runningnumber%> & <%partsgroup%> & <%number%> & <%description%> &
-  <%bin%> & <%qty%> & <%unit%> &
-  <%netprice%> & <%linetotal%> & <%linetaxrate%> & 
-  <%taxamount%> & <%linetotal2%> 
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb partsgroup ?> & <?lsmb number ?> & <?lsmb description ?> &
+  <?lsmb bin ?> & <?lsmb qty ?> & <?lsmb unit ?> &
+  <?lsmb netprice ?> & <?lsmb linetotal ?> & <?lsmb linetaxrate ?> & 
+  <?lsmb taxamount ?> & <?lsmb linetotal2 ?> 
   \cr
-<%end number%>
+<?lsmb end number ?>
 \end{tabularx}
 }
 
@@ -221,19 +221,19 @@ fax: <%fax%>
 \vspace{.2cm}
 
 \begin{tabularx}{10cm}{>{\hsize=7cm\raggedleft}X>{\hsize=3cm\raggedleft}X}
-%\textbf{Total} & <%invtotal%> \cr
-\textbf{Nettó összesen} & <%subtotal%> \cr
-<%foreach tax%>
-\textbf{Alap:} <%taxbase%> \textbf{ráta:} <%taxrate%> & <%tax%> \cr
-<%end tax%>
-<%if paid%>
-\textbf{Fizetve:} & -<%paid%>
-<%end paid%>
+%\textbf{Total} & <?lsmb invtotal ?> \cr
+\textbf{Nettó összesen} & <?lsmb subtotal ?> \cr
+<?lsmb foreach tax ?>
+\textbf{Alap:} <?lsmb taxbase ?> \textbf{ráta:} <?lsmb taxrate ?> & <?lsmb tax ?> \cr
+<?lsmb end tax ?>
+<?lsmb if paid ?>
+\textbf{Fizetve:} & -<?lsmb paid ?>
+<?lsmb end paid ?>
 \end{tabularx}
 
 \rule{10.6cm}{1.5pt}
 \begin{tabularx}{10cm}{>{\hsize=7cm\raggedleft}X>{\hsize=3cm\raggedleft}X}
-\textbf{A számla végösszege} & <%total%> \textbf{Ft}
+\textbf{A számla végösszege} & <?lsmb total ?> \textbf{Ft}
 \end{tabularx}
 
 \end{minipage}
@@ -242,13 +242,13 @@ fax: <%fax%>
 
 \vfill
 \vspace{1cm}
-<%if notes%>
-\textbf{Megjegyzés:} <%notes%>
+<?lsmb if notes ?>
+\textbf{Megjegyzés:} <?lsmb notes ?>
 \vspace{1cm}
-<%end if%>
+<?lsmb end if ?>
 
 
-<%if paid%>
+<?lsmb if paid ?>
 \textbf{Fizetések:}
 
 \rule{12cm}{1.5pt}
@@ -261,18 +261,18 @@ fax: <%fax%>
                        >{\hsize=2.9cm\raggedleft}X@{}}
   \textbf{Dátum} & \textbf{Számla} & \textbf{Bizonylatszám} & \textbf{Összeg} 
   \cr
-<%end paid%>
-<%foreach payment%>
-  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> 
+<?lsmb end paid ?>
+<?lsmb foreach payment ?>
+  <?lsmb paymentdate ?> & <?lsmb paymentaccount ?> & <?lsmb paymentsource ?> & <?lsmb payment ?> 
   \cr
-<%end payment%>  
-<%if paid%>
+<?lsmb end payment ?>  
+<?lsmb if paid ?>
 \end{tabularx}
-<%end paid%>  
+<?lsmb end paid ?>  
 
 \vspace{1cm}
 
-<%intnotes%>
+<?lsmb intnotes ?>
 
 \end{document}
 

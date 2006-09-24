@@ -20,64 +20,64 @@ Special order items are subject to a 10\% cancellation fee.
   }
 }
 
-<%include letterhead.tex%>
+<?lsmb include letterhead.tex ?>
 
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabularx}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{\hspace{1cm}}r@{}}
-  & \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  & \textbf{Subtotal} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%quonumber%>}{<%company%>\hfill <%quonumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb quonumber ?>}{<?lsmb company ?>\hfill <?lsmb quonumber ?>}
 
 \begin{tabularx}{\textwidth}{@{}lXrlrrr@{}}
   \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
     \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\
-  & carried forward from <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & carried forward from <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
 
 \parbox[t]{.5\textwidth}{
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%>
-<%if state%>
-\hspace{-0.1cm}, <%state%>
-<%end state%>
-<%zipcode%>
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 
 \vspace{0.3cm}
 
-<%if contact%>
-<%contact%>
+<?lsmb if contact ?>
+<?lsmb contact ?>
 \vspace{0.2cm}
-<%end contact%>
+<?lsmb end contact ?>
 
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 
 \vspace{1cm}
@@ -90,7 +90,7 @@ Fax: <%customerfax%>
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{Quotation \#} & \textbf{Date} & \textbf{Valid until} & \textbf{Contact} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5ex]
   \hline
-  <%quonumber%> & <%quodate%> & <%reqdate%> & <%employee%> & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb quonumber ?> & <?lsmb quodate ?> & <?lsmb reqdate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
   
@@ -99,10 +99,10 @@ Fax: <%customerfax%>
 \begin{tabularx}{\textwidth}{@{}lXrlrrr@{}}
   \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
     \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discountrate%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discountrate ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 
@@ -113,26 +113,26 @@ Fax: <%customerfax%>
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{\hspace{1cm}}r@{}}
-  & Subtotal & <%subtotal%> \\
-<%foreach tax%>
-  & <%taxdescription%> on <%taxbase%> & <%tax%>\\
-<%end tax%>
+  & Subtotal & <?lsmb subtotal ?> \\
+<?lsmb foreach tax ?>
+  & <?lsmb taxdescription ?> on <?lsmb taxbase ?> & <?lsmb tax ?>\\
+<?lsmb end tax ?>
   \hline
-  & Total & <%quototal%>\\
+  & Total & <?lsmb quototal ?>\\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-All prices in \textbf{<%currency%>}.
+All prices in \textbf{<?lsmb currency ?>}.
 
-<%if terms%>
-Terms: <%terms%> days
-<%end terms%>
+<?lsmb if terms ?>
+Terms: <?lsmb terms ?> days
+<?lsmb end terms ?>
 
 \vspace{12pt}
 
-<%notes%>
+<?lsmb notes ?>
 
 }
 

@@ -30,7 +30,7 @@
 
 \begin{tabular}[t]{p{1.7cm}p{2.4cm}p{1.7cm}}\\
 \centering{Número} & \centering{Fecha} & C. Cliente\\
-\centering{<%ordnumber%>} & \centering{<%orddate%>} & \centering{<%vendor_id%>}
+\centering{<?lsmb ordnumber ?>} & \centering{<?lsmb orddate ?>} & \centering{<?lsmb vendor_id ?>}
 \end{tabular}
 \end{minipage}
 
@@ -38,15 +38,15 @@
 \textbf{P E D I D O} 
 \vspace{1cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 \end{minipage}
 
 }
@@ -58,7 +58,7 @@
 %\markboth{\usebox{\hdr}}{\usebox{\hdr}}
 %\thispagestyle{empty}     %use this with letterhead paper
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabular*}
 \newpage
 \usebox{\hdr}
@@ -67,7 +67,7 @@
 
 \begin{tabular*}{\textwidth}{rp{\descrwidth}rr}
   \textbf{Cant.} & \textbf{Descripción} & \textbf{Precio} & \textbf{Importe} \\ \hline
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
@@ -76,28 +76,28 @@
 
 \begin{tabular*}{\textwidth}{rp{\descrwidth}rr}
   \textbf{Cant.} & \textbf{Descripción} & \textbf{Precio} & \textbf{Importe} \\ \hline
-<%foreach number%>
-  <%qty%> & <%description%> & <%sellprice%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb qty ?> & <?lsmb description ?> & <?lsmb sellprice ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 \parbox{\textwidth}{
 \vspace{12pt}
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 }
 
 \vfill
 
 \begin{flushright}
 \begin{tabularx}{10cm}{Xr@{}}
-  \textbf{Base imponible} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  IVA (<%taxrate%>\%) sobre <%taxbase%> & <%tax%> \\
-<%end tax%>
+  \textbf{Base imponible} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  IVA (<?lsmb taxrate ?>\%) sobre <?lsmb taxbase ?> & <?lsmb tax ?> \\
+<?lsmb end tax ?>
   \hline
-  \textbf{Total} & \textbf{<%ordtotal%>} \\
+  \textbf{Total} & \textbf{<?lsmb ordtotal ?>} \\
 \end{tabularx}
 \end{flushright}
 

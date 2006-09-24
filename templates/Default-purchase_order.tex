@@ -12,28 +12,28 @@
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
-<%include letterhead.tex%>
+<?lsmb include letterhead.tex ?>
 
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabularx}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{\hspace{1cm}r@{}}
-  & Subtotal & <%sumcarriedforward%> \\
+  & Subtotal & <?lsmb sumcarriedforward ?> \\
   \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \begin{tabularx}{\textwidth}{@{}lXrlrr@{}}
   \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
     \textbf{Unit} & \textbf{Price} & \textbf{Amount} \\
-  & carried forward from <%lastpage%> & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & carried forward from <?lsmb lastpage ?> & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
@@ -42,71 +42,71 @@
 \textbf{To}
 \vspace{0.3cm}
   
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%>
-<%if state%>
-\hspace{-0.1cm}, <%state%>
-<%end state%>
-<%zipcode%>
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 
 \vspace{0.3cm}
 
-<%if contact%>
-Attn: <%contact%>
+<?lsmb if contact ?>
+Attn: <?lsmb contact ?>
 \vspace{0.2cm}
-<%end contact%>
+<?lsmb end contact ?>
 
-<%if vendorphone%>
-Tel: <%vendorphone%>
-<%end vendorphone%>
+<?lsmb if vendorphone ?>
+Tel: <?lsmb vendorphone ?>
+<?lsmb end vendorphone ?>
 
-<%if vendorfax%>
-Fax: <%vendorfax%>
-<%end vendorfax%>
+<?lsmb if vendorfax ?>
+Fax: <?lsmb vendorfax ?>
+<?lsmb end vendorfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \parbox[t]{.5\textwidth}{
 \textbf{Ship To}
 \vspace{0.3cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%shiptoaddress2%>
+<?lsmb shiptoaddress2 ?>
 
-<%shiptocity%>
-<%if shiptostate%>
-\hspace{-0.1cm}, <%shiptostate%>
-<%end shiptostate%>
-<%shiptozipcode%>
+<?lsmb shiptocity ?>
+<?lsmb if shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?>
+<?lsmb end shiptostate ?>
+<?lsmb shiptozipcode ?>
 
-<%shiptocountry%>
+<?lsmb shiptocountry ?>
 
 \vspace{0.3cm}
 
-<%if shiptocontact%>
-Attn: <%shiptocontact%>
+<?lsmb if shiptocontact ?>
+Attn: <?lsmb shiptocontact ?>
 \vspace{0.2cm}
-<%end shiptocontact%>
+<?lsmb end shiptocontact ?>
 
-<%if shiptophone%>
-Tel: <%shiptophone%>
-<%end shiptophone%>
+<?lsmb if shiptophone ?>
+Tel: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
 
-<%if shiptofax%>
-Fax: <%shiptofax%>
-<%end shiptofax%>
+<?lsmb if shiptofax ?>
+Fax: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
 
-<%shiptoemail%>
+<?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -119,7 +119,7 @@ Fax: <%shiptofax%>
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{Order \#} & \textbf{Date} & \textbf{Required by} & \textbf{Contact} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5ex]
   \hline
-  <%ordnumber%> & <%orddate%> & <%reqdate%> & <%employee%> & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb ordnumber ?> & <?lsmb orddate ?> & <?lsmb reqdate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
 
@@ -128,10 +128,10 @@ Fax: <%shiptofax%>
 \begin{tabularx}{\textwidth}{@{}lXrlrr@{}}
   \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
     \textbf{Unit} & \textbf{Price} & \textbf{Amount} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 
@@ -142,22 +142,22 @@ Fax: <%shiptofax%>
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{\hspace{1cm}}r@{}}
-  & Subtotal & <%subtotal%> \\
-<%foreach tax%>
-  & <%taxdescription%> on <%taxbase%> & <%tax%>\\
-<%end tax%>
+  & Subtotal & <?lsmb subtotal ?> \\
+<?lsmb foreach tax ?>
+  & <?lsmb taxdescription ?> on <?lsmb taxbase ?> & <?lsmb tax ?>\\
+<?lsmb end tax ?>
   \hline
-  & Total & <%ordtotal%>\\
+  & Total & <?lsmb ordtotal ?>\\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  All prices in \textbf{<%currency%>}.
+  All prices in \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%notes%>
+<?lsmb notes ?>
 
 }
 

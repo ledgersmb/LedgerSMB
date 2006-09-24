@@ -27,35 +27,35 @@
 
 \parbox{\textwidth}{%
   \parbox[b]{.42\textwidth}{%
-    <%company%>
+    <?lsmb company ?>
      
-    <%address%>
+    <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
     \includegraphics[scale=0.3]{ledger-smb}
   }\hfill 
   \begin{tabular}[b]{rr@{}}
-  Telefon & <%tel%>\\
-  Fax & <%fax%>
+  Telefon & <?lsmb tel ?>\\
+  Fax & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5em]{\textwidth}{0.5pt}
 }
 
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabularx}{\textwidth}{@{}rlXrll@{}}
   \textbf{No.} & \textbf{Nummer} & \textbf{Beskrivning} & \textbf{Antal} &
   & \textbf{Serial Number} \\
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
@@ -65,63 +65,63 @@
 \textbf{To}
 \vspace{0.7cm}
   
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 
 \vspace{0.3cm}
 
-<%if contact%>
-<%contact%>
+<?lsmb if contact ?>
+<?lsmb contact ?>
 \vspace{0.2cm}
-<%end contact%>
+<?lsmb end contact ?>
 
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \parbox[t]{.45\textwidth}{
 \textbf{Ship To}
 \vspace{0.7cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%shiptoaddress2%>
+<?lsmb shiptoaddress2 ?>
 
-<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
 
-<%shiptocountry%>
+<?lsmb shiptocountry ?>
 
 \vspace{0.3cm}
 
-<%if shiptocontact%>
-<%shiptocontact%>
+<?lsmb if shiptocontact ?>
+<?lsmb shiptocontact ?>
 \vspace{0.2cm}
-<%end shiptocontact%>
+<?lsmb end shiptocontact ?>
 
-<%if shiptophone%>
-Tel: <%shiptophone%>
-<%end shiptophone%>
+<?lsmb if shiptophone ?>
+Tel: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
 
-<%if shiptofax%>
-Fax: <%shiptofax%>
-<%end shiptofax%>
+<?lsmb if shiptofax ?>
+Fax: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
 
-<%shiptoemail%>
+<?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -135,7 +135,7 @@ Fax: <%shiptofax%>
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{Order \#} & \textbf{Order Datum} & \textbf{} & \textbf{Säljare} & \textbf{Destination} & \textbf{Fraktas Via} \\ [0.5em]
   \hline
-  <%ordnumber%> & <%orddate%> & <%reqdate%> & <%employee%> & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb ordnumber ?> & <?lsmb orddate ?> & <?lsmb reqdate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
   
@@ -144,10 +144,10 @@ Fax: <%shiptofax%>
 \begin{tabularx}{\textwidth}{@{}rlXrll@{}}
   \textbf{No.} & \textbf{Nummer} & \textbf{Beskrivning} & \textbf{Antal} &
   & \textbf{Serie Nummer} \\
-<%foreach number%>
-  <%runningnumber%> & <%number%> & <%description%> & <%qty%> &
-  <%unit%> & <%serialnumber%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+  <?lsmb unit ?> & <?lsmb serialnumber ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 
@@ -156,9 +156,9 @@ Fax: <%shiptofax%>
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 

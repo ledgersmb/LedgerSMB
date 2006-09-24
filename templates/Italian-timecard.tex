@@ -16,16 +16,16 @@
 
 \parbox{\textwidth}{%
   \parbox[b]{.42\textwidth}{%
-    <%company%>
+    <?lsmb company ?>
    
-    <%address%>
+    <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
     \includegraphics[scale=0.3]{ledger-smb}
   }\hfill
   \begin{tabular}[b]{rr@{}}
-  Tel: & <%tel%>\\
-  Fax: & <%fax%>
+  Tel: & <?lsmb tel ?>\\
+  Fax: & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5em]{\textwidth}{0.5pt}
@@ -36,35 +36,35 @@
 \vspace*{0.5cm}
 
 \begin{tabular}[t]{ll}
-  \textbf{Employee} & <%employee%> \\
-  \textbf{ID} & <%employee_id%> \\
+  \textbf{Employee} & <?lsmb employee ?> \\
+  \textbf{ID} & <?lsmb employee_id ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[t]{ll}
-  \textbf{Card ID} & <%id%> \\
-  \textbf{Date Worked} & <%transdate%> \\
-  \textbf{Time In} & <%checkedin%> \\
-  \textbf{Time Out} & <%checkedout%> \\
-  \textbf{Hours Worked} & <%qty%> \\
+  \textbf{Card ID} & <?lsmb id ?> \\
+  \textbf{Date Worked} & <?lsmb transdate ?> \\
+  \textbf{Time In} & <?lsmb checkedin ?> \\
+  \textbf{Time Out} & <?lsmb checkedout ?> \\
+  \textbf{Hours Worked} & <?lsmb qty ?> \\
 \end{tabular}
 
 \vspace{1cm}
 
 \begin{tabular}[b]{ll}
-  \textbf{Project/Job \#} & <%projectnumber%> \\
-  \textbf{Description} & <%projectdescription%> \\
-  \textbf{Labor/Service Code} & <%partnumber%> \\
-  \textbf{Description} & <%description%> \\
+  \textbf{Project/Job \#} & <?lsmb projectnumber ?> \\
+  \textbf{Description} & <?lsmb projectdescription ?> \\
+  \textbf{Labor/Service Code} & <?lsmb partnumber ?> \\
+  \textbf{Description} & <?lsmb description ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[b]{lr}
-  \textbf{Unit Rate} & <%sellprice%> \\
-  \textbf{Total} & <%total%> \\
+  \textbf{Unit Rate} & <?lsmb sellprice ?> \\
+  \textbf{Total} & <?lsmb total ?> \\
 \end{tabular}
   
 \vspace{0.3cm}
 
-<%notes%>
+<?lsmb notes ?>
  
 \end{document}
 

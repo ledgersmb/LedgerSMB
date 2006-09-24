@@ -26,12 +26,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Téléphone & <%tel%>\\
-    Télécopieur & <%fax%>
+    Téléphone & <?lsmb tel ?>\\
+    Télécopieur & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -40,51 +40,51 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%ordnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Sous-total} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Sous-total} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%ordnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrr@{}}
   \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
     \textbf{Unit} & \textbf{Price} & \textbf{Amount} \\
-  & reporté de la page <%lastpage%> & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & reporté de la page <?lsmb lastpage ?> & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{3.5cm}
 
@@ -92,11 +92,11 @@
 \textbf{C O M M A N D E}
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Date de la commande} & <%orddate%> \\
-<%if reqdate%>
-  \textbf{Livrable le} & <%reqdate%> \\
-<%end reqdate%>
-  \textbf{Numéro de commande} & <%ordnumber%>
+  \textbf{Date de la commande} & <?lsmb orddate ?> \\
+<?lsmb if reqdate ?>
+  \textbf{Livrable le} & <?lsmb reqdate ?> \\
+<?lsmb end reqdate ?>
+  \textbf{Numéro de commande} & <?lsmb ordnumber ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -104,10 +104,10 @@
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrr@{}}
   \textbf{Numéro} & \textbf{Description} & \textbf{Qté} &
     \textbf{Unité} & \textbf{Prix} & \textbf{Montant} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -118,24 +118,24 @@
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Sous-total} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%> de <%taxbase%> & <%tax%>\\
-<%end tax%>
+  \textbf{Sous-total} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> de <?lsmb taxbase ?> & <?lsmb tax ?>\\
+<?lsmb end tax ?>
   \hline
-  \textbf{Total} & \textbf{<%ordtotal%>}\\
+  \textbf{Total} & \textbf{<?lsmb ordtotal ?>}\\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  Tous les prix indiqués sont en \textbf{<%currency%>}.
+  Tous les prix indiqués sont en \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 

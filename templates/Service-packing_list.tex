@@ -25,12 +25,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Telephone & <%tel%>\\
-    Facsimile & <%fax%>
+    Telephone & <?lsmb tel ?>\\
+    Facsimile & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -39,39 +39,39 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabular*}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}p{\descrwidth}@{\extracolsep\fill}rl@{}}
   \textbf{Description} & \textbf{Qt'y} &
     \textbf{Unit} \\
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddr1%>
+<?lsmb shiptoaddr1 ?>
 
-<%shiptoaddr2%>
+<?lsmb shiptoaddr2 ?>
 
-<%shiptoaddr3%>
+<?lsmb shiptoaddr3 ?>
 
-<%shiptoaddr4%>
+<?lsmb shiptoaddr4 ?>
 
 \vspace{3.5cm}
 
@@ -79,18 +79,18 @@
 
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Date} & <%invdate%> \\
-  \textbf{Number} & <%invnumber%> \\
-  \textbf{Customer} & <%customer_id%>
+  \textbf{Date} & <?lsmb invdate ?> \\
+  \textbf{Number} & <?lsmb invnumber ?> \\
+  \textbf{Customer} & <?lsmb customer_id ?>
 \end{tabular}
 
 \vspace{1cm}
 
 \begin{tabular*}{\textwidth}{@{}p{\descrwidth}@{\extracolsep\fill}rl@{}}
   \textbf{Description} & \textbf{Qt'y} & \textbf{Unit} \\
-<%foreach number%>
-  <%description%> & <%qty%> & <%unit%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb description ?> & <?lsmb qty ?> & <?lsmb unit ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -99,9 +99,9 @@
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 
@@ -112,9 +112,9 @@
 
 %\footnotetext[1]{\tiny
 %Items returned are subject to a 10\% restocking charge.
-%A return authorization must be obtained from <%company%> before goods are
+%A return authorization must be obtained from <?lsmb company ?> before goods are
 %returned. Returns must be shipped prepaid and properly insured.
-%<%company%> will not be responsible for damages during transit.}
+%<?lsmb company ?> will not be responsible for damages during transit.}
 
 \end{document}
 

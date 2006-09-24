@@ -1,9 +1,9 @@
 
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
 
-  <%include letterhead.html%>
+  <?lsmb include letterhead.html ?>
   
   <tr>
     <td width=10>&nbsp;</td>
@@ -19,72 +19,72 @@
     <td>
       <table width=100% callspacing=0 cellpadding=0>
         <tr valign=top>
-          <td><%name%>
-          <br><%address1%>
-	  <%if address2%>
-          <br><%address2%>
-	  <%end address2%>
-          <br><%city%>
-	  <%if state%>
-	  , <%state%>
-	  <%end state%>
-	  <%zipcode%>
-	  <%if country%>
-	  <br><%country%>
-	  <%end country%>
+          <td><?lsmb name ?>
+          <br><?lsmb address1 ?>
+	  <?lsmb if address2 ?>
+          <br><?lsmb address2 ?>
+	  <?lsmb end address2 ?>
+          <br><?lsmb city ?>
+	  <?lsmb if state ?>
+	  , <?lsmb state ?>
+	  <?lsmb end state ?>
+	  <?lsmb zipcode ?>
+	  <?lsmb if country ?>
+	  <br><?lsmb country ?>
+	  <?lsmb end country ?>
           <br>
 
-          <%if contact%>
-          <br><%contact%>
+          <?lsmb if contact ?>
+          <br><?lsmb contact ?>
           <br>
-          <%end contact%>
+          <?lsmb end contact ?>
 
-          <%if vendorphone%>
-          <br>Tel: <%vendorphone%>
-          <%end vendorphone%>
+          <?lsmb if vendorphone ?>
+          <br>Tel: <?lsmb vendorphone ?>
+          <?lsmb end vendorphone ?>
 
-          <%if vendorfax%>
-          <br>Faks: <%vendorfax%>
-          <%end vendorfax%>
+          <?lsmb if vendorfax ?>
+          <br>Faks: <?lsmb vendorfax ?>
+          <?lsmb end vendorfax ?>
 
-          <%if email%>
-          <br><%email%>
-          <%end email%>
+          <?lsmb if email ?>
+          <br><?lsmb email ?>
+          <?lsmb end email ?>
 
-          <%if vendortaxnumber%>
-          <p>KÃ€ibemaksukohuslane NR: <%vendortaxnumber%>
-          <%end vendortaxnumber%>
+          <?lsmb if vendortaxnumber ?>
+          <p>KÃ€ibemaksukohuslane NR: <?lsmb vendortaxnumber ?>
+          <?lsmb end vendortaxnumber ?>
           </td>
    
 	  <td align=right>
 	    <table>
 	      <tr>
 		<th align=left nowrap>Arve NR. #</th>
-		<td><%invnumber%></td>
+		<td><?lsmb invnumber ?></td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>KuupÃ€ev</th>
-		<td><%invdate%></td>
+		<td><?lsmb invdate ?></td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>Tasuda</th>
-		<td><%duedate%></td>
+		<td><?lsmb duedate ?></td>
 	      </tr>
-	      <%if ponumber%>
+	      <?lsmb if ponumber ?>
               <tr>
                 <th align=left>Hanketellimus NR. #</th>
-		<td><%ponumber%>&nbsp;</td>
+		<td><?lsmb ponumber ?>&nbsp;</td>
 	      </tr>
-	      <%end ponumber%>
-	      <%if ordnumber%>
+	      <?lsmb end ponumber ?>
+	      <?lsmb if ordnumber ?>
 	      <tr>
 		<th align=left>Tellimus NR. #</th>
-		<td><%ordnumber%>&nbsp;</td>
+		<td><?lsmb ordnumber ?>&nbsp;</td>
 	      </tr>
-	      <%end ordnumber%>
+	      <?lsmb end ordnumber ?>
 	      <tr>
 		<th align=left nowrap>TÃ¶Ã¶taja</th>
-		<td><%employee%>&nbsp;</td>
+		<td><?lsmb employee ?>&nbsp;</td>
 	      </tr>
 	    </table>
 	  </td>
@@ -100,48 +100,48 @@
   
     <td>
       <table>
-	<%foreach account%>
+	<?lsmb foreach account ?>
 	<tr valign=top>
-	  <td><%accno%></td>
-	  <td><%account%></td>
+	  <td><?lsmb accno ?></td>
+	  <td><?lsmb account ?></td>
 	  <td width=10> </td>
-	  <td align=right><%amount%></td>
+	  <td align=right><?lsmb amount ?></td>
 	  <td width=10> </td>
-	  <td><%description%></td>
+	  <td><?lsmb description ?></td>
 	  <td width=10> </td>
-	  <td><%projectnumber%></td>
+	  <td><?lsmb projectnumber ?></td>
 	</tr>
-	<%end account%>
+	<?lsmb end account ?>
 
 	<tr>
-	  <%if taxincluded%>
+	  <?lsmb if taxincluded ?>
 	  <th colspan=2 align=right>Kokku</th>
 	  <td width=10> </td>
-	  <td align=right><%invtotal%></td>
-	  <%end taxincluded%>
+	  <td align=right><?lsmb invtotal ?></td>
+	  <?lsmb end taxincluded ?>
 
-	  <%if not taxincluded%>
+	  <?lsmb if not taxincluded ?>
 	  <th colspan=2 align=right>Vahesumma</th>
 	  <td width=10> </td>
-	  <td align=right><%subtotal%></td>
-	  <%end taxincluded%>
+	  <td align=right><?lsmb subtotal ?></td>
+	  <?lsmb end taxincluded ?>
 	</tr>
 
-	<%foreach tax%>
+	<?lsmb foreach tax ?>
 	<tr>
-	  <th colspan=2 align=right><%taxdescription%> @ <%taxrate%> %</th>
+	  <th colspan=2 align=right><?lsmb taxdescription ?> @ <?lsmb taxrate ?> %</th>
 	  <td width=10> </td>
-	  <td align=right><%tax%></td>
+	  <td align=right><?lsmb tax ?></td>
 	</tr>
-	<%end tax%>
+	<?lsmb end tax ?>
 	
-	<%if not taxincluded%>
+	<?lsmb if not taxincluded ?>
 	<tr>
 	  <th colspan=2 align=right>Kokku</th>
 	  <td width=10> </td>
-	  <td align=right><%invtotal%></td>
+	  <td align=right><?lsmb invtotal ?></td>
 	</tr>
-	<%end taxincluded%>
+	<?lsmb end taxincluded ?>
       </table>
     </td>
   </tr>
@@ -150,7 +150,7 @@
     <td>&nbsp;</td>
     
     <td>
-      <%text_amount%> ***** <%decimal%>/100 <%currency%>
+      <?lsmb text_amount ?> ***** <?lsmb decimal ?>/100 <?lsmb currency ?>
     </td>
   </tr>
 
@@ -158,11 +158,11 @@
     <td>&nbsp;</td>
 
     <td>
-      <%notes%>
+      <?lsmb notes ?>
     </td>
   </tr>
 
-  <%if paid_1%>
+  <?lsmb if paid_1 ?>
   <tr>
     <td>&nbsp;</td>
 
@@ -188,30 +188,30 @@
 		<th>Memo</th>
 		<th>Summa</th>
 	      </tr>
-  <%end paid_1%>
+  <?lsmb end paid_1 ?>
 
-        <%foreach payment%>
+        <?lsmb foreach payment ?>
 	      <tr>
-		<td><%paymentdate%></td>
-		<td><%paymentaccount%></td>
-		<td><%paymentsource%></td>
-		<td><%paymentmemo%></td>
-		<td align=right><%payment%></td>
+		<td><?lsmb paymentdate ?></td>
+		<td><?lsmb paymentaccount ?></td>
+		<td><?lsmb paymentsource ?></td>
+		<td><?lsmb paymentmemo ?></td>
+		<td align=right><?lsmb payment ?></td>
 	      </tr>
-        <%end payment%>
+        <?lsmb end payment ?>
 
-  <%if paid_1%>
+  <?lsmb if paid_1 ?>
 	    </table>
 	  </td>
         </tr>
       </table>
     </td>
   </tr>
-  <%end paid_1%>
+  <?lsmb end paid_1 ?>
 
   <tr height=10></tr>
 
-  <%if taxincluded%>
+  <?lsmb if taxincluded ?>
   <tr>
     <td>&nbsp;</td>
   </tr>
@@ -219,7 +219,7 @@
   <tr>
     <th colspan=3 align=left><font size=-2>Hinnad sisaldavad kÃ€ibemaksu.</th>
   </tr>
-  <%end taxincluded%>
+  <?lsmb end taxincluded ?>
 
 </table>
 

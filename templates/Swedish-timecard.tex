@@ -16,16 +16,16 @@
 
 \parbox{\textwidth}{%
   \parbox[b]{.42\textwidth}{%
-    <%company%>
+    <?lsmb company ?>
    
-    <%address%>
+    <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
     \includegraphics[scale=0.3]{ledger-smb}
   }\hfill
   \begin{tabular}[b]{rr@{}}
-  Tel: & <%tel%>\\
-  Fax: & <%fax%>
+  Tel: & <?lsmb tel ?>\\
+  Fax: & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5em]{\textwidth}{0.5pt}
@@ -36,35 +36,35 @@
 \vspace*{0.5cm}
 
 \begin{tabular}[t]{ll}
-  \textbf{Anstäld} & <%employee%> \\
-  \textbf{ID} & <%employee_id%> \\
+  \textbf{Anstäld} & <?lsmb employee ?> \\
+  \textbf{ID} & <?lsmb employee_id ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[t]{ll}
-  \textbf{Kort ID} & <%id%> \\
-  \textbf{Datum Arbetat} & <%transdate%> \\
-  \textbf{Tid In} & <%checkedin%> \\
-  \textbf{Tid ut} & <%checkedout%> \\
-  \textbf{Timmar Arbetat} & <%qty%> \\
+  \textbf{Kort ID} & <?lsmb id ?> \\
+  \textbf{Datum Arbetat} & <?lsmb transdate ?> \\
+  \textbf{Tid In} & <?lsmb checkedin ?> \\
+  \textbf{Tid ut} & <?lsmb checkedout ?> \\
+  \textbf{Timmar Arbetat} & <?lsmb qty ?> \\
 \end{tabular}
 
 \vspace{1cm}
 
 \begin{tabular}[b]{ll}
-  \textbf{Project/Jobb \#} & <%projectnumber%> \\
-  \textbf{Beskrivning} & <%projectdescription%> \\
-  \textbf{Arbete/Service kod} & <%partnumber%> \\
-  \textbf{Beskrivning} & <%description%> \\
+  \textbf{Project/Jobb \#} & <?lsmb projectnumber ?> \\
+  \textbf{Beskrivning} & <?lsmb projectdescription ?> \\
+  \textbf{Arbete/Service kod} & <?lsmb partnumber ?> \\
+  \textbf{Beskrivning} & <?lsmb description ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[b]{lr}
-  \textbf{Enhetspris} & <%sellprice%> \\
-  \textbf{Totalt} & <%total%> \\
+  \textbf{Enhetspris} & <?lsmb sellprice ?> \\
+  \textbf{Totalt} & <?lsmb total ?> \\
 \end{tabular}
   
 \vspace{0.3cm}
 
-<%notes%>
+<?lsmb notes ?>
  
 \end{document}
 

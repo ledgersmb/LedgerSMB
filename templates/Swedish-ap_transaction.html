@@ -1,17 +1,17 @@
 
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
   <tr>
     <td width=10>&nbsp;</td>
 
     <td>
-      <table width=100%>
+      <table width=100 ?>
         <tr>
           <td>
             <h4>
-            <%company%>
-        <br><%address%>
+            <?lsmb company ?>
+        <br><?lsmb address ?>
             </h4>
           </td>
 
@@ -19,8 +19,8 @@
 
           <td align=right>
             <h4>
-            Tel: <%tel%>
-        <br>Fax: <%fax%>
+            Tel: <?lsmb tel ?>
+        <br>Fax: <?lsmb fax ?>
             </h4>
           </td>
         </tr>
@@ -41,56 +41,56 @@
     <td>
       <table width=100% callspacing=0 cellpadding=0>
         <tr valign=top>
-          <td><%name%>
-          <br><%address1%>
-	  <%if address2%>
-          <br><%address2%>
-	  <%end address2%>
-          <br><%city%> <%state%> <%zipcode%>
-	  <%if country%>
-	  <br><%country%>
-	  <%end country%>
+          <td><?lsmb name ?>
+          <br><?lsmb address1 ?>
+	  <?lsmb if address2 ?>
+          <br><?lsmb address2 ?>
+	  <?lsmb end address2 ?>
+          <br><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+	  <?lsmb if country ?>
+	  <br><?lsmb country ?>
+	  <?lsmb end country ?>
           <br>
 
-          <%if contact%>
-          <br><%contact%>
+          <?lsmb if contact ?>
+          <br><?lsmb contact ?>
           <br>
-          <%end contact%>
+          <?lsmb end contact ?>
 
-          <%if customerphone%>
-          <br>Tel: <%customerphone%>
-          <%end customerphone%>
+          <?lsmb if customerphone ?>
+          <br>Tel: <?lsmb customerphone ?>
+          <?lsmb end customerphone ?>
 
-          <%if customerfax%>
-          <br>Fax: <%customerfax%>
-          <%end customerfax%>
+          <?lsmb if customerfax ?>
+          <br>Fax: <?lsmb customerfax ?>
+          <?lsmb end customerfax ?>
 
-          <%if email%>
-          <br><%email%>
-          <%end email%>
+          <?lsmb if email ?>
+          <br><?lsmb email ?>
+          <?lsmb end email ?>
           </td>
    
 	  <td align=right>
 	    <table>
 	      <tr>
 		<th align=left nowrap>Faktura #</th>
-		<td><%invnumber%></td>
+		<td><?lsmb invnumber ?></td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>Datum</th>
-		<td><%invdate%></td>
+		<td><?lsmb invdate ?></td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>Från</th>
-		<td><%duedate%></td>
+		<td><?lsmb duedate ?></td>
 	      </tr>
 	      <tr>
 		<th align=left>Order #</th>
-		<td><%ordnumber%>&nbsp;</td>
+		<td><?lsmb ordnumber ?>&nbsp;</td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>Arbetstagare</th>
-		<td><%employee%>&nbsp;</td>
+		<td><?lsmb employee ?>&nbsp;</td>
 	      </tr>
 	    </table>
 	  </td>
@@ -105,47 +105,47 @@
     <td>&nbsp;</td>
   
     <td>
-      <table width=100%>
+      <table width=100 ?>
         <tr valign=top>
-	  <td width=50%>
+	  <td width=50 ?>
 	    <table>
-	      <%foreach account%>
+	      <?lsmb foreach account ?>
 	      <tr valign=top>
-		<td><%accno%></td>
-		<td><%account%></td>
-		<td align=right><%amount%></td>
-		<td><%projectnumber%></td>
+		<td><?lsmb accno ?></td>
+		<td><?lsmb account ?></td>
+		<td align=right><?lsmb amount ?></td>
+		<td><?lsmb projectnumber ?></td>
 	      </tr>
-	      <%end account%>
+	      <?lsmb end account ?>
 
 	      <tr>
-		<%if taxincluded%>
+		<?lsmb if taxincluded ?>
 		<th colspan=2 align=right>Totalt</th>
-		<td align=right><%invtotal%></td>
-		<%end taxincluded%>
+		<td align=right><?lsmb invtotal ?></td>
+		<?lsmb end taxincluded ?>
 
-		<%if not taxincluded%>
+		<?lsmb if not taxincluded ?>
 		<th colspan=2 align=right>Totalt ink moms</th>
-		<td align=right><%subtotal%></td>
-		<%end taxincluded%>
+		<td align=right><?lsmb subtotal ?></td>
+		<?lsmb end taxincluded ?>
 	      </tr>
 
-	      <%foreach tax%>
+	      <?lsmb foreach tax ?>
 	      <tr>
-		<th colspan=2 align=right><%taxdescription%> @ <%taxrate%> %</th>
-		<td align=right><%tax%></td>
+		<th colspan=2 align=right><?lsmb taxdescription ?> @ <?lsmb taxrate ?> %</th>
+		<td align=right><?lsmb tax ?></td>
 	      </tr>
-	      <%end tax%>
+	      <?lsmb end tax ?>
 	      
-	      <%if not taxincluded%>
+	      <?lsmb if not taxincluded ?>
 		<th colspan=2 align=right>Totalt</th>
-		<td align=right><%invtotal%></td>
-	      <%end taxincluded%>
+		<td align=right><?lsmb invtotal ?></td>
+	      <?lsmb end taxincluded ?>
 
 	    </table>
 	  </td>
-	  <td width=50%>
-	    <%notes%>
+	  <td width=50 ?>
+	    <?lsmb notes ?>
 	  </td>
 	</tr>
       </table>
@@ -159,11 +159,11 @@
     <td>&nbsp;</td>
 
     <td>
-      <%text_amount%> ***** <%decimal%>/100 <%currency%>
+      <?lsmb text_amount ?> ***** <?lsmb decimal ?>/100 <?lsmb currency ?>
     </td>
   </tr>
 
-  <%if paid%>
+  <?lsmb if paid ?>
   <tr>
     <td>&nbsp;</td>
 
@@ -189,30 +189,30 @@
 		<th align=left>Not</th>
 		<th align=left>Värde</th>
 	      </tr>
-  <%end paid%>
+  <?lsmb end paid ?>
 
-        <%foreach payment%>
+        <?lsmb foreach payment ?>
 	      <tr>
-		<td><%paymentdate%></td>
-		<td><%paymentaccount%></td>
-		<td><%paymentsource%></td>
-		<td><%paymentmemo%></td>
-		<td><%payment%></td>
+		<td><?lsmb paymentdate ?></td>
+		<td><?lsmb paymentaccount ?></td>
+		<td><?lsmb paymentsource ?></td>
+		<td><?lsmb paymentmemo ?></td>
+		<td><?lsmb payment ?></td>
 	      </tr>
-        <%end payment%>
+        <?lsmb end payment ?>
 
-  <%if paid%>
+  <?lsmb if paid ?>
 	    </table>
 	  </td>
         </tr>
       </table>
     </td>
   </tr>
-  <%end paid%>
+  <?lsmb end paid ?>
 
   <tr height=10></tr>
 
-  <%if taxincluded%>
+  <?lsmb if taxincluded ?>
   <tr>
     <td>&nbsp;</td>
   </tr>
@@ -220,7 +220,7 @@
   <tr>
     <th colspan=3 align=left><font size=-2>Momsen är inkluderad i priset.</th>
   </tr>
-  <%end taxincluded%>
+  <?lsmb end taxincluded ?>
 
 </table>
 

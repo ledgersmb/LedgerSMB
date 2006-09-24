@@ -11,39 +11,39 @@
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
-<%include letterhead.tex%>
+<?lsmb include letterhead.tex ?>
 
 \parbox[t]{.5\textwidth}{
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%>
-<%if state%>
-\hspace{-0.1cm}, <%state%>
-<%end state%>
-<%zipcode%>
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 }
 \parbox[t]{.5\textwidth}{
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \hfill
 
 \vspace{1cm}
 
-\textbf{S T A T E M E N T} \hfill \textbf{<%statementdate%>}
+\textbf{S T A T E M E N T} \hfill \textbf{<?lsmb statementdate ?>}
 
 \vspace{2cm}
 
@@ -52,13 +52,13 @@ Fax: <%customerfax%>
   \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Due} &
   \textbf{Current} & \textbf{30} & \textbf{60} & \textbf{90} \\
   \hline
-<%foreach invnumber%>
-  <%invnumber%> & <%ordnumber%> & <%invdate%> & <%duedate%> &
-  <%c0%> & <%c30%> & <%c60%> & <%c90%> \\
-<%end invnumber%>
+<?lsmb foreach invnumber ?>
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?> & <?lsmb invdate ?> & <?lsmb duedate ?> &
+  <?lsmb c0 ?> & <?lsmb c30 ?> & <?lsmb c60 ?> & <?lsmb c90 ?> \\
+<?lsmb end invnumber ?>
   \multicolumn{8}{|l|}{\mbox{}} \\
   \hline
-  \textbf{Subtotal} & & & & <%c0total%> & <%c30total%> & <%c60total%> & <%c90total%> \\
+  \textbf{Subtotal} & & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?> \\
   \hline
 \end{tabular*}
 
@@ -66,13 +66,13 @@ Fax: <%customerfax%>
 
 \hfill
 \begin{tabularx}{\textwidth}{Xr@{\hspace{1cm}}r@{}}
-  & \textbf{Total outstanding} & \textbf{<%total%>}
+  & \textbf{Total outstanding} & \textbf{<?lsmb total ?>}
 \end{tabularx}
 
 \vfill
-All amounts in \textbf{<%currency%>} funds.
+All amounts in \textbf{<?lsmb currency ?>} funds.
 
-Please make check payable to \textbf{<%company%>}
+Please make check payable to \textbf{<?lsmb company ?>}
 
 \end{document}
 

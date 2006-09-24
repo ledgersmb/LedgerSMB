@@ -1,49 +1,49 @@
-<%company align=center width=40%>
-<%address align=center width=40%>
+<?lsmb company align=center width=40 ?>
+<?lsmb address align=center width=40 ?>
 
-Till: <%till align=left width=3%>         Phone#: <%tel%>
-Cashier: <%employee%>
-Inv No/Date: <%invnumber%> / <%invdate%>
-Printed: <%dateprinted%>
+Till: <?lsmb till align=left width=3 ?>         Phone#: <?lsmb tel ?>
+Cashier: <?lsmb employee ?>
+Inv No/Date: <?lsmb invnumber ?> / <?lsmb invdate ?>
+Printed: <?lsmb dateprinted ?>
 
   Qty Description                 Amount
-<%foreach number%>
-<%qty align=right width=5%> <%description align=left width=24 offset=6%> <%linetotal align=right width=9%>
-      <%number%> @ <%sellprice%>/<%unit%>
-<%end number%>
+<?lsmb foreach number ?>
+<?lsmb qty align=right width=5 ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width=9 ?>
+      <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
+<?lsmb end number ?>
 
-Number of items: <%rowcount%>
-<%if taxincluded%>
+Number of items: <?lsmb rowcount ?>
+<?lsmb if taxincluded ?>
                          ---------------
-                   Amount Due: <%invtotal align=right width=9%>
-<%end taxincluded%>
-<%if not taxincluded%>
+                   Amount Due: <?lsmb invtotal align=right width=9 ?>
+<?lsmb end taxincluded ?>
+<?lsmb if not taxincluded ?>
                             ------------
-                     Subtotal: <%subtotal align=right width=9%>
-<%end taxincluded%>
-<%foreach tax%>
-<%taxdescription align=right width=23%> @ <%taxrate align=right width=2%>%: <%tax align=right width=9%>
-<%end tax%>
-                   Amount Due: <%invtotal align=right width=9%>
-<%foreach payment%>
-<%paymentaccount align=right width=29%>: <%payment align=right width=9%> <%currency%>
-<%end payment%>
-<%if change%>
-                       Change: <%change align=right width=9%>
-<%end change%>
-<%if total%>
-                  Balance Due: <%total align=right width=9%>
-<%end total%>
-<%if discount%>
+                     Subtotal: <?lsmb subtotal align=right width=9 ?>
+<?lsmb end taxincluded ?>
+<?lsmb foreach tax ?>
+<?lsmb taxdescription align=right width=23 ?> @ <?lsmb taxrate align=right width=2 ?>%: <?lsmb tax align=right width=9 ?>
+<?lsmb end tax ?>
+                   Amount Due: <?lsmb invtotal align=right width=9 ?>
+<?lsmb foreach payment ?>
+<?lsmb paymentaccount align=right width=29 ?>: <?lsmb payment align=right width=9 ?> <?lsmb currency ?>
+<?lsmb end payment ?>
+<?lsmb if change ?>
+                       Change: <?lsmb change align=right width=9 ?>
+<?lsmb end change ?>
+<?lsmb if total ?>
+                  Balance Due: <?lsmb total align=right width=9 ?>
+<?lsmb end total ?>
+<?lsmb if discount ?>
 
-<%discount%> % Discount applied
-<%end discount%>
+<?lsmb discount ?> % Discount applied
+<?lsmb end discount ?>
 
    Thank you for your valued business!
 
-<%if taxincluded%>
+<?lsmb if taxincluded ?>
 Taxes are included in price.
-<%end taxincluded%>
+<?lsmb end taxincluded ?>
 
 
 

@@ -6,7 +6,7 @@
            <td>&nbsp; </td>
           <td align=right>
 
-<table width=50%>
+<table width=50 ?>
        <tr>
            <td align=right>
 <font size=1>
@@ -34,24 +34,24 @@
        <tr>
            <td>&nbsp; </td>
           <td colspan=3>
-            <h3>СЧЕТ-ФАКТУРА  N 000<%invnumber%>   от <%invdate%></h3>
+            <h3>СЧЕТ-ФАКТУРА  N 000<?lsmb invnumber ?>   от <?lsmb invdate ?></h3>
           </th>
         </tr>
   <tr>
     <td width=10>&nbsp;</td>
 
     <td>
-      <table width=100%>
+      <table width=100 ?>
         <tr>
           <td>
-            Продавец: <%company%>
-        <br>Адрес: <%address%>
+            Продавец: <?lsmb company ?>
+        <br>Адрес: <?lsmb address ?>
         <br>Идентификационный номер продавца (ИНН): &nbsp;
         <br>Грузоотправитель и его адрес: Он же
-        <br>Грузополучатель и его адрес: <%shiptoname%>
+        <br>Грузополучатель и его адрес: <?lsmb shiptoname ?>
         <br>К платежно-расчетному документу: &nbsp; от  &nbsp;
-        <br>Получатель: <%name%>
-        <br>Адрес: <%address1%>
+        <br>Получатель: <?lsmb name ?>
+        <br>Адрес: <?lsmb address1 ?>
         <br>Идентификационный номер покупателя (ИНН): &nbsp;
              </td>
         </tr>
@@ -66,7 +66,7 @@
     <td>
       <table border=1  width=100% cellpadding=2 cellspacing=0>
         <tr>
-          <td align=center width=90%><font size=1>Наименование товара (описание  выполненных работ, оказанных услуг)</font></td>
+          <td align=center width=90 ?><font size=1>Наименование товара (описание  выполненных работ, оказанных услуг)</font></td>
           <td align=center><font size=1>Еди- ница<br>из-<br>ме-<br>ре-<br>ния</font></td>
           <td align=center><font size=1>Ко-<br>ли-<br>чес-<br>тво</font></td>
           <td align=center><font size=1>Цена (тариф) за единицу измерения</font></td>
@@ -93,26 +93,26 @@
           <td align=center>11</td>
         </tr>
 
-        <%foreach number%>
+        <?lsmb foreach number ?>
         <tr valign=top>
-           <td><font size=1><%description%></font></td>
+           <td><font size=1><?lsmb description ?></font></td>
           <td align=center>шт.</td>
-          <td align=right><%qty%></td>
-          <td align=right><%sellprice%></td>
-          <td align=right><%linetotal%></td>
+          <td align=right><?lsmb qty ?></td>
+          <td align=right><?lsmb sellprice ?></td>
+          <td align=right><?lsmb linetotal ?></td>
           <td align=right>&nbsp;</td>
           <td align=right>&nbsp;</td>
           <td align=right>&nbsp;</td>
-          <td align=right><%linetotal%></td>
+          <td align=right><?lsmb linetotal ?></td>
           <td><font size=1>&nbsp;</font></td>
           <td align=right><font size=1>&nbsp;</font></td>
         </tr>
-        <%end number%>
+        <?lsmb end number ?>
 
         <tr>
           <th colspan=7 align=right>Всего к оплате</th>
           <td align=right>&nbsp;</td>
-          <td align=right><%subtotal%></td>
+          <td align=right><?lsmb subtotal ?></td>
           <td colspan=2>&nbsp;</td>
         </tr>
 
@@ -131,9 +131,9 @@
         <td>&nbsp; </td>
         <td>
 
-       <table width=100%>
+       <table width=100 ?>
          <tr>
-        <td width=50%>
+        <td width=50 ?>
 <nobr>Руководитель организации ____________________
  </td>
         <td align=right>

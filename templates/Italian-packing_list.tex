@@ -25,12 +25,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Tel & <%tel%>\\
-    Fac & <%fax%>
+    Tel & <?lsmb tel ?>\\
+    Fac & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -39,39 +39,39 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabular*}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
   \textbf{Numero} & \textbf{Descrizione} & \textbf{Quantita'} &
     \textbf{Unita'} & \textbf{Bin} \\
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddr1%>
+<?lsmb shiptoaddr1 ?>
 
-<%shiptoaddr2%>
+<?lsmb shiptoaddr2 ?>
 
-<%shiptoaddr3%>
+<?lsmb shiptoaddr3 ?>
 
-<%shiptoaddr4%>
+<?lsmb shiptoaddr4 ?>
 
 \vspace{3.5cm}
 
@@ -79,9 +79,9 @@
 
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Data} & <%invdate%> \\
-  \textbf{Numero} & <%invnumber%> \\
-  \textbf{Cliente} & <%customer_id%>
+  \textbf{Data} & <?lsmb invdate ?> \\
+  \textbf{Numero} & <?lsmb invnumber ?> \\
+  \textbf{Cliente} & <?lsmb customer_id ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -89,10 +89,10 @@
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rll@{}}
   \textbf{Codice} & \textbf{Descrizione} & \textbf{Quantita'} &
     \textbf{Unita'} & \textbf{Bin} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%bin%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb bin ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -101,9 +101,9 @@
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 

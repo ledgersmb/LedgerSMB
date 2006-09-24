@@ -25,12 +25,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Telefon & <%tel%>\\
-    Telefaks & <%fax%>
+    Telefon & <?lsmb tel ?>\\
+    Telefaks & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -39,32 +39,32 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Subtotal} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Ant.} &
     \textbf{Enhet} & \textbf{Pris} & \textbf{Rabatt} & \textbf{Sum} \\
-  & carried forward from page <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & carried forward from page <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
@@ -76,74 +76,74 @@
   \textbf{Til}
   \vspace{0.5cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{0.3cm}
 
-%<%if contact%>
-%Attn: <%contact%>
+%<?lsmb if contact ?>
+%Attn: <?lsmb contact ?>
 %\vspace{0.3cm}
-%<%end contact%>
+%<?lsmb end contact ?>
 \vspace{0.5cm}
 
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Faks: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Faks: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \parbox[t]{7.5cm}{
 \textbf{Leveringsadresse}
 \vspace{0.5cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%if shiptoaddress2%>
-<%shiptoaddress2%>
-<%end shiptoaddress2%>
+<?lsmb if shiptoaddress2 ?>
+<?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
 
-<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
 
-<%if shiptocountry%>
-<%shiptocountry%>
-<%end shiptocountry%>
-
-\vspace{0.3cm}
+<?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
 
 \vspace{0.3cm}
 
-<%if shiptocontact%>
-Attn: <%shiptocontact%>
 \vspace{0.3cm}
-<%end shiptocontact%>
 
-<%if shiptophone%>
-Tel.: <%shiptophone%>
-<%end shiptophone%>
+<?lsmb if shiptocontact ?>
+Attn: <?lsmb shiptocontact ?>
+\vspace{0.3cm}
+<?lsmb end shiptocontact ?>
 
-<%if shiptofax%>
-Faks: <%shiptofax%>
-<%end shiptofax%>
+<?lsmb if shiptophone ?>
+Tel.: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
 
-<%shiptoemail%>
+<?lsmb if shiptofax ?>
+Faks: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
+
+<?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -155,10 +155,10 @@ Faks: <%shiptofax%>
 \vspace{1cm}
 
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Dato} & <%invdate%> \\
-  \textbf{Fakturanr.} & <%invnumber%> \\
-  \textbf{Ordrenr.} & <%ordnumber%> \\
-  \textbf{Kontakt} & <%employee%>
+  \textbf{Dato} & <?lsmb invdate ?> \\
+  \textbf{Fakturanr.} & <?lsmb invnumber ?> \\
+  \textbf{Ordrenr.} & <?lsmb ordnumber ?> \\
+  \textbf{Kontakt} & <?lsmb employee ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -166,10 +166,10 @@ Faks: <%shiptofax%>
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Ant.} &
     \textbf{Enhet} & \textbf{Pris} & \textbf{Rabatt} & \textbf{Sum} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -180,44 +180,44 @@ Faks: <%shiptofax%>
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Subtotal} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%> on <%taxbase%> & <%tax%> \\
-<%end tax%>
-<%if paid%>
-  \textbf{Betalt} & - <%paid%> \\
-<%end paid%>
+  \textbf{Subtotal} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> on <?lsmb taxbase ?> & <?lsmb tax ?> \\
+<?lsmb end tax ?>
+<?lsmb if paid ?>
+  \textbf{Betalt} & - <?lsmb paid ?> \\
+<?lsmb end paid ?>
   \hline
-  \textbf{Skyldig} & \textbf{<%total%>} \\
+  \textbf{Skyldig} & \textbf{<?lsmb total ?>} \\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  Alle priser i \textbf{<%currency%>} valuta.
+  Alle priser i \textbf{<?lsmb currency ?>} valuta.
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 
 \vfill
 
-<%if paid%>
+<?lsmb if paid ?>
 \begin{tabularx}{10cm}{@{}lXlr@{}}
   \textbf{Innbetalinger} & & & \\
   \hline
   \textbf{Dato} & \textbf{Konto} & \textbf{Kilde} & \textbf{Sum} \\
-<%end paid%>
-<%foreach payment%>
-  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
-<%end payment%>
-<%if paid%>
+<?lsmb end paid ?>
+<?lsmb foreach payment ?>
+  <?lsmb paymentdate ?> & <?lsmb paymentaccount ?> & <?lsmb paymentsource ?> & <?lsmb payment ?> \\
+<?lsmb end payment ?>
+<?lsmb if paid ?>
 \end{tabularx}
-<%end paid%>
+<?lsmb end paid ?>
 
 \vspace{1cm}
 
@@ -226,12 +226,12 @@ Faks: <%shiptofax%>
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 \footnotetext[1]{\tiny
-Betalingen må betales innen <%terms%> dager fra fakturadato. Ved
+Betalingen må betales innen <?lsmb terms ?> dager fra fakturadato. Ved
 forsinket betaling belastes en månedlig rente på 1.5\% per måned,
-fra <%duedate%> inntil betalingen er fullstendig. Varer som returneres
+fra <?lsmb duedate ?> inntil betalingen er fullstendig. Varer som returneres
 belastes med 10\% returgebyr. Retur må forhåndsgodkjennes fra
-<%company%> før varene returneres. Retur må sendes forhåndsbetalt og
-må være forsikret. <%company%> er ikke ansvarlig for transportskader.
+<?lsmb company ?> før varene returneres. Retur må sendes forhåndsbetalt og
+må være forsikret. <?lsmb company ?> er ikke ansvarlig for transportskader.
 }
 
 \end{document}

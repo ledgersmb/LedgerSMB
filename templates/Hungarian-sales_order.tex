@@ -25,12 +25,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Telefon & <%tel%>\\
-    Fax & <%fax%>
+    Telefon & <?lsmb tel ?>\\
+    Fax & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -39,62 +39,62 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%ordnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 48%>
+<?lsmb pagebreak 65 27 48 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Részösszeg} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Részösszeg} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%ordnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Szám} & \textbf{Szöveges leírás} & \textbf{Menny.} &
     \textbf{egys.} & \textbf{Ár} & \textbf{Engedmény} & \textbf{Összeg} \\
-  & folytatás az elõzõ oldalról: <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & folytatás az elõzõ oldalról: <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{3.5cm}
 
 \textbf{V E V Õ} \parbox{0.3cm}{\hfill} \textbf{R E N D E L É S}
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Rendelés dátuma} & <%orddate%> \\
-<%if reqdate%>
-  \textbf{Leszállítás} & <%reqdate%> \\
-<%end reqdate%>
-  \textbf{Szám} & <%ordnumber%>
+  \textbf{Rendelés dátuma} & <?lsmb orddate ?> \\
+<?lsmb if reqdate ?>
+  \textbf{Leszállítás} & <?lsmb reqdate ?> \\
+<?lsmb end reqdate ?>
+  \textbf{Szám} & <?lsmb ordnumber ?>
 \end{tabular}
 
 \vspace{1cm}
@@ -102,10 +102,10 @@
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Szám} & \textbf{Szöveges leírás} & \textbf{Menny.} &
     \textbf{egys.} & \textbf{Ár} & \textbf{Engedmény} & \textbf{Összeg} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -116,24 +116,24 @@
 
 \hfill
 \begin{tabularx}{9cm}{Xr@{}}
-  \textbf{Nettó összeg} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%> alap <%taxbase%>  <%tax%>\\
-<%end tax%>
+  \textbf{Nettó összeg} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> alap <?lsmb taxbase ?>  <?lsmb tax ?>\\
+<?lsmb end tax ?>
   \hline
-  \textbf{Bruttó összeg} & \textbf{<%ordtotal%>}\\
+  \textbf{Bruttó összeg} & \textbf{<?lsmb ordtotal ?>}\\
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-%  All prices in \textbf{<%currency%>} funds.
+%  All prices in \textbf{<?lsmb currency ?>} funds.
 Az árak Forintban értendõk
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 

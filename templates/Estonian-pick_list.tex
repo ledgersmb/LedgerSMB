@@ -11,21 +11,21 @@
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
-<%include letterhead.tex%>
+<?lsmb include letterhead.tex ?>
 
  
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
   \textbf{Item} & \textbf{Number} & \textbf{Description} &
   \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
 
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 \vspace*{0.5cm}
 
@@ -37,32 +37,32 @@
 
 \parbox[t]{.5\textwidth}{
   
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%shiptoaddress2%>
+<?lsmb shiptoaddress2 ?>
 
-<%shiptocity%>
-<%if shiptostate%>
-\hspace{-0.1cm}, <%shiptostate%>
-<%end shiptostate%>
-<%shiptozipcode%>
+<?lsmb shiptocity ?>
+<?lsmb if shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?>
+<?lsmb end shiptostate ?>
+<?lsmb shiptozipcode ?>
 
-<%shiptocountry%>
+<?lsmb shiptocountry ?>
 }
 \parbox[t]{.5\textwidth}{
-  <%shiptocontact%>
+  <?lsmb shiptocontact ?>
 
-  <%if shiptophone%>
-  Tel: <%shiptophone%>
-  <%end shiptophone%>
+  <?lsmb if shiptophone ?>
+  Tel: <?lsmb shiptophone ?>
+  <?lsmb end shiptophone ?>
 
-  <%if shiptofax%>
-  Fax: <%shiptofax%>
-  <%end shiptofax%>
+  <?lsmb if shiptofax ?>
+  Fax: <?lsmb shiptofax ?>
+  <?lsmb end shiptofax ?>
 
-  <%shiptoemail%>
+  <?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -77,14 +77,14 @@
   \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
   & \textbf{Warehouse} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
   \hline
-  <%invnumber%> & <%ordnumber%>
-  <%if shippingdate%>
-  & <%shippingdate%>
-  <%end shippingdate%>
-  <%if not shippingdate%>
-  & <%transdate%>
-  <%end shippingdate%>
-  & <%employee%> & <%warehouse%> & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?>
+  <?lsmb if shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb end shippingdate ?>
+  <?lsmb if not shippingdate ?>
+  & <?lsmb transdate ?>
+  <?lsmb end shippingdate ?>
+  & <?lsmb employee ?> & <?lsmb warehouse ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
   
@@ -93,10 +93,10 @@
 \begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
   \textbf{Item} & \textbf{Number} & \textbf{Description} &
   \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
-<%foreach number%>
-  <%runningnumber%> & <%number%> & <%description%> &
-  <%qty%> & [\hspace{1cm}] & <%unit%> & <%bin%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> &
+  <?lsmb qty ?> & [\hspace{1cm}] & <?lsmb unit ?> & <?lsmb bin ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 

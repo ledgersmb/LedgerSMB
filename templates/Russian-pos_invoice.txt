@@ -1,48 +1,48 @@
-<%company align=center width=40%>
-<%address align=center width=40%>
+<?lsmb company align=center width=40 ?>
+<?lsmb address align=center width=40 ?>
 
- До: <%till align=left width=3%>        Тел: <%tel%>
+ До: <?lsmb till align=left width=3 ?>        Тел: <?lsmb tel ?>
 
-Продажи: <%employee%>
+Продажи: <?lsmb employee ?>
 
-<%invtime%><%invnumber align=right width=16%>
+<?lsmb invtime ?><?lsmb invnumber align=right width=16 ?>
 
   К-во Описание                  Сумма
-<%foreach number%>
-<%qty align=right width=5%> <%description align=left width=24 offset=6%> <%linetotal align=right width=9%>
-      <%number%> @ <%sellprice%>/<%unit%>
-<%end number%>
+<?lsmb foreach number ?>
+<?lsmb qty align=right width=5 ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width=9 ?>
+      <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
+<?lsmb end number ?>
 
-Всего товаров: <%totalqty%>
-<%if taxincluded%>
+Всего товаров: <?lsmb totalqty ?>
+<?lsmb if taxincluded ?>
                          ---------------
-                        Итого: <%invtotal align=right width=9%>
-<%end taxincluded%>
-<%if not taxincluded%>
+                        Итого: <?lsmb invtotal align=right width=9 ?>
+<?lsmb end taxincluded ?>
+<?lsmb if not taxincluded ?>
                             ------------
-                        Всего: <%subtotal align=right width=9%>
-<%end taxincluded%>
-<%foreach tax%>
-<%taxdescription align=right width=23%> @ <%taxrate align=right width=2%>%: <%tax align=right width=9%>
-<%end tax%>
-<%foreach payment%>
-                 Оплачено: <%payment align=right width=9%> <%currency%>
-<%end payment%>
-<%if change%>
-                 Изменить: <%change align=right width=9%>
-<%end change%>
-<%if total%>
-       Баланс оплаты: <%total align=right width=9%>
-<%end total%>
-<%if discount%>
+                        Всего: <?lsmb subtotal align=right width=9 ?>
+<?lsmb end taxincluded ?>
+<?lsmb foreach tax ?>
+<?lsmb taxdescription align=right width=23 ?> @ <?lsmb taxrate align=right width=2 ?>%: <?lsmb tax align=right width=9 ?>
+<?lsmb end tax ?>
+<?lsmb foreach payment ?>
+                 Оплачено: <?lsmb payment align=right width=9 ?> <?lsmb currency ?>
+<?lsmb end payment ?>
+<?lsmb if change ?>
+                 Изменить: <?lsmb change align=right width=9 ?>
+<?lsmb end change ?>
+<?lsmb if total ?>
+       Баланс оплаты: <?lsmb total align=right width=9 ?>
+<?lsmb end total ?>
+<?lsmb if discount ?>
 
-<%discount%> % скидка
-<%end discount%>
+<?lsmb discount ?> % скидка
+<?lsmb end discount ?>
 
    Спасибо за покупку!
 
-<%if taxincluded%>
+<?lsmb if taxincluded ?>
 Цена с учетом налогов.
-<%end taxincluded%>
+<?lsmb end taxincluded ?>
 
 

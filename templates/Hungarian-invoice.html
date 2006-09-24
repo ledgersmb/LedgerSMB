@@ -15,7 +15,7 @@
 
   <tr>
     <td align=right>
-    <!-- <%copysum%> -->
+    <!-- <?lsmb copysum ?> -->
     </td>
   </tr>
   <tr>
@@ -35,27 +35,27 @@
     <td>
     <table width=100% >
     <tr >
-      <th align=left width=50%>Eladó:</th>
-      <th align=left width=50%>Vevõ:</th> 
+      <th align=left width=50 ?>Eladó:</th>
+      <th align=left width=50 ?>Vevõ:</th> 
     </tr>
     <tr valign=top>
-      <td><%company%>
-      <br><%address%>
-      <br>Adószám:<%businessnumber%>
-      <br>tel:<%tel%>  
-      <br>fax:<%fax%>        
+      <td><?lsmb company ?>
+      <br><?lsmb address ?>
+      <br>Adószám:<?lsmb businessnumber ?>
+      <br>tel:<?lsmb tel ?>  
+      <br>fax:<?lsmb fax ?>        
       </td>
  
 
-      <td><%name%>
-      <br><%address1%>
-      <%if address2%>
-<br><%address2%>
-<%end address2%>
-      <br><%city%> <%state%> <%zipcode%>
-      <%if country%>
-<%country%>
-<%end country%>
+      <td><?lsmb name ?>
+      <br><?lsmb address1 ?>
+      <?lsmb if address2 ?>
+<br><?lsmb address2 ?>
+<?lsmb end address2 ?>
+      <br><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+      <?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
       </td>
       
     </tr>
@@ -68,7 +68,7 @@
 
 <tr>
 <td>
-    <table width=100%>
+    <table width=100 ?>
     <tr>
       <th>Fizetési mód</th>
       <th>Telj. dátuma</th>
@@ -79,13 +79,13 @@
       <th>Sorszám</th>
     </tr>
     <tr>
-    <td align=center><%shippingpoint%></td>
-    <td align=center><%invdate%></td>    
-    <td align=center><%crdate%></td>        
-    <td align=center><%duedate%></td>        
-    <td align=center><%ordnumber%></td>    
-    <td align=center><%employee%></td>    
-    <td align=center><font size=2><%invnumber%></font></td>    
+    <td align=center><?lsmb shippingpoint ?></td>
+    <td align=center><?lsmb invdate ?></td>    
+    <td align=center><?lsmb crdate ?></td>        
+    <td align=center><?lsmb duedate ?></td>        
+    <td align=center><?lsmb ordnumber ?></td>    
+    <td align=center><?lsmb employee ?></td>    
+    <td align=center><font size=2><?lsmb invnumber ?></font></td>    
     </tr>
     </table>
 <td>
@@ -112,28 +112,28 @@
       <th align=right>Bruttó összeg</th>
     </tr>
 
-<%foreach number%>
+<?lsmb foreach number ?>
     <tr valign=top>
-      <td align=center><%runningnumber%>.</td>
-      <td nowrap align=left><%number%></td>
-      <td nowrap align=left><%description%></td>
-      <td nowrap align=center><%bin%></td>
-      <td align=center><%qty%></td>
-      <td align=center><%unit%></td>
-      <td align=right><%netprice%></td>
-<!--      <td align=right><%discount%></td>  -->
-      <td align=right><%linetotal%></td>
-      <td align=right><%linetaxrate%></td>
-      <td align=right><%taxamount%></td>
-      <td align=right><%linetotal2%></td>
+      <td align=center><?lsmb runningnumber ?>.</td>
+      <td nowrap align=left><?lsmb number ?></td>
+      <td nowrap align=left><?lsmb description ?></td>
+      <td nowrap align=center><?lsmb bin ?></td>
+      <td align=center><?lsmb qty ?></td>
+      <td align=center><?lsmb unit ?></td>
+      <td align=right><?lsmb netprice ?></td>
+<!--      <td align=right><?lsmb discount ?></td>  -->
+      <td align=right><?lsmb linetotal ?></td>
+      <td align=right><?lsmb linetaxrate ?></td>
+      <td align=right><?lsmb taxamount ?></td>
+      <td align=right><?lsmb linetotal2 ?></td>
     </tr>
-<%end number%>
+<?lsmb end number ?>
 
 <!--
 you can also use netprice instead of sellprice if you
 don't want to show the discount
 netprice = sellprice - discount
-to show the percentage for a discount use <%discountrate%>
+to show the percentage for a discount use <?lsmb discountrate ?>
 -->
 
     <tr>
@@ -141,29 +141,29 @@ to show the percentage for a discount use <%discountrate%>
     </tr>
     
     <tr>
-<%if taxincluded%>
+<?lsmb if taxincluded ?>
       <th colspan=9 align=right>Total</th>
-      <td colspan=2 align=right><%invtotal%></td>
-<%end taxincluded%>
-<%if not taxincluded%>
+      <td colspan=2 align=right><?lsmb invtotal ?></td>
+<?lsmb end taxincluded ?>
+<?lsmb if not taxincluded ?>
       <th colspan=9 align=right>Nettó összesen</th>
-      <td colspan=2 align=right><%subtotal%></td>
-<%end taxincluded%>
+      <td colspan=2 align=right><?lsmb subtotal ?></td>
+<?lsmb end taxincluded ?>
     </tr>
 
-<%foreach tax%>
+<?lsmb foreach tax ?>
     <tr>
-      <th colspan=9 align=right>alap: <%taxbase%> ráta: <%taxrate%> %</th>
-      <td colspan=2 align=right><%tax%></td>
+      <th colspan=9 align=right>alap: <?lsmb taxbase ?> ráta: <?lsmb taxrate ?> %</th>
+      <td colspan=2 align=right><?lsmb tax ?></td>
     </tr>
-<%end tax%>
+<?lsmb end tax ?>
 
-<%if paid%>
+<?lsmb if paid ?>
     <tr>
       <th colspan=9 align=right>Fizetve</th>
-      <td colspan=2 align=right>- <%paid%></td>
+      <td colspan=2 align=right>- <?lsmb paid ?></td>
     </tr>
-<%end paid%>
+<?lsmb end paid ?>
 
     <tr>
       <td colspan=6>&nbsp;</td>
@@ -171,9 +171,9 @@ to show the percentage for a discount use <%discountrate%>
     </tr>
 
     <tr>
-<!--      <td colspan=6>Fizetési határidõ: <b><%terms%></b> nap</td> -->
+<!--      <td colspan=6>Fizetési határidõ: <b><?lsmb terms ?></b> nap</td> -->
       <th colspan=9 align=right>A számla végösszege:</th>
-      <th colspan=2 align=right><%total%>&nbsp;Ft</th>
+      <th colspan=2 align=right><?lsmb total ?>&nbsp;Ft</th>
     </tr>
 
     <tr>
@@ -188,12 +188,12 @@ to show the percentage for a discount use <%discountrate%>
   <td>
   <table width=100% >
     <tr valign=top>
-<%if notes%>
-      <td><b>Megjegyzés:</b>&nbsp;<%notes%></td>
+<?lsmb if notes ?>
+      <td><b>Megjegyzés:</b>&nbsp;<?lsmb notes ?></td>
       <td ></td>
-<%end notes%>
+<?lsmb end notes ?>
       <td align=right>
-<!--      All prices in <b><%currency%></b> Funds -->
+<!--      All prices in <b><?lsmb currency ?></b> Funds -->
       </td>
     </tr>
 
@@ -203,7 +203,7 @@ to show the percentage for a discount use <%discountrate%>
 
 <tr><td>&nbsp;</td></tr>
 
-<%if paid%>
+<?lsmb if paid ?>
 <tr>
   <td colspan=7>
     <table width=60% >
@@ -221,18 +221,18 @@ to show the percentage for a discount use <%discountrate%>
 	<th align=left>Bizonylatszám</th>
 	<th align=left>Összeg</th>
       </tr>
-<%end paid%>
+<?lsmb end paid ?>
 
-<%foreach payment%>
+<?lsmb foreach payment ?>
       <tr>
-        <td><%paymentdate%></td>
-	<td><%paymentaccount%></td>
-	<td><%paymentsource%></td>
-	<td><%payment%></td>
+        <td><?lsmb paymentdate ?></td>
+	<td><?lsmb paymentaccount ?></td>
+	<td><?lsmb paymentsource ?></td>
+	<td><?lsmb payment ?></td>
       </tr>
-<%end payment%>
+<?lsmb end payment ?>
 
-<%if paid%>
+<?lsmb if paid ?>
     </table>
   </td>
 </tr>
@@ -240,7 +240,7 @@ to show the percentage for a discount use <%discountrate%>
 <tr>
   <td>&nbsp;</td>
 </tr>
-<%end paid%>
+<?lsmb end paid ?>
 
 <tr>
   <th colspan=7>
@@ -255,7 +255,7 @@ to show the percentage for a discount use <%discountrate%>
   <table width=100% >
   <tr valign=top>
   <td><font size=-3>
-<%intnotes%>
+<?lsmb intnotes ?>
     </font>
 
     </td>
@@ -267,17 +267,17 @@ to show the percentage for a discount use <%discountrate%>
   </td>
 </tr>
 
-<%foreach tax%>
+<?lsmb foreach tax ?>
   <tr>
-<!--    <th colspan=7 align=left><font size=-2><%taxdescription%> Registration <%taxnumber%></th> -->
+<!--    <th colspan=7 align=left><font size=-2><?lsmb taxdescription ?> Registration <?lsmb taxnumber ?></th> -->
   </tr>
-<%end tax%>
+<?lsmb end tax ?>
 
-<%if taxincluded%>
+<?lsmb if taxincluded ?>
   <tr>
     <th colspan=7 align=left><font size=-2>Taxes shown are included in price.</th>
   </tr>
-<%end taxincluded%>
+<?lsmb end taxincluded ?>
 
 
 

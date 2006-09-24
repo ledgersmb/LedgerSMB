@@ -16,15 +16,15 @@
   \parbox{\textwidth}{
   \tiny
   \rule[1.5em]{\textwidth}{0.5pt}
-Payment due NET <%terms%> Days from date of Invoice. Interest on overdue amounts will acrue at the rate of 12\% per annum starting from <%duedate%> until paid in full. Items returned are subject to a 10\% restocking charge.
-A return authorization must be obtained from <%company%> before goods are returned. Returns must be shipped prepaid and properly insured.
-<%company%> will not be responsible for damages during transit.
+Payment due NET <?lsmb terms ?> Days from date of Invoice. Interest on overdue amounts will acrue at the rate of 12\% per annum starting from <?lsmb duedate ?> until paid in full. Items returned are subject to a 10\% restocking charge.
+A return authorization must be obtained from <?lsmb company ?> before goods are returned. Returns must be shipped prepaid and properly insured.
+<?lsmb company ?> will not be responsible for damages during transit.
   }
 }
 
-<%include letterhead.tex%>
+<?lsmb include letterhead.tex ?>
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabularx}
 
   \rule{\textwidth}{2pt}
@@ -33,18 +33,18 @@ A return authorization must be obtained from <%company%> before goods are return
 
   \hfill
   \begin{tabularx}{\textwidth}{Xr@{\hspace{1cm}}r@{}}
-  & Subtotal & <%sumcarriedforward%> \\
+  & Subtotal & <?lsmb sumcarriedforward ?> \\
   \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%invnumber%>}{<%company%>\hfill <%invnumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \begin{tabularx}{\textwidth}{@{}rlXlrlrrr@{}}
   \textbf{Pos} & \textbf{Number} & \textbf{Description} & & \textbf{Qt'y} &
     \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\ [0.5em]
-  & carried forward from page <%lastpage%> & & & & & & & <%sumcarriedforward%> \\ [0.5em]
-<%end pagebreak%>
+  & carried forward from page <?lsmb lastpage ?> & & & & & & & <?lsmb sumcarriedforward ?> \\ [0.5em]
+<?lsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
@@ -53,71 +53,71 @@ A return authorization must be obtained from <%company%> before goods are return
 \textbf{To}
 \vspace{0.3cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%>
-<%if state%>
-\hspace{-0.1cm}, <%state%>
-<%end state%>
-<%zipcode%>
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 
 \vspace{0.3cm}
 
-<%if contact%>
-<%contact%>
+<?lsmb if contact ?>
+<?lsmb contact ?>
 \vspace{0.2cm}
-<%end contact%>
+<?lsmb end contact ?>
 
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \parbox[t]{.5\textwidth}{
 \textbf{Ship To}
 \vspace{0.3cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%shiptoaddress2%>
+<?lsmb shiptoaddress2 ?>
 
-<%shiptocity%>
-<%if shiptostate%>
-\hspace{-0.1cm}, <%shiptostate%>
-<%end shiptostate%>
-<%shiptozipcode%>
+<?lsmb shiptocity ?>
+<?lsmb if shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?>
+<?lsmb end shiptostate ?>
+<?lsmb shiptozipcode ?>
 
-<%shiptocountry%>
+<?lsmb shiptocountry ?>
 
 \vspace{0.3cm}
 
-<%if shiptocontact%>
-<%shiptocontact%>
+<?lsmb if shiptocontact ?>
+<?lsmb shiptocontact ?>
 \vspace{0.2cm}
-<%end shiptocontact%>
+<?lsmb end shiptocontact ?>
 
-<%if shiptophone%>
-Tel: <%shiptophone%>
-<%end shiptophone%>
+<?lsmb if shiptophone ?>
+Tel: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
 
-<%if shiptofax%>
-Fax: <%shiptofax%>
-<%end shiptofax%>
+<?lsmb if shiptofax ?>
+Fax: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
 
-<%shiptoemail%>
+<?lsmb shiptoemail ?>
 }
 \hfill
 
@@ -132,8 +132,8 @@ Fax: <%shiptofax%>
   \textbf{Arve NR.} & \textbf{KuupÃ€ev} & \textbf{MaksetÃ€htaeg} & \textbf{Tellimus NR.}
   & \textbf{MÃŒÃŒja} & \textbf{Tarneaadress} & \textbf{Tarneviis} \\ [0.5em]
   \hline
-  <%invnumber%> & <%invdate%> & <%duedate%> & <%ordnumber%> & <%employee%>
-  & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb invnumber ?> & <?lsmb invdate ?> & <?lsmb duedate ?> & <?lsmb ordnumber ?> & <?lsmb employee ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
 
@@ -142,10 +142,10 @@ Fax: <%shiptofax%>
 \begin{tabularx}{\textwidth}{@{}rlXlrlrrr@{}}
   \textbf{AR.} & \textbf{Number} & \textbf{Kirjeldus} & & \textbf{Kogus} &
     \textbf{Ãhik} & \textbf{Hind} & \textbf{AlH \%} & \textbf{Summa} \\ [0.5em]
-<%foreach number%>
-  <%runningnumber%> & <%number%> & <%description%> & <%deliverydate%> &
-  <%qty%> & <%unit%> & <%sellprice%> & <%discountrate%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb deliverydate ?> &
+  <?lsmb qty ?> & <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discountrate ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 
@@ -156,44 +156,44 @@ Fax: <%shiptofax%>
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{\hspace{1cm}}r@{}}
-  & Subtotal & <%subtotal%> \\
-<%foreach tax%>
-  & <%taxdescription%> on <%taxbase%> & <%tax%> \\
-<%end tax%>
-<%if paid%>
-  & Paid & - <%paid%> \\
-<%end paid%>
+  & Subtotal & <?lsmb subtotal ?> \\
+<?lsmb foreach tax ?>
+  & <?lsmb taxdescription ?> on <?lsmb taxbase ?> & <?lsmb tax ?> \\
+<?lsmb end tax ?>
+<?lsmb if paid ?>
+  & Paid & - <?lsmb paid ?> \\
+<?lsmb end paid ?>
   \hline
-<%if total%>
-  & Balance Due & <%total%>
-<%end total%>
+<?lsmb if total ?>
+  & Balance Due & <?lsmb total ?>
+<?lsmb end total ?>
 \end{tabularx}
 
 \vspace{0.3cm}
 
-<%text_amount%> ***** <%decimal%>/100
+<?lsmb text_amount ?> ***** <?lsmb decimal ?>/100
 \hfill
-All prices in \textbf{<%currency%>}.
+All prices in \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%notes%>
+<?lsmb notes ?>
 }
 
 \vfill
 
-<%if paid_1%>
+<?lsmb if paid_1 ?>
 \begin{tabularx}{10cm}{@{}lXlr@{}}
   \textbf{Maksed} & & & \\
   \hline
   \textbf{KuupÃ€ev} & & \textbf{Alus} & \textbf{Summa} \\
-<%end paid_1%>
-<%foreach payment%>
-  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%payment%> \\
-<%end payment%>
-<%if paid_1%>
+<?lsmb end paid_1 ?>
+<?lsmb foreach payment ?>
+  <?lsmb paymentdate ?> & <?lsmb paymentaccount ?> & <?lsmb paymentsource ?> & <?lsmb payment ?> \\
+<?lsmb end payment ?>
+<?lsmb if paid_1 ?>
 \end{tabularx}
-<%end paid_1%>
+<?lsmb end paid_1 ?>
 
 \vspace{1cm}
 

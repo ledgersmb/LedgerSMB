@@ -28,34 +28,34 @@
 
 \parbox{\textwidth}{
   \parbox[b]{.42\textwidth}{%
-    <%company%>
+    <?lsmb company ?>
     
-    <%address%>
+    <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
     \includegraphics[scale=0.3]{ledger-smb}
   }\hfill
   \begin{tabular}[b]{rr@{}}
-  Telefon & <%tel%>\\
-  Fax & <%fax%>
+  Telefon & <?lsmb tel ?>\\
+  Fax & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5ex]{\textwidth}{0.5pt}
 }
 
  
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabularx}
 
 \newpage
 
-\markboth{<%company%>\hfill <%ordnumber%>}{<%company%>\hfill <%ordnumber%>}
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
   \textbf{Pos} & \textbf{Nummer} & \textbf{Beskrivning} & \textbf{Serie Nummer} & & \textbf{Antal} & \textbf{Ankommet} & & \textbf{Paket} \\
-<%end pagebreak%>
+<?lsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
@@ -65,37 +65,37 @@
 \textbf{From}
 \vspace{0.7cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if %address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if %address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country4%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country4 ?>
+<?lsmb end country ?>
 }
 \parbox[t]{.4\textwidth}{
 \textbf{Mottagare}
 \vspace{0.7cm}
 
-<%shiptoname%>
+<?lsmb shiptoname ?>
 
-<%shiptoaddress1%>
+<?lsmb shiptoaddress1 ?>
 
-<%if shiptoaddress2%>
-<%shiptoaddress2%>
-<%end shiptoaddress2%>
+<?lsmb if shiptoaddress2 ?>
+<?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
 
-<%shiptocity%> <%shiptostate%> <%shiptozipcode%>
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
 
-<%if shiptocountry%>
-<%shiptocountry%>
-<%end shiptocountry%>
+<?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
 }
 \hfill
 
@@ -108,24 +108,24 @@
 
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{Order \#} & \textbf{Datum} & \textbf{Kontakt}
-  <%if warehouse%>
+  <?lsmb if warehouse ?>
   & \textbf{Warehouse}
-  <%end warehouse%>
+  <?lsmb end warehouse ?>
   & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
   \hline
   
-  <%ordnumber%>
-  <%if shippingdate%>
-  & <%shippingdate%>
-  <%end shippingdate%>
-  <%if not shippingdate%>
-  & <%orddate%>
-  <%end shippingdate%>
-  & <%employee%>
-  <%if warehouse%>
-  & <%warehouse%>
-  <%end warehouse%>
-  & <%shippingpoint%> & <%shipvia%> \\
+  <?lsmb ordnumber ?>
+  <?lsmb if shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb end shippingdate ?>
+  <?lsmb if not shippingdate ?>
+  & <?lsmb orddate ?>
+  <?lsmb end shippingdate ?>
+  & <?lsmb employee ?>
+  <?lsmb if warehouse ?>
+  & <?lsmb warehouse ?>
+  <?lsmb end warehouse ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
   
@@ -134,10 +134,10 @@
 \begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
   \textbf{Pos} & \textbf{Nummer} & \textbf{Beskrivning} & \textbf{Serienummer} & & \textbf{Antal} & \textbf{Ankommet} & & \textbf{Box} \\
 
-<%foreach number%>
-  <%runningnumber%> & <%number%> & <%description%> & <%serialnumber%> &
-  <%deliverydate%> & <%qty%> & <%ship%> & <%unit%> & <%bin%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb serialnumber ?> &
+  <?lsmb deliverydate ?> & <?lsmb qty ?> & <?lsmb ship ?> & <?lsmb unit ?> & <?lsmb bin ?> \\
+<?lsmb end number ?>
 \end{tabularx}
 
 

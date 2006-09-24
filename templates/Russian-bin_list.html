@@ -1,17 +1,17 @@
 
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
   <tr>
     <td width=10>&nbsp;</td>
     
     <td>
-      <table width=100%>
+      <table width=100 ?>
 	<tr>
 	  <td>
 	    <h4>
-	    <%company%>
-	    <br><%address%>
+	    <?lsmb company ?>
+	    <br><?lsmb address ?>
 	    </h4>
 	  </td>
 	  
@@ -19,8 +19,8 @@
 
 	  <th align=right>
 	    <h4>
-	    Тел: <%tel%>
-	    <br>Факс: <%fax%>
+	    Тел: <?lsmb tel ?>
+	    <br>Факс: <?lsmb fax ?>
 	    </h4>
 	  </td>
 	</tr>
@@ -40,62 +40,62 @@
     <td>
       <table width=100% cellspacing=0 cellpadding=0>
 	<tr bgcolor=000000>
-	  <th align=left width=50%><font color=ffffff>От</th>
-	  <th align=left width=50%><font color=ffffff>Доставка в</th>
+	  <th align=left width=50 ?><font color=ffffff>От</th>
+	  <th align=left width=50 ?><font color=ffffff>Доставка в</th>
 	</tr>
 
 	<tr valign=top>
-	  <td><%name%>
-	  <br><%address1%>
-	  <%if address2%>
-<br><%address2%>
-<%end address2%>
-	  <br><%city%> <%state%> <%zipcode%>
-	  <%if country%>
-<%country%>
-<%end country%>
+	  <td><?lsmb name ?>
+	  <br><?lsmb address1 ?>
+	  <?lsmb if address2 ?>
+<br><?lsmb address2 ?>
+<?lsmb end address2 ?>
+	  <br><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+	  <?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 	  <br>
 
-	  <%if contact%>
-	  <br>Контакт: <%contact%>
-	  <%end contact%>
+	  <?lsmb if contact ?>
+	  <br>Контакт: <?lsmb contact ?>
+	  <?lsmb end contact ?>
 
-	  <%if vendorphone%>
-	  <br>Тел: <%vendorphone%>
-	  <%end vendorphone%>
+	  <?lsmb if vendorphone ?>
+	  <br>Тел: <?lsmb vendorphone ?>
+	  <?lsmb end vendorphone ?>
 
-	  <%if vendorfax%>
-	  <br>Факс: <%vendorfax%>
-	  <%end vendorfax%>
+	  <?lsmb if vendorfax ?>
+	  <br>Факс: <?lsmb vendorfax ?>
+	  <?lsmb end vendorfax ?>
 
-	  <%if email%>
-	  <br><%email%>
-	  <%end email%>
+	  <?lsmb if email ?>
+	  <br><?lsmb email ?>
+	  <?lsmb end email ?>
 	  
 	  </td>
 	  
-	  <td><%shiptoname%>
-	  <br><%shiptoaddress1%>
-	  <%if shiptoaddress2%>
-<br><%shiptoaddress2%>
-<%end shiptoaddress2%>
-	  <br><%shiptocity%> <%shiptostate%> <%shiptozipcode%>
-	  <%if shiptocountry%>
-<%shiptocountry%>
-<%end shiptocountry%>
+	  <td><?lsmb shiptoname ?>
+	  <br><?lsmb shiptoaddress1 ?>
+	  <?lsmb if shiptoaddress2 ?>
+<br><?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
+	  <br><?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
+	  <?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
 
 	  <br>
-	  <%if shiptocontact%>
-	  <br>Контакт: <%shiptocontact%>
-	  <%end shiptocontact%>
+	  <?lsmb if shiptocontact ?>
+	  <br>Контакт: <?lsmb shiptocontact ?>
+	  <?lsmb end shiptocontact ?>
 	  
-	  <%if shiptophone%>
-	  <br>Тел: <%shiptophone%>
-	  <%end shiptophone%>
+	  <?lsmb if shiptophone ?>
+	  <br>Тел: <?lsmb shiptophone ?>
+	  <?lsmb end shiptophone ?>
 
-	  <%if shiptofax%>
-	  <br>Факс: <%shiptofax%>
-	  <%end shiptofax%>
+	  <?lsmb if shiptofax ?>
+	  <br>Факс: <?lsmb shiptofax ?>
+	  <?lsmb end shiptofax ?>
 	  </td>
 	</tr>
       </table>
@@ -114,32 +114,32 @@
 	  <th width=17% align=left nowrap>Дата доставки</th>
 	  <th width=17% align=left nowrap>Дата заказа</th>
 	  <th width=17% align=left nowrap>Контакт</th>
-	  <%if warehouse%>
+	  <?lsmb if warehouse ?>
 	  <th width=17% align=left nowrap>Склад</th>
-	  <%end warehouse%>
+	  <?lsmb end warehouse ?>
 	  <th width=17% align=left>Доставка в</th>
 	  <th width=15% align=left>Доставка через</th>
 	</tr>
 
 	<tr>
-	  <td><%ordnumber%>&nbsp;</td>
+	  <td><?lsmb ordnumber ?>&nbsp;</td>
 	  
-	  <%if shippingdate%>
-	  <td><%shippingdate%></td>
-	  <%end shippingdate%>
+	  <?lsmb if shippingdate ?>
+	  <td><?lsmb shippingdate ?></td>
+	  <?lsmb end shippingdate ?>
 	  
-	  <%if not shippingdate%>
-	  <td><%orddate%></td>
-	  <%end shippingdate%>
+	  <?lsmb if not shippingdate ?>
+	  <td><?lsmb orddate ?></td>
+	  <?lsmb end shippingdate ?>
 	  
-	  <td><%employee%>&nbsp;</td>
+	  <td><?lsmb employee ?>&nbsp;</td>
 
-	  <%if warehouse%>
-	  <td><%warehouse%></td>
-	  <%end warehouse%>
+	  <?lsmb if warehouse ?>
+	  <td><?lsmb warehouse ?></td>
+	  <?lsmb end warehouse ?>
   
-	  <td><%shippingpoint%>&nbsp;</td>
-	  <td><%shipvia%>&nbsp;</td>
+	  <td><?lsmb shippingpoint ?>&nbsp;</td>
+	  <td><?lsmb shipvia ?>&nbsp;</td>
 	</tr>
       </table>
     </td>
@@ -149,7 +149,7 @@
     <td>&nbsp;</td>
 
     <td>
-      <table width=100%>
+      <table width=100 ?>
 	<tr bgcolor=000000>
 	  <th align=left><font color=ffffff>Поз.</th>
 	  <th align=left><font color=ffffff>Код</th>
@@ -162,19 +162,19 @@
 	  <th><font color=ffffff>"Bin"</th>
 	</tr>
 
-	<%foreach number%>
+	<?lsmb foreach number ?>
 	<tr valign=top>
-	  <td><%runningnumber%></td>
-	  <td><%number%></td>
-	  <td><%description%></td>
-	  <td><%serialnumber%></td>
-	  <td><%deliverydate%></td>
-	  <td align=right><%qty%></td>
-	  <td align=right><%ship%></td>
-	  <td><%unit%></td>
-	  <td><%bin%></td>
+	  <td><?lsmb runningnumber ?></td>
+	  <td><?lsmb number ?></td>
+	  <td><?lsmb description ?></td>
+	  <td><?lsmb serialnumber ?></td>
+	  <td><?lsmb deliverydate ?></td>
+	  <td align=right><?lsmb qty ?></td>
+	  <td align=right><?lsmb ship ?></td>
+	  <td><?lsmb unit ?></td>
+	  <td><?lsmb bin ?></td>
 	</tr>
-	<%end number%>
+	<?lsmb end number ?>
 
       </table>
     </td>

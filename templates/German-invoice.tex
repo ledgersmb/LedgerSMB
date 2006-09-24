@@ -25,12 +25,12 @@
 
   \parbox{\textwidth}{
     \parbox[b]{12cm}{
-      <%company%>
+      <?lsmb company ?>
       
-      <%address%>}\hfill
+      <?lsmb address ?>}\hfill
     \begin{tabular}[b]{rr@{}}
-    Telefon & <%tel%>\\
-    Telefax & <%fax%>
+    Telefon & <?lsmb tel ?>\\
+    Telefax & <?lsmb fax ?>
     \end{tabular}
 
     \rule[1.5ex]{\textwidth}{0.5pt}
@@ -39,59 +39,59 @@
     
 \fontfamily{cmss}\fontshape{n}\selectfont
 
-\markboth{<%company%>\hfill <%invnumber%>}{\usebox{\hdr}}
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
 
 \pagestyle{myheadings}
 %\thispagestyle{empty}     use this with letterhead paper
 
-<%pagebreak 65 27 37%>
+<?lsmb pagebreak 65 27 37 ?>
 \end{tabular*}
 
   \rule{\textwidth}{2pt}
   
   \hfill
   \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Subtotal} & \textbf{<%sumcarriedforward%>} \\
+  \textbf{Subtotal} & \textbf{<?lsmb sumcarriedforward ?>} \\
   \end{tabularx}
 
 \newpage
 
-\markright{<%company%>\hfill <%invnumber%>}
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{-12pt}
 
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Nummer} & \textbf{Artikel} & \textbf{Anz} &
     \textbf{Einh} & \textbf{Preis} & \textbf{Rab} & \textbf{Total} \\
-  & Übertrag von Seite <%lastpage%> & & & & & <%sumcarriedforward%> \\
-<%end pagebreak%>
+  & Übertrag von Seite <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
 
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
 \vspace*{2cm}
 
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%if address2%>
-<%address2%>
-<%end address2%>
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%if country%>
-<%country%>
-<%end country%>
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
 
 \vspace{3.5cm}
 
 \textbf{R E C H N U N G}
 \hfill
 \begin{tabular}[t]{l@{\hspace{0.3cm}}l}
-  \textbf{Datum} & <%invdate%> \\
-  \textbf{Nummer} & <%invnumber%> \\
+  \textbf{Datum} & <?lsmb invdate ?> \\
+  \textbf{Nummer} & <?lsmb invnumber ?> \\
 \end{tabular}
 
 \vspace{1cm}
@@ -99,10 +99,10 @@
 \begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
   \textbf{Nummer} & \textbf{Artikel} & \textbf{Anz} &
     \textbf{Einh} & \textbf{Preis} & \textbf{Rab} & \textbf{Total} \\
-<%foreach number%>
-  <%number%> & <%description%> & <%qty%> &
-    <%unit%> & <%sellprice%> & <%discount%> & <%linetotal%> \\
-<%end number%>
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
 \end{tabular*}
 
 
@@ -113,30 +113,30 @@
 
 \hfill
 \begin{tabularx}{7cm}{Xr@{}}
-  \textbf{Zwischensumme} & \textbf{<%subtotal%>} \\
-<%foreach tax%>
-  <%taxdescription%> auf <%taxbase%> & <%tax%> \\
-<%end tax%>
+  \textbf{Zwischensumme} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> auf <?lsmb taxbase ?> & <?lsmb tax ?> \\
+<?lsmb end tax ?>
   \hline
-  \textbf{Total} & \textbf{<%invtotal%>} \\
-<%if paid%>
-  \textbf{Bezahlt} & <%paid%> \\
-<%end paid%>
-<%if total%>
-  \textbf{Bezahlbar} & \textbf{<%total%>} \\
-<%end total%>
+  \textbf{Total} & \textbf{<?lsmb invtotal ?>} \\
+<?lsmb if paid ?>
+  \textbf{Bezahlt} & <?lsmb paid ?> \\
+<?lsmb end paid ?>
+<?lsmb if total ?>
+  \textbf{Bezahlbar} & \textbf{<?lsmb total ?>} \\
+<?lsmb end total ?>
 \end{tabularx}
 
 \vspace{0.3cm}
 
 \hfill
-  Alle Preise in \textbf{<%currency%>}.
+  Alle Preise in \textbf{<?lsmb currency ?>}.
 
 \vspace{12pt}
 
-<%if notes%>
-  <%notes%>
-<%end if%>
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
 
 }
 
@@ -146,10 +146,10 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 \footnotetext[1]{\tiny
-Rechnung ist bezahlbar innerhalb von <%terms%> Tagen.
-Nach dem <%duedate%> werden Zinsen zu einem
+Rechnung ist bezahlbar innerhalb von <?lsmb terms ?> Tagen.
+Nach dem <?lsmb duedate ?> werden Zinsen zu einem
 monatlichen Satz von 1.5\% verrechnet.
-Waren bleiben im Besitz von <%company%> bis die Rechnung voll bezahlt ist.
+Waren bleiben im Besitz von <?lsmb company ?> bis die Rechnung voll bezahlt ist.
 Rückgaben werden mit 10 Prozent Lagergebühren belastet. Beschädigte Waren
 und Waren ohne eine Rückgabenummer werden nicht entgegengenommen.
 }

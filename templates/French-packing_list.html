@@ -4,25 +4,25 @@ CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
 
 <head>
 
-<title>A2A <%invnumber%> <%name%></title>
+<title>A2A <?lsmb invnumber ?> <?lsmb name ?></title>
 <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-15">
 
 </head>
 
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
 <tr>
   <td width=10>
   </td> 
   <td>
   
-  <table width=100%>
+  <table width=100 ?>
   <tr>
     <td>
       <h4>
-      <%company%>
-      <br><%address%>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
       </h4>
     </td>
 
@@ -40,11 +40,11 @@ CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
     <td align=right>
     <table>
     <tr>
-      <th align=right>Date de facture&nbsp;:</th><td width=10> </td><td><%invdate%></td>
+      <th align=right>Date de facture&nbsp;:</th><td width=10> </td><td><?lsmb invdate ?></td>
     </tr>
   
     <tr>
-      <th align=right>Numéro de facture&nbsp;:</th><td></td><td><%invnumber%></td></tr>
+      <th align=right>Numéro de facture&nbsp;:</th><td></td><td><?lsmb invnumber ?></td></tr>
     </tr>
   
     <tr>
@@ -57,16 +57,16 @@ CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
 
   <tr>
     <td>
-    <table width=100%>
+    <table width=100 ?>
     <tr bgcolor=000000>
       <th align=left><font color=ffffff>Adresse d'envoi</th>
     </tr>
 
     <tr>
-      <td><%shiptoname%>
-      <br><%shiptoaddr1%>
-      <br><%shiptoaddr2%>
-      <br><%shiptoaddr3%>
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddr1 ?>
+      <br><?lsmb shiptoaddr2 ?>
+      <br><?lsmb shiptoaddr3 ?>
       </td>
     </tr>
     </table>
@@ -80,7 +80,7 @@ CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
   
   <tr>
     <td>
-    <table width=100%>
+    <table width=100 ?>
     <tr bgcolor=000000>
       <th align=left><font color=ffffff>N°</th>
       <th align=left><font color=ffffff>Description</th>
@@ -88,14 +88,14 @@ CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
       <th>&nbsp;</th>
     </tr>
 
-<%foreach number%>
+<?lsmb foreach number ?>
     <tr valign=top>
-      <td><%number%></td>
-      <td><%description%></td>
-      <td align=center><%qty%></td>
-      <td><%unit%></td>
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=center><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
     </tr>
-<%end number%>
+<?lsmb end number ?>
 
     <tr>
       <td colspan=4><hr noshade></td>
@@ -107,14 +107,14 @@ CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
 
 <tr>
   <td>
-  <table width=100%>
+  <table width=100 ?>
     <tr valign=top>
-<%if notes%>
+<?lsmb if notes ?>
       <td>À noter&nbsp;:</td>
-      <td><pre><%notes%></pre></td>
-<%end notes%>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
       <td align=right><b>EXPÉDIÉ PAR&nbsp;: 
-      <%shippingpoint%></b>
+      <?lsmb shippingpoint ?></b>
       </td>
     </tr>
 
@@ -124,14 +124,14 @@ CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
 
 <tr>
   <td>
-  <table width=100%>
+  <table width=100 ?>
   <tr valign=top>
     <td><font size=-3><!--
     Conditions d'envoi :
     Items returned are subject to
     a 10% restocking charge. A return authorization must be obtained
-    from <%company%> before goods are returned. Returns must be shipped
-    prepaid and properly insured. <%company%> will not be responsible
+    from <?lsmb company ?> before goods are returned. Returns must be shipped
+    prepaid and properly insured. <?lsmb company ?> will not be responsible
     for damages during transit. -->
     </font>
     </td>

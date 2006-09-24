@@ -1,8 +1,8 @@
 <body bgcolor=ffffff>
 
-<table width=100%>
+<table width=100 ?>
 
-  <%include letterhead.html%>
+  <?lsmb include letterhead.html ?>
   
   <tr>
     <td width=10>&nbsp;</td>
@@ -22,11 +22,11 @@
 	    <table>
 	      <tr>
 		<th align=left>TÃ¶Ã¶taja</th>
-		<td><%employee%></td>
+		<td><?lsmb employee ?></td>
 	      </tr>
 	      <tr>
 		<th align=left>TÃ¶Ã¶taja Kood</th>
-		<td><%employee_id%></td>
+		<td><?lsmb employee_id ?></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -35,23 +35,23 @@
 	    <table>
 	      <tr>
 		<th align=left nowrap>Kaardi Kood</th>
-		<td><%id%></td>
+		<td><?lsmb id ?></td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>KuupÃ€ev</th>
-		<td><%transdate%></td>
+		<td><?lsmb transdate ?></td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>Algus</th>
-		<td><%checkedin%></td>
+		<td><?lsmb checkedin ?></td>
 	      </tr>
               <tr>
                 <th align=left>LÃµpp</th>
-		<td><%checkedout%></td>
+		<td><?lsmb checkedout ?></td>
 	      </tr>
 	      <tr>
 		<th align=left nowrap>Tundi</th>
-		<td><%qty%></td>
+		<td><?lsmb qty ?></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -66,25 +66,25 @@
     <td>&nbsp;</td>
   
     <td>
-      <table width=100%>
+      <table width=100 ?>
         <tr valign=bottom>
 	  <td>
 	    <table>
 	      <tr valign=top>
 	        <th align=left>TÃ¶Ã¶ÃŒlesanne/Projekt #</th>
-		<td><%projectnumber%></td>
+		<td><?lsmb projectnumber ?></td>
 	      </tr>
 	      <tr>
 	        <th align=left>Kirjeldus</th>
-		<td><%projectdescription%></td>
+		<td><?lsmb projectdescription ?></td>
 	      </tr>
 	      <tr valign=top>
 	        <th align=left>TÃ¶Ã¶/Teenuse Kood</th>
-		<td><%partnumber%></td>
+		<td><?lsmb partnumber ?></td>
 	      </tr>
 	      <tr>
 	        <th align=left>Kirjeldus</th>
-		<td><%description%></td>
+		<td><?lsmb description ?></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -92,11 +92,11 @@
 	    <table>
 	      <tr>
 	        <th align=right>Tariif</th>
-		<td><%sellprice%></td>
+		<td><?lsmb sellprice ?></td>
 	      </tr>
 	      <tr>
 		<th align=right>Kokku</th>
-		<td><%total%></td>
+		<td><?lsmb total ?></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -105,17 +105,17 @@
     </td>
   </tr>
 
-  <%if notes%>
+  <?lsmb if notes ?>
   <tr height=5></tr>
   
   <tr>
     <td>&nbsp;</td>
 
     <td>
-      <%notes%>
+      <?lsmb notes ?>
     </td>
   </tr>
-  <%end notes%>
+  <?lsmb end notes ?>
 
 </table>
 

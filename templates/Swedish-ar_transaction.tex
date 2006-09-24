@@ -28,16 +28,16 @@
 
 \parbox{\textwidth}{%
   \parbox[b]{.42\textwidth}{%
-    <%company%>
+    <?lsmb company ?>
    
-    <%address%>
+    <?lsmb address ?>
   }
   \parbox[b]{.2\textwidth}{
     \includegraphics[scale=0.3]{ledger-smb}
   }\hfill
   \begin{tabular}[b]{rr@{}}
-  Telefon & <%tel%>\\
-  Fax & <%fax%>
+  Telefon & <?lsmb tel ?>\\
+  Fax & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5em]{\textwidth}{0.5pt}
@@ -48,84 +48,84 @@
 \vspace*{0.5cm}
 
 \parbox[t]{.5\textwidth}{
-<%name%>
+<?lsmb name ?>
 
-<%address1%>
+<?lsmb address1 ?>
 
-<%address2%>
+<?lsmb address2 ?>
 
-<%city%> <%state%> <%zipcode%>
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
 
-<%country%>
+<?lsmb country ?>
 
 \vspace{0.3cm}
 
-<%if contact%>
-<%contact%>
-<%end contact%>
+<?lsmb if contact ?>
+<?lsmb contact ?>
+<?lsmb end contact ?>
 
 \vspace{0.2cm}
 
-<%if customerphone%>
-Tel: <%customerphone%>
-<%end customerphone%>
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
 
-<%if customerfax%>
-Fax: <%customerfax%>
-<%end customerfax%>
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
 
-<%email%>
+<?lsmb email ?>
 }
 \hfill
 \begin{tabular}[t]{ll}
-  \textbf{Lagernr \#} & <%invnumber%> \\
-  \textbf{Datum} & <%invdate%> \\
-  \textbf{Från} & <%duedate%> \\
-  \textbf{Order \#} & <%ordnumber%> \\
-  \textbf{Utförare} & <%employee%> \\
+  \textbf{Lagernr \#} & <?lsmb invnumber ?> \\
+  \textbf{Datum} & <?lsmb invdate ?> \\
+  \textbf{Från} & <?lsmb duedate ?> \\
+  \textbf{Order \#} & <?lsmb ordnumber ?> \\
+  \textbf{Utförare} & <?lsmb employee ?> \\
 \end{tabular}
 
 \vspace{1cm}
 
 \begin{tabularx}{.5\textwidth}[t]{@{}llrl@{}}
-<%foreach amount%>
-  <%accno%> & <%account%> & <%amount%> & <%projectnumber%> \\
-<%end amount%>
+<?lsmb foreach amount ?>
+  <?lsmb accno ?> & <?lsmb account ?> & <?lsmb amount ?> & <?lsmb projectnumber ?> \\
+<?lsmb end amount ?>
 
-  \multicolumn{2}{r}{\textbf{Pris Totalt}} & <%subtotal%> & \\
-<%foreach tax%>
-  \multicolumn{2}{r}{\textbf{<%taxdescription%> @ <%taxrate%> \%}} & <%tax%> & \\
-<%end tax%>
+  \multicolumn{2}{r}{\textbf{Pris Totalt}} & <?lsmb subtotal ?> & \\
+<?lsmb foreach tax ?>
+  \multicolumn{2}{r}{\textbf{<?lsmb taxdescription ?> @ <?lsmb taxrate ?> \%}} & <?lsmb tax ?> & \\
+<?lsmb end tax ?>
 
-  \multicolumn{2}{r}{\textbf{Total}} & <%invtotal%> & \\
+  \multicolumn{2}{r}{\textbf{Total}} & <?lsmb invtotal ?> & \\
   
 \end{tabularx}
-<%notes%>
+<?lsmb notes ?>
 
 \vspace{0.3cm}
 
-<%text_amount%> ***** <%decimal%>/100 <%currency%>
+<?lsmb text_amount ?> ***** <?lsmb decimal ?>/100 <?lsmb currency ?>
 
 \vspace{0.3cm}
 
-<%if paid%>
+<?lsmb if paid ?>
 \begin{tabular}{@{}llllr@{}}
   \multicolumn{5}{c}{\textbf{Betalningar}} \\
   \hline
   \textbf{Datum} & & \textbf{Från} & \textbf{Not} & \textbf{Summa} \\
-<%end paid%>
-<%foreach payment%>
-  <%paymentdate%> & <%paymentaccount%> & <%paymentsource%> & <%paymentmemo%> & <%payment%> \\
-<%end payment%>
-<%if paid%>
+<?lsmb end paid ?>
+<?lsmb foreach payment ?>
+  <?lsmb paymentdate ?> & <?lsmb paymentaccount ?> & <?lsmb paymentsource ?> & <?lsmb paymentmemo ?> & <?lsmb payment ?> \\
+<?lsmb end payment ?>
+<?lsmb if paid ?>
 \end{tabular}
-<%end paid%>
+<?lsmb end paid ?>
 
 \vspace{0.5cm}
 
-<%foreach tax%>
-\textbf{\small{<%taxdescription%> Registrering <%taxnumber%>}} \\
-<%end tax%>
+<?lsmb foreach tax ?>
+\textbf{\small{<?lsmb taxdescription ?> Registrering <?lsmb taxnumber ?>}} \\
+<?lsmb end tax ?>
   
 \end{document}
 
