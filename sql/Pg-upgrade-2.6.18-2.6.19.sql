@@ -110,3 +110,13 @@ SET DEFAULT nextval('audit_trail_entry_id_seq');
 
 UPDATE audit_trail SET entry_id = nextval('audit_trail_entry_id_seq');
 ALTER TABLE audit_trail ADD PRIMARY KEY (entry_id);
+
+LOCK shipto IN EXCLUSIVE MODE;
+ALTER TABLE shipto ADD COLUMN entry_id int;
+CREATE SEQUENCE shipto_entry_id_seq ;
+
+ALTER TABLE shipto ALTER COLUMN entry_id 
+SET DEFAULT nextval('shipto_entry_id_seq');
+
+UPDATE shipto SET entry_id = nextval('shipto_entry_id_seq');
+ALTER TABLE shipto ADD PRIMARY KEY (entry_id);
