@@ -1331,10 +1331,10 @@ sub get_custom_queries {
 			$query .= " FROM $_";
 		}
 		if ($query_type eq 'SELECT' or $query_type eq 'UPDATE'){
-			$query .= " WHERE field_id = ?";
+			$query .= " WHERE row_id = ?";
 		}
 		if ($query_type eq 'INSERT'){
-			$query .= " field_id) VALUES ($ins_values ?)";
+			$query .= " row_id) VALUES ($ins_values ?)";
 		}
 		if ($query_type eq 'SELECT'){
 			push @rc, [ $query ];
