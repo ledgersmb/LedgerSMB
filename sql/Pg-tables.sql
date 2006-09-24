@@ -11,14 +11,16 @@ SELECT nextval ('orderitemsid');
 CREATE SEQUENCE jcitemsid;
 SELECT nextval ('jcitemsid');
 --
+
+
 CREATE TABLE makemodel (
-  parts_id int,
+  parts_id int PRIMARY KEY,
   make text,
   model text
 );
 --
 CREATE TABLE gl (
-  id int DEFAULT nextval ( 'id' ),
+  id int DEFAULT nextval ( 'id' ) PRIMAY KEY,
   reference text,
   description text,
   transdate date DEFAULT current_date,
@@ -28,7 +30,7 @@ CREATE TABLE gl (
 );
 --
 CREATE TABLE chart (
-  id int DEFAULT nextval ( 'id' ),
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   accno text NOT NULL,
   description text,
   charttype char(1) DEFAULT 'A',
@@ -40,7 +42,7 @@ CREATE TABLE chart (
 );
 --
 CREATE TABLE gifi (
-  accno text,
+  accno text PRIMARY KEY,
   description text
 );
 --
@@ -55,7 +57,7 @@ CREATE TABLE defaults (
   yearend varchar(5),
   weightunit varchar(5),
   businessnumber text,
-  version varchar(8),
+  version varchar(8) PRIMARY KEY,
   curr text,
   closedto date,
   revtrans bool DEFAULT 't',
@@ -71,7 +73,6 @@ CREATE TABLE defaults (
   glnumber text,
   projectnumber text
 );
-INSERT INTO defaults (version) VALUES ('2.6.18');
 --
 CREATE TABLE acc_trans (
   trans_id int,
@@ -83,11 +84,12 @@ CREATE TABLE acc_trans (
   fx_transaction bool DEFAULT 'f',
   project_id int,
   memo text,
-  invoice_id int
+  invoice_id int,
+  entry_id SERIAL PRIMARY KEY
 );
 --
 CREATE TABLE invoice (
-  id int DEFAULT nextval ( 'invoiceid' ),
+  id int DEFAULT nextval ( 'invoiceid' ) PRIMARY KEY,
   trans_id int,
   parts_id int,
   description text,
@@ -105,7 +107,7 @@ CREATE TABLE invoice (
 );
 --
 CREATE TABLE customer (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   name varchar(64),
   address1 varchar(32),
   address2 varchar(32),
@@ -140,7 +142,7 @@ CREATE TABLE customer (
 --
 --
 CREATE TABLE parts (
-  id int DEFAULT nextval ( 'id' ),
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   partnumber text,
   description text,
   unit varchar(5),
@@ -174,11 +176,12 @@ CREATE TABLE assembly (
   parts_id int,
   qty numeric,
   bom bool,
-  adj bool
-) WITH OIDS;
+  adj bool,
+  PRIMARY KEY (id, parts_id)
+);
 --
 CREATE TABLE ar (
-  id int DEFAULT nextval ( 'id' ),
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
   customer_id int,
@@ -205,7 +208,7 @@ CREATE TABLE ar (
 );
 --
 CREATE TABLE ap (
-  id int DEFAULT nextval ( 'id' ),
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
   vendor_id int,
@@ -233,28 +236,32 @@ CREATE TABLE ap (
 --
 CREATE TABLE partstax (
   parts_id int,
-  chart_id int
+  chart_id int,
+  PRIMARY KEY (parts_id, chart_id)
 );
 --
 CREATE TABLE tax (
-  chart_id int,
+  chart_id int PRIMARY KEY,
   rate numeric,
   taxnumber text,
-  validto date
+  validto date,
+  FOREIGN KEY (chart_id) REFERENCES chart (id)
 );
 --
 CREATE TABLE customertax (
   customer_id int,
-  chart_id int
+  chart_id int,
+  PRIMARY KEY (customer_id, chart_id)
 );
 --
 CREATE TABLE vendortax (
   vendor_id int,
-  chart_id int
+  chart_id int,
+  PRIMARKY KEY (vendor_id, chart_id)
 );
 --
 CREATE TABLE oe (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   ordnumber text,
   transdate date default current_date,
   vendor_id int,
@@ -279,7 +286,7 @@ CREATE TABLE oe (
 );
 --
 CREATE TABLE orderitems (
-  id int default nextval('orderitemsid'),
+  id int default nextval('orderitemsid') PRIMARY KEY,
   trans_id int,
   parts_id int,
   description text,
@@ -292,17 +299,18 @@ CREATE TABLE orderitems (
   ship numeric,
   serialnumber text,
   notes text
-) WITH OIDS;
+);
 --
 CREATE TABLE exchangerate (
   curr char(3),
   transdate date,
   buy numeric,
-  sell numeric
+  sell numeric,
+  PRIMARY KEY (curr, transdate)
 );
 --
 create table employee (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   login text,
   name varchar(64),
   address1 varchar(32),
@@ -339,11 +347,12 @@ create table shipto (
   shiptocontact varchar(64),
   shiptophone varchar(20),
   shiptofax varchar(20),
-  shiptoemail text
+  shiptoemail text,
+  entry_id SERIAL PRIMARY KEY
 );
 --
 CREATE TABLE vendor (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   name varchar(64),
   address1 varchar(32),
   address2 varchar(32),
@@ -378,7 +387,7 @@ CREATE TABLE vendor (
 );
 --
 CREATE TABLE project (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   projectnumber text,
   description text,
   startdate date,
@@ -390,12 +399,12 @@ CREATE TABLE project (
 );
 --
 CREATE TABLE partsgroup (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   partsgroup text
 );
 --
 CREATE TABLE status (
-  trans_id int,
+  trans_id int PRIMARY KEY,
   formname text,
   printed bool default 'f',
   emailed bool default 'f',
@@ -403,33 +412,33 @@ CREATE TABLE status (
 );
 --
 CREATE TABLE department (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   description text,
   role char(1) default 'P'
 );
 --
 -- department transaction table
 CREATE TABLE dpt_trans (
-  trans_id int,
-  department_id int
+  trans_id int PRIMARY KEY,
+  department_id int,
 );
 --
 -- business table
 CREATE TABLE business (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   description text,
   discount numeric
 );
 --
 -- SIC
 CREATE TABLE sic (
-  code varchar(6),
+  code varchar(6) PRIMARY KEY,
   sictype char(1),
   description text
 );
 --
 CREATE TABLE warehouse (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   description text
 );
 --
@@ -440,11 +449,12 @@ CREATE TABLE inventory (
   orderitems_id int,
   qty numeric,
   shippingdate date,
-  employee_id int
-) WITH OIDS;
+  employee_id int,
+  entry_id SERIAL PRIMARY KEY,
+);
 --
 CREATE TABLE yearend (
-  trans_id int,
+  trans_id int PRIMARY KEY,
   transdate date
 );
 --
@@ -454,11 +464,12 @@ CREATE TABLE partsvendor (
   partnumber text,
   leadtime int2,
   lastcost NUMERIC,
-  curr char(3)
+  curr char(3),
+  entry_id SERIAL PRIMARY KEY
 );
 --
 CREATE TABLE pricegroup (
-  id int default nextval('id'),
+  id int default nextval('id') PRIMARY KEY,
   pricegroup text
 );
 --
@@ -470,11 +481,12 @@ CREATE TABLE partscustomer (
   sellprice NUMERIC,
   validfrom date,
   validto date,
-  curr char(3)
+  curr char(3),
+  entry_id SERIAL PRIMARY KEY
 );
 --
 CREATE TABLE language (
-  code varchar(6),
+  code varchar(6) SERIAL PRIMARY KEY,
   description text
 );
 --
@@ -485,17 +497,19 @@ CREATE TABLE audittrail (
   formname text,
   action text,
   transdate timestamp default current_timestamp,
-  employee_id int
+  employee_id int,
+  entry_id BIGSERIAL PRIMARY KEY
 );
 --
 CREATE TABLE translation (
   trans_id int,
   language_code varchar(6),
-  description text
+  description text,
+  PRIMARY KEY (trans_id, language_code)
 );
 --
 CREATE TABLE recurring (
-  id int,
+  id int PRIMARY KEY,
   reference text,
   startdate date,
   nextdate date,
@@ -507,21 +521,21 @@ CREATE TABLE recurring (
 );
 --
 CREATE TABLE recurringemail (
-  id int,
+  id int PRIMARY KEY,
   formname text,
   format text,
   message text
 );
 --
 CREATE TABLE recurringprint (
-  id int,
+  id int PRIMARY KEY,
   formname text,
   format text,
   printer text
 );
 --
 CREATE TABLE jcitems (
-  id int default nextval('jcitemsid'),
+  id int default nextval('jcitemsid') PRIMARY KEY,
   project_id int,
   parts_id int,
   description text,
@@ -685,3 +699,4 @@ field_id SERIAL PRIMARY KEY,
 table_id INT REFERENCES custom_table_catalog,
 field_name TEXT
 );
+INSERT INTO defaults (version) VALUES ('2.6.18');
