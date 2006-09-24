@@ -560,31 +560,31 @@ sub parse_template {
 	}
 
 	# first we generate a tmpfile
-	# read file and replace <%variable%>
+	# read file and replace <?lsmb variable ?>
 	while ($_ = shift) {
 
 		$par = "";
 		$var = $_;
 
 		# detect pagebreak block and its parameters
-		if (/<%pagebreak ([0-9]+) ([0-9]+) ([0-9]+)%>/) {
+		if (/<\?lsmb pagebreak ([0-9]+) ([0-9]+) ([0-9]+) \?>/) {
 			$chars_per_line = $1;
 			$lines_on_first_page = $2;
 			$lines_on_second_page = $3;
 
 			while ($_ = shift) {
-				last if (/<%end pagebreak%>/);
+				last if (/<\?lsmb end pagebreak \?>/);
 				$pagebreak .= $_;
 			}
 		}
 
-		if (/<%foreach /) {
+		if (/<\?lsmb foreach /) {
 
 			# this one we need for the count
 			chomp $var;
-			$var =~ s/.*?<%foreach (.+?)%>/$1/;
+			$var =~ s/.*?<\?lsmb foreach (.+?) \?>/$1/;
 			while ($_ = shift) {
-				last if (/<%end $var%>/);
+				last if (/<\?lsmb end $var \?>/);
 
 				# store line in $par
 				$par .= $_;
@@ -598,7 +598,7 @@ sub parse_template {
 				}
 
 				# Try to detect whether a manual page break is necessary
-				# but only if there was a <%pagebreak ...%> block before
+				# but only if there was a <?lsmb pagebreak ... ?> block before
 
 				if ($var eq 'number' || $var eq 'part' || $var eq 'service') {
 
@@ -632,15 +632,15 @@ sub parse_template {
 						if (($current_line + $lines) > $lpp) {
 							my $pb = $pagebreak;
 
-							# replace the special variables <%sumcarriedforward%>
-							# and <%lastpage%>
+							# replace the special variables <?lsmb sumcarriedforward ?>
+							# and <?lsmb lastpage ?>
 							my $psum = $self->format_amount($myconfig, $sum, 2);
-							$pb =~ s/<%sumcarriedforward%>/$psum/g;
-							$pb =~ s/<%lastpage%>/$current_page/g;
+							$pb =~ s/<\?lsmb sumcarriedforward \?>/$psum/g;
+							$pb =~ s/<\?lsmb lastpage \?>/$current_page/g;
 
 							# only "normal" variables are supported here
-							# (no <%if, no <%foreach, no <%include)
-							$pb =~ s/<%(.+?)%>/$self->{$1}/g;
+							# (no <?lsmb if, no <?lsmb foreach, no <?lsmb include)
+							$pb =~ s/<\?lsmb (.+?) \?>/$self->{$1}/g;
 
 							# page break block is ready to rock
 							print(OUT $pb);
@@ -662,16 +662,16 @@ sub parse_template {
 		}
 
 		# if not comes before if!
-		if (/<%if not /) {
+		if (/<\?lsmb if not /) {
 
 			# check if it is not set and display
 			chop;
-			s/.*?<%if not (.+?)%>/$1/;
+			s/.*?<\?lsmb if not (.+?) \?>/$1/;
 
 			if (! $self->{$_}) {
 
 				while ($_ = shift) {
-					last if (/<%end /);
+					last if (/<\?lsmb end /);
 
 					# store line in $par
 					$par .= $_;
@@ -682,18 +682,18 @@ sub parse_template {
 			} else {
 
 				while ($_ = shift) {
-					last if (/<%end /);
+					last if (/<\?lsmb end /);
 				}
 
 				next;
 			}
 		}
 
-		if (/<%if /) {
+		if (/<\? lsmb if /) {
 
 			# check if it is set and display
 			chop;
-			s/.*?<%if (.+?)%>/$1/;
+			s/.*?<\?lsmb if (.+?) \?>/$1/;
 
 			if (/\s/) {
 				@a = split;
@@ -704,7 +704,7 @@ sub parse_template {
 
 			if ($ok) {
 				while ($_ = shift) {
-					last if (/<%end /);
+					last if (/<\?lsmb end /);
 					# store line in $par
 					$par .= $_;
 				}
@@ -714,19 +714,19 @@ sub parse_template {
 			} else {
 
 				while ($_ = shift) {
-					last if (/<%end /);
+					last if (/<\?lsmb end /);
 				}
 
 				next;
 			}
 		}
 
-		# check for <%include filename%>
-		if (/<%include /) {
+		# check for <?lsmb include filename ?>
+		if (/<\?lsmb include /) {
 
 			# get the filename
 			chomp $var;
-			$var =~ s/.*?<%include (.+?)%>/$1/;
+			$var =~ s/.*?<\?lsmb include (.+?) \?>/$1/;
 
 			# remove / .. for security reasons
 			$var =~ s/(\/|\.\.)//g;
@@ -936,7 +936,7 @@ sub format_line {
 	my $pad;
 	my $item;
 
-	while (/<%(.+?)%>/) {
+	while (/<\?lsmb (.+?) \?>/) {
 
 		%a = ();
 
@@ -961,10 +961,10 @@ sub format_line {
 			if ($str) {
 
 				$var =~ s/if\s+not\s+//;
-				s/<%if\s+not\s+$var%>.*?(<%end\s+$var%>|$)//s;
+				s/<\?lsmb if\s+not\s+$var \?>.*?(<\?lsmb end\s+$var \?>|$)//s;
 
 			} else {
-				s/<%$var%>//;
+				s/<\?lsmb $var \?>//;
 			}
 
 			next;
@@ -973,17 +973,17 @@ sub format_line {
 		if ($var =~ /^if\s+/) {
 
 			if ($str) {
-				s/<%$var%>//;
+				s/<\?lsmb $var \?>//;
 			} else {
 				$var =~ s/if\s+//;
-				s/<%if\s+$var%>.*?(<%end\s+$var%>|$)//s;
+				s/<\?lsmb if\s+$var \?>.*?(<\?lsmb end\s+$var \?>|$)//s;
 			}
 
 			next;
 		}
 
 		if ($var =~ /^end\s+/) {
-			s/<%$var%>//;
+			s/<\?lsmb $var \?>//;
 			next;
 		}
 
@@ -1043,7 +1043,7 @@ sub format_line {
 			}
 		}
 
-		s/<%(.+?)%>/$newstr/;
+		s/<\?lsmb (.+?) \?>/$newstr/;
 
 	}
 
@@ -2581,104 +2581,104 @@ sub update_defaults {
 	$_ = "0" unless $_;
 
 	# check for and replace
-	# <%DATE%>, <%YYMMDD%>, <%YEAR%>, <%MONTH%>, <%DAY%> or variations of
-	# <%NAME 1 1 3%>, <%BUSINESS%>, <%BUSINESS 10%>, <%CURR...%>
-	# <%DESCRIPTION 1 1 3%>, <%ITEM 1 1 3%>, <%PARTSGROUP 1 1 3%> only for parts
-	# <%PHONE%> for customer and vendors
+	# <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
+	# <?lsmb NAME 1 1 3 ?>, <?lsmb BUSINESS ?>, <?lsmb BUSINESS 10 ?>, <?lsmb CURR... ?>
+	# <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
+	# <?lsmb PHONE ?> for customer and vendors
 
-	my $num = $_;
-	$num =~ s/.*?<%.*?%>//g;
-	($num) = $num =~ /(\d+)/;
+	#my $num = $_;
+#	$num =~ s/.*?<\?lsmb\s.*?\?>//g;
+#	($num) = $num =~ /(\d+)/;
+#
+#	if (defined $num) {
+#		my $incnum;
+#		# if we have leading zeros check how long it is
+#
+#		if ($num =~ /^0/) {
+#			my $l = length $num;
+#			$incnum = $num + 1;
+#			$l -= length $incnum;
+#
+#			# pad it out with zeros
+#			my $padzero = "0" x $l;
+#			$incnum = ("0" x $l) . $incnum;
+#		} else {
+#			$incnum = $num + 1;
+#		}
+#
+#		s/$num/$incnum/;
+#	}
+#
+#	my $dbvar = $_;
+#	my $var = $_;
+#	my $str;
+#	my $param;
+#
+#	if (/<\?lsmb /) {
+#
+#		while (/<\?lsmb /) {
+#
+#			s/<\?lsmb .*? ?>//;
+#			last unless $&;
+#			$param = $&;
+#			$str = "";
+#
+#			if ($param =~ /<\?lsmb date ?>/i) {
+#				$str = ($self->split_date($myconfig->{dateformat}, $self->{transdate}))[0];
+#				$var =~ s/$param/$str/;
+#			}
+#
+#			if ($param =~ /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i) {
 
-	if (defined $num) {
-		my $incnum;
-		# if we have leading zeros check how long it is
+#				my $fld = lc $&;
+#				$fld =~ s/<\?lsmb //;
 
-		if ($num =~ /^0/) {
-			my $l = length $num;
-			$incnum = $num + 1;
-			$l -= length $incnum;
-
-			# pad it out with zeros
-			my $padzero = "0" x $l;
-			$incnum = ("0" x $l) . $incnum;
-		} else {
-			$incnum = $num + 1;
-		}
-
-		s/$num/$incnum/;
-	}
-
-	my $dbvar = $_;
-	my $var = $_;
-	my $str;
-	my $param;
-
-	if (/<%/) {
-
-		while (/<%/) {
-
-			s/<%.*?%>//;
-			last unless $&;
-			$param = $&;
-			$str = "";
-
-			if ($param =~ /<%date%>/i) {
-				$str = ($self->split_date($myconfig->{dateformat}, $self->{transdate}))[0];
-				$var =~ s/$param/$str/;
-			}
-
-			if ($param =~ /<%(name|business|description|item|partsgroup|phone|custom)/i) {
-
-				my $fld = lc $&;
-				$fld =~ s/<%//;
-
-				if ($fld =~ /name/) {
-					if ($self->{type}) {
-						$fld = $self->{vc};
-					}
-				}
-
-				my $p = $param;
-				$p =~ s/(<|>|%)//g;
-				my @p = split / /, $p;
-				my @n = split / /, uc $self->{$fld};
-
-				if ($#p > 0) {
-
-					for (my $i = 1; $i <= $#p; $i++) {
-						$str .= substr($n[$i-1], 0, $p[$i]);
-					}
-
-				} else {
-					($str) = split /--/, $self->{$fld};
-				}
-
-				$var =~ s/$param/$str/;
-				$var =~ s/\W//g if $fld eq 'phone';
-			}
-
-			if ($param =~ /<%(yy|mm|dd)/i) {
-
-				my $p = $param;
-				$p =~ s/(<|>|%)//g;
-				my $spc = $p;
-				$spc =~ s/\w//g;
-				$spc = substr($spc, 0, 1);
-				my %d = ( yy => 1, mm => 2, dd => 3 );
-				my @p = ();
-
-				my @a = $self->split_date($myconfig->{dateformat}, $self->{transdate});
-				for (sort keys %d) { push @p, $a[$d{$_}] if ($p =~ /$_/) }
-				$str = join $spc, @p;
-				$var =~ s/$param/$str/;
-			}
-
-			if ($param =~ /<%curr/i) {
-				$var =~ s/$param/$self->{currency}/;
-			}
-		}
-	}
+#				if ($fld =~ /name/) {
+#					if ($self->{type}) {
+#						$fld = $self->{vc};
+#					}
+#				}
+#
+#				my $p = $param;
+#				$p =~ s/(<|>|%)//g;
+#				my @p = split / /, $p;
+#				my @n = split / /, uc $self->{$fld};
+#
+#				if ($#p > 0) {
+#
+#					for (my $i = 1; $i <= $#p; $i++) {
+#						$str .= substr($n[$i-1], 0, $p[$i]);
+#					}
+#
+#				} else {
+#					($str) = split /--/, $self->{$fld};
+#				}
+#
+#				$var =~ s/$param/$str/;
+#				$var =~ s/\W//g if $fld eq 'phone';
+#			}
+#
+#			if ($param =~ /<\?lsmb (yy|mm|dd)/i) {
+#
+#				my $p = $param;
+#				$p =~ s/(<|>|%)//g;
+#				my $spc = $p;
+#				$spc =~ s/\w//g;
+#				$spc = substr($spc, 0, 1);
+#				my %d = ( yy => 1, mm => 2, dd => 3 );
+#				my @p = ();
+#
+#				my @a = $self->split_date($myconfig->{dateformat}, $self->{transdate});
+#				for (sort keys %d) { push @p, $a[$d{$_}] if ($p =~ /$_/) }
+#				$str = join $spc, @p;
+#				$var =~ s/$param/$str/;
+#			}
+#
+#			if ($param =~ /<\?lsmb curr/i) {
+#				$var =~ s/$param/$self->{currency}/;
+#			}
+#		}
+#	}
 
 	$query = qq|UPDATE defaults
 				   SET $fld = '$dbvar'|;
