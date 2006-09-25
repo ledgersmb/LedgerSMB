@@ -998,7 +998,7 @@ sub post_invoice {
   my $till = ($form->{till}) ? qq|'$form->{till}'| : "NULL";
 
   $form->{invnumber} = $form->update_defaults($myconfig, "sinumber", $dbh) unless $form->{invnumber};
-  
+
   # save AR record
   $query = qq|UPDATE ar set
               invnumber = |.$dbh->quote($form->{invnumber}).qq|,

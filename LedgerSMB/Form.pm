@@ -1381,17 +1381,13 @@ sub dbconnect_noauto {
 
 sub dbquote {
 
-	my ($self, $var, $type) = @_;
+	my ($self, $var) = @_;
 
-	# DBI does not return NULL for SQL_DATE if the date is empty
-	if ($type eq 'SQL_DATE') {
-		$_ = ($var) ? "'$var'" : "NULL";
+	if ($var eq ''){
+		$_ = "NULL";
+	} else {
+		$_ = $self->{dbh}->quote($var);
 	}
-
-	if ($type eq 'SQL_INT') {
-		$_ = $var * 1;
-	}
-
 	$_;
 }
 
