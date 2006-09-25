@@ -1417,38 +1417,48 @@ sub update_exchangerate {
 	# some sanity check for currency
 	return if ($curr eq "");
 
-	my $query = qq|SELECT curr 
-					 FROM exchangerate
-					WHERE curr = '$curr'
-					  AND transdate = '$transdate'
-			  		  FOR UPDATE|;
+	my $query = qq|
+		SELECT curr 
+		FROM exchangerate
+		WHERE curr = ?
+		AND transdate = ?
+		FOR UPDATE|;
 
-	my $sth = $dbh->prepare($query);
-	$sth->execute || $self->dberror($query);
+	my $sth = $self->{dbh}->prepare($query);
+	$sth->execute($curr, $transdate) || $self->dberror($query);
 
 	my $set;
+	my @queryargs;
 
 	if ($buy && $sell) {
-		$set = "buy = $buy, sell = $sell";
+		$set = "buy = ?, sell = ?";
+		@queryargs = ($buy, $sell);
 	} elsif ($buy) {
-		$set = "buy = $buy";
+		$set = "buy = ?";
+		@queryargs = ($buy);
 	} elsif ($sell) {
-		$set = "sell = $sell";
+		$set = "sell = ?";
+		@queryargs = ($sell);
 	}
 
 	if ($sth->fetchrow_array) {
 		$query = qq|UPDATE exchangerate
 					   SET $set
-					 WHERE curr = '$curr'
-					   AND transdate = '$transdate'|;
+					 WHERE curr = ?
+					   AND transdate = ?|;
+		push (@queryargs, $curr, $transdate);
 
 	} else {
-		$query = qq|INSERT INTO exchangerate (curr, buy, sell, transdate)
-					VALUES ('$curr', $buy, $sell, '$transdate')|;
+		$query = qq|
+			INSERT INTO exchangerate (
+			curr, buy, sell, transdate)
+			VALUES (?, ?, ?, ?)|;
+		@queryargs = ($curr, $buy, $sell, $transdate);
 	}
-
 	$sth->finish;
-	$dbh->do($query) || $self->dberror($query);
+	$sth = $self->{dbh}->prepare($query);
+
+	$sth->execute(@queryargs) || $self->dberror($query);
 
 }
 
@@ -1457,15 +1467,18 @@ sub save_exchangerate {
 
 	my ($self, $myconfig, $currency, $transdate, $rate, $fld) = @_;
 
-	my $dbh = $self->dbconnect($myconfig);
-
 	my ($buy, $sell) = (0, 0);
 	$buy = $rate if $fld eq 'buy';
 	$sell = $rate if $fld eq 'sell';
 
-	$self->update_exchangerate($dbh, $currency, $transdate, $buy, $sell);
+	$self->update_exchangerate(
+			$self->{dbh}, 
+			$currency, 
+			$transdate, 
+			$buy, 
+			$sell);
 
-	$dbh->disconnect;
+	$dbh->commit;
 }
 
 
@@ -1476,15 +1489,18 @@ sub get_exchangerate {
 	my $exchangerate = 1;
 
 	if ($transdate) {
-		my $query = qq|SELECT $fld 
-						 FROM exchangerate
-						WHERE curr = '$curr'
-						  AND transdate = '$transdate'|;
+		my $query = qq|
+			SELECT $fld FROM exchangerate
+			WHERE curr = ? AND transdate = ?|;
+		$sth = $self->{dbh}->prepare($query);
+		$sth->execute($curr, $transdate);
 
-		($exchangerate) = $dbh->selectrow_array($query);
+		($exchangerate) = $sth->fetchrow_array;
 	}
 
 	$exchangerate;
+	$sth->finish;
+	$self->{dbh}->commit;
 }
 
 
@@ -1494,16 +1510,18 @@ sub check_exchangerate {
 
 	return "" unless $transdate;
 
-	my $dbh = $self->dbconnect($myconfig);
 
-	my $query = qq|SELECT $fld 
-					 FROM exchangerate
-					WHERE curr = '$currency'
-					  AND transdate = '$transdate'|;
+	my $query = qq|
+		SELECT $fld 
+		FROM exchangerate
+		WHERE curr = ? AND transdate = ?|;
 
-	my ($exchangerate) = $dbh->selectrow_array($query);
+	my $sth = $self->{dbh}->prepare($query);
+	$sth->execute($currenct, $transdate);
+	my ($exchangerate) = $sth->fetchrow_array($query);
 
-	$dbh->disconnect;
+	$sth->finish;
+	$self->{dbh}->commit;
 
 	$exchangerate;
 }
@@ -1523,23 +1541,26 @@ sub add_shipto {
 	}
 
 	if ($shipto) {
-		my $query = qq|INSERT INTO shipto (trans_id, shiptoname, shiptoaddress1,
-								   shiptoaddress2, shiptocity, shiptostate,
-								   shiptozipcode, shiptocountry, shiptocontact,
-								   shiptophone, shiptofax, shiptoemail) 
-					   VALUES ($id, |
-							   .$dbh->quote($self->{shiptoname}).qq|, |
-							   .$dbh->quote($self->{shiptoaddress1}).qq|, |
-							   .$dbh->quote($self->{shiptoaddress2}).qq|, |
-							   .$dbh->quote($self->{shiptocity}).qq|, |
-							   .$dbh->quote($self->{shiptostate}).qq|, |
-							   .$dbh->quote($self->{shiptozipcode}).qq|, |
-							   .$dbh->quote($self->{shiptocountry}).qq|, |
-							   .$dbh->quote($self->{shiptocontact}).qq|,
-							   '$self->{shiptophone}', '$self->{shiptofax}',
-							   '$self->{shiptoemail}')|;
+		my $query = qq|
+			INSERT INTO shipto 
+			(trans_id, shiptoname, shiptoaddress1,
+				shiptoaddress2, shiptocity, shiptostate,
+				shiptozipcode, shiptocountry, shiptocontact,
+				shiptophone, shiptofax, shiptoemail) 
+			VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			|;
 
-		$dbh->do($query) || $self->dberror($query);
+		$sth = $self->{dbh}->prepare($query) || $self->dberror($query);
+		$sth->execute(
+			$id, $self->{shiptoname}, $self->{shiptoaddress1},
+			$self->{shiptoaddress2}, $self->{shiptocity},
+			$self->{shiptostate}, $self->{shiptostate},	
+			$self->{shiptozipcode}, $self->{shiptocountry},
+			$self->{shiptocontact}, $self->{shiptophone},
+			$self->{shiptofax}, $self->{shiptoemail}
+		) || $self->dberror($query);
+		$sth->finish;
+		$self->{dbh}->commit;
 	}
 }
 
@@ -1552,10 +1573,15 @@ sub get_employee {
 
 	my $query = qq|SELECT name, id 
 					 FROM employee 
-					WHERE login = '$login'|;
+					WHERE login = ?|;
 
-	my (@a) = $dbh->selectrow_array($query);
+	$sth = $self->{dbh}->prepare($query);
+	$sth->execute($login);
+	my (@a) = $sth->fetchrow_array();
 	$a[1] *= 1;
+
+	$sth->finish;
+	$self->{dbh}->commit;
 
 	@a;
 }
@@ -1567,26 +1593,29 @@ sub get_name {
 	my ($self, $myconfig, $table, $transdate) = @_;
 
 	# connect to database
-	my $dbh = $self->dbconnect($myconfig);
 
+	my @queryargs;
 	my $where;
 	if ($transdate) {
-		$where = qq|AND (startdate IS NULL OR startdate <= '$transdate')
-					AND (enddate IS NULL OR enddate >= '$transdate')|;
+		$where = qq|
+			AND (startdate IS NULL OR startdate <= ?)
+					AND (enddate IS NULL OR enddate >= ?)|;
+
+		@queryargs = ($transdate, $transdate);
 	}
 
 	my $name = $self->like(lc $self->{$table});
 
-	my $query = qq|SELECT *
-					 FROM $table
-					WHERE (lower(name) LIKE '$name'
-					   OR ${table}number LIKE '$name')
-						  $where
-				 ORDER BY name|;
+	my $query = qq|
+		SELECT * FROM $table
+		WHERE (lower(name) LIKE ? OR ${table}number LIKE ?)
+		$where
+		ORDER BY name|;
 
-	my $sth = $dbh->prepare($query);
+	unshift(@queryargs, $name, $name);
+	my $sth = $self->{dbh}->prepare($query);
 
-	$sth->execute || $self->dberror($query);
+	$sth->execute(@queryargs) || $self->dberror($query);
 
 	my $i = 0;
 	@{ $self->{name_list} } = ();
@@ -1597,7 +1626,7 @@ sub get_name {
 	}
 
 	$sth->finish;
-	$dbh->disconnect;
+	$self->{dbh}->commit;
 
 	$i;
 
@@ -1611,25 +1640,29 @@ sub all_vc {
 	my $ref;
 	my $disconnect = 0;
 
-	if (! $dbh) {
-		$dbh = $self->dbconnect($myconfig);
-		$disconnect = 1;
-	}
+	$dbh = $self->{dbh};
 
 	my $sth;
 
 	my $query = qq|SELECT count(*) FROM $vc|;
 	my $where;
+	my @ueryargs = ();
 
 	if ($transdate) {
-		$where = qq|AND (startdate IS NULL OR startdate <= '$transdate')
-					AND (enddate IS NULL OR enddate >= '$transdate')|;
+		$query .= qq| WHERE (startdate IS NULL OR startdate <= ?)
+					AND (enddate IS NULL OR enddate >= ?)|;
 
-		$query .= qq| WHERE 1=1 $where|;
+		@queryargs = ($transdate, $transdate);		
 	}
 
-	my ($count) = $dbh->selectrow_array($query);
+	$sth = $dbh->prepare($query);
 
+	$sth->execute(@queryargs);
+
+	my ($count) = $sth->fetchrow_array;
+
+	$sth->finish;
+	@queryargs = ();
 	# build selection list
 	if ($count < $myconfig->{vclimit}) {
 
@@ -1644,11 +1677,13 @@ sub all_vc {
 
 					SELECT id,name
 					  FROM $vc
-					 WHERE id = $self->{"${vc}_id"}
+					 WHERE id = ?
 				  ORDER BY name|;
 
+		push(@queryargs, $self->{"${vc}_id"});
+
 		$sth = $dbh->prepare($query);
-		$sth->execute || $self->dberror($query);
+		$sth->execute(@queryargs) || $self->dberror($query);
 
 		@{ $self->{"all_$vc"} } = ();
 
@@ -1688,27 +1723,27 @@ sub all_vc {
 
 	$sth->finish;
 	$self->all_taxaccounts($myconfig, $dbh, $transdate);
-	$dbh->disconnect if $disconnect;
+	$self->{dbh}->commit;
 }
 
 
 sub all_taxaccounts {
 
-	my ($self, $myconfig, $dbh, $transdate) = @_;
+	my ($self, $myconfig, $dbh2, $transdate) = @_;
 
 	my $disconnect = ($dbh) ? 0 : 1;
 
-	if (! $dbh) {
-		$dbh = $self->dbconnect($myconfig);
-	}
+	my $dbh = $self->{dbh};
 
 	my $sth;
 	my $query;
 	my $where;
 
+	my @queryargs = ();
 
 	if ($transdate) {
-		$where = qq| AND (t.validto >= '$transdate' OR t.validto IS NULL)|;
+		$where = qq| AND (t.validto >= ? OR t.validto IS NULL)|;
+		push(@queryargs, $transdate);
 	}
 
 	if ($self->{taxaccounts}) {
@@ -1724,28 +1759,30 @@ sub all_taxaccounts {
 		$sth = $dbh->prepare($query) || $self->dberror($query);
 
 		foreach my $accno (split / /, $self->{taxaccounts}) {
-			$sth->execute($accno); 
+			$sth->execute(@queryargs, $accno); 
 			($self->{"${accno}_rate"}, $self->{"${accno}_taxnumber"}) = $sth->fetchrow_array;
 			$sth->finish;
 		}
 	}
-
-	$dbh->disconnect if $disconnect;
+	$self->{dbh}->commit;
 }
 
 
 sub all_employees {
 
-	my ($self, $myconfig, $dbh, $transdate, $sales) = @_;
+	my ($self, $myconfig, $dbh2, $transdate, $sales) = @_;
 
+	my $dbh = $self->{dbh};
+	my @whereargs = ();
 	# setup employees/sales contacts
 	my $query = qq|SELECT id, name
 					 FROM employee
 					WHERE 1 = 1|;
 
 	if ($transdate) {
-		$query .= qq| AND (startdate IS NULL OR startdate <= '$transdate')
-		AND (enddate IS NULL OR enddate >= '$transdate')|;
+		$query .= qq| AND (startdate IS NULL OR startdate <= ?)
+		AND (enddate IS NULL OR enddate >= ?)|;
+		@whereargs = ($transdate, $transdate);
 	} else {
 		$query .= qq| AND enddate IS NULL|;
 	}
@@ -1756,27 +1793,24 @@ sub all_employees {
 
 	$query .= qq| ORDER BY name|;
 	my $sth = $dbh->prepare($query);
-	$sth->execute || $self->dberror($query);
+	$sth->execute(@whereargs) || $self->dberror($query);
 
 	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
 		push @{ $self->{all_employee} }, $ref;
 	}
 
 	$sth->finish;
+	$dbh->commit;
 }
 
 
 
 sub all_projects {
 
-	my ($self, $myconfig, $dbh, $transdate, $job) = @_;
+	my ($self, $myconfig, $dbh2, $transdate, $job) = @_;
 
-	my $disconnect = 0;
-
-	if (! $dbh) {
-		$dbh = $self->dbconnect($myconfig);
-		$disconnect = 1;
-	}
+	my $dbh = $self->{dbh};
+	my @queryargs = ();
 
 	my $where = "1 = 1";
 
@@ -1790,21 +1824,24 @@ sub all_projects {
 
 	if ($form->{language_code}) {
 
-		$query = qq|SELECT pr.*, t.description AS translation
-					  FROM project pr
-				 LEFT JOIN translation t ON (t.trans_id = pr.id)
-					 WHERE t.language_code = '$form->{language_code}'|;
+		$query = qq|
+			SELECT pr.*, t.description AS translation
+			FROM project pr
+			LEFT JOIN translation t ON (t.trans_id = pr.id)
+			WHERE t.language_code = ?|;
+		push(@queryargs, $self->{language_code});
 	}
 
 	if ($transdate) {
-		$query .= qq| AND (startdate IS NULL OR startdate <= '$transdate')
-					  AND (enddate IS NULL OR enddate >= '$transdate')|;
+		$query .= qq| AND (startdate IS NULL OR startdate <= ?)
+				AND (enddate IS NULL OR enddate >= ?)|;
+		push(@queryargs, $transdate, $transdate);
 	}
 
 	$query .= qq| ORDER BY projectnumber|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute || $self->dberror($query);
+	$sth->execute(@queryargs)|| $self->dberror($query);
 
 	@{ $self->{all_project} } = ();
 
@@ -1813,19 +1850,15 @@ sub all_projects {
 	}
 
 	$sth->finish;
-	$dbh->disconnect if $disconnect;
+	$dbh->commit;
 }
 
 
 sub all_departments {
 
-	my ($self, $myconfig, $dbh, $vc) = @_;
+	my ($self, $myconfig, $dbh2, $vc) = @_;
 
-	my $disconnect = 0;
-	if (! $dbh) {
-		$dbh = $self->dbconnect($myconfig);
-		$disconnect = 1;
-	}
+	$dbh = $self->{dbh};
 
 	my $where = "1 = 1";
 
@@ -1850,21 +1883,16 @@ sub all_departments {
 	}
 
 	$sth->finish;
-	$self->all_years($myconfig, $dbh);
-	$dbh->disconnect if $disconnect;
+	$self->all_years($myconfig);
+	$dbh->commit;
 }
 
 
 sub all_years {
 
-	my ($self, $myconfig, $dbh) = @_;
+	my ($self, $myconfig, $dbh2) = @_;
 
-	my $disconnect = 0;
-
-	if (! $dbh) {
-		$dbh = $self->dbconnect($myconfig);
-		$disconnect = 1;
-	}
+	$dbh = $self->{dbh};
 
 	# get years
 	my $query = qq|SELECT (SELECT MIN(transdate) FROM acc_trans),
@@ -1892,20 +1920,21 @@ sub all_years {
 	}
 
 	#this should probably be changed to use locale
-	%{ $self->{all_month} } = ( '01' => 'January',
-								'02' => 'February',
-								'03' => 'March',
-								'04' => 'April',
-								'05' => 'May ',
-								'06' => 'June',
-								'07' => 'July',
-								'08' => 'August',
-								'09' => 'September',
-								'10' => 'October',
-								'11' => 'November',
-								'12' => 'December' );
+	%{ $self->{all_month} } = ( 
+		'01' => 'January',
+		'02' => 'February',
+		'03' => 'March',
+		'04' => 'April',
+		'05' => 'May ',
+		'06' => 'June',
+		'07' => 'July',
+		'08' => 'August',
+		'09' => 'September',
+		'10' => 'October',
+		'11' => 'November',
+		'12' => 'December' );
 
-	$dbh->disconnect if $disconnect;
+	$dbh->commit;
 }
 
 
@@ -1916,7 +1945,7 @@ sub create_links {
 	# get last customers or vendors
 	my ($query, $sth);
 
-	my $dbh = $self->dbconnect($myconfig);
+	$dbh = $self->{dbh};
 
 	my %xkeyref = ();
 
@@ -1924,11 +1953,11 @@ sub create_links {
 	# now get the account numbers
 	$query = qq|SELECT accno, description, link
 				  FROM chart
-				 WHERE link LIKE '%$module%'
+				 WHERE link LIKE ?
 			  ORDER BY accno|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute || $self->dberror($query);
+	$sth->execute("%"."$module%") || $self->dberror($query);
 
 	$self->{accounts} = "";
 
@@ -1940,10 +1969,12 @@ sub create_links {
 				# cross reference for keys
 				$xkeyref{$ref->{accno}} = $key;
 
-				push @{ $self->{"${module}_links"}{$key} }, { accno => $ref->{accno},
-				description => $ref->{description} };
+				push @{ $self->{"${module}_links"}{$key} }, 
+					{ accno => $ref->{accno},
+					description => $ref->{description} };
 
-				$self->{accounts} .= "$ref->{accno} " unless $key =~ /tax/;
+				$self->{accounts} .= "$ref->{accno} " 
+					unless $key =~ /tax/;
 			}
 		}
 	}
@@ -1954,21 +1985,23 @@ sub create_links {
 
 	if ($self->{id}) {
 
-		$query = qq|SELECT a.invnumber, a.transdate,
-						   a.${vc}_id, a.datepaid, a.duedate, a.ordnumber,
-						   a.taxincluded, a.curr AS currency, a.notes, a.intnotes,
-						   c.name AS $vc, a.department_id, d.description AS department,
-						   a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
-						   a.employee_id, e.name AS employee, c.language_code,
-						   a.ponumber
-					  FROM $arap a
-					  JOIN $vc c ON (a.${vc}_id = c.id)
-				 LEFT JOIN employee e ON (e.id = a.employee_id)
-				 LEFT JOIN department d ON (d.id = a.department_id)
-					 WHERE a.id = $self->{id}|;
+		$query = qq|
+			SELECT a.invnumber, a.transdate,
+				a.${vc}_id, a.datepaid, a.duedate, a.ordnumber,
+				a.taxincluded, a.curr AS currency, a.notes, 
+				a.intnotes, c.name AS $vc, a.department_id, 
+				d.description AS department,
+				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
+				a.employee_id, e.name AS employee, 
+				c.language_code, a.ponumber
+			FROM $arap a
+			JOIN $vc c ON (a.${vc}_id = c.id)
+			LEFT JOIN employee e ON (e.id = a.employee_id)
+			LEFT JOIN department d ON (d.id = a.department_id)
+			WHERE a.id = ?|;
 
 		$sth = $dbh->prepare($query);
-		$sth->execute || $self->dberror($query);
+		$sth->execute($self->{id}) || $self->dberror($query);
 
 		$ref = $sth->fetchrow_hashref(NAME_lc);
 
@@ -1980,17 +2013,20 @@ sub create_links {
 
 
 		# get printed, emailed
-		$query = qq|SELECT s.printed, s.emailed, s.spoolfile, s.formname
-					  FROM status s
-					 WHERE s.trans_id = $self->{id}|;
+		$query = qq|
+			SELECT s.printed, s.emailed, s.spoolfile, s.formname
+			FROM status s WHERE s.trans_id = ?|;
 
 		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
+		$sth->execute($self->{id}) || $form->dberror($query);
 
 		while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
-			$self->{printed} .= "$ref->{formname} " if $ref->{printed};
-			$self->{emailed} .= "$ref->{formname} " if $ref->{emailed};
-			$self->{queued} .= "$ref->{formname} $ref->{spoolfile} " if $ref->{spoolfile};
+			$self->{printed} .= "$ref->{formname} " 
+				if $ref->{printed};
+			$self->{emailed} .= "$ref->{formname} " 
+				if $ref->{emailed};
+			$self->{queued} .= "$ref->{formname} ".
+				"$ref->{spoolfile} " if $ref->{spoolfile};
 		}
 
 		$sth->finish;
@@ -2000,29 +2036,35 @@ sub create_links {
 		$self->get_recurring($dbh);
 
 		# get amounts from individual entries
-		$query = qq|SELECT c.accno, c.description, a.source, a.amount,
-						   a.memo, a.transdate, a.cleared, a.project_id,
-						   p.projectnumber
-					  FROM acc_trans a
-					  JOIN chart c ON (c.id = a.chart_id)
-				 LEFT JOIN project p ON (p.id = a.project_id)
-					 WHERE a.trans_id = $self->{id}
-					   AND a.fx_transaction = '0'
-				  ORDER BY transdate|;
+		$query = qq|
+			SELECT c.accno, c.description, a.source, a.amount,
+				a.memo, a.transdate, a.cleared, a.project_id,
+				p.projectnumber
+			FROM acc_trans a
+			JOIN chart c ON (c.id = a.chart_id)
+			LEFT JOIN project p ON (p.id = a.project_id)
+			WHERE a.trans_id = ?
+				AND a.fx_transaction = '0'
+			ORDER BY transdate|;
 
 		$sth = $dbh->prepare($query);
-		$sth->execute || $self->dberror($query);
+		$sth->execute($self->{id}) || $self->dberror($query);
 
 
 		my $fld = ($vc eq 'customer') ? 'buy' : 'sell';
 
-		$self->{exchangerate} = $self->get_exchangerate($dbh, $self->{currency}, $self->{transdate}, $fld);
+		$self->{exchangerate} = $self->get_exchangerate($dbh, 
+				$self->{currency}, $self->{transdate}, $fld);
 
 		# store amounts in {acc_trans}{$key} for multiple accounts
 		while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-			$ref->{exchangerate} = $self->get_exchangerate($dbh, $self->{currency}, $ref->{transdate}, $fld);
+			$ref->{exchangerate} = $self->get_exchangerate($dbh, 
+					$self->{currency}, 
+					$ref->{transdate}, 
+					$fld);
 
-			push @{ $self->{acc_trans}{$xkeyref{$ref->{accno}}} }, $ref;
+			push @{ $self->{acc_trans}{$xkeyref{$ref->{accno}}} }, 
+				$ref;
 		}
 
 		$sth->finish;
@@ -2040,9 +2082,10 @@ sub create_links {
 	} else {
 
 		# get date
-		$query = qq|SELECT current_date AS transdate,
-						   d.curr AS currencies, d.closedto, d.revtrans
-					  FROM defaults d|;
+		$query = qq|
+			SELECT current_date AS transdate,
+				d.curr AS currencies, d.closedto, d.revtrans
+			FROM defaults d|;
 
 		$sth = $dbh->prepare($query);
 		$sth->execute || $self->dberror($query);
@@ -2057,13 +2100,15 @@ sub create_links {
 	}
 
 	$self->all_vc($myconfig, $vc, $module, $dbh, $self->{transdate}, $job);
-	$dbh->disconnect;
+	$self->{dbh}->commit;
 }
 
 
 sub lastname_used {
 
-	my ($self, $myconfig, $dbh, $vc, $module) = @_;
+	my ($self, $myconfig, $dbh2, $vc, $module) = @_;
+
+	my $dbh = $self->{dbh};
 
 	my $arap = ($vc eq 'customer') ? "ar" : "ap";
 	my $where = "1 = 1";
@@ -2079,12 +2124,13 @@ sub lastname_used {
 		$where = "quotation = '1'";
 	}
 
-	my $query = qq|SELECT id 
-					 FROM $arap
-					WHERE id IN (SELECT MAX(id) 
-								   FROM $arap
-								  WHERE $where
-									AND ${vc}_id > 0)|;
+	my $query = qq|
+		SELECT id 
+		FROM $arap
+		WHERE id IN 
+			(SELECT MAX(id) 
+			FROM $arap
+			WHERE $where AND ${vc}_id > 0)|;
 
 	my ($trans_id) = $dbh->selectrow_array($query);
 
@@ -2092,20 +2138,23 @@ sub lastname_used {
 
 	my $DAYS = ($myconfig->{dbdriver} eq 'DB2') ? "DAYS" : "";
 
-	$query = qq|SELECT ct.name AS $vc, a.curr AS currency, a.${vc}_id,
-					   current_date + ct.terms $DAYS AS duedate, a.department_id,
-					   d.description AS department, ct.notes, ct.curr AS currency
-				  FROM $arap a
-				  JOIN $vc ct ON (a.${vc}_id = ct.id)
-			 LEFT JOIN department d ON (a.department_id = d.id)
-				 WHERE a.id = $trans_id|;
+	$query = qq|
+		SELECT ct.name AS $vc, a.curr AS currency, a.${vc}_id,
+			current_date + ct.terms $DAYS AS duedate, 
+			a.department_id, d.description AS department, ct.notes, 
+			ct.curr AS currency
+		FROM $arap a
+		JOIN $vc ct ON (a.${vc}_id = ct.id)
+		LEFT JOIN department d ON (a.department_id = d.id)
+		WHERE a.id = ?|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute || $self->dberror($query);
+	$sth->execute($trans_id)|| $self->dberror($query);
 
 	my $ref = $sth->fetchrow_hashref(NAME_lc);
 	for (keys %$ref) { $self->{$_} = $ref->{$_} }
 	$sth->finish;
+	$dbh->commit;
 }
 
 
@@ -2114,7 +2163,7 @@ sub current_date {
 
 	my ($self, $myconfig, $thisdate, $days) = @_;
 
-	my $dbh = $self->dbconnect($myconfig);
+	my $dbh = $self->{dbh};
 	my $query;
 
 	$days *= 1;
@@ -2131,22 +2180,21 @@ sub current_date {
 			$dateformat = 'yyyymmdd';
 		}
 
-		if ($myconfig->{dbdriver} eq 'DB2') {
-			$query = qq|SELECT date('$thisdate') + $days DAYS AS thisdate
-						  FROM defaults|;
-
-		} else {
-			$query = qq|SELECT to_date('$thisdate', '$dateformat') + $days AS thisdate
-						  FROM defaults|;
-		}
+		$query = qq|SELECT to_date(?, ?) 
+				+ ? AS thisdate
+			FROM defaults|;
+		@queryargs = ($thisdate, $dateformat, $days);
 
 	} else {
 		$query = qq|SELECT current_date AS thisdate
 					  FROM defaults|;
+		@queryargs = ();
 	}
 
-	($thisdate) = $dbh->selectrow_array($query);
-	$dbh->disconnect;
+	$sth = $dbh->prepare($query);
+	$sth->execute(@queryargs);
+	($thisdate) = $sth->fetchrow_array;
+	$dbh->commit;
 	$thisdate;
 }
 
@@ -2198,7 +2246,7 @@ sub get_partsgroup {
 
 	my ($self, $myconfig, $p) = @_;
 
-	my $dbh = $self->dbconnect($myconfig);
+	my $dbh = $self->{dbh};
 
 	my $query = qq|SELECT DISTINCT pg.id, pg.partsgroup
 					 FROM partsgroup pg
@@ -2232,21 +2280,25 @@ sub get_partsgroup {
 		$query = qq|SELECT id, partsgroup
 					  FROM partsgroup|;
 	} 
+	my @queryargs = ();
 
 	if ($p->{language_code}) {
 		$sortorder = "translation";
 
-		$query = qq|SELECT DISTINCT pg.id, pg.partsgroup,
-						   t.description AS translation
-					  FROM partsgroup pg
-					  JOIN parts p ON (p.partsgroup_id = pg.id)
-				 LEFT JOIN translation t ON (t.trans_id = pg.id AND t.language_code = '$p->{language_code}')|;
+		$query = qq|
+			SELECT DISTINCT pg.id, pg.partsgroup,
+				t.description AS translation
+			FROM partsgroup pg
+			JOIN parts p ON (p.partsgroup_id = pg.id)
+			LEFT JOIN translation t ON (t.trans_id = pg.id 
+				AND t.language_code = ?)|;
+		@queryargs = ($p->{language_code});
 	}
 
 	$query .= qq| $where ORDER BY $sortorder|;
 
 	my $sth = $dbh->prepare($query);
-	$sth->execute || $self->dberror($query);
+	$sth->execute(@queryargs)|| $self->dberror($query);
 
 	$self->{all_partsgroup} = ();
 
@@ -2255,7 +2307,7 @@ sub get_partsgroup {
 	}
 
 	$sth->finish;
-	$dbh->disconnect;
+	$dbh->commit;
 }
 
 
@@ -2266,43 +2318,52 @@ sub update_status {
 	# no id return
 	return unless $self->{id};
 
-	my $dbh = $self->dbconnect_noauto($myconfig);
+	my $dbh = $self->{dbh};
 
 	my %queued = split / +/, $self->{queued};
 	my $spoolfile = ($queued{$self->{formname}}) ? "'$queued{$self->{formname}}'" : 'NULL';
 
 	my $query = qq|DELETE FROM status
-					WHERE formname = '$self->{formname}'
-					  AND trans_id = $self->{id}|;
+					WHERE formname = ?
+					  AND trans_id = ?|;
 
-	$dbh->do($query) || $self->dberror($query);
+	$sth=$dbh->prepare($query);
+	$sth->execute($self->{formname}, $self->{id}) || $self->dberror($query);
+
+	$sth->finish;
 
 	my $printed = ($self->{printed} =~ /$self->{formname}/) ? "1" : "0";
 	my $emailed = ($self->{emailed} =~ /$self->{formname}/) ? "1" : "0";
 
-	$query = qq|INSERT INTO status (trans_id, printed, emailed,
-									spoolfile, formname) 
-				VALUES ($self->{id}, '$printed',
-						'$emailed', $spoolfile,
-						'$self->{formname}')|;
+	$query = qq|
+		INSERT INTO status 
+			(trans_id, printed, emailed, spoolfile, formname) 
+		VALUES (?, ?, ?, ?, ?)|;
 
-	$dbh->do($query) || $self->dberror($query);
+	$sth = $dbh->prepare($query);
+	$sth->execute($self->{id}, $printed, $emailed, $spoolfile, 
+			$self->{formname});
+	$sth->finish;
+
 	$dbh->commit;
-	$dbh->disconnect;
 }
 
 
 sub save_status {
 
-	my ($self, $dbh) = @_;
+	my ($self) = @_;
+
+	$dbh = $self->{dbh};
 
 	my $formnames = $self->{printed};
 	my $emailforms = $self->{emailed};
 
 	my $query = qq|DELETE FROM status
-					WHERE trans_id = $self->{id}|;
+					WHERE trans_id = ?|;
 
-	$dbh->do($query) || $self->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{id});
+	$sth->finish;
 
 	my %queued;
 	my $formname;
@@ -2317,12 +2378,17 @@ sub save_status {
 			$emailed = ($self->{emailed} =~ /$formname/) ? "1" : "0";
 
 			if ($queued{$formname}) {
-				$query = qq|INSERT INTO status (trans_id, printed, emailed,
-												spoolfile, formname)
-							VALUES ($self->{id}, '$printed', '$emailed',
-									'$queued{$formname}', '$formname')|;
+				$query = qq|
+					INSERT INTO status 
+						(trans_id, printed, emailed,
+						spoolfile, formname)
+					VALUES (?, ?, ?, ?, ?)|;
 
-				$dbh->do($query) || $self->dberror($query);
+				$sth = $dbh->prepare($query);
+				$sth->execute($self->{id}, $pinted, $emailed,
+					$queued{$formname}, $formname)
+					|| $self->dberror($query);
+				$sth->finish;
 			}
 
 			$formnames =~ s/$formname//;
@@ -2343,28 +2409,35 @@ sub save_status {
 		$printed = ($formnames =~ /$self->{formname}/) ? "1" : "0";
 		$emailed = ($emailforms =~ /$self->{formname}/) ? "1" : "0";
 
-		$query = qq|INSERT INTO status (trans_id, printed, emailed, formname)
-					VALUES ($self->{id}, '$printed', '$emailed', '$formname')|;
+		$query = qq|
+			INSERT INTO status (trans_id, printed, emailed, 
+				formname)
+			VALUES (?, ?, ?, ?)|;
 
-		$dbh->do($query) || $self->dberror($query);
+		$sth = $dbh->prepare($query);
+		$sth->execute($self->{id}, $printed, $emailed, $formname);
+		$sth->finish;
 	}
+	$dbh->commit;
 }
 
 
 sub get_recurring {
 
-	my ($self, $dbh) = @_;
+	my ($self) = @_;
 
-	my $query = qq/SELECT s.*, se.formname || ':' || se.format AS emaila,
-						  se.message,
-						  sp.formname || ':' || sp.format || ':' || sp.printer AS printa
-					 FROM recurring s
-				LEFT JOIN recurringemail se ON (s.id = se.id)
-				LEFT JOIN recurringprint sp ON (s.id = sp.id)
-					WHERE s.id = $self->{id}/;
+	$dbh = $self->{dbh};
+	my $query = qq/
+		SELECT s.*, se.formname || ':' || se.format AS emaila,
+			se.message, sp.formname || ':' || 
+				sp.format || ':' || sp.printer AS printa
+		FROM recurring s
+		LEFT JOIN recurringemail se ON (s.id = se.id)
+		LEFT JOIN recurringprint sp ON (s.id = sp.id)
+		WHERE s.id = ?/;
 
 	my $sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror($query);
+	$sth->execute($self->{id}) || $form->dberror($query);
 
 	for (qw(email print)) { $self->{"recurring$_"} = "" }
 
@@ -2390,52 +2463,52 @@ sub get_recurring {
 
 		chop $self->{recurring};
 	}
+	$dbh->commit;
 }
 
 
 sub save_recurring {
 
-	my ($self, $dbh, $myconfig) = @_;
+	my ($self, $dbh2, $myconfig) = @_;
 
-	my $disconnect = 0;
-
-	if (! $dbh) {
-		$dbh = $self->dbconnect_noauto($myconfig);
-		$disconnect = 1;
-	}
+	my $dbh = $self->{dbh};
 
 	my $query;
 
 	$query = qq|DELETE FROM recurring
-				 WHERE id = $self->{id}|;
+				 WHERE id = ?|;
 
-	$dbh->do($query) || $self->dberror($query);
+	$sth = $dbh->prepare($query); 
+	$sth->execute($self->{id}) || $self->dberror($query);
 
 	$query = qq|DELETE FROM recurringemail
-				 WHERE id = $self->{id}|;
+				 WHERE id = ?|;
 
-	$dbh->do($query) || $self->dberror($query);
+	$sth = $dbh->prepare($query); 
+	$sth->execute($self->{id}) || $self->dberror($query);
 
 	$query = qq|DELETE FROM recurringprint
-				 WHERE id = $self->{id}|;
+				 WHERE id = ?|;
 
-	$dbh->do($query) || $self->dberror($query);
+	$sth = $dbh->prepare($query); 
+	$sth->execute($self->{id}) || $self->dberror($query);
 
 	if ($self->{recurring}) {
 
 		my %s = ();
-		($s{reference}, $s{startdate}, $s{repeat}, $s{unit}, $s{howmany}, 
-		 $s{payment}, $s{print}, $s{email}, $s{message}) = split /,/, $self->{recurring};
+		($s{reference}, $s{startdate}, $s{repeat}, $s{unit}, 
+			$s{howmany}, $s{payment}, $s{print}, $s{email}, 
+			$s{message}) 
+				= split /,/, $self->{recurring};
 
 		for (qw(reference message)) { $s{$_} = $self->unescape($s{$_}) }
 		for (qw(repeat howmany payment)) { $s{$_} *= 1 }
 
 		# calculate enddate
 		my $advance = $s{repeat} * ($s{howmany} - 1);
-		my %interval = ( 'Pg'  => "(date '$s{startdate}' + interval '$advance $s{unit}')",
-						 'DB2' => qq|(date ('$s{startdate}') + "$advance $s{unit}")|, );
-
-		$interval{Oracle} = $interval{PgPP} = $interval{Pg};
+		my %interval;
+		$interval{'Pg'} = 
+			"(date '$s{startdate}' + interval '$advance $s{unit}')";
 
 		$query = qq|SELECT $interval{$myconfig->{dbdriver}}
 					  FROM defaults|;
@@ -2443,11 +2516,14 @@ sub save_recurring {
 		my ($enddate) = $dbh->selectrow_array($query);
 
 		# calculate nextdate
-		$query = qq|SELECT current_date - date '$s{startdate}' AS a,
-						   date '$enddate' - current_date AS b
-					  FROM defaults|;
+		$query = qq|
+			SELECT current_date - date ? AS a,
+				date ? - current_date AS b
+			FROM defaults|;
 
-		my ($a, $b) = $dbh->selectrow_array($query);
+		$sth = $dbh->prepare($query);
+		$sth->execute($s{startdate}, $enddate);
+		my ($a, $b) = $sth->fetchrow_array;
 
 		if ($a + $b) {
 			$advance = int(($a / ($a + $b)) * ($s{howmany} - 1) + 1) * $s{repeat};
@@ -2487,12 +2563,16 @@ sub save_recurring {
 
 		$self->{recurringpayment} *= 1;
 
-		$query = qq|INSERT INTO recurring (id, reference, startdate, enddate,
-										   nextdate, repeat, unit, howmany, payment)
-					VALUES ($self->{id}, |.$dbh->quote($s{reference}).qq|,
-							'$s{startdate}', '$enddate', |.
-							$self->dbquote($nextdate, SQL_DATE).
-							qq|, $s{repeat}, '$s{unit}', $s{howmany}, '$s{payment}')|;
+		$query = qq|
+			INSERT INTO recurring 
+				(id, reference, startdate, enddate, nextdate, 
+				repeat, unit, howmany, payment)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)|;
+
+		$sth = $dbh->prepare($query);
+		$sth->execute($self->{id}, $s{reference}, $s{startdate},
+			$enddate, $nextdate, $s{repeat}, $s{unit}, $s{howmany},
+			$s{payment});
 
 		$dbh->do($query) || $self->dberror($query);
 
@@ -2506,12 +2586,13 @@ sub save_recurring {
 			@p = split /:/, $s{email};
 
 			$query = qq|INSERT INTO recurringemail (id, formname, format, message)
-						VALUES ($self->{id}, ?, ?, ?)|;
+						VALUES (?, ?, ?, ?)|;
 
 			$sth = $dbh->prepare($query) || $self->dberror($query);
 
 			for ($i = 0; $i <= $#p; $i += 2) {
-				$sth->execute($p[$i], $p[$i+1], $s{message});
+				$sth->execute($self->{id}, $p[$i], $p[$i+1], 
+					$s{message});
 			}
 
 			$sth->finish;
@@ -2522,13 +2603,13 @@ sub save_recurring {
 			@p = split /:/, $s{print};
 
 			$query = qq|INSERT INTO recurringprint (id, formname, format, printer)
-						VALUES ($self->{id}, ?, ?, ?)|;
+						VALUES (?, ?, ?, ?)|;
 
 			$sth = $dbh->prepare($query) || $self->dberror($query);
 
 			for ($i = 0; $i <= $#p; $i += 3) {
 				$p = ($p[$i+2]) ? $p[$i+2] : "";
-				$sth->execute($p[$i], $p[$i+1], $p);
+				$sth->execute($self->{id}, $p[$i], $p[$i+1], $p);
 			}
 
 			$sth->finish;
@@ -2551,25 +2632,22 @@ sub save_intnotes {
 
 	my $dbh = $self->dbconnect($myconfig);
 
-	my $query = qq|UPDATE $vc 
-					  SET intnotes = |.$dbh->quote($self->{intnotes}).qq|
-					WHERE id = $self->{id}|;
+	my $query = qq|
+		UPDATE $vc 
+		SET intnotes = |.$dbh->quote($self->{intnotes}).qq|
+		WHERE id = ?|;
 
-	$dbh->do($query) || $self->dberror($query);
-	$dbh->disconnect;
+	$sth=$dbh->prepare($query);
+	$sth->execute($self->{intnotes}, $self->{id}) || $self->dberror($query);
+	$dbh->commit;
 }
 
 
 sub update_defaults {
 
-	my ($self, $myconfig, $fld, $dbh) = @_;
+	my ($self, $myconfig, $fld) = @_;
 
-	my $closedb;
-
-	if (! $dbh) {
-		$dbh = $self->dbconnect_noauto($myconfig);
-		$closedb = 1;
-	}
+	my $dbh = $self->{dbh};
 
 	my $query = qq|SELECT $fld FROM defaults FOR UPDATE|;
 	($_) = $dbh->selectrow_array($query);
@@ -2677,14 +2755,12 @@ sub update_defaults {
 #	}
 
 	$query = qq|UPDATE defaults
-				   SET $fld = '$dbvar'|;
+				   SET $fld = ?|;
 
-	$dbh->do($query) || $form->dberror($query);
+	$sth = $dbh->prepare($query); 
+	$sth->execute($dbvar) || $form->dberror($query);
 
-	if ($closedb) {
-		$dbh->commit;
-		$dbh->disconnect;
-	}
+	$dbh->commit;
 
 	$var;
 }
@@ -2840,6 +2916,8 @@ sub audittrail {
 
 	# if we have an id add audittrail, otherwise get a new timestamp
 
+	my @queryargs;
+
 	if ($audittrail->{id}) {
 
 		$query = qq|SELECT audittrail FROM defaults|;
@@ -2866,17 +2944,22 @@ sub audittrail {
 					splice @a, 0, 5;
 				}
 
-				$query = qq|INSERT INTO audittrail (trans_id, tablename, reference,
-													formname, action, employee_id, transdate)
-							VALUES ($audittrail->{id}, ?, ?, ?, ?, $employee_id, ?)|;
+				$query = qq|
+					INSERT INTO audittrail 
+						(trans_id, tablename, reference,
+						formname, action, transdate, 
+						employee_id)
+					VALUES (?, ?, ?, ?, ?, ?, ?)|;
 
 				my $sth = $dbh->prepare($query) || $self->dberror($query);
 
 				foreach $key (sort { $newtrail{$a}{transdate} cmp $newtrail{$b}{transdate} } keys %newtrail) {
 
-					$i = 1;
-					for (@flds) { $sth->bind_param($i++, $newtrail{$key}{$_}) }
+					$i = 2;
+					$sth->bind_param(1, $audittrail->{id});
 
+					for (@flds) { $sth->bind_param($i++, $newtrail{$key}{$_}) }
+					$sth->bind_param($i++, $employee_id);
 					$sth->execute || $self->dberror;
 					$sth->finish;
 				}
@@ -2884,24 +2967,39 @@ sub audittrail {
 
 			if ($audittrail->{transdate}) {
 
-				$query = qq|INSERT INTO audittrail (trans_id, tablename, reference,
-													formname, action, employee_id, transdate)
-							VALUES ($audittrail->{id}, '$audittrail->{tablename}', |
-									.$dbh->quote($audittrail->{reference}).qq|',
-									'$audittrail->{formname}', '$audittrail->{action}',
-									$employee_id, '$audittrail->{transdate}')|;
-
+				$query = qq|
+					INSERT INTO audittrail (
+						trans_id, tablename, reference,
+						formname, action, employee_id, 
+						transdate)
+					VALUES (?, ?, ?, ?, ?, ?)|;
+				@queryargs = (
+					$audittrail->{id}, 
+					$audittrail->{tablename},
+					$audittrail->{reference},
+					$audittrail->{formname},
+					$audittrail->{action}.
+					$employee_id,
+					$audittrail->{transdate}
+				);
 			} else {
-				$query = qq|INSERT INTO audittrail (trans_id, tablename, reference,
-													formname, action, employee_id)
-							VALUES ($audittrail->{id},
-									'$audittrail->{tablename}', |
-									.$dbh->quote($audittrail->{reference}).qq|,
-									'$audittrail->{formname}', '$audittrail->{action}',
-									$employee_id)|;
+				$query = qq|
+					INSERT INTO audittrail 
+						(trans_id, tablename, reference,
+						formname, action, employee_id)
+					VALUES (?, ?, ?, ?, ?)|;
+				@queryargs = (
+					$audittrail->{id}, 
+					$audittrail->{tablename},
+					$audittrail->{reference},
+					$audittrail->{formname},
+					$audittrail->{action}.
+					$employee_id,
+				);
 			}
 
-			$dbh->do($query);
+			$sth = $dbh->prepare($query);
+			$sth->execute(@queryargs)||$self->dberror($query);
 		}
 
 	} else {
@@ -2912,7 +3010,7 @@ sub audittrail {
 		$rv = "$audittrail->{tablename}|$audittrail->{reference}|$audittrail->{formname}|$audittrail->{action}|$timestamp|";
 	}
 
-	$dbh->disconnect if $disconnect;
+	$dbh->commit;
 	$rv;
 }
 

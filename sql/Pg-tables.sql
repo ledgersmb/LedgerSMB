@@ -12,7 +12,11 @@ CREATE SEQUENCE jcitemsid;
 SELECT nextval ('jcitemsid');
 --
 
-
+create table transactions (
+  id int PRIMARY KEY,
+  table_name text
+);
+--
 CREATE TABLE makemodel (
   parts_id int PRIMARY KEY,
   make text,
@@ -75,7 +79,7 @@ CREATE TABLE defaults (
 );
 --
 CREATE TABLE acc_trans (
-  trans_id int,
+  trans_id int REFERENCES transactions(id),
   chart_id int NOT NULL REFERENCES chart (id),
   amount NUMERIC,
   transdate date DEFAULT current_date,
