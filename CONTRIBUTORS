@@ -14,6 +14,9 @@ current coding standards, and other contributions.
 Joshua Drake <jd @ commandprompt . com>
 Contributed database fixes.
 
+Seneca Cunningham <tentra @ gmail.com> 
+Contributed code fixes.
+
 Other Contributors:
 ========================
 Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
@@ -28,8 +31,6 @@ the password change in the admin.pl
 Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
 documentation.
 
-Seneca Cunningham <tentra @ gmail.com> provided some bug fixes to the upgrade
-from 1.0.0 to 1.1.0
 
 Original Authors of SQL-Ledger:
 ===================================
