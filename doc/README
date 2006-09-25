@@ -1,5 +1,5 @@
                 LedgerSMB Small Medium Business Accounting
-                     Version 2.6
+                     Version 1.1
 
 
 DESCRIPTION:
@@ -53,7 +53,7 @@ REQUIREMENTS:
 -------------
 1 - Perl, 5+
 2 - http server (Apache, NCSA, httpi, thttpd, ...)
-3 - SQL Server (PostgreSQL 7.1+)
+3 - SQL Server (PostgreSQL 8.0+)
 4 - DBD (DBD-Pg)
 5 - DBI
 6 - LaTeX (optional)
@@ -303,8 +303,7 @@ INSTALLATION CHECKLIST:
 
 IF SOMETHING DOESN'T WORK:
 --------------------------
-There is a FAQ at http://www.ledgersmb.org/
-or see the one included in the doc directory.
+There is a FAQ in the doc directory.
 
 There are also several mailing lists at
 http://www.ledgersmb.org/
@@ -313,5 +312,4 @@ where you can seek free help.
 For commercial support see http://www.ledgersmb.org/
 
 =====================================================================
-June 14, 2006
-
+September 24, 2006
