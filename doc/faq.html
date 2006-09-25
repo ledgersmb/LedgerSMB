@@ -82,55 +82,6 @@ tries to create them, you will receive an error message indicating
 that the tables already exist.
 
 
-<p><li><h4>PostgreSQL 8.0+</h4>
-
-To use LedgerSMB with PostgreSQL 8.0+ you have to modify
-<tt>Pg-tables.sql</tt>. This file is in the sql directory.
-
-<pre>
-CREATE TABLE orderitems (
-  trans_id int,
-  parts_id int,
-  description text,
-  qty float4,
-  sellprice float8,
-  discount float4,
-  unit varchar(5),
-  project_id int,
-  reqdate date,
-  ship float4,
-  serialnumber text,
-  id int default nextval('orderitemsid')
-) WITH OIDS;
-
-CREATE TABLE inventory (
-  warehouse_id int,
-  parts_id int,
-  trans_id int,
-  orderitems_id int,
-  qty float4,
-  shippingdate date,
-  employee_id int
-) WITH OIDS;
-
-CREATE TABLE assembly (
-  id int,
-  parts_id int,
-  qty float,
-  bom bool,
-  adj bool
-) WITH OIDS;
-</pre>
-
-This change is only required for LedgerSMB versions 2.6.3 and below.
-
-<p>If you already built a dataset without this change you will get
-an error when you try to save a PO or assembly.
-
-<p>"ERROR: column "oid" does not exist"
-
-<p>Drop the tables and rebuild WITH OIDS.
-
 <p><li><h4>Japanese characters</h4>
 modify apache so that EUC_JP is the main additional language.
 <br>comment out all unrelated languages except, UTF_8 shift jis, EUC_JP
@@ -193,6 +144,10 @@ To make them work load the template either with the builtin template editor
 or a text editor and save. Templates designed on a Windows platform have the
 same problem and won't work on a UNIX platform. Once you strip the ^M's
 the'll work just fine.
+</p><p>
+Note too that most Linux and UNIX installations come with two utilities for making these 
+conversions: unix2dos and dos2unix.  Windows users can obtain these utilities as part of 
+<a href="http://www.cygwin.com">Cygwin</a>.</p>
 
 
 <p><li><h4>UTF-8 character encoding</h4>
@@ -280,7 +235,7 @@ Check if you have latex and pdflatex installed.
 
 
 <p><li><h4>Apache 2.0 "error 500"</h4>
-Some of the early versions of Apache 2.0 (< patchlevel 44) had a rewrite engine
+Some of the early versions of Apache 2.0 (&lt; patchlevel 44) had a rewrite engine
 which decoded escaped strings. This created a lot of problems and I worked
 around it by escaping strings twice.
 If you get a server 500 error 'filename too long' or if collapsed menus
@@ -563,14 +518,6 @@ Add
 <pre>
   AddHandler cgi-script .pl</pre>
 in your httpd.conf file.
-
-
-<p><li><h4>unknown terminal!</h4>
-the frontend script couldn't figure out which browser you are using
-<p>include the terminal variable on the URL
-<pre>
-  http://localhost/ledger-smb/login.pl?terminal=lynx</pre>
-Valid terminal variables are lynx, mozilla and js
 
 
 <p><li><h4>permission denied</h4>
