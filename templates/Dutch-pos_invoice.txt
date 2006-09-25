@@ -1,38 +1,38 @@
-<?lsmb company align=center width=40 ?>
-<?lsmb address align=center width=40 ?>
+<?lsmb company align=center width="40" ?>
+<?lsmb address align=center width="40" ?>
 
-Kassa: <?lsmb till align=left width=3 ?>         Phone#: <?lsmb tel ?>
+Kassa: <?lsmb till align=left width="3" ?>         Phone#: <?lsmb tel ?>
 Kassier: <?lsmb employee ?>
 Verk Nr/Datum: <?lsmb invnumber ?> / <?lsmb invdate ?>
 Afgedrukt: <?lsmb dateprinted ?>
 
   Hoeveelheid Omschrijving                 Bedrag
 <?lsmb foreach number ?>
-<?lsmb qty align=right width=5 ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width=9 ?>
+<?lsmb qty align=right width="5" ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width="9" ?>
       <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
 <?lsmb end number ?>
 
 Aantal items: <?lsmb rowcount ?>
 <?lsmb if taxincluded ?>
                          ---------------
-                   Bedrag : <?lsmb invtotal align=right width=9 ?>
+                   Bedrag : <?lsmb invtotal align=right width="9" ?>
 <?lsmb end taxincluded ?>
 <?lsmb if not taxincluded ?>
                             ------------
-                    Subtotaal: <?lsmb subtotal align=right width=9 ?>
+                    Subtotaal: <?lsmb subtotal align=right width="9" ?>
 <?lsmb end taxincluded ?>
 <?lsmb foreach tax ?>
-<?lsmb taxdescription align=right width=23 ?> @ <?lsmb taxrate align=right width=2 ?>%: <?lsmb tax align=right width=9 ?>
+<?lsmb taxdescription align=right width="23" ?> @ <?lsmb taxrate align=right width="2" ?>%: <?lsmb tax align=right width="9" ?>
 <?lsmb end tax ?>
-                   Bedrag : <?lsmb invtotal align=right width=9 ?>
+                   Bedrag : <?lsmb invtotal align=right width="9" ?>
 <?lsmb foreach payment ?>
-<?lsmb paymentaccount align=right width=29 ?>: <?lsmb payment align=right width=9 ?> <?lsmb currency ?>
+<?lsmb paymentaccount align=right width="29" ?>: <?lsmb payment align=right width="9" ?> <?lsmb currency ?>
 <?lsmb end payment ?>
 <?lsmb if change ?>
-                       Wisselgeld: <?lsmb change align=right width=9 ?>
+                       Wisselgeld: <?lsmb change align=right width="9" ?>
 <?lsmb end change ?>
 <?lsmb if total ?>
-                  Te betalen : <?lsmb total align=right width=9 ?>
+                  Te betalen : <?lsmb total align=right width="9" ?>
 <?lsmb end total ?>
 <?lsmb if discount ?>
 

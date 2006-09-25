@@ -1,37 +1,37 @@
-<?lsmb company align=center width=40 ?>
-<?lsmb address align=center width=40 ?>
+<?lsmb company align=center width="40" ?>
+<?lsmb address align=center width="40" ?>
 
-Till: <?lsmb till align=left width=3 ?>         Phone#: <?lsmb tel ?>
+Till: <?lsmb till align=left width="3" ?>         Phone#: <?lsmb tel ?>
 Cashier: <?lsmb employee ?>
 Inv #/Date: <?lsmb invnumber ?> / <?lsmb invdate ?>
 Printed: <?lsmb dateprinted ?>
 
   Qty Description                 Amount
 <?lsmb foreach number ?>
-<?lsmb qty align=right width=5 ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width=9 ?>
+<?lsmb qty align=right width="5" ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width="9" ?>
       <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
 <?lsmb end number ?>
 
 Number of items: <?lsmb totalqty ?>
 <?lsmb if taxincluded ?>
                          ---------------
-                        Total: <?lsmb invtotal align=right width=9 ?>
+                        Total: <?lsmb invtotal align=right width="9" ?>
 <?lsmb end taxincluded ?>
 <?lsmb if not taxincluded ?>
                             ------------
-                     Subtotal: <?lsmb subtotal align=right width=9 ?>
+                     Subtotal: <?lsmb subtotal align=right width="9" ?>
 <?lsmb end taxincluded ?>
 <?lsmb foreach tax ?>
-<?lsmb taxdescription align=right width=23 ?> @ <?lsmb taxrate align=right width=2 ?>%: <?lsmb tax align=right width=9 ?>
+<?lsmb taxdescription align=right width="23" ?> @ <?lsmb taxrate align=right width="2" ?>%: <?lsmb tax align=right width="9" ?>
 <?lsmb end tax ?>
 <?lsmb foreach payment ?>
-                         Paid: <?lsmb payment align=right width=9 ?> <?lsmb currency ?>
+                         Paid: <?lsmb payment align=right width="9" ?> <?lsmb currency ?>
 <?lsmb end payment ?>
 <?lsmb if change ?>
-                       Change: <?lsmb change align=right width=9 ?>
+                       Change: <?lsmb change align=right width="9" ?>
 <?lsmb end change ?>
 <?lsmb if total ?>
-                  Balance Due: <?lsmb total align=right width=9 ?>
+                  Balance Due: <?lsmb total align=right width="9" ?>
 <?lsmb end total ?>
 <?lsmb if discount ?>
 

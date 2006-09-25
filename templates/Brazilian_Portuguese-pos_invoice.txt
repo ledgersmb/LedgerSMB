@@ -1,39 +1,39 @@
-<?lsmb company align=center width=40 ?>
-<?lsmb address align=center width=40 ?>
+<?lsmb company align=center width="40" ?>
+<?lsmb address align=center width="40" ?>
 
-Até: <?lsmb till align=left width=3 ?>        fone#: <?lsmb tel ?>
+Até: <?lsmb till align=left width="3" ?>        fone#: <?lsmb tel ?>
 Clerk: <?lsmb username ?>
 Vendedor: <?lsmb employee ?>
 
-<?lsmb invtime ?><?lsmb invnumber align=right width=16 ?>
+<?lsmb invtime ?><?lsmb invnumber align=right width="16" ?>
 
   Qtd Descrição                 Total
 <?lsmb foreach number ?>
-<?lsmb qty align=right width=5 ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width=9 ?>
+<?lsmb qty align=right width="5" ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width="9" ?>
       <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
 <?lsmb end number ?>
 
 Número de itens: <?lsmb rowcount ?>
 <?lsmb if taxincluded ?>
                          ---------------
-                   Total devido: <?lsmb invtotal align=right width=9 ?>
+                   Total devido: <?lsmb invtotal align=right width="9" ?>
 <?lsmb end taxincluded ?>
 <?lsmb if not taxincluded ?>
                             ------------
-                     Subtotal: <?lsmb subtotal align=right width=9 ?>
+                     Subtotal: <?lsmb subtotal align=right width="9" ?>
 <?lsmb end taxincluded ?>
 <?lsmb foreach tax ?>
-<?lsmb taxdescription align=right width=23 ?> @ <?lsmb taxrate align=right width=2 ?>%: <?lsmb tax align=right width=9 ?>
+<?lsmb taxdescription align=right width="23" ?> @ <?lsmb taxrate align=right width="2" ?>%: <?lsmb tax align=right width="9" ?>
 <?lsmb end tax ?>
-                   Total devido: <?lsmb invtotal align=right width=9 ?>
+                   Total devido: <?lsmb invtotal align=right width="9" ?>
 <?lsmb foreach payment ?>
-<?lsmb paymentaccount align=right width=29 ?>: <?lsmb payment align=right width=9 ?> <?lsmb currency ?>
+<?lsmb paymentaccount align=right width="29" ?>: <?lsmb payment align=right width="9" ?> <?lsmb currency ?>
 <?lsmb end payment ?>
 <?lsmb if change ?>
-                       Troco: <?lsmb change align=right width=9 ?>
+                       Troco: <?lsmb change align=right width="9" ?>
 <?lsmb end change ?>
 <?lsmb if total ?>
-                  Saldo devido: <?lsmb total align=right width=9 ?>
+                  Saldo devido: <?lsmb total align=right width="9" ?>
 <?lsmb end total ?>
 <?lsmb if discount ?>
 
