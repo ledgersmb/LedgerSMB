@@ -33,6 +33,7 @@
 #
 #======================================================================
 
+use Math::BigFloat lib=>'GMP';
 package Form;
 
 
@@ -489,21 +490,15 @@ sub round_amount {
 
 	my ($self, $amount, $places) = @_;
 
-	#  $places = 4 if $places == 2;
-	my ($null, $dec) = split /\./, $amount;
-	$dec = length $dec;
-	$dec = ($dec > $places) ? $dec : $places;
-	my $adj = ($amount < 0) ? (1/10**($dec+2)) * -1 : (1/10**($dec+2));
+	# These rounding rules follow from the previous implementation.
+	# They should be changed to allow different rules for different accounts.
+	Math::BigFloat->round_mode('+inf') if $amount >= 0;
+	Math::BigFloat->round_mode('-inf') if $amount < 0;
 
-	if (($places * 1) >= 0) {
-		$amount = sprintf("%.${places}f", $amount + $adj) * 1;
-	} else {
-		$places *= -1;
-		$amount = sprintf("%.0f", $amount);
-		$amount = sprintf("%.f", $amount / (10 ** $places)) * (10 ** $places);
-	}
+	$amount = Math::BigFloat->new($amount)->ffround(-$places) if $places >= 0;
+	$amount = Math::BigFloat->new($amount)->ffround(-($places-1)) if $places < 0;
 
-	$amount;
+	return $amount;
 }
 
 
