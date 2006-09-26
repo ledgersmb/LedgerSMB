@@ -2569,7 +2569,6 @@ sub save_recurring {
 			$enddate, $nextdate, $s{repeat}, $s{unit}, $s{howmany},
 			$s{payment});
 
-		$dbh->do($query) || $self->dberror($query);
 
 		my @p;
 		my $p;
@@ -2627,10 +2626,7 @@ sub save_intnotes {
 
 	my $dbh = $self->dbconnect($myconfig);
 
-	my $query = qq|
-		UPDATE $vc 
-		SET intnotes = |.$dbh->quote($self->{intnotes}).qq|
-		WHERE id = ?|;
+	my $query = qq|UPDATE $vc SET intnotes = ? WHERE id = ?|;
 
 	$sth=$dbh->prepare($query);
 	$sth->execute($self->{intnotes}, $self->{id}) || $self->dberror($query);
