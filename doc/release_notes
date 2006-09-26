@@ -19,7 +19,7 @@ which it was derived, but the feature set is starting to diverge rapidly.
 will not work out of the box.
 * Any operating system that supports the above environment.
 
-2:  What's New in 1.1.0?
+2:  What's New in 1.1?
 
 2.1: Database changes:
 LedgerSMB 1.1 allows more flexibility in dataset creation. We now offer the

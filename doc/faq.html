@@ -37,10 +37,10 @@ Unfortunately, since this problem involves information loss, no
 solution can be automated without invalidating your accounting
 information.  </li></p>
 
-<p><li><h4>PostgreSQL 8.x</h4>
+<p><li><h4>Restoring old SQL-Ledger backups</h4>
 PostgreSQL added a restriction in v8.x that a sequence cannot be dropped
 after if it is referenced by a table. However backups created with
-LedgerSMB v2.6.13 and earlier have a DROP SEQUENCE step in the backup
+SQL-Ledger v2.6.13 and earlier have a DROP SEQUENCE step in the backup
 which will fail. To fix this edit the backup before restoring on a 8.x
 system.
 
