@@ -312,7 +312,7 @@ sub parse_links{
     my $p = HTML::LinkExtor->new(\&cb);
     $p->parse($text) or die;
     foreach (@versions){
-        my ($chkversion) = $_ =~ /^\/ledger-smb\/ledger-smb-(\d{1,3}\.\d{1,3}\.\d{1,3})\.tar\.gz$/;
+        my ($chkversion) = $_ =~ /^\/ledger-smb\/ledger-smb-(\d{1,3}\.\d{1,3}\.\d{1,3}\w*)\.tar\.gz$/;
         $version = $chkversion if ($chkversion gt $version);
     }
     return $version;
@@ -322,7 +322,7 @@ sub cb {
     # Callback function for LinkExtor
     my($tag, %attr) = @_;
     return if $tag ne 'a';
-    return unless $attr{href} =~ /^\/ledger-smb\/ledger-smb-\d{1,3}\.\d{1,3}\.\d{1,3}\.tar\.gz$/;
+    return unless $attr{href} =~ /^\/ledger-smb\/ledger-smb-\d{1,3}\.\d{1,3}\.\d{1,3}\w*\.tar\.gz$/;
     push(@versions, values %attr);
 
 }
