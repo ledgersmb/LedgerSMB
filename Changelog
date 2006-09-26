@@ -1,3 +1,11 @@
+Changelog for LedgerSMB 1.2.0
+
+* Corrected rounding errors (Seneca)
+* Audited Form.pm for SQL-injection problems and move to new API (Chris Travers)
+* Code cleanup and template correction (Chris Murtagh)
+* New template system (Chris Travers)
+* OE.pm and IS.pm are aware of custom fields (Chris Travers)
+
 Changelog for LedgerSMB 1.1.1
 
 * Fixed problem with parts_short trigger not being created
