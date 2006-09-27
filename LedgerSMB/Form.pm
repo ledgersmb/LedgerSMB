@@ -2651,111 +2651,117 @@ sub update_defaults {
 	# <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
 	# <?lsmb PHONE ?> for customer and vendors
 
-	#my $num = $_;
-#	$num =~ s/.*?<\?lsmb\s.*?\?>//g;
-#	($num) = $num =~ /(\d+)/;
-#
-#	if (defined $num) {
-#		my $incnum;
-#		# if we have leading zeros check how long it is
-#
-#		if ($num =~ /^0/) {
-#			my $l = length $num;
-#			$incnum = $num + 1;
-#			$l -= length $incnum;
-#
-#			# pad it out with zeros
-#			my $padzero = "0" x $l;
-#			$incnum = ("0" x $l) . $incnum;
-#		} else {
-#			$incnum = $num + 1;
-#		}
-#
-#		s/$num/$incnum/;
-#	}
-#
-#	my $dbvar = $_;
-#	my $var = $_;
-#	my $str;
-#	my $param;
-#
-#	if (/<\?lsmb /) {
-#
-#		while (/<\?lsmb /) {
-#
-#			s/<\?lsmb .*? ?>//;
-#			last unless $&;
-#			$param = $&;
-#			$str = "";
-#
-#			if ($param =~ /<\?lsmb date ?>/i) {
-#				$str = ($self->split_date($myconfig->{dateformat}, $self->{transdate}))[0];
-#				$var =~ s/$param/$str/;
-#			}
-#
-#			if ($param =~ /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i) {
+	my $num = $_;
+	($num) = $num =~ /(\d+)/;
 
-#				my $fld = lc $&;
-#				$fld =~ s/<\?lsmb //;
+	if (defined $num) {
+		my $incnum;
+		# if we have leading zeros check how long it is
 
-#				if ($fld =~ /name/) {
-#					if ($self->{type}) {
-#						$fld = $self->{vc};
-#					}
-#				}
-#
-#				my $p = $param;
-#				$p =~ s/(<|>|%)//g;
-#				my @p = split / /, $p;
-#				my @n = split / /, uc $self->{$fld};
-#
-#				if ($#p > 0) {
-#
-#					for (my $i = 1; $i <= $#p; $i++) {
-#						$str .= substr($n[$i-1], 0, $p[$i]);
-#					}
-#
-#				} else {
-#					($str) = split /--/, $self->{$fld};
-#				}
-#
-#				$var =~ s/$param/$str/;
-#				$var =~ s/\W//g if $fld eq 'phone';
-#			}
-#
-#			if ($param =~ /<\?lsmb (yy|mm|dd)/i) {
-#
-#				my $p = $param;
-#				$p =~ s/(<|>|%)//g;
-#				my $spc = $p;
-#				$spc =~ s/\w//g;
-#				$spc = substr($spc, 0, 1);
-#				my %d = ( yy => 1, mm => 2, dd => 3 );
-#				my @p = ();
-#
-#				my @a = $self->split_date($myconfig->{dateformat}, $self->{transdate});
-#				for (sort keys %d) { push @p, $a[$d{$_}] if ($p =~ /$_/) }
-#				$str = join $spc, @p;
-#				$var =~ s/$param/$str/;
-#			}
-#
-#			if ($param =~ /<\?lsmb curr/i) {
-#				$var =~ s/$param/$self->{currency}/;
-#			}
-#		}
-#	}
+		if ($num =~ /^0/) {
+			my $l = length $num;
+			$incnum = $num + 1;
+			$l -= length $incnum;
+
+			# pad it out with zeros
+			my $padzero = "0" x $l;
+			$incnum = ("0" x $l) . $incnum;
+		} else {
+			$incnum = $num + 1;
+		}
+
+		s/$num/$incnum/;
+	}
+
+	my $dbvar = $_;
+	my $var = $_;
+	my $str;
+	my $param;
+
+	if (/<\?lsmb /) {
+
+		while (/<\?lsmb /) {
+
+			s/<\?lsmb .*? \?>//;
+			last unless $&;
+		$param = $&;
+			$str = "";
+
+			if ($param =~ /<\?lsmb date \?>/i) {
+				$str = ($self->split_date($myconfig->{dateformat}, $self->{transdate}))[0];
+				$var =~ s/$param/$str/;
+			}
+
+			if ($param =~ /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i) {
+
+				my $fld = lc $&;
+				$fld =~ s/<\?lsmb //;
+
+				if ($fld =~ /name/) {
+					if ($self->{type}) {
+						$fld = $self->{vc};
+					}
+				}
+
+				my $p = $param;
+				$p =~ s/(<|>|%)//g;
+				my @p = split / /, $p;
+				my @n = split / /, uc $self->{$fld};
+
+				if ($#p > 0) {
+
+					for (my $i = 1; $i <= $#p; $i++) {
+						$str .= substr($n[$i-1], 0, $p[$i]);
+					}
+
+				} else {
+					($str) = split /--/, $self->{$fld};
+				}
+
+				$var =~ s/$param/$str/;
+				$var =~ s/\W//g if $fld eq 'phone';
+			}
+
+			if ($param =~ /<\?lsmb (yy|mm|dd)/i) {
+
+				my $p = $param;
+				$p =~ s/(<|>|%)//g;
+				my $spc = $p;
+				$spc =~ s/\w//g;
+				$spc = substr($spc, 0, 1);
+				my %d = ( yy => 1, mm => 2, dd => 3 );
+				my @p = ();
+
+				my @a = $self->split_date($myconfig->{dateformat}, $self->{transdate});
+				for (sort keys %d) { push @p, $a[$d{$_}] if ($p =~ /$_/) }
+				$str = join $spc, @p;
+				$var =~ s/$param/$str/;
+			}
+
+			if ($param =~ /<\?lsmb curr/i) {
+				$var =~ s/$param/$self->{currency}/;
+			}
+		}
+	}
 
 	$query = qq|UPDATE defaults
 				   SET $fld = ?|;
 
 	$sth = $dbh->prepare($query); 
-	$sth->execute($dbvar) || $form->dberror($query);
+	$sth->execute($dbvar) || $self->dberror($query);
 
 	$dbh->commit;
 
 	$var;
 }
 
+sub db_prepare_vars {
+	for (@_){
+		if (!$self->{$_} and $self->{$_} != 0){
+			$self->{$_} = undef;
+		}
+	}
+}
 
 sub split_date {
 

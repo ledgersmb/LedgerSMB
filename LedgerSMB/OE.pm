@@ -247,6 +247,25 @@ sub save {
   
 	# connect to database, turn off autocommit
 	my $dbh = $form->{dbh};
+	my $quotation;
+	my $ordnumber;
+	my $numberfld;
+	if ($form->{type} =~ /_order$/) {
+		$quotation = "0";
+		$ordnumber = "ordnumber";
+		$numberfld = ($form->{vc} eq 'customer') ? "sonumber" : 
+			"ponumber";
+	} else {
+		$quotation = "1";
+		$ordnumber = "quonumber";
+		$numberfld = ($form->{vc} eq 'customer') ? "sqnumber" : 
+			"rfqnumber";
+	}
+
+
+	$form->{ordnumber} = $form->update_defaults(
+		$myconfig, $numberfld, $dbh) 
+			unless $form->{ordnumber}; 
 
 	my $query;
 	my $sth;
@@ -331,8 +350,10 @@ sub save {
 	my %taxaccounts;
 	my $netamount = 0;
 
- 
-	for my $i (1 .. $form->{rowcount}) {
+	my $rowcount = $form->{rowcount} - 1;
+	for my $i (1 .. $rowcount) {
+		$form->db_prepare_vars("orderitems_id_$i", "id_$i", 
+			"description_$i", "project_id_$i", "ship_$i");
 
 		for (qw(qty ship)) { 
 			$form->{"${_}_$i"} = $form->parse_amount(
@@ -438,7 +459,6 @@ sub save {
 			$netamount += $form->{"sellprice_$i"} 
 				* $form->{"qty_$i"};
       
-			$project_id = 'NULL';
 			if ($form->{"projectnumber_$i"} ne "") {
 				($null, $project_id) 
 					= split /--/, 
@@ -446,27 +466,37 @@ sub save {
       			}
 			$project_id = $form->{"project_id_$i"} 
 				if $form->{"project_id_$i"};
-      
+
+			if (!$form->{"reqdate_$i"}){
+				$form->{"reqdate_$i"} = undef;
+			}
+
+			@queryargs = ();
 			# save detail record in orderitems table
 			$query = qq|INSERT INTO orderitems (|;
-			$query .= "id, " if $form->{"orderitems_id_$i"};
+			if ($form->{"orderitems_id_$i"}){
+				$query .= "id, ";
+			}
 			$query .= qq|
 				trans_id, parts_id, description, qty, sellprice,
 				discount, unit, reqdate, project_id, ship, 
 				serialnumber, notes)
                    		VALUES (|;
-			$query .= qq|$dbh->quote($form->{"orderitems_id_$i"}),| 
-				if $form->{"orderitems_id_$i"};
+			if ($form->{"orderitems_id_$i"}){
+				$query .= "?, ";
+				push @queryargs, $form->{"orderitems_id_$i"};
+			}
       			$query .= qq| ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
 			$sth = $dbh->prepare($query);
-			$sth->execute(
+			push (@queryargs, 
 				$form->{id}, $form->{"id_$i"},
 				$form->{"description_$i"}, $form->{"qty_$i"},
 				$fxsellprice, $form->{"discount_$i"},
 				$form->{"unit_$i"}, $form->{"reqdate_$i"},
 				$project_id, $form->{"ship_$i"}, 
-				$form->{"serialnumber_$i"}, $form->{"notes_$i"}
-				) || $form->dberror($query);
+				$form->{"serialnumber_$i"}, 
+				$form->{"notes_$i"});
+			$sth->execute(@queryargs) || $form->dberror($query);
 
 			$form->{"sellprice_$i"} = $fxsellprice;
 		}
@@ -496,24 +526,6 @@ sub save {
 	$form->{exchangerate} = ($exchangerate) ? $exchangerate : 
 		$form->parse_amount($myconfig, $form->{exchangerate});
   
-	my $quotation;
-	my $ordnumber;
-	my $numberfld;
-	if ($form->{type} =~ /_order$/) {
-		$quotation = "0";
-		$ordnumber = "ordnumber";
-		$numberfld = ($form->{vc} eq 'customer') ? "sonumber" : 
-			"ponumber";
-	} else {
-		$quotation = "1";
-		$ordnumber = "quonumber";
-		$numberfld = ($form->{vc} eq 'customer') ? "sqnumber" : 
-			"rfqnumber";
-	}
-
-	$form->{$ordnumber} = $form->update_defaults(
-		$myconfig, $numberfld, $dbh) 
-			unless $form->{$ordnumber}; 
   
 	($null, $form->{department_id}) = split(/--/, $form->{department});
 	for (qw(department_id terms)) { $form->{$_} *= 1 }
@@ -543,9 +555,16 @@ sub save {
 			ponumber = ?, 
 			terms = ?
 		WHERE id = ?|;
-	$sth = $dbh->prepare($query);
-	$sth->execute(
-		$form->{ordnumber},
+	$form->db_prepare_vars("quonumber", "transdate", "vendor_id",
+		"customer_id", "reqdate", "taxincluded", "shippingpoint",
+		"shipvia", "currency", "closed", "department_id",
+		"employee_id", "language_code", "ponumber", "terms");
+
+	if (!$form->{reqdate}){
+		$form->{reqdate} = undef;
+	}
+	
+	@queryargs = ($form->{ordnumber},
 		$form->{quonumber}, 
 		$form->{transdate}, 
 		$form->{vendor_id},
@@ -566,8 +585,9 @@ sub save {
 		$form->{language_code},
 		$form->{ponumber}, 
 		$form->{terms}, 
-		$form->{id}	
-	) || $form->dberror($query);
+		$form->{id});
+	$sth = $dbh->prepare($query);
+	$sth->execute(@queryargs) || $form->dberror($query);
 
 	if (!$did_insert){
 		@queries = $form->get_custom_queries('oe', 'UPDATE');
