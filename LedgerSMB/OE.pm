@@ -23,7 +23,7 @@
 #
 #======================================================================
 #
-# This file has undergone PARTIAL (47%) whitespace cleanup To line 1194
+# This file has undergone PARTIAL (55%) whitespace cleanup To line 1416
 # 
 #======================================================================
 #
@@ -308,8 +308,8 @@ sub save {
 			$sth = $dbh->prepare($query);
 			$sth->execute($form->{id}) || $form->dberror($query);
       
-		} else {
-			$form->{id} = undef;
+		} else { # id is not in the database
+			$form->{id} = undef; 
 		}
 			
 	}
@@ -1194,179 +1194,226 @@ sub exchangerate_defaults {
 
 
 sub order_details {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
-  my $query;
-  my $sth;
+	# connect to database
+	my $dbh = $form->dbconnect($myconfig);
+	my $query;
+	my $sth;
     
-  my $item;
-  my $i;
-  my @sortlist = ();
-  my $projectnumber;
-  my $projectdescription;
-  my $projectnumber_id;
-  my $translation;
-  my $partsgroup;
+	my $item;
+	my $i;
+	my @sortlist = ();
+	my $projectnumber;
+	my $projectdescription;
+	my $projectnumber_id;
+	my $translation;
+	my $partsgroup;
 
-  my %oid = ( 'Pg'	=> 'TRUE',
-              'PgPP'	=> 'TRUE',
-              'Oracle'	=> 'rowid',
-	      'DB2'	=> '1=1'
-	    );
+	my @queryargs;
   
-  my @taxaccounts;
-  my %taxaccounts;
-  my $tax;
-  my $taxrate;
-  my $taxamount;
+	my @taxaccounts;
+	my %taxaccounts; # I don't think this works.
+	my $tax;
+	my $taxrate;
+	my $taxamount;
 
-  my %translations;
+	my %translations;
 
-  $query = qq|SELECT p.description, t.description
-              FROM project p
-	       LEFT JOIN translation t ON (t.trans_id = p.id AND t.language_code = '$form->{language_code}')
+	my $language_code = $form->{dbh}->quote($form->{language_code});
+	$query = qq|
+		SELECT p.description, t.description
+		FROM project p
+		LEFT JOIN translation t ON (t.trans_id = p.id AND 
+			t.language_code = $language_code)
 	       WHERE id = ?|;
-  my $prh = $dbh->prepare($query) || $form->dberror($query);
+	my $prh = $dbh->prepare($query) || $form->dberror($query);
 
-  $query = qq|SELECT inventory_accno_id, income_accno_id,
-              expense_accno_id, assembly FROM parts
-	      WHERE id = ?|;
-  my $pth = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|
+		SELECT inventory_accno_id, income_accno_id,
+		expense_accno_id, assembly FROM parts
+		WHERE id = ?|;
+	my $pth = $dbh->prepare($query) || $form->dberror($query);
   
-  my $sortby;
+	my $sortby;
   
-  # sort items by project and partsgroup
-  for $i (1 .. $form->{rowcount}) {
+	# sort items by project and partsgroup
+	for $i (1 .. $form->{rowcount}) {
 
-    if ($form->{"id_$i"}) {
-      # account numbers
-      $pth->execute($form->{"id_$i"});
-      $ref = $pth->fetchrow_hashref(NAME_lc);
-      for (keys %$ref) { $form->{"${_}_$i"} = $ref->{$_} }
-      $pth->finish;
+		if ($form->{"id_$i"}) {
+			# account numbers
+			$pth->execute($form->{"id_$i"});
+			$ref = $pth->fetchrow_hashref(NAME_lc);
+			for (keys %$ref) { $form->{"${_}_$i"} = $ref->{$_} }
+			$pth->finish;
 
-      $projectnumber_id = 0;
-      $projectnumber = "";
-      $form->{partsgroup} = "";
-      $form->{projectnumber} = "";
+			$projectnumber_id = 0;
+			$projectnumber = "";
+			$form->{partsgroup} = "";
+			$form->{projectnumber} = "";
 
-      if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
+			if ($form->{groupprojectnumber} 
+					|| $form->{grouppartsgroup}) {
 
-	$inventory_accno_id = ($form->{"inventory_accno_id_$i"} || $form->{"assembly_$i"}) ? "1" : "";
+				$inventory_accno_id = 
+					($form->{"inventory_accno_id_$i"} || 
+					$form->{"assembly_$i"}) ? "1" : "";
 
-	if ($form->{groupprojectnumber}) {
-	  ($projectnumber, $projectnumber_id) = split /--/, $form->{"projectnumber_$i"};
+				if ($form->{groupprojectnumber}) {
+					($projectnumber, $projectnumber_id) = 
+						split /--/, 
+						$form->{"projectnumber_$i"};
+				}
+				if ($form->{grouppartsgroup}) {
+					($form->{partsgroup}) = split /--/, 
+						$form->{"partsgroup_$i"};
+				}
+
+				if ($projectnumber_id && 
+						$form->{groupprojectnumber}) {
+					if ($translation{$projectnumber_id}) {
+						$form->{projectnumber} = 
+							$translation{$projectnumber_id};
+					} else {
+						# get project description
+						$prh->execute(
+							$projectnumber_id);
+	    					($projectdescription, 
+							$translation) = 
+							$prh->fetchrow_array;
+						$prh->finish;
+
+						$form->{projectnumber} =
+							($translation) ? 
+							"$projectnumber, \n" .
+							"$translation" 
+							: "$projectnumber, \n" .
+							"$projectdescription";
+
+						$translation{$projectnumber_id}
+							= $form->{projectnumber};
+					}
+				}
+
+				if ($form->{grouppartsgroup} 
+						&& $form->{partsgroup}) {
+					$form->{projectnumber} .= " / " 
+						if $projectnumber_id;
+	  				$form->{projectnumber} .= 
+						$form->{partsgroup};
+				}
+
+				$form->format_string(projectnumber);
+
+			}
+
+			$sortby = qq|$projectnumber$form->{partsgroup}|;
+
+			if ($form->{sortby} ne 'runningnumber') {
+				for (qw(partnumber description bin)) {
+					$sortby .= $form->{"${_}_$i"} 
+						if $form->{sortby} eq $_;
+				}
+			}
+
+			push @sortlist, [ $i, 
+				"$projectnumber$form->{partsgroup}".
+					"$inventory_accno_id", 
+				$form->{projectnumber}, $projectnumber_id, 
+				$form->{partsgroup}, $sortby ];
+		}
+
 	}
-	if ($form->{grouppartsgroup}) {
-	  ($form->{partsgroup}) = split /--/, $form->{"partsgroup_$i"};
-	}
 
-	if ($projectnumber_id && $form->{groupprojectnumber}) {
-	  if ($translation{$projectnumber_id}) {
-	    $form->{projectnumber} = $translation{$projectnumber_id};
-	  } else {
-            # get project description
-	    $prh->execute($projectnumber_id);
-	    ($projectdescription, $translation) = $prh->fetchrow_array;
-	    $prh->finish;
-
-	    $form->{projectnumber} = ($translation) ? "$projectnumber, $translation" : "$projectnumber, $projectdescription";
-
-	    $translation{$projectnumber_id} = $form->{projectnumber};
-	  }
-	}
-
-	if ($form->{grouppartsgroup} && $form->{partsgroup}) {
-	  $form->{projectnumber} .= " / " if $projectnumber_id;
-	  $form->{projectnumber} .= $form->{partsgroup};
-	}
-
-	$form->format_string(projectnumber);
-
-      }
-
-      $sortby = qq|$projectnumber$form->{partsgroup}|;
-      if ($form->{sortby} ne 'runningnumber') {
-	for (qw(partnumber description bin)) {
-	  $sortby .= $form->{"${_}_$i"} if $form->{sortby} eq $_;
-	}
-      }
-
-      push @sortlist, [ $i, qq|$projectnumber$form->{partsgroup}$inventory_accno_id|, $form->{projectnumber}, $projectnumber_id, $form->{partsgroup}, $sortby ];
-    }
-
-  }
-
-  delete $form->{projectnumber};
+	delete $form->{projectnumber};
   
-  # sort the whole thing by project and group
-  @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
+	# sort the whole thing by project and group
+	@sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
   
 
-  # if there is a warehouse limit picking
-  if ($form->{warehouse_id} && $form->{formname} =~ /(pick|packing)_list/) {
-    # run query to check for inventory
-    $query = qq|SELECT sum(qty) AS qty
-                FROM inventory
-		WHERE parts_id = ?
-		AND warehouse_id = ?|;
-    $sth = $dbh->prepare($query) || $form->dberror($query);
+	# if there is a warehouse limit picking
+	if ($form->{warehouse_id} && $form->{formname} =~ 
+			/(pick|packing)_list/) {
+		# run query to check for inventory
+		$query = qq|
+			SELECT sum(qty) AS qty FROM inventory
+			WHERE parts_id = ? AND warehouse_id = ?|;
+		$sth = $dbh->prepare($query) || $form->dberror($query);
 
-    for $i (1 .. $form->{rowcount}) {
-      $sth->execute($form->{"id_$i"}, $form->{warehouse_id}) || $form->dberror;
+		for $i (1 .. $form->{rowcount}) {
+			$sth->execute($form->{"id_$i"}, $form->{warehouse_id}) 
+				|| $form->dberror;
 
-      ($qty) = $sth->fetchrow_array;
-      $sth->finish;
+			($qty) = $sth->fetchrow_array;
+			$sth->finish;
 
-      $form->{"qty_$i"} = 0 if $qty == 0;
+			$form->{"qty_$i"} = 0 if $qty == 0;
       
-      if ($form->parse_amount($myconfig, $form->{"ship_$i"}) > $qty) {
-	$form->{"ship_$i"} = $form->format_amount($myconfig, $qty);
-      }
-    }
-  }
+			if ($form->parse_amount($myconfig, $form->{"ship_$i"}) 
+				> $qty) {
+				$form->{"ship_$i"} = 
+					$form->format_amount($myconfig, $qty);
+			}
+		}
+	}
     
 
-  my $runningnumber = 1;
-  my $sameitem = "";
-  my $subtotal;
-  my $k = scalar @sortlist;
-  my $j = 0;
+	my $runningnumber = 1;
+	my $sameitem = "";
+	my $subtotal;
+	my $k = scalar @sortlist;
+	my $j = 0;
 
-  foreach $item (@sortlist) {
-    $i = $item->[0];
-    $j++;
+	foreach $item (@sortlist) {
+		$i = $item->[0];
+		$j++;
 
-    if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
-      if ($item->[1] ne $sameitem) {
-	$sameitem = $item->[1];
+		if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
+			if ($item->[1] ne $sameitem) {
+				$sameitem = $item->[1];
 	
-	$ok = 0;
+				$ok = 0;
 	
-	if ($form->{groupprojectnumber}) {
-	  $ok = $form->{"projectnumber_$i"};
-	}
-	if ($form->{grouppartsgroup}) {
-	  $ok = $form->{"partsgroup_$i"} unless $ok;
-	}
+				if ($form->{groupprojectnumber}) {
+					$ok = $form->{"projectnumber_$i"};
+				}
+				if ($form->{grouppartsgroup}) {
+					$ok = $form->{"partsgroup_$i"} 
+						unless $ok;
+				}
 
-        if ($ok) {
-	  if ($form->{"inventory_accno_id_$i"} || $form->{"assembly_$i"}) {
-	    push(@{ $form->{part} }, "");
-	    push(@{ $form->{service} }, NULL);
-	  } else {
-	    push(@{ $form->{part} }, NULL);
-	    push(@{ $form->{service} }, "");
-	  }
+				if ($ok) {
+					if ($form->{"inventory_accno_id_$i"} 
+						|| $form->{"assembly_$i"}) {
 
-	  push(@{ $form->{description} }, $item->[2]);
-	  for (qw(taxrates runningnumber number sku qty ship unit bin serialnumber requiredate projectnumber sellprice listprice netprice discount discountrate linetotal weight itemnotes)) { push(@{ $form->{$_} }, "") }
-	  push(@{ $form->{lineitems} }, { amount => 0, tax => 0 });
-	}
-      }
-    }
+						push(@{ $form->{part} }, "");
+						push(@{ $form->{service} }, 
+							NULL);
+					} else {
+						push(@{ $form->{part} }, NULL);
+						push(@{ $form->{service} }, "");
+					}
+
+					push(@{ $form->{description} }, 
+						$item->[2]);
+					for (
+						qw(taxrates runningnumber 
+						number sku qty ship unit bin 
+						serialnumber requiredate 
+						projectnumber sellprice 
+						listprice netprice discount 
+						discountrate linetotal weight 
+						itemnotes)
+					) { 
+						push(@{ $form->{$_} }, "");
+					}
+					push(@{ $form->{lineitems} }, 
+						{ amount => 0, tax => 0 });
+				}
+			}
+		}
+
+		## END WHITESPACE REFORMAT HERE Indent = 2
 
     $form->{"qty_$i"} = $form->parse_amount($myconfig, $form->{"qty_$i"});
     $form->{"ship_$i"} = $form->parse_amount($myconfig, $form->{"ship_$i"});
