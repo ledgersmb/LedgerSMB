@@ -394,6 +394,12 @@ sub format_amount {
 	# is the amount negative
 	my $negative = ($amount < 0);
 
+	# Parse $myconfig->{numberformat}
+
+
+
+	my ($ts, $ds) = ($1, $2);
+
 	if ($amount) {
 
 		if ($myconfig->{numberformat}) {

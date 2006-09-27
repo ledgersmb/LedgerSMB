@@ -245,11 +245,17 @@ sub transactions {
 sub save {
 	my ($self, $myconfig, $form) = @_;
   
+	$form->db_prepare_vars("quonumber", "transdate", "vendor_id",
+		"customer_id", "reqdate", "taxincluded", "shippingpoint",
+		"shipvia", "currency", "closed", "department_id",
+		"employee_id", "language_code", "ponumber", "terms");
 	# connect to database, turn off autocommit
 	my $dbh = $form->{dbh};
+	my @queryargs;
 	my $quotation;
 	my $ordnumber;
 	my $numberfld;
+	$form->{vc} = ($form->{vc} eq 'customer') ? 'customer': 'vendor';
 	if ($form->{type} =~ /_order$/) {
 		$quotation = "0";
 		$ordnumber = "ordnumber";
@@ -262,11 +268,11 @@ sub save {
 			"rfqnumber";
 	}
 
-
-	$form->{ordnumber} = $form->update_defaults(
+	$form->{"$ordnumber"} = $form->update_defaults(
 		$myconfig, $numberfld, $dbh) 
 			unless $form->{ordnumber}; 
 
+	
 	my $query;
 	my $sth;
 	my $null;
@@ -303,10 +309,9 @@ sub save {
 			$sth->execute($form->{id}) || $form->dberror($query);
       
 		} else {
-			$query = qq|INSERT INTO oe (id) VALUES (?)|;
-			$sth = $dbh->prepare($query);
-			$sth->execute($form->{id}) || $form->dberror($query);
+			$form->{id} = undef;
 		}
+			
 	}
  
 	my $did_insert = 0;
@@ -314,13 +319,39 @@ sub save {
     
 		my $uid = localtime;
 		$uid .= "$$";
+		if (!$form->{reqdate}){
+			$form->{reqdate} = undef;
+		}
+		if (!$form->{transdate}){
+			$form->{transdate} = "now";
+		}
     
 		$query = qq|
-			INSERT INTO oe (ordnumber, employee_id)
-			VALUES ('$uid', $form->{employee_id})|;
-		$dbh->do($query) || $form->dberror($query);
+			INSERT INTO oe 
+				(ordnumber, quonumber, transdate, vendor_id, 
+				customer_id, reqdate, shippingpoint, shipvia,
+				notes, intnotes, curr, closed, department_id,
+				employee_id, language_code, ponumber, terms,
+				quotation)
+			VALUES 
+				(?, ?, ?, ?,
+				?, ?, ?, ?,
+				?, ?, ?, ?, ?,
+				?, ?, ?, ?, ?)|;
+		@queryargs = (
+			$form->{ordnumber}, $form->{quonumber},
+			$form->{transdate}, $form->{vendor_id},
+			$form->{customer_id}, $form->{reqdate},
+			$form->{shippingpoint}, $form->{shipvia},
+			$form->{notes}, $form->{intnotes}, $form->{curr},
+			$form->{closed}, $form->{department_id}, 
+			$form->{employee_id}, $form->{language_code}, 
+			$form->{ponumber}, $form->{terms}, $quotation);
+		$sth = $dbh->prepare($query);
+		$sth->execute(@queryargs) || $form->dberror($query);
+		$sth->finish;
    
-		$query = qq|SELECT id FROM oe WHERE ordnumber = '$uid'|;
+		$query = qq|SELECT currval('id')|;
 		$sth = $dbh->prepare($query);
 		$sth->execute || $form->dberror($query);
 		($form->{id}) = $sth->fetchrow_array;
@@ -350,7 +381,7 @@ sub save {
 	my %taxaccounts;
 	my $netamount = 0;
 
-	my $rowcount = $form->{rowcount} - 1;
+	my $rowcount = $form->{rowcount};
 	for my $i (1 .. $rowcount) {
 		$form->db_prepare_vars("orderitems_id_$i", "id_$i", 
 			"description_$i", "project_id_$i", "ship_$i");
@@ -529,63 +560,69 @@ sub save {
   
 	($null, $form->{department_id}) = split(/--/, $form->{department});
 	for (qw(department_id terms)) { $form->{$_} *= 1 }
+	if ($did_insert){
+		$query = qq|
+			UPDATE oe SET 
+				amount = ?,
+				netamount = ?,
+				taxincluded = ?
+			WHERE id = ?|;
+		@queryargs = ($amount, $netamount, $form->{taxincluded},
+				$form->{id});
+	} else {
+		# save OE record
+		$query = qq|
+			UPDATE oe set
+				ordnumber = ?, 
+				quonumber = ?,
+				transdate = ?,
+				vendor_id = ?,
+				customer_id = ?, 
+				amount = ?, 
+				netamount = ?,
+				reqdate = ?,
+				taxincluded = ?, 
+				shippingpoint = ?, 
+				shipvia = ?, 
+				notes = ?, 
+				intnotes = ?, 
+				curr = ?, 
+				closed = ?, 
+				quotation = ?, 
+				department_id = ?, 
+				employee_id = ?, 
+				language_code = ?, 
+				ponumber = ?, 
+				terms = ?
+			WHERE id = ?|;
 
-	# save OE record
-	$query = qq|
-		UPDATE oe set
-			ordnumber = ?, 
-			quonumber = ?,
-			transdate = ?,
-			vendor_id = ?,
-			customer_id = ?, 
-			amount = ?, 
-			netamount = ?,
-			reqdate = ?,
-			taxincluded = ?, 
-			shippingpoint = ?, 
-			shipvia = ?, 
-			notes = ?, 
-			intnotes = ?, 
-			curr = ?, 
-			closed = ?, 
-			quotation = ?, 
-			department_id = ?, 
-			employee_id = ?, 
-			language_code = ?, 
-			ponumber = ?, 
-			terms = ?
-		WHERE id = ?|;
-	$form->db_prepare_vars("quonumber", "transdate", "vendor_id",
-		"customer_id", "reqdate", "taxincluded", "shippingpoint",
-		"shipvia", "currency", "closed", "department_id",
-		"employee_id", "language_code", "ponumber", "terms");
-
-	if (!$form->{reqdate}){
-		$form->{reqdate} = undef;
-	}
+		if (!$form->{reqdate}){
+			$form->{reqdate} = undef;
+		}
 	
-	@queryargs = ($form->{ordnumber},
-		$form->{quonumber}, 
-		$form->{transdate}, 
-		$form->{vendor_id},
-		$form->{customer_id}, 
-		$amount, 
-		$netamount, 
-		$form->{reqdate},
-		$form->{taxincluded}, 
-		$form->{shippingpoint}, 
-		$form->{shipvia},
-		$form->{notes}, 
-		$form->{intnotes}, 
-		$form->{currency},
-		$form->{closed}, 
-		$quotation, 
-		$form->{department_id},
-		$form->{employee_id}, 
-		$form->{language_code},
-		$form->{ponumber}, 
-		$form->{terms}, 
-		$form->{id});
+		@queryargs = ($form->{ordnumber},
+			$form->{quonumber}, 
+			$form->{transdate}, 
+			$form->{vendor_id},
+			$form->{customer_id}, 
+			$amount, 
+			$netamount, 
+			$form->{reqdate},
+			$form->{taxincluded}, 
+			$form->{shippingpoint}, 
+			$form->{shipvia},
+			$form->{notes}, 
+			$form->{intnotes}, 
+			$form->{currency},
+			$form->{closed}, 
+			$quotation, 
+			$form->{department_id},
+			$form->{employee_id}, 
+			$form->{language_code},
+			$form->{ponumber}, 
+			$form->{terms}, 
+			$form->{id});
+	}
 	$sth = $dbh->prepare($query);
 	$sth->execute(@queryargs) || $form->dberror($query);
 
@@ -598,7 +635,6 @@ sub save {
 			$sth->finish;
 		}
 	}
-
 
 
 	$form->{ordtotal} = $amount;
@@ -755,164 +791,190 @@ sub delete {
 
 
 sub retrieve {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
   
   # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $query;
-  my $sth;
-  my $var;
-  my $ref;
+	my $query;
+	my $sth;
+	my $var;
+	my $ref;
 
-  $query = qq|SELECT curr, current_date
-              FROM defaults|;
-  ($form->{currencies}, $form->{transdate}) = $dbh->selectrow_array($query);
+	$query = qq|SELECT curr, current_date FROM defaults|;
+	($form->{currencies}, $form->{transdate}) = 
+		$dbh->selectrow_array($query);
   
-  if ($form->{id}) {
+	if ($form->{id}) {
     
-    # retrieve order
-    $query = qq|SELECT o.ordnumber, o.transdate, o.reqdate, o.terms,
-                o.taxincluded, o.shippingpoint, o.shipvia, o.notes, o.intnotes,
-		o.curr AS currency, e.name AS employee, o.employee_id,
-		o.$form->{vc}_id, vc.name AS $form->{vc}, o.amount AS invtotal,
-		o.closed, o.reqdate, o.quonumber, o.department_id,
-		d.description AS department, o.language_code, o.ponumber
-		FROM oe o
-	        JOIN $form->{vc} vc ON (o.$form->{vc}_id = vc.id)
-	        LEFT JOIN employee e ON (o.employee_id = e.id)
-	        LEFT JOIN department d ON (o.department_id = d.id)
-		WHERE o.id = $form->{id}|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		# retrieve order
+		$query = qq|
+			SELECT o.ordnumber, o.transdate, o.reqdate, o.terms,
+                		o.taxincluded, o.shippingpoint, o.shipvia, 
+				o.notes, o.intnotes, o.curr AS currency, 
+				e.name AS employee, o.employee_id,
+				o.$form->{vc}_id, vc.name AS $form->{vc}, 
+				o.amount AS invtotal, o.closed, o.reqdate, 
+				o.quonumber, o.department_id, 
+				d.description AS department, o.language_code, 
+				o.ponumber
+			FROM oe o
+			JOIN $form->{vc} vc ON (o.$form->{vc}_id = vc.id)
+			LEFT JOIN employee e ON (o.employee_id = e.id)
+			LEFT JOIN department d ON (o.department_id = d.id)
+			WHERE o.id = ?|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{id}) || $form->dberror($query);
 
-    $ref = $sth->fetchrow_hashref(NAME_lc);
-    for (keys %$ref) { $form->{$_} = $ref->{$_} }
-    $sth->finish;
+		$ref = $sth->fetchrow_hashref(NAME_lc);
+		for (keys %$ref) { $form->{$_} = $ref->{$_} }
+		$sth->finish;
    
-    $query = qq|SELECT * FROM shipto
-                WHERE trans_id = $form->{id}|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		$query = qq|SELECT * FROM shipto WHERE trans_id = ?|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{id}) || $form->dberror($query);
 
-    $ref = $sth->fetchrow_hashref(NAME_lc);
-    for (keys %$ref) { $form->{$_} = $ref->{$_} }
-    $sth->finish;
+		$ref = $sth->fetchrow_hashref(NAME_lc);
+		for (keys %$ref) { $form->{$_} = $ref->{$_} }
+		$sth->finish;
 
-    # get printed, emailed and queued
-    $query = qq|SELECT s.printed, s.emailed, s.spoolfile, s.formname
-                FROM status s
-		WHERE s.trans_id = $form->{id}|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		# get printed, emailed and queued
+		$query = qq|
+			SELECT s.printed, s.emailed, s.spoolfile, s.formname
+			FROM status s
+			WHERE s.trans_id = ?|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{id}) || $form->dberror($query);
 
-    while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
-      $form->{printed} .= "$ref->{formname} " if $ref->{printed};
-      $form->{emailed} .= "$ref->{formname} " if $ref->{emailed};
-      $form->{queued} .= "$ref->{formname} $ref->{spoolfile} " if $ref->{spoolfile};
-    }
-    $sth->finish;
-    for (qw(printed emailed queued)) { $form->{$_} =~ s/ +$//g }
+		while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+			$form->{printed} .= "$ref->{formname} " 
+				if $ref->{printed};
+			$form->{emailed} .= "$ref->{formname} " 
+				if $ref->{emailed};
+			$form->{queued} .= "$ref->{formname} $ref->{spoolfile} "
+				if $ref->{spoolfile};
+		}
+		$sth->finish;
+		for (qw(printed emailed queued)) { $form->{$_} =~ s/ +$//g }
 
 
-    # retrieve individual items
-    $query = qq|SELECT o.id AS orderitems_id,
-                p.partnumber, p.assembly, o.description, o.qty,
-		o.sellprice, o.parts_id AS id, o.unit, o.discount, p.bin,
-                o.reqdate, o.project_id, o.ship, o.serialnumber, o.notes,
-		pr.projectnumber,
-		pg.partsgroup, p.partsgroup_id, p.partnumber AS sku,
-		p.listprice, p.lastcost, p.weight, p.onhand,
-		p.inventory_accno_id, p.income_accno_id, p.expense_accno_id,
-		t.description AS partsgrouptranslation
-		FROM orderitems o
-		JOIN parts p ON (o.parts_id = p.id)
-		LEFT JOIN project pr ON (o.project_id = pr.id)
-		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		LEFT JOIN translation t ON (t.trans_id = p.partsgroup_id AND t.language_code = '$form->{language_code}')
-		WHERE o.trans_id = $form->{id}
-                ORDER BY o.id|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		# retrieve individual items
+		$query = qq|
+			SELECT o.id AS orderitems_id, p.partnumber, p.assembly, 
+				o.description, o.qty, o.sellprice, 
+				o.parts_id AS id, o.unit, o.discount, p.bin,
+				o.reqdate, o.project_id, o.ship, o.serialnumber,
+				o.notes, pr.projectnumber, pg.partsgroup, 
+				p.partsgroup_id, p.partnumber AS sku,
+				p.listprice, p.lastcost, p.weight, p.onhand,
+				p.inventory_accno_id, p.income_accno_id, 
+				p.expense_accno_id, t.description 
+					AS partsgrouptranslation
+			FROM orderitems o
+			JOIN parts p ON (o.parts_id = p.id)
+			LEFT JOIN project pr ON (o.project_id = pr.id)
+			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+			LEFT JOIN translation t 
+				ON (t.trans_id = p.partsgroup_id 
+					AND t.language_code = ?)
+			WHERE o.trans_id = ?
+			ORDER BY o.id|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{language_code}, $form->{id}) 
+			|| $form->dberror($query);
 
-    # foreign exchange rates
-    &exchangerate_defaults($dbh, $form);
+		# foreign exchange rates
+		&exchangerate_defaults($dbh, $form);
 
-    # query for price matrix
-    my $pmh = &price_matrix_query($dbh, $form);
+		# query for price matrix
+		my $pmh = &price_matrix_query($dbh, $form);
     
-    # taxes
-    $query = qq|SELECT c.accno
-		FROM chart c
-		JOIN partstax pt ON (pt.chart_id = c.id)
-		WHERE pt.parts_id = ?|;
-    my $tth = $dbh->prepare($query) || $form->dberror($query);
+		# taxes
+		$query = qq|
+			SELECT c.accno FROM chart c
+			JOIN partstax pt ON (pt.chart_id = c.id)
+			WHERE pt.parts_id = ?|;
+		my $tth = $dbh->prepare($query) || $form->dberror($query);
    
-    my $taxrate;
-    my $ptref;
-    my $sellprice;
-    my $listprice;
+		my $taxrate;
+		my $ptref;
+		my $sellprice;
+		my $listprice;
     
-    while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+		while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-      ($decimalplaces) = ($ref->{sellprice} =~ /\.(\d+)/);
-      $decimalplaces = length $decimalplaces;
-      $decimalplaces = ($decimalplaces > 2) ? $decimalplaces : 2;
+			($decimalplaces) = ($ref->{sellprice} =~ /\.(\d+)/);
+			$decimalplaces = length $decimalplaces;
+			$decimalplaces = ($decimalplaces > 2) ? 
+				$decimalplaces : 2;
 
-      $tth->execute($ref->{id});
-      $ref->{taxaccounts} = "";
-      $taxrate = 0;
+			$tth->execute($ref->{id});
+			$ref->{taxaccounts} = "";
+			$taxrate = 0;
       
-      while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
-        $ref->{taxaccounts} .= "$ptref->{accno} ";
-        $taxrate += $form->{"$ptref->{accno}_rate"};
-      }
-      $tth->finish;
-      chop $ref->{taxaccounts};
+			while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
+				$ref->{taxaccounts} .= "$ptref->{accno} ";
+				$taxrate += $form->{"$ptref->{accno}_rate"};
+			}
+			$tth->finish;
+			chop $ref->{taxaccounts};
 
-      # preserve price
-      $sellprice = $ref->{sellprice};
+			# preserve price
+			$sellprice = $ref->{sellprice};
       
-      # multiply by exchangerate
-      $ref->{sellprice} = $form->round_amount($ref->{sellprice} * $form->{$form->{currency}}, $decimalplaces);
+			# multiply by exchangerate
+			$ref->{sellprice} = $form->round_amount(
+				$ref->{sellprice} * $form->{$form->{currency}}, 
+				$decimalplaces
+				);
       
-      for (qw(listprice lastcost)) { $ref->{$_} = $form->round_amount($ref->{$_} / $form->{$form->{currency}}, $decimalplaces) }
+			for (qw(listprice lastcost)) { 
+				$ref->{$_} = $form->round_amount(
+					$ref->{$_} / $form->{$form->{currency}},
+					$decimalplaces
+					); 
+			}
       
-      # partnumber and price matrix
-      &price_matrix($pmh, $ref, $form->{transdate}, $decimalplaces, $form, $myconfig);
+			# partnumber and price matrix
+			&price_matrix(
+				$pmh, $ref, $form->{transdate}, $decimalplaces, 
+				$form, $myconfig);
 
-      $ref->{sellprice} = $sellprice;
+			$ref->{sellprice} = $sellprice;
 
-      $ref->{partsgroup} = $ref->{partsgrouptranslation} if $ref->{partsgrouptranslation};
+			$ref->{partsgroup} = $ref->{partsgrouptranslation} 
+				if $ref->{partsgrouptranslation};
       
-      push @{ $form->{form_details} }, $ref;
+			push @{ $form->{form_details} }, $ref;
       
-    }
-    $sth->finish;
+		}
+		$sth->finish;
 
-    # get recurring transaction
-    $form->get_recurring($dbh);
+		# get recurring transaction
+		$form->get_recurring($dbh);
 
-    @queries = $form->get_custom_queries('oe', 'SELECT');
-    for (@queries){
-	$query = shift @{$_};
-	$sth = $form->{dbh}->prepare($query);
-	$sth->execute($form->{id});
-	$ref = $sth->fetchrow_hashref(NAME_lc);
-	for (keys %{$ref}){
-		$form->{$_} = $ref->{$_};
+		@queries = $form->get_custom_queries('oe', 'SELECT');
+		for (@queries){
+			$query = shift @{$_};
+			$sth = $form->{dbh}->prepare($query);
+			$sth->execute($form->{id});
+			$ref = $sth->fetchrow_hashref(NAME_lc);
+			for (keys %{$ref}){
+				$form->{$_} = $ref->{$_};
+			}
+		}
+		$form->{dbh}->commit;
+	} else {
+
+		# get last name used
+		$form->lastname_used($myconfig, $dbh, $form->{vc}) 
+			unless $form->{"$form->{vc}_id"};
+
+		delete $form->{notes};
+
 	}
-    }
-    $form->{dbh}->commit;
-  } else {
 
-    # get last name used
-    $form->lastname_used($myconfig, $dbh, $form->{vc}) unless $form->{"$form->{vc}_id"};
-    delete $form->{notes};
-
-  }
-
-  $dbh->disconnect;
+	$dbh->commit;
 
 }
 
