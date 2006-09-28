@@ -247,7 +247,7 @@ sub save {
   
 	$form->db_prepare_vars("quonumber", "transdate", "vendor_id",
 		"customer_id", "reqdate", "taxincluded", "shippingpoint",
-		"shipvia", "currency", "closed", "department_id",
+		"shipvia", "currency", "department_id",
 		"employee_id", "language_code", "ponumber", "terms");
 	# connect to database, turn off autocommit
 	my $dbh = $form->{dbh};
@@ -309,13 +309,18 @@ sub save {
 			$sth->execute($form->{id}) || $form->dberror($query);
       
 		} else { # id is not in the database
-			$form->{id} = undef; 
+			delete $form->{id}; 
 		}
 			
 	}
  
 	my $did_insert = 0;
 	if (! $form->{id}) {
+		$query = qq|SELECT nextval('id')|;
+		$sth = $dbh->prepare($query);
+		$sth->execute || $form->dberror($query);
+		($form->{id}) = $sth->fetchrow_array;
+		$sth->finish;
     
 		my $uid = localtime;
 		$uid .= "$$";
@@ -325,16 +330,20 @@ sub save {
 		if (!$form->{transdate}){
 			$form->{transdate} = "now";
 		}
-    
+ 
+		if (($form->{closed} ne 't') and ($form->{closed} ne "1")){
+			$form->{closed} = 'f';
+		}
+		# $form->{id} is safe because it is only pulled *from* the db.
 		$query = qq|
 			INSERT INTO oe 
-				(ordnumber, quonumber, transdate, vendor_id, 
+				(id, ordnumber, quonumber, transdate, vendor_id,
 				customer_id, reqdate, shippingpoint, shipvia,
 				notes, intnotes, curr, closed, department_id,
 				employee_id, language_code, ponumber, terms,
 				quotation)
 			VALUES 
-				(?, ?, ?, ?,
+				($form->{id}, ?, ?, ?, ?,
 				?, ?, ?, ?,
 				?, ?, ?, ?, ?,
 				?, ?, ?, ?, ?)|;
@@ -351,11 +360,6 @@ sub save {
 		$sth->execute(@queryargs) || $form->dberror($query);
 		$sth->finish;
    
-		$query = qq|SELECT currval('id')|;
-		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
-		($form->{id}) = $sth->fetchrow_array;
-		$sth->finish;
 		@queries = $form->get_custom_queries('oe', 'INSERT');
 
 		for (@queries){
@@ -1194,6 +1198,7 @@ sub exchangerate_defaults {
 
 
 sub order_details {
+	use LedgerSMB::CP;
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
@@ -1774,7 +1779,6 @@ sub order_details {
 		? $form->{ordtotal} 
 		: $form->{ordtotal} + $tax;
 
-	use LedgerSMB::CP;
 	my $c;
 	if ($form->{language_code} ne "") {
   		$c = new CP $form->{language_code};
