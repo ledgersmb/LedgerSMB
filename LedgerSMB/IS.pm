@@ -635,13 +635,6 @@ sub post_invoice {
     $sth->finish;
 
     @queries = $form->get_custom_queries('ar', 'INSERT');
-    for (@queries){
-	$query = shift (@{$_});
-	$sth = $dbh->prepare($query) || $form->db_error($query);
-	$sth->execute(@{$_}, $form->{id})|| $form->dberror($query);;
-	$sth->finish;
-	$did_insert = 1;
-    }
   }
 
 
@@ -1431,15 +1424,6 @@ sub retrieve_invoice {
   $dbh->disconnect;
   
   @queries = $form->get_custom_queries('ar', 'SELECT');
-  for (@queries){
-	$query = shift @{$_};
-	$sth = $form->{dbh}->prepare($query);
-	$sth->execute($form->{id});
-	$ref = $sth->fetchrow_hashref(NAME_lc);
-	for (keys %{$ref}){
-		$form->{$_} = $ref->{$_};
-	}
-  }
   $form->{dbh}->commit;
   $rc;
 

@@ -362,15 +362,6 @@ sub save {
    
 		@queries = $form->get_custom_queries('oe', 'INSERT');
 
-		for (@queries){
-			$query = shift (@{$_});
-			$sth = $dbh->prepare($query) 
-				|| $form->db_error($query);
-			$sth->execute(@{$_}, $form->{id})
-				|| $form->dberror($query);;
-			$sth->finish;
-			$did_insert = 1;
-		}
 	}
 
 	my $amount;
@@ -632,12 +623,6 @@ sub save {
 
 	if (!$did_insert){
 		@queries = $form->get_custom_queries('oe', 'UPDATE');
-		for (@queries){
-			my $query = shift @{$_};
-			$sth = $dbh->prepare($query);
-			$sth->execute (@{$_}, $form->{id});
-			$sth->finish;
-		}
 	}
 
 
@@ -958,15 +943,6 @@ sub retrieve {
 		$form->get_recurring($dbh);
 
 		@queries = $form->get_custom_queries('oe', 'SELECT');
-		for (@queries){
-			$query = shift @{$_};
-			$sth = $form->{dbh}->prepare($query);
-			$sth->execute($form->{id});
-			$ref = $sth->fetchrow_hashref(NAME_lc);
-			for (keys %{$ref}){
-				$form->{$_} = $ref->{$_};
-			}
-		}
 		$form->{dbh}->commit;
 	} else {
 

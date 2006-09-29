@@ -1282,6 +1282,7 @@ sub db_init {
 }
 
 sub get_custom_queries {
+	my $dbh = $self->{dbh};
 	my ($self, $tablename, $query_type, $linenum) = @_;
 	if ($query_type !~ /^(select|insert|update)$/i){
 		$self->error($locale->text(
@@ -1308,7 +1309,10 @@ sub get_custom_queries {
 		my $ins_values;
 		$query = "$query_type ";
 		if ($query_type eq 'UPDATE'){
-			$query .= " $_ SET ";
+			$query = "DELETE FROM $_ WHERE row_id = ?";
+			my $sth = $dbh->prepare($query);
+			$sth->execute->($form->{"id"."$linenum"})
+				|| $self->dberror($query);
 		} elsif ($query_type eq 'INSERT'){
 			$query .= " INTO $_ (";
 		}
@@ -1342,6 +1346,30 @@ sub get_custom_queries {
 		} else {
 			unshift (@data, $query);
 			push @rc, [ @data ];
+		}
+	}
+	if ($query_type eq 'INSERT'){
+		for (@rc){
+			$query = shift (@{$_});
+			$sth = $dbh->prepare($query) 
+				|| $form->db_error($query);
+			$sth->execute(@{$_}, $form->{id})
+				|| $form->dberror($query);;
+			$sth->finish;
+			$did_insert = 1;
+		}
+	} elsif ($query_type eq 'UPDATE'){
+		@rc = $self->get_custom_queries(
+			$tablename, $query_type, $linenum);
+	} elsif ($query_type eq 'SELECT'){
+		for (@rc){
+			$query = shift @{$_};
+			$sth = $form->{dbh}->prepare($query);
+			$sth->execute($form->{id});
+			$ref = $sth->fetchrow_hashref(NAME_lc);
+			for (keys %{$ref}){
+				$form->{$_} = $ref->{$_};
+			}
 		}
 	}
 	@rc;
