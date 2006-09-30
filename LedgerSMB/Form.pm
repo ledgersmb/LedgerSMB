@@ -507,6 +507,21 @@ sub round_amount {
 	return $amount;
 }
 
+sub callproc {
+	my $procname = shift @_;
+	my $argstr = "";
+	my @results;
+	for (1 .. $#_){
+		$argstr .= "?, ";
+	}
+	$argstr =~ s/\, $//;
+	$query = "SELECT $procname($argstr)";
+	my $sth = $form->{dbh}->prepare($query);
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)){
+		push @results, $ref;
+	}
+	@results;
+}
 
 sub parse_template {
 
