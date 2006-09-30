@@ -1620,7 +1620,7 @@ sub closebooks {
 
 	my ($self, $myconfig, $form) = @_;
 
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 	my $query = qq|UPDATE defaults SET|;
 
 	if ($form->{revtrans}) {
@@ -1629,7 +1629,7 @@ sub closebooks {
 		$query .= qq| revtrans = '0'|;
 	}
 
-	$query .= qq|, closedto = |.$form->dbquote($form->{closedto}, SQL_DATE);
+	$query .= qq|, closedto = |.$dbh->quote($form->{closedto});
 
 	if ($form->{audittrail}) {
 		$query .= qq|, audittrail = '1'|;
@@ -1641,14 +1641,15 @@ sub closebooks {
 	$dbh->do($query) || $form->dberror($query);
 
 	if ($form->{removeaudittrail}) {
-		$query = qq|DELETE FROM audittrail
-						  WHERE transdate < '$form->{removeaudittrail}'|;
+		$query = qq|
+			DELETE FROM audittrail
+			 WHERE transdate < | . 
+				$dbh->quote($form->{removeaudittrail});
 
 		$dbh->do($query) || $form->dberror($query);
 	}
 
 	$dbh->commit;
-	$dbh->disconnect;
 
 }
 
@@ -1660,14 +1661,15 @@ sub earningsaccounts {
 	my ($query, $sth, $ref);
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	# get chart of accounts
-	$query = qq|SELECT accno,description
-				  FROM chart
-				 WHERE charttype = 'A'
-				   AND category = 'Q'
-			  ORDER BY accno|;
+	$query = qq|
+		    SELECT accno,description
+		      FROM chart
+		     WHERE charttype = 'A'
+		           AND category = 'Q'
+		  ORDER BY accno|;
 
 	$sth = $dbh->prepare($query);
 	$sth->execute || $form->dberror($query);
@@ -1678,7 +1680,7 @@ sub earningsaccounts {
 	}
 	
 	$sth->finish;
-	$dbh->disconnect;
+	$dbh->commit;
 }
 
 
@@ -1687,36 +1689,51 @@ sub post_yearend {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database, turn off AutoCommit
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query;
+	my @queryargs;
 	my $uid = localtime;
 	$uid .= "$$";
 
-	$query = qq|INSERT INTO gl (reference, employee_id)
-					 VALUES ('$uid', (SELECT id FROM employee
-					  WHERE login = '$form->{login}'))|;
+	$query = qq|
+		INSERT INTO gl (reference, employee_id)
+		     VALUES (?, (SELECT id FROM employee
+		                  WHERE login = ?))|;
 
-	$dbh->do($query) || $form->dberror($query);
+	$dbh->prepare($query)->execute($uid, $form->{login}) 
+			|| $form->dberror($query);
 
-	$query = qq|SELECT id 
-				  FROM gl
-				 WHERE reference = '$uid'|;
+	$query = qq|
+		SELECT id 
+		  FROM gl
+		 WHERE reference = ?|;
 
-	($form->{id}) = $dbh->selectrow_array($query);
+	($form->{id}) = $dbh->prepare($query)->fetchrow_array($uid);
 
-	$query = qq|UPDATE gl 
-				   SET reference = |.$dbh->quote($form->{reference}).qq|,
-					   description = |.$dbh->quote($form->{description}).qq|,
-					   notes = |.$dbh->quote($form->{notes}).qq|,
-					   transdate = '$form->{transdate}',
-					   department_id = 0
-				 WHERE id = $form->{id}|;
+	$query = qq|
+		UPDATE gl 
+		   SET reference = ?,
+		       description = ?,
+		       notes = ?,
+		       transdate = ?,
+		       department_id = 0
+		 WHERE id = ?|;
 
-	$dbh->do($query) || $form->dberror($query);
+	@queryargs = ($form->{reference}, $form->{description}, $form->{notes},
+		$form->{transdate}, $form->{id});
+	$dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
 
 	my $amount;
 	my $accno;
+	$query = qq|
+		INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, 
+		            source)
+		     VALUES (?, (SELECT id
+		                   FROM chart
+		                  WHERE accno = ?),
+		            ?, ?, ?)|;
+
 
 	# insert acc_trans transactions
 	for my $i (1 .. $form->{rowcount}) {
@@ -1735,33 +1752,32 @@ sub post_yearend {
 
 		# if there is an amount, add the record
 		if ($amount) {
-			$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, source)
-							 VALUES ($form->{id}, (SELECT id
-													 FROM chart
-													WHERE accno = '$accno'),
-									 $amount, '$form->{transdate}', |
-									.$dbh->quote($form->{reference}).qq|)|;
+			my @args = ($form->{id}, $accno, $amount,
+				$form->{transdate}, $form->{reference});
 
-		$dbh->do($query) || $form->dberror($query);
+			$dbh->prepare($query)->execute(@args) 
+				|| $form->dberror($query);
 		}
 	}
 
-	$query = qq|INSERT INTO yearend (trans_id, transdate)
-					 VALUES ($form->{id}, '$form->{transdate}')|;
+	$query = qq|
+		INSERT INTO yearend (trans_id, transdate)
+		     VALUES (?, ?)|;
 
-	$dbh->do($query) || $form->dberror($query);
+	$dbh->prepare($query)->execute($form->{id}, $form->{transdate}) 
+		|| $form->dberror($query);
 
-	my %audittrail = ( tablename	=> 'gl',
-					   reference	=> $form->{reference},
-					    formname	=> 'yearend',
-					      action	=> 'posted',
-							  id	=> $form->{id} );
+	my %audittrail = ( 
+		tablename	=> 'gl',
+		reference	=> $form->{reference},
+		formname	=> 'yearend',
+		action	=> 'posted',
+		id	=> $form->{id} );
 
 	$form->audittrail($dbh, "", \%audittrail);
 
 	# commit and redirect
 	my $rc = $dbh->commit;
-	$dbh->disconnect;
 
 	$rc;
 
