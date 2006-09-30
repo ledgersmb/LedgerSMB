@@ -71,9 +71,7 @@ sub transactions {
 		}
 	}
 
-	if ($form->{vc} == 'customer'){ # Sanitize $form->{vc}
-		$form->{vc} = 'customer';
-	} else {
+	if ($form->{vc} ne 'customer'){ # Sanitize $form->{vc}
 		$form->{vc} = 'vendor';
 	}
 	my $query = qq|
@@ -244,7 +242,7 @@ sub transactions {
 
 sub save {
 	my ($self, $myconfig, $form) = @_;
-  
+ 
 	$form->db_prepare_vars("quonumber", "transdate", "vendor_id",
 		"customer_id", "reqdate", "taxincluded", "shippingpoint",
 		"shipvia", "currency", "department_id",
@@ -352,7 +350,7 @@ sub save {
 			$form->{transdate}, $form->{vendor_id},
 			$form->{customer_id}, $form->{reqdate},
 			$form->{shippingpoint}, $form->{shipvia},
-			$form->{notes}, $form->{intnotes}, $form->{curr},
+			$form->{notes}, $form->{intnotes}, $form->{currency},
 			$form->{closed}, $form->{department_id}, 
 			$form->{employee_id}, $form->{language_code}, 
 			$form->{ponumber}, $form->{terms}, $quotation);
