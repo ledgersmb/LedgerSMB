@@ -36,106 +36,115 @@
 package Mailer;
 
 sub new {
-  my ($type) = @_;
-  my $self = {};
+	my ($type) = @_;
+	my $self = {};
 
-  bless $self, $type;
+	bless $self, $type;
 }
 
 
 sub send {
-  my ($self, $out) = @_;
+	my ($self, $out) = @_;
 
-  my $boundary = time;
-  $boundary = "LedgerSMB-$self->{version}-$boundary";
-  my $domain = $self->{from};
-  $domain =~ s/(.*?\@|>)//g;
-  my $msgid = "$boundary\@$domain";
+	my $boundary = time;
+	$boundary = "LedgerSMB-$self->{version}-$boundary";
+	my $domain = $self->{from};
+	$domain =~ s/(.*?\@|>)//g;
+	my $msgid = "$boundary\@$domain";
   
-  $self->{charset} = "ISO-8859-1" unless $self->{charset};
+	$self->{charset} = "ISO-8859-1" unless $self->{charset};
 
-  if ($out) {
-    open(OUT, $out) or return "$out : $!";
-  } else {
-    open(OUT, ">-") or return "STDOUT : $!";
-  }
+	if ($out) {
+		open(OUT, $out) or return "$out : $!";
+	} else {
+		open(OUT, ">-") or return "STDOUT : $!";
+	}
 
-  $self->{contenttype} = "text/plain" unless $self->{contenttype};
+	$self->{contenttype} = "text/plain" unless $self->{contenttype};
   
-  my %h;
-  for (qw(from to cc bcc)) {
-    $self->{$_} =~ s/\&lt;/</g;
-    $self->{$_} =~ s/\&gt;/>/g;
-    $self->{$_} =~ s/(\/|\\|\$)//g;
-    $h{$_} = $self->{$_};
-  }
+	my %h;
+	for (qw(from to cc bcc)) {
+		$self->{$_} =~ s/\&lt;/</g;
+		$self->{$_} =~ s/\&gt;/>/g;
+		$self->{$_} =~ s/(\/|\\|\$)//g;
+		$h{$_} = $self->{$_};
+	}
  
-  $h{cc} = "Cc: $h{cc}\n" if $self->{cc};
-  $h{bcc} = "Bcc: $h{bcc}\n" if $self->{bcc};
-  $h{notify} = "Disposition-Notification-To: $h{from}\n" if $self->{notify};
-  $h{subject} = ($self->{subject} =~ /([\x00-\x1F]|[\x7B-\xFFFF])/) ? "Subject: =?$self->{charset}?B?".&encode_base64($self->{subject},"")."?=" : "Subject: $self->{subject}";
+	$h{cc} = "Cc: $h{cc}\n" if $self->{cc};
+	$h{bcc} = "Bcc: $h{bcc}\n" if $self->{bcc};
+	$h{notify} = "Disposition-Notification-To: $h{from}\n" 
+		if $self->{notify};
+	$h{subject} = 
+		($self->{subject} =~ /([\x00-\x1F]|[\x7B-\xFFFF])/) 
+		? "Subject: =?$self->{charset}?B?".
+			&encode_base64($self->{subject},"")."?=" 
+		: "Subject: $self->{subject}";
   
-  print OUT qq|From: $h{from}
-To: $h{to}
-$h{cc}$h{bcc}$h{subject}
-Message-ID: <$msgid>
-$h{notify}X-Mailer: LedgerSMB $self->{version}
-MIME-Version: 1.0
-|;
+	print OUT "From: $h{from}\n".
+		"To: $h{to}\n".
+		"$h{cc}$h{bcc}$h{subject}\n".
+		"Message-ID: <$msgid>\n".
+		"$h{notify}X-Mailer: LedgerSMB $self->{version}\n".
+		"MIME-Version: 1.0\n\n";
 
 
-  if (@{ $self->{attachments} }) {
-    print OUT qq|Content-Type: multipart/mixed; boundary="$boundary"
+	if (@{ $self->{attachments} }) {
+		print OUT 
+			qq|Content-Type: multipart/mixed; |.
+			qq|boundary="$boundary"\n\n|;
+		if ($self->{message} ne "") {
+			print OUT qq|--${boundary}\n|.
+				qq|Content-Type: $self->{contenttype};|.
+				qq| charset="$self->{charset}"\n\n|.
+				qq|$self->{message}|;
+	
+		}
 
-|;
-    if ($self->{message} ne "") {
-      print OUT qq|--${boundary}
-Content-Type: $self->{contenttype}; charset="$self->{charset}"
+		foreach my $attachment (@{ $self->{attachments} }) {
 
-$self->{message}
-
-|;
-    }
-
-    foreach my $attachment (@{ $self->{attachments} }) {
-
-      my $application = ($attachment =~ /(^\w+$)|\.(html|text|txt|sql)$/) ? "text" : "application";
+			my $application = 
+				($attachment =~ 
+					/(^\w+$)|\.(html|text|txt|sql)$/) 
+				? "text" 
+				: "application";
       
-      unless (open IN, $attachment) {
+			unless (open IN, $attachment) {
+				close(OUT);
+				return "$attachment : $!";
+			}
+      
+			my $filename = $attachment;
+			# strip path
+			$filename =~ s/(.*\/|$self->{fileid})//g;
+      
+			print OUT qq|--${boundary}\n|.
+				qq|Content-Type: $application/$self->{format}; |
+				. qq|name="$filename"; |.
+				qq|charset="$self->{charset}"\n|.
+				qq|Content-Transfer-Encoding: BASE64\n|.
+				qq|Content-Disposition: attachment; |.
+				qq|filename="$filename"\n\n|;
+
+			my $msg = "";
+			while (<IN>) {;
+				$msg .= $_;
+			}
+			print OUT &encode_base64($msg);
+
+			close(IN);
+      
+		}
+		print OUT qq|--${boundary}--\n|;
+
+	} else {
+		print OUT qq|Content-Type: $self->{contenttype}; |.
+			qq|charset="$self->{charset}"\n\n|.
+			qq|$self->{message}|;
+	}
+
 	close(OUT);
-	return "$attachment : $!";
-      }
-      
-      my $filename = $attachment;
-      # strip path
-      $filename =~ s/(.*\/|$self->{fileid})//g;
-      
-      print OUT qq|--${boundary}
-Content-Type: $application/$self->{format}; name="$filename"; charset="$self->{charset}"
-Content-Transfer-Encoding: BASE64
-Content-Disposition: attachment; filename="$filename"\n\n|;
 
-      my $msg = "";
-      while (<IN>) {;
-        $msg .= $_;
-      }
-      print OUT &encode_base64($msg);
-
-      close(IN);
-      
-    }
-    print OUT qq|--${boundary}--\n|;
-
-  } else {
-    print OUT qq|Content-Type: $self->{contenttype}; charset="$self->{charset}"
-
-$self->{message}
-|;
-  }
-
-  close(OUT);
-
-  return "";
+	return "";
   
 }
 
@@ -163,22 +172,22 @@ sub encode_base64 ($;$) {
 # Contributors:
 #
 
-  my $res = "";
-  my $eol = $_[1];
-  $eol = "\n" unless defined $eol;
-  pos($_[0]) = 0;                          # ensure start at the beginning
+	my $res = "";
+	my $eol = $_[1];
+	$eol = "\n" unless defined $eol;
+	pos($_[0]) = 0;                          # ensure start at the beginning
 
-  $res = join '', map( pack('u',$_)=~ /^.(\S*)/, ($_[0]=~/(.{1,45})/gs));
+	$res = join '', map( pack('u',$_)=~ /^.(\S*)/, ($_[0]=~/(.{1,45})/gs));
 
-  $res =~ tr|` -_|AA-Za-z0-9+/|;               # `# help emacs
-  # fix padding at the end
-  my $padding = (3 - length($_[0]) % 3) % 3;
-  $res =~ s/.{$padding}$/'=' x $padding/e if $padding;
-  # break encoded string into lines of no more than 60 characters each
-  if (length $eol) {
-    $res =~ s/(.{1,60})/$1$eol/g;
-  }
-  return $res;
+	$res =~ tr|` -_|AA-Za-z0-9+/|;               # `# help emacs
+	# fix padding at the end
+	my $padding = (3 - length($_[0]) % 3) % 3;
+	$res =~ s/.{$padding}$/'=' x $padding/e if $padding;
+	# break encoded string into lines of no more than 60 characters each
+	if (length $eol) {
+		$res =~ s/(.{1,60})/$1$eol/g;
+	}
+	return $res;
   
 }
 

@@ -24,7 +24,7 @@
 #
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
@@ -37,54 +37,55 @@ package Inifile;
 
 
 sub new {
-  my ($type, $file) = @_;
+	my ($type, $file) = @_;
 
-  warn "$type has no copy constructor! creating a new object." if ref($type);
-  $type = ref($type) || $type;
-  my $self = bless {}, $type;
-  $self->add_file($file) if defined $file;
+	warn "$type has no copy constructor! creating a new object." 
+		if ref($type);
+	$type = ref($type) || $type;
+	my $self = bless {}, $type;
+	$self->add_file($file) if defined $file;
 
-  return $self;
+	return $self;
 }
 
 
 sub add_file {
-  my ($self, $file) = @_;
+	my ($self, $file) = @_;
   
-  my $id = "";
-  my %menuorder = ();
+	my $id = "";
+	my %menuorder = ();
 
-  for (@{$self->{ORDER}}) { $menuorder{$_} = 1 }
+	for (@{$self->{ORDER}}) { $menuorder{$_} = 1 }
   
-  open FH, "$file" or Form->error("$file : $!");
+	open FH, "$file" or Form->error("$file : $!");
 
-  while (<FH>) {
-    next if /^(#|;|\s)/;
-    last if /^\./;
+	while (<FH>) {
+		next if /^(#|;|\s)/;
+		last if /^\./;
 
-    chop;
+		chop;
 
-    # strip comments
-    s/\s*(#|;).*//g;
+		# strip comments
+		s/\s*(#|;).*//g;
     
-    # remove any trailing whitespace
-    s/^\s*(.*?)\s*$/$1/;
+		# remove any trailing whitespace
+		s/^\s*(.*?)\s*$/$1/;
 
-    if (/^\[/) {
-      s/(\[|\])//g;
-      $id = $_;
-      push @{$self->{ORDER}}, $_ if ! $menuorder{$_};
-      $menuorder{$_} = 1;
-      next;
-    }
+		if (/^\[/) {
+			s/(\[|\])//g;
+			$id = $_;
+			push @{$self->{ORDER}}, $_ if ! $menuorder{$_};
+			$menuorder{$_} = 1;
+			next;
+		}
 
-    # add key=value to $id
-    my ($key, $value) = split /=/, $_, 2;
+		# add key=value to $id
+		my ($key, $value) = split /=/, $_, 2;
     
-    $self->{$id}{$key} = $value;
+		$self->{$id}{$key} = $value;
 
-  }
-  close FH;
+	}
+	close FH;
   
 }
 

@@ -23,7 +23,7 @@
 #
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
@@ -38,72 +38,80 @@ use LedgerSMB::Inifile;
 
 
 sub menuitem {
-  my ($self, $myconfig, $form, $item) = @_;
+	my ($self, $myconfig, $form, $item) = @_;
 
-  my $module = ($self->{$item}{module}) ? $self->{$item}{module} : $form->{script};
-  my $action = ($self->{$item}{action}) ? $self->{$item}{action} : "section_menu";
-  my $target = ($self->{$item}{target}) ? $self->{$item}{target} : "";
+	my $module = ($self->{$item}{module}) 
+		? $self->{$item}{module} : $form->{script};
+	my $action = ($self->{$item}{action}) 
+		? $self->{$item}{action} : "section_menu";
+	my $target = ($self->{$item}{target}) 
+		? $self->{$item}{target} : "";
 
-  my $level = $form->escape($item);
-  my $str = qq|<a style="display:block;" href="$module?path=$form->{path}&amp;action=$action&amp;level=$level&amp;login=$form->{login}&amp;timeout=$form->{timeout}&amp;sessionid=$form->{sessionid}&amp;js=$form->{js}|;
+	my $level = $form->escape($item);
+	my $str = qq|<a style="display:block;"|. 
+		qq|href="$module?path=$form->{path}&amp;action=$action&amp;|.
+		qq|level=$level&amp;login=$form->{login}&amp;|.
+		qq|timeout=$form->{timeout}&amp;sessionid=$form->{sessionid}|.
+		qq|&amp;js=$form->{js}|;
 
-  my @vars = qw(module action target href);
+	my @vars = qw(module action target href);
   
-  if ($self->{$item}{href}) {
-    $str = qq|<a href="$self->{$item}{href}|;
-    @vars = qw(module target href);
-  }
+	if ($self->{$item}{href}) {
+		$str = qq|<a href="$self->{$item}{href}|;
+		@vars = qw(module target href);
+	}
 
-  for (@vars) { delete $self->{$item}{$_} }
+	for (@vars) { delete $self->{$item}{$_} }
   
-  delete $self->{$item}{submenu};
+	delete $self->{$item}{submenu};
  
-  # add other params
-  foreach my $key (keys %{ $self->{$item} }) {
-    $str .= "&amp;".$form->escape($key)."=";
-    ($value, $conf) = split /=/, $self->{$item}{$key}, 2;
-    $value = "$myconfig->{$value}$conf" if $self->{$item}{$key} =~ /=/;
+	# add other params
+	foreach my $key (keys %{ $self->{$item} }) {
+		$str .= "&amp;".$form->escape($key)."=";
+		($value, $conf) = split /=/, $self->{$item}{$key}, 2;
+		$value = "$myconfig->{$value}$conf" 
+			if $self->{$item}{$key} =~ /=/;
     
-    $str .= $form->escape($value);
-  }
+		$str .= $form->escape($value);
+	}
 
-  $str .= qq|#id$form->{tag}| if $target eq 'acc_menu';
+	$str .= qq|#id$form->{tag}| if $target eq 'acc_menu';
   
-  if ($target) {
-    $str .= qq|" target="$target"|;
-  }
-  else{
-	$str .= '"';
-  }
+	if ($target) {
+	  $str .= qq|" target="$target"|;
+	}
+	else{
+		$str .= '"';
+	}
   
-  $str .= qq|>|;
+	$str .= qq|>|;
   
 }
 
 
 sub access_control {
-  my ($self, $myconfig, $menulevel) = @_;
+	my ($self, $myconfig, $menulevel) = @_;
   
-  my @menu = ();
+	my @menu = ();
 
-  if ($menulevel eq "") {
-    @menu = grep { !/--/ } @{ $self->{ORDER} };
-  } else {
-    @menu = grep { /^${menulevel}--/; } @{ $self->{ORDER} };
-  }
+	if ($menulevel eq "") {
+		@menu = grep { !/--/ } @{ $self->{ORDER} };
+	} else {
+		@menu = grep { /^${menulevel}--/; } @{ $self->{ORDER} };
+	}
 
-  my @a = split /;/, $myconfig->{acs};
-  my $excl = ();
+	my @a = split /;/, $myconfig->{acs};
+	my $excl = ();
 
-  # remove --AR, --AP from array
-  grep { ($a, $b) = split /--/; s/--$a$//; } @a;
+	# remove --AR, --AP from array
+	grep { ($a, $b) = split /--/; s/--$a$//; } @a;
 
-  for (@a) { $excl{$_} = 1 }
+	for (@a) { $excl{$_} = 1 }
 
-  @a = ();
-  for (@menu) { push @a, $_ unless $excl{$_} }
+	@a = ();
+	for (@menu) { push @a, $_ unless $excl{$_} }
 
-  @a;
+	@a;
 
 }
 
