@@ -41,7 +41,7 @@ sub post_transaction {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query;
 	my $sth;
@@ -172,7 +172,12 @@ sub post_transaction {
 	my $invamount = $invnetamount + $tax;
 
 	# adjust paidaccounts if there is no date in the last row
-	$form->{paidaccounts}-- unless ($form->{"datepaid_$form->{paidaccounts}"});
+	$form->{paidaccounts}-- 
+		unless ($form->{"datepaid_$form->{paidaccounts}"});
+
+	if ($form->{vc} ne "customer"){
+		$form->{vc} = "vendor";
+	}
 
 	my $paid = 0;
 	my $fxamount;
@@ -202,28 +207,37 @@ sub post_transaction {
 	$invamount = $form->round_amount($invamount, 2);
 	$paid = $form->round_amount($paid, 2);
 
-	$paid = ($fxinvamount == $paid) ? $invamount : $form->round_amount($paid * $form->{exchangerate}, 2);
+	$paid = ($fxinvamount == $paid) 
+		? $invamount 
+		: $form->round_amount($paid * $form->{exchangerate}, 2);
 
-	$query = q|SELECT fxgain_accno_id, fxloss_accno_id
-			  	 FROM defaults|;
+
+	$query = q|
+		SELECT fxgain_accno_id, fxloss_accno_id
+		  FROM defaults|;
 
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
 
 	($null, $form->{employee_id}) = split /--/, $form->{employee};
 	unless ($form->{employee_id}) {
-		($form->{employee}, $form->{employee_id}) = $form->get_employee($dbh); 
+		($form->{employee}, $form->{employee_id}) = 
+			$form->get_employee($dbh); 
 	}
 
 	# check if id really exists
 	if ($form->{id}) {
+		my $id = $dbh->quote($form->{id});
 		$keepcleared = 1;
-		$query = qq|SELECT id FROM $table
-					 WHERE id = $form->{id}|;
+		$query = qq|
+			SELECT id
+			  FROM $table
+			 WHERE id = $id|;
 
 		if ($dbh->selectrow_array($query)) {
 			# delete detail records
-			$query = qq|DELETE FROM acc_trans
-						 WHERE trans_id = $form->{id}|;
+			$query = qq|
+				DELETE FROM acc_trans
+				 WHERE trans_id = $id|;
 
 			$dbh->do($query) || $form->dberror($query);
 		}
@@ -232,13 +246,15 @@ sub post_transaction {
 		my $uid = localtime;
 		$uid .= "$$";
 
-		$query = qq|INSERT INTO $table (invnumber)
-					VALUES ('$uid')|;
+		$query = qq|
+			INSERT INTO $table (invnumber)
+			     VALUES ('$uid')|;
 
 		$dbh->do($query) || $form->dberror($query);
 
-		$query = qq|SELECT id FROM $table
-					 WHERE invnumber = '$uid'|;
+		$query = qq|
+			SELECT id FROM $table
+			 WHERE invnumber = '$uid'|;
 
 		($form->{id}) = $dbh->selectrow_array($query);
 	}
@@ -252,34 +268,34 @@ sub post_transaction {
 
 	$query = qq|
 		UPDATE $table 
-		SET invnumber = |.$dbh->quote($form->{invnumber}).qq|,
-			ordnumber = |.$dbh->quote($form->{ordnumber}).qq|,
-			transdate = '$form->{transdate}',
-			$form->{vc}_id = $form->{"$form->{vc}_id"},
-			taxincluded = '$form->{taxincluded}',
-			amount = $invamount,
-			duedate = '$form->{duedate}',
-			paid = $paid,
-			datepaid = $datepaid,
-			netamount = $invnetamount,
-			curr = '$form->{currency}',
-			notes = |.$dbh->quote($form->{notes}).qq|,
-			department_id = $form->{department_id},
-			employee_id = $form->{employee_id},
-			ponumber = |.$dbh->quote($form->{ponumber}).qq|
-		WHERE id = $form->{id}
+		SET invnumber = ?,
+			ordnumber = ?,
+			transdate = ?,
+			$form->{vc}_id = ?,
+			taxincluded = ?,
+			amount = ?,
+			duedate = ?,
+			paid = ?,
+			datepaid = ?,
+			netamount = ?,
+			curr = ?,
+			notes = ?,
+			department_id = ?,
+			employee_id = ?,
+			ponumber = ?
+		WHERE id = ?
 	|;
 
-	$dbh->do($query) || $form->dberror($query);
+	my @queryargs = ($form->{invnumber}, $form->{ordnumber},
+		$form->{transdate}, $form->{"$form->{vc}_id"},
+		$form->{taxincluded}, $invamount, $form->{duedate}, $paid, 
+		$datepaid, $invnetamout, $form->{currency}, $form->{notes},
+		$form->{department_id}, $form->{employee_id},
+		$form->{ponumber}, $form->{id});
+
+	$dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
 
 	@queries = $form->get_custom_queries($table, 'INSERT');
-	for (@queries){
-		$query = shift (@{$_});
-		$sth = $dbh->prepare($query) || $form->db_error($query);
-		$sth->execute(@{$_}, $form->{id})|| $form->dberror($query);;
-		$sth->finish;
-		$did_insert = 1;
-	}
 	# update exchangerate
 	my $buy = $form->{exchangerate};
 	my $sell = 0;
@@ -289,7 +305,9 @@ sub post_transaction {
 	}
 
 	if (($form->{currency} ne $form->{defaultcurrency}) && !$exchangerate) {
-		$form->update_exchangerate($dbh, $form->{currency}, $form->{transdate}, $buy, $sell);
+		$form->update_exchangerate(
+			$dbh, $form->{currency}, $form->{transdate}, 
+			$buy, $sell);
 	}
 
 	my $ref;
@@ -299,30 +317,40 @@ sub post_transaction {
 
 		# insert detail records in acc_trans
 		if ($ref->{amount}) {
-			$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount, transdate,
-									project_id, memo, fx_transaction, cleared)
-							 VALUES ($form->{id}, (SELECT id FROM chart
-													WHERE accno = '$ref->{accno}'),
-									 $ref->{amount} * $ml, '$form->{transdate}',
-									 $ref->{project_id}, |.$dbh->quote($ref->{description}).qq|,
-									 '$ref->{fx_transaction}', '$ref->{cleared}')|;
+			$query = qq|
+				INSERT INTO acc_trans 
+				            (trans_id, chart_id, amount, 
+				            transdate, project_id, memo, 
+				            fx_transaction, cleared)
+				    VALUES  (?, (SELECT id FROM chart
+				                  WHERE accno = ?), 
+				            ? * ?, ?, ?, ?, ?, ?)|;
 
-			$dbh->do($query) || $form->dberror($query);
+			@queryargs = ($form->{id}, $ref->{accno}, 
+				$ref->{amount}, $ml, $form->{transdate}, 
+				$ref->{project_id}, $ref->{description}, 
+				$ref->{fx_transaction}, $ref->{cleared});
+			$dbh->prepare($query)->execute(@queryargs) 
+				|| $form->dberror($query);
 		}
 	}
 
 	# save taxes
 	foreach $ref (@{ $form->{acc_trans}{taxes} }) {
 		if ($ref->{amount}) {
-			$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-									transdate, fx_transaction)
-							  VALUES ($form->{id},
-									(SELECT id FROM chart
-									  WHERE accno = '$ref->{accno}'),
-									$ref->{amount} * $ml, '$form->{transdate}',
-									'$ref->{fx_transaction}')|;
+			$query = qq|
+				INSERT INTO acc_trans 
+				            (trans_id, chart_id, amount,
+				            transdate, fx_transaction)
+				     VALUES (?, (SELECT id FROM chart
+					          WHERE accno = ?),
+				            ? * ?, ?, ?)|;
 
-			$dbh->do($query) || $form->dberror($query);
+			@queryargs = ($form->{id}, $ref->{accno}, 
+				$ref->{amount}, $ml, $form->{transdate}, 
+				$ref->{fx_transaction});
+			$dbh->prepare($query)->execute(@queryargs) 
+				|| $form->dberror($query);
 		}
 	}
 
@@ -333,13 +361,17 @@ sub post_transaction {
 	if (($arap = $invamount)) {
 		($accno) = split /--/, $form->{$ARAP};
 
-		$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount, transdate)
-						 VALUES ($form->{id},
-								(SELECT id FROM chart
-								  WHERE accno = '$accno'),
-								$invamount * -1 * $ml, '$form->{transdate}')|;
+		$query = qq|
+			INSERT INTO acc_trans 
+			            (trans_id, chart_id, amount, transdate)
+			     VALUES (?, (SELECT id FROM chart
+			                  WHERE accno = '?'), 
+			                  ? * -1 * $ml, ?)|;
+		@queryargs = ($form->{id}, $accno, $invamount, 
+			$form->{transdate});
 
-		$dbh->do($query) || $form->dberror($query);
+		$dbh->prepare($query)->execute(@queryargs) 
+			|| $form->dberror($query);
 	}
 
 	# if there is no amount force ar/ap
@@ -363,27 +395,40 @@ sub post_transaction {
 			if ($form->{currency} eq $form->{defaultcurrency}) {
 				$form->{"exchangerate_$i"} = 1;
 			} else {
-				$exchangerate = $form->check_exchangerate($myconfig, $form->{currency}, $form->{"datepaid_$i"}, $buysell);
+				$exchangerate = $form->check_exchangerate(
+					$myconfig, $form->{currency}, 
+					$form->{"datepaid_$i"}, $buysell);
 
-				$form->{"exchangerate_$i"} = ($exchangerate) ? $exchangerate : $form->parse_amount($myconfig, $form->{"exchangerate_$i"}); 
+				$form->{"exchangerate_$i"} = ($exchangerate) 
+					? $exchangerate 
+					: $form->parse_amount(
+						$myconfig, 
+						$form->{"exchangerate_$i"}); 
 			}
 
 			# if there is no amount
 			if ($fxinvamount == 0) {
-				$form->{exchangerate} = $form->{"exchangerate_$i"};
+				$form->{exchangerate} = 
+					$form->{"exchangerate_$i"};
 			}
 
 			# ar/ap amount
-				if ($arap) {
+			if ($arap) {
 				($accno) = split /--/, $form->{$ARAP};
 
-				# add ar/ap
-				$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,transdate)
-								 VALUES ($form->{id}, (SELECT id FROM chart
-														WHERE accno = '$accno'),
-										$paid{amount}{$i} * $ml, '$form->{"datepaid_$i"}')|;
+			# add ar/ap
+				$query = qq|
+					INSERT INTO acc_trans 
+					            (trans_id, chart_id, 
+					            amount,transdate)
+					     VALUES (?, (SELECT id FROM chart
+					                  WHERE accno = ?),
+					            ? * $ml, ?)|;
 
-				$dbh->do($query) || $form->dberror($query);
+				@queryargs = ($form->{id}, $paid{amount}{$i},
+					$form->{"datepaid_$i"});
+				$dbh->prepare($query)->execute(@queryargs) 
+					|| $form->dberror($query);
 			}
 
 			$arap = $paid{amount}{$i};
@@ -397,46 +442,84 @@ sub post_transaction {
 				my $cleared = ($form->{"cleared_$i"}) ? 1 : 0;
 
 				$amount = $paid{fxamount}{$i};
-				$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-												   transdate, source, memo, cleared)
-								 VALUES ($form->{id}, (SELECT id FROM chart
-														WHERE accno = '$accno'),
-										$amount * -1 * $ml, '$form->{"datepaid_$i"}', |
-										.$dbh->quote($form->{"source_$i"}).qq|, |
-										.$dbh->quote($form->{"memo_$i"}).qq|, '$cleared')|;
+				$query = qq|
+					INSERT INTO acc_trans 
+					            (trans_id, chart_id, amount,
+					            transdate, source, memo, 
+					            cleared)
+					     VALUES (?, (SELECT id FROM chart
+						          WHERE accno = ?),
+					            ? * -1 * $ml, ?, ?, ?, ?)|;
 
-				$dbh->do($query) || $form->dberror($query);
+				@queryargs = ($form->{id}, $accno, $amount, 
+					$form->{"datepaid_$i"}, 
+					$form->{"source_$i"}, 
+					$form->{"memo_$i"},
+					$cleared);
+				$dbh->prepare($query)->execute(@queryargs) 
+					|| $form->dberror($query);
 
-				if ($form->{currency} ne $form->{defaultcurrency}) {
+				if ($form->{currency} 
+						ne $form->{defaultcurrency}) {
 
 					# exchangerate gain/loss
-					$amount = ($form->round_amount($paid{fxamount}{$i} * $form->{exchangerate},2) - $form->round_amount($paid{fxamount}{$i} * $form->{"exchangerate_$i"},2)) * -1;
+					$amount = ($form->round_amount(
+						$paid{fxamount}{$i} 
+						* $form->{exchangerate},2) - 
+						$form->round_amount(
+							$paid{fxamount}{$i} 
+							* $form->{"exchangerate_$i"},
+							2)) * -1;
 
 					if ($amount) {
 
 						my $accno_id = (($amount * $ml) > 0) ? $fxgain_accno_id : $fxloss_accno_id;
 
-						$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-												transdate, fx_transaction, cleared)
-										 VALUES ($form->{id}, $accno_id,
-												$amount * $ml, '$form->{"datepaid_$i"}', '1',
-												'$cleared')|;
+						$query = qq|
+							INSERT INTO acc_trans 
+							            (trans_id, 
+							            chart_id, 
+							            amount,
+							            transdate, 
+							            fx_transaction, 
+							            cleared)
+							     VALUES (?, ?, 
+							            ? * $ml, 
+							            ?, '1', ?)|;
 
-						$dbh->do($query) || $form->dberror($query);
+						@queryargs = ($form->{id}, 
+							$accno_id, $amount,
+							$form->{"datepaid_$i"},
+							$cleared);
+						$sth = $dbh->prepare($query);
+						$sth->execute(@queryargs) 
+							|| 
+							$form->dberror($query);
 					}
 
 					# exchangerate difference
 					$amount = $paid{amount}{$i} - $paid{fxamount}{$i} + $amount;
 
-					$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-														transdate, fx_transaction, cleared, source)
-									VALUES ($form->{id}, (SELECT id FROM chart
-														   WHERE accno = '$accno'),
-											$amount * -1 * $ml, '$form->{"datepaid_$i"}', '1',
-											'$cleared', |
-											.$dbh->quote($form->{"source_$i"}).qq|)|;
+					$query = qq|
+						INSERT INTO acc_trans 
+						            (trans_id, chart_id,
+						            amount,
+						            transdate, 
+						            fx_transaction, 
+						            cleared, source)
+						     VALUES (?, (SELECT id 
+						                   FROM chart
+						                  WHERE accno 
+						                        = ?),
+						            ? * -1 * $ml, ?, 
+						            '1', ?, ?)|;
 
-					$dbh->do($query) || $form->dberror($query);
+					@queryargs = ($form->{id}, $accno,
+						$amount, $form->{"datepaid_$i"},
+						$cleared, $form->{"source_$i"});
+					$sth = $dbh->prepare($query) ;
+					$sth->execute(@queryargs)
+						|| $form->dberror($query);
 
 				}
 
@@ -449,8 +532,13 @@ sub post_transaction {
 					$sell = $form->{"exchangerate_$i"};
 				}
 
-				if (($form->{currency} ne $form->{defaultcurrency}) && !$exchangerate) {
-					$form->update_exchangerate($dbh, $form->{currency}, $form->{"datepaid_$i"}, $buy, $sell);
+				if (($form->{currency} ne 
+				$form->{defaultcurrency}) && !$exchangerate) {
+
+					$form->update_exchangerate(
+						$dbh, $form->{currency}, 
+						$form->{"datepaid_$i"}, $buy, 
+						$sell);
 				}
 			}
 		}
@@ -470,8 +558,6 @@ sub post_transaction {
 	$form->save_recurring($dbh, $myconfig);
 
 	my $rc = $dbh->commit;
-
-	$dbh->disconnect;
 
 	$rc;
 
