@@ -1,5 +1,8 @@
 Changelog for LedgerSMB 1.2.0
 
+* Audited OE.pm and AM.pm for SQL injection problems. (Chris Travers)
+* Forced edited files to have whitelisted extensions and no .. strings (Chris T)
+* Added $form->callproc($procname, @args) returns @hashrefs (Chris Travers)
 * Corrected rounding errors (Seneca)
 * Audited Form.pm for SQL-injection problems and move to new API (Chris Travers)
 * Code cleanup and template correction (Chris Murtagh)
