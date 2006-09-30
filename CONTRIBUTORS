@@ -29,7 +29,7 @@ Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force
 the password change in the admin.pl
 
 Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
-documentation.
+documentation, the Pg-tables.sql, and a setup file for replication
 
 
 Original Authors of SQL-Ledger:

@@ -24,7 +24,7 @@ CREATE TABLE makemodel (
 );
 --
 CREATE TABLE gl (
-  id int DEFAULT nextval ( 'id' ) PRIMAY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   reference text,
   description text,
   transdate date DEFAULT current_date,
@@ -41,8 +41,7 @@ CREATE TABLE chart (
   category char(1),
   link text,
   gifi_accno text,
-  contra bool DEFAULT 'f',
-  PRIMARY KEY (id)
+  contra bool DEFAULT 'f'
 );
 --
 CREATE TABLE gifi (
@@ -261,7 +260,7 @@ CREATE TABLE customertax (
 CREATE TABLE vendortax (
   vendor_id int,
   chart_id int,
-  PRIMARKY KEY (vendor_id, chart_id)
+  PRIMARY KEY (vendor_id, chart_id)
 );
 --
 CREATE TABLE oe (
@@ -424,7 +423,7 @@ CREATE TABLE department (
 -- department transaction table
 CREATE TABLE dpt_trans (
   trans_id int PRIMARY KEY,
-  department_id int,
+  department_id int
 );
 --
 -- business table
@@ -454,7 +453,7 @@ CREATE TABLE inventory (
   qty numeric,
   shippingdate date,
   employee_id int,
-  entry_id SERIAL PRIMARY KEY,
+  entry_id SERIAL PRIMARY KEY
 );
 --
 CREATE TABLE yearend (
@@ -490,7 +489,7 @@ CREATE TABLE partscustomer (
 );
 --
 CREATE TABLE language (
-  code varchar(6) SERIAL PRIMARY KEY,
+  code varchar(6) PRIMARY KEY,
   description text
 );
 --

@@ -1,5 +1,6 @@
 Changelog for LedgerSMB 1.2.0
 
+* Added script to configure Slony replication (Chris Browne)
 * Audited OE.pm and AM.pm for SQL injection problems. (Chris Travers)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
 * Added $form->callproc($procname, @args) returns @hashrefs (Chris Travers)
