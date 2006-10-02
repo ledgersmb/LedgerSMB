@@ -1598,7 +1598,7 @@ sub display_form {
 
   $form->error("$!: $form->{file}") unless -f $form->{file};
 
-  AM->load_template(\%$form);
+  AM->load_template(\%myconfig, \%$form);
 
   $form->{title} = $form->{file};
 
@@ -1643,7 +1643,7 @@ $form->{body}
 
 sub edit_template {
 
-  AM->load_template(\%$form);
+  AM->load_template(\%myconfig, \%$form);
 
   $form->{title} = $locale->text('Edit Template');
   # convert &nbsp to &amp;nbsp;
@@ -1691,7 +1691,7 @@ $form->{body}
 
 sub save_template {
 
-  AM->save_template(\%$form);
+  AM->save_template(\%myconfig, \%$form);
   $form->redirect($locale->text('Template saved!'));
   
 }

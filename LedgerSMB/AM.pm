@@ -1230,24 +1230,9 @@ sub update_recurring {
 }
 
 
-sub load_template {
+sub check_template_name {
 
-	my ($self, $form) = @_;
-
-	open(TEMPLATE, "$form->{file}") or $form->error("$form->{file} : $!");
-
-	while (<TEMPLATE>) {
-		$form->{body} .= $_;
-	}
-
-	close(TEMPLATE);
-
-}
-
-
-sub save_template {
-
-	my ($self, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
 	my @allowedsuff = qw(css tex txt html xml);
 	if ($form->{file} =~ /\.\./){
@@ -1263,6 +1248,33 @@ sub save_template {
 		$form->error("Error:  File is of type that is not allowed.");
 	}
 
+	if ($form->{file} !~ /^$myconfig->{templates}/){
+		$form->error("$!: $form->{file}") unless $form->{file} =~ /^css/;
+	}
+}
+
+
+sub load_template {
+
+	my ($self, $myconfig, $form) = @_;
+
+	$self->check_template_name(\%$myconfig, \%$form);
+	open(TEMPLATE, "$form->{file}") or $form->error("$form->{file} : $!");
+
+	while (<TEMPLATE>) {
+		$form->{body} .= $_;
+	}
+
+	close(TEMPLATE);
+
+}
+
+
+sub save_template {
+
+	my ($self, $myconfig, $form) = @_;
+
+	$self->check_template_name(\%$myconfig, \%$form);
 	open(TEMPLATE, ">$form->{file}") or $form->error("$form->{file} : $!");
 
 	# strip 
