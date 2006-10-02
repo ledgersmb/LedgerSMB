@@ -1,5 +1,10 @@
 Changelog for LedgerSMB 1.2.0
 
+* Added Gentoo ebuilds documentation (Jayson R).
+* POS register now goes from add invoice to add invoice. (Chris T)
+* Added pole display and separate cash drawer open calls. (Chris T)
+* Added simple text import function for invoices received (PDT's) (Chris T)
+* Added whitelist of allowed directories to file editor (Seneca)
 * Added script to configure Slony replication (Chris Browne)
 * Audited OE.pm and AM.pm for SQL injection problems. (Chris Travers)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
