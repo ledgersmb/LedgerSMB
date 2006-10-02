@@ -295,7 +295,7 @@ sub post_transaction {
 
 	$dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
 
-	@queries = $form->get_custom_queries($table, 'INSERT');
+	@queries = $form->run_custom_queries($table, 'INSERT');
 	# update exchangerate
 	my $buy = $form->{exchangerate};
 	my $sell = 0;

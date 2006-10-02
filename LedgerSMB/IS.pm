@@ -634,7 +634,7 @@ sub post_invoice {
     ($form->{id}) = $sth->fetchrow_array;
     $sth->finish;
 
-    @queries = $form->get_custom_queries('ar', 'INSERT');
+    @queries = $form->run_custom_queries('ar', 'INSERT');
   }
 
 
@@ -1423,7 +1423,7 @@ sub retrieve_invoice {
   my $rc = $dbh->commit;
   $dbh->disconnect;
   
-  @queries = $form->get_custom_queries('ar', 'SELECT');
+  @queries = $form->run_custom_queries('ar', 'SELECT');
   $form->{dbh}->commit;
   $rc;
 

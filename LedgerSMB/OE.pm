@@ -358,7 +358,7 @@ sub save {
 		$sth->execute(@queryargs) || $form->dberror($query);
 		$sth->finish;
    
-		@queries = $form->get_custom_queries('oe', 'INSERT');
+		@queries = $form->run_custom_queries('oe', 'INSERT');
 
 	}
 
@@ -620,7 +620,7 @@ sub save {
 	$sth->execute(@queryargs) || $form->dberror($query);
 
 	if (!$did_insert){
-		@queries = $form->get_custom_queries('oe', 'UPDATE');
+		@queries = $form->run_custom_queries('oe', 'UPDATE');
 	}
 
 
@@ -940,7 +940,7 @@ sub retrieve {
 		# get recurring transaction
 		$form->get_recurring($dbh);
 
-		@queries = $form->get_custom_queries('oe', 'SELECT');
+		@queries = $form->run_custom_queries('oe', 'SELECT');
 		$form->{dbh}->commit;
 	} else {
 

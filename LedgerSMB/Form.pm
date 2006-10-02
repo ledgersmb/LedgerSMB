@@ -1296,7 +1296,7 @@ sub db_init {
 	}
 }
 
-sub get_custom_queries {
+sub run_custom_queries {
 	my $dbh = $self->{dbh};
 	my ($self, $tablename, $query_type, $linenum) = @_;
 	if ($query_type !~ /^(select|insert|update)$/i){
@@ -1374,7 +1374,7 @@ sub get_custom_queries {
 			$did_insert = 1;
 		}
 	} elsif ($query_type eq 'UPDATE'){
-		@rc = $self->get_custom_queries(
+		@rc = $self->run_custom_queries(
 			$tablename, $query_type, $linenum);
 	} elsif ($query_type eq 'SELECT'){
 		for (@rc){
