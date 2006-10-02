@@ -35,6 +35,7 @@
 package JC;
 
 use LedgerSMB::IS;
+use LedgerSMB::PriceMatrix;
 
 sub get_jcitems {
   my ($self, $myconfig, $form) = @_;
@@ -268,12 +269,12 @@ sub jcparts {
   my $sth = $dbh->prepare($query);
   $sth->execute || $form->dberror($query);
 
-  my $pmh = price_matrix_query($dbh, $project_id, $customer_id);
+  my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
   IS::exchangerate_defaults($dbh, $form);
 
   while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
     $ref->{description} = $ref->{translation} if $ref->{translation};
-    IS::price_matrix($pmh, $ref, $form->datetonum($form->{transdate}), 4, $form, $myconfig);
+    PriceMatrix::price_matrix($pmh, $ref, $form->{transdate}, 4, $form, $myconfig);
     push @{ $form->{all_parts} }, $ref;
   }
   $sth->finish;
@@ -551,49 +552,6 @@ sub save {
 
 }
 
-
-sub price_matrix_query {
-  my ($dbh, $project_id, $customer_id) = @_;
-  
-  my $query = qq|SELECT p.id AS parts_id, 0 AS customer_id, 0 AS pricegroup_id,
-              0 AS pricebreak, p.sellprice, NULL AS validfrom, NULL AS validto,
-	      (SELECT substr(curr,1,3) FROM defaults) AS curr, '' AS pricegroup
-              FROM parts p
-	      WHERE p.id = ?
-
-	      UNION
-  
-              SELECT p.*, g.pricegroup
-              FROM partscustomer p
-	      LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-	      WHERE p.parts_id = ?
-	      AND p.customer_id = $customer_id
-	      
-	      UNION
-
-	      SELECT p.*, g.pricegroup 
-	      FROM partscustomer p 
-	      LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-	      JOIN customer c ON (c.pricegroup_id = g.id)
-	      WHERE p.parts_id = ?
-	      AND c.id = $customer_id
-	      
-	      UNION
-
-	      SELECT p.*, '' AS pricegroup
-	      FROM partscustomer p
-	      WHERE p.customer_id = 0
-	      AND p.pricegroup_id = 0
-	      AND p.parts_id = ?
-
-	      ORDER BY customer_id DESC, pricegroup_id DESC, pricebreak
-	      
-	      |;
-  my $sth = $dbh->prepare($query) || $form->dberror($query);
-
-  $sth;
-
-}
 
 
 1;

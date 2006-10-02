@@ -1,6 +1,7 @@
 Changelog for LedgerSMB 1.2.0
 
-* Added Gentoo ebuilds documentation (Jayson R).
+* Broke out price matrix calls into PriceMatrix.pm (Chris T)
+* Added Gentoo ebuilds documentation and metadata(Jayson R).
 * POS register now goes from add invoice to add invoice. (Chris T)
 * Added pole display and separate cash drawer open calls. (Chris T)
 * Added simple text import function for invoices received (PDT's) (Chris T)

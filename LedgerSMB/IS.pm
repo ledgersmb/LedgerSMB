@@ -32,7 +32,7 @@
 #======================================================================
 
 package IS;
-
+use LedgerSMB::PriceMatrix;
 
 sub invoice_details {
   my ($self, $myconfig, $form) = @_;
@@ -1377,7 +1377,7 @@ sub retrieve_invoice {
     &exchangerate_defaults($dbh, $form);
 
     # query for price matrix
-    my $pmh = &price_matrix_query($dbh, $form);
+    my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
     
     # taxes
     $query = qq|SELECT c.accno
@@ -1409,7 +1409,7 @@ sub retrieve_invoice {
 
       # price matrix
       $ref->{sellprice} = ($ref->{fxsellprice} * $form->{$form->{currency}});
-      &price_matrix($pmh, $ref, $form->{transdate}, $decimalplaces, $form, $myconfig);
+      PriceMatrix::price_matrix($pmh, $ref, $form->{transdate}, $decimalplaces, $form, $myconfig);
       $ref->{sellprice} = $ref->{fxsellprice};
 
       $ref->{partsgroup} = $ref->{partsgrouptranslation} if $ref->{partsgrouptranslation};
@@ -1503,7 +1503,7 @@ sub retrieve_item {
 
 
   # price matrix
-  my $pmh = &price_matrix_query($dbh, $form);
+  my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
 
   my $transdate = $form->datetonum($myconfig, $form->{transdate});
   
@@ -1524,7 +1524,7 @@ sub retrieve_item {
     chop $ref->{taxaccounts};
 
     # get matrix
-    &price_matrix($pmh, $ref, $transdate, $decimalplaces, $form, $myconfig);
+    PriceMatrix::price_matrix($pmh, $ref, $transdate, $decimalplaces, $form, $myconfig);
 
     $ref->{description} = $ref->{translation} if $ref->{translation};
     $ref->{partsgroup} = $ref->{grouptranslation} if $ref->{grouptranslation};
@@ -1536,121 +1536,6 @@ sub retrieve_item {
   $sth->finish;
   $dbh->disconnect;
   
-}
-
-
-sub price_matrix_query {
-  my ($dbh, $form) = @_;
-  
-  my $query = qq|SELECT p.id AS parts_id, 0 AS customer_id, 0 AS pricegroup_id,
-              0 AS pricebreak, p.sellprice, NULL AS validfrom, NULL AS validto,
-	      '$form->{defaultcurrency}' AS curr, '' AS pricegroup
-              FROM parts p
-	      WHERE p.id = ?
-
-	      UNION
-  
-              SELECT p.*, g.pricegroup
-              FROM partscustomer p
-	      LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-	      WHERE p.parts_id = ?
-	      AND p.customer_id = $form->{customer_id}
-	      
-	      UNION
-
-	      SELECT p.*, g.pricegroup 
-	      FROM partscustomer p 
-	      LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-	      JOIN customer c ON (c.pricegroup_id = g.id)
-	      WHERE p.parts_id = ?
-	      AND c.id = $form->{customer_id}
-	      
-	      UNION
-
-	      SELECT p.*, '' AS pricegroup
-	      FROM partscustomer p
-	      WHERE p.customer_id = 0
-	      AND p.pricegroup_id = 0
-	      AND p.parts_id = ?
-
-	      ORDER BY customer_id DESC, pricegroup_id DESC, pricebreak
-	      
-	      |;
-  my $sth = $dbh->prepare($query) || $form->dberror($query);
-
-  $sth;
-
-}
-
-
-sub price_matrix {
-  my ($pmh, $ref, $transdate, $decimalplaces, $form, $myconfig) = @_;
-
-  $pmh->execute($ref->{id}, $ref->{id}, $ref->{id}, $ref->{id});
- 
-  $ref->{pricematrix} = "";
-  
-  my $customerprice;
-  my $pricegroupprice;
-  my $sellprice;
-  my $baseprice;
-  my $mref;
-  my %p = ();
-  my $i = 0;
-  
-  while ($mref = $pmh->fetchrow_hashref(NAME_lc)) {
-
-    # check date
-    if ($mref->{validfrom}) {
-      next if $transdate < $form->datetonum($myconfig, $mref->{validfrom});
-    }
-    if ($mref->{validto}) {
-      next if $transdate > $form->datetonum($myconfig, $mref->{validto});
-    }
-
-    # convert price
-    $sellprice = $form->round_amount($mref->{sellprice} * $form->{$mref->{curr}}, $decimalplaces);
-
-    $mref->{pricebreak} *= 1;
-
-    if ($mref->{customer_id}) {
-      $p{$mref->{pricebreak}} = $sellprice;
-      $customerprice = 1;
-    }
-
-    if ($mref->{pricegroup_id}) {
-      if (!$customerprice) {
-	$p{$mref->{pricebreak}} = $sellprice;
-	$pricegroupprice = 1;
-      }
-    }
-
-    if (!$customerprice && !$pricegroupprice) {
-      $p{$mref->{pricebreak}} = $sellprice;
-    }
-    
-    if (($mref->{pricebreak} + $mref->{customer_id} + $mref->{pricegroup_id}) == 0) {
-      $baseprice = $sellprice;
-    }
-
-    $i++;
- 
-  }
-  $pmh->finish;
-
-  if (! exists $p{0}) {
-    $p{0} = $baseprice;
-  }
-  
-  if ($i > 1) {
-    $ref->{sellprice} = $p{0};
-    for (sort { $a <=> $b } keys %p) { $ref->{pricematrix} .= "${_}:$p{$_} " }
-  } else {
-    $ref->{sellprice} = $form->round_amount($p{0} * (1 - $form->{tradediscount}), $decimalplaces);
-    $ref->{pricematrix} = "0:$ref->{sellprice} " if $ref->{sellprice};
-  }
-  chop $ref->{pricematrix};
-
 }
 
 

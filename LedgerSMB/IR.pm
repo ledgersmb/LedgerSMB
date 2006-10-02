@@ -32,7 +32,7 @@
 #======================================================================
 
 package IR;
-
+use LedgerSMB::PriceMatrix;
 
 sub post_invoice {
   my ($self, $myconfig, $form) = @_;
@@ -850,11 +850,7 @@ sub retrieve_invoice {
     &exchangerate_defaults($dbh, $form);
 
     # price matrix and vendor partnumber
-    $query = qq|SELECT partnumber
-                FROM partsvendor
-		WHERE parts_id = ?
-		AND vendor_id = $form->{vendor_id}|;
-    my $pmh = $dbh->prepare($query) || $form->dberror($query);
+    my $pmh = PriceMatrix::PriceMatrixQuery($dbh, $form);
 
     # tax rates for part
     $query = qq|SELECT c.accno
@@ -885,7 +881,7 @@ sub retrieve_invoice {
 
       # price matrix
       $ref->{sellprice} = $form->round_amount($ref->{fxsellprice} * $form->{$form->{currency}}, $decimalplaces);
-      &price_matrix($pmh, $ref, $decimalplaces, $form);
+      PriceMatrix::price_matrix($pmh, $ref, $decimalplaces, $form, $myconfig);
 
       $ref->{sellprice} = $ref->{fxsellprice};
       $ref->{qty} *= -1;
@@ -974,11 +970,7 @@ sub retrieve_item {
   my $tth = $dbh->prepare($query) || $form->dberror($query);
 
   # price matrix
-  $query = qq|SELECT p.*
-              FROM partsvendor p
-	      WHERE p.parts_id = ?
-	      AND vendor_id = $form->{vendor_id}|;
-  my $pmh = $dbh->prepare($query) || $form->dberror($query);
+  my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
 
   my $ref;
   my $ptref;
@@ -1000,7 +992,7 @@ sub retrieve_item {
     chop $ref->{taxaccounts};
 
     # get vendor price and partnumber
-    &price_matrix($pmh, $ref, $decimalplaces, $form);
+    PriceMatrix::price_matrix($pmh, $ref, $decimalplaces, $form, $myconfig);
 
     $ref->{description} = $ref->{translation} if $ref->{translation};
     $ref->{partsgroup} = $ref->{grouptranslation} if $ref->{grouptranslation};
@@ -1056,30 +1048,6 @@ sub exchangerate_defaults {
   $form->{$form->{currency}} = $form->{exchangerate} if $form->{exchangerate};
   $form->{$form->{currency}} ||= 1;
   $form->{$form->{defaultcurrency}} = 1;
-  
-}
-
-
-sub price_matrix {
-  my ($pmh, $ref, $decimalplaces, $form) = @_;
-  
-  $pmh->execute($ref->{id});
-  my $mref = $pmh->fetchrow_hashref(NAME_lc);
-  
-  if ($mref->{partnumber} ne "") {
-    $ref->{partnumber} = $mref->{partnumber};
-  }
-
-  if ($mref->{lastcost}) {
-    # do a conversion
-    $ref->{sellprice} = $form->round_amount($mref->{lastcost} * $form->{$mref->{curr}}, $decimalplaces);
-  }
-  $pmh->finish;
-
-  $ref->{sellprice} *= 1;
-  
-  # add 0:price to matrix
-  $ref->{pricematrix} = "0:$ref->{sellprice}";
   
 }
 
