@@ -151,7 +151,7 @@ sub send {
 
 sub encode_base64 ($;$) {
   use MIME::Base64;
-  return MIME::Base64::encode($_[1], $_[2]);
+  return MIME::Base64::encode($_[0], $_[1]);
   
 }
 
