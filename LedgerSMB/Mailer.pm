@@ -150,44 +150,8 @@ sub send {
 
 
 sub encode_base64 ($;$) {
-
-  # this code is from the MIME-Base64-2.12 package
-
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
-# under the GNU General Public License version 2 or, at your option, any later 
-# version.  For a full list including contact information of contributors, 
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2002
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-# Contributors:
-#
-
-	my $res = "";
-	my $eol = $_[1];
-	$eol = "\n" unless defined $eol;
-	pos($_[0]) = 0;                          # ensure start at the beginning
-
-	$res = join '', map( pack('u',$_)=~ /^.(\S*)/, ($_[0]=~/(.{1,45})/gs));
-
-	$res =~ tr|` -_|AA-Za-z0-9+/|;               # `# help emacs
-	# fix padding at the end
-	my $padding = (3 - length($_[0]) % 3) % 3;
-	$res =~ s/.{$padding}$/'=' x $padding/e if $padding;
-	# break encoded string into lines of no more than 60 characters each
-	if (length $eol) {
-		$res =~ s/(.{1,60})/$1$eol/g;
-	}
-	return $res;
+  use MIME::Base64;
+  return MIME::Base64::encode($_[1], $_[2]);
   
 }
 
