@@ -54,7 +54,7 @@ foreach my $module(@req_modules){
   if ($cpan == 1){
     # Can try to install the module..
     print "\n\nWould you like to try and install this package ($module) through CPAN? (Y/N) [Y]:";
-    $response=<STDIN>;
+    my $response=<STDIN>;
     if(($response=~/y/i) or ($response eq "\n")){
       my $inst_obj = CPAN::Shell->install($module);
       @results=&check_module($module);
@@ -74,14 +74,14 @@ foreach my $module(@req_modules){
 use HTML::LinkExtor;
 
 
-$lynx = `lynx -version`;      # if LWP is not installed use lynx
-$gzip = `gzip -V 2>&1`;            # gz decompression utility
-$tar = `tar --version 2>&1`;       # tar archiver
-$latex = `latex -version`;
+my $lynx = `lynx -version`;      # if LWP is not installed use lynx
+my $gzip = `gzip -V 2>&1`;            # gz decompression utility
+my $tar = `tar --version 2>&1`;       # tar archiver
+my $latex = `latex -version`;
 
 my $versionurl ='http://prdownloads.sourceforge.net/ledger-smb';
 
-%source = (
+my %source = (
 	    1 => { url => "http://voxel.dl.sourceforge.net/sourceforge/ledger-smb", site => "New York, U.S.A", locale => 'us' },
             2 => { url => "http://easynews.dl.sourceforge.net/sourceforge/ledger-smb", site => "Arizona, U.S.A", locale => 'us' },
 	    3 => { url => "http://ufpr.dl.sourceforge.net/sourceforge/ledger-smb", site =>"Brazil", locale => 'br' },
@@ -96,14 +96,14 @@ my $versionurl ='http://prdownloads.sourceforge.net/ledger-smb';
 	    12 => { url => "http://heanet.dl.sourceforge.net/sourceforge/ledger-smb", site => "Ireland", locale => 'ie' }
 	  );
 
-$userspath = "users";         # default for new installation
+my $userspath = "users";         # default for new installation
 
 eval { require "ledger-smb.conf"; };
 
-$filename = shift;
+my $filename = shift;
 chomp $filename;
 
-$newinstall = 1;
+my $newinstall = 1;
 
 # is LWP installed
 eval { require LWP::Simple; };
@@ -129,33 +129,67 @@ if (-f "VERSION") {
   close(FH);
   $version = $a[0];
   chomp $version;
-
   $newinstall = !$version;
-
   if (! -f "ledger-smb.conf") {
     $newinstall = 1;
   }
 }
 
+# Try to determine web user and group..
+
 $webowner = "nobody";
 $webgroup = "nogroup";
 
-if ($httpd = `find /etc /usr/local/etc -type f -name 'httpd.conf'`) {
+# Check for apache2.conf
+if ($httpd = `find /etc /usr/local/etc -type f -name 'apache2.conf'`) {
   chomp $httpd;
   $webowner = `grep "^User " $httpd`;
   $webgroup = `grep "^Group " $httpd`;
-
   chomp $webowner;
   chomp $webgroup;
+  (undef, $webowner) = split / /, $webowner;
+  (undef, $webgroup) = split / /, $webgroup;
   
-  ($null, $webowner) = split / /, $webowner;
-  ($null, $webgroup) = split / /, $webgroup;
-
+} elsif ($httpd = `find /etc /usr/local/etc -type f -name 'httpd.conf'`) {
+  # Else check for httpd.conf
+  chomp $httpd;
+  $webowner = `grep "^User " $httpd`;
+  $webgroup = `grep "^Group " $httpd`;
+  chomp $webowner;
+  chomp $webgroup;
+  (undef, $webowner) = split / /, $webowner;
+  (undef, $webgroup) = split / /, $webgroup;
 }
 
 if ($confd = `find /etc /usr/local/etc -type d -name 'apache*/conf.d'`) {
   chomp $confd;
 }
+# If we are doing a new install.. check the postgresql installation..
+if ($newinstall == 1){
+  # Check the postgresql version before we even check for a connection if local
+  system("tput clear"); # Clear the screen..
+  our ($pghost, $pgport, $pguser, $pgpassword);
+  print "\n\nIs PostgreSQL installed [L]ocally,\n or will you be connecting to a [R]emote server? (L/R) [L]:";
+  my $localremote=<STDIN>;
+  if(($localremote=~/L/i) or ($localremote eq "\n")){
+    $pghost = 'localhost';
+    # If local, check the local postgresql version..
+    my $pgversion = `psql --version`;
+    ($pgversionnum) = $pgversion =~ m/(\d\.\d\.\d)/;
+    unless ($pgversionnum gt '8.0.0'){
+      # Die, cannot continue..
+      print "LedgerSMB requires postgres version 8.0 or higher.  You have version $pgversionnum installed\n";
+      die;
+    }
+  }
+  if (!&check_pgconnect){
+    print "\n\n\nInstallation was not successful\n Exiting....\n";
+    exit;
+  }
+  
+}
+
+
 
 system("tput clear");
 
@@ -617,4 +651,118 @@ sub cleanup {
 
 sub remove_lockfile { unlink "$userspath/nologin" if (-f "$userspath/nologin") };
 
+sub check_pgconnect{
+  print "We will now attempt to validate that we are able to \nconnect to your postgres database.\n";
+  my $cnx = 0;
+  while (!$cnx){
+    print "\nPlease enter the host name of the postgresql database? ".
+	"(ie localhost)\n [$pghost]:";
+    my $response=<STDIN>;
+    $response =~ s/\s*//g;
+    chomp($response);
+    # Should probably try to validate the hostname here.. but for now, we'll leave it.
+    $response = $pghost if ($response eq '');
+    while (!$pgport){
+      print "\nPlease enter the port postgres is listening on.\n[5432]:";
+      $pgport=<STDIN>;
+      chomp($pgport);
+      $pgport = 5432 if ($pgport eq '');
+      if (($pgport =~ /\D/)||($pgport > 65535)){
+        print "\nThe port must be a number between 0 and 65535, ".
+  		"postgres default is 5432\n";
+        undef $pgport;
+      }
+    }
+    while (!$pguser){
+      print "\nPlease enter a valid postgres user name ".
+	"to validate the connection.:";
+      $pguser=<STDIN>;
+      chomp($pguser);
+      if ($pguser eq ''){
+        print "\nYou must enter a username\n";
+      }
+    }
+    while (!$pgpass){
+      print "\nPlease enter a valid postgres password ".
+	"to validate the connection.:";
+      $pgpass=<STDIN>;
+      chomp($pgpass);
+      if ($pgpass eq ''){
+        print "\nYou must enter a password\n";
+      }
+    }
+  
+    # Try to connect;
+    eval {
+      my $dbh = DBI->connect("dbi:Pg:dbname=template1;host=$response;".
+	"port=$pgport;", $pguser, $pgpass) or die $DBI::errstr;
+      my $version = $dbh->get_info(  18 );
+      if ($version =~ /^07/){
+        die "You have postgres version $version installed, ".
+		"we require a minimum of 8.0\n";
+      }
+    };
+    if ($@){
+      system("tput clear");
+      print "Connection to the database was unsucessful\n".
+	"The error we received was this:\n$@\n".
+	"Would you like to try to enter the authentication ".
+	"information again? (Y/N)[N]:";
+      $answer=<STDIN>;
+      chomp($answer);
+      if($answer=~/n/i){
+	$cnx = 1;
+      }
+    } else {
+      $cnx = 1;
+    }
+  }
+    # Try to guide the user to an answer to the connection problems.
+    system("tput clear"); # Clear the screen..
+    print "Have you already set up a database user for LedgerSMB? (Y/N) [N]:";
+    $answer = <STDIN>;
+    chomp($answer);
+    if(($answer=~/n/i) or ($answer eq "")){
+      print q|
+    
+If you have not set up a database user yet, you can use the following command:
 
+# su postgres
+$ createuser -d ledger-smb
+Shall the new user be allowed to create databases? (y/n) y
+Shall the new user be allowed to create more new users? (y/n) n
+  
+if you use passwords to access postgres use this command
+$ createuser -d -P ledger-smb
+    |;
+    return 0;
+    }
+    # Maybe they did not change pg_hba.conf?
+    print qq|Did you modify pg_hba.conf to allow access?
+
+    See pg_hba.conf example entries here:
+    http://www.postgresql.org/docs/8.0/static/client-authentication.html#EXAMPLE-PG-HBA.CONF
+    A good starting point would be to add something similar to below to pg_hba.conf:
+    host all all 192.168.1.5/32 MD5
+    Which would allow a connection
+    from any user,
+    to any database,
+    from that one IP (You will need to change this for your setup)
+    Using a MD5 password.
+    
+    Also, remember to reload postgres when you make the change.
+    
+    Did you allow access to the postgres database from the web server?
+    (Y/N) [Y]:|;
+    $answer = <STDIN>;
+    if(($response=~/n/i) or ($response eq "\n")){
+      return 0;
+    }    
+    # Add other checks here..
+    
+    return 0;
+}
+  print "\nConnection Successful, Press enter to continue\n";
+  $answer=<STDIN>;
+  return 1;
+  
