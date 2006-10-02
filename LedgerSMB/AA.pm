@@ -797,7 +797,7 @@ sub transactions {
 
 	if ($form->{till} ne "") {
 		$where .= " AND a.invoice = '1'
-					AND a.till IS NOT NULL";
+					AND a.till = $form->{till}";
 
 		if ($myconfig->{role} eq 'user') {
 			my $login = $dbh->quote($form->{login});
@@ -868,6 +868,12 @@ sub get_name {
 
 	my ($self, $myconfig, $form) = @_;
 
+	# sanitize $form->{vc}
+	if ($form->{vc} ne 'customer'){
+		$form->{vc} = 'vendor';
+	} else {
+		$form->{vc} = 'customer';
+	}
 	# connect to database
 	my $dbh = $form->{dbh};
 
@@ -884,40 +890,34 @@ sub get_name {
 
 	my $duedate;
 
-	if ($myconfig->{dbdriver} eq 'DB2') {
-		$duedate = 
-			($form->{transdate}) 
-			? "date('$form->{transdate}') + c.terms DAYS" 
-			: "current_date + c.terms DAYS";
-	} else {
-		$duedate = ($form->{transdate}) 
-			? "to_date('$form->{transdate}', '$dateformat') 
-				+ c.terms" 
-			: "current_date + c.terms";
-	}
+	$dateformat = $dbh->quote($dateformat);
+	my $tdate = $dbh->quote($form->{transdate});
+	$duedate = ($form->{transdate}) 
+		? "to_date($tdate, $dateformat) 
+			+ c.terms" 
+		: "current_date + c.terms";
 
 	$form->{"$form->{vc}_id"} *= 1;
 	# get customer/vendor
 	my $query = qq|
-		   SELECT c.name AS ?, c.discount, c.creditlimit, 
+		   SELECT c.name AS $form->{vc}, c.discount, c.creditlimit, 
 		          c.terms, c.email, c.cc, c.bcc, c.taxincluded,
 		          c.address1, c.address2, c.city, c.state,
 		          c.zipcode, c.country, c.curr AS currency, 
-		          c.language_code, ? AS duedate, 
+		          c.language_code, $duedate AS duedate, 
 		          c.notes AS intnotes,
 			  b.discount AS tradediscount, 
 		          b.description AS business,
 		          e.name AS employee, e.id AS employee_id
-		     FROM ? c
+		     FROM $form->{vc} c
 		LEFT JOIN business b ON (b.id = c.business_id)
 		LEFT JOIN employee e ON (e.id = c.employee_id)
 		    WHERE c.id = ?|;
 
-	@queryargs = ($form->{vc}, $duedate, $form->{vc}, 
-		$form->{"$form->{vc}_id"});
+	@queryargs = ($form->{"$form->{vc}_id"});
 	my $sth = $dbh->prepare($query);
 
-	$sth->execute || $form->dberror($query);
+	$sth->execute(@queryargs) || $form->dberror($query);
 
 	$ref = $sth->fetchrow_hashref(NAME_lc);
 
@@ -959,10 +959,10 @@ sub get_name {
 	$query = qq|
 		SELECT SUM(amount - paid)
 		  FROM $arap
-		 WHERE ? = ?|;
+		 WHERE $form->{vc}_id = ?|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute("$form->{vc}_id", $form->{"$form->{vc}_id"})
+	$sth->execute($form->{"$form->{vc}_id"})
 		|| $form->dberror($query);
 
 	($form->{creditremaining}) -= $sth->fetchrow_array;
@@ -977,11 +977,11 @@ sub get_name {
 		                   WHERE e.curr = o.curr
 		                         AND e.transdate = o.transdate)
 		  FROM oe o
-		 WHERE o.$form->{vc}_id = $form->{"$form->{vc}_id"}
+		 WHERE o.$form->{vc}_id = ?
 		       AND o.quotation = '0' AND o.closed = '0'|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror($query);
+	$sth->execute ($form->{"$form->{vc}_id"}) || $form->dberror($query);
 
 	while (my ($amount, $exch) = $sth->fetchrow_array) {
 		$exch = 1 unless $exch;
@@ -994,9 +994,12 @@ sub get_name {
 	# get shipto if we did not converted an order or invoice
 	if (!$form->{shipto}) {
 
-		for (qw(shiptoname shiptoaddress1 shiptoaddress2 shiptocity 
-				shiptostate shiptozipcode shiptocountry shiptocontact 
-				shiptophone shiptofax shiptoemail)) { 
+		for (
+				qw(shiptoname shiptoaddress1 shiptoaddress2 
+				shiptocity shiptostate shiptozipcode 
+				shiptocountry shiptocontact shiptophone 
+				shiptofax shiptoemail)
+								) { 
 			delete $form->{$_} 
 		}
 
@@ -1019,10 +1022,10 @@ sub get_name {
 		SELECT c.accno
 		  FROM chart c
 		  JOIN $form->{vc}tax ct ON (ct.chart_id = c.id)
-		 WHERE ct.$form->{vc}_id = $form->{"$form->{vc}_id"}|;
+		 WHERE ct.$form->{vc}_id = ?|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror($query);
+	$sth->execute( $form->{"$form->{vc}_id"}) || $form->dberror($query);
 
 	my %tax;
 
@@ -1079,15 +1082,16 @@ sub get_name {
 			     JOIN $arap a ON (a.id = ac.trans_id)
 			LEFT JOIN project p ON (ac.project_id = p.id)
 			LEFT JOIN department d ON (d.id = a.department_id)
-			    WHERE a.$form->{vc}_id = $form->{"$form->{vc}_id"}
+			    WHERE a.$form->{vc}_id = ?
 			          AND a.id IN (SELECT max(id) 
 			                         FROM $arap
 			                        WHERE $form->{vc}_id = 
-			                              $form->{"$form->{vc}_id"})
+			                              ?)
 			|;
 
 		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
+		$sth->execute($form->{"$form->{vc}_id"},
+			$form->{"$form->{vc}_id"}) || $form->dberror($query);
 
 		my $i = 0;
 
