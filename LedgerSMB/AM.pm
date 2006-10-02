@@ -951,8 +951,8 @@ sub recurring_transactions {
 
 	my $query = qq|SELECT curr FROM defaults|;
 
-	my ($defaultcurrency) = $dbh->quote($dbh->selectrow_array($query));
-	$defaultcurrency =~ s/:.*//g;
+	my ($defaultcurrency) = $dbh->selectrow_array($query);
+	$defaultcurrency = $dbh->quote($defaultcurrency =~ s/:.*//g);
 
 	$form->{sort} ||= "nextdate";
 	my @a = ($form->{sort});
@@ -1004,7 +1004,7 @@ sub recurring_transactions {
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, '' AS vc,
-		          '1' AS exchangerate, '$defaultcurrency' AS curr,
+		          '1' AS exchangerate, $defaultcurrency AS curr,
 		          (s.nextdate IS NULL OR s.nextdate > s.enddate) 
 		          AS expired
 		     FROM recurring s
