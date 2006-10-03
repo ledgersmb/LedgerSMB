@@ -1,5 +1,6 @@
 Changelog for LedgerSMB 1.2.0
 
+* Added experimental TrustCommerce credit card processing (Chris T)
 * Merged most of the rest of the SL-POS interface (Chris T)
 * Broke out price matrix calls into PriceMatrix.pm (Chris T)
 * Added Gentoo ebuilds documentation and metadata(Jayson R).
@@ -8,14 +9,14 @@ Changelog for LedgerSMB 1.2.0
 * Added simple text import function for invoices received (PDT's) (Chris T)
 * Added whitelist of allowed directories to file editor (Seneca)
 * Added script to configure Slony replication (Chris Browne)
-* Audited OE.pm and AM.pm for SQL injection problems. (Chris Travers)
+* Audited OE.pm and AM.pm for SQL injection problems. (Chris T)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
-* Added $form->callproc($procname, @args) returns @hashrefs (Chris Travers)
+* Added $form->callproc($procname, @args) returns @hashrefs (Chris T)
 * Corrected rounding errors (Seneca)
-* Audited Form.pm for SQL-injection problems and move to new API (Chris Travers)
+* Audited Form.pm for SQL-injection problems and move to new API (Chris T)
 * Code cleanup and template correction (Chris Murtagh)
-* New template system (Chris Travers)
-* OE.pm and IS.pm are aware of custom fields (Chris Travers)
+* New template system (Chris T)
+* OE.pm and IS.pm are aware of custom fields (Chris T)
 
 Changelog for LedgerSMB 1.1.1
 
