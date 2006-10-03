@@ -188,10 +188,299 @@ sub reconciliation {
 
 sub continue { &{ $form->{nextsub} } };
 
+sub till_closing {
+  $form->{callback} = "$form->{script}?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+
+  @colheadings = qw(Source Actual Expected Error);
+
+  $form->{title} = "Closing Till For $form->{login}";
+  require "pos.conf.pl"; 
+  RC->getposlines(\%myconfig, \%$form);
+  $form->header;
+  print qq|
+<body>
+
+<form method=post action=$form->{script}>
+<input type=hidden name=path value=$form->{path}>
+<input type=hidden name=login value=$form->{login}>
+<input type=hidden name=sessionid value=$form->{sessionid}>
+
+<input type=hidden name=callback value="$form->{callback}">
+<input type=hidden name=sum value="|.$form->{sum} * -1 .qq|">
+<table width=100%>
+  <tr>
+    <th class=listtop>$form->{title}</th>
+  </tr>
+</table> 
+<table width=100%>
+|;
+
+  print "<tr>";
+  map {print "<td class=listheading>$_</td>";} @colheadings;
+  print "</tr>";
+  my $j;
+  my $source;
+  foreach $source (sort keys %pos_sources){
+    $amount = 0;
+    foreach $ref (@{$form->{TB}}){
+      if ($ref->{source} eq $source){
+        $amount = $ref->{amount} * -1;
+        last;
+      }
+    }
+    ++$j;
+    $j = $j % 2;
+    print qq|<tr class=listrow$j><td>|.$pos_sources{$source}.qq|</td>
+             <td><input name="amount_$source">
+             <input type=hidden name="expected_$source" 
+		value="$amount"></td>
+             <td>\$$amount</td>
+             <td id="error_$source">&nbsp;</td></tr>|;
+  }
+  print qq|
+<script type='text/javascript'>
+ 
+function money_round(m){
+  var r;
+  r = Math.round(m * 100)/100;
+  return r;
+}
+
+function custom_calc_total(){
+  document.forms[0].sub_100.value = document.forms[0].calc_100.value * 100;
+  document.forms[0].sub_50.value = document.forms[0].calc_50.value * 50;
+  document.forms[0].sub_20.value = document.forms[0].calc_20.value * 20;
+  document.forms[0].sub_10.value = document.forms[0].calc_10.value * 10;
+  document.forms[0].sub_5.value = document.forms[0].calc_5.value * 5;
+  document.forms[0].sub_1.value = document.forms[0].calc_1.value * 1;
+  document.forms[0].sub_050.value = document.forms[0].calc_050.value * .5;
+  document.forms[0].sub_025.value = document.forms[0].calc_025.value * .25;
+  document.forms[0].sub_010.value = document.forms[0].calc_010.value * .10;
+  document.forms[0].sub_005.value = document.forms[0].calc_005.value * .05;
+  document.forms[0].sub_001.value = document.forms[0].calc_001.value * .01;
+  document.forms[0].sub_sub.value = document.forms[0].sub_100.value * 1 +
+    document.forms[0].sub_50.value*1 + document.forms[0].sub_20.value*1 +
+    document.forms[0].sub_10.value*1 + document.forms[0].sub_5.value*1 + 
+    document.forms[0].sub_1.value*1 + document.forms[0].sub_050.value*1 + 
+    document.forms[0].sub_025.value*1 + document.forms[0].sub_010.value*1 +
+    document.forms[0].sub_005.value*1 + document.forms[0].sub_001.value*1;
+  document.forms[0].sub_001.value = 
+           money_round(document.forms[0].sub_001.value);
+  document.forms[0].sub_010.value = 
+           money_round(document.forms[0].sub_010.value);
+  document.forms[0].sub_005.value = 
+           money_round(document.forms[0].sub_005.value);
+  document.forms[0].sub_sub.value = 
+           money_round(document.forms[0].sub_sub.value);
+  document.forms[0].amount_cash.value = money_round(
+	document.forms[0].sub_sub.value - $pos_config{till_cash});
+  check_errors();
+}
+function check_errors(){
+  var cumulative_error = 0;
+  var source_error = 0;
+  var err_cell;
+  |;
+  map {
+    print "  source_error = money_round(
+	document.forms[0].amount_$_.value - 
+ 	document.forms[0].expected_$_.value);
+  cumulative_error = cumulative_error + source_error;
+  err_cell = document.getElementById('error_$_');
+  err_cell.innerHTML = '\$' + source_error;\n"; 
+  } (keys %pos_sources);
+  print qq|
+  alert('Cumulative Error: \$' + money_round(cumulative_error));
+}
+</script>
+
+<table>
+<col><col><col>
+  <tr>
+    <td><input type=text name=calc_100 value="$form->{calc_100}"></td>
+    <th>X \$100 = </th>
+    <td><input type=text name=sub_100 value="$form->{sub_100}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_50 value="$form->{calc_50}"></td>
+    <th>X \$50 = </th>
+    <td><input type=text name=sub_50 value="$form->{sub_50}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_20 value="$form->{calc_20}"></td>
+    <th>X \$20 = </th>
+    <td><input type=text name=sub_20 value="$form->{sub_20}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_10 value="$form->{calc_10}"></td>
+    <th>X \$10 = </th>
+    <td><input type=text name=sub_10 value="$form->{sub_10}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_5 value="$form->{calc_5}"></td>
+    <th>X \$5 = </th>
+    <td><input type=text name=sub_5 value="$form->{sub_5}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_1 value="$form->{calc_1}"></td>
+    <th>X \$1 = </th>
+    <td><input type=text name=sub_1 value="$form->{sub_1}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_050 value="$form->{calc_050}"></td>
+    <th>X \$0.50 = </th>
+    <td><input type=text name=sub_050 value="$form->{sub_050}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_025 value="$form->{calc_025}"></td>
+    <th>X \$.25 = </th>
+    <td><input type=text name=sub_025 value="$form->{sub_025}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_010 value="$form->{calc_010}"></td>
+    <th>X \$.10 = </th>
+    <td><input type=text name=sub_010 value="$form->{sub_010}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_005 value="$form->{calc_005}"></td>
+    <th>X \$.05 = </th>
+    <td><input type=text name=sub_005 value="$form->{sub_005}"></td>
+  </tr>
+  <tr>
+    <td><input type=text name=calc_001 value="$form->{calc_001}"></td>
+    <th>X \$.01 = </th>
+    <td><input type=text name=sub_001 value="$form->{sub_001}"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <th>Subtotal:</th>
+    <td><input type=text name=sub_sub value="$form->{sub_sub}"></td>
+</table>
+<input type=button name=calculate class=submit onClick="custom_calc_total()" 
+   value='Calculate'>
+|;
+  print qq|</table><input type=submit name=action value="|.
+		$locale->text("close_till").qq|">|;
+  print qq|
+</form>
+
+</body>
+</html>
+|;
+}
+
+
+sub close_till {
+  use SL::GL;
+  require 'pos.conf.pl';
+  RC->clear_till(\%myconfig, \%$form);
+  my $amount = 0;
+  my $expected = 0;
+  my $difference = 0;
+  my $lines = '';
+  $form->{rowcount} = 2;
+  foreach $key (keys %pos_sources){
+     $amount = 0;
+     $expected = 0;
+     $amount = $form->parse_amount(\%myconfig, $form->{"amount_$key"});
+     $expected = $form->parse_amount(\%myconfig, $form->{"expected_$key"});
+     $gl_entry = "Closing Till $pos_config{till} source = $key";
+     $accno1 = $pos_config{till_accno};
+     if (${$pos_config{'source_accno_override'}{$key}}){
+       $accno2 = ${$pos_config{'source_accno_override'}{$key}};
+     } else {
+       $accno2 = $pos_config{'close_cash_accno'};
+     }
+     $form->{reference} = $gl_entry;
+     $form->{accno_1} = $accno1;
+     $form->{credit_1} = $amount;
+     $form->{accno_2} = $accno2;
+     $form->{debit_2} = $amount;
+     $form->{transdate} = $form->current_date(\%myconfig);
+     GL->post_transaction(\%myconfig, \%$form);
+     delete $form->{id};
+     $error = $amount - $expected;
+     $difference += $error;
+     $lines .= "Source: $key, Amount: $amount\nExpected: $expected.  Error= $error\n\n";
+  }
+  $gl_entry = "Closing Till: $pos_config{till} Over/Under";
+  $amount = $difference * -1;
+  $form->{reference} = $gl_entry;
+  $form->{accno_1} = $accno1;
+  $form->{credit_1} = $amount;
+  $form->{accno_2} = $pos_config{coa_prefix};
+  $form->{debit_2} = $amount;
+  $form->{transdate} = $form->current_date(\%myconfig);
+  GL->post_transaction(\%myconfig, \%$form);
+  delete $form->{id};
+  $lines .= "Cumulative Error: $amount";
+  $form->{accno} = $form->{accno_1};
+  RC->getbalance(\%myconfig, \%$form); 
+  $amount = $form->{balance} * -1;
+  $gl_entry = "Resetting Till: $pos_config{till}";
+  $form->{reference} = $gl_entry;
+  $form->{accno_1} = $accno1;
+  $form->{credit_1} = $amount;
+  $form->{accno_2} = $pos_config{coa_prefix};
+  $form->{debit_2} = $amount;
+  $form->{transdate} = $form->current_date(\%myconfig);
+  GL->post_transaction(\%myconfig, \%$form);
+  delete $form->{id};
+
+  $head = "Closing Till $pos_config{till} for $form->{login}\n".
+	"Date: $form->{transdate}\n\n\n";
+  $cash = join ("\n", 
+	("Cash Breakdown:",
+	"$form->{calc_100} x 100 = $form->{sub_100}",
+	"$form->{calc_50} x 50 = $form->{sub_50}",
+	"$form->{calc_20} x 20 = $form->{sub_20}",
+	"$form->{calc_10} x 10 = $form->{sub_10}",
+	"$form->{calc_5} x 5 = $form->{sub_5}",
+	"$form->{calc_1} x 1 = $form->{sub_1}",
+	"$form->{calc_050} x 0.50 = $form->{sub_050}",
+	"$form->{calc_025} x 0.25 = $form->{sub_025}",
+	"$form->{calc_010} x 0.10 = $form->{sub_010}",
+	"$form->{calc_005} x 0.05 = $form->{sub_005}",
+	"$form->{calc_001} x 0.01 = $form->{sub_001}",
+        "Total Cash in Drawer: $form->{sub_sub}",
+        "Less Cash in Till At Start: $pos_config{till_cash}",
+        "\n"));
+  $foot = "Cumulative Error: $difference\n Reset Till By $amount\n\n\n\n\n\n\n\n\n\n";
+  open (PRN, "|-",  $printer{Printer});
+  print PRN $head;
+  print PRN $lines;
+  print PRN $cash;
+  print PRN $cash;
+  print PRN $foot;
+  close PRN;
+  if ($difference > 0){
+    $message = "You are over by ".$difference;
+  } elsif ($difference < 0){
+    $message = "You are under by ".$difference * -1;
+  }
+  else {
+    $message = "Congradulations!  Your till is exactly balanced.";
+  }
+  $form->info($message);
+}
 
 sub get_payments {
 
   ($form->{accno}, $form->{account}) = split /--/, $form->{accno};
+  if ($form->{'pos'}){
+    require "pos.conf.pl";
+    $form->{fromdate} = $form->current_date(\%myconfig);
+    unless ($form->{source}){
+      $form->{source} = (sort keys(%pos_sources))[0];
+    }
+    if ($form->{source} eq 'cash'){
+      $form->{summary} = "true";
+    } else {
+      $form->{summary} = "";
+    }
+    $form->{accno} = $pos_config{'coa_prefix'} . "." . $pos_config{'till'};   
+    $form->{account} = $form->{source};
+  }
 
   RC->payment_transactions(\%myconfig, \%$form);
   
@@ -243,6 +532,8 @@ sub display_form {
 
 <form method=post action=$form->{script}>
 
+<input type=hidden name=source value="$form->{source}">
+<input type=hidden name=cumulative_error value="$form->{cumulative_error}">
 <table width=100%>
   <tr>
     <th class=listtop>$form->{title}</th>
@@ -359,12 +650,15 @@ sub display_form {
 	  $column_data{cleared} = qq|<td align=center>*</td>
 	  <input type=hidden name="cleared_$i" value=$ref->{cleared}>
 	  <input type=hidden name="oldcleared_$i" value=$ref->{oldcleared}>
-	  <input type=hidden name="source_$i" value="$ref->{source}">|;
+	  <input type=hidden name="source_$i" value="$ref->{source}">
+          <input type=hidden name="amount_$1" value="$ref->{amount}">|;
 	} else {
 	  $cleared += $ref->{amount} * $ml if $checked;
 	  $clearfx = ($checked) ? 1 : 0;
 	  $column_data{cleared} = qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=1 $checked>
-	  <input type=hidden name="source_$i" value="$ref->{source}"></td>|;
+	  <input type=hidden name="source_$i" value="$ref->{source}">
+          <input type=hidden name="amount_$i" value="$ref->{amount}">
+          </td>|;
 	}
 	
       }
@@ -402,6 +696,9 @@ sub display_form {
  
   $form->{statementbalance} = $form->parse_amount(\%myconfig, $form->{statementbalance});
   $difference = $form->format_amount(\%myconfig, $form->{beginningbalance} + $cleared - $form->{statementbalance}, 2, 0);
+  if ($form->{source}){
+    $difference = 0;
+  }
   $form->{statementbalance} = $form->format_amount(\%myconfig, $form->{statementbalance}, 2, 0);
 
   print qq|
@@ -411,7 +708,46 @@ sub display_form {
   </tr>
 |;
 
-  
+  if ($form->{'pos'}){
+     $close_next = qq|<input type=submit class=submit name=action 
+       value="|.$locale->text('close_next').qq|">|;
+     $done = "";
+  }
+  else {
+     $close_next = "";
+     $done = qq|<input type=submit class=submit name=action
+       value="|.$locale->text('Done').qq|">|;
+  }
+  if ($form->{'pos'}){
+    $difference = qq|
+              <tr>
+                 <th align=right><select name=over_under>
+                     <option value=under>|.$locale->text('Under').qq|</option>
+                     <option value=over>|.$locale->text('Over').qq|</option>
+                   </select><input type=hidden name=pos value='true'>
+                 </th>
+		<td width=10%></td>
+		<td align=right><input name=null size=11 
+                    value='|.$form->{null2}.qq|'></td>
+		<input type=hidden name=difference 
+                     value=$difference>
+                
+    |;
+    if ($form->{'over_under'}){
+      $o_u = $form->{'over_under'};
+      $difference =~ s/(value=$o_u)/SELECTED $1/g;
+    }
+  } else {
+    $difference = qq|
+	      <tr>
+		<th align=right nowrap>|.$locale->text('Difference').qq|</th>
+                <td width=10%></td>
+		<td align=right><input name=null size=11 value=$difference></td>
+		<input type=hidden name=difference value=$difference>
+	      </tr>|;
+  }
+   
+ 
   if ($form->{report}) {
 
     print qq|
@@ -434,12 +770,7 @@ sub display_form {
 		<td width=10%></td>
 		<td align=right><input name=statementbalance size=11 value=$form->{statementbalance}></td>
 	      </tr>
-	      <tr>
-		<th align=right nowrap>|.$locale->text('Difference').qq|</th>
-		<td width=10%></td>
-		<td align=right><input name=null size=11 value=$difference></td>
-		<input type=hidden name=difference value=$difference>
-	      </tr>
+		$difference
 	    </table>
 	  </td>
 	</tr>
@@ -458,7 +789,8 @@ sub display_form {
 <br>
 <input type=submit class=submit name=action value="|.$locale->text('Update').qq|">
 <input type=submit class=submit name=action value="|.$locale->text('Select all').qq|">
-<input type=submit class=submit name=action value="|.$locale->text('Done').qq|">|;
+    $done
+    $close_next |;
   }
 
   if ($form->{menubar}) {
@@ -477,6 +809,7 @@ sub display_form {
 
 
 sub update {
+  $form->{null2} = $form->{null};
   
   RC->payment_transactions(\%myconfig, \%$form);
 

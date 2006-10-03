@@ -44,12 +44,55 @@
 1;
 # end
 
+sub check_alert {
+  my $rc = $form->{'rowcount'};
+  if (!$form->{"partnumber_$rc"}){
+    --$rc; # Ensures that alert shows up when item is selected from a list;
+  }
+  for (1 .. $rc){
+    $form->{'check_id'} = ($form->{'check_id'} || $form->{"check_id_$_"});
+  }
+}
+
+sub send_to_pd{
+  socket(SOCK, 2, 1, getprotobynumber($pos_config{'pd_proto'}));
+  connect(SOCK, $pos_config{'pd_dest'});
+  my $rn = $numrows - 1;
+  my $ds_string = sprintf (
+	'%s%s @ $%-7.2f%s%s%s', 
+	$pd_control{'new_line'},
+	$form->{"qty_$rn"},
+	$form->{"sellprice_$rn"},
+	$pd_control{'new_line'},
+	"Subtotal: \$".sprintf('%-7.2f', $form->{'invtotal'})
+  );
+  print SOCK $ds_string;
+  close SOCK;
+}
+
+sub on_update{
+   &send_to_pd;
+   &check_alert;
+}
+
+sub open_drawer{
+   open (PRINTER, "|-", $printer{Printer});
+   print PRINTER $pos_config{'rp_cash_open'};
+   close PRINTER;
+   sleep 1;
+}
+
+sub open {
+  &open_drawer;
+  &update;
+}
 
 sub add {
+  $form->{nextsub} = 'add';
 
   $form->{title} = $locale->text('Add POS Invoice');
 
-  $form->{callback} = "$form->{script}?action=$form->{nextsub}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}" unless $form->{callback};
+  $form->{callback} = "$form->{script}?action=$form->{nextsub}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
   
   &invoice_links;
 
@@ -68,10 +111,14 @@ sub add {
 
   &display_form;
 
+  $form->{dontdisplayrows} = 1;
+  &openinvoices;
 }
 
 
 sub openinvoices {
+  undef %column_data;
+  undef %column_heading;
 
   $ENV{REMOTE_ADDR} =~ /(\d+)\.(\d+)\.(\d+)\.(\d+)/;
   $form->{till} = $4;
@@ -94,7 +141,7 @@ sub edit {
 
   $form->{title} = $locale->text('Edit POS Invoice');
 
-  $form->{callback} = "$form->{script}?action=$form->{nextsub}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}" unless $form->{callback};
+  $form->{callback} = "$form->{script}?action=$form->{nextsub}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
   
   &invoice_links;
   &prepare_invoice;
@@ -114,6 +161,10 @@ sub edit {
 
 
 sub form_header {
+
+  if (!$form->{'check_id'}){
+     &check_alert;
+  }
 
   # set option selected
   for (qw(AR currency)) {
@@ -228,7 +279,7 @@ sub form_header {
 <form method=post action="$form->{script}">
 |;
 
-  $form->hide_form(qw(id till type format printed title discount creditlimit creditremaining tradediscount business closedto locked oldtransdate customer_id oldcustomer));
+  $form->hide_form(qw(id till type format printed title discount creditlimit creditremaining tradediscount business closedto locked oldtransdate customer_id oldcustomer check_id));
 
   print qq|
 <input type=hidden name=vc value="customer">
@@ -236,7 +287,15 @@ sub form_header {
 <table width=100%>
   <tr class=listtop>
     <th class=listtop>$form->{title}</font></th>
-  </tr>
+  </tr>|;
+  if ($form->{'check_id'}){
+    print qq|
+    <tr class=listtop>
+      <th class=listtop style="background-color: red">|.$locale->text('Check ID').qq|
+      </th>
+    </tr>|;
+  }
+  print qq|
   <tr height="5"></tr>
   <tr>
     <td>
@@ -378,12 +437,25 @@ sub form_footer {
     $form->{"paid_$i"} = $form->format_amount(\%myconfig, $form->{"paid_$i"}, 2);
     $form->{"exchangerate_$i"} = $form->format_amount(\%myconfig, $form->{"exchangerate_$i"});
 
-
-    $column_data{paid} = qq|<td><input name="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
+    if ($form->{"paid__$i"}){
+       $column_data{paid} = qq|<td><input name="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
+    } else {
+       $column_data{paid} = qq|<td><input accesskey='n' name="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
+    }
+      
     $column_data{source} = qq|<td><input name="source_$i" size=10 value="$form->{"source_$i"}"></td>|;
     $column_data{memo} = qq|<td><input name="memo_$i" size=10 value="$form->{"memo_$i"}"></td>|;
-    $column_data{AR_paid} = qq|<td><select name="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
 
+    if ($pos_config{"coa_prefix"}){
+      if (!$form->{"AR_paid_$i"}){
+         $form->{"AR_paid_$i"} = 
+                         $pos_config{"coa_prefix"}.'.'.$pos_config{"till"};
+      }
+      $column_data{AR_paid} = qq|<input type=hidden name="AR_paid_$i" 
+                  value='$form->{"AR_paid_$i"}'>|;
+    } else {
+      $column_data{AR_paid} = qq|<td><select name="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
+    }
     print qq|
 	      <tr>
 |;
@@ -520,6 +592,7 @@ sub form_footer {
 
 sub post {
 
+  $form->{media} = 'Printer';
   $form->isblank("customer", $locale->text('Customer missing!'));
 
   # if oldcustomer ne customer redo form
@@ -532,6 +605,7 @@ sub post {
   }
   
   &validate_items;
+  &print;
 
   $form->isblank("exchangerate", $locale->text('Exchange rate missing!')) if ($form->{currency} ne $form->{defaultcurrency});
   
@@ -542,7 +616,16 @@ sub post {
   $total = $form->parse_amount(\%myconfig, $form->{invtotal});
   
   # deduct change from first payment
-  $form->{"paid_1"} = $form->format_amount(\%myconfig, $form->parse_amount(\%myconfig, $form->{"paid_1"}) - ($paid - $total), 2) if $paid > $total;
+  #$form->{"paid_1"} = $form->{invtotal} if $paid > $total;
+  $form->{paid} = $paid;
+  if ($paid > $total){
+    ++$form->{paidaccounts};
+    my $pa = $form->{paidaccounts};
+    $form->{"paid_$pa"} = $total - $paid;
+    $form->{"source_$pa"} = 'cash';
+    $form->{"exchangerate_$pa"} = 0;
+    $form->{"AR_paid_$pa"} = $form->{AR_paid_1}
+  }
   
   ($form->{AR}) = split /--/, $form->{AR};
 
@@ -667,6 +750,22 @@ sub display_row {
 
 
 sub print {
+  if (!$form->{invnumber}){
+    $form->{invnumber} = $form->update_defaults(\%myconfig, 'sinumber');
+  }
+  $rc = $form->{'rowcount'};
+  $pc = $form->{'paidaccounts'};
+  if ($form->{"partnumber_$rc"} || $form->{"description_$rc"} ||
+         $form->{"paid_$pc"}){
+    &update;
+    exit;
+  }
+  for $i (1 .. $rc - 1){
+    if ($form->{"qty_$i"} != $form->{"oldqty_$i"}){
+      &update;
+      exit;
+    }
+  }
   
   if (!$form->{invnumber}) {
     $form->{invnumber} = $form->update_defaults(\%myconfig, "sinumber");
@@ -681,7 +780,8 @@ sub print {
   
   for (qw(employee department)) { $form->{$_} =~ s/--.*//g; }
   $form->{invdate} = $form->{transdate};
-  $form->{dateprinted} = scalar localtime;
+  my @lt = localtime();
+  $form->{dateprinted} = $lt[2].":".$lt[1].":".$lt[0];
 
   &print_form($old_form);
 
@@ -690,6 +790,7 @@ sub print {
 
 sub print_form {
   my $old_form = shift;
+  &open_drawer; 
   
   # if oldcustomer ne customer redo form
   $customer = $form->{customer};
@@ -743,6 +844,7 @@ sub print_form {
   $form->{rowcount}--;
   $form->{pre} = "<body bgcolor=#ffffff>\n<pre>";
   delete $form->{stylesheet};
+  $form->{cd_open} = $pos_config{rp_cash_drawer_open};
   
   $form->parse_template(\%myconfig, $userspath);
 
@@ -768,7 +870,7 @@ sub print_form {
 
     if (! $form->{printandpost}) {
       $form->{rowcount}--;
-      &display_form;
+      #&display_form;
     }
   }
 

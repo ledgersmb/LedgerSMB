@@ -38,7 +38,7 @@ sub get_part {
   my ($self, $myconfig, $form) = @_;
 
   # connect to db
-  my $dbh = $form->dbconnect($myconfig);
+  my $dbh = $form->{dbh};
   my $i;
 
   my $query = qq|SELECT p.*,
@@ -80,11 +80,11 @@ sub get_part {
                 FROM parts p
 		JOIN assembly a ON (a.parts_id = p.id)
 		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		WHERE a.id = $form->{id}
+		WHERE a.id = ?
     |;
 
     $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+    $sth->execute($form->{id}) || $form->dberror($query);
     
     $form->{assembly_rows} = 0;
     while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
@@ -106,10 +106,10 @@ sub get_part {
     if ($form->{makemodel} ne "") {
       $query = qq|SELECT make, model
                   FROM makemodel
-                  WHERE parts_id = $form->{id}|;
+                  WHERE parts_id = ?|;
 
       $sth = $dbh->prepare($query);
-      $sth->execute || $form->dberror($query);
+      $sth->execute($form->{id}) || $form->dberror($query);
       
       while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 	push @{ $form->{makemodels} }, $ref;
@@ -122,10 +122,10 @@ sub get_part {
   $query = qq|SELECT c.accno
               FROM chart c, partstax pt
 	      WHERE pt.chart_id = c.id
-	      AND pt.parts_id = $form->{id}|;
+	      AND pt.parts_id = ?|;
   
   $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+  $sth->execute($form->{id}) || $form->dberror($query);
 
   while (($key) = $sth->fetchrow_array) {
     $form->{amount}{$key} = $key;
@@ -133,22 +133,23 @@ sub get_part {
 
   $sth->finish;
 
+  my $id = $dbh->quote($form->{id});
   # is it an orphan
   $query = qq|SELECT parts_id
               FROM invoice
-	      WHERE parts_id = $form->{id}
+	      WHERE parts_id = $id
 	    UNION
 	      SELECT parts_id
 	      FROM orderitems
-	      WHERE parts_id = $form->{id}
+	      WHERE parts_id = $id
 	    UNION
 	      SELECT parts_id
 	      FROM assembly
-	      WHERE parts_id = $form->{id}
+	      WHERE parts_id = $id
 	    UNION
 	      SELECT parts_id
 	      FROM jcitems
-	      WHERE parts_id = $form->{id}|;
+	      WHERE parts_id = $id
   ($form->{orphaned}) = $dbh->selectrow_array($query);
   $form->{orphaned} = !$form->{orphaned};
 
@@ -166,11 +167,11 @@ sub get_part {
                 pv.lastcost, pv.leadtime, pv.curr AS vendorcurr
 		FROM partsvendor pv
 		JOIN vendor v ON (v.id = pv.vendor_id)
-		WHERE pv.parts_id = $form->{id}
+		WHERE pv.parts_id = ?
 		ORDER BY 2|;
     
     $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+    $sth->execute($form->{id}) || $form->dberror($query);
     
     while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
       push @{ $form->{vendormatrix} }, $ref;
@@ -187,18 +188,18 @@ sub get_part {
 		FROM partscustomer pc
 		LEFT JOIN customer c ON (c.id = pc.customer_id)
 		LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
-		WHERE pc.parts_id = $form->{id}
+		WHERE pc.parts_id = ?
 		ORDER BY c.name, g.pricegroup, pc.pricebreak|;
     $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+    $sth->execute($form->{id}) || $form->dberror($query);
 
     while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
       push @{ $form->{customermatrix} }, $ref;
     }
     $sth->finish;
   }
- 
-  $dbh->disconnect;
+
+  $form->get_custom_queries('parts', 'SELECT');
   
 }
 
@@ -492,6 +493,7 @@ sub save {
   my $rc = $dbh->commit;
   $dbh->disconnect;
 
+  $form->get_custom_queries('parts', 'UPDATE');
   $rc;
   
 }

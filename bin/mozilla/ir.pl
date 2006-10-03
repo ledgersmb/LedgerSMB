@@ -461,10 +461,12 @@ sub form_footer {
 	      <tr>
 		<th align=left>|.$locale->text('Notes').qq|</th>
 		<th align=left>|.$locale->text('Internal Notes').qq|</th>
+                <th align=left>|.$locale->text('Import Text').qq|</th>
 	      </tr>
 	      <tr valign=top>
 		<td>$notes</td>
 		<td>$intnotes</td>
+                <td><textarea name=import_text rows=$rows cols=25></textarea>
 	      </tr>
 	    </table>
 	  </td>
@@ -624,8 +626,71 @@ print qq|
 }
 
 
+sub import_text {
+  my @o_list;
+  my @i_lines = split(/(\n|\r|\r\n)/, $form->{import_text});
+  foreach $i (@i_lines){
+    chomp($i);
+    if ($i != ""){ # Strip out blank lines
+      push @o_list, $i;
+    }
+  }
+  my $c = 1;
+  my $linenumber = 0;
+  foreach $l (@o_list){
+    if ($c % 2){
+      $linenumber += 1;
+      $form->{"partnumber_$linenumber"} = $l;
+    }
+    else {
+      $form->{"qty_$linenumber"} = $l;
+    }
+    $c += 1; 
+    $form->{rowcount}=$linenumber;
+    IR->retrieve_item(\%myconfig, \%$form);
+    $rows = scalar @{ $form->{item_list} };
+    $rows = 0 unless $rows;
+    $i = $form->{rowcount};
+    if ($rows = 0){
+	$form->{"id_$i"}	= 0;
+	$form->{"unit_$i"}	= $locale->text('ea');
+
+	&new_item;
+    } elsif ($rows > 1){
+	&select_item;
+	exit;
+    } else {
+	map { $form->{item_list}[$i]{$_} = $form->quote($form->{item_list}[$i]{$_}) } qw(partnumber description unit);
+	
+	map { $form->{"${_}_$i"} = $form->{item_list}[0]{$_} } keys %{ $form->{item_list}[0] };
+
+	$s = ($sellprice) ? $sellprice : $form->{"sellprice_$i"};
+
+	($dec) = ($s =~ /\.(\d+)/);
+	$dec = length $dec;
+	$decimalplaces = ($dec > 2) ? $dec : 2;
+     
+	$amount = $form->{"sellprice_$i"} * $form->{"qty_$i"} * (1 - $form->{"discount_$i"} / 100);
+	map { $form->{"${_}_base"} = 0 } (split / /, $form->{taxaccounts});
+	map { $form->{"${_}_base"} += $amount } (split / /, $form->{"taxaccounts_$i"});
+	map { $amount += ($form->{"${_}_base"} * $form->{"${_}_rate"}) } split / /, $form->{"taxaccounts_$i"} if !$form->{taxincluded};
+
+	$form->{creditremaining} -= $amount;
+	
+	$form->{"sellprice_$i"} = $form->format_amount(\%myconfig, $form->{"sellprice_$i"}, $decimalplaces);
+	$form->{"qty_$i"} =  $form->format_amount(\%myconfig, $form->{"qty_$i"});
+      
+    }
+    $form->{item_list} = [];
+  }
+  ++$form->{rowcount}
+}
 
 sub update {
+  if($form->{import_text}){
+    &import_text;
+  }
+
 
   $form->{exchangerate} = $form->parse_amount(\%myconfig, $form->{exchangerate});
   

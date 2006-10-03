@@ -83,7 +83,23 @@ require "$form->{path}/arap.pl";
 # $locale->text('Nov')
 # $locale->text('Dec')
 
+sub pos_adjust {
+   $form->{rowcount} = 3;
+   require "pos.conf.pl";
+   $form->{accno_1} = $pos_config{'close_cash_accno'};
+   $form->{accno_2} = $pos_config{'coa_prefix'};
+   $form->{accno_3} = $pos_config{'coa_prefix'};
+}
 
+sub add_pos_adjust {
+   $form->{pos_adjust} = 1;
+   $form->{reference} = $locale->text("Adjusting Till: (till) Source: (source)");
+   $form->{description} = 
+             $locale->text("Adjusting till due to data entry error.");
+  $form->{callback} = "$form->{script}?action=add_pos_adjust&transfer=$form->{transfer}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}" unless $form->{callback};
+   &add;
+}
+ 
 sub add {
 
   $form->{title} = "Add";
@@ -93,6 +109,9 @@ sub add {
   &create_links;
 
   $form->{rowcount} = ($form->{transfer}) ? 3 : 9;
+  if ($form->{pos_adjust}){
+    &pos_adjust;
+  }
   $form->{oldtransdate} = $form->{transdate};
   $form->{focus} = "reference";
 
@@ -856,7 +875,7 @@ sub display_rows {
   |;
   }
 
-  $form->hide_form(qw(rowcount selectaccno));
+  $form->hide_form(qw(rowcount selectaccno pos_adjust));
   
   print qq|
 <input type=hidden name=selectprojectnumber value="|.$form->escape($form->{selectprojectnumber},1).qq|">|;

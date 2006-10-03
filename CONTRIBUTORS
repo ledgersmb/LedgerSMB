@@ -17,6 +17,9 @@ Contributed database fixes.
 Seneca Cunningham <tentra @ gmail.com> 
 Contributed code fixes.
 
+Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
+the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
+
 Other Contributors:
 ========================
 Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
@@ -25,11 +28,9 @@ the setup.diff.
 Angus Carr <apcarr @ users.sourceforge.net> Has provided some corrections to 
 the documentation.
 
-Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
-the password change in the admin.pl
 
 Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
-documentation, the Pg-tables.sql, and a setup file for replication
+documentation, the Pg-tables.sql, and a setup file for replication.
 
 
 Original Authors of SQL-Ledger:
@@ -39,4 +40,3 @@ Original author of SQL-Ledger, on which LedgerSMB is based.  He also owns DWS
 Systems, Inc.
 
 Tony Fraser <tony @ sybaspace.com>
-Both of the above are mentioned as contributors to a single file in SQL-Ledger.

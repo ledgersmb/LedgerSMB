@@ -33,12 +33,90 @@
 
 package RC;
 
+ 
+sub getposlines{
+  my ($self, $myconfig, $form) = @_;
+  %pos_config = %{$form->{pos_config}};
+  %pos_sources = %{$form->{pos_sources}};
+  my $sources = '';
+  foreach $key (keys %pos_sources){
+    $sources .= ", '$key'";
+  }
+  $sources =~ s/^,\s*//;
+  my $dbh = $form->{dbh};
+
+  # Considering the query below to be safe since all variables are from config
+  # files rather than user input.
+  my $query = qq| 
+	SELECT sum(amount) AS amount, source FROM acc_trans
+        WHERE chart_id = 
+		(SELECT id FROM chart WHERE accno = '$pos_config{till_accno}')
+	  AND transdate = date 'NOW'
+          AND cleared IS NOT TRUE
+	GROUP BY source
+  |;
+  my $sth = $dbh->prepare($query);
+  $sth->execute || $form->dberror($query);
+  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+    push @{$form->{TB}}, $ref;
+  }
+  $sth->finish;
+  my $query = qq| 
+	SELECT sum(amount) AS sum FROM acc_trans
+        WHERE chart_id = 
+		(SELECT id FROM chart WHERE accno = '$pos_config{till_accno}')
+	  AND transdate = date 'NOW'
+          AND cleared IS NOT TRUE
+  |;
+  my $sth = $dbh->prepare($query);
+  $sth->execute || $form->dberror($query);
+  my $ref = $sth->fetchrow_hashref(NAME_lc);
+  $form->{sum} = $ref->{sum};
+  $sth->finish;
+}
+
+sub clear_till {
+  my ($self, $myconfig, $form) = @_;
+  %pos_config = %{$form->{pos_config}};
+  %pos_sources = %{$form->{pos_sources}};
+  my $sources = '';
+  foreach $key (keys %pos_sources){
+    $sources .= ", '$key'";
+  }
+  $sources =~ s/^,\s//;
+  my $dbh = $form->{dbh};
+  my $query = qq| 
+	UPDATE acc_trans
+	SET cleared = TRUE
+	WHERE chart_id = 
+		(SELECT id FROM chart WHERE accno = '$pos_config{till_accno}')
+	  AND transdate = date 'NOW'
+  |;
+  my $sth = $dbh->prepare($query);
+  $sth->execute || $form->dberror($query);
+}
+
+sub getbalance{
+  my ($self, $myconfig, $form) = @_;
+  my $dbh = $form->{dbh};
+
+  my $query = qq|SELECT sum(amount) AS balance
+                 FROM acc_trans
+                 WHERE chart_id =
+                   (SELECT id FROM chart WHERE accno = '$form->{accno}')|;
+
+  my $sth = $dbh->prepare($query);
+  $sth->execute || $form->dberror($query);
+  my $ref = $sth->fetchrow_hashref(NAME_lc);
+  $form->{balance} = $ref->{balance};
+}
+ 
 
 sub paymentaccounts {
   my ($self, $myconfig, $form) = @_;
 
   # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+  my $dbh = $form->{dbh};
 
   my $query = qq|SELECT accno, description
                  FROM chart

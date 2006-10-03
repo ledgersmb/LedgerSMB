@@ -523,6 +523,23 @@ sub callproc {
 	@results;
 }
 
+sub get_my_emp_num {
+	my ($self, $myconfig, $form) = @_;
+	%myconfig = %{$myconfig};
+	my $dbh = $form->{dbh};
+	# we got a connection, check the version
+	my $query = qq|
+		SELECT employeenumber FROM employee 
+		 WHERE login = ?|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{login}) || $form->dberror($query);
+	$sth->execute;
+
+	my ($id) = $sth->fetchrow_array;
+	$sth->finish;
+	$form->{'emp_num'} = $id;
+}
+
 sub parse_template {
 
 	my ($self, $myconfig, $userspath) = @_;
@@ -1297,8 +1314,8 @@ sub db_init {
 }
 
 sub run_custom_queries {
-	my $dbh = $self->{dbh};
 	my ($self, $tablename, $query_type, $linenum) = @_;
+	my $dbh = $self->{dbh};
 	if ($query_type !~ /^(select|insert|update)$/i){
 		$self->error($locale->text(
 			"Passed incorrect query type to get_cutstom_queries."
@@ -1379,7 +1396,7 @@ sub run_custom_queries {
 	} elsif ($query_type eq 'SELECT'){
 		for (@rc){
 			$query = shift @{$_};
-			$sth = $form->{dbh}->prepare($query);
+			$sth = $self->{dbh}->prepare($query);
 			$sth->execute($form->{id});
 			$ref = $sth->fetchrow_hashref(NAME_lc);
 			for (keys %{$ref}){
