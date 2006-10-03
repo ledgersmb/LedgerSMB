@@ -1,5 +1,6 @@
 Changelog for LedgerSMB 1.2.0
 
+* Merged most of the rest of the SL-POS interface (Chris T)
 * Broke out price matrix calls into PriceMatrix.pm (Chris T)
 * Added Gentoo ebuilds documentation and metadata(Jayson R).
 * POS register now goes from add invoice to add invoice. (Chris T)
