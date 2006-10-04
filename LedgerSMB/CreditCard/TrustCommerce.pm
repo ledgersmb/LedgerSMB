@@ -16,16 +16,14 @@
 # Simple TrustCommerce API using Net::TCLink
 
 package TrustCommerce;
-use LedgerSMB::CreditCard::TrustCommerce::Config ();
-use LedgerSMB::CreditCard::Config ();
+use LedgerSMB::CreditCard::Config;
+use LedgerSMB::CreditCard::TrustCommerce::Config;
 use Net::TCLink;
 
-%baseparams = ${Config::baseparams};
-$debug = ${Config::debug};
+$debug = $1;
 
 sub sale {
 	$form = shift @_;
-	my %params = %baseparams;
 	$params{action} = 'sale';
 	$params{amount} = $form->{amount} * 100;
 	$params{track1} = $form->{track1};
@@ -34,6 +32,9 @@ sub sale {
 }
 
 sub process {
+		for (keys %params){
+			print "$_=  ".$params{$_}."\n";
+		}
 	my %result = Net::TCLink::send(\%params);
 	$form->{status} = $result{status};
 	if ($result{status} eq 'decline'){
@@ -47,10 +48,12 @@ sub process {
 		"$result{errortype}\n";
 	if ($debug){
 		print STDERR "Full Result:\n";
+
 		for (keys %result){
-			print "$_=  ".$result{$_}."\n";
+			print STDERR "$_=  ".$result{$_}."\n";
 		}
 	}
+		
 	%result;
 }
 

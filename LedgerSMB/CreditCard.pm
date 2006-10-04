@@ -22,3 +22,5 @@ BEGIN {
 	import $gateway_module qw(sale credit); 
 }
 
+1;
+

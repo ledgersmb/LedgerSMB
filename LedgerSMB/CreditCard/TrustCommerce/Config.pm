@@ -15,8 +15,13 @@
 # TrustCommerce configuration Information goes Here
 
 
-package CreditCard::TrustCommerce::Config;
+package TrustCommerce;
 
-%baseparams = ( customer_id => 'MyCustomerID',
-	password => 'MyPassword'
+
+%baseparams = ( custid => '000000',
+	password => 'password',
 );
+
+$debug = 0;
+
+1;
