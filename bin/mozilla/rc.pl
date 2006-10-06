@@ -371,7 +371,7 @@ function check_errors(){
 
 
 sub close_till {
-  use SL::GL;
+  use LedgerSMB::GL;
   require 'pos.conf.pl';
   RC->clear_till(\%myconfig, \%$form);
   my $amount = 0;
