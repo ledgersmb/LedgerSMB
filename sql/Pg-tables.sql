@@ -566,11 +566,6 @@ last_used TIMESTAMP default now()
 );
 
 
-create table transactions (
-  id int PRIMARY KEY,
-  table_name text
-);
-
 insert into transactions (id, table_name) SELECT id, 'ap' FROM ap;
 
 CREATE RULE ap_id_track_i AS ON insert TO ap 
