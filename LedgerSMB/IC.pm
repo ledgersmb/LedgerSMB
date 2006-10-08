@@ -149,7 +149,7 @@ sub get_part {
 	    UNION
 	      SELECT parts_id
 	      FROM jcitems
-	      WHERE parts_id = $id
+	      WHERE parts_id = $id|;
   ($form->{orphaned}) = $dbh->selectrow_array($query);
   $form->{orphaned} = !$form->{orphaned};
 
