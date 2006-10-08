@@ -1,4 +1,4 @@
-ALTER TABLE acc_trans ADD FOREIGN KEY trans_id REFERENCES transactions (id);
+ALTER TABLE acc_trans ADD FOREIGN KEY (trans_id) REFERENCES transactions (id);
 
 ALTER TABLE ap ADD PRIMARY KEY (id);
 
@@ -65,7 +65,7 @@ ALTER TABLE translation ADD PRIMARY KEY (trans_id, language_code);
 
 ALTER TABLE vendor ADD PRIMARY KEY (id);
 
-ALTER TABLE vendor_tax ADD PRIMARY KEY (vendor_id, chart_id);
+ALTER TABLE vendortax ADD PRIMARY KEY (vendor_id, chart_id);
 
 ALTER TABLE warehouse ADD PRIMARY KEY (id);
 
@@ -101,15 +101,15 @@ SET DEFAULT nextval('partsvendor_entry_id_seq');
 UPDATE partsvendor SET entry_id = nextval('partsvendor_entry_id_seq');
 ALTER TABLE partsvendor ADD PRIMARY KEY (entry_id);
 
-LOCK audit_trail IN EXCLUSIVE MODE;
-ALTER TABLE audit_trail ADD COLUMN entry_id int;
-CREATE SEQUENCE audit_trail_entry_id_seq ;
+LOCK audittrail IN EXCLUSIVE MODE;
+ALTER TABLE audittrail ADD COLUMN entry_id int;
+CREATE SEQUENCE audittrail_entry_id_seq ;
 
-ALTER TABLE audit_trail ALTER COLUMN entry_id 
-SET DEFAULT nextval('audit_trail_entry_id_seq');
+ALTER TABLE audittrail ALTER COLUMN entry_id 
+SET DEFAULT nextval('audittrail_entry_id_seq');
 
-UPDATE audit_trail SET entry_id = nextval('audit_trail_entry_id_seq');
-ALTER TABLE audit_trail ADD PRIMARY KEY (entry_id);
+UPDATE audittrail SET entry_id = nextval('audittrail_entry_id_seq');
+ALTER TABLE audittrail ADD PRIMARY KEY (entry_id);
 
 LOCK shipto IN EXCLUSIVE MODE;
 ALTER TABLE shipto ADD COLUMN entry_id int;
