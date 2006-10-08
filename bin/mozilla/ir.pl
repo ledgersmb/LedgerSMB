@@ -41,6 +41,7 @@
 
 use LedgerSMB::IR;
 use LedgerSMB::PE;
+use LedgerSMB::Tax;
 
 require "$form->{path}/io.pl";
 require "$form->{path}/arap.pl";
@@ -422,11 +423,14 @@ sub form_footer {
   }
   
   if (!$form->{taxincluded}) {
-    
-    foreach $item (split / /, $form->{taxaccounts}) {
+    my @taxset = Tax::init_taxes($form, $form->{taxaccounts});
+    $form->{invtotal} += $form->round_amount(
+      Tax::calculate_taxes(\@taxset, $form, $form->{invsubtotal}, 0), 2);
+    foreach $taxobj (@taxset) {
+      $item = $taxobj->account;
       if ($form->{"${item}_base"}) {
-	$form->{invtotal} += $form->{"${item}_total"} = $form->round_amount($form->{"${item}_base"} * $form->{"${item}_rate"}, 2);
-	$form->{"${item}_total"} = $form->format_amount(\%myconfig, $form->{"${item}_total"}, 2);
+        $form->{"${item}_total"} = $form->format_amount(\%myconfig,
+	  $form->round_amount($taxobj->value, 2), 2);
 	
 	$tax .= qq|
 		<tr>
@@ -673,7 +677,10 @@ sub import_text {
 	$amount = $form->{"sellprice_$i"} * $form->{"qty_$i"} * (1 - $form->{"discount_$i"} / 100);
 	map { $form->{"${_}_base"} = 0 } (split / /, $form->{taxaccounts});
 	map { $form->{"${_}_base"} += $amount } (split / /, $form->{"taxaccounts_$i"});
-	map { $amount += ($form->{"${_}_base"} * $form->{"${_}_rate"}) } split / /, $form->{"taxaccounts_$i"} if !$form->{taxincluded};
+	if (!$form->{taxincluded}) {
+	  my @taxes = Tax::init_taxes($form, $form->{taxaccounts});
+	  $amount += (Tax::calculate_taxes(\@taxes, $form, $amount, 0));
+	}
 
 	$form->{creditremaining} -= $amount;
 	
@@ -794,7 +801,8 @@ sub update {
 	for (split / /, $form->{taxaccounts}) { $form->{"${_}_base"} = 0 }
 	for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
 	if (!$form->{taxincluded}) {
-	  for (split / /, $form->{"taxaccounts_$i"}) { $amount += ($form->{"${_}_base"} * $form->{"${_}_rate"}) }
+	  my @taxes = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+	  $amount += (Tax::calculate_taxes(\@taxes, $form, $amount, 0));
 	}
 
 	$form->{creditremaining} -= $amount;

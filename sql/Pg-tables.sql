@@ -12,7 +12,7 @@ CREATE SEQUENCE jcitemsid;
 SELECT nextval ('jcitemsid');
 --
 
-create table transactions (
+CREATE TABLE transactions (
   id int PRIMARY KEY,
   table_name text
 );
@@ -243,12 +243,20 @@ CREATE TABLE partstax (
   PRIMARY KEY (parts_id, chart_id)
 );
 --
+CREATE TABLE taxmodule (
+  taxmodule_id serial PRIMARY KEY,
+  taxmodulename text NOT NULL
+};
+--
 CREATE TABLE tax (
   chart_id int PRIMARY KEY,
   rate numeric,
   taxnumber text,
   validto date,
-  FOREIGN KEY (chart_id) REFERENCES chart (id)
+  pass integer DEFAULT 0 NOT NULL,
+  taxmodule_id int,
+  FOREIGN KEY (chart_id) REFERENCES chart (id),
+  FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id)
 );
 --
 CREATE TABLE customertax (

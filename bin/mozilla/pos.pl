@@ -40,6 +40,7 @@
 #
 #=====================================================================
 
+use LedgerSMB::Tax;
 
 1;
 # end
@@ -376,19 +377,22 @@ sub form_footer {
   
   if (!$form->{taxincluded}) {
     
-    for (split / /, $form->{taxaccounts}) {
-      if ($form->{"${_}_base"}) {
-	$form->{"${_}_total"} = $form->round_amount($form->{"${_}_base"} * $form->{"${_}_rate"}, 2);
-	$form->{invtotal} += $form->{"${_}_total"};
-	$form->{"${_}_total"} = $form->format_amount(\%myconfig, $form->{"${_}_total"}, 2, 0);
-	
-	$tax .= qq|
-	      <tr>
-		<th align=right>$form->{"${_}_description"}</th>
-		<td align=right>$form->{"${_}_total"}</td>
-	      </tr>
-|;
-      }
+    my @taxes = Tax::init_taxes($form, $form->{taxaccounts});
+    $form->{invtotal} += Tax::calculate_taxes(\@taxes, $form,
+      $form->{invsubtotal}, 0);
+    
+    foreach my $item (@taxes) {
+      my $taccno = $item->account;
+      
+      $form->{"${taccno}_total"} = $form->format_amount(\%myconfig, 
+      $item->value, 2, 0);
+
+      $tax .= qq|
+        <tr>
+	  <th align=right>$form->{"${taccno}_description"}</th>
+	  <td align=right>$form->{"${taccno}_total"}</td>
+        </tr>
+        | if $item->value;
     }
 
     $form->{invsubtotal} = $form->format_amount(\%myconfig, $form->{invsubtotal}, 2, 0);

@@ -32,6 +32,7 @@
 #======================================================================
 
 package IS;
+use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 
 sub invoice_details {
@@ -263,44 +264,30 @@ sub invoice_details {
       $form->{"linetotal_$i"} = $form->format_amount($myconfig, $linetotal, 2);
       push(@{ $form->{linetotal} }, $form->{"linetotal_$i"});
       
-      @taxaccounts = split / /, $form->{"taxaccounts_$i"};
+      @taxaccounts = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
       
       my $ml = 1;
       my @taxrates = ();
       
       $tax = 0;
       
-      for (0 .. 1) {
-	$taxrate = 0;
-	
-	for (@taxaccounts) { $taxrate += $form->{"${_}_rate"} if ($form->{"${_}_rate"} * $ml) > 0 }
-	
-	$taxrate *= $ml;
-	$taxamount = $linetotal * $taxrate / (1 + $taxrate);
-	$taxbase = ($linetotal - $taxamount);
+      if ($form->{taxincluded}) {
+        $taxamount = Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 1);
+        $taxbase = ($linetotal - $taxamount);
+	$tax += Tax::extract_taxes(\@taxaccounts, $form, $linetotal);
+      } else {
+        $taxamount = Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 0);
+	$tax += Tax::apply_taxes(\@taxaccounts, $form, $linetotal);
+      }
 
-	foreach $item (@taxaccounts) {
-	  if (($form->{"${item}_rate"} * $ml) > 0) {
-	    
-	    push @taxrates, $form->{"${item}_rate"} * 100;
-	    
-	    if ($form->{taxincluded}) {
-	      $taxaccounts{$item} += $linetotal * $form->{"${item}_rate"} / (1 + $taxrate);
-	      $taxbase{$item} += $taxbase;
-	    } else {
-	      $taxbase{$item} += $linetotal;
-	      $taxaccounts{$item} += $linetotal * $form->{"${item}_rate"};
-	    }
-	  }
-	}
-
+      foreach $item (@taxaccounts) {
+        push @taxrates, 100 * $item->rate;
+	$taxaccounts{$item->account} += $item->value;
 	if ($form->{taxincluded}) {
-	  $tax += $linetotal * ($taxrate / (1 + ($taxrate * $ml)));
+	  $taxbase{$item->account} += $taxbase;
 	} else {
-	  $tax += $linetotal * $taxrate;
+	  $taxbase{$item->account} += $linetotal;
 	}
-	
-	$ml *= -1;
       }
 
       push(@{ $form->{lineitems} }, { amount => $linetotal, tax => $form->round_amount($tax, 2) });
@@ -699,31 +686,20 @@ sub post_invoice {
       my $linetotal = $form->round_amount($amount, 2);
       $fxdiff += $amount - $linetotal;
       
-      @taxaccounts = split / /, $form->{"taxaccounts_$i"};
+      @taxaccounts = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
       $ml = 1;
       $tax = 0;
       $fxtax = 0;
       
-      for (0 .. 1) {
-	$taxrate = 0;
-
-	# add tax rates
-	for (@taxaccounts) { $taxrate += $form->{"${_}_rate"} if ($form->{"${_}_rate"} * $ml) > 0 }
-
-	if ($form->{taxincluded}) {
-	  $tax += $amount = $linetotal * ($taxrate / (1 + ($taxrate * $ml)));
-	  $form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
-	  $fxtax += $fxlinetotal * ($taxrate / (1 + ($taxrate * $ml)));
-	} else {
-	  $tax += $amount = $linetotal * $taxrate;
-	  $fxtax += $fxlinetotal * $taxrate;
-	}
-
-        for (@taxaccounts) {
-	  $form->{acc_trans}{$form->{id}}{$_}{amount} += $amount * $form->{"${_}_rate"} / $taxrate if ($form->{"${_}_rate"} * $ml) > 0;
-	}
-	
-	$ml = -1;
+      if ($form->{taxincluded}) {
+        $tax += $amount = Tax::calculate_taxes(\@taxaccounts, $form,
+		$linetotal, 1);
+	$form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
+	$fxtax += Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 1);
+      } else {
+        $tax += $amount = Tax::calculate_taxes(\@taxaccounts, $form,
+		$linetotal, 0);
+	$fxtax += Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 0);
       }
 
       $grossamount = $form->round_amount($linetotal, 2);
@@ -832,7 +808,11 @@ sub post_invoice {
   $invnetamount = $amount;
   
   $amount = 0;
-  for (split / /, $form->{taxaccounts}) { $amount += $form->{acc_trans}{$form->{id}}{$_}{amount} = $form->round_amount($form->{acc_trans}{$form->{id}}{$_}{amount}, 2) }
+  for (split / /, $form->{taxaccounts}) { 
+    $amount += 
+      $form->{acc_trans}{$form->{id}}{$_}{amount} = 
+      $form->round_amount($form->{acc_trans}{$form->{id}}{$_}{amount}, 2); 
+  }
   $invamount = $invnetamount + $amount;
 
   $diff = 0;

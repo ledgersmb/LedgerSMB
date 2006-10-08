@@ -1868,7 +1868,9 @@ sub taxes {
     $form->{"taxrate_$i"} = $form->format_amount(\%myconfig, $ref->{rate});
     $form->{"taxdescription_$i"} = $ref->{description};
     
-    for (qw(taxnumber validto)) { $form->{"${_}_$i"} = $ref->{$_} }
+    for (qw(taxnumber validto pass taxmodulename)) { 
+      $form->{"${_}_$i"} = $ref->{$_};
+    }
     $form->{taxaccounts} .= "$ref->{id}_$i ";
   }
   chop $form->{taxaccounts};
@@ -1901,6 +1903,8 @@ sub display_taxes {
 	  <th>|.$locale->text('Rate').qq| (%)</th>
 	  <th>|.$locale->text('Number').qq|</th>
 	  <th>|.$locale->text('Valid To').qq|</th>
+	  <th>|.$locale->text('Order').qq|</th>
+	  <th>|.$locale->text('Tax Rules').qq|</th>
 	</tr>
 |;
 
@@ -1926,8 +1930,18 @@ sub display_taxes {
 	  <td><input name="taxrate_$i" size=6 value=$form->{"taxrate_$i"}></td>
 	  <td><input name="taxnumber_$i" value="$form->{"taxnumber_$i"}"></td>
 	  <td><input name="validto_$i" size=11 value="$form->{"validto_$i"}" title="$myconfig{dateformat}"></td>
-	</tr>
-|;
+	  <td><input name="pass_$i" size=6 value="$form->{"pass_$i"}"></td>
+	  <td><select name="taxmodule_id_$i" size=1>|;
+    foreach my $taxmodule (sort keys %$form) {
+      next if ($taxmodule !~ /^taxmodule_/);
+      my $modulenum = $taxmodule;
+      $modulenum =~ s/^taxmodule_//;
+      print '<option label="'.$form->{$taxmodule}.'" value="'.$modulenum . '"';
+      print " SELECTED " if $form->{$taxmodule} eq $form->{"taxmodulename_$i"};
+      print " />\n";
+    }
+    print qq|</select></td>
+	</tr> |;
     $sametax = $form->{"taxdescription_$i"};
     
   }

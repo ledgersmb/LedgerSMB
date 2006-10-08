@@ -42,6 +42,7 @@
 
 
 use LedgerSMB::IC;
+use LedgerSMB::Tax;
 
 require "$form->{path}/io.pl";
 
@@ -2981,7 +2982,8 @@ sub save {
       $amount = $form->{"sellprice_$i"} * (1 - $form->{"discount_$i"} / 100) * $form->{"qty_$i"};
       for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
       if (!$form->{taxincluded}) {
-	for (split / /, $form->{"taxaccounts_$i"}) { $amount += ($form->{"${_}_base"} * $form->{"${_}_rate"}) }
+        my @taxlist= Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+	$amount += Tax::calculate_taxes(\@taxlist, $form, $amount, 0);
       }
 
       $ml = 1;

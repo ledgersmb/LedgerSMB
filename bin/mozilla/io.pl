@@ -38,6 +38,8 @@
 #
 #######################################################################
 
+use LedgerSMB::Tax;
+
 # any custom scripts for this one
 if (-f "$form->{path}/custom_io.pl") {
   eval { require "$form->{path}/custom_io.pl"; };
@@ -504,7 +506,8 @@ sub item_selected {
       $amount = $form->{"sellprice_$i"} * (1 - $form->{"discount_$i"} / 100) * $form->{"qty_$i"};
       for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
       if (!$form->{taxincluded}) {
-	for (split / /, $form->{"taxaccounts_$i"}) { $amount += ($form->{"${_}_base"} * $form->{"${_}_rate"}) }
+        my @taxlist= Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+	$amount += Tax::calculate_taxes(\@taxlist, $form, $amount, 0);
       }
 
       $form->{creditremaining} -= $amount;
@@ -840,7 +843,9 @@ sub invoicetotal {
   }
 
   if (!$form->{taxincluded}) {
-    for (split / /, $form->{taxaccounts}) { $form->{oldinvtotal} += ($form->{"${_}_base"} * $form->{"${_}_rate"}) }
+        my @taxlist= Tax::init_taxes($form, $form->{taxaccounts});
+        $form->{oldinvtotal} += Tax::calculate_taxes(\@taxlist, $form, 
+	  $amount, 0);
   }
   
   $form->{oldtotalpaid} = 0;

@@ -44,6 +44,8 @@
 #
 #======================================================================
 
+use LedgerSMB::Tax;
+
 # any custom scripts for this one
 if (-f "$form->{path}/custom_aa.pl") {
       eval { require "$form->{path}/custom_aa.pl"; };
@@ -257,7 +259,8 @@ sub create_links {
 
   if ($form->{taxincluded}) {
     $diff = 0;
-    # add tax to individual amounts
+    # add tax to individual amounts 
+    # XXX needs alteration for conditional taxes
     for $i (1 .. $form->{rowcount}) {
       if ($netamount) {
 	$amount = $form->{"amount_$i"} * (1 + $tax / $netamount);
@@ -272,53 +275,26 @@ sub create_links {
   # taxincluded is terrible to calculate
   # this works only if all taxes are checked
   
-  @taxaccounts = split / /, $form->{taxaccounts};
+  @taxaccounts = Tax::init_taxes($form, $form->{taxaccounts});
   
   if ($form->{id}) {
     if ($form->{taxincluded}) {
 
-      $ml = 1;
+        $amount = Tax::calculate_taxes(\@taxaccounts, $form,
+	  $form->{invtotal}, 1);
+	$tax = $form->round_amount($amount, 2);
       
-      for (0 .. 1) {
-	$taxrate = 0;
-	$diff = 0;
-	
-	for (@taxaccounts) { $taxrate += $form->{"${_}_rate"} if ($form->{"${_}_rate"} * $ml) > 0 }
-	$taxrate *= $ml;
-
+      } else {
+        $tax = $form->round_amount(Tax::calculate_taxes(\@taxaccounts, 
+          $form, $netamount, 0));
+      }
 	foreach $item (@taxaccounts) {
-	  
-	  if (($form->{"${item}_rate"} * $ml) > 0) {
-	    if ($taxrate) {
-	      $amount = $form->{invtotal} * $form->{"${item}_rate"} / (1 + $taxrate);
-	      $tax = $form->round_amount($amount, 2);
-	      $tax{$item} = $form->round_amount($amount - $diff, 2);
-	      $diff = $tax{$item} - ($amount - $diff);
-
-	      if ($tax) {
-		if ($form->{"tax_$item"} == $tax{$item}) {
-		  $form->{"calctax_$item"} = 1;
-		}
-	      }
-	    }
-	  }
+	  $tax{$item->account} = $form->round_amount($item->value, 2);
+	  $form->{"calctax_".$item->account} = 1 if $item->value and (
+	    $tax{$item->account} == $form->{"tax_".$item->account});
 	}
-	$ml *= -1;
-      }
-      
-    } else {
-      for (@taxaccounts) {
-	$tax = $form->round_amount($netamount * $form->{"${_}_rate"}, 2);
-	if ($tax) {
-	  if ($form->{"tax_$_"} == $tax) {
-	    $form->{"calctax_$_"} = 1;
-	  }
-	}
-      }
-    }
-
   } else {
-    for (@taxaccounts) { $form->{"calctax_$_"} = 1 }
+    for (@taxaccounts) { $form->{"calctax_".$_->account} = 1 }
   }
 
 
@@ -830,61 +806,21 @@ sub update {
   
   for (@taxaccounts) { $form->{"tax_$_"} = $form->parse_amount(\%myconfig, $form->{"tax_$_"}) }
   
+  @taxaccounts = Tax::init_taxes($form, $form->{taxaccounts});
   if ($form->{taxincluded}) {
-
-    $ml = 1;
-    
-    for (0 .. 1) {
-      $taxrate = 0;
-      $diff = 0;
-      
-      for (@taxaccounts) {
-	if (($form->{"${_}_rate"} * $ml) > 0) {
-	  if ($form->{"calctax_$_"}) {
-	    $taxrate += $form->{"${_}_rate"};
-	  } else {
-	    if ($form->{checktax}) {
-	      if ($form->{"tax_$_"}) {
-		$taxrate += $form->{"${_}_rate"};
-	      }
-	    }
-	  }
-	}
-      }
-      
-      $taxrate *= $ml;
-
-      foreach $item (@taxaccounts) {
-	if (($form->{"${item}_rate"} * $ml) > 0) {
-
-	  if ($taxrate) {
-	    $a = $form->{invtotal} * $form->{"${item}_rate"} / (1 + $taxrate);
-	    $b = $form->round_amount($a, 2);
-	    $tax = $form->round_amount($a - $diff, 2);
-	    $diff = $b - ($a - $diff);
-	  }
-	  $form->{"tax_$item"} = $tax if $form->{"calctax_$item"};
-
-	  $form->{"select$form->{ARAP}_tax_$item"} = qq|<option>$item--$form->{"${item}_description"}|;
-	  $totaltax += $form->{"tax_$item"};
-	}
-      }
-      $ml *= -1;
-    }
-    $totaltax += $form->round_amount($diff, 2);
-
-    $form->{checktax} = 1;
-    
+    $totaltax = Tax::calculate_taxes(\@taxaccounts, $form, 
+      $form->{invtotal}, 1);
   } else {
-    foreach $item (@taxaccounts) {
-      $form->{"calctax_$item"} = 1 if $form->{calctax};
-      
-      if ($form->{"calctax_$item"}) {
-	$form->{"tax_$item"} = $form->round_amount($form->{invtotal} * $form->{"${item}_rate"}, 2);
-      }
-      $form->{"select$form->{ARAP}_tax_$item"} = qq|<option>$item--$form->{"${item}_description"}|;
-      $totaltax += $form->{"tax_$item"};
+    $totaltax = Tax::calculate_taxes(\@taxaccounts, $form, 
+      $form->{invtotal}, 0);
+  }
+  foreach $item (@taxaccounts) {
+    $taccno = $item->account;
+    if ($form->{calctax}) {
+      $form->{"calctax_$taccno"} = 1;
+      $form->{"tax_$taccno"} = $form->round_amount($item->value, 2);
     }
+    $form->{"select$form->{ARAP}_tax_$taccno"} = qq|<option>$taccno--$form->{"${taccno}_description"}|;
   }
 
   $form->{invtotal} = ($form->{taxincluded}) ? $form->{invtotal} : $form->{invtotal} + $totaltax;

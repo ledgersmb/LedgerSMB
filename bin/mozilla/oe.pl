@@ -44,6 +44,7 @@ use LedgerSMB::OE;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
+use LedgerSMB::Tax;
 
 require "$form->{path}/arap.pl";
 require "$form->{path}/io.pl";
@@ -600,19 +601,21 @@ sub form_footer {
 
   if (!$form->{taxincluded}) {
     
-    for (split / /, $form->{taxaccounts}) {
-      if ($form->{"${_}_base"}) {
-	$form->{invtotal} += $form->{"${_}_total"} = $form->round_amount($form->{"${_}_base"} * $form->{"${_}_rate"}, 2);
-	$form->{"${_}_total"} = $form->format_amount(\%myconfig, $form->{"${_}_total"}, 2);
+      my @taxes = Tax::init_taxes($form, $form->{taxaccounts});
+      $form->{invtotal} += Tax::calculate_taxes(\@taxes, 
+        $form, $form->{invsubtotal}, 0);
+      foreach my $item (@taxes) {
+        my $taccno = $item->account;
+	$form->{"${taccno}_total"} = $form->format_amount(\%myconfig, 
+	  $item->value, 2);
 	
 	$tax .= qq|
 	      <tr>
-		<th align=right>$form->{"${_}_description"}</th>
-		<td align=right>$form->{"${_}_total"}</td>
+		<th align=right>$form->{"${taccno}_description"}</th>
+		<td align=right>$form->{"${taccno}_total"}</td>
 	      </tr>
-|;
+	      | if $item->value;
       }
-    }
 
     $form->{invsubtotal} = $form->format_amount(\%myconfig, $form->{invsubtotal}, 2, 0);
     
@@ -917,7 +920,8 @@ sub update {
 	for (split / /, $form->{taxaccounts}) { $form->{"${_}_base"} = 0 }
 	for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
 	if (!$form->{taxincluded}) {
-	  for (split / /, $form->{taxaccounts}) { $amount += ($form->{"${_}_base"} * $form->{"${_}_rate"}) }
+	  my @taxes = Tax::init_taxes($form, $form->{taxaccounts});
+	  $amount += Tax::calculate_taxes(\@taxes, $form, $amount, 0);
 	}
 	
 	$form->{creditremaining} -= $amount;

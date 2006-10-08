@@ -120,3 +120,23 @@ SET DEFAULT nextval('shipto_entry_id_seq');
 
 UPDATE shipto SET entry_id = nextval('shipto_entry_id_seq');
 ALTER TABLE shipto ADD PRIMARY KEY (entry_id);
+
+CREATE TABLE taxmodule (
+  taxmodule_id serial PRIMARY KEY,
+  taxmodulename text NOT NULL
+);
+
+INSERT INTO taxmodule (
+  taxmodule_id, taxmodulename
+  ) VALUES (
+  1, 'Simple'
+);
+
+LOCK tax IN EXCLUSIVE MODE;
+ALTER TABLE tax ADD COLUMN pass int DEFAULT 0;
+UPDATE tax SET pass = 0;
+ALTER TABLE tax ALTER COLUMN pass SET NOT NULL;
+
+ALTER TABLE tax ADD COLUMN taxmodule_id int REFERENCES taxmodule DEFAULT 1;
+UPDATE tax SET taxmodule_id = 1;
+ALTER TABLE tax ALTER COLUMN taxmodule_id SET NOT NULL;

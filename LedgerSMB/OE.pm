@@ -33,7 +33,7 @@
 #======================================================================
 
 package OE;
-
+use LedgerSMB::Tax;
 
 sub transactions {
 	my ($self, $myconfig, $form) = @_;
@@ -419,66 +419,51 @@ sub save {
 				$form->{"sellprice_$i"} * $form->{"qty_$i"}, 2
 			);
       
-			@taxaccounts = split / /, $form->{"taxaccounts_$i"};
-			$taxrate = 0;
-			$taxdiff = 0;
-      
-			for (@taxaccounts) { $taxrate += $form->{"${_}_rate"} }
-
+			@taxaccounts = Tax::init_taxes($form,
+				$form->{"taxaccounts_$i"});
 			if ($form->{taxincluded}) {
-				$taxamount = $linetotal * $taxrate 
-					/ (1 + $taxrate);
-				$taxbase = $linetotal - $taxamount;
-				# we are not keeping a natural price, 
-				# do not round
-				$form->{"sellprice_$i"} = 
-					$form->{"sellprice_$i"} 
-						* (1 / (1 + $taxrate));
+				$taxamount = Tax::calculate_taxes(\@taxaccounts,
+					$form, $linetotal, 1);
+				$form->{"sellprice_$i"} = Tax::extract_taxes(\@taxaccounts,
+					$form, $form->{"sellprice_$i"});
+				$taxbase = Tax::extract_taxes(\@taxaccounts, 
+					$form, $linetotal);
 			} else {
-				$taxamount = $linetotal * $taxrate;
+				$taxamount = Tax::apply_taxes(\@taxaccounts,
+					$form, $linetotal);
 				$taxbase = $linetotal;
 			}
-
-			if (@taxaccounts && $form->round_amount($taxamount, 2) 
-					== 0) {
-				if ($form->{taxincluded}) {
+ 
+ 			if (@taxaccounts && $form->round_amount($taxamount, 2) 
+ 					== 0) {
+ 				if ($form->{taxincluded}) {
 					foreach $item (@taxaccounts) {
 						$taxamount = 
 							$form->round_amount(
-
-							$linetotal 
-							* $form->{"${item}_rate"} 
-							/ (1 + abs(
-								$form->{"${item}_rate"}
-							)), 2
-						);
-
-						$taxaccounts{$item} += 
+							$item->value, 2);
+						$taxaccounts{$item->account} +=
 							$taxamount;
-						$taxdiff += $taxamount; 
-
-						$taxbase{$item} += $taxbase;
+						$taxdiff += $taxamount;
+						$taxbase{$item->account} +=
+							$taxbase;
 					}
-					$taxaccounts{$taxaccounts[0]} 
+					$taxaccounts{$taxaccounts[0]->account} 
 						+= $taxdiff;
-				} else {
+ 				} else {
 					foreach $item (@taxaccounts) {
-						$taxaccounts{$item} += 
-							$linetotal * 
-							$form->{"${item}_rate"};
-						$taxbase{$item} += $taxbase;
+						$taxaccounts{$item->account} +=
+							$item->value;
+						$taxbase{$item->account} +=
+							$taxbase;
 					}
 				}
 			} else {
 				foreach $item (@taxaccounts) {
-					$taxaccounts{$item} += 
-						$taxamount * 
-						$form->{"${item}_rate"} / 
-						$taxrate;
-					$taxbase{$item} += $taxbase;
+					$taxaccounts{$item->account} += 
+						$item->value;
+					$taxbase{$item->account} += $taxbase;
 				}
 			}
-
 
 			$netamount += $form->{"sellprice_$i"} 
 				* $form->{"qty_$i"};
@@ -939,7 +924,7 @@ sub retrieve {
 		$sth->finish;
 
 		# get recurring transaction
-		$form->get_recurring($dbh);
+		$form->get_recurring;
 
 		@queries = $form->run_custom_queries('oe', 'SELECT');
 		$form->{dbh}->commit;
@@ -1328,66 +1313,39 @@ sub order_details {
 				$myconfig, $linetotal, 2);
 			push(@{ $form->{linetotal} }, $form->{"linetotal_$i"});
       
-			@taxaccounts = split / /, $form->{"taxaccounts_$i"};
+			@taxaccounts = Tax::init_taxes($form, 
+				$form->{"taxaccounts_$i"});
 
 			my $ml = 1;
 			my @taxrates = ();
       
 			$tax = 0;
       
-			for (0 .. 1) {
-				$taxrate = 0;
-
-				for (@taxaccounts) { 
-					$taxrate += $form->{"${_}_rate"} 
-						if ($form->{"${_}_rate"} * $ml) 
-							> 0; 
-				}
-	
-				$taxrate *= $ml;
-				$taxamount = $linetotal * $taxrate 
-					/ (1 + $taxrate);
-				$taxbase = ($linetotal - $taxamount);
-	
-				foreach $item (@taxaccounts) {
-					if (($form->{"${item}_rate"} * $ml) 
-								> 0) {
-
-						push @taxrates, 
-							$form->{"${item}_rate"} 
-								* 100;
-	    
-						if ($form->{taxincluded}) {
-
-							$taxaccounts{$item}
-								+= $linetotal 
-								* $form->{"${item}_rate"} 
-								/ 
-								(1 + $taxrate);
-
-							$taxbase{$item} 
-								+= $taxbase;
-						} else {
-							$taxbase{$item} 
-								+= $linetotal;
-
-							$taxaccounts{$item} 
-								+= $linetotal 
-								* $form->{"${item}_rate"};
-
-						}
-					}
-				}
-
+			$taxamount = Tax::calculate_taxes(\@taxaccounts,
+				$form, $linetotal, 1);
+			$taxbase = Tax::extract_taxes(\@taxaccounts,
+				$form, $linetotal);
+			foreach $item (@taxaccounts) {
+				push @taxrates, Math::BigFloat->new(100) *
+					$item->rate;
 				if ($form->{taxincluded}) {
-					$tax += $linetotal 
-						* ($taxrate 
-						/ (1 + ($taxrate * $ml)));
+					$taxaccounts{$item->account} += 
+						$item->value;
+					$taxbase{$item->account} += $taxbase;
 				} else {
-					$tax += $linetotal * $taxrate;
+					Tax::apply_taxes(\@taxaccounts, $form,
+						$linetotal);
+					$taxbase{$item->account} += $linetotal;
+					$taxaccounts{$item->account} += 
+						$item->value;
 				}
-	
-				$ml *= -1;
+			}
+			if ($form->{taxincluded}) {
+				$tax += Tax::calculate_taxes(\@taxaccounts,
+					$form, $linetotal, 1);
+			} else {
+				$tax += Tax::calculate_taxes(\@taxaccounts, 
+					$form, $linetotal, 0);
 			}
 
 			push(@{ $form->{lineitems} }, 
@@ -2422,19 +2380,24 @@ sub generate_orders {
 			$sth->execute($parts_id) || $form->dberror($query);
       
 			my $rate = 0;
+			my $taxes = '';
 			while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 				$description = $ref->{description};
 				$unit = $ref->{unit};
 				$rate += $tax{$ref->{accno}};
+				$taxes .= "$ref->{accno} ";
 			}
- 			$sth->finish;  
+ 			$sth->finish;
+			chop $taxes;
+			my @taxaccounts = Tax::init_taxes($form, $taxes);
 
 			$netamount += $linetotal;
 			if ($taxincluded) {
 				$amount += $linetotal;
 			} else {
 				$amount += $form->round_amount(
-					$linetotal * (1 + $rate), 2);
+					Tax::apply_taxes(\@taxaccounts, $form,
+					$linetotal), 2);
 			}
 	
       

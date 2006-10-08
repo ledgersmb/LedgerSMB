@@ -35,7 +35,7 @@
 #======================================================================
 
 package AM;
-
+use LedgerSMB::Tax;
 
 sub get_account {
 
@@ -1479,15 +1479,18 @@ sub defaultaccounts {
 sub taxes {
 
 	my ($self, $myconfig, $form) = @_;
+	my $taxaccounts = '';
 
 	# connect to database
 	my $dbh = $form->{dbh};
 
 	my $query = qq|
-		  SELECT c.id, c.accno, c.description,
-		         t.rate * 100 AS rate, t.taxnumber, t.validto
+		  SELECT c.id, c.accno, c.description, 
+		         t.rate * 100 AS rate, t.taxnumber, t.validto,
+			 t.pass, m.taxmodulename
 		    FROM chart c
 		    JOIN tax t ON (c.id = t.chart_id)
+		    JOIN taxmodule m ON (t.taxmodule_id = m.taxmodule_id)
 		ORDER BY 3, 6|;
 
 	my $sth = $dbh->prepare($query);
@@ -1495,6 +1498,21 @@ sub taxes {
 
 	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
 		push @{ $form->{taxrates} }, $ref;
+		$taxaccounts .= " " . $ref{accno};
+	}
+
+	$sth->finish;
+	
+	$query = qq|
+		SELECT taxmodule_id, taxmodulename FROM taxmodule
+		ORDER BY 2|;
+	
+	$sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
+
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+		$form->{"taxmodule_".$ref->{taxmodule_id}} = 
+			$ref->{taxmodulename};
 	}
 
 	$sth->finish;
@@ -1516,16 +1534,20 @@ sub save_taxes {
 
 
 	$query = qq|
-		INSERT INTO tax (chart_id, rate, taxnumber, validto)
-		     VALUES (?, ?, ?, ?)|;
+		INSERT INTO tax (chart_id, rate, taxnumber, validto, 
+			pass, taxmodule_id)
+			VALUES (?, ?, ?, ?, ?, ?)|;
 
 	my $sth = $dbh->prepare($query);
 	foreach my $item (split / /, $form->{taxaccounts}) {
 		my ($chart_id, $i) = split /_/, $item;
 		my $rate = $form->parse_amount(
 			$myconfig, $form->{"taxrate_$i"}) / 100;
+		my $validto = $form->{"validto_$i"};
+		$validto = undef if not $validto;
 		my @queryargs = ($chart_id, $rate, $form->{"taxnumber_$i"},
-			$form->{"validto_$i"});
+			$validto, $form->{"pass_$i"},
+			$form->{"taxmodule_id_$i"});
 
 		$sth->execute(@queryargs) || $form->dberror($query);
 	}

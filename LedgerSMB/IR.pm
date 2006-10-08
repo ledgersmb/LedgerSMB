@@ -32,6 +32,7 @@
 #======================================================================
 
 package IR;
+use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 
 sub post_invoice {
@@ -172,33 +173,24 @@ sub post_invoice {
       my $linetotal = $form->round_amount($amount, 2);
       $fxdiff += $amount - $linetotal;
 
-      @taxaccounts = split / /, $form->{"taxaccounts_$i"};
+      @taxaccounts = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
 
-      $ml = 1;
-      $tax = 0;
-      $fxtax = 0;
+      $tax = Math::BigFloat->bzero();
+      $fxtax = Math::BigFloat->bzero();
       
-      for (0 .. 1) {
-	$taxrate = 0;
-	
-        # add tax rates
-	for (@taxaccounts) {
-	  $taxrate += $form->{"${_}_rate"} if ($form->{"${_}_rate"} * $ml) > 0;
-	}
-
-	if ($form->{taxincluded}) {
-	  $tax += $amount = $linetotal * ($taxrate / (1 + ($taxrate * $ml)));
-	  $form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
-	} else {
-	  $tax += $amount = $linetotal * $taxrate;
-	  $fxtax += $fxlinetotal * $taxrate;
-	}
-
-        for (@taxaccounts) {
-	  $form->{acc_trans}{$form->{id}}{$_}{amount} += $amount * $form->{"${_}_rate"} / $taxrate if ($form->{"${_}_rate"} * $ml) > 0;
-	}
-	
-	$ml = -1;
+      if ($form->{taxincluded}) {
+        $tax += $amount = Tax::calculate_taxes(\@taxaccounts, $form, 
+	  $linetotal, 1);
+	$form->{"sellprice_$i"} -= $amount / $form{"qty_$i"};
+      } else {
+        $tax += $amount = Tax::calculate_taxes(\@taxaccounts, $form,
+	  $linetotal, 0);
+	$fxtax += Tax::calculate_taxes(\@taxaccounts, $form, 
+	  $fxlinetotal, 0);
+      }
+      
+      for (@taxaccounts) {
+	$form->{acc_trans}{$form->{id}}{$_->account}{amount} += $_->value;
       }
 
       $grossamount = $form->round_amount($linetotal, 2);

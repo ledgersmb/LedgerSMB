@@ -1579,7 +1579,7 @@ sub check_exchangerate {
 
 	my $sth = $self->{dbh}->prepare($query);
 	$sth->execute($currenct, $transdate);
-	my ($exchangerate) = $sth->fetchrow_array($query);
+	my ($exchangerate) = $sth->fetchrow_array;
 
 	$sth->finish;
 	$self->{dbh}->commit;
