@@ -109,7 +109,7 @@ map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout) unless ($form->{type}
 
 $form->db_init(\%myconfig);
 
-if ($form{path} ne 'bin/lynx'){ $form{path} = 'bin/mozilla';}	
+if ($form->{path} ne 'bin/lynx'){ $form->{path} = 'bin/mozilla';}	
 
 # did sysadmin lock us out
 if (-f "$userspath/nologin") {
