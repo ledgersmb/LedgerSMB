@@ -1,4 +1,15 @@
-use vars qw($userspath $spool $memberfile $templates $sendmail $language $sid $latex %printer $gzip);
+use vars qw($userspath $spool $memberfile $templates $sendmail $language $sid $latex %printer $gzip $GLOBALDBH);
+
+#################################
+# Global database parameters
+#################################
+# These parameters *must* be set correctly
+# for LedgerSMB >= 1.2 to work
+my $globalDBConnect = 'dbi:Pg:dbname=ledgersmb;host=localhost;port=5432';
+my $globalUserName = "ledgersmb";
+my $globalPassword = "set me to correct password";
+
+$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword); 
 
 # path to user configuration files
 $userspath = "users";
@@ -18,6 +29,10 @@ $sendmail = "| /usr/sbin/sendmail -t";
 # set language for login and admin
 $language = "";
 
+# Maximum number of invoices that can be printed on a check
+$check_max_invoices = 5;
+
+
 # if you have latex installed set to 1
 $latex = 1;
 
@@ -30,14 +45,10 @@ $latex = 1;
 $gzip = "gzip -S .gz";
 
 # if the server can't find gzip, latex, dvips or pdflatex, add the path
-$ENV{PATH} .= ":/usr/local/bin";
+$ENV{PATH} .= ":/usr/local/bin:/usr/local/pgsql/bin";
 
 # on mac os X using Fink's Perl libs, add the path
 #$ENV{PERL5LIB} .= ":/sw/lib/perl5";
-
-# DB2, Default dataset is expected to be LEDGER
-#$ENV{DB2INSTANCE} = "db2inst1";
-#$ENV{DB2_HOME} = "/opt/IBM/db2/V8.1/";
 
 
 1;
