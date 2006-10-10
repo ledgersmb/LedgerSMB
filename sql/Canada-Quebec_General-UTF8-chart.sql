@@ -52,14 +52,14 @@ INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES 
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5100', 'Frais de transport', 'A', 'E', 'AP_amount:IC_expense', '8457');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5400', 'FRAIS DE PERSONNEL', 'H', 'E', '', '');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5410', 'Salaires', 'A', 'E', '', '9060');
-INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5420', 'Dépenses d''assurance-emploi', 'A', 'E', '', '8622');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5420', 'Dépenses d\'assurance-emploi', 'A', 'E', '', '8622');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5430', 'Dépenses RRQ', 'A', 'E', '', '8622');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5440', 'Dépenses CSST', 'A', 'E', '', '8622');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5600', 'DÉPENSES ADMINISTRATIVES ET GÉNÉRALES', 'H', 'E', '', '');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5610', 'Frais comptables et juridiques', 'A', 'E', 'AP_amount', '8862');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5615', 'Publicité et promotion', 'A', 'E', 'AP_amount', '8520');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5620', 'Créances irrévocables', 'A', 'E', '', '8590');
-INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5660', 'Amortissement de l''exercice', 'A', 'E', '', '8670');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5660', 'Amortissement de l\'exercice', 'A', 'E', '', '8670');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5680', 'Impôt sur le revenu', 'A', 'E', '', '9990');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5685', 'Assurances', 'A', 'E', 'AP_amount', '9804');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5690', 'Intérêts et frais bancaires', 'A', 'E', '', '9805');
@@ -69,7 +69,7 @@ INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES 
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5785', 'Voyages et loisirs', 'A', 'E', '', '8523');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5790', 'Services publics', 'A', 'E', 'AP_amount', '8812');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5765', 'Réparation et entretien', 'A', 'E', 'AP_amount', '8964');
-INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5800', 'Taxes d''affaires, droits d''adhésion et permis', 'A', 'E', 'AP_amount', '8760');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5800', 'Taxes d\'affaires, droits d\'adhésion et permis', 'A', 'E', 'AP_amount', '8760');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5810', 'Perte sur change', 'A', 'E', '', '8231');
 --
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.06);
