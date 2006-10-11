@@ -515,7 +515,8 @@ sub callproc {
 		$argstr .= "?, ";
 	}
 	$argstr =~ s/\, $//;
-	$query = "SELECT $procname($argstr)";
+	$query = "SELECT $procname";
+	$query =~ s/\(\)/$argstr/;
 	my $sth = $form->{dbh}->prepare($query);
 	while (my $ref = $sth->fetchrow_hashref(NAME_lc)){
 		push @results, $ref;
