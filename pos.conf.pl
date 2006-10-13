@@ -41,13 +41,25 @@ $pos_sources{'cash'} = 'Cash';
 $pos_sources{'gcert'} = 'Gift Cert';
 
 ${$pos_config{'source_accno_override'}{'gcert'}} = '2105';
-# Define your till accno scheme here.  Current supported values are 'termina'
+# Define your till accno scheme here.  Current supported values are 'terminal'
 # and 'cashier'
 
 $pos_config{'till_type'} = 'cashier';
 
 # FLAGS: 1 = projects, 2 = departments
 $pos_config{'disable_tables'} = 3;
+
+# HTML for the appropriate currency symbol for your tills
+$pos_config{'curren'} = '$';
+
+# Number format to use
+$pos_config{'numberformat'} = '1,000.00';
+
+# Units of currency to use in the till closing cash breakdown relative to
+# your base unit of currency, formatted in your chosen format
+@{$pos_config{'breakdown'}} = (
+  '100', '50', '20', '10', '5', '2', '1', '0.25', '0.10', '0.05', '0.01');
+
 # Stop Editing Here
 
 if (lc($pos_config{'till_type'}) eq 'terminal'){
@@ -66,7 +78,6 @@ $pos_config{'pd_dest'}=pack(
 	pack('CCCC', split(/\./, $pos_config{'pd_host'}))
 );
 
-
 $form->{pos_config} = \%pos_config;
 $form->{pos_sources} = \%pos_sources;
 
@@ -76,4 +87,5 @@ $form->{pos_sources} = \%pos_sources;
 %printer = ( 
     'Printer' => "utils/pos/directnet.pl $pos_config{rp_host} $pos_config{rp_proto} $pos_config{rp_port}"
 );
+
 1;
