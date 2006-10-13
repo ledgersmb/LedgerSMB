@@ -192,6 +192,7 @@ sub till_closing {
   $form->{callback} = "$form->{script}?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
   @colheadings = qw(Source Actual Expected Error);
+  my $curren = $pos_config{'curren'};
 
   $form->{title} = "Closing Till For $form->{login}";
   require "pos.conf.pl"; 
@@ -234,7 +235,7 @@ sub till_closing {
              <td><input name="amount_$source">
              <input type=hidden name="expected_$source" 
 		value="$amount"></td>
-             <td>\$$amount</td>
+             <td>${curren}$amount</td>
              <td id="error_$source">&nbsp;</td></tr>|;
   }
   print qq|
@@ -247,30 +248,22 @@ function money_round(m){
 }
 
 function custom_calc_total(){
-  document.forms[0].sub_100.value = document.forms[0].calc_100.value * 100;
-  document.forms[0].sub_50.value = document.forms[0].calc_50.value * 50;
-  document.forms[0].sub_20.value = document.forms[0].calc_20.value * 20;
-  document.forms[0].sub_10.value = document.forms[0].calc_10.value * 10;
-  document.forms[0].sub_5.value = document.forms[0].calc_5.value * 5;
-  document.forms[0].sub_1.value = document.forms[0].calc_1.value * 1;
-  document.forms[0].sub_050.value = document.forms[0].calc_050.value * .5;
-  document.forms[0].sub_025.value = document.forms[0].calc_025.value * .25;
-  document.forms[0].sub_010.value = document.forms[0].calc_010.value * .10;
-  document.forms[0].sub_005.value = document.forms[0].calc_005.value * .05;
-  document.forms[0].sub_001.value = document.forms[0].calc_001.value * .01;
-  document.forms[0].sub_sub.value = document.forms[0].sub_100.value * 1 +
-    document.forms[0].sub_50.value*1 + document.forms[0].sub_20.value*1 +
-    document.forms[0].sub_10.value*1 + document.forms[0].sub_5.value*1 + 
-    document.forms[0].sub_1.value*1 + document.forms[0].sub_050.value*1 + 
-    document.forms[0].sub_025.value*1 + document.forms[0].sub_010.value*1 +
-    document.forms[0].sub_005.value*1 + document.forms[0].sub_001.value*1;
-  document.forms[0].sub_001.value = 
-           money_round(document.forms[0].sub_001.value);
-  document.forms[0].sub_010.value = 
-           money_round(document.forms[0].sub_010.value);
-  document.forms[0].sub_005.value = 
-           money_round(document.forms[0].sub_005.value);
-  document.forms[0].sub_sub.value = 
+  |;
+  my $subgen = 'document.forms[0].sub_sub.value = ';
+  foreach my $unit ($pos_config{'breakdown'}) {
+    # XXX Needs to take into account currencies that don't use 2 dp
+    my $parsed = $form->parse_amount(\%pos_config, $unit);
+    my $calcval = $parsed;
+    $calcval = sprintf('%03d', $calcval * 100) if $calcval < 1;
+    my $subval = 'sub_' . $calcval;
+    $calcval = 'calc_' . $calcval;
+    print qq|
+  document.forms[0].${subval}.value = document.forms[0].${calcval}.value * $parsed;
+    |;
+    $subgen .= "document.forms[0].${subval}.value * 1 + ";
+  }
+  print $subgen . "0;";
+  print qq|document.forms[0].sub_sub.value = 
            money_round(document.forms[0].sub_sub.value);
   document.forms[0].amount_cash.value = money_round(
 	document.forms[0].sub_sub.value - $pos_config{till_cash});
@@ -287,75 +280,33 @@ function check_errors(){
  	document.forms[0].expected_$_.value);
   cumulative_error = cumulative_error + source_error;
   err_cell = document.getElementById('error_$_');
-  err_cell.innerHTML = '\$' + source_error;\n"; 
+  err_cell.innerHTML = '$curren' + source_error;\n"; 
   } (keys %pos_sources);
   print qq|
-  alert('Cumulative Error: \$' + money_round(cumulative_error));
+  alert('Cumulative Error: $curren' + money_round(cumulative_error));
 }
 </script>
 
 <table>
-<col><col><col>
-  <tr>
-    <td><input type=text name=calc_100 value="$form->{calc_100}"></td>
-    <th>X \$100 = </th>
-    <td><input type=text name=sub_100 value="$form->{sub_100}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_50 value="$form->{calc_50}"></td>
-    <th>X \$50 = </th>
-    <td><input type=text name=sub_50 value="$form->{sub_50}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_20 value="$form->{calc_20}"></td>
-    <th>X \$20 = </th>
-    <td><input type=text name=sub_20 value="$form->{sub_20}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_10 value="$form->{calc_10}"></td>
-    <th>X \$10 = </th>
-    <td><input type=text name=sub_10 value="$form->{sub_10}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_5 value="$form->{calc_5}"></td>
-    <th>X \$5 = </th>
-    <td><input type=text name=sub_5 value="$form->{sub_5}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_1 value="$form->{calc_1}"></td>
-    <th>X \$1 = </th>
-    <td><input type=text name=sub_1 value="$form->{sub_1}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_050 value="$form->{calc_050}"></td>
-    <th>X \$0.50 = </th>
-    <td><input type=text name=sub_050 value="$form->{sub_050}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_025 value="$form->{calc_025}"></td>
-    <th>X \$.25 = </th>
-    <td><input type=text name=sub_025 value="$form->{sub_025}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_010 value="$form->{calc_010}"></td>
-    <th>X \$.10 = </th>
-    <td><input type=text name=sub_010 value="$form->{sub_010}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_005 value="$form->{calc_005}"></td>
-    <th>X \$.05 = </th>
-    <td><input type=text name=sub_005 value="$form->{sub_005}"></td>
-  </tr>
-  <tr>
-    <td><input type=text name=calc_001 value="$form->{calc_001}"></td>
-    <th>X \$.01 = </th>
-    <td><input type=text name=sub_001 value="$form->{sub_001}"></td>
-  </tr>
-  <tr>
+<col><col><col>|;
+  foreach my $unit ($pos_config{'breakdown'}) {
+    # XXX Needs to take into account currencies that don't use 2 dp
+    my $calcval = $form->parse_amount(\%pos_config, $unit);
+    $calcval = sprintf('%03d', $calcval * 100) if $calcval < 1;
+    my $subval = 'sub_' . $calcval;
+    $calcval = 'calc_' . $calcval;
+    print qq|<tr>
+      <td><input type=text name=$calcval value="$form->{$calcval}"></td>
+      <th>X ${curren}${unit} = </th>
+      <td><input type=text name=$subval value="$form->{$subval}"></td>
+    </tr>|;
+  }
+  print qq|<tr>
     <td>&nbsp;</td>
     <th>Subtotal:</th>
     <td><input type=text name=sub_sub value="$form->{sub_sub}"></td>
-</table>
+  </tr>
+  </table>
 <input type=button name=calculate class=submit onClick="custom_calc_total()" 
    value='Calculate'>
 |;
@@ -429,23 +380,23 @@ sub close_till {
 
   $head = "Closing Till $pos_config{till} for $form->{login}\n".
 	"Date: $form->{transdate}\n\n\n";
-  $cash = join ("\n", 
-	("Cash Breakdown:",
-	"$form->{calc_100} x 100 = $form->{sub_100}",
-	"$form->{calc_50} x 50 = $form->{sub_50}",
-	"$form->{calc_20} x 20 = $form->{sub_20}",
-	"$form->{calc_10} x 10 = $form->{sub_10}",
-	"$form->{calc_5} x 5 = $form->{sub_5}",
-	"$form->{calc_1} x 1 = $form->{sub_1}",
-	"$form->{calc_050} x 0.50 = $form->{sub_050}",
-	"$form->{calc_025} x 0.25 = $form->{sub_025}",
-	"$form->{calc_010} x 0.10 = $form->{sub_010}",
-	"$form->{calc_005} x 0.05 = $form->{sub_005}",
-	"$form->{calc_001} x 0.01 = $form->{sub_001}",
-        "Total Cash in Drawer: $form->{sub_sub}",
-        "Less Cash in Till At Start: $pos_config{till_cash}",
-        "\n"));
-  $foot = "Cumulative Error: $difference\n Reset Till By $amount\n\n\n\n\n\n\n\n\n\n";
+  my @cashlines = [$locale->text("Cash Breakdown:")];
+  foreach my $unit ($pos_config{'breakdown'}) {
+    # XXX Needs to take into account currencies that don't use 2 dp
+    my $parsed = $form->parse_amount(\%pos_config, $unit);
+    my $calcval = $parsed;
+    $calcval = sprintf('%03d', $calcval * 100) if $calcval < 1;
+    my $subval = 'sub_' . $calcval;
+    $calcval = 'calc_' . $calcval;
+    push @cashlines, "$form->{$calcval} x $parseval = $form->{$subval}";
+  }
+  push @cashlines, $locale->text("Total Cash in Drawer:") . $form->{sub_sub};
+  push @cashlines, $locale->text("Less Cash in Till At Start:") . 
+  	$form->{till_cash};
+  push @cashlines, "\n";
+  $cash = join ("\n", @cashlines);
+  $foot = $locale->text("Cumulative Error: ")."$difference\n";
+  $foot .= $locale->text('Reset Till By ')."$amount\n\n\n\n\n\n\n\n\n\n";
   open (PRN, "|-",  $printer{Printer});
   print PRN $head;
   print PRN $lines;
@@ -454,12 +405,12 @@ sub close_till {
   print PRN $foot;
   close PRN;
   if ($difference > 0){
-    $message = "You are over by ".$difference;
+    $message = $locale->text("You are over by ").$difference;
   } elsif ($difference < 0){
-    $message = "You are under by ".$difference * -1;
+    $message = $locale->text("You are under by ").$difference * -1;
   }
   else {
-    $message = "Congradulations!  Your till is exactly balanced.";
+    $message = $local->text("Congratulations!  Your till is exactly balanced.");
   }
   $form->info($message);
 }
