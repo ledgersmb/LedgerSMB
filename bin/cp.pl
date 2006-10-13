@@ -506,7 +506,7 @@ sub payments_footer {
 
   $form->hide_form(qw(callback rowcount path login sessionid));
  
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1109,7 +1109,7 @@ sub payment_footer {
 
   $form->hide_form(qw(callback rowcount path login sessionid));
  
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

@@ -170,7 +170,7 @@ sub search_employee {
 </form>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -378,7 +378,7 @@ sub list_employees {
     print $item->{code};
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -690,7 +690,7 @@ sub employee_footer {
     }
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -872,7 +872,7 @@ sub search_deduction {
     print $item->{code};
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1123,7 +1123,7 @@ sub deduction_footer {
     }
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

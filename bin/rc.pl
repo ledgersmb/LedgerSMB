@@ -172,7 +172,7 @@ sub reconciliation {
 </form>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -744,7 +744,7 @@ sub display_form {
     $close_next |;
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

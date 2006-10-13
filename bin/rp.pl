@@ -778,7 +778,7 @@ $gifi
 </form>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1700,7 +1700,7 @@ sub aging {
     
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2505,7 +2505,7 @@ sub list_payments {
 </table>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

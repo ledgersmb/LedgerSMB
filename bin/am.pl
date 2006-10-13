@@ -262,7 +262,7 @@ sub form_footer {
 
   for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -591,7 +591,7 @@ sub gifi_footer {
 
   for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -750,7 +750,7 @@ sub list_department {
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Add Department').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -940,7 +940,7 @@ sub list_business {
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Add Business').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1141,7 +1141,7 @@ sub list_sic {
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Add SIC').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1329,7 +1329,7 @@ sub list_language {
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Add Language').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1574,7 +1574,7 @@ sub list_templates {
 <input type=hidden name=sessionid value=$form->{sessionid}>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1626,7 +1626,7 @@ $form->{body}
   print qq|
 <input name=action type=submit class=submit value="|.$locale->text('Edit').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1673,7 +1673,7 @@ $form->{body}
 <br>
 <input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1842,7 +1842,7 @@ sub defaults {
   print qq|
 <input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1962,7 +1962,7 @@ sub display_taxes {
 <input type=submit class=submit name=action value="|.$locale->text('Update').qq|">
 <input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2187,7 +2187,7 @@ sub config {
   print qq|
 <input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2468,7 +2468,7 @@ sub list_warehouse {
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Add Warehouse').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2886,7 +2886,7 @@ print qq|
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Process Transactions').qq|">| if $k;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

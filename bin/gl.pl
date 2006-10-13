@@ -353,7 +353,7 @@ sub search {
 </form>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -689,7 +689,7 @@ sub generate_report {
     print $item->{code};
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1072,7 +1072,7 @@ sub form_footer {
     print qq|<div align=right>|.$locale->text('Scheduled').qq|</div>|;
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

@@ -774,7 +774,7 @@ sub form_footer {
   for (keys %button) { delete $button{$_} if ! $a{$_} }
   for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1260,7 +1260,7 @@ sub search {
 </form>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1672,7 +1672,7 @@ sub transactions {
     for (sort { $a->{order} <=> $b->{order} } %button) { print $_->{code} }
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2439,7 +2439,7 @@ sub display_ship_receive {
   
   $form->print_button(\%button, 'Done');
   
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2556,7 +2556,7 @@ sub search_transfer {
 </form>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2708,7 +2708,7 @@ print qq|
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Transfer').qq|">|;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -2917,7 +2917,7 @@ BLANKROW:
   print qq|
 <input class=submit type=submit name=action value="|.$locale->text('Select Vendor').qq|">|;
  
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -3001,7 +3001,7 @@ sub select_vendor {
 </form>
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

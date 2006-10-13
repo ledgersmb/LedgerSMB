@@ -519,7 +519,7 @@ sub list_spool {
     
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }

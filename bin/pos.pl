@@ -577,7 +577,7 @@ sub form_footer {
     }
   }
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
@@ -1041,7 +1041,7 @@ sub receipts {
 <input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
 |;
 
-  if ($form->{menubar}) {
+  if ($form->{lynx}) {
     require "bin/menu.pl";
     &menubar;
   }
