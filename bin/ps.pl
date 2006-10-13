@@ -1,10 +1,8 @@
-#!/usr/bin/perl
-#
 ######################################################################
-# LedgerSMB Accounting and ERP
-
+# LedgerSMB Small Medium Business Accounting
 # http://www.ledgersmb.org/
 #
+
 # Copyright (C) 2006
 # This work contains copyrighted information from a number of sources all used
 # with permission.
@@ -16,18 +14,14 @@
 # maintainers, and copyright holders, see the CONTRIBUTORS file.
 #
 # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2001
+# Copyright (c) 1999 - 2005
 #
-#  Author: Dieter Simader
-#   Email: dsimader@sql-ledger.org
+#  Author: DWS Systems Inc.
 #     Web: http://www.sql-ledger.org
 #
-#  Contributors:
 #
-#
+#  Author: DWS Systems Inc.
 #     Web: http://www.ledgersmb.org/
-#
-#  Contributors:
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,82 +35,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#######################################################################
-#
-# this script sets up the terminal and runs the scripts
-# in bin/$terminal directory
-# admin.pl is linked to this script
 #
 #######################################################################
+#
+# point of sale script
+#
+#######################################################################
 
+use LedgerSMB::AA;
+use LedgerSMB::IS;
+use LedgerSMB::RP;
 
-# setup defaults, DO NOT CHANGE
-$userspath = "users";
-$spool = "spool";
-$templates = "templates";
-$memberfile = "users/members";
-$sendmail = "| /usr/sbin/sendmail -t";
-%printer = ( Printer => 'lpr' );
-########## end ###########################################
+require "bin/ar.pl";
+require "bin/is.pl";
+require "bin/rp.pl";
+require "bin/pos.pl";
+require "pos.conf.pl";
 
-
-$| = 1;
-
-eval { require "ledger-smb.conf"; };
-
-if ($ENV{CONTENT_LENGTH}) {
-	read(STDIN, $_, $ENV{CONTENT_LENGTH});
+# customizations
+if (-f "bin/custom/pos.pl") {
+  eval { require "bin/custom/pos.pl"; };
+}
+if (-f "bin/custom/$form->{login}_pos.pl") {
+  eval { require "bin/custom/$form->{login}_pos.pl"; };
 }
 
-if ($ENV{QUERY_STRING}) {
-	$_ = $ENV{QUERY_STRING};
-}
-
-if ($ARGV[0]) {
-	$_ = $ARGV[0];
-}
-
-
-%form = split /[&=]/;
-
-# fix for apache 2.0 bug
-map { $form{$_} =~ s/\\$// } keys %form;
-
-# name of this script
-$0 =~ tr/\\/\//;
-$pos = rindex $0, '/';
-$script = substr($0, $pos + 1);
-
-
-if (-e "$userspath/nologin" && $script ne 'admin.pl') {
-	print "Content-Type: text/html\n\n<html><body><strong>";
-	print "\nLogin disabled!\n";
-	print "\n</strong></body></html>";
-	exit;
-}
-
-
-if ($form{path}) {
-
-	if ($form{path} ne 'bin/lynx'){ $form{path} = 'bin/mozilla';}	
-
-	$ARGV[0] = "$_&script=$script";
-	require "bin/$script";
-
-} else {
-
-	$form{terminal} = "lynx";
-
-	if ($ENV{HTTP_USER_AGENT} !~ /lynx/i) {
-		$form{terminal} = "mozilla";
-	}
-
-	$ARGV[0] = "path=bin/$form{terminal}&script=$script";
-	map { $ARGV[0] .= "&${_}=$form{$_}" } keys %form;
-
-	require "bin/$script";
-
-}
-
-# end of main
-
+1;
+# end

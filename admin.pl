@@ -100,7 +100,7 @@ if ($form{path}) {
 	if ($form{path} ne 'bin/lynx'){ $form{path} = 'bin/mozilla';}	
 
 	$ARGV[0] = "$_&script=$script";
-	require "$form{path}/$script";
+	require "bin/$script";
 
 } else {
 
@@ -113,7 +113,7 @@ if ($form{path}) {
 	$ARGV[0] = "path=bin/$form{terminal}&script=$script";
 	map { $ARGV[0] .= "&${_}=$form{$_}" } keys %form;
 
-	require "bin/$form{terminal}/$script";
+	require "bin/$script";
 
 }
 

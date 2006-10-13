@@ -117,16 +117,16 @@ if (-f "$userspath/nologin") {
 }
 
 # pull in the main code
-require "$form->{path}/$form->{script}";
+require "bin/$form->{script}";
 
 # customized scripts
-if (-f "$form->{path}/custom_$form->{script}") {
-	eval { require "$form->{path}/custom_$form->{script}"; };
+if (-f "bin/custom/$form->{script}") {
+	eval { require "bin/custom/$form->{script}"; };
 }
 
 # customized scripts for login
-if (-f "$form->{path}/$form->{login}_$form->{script}") {
-	eval { require "$form->{path}/$form->{login}_$form->{script}"; };
+if (-f "bin/custom/$form->{login}_$form->{script}") {
+	eval { require "bin/custom/$form->{login}_$form->{script}"; };
 }
 
   
@@ -154,7 +154,7 @@ sub check_password {
   
 	if ($myconfig{password}) {
 
-		require "$form->{path}/pw.pl";
+		require "bin/pw.pl";
 
 		if ($form->{password}) {
 			if ((crypt $form->{password}, substr($form->{login}, 0, 2)) ne $myconfig{password}) {
