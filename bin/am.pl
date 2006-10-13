@@ -1903,7 +1903,7 @@ sub display_taxes {
 	  <th>|.$locale->text('Rate').qq| (%)</th>
 	  <th>|.$locale->text('Number').qq|</th>
 	  <th>|.$locale->text('Valid To').qq|</th>
-	  <th>|.$locale->text('Order').qq|</th>
+	  <th>|.$locale->text('Ordering').qq|</th>
 	  <th>|.$locale->text('Tax Rules').qq|</th>
 	</tr>
 |;
