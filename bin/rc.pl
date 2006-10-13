@@ -250,6 +250,7 @@ function money_round(m){
 function custom_calc_total(){
   |;
   my $subgen = 'document.forms[0].sub_sub.value = ';
+  my $toround = '';
   foreach my $unit (@{$pos_config{'breakdown'}}) {
     # XXX Needs to take into account currencies that don't use 2 dp
     my $parsed = $form->parse_amount(\%pos_config, $unit);
@@ -261,8 +262,12 @@ function custom_calc_total(){
   document.forms[0].${subval}.value = document.forms[0].${calcval}.value * $parsed;
     |;
     $subgen .= "document.forms[0].${subval}.value * 1 + ";
+    $toround .= qq|
+    	document.forms[0].${subval}.value = 
+    	money_round(document.forms[0].${subval}.value); |;
   }
   print $subgen . "0;";
+  print $toround;
   print qq|document.forms[0].sub_sub.value = 
            money_round(document.forms[0].sub_sub.value);
   document.forms[0].amount_cash.value = money_round(
