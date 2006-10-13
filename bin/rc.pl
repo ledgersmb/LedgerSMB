@@ -250,7 +250,7 @@ function money_round(m){
 function custom_calc_total(){
   |;
   my $subgen = 'document.forms[0].sub_sub.value = ';
-  foreach my $unit ($pos_config{'breakdown'}) {
+  foreach my $unit (@{$pos_config{'breakdown'}}) {
     # XXX Needs to take into account currencies that don't use 2 dp
     my $parsed = $form->parse_amount(\%pos_config, $unit);
     my $calcval = $parsed;
@@ -289,7 +289,7 @@ function check_errors(){
 
 <table>
 <col><col><col>|;
-  foreach my $unit ($pos_config{'breakdown'}) {
+  foreach my $unit (@{$pos_config{'breakdown'}}) {
     # XXX Needs to take into account currencies that don't use 2 dp
     my $calcval = $form->parse_amount(\%pos_config, $unit);
     $calcval = sprintf('%03d', $calcval * 100) if $calcval < 1;
@@ -381,7 +381,7 @@ sub close_till {
   $head = "Closing Till $pos_config{till} for $form->{login}\n".
 	"Date: $form->{transdate}\n\n\n";
   my @cashlines = [$locale->text("Cash Breakdown:")];
-  foreach my $unit ($pos_config{'breakdown'}) {
+  foreach my $unit (@{$pos_config{'breakdown'}}) {
     # XXX Needs to take into account currencies that don't use 2 dp
     my $parsed = $form->parse_amount(\%pos_config, $unit);
     my $calcval = $parsed;
