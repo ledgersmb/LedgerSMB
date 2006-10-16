@@ -1296,7 +1296,7 @@ sub print_button {
 
 sub db_init {
 	my ($self, $myconfig) = @_;
-	$self->{dbh} = $self->dbconnect_noauto($myconfig);
+	$self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
 
 	my $query = 
 		"SELECT t.extends, 
