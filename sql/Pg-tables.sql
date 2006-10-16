@@ -246,7 +246,7 @@ CREATE TABLE partstax (
 CREATE TABLE taxmodule (
   taxmodule_id serial PRIMARY KEY,
   taxmodulename text NOT NULL
-};
+);
 --
 CREATE TABLE tax (
   chart_id int PRIMARY KEY,
