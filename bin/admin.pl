@@ -754,6 +754,7 @@ sub form_header {
 
 sub save {
 
+	$form->db_init;
 	# no driver checked
 	$form->error($locale->text('Database Driver not checked!')) unless $form->{dbdriver};
 
