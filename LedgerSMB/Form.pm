@@ -1392,7 +1392,7 @@ sub run_custom_queries {
 		}
 	} elsif ($query_type eq 'UPDATE'){
 		@rc = $self->run_custom_queries(
-			$tablename, $query_type, $linenum);
+			$tablename, 'INSERT', $linenum);
 	} elsif ($query_type eq 'SELECT'){
 		for (@rc){
 			$query = shift @{$_};
