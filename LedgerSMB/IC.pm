@@ -199,7 +199,7 @@ sub get_part {
     $sth->finish;
   }
 
-  $form->get_custom_queries('parts', 'SELECT');
+  $form->run_custom_queries('parts', 'SELECT');
   
 }
 
@@ -493,7 +493,7 @@ sub save {
   my $rc = $dbh->commit;
   $dbh->disconnect;
 
-  $form->get_custom_queries('parts', 'UPDATE');
+  $form->run_custom_queries('parts', 'UPDATE');
   $rc;
   
 }

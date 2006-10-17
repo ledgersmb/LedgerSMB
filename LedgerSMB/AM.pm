@@ -77,7 +77,7 @@ sub get_account {
 		 LIMIT 1|;
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{id});
-	($form->{orphaned}) = $dbh->fetchrow_array();
+	($form->{orphaned}) = $sth->fetchrow_array();
 	$form->{orphaned} = !$form->{orphaned};
 
 	$dbh->commit;
@@ -140,7 +140,7 @@ sub save_account {
 			       category = ?,
 			       link = ?,
 			       contra = ?
-			 WHERE id = $form->{id}|;
+			 WHERE id = ?|;
 		push @queryargs, $form->{id};
 	} else {
 		$query = qq|
@@ -165,7 +165,7 @@ sub save_account {
 
 		$sth = $dbh->prepare($query);
 		$sth->execute($form->{accno});
-		($chart_id) = $sth->fetchrow_array($query);
+		($chart_id) = $sth->fetchrow_array();
 		$sth->finish;
 	}
 
