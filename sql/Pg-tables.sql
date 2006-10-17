@@ -254,7 +254,7 @@ CREATE TABLE tax (
   taxnumber text,
   validto date,
   pass integer DEFAULT 0 NOT NULL,
-  taxmodule_id int,
+  taxmodule_id int DEFAULT 1 NOT NULL,
   FOREIGN KEY (chart_id) REFERENCES chart (id),
   FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id)
 );
@@ -706,3 +706,9 @@ table_id INT REFERENCES custom_table_catalog,
 field_name TEXT
 );
 INSERT INTO defaults (version) VALUES ('2.6.18');
+
+INSERT INTO taxmodule (
+  taxmodule_id, taxmodulename
+  ) VALUES (
+  1, 'Simple'
+);
