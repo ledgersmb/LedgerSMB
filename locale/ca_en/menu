@@ -1,5 +1,8 @@
 $self{texts} = {
+  'Add Labor/Overhead'          => 'Add Labour/Overhead',
   'Check'                       => 'Cheque',
+  'Labor/Overhead'              => 'Labour/Overhead',
+  'Send by E-Mail'              => 'Send by Email',
 };
 
 $self{subs} = {

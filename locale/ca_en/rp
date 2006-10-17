@@ -1,4 +1,8 @@
 $self{texts} = {
+  'Decimalplaces'               => 'Decimal places',
+  'E-mail'                      => 'Email',
+  'E-mail Statement to'         => 'Email Statement to',
+  'E-mail address missing!'     => 'Email address missing',
 };
 
 $self{subs} = {

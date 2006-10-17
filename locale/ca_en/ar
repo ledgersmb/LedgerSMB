@@ -1,5 +1,6 @@
 $self{texts} = {
   'Check'                       => 'Cheque',
+  'E-mail'                      => 'Email',
 };
 
 $self{subs} = {
