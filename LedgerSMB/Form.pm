@@ -478,14 +478,24 @@ sub parse_amount {
 
 	my ($self, $myconfig, $amount) = @_;
 
-	if (($myconfig->{numberformat} eq '1.000,00') ||
-		($myconfig->{numberformat} eq '1000,00')) {
+	my $numberformat = $myconfig->{numberformat};
+	my $decimal_regex = /\.\d{2}/;
+	if (($numberformat !~ $decimal_regex) and ($amount =~ $decimal_regex)){
+		# We have already parsed this number
+		$numberformat = "1000.00";
+	}
+
+	if (($numberformat eq '1.000,00') ||
+		($numberformat eq '1000,00')) {
 
 		$amount =~ s/\.//g;
 		$amount =~ s/,/\./;
 	}
+	if ($numberformat eq '1 000.00'){
+		$amount =~ s/\s//g;
+	}
 
-	if ($myconfig->{numberformat} eq "1'000.00") {
+	if ($numberformat eq "1'000.00") {
 		$amount =~ s/'//g;
 	}
 
