@@ -32,6 +32,8 @@ the documentation.
 Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
 documentation, the Pg-tables.sql, and a setup file for replication.
 
+Mads Kiilerich <mads @ kiilerich.com> provided the first version of the RPM 
+spec file.
 
 Original Authors of SQL-Ledger:
 ===================================

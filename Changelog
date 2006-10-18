@@ -1,11 +1,14 @@
 Changelog for LedgerSMB 1.2.0
 
+* Corrected parsing of numbers so that they are multi-run safe (Chris T)
+* Added first version of rpm spec from Mads Kiilerich (Chris T)
+* Added "1 000.00" number format (Chris T)
 * Added session method abstraction (Chris T)
 * Added modular tax calculation support (no modules included yet) (Seneca)
 * Added experimental TrustCommerce credit card processing (Chris T)
 * Merged most of the rest of the SL-POS interface (Chris T)
 * Broke out price matrix calls into PriceMatrix.pm (Chris T)
-* Added Gentoo ebuilds documentation and metadata(Jayson R).
+* Added Gentoo ebuilds documentation and metadata (Jayson R).
 * POS register now goes from add invoice to add invoice. (Chris T)
 * Added pole display and separate cash drawer open calls. (Chris T)
 * Added simple text import function for invoices received (PDT's) (Chris T)
