@@ -1,5 +1,6 @@
 Changelog for LedgerSMB 1.2.0
 
+* Added session method abstraction (Chris T)
 * Added modular tax calculation support (no modules included yet) (Seneca)
 * Added experimental TrustCommerce credit card processing (Chris T)
 * Merged most of the rest of the SL-POS interface (Chris T)
