@@ -756,7 +756,6 @@ sub form_header {
 
 sub save {
 
-	$form->db_init;
 	# no driver checked
 	$form->error($locale->text('Database Driver not checked!')) unless $form->{dbdriver};
 
@@ -794,6 +793,7 @@ sub save {
 
 
 	$myconfig = new User "$memberfile", "$form->{login}";
+	$form->db_init(%myconfig);
 
 	# redo acs variable and delete all the acs codes
 	@acs = split /;/, $form->{acs};
