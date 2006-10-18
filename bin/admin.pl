@@ -383,7 +383,9 @@ sub form_header {
 		$dateformat .= ($item eq $myconfig->{dateformat}) ? "<option selected>$item</option>\n" : "<option>$item</option>\n";
 	}
 
-	foreach $item (qw(1,000.00 1000.00 1.000,00 1000,00 1'000.00)) {
+	my @formats = qw(1,000.00 1000.00 1.000,00 1000,00 1'000.00);
+	push @formats, '1 000.00';
+	foreach $item (@formats) {
 		$numberformat .= ($item eq $myconfig->{numberformat}) ? "<option selected>$item</option>\n" : "<option>$item</option>\n";
 	}
 
