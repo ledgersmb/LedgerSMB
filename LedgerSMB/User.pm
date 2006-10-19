@@ -752,7 +752,6 @@ sub create_config {
 
 
 sub save_member {
-
 	my ($self, $memberfile, $userspath) = @_;
 
 	# format dbconnect and dboptions string
@@ -797,7 +796,6 @@ sub save_member {
 		$self->{dbpasswd} = pack 'u', $self->{dbpasswd};
 		chop $self->{dbpasswd};
 	}
-
 	if ($self->{password} ne $self->{old_password}) {
 		$self->{password} = crypt $self->{password}, substr($self->{login}, 0, 2) if $self->{password};
 	}
@@ -818,7 +816,6 @@ sub save_member {
 	print CONF "\n";
 	close CONF;
 	unlink "${memberfile}.LCK";
-
 	# create conf file
 	if (! $self->{'root login'}) {
 
@@ -840,7 +837,6 @@ sub save_member {
 
 		my ($id) = $sth->fetchrow_array;
 		$sth->finish;
-
 		if ($id) {
 
 			$query = qq|UPDATE employee SET

@@ -2714,12 +2714,15 @@ sub update_defaults {
 
 	my ($self, $myconfig, $fld) = @_;
 
-	if (!$self->{dbh}){
+	if (!$self->{dbh} && $self){
 		$self->db_init($myconfig);
-	}
-
+	} 
+		
 	my $dbh = $self->{dbh};
 
+	if (!$self){
+		$dbh = $_[3];
+	}
 
 	my $query = qq|SELECT $fld FROM defaults FOR UPDATE|;
 	($_) = $dbh->selectrow_array($query);

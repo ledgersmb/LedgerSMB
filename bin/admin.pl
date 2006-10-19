@@ -793,11 +793,9 @@ sub save {
 
 
 	$myconfig = new User "$memberfile", "$form->{login}";
-	$form->db_init(%myconfig);
 
 	# redo acs variable and delete all the acs codes
 	@acs = split /;/, $form->{acs};
-
 	$form->{acs} = "";
 
 	foreach $item (@acs) {
@@ -818,7 +816,6 @@ sub save {
 	$form->{dbpasswd} = $form->{"$form->{dbdriver}_dbpasswd"};
 	$form->{dbuser} = $form->{"$form->{dbdriver}_dbuser"};
 	$form->{dbname} = $form->{"$form->{dbdriver}_dbname"};
-
 	$form->isblank("dbname", $locale->text('Dataset missing!'));
 	$form->isblank("dbuser", $locale->text('Database User missing!'));
 
@@ -839,7 +836,6 @@ sub save {
 	$myconfig->{packpw} = 1;
 
 	$myconfig->save_member($memberfile, $userspath);
-
 	# create user template directory and copy master files
 	if (! -d "$form->{templates}") {
 
@@ -875,7 +871,6 @@ sub save {
 	}
 
 	$form->redirect($locale->text('User saved!'));
-
 }
 
 
