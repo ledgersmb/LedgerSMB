@@ -1934,6 +1934,7 @@ sub display_taxes {
 	  <td><select name="taxmodule_id_$i" size=1>|;
     foreach my $taxmodule (sort keys %$form) {
       next if ($taxmodule !~ /^taxmodule_/);
+      next if ($taxmodule =~ /^taxmodule_id_/);
       my $modulenum = $taxmodule;
       $modulenum =~ s/^taxmodule_//;
       print '<option label="'.$form->{$taxmodule}.'" value="'.$modulenum . '"';
@@ -1957,6 +1958,11 @@ sub display_taxes {
 |;
 
   $form->hide_form(qw(taxaccounts path login sessionid));
+  foreach my $taxmodule (sort keys %$form) {
+    next if ($taxmodule !~ /^taxmodule_/);
+    next if ($taxmodule =~ /^taxmodule_id_/);
+    $form->hide_form("$taxmodule");
+  }
 
   print qq|
 <input type=submit class=submit name=action value="|.$locale->text('Update').qq|">
@@ -1985,6 +1991,7 @@ sub update {
   foreach $item (@a) {
     ($accno, $i) = split /_/, $item;
     push @t, $accno;
+    $form->{"taxmodulename_$i"} = $form->{"taxmodule_".$form->{"taxmodule_id_$i"}};
 
     if ($form->{"validto_$i"}) {
       $j = $i + 1;
