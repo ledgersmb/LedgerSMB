@@ -5,3 +5,9 @@
 package LSMBConfig;
 
 $session='DB';
+$logging=0; # No logging on by default
+
+
+
+
+1;
