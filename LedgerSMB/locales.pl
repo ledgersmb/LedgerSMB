@@ -5,15 +5,26 @@
 # -m do not generate missing files
 
 use FileHandle;
-
+use Getopt::Long;
+Getopt::Long::Configure('bundling');
 
 $basedir = "../..";
 $bindir = "$basedir/bin";
+$customdir = "$bindir/custom";
 $menufile = "menu.ini";
 
-foreach $item (@ARGV) {
-  $item =~ s/-//g;
-  $arg{$item} = 1;
+my $excludeCustom = 0;
+my $buildAll = 0;
+my $noMissing = 0;
+my $goodOpt = 0;
+$goodOpt = GetOptions (
+	'n' => \$excludeCustom, 'no-custom' => \$excludeCustom,
+	'a' => \$buildAll, 'build-all' => \$buildAll,
+	'm' => \$noMissing, 'no-missing' => \$noMissing);
+
+if (!$goodOpt) {
+	printf "Invalid options\n";
+	exit 1;
 }
 
 open(FH, "LANGUAGE");
@@ -30,14 +41,18 @@ seekdir DIR, 0;
 closedir DIR;
 
 # put customized files into @customfiles
-@customfiles = () if ($arg{n});
+@customfiles = () if ($excludeCustom);
 
-if ($arg{n}) {
+if ($excludeCustom) {
   @menufiles = ($menufile);
 } else {
-  opendir DIR, "$basedir" or die "$!";
+  opendir DIR, "$bindir" or die "$!";
   @menufiles = grep { /.*?_$menufile$/ } readdir DIR;
   closedir DIR;
+##  unshift @menufiles, $menufile;
+##  opendir DIR, "$customdir" or die "$!";
+##  @menufiles = grep { /^$menufile$/ } readdir DIR;
+##  closedir DIR;
   unshift @menufiles, $menufile;
 }
 
@@ -58,7 +73,8 @@ if (-f 'missing') {
 }
   
 foreach $file (@progfiles) {
-  
+ 
+  next if -d "$bindir/$file";
   %locale = ();
   %submit = ();
   %subrt = ();
@@ -161,7 +177,7 @@ $self{subs} = {
 
   close FH;
 
-  if (!$arg{m}) {  
+  if (!$noMissing) {  
     if (@missing) {
       open FH, ">$file.missing" or die "$! : missing";
 
@@ -189,7 +205,7 @@ $self{subs} = {
 
   
   # redo the all file
-  if ($arg{a}) {
+  if ($buildAll) {
     open FH, ">all" or die "$! : all";
 
     print FH q|# These are all the texts to build the translations files.
@@ -238,6 +254,7 @@ sub scanfile {
   my ($file, $level) = @_;
 
   my $fh = new FileHandle;
+  return unless (-e $file or $file !~ /custom/);
   open $fh, "$file" or die "$! : $file";
 
   $file =~ s/\.pl//;
@@ -273,7 +290,7 @@ sub scanfile {
       my $newfile = $&;
       $newfile =~ s/require\s+\W//;
       $newfile =~ s/\$form->{path}\///;
-      &scanfile("$bindir/$newfile", 1) if $newfile !~ /_/;
+      &scanfile("$basedir/$newfile", 1) if $newfile !~ /_/;
     }
    
     # is this a sub ?
@@ -305,7 +322,7 @@ sub scanfile {
 	  $locale{$string} = 1;
 
           # is it a submit button before $locale->
-          if (/type=submit/i) {
+          if (/type="?submit"?/i) {
 	    $submit{$string} = 1;
           }
 	}
