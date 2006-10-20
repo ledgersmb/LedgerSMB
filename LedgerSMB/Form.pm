@@ -406,8 +406,9 @@ sub format_amount {
 
 		if ($myconfig->{numberformat}) {
 
+			$amount =~ s/-//;
+			$self->parse_amount($amount);
 			my ($whole, $dec) = split /\./, "$amount";
-			$whole =~ s/-//;
 			$amount = join '', reverse split //, $whole;
 
 			if ($places) {
@@ -418,6 +419,13 @@ sub format_amount {
 			if ($myconfig->{numberformat} eq '1,000.00') {
 				$amount =~ s/\d{3,}?/$&,/g;
 				$amount =~ s/,$//;
+				$amount = join '', reverse split //, $amount;
+				$amount .= "\.$dec" if ($dec ne "");
+			}
+
+			if ($myconfig->{numberformat} eq '1 000.00') {
+				$amount =~ s/\d{3,}?/$& /g;
+				$amount =~ s/\s$//;
 				$amount = join '', reverse split //, $amount;
 				$amount .= "\.$dec" if ($dec ne "");
 			}
