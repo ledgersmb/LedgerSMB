@@ -407,7 +407,7 @@ sub format_amount {
 		if ($myconfig->{numberformat}) {
 
 			$amount =~ s/-//;
-			$self->parse_amount($amount);
+			$self->parse_amount($amount, $myconfig);
 			my ($whole, $dec) = split /\./, "$amount";
 			$amount = join '', reverse split //, $whole;
 
