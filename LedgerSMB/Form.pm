@@ -388,13 +388,18 @@ sub format_amount {
 
 	my ($self, $myconfig, $amount, $places, $dash) = @_;
 
+	my $negative = ($amount < 0);
+	if ($amount){
+		$amount =~ s/-//;
+		$amount = $self->parse_amount($myconfig, $amount);
+	}
+
 	if ($places =~ /\d+/) {
 		#$places = 4 if $places == 2;
 		$amount = $self->round_amount($amount, $places);
 	}
 
 	# is the amount negative
-	my $negative = ($amount < 0);
 
 	# Parse $myconfig->{numberformat}
 
@@ -406,8 +411,6 @@ sub format_amount {
 
 		if ($myconfig->{numberformat}) {
 
-			$amount =~ s/-//;
-			$amount = $self->parse_amount($amount, $myconfig);
 			my ($whole, $dec) = split /\./, "$amount";
 			$amount = join '', reverse split //, $whole;
 
@@ -486,8 +489,12 @@ sub parse_amount {
 
 	my ($self, $myconfig, $amount) = @_;
 
+	eval $amount->isa('Math::BigFloat'); # Amount may not be an object
+	if (!$@ and $amount->isa('Math::BigFloat')){
+		return $amount;
+	}
 	my $numberformat = $myconfig->{numberformat};
-	my $decimal_regex = /\.\d{2}/;
+	my $decimal_regex = /\.\d+$/;
 	if (($numberformat !~ $decimal_regex) and ($amount =~ $decimal_regex)){
 		# We have already parsed this number
 		$numberformat = "1000.00";
@@ -508,6 +515,7 @@ sub parse_amount {
 	}
 
 	$amount =~ s/,//g;
+	$amount = new Math::BigFloat($amount);
 	return ($amount * 1);
 }
 
