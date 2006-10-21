@@ -489,8 +489,7 @@ sub parse_amount {
 
 	my ($self, $myconfig, $amount) = @_;
 
-	UNIVERSAL::isa($amount, 'Math::BigFloat'); # Amount may not be an object
-	if (!$@ and $amount->isa('Math::BigFloat')){
+	if (!UNIVERSAL::isa($amount, 'Math::BigFloat')){ # Amount may not be an object
 		return $amount;
 	}
 	my $numberformat = $myconfig->{numberformat};
