@@ -388,16 +388,20 @@ sub format_amount {
 
 	my ($self, $myconfig, $amount, $places, $dash) = @_;
 
+
 	my $negative = ($amount < 0);
+	print STDERR "$amount\n";
 	if ($amount){
 		$amount =~ s/-//;
 		$amount = $self->parse_amount($myconfig, $amount);
 	}
+	print STDERR "$amount\n";
 
 	if ($places =~ /\d+/) {
 		#$places = 4 if $places == 2;
 		$amount = $self->round_amount($amount, $places);
 	}
+	print STDERR "$amount\n";
 
 	# is the amount negative
 
@@ -489,7 +493,7 @@ sub parse_amount {
 
 	my ($self, $myconfig, $amount) = @_;
 
-	if (!UNIVERSAL::isa($amount, 'Math::BigFloat')){ # Amount may not be an object
+	if (UNIVERSAL::isa($amount, 'Math::BigFloat')){ # Amount may not be an object	
 		return $amount;
 	}
 	my $numberformat = $myconfig->{numberformat};
@@ -503,7 +507,7 @@ sub parse_amount {
 		($numberformat eq '1000,00')) {
 
 		$amount =~ s/\.//g;
-		$amount =~ s/,/\./;
+		$amount =~ s/,/./;
 	}
 	if ($numberformat eq '1 000.00'){
 		$amount =~ s/\s//g;
