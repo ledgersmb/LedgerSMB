@@ -1,5 +1,3 @@
-ALTER TABLE acc_trans ADD FOREIGN KEY (trans_id) REFERENCES transactions (id);
-
 ALTER TABLE ap ADD PRIMARY KEY (id);
 
 ALTER TABLE ar ADD PRIMARY KEY (id);

@@ -78,7 +78,7 @@ CREATE TABLE defaults (
 );
 --
 CREATE TABLE acc_trans (
-  trans_id int REFERENCES transactions(id),
+  trans_id int,
   chart_id int NOT NULL REFERENCES chart (id),
   amount NUMERIC,
   transdate date DEFAULT current_date,

@@ -208,6 +208,9 @@ sub save_customer {
 	$form->{terms} *= 1;
 	$form->{taxincluded} *= 1;
 	$form->{creditlimit} = $form->parse_amount($myconfig, $form->{creditlimit});
+	if (!$form->{creditlimit}){
+		$form->{creditlimit} = 0;
+	}
 
 
 	if ($form->{id}) {

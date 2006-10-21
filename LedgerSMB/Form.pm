@@ -490,6 +490,10 @@ sub parse_amount {
 
 	my ($self, $myconfig, $amount) = @_;
 
+	if ($amount eq '') {
+		return undef;
+	}
+
 	if (UNIVERSAL::isa($amount, 'Math::BigFloat')){ # Amount may not be an object	
 		return $amount;
 	}

@@ -120,7 +120,7 @@ sub display_row {
   }
       
 
-  push @column_index, qw(unit sellprice discount linetotal);
+  push @column_index, qw(unit onhand sellprice discount linetotal);
 
   my $colspan = $#column_index + 1;
 
