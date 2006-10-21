@@ -489,7 +489,7 @@ sub parse_amount {
 
 	my ($self, $myconfig, $amount) = @_;
 
-	eval $amount->isa('Math::BigFloat'); # Amount may not be an object
+	eval{ $amount->isa('Math::BigFloat'); }; # Amount may not be an object
 	if (!$@ and $amount->isa('Math::BigFloat')){
 		return $amount;
 	}
