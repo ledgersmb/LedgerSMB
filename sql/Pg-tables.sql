@@ -564,12 +564,10 @@ CREATE TABLE jcitems (
 -- Session tracking table
 
 
-CREATE SEQUENCE session_session_id_seq;
-
 CREATE TABLE session(
-session_id INTEGER PRIMARY KEY DEFAULT nextval('session_session_id_seq'),
+session_id serial PRIMARY KEY,
 sl_login VARCHAR(50),
-token CHAR(32),
+token VARCHAR(32) CHECK(length(token) = 32),
 last_used TIMESTAMP default now()
 );
 
