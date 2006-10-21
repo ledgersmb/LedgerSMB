@@ -3142,16 +3142,7 @@ sub text {
 sub findsub {
 
 	my ($self, $text) = @_;
-
-	if (exists $self{subs}{$text}) {
-		$text = $self{subs}{$text};
-	} else {
-		if ($self->{countrycode} && $self->{NLS_file}) {
-			Form->error("$text not defined in locale/$self->{countrycode}/$self->{NLS_file}");
-		}
-	}
-
-	$text;
+	return $text;
 }
 
 
