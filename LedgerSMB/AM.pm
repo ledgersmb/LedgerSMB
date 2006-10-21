@@ -1235,8 +1235,12 @@ sub check_template_name {
 	my ($self, $myconfig, $form) = @_;
 
 	my @allowedsuff = qw(css tex txt html xml);
-	if ($form->{file} =~ /\.\./){
+	if ($form->{file} =~ /^(.:)*?\/|\.\.\/|^\//){
 		$form->error("Directory transversal not allowed.");
+	}
+	my $userspath = ${main::userspath};
+	if ($form->{file} =~ /^$userspath\//){
+		$form->error("Not allowed to access $userspath/ with this method");
 	}
 	my $whitelisted = 0;
 	for (@allowedsuff){
@@ -1248,8 +1252,8 @@ sub check_template_name {
 		$form->error("Error:  File is of type that is not allowed.");
 	}
 
-	if ($form->{file} !~ /^$myconfig->{templates}/){
-		$form->error("$!: $form->{file}") unless $form->{file} =~ /^css/;
+	if ($form->{file} !~ /^$myconfig->{templates}\//){
+		$form->error("Not in a whitelisted directory: $form->{file}") unless $form->{file} =~ /^css\//;
 	}
 }
 

@@ -1591,13 +1591,6 @@ sub list_templates {
 
 sub display_form {
 
-  $form->{file} =~ s/^(.:)*?\/|\.\.\///g; 
-  $form->{file} =~ s/^\/*//g;
-  $form->{file} =~ s/$userspath//;
-  $form->{file} =~ s/$memberfile//;
-
-  $form->error("$!: $form->{file}") unless -f $form->{file};
-
   AM->load_template(\%myconfig, \%$form);
 
   $form->{title} = $form->{file};
