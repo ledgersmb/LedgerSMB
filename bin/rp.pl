@@ -769,11 +769,11 @@ $gifi
 </table>
 
 <br>
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
+<input type="hidden" name="path" value="$form->{path}">
+<input type="hidden" name="login" value="$form->{login}">
+<input type="hidden" name="sessionid" value="$form->{sessionid}">
 
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 
 </form>
 |;
@@ -1876,10 +1876,10 @@ sub e_mail {
   </tr>
 </table>
 
-<input type=hidden name=nextsub value=send_email>
+<input type="hidden" name="nextsub" value="send_email">
 
 <br>
-<input name=action class=submit type=submit value="|.$locale->text('Continue').qq|">
+<button name="action" class="submit" type="submit" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>

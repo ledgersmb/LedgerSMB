@@ -1313,8 +1313,8 @@ sub add_date {
 sub print_button {
 	my ($self, $button, $name) = @_;
 
-	print qq|<input class="submit" type="submit" name="action" value="$button->{$name}{value}" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]" />\n|;
-}
+	print qq|<button class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
+}          
 
 
 # Database routines used throughout

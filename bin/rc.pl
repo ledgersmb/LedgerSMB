@@ -167,7 +167,7 @@ sub reconciliation {
   $form->hide_form(qw(path login sessionid));
 
   print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 
 </form>
 |;
@@ -315,8 +315,8 @@ function check_errors(){
 <input type=button name=calculate class=submit onClick="custom_calc_total()" 
    value='Calculate'>
 |;
-  print qq|</table><input type=submit name=action value="|.
-		$locale->text("close_till").qq|">|;
+  print qq|</table><button type="submit" name="action" value="close_till">|.
+		$locale->text("close_till").qq|</button>|;
   print qq|
 </form>
 
@@ -665,14 +665,14 @@ sub display_form {
 |;
 
   if ($form->{'pos'}){
-     $close_next = qq|<input type=submit class=submit name=action 
-       value="|.$locale->text('close_next').qq|">|;
+     $close_next = qq|<button type="submit" class="submit" name="action" 
+       value="close_next">|.$locale->text('close_next').qq|</button>|;
      $done = "";
   }
   else {
      $close_next = "";
-     $done = qq|<input type=submit class=submit name=action
-       value="|.$locale->text('Done').qq|">|;
+     $done = qq|<button type="submit" class="submit" name="action"
+       value="done">|.$locale->text('Done').qq|</button>|;
   }
   if ($form->{'pos'}){
     $difference = qq|
@@ -743,8 +743,8 @@ sub display_form {
   
   print qq|
 <br>
-<input type=submit class=submit name=action value="|.$locale->text('Update').qq|">
-<input type=submit class=submit name=action value="|.$locale->text('Select all').qq|">
+<button type="submit" class="submit" name="action" value="update">|.$locale->text('Update').qq|</button>
+<button type="submit" class="submit" name="action" value="select_all">|.$locale->text('Select all').qq|</button>
     $done
     $close_next |;
   }
