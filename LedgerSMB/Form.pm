@@ -494,11 +494,6 @@ sub parse_amount {
 		return $amount;
 	}
 	my $numberformat = $myconfig->{numberformat};
-	my $decimal_regex = /\.\d+$/;
-	if (($numberformat !~ $decimal_regex) and ($amount =~ $decimal_regex)){
-		# We have already parsed this number
-		$numberformat = "1000.00";
-	}
 
 	if (($numberformat eq '1.000,00') ||
 		($numberformat eq '1000,00')) {
