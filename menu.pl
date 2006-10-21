@@ -138,7 +138,7 @@ if ($form->{action}) {
 	if (substr($form->{action}, 0, 1) =~ /( |\.)/) {
 		&{ $form->{nextsub} };
 	} else {
-		&{ $locale->findsub($form->{action}) };
+		&{ $form->{action} };
 	}
 
 } else {

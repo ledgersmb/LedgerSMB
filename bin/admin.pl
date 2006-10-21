@@ -67,7 +67,7 @@ if (-f "bin/custom/$form->{script}") {
 if ($form->{action}) {
 
 	&check_password unless $form->{action} eq 'logout';
-	&{ $locale->findsub($form->{action}) };
+	&{ $form->{action} };
 
 } else {
 
@@ -160,7 +160,7 @@ sub adminlogin {
 			<tr>
 				<th>|.$locale->text('Password').qq|</th>
 				<td><input type="password" name="password" /></td>
-				<td><button type="submit" class="submit" name="action" value="login">|.$locale->text('Login').qq|"</button></td>
+				<td><button type="submit" class="submit" name="action" value="login">|.$locale->text('Login').qq|</button></td>
 			</tr>
 		</table>
 		<input type="hidden" name="action" value="login" />

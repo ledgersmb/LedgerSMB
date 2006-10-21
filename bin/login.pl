@@ -66,7 +66,7 @@ $form->{titlebar} = "LedgerSMB ".$locale->text('Version'). " $form->{version}";
 
 if ($form->{action}) {
 	$form->{titlebar} .= " - $myconfig{name} - $myconfig{dbname}";
-	&{ $locale->findsub($form->{action}) };
+	&{ $form->{action} };
 
 } else {
 	&login_screen;

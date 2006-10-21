@@ -3139,13 +3139,6 @@ sub text {
 }
 
 
-sub findsub {
-
-	my ($self, $text) = @_;
-	return $text;
-}
-
-
 sub date {
 
 	my ($self, $myconfig, $date, $longformat) = @_;
