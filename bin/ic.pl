@@ -1133,10 +1133,10 @@ sub search {
   <tr><td colspan=4><hr size=3 noshade></td></tr>
 </table>
 
-<input type=hidden name=nextsub value=generate_report>
+<input type="hidden" name="nextsub" value="generate_report">
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">|;
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>|;
 
   $form->hide_form(qw(path login sessionid));
   
@@ -1525,19 +1525,19 @@ sub generate_report {
 
   $i = 1;
   if ($form->{searchitems} eq 'part') {
-    $button{'Goods & Services--Add Part'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Part').qq|"> |;
+    $button{'Goods & Services--Add Part'}{code} = qq|<button class="submit" type="submit" name="action" value="add_part">|.$locale->text('Add Part').qq|</button> |;
     $button{'Goods & Services--Add Part'}{order} = $i++;
   }
   if ($form->{searchitems} eq 'service') {
-    $button{'Goods & Services--Add Service'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Service').qq|"> |;
+    $button{'Goods & Services--Add Service'}{code} = qq|<button class="submit" type="submit" name="action" value="add_service">|.$locale->text('Add Service').qq|</button> |;
     $button{'Goods & Services--Add Service'}{order} = $i++;
   }
   if ($form->{searchitems} eq 'assembly') {  
-    $button{'Goods & Services--Add Assembly'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Assembly').qq|"> |;
+    $button{'Goods & Services--Add Assembly'}{code} = qq|<button class="submit" type="submit" name="action" value="add_assembly">|.$locale->text('Add Assembly').qq|</button> |;
     $button{'Goods & Services--Add Assembly'}{order} = $i++;
   }
   if ($form->{searchitems} eq 'labor') {  
-    $button{'Goods & Services--Add Labor/Overhead'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Labor/Overhead').qq|"> |;
+    $button{'Goods & Services--Add Labor/Overhead'}{code} = qq|<button class="submit" type="submit" name="action" value="add_labor_overhead">|.$locale->text('Add Labor/Overhead').qq|</button> |;
     $button{'Goods & Services--Add Labor/Overhead'}{order} = $i++;
   }
 
@@ -1956,11 +1956,11 @@ sub requirements {
   </tr>
 </table>
 
-<input type=hidden name=nextsub value=requirements_report>
-<input type=hidden name=sort value=partnumber>
+<input type="hidden" name="nextsub" value="requirements_report">
+<input type="hidden" name="sort" value="partnumber">
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">|;
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>|;
 
   $form->hide_form(qw(path login sessionid));
   
@@ -2501,7 +2501,7 @@ sub assembly_row {
 
     } else {
       
-      $column_data{partnumber} = qq|<td><input class=submit type=submit name=action value="$spc$form->{"partnumber_$i"}"></td>
+      $column_data{partnumber} = qq|<td><button class="submit" type="submit" name="action" value="$spc$form->{"partnumber_$i"}">$spc$form->{"partnumber_$i"}</button></td>
       <input type=hidden name="partnumber_$i" value="$form->{"partnumber_$i"}">|;
 	
       $column_data{runningnumber} = qq|<td><input name="runningnumber_$i" size=3 value="$i"></td>|;
@@ -2850,7 +2850,7 @@ sub select_name {
 <input type=hidden name=nextsub value=name_selected>
 <input type=hidden name=vc value=$table>
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -3084,10 +3084,10 @@ sub stock_assembly {
   $form->hide_form(qw(path login sessionid));
 
   print qq|
-<input type=hidden name=nextsub value=list_assemblies>
+<input type="hidden" name="nextsub" value="list_assemblies">
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 |;
 
@@ -3211,11 +3211,11 @@ sub list_assemblies {
   $form->hide_form(qw(checkinventory path login sessionid callback));
 
   print qq|
-<input type=hidden name=rowcount value="$i">
-<input type=hidden name=nextsub value=restock_assemblies>
+<input type="hidden" name="rowcount" value="$i">
+<input type="hidden" name="nextsub" value="restock_assemblies">
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 
 </form>
 

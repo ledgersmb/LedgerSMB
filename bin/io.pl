@@ -442,10 +442,10 @@ sub select_item {
   $form->hide_form;
   
   print qq|
-<input type=hidden name=nextsub value=item_selected>
+<input type="hidden" name="nextsub" value="item_selected">
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -601,7 +601,7 @@ sub new_item {
 
   print qq|
 <p>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 |;
   }
@@ -1039,10 +1039,10 @@ sub e_mail {
   </tr>
 </table>
 
-<input type=hidden name=nextsub value=send_email>
+<input type="hidden" name="nextsub" value="send_email">
 
 <br>
-<input name=action class=submit type=submit value="|.$locale->text('Continue').qq|">
+<button name="action" class="submit" type="submit" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -1690,7 +1690,7 @@ sub ship_to {
 <hr size=3 noshade>
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>

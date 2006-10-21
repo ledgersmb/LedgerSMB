@@ -294,7 +294,7 @@ sub search {
 
   print qq|
 <br>
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 |;
 
@@ -1089,7 +1089,7 @@ sub resave {
 
 <h4>$msg</h4>
 
-<input name=action class=submit type=submit value="|.$locale->text('Continue').qq|">
+<button name="action" class="submit" type="submit" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -1150,7 +1150,7 @@ sub delete_timecard {
 </h4>
 
 <p>
-<input name=action class=submit type=submit value="|.$locale->text('Yes').qq|">
+<button name="action" class="submit" type="submit" value="yes">|.$locale->text('Yes').qq|</button>
 </form>
 |;
 
@@ -1486,19 +1486,19 @@ sub list_timecard {
   if ($form->{project} eq 'job') {
     if ($myconfig{acs} !~ /Production--Production/) {
       $i = 1;
-      $button{'Production--Add Time Card'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Time Card').qq|"> |;
+      $button{'Production--Add Time Card'}{code} = qq|<button class="submit" type="submit" name="action" value="add_time_card">|.$locale->text('Add Time Card').qq|</button> |;
       $button{'Production--Add Time Card'}{order} = $i++;
     }
   } elsif ($form->{project} eq 'project') {
     if ($myconfig{acs} !~ /Projects--Projects/) {
       $i = 1;
-      $button{'Projects--Add Time Card'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Time Card').qq|"> |;
+      $button{'Projects--Add Time Card'}{code} = qq|<button class="submit" type="submit" name="action" value="add_time_card">|.$locale->text('Add Time Card').qq|</button> |;
       $button{'Projects--Add Time Card'}{order} = $i++;
     }
   } else {
     if ($myconfig{acs} !~ /Time Cards--Time Cards/) {
       $i = 1;
-      $button{'Time Cards--Add Time Card'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Time Card').qq|"> |;
+      $button{'Time Cards--Add Time Card'}{code} = qq|<button class="submit" type="submit" name="action" value="add_time_card">|.$locale->text('Add Time Card').qq|</button> |;
       $button{'Time Cards--Add Time Card'}{order} = $i++;
     }
   }
@@ -1677,7 +1677,7 @@ sub list_storescard {
   if ($form->{project} eq 'job') {
     if ($myconfig{acs} !~ /Production--Production/) {
       $i = 1;
-      $button{'Production--Add Stores Card'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Stores Card').qq|"> |;
+      $button{'Production--Add Stores Card'}{code} = qq|<button class="submit" type="submit" name="action" value="add_stores_card">|.$locale->text('Add Stores Card').qq|</button> |;
       $button{'Production--Add Stores Card'}{order} = $i++;
     }
   }
