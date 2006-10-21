@@ -502,14 +502,14 @@ sub search_name {
   </tr>
 </table>
 
-<input type=hidden name=nextsub value=$form->{nextsub}>
+<input type="hidden" name="nextsub" value="$form->{nextsub}">
 
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
+<input type="hidden" name="path" value="$form->{path}">
+<input type="hidden" name="login" value="$form->{login}">
+<input type="hidden" name="sessionid" value="$form->{sessionid}">
 
 <br>
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 |;
 
@@ -918,13 +918,13 @@ sub list_names {
   $i = 1;
   if ($myconfig{acs} !~ /AR--AR/) {
     if ($form->{db} eq 'customer') {
-      $button{'AR--Customers--Add Customer'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Customer').qq|"> |;
+      $button{'AR--Customers--Add Customer'}{code} = qq|<button class="submit" type="submit" name="action" value="add_customer">|.$locale->text('Add Customer').qq|</button> |;
       $button{'AR--Customers--Add Customer'}{order} = $i++;
     }
   }
   if ($myconfig{acs} !~ /AP--AP/) {
     if ($form->{db} eq 'vendor') {
-      $button{'AP--Vendors--Add Vendor'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Vendor').qq|"> |;
+      $button{'AP--Vendors--Add Vendor'}{code} = qq|<button class="submit" type="submit" name="action" value="add_vendor">|.$locale->text('Add Vendor').qq|</button> |;
       $button{'AP--Vendors--Add Vendor'}{order} = $i++;
     }
   }
@@ -2272,10 +2272,10 @@ sub select_item {
   $form->hide_form;
 
   print qq|
-<input type=hidden name=nextsub value=item_selected>
+<input type="hidden" name="nextsub" value="item_selected">
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>

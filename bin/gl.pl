@@ -349,7 +349,7 @@ sub search {
   
   print qq|
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 |;
 
@@ -648,19 +648,19 @@ sub generate_report {
 
   $i = 1;
   if ($myconfig{acs} !~ /General Ledger--General Ledger/) {
-    $button{'General Ledger--Add Transaction'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('GL Transaction').qq|"> |;
+    $button{'General Ledger--Add Transaction'}{code} = qq|<button class="submit" type="submit" name="action" value="gl_transaction">|.$locale->text('GL Transaction').qq|</button> |;
     $button{'General Ledger--Add Transaction'}{order} = $i++;
   }
   if ($myconfig{acs} !~ /AR--AR/) {
-    $button{'AR--Add Transaction'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('AR Transaction').qq|"> |;
+    $button{'AR--Add Transaction'}{code} = qq|<button class="submit" type="submit" name="action" value="ar_transaction">|.$locale->text('AR Transaction').qq|</button> |;
     $button{'AR--Add Transaction'}{order} = $i++;
-    $button{'AR--Sales Invoice'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Sales Invoice ').qq|"> |;
+    $button{'AR--Sales Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="sales_invoice_">|.$locale->text('Sales Invoice ').qq|</button> |;
     $button{'AR--Sales Invoice'}{order} = $i++;
   }
   if ($myconfig{acs} !~ /AP--AP/) {
-    $button{'AP--Add Transaction'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('AP Transaction').qq|"> |;
+    $button{'AP--Add Transaction'}{code} = qq|<button class="submit" type="submit" name="action" value="ap_transaction">|.$locale->text('AP Transaction').qq|</button> |;
     $button{'AP--Add Transaction'}{order} = $i++;
-    $button{'AP--Vendor Invoice'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Vendor Invoice ').qq|"> |;
+    $button{'AP--Vendor Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|.$locale->text('Vendor Invoice ').qq|</button> |;
     $button{'AP--Vendor Invoice'}{order} = $i++;
   }
 
@@ -1106,7 +1106,7 @@ sub delete {
 
 <h4>|.$locale->text('Are you sure you want to delete Transaction').qq| $form->{reference}</h4>
 
-<input name=action class=submit type=submit value="|.$locale->text('Yes').qq|">
+<button name="action" class="submit" type="submit" value="yes">|.$locale->text('Yes').qq|</button>
 </form>
 |;
 

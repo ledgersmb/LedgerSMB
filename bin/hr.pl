@@ -166,7 +166,7 @@ sub search_employee {
 
   print qq|
 <br>
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 |;
 
@@ -352,7 +352,7 @@ sub list_employees {
   }
 
   $i = 1;
-  $button{'HR--Employees--Add Employee'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Employee').qq|"> |;
+  $button{'HR--Employees--Add Employee'}{code} = qq|<button class="submit" type="submit" name="action" value="add_employee">|.$locale->text('Add Employee').qq|</button> |;
   $button{'HR--Employees--Add Employee'}{order} = $i++;
 
   foreach $item (split /;/, $myconfig{acs}) {
@@ -679,14 +679,14 @@ sub employee_footer {
 
 <br>
 
-<input class=submit type=submit name=action value="|.$locale->text('Update').qq|">
-<input class=submit type=submit name=action value="|.$locale->text('Save').qq|">
+<button class="submit" type="submit" name="action" value="update">|.$locale->text('Update').qq|</button>
+<button class="submit" type="submit" name="action" value="save">|.$locale->text('Save').qq|</button>
 |;
 
   if ($form->{id}) {
-    print qq|<input class=submit type=submit name=action value="|.$locale->text('Save as new').qq|">\n|;
+    print qq|<button class="submit" type="submit" name="action" value="save_as_new">|.$locale->text('Save as new').qq|</button>\n|;
     if ($form->{status} eq 'orphaned') {
-      print qq|<input class=submit type=submit name=action value="|.$locale->text('Delete').qq|">\n|;
+      print qq|<button class="submit" type="submit" name="action" value="delete">|.$locale->text('Delete').qq|</button>\n|;
     }
   }
 
@@ -840,7 +840,7 @@ sub search_deduction {
   }
 
   $i = 1;
-  $button{'HR--Deductions--Add Deduction'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Deduction').qq|"> |;
+  $button{'HR--Deductions--Add Deduction'}{code} = qq|<button class="submit" type="submit" name="action" value="add_deduction">|.$locale->text('Add Deduction').qq|</button> |;
   $button{'HR--Deductions--Add Deduction'}{order} = $i++;
 
   foreach $item (split /;/, $myconfig{acs}) {
@@ -1099,27 +1099,27 @@ sub deduction_header {
 sub deduction_footer {
 
   print qq|
-<input name=id type=hidden value=$form->{id}>
+<input name="id" type="hidden" value="$form->{id}">
 
-<input type=hidden name=db value=$form->{db}>
+<input type="hidden" name="db" value="$form->{db}">
 
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
+<input type="hidden" name="path" value="$form->{path}">
+<input type="hidden" name="login" value="$form->{login}">
+<input type="hidden" name="sessionid" value="$form->{sessionid}">
 
-<input type=hidden name=callback value="$form->{callback}">
+<input type="hidden" name="callback" value="$form->{callback}">
 
 <br>
 
-<input class=submit type=submit name=action value="|.$locale->text("Update").qq|">
-<input class=submit type=submit name=action value="|.$locale->text("Save").qq|">
+<button class="submit" type="submit" name="action" value="update">|.$locale->text("Update").qq|</button>
+<button class="submit" type="submit" name="action" value="save">|.$locale->text("Save").qq|</button>
 |;
 
   if ($form->{id}) {
-    print qq|<input class=submit type=submit name=action value="|.$locale->text('Save as new').qq|">\n|;
+    print qq|<button class="submit" type="submit" name="action" value="save_as_new">|.$locale->text('Save as new').qq|</button>\n|;
     
     if ($form->{status} eq 'orphaned') {
-      print qq|<input class=submit type=submit name=action value="|.$locale->text('Delete').qq|">\n|;
+      print qq|<button class="submit" type="submit" name="action" value="delete">|.$locale->text('Delete').qq|</button>\n|;
     }
   }
 

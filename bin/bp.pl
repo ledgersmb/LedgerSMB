@@ -186,7 +186,7 @@ sub search {
 <input type=hidden name=nextsub value=list_spool>
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 |;
 
   $form->hide_form(qw(path login sessionid));
@@ -237,7 +237,7 @@ sub remove {
 
 <h4>|.$locale->text('Are you sure you want to remove the marked entries from the queue?').qq|</h4>
 
-<input name=action class=submit type=submit value="|.$locale->text('Yes').qq|">
+<button name="action" class="submit" type="submit" value="yes">|.$locale->text('Yes').qq|</button>
 </form>
 
 </body>
