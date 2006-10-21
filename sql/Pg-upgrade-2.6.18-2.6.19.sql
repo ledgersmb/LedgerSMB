@@ -138,3 +138,7 @@ ALTER TABLE tax ALTER COLUMN pass SET NOT NULL;
 ALTER TABLE tax ADD COLUMN taxmodule_id int REFERENCES taxmodule DEFAULT 1;
 UPDATE tax SET taxmodule_id = 1;
 ALTER TABLE tax ALTER COLUMN taxmodule_id SET NOT NULL;
+
+-- Fixed session table --
+ALTER TABLE session ADD CONSTRAINT session_token_check check (length(token::text) = 32);
+
