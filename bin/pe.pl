@@ -527,9 +527,9 @@ sub list_stock {
   $form->hide_form(qw(callback type path login sessionid status));
 
   print qq|
-<input type=hidden name=nextsub value="stock">
+<input type="hidden" name="nextsub" value="stock">
 <br>
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -741,7 +741,7 @@ sub search {
   $form->hide_form(qw(path login sessionid title));
 
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 |;
 
@@ -916,7 +916,7 @@ sub list_projects {
   $i = 1;
   if ($form->{type} eq 'project') {
     if ($myconfig{acs} !~ /Projects--Projects/) {
-      $button{'Projects--Add Project'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Project').qq|"> |;
+      $button{'Projects--Add Project'}{code} = qq|<button class="submit" type="submit" name="action" value="add_project">|.$locale->text('Add Project').qq|</button> |;
       $button{'Projects--Add Project'}{order} = $i++;
 
       for (split /;/, $myconfig{acs}) {
@@ -925,7 +925,7 @@ sub list_projects {
     }
   } else {
     if ($myconfig{acs} !~ /Job Costing--Job Costing/) {
-      $button{'Job Costing--Add Job'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Job').qq|"> |;
+      $button{'Job Costing--Add Job'}{code} = qq|<button class="submit" type="submit" name="action" value="add_job">|.$locale->text('Add Job').qq|</button> |;
       $button{'Job Costing--Add Job'}{order} = $i++;
 
       for (split /;/, $myconfig{acs}) {
@@ -1257,7 +1257,7 @@ sub partsgroup_report {
 
   $i = 1;
   if ($myconfig{acs} !~ /Goods \& Services--Goods \& Services/) {
-    $button{'Goods & Services--Add Group'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Group').qq|"> |;
+    $button{'Goods & Services--Add Group'}{code} = qq|<button class="submit" type="submit" name="action" value="add_group">|.$locale->text('Add Group').qq|</button> |;
     $button{'Goods & Services--Add Group'}{order} = $i++;
 
     foreach $item (split /;/, $myconfig{acs}) {
@@ -1351,12 +1351,12 @@ sub partsgroup_footer {
 
   if ($myconfig{acs} !~ /Goods \& Services--Add Group/) {
     print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Save').qq|">
+<button type="submit" class="submit" name="action" value="save">|.$locale->text('Save').qq|</button>
 |;
 
     if ($form->{id} && $form->{orphaned}) {
       print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Delete').qq|">|;
+<button type="submit" class="submit" name="action" value="delete">|.$locale->text('Delete').qq|</button>|;
     }
   }
 
@@ -1453,7 +1453,7 @@ sub pricegroup_report {
 
   $i = 1;
   if ($myconfig{acs} !~ /Goods \& Services--Goods \& Services/) {
-    $button{'Goods & Services--Add Pricegroup'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Add Pricegroup').qq|"> |;
+    $button{'Goods & Services--Add Pricegroup'}{code} = qq|<button class="submit" type="submit" name="action" value="add_pricegroup">|.$locale->text('Add Pricegroup').qq|</button> |;
     $button{'Goods & Services--Add Pricegroup'}{order} = $i++;
 
     foreach $item (split /;/, $myconfig{acs}) {
@@ -1545,12 +1545,12 @@ sub pricegroup_footer {
   
   if ($myconfig{acs} !~ /Goods \& Services--Add Pricegroup/) {
     print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Save').qq|">
+<button type="submit" class="submit" name="action" value="save">|.$locale->text('Save').qq|</button>
 |;
 
     if ($form->{id} && $form->{orphaned}) {
       print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Delete').qq|">|;
+<button type="submit" class="submit" name="action" value="delete">|.$locale->text('Delete').qq|</button>|;
     }
   }
 
@@ -1639,7 +1639,7 @@ $sort
   print qq|
 
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -2068,9 +2068,9 @@ sub select_name {
   $form->hide_form;
 
   print qq|
-<input type=hidden name=nextsub value=name_selected>
+<input type="hidden" name="nextsub" value="name_selected">
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -2218,7 +2218,7 @@ sub project_sales_order {
   $form->hide_form(qw(path login sessionid nextsub type vc));
 
   print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 
 </form>
 |;
@@ -2399,10 +2399,10 @@ sub jcitems {
 
   if ($form->{rowcount}) {
     print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Generate Sales Orders').qq|">|;
+<button class="submit" type="submit" name="action" value="generate_sales_orders">|.$locale->text('Generate Sales Orders').qq|</button>|;
 
     print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Select Customer').qq|">|;
+<button class="submit" type="submit" name="action" value="select_customer">|.$locale->text('Select Customer').qq|</button>|;
 
   }
 
@@ -2448,7 +2448,7 @@ sub select_customer {
   $form->hide_form;
 
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|"> 
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button> 
     
 </form>
 |;

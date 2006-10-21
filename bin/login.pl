@@ -144,7 +144,7 @@ sub login_screen {
 					</table>
 						<input type="hidden" name="path" value="$form->{path}" />
 						<input type="hidden" name="js" value="$form->{js}" />
-						<input type="submit" name="action" value="|.$locale->text('Login').qq|" />
+						<button type="submit" name="action" value="login">|.$locale->text('Login').qq|</button>
 					</form>
 					</p>
 				</td>
@@ -209,7 +209,7 @@ sub selectdataset {
 									</tr>
 								</table>
 								<br />
-								<input type="submit" name="action" value="|.$locale->text('Login').qq|">
+								<button type="submit" name="action" value="login">|.$locale->text('Login').qq|</button>
 							</td>
 						</tr>
 					</table>

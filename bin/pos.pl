@@ -572,7 +572,7 @@ sub form_footer {
       foreach $item (split /\n/, $form->{partsgroup}) {
 	($partsgroup, $translation) = split /--/, $item;
 	$item = ($translation) ? $translation : $partsgroup;
-	print qq| <input class=submit type=submit name=action value="$spc$item">\n| if $item;
+	print qq| <button class="submit" type="submit" name="action" value="$spc$item">$spc$item</button>\n| if $item;
       }
     }
   }
@@ -1034,11 +1034,11 @@ sub receipts {
 </table>
 
 <br>
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
+<input type="hidden" name="path" value="$form->{path}">
+<input type="hidden" name="login" value="$form->{login}">
+<input type="hidden" name="sessionid" value="$form->{sessionid}">
 
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 |;
 
   if ($form->{lynx}) {
