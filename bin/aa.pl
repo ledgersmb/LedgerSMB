@@ -931,7 +931,7 @@ sub delete {
 
 <h4>|.$locale->text('Are you sure you want to delete Transaction').qq| $form->{invnumber}</h4>
 
-<input name=action class=submit type=submit value="|.$locale->text('Yes').qq|">
+<button name="action" class="submit" type="submit" value="yes">|.$locale->text('Yes').qq|</button>
 </form>
 
 </body>
@@ -1189,8 +1189,8 @@ sub search {
 </table>
 
 <br>
-<input type=hidden name=action value=continue>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">|;
+<input type="hidden" name="action" value="continue">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>|;
 
   $form->hide_form(qw(nextsub path login sessionid));
   
@@ -1557,14 +1557,14 @@ sub transactions {
   if ($myconfig{acs} !~ /$form->{ARAP}--$form->{ARAP}/) {
     $i = 1;
     if ($form->{ARAP} eq 'AR') {
-      $button{'AR--Add Transaction'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('AR Transaction').qq|"> |;
+      $button{'AR--Add Transaction'}{code} = qq|<button class="submit" type="submit" name="action" value="ar_transaction">|.$locale->text('AR Transaction').qq|</button> |;
       $button{'AR--Add Transaction'}{order} = $i++;
-      $button{'AR--Sales Invoice'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Sales Invoice.').qq|"> |;
+      $button{'AR--Sales Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="sales_invoice_">|.$locale->text('Sales Invoice.').qq|</button> |;
       $button{'AR--Sales Invoice'}{order} = $i++;
     } else {
-      $button{'AP--Add Transaction'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('AP Transaction').qq|"> |;
+      $button{'AP--Add Transaction'}{code} = qq|<button class="submit" type="submit" name="action" value="ap_transaction">|.$locale->text('AP Transaction').qq|</button> |;
       $button{'AP--Add Transaction'}{order} = $i++;
-      $button{'AP--Vendor Invoice'}{code} = qq|<input class=submit type=submit name=action value="|.$locale->text('Vendor Invoice.').qq|"> |;
+      $button{'AP--Vendor Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|.$locale->text('Vendor Invoice.').qq|</button> |;
       $button{'AP--Vendor Invoice'}{order} = $i++;
     }
 

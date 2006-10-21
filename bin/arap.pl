@@ -213,9 +213,9 @@ sub select_name {
 
   print qq|
 <input type=hidden name=nextsub value=name_selected>
-<input type=hidden name=vc value=$table>
+<input type=hidden name=vc value="$table">
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -408,7 +408,7 @@ sub select_project {
   print qq|
 <input type=hidden name=nextsub value=project_selected>
 <br>
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -507,7 +507,7 @@ sub repost {
 
 <h4>$msg</h4>
 
-<input name=action class=submit type=submit value="|.$locale->text('Continue').qq|">
+<button name="action" class="submit" type="submit" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>

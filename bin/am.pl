@@ -225,7 +225,7 @@ if ($form->{charttype} eq "A") {
 print qq|
         <tr>
 	  <th align="right">|.$locale->text('GIFI').qq|</th>
-	  <td><input name=gifi_accno size=9 value=$form->{gifi_accno}></td>
+	  <td><input name=gifi_accno size=9 value="$form->{gifi_accno}"></td>
 	</tr>
       </table>
     </td>
@@ -748,7 +748,7 @@ sub list_department {
   $form->hide_form(qw(type callback path login sessionid));
   
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Add Department').qq|">|;
+<button class="submit" type="submit" name="action" value="add_department">|.$locale->text('Add Department').qq|"</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -938,7 +938,7 @@ sub list_business {
   $form->hide_form(qw(type callback path login sessionid));
 
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Add Business').qq|">|;
+<button class="submit" type="submit" name="action" value="add_business">|.$locale->text('Add Business').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -1139,7 +1139,7 @@ sub list_sic {
   $form->hide_form(qw(type callback path login sessionid));
   
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Add SIC').qq|">|;
+<button class="submit" type="submit" name="action" value="add_sic">|.$locale->text('Add SIC').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -1327,7 +1327,7 @@ sub list_language {
   $form->hide_form(qw(type callback path login sessionid));
   
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Add Language').qq|">|;
+<button class="submit" type="submit" name="action" value="add_language"|.$locale->text('Add Language').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -1451,7 +1451,7 @@ sub delete_language {
 
 <input type=hidden name=action value=continue>
 <input type=hidden name=nextsub value=yes_delete_language>
-<input name=action class=submit type=submit value="|.$locale->text('Continue').qq|">
+<button name="action" class="submit" type="submit" value="continue">|.$locale->text('Continue').qq|</button>
 </form>
 
 </body>
@@ -1617,7 +1617,7 @@ $form->{body}
   $form->hide_form(qw(file type path login sessionid));
   
   print qq|
-<input name=action type=submit class=submit value="|.$locale->text('Edit').qq|">|;
+<button name="action" type="submit" class="submit" value="edit">|.$locale->text('Edit').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -1664,7 +1664,7 @@ $form->{body}
 </textarea>
 
 <br>
-<input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
+<button type="submit" class="submit" name="action" value="save">|.$locale->text('Save').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -1833,7 +1833,7 @@ sub defaults {
   $form->hide_form(qw(path login sessionid));
   
   print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
+<button type="submit" class="submit" name="action" value="save">|.$locale->text('Save').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -1958,8 +1958,8 @@ sub display_taxes {
   }
 
   print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Update').qq|">
-<input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
+<button type="submit" class="submit" name="action" value="update">|.$locale->text('Update').qq|</button>
+<button type="submit" class="submit" name="action" value="save_taxes">|.$locale->text('Save').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -2187,7 +2187,7 @@ sub config {
   $form->hide_form(qw(path login sessionid));
   
   print qq|
-<input type=submit class=submit name=action value="|.$locale->text('Save').qq|">|;
+<button type="submit" class="submit" name="action" value="save">|.$locale->text('Save').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -2324,7 +2324,7 @@ sub audit_control {
 <br>
 <input type=hidden name=nextsub value=doclose>
 <input type=hidden name=action value=continue>
-<input type=submit class=submit name=action value="|.$locale->text('Continue').qq|">
+<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 
 </form>
 
@@ -2468,7 +2468,7 @@ sub list_warehouse {
   $form->hide_form(qw(type callback path login sessionid));
   
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Add Warehouse').qq|">|;
+<button class="submit" type="submit" name="action" value="add_warehouse">|.$locale->text('Add Warehouse').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
@@ -2605,7 +2605,7 @@ sub yearend {
   $form->hide_form(qw(path login sessionid));
   
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">|;
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>|;
 
 }
 
@@ -2886,7 +2886,7 @@ print qq|
   $form->hide_form(qw(path login sessionid));
 
   print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Process Transactions').qq|">| if $k;
+<button class="submit" type="submit" name="action" value="process_transactions">|.$locale->text('Process Transactions').qq|</button>| if $k;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";

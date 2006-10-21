@@ -125,7 +125,7 @@ sub setup_initial_password {
 					</table>
 		<input type="hidden" name="path" value="$form->{path}" />
 		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
-		<p><input type="submit" class="submit" name="action" value="|.$locale->text('Change Password').qq|" /></p>
+		<p><button type="submit" class="submit" name="action" value="change_password">|.$locale->text('Change Password').qq|</button></p>
 		</form>
 
 		<a href="http://www.ledgersmb.org/">LedgerSMB |.$locale->text('website').qq|</a>
@@ -160,7 +160,7 @@ sub adminlogin {
 			<tr>
 				<th>|.$locale->text('Password').qq|</th>
 				<td><input type="password" name="password" /></td>
-				<td><input type="submit" class="submit" name="action" value="|.$locale->text('Login').qq|" /></td>
+				<td><button type="submit" class="submit" name="action" value="login">|.$locale->text('Login').qq|"</button></td>
 			</tr>
 		</table>
 		<input type="hidden" name="action" value="login" />
@@ -226,7 +226,7 @@ sub edit {
 sub form_footer {
 
 	if ($form->{edit}) {
-		$delete = qq|<input type="submit" class="submit" name="action" value="|.$locale->text('Delete').qq|" />
+		$delete = qq|<button type="submit" class="submit" name="action" value="delete">|.$locale->text('Delete').qq|</button>
 					 <input type="hidden" name="edit" value="1" />|;
 	}
 
@@ -234,7 +234,7 @@ sub form_footer {
 	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}" />
 	<input type="hidden" name="path" value="$form->{path}" />
 	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
-	<input type="submit" class="submit" name="action" value="|.$locale->text('Save').qq|" />
+	<button type="submit" class="submit" name="action" value="save">|.$locale->text('Save').qq|</button>
 	$delete
 	</form>
 	</body>
@@ -247,10 +247,10 @@ sub list_users {
 
 	open(FH, "$memberfile") or $form->error("$memberfile : $!");
 
-	$nologin = qq|<input type="submit" class="submit" name="action" value="|.$locale->text('Lock System').qq|" />|;
+	$nologin = qq|<button type="submit" class="submit" name="action" value="lock_system">|.$locale->text('Lock System').qq|</button>|;
 
 	if (-e "$userspath/nologin") {
-		$nologin = qq|<input type="submit" class="submit" name="action" value="|.$locale->text('Unlock System').qq|" />|;
+		$nologin = qq|<button type="submit" class="submit" name="action" value="unlock_system">|.$locale->text('Unlock System').qq|</button>|;
 	}
 
 
@@ -274,7 +274,7 @@ sub list_users {
 	# type=submit $locale->text('PgPP Database Administration')
 
 	foreach $item (User->dbdrivers) {
-		$dbdrivers .= qq|<input name="action" type="submit" class="submit" value="|.$locale->text("$item Database Administration").qq|" />|;
+		$dbdrivers .= qq|<button name="action" type="submit" class="submit" value="|.(lc $item).'_database_administration">'.$locale->text("$item Database Administration").qq|</button>|;
 	}
 
 
@@ -345,13 +345,13 @@ sub list_users {
 		<input type="hidden" name="path" value="$form->{path}" />
 		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 		<br />
-		<input type="submit" class="submit" name="action" value="|.$locale->text('Add User').qq|" />
-		<input type="submit" class="submit" name="action" value="|.$locale->text('Change Admin Password').qq|" />
+		<button type="submit" class="submit" name="action" value="add_user">|.$locale->text('Add User').qq|</button>
+		<button type="submit" class="submit" name="action" value="change_admin_password">|.$locale->text('Change Admin Password').qq|</button>
 
 		$dbdrivers
 		$nologin
 
-		<input type="submit" class="submit" name="action" value="|.$locale->text('Logout').qq|" />
+		<button type="submit" class="submit" name="action" value="logout">|.$locale->text('Logout').qq|</button>
 		</form>
 
 	|.$locale->text('Click on login name to edit!').qq|
@@ -1018,7 +1018,7 @@ sub change_admin_password {
 		<hr size="3" noshade />
 		<input type="hidden" name="path" value="$form->{path}" />
 		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
-		<p><input type="submit" class="submit" name="action" value="|.$locale->text('Change Password').qq|" /></p>
+		<p><button type="submit" class="submit" name="action" value="change_password">|.$locale->text('Change Password').qq|</button></p>
 		</form>
 	</body>
 	</html>
@@ -1187,8 +1187,8 @@ sub dbselect_source {
 	<input type="hidden" name="path" value="$form->{path}" />
 	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 	<br />
-	<input type="submit" class="submit" name="action" value="|.$locale->text('Create Dataset').qq|" />
-	<input type="submit" class="submit" name="action" value="|.$locale->text('Delete Dataset').qq|" />
+	<button type="submit" class="submit" name="action" value="create_dataset">|.$locale->text('Create Dataset').qq|</button>
+	<button type="submit" class="submit" name="action" value="delete_dataset">|.$locale->text('Delete Dataset').qq|</button>
 	</form>
 	<p>|.$locale->text('This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!')
 	.qq|</p>
@@ -1326,7 +1326,7 @@ sub create_dataset {
 	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}" />
 	<input type="hidden" name="nextsub" value="dbcreate" />
 	<br />
-	<input type="submit" class="submit" name="action" value="|.$locale->text('Continue').qq|" />
+	<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 	</form>
 	</body>
 	</html>
@@ -1358,7 +1358,7 @@ sub dbcreate {
 		<input type="hidden" name="path" value="$form->{path}" />
 		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 		<input type="hidden" name="nextsub" value="list_users" />
-		<p><input type="submit" class="submit" name="action" value="|.$locale->text('Continue').qq|" /></p>
+		<p><button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button></p>
 	</form>
 	</center>
 	</body>
@@ -1413,7 +1413,7 @@ sub delete_dataset {
 			<td>
 				<hr size="3" noshade />
 				<br />
-				<input type="submit" class="submit" name="action" value="|.$locale->text('Continue').qq|" />
+				<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
 			</td>
 		</tr>
 	</table>
@@ -1450,7 +1450,7 @@ sub dbdelete {
 	<input type="hidden" name="path" value="$form->{path}" />
 	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 	<input type="hidden" name="nextsub" value="list_users" />
-	<p><input type="submit" class="submit" name="action" value="|.$locale->text('Continue').qq|" /></p>
+	<p><button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button></p>
 	</form>
 	</body>
 	</html>

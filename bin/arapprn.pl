@@ -583,7 +583,7 @@ sub select_payment {
 
   if ($ok) {
     print qq|
-<input class=submit type=submit name=action value="|.$locale->text('Continue').qq|">|;
+<button class="submit" type="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>|;
   }
 
   print qq|
