@@ -1,5 +1,6 @@
 Changelog for LedgerSMB 1.2.0
 
+* Invoice now has an Onhand column (Chris T)
 * Added logging module (Jason R)
 * Corrected parsing of numbers so that they are multi-run safe (Chris T)
 * Added first version of rpm spec from Mads Kiilerich (Chris T)
