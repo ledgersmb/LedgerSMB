@@ -139,6 +139,52 @@ ALTER TABLE tax ADD COLUMN taxmodule_id int REFERENCES taxmodule DEFAULT 1;
 UPDATE tax SET taxmodule_id = 1;
 ALTER TABLE tax ALTER COLUMN taxmodule_id SET NOT NULL;
 
--- Fixed session table --
+-- Fixed session table and add users table --
+BEGIN;
+LOCK session in EXCLUSIVE MODE;
 ALTER TABLE session ADD CONSTRAINT session_token_check check (length(token::text) = 32);
+ALTER TABLE session ADD column user_id integer not null references users(id);
+LOCK users in EXCLUSIVE MODE;
+CREATE TABLE users (id serial UNIQUE, username varchar(30) PRIMARY KEY);
+COMMENT ON TABLE users 'username is the primary key because we don't want duplicate users';
+LOCK users_conf in EXCLUSIVE MODE;
+CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
+                        acs text,
+                        address text,
+                        businessnumber text,
+                        company text,
+                        countrycode text,
+                        currency text,
+                        dateformat text,
+                        dbconnect text,
+                        dbdriver text default 'Pg',
+                        dbhost text default 'localhost',
+                        dbname text,
+                        dboptions text,
+                        dbpasswd text,
+                        dbport text,
+                        dbuser text,
+                        email text,
+                        fax text,
+                        menuwidth text,
+                        name text,
+                        numberformat text,
+                        password varchar(32) check(length(password) = 32),
+                        print text,
+                        printer text,
+                        role text,
+                        sid text,
+                        signature text,
+                        stylesheet text,
+                        tel text,
+                        templates text,
+                        timeout numeric,
+                        vclimit numeric);
+COMMENT ON TABLE users_conf IS 'This is a completely dumb table that is a place holder to get usersconf into the database. Next major release will have a much more sane implementation';
+COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(id) is correct';
+COMMENT ON COLUMN users_conf.password IS 'This means we have to get rid of the current password stuff and move to presumably md5()';
+COMMIT;
+
+
+
 
