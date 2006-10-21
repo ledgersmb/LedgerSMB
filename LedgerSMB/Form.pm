@@ -390,18 +390,15 @@ sub format_amount {
 
 
 	my $negative = ($amount < 0);
-	print STDERR "$amount\n";
 	if ($amount){
-		$amount =~ s/-//;
 		$amount = $self->parse_amount($myconfig, $amount);
+		$amount =~ s/-//;
 	}
-	print STDERR "$amount\n";
 
 	if ($places =~ /\d+/) {
 		#$places = 4 if $places == 2;
 		$amount = $self->round_amount($amount, $places);
 	}
-	print STDERR "$amount\n";
 
 	# is the amount negative
 
