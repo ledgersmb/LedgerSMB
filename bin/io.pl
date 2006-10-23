@@ -121,7 +121,7 @@ sub display_row {
   }
       
 
-  push @column_index, @{LSMBConfig::io_lineitem_columns};
+  push @column_index, @{LedgerSMB::Sysconfig::io_lineitem_columns};
 
   my $colspan = $#column_index + 1;
 
