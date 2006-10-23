@@ -37,13 +37,16 @@
 $menufile = "menu.ini";
 
 use LedgerSMB::Form;
+use LedgerSMB::Locale;
 use LedgerSMB::User;
 
 
 $form = new Form;
 
-$locale = new Locale $language, "admin";
-$form->{charset} = $locale->{charset};
+$locale = LedgerSMB::Locale->get_handle($language);
+$locale->encoding('UTF-8');
+$form->{charset} = 'UTF-8';
+#$form->{charset} = $locale->encoding;
 
 eval { require DBI; };
 $form->error($locale->text('DBI not installed!')) if ($@);

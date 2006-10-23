@@ -60,6 +60,7 @@ $latex = 0;
 $| = 1;
 
 use LedgerSMB::Form;
+use LedgerSMB::Locale;
 use LedgerSMB::Session;
 
 eval { require "ledger-smb.conf"; };
@@ -86,7 +87,10 @@ use DBI qw(:sql_types);
 # check for user config file, could be missing or ???
 eval { require("$userspath/$form->{login}.conf"); };
 if ($@) {
-	$locale = new Locale "$language", "$script";
+	$locale = LedgerSMB::Locale->get_handle("fr_CA");
+	$form->{charset} = $locale->encoding;
+	$form->{charset} = 'UTF-8';
+	$locale->encoding('UTF-8');
 
 	$form->{callback} = "";
 	$msg1 = $locale->text('You are logged out!');
@@ -95,8 +99,10 @@ if ($@) {
 }
 
 # locale messages
-$locale = new Locale "$myconfig{countrycode}", "$script";
-$form->{charset} = $locale->{charset};
+$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode});
+#$form->{charset} = $locale->encoding;
+$form->{charset} = 'UTF-8';
+$locale->encoding('UTF-8');
 
 # send warnings to browser
 $SIG{__WARN__} = sub { $form->info($_[0]) };

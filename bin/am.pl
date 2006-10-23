@@ -2050,7 +2050,6 @@ sub config {
   foreach $key (sort { $countrycodes{$a} cmp $countrycodes{$b} } keys %countrycodes) {
     $countrycodes .= ($myconfig{countrycode} eq $key) ? "<option selected value=$key>$countrycodes{$key}\n" : "<option value=$key>$countrycodes{$key}\n";
   }
-  $countrycodes = qq|<option value="">English\n$countrycodes|;
 
   opendir CSS, "css/.";
   @all = grep /.*\.css$/, readdir CSS;

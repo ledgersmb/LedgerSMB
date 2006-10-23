@@ -45,6 +45,7 @@ use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
+use LedgerSMB::Locale;
 
 require "bin/arap.pl";
 require "bin/io.pl";
@@ -1944,7 +1945,10 @@ sub invoice {
   $form->{type} = "invoice";
  
   # locale messages
-  $locale = new Locale "$myconfig{countrycode}", "$script";
+  $locale = LedgerSMB::Locale->get_handle($myconfig{countrycode});
+  #$form->{charset} = $locale->encoding;
+  $form->{charset} = 'UTF-8';
+  $locale->encoding('UTF-8');
 
   require "bin/$form->{script}";
 

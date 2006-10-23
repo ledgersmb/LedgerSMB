@@ -39,6 +39,7 @@
 use DBI;
 use LedgerSMB::User;
 use LedgerSMB::Form;
+use LedgerSMB::Locale;
 
 ## will need this later when session_destroy will be used
 #use LedgerSMB::Session;
@@ -46,8 +47,10 @@ use LedgerSMB::Form;
 
 $form = new Form;
 
-$locale = new Locale $language, "login";
-$form->{charset} = $locale->{charset};
+$locale = LedgerSMB::Locale->get_handle($language);
+$locale->encoding('UTF-8');
+$form->{charset} = 'UTF-8';
+#$form->{charset} = $locale->encoding;
 
 # customization
 if (-f "bin/custom/$form->{script}") {
