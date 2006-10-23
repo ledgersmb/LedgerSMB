@@ -7,7 +7,7 @@ package LSMBConfig;
 $session='DB';
 $logging=0; # No logging on by default
 
-
+@io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
 
 1;

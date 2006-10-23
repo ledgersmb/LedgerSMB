@@ -1,5 +1,6 @@
 Changelog for LedgerSMB 1.2.0
 
+* Moved IS/IR/OE the linitem column list to the LedgerSMB::Sysconfig Chris T) 
 * Removed back-translation of function names for i18n (Seneca)
 * Invoice now has an Onhand column (Chris T)
 * Added logging module (Jason R)

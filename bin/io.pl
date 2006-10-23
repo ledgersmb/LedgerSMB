@@ -39,6 +39,7 @@
 #######################################################################
 
 use LedgerSMB::Tax;
+use LedgerSMB::Sysconfig;
 
 # any custom scripts for this one
 if (-f "bin/custom/io.pl") {
@@ -120,7 +121,7 @@ sub display_row {
   }
       
 
-  push @column_index, qw(unit onhand sellprice discount linetotal);
+  push @column_index, @{LSMBConfig::io_lineitem_columns};
 
   my $colspan = $#column_index + 1;
 
