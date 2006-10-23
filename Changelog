@@ -1,31 +1,47 @@
 Changelog for LedgerSMB 1.2.0
 
-* Moved IS/IR/OE the linitem column list to the LedgerSMB::Sysconfig Chris T) 
-* Removed back-translation of function names for i18n (Seneca)
-* Invoice now has an Onhand column (Chris T)
-* Added logging module (Jason R)
-* Corrected parsing of numbers so that they are multi-run safe (Chris T)
-* Added first version of rpm spec from Mads Kiilerich (Chris T)
-* Added "1 000.00" number format (Chris T)
-* Added session method abstraction (Chris T)
-* Added modular tax calculation support (no modules included yet) (Seneca)
-* Added experimental TrustCommerce credit card processing (Chris T)
-* Merged most of the rest of the SL-POS interface (Chris T)
-* Broke out price matrix calls into PriceMatrix.pm (Chris T)
-* Added Gentoo ebuilds documentation and metadata (Jayson R).
-* POS register now goes from add invoice to add invoice. (Chris T)
-* Added pole display and separate cash drawer open calls. (Chris T)
-* Added simple text import function for invoices received (PDT's) (Chris T)
-* Added whitelist of allowed directories to file editor (Seneca)
+Database:
 * Added script to configure Slony replication (Chris Browne)
+
+Security:
+* Added whitelist of allowed directories to file editor (Seneca)
 * Audited OE.pm and AM.pm for SQL injection problems. (Chris T)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
+* Audited Form.pm for SQL-injection problems and move to new API (Chris T)
+
+Localization:
+* Added cumulative tax support (Seneca)
+* Translations now use Gettext (Seneca)
+* Removed back-translation of function names for i18n (Seneca)
+* Corrected parsing of numbers so that they are multi-run safe (Chris T)
+* Added modular tax calculation support (no modules included yet) (Seneca)
+* Added "1 000.00" number format (Chris T)
+
+Code Quality and API:
+* Added logging module (Jason R)
+* Added session method abstraction (Chris T)
+* Broke out price matrix calls into PriceMatrix.pm (Chris T)
 * Added $form->callproc($procname, @args) returns @hashrefs (Chris T)
 * Corrected rounding errors (Seneca)
-* Audited Form.pm for SQL-injection problems and move to new API (Chris T)
 * Code cleanup and template correction (Chris Murtagh)
 * New template system (Chris T)
-* OE.pm and IS.pm are aware of custom fields (Chris T)
+* IC.pm, OE.pm, and IS.pm are aware of custom fields (Chris T)
+* Added LedgerSMB::Sysconfig for site-wide configuration (Chris T)
+
+Packaging:
+* Added first version of rpm spec from Mads Kiilerich (Chris T)
+* Added Gentoo ebuilds documentation and metadata (Jayson R).
+
+Point of Sale:
+* Added experimental TrustCommerce credit card processing (Chris T)
+* Merged most of the rest of the SL-POS interface (Chris T)
+* POS register now goes from add invoice to add invoice. (Chris T)
+* Added pole display and separate cash drawer open calls. (Chris T)
+
+User Interface:
+* Moved IS/IR/OE the linitem column list to the LedgerSMB::Sysconfig Chris T) 
+* Invoice now has an Onhand column (Chris T)
+* Added simple text import function for invoices received (PDT's) (Chris T)
 
 Changelog for LedgerSMB 1.1.1
 
