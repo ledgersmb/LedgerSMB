@@ -1,9 +1,0 @@
-$self{texts} = {
-};
-
-$self{subs} = {
-  'getpassword'                 => 'getpassword',
-};
-
-1;
-
