@@ -185,6 +185,8 @@ COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(
 COMMENT ON COLUMN users_conf.password IS 'This means we have to get rid of the current password stuff and move to presumably md5()';
 COMMIT;
 
-
-
-
+-- Admin user --
+BEGIN;
+INSERT INTO users(username) VALUES ('admin');
+INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
+COMMIT;
