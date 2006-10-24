@@ -758,12 +758,14 @@ sub save_member {
 	# format dbconnect and dboptions string
 	&dbconnect_vars($self, $self->{dbname});
 
-	$self->error("${LedgerSMB::Sysconfig::memberfile} locked!") if (-f "${memberfile}.LCK");
-	open(FH, ">${memberfile}.LCK") or $self->error("${memberfile}.LCK : $!");
+	$self->error("${LedgerSMB::Sysconfig::memberfile} locked!") 
+		if (-f "${LedgerSMB::Sysconfig::memberfile}.LCK");
+	open(FH, ">${LedgerSMB::Sysconfig::memberfile}.LCK") 
+		or $self->error("${LedgerSMB::Sysconfig::memberfile}.LCK : $!");
 	close(FH);
 
 	if (! open(CONF, "+<${LedgerSMB::Sysconfig::memberfile}")) {
-		unlink "${memberfile}.LCK";
+		unlink "${LedgerSMB::Sysconfig::memberfile}.LCK";
 		$self->error("${LedgerSMB::Sysconfig::memberfile} : $!");
 	}
 
@@ -816,7 +818,7 @@ sub save_member {
 
 	print CONF "\n";
 	close CONF;
-	unlink "${memberfile}.LCK";
+	unlink "${LedgerSMB::Sysconfig::memberfile}.LCK";
 	# create conf file
 	if (! $self->{'root login'}) {
 
