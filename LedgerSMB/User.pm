@@ -75,26 +75,26 @@ sub new {
 
 
 sub country_codes {
+	use Locale::Country;
+	use Locale::Language;
 
-  my %cc = ();
-  my @language = ();
-  
-  # scan the locale directory and read in the LANGUAGE files
-  opendir DIR, "locale";
+	my %cc = ();
+	
+	# scan the locale directory and read in the LANGUAGE files
+	opendir DIR, "${LedgerSMB::Sysconfig::localepath}";
 
-  my @dir = grep !/(^\.\.?$|\..*)/, readdir DIR;
-  
-  foreach my $dir (@dir) {
-    next unless open(FH, "locale/$dir/LANGUAGE");
-    @language = <FH>;
-    close FH;
+	my @dir = grep !/(^\.\.?$|\..*)/, readdir DIR;
 
-    $cc{$dir} = "@language";
-  }
+	foreach my $dir (@dir) {
+		$cc{$dir} = code2language(substr($dir, 0, 2));
+		$cc{$dir} .= ("/" . code2country(substr($dir, 3, 2)))
+			if length($dir) > 2;
+		$cc{$dir} .= (" " . substr($dir, 6)) if length($dir) > 5;
+	}
 
-  closedir(DIR);
-  
-  %cc;
+	closedir(DIR);
+
+	%cc;
 
 }
 
