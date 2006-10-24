@@ -190,3 +190,19 @@ BEGIN;
 INSERT INTO users(username) VALUES ('admin');
 INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
 COMMIT;
+
+-- Functions
+
+CREATE FUNCTION create_user(text) RETURNS int4 AS $$
+   INSERT INTO users(username) VALUES ('$1');
+   SELECT 1;
+   $$ LANGUAGE 'SQL';
+
+COMMENT ON FUNCTION create_user(text) IS $$ Function to create user Returns 1 if successful, else it is an error. $$;
+
+CREATE FUNCTION update_user(int4,text) RETURNS int4 AS $$
+   UPDATE users SET username = '$2' WHERE id = $1;
+   SELECT 1;
+   $$ LANGUAGE 'SQL';
+
+COMMENT ON FUNCTION update_user(int4,text) IS $$ Takes int4 which is users.id and text which is username. Will update username based on id. Username is unique $$;
