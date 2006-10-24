@@ -62,6 +62,9 @@ my $globalDBConnect = undef;
 my $globalUserName = undef;
 my $globalPassword = undef;
 
-
+eval { require "ledger-smb.conf"; };
+if ($@){
+	print STDERR "Parsing ledger-smb.conf failed: $@";
+}
 
 1;
