@@ -34,6 +34,8 @@
 #======================================================================
 
 use Math::BigFloat lib=>'GMP';
+use LedgerSMB::Sysconfig;
+
 package Form;
 
 

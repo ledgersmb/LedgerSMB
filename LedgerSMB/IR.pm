@@ -34,6 +34,8 @@
 package IR;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
+use LedgerSMB::Sysconfig;
+
 
 sub post_invoice {
   my ($self, $myconfig, $form) = @_;

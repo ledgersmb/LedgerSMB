@@ -34,7 +34,7 @@
 #======================================================================
 
 package AA;
-
+use LedgerSMB::Sysconfig;
 
 sub post_transaction {
 

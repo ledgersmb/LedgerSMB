@@ -34,6 +34,8 @@
 
 package OE;
 use LedgerSMB::Tax;
+use LedgerSMB::Sysconfig;
+
 
 sub transactions {
 	my ($self, $myconfig, $form) = @_;

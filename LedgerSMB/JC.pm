@@ -36,6 +36,8 @@ package JC;
 
 use LedgerSMB::IS;
 use LedgerSMB::PriceMatrix;
+use LedgerSMB::Sysconfig;
+
 
 sub get_jcitems {
   my ($self, $myconfig, $form) = @_;

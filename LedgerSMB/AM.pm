@@ -36,6 +36,7 @@
 
 package AM;
 use LedgerSMB::Tax;
+use LedgerSMB::Sysconfig;
 
 sub get_account {
 
