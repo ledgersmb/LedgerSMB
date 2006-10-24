@@ -405,7 +405,7 @@ sub form_footer {
 |;
   }
 
-  @column_index = qw(paid source memo AR_paid);
+  @column_index = qw(paid memo source AR_paid);
 
   $column_data{paid} = "<th>".$locale->text('Amount')."</th>";
   $column_data{source} = "<th>".$locale->text('Source')."</th>";
@@ -431,6 +431,14 @@ sub form_footer {
   $totalpaid = 0;
   
   $form->{paidaccounts}++ if ($form->{"paid_$form->{paidaccounts}"});
+
+  my $memoselect = qq|<SELECT name="MEMONAME">|;
+  for (keys %pos_sources){
+	$memoselect .= qq|<option value="$_">$pos_sources{$_}</option>|;
+  }
+  $memoselect .= qq|</SELECT>|;
+	
+
   for $i (1 .. $form->{paidaccounts}) {
   
     $form->{"selectAR_paid_$i"} = $form->{selectAR_paid};
@@ -448,7 +456,12 @@ sub form_footer {
     }
       
     $column_data{source} = qq|<td><input name="source_$i" size=10 value="$form->{"source_$i"}"></td>|;
-    $column_data{memo} = qq|<td><input name="memo_$i" size=10 value="$form->{"memo_$i"}"></td>|;
+    $column_data{memo} = qq|<td>$memoselect</td>|;
+    $column_data{memo} =~ s/MEMONAME/memo_$i/;
+    if ($form->{"memo_$i"}){
+	my $memval = $form->{"memo_$i"};
+	$column_data{memo} =~ s/(option value="$memval")/$1 SELECTED/;
+    }
 
     if ($pos_config{"coa_prefix"}){
       if (!$form->{"AR_paid_$i"}){

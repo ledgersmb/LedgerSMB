@@ -40,6 +40,15 @@ $pos_sources{'check'} = 'Check';
 $pos_sources{'cash'} = 'Cash';
 $pos_sources{'gcert'} = 'Gift Cert';
 
+# 1 for source = memo
+# 2 for credit card handling
+%pos_source_type = {
+	visa => 2,
+	cash => 1,
+	check => 1,
+	disc => 2
+};
+
 ${$pos_config{'source_accno_override'}{'gcert'}} = '2105';
 # Define your till accno scheme here.  Current supported values are 'terminal'
 # and 'cashier'
@@ -84,8 +93,7 @@ $form->{pos_sources} = \%pos_sources;
 # Due to the architecture of SL, we need to use netcat to print.
 # Otherwise the document gets spooled twice and this interferes with timeliness.
 
-%printer = ( 
-    'Printer' => "utils/pos/directnet.pl $pos_config{rp_host} $pos_config{rp_proto} $pos_config{rp_port}"
+%{LedgerSMB::Sysconfig::printer}{'Printer'} = "utils/pos/directnet.pl $pos_config{rp_host} $pos_config{rp_proto} $pos_config{rp_port}"
 );
 
 1;
