@@ -57,7 +57,9 @@ sub price_matrix_query {
 
 			UNION
 
-    			SELECT p.*, g.pricegroup
+    			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
+				p.pricebreak, p.sellprice, p.validfrom,
+				p.valid_to, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			WHERE p.parts_id = ?
@@ -65,7 +67,9 @@ sub price_matrix_query {
 
 			UNION
 
-			SELECT p.*, g.pricegroup
+    			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
+				p.pricebreak, p.sellprice, p.validfrom,
+				p.valid_to, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			JOIN customer c ON (c.pricegroup_id = g.id)
@@ -74,7 +78,9 @@ sub price_matrix_query {
 
 			UNION
 
-			SELECT p.*, '' AS pricegroup
+    			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
+				p.pricebreak, p.sellprice, p.validfrom,
+				p.valid_to, p.curr, g.pricegroup
 			FROM partscustomer p
 			WHERE p.customer_id = 0
 			AND p.pricegroup_id = 0
