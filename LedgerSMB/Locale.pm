@@ -17,7 +17,7 @@
 #
 #======================================================================
 # This package contains locale related functions:
-#
+#`
 # get_handle - gets a locale handle
 # text - outputs HTML escaped translation for input text
 # date - formats date for the locale
@@ -30,10 +30,9 @@ use Locale::Maketext::Lexicon;
 use HTML::Entities;
 use Encode;
 
-$localepath = 'locale/mo';
 Locale::Maketext::Lexicon->import({
 	'*' => [
-		Gettext => "$localepath/*/LC_MESSAGES/LedgerSMB.mo",
+		Gettext => "${LedgerSMB::Sysconfig::localepath}/*/LC_MESSAGES/LedgerSMB.mo",
 	],
 	_auto => 1,
 	_decode => 1,

@@ -36,6 +36,9 @@ $check_max_invoices = 5;
 # program to use for file compression
 $gzip = "gzip -S .gz";
 
+# Path to the translation files
+$localepath = 'locale/mo';
+
 #################################
 # Global database parameters
 #################################
