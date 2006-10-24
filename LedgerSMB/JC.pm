@@ -310,11 +310,11 @@ sub delete_timecard {
   my $sth = $dbh->prepare($query);
   $sth->execute || $form->dberror($query);
 
-  my ${LedgerSMB::Sysconfig::spool}file;
+  my $spoolfile;
   my @spoolfiles = ();
 
-  while ((${LedgerSMB::Sysconfig::spool}file) = $sth->fetchrow_array) {
-    push @spoolfiles, ${LedgerSMB::Sysconfig::spool}file;
+  while (($spoolfile) = $sth->fetchrow_array) {
+    push @spoolfiles, $spoolfile;
   }
   $sth->finish;
 
@@ -327,7 +327,7 @@ sub delete_timecard {
   my $rc = $dbh->commit;
 
   if ($rc) {
-    foreach ${LedgerSMB::Sysconfig::spool}file (@spoolfiles) {
+    foreach $spoolfile (@spoolfiles) {
       unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
     }
   }

@@ -268,7 +268,7 @@ sub get_openinvoices {
 
 	my $vth = $dbh->prepare($query);
 
-	my ${LedgerSMB::Sysconfig::spool}file;
+	my $spoolfile;
 
 	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
@@ -278,8 +278,8 @@ sub get_openinvoices {
 		$vth->execute($ref->{id});
 		$ref->{queue} = "";
 	
-		while ((${LedgerSMB::Sysconfig::spool}file) = $vth->fetchrow_array) {
-			$ref->{queued} .= "$form->{formname} ${LedgerSMB::Sysconfig::spool}file ";
+		while (($spoolfile) = $vth->fetchrow_array) {
+			$ref->{queued} .= "$form->{formname} $spoolfile ";
 		}
 
 		$vth->finish;

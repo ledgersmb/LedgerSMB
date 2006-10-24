@@ -572,7 +572,7 @@ sub get_my_emp_num {
 
 sub parse_template {
 
-	my ($self, $myconfig, ${LedgerSMB::Sysconfig::userspath}) = @_;
+	my ($self, $myconfig) = @_;
 
 	my ($chars_per_line, $lines_on_first_page, $lines_on_second_page) = (0, 0, 0);
 	my ($current_page, $current_line) = (1, 1);
@@ -2409,7 +2409,7 @@ sub update_status {
 	my $dbh = $self->{dbh};
 
 	my %queued = split / +/, $self->{queued};
-	my ${LedgerSMB::Sysconfig::spool}file = ($queued{$self->{formname}}) ? "'$queued{$self->{formname}}'" : 'NULL';
+	my $spoolfile = ($queued{$self->{formname}}) ? "'$queued{$self->{formname}}'" : 'NULL';
 
 	my $query = qq|DELETE FROM status
 					WHERE formname = ?
@@ -2429,7 +2429,7 @@ sub update_status {
 		VALUES (?, ?, ?, ?, ?)|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute($self->{id}, $printed, $emailed, ${LedgerSMB::Sysconfig::spool}file, 
+	$sth->execute($self->{id}, $printed, $emailed, $spoolfile, 
 			$self->{formname});
 	$sth->finish;
 

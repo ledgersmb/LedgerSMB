@@ -1239,7 +1239,6 @@ sub check_template_name {
 	if ($form->{file} =~ /^(.:)*?\/|\.\.\/|^\//){
 		$form->error("Directory transversal not allowed.");
 	}
-	my ${LedgerSMB::Sysconfig::userspath} = ${main::userspath};
 	if ($form->{file} =~ /^${LedgerSMB::Sysconfig::userspath}\//){
 		$form->error("Not allowed to access ${LedgerSMB::Sysconfig::userspath}/ with this method");
 	}
@@ -1293,7 +1292,7 @@ sub save_template {
 
 sub save_preferences {
 
-	my ($self, $myconfig, $form, ${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath}) = @_;
+	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
 	my $dbh = $form->{dbh};
@@ -1566,7 +1565,7 @@ sub save_taxes {
 
 sub backup {
 
-	my ($self, $myconfig, $form, ${LedgerSMB::Sysconfig::userspath}, ${LedgerSMB::Sysconfig::gzip}) = @_;
+	my ($self, $myconfig, $form) = @_;
 
 	my $mail;
 	my $err;
