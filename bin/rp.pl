@@ -1751,8 +1751,8 @@ sub print_options {
     $media = qq|
             <td><select name=media>
 	    <option value=screen>|.$locale->text('Screen');
-    if (%printer && ${LedgerSMB::Sysconfig::latex}) {
-      for (sort keys %printer) { $media .= qq|
+    if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex}) {
+      for (sort keys %{LedgerSMB::Sysconfig::printer}) { $media .= qq|
             <option value="$_">$_| }
     }
   }
@@ -1774,7 +1774,7 @@ sub print_options {
     $media
 |;
 
-  if (%printer && ${LedgerSMB::Sysconfig::latex} && $form->{media} ne 'email') {
+  if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} && $form->{media} ne 'email') {
     print qq|
       <td>|.$locale->text('Copies').qq|
       <input name=copies size=2 value=$form->{copies}></td>
@@ -1926,7 +1926,7 @@ sub print {
      
  
   if ($form->{media} !~ /(screen|email)/) {
-    $form->{OUT} = "| $printer{$form->{media}}";
+    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
     $form->{"$form->{ct}_id"} = "";
     $SIG{INT} = 'IGNORE';
   } else {

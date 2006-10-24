@@ -402,7 +402,7 @@ sub close_till {
   $cash = join ("\n", @cashlines);
   $foot = $locale->text("Cumulative Error: ")."$difference\n";
   $foot .= $locale->text('Reset Till By ')."$amount\n\n\n\n\n\n\n\n\n\n";
-  open (PRN, "|-",  $printer{Printer});
+  open (PRN, "|-",  ${LedgerSMB::Sysconfig::printer}{Printer});
   print PRN $head;
   print PRN $lines;
   print PRN $cash;

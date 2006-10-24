@@ -615,9 +615,9 @@ sub schedule {
   }
 
 
-  if (%printer && ${LedgerSMB::Sysconfig::latex} && %formname) {
+  if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} && %formname) {
     $selectprinter = qq|<option>\n|;
-    for (sort keys %printer) { $selectprinter .= qq|<option value="$_">$_\n| }
+    for (sort keys %{LedgerSMB::Sysconfig::printer}) { $selectprinter .= qq|<option value="$_">$_\n| }
     
     # formname:format:printer
     @p = split /:/, $form->{recurringprint};

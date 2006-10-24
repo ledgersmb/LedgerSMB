@@ -1761,8 +1761,8 @@ sub print_options {
 
   $form->{selectformat} = qq|<option value="html">html\n|;
   
-  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
-    for (sort keys %printer) { $media .= qq| 
+  if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex}) {
+    for (sort keys %{LedgerSMB::Sysconfig::printer}) { $media .= qq| 
           <option value="$_">$_| }
   }
 
@@ -1859,7 +1859,7 @@ sub print_timecard {
   }
 
   if ($form->{media} !~ /(screen|queue)/) {
-    $form->{OUT} = "| $printer{$form->{media}}";
+    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
 
     if ($form->{printed} !~ /$form->{formname}/) {
       $form->{printed} .= " $form->{formname}";

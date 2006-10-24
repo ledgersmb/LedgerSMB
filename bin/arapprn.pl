@@ -226,7 +226,7 @@ sub print_check {
     %queued = split / /, $form->{queued};
 
 
-    $form->{OUT} = "| $printer{$form->{media}}";
+    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
     
     if ($form->{printed} !~ /$form->{formname}/) {
 
@@ -443,7 +443,7 @@ sub print_transaction {
   }
 
   if ($form->{media} !~ /(queue|screen)/) {
-    $form->{OUT} = "| $printer{$form->{media}}";
+    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
     
     if ($form->{printed} !~ /$form->{formname}/) {
 
@@ -625,8 +625,8 @@ sub print_options {
 
   $form->{selectformat} = qq|<option value="html">html\n|;
   
-  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
-    for (sort keys %printer) { $media .= qq| 
+  if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex}) {
+    for (sort keys %{LedgerSMB::Sysconfig::printer}) { $media .= qq| 
           <option value="$_">$_| }
   }
 

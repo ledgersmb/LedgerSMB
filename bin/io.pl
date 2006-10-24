@@ -1099,8 +1099,8 @@ sub print_options {
     $media = qq|<select name=media>
 	    <option value="screen">|.$locale->text('Screen');
  
-    if (%printer && ${LedgerSMB::Sysconfig::latex}) {
-      for (sort keys %printer) { $media .= qq|
+    if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex}) {
+      for (sort keys %{LedgerSMB::Sysconfig::printer}) { $media .= qq|
             <option value="$_">$_| }
     }
     if (${LedgerSMB::Sysconfig::latex}) {
@@ -1138,7 +1138,7 @@ sub print_options {
     <td>$media</td>
 |;
 
-  if (%printer && ${LedgerSMB::Sysconfig::latex} && $form->{media} ne 'email') {
+  if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} && $form->{media} ne 'email') {
     print qq|
     <td nowrap>|.$locale->text('Copies').qq|
     <input name=copies size=2 value=$form->{copies}></td>
@@ -1427,7 +1427,7 @@ sub print_form {
   $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
 
   if ($form->{media} !~ /(screen|queue|email)/) {
-    $form->{OUT} = "| $printer{$form->{media}}";
+    $form->{OUT} = "| ${LedgerSMB::SysConfig::printer}{$form->{media}}";
     
     $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
     $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;

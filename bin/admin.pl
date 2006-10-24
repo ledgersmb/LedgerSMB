@@ -464,11 +464,11 @@ sub form_header {
 
 	$selectstylesheet .= "<option></option>\n";
 
-	if (%printer && ${LedgerSMB::Sysconfig::latex}) {
+	if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex}) {
 
 		$selectprinter = "<option></option>\n";
 
-		foreach $item (sort keys %printer) {
+		foreach $item (sort keys %{LedgerSMB::Sysconfig::printer}) {
 
 			if ($myconfig->{printer} eq $item) {
 				$selectprinter .= qq|<option value="$item" selected>$item</option>\n|;

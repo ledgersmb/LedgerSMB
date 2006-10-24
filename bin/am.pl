@@ -2064,9 +2064,9 @@ sub config {
   }
   $selectstylesheet .= "<option>\n";
   
-  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
+  if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex}) {
     $selectprinter = "<option>\n";
-    foreach $item (sort keys %printer) {
+    foreach $item (sort keys %{LedgerSMB::Sysconfig::printer}) {
       if ($myconfig{printer} eq $item) {
 	$selectprinter .= qq|<option value="$item" selected>$item\n|;
       } else {
@@ -2972,7 +2972,7 @@ sub process_transactions {
   for (keys %$form) { $pt->{$_} = $form->{$_} }
 
   my $defaultprinter;
-  while (my ($key, $value) = each %printer) {
+  while (my ($key, $value) = each %{LedgerSMB::Sysconfig::printer}) {
     if ($value =~ /lpr/) {
       $defaultprinter = $key;
       last;
@@ -3197,7 +3197,8 @@ sub print_recurring {
     @f = split /:/, $pt->{recurringprint};
     for ($j = 0; $j <= $#f; $j += 3) {
       $media = $f[$j+2];
-      $media ||= $myconfig->{printer} if $printer{$myconfig->{printer}};
+      $media ||= $myconfig->{printer} 
+		if ${LedgerSMB::Sysconfig::printer}{$myconfig->{printer}};
       $media ||= $defaultprinter;
       
       $form->info("\n".$locale->text('Printing')." ".$locale->text($f{$f[$j]})." $form->{reference}");

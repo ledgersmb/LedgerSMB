@@ -271,7 +271,7 @@ sub print {
 
   for $i (1 .. $form->{rowcount}) {
     if ($form->{"checked_$i"}) {
-      $form->{OUT} = "| $printer{$form->{media}}";
+      $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
       $form->info($locale->text('Printing')." ...");
 
       if (BP->print_spool(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool})) {
@@ -496,8 +496,8 @@ sub list_spool {
 
   $form->hide_form(qw(callback title vc type sort module account path login sessionid));
     
-  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
-    foreach $key (sort keys %printer) {
+  if (%{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex}) {
+    foreach $key (sort keys %{LedgerSMB::Sysconfig::printer}) {
       print qq|
 <input name=media type=radio class=radio value="$key" |;
       print qq|checked| if $key eq $myconfig{printer};

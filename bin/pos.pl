@@ -77,7 +77,7 @@ sub on_update{
 }
 
 sub open_drawer{
-   open (PRINTER, "|-", $printer{Printer});
+   open (PRINTER, "|-", ${LedgerSMB::Sysconfig::printer}{Printer});
    print PRINTER $pos_config{'rp_cash_open'};
    close PRINTER;
    sleep 1;
@@ -840,7 +840,7 @@ sub print_form {
   }
   
   if ($form->{media} ne 'screen') {
-    $form->{OUT} = "| $printer{$form->{media}}";
+    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
   }
 
   $form->{discount} = $form->format_amount(\%myconfig, $form->{discount} * 100);
@@ -931,8 +931,8 @@ sub print_options {
     <td><input class=radio type=radio name=media value="screen"></td>
     <td>|.$locale->text('Screen').qq|</td>|;
 
-  if (%printer) {
-    for (keys %printer) {
+  if (%{LedgerSMB::Sysconfig::printer}) {
+    for (keys %{LedgerSMB::Sysconfig::printer}) {
       $media .= qq|
     <td><input class=radio type=radio name=media value="$_"></td>
     <td nowrap>$_</td>

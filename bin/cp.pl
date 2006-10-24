@@ -457,8 +457,8 @@ sub payments_footer {
     $media = qq|<select name=media>
           <option value=screen>|.$locale->text('Screen');
 
-    if (%printer) {
-      for (sort keys %printer) { $media .= qq| 
+    if (%{LedgerSMB::Sysconfig::printer}) {
+      for (sort keys %{LedgerSMB::Sysconfig::printer}) { $media .= qq| 
           <option value="$_">$_| }
     }
   
@@ -1064,8 +1064,8 @@ sub payment_footer {
     $media = qq|<select name=media>
           <option value=screen>|.$locale->text('Screen');
 
-    if (%printer) {
-      for (sort keys %printer) { $media .= qq| 
+    if (%{LedgerSMB::Sysconfig::printer}) {
+      for (sort keys %{LedgerSMB::Sysconfig::printer}) { $media .= qq| 
           <option value="$_">$_| }
     }
   
@@ -1266,7 +1266,7 @@ sub print_form {
   $form->{IN} = "$form->{formname}.tex";
 
   if ($form->{media} ne 'screen') {
-    $form->{OUT} = "| $printer{$form->{media}}";
+    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
   }
 
   $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
