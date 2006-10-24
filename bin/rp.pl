@@ -1751,7 +1751,7 @@ sub print_options {
     $media = qq|
             <td><select name=media>
 	    <option value=screen>|.$locale->text('Screen');
-    if (%printer && $latex) {
+    if (%printer && ${LedgerSMB::Sysconfig::latex}) {
       for (sort keys %printer) { $media .= qq|
             <option value="$_">$_| }
     }
@@ -1760,7 +1760,7 @@ sub print_options {
   $media =~ s/(<option value="\Q$form->{media}\E")/$1 selected/;
   $media .= qq|</select></td>|;
 
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
     $format .= qq|
             <option value=postscript $form->{DF}{postscript}>|.$locale->text('Postscript').qq|
 	    <option value=pdf $form->{DF}{pdf}>|.$locale->text('PDF');
@@ -1774,7 +1774,7 @@ sub print_options {
     $media
 |;
 
-  if (%printer && $latex && $form->{media} ne 'email') {
+  if (%printer && ${LedgerSMB::Sysconfig::latex} && $form->{media} ne 'email') {
     print qq|
       <td>|.$locale->text('Copies').qq|
       <input name=copies size=2 value=$form->{copies}></td>
@@ -1891,7 +1891,7 @@ sub e_mail {
 
 sub send_email {
 
-  $form->{OUT} = "$sendmail";
+  $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
 
   $form->{subject} = $locale->text('Statement').qq| - $form->{todate}| unless $form->{subject};
   $form->isblank("email", $locale->text('E-mail address missing!'));
@@ -2020,7 +2020,7 @@ sub print_form {
 	
 	for ("c0", "c30", "c60", "c90", "") { $form->{"${_}total"} = $form->format_amount(\%myconfig, $form->{"${_}total"}, 2) }
 
-	$form->parse_template(\%myconfig, $userspath);
+	$form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 	
       }
     }

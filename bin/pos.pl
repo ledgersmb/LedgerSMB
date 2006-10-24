@@ -550,7 +550,7 @@ sub form_footer {
 	delete $button{'Delete'};
       }
 
-      delete $button{'Print and Post'} unless $latex;
+      delete $button{'Print and Post'} unless ${LedgerSMB::Sysconfig::latex};
     } else {
       for ('Print', 'Post', 'Print and Post', 'Delete') { delete $button{$_} }
     }
@@ -850,7 +850,7 @@ sub print_form {
   delete $form->{stylesheet};
   $form->{cd_open} = $pos_config{rp_cash_drawer_open};
   
-  $form->parse_template(\%myconfig, $userspath);
+  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
   if ($form->{printed} !~ /$form->{formname}/) {
     $form->{printed} .= " $form->{formname}";

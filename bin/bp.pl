@@ -253,7 +253,7 @@ sub yes {
   $form->info($locale->text('Removing marked entries from queue ...'));
   $form->{callback} .= "&header=1" if $form->{callback};
 
-  if (BP->delete_spool(\%myconfig, \%$form, $spool)) {
+  if (BP->delete_spool(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool})) {
     $form->redirect($locale->text('Removed spoolfiles!'));
   } else {
     $form->error($locale->text('Cannot remove files!'));
@@ -274,7 +274,7 @@ sub print {
       $form->{OUT} = "| $printer{$form->{media}}";
       $form->info($locale->text('Printing')." ...");
 
-      if (BP->print_spool(\%myconfig, \%$form, $spool)) {
+      if (BP->print_spool(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool})) {
 	print $locale->text('done');
 	$form->redirect($locale->text('Marked entries printed!'));
       }
@@ -432,7 +432,7 @@ sub list_spool {
     
     $column_data{transdate} = "<td>$ref->{transdate}&nbsp;</td>";
 
-    if ($spoolfile eq $ref->{spoolfile}) {
+    if (${LedgerSMB::Sysconfig::spool}file eq $ref->{spoolfile}) {
       $column_data{checked} = qq|<td></td>|;
     } else {
       $column_data{checked} = qq|<td><input name=checked_$i type=checkbox class=checkbox $form->{"checked_$i"} $form->{"checked_$i"}></td>|;
@@ -458,11 +458,11 @@ sub list_spool {
     
    
     $column_data{name} = "<td>$ref->{name}</td>";
-    $column_data{spoolfile} = qq|<td><a href=$spool/$ref->{spoolfile}>$ref->{spoolfile}</a></td>
+    $column_data{spoolfile} = qq|<td><a href=${LedgerSMB::Sysconfig::spool}/$ref->{spoolfile}>$ref->{spoolfile}</a></td>
 
 |;
 
-    $spoolfile = $ref->{spoolfile};
+    ${LedgerSMB::Sysconfig::spool}file = $ref->{spoolfile};
     
     $j++; $j %= 2;
     print "
@@ -496,7 +496,7 @@ sub list_spool {
 
   $form->hide_form(qw(callback title vc type sort module account path login sessionid));
     
-  if (%printer && $latex) {
+  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
     foreach $key (sort keys %printer) {
       print qq|
 <input name=media type=radio class=radio value="$key" |;

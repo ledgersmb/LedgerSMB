@@ -2064,7 +2064,7 @@ sub config {
   }
   $selectstylesheet .= "<option>\n";
   
-  if (%printer && $latex) {
+  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
     $selectprinter = "<option>\n";
     foreach $item (sort keys %printer) {
       if ($myconfig{printer} eq $item) {
@@ -2233,7 +2233,7 @@ sub save_preferences {
     $form->error($locale->text('Password does not match!')) if $form->{new_password} ne $form->{confirm_password};
   }
 
-  if (AM->save_preferences(\%myconfig, \%$form, $memberfile, $userspath)) {
+  if (AM->save_preferences(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath})) {
     $form->redirect($locale->text('Preferences saved!'));
   } else {
     $form->error($locale->text('Cannot save preferences!'));
@@ -2247,12 +2247,12 @@ sub backup {
   if ($form->{media} eq 'email') {
     $form->error($locale->text('No email address for')." $myconfig{name}") unless ($myconfig{email});
     
-    $form->{OUT} = "$sendmail";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
 
   }
 
   $SIG{INT} = 'IGNORE';
-  AM->backup(\%myconfig, \%$form, $userspath, $gzip);
+  AM->backup(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::userspath}, ${LedgerSMB::Sysconfig::gzip});
 
   if ($form->{media} eq 'email') {
     $form->redirect($locale->text('Backup sent to').qq| $myconfig{email}|);
@@ -2954,7 +2954,7 @@ sub edit_recurring {
   }
   
   $form->{selectformat} = qq|<option value="html">html\n|;
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
     $form->{selectformat} .= qq|
             <option value="postscript">|.$locale->text('Postscript').qq|
 	    <option value="pdf">|.$locale->text('PDF');
@@ -3083,7 +3083,7 @@ sub process_transactions {
 	  $form->info(" ..... ".$locale->text('done'));
 	  
 	  # print form
-	  if ($latex && $ok) {
+	  if (${LedgerSMB::Sysconfig::latex} && $ok) {
 	    $ok = &print_recurring(\%$pt, $defaultprinter);
 	  }
 	  
@@ -3136,7 +3136,7 @@ sub process_transactions {
 	  }
 
 	  # print form
-	  if ($latex && $ok) {
+	  if (${LedgerSMB::Sysconfig::latex} && $ok) {
 	    &print_recurring(\%$pt, $defaultprinter);
 	  }
 

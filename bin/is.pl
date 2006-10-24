@@ -663,7 +663,7 @@ sub form_footer {
 	for ("Post", "Print and Post", "Delete") { delete $button{$_} }
       }
      
-      if (!$latex) {
+      if (!${LedgerSMB::Sysconfig::latex}) {
 	for ("Print and Post", "Print and Post as new") { delete $button{$_} }
       }
 
@@ -672,7 +672,7 @@ sub form_footer {
       if ($transdate > $closedto) {
 	
 	for ("Update", "Ship to", "Print", "E-mail", "Post", "Schedule") { $a{$_} = 1 }
-	$a{'Print and Post'} = 1 if $latex;
+	$a{'Print and Post'} = 1 if ${LedgerSMB::Sysconfig::latex};
 	
       }
       for (keys %button) { delete $button{$_} if ! $a{$_} }
@@ -962,7 +962,7 @@ sub delete {
 
 sub yes {
 
-  if (IS->delete_invoice(\%myconfig, \%$form, $spool)) {
+  if (IS->delete_invoice(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool})) {
     $form->redirect($locale->text('Invoice deleted!'));
   } else {
     $form->error($locale->text('Cannot delete invoice!'));

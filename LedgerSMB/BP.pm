@@ -242,7 +242,7 @@ sub get_spoolfiles {
 
 sub delete_spool {
 
-	my ($self, $myconfig, $form, $spool) = @_;
+	my ($self, $myconfig, $form, ${LedgerSMB::Sysconfig::spool}) = @_;
 
 	# connect to database, turn AutoCommit off
 	my $dbh = $form->dbconnect_noauto($myconfig);
@@ -278,7 +278,7 @@ sub delete_spool {
 
 	if ($rc) {
 		foreach my $i (1 .. $form->{rowcount}) {
-			$_ = qq|$spool/$form->{"spoolfile_$i"}|;
+			$_ = qq|${LedgerSMB::Sysconfig::spool}/$form->{"spoolfile_$i"}|;
 			if ($form->{"checked_$i"}) {
 				unlink;
 			}
@@ -291,7 +291,7 @@ sub delete_spool {
 
 sub print_spool {
 
-	my ($self, $myconfig, $form, $spool) = @_;
+	my ($self, $myconfig, $form, ${LedgerSMB::Sysconfig::spool}) = @_;
 
 	# connect to database
 	my $dbh = $form->dbconnect_noauto($myconfig);
@@ -310,10 +310,10 @@ sub print_spool {
 			open(OUT, $form->{OUT}) or $form->error("$form->{OUT} : $!");
 			binmode(OUT);
 
-			$spoolfile = qq|$spool/$form->{"spoolfile_$i"}|;
+			${LedgerSMB::Sysconfig::spool}file = qq|$spool/$form->{"spoolfile_$i"}|;
 
 			# send file to printer
-			open(IN, $spoolfile) or $form->error("$spoolfile : $!");
+			open(IN, ${LedgerSMB::Sysconfig::spool}file) or $form->error("$spoolfile : $!");
 			binmode(IN);
 
 			while (<IN>) {

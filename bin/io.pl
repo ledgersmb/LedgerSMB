@@ -1099,11 +1099,11 @@ sub print_options {
     $media = qq|<select name=media>
 	    <option value="screen">|.$locale->text('Screen');
  
-    if (%printer && $latex) {
+    if (%printer && ${LedgerSMB::Sysconfig::latex}) {
       for (sort keys %printer) { $media .= qq|
             <option value="$_">$_| }
     }
-    if ($latex) {
+    if (${LedgerSMB::Sysconfig::latex}) {
       $media .= qq|
             <option value="queue">|.$locale->text('Queue');
     }
@@ -1118,7 +1118,7 @@ sub print_options {
   $form->{selectformat} = qq|<option value="html">html\n|;
 #	    <option value="txt">|.$locale->text('Text');
 
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
     $form->{selectformat} .= qq|
             <option value="postscript">|.$locale->text('Postscript').qq|
 	    <option value="pdf">|.$locale->text('PDF');
@@ -1138,7 +1138,7 @@ sub print_options {
     <td>$media</td>
 |;
 
-  if (%printer && $latex && $form->{media} ne 'email') {
+  if (%printer && ${LedgerSMB::Sysconfig::latex} && $form->{media} ne 'email') {
     print qq|
     <td nowrap>|.$locale->text('Copies').qq|
     <input name=copies size=2 value=$form->{copies}></td>
@@ -1457,7 +1457,7 @@ sub print_form {
     $form->{subject} = qq|$form->{label} $form->{"${inv}number"}| unless $form->{subject};
 
     $form->{plainpaper} = 1;
-    $form->{OUT} = "$sendmail";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
 
     if ($form->{emailed} !~ /$form->{formname}/) {
       $form->{emailed} .= " $form->{formname}";
@@ -1505,7 +1505,7 @@ sub print_form {
 
     if ($filename = $queued{$form->{formname}}) {
       $form->{queued} =~ s/$form->{formname} $filename//;
-      unlink "$spool/$filename";
+      unlink "${LedgerSMB::Sysconfig::spool}/$filename";
       $filename =~ s/\..*$//g;
     } else {
       $filename = time;
@@ -1513,7 +1513,7 @@ sub print_form {
     }
 
     $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-    $form->{OUT} = ">$spool/$filename";
+    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
 
     $form->{queued} .= " $form->{formname} $filename";
     $form->{queued} =~ s/^ //;
@@ -1539,7 +1539,7 @@ sub print_form {
   $form->{fileid} = $form->{"${inv}number"};
   $form->{fileid} =~ s/(\s|\W)+//g;
   
-  $form->parse_template(\%myconfig, $userspath);
+  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
   # if we got back here restore the previous form
   if (defined %$old_form) {

@@ -107,7 +107,7 @@ sub print {
   }
   if ($filename = $queued{$form->{formname}}) {
     $form->{queued} =~ s/$form->{formname} $filename//;
-    unlink "$spool/$filename";
+    unlink "${LedgerSMB::Sysconfig::spool}/$filename";
     $filename =~ s/\..*$//g;
   } else {
     $filename = time;
@@ -115,7 +115,7 @@ sub print {
   }
 
   $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-  $form->{OUT} = ">$spool/$filename";
+  $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
 
   $form->{queued} .= " $form->{formname} $filename";
   $form->{queued} =~ s/^ //;
@@ -215,7 +215,7 @@ sub print_check {
                    id          => $form->{id} );
 
     $form->{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
-    $form->{OUT} = ">$spool/$filename";
+    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
 
     $form->{queued} .= " $form->{formname} $filename";
     $form->{queued} =~ s/^ //;
@@ -252,7 +252,7 @@ sub print_check {
   $form->{fileid} = $invnumber;
   $form->{fileid} =~ s/(\s|\W)+//g;
 
-  $form->parse_template(\%myconfig, $userspath);
+  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
   if ($form->{previousform}) {
   
@@ -415,7 +415,7 @@ sub print_transaction {
 
     if ($filename = $queued{$form->{formname}}) {
       $form->{queued} =~ s/$form->{formname} $filename//;
-      unlink "$spool/$filename";
+      unlink "${LedgerSMB::Sysconfig::spool}/$filename";
       $filename =~ s/\..*$//g;
     } else {
       $filename = time;
@@ -423,7 +423,7 @@ sub print_transaction {
     }
 
     $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-    $form->{OUT} = ">$spool/$filename";
+    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
 
     $form->{queued} .= " $form->{formname} $filename";
     $form->{queued} =~ s/^ //;
@@ -468,7 +468,7 @@ sub print_transaction {
   $form->{fileid} = $form->{invnumber};
   $form->{fileid} =~ s/(\s|\W)+//g;
 
-  $form->parse_template(\%myconfig, $userspath);
+  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
   if (%$old_form) {
     $old_form->{invnumber} = $form->{invnumber};
@@ -625,12 +625,12 @@ sub print_options {
 
   $form->{selectformat} = qq|<option value="html">html\n|;
   
-  if (%printer && $latex) {
+  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
     for (sort keys %printer) { $media .= qq| 
           <option value="$_">$_| }
   }
 
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
     $form->{selectformat} .= qq|
             <option value="postscript">|.$locale->text('Postscript').qq|
 	    <option value="pdf">|.$locale->text('PDF');

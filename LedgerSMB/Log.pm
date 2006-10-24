@@ -46,7 +46,7 @@ use LedgerSMB::Sysconfig;
 our $fh;
 
 sub print { 
-	if (!$LSMBConfig::logging){
+	if (!$LedgerSMB::Sysconfig::logging){
 		return 0;
 	}
 	shift;

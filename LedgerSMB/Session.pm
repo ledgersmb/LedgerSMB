@@ -16,8 +16,8 @@ package Session;
 
 use LedgerSMB::Sysconfig;
 
-if (!${LSMBConfig::session}){
-	${LSMBConfig::session} = 'DB';
+if (!${LedgerSMB::Sysconfig::session}){
+	${LedgerSMB::Sysconfig::session} = 'DB';
 }
 
-require "LedgerSMB/Session/".${LSMBConfig::session}.".pm";
+require "LedgerSMB/Session/".${LedgerSMB::Sysconfig::session}.".pm";

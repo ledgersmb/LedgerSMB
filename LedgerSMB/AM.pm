@@ -1238,9 +1238,9 @@ sub check_template_name {
 	if ($form->{file} =~ /^(.:)*?\/|\.\.\/|^\//){
 		$form->error("Directory transversal not allowed.");
 	}
-	my $userspath = ${main::userspath};
-	if ($form->{file} =~ /^$userspath\//){
-		$form->error("Not allowed to access $userspath/ with this method");
+	my ${LedgerSMB::Sysconfig::userspath} = ${main::userspath};
+	if ($form->{file} =~ /^${LedgerSMB::Sysconfig::userspath}\//){
+		$form->error("Not allowed to access ${LedgerSMB::Sysconfig::userspath}/ with this method");
 	}
 	my $whitelisted = 0;
 	for (@allowedsuff){
@@ -1292,7 +1292,7 @@ sub save_template {
 
 sub save_preferences {
 
-	my ($self, $myconfig, $form, $memberfile, $userspath) = @_;
+	my ($self, $myconfig, $form, ${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath}) = @_;
 
 	# connect to database
 	my $dbh = $form->{dbh};
@@ -1317,7 +1317,7 @@ sub save_preferences {
 
 	$dbh->commit;
 
-	my $myconfig = new User "$memberfile", "$form->{login}";
+	my $myconfig = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
 
 	foreach my $item (keys %$form) {
 		$myconfig->{$item} = $form->{$item};
@@ -1325,7 +1325,7 @@ sub save_preferences {
 
 	$myconfig->{password} = $form->{new_password} if ($form->{old_password} ne $form->{new_password});
 
-	$myconfig->save_member($memberfile, $userspath);
+	$myconfig->save_member(${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath});
 
 	1;
 
@@ -1565,7 +1565,7 @@ sub save_taxes {
 
 sub backup {
 
-	my ($self, $myconfig, $form, $userspath, $gzip) = @_;
+	my ($self, $myconfig, $form, ${LedgerSMB::Sysconfig::userspath}, ${LedgerSMB::Sysconfig::gzip}) = @_;
 
 	my $mail;
 	my $err;
@@ -1577,7 +1577,7 @@ sub backup {
 	$t[4] = substr("0$t[4]", -2);
 
 	my $boundary = time;
-	my $tmpfile = "$userspath/$boundary.$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
+	my $tmpfile = "${LedgerSMB::Sysconfig::userspath}/$boundary.$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
 	my $out = $form->{OUT};
 	$form->{OUT} = ">$tmpfile";
 
@@ -1596,8 +1596,8 @@ sub backup {
 	my $suffix = "";
 
 	if ($form->{media} eq 'email') {
-		if ($gzip){
-			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | $gzip`;
+		if (${LedgerSMB::Sysconfig::gzip}){
+			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | ${LedgerSMB::Sysconfig::gzip}`;
 		} else {
 			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
 		}
@@ -1625,8 +1625,8 @@ sub backup {
 
 		print OUT qq|Content-Type: application/file;\n| .
 		qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
-		if ($gzip){
-			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | $gzip`;
+		if (${LedgerSMB::Sysconfig::gzip}){
+			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | ${LedgerSMB::Sysconfig::gzip}`;
 		} else {
 			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
 		}

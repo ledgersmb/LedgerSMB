@@ -570,7 +570,7 @@ sub get_my_emp_num {
 
 sub parse_template {
 
-	my ($self, $myconfig, $userspath) = @_;
+	my ($self, $myconfig, ${LedgerSMB::Sysconfig::userspath}) = @_;
 
 	my ($chars_per_line, $lines_on_first_page, $lines_on_second_page) = (0, 0, 0);
 	my ($current_page, $current_line) = (1, 1);
@@ -605,7 +605,7 @@ sub parse_template {
 	my $fileid = time;
 	my $tmpfile = $self->{IN};
 	$tmpfile =~ s/\./_$self->{fileid}./ if $self->{fileid};
-	$self->{tmpfile} = "$userspath/${fileid}_${tmpfile}";
+	$self->{tmpfile} = "${LedgerSMB::Sysconfig::userspath}/${fileid}_${tmpfile}";
 
 	if ($self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email') {
 		$out = $self->{OUT};
@@ -822,15 +822,15 @@ sub parse_template {
 
 		use Cwd;
 		$self->{cwd} = cwd();
-		$self->{tmpdir} = "$self->{cwd}/$userspath";
+		$self->{tmpdir} = "$self->{cwd}/${LedgerSMB::Sysconfig::userspath}";
 
-		unless (chdir("$userspath")) {
+		unless (chdir("${LedgerSMB::Sysconfig::userspath}")) {
 			$err = $!;
 			$self->cleanup;
 			$self->error("chdir : $err");
 		}
 
-		$self->{tmpfile} =~ s/$userspath\///g;
+		$self->{tmpfile} =~ s/${LedgerSMB::Sysconfig::userspath}\///g;
 
 		$self->{errfile} = $self->{tmpfile};
 		$self->{errfile} =~ s/tex$/err/;
@@ -2407,7 +2407,7 @@ sub update_status {
 	my $dbh = $self->{dbh};
 
 	my %queued = split / +/, $self->{queued};
-	my $spoolfile = ($queued{$self->{formname}}) ? "'$queued{$self->{formname}}'" : 'NULL';
+	my ${LedgerSMB::Sysconfig::spool}file = ($queued{$self->{formname}}) ? "'$queued{$self->{formname}}'" : 'NULL';
 
 	my $query = qq|DELETE FROM status
 					WHERE formname = ?
@@ -2427,7 +2427,7 @@ sub update_status {
 		VALUES (?, ?, ?, ?, ?)|;
 
 	$sth = $dbh->prepare($query);
-	$sth->execute($self->{id}, $printed, $emailed, $spoolfile, 
+	$sth->execute($self->{id}, $printed, $emailed, ${LedgerSMB::Sysconfig::spool}file, 
 			$self->{formname});
 	$sth->finish;
 

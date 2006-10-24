@@ -132,7 +132,7 @@ sub create_links {
   
   $form->{selectformname} = qq|<option value="transaction">|.$locale->text('Transaction');
   
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
     if ($form->{ARAP} eq 'AR') {
       $form->{selectformname} .= qq|
   <option value="receipt">|.$locale->text('Receipt');
@@ -721,14 +721,14 @@ sub form_footer {
 	for ("Post", "Print and Post", "Delete") { delete $button{$_} }
       }
 	
-      if (!$latex) {
+      if (!${LedgerSMB::Sysconfig::latex}) {
 	for ("Print and Post", "Print and Post as new") { delete $button{$_} }
       }
 
     } else {
       
       for ("Post as new", "Print and Post as new", "Delete") { delete $button{$_} }
-      delete $button{"Print and Post"} if ! $latex;
+      delete $button{"Print and Post"} if ! ${LedgerSMB::Sysconfig::latex};
       
       if ($transdate <= $closedto) {
 	for ("Post", "Print and Post") { delete $button{$_} }
@@ -944,7 +944,7 @@ sub delete {
 
 sub yes {
 
-  if (AA->delete_transaction(\%myconfig, \%$form, $spool)) {
+  if (AA->delete_transaction(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool})) {
     $form->redirect($locale->text('Transaction deleted!'));
   } else {
     $form->error($locale->text('Cannot delete transaction!'));

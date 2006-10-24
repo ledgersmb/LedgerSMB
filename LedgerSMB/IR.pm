@@ -703,11 +703,11 @@ sub delete_invoice {
   my $sth = $dbh->prepare($query);
   $sth->execute || $form->dberror($query);
 
-  my $spoolfile;
+  my ${LedgerSMB::Sysconfig::spool}file;
   my @spoolfiles = ();
 
-  while (($spoolfile) = $sth->fetchrow_array) {
-    push @spoolfiles, $spoolfile;
+  while ((${LedgerSMB::Sysconfig::spool}file) = $sth->fetchrow_array) {
+    push @spoolfiles, ${LedgerSMB::Sysconfig::spool}file;
   }
   $sth->finish;
   
@@ -728,8 +728,8 @@ sub delete_invoice {
       $dbh->commit;
     }
 
-    foreach $spoolfile (@spoolfiles) {
-      unlink "$spool/$spoolfile" if $spoolfile;
+    foreach ${LedgerSMB::Sysconfig::spool}file (@spoolfiles) {
+      unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
     }
   }
   

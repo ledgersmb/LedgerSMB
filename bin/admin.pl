@@ -43,7 +43,7 @@ use LedgerSMB::User;
 
 $form = new Form;
 
-$locale = LedgerSMB::Locale->get_handle($language);
+$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language});
 $locale->encoding('UTF-8');
 $form->{charset} = 'UTF-8';
 #$form->{charset} = $locale->encoding;
@@ -78,8 +78,8 @@ if ($form->{action}) {
 	$form->error($locale->text('No Database Drivers available!')) unless (User->dbdrivers);
 
 	# create memberfile
-	if (! -f $memberfile) {
-		open(FH, ">$memberfile") or $form->error("$memberfile : $!");
+	if (! -f ${LedgerSMB::Sysconfig::memberfile}) {
+		open(FH, ">${LedgerSMB::Sysconfig::memberfile}") or $form->error("$memberfile : $!");
 		print FH qq|# LedgerSMB Accounting members
 
 [root login]
@@ -88,7 +88,7 @@ password=
 		close FH;
 	}
 
-	$root = new User "$memberfile", "root login";
+	$root = new User "${LedgerSMB::Sysconfig::memberfile}", "root login";
 
 	unless($root && $root->{password}) { 
 		 &setup_initial_password();
@@ -192,7 +192,7 @@ sub login {
 sub logout {
 
 	$form->{callback} = "$form->{script}?path=$form->{path}&amp;endsession=1";
-	unlink "$userspath/adminhash";
+	unlink "${LedgerSMB::Sysconfig::userspath}/adminhash";
 	print qq|Set-Cookie: LedgerSMB=; path=/;\n|; 
 	$form->redirect($locale->text('You are logged out'));
 
@@ -248,11 +248,11 @@ sub form_footer {
 
 sub list_users {
 
-	open(FH, "$memberfile") or $form->error("$memberfile : $!");
+	open(FH, "${LedgerSMB::Sysconfig::memberfile}") or $form->error("$memberfile : $!");
 
 	$nologin = qq|<button type="submit" class="submit" name="action" value="lock_system">|.$locale->text('Lock System').qq|</button>|;
 
-	if (-e "$userspath/nologin") {
+	if (-e "${LedgerSMB::Sysconfig::userspath}/nologin") {
 		$nologin = qq|<button type="submit" class="submit" name="action" value="unlock_system">|.$locale->text('Unlock System').qq|</button>|;
 	}
 
@@ -318,7 +318,7 @@ sub list_users {
 		$href = "$script?action=edit&amp;login=$key&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
 		$href =~ s/ /%20/g;
 
-		$member{$key}{templates} =~ s/^$templates\///;
+		$member{$key}{templates} =~ s/^${LedgerSMB::Sysconfig::templates}\///;
 		$member{$key}{dbhost} = $locale->text('localhost') unless $member{$key}{dbhost};
 
 		$column_data{login} = qq|<td><a href="$href">$key</a></td>|;
@@ -372,13 +372,13 @@ sub form_header {
 	if ($form->{login}) {
 
 		# get user
-		$myconfig = new User "$memberfile", "$form->{login}";
+		$myconfig = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
 
 		for (qw(company address signature)) { $myconfig->{$_} = $form->quote($myconfig->{$_}) }
 		for (qw(address signature)) { $myconfig->{$_} =~ s/\\n/\n/g }
 
 		# strip basedir from templates directory
-		$myconfig->{templates} =~ s/^$templates\///;
+		$myconfig->{templates} =~ s/^${LedgerSMB::Sysconfig::templates}\///;
 		$myconfig->{dbpasswd} = unpack 'u', $myconfig->{dbpasswd};
 	}
 
@@ -404,11 +404,11 @@ sub form_header {
 	$countrycodes = qq|<option value="">English</option>\n$countrycodes|;
 
 	# is there a templates basedir
-	if (! -d "$templates") {
-		$form->error($locale->text('Directory').": $templates ".$locale->text('does not exist'));
+	if (! -d "${LedgerSMB::Sysconfig::templates}") {
+		$form->error($locale->text('Directory').": ${LedgerSMB::Sysconfig::templates} ".$locale->text('does not exist'));
 	}
 
-	opendir TEMPLATEDIR, "$templates/." or $form->error("$templates : $!");
+	opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error("$templates : $!");
 	@all = grep !/^\.\.?$/, readdir TEMPLATEDIR;
 	closedir TEMPLATEDIR;
 
@@ -417,7 +417,7 @@ sub form_header {
 	@alldir = ();
 	for (@all) {
 
-		if (-d "$templates/$_") {
+		if (-d "${LedgerSMB::Sysconfig::templates}/$_") {
 			push @alldir, $_;
 		}
 	}
@@ -464,7 +464,7 @@ sub form_header {
 
 	$selectstylesheet .= "<option></option>\n";
 
-	if (%printer && $latex) {
+	if (%printer && ${LedgerSMB::Sysconfig::latex}) {
 
 		$selectprinter = "<option></option>\n";
 
@@ -770,7 +770,7 @@ sub save {
 	# check for duplicates
 	if (!$form->{edit}) {
 
-		$temp = new User "$memberfile", "$form->{login}";
+		$temp = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
 
 		if ($temp->{login}) {
 			$form->error("$form->{login} ".$locale->text('is already a member!'));
@@ -787,15 +787,15 @@ sub save {
 	}
 
 	# is there a basedir
-	if (! -d "$templates") {
-		$form->error($locale->text('Directory').": $templates ".$locale->text('does not exist'));
+	if (! -d "${LedgerSMB::Sysconfig::templates}") {
+		$form->error($locale->text('Directory').": ${LedgerSMB::Sysconfig::templates} ".$locale->text('does not exist'));
 	}
 
 	# add base directory to $form->{templates}
-	$form->{templates} = "$templates/$form->{templates}";
+	$form->{templates} = "${LedgerSMB::Sysconfig::templates}/$form->{templates}";
 
 
-	$myconfig = new User "$memberfile", "$form->{login}";
+	$myconfig = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
 
 	# redo acs variable and delete all the acs codes
 	@acs = split /;/, $form->{acs};
@@ -838,7 +838,7 @@ sub save {
 
 	$myconfig->{packpw} = 1;
 
-	$myconfig->save_member($memberfile, $userspath);
+	$myconfig->save_member(${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath});
 	# create user template directory and copy master files
 	if (! -d "$form->{templates}") {
 
@@ -849,13 +849,13 @@ sub save {
 			umask(007);
 
 			# copy templates to the directory
-			opendir TEMPLATEDIR, "$templates/." or $form->error("$templates : $!");
+			opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error("$templates : $!");
 			@templates = grep /$form->{mastertemplates}-/, readdir TEMPLATEDIR;
 			closedir TEMPLATEDIR;
 
 			foreach $file (@templates) {
 
-				open(TEMP, "$templates/$file") or $form->error("$templates/$file : $!");
+				open(TEMP, "${LedgerSMB::Sysconfig::templates}/$file") or $form->error("$templates/$file : $!");
 
 				$file =~ s/$form->{mastertemplates}-//;
 				open(NEW, ">$form->{templates}/$file") or $form->error("$form->{templates}/$file : $!");
@@ -879,16 +879,16 @@ sub save {
 
 sub delete {
 
-	$form->{templates} = ($form->{templates}) ? "$templates/$form->{templates}" : "$templates/$form->{login}";
+	$form->{templates} = ($form->{templates}) ? "${LedgerSMB::Sysconfig::templates}/$form->{templates}" : "$templates/$form->{login}";
 
-	$form->error("$memberfile ".$locale->text('locked!')) if (-f ${memberfile}.LCK);
+	$form->error("${LedgerSMB::Sysconfig::memberfile} ".$locale->text('locked!')) if (-f ${memberfile}.LCK);
 
 	open(FH, ">${memberfile}.LCK") or $form->error("${memberfile}.LCK : $!");
 	close(FH);
 
-	if (! open(CONF, "+<$memberfile")) {
+	if (! open(CONF, "+<${LedgerSMB::Sysconfig::memberfile}")) {
 		unlink "${memberfile}.LCK";
-		$form->error("$memberfile : $!");
+		$form->error("${LedgerSMB::Sysconfig::memberfile} : $!");
 	}
 
 	@config = <CONF>;
@@ -972,7 +972,7 @@ sub delete {
 		User->delete_login(\%$form);
 
 		# delete config file for user
-		unlink "$userspath/$form->{login}.conf";
+		unlink "${LedgerSMB::Sysconfig::userspath}/$form->{login}.conf";
 	}
 
 	$form->redirect($locale->text('User deleted!'));
@@ -1035,7 +1035,7 @@ sub change_password {
 	$form->error($locale->text('Passwords do not match!')) if $form->{new_password} ne $form->{confirm_password};
 	$root->{password} = $form->{new_password};
 	$root->{'root login'} = 1;
-	$root->save_member($memberfile);
+	$root->save_member(${LedgerSMB::Sysconfig::memberfile});
 	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
 	$form->redirect($locale->text('Password changed!'));
 }
@@ -1048,7 +1048,7 @@ sub get_hash {
 
 sub check_password {
 
-	$root = new User "$memberfile", "root login";
+	$root = new User "${LedgerSMB::Sysconfig::memberfile}", "root login";
 
 	if ($root->{password}) {
 
@@ -1064,7 +1064,7 @@ sub check_password {
 
 			&get_hash;
 
-			open(HASHFILE, "> $userspath/adminhash") || $form->error("Can't Open Hashfile: $!");
+			open(HASHFILE, "> ${LedgerSMB::Sysconfig::userspath}/adminhash") || $form->error("Can't Open Hashfile: $!");
 			print HASHFILE $form->{hash}; 
 			print qq|Set-Cookie: LedgerSMB=$form->{hash}; path=/;\n|;
 
@@ -1077,14 +1077,14 @@ sub check_password {
 				$cookie = ($form->{path} eq 'bin/lynx') ? $cookie{login} : $cookie{"LedgerSMB-root login"};
 
 				#fixes problem with first login and such
-				if (!(-f "$userspath/adminhash")) {
+				if (!(-f "${LedgerSMB::Sysconfig::userspath}/adminhash")) {
 					&get_hash;
-					open(HASHFILE, "> $userspath/adminhash") || $form->error("Can't Open Hashfile: $!");
+					open(HASHFILE, "> ${LedgerSMB::Sysconfig::userspath}/adminhash") || $form->error("Can't Open Hashfile: $!");
 					print HASHFILE $form->{hash}; 
 					close(HASHFILE);
 				}	
 
-				open (HASHFILE, "< $userspath/adminhash") || $form->error("Can't Open Hashfile: $!");
+				open (HASHFILE, "< ${LedgerSMB::Sysconfig::userspath}/adminhash") || $form->error("Can't Open Hashfile: $!");
 				chomp($form->{hash} = <HASHFILE>);
 				%cookies = split /[=;]/, $ENV{HTTP_COOKIE};
 
@@ -1372,7 +1372,7 @@ sub dbcreate {
 
 sub delete_dataset {
 
-	if (@dbsources = User->dbsources_unused(\%$form, $memberfile)) {
+	if (@dbsources = User->dbsources_unused(\%$form, ${LedgerSMB::Sysconfig::memberfile})) {
 
 		foreach $item (sort @dbsources) {
 			$dbsources .= qq|<input name="db" class="radio" type="radio" value="$item" />&nbsp;$item |;
@@ -1463,7 +1463,7 @@ sub dbdelete {
 
 sub unlock_system {
 
-	unlink "$userspath/nologin";
+	unlink "${LedgerSMB::Sysconfig::userspath}/nologin";
 	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
 	$form->redirect($locale->text('Lockfile removed!'));
 }
@@ -1471,7 +1471,7 @@ sub unlock_system {
 
 sub lock_system {
 
-	open(FH, ">$userspath/nologin") or $form->error($locale->text('Cannot create Lock!'));
+	open(FH, ">${LedgerSMB::Sysconfig::userspath}/nologin") or $form->error($locale->text('Cannot create Lock!'));
 	close(FH);
 	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
 	$form->redirect($locale->text('Lockfile created!'));

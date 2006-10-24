@@ -2552,7 +2552,7 @@ sub generate_sales_orders {
 
     if (OE->save(\%myconfig, \%$order)) {
       if (! PE->allocate_projectitems(\%myconfig, \%$order)) {
-	OE->delete(\%myconfig, \%$order, $spool);
+	OE->delete(\%myconfig, \%$order, ${LedgerSMB::Sysconfig::spool});
       }
     } else {
       $order->error($locale->text('Failed to save order!'));

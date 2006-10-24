@@ -98,7 +98,7 @@ sub country_codes {
 
 
 sub login {
-  my ($self, $form, $userspath) = @_;
+  my ($self, $form, ${LedgerSMB::Sysconfig::userspath}) = @_;
 
   my $rc = -1;
   
@@ -112,9 +112,9 @@ sub login {
     }
     
 	#there shouldn't be any harm in always doing this. It might even un-bork things.
-  	$self->create_config("$userspath/$self->{login}.conf");
+  	$self->create_config("${LedgerSMB::Sysconfig::userspath}/$self->{login}.conf");
     
-    do "$userspath/$self->{login}.conf";
+    do "${LedgerSMB::Sysconfig::userspath}/$self->{login}.conf";
     $myconfig{dbpasswd} = unpack 'u', $myconfig{dbpasswd};
   
     # check if database is down
@@ -752,18 +752,18 @@ sub create_config {
 
 
 sub save_member {
-	my ($self, $memberfile, $userspath) = @_;
+	my ($self, ${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath}) = @_;
 
 	# format dbconnect and dboptions string
 	&dbconnect_vars($self, $self->{dbname});
 
-	$self->error("$memberfile locked!") if (-f "${memberfile}.LCK");
+	$self->error("${LedgerSMB::Sysconfig::memberfile} locked!") if (-f "${memberfile}.LCK");
 	open(FH, ">${memberfile}.LCK") or $self->error("${memberfile}.LCK : $!");
 	close(FH);
 
-	if (! open(CONF, "+<$memberfile")) {
+	if (! open(CONF, "+<${LedgerSMB::Sysconfig::memberfile}")) {
 		unlink "${memberfile}.LCK";
-		$self->error("$memberfile : $!");
+		$self->error("${LedgerSMB::Sysconfig::memberfile} : $!");
 	}
 
 	@config = <CONF>;
@@ -819,7 +819,7 @@ sub save_member {
 	# create conf file
 	if (! $self->{'root login'}) {
 
-		$self->create_config("$userspath/$self->{login}.conf");
+		$self->create_config("${LedgerSMB::Sysconfig::userspath}/$self->{login}.conf");
 
 		$self->{dbpasswd} =~ s/\\'/'/g;
 		$self->{dbpasswd} =~ s/\\\\/\\/g;

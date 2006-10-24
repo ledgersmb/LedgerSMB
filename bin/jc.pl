@@ -629,7 +629,7 @@ sub timecard_footer {
       if (!$form->{locked}) {
 	for ('Update', 'Print', 'Save', 'Save as new') { $a{$_} = 1 }
 	
-	if ($latex) {
+	if (${LedgerSMB::Sysconfig::latex}) {
 	  for ('Print and Save', 'Print and Save as new') { $a{$_} = 1 }
 	}
 
@@ -645,7 +645,7 @@ sub timecard_footer {
 	
 	for ('Update', 'Print', 'Save') { $a{$_} = 1 }
 
-	if ($latex) {
+	if (${LedgerSMB::Sysconfig::latex}) {
 	  $a{'Print and Save'} = 1;
 	}
 
@@ -842,7 +842,7 @@ sub storescard_footer {
       
       if (!$form->{locked}) {
 	for ('Update', 'Print', 'Save', 'Save as new') { $a{$_} = 1 }
-	if ($latex) {
+	if (${LedgerSMB::Sysconfig::latex}) {
 	  for ('Print and Save', 'Print and Save as new') { $a{$_} = 1 }
 	}
 	if ($form->{orphaned}) {
@@ -855,7 +855,7 @@ sub storescard_footer {
       if ($transdate > $closedto) {
 	for ('Update', 'Print', 'Save') { $a{$_} = 1 }
 
-	if ($latex) {
+	if (${LedgerSMB::Sysconfig::latex}) {
 	  $a{'Print and Save'} = 1;
 	}
       }
@@ -1761,12 +1761,12 @@ sub print_options {
 
   $form->{selectformat} = qq|<option value="html">html\n|;
   
-  if (%printer && $latex) {
+  if (%printer && ${LedgerSMB::Sysconfig::latex}) {
     for (sort keys %printer) { $media .= qq| 
           <option value="$_">$_| }
   }
 
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
     $media .= qq|
           <option value="queue">|.$locale->text('Queue');
 	  
@@ -1886,7 +1886,7 @@ sub print_timecard {
 
     if ($filename = $queued{$form->{formname}}) {
       $form->{queued} =~ s/$form->{formname} $filename//;
-      unlink "$spool/$filename";
+      unlink "${LedgerSMB::Sysconfig::spool}/$filename";
       $filename =~ s/\..*$//g;
     } else {
       $filename = time;
@@ -1894,7 +1894,7 @@ sub print_timecard {
     }
 
     $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-    $form->{OUT} = ">$spool/$filename";
+    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
     
     $form->{queued} = "$form->{formname} $filename";
     $form->update_status(\%myconfig);
@@ -1911,7 +1911,7 @@ sub print_timecard {
     $status{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
   }
 
-  $form->parse_template(\%myconfig, $userspath);
+  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
   if (defined %$old_form) {
 

@@ -615,7 +615,7 @@ sub schedule {
   }
 
 
-  if (%printer && $latex && %formname) {
+  if (%printer && ${LedgerSMB::Sysconfig::latex} && %formname) {
     $selectprinter = qq|<option>\n|;
     for (sort keys %printer) { $selectprinter .= qq|<option value="$_">$_\n| }
     

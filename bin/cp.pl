@@ -452,7 +452,7 @@ sub payments_footer {
   $transdate = $form->datetonum(\%myconfig, $form->{datepaid});
   $closedto = $form->datetonum(\%myconfig, $form->{closedto});
   
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
    
     $media = qq|<select name=media>
           <option value=screen>|.$locale->text('Screen');
@@ -486,7 +486,7 @@ sub payments_footer {
 	     'Post' => { ndx => 4, key => 'O', value => $locale->text('Post') },
 	    ); 
 
-  if (! $latex) {
+  if (! ${LedgerSMB::Sysconfig::latex}) {
     delete $button{'Print'};
   }
 
@@ -1051,7 +1051,7 @@ sub payment_footer {
   $transdate = $form->datetonum(\%myconfig, $form->{datepaid});
   $closedto = $form->datetonum(\%myconfig, $form->{closedto});
 
-  if ($latex) {
+  if (${LedgerSMB::Sysconfig::latex}) {
     if ($form->{selectlanguage}) {
       $form->{"selectlanguage"} = $form->unescape($form->{"selectlanguage"});
       $form->{"selectlanguage"} =~ s/ selected//;
@@ -1088,7 +1088,7 @@ sub payment_footer {
 	     'Post' => { ndx => 4, key => 'O', value => $locale->text('Post') },
 	    ); 
 
-  if (! $latex) {
+  if (! ${LedgerSMB::Sysconfig::latex}) {
     delete $button{'Print'};
   }
 
@@ -1269,7 +1269,7 @@ sub print_form {
     $form->{OUT} = "| $printer{$form->{media}}";
   }
 
-  $form->parse_template(\%myconfig, $userspath);
+  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
 }
 
@@ -1286,8 +1286,8 @@ sub print_payment {
   %temp = ();
   for (@a) { $temp{$_} = $form->{$_} }
 
-  if (scalar @{$form->{invnumber}} > $check_max_invoices) {
-    $#{$form->{invnumber}} = $check_max_invoices - 1;
+  if (scalar @{$form->{invnumber}} > ${LedgerSMB::Sysconfig::check_max_invoices}) {
+    $#{$form->{invnumber}} = ${LedgerSMB::Sysconfig::check_max_invoices} - 1;
     $form->{invnumbers_maxed} = 1;
     $form->{message} = $locale->text("Please see attatched report for list of invoices paid.");
   }

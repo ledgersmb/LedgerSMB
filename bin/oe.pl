@@ -723,13 +723,13 @@ sub form_footer {
 
     %a = ();
     for ("Update", "Ship to", "Print", "E-mail", "Save") { $a{$_} = 1 }
-    $a{'Print and Save'} = 1 if $latex;
+    $a{'Print and Save'} = 1 if ${LedgerSMB::Sysconfig::latex};
     
     if ($form->{id}) {
       
       $a{'Delete'} = 1;
       $a{'Save as new'} = 1;
-      $a{'Print and Save as new'} = 1 if $latex;
+      $a{'Print and Save as new'} = 1 if ${LedgerSMB::Sysconfig::latex};
 
       if ($form->{type} =~ /sales_/) {
 	if ($myconfig{acs} !~ /AR--Sales Invoice/) {
@@ -1861,7 +1861,7 @@ sub yes {
     $err = $locale->text('Cannot delete quotation!');
   }
   
-  if (OE->delete(\%myconfig, \%$form, $spool)) {
+  if (OE->delete(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool})) {
     $form->redirect($msg);
   } else {
     $form->error($err);

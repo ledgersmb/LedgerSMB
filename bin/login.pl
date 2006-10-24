@@ -47,7 +47,7 @@ use LedgerSMB::Locale;
 
 $form = new Form;
 
-$locale = LedgerSMB::Locale->get_handle($language);
+$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language});
 $locale->encoding('UTF-8');
 $form->{charset} = 'UTF-8';
 #$form->{charset} = $locale->encoding;
@@ -235,7 +235,7 @@ sub login {
 	$form->error($locale->text('You did not enter a name!')) unless ($form->{login});
 
 	if (! $form->{beenthere}) {
-		open(FH, "$memberfile") or $form->error("$memberfile : $!");
+		open(FH, "${LedgerSMB::Sysconfig::memberfile}") or $form->error("$memberfile : $!");
 		@a = <FH>;
 		close(FH);
 
@@ -262,10 +262,10 @@ sub login {
 	}
 
 
-	$user = new User $memberfile, $form->{login};
+	$user = new User ${LedgerSMB::Sysconfig::memberfile}, $form->{login};
 
 	# if we get an error back, bale out
-	if (($errno = $user->login(\%$form, $userspath)) <= -1) {
+	if (($errno = $user->login(\%$form, ${LedgerSMB::Sysconfig::userspath})) <= -1) {
 
 		$errno *= -1;
 		$err[1] = $locale->text('Access Denied!');
@@ -274,7 +274,7 @@ sub login {
 
 		if ($errno == 4) {
 			# upgrade dataset and log in again
-			open FH, ">$userspath/nologin" or $form->error($!);
+			open FH, ">${LedgerSMB::Sysconfig::userspath}/nologin" or $form->error($!);
 
 			for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) { $form->{$_} = $user->{$_} }
 
@@ -293,7 +293,7 @@ sub login {
 			$user->dbupdate(\%$form);
 
 			# remove lock file
-			unlink "$userspath/nologin";
+			unlink "${LedgerSMB::Sysconfig::userspath}/nologin";
 
 			print $locale->text('done');
 

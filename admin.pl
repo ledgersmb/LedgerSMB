@@ -52,7 +52,7 @@
 # setup defaults, DO NOT CHANGE
 $userspath = "users";
 $spool = "spool";
-$templates = "templates";
+${LedgerSMB::Sysconfig::templates} = "templates";
 $memberfile = "users/members";
 $sendmail = "| /usr/sbin/sendmail -t";
 %printer = ( Printer => 'lpr' );
