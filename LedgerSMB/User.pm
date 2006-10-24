@@ -100,7 +100,7 @@ sub country_codes {
 
 
 sub login {
-  my ($self, $form, ${LedgerSMB::Sysconfig::userspath}) = @_;
+  my ($self, $form) = @_;
 
   my $rc = -1;
   
@@ -754,7 +754,7 @@ sub create_config {
 
 
 sub save_member {
-	my ($self, ${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath}) = @_;
+	my ($self) = @_;
 
 	# format dbconnect and dboptions string
 	&dbconnect_vars($self, $self->{dbname});
