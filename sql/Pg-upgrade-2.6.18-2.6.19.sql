@@ -195,10 +195,10 @@ COMMIT;
 
 CREATE FUNCTION create_user(text) RETURNS int4 AS $$
    INSERT INTO users(username) VALUES ('$1');
-   SELECT 1;
+   SELECT currval('user_id_seq');
    $$ LANGUAGE 'SQL';
 
-COMMENT ON FUNCTION create_user(text) IS $$ Function to create user Returns 1 if successful, else it is an error. $$;
+COMMENT ON FUNCTION create_user(text) IS $$ Function to create user Returns users.id if successful, else it is an error. $$;
 
 CREATE FUNCTION update_user(int4,text) RETURNS int4 AS $$
    UPDATE users SET username = '$2' WHERE id = $1;
