@@ -35,7 +35,6 @@ package User;
 use LedgerSMB::Sysconfig;
 
 
-
 sub new {
   my ($type, $memfile, $login) = @_;
   my $self = {};

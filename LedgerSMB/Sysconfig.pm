@@ -39,6 +39,11 @@ $gzip = "gzip -S .gz";
 # Path to the translation files
 $localepath = 'locale/mo';
 
+# available printers
+%printer = ( Laser	=> 'lpr -Plaser',
+             Epson	=> 'lpr -PEpson',
+	     );
+
 #################################
 # Global database parameters
 #################################
@@ -49,6 +54,14 @@ my $globalUserName = "ledgersmb";
 my $globalPassword = "set me to correct password";
 
 #$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword); 
+
+# These lines prevent other apps in mod_perl from seeing the global db 
+# connection info
+
+my $globalDBConnect = undef;
+my $globalUserName = undef;
+my $globalPassword = undef;
+
 
 
 1;
