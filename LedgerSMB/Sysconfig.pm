@@ -37,7 +37,7 @@ $check_max_invoices = 5;
 $gzip = "gzip -S .gz";
 
 # Path to the translation files
-$localepath = 'locale/mo';
+$localepath = 'locale/po';
 
 # available printers
 %printer = ( Laser	=> 'lpr -Plaser',

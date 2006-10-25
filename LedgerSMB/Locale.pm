@@ -32,7 +32,7 @@ use Encode;
 
 Locale::Maketext::Lexicon->import({
 	'*' => [
-		Gettext => "${LedgerSMB::Sysconfig::localepath}/*/LC_MESSAGES/LedgerSMB.mo",
+		Gettext => "${LedgerSMB::Sysconfig::localepath}/*.po",
 	],
 	_auto => 1,
 	_decode => 1,
