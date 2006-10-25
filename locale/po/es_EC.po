@@ -1,0 +1,2688 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2004
+#
+# Spanish (Ecuador) texts:
+#
+#  Author: Technical <tech@mundomovil.us>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr "A"
+
+msgid "AP"
+msgstr "Facturas de Proveedores"
+
+msgid "AP Aging"
+msgstr "Diario resumido de pagos"
+
+msgid "AP Outstanding"
+msgstr "Impagados Proveedores"
+
+msgid "AP Transaction"
+msgstr "Transaccion Proveedor"
+
+msgid "AP Transactions"
+msgstr "Gestiones de pagos"
+
+msgid "AR"
+msgstr "Facturas de Ventas"
+
+msgid "AR Aging"
+msgstr "Diario resumido de cobros "
+
+msgid "AR Outstanding"
+msgstr "Impagados Cartera"
+
+msgid "AR Transaction"
+msgstr "Gestión de cobro"
+
+msgid "AR Transactions"
+msgstr "Gestiones de cobros"
+
+msgid "AR/AP"
+msgstr ""
+
+msgid "About"
+msgstr "Acerca de"
+
+msgid "Above"
+msgstr "Arriba"
+
+msgid "Access Control"
+msgstr "Control de Acceso"
+
+msgid "Access Denied!"
+msgstr ""
+
+msgid "Account"
+msgstr "Cuenta"
+
+msgid "Account Number"
+msgstr "Número de cuenta"
+
+msgid "Account Number missing!"
+msgstr "No se ha definido el número de la cuenta"
+
+msgid "Account Type"
+msgstr "Categoría de cuenta"
+
+msgid "Account Type missing!"
+msgstr "No se ha definido el tipo de la cuenta"
+
+msgid "Account deleted!"
+msgstr "¡Cuenta borraba!"
+
+msgid "Account does not exist!"
+msgstr "¡Cuenta inexistente!"
+
+msgid "Account saved!"
+msgstr "¡Cuenta guardada!"
+
+msgid "Accounting"
+msgstr "Contabilidad"
+
+msgid "Accounting Menu"
+msgstr "Menú general"
+
+msgid "Accounts"
+msgstr "Cuentas"
+
+msgid "Accrual"
+msgstr "Acumulado"
+
+msgid "Activate Audit trail"
+msgstr "Activar rastros Auditables"
+
+msgid "Activate Audit trails"
+msgstr "Activar rastros Auditables"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Add"
+msgstr "Añadir"
+
+msgid "Add AP Transaction"
+msgstr "Añadir Asiento de CxP"
+
+msgid "Add AR Transaction"
+msgstr "Añadir Asiento de CxP"
+
+msgid "Add Account"
+msgstr "Añadir cuenta"
+
+msgid "Add Assembly"
+msgstr "Añadir compuesto"
+
+msgid "Add Business"
+msgstr "Adicionar Negocio"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Agregar transacción"
+
+msgid "Add Customer"
+msgstr "Añadir cliente"
+
+msgid "Add Deduction"
+msgstr "Añadir Deducción"
+
+msgid "Add Department"
+msgstr "Adicionar Departamento"
+
+msgid "Add Employee"
+msgstr "Añadir Empleado"
+
+msgid "Add Exchange Rate"
+msgstr "Añadir Tasa de Cambio"
+
+msgid "Add GIFI"
+msgstr "Añadir cuenta RUC"
+
+msgid "Add General Ledger Transaction"
+msgstr "Añadir Nota de Contabilidad"
+
+msgid "Add Group"
+msgstr "Agregar Grupo"
+
+msgid "Add Job"
+msgstr ""
+
+msgid "Add Labor/Overhead"
+msgstr "Adicionar Mano de Obra"
+
+msgid "Add Language"
+msgstr "Adicionar lenguage"
+
+msgid "Add POS Invoice"
+msgstr "Agregar Factura POS"
+
+msgid "Add Part"
+msgstr "Añadir artículo"
+
+msgid "Add Pricegroup"
+msgstr "Añadir Preciogrupal"
+
+msgid "Add Project"
+msgstr "Añadir proyecto"
+
+msgid "Add Purchase Order"
+msgstr "Añadir pedido"
+
+msgid "Add Quotation"
+msgstr "Añadir Cotización"
+
+msgid "Add Request for Quotation"
+msgstr "Añadir Pedido de Cotización"
+
+msgid "Add SIC"
+msgstr "Adicionar SIC"
+
+msgid "Add Sales Invoice"
+msgstr "Añadir factura"
+
+msgid "Add Sales Order"
+msgstr "Añadir cotización"
+
+msgid "Add Service"
+msgstr "Añadir servicio"
+
+msgid "Add Timecard"
+msgstr ""
+
+msgid "Add Transaction"
+msgstr "Añadir Transacción"
+
+msgid "Add User"
+msgstr "Añadir usuario"
+
+msgid "Add Vendor"
+msgstr "Añadir proveedor"
+
+msgid "Add Vendor Invoice"
+msgstr "Agregar Factura de Proveedor"
+
+msgid "Add Warehouse"
+msgstr "Adicionar Bodega"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Administration"
+msgstr "Administración"
+
+msgid "Administrator"
+msgstr "Administrador"
+
+msgid "After Deduction"
+msgstr "Después de Deducción"
+
+msgid "All"
+msgstr "Todos"
+
+msgid "All Accounts"
+msgstr "Todas las Cuentas"
+
+msgid "All Datasets up to date!"
+msgstr "Todas las bases de datos están actualizadas"
+
+msgid "All Items"
+msgstr "Todos los Artículos"
+
+msgid "Allowances"
+msgstr "Permisos"
+
+msgid "Amount"
+msgstr "Total"
+
+msgid "Amount Due"
+msgstr "Cantidad adeudada"
+
+msgid "Amount missing!"
+msgstr "Valor faltante"
+
+msgid "Apr"
+msgstr "Abr"
+
+msgid "April"
+msgstr "Abril"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "¿Esta seguro de que desea borrar la factura número"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "¿Esta seguro de que desea borrar la orden número?"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "¿Está seguro que quiere borrar el número de la Cotización?"
+
+msgid "Are you sure you want to delete Timecard for"
+msgstr ""
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "¿Está seguro de que desea borrar la transacción?"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "¿Está seguro de que quiere borrar las entradas señaladas de la cola?"
+
+msgid "Assemblies"
+msgstr "Compuestos"
+
+msgid "Assemblies restocked!"
+msgstr "¡Compuestos actualizados en almacen!"
+
+msgid "Assembly"
+msgstr "Ensamblaje"
+
+msgid "Assembly stocked!"
+msgstr ""
+
+msgid "Asset"
+msgstr "Activo"
+
+msgid "Attachment"
+msgstr "Adjunto"
+
+msgid "Audit Control"
+msgstr "Control de auditoría"
+
+msgid "Audit trail disabled"
+msgstr "Desabilitados rastros Audiotoriales"
+
+msgid "Audit trail enabled"
+msgstr "¡Iniciado rastros Auditoriales"
+
+msgid "Audit trail removed up to"
+msgstr "Rastro Auditorial removido hasta"
+
+msgid "Audit trails disabled"
+msgstr "Desabilitados rastros Audiotoriales"
+
+msgid "Audit trails enabled"
+msgstr "¡Iniciado rastros Auditoriales"
+
+msgid "Aug"
+msgstr "Ago"
+
+msgid "August"
+msgstr "Agosto"
+
+msgid "Average Cost"
+msgstr ""
+
+msgid "Avg Cost"
+msgstr ""
+
+msgid "BIC"
+msgstr "Swift"
+
+msgid "BOM"
+msgstr "Listado de piezas"
+
+msgid "Backup"
+msgstr "Copia de seguridad de los datos"
+
+msgid "Backup sent to"
+msgstr "Copia de seguridad enviada a"
+
+msgid "Balance"
+msgstr "Balance"
+
+msgid "Balance Sheet"
+msgstr "Hoja de balance"
+
+msgid "Based on"
+msgstr "Basado en"
+
+msgid "Bcc"
+msgstr "Bcc"
+
+msgid "Before Deduction"
+msgstr "Antes de la Deducción"
+
+msgid "Beginning Balance"
+msgstr "Balance Inicial"
+
+msgid "Below"
+msgstr "Abajo"
+
+msgid "Billing Address"
+msgstr "Dirección de Cobro"
+
+msgid "Bin"
+msgstr "Compatimiento"
+
+msgid "Bin List"
+msgstr "Lista de Compatimiento"
+
+msgid "Bin Lists"
+msgstr "Listas de Compatimiento"
+
+msgid "Books are open"
+msgstr "Los libros están abiertos"
+
+msgid "Break"
+msgstr "¡Roto!"
+
+msgid "Business"
+msgstr "Negocio"
+
+msgid "Business Number"
+msgstr "Numero de negocio"
+
+msgid "Business deleted!"
+msgstr "¡Negocio borrado!"
+
+msgid "Business saved!"
+msgstr "¡Negocio guardado!"
+
+msgid "C"
+msgstr "C"
+
+msgid "COGS"
+msgstr "Costo de los artículos"
+
+msgid "COGS account does not exist!"
+msgstr ""
+
+msgid "Cannot add timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot change timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot create Assembly"
+msgstr ""
+
+msgid "Cannot create Labor"
+msgstr ""
+
+msgid "Cannot create Lock!"
+msgstr "No se puede crear seguro"
+
+msgid "Cannot create Part"
+msgstr ""
+
+msgid "Cannot create Service"
+msgstr ""
+
+msgid "Cannot delete Timecard!"
+msgstr ""
+
+msgid "Cannot delete account!"
+msgstr "¡No se puede borrar la cuenta!"
+
+msgid "Cannot delete customer!"
+msgstr "¡No se puede borrar el cliente!"
+
+msgid "Cannot delete default account!"
+msgstr "No se puede borrar la cuenta por omisión"
+
+msgid "Cannot delete invoice!"
+msgstr "¡No se puede borrar la factura!"
+
+msgid "Cannot delete item!"
+msgstr "¡No se puede borrar el artículo!"
+
+msgid "Cannot delete order!"
+msgstr "¡No se puede borrar el pedido!"
+
+msgid "Cannot delete quotation!"
+msgstr "¡No se puede borrar la cotización!"
+
+msgid "Cannot delete transaction!"
+msgstr "¡No se puede borrar la transacción!"
+
+msgid "Cannot delete vendor!"
+msgstr "¡No se puede borrar el vendedor!"
+
+msgid "Cannot post Payment!"
+msgstr "No se puede desplegar Pago"
+
+msgid "Cannot post Receipt!"
+msgstr "No se puede desplegar Recibo"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "¡No se puede registrar una factura en un periodo ya cerrado!"
+
+msgid "Cannot post invoice!"
+msgstr "¡No se puede registrar la factura!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "¡No se puede registrar un pago en un periodo ya cerrado!"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "¡No se puede registrar una transacción para un periodo cerrado"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr ""
+
+msgid "Cannot post transaction!"
+msgstr "¡No se puede registrar la transacción"
+
+msgid "Cannot remove files!"
+msgstr "¡No se puede remover archivos!"
+
+msgid "Cannot save account!"
+msgstr "¡No se puede guardar la cuenta!"
+
+msgid "Cannot save defaults!"
+msgstr "¡No se puede grabar predeterminados!"
+
+msgid "Cannot save order!"
+msgstr "¡No se puede guardar el pedido!"
+
+msgid "Cannot save preferences!"
+msgstr "¡No se puede guardar las preferencias!"
+
+msgid "Cannot save quotation!"
+msgstr "¡No se puede guardar cotización!"
+
+msgid "Cannot save timecard for a closed period!"
+msgstr ""
+
+msgid "Cannot save timecard!"
+msgstr ""
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Tiene que seleccionar cuenta!"
+
+msgid "Cannot set multiple options for"
+msgstr "No se puede iniciar opciones multiples para"
+
+msgid "Cannot set multiple options for Item"
+msgstr ""
+
+msgid "Cannot stock Assembly!"
+msgstr ""
+
+msgid "Cannot stock assemblies!"
+msgstr "¡No se pueden almacenar los compuestos!"
+
+msgid "Cash"
+msgstr "Efectivo"
+
+msgid "Cc"
+msgstr "Cc"
+
+msgid "Change"
+msgstr "Cambiar"
+
+msgid "Change Admin Password"
+msgstr "Cambiar la contraseña del administrador"
+
+msgid "Change Password"
+msgstr "Cambiar contraseña"
+
+msgid "Charge"
+msgstr ""
+
+msgid "Chart of Accounts"
+msgstr "Plan de cuentas"
+
+msgid "Check"
+msgstr "Cheque"
+
+msgid "Check Inventory"
+msgstr "Revisar Inventario"
+
+msgid "Checks"
+msgstr "Cheques"
+
+msgid "City"
+msgstr "Ciudad"
+
+msgid "Cleared"
+msgstr "¡Limpiado!"
+
+msgid "Click on login name to edit!"
+msgstr "Haga clic en el nombre de usuario por editar"
+
+msgid "Clocked"
+msgstr ""
+
+msgid "Close Books up to"
+msgstr "Cerrar los libros hasta"
+
+msgid "Closed"
+msgstr "Cerrado"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Code missing!"
+msgstr "¡Falta Código!"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Company Name"
+msgstr "Nombre de Compañía"
+
+msgid "Compare to"
+msgstr "Comparar con"
+
+msgid "Completed"
+msgstr ""
+
+msgid "Components"
+msgstr "Componentes"
+
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "Confirm!"
+msgstr "Confirmar"
+
+msgid "Connect to"
+msgstr "Conectar a"
+
+msgid "Contact"
+msgstr "Contacto"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Contra"
+msgstr "Contra"
+
+msgid "Copies"
+msgstr "Copias"
+
+msgid "Copy to COA"
+msgstr "Copiar al plan de cuentas"
+
+msgid "Cost"
+msgstr "Costo"
+
+msgid "Cost Center"
+msgstr "Centro de Costos"
+
+msgid "Could not save pricelist!"
+msgstr "¡No se puede grabar lista de precios!"
+
+msgid "Could not save!"
+msgstr "¡No se puede grabar!"
+
+msgid "Could not transfer Inventory!"
+msgstr "¡No se puede transferir el Inventario!"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Create Chart of Accounts"
+msgstr "Crear plan de cuentas"
+
+msgid "Create Dataset"
+msgstr "Crear base de datos"
+
+msgid "Credit"
+msgstr "Crédito"
+
+msgid "Credit Limit"
+msgstr "Limite de credito"
+
+msgid "Curr"
+msgstr "Mon."
+
+msgid "Currency"
+msgstr "Moneda"
+
+msgid "Current"
+msgstr "Actual"
+
+msgid "Current Earnings"
+msgstr "Ganacias Actuales"
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Customer History"
+msgstr "Historial del Cliente"
+
+msgid "Customer Number"
+msgstr "Número de Cliente"
+
+msgid "Customer deleted!"
+msgstr "¡Cliente borrado!"
+
+msgid "Customer missing!"
+msgstr "¡Falta el cliente!"
+
+msgid "Customer not on file!"
+msgstr "¡El cliente no existe!"
+
+msgid "Customer saved!"
+msgstr "¡Cliente guardado!"
+
+msgid "Customers"
+msgstr "Clientes"
+
+msgid "DBI not installed!"
+msgstr "No se ha instalado DBI"
+
+msgid "DOB"
+msgstr "Fecha de Nacimiento"
+
+msgid "Database"
+msgstr "Base de datos"
+
+msgid "Database Administration"
+msgstr "Administración de las bases de datos"
+
+msgid "Database Driver not checked!"
+msgstr "No se ha podido verificar el gestor de la base de datos"
+
+msgid "Database Host"
+msgstr "Máquina servidor de base de datos"
+
+msgid "Database User missing!"
+msgstr "No se ha definido el usuario de la base de datos"
+
+msgid "Dataset"
+msgstr "Base de datos"
+
+msgid "Dataset is newer than version!"
+msgstr "La base de datos está más actual que la versión del programa"
+
+msgid "Dataset missing!"
+msgstr "No se ha definido la base de datos"
+
+msgid "Dataset updated!"
+msgstr "Base de datos actualizada"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Date Format"
+msgstr "Formato de fecha"
+
+msgid "Date Paid"
+msgstr "Fecha de pago"
+
+msgid "Date Received"
+msgstr "Fecha de Recepción"
+
+msgid "Date missing!"
+msgstr "¡Falta la fecha!"
+
+msgid "Date received missing!"
+msgstr "¡Falta Fecha de recepción!"
+
+msgid "Date worked"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Day(s)"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Debit"
+msgstr "Débito"
+
+msgid "Dec"
+msgstr "Dic"
+
+msgid "December"
+msgstr "Diciembre"
+
+msgid "Decimalplaces"
+msgstr "Lugar de los decimales"
+
+msgid "Decrease"
+msgstr "Reducir"
+
+msgid "Deduct after"
+msgstr "Deducir luego"
+
+msgid "Deduction deleted!"
+msgstr "¡Deducción borrada!"
+
+msgid "Deduction saved!"
+msgstr "¡Guardada Deducción!"
+
+msgid "Deductions"
+msgstr "Deducciones"
+
+msgid "Default Template"
+msgstr ""
+
+msgid "Defaults"
+msgstr "Pre-estableciodos"
+
+msgid "Defaults saved!"
+msgstr "¡Guardados Predeterminados!"
+
+msgid "Delete"
+msgstr "Borrar"
+
+msgid "Delete Account"
+msgstr "Borrar cuenta"
+
+msgid "Delete Dataset"
+msgstr "Borrar base de datos"
+
+msgid "Delete Schedule"
+msgstr ""
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr ""
+
+msgid "Delivery Date"
+msgstr "Fecha de entrega"
+
+msgid "Department"
+msgstr "Departamento"
+
+msgid "Department deleted!"
+msgstr "¡Departamento borrado!"
+
+msgid "Department saved!"
+msgstr "¡Guardado Departamento!"
+
+msgid "Departments"
+msgstr "Departamentos"
+
+msgid "Deposit"
+msgstr "Depósito"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Description Translations"
+msgstr "Traducciónes de Descripción"
+
+msgid "Description missing!"
+msgstr "¡Falta descripción!"
+
+msgid "Detail"
+msgstr "Detalle"
+
+msgid "Difference"
+msgstr "Diferencia"
+
+msgid "Directory"
+msgstr "Directorio"
+
+msgid "Discount"
+msgstr "Descuento"
+
+msgid "Done"
+msgstr "Hecho"
+
+msgid "Drawing"
+msgstr "Reintegro"
+
+msgid "Driver"
+msgstr "Gestor"
+
+msgid "Dropdown Limit"
+msgstr "Límite de efectivo"
+
+msgid "Due Date"
+msgstr "Fecha de vencimiento"
+
+msgid "Due Date missing!"
+msgstr "Falta la fecha de vencimiento"
+
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+msgid "E-mail Statement to"
+msgstr "Enviar comprobante por correo electrónico a"
+
+msgid "E-mail address missing!"
+msgstr "No se ha definido el correo electrónico"
+
+msgid "E-mail message"
+msgstr ""
+
+msgid "E-mailed"
+msgstr "¡Enviado por Correo-e!"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Edit AP Transaction"
+msgstr "Editar Asiento de CxP"
+
+msgid "Edit AR Transaction"
+msgstr "Editar Asiento de CxC"
+
+msgid "Edit Account"
+msgstr "Editar cuenta"
+
+msgid "Edit Assembly"
+msgstr "Editar compuesto"
+
+msgid "Edit Business"
+msgstr "Editar Negocio"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "Editar Transacción en Effectivo"
+
+msgid "Edit Customer"
+msgstr "Editar Cliente"
+
+msgid "Edit Deduction"
+msgstr "Editar Deducción"
+
+msgid "Edit Department"
+msgstr "Editar Departamento"
+
+msgid "Edit Description Translations"
+msgstr "Editar Descripciones de Traducciones"
+
+msgid "Edit Employee"
+msgstr "Editar Empleado"
+
+msgid "Edit GIFI"
+msgstr "Editar PUC"
+
+msgid "Edit General Ledger Transaction"
+msgstr "Editar Notas Contables"
+
+msgid "Edit Group"
+msgstr "Editar Grupo"
+
+msgid "Edit Job"
+msgstr ""
+
+msgid "Edit Labor/Overhead"
+msgstr "Editar Mano de Obra"
+
+msgid "Edit Language"
+msgstr "Editar Idioma"
+
+msgid "Edit POS Invoice"
+msgstr "Editar Factura POS"
+
+msgid "Edit Part"
+msgstr "Editar compuesto"
+
+msgid "Edit Preferences for"
+msgstr "Editar preferencias de"
+
+msgid "Edit Pricegroup"
+msgstr "Editar Precio de Grupo"
+
+msgid "Edit Project"
+msgstr "Editar proyecto"
+
+msgid "Edit Purchase Order"
+msgstr "Editar pedido"
+
+msgid "Edit Quotation"
+msgstr "Editar Cotización"
+
+msgid "Edit Request for Quotation"
+msgstr "Editar Petición de Cotizacion"
+
+msgid "Edit SIC"
+msgstr "Edita CIS"
+
+msgid "Edit Sales Invoice"
+msgstr "Edirar factura de venta"
+
+msgid "Edit Sales Order"
+msgstr "Editar cotización"
+
+msgid "Edit Service"
+msgstr "Editar servicio"
+
+msgid "Edit Template"
+msgstr "Editar plantilla"
+
+msgid "Edit Timecard"
+msgstr ""
+
+msgid "Edit User"
+msgstr "Editar usuario"
+
+msgid "Edit Vendor"
+msgstr "Editar Proveedor"
+
+msgid "Edit Vendor Invoice"
+msgstr "Editar factura de Proveedor"
+
+msgid "Edit Warehouse"
+msgstr "Editar bodega"
+
+msgid "Employee"
+msgstr "Colaborador/Empleado"
+
+msgid "Employee Name"
+msgstr "Empleado"
+
+msgid "Employee Number"
+msgstr "Número de Empleado"
+
+msgid "Employee deleted!"
+msgstr "¡Empleado borrado!"
+
+msgid "Employee pays"
+msgstr "Empleado paga"
+
+msgid "Employee saved!"
+msgstr "¡Empleado salvado!"
+
+msgid "Employees"
+msgstr "Empleados"
+
+msgid "Employer"
+msgstr "Empleador"
+
+msgid "Employer pays"
+msgstr "Empleador paga"
+
+msgid "Enddate"
+msgstr "Fecha Final"
+
+msgid "Ends"
+msgstr ""
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "Forzar la anulación de las transacciones para todas las fechas"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Introduzca hasta 3 letras separadas por dos puntos (p.e. CAD:USD:EUR) para las monedas locales y las extranjeras"
+
+msgid "Equity"
+msgstr "Balance"
+
+msgid "Every"
+msgstr ""
+
+msgid "Excempt age <"
+msgstr "Edad de Excención <"
+
+msgid "Exch"
+msgstr "Cambio"
+
+msgid "Exchange Rate"
+msgstr "Tasa de Cambio"
+
+msgid "Exchange rate for payment missing!"
+msgstr "¡Falta tasa de Cambio para pago!"
+
+msgid "Exchange rate missing!"
+msgstr "¡Falta Tasa de Cambio!"
+
+msgid "Existing Datasets"
+msgstr "Bases de datos existentes"
+
+msgid "Expense"
+msgstr "Gastos"
+
+msgid "Expense account does not exist!"
+msgstr ""
+
+msgid "Expense/Asset"
+msgstr "Gastos/Activo"
+
+msgid "Extended"
+msgstr "Extendido"
+
+msgid "FX"
+msgstr "Tasa de Cambio"
+
+msgid "Failed to save order!"
+msgstr ""
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "Feb"
+msgstr "Feb"
+
+msgid "February"
+msgstr "Febrero"
+
+msgid "For"
+msgstr ""
+
+msgid "Foreign Exchange Gain"
+msgstr "Ganancia en moneda extranjera"
+
+msgid "Foreign Exchange Loss"
+msgstr "Pérdida en moneda extranjera"
+
+msgid "Friday"
+msgstr ""
+
+msgid "From"
+msgstr "Desde"
+
+msgid "From Warehouse"
+msgstr ""
+
+msgid "GIFI"
+msgstr "Plan Único de Cuentas (PUC)"
+
+msgid "GIFI deleted!"
+msgstr "¡Borrado el código PUC!"
+
+msgid "GIFI missing!"
+msgstr "No se ha definido el código PUC"
+
+msgid "GIFI saved!"
+msgstr "¡Guardado el código PUC!"
+
+msgid "GL"
+msgstr ""
+
+msgid "GL Reference Number"
+msgstr ""
+
+msgid "GL Transaction"
+msgstr "Nota de Contabilidad"
+
+msgid "General Ledger"
+msgstr "Notas de Contabilidad"
+
+msgid "Generate"
+msgstr ""
+
+msgid "Generate Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr ""
+
+msgid "Generate Sales Orders"
+msgstr ""
+
+msgid "Goods & Services"
+msgstr "Bienes y servicios"
+
+msgid "Group"
+msgstr "Grupo"
+
+msgid "Group Items"
+msgstr "Agrupar artículos"
+
+msgid "Group Translations"
+msgstr "Traducciones de Grupo"
+
+msgid "Group deleted!"
+msgstr "Grupo eleminado!"
+
+msgid "Group missing!"
+msgstr "Falta el grupo"
+
+msgid "Group saved!"
+msgstr "Grupo guardado!"
+
+msgid "Groups"
+msgstr "Grupos"
+
+msgid "HR"
+msgstr "Recursos Humanos"
+
+msgid "HTML Templates"
+msgstr "Plantillas HTML"
+
+msgid "Heading"
+msgstr "Encabezado"
+
+msgid "History"
+msgstr "Historia"
+
+msgid "Home Phone"
+msgstr "Teléfono del Hogar"
+
+msgid "Host"
+msgstr "Máquina servidor de base de datos"
+
+msgid "Hostname missing!"
+msgstr "No se ha definido la máquina servidor de base de datos"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Image"
+msgstr "Imagen"
+
+msgid "In-line"
+msgstr "Incrustado"
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Include Exchange Rate Difference"
+msgstr "Incluir Diferencia de Tasa de Cambio"
+
+msgid "Include Payment"
+msgstr ""
+
+msgid "Include in Report"
+msgstr "Incluir en informe"
+
+msgid "Include in drop-down menus"
+msgstr "Incluir en menúes desplegables:"
+
+msgid "Income"
+msgstr "Ingresos"
+
+msgid "Income Statement"
+msgstr "Estado de Resultados"
+
+msgid "Income account does not exist!"
+msgstr ""
+
+msgid "Incorrect Dataset version!"
+msgstr "Versión de base de datos incorrecta"
+
+msgid "Increase"
+msgstr "Aumentar"
+
+msgid "Individual Items"
+msgstr "Artículos individuales"
+
+msgid "Internal Notes"
+msgstr "Notas Internas"
+
+msgid "Inventory"
+msgstr "Inventario"
+
+msgid "Inventory account does not exist!"
+msgstr ""
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "La cantidad en inventario debe ser cero antes de cambiar este compuesto a obsoleto"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "La cantidad en inventario debe ser cero antes de cambiar este artículo a obsoleto"
+
+msgid "Inventory saved!"
+msgstr "¡Inventario salvado!"
+
+msgid "Inventory transferred!"
+msgstr "¡Inventario transferido!"
+
+msgid "Invoice"
+msgstr "Factura de Venta"
+
+msgid "Invoice Date"
+msgstr "Fecha de factura"
+
+msgid "Invoice Date missing!"
+msgstr "No se ha definido la fecha de la factura"
+
+msgid "Invoice Number"
+msgstr "Número de factura"
+
+msgid "Invoice Number missing!"
+msgstr "No se ha definido el número de la factura"
+
+msgid "Invoice deleted!"
+msgstr "¡Factura borrada!"
+
+msgid "Invoices"
+msgstr "Facturas"
+
+msgid "Is this a summary account to record"
+msgstr "¿Es esta una cuenta de resumen a registrar?"
+
+msgid "Item already on pricelist!"
+msgstr "¡Artículo existe en lista de precios!"
+
+msgid "Item deleted!"
+msgstr "¡Concepto borrado!"
+
+msgid "Item not on file!"
+msgstr "El concepto no se encuentra en ningún archivo"
+
+msgid "Items"
+msgstr "Artículos"
+
+msgid "Jan"
+msgstr "Ene"
+
+msgid "January"
+msgstr "Enero"
+
+msgid "Job"
+msgstr ""
+
+msgid "Job Name"
+msgstr ""
+
+msgid "Job Number"
+msgstr ""
+
+msgid "Job Number missing!"
+msgstr ""
+
+msgid "Job deleted!"
+msgstr ""
+
+msgid "Job saved!"
+msgstr ""
+
+msgid "Jobs"
+msgstr ""
+
+msgid "Jul"
+msgstr "Jul"
+
+msgid "July"
+msgstr "Julio"
+
+msgid "Jun"
+msgstr "Jun"
+
+msgid "June"
+msgstr "Junio"
+
+msgid "LaTeX Templates"
+msgstr "Plantillas LaTeX"
+
+msgid "Labor Code"
+msgstr ""
+
+msgid "Labor/Overhead"
+msgstr "Mano de Obra"
+
+msgid "Language"
+msgstr "Lenguaje"
+
+msgid "Language deleted!"
+msgstr "¡Idiocmas borrados!"
+
+msgid "Language saved!"
+msgstr "¡Idiomas grabados!"
+
+msgid "Languages"
+msgstr "Idiomas"
+
+msgid "Languages not defined!"
+msgstr "¡Idiomas no definidos!"
+
+msgid "Last Cost"
+msgstr ""
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Últimos números y cuentas por omisión"
+
+msgid "Lead"
+msgstr ""
+
+msgid "Leadtime"
+msgstr "Plazo"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "Deje los campos de máquina servidor de base de datos y puerto vacíos al menos que quiera hacer una conexión remota"
+
+msgid "Liability"
+msgstr "Pasivo"
+
+msgid "Licensed to"
+msgstr "Adaptado para"
+
+msgid "Line Total"
+msgstr "Total de la línea"
+
+msgid "Link"
+msgstr "Enlaces"
+
+msgid "Link Accounts"
+msgstr "Enlazar cuentas"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "List Accounts"
+msgstr "Listar Plan Único de Cuentas"
+
+msgid "List Businesses"
+msgstr "Lista de Negocios"
+
+msgid "List Departments"
+msgstr "Lista de Departamentos"
+
+msgid "List GIFI"
+msgstr "Listar PUC"
+
+msgid "List Languages"
+msgstr "Lista de Lenguages"
+
+msgid "List Price"
+msgstr "Precio de lista"
+
+msgid "List Projects"
+msgstr "Lista de Proyectos"
+
+msgid "List SIC"
+msgstr "Lista SIC"
+
+msgid "List Transactions"
+msgstr "Listar transacciones"
+
+msgid "List Warehouses"
+msgstr "Lista de Bodegas"
+
+msgid "Lock System"
+msgstr "Bloquear sistema"
+
+msgid "Lockfile created!"
+msgstr "Sistema bloqueado"
+
+msgid "Lockfile removed!"
+msgstr "Lockfile removido"
+
+msgid "Login"
+msgstr "Entrar"
+
+msgid "Login name missing!"
+msgstr "Falta nombre del usuario"
+
+msgid "Logout"
+msgstr "Salir"
+
+msgid "Make"
+msgstr "Marca"
+
+msgid "Manager"
+msgstr "Gerente"
+
+msgid "Mar"
+msgstr "Mar"
+
+msgid "March"
+msgstr "Marzo"
+
+msgid "Marked entries printed!"
+msgstr "¡Impresas las entradas marcadas!"
+
+msgid "Markup"
+msgstr "Margen de Beneficio"
+
+msgid "Maximum"
+msgstr "Máximo"
+
+msgid "May"
+msgstr "Mayo"
+
+msgid "May "
+msgstr "Mayo"
+
+msgid "Memo"
+msgstr "Memo"
+
+msgid "Menu Width"
+msgstr "Ancho de Menú"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Method"
+msgstr "Método"
+
+msgid "Microfiche"
+msgstr "Microficha"
+
+msgid "Model"
+msgstr "Modelo"
+
+msgid "Monday"
+msgstr ""
+
+msgid "Month"
+msgstr "Mes"
+
+msgid "Month(s)"
+msgstr ""
+
+msgid "Months"
+msgstr ""
+
+msgid "Multibyte Encoding"
+msgstr "Codificación Multibyte"
+
+msgid "N/A"
+msgstr "Sin respuesta"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Name missing!"
+msgstr "¡Falta el nombre!"
+
+msgid "New Templates"
+msgstr "Nuevas plantillas"
+
+msgid "New Window"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Next Date"
+msgstr ""
+
+msgid "Next Number"
+msgstr ""
+
+msgid "No"
+msgstr "No"
+
+msgid "No Database Drivers available!"
+msgstr "No hay ningún gestor de base de datos disponible"
+
+msgid "No Dataset selected!"
+msgstr "No se ha seleccionado ninguna base de datos"
+
+msgid "No Employees on file!"
+msgstr ""
+
+msgid "No Labor codes on file!"
+msgstr ""
+
+msgid "No email address for"
+msgstr "Falta la dirección de correo electrónico de"
+
+msgid "No open Jobs!"
+msgstr ""
+
+msgid "No open Projects!"
+msgstr ""
+
+msgid "No."
+msgstr "No"
+
+msgid "Non-taxable"
+msgstr "No Grabable"
+
+msgid "Non-taxable Purchases"
+msgstr "Compras excentas de Impuestos"
+
+msgid "Non-taxable Sales"
+msgstr "Ventas excentas de Impuestos"
+
+msgid "Non-tracking Items"
+msgstr ""
+
+msgid "Notes"
+msgstr "Notas"
+
+msgid "Nothing entered!"
+msgstr "¡Nada ingresado!"
+
+msgid "Nothing selected!"
+msgstr "¡No es seleccionado nada!"
+
+msgid "Nothing to delete!"
+msgstr "¡No hay nada para borrar!"
+
+msgid "Nothing to print!"
+msgstr "¡No hay nada que imprimir!"
+
+msgid "Nothing to transfer!"
+msgstr "¡Nada para Transferir!"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "November"
+msgstr "Noviembre"
+
+msgid "Number"
+msgstr "Número"
+
+msgid "Number Format"
+msgstr "Formato de número"
+
+msgid "Number missing in Row"
+msgstr "No se ha definido el número en la fila"
+
+msgid "O"
+msgstr "O"
+
+msgid "OH"
+msgstr ""
+
+msgid "Obsolete"
+msgstr "Obsoleto"
+
+msgid "Oct"
+msgstr "Oct"
+
+msgid "October"
+msgstr "Octubre"
+
+msgid "On Hand"
+msgstr "Disponible"
+
+msgid "Open"
+msgstr "Abierto"
+
+msgid "Oracle Database Administration"
+msgstr "Administración de la base de datos Oracle"
+
+msgid "Order"
+msgstr "Orden"
+
+msgid "Order Date"
+msgstr "Fecha de elaboración"
+
+msgid "Order Date missing!"
+msgstr "No se ha definido la fecha de la elaboración"
+
+msgid "Order Entry"
+msgstr "Cotizaciones y pedidos"
+
+msgid "Order Number"
+msgstr "Número de orden"
+
+msgid "Order Number missing!"
+msgstr "No se ha definido el número de la orden"
+
+msgid "Order deleted!"
+msgstr "¡Orden borrada!"
+
+msgid "Order generation failed!"
+msgstr ""
+
+msgid "Order saved!"
+msgstr "Pedido guardado"
+
+msgid "Orders generated!"
+msgstr ""
+
+msgid "Orphaned"
+msgstr "Independiente"
+
+msgid "Out of balance transaction!"
+msgstr "¡Transacción Fuera de BAlance"
+
+msgid "Out of balance!"
+msgstr "¡Fuera de balance!"
+
+msgid "Outstanding"
+msgstr "Impagados"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PO Number"
+msgstr ""
+
+msgid "POS"
+msgstr "PdV"
+
+msgid "POS Invoice"
+msgstr "Factura PdV"
+
+msgid "Packing List"
+msgstr "Lista de Empaque"
+
+msgid "Packing List Date missing!"
+msgstr "No se ha definido la fecha del albarán"
+
+msgid "Packing List Number missing!"
+msgstr "No se ha definido el número del albarán"
+
+msgid "Packing Lists"
+msgstr "Lista de Empaque"
+
+msgid "Paid"
+msgstr "Pagado"
+
+msgid "Part"
+msgstr "Artículo"
+
+msgid "Part Number"
+msgstr ""
+
+msgid "Partnumber"
+msgstr "Número de Parte"
+
+msgid "Parts"
+msgstr "Artículos"
+
+msgid "Password"
+msgstr "Contraseña"
+
+msgid "Password changed!"
+msgstr "¡Contraseña cambiada!"
+
+msgid "Password does not match!"
+msgstr "¡Contraseña incorrecta!"
+
+msgid "Passwords do not match!"
+msgstr "¡Contraseñas son incorrectas!"
+
+msgid "Payables"
+msgstr "Pagos"
+
+msgid "Payment"
+msgstr "Comprobante de Egreso"
+
+msgid "Payment date missing!"
+msgstr "No se encuentra la fecha de pago"
+
+msgid "Payment posted!"
+msgstr "¡Pago registrado!"
+
+msgid "Payments"
+msgstr "Vencimientos impagados"
+
+msgid "Payments posted!"
+msgstr ""
+
+msgid "Payroll Deduction"
+msgstr "Descuento del Rol de Pagos"
+
+msgid "Period"
+msgstr "Período"
+
+msgid "Pg Database Administration"
+msgstr "Administración de la base de datos PostgreSQL"
+
+msgid "PgPP Database Administration"
+msgstr "PostGres Admin"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Pick List"
+msgstr "Lista de Selección"
+
+msgid "Pick Lists"
+msgstr "Listas de Selección"
+
+msgid "Port"
+msgstr "Puerto"
+
+msgid "Port missing!"
+msgstr "No se ha definido  el puerto"
+
+msgid "Pos"
+msgstr ""
+
+msgid "Post"
+msgstr "Registrar"
+
+msgid "Post as new"
+msgstr "Registrar como nuevo"
+
+msgid "Posted!"
+msgstr "Agregado!"
+
+msgid "Posting"
+msgstr ""
+
+msgid "Posting failed!"
+msgstr ""
+
+msgid "Postscript"
+msgstr "Postscript"
+
+msgid "Preferences"
+msgstr "Preferencias"
+
+msgid "Preferences saved!"
+msgstr "Preferencias guardadas"
+
+msgid "Prepayment"
+msgstr "Prepago"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "Pricegroup"
+msgstr "Preciogrupo"
+
+msgid "Pricegroup deleted!"
+msgstr "¡Preciogrupo borrado!"
+
+msgid "Pricegroup missing!"
+msgstr "¡Preciogrupo desaparecido!"
+
+msgid "Pricegroup saved!"
+msgstr "¡Preciogrupo salvado"
+
+msgid "Pricegroups"
+msgstr "Preciogrupos"
+
+msgid "Pricelist"
+msgstr "Lista de Precios"
+
+msgid "Print"
+msgstr "Imprimir"
+
+msgid "Print and Post"
+msgstr "Imprimir y Muestre"
+
+msgid "Print and Post as new"
+msgstr ""
+
+msgid "Print and Save"
+msgstr "Imprimir y Salve"
+
+msgid "Print and Save as new"
+msgstr ""
+
+msgid "Print and post as new"
+msgstr ""
+
+msgid "Print and save as new"
+msgstr ""
+
+msgid "Printed"
+msgstr "Impreso"
+
+msgid "Printer"
+msgstr "Impresora"
+
+msgid "Printing"
+msgstr ""
+
+msgid "Printing ... "
+msgstr "Imprimiendo..."
+
+msgid "Process Transactions"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Profit Center"
+msgstr "Centro de Ganancias"
+
+msgid "Project"
+msgstr "Proyecto"
+
+msgid "Project Description Translations"
+msgstr "Traducciones de Descripción de Proyecto"
+
+msgid "Project Name"
+msgstr ""
+
+msgid "Project Number"
+msgstr "número del projecto"
+
+msgid "Project Number missing!"
+msgstr "¡Falta el número de proyecto!"
+
+msgid "Project Transactions"
+msgstr "Traducciones de Proyecto"
+
+msgid "Project deleted!"
+msgstr "¡Proyecto borrado!"
+
+msgid "Project not on file!"
+msgstr "¡Proyecto no en archivo!"
+
+msgid "Project saved!"
+msgstr "¡Proyecto guardado "
+
+msgid "Project/Job Name"
+msgstr ""
+
+msgid "Project/Job Number"
+msgstr ""
+
+msgid "Projects"
+msgstr "Proyectos"
+
+msgid "Purchase Order"
+msgstr "Pedido"
+
+msgid "Purchase Order Number"
+msgstr "Número de Orden de Compra"
+
+msgid "Purchase Orders"
+msgstr "Pedidos"
+
+msgid "Qty"
+msgstr "Cantidad"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "¡La cantidad exede la unidades disponibles en inventario!"
+
+msgid "Quarter"
+msgstr "Trimestre"
+
+msgid "Quotation"
+msgstr "Cotización"
+
+msgid "Quotation "
+msgstr "Cotización "
+
+msgid "Quotation Date"
+msgstr "Fecha de Cotización"
+
+msgid "Quotation Date missing!"
+msgstr "Falta Fecha de Cotización"
+
+msgid "Quotation Number"
+msgstr "Número de Cotización"
+
+msgid "Quotation Number missing!"
+msgstr "Falta número de Cotización"
+
+msgid "Quotation deleted!"
+msgstr "¡Cotización borrada!"
+
+msgid "Quotations"
+msgstr "Cotizaciones"
+
+msgid "R"
+msgstr "Reconciliado"
+
+msgid "RFQ"
+msgstr "Requerimiento de Cotización"
+
+msgid "RFQ "
+msgstr "Requerimiento de Cotización "
+
+msgid "RFQ Number"
+msgstr "Número de Requerimiento de Cotización"
+
+msgid "RFQs"
+msgstr "Requerimiento de Cotizaciónes"
+
+msgid "ROP"
+msgstr "Tope de envio"
+
+msgid "Rate"
+msgstr "Tarifa"
+
+msgid "Rate missing!"
+msgstr "Falta Tarifa"
+
+msgid "Recd"
+msgstr "Cobrado"
+
+msgid "Receipt"
+msgstr "Recibo"
+
+msgid "Receipt posted!"
+msgstr "¡Recibo desplegado!"
+
+msgid "Receipts"
+msgstr "Recibos"
+
+msgid "Receivables"
+msgstr "Cobros"
+
+msgid "Receive"
+msgstr "Cobro"
+
+msgid "Receive Merchandise"
+msgstr "Recepción de Mercadería"
+
+msgid "Reconciliation"
+msgstr "Reconciliación"
+
+msgid "Reconciliation Report"
+msgstr "Reporte de Reconciliación"
+
+msgid "Record in"
+msgstr "Registrar en"
+
+msgid "Recurring Transaction"
+msgstr ""
+
+msgid "Recurring Transactions"
+msgstr ""
+
+msgid "Reference"
+msgstr "Referencia"
+
+msgid "Remaining"
+msgstr "Resto"
+
+msgid "Remove"
+msgstr "Remover"
+
+msgid "Remove Audit trail up to"
+msgstr "Remover rastros de Audición hasta"
+
+msgid "Remove Audit trails up to"
+msgstr "Remover rastros de Audición hasta"
+
+msgid "Removed spoolfiles!"
+msgstr "Archivos de "
+
+msgid "Removing marked entries from queue ..."
+msgstr "Removiendo entradas marcadas de la cola..."
+
+msgid "Repeat"
+msgstr ""
+
+msgid "Report for"
+msgstr "Informe para"
+
+msgid "Reports"
+msgstr "Informes"
+
+msgid "Req"
+msgstr ""
+
+msgid "Request for Quotation"
+msgstr "Pedido de Cotización"
+
+msgid "Request for Quotations"
+msgstr "Pedido de Cotizaciónes"
+
+msgid "Required by"
+msgstr "Solicitado por"
+
+msgid "Retained Earnings"
+msgstr "Resultado del Ejercicio"
+
+msgid "Role"
+msgstr "Rol"
+
+msgid "S"
+msgstr "S"
+
+msgid "SIC"
+msgstr "Código Industrial Estandard"
+
+msgid "SIC deleted!"
+msgstr "¡CIS borrado!"
+
+msgid "SIC saved!"
+msgstr "¡CIS grabado!"
+
+msgid "SKU"
+msgstr "Unidad de Mantenimiento de Stock"
+
+msgid "SSN"
+msgstr "Número de Seguro Social"
+
+msgid "Sale"
+msgstr "Venta"
+
+msgid "Sales"
+msgstr "Ventas"
+
+msgid "Sales Invoice"
+msgstr "Factura de venta"
+
+msgid "Sales Invoice "
+msgstr "Factura de venta "
+
+msgid "Sales Invoice."
+msgstr "Factura de venta."
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr ""
+
+msgid "Sales Invoices"
+msgstr "Facturas de Ventas"
+
+msgid "Sales Order"
+msgstr "Orden de Venta"
+
+msgid "Sales Order Number"
+msgstr "N°de Pedido"
+
+msgid "Sales Orders"
+msgstr "Ordenes de Venta"
+
+msgid "Sales Quotation Number"
+msgstr "N°de Cotización de Venta"
+
+msgid "Salesperson"
+msgstr "Vendedor"
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Save Pricelist"
+msgstr "Lista de Precios Guardada"
+
+msgid "Save Schedule"
+msgstr ""
+
+msgid "Save as new"
+msgstr "Guardar como nuevo"
+
+msgid "Save to File"
+msgstr "Guardar en un archivo"
+
+msgid "Saving"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Scheduled"
+msgstr ""
+
+msgid "Screen"
+msgstr "Pantalla"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Select"
+msgstr "Seleccione"
+
+msgid "Select Customer"
+msgstr ""
+
+msgid "Select Vendor"
+msgstr ""
+
+msgid "Select a Printer!"
+msgstr ""
+
+msgid "Select a printer!"
+msgstr ""
+
+msgid "Select all"
+msgstr "Seleccione todo"
+
+msgid "Select from one of the items below"
+msgstr "Seleccione uno de los artículos siguientes"
+
+msgid "Select from one of the names below"
+msgstr "Seleccione uno de los nombres de la lista"
+
+msgid "Select from one of the projects below"
+msgstr "Seleccione de uno de los proyectos siguientes"
+
+msgid "Select items"
+msgstr ""
+
+msgid "Select payment"
+msgstr "¡Seleccione Pago!"
+
+msgid "Select postscript or PDF!"
+msgstr "¡Seleccione postscript o PDF"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "¡Seleccione txt, postscript o PDF!"
+
+msgid "Sell"
+msgstr "Venta"
+
+msgid "Sell Price"
+msgstr "Precio de venta"
+
+msgid "Send by E-Mail"
+msgstr "Enviar por correo electrónico"
+
+msgid "Sending"
+msgstr ""
+
+msgid "Sep"
+msgstr "Sep"
+
+msgid "September"
+msgstr "Septiembre"
+
+msgid "Serial No."
+msgstr "Nº de Serie"
+
+msgid "Serial Number"
+msgstr "Número Serie"
+
+msgid "Service"
+msgstr "Servicio"
+
+msgid "Service Code"
+msgstr ""
+
+msgid "Service/Labor Code"
+msgstr ""
+
+msgid "Services"
+msgstr "Servicios"
+
+msgid "Session Timeout"
+msgstr "¡Sesión Caducó!"
+
+msgid "Session expired!"
+msgstr "¡Sesión Expiró!"
+
+msgid "Setup Templates"
+msgstr "Configurar plantillas"
+
+msgid "Ship"
+msgstr "Envio"
+
+msgid "Ship Merchandise"
+msgstr "Envío de Mercadería"
+
+msgid "Ship to"
+msgstr "Destino"
+
+msgid "Ship via"
+msgstr "Envio por"
+
+msgid "Shipping"
+msgstr "Despacho"
+
+msgid "Shipping Address"
+msgstr "Dirección de Embarque"
+
+msgid "Shipping Date"
+msgstr "Fecha de Embarque"
+
+msgid "Shipping Date missing!"
+msgstr "¡Falta Fecha de Embarque!"
+
+msgid "Shipping Point"
+msgstr "Puerto de Embarque"
+
+msgid "Short"
+msgstr "Corto"
+
+msgid "Signature"
+msgstr "Firma"
+
+msgid "Source"
+msgstr "Fuente"
+
+msgid "Spoolfile"
+msgstr "Archivo de carrete"
+
+msgid "Standard"
+msgstr "Estándard"
+
+msgid "Standard Industrial Codes"
+msgstr "Códigos Standart Industriales"
+
+msgid "Startdate"
+msgstr "FechaInicio"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "State/Province"
+msgstr "Estado/Provincia"
+
+msgid "Statement"
+msgstr "Estado de cuenta"
+
+msgid "Statement Balance"
+msgstr "Balance de cuenta"
+
+msgid "Statement sent to"
+msgstr "Estado de cuenta enviado a"
+
+msgid "Statements sent to printer!"
+msgstr "¡Estado de cuenta enviado a la impresora!"
+
+msgid "Stock"
+msgstr "Inventario"
+
+msgid "Stock Assembly"
+msgstr "Inventariar compuesto"
+
+msgid "Stocking Date"
+msgstr ""
+
+msgid "Stylesheet"
+msgstr "Hoja de estilo"
+
+msgid "Sub-contract GIFI"
+msgstr "RUC"
+
+msgid "Subject"
+msgstr "Asunto"
+
+msgid "Subtotal"
+msgstr "Subtotal"
+
+msgid "Summary"
+msgstr "Resúmen"
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Supervisor"
+msgstr "Supervisor"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "System Defaults"
+msgstr "Predeterminados del Sistema"
+
+msgid "Tax"
+msgstr "Impuestos"
+
+msgid "Tax Accounts"
+msgstr "Cuentas de impuestos"
+
+msgid "Tax Included"
+msgstr "Impuestos incluidos en el precio"
+
+msgid "Tax Number"
+msgstr "Número de Impuesto"
+
+msgid "Tax Number / SSN"
+msgstr "Número de Impuesto / SSN"
+
+msgid "Tax collected"
+msgstr "Impuestos cobrados Clientes"
+
+msgid "Tax paid"
+msgstr "Impuestos pagados"
+
+msgid "Taxable"
+msgstr "Impuestos gravables"
+
+msgid "Template saved!"
+msgstr "¡Plantilla guardada!"
+
+msgid "Templates"
+msgstr "Plantillas"
+
+msgid "Terms"
+msgstr "Términos"
+
+msgid "Text"
+msgstr ""
+
+msgid "Text Templates"
+msgstr "Plantillas de Texto"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "Las siguientes bases de datos no están en uso y se pueden borrar"
+
+msgid "The following Datasets need to be updated"
+msgstr "Es necesario actualizar las siguientes bases de datos"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "Esta es una verificacion preliminar de fuentes existentes.  No se creará ni borrará nada durante esta etapa"
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Till"
+msgstr "Caja"
+
+msgid "Time In"
+msgstr ""
+
+msgid "Time Out"
+msgstr ""
+
+msgid "Timecard"
+msgstr ""
+
+msgid "Timecard deleted!"
+msgstr ""
+
+msgid "Timecard saved!"
+msgstr ""
+
+msgid "Timecards"
+msgstr ""
+
+msgid "Times"
+msgstr ""
+
+msgid "To"
+msgstr "Hasta "
+
+msgid "To Warehouse"
+msgstr ""
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Para añadir un usuario a un grupo, edite un nombre, cambie el nombre de usuario (login) y guarde los cambios.  Un nuevo usuario, con las mismas propiedades se guardará bajo el nuevo nombre de usuario (login)."
+
+msgid "Top Level"
+msgstr "Nivel superior"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Tracking Items"
+msgstr ""
+
+msgid "Trade Discount"
+msgstr "Descuento por Intercambio"
+
+msgid "Transaction"
+msgstr "Asiento"
+
+msgid "Transaction Date missing!"
+msgstr "No se ha definido la fecha de la transacción"
+
+msgid "Transaction Dates"
+msgstr ""
+
+msgid "Transaction deleted!"
+msgstr "¡Transacción borrada!"
+
+msgid "Transaction posted!"
+msgstr "¡Transacción registrada!"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "Se ha forzado la anulación de las transacciones para todas las fechas"
+
+msgid "Transaction reversal enforced up to"
+msgstr "Se ha forzado la anulación de las transacciones hasta"
+
+msgid "Transactions"
+msgstr "Transacciones"
+
+msgid "Transfer"
+msgstr "Transferencia"
+
+msgid "Transfer Inventory"
+msgstr "Transferir Inventario"
+
+msgid "Transfer from"
+msgstr ""
+
+msgid "Transfer to"
+msgstr "Transferir a"
+
+msgid "Translation"
+msgstr "Traducción"
+
+msgid "Translation deleted!"
+msgstr "¡Traducción borrada!"
+
+msgid "Translation not on file!"
+msgstr "¡Traducción no en archivo!"
+
+msgid "Translations"
+msgstr "Traducciones"
+
+msgid "Translations saved!"
+msgstr "Traducciones guardadas"
+
+msgid "Trial Balance"
+msgstr "Balance de comprobación"
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Type of Business"
+msgstr "Tipo de Negocio"
+
+msgid "Unit"
+msgstr "Unidad"
+
+msgid "Unit of measure"
+msgstr "Unidad de medida"
+
+msgid "Unlock System"
+msgstr "Unlock sistema"
+
+msgid "Update"
+msgstr "Actualizar"
+
+msgid "Update Dataset"
+msgstr "Actualizar base de datos"
+
+msgid "Updated"
+msgstr "¡Actualizado!"
+
+msgid "Upgrading to Version"
+msgstr "Actualizando a Versión"
+
+msgid "Use Templates"
+msgstr "Plantillas de usuarios"
+
+msgid "User"
+msgstr "Usuario"
+
+msgid "User deleted!"
+msgstr "¡Usuario borrado!"
+
+msgid "User saved!"
+msgstr "¡Usuario guardado!"
+
+msgid "Valid until"
+msgstr "Válido hasta"
+
+msgid "Vendor"
+msgstr "Proveedor"
+
+msgid "Vendor History"
+msgstr "Historia de Proveedor"
+
+msgid "Vendor Invoice"
+msgstr "Factura de proveedor"
+
+msgid "Vendor Invoice "
+msgstr "Factura de proveedor "
+
+msgid "Vendor Invoice."
+msgstr "Factura de proveedor."
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr ""
+
+msgid "Vendor Invoices"
+msgstr "Facturas de proveedor"
+
+msgid "Vendor Number"
+msgstr "Número de Proveedor"
+
+msgid "Vendor deleted!"
+msgstr "¡Proveedor borrado!"
+
+msgid "Vendor missing!"
+msgstr "¡Falta el proveedor!"
+
+msgid "Vendor not on file!"
+msgstr "¡No se encuentra el proveedor en la base de datos!"
+
+msgid "Vendor saved!"
+msgstr "¡Proveedor guardado!"
+
+msgid "Vendors"
+msgstr "Proveedores"
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "Warehouse"
+msgstr "Bodega"
+
+msgid "Warehouse deleted!"
+msgstr "¡Bodega borrada"
+
+msgid "Warehouse saved!"
+msgstr "¡Bodega grabada!"
+
+msgid "Warehouses"
+msgstr "Bodegas"
+
+msgid "Warning!"
+msgstr "¡Precaución!"
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Week"
+msgstr ""
+
+msgid "Week(s)"
+msgstr ""
+
+msgid "Weeks"
+msgstr ""
+
+msgid "Weight"
+msgstr "Peso"
+
+msgid "Weight Unit"
+msgstr "Unidad de peso"
+
+msgid "What type of item is this?"
+msgstr "¿De qué tipo es este concepto?"
+
+msgid "Work Order"
+msgstr "Orden de Trabajo"
+
+msgid "Work Orders"
+msgstr "Ordenes de Trabajo"
+
+msgid "Work Phone"
+msgstr "Teléfono del trabajo"
+
+msgid "Year"
+msgstr "Año"
+
+msgid "Year(s)"
+msgstr ""
+
+msgid "Yearend"
+msgstr "Fin de año"
+
+msgid "Yearend date missing!"
+msgstr "¡Falta Fecha de Fin de Año!"
+
+msgid "Yearend posted!"
+msgstr "¡Fin de Año fijado!"
+
+msgid "Yearend posting failed!"
+msgstr "¡Falló fijación de Fin de año"
+
+msgid "Years"
+msgstr ""
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "You are logged out"
+msgstr "¡Ud. está desconectado del sistema!"
+
+msgid "You are posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and saving an existing order"
+msgstr ""
+
+msgid "You are printing and saving an existing quotation"
+msgstr ""
+
+msgid "You are printing and saving an existing transaction!"
+msgstr ""
+
+msgid "You are saving an existing order"
+msgstr ""
+
+msgid "You are saving an existing quotation"
+msgstr ""
+
+msgid "You are saving an existing transaction!"
+msgstr ""
+
+msgid "You did not enter a name!"
+msgstr "No ha introducido un nombre"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "Debe introducir una máquina servidor de bases de datos y un puerto para conexiones locales y remotas"
+
+msgid "Zip/Postal Code"
+msgstr "Código Postal"
+
+msgid "account cannot be set to any other type of account"
+msgstr "No se puede cambiar a otro tipo de cuenta"
+
+msgid "as at"
+msgstr "al"
+
+msgid "days"
+msgstr "días"
+
+msgid "does not exist"
+msgstr "no existe"
+
+msgid "done"
+msgstr "hecho"
+
+msgid "ea"
+msgstr "unid."
+
+msgid "failed"
+msgstr ""
+
+msgid "for"
+msgstr ""
+
+msgid "for Period"
+msgstr "para el periodo"
+
+msgid "is already a member!"
+msgstr "ya es actualmente un miembro"
+
+msgid "localhost"
+msgstr "máquina local"
+
+msgid "locked!"
+msgstr "¡Asegurado!"
+
+msgid "partsgroup"
+msgstr ""
+
+msgid "posted!"
+msgstr "fijado"
+
+msgid "sent"
+msgstr "enviado"
+
+msgid "successfully created!"
+msgstr "creado satisfactoriamente"
+
+msgid "successfully deleted!"
+msgstr "borrado satisfactoriamente"
+
+msgid "time(s)"
+msgstr ""
+
+msgid "unexpected error!"
+msgstr ""
+
+msgid "website"
+msgstr "sitio web"
+
