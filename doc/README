@@ -56,7 +56,8 @@ REQUIREMENTS:
 3 - SQL Server (PostgreSQL 8.0+)
 4 - DBD (DBD-Pg)
 5 - DBI
-6 - LaTeX (optional)
+6 - Locale::Maketext::Lexicon 0.56+
+7 - LaTeX (optional)
 
 
 FOREIGN LANGUAGE SUPPORT:
