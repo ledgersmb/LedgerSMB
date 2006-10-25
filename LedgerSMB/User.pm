@@ -82,7 +82,7 @@ sub country_codes {
 	# scan the locale directory and read in the LANGUAGE files
 	opendir DIR, "${LedgerSMB::Sysconfig::localepath}";
 
-	my @dir = grep !/^\.\.?$/, readdir DIR;
+	my @dir = grep !/^\..*$/, readdir DIR;
 
 	foreach my $dir (@dir) {
 		$dir = substr($dir, 0, -3);
