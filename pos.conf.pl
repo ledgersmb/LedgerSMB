@@ -34,11 +34,13 @@ $pos_config{'close_cash_accno'} = 1060;
 $pos_config{till_cash} = 200;
 # Add your sources here.
 
-$pos_sources{'visa'} = "Visa/MC";
-$pos_sources{'disc'} = "Discover";
-$pos_sources{'check'} = 'Check';
-$pos_sources{'cash'} = 'Cash';
-$pos_sources{'gcert'} = 'Gift Cert';
+$pos_sources{'visa'} = $locale->text("Visa/MC");
+$pos_sources{'disc'} = $locale->text("Discover");
+$pos_sources{'check'} = $locale->text('Check');
+$pos_sources{'cash'} = $locale->text('Cash');
+$pos_sources{'gcert'} = $locale->text('Gift Cert');
+
+$pos_source_default = 'cash';
 
 # 1 for source = memo
 # 2 for credit card handling

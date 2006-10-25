@@ -163,6 +163,7 @@ sub edit {
 
 sub form_header {
 
+
   if (!$form->{'check_id'}){
      &check_alert;
   }
@@ -272,7 +273,7 @@ sub form_header {
   $i = $form->{rowcount} + 1;
   $focus = "partnumber_$i";
   
-  $form->header;
+  $form->header();
  
   print qq|
 <body onLoad="document.forms[0].${focus}.focus()" />
@@ -405,11 +406,12 @@ sub form_footer {
 |;
   }
 
-  @column_index = qw(paid memo source AR_paid);
+  @column_index = qw(paid memo source cctrack AR_paid);
 
   $column_data{paid} = "<th>".$locale->text('Amount')."</th>";
   $column_data{source} = "<th>".$locale->text('Source')."</th>";
   $column_data{memo} = "<th>".$locale->text('Memo')."</th>";
+  $column_data{cctrack} = "<th>".$locale->text('Credit Card Track')."</th>";
   $column_data{AR_paid} = "<th>&nbsp;</th>";
   
   print qq|
@@ -433,7 +435,7 @@ sub form_footer {
   $form->{paidaccounts}++ if ($form->{"paid_$form->{paidaccounts}"});
 
   my $memoselect = qq|<SELECT name="MEMONAME">|;
-  for (keys %pos_sources){
+  for (sort keys %pos_sources){
 	$memoselect .= qq|<option value="$_">$pos_sources{$_}</option>|;
   }
   $memoselect .= qq|</SELECT>|;
