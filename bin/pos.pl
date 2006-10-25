@@ -460,10 +460,14 @@ sub form_footer {
     $column_data{source} = qq|<td><input name="source_$i" size=10 value="$form->{"source_$i"}"></td>|;
     $column_data{memo} = qq|<td>$memoselect</td>|;
     $column_data{memo} =~ s/MEMONAME/memo_$i/;
-    if ($form->{"memo_$i"}){
-	my $memval = $form->{"memo_$i"};
-	$column_data{memo} =~ s/(option value="$memval")/$1 SELECTED/;
+    if (!$form->{"memo_$i"}){
+	$form->{"memo_$i"} = $pos_source_default;
     }
+    my $memval = $form->{"memo_$i"};
+    $column_data{memo} =~ s/(option value="$memval")/$1 SELECTED/;
+
+    $column_data{cctrack} = qq|<td><input type="text" name="cctrack_$i"
+	value="|.$form->{"cctrack_$i"}.qq|" size="3"></td>|;
 
     if ($pos_config{"coa_prefix"}){
       if (!$form->{"AR_paid_$i"}){
