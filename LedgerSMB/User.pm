@@ -388,50 +388,9 @@ sub process_query {
   return unless (-f $filename);
   
   open(FH, "$filename") or $form->error("$filename : $!\n");
-  my $query = "";
-  my $loop = 0;
-  my $sth;
-  
-
-  while (<FH>) {
-
-    if ($loop && /^--\s*end\s*(procedure|function|trigger)/i) {
-      $loop = 0;
-
-      $sth = $dbh->prepare($query);
-      $sth->execute || $form->dberror($query);
-      $sth->finish;
-      
-      $query = "";
-      next;
-    }
-    
-    if ($loop || /^create *(or replace)? *(procedure|function|trigger)/i) {
-      $loop = 1;
-      next if /^(--.*|\s+)$/;
-
-      $query .= $_;
-      next;
-    }
-    
-    # don't add comments or empty lines
-    next if /^(--.*|\s+)$/;
-    
-    # anything else, add to query
-    $query .= $_;
-     
-    if (/;\s*$/) {
-      # strip ;... Oracle doesn't like it
-      $query =~ s/;\s*$//;
-      $query =~ s/\\'/''/g;
-
-      $sth = $dbh->prepare($query);
-      $sth->execute || $form->dberror($query);
-      $sth->finish;
-
-      $query = "";
-    }
-
+  open(PSQL, "| psql") or $form->error("psql : $! \n");
+  while (<FH>){
+    print PSQL $_;
   }
   close FH;
  

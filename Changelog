@@ -3,6 +3,7 @@ Changelog for LedgerSMB 1.2.0
 Database:
 * Added script to configure Slony replication (Chris Browne)
 * Added defined primary keys to all tables (Chris T)
+* Database upgrades now use psql (Chris T)
 
 Security:
 * Added whitelist of allowed directories to file editor (Seneca)
