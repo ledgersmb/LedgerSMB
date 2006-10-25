@@ -11,6 +11,7 @@ Security:
 * Audited Form.pm for SQL-injection problems and move to new API (Chris T)
 
 Localization:
+* Moved localization files to standard codes (Seneca)
 * Added cumulative tax support (Seneca)
 * Translations now use Gettext (Seneca)
 * Removed back-translation of function names for i18n (Seneca)
