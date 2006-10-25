@@ -43,7 +43,8 @@ use LedgerSMB::User;
 
 $form = new Form;
 
-$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language});
+$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
+	$form->error("Locale not loaded: $!\n");
 $locale->encoding('UTF-8');
 $form->{charset} = 'UTF-8';
 #$form->{charset} = $locale->encoding;

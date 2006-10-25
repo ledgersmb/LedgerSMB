@@ -87,7 +87,8 @@ use DBI qw(:sql_types);
 # check for user config file, could be missing or ???
 eval { require("$userspath/$form->{login}.conf"); };
 if ($@) {
-	$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode});
+	$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
+		$form->error("Locale not loaded: $!\n");
 	$form->{charset} = $locale->encoding;
 	$form->{charset} = 'UTF-8';
 	$locale->encoding('UTF-8');
@@ -99,7 +100,8 @@ if ($@) {
 }
 
 # locale messages
-$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode});
+$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
+	$form->error("Locale not loaded: $!\n");
 #$form->{charset} = $locale->encoding;
 $form->{charset} = 'UTF-8';
 $locale->encoding('UTF-8');

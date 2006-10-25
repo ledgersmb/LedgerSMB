@@ -1945,7 +1945,8 @@ sub invoice {
   $form->{type} = "invoice";
  
   # locale messages
-  $locale = LedgerSMB::Locale->get_handle($myconfig{countrycode});
+  $locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
+  	$form->error("Locale not loaded: $!\n");
   #$form->{charset} = $locale->encoding;
   $form->{charset} = 'UTF-8';
   $locale->encoding('UTF-8');
