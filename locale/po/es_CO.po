@@ -7,7 +7,7 @@
 # Adoption to Colombian Accounting Terms:
 #
 # Authors: 	Dirk Enrique Seiffert <info@caribenet.com> 
-#		Lourdes Mejía Martinez <lourdes@caribenet.com>
+#		Lourdes MejÃ­a Martinez <lourdes@caribenet.com>
 #		Silfredo Godoy Chavez <silfredo@caribenet.com>
 #	
 # This program is free software; you can redistribute it and/or modify

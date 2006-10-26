@@ -4,7 +4,7 @@
 #
 # Danish texts:
 #
-#  Author: Keld Jørn Simonsen <keld@dkuug.dk>
+#  Author: Keld JÃ¸rn Simonsen <keld@dkuug.dk>
 #          Jonas Smedegaard <jonas@jones.dk>
 #
 # This program is free software; you can redistribute it and/or modify

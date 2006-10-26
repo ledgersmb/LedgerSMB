@@ -4,7 +4,7 @@
 #
 # French texts:
 #
-#  Author: Sèbastien Brassard <sbrassar.cgocable.ca>
+#  Author: SÃ¨bastien Brassard <sbrassar.cgocable.ca>
 #          Oscar Buijten <oscar@elbie.com>
 #          Wolfgang Sourdeau <wolfgang@contre.com>
 #          Aguibou KONE <aguibou.kone@rocketmail.com>
