@@ -30,6 +30,8 @@ Code Quality and API:
 * New template system (Chris T)
 * IC.pm, OE.pm, and IS.pm are aware of custom fields (Chris T)
 * Added LedgerSMB::Sysconfig for site-wide configuration (Chris T)
+* LedgerSMB::IC is aware of custom fields (Chris T)
+* LedgerSMB::PE is aware of custom fields (Chris T)
 
 Packaging:
 * Added first version of rpm spec from Mads Kiilerich (Chris T)

@@ -188,6 +188,8 @@ sub get_project {
 
   PE->get_customer($myconfig, $form, $dbh);
 
+  $form->run_custom_queries('project', 'SELECT');
+
   $dbh->disconnect;
 
 }
@@ -225,6 +227,7 @@ sub save_project {
 		)|;
   }
   $dbh->do($query) || $form->dberror($query);
+  $form->run_custom_queries('project', 'UPDATE');
   
   $dbh->disconnect;
 
