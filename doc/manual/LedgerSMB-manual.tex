@@ -2780,8 +2780,6 @@ how this can be customized and how one might go about doing this.
 
 The Perl Modules (.pm files) in the LedgerSMB directory contain the
 main business logic of the application including all database access.
-Most of these modules are fairly easy to follow, and there is an effort
-to document all API's at the wiki (\url{http://www.metatrontech.com/ledger-smb-wiki?APIReference}).
 
 Many of these modules have a fair bit of dormant code in them which
 was written for forthcoming features, such as payroll and bills of
@@ -2800,50 +2798,9 @@ dbconnect\_noauto(\%myconfig) method requires a manual commit. Both
 these functions are thin wrappers around the standard Perl DBI operations.
 
 
-\subsection{Examples}
-
-
-\subsubsection{Adding a New Report for Sales Data}
-
-One of our customers required a report of inventory activity during
-an arbitrary time period. So we added this customization. This report
-required merely adding a few functions to the rp.pl user interface
-script (bin/mozilla/rp.pl) and slightly altering a few more. However,
-as they eventually wanted to pull up invoices (AP and AR) containing
-those part numbers, we also had to customize the AA.pm module to accept
-this sort of filtering.
-
-The patch is available at \url{http://www.metatrontech.com/downloads/sl-inv\_report-2.6.7.diff}
-and was not built against Ledger-SMB. It may need to be updated to
-match the present software.
-
-
-\subsubsection{Truncating Number of Invoices on a Check Stub}
-
-One of our customers required an ability to truncate the list of invoices
-printed on a stub so that an additional report could be printed as
-an attachment. This patch required truncating the list of invoices
-in the bin/mozilla/cp.pl file, and slightly patching the ledger-smb.conf
-to allow for the number of listed invoices to be a runtime parameter.
-Finally a very small modification was made to the template.
-
-The patch is available at \url{http://www.metatrontech.com/downloads/sl-check-max-2.6.7.diff}
-
-
-\subsubsection{Adding the a Check ID flag for Alcohol Purchases}
-
-One of our customers is a retail store that sells alcoholic beverages.
-As the law requires them to ask customers purchasing these beverages
-for ID, they needed a reminder set to the screen when an alcoholic
-beverage was sold.
-
-To make this change, we added a field to the parts table of the database,
-had to change a few aspects of the IC.pm to handle inserting and updating
-this field. Then we modified the ps.pl to display a red banner on
-invoices which had alcoholic beverages associated with them.
-
-This patch is part of SL-POS which can be downloaded at \url{http://www.metatrontech.com/downloads/SL-POS-0.5.0.tar.gz}
-(note: this patch has not been ported to Ledger-SMB yet).
+\subsection{CLI Examples}
+Louis Moore contributed some SQL-Ledger CLI examples that still work for 
+LedgerSMB.  You can find his page at \url{http://www.sql-ledger.org/cgi-bin/nav.pl?page=contrib/moore.html&title=Louis\%20B.\%20Moore}.
 
 \clearpage 
 
