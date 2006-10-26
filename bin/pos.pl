@@ -110,9 +110,12 @@ sub add {
   $form->{partsgroup} = "";
   for (@{ $form->{all_partsgroup} }) { $form->{partsgroup} .= "$_->{partsgroup}--$_->{translation}\n"; }
 
+  $form->{dontdisplayend} = 1;
+
   &display_form;
 
   $form->{dontdisplayrows} = 1;
+  $form->{dontdisplayend} = 0;
   &openinvoices;
 }
 
@@ -603,13 +606,14 @@ sub form_footer {
   
   $form->hide_form(qw(rowcount callback path login sessionid));
   
-  print qq|
-</form>
+  print qq|</form>|;
 
+  if (!$form->{dontdisplayend}){
+    print qq|
 </body>
 </html>
 |;
-
+  }
 }
 
 
