@@ -1,0 +1,2866 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2001
+#
+# Dutch texts:
+#
+#  Author: AJ Hettema <Ignite@ecosse.net>
+#          Oscar Buijten <oscar@elbie.com>
+#          Bert Tijhuis <domino@dse.nl>
+#          Paul Tammes <ptammes@home.nl>
+#          Arno Peters <a.w.peters@ieee.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid ">"
+msgstr ">"
+
+msgid "A"
+msgstr "A"
+
+msgid "AP"
+msgstr "Crediteuren"
+
+msgid "AP Aging"
+msgstr "Ouderdomsoverzicht Crediteuren"
+
+msgid "AP Outstanding"
+msgstr "Openstaande Crediteuren"
+
+msgid "AP Transaction"
+msgstr "Crediteurenboeking"
+
+msgid "AP Transactions"
+msgstr "Crediteurenboekingen"
+
+msgid "AR"
+msgstr "Debiteuren"
+
+msgid "AR Aging"
+msgstr "Ouderdomsoverzicht Debiteuren"
+
+msgid "AR Outstanding"
+msgstr "Openstaande Debiteuren"
+
+msgid "AR Transaction"
+msgstr "Debiteurenboeking"
+
+msgid "AR Transactions"
+msgstr "Debiteurenboekingen"
+
+msgid "AR/AP"
+msgstr "Deb/Cred"
+
+msgid "About"
+msgstr "Over"
+
+msgid "Above"
+msgstr "Boven"
+
+msgid "Access Control"
+msgstr "Toegangsbeheer"
+
+msgid "Access Denied!"
+msgstr "Toegang Geweigerd!"
+
+msgid "Account"
+msgstr "Rekening"
+
+msgid "Account Number"
+msgstr "Rekeningnummer"
+
+msgid "Account Number missing!"
+msgstr "Rekeningnummer Ontbreekt!"
+
+msgid "Account Type"
+msgstr "Rekeningtype"
+
+msgid "Account Type missing!"
+msgstr "Rekeningtype Ontbreekt!"
+
+msgid "Account deleted!"
+msgstr "Rekening Verwijderd"
+
+msgid "Account does not exist!"
+msgstr "Rekening Bestaat Niet"
+
+msgid "Account saved!"
+msgstr "Rekening Opgeslagen"
+
+msgid "Accounting"
+msgstr "Boekhouding"
+
+msgid "Accounting Menu"
+msgstr "Boekhoudmenu"
+
+msgid "Accounts"
+msgstr "Rekeningen"
+
+msgid "Accrual"
+msgstr "Transactie"
+
+msgid "Acquisition Date"
+msgstr "Acquisitiedatum"
+
+msgid "Activate Audit trail"
+msgstr "Activeer Transactielogboek"
+
+msgid "Activate Audit trails"
+msgstr "Activeer Transactielogboek"
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Add"
+msgstr "Toevoegen"
+
+msgid "Add AP Transaction"
+msgstr "Crediteurenboeking Toevoegen"
+
+msgid "Add AR Transaction"
+msgstr "Debiteurenboeking Toevoegen"
+
+msgid "Add Account"
+msgstr "Rekening Toevoegen"
+
+msgid "Add Assembly"
+msgstr "Assemblage Toevoegen"
+
+msgid "Add Asset"
+msgstr "Activa Toevoegen"
+
+msgid "Add Business"
+msgstr "Branche Toevoegen"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Geldoverboeking Toevoegen"
+
+msgid "Add Customer"
+msgstr "Klant Toevoegen"
+
+msgid "Add Deduction"
+msgstr "Korting Toevoegen"
+
+msgid "Add Department"
+msgstr "Afdeling Toevoegen"
+
+msgid "Add Depreciation"
+msgstr "Afschrijving Toevoegen"
+
+msgid "Add Employee"
+msgstr "Werknemer Toevoegen"
+
+msgid "Add Exchange Rate"
+msgstr "Wisselkoers Toevoegen"
+
+msgid "Add GIFI"
+msgstr "GIFI Toevoegen"
+
+msgid "Add General Ledger Transaction"
+msgstr "Journaalpost Toevoegen"
+
+msgid "Add Group"
+msgstr "Productgroep Toevoegen"
+
+msgid "Add Job"
+msgstr "Job Toevoegen"
+
+msgid "Add Labor/Overhead"
+msgstr "Arbeids-/Overheadkosten Toevoegen"
+
+msgid "Add Language"
+msgstr "Taal Toevoegen"
+
+msgid "Add POS Invoice"
+msgstr "Kassaverkoop Toevoegen"
+
+msgid "Add Part"
+msgstr "Artikel Toevoegen"
+
+msgid "Add Pricegroup"
+msgstr "Prijsgroep Toevoegen"
+
+msgid "Add Project"
+msgstr "Project Toevoegen"
+
+msgid "Add Purchase Order"
+msgstr "Inkooporder Toevoegen"
+
+msgid "Add Quotation"
+msgstr "Offerte Toevoegen"
+
+msgid "Add Request for Quotation"
+msgstr "Prijsaanvraag Toevoegen"
+
+msgid "Add SIC"
+msgstr "SIC Toevoegen"
+
+msgid "Add Sales Invoice"
+msgstr "Verkoopfactuur Toevoegen"
+
+msgid "Add Sales Order"
+msgstr "Verkooporder Toevoegen"
+
+msgid "Add Service"
+msgstr "Dienst Toevoegen"
+
+msgid "Add Stores Card"
+msgstr "Materiaalkaart Toevoegen"
+
+msgid "Add Time Card"
+msgstr "Tijdkaart Toevoegen"
+
+msgid "Add Transaction"
+msgstr "Boeking Toevoegen"
+
+msgid "Add User"
+msgstr "Gebruiker Toevoegen"
+
+msgid "Add Vendor"
+msgstr "Leverancier Toevoegen"
+
+msgid "Add Vendor Invoice"
+msgstr "Inkoopfactuur Toevoegen"
+
+msgid "Add Warehouse"
+msgstr "Magazijn Toevoegen"
+
+msgid "Address"
+msgstr "Adres"
+
+msgid "Administration"
+msgstr "Administratie"
+
+msgid "Administrator"
+msgstr "Beheerder"
+
+msgid "After Deduction"
+msgstr "Na Korting"
+
+msgid "After Depreciation"
+msgstr "Na Afschrijving"
+
+msgid "Aged"
+msgstr "Ouderdom"
+
+msgid "Aged Overdue"
+msgstr "Achterstallig"
+
+msgid "All"
+msgstr "Allemaal"
+
+msgid "All Accounts"
+msgstr "Alle Rekeningen"
+
+msgid "All Datasets up to date!"
+msgstr "Alle Datasets Actueel"
+
+msgid "All Items"
+msgstr "Alle Onderdelen"
+
+msgid "Allocated"
+msgstr "Toegewezen"
+
+msgid "Allowances"
+msgstr "Toelagen"
+
+msgid "Amount"
+msgstr "Bedrag"
+
+msgid "Amount Due"
+msgstr "Verschuldigd Bedrag"
+
+msgid "Amount missing!"
+msgstr "Bedrag Ontbreekt!"
+
+msgid "Apr"
+msgstr "apr"
+
+msgid "April"
+msgstr "april"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Weet u zeker dat u dit factuurnummer wilt verwijderen?"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Weet u zeker dat u dit ordernummer wilt verwijderen?"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Weet u zeker dat u dit offertenummer wilt verwijderen?"
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "Weet u zeker dat u deze boeking wilt verwijderen?"
+
+msgid "Are you sure you want to delete time card for"
+msgstr "Weet u zeker dat u de tijdkaart wil verwijderen voor"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "Weet us zeker dat u de gemarkeerde stukken wil verwijderen uit de wachtrij?"
+
+msgid "As of"
+msgstr "Vanaf"
+
+msgid "Assemblies"
+msgstr "Assemblages"
+
+msgid "Assemblies restocked!"
+msgstr "Assemblage Aangevuld!"
+
+msgid "Assembly"
+msgstr "Assemblage"
+
+msgid "Assembly stocked!"
+msgstr "Assemblage ingeslagen!"
+
+msgid "Asset"
+msgstr "Activa"
+
+msgid "Asset Name"
+msgstr "Naam Activa"
+
+msgid "Asset Number"
+msgstr "Activacode"
+
+msgid "Asset deleted!"
+msgstr "Activa verwijderd!"
+
+msgid "Asset saved!"
+msgstr "Activa opgeslagen!"
+
+msgid "Assets"
+msgstr "Activa"
+
+msgid "Attachment"
+msgstr "Bijlage"
+
+msgid "Audit Control"
+msgstr "Transactielogboek"
+
+msgid "Audit trail disabled"
+msgstr "Transactielogboek Niet Geactiveerd"
+
+msgid "Audit trail enabled"
+msgstr "Transactielogboek Geactiveerd"
+
+msgid "Audit trail removed up to"
+msgstr "Transactielogboek Verwijderd Tot"
+
+msgid "Audit trails disabled"
+msgstr "Transactielogboek Niet Geactiveerd"
+
+msgid "Audit trails enabled"
+msgstr "Transactielogboek Geactiveerd"
+
+msgid "Aug"
+msgstr "aug"
+
+msgid "August"
+msgstr "augustus"
+
+msgid "Average Cost"
+msgstr "Gemiddelde Kostprijs"
+
+msgid "Avg Cost"
+msgstr "Gem. Kostpr."
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "BOM"
+msgstr "Onderdelenlijst"
+
+msgid "Backup"
+msgstr "Backup"
+
+msgid "Backup sent to"
+msgstr "Backup gezonden aan"
+
+msgid "Balance"
+msgstr "Saldo"
+
+msgid "Balance Sheet"
+msgstr "Balans"
+
+msgid "Based on"
+msgstr "Gebaseerd op"
+
+msgid "Batch Printing"
+msgstr "Gegroepeerd Afdrukken"
+
+msgid "Bcc"
+msgstr "Bcc"
+
+msgid "Before Deduction"
+msgstr "Voor Korting"
+
+msgid "Before Depreciation"
+msgstr "Voor Afschrijving"
+
+msgid "Beginning Balance"
+msgstr "Beginsaldo"
+
+msgid "Below"
+msgstr "Onder"
+
+msgid "Billing Address"
+msgstr "Facturatieadres"
+
+msgid "Bin"
+msgstr "Vergaarbak"
+
+msgid "Bin List"
+msgstr "Vergaarlijst"
+
+msgid "Bin Lists"
+msgstr "Vergaarlijsten"
+
+msgid "Books are open"
+msgstr "Boekingsperiode is open"
+
+msgid "Break"
+msgstr "Staffel"
+
+msgid "Business"
+msgstr "Branche"
+
+msgid "Business Number"
+msgstr "KvK-nummer"
+
+msgid "Business deleted!"
+msgstr "Branche verwijderd!"
+
+msgid "Business saved!"
+msgstr "Branche opgeslagen!"
+
+msgid "C"
+msgstr "C"
+
+msgid "COGS"
+msgstr "Kostprijs omzet"
+
+msgid "COGS account does not exist!"
+msgstr "Kostprijs Omzet rekening bestaat niet!"
+
+msgid "Cannot add stores card for a completed job!"
+msgstr "Kan geen materiaalkaart toevoegen aan een afgewerkte job!"
+
+msgid "Cannot add time card for a completed job!"
+msgstr "Kan geen tijdkaart toevoegen aan een afgewerkte job!"
+
+msgid "Cannot change stores card for a completed job!"
+msgstr "Kan materiaalkaart niet veranderen voor een afgewerkte job!"
+
+msgid "Cannot change time card for a completed job!"
+msgstr "Kan tijdkaart niet veranderen voor een afgewerkte job!"
+
+msgid "Cannot create Assembly"
+msgstr "Kan Assemblage niet aanmaken"
+
+msgid "Cannot create Labor"
+msgstr "Kan Arbeid niet aanmaken"
+
+msgid "Cannot create Lock!"
+msgstr "Kan geen exclusieve toegang krijgen!"
+
+msgid "Cannot create Part"
+msgstr "Kan Artikel niet aanmaken"
+
+msgid "Cannot create Service"
+msgstr "Kan Dienst niet aanmaken"
+
+msgid "Cannot delete account!"
+msgstr "Kan rekening niet verwijderen!"
+
+msgid "Cannot delete customer!"
+msgstr "Kan klant niet verwijderen!"
+
+msgid "Cannot delete default account!"
+msgstr "Kan standaardrekening niet verwijderen!"
+
+msgid "Cannot delete invoice!"
+msgstr "Kan factuur niet verwijderen!"
+
+msgid "Cannot delete item!"
+msgstr "Kan onderdeel niet verwijderen!"
+
+msgid "Cannot delete order!"
+msgstr "Kan order niet verwijderen!"
+
+msgid "Cannot delete quotation!"
+msgstr "Kan offerte niet verwijderen!"
+
+msgid "Cannot delete time card!"
+msgstr "Kan tijdkaart niet verwijderen!"
+
+msgid "Cannot delete transaction!"
+msgstr "Kan boeking niet verwijderen!"
+
+msgid "Cannot delete vendor!"
+msgstr "Kan leverancier niet verwijderen!"
+
+msgid "Cannot post Payment!"
+msgstr "Kan betaling niet boeken!"
+
+msgid "Cannot post Receipt!"
+msgstr "Kan ontvangst niet boeken!"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "Kan geen factuur boeken in afgesloten periode!"
+
+msgid "Cannot post invoice!"
+msgstr "Kan factuur niet boeken!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "Kan geen betaling boeken voor afgesloten periode!"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "Kan geen boeking maken in afgesloten periode"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr "Kan geen transactie boeken met een debit- en creditregel voor dezelfde rekening!"
+
+msgid "Cannot post transaction!"
+msgstr "Kan transactie niet boeken!"
+
+msgid "Cannot remove files!"
+msgstr "Kan bestanden niet verwijderen!"
+
+msgid "Cannot save account!"
+msgstr "Kan rekening niet opslaan!"
+
+msgid "Cannot save defaults!"
+msgstr "Kan de standaard niet opslaan!"
+
+msgid "Cannot save order!"
+msgstr "Kan order niet opslaan!"
+
+msgid "Cannot save preferences!"
+msgstr "Kan voorkeuren niet opslaan!"
+
+msgid "Cannot save quotation!"
+msgstr "Kan offerte niet opslaan!"
+
+msgid "Cannot save stores card for a closed period!"
+msgstr "Kan materiaalkaart niet opslaan in een afgesloten periode!"
+
+msgid "Cannot save stores card!"
+msgstr "Kan materiaalkaart niet opslaan!"
+
+msgid "Cannot save time card for a closed period!"
+msgstr "Kan tijdkaart niet opslaan in een afgesloten periode!"
+
+msgid "Cannot save time card!"
+msgstr "Kan tijdkaart niet opslaan!"
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Kan rekening niet toekennen behalve aan ofwel Debiteuren, Crediteuren of Inventaris"
+
+msgid "Cannot set multiple options for"
+msgstr "Kan slechts één menuoptie instellen voor"
+
+msgid "Cannot set multiple options for Item"
+msgstr "Kan niet verschillende opties voor Artikel toekennen"
+
+msgid "Cannot stock Assembly!"
+msgstr "Kan assemblage niet inslaan"
+
+msgid "Cannot stock assemblies!"
+msgstr "Kan assemblages niet in voorraad nemen!"
+
+msgid "Cash"
+msgstr "Kas"
+
+msgid "Cc"
+msgstr "Cc"
+
+msgid "Change"
+msgstr "Wijzig"
+
+msgid "Change Admin Password"
+msgstr "Wachtwoord Beheerder Veranderen"
+
+msgid "Change Password"
+msgstr "Verander Wachtwoord"
+
+msgid "Chargeable"
+msgstr "Doorbelastbaar"
+
+msgid "Chargeout Rate"
+msgstr "Doorbelasting"
+
+msgid "Chart of Accounts"
+msgstr "Rekeningstelsel"
+
+msgid "Check"
+msgstr "Cheque"
+
+msgid "Check Inventory"
+msgstr "Inventaris Controleren"
+
+msgid "Checks"
+msgstr "Cheques"
+
+msgid "City"
+msgstr "Stad"
+
+msgid "Cleared"
+msgstr "Opgeschoond"
+
+msgid "Click on login name to edit!"
+msgstr "Klik op gebruikersnaam om deze te bewerken!"
+
+msgid "Clocked"
+msgstr "Geklokt"
+
+msgid "Close Books up to"
+msgstr "Boeken afsluiten tot"
+
+msgid "Closed"
+msgstr "Afgesloten"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Code missing!"
+msgstr "Code ontbreekt!"
+
+msgid "Company"
+msgstr "Bedrijf"
+
+msgid "Company Name"
+msgstr "Bedrijfsnaam"
+
+msgid "Compare to"
+msgstr "Vergelijk met"
+
+msgid "Completed"
+msgstr "Voltooid"
+
+msgid "Components"
+msgstr "Componenten"
+
+msgid "Confirm"
+msgstr "Bevestig"
+
+msgid "Confirm!"
+msgstr "Bevestig!"
+
+msgid "Connect to"
+msgstr "Verbinden met"
+
+msgid "Consolidate"
+msgstr "Consolideren"
+
+msgid "Consolidate Orders"
+msgstr "Samenvoegen Orders"
+
+msgid "Consolidate Purchase Orders"
+msgstr "Samenvoegen Inkooporders"
+
+msgid "Consolidate Sales Orders"
+msgstr "Samenvoegen Verkooporders"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Continue"
+msgstr "Verder"
+
+msgid "Contra"
+msgstr "Contra"
+
+msgid "Copies"
+msgstr "Kopieën"
+
+msgid "Copy to COA"
+msgstr "Kopieër naar rekeningstelsel"
+
+msgid "Cost"
+msgstr "Kostprijs"
+
+msgid "Cost Center"
+msgstr "Kostenpost"
+
+msgid "Could not save pricelist!"
+msgstr "Kon prijslijst niet opslaan!"
+
+msgid "Could not save!"
+msgstr "Kon niet opslaan!"
+
+msgid "Could not transfer Inventory!"
+msgstr "Kon geen Inventaris overboeken!"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Create Chart of Accounts"
+msgstr "Maak Rekeningstelsel"
+
+msgid "Create Dataset"
+msgstr "Maak Dataset"
+
+msgid "Credit"
+msgstr "Credit"
+
+msgid "Credit Invoice"
+msgstr "Creditfactuur"
+
+msgid "Credit Limit"
+msgstr "Kredietlimiet"
+
+msgid "Curr"
+msgstr "Val."
+
+msgid "Currency"
+msgstr "Valuta"
+
+msgid "Current"
+msgstr "Huidig"
+
+msgid "Current Earnings"
+msgstr "Huidige Winst"
+
+msgid "Customer"
+msgstr "Klant"
+
+msgid "Customer History"
+msgstr "Klanthistorie"
+
+msgid "Customer Number"
+msgstr "Klantcode"
+
+msgid "Customer deleted!"
+msgstr "Klant verwijderd!"
+
+msgid "Customer missing!"
+msgstr "Klant ontbreekt!"
+
+msgid "Customer not on file!"
+msgstr "Klant bestaat niet!"
+
+msgid "Customer saved!"
+msgstr "Klant opgeslagen!"
+
+msgid "Customers"
+msgstr "Klanten"
+
+msgid "DBA"
+msgstr "DBA"
+
+msgid "DBI not installed!"
+msgstr "DBI niet geinstalleerd"
+
+msgid "DOB"
+msgstr "Geb. datum"
+
+msgid "Database"
+msgstr "Database"
+
+msgid "Database Administration"
+msgstr "Database administratie"
+
+msgid "Database Driver not checked!"
+msgstr "Stuurprogramma niet aangevinkt"
+
+msgid "Database Host"
+msgstr "Databasecomputer"
+
+msgid "Database User missing!"
+msgstr "Databasegebruiker ontbreekt!"
+
+msgid "Dataset"
+msgstr "Dataset"
+
+msgid "Dataset is newer than version!"
+msgstr "Dataset is nieuwer dan de versie!"
+
+msgid "Dataset missing!"
+msgstr "Geen dataset aanwezig"
+
+msgid "Dataset updated!"
+msgstr "Dataset aangepast aan nieuwe versie!"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Date Format"
+msgstr "Datumformaat"
+
+msgid "Date Paid"
+msgstr "Betaaldatum"
+
+msgid "Date Received"
+msgstr "Ontvangstdatum"
+
+msgid "Date missing!"
+msgstr "Datum ontbreekt!"
+
+msgid "Date received missing!"
+msgstr "Ontvangstdatum ontbreekt!"
+
+msgid "Date worked"
+msgstr "Datum gewerkt"
+
+msgid "Day"
+msgstr "Dag"
+
+msgid "Day(s)"
+msgstr "Dag(en)"
+
+msgid "Days"
+msgstr "Dagen"
+
+msgid "Debit"
+msgstr "Debet"
+
+msgid "Debit Invoice"
+msgstr "Debitfactuur"
+
+msgid "Dec"
+msgstr "dec"
+
+msgid "December"
+msgstr "december"
+
+msgid "Decimalplaces"
+msgstr "Decimalen"
+
+msgid "Decrease"
+msgstr "Vermindering"
+
+msgid "Deduct after"
+msgstr "Verminder na"
+
+msgid "Deduction deleted!"
+msgstr "Korting verwijderd!"
+
+msgid "Deduction saved!"
+msgstr "Korting opgeslagen!"
+
+msgid "Deductions"
+msgstr "Kortingen"
+
+msgid "Default Template"
+msgstr "Standaard Sjabloon"
+
+msgid "Defaults"
+msgstr "Standaardinstellingen"
+
+msgid "Defaults saved!"
+msgstr "Standaardinstellingen bewaard!"
+
+msgid "Delete"
+msgstr "Verwijder"
+
+msgid "Delete Account"
+msgstr "Rekening Verwijderen"
+
+msgid "Delete Dataset"
+msgstr "Dataset Verwijderen"
+
+msgid "Delete Schedule"
+msgstr "Inplanning Verwijderen"
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr "Een taal verwijderen, verwijdert eveneens de sjablonen voor die taal"
+
+msgid "Delivery Date"
+msgstr "Leverdatum"
+
+msgid "Department"
+msgstr "Afdeling"
+
+msgid "Department deleted!"
+msgstr "Afdeling verwijderd!"
+
+msgid "Department saved!"
+msgstr "Afdeling opgeslagen!"
+
+msgid "Departments"
+msgstr "Afdelingen"
+
+msgid "Deposit"
+msgstr "Storting"
+
+msgid "Depreciation deleted!"
+msgstr "Afschrijving verwijderd!"
+
+msgid "Depreciation saved!"
+msgstr "Afschrijving opgeslagen!"
+
+msgid "Depreciations"
+msgstr "Afschrijvingen"
+
+msgid "Description"
+msgstr "Omschrijving"
+
+msgid "Description Translations"
+msgstr "Vertalingen Omschrijving"
+
+msgid "Description missing!"
+msgstr "Omschrijving ontbreekt"
+
+msgid "Detail"
+msgstr "Detail"
+
+msgid "Difference"
+msgstr "Verschil"
+
+msgid "Directory"
+msgstr "Directory"
+
+msgid "Discount"
+msgstr "Korting"
+
+msgid "Done"
+msgstr "Klaar"
+
+msgid "Drawing"
+msgstr "Tekening"
+
+msgid "Driver"
+msgstr "Stuurprogramma"
+
+msgid "Dropdown Limit"
+msgstr "Maximum in Dropdown-lijst"
+
+msgid "Due Date"
+msgstr "Vervaldatum"
+
+msgid "Due Date missing!"
+msgstr "Vervaldatum ontbreekt!"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "E-mail Statement to"
+msgstr "E-mail Overzicht aan"
+
+msgid "E-mail address missing!"
+msgstr "E-mailadres ontbreekt!"
+
+msgid "E-mail message"
+msgstr "E-mailbericht"
+
+msgid "E-mailed"
+msgstr "Gemaild"
+
+msgid "Edit"
+msgstr "Wijzigen"
+
+msgid "Edit AP Transaction"
+msgstr "Crediteurenboeking Wijzigen"
+
+msgid "Edit AR Transaction"
+msgstr "Debiteurenboeking Wijzigen"
+
+msgid "Edit Account"
+msgstr "Rekening Wijzigen"
+
+msgid "Edit Assembly"
+msgstr "Assemblage Wijzigen"
+
+msgid "Edit Asset"
+msgstr "Activa Wijzigen"
+
+msgid "Edit Business"
+msgstr "Branche Wijzigen"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "Kasoverboeking Wijzigen"
+
+msgid "Edit Customer"
+msgstr "Klant Wijzigen"
+
+msgid "Edit Deduction"
+msgstr "Korting Wijzigen"
+
+msgid "Edit Department"
+msgstr "Afdeling Wijzigen"
+
+msgid "Edit Depreciation"
+msgstr "Afschrijving Wijzigen"
+
+msgid "Edit Description Translations"
+msgstr "Vertalingen Omschrijving Wijzigen"
+
+msgid "Edit Employee"
+msgstr "Werknemer Wijzigen"
+
+msgid "Edit GIFI"
+msgstr "GIFI Wijzigen"
+
+msgid "Edit General Ledger Transaction"
+msgstr "Boeking in grootboek Wijzigen"
+
+msgid "Edit Group"
+msgstr "Productgroep Wijzigen"
+
+msgid "Edit Job"
+msgstr "Job Wijzigen"
+
+msgid "Edit Labor/Overhead"
+msgstr "Arbeids-/Overheadkosten Wijzigen"
+
+msgid "Edit Language"
+msgstr "Taal Wijzigen"
+
+msgid "Edit POS Invoice"
+msgstr "Kassaorder Wijzigen"
+
+msgid "Edit Part"
+msgstr "Artikel Wijzigen"
+
+msgid "Edit Preferences for"
+msgstr "Instellingen Wijzigen voor"
+
+msgid "Edit Pricegroup"
+msgstr "Prijsgroep Wijzigen "
+
+msgid "Edit Project"
+msgstr "Project Wijzigen"
+
+msgid "Edit Purchase Order"
+msgstr "Inkooporder Wijzigen"
+
+msgid "Edit Quotation"
+msgstr "Offerte Wijzigen"
+
+msgid "Edit Request for Quotation"
+msgstr "Prijsaanvraag Wijzigen"
+
+msgid "Edit SIC"
+msgstr "SIC Wijzigen"
+
+msgid "Edit Sales Invoice"
+msgstr "Verkoopfactuur Wijzigen"
+
+msgid "Edit Sales Order"
+msgstr "Verkooporder Wijzigen"
+
+msgid "Edit Service"
+msgstr "Dienst Wijzigen"
+
+msgid "Edit Template"
+msgstr "Sjabloon Wijzigen"
+
+msgid "Edit Time Card"
+msgstr "Tijdkaart wijzigen"
+
+msgid "Edit User"
+msgstr "Gebruiker Wijzigen"
+
+msgid "Edit Vendor"
+msgstr "Leverancier Wijzigen"
+
+msgid "Edit Vendor Invoice"
+msgstr "Inkoopfactuur Wijzigen"
+
+msgid "Edit Warehouse"
+msgstr "Magazijn Wijzigen"
+
+msgid "Employee"
+msgstr "Werknemer"
+
+msgid "Employee Name"
+msgstr "Naam Werknemer"
+
+msgid "Employee Number"
+msgstr "Werknemercode"
+
+msgid "Employee deleted!"
+msgstr "Werknemer verwijderd"
+
+msgid "Employee pays"
+msgstr "Werknemerbetalingen"
+
+msgid "Employee saved!"
+msgstr "Werknemer opgeslagen!"
+
+msgid "Employees"
+msgstr "Werknemers"
+
+msgid "Employer"
+msgstr "Werkgever"
+
+msgid "Employer pays"
+msgstr "Werkgeverbetalingen"
+
+msgid "Enddate"
+msgstr "Einddatum"
+
+msgid "Ends"
+msgstr "Eindigt"
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "Boeking terugdraaien voor alle data"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Vul max drie karakters in, gescheiden door een dubbelepunt (b.v. EUR:USD:GBP:CAD) voor locale en buitenlandse valuta"
+
+msgid "Equity"
+msgstr "Actief vermogen"
+
+msgid "Every"
+msgstr "Elke"
+
+msgid "Exch"
+msgstr "Wissel"
+
+msgid "Exchange Rate"
+msgstr "Wisselkoers"
+
+msgid "Exchange rate for payment missing!"
+msgstr "Wisselkoers voor betaling ontbreekt!"
+
+msgid "Exchange rate missing!"
+msgstr "Wisselkoers ontbreekt!"
+
+msgid "Exempt age <"
+msgstr "Uitsluiten leeftijd <"
+
+msgid "Existing Datasets"
+msgstr "Bestaande Datasets"
+
+msgid "Expense"
+msgstr "Onkosten"
+
+msgid "Expense account does not exist!"
+msgstr "Uitgavenrekening bestaat niet!"
+
+msgid "Expense/Asset"
+msgstr "Uitgaven/Activa"
+
+msgid "Extended"
+msgstr "Totaal"
+
+msgid "FX"
+msgstr "FX"
+
+msgid "Failed to save order!"
+msgstr "Order opslaan mislukt!"
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "Feb"
+msgstr "feb"
+
+msgid "February"
+msgstr "februari"
+
+msgid "For"
+msgstr "Gedurende"
+
+msgid "Foreign Exchange Gain"
+msgstr "Wisselkoerswinst"
+
+msgid "Foreign Exchange Loss"
+msgstr "Wisselkoersverlies"
+
+msgid "Friday"
+msgstr "vrijdag"
+
+msgid "From"
+msgstr "Van"
+
+msgid "From Warehouse"
+msgstr "Van Magazijn"
+
+msgid "GIFI"
+msgstr "GIFI"
+
+msgid "GIFI deleted!"
+msgstr "GIFI verwijderd!"
+
+msgid "GIFI missing!"
+msgstr "GIFI ontbreekt!"
+
+msgid "GIFI saved!"
+msgstr "GIFI opgeslagen!"
+
+msgid "GL"
+msgstr "Memoriaal"
+
+msgid "GL Reference Number"
+msgstr "Memoriaal Referentiecode"
+
+msgid "GL Transaction"
+msgstr "Grootboekboeking"
+
+msgid "General Ledger"
+msgstr "Grootboek"
+
+msgid "Generate"
+msgstr "Genereer"
+
+msgid "Generate Orders"
+msgstr "Genereer Orders"
+
+msgid "Generate Purchase Orders"
+msgstr "Genereer Aankooporders"
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr "Genereer Aankooporders van Verkooporder"
+
+msgid "Generate Sales Order"
+msgstr "Genereer Verkooporder"
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr "Genereer Verkooporder van Aankooporders"
+
+msgid "Generate Sales Orders"
+msgstr "Genereer Verkooporders"
+
+msgid "Goods & Services"
+msgstr "Goederen & Diensten"
+
+msgid "Group"
+msgstr "Productgroep"
+
+msgid "Group Items"
+msgstr "Groepeer Onderdelen"
+
+msgid "Group Translations"
+msgstr "Vertaling Productgroep"
+
+msgid "Group deleted!"
+msgstr "Productgroep verwijderd!"
+
+msgid "Group missing!"
+msgstr "Productgroep ontbreekt!"
+
+msgid "Group saved!"
+msgstr "Productgroep opgeslagen!"
+
+msgid "Groups"
+msgstr "Productgroepen"
+
+msgid "HR"
+msgstr "Personeel"
+
+msgid "HTML Templates"
+msgstr "HTML Sjablonen"
+
+msgid "Heading"
+msgstr "Kopregel"
+
+msgid "History"
+msgstr "Historie"
+
+msgid "Home Phone"
+msgstr "Thuistelefoon"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Hostname missing!"
+msgstr "Hostnaam ontbreekt!"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Image"
+msgstr "Plaatje"
+
+msgid "In-line"
+msgstr "In Lijn"
+
+msgid "Inactive"
+msgstr "Inactief"
+
+msgid "Include Exchange Rate Difference"
+msgstr "Inclusief Wisselkoersverschil"
+
+msgid "Include Payment"
+msgstr "Inclusief Bedrag"
+
+msgid "Include in Report"
+msgstr "Toevoegen aan Uitvoer"
+
+msgid "Include in drop-down menus"
+msgstr "Toevoegen aan drop-down menu's"
+
+msgid "Income"
+msgstr "Inkomsten"
+
+msgid "Income Statement"
+msgstr "Resultatenrekening"
+
+msgid "Income account does not exist!"
+msgstr "Inkomstenrekening bestaat niet!"
+
+msgid "Incorrect Dataset version!"
+msgstr "Dataset heeft verkeerde versie!"
+
+msgid "Increase"
+msgstr "Toename"
+
+msgid "Individual Items"
+msgstr "Afzonderlijke Onderdelen"
+
+msgid "Internal Notes"
+msgstr "Interne Opmerkingen"
+
+msgid "Inventory"
+msgstr "Voorraad"
+
+msgid "Inventory account does not exist!"
+msgstr "Inventarisrekening bestaat niet!"
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "Aanwezige voorraad moet nul zijn voordat een assemblage als 'niet actief' kan worden gemarkeerd."
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "Aanwezige voorraad moet nul zijn voordat een product als 'niet actief' kan worden gemarkeerd."
+
+msgid "Inventory saved!"
+msgstr "Voorraad opgeslagen!"
+
+msgid "Inventory transferred!"
+msgstr "Voorraad overgeheveld!"
+
+msgid "Invoice"
+msgstr "Factuur"
+
+msgid "Invoice Date"
+msgstr "Factuurdatum"
+
+msgid "Invoice Date missing!"
+msgstr "Factuurdatum ontbreekt!"
+
+msgid "Invoice Number"
+msgstr "Factuurcode"
+
+msgid "Invoice Number missing!"
+msgstr "Factuurcode ontbreekt!"
+
+msgid "Invoice deleted!"
+msgstr "Factuur verwijderd!"
+
+msgid "Invoices"
+msgstr "Facturen"
+
+msgid "Is this a summary account to record"
+msgstr "Totaalrekening voor"
+
+msgid "Item"
+msgstr "Regel"
+
+msgid "Item already on pricelist!"
+msgstr "Onderdeel al aanwezig op prijslijst!"
+
+msgid "Item deleted!"
+msgstr "Onderdeel verwijderd!"
+
+msgid "Item not on file!"
+msgstr "Dit onderdeel is niet in de database gevonden!"
+
+msgid "Items"
+msgstr "Onderdelen"
+
+msgid "Jan"
+msgstr "jan"
+
+msgid "January"
+msgstr "januari"
+
+msgid "Job"
+msgstr "Job"
+
+msgid "Job Description"
+msgstr "Jobomschrijving"
+
+msgid "Job Name"
+msgstr "Jobnaam"
+
+msgid "Job Number"
+msgstr "Jobcode"
+
+msgid "Job Number missing!"
+msgstr "Jobcode ontbreekt!"
+
+msgid "Job deleted!"
+msgstr "Job verwijderd!"
+
+msgid "Job saved!"
+msgstr "Job opgeslagen!"
+
+msgid "Job/Project Number"
+msgstr "Job-/Projectcode"
+
+msgid "Jobs"
+msgstr "Jobs"
+
+msgid "Jul"
+msgstr "jul"
+
+msgid "July"
+msgstr "juli"
+
+msgid "Jun"
+msgstr "jun"
+
+msgid "June"
+msgstr "juni"
+
+msgid "LaTeX Templates"
+msgstr "LaTeX Sjablonen"
+
+msgid "Labor Code"
+msgstr "Werkcode"
+
+msgid "Labor Code missing!"
+msgstr "Werkcode ontbreekt!"
+
+msgid "Labor/Overhead"
+msgstr "Arbeids-/Overheadkosten"
+
+msgid "Language"
+msgstr "Taal"
+
+msgid "Language deleted!"
+msgstr "Taal verwijderd!"
+
+msgid "Language saved!"
+msgstr "Taal opgeslagen!"
+
+msgid "Languages"
+msgstr "Talen"
+
+msgid "Languages not defined!"
+msgstr "Talen niet gedefinieerd!"
+
+msgid "Last Cost"
+msgstr "Laaste Kostprijs"
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Laatst Toegekende Codes & Standaardrekeningen"
+
+msgid "Lead"
+msgstr "Doorloop"
+
+msgid "Leadtime"
+msgstr "Levertijd"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "Laat computernaam en poortnummer leeg, tenzij u een netwerkverbinding wilt opzetten."
+
+msgid "Liability"
+msgstr "Passiva"
+
+msgid "Licensed to"
+msgstr "Gelicenseerd aan"
+
+msgid "Lifetime"
+msgstr "Levensduur"
+
+msgid "Line Total"
+msgstr "Totaalregel"
+
+msgid "Link"
+msgstr "Verbinding"
+
+msgid "Link Accounts"
+msgstr "Rekeningen Verbinden"
+
+msgid "List"
+msgstr "Weergeven"
+
+msgid "List Accounts"
+msgstr "Rekeningen Weergeven"
+
+msgid "List Businesses"
+msgstr "Branches Weergeven"
+
+msgid "List Departments"
+msgstr "Afdelingen Weergeven"
+
+msgid "List GIFI"
+msgstr "GIFI Weergeven"
+
+msgid "List Languages"
+msgstr "Talen Weergeven"
+
+msgid "List Price"
+msgstr "Catalogusprijs"
+
+msgid "List Projects"
+msgstr "Projecten Weergeven"
+
+msgid "List SIC"
+msgstr "SIC Weergeven"
+
+msgid "List Transactions"
+msgstr "Boekingen Weergeven"
+
+msgid "List Warehouses"
+msgstr "Magazijnen Weergeven"
+
+msgid "Lock System"
+msgstr "Vergrendel het Systeem"
+
+msgid "Lockfile created!"
+msgstr "Blokkeerbestand aangemaakt!"
+
+msgid "Lockfile removed!"
+msgstr "Blokkeerbestand verwijderd!"
+
+msgid "Login"
+msgstr "Aanmelden"
+
+msgid "Login name missing!"
+msgstr "Aanmeldnaam ontbreekt!"
+
+msgid "Logout"
+msgstr "Afmelden"
+
+msgid "Make"
+msgstr "Fabrikant"
+
+msgid "Manager"
+msgstr "Manager"
+
+msgid "Mar"
+msgstr "mrt"
+
+msgid "March"
+msgstr "maart"
+
+msgid "Marked entries printed!"
+msgstr "Gemarkeerde delen afgedrukt!"
+
+msgid "Markup"
+msgstr "Winstmarge"
+
+msgid "Maximum"
+msgstr "Maximum"
+
+msgid "May"
+msgstr "mei"
+
+msgid "May "
+msgstr "mei "
+
+msgid "Memo"
+msgstr "Memo"
+
+msgid "Menu Width"
+msgstr "Menubreedte"
+
+msgid "Message"
+msgstr "Boodschap"
+
+msgid "Method"
+msgstr "Gebruikt Stelsel"
+
+msgid "Microfiche"
+msgstr "Microfiche"
+
+msgid "Model"
+msgstr "Type"
+
+msgid "Monday"
+msgstr "maandag"
+
+msgid "Month"
+msgstr "Maand"
+
+msgid "Month(s)"
+msgstr "Maand(en)"
+
+msgid "Months"
+msgstr "Maanden"
+
+msgid "Multibyte Encoding"
+msgstr "Unicode"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "Name missing!"
+msgstr "Naam ontbreekt!"
+
+msgid "New Templates"
+msgstr "Nieuwe sjablonen"
+
+msgid "New Window"
+msgstr "Nieuw Venster"
+
+msgid "Next"
+msgstr "Volgende"
+
+msgid "Next Date"
+msgstr "Volgende Datum"
+
+msgid "Next Number"
+msgstr "Volgende Code"
+
+msgid "No"
+msgstr "Nee"
+
+msgid "No Database Drivers available!"
+msgstr "Geen Stuurprogramma voor Database beschikbaar!"
+
+msgid "No Dataset selected!"
+msgstr "Geen Dataset geselecteerd"
+
+msgid "No Employees on file!"
+msgstr "Geen Werknemers bekend!"
+
+msgid "No History!"
+msgstr "Geen geschiedenis!"
+
+msgid "No Labor codes on file!"
+msgstr "Geen Werkcodes bekend!"
+
+msgid "No Parts on file!"
+msgstr "Geen Onderdelen bekend!"
+
+msgid "No Services on file!"
+msgstr "Geen diensten bekend!"
+
+msgid "No email address for"
+msgstr "Geen e-mailadres voor"
+
+msgid "No open Jobs!"
+msgstr "Geen open Jobs!"
+
+msgid "No open Projects!"
+msgstr "Geen open Projecten!"
+
+msgid "No."
+msgstr "Nr."
+
+msgid "Non-chargeable"
+msgstr "Niet Doorbelastbaar"
+
+msgid "Non-taxable"
+msgstr "Onbelast"
+
+msgid "Non-taxable Purchases"
+msgstr "Onbelaste Aankopen"
+
+msgid "Non-taxable Sales"
+msgstr "Onbelaste Verkopen"
+
+msgid "Non-tracking Items"
+msgstr "Inventarisgoederen"
+
+msgid "Notes"
+msgstr "Opmerkingen"
+
+msgid "Nothing entered!"
+msgstr "Niets ingevuld!"
+
+msgid "Nothing open!"
+msgstr "Niets open!"
+
+msgid "Nothing selected!"
+msgstr "Niets geselecteerd!"
+
+msgid "Nothing to delete!"
+msgstr "Niets te verwijderen!"
+
+msgid "Nothing to print!"
+msgstr "Niets af te drukken!"
+
+msgid "Nothing to transfer!"
+msgstr "Niets over te boeken!"
+
+msgid "Nov"
+msgstr "nov"
+
+msgid "November"
+msgstr "november"
+
+msgid "Number"
+msgstr "Code"
+
+msgid "Number Format"
+msgstr "Nummeraanduiding"
+
+msgid "Number missing in Row"
+msgstr "Code ontbreekt in Regel"
+
+msgid "O"
+msgstr "O"
+
+msgid "OH"
+msgstr "OH"
+
+msgid "Obsolete"
+msgstr "Niet actief"
+
+msgid "Oct"
+msgstr "okt"
+
+msgid "October"
+msgstr "oktober"
+
+msgid "On Hand"
+msgstr "Op voorraad"
+
+msgid "Onhand"
+msgstr "Beschikbaar"
+
+msgid "Open"
+msgstr "Open"
+
+msgid "Oracle Database Administration"
+msgstr "Oracle Database Administratie"
+
+msgid "Order"
+msgstr "Bestelling"
+
+msgid "Order Date"
+msgstr "Orderdatum"
+
+msgid "Order Date missing!"
+msgstr "Orderdatum ontbreekt!"
+
+msgid "Order Entry"
+msgstr "Orderinvoer"
+
+msgid "Order Number"
+msgstr "Referentie"
+
+msgid "Order Number missing!"
+msgstr "Ordernummer ontbreekt!"
+
+msgid "Order deleted!"
+msgstr "Order verwijderd!"
+
+msgid "Order generation failed!"
+msgstr "Genereren order mislukt!"
+
+msgid "Order saved!"
+msgstr "Order opgeslagen!"
+
+msgid "Orders generated!"
+msgstr "Orders gegenereerd!"
+
+msgid "Orphaned"
+msgstr "Wees"
+
+msgid "Out of balance transaction!"
+msgstr "Boeking is niet in evenwicht!"
+
+msgid "Out of balance!"
+msgstr "Niet in evenwicht!"
+
+msgid "Outstanding"
+msgstr "Openstaand"
+
+msgid "Overdue"
+msgstr "Achterstallig"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PO"
+msgstr "PO"
+
+msgid "PO Number"
+msgstr "PO code"
+
+msgid "POS"
+msgstr "Kassa"
+
+msgid "POS Invoice"
+msgstr "Kassabon"
+
+msgid "Packing List"
+msgstr "Pakbon"
+
+msgid "Packing List Date missing!"
+msgstr "Datum ontbreekt op de pakbon!"
+
+msgid "Packing List Number missing!"
+msgstr "Nummer ontbreekt op de pakbon!"
+
+msgid "Packing Lists"
+msgstr "Pakbonnen"
+
+msgid "Paid"
+msgstr "Betaald"
+
+msgid "Part"
+msgstr "Artikel"
+
+msgid "Part Number"
+msgstr "Artikelcode"
+
+msgid "Partnumber"
+msgstr "Artikelcode"
+
+msgid "Parts"
+msgstr "Artikelen"
+
+msgid "Parts Requirements"
+msgstr "Benodigde Onderdelen"
+
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgid "Password changed!"
+msgstr "Wachtwoord gewijzigd!"
+
+msgid "Password does not match!"
+msgstr "Wachtwoord komt niet overeen!"
+
+msgid "Passwords do not match!"
+msgstr "Wachtwoorden komen niet overeen!"
+
+msgid "Payables"
+msgstr "Betalingen"
+
+msgid "Payment"
+msgstr "Betaling"
+
+msgid "Payment date missing!"
+msgstr "Geen betalingsdatum aanwezig!"
+
+msgid "Payment posted!"
+msgstr "Betaling geboekt!"
+
+msgid "Payments"
+msgstr "Betalingen"
+
+msgid "Payments posted!"
+msgstr "Betalingen ingeboekt!"
+
+msgid "Payroll Deduction"
+msgstr "Loonkorting"
+
+msgid "Payroll Depreciation"
+msgstr "Loon afwaardering"
+
+msgid "Period"
+msgstr "Periode"
+
+msgid "Pg Database Administration"
+msgstr "Pg Database Administratie"
+
+msgid "PgPP Database Administration"
+msgstr "PgPP Database Administratie"
+
+msgid "Phone"
+msgstr "Telefoon"
+
+msgid "Pick List"
+msgstr "Uitsorteerbon"
+
+msgid "Pick Lists"
+msgstr "Uitsorteerbonnen"
+
+msgid "Port"
+msgstr "Poortnummer"
+
+msgid "Port missing!"
+msgstr "Geen poortnummer ingevuld!"
+
+msgid "Pos"
+msgstr "Pos"
+
+msgid "Post"
+msgstr "Inboeken"
+
+msgid "Post as new"
+msgstr "Inboeken als nieuw"
+
+msgid "Posted!"
+msgstr "Ingeboekt!"
+
+msgid "Posting"
+msgstr "Aan Het Inboeken"
+
+msgid "Posting failed!"
+msgstr "Inboeken mislukt"
+
+msgid "Postscript"
+msgstr "Postscript"
+
+msgid "Preferences"
+msgstr "Instellingen"
+
+msgid "Preferences saved!"
+msgstr "Instellingen bewaard!"
+
+msgid "Prepayment"
+msgstr "Voorschot"
+
+msgid "Price"
+msgstr "Prijs"
+
+msgid "Pricegroup"
+msgstr "Prijsgroep"
+
+msgid "Pricegroup deleted!"
+msgstr "Prijsgroep verwijderd!"
+
+msgid "Pricegroup missing!"
+msgstr "Prijsgroep ontbreekt!"
+
+msgid "Pricegroup saved!"
+msgstr "Prijsgroep opgeslagen!"
+
+msgid "Pricegroups"
+msgstr "Prijsgroepen"
+
+msgid "Pricelist"
+msgstr "Prijslijst"
+
+msgid "Print"
+msgstr "Afdrukken"
+
+msgid "Print and Post"
+msgstr "Afdrukken en Inboeken"
+
+msgid "Print and Post as new"
+msgstr "Afdrukken en Boek als nieuw"
+
+msgid "Print and Save"
+msgstr "Afdrukken en Opslaan"
+
+msgid "Print and Save as new"
+msgstr "Afdrukken en Sla op als nieuw"
+
+msgid "Printed"
+msgstr "Afgedrukt"
+
+msgid "Printer"
+msgstr "Printer"
+
+msgid "Printing"
+msgstr "Afdrukken"
+
+msgid "Printing ... "
+msgstr "Afdrukken ... "
+
+msgid "Process Transactions"
+msgstr "Transacties Verwerken"
+
+msgid "Production"
+msgstr "Productie"
+
+msgid "Profit Center"
+msgstr "Inkomstenpost"
+
+msgid "Project"
+msgstr "Project"
+
+msgid "Project Description Translations"
+msgstr "Vertalingen Projectomschrijving"
+
+msgid "Project Name"
+msgstr "Projectnaam"
+
+msgid "Project Number"
+msgstr "Projectcode"
+
+msgid "Project Number missing!"
+msgstr "Projectcode ontbreekt!"
+
+msgid "Project Transactions"
+msgstr "Projectboekingen"
+
+msgid "Project deleted!"
+msgstr "Project verwijderd!"
+
+msgid "Project not on file!"
+msgstr "Onbekend project!"
+
+msgid "Project saved!"
+msgstr "Project opgeslagen!"
+
+msgid "Project/Job Name"
+msgstr "Project-/Jobnaam"
+
+msgid "Project/Job Number"
+msgstr "Project-/Jobcode"
+
+msgid "Projects"
+msgstr "Projecten"
+
+msgid "Purchase Order"
+msgstr "Inkooporder"
+
+msgid "Purchase Order Number"
+msgstr "Inkoopordercode"
+
+msgid "Purchase Orders"
+msgstr "Inkooporders"
+
+msgid "Qty"
+msgstr "Aantal"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "Aantal is hoger dan de aanwezige voorraad!"
+
+msgid "Quarter"
+msgstr "Kwartaal"
+
+msgid "Queue"
+msgstr "Wachtrij"
+
+msgid "Queued"
+msgstr "In Wachtrij Gezet"
+
+msgid "Quotation"
+msgstr "Offerte"
+
+msgid "Quotation "
+msgstr "Offerte "
+
+msgid "Quotation Date"
+msgstr "Offertedatum"
+
+msgid "Quotation Date missing!"
+msgstr "Offertedatum ontbreekt!"
+
+msgid "Quotation Number"
+msgstr "Offertecode"
+
+msgid "Quotation Number missing!"
+msgstr "Offertecode ontbreekt!"
+
+msgid "Quotation deleted!"
+msgstr "Offerte verwijderd!"
+
+msgid "Quotations"
+msgstr "Offertes"
+
+msgid "R"
+msgstr "R"
+
+msgid "RFQ"
+msgstr "Prijsaanvraag"
+
+msgid "RFQ "
+msgstr "Prijsaanvraag "
+
+msgid "RFQ Number"
+msgstr "Prijsaanvraagcode"
+
+msgid "RFQs"
+msgstr "Prijsaanvragen"
+
+msgid "ROP"
+msgstr "Minimum voorraad"
+
+msgid "Rate"
+msgstr "Percentage"
+
+msgid "Rate missing!"
+msgstr "Percentage ontbreekt!"
+
+msgid "Recd"
+msgstr "Ontvangen"
+
+msgid "Receipt"
+msgstr "Ontvangstbewijs"
+
+msgid "Receipt posted!"
+msgstr "Ontvangstbewijs geboekt"
+
+msgid "Receipts"
+msgstr "Ontvangstbewijzen"
+
+msgid "Receivables"
+msgstr "Vorderingen"
+
+msgid "Receive"
+msgstr "Ontvangen"
+
+msgid "Receive Merchandise"
+msgstr "Goederen Ontvangen"
+
+msgid "Reconciliation"
+msgstr "Boekingen Verwerken"
+
+msgid "Reconciliation Report"
+msgstr "Reconcilidatierapport"
+
+msgid "Record in"
+msgstr "Boeken op"
+
+msgid "Recurring Transaction"
+msgstr "Geplande Transactie"
+
+msgid "Recurring Transactions"
+msgstr "Geplande Transacties"
+
+msgid "Reference"
+msgstr "Referentie"
+
+msgid "Remaining"
+msgstr "Resterend"
+
+msgid "Remove"
+msgstr "Verwijder"
+
+msgid "Remove Audit trail up to"
+msgstr "Verwijder Transactielogboek tot"
+
+msgid "Remove Audit trails up to"
+msgstr "Verwijder Transactielogboek tot"
+
+msgid "Removed spoolfiles!"
+msgstr "Spoolfiles verwijderd!"
+
+msgid "Removing marked entries from queue ..."
+msgstr "Verwijderen gemarkeerde stukken uit wachtrij ..."
+
+msgid "Repeat"
+msgstr "Herhaal"
+
+msgid "Report for"
+msgstr "Rapport voor"
+
+msgid "Reports"
+msgstr "Rapporten"
+
+msgid "Req"
+msgstr "Gevr"
+
+msgid "Request for Quotation"
+msgstr "Prijsaanvraag"
+
+msgid "Request for Quotations"
+msgstr "Prijsaanvragen"
+
+msgid "Required by"
+msgstr "Nodig voor"
+
+msgid "Requirements"
+msgstr "Vereisten"
+
+msgid "Retained Earnings"
+msgstr "Winstreserve"
+
+msgid "Role"
+msgstr "Rol"
+
+msgid "S"
+msgstr "S"
+
+msgid "SIC"
+msgstr "SIC"
+
+msgid "SIC deleted!"
+msgstr "SIC verwijderd!"
+
+msgid "SIC saved!"
+msgstr "SIC opgeslagen!"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "SO"
+msgstr "VO"
+
+msgid "SSN"
+msgstr "Pers.nr."
+
+msgid "Sale"
+msgstr "Verkoopfactuur"
+
+msgid "Sales"
+msgstr "Verkoop"
+
+msgid "Sales Invoice"
+msgstr "Verkoopfactuur"
+
+msgid "Sales Invoice "
+msgstr "Verkoopfactuur "
+
+msgid "Sales Invoice."
+msgstr "Verkoopfactuur."
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr "Verkoopfactuur/Transactienummer Debiteuren"
+
+msgid "Sales Invoices"
+msgstr "Verkoopfacturen"
+
+msgid "Sales Order"
+msgstr "Verkooporder"
+
+msgid "Sales Order Number"
+msgstr "Verkoopordercode"
+
+msgid "Sales Orders"
+msgstr "Verkooporders"
+
+msgid "Sales Quotation Number"
+msgstr "Verkoopoffertecode"
+
+msgid "Salesperson"
+msgstr "Verkoper"
+
+msgid "Saturday"
+msgstr "zaterdag"
+
+msgid "Save"
+msgstr "Opslaan"
+
+msgid "Save Pricelist"
+msgstr "Prijslijst Opslaan"
+
+msgid "Save Schedule"
+msgstr "Planning Opslaan"
+
+msgid "Save as new"
+msgstr "Opslaan als nieuw"
+
+msgid "Save to File"
+msgstr "Opslaan naar Bestand"
+
+msgid "Saving"
+msgstr "Opslaan"
+
+msgid "Schedule"
+msgstr "Inplannen"
+
+msgid "Scheduled"
+msgstr "Ingepland"
+
+msgid "Screen"
+msgstr "Scherm"
+
+msgid "Search"
+msgstr "Zoek"
+
+msgid "Select"
+msgstr "Selecteer"
+
+msgid "Select Customer"
+msgstr "Selecteer Klant"
+
+msgid "Select Printer or Queue!"
+msgstr "Selecteer de Printer of Wachtrij"
+
+msgid "Select Vendor"
+msgstr "Selecteer Leverancier"
+
+msgid "Select a Printer!"
+msgstr "Selecteer een Printer"
+
+msgid "Select a printer!"
+msgstr "Selecteer een printer!"
+
+msgid "Select all"
+msgstr "Selecteer alles"
+
+msgid "Select from one of the items below"
+msgstr "Kies een van de onderstaande onderdelen"
+
+msgid "Select from one of the names below"
+msgstr "Kies een van de onderstaande namen"
+
+msgid "Select from one of the projects below"
+msgstr "Kies een van de onderstaande projecten"
+
+msgid "Select items"
+msgstr "Selecteer artikelen"
+
+msgid "Select payment"
+msgstr "Kies een betaling"
+
+msgid "Select postscript or PDF!"
+msgstr "Kies postscript of PDF!"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "Kiest txt, postscript of PDF!"
+
+msgid "Sell"
+msgstr "Verkopen"
+
+msgid "Sell Price"
+msgstr "Verkoopprijs"
+
+msgid "Send by E-Mail"
+msgstr "Verzenden per E-mail"
+
+msgid "Sending"
+msgstr "Versturen"
+
+msgid "Sep"
+msgstr "sep"
+
+msgid "September"
+msgstr "september"
+
+msgid "Serial No."
+msgstr "Serienr"
+
+msgid "Serial Number"
+msgstr "Serienummer"
+
+msgid "Service"
+msgstr "Dienst"
+
+msgid "Service Code"
+msgstr "Dienstcode"
+
+msgid "Service Code missing!"
+msgstr "Dienstcode ontbreekt!"
+
+msgid "Service/Labor Code"
+msgstr "Dienst-/Arbeidscode"
+
+msgid "Services"
+msgstr "Diensten"
+
+msgid "Session Timeout"
+msgstr "Tijdsduur Sessie"
+
+msgid "Session expired!"
+msgstr "Sessie verlopen!"
+
+msgid "Setup Templates"
+msgstr "Basissjablonen"
+
+msgid "Ship"
+msgstr "Verzenden"
+
+msgid "Ship Merchandise"
+msgstr "Goederen Verzenden"
+
+msgid "Ship to"
+msgstr "Verzenden aan"
+
+msgid "Ship via"
+msgstr "Verzenden via"
+
+msgid "Shipping"
+msgstr "Zendingen"
+
+msgid "Shipping Address"
+msgstr "Verzendadres"
+
+msgid "Shipping Date"
+msgstr "Verzenddatum"
+
+msgid "Shipping Date missing!"
+msgstr "Verzenddatum ontbreekt!"
+
+msgid "Shipping Point"
+msgstr "Verzendpunt"
+
+msgid "Short"
+msgstr "Kort"
+
+msgid "Signature"
+msgstr "Handtekening"
+
+msgid "Source"
+msgstr "Herkomst"
+
+msgid "Spoolfile"
+msgstr "Spoolfile"
+
+msgid "Standard"
+msgstr "Standaard"
+
+msgid "Standard Industrial Codes"
+msgstr "Standaard Industiële Codes"
+
+msgid "Startdate"
+msgstr "Begindatum"
+
+msgid "State"
+msgstr "Provincie"
+
+msgid "State/Province"
+msgstr "Staat/Provincie"
+
+msgid "Statement"
+msgstr "Overzicht"
+
+msgid "Statement Balance"
+msgstr "Saldo Overzicht"
+
+msgid "Statement sent to"
+msgstr "Overzicht verzonden aan"
+
+msgid "Statements sent to printer!"
+msgstr "Overzichten naar de printer gestuurd!"
+
+msgid "Stock"
+msgstr "Voorraad"
+
+msgid "Stock Assembly"
+msgstr "Assemblagevoorraad"
+
+msgid "Stock Finished Goods"
+msgstr "Inslaan Afgewerkte Goederen"
+
+msgid "Stores Card"
+msgstr "Materiaalkaart"
+
+msgid "Stores Card saved!"
+msgstr "Materiaalkaart opgeslagen!"
+
+msgid "Stores Cards"
+msgstr "Materiaalkaarten"
+
+msgid "Stylesheet"
+msgstr "Stylesheet"
+
+msgid "Sub-contract GIFI"
+msgstr "GIFI rubricering"
+
+msgid "Subject"
+msgstr "Onderwerp"
+
+msgid "Subtotal"
+msgstr "Subtotaal"
+
+msgid "Summary"
+msgstr "Overzicht"
+
+msgid "Sunday"
+msgstr "zondag"
+
+msgid "Supervisor"
+msgstr "Controleur"
+
+msgid "System"
+msgstr "Systeem"
+
+msgid "System Defaults"
+msgstr "Standaardinstellingen"
+
+msgid "Tax"
+msgstr "Belasting"
+
+msgid "Tax Account"
+msgstr "Belastingrekening"
+
+msgid "Tax Accounts"
+msgstr "Belastingrekeningen"
+
+msgid "Tax Included"
+msgstr "Belasting Inbegrepen"
+
+msgid "Tax Number"
+msgstr "Belastingnummer"
+
+msgid "Tax Number / SSN"
+msgstr "Belastingnummer / Sofinummer"
+
+msgid "Tax collected"
+msgstr "Geïnde belasting"
+
+msgid "Tax paid"
+msgstr "Betaalde belasting"
+
+msgid "Taxable"
+msgstr "Belastbaar percentage"
+
+msgid "Template saved!"
+msgstr "Sjabloon opgeslagen!"
+
+msgid "Templates"
+msgstr "Sjablonen"
+
+msgid "Terms"
+msgstr "Betalingstermijn"
+
+msgid "Text"
+msgstr "Tekst"
+
+msgid "Text Templates"
+msgstr "Tekstsjablonen"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "De volgende Datasets zijn niet in gebruik en kunnen worden verwijderd."
+
+msgid "The following Datasets need to be updated"
+msgstr "De volgende Datasets moeten worden bijgewerkt"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "Dit is een eerste controle. Er wordt op dit moment niks bijgewerkt of verwijderd."
+
+msgid "Thursday"
+msgstr "donderdag"
+
+msgid "Till"
+msgstr "Kassa"
+
+msgid "Time"
+msgstr "Tijd"
+
+msgid "Time Card"
+msgstr "Tijdkaart"
+
+msgid "Time Card deleted!"
+msgstr "Tijdkaart verwijderd!"
+
+msgid "Time Card saved!"
+msgstr "Tijdkaart opgeslagen!"
+
+msgid "Time Cards"
+msgstr "Tijdkaarten"
+
+msgid "Time In"
+msgstr "Ingeklokt"
+
+msgid "Time Out"
+msgstr "Uitgeklokt"
+
+msgid "Times"
+msgstr "Keren"
+
+msgid "To"
+msgstr "Tot"
+
+msgid "To Warehouse"
+msgstr "Naar Magazijn"
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Om een gebruiker aan een groep toe te voegen, een naam te wijzigen, een gebruikersnaam te wijzigen en op te slaan. Een nieuwe gebruiker zal dan worder opgeslagen met dezelfde gegevens onder de nieuwe gebruikersnaam."
+
+msgid "Top Level"
+msgstr "Hoogste Niveau"
+
+msgid "Total"
+msgstr "Totaal"
+
+msgid "Tracking Items"
+msgstr "Niet-inventarisgoederen"
+
+msgid "Trade Discount"
+msgstr "Handelskorting"
+
+msgid "Transaction"
+msgstr "Boeking"
+
+msgid "Transaction Date missing!"
+msgstr "Boekingsdatum ontbreekt!"
+
+msgid "Transaction Dates"
+msgstr "Transactiedatums"
+
+msgid "Transaction deleted!"
+msgstr "Boeking verwijderd!"
+
+msgid "Transaction posted!"
+msgstr "Boeking opgeslagen!"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "Boekingen verplicht terugdraaien voor alle datums"
+
+msgid "Transaction reversal enforced up to"
+msgstr "Boekingen verplicht terugdraaien tot aan"
+
+msgid "Transactions"
+msgstr "Boekingen"
+
+msgid "Transfer"
+msgstr "Overboeking"
+
+msgid "Transfer Inventory"
+msgstr "Inventaris overboeken"
+
+msgid "Transfer from"
+msgstr "Overdragen van"
+
+msgid "Transfer to"
+msgstr "Overboeken naar"
+
+msgid "Translation"
+msgstr "Vertaling"
+
+msgid "Translation deleted!"
+msgstr "Vertaling verwijderd!"
+
+msgid "Translation not on file!"
+msgstr "Vertaling niet beschikbaar!"
+
+msgid "Translations"
+msgstr "Vertalingen"
+
+msgid "Translations saved!"
+msgstr "Vertalingen opgeslagen!"
+
+msgid "Trial Balance"
+msgstr "Proefbalans"
+
+msgid "Tuesday"
+msgstr "dinsdag"
+
+msgid "Type of Business"
+msgstr "Branche"
+
+msgid "Unit"
+msgstr "Eenheid"
+
+msgid "Unit Rate"
+msgstr "Eenheidsprijs"
+
+msgid "Unit of measure"
+msgstr "Rekeneenheid"
+
+msgid "Unlock System"
+msgstr "System Ontgrendelen"
+
+msgid "Update"
+msgstr "Bijwerken"
+
+msgid "Update Dataset"
+msgstr "Dataset Bijwerken"
+
+msgid "Updated"
+msgstr "Bijgewerkt"
+
+msgid "Upgrading to Version"
+msgstr "Opwaarderen naar Versie"
+
+msgid "Use Templates"
+msgstr "Gebruik Sjablonen"
+
+msgid "User"
+msgstr "Gebruiker"
+
+msgid "User deleted!"
+msgstr "Gebruiker verwijderd!"
+
+msgid "User saved!"
+msgstr "Gebruiker opgeslagen!"
+
+msgid "Valid until"
+msgstr "Geldig tot"
+
+msgid "Vendor"
+msgstr "Leverancier"
+
+msgid "Vendor History"
+msgstr "Leverancierhistorie"
+
+msgid "Vendor Invoice"
+msgstr "Inkoopfactuur"
+
+msgid "Vendor Invoice "
+msgstr "Inkoopfactuur "
+
+msgid "Vendor Invoice."
+msgstr "Inkoopfactuur."
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr "Inkoopfactuur/Transactienummer Crediteuren"
+
+msgid "Vendor Invoices"
+msgstr "Inkoopfacturen"
+
+msgid "Vendor Number"
+msgstr "Leveranciercode"
+
+msgid "Vendor deleted!"
+msgstr "Leverancier verwijderd!"
+
+msgid "Vendor missing!"
+msgstr "Leverancier ontbreekt!"
+
+msgid "Vendor not on file!"
+msgstr "Leverancier bestaat niet!"
+
+msgid "Vendor saved!"
+msgstr "Leverancier opgeslagen!"
+
+msgid "Vendors"
+msgstr "Leveranciers"
+
+msgid "Version"
+msgstr "Versie"
+
+msgid "Warehouse"
+msgstr "Magazijn"
+
+msgid "Warehouse deleted!"
+msgstr "Magazijn verwijderd!"
+
+msgid "Warehouse saved!"
+msgstr "Magazijn opgeslagen!"
+
+msgid "Warehouses"
+msgstr "Magazijnen"
+
+msgid "Warning!"
+msgstr "Waarschuwing!"
+
+msgid "Wednesday"
+msgstr "woensdag"
+
+msgid "Week"
+msgstr "Week"
+
+msgid "Week(s)"
+msgstr "Week/Weken"
+
+msgid "Weeks"
+msgstr "Weken"
+
+msgid "Weight"
+msgstr "Gewicht"
+
+msgid "Weight Unit"
+msgstr "Gewichtseenheid"
+
+msgid "What type of item is this?"
+msgstr "Wat voor soort artikel is dit?"
+
+msgid "Work Order"
+msgstr "Werkorder"
+
+msgid "Work Orders"
+msgstr "Werkorders"
+
+msgid "Work Phone"
+msgstr "Bedrijfstelefoon"
+
+msgid "Year"
+msgstr "Jaar"
+
+msgid "Year(s)"
+msgstr "Jaar/Jaren"
+
+msgid "Yearend"
+msgstr "Jaareinde"
+
+msgid "Yearend date missing!"
+msgstr "Jaareinde ontbreekt!"
+
+msgid "Yearend posted!"
+msgstr "Jaareinde geboekt!"
+
+msgid "Yearend posting failed!"
+msgstr "Boeking jaareinde mislukt!"
+
+msgid "Years"
+msgstr "Jaren"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "You are logged out"
+msgstr "U bent afgemeld"
+
+msgid "You are posting an existing transaction!"
+msgstr "U boekt een bestaande transactie!"
+
+msgid "You are printing and posting an existing transaction!"
+msgstr "U print en boekt een bestaande transactie!"
+
+msgid "You are printing and saving an existing order"
+msgstr "U print een bestaande order en slaat deze daarna op"
+
+msgid "You are printing and saving an existing quotation"
+msgstr "U print een bestaande offerte en slaat deze daarna op"
+
+msgid "You are printing and saving an existing transaction!"
+msgstr "U bent een bestaande transactie aan het printen en opslaan!"
+
+msgid "You are saving an existing order"
+msgstr "U slaat een bestaande order op"
+
+msgid "You are saving an existing quotation"
+msgstr "U slaat een bestaande offerte op"
+
+msgid "You are saving an existing transaction!"
+msgstr "U bent een bestaande transactie aan het opslaan!"
+
+msgid "You did not enter a name!"
+msgstr "U heeft geen gebruikersnaam gegeven!"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "Vul een computernaam en een poortnummer in voor netwerkverbindingen!"
+
+msgid "Zip/Postal Code"
+msgstr "Postcode"
+
+msgid "account cannot be set to any other type of account"
+msgstr "Rekening kan niet omgezet worden naar ander type rekening"
+
+msgid "as at"
+msgstr "per"
+
+msgid "days"
+msgstr "dagen"
+
+msgid "does not exist"
+msgstr "bestaat niet"
+
+msgid "done"
+msgstr "gebeurd"
+
+msgid "ea"
+msgstr "p.st."
+
+msgid "failed"
+msgstr "mislukt"
+
+msgid "for"
+msgstr "gedurende"
+
+msgid "for Period"
+msgstr "voor Periode"
+
+msgid "is already a member!"
+msgstr "is al een gebruiker!"
+
+msgid "localhost"
+msgstr "localhost"
+
+msgid "locked!"
+msgstr "geblokeerd!"
+
+msgid "posted!"
+msgstr "opgeslagen!"
+
+msgid "sent"
+msgstr "verzonden"
+
+msgid "successfully created!"
+msgstr "met succes aangemaakt!"
+
+msgid "successfully deleted!"
+msgstr "met succes verwijderd!"
+
+msgid "time(s)"
+msgstr "keer"
+
+msgid "unexpected error!"
+msgstr "onverwachte fout!"
+
+msgid "website"
+msgstr "website"
+
