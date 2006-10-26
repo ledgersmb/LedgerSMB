@@ -15,7 +15,8 @@ Joshua Drake <jd @ commandprompt . com>
 Contributed database fixes.
 
 Seneca Cunningham <tentra @ gmail.com> 
-Contributed code fixes and support for advanced tax rules.
+Contributed code fixes and support for advanced tax rules.  She has also 
+re-engineered the localization framework.
 
 Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
 the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
