@@ -114,6 +114,11 @@ foreach my $format (0 .. $#formats) {
 	$value = Math::BigFloat->new('-21');
 	cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
 		"$expected parsed as $formats[$format][0] - $value");
+	
+	is($form->parse_amount(\%myconfig, ''), undef,
+		"Empty string returns undef");
+	cmp_ok($form->parse_amount(\%myconfig, 'foo'), '==',
+		Math::BigFloat->bnan(), "Invalid string returns NaN");
 }
 
 foreach my $format (0 .. $#formats) {
@@ -150,4 +155,9 @@ foreach my $format (0 .. $#formats) {
 		$form->parse_amount(\%myconfig, $expected)),
 		'==',  $value,
 		"$expected parsed as $formats[$format][0] - $value");
+
+	is($form->parse_amount(\%myconfig, ''), undef,
+		"Empty string returns undef");
+	cmp_ok($form->parse_amount(\%myconfig, 'foo'), '==',
+		Math::BigFloat->bnan(), "Invalid string returns NaN");
 }
