@@ -569,7 +569,7 @@ session_id serial PRIMARY KEY,
 sl_login VARCHAR(50),
 token VARCHAR(32) CHECK(length(token) = 32),
 last_used TIMESTAMP default now(),
-users_id integer not null references users(id),
+users_id INTEGER NOT NULL references users(id)
 );
 
 
