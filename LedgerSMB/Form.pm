@@ -170,7 +170,7 @@ sub error {
 
 		$self->{msg} = $msg;
 		$self->{format} = "html";
-		$self->format_string(msg);
+		$self->format_string('msg');
 
 		delete $self->{pre};
 
@@ -679,7 +679,7 @@ sub parse_template {
 
 						my $line;
 						my $lines = 0;
-						my @d = (description);
+						my @d = qw(description);
 						push @d, "itemnotes" if $self->{countitemnotes};
 
 						foreach my $item (@d) {
