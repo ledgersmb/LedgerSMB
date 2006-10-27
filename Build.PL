@@ -12,7 +12,7 @@ my $build = Module::Build->new (
 		'Data::Dumper'			=> 0,
 		'Locale::Maketext'		=> 0,
 		'Locale::Maketext::Lexicon'	=> '>= 0.56',
-		'Mime::Base64'			=> 0,
+		'MIME::Base64'			=> 0,
 		'Digest::MD5'			=> 0,
 		'HTML::Entities'		=> 0,
 		'DBI'				=> 0,

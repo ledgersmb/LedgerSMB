@@ -7,7 +7,7 @@ Database:
 
 Security:
 * Added whitelist of allowed directories to file editor (Seneca)
-* Audited OE.pm and AM.pm for SQL injection problems. (Chris T)
+* Audited OE.pm, AA.pm, and AM.pm for SQL injection problems. (Chris T)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
 * Audited Form.pm for SQL-injection problems and move to new API (Chris T)
 * Audited BP.pm for SQL injection and moved to new API. (Chris T)
