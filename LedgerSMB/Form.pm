@@ -518,7 +518,7 @@ sub parse_amount {
 
 
 	$amount =~ s/,//g;
-	if ($amount =~ s/\((\d+)\)/$1/){
+	if ($amount =~ s/\((\d+.?\d*)\)/$1/){
 		$amount *= -1;
 	}
 	$amount = new Math::BigFloat($amount);
