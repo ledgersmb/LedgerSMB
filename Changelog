@@ -34,6 +34,7 @@ Code Quality and API:
 * Added LedgerSMB::Sysconfig for site-wide configuration (Chris T)
 * LedgerSMB::IC is aware of custom fields (Chris T)
 * LedgerSMB::PE is aware of custom fields (Chris T)
+* Testing suite added (Seneca)
 
 Packaging:
 * Added first version of rpm spec from Mads Kiilerich (Chris T)
