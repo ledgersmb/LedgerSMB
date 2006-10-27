@@ -47,7 +47,7 @@ Point of Sale:
 * Added pole display and separate cash drawer open calls. (Chris T)
 
 User Interface:
-* Moved IS/IR/OE the linitem column list to the LedgerSMB::Sysconfig Chris T) 
+* Moved IS/IR/OE the lineitem column list to the LedgerSMB::Sysconfig Chris T) 
 * Invoice now has an Onhand column (Chris T)
 * Added simple text import function for invoices received (PDT's) (Chris T)
 
