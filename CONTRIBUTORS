@@ -21,6 +21,9 @@ re-engineered the localization framework.
 Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
 the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
 
+Josh Berkus <josh @ agliodbs.com> has helped provide assistance in promotion,
+advocacy, and other assistance.
+
 Other Contributors:
 ========================
 Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
