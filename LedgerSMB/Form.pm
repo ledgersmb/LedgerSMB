@@ -522,10 +522,10 @@ sub parse_amount {
 	if ($amount =~ s/\((\d*\.?\d*)\)/$1/){
 		$amount = $1 * -1;
 	}
-	if ($amount =~ s/(\d*\.?\d*) DR/$1/){
+	if ($amount =~ s/(\d*\.?\d*)\s?DR/$1/){
 		$amount = $1 * -1;
 	}
-	$amount =~ s/ CR//;
+	$amount =~ s/\s?CR//;
 	$amount = new Math::BigFloat($amount);
 	return ($amount * 1);
 }
