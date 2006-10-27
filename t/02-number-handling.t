@@ -106,6 +106,14 @@ foreach my $format (0 .. $#formats) {
 		cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
 			"$expected parsed as $formats[$format][0] - $value");
 	}
+	$expected = '12 CR';
+	my $value = Math::BigFloat->new('12');
+	cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
+		"$expected parsed as $formats[$format][0] - $value");
+	$expected = '21 DR';
+	$value = Math::BigFloat->new('-21');
+	cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
+		"$expected parsed as $formats[$format][0] - $value");
 }
 
 foreach my $format (0 .. $#formats) {
@@ -130,4 +138,16 @@ foreach my $format (0 .. $#formats) {
 			'==',  $value,
 			"$expected parsed as $formats[$format][0] - $value");
 	}
+	$expected = '12 CR';
+	my $value = Math::BigFloat->new('12');
+	cmp_ok($form->parse_amount(\%myconfig, 
+		$form->parse_amount(\%myconfig, $expected)),
+		'==',  $value,
+		"$expected parsed as $formats[$format][0] - $value");
+	$expected = '21 DR';
+	$value = Math::BigFloat->new('-21');
+	cmp_ok($form->parse_amount(\%myconfig, 
+		$form->parse_amount(\%myconfig, $expected)),
+		'==',  $value,
+		"$expected parsed as $formats[$format][0] - $value");
 }
