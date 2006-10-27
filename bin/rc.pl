@@ -316,7 +316,7 @@ function check_errors(){
    value='Calculate'>
 |;
   print qq|</table><button type="submit" name="action" value="close_till">|.
-		$locale->text("close_till").qq|</button>|;
+		$locale->text("Close Till").qq|</button>|;
   print qq|
 </form>
 
@@ -666,7 +666,7 @@ sub display_form {
 
   if ($form->{'pos'}){
      $close_next = qq|<button type="submit" class="submit" name="action" 
-       value="close_next">|.$locale->text('close_next').qq|</button>|;
+       value="close_next">|.$locale->text('Close Next').qq|</button>|;
      $done = "";
   }
   else {
