@@ -391,9 +391,10 @@ sub format_amount {
 	my ($self, $myconfig, $amount, $places, $dash) = @_;
 
 
-	my $negative = ($amount < 0);
+	my $negative ;
 	if ($amount){
 		$amount = $self->parse_amount($myconfig, $amount);
+		$negative = ($amount < 0);
 		$amount =~ s/-//;
 	}
 
@@ -518,9 +519,13 @@ sub parse_amount {
 
 
 	$amount =~ s/,//g;
-	if ($amount =~ s/\((\d+.?\d*)\)/$1/){
+	if ($amount =~ s/\((\d*\.?\d*)\)/$1/){
 		$amount *= -1;
 	}
+	if ($amount =~ s/(\d*\.?\d*) DR/$1/){
+		$amount *= -1;
+	}
+	$amount =~ s/ CR//;
 	$amount = new Math::BigFloat($amount);
 	return ($amount * 1);
 }
