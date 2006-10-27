@@ -158,6 +158,6 @@ foreach my $format (0 .. $#formats) {
 
 	is($form->parse_amount(\%myconfig, ''), undef,
 		"Empty string returns undef");
-	cmp_ok($form->parse_amount(\%myconfig, 'foo'), '==',
+	cmp_ok($form->parse_amount(\%myconfig, 'foo'), 'eq',
 		Math::BigFloat->bnan(), "Invalid string returns NaN");
 }
