@@ -45,7 +45,7 @@ my @formats = (['1,000.00', ',', '.'], ["1'000.00", "'", '.'],
 		['1.000,00', '.', ','], ['1000,00', '', ','], 
 		['1000.00', '', '.'], ['1 000.00', ' ', '.']);
 my %myfooconfig = (numberformat => '1000.00');
-foreach my $format (0 .. 5) {
+foreach my $format (0 .. $#formats) {
 	%myconfig = (numberformat => $formats[$format][0]);
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
@@ -64,7 +64,7 @@ foreach my $format (0 .. 5) {
 	}
 }
 
-foreach my $format (0 .. 5) {
+foreach my $format (0 .. $#formats) {
 	%myconfig = (numberformat => $formats[$format][0]);
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
@@ -86,37 +86,45 @@ foreach my $format (0 .. 5) {
 	}
 }
 
-foreach my $format (0 .. 5) {
+foreach my $format (0 .. $#formats) {
 	%myconfig = ('numberformat' => $formats[$format][0]);
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
 	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
-			'7t777t777d77', '-12d34') {
+			'7t777t777d77', '-12d34', '(76t543d21)') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
 		$expected =~ s/d/$dec/gx;
 		my $value = $rawValue;
 		$value =~ s/t//gx;
 		$value =~ s/d/\./gx;
-		$value = sprintf("%.2f", $value);
+		if ($value =~ m/^\(/gx) {
+			$value = Math::BigFloat->new('-'.substr($value, 1, -1));
+		} else {
+			$value = Math::BigFloat->new($value);
+		}
 		cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
 			"$expected parsed as $formats[$format][0] - $value");
 	}
 }
 
-foreach my $format (0 .. 5) {
+foreach my $format (0 .. $#formats) {
 	%myconfig = ('numberformat' => $formats[$format][0]);
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
 	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
-			'7t777t777d77', '-12d34') {
+			'7t777t777d77', '-12d34', '(76t543d21)') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
 		$expected =~ s/d/$dec/gx;
 		my $value = $rawValue;
 		$value =~ s/t//gx;
 		$value =~ s/d/\./gx;
-		$value = sprintf("%.2f", $value);
+		if ($value =~ m/^\(/gx) {
+			$value = Math::BigFloat->new('-'.substr($value, 1, -1));
+		} else {
+			$value = Math::BigFloat->new($value);
+		}
 		cmp_ok($form->parse_amount(\%myconfig, 
 			$form->parse_amount(\%myconfig, $expected)),
 			'==',  $value,
