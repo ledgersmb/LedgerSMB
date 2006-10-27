@@ -501,6 +501,7 @@ sub parse_amount {
 	}
 	my $numberformat = $myconfig->{numberformat};
 
+
 	if (($numberformat eq '1.000,00') ||
 		($numberformat eq '1000,00')) {
 
@@ -515,7 +516,11 @@ sub parse_amount {
 		$amount =~ s/'//g;
 	}
 
+
 	$amount =~ s/,//g;
+	if ($amount =~ s/\((\d+)\)/$1/){
+		$amount *= -1;
+	}
 	$amount = new Math::BigFloat($amount);
 	return ($amount * 1);
 }
