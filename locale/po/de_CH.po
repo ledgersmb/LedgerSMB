@@ -409,6 +409,9 @@ msgstr "Unter"
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
+msgid "Billion"
+msgstr "milliarde"
+
 msgid "Bin"
 msgstr "Lagerort"
 
@@ -1060,6 +1063,18 @@ msgstr "Einkaufsrechnung bearbeiten"
 msgid "Edit Warehouse"
 msgstr "Warenlager bearbeiten"
 
+msgid "Eight"
+msgstr "acht"
+
+msgid "Eighteen"
+msgstr "achtzehn"
+
+msgid "Eighty"
+msgstr "achtzig"
+
+msgid "Eleven"
+msgstr "elf"
+
 msgid "Email"
 msgstr "E-Mail"
 
@@ -1162,11 +1177,29 @@ msgstr "Februar"
 msgid "For"
 msgstr "für"
 
+msgid "Fifteen"
+msgstr "fünfzehn"
+
+msgid "Fifty"
+msgstr "fünfzig"
+
+msgid "Five"
+msgstr "fünf"
+
 msgid "Foreign Exchange Gain"
 msgstr "Wechselkurserträge"
 
 msgid "Foreign Exchange Loss"
 msgstr "Wechselkursverluste"
+
+msgid "Forty"
+msgstr "vierzig"
+
+msgid "Four"
+msgstr "vier"
+
+msgid "Fourteen"
+msgstr "vierzehn"
 
 msgid "Forgot Password"
 msgstr "Passwort vergessen"
@@ -1269,6 +1302,9 @@ msgstr "Rechner"
 
 msgid "Hostname missing!"
 msgstr "Rechnername fehlt!"
+
+msgid "Hundred"
+msgstr "hundert"
 
 msgid "IBAN"
 msgstr "IBAN"
@@ -1570,6 +1606,9 @@ msgstr "Abrechnungsmethode"
 msgid "Microfiche"
 msgstr "Mikrofilm"
 
+msgid "Million"
+msgstr "million"
+
 msgid "Model"
 msgstr "Modell"
 
@@ -1617,6 +1656,15 @@ msgstr "Nächstes Datum"
 
 msgid "Next Number"
 msgstr "Nächste Nummer"
+
+msgid "Nine"
+msgstr "neun"
+
+msgid "Nineteen"
+msgstr "neunzehn"
+
+msgid "Ninety"
+msgstr "neunzig"
 
 msgid "No"
 msgstr "Nein"
@@ -1722,6 +1770,9 @@ msgstr "Oktober"
 
 msgid "On Hand"
 msgstr "am Lager"
+
+msgid "One"
+msgstr "ein"
 
 msgid "Onhand"
 msgstr "am Lager"
@@ -2350,6 +2401,15 @@ msgstr "Sitzungsdauer abgelaufen!"
 msgid "Setup Templates"
 msgstr "Vorlage auswählen"
 
+msgid "Seven"
+msgstr "sieben"
+
+msgid "Seventeen"
+msgstr "siebzehn"
+
+msgid "Seventy"
+msgstr "siebzig"
+
 msgid "Ship"
 msgstr "Versenden"
 
@@ -2382,6 +2442,15 @@ msgstr "Kurz"
 
 msgid "Signature"
 msgstr "Signatur"
+
+msgid "Six"
+msgstr "sechs"
+
+msgid "Sixteen"
+msgstr "sechzehn"
+
+msgid "Sixty"
+msgstr "sechzig"
 
 msgid "Source"
 msgstr "Beleg"
@@ -2494,6 +2563,9 @@ msgstr "Druckvorlage gespeichert!"
 msgid "Templates"
 msgstr "Druckvorlagen"
 
+msgid "Ten"
+msgstr "zehn"
+
 msgid "Terms"
 msgstr "Zahlungsbedingungen"
 
@@ -2509,8 +2581,20 @@ msgstr "Die folgenden Datensets werden nicht verwendet und können gelöscht wer
 msgid "The following Datasets need to be updated"
 msgstr "Folgende Datensets müssen aktualisiert werden"
 
+msgid "Thirteen"
+msgstr "dreizehn"
+
+msgid "Thirty"
+msgstr "dreissig"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "In diesem Schritt werden bestehende Datensets gesucht. Es werden noch keine Änderungen vorgenommen!"
+
+msgid "Thousand"
+msgstr "tausend"
+
+msgid "Three"
+msgstr "drei"
 
 msgid "Thursday"
 msgstr "Donnerstag"
@@ -2620,8 +2704,20 @@ msgstr "Übersetzung gespeichert!"
 msgid "Trial Balance"
 msgstr "Saldenbilanz"
 
+msgid "Trillion"
+msgstr "billion"
+
 msgid "Tuesday"
 msgstr "Dienstag"
+
+msgid "Twelve"
+msgstr "zwölf"
+
+msgid "Twenty"
+msgstr "zwanzig"
+
+msgid "Two"
+msgstr "zwei"
 
 msgid "Type"
 msgstr "Typ"
