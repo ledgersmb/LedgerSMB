@@ -432,7 +432,7 @@ sub list_spool {
     
     $column_data{transdate} = "<td>$ref->{transdate}&nbsp;</td>";
 
-    if (${LedgerSMB::Sysconfig::spool}file eq $ref->{spoolfile}) {
+    if (${LedgerSMB::Sysconfig::spool} eq $ref->{spoolfile}) {
       $column_data{checked} = qq|<td></td>|;
     } else {
       $column_data{checked} = qq|<td><input name=checked_$i type=checkbox class=checkbox $form->{"checked_$i"} $form->{"checked_$i"}></td>|;
@@ -462,7 +462,7 @@ sub list_spool {
 
 |;
 
-    ${LedgerSMB::Sysconfig::spool}file = $ref->{spoolfile};
+    ${LedgerSMB::Sysconfig::spool} = $ref->{spoolfile};
     
     $j++; $j %= 2;
     print "

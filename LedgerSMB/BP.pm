@@ -75,7 +75,7 @@ sub get_vc {
 
 		$sth = $dbh->prepare($query);
 		$sth->execute($form->{type});
-		($n) = $sth->fetchrow_array($query);
+		($n) = $sth->fetchrow_array;
 		$count += $n;
 	}
 
@@ -97,7 +97,7 @@ sub get_vc {
 				 WHERE s.formname = ?
 				       AND s.spoolfile IS NOT NULL|;
 			$union = "UNION";
-			push @queryags, $form->{type};
+			push @queryargs, $form->{type};
 		}
 
 		$sth = $dbh->prepare($query);
@@ -199,14 +199,14 @@ sub get_spoolfiles {
 				$union
 				SELECT a.id, vc.name, a.$invnumber AS invnumber, a.transdate,
 				       a.ordnumber, a.quonumber, $invoice AS invoice,
-				       ? AS module, s.spoolfile
+				       '$item' AS module, s.spoolfile
 				  FROM $item a, $form->{vc} vc, status s
 				 WHERE s.trans_id = a.id
 				       AND s.spoolfile IS NOT NULL
 				       AND s.formname = ?
 				       AND a.$form->{vc}_id = vc.id|;
 
-			push (@queryargs, $item, $form->{type});
+			push (@queryargs, $form->{type});
 			if ($form->{"$form->{vc}_id"}) {
 				$query .= qq| AND a.$form->{vc}_id = $form->{"$form->{vc}_id"}|;
 			} else {
