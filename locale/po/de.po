@@ -321,6 +321,9 @@ msgstr "Unter"
 msgid "Billing Address"
 msgstr "Rechnungsanschrift"
 
+msgid "Billion"
+msgstr "milliarde"
+
 msgid "Bin"
 msgstr "Stellage"
 
@@ -822,6 +825,18 @@ msgstr "Einkaufsrechnung bearbeiten"
 msgid "Edit Warehouse"
 msgstr "Warenlager bearbeiten"
 
+msgid "Eight"
+msgstr "acht"
+
+msgid "Eighteen"
+msgstr "achtzehn"
+
+msgid "Eighty"
+msgstr "achtzig"
+
+msgid "Eleven"
+msgstr "elf"
+
 msgid "Employee"
 msgstr "Arbeitnehmer"
 
@@ -894,11 +909,29 @@ msgstr "Feb"
 msgid "February"
 msgstr "Februar"
 
+msgid "Fifteen"
+msgstr "fünfzehn"
+
+msgid "Fifty"
+msgstr "fünfzig"
+
+msgid "Five"
+msgstr "fünf"
+
 msgid "Foreign Exchange Gain"
 msgstr "Wechselkurserträge"
 
 msgid "Foreign Exchange Loss"
 msgstr "Wechselkursaufwendungen"
+
+msgid "Forty"
+msgstr "vierzig"
+
+msgid "Four"
+msgstr "vier"
+
+msgid "Fourteen"
+msgstr "vierzehn"
 
 msgid "From"
 msgstr "Von"
@@ -962,6 +995,9 @@ msgstr "Datenbank-Rechner"
 
 msgid "Hostname missing!"
 msgstr "Rechnername fehlt!"
+
+msgid "Hundred"
+msgstr "hundert"
 
 msgid "IBAN"
 msgstr "IBAN"
@@ -1194,6 +1230,9 @@ msgstr "Methode"
 msgid "Microfiche"
 msgstr "Mikrofilm"
 
+msgid "Million"
+msgstr "million"
+
 msgid "Model"
 msgstr "Modell"
 
@@ -1214,6 +1253,15 @@ msgstr "Name fehlt!"
 
 msgid "New Templates"
 msgstr "Neue Vorlagen"
+
+msgid "Nine"
+msgstr "neun"
+
+msgid "Nineteen"
+msgstr "neunzehn"
+
+msgid "Ninety"
+msgstr "neunzig"
 
 msgid "No"
 msgstr "Nein"
@@ -1283,6 +1331,9 @@ msgstr "Oktober"
 
 msgid "On Hand"
 msgstr "am Lager"
+
+msgid "One"
+msgstr "ein"
 
 msgid "Open"
 msgstr "Offen"
@@ -1707,6 +1758,15 @@ msgstr "Leistungen"
 msgid "Setup Templates"
 msgstr "Vorlagen auswählen"
 
+msgid "Seven"
+msgstr "sieben"
+
+msgid "Seventeen"
+msgstr "siebzehn"
+
+msgid "Seventy"
+msgstr "siebzig"
+
 msgid "Ship"
 msgstr "Versenden"
 
@@ -1739,6 +1799,15 @@ msgstr "Kurz"
 
 msgid "Signature"
 msgstr "Unterschrift"
+
+msgid "Six"
+msgstr "sechs"
+
+msgid "Sixteen"
+msgstr "sechzehn"
+
+msgid "Sixty"
+msgstr "sechzig"
 
 msgid "Source"
 msgstr "Beleg"
@@ -1824,6 +1893,9 @@ msgstr "Schablone gespeichert!"
 msgid "Templates"
 msgstr "Vorlagen"
 
+msgid "Ten"
+msgstr "zehn"
+
 msgid "Terms"
 msgstr "Zahlungsbedingungen"
 
@@ -1836,8 +1908,20 @@ msgstr "Die folgenden Datenbanken sind nicht in Verwendung und können gelöscht
 msgid "The following Datasets need to be updated"
 msgstr "Folgende Datenbanken müssen aktualisiert werden"
 
+msgid "Thirteen"
+msgstr "dreizehn"
+
+msgid "Thirty"
+msgstr "dreissig"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "In diesem Schritt werden bestehende Datenbanken gesucht. Es werden noch keine Änderungen vorgenommen!"
+
+msgid "Thousand"
+msgstr "tausend"
+
+msgid "Three"
+msgstr "drei"
 
 msgid "Till"
 msgstr "Kassa"
@@ -1901,6 +1985,18 @@ msgstr "Übersetzung gespeichert!"
 
 msgid "Trial Balance"
 msgstr "Saldenbilanz"
+
+msgid "Trillion"
+msgstr "billion"
+
+msgid "Twelve"
+msgstr "zwölf"
+
+msgid "Twenty"
+msgstr "zwanzig"
+
+msgid "Two"
+msgstr "zwei"
 
 msgid "Type of Business"
 msgstr "Gewerbe"
@@ -2024,6 +2120,9 @@ msgstr "Ja"
 
 msgid "You did not enter a name!"
 msgstr "Sie haben keinen Namen eingegeben!"
+
+msgid "Zero"
+msgstr "Null"
 
 msgid "account cannot be set to any other type of account"
 msgstr "Dieses Konto kann nicht auf andere Typen eingestellt werden"
