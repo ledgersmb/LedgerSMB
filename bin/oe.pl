@@ -702,72 +702,72 @@ sub form_footer {
 # type=submit $locale->text('Purchase Order')
 
   if (! $form->{readonly}) {
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-               'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	       'Save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
-	       'Ship to' => { ndx => 4, key => 'T', value => $locale->text('Ship to') },
-	       'E-mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
-	       'Print and Save' => { ndx => 6, key => 'R', value => $locale->text('Print and Save') },
-	       'Save as new' => { ndx => 7, key => 'N', value => $locale->text('Save as new') },
-	       'Print and Save as new' => { ndx => 8, key => 'W', value => $locale->text('Print and Save as new') },
-	       'Sales Invoice' => { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
-	       'Sales Order' => { ndx => 10, key => 'O', value => $locale->text('Sales Order') },
-	       'Quotation' => { ndx => 11, key => 'Q', value => $locale->text('Quotation') },
-	       'Vendor Invoice' => { ndx => 12, key => 'I', value => $locale->text('Vendor Invoice') },
-	       'Purchase Order' => { ndx => 13, key => 'O', value => $locale->text('Purchase Order') },
-	       'RFQ' => { ndx => 14, key => 'Q', value => $locale->text('RFQ') },
-	       'Schedule' => { ndx => 15, key => 'H', value => $locale->text('Schedule') },
-	       'Delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+               'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	       'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
+	       'ship_to' => { ndx => 4, key => 'T', value => $locale->text('Ship to') },
+	       'e_mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
+	       'print_and_save' => { ndx => 6, key => 'R', value => $locale->text('Print and Save') },
+	       'save_as_new' => { ndx => 7, key => 'N', value => $locale->text('Save as new') },
+	       'print_and_save_as_new' => { ndx => 8, key => 'W', value => $locale->text('Print and Save as new') },
+	       'sales_invoice' => { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
+	       'sales_order' => { ndx => 10, key => 'O', value => $locale->text('Sales Order') },
+	       'quotation' => { ndx => 11, key => 'Q', value => $locale->text('Quotation') },
+	       'vendor_invoice' => { ndx => 12, key => 'I', value => $locale->text('Vendor Invoice') },
+	       'purchase_order' => { ndx => 13, key => 'O', value => $locale->text('Purchase Order') },
+	       'rfq' => { ndx => 14, key => 'Q', value => $locale->text('RFQ') },
+	       'schedule' => { ndx => 15, key => 'H', value => $locale->text('Schedule') },
+	       'delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
 	      );
 
 
     %a = ();
-    for ("Update", "Ship to", "Print", "E-mail", "Save") { $a{$_} = 1 }
-    $a{'Print and Save'} = 1 if ${LedgerSMB::Sysconfig::latex};
+    for ("update", "ship_to", "print", "e_mail", "save") { $a{$_} = 1 }
+    $a{'print_and_save'} = 1 if ${LedgerSMB::Sysconfig::latex};
     
     if ($form->{id}) {
       
-      $a{'Delete'} = 1;
-      $a{'Save as new'} = 1;
-      $a{'Print and Save as new'} = 1 if ${LedgerSMB::Sysconfig::latex};
+      $a{'delete'} = 1;
+      $a{'save_as_new'} = 1;
+      $a{'print_and_save_as_new'} = 1 if ${LedgerSMB::Sysconfig::latex};
 
       if ($form->{type} =~ /sales_/) {
 	if ($myconfig{acs} !~ /AR--Sales Invoice/) {
-	  $a{'Sales Invoice'} = 1;
+	  $a{'sales_invoice'} = 1;
 	}
       } else {
 	if ($myconfig{acs} !~ /AP--Vendor Invoice/) {
-	  $a{'Vendor Invoice'} = 1;
+	  $a{'vendor_invoice'} = 1;
 	}
       }
 	
       if ($form->{type} eq 'sales_order') {
         if ($myconfig{acs} !~ /Quotations--RFQ/) {
-	  $a{'Quotation'} = 1;
+	  $a{'quotation'} = 1;
 	}
       }
       
       if ($form->{type} eq 'purchase_order') {
 	if ($myconfig{acs} !~ /Quotations--RFQ/) {
-	  $a{'RFQ'} = 1;
+	  $a{'rfq'} = 1;
 	}
       }
       
       if ($form->{type} eq 'sales_quotation') {
 	if ($myconfig{acs} !~ /Order Entry--Sales Order/) {
-	  $a{'Sales Order'} = 1;
+	  $a{'sales_order'} = 1;
 	}
       }
       
       if ($myconfig{acs} !~ /Order Entry--Purchase Order/) {
 	if ($form->{type} eq 'request_quotation') {
-	  $a{'Purchase Order'} = 1;
+	  $a{'purchase_order'} = 1;
 	}
       }
     }
 
     if ($form->{type} =~ /_order/) {
-      $a{'Schedule'} = 1;
+      $a{'schedule'} = 1;
     }
 
   }
