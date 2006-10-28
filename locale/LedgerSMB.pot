@@ -6,8 +6,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.99\n"
-"POT-Creation-Date: 2006-10-27 16:10-0400\n"
+"Project-Id-Version: LedgerSMB 1.1.999\n"
+"POT-Creation-Date: 2006-10-28 14:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@example.org>\n"
@@ -497,6 +497,10 @@ msgstr ""
 
 #: bin/ct.pl:1453 bin/io.pl:1611
 msgid "Billing Address"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:71
+msgid "Billion"
 msgstr ""
 
 #: bin/ic.pl:1479 bin/ic.pl:3132 bin/ic.pl:403 bin/ic.pl:918 bin/io.pl:1193 bin/io.pl:139 bin/oe.pl:2360 bin/pe.pl:355
@@ -1375,6 +1379,22 @@ msgstr ""
 msgid "Edit Warehouse"
 msgstr ""
 
+#: LedgerSMB/Num2text.pm:48
+msgid "Eight"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:58
+msgid "Eighteen"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:66
+msgid "Eighty"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:51
+msgid "Eleven"
+msgstr ""
+
 #: bin/aa.pl:1263 bin/aa.pl:1364 bin/aa.pl:407 bin/aa.pl:991 bin/bp.pl:74 bin/ct.pl:1408 bin/ct.pl:306 bin/ct.pl:399 bin/ct.pl:626 bin/ct.pl:736 bin/hr.pl:776 bin/ic.pl:1501 bin/ic.pl:888 bin/jc.pl:234 bin/jc.pl:512 bin/oe.pl:1002 bin/oe.pl:1026 bin/oe.pl:1043 bin/oe.pl:1376 bin/oe.pl:1415 bin/oe.pl:1473 bin/oe.pl:493 bin/oe.pl:970 bin/oe.pl:978 bin/oe.pl:986 bin/pe.pl:2170
 msgid "Employee"
 msgstr ""
@@ -1495,6 +1515,18 @@ msgstr ""
 msgid "February"
 msgstr ""
 
+#: LedgerSMB/Num2text.pm:55
+msgid "Fifteen"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:63
+msgid "Fifty"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:45
+msgid "Five"
+msgstr ""
+
 #: bin/arap.pl:706
 msgid "For"
 msgstr ""
@@ -1505,6 +1537,18 @@ msgstr ""
 
 #: bin/am.pl:1759
 msgid "Foreign Exchange Loss"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:62
+msgid "Forty"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:44
+msgid "Four"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:54
+msgid "Fourteen"
 msgstr ""
 
 #: bin/jc.pl:1268
@@ -1641,6 +1685,10 @@ msgstr ""
 
 #: bin/admin.pl:1162 bin/admin.pl:289 bin/admin.pl:614
 msgid "Host"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:68
+msgid "Hundred"
 msgstr ""
 
 #: bin/ct.pl:1586 bin/ct.pl:313 bin/ct.pl:724 bin/hr.pl:287 bin/hr.pl:600 bin/hr.pl:91
@@ -2047,6 +2095,10 @@ msgstr ""
 msgid "Microfiche"
 msgstr ""
 
+#: LedgerSMB/Num2text.pm:70
+msgid "Million"
+msgstr ""
+
 #: bin/ic.pl:1362 bin/ic.pl:1493 bin/ic.pl:2200 bin/ic.pl:910 bin/ic.pl:916
 msgid "Model"
 msgstr ""
@@ -2101,6 +2153,18 @@ msgstr ""
 
 #: bin/am.pl:2826
 msgid "Next Number"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:49
+msgid "Nine"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:59
+msgid "Nineteen"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:67
+msgid "Ninety"
 msgstr ""
 
 #: bin/am.pl:2302 bin/am.pl:2310
@@ -2241,6 +2305,10 @@ msgstr ""
 
 #: bin/ic.pl:1223 bin/ic.pl:389 bin/ic.pl:611 bin/ic.pl:902
 msgid "On Hand"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:41
+msgid "One"
 msgstr ""
 
 #: bin/ic.pl:2040
@@ -3063,6 +3131,14 @@ msgstr ""
 msgid "Setup Templates"
 msgstr ""
 
+#: LedgerSMB/Num2text.pm:47
+msgid "Seven"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:57
+msgid "Seventeen"
+msgstr ""
+
 #: bin/io.pl:93 bin/oe.pl:2345 menu.ini:288
 msgid "Ship"
 msgstr ""
@@ -3105,6 +3181,18 @@ msgstr ""
 
 #: bin/admin.pl:522 bin/am.pl:2115
 msgid "Signature"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:46
+msgid "Six"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:56
+msgid "Sixteen"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:64
+msgid "Sixty"
 msgstr ""
 
 #: bin/rp.pl:843
@@ -3279,6 +3367,10 @@ msgstr ""
 msgid "Templates"
 msgstr ""
 
+#: LedgerSMB/Num2text.pm:50
+msgid "Ten"
+msgstr ""
+
 #: bin/ct.pl:1569 bin/ct.pl:316 bin/ct.pl:717 bin/oe.pl:358
 msgid "Terms"
 msgstr ""
@@ -3295,8 +3387,24 @@ msgstr ""
 msgid "The following Datasets are not in use and can be deleted"
 msgstr ""
 
+#: LedgerSMB/Num2text.pm:53
+msgid "Thirteen"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:61
+msgid "Thirty"
+msgstr ""
+
 #: bin/admin.pl:1197
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:69
+msgid "Thousand"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:43
+msgid "Three"
 msgstr ""
 
 #: bin/jc.pl:1267
@@ -3443,8 +3551,24 @@ msgstr ""
 msgid "Trial Balance"
 msgstr ""
 
+#: LedgerSMB/Num2text.pm:72
+msgid "Trillion"
+msgstr ""
+
 #: bin/jc.pl:1265
 msgid "Tuesday"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:52
+msgid "Twelve"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:60
+msgid "Twenty"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:42
+msgid "Two"
 msgstr ""
 
 #: bin/am.pl:874 bin/am.pl:988 bin/ct.pl:1355 bin/ct.pl:315 bin/ct.pl:723 menu.ini:695
@@ -3701,6 +3825,10 @@ msgstr ""
 
 #: bin/login.pl:236
 msgid "You did not enter a name!"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:40
+msgid "Zero"
 msgstr ""
 
 #: bin/ct.pl:1479 bin/ct.pl:285 bin/ct.pl:470 bin/ct.pl:606 bin/ct.pl:707 bin/hr.pl:272 bin/hr.pl:557 bin/hr.pl:78 bin/io.pl:1645
