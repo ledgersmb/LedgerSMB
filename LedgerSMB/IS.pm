@@ -38,401 +38,592 @@ use LedgerSMB::Sysconfig;
 
 
 sub invoice_details {
-  my ($self, $myconfig, $form) = @_;
+	use LedgerSMB::CP;
+	my ($self, $myconfig, $form) = @_;
 
-  $form->{duedate} = $form->{transdate} unless ($form->{duedate});
+	$form->{duedate} = $form->{transdate} unless ($form->{duedate});
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	# connect to database
+	my $dbh = $form->{dbh};
 
-  my $query = qq|SELECT date '$form->{duedate}' - date '$form->{transdate}'
-                 AS terms, weightunit
-		 FROM defaults|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $query = qq|
+		SELECT ?::date - ?::date
+                       AS terms, weightunit
+		  FROM defaults|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{duedate}, $form->{transdate})
+		|| $form->dberror($query);
 
-  ($form->{terms}, $form->{weightunit}) = $sth->fetchrow_array;
-  $sth->finish;
+	($form->{terms}, $form->{weightunit}) = $sth->fetchrow_array;
+	$sth->finish;
 
-  # this is for the template
-  $form->{invdate} = $form->{transdate};
+	# this is for the template
+	$form->{invdate} = $form->{transdate};
   
-  my $tax = 0;
-  my $item;
-  my $i;
-  my @sortlist = ();
-  my $projectnumber;
-  my $projectdescription;
-  my $projectnumber_id;
-  my $translation;
-  my $partsgroup;
+	my $tax = 0;
+	my $item;
+	my $i;
+	my @sortlist = ();
+	my $projectnumber;
+	my $projectdescription;
+	my $projectnumber_id;
+	my $translation;
+	my $partsgroup;
   
-  my %oid = ( 'Pg'	=> 'TRUE',
-              'Oracle'	=> 'rowid',
-	      'DB2'	=> '1=1'
-	    );
   
-  my @taxaccounts;
-  my %taxaccounts;
-  my $tax;
-  my $taxrate;
-  my $taxamount;
+	my @taxaccounts;
+	my %taxaccounts;
+	my $tax;
+	my $taxrate;
+	my $taxamount;
  
-  my %translations;
+	my %translations;
   
-  $query = qq|SELECT p.description, t.description
-              FROM project p
-	      LEFT JOIN translation t ON (t.trans_id = p.id AND t.language_code = '$form->{language_code}')
-	      WHERE id = ?|;
-  my $prh = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|
+		   SELECT p.description, t.description
+		     FROM project p
+		LEFT JOIN translation t 
+		          ON (t.trans_id = p.id 
+		          AND t.language_code = ?)
+		    WHERE id = ?|;
+	my $prh = $dbh->prepare($query) || $form->dberror($query);
 
-  $query = qq|SELECT inventory_accno_id, income_accno_id,
-              expense_accno_id, assembly, weight FROM parts
-              WHERE id = ?|;
-  my $pth = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|
+		SELECT inventory_accno_id, income_accno_id,
+		       expense_accno_id, assembly, weight FROM parts
+		 WHERE id = ?|;
+	my $pth = $dbh->prepare($query) || $form->dberror($query);
 
-  my $sortby;
+	my $sortby;
   
-  # sort items by project and partsgroup
-  for $i (1 .. $form->{rowcount} - 1) {
+	# sort items by project and partsgroup
+	for $i (1 .. $form->{rowcount} - 1) {
 
-    # account numbers
-    $pth->execute($form->{"id_$i"});
-    $ref = $pth->fetchrow_hashref(NAME_lc);
-    for (keys %$ref) { $form->{"${_}_$i"} = $ref->{$_} }
-    $pth->finish;
+		# account numbers
+		$pth->execute($form->{"id_$i"});
+		$ref = $pth->fetchrow_hashref(NAME_lc);
+		for (keys %$ref) { $form->{"${_}_$i"} = $ref->{$_} }
+		$pth->finish;
 
-    $projectnumber_id = 0;
-    $projectnumber = "";
-    $form->{partsgroup} = "";
-    $form->{projectnumber} = "";
+		$projectnumber_id = 0;
+		$projectnumber = "";
+		$form->{partsgroup} = "";
+		$form->{projectnumber} = "";
     
-    if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
+		if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
       
-      $inventory_accno_id = ($form->{"inventory_accno_id_$i"} || $form->{"assembly_$i"}) ? "1" : "";
+			$inventory_accno_id = 
+				($form->{"inventory_accno_id_$i"} 
+					|| $form->{"assembly_$i"}) 
+				? "1" 
+				: "";
       
-      if ($form->{groupprojectnumber}) {
-	($projectnumber, $projectnumber_id) = split /--/, $form->{"projectnumber_$i"};
-      }
-      if ($form->{grouppartsgroup}) {
-	($form->{partsgroup}) = split /--/, $form->{"partsgroup_$i"};
-      }
+			if ($form->{groupprojectnumber}) {
+				($projectnumber, $projectnumber_id) = 
+					split /--/, $form->{"projectnumber_$i"};
+			}
+			if ($form->{grouppartsgroup}) {
+				($form->{partsgroup}) = 
+					split /--/, $form->{"partsgroup_$i"};
+			}
       
-      if ($projectnumber_id && $form->{groupprojectnumber}) {
-	if ($translation{$projectnumber_id}) {
-	  $form->{projectnumber} = $translation{$projectnumber_id};
-	} else {
-	  # get project description
-	  $prh->execute($projectnumber_id);
-	  ($projectdescription, $translation) = $prh->fetchrow_array;
-	  $prh->finish;
+			if ($projectnumber_id && $form->{groupprojectnumber}) {
+				if ($translation{$projectnumber_id}) {
+					$form->{projectnumber} = 
+						$translation{$projectnumber_id};
+				} else {
+					# get project description
+					$prh->execute($projectnumber_id, 
+						$form->{language_code});
+
+					($projectdescription, $translation) = 
+						$prh->fetchrow_array;
+
+					$prh->finish;
 	  
-	  $form->{projectnumber} = ($translation) ? "$projectnumber, $translation" : "$projectnumber, $projectdescription";
+					$form->{projectnumber} = 
+						($translation) 
+						? "$projectnumber, $translation"
+						: "$projectnumber, ".
+							"$projectdescription";
 
-	  $translation{$projectnumber_id} = $form->{projectnumber};
-	}
-      }
+					$translation{$projectnumber_id} = 
+						$form->{projectnumber};
+				}
+			}
 
-      if ($form->{grouppartsgroup} && $form->{partsgroup}) {
-	$form->{projectnumber} .= " / " if $projectnumber_id;
-	$form->{projectnumber} .= $form->{partsgroup};
-      }
+			if ($form->{grouppartsgroup} && $form->{partsgroup}) {
+				$form->{projectnumber} .= " / " 
+					if $projectnumber_id;
+				$form->{projectnumber} .= $form->{partsgroup};
+			}
       
-      $form->format_string(projectnumber);
+			$form->format_string(projectnumber);
 
-    }
+		}
 
-    $sortby = qq|$projectnumber$form->{partsgroup}|;
-    if ($form->{sortby} ne 'runningnumber') {
-      for (qw(partnumber description bin)) {
-	$sortby .= $form->{"${_}_$i"} if $form->{sortby} eq $_;
-      }
-    }
+		$sortby = qq|$projectnumber$form->{partsgroup}|;
+		if ($form->{sortby} ne 'runningnumber') {
+			for (qw(partnumber description bin)) {
+				$sortby .= $form->{"${_}_$i"} 
+					if $form->{sortby} eq $_;
+			}
+		}
 
-    push @sortlist, [ $i, qq|$projectnumber$form->{partsgroup}$inventory_accno_id|, $form->{projectnumber}, $projectnumber_id, $form->{partsgroup}, $sortby ];
+		push @sortlist, [ $i, 
+			qq|$projectnumber$form->{partsgroup}|.
+				qq|$inventory_accno_id|, 
+			$form->{projectnumber}, $projectnumber_id, 
+			$form->{partsgroup}, $sortby ];
 
-  }
+	}
 
-  # sort the whole thing by project and group
-  @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
+	# sort the whole thing by project and group
+	@sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
 
-  my $runningnumber = 1;
-  my $sameitem = "";
-  my $subtotal;
-  my $k = scalar @sortlist;
-  my $j = 0;
+	my $runningnumber = 1;
+	my $sameitem = "";
+	my $subtotal;
+	my $k = scalar @sortlist;
+	my $j = 0;
 
-  foreach $item (@sortlist) {
+	foreach $item (@sortlist) {
 
-    $i = $item->[0];
-    $j++;
+		$i = $item->[0];
+		$j++;
 
-    # heading
-    if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
-      if ($item->[1] ne $sameitem) {
-	$sameitem = $item->[1];
+		# heading
+		if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
+			if ($item->[1] ne $sameitem) {
+				$sameitem = $item->[1];
 	
-	$ok = 0;
+				$ok = 0;
 
-	if ($form->{groupprojectnumber}) {
-	  $ok = $form->{"projectnumber_$i"};
-	}
-	if ($form->{grouppartsgroup}) {
-	  $ok = $form->{"partsgroup_$i"} unless $ok;
-	}
+				if ($form->{groupprojectnumber}) {
+					$ok = $form->{"projectnumber_$i"};
+				}
+				if ($form->{grouppartsgroup}) {
+					$ok = $form->{"partsgroup_$i"} 
+						unless $ok;
+				}
 
-	if ($ok) {
+				if ($ok) {
 	  
-	  if ($form->{"inventory_accno_id_$i"} || $form->{"assembly_$i"}) {
-	    push(@{ $form->{part} }, "");
-	    push(@{ $form->{service} }, NULL);
-	  } else {
-	    push(@{ $form->{part} }, NULL);
-	    push(@{ $form->{service} }, "");
-	  }
+					if ($form->{"inventory_accno_id_$i"} 
+						|| $form->{"assembly_$i"}) {
+
+						push(@{ $form->{part} }, "");
+						push(@{ $form->{service} }, 
+							NULL);
+					} else {
+						push(@{ $form->{part} }, NULL);
+						push(@{ $form->{service} }, "");
+					}
     
-	  push(@{ $form->{description} }, $item->[2]);
-	  for (qw(taxrates runningnumber number sku serialnumber bin qty ship unit deliverydate projectnumber sellprice listprice netprice discount discountrate linetotal weight itemnotes)) { push(@{ $form->{$_} }, "") }
-	  push(@{ $form->{lineitems} }, { amount => 0, tax => 0 });
-	}
-      }
-    }
+					push(@{ $form->{description} }, 
+						$item->[2]);
+					for (
+						qw(taxrates runningnumber number
+						sku serialnumber bin qty ship 
+						unit deliverydate projectnumber 
+						sellprice listprice netprice 
+						discount discountrate linetotal 
+						weight itemnotes)
+					) { 
+						push(@{ $form->{$_} }, ""); 
+					}
+					push(@{ $form->{lineitems} }, 
+						{ amount => 0, tax => 0 });
+				}
+			}
+		}
       
-    $form->{"qty_$i"} = $form->parse_amount($myconfig, $form->{"qty_$i"});
+		$form->{"qty_$i"} = 
+			$form->parse_amount($myconfig, $form->{"qty_$i"});
     
-    if ($form->{"qty_$i"}) {
+		if ($form->{"qty_$i"}) {
 
-      $form->{totalqty} += $form->{"qty_$i"};
-      $form->{totalship} += $form->{"qty_$i"};
-      $form->{totalweight} += ($form->{"qty_$i"} * $form->{"weight_$i"});
-      $form->{totalweightship} += ($form->{"qty_$i"} * $form->{"weight_$i"});
+			$form->{totalqty} += $form->{"qty_$i"};
+			$form->{totalship} += $form->{"qty_$i"};
+			$form->{totalweight} += ($form->{"qty_$i"} 
+				* $form->{"weight_$i"});
 
-      # add number, description and qty to $form->{number}, ....
-      push(@{ $form->{runningnumber} }, $runningnumber++);
-      push(@{ $form->{number} }, $form->{"partnumber_$i"});
-      push(@{ $form->{sku} }, $form->{"sku_$i"});
-      push(@{ $form->{serialnumber} }, $form->{"serialnumber_$i"});
-      push(@{ $form->{bin} }, $form->{"bin_$i"});
-      push(@{ $form->{description} }, $form->{"description_$i"});
-      push(@{ $form->{itemnotes} }, $form->{"notes_$i"});
-      push(@{ $form->{qty} }, $form->format_amount($myconfig, $form->{"qty_$i"}));
-      push(@{ $form->{ship} }, $form->format_amount($myconfig, $form->{"qty_$i"}));
-      push(@{ $form->{unit} }, $form->{"unit_$i"});
-      push(@{ $form->{deliverydate} }, $form->{"deliverydate_$i"});
-      push(@{ $form->{projectnumber} }, $form->{"projectnumber_$i"});
+			$form->{totalweightship} += ($form->{"qty_$i"} 
+				* $form->{"weight_$i"});
+
+			# add number, description and qty to $form->{number}...
+			push(@{ $form->{runningnumber} }, $runningnumber++);
+			push(@{ $form->{number} }, $form->{"partnumber_$i"});
+			push(@{ $form->{sku} }, $form->{"sku_$i"});
+			push(@{ $form->{serialnumber} }, 
+				$form->{"serialnumber_$i"});
+
+			push(@{ $form->{bin} }, $form->{"bin_$i"});
+			push(@{ $form->{description} }, 
+				$form->{"description_$i"});
+			push(@{ $form->{itemnotes} }, $form->{"notes_$i"});
+			push(@{ $form->{qty} }, 
+				$form->format_amount(
+					$myconfig, $form->{"qty_$i"}));
+
+			push(@{ $form->{ship} }, 
+				$form->format_amount(
+					$myconfig, $form->{"qty_$i"}));
+
+			push(@{ $form->{unit} }, $form->{"unit_$i"});
+			push(@{ $form->{deliverydate} }, 
+				$form->{"deliverydate_$i"});
+
+			push(@{ $form->{projectnumber} }, 
+				$form->{"projectnumber_$i"});
       
-      push(@{ $form->{sellprice} }, $form->{"sellprice_$i"});
+			push(@{ $form->{sellprice} }, $form->{"sellprice_$i"});
       
-      # listprice
-      push(@{ $form->{listprice} }, $form->{"listprice_$i"});
+			push(@{ $form->{listprice} }, $form->{"listprice_$i"});
       
-      push(@{ $form->{weight} }, $form->format_amount($myconfig, $form->{"weight_$i"} * $form->{"qty_$i"}));
+			push(@{ $form->{weight} }, 
+				$form->format_amount(
+					$myconfig, 
+					$form->{"weight_$i"} 
+						* $form->{"qty_$i"}));
 
-      my $sellprice = $form->parse_amount($myconfig, $form->{"sellprice_$i"});
-      my ($dec) = ($sellprice =~ /\.(\d+)/);
-      $dec = length $dec;
-      my $decimalplaces = ($dec > 2) ? $dec : 2;
+			my $sellprice = 
+				$form->parse_amount(
+					$myconfig, $form->{"sellprice_$i"});
+
+			my ($dec) = ($sellprice =~ /\.(\d+)/);
+			$dec = length $dec;
+			my $decimalplaces = ($dec > 2) ? $dec : 2;
       
-      my $discount = $form->round_amount($sellprice * $form->parse_amount($myconfig, $form->{"discount_$i"})/100, $decimalplaces);
+			my $discount = 
+				$form->round_amount(
+					$sellprice 
+						* $form->parse_amount(
+							$myconfig, 
+							$form->{"discount_$i"})
+						/100, 
+					$decimalplaces);
       
-      # keep a netprice as well, (sellprice - discount)
-      $form->{"netprice_$i"} = $sellprice - $discount;
+			# keep a netprice as well, (sellprice - discount)
+			$form->{"netprice_$i"} = $sellprice - $discount;
       
-      my $linetotal = $form->round_amount($form->{"qty_$i"} * $form->{"netprice_$i"}, 2);
+			my $linetotal = $form->round_amount(
+				$form->{"qty_$i"} * $form->{"netprice_$i"}, 2);
 
-      if ($form->{"inventory_accno_id_$i"} || $form->{"assembly_$i"}) {
-	push(@{ $form->{part} }, $form->{"sku_$i"});
-	push(@{ $form->{service} }, NULL);
-	$form->{totalparts} += $linetotal;
-      } else {
-	push(@{ $form->{service} }, $form->{"sku_$i"});
-	push(@{ $form->{part} }, NULL);
-	$form->{totalservices} += $linetotal;
-      }
+			if ($form->{"inventory_accno_id_$i"} 
+						|| $form->{"assembly_$i"}) {
 
-      push(@{ $form->{netprice} }, ($form->{"netprice_$i"}) ? $form->format_amount($myconfig, $form->{"netprice_$i"}, $decimalplaces) : " ");
+				push(@{ $form->{part} }, $form->{"sku_$i"});
+				push(@{ $form->{service} }, NULL);
+				$form->{totalparts} += $linetotal;
+			} else {
+				push(@{ $form->{service} }, $form->{"sku_$i"});
+				push(@{ $form->{part} }, NULL);
+				$form->{totalservices} += $linetotal;
+			}
+
+			push(@{ $form->{netprice} }, 
+				($form->{"netprice_$i"}) 
+				? $form->format_amount(
+					$myconfig, $form->{"netprice_$i"}, 
+					$decimalplaces) 
+				: " ");
       
-      $discount = ($discount) ? $form->format_amount($myconfig, $discount * -1, $decimalplaces) : " ";
-      $linetotal = ($linetotal) ? $linetotal : " ";
+			$discount = 
+				($discount) 
+				? $form->format_amount(
+					$myconfig, $discount * -1, 
+					$decimalplaces) 
+				: " ";
+			$linetotal = ($linetotal) ? $linetotal : " ";
       
-      push(@{ $form->{discount} }, $discount);
-      push(@{ $form->{discountrate} }, $form->format_amount($myconfig, $form->{"discount_$i"}));
+			push(@{ $form->{discount} }, $discount);
+			push(@{ $form->{discountrate} }, 
+				$form->format_amount(
+					$myconfig, $form->{"discount_$i"}));
 
-      $form->{total} += $linetotal;
+			$form->{total} += $linetotal;
 
-      # this is for the subtotals for grouping
-      $subtotal += $linetotal;
+			# this is for the subtotals for grouping
+			$subtotal += $linetotal;
 
-      $form->{"linetotal_$i"} = $form->format_amount($myconfig, $linetotal, 2);
-      push(@{ $form->{linetotal} }, $form->{"linetotal_$i"});
+			$form->{"linetotal_$i"} = 
+				$form->format_amount($myconfig, $linetotal, 2);
+
+			push(@{ $form->{linetotal} }, $form->{"linetotal_$i"});
       
-      @taxaccounts = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+ 			@taxaccounts = Tax::init_taxes(
+				$form, $form->{"taxaccounts_$i"});
       
-      my $ml = 1;
-      my @taxrates = ();
+			my $ml = 1;
+			my @taxrates = ();
       
-      $tax = 0;
+			$tax = 0;
       
-      if ($form->{taxincluded}) {
-        $taxamount = Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 1);
-        $taxbase = ($linetotal - $taxamount);
-	$tax += Tax::extract_taxes(\@taxaccounts, $form, $linetotal);
-      } else {
-        $taxamount = Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 0);
-	$tax += Tax::apply_taxes(\@taxaccounts, $form, $linetotal);
-      }
+			if ($form->{taxincluded}) {
+				$taxamount = Tax::calculate_taxes(
+					\@taxaccounts, $form, $linetotal, 1);
+				$taxbase = ($linetotal - $taxamount);
+				$tax += Tax::extract_taxes(
+					\@taxaccounts, $form, $linetotal);
+			} else {
+				$taxamount = Tax::calculate_taxes(
+					\@taxaccounts, $form, $linetotal, 0);
+				$tax += Tax::apply_taxes(
+					\@taxaccounts, $form, $linetotal);
+			}
 
-      foreach $item (@taxaccounts) {
-        push @taxrates, 100 * $item->rate;
-	$taxaccounts{$item->account} += $item->value;
-	if ($form->{taxincluded}) {
-	  $taxbase{$item->account} += $taxbase;
-	} else {
-	  $taxbase{$item->account} += $linetotal;
-	}
-      }
+			foreach $item (@taxaccounts) {
+				push @taxrates, 100 * $item->rate;
+				$taxaccounts{$item->account} += $item->value;
+				if ($form->{taxincluded}) {
+					$taxbase{$item->account} += $taxbase;
+				} else {
+					$taxbase{$item->account} += $linetotal;
+				}
+			}
 
-      push(@{ $form->{lineitems} }, { amount => $linetotal, tax => $form->round_amount($tax, 2) });
-      push(@{ $form->{taxrates} }, join ' ', sort { $a <=> $b } @taxrates);
+			push(@{ $form->{lineitems} }, 
+				{ amount => $linetotal, 
+				tax => $form->round_amount($tax, 2) });
+
+			push(@{ $form->{taxrates} }, 
+				join' ', sort { $a <=> $b } @taxrates);
       
-      if ($form->{"assembly_$i"}) {
-	$form->{stagger} = -1;
-	&assembly_details($myconfig, $form, $dbh, $form->{"id_$i"}, $oid{$myconfig->{dbdriver}}, $form->{"qty_$i"});
-      }
+			if ($form->{"assembly_$i"}) {
+				$form->{stagger} = -1;
+				&assembly_details(
+					$myconfig, $form, $dbh, 
+					$form->{"id_$i"}, 
+					$oid{$myconfig->{dbdriver}}, 
+					$form->{"qty_$i"});
+			}
 
-    }
+		}
 
-    # add subtotal
-    if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
-      if ($subtotal) {
-	if ($j < $k) {
-	  # look at next item
-	  if ($sortlist[$j]->[1] ne $sameitem) {
+		# add subtotal
+		if ($form->{groupprojectnumber} || $form->{grouppartsgroup}) {
+			if ($subtotal) {
+				if ($j < $k) {
+					# look at next item
+					if ($sortlist[$j]->[1] ne $sameitem) {
 
-	    if ($form->{"inventory_accno_id_$j"} || $form->{"assembly_$i"}) {
-	      push(@{ $form->{part} }, "");
-	      push(@{ $form->{service} }, NULL);
-	    } else {
-	      push(@{ $form->{service} }, "");
-	      push(@{ $form->{part} }, NULL);
-	    }
+						if ($form->{"inventory_accno_id_$j"} || $form->{"assembly_$i"}) {
 
-	    for (qw(taxrates runningnumber number sku serialnumber bin qty ship unit deliverydate projectnumber sellprice listprice netprice discount discountrate weight itemnotes)) { push(@{ $form->{$_} }, "") }
+
+							push(@{ $form->{part} },
+								"");
+							push(@{$form->{service}}, 
+								NULL);
+						} else {
+							push(@{$form->{service}}, 
+								"");
+
+							push(@{ $form->{part} },
+								NULL);
+						}
+
+						for (
+							qw(taxrates 
+							runningnumber number sku
+							serialnumber bin qty 
+							ship unit deliverydate 
+							projectnumber sellprice 
+							listprice netprice 
+							discount discountrate 
+							weight itemnotes)
+						) { 
+
+							push(@{ $form->{$_} }, 
+								"") 
+						}
 	    
-	    push(@{ $form->{description} }, $form->{groupsubtotaldescription});
-	    
-	    push(@{ $form->{lineitems} }, { amount => 0, tax => 0 });
+						push(@{ $form->{description} }, 
+							$form->{groupsubtotaldescription});
 
-	    if ($form->{groupsubtotaldescription} ne "") {
-	      push(@{ $form->{linetotal} }, $form->format_amount($myconfig, $subtotal, 2));
-	    } else {
-	      push(@{ $form->{linetotal} }, "");
-	    }
-	    $subtotal = 0;
-	  }
+						push(@{ $form->{lineitems} }, 
+							{ amount => 0, 
+								tax => 0 });
+
+
+						if ($form->{groupsubtotaldescription} ne "") {
+
+							push(@{ $form->{linetotal} }, 
+								$form->format_amount(
+									$myconfig, 
+									$subtotal, 
+									2));
+						} else {
+							push(@{$form->{linetotal}}, 
+								"");
+						}
+						$subtotal = 0;
+					}
 	  
-	} else {
+				} else {
 
-	  # got last item
-	  if ($form->{groupsubtotaldescription} ne "") {
+					# got last item
+					if ($form->{groupsubtotaldescription} 
+									ne "") {
 
-	    if ($form->{"inventory_accno_id_$j"} || $form->{"assembly_$i"}) {
-	      push(@{ $form->{part} }, "");
-	      push(@{ $form->{service} }, NULL);
-	    } else {
-	      push(@{ $form->{service} }, "");
-	      push(@{ $form->{part} }, NULL);
-	    }
+						if ($form->{"inventory_accno_id_$j"} || $form->{"assembly_$i"}) {
 
-	    for (qw(taxrates runningnumber number sku serialnumber bin qty ship unit deliverydate projectnumber sellprice listprice netprice discount discountrate weight itemnotes)) { push(@{ $form->{$_} }, "") }
+							push(@{ $form->{part} },
+								"");
 
-	    push(@{ $form->{description} }, $form->{groupsubtotaldescription});
-	    push(@{ $form->{linetotal} }, $form->format_amount($myconfig, $subtotal, 2));
-	    push(@{ $form->{lineitems} }, { amount => 0, tax => 0 });
-	  }
+							push(@{$form->{service}}, 
+								NULL);
+						} else {
+							push(@{$form->{service}}, 
+								"");
+
+							push(@{ $form->{part} },
+								NULL);
+						}
+
+						for (
+							qw(taxrates 
+							runningnumber number sku
+							serialnumber bin qty 
+							ship unit deliverydate 
+							projectnumber sellprice 
+							listprice netprice 
+							discount discountrate 
+							weight itemnotes)
+						) {
+
+							push(@{ $form->{$_} }, 
+								"");
+						}
+
+						push(@{ $form->{description} }, 
+							$form->{groupsubtotaldescription});
+
+						push(@{ $form->{linetotal} }, 
+							$form->format_amount(
+								$myconfig, 
+								$subtotal, 
+								2));
+						push(@{ $form->{lineitems} }, 
+							{ amount => 0, 
+								tax => 0 });
+					}
+				}
+			}
+		}
 	}
-      }
-    }
-  }
 
    
-  $tax = 0;
-  foreach my $item (sort keys %taxaccounts) {
-    if ($form->round_amount($taxaccounts{$item}, 2)) {
-      $tax += $taxamount = $form->round_amount($taxaccounts{$item}, 2);
+	$tax = 0;
+	foreach my $item (sort keys %taxaccounts) {
+		if ($form->round_amount($taxaccounts{$item}, 2)) {
+			$tax += $taxamount = 
+				$form->round_amount($taxaccounts{$item}, 2);
       
-      push(@{ $form->{taxbaseinclusive} }, $form->{"${item}_taxbaseinclusive"} = $form->format_amount($myconfig, $taxbase{$item} + $tax, 2));
-      push(@{ $form->{taxbase} }, $form->{"${item}_taxbase"} = $form->format_amount($myconfig, $taxbase{$item}, 2));
-      push(@{ $form->{tax} }, $form->{"${item}_tax"} = $form->format_amount($myconfig, $taxamount, 2));
+			push(@{ $form->{taxbaseinclusive} }, 
+				$form->{"${item}_taxbaseinclusive"} 
+					= $form->format_amount(
+						$myconfig, 
+						$taxbase{$item} + $tax, 2));
+
+			push(@{ $form->{taxbase} }, 
+				$form->{"${item}_taxbase"} 
+					= $form->format_amount(
+						$myconfig, $taxbase{$item}, 2));
+
+			push(@{ $form->{tax} }, 
+				$form->{"${item}_tax"} 
+					= $form->format_amount(
+						$myconfig, $taxamount, 2));
       
-      push(@{ $form->{taxdescription} }, $form->{"${item}_description"});
+			push(@{ $form->{taxdescription} }, 
+				$form->{"${item}_description"});
       
-      $form->{"${item}_taxrate"} = $form->format_amount($myconfig, $form->{"${item}_rate"} * 100);
-      push(@{ $form->{taxrate} }, $form->{"${item}_taxrate"});
-      push(@{ $form->{taxnumber} }, $form->{"${item}_taxnumber"});
-    }
-  }
+			$form->{"${item}_taxrate"} 
+				= $form->format_amount(
+					$myconfig, 
+					$form->{"${item}_rate"} * 100);
+			push(@{ $form->{taxrate} }, $form->{"${item}_taxrate"});
+			push(@{ $form->{taxnumber} }, 
+				$form->{"${item}_taxnumber"});
+		}
+	}
     
-  # adjust taxes for lineitems
-  my $total = 0;
-  for (@{ $form->{lineitems} }) {
-    $total += $_->{tax};
-  }
-  if ($form->round_amount($total,2) != $form->round_amount($tax,2)) {
-    # get largest amount
-    for (reverse sort { $a->{tax} <=> $b->{tax} } @{ $form->{lineitems} }) {
-      $_->{tax} -= $total - $tax;
-      last;
-    }
-  }
-  $i = 1;
-  for (@{ $form->{lineitems} }) {
-    push(@{ $form->{linetax} }, $form->format_amount($myconfig, $_->{tax}, 2, ""));
-  }
+	# adjust taxes for lineitems
+	my $total = 0;
+	for (@{ $form->{lineitems} }) {
+		$total += $_->{tax};
+	}
+	if ($form->round_amount($total,2) != $form->round_amount($tax,2)) {
+		# get largest amount
+		for (reverse sort { $a->{tax} <=> $b->{tax} } 
+						@{ $form->{lineitems} }) {
+
+			$_->{tax} -= $total - $tax;
+			last;
+		}
+	}
+	$i = 1;
+	for (@{ $form->{lineitems} }) {
+		push(@{ $form->{linetax} }, 
+			$form->format_amount($myconfig, $_->{tax}, 2, ""));
+	}
   
  
-  for $i (1 .. $form->{paidaccounts}) {
-    if ($form->{"paid_$i"}) {
-      push(@{ $form->{payment} }, $form->{"paid_$i"});
-      my ($accno, $description) = split /--/, $form->{"AR_paid_$i"};
-      push(@{ $form->{paymentaccount} }, $description); 
-      push(@{ $form->{paymentdate} }, $form->{"datepaid_$i"});
-      push(@{ $form->{paymentsource} }, $form->{"source_$i"});
-      push(@{ $form->{paymentmemo} }, $form->{"memo_$i"});
+	for $i (1 .. $form->{paidaccounts}) {
+		if ($form->{"paid_$i"}) {
+			push(@{ $form->{payment} }, $form->{"paid_$i"});
+			my ($accno, $description) 
+				= split /--/, $form->{"AR_paid_$i"};
 
-      $form->{paid} += $form->parse_amount($myconfig, $form->{"paid_$i"});
-    }
-  }
+			push(@{ $form->{paymentaccount} }, $description); 
+			push(@{ $form->{paymentdate} }, $form->{"datepaid_$i"});
+			push(@{ $form->{paymentsource} }, $form->{"source_$i"});
+			push(@{ $form->{paymentmemo} }, $form->{"memo_$i"});
 
-  for (qw(totalparts totalservices)) { $form->{$_} = $form->format_amount($myconfig, $form->{$_}, 2) }
-  for (qw(totalqty totalship totalweight)) { $form->{$_} = $form->format_amount($myconfig, $form->{$_}) }
-  $form->{subtotal} = $form->format_amount($myconfig, $form->{total}, 2);
-  $form->{invtotal} = ($form->{taxincluded}) ? $form->{total} : $form->{total} + $tax;
+			$form->{paid} 
+				+= $form->parse_amount(
+					$myconfig, $form->{"paid_$i"});
+		}
+	}
 
-  use LedgerSMB::CP;
-  my $c;
-  if ($form->{language_code} ne "") {
-    $c = new CP $form->{language_code};
-  } else {
-    $c = new CP $myconfig->{countrycode};
-  }
-  $c->init;
-  my $whole;
-  ($whole, $form->{decimal}) = split /\./, $form->{invtotal};
-  $form->{decimal} .= "00";
-  $form->{decimal} = substr($form->{decimal}, 0, 2);
-  $form->{text_decimal} = $c->num2text($form->{decimal} * 1);
-  $form->{text_amount} = $c->num2text($whole);
-  $form->{integer_amount} = $form->format_amount($myconfig, $whole);
+	for (qw(totalparts totalservices)) { 
+		$form->{$_} = $form->format_amount($myconfig, $form->{$_}, 2); 
+	}
+	for (qw(totalqty totalship totalweight)) { 
+		$form->{$_} = $form->format_amount($myconfig, $form->{$_});
+	}
+	$form->{subtotal} = $form->format_amount($myconfig, $form->{total}, 2);
+	$form->{invtotal} = 
+		($form->{taxincluded}) ? $form->{total} : $form->{total} + $tax;
+
+	my $c;
+	if ($form->{language_code} ne "") {
+		$c = new CP $form->{language_code};
+	} else {
+		$c = new CP $myconfig->{countrycode};
+	}
+	$c->init;
+	my $whole;
+	($whole, $form->{decimal}) = split /\./, $form->{invtotal};
+	$form->{decimal} .= "00";
+	$form->{decimal} = substr($form->{decimal}, 0, 2);
+	$form->{text_decimal} = $c->num2text($form->{decimal} * 1);
+	$form->{text_amount} = $c->num2text($whole);
+	$form->{integer_amount} = $form->format_amount($myconfig, $whole);
  
-  $form->format_string(qw(text_amount text_decimal));
+	$form->format_string(qw(text_amount text_decimal));
 
-  $form->{total} = $form->format_amount($myconfig, $form->{invtotal} - $form->{paid}, 2);
-  $form->{invtotal} = $form->format_amount($myconfig, $form->{invtotal}, 2);
+	$form->{total} 
+		= $form->format_amount(
+			$myconfig, $form->{invtotal} - $form->{paid}, 2);
 
-  $form->{paid} = $form->format_amount($myconfig, $form->{paid}, 2);
+	$form->{invtotal} 
+		= $form->format_amount($myconfig, $form->{invtotal}, 2);
 
-  $dbh->disconnect;
+	$form->{paid} = $form->format_amount($myconfig, $form->{paid}, 2);
+
+	$dbh->commit;
   
 }
 
