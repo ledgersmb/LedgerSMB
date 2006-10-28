@@ -629,122 +629,167 @@ sub invoice_details {
 
 
 sub assembly_details {
-  my ($myconfig, $form, $dbh, $id, $oid, $qty) = @_;
+	my ($myconfig, $form, $dbh2, $id, $oid, $qty) = @_;
+  	$dbh  = $form->{dbh};
+	my $sm = "";
+	my $spacer;
   
-  my $sm = "";
-  my $spacer;
-  
-  $form->{stagger}++;
-  if ($form->{format} eq 'html') {
-    $spacer = "&nbsp;" x (3 * ($form->{stagger} - 1)) if $form->{stagger} > 1;
-  }
-  if ($form->{format} =~ /(postscript|pdf)/) {
-    if ($form->{stagger} > 1) {
-      $spacer = ($form->{stagger} - 1) * 3;
-      $spacer = '\rule{'.$spacer.'mm}{0mm}';
-    }
-  }
+	$form->{stagger}++;
+	if ($form->{format} eq 'html') {
+		$spacer = "&nbsp;" x (3 * ($form->{stagger} - 1)) 
+			if $form->{stagger} > 1;
+	}
+	if ($form->{format} =~ /(postscript|pdf)/) {
+		if ($form->{stagger} > 1) {
+			$spacer = ($form->{stagger} - 1) * 3;
+			$spacer = '\rule{'.$spacer.'mm}{0mm}';
+		}
+	}
   
   # get parts and push them onto the stack
-  my $sortorder = "";
+	my $sortorder = "";
 
-  if ($form->{grouppartsgroup}) {
-    $sortorder = qq|ORDER BY pg.partsgroup|;
-  }
+	if ($form->{grouppartsgroup}) {
+		$sortorder = qq|ORDER BY pg.partsgroup|;
+	}
   
-  my $query = qq|SELECT p.partnumber, p.description, p.unit, a.qty,
-	         pg.partsgroup, p.partnumber AS sku
-	         FROM assembly a
-	         JOIN parts p ON (a.parts_id = p.id)
-	         LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-	         WHERE a.bom = '1'
-	         AND a.id = '$id'
-	         $sortorder|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $query = qq|
+		   SELECT p.partnumber, p.description, p.unit, a.qty,
+		          pg.partsgroup, p.partnumber AS sku
+		     FROM assembly a
+		     JOIN parts p ON (a.parts_id = p.id)
+		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+		    WHERE a.bom = '1'
+		      AND a.id = ?
+		$sortorder|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($id) || $form->dberror($query);
 
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-    for (qw(partnumber description partsgroup)) {
-      $form->{"a_$_"} = $ref->{$_};
-      $form->format_string("a_$_");
-    }
+		for (qw(partnumber description partsgroup)) {
+			$form->{"a_$_"} = $ref->{$_};
+			$form->format_string("a_$_");
+		}
 
-    if ($form->{grouppartsgroup} && $ref->{partsgroup} ne $sm) {
-      for (qw(taxrates runningnumber number sku serialnumber unit qty ship bin deliverydate projectnumber sellprice listprice netprice discount discountrate linetotal weight itemnotes)) { push(@{ $form->{$_} }, "") }
-      $sm = ($form->{"a_partsgroup"}) ? $form->{"a_partsgroup"} : "--";
-      push(@{ $form->{description} }, "$spacer$sm");
-      push(@{ $form->{lineitems} }, { amount => 0, tax => 0 });
-    }
+		if ($form->{grouppartsgroup} && $ref->{partsgroup} ne $sm) {
+			for (
+				qw(taxrates runningnumber number sku 
+				serialnumber unit qty ship bin deliverydate 
+				projectnumber sellprice listprice netprice 
+				discount discountrate linetotal weight 
+				itemnotes)
+			) { 
+
+				push(@{ $form->{$_} }, ""); 
+			}
+			$sm = 
+				($form->{"a_partsgroup"}) 
+				? $form->{"a_partsgroup"} 
+				: "--";
+
+			push(@{ $form->{description} }, "$spacer$sm");
+			push(@{ $form->{lineitems} }, 
+				{ amount => 0, tax => 0 });
+		}
     
-    if ($form->{stagger}) {
+		if ($form->{stagger}) {
       
-      push(@{ $form->{description} }, $form->format_amount($myconfig, $ref->{qty} * $form->{"qty_$i"}) . qq| -- $form->{"a_partnumber"}, $form->{"a_description"}|);
-      for (qw(taxrates runningnumber number sku serialnumber unit qty ship bin deliverydate projectnumber sellprice listprice netprice discount discountrate linetotal weight itemnotes)) { push(@{ $form->{$_} }, "") }
-      
-    } else {
-      
-      push(@{ $form->{description} }, qq|$form->{"a_description"}|);
-      push(@{ $form->{number} }, $form->{"a_partnumber"});
-      push(@{ $form->{sku} }, $form->{"a_partnumber"});
+			push(@{ $form->{description} }, 
+				$form->format_amount(
+					$myconfig, 
+					$ref->{qty} * $form->{"qty_$i"}) 
+					.qq| -- $form->{"a_partnumber"}|
+					.qq|, $form->{"a_description"}|);
 
-      for (qw(taxrates runningnumber ship serialnumber reqdate projectnumber sellprice listprice netprice discount discountrate linetotal weight itemnotes)) { push(@{ $form->{$_} }, "") }
+			for (
+				qw(taxrates runningnumber number sku 
+				serialnumber unit qty ship bin deliverydate 
+				projectnumber sellprice listprice netprice 
+				discount discountrate linetotal weight 
+				itemnotes)
+			) { 
+				push(@{ $form->{$_} }, ""); 
+			}
       
-    }
+		} else {
+      
+			push(@{ $form->{description} }, 
+				qq|$form->{"a_description"}|);
 
-    push(@{ $form->{lineitems} }, { amount => 0, tax => 0 });
+			push(@{ $form->{number} }, $form->{"a_partnumber"});
+			push(@{ $form->{sku} }, $form->{"a_partnumber"});
 
-    push(@{ $form->{qty} }, $form->format_amount($myconfig, $ref->{qty} * $qty));
+			for (
+				qw(taxrates runningnumber ship serialnumber 
+				reqdate projectnumber sellprice listprice 
+				netprice discount discountrate linetotal weight 
+				itemnotes)
+			) { 
+
+				push(@{ $form->{$_} }, "");
+			}
+      
+		}
+
+		push(@{ $form->{lineitems} }, { amount => 0, tax => 0 });
+
+		push(@{ $form->{qty} }, 
+			$form->format_amount($myconfig, $ref->{qty} * $qty));
     
-    for (qw(unit bin)) {
-      $form->{"a_$_"} = $ref->{$_};
-      $form->format_string("a_$_");
-      push(@{ $form->{$_} }, $form->{"a_$_"});
-    }
+		for (qw(unit bin)) {
+			$form->{"a_$_"} = $ref->{$_};
+			$form->format_string("a_$_");
+			push(@{ $form->{$_} }, $form->{"a_$_"});
+		}
 
-  }
-  $sth->finish;
+	}
+	$sth->finish;
 
-  $form->{stagger}--;
+	$form->{stagger}--;
   
 }
 
 
 sub project_description {
-  my ($self, $dbh, $id) = @_;
+	my ($self, $dbh2, $id) = @_;
+	$dbh = $form->{dbh};
+	my $query = qq|
+		SELECT description
+		  FROM project
+		 WHERE id = ?|;
 
-  my $query = qq|SELECT description
-                 FROM project
-		 WHERE id = $id|;
-  ($_) = $dbh->selectrow_array($query);
+	$sth = $dbh->prepare($query);
+	$sth->execute($id);
+	($_) = $sth->fetchrow_array($query);
 
-  $_;
+	$_;
 
 }
 
 
 sub customer_details {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
   
-  # get rest for the customer
-  my $query = qq|SELECT customernumber, name, address1, address2, city,
-                 state, zipcode, country,
-	         contact, phone as customerphone, fax as customerfax,
-		 taxnumber AS customertaxnumber, sic_code AS sic, iban, bic,
-		 startdate, enddate
-	         FROM customer
-	         WHERE id = $form->{customer_id}|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	# get rest for the customer
+	my $query = qq|
+		SELECT customernumber, name, address1, address2, city,
+		       state, zipcode, country,
+		       contact, phone as customerphone, fax as customerfax,
+		       taxnumber AS customertaxnumber, sic_code AS sic, iban, 
+		       bic, startdate, enddate
+		  FROM customer
+		 WHERE id = ?|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{customer_id}) || $form->dberror($query);
 
-  $ref = $sth->fetchrow_hashref(NAME_lc);
-  for (keys %$ref) { $form->{$_} = $ref->{$_} }
+	$ref = $sth->fetchrow_hashref(NAME_lc);
+	for (keys %$ref) { $form->{$_} = $ref->{$_} }
 
-  $sth->finish;
-  $dbh->disconnect;
+	$sth->finish;
+	$dbh->commit;
 
 }
 
