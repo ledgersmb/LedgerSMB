@@ -18,7 +18,7 @@ Seneca Cunningham <tentra @ gmail.com>
 Contributed code fixes and support for advanced tax rules.  She has also 
 re-engineered the localization framework.
 
-Jason Rodriguez <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
+Jason Rodrigues <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
 the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
 
 Josh Berkus <josh @ agliodbs.com> has helped provide assistance in promotion,
