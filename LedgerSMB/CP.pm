@@ -45,17 +45,9 @@ sub new {
 
 	$self = {};
 
-	if ($countrycode) {
-
-		if (-f "locale/$countrycode/Num2text") {
-			require "locale/$countrycode/Num2text";
-		} else {
-			use LedgerSMB::Num2text;
-		}
-
-	} else {
-		use LedgerSMB::Num2text;
-	}
+	use LedgerSMB::Num2text;
+	use LedgerSMB::Locale;
+	$self->{'locale'} = LedgerSMB::Locale->get_handle($countrycode);
 
 	bless $self, $type;
 
