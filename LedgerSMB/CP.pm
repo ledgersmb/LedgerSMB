@@ -66,7 +66,7 @@ sub paymentaccounts {
 
 	my ($self, $myconfig, $form) = @_;
 
-	my $dbh = $form->{dbh}
+	my $dbh = $form->{dbh};
 
 	my $query = qq|SELECT accno, description, link
 					 FROM chart
