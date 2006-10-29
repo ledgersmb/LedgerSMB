@@ -1698,294 +1698,326 @@ sub delete_invoice {
 		}
 	}
   
-  $dbh->commit;
+	$dbh->commit;
   
-  $rc;
+	$rc;
   
 }
 
 
 
 sub retrieve_invoice {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
   
-  # connect to database
-  my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $query;
+	my $query;
 
-  if ($form->{id}) {
-    # get default accounts and last invoice number
-    $query = qq|SELECT d.curr AS currencies
-		FROM defaults d|;
-  } else {
-    $query = qq|SELECT d.curr AS currencies, current_date AS transdate
-                FROM defaults d|;
-  }
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	if ($form->{id}) {
+		# get default accounts and last invoice number
+		$query = qq|SELECT d.curr AS currencies FROM defaults d|;
+	} else {
+		$query = qq|
+			SELECT d.curr AS currencies, current_date AS transdate
+			  FROM defaults d|;
+	}
+	my $sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
 
-  my $ref = $sth->fetchrow_hashref(NAME_lc);
-  for (keys %$ref) { $form->{$_} = $ref->{$_} }
-  $sth->finish;
+	my $ref = $sth->fetchrow_hashref(NAME_lc);
+	for (keys %$ref) { $form->{$_} = $ref->{$_} }
+	$sth->finish;
 
   
-  if ($form->{id}) {
+	if ($form->{id}) {
     
-    # retrieve invoice
-    $query = qq|SELECT a.invnumber, a.ordnumber, a.quonumber,
-                a.transdate, a.paid,
-                a.shippingpoint, a.shipvia, a.terms, a.notes, a.intnotes,
-		a.duedate, a.taxincluded, a.curr AS currency,
-		a.employee_id, e.name AS employee, a.till, a.customer_id,
-		a.language_code, a.ponumber
-		FROM ar a
-	        LEFT JOIN employee e ON (e.id = a.employee_id)
-		WHERE a.id = $form->{id}|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		# retrieve invoice
+		$query = qq|
+			   SELECT a.invnumber, a.ordnumber, a.quonumber,
+			          a.transdate, a.paid,
+			          a.shippingpoint, a.shipvia, a.terms, a.notes, 
+			          a.intnotes,
+			          a.duedate, a.taxincluded, a.curr AS currency,
+			          a.employee_id, e.name AS employee, a.till, 
+			          a.customer_id,
+			          a.language_code, a.ponumber
+			     FROM ar a
+			LEFT JOIN employee e ON (e.id = a.employee_id)
+			    WHERE a.id = ?|;
 
-    $ref = $sth->fetchrow_hashref(NAME_lc);
-    for (keys %$ref) { $form->{$_} = $ref->{$_} }
-    $sth->finish;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{id}) || $form->dberror($query);
 
-    # get shipto
-    $query = qq|SELECT * FROM shipto
-                WHERE trans_id = $form->{id}|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		$ref = $sth->fetchrow_hashref(NAME_lc);
+		for (keys %$ref) { $form->{$_} = $ref->{$_} }
+		$sth->finish;
 
-    $ref = $sth->fetchrow_hashref(NAME_lc);
-    for (keys %$ref) { $form->{$_} = $ref->{$_} }
-    $sth->finish;
+		# get shipto
+		$query = qq|SELECT * FROM shipto WHERE trans_id = ?|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{id}) || $form->dberror($query);
 
-    # retrieve individual items
-    $query = qq|SELECT i.description, i.qty, i.fxsellprice, i.sellprice,
-		i.discount, i.parts_id AS id, i.unit, i.deliverydate,
-		i.project_id, pr.projectnumber, i.serialnumber, i.notes,
-		p.partnumber, p.assembly, p.bin,
-		pg.partsgroup, p.partsgroup_id, p.partnumber AS sku,
-		p.listprice, p.lastcost, p.weight, p.onhand,
-		p.inventory_accno_id, p.income_accno_id, p.expense_accno_id,
-		t.description AS partsgrouptranslation
-		FROM invoice i
-	        JOIN parts p ON (i.parts_id = p.id)
-	        LEFT JOIN project pr ON (i.project_id = pr.id)
-	        LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		LEFT JOIN translation t ON (t.trans_id = p.partsgroup_id AND t.language_code = '$form->{language_code}')
-		WHERE i.trans_id = $form->{id}
-		AND NOT i.assemblyitem = '1'
-		ORDER BY i.id|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		$ref = $sth->fetchrow_hashref(NAME_lc);
+		for (keys %$ref) { $form->{$_} = $ref->{$_} }
+		$sth->finish;
 
-    # foreign currency
-    &exchangerate_defaults($dbh, $form);
+		# retrieve individual items
+		$query = qq|
+			   SELECT i.description, i.qty, i.fxsellprice, 
+			          i.sellprice, i.discount, i.parts_id AS id, 
+			          i.unit, i.deliverydate, i.project_id, 
+			          pr.projectnumber, i.serialnumber, i.notes,
+			          p.partnumber, p.assembly, p.bin,
+			          pg.partsgroup, p.partsgroup_id, 
+			          p.partnumber AS sku, p.listprice, p.lastcost,
+			          p.weight, p.onhand, p.inventory_accno_id, 
+			          p.income_accno_id, p.expense_accno_id,
+			          t.description AS partsgrouptranslation
+			     FROM invoice i
+		             JOIN parts p ON (i.parts_id = p.id)
+			LEFT JOIN project pr ON (i.project_id = pr.id)
+			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+			LEFT JOIN translation t 
+			          ON (t.trans_id = p.partsgroup_id 
+			          AND t.language_code 
+			          = ?)
+			    WHERE i.trans_id = ?
+			          AND NOT i.assemblyitem = '1'
+			 ORDER BY i.id|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{language_code}, $form->{id}) 
+			|| $form->dberror($query);
 
-    # query for price matrix
-    my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
+		# foreign currency
+		&exchangerate_defaults($dbh, $form);
+
+		# query for price matrix
+		my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
     
-    # taxes
-    $query = qq|SELECT c.accno
-		FROM chart c
-		JOIN partstax pt ON (pt.chart_id = c.id)
-		WHERE pt.parts_id = ?|;
-    my $tth = $dbh->prepare($query) || $form->dberror($query);
+		# taxes
+		$query = qq|
+			SELECT c.accno
+			  FROM chart c
+			  JOIN partstax pt ON (pt.chart_id = c.id)
+			 WHERE pt.parts_id = ?|;
+		my $tth = $dbh->prepare($query) || $form->dberror($query);
    
-    my $taxrate;
-    my $ptref;
+		my $taxrate;
+		my $ptref;
     
-    while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+		while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-      my ($dec) = ($ref->{fxsellprice} =~ /\.(\d+)/);
-      $dec = length $dec;
-      my $decimalplaces = ($dec > 2) ? $dec : 2;
+			my ($dec) = ($ref->{fxsellprice} =~ /\.(\d+)/);
+			$dec = length $dec;
+			my $decimalplaces = ($dec > 2) ? $dec : 2;
 
-      $tth->execute($ref->{id});
+			$tth->execute($ref->{id});
 
-      $ref->{taxaccounts} = "";
-      $taxrate = 0;
+ 			$ref->{taxaccounts} = "";
+			$taxrate = 0;
       
-      while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
-	$ref->{taxaccounts} .= "$ptref->{accno} ";
-	$taxrate += $form->{"$ptref->{accno}_rate"};
-      }
-      $tth->finish;
-      chop $ref->{taxaccounts};
+			while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
+				$ref->{taxaccounts} .= "$ptref->{accno} ";
+				$taxrate += $form->{"$ptref->{accno}_rate"};
+			}
+			$tth->finish;
+			chop $ref->{taxaccounts};
 
-      # price matrix
-      $ref->{sellprice} = ($ref->{fxsellprice} * $form->{$form->{currency}});
-      PriceMatrix::price_matrix($pmh, $ref, $form->{transdate}, $decimalplaces, $form, $myconfig);
-      $ref->{sellprice} = $ref->{fxsellprice};
+			# price matrix
+			$ref->{sellprice} = 
+				($ref->{fxsellprice} 
+					* $form->{$form->{currency}});
+			PriceMatrix::price_matrix(
+				$pmh, $ref, $form->{transdate}, $decimalplaces, 
+				$form, $myconfig);
+			$ref->{sellprice} = $ref->{fxsellprice};
 
-      $ref->{partsgroup} = $ref->{partsgrouptranslation} if $ref->{partsgrouptranslation};
+			$ref->{partsgroup} = $ref->{partsgrouptranslation} 
+				if $ref->{partsgrouptranslation};
       
-      push @{ $form->{invoice_details} }, $ref;
-    }
-    $sth->finish;
+			push @{ $form->{invoice_details} }, $ref;
+		}
+		$sth->finish;
 
-  }
+	}
 
-  my $rc = $dbh->commit;
-  $dbh->disconnect;
   
-  @queries = $form->run_custom_queries('ar', 'SELECT');
-  $form->{dbh}->commit;
-  $rc;
+	@queries = $form->run_custom_queries('ar', 'SELECT');
+	my $rc = $dbh->commit;
+	$rc;
 
 }
 
 
 sub retrieve_item {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
   
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	# connect to database
+	my $dbh = $form->dbconnect($myconfig);
 
-  my $i = $form->{rowcount};
-  my $null;
-  my $var;
+	my $i = $form->{rowcount};
+	my $null;
+	my $var;
 
-  my $where = "WHERE p.obsolete = '0' AND NOT p.income_accno_id IS NULL";
+	my $where = "WHERE p.obsolete = '0' AND NOT p.income_accno_id IS NULL";
 
-  if ($form->{"partnumber_$i"} ne "") {
-    $var = $form->like(lc $form->{"partnumber_$i"});
-    $where .= " AND lower(p.partnumber) LIKE '$var'";
-  }
-  if ($form->{"description_$i"} ne "") {
-    $var = $form->like(lc $form->{"description_$i"});
-    if ($form->{language_code} ne "") {
-      $where .= " AND lower(t1.description) LIKE '$var'";
-    } else {
-      $where .= " AND lower(p.description) LIKE '$var'";
-    }
-  }
+	if ($form->{"partnumber_$i"} ne "") {
+		$var = $dbh->quote($form->like(lc $form->{"partnumber_$i"}));
+		$where .= " AND lower(p.partnumber) LIKE $var";
+	}
+	if ($form->{"description_$i"} ne "") {
+		$var = $dbh->quote($form->like(lc $form->{"description_$i"}));
 
-  if ($form->{"partsgroup_$i"} ne "") {
-    ($null, $var) = split /--/, $form->{"partsgroup_$i"};
-    $var *= 1;
-    if ($var == 0) {
-      # search by partsgroup, this is for the POS
-      $where .= qq| AND pg.partsgroup = '$form->{"partsgroup_$i"}'|;
-    } else {
-      $where .= qq| AND p.partsgroup_id = $var|;
-    }
-  }
+		if ($form->{language_code} ne "") {
+			$where .= " AND lower(t1.description) LIKE $var";
+		} else {
+			$where .= " AND lower(p.description) LIKE $var";
+		}
+	}
 
-  if ($form->{"description_$i"} ne "") {
-    $where .= " ORDER BY 3";
-  } else {
-    $where .= " ORDER BY 2";
-  }
+	if ($form->{"partsgroup_$i"} ne "") {
+		($null, $var) = split /--/, $form->{"partsgroup_$i"};
+		$var = $dbh->quote($var);
+		if ($var == 0) {
+			# search by partsgroup, this is for the POS
+			$where .= qq| AND pg.partsgroup = |.
+				$dbh->quote($form->{"partsgroup_$i"});
+		} else {
+			$where .= qq| AND p.partsgroup_id = $var|;
+		}
+	}
+
+	if ($form->{"description_$i"} ne "") {
+		$where .= " ORDER BY 3";
+	} else {
+		$where .= " ORDER BY 2";
+	}
   
-  my $query = qq|SELECT p.id, p.partnumber, p.description, p.sellprice,
-                 p.listprice, p.lastcost,
-		 p.unit, p.assembly, p.bin, p.onhand, p.notes,
-		 p.inventory_accno_id, p.income_accno_id, p.expense_accno_id,
-		 pg.partsgroup, p.partsgroup_id, p.partnumber AS sku,
-		 p.weight,
-		 t1.description AS translation,
-		 t2.description AS grouptranslation
-                 FROM parts p
-		 LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
-		 LEFT JOIN translation t1 ON (t1.trans_id = p.id AND t1.language_code = '$form->{language_code}')
-		 LEFT JOIN translation t2 ON (t2.trans_id = p.partsgroup_id AND t2.language_code = '$form->{language_code}')
+	my $query = qq|
+		   SELECT p.id, p.partnumber, p.description, p.sellprice,
+			  p.listprice, p.lastcost, p.unit, p.assembly, p.bin, 
+		          p.onhand, p.notes, p.inventory_accno_id, 
+		          p.income_accno_id, p.expense_accno_id, pg.partsgroup, 
+		          p.partsgroup_id, p.partnumber AS sku, p.weight,
+		          t1.description AS translation, 
+		          t2.description AS grouptranslation
+                     FROM parts p
+		LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
+		LEFT JOIN translation t1 
+		          ON (t1.trans_id = p.id AND t1.language_code = ?)
+		LEFT JOIN translation t2 
+		          ON (t2.trans_id = p.partsgroup_id 
+		          AND t2.language_code = ?)
 	         $where|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{language_code}, $form->{language_code}) 
+		|| $form->dberror($query);
 
-  my $ref;
-  my $ptref;
+	my $ref;
+	my $ptref;
 
-  # setup exchange rates
-  &exchangerate_defaults($dbh, $form);
+	# setup exchange rates
+	&exchangerate_defaults($dbh, $form);
   
-  # taxes
-  $query = qq|SELECT c.accno
-	      FROM chart c
-	      JOIN partstax pt ON (c.id = pt.chart_id)
-	      WHERE pt.parts_id = ?|;
-  my $tth = $dbh->prepare($query) || $form->dberror($query);
+	# taxes
+	$query = qq|
+		SELECT c.accno
+		  FROM chart c
+		  JOIN partstax pt ON (c.id = pt.chart_id)
+		 WHERE pt.parts_id = ?|;
+	my $tth = $dbh->prepare($query) || $form->dberror($query);
 
 
-  # price matrix
-  my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
+	# price matrix
+	my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
 
-  my $transdate = $form->datetonum($myconfig, $form->{transdate});
+	my $transdate = $form->datetonum($myconfig, $form->{transdate});
   
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-    my ($dec) = ($ref->{sellprice} =~ /\.(\d+)/);
-    $dec = length $dec;
-    my $decimalplaces = ($dec > 2) ? $dec : 2;
+		my ($dec) = ($ref->{sellprice} =~ /\.(\d+)/);
+		$dec = length $dec;
+		my $decimalplaces = ($dec > 2) ? $dec : 2;
 
-    # get taxes for part
-    $tth->execute($ref->{id});
+		# get taxes for part
+		$tth->execute($ref->{id});
 
-    $ref->{taxaccounts} = "";
-    while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
-      $ref->{taxaccounts} .= "$ptref->{accno} ";
-    }
-    $tth->finish;
-    chop $ref->{taxaccounts};
+		$ref->{taxaccounts} = "";
 
-    # get matrix
-    PriceMatrix::price_matrix($pmh, $ref, $transdate, $decimalplaces, $form, $myconfig);
+		while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
+			$ref->{taxaccounts} .= "$ptref->{accno} ";
+		}
+		$tth->finish;
+		chop $ref->{taxaccounts};
 
-    $ref->{description} = $ref->{translation} if $ref->{translation};
-    $ref->{partsgroup} = $ref->{grouptranslation} if $ref->{grouptranslation};
+		# get matrix
+		PriceMatrix::price_matrix(
+			$pmh, $ref, $transdate, $decimalplaces, $form, 
+			$myconfig);
+
+		$ref->{description} = $ref->{translation} 
+			if $ref->{translation};
+
+		$ref->{partsgroup} = $ref->{grouptranslation} 
+			if $ref->{grouptranslation};
     
-    push @{ $form->{item_list} }, $ref;
+		push @{ $form->{item_list} }, $ref;
 
-  }
+	}
   
-  $sth->finish;
-  $dbh->disconnect;
+	$sth->finish;
+	$dbh->commit;
   
 }
 
 
 sub exchangerate_defaults {
-  my ($dbh, $form) = @_;
+	my ($dbh2, $form) = @_;
+	$dbh = $form->{dbh};
 
-  my $var;
+
+	my $var;
   
-  # get default currencies
-  my $query = qq|SELECT substr(curr,1,3), curr FROM defaults|;
-  my $eth = $dbh->prepare($query) || $form->dberror($query);
-  $eth->execute;
-  ($form->{defaultcurrency}, $form->{currencies}) = $eth->fetchrow_array;
-  $eth->finish;
+	# get default currencies
+	my $query = qq|SELECT substr(curr,1,3), curr FROM defaults|;
+	my $eth = $dbh->prepare($query) || $form->dberror($query);
+	$eth->execute;
+	($form->{defaultcurrency}, $form->{currencies}) = $eth->fetchrow_array;
+	$eth->finish;
 
-  $query = qq|SELECT buy
-              FROM exchangerate
-	      WHERE curr = ?
-	      AND transdate = ?|;
-  my $eth1 = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|
+		SELECT buy
+		  FROM exchangerate
+		 WHERE curr = ?
+		       AND transdate = ?|;
+	my $eth1 = $dbh->prepare($query) || $form->dberror($query);
 
-  $query = qq~SELECT max(transdate || ' ' || buy || ' ' || curr)
-              FROM exchangerate
-	      WHERE curr = ?~;
-  my $eth2 = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq/
+		SELECT max(transdate || ' ' || buy || ' ' || curr)
+		  FROM exchangerate
+		 WHERE curr = ?/;
+	my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
-  # get exchange rates for transdate or max
-  foreach $var (split /:/, substr($form->{currencies},4)) {
-    $eth1->execute($var, $form->{transdate});
-    ($form->{$var}) = $eth1->fetchrow_array;
-    if (! $form->{$var} ) {
-      $eth2->execute($var);
+	# get exchange rates for transdate or max
+	foreach $var (split /:/, substr($form->{currencies},4)) {
+		$eth1->execute($var, $form->{transdate});
+		($form->{$var}) = $eth1->fetchrow_array;
+
+		if (! $form->{$var} ) {
+			$eth2->execute($var);
       
-      ($form->{$var}) = $eth2->fetchrow_array;
-      ($null, $form->{$var}) = split / /, $form->{$var};
-      $form->{$var} = 1 unless $form->{$var};
-      $eth2->finish;
-    }
-    $eth1->finish;
-  }
+			($form->{$var}) = $eth2->fetchrow_array;
+			($null, $form->{$var}) = split / /, $form->{$var};
+			$form->{$var} = 1 unless $form->{$var};
+			$eth2->finish;
+		}
+		$eth1->finish;
+	}
 
-  $form->{$form->{currency}} = $form->{exchangerate} if $form->{exchangerate};
-  $form->{$form->{currency}} ||= 1;
-  $form->{$form->{defaultcurrency}} = 1;
+	$form->{$form->{currency}} = $form->{exchangerate} 
+		if $form->{exchangerate};
+	$form->{$form->{currency}} ||= 1;
+	$form->{$form->{defaultcurrency}} = 1;
 
 }
 
