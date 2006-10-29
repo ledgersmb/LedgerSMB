@@ -4,6 +4,8 @@
 
 package LedgerSMB::Sysconfig;
 
+use Config::Std;
+
 $session='DB';
 $logging=0; # No logging on by default
 
@@ -53,10 +55,35 @@ my $globalDBConnect = 'dbi:Pg:dbname=ledgersmb;host=localhost;port=5432';
 my $globalUserName = "ledgersmb";
 my $globalPassword = "set me to correct password";
 
-eval { require "ledger-smb.conf"; };
-if ($@){
-	print STDERR "Parsing ledger-smb.conf failed: $@";
-}
+my %config;
+read_config('ledger-smb.conf' => %config) or die;
+
+$logging = $config{''}{logging} if $config{''}{logging};
+$check_max_invoices = $config{''}{check_max_invoices} if
+	$config{''}{check_max_invoices};
+$language = $config{''}{language} if $config{''}{language};
+$session = $config{''}{session} if $config{''}{session};
+$latex = $config{''}{latex} if $config{''}{latex};
+
+$ENV{PATH} .= ":".(join ':', @{$config{environment}{PATH}}) if
+	$config{environment}{PATH};
+$ENV{PERL5LIB} .= ":".(join ':', @{$config{environment}{PERL5LIB}}) if
+	$config{environment}{PERL5LIB};
+
+%printer = %{$config{printers}} if $config{printers};
+
+$memberfile = $config{paths}{memberfile} if $config{paths}{memberfile};
+$userspath = $config{paths}{userspath} if $config{paths}{userspath};
+$localepath = $config{paths}{localepath} if $config{paths}{localepath};
+$spool = $config{paths}{spool} if $config{paths}{spool};
+$templates = $config{paths}{tempates} if $config{paths}{tempates};
+
+$sendmail = $config{programs}{sendmail} if $config{programs}{sendmail};
+$gzip = $config{programs}{gzip} if $config{programs}{gzip};
+
+$globalDBConnect = $config{globaldb}{DBConnect} if $config{globaldb}{DBConnect};
+$globalUserName = $config{globaldb}{UserName} if $config{globaldb}{UserName};
+$globalPassword = $config{globaldb}{Password} if $config{globaldb}{Password};
 
 #$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword); 
 

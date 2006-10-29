@@ -1,55 +1,47 @@
-use vars qw($userspath $spool $memberfile $templates $sendmail $language $sid $latex %printer $gzip $GLOBALDBH);
+session  : DB
+logging  : 0
 
-#################################
-# Global database parameters
-#################################
-# These parameters *must* be set correctly
-# for LedgerSMB >= 1.2 to work
-my $globalDBConnect = 'dbi:Pg:dbname=ledgersmb;host=localhost;port=5432';
-my $globalUserName = "ledgersmb";
-my $globalPassword = "set me to correct password";
+# Set language for login and admin pages
+language : 
 
-$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword); 
+# If you have LaTeX installed, set to 1
+latex : 1
 
-# path to user configuration files
-$userspath = "users";
+# Maximum number of invoices that can be printed on a cheque
+check_max_invoices : 5
 
+[environment]
+# If the server can't find applications, append to the path
+PATH: /usr/local/pgsql/bin
+PATH: /usr/local/bin
+
+# If on Mac OS X using Fink's Perl libs, append to the path
+#PERL5LIB = /sw/lib/perl5
+
+[paths]
 # spool directory for batch printing
-$spool = "spool";
-
+spool      = spool
+# path to user configuration files
+userspath  = users
 # templates base directory
-$templates = "templates";
-
+templates  = templates
 # member file
-$memberfile = "users/members";
+memberfile = users/members
+localepath = locale/po
 
-# location of sendmail
-$sendmail = "| /usr/sbin/sendmail -t";
-
-# set language for login and admin
-$language = "";
-
-# Maximum number of invoices that can be printed on a check
-$check_max_invoices = 5;
-
-
-# if you have latex installed set to 1
-$latex = 1;
-
-# available printers
-%printer = ( Laser	=> 'lpr -Plaser',
-             Epson	=> 'lpr -PEpson',
-	     );
-
+[programs]
+sendmail   = | /usr/bin/sendmail -t
 # program to use for file compression
-$gzip = "gzip -S .gz";
+gzip       = gzip -S .gz
 
-# if the server can't find gzip, latex, dvips or pdflatex, add the path
-$ENV{PATH} .= ":/usr/local/bin:/usr/local/pgsql/bin";
+[printers]
+# Available printers
+Laser      = lpr -Plaser
+Epson      = lpr -PEpson
 
-# on mac os X using Fink's Perl libs, add the path
-#$ENV{PERL5LIB} .= ":/sw/lib/perl5";
-
-
-1;
-
+[globaldb]
+# These paramaters *must* be set correctly
+# for LedgerSMB >= 1.2 to work
+DBConnect  = dbi:Pg:dbname=ledgersmb;host=localhost;port5432
+UserName   = ledgersmb
+Password   = set me to correct password
