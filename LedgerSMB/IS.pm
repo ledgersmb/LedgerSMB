@@ -795,473 +795,643 @@ sub customer_details {
 
 
 sub post_invoice {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
   
-  # connect to database, turn off autocommit
-  my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $query;
-  my $sth;
-  my $null;
-  my $project_id;
-  my $exchangerate = 0;
-  my $keepcleared = 0;
+	my $query;
+	my $sth;
+	my $null;
+	my $project_id;
+	my $exchangerate = 0;
+	my $keepcleared = 0;
   
-  %$form->{acc_trans} = ();
+	%$form->{acc_trans} = ();
 
-  ($null, $form->{employee_id}) = split /--/, $form->{employee};
-  unless ($form->{employee_id}) {
-    ($form->{employee}, $form->{employee_id}) = $form->get_employee($dbh);
-  }
-  
-  ($null, $form->{department_id}) = split(/--/, $form->{department});
-  $form->{department_id} *= 1;
-
-  $query = qq|SELECT fxgain_accno_id, fxloss_accno_id
-              FROM defaults|;
-  my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
-
-  $query = qq|SELECT p.assembly, p.inventory_accno_id,
-              p.income_accno_id, p.expense_accno_id, p.project_id
-	      FROM parts p
-	      WHERE p.id = ?|;
-  my $pth = $dbh->prepare($query) || $form->dberror($query);
-  
-  if ($form->{id}) {
-    $keepcleared = 1;
-    $query = qq|SELECT id FROM ar
-                WHERE id = $form->{id}|;
-
-    if ($dbh->selectrow_array($query)) {
-      &reverse_invoice($dbh, $form);
-    } else {
-      $query = qq|INSERT INTO ar (id)
-                  VALUES ($form->{id})|;
-      $dbh->do($query) || $form->dberror($query);
-    }
-    
-  }
-  
-  my $uid = localtime;
-  $uid .= "$$";
- 
-  if (! $form->{id}) {
-   
-    $query = qq|INSERT INTO ar (invnumber, employee_id)
-                VALUES ('$uid', $form->{employee_id})|;
-    $dbh->do($query) || $form->dberror($query);
-
-    $query = qq|SELECT id FROM ar
-                WHERE invnumber = '$uid'|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    ($form->{id}) = $sth->fetchrow_array;
-    $sth->finish;
-
-    @queries = $form->run_custom_queries('ar', 'INSERT');
-  }
-
-
-  if ($form->{currency} eq $form->{defaultcurrency}) {
-    $form->{exchangerate} = 1;
-  } else {
-    $exchangerate = $form->check_exchangerate($myconfig, $form->{currency}, $form->{transdate}, 'buy');
-  }
-
-  $form->{exchangerate} = ($exchangerate) ? $exchangerate : $form->parse_amount($myconfig, $form->{exchangerate});
-
-  my $i;
-  my $item;
-  my $allocated = 0;
-  my $taxrate;
-  my $tax;
-  my $fxtax;
-  my @taxaccounts;
-  my $amount;
-  my $grossamount;
-  my $invamount = 0;
-  my $invnetamount = 0;
-  my $diff = 0;
-  my $ml;
-  my $invoice_id;
-  my $ndx;
-
-  foreach $i (1 .. $form->{rowcount}) {
-    $form->{"qty_$i"} = $form->parse_amount($myconfig, $form->{"qty_$i"});
-    
-    if ($form->{"qty_$i"}) {
-      
-      $pth->execute($form->{"id_$i"});
-      $ref = $pth->fetchrow_hashref(NAME_lc);
-      for (keys %$ref) { $form->{"${_}_$i"} = $ref->{$_} }
-      $pth->finish;
-
-      # project
-      $project_id = 'NULL';
-      if ($form->{"projectnumber_$i"}) {
-	($null, $project_id) = split /--/, $form->{"projectnumber_$i"};
-      }
-      $project_id = $form->{"project_id_$i"} if $form->{"project_id_$i"};
-
-      # keep entered selling price
-      my $fxsellprice = $form->parse_amount($myconfig, $form->{"sellprice_$i"});
-
-      my ($dec) = ($fxsellprice =~ /\.(\d+)/);
-      $dec = length $dec;
-      my $decimalplaces = ($dec > 2) ? $dec : 2;
-      
-      # undo discount formatting
-      $form->{"discount_$i"} = $form->parse_amount($myconfig, $form->{"discount_$i"})/100;
-     
-      # deduct discount
-      $form->{"sellprice_$i"} = $fxsellprice - $form->round_amount($fxsellprice * $form->{"discount_$i"}, $decimalplaces);
-      
-      # linetotal
-      my $fxlinetotal = $form->round_amount($form->{"sellprice_$i"} * $form->{"qty_$i"}, 2);
-
-      $amount = $fxlinetotal * $form->{exchangerate};
-      my $linetotal = $form->round_amount($amount, 2);
-      $fxdiff += $amount - $linetotal;
-      
-      @taxaccounts = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
-      $ml = 1;
-      $tax = 0;
-      $fxtax = 0;
-      
-      if ($form->{taxincluded}) {
-        $tax += $amount = Tax::calculate_taxes(\@taxaccounts, $form,
-		$linetotal, 1);
-	$form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
-	$fxtax += Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 1);
-      } else {
-        $tax += $amount = Tax::calculate_taxes(\@taxaccounts, $form,
-		$linetotal, 0);
-	$fxtax += Tax::calculate_taxes(\@taxaccounts, $form, $linetotal, 0);
-      }
-
-      $grossamount = $form->round_amount($linetotal, 2);
-      
-      if ($form->{taxincluded}) {
-	$amount = $form->round_amount($tax, 2);
-	$linetotal -= $form->round_amount($tax - $diff, 2);
-	$diff = ($amount - $tax);
-      }
-      
-      # add linetotal to income
-      $amount = $form->round_amount($linetotal, 2);
-
-      push @{ $form->{acc_trans}{lineitems} }, {
-        chart_id => $form->{"income_accno_id_$i"},
-	amount => $amount,
-	fxgrossamount => $fxlinetotal + $fxtax,
-	grossamount => $grossamount,
-	project_id => $project_id };
-      $ndx = $#{@{$form->{acc_trans}{lineitems}}};
-
-      $form->{"sellprice_$i"} = $form->round_amount($form->{"sellprice_$i"} * $form->{exchangerate}, $decimalplaces);
-  
-      if ($form->{"inventory_accno_id_$i"} || $form->{"assembly_$i"}) {
-	
-        if ($form->{"assembly_$i"}) {
-          # do not update if assembly consists of all services
-	  $query = qq|SELECT sum(p.inventory_accno_id), p.assembly
-	              FROM parts p
-		      JOIN assembly a ON (a.parts_id = p.id)
-		      WHERE a.id = $form->{"id_$i"}
-		      GROUP BY p.assembly|;
-          $sth = $dbh->prepare($query);
-	  $sth->execute || $form->dberror($query);
-	  my ($inv, $assembly) = $sth->fetchrow_array;
-	  $sth->finish;
-		      
-          if ($inv || $assembly) {
-	    $form->update_balance($dbh,
-				  "parts",
-				  "onhand",
-				  qq|id = $form->{"id_$i"}|,
-				  $form->{"qty_$i"} * -1) unless $form->{shipped};
-	  }
-
-	  &process_assembly($dbh, $form, $form->{"id_$i"}, $form->{"qty_$i"}, $project_id);
-	} else {
-	  $form->update_balance($dbh,
-	                        "parts",
-				"onhand",
-				qq|id = $form->{"id_$i"}|,
-				$form->{"qty_$i"} * -1) unless $form->{shipped};
-				
-	  $allocated = &cogs($dbh, $form, $form->{"id_$i"}, $form->{"qty_$i"}, $project_id);
+	($null, $form->{employee_id}) = split /--/, $form->{employee};
+	unless ($form->{employee_id}) {
+		($form->{employee}, $form->{employee_id}) 
+			= $form->get_employee($dbh);
 	}
-      }
-
-      # save detail record in invoice table
-      $query = qq|INSERT INTO invoice (description)
-                  VALUES ('$uid')|;
-      $dbh->do($query) || $form->dberror($query);
-
-      $query = qq|SELECT id FROM invoice
-                  WHERE description = '$uid'|;
-      ($invoice_id) = $dbh->selectrow_array($query);
-      
-      $query = qq|UPDATE invoice SET
-                  trans_id = $form->{id},
-		  parts_id = $form->{"id_$i"},
-		  description = |.$dbh->quote($form->{"description_$i"}).qq|,
-		  qty = $form->{"qty_$i"},
-                  sellprice = $form->{"sellprice_$i"},
-		  fxsellprice = $fxsellprice,
-		  discount = $form->{"discount_$i"},
-		  allocated = $allocated,
-		  unit = |.$dbh->quote($form->{"unit_$i"}).qq|,
-		  deliverydate = |.$form->dbquote($form->{"deliverydate_$i"}, SQL_DATE).qq|,
-		  project_id = $project_id,
-		  serialnumber = |.$dbh->quote($form->{"serialnumber_$i"}).qq|,
-		  notes = |.$dbh->quote($form->{"notes_$i"}).qq|
-		  WHERE id = $invoice_id|;
-      $dbh->do($query) || $form->dberror($query);
-
-      # add invoice_id
-      $form->{acc_trans}{lineitems}[$ndx]->{invoice_id} = $invoice_id;
-      
-    }
-  }
-
-  $form->{paid} = 0;
-  for $i (1 .. $form->{paidaccounts}) {
-    $form->{"paid_$i"} = $form->parse_amount($myconfig, $form->{"paid_$i"});
-    $form->{paid} += $form->{"paid_$i"};
-    $form->{datepaid} = $form->{"datepaid_$i"} if ($form->{"paid_$i"});
-  }
   
-  # add lineitems + tax
-  $amount = 0;
-  $grossamount = 0;
-  $fxgrossamount = 0;
-  for (@{ $form->{acc_trans}{lineitems} }) {
-    $amount += $_->{amount};
-    $grossamount += $_->{grossamount};
-    $fxgrossamount += $_->{fxgrossamount};
-  }
-  $invnetamount = $amount;
+	($null, $form->{department_id}) = split(/--/, $form->{department});
+	$form->{department_id} *= 1;
+
+	$query = qq|SELECT fxgain_accno_id, fxloss_accno_id FROM defaults|;
+	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
+
+	$query = qq|
+		SELECT p.assembly, p.inventory_accno_id,
+		       p.income_accno_id, p.expense_accno_id, p.project_id
+		  FROM parts p
+		 WHERE p.id = ?|;
+	my $pth = $dbh->prepare($query) || $form->dberror($query);
   
-  $amount = 0;
-  for (split / /, $form->{taxaccounts}) { 
-    $amount += 
-      $form->{acc_trans}{$form->{id}}{$_}{amount} = 
-      $form->round_amount($form->{acc_trans}{$form->{id}}{$_}{amount}, 2); 
-  }
-  $invamount = $invnetamount + $amount;
+	if ($form->{id}) {
+		$keepcleared = 1;
+		$query = qq|SELECT id FROM ar WHERE id = ?|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{id});
 
-  $diff = 0;
-  if ($form->{taxincluded}) {
-    $diff = $form->round_amount($grossamount - $invamount, 2);
-    $invamount += $diff;
-  }
-  $fxdiff = $form->round_amount($fxdiff,2);
-  $invnetamount += $fxdiff;
-  $invamount += $fxdiff;
-
-  if ($form->round_amount($form->{paid} - $fxgrossamount,2) == 0) {
-    $form->{paid} = $invamount;
-  } else {
-    $form->{paid} = $form->round_amount($form->{paid} * $form->{exchangerate}, 2);
-  }
-
-  foreach $ref (sort { $b->{amount} <=> $a->{amount} } @ { $form->{acc_trans}{lineitems} }) {
-    $amount = $ref->{amount} + $diff + $fxdiff;
-    $query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-		transdate, project_id, invoice_id)
-		VALUES ($form->{id}, $ref->{chart_id}, $amount,
-	      '$form->{transdate}', $ref->{project_id}, $ref->{invoice_id})|;
-    $dbh->do($query) || $form->dberror($query);
-    $diff = 0;
-    $fxdiff = 0;
-  }
-  
-  $form->{receivables} = $invamount * -1;
- 
-  delete $form->{acc_trans}{lineitems};
-  
-  # update exchangerate
-  if (($form->{currency} ne $form->{defaultcurrency}) && !$exchangerate) {
-    $form->update_exchangerate($dbh, $form->{currency}, $form->{transdate}, $form->{exchangerate}, 0);
-  }
-
-  # record receivable
-  if ($form->{receivables}) {
-    ($accno) = split /--/, $form->{AR};
-
-    $query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-                transdate)
-                VALUES ($form->{id},
-		       (SELECT id FROM chart
-		        WHERE accno = '$accno'),
-                $form->{receivables}, '$form->{transdate}')|;
-    $dbh->do($query) || $form->dberror($query);
-  }
-
-  foreach my $trans_id (keys %{$form->{acc_trans}}) {
-    foreach my $accno (keys %{$form->{acc_trans}{$trans_id}}) {
-      $amount = $form->round_amount($form->{acc_trans}{$trans_id}{$accno}{amount}, 2);
-      if ($amount) {
-	$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-		    transdate)
-		    VALUES ($trans_id, (SELECT id FROM chart
-					WHERE accno = '$accno'),
-		    $amount, '$form->{transdate}')|;
-	$dbh->do($query) || $form->dberror($query);
-      }
-    }
-  }
-
-  
-  # if there is no amount but a payment record receivable
-  if ($invamount == 0) {
-    $form->{receivables} = 1;
-  }
-  
-  my $cleared = 0;
-  
-  # record payments and offsetting AR
-  for $i (1 .. $form->{paidaccounts}) {
+	 	if ($dbh->selectrow_array($query)) {
+	 	 	&reverse_invoice($dbh, $form);
+	 	} else {
+			$query = qq|INSERT INTO ar (id) VALUES (?)|;
+			$sth = $dbh->prepare($query); 
+			$sth->execute($form->{id}) || $form->dberror($query);
+		}
     
-    if ($form->{"paid_$i"}) {
-      my ($accno) = split /--/, $form->{"AR_paid_$i"};
-      $form->{"datepaid_$i"} = $form->{transdate} unless ($form->{"datepaid_$i"});
-      $form->{datepaid} = $form->{"datepaid_$i"};
-      
-      $exchangerate = 0;
-      
-      if ($form->{currency} eq $form->{defaultcurrency}) {
-	$form->{"exchangerate_$i"} = 1;
-      } else {
-	$exchangerate = $form->check_exchangerate($myconfig, $form->{currency}, $form->{"datepaid_$i"}, 'buy');
-	
-	$form->{"exchangerate_$i"} = ($exchangerate) ? $exchangerate : $form->parse_amount($myconfig, $form->{"exchangerate_$i"});
-      }
-      
- 
-      # record AR
-      $amount = $form->round_amount($form->{"paid_$i"} * $form->{exchangerate}, 2);
-
-      if ($form->{receivables}) {
-	$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-	            transdate)
-		    VALUES ($form->{id}, (SELECT id FROM chart
-					WHERE accno = '$form->{AR}'),
-		    $amount, '$form->{"datepaid_$i"}')|;
-	$dbh->do($query) || $form->dberror($query);
-      }
-
-      # record payment
-      $amount = $form->{"paid_$i"} * -1;
-      if ($keepcleared) {
-	$cleared = ($form->{"cleared_$i"}) ? 1 : 0;
-      }
-      
-      $query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount, transdate,
-                  source, memo, cleared)
-                  VALUES ($form->{id}, (SELECT id FROM chart
-		                      WHERE accno = '$accno'),
-		  $amount, '$form->{"datepaid_$i"}', |
-		  .$dbh->quote($form->{"source_$i"}).qq|, |
-		  .$dbh->quote($form->{"memo_$i"}).qq|, '$cleared')|;
-      $dbh->do($query) || $form->dberror($query);
-
-      # exchangerate difference
-      $amount = $form->round_amount(($form->round_amount($form->{"paid_$i"} * $form->{"exchangerate_$i"} - $form->{"paid_$i"}, 2)) * -1, 2);
-
-      if ($amount) { 
-	$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-	            transdate, source, fx_transaction, cleared)
-		    VALUES ($form->{id}, (SELECT id FROM chart
-					WHERE accno = '$accno'),
-		    $amount, '$form->{"datepaid_$i"}', |
-		    .$dbh->quote($form->{"source_$i"}).qq|, '1', '$cleared')|;
-	$dbh->do($query) || $form->dberror($query);
-      }
-     
-      # gain/loss
-      $amount = $form->round_amount(($form->round_amount($form->{"paid_$i"} * $form->{exchangerate},2) - $form->round_amount($form->{"paid_$i"} * $form->{"exchangerate_$i"},2)) * -1, 2);
-
-      if ($amount) {
-	my $accno_id = ($amount > 0) ? $fxgain_accno_id : $fxloss_accno_id;
-	$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount,
-	            transdate, fx_transaction, cleared)
-	            VALUES ($form->{id}, $accno_id,
-		    $amount, '$form->{"datepaid_$i"}', '1', '$cleared')|;
-	$dbh->do($query) || $form->dberror($query);
-      }
-	
-      # update exchange rate
-      if (($form->{currency} ne $form->{defaultcurrency}) && !$exchangerate) {
-	$form->update_exchangerate($dbh, $form->{currency}, $form->{"datepaid_$i"}, $form->{"exchangerate_$i"}, 0);
-      }
-    }
-  }
-
-  # set values which could be empty to 0
-  $form->{terms} *= 1;
-  $form->{taxincluded} *= 1;
-
-  # if this is from a till
-  my $till = ($form->{till}) ? qq|'$form->{till}'| : "NULL";
-
-  $form->{invnumber} = $form->update_defaults($myconfig, "sinumber", $dbh) unless $form->{invnumber};
-
-  # save AR record
-  $query = qq|UPDATE ar set
-              invnumber = |.$dbh->quote($form->{invnumber}).qq|,
-	      ordnumber = |.$dbh->quote($form->{ordnumber}).qq|,
-	      quonumber = |.$dbh->quote($form->{quonumber}).qq|,
-              transdate = '$form->{transdate}',
-              customer_id = $form->{customer_id},
-              amount = $invamount,
-              netamount = $invnetamount,
-              paid = $form->{paid},
-	      datepaid = |.$form->dbquote($form->{datepaid}, SQL_DATE).qq|,
-	      duedate = |.$form->dbquote($form->{duedate}, SQL_DATE).qq|,
-	      invoice = '1',
-	      shippingpoint = |.$dbh->quote($form->{shippingpoint}).qq|,
-	      shipvia = |.$dbh->quote($form->{shipvia}).qq|,
-	      terms = $form->{terms},
-	      notes = |.$dbh->quote($form->{notes}).qq|,
-	      intnotes = |.$dbh->quote($form->{intnotes}).qq|,
-	      taxincluded = '$form->{taxincluded}',
-	      curr = '$form->{currency}',
-	      department_id = $form->{department_id},
-	      employee_id = $form->{employee_id},
-	      till = $till,
-	      language_code = '$form->{language_code}',
-	      ponumber = |.$dbh->quote($form->{ponumber}).qq|
-              WHERE id = $form->{id}
-             |;
-  $dbh->do($query) || $form->dberror($query);
-
-  # add shipto
-  $form->{name} = $form->{customer};
-  $form->{name} =~ s/--$form->{customer_id}//;
-  $form->add_shipto($dbh, $form->{id});
-
-  # save printed, emailed and queued
-  $form->save_status($dbh);
+	}
   
-  my %audittrail = ( tablename  => 'ar',
-                     reference  => $form->{invnumber},
-		     formname   => $form->{type},
-		     action     => 'posted',
-		     id         => $form->{id} );
+	my $uid = localtime;
+	$uid .= "$$";
  
-  $form->audittrail($dbh, "", \%audittrail);
+	if (! $form->{id}) {
+   
+		$query = qq|
+			INSERT INTO ar (invnumber, employee_id) 
+			     VALUES ('$uid', ?)|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{employee_id}) || $form->dberror($query);
 
-  $form->save_recurring($dbh, $myconfig);
+		$query = qq|SELECT id FROM ar WHERE invnumber = '$uid'|;
+		$sth = $dbh->prepare($query);
+		$sth->execute || $form->dberror($query);
 
-  my $rc = $dbh->commit;
+		($form->{id}) = $sth->fetchrow_array;
+		$sth->finish;
 
-  $dbh->disconnect;
+		@queries = $form->run_custom_queries('ar', 'INSERT');
+	}
 
-  $rc;
+
+	if ($form->{currency} eq $form->{defaultcurrency}) {
+		$form->{exchangerate} = 1;
+	} else {
+		$exchangerate = 
+			$form->check_exchangerate(
+				$myconfig, $form->{currency}, 
+				$form->{transdate}, 'buy');
+	}
+
+	$form->{exchangerate} = 
+		($exchangerate) 
+		? $exchangerate 
+		: $form->parse_amount($myconfig, $form->{exchangerate});
+
+	my $i;
+	my $item;
+	my $allocated = 0;
+	my $taxrate;
+	my $tax;
+	my $fxtax;
+	my @taxaccounts;
+	my $amount;
+	my $grossamount;
+	my $invamount = 0;
+	my $invnetamount = 0;
+	my $diff = 0;
+	my $ml;
+	my $invoice_id;
+	my $ndx;
+
+	foreach $i (1 .. $form->{rowcount}) {
+		$form->{"qty_$i"} = 
+			$form->parse_amount($myconfig, $form->{"qty_$i"});
+    
+		if ($form->{"qty_$i"}) {
+      
+			$pth->execute($form->{"id_$i"});
+			$ref = $pth->fetchrow_hashref(NAME_lc);
+			for (keys %$ref) { $form->{"${_}_$i"} = $ref->{$_} }
+			$pth->finish;
+
+			# project
+			$project_id = 'NULL';
+			if ($form->{"projectnumber_$i"}) {
+				($null, $project_id) 
+					= split /--/, 
+						$form->{"projectnumber_$i"};
+			}
+			$project_id = $form->{"project_id_$i"} 
+				if $form->{"project_id_$i"};
+
+			# keep entered selling price
+			my $fxsellprice = 
+				$form->parse_amount(
+					$myconfig, $form->{"sellprice_$i"});
+
+			my ($dec) = ($fxsellprice =~ /\.(\d+)/);
+			$dec = length $dec;
+			my $decimalplaces = ($dec > 2) ? $dec : 2;
+      
+			# undo discount formatting
+			$form->{"discount_$i"} = 
+				$form->parse_amount(
+					$myconfig, $form->{"discount_$i"})/100;
+     
+			# deduct discount
+			$form->{"sellprice_$i"} = $fxsellprice 
+				- $form->round_amount(
+					$fxsellprice * $form->{"discount_$i"}, 
+					$decimalplaces);
+      
+			# linetotal
+			my $fxlinetotal = $form->round_amount(
+				$form->{"sellprice_$i"} * $form->{"qty_$i"}, 2);
+
+			$amount = $fxlinetotal * $form->{exchangerate};
+			my $linetotal = $form->round_amount($amount, 2);
+			$fxdiff += $amount - $linetotal;
+      
+			@taxaccounts = Tax::init_taxes(
+				$form, $form->{"taxaccounts_$i"});
+			$ml = 1;
+			$tax = 0;
+			$fxtax = 0;
+      
+	 	 	if ($form->{taxincluded}) {
+	 	 		$tax += $amount = 
+					Tax::calculate_taxes(
+						\@taxaccounts, $form,
+						$linetotal, 1);
+				$form->{"sellprice_$i"} -= $amount 
+					/ $form->{"qty_$i"};
+
+				$fxtax += Tax::calculate_taxes(
+					\@taxaccounts, $form, $linetotal, 1);
+			} else {
+				$tax += $amount = Tax::calculate_taxes(
+					\@taxaccounts, $form, $linetotal, 0);
+
+				$fxtax += Tax::calculate_taxes(
+					\@taxaccounts, $form, $linetotal, 0);
+			}
+
+			$grossamount = $form->round_amount($linetotal, 2);
+      
+			if ($form->{taxincluded}) {
+				$amount = $form->round_amount($tax, 2);
+				$linetotal -= $form->round_amount(
+					$tax - $diff, 2);
+				$diff = ($amount - $tax);
+			}
+      
+			# add linetotal to income
+			$amount = $form->round_amount($linetotal, 2);
+
+			push @{ $form->{acc_trans}{lineitems} }, {
+				chart_id => $form->{"income_accno_id_$i"},
+				amount => $amount,
+				fxgrossamount => $fxlinetotal + $fxtax,
+				grossamount => $grossamount,
+				project_id => $project_id };
+
+			$ndx = $#{@{$form->{acc_trans}{lineitems}}};
+
+			$form->{"sellprice_$i"} = 
+				$form->round_amount(
+					$form->{"sellprice_$i"} 
+						* $form->{exchangerate}, 
+					$decimalplaces);
+  
+			if ($form->{"inventory_accno_id_$i"} 
+						|| $form->{"assembly_$i"}) {
+	
+				if ($form->{"assembly_$i"}) {
+					# If the assembly consists of all 
+					# services, we don't keep inventory,
+					# so we should not update it
+					$query = qq|
+						SELECT sum(
+						       p.inventory_accno_id), 
+						       p.assembly
+						  FROM parts p
+						  JOIN assembly a 
+						       ON (a.parts_id = p.id)
+						 WHERE a.id = $form->{"id_$i"}
+						 GROUP BY p.assembly|;
+ 					$sth = $dbh->prepare($query);
+					$sth->execute($form->{"id_$i"}) 
+						|| $form->dberror($query);
+					my ($inv, $assembly) 
+						= $sth->fetchrow_array;
+					$sth->finish;
+		      
+					if ($inv || $assembly) {
+						$form->update_balance($dbh,
+							"parts",
+							"onhand",
+							qq|id = |.
+							qq|$form->{"id_$i"}|,
+				  			$form->{"qty_$i"} * -1) 
+								unless $form->{shipped};
+					}
+
+					&process_assembly(
+						$dbh, $form, $form->{"id_$i"}, 
+						$form->{"qty_$i"}, $project_id);
+				} else {
+					$form->update_balance(
+						$dbh, "parts", "onhand",
+						qq|id = $form->{"id_$i"}|,
+						$form->{"qty_$i"} * -1) 
+							unless $form->{shipped};
+				
+					$allocated = &cogs(
+						$dbh, $form, $form->{"id_$i"}, 
+						$form->{"qty_$i"}, $project_id);
+				}
+ 			}
+
+			# save detail record in invoice table
+			$query = qq|
+				INSERT INTO invoice (description)
+				     VALUES ('$uid')|;
+
+ 			$dbh->do($query) || $form->dberror($query);
+
+			$query = qq|
+				SELECT id FROM invoice
+				WHERE description = '$uid'|;
+			($invoice_id) = $dbh->selectrow_array($query);
+      
+			$query = qq|
+				UPDATE invoice 
+				   SET trans_id = ?,
+				       parts_id = ?,
+				       description = ?,
+				       qty = ?,
+				       sellprice = ?,
+				       fxsellprice = ?,
+				       discount = ?,
+				       allocated = ?,
+				       unit = ?,
+				       deliverydate = ?,
+				       project_id = ?,
+				       serialnumber = ?,
+				       notes = ?
+				      WHERE id = ?|;
+
+			$sth = $dbh->prepare($query);
+			$sth->execute(
+				$form->{id},  $form->{"id_$i"}, 
+				$form->{"description_$i"}, $form->{"qty_$i"},
+				$form->{"sellprice_$i"}, $fxsellprice, 
+				$form->{"discount_$i"}, $allocated, 
+				$form->{"unit_$i"}, $form->{"deliverydate_$i"},
+				$project_id, $form->{"serialnumber_$i"}, 
+				$form->{"notes_$i"}, $invoice_id)
+					|| $form->dberror($query);
+
+			# add invoice_id
+			$form->{acc_trans}{lineitems}[$ndx]->{invoice_id} 
+				= $invoice_id;
+      
+		}
+	}
+
+	$form->{paid} = 0;
+	for $i (1 .. $form->{paidaccounts}) {
+		$form->{"paid_$i"} = 
+			$form->parse_amount($myconfig, $form->{"paid_$i"});
+		$form->{paid} += $form->{"paid_$i"};
+		$form->{datepaid} = $form->{"datepaid_$i"} 
+			if ($form->{"paid_$i"});
+	}
+  
+	# add lineitems + tax
+	$amount = 0;
+	$grossamount = 0;
+	$fxgrossamount = 0;
+
+	for (@{ $form->{acc_trans}{lineitems} }) {
+		$amount += $_->{amount};
+		$grossamount += $_->{grossamount};
+		$fxgrossamount += $_->{fxgrossamount};
+	}
+	$invnetamount = $amount;
+  
+	$amount = 0;
+
+	for (split / /, $form->{taxaccounts}) { 
+		$amount += 
+			$form->{acc_trans}{$form->{id}}{$_}{amount} = 
+				$form->round_amount(
+					$form->{acc_trans}{$form->{id}}{$_}{amount}, 
+					2); 
+	}
+	$invamount = $invnetamount + $amount;
+
+	$diff = 0;
+
+	if ($form->{taxincluded}) {
+		$diff = $form->round_amount($grossamount - $invamount, 2);
+		$invamount += $diff;
+	}
+	$fxdiff = $form->round_amount($fxdiff,2);
+	$invnetamount += $fxdiff;
+	$invamount += $fxdiff;
+
+	if ($form->round_amount($form->{paid} - $fxgrossamount,2) == 0) {
+		$form->{paid} = $invamount;
+	} else {
+		$form->{paid} = $form->round_amount(
+			$form->{paid} * $form->{exchangerate}, 2);
+	}
+
+	foreach $ref (sort { $b->{amount} <=> $a->{amount} } 
+					@ { $form->{acc_trans}{lineitems} }) {
+
+		$amount = $ref->{amount} + $diff + $fxdiff;
+		$query = qq|
+			INSERT INTO acc_trans 
+			            (trans_id, chart_id, amount,
+			            transdate, project_id, invoice_id)
+			     VALUES (?, ?, ?, ?, ?, ?)|;
+		$sth = $dbh->prepare($query);
+		$sth->execute(
+			$form->{id}, $ref->{chart_id}, $amount, 
+			$form->{transdate}, $ref->{project_id}, 
+			$ref->{invoice_id}) 
+				|| $form->dberror($query);
+		$diff = 0;
+		$fxdiff = 0;
+	}
+  
+	$form->{receivables} = $invamount * -1;
+ 
+	delete $form->{acc_trans}{lineitems};
+  
+	# update exchangerate
+	if (($form->{currency} ne $form->{defaultcurrency}) && !$exchangerate) {
+		$form->update_exchangerate(
+			$dbh, $form->{currency}, $form->{transdate}, 
+			$form->{exchangerate}, 0);
+	}
+
+	# record receivable
+	if ($form->{receivables}) {
+		($accno) = split /--/, $form->{AR};
+
+		$query = qq|
+			INSERT INTO acc_trans 
+			            (trans_id, chart_id, amount, transdate)
+			     VALUES (?, (SELECT id FROM chart WHERE accno = ?), 
+			            ?, ?)|;
+
+		$sth = $dbh->prepare($query);
+		$sth->execute(
+			$form->{id}, $accno, $form->{receivables}, 
+			$form->{transdate})
+				|| $form->dberror($query);
+	}
+
+	foreach my $trans_id (keys %{$form->{acc_trans}}) {
+		foreach my $accno (keys %{$form->{acc_trans}{$trans_id}}) {
+			$amount = $form->round_amount(
+				$form->{acc_trans}{$trans_id}{$accno}{amount}, 
+				2);
+			if ($amount) {
+
+				$query = qq|
+					INSERT INTO acc_trans 
+					            (trans_id, chart_id, amount,
+					            transdate)
+					VALUES (?, (SELECT id FROM chart
+					             WHERE accno = ?),
+					       ?, ?)|;
+
+				$sth = $dbh->prepare($query);
+				$sth->execute(
+					$trans_id, $accno, $amount, 
+					$form->{transdate})
+						 || $form->dberror($query);
+			}
+		}
+	}
+
+  
+	# if there is no amount but a payment record receivable
+	if ($invamount == 0) {
+  		$form->{receivables} = 1;
+	}
+  
+	my $cleared = 0;
+  
+	# record payments and offsetting AR
+	for $i (1 .. $form->{paidaccounts}) {
+    
+		if ($form->{"paid_$i"}) {
+			my ($accno) = split /--/, $form->{"AR_paid_$i"};
+			$form->{"datepaid_$i"} = $form->{transdate} 
+				unless ($form->{"datepaid_$i"});
+
+			$form->{datepaid} = $form->{"datepaid_$i"};
+      
+			$exchangerate = 0;
+      
+			if ($form->{currency} eq $form->{defaultcurrency}) {
+				$form->{"exchangerate_$i"} = 1;
+			} else {
+				$exchangerate = 
+					$form->check_exchangerate(
+						$myconfig, $form->{currency}, 
+						$form->{"datepaid_$i"}, 'buy');
+	
+				$form->{"exchangerate_$i"} = 
+					($exchangerate) 
+					? $exchangerate 
+					: $form->parse_amount(
+						$myconfig, 
+						$form->{"exchangerate_$i"});
+			}
+      
+ 
+			# record AR
+			$amount = $form->round_amount(
+				$form->{"paid_$i"} * $form->{exchangerate}, 2);
+
+			if ($form->{receivables}) {
+				$query = qq|
+					INSERT INTO acc_trans 
+					            (trans_id, chart_id, amount,
+					            transdate)
+					     VALUES (?, (SELECT id FROM chart
+					                  WHERE accno = ?),
+					            ?, ?)|;
+				$sth = $dbh->prpare($query);
+				$sth->execute(
+					$form->{id}, $form->{AR}, $amount, 
+					$form->{"datepaid_$i"}) 
+						|| $form->dberror($query);
+			}
+
+			# record payment
+			$amount = $form->{"paid_$i"} * -1;
+			if ($keepcleared) {
+				$cleared = ($form->{"cleared_$i"}) ? 1 : 0;
+			}
+      
+			$query = qq|
+				INSERT INTO acc_trans 
+				            (trans_id, chart_id, amount, 
+				            transdate, source, memo, cleared)
+                  		     VALUES ($?, (SELECT id FROM chart
+		                                   WHERE accno = ?),
+		  		            ?, ?, ?, ?, ?)|;
+
+			$sth = $dbh->prepare($query); 
+			$sth->prepare(
+				$form->{id}, $accno, $amount, 
+				$form->{"datepaid_$i"}, $form->{"source_$i"},
+				$form->{"memo_$i"}, $cleared) 
+					|| $form->dberror($query);
+
+			# exchangerate difference
+			$amount = $form->round_amount(
+				($form->round_amount(
+					$form->{"paid_$i"} 
+						* $form->{"exchangerate_$i"} 
+						- $form->{"paid_$i"}, 2)) * -1, 
+				2);
+
+			if ($amount) { 
+				$query = qq|
+					INSERT INTO acc_trans 
+					            (trans_id, chart_id, amount,
+					            transdate, source, 
+					            fx_transaction, cleared)
+					     VALUES (?, (SELECT id FROM chart
+					                   WHERE accno = >),
+					            ?, ?, ?, '1', ?)|;
+
+				$sth = $dbh->prepare($query);
+				$sth->execute(
+					$form->{id}, $accno, $amount,
+					$form->{"datepaid_$i"}, 
+					$form->{"source_$i"}, $cleared ) 
+						|| $form->dberror($query);
+			}
+     
+			# gain/loss
+			$amount = $form->round_amount(
+				($form->round_amount(
+					$form->{"paid_$i"} 
+						* $form->{exchangerate},2) 
+					- $form->round_amount(
+						$form->{"paid_$i"} 
+						* $form->{"exchangerate_$i"},2)
+				) * -1, 
+				2);
+
+			if ($amount) {
+				my $accno_id = 
+					($amount > 0) 
+					? $fxgain_accno_id 
+					: $fxloss_accno_id;
+
+				$query = qq|
+					INSERT INTO acc_trans (
+					            trans_id, chart_id, amount,
+					            transdate, fx_transaction, 
+					            cleared)
+					     VALUES (?, ?, ?, ?, '1', ?)|;
+
+				$sth = $dbh->prepare($query);
+				$sth->execute(
+					$form->{id}, $accno_id, $amount,
+					$form->{"datepaid_$i"}, $cleared) 
+						|| $form->dberror($query);
+			}
+	
+			# update exchange rate
+			if (($form->{currency} ne $form->{defaultcurrency}) 
+							&& !$exchangerate) {
+
+				$form->update_exchangerate(
+					$dbh, $form->{currency}, 
+					$form->{"datepaid_$i"}, 
+					$form->{"exchangerate_$i"}, 0);
+			}
+		}
+	}
+
+	# set values which could be empty to 0
+	$form->{terms} *= 1;
+	$form->{taxincluded} *= 1;
+
+	# if this is from a till
+	my $till = ($form->{till}) ? qq|'$form->{till}'| : "NULL";
+
+	$form->{invnumber} = 
+		$form->update_defaults($myconfig, "sinumber", $dbh) 
+			unless $form->{invnumber};
+
+	# save AR record
+	$query = qq|
+		UPDATE ar set
+		       invnumber = ?,
+		       ordnumber = ?,
+		       quonumber = ?,
+		       transdate = ?,
+		       customer_id = ?,
+		       amount = ?,
+		       netamount = ?,
+		       paid = ?,
+		       datepaid = ?,
+		       duedate = ?,
+		       invoice = '1',
+		       shippingpoint = ?,
+		       shipvia = ?,
+		       terms = ?,
+		       notes = ?,
+		       intnotes = ?,
+		       taxincluded = ?,
+		       curr = ?,
+		       department_id = ?,
+		       employee_id = ?,
+		       till = ?,
+		       language_code = ?,
+		       ponumber = ?
+		 WHERE id = ?
+             |;
+
+	$sth = $dbh->prepare($query);
+	$sth->execute(
+		$form->{invnumber}, $form->{ordnumber}, $form->{quonumber},
+		$form->{transdate}, $form->{customer_id}, $invamount,
+		$invnetamount, $form->{paid}, $form->{datepaid}, 
+		$form->{duedate}, $form->{shippingpoint}, $form->{shipvia},
+		$form->{terms}, $form->{notes}, $form->{intnotes}, 
+		$form->{taxincluded}, $form->{currency}, $form->{department_id},
+		$form->{employee_id}, $till, $form->{language_code}, 
+		$form->{ponumber}, $form->{id})
+			 || $form->dberror($query);
+
+	# add shipto
+	$form->{name} = $form->{customer};
+	$form->{name} =~ s/--$form->{customer_id}//;
+	$form->add_shipto($dbh, $form->{id});
+
+	# save printed, emailed and queued
+	$form->save_status($dbh);
+  
+	my %audittrail = ( 
+		tablename  => 'ar',
+		reference  => $form->{invnumber},
+		formname   => $form->{type},
+		action     => 'posted',
+		id         => $form->{id} );
+ 
+	$form->audittrail($dbh, "", \%audittrail);
+
+	$form->save_recurring($dbh, $myconfig);
+
+	my $rc = $dbh->commit;
+
+
+	$rc;
   
 }
 
