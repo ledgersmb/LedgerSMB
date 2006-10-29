@@ -23,7 +23,7 @@
 #
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
@@ -814,59 +814,61 @@ sub save_member {
 
 
 sub delete_login {
-  my ($self, $form) = @_;
+	my ($self, $form) = @_;
 
-  my $dbh = DBI->connect($form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}, {AutoCommit} => 0) or $form->dberror;
+	my $dbh = DBI->connect(
+		$form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}, 
+		{AutoCommit => 0}) 
+			or $form->dberror;
   
-  my $login = $form->{login};
-  $login =~ s/@.*//;
-  my $query = qq|SELECT id FROM employee
-                 WHERE login = '$login'|; 
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $login = $form->{login};
+	$login =~ s/@.*//;
+	my $query = qq|SELECT id FROM employee WHERE login = ?|; 
+	my $sth = $dbh->prepare($query);
+	$sth->execute($login) || $form->dberror($query);
   
-  my ($id) = $sth->fetchrow_array;
-  $sth->finish;
+	my ($id) = $sth->fetchrow_array;
+	$sth->finish;
 	
-  my $query = qq|UPDATE employee SET
-		 login = NULL,
-		 enddate = current_date
-		 WHERE login = '$login'|;
-  $dbh->do($query);
- 
-  $dbh->commit;
-  $dbh->disconnect;
+	my $query = qq|
+		UPDATE employee 
+		   SET login = NULL,
+		       enddate = current_date
+		 WHERE login = ?|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($login); 
+	$dbh->commit;
+	$dbh->disconnect;
 
 }
 
 
 sub config_vars {
   
-  my @conf = qw(acs address businessnumber company countrycode
-             currency dateformat dbconnect dbdriver dbhost dbname dboptions
-	     dbpasswd dbport dbuser email fax menuwidth name numberformat
-	     password printer role sid signature stylesheet tel
-	     templates timeout vclimit);
+	my @conf = 
+		qw(acs address businessnumber company countrycode
+		currency dateformat dbconnect dbdriver dbhost dbname dboptions
+		dbpasswd dbport dbuser email fax menuwidth name numberformat
+		password printer role sid signature stylesheet tel templates 
+		timeout vclimit);
 
-  @conf;
+	@conf;
 
 }
 
 
 sub error {
-  my ($self, $msg) = @_;
+	my ($self, $msg) = @_;
 
-  if ($ENV{HTTP_USER_AGENT}) {
-    print qq|Content-Type: text/html
+	if ($ENV{HTTP_USER_AGENT}) {
+		print qq|Content-Type: text/html\n\n|.
+			qq|<body bgcolor=ffffff>\n\n|.
+			qq|<h2><font color=red>Error!</font></h2>\n|.
+			qq|<p><b>$msg</b>|;
 
-<body bgcolor=ffffff>
-
-<h2><font color=red>Error!</font></h2>
-<p><b>$msg</b>|;
-
-  }
+	}
   
-  die "Error: $msg\n";
+	die "Error: $msg\n";
   
 }
 

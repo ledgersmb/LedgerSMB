@@ -12,7 +12,7 @@ Security:
 * Audited Form.pm for SQL-injection problems and move to new API (Chris T)
 * Audited BP.pm, CA.pm, CT.pm for SQL injection and moved to new API. (Chris T)
 * Audited IS.pm for SQL injection and moved to new API. (Chris T)
-
+* Audited User.pm for SQL injection. (Chris T)
 
 Localization:
 * Moved localization files to standard codes (Seneca)
