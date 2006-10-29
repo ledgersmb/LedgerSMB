@@ -52,6 +52,9 @@ User Interface:
 * Invoice now has an Onhand column (Chris T)
 * Added simple text import function for invoices received (PDT's) (Chris T)
 
+Other:
+* ledger-smb.conf is now an ini file (Seneca)
+
 Changelog for LedgerSMB 1.1.1
 
 * Fixed problem with parts_short trigger not being created
