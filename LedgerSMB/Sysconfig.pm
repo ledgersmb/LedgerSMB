@@ -53,16 +53,15 @@ my $globalDBConnect = 'dbi:Pg:dbname=ledgersmb;host=localhost;port=5432';
 my $globalUserName = "ledgersmb";
 my $globalPassword = "set me to correct password";
 
-
-# These lines prevent other apps in mod_perl from seeing the global db 
-# connection info
-
 eval { require "ledger-smb.conf"; };
 if ($@){
 	print STDERR "Parsing ledger-smb.conf failed: $@";
 }
 
 #$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword); 
+
+# These lines prevent other apps in mod_perl from seeing the global db 
+# connection info
 
 my $globalDBConnect = undef;
 my $globalUserName = undef;
