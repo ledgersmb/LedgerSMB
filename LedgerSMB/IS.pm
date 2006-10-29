@@ -1437,250 +1437,268 @@ sub post_invoice {
 
 
 sub process_assembly {
-  my ($dbh, $form, $id, $totalqty, $project_id) = @_;
+	my ($dbh2, $form, $id, $totalqty, $project_id) = @_;
+	my $dbh = $form->{dbh};
+	my $query = qq|
+		SELECT a.parts_id, a.qty, p.assembly,
+		       p.partnumber, p.description, p.unit,
+		       p.inventory_accno_id, p.income_accno_id,
+		       p.expense_accno_id
+		  FROM assembly a
+		  JOIN parts p ON (a.parts_id = p.id)
+		 WHERE a.id = ?|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($id) || $form->dberror($query);
 
-  my $query = qq|SELECT a.parts_id, a.qty, p.assembly,
-                 p.partnumber, p.description, p.unit,
-                 p.inventory_accno_id, p.income_accno_id,
-		 p.expense_accno_id
-                 FROM assembly a
-		 JOIN parts p ON (a.parts_id = p.id)
-		 WHERE a.id = $id|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
-
-  my $allocated;
+	my $allocated;
   
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-    $allocated = 0;
+		$allocated = 0;
     
-    $ref->{inventory_accno_id} *= 1;
-    $ref->{expense_accno_id} *= 1;
+		$ref->{inventory_accno_id} *= 1;
+		$ref->{expense_accno_id} *= 1;
 
-    # multiply by number of assemblies
-    $ref->{qty} *= $totalqty;
+		# multiply by number of assemblies
+		$ref->{qty} *= $totalqty;
     
-    if ($ref->{assembly}) {
-      &process_assembly($dbh, $form, $ref->{parts_id}, $ref->{qty}, $project_id);
-      next;
-    } else {
-      if ($ref->{inventory_accno_id}) {
-	$allocated = &cogs($dbh, $form, $ref->{parts_id}, $ref->{qty}, $project_id);
-      }
-    }
+		if ($ref->{assembly}) {
+			&process_assembly(
+				$dbh, $form, $ref->{parts_id}, $ref->{qty}, 
+				$project_id);
+			next;
+		} else {
+			if ($ref->{inventory_accno_id}) {
+			$allocated = &cogs(
+				$dbh, $form, $ref->{parts_id}, 
+				$ref->{qty}, $project_id);
+			}
+		}
 
-    # save detail record for individual assembly item in invoice table
-    $query = qq|INSERT INTO invoice (trans_id, description, parts_id, qty,
-                sellprice, fxsellprice, allocated, assemblyitem, unit)
-		VALUES
-		($form->{id}, |
-		.$dbh->quote($ref->{description}).qq|,
-		$ref->{parts_id}, $ref->{qty}, 0, 0, $allocated, 't', |
-		.$dbh->quote($ref->{unit}).qq|)|;
-    $dbh->do($query) || $form->dberror($query);
+		$query = qq|
+			INSERT INTO invoice 
+			            (trans_id, description, parts_id, qty,
+ 			            sellprice, fxsellprice, allocated, 
+			            assemblyitem, unit)
+			     VALUES (?, ?, ?, ?, 0, 0, ?, 't', ?)|;
+
+		$sth = $dbh->prepare($query);
+		$sth->execute(
+			$form->{id}, $ref->{description}, $ref->{parts_id}, 
+			$ref->{qty}, $allocated, $ref->{unit})
+				|| $form->dberror($query);
 	 
-  }
+	}
 
-  $sth->finish;
+	$sth->finish;
 
 }
 
 
 sub cogs {
-  my ($dbh, $form, $id, $totalqty, $project_id) = @_;
-
-  my $query = qq|SELECT i.id, i.trans_id, i.qty, i.allocated, i.sellprice,
-                 i.fxsellprice, p.inventory_accno_id, p.expense_accno_id
-		 FROM invoice i, parts p
-		 WHERE i.parts_id = p.id
-		 AND i.parts_id = $id
-		 AND (i.qty + i.allocated) < 0
+	my ($dbh2, $form, $id, $totalqty, $project_id) = @_;
+	my $dbh = $form->{dbh};
+	my $query = qq|
+		   SELECT i.id, i.trans_id, i.qty, i.allocated, i.sellprice,
+		          i.fxsellprice, p.inventory_accno_id, 
+		          p.expense_accno_id
+		     FROM invoice i, parts p
+		    WHERE i.parts_id = p.id
+		      AND i.parts_id = ?
+		      AND (i.qty + i.allocated) < 0
 		 ORDER BY trans_id|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute($id) || $form->dberror($query);
 
-  my $allocated = 0;
-  my $qty;
+	my $allocated = 0;
+	my $qty;
   
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-    if (($qty = (($ref->{qty} * -1) - $ref->{allocated})) > $totalqty) {
-      $qty = $totalqty;
-    }
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+		if (($qty = (($ref->{qty} * -1) - $ref->{allocated})) 
+								> $totalqty) {
+			$qty = $totalqty;
+		}
     
-    $form->update_balance($dbh,
-			  "invoice",
-			  "allocated",
-			  qq|id = $ref->{id}|,
-			  $qty);
+		$form->update_balance(
+			$dbh, "invoice", "allocated", qq|id = $ref->{id}|, 
+			$qty);
 
-    # total expenses and inventory
-    # sellprice is the cost of the item
-    my $linetotal = $form->round_amount($ref->{sellprice} * $qty, 2);
+		# total expenses and inventory
+		# sellprice is the cost of the item
+		my $linetotal = $form->round_amount(
+			$ref->{sellprice} * $qty, 2);
 
-    # add expense
-    push @{ $form->{acc_trans}{lineitems} }, {
-      chart_id => $ref->{expense_accno_id},
-      amount => $linetotal * -1,
-      project_id => $project_id,
-      invoice_id => $ref->{id} };
+		# add expense
+		push @{ $form->{acc_trans}{lineitems} }, {
+			chart_id => $ref->{expense_accno_id},
+			amount => $linetotal * -1,
+			project_id => $project_id,
+			invoice_id => $ref->{id} };
 
-    # deduct inventory
-    push @{ $form->{acc_trans}{lineitems} }, {
-      chart_id => $ref->{inventory_accno_id},
-      amount => $linetotal,
-      project_id => $project_id,
-      invoice_id => $ref->{id} };
+		# deduct inventory
+		push @{ $form->{acc_trans}{lineitems} }, {
+			chart_id => $ref->{inventory_accno_id},
+			amount => $linetotal,
+			project_id => $project_id,
+			invoice_id => $ref->{id} };
 
-    # add allocated
-    $allocated += -$qty;
+		# add allocated
+		$allocated += -$qty;
     
-    last if (($totalqty -= $qty) <= 0);
-  }
+		last if (($totalqty -= $qty) <= 0);
+	}
 
-  $sth->finish;
+	$sth->finish;
 
-  $allocated;
-  
+	$allocated;
+	$dbh->commit;
 }
 
 
 
 sub reverse_invoice {
-  my ($dbh, $form) = @_;
-  
-  my $query = qq|SELECT id FROM ar
-                 WHERE id = $form->{id}|;
-  my ($id) = $dbh->selectrow_array($query);
+	my ($dbh2, $form) = @_;
+	my $dbh = $form->{dbh};
+	my $query = qq|
+		SELECT id FROM ar
+		WHERE id = ?|;
 
-  return unless $id;
+	my $sth;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{id});
+	my ($id) = $sth->fetchrow_array($query);
 
-  # reverse inventory items
-  my $query = qq|SELECT i.id, i.parts_id, i.qty, i.assemblyitem, p.assembly,
-		 p.inventory_accno_id
-                 FROM invoice i
-		 JOIN parts p ON (i.parts_id = p.id)
-		 WHERE i.trans_id = $form->{id}|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	return unless $id;
 
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+	# reverse inventory items
+	my $query = qq|
+		SELECT i.id, i.parts_id, i.qty, i.assemblyitem, p.assembly,
+		       p.inventory_accno_id
+		  FROM invoice i
+		  JOIN parts p ON (i.parts_id = p.id)
+		 WHERE i.trans_id = ?|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
 
-    if ($ref->{inventory_accno_id} || $ref->{assembly}) {
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-      # if the invoice item is not an assemblyitem adjust parts onhand
-      if (!$ref->{assemblyitem}) {
-        # adjust onhand in parts table
-	$form->update_balance($dbh,
-	                      "parts",
-			      "onhand",
-			      qq|id = $ref->{parts_id}|,
-			      $ref->{qty});
-      }
+		if ($ref->{inventory_accno_id} || $ref->{assembly}) {
 
-      # loop if it is an assembly
-      next if ($ref->{assembly});
+			# if the invoice item is not an assemblyitem 
+			# adjust parts onhand
+			if (!$ref->{assemblyitem}) {
+				# adjust onhand in parts table
+				$form->update_balance(
+					$dbh, "parts", "onhand",
+					qq|id = $ref->{parts_id}|, $ref->{qty});
+			}
+
+			# loop if it is an assembly
+			next if ($ref->{assembly});
       
-      # de-allocated purchases
-      $query = qq|SELECT id, trans_id, allocated
-                  FROM invoice
-		  WHERE parts_id = $ref->{parts_id}
-		  AND allocated > 0
-		  ORDER BY trans_id DESC|;
-      my $sth = $dbh->prepare($query);
-      $sth->execute || $form->dberror($query);
+			# de-allocated purchases
+			$query = qq|
+				  SELECT id, trans_id, allocated
+				    FROM invoice
+				   WHERE parts_id = ?
+				         AND allocated > 0
+				ORDER BY trans_id DESC|;
+			my $sth = $dbh->prepare($query);
+			$sth->execute($ref->{parts_id}) 
+				|| $form->dberror($query);
 
-      while (my $inhref = $sth->fetchrow_hashref(NAME_lc)) {
-	$qty = $ref->{qty};
-	if (($ref->{qty} - $inhref->{allocated}) > 0) {
-	  $qty = $inhref->{allocated};
-	}
+			while (my $inhref = $sth->fetchrow_hashref(NAME_lc)) {
+				$qty = $ref->{qty};
+				if (($ref->{qty} - $inhref->{allocated}) > 0) {
+					$qty = $inhref->{allocated};
+				}
 	
-	# update invoice
-	$form->update_balance($dbh,
-			      "invoice",
-			      "allocated",
-			      qq|id = $inhref->{id}|,
-			      $qty * -1);
+				# update invoice
+				$form->update_balance(
+					$dbh, "invoice", "allocated",
+					qq|id = $inhref->{id}|, $qty * -1);
 
-        last if (($ref->{qty} -= $qty) <= 0);
-      }
-      $sth->finish;
-    }
-  }
+				last if (($ref->{qty} -= $qty) <= 0);
+			}
+			$sth->finish;
+		}
+	}
   
-  $sth->finish;
+	$sth->finish;
   
-  # delete acc_trans
-  $query = qq|DELETE FROM acc_trans
-              WHERE trans_id = $form->{id}|;
-  $dbh->do($query) || $form->dberror($query);
+	# delete acc_trans
+	$query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
+
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
  
-  # delete invoice entries
-  $query = qq|DELETE FROM invoice
-              WHERE trans_id = $form->{id}|;
-  $dbh->do($query) || $form->dberror($query);
+	# delete invoice entries
+	$query = qq|DELETE FROM invoice WHERE trans_id = ?|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
 
-  $query = qq|DELETE FROM shipto
-              WHERE trans_id = $form->{id}|;
-  $dbh->do($query) || $form->dberror($query);
+	$query = qq|DELETE FROM shipto WHERE trans_id = ?|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
 
-  $dbh->commit;
+	$dbh->commit;
 
 }
 
 
 
 sub delete_invoice {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
+	my $sth;
 
-  &reverse_invoice($dbh, $form);
+	&reverse_invoice($dbh, $form);
   
-  my %audittrail = ( tablename  => 'ar',
-                     reference  => $form->{invnumber},
-		     formname   => $form->{type},
-		     action     => 'deleted',
-		     id         => $form->{id} );
+	my %audittrail = ( 
+		tablename  => 'ar',
+		reference  => $form->{invnumber},
+		formname   => $form->{type},
+		action     => 'deleted',
+		id         => $form->{id} );
  
-  $form->audittrail($dbh, "", \%audittrail);
+	$form->audittrail($dbh, "", \%audittrail);
      
-  # delete AR record
-  my $query = qq|DELETE FROM ar
-                 WHERE id = $form->{id}|;
-  $dbh->do($query) || $form->dberror($query);
+	# delete AR record
+	my $query = qq|DELETE FROM ar WHERE id = ?|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
 
-  # delete spool files
-  $query = qq|SELECT spoolfile FROM status
-              WHERE trans_id = $form->{id}
-	      AND spoolfile IS NOT NULL|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	# delete spool files
+	$query = qq|
+		SELECT spoolfile FROM status
+		 WHERE trans_id = $form->{id} AND spoolfile IS NOT NULL|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
 
-  my $spoolfile;
-  my @spoolfiles = ();
+	my $spoolfile;
+	my @spoolfiles = ();
   
-  while (($spoolfile) = $sth->fetchrow_array) {
-    push @spoolfiles, $spoolfile;
-  }
-  $sth->finish;  
+	while (($spoolfile) = $sth->fetchrow_array) {
+		push @spoolfiles, $spoolfile;
+	}
+	$sth->finish;  
 
-  # delete status entries
-  $query = qq|DELETE FROM status
-              WHERE trans_id = $form->{id}|;
-  $dbh->do($query) || $form->dberror($query);
+	# delete status entries
+	$query = qq|DELETE FROM status WHERE trans_id = ?|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
 
-  my $rc = $dbh->commit;
+	my $rc = $dbh->commit;
 
-  if ($rc) {
-    foreach $spoolfile (@spoolfiles) {
-      unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
-    }
-  }
+	if ($rc) {
+		foreach $spoolfile (@spoolfiles) {
+		unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" 
+			if $spoolfile;
+		}
+	}
   
-  $dbh->disconnect;
+  $dbh->commit;
   
   $rc;
   
