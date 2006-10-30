@@ -1631,19 +1631,19 @@ sub form_footer {
 # type=submit $locale->text('Delete')
 # type=submit $locale->text('POS')
 
-  %button = ('Save' => { ndx => 1, key => 'S', value => $locale->text('Save') },
-             'Save as new' => { ndx => 2, key => 'N', value => $locale->text('Save as new') },
-	     'AR Transaction' => { ndx => 7, key => 'A', value => $locale->text('AR Transaction') },
-	     'AP Transaction' => { ndx => 8, key => 'A', value => $locale->text('AP Transaction') },
-	     'Sales Invoice' => { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
-	     'POS' => { ndx => 10, key => 'C', value => $locale->text('POS') },
-	     'Sales Order' => { ndx => 11, key => 'O', value => $locale->text('Sales Order') },
-	     'Quotation' => { ndx => 12, key => 'Q', value => $locale->text('Quotation') },
-	     'Vendor Invoice' => { ndx => 13, key => 'I', value => $locale->text('Vendor Invoice') },
-	     'Purchase Order' => { ndx => 14, key => 'O', value => $locale->text('Purchase Order') },
-	     'RFQ' => { ndx => 15, key => 'Q', value => $locale->text('RFQ') },
-	     'Pricelist' => { ndx => 16, key => 'P', value => $locale->text('Pricelist') },
-	     'Delete' => { ndx => 17, key => 'D', value => $locale->text('Delete') },
+  %button = ('save' => { ndx => 1, key => 'S', value => $locale->text('Save') },
+             'save_as_new' => { ndx => 2, key => 'N', value => $locale->text('Save as new') },
+	     'ar_transaction' => { ndx => 7, key => 'A', value => $locale->text('AR Transaction') },
+	     'ap_transaction' => { ndx => 8, key => 'A', value => $locale->text('AP Transaction') },
+	     'sales_invoice' => { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
+	     'pos' => { ndx => 10, key => 'C', value => $locale->text('POS') },
+	     'sales_order' => { ndx => 11, key => 'O', value => $locale->text('Sales Order') },
+	     'quotation' => { ndx => 12, key => 'Q', value => $locale->text('Quotation') },
+	     'vendor_invoice' => { ndx => 13, key => 'I', value => $locale->text('Vendor Invoice') },
+	     'purchase_order' => { ndx => 14, key => 'O', value => $locale->text('Purchase Order') },
+	     'rfq' => { ndx => 15, key => 'Q', value => $locale->text('RFQ') },
+	     'pricelist' => { ndx => 16, key => 'P', value => $locale->text('Pricelist') },
+	     'delete' => { ndx => 17, key => 'D', value => $locale->text('Delete') },
 	    );
   
   
@@ -2083,8 +2083,8 @@ sub pricelist_footer {
 # type=submit $locale->text('Update')
 # type=submit $locale->text('Save Pricelist')
 
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-             'Save Pricelist' => { ndx => 3, key => 'S', value => $locale->text('Save Pricelist') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+             'save_pricelist' => { ndx => 3, key => 'S', value => $locale->text('Save Pricelist') },
 	    ); 
 	     
   for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
