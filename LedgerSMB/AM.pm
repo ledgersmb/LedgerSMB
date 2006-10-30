@@ -1317,7 +1317,7 @@ sub save_preferences {
 
 	$dbh->commit;
 
-	my $myconfig = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
+	my $myconfig = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "$form->{login}");
 
 	foreach my $item (keys %$form) {
 		$myconfig->{$item} = $form->{$item};

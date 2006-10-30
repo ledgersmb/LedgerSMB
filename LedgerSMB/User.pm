@@ -31,7 +31,7 @@
 #
 #=====================================================================
 
-package User;
+package LedgerSMB::User;
 use LedgerSMB::Sysconfig;
 
 

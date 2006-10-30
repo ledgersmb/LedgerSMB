@@ -2044,7 +2044,7 @@ sub config {
   for (qw(name company address signature)) { $myconfig{$_} = $form->quote($myconfig{$_}) }
   for (qw(address signature)) { $myconfig{$_} =~ s/\\n/\n/g }
 
-  %countrycodes = User->country_codes;
+  %countrycodes = LedgerSMB::User->country_codes;
   $countrycodes = '';
   
   foreach $key (sort { $countrycodes{$a} cmp $countrycodes{$b} } keys %countrycodes) {

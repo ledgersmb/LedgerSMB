@@ -76,7 +76,7 @@ if ($form->{action}) {
 } else {
 
 	# if there are no drivers bail out
-	$form->error($locale->text('No Database Drivers available!')) unless (User->dbdrivers);
+	$form->error($locale->text('No Database Drivers available!')) unless (LedgerSMB::User->dbdrivers);
 
 	# create memberfile
 	if (! -f ${LedgerSMB::Sysconfig::memberfile}) {
@@ -89,7 +89,7 @@ password=
 		close FH;
 	}
 
-	$root = new User "${LedgerSMB::Sysconfig::memberfile}", "root login";
+	$root = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "root login");
 
 	unless($root && $root->{password}) { 
 		 &setup_initial_password();
@@ -277,7 +277,7 @@ sub list_users {
 	# type=submit $locale->text('Pg Database Administration')
 	# type=submit $locale->text('PgPP Database Administration')
 
-	foreach $item (User->dbdrivers) {
+	foreach $item (LedgerSMB::User->dbdrivers) {
 		$dbdrivers .= qq|<button name="action" type="submit" class="submit" value="|.(lc $item).'_database_administration">'.$locale->text("$item Database Administration").qq|</button>|;
 	}
 
@@ -373,7 +373,7 @@ sub form_header {
 	if ($form->{login}) {
 
 		# get user
-		$myconfig = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
+		$myconfig = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "$form->{login}");
 
 		for (qw(company address signature)) { $myconfig->{$_} = $form->quote($myconfig->{$_}) }
 		for (qw(address signature)) { $myconfig->{$_} =~ s/\\n/\n/g }
@@ -394,7 +394,7 @@ sub form_header {
 	}
 
 
-	%countrycodes = User->country_codes;
+	%countrycodes = LedgerSMB::User->country_codes;
 	$countrycodes = "";
 
 	foreach $key (sort { $countrycodes{$a} cmp $countrycodes{$b} } keys %countrycodes) {
@@ -592,7 +592,7 @@ sub form_header {
 		</tr>|;
 
 	# list section for database drivers
-	foreach $item (User->dbdrivers) {
+	foreach $item (LedgerSMB::User->dbdrivers) {
 
 		print qq|
 			<tr>
@@ -771,7 +771,7 @@ sub save {
 	# check for duplicates
 	if (!$form->{edit}) {
 
-		$temp = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
+		$temp = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "$form->{login}");
 
 		if ($temp->{login}) {
 			$form->error("$form->{login} ".$locale->text('is already a member!'));
@@ -796,7 +796,7 @@ sub save {
 	$form->{templates} = "${LedgerSMB::Sysconfig::templates}/$form->{templates}";
 
 
-	$myconfig = new User "${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
+	$myconfig = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "$form->{login}");
 
 	# redo acs variable and delete all the acs codes
 	@acs = split /;/, $form->{acs};
@@ -970,7 +970,7 @@ sub delete {
 		$myconfig{dbpasswd} = unpack 'u', $myconfig{dbpasswd};
 		for (keys %myconfig) { $form->{$_} = $myconfig{$_} }
 
-		User->delete_login(\%$form);
+		LedgerSMB::User->delete_login(\%$form);
 
 		# delete config file for user
 		unlink "${LedgerSMB::Sysconfig::userspath}/$form->{login}.conf";
@@ -1049,7 +1049,7 @@ sub get_hash {
 
 sub check_password {
 
-	$root = new User "${LedgerSMB::Sysconfig::memberfile}", "root login";
+	$root = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "root login");
 
 	if ($root->{password}) {
 
@@ -1211,14 +1211,14 @@ sub continue {
 
 sub dbupdate {
 
-	User->dbupdate(\%$form);
+	LedgerSMB::User->dbupdate(\%$form);
 	$form->redirect($locale->text('Dataset updated!'));
 }
 
 
 sub create_dataset {
 
-	@dbsources = sort User->dbsources(\%$form);
+	@dbsources = sort LedgerSMB::User->dbsources(\%$form);
 
 	opendir SQLDIR, "sql/." or $form->error($!);
 
@@ -1343,7 +1343,7 @@ sub dbcreate {
 
 	$form->isblank("db", $locale->text('Dataset missing!'));
 
-	User->dbcreate(\%$form);
+	LedgerSMB::User->dbcreate(\%$form);
 
 	$form->{title} = "LedgerSMB ".$locale->text('Accounting')
 					." ".$locale->text('Database Administration')
@@ -1373,7 +1373,7 @@ sub dbcreate {
 
 sub delete_dataset {
 
-	if (@dbsources = User->dbsources_unused(\%$form, ${LedgerSMB::Sysconfig::memberfile})) {
+	if (@dbsources = LedgerSMB::User->dbsources_unused(\%$form, ${LedgerSMB::Sysconfig::memberfile})) {
 
 		foreach $item (sort @dbsources) {
 			$dbsources .= qq|<input name="db" class="radio" type="radio" value="$item" />&nbsp;$item |;
@@ -1435,7 +1435,7 @@ sub dbdelete {
 		$form->error($locale->text('No Dataset selected!'));
 	}
 
-	User->dbdelete(\%$form);
+	LedgerSMB::User->dbdelete(\%$form);
 
 	$form->{title} = "LedgerSMB ".$locale->text('Accounting')
 					." ".$locale->text('Database Administration')

@@ -263,7 +263,7 @@ sub login {
 	}
 
 
-	$user = new User ${LedgerSMB::Sysconfig::memberfile}, $form->{login};
+	$user = LedgerSMB::User->new(${LedgerSMB::Sysconfig::memberfile}, $form->{login});
 
 	# if we get an error back, bale out
 	if (($errno = $user->login(\%$form, ${LedgerSMB::Sysconfig::userspath})) <= -1) {

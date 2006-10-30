@@ -716,7 +716,7 @@ sub save_employee {
 
   # if it is a login change memberfile and .conf
   if ($form->{employeelogin}) {
-    $user = new User ${LedgerSMB::Sysconfig::memberfile}, $form->{employeelogin};
+    $user = LedgerSMB::User->new(${LedgerSMB::Sysconfig::memberfile}, $form->{employeelogin});
 
     for (qw(name email role)) { $user->{$_} = $form->{$_} }
 
