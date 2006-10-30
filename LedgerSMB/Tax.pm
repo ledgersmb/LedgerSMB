@@ -41,7 +41,7 @@ sub init_taxes {
 			WHERE c.accno = ?|;
 	my $sth = $dbh->prepare($query);
 	foreach $taxaccount (@accounts) {
-		$sth->execute(int($taxaccount)) || $form->dberror($query);
+		$sth->execute($taxaccount) || $form->dberror($query);
 		my $ref = $sth->fetchrow_hashref;
 
 		my $module = $ref->{'taxmodulename'};
