@@ -782,6 +782,7 @@ sub save_member {
 
 		my ($id) = $sth->fetchrow_array;
 		$sth->finish;
+		my $employeenumber;
 		if ($id) {
 
 			$query = qq|UPDATE employee SET
@@ -792,7 +793,7 @@ sub save_member {
 
 		} else {
 
-			my ($employeenumber) = Form::update_defaults(
+			($employeenumber) = Form::update_defaults(
 				"", \%$self, "employeenumber", $dbh);
 			$query = qq|
 				INSERT INTO employee 
