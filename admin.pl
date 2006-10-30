@@ -48,20 +48,9 @@
 #
 #######################################################################
 
-
-# setup defaults, DO NOT CHANGE
-$userspath = "users";
-$spool = "spool";
-${LedgerSMB::Sysconfig::templates} = "templates";
-$memberfile = "users/members";
-$sendmail = "| /usr/sbin/sendmail -t";
-%printer = ( Printer => 'lpr' );
-########## end ###########################################
-
+use LedgerSMB::Sysconfig;
 
 $| = 1;
-
-eval { require "ledger-smb.conf"; };
 
 if ($ENV{CONTENT_LENGTH}) {
 	read(STDIN, $_, $ENV{CONTENT_LENGTH});
@@ -87,7 +76,7 @@ $pos = rindex $0, '/';
 $script = substr($0, $pos + 1);
 
 
-if (-e "$userspath/nologin" && $script ne 'admin.pl') {
+if (-e "${LedgerSMB::Sysconfig::userspath}/nologin" && $script ne 'admin.pl') {
 	print "Content-Type: text/html\n\n<html><body><strong>";
 	print "\nLogin disabled!\n";
 	print "\n</strong></body></html>";

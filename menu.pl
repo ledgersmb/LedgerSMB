@@ -46,24 +46,13 @@
 #
 #######################################################################
 
-# setup defaults, DO NOT CHANGE
-$userspath = "users";
-$spool = "spool";
-${LedgerSMB::Sysconfig::templates} = "templates";
-$memberfile = "users/members";
-$sendmail = "| /usr/sbin/sendmail -t";
-$latex = 0;
-%printer = ();
-########## end ###########################################
-
+use LedgerSMB::Sysconfig;
 
 $| = 1;
 
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Session;
-
-eval { require "ledger-smb.conf"; };
 
 # for custom preprocessing logic
 eval { require "custom.pl"; };
@@ -85,7 +74,7 @@ $script =~ s/\.pl//;
 use DBI qw(:sql_types);
 
 # check for user config file, could be missing or ???
-eval { require("$userspath/$form->{login}.conf"); };
+eval { require("${LedgerSMB::Sysconfig::userspath}/$form->{login}.conf"); };
 if ($@) {
 	$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
 		$form->error("Locale not loaded: $!\n");
@@ -119,7 +108,7 @@ $form->db_init(\%myconfig);
 if ($form->{path} ne 'bin/lynx'){ $form->{path} = 'bin/mozilla';}	
 
 # did sysadmin lock us out
-if (-f "$userspath/nologin") {
+if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
 	$form->error($locale->text('System currently down for maintenance!'));
 }
 
