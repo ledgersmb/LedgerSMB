@@ -559,22 +559,22 @@ sub form_footer {
 # type=submit $locale->text('Delete')
 
   if (! $form->{readonly}) {
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-	       'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	       'Post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-	       'Print and Post' => { ndx => 4, key => 'R', value => $locale->text('Print and Post') },
-	       'Delete' => { ndx => 5, key => 'D', value => $locale->text('Delete') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+	       'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	       'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+	       'print_and_post' => { ndx => 4, key => 'R', value => $locale->text('Print and Post') },
+	       'delete' => { ndx => 5, key => 'D', value => $locale->text('Delete') },
 	      );
    
     if ($transdate > $closedto) {
 
       if (! $form->{id}) {
-	delete $button{'Delete'};
+	delete $button{'delete'};
       }
 
-      delete $button{'Print and Post'} unless ${LedgerSMB::Sysconfig::latex};
+      delete $button{'print_and_post'} unless ${LedgerSMB::Sysconfig::latex};
     } else {
-      for ('Print', 'Post', 'Print and Post', 'Delete') { delete $button{$_} }
+      for ('print', 'post', 'print_and_post', 'delete') { delete $button{$_} }
     }
       
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
