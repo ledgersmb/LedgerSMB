@@ -25,7 +25,7 @@
 # Dieter Simader dsmimader@sql-ledger.com
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
