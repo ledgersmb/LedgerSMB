@@ -510,9 +510,9 @@ sub list_spool {
 # type=submit $locale->text('Print')
 # type=submit $locale->text('Remove')
 
-    %button = ('Select all' => { ndx => 2, key => 'A', value => $locale->text('Select all') },
-               'Print' => { ndx => 3, key => 'P', value => $locale->text('Print') },
-	       'Remove' => { ndx => 4, key => 'R', value => $locale->text('Remove') },
+    %button = ('select_all' => { ndx => 2, key => 'A', value => $locale->text('Select all') },
+               'print' => { ndx => 3, key => 'P', value => $locale->text('Print') },
+	       'remove' => { ndx => 4, key => 'R', value => $locale->text('Remove') },
 	      );
 	       
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
