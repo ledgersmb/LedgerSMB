@@ -587,24 +587,24 @@ sub form_footer {
 # type=submit $locale->text('Delete')
 
   if (! $form->{readonly}) {
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-	       'Post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-	       'Post as new' => { ndx => 5, key => 'N', value => $locale->text('Post as new') },
-	       'Purchase Order' => { ndx => 6, key => 'L', value => $locale->text('Purchase Order') },
-	       'Schedule' => { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-	       'Delete' => { ndx => 8, key => 'D', value => $locale->text('Delete') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+	       'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+	       'post_as_new' => { ndx => 5, key => 'N', value => $locale->text('Post as new') },
+	       'purchase_order' => { ndx => 6, key => 'L', value => $locale->text('Purchase Order') },
+	       'schedule' => { ndx => 7, key => 'H', value => $locale->text('Schedule') },
+	       'delete' => { ndx => 8, key => 'D', value => $locale->text('Delete') },
 	      );
     
     if ($form->{id}) {
       
       if ($form->{locked}) {
-	for ("Post", "Delete") { delete $button{$_} }
+	for ("post", "delete") { delete $button{$_} }
       }
 
     } else {
 
       if ($transdate > $closedto) {
-	for ('Update', 'Post', 'Schedule') { $a{$_} = 1 }
+	for ('update', 'post', 'schedule') { $a{$_} = 1 }
       }
       for (keys %button) { delete $button{$_} if ! $a{$_} }
     }
