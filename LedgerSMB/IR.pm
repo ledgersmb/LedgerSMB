@@ -23,7 +23,7 @@
 #
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
@@ -1135,203 +1135,218 @@ sub retrieve_invoice {
 
 
 sub retrieve_item {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  my $i = $form->{rowcount};
-  my $null;
-  my $var;
+	my $i = $form->{rowcount};
+	my $null;
+	my $var;
   
-  # don't include assemblies or obsolete parts
-  my $where = "WHERE p.assembly = '0' AND p.obsolete = '0'";
+	# don't include assemblies or obsolete parts
+	my $where = "WHERE p.assembly = '0' AND p.obsolete = '0'";
   
-  if ($form->{"partnumber_$i"} ne "") {
-    $var = $form->like(lc $form->{"partnumber_$i"});
-    $where .= " AND lower(p.partnumber) LIKE '$var'";
-  }
+	if ($form->{"partnumber_$i"} ne "") {
+		$var = $dbh->quote($form->like(lc $form->{"partnumber_$i"}));
+		$where .= " AND lower(p.partnumber) LIKE $var";
+	}
   
-  if ($form->{"description_$i"} ne "") {
-    $var = $form->like(lc $form->{"description_$i"});
-    if ($form->{language_code} ne "") {
-      $where .= " AND lower(t1.description) LIKE '$var'";
-    } else {
-      $where .= " AND lower(p.description) LIKE '$var'";
-    }
-  }
+	if ($form->{"description_$i"} ne "") {
+		$var = $dbh->quote($form->$like(lc $form->{"description_$i"}));
+		if ($form->{language_code} ne "") {
+			$where .= " AND lower(t1.description) LIKE $var";
+		} else {
+			$where .= " AND lower(p.description) LIKE $var";
+		}
+	}
 
-  if ($form->{"partsgroup_$i"} ne "") {
-    ($null, $var) = split /--/, $form->{"partsgroup_$i"};
-    $var *= 1;
-    $where .= qq| AND p.partsgroup_id = $var|;
-  }
+	if ($form->{"partsgroup_$i"} ne "") {
+		($null, $var) = split /--/, $form->{"partsgroup_$i"};
+		$var = $dbh->quote($var);
+		$where .= qq| AND p.partsgroup_id = $var|;
+	}
   
-  if ($form->{"description_$i"} ne "") {
-    $where .= " ORDER BY 3";
-  } else {
-    $where .= " ORDER BY 2";
-  }
+	if ($form->{"description_$i"} ne "") {
+		$where .= " ORDER BY 3";
+	} else {
+		$where .= " ORDER BY 2";
+	}
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	# connect to database
+	my $dbh = $form->dbconnect($myconfig);
 
-  my $query = qq|SELECT p.id, p.partnumber, p.description,
-		 pg.partsgroup, p.partsgroup_id,
-                 p.lastcost AS sellprice, p.unit, p.bin, p.onhand, p.notes,
-		 p.inventory_accno_id, p.income_accno_id, p.expense_accno_id,
-		 p.partnumber AS sku, p.weight,
-		 t1.description AS translation,
-		 t2.description AS grouptranslation
-                 FROM parts p
-		 LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
-		 LEFT JOIN translation t1 ON (t1.trans_id = p.id AND t1.language_code = '$form->{language_code}')
-		 LEFT JOIN translation t2 ON (t2.trans_id = p.partsgroup_id AND t2.language_code = '$form->{language_code}')
+	my $query = qq|
+		   SELECT p.id, p.partnumber, p.description,
+		          pg.partsgroup, p.partsgroup_id,
+		          p.lastcost AS sellprice, p.unit, p.bin, p.onhand, 
+		          p.notes, p.inventory_accno_id, p.income_accno_id, 
+		          p.expense_accno_id, p.partnumber AS sku, p.weight,
+		          t1.description AS translation, 
+		          t2.description AS grouptranslation
+		     FROM parts p
+		LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
+		LEFT JOIN translation t1 
+		          ON (t1.trans_id = p.id AND t1.language_code = ?)
+		LEFT JOIN translation t2 
+		          ON (t2.trans_id = p.partsgroup_id 
+		          AND t2.language_code = ?)
 	         $where|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{language_code}, $form->{language_code}) 
+		|| $form->dberror($query);
   
-  # foreign currency
-  &exchangerate_defaults($dbh, $form);
+	# foreign currency
+	&exchangerate_defaults($dbh, $form);
 
-  # taxes
-  $query = qq|SELECT c.accno
-	      FROM chart c
-	      JOIN partstax pt ON (pt.chart_id = c.id)
-	      WHERE pt.parts_id = ?|;
-  my $tth = $dbh->prepare($query) || $form->dberror($query);
+	# taxes
+	$query = qq|
+		SELECT c.accno
+		  FROM chart c
+		  JOIN partstax pt ON (pt.chart_id = c.id)
+		 WHERE pt.parts_id = ?|;
+	my $tth = $dbh->prepare($query) || $form->dberror($query);
 
-  # price matrix
-  my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
+	# price matrix
+	my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
 
-  my $ref;
-  my $ptref;
+	my $ref;
+	my $ptref;
   
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-    my ($dec) = ($ref->{sellprice} =~ /\.(\d+)/);
-    $dec = length $dec;
-    my $decimalplaces = ($dec > 2) ? $dec : 2;
+		my ($dec) = ($ref->{sellprice} =~ /\.(\d+)/);
+		$dec = length $dec;
+		my $decimalplaces = ($dec > 2) ? $dec : 2;
 
-    # get taxes for part
-    $tth->execute($ref->{id});
+		# get taxes for part
+		$tth->execute($ref->{id});
 
-    $ref->{taxaccounts} = "";
-    while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
-      $ref->{taxaccounts} .= "$ptref->{accno} ";
-    }
-    $tth->finish;
-    chop $ref->{taxaccounts};
+		$ref->{taxaccounts} = "";
+		while ($ptref = $tth->fetchrow_hashref(NAME_lc)) {
+			$ref->{taxaccounts} .= "$ptref->{accno} ";
+		}
+		$tth->finish;
+		chop $ref->{taxaccounts};
 
-    # get vendor price and partnumber
-    PriceMatrix::price_matrix($pmh, $ref, $decimalplaces, $form, $myconfig);
+		# get vendor price and partnumber
+		PriceMatrix::price_matrix(
+			$pmh, $ref, $decimalplaces, $form, $myconfig);
 
-    $ref->{description} = $ref->{translation} if $ref->{translation};
-    $ref->{partsgroup} = $ref->{grouptranslation} if $ref->{grouptranslation};
+		$ref->{description} = $ref->{translation} 
+			if $ref->{translation};
+		$ref->{partsgroup} = $ref->{grouptranslation} 
+			if $ref->{grouptranslation};
     
-    push @{ $form->{item_list} }, $ref;
+		push @{ $form->{item_list} }, $ref;
     
-  }
+	}
   
-  $sth->finish;
-  $dbh->disconnect;
+	$sth->finish;
+	$dbh->commit;
   
 }
 
 
 sub exchangerate_defaults {
-  my ($dbh, $form) = @_;
+	my ($dbh, $form) = @_;
 
-  my $var;
+	my $var;
   
-  # get default currencies
-  my $query = qq|SELECT substr(curr,1,3), curr FROM defaults|;
-  my $eth = $dbh->prepare($query) || $form->dberror($query);
-  $eth->execute;
-  ($form->{defaultcurrency}, $form->{currencies}) = $eth->fetchrow_array;
-  $eth->finish;
+	# get default currencies
+	my $query = qq|SELECT substr(curr,1,3), curr FROM defaults|;
+	my $eth = $dbh->prepare($query) || $form->dberror($query);
+	$eth->execute;
+	($form->{defaultcurrency}, $form->{currencies}) = $eth->fetchrow_array;
+	$eth->finish;
 
-  $query = qq|SELECT sell
-              FROM exchangerate
-	      WHERE curr = ?
-	      AND transdate = ?|;
-  my $eth1 = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|
+		SELECT sell
+		  FROM exchangerate
+		 WHERE curr = ?
+		       AND transdate = ?|;
+	my $eth1 = $dbh->prepare($query) || $form->dberror($query);
 
-  $query = qq~SELECT max(transdate || ' ' || sell || ' ' || curr)
-              FROM exchangerate
-	      WHERE curr = ?~;
-  my $eth2 = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq/
+		SELECT max(transdate || ' ' || sell || ' ' || curr)
+		  FROM exchangerate
+		 WHERE curr = ?/;
+	my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
-  # get exchange rates for transdate or max
-  foreach $var (split /:/, substr($form->{currencies},4)) {
-    $eth1->execute($var, $form->{transdate});
-    ($form->{$var}) = $eth1->fetchrow_array;
-    if (! $form->{$var} ) {
-      $eth2->execute($var);
+	# get exchange rates for transdate or max
+	foreach $var (split /:/, substr($form->{currencies},4)) {
+		$eth1->execute($var, $form->{transdate});
+		($form->{$var}) = $eth1->fetchrow_array;
+		if (! $form->{$var} ) {
+			$eth2->execute($var);
 
-      ($form->{$var}) = $eth2->fetchrow_array;
-      ($null, $form->{$var}) = split / /, $form->{$var};
-      $form->{$var} = 1 unless $form->{$var};
-      $eth2->finish;
-    }
-    $eth1->finish;
-  }
+			($form->{$var}) = $eth2->fetchrow_array;
+			($null, $form->{$var}) = split / /, $form->{$var};
+			$form->{$var} = 1 unless $form->{$var};
+			$eth2->finish;
+		}
+		$eth1->finish;
+	}
 
-  $form->{$form->{currency}} = $form->{exchangerate} if $form->{exchangerate};
-  $form->{$form->{currency}} ||= 1;
-  $form->{$form->{defaultcurrency}} = 1;
+	$form->{$form->{currency}} = $form->{exchangerate} 
+		if $form->{exchangerate};
+	$form->{$form->{currency}} ||= 1;
+	$form->{$form->{defaultcurrency}} = 1;
   
 }
 
 
 sub vendor_details {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
       
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	# connect to database
+	my $dbh = $form->{dbh};
 
-  # get rest for the vendor
-  my $query = qq|SELECT vendornumber, name, address1, address2, city, state,
-                 zipcode, country,
-                 contact, phone as vendorphone, fax as vendorfax, vendornumber,
-		 taxnumber AS vendortaxnumber, sic_code AS sic, iban, bic,
-		 gifi_accno AS gifi, startdate, enddate
-                 FROM vendor
-                 WHERE id = $form->{vendor_id}|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	# get rest for the vendor
+	my $query = qq|
+		SELECT vendornumber, name, address1, address2, city, state,
+		       zipcode, country, contact, phone as vendorphone, 
+		       fax as vendorfax, vendornumber, 
+		       taxnumber AS vendortaxnumber, sic_code AS sic, iban, bic,
+		       gifi_accno AS gifi, startdate, enddate
+		  FROM vendor
+		 WHERE id = ?|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{vendor_id}) || $form->dberror($query);
 
-  $ref = $sth->fetchrow_hashref(NAME_lc);
-  for (keys %$ref) {
-    $form->{$_} = $ref->{$_};
-  }
+	$ref = $sth->fetchrow_hashref(NAME_lc);
+	for (keys %$ref) {
+		$form->{$_} = $ref->{$_};
+	}
 
-  $sth->finish;
-  $dbh->disconnect;
+	$sth->finish;
+	$dbh->commit;
 
 }
 
 
 sub item_links {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	# connect to database
+	my $dbh = $form->dbconnect($myconfig);
 
-  my $query = qq|SELECT accno, description, link
-	         FROM chart
-	         WHERE link LIKE '%IC%'
+	my $query = qq|
+		   SELECT accno, description, link
+		     FROM chart
+	            WHERE link LIKE '%IC%'
 		 ORDER BY accno|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
 
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-    foreach my $key (split(/:/, $ref->{link})) {
-      if ($key =~ /IC/) {
-        push @{ $form->{IC_links}{$key} }, { accno => $ref->{accno},
-                                       description => $ref->{description} };
-      }
-    }
-  }
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+		foreach my $key (split(/:/, $ref->{link})) {
+			if ($key =~ /IC/) {
+				push @{ $form->{IC_links}{$key} }, 
+					{ accno => $ref->{accno},
+					description => $ref->{description} };
+			}
+		}
+	}
 
-  $sth->finish;
+	$sth->finish;
 }
 
 1;
