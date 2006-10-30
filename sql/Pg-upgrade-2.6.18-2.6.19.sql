@@ -1,3 +1,5 @@
+BEGIN;
+
 ALTER TABLE ap ADD PRIMARY KEY (id);
 
 ALTER TABLE ar ADD PRIMARY KEY (id);
@@ -206,3 +208,70 @@ CREATE FUNCTION update_user(int4,text) RETURNS int4 AS $$
    $$ LANGUAGE 'SQL';
 
 COMMENT ON FUNCTION update_user(int4,text) IS $$ Takes int4 which is users.id and text which is username. Will update username based on id. Username is unique $$;
+
+ALTER TABLE defaults RENAME TO old_defaults;
+
+CREATE TABLE defaults (
+	setting_key TEXT PRIMARY KEY,
+	value TEXT
+);
+
+COMMENT ON TABLE defaults IS $$This table replaces the old one column per value system with a simple key => value table$$;
+
+
+INSERT INTO defaults (setting_key, value) 
+SELECT 'inventory_accno_id', inventory_accno_id FROM old_defaults
+UNION
+SELECT 'income_accno_id', income_accno_id FROM old_defaults
+UNION
+SELECT 'expense_accno_id', expense_accno_id FROM old_defaults
+UNION
+SELECT 'fxloss_accno_id', fxloss_accno_id FROM old_defaults
+UNION
+SELECT 'fxgain_accno_id', fxgain_accno_id FROM old_defaults
+UNION
+SELECT 'sinumber', sinumber FROM old_defaults
+UNION
+SELECT 'sonumber', sonumber FROM old_defaults
+UNION
+SELECT 'yearend', yearend FROM old_defaults
+UNION
+SELECT 'weightunit', weightunit FROM old_defaults
+UNION
+SELECT 'businessnumber', businessnumber FROM old_defaults
+UNION
+SELECT 'version', '1.2.0'
+UNION
+SELECT 'curr', curr FROM old_defaults
+UNION
+SELECT 'closedto', closedto FROM old_defaults
+UNION
+SELECT 'revtrans', revtrans FROM old_defaults
+UNION
+SELECT 'ponumber', ponumber FROM old_defaults
+UNION
+SELECT 'sqnumber', sqnumber FROM old_defaults
+UNION
+SELECT 'rfqnumber', rfqnumber FROM old_defaults
+UNION
+SELECT 'audittrail', audittrail FROM old_defaults
+UNION
+SELECT 'vinumber', vinumber FROM old_defaults
+UNION
+SELECT 'employeenumber', employeenumber FROM old_defaults
+UNION
+SELECT 'partnumber', partnumber FROM old_defaults
+UNION
+SELECT 'customernumber', customernumber FROM old_defaults
+UNION
+SELECT 'vendornumber', vendornumber FROM old_defaults
+UNION
+SELECT 'glnumber', glnumber FROM old_defaults
+UNION
+SELECT 'projectnumber', projectnumber FROM old_defaults
+UNION
+SELECT 'appname', 'LedgerSMB';
+
+DROP TABLE old_defaults;
+
+COMMIT;

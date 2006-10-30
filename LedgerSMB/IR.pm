@@ -42,6 +42,12 @@ sub post_invoice {
   
 	my $dbh = $form->{dbh};
 
+	for (1 .. $form->{rowcount}){
+		unless ($form->{"deliverydate_$_"}){
+			$form->{"deliverydate_$_"} =  $form->{transdate};
+		}
+
+	}
 	my $query;
 	my $sth;
 	my $ref;
@@ -169,7 +175,6 @@ sub post_invoice {
 			$pth->finish;
       
 	 	 	# project
-	 	   	$project_id = 'NULL';
 
 			if ($form->{"projectnumber_$i"} ne "") {
 				($null, $project_id) = 
@@ -256,6 +261,8 @@ sub post_invoice {
 				SELECT id FROM invoice
 				 WHERE description = '$uid'|;
 			($invoice_id) = $dbh->selectrow_array($query);
+
+				$form->debug;
 
 			$query = qq|
 				UPDATE invoice 
@@ -472,10 +479,10 @@ sub post_invoice {
 		$query = qq|
 			INSERT INTO acc_trans (trans_id, chart_id, amount,
 			            transdate, project_id, invoice_id)
-			            VALUES (?, ?, ? * -1, ?, ?, ?)|;
-    		$sth = $dbh->do($query);
+			            VALUES (?, ?, ?, ?, ?, ?)|;
+    		$sth = $dbh->prepare($query);
 		$sth->execute(
-			$form->{id}, $ref->{chart_id}, $amount, 
+			$form->{id}, $ref->{chart_id}, $amount * -1, 
 			$form->{transdate}, $ref->{project_id}, 
 			$ref->{invoice_id}) || $form->dberror($query);
 		$diff = 0;
@@ -500,7 +507,7 @@ sub post_invoice {
 		$query = qq|
 			INSERT INTO acc_trans (trans_id, chart_id, amount,
                 	            transdate)
-                	     VALUES ?, (SELECT id FROM chart WHERE accno = ?),
+                	     VALUES (?, (SELECT id FROM chart WHERE accno = ?),
                 	            ?, ?)|;
 		$sth = $dbh->prepare($query);
 		$sth->execute(
@@ -737,10 +744,10 @@ sub post_invoice {
 		$item = $dbh->quote($item);
 		$query = qq|
 			UPDATE parts 
-			   SET avgcost = avgcost(?),
-			       lastcost = lastcost(?)
-			 WHERE id = ?|;
-		$dbh->do($query) || $form->dberror($query);
+			   SET avgcost = avgcost($item),
+			       lastcost = lastcost($item)
+			 WHERE id = $item|;
+		$dbh->prepare($query) || $form->dberror($query);
 		$dbh->commit;
 	}
   
@@ -1137,6 +1144,7 @@ sub retrieve_invoice {
 sub retrieve_item {
 	my ($self, $myconfig, $form) = @_;
 
+	$dbh = $form->{dbh};
 	my $i = $form->{rowcount};
 	my $null;
 	my $var;

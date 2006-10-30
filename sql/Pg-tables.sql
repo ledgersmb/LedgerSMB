@@ -50,6 +50,10 @@ CREATE TABLE gifi (
 );
 --
 CREATE TABLE defaults (
+  setting_key text primary key,
+  value text
+);
+/*
   inventory_accno_id int,
   income_accno_id int,
   expense_accno_id int,
@@ -76,7 +80,7 @@ CREATE TABLE defaults (
   glnumber text,
   projectnumber text
 );
---
+-- */
 CREATE TABLE acc_trans (
   trans_id int,
   chart_id int NOT NULL REFERENCES chart (id),

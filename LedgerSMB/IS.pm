@@ -907,7 +907,6 @@ sub post_invoice {
 			$pth->finish;
 
 			# project
-			$project_id = 'NULL';
 			if ($form->{"projectnumber_$i"}) {
 				($null, $project_id) 
 					= split /--/, 
@@ -1055,7 +1054,10 @@ sub post_invoice {
 				SELECT id FROM invoice
 				WHERE description = '$uid'|;
 			($invoice_id) = $dbh->selectrow_array($query);
-      
+
+			unless ($form->{"deliverydate_$i"}){
+				undef $form->{"deliverydate_$i"};   
+			}   
 			$query = qq|
 				UPDATE invoice 
 				   SET trans_id = ?,
@@ -1361,8 +1363,6 @@ sub post_invoice {
 	$form->{terms} *= 1;
 	$form->{taxincluded} *= 1;
 
-	# if this is from a till
-	my $till = ($form->{till}) ? qq|'$form->{till}'| : "NULL";
 
 	$form->{invnumber} = 
 		$form->update_defaults($myconfig, "sinumber", $dbh) 

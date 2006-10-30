@@ -2868,8 +2868,8 @@ sub update_defaults {
 
 sub db_prepare_vars {
 	for (@_){
-		if (!$self->{$_} and $self->{$_} != 0){
-			$self->{$_} = undef;
+		if (!$self->{$_} and $self->{$_} ne "0"){
+			undef $self->{$_};
 		}
 	}
 }

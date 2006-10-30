@@ -316,7 +316,7 @@ sub save_customer {
 		       phone = ?,
 		       fax = ?,
 		       email = ?,
-		       cc = '?,
+		       cc = ?,
 		       bcc = ?,
 		       notes = ?,
 		       discount = ?,
@@ -337,6 +337,12 @@ sub save_customer {
 		 WHERE id = ?|;
 
 	$sth = $dbh->prepare($query);
+	if (!$form->{startdate}){
+		undef $form->{startdate};
+	}
+	if (!$form->{enddate}){
+		undef $form->{enddate};
+	}
 	$sth->execute(
 		$form->{customernumber}, $form->{name}, $form->{address1},
 		$form->{address2}, $form->{city}, $form->{state}, 
@@ -345,7 +351,8 @@ sub save_customer {
 		$form->{bcc}, $form->{notes}, $form->{discount}, 
 		$form->{creditlimit}, $form->{terms}, $form->{taxincluded},
 		$business_id, $form->{taxnumber}, $form->{sic_code}, 
-		$form->{iban}, $form->{bic}, $employee_id, $language_code, 
+		$form->{iban}, $form->{bic}, $employee_id,  $pricegroup_id,
+		$language_code, 
 		$form->{curr}, $form->{startdate}, $form->{enddate},
 		$form->{id})
 			|| $form->dberror($query);
