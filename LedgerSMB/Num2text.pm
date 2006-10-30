@@ -45,6 +45,7 @@ sub init {
 	%{ $self->{numbername} } =
                    (0 => $locale->text('Zero'),
                     1 => $locale->text('One'),
+	       	 '1o' => $locale->text('One-o'),
                     2 => $locale->text('Two'),
 	            3 => $locale->text('Three'),
 		    4 => $locale->text('Four'),
@@ -55,6 +56,7 @@ sub init {
 		    9 => $locale->text('Nine'),
 		   10 => $locale->text('Ten'),
 		   11 => $locale->text('Eleven'),
+	       	'11o' => $locale->text('Eleven-o'),
 		   12 => $locale->text('Twelve'),
 		   13 => $locale->text('Thirteen'),
 		   14 => $locale->text('Fourteen'),
@@ -65,6 +67,7 @@ sub init {
 		   19 => $locale->text('Nineteen'),
 		   20 => $locale->text('Twenty'),
 		   21 => $locale->text('Twenty One'),
+	       	'21o' => $locale->text('Twenty One-o'),
 		   22 => $locale->text('Twenty Two'),
 		   23 => $locale->text('Twenty Three'),
 		   24 => $locale->text('Twenty Four'),
