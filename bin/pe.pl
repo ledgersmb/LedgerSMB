@@ -385,14 +385,14 @@ sub job_footer {
 # type=submit $locale->text('Save')
 # type=submit $locale->text('Delete')
   
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
 	    );
   
   if ($myconfig{acs} !~ /Job Costing--Add Job/) {
-    $button{'Save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
+    $button{'save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
 
     if ($form->{id} && $form->{orphaned}) {
-      $button{'Delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
+      $button{'delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
     }
   }
 
@@ -1052,14 +1052,14 @@ sub project_footer {
 
   $form->hide_form(qw(callback path login sessionid));
   
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
 	    );
   
   if ($myconfig{acs} !~ /Projects--Add Project/) {
-    $button{'Save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
+    $button{'save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
 
     if ($form->{id} && $form->{orphaned}) {
-      $button{'Delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
+      $button{'delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
     }
   }
 
@@ -1888,13 +1888,13 @@ sub translation_footer {
 
   $form->hide_form(qw(path login sessionid callback));
   
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-	     'Save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
-	     'Delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+	     'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
+	     'delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
 	    );
   
   if (! $form->{trans_id}) {
-    delete $button{'Delete'};
+    delete $button{'delete'};
   }
 
   for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
