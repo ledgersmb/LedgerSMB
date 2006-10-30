@@ -612,14 +612,14 @@ sub timecard_footer {
 # type=submit $locale->text('Print and Save as new')
 # type=submit $locale->text('Delete')
 
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-             'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	     'Save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
-	     'Print and Save' => { ndx => 6, key => 'R', value => $locale->text('Print and Save') },
-	     'Save as new' => { ndx => 7, key => 'N', value => $locale->text('Save as new') },
-	     'Print and Save as new' => { ndx => 8, key => 'W', value => $locale->text('Print and Save as new') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+             'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	     'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
+	     'print_and_save' => { ndx => 6, key => 'R', value => $locale->text('Print and Save') },
+	     'save_as_new' => { ndx => 7, key => 'N', value => $locale->text('Save as new') },
+	     'print_and_save_as_new' => { ndx => 8, key => 'W', value => $locale->text('Print and Save as new') },
 	     
-	     'Delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
+	     'delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
 	    );
 
     %a = ();
@@ -627,14 +627,14 @@ sub timecard_footer {
     if ($form->{id}) {
     
       if (!$form->{locked}) {
-	for ('Update', 'Print', 'Save', 'Save as new') { $a{$_} = 1 }
+	for ('update', 'print', 'save', 'save_as_new') { $a{$_} = 1 }
 	
 	if (${LedgerSMB::Sysconfig::latex}) {
-	  for ('Print and Save', 'Print and Save as new') { $a{$_} = 1 }
+	  for ('print_and_save', 'print_and_save_as_new') { $a{$_} = 1 }
 	}
 
 	if ($form->{orphaned}) {
-	  $a{'Delete'} = 1;
+	  $a{'delete'} = 1;
 	}
 	
       }
@@ -643,10 +643,10 @@ sub timecard_footer {
 
       if ($transdate > $closedto) {
 	
-	for ('Update', 'Print', 'Save') { $a{$_} = 1 }
+	for ('update', 'print', 'save') { $a{$_} = 1 }
 
 	if (${LedgerSMB::Sysconfig::latex}) {
-	  $a{'Print and Save'} = 1;
+	  $a{'print_and_save'} = 1;
 	}
 
       }
@@ -827,13 +827,13 @@ sub storescard_footer {
 
   if (! $form->{readonly}) {
 
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-               'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	       'Save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
-	       'Print and Save' => { ndx => 6, key => 'R', value => $locale->text('Print and Save') },
-	       'Save as new' => { ndx => 7, key => 'N', value => $locale->text('Save as new') },
-	       'Print and Save as new' => { ndx => 8, key => 'W', value => $locale->text('Print and Save as new') },
-	       'Delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+               'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	       'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
+	       'print_and_save' => { ndx => 6, key => 'R', value => $locale->text('Print and Save') },
+	       'save_as_new' => { ndx => 7, key => 'N', value => $locale->text('Save as new') },
+	       'print_and_save_as_new' => { ndx => 8, key => 'W', value => $locale->text('Print and Save as new') },
+	       'delete' => { ndx => 16, key => 'D', value => $locale->text('Delete') },
 	      );
     
     %a = ();
@@ -841,22 +841,22 @@ sub storescard_footer {
     if ($form->{id}) {
       
       if (!$form->{locked}) {
-	for ('Update', 'Print', 'Save', 'Save as new') { $a{$_} = 1 }
+	for ('update', 'print', 'save', 'save_as_new') { $a{$_} = 1 }
 	if (${LedgerSMB::Sysconfig::latex}) {
-	  for ('Print and Save', 'Print and Save as new') { $a{$_} = 1 }
+	  for ('print_and_save', 'print_and_save_as_new') { $a{$_} = 1 }
 	}
 	if ($form->{orphaned}) {
-	  $a{'Delete'} = 1;
+	  $a{'delete'} = 1;
 	}
       }
       
     } else {
 
       if ($transdate > $closedto) {
-	for ('Update', 'Print', 'Save') { $a{$_} = 1 }
+	for ('update', 'print', 'save') { $a{$_} = 1 }
 
 	if (${LedgerSMB::Sysconfig::latex}) {
-	  $a{'Print and Save'} = 1;
+	  $a{'print_and_save'} = 1;
 	}
       }
     }
