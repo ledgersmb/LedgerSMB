@@ -644,35 +644,35 @@ sub form_footer {
 
   if (! $form->{readonly}) {
     
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-	       'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	       'Post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-	       'Ship to' => { ndx => 4, key => 'T', value => $locale->text('Ship to') },
-	       'E-mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
-	       'Print and Post' => { ndx => 6, key => 'R', value => $locale->text('Print and Post') },
-	       'Post as new' => { ndx => 7, key => 'N', value => $locale->text('Post as new') },
-	       'Print and Post as new' => { ndx => 8, key => 'W', value => $locale->text('Print and Post as new') },
-	       'Sales Order' => { ndx => 9, key => 'L', value => $locale->text('Sales Order') },
-	       'Schedule' => { ndx => 10, key => 'H', value => $locale->text('Schedule') },
-	       'Delete' => { ndx => 11, key => 'D', value => $locale->text('Delete') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+	       'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	       'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+	       'ship_to' => { ndx => 4, key => 'T', value => $locale->text('Ship to') },
+	       'e_mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
+	       'print_and_post' => { ndx => 6, key => 'R', value => $locale->text('Print and Post') },
+	       'post_as_new' => { ndx => 7, key => 'N', value => $locale->text('Post as new') },
+	       'print_and_post_as_new' => { ndx => 8, key => 'W', value => $locale->text('Print and Post as new') },
+	       'sales_order' => { ndx => 9, key => 'L', value => $locale->text('Sales Order') },
+	       'schedule' => { ndx => 10, key => 'H', value => $locale->text('Schedule') },
+	       'delete' => { ndx => 11, key => 'D', value => $locale->text('Delete') },
 	      );
 
     if ($form->{id}) {
       
       if ($form->{locked} || $transdate <= $closedto) {
-	for ("Post", "Print and Post", "Delete") { delete $button{$_} }
+	for ("post", "print_and_post", "delete") { delete $button{$_} }
       }
      
       if (!${LedgerSMB::Sysconfig::latex}) {
-	for ("Print and Post", "Print and Post as new") { delete $button{$_} }
+	for ("print_and_post", "print_and_post_as_new") { delete $button{$_} }
       }
 
     } else {
 
       if ($transdate > $closedto) {
 	
-	for ("Update", "Ship to", "Print", "E-mail", "Post", "Schedule") { $a{$_} = 1 }
-	$a{'Print and Post'} = 1 if ${LedgerSMB::Sysconfig::latex};
+	for ("update", "ship_to", "print", "e_mail", "post", "schedule") { $a{$_} = 1 }
+	$a{'print_and_post'} = 1 if ${LedgerSMB::Sysconfig::latex};
 	
       }
       for (keys %button) { delete $button{$_} if ! $a{$_} }
