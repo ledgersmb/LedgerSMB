@@ -250,14 +250,14 @@ sub form_footer {
   %button = ();
   
   if ($form->{id}) {
-    $button{'Save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
-    $button{'Save as new'} = { ndx => 7, key => 'N', value => $locale->text('Save as new') };
+    $button{'save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
+    $button{'save_as_new'} = { ndx => 7, key => 'N', value => $locale->text('Save as new') };
     
     if ($form->{orphaned}) {
-      $button{'Delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
+      $button{'delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
     }
   } else {
-    $button{'Save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
+    $button{'save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
   }
 
   for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
@@ -577,16 +577,16 @@ sub gifi_footer {
 
   %button = ();
   
-  $button{'Save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
+  $button{'save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
   
   if ($form->{accno}) {
     if ($form->{orphaned}) {
-      $button{'Delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
+      $button{'delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
     }
   }
     
   if ($form->{coa}) {
-    $button{'Copy to COA'} = { ndx => 7, key => 'C', value => $locale->text('Copy to COA') };
+    $button{'copy_to_coa'} = { ndx => 7, key => 'C', value => $locale->text('Copy to COA') };
   }
 
   for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
@@ -1327,7 +1327,7 @@ sub list_language {
   $form->hide_form(qw(type callback path login sessionid));
   
   print qq|
-<button class="submit" type="submit" name="action" value="add_language"|.$locale->text('Add Language').qq|</button>|;
+<button class="submit" type="submit" name="action" value="add_language">|.$locale->text('Add Language').qq|</button>|;
 
   if ($form->{lynx}) {
     require "bin/menu.pl";
