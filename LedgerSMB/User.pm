@@ -783,29 +783,33 @@ sub save_member {
 		my ($id) = $sth->fetchrow_array;
 		$sth->finish;
 		my $employeenumber;
+		my @values;
 		if ($id) {
 
 			$query = qq|UPDATE employee SET
-			role = '$self->{role}',
-			email = '$self->{email}',
-			name = '$self->{name}'
-			WHERE login = '$login'|;
+			role = ?,
+			email = ?, 
+			name = ?
+			WHERE login = ?|;
+
+			@values = ($self->{role}, $self->{email}, $self->{name}, $login);
 
 		} else {
 
-			($employeenumber) = Form::update_defaults(
+			my ($employeenumber) = Form::update_defaults(
 				"", \%$self, "employeenumber", $dbh);
 			$query = qq|
 				INSERT INTO employee 
 				            (login, employeenumber, name, 
 				            workphone, role, email, sales)
 				    VALUES (?, ?, ?, ?, ?, ?, '1')|;
+			
+			@values = ($login, $employeenumber, $self->{name}, $self->{tel},
+			$self->{role}, $self->{email})
 		}
 
 		$sth = $dbh->prepare($query);
-		$sth->execute(
-			$login, $employeenumber, $self->{name}, $self->{tel},
-			$self->{role}, $self->{email});
+		$sth->execute(@values);
 		$dbh->commit;
 		$dbh->disconnect;
 
