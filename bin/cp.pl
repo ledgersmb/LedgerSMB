@@ -480,18 +480,18 @@ sub payments_footer {
 # type=submit $locale->text('Print') 
 # type=submit $locale->text('Select all') 
 
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-	     'Select all' => { ndx => 2, key => 'A', value => $locale->text('Select all') },
-             'Print' => { ndx => 3, key => 'P', value => $locale->text('Print') },
-	     'Post' => { ndx => 4, key => 'O', value => $locale->text('Post') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+	     'select_all' => { ndx => 2, key => 'A', value => $locale->text('Select all') },
+             'print' => { ndx => 3, key => 'P', value => $locale->text('Print') },
+	     'post' => { ndx => 4, key => 'O', value => $locale->text('Post') },
 	    ); 
 
   if (! ${LedgerSMB::Sysconfig::latex}) {
-    delete $button{'Print'};
+    delete $button{'print'};
   }
 
   if ($transdate <= $closedto) {
-    for ('Post', 'Print') { delete $button{$_} }
+    for ('post', 'print') { delete $button{$_} }
     $media = $format = "";
   }
   
@@ -1082,18 +1082,18 @@ sub payment_footer {
 </table>
 |;
 
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-	     'Select all' => { ndx => 2, key => 'A', value => $locale->text('Select all') },
-             'Print' => { ndx => 3, key => 'P', value => $locale->text('Print') },
-	     'Post' => { ndx => 4, key => 'O', value => $locale->text('Post') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+	     'select_all' => { ndx => 2, key => 'A', value => $locale->text('Select all') },
+             'print' => { ndx => 3, key => 'P', value => $locale->text('Print') },
+	     'post' => { ndx => 4, key => 'O', value => $locale->text('Post') },
 	    ); 
 
   if (! ${LedgerSMB::Sysconfig::latex}) {
-    delete $button{'Print'};
+    delete $button{'print'};
   }
 
   if ($transdate <= $closedto) {
-    for ('Post', 'Print') { delete $button{$_} }
+    for ('post', 'print') { delete $button{$_} }
     $media = $format = "";
   }
 
