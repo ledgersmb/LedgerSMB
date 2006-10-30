@@ -780,14 +780,14 @@ sub schedule {
 # type=submit $locale->text('Save Schedule')
 # type=submit $locale->text('Delete Schedule')
 
-  %button = ('Save Schedule' => { ndx => 1, key => 'S', value => $locale->text('Save Schedule') },
-             'Delete Schedule' => { ndx => 16, key => 'D', value => $locale->text('Delete Schedule') },
+  %button = ('save_schedule' => { ndx => 1, key => 'S', value => $locale->text('Save Schedule') },
+             'delete_schedule' => { ndx => 16, key => 'D', value => $locale->text('Delete Schedule') },
 	    );
   
-  $form->print_button(\%button, 'Save Schedule');
+  $form->print_button(\%button, 'save_schedule');
   
   if ($form->{recurring}) {
-    $form->print_button(\%button, 'Delete Schedule');
+    $form->print_button(\%button, 'delete_schedule');
   }
 
   # delete variables
