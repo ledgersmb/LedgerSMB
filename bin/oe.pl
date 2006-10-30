@@ -2429,20 +2429,20 @@ sub display_ship_receive {
 
 # type=submit $locale->text('Done')
 
-  %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-             'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	     'Ship to' => { ndx => 4, key => 'T', value => $locale->text('Ship to') },
-	     'E-mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
-	     'Done' => { ndx => 11, key => 'D', value => $locale->text('Done') },
+  %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+             'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	     'ship_to' => { ndx => 4, key => 'T', value => $locale->text('Ship to') },
+	     'e_mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
+	     'done' => { ndx => 11, key => 'D', value => $locale->text('Done') },
 	    );
   
-  for ("Update", "Print") { $form->print_button(\%button, $_) }
+  for ("update", "print") { $form->print_button(\%button, $_) }
   
   if ($form->{type} eq 'ship_order') {
-    for ('Ship to', 'E-mail') { $form->print_button(\%button, $_) }
+    for ('ship_to', 'e_mail') { $form->print_button(\%button, $_) }
   }
   
-  $form->print_button(\%button, 'Done');
+  $form->print_button(\%button, 'done');
   
   if ($form->{lynx}) {
     require "bin/menu.pl";
