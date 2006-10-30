@@ -754,18 +754,18 @@ sub form_footer {
 
   if (! $form->{readonly}) {
     
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-               'Save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+               'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
 	      );
     
     if ($form->{id}) {
 
       if (!$form->{isassemblyitem}) {
-	$button{'Save as new'} = { ndx => 7, key => 'N', value => $locale->text('Save as new') };
+	$button{'save_as_new'} = { ndx => 7, key => 'N', value => $locale->text('Save as new') };
       }
 
       if ($form->{orphaned}) {
-	$button{'Delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
+	$button{'delete'} = { ndx => 16, key => 'D', value => $locale->text('Delete') };
       }
     }
     %button = () if $form->{isassemblyitem} && $form->{item} eq 'assembly';
