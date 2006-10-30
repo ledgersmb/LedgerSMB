@@ -1039,27 +1039,27 @@ sub form_footer {
 
   if (! $form->{readonly}) {
 
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-               'Post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-	       'Post as new' => { ndx => 6, key => 'N', value => $locale->text('Post as new') },
-	       'Schedule' => { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-	       'Delete' => { ndx => 8, key => 'D', value => $locale->text('Delete') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+               'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+	       'post_as_new' => { ndx => 6, key => 'N', value => $locale->text('Post as new') },
+	       'schedule' => { ndx => 7, key => 'H', value => $locale->text('Schedule') },
+	       'delete' => { ndx => 8, key => 'D', value => $locale->text('Delete') },
 	      );
     
     %a = ();
     
     if ($form->{id}) {
-      for ('Update', 'Post as new', 'Schedule') { $a{$_} = 1 }
+      for ('update', 'post_as_new', 'schedule') { $a{$_} = 1 }
       
       if (! $form->{locked}) {
 	if ($transdate > $closedto) {
-	  for ('Post', 'Delete') { $a{$_} = 1 }
+	  for ('post', 'delete') { $a{$_} = 1 }
 	}
       }
       
     } else {
       if ($transdate > $closedto) {
-	for ("Update", "Post", "Schedule") { $a{$_} = 1 }
+	for ("update", "post", "schedule") { $a{$_} = 1 }
       }
     }
 
