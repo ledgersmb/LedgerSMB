@@ -705,33 +705,33 @@ sub form_footer {
 
     print "<br>";
 
-    %button = ('Update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
-               'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	       'Post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-	       'Print and Post' => { ndx => 4, key => 'R', value => $locale->text('Print and Post') },
-	       'Post as new' => { ndx => 5, key => 'N', value => $locale->text('Post as new') },
-	       'Print and Post as new' => { ndx => 6, key => 'W', value => $locale->text('Print and Post as new') },
-	       'Schedule' => { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-	       'Delete' => { ndx => 8, key => 'D', value => $locale->text('Delete') },
+    %button = ('update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+               'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	       'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+	       'print_and_post' => { ndx => 4, key => 'R', value => $locale->text('Print and Post') },
+	       'post_as_new' => { ndx => 5, key => 'N', value => $locale->text('Post as new') },
+	       'print_and_post_as_new' => { ndx => 6, key => 'W', value => $locale->text('Print and Post as new') },
+	       'schedule' => { ndx => 7, key => 'H', value => $locale->text('Schedule') },
+	       'delete' => { ndx => 8, key => 'D', value => $locale->text('Delete') },
 	      );
 
     if ($form->{id}) {
 
       if ($form->{locked} || $transdate <= $closedto) {
-	for ("Post", "Print and Post", "Delete") { delete $button{$_} }
+	for ("post", "print_and_post", "delete") { delete $button{$_} }
       }
 	
       if (!${LedgerSMB::Sysconfig::latex}) {
-	for ("Print and Post", "Print and Post as new") { delete $button{$_} }
+	for ("print_and_post", "print_and_post_as_new") { delete $button{$_} }
       }
 
     } else {
       
-      for ("Post as new", "Print and Post as new", "Delete") { delete $button{$_} }
-      delete $button{"Print and Post"} if ! ${LedgerSMB::Sysconfig::latex};
+      for ("post_as_new", "print_and_post_as_new", "delete") { delete $button{$_} }
+      delete $button{"print_and_post"} if ! ${LedgerSMB::Sysconfig::latex};
       
       if ($transdate <= $closedto) {
-	for ("Post", "Print and Post") { delete $button{$_} }
+	for ("post", "print_and_post") { delete $button{$_} }
       }
     }
 
