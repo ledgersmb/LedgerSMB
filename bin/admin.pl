@@ -113,8 +113,8 @@ sub setup_initial_password {
 		<a href="http://www.ledgersmb.org/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
 		<h1 class="login">|.$locale->text('Version').qq| $form->{version} <br />|.$locale->text('Administration').qq|</h1>
 		
-		<fieldset><legend>Change password</legend>
-		<p>This is your first time logging into LedgerSMB.  Please set your administrative password</p>
+		<fieldset><legend>|.$locale->text('Change password').qq|</legend>
+		<p>|.$locale->text('This is your first time logging into LedgerSMB.  Please set your administrative password').qq|</p>
 		
 		<form method="post" action="$form->{script}" name="admin">
 						<table>
@@ -401,8 +401,6 @@ sub form_header {
 		$countrycodes .= ($myconfig->{countrycode} eq $key) ? qq|<option selected value="$key">$countrycodes{$key}</option>|
 															: qq|<option value="$key">$countrycodes{$key}</option>|;
 	}
-
-	$countrycodes = qq|<option value="">English</option>\n$countrycodes|;
 
 	# is there a templates basedir
 	if (! -d "${LedgerSMB::Sysconfig::templates}") {
