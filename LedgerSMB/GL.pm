@@ -39,25 +39,25 @@ sub delete_transaction {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
-	my %audittrail = ( tablename  => 'gl',
-					   reference  => $form->{reference},
-					   formname   => 'transaction',
-					   action     => 'deleted',
-					   id         => $form->{id} );
+	my %audittrail = ( 
+		tablename  => 'gl',
+		reference  => $form->{reference},
+		formname   => 'transaction',
+		action     => 'deleted',
+		id         => $form->{id} );
 
 	$form->audittrail($dbh, "", \%audittrail);
-
-	my $query = qq|DELETE FROM gl WHERE id = $form->{id}|;
+	my $id = $dbh->quote($form->{id});
+	my $query = qq|DELETE FROM gl WHERE id = $id|;
 	$dbh->do($query) || $form->dberror($query);
 
-	$query = qq|DELETE FROM acc_trans WHERE trans_id = $form->{id}|;
+	$query = qq|DELETE FROM acc_trans WHERE trans_id = $id|;
 	$dbh->do($query) || $form->dberror($query);
 
 	# commit and redirect
 	my $rc = $dbh->commit;
-	$dbh->disconnect;
 
 	$rc;
 }
@@ -73,20 +73,21 @@ sub post_transaction {
 	my $i;
 
 	# connect to database, turn off AutoCommit
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query;
 	my $sth;
 
+	my $id = $dbh->quote($form->{id});
 	if ($form->{id}) {
 
-		$query = qq|SELECT id FROM gl WHERE id = $form->{id}|;
+		$query = qq|SELECT id FROM gl WHERE id = $id|;
 		($form->{id}) = $dbh->selectrow_array($query);
 
 		if ($form->{id}) {
 			# delete individual transactions
-			$query = qq|DELETE FROM acc_trans 
-						 WHERE trans_id = $form->{id}|;
+			$query = qq|
+				DELETE FROM acc_trans WHERE trans_id = $id|;
 
 			$dbh->do($query) || $form->dberror($query);
 		}
@@ -97,15 +98,18 @@ sub post_transaction {
 		my $uid = localtime;
 		$uid .= "$$";
 
-		$query = qq|INSERT INTO gl (reference, employee_id)
-					VALUES ('$uid', (SELECT id FROM employee
-					 WHERE login = '$form->{login}'))|;
+		$query = qq|
+		INSERT INTO gl (reference, employee_id)
+		     VALUES ('$uid', (SELECT id FROM employee
+		                       WHERE login = ?))|;
 
-		$dbh->do($query) || $form->dberror($query);
+		$sth = $dbh->prepare($query);
+		$sth->execute($form->{login}) || $form->dberror($query);
 
-		$query = qq|SELECT id 
-					  FROM gl
-					 WHERE reference = '$uid'|;
+		$query = qq|
+			SELECT id 
+			  FROM gl
+			 WHERE reference = '$uid'|;
 	
 		($form->{id}) = $dbh->selectrow_array($query);
 	}
@@ -113,18 +117,23 @@ sub post_transaction {
 	($null, $department_id) = split /--/, $form->{department};
 	$department_id *= 1;
 
-	$form->{reference} = $form->update_defaults($myconfig, 'glnumber', $dbh) unless $form->{reference};
+	$form->{reference} = $form->update_defaults(
+		$myconfig, 'glnumber', $dbh) 
+			unless $form->{reference};
 	$form->{reference} ||= $form->{id};
 
-	$query = qq|UPDATE gl 
-				   SET reference = |.$dbh->quote($form->{reference}).qq|,
-					   description = |.$dbh->quote($form->{description}).qq|,
-					   notes = |.$dbh->quote($form->{notes}).qq|,
-					   transdate = '$form->{transdate}',
-					   department_id = $department_id
-				 WHERE id = $form->{id}|;
+	$query = qq|
+		UPDATE gl 
+		   SET reference = |.$dbh->quote($form->{reference}).qq|,
+		      description = |.$dbh->quote($form->{description}).qq|,
+		      notes = |.$dbh->quote($form->{notes}).qq|,
+		      transdate = '$form->{transdate}',
+		      department_id = $department_id
+		WHERE id = $form->{id}|;
 
-	$dbh->do($query) || $form->dberror($query);
+	$dbh->prepare($query);
+	$sth->execute($form->{transdate}, $department_id, $form->{id}) 
+		|| $form->dberror($query);
 
 	my $amount = 0;
 	my $posted = 0;
@@ -153,35 +162,39 @@ sub post_transaction {
 		# add the record
 		if (! $posted) {
 
-			($null, $project_id) = split /--/, $form->{"projectnumber_$i"};
+			($null, $project_id) = split /--/, 
+				$form->{"projectnumber_$i"};
 			$project_id ||= 'NULL';
 
-			for (qw(fx_transaction cleared)) { $form->{"${_}_$i"} *= 1 }
 
+			$query = qq|
+				INSERT INTO acc_trans 
+				            (trans_id, chart_id, amount, 
+				            transdate, source, project_id, 
+				            fx_transaction, memo, cleared)
+				    VALUES  (?, (SELECT id
+				                   FROM chart
+				                  WHERE accno = ?),
+				           ?, ?, ?, ?, ?, ?, ?)|;
 
-			$query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount, 
-											   transdate, source, project_id, 
-											   fx_transaction, memo, cleared)
-						VALUES ($form->{id}, (SELECT id
-												FROM chart
-											   WHERE accno = '$accno'),
-								$amount, '$form->{transdate}', |.
-								$dbh->quote($form->{"source_$i"}) .qq|,
-								$project_id, '$form->{"fx_transaction_$i"}', |.
-								$dbh->quote($form->{"memo_$i"}).qq|,
-								'$form->{"cleared_$i"}')|;
-
-			$dbh->do($query) || $form->dberror($query);
+			$sth = $dbh->prepare($query);
+			$sth->execute(
+				$form->{id}, $accno, $amount, 
+				$form->{transdate}, $form->{"source_$i"},
+				$project_id, $form->{"fx_transaction_$i"},
+				$form->{"memo_$i"}, $form->{"cleared_$i"}
+				) || $form->dberror($query);
 
 			$posted = 1;
 		}
 	}
 
-	my %audittrail = ( tablename  => 'gl',
-						reference  => $form->{reference},
-						formname   => 'transaction',
-						action     => 'posted',
-						id         => $form->{id} );
+	my %audittrail = ( 
+		tablename  => 'gl',
+		reference  => $form->{reference},
+		formname   => 'transaction',
+		action     => 'posted',
+		id         => $form->{id} );
 
 	$form->audittrail($dbh, "", \%audittrail);
 
@@ -201,7 +214,7 @@ sub all_transactions {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 	my $query;
 	my $sth;
 	my $var;
@@ -210,156 +223,182 @@ sub all_transactions {
 	my ($glwhere, $arwhere, $apwhere) = ("1 = 1", "1 = 1", "1 = 1");
 
 	if ($form->{reference} ne "") {
-		$var = $form->like(lc $form->{reference});
-		$glwhere .= " AND lower(g.reference) LIKE '$var'";
-		$arwhere .= " AND lower(a.invnumber) LIKE '$var'";
-		$apwhere .= " AND lower(a.invnumber) LIKE '$var'";
+		$var = $dbh->quote($form->like(lc $form->{reference}));
+		$glwhere .= " AND lower(g.reference) LIKE $var";
+		$arwhere .= " AND lower(a.invnumber) LIKE $var";
+		$apwhere .= " AND lower(a.invnumber) LIKE $var";
 	}
 
 	if ($form->{department} ne "") {
 		($null, $var) = split /--/, $form->{department};
+		$var = $dbh->quote($var);
 		$glwhere .= " AND g.department_id = $var";
 		$arwhere .= " AND a.department_id = $var";
 		$apwhere .= " AND a.department_id = $var";
 	}
 
 	if ($form->{source} ne "") {
-		$var = $form->like(lc $form->{source});
-		$glwhere .= " AND lower(ac.source) LIKE '$var'";
-		$arwhere .= " AND lower(ac.source) LIKE '$var'";
-		$apwhere .= " AND lower(ac.source) LIKE '$var'";
+		$var = $dbh->quote($form->like(lc $form->{source}));
+		$glwhere .= " AND lower(ac.source) LIKE $var";
+		$arwhere .= " AND lower(ac.source) LIKE $var";
+		$apwhere .= " AND lower(ac.source) LIKE $var";
 	}
 
 	if ($form->{memo} ne "") {
 		$var = $form->like(lc $form->{memo});
-		$glwhere .= " AND lower(ac.memo) LIKE '$var'";
-		$arwhere .= " AND lower(ac.memo) LIKE '$var'";
-		$apwhere .= " AND lower(ac.memo) LIKE '$var'";
+		$glwhere .= " AND lower(ac.memo) LIKE $var";
+		$arwhere .= " AND lower(ac.memo) LIKE $var";
+		$apwhere .= " AND lower(ac.memo) LIKE $var";
 	}
 
-	($form->{datefrom}, $form->{dateto}) = $form->from_to($form->{year}, $form->{month}, $form->{interval}) if $form->{year} && $form->{month};
+	($form->{datefrom}, $form->{dateto}) = $form->from_to(
+			$form->{year}, $form->{month}, $form->{interval}) 
+				if $form->{year} && $form->{month};
 
 	if ($form->{datefrom}) {
-		$glwhere .= " AND ac.transdate >= '$form->{datefrom}'";
-		$arwhere .= " AND ac.transdate >= '$form->{datefrom}'";
-		$apwhere .= " AND ac.transdate >= '$form->{datefrom}'";
+		$glwhere .= " AND ac.transdate >= ".
+			$dbh->quote($form->{datefrom});
+		$arwhere .= " AND ac.transdate >= ".
+			$dbh->quote($form->{datefrom});
+		$apwhere .= " AND ac.transdate >= ".
+			$dbh->quote($form->{datefrom});
 	}
 
 	if ($form->{dateto}) {
-		$glwhere .= " AND ac.transdate <= '$form->{dateto}'";
-		$arwhere .= " AND ac.transdate <= '$form->{dateto}'";
-		$apwhere .= " AND ac.transdate <= '$form->{dateto}'";
+		$glwhere .= " AND ac.transdate <= ".
+			$dbh->quote($form->{dateto});
+		$arwhere .= " AND ac.transdate <= ".
+			$dbh->quote($form->{dateto});
+		$apwhere .= " AND ac.transdate <= ".
+			$dbh->quote($form->{dateto});
 	}
 
 	if ($form->{amountfrom}) {
-		$glwhere .= " AND abs(ac.amount) >= $form->{amountfrom}";
-		$arwhere .= " AND abs(ac.amount) >= $form->{amountfrom}";
-		$apwhere .= " AND abs(ac.amount) >= $form->{amountfrom}";
+		$glwhere .= " AND abs(ac.amount) >= ".
+			$dbh->quote($form->{amountfrom});
+		$arwhere .= " AND abs(ac.amount) >= ".
+			$dbh->quote($form->{amountfrom});
+		$apwhere .= " AND abs(ac.amount) >= ".
+			$dbh->quote($form->{amountfrom});
 	}
 
 	if ($form->{amountto}) {
-		$glwhere .= " AND abs(ac.amount) <= $form->{amountto}";
-		$arwhere .= " AND abs(ac.amount) <= $form->{amountto}";
-		$apwhere .= " AND abs(ac.amount) <= $form->{amountto}";
+		$glwhere .= " AND abs(ac.amount) <= ".
+			$dbh->quote($form->{amountto});
+		$arwhere .= " AND abs(ac.amount) <= ".
+			$dbh->quote($form->{amountto});
+		$apwhere .= " AND abs(ac.amount) <= ".
+			$dbh->quote($form->{amountto});
 	}
 
 	if ($form->{description}) {
 
-		$var = $form->like(lc $form->{description});
-		$glwhere .= " AND lower(g.description) LIKE '$var'";
-		$arwhere .= " AND (lower(ct.name) LIKE '$var'
-					   OR lower(ac.memo) LIKE '$var'
+		$var = $dbh->quote($form->like(lc $form->{description}));
+		$glwhere .= " AND lower(g.description) LIKE $var";
+		$arwhere .= " AND (lower(ct.name) LIKE $var
+					   OR lower(ac.memo) LIKE $var
 					   OR a.id IN (SELECT DISTINCT trans_id
 					 FROM invoice
-					WHERE lower(description) LIKE '$var'))";
+					WHERE lower(description) LIKE 'var))";
 
-		$apwhere .= " AND (lower(ct.name) LIKE '$var'
-					   OR lower(ac.memo) LIKE '$var'
+		$apwhere .= " AND (lower(ct.name) LIKE $var
+					   OR lower(ac.memo) LIKE $var
 					   OR a.id IN (SELECT DISTINCT trans_id
 					 FROM invoice
-					WHERE lower(description) LIKE '$var'))";
+					WHERE lower(description) LIKE $var))";
 	}
 
 	if ($form->{notes}) {
-		$var = $form->like(lc $form->{notes});
-		$glwhere .= " AND lower(g.notes) LIKE '$var'";
-		$arwhere .= " AND lower(a.notes) LIKE '$var'";
-		$apwhere .= " AND lower(a.notes) LIKE '$var'";
+		$var = $dbh->quote($form->like(lc $form->{notes}));
+		$glwhere .= " AND lower(g.notes) LIKE $var";
+		$arwhere .= " AND lower(a.notes) LIKE $var";
+		$apwhere .= " AND lower(a.notes) LIKE $var";
 	}
 
 	if ($form->{accno}) {
-		$glwhere .= " AND c.accno = '$form->{accno}'";
-		$arwhere .= " AND c.accno = '$form->{accno}'";
-		$apwhere .= " AND c.accno = '$form->{accno}'";
+		$var = $dbh->quote($form->{accno});
+		$glwhere .= " AND c.accno = $var";
+		$arwhere .= " AND c.accno = $var";
+		$apwhere .= " AND c.accno = $var";
 	}
 
 	if ($form->{gifi_accno}) {
-		$glwhere .= " AND c.gifi_accno = '$form->{gifi_accno}'";
-		$arwhere .= " AND c.gifi_accno = '$form->{gifi_accno}'";
-		$apwhere .= " AND c.gifi_accno = '$form->{gifi_accno}'";
+		$var = $dbh->quote($form->{gifiaccno});
+		$glwhere .= " AND c.gifi_accno = $var";
+		$arwhere .= " AND c.gifi_accno = $var";
+		$apwhere .= " AND c.gifi_accno = $var";
 	}
 
 	if ($form->{category} ne 'X') {
-		$glwhere .= " AND c.category = '$form->{category}'";
-		$arwhere .= " AND c.category = '$form->{category}'";
-		$apwhere .= " AND c.category = '$form->{category}'";
+		$var = $dbh->quote($form->{gifiaccno});
+		$glwhere .= " AND c.category = $var";
+		$arwhere .= " AND c.category = $var";
+		$apwhere .= " AND c.category = $var";
 	}
 
 	if ($form->{accno}) {
+		my $accno = $dbh->quote($form->{accno});
 
 		# get category for account
 		$query = qq|SELECT category, link, contra, description
 					  FROM chart
-					 WHERE accno = '$form->{accno}'|;
+					 WHERE accno = $accno|;
 
 		($form->{category}, $form->{link}, $form->{contra}, 
 		 $form->{account_description}) = $dbh->selectrow_array($query); 
 
 		if ($form->{datefrom}) {
 
-			$query = qq|SELECT SUM(ac.amount)
-						  FROM acc_trans ac
-						  JOIN chart c ON (ac.chart_id = c.id)
-						 WHERE c.accno = '$form->{accno}'
-						   AND ac.transdate < date '$form->{datefrom}' |;
+			$query = qq|
+				SELECT SUM(ac.amount)
+				  FROM acc_trans ac
+				  JOIN chart c ON (ac.chart_id = c.id)
+				 WHERE c.accno = $accno
+				       AND ac.transdate < date |.
+				       $dbh->quote($form->{datefrom});
 
 			($form->{balance}) = $dbh->selectrow_array($query);
 		}
 	}
 
 	if ($form->{gifi_accno}) {
+		my $gifi = $dbh->quote($form->{gifi_accno});
 
 		# get category for account
 		$query = qq|SELECT c.category, c.link, c.contra, g.description
 					  FROM chart c
 				 LEFT JOIN gifi g ON (g.accno = c.gifi_accno)
-					 WHERE c.gifi_accno = '$form->{gifi_accno}'|;
+					 WHERE c.gifi_accno = $gifi|;
 
 		($form->{category}, $form->{link}, $form->{contra}, 
-		 $form->{gifi_account_description}) = $dbh->selectrow_array($query); 
+		 $form->{gifi_account_description}) = $dbh->selectrow_array(
+			$query); 
 
 		if ($form->{datefrom}) {
 
-			$query = qq|SELECT SUM(ac.amount)
-						  FROM acc_trans ac
-						  JOIN chart c ON (ac.chart_id = c.id)
-						 WHERE c.gifi_accno = '$form->{gifi_accno}'
-						   AND ac.transdate < date '$form->{datefrom}' |;
+			$query = qq|
+				SELECT SUM(ac.amount)
+				  FROM acc_trans ac
+				  JOIN chart c ON (ac.chart_id = c.id)
+				 WHERE c.gifi_accno = $gifi
+				       AND ac.transdate < date |.
+				       $dbh->quote($form->{datefrom});
 
 			($form->{balance}) = $dbh->selectrow_array($query);
 		}
 	}
 
-	my $false = ($myconfig->{dbdriver} =~ /Pg/) ? FALSE : q|'0'|;
+	my $false = 'FALSE';
 
-	my %ordinal = ( id => 1,
-					reference => 4,
-					description => 5,
-					transdate => 6,
-					source => 7,
-					accno => 9,
-					department => 15,
-					memo => 16 );
+	my %ordinal = ( 
+		id => 1,
+		reference => 4,
+		description => 5,
+		transdate => 6,
+		source => 7,
+		accno => 9,
+		department => 15,
+		memo => 16 );
 
 	my @a = (id, transdate, reference, source, description, accno);
 	my $sortorder = $form->sort_order(\@a, \%ordinal);
@@ -446,7 +485,7 @@ sub all_transactions {
 	}
 
 	$sth->finish;
-	$dbh->disconnect;
+	$dbh->commit;
 }
 
 
@@ -457,7 +496,7 @@ sub transaction {
 	my ($query, $sth, $ref);
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	if ($form->{id}) {
 
@@ -473,10 +512,10 @@ sub transaction {
 		$query = qq|SELECT g.*, d.description AS department
 					  FROM gl g
 				 LEFT JOIN department d ON (d.id = g.department_id)  
-					 WHERE g.id = $form->{id}|;
+					 WHERE g.id = ?|;
 
 		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
+		$sth->execute($form->{id}) || $form->dberror($query);
 
 		$ref = $sth->fetchrow_hashref(NAME_lc);
 		for (keys %$ref) { $form->{$_} = $ref->{$_} }
@@ -487,11 +526,11 @@ sub transaction {
 					  FROM acc_trans ac
 					  JOIN chart c ON (ac.chart_id = c.id)
 				 LEFT JOIN project p ON (p.id = ac.project_id)
-					 WHERE ac.trans_id = $form->{id}
+					 WHERE ac.trans_id = ?
 				  ORDER BY accno|;
 
 		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
+		$sth->execute($form->{id}) || $form->dberror($query);
 
 		while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
@@ -537,7 +576,7 @@ sub transaction {
 	# get projects
 	$form->all_projects($myconfig, $dbh, $form->{transdate});
 
-	$dbh->disconnect;
+	$dbh->commit;
 
 }
 

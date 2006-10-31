@@ -12,7 +12,7 @@ Security:
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
 * Audited Form.pm for SQL-injection problems and move to new API (Chris T)
 * Audited BP.pm, CA.pm, CT.pm for SQL injection and moved to new API. (Chris T)
-* Audited IS.pm, IR.pm for SQL injection and moved to new API. (Chris T)
+* Audited IS.pm, GL.pm, IR.pm for SQL injection and moved to new API. (Chris T)
 * Audited User.pm for SQL injection. (Chris T)
 * Audited HR.pm, removed old, stale payroll code, moved to new API (Chris T)
 
