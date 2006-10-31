@@ -146,6 +146,10 @@ BEGIN;
 LOCK session in EXCLUSIVE MODE;
 ALTER TABLE session ADD CONSTRAINT session_token_check check (length(token::text) = 32);
 ALTER TABLE session ADD column user_id integer not null references users(id);
+
+-- comment this out when user db is working:
+ALTER TABLE session ALTER COLUMN user_id DROP NOT NULL;
+
 LOCK users in EXCLUSIVE MODE;
 CREATE TABLE users (id serial UNIQUE, username varchar(30) PRIMARY KEY);
 COMMENT ON TABLE users 'username is the primary key because we don't want duplicate users';
