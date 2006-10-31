@@ -1367,7 +1367,7 @@ sub transactions {
       $quotation = $locale->text('RFQ');
 
       if ($myconfig{acs} !~ /Quotations--Quotations/) {
-	$button{'Quotations--RFQ'}{code} = qq|<button class="submit" type="submit" name="action" value="rfq_">|.$locale->text('RFQ ').qq|"</button> |;
+	$button{'Quotations--RFQ'}{code} = qq|<button class="submit" type="submit" name="action" value="add">|.$locale->text('RFQ').qq|"</button> |;
 	$button{'Quotations--RFQ'}{order} = $i++;
       }
       
@@ -1417,7 +1417,7 @@ sub transactions {
       $quotation = $locale->text('Quotation');
 
       if ($myconfig{acs} !~ /Quotations--Quotations/) {
-	$button{'Quotations--Quotation'}{code} = qq|<button class="submit" type="submit" name="action" value="quotation_">|.$locale->text('Quotation ').qq|</button> |;
+	$button{'Quotations--Quotation'}{code} = qq|<button class="submit" type="submit" name="action" value="add">|.$locale->text('Quotation').qq|</button> |;
 	$button{'Quotations--Quotation'}{order} = $i++;
       }
       
@@ -2738,10 +2738,6 @@ sub transfer {
   }
 
 }
-
-
-sub rfq_ { &add };
-sub quotation_ { &add };
 
 
 sub generate_purchase_orders {

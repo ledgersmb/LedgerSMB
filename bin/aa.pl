@@ -1317,7 +1317,7 @@ sub transactions {
     $callback .= "&transdateto=$form->{transdateto}";
     $href .= "&transdateto=$form->{transdateto}";
     $option .= "\n<br>" if ($option);
-    $option .= $locale->text('To')."&nbsp;".$locale->date(\%myconfig, $form->{transdateto}, 1);
+    $option .= $locale->text('To [_1]', $locale->date(\%myconfig, $form->{transdateto}, 1));
   }
   if ($form->{open}) {
     $callback .= "&open=$form->{open}";

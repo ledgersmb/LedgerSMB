@@ -1468,15 +1468,15 @@ sub print_form {
     }
 
     $now = scalar localtime;
-    $cc = $locale->text('Cc').qq|: $form->{cc}\n| if $form->{cc};
-    $bcc = $locale->text('Bcc').qq|: $form->{bcc}\n| if $form->{bcc};
+    $cc = $locale->text('Cc: [_1]', $form->{cc}).qq|\n| if $form->{cc};
+    $bcc = $locale->text('Bcc: [_1]', $form->{bcc}).qq|\n| if $form->{bcc};
     
     if (defined %$old_form) {
       $old_form->{intnotes} = qq|$old_form->{intnotes}\n\n| if $old_form->{intnotes};
       $old_form->{intnotes} .= qq|[email]\n|
-      .$locale->text('Date').qq|: $now\n|
-      .$locale->text('To').qq|: $form->{email}\n${cc}${bcc}|
-      .$locale->text('Subject').qq|: $form->{subject}\n|;
+      .$locale->text('Date: [_1]', $now).qq|\n|
+      .$locale->text('To: [_1]\n[_2][_3]', $form->{email}, ${cc}, ${bcc})
+      .$locale->text('Subject: [_1]', $form->{subject}).qq|\n|;
 
       $old_form->{intnotes} .= qq|\n|.$locale->text('Message').qq|: |;
       $old_form->{intnotes} .= ($form->{message}) ? $form->{message} : $locale->text('sent');

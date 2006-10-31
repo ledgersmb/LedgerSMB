@@ -132,7 +132,7 @@ sub setup_initial_password {
 		<p><button type="submit" class="submit" name="action" value="change_password">|.$locale->text('Change Password').qq|</button></p>
 		</form>
 
-		<a href="http://www.ledgersmb.org/">LedgerSMB |.$locale->text('website').qq|</a>
+		<a href="http://www.ledgersmb.org/">|.$locale->text('LedgerSMB website').qq|</a>
 	</div>
 	</body>
 	</html>
@@ -175,7 +175,7 @@ sub adminlogin {
 			>|.$locale->text("Application Login").qq|</a></p>
 
 
-		<a href="http://www.ledgersmb.org/">LedgerSMB |.$locale->text('website').qq|</a>
+		<a href="http://www.ledgersmb.org/">|.$locale->text('LedgerSMB website').qq|</a>
 	</div>
 	</body>
 	</html>
@@ -880,7 +880,7 @@ sub delete {
 
 	$form->{templates} = ($form->{templates}) ? "${LedgerSMB::Sysconfig::templates}/$form->{templates}" : "$templates/$form->{login}";
 
-	$form->error("${LedgerSMB::Sysconfig::memberfile} ".$locale->text('locked!')) if (-f ${memberfile}.LCK);
+	$form->error($locale->text("[_1] locked!", ${LedgerSMB::Sysconfig::memberfile}) if (-f ${memberfile}.LCK);
 
 	open(FH, ">${memberfile}.LCK") or $form->error("${memberfile}.LCK : $!");
 	close(FH);
