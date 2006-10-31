@@ -5,6 +5,8 @@
 package LedgerSMB::Sysconfig;
 
 use Config::Std;
+use DBI qw(:sql_types); 
+
 
 $session='DB';
 $logging=0; # No logging on by default
@@ -46,15 +48,6 @@ $localepath = 'locale/po';
              Epson	=> 'lpr -PEpson',
 	     );
 
-#################################
-# Global database parameters
-#################################
-# These parameters *must* be set correctly
-# for LedgerSMB >= 1.2 to work
-my $globalDBConnect = 'dbi:Pg:dbname=ledgersmb;host=localhost;port=5432';
-my $globalUserName = "ledgersmb";
-my $globalPassword = "set me to correct password";
-
 my %config;
 read_config('ledger-smb.conf' => %config) or die;
 
@@ -82,11 +75,13 @@ $sendmail = $config{programs}{sendmail} if $config{programs}{sendmail};
 $gzip = $config{programs}{gzip} if $config{programs}{gzip};
 
 $globalDBConnect = $config{globaldb}{DBConnect} if $config{globaldb}{DBConnect};
-$globalUserName = $config{globaldb}{UserName} if $config{globaldb}{UserName};
-$globalPassword = $config{globaldb}{Password} if $config{globaldb}{Password};
+$globalDBUserName = $config{globaldb}{DBUserName} if $config{globaldb}{DBUserName};
+$globalDBPassword = $config{globaldb}{DBPassword} if $config{globaldb}{DBPassword};
 
-#$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword); 
-
+#putting this in an if clause for now so not to break other devel users
+if ($config{globaldb}{DBConnect}){
+	$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword) or die;
+}
 # These lines prevent other apps in mod_perl from seeing the global db 
 # connection info
 
