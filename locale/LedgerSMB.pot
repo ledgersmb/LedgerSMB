@@ -6,14 +6,20 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.999\n"
-"POT-Creation-Date: 2006-10-28 14:44-0400\n"
+"Project-Id-Version: LedgerSMB 1.2.0\n"
+"POT-Creation-Date: 2006-10-30 21:02-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@example.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: bin/admin.pl:883
+#. (${LedgerSMB::Sysconfig::memberfile})
+#, perl-maketext-format
+msgid "%1 locked!"
+msgstr ""
 
 #: bin/ic.pl:2449
 msgid "A"
@@ -71,11 +77,11 @@ msgstr ""
 msgid "Above"
 msgstr ""
 
-#: bin/admin.pl:693
+#: bin/admin.pl:691
 msgid "Access Control"
 msgstr ""
 
-#: bin/login.pl:272 menu.pl:171
+#: bin/login.pl:272 menu.pl:160
 msgid "Access Denied!"
 msgstr ""
 
@@ -111,7 +117,7 @@ msgstr ""
 msgid "Account saved!"
 msgstr ""
 
-#: bin/admin.pl:1140 bin/admin.pl:1267 bin/admin.pl:1348 bin/admin.pl:1386 bin/admin.pl:1440 bin/admin.pl:205 bin/admin.pl:222 bin/admin.pl:295 bin/admin.pl:993
+#: bin/admin.pl:1138 bin/admin.pl:1265 bin/admin.pl:1346 bin/admin.pl:1384 bin/admin.pl:1438 bin/admin.pl:205 bin/admin.pl:222 bin/admin.pl:295 bin/admin.pl:991
 msgid "Accounting"
 msgstr ""
 
@@ -259,7 +265,7 @@ msgstr ""
 msgid "Add Time Card"
 msgstr ""
 
-#: menu.ini:3 menu.ini:93 menu.ini:332
+#: menu.ini:3 menu.ini:332 menu.ini:93
 msgid "Add Transaction"
 msgstr ""
 
@@ -279,7 +285,7 @@ msgstr ""
 msgid "Add Warehouse"
 msgstr ""
 
-#: bin/admin.pl:538 bin/am.pl:2131 bin/arap.pl:138 bin/cp.pl:883 bin/ct.pl:1463 bin/ct.pl:282 bin/ct.pl:458 bin/ct.pl:591 bin/ct.pl:704 bin/hr.pl:269 bin/hr.pl:541 bin/hr.pl:75 bin/ic.pl:2773 bin/io.pl:1625 bin/pe.pl:1999
+#: bin/admin.pl:536 bin/am.pl:2131 bin/arap.pl:138 bin/cp.pl:883 bin/ct.pl:1463 bin/ct.pl:282 bin/ct.pl:458 bin/ct.pl:591 bin/ct.pl:704 bin/hr.pl:269 bin/hr.pl:541 bin/hr.pl:75 bin/ic.pl:2773 bin/io.pl:1625 bin/pe.pl:1999
 msgid "Address"
 msgstr ""
 
@@ -295,7 +301,7 @@ msgstr ""
 msgid "Adjusting till due to data entry error."
 msgstr ""
 
-#: bin/admin.pl:114 bin/admin.pl:144 bin/admin.pl:161 bin/admin.pl:205 bin/admin.pl:222 bin/admin.pl:295 bin/admin.pl:993
+#: bin/admin.pl:114 bin/admin.pl:144 bin/admin.pl:161 bin/admin.pl:205 bin/admin.pl:222 bin/admin.pl:295 bin/admin.pl:991
 msgid "Administration"
 msgstr ""
 
@@ -303,7 +309,7 @@ msgstr ""
 msgid "Administrative login"
 msgstr ""
 
-#: bin/admin.pl:679 bin/hr.pl:212 bin/hr.pl:431
+#: bin/admin.pl:677 bin/hr.pl:212 bin/hr.pl:431
 msgid "Administrator"
 msgstr ""
 
@@ -463,7 +469,7 @@ msgstr ""
 msgid "Backup sent to"
 msgstr ""
 
-#: bin/ca.pl:310 bin/gl.pl:526 bin/rc.pl:471 bin/rp.pl:1108 bin/rp.pl:1109
+#: bin/ca.pl:310 bin/gl.pl:526 bin/rc.pl:472 bin/rp.pl:1108 bin/rp.pl:1109
 msgid "Balance"
 msgstr ""
 
@@ -479,15 +485,21 @@ msgstr ""
 msgid "Batch Printing"
 msgstr ""
 
-#: bin/arap.pl:910 bin/ct.pl:1302 bin/ct.pl:292 bin/ct.pl:714 bin/io.pl:1472 bin/io.pl:967 bin/rp.pl:1811
+#: bin/ct.pl:1302 bin/ct.pl:292 bin/ct.pl:714 bin/io.pl:967 bin/rp.pl:1811
 msgid "Bcc"
+msgstr ""
+
+#: bin/arap.pl:910 bin/io.pl:1472
+#. ($form->{bcc})
+#, perl-maketext-format
+msgid "Bcc: %1"
 msgstr ""
 
 #: bin/hr.pl:634
 msgid "Before Deduction"
 msgstr ""
 
-#: bin/rc.pl:528
+#: bin/rc.pl:529
 msgid "Beginning Balance"
 msgstr ""
 
@@ -499,7 +511,7 @@ msgstr ""
 msgid "Billing Address"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:71
+#: LedgerSMB/Num2text.pm:92
 msgid "Billion"
 msgstr ""
 
@@ -551,6 +563,10 @@ msgstr ""
 msgid "COGS account does not exist!"
 msgstr ""
 
+#: bin/rc.pl:316
+msgid "Calculate"
+msgstr ""
+
 #: bin/jc.pl:1034
 msgid "Cannot add stores card for a completed job!"
 msgstr ""
@@ -575,7 +591,7 @@ msgstr ""
 msgid "Cannot create Labor"
 msgstr ""
 
-#: bin/admin.pl:1475
+#: bin/admin.pl:1473
 msgid "Cannot create Lock!"
 msgstr ""
 
@@ -719,7 +735,7 @@ msgstr ""
 msgid "Cannot stock assemblies!"
 msgstr ""
 
-#: bin/am.pl:2592 bin/ic.pl:872 bin/rp.pl:339 bin/rp.pl:400 bin/rp.pl:509 bin/rp.pl:589 pos.conf.pl:40 menu.ini:161
+#: bin/am.pl:2592 bin/ic.pl:872 bin/rp.pl:339 bin/rp.pl:400 bin/rp.pl:509 bin/rp.pl:589 menu.ini:161 pos.conf.pl:40
 msgid "Cash"
 msgstr ""
 
@@ -727,20 +743,30 @@ msgstr ""
 msgid "Cash Breakdown:"
 msgstr ""
 
-#: bin/arap.pl:909 bin/ct.pl:1503 bin/ct.pl:289 bin/ct.pl:713 bin/io.pl:1471 bin/io.pl:998 bin/rp.pl:1838
+#: bin/ct.pl:1503 bin/ct.pl:289 bin/ct.pl:713 bin/io.pl:998 bin/rp.pl:1838
 msgid "Cc"
+msgstr ""
+
+#: bin/arap.pl:909 bin/io.pl:1471
+#. ($form->{cc})
+#, perl-maketext-format
+msgid "Cc: %1"
 msgstr ""
 
 #: bin/pos.pl:511
 msgid "Change"
 msgstr ""
 
-#: bin/admin.pl:353 bin/admin.pl:993
+#: bin/admin.pl:353 bin/admin.pl:991
 msgid "Change Admin Password"
 msgstr ""
 
-#: bin/admin.pl:1003 bin/admin.pl:1025 bin/admin.pl:132
+#: bin/admin.pl:1001 bin/admin.pl:1023 bin/admin.pl:132
 msgid "Change Password"
+msgstr ""
+
+#: bin/admin.pl:116
+msgid "Change password"
 msgstr ""
 
 #: bin/jc.pl:566
@@ -755,7 +781,7 @@ msgstr ""
 msgid "Chart of Accounts"
 msgstr ""
 
-#: bin/aa.pl:141 pos.conf.pl:39 menu.ini:874
+#: bin/aa.pl:141 menu.ini:874 pos.conf.pl:39
 msgid "Check"
 msgstr ""
 
@@ -791,16 +817,22 @@ msgstr ""
 msgid "Close Books up to"
 msgstr ""
 
-#: bin/rc.pl:669
+#: bin/rc.pl:670
 msgid "Close Next"
 msgstr ""
 
-#: bin:rc.pl:319 menu.ini:86
+#: bin/rc.pl:319 menu.ini:86
 msgid "Close Till"
 msgstr ""
 
 #: bin/aa.pl:1038 bin/aa.pl:1332 bin/ct.pl:1090 bin/ct.pl:121 bin/ct.pl:247 bin/ct.pl:693 bin/ic.pl:1305 bin/ic.pl:1307 bin/ic.pl:877 bin/jc.pl:1260 bin/jc.pl:269 bin/oe.pl:1126 bin/oe.pl:1509 bin/oe.pl:310
 msgid "Closed"
+msgstr ""
+
+#: bin/rc.pl:197
+#. ($form->{login})
+#, perl-maketext-format
+msgid "Closing Till For %1"
 msgstr ""
 
 #: bin/am.pl:1071 bin/am.pl:1186 bin/am.pl:1269 bin/am.pl:1372 bin/am.pl:1513
@@ -811,7 +843,7 @@ msgstr ""
 msgid "Code missing!"
 msgstr ""
 
-#: bin/admin.pl:287 bin/admin.pl:534 bin/am.pl:2127 bin/login.pl:202
+#: bin/admin.pl:287 bin/admin.pl:532 bin/am.pl:2127 bin/login.pl:202
 msgid "Company"
 msgstr ""
 
@@ -831,7 +863,7 @@ msgstr ""
 msgid "Components"
 msgstr ""
 
-#: bin/admin.pl:1014 bin/admin.pl:126 bin/am.pl:2143
+#: bin/admin.pl:1012 bin/admin.pl:126 bin/am.pl:2143
 msgid "Confirm"
 msgstr ""
 
@@ -839,11 +871,11 @@ msgstr ""
 msgid "Confirm!"
 msgstr ""
 
-#: bin/rc.pl:418
+#: bin/rc.pl:419
 msgid "Congratulations!  Your till is exactly balanced."
 msgstr ""
 
-#: bin/admin.pl:1126
+#: bin/admin.pl:1124
 msgid "Connect to"
 msgstr ""
 
@@ -867,7 +899,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: bin/aa.pl:1193 bin/admin.pl:1333 bin/admin.pl:1365 bin/admin.pl:1420 bin/admin.pl:1457 bin/am.pl:1454 bin/am.pl:2326 bin/am.pl:2607 bin/arap.pl:218 bin/arap.pl:411 bin/arap.pl:510 bin/arapprn.pl:586 bin/bp.pl:189 bin/ct.pl:2278 bin/ct.pl:512 bin/gl.pl:352 bin/hr.pl:169 bin/ic.pl:1139 bin/ic.pl:1963 bin/ic.pl:2853 bin/ic.pl:3090 bin/ic.pl:3218 bin/io.pl:1046 bin/io.pl:1694 bin/io.pl:449 bin/io.pl:605 bin/jc.pl:1092 bin/jc.pl:297 bin/login.pl:301 bin/oe.pl:1260 bin/oe.pl:2045 bin/oe.pl:2556 bin/oe.pl:3004 bin/pe.pl:1642 bin/pe.pl:2073 bin/pe.pl:2221 bin/pe.pl:2451 bin/pe.pl:532 bin/pe.pl:744 bin/pos.pl:1064 bin/pw.pl:69 bin/rc.pl:170 bin/rp.pl:1882 bin/rp.pl:776
+#: bin/aa.pl:1193 bin/admin.pl:1331 bin/admin.pl:1363 bin/admin.pl:1418 bin/admin.pl:1455 bin/am.pl:1454 bin/am.pl:2326 bin/am.pl:2607 bin/arap.pl:218 bin/arap.pl:411 bin/arap.pl:510 bin/arapprn.pl:586 bin/bp.pl:189 bin/ct.pl:2278 bin/ct.pl:512 bin/gl.pl:352 bin/hr.pl:169 bin/ic.pl:1139 bin/ic.pl:1963 bin/ic.pl:2853 bin/ic.pl:3090 bin/ic.pl:3218 bin/io.pl:1046 bin/io.pl:1694 bin/io.pl:449 bin/io.pl:605 bin/jc.pl:1092 bin/jc.pl:297 bin/login.pl:301 bin/oe.pl:1260 bin/oe.pl:2045 bin/oe.pl:2556 bin/oe.pl:3000 bin/pe.pl:1642 bin/pe.pl:2073 bin/pe.pl:2221 bin/pe.pl:2451 bin/pe.pl:532 bin/pe.pl:744 bin/pos.pl:1064 bin/pw.pl:69 bin/rc.pl:170 bin/rp.pl:1882 bin/rp.pl:776
 msgid "Continue"
 msgstr ""
 
@@ -883,7 +915,7 @@ msgstr ""
 msgid "Copy to COA"
 msgstr ""
 
-#: bin/ct.pl:1955 bin/ct.pl:2195 bin/ic.pl:2239 bin/ic.pl:2447 bin/jc.pl:778 bin/oe.pl:2832
+#: bin/ct.pl:1955 bin/ct.pl:2195 bin/ic.pl:2239 bin/ic.pl:2447 bin/jc.pl:778 bin/oe.pl:2828
 msgid "Cost"
 msgstr ""
 
@@ -907,15 +939,15 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: bin/admin.pl:1301
+#: bin/admin.pl:1299
 msgid "Create Chart of Accounts"
 msgstr ""
 
-#: bin/admin.pl:1194 bin/admin.pl:1269 bin/admin.pl:1293 bin/admin.pl:1350
+#: bin/admin.pl:1192 bin/admin.pl:1267 bin/admin.pl:1291 bin/admin.pl:1348
 msgid "Create Dataset"
 msgstr ""
 
-#: bin/aa.pl:1397 bin/am.pl:324 bin/ca.pl:309 bin/ca.pl:93 bin/gl.pl:245 bin/gl.pl:523 bin/gl.pl:985 bin/rc.pl:470 bin/rp.pl:1107
+#: bin/aa.pl:1397 bin/am.pl:324 bin/ca.pl:309 bin/ca.pl:93 bin/gl.pl:245 bin/gl.pl:523 bin/gl.pl:985 bin/rc.pl:471 bin/rp.pl:1107
 msgid "Credit"
 msgstr ""
 
@@ -931,11 +963,17 @@ msgstr ""
 msgid "Credit Limit"
 msgstr ""
 
-#: bin/rc.pl:403
-msgid "Cumulative Error: "
+#: bin/rc.pl:291
+msgid "Cumulative Error:"
 msgstr ""
 
-#: bin/aa.pl:1389 bin/ct.pl:1107 bin/ct.pl:1961 bin/ic.pl:1507 bin/ic.pl:2228 bin/ic.pl:2313 bin/oe.pl:1442 bin/oe.pl:2835 bin/rp.pl:2374
+#: bin/rc.pl:404
+#. ($difference)
+#, perl-maketext-format
+msgid "Cumulative Error: %1"
+msgstr ""
+
+#: bin/aa.pl:1389 bin/ct.pl:1107 bin/ct.pl:1961 bin/ic.pl:1507 bin/ic.pl:2228 bin/ic.pl:2313 bin/oe.pl:1442 bin/oe.pl:2831 bin/rp.pl:2374
 msgid "Curr"
 msgstr ""
 
@@ -991,15 +1029,15 @@ msgstr ""
 msgid "DOB"
 msgstr ""
 
-#: bin/admin.pl:1156 bin/admin.pl:591
+#: bin/admin.pl:1154 bin/admin.pl:589
 msgid "Database"
 msgstr ""
 
-#: bin/admin.pl:1140 bin/admin.pl:1268 bin/admin.pl:1349 bin/admin.pl:1387 bin/admin.pl:1441
+#: bin/admin.pl:1138 bin/admin.pl:1266 bin/admin.pl:1347 bin/admin.pl:1385 bin/admin.pl:1439
 msgid "Database Administration"
 msgstr ""
 
-#: bin/admin.pl:764
+#: bin/admin.pl:762
 msgid "Database Driver not checked!"
 msgstr ""
 
@@ -1007,11 +1045,11 @@ msgstr ""
 msgid "Database Host"
 msgstr ""
 
-#: bin/admin.pl:824
+#: bin/admin.pl:822
 msgid "Database User missing!"
 msgstr ""
 
-#: bin/admin.pl:1360 bin/admin.pl:290 bin/admin.pl:620 bin/am.pl:2701
+#: bin/admin.pl:1358 bin/admin.pl:290 bin/admin.pl:618 bin/am.pl:2701
 msgid "Dataset"
 msgstr ""
 
@@ -1019,19 +1057,19 @@ msgstr ""
 msgid "Dataset is newer than version!"
 msgstr ""
 
-#: bin/admin.pl:1344 bin/admin.pl:823
+#: bin/admin.pl:1342 bin/admin.pl:821
 msgid "Dataset missing!"
 msgstr ""
 
-#: bin/admin.pl:1215
+#: bin/admin.pl:1213
 msgid "Dataset updated!"
 msgstr ""
 
-#: bin/aa.pl:1369 bin/aa.pl:610 bin/arap.pl:914 bin/arapprn.pl:512 bin/bp.pl:374 bin/ca.pl:303 bin/cp.pl:313 bin/cp.pl:351 bin/cp.pl:934 bin/cp.pl:978 bin/gl.pl:239 bin/gl.pl:515 bin/gl.pl:963 bin/io.pl:1477 bin/ir.pl:507 bin/is.pl:550 bin/jc.pl:1275 bin/jc.pl:1596 bin/jc.pl:764 bin/oe.pl:1169 bin/oe.pl:1433 bin/oe.pl:2028 bin/pe.pl:2318 bin/rc.pl:467 bin/rp.pl:1366 bin/rp.pl:2147 bin/rp.pl:2372 bin/rp.pl:527 bin/rp.pl:601
+#: bin/aa.pl:1369 bin/aa.pl:610 bin/arapprn.pl:512 bin/bp.pl:374 bin/ca.pl:303 bin/cp.pl:313 bin/cp.pl:351 bin/cp.pl:934 bin/cp.pl:978 bin/gl.pl:239 bin/gl.pl:515 bin/gl.pl:963 bin/ir.pl:507 bin/is.pl:550 bin/jc.pl:1275 bin/jc.pl:1596 bin/jc.pl:764 bin/oe.pl:1169 bin/oe.pl:1433 bin/oe.pl:2028 bin/pe.pl:2318 bin/rc.pl:468 bin/rp.pl:1366 bin/rp.pl:2147 bin/rp.pl:2372 bin/rp.pl:527 bin/rp.pl:601
 msgid "Date"
 msgstr ""
 
-#: bin/admin.pl:546 bin/am.pl:2147
+#: bin/admin.pl:544 bin/am.pl:2147
 msgid "Date Format"
 msgstr ""
 
@@ -1055,6 +1093,12 @@ msgstr ""
 msgid "Date worked"
 msgstr ""
 
+#: bin/arap.pl:914 bin/io.pl:1477
+#. ($now)
+#, perl-maketext-format
+msgid "Date: %1"
+msgstr ""
+
 #: bin/am.pl:2721
 msgid "Day"
 msgstr ""
@@ -1067,7 +1111,7 @@ msgstr ""
 msgid "Days"
 msgstr ""
 
-#: bin/aa.pl:1396 bin/am.pl:323 bin/ca.pl:308 bin/ca.pl:92 bin/gl.pl:244 bin/gl.pl:522 bin/gl.pl:984 bin/rc.pl:469 bin/rp.pl:1106
+#: bin/aa.pl:1396 bin/am.pl:323 bin/ca.pl:308 bin/ca.pl:92 bin/gl.pl:244 bin/gl.pl:522 bin/gl.pl:984 bin/rc.pl:470 bin/rp.pl:1106
 msgid "Debit"
 msgstr ""
 
@@ -1123,7 +1167,7 @@ msgstr ""
 msgid "Delete Account"
 msgstr ""
 
-#: bin/admin.pl:1195 bin/admin.pl:1388 bin/admin.pl:1442
+#: bin/admin.pl:1193 bin/admin.pl:1386 bin/admin.pl:1440
 msgid "Delete Dataset"
 msgstr ""
 
@@ -1159,7 +1203,7 @@ msgstr ""
 msgid "Deposit"
 msgstr ""
 
-#: bin/aa.pl:1026 bin/aa.pl:1296 bin/aa.pl:1399 bin/aa.pl:522 bin/am.pl:1072 bin/am.pl:1194 bin/am.pl:1270 bin/am.pl:1376 bin/am.pl:139 bin/am.pl:1514 bin/am.pl:2411 bin/am.pl:2520 bin/am.pl:2583 bin/am.pl:2753 bin/am.pl:322 bin/am.pl:440 bin/am.pl:555 bin/am.pl:685 bin/am.pl:802 bin/am.pl:878 bin/arap.pl:333 bin/ca.pl:305 bin/ca.pl:91 bin/ct.pl:1098 bin/ct.pl:147 bin/ct.pl:1959 bin/ct.pl:2191 bin/gl.pl:241 bin/gl.pl:282 bin/gl.pl:436 bin/gl.pl:519 bin/gl.pl:968 bin/hr.pl:770 bin/hr.pl:996 bin/ic.pl:1000 bin/ic.pl:1067 bin/ic.pl:1354 bin/ic.pl:1476 bin/ic.pl:1944 bin/ic.pl:2004 bin/ic.pl:2039 bin/ic.pl:2444 bin/ic.pl:3068 bin/ic.pl:3131 bin/ic.pl:670 bin/io.pl:1191 bin/io.pl:133 bin/io.pl:357 bin/jc.pl:1276 bin/jc.pl:1600 bin/jc.pl:532 bin/jc.pl:772 bin/oe.pl:1214 bin/oe.pl:1495 bin/oe.pl:2357 bin/oe.pl:2538 bin/oe.pl:2599 bin/oe.pl:2624 bin/oe.pl:2828 bin/pe.pl:1029 bin/pe.pl:1624 bin/pe.pl:1666 bin/pe.pl:1687 bin/pe.pl:2321 bin/pe.pl:241 bin/pe.pl:283 bin/pe.pl:445 bin/pe.pl:622 bin/pe.pl:648 bin/pe.pl:665 bin/pe.pl:827 bin/pe.pl:845 bin/pos.pl:678 bin/rc.pl:466 bin/rp.pl:1105 bin/rp.pl:2154 bin/rp.pl:2346 bin/rp.pl:2371 bin/rp.pl:268 bin/rp.pl:542 bin/rp.pl:616 bin/rp.pl:725 bin/rp.pl:840 menu.ini:440 menu.ini:501
+#: bin/aa.pl:1026 bin/aa.pl:1296 bin/aa.pl:1399 bin/aa.pl:522 bin/am.pl:1072 bin/am.pl:1194 bin/am.pl:1270 bin/am.pl:1376 bin/am.pl:139 bin/am.pl:1514 bin/am.pl:2411 bin/am.pl:2520 bin/am.pl:2583 bin/am.pl:2753 bin/am.pl:322 bin/am.pl:440 bin/am.pl:555 bin/am.pl:685 bin/am.pl:802 bin/am.pl:878 bin/arap.pl:333 bin/ca.pl:305 bin/ca.pl:91 bin/ct.pl:1098 bin/ct.pl:147 bin/ct.pl:1959 bin/ct.pl:2191 bin/gl.pl:241 bin/gl.pl:282 bin/gl.pl:436 bin/gl.pl:519 bin/gl.pl:968 bin/hr.pl:770 bin/hr.pl:996 bin/ic.pl:1000 bin/ic.pl:1067 bin/ic.pl:1354 bin/ic.pl:1476 bin/ic.pl:1944 bin/ic.pl:2004 bin/ic.pl:2039 bin/ic.pl:2444 bin/ic.pl:3068 bin/ic.pl:3131 bin/ic.pl:670 bin/io.pl:1191 bin/io.pl:133 bin/io.pl:357 bin/jc.pl:1276 bin/jc.pl:1600 bin/jc.pl:532 bin/jc.pl:772 bin/oe.pl:1214 bin/oe.pl:1495 bin/oe.pl:2357 bin/oe.pl:2538 bin/oe.pl:2599 bin/oe.pl:2624 bin/oe.pl:2824 bin/pe.pl:1029 bin/pe.pl:1624 bin/pe.pl:1666 bin/pe.pl:1687 bin/pe.pl:2321 bin/pe.pl:241 bin/pe.pl:283 bin/pe.pl:445 bin/pe.pl:622 bin/pe.pl:648 bin/pe.pl:665 bin/pe.pl:827 bin/pe.pl:845 bin/pos.pl:678 bin/rc.pl:467 bin/rp.pl:1105 bin/rp.pl:2154 bin/rp.pl:2346 bin/rp.pl:2371 bin/rp.pl:268 bin/rp.pl:542 bin/rp.pl:616 bin/rp.pl:725 bin/rp.pl:840 menu.ini:440 menu.ini:501
 msgid "Description"
 msgstr ""
 
@@ -1175,11 +1219,11 @@ msgstr ""
 msgid "Detail"
 msgstr ""
 
-#: bin/rc.pl:699
+#: bin/rc.pl:700
 msgid "Difference"
 msgstr ""
 
-#: bin/admin.pl:409 bin/admin.pl:792
+#: bin/admin.pl:407 bin/admin.pl:790
 msgid "Directory"
 msgstr ""
 
@@ -1191,7 +1235,7 @@ msgstr ""
 msgid "Discover"
 msgstr ""
 
-#: bin/oe.pl:2430 bin/oe.pl:2436 bin/rc.pl:675
+#: bin/oe.pl:2430 bin/oe.pl:2436 bin/rc.pl:676
 msgid "Done"
 msgstr ""
 
@@ -1199,11 +1243,11 @@ msgstr ""
 msgid "Drawing"
 msgstr ""
 
-#: bin/admin.pl:288 bin/admin.pl:612
+#: bin/admin.pl:288 bin/admin.pl:610
 msgid "Driver"
 msgstr ""
 
-#: bin/admin.pl:554 bin/am.pl:2155
+#: bin/admin.pl:552 bin/am.pl:2155
 msgid "Dropdown Limit"
 msgstr ""
 
@@ -1215,12 +1259,14 @@ msgstr ""
 msgid "Due Date missing!"
 msgstr ""
 
-#: bin/admin.pl:518 bin/am.pl:2111 bin/am.pl:2760 bin/arap.pl:565 bin/ct.pl:1062 bin/ct.pl:1499 bin/ct.pl:281 bin/ct.pl:434 bin/ct.pl:665 bin/ct.pl:712 bin/hr.pl:284 bin/hr.pl:565 bin/hr.pl:88 bin/io.pl:1670 bin/io.pl:978 bin/io.pl:996 bin/is.pl:641 bin/is.pl:651 bin/oe.pl:2435 bin/oe.pl:695 bin/oe.pl:709 bin/rp.pl:1692 bin/rp.pl:1696 bin/rp.pl:1836
+#: bin/admin.pl:516 bin/am.pl:2111 bin/am.pl:2760 bin/arap.pl:565 bin/ct.pl:1062 bin/ct.pl:1499 bin/ct.pl:281 bin/ct.pl:434 bin/ct.pl:665 bin/ct.pl:712 bin/hr.pl:284 bin/hr.pl:565 bin/hr.pl:88 bin/io.pl:1670 bin/io.pl:978 bin/io.pl:996 bin/is.pl:641 bin/is.pl:651 bin/oe.pl:2435 bin/oe.pl:695 bin/oe.pl:709 bin/rp.pl:1692 bin/rp.pl:1696 bin/rp.pl:1836
 msgid "E-mail"
 msgstr ""
 
 #: bin/rp.pl:1816
-msgid "E-mail Statement to"
+#. ($form->{$form->{ct}})
+#, perl-maketext-format
+msgid "E-mail Statement to %1"
 msgstr ""
 
 #: bin/am.pl:3239 bin/io.pl:1311 bin/rp.pl:1897
@@ -1379,20 +1425,24 @@ msgstr ""
 msgid "Edit Warehouse"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:48
+#: LedgerSMB/Num2text.pm:55
 msgid "Eight"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:58
+#: LedgerSMB/Num2text.pm:66
 msgid "Eighteen"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:66
+#: LedgerSMB/Num2text.pm:84
 msgid "Eighty"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:51
+#: LedgerSMB/Num2text.pm:58
 msgid "Eleven"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:59
+msgid "Eleven-o"
 msgstr ""
 
 #: bin/aa.pl:1263 bin/aa.pl:1364 bin/aa.pl:407 bin/aa.pl:991 bin/bp.pl:74 bin/ct.pl:1408 bin/ct.pl:306 bin/ct.pl:399 bin/ct.pl:626 bin/ct.pl:736 bin/hr.pl:776 bin/ic.pl:1501 bin/ic.pl:888 bin/jc.pl:234 bin/jc.pl:512 bin/oe.pl:1002 bin/oe.pl:1026 bin/oe.pl:1043 bin/oe.pl:1376 bin/oe.pl:1415 bin/oe.pl:1473 bin/oe.pl:493 bin/oe.pl:970 bin/oe.pl:978 bin/oe.pl:986 bin/pe.pl:2170
@@ -1475,7 +1525,7 @@ msgstr ""
 msgid "Exempt age <"
 msgstr ""
 
-#: bin/admin.pl:1283
+#: bin/admin.pl:1281
 msgid "Existing Datasets"
 msgstr ""
 
@@ -1503,7 +1553,7 @@ msgstr ""
 msgid "Failed to save order!"
 msgstr ""
 
-#: bin/admin.pl:530 bin/am.pl:2123 bin/ct.pl:1495 bin/ct.pl:288 bin/ct.pl:711 bin/io.pl:1665
+#: bin/admin.pl:528 bin/am.pl:2123 bin/ct.pl:1495 bin/ct.pl:288 bin/ct.pl:711 bin/io.pl:1665
 msgid "Fax"
 msgstr ""
 
@@ -1515,16 +1565,20 @@ msgstr ""
 msgid "February"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:55
+#: LedgerSMB/Num2text.pm:63
 msgid "Fifteen"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:63
+#: LedgerSMB/Num2text.pm:81
 msgid "Fifty"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:45
+#: LedgerSMB/Num2text.pm:52
 msgid "Five"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:87
+msgid "Five Hundred"
 msgstr ""
 
 #: bin/arap.pl:706
@@ -1539,15 +1593,15 @@ msgstr ""
 msgid "Foreign Exchange Loss"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:62
+#: LedgerSMB/Num2text.pm:80
 msgid "Forty"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:44
+#: LedgerSMB/Num2text.pm:51
 msgid "Four"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:54
+#: LedgerSMB/Num2text.pm:62
 msgid "Fourteen"
 msgstr ""
 
@@ -1555,7 +1609,7 @@ msgstr ""
 msgid "Friday"
 msgstr ""
 
-#: bin/aa.pl:1144 bin/aa.pl:1314 bin/bp.pl:171 bin/bp.pl:340 bin/ca.pl:244 bin/cp.pl:289 bin/ct.pl:1068 bin/ct.pl:112 bin/ct.pl:1943 bin/ct.pl:238 bin/ct.pl:479 bin/ct.pl:671 bin/gl.pl:290 bin/gl.pl:449 bin/hr.pl:121 bin/ic.pl:1322 bin/ic.pl:2328 bin/ic.pl:865 bin/jc.pl:1242 bin/jc.pl:1586 bin/jc.pl:165 bin/oe.pl:1218 bin/oe.pl:1498 bin/oe.pl:2601 bin/pe.pl:2151 bin/pe.pl:587 bin/pe.pl:831 bin/pos.pl:1043 bin/rc.pl:141 bin/rc.pl:475 bin/rp.pl:222 bin/rp.pl:2362 bin/rp.pl:247 bin/rp.pl:277 bin/rp.pl:306 bin/rp.pl:417 bin/rp.pl:449 bin/rp.pl:579 bin/rp.pl:737
+#: bin/aa.pl:1144 bin/aa.pl:1314 bin/bp.pl:171 bin/bp.pl:340 bin/ca.pl:244 bin/cp.pl:289 bin/ct.pl:1068 bin/ct.pl:112 bin/ct.pl:1943 bin/ct.pl:238 bin/ct.pl:479 bin/ct.pl:671 bin/gl.pl:290 bin/gl.pl:449 bin/hr.pl:121 bin/ic.pl:1322 bin/ic.pl:2328 bin/ic.pl:865 bin/jc.pl:1242 bin/jc.pl:1586 bin/jc.pl:165 bin/oe.pl:1218 bin/oe.pl:1498 bin/oe.pl:2601 bin/pe.pl:2151 bin/pe.pl:587 bin/pe.pl:831 bin/pos.pl:1043 bin/rc.pl:141 bin/rc.pl:476 bin/rp.pl:222 bin/rp.pl:2362 bin/rp.pl:247 bin/rp.pl:277 bin/rp.pl:306 bin/rp.pl:417 bin/rp.pl:449 bin/rp.pl:579 bin/rp.pl:737
 msgid "From"
 msgstr ""
 
@@ -1599,11 +1653,11 @@ msgstr ""
 msgid "Generate"
 msgstr ""
 
-#: bin/oe.pl:2920
+#: bin/oe.pl:2916
 msgid "Generate Orders"
 msgstr ""
 
-#: bin/oe.pl:1395 bin/oe.pl:2838
+#: bin/oe.pl:1395 bin/oe.pl:2834
 msgid "Generate Purchase Orders"
 msgstr ""
 
@@ -1627,7 +1681,7 @@ msgstr ""
 msgid "Gift Cert"
 msgstr ""
 
-#: menu.ini
+#: menu.ini:348
 msgid "Goods & Services"
 msgstr ""
 
@@ -1675,7 +1729,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: menu.ini:66 menu.ini:156
+#: menu.ini:156 menu.ini:66
 msgid "History"
 msgstr ""
 
@@ -1683,11 +1737,11 @@ msgstr ""
 msgid "Home Phone"
 msgstr ""
 
-#: bin/admin.pl:1162 bin/admin.pl:289 bin/admin.pl:614
+#: bin/admin.pl:1160 bin/admin.pl:289 bin/admin.pl:612
 msgid "Host"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:68
+#: LedgerSMB/Num2text.pm:86
 msgid "Hundred"
 msgstr ""
 
@@ -1759,12 +1813,12 @@ msgstr ""
 msgid "Inventory"
 msgstr ""
 
-#: bin/ic.pl:122 bin/ic.pl:139
-msgid "Inventory account does not exist!"
-msgstr ""
-
 #: menu.ini:527
 msgid "Inventory Activity"
+msgstr ""
+
+#: bin/ic.pl:122 bin/ic.pl:139
+msgid "Inventory account does not exist!"
 msgstr ""
 
 #: bin/ic.pl:2894
@@ -1783,8 +1837,14 @@ msgstr ""
 msgid "Inventory transferred!"
 msgstr ""
 
-#: bin/aa.pl:1371 bin/am.pl:3267 bin/bp.pl:375 bin/cp.pl:350 bin/cp.pl:977 bin/ct.pl:729 bin/io.pl:1231 bin/ir.pl:886 bin/is.pl:211 bin/is.pl:890 bin/is.pl:903 bin/rp.pl:1364 bin/rp.pl:2146 bin/rp.pl:525 bin/rp.pl:599 menu.ini:753 menu.ini:824
+#: bin/aa.pl:1371 bin/am.pl:3267 bin/bp.pl:375 bin/cp.pl:350 bin/cp.pl:977 bin/ct.pl:729 bin/io.pl:1231 bin/is.pl:211 bin/is.pl:890 bin/is.pl:903 bin/rp.pl:1364 bin/rp.pl:2146 bin/rp.pl:525 bin/rp.pl:599 menu.ini:753 menu.ini:824
 msgid "Invoice"
+msgstr ""
+
+#: bin/ir.pl:886
+#. ($form->{invnumber})
+#, perl-maketext-format
+msgid "Invoice %1 posted!"
 msgstr ""
 
 #: bin/aa.pl:1097 bin/aa.pl:490 bin/ir.pl:374 bin/is.pl:412
@@ -1911,7 +1971,7 @@ msgstr ""
 msgid "Labor/Overhead"
 msgstr ""
 
-#: bin/admin.pl:562 bin/am.pl:2163 bin/cp.pl:358 bin/ct.pl:1391 bin/ct.pl:317 bin/ct.pl:741 bin/ir.pl:246 bin/pe.pl:1688 bin/pe.pl:1853 bin/pos.pl:268 bin/rp.pl:1363 menu.ini:709
+#: bin/admin.pl:560 bin/am.pl:2163 bin/cp.pl:358 bin/ct.pl:1391 bin/ct.pl:317 bin/ct.pl:741 bin/ir.pl:246 bin/pe.pl:1688 bin/pe.pl:1853 bin/pos.pl:268 bin/rp.pl:1363 menu.ini:709
 msgid "Language"
 msgstr ""
 
@@ -1939,7 +1999,7 @@ msgstr ""
 msgid "Last Numbers & Default Accounts"
 msgstr ""
 
-#: bin/oe.pl:2834
+#: bin/oe.pl:2830
 msgid "Lead"
 msgstr ""
 
@@ -1947,8 +2007,14 @@ msgstr ""
 msgid "Leadtime"
 msgstr ""
 
-#: bin/rc.pl:399
-msgid "Less Cash in Till At Start:"
+#: bin/admin.pl:135 bin/admin.pl:178
+msgid "LedgerSMB website"
+msgstr ""
+
+#: bin/rc.pl:401
+#. ($form->{till_cash})
+#, perl-maketext-format
+msgid "Less Cash in Till At Start: %1"
 msgstr ""
 
 #: bin/am.pl:148 bin/gl.pl:310 bin/gl.pl:382
@@ -2019,19 +2085,19 @@ msgstr ""
 msgid "Lock System"
 msgstr ""
 
-#: bin/admin.pl:1478
+#: bin/admin.pl:1476
 msgid "Lockfile created!"
 msgstr ""
 
-#: bin/admin.pl:1469
+#: bin/admin.pl:1467
 msgid "Lockfile removed!"
 msgstr ""
 
-#: bin/admin.pl:167 bin/admin.pl:285 bin/admin.pl:505 bin/hr.pl:281 bin/hr.pl:87 bin/login.pl:151 bin/login.pl:216 menu.pl:98
+#: bin/admin.pl:167 bin/admin.pl:285 bin/admin.pl:503 bin/hr.pl:281 bin/hr.pl:87 bin/login.pl:151 bin/login.pl:216 menu.pl:87
 msgid "Login"
 msgstr ""
 
-#: bin/admin.pl:769
+#: bin/admin.pl:767
 msgid "Login name missing!"
 msgstr ""
 
@@ -2043,7 +2109,7 @@ msgstr ""
 msgid "Make"
 msgstr ""
 
-#: bin/aa.pl:1002 bin/aa.pl:1383 bin/admin.pl:682 bin/ct.pl:302 bin/ct.pl:307 bin/ct.pl:738 bin/hr.pl:211 bin/hr.pl:268 bin/hr.pl:430 bin/hr.pl:485 bin/hr.pl:85 bin/oe.pl:1047 bin/oe.pl:1448
+#: bin/aa.pl:1002 bin/aa.pl:1383 bin/admin.pl:680 bin/ct.pl:302 bin/ct.pl:307 bin/ct.pl:738 bin/hr.pl:211 bin/hr.pl:268 bin/hr.pl:430 bin/hr.pl:485 bin/hr.pl:85 bin/oe.pl:1047 bin/oe.pl:1448
 msgid "Manager"
 msgstr ""
 
@@ -2079,12 +2145,16 @@ msgstr ""
 msgid "Memo"
 msgstr ""
 
-#: bin/admin.pl:558 bin/am.pl:2159
+#: bin/admin.pl:556 bin/am.pl:2159
 msgid "Menu Width"
 msgstr ""
 
-#: bin/arap.pl:917 bin/io.pl:1013 bin/io.pl:1481 bin/rp.pl:1853
+#: bin/io.pl:1013 bin/io.pl:1481 bin/rp.pl:1853
 msgid "Message"
+msgstr ""
+
+#: bin/arap.pl:917
+msgid "Message: "
 msgstr ""
 
 #: bin/am.pl:2591 bin/rp.pl:337 bin/rp.pl:398 bin/rp.pl:507 bin/rp.pl:587
@@ -2095,7 +2165,7 @@ msgstr ""
 msgid "Microfiche"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:70
+#: LedgerSMB/Num2text.pm:91
 msgid "Million"
 msgstr ""
 
@@ -2119,7 +2189,7 @@ msgstr ""
 msgid "Months"
 msgstr ""
 
-#: bin/admin.pl:1297
+#: bin/admin.pl:1295
 msgid "Multibyte Encoding"
 msgstr ""
 
@@ -2127,7 +2197,7 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: bin/admin.pl:286 bin/admin.pl:514 bin/am.pl:2107 bin/ct.pl:1047 bin/ct.pl:586 bin/ct.pl:703 bin/hr.pl:267 bin/hr.pl:537 bin/ic.pl:1499 bin/ic.pl:886 bin/login.pl:137 bin/login.pl:194
+#: bin/admin.pl:286 bin/admin.pl:512 bin/am.pl:2107 bin/ct.pl:1047 bin/ct.pl:586 bin/ct.pl:703 bin/hr.pl:267 bin/hr.pl:537 bin/ic.pl:1499 bin/ic.pl:886 bin/login.pl:137 bin/login.pl:194
 msgid "Name"
 msgstr ""
 
@@ -2135,7 +2205,7 @@ msgstr ""
 msgid "Name missing!"
 msgstr ""
 
-#: bin/admin.pl:579
+#: bin/admin.pl:577
 msgid "New Templates"
 msgstr ""
 
@@ -2155,15 +2225,19 @@ msgstr ""
 msgid "Next Number"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:49
+#: LedgerSMB/Num2text.pm:56
 msgid "Nine"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:59
-msgid "Nineteen"
+#: LedgerSMB/Num2text.pm:89
+msgid "Nine Hundred"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:67
+msgid "Nineteen"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:85
 msgid "Ninety"
 msgstr ""
 
@@ -2175,7 +2249,7 @@ msgstr ""
 msgid "No Database Drivers available!"
 msgstr ""
 
-#: bin/admin.pl:1435
+#: bin/admin.pl:1433
 msgid "No Dataset selected!"
 msgstr ""
 
@@ -2219,7 +2293,7 @@ msgstr ""
 msgid "Non-chargeable"
 msgstr ""
 
-#: menu.ini:39 menu.ini:129
+#: menu.ini:129 menu.ini:39
 msgid "Non-taxable"
 msgstr ""
 
@@ -2247,11 +2321,11 @@ msgstr ""
 msgid "Nothing open!"
 msgstr ""
 
-#: bin/oe.pl:2756 bin/oe.pl:2961 bin/oe.pl:2985 bin/pe.pl:2430 bin/rp.pl:1807 bin/rp.pl:1925
+#: bin/oe.pl:2752 bin/oe.pl:2957 bin/oe.pl:2981 bin/pe.pl:2430 bin/rp.pl:1807 bin/rp.pl:1925
 msgid "Nothing selected!"
 msgstr ""
 
-#: bin/admin.pl:1383
+#: bin/admin.pl:1381
 msgid "Nothing to delete!"
 msgstr ""
 
@@ -2275,7 +2349,7 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: bin/admin.pl:550 bin/am.pl:2151
+#: bin/admin.pl:548 bin/am.pl:2151
 msgid "Number Format"
 msgstr ""
 
@@ -2307,8 +2381,12 @@ msgstr ""
 msgid "On Hand"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:41
+#: LedgerSMB/Num2text.pm:47
 msgid "One"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:48
+msgid "One-o"
 msgstr ""
 
 #: bin/ic.pl:2040
@@ -2319,7 +2397,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: bin/aa.pl:1372 bin/bp.pl:376 bin/ct.pl:730 bin/ic.pl:2043 bin/oe.pl:1435 bin/oe.pl:2830 bin/rp.pl:1365
+#: bin/aa.pl:1372 bin/bp.pl:376 bin/ct.pl:730 bin/ic.pl:2043 bin/oe.pl:1435 bin/oe.pl:2826 bin/rp.pl:1365
 msgid "Order"
 msgstr ""
 
@@ -2347,7 +2425,7 @@ msgstr ""
 msgid "Order deleted!"
 msgstr ""
 
-#: bin/oe.pl:2945 bin/oe.pl:2973
+#: bin/oe.pl:2941 bin/oe.pl:2969
 msgid "Order generation failed!"
 msgstr ""
 
@@ -2371,15 +2449,15 @@ msgstr ""
 msgid "Out of balance transaction!"
 msgstr ""
 
-#: bin/rc.pl:798
+#: bin/rc.pl:799
 msgid "Out of balance!"
 msgstr ""
 
-#: bin/rc.pl:90 menu.ini:23 menu.ini:113
+#: bin/rc.pl:90 menu.ini:113 menu.ini:23
 msgid "Outstanding"
 msgstr ""
 
-#: bin/rc.pl:682
+#: bin/rc.pl:683
 msgid "Over"
 msgstr ""
 
@@ -2431,7 +2509,7 @@ msgstr ""
 msgid "Part"
 msgstr ""
 
-#: bin/am.pl:1805 bin/ct.pl:1097 bin/ct.pl:144 bin/jc.pl:1599 bin/jc.pl:768 bin/oe.pl:2534 bin/oe.pl:2598 bin/oe.pl:2620 bin/oe.pl:2827 bin/pe.pl:2319 bin/rp.pl:266 bin/rp.pl:837
+#: bin/am.pl:1805 bin/ct.pl:1097 bin/ct.pl:144 bin/jc.pl:1599 bin/jc.pl:768 bin/oe.pl:2534 bin/oe.pl:2598 bin/oe.pl:2620 bin/oe.pl:2823 bin/pe.pl:2319 bin/rp.pl:266 bin/rp.pl:837
 msgid "Part Number"
 msgstr ""
 
@@ -2447,11 +2525,11 @@ msgstr ""
 msgid "Passed incorrect query type to get_cutstom_queries."
 msgstr ""
 
-#: bin/admin.pl:1010 bin/admin.pl:1170 bin/admin.pl:1179 bin/admin.pl:122 bin/admin.pl:165 bin/admin.pl:509 bin/admin.pl:628 bin/am.pl:2139 bin/login.pl:141 bin/login.pl:198 bin/pw.pl:67
+#: bin/admin.pl:1008 bin/admin.pl:1168 bin/admin.pl:1177 bin/admin.pl:122 bin/admin.pl:165 bin/admin.pl:507 bin/admin.pl:626 bin/am.pl:2139 bin/login.pl:141 bin/login.pl:198 bin/pw.pl:67
 msgid "Password"
 msgstr ""
 
-#: bin/admin.pl:1041
+#: bin/admin.pl:1039
 msgid "Password changed!"
 msgstr ""
 
@@ -2459,7 +2537,7 @@ msgstr ""
 msgid "Password does not match!"
 msgstr ""
 
-#: bin/admin.pl:1036
+#: bin/admin.pl:1034
 msgid "Passwords do not match!"
 msgstr ""
 
@@ -2503,7 +2581,7 @@ msgstr ""
 msgid "PgPP Database Administration"
 msgstr ""
 
-#: bin/admin.pl:526 bin/am.pl:2119 bin/ct.pl:1491 bin/ct.pl:287 bin/ct.pl:438 bin/ct.pl:660 bin/ct.pl:710 bin/io.pl:1660
+#: bin/admin.pl:524 bin/am.pl:2119 bin/ct.pl:1491 bin/ct.pl:287 bin/ct.pl:438 bin/ct.pl:660 bin/ct.pl:710 bin/io.pl:1660
 msgid "Phone"
 msgstr ""
 
@@ -2519,7 +2597,7 @@ msgstr ""
 msgid "Please see attatched report for list of invoices paid."
 msgstr ""
 
-#: bin/admin.pl:1164 bin/admin.pl:622
+#: bin/admin.pl:1162 bin/admin.pl:620
 msgid "Port"
 msgstr ""
 
@@ -2615,7 +2693,7 @@ msgstr ""
 msgid "Printed"
 msgstr ""
 
-#: bin/admin.pl:483 bin/am.pl:2079
+#: bin/admin.pl:481 bin/am.pl:2079
 msgid "Printer"
 msgstr ""
 
@@ -2683,7 +2761,7 @@ msgstr ""
 msgid "Projects"
 msgstr ""
 
-#: bin/am.pl:3108 bin/am.pl:3274 bin/ct.pl:1163 bin/ct.pl:1628 bin/ct.pl:1643 bin/ic.pl:1258 bin/io.pl:1281 bin/ir.pl:586 bin/ir.pl:593 bin/oe.pl:1342 bin/oe.pl:1760 bin/oe.pl:285 bin/oe.pl:702 bin/oe.pl:717 menu.ini:238 menu.ini:788 menu.ini:959
+#: bin/am.pl:3108 bin/am.pl:3274 bin/ct.pl:1163 bin/ct.pl:1628 bin/ct.pl:1643 bin/ic.pl:1258 bin/io.pl:1281 bin/ir.pl:586 bin/ir.pl:593 bin/oe.pl:1342 bin/oe.pl:1760 bin/oe.pl:285 bin/oe.pl:702 bin/oe.pl:717 menu.ini:238 menu.ini:788 menu.ini:859
 msgid "Purchase Order"
 msgstr ""
 
@@ -2715,12 +2793,8 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: bin/bp.pl:377 bin/ct.pl:1154 bin/ct.pl:1625 bin/ct.pl:1641 bin/ct.pl:731 bin/ic.pl:1273 bin/ic.pl:1497 bin/io.pl:1295 bin/io.pl:1302 bin/oe.pl:1417 bin/oe.pl:1770 bin/oe.pl:258 bin/oe.pl:699 bin/oe.pl:715 menu.ini:304 menu.ini:803 menu.ini:884
+#: bin/bp.pl:377 bin/ct.pl:1154 bin/ct.pl:1625 bin/ct.pl:1641 bin/ct.pl:731 bin/ic.pl:1273 bin/ic.pl:1497 bin/io.pl:1295 bin/io.pl:1302 bin/oe.pl:1417 bin/oe.pl:1420 bin/oe.pl:1770 bin/oe.pl:258 bin/oe.pl:699 bin/oe.pl:715 menu.ini:304 menu.ini:803 menu.ini:884
 msgid "Quotation"
-msgstr ""
-
-#: bin/oe.pl:1420
-msgid "Quotation "
 msgstr ""
 
 #: bin/oe.pl:442
@@ -2747,16 +2821,12 @@ msgstr ""
 msgid "Quotations"
 msgstr ""
 
-#: bin/ca.pl:306 bin/gl.pl:527 bin/rc.pl:464
+#: bin/ca.pl:306 bin/gl.pl:527 bin/rc.pl:465
 msgid "R"
 msgstr ""
 
-#: bin/ct.pl:1164 bin/ct.pl:1629 bin/ct.pl:1644 bin/ic.pl:1268 bin/ic.pl:836 bin/oe.pl:1367 bin/oe.pl:266 bin/oe.pl:700 bin/oe.pl:718 menu.ini:309 menu.ini:808 menu.ini:889
+#: bin/ct.pl:1164 bin/ct.pl:1629 bin/ct.pl:1644 bin/ic.pl:1268 bin/ic.pl:836 bin/oe.pl:1367 bin/oe.pl:1370 bin/oe.pl:266 bin/oe.pl:700 bin/oe.pl:718 menu.ini:309 menu.ini:808 menu.ini:889
 msgid "RFQ"
-msgstr ""
-
-#: bin/oe.pl:1370
-msgid "RFQ "
 msgstr ""
 
 #: bin/am.pl:1801 bin/oe.pl:1000 bin/oe.pl:430
@@ -2791,7 +2861,7 @@ msgstr ""
 msgid "Receipt posted!"
 msgstr ""
 
-#: bin/cp.pl:207 bin/pos.pl:988 bin/rp.pl:88 menu.ini:82 menu.ini:168 menu.ini:198
+#: bin/cp.pl:207 bin/pos.pl:988 bin/rp.pl:88 menu.ini:168 menu.ini:198 menu.ini:82
 msgid "Receipts"
 msgstr ""
 
@@ -2811,7 +2881,7 @@ msgstr ""
 msgid "Received"
 msgstr ""
 
-#: bin/rc.pl:82 menu.ini:118 menu.ini:208
+#: bin/rc.pl:82 menu.ini:188 menu.ini:208
 msgid "Reconciliation"
 msgstr ""
 
@@ -2824,7 +2894,9 @@ msgid "Record in"
 msgstr ""
 
 #: bin/arap.pl:714
-msgid "Recurring Transaction"
+#. ($description)
+#, perl-maketext-format
+msgid "Recurring Transaction for %1"
 msgstr ""
 
 #: bin/am.pl:2732 menu.ini:532
@@ -2863,11 +2935,11 @@ msgstr ""
 msgid "Report for"
 msgstr ""
 
-#: bin/gl.pl:196 menu.ini:12 menu.ini:55 menu.ini:102 menu.ini:145 menu.ini:192 menu.ini:226 menu.ini:243 menu.ini:314 menu.ini:336 menu.ini:384 menu.ini:473 menu.ini:506
+#: bin/gl.pl:196 menu.ini:102 menu.ini:12 menu.ini:145 menu.ini:192 menu.ini:226 menu.ini:243 menu.ini:314 menu.ini:336 menu.ini:384 menu.ini:473 menu.ini:506 menu.ini:55
 msgid "Reports"
 msgstr ""
 
-#: bin/oe.pl:2831
+#: bin/oe.pl:2827
 msgid "Req"
 msgstr ""
 
@@ -2887,8 +2959,10 @@ msgstr ""
 msgid "Requirements"
 msgstr ""
 
-#: bin/rc.pl:404
-msgid "Reset Till By "
+#: bin/rc.pl:405
+#. ($amount)
+#, perl-maketext-format
+msgid "Reset Till By %1"
 msgstr ""
 
 #: bin/am.pl:2587
@@ -2919,7 +2993,7 @@ msgstr ""
 msgid "SIC saved!"
 msgstr ""
 
-#: bin/ct.pl:1953 bin/io.pl:159 bin/io.pl:356 bin/oe.pl:2349 bin/oe.pl:2826
+#: bin/ct.pl:1953 bin/io.pl:159 bin/io.pl:356 bin/oe.pl:2349 bin/oe.pl:2822
 msgid "SKU"
 msgstr ""
 
@@ -3019,7 +3093,7 @@ msgstr ""
 msgid "Screen"
 msgstr ""
 
-#: bin/ct.pl:352 menu.ini:61 menu.ini:151
+#: bin/ct.pl:352 menu.ini:151 menu.ini:61
 msgid "Search"
 msgstr ""
 
@@ -3031,7 +3105,7 @@ msgstr ""
 msgid "Select Customer"
 msgstr ""
 
-#: bin/oe.pl:2923
+#: bin/oe.pl:2919
 msgid "Select Vendor"
 msgstr ""
 
@@ -3039,7 +3113,7 @@ msgstr ""
 msgid "Select a Printer!"
 msgstr ""
 
-#: bin/bp.pl:509 bin/bp.pl:513 bin/cp.pl:1086 bin/cp.pl:481 bin/cp.pl:484 bin/rc.pl:747 bin/rp.pl:1690 bin/rp.pl:1694
+#: bin/bp.pl:509 bin/bp.pl:513 bin/cp.pl:1086 bin/cp.pl:481 bin/cp.pl:484 bin/rc.pl:748 bin/rp.pl:1690 bin/rp.pl:1694
 msgid "Select all"
 msgstr ""
 
@@ -3119,7 +3193,7 @@ msgstr ""
 msgid "Services"
 msgstr ""
 
-#: bin/admin.pl:566 bin/am.pl:2167
+#: bin/admin.pl:564 bin/am.pl:2167
 msgid "Session Timeout"
 msgstr ""
 
@@ -3127,16 +3201,24 @@ msgstr ""
 msgid "Session expired!"
 msgstr ""
 
-#: bin/admin.pl:583
+#: bin/admin.pl:581
 msgid "Setup Templates"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:47
+#: LedgerSMB/Num2text.pm:54
 msgid "Seven"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:57
+#: LedgerSMB/Num2text.pm:88
+msgid "Seven Hundred"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:65
 msgid "Seventeen"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:83
+msgid "Seventy"
 msgstr ""
 
 #: bin/io.pl:93 bin/oe.pl:2345 menu.ini:288
@@ -3179,19 +3261,19 @@ msgstr ""
 msgid "Short"
 msgstr ""
 
-#: bin/admin.pl:522 bin/am.pl:2115
+#: bin/admin.pl:520 bin/am.pl:2115
 msgid "Signature"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:46
+#: LedgerSMB/Num2text.pm:53
 msgid "Six"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:56
+#: LedgerSMB/Num2text.pm:64
 msgid "Sixteen"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:64
+#: LedgerSMB/Num2text.pm:82
 msgid "Sixty"
 msgstr ""
 
@@ -3203,7 +3285,7 @@ msgstr ""
 msgid "Sort by"
 msgstr ""
 
-#: bin/aa.pl:1022 bin/aa.pl:1290 bin/aa.pl:1395 bin/aa.pl:614 bin/arapprn.pl:513 bin/ca.pl:307 bin/cp.pl:357 bin/cp.pl:940 bin/gl.pl:246 bin/gl.pl:275 bin/gl.pl:410 bin/gl.pl:517 bin/gl.pl:986 bin/ir.pl:511 bin/is.pl:554 bin/pos.pl:415 bin/rc.pl:465 bin/rp.pl:2352 bin/rp.pl:2375 bin/rp.pl:729
+#: bin/aa.pl:1022 bin/aa.pl:1290 bin/aa.pl:1395 bin/aa.pl:614 bin/arapprn.pl:513 bin/ca.pl:307 bin/cp.pl:357 bin/cp.pl:940 bin/gl.pl:246 bin/gl.pl:275 bin/gl.pl:410 bin/gl.pl:517 bin/gl.pl:986 bin/ir.pl:511 bin/is.pl:554 bin/pos.pl:415 bin/rc.pl:466 bin/rp.pl:2352 bin/rp.pl:2375 bin/rp.pl:729
 msgid "Source"
 msgstr ""
 
@@ -3231,16 +3313,24 @@ msgstr ""
 msgid "State/Province"
 msgstr ""
 
-#: bin/rp.pl:1742 bin/rp.pl:1896 menu.ini:798 menu.ini:869
+#: bin/rp.pl:1742 menu.ini:798 menu.ini:869
 msgid "Statement"
 msgstr ""
 
-#: bin/rc.pl:725
+#: bin/rp.pl:1896
+#. ($form->{todate})
+#, perl-maketext-format
+msgid "Statement - %1"
+msgstr ""
+
+#: bin/rc.pl:726
 msgid "Statement Balance"
 msgstr ""
 
 #: bin/rp.pl:1903
-msgid "Statement sent to"
+#. ($form->{$form->{ct}})
+#, perl-maketext-format
+msgid "Statement sent to %1"
 msgstr ""
 
 #: bin/rp.pl:1942
@@ -3271,7 +3361,7 @@ msgstr ""
 msgid "Stores Cards"
 msgstr ""
 
-#: bin/admin.pl:570 bin/am.pl:2171 menu.ini:910
+#: bin/admin.pl:568 bin/am.pl:2171 menu.ini:910
 msgid "Stylesheet"
 msgstr ""
 
@@ -3279,8 +3369,14 @@ msgstr ""
 msgid "Sub-contract GIFI"
 msgstr ""
 
-#: bin/arap.pl:916 bin/io.pl:1002 bin/io.pl:1479 bin/rp.pl:1842
+#: bin/io.pl:1002 bin/rp.pl:1842
 msgid "Subject"
+msgstr ""
+
+#: bin/arap.pl:916 bin/io.pl:1479
+#. ($form->{subject})
+#, perl-maketext-format
+msgid "Subject: %1"
 msgstr ""
 
 #: bin/aa.pl:1178 bin/ca.pl:254 bin/ct.pl:256 bin/gl.pl:331 bin/ic.pl:1125 bin/io.pl:1359 bin/ir.pl:448 bin/is.pl:493 bin/jc.pl:276 bin/oe.pl:1242 bin/oe.pl:625 bin/pos.pl:406 bin/rp.pl:237 bin/rp.pl:345 bin/rp.pl:406 bin/rp.pl:432 bin/rp.pl:556 bin/rp.pl:622 bin/rp.pl:749
@@ -3295,11 +3391,11 @@ msgstr ""
 msgid "Sunday"
 msgstr ""
 
-#: bin/admin.pl:1177
+#: bin/admin.pl:1175
 msgid "Superuser"
 msgstr ""
 
-#: bin/admin.pl:681 bin/hr.pl:210 bin/hr.pl:429
+#: bin/admin.pl:679 bin/hr.pl:210 bin/hr.pl:429
 msgid "Supervisor"
 msgstr ""
 
@@ -3311,7 +3407,7 @@ msgstr ""
 msgid "System Defaults"
 msgstr ""
 
-#: menu.pl:123
+#: menu.pl:112
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -3367,7 +3463,7 @@ msgstr ""
 msgid "Templates"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:50
+#: LedgerSMB/Num2text.pm:57
 msgid "Ten"
 msgstr ""
 
@@ -3383,27 +3479,31 @@ msgstr ""
 msgid "Text Templates"
 msgstr ""
 
-#: bin/admin.pl:1409
+#: bin/admin.pl:1407
 msgid "The following Datasets are not in use and can be deleted"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:53
+#: LedgerSMB/Num2text.pm:61
 msgid "Thirteen"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:61
+#: LedgerSMB/Num2text.pm:79
 msgid "Thirty"
 msgstr ""
 
-#: bin/admin.pl:1197
+#: bin/admin.pl:1195
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:69
+#: bin/admin.pl:117
+msgid "This is your first time logging into LedgerSMB.  Please set your administrative password"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:90
 msgid "Thousand"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:43
+#: LedgerSMB/Num2text.pm:50
 msgid "Three"
 msgstr ""
 
@@ -3447,8 +3547,14 @@ msgstr ""
 msgid "Times"
 msgstr ""
 
-#: bin/aa.pl:1146 bin/aa.pl:1320 bin/arap.pl:915 bin/bp.pl:173 bin/bp.pl:346 bin/ca.pl:246 bin/cp.pl:291 bin/ct.pl:1078 bin/ct.pl:114 bin/ct.pl:1944 bin/ct.pl:240 bin/ct.pl:479 bin/ct.pl:681 bin/gl.pl:292 bin/gl.pl:459 bin/hr.pl:121 bin/ic.pl:1326 bin/ic.pl:2329 bin/ic.pl:867 bin/io.pl:1478 bin/jc.pl:1248 bin/jc.pl:1592 bin/jc.pl:166 bin/oe.pl:1220 bin/oe.pl:1501 bin/oe.pl:2602 bin/pe.pl:2152 bin/pe.pl:587 bin/pe.pl:840 bin/pos.pl:1045 bin/rc.pl:142 bin/rc.pl:479 bin/rp.pl:1427 bin/rp.pl:224 bin/rp.pl:2366 bin/rp.pl:249 bin/rp.pl:279 bin/rp.pl:308 bin/rp.pl:419 bin/rp.pl:451 bin/rp.pl:581 bin/rp.pl:660 bin/rp.pl:739 bin/rp.pl:973 bin/rp.pl:984
+#: bin/aa.pl:1146 bin/bp.pl:173 bin/bp.pl:346 bin/ca.pl:246 bin/cp.pl:291 bin/ct.pl:1078 bin/ct.pl:114 bin/ct.pl:1944 bin/ct.pl:240 bin/ct.pl:479 bin/ct.pl:681 bin/gl.pl:292 bin/gl.pl:459 bin/hr.pl:121 bin/ic.pl:1326 bin/ic.pl:2329 bin/ic.pl:867 bin/jc.pl:1248 bin/jc.pl:1592 bin/jc.pl:166 bin/oe.pl:1220 bin/oe.pl:1501 bin/oe.pl:2602 bin/pe.pl:2152 bin/pe.pl:587 bin/pe.pl:840 bin/pos.pl:1045 bin/rc.pl:142 bin/rc.pl:480 bin/rp.pl:1427 bin/rp.pl:224 bin/rp.pl:2366 bin/rp.pl:249 bin/rp.pl:279 bin/rp.pl:308 bin/rp.pl:419 bin/rp.pl:451 bin/rp.pl:581 bin/rp.pl:660 bin/rp.pl:739 bin/rp.pl:973 bin/rp.pl:984
 msgid "To"
+msgstr ""
+
+#: bin/aa.pl:1320
+#. ($locale->date(\%myconfig, $form->{transdateto}, 1)
+#, perl-maketext-format
+msgid "To %1"
 msgstr ""
 
 #: bin/oe.pl:2616
@@ -3459,6 +3565,12 @@ msgstr ""
 msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
 msgstr ""
 
+#: bin/arap.pl:915 bin/io.pl:1478
+#. ($form->{email}, ${cc}, ${bcc})
+#, perl-maketext-format
+msgid "To: %1\\n%2%3"
+msgstr ""
+
 #: bin/ic.pl:963
 msgid "Top Level"
 msgstr ""
@@ -3467,8 +3579,10 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: bin/rc.pl:398
-msgid "Total Cash in Drawer:"
+#: bin/rc.pl:399
+#. ($form->{sub_sub})
+#, perl-maketext-format
+msgid "Total Cash in Drawer: %1"
 msgstr ""
 
 #: bin/am.pl:192
@@ -3507,7 +3621,7 @@ msgstr ""
 msgid "Transaction reversal enforced up to"
 msgstr ""
 
-#: menu.ini:18 menu.ini:108 menu.ini:484
+#: menu.ini:108 menu.ini:18 menu.ini:484
 msgid "Transactions"
 msgstr ""
 
@@ -3551,7 +3665,7 @@ msgstr ""
 msgid "Trial Balance"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:72
+#: LedgerSMB/Num2text.pm:93
 msgid "Trillion"
 msgstr ""
 
@@ -3559,15 +3673,55 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:52
+#: LedgerSMB/Num2text.pm:60
 msgid "Twelve"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:60
+#: LedgerSMB/Num2text.pm:68
 msgid "Twenty"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:42
+#: LedgerSMB/Num2text.pm:77
+msgid "Twenty Eight"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:74
+msgid "Twenty Five"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:73
+msgid "Twenty Four"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:78
+msgid "Twenty Nine"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:69
+msgid "Twenty One"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:70
+msgid "Twenty One-o"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:76
+msgid "Twenty Seven"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:75
+msgid "Twenty Six"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:72
+msgid "Twenty Three"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:71
+msgid "Twenty Two"
+msgstr ""
+
+#: LedgerSMB/Num2text.pm:49
 msgid "Two"
 msgstr ""
 
@@ -3575,7 +3729,7 @@ msgstr ""
 msgid "Type of Business"
 msgstr ""
 
-#: bin/rc.pl:681
+#: bin/rc.pl:682
 msgid "Under"
 msgstr ""
 
@@ -3587,7 +3741,7 @@ msgstr ""
 msgid "Unlock System"
 msgstr ""
 
-#: bin/aa.pl:692 bin/aa.pl:708 bin/am.pl:1961 bin/cp.pl:1085 bin/cp.pl:478 bin/cp.pl:483 bin/ct.pl:2083 bin/ct.pl:2086 bin/gl.pl:1034 bin/gl.pl:1042 bin/hr.pl:1114 bin/hr.pl:682 bin/ic.pl:750 bin/ic.pl:757 bin/ir.pl:582 bin/ir.pl:590 bin/is.pl:633 bin/is.pl:647 bin/jc.pl:607 bin/jc.pl:615 bin/jc.pl:819 bin/jc.pl:830 bin/oe.pl:2432 bin/oe.pl:687 bin/oe.pl:705 bin/pe.pl:1055 bin/pe.pl:1891 bin/pe.pl:384 bin/pe.pl:388 bin/pos.pl:555 bin/pos.pl:562 bin/rc.pl:746
+#: bin/aa.pl:692 bin/aa.pl:708 bin/am.pl:1961 bin/cp.pl:1085 bin/cp.pl:478 bin/cp.pl:483 bin/ct.pl:2083 bin/ct.pl:2086 bin/gl.pl:1034 bin/gl.pl:1042 bin/hr.pl:1114 bin/hr.pl:682 bin/ic.pl:750 bin/ic.pl:757 bin/ir.pl:582 bin/ir.pl:590 bin/is.pl:633 bin/is.pl:647 bin/jc.pl:607 bin/jc.pl:615 bin/jc.pl:819 bin/jc.pl:830 bin/oe.pl:2432 bin/oe.pl:687 bin/oe.pl:705 bin/pe.pl:1055 bin/pe.pl:1891 bin/pe.pl:384 bin/pe.pl:388 bin/pos.pl:555 bin/pos.pl:562 bin/rc.pl:747
 msgid "Update"
 msgstr ""
 
@@ -3599,19 +3753,19 @@ msgstr ""
 msgid "Upgrading to Version"
 msgstr ""
 
-#: bin/admin.pl:575
+#: bin/admin.pl:573
 msgid "Use Templates"
 msgstr ""
 
-#: bin/admin.pl:1168 bin/admin.pl:626 bin/admin.pl:680 bin/am.pl:2697 bin/hr.pl:209 bin/hr.pl:428
+#: bin/admin.pl:1166 bin/admin.pl:624 bin/admin.pl:678 bin/am.pl:2697 bin/hr.pl:209 bin/hr.pl:428
 msgid "User"
 msgstr ""
 
-#: bin/admin.pl:979
+#: bin/admin.pl:977
 msgid "User deleted!"
 msgstr ""
 
-#: bin/admin.pl:877
+#: bin/admin.pl:875
 msgid "User saved!"
 msgstr ""
 
@@ -3623,7 +3777,7 @@ msgstr ""
 msgid "Valid until"
 msgstr ""
 
-#: bin/aa.pl:1086 bin/aa.pl:1245 bin/aa.pl:1365 bin/aa.pl:437 bin/bp.pl:308 bin/bp.pl:73 bin/cp.pl:778 bin/ic.pl:2237 bin/ir.pl:333 bin/oe.pl:1096 bin/oe.pl:1375 bin/oe.pl:2829 bin/oe.pl:2994 bin/pe.pl:2307 bin/pe.pl:2432 bin/rp.pl:2136 bin/rp.pl:537 bin/rp.pl:611 bin/rp.pl:639
+#: bin/aa.pl:1086 bin/aa.pl:1245 bin/aa.pl:1365 bin/aa.pl:437 bin/bp.pl:308 bin/bp.pl:73 bin/cp.pl:778 bin/ic.pl:2237 bin/ir.pl:333 bin/oe.pl:1096 bin/oe.pl:1375 bin/oe.pl:2825 bin/oe.pl:2990 bin/pe.pl:2307 bin/pe.pl:2432 bin/rp.pl:2136 bin/rp.pl:537 bin/rp.pl:611 bin/rp.pl:639
 msgid "Vendor"
 msgstr ""
 
@@ -3675,7 +3829,7 @@ msgstr ""
 msgid "Vendors"
 msgstr ""
 
-#: bin/admin.pl:114 bin/admin.pl:161 bin/am.pl:2684 bin/login.pl:129 bin/login.pl:183 bin/login.pl:69 menu.pl:142 menu.pl:921
+#: bin/admin.pl:114 bin/admin.pl:161 bin/am.pl:2684 bin/login.pl:129 bin/login.pl:183 bin/login.pl:69 menu.ini:921 menu.pl:131
 msgid "Version"
 msgstr ""
 
@@ -3731,7 +3885,7 @@ msgstr ""
 msgid "What type of item is this?"
 msgstr ""
 
-#: bin/am.pl:3273 bin/io.pl:1243 bin/oe.pl:275 menu.ini:783 menu.ini:859
+#: bin/am.pl:3273 bin/io.pl:1243 bin/oe.pl:275 menu.ini:783 menu.ini:854
 msgid "Work Order"
 msgstr ""
 
@@ -3779,12 +3933,14 @@ msgstr ""
 msgid "You are logged out"
 msgstr ""
 
-#: menu.pl:97
+#: menu.pl:86
 msgid "You are logged out!"
 msgstr ""
 
-#: bin/rc.pl:413
-msgid "You are over by "
+#: bin/rc.pl:414
+#. ($difference)
+#, perl-maketext-format
+msgid "You are over by %1"
 msgstr ""
 
 #: bin/arap.pl:488
@@ -3819,15 +3975,17 @@ msgstr ""
 msgid "You are saving an existing transaction!"
 msgstr ""
 
-#: bin/rc.pl:415
-msgid "You are under by "
+#: bin/rc.pl:416
+#. ($difference * -1)
+#, perl-maketext-format
+msgid "You are under by %1"
 msgstr ""
 
 #: bin/login.pl:236
 msgid "You did not enter a name!"
 msgstr ""
 
-#: LedgerSMB/Num2text.pm:40
+#: LedgerSMB/Num2text.pm:46
 msgid "Zero"
 msgstr ""
 
@@ -3839,7 +3997,7 @@ msgstr ""
 msgid "account cannot be set to any other type of account"
 msgstr ""
 
-#: menu.pl:153
+#: menu.pl:142
 msgid "action= not defined!"
 msgstr ""
 
@@ -3851,7 +4009,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: bin/admin.pl:409 bin/admin.pl:792
+#: bin/admin.pl:407 bin/admin.pl:790
 msgid "does not exist"
 msgstr ""
 
@@ -3867,15 +4025,11 @@ msgstr ""
 msgid "failed"
 msgstr ""
 
-#: bin/arap.pl:714
-msgid "for"
-msgstr ""
-
 #: bin/rp.pl:1427 bin/rp.pl:973
 msgid "for Period"
 msgstr ""
 
-#: bin/admin.pl:777
+#: bin/admin.pl:775
 msgid "is already a member!"
 msgstr ""
 
@@ -3883,11 +4037,7 @@ msgstr ""
 msgid "localhost"
 msgstr ""
 
-#: bin/admin.pl:885
-msgid "locked!"
-msgstr ""
-
-#: bin/ir.pl:886 bin/is.pl:903
+#: bin/is.pl:903
 msgid "posted!"
 msgstr ""
 
@@ -3895,11 +4045,11 @@ msgstr ""
 msgid "sent"
 msgstr ""
 
-#: bin/admin.pl:1360
+#: bin/admin.pl:1358
 msgid "successfully created!"
 msgstr ""
 
-#: bin/admin.pl:1451
+#: bin/admin.pl:1449
 msgid "successfully deleted!"
 msgstr ""
 
@@ -3909,8 +4059,4 @@ msgstr ""
 
 #: bin/ic.pl:2576
 msgid "unexpected error!"
-msgstr ""
-
-#: bin/admin.pl:135 bin/admin.pl:178
-msgid "website"
 msgstr ""
