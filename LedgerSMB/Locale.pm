@@ -39,8 +39,8 @@ Locale::Maketext::Lexicon->import({
 });
 
 sub text {
-	my ($self, $text) = @_;
-	return encode_entities($self->maketext($text));
+	my ($self, $text, @params) = @_;
+	return encode_entities($self->maketext($text, @params));
 }
 
 ##sub date {
