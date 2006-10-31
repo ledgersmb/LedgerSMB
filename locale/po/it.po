@@ -1,4 +1,5 @@
-######################################################################
+# #-#-#-#-#  it.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2001-2003
 #
@@ -22,8 +23,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-#######################################################################
-
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -216,6 +216,9 @@ msgstr "Stato Patrimoniale"
 
 msgid "Bcc"
 msgstr "Bcc"
+
+msgid "Billion"
+msgstr "miliardo"
 
 msgid "Bin"
 msgstr "Codice BIN"
@@ -520,6 +523,18 @@ msgstr "Modifica Modello"
 msgid "Edit User"
 msgstr "Modifica Utente"
 
+msgid "Eight"
+msgstr "otto"
+
+msgid "Eighteen"
+msgstr "diciotto"
+
+msgid "Eighty"
+msgstr "ottanta"
+
+msgid "Eleven"
+msgstr "undici"
+
 msgid "Employee"
 msgstr "Dipendente"
 
@@ -556,11 +571,29 @@ msgstr "Feb"
 msgid "February"
 msgstr "Febbraio"
 
+msgid "Fifteen"
+msgstr "quindici"
+
+msgid "Fifty"
+msgstr "cinquanta"
+
+msgid "Five"
+msgstr "cinque"
+
 msgid "Foreign Exchange Gain"
 msgstr "Guadagno da cambio valuta"
 
 msgid "Foreign Exchange Loss"
 msgstr "Perdita da cambio valuta"
+
+msgid "Forty"
+msgstr "quaranta"
+
+msgid "Four"
+msgstr "quattro"
+
+msgid "Fourteen"
+msgstr "quattrodici"
 
 msgid "From"
 msgstr "Dal"
@@ -597,6 +630,9 @@ msgstr "Host"
 
 msgid "Hostname missing!"
 msgstr "Manca il nome del server"
+
+msgid "Hundred"
+msgstr "cento"
 
 msgid "ID"
 msgstr "ID"
@@ -751,6 +787,9 @@ msgstr "Messaggio"
 msgid "Microfiche"
 msgstr "Microfiche"
 
+msgid "Million"
+msgstr "milione"
+
 msgid "Model"
 msgstr "Modello"
 
@@ -765,6 +804,15 @@ msgstr "Manca il Nome!"
 
 msgid "New Templates"
 msgstr "Nuovi Modelli"
+
+msgid "Nine"
+msgstr "nove"
+
+msgid "Nineteen"
+msgstr "diciannove"
+
+msgid "Ninety"
+msgstr "novanta"
 
 msgid "No"
 msgstr "No"
@@ -819,6 +867,9 @@ msgstr "Ottobre"
 
 msgid "On Hand"
 msgstr "Disponibilit&agrave;"
+
+msgid "One"
+msgstr "uno"
 
 msgid "Open"
 msgstr "Aperto"
@@ -1063,6 +1114,15 @@ msgstr "Servizi"
 msgid "Setup Templates"
 msgstr "Configurazione dei modelli"
 
+msgid "Seven"
+msgstr "sette"
+
+msgid "Seventeen"
+msgstr "diciassette"
+
+msgid "Seventy"
+msgstr "settanta"
+
 msgid "Ship"
 msgstr "Invio"
 
@@ -1077,6 +1137,15 @@ msgstr "Corto"
 
 msgid "Signature"
 msgstr "Firma"
+
+msgid "Six"
+msgstr "sei"
+
+msgid "Sixteen"
+msgstr "sedici"
+
+msgid "Sixty"
+msgstr "sessanta"
 
 msgid "Source"
 msgstr "Sorgente"
@@ -1135,14 +1204,29 @@ msgstr "Modello salvato!"
 msgid "Templates"
 msgstr "Modelli"
 
+msgid "Ten"
+msgstr "dieci"
+
 msgid "The following Datasets are not in use and can be deleted"
 msgstr "I seguenti datasets non sono in uso e possono essere cancellati"
 
 msgid "The following Datasets need to be updated"
 msgstr "I seguenti datasets devono essere aggiornati"
 
+msgid "Thirteen"
+msgstr "tredici"
+
+msgid "Thirty"
+msgstr "trenta"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Questo &egrave; un controllo preliminare per verificare le risorse esistenti. Nulla verr&agrave; creato o cancellato in questa fase!"
+
+msgid "Thousand"
+msgstr "mille"
+
+msgid "Three"
+msgstr "tre"
 
 msgid "To"
 msgstr "Al"
@@ -1176,6 +1260,18 @@ msgstr "Transazioni"
 
 msgid "Trial Balance"
 msgstr "Bilancio di Verifica"
+
+msgid "Trillion"
+msgstr "mille miliardi"
+
+msgid "Twelve"
+msgstr "dodici"
+
+msgid "Twenty"
+msgstr "venti"
+
+msgid "Two"
+msgstr "due"
 
 msgid "Unit"
 msgstr "Unit&agrave;"
@@ -1243,6 +1339,9 @@ msgstr "Non hai inserito il nome!"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "Devi inserire un server ed una porta per le connessioni locali e remote!"
 
+msgid "Zero"
+msgstr "Zero"
+
 msgid "as at"
 msgstr "Al"
 
@@ -1272,4 +1371,3 @@ msgstr "cancellato!"
 
 msgid "website"
 msgstr "sito web"
-
