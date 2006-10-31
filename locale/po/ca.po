@@ -1,4 +1,5 @@
-######################################################################
+# #-#-#-#-#  ca.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (C) 2002
 #
@@ -18,8 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-######################################################################
-
+# #####################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -354,6 +354,21 @@ msgstr "Editar Plantilla"
 msgid "Edit User"
 msgstr "Editar Usuari"
 
+msgid "Eight"
+msgstr "ocho"
+
+msgid "Eighteen"
+msgstr "dieciocho"
+
+msgid "Eighty"
+msgstr "ochenta"
+
+msgid "Eleven"
+msgstr "once"
+
+msgid "Eleven-o"
+msgstr "once"
+
 msgid "Enforce transaction reversal for all dates"
 msgstr "Forçar l'anul.lació de transaccions per totes les dates"
 
@@ -387,11 +402,32 @@ msgstr "Feb"
 msgid "February"
 msgstr "Febrer"
 
+msgid "Fifteen"
+msgstr "quince"
+
+msgid "Fifty"
+msgstr "cincuenta"
+
+msgid "Five"
+msgstr "cinco"
+
+msgid "Five Hundred"
+msgstr "quinientos"
+
 msgid "Foreign Exchange Gain"
 msgstr "Guany en Bescanvi Moneda"
 
 msgid "Foreign Exchange Loss"
 msgstr "Pèrdua en Bescanvi Moneda"
+
+msgid "Forty"
+msgstr "cuarenta"
+
+msgid "Four"
+msgstr "cuatro"
+
+msgid "Fourteen"
+msgstr "catorce"
 
 msgid "From"
 msgstr "De"
@@ -413,6 +449,9 @@ msgstr "Servidor"
 
 msgid "Hostname missing!"
 msgstr "Falta el Nom del Servidor!"
+
+msgid "Hundred"
+msgstr "ciento"
 
 msgid "ID"
 msgstr "ID"
@@ -552,6 +591,9 @@ msgstr "Mai"
 msgid "May "
 msgstr "Maig"
 
+msgid "Million"
+msgstr "millón"
+
 msgid "Model"
 msgstr "Model"
 
@@ -563,6 +605,18 @@ msgstr "Nom"
 
 msgid "New Templates"
 msgstr "Noves Plantilles"
+
+msgid "Nine"
+msgstr "nueve"
+
+msgid "Nine Hundred"
+msgstr "novecientos"
+
+msgid "Nineteen"
+msgstr "diecinueve"
+
+msgid "Ninety"
+msgstr "noventa"
 
 msgid "No"
 msgstr "No"
@@ -608,6 +662,12 @@ msgstr "Octubre"
 
 msgid "On Hand"
 msgstr "Disponible"
+
+msgid "One"
+msgstr "un"
+
+msgid "One-o"
+msgstr "uno"
 
 msgid "Open"
 msgstr "Obert"
@@ -777,11 +837,32 @@ msgstr "Serveis"
 msgid "Setup Templates"
 msgstr "Configurar Plantilles"
 
+msgid "Seven"
+msgstr "siete"
+
+msgid "Seven Hundred"
+msgstr "setecientos"
+
+msgid "Seventeen"
+msgstr "diecisiete"
+
+msgid "Seventy"
+msgstr "setenta"
+
 msgid "Short"
 msgstr "Curt"
 
 msgid "Signature"
 msgstr "Signatura"
+
+msgid "Six"
+msgstr "sies"
+
+msgid "Sixteen"
+msgstr "dieciséis"
+
+msgid "Sixty"
+msgstr "sesenta"
 
 msgid "Source"
 msgstr "Font"
@@ -813,6 +894,9 @@ msgstr "Imponible"
 msgid "Templates"
 msgstr "Plantilles"
 
+msgid "Ten"
+msgstr "diez"
+
 msgid "Terms"
 msgstr "Terms:Net"
 
@@ -822,14 +906,26 @@ msgstr "Els següents conjunt de dades no s'usen i poden esborrar-se"
 msgid "The following Datasets need to be updated"
 msgstr "Cal actualitzar els següents conjunt de dades"
 
+msgid "Thirteen"
+msgstr "trece"
+
+msgid "Thirty"
+msgstr "treinta"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Comprovació preliminar de les fonts existents. No es crearà ni s'esborrra res en aquest punt!"
+
+msgid "Thousand"
+msgstr "mil"
+
+msgid "Three"
+msgstr "tres"
 
 msgid "To"
 msgstr "Fins"
 
 msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
-msgstr "Per afegir un usuari a un grup, editar el nom, canviar el nom d'accés i guardar. Un nou usuari amb les mateixes variables es guardarà amb el nou nom d\«accés"
+msgstr "Per afegir un usuari a un grup, editar el nom, canviar el nom d'accés i guardar. Un nou usuari amb les mateixes variables es guardarà amb el nou nom d'accés"
 
 msgid "Total"
 msgstr "Total"
@@ -848,6 +944,48 @@ msgstr "Transaccions"
 
 msgid "Trial Balance"
 msgstr "Balanç de Comprovació"
+
+msgid "Trillion"
+msgstr "billón"
+
+msgid "Twelve"
+msgstr "doce"
+
+msgid "Twenty"
+msgstr "veinte"
+
+msgid "Twenty Eight"
+msgstr "veintiocho"
+
+msgid "Twenty Five"
+msgstr "veinticinco"
+
+msgid "Twenty Four"
+msgstr "veinticuatro"
+
+msgid "Twenty Nine"
+msgstr "veintinueve"
+
+msgid "Twenty One"
+msgstr "veintiún"
+
+msgid "Twenty One-o"
+msgstr "veintiuno"
+
+msgid "Twenty Seven"
+msgstr "veintisiete"
+
+msgid "Twenty Six"
+msgstr "veintiséis"
+
+msgid "Twenty Three"
+msgstr "veintitrés"
+
+msgid "Twenty Two"
+msgstr "veintidós"
+
+msgid "Two"
+msgstr "dos"
 
 msgid "Unit"
 msgstr "Unitat"
@@ -897,6 +1035,9 @@ msgstr "No heu entrat cap nom!"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "Heu d'entrar el servidor i el port per les connexions locals i remotes!"
 
+msgid "Zero"
+msgstr "cero"
+
 msgid "days"
 msgstr "dies"
 
@@ -923,4 +1064,3 @@ msgstr "esborrat correctament!"
 
 msgid "website"
 msgstr "web"
-
