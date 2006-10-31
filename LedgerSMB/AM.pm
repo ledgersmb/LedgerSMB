@@ -1362,51 +1362,41 @@ sub save_defaults {
 	# connect to database
 	my $dbh = $form->{dbh};
 	# save defaults
-	my $query = qq|
-		UPDATE defaults 
-		   SET inventory_accno_id = (SELECT id 
-		                               FROM chart
-		                              WHERE accno = ?),
-		       income_accno_id = (SELECT id 
-		                            FROM chart
-		                           WHERE accno = ?),
-		       expense_accno_id = (SELECT id
-		                             FROM chart
-		                            WHERE accno = ?),
-		       fxgain_accno_id = (SELECT id 
-		                            FROM chart
-		                           WHERE accno = ?),
-		       fxloss_accno_id = (SELECT id 
-		                            FROM chart
-		                           WHERE accno = ?),
-		       glnumber = ?,
-		       sinumber = ?,
-		       vinumber = ?,
-		       sonumber = ?,
-		       ponumber = ?,
-		       sqnumber = ?,
-		       rfqnumber = ?,
-		       partnumber = ?,
-		       employeenumber = ?,
-		       customernumber = ?,
-		       vendornumber = ?,
-		       projectnumber = ?,
-		       yearend = ?,
-		       curr = ?,
-		       weightunit = ?,
-		       businessnumber = ?|;
+	$sth_plain = $dbh->prepare("
+		UPDATE defaults SET value = ? WHERE setting_key = ?");
+	$sth_accno = $dbh->prepare(qq|
+		UPDATE defaults
+                   SET value = (SELECT id
+                                               FROM chart
+                                              WHERE accno = ?)
+		 WHERE setting_key = ?|);
+	my %translation = {
+		inventory_accno_id => 'IC',
+		income_accno_id => 'IC_income',
+		expense_accno_id => 'IC_expense',
+		fxgain_accno_id => 'FX_gain',
+		fxloss_accno_id => 'FX_loss'	
+	};
+	for (
+		qw(inventory_accno_id income_accno_id expense_accno_id 
+		fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
+		sonumber ponumber sqnumber rfqnumber partnumber employeenumber
+		customernumber vendornumber projectnumber yearend curr
+		weightunit businessnumber yearend)
+	){
+		my $name;
+		if ($translation{$_}){
+			$name = $translation{$_};
+		} else {
+			$name = $_;
+		}
+		if ($_ =~ /accno_id/){
+			$sth_accno->execute($form->{$name}, $_);
+		} else {
+			$sth_plain->execute($form->{$name}, $_);
+		}
 
-	my @queryargs = (
-		$form->{IC}, $form->{IC_income}, $form->{IC_expense},
-		$form->{FX_gain}, $form->{FX_loss}, $form->{glnumber},
-		$form->{sinumber}, $form->{vinumber}, $form->{sonumber}, 
-		$form->{ponumber}, $form->{sqnumber}, $form->{rfqnumber},
-		$form->{partnumber}, $form->{employeenumber}, 
-		$form->{customernumber}, $form->{vendornumber}, 
-		$form->{projectnumber}, $form->{yearend}, $form->{curr},
-		$form->{weightunit}, $form->{businessnumber});
-	$dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
-
+	}
 	my $rc = $dbh->commit;
 
 	$rc;
@@ -1432,8 +1422,6 @@ sub defaultaccounts {
 	while ($ref = $sth->fetchrow_hashref(NAME_lc)){
 		$form->{$ref->{setting_key}} = $ref->{value};
 	}
-	my $ref = $sth->fetchrow_hashref(NAME_lc);
-	for (keys %$ref) { $form->{$_} = $ref->{$_} }
 
 	$form->{defaults}{IC} = $form->{inventory_accno_id};
 	$form->{defaults}{IC_income} = $form->{income_accno_id};
