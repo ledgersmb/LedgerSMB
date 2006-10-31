@@ -45,7 +45,7 @@ sub get_jcitems {
   # connect to database
   my $dbh = $form->dbconnect($myconfig);
 
-  my $query = qq|SELECT current_date FROM defaults|;
+  my $query = qq|SELECT current_date|;
   ($form->{transdate}) = $dbh->selectrow_array($query);
 
   ($form->{employee}, $form->{employee_id}) = $form->get_employee($dbh);

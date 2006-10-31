@@ -59,27 +59,27 @@ CREATE TABLE defaults (
   expense_accno_id int,
   fxgain_accno_id int,
   fxloss_accno_id int,
-  sinumber text,
-  sonumber text,
-  yearend varchar(5),
-  weightunit varchar(5),
-  businessnumber text,
-  version varchar(8) PRIMARY KEY,
-  curr text,
-  closedto date,
-  revtrans bool DEFAULT 't',
-  ponumber text,
-  sqnumber text,
-  rfqnumber text,
-  audittrail bool default 'f',
-  vinumber text,
-  employeenumber text,
-  partnumber text,
-  customernumber text,
-  vendornumber text,
-  glnumber text,
-  projectnumber text
-);
+*/
+\COPY defaults FROM stdin WITH DELIMITER |
+sinumber|1
+sonumber|1
+yearend|1
+businessnumber|1
+version|1.2.0
+closedto|\N
+revtrans|1
+ponumber|1
+sqnumber|1
+rfqnumber|1
+audittrail|0
+vinumber|1
+employeenumber|1
+partnumber|1
+customernumber|1
+vendornumber|1
+glnumber|1
+projectnumber|1
+\.
 -- */
 CREATE TABLE acc_trans (
   trans_id int,
@@ -565,17 +565,6 @@ CREATE TABLE jcitems (
   notes text
 );
 
--- Session tracking table
-
-
-CREATE TABLE session(
-session_id serial PRIMARY KEY,
-sl_login VARCHAR(50),
-token VARCHAR(32) CHECK(length(token) = 32),
-last_used TIMESTAMP default now(),
-users_id INTEGER NOT NULL references users(id)
-);
-
 
 insert into transactions (id, table_name) SELECT id, 'ap' FROM ap;
 
@@ -708,7 +697,6 @@ field_id SERIAL PRIMARY KEY,
 table_id INT REFERENCES custom_table_catalog,
 field_name TEXT
 );
-INSERT INTO defaults (version) VALUES ('2.6.18');
 
 INSERT INTO taxmodule (
   taxmodule_id, taxmodulename
@@ -718,7 +706,8 @@ INSERT INTO taxmodule (
 
 -- USERS stuff --
 CREATE TABLE users (id serial UNIQUE, username varchar(30) primary key);
-COMMENT ON TABLE users IS 'username is the actual primary key here because we don't want duplicate users';
+COMMENT ON TABLE users IS 
+$$username is the actual primary key here because we don't want duplicate users$$;
 CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
                         acs text,
                         address text,
@@ -777,4 +766,15 @@ CREATE FUNCTION update_user(int4,text) RETURNS int4 AS $$
 
 COMMENT ON FUNCTION update_user(int4,text) IS $$ Takes int4 which is users.id and text which is username. Will update username based on id. Username is unique $$;
 
+
+-- Session tracking table
+
+
+CREATE TABLE session(
+session_id serial PRIMARY KEY,
+sl_login VARCHAR(50),
+token VARCHAR(32) CHECK(length(token) = 32),
+last_used TIMESTAMP default now(),
+users_id INTEGER  -- NOT NULL references users(id)
+);
 

@@ -131,7 +131,9 @@ sub login {
 				or $self->error($DBI::errstr);
 
 		# we got a connection, check the version
-		my $query = qq|SELECT version FROM defaults|;
+		my $query = qq|
+			SELECT value FROM defaults 
+			 WHERE setting_key = 'version'|;
 		my $sth = $dbh->prepare($query);
 		$sth->execute || $form->dberror($query);
 
@@ -228,13 +230,8 @@ sub dbconnect_vars {
 
 	$form->{dboptions} = $dboptions{$form->{dbdriver}}{$form->{dateformat}};
 
-	if ($form->{dbdriver} =~ /Pg/) {
-		$form->{dbconnect} = "dbi:$form->{dbdriver}:dbname=$db";
-	}
+	$form->{dbconnect} = "dbi:$form->{dbdriver}:dbname=$db";
 
-	if ($form->{dbdriver} eq 'Oracle') {
-		$form->{dbconnect} = "dbi:Oracle:sid=$form->{sid}";
-	}
 
 	if ($form->{dbhost}) {
 		$form->{dbconnect} .= ";host=$form->{dbhost}";
@@ -411,7 +408,12 @@ sub process_query {
 	return unless (-f $filename);
   
 	open(FH, "$filename") or $form->error("$filename : $!\n");
+	$ENV{PGPASSWORD} = $form->{dbpasswd};
+	$ENV{PGUSER} = $form->{dbuser};
+	$ENV{PGDATABASE} = $form->{db};
+	
 	open(PSQL, "| psql") or $form->error("psql : $! \n");
+	print PSQL "\\o spool/log \n";
 	while (<FH>){
 		print PSQL $_;
 	}
@@ -516,7 +518,9 @@ sub dbneedsupdate {
 			$sth->execute || $form->dberror($query);
 
 			if ($sth->fetchrow_array) {
-				$query = qq|SELECT version FROM defaults|;
+				$query = qq|
+					SELECT value FROM defaults
+					 WHERE setting_key = 'version'|;
 				my $sth = $dbh->prepare($query);
 				$sth->execute;
 	
@@ -574,7 +578,9 @@ sub dbupdate {
 				or $form->dberror;
 
 		# check version
-		$query = qq|SELECT version FROM defaults|;
+		$query = qq|
+			SELECT value FROM defaults
+			 WHERE setting_key = 'version'|;
 		my $sth = $dbh->prepare($query);
 		# no error check, let it fall through
 		$sth->execute;

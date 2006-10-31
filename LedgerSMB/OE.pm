@@ -776,7 +776,9 @@ sub retrieve {
 	my $var;
 	my $ref;
 
-	$query = qq|SELECT curr, current_date FROM defaults|;
+	$query = qq|
+		SELECT value, current_date FROM defaults
+		 WHERE setting_key = 'curr'|;
 	($form->{currencies}, $form->{transdate}) = 
 		$dbh->selectrow_array($query);
   
@@ -952,7 +954,9 @@ sub exchangerate_defaults {
 	my $buysell = ($form->{vc} eq "customer") ? "buy" : "sell";
   
 	# get default currencies
-	my $query = qq|SELECT substr(curr,1,3), curr FROM defaults|;
+	my $query = qq|
+		SELECT substr(value,1,3), value FROM defaults
+		 WHERE setting_key = 'curr'|;
 	($form->{defaultcurrency}, $form->{currencies}) 
 		= $dbh->selectrow_array($query);
 
@@ -1568,7 +1572,9 @@ sub order_details {
 
 	$form->format_string(qw(text_amount text_decimal));
 
-	$query = qq|SELECT weightunit FROM defaults|;
+	$query = qq|
+		SELECT value FROM defaults 
+		 WHERE setting_key = 'weightunit'|;
 	($form->{weightunit}) = $dbh->selectrow_array($query);
   
 	$dbh->commit;
@@ -2193,7 +2199,7 @@ sub get_soparts {
 
 	}
 
-	$query = qq|SELECT current_date FROM defaults|;
+	$query = qq|SELECT current_date|;
 	($form->{transdate}) = $dbh->selectrow_array($query);
   
 	# foreign exchange rates

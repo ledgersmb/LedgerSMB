@@ -93,7 +93,7 @@ if ($form->{deductions}) {
     
   } else {
 
-    $query = qq|SELECT current_date FROM defaults|;
+    $query = qq|SELECT current_date|;
     ($form->{startdate}) = $dbh->selectrow_array($query);
   
   }

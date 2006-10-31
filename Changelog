@@ -4,6 +4,7 @@ Database:
 * Added script to configure Slony replication (Chris Browne)
 * Added defined primary keys to all tables (Chris T)
 * Database upgrades now use psql (Chris T)
+* Defaults table now uses a simple key->value system (Chris T)
 
 Security:
 * Added whitelist of allowed directories to file editor (Seneca)

@@ -68,7 +68,7 @@ sub new {
 	$self->{lynx} = 1 if $self->{path} =~ /lynx/i;
 
 	$self->{version} = "1.1.1";
-	$self->{dbversion} = "2.6.18";
+	$self->{dbversion} = "1.2.0";
 
 	bless $self, $type;
 
@@ -1993,9 +1993,9 @@ sub all_years {
 	$dbh = $self->{dbh};
 
 	# get years
-	my $query = qq|SELECT (SELECT MIN(transdate) FROM acc_trans),
-						  (SELECT MAX(transdate) FROM acc_trans)
-					 FROM defaults|;
+	my $query = qq|
+		SELECT (SELECT MIN(transdate) FROM acc_trans),
+		       (SELECT MAX(transdate) FROM acc_trans)|;
 
 	my ($startdate, $enddate) = $dbh->selectrow_array($query);
 
@@ -2167,30 +2167,43 @@ sub create_links {
 
 		$sth->finish;
 
-		$query = qq|SELECT d.curr AS currencies, d.closedto, d.revtrans
-					  FROM defaults d|;
+		for (qw(curr closedto revtrans)){
+			$query = qq|
+				SELECT value FROM defaults 
+				 WHERE setting_key = '$_'|;
 
-		$sth = $dbh->prepare($query);
-		$sth->execute || $self->dberror($query);
+			$sth = $dbh->prepare($query);
+			$sth->execute || $self->dberror($query);
 
-		$ref = $sth->fetchrow_hashref(NAME_lc);
-		for (keys %$ref) { $self->{$_} = $ref->{$_} }
-		$sth->finish;
+			(undef, $val) = $sth->fetchrow_array();
+			if ($_ eq 'curr'){
+				$form->{currencies} = $val;
+			} else {
+				$form->{$_} = $val;
+			}
+			$sth->finish;
+		}
 
 	} else {
 
-		# get date
-		$query = qq|
-			SELECT current_date AS transdate,
-				d.curr AS currencies, d.closedto, d.revtrans
-			FROM defaults d|;
+		for (qw(current_date curr closedto revtrans)){
+			$query = qq|
+				SELECT value FROM defaults 
+				 WHERE setting_key = '$_'|;
 
-		$sth = $dbh->prepare($query);
-		$sth->execute || $self->dberror($query);
+			$sth = $dbh->prepare($query);
+			$sth->execute || $self->dberror($query);
 
-		$ref = $sth->fetchrow_hashref(NAME_lc);
-		for (keys %$ref) { $self->{$_} = $ref->{$_} }
-		$sth->finish;
+			(undef, $val) = $sth->fetchrow_array();
+			if ($_ eq 'curr'){
+				$form->{currencies} = $val;
+			} elsif ($_ eq 'current_date'){
+				$form->{transdate} = $val;
+			} else {
+				$form->{$_} = $val;
+			}
+			$sth->finish;
+		}
 
 		if (! $self->{"$self->{vc}_id"}) {
 			$self->lastname_used($myconfig, $dbh, $vc, $module);
@@ -2279,13 +2292,11 @@ sub current_date {
 		}
 
 		$query = qq|SELECT to_date(?, ?) 
-				+ ? AS thisdate
-			FROM defaults|;
+				+ ? AS thisdate|;
 		@queryargs = ($thisdate, $dateformat, $days);
 
 	} else {
-		$query = qq|SELECT current_date AS thisdate
-					  FROM defaults|;
+		$query = qq|SELECT current_date AS thisdate|;
 		@queryargs = ();
 	}
 
@@ -2608,16 +2619,14 @@ sub save_recurring {
 		$interval{'Pg'} = 
 			"(date '$s{startdate}' + interval '$advance $s{unit}')";
 
-		$query = qq|SELECT $interval{$myconfig->{dbdriver}}
-					  FROM defaults|;
+		$query = qq|SELECT $interval{$myconfig->{dbdriver}}|;
 
 		my ($enddate) = $dbh->selectrow_array($query);
 
 		# calculate nextdate
 		$query = qq|
 			SELECT current_date - date ? AS a,
-				date ? - current_date AS b
-			FROM defaults|;
+				date ? - current_date AS b|;
 
 		$sth = $dbh->prepare($query);
 		$sth->execute($s{startdate}, $enddate);
@@ -2637,8 +2646,8 @@ sub save_recurring {
 
 				$interval{Oracle} = $interval{PgPP} = $interval{Pg};
 
-				$query = qq|SELECT $interval{$myconfig->{dbdriver}}
-							  FROM defaults|;
+
+				$query = qq|SELECT $interval{$myconfig->{dbdriver}}|;
 
 				($nextdate) = $dbh->selectrow_array($query);
 			}
@@ -2651,8 +2660,7 @@ sub save_recurring {
 
 			$nextdate = $self->{recurringnextdate};
 
-			$query = qq|SELECT '$enddate' - date '$nextdate'
-						  FROM defaults|;
+			$query = qq|SELECT '$enddate' - date '$nextdate'|;
 
 			if ($dbh->selectrow_array($query) < 0) {
 				undef $nextdate;
@@ -2751,7 +2759,11 @@ sub update_defaults {
 		$dbh = $_[3];
 	}
 
-	my $query = qq|SELECT $fld FROM defaults FOR UPDATE|;
+	my $query = qq|
+		SELECT value FROM defaults 
+		 WHERE setting_key = ? FOR UPDATE|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($fld);
 	($_) = $dbh->selectrow_array($query);
 
 	$_ = "0" unless $_;
@@ -2855,11 +2867,13 @@ sub update_defaults {
 		}
 	}
 
-	$query = qq|UPDATE defaults
-				   SET $fld = ?|;
+	$query = qq|
+		UPDATE defaults
+		   SET value = ?
+		 WHERE setting_key = ?|;
 
 	$sth = $dbh->prepare($query); 
-	$sth->execute($dbvar) || $self->dberror($query);
+	$sth->execute($dbvar, $fld) || $self->dberror($query);
 
 	$dbh->commit;
 
@@ -3028,7 +3042,9 @@ sub audittrail {
 
 	if ($audittrail->{id}) {
 
-		$query = qq|SELECT audittrail FROM defaults|;
+		$query = qq|
+			SELECT value FROM defaults 
+			 WHERE setting_key = 'audittrail'|;
 
 		if ($dbh->selectrow_array($query)) {
 
@@ -3112,7 +3128,7 @@ sub audittrail {
 
 	} else {
 
-		$query = qq|SELECT current_timestamp FROM defaults|;
+		$query = qq|SELECT current_timestamp|;
 		my ($timestamp) = $dbh->selectrow_array($query);
 
 		$rv = "$audittrail->{tablename}|$audittrail->{reference}|$audittrail->{formname}|$audittrail->{action}|$timestamp|";

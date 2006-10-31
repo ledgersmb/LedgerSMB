@@ -953,7 +953,7 @@ sub all_parts {
   my @a = qw(partnumber description);
   my $sortorder = $form->sort_order(\@a, \%ordinal);
 
-  my $query = qq|SELECT curr FROM defaults|;
+  my $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
   my ($curr) = $dbh->selectrow_array($query);
   $curr =~ s/:.*//;
   
@@ -1678,20 +1678,28 @@ sub create_links {
 
 
   if ($form->{id}) {
-    $query = qq|SELECT weightunit, curr AS currencies
-                FROM defaults|;
-    ($form->{weightunit}, $form->{currencies}) = $dbh->selectrow_array($query);
+    $query = qq|SELECT value FROM defaults WHERE setting_key = 'weightunit'|;
+    ($form->{weightunit}) = $dbh->selectrow_array($query);
+    $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
+    ($form->{currencies}) = $dbh->selectrow_array($query);
 
   } else {
-    $query = qq|SELECT d.weightunit, current_date AS priceupdate,
-                d.curr AS currencies,
+    # FIXME left joins not working
+    $query = qq|SELECT (SELECT value FROM defaults 
+		WHERE setting_key = 'weightunit') AS weightunit, 
+		current_date AS priceupdate,
+                (SELECT value FROM defaults WHERE setting_key = 'curr') 
+		AS currencies,
                 c1.accno AS inventory_accno, c1.description AS inventory_description,
 		c2.accno AS income_accno, c2.description AS income_description,
 		c3.accno AS expense_accno, c3.description AS expense_description
-	        FROM defaults d
-		LEFT JOIN chart c1 ON (d.inventory_accno_id = c1.id)
-		LEFT JOIN chart c2 ON (d.income_accno_id = c2.id)
-		LEFT JOIN chart c3 ON (d.expense_accno_id = c3.id)|;
+		FROM chart c1, chart c2, chartc3 
+		WHERE c1.id IN (SELECT value FROM defaults 
+			WHERE setting_key = 'inventory_accno_id')
+		AND c2.id IN (SELECT value FROM defaults
+			WHERE setting_key = 'income_accno_id')
+		AND c3.id IN (SELECT value FROM defaults
+			WHERE setting_key = 'expense_accno_id')|;
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 

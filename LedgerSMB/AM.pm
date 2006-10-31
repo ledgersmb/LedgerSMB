@@ -59,9 +59,21 @@ sub get_account {
 
 	# get default accounts
 	$query = qq|
-		SELECT inventory_accno_id, income_accno_id, expense_accno_id,
-		       fxgain_accno_id, fxloss_accno_id
-		  FROM defaults|;
+		SELECT (SELECT value FROM defaults
+		         WHERE setting_key = 'inventory_accno_id')
+		       AS inventory_accno_id,
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'income_accno_id')
+		       AS income_accno_id, 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'expense_accno_id')
+		       AS expense_accno_id,
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'fxgain_accno_id')
+		       AS fxgain_accno_id, 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'fxloss_accno_id')
+		       AS fxloss_accno_id|;
 
 	$sth = $dbh->prepare($query);
 	$sth->execute || $form->dberror($query);
@@ -249,8 +261,9 @@ sub delete_account {
 	for (qw(income_accno_id expense_accno_id)){
 		$query = qq|
 			UPDATE parts
-			   SET $_ = (SELECT $_
-			               FROM defaults)
+			   SET $_ = (SELECT value
+			               FROM defaults
+			              WHERE setting_key = '$_')
 			 WHERE $_ = ?|;
 
 		$sth = $dbh->prepare($query);
@@ -950,7 +963,7 @@ sub recurring_transactions {
 
 	my $dbh = $form->{dbh};
 
-	my $query = qq|SELECT curr FROM defaults|;
+	my $query = qq|SELECT value FROM defaults where setting_key = 'curr'|;
 
 	my ($defaultcurrency) = $dbh->selectrow_array($query);
 	$defaultcurrency = $dbh->quote($defaultcurrency =~ s/:.*//g);
@@ -1308,8 +1321,11 @@ sub save_preferences {
 	$dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
 
 	# get default currency
-	$query = qq|SELECT curr, businessnumber
-				  FROM defaults|;
+	$query = qq|
+		SELECT value, (SELECT value FROM defaults
+		                WHERE setting_key = 'businessnumber')
+		  FROM defaults
+		 WHERE setting_key = 'curr'|;
 
 	($form->{currency}, $form->{businessnumber}) = 
 			$dbh->selectrow_array($query);
@@ -1406,10 +1422,16 @@ sub defaultaccounts {
 	my $dbh = $form->{dbh};
 
 	# get defaults from defaults table
-	my $query = qq|SELECT * FROM defaults|;
+	my $query = qq|
+		SELECT setting_key, value FROM defaults
+		 WHERE setting_key LIKE ?|;
 	my $sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror($query);
+	$sth->execute('%accno_id') || $form->dberror($query);
 
+	my $ref;
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)){
+		$form->{$ref->{setting_key}} = $ref->{value};
+	}
 	my $ref = $sth->fetchrow_hashref(NAME_lc);
 	for (keys %$ref) { $form->{$_} = $ref->{$_} }
 
@@ -1644,10 +1666,15 @@ sub closedto {
 	my $dbh = $form->{dbh};
 
 	my $query = qq|
-		SELECT closedto, revtrans, audittrail
-		  FROM defaults|;
+		SELECT (SELECT value FROM defaults 
+		         WHERE setting_key = 'closedto'), 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'revtrans'), 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'audittrail')|;
 
-	($form->{closedto}, $form->{revtrans}, $form->{audittrail}) = $dbh->selectrow_array($query);
+	($form->{closedto}, $form->{revtrans}, $form->{audittrail}) 
+		= $dbh->selectrow_array($query);
 
 	$dbh->commit;
 
@@ -1659,24 +1686,20 @@ sub closebooks {
 	my ($self, $myconfig, $form) = @_;
 
 	my $dbh = $form->{dbh};
-	my $query = qq|UPDATE defaults SET|;
-
-	if ($form->{revtrans}) {
-		$query .= qq| revtrans = '1'|;
-	} else {
-		$query .= qq| revtrans = '0'|;
+	my $query = qq|
+		UPDATE defaults SET value = ? 
+		 WHERE setting_key = ?|;
+	my $sth = $dbh->prepare($query);
+	for (qw(revtrans, closedto, audittrail)){
+		
+		if ($form->{$_}){
+			$val = 1;
+		} else {
+			$val = 0;
+		}
+		$sth->execute($val, $_);
 	}
 
-	$query .= qq|, closedto = |.$dbh->quote($form->{closedto});
-
-	if ($form->{audittrail}) {
-		$query .= qq|, audittrail = '1'|;
-	} else {
-		$query .= qq|, audittrail = '0'|;
-	}
-
-	# set close in defaults
-	$dbh->do($query) || $form->dberror($query);
 
 	if ($form->{removeaudittrail}) {
 		$query = qq|

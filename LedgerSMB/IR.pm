@@ -72,7 +72,13 @@ sub post_invoice {
 	($null, $form->{department_id}) = split(/--/, $form->{department});
 	$form->{department_id} *= 1;
  
-	$query = qq|SELECT fxgain_accno_id, fxloss_accno_id FROM defaults d|;
+	$query = qq|
+		SELECT (SELECT value FROM defaults
+		         WHERE setting_key = 'fxgain_accno_id') 
+		       AS fxgain_accno_id, 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'fxloss_accno_id')
+		       AS fxloss_accno_id|;
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
   
 	$query = qq|
@@ -976,41 +982,71 @@ sub retrieve_invoice {
 	if ($form->{id}) {
 		# get default accounts and last invoice number
 		$query = qq|
-			SELECT (SELECT c.accno FROM chart c
-			         WHERE d.inventory_accno_id = c.id) 
+			SELECT (select c.accno FROM chart c 
+			         WHERE c.id = (SELECT value FROM defaults 
+			                        WHERE setting_key = 
+			                              'inventory_accno_id'))
 			       AS inventory_accno,
+
 			       (SELECT c.accno FROM chart c
-				 WHERE d.income_accno_id = c.id) 
+				 WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'income_accno_id'))
 			       AS income_accno,
+
 			       (SELECT c.accno FROM chart c
-			         WHERE d.expense_accno_id = c.id) 
+			         WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'expense_accno_id'))
 			       AS expense_accno,
+
 			       (SELECT c.accno FROM chart c
-			         WHERE d.fxgain_accno_id = c.id) 
+			         WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'fxgain_accno_id'))
 			       AS fxgain_accno,
+
 			       (SELECT c.accno FROM chart c
-			         WHERE d.fxloss_accno_id = c.id) 
-			       AS fxloss_accno, d.curr AS currencies
-	 		  FROM defaults d|;
+			         WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'fxloss_accno_id'))
+			       AS fxloss_accno, 
+			       (SELECT value FROM defaults
+			         WHERE setting_key = 'curr') AS currencies|;
 	} else {
 		$query = qq|
-			SELECT (SELECT c.accno FROM chart c
-			         WHERE d.inventory_accno_id = c.id) 
+			SELECT (select c.accno FROM chart c 
+			         WHERE c.id = (SELECT value FROM defaults 
+			                        WHERE setting_key = 
+			                              'inventory_accno_id'))
 			       AS inventory_accno,
+
 			       (SELECT c.accno FROM chart c
-			         WHERE d.income_accno_id = c.id) 
+				 WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'income_accno_id'))
 			       AS income_accno,
+
 			       (SELECT c.accno FROM chart c
-			         WHERE d.expense_accno_id = c.id) 
+			         WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'expense_accno_id'))
 			       AS expense_accno,
+
 			       (SELECT c.accno FROM chart c
-			         WHERE d.fxgain_accno_id = c.id) 
+			         WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'fxgain_accno_id'))
 			       AS fxgain_accno,
+
 			       (SELECT c.accno FROM chart c
-			         WHERE d.fxloss_accno_id = c.id) 
-			       AS fxloss_accno, d.curr AS currencies,
-			       current_date AS transdate
-	 		  FROM defaults d|;
+			         WHERE c.id = (SELECT value FROM defaults
+			                        WHERE setting_key =
+			                              'fxloss_accno_id'))
+			       AS fxloss_accno, 
+			       (SELECT value FROM defaults
+			         WHERE setting_key = 'curr') AS currencies,
+			       current_date AS transdate|;
 	}
 	my $sth = $dbh->prepare($query);
 	$sth->execute || $form->dberror($query);
@@ -1259,7 +1295,9 @@ sub exchangerate_defaults {
 	my $var;
   
 	# get default currencies
-	my $query = qq|SELECT substr(curr,1,3), curr FROM defaults|;
+	my $query = qq|
+		SELECT substr(value,1,3), value FROM defaults
+		 WHERE setting_key = 'curr'|;
 	my $eth = $dbh->prepare($query) || $form->dberror($query);
 	$eth->execute;
 	($form->{defaultcurrency}, $form->{currencies}) = $eth->fetchrow_array;

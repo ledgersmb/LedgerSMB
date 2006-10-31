@@ -572,7 +572,7 @@ sub get_accounts {
   $sth->finish;
 
   if ($form->{method} eq 'cash' && !$todate) {
-    ($todate) = $dbh->selectrow_array(qq|SELECT current_date FROM defaults|);
+    ($todate) = $dbh->selectrow_array(qq|SELECT current_date|);
   }
 
   if ($fromdate) {
@@ -1353,13 +1353,13 @@ sub aging {
   my $dbh = $form->dbconnect($myconfig);
   my $invoice = ($form->{arap} eq 'ar') ? 'is' : 'ir';
 
-  my $query = qq|SELECT curr FROM defaults|;
+  my $query = qq|SELECT value FROM defaults WHERE settings_key = 'curr'|;
   ($form->{currencies}) = $dbh->selectrow_array($query);
   
   ($null, $form->{todate}) = $form->from_to($form->{year}, $form->{month}) if $form->{year} && $form->{month};
   
   if (! $form->{todate}) {
-    $query = qq|SELECT current_date FROM defaults|;
+    $query = qq|SELECT current_date|;
     ($form->{todate}) = $dbh->selectrow_array($query);
   }
     
@@ -1721,7 +1721,7 @@ sub tax_report {
 
     my $todate = $form->{todate};
     if (! $todate) {
-      ($todate) = $dbh->selectrow_array(qq|SELECT current_date FROM defaults|);
+      ($todate) = $dbh->selectrow_array(qq|SELECT current_date|);
     }
     
     $cashwhere = qq|

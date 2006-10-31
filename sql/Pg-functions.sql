@@ -1,3 +1,4 @@
+CREATE LANGUAGE plpgsql;
 --
 CREATE FUNCTION del_yearend() RETURNS OPAQUE AS '
 begin

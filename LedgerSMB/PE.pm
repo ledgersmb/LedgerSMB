@@ -283,7 +283,7 @@ sub list_stock {
   }
   $sth->finish;
 
-  $query = qq|SELECT current_date FROM defaults|;
+  $query = qq|SELECT current_date|;
   ($form->{stockingdate}) = $dbh->selectrow_array($query) if !$form->{stockingdate};
   
   $dbh->disconnect;
@@ -378,8 +378,7 @@ sub get_job {
   my $ref;
 
   if ($form->{id}) {
-    $query = qq|SELECT weightunit
-		FROM defaults|;
+    $query = qq|SELECT value FROM defaults WHERE setting_key = 'weightunit'|;
     ($form->{weightunit}) = $dbh->selectrow_array($query);
 
     $query = qq|SELECT pr.*,
@@ -396,7 +395,9 @@ sub get_job {
 		LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
 		WHERE pr.id = $form->{id}|;
   } else {
-    $query = qq|SELECT weightunit, current_date AS startdate FROM defaults|;
+    $query = qq|
+		SELECT value, current_date AS startdate FROM defaults
+		 WHERE setting_key = 'weightunit'|;
   }
 
   $sth = $dbh->prepare($query);
@@ -491,7 +492,7 @@ sub get_customer {
   my $ref;
 
   if (! $form->{startdate}) {
-    $query = qq|SELECT current_date FROM defaults|;
+    $query = qq|SELECT current_date|;
     ($form->{startdate}) = $dbh->selectrow_array($query);
   }
   
@@ -654,7 +655,7 @@ sub stock_assembly {
   my $rvh = $dbh->prepare($query) || $form->dberror($query);
 
   if (! $form->{stockingdate}) {
-    $query = qq|SELECT current_date FROM defaults|;
+    $query = qq|SELECT current_date|;
     ($form->{stockingdate}) = $dbh->selectrow_array($query);
   }
   
@@ -1375,7 +1376,7 @@ sub project_sales_order {
   # connect to database
   my $dbh = $form->dbconnect($myconfig);
 
-  my $query = qq|SELECT current_date FROM defaults|;
+  my $query = qq|SELECT current_date|;
   my ($transdate) = $dbh->selectrow_array($query);
   
   $form->all_years($myconfig, $dbh);
@@ -1468,8 +1469,7 @@ sub get_jcitems {
 
   $sth->finish;
 
-  $query = qq|SELECT curr
-              FROM defaults|;
+  $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
   ($form->{currency}) = $dbh->selectrow_array($query);
   $form->{currency} =~ s/:.*//;
   $form->{defaultcurrency} = $form->{currency};

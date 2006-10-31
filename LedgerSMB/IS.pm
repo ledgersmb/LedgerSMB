@@ -48,8 +48,9 @@ sub invoice_details {
 
 	my $query = qq|
 		SELECT ?::date - ?::date
-                       AS terms, weightunit
-		  FROM defaults|;
+                       AS terms, value
+		  FROM defaults
+		 WHERE setting_key = 'weightunit'/|;
 	my $sth = $dbh->prepare($query);
 	$sth->execute($form->{duedate}, $form->{transdate})
 		|| $form->dberror($query);
@@ -817,7 +818,13 @@ sub post_invoice {
 	($null, $form->{department_id}) = split(/--/, $form->{department});
 	$form->{department_id} *= 1;
 
-	$query = qq|SELECT fxgain_accno_id, fxloss_accno_id FROM defaults|;
+	$query = qq|
+		SELECT (SELECT value FROM defaults 
+		         WHERE setting_key = fxgain_accno_id) 
+		       AS fxgain_accno_id, 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = fxloss_accno_id) 
+		       AS fxloss_accno_id|;
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
 
 	$query = qq|
@@ -1715,11 +1722,14 @@ sub retrieve_invoice {
 
 	if ($form->{id}) {
 		# get default accounts and last invoice number
-		$query = qq|SELECT d.curr AS currencies FROM defaults d|;
+		$query = qq|
+			SELECT value AS currencies FROM defaults
+			 WHERE setting_key = 'curr'|;
 	} else {
 		$query = qq|
-			SELECT d.curr AS currencies, current_date AS transdate
-			  FROM defaults d|;
+			SELECT value AS currencies, current_date AS transdate
+			  FROM defaults
+			 WHERE setting_key = 'curr'|;
 	}
 	my $sth = $dbh->prepare($query);
 	$sth->execute || $form->dberror($query);
@@ -1979,7 +1989,9 @@ sub exchangerate_defaults {
 	my $var;
   
 	# get default currencies
-	my $query = qq|SELECT substr(curr,1,3), curr FROM defaults|;
+	my $query = qq|
+		SELECT substr(value,1,3), value FROM defaults
+		 WHERE setting_key = 'curr'|;
 	my $eth = $dbh->prepare($query) || $form->dberror($query);
 	$eth->execute;
 	($form->{defaultcurrency}, $form->{currencies}) = $eth->fetchrow_array;

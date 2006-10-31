@@ -52,7 +52,8 @@ sub session_check {
 		$timeout = "$myconfig{timeout} seconds";
 	}
 
-	$checkQuery->execute($sessionid, $token, $timeout) || $form->dberror('Looking for session: ');
+	$checkQuery->execute($sessionid, $token, $timeout) 
+		|| $form->dberror('Looking for session: ');
 	my $sessionValid = $checkQuery->rows;
 
 	if($sessionValid){

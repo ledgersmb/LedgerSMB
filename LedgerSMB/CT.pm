@@ -111,7 +111,7 @@ sub create_links {
 
 		($form->{employee}, $form->{employee_id}) = $form->get_employee($dbh);
 
-		$query = qq|SELECT current_date FROM defaults|;
+		$query = qq|SELECT current_date|;
 		($form->{startdate}) = $dbh->selectrow_array($query);
 
 	}
@@ -188,8 +188,10 @@ sub create_links {
 	$sth->finish;
 
 	# get currencies
-	$query = qq|SELECT curr AS currencies
-				  FROM defaults|;
+	$query = qq|
+		SELECT value AS currencies
+		  FROM defaults
+		  WHERE setting_key = 'curr'|;
 
 	($form->{currencies}) = $dbh->selectrow_array($query);
 
@@ -1085,7 +1087,7 @@ sub pricelist {
 		$sth->finish;
 	}
 
-	$query = qq|SELECT curr FROM defaults|;
+	$query = qq|SELECT value FROM defaults where setting_key = 'curr'|;
 	($form->{currencies}) = $dbh->selectrow_array($query);
 
 	$query = qq|SELECT id, partsgroup 

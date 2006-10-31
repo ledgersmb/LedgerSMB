@@ -1,4 +1,3 @@
-Dataset creation is temporarily broken because of changes to the defaults table structure that are not found in the chart.sql files or the application.  Will 
-fix ASAP.
+Dataset creation is now fixed (and mandatory).  Only Default and Canadian English (General) COA's currently work.
 
 Chris T

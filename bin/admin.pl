@@ -880,7 +880,8 @@ sub delete {
 
 	$form->{templates} = ($form->{templates}) ? "${LedgerSMB::Sysconfig::templates}/$form->{templates}" : "$templates/$form->{login}";
 
-	$form->error($locale->text("[_1] locked!", ${LedgerSMB::Sysconfig::memberfile}) if (-f ${memberfile}.LCK);
+	$form->error($locale->text("[_1] locked!", 
+		${LedgerSMB::Sysconfig::memberfile})) if (-f ${memberfile}.LCK);
 
 	open(FH, ">${memberfile}.LCK") or $form->error("${memberfile}.LCK : $!");
 	close(FH);

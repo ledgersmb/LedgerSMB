@@ -88,8 +88,12 @@ sub paymentaccounts {
 	$sth->finish;
 
 	# get currencies and closedto
-	$query = qq|SELECT curr, closedto, current_date
-				  FROM defaults|;
+	$query = qq|
+		SELECT value, (SELECT value FROM defaults
+		                WHERE setting_key = 'closedto'), 
+		       current_date
+		  FROM defaults
+		 WHERE setting_key = 'curr'|;
 
 	($form->{currencies}, $form->{closedto}, $form->{datepaid}) = $dbh->selectrow_array($query);
 
@@ -325,8 +329,11 @@ sub post_payment {
 		$form->{exchangerate} = 1;
 	}
 
-	my $query = qq|SELECT fxgain_accno_id, fxloss_accno_id
-					 FROM defaults|;
+	my $query = qq|
+		SELECT (SELECT value FROM defaults 
+		         WHERE setting_key='fxgain_accno_id'), 
+		       (SELECT value FROM defaults
+		         WHERE setting_key='fxloss_accno_id'|;
 
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
 
@@ -573,8 +580,11 @@ sub post_payments {
 		$form->{exchangerate} = 1;
 	}
 
-	my $query = qq|SELECT fxgain_accno_id, fxloss_accno_id
-					 FROM defaults|;
+	my $query = qq|
+		SELECT (SELECT value FROM defaults 
+		         WHERE setting_key='fxgain_accno_id'), 
+		       (SELECT value FROM defaults
+		         WHERE setting_key='fxloss_accno_id'|;
 
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
 
