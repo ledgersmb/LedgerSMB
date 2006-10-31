@@ -1,3 +1,26 @@
+# #-#-#-#-#  es_MX.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2001
+#
+# Spanish texts (Mexico):
+#
+#  Author: Alberto Ladron <h@grupoh.com.mx>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -951,6 +974,21 @@ msgstr "Modificar factura de compra"
 msgid "Edit Warehouse"
 msgstr "Modificar almacén"
 
+msgid "Eight"
+msgstr "ocho"
+
+msgid "Eighteen"
+msgstr "dieciocho"
+
+msgid "Eighty"
+msgstr "ochenta"
+
+msgid "Eleven"
+msgstr "once"
+
+msgid "Eleven-o"
+msgstr "once"
+
 msgid "Employee"
 msgstr "Empleado"
 
@@ -1041,6 +1079,18 @@ msgstr "Feb"
 msgid "February"
 msgstr "Febrero"
 
+msgid "Fifteen"
+msgstr "quince"
+
+msgid "Fifty"
+msgstr "cincuenta"
+
+msgid "Five"
+msgstr "cinco"
+
+msgid "Five Hundred"
+msgstr "quinientos"
+
 msgid "For"
 msgstr ""
 
@@ -1049,6 +1099,15 @@ msgstr "Utilidad cambiaria"
 
 msgid "Foreign Exchange Loss"
 msgstr "Perdida cambiaria"
+
+msgid "Forty"
+msgstr "cuarenta"
+
+msgid "Four"
+msgstr "cuatro"
+
+msgid "Fourteen"
+msgstr "catorce"
 
 msgid "Friday"
 msgstr ""
@@ -1148,6 +1207,9 @@ msgstr "Servidor"
 
 msgid "Hostname missing!"
 msgstr "¡Falta el nombre del servidor"
+
+msgid "Hundred"
+msgstr "ciento"
 
 msgid "IBAN"
 msgstr "IBAN"
@@ -1437,6 +1499,9 @@ msgstr "Método"
 msgid "Microfiche"
 msgstr "Microficha"
 
+msgid "Million"
+msgstr "millón"
+
 msgid "Model"
 msgstr "Modelo"
 
@@ -1478,6 +1543,18 @@ msgstr ""
 
 msgid "Next Number"
 msgstr ""
+
+msgid "Nine"
+msgstr "nueve"
+
+msgid "Nine Hundred"
+msgstr "novecientos"
+
+msgid "Nineteen"
+msgstr "diecinueve"
+
+msgid "Ninety"
+msgstr "noventa"
 
 msgid "No"
 msgstr "No"
@@ -1568,6 +1645,12 @@ msgstr "Octubre"
 
 msgid "On Hand"
 msgstr "Existencias"
+
+msgid "One"
+msgstr "un"
+
+msgid "One-o"
+msgstr "uno"
 
 msgid "Open"
 msgstr "Abierto"
@@ -2163,6 +2246,18 @@ msgstr "¡Sesión Expiró!"
 msgid "Setup Templates"
 msgstr "Plantillas de inicio"
 
+msgid "Seven"
+msgstr "siete"
+
+msgid "Seven Hundred"
+msgstr "setecientos"
+
+msgid "Seventeen"
+msgstr "diecisiete"
+
+msgid "Seventy"
+msgstr "setenta"
+
 msgid "Ship"
 msgstr "Enviar"
 
@@ -2195,6 +2290,15 @@ msgstr "Corto"
 
 msgid "Signature"
 msgstr "Firma"
+
+msgid "Six"
+msgstr "sies"
+
+msgid "Sixteen"
+msgstr "dieciséis"
+
+msgid "Sixty"
+msgstr "sesenta"
 
 msgid "Source"
 msgstr "Referencia"
@@ -2295,6 +2399,9 @@ msgstr "¡Plantilla guardada!"
 msgid "Templates"
 msgstr "Plantillas"
 
+msgid "Ten"
+msgstr "diez"
+
 msgid "Terms"
 msgstr "Condiciones"
 
@@ -2310,8 +2417,20 @@ msgstr "Los siguientes conjuntos de datos no están en uso y pueden ser borrados
 msgid "The following Datasets need to be updated"
 msgstr "Es necesario actualizar los siguientes conjuntos de datos"
 
+msgid "Thirteen"
+msgstr "trece"
+
+msgid "Thirty"
+msgstr "treinta"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Esta es una verificación preliminar de fuentes existentes. ¡Nada será creado o borrado en esta etapa!"
+
+msgid "Thousand"
+msgstr "mil"
+
+msgid "Three"
+msgstr "tres"
 
 msgid "Thursday"
 msgstr ""
@@ -2415,8 +2534,50 @@ msgstr "¡Traducciones guardadas!"
 msgid "Trial Balance"
 msgstr "Balanza de comprobación"
 
+msgid "Trillion"
+msgstr "billón"
+
 msgid "Tuesday"
 msgstr ""
+
+msgid "Twelve"
+msgstr "doce"
+
+msgid "Twenty"
+msgstr "veinte"
+
+msgid "Twenty Eight"
+msgstr "veintiocho"
+
+msgid "Twenty Five"
+msgstr "veinticinco"
+
+msgid "Twenty Four"
+msgstr "veinticuatro"
+
+msgid "Twenty Nine"
+msgstr "veintinueve"
+
+msgid "Twenty One"
+msgstr "veintiún"
+
+msgid "Twenty One-o"
+msgstr "veintiuno"
+
+msgid "Twenty Seven"
+msgstr "veintisiete"
+
+msgid "Twenty Six"
+msgstr "veintiséis"
+
+msgid "Twenty Three"
+msgstr "veintitrés"
+
+msgid "Twenty Two"
+msgstr "veintidós"
+
+msgid "Two"
+msgstr "dos"
 
 msgid "Type of Business"
 msgstr "Tipo de negocio"
@@ -2601,6 +2762,9 @@ msgstr "¡No ingresó un nombre!"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "Debe ingresar un servidor y un puerto para conexiones locales y remotas!"
 
+msgid "Zero"
+msgstr "cero"
+
 msgid "Zip/Postal Code"
 msgstr "Código Postal"
 
@@ -2663,4 +2827,3 @@ msgstr ""
 
 msgid "website"
 msgstr "sitio web"
-

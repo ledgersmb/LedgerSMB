@@ -1,4 +1,5 @@
-######################################################################
+# #-#-#-#-#  es.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2002
 #
@@ -22,8 +23,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-#######################################################################
-
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -961,6 +961,21 @@ msgstr "Editar factura de compra"
 msgid "Edit Warehouse"
 msgstr ""
 
+msgid "Eight"
+msgstr "ocho"
+
+msgid "Eighteen"
+msgstr "dieciocho"
+
+msgid "Eighty"
+msgstr "ochenta"
+
+msgid "Eleven"
+msgstr "once"
+
+msgid "Eleven-o"
+msgstr "once"
+
 msgid "Employee"
 msgstr "Colaborador/Empleado"
 
@@ -1051,6 +1066,18 @@ msgstr "Feb"
 msgid "February"
 msgstr "Febrero"
 
+msgid "Fifteen"
+msgstr "quince"
+
+msgid "Fifty"
+msgstr "cincuenta"
+
+msgid "Five"
+msgstr "cinco"
+
+msgid "Five Hundred"
+msgstr "quinientos"
+
 msgid "For"
 msgstr ""
 
@@ -1059,6 +1086,15 @@ msgstr "Ganancia en moneda extranjera"
 
 msgid "Foreign Exchange Loss"
 msgstr "Pérdida en moneda extranjera"
+
+msgid "Forty"
+msgstr "cuarenta"
+
+msgid "Four"
+msgstr "cuatro"
+
+msgid "Fourteen"
+msgstr "catorce"
 
 msgid "Friday"
 msgstr ""
@@ -1158,6 +1194,9 @@ msgstr "Máquina servidor de base de datos"
 
 msgid "Hostname missing!"
 msgstr "No se ha definido la máquina servidor de base de datos"
+
+msgid "Hundred"
+msgstr "ciento"
 
 msgid "IBAN"
 msgstr ""
@@ -1447,6 +1486,9 @@ msgstr ""
 msgid "Microfiche"
 msgstr "Microficha"
 
+msgid "Million"
+msgstr "millón"
+
 msgid "Model"
 msgstr "Modelo"
 
@@ -1488,6 +1530,18 @@ msgstr ""
 
 msgid "Next Number"
 msgstr ""
+
+msgid "Nine"
+msgstr "nueve"
+
+msgid "Nine Hundred"
+msgstr "novecientos"
+
+msgid "Nineteen"
+msgstr "diecinueve"
+
+msgid "Ninety"
+msgstr "noventa"
 
 msgid "No"
 msgstr "No"
@@ -1578,6 +1632,12 @@ msgstr "Octubre"
 
 msgid "On Hand"
 msgstr "Disponible"
+
+msgid "One"
+msgstr "un"
+
+msgid "One-o"
+msgstr "uno"
 
 msgid "Open"
 msgstr "Abierto"
@@ -2170,6 +2230,18 @@ msgstr ""
 msgid "Setup Templates"
 msgstr "Configurar plantillas"
 
+msgid "Seven"
+msgstr "siete"
+
+msgid "Seven Hundred"
+msgstr "setecientos"
+
+msgid "Seventeen"
+msgstr "diecisiete"
+
+msgid "Seventy"
+msgstr "setenta"
+
 msgid "Ship"
 msgstr "Envio"
 
@@ -2202,6 +2274,15 @@ msgstr "Corto"
 
 msgid "Signature"
 msgstr "Firma"
+
+msgid "Six"
+msgstr "sies"
+
+msgid "Sixteen"
+msgstr "dieciséis"
+
+msgid "Sixty"
+msgstr "sesenta"
 
 msgid "Source"
 msgstr "Fuente"
@@ -2302,6 +2383,9 @@ msgstr "¡Plantilla guardada!"
 msgid "Templates"
 msgstr "Plantillas"
 
+msgid "Ten"
+msgstr "diez"
+
 msgid "Terms"
 msgstr "Crédito"
 
@@ -2317,8 +2401,20 @@ msgstr "Las siguientes bases de datos no están en uso y se pueden borrar"
 msgid "The following Datasets need to be updated"
 msgstr "Es necesario actualizar las siguientes bases de datos"
 
+msgid "Thirteen"
+msgstr "trece"
+
+msgid "Thirty"
+msgstr "treinta"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Esta es una verificacion preliminar de fuentes existentes.  No se creará ni borrará nada durante esta etapa"
+
+msgid "Thousand"
+msgstr "mil"
+
+msgid "Three"
+msgstr "tres"
 
 msgid "Thursday"
 msgstr ""
@@ -2422,8 +2518,50 @@ msgstr ""
 msgid "Trial Balance"
 msgstr "Balance de comprobación"
 
+msgid "Trillion"
+msgstr "billón"
+
 msgid "Tuesday"
 msgstr ""
+
+msgid "Twelve"
+msgstr "doce"
+
+msgid "Twenty"
+msgstr "veinte"
+
+msgid "Twenty Eight"
+msgstr "veintiocho"
+
+msgid "Twenty Five"
+msgstr "veinticinco"
+
+msgid "Twenty Four"
+msgstr "veinticuatro"
+
+msgid "Twenty Nine"
+msgstr "veintinueve"
+
+msgid "Twenty One"
+msgstr "veintiún"
+
+msgid "Twenty One-o"
+msgstr "veintiuno"
+
+msgid "Twenty Seven"
+msgstr "veintisiete"
+
+msgid "Twenty Six"
+msgstr "veintiséis"
+
+msgid "Twenty Three"
+msgstr "veintitrés"
+
+msgid "Twenty Two"
+msgstr "veintidós"
+
+msgid "Two"
+msgstr "dos"
 
 msgid "Type of Business"
 msgstr ""
@@ -2608,6 +2746,9 @@ msgstr "No ha introducido el nombre"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "Debe introducir una máquina servidor de bases de datos y un puerto para conexiones locales y remotas"
 
+msgid "Zero"
+msgstr "cero"
+
 msgid "Zip/Postal Code"
 msgstr ""
 
@@ -2670,4 +2811,3 @@ msgstr ""
 
 msgid "website"
 msgstr "sitio web"
-
