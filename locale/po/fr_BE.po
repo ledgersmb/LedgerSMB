@@ -1,4 +1,5 @@
-######################################################################
+# #-#-#-#-#  fr_BE.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2003
 #
@@ -25,8 +26,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-#######################################################################
-
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -393,6 +393,9 @@ msgstr "En dessous"
 
 msgid "Billing Address"
 msgstr "Adresse de facturation"
+
+msgid "Billion"
+msgstr "Milliard"
 
 msgid "Bin"
 msgstr "Lieu stockage"
@@ -1021,6 +1024,18 @@ msgstr "Modifier facture de fournisseur"
 msgid "Edit Warehouse"
 msgstr "Modifier entrepôt"
 
+msgid "Eight"
+msgstr "Huit"
+
+msgid "Eighteen"
+msgstr "Dix-huit"
+
+msgid "Eighty"
+msgstr "Quatre-vingt"
+
+msgid "Eleven"
+msgstr "Onze"
+
 msgid "Employee"
 msgstr "Employé"
 
@@ -1111,6 +1126,15 @@ msgstr "Fév."
 msgid "February"
 msgstr "Février"
 
+msgid "Fifteen"
+msgstr "Quinze"
+
+msgid "Fifty"
+msgstr "Cinquante"
+
+msgid "Five"
+msgstr "Cinq"
+
 msgid "For"
 msgstr "Pour"
 
@@ -1119,6 +1143,15 @@ msgstr "Produit conversion devises"
 
 msgid "Foreign Exchange Loss"
 msgstr "Perte conversion devises"
+
+msgid "Forty"
+msgstr "Quarante"
+
+msgid "Four"
+msgstr "Quatre"
+
+msgid "Fourteen"
+msgstr "Quatorze"
 
 msgid "Friday"
 msgstr "Vendredi"
@@ -1218,6 +1251,9 @@ msgstr "Hôte"
 
 msgid "Hostname missing!"
 msgstr "Nom de l'hôte manquant"
+
+msgid "Hundred"
+msgstr "Cent"
 
 msgid "IBAN"
 msgstr "IBAN"
@@ -1516,6 +1552,9 @@ msgstr "Méthode"
 msgid "Microfiche"
 msgstr "Microfiche"
 
+msgid "Million"
+msgstr "Million"
+
 msgid "Model"
 msgstr "Modèle"
 
@@ -1557,6 +1596,15 @@ msgstr "Prochaine date"
 
 msgid "Next Number"
 msgstr "Prochain numéro"
+
+msgid "Nine"
+msgstr "Neuf"
+
+msgid "Nineteen"
+msgstr "Dix-neuf"
+
+msgid "Ninety"
+msgstr "Quatre-vignt-dix"
 
 msgid "No"
 msgstr "Non"
@@ -1662,6 +1710,9 @@ msgstr "Octobre"
 
 msgid "On Hand"
 msgstr "En Stock / disponible"
+
+msgid "One"
+msgstr "Un"
 
 msgid "Onhand"
 msgstr "Disponible"
@@ -2278,6 +2329,15 @@ msgstr "Session terminée!"
 msgid "Setup Templates"
 msgstr "Configuration des squelettes"
 
+msgid "Seven"
+msgstr "Sept"
+
+msgid "Seventeen"
+msgstr "Dix-sept"
+
+msgid "Seventy"
+msgstr "Soixante-dix"
+
 msgid "Ship"
 msgstr "Expédier"
 
@@ -2310,6 +2370,15 @@ msgstr "Court"
 
 msgid "Signature"
 msgstr "Signature"
+
+msgid "Six"
+msgstr "Six"
+
+msgid "Sixteen"
+msgstr "Seize"
+
+msgid "Sixty"
+msgstr "Soixante"
 
 msgid "Source"
 msgstr "Source"
@@ -2422,6 +2491,9 @@ msgstr "Squelette enregistré!"
 msgid "Templates"
 msgstr "Squelettes"
 
+msgid "Ten"
+msgstr "Dix"
+
 msgid "Terms"
 msgstr "Crédit limité à"
 
@@ -2437,8 +2509,20 @@ msgstr "Les fichiers de données suivants ne sont pas utilisés et peuvent être
 msgid "The following Datasets need to be updated"
 msgstr "Les fichiers de données suivants doivent être mis à jour"
 
+msgid "Thirteen"
+msgstr "Treize"
+
+msgid "Thirty"
+msgstr "Trente"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Ceci est un test préliminaire des sources existantes. Aucune modification à ce stade!"
+
+msgid "Thousand"
+msgstr "Mille"
+
+msgid "Three"
+msgstr "Trois"
 
 msgid "Thursday"
 msgstr "Jeudi"
@@ -2545,8 +2629,20 @@ msgstr "Traductions enregistrées"
 msgid "Trial Balance"
 msgstr "Balance Globale"
 
+msgid "Trillion"
+msgstr "Billion"
+
 msgid "Tuesday"
 msgstr "Mardi"
+
+msgid "Twelve"
+msgstr "Douze"
+
+msgid "Twenty"
+msgstr "Vingt"
+
+msgid "Two"
+msgstr "Deux"
 
 msgid "Type of Business"
 msgstr "Type d'affaire"
@@ -2734,6 +2830,9 @@ msgstr "Vous n'avez pas saisi de nom!"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "Vous devez saisir un \"hôte\" et un \"port\" pour les connexions distantes!"
 
+msgid "Zero"
+msgstr "Zéro"
+
 msgid "Zip/Postal Code"
 msgstr "Code postal"
 
@@ -2793,4 +2892,3 @@ msgstr "Erreur inattendue!"
 
 msgid "website"
 msgstr "site web"
-
