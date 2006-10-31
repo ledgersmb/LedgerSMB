@@ -1691,9 +1691,9 @@ sub aging {
 # type=submit $locale->text('Print')
 # type=submit $locale->text('E-mail')
 
-    %button = ('Select all' => { ndx => 1, key => 'A', value => $locale->text('Select all') },
-               'Print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
-	       'E-mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
+    %button = ('select_all' => { ndx => 1, key => 'A', value => $locale->text('Select all') },
+               'print' => { ndx => 2, key => 'P', value => $locale->text('Print') },
+	       'e_mail' => { ndx => 5, key => 'E', value => $locale->text('E-mail') },
 	      );
     
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
@@ -1813,7 +1813,7 @@ sub e_mail {
 |;
   }
 
-  $title = $locale->text('E-mail Statement to')." $form->{$form->{ct}}";
+  $title = $locale->text('E-mail Statement to [_1]', $form->{$form->{ct}});
 
   $form->{media} = "email";
   
@@ -1893,14 +1893,14 @@ sub send_email {
 
   $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
 
-  $form->{subject} = $locale->text('Statement').qq| - $form->{todate}| unless $form->{subject};
+  $form->{subject} = $locale->text('Statement - [_1]', $form->{todate}) unless $form->{subject};
   $form->isblank("email", $locale->text('E-mail address missing!'));
 
   RP->aging(\%myconfig, \%$form);
   
   &print_form;
   
-  $form->redirect($locale->text('Statement sent to')." $form->{$form->{ct}}");
+  $form->redirect($locale->text('Statement sent to [_1]', $form->{$form->{ct}}));
 
 }
 
