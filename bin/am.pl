@@ -1693,7 +1693,7 @@ sub save_template {
 sub defaults {
   
   # get defaults for account numbers and last numbers
-  AM->defaultaccounts(\%myconfig, \%$form);
+  AM->get_all_defaults(\%$form);
 
   foreach $key (keys %{ $form->{accno} }) {
     foreach $accno (sort keys %{ $form->{accno}{$key} }) {

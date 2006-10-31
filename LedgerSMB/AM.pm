@@ -1835,5 +1835,18 @@ sub post_yearend {
 
 }
 
+sub get_all_defaults{
+	my ($self, $form) = @_;
+	my $dbh = $form->{dbh};
+	my $query = "select setting_key, value FROM defaults";
+	$sth = $dbh->prepare($query);
+	$sth->execute;
+	while (($skey, $value) = $sth->fetchrow_array()){
+		$form->{$skey} = $value;
+	}
+
+	$self->defaultaccounts(undef, $form);
+	$dbh->commit;
+}
 
 1;
