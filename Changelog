@@ -23,6 +23,7 @@ Localization:
 * Corrected parsing of numbers so that they are multi-run safe (Chris T)
 * Added modular tax calculation support (no modules included yet) (Seneca)
 * Added "1 000.00" number format (Chris T)
+* Buttons are now localization-safe (Seneca)
 
 Code Quality and API:
 * Added logging module (Jason R)
