@@ -1370,30 +1370,33 @@ sub save_defaults {
                                                FROM chart
                                               WHERE accno = ?)
 		 WHERE setting_key = ?|);
-	my %translation = {
+	my %translation = (
 		inventory_accno_id => 'IC',
 		income_accno_id => 'IC_income',
 		expense_accno_id => 'IC_expense',
 		fxgain_accno_id => 'FX_gain',
 		fxloss_accno_id => 'FX_loss'	
-	};
+	);
 	for (
 		qw(inventory_accno_id income_accno_id expense_accno_id 
 		fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
 		sonumber ponumber sqnumber rfqnumber partnumber employeenumber
 		customernumber vendornumber projectnumber yearend curr
-		weightunit businessnumber yearend)
+		weightunit businessnumber)
 	){
-		my $name;
+		my $val = $form->{$_};
+
 		if ($translation{$_}){
-			$name = $translation{$_};
+			$val = $form->{$translation{$_}};
+			print STDERR $val;
+		} 
+		if ($_ =~ /accno/){
+			print STDERR "Account $_: $translation{$_}";
+			$sth_accno->execute($val, $_) 
+				|| $form->dberror("Saving $_");
 		} else {
-			$name = $_;
-		}
-		if ($_ =~ /accno_id/){
-			$sth_accno->execute($form->{$name}, $_);
-		} else {
-			$sth_plain->execute($form->{$name}, $_);
+			$sth_plain->execute($val, $_)
+				|| $form->dberror("Saving $_");
 		}
 
 	}
