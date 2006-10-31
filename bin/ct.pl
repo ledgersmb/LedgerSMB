@@ -1651,69 +1651,69 @@ sub form_footer {
   
   if ($form->{db} eq 'customer') {
     if ($myconfig{acs} !~ /AR--Customers--Add Customer/) {
-      $a{'Save'} = 1;
+      $a{'save'} = 1;
 
       if ($form->{id}) {
-	$a{'Save as new'} = 1;
+	$a{'save_as_new'} = 1;
 	if ($form->{status} eq 'orphaned') {
-	  $a{'Delete'} = 1;
+	  $a{'delete'} = 1;
 	}
       }
     }
     
     if ($myconfig{acs} !~ /AR--AR/) {
       if ($myconfig{acs} !~ /AR--Add Transaction/) {
-	$a{'AR Transaction'} = 1;
+	$a{'ar_transaction'} = 1;
       }
       if ($myconfig{acs} !~ /AR--Sales Invoice/) {
-	$a{'Sales Invoice'} = 1;
+	$a{'sales_invoice'} = 1;
       }
     }
     if ($myconfig{acs} !~ /POS--POS/) {
       if ($myconfig{acs} !~ /POS--Sale/) {
-	$a{'POS'} = 1;
+	$a{'pos'} = 1;
       }
     }
     if ($myconfig{acs} !~ /Order Entry--Order Entry/) {
       if ($myconfig{acs} !~ /Order Entry--Sales Order/) {
-	$a{'Sales Order'} = 1;
+	$a{'sales_order'} = 1;
       }
     }
     if ($myconfig{acs} !~ /Quotations--Quotations/) {
       if ($myconfig{acs} !~ /Quotations--Quotation/) {
-	$a{'Quotation'} = 1;
+	$a{'quotation'} = 1;
       }
     }
   }
   
   if ($form->{db} eq 'vendor') {
     if ($myconfig{acs} !~ /AP--Vendors--Add Vendor/) {
-      $a{'Save'} = 1;
+      $a{'save'} = 1;
 
       if ($form->{id}) {
-	$a{'Save as new'} = 1;
+	$a{'save_as_new'} = 1;
 	if ($form->{status} eq 'orphaned') {
-	  $a{'Delete'} = 1;
+	  $a{'delete'} = 1;
 	}
       }
     }
  
     if ($myconfig{acs} !~ /AP--AP/) {
       if ($myconfig{acs} !~ /AP--Add Transaction/) {
-	$a{'AP Transaction'} = 1;
+	$a{'ap_transaction'} = 1;
       }
       if ($myconfig{acs} !~ /AP--Vendor Invoice/) {
-	$a{'Vendor Invoice'} = 1;
+	$a{'vendor_invoice'} = 1;
       }
     }
     if ($myconfig{acs} !~ /Order Entry--Order Entry/) {
       if ($myconfig{acs} !~ /Order Entry--Purchase Order/) {
-	$a{'Purchase Order'} = 1;
+	$a{'purchase_order'} = 1;
       }
     }
     if ($myconfig{acs} !~ /Quotations--Quotations/) {
       if ($myconfig{acs} !~ /Quotations--RFQ/) {
-	$a{'RFQ'} = 1;
+	$a{'rfq'} = 1;
       }
     }
   }
@@ -1721,7 +1721,7 @@ sub form_footer {
   if ($myconfig{acs} !~ /Goods & Services--Goods & Services/) {
     $myconfig{acs} =~ s/(Goods & Services--)Add (Service|Assembly).*;/$1--Add Part/g;
     if ($myconfig{acs} !~ /Goods & Services--Add Part/) {
-      $a{'Pricelist'} = 1;
+      $a{'pricelist'} = 1;
     }
   }
 
