@@ -331,7 +331,17 @@ insert into tax (chart_id,rate) values ((select id from chart where accno = '223
 insert into tax (chart_id,rate) values ((select id from chart where accno = '223030200'),0.07);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '223030300'),0);
 --
-update defaults set inventory_accno_id = (select id from chart where accno = '333000000'), income_accno_id = (select id from chart where accno = '773010000'), expense_accno_id = (select id from chart where accno = '773110000'), fxgain_accno_id = (select id from chart where accno = '775060000'), fxloss_accno_id = (select id from chart where accno = '775140000'), invnumber = '1000', sonumber = '1000', ponumber = '1000', curr = 'PLN:USD:EUR', weightunit = 'kg';
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '333000000'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '773010000'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '773110000'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '775060000'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '775140000'), invnumber = '1000', sonumber = '1000', ponumber = '1000', curr = 'PLN:USD:EUR');
+
+ INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
 
 

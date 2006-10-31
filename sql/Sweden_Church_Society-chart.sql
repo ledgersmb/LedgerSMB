@@ -227,5 +227,17 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('899','Redovisat resultat','H','','E','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8999','Redovisat resultat','A','','E','');
 --
-update defaults set inventory_accno_id = (select id from chart where accno ='1130'), income_accno_id = (select id from chart where accno = '3400'), expense_accno_id = (select id from chart where accno = '4400'), fxgain_accno_id = (select id from chart where accno = '3960'), fxloss_accno_id = (select id from chart where accno = '7960'), curr = 'SEK:EUR:USD', weightunit = 'kg';
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno ='1130'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '3400'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '4400'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '3960'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '7960'));
+
+ INSERT INTO defaults (setting_key, value) VALUES ('curr', 'SEK:EUR:USD');
+
+ INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
