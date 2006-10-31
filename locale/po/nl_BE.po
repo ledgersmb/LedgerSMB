@@ -1,4 +1,5 @@
-######################################################################
+# #-#-#-#-#  nl_BE.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2004
 #
@@ -19,8 +20,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-#######################################################################
-
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -339,6 +339,9 @@ msgstr "Onder"
 
 msgid "Billing Address"
 msgstr "Facturatieadres"
+
+msgid "Billion"
+msgstr "miljard"
 
 msgid "Bin"
 msgstr "Locatie"
@@ -850,6 +853,18 @@ msgstr "Inkoop factuur wijzigen"
 msgid "Edit Warehouse"
 msgstr "Magazijn wijzigen"
 
+msgid "Eight"
+msgstr "acht"
+
+msgid "Eighteen"
+msgstr "achtien"
+
+msgid "Eighty"
+msgstr "tachtig"
+
+msgid "Eleven"
+msgstr "elf"
+
 msgid "Employee"
 msgstr "Werknemer"
 
@@ -922,11 +937,29 @@ msgstr "Feb"
 msgid "February"
 msgstr "Februari"
 
+msgid "Fifteen"
+msgstr "vijftien"
+
+msgid "Fifty"
+msgstr "vijftig"
+
+msgid "Five"
+msgstr "vijf"
+
 msgid "Foreign Exchange Gain"
 msgstr "Wisselkoers winst"
 
 msgid "Foreign Exchange Loss"
 msgstr "Wisselkoers verlies"
+
+msgid "Forty"
+msgstr "veertig"
+
+msgid "Four"
+msgstr "vier"
+
+msgid "Fourteen"
+msgstr "veertien"
 
 msgid "From"
 msgstr "Van"
@@ -993,6 +1026,9 @@ msgstr "Host"
 
 msgid "Hostname missing!"
 msgstr "Geen hostnaam!"
+
+msgid "Hundred"
+msgstr "honderd"
 
 msgid "IBAN"
 msgstr "IBAN"
@@ -1234,6 +1270,9 @@ msgstr "Methode"
 msgid "Microfiche"
 msgstr "Microfiche"
 
+msgid "Million"
+msgstr "miljoen"
+
 msgid "Model"
 msgstr "Type"
 
@@ -1251,6 +1290,15 @@ msgstr "Naam ontbreekt!"
 
 msgid "New Templates"
 msgstr "Nieuwe templates"
+
+msgid "Nine"
+msgstr "negen"
+
+msgid "Nineteen"
+msgstr "negentien"
+
+msgid "Ninety"
+msgstr "negentig"
 
 msgid "No"
 msgstr "Nee"
@@ -1320,6 +1368,9 @@ msgstr "Oktober"
 
 msgid "On Hand"
 msgstr "Op voorraad"
+
+msgid "One"
+msgstr "een"
 
 msgid "Open"
 msgstr "Open"
@@ -1744,6 +1795,15 @@ msgstr "Diensten"
 msgid "Setup Templates"
 msgstr "Setup templates"
 
+msgid "Seven"
+msgstr "zeven"
+
+msgid "Seventeen"
+msgstr "zeventien"
+
+msgid "Seventy"
+msgstr "zeventig"
+
 msgid "Ship"
 msgstr "Verzenden"
 
@@ -1776,6 +1836,15 @@ msgstr "Kort"
 
 msgid "Signature"
 msgstr "Handtekening"
+
+msgid "Six"
+msgstr "zes"
+
+msgid "Sixteen"
+msgstr "zestien"
+
+msgid "Sixty"
+msgstr "zestig"
 
 msgid "Source"
 msgstr "Herkomst"
@@ -1864,6 +1933,9 @@ msgstr "Template opgeslagen!"
 msgid "Templates"
 msgstr "Templates"
 
+msgid "Ten"
+msgstr "tien"
+
 msgid "Terms"
 msgstr "Termijn"
 
@@ -1876,8 +1948,20 @@ msgstr "De volgende datasets zijn niet ingebruik en kunnen worder verwijderd."
 msgid "The following Datasets need to be updated"
 msgstr "De volgende datasets moeten worden bijgewerkt"
 
+msgid "Thirteen"
+msgstr "dertien"
+
+msgid "Thirty"
+msgstr "dertig"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Dit is een eerste controle. Er wordt niks gecreéerd of verwijderd."
+
+msgid "Thousand"
+msgstr "duizend"
+
+msgid "Three"
+msgstr "drie"
 
 msgid "Till"
 msgstr "Kassa"
@@ -1938,6 +2022,18 @@ msgstr "Vertalingen opgeslagen!"
 
 msgid "Trial Balance"
 msgstr "Proefbalans"
+
+msgid "Trillion"
+msgstr "biljoen"
+
+msgid "Twelve"
+msgstr "twalf"
+
+msgid "Twenty"
+msgstr "twintig"
+
+msgid "Two"
+msgstr "twee"
 
 msgid "Type of Business"
 msgstr "Zaaktype"
@@ -2065,6 +2161,9 @@ msgstr "U heeft geen naam gegeven!"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "Vul een \"host\" en een \"port\" voor netwerk connecties!"
 
+msgid "Zero"
+msgstr "nul"
+
 msgid "account cannot be set to any other type of account"
 msgstr "Rekening kan niet omgezet worden naar ander type Rekening"
 
@@ -2109,4 +2208,3 @@ msgstr "Met succes verwijderd!"
 
 msgid "website"
 msgstr "website"
-

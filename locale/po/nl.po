@@ -1,4 +1,5 @@
-######################################################################
+# #-#-#-#-#  nl.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2001
 #
@@ -23,8 +24,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-#######################################################################
-
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -424,6 +424,9 @@ msgstr "Onder"
 
 msgid "Billing Address"
 msgstr "Facturatieadres"
+
+msgid "Billion"
+msgstr "miljard"
 
 msgid "Bin"
 msgstr "Vergaarbak"
@@ -1079,6 +1082,18 @@ msgstr "Inkoopfactuur Wijzigen"
 msgid "Edit Warehouse"
 msgstr "Magazijn Wijzigen"
 
+msgid "Eight"
+msgstr "acht"
+
+msgid "Eighteen"
+msgstr "achtien"
+
+msgid "Eighty"
+msgstr "tachtig"
+
+msgid "Eleven"
+msgstr "elf"
+
 msgid "Employee"
 msgstr "Werknemer"
 
@@ -1169,6 +1184,15 @@ msgstr "feb"
 msgid "February"
 msgstr "februari"
 
+msgid "Fifteen"
+msgstr "vijftien"
+
+msgid "Fifty"
+msgstr "vijftig"
+
+msgid "Five"
+msgstr "vijf"
+
 msgid "For"
 msgstr "Gedurende"
 
@@ -1177,6 +1201,15 @@ msgstr "Wisselkoerswinst"
 
 msgid "Foreign Exchange Loss"
 msgstr "Wisselkoersverlies"
+
+msgid "Forty"
+msgstr "veertig"
+
+msgid "Four"
+msgstr "vier"
+
+msgid "Fourteen"
+msgstr "veertien"
 
 msgid "Friday"
 msgstr "vrijdag"
@@ -1276,6 +1309,9 @@ msgstr "Host"
 
 msgid "Hostname missing!"
 msgstr "Hostnaam ontbreekt!"
+
+msgid "Hundred"
+msgstr "honderd"
 
 msgid "IBAN"
 msgstr "IBAN"
@@ -1580,6 +1616,9 @@ msgstr "Gebruikt Stelsel"
 msgid "Microfiche"
 msgstr "Microfiche"
 
+msgid "Million"
+msgstr "miljoen"
+
 msgid "Model"
 msgstr "Type"
 
@@ -1621,6 +1660,15 @@ msgstr "Volgende Datum"
 
 msgid "Next Number"
 msgstr "Volgende Code"
+
+msgid "Nine"
+msgstr "negen"
+
+msgid "Nineteen"
+msgstr "negentien"
+
+msgid "Ninety"
+msgstr "negentig"
 
 msgid "No"
 msgstr "Nee"
@@ -1726,6 +1774,9 @@ msgstr "oktober"
 
 msgid "On Hand"
 msgstr "Op voorraad"
+
+msgid "One"
+msgstr "een"
 
 msgid "Onhand"
 msgstr "Beschikbaar"
@@ -2348,6 +2399,15 @@ msgstr "Sessie verlopen!"
 msgid "Setup Templates"
 msgstr "Basissjablonen"
 
+msgid "Seven"
+msgstr "zeven"
+
+msgid "Seventeen"
+msgstr "zeventien"
+
+msgid "Seventy"
+msgstr "zeventig"
+
 msgid "Ship"
 msgstr "Verzenden"
 
@@ -2380,6 +2440,15 @@ msgstr "Kort"
 
 msgid "Signature"
 msgstr "Handtekening"
+
+msgid "Six"
+msgstr "zes"
+
+msgid "Sixteen"
+msgstr "zestien"
+
+msgid "Sixty"
+msgstr "zestig"
 
 msgid "Source"
 msgstr "Herkomst"
@@ -2492,6 +2561,9 @@ msgstr "Sjabloon opgeslagen!"
 msgid "Templates"
 msgstr "Sjablonen"
 
+msgid "Ten"
+msgstr "tien"
+
 msgid "Terms"
 msgstr "Betalingstermijn"
 
@@ -2507,8 +2579,20 @@ msgstr "De volgende Datasets zijn niet in gebruik en kunnen worden verwijderd."
 msgid "The following Datasets need to be updated"
 msgstr "De volgende Datasets moeten worden bijgewerkt"
 
+msgid "Thirteen"
+msgstr "dertien"
+
+msgid "Thirty"
+msgstr "dertig"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Dit is een eerste controle. Er wordt op dit moment niks bijgewerkt of verwijderd."
+
+msgid "Thousand"
+msgstr "duizend"
+
+msgid "Three"
+msgstr "drie"
 
 msgid "Thursday"
 msgstr "donderdag"
@@ -2615,8 +2699,20 @@ msgstr "Vertalingen opgeslagen!"
 msgid "Trial Balance"
 msgstr "Proefbalans"
 
+msgid "Trillion"
+msgstr "biljoen"
+
 msgid "Tuesday"
 msgstr "dinsdag"
+
+msgid "Twelve"
+msgstr "twalf"
+
+msgid "Twenty"
+msgstr "twintig"
+
+msgid "Two"
+msgstr "twee"
 
 msgid "Type of Business"
 msgstr "Branche"
@@ -2804,6 +2900,9 @@ msgstr "U heeft geen gebruikersnaam gegeven!"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "Vul een computernaam en een poortnummer in voor netwerkverbindingen!"
 
+msgid "Zero"
+msgstr "nul"
+
 msgid "Zip/Postal Code"
 msgstr "Postcode"
 
@@ -2863,4 +2962,3 @@ msgstr "onverwachte fout!"
 
 msgid "website"
 msgstr "website"
-
