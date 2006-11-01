@@ -935,315 +935,371 @@ sub assembly_item {
 
 
 sub all_parts {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  my $where = '1 = 1';
-  my $null;
-  my $var;
-  my $ref;
+	$dbh = $form->{dbh};
+	my $where = '1 = 1';
+	my $null;
+	my $var;
+	my $ref;
   
-  for (qw(partnumber drawing microfiche)) {
-    if ($form->{$_} ne "") {
-      $var = $form->like(lc $form->{$_});
-      $where .= " AND lower(p.$_) LIKE '$var'";
-    }
-  }
-  # special case for description
-  if ($form->{description} ne "") {
-    unless ($form->{bought} || $form->{sold} || $form->{onorder} || $form->{ordered} || $form->{rfq} || $form->{quoted}) {
-      $var = $form->like(lc $form->{description});
-      $where .= " AND lower(p.description) LIKE '$var'";
-    }
-  }
-  
-  # assembly components
-  my $assemblyflds;
-  if ($form->{searchitems} eq 'component') {
-    $assemblyflds = qq|, p1.partnumber AS assemblypartnumber, a.id AS assembly_id|;
-  }
+	for (qw(partnumber drawing microfiche)) {
+		if ($form->{$_} ne "") {
+			$var = $dbh->quote($form->like(lc $form->{$_}));
+			$where .= " AND lower(p.$_) LIKE $var";
+		}
+	}
+	# special case for description
+	if ($form->{description} ne "") {
+		unless ($form->{bought} || $form->{sold} || $form->{onorder} 
+			|| $form->{ordered} || $form->{rfq} || $form->{quoted}
+		) {
 
-  # special case for serialnumber
-  if ($form->{l_serialnumber}) {
-    if ($form->{serialnumber} ne "") {
-      $var = $form->like(lc $form->{serialnumber});
-      $where .= " AND lower(i.serialnumber) LIKE '$var'";
-    }
-  }
-
-  if (($form->{warehouse} ne "") || $form->{l_warehouse}) {
-    $form->{l_warehouse} = 1;
-  }
+			$var = $dbh->quote($form->like(
+				lc $form->{description}));
+			$where .= " AND lower(p.description) LIKE $var";
+		}
+	}
   
-  if ($form->{searchitems} eq 'part') {
-    $where .= " AND p.inventory_accno_id > 0 AND p.income_accno_id > 0";
-  }
-  if ($form->{searchitems} eq 'assembly') {
-    $form->{bought} = "";
-    $where .= " AND p.assembly = '1'";
-  }
-  if ($form->{searchitems} eq 'service') {
-    $where .= " AND p.assembly = '0' AND p.inventory_accno_id IS NULL";
-  }
-  if ($form->{searchitems} eq 'labor') {
-    $where .= " AND p.inventory_accno_id > 0 AND p.income_accno_id IS NULL";
-  }
+	# assembly components
+	my $assemblyflds;
+	if ($form->{searchitems} eq 'component') {
+		$assemblyflds = qq|, p1.partnumber AS assemblypartnumber, 
+			a.id AS assembly_id|;
+	}
 
-  # items which were never bought, sold or on an order
-  if ($form->{itemstatus} eq 'orphaned') {
-    $where .= qq| AND p.onhand = 0
-                  AND p.id NOT IN (SELECT p.id FROM parts p
-		                   JOIN invoice i ON (p.id = i.parts_id))
-		  AND p.id NOT IN (SELECT p.id FROM parts p
-		                   JOIN assembly a ON (p.id = a.parts_id))
-                  AND p.id NOT IN (SELECT p.id FROM parts p
-		                   JOIN orderitems o ON (p.id = o.parts_id))
-		  AND p.id NOT IN (SELECT p.id FROM parts p
-		                   JOIN jcitems j ON (p.id = j.parts_id))|;
-  }
-  
-  if ($form->{itemstatus} eq 'active') {
-    $where .= " AND p.obsolete = '0'";
-  }
-  if ($form->{itemstatus} eq 'obsolete') {
-    $where .= " AND p.obsolete = '1'";
-  }
-  if ($form->{itemstatus} eq 'onhand') {
-    $where .= " AND p.onhand > 0";
-  }
-  if ($form->{itemstatus} eq 'short') {
-    $where .= " AND p.onhand < p.rop";
-  }
+	# special case for serialnumber
+	if ($form->{l_serialnumber}) {
+		if ($form->{serialnumber} ne "") {
+			$var = $dbh->quote(
+				$form->like(lc $form->{serialnumber}));
+			$where .= " AND lower(i.serialnumber) LIKE $var";
+		}
+	}
 
-  my $makemodelflds = qq|, '', ''|;;
-  my $makemodeljoin;
+	if (($form->{warehouse} ne "") || $form->{l_warehouse}) {
+		$form->{l_warehouse} = 1;
+	}
   
-  if (($form->{make} ne "") || $form->{l_make} || ($form->{model} ne "") || $form->{l_model}) {
-    $makemodelflds = qq|, m.make, m.model|;
-    $makemodeljoin = qq|LEFT JOIN makemodel m ON (m.parts_id = p.id)|;
+	if ($form->{searchitems} eq 'part') {
+		$where .= " AND p.inventory_accno_id > 0 AND p.income_accno_id > 0";
+	}
+	if ($form->{searchitems} eq 'assembly') {
+		$form->{bought} = "";
+		$where .= " AND p.assembly = '1'";
+	}
+	if ($form->{searchitems} eq 'service') {
+		$where .= " AND p.assembly = '0' AND p.inventory_accno_id IS NULL";
+	}
+	if ($form->{searchitems} eq 'labor') {
+		$where .= " AND p.inventory_accno_id > 0 AND p.income_accno_id IS NULL";
+	}
+
+	# items which were never bought, sold or on an order
+	if ($form->{itemstatus} eq 'orphaned') {
+		$where .= qq| 
+			AND p.onhand = 0
+			AND p.id NOT IN (SELECT p.id FROM parts p
+				           JOIN invoice i 
+			                        ON (p.id = i.parts_id))
+			AND p.id NOT IN (SELECT p.id FROM parts p
+			                  JOIN assembly a 
+			                       ON (p.id = a.parts_id))
+			AND p.id NOT IN (SELECT p.id FROM parts p
+			                   JOIN orderitems o 
+			                        ON (p.id = o.parts_id))
+			AND p.id NOT IN (SELECT p.id FROM parts p
+			                   JOIN jcitems j 
+			                        ON (p.id = j.parts_id))|;
+	}
+  
+	if ($form->{itemstatus} eq 'active') {
+		 $where .= " AND p.obsolete = '0'";
+	}
+	if ($form->{itemstatus} eq 'obsolete') {
+		$where .= " AND p.obsolete = '1'";
+	}
+	if ($form->{itemstatus} eq 'onhand') {
+		$where .= " AND p.onhand > 0";
+	}
+	if ($form->{itemstatus} eq 'short') {
+		$where .= " AND p.onhand < p.rop";
+	}
+
+	my $makemodelflds = qq|, '', ''|;;
+	my $makemodeljoin;
+  
+	if (($form->{make} ne "") || $form->{l_make} || ($form->{model} ne "") 
+							|| $form->{l_model}) {
+		$makemodelflds = qq|, m.make, m.model|;
+	 	$makemodeljoin = qq|LEFT JOIN makemodel m ON (m.parts_id = p.id)|;
     
-    if ($form->{make} ne "") {
-      $var = $form->like(lc $form->{make});
-      $where .= " AND lower(m.make) LIKE '$var'";
-    }
-    if ($form->{model} ne "") {
-      $var = $form->like(lc $form->{model});
-      $where .= " AND lower(m.model) LIKE '$var'";
-    }
-  }
-  if ($form->{partsgroup} ne "") {
-    ($null, $var) = split /--/, $form->{partsgroup};
-    $where .= qq| AND p.partsgroup_id = $var|;
-  }
+		if ($form->{make} ne "") {
+			$var = $dbh->quote($form->like(lc $form->{make}));
+			$where .= " AND lower(m.make) LIKE $var";
+		}
+		if ($form->{model} ne "") {
+			$var = $dbh->quote($form->like(lc $form->{model}));
+			$where .= " AND lower(m.model) LIKE $var";
+		}
+	}
+	if ($form->{partsgroup} ne "") {
+		($null, $var) = split /--/, $form->{partsgroup};
+		$where .= qq| AND p.partsgroup_id = | . $dbh->quote($var);
+	}
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
 
-  my %ordinal = ( 'partnumber' => 2,
-                  'description' => 3,
-		  'bin' => 6,
-		  'priceupdate' => 13,
-		  'drawing' => 15,
-		  'microfiche' => 16,
-		  'partsgroup' => 18,
-		  'make' => 21,
-		  'model' => 22,
-		  'assemblypartnumber' => 23
+	my %ordinal = ( 
+		'partnumber' => 2,
+		'description' => 3,
+		'bin' => 6,
+		'priceupdate' => 13,
+		'drawing' => 15,
+		'microfiche' => 16,
+		'partsgroup' => 18,
+		'make' => 21,
+		'model' => 22,
+		'assemblypartnumber' => 23
 		);
   
-  my @a = qw(partnumber description);
-  my $sortorder = $form->sort_order(\@a, \%ordinal);
+	my @a = qw(partnumber description);
+	my $sortorder = $form->sort_order(\@a, \%ordinal);
 
-  my $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
-  my ($curr) = $dbh->selectrow_array($query);
-  $curr =~ s/:.*//;
-  
-  my $flds = qq|p.id, p.partnumber, p.description, p.onhand, p.unit,
-                p.bin, p.sellprice, p.listprice, p.lastcost, p.rop,
+	my $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
+	my ($curr) = $dbh->selectrow_array($query);
+	$curr =~ s/:.*//;
+	$curr = $dbh->quote($curr);
+	my $flds = qq|
+		p.id, p.partnumber, p.description, p.onhand, p.unit,
+		p.bin, p.sellprice, p.listprice, p.lastcost, p.rop,
 		p.avgcost,
 		p.weight, p.priceupdate, p.image, p.drawing, p.microfiche,
-		p.assembly, pg.partsgroup, '$curr' AS curr,
+		p.assembly, pg.partsgroup, $curr AS curr,
 		c1.accno AS inventory, c2.accno AS income, c3.accno AS expense,
 		p.notes
 		$makemodelflds $assemblyflds
 		|;
 
-  $query = qq|SELECT $flds
-	      FROM parts p
-	      LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-	      LEFT JOIN chart c1 ON (c1.id = p.inventory_accno_id)
-	      LEFT JOIN chart c2 ON (c2.id = p.income_accno_id)
-	      LEFT JOIN chart c3 ON (c3.id = p.expense_accno_id)
-	      $makemodeljoin
-  	      WHERE $where
-	      ORDER BY $sortorder|;
-
-  # redo query for components report
-  if ($form->{searchitems} eq 'component') {
-    
-    $flds =~ s/p.onhand/a.qty AS onhand/;
-    
-    $query = qq|SELECT $flds
-		FROM assembly a
-		JOIN parts p ON (a.parts_id = p.id)
-		JOIN parts p1 ON (a.id = p1.id)
+	$query = qq|
+		   SELECT $flds
+		     FROM parts p
 		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 		LEFT JOIN chart c1 ON (c1.id = p.inventory_accno_id)
 		LEFT JOIN chart c2 ON (c2.id = p.income_accno_id)
 		LEFT JOIN chart c3 ON (c3.id = p.expense_accno_id)
 		$makemodeljoin
-  	        WHERE $where
-	        ORDER BY $sortorder|;
-  }
+		    WHERE $where
+		 ORDER BY $sortorder|;
 
-
-  # rebuild query for bought and sold items
-  if ($form->{bought} || $form->{sold} || $form->{onorder} || $form->{ordered} || $form->{rfq} || $form->{quoted}) {
-
-    $form->sort_order();
-    @a = qw(partnumber description curr employee name serialnumber id);
-    push @a, "invnumber" if ($form->{bought} || $form->{sold});
-    push @a, "ordnumber" if ($form->{onorder} || $form->{ordered});
-    push @a, "quonumber" if ($form->{rfq} || $form->{quoted});
-
-    %ordinal = ( 'partnumber' => 2,
-                 'description' => 3,
-		 'serialnumber' => 4,
-		 'bin' => 7,
-		 'priceupdate' => 14,
-		 'partsgroup' => 19,
-		 'invnumber' => 20,
-		 'ordnumber' => 21,
-		 'quonumber' => 22,
-		 'name' => 24,
-		 'employee' => 25,
-		 'curr' => 26,
-		 'make' => 29,
-		 'model' => 30
-	       );
+	# redo query for components report
+	if ($form->{searchitems} eq 'component') {
     
-    $sortorder = $form->sort_order(\@a, \%ordinal);
+		$flds =~ s/p.onhand/a.qty AS onhand/;
+    
+		$query = qq|
+			   SELECT $flds
+			     FROM assembly a
+			     JOIN parts p ON (a.parts_id = p.id)
+			     JOIN parts p1 ON (a.id = p1.id)
+			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+			LEFT JOIN chart c1 ON (c1.id = p.inventory_accno_id)
+			LEFT JOIN chart c2 ON (c2.id = p.income_accno_id)
+			LEFT JOIN chart c3 ON (c3.id = p.expense_accno_id)
+			$makemodeljoin
+			    WHERE $where
+			 ORDER BY $sortorder|;
+	}
 
-    my $union = "";
-    $query = "";
+
+	# rebuild query for bought and sold items
+	if ($form->{bought} || $form->{sold} || $form->{onorder} 
+		|| $form->{ordered} || $form->{rfq} || $form->{quoted}
+	) {
+
+		$form->sort_order();
+		@a = qw(partnumber description curr employee name 
+			serialnumber id);
+		push @a, "invnumber" if ($form->{bought} || $form->{sold});
+		push @a, "ordnumber" if ($form->{onorder} || $form->{ordered});
+		push @a, "quonumber" if ($form->{rfq} || $form->{quoted});
+
+		%ordinal = (
+			'partnumber' => 2,
+			'description' => 3,
+			'serialnumber' => 4,
+			'bin' => 7,
+			'priceupdate' => 14,
+			'partsgroup' => 19,
+			'invnumber' => 20,
+			'ordnumber' => 21,
+			'quonumber' => 22,
+			'name' => 24,
+			'employee' => 25,
+			'curr' => 26,
+			'make' => 29,
+			'model' => 30
+			);
+    
+		$sortorder = $form->sort_order(\@a, \%ordinal);
+
+		my $union = "";
+		$query = "";
   
-    if ($form->{bought} || $form->{sold}) {
+		if ($form->{bought} || $form->{sold}) {
       
-      my $invwhere = "$where";
-      my $transdate = ($form->{method} eq 'accrual') ? "transdate" : "datepaid";
+			my $invwhere = "$where";
+			my $transdate = 
+				($form->{method} eq 'accrual') 
+				? "transdate" 
+				: "datepaid";
       
-      $invwhere .= " AND i.assemblyitem = '0'";
-      $invwhere .= " AND a.$transdate >= '$form->{transdatefrom}'" if $form->{transdatefrom};
-      $invwhere .= " AND a.$transdate <= '$form->{transdateto}'" if $form->{transdateto};
+			$invwhere .= " AND i.assemblyitem = '0'";
+			$invwhere .= " AND a.$transdate >= " . 
+				$dbh->quote($form->{transdatefrom})
+					if $form->{transdatefrom};
+			$invwhere .= " AND a.$transdate <= " . 
+				$dbh->quote($form->{transdateto})
+					if $form->{transdateto};
 
-      if ($form->{description} ne "") {
-	$var = $form->like(lc $form->{description});
-	$invwhere .= " AND lower(i.description) LIKE '$var'";
-      }
+			if ($form->{description} ne "") {
+				$var = dbh->quote(
+					$form->like(lc $form->{description}));
+				$invwhere .= 
+					" AND lower(i.description) LIKE $var";
+			}
 
-      if ($form->{open} || $form->{closed}) {
-	if ($form->{open} && $form->{closed}) {
-	  if ($form->{method} eq 'cash') {
-	    $invwhere .= " AND a.amount = a.paid";
-	  }
-	} else {
-	  if ($form->{open}) {
-	    if ($form->{method} eq 'cash') {
-	      $invwhere .= " AND a.id = 0";
-	    } else {
-	      $invwhere .= " AND NOT a.amount = a.paid";
-	    }
-	  } else {
-	    $invwhere .= " AND a.amount = a.paid";
-	  }
-	}
-      } else {
-	$invwhere .= " AND a.id = 0";
-      }
+			if ($form->{open} || $form->{closed}) {
+				if ($form->{open} && $form->{closed}) {
+					if ($form->{method} eq 'cash') {
+						$invwhere .= 
+							" AND a.amount = a.paid";
+					}
+				} else {
+					if ($form->{open}) {
+						if ($form->{method} eq 'cash') {
+							$invwhere .= 
+								" AND a.id = 0";
+						} else {
+							$invwhere .= 
+								" AND NOT a.amount = a.paid";
+						}
+					} else {
+						$invwhere .= 
+							" AND a.amount = a.paid";
+					}
+				}
+			} else {
+				$invwhere .= " AND a.id = 0";
+			}
 
-      my $flds = qq|p.id, p.partnumber, i.description, i.serialnumber,
-                    i.qty AS onhand, i.unit, p.bin, i.sellprice,
-		    p.listprice, p.lastcost, p.rop, p.weight,
-		    p.avgcost,
-		    p.priceupdate, p.image, p.drawing, p.microfiche,
-		    p.assembly,
-		    pg.partsgroup, a.invnumber, a.ordnumber, a.quonumber,
-		    i.trans_id, ct.name, e.name AS employee, a.curr, a.till,
-		    p.notes
-		    $makemodelfld|;
+			my $flds = qq|
+				p.id, p.partnumber, i.description, 
+				i.serialnumber, i.qty AS onhand, i.unit, p.bin,
+				i.sellprice, p.listprice, p.lastcost, p.rop, 
+				p.weight, p.avgcost, p.priceupdate, p.image, 
+				p.drawing, p.microfiche, p.assembly, 
+				pg.partsgroup, a.invnumber, a.ordnumber, 
+				a.quonumber, i.trans_id, ct.name, 
+				e.name AS employee, a.curr, a.till, p.notes
+				$makemodelfld|;
 
 
-      if ($form->{bought}) {
-	my $rflds = $flds;
-	$rflds =~ s/i.qty AS onhand/i.qty * -1 AS onhand/;
+			if ($form->{bought}) {
+				my $rflds = $flds;
+				$rflds =~ 
+					s/i.qty AS onhand/i.qty * -1 AS onhand/;
 
-	$query = qq|
-	            SELECT $rflds, 'ir' AS module, '' AS type,
-		    (SELECT sell FROM exchangerate ex
-		     WHERE ex.curr = a.curr
-		     AND ex.transdate = a.$transdate) AS exchangerate,
-		     i.discount
-		    FROM invoice i
-		    JOIN parts p ON (p.id = i.parts_id)
-		    JOIN ap a ON (a.id = i.trans_id)
-		    JOIN vendor ct ON (a.vendor_id = ct.id)
-		    LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		    LEFT JOIN employee e ON (a.employee_id = e.id)
-		    $makemodeljoin
-		    WHERE $invwhere|;
-	$union = "
-	          UNION ALL";
-      }
+				$query = qq|
+					   SELECT $rflds, 'ir' AS module, 
+					          '' AS type,
+					          (SELECT sell 
+					             FROM exchangerate ex
+					            WHERE ex.curr = a.curr
+					                  AND ex.transdate 
+					                   = a.$transdate) 
+					          AS exchangerate, i.discount
+					     FROM invoice i
+					     JOIN parts p 
+					          ON (p.id = i.parts_id)
+					     JOIN ap a ON (a.id = i.trans_id)
+					     JOIN vendor ct 
+					          ON (a.vendor_id = ct.id)
+					LEFT JOIN partsgroup pg 
+					          ON (p.partsgroup_id = pg.id)
+					LEFT JOIN employee e 
+					          ON (a.employee_id = e.id)
+					$makemodeljoin
+					    WHERE $invwhere|;
+				$union = "
+					UNION ALL";
+			}
 
-      if ($form->{sold}) {
-	$query .= qq|$union
-                     SELECT $flds, 'is' AS module, '' AS type,
-		    (SELECT buy FROM exchangerate ex
-		     WHERE ex.curr = a.curr
-		     AND ex.transdate = a.$transdate) AS exchangerate,
-		     i.discount
-		     FROM invoice i
-		     JOIN parts p ON (p.id = i.parts_id)
-		     JOIN ar a ON (a.id = i.trans_id)
-		     JOIN customer ct ON (a.customer_id = ct.id)
-		     LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		     LEFT JOIN employee e ON (a.employee_id = e.id)
-		     $makemodeljoin
-		     WHERE $invwhere|;
-	$union = "
-	          UNION ALL";
-      }
-    }
+			if ($form->{sold}) {
+				$query .= qq|
+					$union
+					   SELECT $flds, 'is' AS module, 
+					          '' AS type,
+					          (SELECT buy 
+					             FROM exchangerate ex
+					            WHERE ex.curr = a.curr
+					                  AND ex.transdate 
+					                  = a.$transdate) 
+					          AS exchangerate, i.discount
+					     FROM invoice i
+					     JOIN parts p 
+					          ON (p.id = i.parts_id)
+					     JOIN ar a ON (a.id = i.trans_id)
+					     JOIN customer ct 
+					          ON (a.customer_id = ct.id)
+					LEFT JOIN partsgroup pg 
+					          ON (p.partsgroup_id = pg.id)
+					LEFT JOIN employee e 
+					          ON (a.employee_id = e.id)
+					$makemodeljoin
+					    WHERE $invwhere|;
+				$union = "
+					UNION ALL";
+			}
+		}
 
-    if ($form->{onorder} || $form->{ordered}) {
-      my $ordwhere = "$where
-		     AND a.quotation = '0'";
-      $ordwhere .= " AND a.transdate >= '$form->{transdatefrom}'" if $form->{transdatefrom};
-      $ordwhere .= " AND a.transdate <= '$form->{transdateto}'" if $form->{transdateto};
+		if ($form->{onorder} || $form->{ordered}) {
+			my $ordwhere = "$where
+				AND a.quotation = '0'";
+			$ordwhere .= " AND a.transdate >= ".
+				$dbh->quote($form->{transdatefrom}) 
+					if $form->{transdatefrom};
+			$ordwhere .= " AND a.transdate <= ".
+				$dbh->quote($form->{transdateto}) 
+					if $form->{transdateto};
 
-      if ($form->{description} ne "") {
-	$var = $form->like(lc $form->{description});
-	$ordwhere .= " AND lower(i.description) LIKE '$var'";
-      }
+			if ($form->{description} ne "") {
+				$var = $dbh->quote(
+					$form->like(lc $form->{description}));
+				$ordwhere .= " AND lower(i.description) LIKE $var";
+			}
       
-      if ($form->{open} || $form->{closed}) {
-	unless ($form->{open} && $form->{closed}) {
-	  $ordwhere .= " AND a.closed = '0'" if $form->{open};
-	  $ordwhere .= " AND a.closed = '1'" if $form->{closed};
-	}
-      } else {
-	$ordwhere .= " AND a.id = 0";
-      }
+			if ($form->{open} || $form->{closed}) {
+				unless ($form->{open} && $form->{closed}) {
+					$ordwhere .= " AND a.closed = '0'" 
+						if $form->{open};
+					$ordwhere .= " AND a.closed = '1'" 
+						if $form->{closed};
+				}
+			} else {
+				$ordwhere .= " AND a.id = 0";
+			}
 
-      $flds = qq|p.id, p.partnumber, i.description, i.serialnumber,
-                 i.qty AS onhand, i.unit, p.bin, i.sellprice,
-	         p.listprice, p.lastcost, p.rop, p.weight,
-		 p.avgcost,
-		 p.priceupdate, p.image, p.drawing, p.microfiche,
-		 p.assembly,
-		 pg.partsgroup, '' AS invnumber, a.ordnumber, a.quonumber,
-		 i.trans_id, ct.name, e.name AS employee, a.curr, '0' AS till,
-		 p.notes
-		 $makemodelfld|;
+			$flds = qq|
+				p.id, p.partnumber, i.description, 
+				i.serialnumber, i.qty AS onhand, i.unit, p.bin,
+				i.sellprice, p.listprice, p.lastcost, p.rop, 
+				p.weight, p.avgcost, p.priceupdate, p.image, 
+				p.drawing, p.microfiche, p.assembly,
+				pg.partsgroup, '' AS invnumber, a.ordnumber, 
+				a.quonumber, i.trans_id, ct.name, 
+				e.name AS employee, a.curr, '0' AS till, 
+				p.notes
+				$makemodelfld|;
 
       if ($form->{ordered}) {
 	$query .= qq|$union
