@@ -367,13 +367,9 @@ sub dbcreate {
 		? 'Pg' 
 		: $form->{dbdriver};
   
-	my $filename = qq|sql/${dbdriver}-tables.sql|;
+	my $filename = qq|sql/Pg-database.sql|;
 	$self->process_query($form, $dbh, $filename);
   
-	# create functions
-	$filename = qq|sql/${dbdriver}-functions.sql|;
-	$self->process_query($form, $dbh, $filename);
-
 	# load gifi
 	($filename) = split /_/, $form->{chart};
 	$filename =~ s/_//;
@@ -383,9 +379,6 @@ sub dbcreate {
 	$filename = qq|sql/$form->{chart}-chart.sql|;
 	$self->process_query($form, $dbh, $filename);
 
-	# create indices
-	$filename = qq|sql/${dbdriver}-indices.sql|;
-	$self->process_query($form, $dbh, $filename);
  
 	# create custom tables and functions
 	my $item;
