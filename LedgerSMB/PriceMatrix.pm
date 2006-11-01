@@ -50,7 +50,8 @@ sub price_matrix_query {
 			SELECT p.id AS parts_id, 0 AS customer_id, 
 				0 AS pricegroup_id, 0 AS pricebreak, 
 				p.sellprice, NULL AS validfrom, NULL AS validto,
-				(SELECT substr(curr,1,3) FROM defaults) AS curr,
+				(SELECT substr(value,1,3) FROM defaults WHERE 
+					setting_key = 'curr') AS curr,
 			        '' AS pricegroup
 	     		FROM parts p
 			WHERE p.id = ?
