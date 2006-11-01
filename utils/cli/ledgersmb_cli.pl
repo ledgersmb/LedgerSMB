@@ -17,6 +17,9 @@
 #
 # This is a simple wrapper that allows you to write simple scripts with LSMB
 # See sample for the file format.
+#
+# THIS IS EXPERIMENTAL AND THE INTERFACE IS SUBJECT TO CHANGE
+
 
 use LedgerSMB::User;
 use LedgerSMB::Form;
