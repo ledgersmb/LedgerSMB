@@ -191,6 +191,10 @@ sub continue { &{ $form->{nextsub} } };
 sub till_closing {
   $form->{callback} = "$form->{script}?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
+  # $locale->text("Source");
+  # $locale->text("Actual");
+  # $locale->text("Expected");
+  # $locale->text("Error");
   @colheadings = qw(Source Actual Expected Error);
   my $curren = $pos_config{'curren'};
 
@@ -217,7 +221,7 @@ sub till_closing {
 |;
 
   print "<tr>";
-  map {print "<td class=listheading>$_</td>";} @colheadings;
+  map {print "<td class=listheading>".$locale->text($_)."</td>";} @colheadings;
   print "</tr>";
   my $j;
   my $source;
@@ -303,12 +307,12 @@ function check_errors(){
     print qq|<tr>
       <td><input type=text name=$calcval value="$form->{$calcval}"></td>
       <th>X ${curren}${unit} = </th>
-      <td><input type=text name=$subval value="$form->{$subval}"></td>
+      <td><input type="text" name="$subval" value="$form->{$subval}"></td>
     </tr>|;
   }
   print qq|<tr>
     <td>&nbsp;</td>
-    <th>Subtotal:</th>
+    <th>|.$locale->text("Subtotal").qq|:</th>
     <td><input type=text name=sub_sub value="$form->{sub_sub}"></td>
   </tr>
   </table>
