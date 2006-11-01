@@ -29,22 +29,30 @@ $form = new Form;
 
 while ($line = <>){
 	$line =~ s/#.*//; # strip out comments
-	if ($line =~ /^\s*CALL (.+) INTO (.+)/){
+	if ($line =~ /^\s*CALL\s+(.+)\s+INTO\s+(.+)/i){
 		$form->{$2} = &{$1}(\%$form);
-	} elsif ($line =~ /^\s*MODULE (.+)/){
+	} elsif ($line =~ /^\s*MODULE (.+)/i){
 		$module = $1;
 		$module =~ s/::/\//;
 		eval { require $module; };
-	} elsif ($line =~ /^\s*ENV:(.+)\s*=\s*(.*)/){
+	} elsif ($line =~ /^\s*ENV:(.+)\s*=\s*(.*)/i){
+		my ($key, $value) = ($1, $2);
+		$key =~ s/\s?(.*)\s?/$1/;
+		$value =~ s/\s?(.*)\s?/$1/;
 		$ENV{$1} = $2;
 	} elsif ($line =~ /^\s*(.+)\s*=\s*(.+)/){
 		$form->{$1} = $2;
-	} elsif ($line =~ /^\s*CALL (.+)/){
-		{$1}(\%$form);
+	} elsif ($line =~ /^\s*CALL\s+(.+)/i){
+		{$1};
+	} elsif ($line =~ /^\s*LOGIN\s*/i){
+		$myconfig = new LedgerSMB::User 
+			"${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
 	} elsif ($line !~ /^\s*$/) {
 		die "Parse error in script file: $line";
 	}
 }
+
+delete $form->{password};
 
 for (keys %$form){
 	print "$_ = $form->{$_}\n";
