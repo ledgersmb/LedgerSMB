@@ -58,6 +58,7 @@ User Interface:
 
 Other:
 * ledger-smb.conf is now an ini file (Seneca)
+* Experimental scripting wrapper in utils/cli (Chris T)
 
 Changelog for LedgerSMB 1.1.1
 
