@@ -1859,7 +1859,7 @@ sub all_taxaccounts {
 		$sth = $dbh->prepare($query) || $self->dberror($query);
 
 		foreach my $accno (split / /, $self->{taxaccounts}) {
-			$sth->execute(@queryargs, $accno); 
+			$sth->execute($accno, @queryargs); 
 			($self->{"${accno}_rate"}, $self->{"${accno}_taxnumber"}) = $sth->fetchrow_array;
 			$sth->finish;
 		}
