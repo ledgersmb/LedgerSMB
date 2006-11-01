@@ -1,3 +1,27 @@
+# #-#-#-#-#  et.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2006
+#
+# Estonian texts:
+#
+#  Author: Andrei Kolu <andrei.kolu@mail.ee>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# ######################################################################
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -365,6 +389,9 @@ msgstr "All"
 
 msgid "Billing Address"
 msgstr "Arve Esitamise Aadress"
+
+msgid "Billion"
+msgstr "miljard"
 
 msgid "Bin"
 msgstr "Pakendit"
@@ -996,6 +1023,9 @@ msgstr "Muuda Ostuarve"
 msgid "Edit Warehouse"
 msgstr "Muuda Kaubaladu"
 
+msgid "Eight"
+msgstr "kaheksa"
+
 msgid "Employee"
 msgstr "Töötaja"
 
@@ -1086,6 +1116,9 @@ msgstr "Veebr"
 msgid "February"
 msgstr "Veebruar"
 
+msgid "Five"
+msgstr "viis"
+
 msgid "For"
 msgstr "Saata"
 
@@ -1094,6 +1127,9 @@ msgstr "Valuutavahetuse Kasum"
 
 msgid "Foreign Exchange Loss"
 msgstr "Valuutavahetuse Kahjum"
+
+msgid "Four"
+msgstr "neli"
 
 msgid "Friday"
 msgstr "Reede"
@@ -1193,6 +1229,9 @@ msgstr "Server"
 
 msgid "Hostname missing!"
 msgstr "Serveri nimi puudu!"
+
+msgid "Hundred"
+msgstr "sada"
 
 msgid "IBAN"
 msgstr "Pangaarve NR."
@@ -1488,6 +1527,9 @@ msgstr "Meetod"
 msgid "Microfiche"
 msgstr "Mikrofišš"
 
+msgid "Million"
+msgstr "miljon"
+
 msgid "Model"
 msgstr "Mudel"
 
@@ -1529,6 +1571,9 @@ msgstr "Järgmine Kuupäev"
 
 msgid "Next Number"
 msgstr "Järgmine Number"
+
+msgid "Nine"
+msgstr "üheksa"
 
 msgid "No"
 msgstr "Ei"
@@ -1634,6 +1679,9 @@ msgstr "Oktoober"
 
 msgid "On Hand"
 msgstr "Saadaval"
+
+msgid "One"
+msgstr "üks"
 
 msgid "Onhand"
 msgstr "Käepärast"
@@ -2247,6 +2295,9 @@ msgstr "Sessioon aegunud!"
 msgid "Setup Templates"
 msgstr "Dokumendipõhjade seadistamine"
 
+msgid "Seven"
+msgstr "seitse"
+
 msgid "Ship"
 msgstr "Saatmine"
 
@@ -2279,6 +2330,9 @@ msgstr "Puudu"
 
 msgid "Signature"
 msgstr "Allkiri"
+
+msgid "Six"
+msgstr "kuus"
 
 msgid "Source"
 msgstr "Allikas"
@@ -2391,6 +2445,9 @@ msgstr "Dokumendipõhjad salvestatud!"
 msgid "Templates"
 msgstr "Dokumendipõhjad"
 
+msgid "Ten"
+msgstr "kümme"
+
 msgid "Terms"
 msgstr "Tingimused"
 
@@ -2408,6 +2465,12 @@ msgstr "Järgmised andmebaasid vajavad uuendamist"
 
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Olemasolevate allikate eelkontroll. Praeguses staadiumis ei toimu andmete lisamist ega kustutamist."
+
+msgid "Thousand"
+msgstr "tuhat"
+
+msgid "Three"
+msgstr "kolm"
 
 msgid "Thursday"
 msgstr "Neljapäev"
@@ -2514,8 +2577,14 @@ msgstr "Tõlked salvestatud"
 msgid "Trial Balance"
 msgstr "Proovibilanss"
 
+msgid "Trillion"
+msgstr "biljon"
+
 msgid "Tuesday"
 msgstr "Teisipäev"
+
+msgid "Two"
+msgstr "kaks"
 
 msgid "Type of Business"
 msgstr "Ettevõtte tüüp"
@@ -2700,6 +2769,9 @@ msgstr "Salvestad juba olemasolevat tehingut\""
 msgid "You did not enter a name!"
 msgstr "Jätsid nime sisestamata!"
 
+msgid "Zero"
+msgstr "null"
+
 msgid "Zip/Postal Code"
 msgstr "Postiindex"
 
@@ -2759,4 +2831,3 @@ msgstr "ootamatu viga!"
 
 msgid "website"
 msgstr "kodulehekülg"
-
