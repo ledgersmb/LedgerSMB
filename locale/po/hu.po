@@ -1,4 +1,5 @@
-######################################################################
+# #-#-#-#-#  hu.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2003
 #
@@ -19,8 +20,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-#######################################################################
-
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
@@ -384,6 +384,9 @@ msgstr ""
 
 msgid "Billing Address"
 msgstr "Számlázási cím"
+
+msgid "Billion"
+msgstr "milliárd"
 
 msgid "Bin"
 msgstr "Raktárhely"
@@ -1048,6 +1051,18 @@ msgstr "Beszerzési számla módosítása"
 msgid "Edit Warehouse"
 msgstr "Raktár módosítás"
 
+msgid "Eight"
+msgstr "nyolc"
+
+msgid "Eighteen"
+msgstr "tizennyolc"
+
+msgid "Eighty"
+msgstr "nyolcvan"
+
+msgid "Eleven"
+msgstr "tizenegy"
+
 msgid "Employee"
 msgstr "Alkalmazott"
 
@@ -1141,6 +1156,15 @@ msgstr "Feb."
 msgid "February"
 msgstr "Február"
 
+msgid "Fifteen"
+msgstr "tizenöt"
+
+msgid "Fifty"
+msgstr "ötven"
+
+msgid "Five"
+msgstr "öt"
+
 msgid "For"
 msgstr "Ismétlés"
 
@@ -1149,6 +1173,15 @@ msgstr "Árfolyamnyereség"
 
 msgid "Foreign Exchange Loss"
 msgstr "Árfolyamveszteség"
+
+msgid "Forty"
+msgstr "negyven"
+
+msgid "Four"
+msgstr "négy"
+
+msgid "Fourteen"
+msgstr "tizennégy"
 
 msgid "Friday"
 msgstr "Péntek"
@@ -1251,6 +1284,9 @@ msgstr "Adatbázis helye:"
 
 msgid "Hostname missing!"
 msgstr "Adatbázis helye hiányzik!"
+
+msgid "Hundred"
+msgstr "száz"
 
 msgid "IBAN"
 msgstr "Bank Számlaszám"
@@ -1552,6 +1588,9 @@ msgstr "Módszer"
 msgid "Microfiche"
 msgstr "Mikrofilm"
 
+msgid "Million"
+msgstr "millió"
+
 msgid "Model"
 msgstr "Modell"
 
@@ -1593,6 +1632,15 @@ msgstr "Következő Dátum"
 
 msgid "Next Number"
 msgstr "Következő szám"
+
+msgid "Nine"
+msgstr "kilenc"
+
+msgid "Nineteen"
+msgstr "tizenkilenc"
+
+msgid "Ninety"
+msgstr "kilencven"
 
 msgid "No"
 msgstr "Nem"
@@ -1698,6 +1746,9 @@ msgstr "Október"
 
 msgid "On Hand"
 msgstr "Készleten"
+
+msgid "One"
+msgstr "egy"
 
 msgid "Onhand"
 msgstr "Ténykészlet"
@@ -2317,6 +2368,15 @@ msgstr "Kapcsolat lejárt!"
 msgid "Setup Templates"
 msgstr "Sablonok beállítása"
 
+msgid "Seven"
+msgstr "hét"
+
+msgid "Seventeen"
+msgstr "tizenhét"
+
+msgid "Seventy"
+msgstr "hatven"
+
 msgid "Ship"
 msgstr "Szállítás"
 
@@ -2349,6 +2409,15 @@ msgstr "Hiányzó"
 
 msgid "Signature"
 msgstr "Aláírás"
+
+msgid "Six"
+msgstr "hat"
+
+msgid "Sixteen"
+msgstr "tizenhat"
+
+msgid "Sixty"
+msgstr "hatvan"
 
 msgid "Sort by"
 msgstr "Rendezve"
@@ -2473,6 +2542,9 @@ msgstr "Sablon elmentve!"
 msgid "Templates"
 msgstr "Sablonok"
 
+msgid "Ten"
+msgstr "tíz"
+
 msgid "Terms"
 msgstr "Határidő"
 
@@ -2488,8 +2560,20 @@ msgstr "Az alábbi cégadatbázisok üresek, és törölhetők"
 msgid "The following Datasets need to be updated"
 msgstr "Az alábbi cégadatbázisokat frissíteni kell"
 
+msgid "Thirteen"
+msgstr "tizenhárom"
+
+msgid "Thirty"
+msgstr "harminc"
+
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "A meglévő adatbázisok előzetes ellenőrzése. A program itt még nem töröl és nem hoz létre semmit!"
+
+msgid "Thousand"
+msgstr "ezer"
+
+msgid "Three"
+msgstr "három"
 
 msgid "Thursday"
 msgstr "Csütörtök"
@@ -2608,8 +2692,47 @@ msgstr "Fordítás elmentve!"
 msgid "Trial Balance"
 msgstr "Főkönyvi kivonat"
 
+msgid "Trillion"
+msgstr "billió"
+
 msgid "Tuesday"
 msgstr "Kedd"
+
+msgid "Twelve"
+msgstr "tizenkettõ"
+
+msgid "Twenty"
+msgstr "húsz"
+
+msgid "Twenty Eight"
+msgstr "huszonnyolc"
+
+msgid "Twenty Five"
+msgstr "huszonöt"
+
+msgid "Twenty Four"
+msgstr "huszonnégy"
+
+msgid "Twenty Nine"
+msgstr "huszonkilenc"
+
+msgid "Twenty One"
+msgstr "huszonegy"
+
+msgid "Twenty Seven"
+msgstr "huszonhét"
+
+msgid "Twenty Six"
+msgstr "huszonhat"
+
+msgid "Twenty Three"
+msgstr "huszonhárom"
+
+msgid "Twenty Two"
+msgstr "huszonkettõ"
+
+msgid "Two"
+msgstr "kettõ"
 
 msgid "Type of Business"
 msgstr "ÜzletágTípus"
@@ -2797,6 +2920,9 @@ msgstr "Nem írt be nevet!"
 msgid "You must enter a host and port for local and remote connections!"
 msgstr "A helyi és távoli kapcsolat eléréséhez írjon be helyet, és portszámot!"
 
+msgid "Zero"
+msgstr "Nulla"
+
 msgid "Zip/Postal Code"
 msgstr "Irányítószám"
 
@@ -2859,4 +2985,3 @@ msgstr "Váratlan hiba!"
 
 msgid "website"
 msgstr "honlap"
-
