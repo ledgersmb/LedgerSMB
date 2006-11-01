@@ -1604,7 +1604,7 @@ msgid "Nineteen"
 msgstr "Dix-neuf"
 
 msgid "Ninety"
-msgstr "Quatre-vignt-dix"
+msgstr "Nonante"
 
 msgid "No"
 msgstr "Non"
@@ -2336,7 +2336,7 @@ msgid "Seventeen"
 msgstr "Dix-sept"
 
 msgid "Seventy"
-msgstr "Soixante-dix"
+msgstr "Septante"
 
 msgid "Ship"
 msgstr "Expédier"
