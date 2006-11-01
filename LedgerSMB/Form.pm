@@ -1491,6 +1491,8 @@ sub dbquote {
 
 
 sub update_balance {
+	# This is a dangerous private function.  All apps calling it must
+	# be careful to avoid SQL injection issues
 
 	my ($self, $dbh, $table, $field, $where, $value) = @_;
 
