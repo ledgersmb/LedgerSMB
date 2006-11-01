@@ -22,7 +22,7 @@ while ($line = <>){
 	} elsif ($line =~ /^\s*(.+)\s*=\s*(.+)/){
 		$form->{$1} = $2;
 	} elsif ($line =~ /^\s*CALL (.+)/){
-		&{$1}(\%$form);
+		{$1}(\%$form);
 	} elsif ($line !~ /^\s*$/) {
 		die "Parse error in script file: $line";
 	}

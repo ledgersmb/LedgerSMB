@@ -1,0 +1,6 @@
+# THe below line shows how to set the PGUSER environment variable
+ENV:PGUSER = postgres
+user = demo # set username
+password = demo # set password
+MODULE AR # load AR
+CALL AR::transactions
