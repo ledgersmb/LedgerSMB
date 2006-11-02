@@ -1,7 +1,6 @@
-# THe below line shows how to set the PGUSER environment variable
-ENV:PGUSER=postgres
-login=demo # set username
-password=demo # set password
-LOGIN
-MODULE AR # load AR
-CALL AR::transactions(\%$form);
+ENV:PGUSER = postgres # how to set an environment variable
+login = demo  # How to set a form variable
+password = demo  
+LOGIN # Log in
+MODULE AR  # Load a module
+CALL AR::transactions(form, user) # call a function

@@ -30,12 +30,12 @@ $form = new Form;
 $syntax = << '_END_SYNTAX_';
 
 	KEY : /\w[a-z0-9_]*/i
-	FNKEY : /\w[a-z0-9_]*/i
-	MODSTR: /\w[a-z0-9_:]*/i
+	MODSTR : /\w[a-z0-9_]*/i
+	FNKEY : /(?:\w|:)+/
 	OP       : m([-+*/%])
 	NUMBER : /[+-]?\d*\.?\d+/
 
-	ARGSTR : /\w[a-z0-9_,\s]*/i 
+	ARGS : /(\w[a-z0-9_]*,?\s?)+/i 
 
 	expression : NUMBER OP expression
               { return main::expression(@item) }
@@ -45,13 +45,13 @@ $syntax = << '_END_SYNTAX_';
               | KEY
 
 	assign_instruction : KEY "=" expression
-		{ ${main::stackref}->{$item{key}} = $item{expression} }
+		{ main::assignval($item{KEY}, $item{expression}) }
 
-	call_and_assign : /call/i FNKEY(ARGSTR) /into/i KEY
+	call_and_assign : /call/i FNKEY '(' ARGS ')' /into/i KEY
 		{ main::call_and_assign($item{FNKEY}, $item{ARGSTR}, $item{KEY}) }	
 
-	call : /call/i FNKEY(ARGSTR)
-		{ main::call($item{FNKEY}, $item{ARGSTR}) }
+	FUNCTIONCALL : /call/i FNKEY '(' ARGS ')'
+		{ main::call($item{FNKEY}, $item{ARGS})}
 
 	for : /for/i KEY
 		{ main::push_loop($item{KEY}) }
@@ -60,7 +60,7 @@ $syntax = << '_END_SYNTAX_';
 		{ main::pop_loop() }
 
 	if : /^\s*if/i KEY
-		{ main::if_handler($item{KEY} }
+		{ main::if_handler($item{KEY}) }
 
 	# IF is terminated by END IF or FI on its own line
 
@@ -68,11 +68,11 @@ $syntax = << '_END_SYNTAX_';
 		{ main::login() }
 
 	module : /module/i MODSTR
-		{ main::load_mod($item{MODSTR} }
+		{ main::load_mod($item{MODSTR}) }
 
 	instruction : assign_instruction
 		| call_and_assign
-		| call
+		| FUNCTIONCALL
 		| for
 		| done
 		| if
@@ -85,8 +85,20 @@ _END_SYNTAX_
  $::RD_HINT = 1;
  $::RD_ERRORS = 1; # Make sure the parser dies when it encounters an error
  $::RD_WARN   = 1; # Enable warnings. This will warn on unused rules &c.`
+#$::RD_TRACE = 1;
 my $stackref;
 my @loopstack;
+
+push @loopstack, $form;
+
+sub assignval {
+	my ($key, $value) = @_;
+	if ($key =~ /^ENV:/i){
+		$ENV{$key} = $value;
+	} else {
+		%{$loopstack[$#loopstack - 1]}->{$key} = $value;
+	}
+}
 
 sub expression {
 	shift;
@@ -131,6 +143,7 @@ sub if_handler {
 sub login {
 	$myconfig = new LedgerSMB::User 
 		"${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
+	$form->db_init($myconfig);
 }
 
 sub load_mod {
@@ -142,6 +155,7 @@ sub load_mod {
 my $scriptparse = new Parse::RecDescent($syntax);
 
 while ($line = <>){
+	$line =~ s/#.*$//; # strip comments
 	$scriptparse->startrule($line);
 }
 
