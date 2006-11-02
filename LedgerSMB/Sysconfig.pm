@@ -29,7 +29,11 @@ $templates = "templates";
 $memberfile = "users/members";
 
 # location of sendmail
-$sendmail = "| /usr/sbin/sendmail -t";
+$sendmail = "/usr/sbin/sendmail -t";
+
+# SMTP settings
+$smtphost = '';
+$smtptimout = 60;
 
 # set language for login and admin
 $language = "";
@@ -71,8 +75,11 @@ $localepath = $config{paths}{localepath} if $config{paths}{localepath};
 $spool = $config{paths}{spool} if $config{paths}{spool};
 $templates = $config{paths}{tempates} if $config{paths}{tempates};
 
-$sendmail = $config{programs}{sendmail} if $config{programs}{sendmail};
 $gzip = $config{programs}{gzip} if $config{programs}{gzip};
+
+$sendmail = $config{mail}{sendmail} if $config{mail}{sendmail};
+$smtphost = $config{mail}{smtphost} if $config{mail}{smtphost};
+$smtptimeout = $config{mail}{smtptimeout} if $config{mail}{smtptimeout};
 
 $globalDBConnect = $config{globaldb}{DBConnect} if $config{globaldb}{DBConnect};
 $globalDBUserName = $config{globaldb}{DBUserName} if $config{globaldb}{DBUserName};

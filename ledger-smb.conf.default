@@ -30,9 +30,14 @@ memberfile = users/members
 localepath = locale/po
 
 [programs]
-sendmail   = | /usr/bin/sendmail -t
 # program to use for file compression
 gzip       = gzip -S .gz
+
+[mail]
+### How to send mail.  The sendmail command is used unless smtphost is set.
+sendmail   = /usr/bin/sendmail -t
+# smtphost = 127.0.0.1
+# smtptimeout = 60
 
 [printers]
 # Available printers
