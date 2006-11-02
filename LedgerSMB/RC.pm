@@ -23,7 +23,7 @@
 #
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
@@ -35,105 +35,97 @@ package RC;
 
  
 sub getposlines{
-  my ($self, $myconfig, $form) = @_;
-  %pos_config = %{$form->{pos_config}};
-  %pos_sources = %{$form->{pos_sources}};
-  my $sources = '';
-  foreach $key (keys %pos_sources){
-    $sources .= ", '$key'";
-  }
-  $sources =~ s/^,\s*//;
-  my $dbh = $form->{dbh};
+	my ($self, $myconfig, $form) = @_;
+	%pos_config = %{$form->{pos_config}};
+	%pos_sources = %{$form->{pos_sources}};
+	my $sources = '';
+	foreach $key (keys %pos_sources){
+		$sources .= ", '$key'";
+	}
+	$sources =~ s/^,\s*//;
+	my $dbh = $form->{dbh};
 
-  # Considering the query below to be safe since all variables are from config
-  # files rather than user input.
-  my $query = qq| 
-	SELECT sum(amount) AS amount, source FROM acc_trans
-        WHERE chart_id = 
-		(SELECT id FROM chart WHERE accno = '$pos_config{till_accno}')
+	my $query = qq| 
+		  SELECT sum(amount) AS amount, source FROM acc_trans
+		   WHERE chart_id = (SELECT id FROM chart 
+		                    WHERE accno = ?)
+		         AND transdate = date 'NOW' AND cleared IS NOT TRUE
+		GROUP BY source|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($pos_config{till_accno}) || $form->dberror($query);
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+		push @{$form->{TB}}, $ref;
+	}
+	$sth->finish;
+	my $query = qq| 
+		SELECT sum(amount) AS sum FROM acc_trans
+		 WHERE chart_id =  (SELECT id FROM chart WHERE accno = ?)
 	  AND transdate = date 'NOW'
-          AND cleared IS NOT TRUE
-	GROUP BY source
-  |;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-    push @{$form->{TB}}, $ref;
-  }
-  $sth->finish;
-  my $query = qq| 
-	SELECT sum(amount) AS sum FROM acc_trans
-        WHERE chart_id = 
-		(SELECT id FROM chart WHERE accno = '$pos_config{till_accno}')
-	  AND transdate = date 'NOW'
-          AND cleared IS NOT TRUE
-  |;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
-  my $ref = $sth->fetchrow_hashref(NAME_lc);
-  $form->{sum} = $ref->{sum};
-  $sth->finish;
+          AND cleared IS NOT TRUE|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($pos_config{till_accno}) || $form->dberror($query);
+	my $ref = $sth->fetchrow_hashref(NAME_lc);
+	$form->{sum} = $ref->{sum};
+	$sth->finish;
 }
 
 sub clear_till {
-  my ($self, $myconfig, $form) = @_;
-  %pos_config = %{$form->{pos_config}};
-  %pos_sources = %{$form->{pos_sources}};
-  my $sources = '';
-  foreach $key (keys %pos_sources){
-    $sources .= ", '$key'";
-  }
-  $sources =~ s/^,\s//;
-  my $dbh = $form->{dbh};
-  my $query = qq| 
-	UPDATE acc_trans
-	SET cleared = TRUE
-	WHERE chart_id = 
-		(SELECT id FROM chart WHERE accno = '$pos_config{till_accno}')
-	  AND transdate = date 'NOW'
-  |;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my ($self, $myconfig, $form) = @_;
+	%pos_config = %{$form->{pos_config}};
+	%pos_sources = %{$form->{pos_sources}};
+	my $sources = '';
+	foreach $key (keys %pos_sources){
+		$sources .= ", '$key'";
+	}
+	$sources =~ s/^,\s//;
+	my $dbh = $form->{dbh};
+	my $query = qq| 
+		UPDATE acc_trans
+		SET cleared = TRUE
+		WHERE chart_id = 
+			(SELECT id FROM chart WHERE accno = ?)
+		  AND transdate = date 'NOW'|;
+
+	my $sth = $dbh->prepare($query);
+	$sth->execute($pos_config{till_accno}) || $form->dberror($query);
 }
 
 sub getbalance{
-  my ($self, $myconfig, $form) = @_;
-  my $dbh = $form->{dbh};
+	my ($self, $myconfig, $form) = @_;
+	my $dbh = $form->{dbh};
 
-  my $query = qq|SELECT sum(amount) AS balance
-                 FROM acc_trans
-                 WHERE chart_id =
-                   (SELECT id FROM chart WHERE accno = '$form->{accno}')|;
+	my $query = qq|
+		SELECT sum(amount) AS balance
+		  FROM acc_trans
+		 WHERE chart_id = (SELECT id FROM chart WHERE accno = ?)|;
 
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
-  my $ref = $sth->fetchrow_hashref(NAME_lc);
-  $form->{balance} = $ref->{balance};
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{accno}) || $form->dberror($query);
+	my $ref = $sth->fetchrow_hashref(NAME_lc);
+	$form->{balance} = $ref->{balance};
 }
  
 
 sub paymentaccounts {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->{dbh};
+	my $dbh = $form->{dbh};
 
-  my $query = qq|SELECT accno, description
-                 FROM chart
-		 WHERE link LIKE '%_paid%'
-		 AND (category = 'A' OR category = 'L')
+	my $query = qq|
+		SELECT accno, description
+		  FROM chart
+		 WHERE link LIKE '%_paid%' 
+		       AND (category = 'A' OR category = 'L')
 		 ORDER BY accno|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
 
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-    push @{ $form->{PR} }, $ref;
-  }
-  $sth->finish;
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+		push @{ $form->{PR} }, $ref;
+	}
+	$sth->finish;
 
-  $form->all_years($myconfig, $dbh);
-
-  $dbh->disconnect;
+	$form->all_years($myconfig, $dbh);
 
 }
 
@@ -432,54 +424,62 @@ sub payment_transactions {
 
 
 sub reconcile {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->dbconnect($myconfig);
 
-  my $query = qq|SELECT id FROM chart
+	my $query = qq|SELECT id FROM chart
                  WHERE accno = '$form->{accno}'|;
-  my ($chart_id) = $dbh->selectrow_array($query);
-  $chart_id *= 1;
+	my ($chart_id) = $dbh->selectrow_array($query);
+	$chart_id *= 1;
   
-  $query = qq|SELECT trans_id FROM acc_trans
-              WHERE (source = ? OR source IS NULL)
-	      AND transdate = ?
-	      AND cleared = '0'
-	      AND chart_id = $chart_id|;
-  my $sth = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|
+		SELECT trans_id FROM acc_trans
+		 WHERE (source = ? OR source IS NULL) AND transdate = ?
+		       AND cleared = '0' 
+		       AND chart_id = |.$dbh->quote($chart_id);
+	my $sth = $dbh->prepare($query) || $form->dberror($query);
     
-  my $i;
-  my $trans_id;
+	my $i;
+	my $trans_id;
 
-  $query = qq|UPDATE acc_trans SET cleared = '1'
-              WHERE cleared = '0'
-	      AND trans_id = ? 
-	      AND transdate = ?
-	      AND chart_id = $chart_id|;
-  my $tth = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|
+		UPDATE acc_trans 
+		   SET cleared = '1'
+		 WHERE cleared = '0' AND trans_id = ? AND transdate = ?
+		       AND chart_id = |.$dbh->quote($chart_id);
+	my $tth = $dbh->prepare($query) || $form->dberror($query);
   
-  # clear flags
-  for $i (1 .. $form->{rowcount}) {
-    if ($form->{"cleared_$i"} && ! $form->{"oldcleared_$i"}) {
-      if ($form->{summary}) {
-	$sth->execute($form->{"source_$i"}, $form->{"transdate_$i"}) || $form->dberror;
+	# clear flags
+	for $i (1 .. $form->{rowcount}) {
+		if ($form->{"cleared_$i"} && ! $form->{"oldcleared_$i"}) {
+			if ($form->{summary}) {
+				$sth->execute(
+					$form->{"source_$i"}, 
+					$form->{"transdate_$i"}
+					) || $form->dberror;
       
-	while (($trans_id) = $sth->fetchrow_array) {
-	  $tth->execute($trans_id, $form->{"transdate_$i"}) || $form->dberror;
-	  $tth->finish;
-	}
-	$sth->finish;
+				while (($trans_id) = $sth->fetchrow_array) {
+					$tth->execute(
+						$trans_id, 
+						$form->{"transdate_$i"}
+						) || $form->dberror;
+					$tth->finish;
+				}
+				$sth->finish;
 	
-      } else {
+			} else {
 
-	$tth->execute($form->{"id_$i"}, $form->{"transdate_$i"}) || $form->dberror;
-	$tth->finish;
-      }
-    }
-  }
+				$tth->execute(
+					$form->{"id_$i"}, 
+					$form->{"transdate_$i"}
+					) || $form->dberror;
+				$tth->finish;
+			}
+		}
+	}
 
-  $dbh->disconnect;
+	$dbh->commit;
 
 }
 
