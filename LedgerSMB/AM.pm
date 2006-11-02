@@ -1591,6 +1591,7 @@ sub backup {
 
 	my $boundary = time;
 	my $tmpfile = "${LedgerSMB::Sysconfig::userspath}/$boundary.$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
+	$tmpfile .= ".gz" if ${LedgerSMB::Sysconfig::gzip};
 	my $out = $form->{OUT};
 	$form->{OUT} = ">$tmpfile";
 
@@ -1624,11 +1625,13 @@ sub backup {
 		@{ $mail->{attachments} } = ($tmpfile);
 		$mail->{version} = $form->{version};
 		$mail->{fileid} = "$boundary.";
+		$mail->{format} = "plain";
+		$mail->{format} = "octet-stream" if ${LedgerSMB::Sysconfig::gzip};
 
 		$myconfig->{signature} =~ s/\\n/\n/g;
 		$mail->{message} = "-- \n$myconfig->{signature}";
 
-		$err = $mail->send($out);
+		$err = $mail->send;
 	}
 
 	if ($form->{media} eq 'file') {

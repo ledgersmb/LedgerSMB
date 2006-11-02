@@ -2245,7 +2245,7 @@ sub save_preferences {
 sub backup {
 
   if ($form->{media} eq 'email') {
-    $form->error($locale->text('No email address for')." $myconfig{name}") unless ($myconfig{email});
+    $form->error($locale->text('No email address for [_1]', $myconfig{name})) unless ($myconfig{email});
     
     $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
 
@@ -2255,7 +2255,7 @@ sub backup {
   AM->backup(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::userspath}, ${LedgerSMB::Sysconfig::gzip});
 
   if ($form->{media} eq 'email') {
-    $form->redirect($locale->text('Backup sent to').qq| $myconfig{email}|);
+    $form->redirect($locale->text('Backup sent to [_1]', $myconfig{email}));
   }
 
 }

@@ -390,7 +390,6 @@ sub format_amount {
 
 	my ($self, $myconfig, $amount, $places, $dash) = @_;
 
-
 	my $negative ;
 	if ($amount){
 		$amount = $self->parse_amount($myconfig, $amount);
@@ -929,7 +928,7 @@ sub parse_template {
 
 			}
 
-			if ($err = $mail->send($out)) {
+			if ($err = $mail->send) {
 				$self->cleanup;
 				$self->error($err);
 			}
@@ -2548,7 +2547,7 @@ sub get_recurring {
 		WHERE s.id = ?/;
 
 	my $sth = $dbh->prepare($query);
-	$sth->execute($self->{id}) || $form->dberror($query);
+	$sth->execute($self->{id}) || $self->dberror($query);
 
 	for (qw(email print)) { $self->{"recurring$_"} = "" }
 

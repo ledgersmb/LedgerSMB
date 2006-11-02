@@ -25,6 +25,7 @@ my $build = Module::Build->new (
 		'Time::Local'			=> 0,
 		'Cwd'				=> 0,
 		'Config::Std'			=> 0,
+		'MIME::Lite'			=> 0,
 		},
 	recommends => {
 		'HTML::LinkExtor'		=> 0,

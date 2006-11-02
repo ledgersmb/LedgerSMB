@@ -35,6 +35,10 @@
 
 package Mailer;
 
+use MIME::Lite;
+use MIME::Base64;
+use LedgerSMB::Sysconfig;
+
 sub new {
 	my ($type) = @_;
 	my $self = {};
@@ -44,21 +48,12 @@ sub new {
 
 
 sub send {
-	my ($self, $out) = @_;
+	my ($self) = @_;
 
-	my $boundary = time;
-	$boundary = "LedgerSMB-$self->{version}-$boundary";
 	my $domain = $self->{from};
 	$domain =~ s/(.*?\@|>)//g;
 	my $msgid = "$boundary\@$domain";
   
-	$self->{charset} = "ISO-8859-1" unless $self->{charset};
-
-	if ($out) {
-		open(OUT, $out) or return "$out : $!";
-	} else {
-		open(OUT, ">-") or return "STDOUT : $!";
-	}
 
 	$self->{contenttype} = "text/plain" unless $self->{contenttype};
   
@@ -70,36 +65,26 @@ sub send {
 		$h{$_} = $self->{$_};
 	}
  
-	$h{cc} = "Cc: $h{cc}\n" if $self->{cc};
-	$h{bcc} = "Bcc: $h{bcc}\n" if $self->{bcc};
-	$h{notify} = "Disposition-Notification-To: $h{from}\n" 
-		if $self->{notify};
 	$h{subject} = 
 		($self->{subject} =~ /([\x00-\x1F]|[\x7B-\xFFFF])/) 
 		? "Subject: =?$self->{charset}?B?".
-			&encode_base64($self->{subject},"")."?=" 
+			MIME::Base64::encode($self->{subject},"")."?=" 
 		: "Subject: $self->{subject}";
   
-	print OUT "From: $h{from}\n".
-		"To: $h{to}\n".
-		"$h{cc}$h{bcc}$h{subject}\n".
-		"Message-ID: <$msgid>\n".
-		"$h{notify}X-Mailer: LedgerSMB $self->{version}\n".
-		"MIME-Version: 1.0\n\n";
-
+	my $msg = MIME::Lite->new(
+		'From' => $self->{from},
+		'To' => $self->{to},
+		'Cc' => $self->{cc},
+		'Bcc' => $self->{bcc},
+		'Subject' => $self->{subject},
+		'Type' => 'TEXT',
+		'Data' => $self->{message},
+		);
+	$msg->add('Disposition-Notification-To' => $self->{from}) 
+		if $self->{notify};
+	$msg->replace('X-Mailer' => "LedgerSMB $self->{version}");
 
 	if (@{ $self->{attachments} }) {
-		print OUT 
-			qq|Content-Type: multipart/mixed; |.
-			qq|boundary="$boundary"\n\n|;
-		if ($self->{message} ne "") {
-			print OUT qq|--${boundary}\n|.
-				qq|Content-Type: $self->{contenttype};|.
-				qq| charset="$self->{charset}"\n\n|.
-				qq|$self->{message}|;
-	
-		}
-
 		foreach my $attachment (@{ $self->{attachments} }) {
 
 			my $application = 
@@ -108,50 +93,30 @@ sub send {
 				? "text" 
 				: "application";
       
-			unless (open IN, $attachment) {
-				close(OUT);
-				return "$attachment : $!";
-			}
-      
 			my $filename = $attachment;
 			# strip path
 			$filename =~ s/(.*\/|$self->{fileid})//g;
-      
-			print OUT qq|--${boundary}\n|.
-				qq|Content-Type: $application/$self->{format}; |
-				. qq|name="$filename"; |.
-				qq|charset="$self->{charset}"\n|.
-				qq|Content-Transfer-Encoding: BASE64\n|.
-				qq|Content-Disposition: attachment; |.
-				qq|filename="$filename"\n\n|;
-
-			my $msg = "";
-			while (<IN>) {;
-				$msg .= $_;
-			}
-			print OUT &encode_base64($msg);
-
-			close(IN);
-      
+			printf STDERR "$self->{format}\n";
+			$msg->attach(
+				'Type' => "$application/$self->{format}",
+				'Path' => $attachment,
+				'Filename' => $filename,
+				'Disposition' => 'attachment',
+				);
 		}
-		print OUT qq|--${boundary}--\n|;
 
-	} else {
-		print OUT qq|Content-Type: $self->{contenttype}; |.
-			qq|charset="$self->{charset}"\n\n|.
-			qq|$self->{message}|;
 	}
 
-	close(OUT);
+	if (${LedgerSMB::Sysconfig::smtphost}) {
+		$msg->send('smtp', ${LedgerSMB::Sysconfig::smtphost}, 
+			Timeout => ${LedgerSMB::Sysconfig::smtptimeout}) || 
+			return $!;
+	} else {
+		$msg->send('sendmail', ${LedgerSMB::Sysconfig::sendmail}) ||
+			return $!;
+	}
 
 	return "";
-  
-}
-
-
-sub encode_base64 ($;$) {
-  use MIME::Base64;
-  return MIME::Base64::encode($_[0], $_[1]);
   
 }
 
