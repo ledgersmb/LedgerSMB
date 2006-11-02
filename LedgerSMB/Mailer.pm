@@ -96,7 +96,6 @@ sub send {
 			my $filename = $attachment;
 			# strip path
 			$filename =~ s/(.*\/|$self->{fileid})//g;
-			printf STDERR "$self->{format}\n";
 			$msg->attach(
 				'Type' => "$application/$self->{format}",
 				'Path' => $attachment,
