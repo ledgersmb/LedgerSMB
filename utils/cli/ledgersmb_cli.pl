@@ -30,8 +30,8 @@ $form = new Form;
 $syntax = << '_END_SYNTAX_';
 
 	KEY : /\w[a-z0-9_]*/i
-	MODSTR : /\w[a-z0-9_]*/i
-	FNKEY : /(?:\w|:)+/
+	MODSTR : /\w[a-z0-9_:]*/i
+	FNKEY : /(?:\w|:|\-\>)+/
 	OP       : m([-+*/%])
 	NUMBER : /[+-]?\d*\.?\d+/
 
@@ -51,7 +51,7 @@ $syntax = << '_END_SYNTAX_';
 		{ main::call_and_assign($item{FNKEY}, $item{ARGSTR}, $item{KEY}) }	
 
 	FUNCTIONCALL : /call/i FNKEY '(' ARGS ')'
-		{ main::call($item{FNKEY}, $item{ARGS})}
+		{ main::call($item{FNKEY}, $item{ARGS});}
 
 	for : /for/i KEY
 		{ main::push_loop($item{KEY}) }
@@ -112,7 +112,7 @@ sub call {
 	$argstr =~ s/form/\\\%\$form/;
 	$argstr =~ s/user/\\\%myconfig/;
 	my @args = split /,\s/, $argstr;
-	return $call(@args);
+	eval "$call($argstr);\n" || print STDERR $@ . "\n";
 }
 
 sub call_and_assign {
@@ -149,7 +149,7 @@ sub login {
 sub load_mod {
 	my $mod = shift;
 	$mod =~ s/::/\//;
-	eval { require "$mod.pm"; };
+	require "$mod.pm";;
 }
 
 my $scriptparse = new Parse::RecDescent($syntax);

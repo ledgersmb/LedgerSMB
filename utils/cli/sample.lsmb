@@ -2,5 +2,8 @@ ENV:PGUSER = postgres # how to set an environment variable
 login = demo  # How to set a form variable
 password = demo  
 LOGIN # Log in
-MODULE AR  # Load a module
-CALL AR::transactions(form, user) # call a function
+MODULE LedgerSMB::CT  # Load a module
+id = 10139
+vc = customer
+db = customer
+CALL CT->create_links(user, form) # call a function
