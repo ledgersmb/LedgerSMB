@@ -131,294 +131,310 @@ sub paymentaccounts {
 
 
 sub payment_transactions {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database, turn AutoCommit off
-  my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $query;
-  my $sth;
+	my $query;
+	my $sth;
 
-  $query = qq|SELECT category FROM chart
-              WHERE accno = '$form->{accno}'|;
-  ($form->{category}) = $dbh->selectrow_array($query);
+	$query = qq|SELECT category FROM chart WHERE accno = ?|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{accno});
+	($form->{category}) = $sth->fetchrow_array();
   
-  my $cleared;
+	my $cleared;
 
-  ($form->{fromdate}, $form->{todate}) = $form->from_to($form->{year}, $form->{month}, $form->{interval}) if $form->{year} && $form->{month};
+	($form->{fromdate}, $form->{todate}) 
+		= $form->from_to(
+			$form->{year}, $form->{month}, $form->{interval}) 
+				if $form->{year} && $form->{month};
 
-  my $transdate = qq| AND ac.transdate < date '$form->{fromdate}'|;
+	my $transdate = qq| AND ac.transdate < date |.
+		$dbh->quote($form->{fromdate});
 
-  if (! $form->{fromdate}) {
-    $cleared = qq| AND ac.cleared = '1'|;
-    $transdate = "";
-  }
+	if (! $form->{fromdate}) {
+	  $cleared = qq| AND ac.cleared = '1'|;
+	  $transdate = "";
+	}
     
-  # get beginning balance
-  $query = qq|SELECT sum(ac.amount)
-	      FROM acc_trans ac
-	      JOIN chart ch ON (ch.id = ac.chart_id)
-	      WHERE ch.accno = '$form->{accno}'
-	      $transdate
-	      $cleared
-	      |;
-  ($form->{beginningbalance}) = $dbh->selectrow_array($query);
+	# get beginning balance
+	$query = qq|
+		SELECT sum(ac.amount)
+		  FROM acc_trans ac
+		  JOIN chart ch ON (ch.id = ac.chart_id)
+		 WHERE ch.accno = ? $transdate $cleared |;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{accno});
+	($form->{beginningbalance}) = $sth->fetchrow_array();
 
-  # fx balance
-  $query = qq|SELECT sum(ac.amount)
-	      FROM acc_trans ac
-	      JOIN chart ch ON (ch.id = ac.chart_id)
-	      WHERE ch.accno = '$form->{accno}'
-	      AND ac.fx_transaction = '1'
-	      $transdate
-	      $cleared
-	      |;
-  ($form->{fx_balance}) = $dbh->selectrow_array($query);
+	$query = qq|
+		SELECT sum(ac.amount)
+		  FROM acc_trans ac
+		  JOIN chart ch ON (ch.id = ac.chart_id)
+		 WHERE ch.accno = ? AND ac.fx_transaction = '1'
+		       $transdate $cleared|;
+
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{accno});
+	($form->{fx_balance}) = $sth->fetchrow_array();
   
 
-  $transdate = "";
-  if ($form->{todate}) {
-    $transdate = qq| AND ac.transdate <= date '$form->{todate}'|;
-  }
+	$transdate = "";
+	if ($form->{todate}) {
+		$transdate = qq| AND ac.transdate <= date |.
+			$dbh->quote($form->{todate});
+	}
  
-  # get statement balance
-  $query = qq|SELECT sum(ac.amount)
-	      FROM acc_trans ac
-	      JOIN chart ch ON (ch.id = ac.chart_id)
-	      WHERE ch.accno = '$form->{accno}'
-	      $transdate
-	      |;
-  ($form->{endingbalance}) = $dbh->selectrow_array($query);
+	# get statement balance
+	$query = qq|
+		SELECT sum(ac.amount)
+		  FROM acc_trans ac
+		  JOIN chart ch ON (ch.id = ac.chart_id)
+		 WHERE ch.accno = ? $transdate|;
 
-  # fx balance
-  $query = qq|SELECT sum(ac.amount)
-	      FROM acc_trans ac
-	      JOIN chart ch ON (ch.id = ac.chart_id)
-	      WHERE ch.accno = '$form->{accno}'
-	      AND ac.fx_transaction = '1'
-	      $transdate
-	      |;
-  ($form->{fx_endingbalance}) = $dbh->selectrow_array($query);
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{accno});
+	($form->{endingbalance}) = $sth->fetchrow_array();
+
+	# fx balance
+	$query = qq|
+		SELECT sum(ac.amount)
+		  FROM acc_trans ac
+		  JOIN chart ch ON (ch.id = ac.chart_id)
+		 WHERE ch.accno = ? AND ac.fx_transaction = '1' $transdate |;
+
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{accno});
+	($form->{fx_endingbalance}) = $sth->fetchrow_array();
 
 
-  $cleared = qq| AND ac.cleared = '0'| unless $form->{fromdate};
+	$cleared = qq| AND ac.cleared = '0'| unless $form->{fromdate};
   
-  if ($form->{report}) {
-    $cleared = qq| AND NOT (ac.cleared = '0' OR ac.cleared = '1')|;
-    if ($form->{cleared}) {
-      $cleared = qq| AND ac.cleared = '1'|;
-    }
-    if ($form->{outstanding}) {
-      $cleared = ($form->{cleared}) ? "" : qq| AND ac.cleared = '0'|;
-    }
-    if (! $form->{fromdate}) {
-      $form->{beginningbalance} = 0;
-      $form->{fx_balance} = 0;
-    }
-  }
+	if ($form->{report}) {
+		$cleared = qq| AND NOT (ac.cleared = '0' OR ac.cleared = '1')|;
+		if ($form->{cleared}) {
+			$cleared = qq| AND ac.cleared = '1'|;
+		}
+		if ($form->{outstanding}) {
+			$cleared = 
+				($form->{cleared}) 
+				? "" 
+				: qq| AND ac.cleared = '0'|;
+		}
+		if (! $form->{fromdate}) {
+			$form->{beginningbalance} = 0;
+			$form->{fx_balance} = 0;
+		}
+	}
   
-  my $fx_transaction;
-  if ($form->{fx_transaction}) {
-    $fx_transaction = qq|
-	      AND NOT
-		 (ac.chart_id IN
-		  (SELECT fxgain_accno_id FROM defaults
-		   UNION
-		   SELECT fxloss_accno_id FROM defaults))|;
-  } else {
-    $fx_transaction = qq|
-	      AND ac.fx_transaction = '0'|;
-  }
+	my $fx_transaction;
+	if ($form->{fx_transaction}) {
+		$fx_transaction = qq|
+			AND NOT (ac.chart_id IN 
+				(SELECT fxgain_accno_id FROM defaults
+				UNION
+				SELECT fxloss_accno_id FROM defaults))|;
+	} else {
+		$fx_transaction = qq|
+			AND ac.fx_transaction = '0'|;
+	}
  
   
-  if ($form->{summary}) {
-    $query = qq|SELECT ac.transdate, ac.source,
-		sum(ac.amount) AS amount, ac.cleared
-		FROM acc_trans ac
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ch.accno = '$form->{accno}'
-		AND ac.amount >= 0
-		$fx_transaction
-		$cleared|;
-    $query .= " AND ac.transdate >= '$form->{fromdate}'" if $form->{fromdate};
-    $query .= " AND ac.transdate <= '$form->{todate}'" if $form->{todate};
-    $query .= " GROUP BY ac.source, ac.transdate, ac.cleared";
-    $query .= qq|
-                UNION ALL
-		SELECT ac.transdate, ac.source,
-		sum(ac.amount) AS amount, ac.cleared
-		FROM acc_trans ac
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ch.accno = '$form->{accno}'
-		AND ac.amount < 0
-		$fx_transaction
-		$cleared|;
-    $query .= " AND ac.transdate >= '$form->{fromdate}'" if $form->{fromdate};
-    $query .= " AND ac.transdate <= '$form->{todate}'" if $form->{todate};
-    $query .= " GROUP BY ac.source, ac.transdate, ac.cleared";
+	if ($form->{summary}) {
+		$query = qq|
+			SELECT ac.transdate, ac.source, 
+			       sum(ac.amount) AS amount, ac.cleared
+			  FROM acc_trans ac
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			 WHERE ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       AND ac.amount >= 0 $fx_transaction $cleared|;
+		$query .= " AND ac.transdate >= ".$dbh->quote($form->{fromdate})
+			if $form->{fromdate};
+		$query .= " AND ac.transdate <= ".$dbh->quote($form->{todate})
+			if $form->{todate};
+		$query .= " GROUP BY ac.source, ac.transdate, ac.cleared";
+		$query .= qq|
+			UNION ALL
+			SELECT ac.transdate, ac.source, 
+			       sum(ac.amount) AS amount, ac.cleared
+			  FROM acc_trans ac
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			 WHERE ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       AND ac.amount < 0 $fx_transaction $cleared|;
 
-    $query .= " ORDER BY 1,2";
-    
-  } else {
-    
-    $query = qq|SELECT ac.transdate, ac.source, ac.fx_transaction,
-		ac.amount, ac.cleared, g.id, g.description
-		FROM acc_trans ac
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		JOIN gl g ON (g.id = ac.trans_id)
-		WHERE ch.accno = '$form->{accno}'
-		$fx_transaction
-		$cleared|;
-    $query .= " AND ac.transdate >= '$form->{fromdate}'" if $form->{fromdate};
-    $query .= " AND ac.transdate <= '$form->{todate}'" if $form->{todate};
-    $query .= qq|
-                UNION ALL
-		SELECT ac.transdate, ac.source, ac.fx_transaction,
-		ac.amount, ac.cleared, a.id, n.name
-		FROM acc_trans ac
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		JOIN ar a ON (a.id = ac.trans_id)
-		JOIN customer n ON (n.id = a.customer_id)
-		WHERE ch.accno = '$form->{accno}'
-		$fx_transaction
-		$cleared|;
-    $query .= " AND ac.transdate >= '$form->{fromdate}'" if $form->{fromdate};
-    $query .= " AND ac.transdate <= '$form->{todate}'" if $form->{todate};
-    $query .= qq|
-                UNION ALL
-		SELECT ac.transdate, ac.source, ac.fx_transaction,
-		ac.amount, ac.cleared, a.id, n.name
-		FROM acc_trans ac
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		JOIN ap a ON (a.id = ac.trans_id)
-		JOIN vendor n ON (n.id = a.vendor_id)
-		WHERE ch.accno = '$form->{accno}'
-		$fx_transaction
-		$cleared|;
-    $query .= " AND ac.transdate >= '$form->{fromdate}'" if $form->{fromdate};
-    $query .= " AND ac.transdate <= '$form->{todate}'" if $form->{todate};
-    
-    $query .= " ORDER BY 1,2,3";
-  }
+		$query .= " AND ac.transdate >= ".$dbh->quote($form->{fromdate})
+			if $form->{fromdate};
+		$query .= " AND ac.transdate <= ".$dbh->quote($form->{todate})
+			if $form->{todate};
+		$query .= " GROUP BY ac.source, ac.transdate, ac.cleared";
 
-  $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+		$query .= " ORDER BY 1,2";
+    
+	} else {
+    
+		$query = qq|
+			SELECT ac.transdate, ac.source, ac.fx_transaction,
+			       ac.amount, ac.cleared, g.id, g.description
+			  FROM acc_trans ac
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			  JOIN gl g ON (g.id = ac.trans_id)
+			 WHERE ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       $fx_transaction $cleared|;
+		$query .= " AND ac.transdate >= ".$dbh->quote($form->{fromdate})
+			if $form->{fromdate};
+		$query .= " AND ac.transdate <= ".$dbh->quote($form->{todate})
+			if $form->{todate};
+		$query .= qq|
+			UNION ALL
+			SELECT ac.transdate, ac.source, ac.fx_transaction,
+			       ac.amount, ac.cleared, a.id, n.name
+			  FROM acc_trans ac
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			  JOIN ar a ON (a.id = ac.trans_id)
+			  JOIN customer n ON (n.id = a.customer_id)
+			 WHERE ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       $fx_transaction $cleared|;
+		$query .= " AND ac.transdate >= ".$dbh->quote($form->{fromdate})
+			if $form->{fromdate};
+		$query .= " AND ac.transdate <= ".$dbh->quote($form->{todate})
+			if $form->{todate};
+		$query .= qq|
+			UNION ALL
+			SELECT ac.transdate, ac.source, ac.fx_transaction,
+			       ac.amount, ac.cleared, a.id, n.name
+			  FROM acc_trans ac
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			  JOIN ap a ON (a.id = ac.trans_id)
+			  JOIN vendor n ON (n.id = a.vendor_id)
+			 WHERE ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       $fx_transaction $cleared|;
+		$query .= " AND ac.transdate >= ".$dbh->quote($form->{fromdate})
+			if $form->{fromdate};
+		$query .= " AND ac.transdate <= ".$dbh->quote($form->{todate})
+			if $form->{todate};
+    
+		$query .= " ORDER BY 1,2,3";
+	}
 
-  my $dr;
-  my $cr;
+	$sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
+
+	my $dr;
+	my $cr;
   
-  if ($form->{summary}) {
-    $query = qq|SELECT c.name
-		FROM customer c
-		JOIN ar a ON (c.id = a.customer_id)
-		JOIN acc_trans ac ON (a.id = ac.trans_id)
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ac.transdate = ?
-		AND ch.accno = '$form->{accno}'
-		AND (ac.source = ? OR ac.source IS NULL)
-		AND ac.amount >= 0
-		$cleared
-	UNION
-		SELECT v.name
-		FROM vendor v
-		JOIN ap a ON (v.id = a.vendor_id)
-		JOIN acc_trans ac ON (a.id = ac.trans_id)
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ac.transdate = ?
-		AND ch.accno = '$form->{accno}'
-		AND (ac.source = ? OR ac.source IS NULL)
-		AND ac.amount > 0
-		$cleared
-	UNION
-		SELECT g.description
-		FROM gl g
-		JOIN acc_trans ac ON (g.id = ac.trans_id)
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ac.transdate = ?
-		AND ch.accno = '$form->{accno}'
-		AND (ac.source = ? OR ac.source IS NULL)
-		AND ac.amount >= 0
-		$cleared
-		|;
+	if ($form->{summary}) {
+		$query = qq|
+			SELECT c.name
+			  FROM customer c
+			  JOIN ar a ON (c.id = a.customer_id)
+			  JOIN acc_trans ac ON (a.id = ac.trans_id)
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			 WHERE ac.transdate = ?
+			       AND ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       AND (ac.source = ? OR ac.source IS NULL)
+			       AND ac.amount >= 0 $cleared
+			UNION
+			SELECT v.name
+			  FROM vendor v
+			  JOIN ap a ON (v.id = a.vendor_id)
+			  JOIN acc_trans ac ON (a.id = ac.trans_id)
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			 WHERE ac.transdate = ?
+			       AND ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       AND (ac.source = ? OR ac.source IS NULL)
+			       AND ac.amount > 0 $cleared
+			UNION
+			SELECT g.description
+			  FROM gl g
+			  JOIN acc_trans ac ON (g.id = ac.trans_id)
+			  JOIN chart ch ON (ac.chart_id = ch.id)
+			 WHERE ac.transdate = ?
+			       AND ch.accno = |.$dbh->quote($form->{accno}).qq|
+			       AND (ac.source = ? OR ac.source IS NULL)
+			       AND ac.amount >= 0 $cleared|;
     
-    $query .= " ORDER BY 1";
-    $dr = $dbh->prepare($query);
+		$query .= " ORDER BY 1";
+ 		$dr = $dbh->prepare($query);
 
-    $query = qq|SELECT c.name
-		FROM customer c
-		JOIN ar a ON (c.id = a.customer_id)
-		JOIN acc_trans ac ON (a.id = ac.trans_id)
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ac.transdate = ?
-		AND ch.accno = '$form->{accno}'
-		AND (ac.source = ? OR ac.source IS NULL)
-		AND ac.amount < 0
-		$cleared
-	UNION
+    $query = qq|
+		SELECT c.name
+		  FROM customer c
+		  JOIN ar a ON (c.id = a.customer_id)
+		  JOIN acc_trans ac ON (a.id = ac.trans_id)
+		  JOIN chart ch ON (ac.chart_id = ch.id)
+		 WHERE ac.transdate = ?
+		       AND ch.accno = |.$dbh->quote($form->{accno}).qq|
+		       AND (ac.source = ? OR ac.source IS NULL)
+		       AND ac.amount < 0 $cleared
+		UNION
 		SELECT v.name
-		FROM vendor v
-		JOIN ap a ON (v.id = a.vendor_id)
-		JOIN acc_trans ac ON (a.id = ac.trans_id)
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ac.transdate = ?
-		AND ch.accno = '$form->{accno}'
-		AND (ac.source = ? OR ac.source IS NULL)
-		AND ac.amount < 0
-		$cleared
-	UNION
+		  FROM vendor v
+		  JOIN ap a ON (v.id = a.vendor_id)
+		  JOIN acc_trans ac ON (a.id = ac.trans_id)
+		  JOIN chart ch ON (ac.chart_id = ch.id)
+		 WHERE ac.transdate = ?
+		       AND ch.accno = |.$dbh->quote($form->{accno}).qq|
+		       AND (ac.source = ? OR ac.source IS NULL) 
+		       AND ac.amount < 0 $cleared
+		UNION
 		SELECT g.description
-		FROM gl g
-		JOIN acc_trans ac ON (g.id = ac.trans_id)
-		JOIN chart ch ON (ac.chart_id = ch.id)
-		WHERE ac.transdate = ?
-		AND ch.accno = '$form->{accno}'
-		AND (ac.source = ? OR ac.source IS NULL)
-		AND ac.amount < 0
-		$cleared
-		|;
+		  FROM gl g
+		  JOIN acc_trans ac ON (g.id = ac.trans_id)
+		  JOIN chart ch ON (ac.chart_id = ch.id)
+		 WHERE ac.transdate = ?
+		       AND ch.accno = |.$dbh->quote($form->{accno}).qq|
+		       AND (ac.source = ? OR ac.source IS NULL)
+		       AND ac.amount < 0 $cleared|;
 		
-    $query .= " ORDER BY 1";
-    $cr = $dbh->prepare($query);
-  }
+		$query .= " ORDER BY 1";
+		$cr = $dbh->prepare($query);
+	}
  
-  my $name;
-  my $ref;
+	my $name;
+	my $ref;
 
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-    if ($form->{summary}) {
+		if ($form->{summary}) {
 
-      if ($ref->{amount} > 0) {
-	$dr->execute($ref->{transdate}, $ref->{source}, $ref->{transdate}, $ref->{source}, $ref->{transdate}, $ref->{source});
-	$ref->{oldcleared} = $ref->{cleared};
-	$ref->{name} = ();
+			if ($ref->{amount} > 0) {
+				$dr->execute(
+					$ref->{transdate}, $ref->{source}, 
+					$ref->{transdate}, $ref->{source}, 
+					$ref->{transdate}, $ref->{source});
+				$ref->{oldcleared} = $ref->{cleared};
+				$ref->{name} = ();
 
-	while (($name) = $dr->fetchrow_array) {
-	  push @{ $ref->{name} }, $name;
-	}
-	$dr->finish;
-      } else {
+				while (($name) = $dr->fetchrow_array) {
+					push @{ $ref->{name} }, $name;
+				}
+				$dr->finish;
+			} else {
       
-	$cr->execute($ref->{transdate}, $ref->{source}, $ref->{transdate}, $ref->{source}, $ref->{transdate}, $ref->{source});
-	$ref->{oldcleared} = $ref->{cleared};
-	$ref->{name} = ();
-	while (($name) = $cr->fetchrow_array) {
-	  push @{ $ref->{name} }, $name;
-	}
-	$cr->finish;
+				$cr->execute(
+					$ref->{transdate}, $ref->{source}, 
+					$ref->{transdate}, $ref->{source}, 
+					$ref->{transdate}, $ref->{source});
+				$ref->{oldcleared} = $ref->{cleared};
+				$ref->{name} = ();
+				while (($name) = $cr->fetchrow_array) {
+					push @{ $ref->{name} }, $name;
+				}
+				$cr->finish;
 	
-      }
+			}
 
-    } else {
-      push @{ $ref->{name} }, $ref->{description};
-    }
+		} else {
+			push @{ $ref->{name} }, $ref->{description};
+		}
 
-    push @{ $form->{PR} }, $ref;
+		push @{ $form->{PR} }, $ref;
 
-  }
-  $sth->finish;
+	}
+	$sth->finish;
 
-  $dbh->disconnect;
+	$dbh->commit;
   
 }
 
