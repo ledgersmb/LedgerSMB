@@ -39,10 +39,10 @@ $syntax = << '_END_SYNTAX_';
 
 	expression : NUMBER OP expression
               { return main::expression(@item) }
-              | key OP expression
+              | KEY OP expression
               { return main::expression(@item) }
-              | INTEGER
-              | VARIABLE
+              | NUMBER
+              | KEY
 
 	assign_instruction : KEY "=" expression
 		{ ${main::stackref}->{$item{key}} = $item{expression} }
@@ -82,9 +82,18 @@ $syntax = << '_END_SYNTAX_';
 	startrule : instruction
 
 _END_SYNTAX_
-
+ $::RD_HINT = 1;
+ $::RD_ERRORS = 1; # Make sure the parser dies when it encounters an error
+ $::RD_WARN   = 1; # Enable warnings. This will warn on unused rules &c.`
 my $stackref;
 my @loopstack;
+
+sub expression {
+	shift;
+	my ($lhs,$op,$rhs) = @_;
+	$lhs = $VARIABLE{$lhs} if $lhs=~/[^-+0-9]/;
+	return eval "$lhs $op $rhs";
+}
 
 sub call {
 	my ($call, $argstr) = @_;
@@ -130,10 +139,10 @@ sub load_mod {
 	eval { require "$mod.pm"; };
 }
 
-my $scriptparse = new Parse::RecDescent($grammer);
+my $scriptparse = new Parse::RecDescent($syntax);
 
 while ($line = <>){
-	$scriptparse->instruction($line);
+	$scriptparse->startrule($line);
 }
 
 delete $form->{password};
