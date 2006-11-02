@@ -500,13 +500,17 @@ sub transaction {
 
 	if ($form->{id}) {
 
-		$query = "SELECT closedto, revtrans
-					FROM defaults";
+		$query = "SELECT setting_key, value
+					FROM defaults
+					WHERE setting_key IN 
+						('closedto', 'revtrans')";
 
 		$sth = $dbh->prepare($query);
 		$sth->execute || $form->dberror($query);
 
-		($form->{closedto}, $form->{revtrans}) = $sth->fetchrow_array;
+		my $results = $sth->fetchall_hashref('setting_key');
+		$form->{closedto} = $results->{'closedto'}->{'value'};
+		$form->{revtrans} = $results->{'revtrans'}->{'value'};
 		$sth->finish;
 
 		$query = qq|SELECT g.*, d.description AS department
@@ -544,13 +548,19 @@ sub transaction {
 		$form->get_recurring($dbh);
 
 	} else {
-		$query = "SELECT current_date AS transdate, closedto, revtrans
-					FROM defaults";
 
+		$query = "SELECT current_date AS transdate, setting_key, value
+					FROM defaults
+					WHERE setting_key IN 
+						('closedto', 'revtrans')";
+		
 		$sth = $dbh->prepare($query);
 		$sth->execute || $form->dberror($query);
 
-		($form->{transdate}, $form->{closedto}, $form->{revtrans}) = $sth->fetchrow_array;
+		my $results = $sth->fetchall_hashref('setting_key');
+		$form->{closedto} = $results->{'closedto'}->{'value'};
+		$form->{revtrans} = $results->{'revtrans'}->{'value'};
+		$form->{transdate} = $results->{'revtrans'}->{'transdate'};
 	}
 
 	$sth->finish;

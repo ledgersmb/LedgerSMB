@@ -251,8 +251,10 @@ sub delete_account {
 	# set inventory_accno_id, income_accno_id, expense_accno_id to defaults
 	$query = qq|
 		UPDATE parts
-		   SET inventory_accno_id = (SELECT inventory_accno_id 
-		                               FROM defaults)
+		   SET inventory_accno_id = (SELECT value
+		                               FROM defaults
+					      WHERE setting_key = 
+							'inventory_accno_id')
 		 WHERE inventory_accno_id = ?|;
 
 	$sth = $dbh->prepare($query);
@@ -1592,7 +1594,6 @@ sub backup {
 	my $boundary = time;
 	my $tmpfile = "${LedgerSMB::Sysconfig::userspath}/$boundary.$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
 	$tmpfile .= ".gz" if ${LedgerSMB::Sysconfig::gzip};
-	my $out = $form->{OUT};
 	$form->{OUT} = ">$tmpfile";
 
 	open(OUT, "$form->{OUT}") or $form->error("$form->{OUT} : $!");
