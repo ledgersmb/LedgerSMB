@@ -134,9 +134,7 @@ sub pop_loop {
 sub if_handler {
 	my $key = shift;
 	if (!$stackref->{$key}){
-		while ($line !~ /^(\s*FI\s*|\s*END\s+IF\s*)$/ ){
-			$line = <>;
-		}
+		$if_count = 1;
 	}
 }
 
@@ -155,6 +153,15 @@ sub load_mod {
 my $scriptparse = new Parse::RecDescent($syntax);
 
 while ($line = <>){
+	if ($if_count){
+		if ($line =~ /^\s*IF\s/){
+			++$if_count;
+		}
+		if ($line =~ /^(\s*FI\s*|\s*END\s+IF\s*)$/){
+			--$if_count;
+		}
+	}
+	next if ($if_count);
 	$line =~ s/#.*$//; # strip comments
 	$scriptparse->startrule($line);
 }
