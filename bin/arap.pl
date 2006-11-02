@@ -282,7 +282,7 @@ sub add_transaction {
 
   $form->{callback} = $form->escape($form->{callback},1);
   $argv = "";
-  for (keys %$form) { $argv .= "$_=$form->{$_}&" }
+  for (keys %$form) { $argv .= "$_=$form->{$_}&" if $_ ne 'dbh' }
 
   $form->{callback} = "$module.pl?$argv";
 
