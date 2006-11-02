@@ -152,7 +152,7 @@ ALTER TABLE session ALTER COLUMN user_id DROP NOT NULL;
 
 LOCK users in EXCLUSIVE MODE;
 CREATE TABLE users (id serial UNIQUE, username varchar(30) PRIMARY KEY);
-COMMENT ON TABLE users 'username is the primary key because we don't want duplicate users';
+COMMENT ON TABLE users 'username is the primary key because we don\'t want duplicate users';
 LOCK users_conf in EXCLUSIVE MODE;
 CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
                         acs text,
