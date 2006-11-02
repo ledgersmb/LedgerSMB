@@ -770,7 +770,7 @@ sub restock_assemblies {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
    
 	for my $i (1 .. $form->{rowcount}) {
 		$form->{"qty_$i"} = $form->parse_amount(

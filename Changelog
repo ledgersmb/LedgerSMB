@@ -16,7 +16,7 @@ Security:
 * Audited IS.pm, GL.pm, IR.pm for SQL injection and moved to new API. (Chris T)
 * Audited User.pm for SQL injection. (Chris T)
 * Audited HR.pm, removed old, stale payroll code, moved to new API (Chris T)
-* Audited OP.pm, JC.pm IC.pm and moved to new API (Chris T)
+* Audited OP.pm, PE,pm, JC.pm IC.pm and moved to new API (Chris T)
 
 Localization:
 * Moved localization files to standard codes (Seneca)
