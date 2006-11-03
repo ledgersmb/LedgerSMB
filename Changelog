@@ -25,7 +25,7 @@ Localization:
 * Buttons are now localization-safe (Seneca)
 
 Code Quality and API:
-* Added logging module (Jason R)
+* Added logging module (Jason)
 * Added session method abstraction (Chris T)
 * Broke out price matrix calls into PriceMatrix.pm (Chris T)
 * Added $form->callproc($procname, @args) returns @hashrefs (Chris T)
