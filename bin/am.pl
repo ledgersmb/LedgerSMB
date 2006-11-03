@@ -2233,7 +2233,7 @@ sub save_preferences {
     $form->error($locale->text('Password does not match!')) if $form->{new_password} ne $form->{confirm_password};
   }
 
-  if (AM->save_preferences(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath})) {
+  if (AM->save_preferences(\%myconfig, \%$form)) {
     $form->redirect($locale->text('Preferences saved!'));
   } else {
     $form->error($locale->text('Cannot save preferences!'));

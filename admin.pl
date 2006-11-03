@@ -75,13 +75,13 @@ $0 =~ tr/\\/\//;
 $pos = rindex $0, '/';
 $script = substr($0, $pos + 1);
 
-
-if (-e "${LedgerSMB::Sysconfig::userspath}/nologin" && $script ne 'admin.pl') {
-	print "Content-Type: text/html\n\n<html><body><strong>";
-	print "\nLogin disabled!\n";
-	print "\n</strong></body></html>";
-	exit;
-}
+#this needs to be a db based function
+#if (-e "${LedgerSMB::Sysconfig::userspath}/nologin" && $script ne 'admin.pl') {
+#	print "Content-Type: text/html\n\n<html><body><strong>";
+#	print "\nLogin disabled!\n";
+#	print "\n</strong></body></html>";
+#	exit;
+#}
 
 
 if ($form{path}) {

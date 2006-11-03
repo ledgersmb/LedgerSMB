@@ -1335,7 +1335,7 @@ sub save_preferences {
 
 	$dbh->commit;
 
-	my $myconfig = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "$form->{login}");
+	my $myconfig = LedgerSMB::User->new($form->{login});
 
 	foreach my $item (keys %$form) {
 		$myconfig->{$item} = $form->{$item};
@@ -1343,7 +1343,7 @@ sub save_preferences {
 
 	$myconfig->{password} = $form->{new_password} if ($form->{old_password} ne $form->{new_password});
 
-	$myconfig->save_member(${LedgerSMB::Sysconfig::memberfile}, ${LedgerSMB::Sysconfig::userspath});
+	$myconfig->save_member();
 
 	1;
 

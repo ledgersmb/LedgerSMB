@@ -47,18 +47,21 @@
 #######################################################################
 
 use LedgerSMB::Sysconfig;
+use Digest::MD5;
 
 $| = 1;
 
+use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Session;
+use Data::Dumper;
+
 
 # for custom preprocessing logic
 eval { require "custom.pl"; };
 
 $form = new Form;
-
   
 # name of this script
 $0 =~ tr/\\/\//;
@@ -73,11 +76,13 @@ $script =~ s/\.pl//;
 # pull in DBI
 use DBI qw(:sql_types);
 
-# check for user config file, could be missing or ???
-eval { require("${LedgerSMB::Sysconfig::userspath}/$form->{login}.conf"); };
+# grab user config. This is ugly and unecessary if/when 
+# we get rid of myconfig and use User as a real object 
+%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
+
 if ($@) {
 	$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
-		$form->error("Locale not loaded: $!\n");
+		$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 	$form->{charset} = $locale->encoding;
 	$form->{charset} = 'UTF-8';
 	$locale->encoding('UTF-8');
@@ -90,7 +95,7 @@ if ($@) {
 
 # locale messages
 $locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
-	$form->error("Locale not loaded: $!\n");
+	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 #$form->{charset} = $locale->encoding;
 $form->{charset} = 'UTF-8';
 $locale->encoding('UTF-8');
@@ -99,9 +104,8 @@ $locale->encoding('UTF-8');
 $SIG{__WARN__} = sub { $form->info($_[0]) };
 
 # send errors to browser
-$SIG{__DIE__} = sub { $form->error($_[0]) };
+$SIG{__DIE__} = sub { $form->error(__FILE__.':'.__LINE__.': '.$_[0]) };
 
-$myconfig{dbpasswd} = unpack 'u', $myconfig{dbpasswd};
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout) unless ($form->{type} eq 'preferences');
 $form->db_init(\%myconfig);
 
@@ -109,7 +113,7 @@ if ($form->{path} ne 'bin/lynx'){ $form->{path} = 'bin/mozilla';}
 
 # did sysadmin lock us out
 if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
-	$form->error($locale->text('System currently down for maintenance!'));
+	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
 }
 
 # pull in the main code
@@ -139,7 +143,7 @@ if ($form->{action}) {
 	}
 
 } else {
-	$form->error($locale->text('action= not defined!'));
+	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('action= not defined!'));
 }
 
 1;
@@ -153,15 +157,15 @@ sub check_password {
 		require "bin/pw.pl";
 
 		if ($form->{password}) {
-			if ((crypt $form->{password}, substr($form->{login}, 0, 2)) ne $myconfig{password}) {
+			if ($myconfig{password} ne (Digest::MD5::md5_hex $form->{password})) {
 				if ($ENV{HTTP_USER_AGENT}) {
 					&getpassword;
 				} else {
-					$form->error($locale->text('Access Denied!'));
+					$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Access Denied!'));
 				}
 				exit;
 			} else {
-				Session::session_create($form, %myconfig);
+				Session::session_create($form);
 			}
 			
 		} else {
@@ -180,7 +184,7 @@ sub check_password {
 					}
 				}
 				#check for valid session
-				if(!Session::session_check($cookie{"LedgerSMB"}, $form, %myconfig)){
+				if(!Session::session_check($cookie{"LedgerSMB"}, $form)){
 					&getpassword(1);
 					exit;
 				}

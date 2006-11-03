@@ -28,11 +28,11 @@ package Session;
 
 sub session_check {
 
-	my ($cookie, $form, %myconfig) = @_;
+	my ($cookie, $form) = @_;
 	my ($sessionid, $token) = split /:/, $cookie;
 
-	# connect to database
-	my $dbh = DBI->connect($myconfig{dbconnect}, $myconfig{dbuser}, $myconfig{dbpasswd});
+	# use the central database handle
+	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH}; 
 
 	my $checkQuery = $dbh->prepare("SELECT sl_login FROM session WHERE session_id = ? AND token = ? AND last_used > now() - ?::interval");
 
@@ -53,7 +53,7 @@ sub session_check {
 	}
 
 	$checkQuery->execute($sessionid, $token, $timeout) 
-		|| $form->dberror('Looking for session: ');
+		|| $form->dberror(__FILE__.':'.__LINE__.': Looking for session: ');
 	my $sessionValid = $checkQuery->rows;
 
 	if($sessionValid){
@@ -65,7 +65,7 @@ sub session_check {
 		$login =~ s/[^a-zA-Z0-9@.-]//g;
 
 		if($sessionLogin eq $login){
-			$updateAge->execute($sessionid) || $form->dberror('Updating session age: ');
+			$updateAge->execute($sessionid) || $form->dberror(__FILE__.':'.__LINE__.': Updating session age: ');
 			return 1;
 
 		} else {
@@ -85,10 +85,10 @@ sub session_check {
 }
 
 sub session_create {
-	my ($form, %myconfig) = @_;
+	my ($form) = @_;
 
-	# connect to database
-	my $dbh = DBI->connect($myconfig{dbconnect}, $myconfig{dbuser}, $myconfig{dbpasswd});
+	# use the central database handle
+	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH}; 
 
 	# TODO Change this to use %myconfig
 	my $deleteExisting = $dbh->prepare("DELETE FROM session WHERE sl_login = ? AND age(last_used) > ?::interval");  
@@ -110,19 +110,19 @@ sub session_create {
 	   $myconfig{timeout} = 86400;
 	}
 
-	$deleteExisting->execute($login, "$myconfig{timeout} seconds") || $form->dberror('Delete from session: ');
+	$deleteExisting->execute($login, "$myconfig{timeout} seconds") || $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
 
 	#doing the md5 and random stuff in the db so that LedgerSMB won't
 	#require new perl modules (Digest::MD5 and a good random generator)
-	$fetchSequence->execute() || $form->dberror('Fetch sequence id: ');
+	$fetchSequence->execute() || $form->dberror(__FILE__.':'.__LINE__.': Fetch sequence id: ');
 	my ($newSessionID, $newToken) = $fetchSequence->fetchrow_array;
 
 	#create a new session
-	$createNew->execute($newSessionID, $login, $newToken) || $form->dberror('Create new session: ');
+	$createNew->execute($newSessionID, $login, $newToken) || $form->dberror(__FILE__.':'.__LINE__.': Create new session: ');
 
 	#reseed the random number generator
 	my $randomSeed = 1.0 * ('0.'. (time() ^ ($$ + ($$ <<15))));
-	$seedRandom->execute($randomSeed)|| $form->dberror('Reseed random generator: ');;
+	$seedRandom->execute($randomSeed)|| $form->dberror(__FILE__.':'.__LINE__.': Reseed random generator: ');
 
 	$newCookieValue = $newSessionID . ':' . $newToken;
 
@@ -139,16 +139,16 @@ sub session_destroy {
 	# which means that the db connection parameters are not available.
 	# moving user prefs and the session table into a central db will solve this issue
 
-	my ($form, %myconfig) = @_;
+	my ($form) = @_;
 
 	my $login = $form->{login};
 	$login =~ s/[^a-zA-Z0-9@.-]//g;
 
-	# connect to database
-	my $dbh = DBI->connect($myconfig{dbconnect}, $myconfig{dbuser}, $myconfig{dbpasswd});
+	# use the central database handle
+	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
 	my $deleteExisting = $dbh->prepare("DELETE FROM session WHERE sl_login = ?;");
-	$deleteExisting->execute($login) || $form->dberror('Delete from session: ');
+	$deleteExisting->execute($login) || $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
 
 	#delete the cookie in the browser
 	print qq|Set-Cookie: LedgerSMB=; path=/;\n|;

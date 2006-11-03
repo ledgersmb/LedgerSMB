@@ -33,46 +33,46 @@
 
 package LedgerSMB::User;
 use LedgerSMB::Sysconfig;
-
+use Data::Dumper; 
 
 sub new {
-	my ($type, $memfile, $login) = @_;
+	
+	my ($type, $login) = @_;
 	my $self = {};
 
 	if ($login ne "") {
-		&error("", "$memfile locked!") if (-f "${memfile}.LCK");
-    
-		open(MEMBER, "$memfile") or &error("", "$memfile : $!");
-    
-		while (<MEMBER>) {
-			if (/^\[$login\]/) {
-				while (<MEMBER>) {
-					last if /^\[/;
-					next if /^(#|\s)/;
-	  
-					# remove comments
-	  
-					s/^\s*#.*//g;
 
-					# remove any trailing whitespace
-					s/^\s*(.*?)\s*$/$1/;
+		# use central db
+		my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+  
+		# for now, this is querying the table directly... ugly 
+		my $fetchUserPrefs = $dbh->prepare("SELECT acs, address, businessnumber,
+												   company, countrycode, currency,
+												   dateformat, dbconnect, dbdriver,
+												   dbhost, dbname, dboptions, dbpasswd,
+												   dbport, dbuser, email, fax, menuwidth,
+												   name, numberformat, password, print,
+												   printer, role, sid, signature, stylesheet,
+												   tel, templates, timeout, vclimit, u.username
+											  FROM users_conf as uc, users as u
+											 WHERE u.username =  ?
+											   AND u.id = uc.id;");
 
-					($key, $value) = split /=/, $_, 2;
-	  
-					$self->{$key} = $value;
-				}
-	
-				$self->{login} = $login;
+		$fetchUserPrefs->execute($login);
 
-				last;
-			}
+		my $userHashRef = $fetchUserPrefs->fetchrow_hashref;
+
+		while ( my ($key, $value) = each(%{$userHashRef}) ) {
+			$self->{$key} = $value;
 		}
-		close MEMBER;
+
+		if($self->{username}){
+			$self->{login} = $login;
+		}
 	}
   
 	bless $self, $type;
 }
-
 
 sub country_codes {
 	use Locale::Country;
@@ -99,43 +99,71 @@ sub country_codes {
 
 }
 
+sub fetch_config {
+#I'm hoping that this function will go and is a temporary bridge
+#until we get rid of %myconfig elsewhere in the code
+
+	my ($self, $login) = @_;
+
+	if ($login ne "") {
+  
+		# use central db
+		my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+  
+		# for now, this is querying the table directly... ugly 
+		my $fetchUserPrefs = $dbh->prepare("SELECT acs, address, businessnumber,
+												   company, countrycode, currency,
+												   dateformat, dbconnect, dbdriver,
+												   dbhost, dbname, dboptions, dbpasswd,
+												   dbport, dbuser, email, fax, menuwidth,
+												   name, numberformat, password, print,
+												   printer, role, sid, signature, stylesheet,
+												   tel, templates, timeout, vclimit
+											  FROM users_conf as uc, users as u
+											 WHERE u.username =  ?
+											   AND u.id = uc.id;");
+
+		$fetchUserPrefs->execute($login);
+
+		my $userHashRef = $fetchUserPrefs->fetchrow_hashref;
+
+		while ( my ($key, $value) = each(%{$userHashRef}) ) {
+			$myconfig{$key} = $value;
+		}
+	}
+ 
+	return \%myconfig;
+}
 
 sub login {
+	use Digest::MD5;
+
 	my ($self, $form) = @_;
 
 	my $rc = -1;
   
 	if ($self->{login} ne "") {
-
-		if ($self->{password} ne "") {
-			my $password = 
-				crypt $form->{password}, 
-					substr($self->{login}, 0, 2);
-			if ($self->{password} ne $password) {
-				return -1;
-			}
+		if ($self->{password} ne (Digest::MD5::md5_hex $form->{password}) ) {
+			return -1;
 		}
-    
-		#there shouldn't be any harm in always doing this. 
-		#It might even un-bork things.
-  		$self->create_config(
-			"${LedgerSMB::Sysconfig::userspath}/$self->{login}.conf");
-    
-		do "${LedgerSMB::Sysconfig::userspath}/$self->{login}.conf";
-		$myconfig{dbpasswd} = unpack 'u', $myconfig{dbpasswd};
-  
+
+		#this is really dumb, but %myconfig will have to stay until 1.3    
+		while ( my ($key, $value) = each(%{$self}) ) {
+			$myconfig{$key} = $value;
+		}
+
 		# check if database is down
 		my $dbh = DBI->connect(
 			$myconfig{dbconnect}, $myconfig{dbuser}, 
 			$myconfig{dbpasswd}) 
-				or $self->error($DBI::errstr);
+				or $self->error(__FILE__.':'.__LINE__.': '.$DBI::errstr);
 
 		# we got a connection, check the version
 		my $query = qq|
 			SELECT value FROM defaults 
 			 WHERE setting_key = 'version'|;
 		my $sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
+		$sth->execute || $form->dberror(__FILE__.':'.__LINE__.$query);
 
 		my ($dbversion) = $sth->fetchrow_array;
 		$sth->finish;
@@ -195,11 +223,9 @@ sub login {
 sub check_recurring {
 	my ($self, $form) = @_;
 
-	$self->{dbpasswd} = unpack 'u', $self->{dbpasswd};
-
 	my $dbh = DBI->connect(
 		$self->{dbconnect}, $self->{dbuser}, $self->{dbpasswd}) 
-			or $form->dberror;
+			or $form->dberror(__FILE__.':'.__LINE__);
 
 	my $query = qq|
 		SELECT count(*) FROM recurring
@@ -265,14 +291,14 @@ sub dbsources {
 
 	my $dbh = DBI->connect(
 		$form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) 
-			or $form->dberror;
+			or $form->dberror(__FILE__.':'.__LINE__);
 
 
 	if ($form->{dbdriver} eq 'Pg') {
 
 		$query = qq|SELECT datname FROM pg_database|;
 		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
+		$sth->execute || $form->dberror(__FILE__.':'.__LINE__.$query);
     
 		while (my ($db) = $sth->fetchrow_array) {
 
@@ -284,7 +310,7 @@ sub dbsources {
 				my $dbh = DBI->connect(
 					$form->{dbconnect}, $form->{dbuser}, 
 					$form->{dbpasswd}) 
-						or $form->dberror;
+						or $form->dberror(__FILE__.':'.__LINE__);
 
 				$query = qq|
 					SELECT tablename FROM pg_tables
@@ -292,7 +318,7 @@ sub dbsources {
 					   AND tableowner = ?|;
 				my $sth = $dbh->prepare($query);
 				$sth->execute($form->{dbuser}) 
-					|| $form->dberror($query);
+					|| $form->dberror(__FILE__.':'.__LINE__.$query);
 
 				if ($sth->fetchrow_array) {
 					push @dbsources, $db;
@@ -330,9 +356,9 @@ sub dbcreate {
  			$form->{dbconnect}, 
 			$form->{dbsuperuser}, 
 			$form->{dbsuperpasswd}) 
-				or $form->dberror;
+				or $form->dberror(__FILE__.':'.__LINE__);
 		my $query = qq|$dbcreate{$form->{dbdriver}}|;
-		$superdbh->do($query) || $form->dberror($query);
+		$superdbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.$query);
     
 		$superdbh->disconnect;  
 	}
@@ -344,13 +370,13 @@ sub dbcreate {
 		$form->{dbconnect}, 
 		$form->{dbuser}, 
 		$form->{dbpasswd}) 
-			or $form->dberror;
+			or $form->dberror(__FILE__.':'.__LINE__);
 	if ($form->{dbsuperuser}){
 		my $superdbh = DBI->connect(
 			$form->{dbconnect}, 
 			$form->{dbsuperuser}, 
 			$form->{dbsuperpasswd}) 
-				or $form->dberror;
+				or $form->dberror(__FILE__.':'.__LINE__);
 		# JD: We need to check for plpgsql, 
 		# if it isn't there create it, if we can't error
 		# Good chance I will have to do this twice as I get 
@@ -400,12 +426,12 @@ sub process_query {
   
 	return unless (-f $filename);
   
-	open(FH, "$filename") or $form->error("$filename : $!\n");
+	open(FH, "$filename") or $form->error(__FILE__.':'.__LINE__.": $filename : $!\n");
 	$ENV{PGPASSWORD} = $form->{dbpasswd};
 	$ENV{PGUSER} = $form->{dbuser};
 	$ENV{PGDATABASE} = $form->{db};
 	
-	open(PSQL, "| psql") or $form->error("psql : $! \n");
+	open(PSQL, "| psql") or $form->error(__FILE__.':'.__LINE__.": psql : $! \n");
 	print PSQL "\\o spool/log \n";
 	while (<FH>){
 		print PSQL $_;
@@ -423,9 +449,9 @@ sub dbdelete {
 	&dbconnect_vars($form, $form->{dbdefault});
 	my $dbh = DBI->connect(
 		$form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) 
-			or $form->dberror;
+			or $form->dberror(__FILE__.':'.__LINE__);
 	my $query = qq|DROP DATABASE "$form->{db}"|;
-	$dbh->do($query) || $form->dberror($query);
+	$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.$query);
 
 	$dbh->disconnect;
 
@@ -439,10 +465,10 @@ sub dbsources_unused {
 	my @dbexcl = ();
 	my @dbsources = ();
   
-	$form->error("$memfile locked!") if (-f "${memfile}.LCK");
+	$form->error(__FILE__.':'.__LINE__.": $memfile locked!") if (-f "${memfile}.LCK");
   
 	# open members file
-	open(FH, "$memfile") or $form->error("$memfile : $!");
+	open(FH, "$memfile") or $form->error(__FILE__.':'.__LINE__.": $memfile : $!");
 
 	while (<FH>) {
 		if (/^dbname=/) {
@@ -480,7 +506,7 @@ sub dbneedsupdate {
 
 	my $dbh = DBI->connect(
 		$form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) 
-			or $form->dberror;
+			or $form->dberror(__FILE__.':'.__LINE__);
 
 	if ($form->{dbdriver} =~ /Pg/) {
 
@@ -490,7 +516,7 @@ sub dbneedsupdate {
 			 WHERE d.datdba = u.usesysid
 			       AND u.usename = ?|;
 		my $sth = $dbh->prepare($query);
-		$sth->execute($form->{dbuser}) || $form->dberror($query);
+		$sth->execute($form->{dbuser}) || $form->dberror(__FILE__.':'.__LINE__.$query);
     
 		while (my ($db) = $sth->fetchrow_array) {
 
@@ -501,14 +527,14 @@ sub dbneedsupdate {
 			my $dbh = DBI->connect(
 				$form->{dbconnect}, $form->{dbuser}, 
 				$form->{dbpasswd}) 
-					or $form->dberror;
+					or $form->dberror(__FILE__.':'.__LINE__);
 
 			$query = qq|
 				SELECT tablename 
 				  FROM pg_tables
 				 WHERE tablename = 'defaults'|;
 			my $sth = $dbh->prepare($query);
-			$sth->execute || $form->dberror($query);
+			$sth->execute || $form->dberror(__FILE__.':'.__LINE__.$query);
 
 			if ($sth->fetchrow_array) {
 				$query = qq|
@@ -548,7 +574,7 @@ sub dbupdate {
   
 	if ($form->{dbupdate}) {
 		# read update scripts into memory
-		opendir SQLDIR, "sql/." or $form->error($!);
+		opendir SQLDIR, "sql/." or $form->error(__FILE__.':'.__LINE__.': '.$!);
 		@upgradescripts = 
 			sort script_version 
 				grep /$form->{dbdriver}-upgrade-.*?\.sql$/, 
@@ -568,7 +594,7 @@ sub dbupdate {
 		my $dbh = DBI->connect(
 			$form->{dbconnect}, $form->{dbuser}, 
 			$form->{dbpasswd}, {AutoCommit => 0}) 
-				or $form->dberror;
+				or $form->dberror(__FILE__.':'.__LINE__);
 
 		# check version
 		$query = qq|
@@ -657,114 +683,102 @@ sub script_version {
   
 }
 
-
-sub create_config {
-	my ($self, $filename) = @_;
-
-
-	@config = &config_vars;
-
-	open(CONF, ">$filename") or $self->error("$filename : $!");
-  
-	# create the config file
-	print CONF qq|# configuration file for $self->{login}
-
-\%myconfig = (
-|;
-
-	foreach $key (sort @config) {
-		$self->{$key} =~ s/\\/\\\\/g;
-		$self->{$key} =~ s/'/\\'/g;
-
-		#remaining conversion from SL
-		$self->{$key} =~ s/sql-ledger([^.]*)\.css/ledger-smb$1.css/g;
-		print CONF qq|  $key => '$self->{$key}',\n|;
-	}
-
-   
-	print CONF qq|);\n\n|;
-
-	close CONF;
-
-}
-
-
 sub save_member {
+
 	my ($self) = @_;
-
-	# format dbconnect and dboptions string
-	&dbconnect_vars($self, $self->{dbname});
-
-	$self->error("${LedgerSMB::Sysconfig::memberfile} locked!") 
-		if (-f "${LedgerSMB::Sysconfig::memberfile}.LCK");
-	open(FH, ">${LedgerSMB::Sysconfig::memberfile}.LCK") 
-		or $self->error("${LedgerSMB::Sysconfig::memberfile}.LCK : $!");
-	close(FH);
-
-	if (! open(CONF, "+<${LedgerSMB::Sysconfig::memberfile}")) {
-		unlink "${LedgerSMB::Sysconfig::memberfile}.LCK";
-		$self->error("${LedgerSMB::Sysconfig::memberfile} : $!");
-	}
-
-	@config = <CONF>;
-
-	seek(CONF, 0, 0);
-	truncate(CONF, 0);
-
-	while ($line = shift @config) {
-		last if ($line =~ /^\[$self->{login}\]/);
-		#remaining conversion from SL
-		$line =~ s/sql-ledger([^.]*)\.css/ledger-smb$1.css/g;
-		print CONF $line;
-	}
-
-	# remove everything up to next login or EOF
-	while ($line = shift @config) {
-		last if ($line =~ /^\[/);
-	}
-
-	# this one is either the next login or EOF
-	print CONF $line;
-
-	while ($line = shift @config) {
-		print CONF $line;
-	}
-
-	print CONF qq|[$self->{login}]\n|;
-
-	if ($self->{packpw}) {
-		$self->{dbpasswd} = pack 'u', $self->{dbpasswd};
-		chop $self->{dbpasswd};
-	}
-	if ($self->{password} ne $self->{old_password}) {
-		$self->{password} = crypt $self->{password}, 
-			substr($self->{login}, 0, 2) if $self->{password};
-	}
-
-	if ($self->{'root login'}) {
-		@config = qw(password);
-	} else {
-		@config = &config_vars;
-	}
 
 	# replace \r\n with \n
 	for (qw(address signature)) { $self->{$_} =~ s/\r?\n/\\n/g }
 
-	for (sort @config) {
-		print CONF qq|$_=$self->{$_}\n| 
+	# use central db
+	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+
+	#check to see if the user exists already
+	my $userCheck = $dbh->prepare("SELECT id FROM users WHERE username = ?");
+	$userCheck->execute($self->{login});
+	my ($userID) = $userCheck->fetchrow_array;
+
+	if($userID){
+		#got an id, check to see if it's in the users_conf table
+		my $userConfCheck = $dbh->prepare("SELECT id FROM users_conf WHERE id = ?");
+		$userConfCheck->execute($userID);
+
+		if($userConfCheck->rows){
+			my $userConfExists = 1;
+		}
+	}
+	else{
+		my $userConfAdd = $dbh->prepare("SELECT create_user(?);");
+		$userConfAdd->execute($self->{login});
+		($userID) = $userConfAdd->fetchrow_array;
 	}
 
-	print CONF "\n";
-	close CONF;
-	unlink "${LedgerSMB::Sysconfig::memberfile}.LCK";
-	# create conf file
-	if (! $self->{'root login'}) {
+	if($userConfExists){
 
-		$self->create_config("${LedgerSMB::Sysconfig::userspath}/$self->{login}.conf");
+		# for now, this is updating the table directly... ugly 
+		my $userConfUpdate = $dbh->prepare("UPDATE users_conf
+											   SET acs = ?, address = ?, businessnumber = ?,
+												   company = ?, countrycode = ?, currency = ?,
+												   dateformat = ?, dbconnect = ?, dbdriver = ?,
+												   dbhost = ?, dbname = ?, dboptions = ?, 
+												   dbpasswd = ?, dbport = ?, dbuser = ?,
+												   email = ?, fax = ?, menuwidth = ?,
+												   name = ?, numberformat = ?, password = md5(?),
+												   print = ?, printer = ?, role = ?,
+												   sid = ?, signature = ?, stylesheet = ?,
+												   tel = ?, templates = ?, timeout = ?,
+												   vclimit = ?
+											 WHERE id = ?;");
+
+		$userConfUpdate->execute($self->{acs}, $self->{address}, $self->{businessnumber},
+								 $self->{company}, $self->{countrycode}, $self->{currency},
+								 $self->{dateformat}, $self->{dbconnect}, $self->{dbdriver},
+								 $self->{dbhost}, $self->{dbname}, $self->{dboptions}, 
+								 $self->{dbpasswd}, $self->{dbport}, $self->{dbuser}, 
+								 $self->{email}, $self->{fax}, $self->{menuwidth},
+								 $self->{name}, $self->{numberformat}, $self->{password}, 
+								 $self->{print}, $self->{printer}, $self->{role}, 
+								 $self->{sid}, $self->{signature}, $self->{stylesheet},
+								 $self->{tel}, $self->{templates}, $self->{timeout}, 
+								 $self->{vclimit}, $userID);
+	  
+
+	}
+	else{
+
+		my $userConfInsert = $dbh->prepare("INSERT INTO users_conf(acs, address, businessnumber,
+																   company, countrycode, currency,
+																   dateformat, dbconnect, dbdriver,
+																   dbhost, dbname, dboptions, dbpasswd,
+																   dbport, dbuser, email, fax, menuwidth,
+																   name, numberformat, print, printer, role, 
+																   sid, signature, stylesheet, tel, templates, 
+																   timeout, vclimit, id, password)
+											VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, md5(?));");
+
+		$userConfInsert->execute($self->{acs}, $self->{address}, $self->{businessnumber},
+								 $self->{company}, $self->{countrycode}, $self->{currency},
+								 $self->{dateformat}, $self->{dbconnect}, $self->{dbdriver},
+								 $self->{dbhost}, $self->{dbname}, $self->{dboptions}, 
+								 $self->{dbpasswd}, $self->{dbport}, $self->{dbuser}, 
+								 $self->{email}, $self->{fax}, $self->{menuwidth},
+								 $self->{name}, $self->{numberformat}, 
+								 $self->{print}, $self->{printer}, $self->{role}, 
+								 $self->{sid}, $self->{signature}, $self->{stylesheet},
+								 $self->{tel}, $self->{templates}, $self->{timeout}, 
+								 $self->{vclimit}, $userID, $self->{password});
+	  
+	}
+
+	if (! $self->{'admin'}) {
 
 		$self->{dbpasswd} =~ s/\\'/'/g;
 		$self->{dbpasswd} =~ s/\\\\/\\/g;
-		$self->{dbpasswd} = unpack 'u', $self->{dbpasswd};
+
+		# format dbconnect and dboptions string
+ 		&dbconnect_vars($self, $self->{dbname});
 
 		# check if login is in database
 		my $dbh = DBI->connect(
@@ -813,7 +827,6 @@ sub save_member {
 		$dbh->disconnect;
 
 	}
-
 }
 
 
@@ -823,13 +836,13 @@ sub delete_login {
 	my $dbh = DBI->connect(
 		$form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}, 
 		{AutoCommit => 0}) 
-			or $form->dberror;
+			or $form->dberror(__FILE__.':'.__LINE__);
   
 	my $login = $form->{login};
 	$login =~ s/@.*//;
 	my $query = qq|SELECT id FROM employee WHERE login = ?|; 
 	my $sth = $dbh->prepare($query);
-	$sth->execute($login) || $form->dberror($query);
+	$sth->execute($login) || $form->dberror(__FILE__.':'.__LINE__.': '.$query);
   
 	my ($id) = $sth->fetchrow_array;
 	$sth->finish;

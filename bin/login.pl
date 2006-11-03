@@ -40,6 +40,7 @@ use DBI;
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
+use LedgerSMB::Session;
 
 ## will need this later when session_destroy will be used
 #use LedgerSMB::Session;
@@ -48,7 +49,7 @@ use LedgerSMB::Locale;
 $form = new Form;
 
 $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or 
-	$form->error("Locale not loaded: $!\n");
+	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 $locale->encoding('UTF-8');
 $form->{charset} = 'UTF-8';
 #$form->{charset} = $locale->encoding;
@@ -56,13 +57,13 @@ $form->{charset} = 'UTF-8';
 # customization
 if (-f "bin/custom/$form->{script}") {
 	eval { require "bin/custom/$form->{script}"; };
-	$form->error($@) if ($@);
+	$form->error(__FILE__.':'.__LINE__.': '.$@) if ($@);
 }
 
 # per login customization
 if (-f "bin/custom/$form->{login}_$form->{script}") {
 	eval { require "bin/custom/$form->{login}_$form->{script}"; };
-	$form->error($@) if ($@);
+	$form->error(__FILE__.':'.__LINE__.': '.$@) if ($@);
 }
 
 # window title bar, user info
@@ -233,40 +234,41 @@ sub login {
 	$form->{stylesheet} = "ledger-smb.css";
 	$form->{favicon} = "favicon.ico";
 
-	$form->error($locale->text('You did not enter a name!')) unless ($form->{login});
+	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('You did not enter a name!')) unless ($form->{login});
 
-	if (! $form->{beenthere}) {
-		open(FH, "${LedgerSMB::Sysconfig::memberfile}") or $form->error("$memberfile : $!");
-		@a = <FH>;
-		close(FH);
+	#this needs to be done via db
+	#if (! $form->{beenthere}) {
+	#	open(FH, "${LedgerSMB::Sysconfig::memberfile}") or $form->error(__FILE__.':'.__LINE__.": $memberfile : $!");
+	#	@a = <FH>;
+	#	close(FH);
+	#
+	#	foreach $item (@a) {
+	#
+	#		if ($item =~ /^\[(.*?)\]/) {
+	#			$login = $1;
+	#			$found = 1;
+	#		}
+	#
+	#		if ($item =~ /^company=/) {
+	#			if ($login =~ /$form->{login}\@/ && $found) {
+	#				($null, $name) = split /=/, $item, 2;
+	#				$login{$login} = $name;
+	#			}
+	#			$found = 0;
+	#		}
+	#	}
+	#
+	#	if (keys %login > 1) {
+	#		&selectdataset(\%login);
+	#		exit;
+	#	}
+	#}
 
-		foreach $item (@a) {
 
-			if ($item =~ /^\[(.*?)\]/) {
-				$login = $1;
-				$found = 1;
-			}
-
-			if ($item =~ /^company=/) {
-				if ($login =~ /$form->{login}\@/ && $found) {
-					($null, $name) = split /=/, $item, 2;
-					$login{$login} = $name;
-				}
-				$found = 0;
-			}
-		}
-
-		if (keys %login > 1) {
-			&selectdataset(\%login);
-			exit;
-		}
-	}
-
-
-	$user = LedgerSMB::User->new(${LedgerSMB::Sysconfig::memberfile}, $form->{login});
+	$user = LedgerSMB::User->new($form->{login});
 
 	# if we get an error back, bale out
-	if (($errno = $user->login(\%$form, ${LedgerSMB::Sysconfig::userspath})) <= -1) {
+	if (($errno = $user->login(\%$form)) <= -1) {
 
 		$errno *= -1;
 		$err[1] = $locale->text('Access Denied!');
@@ -275,7 +277,9 @@ sub login {
 
 		if ($errno == 4) {
 			# upgrade dataset and log in again
-			open FH, ">${LedgerSMB::Sysconfig::userspath}/nologin" or $form->error($!);
+
+			#locking needs to be done via db function
+			#open FH, ">${LedgerSMB::Sysconfig::userspath}/nologin" or $form->error($!);
 
 			for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) { $form->{$_} = $user->{$_} }
 
@@ -293,8 +297,8 @@ sub login {
 
 			$user->dbupdate(\%$form);
 
-			# remove lock file
-			unlink "${LedgerSMB::Sysconfig::userspath}/nologin";
+			# remove lock
+			#unlink "${LedgerSMB::Sysconfig::userspath}/nologin";
 
 			print $locale->text('done');
 
@@ -303,7 +307,7 @@ sub login {
 			exit;
 		}
 
-		$form->error($err[$errno]);
+		$form->error(__FILE__.':'.__LINE__.': '.$err[$errno]);
 	}
 
 	# made it this far, setup callback for the menu
@@ -340,11 +344,9 @@ sub login {
 
 
 sub logout {
-
 	$form->{callback} = "$form->{script}?path=$form->{path}&login=$form->{login}";
 	$form->{endsession} = 1;
-	#delete the cookie in the browser manually (can't use session_destroy here unfortunately)
-	print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
+	Session::session_destroy($form);
 	$form->redirect;
 }
 
