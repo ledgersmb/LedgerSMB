@@ -193,7 +193,7 @@ sub create_links {
 
 sub search {
 
-  $form->{title} = $locale->text('General Ledger')." ".$locale->text('Reports');
+  $form->{title} = $locale->text('General Ledger Reports');
   
   $colspan = 5;
   $form->all_departments(\%myconfig);
@@ -654,13 +654,13 @@ sub generate_report {
   if ($myconfig{acs} !~ /AR--AR/) {
     $button{'AR--Add Transaction'}{code} = qq|<button class="submit" type="submit" name="action" value="ar_transaction">|.$locale->text('AR Transaction').qq|</button> |;
     $button{'AR--Add Transaction'}{order} = $i++;
-    $button{'AR--Sales Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="sales_invoice_">|.$locale->text('Sales Invoice ').qq|</button> |;
+    $button{'AR--Sales Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="sales_invoice_">|.$locale->text('Sales Invoice').qq|</button> |;
     $button{'AR--Sales Invoice'}{order} = $i++;
   }
   if ($myconfig{acs} !~ /AP--AP/) {
     $button{'AP--Add Transaction'}{code} = qq|<button class="submit" type="submit" name="action" value="ap_transaction">|.$locale->text('AP Transaction').qq|</button> |;
     $button{'AP--Add Transaction'}{order} = $i++;
-    $button{'AP--Vendor Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|.$locale->text('Vendor Invoice ').qq|</button> |;
+    $button{'AP--Vendor Invoice'}{code} = qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|.$locale->text('Vendor Invoice').qq|</button> |;
     $button{'AP--Vendor Invoice'}{order} = $i++;
   }
 
@@ -1104,7 +1104,7 @@ sub delete {
   print qq|
 <h2 class=confirm>|.$locale->text('Confirm!').qq|</h2>
 
-<h4>|.$locale->text('Are you sure you want to delete Transaction').qq| $form->{reference}</h4>
+<h4>|.$locale->text('Are you sure you want to delete Transaction [_1]', $form->{reference}).qq|</h4>
 
 <button name="action" class="submit" type="submit" value="yes">|.$locale->text('Yes').qq|</button>
 </form>

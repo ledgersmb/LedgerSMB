@@ -869,7 +869,7 @@ sub validate_items {
   }
     
   for $i (1 .. $form->{rowcount} - 1) {
-    $form->isblank("partnumber_$i", $locale->text('Number missing in Row') . " $i");
+    $form->isblank("partnumber_$i", $locale->text('Number missing in Row [_1]', $i));
   }
 
 }

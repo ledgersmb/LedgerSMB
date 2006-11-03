@@ -214,7 +214,7 @@ sub remove {
     }
   }
 
-  $form->error('Nothing selected!') unless $selected;
+  $form->error($locale->text('Nothing selected!')) unless $selected;
  
   $form->{title} = $locale->text('Confirm!');
   

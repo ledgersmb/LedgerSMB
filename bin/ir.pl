@@ -908,7 +908,7 @@ sub delete {
   print qq|
 <h2 class=confirm>|.$locale->text('Confirm!').qq|</h2>
 
-<h4>|.$locale->text('Are you sure you want to delete Invoice Number').qq| $form->{invnumber}</h4>
+<h4>|.$locale->text('Are you sure you want to delete Invoice Number [_1]?', $form->{invnumber}).qq|</h4>
 <p>
 <button name="action" class="submit" type="submit" value="yes">|.$locale->text('Yes').qq|</button>
 </form>

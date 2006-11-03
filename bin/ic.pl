@@ -119,25 +119,25 @@ sub link_part {
   # readonly
   if ($form->{item} eq 'part') {
     $form->{readonly} = 1 if $myconfig{acs} =~ /Goods \& Services--Add Part/;
-    $form->error($locale->text('Cannot create Part').";".$locale->text('Inventory account does not exist!')) if ! @{ $form->{IC_links}{IC} };
-    $form->error($locale->text('Cannot create Part').";".$locale->text('Income account does not exist!')) if ! @{ $form->{IC_links}{IC_sale} };
-    $form->error($locale->text('Cannot create Part').";".$locale->text('COGS account does not exist!')) if ! @{ $form->{IC_links}{IC_cogs} };
+    $form->error($locale->text('Cannot create Part; Inventory account does not exist!')) if ! @{ $form->{IC_links}{IC} };
+    $form->error($locale->text('Cannot create Part; Income account does not exist!')) if ! @{ $form->{IC_links}{IC_sale} };
+    $form->error($locale->text('Cannot create Part; COGS account does not exist!')) if ! @{ $form->{IC_links}{IC_cogs} };
   }
   
   if ($form->{item} eq 'service') {
     $form->{readonly} = 1 if $myconfig{acs} =~ /Goods \& Services--Add Service/;
-    $form->error($locale->text('Cannot create Service').";".$locale->text('Income account does not exist!')) if ! @{ $form->{IC_links}{IC_income} };
-    $form->error($locale->text('Cannot create Service').";".$locale->text('Expense account does not exist!')) if ! @{ $form->{IC_links}{IC_expense} };
+    $form->error($locale->text('Cannot create Service; Income account does not exist!')) if ! @{ $form->{IC_links}{IC_income} };
+    $form->error($locale->text('Cannot create Service; Expense account does not exist!')) if ! @{ $form->{IC_links}{IC_expense} };
   }
   
   if ($form->{item} eq 'assembly') {
     $form->{readonly} = 1 if $myconfig{acs} =~ /Goods \& Services--Add Assembly/;
-    $form->error($locale->text('Cannot create Assembly').";".$locale->text('Income account does not exist!')) if ! @{ $form->{IC_links}{IC_income} };
+    $form->error($locale->text('Cannot create Assembly; Income account does not exist!')) if ! @{ $form->{IC_links}{IC_income} };
   }
   if ($form->{item} eq 'labor') {
     $form->{readonly} = 1 if $myconfig{acs} =~ /Goods \& Services--Add Labor\/Overhead/;
-    $form->error($locale->text('Cannot create Labor').";".$locale->text('Inventory account does not exist!')) if ! @{ $form->{IC_links}{IC} };
-    $form->error($locale->text('Cannot create Labor').";".$locale->text('COGS account does not exist!')) if ! @{ $form->{IC_links}{IC_cogs} };
+    $form->error($locale->text('Cannot create Labor; Inventory account does not exist!')) if ! @{ $form->{IC_links}{IC} };
+    $form->error($locale->text('Cannot create Labor; COGS account does not exist!')) if ! @{ $form->{IC_links}{IC_cogs} };
   }
 
   
@@ -2684,7 +2684,7 @@ sub check_vendor {
 	$form->{"vendor_$i"} = qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
       } else {
 	# name is not on file
-	$form->error(qq|$form->{"vendor_$i"} : |.$locale->text('Vendor not on file!'));
+	$form->error($locale->text('[_1]: Vendor not on file!', $form->{"vendor_$i"}));
       }
     }
   }
@@ -2743,7 +2743,7 @@ sub check_customer {
 	$form->{"customer_$i"} = qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
       } else {
 	# name is not on file
-	$form->error(qq|$form->{customer} : |.$locale->text('Customer not on file!'));
+	$form->error($locale->text('[_1]: Customer not on file!', $form->{customer}));
       }
     }
   }

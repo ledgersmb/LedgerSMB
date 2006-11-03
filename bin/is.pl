@@ -900,7 +900,7 @@ sub post {
   ($form->{AR_paid}) = split /--/, $form->{AR_paid};
 
   if (IS->post_invoice(\%myconfig, \%$form)) {
-    $form->redirect($locale->text('Invoice')." $form->{invnumber} ".$locale->text('posted!'));
+    $form->redirect($locale->text('Invoice [_1] posted!', $form->{invnumber}));
   } else {
     $form->error($locale->text('Cannot post invoice!'));
   }
@@ -947,7 +947,7 @@ sub delete {
   print qq|
 <h2 class=confirm>|.$locale->text('Confirm!').qq|</h2>
 
-<h4>|.$locale->text('Are you sure you want to delete Invoice Number').qq| $form->{invnumber}
+<h4>|.$locale->text('Are you sure you want to delete Invoice Number [_1]?', $form->{invnumber}).qq|
 </h4>
 
 <p>

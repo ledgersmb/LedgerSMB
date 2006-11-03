@@ -294,7 +294,7 @@ sub save_account {
   foreach $item ("AR", "AP") {
     $i = 0;
     for ("${item}_amount", "${item}_paid", "${item}_tax") { $i++ if $form->{$_} }
-    $form->error($locale->text('Cannot set multiple options for')." $item") if $i > 1;
+    $form->error($locale->text('Cannot set multiple options for [_1]', $item)) if $i > 1;
   }
   
   if (AM->save_account(\%myconfig, \%$form)) {
@@ -1447,7 +1447,7 @@ sub delete_language {
   print qq|
 <h2 class=confirm>$form->{title}</h2>
 
-<h4>|.$locale->text('Deleting a language will also delete the templates for the language').qq| $form->{invnumber}</h4>
+<h4>|.$locale->text('Deleting a language will also delete the templates for the language [_1]', $form->{invnumber}).qq|</h4>
 
 <input type=hidden name=action value=continue>
 <input type=hidden name=nextsub value=yes_delete_language>
@@ -2082,7 +2082,7 @@ sub config {
 |;
   }
   
-  $form->{title} = $locale->text('Edit Preferences for').qq| $form->{login}|;
+  $form->{title} = $locale->text('Edit Preferences for [_1]', $form->{login});
   
   $form->header;
 
@@ -2246,9 +2246,6 @@ sub backup {
 
   if ($form->{media} eq 'email') {
     $form->error($locale->text('No email address for [_1]', $myconfig{name})) unless ($myconfig{email});
-    
-    $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
-
   }
 
   $SIG{INT} = 'IGNORE';
@@ -3064,17 +3061,17 @@ sub process_transactions {
 
           if ($pt->{invoice}) {
 	    if ($pt->{arid}) {
-	      $form->info("\n".$locale->text('Posting')." ".$locale->text('Sales Invoice')." $form->{invnumber}");
+	      $form->info("\n".$locale->text('Posting Sales Invoice [_1]', $form->{invnumber}));
 	      $ok = IS->post_invoice(\%myconfig, \%$form);
 	    } else {
-	      $form->info("\n".$locale->text('Posting')." ".$locale->text('Vendor Invoice')." $form->{invnumber}");
+	      $form->info("\n".$locale->text('Posting Vendor Invoice [_1]', $form->{invnumber}));
 	      $ok = IR->post_invoice(\%myconfig, \%$form);
 	    }
 	  } else {
 	    if ($pt->{arid}) {
-	      $form->info("\n".$locale->text('Posting')." ".$locale->text('Transaction')." $form->{invnumber}");
+	      $form->info("\n".$locale->text('Posting Transaction [_1]', $form->{invnumber}));
 	    } else {
-	      $form->info("\n".$locale->text('Posting')." ".$locale->text('Transaction')." $form->{invnumber}");
+	      $form->info("\n".$locale->text('Posting Transaction [_1]', $form->{invnumber}));
 	    }
 
 	    $ok = AA->post_transaction(\%myconfig, \%$form);
@@ -3128,7 +3125,7 @@ sub process_transactions {
 	  for ("$ordnumber", "reference") { $form->{$_} = $form->unquote($form->{$_}) }
 	  $form->{closed} = 0;
 
-	  $form->info("\n".$locale->text('Saving')." ".$flabel." $form->{$ordnumber}");
+	  $form->info("\n".$locale->text('Saving [_1] [_2]', $flabel, $form->{$ordnumber}));
 	  if ($ok = OE->save(\%myconfig, \%$form)) {
 	    $form->info(" ..... ".$locale->text('done'));
 	  } else {
@@ -3170,7 +3167,7 @@ sub process_transactions {
 	$form->{rowcount} = $j;
 
 	for (qw(id recurring)) { delete $form->{$_} }
-	$form->info("\n".$locale->text('Posting')." ".$locale->text('GL Transaction')." $form->{reference}");
+	$form->info("\n".$locale->text('Posting GL Transaction [_1]', $form->{reference}));
 	$ok = GL->post_transaction(\%myconfig, \%$form);
 	$form->info(" ..... ".$locale->text('done'));
 	
