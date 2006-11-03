@@ -1872,357 +1872,382 @@ sub tax_report {
 			       AND pt.chart_id = ch.id)
 			 WHERE $where $accno AND a.invoice = '1' $cashwhere|;
 
-      if ($form->{fromdate}) {
-	if ($cashwhere) {
-	 $query .= qq|
-	      UNION
+ 		if ($form->{fromdate}) {
+			if ($cashwhere) {
+				 $query .= qq|
+					UNION
+
+					SELECT a.id, '0' AS invoice, 
+					       $transdate AS transdate,
+					       a.invnumber, n.name, a.netamount,
+					       ac.amount * $ml AS tax,
+					       a.notes AS description, a.till
+					  FROM acc_trans ac
+					  JOIN $form->{db} a 
+					       ON (a.id = ac.trans_id)
+					  JOIN chart ch ON (ch.id = ac.chart_id)
+					  JOIN $table n 
+					       ON (n.id = a.${table}_id)
+					 WHERE a.datepaid >= '$form->{fromdate}'
+					       $accno AND a.invoice = '0'
+					       $cashwhere
+
+					UNION
 	      
-	        SELECT a.id, '0' AS invoice, $transdate AS transdate,
-		a.invnumber, n.name, a.netamount,
-		ac.amount * $ml AS tax,
-		a.notes AS description, a.till
-		FROM acc_trans ac
-	      JOIN $form->{db} a ON (a.id = ac.trans_id)
-	      JOIN chart ch ON (ch.id = ac.chart_id)
-	      JOIN $table n ON (n.id = a.${table}_id)
-		WHERE a.datepaid >= '$form->{fromdate}'
-		$accno
-		AND a.invoice = '0'
-		$cashwhere
-		
-	      UNION
-	      
-		SELECT a.id, '1' AS invoice, $transdate AS transdate,
-		a.invnumber, n.name,
-		i.sellprice * i.qty * $ml AS netamount,
-		i.sellprice * i.qty * $ml *
-		(SELECT tx.rate FROM tax tx WHERE tx.chart_id = ch.id AND (tx.validto > $transdate OR tx.validto IS NULL) ORDER BY validto LIMIT 1) AS tax,
-		i.description, a.till
-		FROM acc_trans ac
-	      JOIN $form->{db} a ON (a.id = ac.trans_id)
-	      JOIN chart ch ON (ch.id = ac.chart_id)
-	      JOIN $table n ON (n.id = a.${table}_id)
-	      JOIN ${table}tax t ON (t.${table}_id = n.id AND t.chart_id = ch.id)
-	      JOIN invoice i ON (i.trans_id = a.id)
-	      JOIN partstax pt ON (pt.parts_id = i.parts_id AND pt.chart_id = ch.id)
-		WHERE a.datepaid >= '$form->{fromdate}'
-		$accno
-		AND a.invoice = '1'
-		$cashwhere
-		|;
+					SELECT a.id, '1' AS invoice, 
+					       $transdate AS transdate,
+					       a.invnumber, n.name,
+					       i.sellprice * i.qty * $ml 
+					       AS netamount, i.sellprice 
+					       * i.qty * $ml *
+					        (SELECT tx.rate FROM tax tx 
+					          WHERE tx.chart_id = ch.id 
+					                AND 
+					                (tx.validto > $transdate
+					                OR tx.validto IS NULL) 
+					       ORDER BY validto LIMIT 1) 
+					       AS tax, i.description, a.till
+					  FROM acc_trans ac
+					  JOIN $form->{db} a 
+					       ON (a.id = ac.trans_id)
+					  JOIN chart ch ON (ch.id = ac.chart_id)
+					  JOIN $table n ON 
+					       (n.id = a.${table}_id)
+					  JOIN ${table}tax t 
+					       ON (t.${table}_id = n.id 
+					       AND t.chart_id = ch.id)
+					  JOIN invoice i ON (i.trans_id = a.id)
+					  JOIN partstax pt 
+					       ON (pt.parts_id = i.parts_id 
+					       AND pt.chart_id = ch.id)
+					 WHERE a.datepaid >= '$form->{fromdate}'
+					       $accno AND a.invoice = '1'
+					       $cashwhere|;
+			}
+		}
 	}
-      }
-    }
 
 
-  if ($form->{report} =~ /nontaxable/) {
+	if ($form->{report} =~ /nontaxable/) {
     
-    if ($form->{summary}) {
-      # only gather up non-taxable transactions
-      $query = qq|SELECT DISTINCT a.id, a.invoice, $transdate AS transdate,
-		  a.invnumber, n.name, a.netamount, a.till
-		  FROM acc_trans ac
-		JOIN $form->{db} a ON (a.id = ac.trans_id)
-		JOIN $table n ON (n.id = a.${table}_id)
-		  WHERE $where
-		  AND a.netamount = a.amount
-		  $cashwhere
-		  |;
+		if ($form->{summary}) {
+			# only gather up non-taxable transactions
+			$query = qq|
+				SELECT DISTINCT a.id, a.invoice, 
+				       $transdate AS transdate, a.invnumber, 
+				       n.name, a.netamount, a.till
+				  FROM acc_trans ac
+				  JOIN $form->{db} a ON (a.id = ac.trans_id)
+				  JOIN $table n ON (n.id = a.${table}_id)
+				 WHERE $where AND a.netamount = a.amount
+				       $cashwhere|;
 
-      if ($form->{fromdate}) {
-	if ($cashwhere) {
-	  $query .= qq|
-                UNION
-		
-                  SELECT DISTINCT a.id, a.invoice, $transdate AS transdate,
-		  a.invnumber, n.name, a.netamount, a.till
-		  FROM acc_trans ac
-		JOIN $form->{db} a ON (a.id = ac.trans_id)
-		JOIN $table n ON (n.id = a.${table}_id)
-		WHERE a.datepaid >= '$form->{fromdate}'
-		  AND a.netamount = a.amount
-		  $cashwhere
-		  |;
-	}
-      }
+			if ($form->{fromdate}) {
+				if ($cashwhere) {
+					 $query .= qq|
+						UNION
+
+						SELECT DISTINCT a.id, a.invoice,
+						       $transdate AS transdate,
+						       a.invnumber, n.name, 
+						       a.netamount, a.till
+						  FROM acc_trans ac
+						  JOIN $form->{db} a 
+						       ON (a.id = ac.trans_id)
+						  JOIN $table n 
+						       ON (n.id = a.${table}_id)
+						 WHERE a.datepaid 
+						       >= '$form->{fromdate}'
+						       AND 
+						       a.netamount = a.amount
+						       $cashwhere|;
+				}
+			}
 		  
-    } else {
+		} else {
 
-      # gather up details for non-taxable transactions
-      $query = qq|SELECT a.id, '0' AS invoice, $transdate AS transdate,
-		  a.invnumber, n.name, a.netamount,
-		  a.notes AS description, a.till
-		  FROM acc_trans ac
-		JOIN $form->{db} a ON (a.id = ac.trans_id)
-		JOIN $table n ON (n.id = a.${table}_id)
-		  WHERE $where
-		  AND a.invoice = '0'
-		  AND a.netamount = a.amount
-		  $cashwhere
-		GROUP BY a.id, $transdate, a.invnumber, n.name, a.netamount,
-		a.notes, a.till
+			# gather up details for non-taxable transactions
+			$query = qq|
+				  SELECT a.id, '0' AS invoice, 
+				         $transdate AS transdate, a.invnumber, 
+				         n.name, a.netamount, 
+				         a.notes AS description, a.till
+				    FROM acc_trans ac
+				    JOIN $form->{db} a ON (a.id = ac.trans_id)
+				    JOIN $table n ON (n.id = a.${table}_id)
+				   WHERE $where AND a.invoice = '0'
+				         AND a.netamount = a.amount $cashwhere
+				GROUP BY a.id, $transdate, a.invnumber, n.name, 
+				         a.netamount, a.notes, a.till
 		
-		UNION
+				UNION
 		
-		  SELECT a.id, '1' AS invoice, $transdate AS transdate,
-		  a.invnumber, n.name,
-		  sum(ac.sellprice * ac.qty) * $ml AS netamount,
-		  ac.description, a.till
-		  FROM invoice ac
-		JOIN $form->{db} a ON (a.id = ac.trans_id)
-		JOIN $table n ON (n.id = a.${table}_id)
-		  WHERE $where
-		  AND a.invoice = '1'
-		  AND (
-		    a.${table}_id NOT IN (
-			  SELECT ${table}_id FROM ${table}tax t (${table}_id)
-					 ) OR
-		    ac.parts_id NOT IN (
-			  SELECT parts_id FROM partstax p (parts_id)
-				      )
-		      )
-		  $cashwhere
-		  GROUP BY a.id, a.invnumber, $transdate, n.name,
-		  ac.description, a.till
-		  |;
+				  SELECT a.id, '1' AS invoice, 
+				         $transdate AS transdate, a.invnumber, 
+				         n.name,  sum(ac.sellprice * ac.qty) 
+				         * $ml AS netamount, ac.description, 
+				         a.till
+				    FROM invoice ac
+				    JOIN $form->{db} a ON (a.id = ac.trans_id)
+				    JOIN $table n ON (n.id = a.${table}_id)
+				   WHERE $where AND a.invoice = '1' AND 
+				         (a.${table}_id NOT IN 
+				         (SELECT ${table}_id FROM ${table}tax t 
+				         (${table}_id)
+					 ) OR ac.parts_id NOT IN 
+				         (SELECT parts_id FROM partstax p 
+				         (parts_id))) $cashwhere
+				GROUP BY a.id, a.invnumber, $transdate, n.name,
+				         ac.description, a.till|;
 
-      if ($form->{fromdate}) {
-	if ($cashwhere) {
-	  $query .= qq|
-                UNION
+ 			if ($form->{fromdate}) {
+				if ($cashwhere) {
+					$query .= qq|
+						UNION
+						SELECT a.id, '0' AS invoice, 
+						       $transdate AS transdate,
+						       a.invnumber, n.name, 
+						       a.netamount, 
+						       a.notes AS description, 
+						       a.till
+						  FROM acc_trans ac
+						  JOIN $form->{db} a 
+						       ON (a.id = ac.trans_id)
+						  JOIN $table n 
+						       ON (n.id = a.${table}_id)
+						 WHERE a.datepaid 
+						       >= '$form->{fromdate}'
+						       AND a.invoice = '0'
+						       AND a.netamount 
+						       = a.amount $cashwhere
+						GROUP BY a.id, $transdate, 
+						       a.invnumber, n.name, 
+						       a.netamount, a.notes, 
+						       a.till
 		
-                  SELECT a.id, '0' AS invoice, $transdate AS transdate,
-		  a.invnumber, n.name, a.netamount,
-		  a.notes AS description, a.till
-		  FROM acc_trans ac
-		JOIN $form->{db} a ON (a.id = ac.trans_id)
-		JOIN $table n ON (n.id = a.${table}_id)
-		  WHERE a.datepaid >= '$form->{fromdate}'
-		  AND a.invoice = '0'
-		  AND a.netamount = a.amount
-		  $cashwhere
-		GROUP BY a.id, $transdate, a.invnumber, n.name, a.netamount,
-		a.notes, a.till
+						UNION
 		
-		UNION
-		
-		  SELECT a.id, '1' AS invoice, $transdate AS transdate,
-		  a.invnumber, n.name,
-		  sum(ac.sellprice * ac.qty) * $ml AS netamount,
-		  ac.description, a.till
-		  FROM invoice ac
-		JOIN $form->{db} a ON (a.id = ac.trans_id)
-		JOIN $table n ON (n.id = a.${table}_id)
-		  WHERE a.datepaid >= '$form->{fromdate}'
-		  AND a.invoice = '1'
-		  AND (
-		    a.${table}_id NOT IN (
-			  SELECT ${table}_id FROM ${table}tax t (${table}_id)
-					 ) OR
-		    ac.parts_id NOT IN (
-			  SELECT parts_id FROM partstax p (parts_id)
-				      )
-		      )
-		  $cashwhere
-		  GROUP BY a.id, a.invnumber, $transdate, n.name,
-		  ac.description, a.till
-		  |;
+						SELECT a.id, '1' AS invoice, 
+						       $transdate AS transdate,
+						       a.invnumber, n.name,
+						       sum(ac.sellprice 
+						       * ac.qty) * $ml 
+						       AS netamount,
+						       ac.description, a.till
+						  FROM invoice ac
+						  JOIN $form->{db} a 
+						       ON (a.id = ac.trans_id)
+						  JOIN $table n 
+						       ON (n.id = a.${table}_id)
+						 WHERE a.datepaid 
+						       >= '$form->{fromdate}'
+						       AND a.invoice = '1' AND 
+						       (a.${table}_id NOT IN 
+						       (SELECT ${table}_id 
+						          FROM ${table}tax t 
+						       (${table}_id)) OR
+						       ac.parts_id NOT IN
+						       (SELECT parts_id 
+						          FROM partstax p 
+						       (parts_id)))
+						       $cashwhere
+						GROUP BY a.id, a.invnumber, 
+						       $transdate, n.name,
+						       ac.description, a.till|;
+				}
+			}
+
+		}
 	}
-      }
-
-    }
-  }
 
   
-  $query .= qq|
-	      ORDER by $sortorder|;
+	$query .= qq| ORDER by $sortorder|;
 
-  $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	$sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
 
-  while ( my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-    $ref->{tax} = $form->round_amount($ref->{tax}, 2);
-    if ($form->{report} =~ /nontaxable/) {
-      push @{ $form->{TR} }, $ref if $ref->{netamount};
-    } else {
-      push @{ $form->{TR} }, $ref if $ref->{tax};
-    }
-  }
+	while ( my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+		$ref->{tax} = $form->round_amount($ref->{tax}, 2);
+		if ($form->{report} =~ /nontaxable/) {
+			push @{ $form->{TR} }, $ref if $ref->{netamount};
+		} else {
+			push @{ $form->{TR} }, $ref if $ref->{tax};
+		}
+	}
 
-  $sth->finish;
-  $dbh->disconnect;
+	$sth->finish;
+	$dbh->commit;
 
 }
 
 
 sub paymentaccounts {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
  
-  # connect to database, turn AutoCommit off
-  my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $ARAP = uc $form->{db};
+	my $ARAP = uc $form->{db};
   
-  # get A(R|P)_paid accounts
-  my $query = qq|SELECT accno, description
-                 FROM chart
-                 WHERE link LIKE '%${ARAP}_paid%'
+	# get A(R|P)_paid accounts
+	my $query = qq|
+		SELECT accno, description FROM chart
+		 WHERE link LIKE '%${ARAP}_paid%'
 		 ORDER BY accno|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
  
-  while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-    push @{ $form->{PR} }, $ref;
-  }
-  $sth->finish;
+	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+		push @{ $form->{PR} }, $ref;
+	}
+	$sth->finish;
 
-  $form->all_years($myconfig, $dbh);
+	$form->all_years($myconfig, $dbh);
   
-  $dbh->disconnect;
+	$dbh->{dbh};
 
 }
 
  
 sub payments {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database, turn AutoCommit off
-  my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $ml = 1;
-  if ($form->{db} eq 'ar') {
-    $table = 'customer';
-    $ml = -1;
-  }
-  if ($form->{db} eq 'ap') {
-    $table = 'vendor';
-  }
+	my $ml = 1;
+	if ($form->{db} eq 'ar') {
+		$table = 'customer';
+		$ml = -1;
+	}
+	if ($form->{db} eq 'ap') {
+		$table = 'vendor';
+	}
      
 
-  my $query;
-  my $sth;
-  my $dpt_join;
-  my $where;
-  my $var;
+	my $query;
+	my $sth;
+	my $dpt_join;
+	my $where;
+	my $var;
 
-  if ($form->{department_id}) {
-    $dpt_join = qq|
-	         JOIN dpt_trans t ON (t.trans_id = ac.trans_id)
-		 |;
+	if ($form->{department_id}) {
+		$dpt_join = qq| JOIN dpt_trans t ON (t.trans_id = ac.trans_id)|;
 
-    $where = qq|
-		 AND t.department_id = $form->{department_id}
-		|;
-  }
+		$where = qq| AND t.department_id = |.
+			$dbh->quote($form->{department_id});
+	}
 
-  ($form->{fromdate}, $form->{todate}) = $form->from_to($form->{year}, $form->{month}, $form->{interval}) if $form->{year} && $form->{month};
+	($form->{fromdate}, $form->{todate}) = $form->from_to(
+		$form->{year}, $form->{month}, $form->{interval}) 
+			if $form->{year} && $form->{month};
   
-  if ($form->{fromdate}) {
-    $where .= " AND ac.transdate >= '$form->{fromdate}'";
-  }
-  if ($form->{todate}) {
-    $where .= " AND ac.transdate <= '$form->{todate}'";
-  }
-  if (!$form->{fx_transaction}) {
-    $where .= " AND ac.fx_transaction = '0'";
-  }
+	if ($form->{fromdate}) {
+		$where .= " AND ac.transdate >= "
+			.$dbh->quote($form->{fromdate});
+	}
+	if ($form->{todate}) {
+		$where .= " AND ac.transdate <= ".$dbh->quote($form->{todate});
+	}
+	if (!$form->{fx_transaction}) {
+		$where .= " AND ac.fx_transaction = '0'";
+	}
   
-  if ($form->{description} ne "") {
-    $var = $form->like(lc $form->{description});
-    $where .= " AND lower(c.name) LIKE '$var'";
-  }
-  if ($form->{source} ne "") {
-    $var = $form->like(lc $form->{source});
-    $where .= " AND lower(ac.source) LIKE '$var'";
-  }
-  if ($form->{memo} ne "") {
-    $var = $form->like(lc $form->{memo});
-    $where .= " AND lower(ac.memo) LIKE '$var'";
-  }
+	if ($form->{description} ne "") {
+		$var = $dbh->quote($form->like(lc $form->{description}));
+		$where .= " AND lower(c.name) LIKE $var";
+	}
+	if ($form->{source} ne "") {
+		$var = $dbh->quote($form->like(lc $form->{source}));
+		$where .= " AND lower(ac.source) LIKE $var";
+	}
+	if ($form->{memo} ne "") {
+		$var = $dbh->quote($form->like(lc $form->{memo}));
+		$where .= " AND lower(ac.memo) LIKE $var";
+	}
  
-  my %ordinal = ( 'name' => 1,
-		  'transdate' => 2,
-		  'source' => 4,
-		  'employee' => 6,
-		  'till' => 7
+	my %ordinal = ( 
+		'name' => 1,
+		'transdate' => 2,
+		'source' => 4,
+		'employee' => 6,
+		'till' => 7
 		);
 
-  my @a = qw(name transdate employee);
-  my $sortorder = $form->sort_order(\@a, \%ordinal);
+	my @a = qw(name transdate employee);
+	my $sortorder = $form->sort_order(\@a, \%ordinal);
   
-  my $glwhere = $where;
-  $glwhere =~ s/\(c.name\)/\(g.description\)/;
+	my $glwhere = $where;
+	$glwhere =~ s/\(c.name\)/\(g.description\)/;
 
-  # cycle through each id
-  foreach my $accno (split(/ /, $form->{paymentaccounts})) {
+	# cycle through each id
+	foreach my $accno (split(/ /, $form->{paymentaccounts})) {
 
-    $query = qq|SELECT id, accno, description
-                FROM chart
-		WHERE accno = '$accno'|;
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		$query = qq|
+			SELECT id, accno, description
+			  FROM chart
+			 WHERE accno = ?|;
+		$sth = $dbh->prepare($query);
+		$sth->execute($accno) || $form->dberror($query);
 
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
-    push @{ $form->{PR} }, $ref;
-    $sth->finish;
+		my $ref = $sth->fetchrow_hashref(NAME_lc);
+		push @{ $form->{PR} }, $ref;
+		$sth->finish;
 
-    $query = qq|SELECT c.name, ac.transdate, sum(ac.amount) * $ml AS paid,
-                ac.source, ac.memo, e.name AS employee, a.till, a.curr
-		FROM acc_trans ac
-	        JOIN $form->{db} a ON (ac.trans_id = a.id)
-	        JOIN $table c ON (c.id = a.${table}_id)
-		LEFT JOIN employee e ON (a.employee_id = e.id)
-	        $dpt_join
-		WHERE ac.chart_id = $ref->{id}
-		$where|;
+		$query = qq|
+			   SELECT c.name, ac.transdate, 
+			          sum(ac.amount) * $ml AS paid, ac.source, 
+			          ac.memo, e.name AS employee, a.till, a.curr
+			     FROM acc_trans ac
+			     JOIN $form->{db} a ON (ac.trans_id = a.id)
+			     JOIN $table c ON (c.id = a.${table}_id)
+			LEFT JOIN employee e ON (a.employee_id = e.id)
+			          $dpt_join
+			    WHERE ac.chart_id = $ref->{id} $where|;
 
-    if ($form->{till} ne "") {
-      $query .= " AND a.invoice = '1' 
-                  AND NOT a.till IS NULL";
+		if ($form->{till} ne "") {
+ 			$query .= " AND a.invoice = '1' AND NOT a.till IS NULL";
       
-      if ($myconfig->{role} eq 'user') {
-	$query .= " AND e.login = '$form->{login}'";
-      }
-    }
+			if ($myconfig->{role} eq 'user') {
+				$query .= " AND e.login = '$form->{login}'";
+			}
+		}
 
-    $query .= qq|
-                GROUP BY c.name, ac.transdate, ac.source, ac.memo,
-		e.name, a.till, a.curr
-		|;
+		$query .= qq|
+			GROUP BY c.name, ac.transdate, ac.source, ac.memo,
+			         e.name, a.till, a.curr|;
 		
-    if ($form->{till} eq "") {
-# don't need gl for a till
+		if ($form->{till} eq "") {
       
-      $query .= qq|
- 	UNION
-		SELECT g.description, ac.transdate, sum(ac.amount) * $ml AS paid, ac.source,
-		ac.memo, e.name AS employee, '' AS till, '' AS curr
-		FROM acc_trans ac
-	        JOIN gl g ON (g.id = ac.trans_id)
-		LEFT JOIN employee e ON (g.employee_id = e.id)
-	        $dpt_join
-		WHERE ac.chart_id = $ref->{id}
-		$glwhere
-		AND (ac.amount * $ml) > 0
-	GROUP BY g.description, ac.transdate, ac.source, ac.memo, e.name
-		|;
+			$query .= qq|
+ 				UNION
+				SELECT g.description, ac.transdate, 
+				       sum(ac.amount) * $ml AS paid, ac.source,
+				       ac.memo, e.name AS employee, '' AS till,
+				       '' AS curr
+				  FROM acc_trans ac
+				  JOIN gl g ON (g.id = ac.trans_id)
+				  LEFT 
+				  JOIN employee e ON (g.employee_id = e.id)
+				       $dpt_join
+				 WHERE ac.chart_id = $ref->{id} $glwhere
+				       AND (ac.amount * $ml) > 0
+				 GROUP BY g.description, ac.transdate, 
+			               ac.source, ac.memo, e.name|;
 
-    }
+		}
 
-    $query .= qq|
-                ORDER BY $sortorder|;
+		$query .= qq| ORDER BY $sortorder|;
 
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		$sth = $dbh->prepare($query);
+		$sth->execute || $form->dberror($query);
 
-    while (my $pr = $sth->fetchrow_hashref(NAME_lc)) {
-      push @{ $form->{$ref->{id}} }, $pr;
-    }
-    $sth->finish;
+		while (my $pr = $sth->fetchrow_hashref(NAME_lc)) {
+			push @{ $form->{$ref->{id}} }, $pr;
+		}
+		$sth->finish;
 
-  }
+	}
   
-  $dbh->disconnect;
+	$dbh->commit;
   
 }
 

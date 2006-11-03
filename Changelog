@@ -9,14 +9,8 @@ Database:
 
 Security:
 * Added whitelist of allowed directories to file editor (Seneca)
-* Audited OE.pm, AA.pm, and AM.pm for SQL injection problems. (Chris T)
+* Audited All Perl Modules for SQL Injection attacks (Chris T)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
-* Audited Form.pm for SQL-injection problems and move to new API (Chris T)
-* Audited BP.pm, CA.pm, CT.pm for SQL injection and moved to new API. (Chris T)
-* Audited IS.pm, GL.pm, IR.pm for SQL injection and moved to new API. (Chris T)
-* Audited User.pm for SQL injection. (Chris T)
-* Audited HR.pm, removed old, stale payroll code, moved to new API (Chris T)
-* Audited OP.pm, PE,pm, JC.pm RC.pm, IC.pm and moved to new API (Chris T)
 
 Localization:
 * Moved localization files to standard codes (Seneca)
@@ -41,6 +35,7 @@ Code Quality and API:
 * LedgerSMB::IC is aware of custom fields (Chris T)
 * LedgerSMB::PE is aware of custom fields (Chris T)
 * Testing suite added (Seneca)
+* Moved all database calls to $form->{dbh} (CHris T)
 
 Packaging:
 * Added first version of rpm spec from Mads Kiilerich (Chris T)
