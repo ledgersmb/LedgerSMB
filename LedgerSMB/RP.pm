@@ -23,7 +23,7 @@
 #
 #======================================================================
 #
-# This file has NOT undergone whitespace cleanup.
+# This file has undergone whitespace cleanup.
 #
 #======================================================================
 #
@@ -34,1566 +34,1621 @@
 package RP;
 
 sub inventory_activity {
-  my ($self, $myconfig, $form) = @_;
-  ($form->{fromdate}, $form->{todate}) = $form->from_to($form->{fromyear}, $form->{frommonth}, $form->{interval}) if $form->{fromyear} && $form->{frommonth};
+	my ($self, $myconfig, $form) = @_;
+	($form->{fromdate}, $form->{todate}) = 
+		$form->from_to($form->{fromyear}, $form->{frommonth}, 
+		$form->{interval}) 
+			if $form->{fromyear} && $form->{frommonth};
+
+	my $dbh = $form->{dbh};
+
+	unless ($form->{sort_col}){
+		$form->{sort_col} = 'partnumber';
+	}
 
 
-  unless ($form->{sort_col}){
-    $form->{sort_col} = 'partnumber';
-  }
+	my $where = '';
+	if ($form->{fromdate}){
+		 $where .= "AND coalesce(ar.duedate, ap.duedate) >= ".
+			$dbh->quote($form->{fromdate});
+	}
+	if ($form->{todate}){
+		 $where .= "AND coalesce(ar.duedate, ap.duedate) < ".
+			$dbh->quote($form->{todate}). " ";
+	}
+	if ($form->{partnumber}){
+		$where .= qq| AND p.partnumber ILIKE |.
+			$dbh->quote('%'."$form->{partnumber}%"); 
+	}
+	if ($form->{description}){
+		$where .= q| AND p.description ILIKE |
+			.$dbh->quote('%'."$form->{description}%");
+	}
+	$where =~ s/^\s?AND/WHERE/;
 
-  my $dbh = $form->dbconnect($myconfig) || $form->dberror();
-
-  my $where = '';
-  if ($form->{fromdate}){
-     $where .= "AND coalesce(ar.duedate, ap.duedate) >= ".$dbh->quote($form->{fromdate});
-  }
-  if ($form->{todate}){
-     $where .= "AND coalesce(ar.duedate, ap.duedate) < ".$dbh->quote($form->{todate}). " ";
-  }
-  if ($form->{partnumber}){
-    $where .= qq|AND p.partnumber ILIKE '%|.$form->{partnumber}.qq|%' |; 
-  }
-  if ($form->{description}){
-    $where .= q|AND p.description ILIKE '%|.$form->{description}.q|%' |;
-  }
-  $where =~ s/^AND/WHERE/;
-
-  my $query = qq|
-	SELECT min(p.description) AS description, 
-		min(p.partnumber) AS partnumber, sum(
-			CASE WHEN i.qty > 0 THEN i.qty ELSE 0 END
-		) AS sold, sum (
-			CASE WHEN i.qty > 0 THEN i.sellprice * i.qty ELSE 0 END
-		) AS revenue, sum(
-			CASE WHEN i.qty < 0 THEN i.qty * -1 ELSE 0 END
-		) AS received, sum(
-			CASE WHEN i.qty < 0 THEN i.sellprice * i.qty * -1
-			ELSE 0 END
-		) as expenses, min(p.id) as id
-	FROM invoice i
-	INNER JOIN parts p ON (i.parts_id = p.id)
-	LEFT JOIN ar ON (ar.id = i.trans_id)
-	LEFT JOIN ap ON (ap.id = i.trans_id)
-        $where
-	GROUP BY i.parts_id
-	ORDER BY $form->{sort_col}
-  |;
-  my $sth = $dbh->prepare($query) || $form->dberror($query);
-  $sth->execute() || $form->dberror($query);
-  @cols = qw(description sold revenue partnumber received expense);
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
-    $ref->{net_income} = $ref->{revenue} - $ref->{expense}; 
-    map {$ref->{$_} =~ s/^\s*//} @cols;
-    map {$ref->{$_} =~ s/\s*$//} @cols;
-    push @{$form->{TB}}, $ref;
-  }
-  $sth->finish;
-  $dbh->disconnect;
+	my $query = qq|
+		   SELECT min(p.description) AS description, 
+		          min(p.partnumber) AS partnumber, sum(
+		          CASE WHEN i.qty > 0 THEN i.qty ELSE 0 END) AS sold, 
+		          sum (CASE WHEN i.qty > 0 
+		                    THEN i.sellprice * i.qty 
+		                    ELSE 0 END) AS revenue, 
+		          sum(CASE WHEN i.qty < 0 THEN i.qty * -1 ELSE 0 END) 
+		          AS received, sum(CASE WHEN i.qty < 0 
+		                                THEN i.sellprice * i.qty * -1
+		                                ELSE 0 END) as expenses, 
+		          min(p.id) as id
+		     FROM invoice i
+		     JOIN parts p ON (i.parts_id = p.id)
+		LEFT JOIN ar ON (ar.id = i.trans_id)
+		LEFT JOIN ap ON (ap.id = i.trans_id)
+		   $where
+		 GROUP BY i.parts_id
+		 ORDER BY $form->{sort_col}|;
+	my $sth = $dbh->prepare($query) || $form->dberror($query);
+	$sth->execute() || $form->dberror($query);
+	@cols = qw(description sold revenue partnumber received expense);
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+		$ref->{net_income} = $ref->{revenue} - $ref->{expense}; 
+		map {$ref->{$_} =~ s/^\s*//} @cols;
+		map {$ref->{$_} =~ s/\s*$//} @cols;
+		push @{$form->{TB}}, $ref;
+	}
+	$sth->finish;
+	$dbh->commit;
     
 }
 
 
 
 sub yearend_statement {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->dbconnect($myconfig);
 
-  # if todate < existing yearends, delete GL and yearends
-  my $query = qq|SELECT trans_id FROM yearend
-                 WHERE transdate >= '$form->{todate}'|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
-  
-  my @trans_id = ();
-  my $id;
-  while (($id) = $sth->fetchrow_array) {
-    push @trans_id, $id;
-  }
-  $sth->finish;
+	# if todate < existing yearends, delete GL and yearends
+	my $query = qq|SELECT trans_id FROM yearend WHERE transdate >= ?|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{todate}) || $form->dberror($query);
+	
+	my @trans_id = ();
+	my $id;
+	while (($id) = $sth->fetchrow_array) {
+		push @trans_id, $id;
+	}
+	$sth->finish;
 
-  $query = qq|DELETE FROM gl
-              WHERE id = ?|;
-  $sth = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|DELETE FROM gl WHERE id = ?|;
+	$sth = $dbh->prepare($query) || $form->dberror($query);
 
-  $query = qq|DELETE FROM acc_trans
-              WHERE trans_id = ?|;
-  my $ath = $dbh->prepare($query) || $form->dberror($query);
+	$query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
+	my $ath = $dbh->prepare($query) || $form->dberror($query);
 	      
-  foreach $id (@trans_id) {
-    $sth->execute($id);
-    $ath->execute($id);
+	foreach $id (@trans_id) {
+		$sth->execute($id);
+		$ath->execute($id);
 
-    $sth->finish;
-    $ath->finish;
-  }
+		$sth->finish;
+		$ath->finish;
+	}
   
   
-  my $last_period = 0;
-  my @categories = qw(I E);
-  my $category;
+	my $last_period = 0;
+	my @categories = qw(I E);
+	my $category;
 
-  $form->{decimalplaces} *= 1;
+	$form->{decimalplaces} *= 1;
 
-  &get_accounts($dbh, 0, $form->{fromdate}, $form->{todate}, $form, \@categories);
+	&get_accounts($dbh, 0, $form->{fromdate}, $form->{todate}, $form, \@categories);
   
-  # disconnect
-  $dbh->disconnect;
+	$dbh->commit;
 
 
-  # now we got $form->{I}{accno}{ }
-  # and $form->{E}{accno}{  }
+	# now we got $form->{I}{accno}{ }
+	# and $form->{E}{accno}{  }
   
-  my %account = ( 'I' => { 'label' => 'income',
-                           'labels' => 'income',
-			   'ml' => 1 },
-		  'E' => { 'label' => 'expense',
-		           'labels' => 'expenses',
-			   'ml' => -1 }
+	my %account = ( 
+		'I' => { 
+			'label' => 'income',
+			'labels' => 'income',
+			'ml' => 1 },
+		'E' => { 
+			'label' => 'expense',
+			'labels' => 'expenses',
+			'ml' => -1 }
 		);
   
-  foreach $category (@categories) {
-    foreach $key (sort keys %{ $form->{$category} }) {
-      if ($form->{$category}{$key}{charttype} eq 'A') {
-	$form->{"total_$account{$category}{labels}_this_period"} += $form->{$category}{$key}{this} * $account{$category}{ml};
-      }
-    }
-  }
+	foreach $category (@categories) {
+		foreach $key (sort keys %{ $form->{$category} }) {
+			if ($form->{$category}{$key}{charttype} eq 'A') {
+				$form->{"total_$account{$category}{labels}_this_period"} 
+					+= $form->{$category}{$key}{this} 
+					* $account{$category}{ml};
+			}
+		}
+	}
 
 
-  # totals for income and expenses
-  $form->{total_income_this_period} = $form->round_amount($form->{total_income_this_period}, $form->{decimalplaces});
-  $form->{total_expenses_this_period} = $form->round_amount($form->{total_expenses_this_period}, $form->{decimalplaces});
+	# totals for income and expenses
+	$form->{total_income_this_period} = $form->round_amount(
+		$form->{total_income_this_period}, $form->{decimalplaces});
+	$form->{total_expenses_this_period} = $form->round_amount(
+		$form->{total_expenses_this_period}, $form->{decimalplaces});
 
-  # total for income/loss
-  $form->{total_this_period} = $form->{total_income_this_period} - $form->{total_expenses_this_period};
+	# total for income/loss
+	$form->{total_this_period} 
+		= $form->{total_income_this_period} 
+			- $form->{total_expenses_this_period};
   
 }
 
 
 sub income_statement {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $last_period = 0;
-  my @categories = qw(I E);
-  my $category;
+	my $last_period = 0;
+	my @categories = qw(I E);
+	my $category;
 
-  $form->{decimalplaces} *= 1;
+	$form->{decimalplaces} *= 1;
 
-  if (! ($form->{fromdate} || $form->{todate})) {
-    if ($form->{fromyear} && $form->{frommonth}) {
-      ($form->{fromdate}, $form->{todate}) = $form->from_to($form->{fromyear}, $form->{frommonth}, $form->{interval});
-    }
-  }
+	if (! ($form->{fromdate} || $form->{todate})) {
+		if ($form->{fromyear} && $form->{frommonth}) {
+			($form->{fromdate}, $form->{todate}) 
+				= $form->from_to(
+					$form->{fromyear}, 
+					$form->{frommonth}, $form->{interval});
+		}
+	}
   
-  &get_accounts($dbh, $last_period, $form->{fromdate}, $form->{todate}, $form, \@categories, 1);
+	&get_accounts(
+		$dbh, $last_period, $form->{fromdate}, $form->{todate}, 
+		$form, \@categories, 1);
   
-  if (! ($form->{comparefromdate} || $form->{comparetodate})) {
-    if ($form->{compareyear} && $form->{comparemonth}) {
-      ($form->{comparefromdate}, $form->{comparetodate}) = $form->from_to($form->{compareyear}, $form->{comparemonth}, $form->{interval});
-    }
-  }
+	if (! ($form->{comparefromdate} || $form->{comparetodate})) {
+		if ($form->{compareyear} && $form->{comparemonth}) {
+			($form->{comparefromdate}, $form->{comparetodate}) 
+				= $form->from_to(
+					$form->{compareyear}, 
+					$form->{comparemonth}, 
+					$form->{interval});
+		}
+	}
 
-  # if there are any compare dates
-  if ($form->{comparefromdate} || $form->{comparetodate}) {
-    $last_period = 1;
+	# if there are any compare dates
+	if ($form->{comparefromdate} || $form->{comparetodate}) {
+		$last_period = 1;
 
-    &get_accounts($dbh, $last_period, $form->{comparefromdate}, $form->{comparetodate}, $form, \@categories, 1);
-  }  
+		&get_accounts(
+			$dbh, $last_period, $form->{comparefromdate}, 
+			$form->{comparetodate}, $form, \@categories, 1);
+	}  
 
   
-  # disconnect
-  $dbh->disconnect;
+	$dbh->commit;
 
 
-  # now we got $form->{I}{accno}{ }
-  # and $form->{E}{accno}{  }
+	# now we got $form->{I}{accno}{ }
+	# and $form->{E}{accno}{  }
   
-  my %account = ( 'I' => { 'label' => 'income',
-                           'labels' => 'income',
-			   'ml' => 1 },
-		  'E' => { 'label' => 'expense',
-		           'labels' => 'expenses',
-			   'ml' => -1 }
+	my %account = ( 
+		'I' => { 
+			'label' => 'income',
+			'labels' => 'income',
+			'ml' => 1 },
+		  'E' => { 
+			'label' => 'expense',
+			'labels' => 'expenses',
+			'ml' => -1 }
 		);
   
-  my $str;
+	my $str;
   
-  foreach $category (@categories) {
+	foreach $category (@categories) {
     
-    foreach $key (sort keys %{ $form->{$category} }) {
-      # push description onto array
+		foreach $key (sort keys %{ $form->{$category} }) {
+			# push description onto array
       
-      $str = ($form->{l_heading}) ? $form->{padding} : "";
+			$str = ($form->{l_heading}) ? $form->{padding} : "";
       
-      if ($form->{$category}{$key}{charttype} eq "A") {
-	$str .= ($form->{l_accno}) ? "$form->{$category}{$key}{accno} - $form->{$category}{$key}{description}" : "$form->{$category}{$key}{description}";
-      }
-      if ($form->{$category}{$key}{charttype} eq "H") {
-	if ($account{$category}{subtotal} && $form->{l_subtotal}) {
-	  $dash = "- ";
-	  push(@{$form->{"$account{$category}{label}_account"}}, "$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
-	  push(@{$form->{"$account{$category}{labels}_this_period"}}, $form->format_amount($myconfig, $account{$category}{subthis} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+			if ($form->{$category}{$key}{charttype} eq "A") {
+				$str .= 
+					($form->{l_accno}) 
+					? "$form->{$category}{$key}{accno} - $form->{$category}{$key}{description}" 
+					: "$form->{$category}{$key}{description}";
+			}
+			if ($form->{$category}{$key}{charttype} eq "H") {
+				if ($account{$category}{subtotal} 
+						&& $form->{l_subtotal}) {
+
+					$dash = "- ";
+					push(@{$form->{"$account{$category}{label}_account"}}, 
+						"$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
+
+					push(@{$form->{"$account{$category}{labels}_this_period"}}, 
+						$form->format_amount(
+							$myconfig, 
+							$account{$category}{subthis} 
+								* $account{$category}{ml}, 
+							$form->{decimalplaces}, 
+							$dash));
 	  
-	  if ($last_period) {
-	    push(@{$form->{"$account{$category}{labels}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-	  }
+					if ($last_period) {
+						# Chris T:  Giving up on
+						# Formatting this one :-(
+						push(@{$form->{"$account{$category}{labels}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+					}
 	  
-	}
+				}
 	
-	$str = "$form->{br}$form->{bold}$form->{$category}{$key}{description}$form->{endbold}";
+				$str = "$form->{br}$form->{bold}$form->{$category}{$key}{description}$form->{endbold}";
 
-	$account{$category}{subthis} = $form->{$category}{$key}{this};
-	$account{$category}{sublast} = $form->{$category}{$key}{last};
-	$account{$category}{subdescription} = $form->{$category}{$key}{description};
-	$account{$category}{subtotal} = 1;
+				$account{$category}{subthis} 
+					= $form->{$category}{$key}{this};
+				$account{$category}{sublast} 
+					= $form->{$category}{$key}{last};
+				$account{$category}{subdescription} 
+					= $form->{$category}{$key}{description};
+				$account{$category}{subtotal} = 1;
 
-	$form->{$category}{$key}{this} = 0;
-	$form->{$category}{$key}{last} = 0;
+				$form->{$category}{$key}{this} = 0;
+				$form->{$category}{$key}{last} = 0;
 
-	next unless $form->{l_heading};
+				next unless $form->{l_heading};
 
-	$dash = " ";
-      }
+				$dash = " ";
+			}
       
-      push(@{$form->{"$account{$category}{label}_account"}}, $str);
+			push(@{$form->{"$account{$category}{label}_account"}}, 
+				$str);
       
-      if ($form->{$category}{$key}{charttype} eq 'A') {
-	$form->{"total_$account{$category}{labels}_this_period"} += $form->{$category}{$key}{this} * $account{$category}{ml};
-	$dash = "- ";
-      }
+			if ($form->{$category}{$key}{charttype} eq 'A') {
+					$form->{"total_$account{$category}{labels}_this_period"} += $form->{$category}{$key}{this} * $account{$category}{ml};
+
+					$dash = "- ";
+			}
       
-      push(@{$form->{"$account{$category}{labels}_this_period"}}, $form->format_amount($myconfig, $form->{$category}{$key}{this} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+			push(@{$form->{"$account{$category}{labels}_this_period"}}, $form->format_amount($myconfig, $form->{$category}{$key}{this} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
       
-      # add amount or - for last period
-      if ($last_period) {
-	$form->{"total_$account{$category}{labels}_last_period"} += $form->{$category}{$key}{last} * $account{$category}{ml};
+			# add amount or - for last period
+			if ($last_period) {
+				$form->{"total_$account{$category}{labels}_last_period"} += $form->{$category}{$key}{last} * $account{$category}{ml};
 
-	push(@{$form->{"$account{$category}{labels}_last_period"}}, $form->format_amount($myconfig,$form->{$category}{$key}{last} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-      }
-    }
+				push(@{$form->{"$account{$category}{labels}_last_period"}}, $form->format_amount($myconfig,$form->{$category}{$key}{last} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+			}
+		}
 
-    $str = ($form->{l_heading}) ? $form->{padding} : "";
-    if ($account{$category}{subtotal} && $form->{l_subtotal}) {
-      push(@{$form->{"$account{$category}{label}_account"}}, "$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
-      push(@{$form->{"$account{$category}{labels}_this_period"}}, $form->format_amount($myconfig, $account{$category}{subthis} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+		$str = ($form->{l_heading}) ? $form->{padding} : "";
+		if ($account{$category}{subtotal} && $form->{l_subtotal}) {
+			push(@{$form->{"$account{$category}{label}_account"}}, "$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
+			push(@{$form->{"$account{$category}{labels}_this_period"}}, $form->format_amount($myconfig, $account{$category}{subthis} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
 
-      if ($last_period) {
-	push(@{$form->{"$account{$category}{labels}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-      }
-    }
+			if ($last_period) {
+				push(@{$form->{"$account{$category}{labels}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+			}
+		}
       
-  }
+	}
 
 
-  # totals for income and expenses
-  $form->{total_income_this_period} = $form->round_amount($form->{total_income_this_period}, $form->{decimalplaces});
-  $form->{total_expenses_this_period} = $form->round_amount($form->{total_expenses_this_period}, $form->{decimalplaces});
+	# totals for income and expenses
+	$form->{total_income_this_period} = $form->round_amount($form->{total_income_this_period}, $form->{decimalplaces});
+	$form->{total_expenses_this_period} = $form->round_amount($form->{total_expenses_this_period}, $form->{decimalplaces});
 
-  # total for income/loss
-  $form->{total_this_period} = $form->{total_income_this_period} - $form->{total_expenses_this_period};
+	# total for income/loss
+	$form->{total_this_period} = $form->{total_income_this_period} - $form->{total_expenses_this_period};
   
-  if ($last_period) {
-    # total for income/loss
-    $form->{total_last_period} = $form->format_amount($myconfig, $form->{total_income_last_period} - $form->{total_expenses_last_period}, $form->{decimalplaces}, "- ");
+	if ($last_period) {
+		# total for income/loss
+		$form->{total_last_period} = $form->format_amount($myconfig, $form->{total_income_last_period} - $form->{total_expenses_last_period}, $form->{decimalplaces}, "- ");
     
-    # totals for income and expenses for last_period
-    $form->{total_income_last_period} = $form->format_amount($myconfig, $form->{total_income_last_period}, $form->{decimalplaces}, "- ");
-    $form->{total_expenses_last_period} = $form->format_amount($myconfig, $form->{total_expenses_last_period}, $form->{decimalplaces}, "- ");
+		# totals for income and expenses for last_period
+		$form->{total_income_last_period} = $form->format_amount($myconfig, $form->{total_income_last_period}, $form->{decimalplaces}, "- ");
+  		$form->{total_expenses_last_period} = $form->format_amount($myconfig, $form->{total_expenses_last_period}, $form->{decimalplaces}, "- ");
 
-  }
+	}
 
 
-  $form->{total_income_this_period} = $form->format_amount($myconfig,$form->{total_income_this_period}, $form->{decimalplaces}, "- ");
-  $form->{total_expenses_this_period} = $form->format_amount($myconfig,$form->{total_expenses_this_period}, $form->{decimalplaces}, "- ");
-  $form->{total_this_period} = $form->format_amount($myconfig,$form->{total_this_period}, $form->{decimalplaces}, "- ");
+	$form->{total_income_this_period} = $form->format_amount($myconfig,$form->{total_income_this_period}, $form->{decimalplaces}, "- ");
+	$form->{total_expenses_this_period} = $form->format_amount($myconfig,$form->{total_expenses_this_period}, $form->{decimalplaces}, "- ");
+	$form->{total_this_period} = $form->format_amount($myconfig,$form->{total_this_period}, $form->{decimalplaces}, "- ");
 
 }
 
 
 sub balance_sheet {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
   
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $last_period = 0;
-  my @categories = qw(A L Q);
+	my $last_period = 0;
+	my @categories = qw(A L Q);
 
-  my $null;
+	my $null;
   
-  if ($form->{asofdate}) {
-    if ($form->{asofyear} && $form->{asofmonth}) {
-      if ($form->{asofdate} !~ /\W/) {
-	$form->{asofdate} = "$form->{asofyear}$form->{asofmonth}$form->{asofdate}";
-      }
-    }
-  } else {
-    if ($form->{asofyear} && $form->{asofmonth}) {
-      ($null, $form->{asofdate}) = $form->from_to($form->{asofyear}, $form->{asofmonth});
-    }
-  }
+	if ($form->{asofdate}) {
+		if ($form->{asofyear} && $form->{asofmonth}) {
+			if ($form->{asofdate} !~ /\W/) {
+				$form->{asofdate} 
+					= "$form->{asofyear}$form->{asofmonth}$form->{asofdate}";
+			}
+		}
+	} else {
+		if ($form->{asofyear} && $form->{asofmonth}) {
+			($null, $form->{asofdate}) 
+				= $form->from_to(
+					$form->{asofyear}, $form->{asofmonth});
+		}
+	}
   
-  # if there are any dates construct a where
-  if ($form->{asofdate}) {
+	# if there are any dates construct a where
+	if ($form->{asofdate}) {
     
-    $form->{this_period} = "$form->{asofdate}";
-    $form->{period} = "$form->{asofdate}";
+		$form->{this_period} = "$form->{asofdate}";
+		$form->{period} = "$form->{asofdate}";
     
-  }
+	}
 
-  $form->{decimalplaces} *= 1;
+	$form->{decimalplaces} *= 1;
 
-  &get_accounts($dbh, $last_period, "", $form->{asofdate}, $form, \@categories, 1);
+	&get_accounts(
+		$dbh, $last_period, "", $form->{asofdate}, $form, 
+		\@categories, 1);
   
-  if ($form->{compareasofdate}) {
-    if ($form->{compareasofyear} && $form->{compareasofmonth}) {
-      if ($form->{compareasofdate} !~ /\W/) {
-	$form->{compareasofdate} = "$form->{compareasofyear}$form->{compareasofmonth}$form->{compareasofdate}";
-      }
-    }
-  } else {
-    if ($form->{compareasofyear} && $form->{compareasofmonth}) {
-      ($null, $form->{compareasofdate}) = $form->from_to($form->{compareasofyear}, $form->{compareasofmonth});
-    }
-  }
+	if ($form->{compareasofdate}) {
+		if ($form->{compareasofyear} && $form->{compareasofmonth}) {
+			if ($form->{compareasofdate} !~ /\W/) {
+				$form->{compareasofdate} = "$form->{compareasofyear}$form->{compareasofmonth}$form->{compareasofdate}";
+			}
+		}
+	} else {
+		if ($form->{compareasofyear} && $form->{compareasofmonth}) {
+			($null, $form->{compareasofdate}) = $form->from_to(
+				$form->{compareasofyear}, 
+				$form->{compareasofmonth});
+		}
+	}
   
-  # if there are any compare dates
-  if ($form->{compareasofdate}) {
+	# if there are any compare dates
+	if ($form->{compareasofdate}) {
 
-    $last_period = 1;
-    &get_accounts($dbh, $last_period, "", $form->{compareasofdate}, $form, \@categories, 1);
+		$last_period = 1;
+		&get_accounts(
+			$dbh, $last_period, "", $form->{compareasofdate}, 
+			$form, \@categories, 1);
   
-    $form->{last_period} = "$form->{compareasofdate}";
+		$form->{last_period} = "$form->{compareasofdate}";
 
-  }  
+	}  
 
   
-  # disconnect
-  $dbh->disconnect;
+	$dbh->commit;
 
 
-  # now we got $form->{A}{accno}{ }    assets
-  # and $form->{L}{accno}{ }           liabilities
-  # and $form->{Q}{accno}{ }           equity
-  # build asset accounts
+	# now we got $form->{A}{accno}{ }    assets
+	# and $form->{L}{accno}{ }           liabilities
+	# and $form->{Q}{accno}{ }           equity
+	# build asset accounts
   
-  my $str;
-  my $key;
+	my $str;
+	my $key;
   
-  my %account  = ( 'A' => { 'label' => 'asset',
-                            'labels' => 'assets',
-			    'ml' => -1 },
-		   'L' => { 'label' => 'liability',
-		            'labels' => 'liabilities',
-			    'ml' => 1 },
-		   'Q' => { 'label' => 'equity',
-		            'labels' => 'equity',
-			    'ml' => 1 }
+	my %account  = ( 
+		'A' => {
+			'label' => 'asset',
+			'labels' => 'assets',
+			'ml' => -1 },
+		'L' => { 
+			'label' => 'liability',
+			'labels' => 'liabilities',
+			'ml' => 1 },
+		'Q' => { 
+			'label' => 'equity',
+			'labels' => 'equity',
+			'ml' => 1 }
 		);	    
 
 
-   foreach $category (@categories) {			    
+	foreach $category (@categories) {			    
 
-    foreach $key (sort keys %{ $form->{$category} }) {
+		foreach $key (sort keys %{ $form->{$category} }) {
 
-      $str = ($form->{l_heading}) ? $form->{padding} : "";
+			$str = ($form->{l_heading}) ? $form->{padding} : "";
 
-      if ($form->{$category}{$key}{charttype} eq "A") {
-	$str .= ($form->{l_accno}) ? "$form->{$category}{$key}{accno} - $form->{$category}{$key}{description}" : "$form->{$category}{$key}{description}";
-      }
-      if ($form->{$category}{$key}{charttype} eq "H") {
-	if ($account{$category}{subtotal} && $form->{l_subtotal}) {
-	  $dash = "- ";
-	  push(@{$form->{"$account{$category}{label}_account"}}, "$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
-	  push(@{$form->{"$account{$category}{label}_this_period"}}, $form->format_amount($myconfig, $account{$category}{subthis} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+			if ($form->{$category}{$key}{charttype} eq "A") {
+				$str .= 
+					($form->{l_accno}) 
+					? "$form->{$category}{$key}{accno} - $form->{$category}{$key}{description}" 
+					: "$form->{$category}{$key}{description}";
+			}
+			if ($form->{$category}{$key}{charttype} eq "H") {
+				if ($account{$category}{subtotal} 
+						&& $form->{l_subtotal}) {
+
+					$dash = "- ";
+					push(@{$form->{"$account{$category}{label}_account"}}, "$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
+					push(@{$form->{"$account{$category}{label}_this_period"}}, $form->format_amount($myconfig, $account{$category}{subthis} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
 	  
-	  if ($last_period) {
-	    push(@{$form->{"$account{$category}{label}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-	  }
+					if ($last_period) {
+						push(@{$form->{"$account{$category}{label}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+					}
+				}
+
+				$str = "$form->{bold}$form->{$category}{$key}{description}$form->{endbold}";
+	
+				$account{$category}{subthis} = $form->{$category}{$key}{this};
+				$account{$category}{sublast} = $form->{$category}{$key}{last};
+				$account{$category}{subdescription} = $form->{$category}{$key}{description};
+				$account{$category}{subtotal} = 1;
+	
+				$form->{$category}{$key}{this} = 0;
+				$form->{$category}{$key}{last} = 0;
+
+				next unless $form->{l_heading};
+
+				$dash = " ";
+			}
+      
+			# push description onto array
+			push(@{$form->{"$account{$category}{label}_account"}}, 
+				$str);
+      
+			if ($form->{$category}{$key}{charttype} eq 'A') {
+				$form->{"total_$account{$category}{labels}_this_period"} += $form->{$category}{$key}{this} * $account{$category}{ml};
+				$dash = "- ";
+			}
+
+			push(@{$form->{"$account{$category}{label}_this_period"}}, $form->format_amount($myconfig, $form->{$category}{$key}{this} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+      
+			if ($last_period) {
+				$form->{"total_$account{$category}{labels}_last_period"} += $form->{$category}{$key}{last} * $account{$category}{ml};
+
+				push(@{$form->{"$account{$category}{label}_last_period"}}, $form->format_amount($myconfig, $form->{$category}{$key}{last} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+			}
+		}
+
+		$str = ($form->{l_heading}) ? $form->{padding} : "";
+		if ($account{$category}{subtotal} && $form->{l_subtotal}) {
+			push(@{$form->{"$account{$category}{label}_account"}}, "$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
+			push(@{$form->{"$account{$category}{label}_this_period"}}, $form->format_amount($myconfig, $account{$category}{subthis} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+      
+			if ($last_period) {
+				push(@{$form->{"$account{$category}{label}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
+			}
+		}
+
 	}
 
-	$str = "$form->{bold}$form->{$category}{$key}{description}$form->{endbold}";
-	
-	$account{$category}{subthis} = $form->{$category}{$key}{this};
-	$account{$category}{sublast} = $form->{$category}{$key}{last};
-	$account{$category}{subdescription} = $form->{$category}{$key}{description};
-	$account{$category}{subtotal} = 1;
-	
-	$form->{$category}{$key}{this} = 0;
-	$form->{$category}{$key}{last} = 0;
-
-	next unless $form->{l_heading};
-
-	$dash = " ";
-      }
-      
-      # push description onto array
-      push(@{$form->{"$account{$category}{label}_account"}}, $str);
-      
-      if ($form->{$category}{$key}{charttype} eq 'A') {
-	$form->{"total_$account{$category}{labels}_this_period"} += $form->{$category}{$key}{this} * $account{$category}{ml};
-	$dash = "- ";
-      }
-
-      push(@{$form->{"$account{$category}{label}_this_period"}}, $form->format_amount($myconfig, $form->{$category}{$key}{this} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-      
-      if ($last_period) {
-	$form->{"total_$account{$category}{labels}_last_period"} += $form->{$category}{$key}{last} * $account{$category}{ml};
-
-	push(@{$form->{"$account{$category}{label}_last_period"}}, $form->format_amount($myconfig, $form->{$category}{$key}{last} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-      }
-    }
-
-    $str = ($form->{l_heading}) ? $form->{padding} : "";
-    if ($account{$category}{subtotal} && $form->{l_subtotal}) {
-      push(@{$form->{"$account{$category}{label}_account"}}, "$str$form->{bold}$account{$category}{subdescription}$form->{endbold}");
-      push(@{$form->{"$account{$category}{label}_this_period"}}, $form->format_amount($myconfig, $account{$category}{subthis} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-      
-      if ($last_period) {
-	push(@{$form->{"$account{$category}{label}_last_period"}}, $form->format_amount($myconfig, $account{$category}{sublast} * $account{$category}{ml}, $form->{decimalplaces}, $dash));
-      }
-    }
-
-  }
-
   
-  # totals for assets, liabilities
-  $form->{total_assets_this_period} = $form->round_amount($form->{total_assets_this_period}, $form->{decimalplaces});
-  $form->{total_liabilities_this_period} = $form->round_amount($form->{total_liabilities_this_period}, $form->{decimalplaces});
-  $form->{total_equity_this_period} = $form->round_amount($form->{total_equity_this_period}, $form->{decimalplaces});
+	# totals for assets, liabilities
+	$form->{total_assets_this_period} = $form->round_amount(
+		$form->{total_assets_this_period}, $form->{decimalplaces});
+	$form->{total_liabilities_this_period} = $form->round_amount(
+		$form->{total_liabilities_this_period}, 
+		$form->{decimalplaces});
+	$form->{total_equity_this_period} = $form->round_amount(
+		$form->{total_equity_this_period}, $form->{decimalplaces});
 
-  # calculate earnings
-  $form->{earnings_this_period} = $form->{total_assets_this_period} - $form->{total_liabilities_this_period} - $form->{total_equity_this_period};
+	# calculate earnings
+	$form->{earnings_this_period} = $form->{total_assets_this_period} 
+		- $form->{total_liabilities_this_period} 
+		- $form->{total_equity_this_period};
 
-  push(@{$form->{equity_this_period}}, $form->format_amount($myconfig, $form->{earnings_this_period}, $form->{decimalplaces}, "- "));
+	push(@{$form->{equity_this_period}}, 
+		$form->format_amount(
+			$myconfig, $form->{earnings_this_period}, 
+			$form->{decimalplaces}, "- "));
   
-  $form->{total_equity_this_period} = $form->round_amount($form->{total_equity_this_period} + $form->{earnings_this_period}, $form->{decimalplaces});
+	$form->{total_equity_this_period} = $form->round_amount(
+		$form->{total_equity_this_period} 
+			+ $form->{earnings_this_period}, 
+		$form->{decimalplaces});
   
-  # add liability + equity
-  $form->{total_this_period} = $form->format_amount($myconfig, $form->{total_liabilities_this_period} + $form->{total_equity_this_period}, $form->{decimalplaces}, "- ");
+	# add liability + equity
+	$form->{total_this_period} = $form->format_amount(
+		$myconfig, 
+		$form->{total_liabilities_this_period} 
+			+ $form->{total_equity_this_period}, 
+		$form->{decimalplaces}, "- ");
 
 
-  if ($last_period) {
-    # totals for assets, liabilities
-    $form->{total_assets_last_period} = $form->round_amount($form->{total_assets_last_period}, $form->{decimalplaces});
-    $form->{total_liabilities_last_period} = $form->round_amount($form->{total_liabilities_last_period}, $form->{decimalplaces});
-    $form->{total_equity_last_period} = $form->round_amount($form->{total_equity_last_period}, $form->{decimalplaces});
+	if ($last_period) {
+		# totals for assets, liabilities
+		$form->{total_assets_last_period} = $form->round_amount(
+			$form->{total_assets_last_period}, 
+			$form->{decimalplaces});
+		$form->{total_liabilities_last_period} = $form->round_amount(
+			$form->{total_liabilities_last_period}, 
+			$form->{decimalplaces});
+		$form->{total_equity_last_period} = $form->round_amount(
+			$form->{total_equity_last_period}, 
+			$form->{decimalplaces});
 
-    # calculate retained earnings
-    $form->{earnings_last_period} = $form->{total_assets_last_period} - $form->{total_liabilities_last_period} - $form->{total_equity_last_period};
+		# calculate retained earnings
+		$form->{earnings_last_period}
+			= $form->{total_assets_last_period} 
+			- $form->{total_liabilities_last_period} 
+			- $form->{total_equity_last_period};
 
-    push(@{$form->{equity_last_period}}, $form->format_amount($myconfig,$form->{earnings_last_period}, $form->{decimalplaces}, "- "));
+		push(@{$form->{equity_last_period}}, 
+			$form->format_amount(
+				$myconfig,$form->{earnings_last_period}, 
+				$form->{decimalplaces}, "- "));
     
-    $form->{total_equity_last_period} = $form->round_amount($form->{total_equity_last_period} + $form->{earnings_last_period}, $form->{decimalplaces});
+		$form->{total_equity_last_period} = $form->round_amount(
+			$form->{total_equity_last_period} 
+				+ $form->{earnings_last_period}, 
+			$form->{decimalplaces});
 
-    # add liability + equity
-    $form->{total_last_period} = $form->format_amount($myconfig, $form->{total_liabilities_last_period} + $form->{total_equity_last_period}, $form->{decimalplaces}, "- ");
+		# add liability + equity
+		$form->{total_last_period} = $form->format_amount(
+			$myconfig, 
+			$form->{total_liabilities_last_period} 
+				+ $form->{total_equity_last_period}, 
+			$form->{decimalplaces}, "- ");
 
-  }
+	}
 
   
-  $form->{total_liabilities_last_period} = $form->format_amount($myconfig, $form->{total_liabilities_last_period}, $form->{decimalplaces}, "- ") if ($form->{total_liabilities_last_period});
+	$form->{total_liabilities_last_period} = $form->format_amount(
+		$myconfig, $form->{total_liabilities_last_period}, 
+		$form->{decimalplaces}, "- ") 
+			if ($form->{total_liabilities_last_period});
   
-  $form->{total_equity_last_period} = $form->format_amount($myconfig, $form->{total_equity_last_period}, $form->{decimalplaces}, "- ") if ($form->{total_equity_last_period});
+	$form->{total_equity_last_period} = $form->format_amount(
+		$myconfig, $form->{total_equity_last_period}, 
+		$form->{decimalplaces}, "- ") 
+			if ($form->{total_equity_last_period});
   
-  $form->{total_assets_last_period} = $form->format_amount($myconfig, $form->{total_assets_last_period}, $form->{decimalplaces}, "- ") if ($form->{total_assets_last_period});
+	$form->{total_assets_last_period} = $form->format_amount(
+		$myconfig, $form->{total_assets_last_period}, 
+		$form->{decimalplaces}, "- ") 
+			if ($form->{total_assets_last_period});
   
-  $form->{total_assets_this_period} = $form->format_amount($myconfig, $form->{total_assets_this_period}, $form->{decimalplaces}, "- ");
+	$form->{total_assets_this_period} = $form->format_amount(
+		$myconfig, $form->{total_assets_this_period}, 
+		$form->{decimalplaces}, "- ");
   
-  $form->{total_liabilities_this_period} = $form->format_amount($myconfig, $form->{total_liabilities_this_period}, $form->{decimalplaces}, "- ");
+	$form->{total_liabilities_this_period} = $form->format_amount(
+		$myconfig, $form->{total_liabilities_this_period}, 
+		$form->{decimalplaces}, "- ");
   
-  $form->{total_equity_this_period} = $form->format_amount($myconfig, $form->{total_equity_this_period}, $form->{decimalplaces}, "- ");
+	$form->{total_equity_this_period} = $form->format_amount(
+		$myconfig, $form->{total_equity_this_period}, 
+		$form->{decimalplaces}, "- ");
 
 }
 
 
 sub get_accounts {
-  my ($dbh, $last_period, $fromdate, $todate, $form, $categories, $excludeyearend) = @_;
+	my  ($dbh, $last_period, $fromdate, $todate, $form, $categories, 
+		$excludeyearend) = @_;
 
-  my $department_id;
-  my $project_id;
+	my $department_id;
+	my $project_id;
   
-  ($null, $department_id) = split /--/, $form->{department};
-  ($null, $project_id) = split /--/, $form->{projectnumber};
+	($null, $department_id) = split /--/, $form->{department};
+	($null, $project_id) = split /--/, $form->{projectnumber};
 
-  my $query;
-  my $dpt_where;
-  my $dpt_join;
-  my $project;
-  my $where = "1 = 1";
-  my $glwhere = "";
-  my $subwhere = "";
-  my $yearendwhere = "1 = 1";
-  my $item;
+	my $query;
+	my $dpt_where;
+	my $dpt_join;
+	my $project;
+	my $where = "1 = 1";
+	my $glwhere = "";
+	my $subwhere = "";
+	my $yearendwhere = "1 = 1";
+	my $item;
  
-  my $category = "AND (";
-  foreach $item (@{ $categories }) {
-    $category .= qq|c.category = '$item' OR |;
-  }
-  $category =~ s/OR $/\)/;
+	my $category = "AND (";
+	foreach $item (@{ $categories }) {
+		$category .= qq|c.category = |.$dbh->quote($item).qq| OR |;
+	}
+	$category =~ s/OR $/\)/;
 
 
-  # get headings
-  $query = qq|SELECT accno, description, category
-	      FROM chart c
-	      WHERE c.charttype = 'H'
-	      $category
-	      ORDER by c.accno|;
-
-  if ($form->{accounttype} eq 'gifi')
-  {
-    $query = qq|SELECT g.accno, g.description, c.category
-		FROM gifi g
-		JOIN chart c ON (c.gifi_accno = g.accno)
-		WHERE c.charttype = 'H'
-		$category
-		ORDER BY g.accno|;
-  }
-
-  $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
-  
-  my @headingaccounts = ();
-  while ($ref = $sth->fetchrow_hashref(NAME_lc))
-  {
-    $form->{$ref->{category}}{$ref->{accno}}{description} = "$ref->{description}";
-    $form->{$ref->{category}}{$ref->{accno}}{charttype} = "H";
-    $form->{$ref->{category}}{$ref->{accno}}{accno} = $ref->{accno};
-    
-    push @headingaccounts, $ref->{accno};
-  }
-
-  $sth->finish;
-
-  if ($form->{method} eq 'cash' && !$todate) {
-    ($todate) = $dbh->selectrow_array(qq|SELECT current_date|);
-  }
-
-  if ($fromdate) {
-    if ($form->{method} eq 'cash') {
-      $subwhere .= " AND transdate >= '$fromdate'";
-      $glwhere = " AND ac.transdate >= '$fromdate'";
-    } else {
-      $where .= " AND ac.transdate >= '$fromdate'";
-    }
-  }
-
-  if ($todate) {
-    $where .= " AND ac.transdate <= '$todate'";
-    $subwhere .= " AND transdate <= '$todate'";
-    $yearendwhere = "ac.transdate < '$todate'";
-  }
-
-  if ($excludeyearend) {
-    $ywhere = " AND ac.trans_id NOT IN
-               (SELECT trans_id FROM yearend)";
-	       
-   if ($todate) {
-      $ywhere = " AND ac.trans_id NOT IN
-		 (SELECT trans_id FROM yearend
-		  WHERE transdate <= '$todate')";
-    }
-       
-    if ($fromdate) {
-      $ywhere = " AND ac.trans_id NOT IN
-		 (SELECT trans_id FROM yearend
-		  WHERE transdate >= '$fromdate')";
-      if ($todate) {
-	$ywhere = " AND ac.trans_id NOT IN
-		   (SELECT trans_id FROM yearend
-		    WHERE transdate >= '$fromdate'
-		    AND transdate <= '$todate')";
-      }
-    }
-  }
-
-  if ($department_id) {
-    $dpt_join = qq|
-               JOIN department t ON (a.department_id = t.id)
-		  |;
-    $dpt_where = qq|
-               AND t.id = $department_id
-	           |;
-  }
-
-  if ($project_id) {
-    $project = qq|
-                 AND ac.project_id = $project_id
-		 |;
-  }
-
-
-  if ($form->{accounttype} eq 'gifi') {
-    
-    if ($form->{method} eq 'cash') {
-
+	# get headings
 	$query = qq|
-	
-	         SELECT g.accno, sum(ac.amount) AS amount,
-		 g.description, c.category
-		 FROM acc_trans ac
-	         JOIN chart c ON (c.id = ac.chart_id)
-	         JOIN ar a ON (a.id = ac.trans_id)
-	         JOIN gifi g ON (g.accno = c.gifi_accno)
-	         $dpt_join
-		 WHERE $where
-		 $ywhere
-		 $dpt_where
-		 $category
-		 AND ac.trans_id IN
-		   (
-		     SELECT trans_id
-		     FROM acc_trans
-		     JOIN chart ON (chart_id = id)
-		     WHERE link LIKE '%AR_paid%'
-		     $subwhere
-		   )
-		 $project
-		 GROUP BY g.accno, g.description, c.category
-		 
-       UNION ALL
-       
-		 SELECT '' AS accno, SUM(ac.amount) AS amount,
-		 '' AS description, c.category
-		 FROM acc_trans ac
-	         JOIN chart c ON (c.id = ac.chart_id)
-	         JOIN ar a ON (a.id = ac.trans_id)
-	         $dpt_join
-		 WHERE $where
-		 $ywhere
-		 $dpt_where
-		 $category
-		 AND c.gifi_accno = ''
-		 AND ac.trans_id IN
-		   (
-		     SELECT trans_id
-		     FROM acc_trans
-		     JOIN chart ON (chart_id = id)
-		     WHERE link LIKE '%AR_paid%'
-		     $subwhere
-		   )
-		 $project
-		 GROUP BY c.category
+		  SELECT accno, description, category
+		    FROM chart c
+		   WHERE c.charttype = 'H' $category
+		ORDER BY c.accno|;
 
-       UNION ALL
+	if ($form->{accounttype} eq 'gifi'){
+	  $query = qq|
+		  SELECT g.accno, g.description, c.category
+		    FROM gifi g
+		    JOIN chart c ON (c.gifi_accno = g.accno)
+		   WHERE c.charttype = 'H' $category
+		ORDER BY g.accno|;
+	}
 
-       	         SELECT g.accno, sum(ac.amount) AS amount,
-		 g.description, c.category
-		 FROM acc_trans ac
-	         JOIN chart c ON (c.id = ac.chart_id)
-	         JOIN ap a ON (a.id = ac.trans_id)
-	         JOIN gifi g ON (g.accno = c.gifi_accno)
-	         $dpt_join
-		 WHERE $where
-		 $ywhere
-		 $dpt_where
-		 $category
-		 AND ac.trans_id IN
-		   (
-		     SELECT trans_id
-		     FROM acc_trans
-		     JOIN chart ON (chart_id = id)
-		     WHERE link LIKE '%AP_paid%'
-		     $subwhere
-		   )
-		 $project
-		 GROUP BY g.accno, g.description, c.category
-		 
-       UNION ALL
-       
-		 SELECT '' AS accno, SUM(ac.amount) AS amount,
-		 '' AS description, c.category
-		 FROM acc_trans ac
-	         JOIN chart c ON (c.id = ac.chart_id)
-	         JOIN ap a ON (a.id = ac.trans_id)
-	         $dpt_join
-		 WHERE $where
-		 $ywhere
-		 $dpt_where
-		 $category
-		 AND c.gifi_accno = ''
-		 AND ac.trans_id IN
-		   (
-		     SELECT trans_id
-		     FROM acc_trans
-		     JOIN chart ON (chart_id = id)
-		     WHERE link LIKE '%AP_paid%'
-		     $subwhere
-		   )
-		 $project
-		 GROUP BY c.category
+	$sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
+  
+	my @headingaccounts = ();
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)){
+		$form->{$ref->{category}}{$ref->{accno}}{description} 
+			= "$ref->{description}";
 
-       UNION ALL
+		$form->{$ref->{category}}{$ref->{accno}}{charttype} = "H";
+		$form->{$ref->{category}}{$ref->{accno}}{accno} = $ref->{accno};
+    
+		push @headingaccounts, $ref->{accno};
+	}
 
--- add gl
-	
-	         SELECT g.accno, sum(ac.amount) AS amount,
-		 g.description, c.category
-		 FROM acc_trans ac
-	         JOIN chart c ON (c.id = ac.chart_id)
-	         JOIN gifi g ON (g.accno = c.gifi_accno)
-	         JOIN gl a ON (a.id = ac.trans_id)
-	         $dpt_join
-		 WHERE $where
-		 $ywhere
-		 $glwhere
-		 $dpt_where
-		 $category
-		 AND NOT (c.link = 'AR' OR c.link = 'AP')
-		 $project
-		 GROUP BY g.accno, g.description, c.category
-		 
-       UNION ALL
-       
-		 SELECT '' AS accno, SUM(ac.amount) AS amount,
-		 '' AS description, c.category
-		 FROM acc_trans ac
-	         JOIN chart c ON (c.id = ac.chart_id)
-	         JOIN gl a ON (a.id = ac.trans_id)
-	         $dpt_join
-		 WHERE $where
-		 $ywhere
-		 $glwhere
-		 $dpt_where
-		 $category
-		 AND c.gifi_accno = ''
-		 AND NOT (c.link = 'AR' OR c.link = 'AP')
-		 $project
-		 GROUP BY c.category
-		 |;
+	$sth->finish;
 
-      if ($excludeyearend) {
+	if ($form->{method} eq 'cash' && !$todate) {
+		($todate) = $dbh->selectrow_array(qq|SELECT current_date|);
+	}
 
-         # this is for the yearend
+	if ($fromdate) {
+		if ($form->{method} eq 'cash') {
+			$subwhere .= " AND transdate >= ".
+				$dbh->quote($fromdate);
+			$glwhere = " AND ac.transdate >= ".
+				$dbh->quote($fromdate);
+		} else {
+			$where .= " AND ac.transdate >= ".
+				$dbh->quote($fromdate);
+		}
+	}
 
-	 $query .= qq|
-
-       UNION ALL
-       
-	         SELECT g.accno, sum(ac.amount) AS amount,
-		 g.description, c.category
-		 FROM yearend y
-		 JOIN gl a ON (a.id = y.trans_id)
-		 JOIN acc_trans ac ON (ac.trans_id = y.trans_id)
-		 JOIN chart c ON (c.id = ac.chart_id)
-		 JOIN gifi g ON (g.accno = c.gifi_accno)
-	         $dpt_join
-		 WHERE $yearendwhere
-		 AND c.category = 'Q'
-		 $dpt_where
-		 $project
-		 GROUP BY g.accno, g.description, c.category
-		 |;
-      }
-
-    } else {
-
-      if ($department_id) {
-	$dpt_join = qq|
-	      JOIN dpt_trans t ON (t.trans_id = ac.trans_id)
-	      |;
-	$dpt_where = qq|
-               AND t.department_id = $department_id
-	      |;
-      }
-
-      $query = qq|
-      
-	      SELECT g.accno, SUM(ac.amount) AS amount,
-	      g.description, c.category
-	      FROM acc_trans ac
-	      JOIN chart c ON (c.id = ac.chart_id)
-	      JOIN gifi g ON (c.gifi_accno = g.accno)
-	      $dpt_join
-	      WHERE $where
-	      $ywhere
-	      $dpt_where
-	      $category
-	      $project
-	      GROUP BY g.accno, g.description, c.category
-	      
-	   UNION ALL
-	   
-	      SELECT '' AS accno, SUM(ac.amount) AS amount,
-	      '' AS description, c.category
-	      FROM acc_trans ac
-	      JOIN chart c ON (c.id = ac.chart_id)
-	      $dpt_join
-	      WHERE $where
-	      $ywhere
-	      $dpt_where
-	      $category
-	      AND c.gifi_accno = ''
-	      $project
-	      GROUP BY c.category
-	      |;
+	if ($todate) {
+		$where .= " AND ac.transdate <= ".$dbh->quote($todate);
+		$subwhere .= " AND transdate <= ".$dbh->quote($todate);
+		$yearendwhere = "ac.transdate < ".$dbh->quote($todate);
+	}
 
 	if ($excludeyearend) {
-
-	  # this is for the yearend
-
-	  $query .= qq|
-
-       UNION ALL
+		$ywhere = "
+			AND ac.trans_id NOT IN (SELECT trans_id FROM yearend)";
+	       
+		if ($todate) {
+			$ywhere = " 
+				AND ac.trans_id NOT IN 
+				(SELECT trans_id FROM yearend
+				  WHERE transdate <= ".dbh->quote($todate).")";
+		}
        
-	         SELECT g.accno, sum(ac.amount) AS amount,
-		 g.description, c.category
-		 FROM yearend y
-		 JOIN gl a ON (a.id = y.trans_id)
-		 JOIN acc_trans ac ON (ac.trans_id = y.trans_id)
-		 JOIN chart c ON (c.id = ac.chart_id)
-		 JOIN gifi g ON (g.accno = c.gifi_accno)
-	         $dpt_join
-		 WHERE $yearendwhere
-		 AND c.category = 'Q'
-		 $dpt_where
-		 $project
-		 GROUP BY g.accno, g.description, c.category
-	      |;
+		if ($fromdate) {
+			$ywhere = "
+				AND ac.trans_id NOT IN 
+				(SELECT trans_id FROM yearend
+				  WHERE transdate >= ".$dbh->quote($fromdate).
+				")";
+			if ($todate) {
+				$ywhere = " 
+					AND ac.trans_id NOT IN
+					(SELECT trans_id FROM yearend
+					WHERE transdate >= "
+						.$dbh->quote($fromdate)."
+					      AND transdate <= ".
+						$dbh->quote($todate).")";
+			}
+		}
 	}
-    }
+
+	if ($department_id) {
+		$dpt_join = qq|
+			JOIN department t ON (a.department_id = t.id)|;
+		$dpt_where = qq|
+			AND t.id = $department_id|;
+	}
+
+	if ($project_id) {
+		$project = qq|
+			AND ac.project_id = $project_id|;
+	}
+
+
+	if ($form->{accounttype} eq 'gifi') {
     
-  } else {    # standard account
+ 		if ($form->{method} eq 'cash') {
 
-    if ($form->{method} eq 'cash') {
-
-      $query = qq|
-	
-	         SELECT c.accno, sum(ac.amount) AS amount,
-		 c.description, c.category
-		 FROM acc_trans ac
-		 JOIN chart c ON (c.id = ac.chart_id)
-		 JOIN ar a ON (a.id = ac.trans_id)
-		 $dpt_join
-		 WHERE $where
-	         $ywhere
-		 $dpt_where
-		 $category
-		 AND ac.trans_id IN
-		   (
-		     SELECT trans_id
-		     FROM acc_trans
-		     JOIN chart ON (chart_id = id)
-		     WHERE link LIKE '%AR_paid%'
-		     $subwhere
-		   )
-		     
-		 $project
-		 GROUP BY c.accno, c.description, c.category
+			$query = qq|
+				  SELECT g.accno, sum(ac.amount) AS amount,
+				         g.description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				    JOIN ar a ON (a.id = ac.trans_id)
+				    JOIN gifi g ON (g.accno = c.gifi_accno)
+				    $dpt_join
+				   WHERE $where $ywhere $dpt_where $category
+				         AND ac.trans_id IN (
+				         SELECT trans_id
+				           FROM acc_trans
+					   JOIN chart ON (chart_id = id)
+				          WHERE link LIKE '%AR_paid%'
+				                $subwhere)
+				$project
+				GROUP BY g.accno, g.description, c.category
 		 
-	UNION ALL
-	
-	         SELECT c.accno, sum(ac.amount) AS amount,
-		 c.description, c.category
-		 FROM acc_trans ac
-		 JOIN chart c ON (c.id = ac.chart_id)
-		 JOIN ap a ON (a.id = ac.trans_id)
-		 $dpt_join
-		 WHERE $where
-	         $ywhere
-		 $dpt_where
-		 $category
-		 AND ac.trans_id IN
-		   (
-		     SELECT trans_id
-		     FROM acc_trans
-		     JOIN chart ON (chart_id = id)
-		     WHERE link LIKE '%AP_paid%'
-		     $subwhere
-		   )
-		     
-		 $project
-		 GROUP BY c.accno, c.description, c.category
+				UNION ALL
+
+				  SELECT '' AS accno, SUM(ac.amount) AS amount,
+				         '' AS description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				    JOIN ar a ON (a.id = ac.trans_id)
+				    $dpt_join
+				   WHERE $where $ywhere $dpt_where $category
+				         AND c.gifi_accno = '' AND 
+				         ac.trans_id IN
+				         (SELECT trans_id FROM acc_trans
+				            JOIN chart ON (chart_id = id)
+				           WHERE link LIKE '%AR_paid%'
+				         $subwhere) $project
+				GROUP BY c.category
+
+				UNION ALL
+
+				  SELECT g.accno, sum(ac.amount) AS amount,
+				         g.description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				    JOIN ap a ON (a.id = ac.trans_id)
+				    JOIN gifi g ON (g.accno = c.gifi_accno)
+				$dpt_join
+				   WHERE $where $ywhere $dpt_where $category
+				         AND ac.trans_id IN
+				         (SELECT trans_id FROM acc_trans
+				            JOIN chart ON (chart_id = id)
+				           WHERE link LIKE '%AP_paid%'
+				                 $subwhere) $project
+				GROUP BY g.accno, g.description, c.category
 		 
-        UNION ALL
+				UNION ALL
+       
+				  SELECT '' AS accno, SUM(ac.amount) AS amount,
+				         '' AS description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				    JOIN ap a ON (a.id = ac.trans_id)
+				 $dpt_join
+				   WHERE $where $ywhere $dpt_where $category
+				         AND c.gifi_accno = '' 
+				         AND ac.trans_id IN
+				         (SELECT trans_id FROM acc_trans
+				            JOIN chart ON (chart_id = id)
+				   WHERE link LIKE '%AP_paid%' $subwhere)
+				         $project
+				GROUP BY c.category
 
-		 SELECT c.accno, sum(ac.amount) AS amount,
-		 c.description, c.category
-		 FROM acc_trans ac
-		 JOIN chart c ON (c.id = ac.chart_id)
-		 JOIN gl a ON (a.id = ac.trans_id)
-		 $dpt_join
-		 WHERE $where
-	         $ywhere
-		 $glwhere
-		 $dpt_where
-		 $category
-		 AND NOT (c.link = 'AR' OR c.link = 'AP')
-		 $project
-		 GROUP BY c.accno, c.description, c.category
-		 |;
+				UNION ALL
 
-      if ($excludeyearend) {
+				  SELECT g.accno, sum(ac.amount) AS amount,
+				         g.description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				    JOIN gifi g ON (g.accno = c.gifi_accno)
+				    JOIN gl a ON (a.id = ac.trans_id)
+				$dpt_join
+				   WHERE $where $ywhere $glwhere $dpt_where
+				         $category AND NOT 
+				         (c.link = 'AR' OR c.link = 'AP')
+				         $project
+				GROUP BY g.accno, g.description, c.category
+		 
+				UNION ALL
+
+				  SELECT '' AS accno, SUM(ac.amount) AS amount,
+				         '' AS description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				    JOIN gl a ON (a.id = ac.trans_id)
+				$dpt_join
+				   WHERE $where $ywhere $glwhere $dpt_where
+				         $category AND c.gifi_accno = ''
+				         AND NOT 
+				         (c.link = 'AR' OR c.link = 'AP')
+				         $project
+				GROUP BY c.category|;
+
+			if ($excludeyearend) {
+
+
+				$query .= qq|
+
+					UNION ALL
+
+					  SELECT g.accno, 
+					         sum(ac.amount) AS amount,
+					         g.description, c.category
+					    FROM yearend y
+					    JOIN gl a ON (a.id = y.trans_id)
+					    JOIN acc_trans ac 
+					         ON (ac.trans_id = y.trans_id)
+					    JOIN chart c 
+					         ON (c.id = ac.chart_id)
+					    JOIN gifi g 
+					         ON (g.accno = c.gifi_accno) 
+					$dpt_join
+					   WHERE $yearendwhere 
+					         AND c.category = 'Q' 
+					         $dpt_where $project
+					GROUP BY g.accno, g.description, 
+					         c.category|;
+			}
+
+		} else {
+
+			if ($department_id) {
+				$dpt_join = qq|
+					JOIN dpt_trans t 
+					     ON (t.trans_id = ac.trans_id)|;
+				$dpt_where = qq|
+					AND t.department_id = |.
+						$dbh->quote($department_id);
+			}
+
+			$query = qq|
+				  SELECT g.accno, SUM(ac.amount) AS amount,
+				         g.description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				    JOIN gifi g ON (c.gifi_accno = g.accno)
+				         $dpt_join
+				   WHERE $where $ywhere $dpt_where $category
+				         $project
+				GROUP BY g.accno, g.description, c.category
+	      
+				UNION ALL
+	   
+				  SELECT '' AS accno, SUM(ac.amount) AS amount,
+				         '' AS description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				         $dpt_join
+				   WHERE $where $ywhere $dpt_where $category
+				         AND c.gifi_accno = '' $project
+				GROUP BY c.category|;
+
+			if ($excludeyearend) {
+
+				$query .= qq|
+
+						UNION ALL
+
+						  SELECT g.accno, 
+						         sum(ac.amount) 
+						         AS amount,
+						         g.description, 
+						         c.category
+						    FROM yearend y
+						    JOIN gl a 
+						         ON (a.id = y.trans_id)
+						    JOIN acc_trans ac 
+						         ON (ac.trans_id = 
+						         y.trans_id)
+						    JOIN chart c 
+						         ON 
+						         (c.id = ac.chart_id)
+						    JOIN gifi g 
+						         ON (g.accno = 
+						         c.gifi_accno)
+						         $dpt_join
+						   WHERE $yearendwhere
+						         AND c.category = 'Q'
+						         $dpt_where $project
+						GROUP BY g.accno, 
+						         g.description, 
+						         c.category|;
+			}
+		}
+    
+	} else {    # standard account
+
+		if ($form->{method} eq 'cash') {
+
+  			$query = qq|
+			  SELECT c.accno, sum(ac.amount) AS amount,
+			         c.description, c.category
+			    FROM acc_trans ac
+			    JOIN chart c ON (c.id = ac.chart_id)
+			    JOIN ar a ON (a.id = ac.trans_id) $dpt_join
+			   WHERE $where $ywhere $dpt_where $category 
+			         AND ac.trans_id IN (
+			         SELECT trans_id FROM acc_trans
+			           JOIN chart ON (chart_id = id)
+			          WHERE link LIKE '%AR_paid%' $subwhere)
+			         $project
+			GROUP BY c.accno, c.description, c.category
+
+			UNION ALL
+	
+			  SELECT c.accno, sum(ac.amount) AS amount,
+			         c.description, c.category
+			    FROM acc_trans ac
+			    JOIN chart c ON (c.id = ac.chart_id)
+			    JOIN ap a ON (a.id = ac.trans_id) $dpt_join
+			   WHERE $where $ywhere $dpt_where $category
+			         AND ac.trans_id IN (
+			         SELECT trans_id FROM acc_trans
+			           JOIN chart ON (chart_id = id)
+			          WHERE link LIKE '%AP_paid%' $subwhere)
+			         $project
+			GROUP BY c.accno, c.description, c.category
+		 
+			UNION ALL
+
+			  SELECT c.accno, sum(ac.amount) AS amount,
+			         c.description, c.category
+			    FROM acc_trans ac
+			    JOIN chart c ON (c.id = ac.chart_id)
+			    JOIN gl a ON (a.id = ac.trans_id) $dpt_join
+			   WHERE $where $ywhere $glwhere $dpt_where $category
+			         AND NOT (c.link = 'AR' OR c.link = 'AP')
+			         $project
+			GROUP BY c.accno, c.description, c.category|;
+
+			if ($excludeyearend) {
 
         # this is for the yearend
 	
-	$query .= qq|
+				$query .= qq|
 
-       UNION ALL
-       
-	         SELECT c.accno, sum(ac.amount) AS amount,
-		 c.description, c.category
-		 FROM yearend y
-		 JOIN gl a ON (a.id = y.trans_id)
-		 JOIN acc_trans ac ON (ac.trans_id = y.trans_id)
-		 JOIN chart c ON (c.id = ac.chart_id)
-	         $dpt_join
-		 WHERE $yearendwhere
-		 AND c.category = 'Q'
-		 $dpt_where
-		 $project
-		 GROUP BY c.accno, c.description, c.category
-		 |;
-      }
+ 					UNION ALL
 
-    } else {
+					  SELECT c.accno, 
+					         sum(ac.amount) AS amount,
+					         c.description, c.category
+					    FROM yearend y
+					    JOIN gl a ON (a.id = y.trans_id)
+					    JOIN acc_trans ac 
+					         ON (ac.trans_id = y.trans_id)
+					    JOIN chart c 
+					         ON (c.id = ac.chart_id)
+					         $dpt_join
+					   WHERE $yearendwhere AND 
+					         c.category = 'Q' $dpt_where
+					         $project
+					GROUP BY c.accno, c.description, 
+					         c.category|;
+			}
+
+		} else {
      
-      if ($department_id) {
-	$dpt_join = qq|
-	      JOIN dpt_trans t ON (t.trans_id = ac.trans_id)
-	      |;
-	$dpt_where = qq|
-               AND t.department_id = $department_id
-	      |;
-      }
+			if ($department_id) {
+				$dpt_join = qq|
+					JOIN dpt_trans t 
+					     ON (t.trans_id = ac.trans_id)|;
+				$dpt_where = qq| AND t.department_id = |.
+					$dbh->quote($department_id);
+			}
 
 	
-      $query = qq|
-      
-		 SELECT c.accno, sum(ac.amount) AS amount,
-		 c.description, c.category
-		 FROM acc_trans ac
-		 JOIN chart c ON (c.id = ac.chart_id)
-		 $dpt_join
-		 WHERE $where
-	         $ywhere
-		 $dpt_where
-		 $category
-		 $project
-		 GROUP BY c.accno, c.description, c.category
-		 |;
+			$query = qq|
+				  SELECT c.accno, sum(ac.amount) AS amount,
+				         c.description, c.category
+				    FROM acc_trans ac
+				    JOIN chart c ON (c.id = ac.chart_id)
+				         $dpt_join
+				   WHERE $where $ywhere $dpt_where $category
+				         $project
+				GROUP BY c.accno, c.description, c.category|;
 
-      if ($excludeyearend) {
+			if ($excludeyearend) {
 
-        # this is for the yearend
-	
-	$query .= qq|
+				$query .= qq|
 
-       UNION ALL
+					UNION ALL
        
-	         SELECT c.accno, sum(ac.amount) AS amount,
-		 c.description, c.category
-		 FROM yearend y
-		 JOIN gl a ON (a.id = y.trans_id)
-		 JOIN acc_trans ac ON (ac.trans_id = y.trans_id)
-		 JOIN chart c ON (c.id = ac.chart_id)
-	         $dpt_join
-		 WHERE $yearendwhere
-		 AND c.category = 'Q'
-		 $dpt_where
-		 $project
-		 GROUP BY c.accno, c.description, c.category
-		 |;
-      }
-    }
-  }
+					  SELECT c.accno, 
+					         sum(ac.amount) AS amount,
+					         c.description, c.category
+					    FROM yearend y
+					    JOIN gl a ON (a.id = y.trans_id)
+					    JOIN acc_trans ac 
+					         ON (ac.trans_id = y.trans_id)
+					    JOIN chart c 
+					         ON (c.id = ac.chart_id)
+					         $dpt_join
+					   WHERE $yearendwhere AND 
+					         c.category = 'Q' $dpt_where
+					         $project
+					GROUP BY c.accno, c.description, 
+					         c.category|;
+			}
+		}
+	}
 
-  my @accno;
-  my $accno;
-  my $ref;
+	my @accno;
+	my $accno;
+	my $ref;
   
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
 
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 
-    # get last heading account
-    @accno = grep { $_ le "$ref->{accno}" } @headingaccounts;
-    $accno = pop @accno;
-    if ($accno && ($accno ne $ref->{accno}) ) {
-      if ($last_period)
-      {
-	$form->{$ref->{category}}{$accno}{last} += $ref->{amount};
-      } else {
-	$form->{$ref->{category}}{$accno}{this} += $ref->{amount};
-      }
-    }
+		# get last heading account
+		@accno = grep { $_ le "$ref->{accno}" } @headingaccounts;
+		$accno = pop @accno;
+		if ($accno && ($accno ne $ref->{accno}) ) {
+			if ($last_period) {
+				$form->{$ref->{category}}{$accno}{last} 
+					+= $ref->{amount};
+			} else {
+				$form->{$ref->{category}}{$accno}{this} 
+					+= $ref->{amount};
+			}
+		}
     
-    $form->{$ref->{category}}{$ref->{accno}}{accno} = $ref->{accno};
-    $form->{$ref->{category}}{$ref->{accno}}{description} = $ref->{description};
-    $form->{$ref->{category}}{$ref->{accno}}{charttype} = "A";
+		$form->{$ref->{category}}{$ref->{accno}}{accno} 
+			= $ref->{accno};
+		$form->{$ref->{category}}{$ref->{accno}}{description} 
+			= $ref->{description};
+		$form->{$ref->{category}}{$ref->{accno}}{charttype} = "A";
     
-    if ($last_period) {
-      $form->{$ref->{category}}{$ref->{accno}}{last} += $ref->{amount};
-    } else {
-      $form->{$ref->{category}}{$ref->{accno}}{this} += $ref->{amount};
-    }
-  }
-  $sth->finish;
+		if ($last_period) {
+			$form->{$ref->{category}}{$ref->{accno}}{last} 
+				+= $ref->{amount};
+		} else {
+			$form->{$ref->{category}}{$ref->{accno}}{this} 
+				+= $ref->{amount};
+		}
+	}
+	$sth->finish;
 
   
-  # remove accounts with zero balance
-  foreach $category (@{ $categories }) {
-    foreach $accno (keys %{ $form->{$category} }) {
-      $form->{$category}{$accno}{last} = $form->round_amount($form->{$category}{$accno}{last}, $form->{decimalplaces});
-      $form->{$category}{$accno}{this} = $form->round_amount($form->{$category}{$accno}{this}, $form->{decimalplaces});
+	# remove accounts with zero balance
+	foreach $category (@{ $categories }) {
+		foreach $accno (keys %{ $form->{$category} }) {
+			$form->{$category}{$accno}{last} = $form->round_amount(
+				$form->{$category}{$accno}{last}, 
+				$form->{decimalplaces});
+			$form->{$category}{$accno}{this} = $form->round_amount(
+				$form->{$category}{$accno}{this}, 
+				$form->{decimalplaces});
 
-      delete $form->{$category}{$accno} if ($form->{$category}{$accno}{this} == 0 && $form->{$category}{$accno}{last} == 0);
-    }
-  }
+			delete $form->{$category}{$accno} 
+				if ($form->{$category}{$accno}{this} == 0 
+					&& $form->{$category}{$accno}{last} 
+						== 0);
+		}
+	}
 
 }
 
 
 
 sub trial_balance {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
-  my ($query, $sth, $ref);
-  my %balance = ();
-  my %trb = ();
-  my $null;
-  my $department_id;
-  my $project_id;
-  my @headingaccounts = ();
-  my $dpt_where;
-  my $dpt_join;
-  my $project;
+	my ($query, $sth, $ref);
+	my %balance = ();
+	my %trb = ();
+	my $null;
+	my $department_id;
+	my $project_id;
+	my @headingaccounts = ();
+	my $dpt_where;
+	my $dpt_join;
+	my $project;
 
-  my $where = "1 = 1";
-  my $invwhere = $where;
+	my $where = "1 = 1";
+	my $invwhere = $where;
   
-  ($null, $department_id) = split /--/, $form->{department};
-  ($null, $project_id) = split /--/, $form->{projectnumber};
+	($null, $department_id) = split /--/, $form->{department};
+	($null, $project_id) = split /--/, $form->{projectnumber};
 
-  if ($department_id) {
-    $dpt_join = qq|
-                JOIN dpt_trans t ON (ac.trans_id = t.trans_id)
-		  |;
-    $dpt_where = qq|
-                AND t.department_id = $department_id
-		|;
-  }
+	if ($department_id) {
+		$dpt_join = qq|
+			JOIN dpt_trans t ON (ac.trans_id = t.trans_id)|;
+		$dpt_where = qq|
+			AND t.department_id = |.$dbh->quote($department_id);
+	}
   
   
-  if ($project_id) {
-    $project = qq|
-                AND ac.project_id = $project_id
-		|;
-  }
+	if ($project_id) {
+		$project = qq|
+			AND ac.project_id = |.$dbh->quote($project_id);
+	}
   
-  ($form->{fromdate}, $form->{todate}) = $form->from_to($form->{year}, $form->{month}, $form->{interval}) if $form->{year} && $form->{month}; 
+	($form->{fromdate}, $form->{todate}) = $form->from_to(
+		$form->{year}, $form->{month}, $form->{interval}) 
+			if $form->{year} && $form->{month}; 
    
-  # get beginning balances
-  if ($form->{fromdate}) {
+	# get beginning balances
+	if ($form->{fromdate}) {
 
-    if ($form->{accounttype} eq 'gifi') {
+		if ($form->{accounttype} eq 'gifi') {
       
-      $query = qq|SELECT g.accno, c.category, SUM(ac.amount) AS amount,
-                  g.description, c.contra
-		  FROM acc_trans ac
-		  JOIN chart c ON (ac.chart_id = c.id)
-		  JOIN gifi g ON (c.gifi_accno = g.accno)
-		  $dpt_join
-		  WHERE ac.transdate < '$form->{fromdate}'
-		  $dpt_where
-		  $project
-		  GROUP BY g.accno, c.category, g.description, c.contra
-		  |;
+			$query = qq|
+				  SELECT g.accno, c.category, 
+				         SUM(ac.amount) AS amount,
+				         g.description, c.contra
+				    FROM acc_trans ac
+				    JOIN chart c ON (ac.chart_id = c.id)
+				    JOIN gifi g ON (c.gifi_accno = g.accno)
+				         $dpt_join
+				   WHERE ac.transdate < '$form->{fromdate}'
+				         $dpt_where $project
+				GROUP BY g.accno, c.category, g.description, 
+				         c.contra|;
    
-    } else {
+		} else {
       
-      $query = qq|SELECT c.accno, c.category, SUM(ac.amount) AS amount,
-                  c.description, c.contra
-		  FROM acc_trans ac
-		  JOIN chart c ON (ac.chart_id = c.id)
-		  $dpt_join
-		  WHERE ac.transdate < '$form->{fromdate}'
-		  $dpt_where
-		  $project
-		  GROUP BY c.accno, c.category, c.description, c.contra
-		  |;
+			$query = qq|
+				  SELECT c.accno, c.category, 
+				         SUM(ac.amount) AS amount,
+				         c.description, c.contra
+				    FROM acc_trans ac
+				    JOIN chart c ON (ac.chart_id = c.id)
+				         $dpt_join
+				   WHERE ac.transdate < '$form->{fromdate}'
+				         $dpt_where $project
+				GROUP BY c.accno, c.category, c.description, 
+				         c.contra|;
 		  
-    }
+		}
 
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+		$sth = $dbh->prepare($query);
+		$sth->execute || $form->dberror($query);
 
-    while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-      $ref->{amount} = $form->round_amount($ref->{amount}, 2);
-      $balance{$ref->{accno}} = $ref->{amount};
+		while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
+			$ref->{amount} = $form->round_amount($ref->{amount}, 
+				2);
+			$balance{$ref->{accno}} = $ref->{amount};
 
-      if ($form->{all_accounts}) {
-	$trb{$ref->{accno}}{description} = $ref->{description};
-	$trb{$ref->{accno}}{charttype} = 'A';
-	$trb{$ref->{accno}}{category} = $ref->{category};
-	$trb{$ref->{accno}}{contra} = $ref->{contra};
-      }
+			if ($form->{all_accounts}) {
+				$trb{$ref->{accno}}{description} 
+					= $ref->{description};
+				$trb{$ref->{accno}}{charttype} 
+					= 'A';
+				$trb{$ref->{accno}}{category} 
+					= $ref->{category};
+				$trb{$ref->{accno}}{contra} 
+					= $ref->{contra};
+			}
 
-    }
-    $sth->finish;
+		}
+		$sth->finish;
 
-  }
+	}
   
 
-  # get headings
-  $query = qq|SELECT c.accno, c.description, c.category
-	      FROM chart c
-	      WHERE c.charttype = 'H'
-	      ORDER by c.accno|;
+	# get headings
+	$query = qq|
+		  SELECT c.accno, c.description, c.category FROM chart c
+		   WHERE c.charttype = 'H'
+		ORDER by c.accno|;
 
-  if ($form->{accounttype} eq 'gifi')
-  {
-    $query = qq|SELECT g.accno, g.description, c.category, c.contra
-		FROM gifi g
-		JOIN chart c ON (c.gifi_accno = g.accno)
-		WHERE c.charttype = 'H'
-		ORDER BY g.accno|;
-  }
+	if ($form->{accounttype} eq 'gifi'){
+		$query = qq|
+			  SELECT g.accno, g.description, c.category, c.contra
+			    FROM gifi g
+			    JOIN chart c ON (c.gifi_accno = g.accno)
+			   WHERE c.charttype = 'H'
+			ORDER BY g.accno|;
+	}
 
-  $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	$sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
   
-  while ($ref = $sth->fetchrow_hashref(NAME_lc))
-  {
-    $trb{$ref->{accno}}{description} = $ref->{description};
-    $trb{$ref->{accno}}{charttype} = 'H';
-    $trb{$ref->{accno}}{category} = $ref->{category};
-    $trb{$ref->{accno}}{contra} = $ref->{contra};
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+		$trb{$ref->{accno}}{description} = $ref->{description};
+		$trb{$ref->{accno}}{charttype} = 'H';
+		$trb{$ref->{accno}}{category} = $ref->{category};
+		$trb{$ref->{accno}}{contra} = $ref->{contra};
    
-    push @headingaccounts, $ref->{accno};
-  }
+		push @headingaccounts, $ref->{accno};
+	}
 
-  $sth->finish;
-
-
-  if ($form->{fromdate} || $form->{todate}) {
-    if ($form->{fromdate}) {
-      $where .= " AND ac.transdate >= '$form->{fromdate}'";
-      $invwhere .= " AND a.transdate >= '$form->{fromdate}'";
-    }
-    if ($form->{todate}) {
-      $where .= " AND ac.transdate <= '$form->{todate}'";
-      $invwhere .= " AND a.transdate <= '$form->{todate}'";
-    }
-  }
+	$sth->finish;
 
 
-  if ($form->{accounttype} eq 'gifi') {
+	if ($form->{fromdate} || $form->{todate}) {
+		if ($form->{fromdate}) {
+			$where .= " AND ac.transdate >= "
+				.$dbh->quote($form->{fromdate});
+			$invwhere .= " AND a.transdate >= ".
+				$dbh->quote($form->{fromdate});
+		}
+		if ($form->{todate}) {
+			$where .= " AND ac.transdate <= ".
+				$dbh->quote($form->{todate});
+			$invwhere .= " AND a.transdate <= "
+				.$dbh->quote($form->{todate});
+		}
+	}
 
-    $query = qq|SELECT g.accno, g.description, c.category,
-                SUM(ac.amount) AS amount, c.contra
-		FROM acc_trans ac
-		JOIN chart c ON (c.id = ac.chart_id)
-		JOIN gifi g ON (c.gifi_accno = g.accno)
-		$dpt_join
-		WHERE $where
-		$dpt_where
-		$project
-		GROUP BY g.accno, g.description, c.category, c.contra
-		ORDER BY accno|;
+
+	if ($form->{accounttype} eq 'gifi') {
+
+		$query = qq|
+			  SELECT g.accno, g.description, c.category,
+			         SUM(ac.amount) AS amount, c.contra
+			    FROM acc_trans ac
+			    JOIN chart c ON (c.id = ac.chart_id)
+			    JOIN gifi g ON (c.gifi_accno = g.accno)
+			         $dpt_join
+			   WHERE $where $dpt_where $project
+			GROUP BY g.accno, g.description, c.category, c.contra
+			ORDER BY accno|;
     
-  } else {
-
-    $query = qq|SELECT c.accno, c.description, c.category,
-                SUM(ac.amount) AS amount, c.contra
-		FROM acc_trans ac
-		JOIN chart c ON (c.id = ac.chart_id)
-		$dpt_join
-		WHERE $where
-		$dpt_where
-		$project
-		GROUP BY c.accno, c.description, c.category, c.contra
-                ORDER BY accno|;
-
-  }
-
-  $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
-
-  # prepare query for each account
-  $query = qq|SELECT (SELECT SUM(ac.amount) * -1
-	      FROM acc_trans ac
-	      JOIN chart c ON (c.id = ac.chart_id)
-	      $dpt_join
-	      WHERE $where
-	      $dpt_where
-	      $project
-	      AND ac.amount < 0
-	      AND c.accno = ?) AS debit,
-	      
-	     (SELECT SUM(ac.amount)
-	      FROM acc_trans ac
-	      JOIN chart c ON (c.id = ac.chart_id)
-	      $dpt_join
-	      WHERE $where
-	      $dpt_where
-	      $project
-	      AND ac.amount > 0
-	      AND c.accno = ?) AS credit
-	      |;
-
-  if ($form->{accounttype} eq 'gifi') {
-
-    $query = qq|SELECT (SELECT SUM(ac.amount) * -1
-		FROM acc_trans ac
-		JOIN chart c ON (c.id = ac.chart_id)
-		$dpt_join
-		WHERE $where
-		$dpt_where
-		$project
-		AND ac.amount < 0
-		AND c.gifi_accno = ?) AS debit,
-		
-	       (SELECT SUM(ac.amount)
-		FROM acc_trans ac
-		JOIN chart c ON (c.id = ac.chart_id)
-		$dpt_join
-		WHERE $where
-		$dpt_where
-		$project
-		AND ac.amount > 0
-		AND c.gifi_accno = ?) AS credit|;
-  
-  }
-  
-  $drcr = $dbh->prepare($query);
-
-  # calculate debit and credit for the period
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
-    $trb{$ref->{accno}}{description} = $ref->{description};
-    $trb{$ref->{accno}}{charttype} = 'A';
-    $trb{$ref->{accno}}{category} = $ref->{category};
-    $trb{$ref->{accno}}{contra} = $ref->{contra};
-    $trb{$ref->{accno}}{amount} += $ref->{amount};
-  }
-  $sth->finish;
-
-  my ($debit, $credit);
-  
-  foreach my $accno (sort keys %trb) {
-    $ref = ();
-    
-    $ref->{accno} = $accno;
-    for (qw(description category contra charttype amount)) { $ref->{$_} = $trb{$accno}{$_} }
-    
-    $ref->{balance} = $balance{$ref->{accno}};
-
-    if ($trb{$accno}{charttype} eq 'A') {
-      if ($project_id) {
-
-        if ($ref->{amount} < 0) {
-	  $ref->{debit} = $ref->{amount} * -1;
 	} else {
-	  $ref->{credit} = $ref->{amount};
+
+		$query = qq|
+			  SELECT c.accno, c.description, c.category,
+			         SUM(ac.amount) AS amount, c.contra
+			    FROM acc_trans ac
+			    JOIN chart c ON (c.id = ac.chart_id)
+			         $dpt_join
+			   WHERE $where $dpt_where $project
+			GROUP BY c.accno, c.description, c.category, c.contra
+			ORDER BY accno|;
+
 	}
-	next if $form->round_amount($ref->{amount}, 2) == 0;
 
-      } else {
-	
-	# get DR/CR
-	$drcr->execute($ref->{accno}, $ref->{accno});
-	
-	($debit, $credit) = (0,0);
-	while (($debit, $credit) = $drcr->fetchrow_array) {
-	  $ref->{debit} += $debit;
-	  $ref->{credit} += $credit;
+	$sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
+
+	# prepare query for each account
+	$query = qq|
+		SELECT (SELECT SUM(ac.amount) * -1 FROM acc_trans ac
+		          JOIN chart c ON (c.id = ac.chart_id)
+		               $dpt_join
+		          WHERE $where $dpt_where $project AND ac.amount < 0
+		                 AND c.accno = ?) AS debit,
+		       (SELECT SUM(ac.amount FROM acc_trans ac
+		          JOIN chart c ON (c.id = ac.chart_id)
+		               $dpt_join
+		         WHERE $where $dpt_where $project AND ac.amount > 0
+		               AND c.accno = ?) AS credit |;
+
+	if ($form->{accounttype} eq 'gifi') {
+
+  	$query = qq|
+		SELECT (SELECT SUM(ac.amount) * -1
+		          FROM acc_trans ac
+		          JOIN chart c ON (c.id = ac.chart_id)
+		               $dpt_join
+		         WHERE $where $dpt_where $project AND ac.amount < 0
+		               AND c.gifi_accno = ?) AS debit,
+		
+		       (SELECT SUM(ac.amount)
+		          FROM acc_trans ac
+		          JOIN chart c ON (c.id = ac.chart_id)
+		               $dpt_join
+		         WHERE $where $dpt_where $project AND ac.amount > 0
+		               AND c.gifi_accno = ?) AS credit|;
+  
 	}
-	$drcr->finish;
+  
+	$drcr = $dbh->prepare($query);
 
-      }
+	# calculate debit and credit for the period
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
+		$trb{$ref->{accno}}{description} = $ref->{description};
+		$trb{$ref->{accno}}{charttype} = 'A';
+		$trb{$ref->{accno}}{category} = $ref->{category};
+		$trb{$ref->{accno}}{contra} = $ref->{contra};
+		$trb{$ref->{accno}}{amount} += $ref->{amount};
+	}
+	$sth->finish;
 
-      $ref->{debit} = $form->round_amount($ref->{debit}, 2);
-      $ref->{credit} = $form->round_amount($ref->{credit}, 2);
+	my ($debit, $credit);
+  
+	foreach my $accno (sort keys %trb) {
+		$ref = ();
     
-      if (!$form->{all_accounts}) {
-	next if $form->round_amount($ref->{debit} + $ref->{credit}, 2) == 0;
-      }
-    }
-
-    # add subtotal
-    @accno = grep { $_ le "$ref->{accno}" } @headingaccounts;
-    $accno = pop @accno;
-    if ($accno) {
-      $trb{$accno}{debit} += $ref->{debit};
-      $trb{$accno}{credit} += $ref->{credit};
-    }
-
-    push @{ $form->{TB} }, $ref;
+		$ref->{accno} = $accno;
+		for (qw(description category contra charttype amount)) { 
+			$ref->{$_} = $trb{$accno}{$_}; 
+		}
     
-  }
+		$ref->{balance} = $balance{$ref->{accno}};
 
-  $dbh->disconnect;
+		if ($trb{$accno}{charttype} eq 'A') {
+			if ($project_id) {
 
-  # debits and credits for headings
-  foreach $accno (@headingaccounts) {
-    foreach $ref (@{ $form->{TB} }) {
-      if ($accno eq $ref->{accno}) {
-        $ref->{debit} = $trb{$accno}{debit};
-        $ref->{credit} = $trb{$accno}{credit};
-      }
-    }
-  }
+				if ($ref->{amount} < 0) {
+					$ref->{debit} = $ref->{amount} * -1;
+				} else {
+					$ref->{credit} = $ref->{amount};
+				}
+				next if $form->round_amount(
+					$ref->{amount}, 2) == 0;
+
+			} else {
+	
+				# get DR/CR
+				$drcr->execute($ref->{accno}, $ref->{accno});
+	
+				($debit, $credit) = (0,0);
+				while (($debit, $credit) 
+						= $drcr->fetchrow_array) {
+					$ref->{debit} += $debit;
+					$ref->{credit} += $credit;
+				}
+				$drcr->finish;
+
+			}
+
+			$ref->{debit} = $form->round_amount($ref->{debit}, 2);
+			$ref->{credit} 
+				= $form->round_amount($ref->{credit}, 2);
+    
+			if (!$form->{all_accounts}) {
+				next 
+					if $form->round_amount(
+						$ref->{debit} + $ref->{credit},
+						2) 
+					== 0;
+			}
+		}
+
+		# add subtotal
+		@accno = grep { $_ le "$ref->{accno}" } @headingaccounts;
+		$accno = pop @accno;
+		if ($accno) {
+			$trb{$accno}{debit} += $ref->{debit};
+			$trb{$accno}{credit} += $ref->{credit};
+		}
+
+		push @{ $form->{TB} }, $ref;
+    
+	}
+
+	$dbh->commit;
+
+	# debits and credits for headings
+	foreach $accno (@headingaccounts) {
+		foreach $ref (@{ $form->{TB} }) {
+			if ($accno eq $ref->{accno}) {
+				$ref->{debit} = $trb{$accno}{debit};
+				$ref->{credit} = $trb{$accno}{credit};
+			}
+		}
+	}
 
 }
 
 
 sub aging {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
-  my $invoice = ($form->{arap} eq 'ar') ? 'is' : 'ir';
+	my $dbh = $form->{dbh};
+	my $invoice = ($form->{arap} eq 'ar') ? 'is' : 'ir';
 
-  my $query = qq|SELECT value FROM defaults WHERE settings_key = 'curr'|;
-  ($form->{currencies}) = $dbh->selectrow_array($query);
+	my $query = qq|SELECT value FROM defaults WHERE settings_key = 'curr'|;
+	($form->{currencies}) = $dbh->selectrow_array($query);
   
-  ($null, $form->{todate}) = $form->from_to($form->{year}, $form->{month}) if $form->{year} && $form->{month};
+	($null, $form->{todate}) 
+		= $form->from_to($form->{year}, $form->{month}) 
+		if $form->{year} && $form->{month};
   
-  if (! $form->{todate}) {
-    $query = qq|SELECT current_date|;
-    ($form->{todate}) = $dbh->selectrow_array($query);
-  }
+	if (! $form->{todate}) {
+		$query = qq|SELECT current_date|;
+		($form->{todate}) = $dbh->selectrow_array($query);
+	}
     
-  my $where = "1 = 1";
-  my $name;
-  my $null;
-  my $ref;
-  my $transdate = ($form->{overdue}) ? "duedate" : "transdate";
+	my $where = "1 = 1";
+	my $name;
+	my $null;
+	my $ref;
+	my $transdate = ($form->{overdue}) ? "duedate" : "transdate";
 
-  if ($form->{"$form->{ct}_id"}) {
-    $where .= qq| AND ct.id = $form->{"$form->{ct}_id"}|;
-  } else {
-    if ($form->{$form->{ct}} ne "") {
-      $name = $form->like(lc $form->{$form->{ct}});
-      $where .= qq| AND lower(ct.name) LIKE '$name'| if $form->{$form->{ct}};
-    }
-  }
+	if ($form->{"$form->{ct}_id"}) {
+		$where .= qq| AND ct.id = |.
+			$dbh->quote($form->{"$form->{ct}_id"});
+	} else {
+		if ($form->{$form->{ct}} ne "") {
+			$name = $dbh->quote($form->like(
+				lc $form->{$form->{ct}}));
+			$where .= qq| AND lower(ct.name) LIKE $name| 
+				if $form->{$form->{ct}};
+		}
+	}
 
-  if ($form->{department}) {
-    ($null, $department_id) = split /--/, $form->{department};
-    $where .= qq| AND a.department_id = $department_id|;
-  }
+	if ($form->{department}) {
+		($null, $department_id) = split /--/, $form->{department};
+		$where .= qq| AND a.department_id = |.
+			$dbh->quote($department_id);
+	}
   
-  # select outstanding vendors or customers, depends on $ct
-  $query = qq|SELECT DISTINCT ct.id, ct.name, ct.language_code
-              FROM $form->{ct} ct
-	      JOIN $form->{arap} a ON (a.$form->{ct}_id = ct.id)
-	      WHERE $where
-              AND a.paid != a.amount
-              AND (a.$transdate <= '$form->{todate}')
-              ORDER BY ct.name|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror;
+	# select outstanding vendors or customers, depends on $ct
+	$query = qq|
+		  SELECT DISTINCT ct.id, ct.name, ct.language_code
+		    FROM $form->{ct} ct
+		    JOIN $form->{arap} a ON (a.$form->{ct}_id = ct.id)
+		   WHERE $where AND a.paid != a.amount 
+		         AND (a.$transdate <= ?)
+		ORDER BY ct.name|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute($form->{todate}) || $form->dberror;
   
-  my @ot = ();
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
-    push @ot, $ref;
-  }
-  $sth->finish;
-
-  my $buysell = ($form->{arap} eq 'ar') ? 'buy' : 'sell';
-
-  my %interval = ( 'Pg' => {
-                        'c0' => "(date '$form->{todate}' - interval '0 days')",
-			'c30' => "(date '$form->{todate}' - interval '30 days')",
-			'c60' => "(date '$form->{todate}' - interval '60 days')",
-			'c90' => "(date '$form->{todate}' - interval '90 days')" },
-		  'DB2' => {
-		        'c0' => "(date ('$form->{todate}') - 0 days)",
-			'c30' => "(date ('$form->{todate}') - 30 days)",
-			'c60' => "(date ('$form->{todate}') - 60 days)",
-			'c90' => "(date ('$form->{todate}') - 90 days)" }
-		);
-
-  $interval{Oracle} = $interval{PgPP} = $interval{Pg};
-  
-		    
-  # for each company that has some stuff outstanding
-  $form->{currencies} ||= ":";
-  
-      
-       $where = qq|
-	    a.paid != a.amount
-	    AND c.id = ?
-	    AND a.curr = ?|;
-	    
-      if ($department_id) {
-	$where .= qq| AND a.department_id = $department_id|;
-      }
-  
-      $query = "";
-      my $union = "";
-
-      if ($form->{c0}) {
-	$query .= qq|
-	  SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-	  c.address1, c.address2, c.city, c.state, c.zipcode, c.country,
-	  c.contact, c.email,
-	  c.phone as $form->{ct}phone, c.fax as $form->{ct}fax,
-	  c.$form->{ct}number, c.taxnumber as $form->{ct}taxnumber,
-	  a.invnumber, a.transdate, a.till, a.ordnumber, a.ponumber, a.notes,
-	  (a.amount - a.paid) as c0, 0.00 as c30, 0.00 as c60, 0.00 as c90,
-	  a.duedate, a.invoice, a.id, a.curr,
-	    (SELECT $buysell FROM exchangerate e
-	     WHERE a.curr = e.curr
-	     AND e.transdate = a.transdate) AS exchangerate
-    FROM $form->{arap} a
-    JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-	  WHERE $where
-	  AND (
-		  a.$transdate <= $interval{$myconfig->{dbdriver}}{c0}
-		  AND a.$transdate >= $interval{$myconfig->{dbdriver}}{c30}
-	      )
-|;
-
-        $union = qq|
-	  UNION
-|;
-
-      }
-	  
-      if ($form->{c30}) {
-
-	$query .= qq|
-
-	  $union
-
-	  SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-	  c.address1, c.address2, c.city, c.state, c.zipcode, c.country,
-	  c.contact, c.email,
-	  c.phone as $form->{ct}phone, c.fax as $form->{ct}fax,
-	  c.$form->{ct}number, c.taxnumber as $form->{ct}taxnumber,
-	  a.invnumber, a.transdate, a.till, a.ordnumber, a.ponumber, a.notes,
-	  0.00 as c0, (a.amount - a.paid) as c30, 0.00 as c60, 0.00 as c90,
-	  a.duedate, a.invoice, a.id, a.curr,
-	    (SELECT $buysell FROM exchangerate e
-	     WHERE a.curr = e.curr
-	     AND e.transdate = a.transdate) AS exchangerate
-    FROM $form->{arap} a
-    JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-	  WHERE $where
-	  AND (
-		  a.$transdate < $interval{$myconfig->{dbdriver}}{c30}
-		  AND a.$transdate >= $interval{$myconfig->{dbdriver}}{c60}
-		  )
-|;
-
-        $union = qq|
-	  UNION
-|;
-
-      }
-
-      if ($form->{c60}) {
-
-	$query .= qq|
-
-	  $union
-    
-	  SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-	  c.address1, c.address2, c.city, c.state, c.zipcode, c.country,
-	  c.contact, c.email,
-	  c.phone as $form->{ct}phone, c.fax as $form->{ct}fax,
-	  c.$form->{ct}number, c.taxnumber as $form->{ct}taxnumber,
-	  a.invnumber, a.transdate, a.till, a.ordnumber, a.ponumber, a.notes,
-	  0.00 as c0, 0.00 as c30, (a.amount - a.paid) as c60, 0.00 as c90,
-	  a.duedate, a.invoice, a.id, a.curr,
-	    (SELECT $buysell FROM exchangerate e
-	     WHERE a.curr = e.curr
-	     AND e.transdate = a.transdate) AS exchangerate
-	  FROM $form->{arap} a
-	  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-	  WHERE $where
-	  AND (
-		  a.$transdate < $interval{$myconfig->{dbdriver}}{c60}
-		  AND a.$transdate >= $interval{$myconfig->{dbdriver}}{c90}
-		  )
-|;
-
-        $union = qq|
-	  UNION
-|;
-
-      }
-
-      if ($form->{c90}) {
-
-	$query .= qq|
-
-	  $union
-
-	  SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-	  c.address1, c.address2, c.city, c.state, c.zipcode, c.country,
-	  c.contact, c.email,
-	  c.phone as $form->{ct}phone, c.fax as $form->{ct}fax,
-	  c.$form->{ct}number, c.taxnumber as $form->{ct}taxnumber,
-	  a.invnumber, a.transdate, a.till, a.ordnumber, a.ponumber, a.notes,
-	  0.00 as c0, 0.00 as c30, 0.00 as c60, (a.amount - a.paid) as c90,
-	  a.duedate, a.invoice, a.id, a.curr,
-	    (SELECT $buysell FROM exchangerate e
-	     WHERE a.curr = e.curr
-	     AND e.transdate = a.transdate) AS exchangerate
-	  FROM $form->{arap} a
-	  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-	  WHERE $where
-	  AND a.$transdate < $interval{$myconfig->{dbdriver}}{c90}
-|;
-      }
-
-      $query .= qq|
-
-	  ORDER BY ctid, $transdate, invnumber|;
-
-      $sth = $dbh->prepare($query) || $form->dberror($query);
-
-  my @var = ();
-  
-  if ($form->{c0} + $form->{c30} + $form->{c60} + $form->{c90}) {
-    foreach $curr (split /:/, $form->{currencies}) {
-    
-      foreach $item (@ot) {
-    
-	@var = ();
-	for (qw(c0 c30 c60 c90)) { push @var, ($item->{id}, $curr) if $form->{$_} }
-	
-	$sth->execute(@var);
-
+	my @ot = ();
 	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
-	  $ref->{module} = ($ref->{invoice}) ? $invoice : $form->{arap};
-	  $ref->{module} = 'ps' if $ref->{till};
-	  $ref->{exchangerate} = 1 unless $ref->{exchangerate};
-	  $ref->{language_code} = $item->{language_code};
-	  push @{ $form->{AG} }, $ref;
+		push @ot, $ref;
 	}
 	$sth->finish;
 
-      }
-    }
-  }
+	my $buysell = ($form->{arap} eq 'ar') ? 'buy' : 'sell';
 
-  # get language
-  my $query = qq|SELECT *
-                 FROM language
-		 ORDER BY 2|;
-  $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror($query);
+	my $todate = $dbh->quote($form->{todate});
+	my %interval = ( 
+		'c0' => "(date $todate - interval '0 days')",
+		'c30' => "(date $todate - interval '30 days')",
+		'c60' => "(date $todate - interval '60 days')",
+		'c90' => "(date $todate - interval '90 days')" 
+		);
 
-  while ($ref = $sth->fetchrow_hashref(NAME_lc)) { 
-    push @{ $form->{all_language} }, $ref;
-  }
-  $sth->finish;
+  
+		    
+	# for each company that has some stuff outstanding
+	$form->{currencies} ||= ":";
+  
+      
+	$where = qq|a.paid != a.amount AND c.id = ? AND a.curr = ?|;
+	    
+	if ($department_id) {
+		$where .= qq| AND a.department_id = |.
+			$dbh->quote($department_id);
+	}
+  
+	$query = "";
+	my $union = "";
 
-  # disconnect
-  $dbh->disconnect;
+	if ($form->{c0}) {
+		$query .= qq|
+			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
+			       c.address1, c.address2, c.city, c.state, 
+			       c.zipcode, c.country, c.contact, c.email,
+		               c.phone as $form->{ct}phone, 
+			       c.fax as $form->{ct}fax,
+			       c.$form->{ct}number, 
+			       c.taxnumber as $form->{ct}taxnumber,
+		               a.invnumber, a.transdate, a.till, a.ordnumber, 
+			       a.ponumber, a.notes, (a.amount - a.paid) as c0, 
+			       0.00 as c30, 0.00 as c60, 0.00 as c90, 
+			       a.duedate, a.invoice, a.id, a.curr,
+			       (SELECT $buysell FROM exchangerate e
+			         WHERE a.curr = e.curr
+			              AND e.transdate = a.transdate) 
+			       AS exchangerate
+			  FROM $form->{arap} a
+			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
+			 WHERE $where AND ( a.$transdate <= $interval{c0}
+			       AND a.$transdate >= $interval{c30} )|;
+
+		$union = qq|UNION|;
+
+	}
+	  
+	if ($form->{c30}) {
+
+		$query .= qq|
+
+			$union
+
+			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
+			       c.address1, c.address2, c.city, c.state, 
+			       c.zipcode, c.country, c.contact, c.email,
+			       c.phone as $form->{ct}phone, 
+			       c.fax as $form->{ct}fax, c.$form->{ct}number, 
+			       c.taxnumber as $form->{ct}taxnumber,
+			       a.invnumber, a.transdate, a.till, a.ordnumber, 
+			       a.ponumber, a.notes, 0.00 as c0, 
+			       (a.amount - a.paid) as c30, 0.00 as c60, 
+			       0.00 as c90, a.duedate, a.invoice, a.id, a.curr,
+			       (SELECT $buysell FROM exchangerate e
+			         WHERE a.curr = e.curr
+			               AND e.transdate = a.transdate) 
+			       AS exchangerate
+			  FROM $form->{arap} a
+			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
+			 WHERE $where AND (a.$transdate < $interval{c30}
+			        AND a.$transdate >= $interval{c60})|;
+
+		$union = qq|UNION|;
+
+	}
+
+	if ($form->{c60}) {
+
+		$query .= qq|
+			$union
+    
+			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
+			       c.address1, c.address2, c.city, c.state, 
+			       c.zipcode, c.country, c.contact, c.email,
+			       c.phone as $form->{ct}phone, 
+			       c.fax as $form->{ct}fax, c.$form->{ct}number, 
+			       c.taxnumber as $form->{ct}taxnumber, 
+			       a.invnumber, a.transdate, a.till, a.ordnumber, 
+			       a.ponumber, a.notes, 0.00 as c0, 0.00 as c30, 
+			       (a.amount - a.paid) as c60, 0.00 as c90,
+			       a.duedate, a.invoice, a.id, a.curr,
+			       (SELECT $buysell FROM exchangerate e
+			         WHERE a.curr = e.curr
+			               AND e.transdate = a.transdate) 
+			       AS exchangerate
+			  FROM $form->{arap} a
+			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
+			 WHERE $where AND (a.$transdate < $interval{c60}
+			       AND a.$transdate >= $interval{c90})|;
+
+		$union = qq|UNION|;
+
+	}
+
+	if ($form->{c90}) {
+
+		$query .= qq|
+			$union
+			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
+			       c.address1, c.address2, c.city, c.state, 
+			       c.zipcode, c.country, c.contact, c.email,
+			       c.phone as $form->{ct}phone, 
+			       c.fax as $form->{ct}fax, c.$form->{ct}number, 
+			       c.taxnumber as $form->{ct}taxnumber, 
+			       a.invnumber, a.transdate, a.till, a.ordnumber, 
+			       a.ponumber, a.notes, 0.00 as c0, 0.00 as c30, 
+			       0.00 as c60, (a.amount - a.paid) as c90, 
+			       a.duedate, a.invoice, a.id, a.curr,
+			       (SELECT $buysell FROM exchangerate e
+			         WHERE a.curr = e.curr
+			               AND e.transdate = a.transdate) 
+			       AS exchangerate
+			  FROM $form->{arap} a
+			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
+			 WHERE $where
+			       AND a.$transdate < $interval{c90}|;
+	}
+	$query .= qq| ORDER BY ctid, $transdate, invnumber|;
+	$sth = $dbh->prepare($query) || $form->dberror($query);
+
+	my @var = ();
+  
+	if ($form->{c0} + $form->{c30} + $form->{c60} + $form->{c90}) {
+		foreach $curr (split /:/, $form->{currencies}) {
+    
+			foreach $item (@ot) {
+    
+				@var = ();
+				for (qw(c0 c30 c60 c90)) { 
+					push @var, ($item->{id}, $curr) 
+					if $form->{$_} }
+	
+				$sth->execute(@var);
+
+				while ($ref = $sth->fetchrow_hashref(NAME_lc)){
+					$ref->{module} = 
+						($ref->{invoice}) 
+						? $invoice 
+						: $form->{arap};
+					$ref->{module} = 'ps' if $ref->{till};
+					$ref->{exchangerate} = 1 
+						unless $ref->{exchangerate};
+					$ref->{language_code} 
+						= $item->{language_code};
+					push @{ $form->{AG} }, $ref;
+				}
+				$sth->finish;
+
+			}
+		}
+	}
+
+	# get language
+	my $query = qq|SELECT * FROM language ORDER BY 2|;
+	$sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror($query);
+
+	while ($ref = $sth->fetchrow_hashref(NAME_lc)) { 
+		push @{ $form->{all_language} }, $ref;
+	}
+	$sth->finish;
+
+	$dbh->commit;
 
 }
 
