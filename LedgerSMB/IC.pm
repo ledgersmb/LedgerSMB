@@ -1900,7 +1900,7 @@ sub create_links {
 			       c2.description AS income_description,
 			       c3.accno AS expense_accno, 
 			       c3.description AS expense_description
-			  FROM chart c1, chart c2, chartc3 
+			  FROM chart c1, chart c2, chart c3 
 			 WHERE c1.id IN (SELECT value FROM defaults 
 			 WHERE setting_key = 'inventory_accno_id')
 			       AND c2.id IN (SELECT value FROM defaults
