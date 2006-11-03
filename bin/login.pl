@@ -286,7 +286,7 @@ sub login {
 
 			$form->header;
 			print qq|<body>|;
-			print $locale->text('Upgrading to Version')." $form->{version} ... ";
+			print $locale->text('Upgrading to Version [_1] ...', $form->{version});
 
 			# required for Oracle
 			$form->{dbdefault} = $sid;

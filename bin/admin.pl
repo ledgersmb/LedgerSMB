@@ -404,7 +404,7 @@ sub form_header {
 
 	# is there a templates basedir
 	if (! -d "${LedgerSMB::Sysconfig::templates}") {
-		$form->error($locale->text('Directory').": ${LedgerSMB::Sysconfig::templates} ".$locale->text('does not exist'));
+		$form->error($locale->text('Directory [_1] does not exist', ${LedgerSMB::Sysconfig::templates}));
 	}
 
 	opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error("$templates : $!");
@@ -772,7 +772,7 @@ sub save {
 		$temp = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "$form->{login}");
 
 		if ($temp->{login}) {
-			$form->error("$form->{login} ".$locale->text('is already a member!'));
+			$form->error($locale->text('[_1] is already a member!', $form->{login}));
 		}
 	}
 
@@ -787,7 +787,7 @@ sub save {
 
 	# is there a basedir
 	if (! -d "${LedgerSMB::Sysconfig::templates}") {
-		$form->error($locale->text('Directory').": ${LedgerSMB::Sysconfig::templates} ".$locale->text('does not exist'));
+		$form->error($locale->text('Directory [_1] does not exist', ${LedgerSMB::Sysconfig::templates}));
 	}
 
 	# add base directory to $form->{templates}
@@ -1356,7 +1356,7 @@ sub dbcreate {
 	<center>
 	<h2>$form->{title}</h2>
 	<form method="post" action="$form->{script}">|
-		.$locale->text('Dataset')." $form->{db} ".$locale->text('successfully created!')
+		.$locale->text('Dataset [_1] successfully created!', $form->{db})
 		.qq|
 		<input type="hidden" name="path" value="$form->{path}" />
 		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
