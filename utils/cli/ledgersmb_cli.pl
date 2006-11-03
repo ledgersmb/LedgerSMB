@@ -82,12 +82,15 @@ $syntax = << '_END_SYNTAX_';
 	startrule : instruction
 
 _END_SYNTAX_
+
  $::RD_HINT = 1;
  $::RD_ERRORS = 1; # Make sure the parser dies when it encounters an error
  $::RD_WARN   = 1; # Enable warnings. This will warn on unused rules &c.`
 #$::RD_TRACE = 1;
-my $stackref;
 my @loopstack;
+my $loopindex;
+my $stackref;
+my @control_stack;
 
 push @loopstack, $form;
 
@@ -122,8 +125,18 @@ sub call_and_assign {
 
 sub push_loop {
 	my $key = shift;
+	my $is_hash = 0;
+	if (ref($stackref->{$key}) =~ /HASH/){
+		$is_hash = 1;
+	elsif (ref ($stackref->{$key}) !~ /ARRAY/){
+		print STDERR "Warning:  Must loop through array or hash.";
+	}
 	push @loopstack, \$stackref->{$key};
-	$stackref = \$loopstack[$#loopstack];
+	push @controlstack, 
+		{ "key" => $key, 
+		'index' => 0,
+		'linenum' => $#linestack,
+		is_hash => $is_hash };
 }
 
 sub pop_loop {
@@ -152,7 +165,12 @@ sub load_mod {
 
 my $scriptparse = new Parse::RecDescent($syntax);
 
+
+$loopindex = 0;
+my @linestack;
+
 while ($line = <>){
+	push @linestack, $line;
 	if ($if_count){
 		if ($line =~ /^\s*IF\s/){
 			++$if_count;
