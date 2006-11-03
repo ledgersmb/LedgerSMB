@@ -1654,59 +1654,62 @@ sub aging {
 
 
 sub get_customer {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
-  my $query = qq|SELECT name, email, cc, bcc
-                 FROM $form->{ct} ct
-		 WHERE ct.id = $form->{"$form->{ct}_id"}|;
-  ($form->{$form->{ct}}, $form->{email}, $form->{cc}, $form->{bcc}) = $dbh->selectrow_array($query);
+	my $query = qq|
+		SELECT name, email, cc, bcc FROM $form->{ct} ct
+		 WHERE ct.id = ?|;
+	$sth = $dbh->prepare($query);
+	$sth->execute($form->{"$form->{ct}_id"});
+	($form->{$form->{ct}}, $form->{email}, $form->{cc}, $form->{bcc}) 
+		= $sth->fetchrow_array();
   
-  $dbh->disconnect;
+	$dbh->commit;
 
 }
 
 
 sub get_taxaccounts {
-  my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
 
-  # connect to database
-  my $dbh = $form->dbconnect($myconfig);
-  my $ARAP = uc $form->{db};
+	my $dbh = $form->{dbh};
+	my $ARAP = uc $form->{db};
   
-  # get tax accounts
-  my $query = qq|SELECT DISTINCT c.accno, c.description
-                 FROM chart c
-		 JOIN tax t ON (c.id = t.chart_id)
-		 WHERE c.link LIKE '%${ARAP}_tax%'
-                 ORDER BY c.accno|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror;
+	# get tax accounts
+	my $query = qq|
+		  SELECT DISTINCT c.accno, c.description
+		    FROM chart c
+		    JOIN tax t ON (c.id = t.chart_id)
+		   WHERE c.link LIKE '%${ARAP}_tax%'
+                ORDER BY c.accno|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror;
 
-  my $ref = ();
-  while ($ref = $sth->fetchrow_hashref(NAME_lc) ) {
-    push @{ $form->{taxaccounts} }, $ref;
-  }
-  $sth->finish;
+	my $ref = ();
+	while ($ref = $sth->fetchrow_hashref(NAME_lc) ) {
+		push @{ $form->{taxaccounts} }, $ref;
+	}
+	$sth->finish;
 
-  # get gifi tax accounts
-  my $query = qq|SELECT DISTINCT g.accno, g.description
-                 FROM gifi g
-		 JOIN chart c ON (c.gifi_accno= g.accno)
-		 JOIN tax t ON (c.id = t.chart_id)
-		 WHERE c.link LIKE '%${ARAP}_tax%'
-                 ORDER BY accno|;
-  my $sth = $dbh->prepare($query);
-  $sth->execute || $form->dberror;
+	# get gifi tax accounts
+	my $query = qq|
+		  SELECT DISTINCT g.accno, g.description
+		    FROM gifi g
+		    JOIN chart c ON (c.gifi_accno= g.accno)
+		    JOIN tax t ON (c.id = t.chart_id)
+		   WHERE c.link LIKE '%${ARAP}_tax%'
+		ORDER BY accno|;
+	my $sth = $dbh->prepare($query);
+	$sth->execute || $form->dberror;
 
-  while ($ref = $sth->fetchrow_hashref(NAME_lc) ) {
-    push @{ $form->{gifi_taxaccounts} }, $ref;
-  }
-  $sth->finish;
+	while ($ref = $sth->fetchrow_hashref(NAME_lc) ) {
+		push @{ $form->{gifi_taxaccounts} }, $ref;
+	}
+	$sth->finish;
 
-  $dbh->disconnect;
+	$dbh->commit;
 
 }
 
