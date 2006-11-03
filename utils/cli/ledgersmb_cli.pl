@@ -128,7 +128,7 @@ sub push_loop {
 	my $is_hash = 0;
 	if (ref($stackref->{$key}) =~ /HASH/){
 		$is_hash = 1;
-	elsif (ref ($stackref->{$key}) !~ /ARRAY/){
+	} elsif (ref ($stackref->{$key}) !~ /ARRAY/){
 		print STDERR "Warning:  Must loop through array or hash.";
 	}
 	push @loopstack, \$stackref->{$key};
