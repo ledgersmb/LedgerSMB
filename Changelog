@@ -41,7 +41,7 @@ Code Quality and API:
 
 Packaging:
 * Added first version of rpm spec from Mads Kiilerich (Chris T)
-* Added Gentoo ebuilds documentation and metadata (Jayson R).
+* Added Gentoo ebuilds documentation and metadata (Jason R)
 
 Point of Sale:
 * Added experimental TrustCommerce credit card processing (Chris T)
