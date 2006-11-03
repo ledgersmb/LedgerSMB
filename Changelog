@@ -11,6 +11,8 @@ Security:
 * Added whitelist of allowed directories to file editor (Seneca)
 * Audited All Perl Modules for SQL Injection attacks (Chris T)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
+* Users are now stored in a separate database instead of fs. (Chris M)
+* User database schema now included (Josh D)
 
 Localization:
 * Moved localization files to standard codes (Seneca)
