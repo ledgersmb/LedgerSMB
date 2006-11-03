@@ -2765,7 +2765,7 @@ sub update_defaults {
 		 WHERE setting_key = ? FOR UPDATE|;
 	$sth = $dbh->prepare($query);
 	$sth->execute($fld);
-	($_) = $sth->fetchrow_array($query);
+	($_) = $sth->fetchrow_array();
 
 	$_ = "0" unless $_;
 
