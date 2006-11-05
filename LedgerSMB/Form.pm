@@ -619,7 +619,7 @@ sub parse_template {
 	$self->{tmpfile} = "${LedgerSMB::Sysconfig::userspath}/${fileid}_${tmpfile}";
 
 	if ($self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email') {
-		$out = $self->{OUT};
+		my $out = $self->{OUT};
 		$self->{OUT} = ">$self->{tmpfile}";
 	}
 
@@ -892,6 +892,7 @@ sub parse_template {
 
 			$mail->{to} = qq|$self->{email}|;
 			$mail->{from} = qq|"$myconfig->{name}" <$myconfig->{email}>|;
+			$mail->{notify} = $self->{notify};
 			$mail->{fileid} = "$fileid.";
 
 			# if we send html or plain text inline
