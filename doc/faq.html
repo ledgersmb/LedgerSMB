@@ -248,7 +248,7 @@ SL/Form.pm and change the number (44) on line 84.
   }</pre>
 
 
-<p><li><h4>IDENT Authentication failed for user "sledger-smb"</h4>
+<p><li><h4>IDENT Authentication failed for user "ledger-smb"</h4>
 Edit pg_hba.conf and change authentication to
 
 <pre>
@@ -291,12 +291,6 @@ and use \usepackage[latin1]{inputenc} in the preamble.
 If you don't want to edit tex code by hand,
 you could use Lyx, Abiword, or any WYSIWYG editor capable of exporting
 latex code.
-To do that you must change the tokens for the variables <% and %> to something
-like << and >>. % is the comment character in tex. There is also a
-pagebreak block which must be commented out.
-When you are done with the changes
-replace << and >> with <% and %> and uncomment the pagebreak block.
-
 <p>LaTeX is somewhat complex to learn, initially, but offers a much
 superior environment to produce professional-looking forms in
 postscript and PDF format.
@@ -311,9 +305,8 @@ To use without frames
   $ w3m http://localhost/ledger-smb/login.pl?terminal=lynx</pre>
 
 <p><li><h4>PDF option disappeared</h4>
-Edit ledger-smb.conf and set $latex = 1;
-<br>ledger-smb.conf is perl code, check if it compiles, if it does not,
-the internal defaults are used which turn off $latex, hence no PDF option.
+Edit ledger-smb.conf and set:
+latex = 1
 
 <p><li><h4>Installation on Windows (WIN32)</h4>
 <ul>
@@ -633,8 +626,6 @@ you can keep tab of who is doing what.
 
 <p><li>For PostgreSQL you may also set who has access to the server in the file
 pg_hba.conf
-<br>Authentication crypt does not work because not all SQL servers
-accept encrypted passwords.
 
 <p><li>in addition you can secure the tables from unauthorized access by
 setting up a different database user and GRANT rights. For instance,
