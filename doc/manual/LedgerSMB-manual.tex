@@ -6,6 +6,7 @@
 \IfFileExists{url.sty}{\usepackage{url}}
                       {\newcommand{\url}{\texttt}}
 
+\newcommand{\version}{1.2}
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
@@ -23,7 +24,7 @@
 \renewcommand{\abstractname}{Executive Summary}
 \newcommand{\mycustomer}[1][]{#1\space}
 \newcommand{\myproject}[1][]{#1\space}
-\title{Ledger-SMB Manual}
+\title{Ledger-SMB Manual v. \version}
 \author{The LedgerSMB Core Team}
 \date{\today}
 
@@ -134,9 +135,17 @@ your business.
 
 \begin{itemize}
 \item Run multiple cash registers against main Ledger-SMB installation. 
-\item Suitable for retail stores and more. 
-\item Supports some POS hardware out of the box. 
-\item Third party add-ons available for more functionality. 
+\item Suitable for retail stores and more.
+\item Credit card processing via TrustCommerce 
+\item Supports some POS hardware out of the box including:
+
+\begin{itemize}
+\item Logic Controls PD3000 pole displays (serial or parallel)
+\item Basic text-based receipt printers
+\item Keyboard wedge barcode scanners
+\item Keyboard wedge magnetic card readers
+\item Printer-attached cash drawers
+\end{itemize}
 \end{itemize}
 \item Price Matrix 
 
@@ -178,10 +187,31 @@ broad range of technologies.
 \begin{itemize}
 \item PostgreSQL 
 \item A CGI-enabled Web Server (for example, Apache) 
-\item Perl with the DBI and DBD::Pg modules 
+\item Perl 5.8.x
 \item An operating system which supports the above software (usually Linux,
 though Windows, MacOS X, etc. do work). 
 \item \LaTeX{}\ (optional) is required to create PDF or Postscript invoices. 
+\item The following CPAN modules:
+
+\begin{itemize}
+\item Data::Dumper
+\item Locale::Maketext
+\item Locale::Maketext::Lexicon
+\item MIME::Base64
+\item Digest::MD5
+\item HTML::Entities
+\item DBI
+\item DBD::Pg
+\item Math::BigFloat
+\item IO::File
+\item Encode
+\item Locale::Country
+\item Locale::Language
+\item Time::Local
+\item Cwd
+\item Config::Std
+\item MIME::Lite
+\end{itemize}
 \end{itemize}
 
 \section{User Account and Database Administration Basics}
@@ -377,7 +407,7 @@ in the System submenu.
 
 Sales Tax is collected on behalf of a state of national government
 by the individual store. Thus a sales tax account is a liability--
-it represents money {*}owed{*} by the business to the government.
+it represents money owed by the business to the government.
 
 To add a sales tax account, one would create an account in the COA
 as a liability account, check all of the \char`\"{}tax\char`\"{} checkboxes,
@@ -417,6 +447,22 @@ will be used.
 A common application is to set invoices, etc. to start at 1000 in
 order to hide the number of issued invoices from a customer.
 
+Leading zeros are preserved.  Other special values which can be embedded using
+$<$?lsmb ?$>$ tags include:
+
+\begin{description}
+\item[DATE] expands to the current date
+\item[YYMMDD] expands to a six-digit version of the date.  The components of 
+this date can be re-arranged in any order, so MMDDYY, DDMMYY, 
+or even just MMYY are all options.
+\item[NAME] expands to the name of the customer or vendor
+\item[BUSINESS] expands to the type of business assigned to the customer or 
+ventor.
+\item[DESCRIPTION] expands to the description of the part.  Valid only for parts.
+\item[ITEM] expands to the item field.  Valid only for parts.
+\item[PARTSGROUP] expands to the partsgroup.  Valid only for parts.
+\item[PHONE] expands to the telephoen number for customers and vendors.
+\end{description}
 
 \subsection{Audit Control}
 
