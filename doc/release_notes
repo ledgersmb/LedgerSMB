@@ -13,70 +13,89 @@ which it was derived, but the feature set is starting to diverge rapidly.
 
 1.1 System Requirements:
 
-* Perl 5.6 and higher (prefer 5.8).
+* Perl 5.8.
 * Apache, IIS, or other web server that supports CGI.
 * PostgreSQL 8.0 or higher.  7.3 and 7.4 could be supported with some effort but
 will not work out of the box.
 * Any operating system that supports the above environment.
+* The following CPAN modules:
+	* Data::Dumper
+	* Locale::Maketext
+	* Locale::Maketext::Lexicon
+	* MIME::Base64
+	* Digest::MD5
+	* HTML::Entities
+	* DBI
+	* DBD::Pg
+	* Math::BigFloat
+	* IO::File
+	* Encode
+	* Locale::Country
+	* Locale::Language
+	* Time::Local
+	* Cwd
+	* Config::Std
+	* MIME::Lite
 
-2:  What's New in 1.1?
+	
+
+2:  What's New in 1.2?
 
 2.1: Database changes:
-LedgerSMB 1.1 allows more flexibility in dataset creation. We now offer the
-ability to create the dataset and language with a different user than is used to
-populate the database.  If the superuser field is left blank, it will try to
-populate an existing database, while if this field is filled in, it will try to
-create the database with this account and add plpgsql to it (if the language
-already exists, it will skip over that part).
 
-Database backups now use pg_dump.  Some time ago, there were problems which
-resulted in sequences not being restored properly but these have been resolved
-in every version of PostgreSQL that we support.  The backup code is now more
-robust and simple than it was in previous versions.
+All core tables now have defined primary keys.  This allows Slony-I to be 
+supported out of the box.
 
-A foreign key constraint was added to acc_trans.chart_id, and primary keys were
-added to the acc_trans and chart tables.  These changes further tighten the data
-integrity controls and prevents invalid data from being entered into the 
-database.  Also, some database schema changes were added to prevent against
-duplicate (and ambiguous) transaction id's.
+Chris Browne has contributed a setup script for Slony.  It is in the 
+utils/replication directory.
 
-Finally, a standard means was added to extend the SQL-Ledger database schema.
-To add a custom field to a table, use the following function:
-add_custom_field(tablename, fieldname, datatype);
+Also all user information has been moved into the database and the password 
+algorythm has been changed from crypt to md5.  This means that users will need 
+to convert their accounts prior to first login on the new system (if this is an
+upgrade).
 
-For example:
-select add_cutom_field('ap', 'milage_start', 'numeric');
+Also now the defaults table has moved from a one column per value structure to a simple key->value structure.
 
-To drop a custom field, use drop_custom_field(tablename, fieldname).  For
-example:
-select drop_custom_field('ap', 'milage_start');
 
 2.2:  Security
-Previous versions installed the software with a blank admin password.  This
-password would often be left at its default, and when this happened, the
-application would not check the supplied password at all.  To correct this
-problem, we have insituted a routine to require a password check when the admin
-password is blank.
 
-2.3:  Usability Changes
-The Sales Data report from Metatron Technology Consulting was added to this
-release of LedgerSMB.  This report allows you to track sales and purchases in a
-given date range by good or service, and drill down into the AR and AP invoices
-in that time period that contain those items.
+LedgerSMB 1.2 has been through a detailed SQL injection audit of the codebase
+inherited from SQL-Ledger.  As a result several vulnerabilities which were known
+to be exploitable were corrected along with hundreds of places where
+vulnerabilities may have been exploitable but we didn't have time to verify the
+what was involved in exploiting it.  We believe though that many or most of the
+issues were exploitable given a little time and effort.
 
-Several changes have been made to check handling.  These include notices printed
-on check stubs when the number of invoices exceeds a user defined number.  Also,
-batch printing is now available for checks.
+Also, we discovered the template editor's security system was moved from
+blacklisting to whitelisting, eliminating a whole class of possible security
+issues.
 
-It is now possible (though still difficult) to print directly to a printer from
-a Windows server.
+2.3:  New Features
+
+Metatron Technology Consulting's SL-POS codebase was merged with this project,
+providing a framework for POS hardware support and more.
+
+Online credit card processing support has been added.
+
+LSMB now supports an arbitrary number of defined currencies for a business and 
+is no longer limited to 3.
+
+2.4:  Localization Changes
+
+Localization functions now use Gettext .po files on all platforms.  This means that standard translation management tools will work with LSMB translations.
+
+2.5:  Other changes
+
+The ledger-smb.conf is now an inifile which will reduce the level of expertise 
+necessary to configure it for non-Perl users.
 
 3:  Known Issues
 Reposting invoices is known to cause inaccuracies cost of goods sold and
 inventory accounts.  This problem has been confirmed to affect SQL-Ledger 2.6.x 
 as well and is caused by problems involving the de-allocation and trasaction
-reversal routines.  It will be corrected in an upcoming release as we continue
-to re-engineer the application.
+reversal routines.  It will be corrected (by removing the ability to truly
+repost invoices) in an upcoming version as we continue to re-engineer the
+application.
 
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 
@@ -110,9 +129,18 @@ floating points are unsafe for large numbers of records where accounting data is
 involved.
 
 5:  Roadmap
-The project has no defined roadmap but rather a list of tasks and objectives
-outlined in the TODO list.   There are many projects here and there are always
-room for new ideas.
+This project has no defined roadmap but rather a set of statements and 
+objectives contained in the documentation manager and trackers of sourceforge.
+In general, our development is focused around the following principles:
+
+* LSMB as infrastructure:  LSMB should be accessible from other applications.
+
+* Universal applicability:  LSMB should be usable by any any business and should
+always do the right thing in the background.  Businesses should never find that 
+they have outgrown the software.
+
+* Focus on Small to Midsize Businesses:  LSMB's core market will remain in the
+small to midsize market.
 
 6:  Get Involved
 Contributors should start by joining the LedgerSMB users and devel lists.  Code
