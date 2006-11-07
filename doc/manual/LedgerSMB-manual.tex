@@ -63,11 +63,11 @@ Documentation License\char`\"{} (Appendix \ref{fdl}).
 \begin{itemize}
 \item Flexibility and Central Management 
 \item Accessibility over the Internet (for some users) 
-\item Data is in a relatively open format 
+\item Relatively open data format
 \item Integration with other tools 
-\item One of the best accounting options for Linux users. 
+\item Excellent accounting options for Linux users
 \item Open Source 
-\item A flexible, open framework that can be extended or modified to fit
+\item Flexible, open framework that can be extended or modified to fit
 your business. 
 \item Security-conscious development community. 
 \end{itemize}
@@ -80,7 +80,7 @@ your business.
 \begin{itemize}
 \item Track sales by customer 
 \item Issue Invoices, Statements, Receipts, and more 
-\item Job costing and time entry for customer projects. 
+\item Do job costing and time entry for customer projects. 
 \item Manage sales orders and quotations 
 \item Ship items from sales orders 
 \end{itemize}
@@ -606,13 +606,10 @@ as a subcontractor a 10\% discount or more.
 
 GIFI is a requirement for Canadian customers. This feature allows
 one to link accounts with Canadian tax codes to simplify the reporting
-process.
+process. Some European countries now use a similar system.
 
-It also has another use in that non-Canadians can use this functionality
-to create customized reports by categorizing accounts using this field.
-This allows for a sort of shallow \char`\"{}account hierarchy\char`\"{}
-like some users are used to with other products.
-
+People that don't otherwise have a use for GIFI can use it to create reports
+which agregate accounts together.
 
 \subsubsection{SIC}
 
@@ -642,7 +639,7 @@ a matter best discussed with an accountant.
 The standard way books are normally closed at the end of the year
 is by moving all adjusted%
 \footnote{Adjustments would be entered via the General Ledger. The exact process
-is beyond the scope of this class, however.%
+is beyond the scope of this document, however.%
 } income and expenses to an equity account usually called \char`\"{}Retained
 Earnings.\char`\"{} Assets and liabilities are not moved. Equity drawing/dividend
 accounts are also moved, but the investment accounts are not. The
@@ -668,27 +665,23 @@ variables. Most of these should be left alone unless one knows what
 one is doing. However, on some systems some options might need to
 be changed, so all options are presented here for reference:
 
-\begin{itemize}
-\item \$userspath is the directory where Ledger-SMB will store the user
-accounts. The web server process must be able to read from and write
-to this directory. 
-\item \$templates is the directory where the templates are stored. 
-\item \$memberfile is the master list of user configuration information 
-\item \$sendmail is the command to use to send a message. It must read the
+\begin{description}
+\item[templates] is the directory where the templates are stored. 
+\item[sendmail] is the command to use to send a message. It must read the
 email from standard input. 
-\item \$language allows one to set the language for the login screen and
+\item[language] allows one to set the language for the login screen and
 admin page. 
-\item \$latex tells Ledger-SMB whether \LaTeX{} is installed. \LaTeX{} is
+\item[latex] tells Ledger-SMB whether \LaTeX{} is installed. \LaTeX{} is
 required for generating Postscript and PDF invoices and the like. 
-\item Various environmental variables (\$ENV...) can be set here too. One
+\item[Environmental variables] can be set here too. One
 can add paths for searching for \LaTeX{}, etc. 
-\item \%printer can be used to set a hash table of printers for the software.
+\item[printer] can be used to set a hash table of printers for the software.
 The primary example is\\
  \%printer = ( 'Default' =\textgreater 'lpr', 'Color' =\textgreater
-'lpr -PEpson' ); \\
+'lpr -PEpson' ); \\%TODO check with Seneca on this
  However, this can use any program that can accept print documents
 (in Postscript) from standard input, so there are many more possibilities. 
-\end{itemize}
+\end{description}
 I have omitted the variables used to configure Oracle as I do not
 believe it is still supported (it could be with a small amount of
 work though).
@@ -1025,16 +1018,8 @@ invoices.
 
 \subsubsection{Tax Paid and Non-taxable Report}
 
-These reports are not generally used in the US because most of the
-time wholesale goods are not taxable. However, for businesses with
-offices in other countries including Canada, it is often important
-for them to be aware of this functionality. In these countries, one
-generally pays sales tax even on wholesale goods and then takes a
-tax credit for these when when paying the sales tax to the country
-of province. Thus one needs to be able to track taxable and non-taxable
-expenses, and how much was paid. For now, it is sufficient to know
-that they are there.
-
+These reports have known issues.  It is better to use the GL reports and filter 
+accordingly.
 
 \subsection{Vendor Reporting}
 
@@ -1474,10 +1459,9 @@ build payroll systems that could integrate with it however.
 
 \section{POS}
 
-The Point of Sale screen is still fairly rudimentary, and it is one
-of the least mature aspects of Ledger-SMB. It is suitable for small
-retail environments at the moment but not much else.
-
+LedgerSMB 1.2 includes a number of components merged from Metatron Technology 
+Consulting's SL-POS.  Although it is still not a perfect solution, it is greatly improved in both workflow and hardware support.  It is suitable for retail 
+establishments at the moment.
 
 \subsection{Sales Screen}
 
@@ -1491,6 +1475,7 @@ for rapid data entry.
 \item Hot keys for the buttons are Alt-U for update, Alt-P for print, Alt-O
 for post, and Alt-R for print and post. 
 \item Part Groups appear at the bottom of the screen. 
+\item Alt-N moves the cursor to the next free payment line.
 \end{itemize}
 
 \subsection{Possibilities for Data Entry}
@@ -1504,12 +1489,12 @@ custom stylesheets to make it efficient.
 
 \subsection{Hardware Support}
 
-As Ledger-SMB is a web-based application, the web browser usually
+As LedgerSMB is a web-based application, the web browser usually
 does not allow the page to write to arbitrary files. Therefore hardware
 support for pole displays, etc. is not readily possible from the application
-itself. In some cases, there are add-on packages (such as SL-POS)
-which offer some additional hardware options via simple additional
-networking programs.
+itself. LedgerSMB gets around this limitation by using an additional set of 
+network sockets from the server to the client to control its hardware.  This 
+naturally requires that other software is also running on the client.
 
 Notes for specific types of hardware are as follows:
 
@@ -1520,11 +1505,12 @@ modify the stylesheets to ensure that the relevant items would be
 reasonable. Setting down the resolution would also help. 
 \item [{Receipt}] Printers: ESC/POS printers generally work in text mode.
 Control sequences can be embedded in the template as necessary. 
-\item [{Pole}] Displays: Generally are unsupported in Ledger-SMB without
-add-on patches and special network clients. 
+\item [{Pole}] Displays: Generally supported.  Only the Logic Controls PD3000 is
+supported out of the box, but making this work for other models ought to be
+trivial.
 \item [{Cash}] Drawers: These should be attached to the printer. The control
-codes can then be embedded in the invoices so that the drawer opens
-whenever an invoice is printed. 
+codes is then specified in the pos.conf.pl so that the command is sent to the
+printer when the open till button is pushed.
 \item [{Barcode}] Scanners: Most customers use decoded barcode scanners
 through a keyboard wedge interface. This allows them to scan items
 as if they were typing them on the keyboard. 
