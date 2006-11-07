@@ -115,7 +115,8 @@ sub print {
   }
 
   $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-  $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
+  $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename" if 
+  	$form->{media} ne 'screen';
 
   $form->{queued} .= " $form->{formname} $filename";
   $form->{queued} =~ s/^ //;
