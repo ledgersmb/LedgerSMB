@@ -321,6 +321,8 @@ sub redirect {
 	if ($self->{callback}) {
 
 		my ($script, $argv) = split(/\?/, $self->{callback});
+		$self->error($locale->text("Invalid redirect")) unless
+			grep {/$script/} @{LedgerSMB::Sysconfig::scripts};
 		exec ("perl", $script, $argv);
 
 	} else {

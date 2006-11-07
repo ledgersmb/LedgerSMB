@@ -13,6 +13,12 @@ $logging=0; # No logging on by default
 
 @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
+# Whitelist for redirect destination
+@scripts = ('aa.pl', 'admin.pl', 'am.pl', 'ap.pl', 'ar.pl', 'arap.pl', 
+	'arapprn.pl', 'bp.pl', 'ca.pl', 'cp.pl', 'ct.pl', 'gl.pl', 'hr.pl',
+	'ic.pl', 'io.pl', 'ir.pl', 'is.pl', 'jc.pl', 'login.pl', 'menu.pl',
+	'oe.pl', 'pe.pl', 'pos.pl', 'ps.pl', 'pw.pl', 'rc.pl', 'rp.pl');
+
 # if you have latex installed set to 1
 $latex = 1;
 
