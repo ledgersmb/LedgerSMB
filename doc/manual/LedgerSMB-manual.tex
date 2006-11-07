@@ -80,27 +80,27 @@ your business.
 \begin{itemize}
 \item Track sales by customer 
 \item Issue Invoices, Statements, Receipts, and more 
-\item Do job costing and time entry for customer projects. 
+\item Do job costing and time entry for customer projects 
 \item Manage sales orders and quotations 
 \item Ship items from sales orders 
 \end{itemize}
 \item Accounts Payable 
 
 \begin{itemize}
-\item Track purchases and debts by vendor. 
+\item Track purchases and debts by vendor 
 \item Issue RFQ's Purchase Orders, etc. 
-\item Track items received from purchase orders. 
+\item Track items received from purchase orders 
 \end{itemize}
 \item Budgeting 
 
 \begin{itemize}
-\item Track expenditures and income across multiple departments. 
-\item Track all transactions across departments. 
+\item Track expenditures and income across multiple departments 
+\item Track all transactions across departments 
 \end{itemize}
 \item Check Printing 
 
 \begin{itemize}
-\item Can customize template for any check form 
+\item Customize template for any check form 
 \end{itemize}
 \item General Ledger 
 \item Inventory Management 
@@ -108,34 +108,34 @@ your business.
 \begin{itemize}
 \item Track sales and orders of parts 
 \item Track cost of goods sold using First In/First Out method 
-\item List all parts below reorder point. 
-\item Track ordering requirements. 
-\item Track, ship, receive, and transfer parts to and from multiple warehouses. 
+\item List all parts below reorder point 
+\item Track ordering requirements 
+\item Track, ship, receive, and transfer parts to and from multiple warehouses 
 \end{itemize}
 \item Localization 
 
 \begin{itemize}
 \item Provide Localized Translations for Part Descriptions 
-\item Provide Localized Templates for Invoices, Orders, Checks, and more. 
+\item Provide Localized Templates for Invoices, Orders, Checks, and more 
 \item Select language per customer, invoice, order, etc. 
 \end{itemize}
 \item Manufacturing 
 
 \begin{itemize}
 \item Track cost of goods sold for manufactured goods (assemblies) 
-\item Create assemblies and stock assemblies, tracking materials on hand. 
+\item Create assemblies and stock assemblies, tracking materials on hand 
 \end{itemize}
 \item Multi-company/Multiuser 
 
 \begin{itemize}
 \item One isolated database per company 
-\item Users can have localized systems independent of company data set. 
+\item Users can have localized systems independent of company data set 
 \end{itemize}
 \item Point of Sale 
 
 \begin{itemize}
-\item Run multiple cash registers against main Ledger-SMB installation. 
-\item Suitable for retail stores and more.
+\item Run multiple cash registers against main Ledger-SMB installation 
+\item Suitable for retail stores and more
 \item Credit card processing via TrustCommerce 
 \item Supports some POS hardware out of the box including:
 
@@ -150,17 +150,16 @@ your business.
 \item Price Matrix 
 
 \begin{itemize}
-\item Track different prices for vendors and customers across the board. 
-\item Provide discounts to groups of customers per item or across the board. 
+\item Track different prices for vendors and customers across the board 
+\item Provide discounts to groups of customers per item or across the board 
 \item Store vendors' prices independent of the other last cost in the parts
-record. 
+record 
 \end{itemize}
 \item Reporting 
 
 \begin{itemize}
-\item All basic financial statements supported. 
-\item Customer history, sales data, and additional information can be easily
-displayed. 
+\item Supports all basic financial statements
+\item Easily display customer history, sales data, and additional information 
 \item Open framework allows for ODBC connections to be used to generate
 reports using third party reporting tools. 
 \end{itemize}
@@ -179,7 +178,7 @@ reporting framework to meet any local requirement.
 \item No payroll module (Payroll must be done manually) 
 \item Some integration limitations 
 \item Further development/maintenance requires a knowledge of a relatively
-broad range of technologies. 
+broad range of technologies 
 \end{itemize}
 
 \subsection{System Requirements of Ledger-SMB}
@@ -189,8 +188,8 @@ broad range of technologies.
 \item A CGI-enabled Web Server (for example, Apache) 
 \item Perl 5.8.x
 \item An operating system which supports the above software (usually Linux,
-though Windows, MacOS X, etc. do work). 
-\item \LaTeX{}\ (optional) is required to create PDF or Postscript invoices. 
+though Windows, MacOS X, etc. do work) 
+\item \LaTeX{}\ (optional) is required to create PDF or Postscript invoices 
 \item The following CPAN modules:
 
 \begin{itemize}
@@ -216,7 +215,7 @@ though Windows, MacOS X, etc. do work).
 
 \section{User Account and Database Administration Basics}
 
-These functions are accessed by going to the admin.pl script in the
+These functions are accessed via the admin.pl script in the
 installed directory of Ledger-SMB.
 
 
@@ -227,7 +226,7 @@ a dataset is created, it sets various defaults such as currency, a
 basic chart of accounts setup, and so forth. Note that the default
 setup is for Canada, where the author of the software resides.
 
-Datasets are generally tracked as PostgreSQL databases. The application
+Datasets are stored as PostgreSQL databases. The application
 is designed with the idea that each dataset will represent exactly
 one company. If a customer is working with multiple companies, he/she
 must create a dataset to for each.
@@ -272,7 +271,7 @@ unchecked disable those entries on the menu.
 \item Lock System allows one to lock users out of the system while maintenance
 is performed. This is only necessary during upgrades or maintenance
 which results in the RDBMS being offline. 
-\item Change Admin Password. 
+\item Change Admin Password changes the administrative password.
 \item Logout terminates the admin session. 
 \end{itemize}
 
@@ -284,80 +283,148 @@ tracking of different sorts of information.
 
 
 \subsection{Introduction to Double Entry Bookkeeping}
+In order to set up your chart of accounts in LedgerSMB you will need to
+understand a bit about double entry bookkeeping.  This section provides a
+brief overview of the essential concepts.  There is a list of references
+for further reading at the end.
 
-Ledger-SMB is a double entry system, meaning that every transaction
-consists of an equal sum of credits and debits (see below). A transaction
-is said to be balanced when the debits and credits are equal. This
-is an oversimplification and doesn't cover more complex processes
-involving closing books properly. In general customers should be referred
-to their accountants for information beyond the capabilities of the
-software. This module is just designed to provide enough familiarity
-with the concepts to be able to have an intelligent conversation with
-a bookkeeper or accountant who has specific requirements in this regard.
+\subsubsection{Business Entity}
+You don't want to mix your personal expenses and income with that of the
+business or you will not be able to tell how much money it is making (if
+any).  For the same reason you will want to keep track of how much money
+you put into and take out of the business so you will want to set up a
+completely seperate set of records for it and treat it almost as if it had
+a life of its own.
 
-
-\subsubsection{Account Types}
-
+\subsubsection{Double Entry}
+Examples:
 \begin{itemize}
-\item Assets represent tangible or intangible property or money retained
-by the company. This includes money owed to the company. 
-\item Liabilities are money that the company owes others. 
-\item Equity is the valuation of the company as a whole. Includes investment
-capital, and money paid out to owners either as dividends or as withdrawals
-(for sole proprietorships). Normally one will have at least three
-equity accounts: One for tracking investment in the business, one
-for tracking withdrawals or dividends, and one for tracking retained
-earnings. 
-\item Income accounts track the category of money as it is earned by the
-business. 
-\item Expense accounts track the category of money flowing out as expenses
-are accrued. 
+\item When you buy you pay money and receive goods.
+\item When you sell you get money and give goods.
+\item When you borrow you get money and give a promise to pay it back.
+\item When you lend you give money and get a promise to pay it back.
+\item When you sell on credit you give goods and get a promise to pay.
+\item When you buy on credit you give a promise to pay and get goods.
 \end{itemize}
+
+You need to record both sides of each transaction: thus double entry.
+Furthermore, you want to organize your entries, recording those having to
+do with money in one place, value of goods bought and sold in another,
+money owed in yet another, etc.  Hence you create accounts, and record each
+half of each transaction in an appropriate account.  Of course, you won't
+have to actually record the amount in more than one place yourself: the
+program takes care of that.
+
+\subsubsection{Accounts}
+
+\begin{description}
+\item[Assets] Valuable stuff the business owns such as money and
+goods available for sale 
+\item[Liabilities] Debts owned by the business such as bank loans and unpaid 
+bills
+\item[Equity or Capital] What would be left for the owner if all the assets were 
+converted to money and all the liabilities paid off ("Share Capital" on the
+LedgerSMB default chart of accounts: not to be confused with "Capital Assets".)
+\item[Revenue] Income from business activity: increases Equity  
+\item[Expense] The light bill, the cost of goods sold, etc: decreases Equity
+\end{description}
+
+All other accounts are subdivisions of these.  The relationship between the
+top-level accounts is often stated in the form of the Accounting Equation
+(don't worry: you won't have to solve it):
+
+Assets = Liabilities + Equity + (Revenue - Expense)
+
+You won't actually use this equation while doing your bookkeeping, but it's
+a useful tool for understanding how the system works.
 
 \subsubsection{Debits and Credits}
 
-Debits and credits are the basic unit of double-entry bookkeeping.
-When money is removed from the business by the owners (as an equity
-payment) that is a debit, while when money is invested in the business,
-that is a credit. Every other transaction is set to balance these
-concepts. Therefore asset accounts normally have a debit balance because
-this allows for the equity account to be debited, while expense accounts
-normally have a credit balance.
+Traditional paper accounting systems used a two-column form in which all
+increases went in one column and all deceases in the other.  For asset and
+expense accounts increases went in the left column and decreases in the
+right.  For liability and capital accounts decreases went in the left
+column and increases in the right.  Looking at the accounting equation we
+see that assets are on the left, so it is logical that asset increases
+would go on the left.  Libilities, capital, and revenue are on the right so
+it is logical that their increase would go on the right.  Expenses,
+however, are on the right, so why do their increases go on the left?
+Because expenses are subtracted from the right side of the equation and so
+expense increases decrease the right side of the equation.
 
-If the total debits is not equal to the total credits in the chart
-of accounts, something is very wrong, and the customer should get
-technical support immediately.
-
-
-\subsubsection{A few Examples}
-
-One might have a business that rents an office space. When rent is
-due, the accounts payable account would be credited, while the rent
-expense account would be debited. When this is paid, the accounts
-payable account would be debited while the asset account would be
-credited. This may seem backwards, but the result is to reduce by
-the amount owed for rent the amount that the owners can withdraw from
-the business as a debit. Let's say the office rent is \$300.
+Entries in the left column of the traditional form are called debits, while
+entries on the right are called credits.  Neither is "negative".
 
 \begin{itemize}
-\item Rent expense account is debited \$300 
-\item Accounts Payable is credited \$300 
-\item When this is paid, the checking account is credited \$300 
-\item And the Accounts Payable is debited \$300 
+\item Debits increase assets
+\item Debits increase expense
+\item Credits increase liabilities
+\item Credits increase capital
+\item Credits increase revenue
 \end{itemize}
-Let us say one performs a small consulting project for \$600. At the
-completion of this project, the following transaction would be made:
 
-\begin{itemize}
-\item Accounts Receivable is debited \$600 
-\item Income (Consulting) is credited \$600. 
-\end{itemize}
-Then the customer pays the \$600, the following transaction is entered. 
+Examples:
 
-\begin{itemize}
-\item Accounts Receivable is credited \$600 
-\item Payments Received is debited \$600. 
-\end{itemize}
+You go to the bank and make a deposit.  The teller tells you that he is
+going to credit your account.  This is correct: your account is money the
+bank owes you and so is a liability from their point of view.  Your deposit
+increased this liability and so they will credit it.  They will make an
+equal debit to their cash account.  When you return you will debit your
+bank deposits account because you have increased that asset and credit cash
+on hand because you have decreased that one.
+
+
+\subsubsection{Accrual}
+
+You deliver some goods to a customer and give him the bill which, as
+agreed, he promises to pay within 90 days.  You record the sale as
+completed, debiting the customer's account in Accounts Payable (an asset
+account) for the amount due.  This is accrual.  Later, when the payment
+comes, you credit his account and debit cash.  You purchase some goods on
+credit, taking delivery and promising to pay within 90 days.  You debit
+inventory (an asset account) and credit the supplier's account in Accounts
+Payable (a Liability account).  This is also accrual.  Later, when you pay
+the bill, you credit cash and debit the supplier's account.  Accrual just
+means recognizing and recording transactions when they actually occur
+rather than waiting until cash changes hands.
+
+You won't have to think about most of this stuff while doing your
+bookkeeping with LedgerSMB, but understanding it will help you set up your
+accounts, handle unusual situations, and understand the reports.  If you
+need to learn more about double entry bookkeeping see the following
+references or consult an accountant.
+
+\subsubsection{References}
+
+\url{http://www.accounting-and-bookkeeping-tips.com/learning-accounting/accounting-basics-credit.htm}\\
+Discussion of debits and credits as well as links to other accounting subjects.\\
+
+\noindent \url{http://www.computer-consulting.com/accttips.htm}\\
+Discussion of double entry bookkeeping.\\
+
+\noindent \url{http://www.minnesota.com/~tom/sql-ledger/howtos/}\\
+A short glossary, some links, and a FAQ (which makes the "credit=negative
+number" error).  The FAQ focuses on SQL-Ledger, LedgerSMB's ancestor.\\
+
+\noindent \url{http://bitscafe.com/pub2/etp/sql-ledger-notes\#expenses}\\
+Some notes on using SQL-Ledger (LedgerSMB's ancestor).\\
+
+\noindent \url{http://en.wikipedia.org/wiki/List\_of\_accounting\_topics}\\
+Wikipedia articles on accounting.\\
+
+\noindent \url{http://www.bized.ac.uk/learn/accounting/financial/index.htm}\\
+Basic accounting tutorial.\\
+
+\noindent \url{http://www.asset-analysis.com/glossary/glo\_index.html}\\
+Financial dictionary and glossary.\\
+
+\noindent \url{http://www.geocities.com/chapleaucree/educational/FinanceHandbook.html}\\
+Financial glossary.\\
+
+\noindent \url{http://www.quickmba.com/accounting/fin/}\\
+Explanation of fundamentals of accounting, including good discussions
+of debits and credits and of double-entry.
+
 
 \subsection{General Guidelines on Numbering Accounts}
 
@@ -366,7 +433,7 @@ by account number. Therefore by setting appropriate account numbers,
 one can affect the default values.
 
 A second consideration is to try to keep things under each heading
-appropriate tot hat heading. Thus setting an account number for a
+appropriate to that heading. Thus setting an account number for a
 bank loan account in the assets category is not generally advisable.
 
 
@@ -380,8 +447,8 @@ new accounts.
 \begin{itemize}
 \item Headings are just broad categories and do not store values themselves,
 while accounts are used to store the transactional information. 
-\item One cannot have an account that is both a summary account (like AR)
-but also has another function. 
+\item One cannot have an account that is  a summary account (like AR)
+and also has another function. 
 \item GIFI is mostly of interest to Canadian customers but it can be used
 to create reports of account hierarchies. 
 \end{itemize}
@@ -395,7 +462,7 @@ ledger for that account.
 
 \section{Administration}
 
-This section will cover other (non-Chart of Accounts) aspects to the
+This section covers other (non-Chart of Accounts) aspects to the
 setup of the Ledger-SMB accounting package. These are generally accessed
 in the System submenu.
 
@@ -405,11 +472,11 @@ in the System submenu.
 
 \subsubsection{Adding A Sales Tax Account}
 
-Sales Tax is collected on behalf of a state of national government
+Sales Tax is collected on behalf of a state or national government
 by the individual store. Thus a sales tax account is a liability--
 it represents money owed by the business to the government.
 
-To add a sales tax account, one would create an account in the COA
+To add a sales tax account, create an account in the Chart of Accounts
 as a liability account, check all of the \char`\"{}tax\char`\"{} checkboxes,
 and answer the following question as \char`\"{}yes:\char`\"{}
 
@@ -466,7 +533,7 @@ ventor.
 
 \subsection{Audit Control}
 
-Auditibility is a core concern of the architects of any accounting
+Auditability is a core concern of the architects of any accounting
 system. Such ensures that any modification to the accounting information
 leaves a trail which can be followed to determine the nature of the
 change. Audits can help ensure that the data in the accounting system
@@ -532,8 +599,7 @@ is well proven and understood by them.
 
 \subsubsection{Close books option}
 
-The option to close books requires transaction reversal for any transaction
-up to a certain date.
+You cannot alter a transaction that was entered before the closing date.  
 
 
 \subsubsection{Audit Trails}
@@ -659,8 +725,7 @@ though this would likely be of limited use.
 
 \subsection{Options in the ledger-smb.conf}
 
-For those who are unfamiliar with Perl as a programming language,
-the ledger-smb.conf configures the software by assigning site-wide
+The ledger-smb.conf configures the software by assigning site-wide
 variables. Most of these should be left alone unless one knows what
 one is doing. However, on some systems some options might need to
 be changed, so all options are presented here for reference:
@@ -682,9 +747,6 @@ The primary example is\\
  However, this can use any program that can accept print documents
 (in Postscript) from standard input, so there are many more possibilities. 
 \end{description}
-I have omitted the variables used to configure Oracle as I do not
-believe it is still supported (it could be with a small amount of
-work though).
 
 
 \section{Goods and Services}
@@ -698,11 +760,10 @@ and services and the related accounting concepts.
 \begin{description}
 \item [{COGS}] is Cost of Goods Sold. When an item is sold, then the expense
 of its purchase is accrued as attached to the income of the sale.
-It is tracked as COGS. 
 \item [{List}] Price is the recommended retail price. 
 \item [{Markup}] is the percentage increase that is applied to the last
 cost to get the sell price. 
-\item [{ROP}] Re-order point. Items with fewer in stock than this will
+\item [{ROP}] is re-order point. Items with fewer in stock than this will
 show up on short reports. 
 \item [{Sell}] Price is the price at which the item is sold. 
 \end{description}
@@ -732,7 +793,7 @@ with some stylesheet changes, it could be made to work.
 
 Labor/overhead is usually used for tracking manufacturing expenses.
 It is not directly billed to a customer. It is associated with an
-expense/Cost of Goods Sold (COGS) account
+expense/Cost of Goods Sold (COGS) account.
 
 
 \subsection{Services}
@@ -747,7 +808,7 @@ Services can be associated with sales tax.
 One approach to dealing with shipping and handling is to add it as
 a service. Create a service called {}``Shipping and Handling'',
 with a sell price \$1 per unit, and a 0\% markup. Bill it as \$1 per
-unit. This allows me to add the exact amount of shipping and handling
+unit. This allows one to add the exact amount of shipping and handling
 as necessary.
 
 
@@ -770,9 +831,6 @@ are treated as parts in most other regards.
 However, one cannot order assemblies from vendors. One must instead
 order the components and stock them once they are manufactured.
 
-%Excersize 1
-
-
 
 \subsubsection{Stocking Assemblies}
 
@@ -790,16 +848,16 @@ drop the part below the reorder point.
 
 \subsubsection{All Items and Parts Reports}
 
-The All Items provides a unified view of assemblies, parts, services,
+The All Items report provides a unified view of assemblies, parts, services,
 and labor for the company, while the Parts report confines it to parts.
 
 Types of reports are: 
 
 \begin{description}
 \item [{Active}] lists all items not marked as obsolete. 
-\item [{On}] Hand lists current inventory 
-\item [{Short}] Lists all items which are stocked below their ROP 
-\item [{Obsolete}] Lists all items which are marked as obsolete 
+\item [{On}] Hand lists current inventory .
+\item [{Short}] Lists all items which are stocked below their ROP.
+\item [{Obsolete}] Lists all items which are marked as obsolete.
 \item [{Orphaned}] Lists all items which have never had a transaction associated
 with them. 
 \end{description}
@@ -820,7 +878,7 @@ need to be ordered and the relevant quantity.
 \subsubsection{Services and Labor}
 
 This is similar to the Parts and All Items menu but only supports
-active, obsolete, and orphaned reports.
+Active, Obsolete, and Orphaned reports.
 
 
 \subsubsection{Assemblies}
@@ -948,21 +1006,22 @@ and click update.
 If an invoice is entered improperly, the methods used to correct it
 will vary depending on whether transaction reversal is enforced or
 not. If transaction reversal is not enforced, one can simply correct
-the invoice or transaction and repost.
+the invoice or transaction and repost. Note, however, that this violates 
+generally accepted accounting principles.
 
-If not, one needs to create a {*}duplicate{*} invoice with exactly
-opposite values entered. If one part was listed as received, then
-one should enter a negative one for the quantity. Then one can enter
-the invoice number as the same as the old one (though I like to add
-an R to the end to show that it is a reversing transaction). Once
-this is posted, one can enter the invoice correctly.
+If transaction reversal is in effect, one needs to create a duplicate 
+invoice with exactly opposite values entered. If one part was listed as 
+received, then one should enter a negative one for the quantity. Then one 
+can enter the invoice number as the same as the old one. Add an R to the 
+end to show that it is a reversing transaction. Once this is posted, one can 
+enter the invoice correctly.
 
 
 \subsection{Cash payment And Check Printing}
 
-In general, it is a bad idea to repost invoices/transactions just
-in order to enter a payment. The Cash-\textgreater Payment window
-allows one to enter payments against AP invoices or transactions.
+It is a bad idea to repost invoices/transactions just to enter a payment. 
+The Cash-\textgreater Payment window allows one to enter payments against 
+AP invoices or transactions.
 
 The printing capability can be used to print checks. The default template
 is NEBS 9085, though you can use 9082 as well (as Quickbooks does).
@@ -996,7 +1055,7 @@ To view the invoice, click on the invoice number. In the detail view,
 to view the account transactions as a whole, click on the account
 number.
 
-Open invoices are ones not fully paid off, while paid closed invoices
+Open invoices are ones not fully paid off, while closed invoices
 are those that have been paid.
 
 
@@ -1004,7 +1063,7 @@ are those that have been paid.
 
 The outstanding report is designed to help you locate AP transactions
 that are not paid yet. The ID field is mostly useful for locating
-the specific database record of a duplicate invoice number exists.
+the specific database record if a duplicate invoice number exists.
 
 
 \subsubsection{AP Aging Report}
@@ -1214,8 +1273,8 @@ a variety of customers.
 
 This unit will introduce the business processes that Ledger-SMB allows.
 These processes are designed to allow various types of businesses
-to manage their orders allow for rudimentary customer relationship
-management processes to be built around this software. In this module,
+to manage their orders and allow for rudimentary customer relationship
+management processes to be built around this software. In this section,
 we will introduce the work flow options that many businesses may use
 in their day-to-day use of the software.
 
@@ -1223,7 +1282,7 @@ in their day-to-day use of the software.
 \subsection{Sales Orders}
 
 Sales orders represent orders from customers that have not been delivered
-or shipped yet. These orders can be for work in the future, or for
+or shipped yet. These orders can be for work in the future, for
 back ordered products, or work in progress. A sales order can be generated
 form an AR invoice or from a quotation automatically.
 
@@ -1256,14 +1315,14 @@ will just generate invoices from orders.
 A customer contacts your firm and asks for a quote on some services.
 Your company would create a quotation for the job and email it to
 the customer or print it and mail it. Once the customer agrees to
-pay, one creates an order from the quotation.
+pay, one creates a sales order from the quotation.
 
-When the work is completed, the order is converted into a sales invoice
-and this is presented to the customer as a bill.
+When the work is completed, the sales order is converted into a sales 
+invoice and this is presented to the customer as a bill.
 
 Note that in some cases, this procedure may be shortened. If the customer
 places an order without asking for a quotation and is offered a verbal
-quote, then one might merely prepare the order.
+quote, then one might merely prepare the sales order.
 
 %
 \begin{figure}[hbtp]
@@ -1306,7 +1365,7 @@ Note that this requires that you have the part in your inventory.
 
 A customer contacts your firm and asks for a quotation for a number
 of different parts. You would create a quotation and when you get
-confirmation, convert it to an order. When you go to ship the item,
+confirmation, convert it to a sales order. When you go to ship the item,
 you would select the warehouse in the drop-down menu, and select the
 parts to ship. One would repeat with other warehouses until the entire
 order is shipped.
@@ -1330,13 +1389,13 @@ the invoice. It would then be mailed to the customer.
 
 A request for quotation would be a formal document one might submit
 to a vendor to ask for a quote on a product or service they might
-offer. These can be generated from Purchase Orders or AP Invoices
+offer. These can be generated from Purchase Orders or AP Invoices.
 
 
 \subsection{Purchase Orders}
 
 A purchase order is a confirmation that is issued to the vendor to
-order the product of service. Many businesses will require a purchase
+order the product or service. Many businesses will require a purchase
 order with certain terms in order to begin work on a product. These
 can be generated from RFQ's or AP Invoices.
 
@@ -1399,7 +1458,7 @@ Your company inquires about the price of a given good or service from
 another firm, You submit an RFQ to the vendor, and finding that the
 price is acceptable, you convert it into an order, adjusting the price
 to what they have quoted, and save it. When some or all of the goods
-are received, the receiving staff goes Shipping-Receiving, locates
+are received, the receiving staff goes to Shipping-Receiving, locates
 the purchase order, and fills in the number of items received.
 
 The bookkeeper can then determine when all items have been received
@@ -1710,16 +1769,17 @@ to be a description of the transaction.
 \item [{Debit}] indicates money going \textbf{into} the asset account. 
 \item [{Credit}] indicates money coming \textbf{out} of the asset account. 
 \item [{Source}] is the source document for that portion of the transaction. 
-\item [{Memo}] lists additional information as necessary 
+\item [{Memo}] lists additional information as necessary.
 \item [{Project}] allows you to assign this line to a project. 
 \end{description}
 The credit and debit options seem to be the opposite of what one would
-think of concerning one's bank account. The reason is that credits
-and debits are recorded so as to balance any money that may be invested
-in or withdrawn from the business. A debit to an asset account will
-be credited when money is withdrawn from the business, for example.
+think of concerning one's bank account. The reason is that your bank
+statement is done from the bank's point of view.  Your bank account balance
+is an asset to you and therefor you show it as having a debit balance, but
+to the bank it is money they owe you and so they show it as having a credit
+balance.
 
-Also note that in this screen, when an item is updated, it will reduce
+Note that in this screen, when an item is updated, it will reduce
 the number of lines to those already filled in plus an extra line
 for the new line in the data entry.
 
@@ -1728,7 +1788,7 @@ for the new line in the data entry.
 
 The GL Transaction screen (General Ledger-\textgreater Add Transaction)
 is identical to the Cash Transfer screen with the exception that it
-starts with nine instead of two lines. Otherwise, they are identical.
+starts with nine lines instead of two. Otherwise, they are identical.
 
 Again, one must be careful with debits and credits. Often it is easy
 to get confused. It is generally worth while to go back to the principle
@@ -1819,11 +1879,11 @@ a payment or other transaction.%
 \footnote{Source documents are things like receipts, canceled checks, etc. that
 can be used to verify the existence and nature of a transaction.%
 } 
-\item [{Memo}] relates to the memo field on a payment 
+\item [{Memo}] relates to the memo field on a payment.
 \item [{Department}] can be used to filter results by department. 
 \item [{Account}] Type can be used to filter results by type of account
 (Asset, Liability, etc.) 
-\item [{Description}] can be used to filter out by GL description or by
+\item [{Description}] can be used to filter by GL description or by
 customer/vendor name. 
 \end{description}
 The actual format of the report looks more like what one would expect
@@ -1836,7 +1896,7 @@ ledger is found in the Chart of Accounts report.
 
 The GL reports can be used to do all manner of things. One can determine,
 for example, which AP invoice or transaction was paid with a certain
-check number, which invoice by a specific customer was paid by a specific
+check number or which invoice by a specific customer was paid by a specific
 check number.
 
 
@@ -1860,7 +1920,7 @@ option on the main menu select the ones you want to process and click
 \section{Financial Statements and Reports}
 
 Financial statements and reports are a very important part of any
-accounting system. Accountants and businesspeople rely on these reports
+accounting system. Accountants and business people rely on these reports
 to determine the financial soundness of the business and its prospects
 for the next accounting period.
 
@@ -1872,8 +1932,8 @@ can be prepared either on a cash or accrual basis. In cash-basis accounting,
 the income is deemed earned when the customer pays it, and the expenses
 are deemed incurred when the business pays them.
 
-There are a number of issues with cash-basis accounting from a business
-point of view. The most extreme is that one can misrepresent the wellbeing
+There are a number of problems with cash-basis accounting from a business
+point of view. The most serious is that one can misrepresent the wellbeing
 of a business by paying a large expense after a deadline. Thus cash-basis
 accounting does not allow one to accurately pair the income with the
 related expense as these are recorded at different times. If one cannot
@@ -1898,7 +1958,7 @@ If you click on an account number, you will get a screen that allows
 you to filter out transactions in that account by various criteria.
 One can also include AR/AP, and Subtotal in the report.
 
-The report format is similar to that of a paper-based general ledger,
+The report format is similar to that of a paper-based general ledger.
 
 
 \subsection{Trial Balance}
@@ -1967,7 +2027,7 @@ This is useful for budgetary purposes.
 can show how profitable a given project was during a given time period. 
 \item [{From}] and To allow you to select arbitrary from and to dates. 
 \item [{Period}] allows you to specify a standard accounting period. 
-\item [{Compare}] to fields allow you to run a second report for comparison
+\item [{Compare to}] fields allow you to run a second report for comparison
 purposes for a separate range of dates or accounting period. 
 \item [{Decimalplaces}] allows you to display numbers to a given precision. 
 \item [{Method}] allows you to select between accrual and cash basis reports. 
@@ -2025,7 +2085,7 @@ The fields in creating a balance sheet are:
 \item [{Department}] allows you to run separate balance sheets for each
 department. 
 \item [{As}] at specifies the date. If blank this will be the current date. 
-\item [{Compare}] to specifies the date to compare the balance sheet to. 
+\item [{Compare to}] specifies the date to compare the balance sheet to. 
 \item [{Decimalplaces}] specifies the number of decimal places to use. 
 \item [{Method}] selects between cash and accrual basis. 
 \item [{Include}] in report allows you to select supplemental information
@@ -2167,7 +2227,7 @@ on the structure of the document while letting the \TeX{}\ engine
 do the heavy lifting in terms of determining the optimal formatting
 for the page. \LaTeX{}\ is used in a large number of academic journals
 (including those of the American Mathematics Association). It is available
-at \url{http://www.tug.org}.
+at \url{http://www.tug.org} and is included in most Linux distributions.
 
 Like HTML, \LaTeX{}\ uses plain text documents to store the formatting
 information and then when the document is rendered, attempts to fit
@@ -2188,21 +2248,8 @@ This document is written in \LaTeX{}.
 \LyX{} is a synchronous \LaTeX{}\ editor that runs on Windows, UNIX/Linux,
 and Mac OS X. It requires an installed \LaTeX{}-2e implementation
 and can be obtained at \url{http://www.lyx.org}. Like the most common
-\LaTeX{}\ implementations, it is open source.
-
-In \LaTeX{}, the \% sign is used to begin a comment. Therefore in
-order to edit the documents effectively, you must convert the \% signs
-into another character combination, such as @@@. This can be done
-with a sed script such as:\\
- sed -e \char`\"{}s$\vert$\%$\vert$@@@$\vert$ig\char`\"{} template.tex
-\textgreater\  template-edit.tex \\
- Then when you are done:\\
- sed -e \char`\"{}$\vert$@@@$\vert$\%$\vert$ig\char`\"{} template-edit.tex
-\textgreater\  template.tex
-
-One can edit the template-edit.tex without worrying about \LyX{} disregarding
-lines when it encounters a \%.
-
+\LaTeX{}\ implementations, it is open source and is included with most 
+Linux distributions.
 
 \subsection{Customizing Logos}
 
@@ -2217,7 +2264,7 @@ HTML documents can have logos in many different formats. PNG's are
 generally preferred for printing reasons. The image can be stored
 anywhere and merely referenced in the HTML.
 
-Note: Always test the an invoice with an image on it to ensure that
+Note: Always test the an invoice with images to ensure that
 the rest of the page format is not thrown off by it.
 
 
@@ -2317,8 +2364,8 @@ their solutions.
 
 \subsubsection{Scalability Strategies}
 
-As Ledger-SMB is a fairly standard web-based application. However,
-sometimes during upgrades, the database schema changes. In these cases,
+Ledger-SMB is a fairly standard web-based application. However,
+sometimes the database schema changes during upgrades. In these cases,
 it becomes impossible to use different versions of the software against
 the same database version safely. Ledger-SMB checks the version of
 the database and if the version is higher than the version of the
@@ -2580,7 +2627,7 @@ In general, it is advisable to run all such programs that benefit
 from integration in the same database but under different schemas.
 This allows PostgreSQL to become the main method of synchronizing
 the data in real time. However, sometimes this can require dumping
-the database recreating the tables etc. in a different schema and
+the database, recreating the tables etc. in a different schema and
 importing the data back into Ledger-SMB.
 
 One possibility for this sort of integration is to use database triggers
@@ -2615,9 +2662,10 @@ the same database.
 
 \subsubsection{Strategies}
 
-Ordinarily real-time integration is not always possible. MySQL does
-not support the SQL extension SQL/MED (Management of External Data)
-so it is not possible to replicate the data in real-time. Therefore
+Real-time integration is not always possible. MySQL does
+not support the SQL extension SQL/MED (Management of External Data) that
+supports non-MySQL data sources so it is not possible to replicate the 
+data in real-time. Therefore
 one generally resorts to integrating the system using time-based updates.
 Replication may be somewhat error-prone unless the database manager
 supports triggers (first added to MySQL in 5.0) or other mechanisms
@@ -2700,24 +2748,23 @@ num1 num2 num3\%\textgreater
 \item num2 represents lines on first page 
 \item num3 represents lines on second page. 
 \end{itemize}
-The pagebreak block is terminated by \textless\%end pagebreak\%\textgreater
+The pagebreak block is terminated by \textless\%end pagebreak\%\textgreater.
 Any text within the pagebreak block is ignored by the template.
 
 
 \subsubsection{Conditionals}
 
 \begin{itemize}
-\item \textless\%if not varname\%\textgreater tells the parser to ignore
+\item \textless\%if not varname\%\textgreater tells the parser to
 include the next block only if varname was posted by the submitting
 form (or set via the form hash elsewhere in the scripts). The block
 ends with \textless\%end varname\%\textgreater 
-\item \textless\%if varname\%\textgreater tells the parser to ignore the
-block if varname was not posted in the submitting form (or set via
+\item \textless\%if varname\%\textgreater tells the parser to include the
+block if varname was posted in the submitting form (or set via
 the form hash elsewhere in the scripts). The block ends with \textless\%end
 varname\%\textgreater 
 \item Lines conditionals are otherwise ignored by the parser. 
-\item Conditionals cannot be nested, but IF's can be nested inside loops
-as of 2.6.4 
+\item Conditionals cannot be nested, but IF's can be nested inside loops.
 \end{itemize}
 
 \subsubsection{Loops}
@@ -2812,6 +2859,12 @@ how this can be customized and how one might go about doing this.
 
 The Perl Modules (.pm files) in the LedgerSMB directory contain the
 main business logic of the application including all database access.
+Most of the modules are relatively easy to follow, but the code quality 
+leaves something to be desired.  The API calls themselves are 
+likely to be replaced in the future, so work on documenting API calls is
+now focused solely on those calls that are considered to be stable.
+At the moment, the best place to request information on the API's is on
+the Developmers' Email List (\mailto{ledger-smb-devel@lists.sourceforge.net}).
 
 Many of these modules have a fair bit of dormant code in them which
 was written for forthcoming features, such as payroll and bills of
@@ -2849,16 +2902,14 @@ LedgerSMB.  You can find his page at \url{http://www.sql-ledger.org/cgi-bin/nav.
 There are a couple of relevant sources of information on Ledger-SMB
 in particular.
 
-\begin{itemize}
-\item The latest version of this document will always be advertised at \url{http://www.metatrontech.com/projects/}. 
-\item We also maintain a community wiki with more information including
-programming, customization, and links to other sites. The wiki can
-be found at \url{http://www.metatrontech.com/ledger-smb-wiki} 
-\end{itemize}
+The most important resources are the LedgerSMB web site 
+(\url{http://www.ledgersmb.org}) and the email lists found at our Sourceforge
+site.
+
 In addition, it is generally recommended that the main bookkeeper
 of a company using Ledger-SMB work through at least one accounting
 textbook. Which textbook is not as important as the fact that a textbook
-is used however.
+is used.
 
 
 \section{Quick Tips}
@@ -2911,22 +2962,22 @@ For purposes of this example we will use a business that assembles
 computers and sells them on a retail store. 
 
 \begin{enumerate}
-\item Install Ledger-SMB 
-\item Set preferences, and customize chart of accounts 
+\item Install Ledger-SMB.
+\item Set preferences, and customize chart of accounts.
 
 \begin{enumerate}
-\item Before customizing the COA it is often worth consulting an accountant. 
+\item Before customizing the COA it is suggested that you consult an accountant. 
 \end{enumerate}
 \item Define Goods, Labor, and Services as raw parts ordered from the vendors. 
 
 \begin{itemize}
 \item These are located under the goods and services menu node. 
 \end{itemize}
-\item Define assemblies 
+\item Define assemblies.
 
 \begin{itemize}
 \item These are also located under goods and services. 
-\item Component goods and services must be defined prior to creating assembly 
+\item Component goods and services must be defined prior to creating assembly.
 \end{itemize}
 \item Enter an AP Invoice to populate inventory with proper raw materials. 
 
@@ -2934,8 +2985,8 @@ computers and sells them on a retail store.
 \item One must generally add a generic vendor first. The vendor is added
 under AP-\textgreater Vendors-\textgreater Add Vendor. 
 \end{itemize}
-\item To pay an AP invoice like a check, go to cash->payment. Fill out approrpiate
-fields and click print. 
+\item To pay an AP invoice like a check, go to cash-$>$payment. Fill out 
+approrpiate fields and click print. 
 
 \begin{itemize}
 \item Note that one should select an invoice and enter in the payment amount
@@ -2984,8 +3035,6 @@ return to the add customer screen.
 \end{itemize}
 \item One can use the requirements report to help determine what parts need
 to be ordered though one cannot generate PO's directly from this report.
-Note that prior to 2.6.8 sales orders for assemblies are not properly
-tracked regarding. 
 \end{enumerate}
 Note, the needs of Ledger-SMB are mostly useful for light manufacturing
 operations (assembling computers, for example). More manufacturing
@@ -3048,13 +3097,16 @@ cost to get the sell price.
 \item [{ROP}] Re-order point. Items with fewer in stock than this will
 show up on short reports. 
 \item [{Sell}] Price is the price at which the item is sold. 
+\item [{SKU}] Stock Keeping Unit: a number designating a specific product.
 \item [{Source}] Document : a paper document that can be used as evidence
 that a transaction occurred. Source documents can include canceled
 checks, receipts, credit card statements and the like. 
 \item [{Terms}] is the number of days one has to pay the invoice. Most
 businesses abbreviate the terms as Net n where n is the number of
 days. For example, Net 30 means the customer has 30 days to pay the
-net due on an invoice before it is late and incurs late fees. 
+net due on an invoice before it is late and incurs late fees.  Sometimes
+you will see 2 10 net 30 or similar.  This means 2\% discount if paid within
+10 days but due within 30 days in any case.
 \end{description}
 \input{fdl.tex} 
 \end{document}
