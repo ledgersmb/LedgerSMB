@@ -2734,53 +2734,56 @@ will not include \LaTeX{} or HTML instruction, but will include a
 general introduction to editing templates. Also, this is not intended
 to function as a complete reference.
 
-Template instructions are contained in tags \textless\% and \%\textgreater.
+Template instructions are contained in tags \textless?lsmb and ?\textgreater.
 The actual parsing is done by the parse\_template function in SL/Form.pm.
 
 
 \subsubsection{Page Breaks in \LaTeX{}}
 
-The first tag one will see with \LaTeX{}\ templates is \textless\%pagebreak
-num1 num2 num3\%\textgreater
+The first tag one will see with \LaTeX{}\ templates is \textless?lsmb pagebreak
+num1 num2 num3 ?\textgreater
 
 \begin{itemize}
 \item num1 represents characters per line 
 \item num2 represents lines on first page 
 \item num3 represents lines on second page. 
 \end{itemize}
-The pagebreak block is terminated by \textless\%end pagebreak\%\textgreater.
+The pagebreak block is terminated by \textless?lsmb end pagebreak ?\textgreater.
 Any text within the pagebreak block is ignored by the template.
 
 
 \subsubsection{Conditionals}
 
 \begin{itemize}
-\item \textless\%if not varname\%\textgreater tells the parser to
+\item \textless?lsmb if not varname ?\textgreater tells the parser to
 include the next block only if varname was posted by the submitting
 form (or set via the form hash elsewhere in the scripts). The block
-ends with \textless\%end varname\%\textgreater 
-\item \textless\%if varname\%\textgreater tells the parser to include the
+ends with \textless?lsmb end varname ?\textgreater 
+\item \textless?lsmb if varname ?\textgreater tells the parser to include the
 block if varname was posted in the submitting form (or set via
-the form hash elsewhere in the scripts). The block ends with \textless\%end
-varname\%\textgreater 
+the form hash elsewhere in the scripts). The block ends with \textless?lsmb end
+varname ?\textgreater 
 \item Lines conditionals are otherwise ignored by the parser. 
 \item Conditionals cannot be nested, but IF's can be nested inside loops.
 \end{itemize}
 
 \subsubsection{Loops}
 
-\textless\%foreach varname\%\textgreater is used to iterate through
+\textless?lsmb foreach varname ?\textgreater is used to iterate through
 a list of vars set by the user interface system (usually one of the
 files under bin/mozilla (or otherwise). The block is repeated for
-each varname in a list. Block ends with \textless\%end varname\%\textgreater
+each varname in a list. Block ends with \textless?lsmb end varname ?\textgreater
 
 
 \subsubsection{File Inclusion}
 
 \begin{itemize}
-\item Files may be included with the syntax \textless\%include template\_name\%\textgreater
+\item Files may be included with the syntax \textless?lsmb include template\_name
+?\textgreater
 where templatename is the name of the template within the current
-template directory (usually templates/\$username/) 
+template directory (usually templates/\$username/).  Note that for \LaTeX\ 
+templates, the input or include functionalities might be better suited for many
+many things.
 \item Cannot be used with conditionals 
 \item Filenames cannot use slashes (/) or .. due to directory transversal
 considerations. 
@@ -2819,7 +2822,7 @@ three passes.
 The following format is used for variable substitution: 
 
 \begin{itemize}
-\item \textless\%varname options\%\textgreater Options are one or more
+\item \textless?lsmb varname options ?\textgreater Options are one or more
 (whitespace separated) of: 
 
 \begin{itemize}
