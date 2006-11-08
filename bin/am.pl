@@ -3186,6 +3186,7 @@ sub process_transactions {
 
 sub print_recurring {
   my ($pt, $defaultprinter) = @_;
+  use List::Util qw(first);
 
   my %f = &formnames;
   my $ok = 1;
@@ -3203,7 +3204,7 @@ sub print_recurring {
       @a = ("perl", "$form->{script}", "action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}");
 
       $form->error($locale->text('Invalid redirect')) unless
-        grep {/$form->{script}/} @{LedgerSMB::Sysconfig::scripts};
+        first {$_ eq $form->{script}} @{LedgerSMB::Sysconfig::scripts};
       $ok = !(system(@a));
       
       if ($ok) {
@@ -3222,6 +3223,7 @@ sub print_recurring {
 
 sub email_recurring {
   my ($pt) = @_;
+  use List::Util qw(first);
 
   my %f = &formnames;
   my $ok = 1;
@@ -3244,7 +3246,7 @@ sub email_recurring {
       @a = ("perl", "$form->{script}", "action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message");
 
       $form->error($locale->text('Invalid redirect')) unless
-        grep {/$form->{script}/} @{LedgerSMB::Sysconfig::scripts};
+        first {$_ eq $form->{script}} @{LedgerSMB::Sysconfig::scripts};
       $ok = !(system(@a));
       
       if ($ok) {

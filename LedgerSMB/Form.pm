@@ -317,12 +317,13 @@ sub set_cookie {
 sub redirect {
 
 	my ($self, $msg) = @_;
+	use List::Util qw(first);
 
 	if ($self->{callback}) {
 
 		my ($script, $argv) = split(/\?/, $self->{callback});
 		$self->error($locale->text("Invalid redirect")) unless
-			grep {/$script/} @{LedgerSMB::Sysconfig::scripts};
+			first {$_ eq $script} @{LedgerSMB::Sysconfig::scripts};
 		exec ("perl", $script, $argv);
 
 	} else {
