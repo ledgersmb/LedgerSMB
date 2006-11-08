@@ -1092,7 +1092,7 @@ BEGIN
 			INSERT INTO custom_table_catalog (extends) 
 				VALUES (table_name);
 			EXECUTE ''CREATE TABLE custom_''||table_name || 
-				'' (row_id INT)'';
+				'' (row_id INT PRIMARY KEY)'';
 		EXCEPTION WHEN duplicate_table THEN
 			-- do nothing
 		END;
