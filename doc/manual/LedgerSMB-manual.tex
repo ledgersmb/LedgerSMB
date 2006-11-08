@@ -740,10 +740,11 @@ admin page.
 required for generating Postscript and PDF invoices and the like. 
 \item[Environmental variables] can be set here too. One
 can add paths for searching for \LaTeX{}, etc. 
-\item[printer] can be used to set a hash table of printers for the software.
+\item[Printers] section can be used to set a hash table of printers for the software.
 The primary example is\\
- \%printer = ( 'Default' =\textgreater 'lpr', 'Color' =\textgreater
-'lpr -PEpson' ); \\%TODO check with Seneca on this
+$[$printers$]$\\
+Default = lpr\\
+Color = lpr -PEpson \\%
  However, this can use any program that can accept print documents
 (in Postscript) from standard input, so there are many more possibilities. 
 \end{description}

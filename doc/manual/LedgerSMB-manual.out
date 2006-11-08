@@ -13,9 +13,12 @@
 \BOOKMARK [2][-]{subsection.2.5}{Other Features}{section.2}
 \BOOKMARK [1][-]{section.3}{Chart of Accounts}{part.1}
 \BOOKMARK [2][-]{subsection.3.1}{Introduction to Double Entry Bookkeeping}{section.3}
-\BOOKMARK [3][-]{subsubsection.3.1.1}{Account Types}{subsection.3.1}
-\BOOKMARK [3][-]{subsubsection.3.1.2}{Debits and Credits}{subsection.3.1}
-\BOOKMARK [3][-]{subsubsection.3.1.3}{A few Examples}{subsection.3.1}
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Business Entity}{subsection.3.1}
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Double Entry}{subsection.3.1}
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Accounts}{subsection.3.1}
+\BOOKMARK [3][-]{subsubsection.3.1.4}{Debits and Credits}{subsection.3.1}
+\BOOKMARK [3][-]{subsubsection.3.1.5}{Accrual}{subsection.3.1}
+\BOOKMARK [3][-]{subsubsection.3.1.6}{References}{subsection.3.1}
 \BOOKMARK [2][-]{subsection.3.2}{General Guidelines on Numbering Accounts}{section.3}
 \BOOKMARK [2][-]{subsection.3.3}{Adding/Modifying Accounts}{section.3}
 \BOOKMARK [2][-]{subsection.3.4}{Listing Account Balances and Transactions}{section.3}
@@ -198,10 +201,7 @@
 \BOOKMARK [2][-]{subsection.19.3}{Customizing Forms}{section.19}
 \BOOKMARK [2][-]{subsection.19.4}{Customizing Modules}{section.19}
 \BOOKMARK [3][-]{subsubsection.19.4.1}{Database Access}{subsection.19.4}
-\BOOKMARK [2][-]{subsection.19.5}{Examples}{section.19}
-\BOOKMARK [3][-]{subsubsection.19.5.1}{Adding a New Report for Sales Data}{subsection.19.5}
-\BOOKMARK [3][-]{subsubsection.19.5.2}{Truncating Number of Invoices on a Check Stub}{subsection.19.5}
-\BOOKMARK [3][-]{subsubsection.19.5.3}{Adding the a Check ID flag for Alcohol Purchases}{subsection.19.5}
+\BOOKMARK [2][-]{subsection.19.5}{CLI Examples}{section.19}
 \BOOKMARK [0][-]{part.3}{III Appendix}{}
 \BOOKMARK [1][-]{section.A}{Where to Go for More Information}{part.3}
 \BOOKMARK [1][-]{section.B}{Quick Tips}{part.3}
