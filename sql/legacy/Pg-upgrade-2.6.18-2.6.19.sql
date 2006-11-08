@@ -278,4 +278,31 @@ SELECT 'appname', 'LedgerSMB';
 
 DROP TABLE old_defaults;
 
+
+CREATE OR REPLACE FUNCTION add_custom_field (VARCHAR, VARCHAR, VARCHAR)
+RETURNS BOOL AS
+'BEGIN
+        EXECUTE ''SELECT TABLE_ID FROM custom_table_catalog
+                WHERE extends = '''''' || table_name || '''''' '';
+        IF NOT FOUND THEN
+                BEGIN
+                        INSERT INTO custom_table_catalog (extends)
+                                VALUES (table_name);
+                        EXECUTE ''CREATE TABLE custom_''||table_name ||
+                                '' (row_id INT PRIMARY KEY)'';
+                EXCEPTION WHEN duplicate_table THEN
+                        -- do nothing
+                END;
+        END IF;
+        EXECUTE ''INSERT INTO custom_field_catalog (field_name, table_id)
+        VALUES ( '''''' || new_field_name ||'''''', (SELECT table_id FROM custom_table_catalog
+                WHERE extends = ''''''|| table_name || ''''''))'';
+        EXECUTE ''ALTER TABLE custom_''||table_name || '' ADD COLUMN ''
+                || new_field_name || '' '' || field_datatype;
+        RETURN TRUE;
+' LANGUAGE PLPGSQL;
+
+END;
+
+
 COMMIT;
