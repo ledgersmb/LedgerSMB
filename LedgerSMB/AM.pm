@@ -1390,10 +1390,8 @@ sub save_defaults {
 
 		if ($translation{$_}){
 			$val = $form->{$translation{$_}};
-			print STDERR $val;
 		} 
 		if ($_ =~ /accno/){
-			print STDERR "Account $_: $translation{$_}";
 			$sth_accno->execute($val, $_) 
 				|| $form->dberror("Saving $_");
 		} else {

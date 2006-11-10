@@ -820,10 +820,10 @@ sub post_invoice {
 
 	$query = qq|
 		SELECT (SELECT value FROM defaults 
-		         WHERE setting_key = fxgain_accno_id) 
+		         WHERE setting_key = 'fxgain_accno_id') 
 		       AS fxgain_accno_id, 
 		       (SELECT value FROM defaults
-		         WHERE setting_key = fxloss_accno_id) 
+		         WHERE setting_key = 'fxloss_accno_id') 
 		       AS fxloss_accno_id|;
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
 
