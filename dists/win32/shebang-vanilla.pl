@@ -1,4 +1,4 @@
-#!c:\vanilla-perl\perl\bin
+#!c:\vanilla-perl\perl\bin\perl
 # Use this script to convert the beginnings of files to the path to ActivePerl 
 # if you are installing with Vanilla Perl.
 
@@ -16,7 +16,7 @@
 
     $line = shift @file;
 
-    print FH "#!c:\\vanilla-perl\\perl\\bin\n";
+    print FH "#!c:\\vanilla-perl\\perl\\bin\\perl\n";
     print FH @file;
 
     close(FH);
