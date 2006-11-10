@@ -455,24 +455,10 @@ sub install_smb {
       $norw = 1;
     }
 
-    $directives = qq|
-Alias /$alias $absolutealias/
-<Directory $absolutealias>
-  AllowOverride All
-  AddHandler cgi-script .pl
-  Options ExecCGI Includes FollowSymlinks
-  Order Allow,Deny
-  Allow from All
-</Directory>
-
-<Directory $absolutealias/users>
-  Order Deny,Allow
-  Deny from All
-</Directory>
-  
-|;
-
-    print FH $directives;
+    open (HTTPD, '< sql-ledger-httpd.conf');
+    while ($line = <HTTPD>){
+        print FH $line;
+    }
     close(FH);
     
     print qq|
