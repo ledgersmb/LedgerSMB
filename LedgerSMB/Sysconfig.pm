@@ -7,6 +7,8 @@ package LedgerSMB::Sysconfig;
 use Config::Std;
 use DBI qw(:sql_types); 
 
+# For Win32, change $pathsep to ';';
+$pathsep=':';
 
 $session='DB';
 $logging=0; # No logging on by default
@@ -68,7 +70,7 @@ $language = $config{''}{language} if $config{''}{language};
 $session = $config{''}{session} if $config{''}{session};
 $latex = $config{''}{latex} if $config{''}{latex};
 
-$ENV{PATH} .= ":".(join ':', @{$config{environment}{PATH}}) if
+$ENV{PATH} .= $pathsep.(join $pathsep, @{$config{environment}{PATH}}) if
 	$config{environment}{PATH};
 $ENV{PERL5LIB} .= ":".(join ':', @{$config{environment}{PERL5LIB}}) if
 	$config{environment}{PERL5LIB};
