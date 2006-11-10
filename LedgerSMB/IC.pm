@@ -929,7 +929,6 @@ sub assembly_item {
 	}
   
 	$sth->finish;
-	$dbh->disconnect;
   
 }
 
@@ -1927,7 +1926,7 @@ sub create_links {
 		$sth->finish;
 	}
   
-	$dbh->connect;
+	$dbh->commit;
 
 }
 
