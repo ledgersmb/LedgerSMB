@@ -750,7 +750,7 @@ sub transactions {
 		}
 	}
         if ($form->{partsid}){
-		my $parts_id = $dbh->quote($form->{parts_id});
+		my $partsid = $dbh->quote($form->{partsid});
 		$where .= " AND a.id IN (select trans_id FROM invoice
 			WHERE parts_id = $partsid)";
 	}
