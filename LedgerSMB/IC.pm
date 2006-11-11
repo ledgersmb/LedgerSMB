@@ -383,6 +383,9 @@ sub save {
 	$form->{partnumber} = $form->update_defaults(
 		$myconfig, "partnumber", $dbh) if ! $form->{partnumber};
 
+	if (!$form->{priceupdate}){
+		$form->{priceupdate} = 'now';
+	}
 	$query = qq|
 		UPDATE parts 
 		   SET partnumber = ?,
