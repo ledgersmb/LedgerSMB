@@ -1297,7 +1297,7 @@ sub trial_balance {
 		               $dpt_join
 		          WHERE $where $dpt_where $project AND ac.amount < 0
 		                 AND c.accno = ?) AS debit,
-		       (SELECT SUM(ac.amount FROM acc_trans ac
+		       (SELECT SUM(ac.amount) FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
 		         WHERE $where $dpt_where $project AND ac.amount > 0
@@ -1360,7 +1360,8 @@ sub trial_balance {
 			} else {
 	
 				# get DR/CR
-				$drcr->execute($ref->{accno}, $ref->{accno});
+				$drcr->execute($ref->{accno}, $ref->{accno})
+					|| $form->dberror($query);
 	
 				($debit, $credit) = (0,0);
 				while (($debit, $credit) 
