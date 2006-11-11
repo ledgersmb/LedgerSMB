@@ -56,6 +56,7 @@ use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Session;
 use Data::Dumper;
+require "common.pl";
 
 
 # for custom preprocessing logic

@@ -43,15 +43,18 @@ sub new {
 
 	my $type = shift;
 
-	my $self = {};
+	my $argstr = shift;
 
 	read(STDIN, $_, $ENV{CONTENT_LENGTH});
 
-	if ($ENV{QUERY_STRING}) {
+	if ($argstr){
+		 $_ = $argstr;
+	}
+	elsif ($ENV{QUERY_STRING}) {
 		$_ = $ENV{QUERY_STRING};
 	}
 
-	if ($ARGV[0]) {
+	elsif ($ARGV[0]) {
 		$_ = $ARGV[0];
 	}
 
@@ -321,11 +324,7 @@ sub redirect {
 
 	if ($self->{callback}) {
 
-		my ($script, $argv) = split(/\?/, $self->{callback});
-		$self->error($locale->text("Invalid redirect")) unless
-			first {$_ eq $script} @{LedgerSMB::Sysconfig::scripts};
-		exec ("perl", $script, $argv);
-
+		main::redirect();
 	} else {
 
 		$self->info($msg);

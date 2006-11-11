@@ -56,7 +56,7 @@ sub display {
 
 		print qq|
 		<frameset cols="$menuwidth,*" border="1">
-			<frame name="acc_menu" src="$form->{script}?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;action=acc_menu&amp;path=$form->{path}&amp;js=$form->{js}" />
+			<frame name="acc_menu" src="menu.pl?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;action=acc_menu&amp;path=$form->{path}&amp;js=$form->{js}" />
 			<frame name="main_window" src="am.pl?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;action=$form->{main}&amp;path=$form->{path}" />
 		</frameset>
 		</html>
