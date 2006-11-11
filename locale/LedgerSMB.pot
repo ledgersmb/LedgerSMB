@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.2.0\n"
-"POT-Creation-Date: 2006-11-03 15:50-0500\n"
+"POT-Creation-Date: 2006-11-10 20:27-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@example.org>\n"
@@ -97,7 +97,7 @@ msgstr ""
 msgid "Access Denied!"
 msgstr ""
 
-#: bin/aa.pl:1129 bin/aa.pl:1238 bin/aa.pl:1394 bin/aa.pl:521 bin/aa.pl:613 bin/am.pl:158 bin/am.pl:320 bin/arapprn.pl:516 bin/bp.pl:315 bin/ca.pl:178 bin/ca.pl:328 bin/ca.pl:89 bin/cp.pl:307 bin/cp.pl:928 bin/gl.pl:248 bin/gl.pl:398 bin/gl.pl:524 bin/gl.pl:982 bin/ir.pl:510 bin/is.pl:553 bin/rc.pl:137 bin/rp.pl:1104 bin/rp.pl:2334 bin/rp.pl:719
+#: bin/aa.pl:1129 bin/aa.pl:1238 bin/aa.pl:1394 bin/aa.pl:521 bin/aa.pl:613 bin/am.pl:158 bin/am.pl:320 bin/arapprn.pl:517 bin/bp.pl:315 bin/ca.pl:178 bin/ca.pl:328 bin/ca.pl:89 bin/cp.pl:307 bin/cp.pl:928 bin/gl.pl:248 bin/gl.pl:398 bin/gl.pl:524 bin/gl.pl:982 bin/ir.pl:510 bin/is.pl:553 bin/rc.pl:137 bin/rp.pl:1104 bin/rp.pl:2334 bin/rp.pl:719
 msgid "Account"
 msgstr ""
 
@@ -361,7 +361,7 @@ msgstr ""
 msgid "Allowances"
 msgstr ""
 
-#: bin/aa.pl:1102 bin/aa.pl:1375 bin/aa.pl:519 bin/aa.pl:611 bin/am.pl:2753 bin/arapprn.pl:515 bin/cp.pl:352 bin/cp.pl:354 bin/cp.pl:944 bin/cp.pl:979 bin/cp.pl:981 bin/ct.pl:253 bin/ct.pl:744 bin/gl.pl:297 bin/gl.pl:299 bin/gl.pl:466 bin/gl.pl:475 bin/hr.pl:1025 bin/hr.pl:772 bin/ir.pl:508 bin/is.pl:551 bin/jc.pl:1602 bin/oe.pl:1176 bin/oe.pl:1439 bin/pe.pl:2324 bin/pos.pl:414 bin/rp.pl:2148 bin/rp.pl:2373 bin/rp.pl:544 bin/rp.pl:618
+#: bin/aa.pl:1102 bin/aa.pl:1375 bin/aa.pl:519 bin/aa.pl:611 bin/am.pl:2753 bin/arapprn.pl:516 bin/cp.pl:352 bin/cp.pl:354 bin/cp.pl:944 bin/cp.pl:979 bin/cp.pl:981 bin/ct.pl:253 bin/ct.pl:744 bin/gl.pl:297 bin/gl.pl:299 bin/gl.pl:466 bin/gl.pl:475 bin/hr.pl:1025 bin/hr.pl:772 bin/ir.pl:508 bin/is.pl:551 bin/jc.pl:1602 bin/oe.pl:1176 bin/oe.pl:1439 bin/pe.pl:2324 bin/pos.pl:414 bin/rp.pl:2148 bin/rp.pl:2373 bin/rp.pl:544 bin/rp.pl:618
 msgid "Amount"
 msgstr ""
 
@@ -545,7 +545,7 @@ msgstr ""
 msgid "Bin"
 msgstr ""
 
-#: bin/am.pl:3272 bin/io.pl:1288 bin/oe.pl:286 bin/oe.pl:295 menu.ini:793 menu.ini:864
+#: bin/am.pl:3278 bin/io.pl:1288 bin/oe.pl:286 bin/oe.pl:295 menu.ini:793 menu.ini:864
 msgid "Bin List"
 msgstr ""
 
@@ -939,7 +939,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: bin/aa.pl:1193 bin/admin.pl:1216 bin/admin.pl:1248 bin/admin.pl:1303 bin/admin.pl:1340 bin/am.pl:1454 bin/am.pl:2323 bin/am.pl:2604 bin/arap.pl:218 bin/arap.pl:411 bin/arap.pl:510 bin/arapprn.pl:586 bin/bp.pl:189 bin/ct.pl:2278 bin/ct.pl:512 bin/gl.pl:352 bin/hr.pl:169 bin/ic.pl:1139 bin/ic.pl:1963 bin/ic.pl:2853 bin/ic.pl:3090 bin/ic.pl:3218 bin/io.pl:1046 bin/io.pl:1694 bin/io.pl:449 bin/io.pl:605 bin/jc.pl:1092 bin/jc.pl:297 bin/login.pl:305 bin/oe.pl:1260 bin/oe.pl:2045 bin/oe.pl:2556 bin/oe.pl:3000 bin/pe.pl:1642 bin/pe.pl:2073 bin/pe.pl:2221 bin/pe.pl:2451 bin/pe.pl:532 bin/pe.pl:744 bin/pos.pl:1064 bin/pw.pl:69 bin/rc.pl:170 bin/rp.pl:1882 bin/rp.pl:776
+#: bin/aa.pl:1193 bin/admin.pl:1216 bin/admin.pl:1248 bin/admin.pl:1303 bin/admin.pl:1340 bin/am.pl:1454 bin/am.pl:2323 bin/am.pl:2604 bin/arap.pl:218 bin/arap.pl:411 bin/arap.pl:510 bin/arapprn.pl:587 bin/bp.pl:189 bin/ct.pl:2278 bin/ct.pl:512 bin/gl.pl:352 bin/hr.pl:169 bin/ic.pl:1139 bin/ic.pl:1963 bin/ic.pl:2853 bin/ic.pl:3090 bin/ic.pl:3218 bin/io.pl:1046 bin/io.pl:1694 bin/io.pl:449 bin/io.pl:605 bin/jc.pl:1092 bin/jc.pl:297 bin/login.pl:305 bin/oe.pl:1260 bin/oe.pl:2045 bin/oe.pl:2556 bin/oe.pl:3000 bin/pe.pl:1642 bin/pe.pl:2073 bin/pe.pl:2221 bin/pe.pl:2451 bin/pe.pl:532 bin/pe.pl:744 bin/pos.pl:1064 bin/pw.pl:69 bin/rc.pl:170 bin/rp.pl:1882 bin/rp.pl:776
 msgid "Continue"
 msgstr ""
 
@@ -995,7 +995,7 @@ msgstr ""
 msgid "Credit Card Track"
 msgstr ""
 
-#: bin/am.pl:3265
+#: bin/am.pl:3271
 msgid "Credit Invoice"
 msgstr ""
 
@@ -1111,7 +1111,7 @@ msgstr ""
 msgid "Dataset updated!"
 msgstr ""
 
-#: bin/aa.pl:1369 bin/aa.pl:610 bin/arapprn.pl:512 bin/bp.pl:374 bin/ca.pl:303 bin/cp.pl:313 bin/cp.pl:351 bin/cp.pl:934 bin/cp.pl:978 bin/gl.pl:239 bin/gl.pl:515 bin/gl.pl:963 bin/ir.pl:507 bin/is.pl:550 bin/jc.pl:1275 bin/jc.pl:1596 bin/jc.pl:764 bin/oe.pl:1169 bin/oe.pl:1433 bin/oe.pl:2028 bin/pe.pl:2318 bin/rc.pl:472 bin/rp.pl:1366 bin/rp.pl:2147 bin/rp.pl:2372 bin/rp.pl:527 bin/rp.pl:601
+#: bin/aa.pl:1369 bin/aa.pl:610 bin/arapprn.pl:513 bin/bp.pl:374 bin/ca.pl:303 bin/cp.pl:313 bin/cp.pl:351 bin/cp.pl:934 bin/cp.pl:978 bin/gl.pl:239 bin/gl.pl:515 bin/gl.pl:963 bin/ir.pl:507 bin/is.pl:550 bin/jc.pl:1275 bin/jc.pl:1596 bin/jc.pl:764 bin/oe.pl:1169 bin/oe.pl:1433 bin/oe.pl:2028 bin/pe.pl:2318 bin/rc.pl:472 bin/rp.pl:1366 bin/rp.pl:2147 bin/rp.pl:2372 bin/rp.pl:527 bin/rp.pl:601
 msgid "Date"
 msgstr ""
 
@@ -1161,7 +1161,7 @@ msgstr ""
 msgid "Debit"
 msgstr ""
 
-#: bin/am.pl:3266
+#: bin/am.pl:3272
 msgid "Debit Invoice"
 msgstr ""
 
@@ -1319,7 +1319,7 @@ msgstr ""
 msgid "E-mail Statement to %1"
 msgstr ""
 
-#: bin/am.pl:3236 bin/io.pl:1311 bin/rp.pl:1897
+#: bin/am.pl:3240 bin/io.pl:1311 bin/rp.pl:1897
 msgid "E-mail address missing!"
 msgstr ""
 
@@ -1865,6 +1865,10 @@ msgstr ""
 msgid "Internal Notes"
 msgstr ""
 
+#: LedgerSMB/Form.pm:325 bin/am.pl:3206 bin/am.pl:3248
+msgid "Invalid redirect"
+msgstr ""
+
 #: bin/am.pl:1743 bin/am.pl:177 bin/ic.pl:1519 bin/ic.pl:433
 msgid "Inventory"
 msgstr ""
@@ -1889,7 +1893,7 @@ msgstr ""
 msgid "Inventory transferred!"
 msgstr ""
 
-#: bin/aa.pl:1371 bin/am.pl:3264 bin/bp.pl:375 bin/cp.pl:350 bin/cp.pl:977 bin/ct.pl:729 bin/io.pl:1231 bin/is.pl:211 bin/is.pl:890 bin/rp.pl:1364 bin/rp.pl:2146 bin/rp.pl:525 bin/rp.pl:599 menu.ini:753 menu.ini:824
+#: bin/aa.pl:1371 bin/am.pl:3270 bin/bp.pl:375 bin/cp.pl:350 bin/cp.pl:977 bin/ct.pl:729 bin/io.pl:1231 bin/is.pl:211 bin/is.pl:890 bin/rp.pl:1364 bin/rp.pl:2146 bin/rp.pl:525 bin/rp.pl:599 menu.ini:753 menu.ini:824
 msgid "Invoice"
 msgstr ""
 
@@ -2193,7 +2197,7 @@ msgstr ""
 msgid "May "
 msgstr ""
 
-#: bin/aa.pl:615 bin/arapprn.pl:514 bin/cp.pl:356 bin/cp.pl:913 bin/gl.pl:247 bin/gl.pl:277 bin/gl.pl:416 bin/gl.pl:518 bin/gl.pl:987 bin/ir.pl:512 bin/is.pl:555 bin/pos.pl:416 bin/rp.pl:2358 bin/rp.pl:2376 bin/rp.pl:733
+#: bin/aa.pl:615 bin/arapprn.pl:515 bin/cp.pl:356 bin/cp.pl:913 bin/gl.pl:247 bin/gl.pl:277 bin/gl.pl:416 bin/gl.pl:518 bin/gl.pl:987 bin/ir.pl:512 bin/is.pl:555 bin/pos.pl:416 bin/rp.pl:2358 bin/rp.pl:2376 bin/rp.pl:733
 msgid "Memo"
 msgstr ""
 
@@ -2521,7 +2525,7 @@ msgstr ""
 msgid "Overdue"
 msgstr ""
 
-#: bin/am.pl:2957 bin/arapprn.pl:636 bin/cp.pl:1075 bin/cp.pl:468 bin/io.pl:1124 bin/jc.pl:1775 bin/rp.pl:1766
+#: bin/am.pl:2957 bin/arapprn.pl:637 bin/cp.pl:1075 bin/cp.pl:468 bin/io.pl:1124 bin/jc.pl:1775 bin/rp.pl:1766
 msgid "PDF"
 msgstr ""
 
@@ -2541,7 +2545,7 @@ msgstr ""
 msgid "POS Invoice"
 msgstr ""
 
-#: bin/am.pl:3267 bin/io.pl:1249 bin/is.pl:213 bin/oe.pl:277 bin/oe.pl:291 menu.ini:768 menu.ini:839
+#: bin/am.pl:3273 bin/io.pl:1249 bin/is.pl:213 bin/oe.pl:277 bin/oe.pl:291 menu.ini:768 menu.ini:839
 msgid "Packing List"
 msgstr ""
 
@@ -2577,7 +2581,7 @@ msgstr ""
 msgid "Parts Requirements"
 msgstr ""
 
-#: LedgerSMB/Form.pm:1357
+#: LedgerSMB/Form.pm:1361
 msgid "Passed incorrect query type to get_cutstom_queries."
 msgstr ""
 
@@ -2641,7 +2645,7 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: bin/am.pl:3268 bin/io.pl:1270 bin/is.pl:212 bin/oe.pl:276 bin/oe.pl:290 menu.ini:773 menu.ini:844
+#: bin/am.pl:3274 bin/io.pl:1270 bin/is.pl:212 bin/oe.pl:276 bin/oe.pl:290 menu.ini:773 menu.ini:844
 msgid "Pick List"
 msgstr ""
 
@@ -2701,7 +2705,7 @@ msgstr ""
 msgid "Posting failed!"
 msgstr ""
 
-#: bin/am.pl:2956 bin/arapprn.pl:635 bin/cp.pl:1074 bin/cp.pl:467 bin/io.pl:1123 bin/jc.pl:1774 bin/rp.pl:1765
+#: bin/am.pl:2956 bin/arapprn.pl:636 bin/cp.pl:1074 bin/cp.pl:467 bin/io.pl:1123 bin/jc.pl:1774 bin/rp.pl:1765
 msgid "Postscript"
 msgstr ""
 
@@ -2765,7 +2769,7 @@ msgstr ""
 msgid "Print and Save as new"
 msgstr ""
 
-#: bin/arapprn.pl:658 bin/io.pl:1148 bin/jc.pl:1796 bin/pos.pl:975
+#: bin/arapprn.pl:659 bin/io.pl:1148 bin/jc.pl:1796 bin/pos.pl:975
 msgid "Printed"
 msgstr ""
 
@@ -2773,7 +2777,7 @@ msgstr ""
 msgid "Printer"
 msgstr ""
 
-#: bin/am.pl:3201 bin/bp.pl:275
+#: bin/am.pl:3202 bin/bp.pl:275
 msgid "Printing"
 msgstr ""
 
@@ -2837,7 +2841,7 @@ msgstr ""
 msgid "Projects"
 msgstr ""
 
-#: bin/am.pl:3105 bin/am.pl:3271 bin/ct.pl:1163 bin/ct.pl:1628 bin/ct.pl:1643 bin/ic.pl:1258 bin/io.pl:1281 bin/ir.pl:586 bin/ir.pl:593 bin/oe.pl:1342 bin/oe.pl:1760 bin/oe.pl:285 bin/oe.pl:702 bin/oe.pl:717 menu.ini:238 menu.ini:788 menu.ini:859
+#: bin/am.pl:3105 bin/am.pl:3277 bin/ct.pl:1163 bin/ct.pl:1628 bin/ct.pl:1643 bin/ic.pl:1258 bin/io.pl:1281 bin/ir.pl:586 bin/ir.pl:593 bin/oe.pl:1342 bin/oe.pl:1760 bin/oe.pl:285 bin/oe.pl:702 bin/oe.pl:717 menu.ini:238 menu.ini:788 menu.ini:859
 msgid "Purchase Order"
 msgstr ""
 
@@ -2861,7 +2865,7 @@ msgstr ""
 msgid "Quarter"
 msgstr ""
 
-#: bin/arapprn.pl:637 bin/io.pl:1108 bin/jc.pl:1771
+#: bin/arapprn.pl:638 bin/io.pl:1108 bin/jc.pl:1771
 msgid "Queue"
 msgstr ""
 
@@ -3105,7 +3109,7 @@ msgstr ""
 msgid "Sales Invoices"
 msgstr ""
 
-#: bin/am.pl:3100 bin/am.pl:3269 bin/ct.pl:1153 bin/ct.pl:1624 bin/ct.pl:1640 bin/ic.pl:1263 bin/io.pl:1236 bin/is.pl:643 bin/is.pl:655 bin/oe.pl:1384 bin/oe.pl:1755 bin/oe.pl:274 bin/oe.pl:701 bin/oe.pl:714 menu.ini:233 menu.ini:778 menu.ini:849
+#: bin/am.pl:3100 bin/am.pl:3275 bin/ct.pl:1153 bin/ct.pl:1624 bin/ct.pl:1640 bin/ic.pl:1263 bin/io.pl:1236 bin/is.pl:643 bin/is.pl:655 bin/oe.pl:1384 bin/oe.pl:1755 bin/oe.pl:274 bin/oe.pl:701 bin/oe.pl:714 menu.ini:233 menu.ini:778 menu.ini:849
 msgid "Sales Order"
 msgstr ""
 
@@ -3159,11 +3163,11 @@ msgstr ""
 msgid "Schedule"
 msgstr ""
 
-#: bin/arapprn.pl:662 bin/gl.pl:1072 bin/io.pl:1151
+#: bin/arapprn.pl:663 bin/gl.pl:1072 bin/io.pl:1151
 msgid "Scheduled"
 msgstr ""
 
-#: bin/arapprn.pl:624 bin/cp.pl:1065 bin/cp.pl:458 bin/io.pl:1100 bin/jc.pl:1760 bin/pos.pl:955 bin/rp.pl:1753
+#: bin/arapprn.pl:625 bin/cp.pl:1065 bin/cp.pl:458 bin/io.pl:1100 bin/jc.pl:1760 bin/pos.pl:955 bin/rp.pl:1753
 msgid "Screen"
 msgstr ""
 
@@ -3183,7 +3187,7 @@ msgstr ""
 msgid "Select Vendor"
 msgstr ""
 
-#: bin/arapprn.pl:677 bin/is.pl:914 bin/jc.pl:1105 bin/oe.pl:1804 bin/pos.pl:909
+#: bin/arapprn.pl:678 bin/is.pl:914 bin/jc.pl:1105 bin/oe.pl:1804 bin/pos.pl:909
 msgid "Select a Printer!"
 msgstr ""
 
@@ -3203,11 +3207,11 @@ msgstr ""
 msgid "Select items"
 msgstr ""
 
-#: bin/arapprn.pl:509
+#: bin/arapprn.pl:510
 msgid "Select payment"
 msgstr ""
 
-#: bin/arapprn.pl:58 bin/arapprn.pl:65 bin/arapprn.pl:676 bin/cp.pl:1190 bin/is.pl:913 bin/jc.pl:1104 bin/jc.pl:1815 bin/oe.pl:1803 bin/rp.pl:1912
+#: bin/arapprn.pl:58 bin/arapprn.pl:65 bin/arapprn.pl:677 bin/cp.pl:1190 bin/is.pl:913 bin/jc.pl:1104 bin/jc.pl:1815 bin/oe.pl:1803 bin/rp.pl:1912
 msgid "Select postscript or PDF!"
 msgstr ""
 
@@ -3227,7 +3231,7 @@ msgstr ""
 msgid "Send by E-Mail"
 msgstr ""
 
-#: bin/am.pl:3232
+#: bin/am.pl:3236
 msgid "Sending"
 msgstr ""
 
@@ -3359,7 +3363,7 @@ msgstr ""
 msgid "Sort by"
 msgstr ""
 
-#: bin/aa.pl:1022 bin/aa.pl:1290 bin/aa.pl:1395 bin/aa.pl:614 bin/arapprn.pl:513 bin/ca.pl:307 bin/cp.pl:357 bin/cp.pl:940 bin/gl.pl:246 bin/gl.pl:275 bin/gl.pl:410 bin/gl.pl:517 bin/gl.pl:986 bin/ir.pl:511 bin/is.pl:554 bin/pos.pl:415 bin/rc.pl:194 bin/rc.pl:470 bin/rp.pl:2352 bin/rp.pl:2375 bin/rp.pl:729
+#: bin/aa.pl:1022 bin/aa.pl:1290 bin/aa.pl:1395 bin/aa.pl:614 bin/arapprn.pl:514 bin/ca.pl:307 bin/cp.pl:357 bin/cp.pl:940 bin/gl.pl:246 bin/gl.pl:275 bin/gl.pl:410 bin/gl.pl:517 bin/gl.pl:986 bin/ir.pl:511 bin/is.pl:554 bin/pos.pl:415 bin/rc.pl:194 bin/rc.pl:470 bin/rp.pl:2352 bin/rp.pl:2375 bin/rp.pl:729
 msgid "Source"
 msgstr ""
 
@@ -3667,7 +3671,7 @@ msgstr ""
 msgid "Trade Discount"
 msgstr ""
 
-#: bin/aa.pl:133 bin/am.pl:3263
+#: bin/aa.pl:133 bin/am.pl:3269
 msgid "Transaction"
 msgstr ""
 
@@ -3957,7 +3961,7 @@ msgstr ""
 msgid "What type of item is this?"
 msgstr ""
 
-#: bin/am.pl:3270 bin/io.pl:1243 bin/oe.pl:275 menu.ini:783 menu.ini:854
+#: bin/am.pl:3276 bin/io.pl:1243 bin/oe.pl:275 menu.ini:783 menu.ini:854
 msgid "Work Order"
 msgstr ""
 
@@ -4081,7 +4085,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: bin/am.pl:3080 bin/am.pl:3130 bin/am.pl:3172 bin/am.pl:3208 bin/am.pl:3247 bin/bp.pl:278 bin/login.pl:303
+#: bin/am.pl:3080 bin/am.pl:3130 bin/am.pl:3172 bin/am.pl:3211 bin/am.pl:3253 bin/bp.pl:278 bin/login.pl:303
 msgid "done"
 msgstr ""
 
@@ -4089,7 +4093,7 @@ msgstr ""
 msgid "ea"
 msgstr ""
 
-#: bin/am.pl:3132 bin/am.pl:3210 bin/am.pl:3249
+#: bin/am.pl:3132 bin/am.pl:3213 bin/am.pl:3255
 msgid "failed"
 msgstr ""
 
