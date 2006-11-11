@@ -243,7 +243,7 @@ sub save {
 		$sth->execute($form->{id});
 		my ($id, $listprice, $sellprice, $lastcost, $weight, 
 			$project_id) 
-				= $dbh->fetchrow_array();
+				= $sth->fetchrow_array();
 
 		if ($id) {
       
