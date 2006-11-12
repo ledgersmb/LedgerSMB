@@ -1194,7 +1194,7 @@ sub retrieve_item {
 	}
   
 	if ($form->{"description_$i"} ne "") {
-		$var = $dbh->quote($form->$like(lc $form->{"description_$i"}));
+		$var = $dbh->quote($form->like(lc $form->{"description_$i"}));
 		if ($form->{language_code} ne "") {
 			$where .= " AND lower(t1.description) LIKE $var";
 		} else {
