@@ -635,7 +635,7 @@ sub import_text {
   my @i_lines = split(/(\n|\r|\r\n)/, $form->{import_text});
   foreach $i (@i_lines){
     chomp($i);
-    if ($i != ""){ # Strip out blank lines
+    if ($i ne ""){ # Strip out blank lines
       push @o_list, $i;
     }
   }

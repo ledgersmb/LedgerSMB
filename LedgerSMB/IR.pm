@@ -1214,8 +1214,6 @@ sub retrieve_item {
 		$where .= " ORDER BY 2";
 	}
 
-	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
 
 	my $query = qq|
 		   SELECT p.id, p.partnumber, p.description,
