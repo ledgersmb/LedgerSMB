@@ -44,13 +44,13 @@ use LedgerSMB::Session;
 $form = new Form;
 
 $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
-	$form->error("Locale not loaded: $!\n");
+	$form->error(__FILE__.':'.__LINE__.': '."Locale not loaded: $!\n");
 $locale->encoding('UTF-8');
 $form->{charset} = 'UTF-8';
 #$form->{charset} = $locale->encoding;
 
 eval { require DBI; };
-$form->error($locale->text('DBI not installed!')) if ($@);
+$form->error(__FILE__.':'.__LINE__.': '.$locale->text('DBI not installed!')) if ($@);
 
 $form->{stylesheet} = "ledger-smb.css";
 $form->{favicon} = "favicon.ico";
@@ -61,7 +61,7 @@ require "bin/pw.pl";
 # customization
 if (-f "bin/custom/$form->{script}") {
 	eval { require "bin/custom/$form->{script}"; };
-	$form->error($@) if ($@);
+	$form->error(__FILE__.':'.__LINE__.': '.$@) if ($@);
 }
 
 
@@ -72,7 +72,7 @@ if ($form->{action}) {
 } else {
 
 	# if there are no drivers bail out
-	$form->error($locale->text('No Database Drivers available!')) unless (LedgerSMB::User->dbdrivers);
+	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('No Database Drivers available!')) unless (LedgerSMB::User->dbdrivers);
 
 	$root = LedgerSMB::User->new('admin');
 
@@ -386,10 +386,10 @@ sub form_header {
 
 	# is there a templates basedir
 	if (! -d "${LedgerSMB::Sysconfig::templates}") {
-		$form->error($locale->text('Directory [_1] does not exist', ${LedgerSMB::Sysconfig::templates}));
+		$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Directory [_1] does not exist', ${LedgerSMB::Sysconfig::templates}));
 	}
 
-	opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error("$templates : $!");
+	opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error(__FILE__.':'.__LINE__.': '."$templates : $!");
 	@all = grep !/^\.\.?$/, readdir TEMPLATEDIR;
 	closedir TEMPLATEDIR;
 
@@ -623,7 +623,7 @@ sub form_header {
 
 
 	# access control
-	open(FH, $menufile) or $form->error("$menufile : $!");
+	open(FH, $menufile) or $form->error(__FILE__.':'.__LINE__.': '."$menufile : $!");
 	# scan for first menu level
 	@a = <FH>;
 	close(FH);
@@ -741,7 +741,7 @@ sub form_header {
 sub save {
 
 	# no driver checked
-	$form->error($locale->text('Database Driver not checked!')) unless $form->{dbdriver};
+	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Database Driver not checked!')) unless $form->{dbdriver};
 
 	# no spaces allowed in login name
 	$form->{login} =~ s/ //g;
@@ -754,7 +754,7 @@ sub save {
 		$temp = LedgerSMB::User->new($form->{login});
 
 		if ($temp->{login}) {
-			$form->error($locale->text('[_1] is already a member!', $form->{login}));
+			$form->error(__FILE__.':'.__LINE__.': '.$locale->text('[_1] is already a member!', $form->{login}));
 		}
 	}
 
@@ -769,7 +769,7 @@ sub save {
 
 	# is there a basedir
 	if (! -d "${LedgerSMB::Sysconfig::templates}") {
-		$form->error($locale->text('Directory [_1] does not exist', ${LedgerSMB::Sysconfig::templates}));
+		$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Directory [_1] does not exist', ${LedgerSMB::Sysconfig::templates}));
 	}
 
 	# add base directory to $form->{templates}
@@ -829,16 +829,16 @@ sub save {
 			umask(007);
 
 			# copy templates to the directory
-			opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error("$templates : $!");
+			opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error(__FILE__.':'.__LINE__.': '."$templates : $!");
 			@templates = grep /$form->{mastertemplates}-/, readdir TEMPLATEDIR;
 			closedir TEMPLATEDIR;
 
 			foreach $file (@templates) {
 
-				open(TEMP, "${LedgerSMB::Sysconfig::templates}/$file") or $form->error("$templates/$file : $!");
+				open(TEMP, "${LedgerSMB::Sysconfig::templates}/$file") or $form->error(__FILE__.':'.__LINE__.': '."$templates/$file : $!");
 
 				$file =~ s/$form->{mastertemplates}-//;
-				open(NEW, ">$form->{templates}/$file") or $form->error("$form->{templates}/$file : $!");
+				open(NEW, ">$form->{templates}/$file") or $form->error(__FILE__.':'.__LINE__.': '."$form->{templates}/$file : $!");
 
 				while ($line = <TEMP>) {
 					print NEW $line;
@@ -849,7 +849,7 @@ sub save {
 			}
 
 		} else {
-			$form->error("$form->{templates} : $!");
+			$form->error(__FILE__.':'.__LINE__.': '."$form->{templates} : $!");
 		}
 	}
 
@@ -943,7 +943,7 @@ sub change_admin_password {
 
 sub change_password {
 
-	$form->error($locale->text('Passwords do not match!')) if $form->{new_password} ne $form->{confirm_password};
+	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Passwords do not match!')) if $form->{new_password} ne $form->{confirm_password};
 	$root->{password} = $form->{new_password};
 	$root->{'root login'} = 1;
 	$root->save_member();
@@ -1103,7 +1103,7 @@ sub create_dataset {
 
 	@dbsources = sort LedgerSMB::User->dbsources(\%$form);
 
-	opendir SQLDIR, "sql/." or $form->error($!);
+	opendir SQLDIR, "sql/." or $form->error(__FILE__.':'.__LINE__.': '.$!);
 
 	foreach $item (sort grep /-chart\.sql/, readdir SQLDIR) {
 		next if ($item eq 'Default-chart.sql');
@@ -1263,7 +1263,7 @@ sub delete_dataset {
 		}
 
 	} else {
-		$form->error($locale->text('Nothing to delete!'));
+		$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Nothing to delete!'));
 	}
 
 	$form->{title} = "LedgerSMB ".$locale->text('Accounting')
@@ -1315,7 +1315,7 @@ sub delete_dataset {
 sub dbdelete {
 
 	if (!$form->{db}) {
-		$form->error($locale->text('No Dataset selected!'));
+		$form->error(__FILE__.':'.__LINE__.': '.$locale->text('No Dataset selected!'));
 	}
 
 	LedgerSMB::User->dbdelete(\%$form);
