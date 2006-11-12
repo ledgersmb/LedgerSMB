@@ -82,7 +82,6 @@ sub session_check {
 		#cookie is not valid
 		#delete the cookie in the browser
 		print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
-		print qq|Set-Cookie: DiedHere=true; path=/;\n|;
 		return 0;
 	}
 }
