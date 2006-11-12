@@ -25,7 +25,6 @@
 #
 # http://www.ledgersmb.org/help/
 #
-
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
@@ -95,6 +94,7 @@ close(FH);
 
 print "\n\nParsing members file completed. Now trying to import user data.\n\n";
 
+
 foreach (@users) {
 
 	$myUser = $member{$_};
@@ -125,12 +125,10 @@ sub save_member {
 
 	if($userID){
 		#got an id, check to see if it's in the users_conf table
-		my $userConfCheck = $dbh->prepare("SELECT id FROM users_conf WHERE id = ?");
+		my $userConfCheck = $dbh->prepare("SELECT count(*) FROM users_conf WHERE id = ?");
 		$userConfCheck->execute($userID);
 
-		if($userConfCheck->rows){
-			my $userConfExists = 1;
-		}
+		($userConfExists) = $userConfCheck->fetchrow_array;
 	}
 	else{
 		my $userConfAdd = $dbh->prepare("SELECT create_user(?);");
@@ -213,8 +211,7 @@ sub save_member {
 		# add login to employee table if it does not exist
 		my $login = $self->{login};
 		$login =~ s/@.*//;
-		my $query = qq|SELECT id FROM employee WHERE login = ?|;
-		my $sth = $dbh->prepare($query);
+		my $sth = $dbh->prepare("SELECT id FROM employee WHERE login = ?;");
 		$sth->execute($login);
 
 		my ($id) = $sth->fetchrow_array;
