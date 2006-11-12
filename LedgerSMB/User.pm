@@ -713,15 +713,14 @@ sub save_member {
 	my $userCheck = $dbh->prepare("SELECT id FROM users WHERE username = ?");
 	$userCheck->execute($self->{login});
 	my ($userID) = $userCheck->fetchrow_array;
+	my $userConfExists = 0;
 
 	if($userID){
 		#got an id, check to see if it's in the users_conf table
-		my $userConfCheck = $dbh->prepare("SELECT id FROM users_conf WHERE id = ?");
+		my $userConfCheck = $dbh->prepare("SELECT count(*) FROM users_conf WHERE id = ?");
 		$userConfCheck->execute($userID);
 
-		if($userConfCheck->rows){
-			my $userConfExists = 1;
-		}
+		($userConfExists) = $userConfCheck->fetchrow_array;
 	}
 	else{
 		my $userConfAdd = $dbh->prepare("SELECT create_user(?);");
