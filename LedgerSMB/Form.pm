@@ -533,7 +533,7 @@ sub callproc {
 	$argstr =~ s/\, $//;
 	$query = "SELECT $procname";
 	$query =~ s/\(\)/$argstr/;
-	my $sth = $form->{dbh}->prepare($query);
+	my $sth = $self->{dbh}->prepare($query);
 	while (my $ref = $sth->fetchrow_hashref(NAME_lc)){
 		push @results, $ref;
 	}
@@ -1358,7 +1358,7 @@ sub run_custom_queries {
 		if ($query_type eq 'UPDATE'){
 			$query = "DELETE FROM $_ WHERE row_id = ?";
 			my $sth = $dbh->prepare($query);
-			$sth->execute->($form->{"id"."$linenum"})
+			$sth->execute->($self->{"id"."$linenum"})
 				|| $self->dberror($query);
 		} elsif ($query_type eq 'INSERT'){
 			$query .= " INTO $_ (";
@@ -1399,9 +1399,9 @@ sub run_custom_queries {
 		for (@rc){
 			$query = shift (@{$_});
 			$sth = $dbh->prepare($query) 
-				|| $form->db_error($query);
-			$sth->execute(@{$_}, $form->{id})
-				|| $form->dberror($query);;
+				|| $self->db_error($query);
+			$sth->execute(@{$_}, $self->{id})
+				|| $self->dberror($query);;
 			$sth->finish;
 			$did_insert = 1;
 		}
@@ -1412,10 +1412,10 @@ sub run_custom_queries {
 		for (@rc){
 			$query = shift @{$_};
 			$sth = $self->{dbh}->prepare($query);
-			$sth->execute($form->{id});
+			$sth->execute($self->{id});
 			$ref = $sth->fetchrow_hashref(NAME_lc);
 			for (keys %{$ref}){
-				$form->{$_} = $ref->{$_};
+				$self->{$_} = $ref->{$_};
 			}
 		}
 	}
@@ -1900,7 +1900,7 @@ sub all_projects {
 					 FROM project
 					WHERE $where|;
 
-	if ($form->{language_code}) {
+	if ($self->{language_code}) {
 
 		$query = qq|
 			SELECT pr.*, t.description AS translation
@@ -2096,7 +2096,7 @@ sub create_links {
 			FROM status s WHERE s.trans_id = ?|;
 
 		$sth = $dbh->prepare($query);
-		$sth->execute($self->{id}) || $form->dberror($query);
+		$sth->execute($self->{id}) || $self->dberror($query);
 
 		while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 			$self->{printed} .= "$ref->{formname} " 
@@ -2157,9 +2157,9 @@ sub create_links {
 
 			(undef, $val) = $sth->fetchrow_array();
 			if ($_ eq 'curr'){
-				$form->{currencies} = $val;
+				$self->{currencies} = $val;
 			} else {
-				$form->{$_} = $val;
+				$self->{$_} = $val;
 			}
 			$sth->finish;
 		}
@@ -2176,11 +2176,11 @@ sub create_links {
 
 			(undef, $val) = $sth->fetchrow_array();
 			if ($_ eq 'curr'){
-				$form->{currencies} = $val;
+				$self->{currencies} = $val;
 			} elsif ($_ eq 'current_date'){
-				$form->{transdate} = $val;
+				$self->{transdate} = $val;
 			} else {
-				$form->{$_} = $val;
+				$self->{$_} = $val;
 			}
 			$sth->finish;
 		}
@@ -2451,7 +2451,7 @@ sub save_status {
 					WHERE trans_id = ?|;
 
 	my $sth = $dbh->prepare($query);
-	$sth->execute($form->{id});
+	$sth->execute($self->{id});
 	$sth->finish;
 
 	my %queued;

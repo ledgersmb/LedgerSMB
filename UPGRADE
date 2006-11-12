@@ -40,6 +40,11 @@ the installation nominally works by running "./Build test" from the command
 line.  The test suites currently check to make sure all the perl modules load
 and that a number of numeric tests are passed.
 
+Dependencies which are recommended are needed only for specific functionality
+and may not be required in all circumstances.  These include:
+  * Net::TCLink for credit card processing in a POS environment
+  * Parse::RecDescent for the CLI script host
+
 3)  Upgrade database
 
   a) cd to the sql/legacy/ directory of the new ledger directory
