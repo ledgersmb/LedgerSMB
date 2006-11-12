@@ -150,7 +150,6 @@ if ($form->{action}) {
 1;
 # end
 
-
 sub check_password {
   
 	if ($myconfig{password}) {
@@ -158,7 +157,7 @@ sub check_password {
 		require "bin/pw.pl";
 
 		if ($form->{password}) {
-			if ($myconfig{password} ne (Digest::MD5::md5_hex $form->{password})) {
+			if (! Session::password_check($form, $form->{login}, $form->{password})) {
 				if ($ENV{HTTP_USER_AGENT}) {
 					&getpassword;
 				} else {
@@ -178,12 +177,6 @@ sub check_password {
 					$cookie{$name} = $value;
 				}
 
-				if ($form->{action} ne 'display') {
-					if ((! $cookie{"LedgerSMB-$form->{login}"}) || $cookie{"LedgerSMB-$form->{login}"} ne $form->{sessionid}) {
-						&getpassword(1);
-						exit;
-					}
-				}
 				#check for valid session
 				if(!Session::session_check($cookie{"LedgerSMB"}, $form)){
 					&getpassword(1);

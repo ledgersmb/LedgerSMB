@@ -23,6 +23,9 @@
 # create - creates a new session, writes cookie upon success
 #
 # destroy - destroys session
+#
+# password_check - compares the password with the stored cryted password 
+#                  (ver. < 1.2) and the md5 one (ver. >= 1.2)
 #====================================================================
 package Session;
 
@@ -112,8 +115,8 @@ sub session_create {
 
 	$deleteExisting->execute($login, "$myconfig{timeout} seconds") || $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
 
-	#doing the md5 and random stuff in the db so that LedgerSMB won't
-	#require new perl modules (Digest::MD5 and a good random generator)
+	#doing the random stuff in the db so that LedgerSMB won't
+	#require a good random generator - maybe this should be reviewed, pgsql's isn't great either
 	$fetchSequence->execute() || $form->dberror(__FILE__.':'.__LINE__.': Fetch sequence id: ');
 	my ($newSessionID, $newToken) = $fetchSequence->fetchrow_array;
 
@@ -134,11 +137,6 @@ sub session_create {
 
 sub session_destroy {
 
-	# Under the current architecture, this function is a bit problematic
-	# %myconfig is often not defined when this function needs to be called.
-	# which means that the db connection parameters are not available.
-	# moving user prefs and the session table into a central db will solve this issue
-
 	my ($form) = @_;
 
 	my $login = $form->{login};
@@ -153,6 +151,60 @@ sub session_destroy {
 	#delete the cookie in the browser
 	print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
 
+}
+
+sub password_check {
+
+	use Digest::MD5;
+
+	my ($form, $username, $password) = @_;
+
+	# use the central database handle
+	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+
+	my $fetchPassword = $dbh->prepare("SELECT uc.password, uc.crypted_password
+										 FROM users as u, users_conf as uc
+										WHERE u.username = ?
+										  AND u.id = uc.id;");
+
+	$fetchPassword->execute($username) || $form->dberror(__FILE__.':'.__LINE__.': Fetching password : ');
+
+	my ($md5Password, $cryptPassword) = $fetchPassword->fetchrow_array;
+
+	if ($cryptPassword){
+		#First time login from old system, check crypted password
+
+		if ((crypt $password, substr($username, 0, 2)) eq $cryptPassword) {	
+
+			#password was good, convert to md5 password and null crypted
+			my $updatePassword = $dbh->prepare("UPDATE users_conf
+												   SET password = md5(?),
+													   crypted_password = null
+												  FROM users
+												 WHERE users_conf.id = users.id
+												   AND users.username = ?;");
+
+			$updatePassword->execute($password, $username) || $form->dberror(__FILE__.':'.__LINE__.': Converting password : ');
+
+			return 1;
+
+		} else {
+			return 0; #password failed
+		}
+
+	}elsif ($md5Password){
+
+		if ($md5Password ne (Digest::MD5::md5_hex $password) ) {
+			return 0;
+		}
+		else{
+			return 1;
+		}
+	
+	} else {
+		#both the md5Password and cryptPasswords were blank
+		return 0;
+	}
 }
 
 1;

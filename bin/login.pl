@@ -337,6 +337,7 @@ sub login {
 		}
 	}
 
+	Session::session_create($form);
 	$form->redirect;
 
 }

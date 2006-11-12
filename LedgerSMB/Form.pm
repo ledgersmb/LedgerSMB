@@ -272,8 +272,6 @@ sub header {
 
 		$self->{titlebar} = ($self->{title}) ? "$self->{title} - $self->{titlebar}" : $self->{titlebar};
 
-		$self->set_cookie($init);
-
 		print qq|Content-Type: text/html\n\n
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -294,28 +292,6 @@ sub header {
 
 	$self->{header} = 1;
 }
-
-
-sub set_cookie {
-
-	my ($self, $init) = @_;
-
-	$self->{timeout} = ($self->{timeout} > 0) ? $self->{timeout} : 3600;
-	my $t = ($self->{endsession}) ? time : time + $self->{timeout};
-
-	if ($ENV{HTTP_USER_AGENT}) {
-
-		my @d = split / +/, scalar gmtime($t);
-		my $today = "$d[0], $d[2]-$d[1]-$d[4] $d[3] GMT";
-
-		if ($init) {
-			$self->{sessionid} = time;
-		}
-
-		print qq|Set-Cookie: LedgerSMB-$self->{login}=$self->{sessionid}; expires=$today; path=/;\n| if $self->{login};
-	}
-}
-
 
 sub redirect {
 

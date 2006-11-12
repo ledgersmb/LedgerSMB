@@ -33,6 +33,7 @@
 
 package LedgerSMB::User;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Session;
 use Data::Dumper; 
 
 sub new {
@@ -48,12 +49,12 @@ sub new {
 		# for now, this is querying the table directly... ugly 
 		my $fetchUserPrefs = $dbh->prepare("SELECT acs, address, businessnumber,
 												   company, countrycode, currency,
-												   dateformat, dbconnect, dbdriver,
-												   dbhost, dbname, dboptions, dbpasswd,
-												   dbport, dbuser, email, fax, menuwidth,
-												   name, numberformat, password, print,
-												   printer, role, sid, signature, stylesheet,
-												   tel, templates, timeout, vclimit, u.username
+												   dateformat, dbdriver, dbhost, dbname, 
+												   dboptions, dbpasswd, dbport, dbuser, 
+												   email, fax, menuwidth, name, numberformat, 
+												   password, print, printer, role, sid, 
+												   signature, stylesheet, tel, templates, 
+												   timeout, vclimit, u.username
 											  FROM users_conf as uc, users as u
 											 WHERE u.username =  ?
 											   AND u.id = uc.id;");
@@ -65,6 +66,16 @@ sub new {
 		while ( my ($key, $value) = each(%{$userHashRef}) ) {
 			$self->{$key} = $value;
 		}
+
+		chomp($self->{dbport});
+		chomp($self->{dbname});
+		chomp($self->{dbhost});
+
+		if(! int($self->{dbport})){#in case there's a space or junk in the dbport
+			$self->{dbport} = '5432';
+		}
+
+		$self->{dbconnect} = 'dbi:Pg:dbname='.$self->{dbname}.';host='.$self->{dbhost}.';port='.$self->{dbport};
 
 		if($self->{username}){
 			$self->{login} = $login;
@@ -113,12 +124,12 @@ sub fetch_config {
 		# for now, this is querying the table directly... ugly 
 		my $fetchUserPrefs = $dbh->prepare("SELECT acs, address, businessnumber,
 												   company, countrycode, currency,
-												   dateformat, dbconnect, dbdriver,
-												   dbhost, dbname, dboptions, dbpasswd,
-												   dbport, dbuser, email, fax, menuwidth,
-												   name, numberformat, password, print,
-												   printer, role, sid, signature, stylesheet,
-												   tel, templates, timeout, vclimit
+												   dateformat, dbdriver, dbhost, dbname, 
+												   dboptions, dbpasswd, dbport, dbuser, 
+												   email, fax, menuwidth, name, numberformat, 
+												   password, print, printer, role, sid, 
+												   signature, stylesheet, tel, templates, 
+												   timeout, vclimit, u.username
 											  FROM users_conf as uc, users as u
 											 WHERE u.username =  ?
 											   AND u.id = uc.id;");
@@ -130,20 +141,25 @@ sub fetch_config {
 		while ( my ($key, $value) = each(%{$userHashRef}) ) {
 			$myconfig{$key} = $value;
 		}
+
+		if(! int($myconfig{'dbport'})){#in case there's a space or junk in the dbport
+			$myconfig{'dbport'} = '5432';
+		}
+
+		$myconfig{'dbconnect'} = 'dbi:Pg:dbname='.$myconfig{'dbname'}.';host='.$myconfig{'dbhost'}.';port='.$myconfig{'dbport'};
 	}
  
 	return \%myconfig;
 }
 
 sub login {
-	use Digest::MD5;
 
 	my ($self, $form) = @_;
 
 	my $rc = -1;
   
 	if ($self->{login} ne "") {
-		if ($self->{password} ne (Digest::MD5::md5_hex $form->{password}) ) {
+		if (! Session::password_check($form, $form->{login}, $form->{password})) {
 			return -1;
 		}
 
@@ -719,7 +735,7 @@ sub save_member {
 		my $userConfUpdate = $dbh->prepare("UPDATE users_conf
 											   SET acs = ?, address = ?, businessnumber = ?,
 												   company = ?, countrycode = ?, currency = ?,
-												   dateformat = ?, dbconnect = ?, dbdriver = ?,
+												   dateformat = ?, dbdriver = ?,
 												   dbhost = ?, dbname = ?, dboptions = ?, 
 												   dbpasswd = ?, dbport = ?, dbuser = ?,
 												   email = ?, fax = ?, menuwidth = ?,
@@ -732,7 +748,7 @@ sub save_member {
 
 		$userConfUpdate->execute($self->{acs}, $self->{address}, $self->{businessnumber},
 								 $self->{company}, $self->{countrycode}, $self->{currency},
-								 $self->{dateformat}, $self->{dbconnect}, $self->{dbdriver},
+								 $self->{dateformat}, $self->{dbdriver},
 								 $self->{dbhost}, $self->{dbname}, $self->{dboptions}, 
 								 $self->{dbpasswd}, $self->{dbport}, $self->{dbuser}, 
 								 $self->{email}, $self->{fax}, $self->{menuwidth},
@@ -748,7 +764,7 @@ sub save_member {
 
 		my $userConfInsert = $dbh->prepare("INSERT INTO users_conf(acs, address, businessnumber,
 																   company, countrycode, currency,
-																   dateformat, dbconnect, dbdriver,
+																   dateformat, dbdriver,
 																   dbhost, dbname, dboptions, dbpasswd,
 																   dbport, dbuser, email, fax, menuwidth,
 																   name, numberformat, print, printer, role, 
@@ -756,11 +772,11 @@ sub save_member {
 																   timeout, vclimit, id, password)
 											VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, md5(?));");
+												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, md5(?));");
 
 		$userConfInsert->execute($self->{acs}, $self->{address}, $self->{businessnumber},
 								 $self->{company}, $self->{countrycode}, $self->{currency},
-								 $self->{dateformat}, $self->{dbconnect}, $self->{dbdriver},
+								 $self->{dateformat}, $self->{dbdriver},
 								 $self->{dbhost}, $self->{dbname}, $self->{dboptions}, 
 								 $self->{dbpasswd}, $self->{dbport}, $self->{dbuser}, 
 								 $self->{email}, $self->{fax}, $self->{menuwidth},
