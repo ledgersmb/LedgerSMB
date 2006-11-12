@@ -38,7 +38,16 @@ if($ENV{HTTP_HOST}){
 	exit;
 }
 
-my $membersfile = 'users/members';
+my $membersfile = $ARGV[0];
+
+if (length($membersfile) < 2){
+
+    print "\nUsage: import_members.pl path/to/members\n\n";
+	print "You must supply the path to the members file. Default location\n";
+	print "is users/members. In this case do this:\n\n";
+	print "  ./import_members.pl users/members\n\n";
+	exit;
+}
 
 my @users = ();
 
@@ -83,6 +92,8 @@ while (<FH>) {
 }
 
 close(FH);
+
+print "\n\nParsing members file completed. Now trying to import user data.\n\n";
 
 foreach (@users) {
 
