@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.2.0\n"
-"POT-Creation-Date: 2006-11-10 20:27-0500\n"
+"POT-Creation-Date: 2006-11-12 14:41-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@example.org>\n"
@@ -93,7 +93,7 @@ msgstr ""
 msgid "Access Control"
 msgstr ""
 
-#: bin/login.pl:274 menu.pl:164
+#: bin/login.pl:277 menu.pl:164
 msgid "Access Denied!"
 msgstr ""
 
@@ -939,7 +939,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: bin/aa.pl:1193 bin/admin.pl:1216 bin/admin.pl:1248 bin/admin.pl:1303 bin/admin.pl:1340 bin/am.pl:1454 bin/am.pl:2323 bin/am.pl:2604 bin/arap.pl:218 bin/arap.pl:411 bin/arap.pl:510 bin/arapprn.pl:587 bin/bp.pl:189 bin/ct.pl:2278 bin/ct.pl:512 bin/gl.pl:352 bin/hr.pl:169 bin/ic.pl:1139 bin/ic.pl:1963 bin/ic.pl:2853 bin/ic.pl:3090 bin/ic.pl:3218 bin/io.pl:1046 bin/io.pl:1694 bin/io.pl:449 bin/io.pl:605 bin/jc.pl:1092 bin/jc.pl:297 bin/login.pl:305 bin/oe.pl:1260 bin/oe.pl:2045 bin/oe.pl:2556 bin/oe.pl:3000 bin/pe.pl:1642 bin/pe.pl:2073 bin/pe.pl:2221 bin/pe.pl:2451 bin/pe.pl:532 bin/pe.pl:744 bin/pos.pl:1064 bin/pw.pl:69 bin/rc.pl:170 bin/rp.pl:1882 bin/rp.pl:776
+#: bin/aa.pl:1193 bin/admin.pl:1216 bin/admin.pl:1248 bin/admin.pl:1303 bin/admin.pl:1340 bin/am.pl:1454 bin/am.pl:2323 bin/am.pl:2604 bin/arap.pl:218 bin/arap.pl:411 bin/arap.pl:510 bin/arapprn.pl:587 bin/bp.pl:189 bin/ct.pl:2278 bin/ct.pl:512 bin/gl.pl:352 bin/hr.pl:169 bin/ic.pl:1139 bin/ic.pl:1963 bin/ic.pl:2853 bin/ic.pl:3090 bin/ic.pl:3218 bin/io.pl:1046 bin/io.pl:1694 bin/io.pl:449 bin/io.pl:605 bin/jc.pl:1092 bin/jc.pl:297 bin/login.pl:308 bin/oe.pl:1260 bin/oe.pl:2045 bin/oe.pl:2556 bin/oe.pl:3000 bin/pe.pl:1642 bin/pe.pl:2073 bin/pe.pl:2221 bin/pe.pl:2451 bin/pe.pl:532 bin/pe.pl:744 bin/pos.pl:1064 bin/pw.pl:69 bin/rc.pl:170 bin/rp.pl:1882 bin/rp.pl:776
 msgid "Continue"
 msgstr ""
 
@@ -1099,7 +1099,7 @@ msgstr ""
 msgid "Dataset %1 successfully created!"
 msgstr ""
 
-#: bin/login.pl:276
+#: bin/login.pl:279
 msgid "Dataset is newer than version!"
 msgstr ""
 
@@ -1853,7 +1853,7 @@ msgstr ""
 msgid "Income Statement"
 msgstr ""
 
-#: bin/login.pl:275
+#: bin/login.pl:278
 msgid "Incorrect Dataset version!"
 msgstr ""
 
@@ -1865,7 +1865,7 @@ msgstr ""
 msgid "Internal Notes"
 msgstr ""
 
-#: LedgerSMB/Form.pm:325 bin/am.pl:3206 bin/am.pl:3248
+#: bin/am.pl:3206 bin/am.pl:3248
 msgid "Invalid redirect"
 msgstr ""
 
@@ -2149,7 +2149,7 @@ msgstr ""
 msgid "Lockfile removed!"
 msgstr ""
 
-#: bin/admin.pl:152 bin/admin.pl:267 bin/admin.pl:485 bin/hr.pl:281 bin/hr.pl:87 bin/login.pl:152 bin/login.pl:217 menu.pl:92
+#: bin/admin.pl:152 bin/admin.pl:267 bin/admin.pl:485 bin/hr.pl:281 bin/hr.pl:87 bin/login.pl:152 bin/login.pl:217 menu.pl:93
 msgid "Login"
 msgstr ""
 
@@ -2311,6 +2311,10 @@ msgstr ""
 
 #: bin/jc.pl:129 bin/jc.pl:220
 msgid "No Employees on file!"
+msgstr ""
+
+#: bin/login.pl:269
+msgid "No GlobalDBH Configured or Could not Connect"
 msgstr ""
 
 #: bin/ic.pl:1916
@@ -2581,7 +2585,7 @@ msgstr ""
 msgid "Parts Requirements"
 msgstr ""
 
-#: LedgerSMB/Form.pm:1361
+#: LedgerSMB/Form.pm:1336
 msgid "Passed incorrect query type to get_cutstom_queries."
 msgstr ""
 
@@ -3485,7 +3489,7 @@ msgstr ""
 msgid "System Defaults"
 msgstr ""
 
-#: menu.pl:116
+#: menu.pl:117
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -3827,7 +3831,7 @@ msgstr ""
 msgid "Updated"
 msgstr ""
 
-#: bin/login.pl:293
+#: bin/login.pl:296
 #. ($form->{version})
 #, perl-maketext-format
 msgid "Upgrading to Version %1 ..."
@@ -3905,7 +3909,7 @@ msgstr ""
 msgid "Vendors"
 msgstr ""
 
-#: bin/admin.pl:146 bin/admin.pl:99 bin/am.pl:2681 bin/login.pl:130 bin/login.pl:184 bin/login.pl:70 menu.ini:921 menu.pl:135
+#: bin/admin.pl:146 bin/admin.pl:99 bin/am.pl:2681 bin/login.pl:130 bin/login.pl:184 bin/login.pl:70 menu.ini:921 menu.pl:136
 msgid "Version"
 msgstr ""
 
@@ -4009,7 +4013,7 @@ msgstr ""
 msgid "You are logged out"
 msgstr ""
 
-#: menu.pl:91
+#: menu.pl:92
 msgid "You are logged out!"
 msgstr ""
 
@@ -4073,7 +4077,7 @@ msgstr ""
 msgid "account cannot be set to any other type of account"
 msgstr ""
 
-#: menu.pl:146
+#: menu.pl:147
 msgid "action= not defined!"
 msgstr ""
 
@@ -4085,7 +4089,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: bin/am.pl:3080 bin/am.pl:3130 bin/am.pl:3172 bin/am.pl:3211 bin/am.pl:3253 bin/bp.pl:278 bin/login.pl:303
+#: bin/am.pl:3080 bin/am.pl:3130 bin/am.pl:3172 bin/am.pl:3211 bin/am.pl:3253 bin/bp.pl:278 bin/login.pl:306
 msgid "done"
 msgstr ""
 
