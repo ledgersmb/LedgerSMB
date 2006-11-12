@@ -213,9 +213,9 @@ sub save_member {
 		# add login to employee table if it does not exist
 		my $login = $self->{login};
 		$login =~ s/@.*//;
-		my $query = qq|SELECT id FROM employee WHERE login = '$login'|;
+		my $query = qq|SELECT id FROM employee WHERE login = ?|;
 		my $sth = $dbh->prepare($query);
-		$sth->execute;
+		$sth->execute($login);
 
 		my ($id) = $sth->fetchrow_array;
 		$sth->finish;
