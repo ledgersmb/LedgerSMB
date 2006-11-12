@@ -31,10 +31,11 @@ sub redirect {
 
 	if (!$script){ # http redirect to login.pl if called w/no args
 		print "Location: login.pl\n";
+		print "Content-type: text/html\n\n";
 		exit;
 	}
 
-	$form->error($locale->text("Invalid Redirect"))
+	$form->error($locale->text(__FILE__.':'.__LINE__.':'.$script.':'."Invalid Redirect"))
 		unless first {$_ eq $script} @{LedgerSMB::Sysconfig::scripts};
 
 	$oldform = $form;
