@@ -53,7 +53,6 @@ sub redirect {
 		$form->{$_} = $temphash{$_};
 	}
 
-	$form->debug;
 	if (!$myconfig){ # needed for login
 		%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
 	}
