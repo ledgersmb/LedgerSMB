@@ -43,6 +43,8 @@ ALTER TABLE parts ADD PRIMARY KEY (id);
 ALTER TABLE partsgroup ADD PRIMARY KEY (id);
 
 ALTER TABLE partstax ADD PRIMARY KEY (parts_id, chart_id);
+ALTER TABLE partstax ADD FOREIGN KEY (chart_id) REFERENCES chart (id);
+ALTER TABLE partstax ADD FOREIGN KEY (parts_id) REFERENCES parts (id);
 
 ALTER TABLE pricegroup ADD PRIMARY KEY (id);
 
@@ -131,6 +133,14 @@ INSERT INTO taxmodule (
   ) VALUES (
   1, 'Simple'
 );
+
+CREATE TABLE taxcategory (
+  taxcategory_id serial PRIMARY KEY,
+  taxcategoryname text NOT NULL,
+  taxmodule_id int NOT NULL REFERENCES taxmodule (taxmodule_id)
+);
+
+ALTER TABLE partstax ADD COLUMN taxcategory_id int REFERENCES taxcategory (taxcategory_id);
 
 LOCK tax IN EXCLUSIVE MODE;
 ALTER TABLE tax ADD COLUMN pass int DEFAULT 0;

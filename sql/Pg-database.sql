@@ -241,15 +241,26 @@ CREATE TABLE ap (
   terms int2 DEFAULT 0
 );
 --
-CREATE TABLE partstax (
-  parts_id int,
-  chart_id int,
-  PRIMARY KEY (parts_id, chart_id)
-);
---
 CREATE TABLE taxmodule (
   taxmodule_id serial PRIMARY KEY,
   taxmodulename text NOT NULL
+);
+--
+CREATE TABLE taxcategory (
+  taxcategory_id serial PRIMARY KEY,
+  taxcategoryname text NOT NULL,
+  taxmodule_id int NOT NULL,
+  FOREIGN KEY taxmodule_id REFERENCES taxmodule (taxmodule_id)
+);
+--
+CREATE TABLE partstax (
+  parts_id int,
+  chart_id int,
+  taxcategory_id int,
+  PRIMARY KEY (parts_id, chart_id),
+  FOREIGN KEY parts_id REFERENCES parts (id),
+  FOREIGN KEY chart_id REFERENCES chart (id),
+  FOREIGN KEY taxcategory_id REFERENCES taxcategory (taxcategory_id)
 );
 --
 CREATE TABLE tax (
