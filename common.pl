@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!c:\vanilla-perl\perl\bin\perl
 #
 ######################################################################
 # LedgerSMB Accounting and ERP
@@ -27,8 +27,8 @@ sub redirect {
 	use List::Util qw(first);
 	my ($script, $argv) = split(/\?/, $form->{callback});
 
-	my @common_attrs = 
-		qw(dbh login favicon stylesheet titlebar password
+	my @common_attrs = qw( 
+		dbh login favicon stylesheet titlebar password custom_db_fields
 		);
 
 	if (!$script){ # http redirect to login.pl if called w/no args
@@ -40,13 +40,20 @@ sub redirect {
 	$form->error($locale->text(__FILE__.':'.__LINE__.':'.$script.':'."Invalid Redirect"))
 		unless first {$_ eq $script} @{LedgerSMB::Sysconfig::scripts};
 
-	$oldform = $form;
+	my %temphash;
+	for (@common_attrs){
+		$temphash{$_} = $form->{$_};
+	}
+
 	require "bin/$script";
+	undef $form;
 	$form = new Form($argv);
 
 	for (@common_attrs){
-		$form->{$_} = $oldform->{$_};
+		$form->{$_} = $temphash{$_};
 	}
+
+	$form->debug;
 	if (!$myconfig){ # needed for login
 		%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
 	}
