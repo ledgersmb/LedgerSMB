@@ -68,7 +68,7 @@ sql/Pg-central.sql file into it.
       "update users_conf set password = md5('my_password');"
       Naturally you would use your password instead of my_password.
 
-6)  Import the users.  Run the utils/upgrade/import_users.pl script to do this.
+6)  Import the users.  Run the import-members script to do this.
 
 7)  Copy the files from the LedgerSMB tarball over your existing installation.
 8)  Delete the users directory.

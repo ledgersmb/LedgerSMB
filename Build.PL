@@ -33,6 +33,7 @@ my $build = Module::Build->new (
 		'Getopt::Long'			=> 0,
 		'Test::More'			=> 0,
 		'Net::TCLink'			=> 0,
+		'Parse::RecDescent'		=> 0,
 		},
 );
 
