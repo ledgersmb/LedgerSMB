@@ -31,6 +31,7 @@ sub redirect {
 
 	if (!$script){ # http redirect to login.pl if called w/no args
 		print "Location: login.pl\n";
+		exit;
 	}
 
 	$form->error($locale->text("Invalid Redirect"))
