@@ -265,6 +265,9 @@ sub login {
 	#}
 
 
+	if (!${LedgerSMB::Sysconfig::GLOBALDBH}){
+		$locale->text("No GlobalDBH Configured or Could not Connect");
+	}
 	$user = LedgerSMB::User->new($form->{login});
 
 	# if we get an error back, bale out
