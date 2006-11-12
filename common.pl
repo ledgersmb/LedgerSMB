@@ -29,6 +29,10 @@ sub redirect {
 
 	my @common_attrs = qw(dbh login favicon stylesheet titlebar password);
 
+	if (!$script){ # http redirect to login.pl if called w/no args
+		print "Location: login.pl\n";
+	}
+
 	$form->error($locale->text("Invalid Redirect"))
 		unless first {$_ eq $script} @{LedgerSMB::Sysconfig::scripts};
 

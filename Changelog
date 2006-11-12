@@ -38,6 +38,7 @@ Code Quality and API:
 * LedgerSMB::PE is aware of custom fields (Chris T)
 * Testing suite added (Seneca)
 * Moved all database calls to $form->{dbh} (CHris T)
+* Form->redirect no longer makes use of exec (Chris T)
 
 Packaging:
 * Added first version of rpm spec from Mads Kiilerich (Chris T)
