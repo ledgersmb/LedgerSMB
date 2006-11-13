@@ -48,5 +48,5 @@ Epson      = lpr -PEpson
 # These paramaters *must* be set correctly
 # for LedgerSMB >= 1.2 to work
 DBConnect  = dbi:Pg:dbname=ledgersmb;host=localhost;port5432
-UserName   = ledgersmb
-Password   = set me to correct password
+DBUserName   = ledgersmb
+DBPassword   = set me to correct password
