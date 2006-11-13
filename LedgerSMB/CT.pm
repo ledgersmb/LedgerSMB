@@ -205,7 +205,7 @@ sub save_customer {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 	my $query;
 	my $sth;
 	my $null;
@@ -575,7 +575,7 @@ sub search {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $where = "1 = 1";
 	$form->{sort} = ($form->{sort}) ? $form->{sort} : "name";
@@ -867,7 +867,7 @@ sub get_history {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query;
 	my $where = "1 = 1";
@@ -1114,7 +1114,7 @@ sub save_pricelist {
 
 	my ($self, $myconfig, $form) = @_;
 
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query = qq|
 		DELETE FROM parts$form->{db}
@@ -1187,7 +1187,7 @@ sub retrieve_item {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $i = $form->{rowcount};
 	my $var;

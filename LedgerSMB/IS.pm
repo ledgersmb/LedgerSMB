@@ -1862,8 +1862,7 @@ sub retrieve_invoice {
 sub retrieve_item {
 	my ($self, $myconfig, $form) = @_;
   
-	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $i = $form->{rowcount};
 	my $null;
