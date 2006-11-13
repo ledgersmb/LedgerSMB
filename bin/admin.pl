@@ -698,7 +698,7 @@ sub form_header {
 
 sub save {
 
-	$form->{callback} = "admin.pl?action=login";
+	$form->{callback} = "admin.pl?action=list_users";
 	# no driver checked
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Database Driver not checked!')) unless $form->{dbdriver};
 
@@ -818,6 +818,8 @@ sub save {
 
 sub delete {
 
+	$form->callback = "admin.pl?action=list_users";
+
 	$form->{templates} = ($form->{templates}) ? "${LedgerSMB::Sysconfig::templates}/$form->{templates}" : "$templates/$form->{login}";
 
 	# scan %user for $templatedir
@@ -900,6 +902,9 @@ sub change_admin_password {
 
 
 sub change_password {
+
+	# Do we want to force a login after changing the password?
+	$form->callback = "admin.pl?";
 
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Passwords do not match!')) if $form->{new_password} ne $form->{confirm_password};
 	$root->{password} = $form->{new_password};
@@ -1050,6 +1055,7 @@ sub continue {
 
 
 sub dbupdate {
+	$form->callback = "admin.pl?action=list_users";
 
 	LedgerSMB::User->dbupdate(\%$form);
 	$form->redirect($locale->text('Dataset updated!'));
