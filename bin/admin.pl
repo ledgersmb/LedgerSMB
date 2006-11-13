@@ -431,7 +431,7 @@ sub form_header {
 
 	print qq|
 	<body class="admin">
-	<form method="post" action="$form->{script}">
+	<form method="post" action="admin.pl">
 	<table width="100%">
 		<tr class="listheading"><th colspan="2">$form->{title}</th></tr>
 		<tr size="5"></tr>
