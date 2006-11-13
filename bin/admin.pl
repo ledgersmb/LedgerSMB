@@ -136,7 +136,7 @@ sub login {
 
 sub logout {
 
-	$form->{callback} = "$form->{script}?path=$form->{path}&amp;endsession=1";
+	$form->{callback} = "$form->{script}?action=adminlogin";
 	Session::session_destroy($form);
 	$form->redirect($locale->text('You are logged out'));
 
