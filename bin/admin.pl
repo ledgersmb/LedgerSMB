@@ -818,7 +818,7 @@ sub save {
 
 sub delete {
 
-	$form->callback = "admin.pl?action=list_users";
+	$form->{callback} = "admin.pl?action=list_users";
 
 	$form->{templates} = ($form->{templates}) ? "${LedgerSMB::Sysconfig::templates}/$form->{templates}" : "$templates/$form->{login}";
 
