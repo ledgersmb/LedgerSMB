@@ -992,7 +992,7 @@ sub dbselect_source {
 
 	$form->{title} = "LedgerSMB ".$locale->text('Accounting')." / ".$locale->text('Database Administration');
 
-	$form->{login} = "root login";
+	$form->{login} = "admin";
 	$form->header;
 
 	#an insane amount of table nesting here, this should be cleaned up.
@@ -1121,7 +1121,7 @@ sub create_dataset {
 	$form->{title} = "LedgerSMB ".$locale->text('Accounting')
 					." ".$locale->text('Database Administration')
 					." / ".$locale->text('Create Dataset');
-	$form->{login} = "root login";
+	$form->{login} = "admin";
 	$form->header;
 
 	print qq|
@@ -1203,7 +1203,7 @@ sub dbcreate {
 					." ".$locale->text('Database Administration')
 					." / ".$locale->text('Create Dataset');
 
-	$form->{login} = "root login";
+	$form->{login} = "admin";
 	$form->header;
 
 	print qq|
@@ -1240,7 +1240,7 @@ sub delete_dataset {
 					." ".$locale->text('Database Administration')
 					." / ".$locale->text('Delete Dataset');
 
-	$form->{login} = "root login";
+	$form->{login} = "admin";
 	$form->header;
 
 	print qq|
@@ -1293,7 +1293,7 @@ sub dbdelete {
 					." ".$locale->text('Database Administration')
 					." / ".$locale->text('Delete Dataset');
 
-	$form->{login} = "root login";
+	$form->{login} = "admin";
 	$form->header;
 
 	print qq|
