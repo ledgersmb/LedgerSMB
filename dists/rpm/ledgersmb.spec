@@ -1,141 +1,160 @@
+# RPM spec written for and tested on Fedora Core 6
 Summary: LedgerSMB - Open Source accounting software
 Name: ledger-smb
-Version: 1.1.1d
+Version: svn
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
-Group: Applications/Office
+Group: Applications/Productivity
 Source0: http://prdownloads.sourceforge.net/ledger-smb/%{name}-%{version}.tar.gz
+Source1: Class-Std-v0.0.8.tar.gz
+Source2: Config-Std-v0.0.4.tar.gz
+Source3: Locale-Maketext-Lexicon-0.62.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Requires: perl >= 5.8, httpd, postgresql-server >= 8.1, perl-DBD-Pg, perl-DBI
+Requires: perl >= 5.8, httpd, postgresql-server >= 8.1, tetex-latex
+Requires: perl-DBD-Pg, perl-DBI, perl-version, perl-Smart-Comments, perl-MIME-Lite
 BuildRequires: perl
+# avoid bogus autodetection of perl modules:
 AutoReqProv: no
+
 
 %description
 LedgerSMB is a double-entry accounting system written in perl.
-LedgerSMB is a fork of sql-ledger offering better security and data integrity, 
+LedgerSMB is a fork of sql-ledger offering better security and data integrity,
 and many advanced features.
 
-SELinux should be disabled to use this RPM.
+This package does not work in SELinux restricted mode.
 
-To finalize the installation:
+To finalize the ledger-smb installation:
 
-Start PostgreSQL, let /var/lib/pgsql/data/pg_hba.conf start with
+Start the PostgreSQL service, let /var/lib/pgsql/data/pg_hba.conf start with:
 local   all         postgres                          ident sameuser
 local   all         all                               md5
-and restart PostgreSQL
+host    all         all         127.0.0.1/32          md5
+(Remember to restart PostgreSQL.)
 
-Create databaseuser, create database and initialize it
-su - postgres -c "createuser -d ledger-smb --no-createdb --no-createrole --no-superuser -P"
-(remember the password!)
-su - postgres -c "createdb ledger-smb"
-su - postgres -c "createlang plpgsql ledger-smb"
+In %{_sysconfdir}/%{name}/ledger-smb.conf set DBPassword to something
+and create the ledgersmb master user and database:
+su - postgres -c "createuser -d ledgersmb --createdb --createrole --superuser -P"
+su - postgres -c "createdb ledgersmb"
+su - postgres -c "createlang plpgsql ledgersmb"
+su - postgres -c "psql ledgersmb < %{_datadir}/%{name}/sql/Pg-central.sql"
+Bleeding edge hint: Set password to avoid bogus web prompt:
+su - postgres -c "psql ledgersmb -c \"update users_conf set password = md5('yada') where id = 1;\""
 
-Delete the "password" in %{_localstatedir}/lib/%{name}/users/members and
-browse http://localhost/ledger-smb/admin.pl and set a ledger-smb master password.
-In "Pg Database Administration" the "User" defaults to the database user "ledger-smb"
-we just created - specify the password and "Create Dataset".
-Set "Create Dataset" to the database "ledger-smb" we just created and continue.
-In "Add User" specify the Dataset, User and password again for each user.
+Visit http://localhost/ledger-smb/admin.pl with password "yada" and create an
+application database and users.
+
 
 %prep
 %setup -q -n ledger-smb
 
+# Include code from perl packages not available in the standard distribution
+mkdir .tmperl
+cd .tmperl
+tar xzf %SOURCE1
+tar xzf %SOURCE2
+tar xzf %SOURCE3
+mv */lib/* ..
+cd ..
+
+chmod 0644 $(find . -type f)
+chmod 0755 $(find . -type d)
+chmod +x *.pl
+chmod -x pos.conf.pl custom.pl # FIXME: Config???
+chmod +x utils/*/*.pl utils/devel/find-use utils/pos/pos-hardware-client-startup-script
+
+
 %build
 
-# generate .conf from default with fixes
-perl -p -e 's,^(\$ENV\{PATH\}),#\1,g' ledger-smb.conf.default > ledger-smb.conf
+cat << TAK > rpm-ledger-smb-httpd.conf
+Alias /ledger-smb/doc/LedgerSMB-manual.pdf %{_docdir}/%{name}-%{version}/LedgerSMB-manual.pdf
+<Files %{_docdir}/%{name}-%{version}/LedgerSMB-manual.pdf>
+</Files>
 
-# fix location
-perl -pi -e "s,/usr/local/ledger-smb,%{_datadir}/%{name},g" ledger-smb-httpd.conf
+TAK
+
+perl -p -e "s,/some/path/to/ledger-smb,%{_datadir}/%{name},g" ledger-smb-httpd.conf >> rpm-ledger-smb-httpd.conf
+
 
 %install
 
-# Most stuff is installed readonly in %{_datadir}/%{name}/
-# Some parts are installed other places with other policies and symlinked in place
-
 rm -rf $RPM_BUILD_ROOT
-mkdir -p -m0755 $RPM_BUILD_ROOT%{_datadir}/%{name} # /usr/share/ledger-smb - primary and cgi directory
-mkdir -p -m0755 $RPM_BUILD_ROOT%{_sysconfdir}/%{name} # /etc/ledger-smb - links to configs
-mkdir -p -m0755 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name} # /var/lib/ledger-smb - data files, modified by cgi
-mkdir -p -m0755 $RPM_BUILD_ROOT%{_localstatedir}/spool/%{name} # /var/spool/ledger-smb - spool files, modified by cgi
+mkdir -p -m0755 $RPM_BUILD_ROOT%{_datadir}/%{name} # /usr/lib/ledger-smb - readonly code and cgi directory
+mkdir -p -m0750 $RPM_BUILD_ROOT%{_sysconfdir}/%{name} # /etc/ledger-smb - configs
+mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name} # /var/lib/ledger-smb - data files, modified by cgi
+mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/spool/%{name} # /var/spool/ledger-smb - spool files, modified by cgi
 
-# rm setup.pl SL2LS.pl # FiXME - install somewhere else...
-
-# the executable conf
-mv ledger-smb.conf $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/ledger-smb.conf
-
-# link from /etc to our executable conf
-ln -s ../..%{_localstatedir}/lib/%{name}/ledger-smb.conf \
- $RPM_BUILD_ROOT%{_sysconfdir}/ledger-smb/
-
-# link from cgi stuff to our executable conf
-ln -s ../../..%{_localstatedir}/lib/%{name}/ledger-smb.conf \
+# the conf, placed in etc, symlinked back in place
+mv ledger-smb.conf.default $RPM_BUILD_ROOT%{_sysconfdir}/ledger-smb/ledger-smb.conf
+ln -s ../../..%{_sysconfdir}/ledger-smb/ledger-smb.conf \
  $RPM_BUILD_ROOT%{_datadir}/%{name}/ledger-smb.conf
 
-#FIXME
-# menu.ini is pure configuration
-mv menu.ini $RPM_BUILD_ROOT%{_sysconfdir}/ledger-smb/menu.ini
-ln -s ../../..%{_sysconfdir}/ledger-smb/menu.ini \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/menu.ini
-
-# install forelevant parts in data / cgi directory
+# install relevant parts in data/cgi directory
 cp -rp *.pl favicon.ico index.html ledger-smb.gif ledger-smb.png ledger-smb_small.png menu.ini \
- bin LedgerSMB sql utils locale \
+ bin LedgerSMB sql utils locale drivers \
+ Config Class Locale \
  $RPM_BUILD_ROOT%{_datadir}/%{name}/
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/{setup.pl,SL2LS.pl} # FIXME - install somewhere else...
+rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}/locale/legacy
 
-# users - written by cgi
-mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/users
+# users - written to by cgi
+mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/users
 ln -s ../../..%{_localstatedir}/lib/%{name}/users \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/users
-cat << TAK > $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/users/members
-# LedgerSMB Accounting members
-[root login]
-password=
-TAK
+ $RPM_BUILD_ROOT%{_datadir}/%{name}/users
 
-# css - written by cgi
-mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/css
+# css - written to by cgi
+mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/css
 ln -s ../../..%{_localstatedir}/lib/%{name}/css \
  $RPM_BUILD_ROOT%{_datadir}/%{name}/css
 cp -rp css/* \
  $RPM_BUILD_ROOT%{_datadir}/%{name}/css
 
-# templates - written by cgi
-mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/templates
+# templates - written to by cgi
+mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/templates
 ln -s ../../..%{_localstatedir}/lib/%{name}/templates \
  $RPM_BUILD_ROOT%{_datadir}/%{name}/templates
 cp -rp templates/* \
  $RPM_BUILD_ROOT%{_datadir}/%{name}/templates
 
-# spool - written by cgi
+# spool - written to by cgi
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/spool/%{name}
 ln -s ../../..%{_localstatedir}/spool/%{name} \
  $RPM_BUILD_ROOT%{_datadir}/%{name}/spool
 
-# install the apache config file
+# apache config file
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
-install -m 644 ledger-smb-httpd.conf \
- $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/
+install -m 644 rpm-ledger-smb-httpd.conf \
+ $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/ledger-smb.conf
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
 
 %files
 %defattr(-,root,root)
 
 %{_datadir}/%{name}
-%attr(0700, apache, apache) %config(noreplace) %{_localstatedir}/lib/%{name}
-%attr(0700, apache, apache) %dir %{_localstatedir}/spool/%{name}
 
-%attr(0640, root,   apache) %config(noreplace) %{_sysconfdir}/ledger-smb
-%attr(0640, root,   apache) %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
+%attr(-, apache, apache) %config(noreplace) %{_localstatedir}/lib/%{name}
+%attr(-, apache, apache) %dir %{_localstatedir}/spool/%{name}
 
-%doc doc/*
-%doc LICENSE README.sql-ledger TODO Changelog CONTRIBUTORS COPYRIGHT
+%attr(0750, root, apache) %dir %{_sysconfdir}/%{name}
+%attr(0640, root, apache) %config(noreplace) %{_sysconfdir}/%{name}/*
+
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
+
+%doc doc/{COPYRIGHT,LedgerSMB-manual.pdf,README,faq.html,release_notes}
+%doc LICENSE README.sql-ledger README.translations TODO Changelog CONTRIBUTORS
+
 
 %changelog
+* Fri Nov 10 2006 Mads Kiilerich <mads@kiilerich.com> - 1.2 alpha
+- Updating towards 1.2
+
 * Wed Oct 18 2006 Mads Kiilerich <mads@kiilerich.com> - 1.1.1d-1
 - Initial version
+
 
