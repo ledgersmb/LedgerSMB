@@ -11,9 +11,11 @@ fi
 if test ! -d $build_d; then
   mkdir $build_d
 fi
-cp ledger-smb $build_d
+mkdir $build_d/ledger-smb
+cp -R * $build_d/ledger-smb
 cd $build_d/ledger-smb
+pwd
 find -name '*.svn' -exec rm -rf '{}' ';'
 rm ledger-smb.conf
 cd ..
-tar -zxvf ledger-smb-$version.tar.gz ledger-smb
+tar -zcvf ledger-smb-$version.tar.gz ledger-smb
