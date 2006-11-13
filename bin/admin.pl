@@ -907,9 +907,16 @@ sub change_password {
 	$form->{callback} = "admin.pl?";
 
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Passwords do not match!')) if $form->{new_password} ne $form->{confirm_password};
-	$root->{password} = $form->{new_password};
-	$root->{'root login'} = 1;
-	$root->save_member();
+
+	# use the central database handle
+	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+
+	my $updateAdminPassword = $dbh->prepare("UPDATE users_conf
+												SET password = md5(?)
+											  WHERE id = 1");
+
+	$updateAdminPassword->execute($form->{new_password});
+
 	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}";
 	$form->redirect($locale->text('Password changed!'));
 }
