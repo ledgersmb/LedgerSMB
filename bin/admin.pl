@@ -336,9 +336,11 @@ sub form_header {
 
 	%countrycodes = LedgerSMB::User->country_codes;
 	$countrycodes = "";
+	my $selectedcode = ($myconfig->{countrycode}) ? 
+		$myconfig->{countrycode} : 'en';
 
 	foreach $key (sort { $countrycodes{$a} cmp $countrycodes{$b} } keys %countrycodes) {
-		$countrycodes .= ($myconfig->{countrycode} eq $key) ? qq|<option selected value="$key">$countrycodes{$key}</option>|
+		$countrycodes .= ($selectedcode eq $key) ? qq|<option selected value="$key">$countrycodes{$key}</option>|
 															: qq|<option value="$key">$countrycodes{$key}</option>|;
 	}
 

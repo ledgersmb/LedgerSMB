@@ -2046,9 +2046,10 @@ sub config {
 
   %countrycodes = LedgerSMB::User->country_codes;
   $countrycodes = '';
+  my $selectedcode = ($myconfig{countrycode}) ? $myconfig{countrycode} : 'en';
   
   foreach $key (sort { $countrycodes{$a} cmp $countrycodes{$b} } keys %countrycodes) {
-    $countrycodes .= ($myconfig{countrycode} eq $key) ? "<option selected value=$key>$countrycodes{$key}\n" : "<option value=$key>$countrycodes{$key}\n";
+    $countrycodes .= ($selectedcode eq $key) ? "<option selected value=$key>$countrycodes{$key}\n" : "<option value=$key>$countrycodes{$key}\n";
   }
 
   opendir CSS, "css/.";
