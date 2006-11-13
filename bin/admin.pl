@@ -76,53 +76,11 @@ if ($form->{action}) {
 
 	$root = LedgerSMB::User->new('admin');
 
-	unless($root && $root->{password}){ 
-		 &setup_initial_password();
-		 exit;
-	}
-
 	&adminlogin;
 }
 
 1;
 # end
-
-
-sub setup_initial_password {
-	
-
-	$form->header();
-	print qq|
-	<body class="admin" onload="sf()">
-	<div align="center">
-		<a href="http://www.ledgersmb.org/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
-		<h1 class="login">|.$locale->text('Version').qq| $form->{version} <br />|.$locale->text('Administration').qq|</h1>
-		
-		<fieldset><legend>|.$locale->text('Change password').qq|</legend>
-		<p>|.$locale->text('This is your first time logging into LedgerSMB.  Please set your administrative password').qq|</p>
-		
-		<form method="post" action="$form->{script}" name="admin">
-						<table>
-						<tr>
-							<th align="right">|.$locale->text('Password').qq|</th>
-							<td><input type="password" name="new_password" /></td>
-						</tr>
-						<tr>
-							<th align="right">|.$locale->text('Confirm').qq|</th>
-							<td><input type="password" name="confirm_password" /></td>
-						</tr>
-					</table>
-		<input type="hidden" name="path" value="$form->{path}" />
-		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
-		<p><button type="submit" class="submit" name="action" value="change_password">|.$locale->text('Change Password').qq|</button></p>
-		</form>
-
-		<a href="http://www.ledgersmb.org/">|.$locale->text('LedgerSMB website').qq|</a>
-	</div>
-	</body>
-	</html>
-|;	
-}
 
 sub adminlogin {
 
@@ -219,9 +177,8 @@ sub form_footer {
 	}
 
 	print qq|
-	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}" />
+	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}" />
 	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 	<button type="submit" class="submit" name="action" value="save">|.$locale->text('Save').qq|</button>
 	$delete
 	</form>
@@ -240,21 +197,23 @@ sub list_users {
 	#	$nologin = qq|<button type="submit" class="submit" name="action" value="unlock_system">|.$locale->text('Unlock System').qq|</button>|;
 	#}
 
-	while (<FH>) {
-		chop;
+	# use the central database handle
+	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
-		if (/^\[.*\]/) {
-			$login = $_;
-			$login =~ s/(\[|\])//g;
-		}
+	my $fetchMembers = $dbh->selectall_arrayref("SELECT uc.name, uc.company, uc.templates,
+														uc.dbuser, uc.dbdriver, uc.dbname, 
+														uc.dbhost, u.username
+												   FROM users as u, users_conf as uc
+												  WHERE u.id = uc.id	
+													AND u.id > 1
+											   ORDER BY u.username;", { Slice => {} });	
 
-		if (/^(name=|company=|templates=|dbuser=|dbdriver=|dbname=|dbhost=)/) {
-			chop ($var = $&);
-			($null, $member{$login}{$var}) = split /=/, $_, 2;
-		}
+	my @memberArray = ();
+	my @member = ();
+
+	foreach my $memberArray ( @$fetchMembers ) {
+		$member{$memberArray->{username}} = $memberArray;
 	}
-
-	close(FH);
 
 	# type=submit $locale->text('Pg Database Administration')
 	# type=submit $locale->text('PgPP Database Administration')
@@ -298,7 +257,7 @@ sub list_users {
 
 	foreach $key (sort keys %member) {
 
-		$href = "$script?action=edit&amp;login=$key&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
+		$href = "$script?action=edit&amp;login=$key&amp;path=$form->{path}";
 		$href =~ s/ /%20/g;
 
 		$member{$key}{templates} =~ s/^${LedgerSMB::Sysconfig::templates}\///;
@@ -329,7 +288,6 @@ sub list_users {
 			</tr>
 		</table>
 		<input type="hidden" name="path" value="$form->{path}" />
-		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 		<br />
 		<button type="submit" class="submit" name="action" value="add_user">|.$locale->text('Add User').qq|</button>
 		<button type="submit" class="submit" name="action" value="change_admin_password">|.$locale->text('Change Admin Password').qq|</button>
@@ -355,14 +313,13 @@ sub form_header {
 	if ($form->{login}) {
 
 		# get user
-		%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
+		%{$myconfig} = %{LedgerSMB::User->fetch_config($form->{login})};
 
 		for (qw(company address signature)) { $myconfig->{$_} = $form->quote($myconfig->{$_}) }
 		for (qw(address signature)) { $myconfig->{$_} =~ s/\\n/\n/g }
 
 		# strip basedir from templates directory
 		$myconfig->{templates} =~ s/^${LedgerSMB::Sysconfig::templates}\///;
-		$myconfig->{dbpasswd} = unpack 'u', $myconfig->{dbpasswd};
 	}
 
 	foreach $item (qw(mm-dd-yy mm/dd/yy dd-mm-yy dd/mm/yy dd.mm.yy yyyy-mm-dd)) {
@@ -902,7 +859,7 @@ sub change_admin_password {
 
 	$form->{title} = qq|LedgerSMB |.$locale->text('Accounting')." ".$locale->text('Administration')." / ".$locale->text('Change Admin Password');
 
-	$form->{login} = "root login";
+	$form->{login} = "admin";
 	$form->header;
 
 	print qq|
@@ -931,7 +888,6 @@ sub change_admin_password {
 		<br />
 		<hr size="3" noshade />
 		<input type="hidden" name="path" value="$form->{path}" />
-		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 		<p><button type="submit" class="submit" name="action" value="change_password">|.$locale->text('Change Password').qq|</button></p>
 		</form>
 	</body>
@@ -947,7 +903,7 @@ sub change_password {
 	$root->{password} = $form->{new_password};
 	$root->{'root login'} = 1;
 	$root->save_member();
-	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
+	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}";
 	$form->redirect($locale->text('Password changed!'));
 }
 
@@ -1070,9 +1026,8 @@ sub dbselect_source {
 			</tr>
 		</table>
 	<input type="hidden" name="dbdriver" value="$form->{dbdriver}" />
-	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}" />
+	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}" />
 	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 	<br />
 	<button type="submit" class="submit" name="action" value="create_dataset">|.$locale->text('Create Dataset').qq|</button>
 	<button type="submit" class="submit" name="action" value="delete_dataset">|.$locale->text('Delete Dataset').qq|</button>
@@ -1207,10 +1162,10 @@ sub create_dataset {
 	</table>
 	|;
 
-	$form->hide_form(qw(dbdriver dbsuperuser dbsuperpasswd dbuser dbhost dbport dbpasswd dbdefault path sessionid));
+	$form->hide_form(qw(dbdriver dbsuperuser dbsuperpasswd dbuser dbhost dbport dbpasswd dbdefault path));
 
 	print qq|
-	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}" />
+	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}" />
 	<input type="hidden" name="nextsub" value="dbcreate" />
 	<br />
 	<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
@@ -1243,7 +1198,6 @@ sub dbcreate {
 		.$locale->text('Dataset [_1] successfully created!', $form->{db})
 		.qq|
 		<input type="hidden" name="path" value="$form->{path}" />
-		<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 		<input type="hidden" name="nextsub" value="list_users" />
 		<p><button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button></p>
 	</form>
@@ -1283,9 +1237,8 @@ sub delete_dataset {
 	<input type="hidden" name="dbport" value="$form->{dbport}" />
 	<input type="hidden" name="dbpasswd" value="$form->{dbpasswd}" />
 	<input type="hidden" name="dbdefault" value="$form->{dbdefault}" />
-	<input name=callback type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}">
+	<input name=callback type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}">
 	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 	<input type="hidden" name="nextsub" value="dbdelete" />
 	<table width="100%">
 		<tr class="listheading">
@@ -1335,7 +1288,6 @@ sub dbdelete {
 	.qq|
 	<form method="post" action="$form->{script}" />
 	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="sessionid" value="$form->{sessionid}" />
 	<input type="hidden" name="nextsub" value="list_users" />
 	<p><button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button></p>
 	</form>
@@ -1349,7 +1301,7 @@ sub unlock_system {
 
 	# This needs to be done with a db tool
 	#	unlink "${LedgerSMB::Sysconfig::userspath}/nologin";
-	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
+	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}";
 	$form->redirect($locale->text('Lockfile removed!'));
 }
 
@@ -1359,6 +1311,6 @@ sub lock_system {
 	# This needs to be done with a db tool
 	#open(FH, ">${LedgerSMB::Sysconfig::userspath}/nologin") or $form->error($locale->text('Cannot create Lock!'));
 	#close(FH);
-	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}&amp;sessionid=$form->{sessionid}";
+	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}";
 	$form->redirect($locale->text('Lockfile created!'));
 }
