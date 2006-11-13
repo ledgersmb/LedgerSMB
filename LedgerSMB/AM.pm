@@ -675,7 +675,7 @@ sub get_business {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query = qq|
 		SELECT description, discount
@@ -695,7 +695,7 @@ sub save_business {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	$form->{description} =~ s/-(-)+/-/g;
 	$form->{description} =~ s/ ( )+/ /g;

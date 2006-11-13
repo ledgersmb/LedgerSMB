@@ -104,7 +104,7 @@ sub inventory_activity {
 sub yearend_statement {
 	my ($self, $myconfig, $form) = @_;
 
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	# if todate < existing yearends, delete GL and yearends
 	my $query = qq|SELECT trans_id FROM yearend WHERE transdate >= ?|;

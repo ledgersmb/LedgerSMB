@@ -979,7 +979,7 @@ sub partsgroups {
   
 	my $var;
   
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	$form->{sort} = "partsgroup" unless $form->{partsgroup};
 	my @a = (partsgroup);
@@ -1051,7 +1051,7 @@ sub save_partsgroup {
 sub get_partsgroup {
 	my ($self, $myconfig, $form) = @_;
 
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
   
 	my $query = qq|SELECT * FROM partsgroup WHERE id = ?|;
 	my $sth = $dbh->prepare($query);
@@ -1432,7 +1432,7 @@ sub project_sales_order {
    my ($self, $myconfig, $form) = @_;
   
   # connect to database
-  my $dbh = $form->dbconnect($myconfig);
+  my $dbh = $form->{dbh};
 
   my $query = qq|SELECT current_date|;
   my ($transdate) = $dbh->selectrow_array($query);
@@ -1443,7 +1443,7 @@ sub project_sales_order {
   
   $form->all_employees($myconfig, $dbh, $transdate);
 
-  $dbh->disconnect;
+  $dbh->commit;
 
 }
 

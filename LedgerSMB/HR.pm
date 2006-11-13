@@ -37,7 +37,7 @@ package HR;
 sub get_employee {
 	my ($self, $myconfig, $form) = @_;
 
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query;
 	my $sth;
@@ -173,7 +173,7 @@ sub delete_employee {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
 	# delete employee
 	

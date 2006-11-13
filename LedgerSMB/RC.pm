@@ -444,7 +444,7 @@ sub payment_transactions {
 sub reconcile {
 	my ($self, $myconfig, $form) = @_;
 
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query = qq|SELECT id FROM chart
                  WHERE accno = '$form->{accno}'|;

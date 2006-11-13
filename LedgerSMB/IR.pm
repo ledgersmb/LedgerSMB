@@ -975,7 +975,7 @@ sub retrieve_invoice {
 	my ($self, $myconfig, $form) = @_;
   
 	# connect to database
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query;
 
@@ -1370,7 +1370,7 @@ sub item_links {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $query = qq|
 		   SELECT accno, description, link

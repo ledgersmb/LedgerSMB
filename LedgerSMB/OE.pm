@@ -750,7 +750,6 @@ sub delete {
 	$form->audittrail($dbh, "", \%audittrail);
   
 	my $rc = $dbh->commit;
-	$dbh->disconnect;
 
 	if ($rc) {
 		foreach $spoolfile (@spoolfiles) {
@@ -1000,7 +999,7 @@ sub order_details {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 	my $query;
 	my $sth;
     
@@ -1729,7 +1728,7 @@ sub project_description {
 sub get_warehouses {
 	my ($self, $myconfig, $form) = @_;
   
-	my $dbh = $form->dbconnect($myconfig);
+	my $dbh = $form->{dbh};
 	# setup warehouses
 	my $query = qq|
 		SELECT id, description
@@ -1744,7 +1743,7 @@ sub get_warehouses {
 	}
 	$sth->finish;
 
-	$dbh->disconnect;
+	$dbh->commit;
 
 }
 
@@ -1757,7 +1756,7 @@ sub save_inventory {
 
 	my $ml = ($form->{type} eq 'ship_order') ? -1 : 1;
   
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 	my $sth;
 	my $wth;
 	my $serialnumber;
@@ -2110,7 +2109,7 @@ sub get_inventory {
 sub transfer {
 	my ($self, $myconfig, $form) = @_;
   
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
   
 	($form->{employee}, $form->{employee_id}) = $form->get_employee($dbh);
   
@@ -2205,7 +2204,7 @@ sub get_soparts {
 	# foreign exchange rates
 	&exchangerate_defaults($dbh, $form);
 
-	$dbh->disconnect;
+	$dbh->commit;
 
 }
 
@@ -2302,7 +2301,7 @@ sub generate_orders {
 	}
 
 	# connect to database
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
   
 	# foreign exchange rates
 	&exchangerate_defaults($dbh, $form);

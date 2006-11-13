@@ -560,7 +560,7 @@ sub post_payments {
 	my ($self, $myconfig, $form) = @_;
 
 	# connect to database, turn AutoCommit off
-	my $dbh = $form->dbconnect_noauto($myconfig);
+	my $dbh = $form->{dbh};
 
 	my $sth;
 
