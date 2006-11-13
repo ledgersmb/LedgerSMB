@@ -82,6 +82,7 @@ if ($form->{action}) {
 1;
 # end
 
+
 sub adminlogin {
 
 	$form->{title} = qq|LedgerSMB $form->{version} |.$locale->text('Administration');
@@ -697,6 +698,7 @@ sub form_header {
 
 sub save {
 
+	$form->{callback} = "admin.pl?action=login";
 	# no driver checked
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Database Driver not checked!')) unless $form->{dbdriver};
 
