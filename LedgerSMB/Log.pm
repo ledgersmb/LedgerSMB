@@ -76,6 +76,11 @@ sub warn { shift->print('warn',@_) }
 sub notice { shift->print('notice',@_) }
 sub info { shift->print('info',@_) }
 sub debug { shift->print('debug',@_) }
-sub dump { shift->print('dump',Dumper(@_)) }
+sub dump { 
+	my $self = shift;
+	my $d = Data::Dumper->new([@_]);
+	$d->Sortkeys(1);
+	$self->print('dump',$d->Dump());
+}
 
 1;
