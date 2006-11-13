@@ -904,7 +904,7 @@ sub change_admin_password {
 sub change_password {
 
 	# Do we want to force a login after changing the password?
-	$form->callback = "admin.pl?";
+	$form->{callback} = "admin.pl?";
 
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Passwords do not match!')) if $form->{new_password} ne $form->{confirm_password};
 	$root->{password} = $form->{new_password};
@@ -1056,7 +1056,7 @@ sub continue {
 
 
 sub dbupdate {
-	$form->callback = "admin.pl?action=list_users";
+	$form->{callback} = "admin.pl?action=list_users";
 
 	LedgerSMB::User->dbupdate(\%$form);
 	$form->redirect($locale->text('Dataset updated!'));
