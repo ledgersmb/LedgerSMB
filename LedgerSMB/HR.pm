@@ -47,7 +47,7 @@ sub get_employee {
 	if ($form->{id}) {
 		$query = qq|SELECT e.* FROM employee e WHERE e.id = ?|;
 		$sth = $dbh->prepare($query);
-		$sth->execute($form->{id}) || $form->dberror($query);
+		$sth->execute($form->{id}) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
   
 		$ref = $sth->fetchrow_hashref(NAME_lc);
   
@@ -63,19 +63,17 @@ sub get_employee {
 
 		# get manager
 		$form->{managerid} *= 1;
-		$query = qq|SELECT name FROM employee WHERE id = ?|;
 
-		$sth = $dbh->prepare($query);
+		$sth = $dbh->prepare("SELECT name FROM employee WHERE id = ?");
 		$sth->execute($form->{managerid});
-		($form->{manager}) = $sth->fetchrow_array($query);
+		($form->{manager}) = $sth->fetchrow_array;
     
 		
 		$notid = qq|AND id != |.$dbh->quote($form->{id});
     
 	} else {
 
-		$query = qq|SELECT current_date|;
-		($form->{startdate}) = $dbh->selectrow_array($query);
+		($form->{startdate}) = $dbh->selectrow_array("SELECT current_date");
   
 	}
   
@@ -88,15 +86,12 @@ sub get_employee {
 		         $notid
 		ORDER BY 2|;
 	$sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror($query);
+	$sth->execute || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
 
 	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
 		push @{ $form->{all_manager} }, $ref;
 	}
 	$sth->finish;
-
-
-	$dbh->commit;
 
 }
 
@@ -114,11 +109,11 @@ sub save_employee {
 		$uid .= "$$";
 
 		$query = qq|INSERT INTO employee (name) VALUES ('$uid')|;
-		$dbh->do($query) || $form->dberror($query);
+		$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
     
 		$query = qq|SELECT id FROM employee WHERE name = '$uid'|;
 		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror($query);
+		$sth->execute || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
 
 		($form->{id}) = $sth->fetchrow_array;
 		$sth->finish;
@@ -159,14 +154,14 @@ sub save_employee {
 	$sth = $dbh->prepare($query);
 	$form->db_prepare_vars('startdate', 'enddate');
 	$sth->execute(
-		$form->{employeenumber}, $form->{name}, $form->{address1},
-		$form->{address2}, $form->{city}, $form->{state},
-		$form->{zipcode}, $form->{country}, $form->{workphone},
-		$form->{homephone}, $form->{startdate}, $form->{enddate},
-		$form->{notes}, $form->{role}, $form->{sales}, $form->{email},
-		$form->{ssn}, $form->{dob}, $form->{iban}, $form->{bic},
-		$managerid, $form->{id}
-		) || $form->dberror($query);
+					$form->{employeenumber}, $form->{name}, $form->{address1},
+					$form->{address2}, $form->{city}, $form->{state},
+					$form->{zipcode}, $form->{country}, $form->{workphone},
+					$form->{homephone}, $form->{startdate}, $form->{enddate},
+					$form->{notes}, $form->{role}, $form->{sales}, $form->{email},
+					$form->{ssn}, $form->{dob}, $form->{iban}, $form->{bic},
+					$managerid, $form->{id}
+				) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
 
 
 	$dbh->commit;
@@ -185,7 +180,7 @@ sub delete_employee {
 	my $query = qq|
 		DELETE FROM employee 
 		      WHERE id = |.$dbh->quote($form->{id});
-	$dbh->do($query) || $form->dberror($query);
+	$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
 
 	$dbh->commit;
 
@@ -242,7 +237,7 @@ sub employees {
 		 ORDER BY $sortorder|;
 
 	my $sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror($query);
+	$sth->execute || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
 
 	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
 		$ref->{address} = "";
