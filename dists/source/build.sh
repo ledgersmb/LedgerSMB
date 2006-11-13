@@ -3,9 +3,16 @@
 # Simple script to prepare for release
 
 version="1.2.0b1";
+build_d="../release";
 
-cp ledger-smb ../releases/
-cd ../releases/ledger-smb
+if test -d $build_d/ledger-smb; then
+  rm -rf $build_d/ledger-smb
+fi
+if test ! -d $build_d; then
+  mkdir $build_d
+fi
+cp ledger-smb $build_d
+cd $build_d/ledger-smb
 find -name '*.svn' -exec rm -rf '{}' ';'
 rm ledger-smb.conf
 cd ..
