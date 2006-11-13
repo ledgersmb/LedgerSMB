@@ -93,6 +93,8 @@ sub get_employee {
 	}
 	$sth->finish;
 
+	$dbh->commit;
+
 }
 
 
