@@ -56,7 +56,7 @@ sub redirect {
 	if (!$myconfig){ # needed for login
 		%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
 	}
-	if (!$form->{dbh}){
+	if (!$form->{dbh} and ($script ne 'admin.pl')){
 		$form->db_init(\%myconfig);
 	}
 
