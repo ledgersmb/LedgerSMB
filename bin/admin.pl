@@ -446,7 +446,6 @@ sub form_header {
 					<tr>
 						<th align="right">|.$locale->text('Password').qq|</th>
 						<td><input type="password" name="new_password" size="8" value="$myconfig->{password}" /></td>
-						<input type="hidden" name="old_password" value="$myconfig->{password}" />
 					</tr>
 					<tr>
 						<th align="right">|.$locale->text('Name').qq|</th>
@@ -765,8 +764,7 @@ sub save {
 		$myconfig->{$item} = $form->{$item};
 	}
 
-	$myconfig->{password} = $form->{old_password};
-	$myconfig->{password} = $form->{new_password} if $form->{new_password} ne $form->{old_password};
+	$myconfig->{password} = $form->{new_password};
 	$myconfig->{timeout} = $form->{newtimeout};
 
 	delete $myconfig->{stylesheet};
@@ -1013,18 +1011,19 @@ sub dbselect_source {
 									<tr>
 										<th align="right">|.$locale->text('User').qq|</th>
 										<td><input name="dbuser" size="10" value="$form->{dbuser}" /></td>
-<th align="right">|.$locale->text('Password').qq|</th>				
-<td><input type="password" name="dbpasswd" size="10" /></td>
+										<th align="right">|.$locale->text('Password').qq|</th>				
+										<td><input type="password" name="dbpasswd" size="10" /></td>
 									</tr>
 									<tr>
 										<th align="right">$form->{connectstring}</th>
 										<td colspan="3"><input name="dbdefault" size="10" value="$form->{dbdefault}" /></td>
 									</tr>
-<th align="right">|.$locale->text("Superuser").qq|</th>
- <td><input name="dbsuperuser" size="10" value="$form->{dbsuperuser}" /></td>
-<th align="right">|.$locale->text('Password').qq|</th>				
-<td><input type="password" name="dbsuperpasswd" size="10" /></td>
-
+									<tr>
+										<th align="right">|.$locale->text("Superuser").qq|</th>
+										 <td><input name="dbsuperuser" size="10" value="$form->{dbsuperuser}" /></td>
+										<th align="right">|.$locale->text('Password').qq|</th>				
+										<td><input type="password" name="dbsuperpasswd" size="10" /></td>
+									</tr>
 								</table>
 							</td>
 						</tr>

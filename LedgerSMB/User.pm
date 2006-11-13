@@ -146,6 +146,7 @@ sub fetch_config {
 			$myconfig{'dbport'} = '5432';
 		}
 
+		$myconfig{'login'} = $login;
 		$myconfig{'dbconnect'} = 'dbi:Pg:dbname='.$myconfig{'dbname'}.';host='.$myconfig{'dbhost'}.';port='.$myconfig{'dbport'};
 	}
  
@@ -717,10 +718,10 @@ sub save_member {
 
 	if($userID){
 		#got an id, check to see if it's in the users_conf table
-		my $userConfCheck = $dbh->prepare("SELECT count(*) FROM users_conf WHERE id = ?");
+		my $userConfCheck = $dbh->prepare("SELECT password, 1 FROM users_conf WHERE id = ?");
 		$userConfCheck->execute($userID);
 
-		($userConfExists) = $userConfCheck->fetchrow_array;
+		($oldPassword, $userConfExists) = $userConfCheck->fetchrow_array;
 	}
 	else{
 		my $userConfAdd = $dbh->prepare("SELECT create_user(?);");
@@ -738,7 +739,7 @@ sub save_member {
 												   dbhost = ?, dbname = ?, dboptions = ?, 
 												   dbpasswd = ?, dbport = ?, dbuser = ?,
 												   email = ?, fax = ?, menuwidth = ?,
-												   name = ?, numberformat = ?, password = md5(?),
+												   name = ?, numberformat = ?,
 												   print = ?, printer = ?, role = ?,
 												   sid = ?, signature = ?, stylesheet = ?,
 												   tel = ?, templates = ?, timeout = ?,
@@ -751,12 +752,24 @@ sub save_member {
 								 $self->{dbhost}, $self->{dbname}, $self->{dboptions}, 
 								 $self->{dbpasswd}, $self->{dbport}, $self->{dbuser}, 
 								 $self->{email}, $self->{fax}, $self->{menuwidth},
-								 $self->{name}, $self->{numberformat}, $self->{password}, 
+								 $self->{name}, $self->{numberformat}, 
 								 $self->{print}, $self->{printer}, $self->{role}, 
 								 $self->{sid}, $self->{signature}, $self->{stylesheet},
 								 $self->{tel}, $self->{templates}, $self->{timeout}, 
 								 $self->{vclimit}, $userID);
 	  
+
+		if($oldPassword ne $self->{password}){
+			# if they're supplying a 32 char password that matches their old password
+			# assume they don't want to change passwords
+
+			$userConfUpdate = $dbh->prepare("UPDATE users_conf
+												SET password = md5(?)
+											  WHERE id = ?");
+
+			$userConfUpdate->execute($self->{password}, $userID);
+
+		}
 
 	}
 	else{
