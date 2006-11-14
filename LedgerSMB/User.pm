@@ -146,6 +146,9 @@ sub fetch_config {
 			$myconfig{'dbport'} = '5432';
 		}
 
+		if (! $myconfig{'dbhost'}){ # necessary to avoid many issues
+			$myconfig{'dbhost'} = 'localhost';
+		}
 		$myconfig{'login'} = $login;
 		$myconfig{'dbconnect'} = 'dbi:Pg:dbname='.$myconfig{'dbname'}.';host='.$myconfig{'dbhost'}.';port='.$myconfig{'dbport'};
 	}
