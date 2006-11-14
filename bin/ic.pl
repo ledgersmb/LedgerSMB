@@ -2909,13 +2909,13 @@ sub save {
     $baseassembly = $form->{baseassembly};
 
     # don't trample on previous variables
-    for (keys %newform) { delete $form->{$_} }
+    for (keys %newform) { delete $form->{$_} if $_ ne 'dbh'}
 
     # now take it apart and restore original values
     foreach $item (split /&/, $previousform) {
       ($key, $value) = split /=/, $item, 2;
       $value =~ s/%26/&/g;
-      $form->{$key} = $value;
+      $form->{$key} = $value if $key ne 'dbh';
     }
 
 
