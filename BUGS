@@ -15,3 +15,5 @@ A few documentation fixes
 Updates RPM Spec file
 
 Better error handling in Admin.pl
+
+Database scripts now run as transactions.
