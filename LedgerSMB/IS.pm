@@ -1269,7 +1269,7 @@ sub post_invoice {
 					     VALUES (?, (SELECT id FROM chart
 					                  WHERE accno = ?),
 					            ?, ?)|;
-				$sth = $dbh->prpare($query);
+				$sth = $dbh->prepare($query);
 				$sth->execute(
 					$form->{id}, $form->{AR}, $amount, 
 					$form->{"datepaid_$i"}) 
@@ -1286,12 +1286,12 @@ sub post_invoice {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, amount, 
 				            transdate, source, memo, cleared)
-                  		     VALUES ($?, (SELECT id FROM chart
+                  		     VALUES (?, (SELECT id FROM chart
 		                                   WHERE accno = ?),
 		  		            ?, ?, ?, ?, ?)|;
 
 			$sth = $dbh->prepare($query); 
-			$sth->prepare(
+			$sth->execute(
 				$form->{id}, $accno, $amount, 
 				$form->{"datepaid_$i"}, $form->{"source_$i"},
 				$form->{"memo_$i"}, $cleared) 
