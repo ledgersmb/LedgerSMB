@@ -36,8 +36,8 @@ the documentation.
 Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
 documentation, the Pg-tables.sql, and a setup file for replication.
 
-Mads Kiilerich <mads @ kiilerich.com> provided the first version of the RPM 
-spec file.
+Mads Kiilerich <mads @ kiilerich.com> has provided the RPM spec file and
+numerous bug fixes.
 
 Tony Fraser <tony @ sybaspace.com> provided some database fixes.
 

@@ -342,7 +342,7 @@ msgid "BOM"
 msgstr "BOM"
 
 msgid "Backup"
-msgstr "Sikkerheskopi"
+msgstr "Sikkerhedskopi"
 
 msgid "Backup sent to"
 msgstr "Sikkerhedskopier sendt til"

@@ -28,15 +28,18 @@ This package does not work in SELinux restricted mode.
 
 To finalize the ledger-smb installation:
 
-Start the PostgreSQL service, let /var/lib/pgsql/data/pg_hba.conf start with:
+Enable local password autentication in PosgreSQL, leaving ident login for the
+postgres user:
+- Start PostgreSQL to create database instance (service postgres start)
+- Let /var/lib/pgsql/data/pg_hba.conf start with:
 local   all         postgres                          ident sameuser
 local   all         all                               md5
 host    all         all         127.0.0.1/32          md5
-(Remember to restart PostgreSQL.)
+- Restart PostgreSQL to apply changes (service postgres restart)
 
 In %{_sysconfdir}/%{name}/ledger-smb.conf set DBPassword to something
 and create the ledgersmb master user and database:
-su - postgres -c "createuser -d ledgersmb --createdb --createrole --superuser -P"
+su - postgres -c "createuser -d ledgersmb --createdb --superuser -P"
 su - postgres -c "createdb ledgersmb"
 su - postgres -c "createlang plpgsql ledgersmb"
 su - postgres -c "psql ledgersmb < %{_datadir}/%{name}/sql/Pg-central.sql"
@@ -89,44 +92,44 @@ mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/spool/%{name} # /var/spool/ledg
 # the conf, placed in etc, symlinked back in place
 mv ledger-smb.conf.default $RPM_BUILD_ROOT%{_sysconfdir}/ledger-smb/ledger-smb.conf
 ln -s ../../..%{_sysconfdir}/ledger-smb/ledger-smb.conf \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/ledger-smb.conf
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/ledger-smb.conf
 
 # install relevant parts in data/cgi directory
-cp -rp *.pl favicon.ico index.html ledger-smb.gif ledger-smb.png ledger-smb_small.png menu.ini \
- bin LedgerSMB sql utils locale drivers \
- Config Class Locale \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/
+cp -rp *.pl favicon.ico index.html ledger-smb.eps ledger-smb.gif ledger-smb.png ledger-smb_small.png menu.ini \
+  bin LedgerSMB sql utils locale drivers \
+  Config Class Locale \
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/
 rm $RPM_BUILD_ROOT%{_datadir}/%{name}/{setup.pl,SL2LS.pl} # FIXME - install somewhere else...
 rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}/locale/legacy
 
 # users - written to by cgi
 mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/users
 ln -s ../../..%{_localstatedir}/lib/%{name}/users \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/users
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/users
 
 # css - written to by cgi
 mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/css
 ln -s ../../..%{_localstatedir}/lib/%{name}/css \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/css
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/css
 cp -rp css/* \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/css
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/css
 
 # templates - written to by cgi
 mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/templates
 ln -s ../../..%{_localstatedir}/lib/%{name}/templates \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/templates
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/templates
 cp -rp templates/* \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/templates
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/templates
 
 # spool - written to by cgi
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/spool/%{name}
 ln -s ../../..%{_localstatedir}/spool/%{name} \
- $RPM_BUILD_ROOT%{_datadir}/%{name}/spool
+  $RPM_BUILD_ROOT%{_datadir}/%{name}/spool
 
 # apache config file
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 install -m 644 rpm-ledger-smb-httpd.conf \
- $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/ledger-smb.conf
+  $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/ledger-smb.conf
 
 
 %clean
@@ -146,15 +149,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
-%doc doc/{COPYRIGHT,LedgerSMB-manual.pdf,README,faq.html,release_notes}
-%doc LICENSE README.sql-ledger README.translations TODO Changelog CONTRIBUTORS
+%doc doc/{COPYRIGHT,faq.html,LedgerSMB-manual.pdf,README,release_notes}
+%doc BUGS Changelog CONTRIBUTORS INSTALL LICENSE README.sql-ledger README.translations TODO UPGRADE
 
 
 %changelog
-* Fri Nov 10 2006 Mads Kiilerich <mads@kiilerich.com> - 1.2 alpha
+* Fri Nov 10 2006 Mads Kiilerich <mads@kiilerich.com> - 1.2-alpha
 - Updating towards 1.2
 
 * Wed Oct 18 2006 Mads Kiilerich <mads@kiilerich.com> - 1.1.1d-1
 - Initial version
-
-
