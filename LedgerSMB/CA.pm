@@ -211,7 +211,7 @@ sub all_transactions {
 		$sth->execute($accno);
 		($form->{description}, $form->{category}, $form->{link}, 
 			$form->{contra})
-				 = $sth->fetchrow_array($query);
+				 = $sth->fetchrow_array;
 
 		if ($form->{fromdate}) {
 
