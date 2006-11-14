@@ -85,6 +85,8 @@ if ($form->{action}) {
 
 sub adminlogin {
 
+	my ($errorMessage) = @_;
+
 	$form->{title} = qq|LedgerSMB $form->{version} |.$locale->text('Administration');
 
 	$myheaderadd = qq|  
@@ -114,12 +116,19 @@ sub adminlogin {
 		<input type="hidden" name="action" value="login" />
 		<input type="hidden" name="path" value="$form->{path}" />
 		</form>
+	|;
 
+	if($errorMessage){
+		print qq|<p><span style="font-weight:bold; color:red;">$errorMessage</span></p><br />|;
+	}
+
+	print qq|
+		<br /><br />
 		<p><a href="login.pl"
 			>|.$locale->text("Application Login").qq|</a></p>
 
-
-		<a href="http://www.ledgersmb.org/">|.$locale->text('LedgerSMB website').qq|</a>
+		<br /><br />
+		<a style="font-size: 0.8em;" href="http://www.ledgersmb.org/">|.$locale->text('LedgerSMB website').qq|</a>
 	</div>
 	</body>
 	</html>
@@ -930,7 +939,7 @@ sub check_password {
 		$form->{callback} .= "&amp;password=$form->{password}" if $form->{callback};
 
 		if ($root->{password} ne (Digest::MD5::md5_hex $form->{password}) ) {
-			&getpassword;
+			&adminlogin($locale->text('Access Denied!'));
 			exit;
 		}
 		else{
