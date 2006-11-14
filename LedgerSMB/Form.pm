@@ -1809,8 +1809,6 @@ sub all_taxaccounts {
 
 	my ($self, $myconfig, $dbh2, $transdate) = @_;
 
-	my $disconnect = ($dbh) ? 0 : 1;
-
 	my $dbh = $self->{dbh};
 
 	my $sth;
@@ -2701,10 +2699,7 @@ sub save_recurring {
 		}
 	}
 
-	if ($disconnect) {
-		$dbh->commit;
-		$dbh->disconnect;
-	}
+	$dbh->commit;
 }
 
 
@@ -3012,8 +3007,7 @@ sub audittrail {
 	my $disconnect;
 
 	if (! $dbh) {
-		$dbh = $self->dbconnect($myconfig);
-		$disconnect = 1;
+		$dbh = $self->{dbh};
 	}
 
 	# if we have an id add audittrail, otherwise get a new timestamp
