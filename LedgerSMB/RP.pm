@@ -1419,7 +1419,7 @@ sub aging {
 	my $dbh = $form->{dbh};
 	my $invoice = ($form->{arap} eq 'ar') ? 'is' : 'ir';
 
-	my $query = qq|SELECT value FROM defaults WHERE settings_key = 'curr'|;
+	my $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
 	($form->{currencies}) = $dbh->selectrow_array($query);
   
 	($null, $form->{todate}) 

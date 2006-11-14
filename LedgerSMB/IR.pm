@@ -595,7 +595,7 @@ sub post_invoice {
 					             WHERE accno = ?),
 		    			             ?, ?)|;
 
-				$sth = $dbh->$dbh->prepare($query);
+				$sth = $dbh->prepare($query);
 				$sth->execute(
 					$form->{id}, $form->{AP}, $amount, 
 					$form->{"datepaid_$i"}
