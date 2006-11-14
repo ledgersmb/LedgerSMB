@@ -1724,7 +1724,7 @@ sub all_vc {
 
 	my $query = qq|SELECT count(*) FROM $vc|;
 	my $where;
-	my @ueryargs = ();
+	my @queryargs = ();
 
 	if ($transdate) {
 		$query .= qq| WHERE (startdate IS NULL OR startdate <= ?)
