@@ -95,7 +95,12 @@ $globalDBPassword = $config{globaldb}{DBPassword} if $config{globaldb}{DBPasswor
 
 #putting this in an if clause for now so not to break other devel users
 if ($config{globaldb}{DBConnect}){
-	$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, $globalDBPassword) or die;
+	$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, 
+		$globalDBPassword);
+	if (!$GLOBALDBH){
+		$form = new Form;
+		$form->error("No GlobalDBH Configured or Could not Connect");
+	}
 }
 # These lines prevent other apps in mod_perl from seeing the global db 
 # connection info
