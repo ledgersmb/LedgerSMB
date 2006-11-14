@@ -1932,7 +1932,7 @@ sub display_taxes {
       $modulenum =~ s/^taxmodule_//;
       print '<option label="'.$form->{$taxmodule}.'" value="'.$modulenum . '"';
       print " SELECTED " if $form->{$taxmodule} eq $form->{"taxmodulename_$i"};
-      print " />\n";
+      print ">".$form->{$taxmodule}."</option>\n";
     }
     print qq|</select></td>
 	</tr> |;
