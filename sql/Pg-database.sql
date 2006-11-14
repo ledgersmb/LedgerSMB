@@ -250,7 +250,7 @@ CREATE TABLE taxcategory (
   taxcategory_id serial PRIMARY KEY,
   taxcategoryname text NOT NULL,
   taxmodule_id int NOT NULL,
-  FOREIGN KEY taxmodule_id REFERENCES taxmodule (taxmodule_id)
+  FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id)
 );
 --
 CREATE TABLE partstax (
@@ -258,9 +258,9 @@ CREATE TABLE partstax (
   chart_id int,
   taxcategory_id int,
   PRIMARY KEY (parts_id, chart_id),
-  FOREIGN KEY parts_id REFERENCES parts (id),
-  FOREIGN KEY chart_id REFERENCES chart (id),
-  FOREIGN KEY taxcategory_id REFERENCES taxcategory (taxcategory_id)
+  FOREIGN KEY (parts_id) REFERENCES parts (id),
+  FOREIGN KEY (chart_id) REFERENCES chart (id),
+  FOREIGN KEY (taxcategory_id) REFERENCES taxcategory (taxcategory_id)
 );
 --
 CREATE TABLE tax (
@@ -815,7 +815,6 @@ create unique index language_code_key on language (code);
 --
 create index jcitems_id_key on jcitems (id);
 
-CREATE LANGUAGE plpgsql;
 --
 CREATE FUNCTION del_yearend() RETURNS OPAQUE AS '
 begin
