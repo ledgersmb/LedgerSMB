@@ -35,6 +35,7 @@ package IR;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
+use Math::BigFloat;
 
 
 sub post_invoice {
@@ -227,7 +228,7 @@ sub post_invoice {
 					\@taxaccounts, $form, $linetotal, 1);
 
 				$form->{"sellprice_$i"} 
-					-= $amount / $form{"qty_$i"};
+					-= $amount / $form->{"qty_$i"};
 			} else {
 				$tax += $amount = Tax::calculate_taxes(
 					\@taxaccounts, $form, $linetotal, 0);
