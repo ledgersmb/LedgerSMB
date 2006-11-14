@@ -240,7 +240,7 @@ which decoded escaped strings. This created a lot of problems and I worked
 around it by escaping strings twice.
 If you get a server 500 error 'filename too long' or if collapsed menus
 don't expand you may have to adjusted the following code in
-SL/Form.pm and change the number (44) on line 84.
+LSMB/Form.pm and change the number (44) on line 84.
 <pre>
   # for Apache 2 we escape strings twice
   if (($ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/) && !$beenthere) {
@@ -586,7 +586,7 @@ may be changed by setting the language in your Preferences.
 and access control which makes it fairly safe out of the box to run even in
 front of a firewall.
 Some precautions which are out of our control must be taken though.
-It matters where you install SL and how you configure your web server and
+It matters where you install LSMB and how you configure your web server and
 SQL server.
 
 <pre>

@@ -1801,7 +1801,7 @@ income is a debit because it credits the retained earning equity account.
 \subsection{Payroll as a GL transaction}
 
 Currently payroll must be done as a GL transaction. The attempts to
-create a payroll system that would ship with SL have largely stalled.
+create a payroll system that would ship with LSMB have largely stalled.
 
 Most customers running their businesses will have an idea of how to
 do this.
@@ -1854,7 +1854,7 @@ To reconcile an account (say, when one would get a checking account
 statement), one would go to cash/reconciliation, and check off the
 items that have cleared. One can then attempt to determine where any
 errors lie by comparing the total on the statement with the total
-that SL generates.
+that LSMB generates.
 
 This can be done for other accounts too, such as petty cash.%
 \footnote{Petty cash denotes a drawer of cash that is used to pay small expenses.
@@ -2494,7 +2494,7 @@ The locale directory contains translation files that Ledger-SMB uses
 to translate between different languages. One could add translations
 to these files if necessary.
 
-The SL directory is where the Perl modules reside that provide the
+The LSMB directory is where the Perl modules reside that provide the
 core business logic in Ledger-SMB. These modules provide functionality
 such as form handling, email capabilities, and access to the database
 through its at least partially object oriented API.
@@ -2526,7 +2526,7 @@ to do this.
 
 \subsection{Extensions}
 
-One can add functionality to the Perl modules in the SL directory
+One can add functionality to the Perl modules in the LSMB directory
 and often add missing functions easily.
 
 
@@ -2736,7 +2736,7 @@ general introduction to editing templates. Also, this is not intended
 to function as a complete reference.
 
 Template instructions are contained in tags \textless?lsmb and ?\textgreater.
-The actual parsing is done by the parse\_template function in SL/Form.pm.
+The actual parsing is done by the parse\_template function in LSMB/Form.pm.
 
 
 \subsubsection{Page Breaks in \LaTeX{}}
@@ -2852,7 +2852,7 @@ the appropriate action taken:
 
 The \$locale-\textgreater getsub routine is called. This routine
 checks the locale package to determine if the value needs to be translated
-back into an appropriate SL function. If not, the variable is lower-cased,
+back into an appropriate LSMB function. If not, the variable is lower-cased,
 and all spaces are converted into underscores.
 
 In general there is no substitute for reading the code to understand
