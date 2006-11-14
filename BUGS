@@ -2,5 +2,16 @@ Known issues in LedgerSMB 1.2, Beta 1:
 
 Installation/upgrade is not automated yet.
 
-Currencies do not show up on invoices/orders.
+Changes since last Beta:
 
+Currencies not showing up on orders and invoices
+
+Internal server error on login screen when can't connect to db.
+
+A couple of dataset creation issues.
+
+A few documentation fixes
+
+Updates RPM Spec file
+
+Better error handling in Admin.pl
