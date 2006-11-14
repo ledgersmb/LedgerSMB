@@ -327,7 +327,7 @@ sub get_gifi {
 	my $query = qq|
 		SELECT accno, description
 		  FROM gifi
-		 WHERE accno = '$form->{accno}'|;
+		 WHERE accno = ?|;
 
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{accno}) || $form->dberror($query);
