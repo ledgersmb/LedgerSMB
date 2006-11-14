@@ -271,7 +271,7 @@ sub list_users {
 		$href =~ s/ /%20/g;
 
 		$member{$key}{templates} =~ s/^${LedgerSMB::Sysconfig::templates}\///;
-		$member{$key}{dbhost} = $locale->text('localhost') unless $member{$key}{dbhost};
+		$member{$key}{dbhost} = 'localhost' unless $member{$key}{dbhost};
 
 		$column_data{login} = qq|<td><a href="$href">$key</a></td>|;
 		$column_data{name} = qq|<td>$member{$key}{name}</td>|;
