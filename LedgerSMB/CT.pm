@@ -476,6 +476,9 @@ sub save_vendor {
 	($null, $language_code) = split /--/, $form->{language};
 
 	$form->{vendornumber} = $form->update_defaults($myconfig, "vendornumber", $dbh) if ! $form->{vendornumber};
+	
+	$form->{startdate} = undef unless $form->{startdate};
+	$form->{enddate} = undef unless $form->{enddate};
 
 	$query = qq|
 		UPDATE vendor 
