@@ -109,9 +109,9 @@ INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VA
 INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '1230'), 0.1, '');
 INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2290'), 0.1, '');
 --
- SET inventory_accno_id = (SELECT id FROM chart WHERE accno = '1520'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '1520'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '4020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '4020'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '5020'));
 

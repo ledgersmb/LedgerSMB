@@ -105,9 +105,9 @@ INSERT INTO chart (accno,description,charttype,gifi_accno,category,link) VALUES 
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2200'),0.175);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2205'),0.05);
 --
- SET inventory_accno_id = (SELECT id FROM chart WHERE accno = '1001'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',  (SELECT id FROM chart WHERE accno = '1001'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '4000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '4000'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '5000'));
 

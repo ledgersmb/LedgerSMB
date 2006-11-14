@@ -72,9 +72,9 @@ INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES 
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5790','مرافق','A','E','AP_amount','');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('2280','ضرائب مرتبات مستحقة','A','L','','');
 
- SET inventory_accno_id = (SELECT id FROM chart WHERE accno = '1520'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '1520'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '4020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '4020'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '5010'));
 

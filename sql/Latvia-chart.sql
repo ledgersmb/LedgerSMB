@@ -251,7 +251,7 @@ INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart where ac
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1230'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '6010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '6010'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '7110'));
 
