@@ -43,7 +43,7 @@ sub getpassword {
 
   $form->{endsession} = 1;
 
-  $sessionexpired = qq|<b><font color=red><blink>|.$locale->text('Session expired!').qq|</blink></font></b><p>| if $s;
+  $sessionexpired = qq|<p><span style="font-weight:bold; color:red;">|.$locale->text('Session expired!').qq|</span></p>| if $s;
   
   my $headeradd = qq|
 <script language="JavaScript" type="text/javascript">
