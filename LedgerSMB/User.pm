@@ -450,9 +450,11 @@ sub process_query {
 	
 	open(PSQL, "| psql") or $form->error(__FILE__.':'.__LINE__.": psql : $! \n");
 	print PSQL "\\o spool/log \n";
+	print PSQL "BEGIN;\n";
 	while (<FH>){
 		print PSQL $_;
 	}
+	print PSQL "COMMIT;\n";
 	close FH;
  
 }
