@@ -2174,7 +2174,7 @@ sub create_links {
 			$sth = $dbh->prepare($query);
 			$sth->execute || $self->dberror($query);
 
-			(undef, $val) = $sth->fetchrow_array();
+			($val) = $sth->fetchrow_array();
 			if ($_ eq 'curr'){
 				$self->{currencies} = $val;
 			} elsif ($_ eq 'current_date'){
