@@ -4,6 +4,7 @@
 
 package LedgerSMB::Sysconfig;
 
+use LedgerSMB::Form;
 use Config::Std;
 use DBI qw(:sql_types); 
 
