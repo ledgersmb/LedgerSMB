@@ -1367,7 +1367,7 @@ sub transactions {
       $quotation = $locale->text('RFQ');
 
       if ($myconfig{acs} !~ /Quotations--Quotations/) {
-	$button{'Quotations--RFQ'}{code} = qq|<button class="submit" type="submit" name="action" value="add">|.$locale->text('RFQ').qq|"</button> |;
+	$button{'Quotations--RFQ'}{code} = qq|<button class="submit" type="submit" name="action" value="add">|.$locale->text('RFQ').qq|</button> |;
 	$button{'Quotations--RFQ'}{order} = $i++;
       }
       
