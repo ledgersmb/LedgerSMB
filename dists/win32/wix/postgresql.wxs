@@ -1,0 +1,183 @@
+Microsoft (R) Windows Installer Xml Tool version 2.0.4611.0
+Copyright (C) Microsoft Corporation 2003. All rights reserved.
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+  <Fragment>
+    <DirectoryRef Id="TARGETDIR">
+      <Directory Id="directory0" Name="8.1">
+          <File Id="file0" Name="INSTAL_1.RTF" LongName="Installation Notes.rtf" src="c:\Program Files\PostgreSQL\8.1\Installation Notes.rtf" />
+          <File Id="file1" Name="OPENSS_1.TXT" LongName="OpenSSL Licence.txt" src="c:\Program Files\PostgreSQL\8.1\OpenSSL Licence.txt" />
+        <Directory Id="directory1" Name="bin">
+            <File Id="file2" Name="ADDDEP_1.PL" LongName="adddepend.pl" src="c:\Program Files\PostgreSQL\8.1\bin\adddepend.pl" />
+            <File Id="file3" Name="CLEAN__1.PL" LongName="clean_pending.pl" src="c:\Program Files\PostgreSQL\8.1\bin\clean_pending.pl" />
+            <File Id="file4" Name="CLUSTE_1.EXE" LongName="clusterdb.exe" src="c:\Program Files\PostgreSQL\8.1\bin\clusterdb.exe" />
+            <File Id="file5" Name="comerr32.dll" src="c:\Program Files\PostgreSQL\8.1\bin\comerr32.dll" />
+            <File Id="file6" Name="createdb.exe" src="c:\Program Files\PostgreSQL\8.1\bin\createdb.exe" />
+            <File Id="file7" Name="CREATE_1.EXE" LongName="createlang.exe" src="c:\Program Files\PostgreSQL\8.1\bin\createlang.exe" />
+            <File Id="file8" Name="CREATE_2.EXE" LongName="createuser.exe" src="c:\Program Files\PostgreSQL\8.1\bin\createuser.exe" />
+            <File Id="file9" Name="dbf2pg.exe" src="c:\Program Files\PostgreSQL\8.1\bin\dbf2pg.exe" />
+            <File Id="file10" Name="dbmirror.pl" src="c:\Program Files\PostgreSQL\8.1\bin\dbmirror.pl" />
+            <File Id="file11" Name="dropdb.exe" src="c:\Program Files\PostgreSQL\8.1\bin\dropdb.exe" />
+            <File Id="file12" Name="droplang.exe" src="c:\Program Files\PostgreSQL\8.1\bin\droplang.exe" />
+            <File Id="file13" Name="dropuser.exe" src="c:\Program Files\PostgreSQL\8.1\bin\dropuser.exe" />
+            <File Id="file14" Name="ecpg.exe" src="c:\Program Files\PostgreSQL\8.1\bin\ecpg.exe" />
+            <File Id="file15" Name="fti.pl" src="c:\Program Files\PostgreSQL\8.1\bin\fti.pl" />
+            <File Id="file16" Name="initdb.exe" src="c:\Program Files\PostgreSQL\8.1\bin\initdb.exe" />
+            <File Id="file17" Name="krb5_32.dll" src="c:\Program Files\PostgreSQL\8.1\bin\krb5_32.dll" />
+            <File Id="file18" Name="libeay32.dll" src="c:\Program Files\PostgreSQL\8.1\bin\libeay32.dll" />
+            <File Id="file19" Name="LIBGEO_1.DLL" LongName="libgeos-2.dll" src="c:\Program Files\PostgreSQL\8.1\bin\libgeos-2.dll" />
+            <File Id="file20" Name="LIBGEO_2.DLL" LongName="libgeos_c-1.dll" src="c:\Program Files\PostgreSQL\8.1\bin\libgeos_c-1.dll" />
+            <File Id="file21" Name="LIBICO_1.DLL" LongName="libiconv-2.dll" src="c:\Program Files\PostgreSQL\8.1\bin\libiconv-2.dll" />
+            <File Id="file22" Name="LIBINT_1.DLL" LongName="libintl-2.dll" src="c:\Program Files\PostgreSQL\8.1\bin\libintl-2.dll" />
+            <File Id="file23" Name="libpq.dll" src="c:\Program Files\PostgreSQL\8.1\bin\libpq.dll" />
+            <File Id="file24" Name="libproj.dll" src="c:\Program Files\PostgreSQL\8.1\bin\libproj.dll" />
+            <File Id="file25" Name="MYBACK_1" LongName="mybackup_file" src="c:\Program Files\PostgreSQL\8.1\bin\mybackup_file" />
+            <File Id="file26" Name="oid2name.exe" src="c:\Program Files\PostgreSQL\8.1\bin\oid2name.exe" />
+            <File Id="file27" Name="pgAdmin3.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pgAdmin3.exe" />
+            <File Id="file28" Name="pgaevent.dll" src="c:\Program Files\PostgreSQL\8.1\bin\pgaevent.dll" />
+            <File Id="file29" Name="pgAgent.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pgAgent.exe" />
+            <File Id="file30" Name="pgbench.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pgbench.exe" />
+            <File Id="file31" Name="pgoledb.dll" src="c:\Program Files\PostgreSQL\8.1\bin\pgoledb.dll" />
+            <File Id="file32" Name="pgperm.bat" src="c:\Program Files\PostgreSQL\8.1\bin\pgperm.bat" />
+            <File Id="file33" Name="PGSQL2_1.EXE" LongName="pgsql2shp.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pgsql2shp.exe" />
+            <File Id="file34" Name="PG_CON_1.EXE" LongName="pg_config.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pg_config.exe" />
+            <File Id="file35" Name="PG_CON_2.EXE" LongName="pg_controldata.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pg_controldata.exe" />
+            <File Id="file36" Name="pg_ctl.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pg_ctl.exe" />
+            <File Id="file37" Name="pg_dump.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pg_dump.exe" />
+            <File Id="file38" Name="PG_DUM_1.EXE" LongName="pg_dumpall.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pg_dumpall.exe" />
+            <File Id="file39" Name="PG_RES_1.EXE" LongName="pg_resetxlog.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pg_resetxlog.exe" />
+            <File Id="file40" Name="PG_RES_2.EXE" LongName="pg_restore.exe" src="c:\Program Files\PostgreSQL\8.1\bin\pg_restore.exe" />
+            <File Id="file41" Name="postgres.exe" src="c:\Program Files\PostgreSQL\8.1\bin\postgres.exe" />
+            <File Id="file42" Name="POSTMA_1.EXE" LongName="postmaster.exe" src="c:\Program Files\PostgreSQL\8.1\bin\postmaster.exe" />
+            <File Id="file43" Name="psql.exe" src="c:\Program Files\PostgreSQL\8.1\bin\psql.exe" />
+            <File Id="file44" Name="PSQLOD_1.DLL" LongName="psqlodbca.dll" src="c:\Program Files\PostgreSQL\8.1\bin\psqlodbca.dll" />
+            <File Id="file45" Name="PSQLOD_2.DLL" LongName="psqlodbcw.dll" src="c:\Program Files\PostgreSQL\8.1\bin\psqlodbcw.dll" />
+            <File Id="file46" Name="PTHREA_1.DLL" LongName="pthreadGC2.dll" src="c:\Program Files\PostgreSQL\8.1\bin\pthreadGC2.dll" />
+            <File Id="file47" Name="SHP2PG_1.EXE" LongName="shp2pgsql.exe" src="c:\Program Files\PostgreSQL\8.1\bin\shp2pgsql.exe" />
+            <File Id="file48" Name="ssleay32.dll" src="c:\Program Files\PostgreSQL\8.1\bin\ssleay32.dll" />
+            <File Id="file49" Name="vacuumdb.exe" src="c:\Program Files\PostgreSQL\8.1\bin\vacuumdb.exe" />
+            <File Id="file50" Name="vacuumlo.exe" src="c:\Program Files\PostgreSQL\8.1\bin\vacuumlo.exe" />
+        </Directory>
+        <Directory Id="directory2" Name="doc" />
+        <Directory Id="directory3" Name="include">
+            <File Id="file51" Name="ECPGER_1.H" LongName="ecpgerrno.h" src="c:\Program Files\PostgreSQL\8.1\include\ecpgerrno.h" />
+            <File Id="file52" Name="ecpglib.h" src="c:\Program Files\PostgreSQL\8.1\include\ecpglib.h" />
+            <File Id="file53" Name="ecpgtype.h" src="c:\Program Files\PostgreSQL\8.1\include\ecpgtype.h" />
+            <File Id="file54" Name="ECPG_I_1.H" LongName="ecpg_informix.h" src="c:\Program Files\PostgreSQL\8.1\include\ecpg_informix.h" />
+            <File Id="file55" Name="libpq-fe.h" src="c:\Program Files\PostgreSQL\8.1\include\libpq-fe.h" />
+            <File Id="file56" Name="PGTYPE_1.H" LongName="pgtypes_date.h" src="c:\Program Files\PostgreSQL\8.1\include\pgtypes_date.h" />
+            <File Id="file57" Name="PGTYPE_2.H" LongName="pgtypes_error.h" src="c:\Program Files\PostgreSQL\8.1\include\pgtypes_error.h" />
+            <File Id="file58" Name="PGTYPE_3.H" LongName="pgtypes_interval.h" src="c:\Program Files\PostgreSQL\8.1\include\pgtypes_interval.h" />
+            <File Id="file59" Name="PGTYPE_4.H" LongName="pgtypes_numeric.h" src="c:\Program Files\PostgreSQL\8.1\include\pgtypes_numeric.h" />
+            <File Id="file60" Name="PG53A8_1.H" LongName="pgtypes_timestamp.h" src="c:\Program Files\PostgreSQL\8.1\include\pgtypes_timestamp.h" />
+            <File Id="file61" Name="PG_CON_1.H" LongName="pg_config.h" src="c:\Program Files\PostgreSQL\8.1\include\pg_config.h" />
+            <File Id="file62" Name="PG_CON_2.H" LongName="pg_config_manual.h" src="c:\Program Files\PostgreSQL\8.1\include\pg_config_manual.h" />
+            <File Id="file63" Name="PG_CON_3.H" LongName="pg_config_os.h" src="c:\Program Files\PostgreSQL\8.1\include\pg_config_os.h" />
+            <File Id="file64" Name="POSTGR_1.H" LongName="postgres_ext.h" src="c:\Program Files\PostgreSQL\8.1\include\postgres_ext.h" />
+            <File Id="file65" Name="SQL3TY_1.H" LongName="sql3types.h" src="c:\Program Files\PostgreSQL\8.1\include\sql3types.h" />
+            <File Id="file66" Name="sqlca.h" src="c:\Program Files\PostgreSQL\8.1\include\sqlca.h" />
+        </Directory>
+        <Directory Id="directory4" Name="jdbc">
+            <File Id="file67" Name="POSTGI_1.JAR" LongName="postgis_1_0_0.jar" src="c:\Program Files\PostgreSQL\8.1\jdbc\postgis_1_0_0.jar" />
+            <File Id="file68" Name="POSTGR_1.JAR" LongName="postgresql-8.1-405.jdbc2.jar" src="c:\Program Files\PostgreSQL\8.1\jdbc\postgresql-8.1-405.jdbc2.jar" />
+            <File Id="file69" Name="POSTGR_2.JAR" LongName="postgresql-8.1-405.jdbc2ee.jar" src="c:\Program Files\PostgreSQL\8.1\jdbc\postgresql-8.1-405.jdbc2ee.jar" />
+            <File Id="file70" Name="POSTGR_3.JAR" LongName="postgresql-8.1-405.jdbc3.jar" src="c:\Program Files\PostgreSQL\8.1\jdbc\postgresql-8.1-405.jdbc3.jar" />
+        </Directory>
+        <Directory Id="directory5" Name="lib">
+            <File Id="file71" Name="admin81.dll" src="c:\Program Files\PostgreSQL\8.1\lib\admin81.dll" />
+            <File Id="file72" Name="ASCII__1.DLL" LongName="ascii_and_mic.dll" src="c:\Program Files\PostgreSQL\8.1\lib\ascii_and_mic.dll" />
+            <File Id="file73" Name="autoinc.dll" src="c:\Program Files\PostgreSQL\8.1\lib\autoinc.dll" />
+            <File Id="file74" Name="BTREE__1.DLL" LongName="btree_gist.dll" src="c:\Program Files\PostgreSQL\8.1\lib\btree_gist.dll" />
+            <File Id="file75" Name="chkpass.dll" src="c:\Program Files\PostgreSQL\8.1\lib\chkpass.dll" />
+            <File Id="file76" Name="cube.dll" src="c:\Program Files\PostgreSQL\8.1\lib\cube.dll" />
+            <File Id="file77" Name="CYRILL_1.DLL" LongName="cyrillic_and_mic.dll" src="c:\Program Files\PostgreSQL\8.1\lib\cyrillic_and_mic.dll" />
+            <File Id="file78" Name="dblink.dll" src="c:\Program Files\PostgreSQL\8.1\lib\dblink.dll" />
+            <File Id="file79" Name="EARTHD_1.DLL" LongName="earthdistance.dll" src="c:\Program Files\PostgreSQL\8.1\lib\earthdistance.dll" />
+            <File Id="file80" Name="EUC_CN_1.DLL" LongName="euc_cn_and_mic.dll" src="c:\Program Files\PostgreSQL\8.1\lib\euc_cn_and_mic.dll" />
+            <File Id="file81" Name="EUC_JP_1.DLL" LongName="euc_jp_and_sjis.dll" src="c:\Program Files\PostgreSQL\8.1\lib\euc_jp_and_sjis.dll" />
+            <File Id="file82" Name="EUC_KR_1.DLL" LongName="euc_kr_and_mic.dll" src="c:\Program Files\PostgreSQL\8.1\lib\euc_kr_and_mic.dll" />
+            <File Id="file83" Name="EUC_TW_1.DLL" LongName="euc_tw_and_big5.dll" src="c:\Program Files\PostgreSQL\8.1\lib\euc_tw_and_big5.dll" />
+            <File Id="file84" Name="fti.dll" src="c:\Program Files\PostgreSQL\8.1\lib\fti.dll" />
+            <File Id="file85" Name="FUZZYS_1.DLL" LongName="fuzzystrmatch.dll" src="c:\Program Files\PostgreSQL\8.1\lib\fuzzystrmatch.dll" />
+            <File Id="file86" Name="INSERT_1.DLL" LongName="insert_username.dll" src="c:\Program Files\PostgreSQL\8.1\lib\insert_username.dll" />
+            <File Id="file87" Name="INT_AG_1.DLL" LongName="int_aggregate.dll" src="c:\Program Files\PostgreSQL\8.1\lib\int_aggregate.dll" />
+            <File Id="file88" Name="ISBN_I_1.DLL" LongName="isbn_issn.dll" src="c:\Program Files\PostgreSQL\8.1\lib\isbn_issn.dll" />
+            <File Id="file89" Name="LATIN2_1.DLL" LongName="latin2_and_win1250.dll" src="c:\Program Files\PostgreSQL\8.1\lib\latin2_and_win1250.dll" />
+            <File Id="file90" Name="LATIN__1.DLL" LongName="latin_and_mic.dll" src="c:\Program Files\PostgreSQL\8.1\lib\latin_and_mic.dll" />
+            <File Id="file91" Name="libecpg.a" src="c:\Program Files\PostgreSQL\8.1\lib\libecpg.a" />
+            <File Id="file92" Name="libecpg.dll" src="c:\Program Files\PostgreSQL\8.1\lib\libecpg.dll" />
+            <File Id="file93" Name="LIBECP_1.A" LongName="libecpg_compat.a" src="c:\Program Files\PostgreSQL\8.1\lib\libecpg_compat.a" />
+            <File Id="file94" Name="LIBECP_1.DLL" LongName="libecpg_compat.dll" src="c:\Program Files\PostgreSQL\8.1\lib\libecpg_compat.dll" />
+            <File Id="file95" Name="LIBLWG_1.DLL" LongName="liblwgeom.dll" src="c:\Program Files\PostgreSQL\8.1\lib\liblwgeom.dll" />
+            <File Id="file96" Name="LIBPGP_1.A" LongName="libpgport.a" src="c:\Program Files\PostgreSQL\8.1\lib\libpgport.a" />
+            <File Id="file97" Name="LIBPGT_1.A" LongName="libpgtypes.a" src="c:\Program Files\PostgreSQL\8.1\lib\libpgtypes.a" />
+            <File Id="file98" Name="LIBPGT_1.DLL" LongName="libpgtypes.dll" src="c:\Program Files\PostgreSQL\8.1\lib\libpgtypes.dll" />
+            <File Id="file99" Name="LIBPLJ_1.DLL" LongName="libpljava.dll" src="c:\Program Files\PostgreSQL\8.1\lib\libpljava.dll" />
+            <File Id="file100" Name="LIBPOS_1.A" LongName="libpostgres.a" src="c:\Program Files\PostgreSQL\8.1\lib\libpostgres.a" />
+            <File Id="file101" Name="libpq.a" src="c:\Program Files\PostgreSQL\8.1\lib\libpq.a" />
+            <File Id="file102" Name="lo.dll" src="c:\Program Files\PostgreSQL\8.1\lib\lo.dll" />
+            <File Id="file103" Name="ltree.dll" src="c:\Program Files\PostgreSQL\8.1\lib\ltree.dll" />
+            <File Id="file104" Name="MODDAT_1.DLL" LongName="moddatetime.dll" src="c:\Program Files\PostgreSQL\8.1\lib\moddatetime.dll" />
+            <File Id="file105" Name="pending.dll" src="c:\Program Files\PostgreSQL\8.1\lib\pending.dll" />
+            <File Id="file106" Name="pgcrypto.dll" src="c:\Program Files\PostgreSQL\8.1\lib\pgcrypto.dll" />
+            <File Id="file107" Name="pgevent.dll" src="c:\Program Files\PostgreSQL\8.1\lib\pgevent.dll" />
+            <File Id="file108" Name="PGSTAT_1.DLL" LongName="pgstattuple.dll" src="c:\Program Files\PostgreSQL\8.1\lib\pgstattuple.dll" />
+            <File Id="file109" Name="pg_trgm.dll" src="c:\Program Files\PostgreSQL\8.1\lib\pg_trgm.dll" />
+            <File Id="file110" Name="plperl.dll" src="c:\Program Files\PostgreSQL\8.1\lib\plperl.dll" />
+            <File Id="file111" Name="plpgsql.dll" src="c:\Program Files\PostgreSQL\8.1\lib\plpgsql.dll" />
+            <File Id="file112" Name="plpython.dll" src="c:\Program Files\PostgreSQL\8.1\lib\plpython.dll" />
+            <File Id="file113" Name="pltcl.dll" src="c:\Program Files\PostgreSQL\8.1\lib\pltcl.dll" />
+            <File Id="file114" Name="refint.dll" src="c:\Program Files\PostgreSQL\8.1\lib\refint.dll" />
+            <File Id="file115" Name="seg.dll" src="c:\Program Files\PostgreSQL\8.1\lib\seg.dll" />
+            <File Id="file116" Name="TABLEF_1.DLL" LongName="tablefunc.dll" src="c:\Program Files\PostgreSQL\8.1\lib\tablefunc.dll" />
+            <File Id="file117" Name="TIMETR_1.DLL" LongName="timetravel.dll" src="c:\Program Files\PostgreSQL\8.1\lib\timetravel.dll" />
+            <File Id="file118" Name="tsearch2.dll" src="c:\Program Files\PostgreSQL\8.1\lib\tsearch2.dll" />
+            <File Id="file119" Name="USER_L_1.DLL" LongName="user_locks.dll" src="c:\Program Files\PostgreSQL\8.1\lib\user_locks.dll" />
+            <File Id="file120" Name="UTF8_A_1.DLL" LongName="utf8_and_ascii.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_ascii.dll" />
+            <File Id="file121" Name="UTF8_A_2.DLL" LongName="utf8_and_big5.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_big5.dll" />
+            <File Id="file122" Name="UTF8_A_3.DLL" LongName="utf8_and_cyrillic.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_cyrillic.dll" />
+            <File Id="file123" Name="UTF8_A_4.DLL" LongName="utf8_and_euc_cn.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_euc_cn.dll" />
+            <File Id="file124" Name="UT9979_1.DLL" LongName="utf8_and_euc_jp.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_euc_jp.dll" />
+            <File Id="file125" Name="UT9187_1.DLL" LongName="utf8_and_euc_kr.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_euc_kr.dll" />
+            <File Id="file126" Name="UTA595_1.DLL" LongName="utf8_and_euc_tw.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_euc_tw.dll" />
+            <File Id="file127" Name="UT7A71_1.DLL" LongName="utf8_and_gb18030.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_gb18030.dll" />
+            <File Id="file128" Name="UTA840_1.DLL" LongName="utf8_and_gbk.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_gbk.dll" />
+            <File Id="file129" Name="UTE390_1.DLL" LongName="utf8_and_iso8859.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_iso8859.dll" />
+            <File Id="file130" Name="UTA3E1_1.DLL" LongName="utf8_and_iso8859_1.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_iso8859_1.dll" />
+            <File Id="file131" Name="UTC0E0_1.DLL" LongName="utf8_and_johab.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_johab.dll" />
+            <File Id="file132" Name="UT87C7_1.DLL" LongName="utf8_and_sjis.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_sjis.dll" />
+            <File Id="file133" Name="UTA06C_1.DLL" LongName="utf8_and_uhc.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_uhc.dll" />
+            <File Id="file134" Name="UTCB7A_1.DLL" LongName="utf8_and_win1250.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_win1250.dll" />
+            <File Id="file135" Name="UTCB72_1.DLL" LongName="utf8_and_win1252.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_win1252.dll" />
+            <File Id="file136" Name="UTDB72_1.DLL" LongName="utf8_and_win1256.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_win1256.dll" />
+            <File Id="file137" Name="UTEB7A_1.DLL" LongName="utf8_and_win1258.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_win1258.dll" />
+            <File Id="file138" Name="UT4F2A_1.DLL" LongName="utf8_and_win874.dll" src="c:\Program Files\PostgreSQL\8.1\lib\utf8_and_win874.dll" />
+            <File Id="file139" Name="_int.dll" src="c:\Program Files\PostgreSQL\8.1\lib\_int.dll" />
+        </Directory>
+        <Directory Id="directory6" Name="Npgsql">
+            <File Id="file140" Name="INFO.txt" src="c:\Program Files\PostgreSQL\8.1\Npgsql\INFO.txt" />
+            <File Id="file141" Name="LICENSE.txt" src="c:\Program Files\PostgreSQL\8.1\Npgsql\LICENSE.txt" />
+            <File Id="file142" Name="RELEAS_1.TXT" LongName="RELEASENOTES.txt" src="c:\Program Files\PostgreSQL\8.1\Npgsql\RELEASENOTES.txt" />
+        </Directory>
+        <Directory Id="directory7" Name="share">
+            <File Id="file143" Name="CONVER_1.SQL" LongName="conversion_create.sql" src="c:\Program Files\PostgreSQL\8.1\share\conversion_create.sql" />
+            <File Id="file144" Name="INFORM_1.SQL" LongName="information_schema.sql" src="c:\Program Files\PostgreSQL\8.1\share\information_schema.sql" />
+            <File Id="file145" Name="PG_HBA_1.SAM" LongName="pg_hba.conf.sample" src="c:\Program Files\PostgreSQL\8.1\share\pg_hba.conf.sample" />
+            <File Id="file146" Name="PG_IDE_1.SAM" LongName="pg_ident.conf.sample" src="c:\Program Files\PostgreSQL\8.1\share\pg_ident.conf.sample" />
+            <File Id="file147" Name="PG_SER_1.SAM" LongName="pg_service.conf.sample" src="c:\Program Files\PostgreSQL\8.1\share\pg_service.conf.sample" />
+            <File Id="file148" Name="postgres.bki" src="c:\Program Files\PostgreSQL\8.1\share\postgres.bki" />
+            <File Id="file149" Name="POSTGR_1.DES" LongName="postgres.description" src="c:\Program Files\PostgreSQL\8.1\share\postgres.description" />
+            <File Id="file150" Name="POSTGR_1.SAM" LongName="postgresql.conf.sample" src="c:\Program Files\PostgreSQL\8.1\share\postgresql.conf.sample" />
+            <File Id="file151" Name="PSQLRC_1.SAM" LongName="psqlrc.sample" src="c:\Program Files\PostgreSQL\8.1\share\psqlrc.sample" />
+            <File Id="file152" Name="RECOVE_1.SAM" LongName="recovery.conf.sample" src="c:\Program Files\PostgreSQL\8.1\share\recovery.conf.sample" />
+            <File Id="file153" Name="SQL_FE_1.TXT" LongName="sql_features.txt" src="c:\Program Files\PostgreSQL\8.1\share\sql_features.txt" />
+            <File Id="file154" Name="SYSTEM_1.SQL" LongName="system_views.sql" src="c:\Program Files\PostgreSQL\8.1\share\system_views.sql" />
+            <File Id="file155" Name="UNKNOW_1.PLT" LongName="unknown.pltcl" src="c:\Program Files\PostgreSQL\8.1\share\unknown.pltcl" />
+        </Directory>
+        <Directory Id="directory8" Name="PGADMI_1" LongName="pgAdmin III">
+            <File Id="file156" Name="pgAgent.sql" src="c:\Program Files\PostgreSQL\8.1\pgAdmin III\pgAgent.sql" />
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>
