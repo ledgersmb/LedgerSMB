@@ -956,7 +956,7 @@ sub check_password {
 		}
 
 		if(!Session::session_check($cookie{"LedgerSMB"}, $root)){
-			&getpassword(1);
+			&adminlogin($locale->text('Session expired!'));
 			exit;
 		}
 	}
