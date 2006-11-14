@@ -2,7 +2,7 @@
 
 # Simple script to prepare for release
 
-version="1.2.0b1";
+version="1.2.0b2";
 build_d="../release";
 
 if test -d $build_d/ledger-smb; then
