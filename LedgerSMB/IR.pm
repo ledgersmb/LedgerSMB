@@ -1118,7 +1118,7 @@ sub retrieve_invoice {
 		&exchangerate_defaults($dbh, $form);
 
 		# price matrix and vendor partnumber
-		my $pmh = PriceMatrix::PriceMatrixQuery($dbh, $form);
+		my $pmh = PriceMatrix::price_matrix_query($dbh, $form);
 
 		# tax rates for part
  		$query = qq|
