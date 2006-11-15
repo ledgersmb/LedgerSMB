@@ -3013,8 +3013,12 @@ sub save {
     $form->{callback} = $callback;
   }
 
-  # redirect
-  $form->redirect;
+  if ($rc){
+    # redirect
+    $form->redirect("Part Saved");
+  } else {
+    $form->error;
+  }
 
 }
 

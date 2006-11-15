@@ -202,7 +202,6 @@ sub post_transaction {
 
 	# commit and redirect
 	my $rc = $dbh->commit;
-	$dbh->disconnect;
 
 	$rc;
 }
