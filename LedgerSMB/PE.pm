@@ -1143,7 +1143,7 @@ sub save_pricegroup {
 			INSERT INTO pricegroup (pricegroup)
 			VALUES (?)|;
 	}
-	$sth = $dbh->do($query);
+	$sth = $dbh->prepare($query);
 	$sth->execute($form->{pricegroup}) || $form->dberror($query);
   
 	$dbh->commit;
