@@ -1,3 +1,4 @@
+begin;
 INSERT INTO gifi (accno, description) VALUES ('PartIV-B,82b', 'Part IV-B, 82b');
 INSERT INTO gifi (accno, description) VALUES ('10a&102', 'Line 10a & 102');
 INSERT INTO gifi (accno, description) VALUES ('10b&102', 'Line 10b & 102');
@@ -82,3 +83,4 @@ INSERT INTO gifi (accno, description) VALUES ('PartIV-A&82b', 'Part IV-A & 82b')
 INSERT INTO gifi (accno, description) VALUES ('PartIV-A', 'Part IV-A');
 INSERT INTO gifi (accno, description) VALUES ('capitalized', 'capitalized');
 INSERT INTO gifi (accno, description) VALUES ('contra1a', 'contra Line 1a');
+commit;

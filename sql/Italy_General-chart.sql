@@ -1,3 +1,4 @@
+begin;
 --
 -- Chart of Accounts for Italy
 --
@@ -189,3 +190,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

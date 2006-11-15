@@ -1,3 +1,4 @@
+begin;
 --
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('2210','Workers Comp Payable','A','L','','');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('2220','Vacation Pay Payable','A','L','','');
@@ -89,3 +90,4 @@ INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE ac
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2320'),'0.14',NULL);
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2330'),'0.3',NULL);
 
+commit;

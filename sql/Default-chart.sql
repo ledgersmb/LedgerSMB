@@ -1,3 +1,4 @@
+begin;
 -- Default chart of accounts
 -- sample only
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1000','CURRENT ASSETS','H','','A','');
@@ -87,3 +88,4 @@ INSERT INTO defaults (setting_key, value)
 VALUES ('curr', 'USD:CAD:EUR');
 INSERT INTO defaults (setting_key, value) 
 VALUES ('weightunit', 'kg');
+commit;

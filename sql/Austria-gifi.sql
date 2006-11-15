@@ -1,3 +1,4 @@
+begin;
 -- Österreichischer Einheitskontenrahmen / Kontenplan (ÖSV Österreichischer Steuerverein)
 --
 INSERT INTO gifi (accno, description) VALUES ('0', 'Anlagevermögen und Aufwendungen für das Ingangsetzen und Erweitern eines Betriebes');
@@ -332,3 +333,4 @@ INSERT INTO gifi (accno, description) VALUES ('980', 'Eröffnungsbilanz');
 INSERT INTO gifi (accno, description) VALUES ('985', 'Schlußbilanz');
 INSERT INTO gifi (accno, description) VALUES ('989', 'Gewinn- und Verlustrechnung');
 INSERT INTO gifi (accno, description) VALUES ('990-999', 'Evidenzkonten');
+commit;

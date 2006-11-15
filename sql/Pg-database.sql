@@ -1,3 +1,4 @@
+begin;
 --
 CREATE SEQUENCE id start 10000;
 SELECT nextval ('id');
@@ -1134,3 +1135,4 @@ BEGIN
 END;
 ' LANGUAGE PLPGSQL;
 -- end function
+commit;

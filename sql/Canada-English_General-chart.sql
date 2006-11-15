@@ -1,3 +1,4 @@
+begin;
 -- General Canadian COA
 -- sample only
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1000','CURRENT ASSETS','H','1000','A','');
@@ -80,3 +81,4 @@ INSERT INTO defaults (setting_key, value) values ('fxloss_accno_id',
 INSERT INTO defaults (setting_key, value) values ('curr', 'CAD:USD:EUR');
 INSERT INTO defaults (setting_key, value) values ('weightunit', 'kg');
 --
+commit;

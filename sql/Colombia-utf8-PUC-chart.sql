@@ -1,3 +1,4 @@
+begin;
 --
 -- Plan único de Cuentas de Colombia, elaborado por Rene Real Hernandez (SDI S.A.), Francico Padilla (SDI S.A.), 
 -- Silfredo Godoy Chavez (CaribeNet S.A.),
@@ -784,3 +785,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
  
+commit;

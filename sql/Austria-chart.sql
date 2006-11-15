@@ -1,3 +1,4 @@
+begin;
 -- Kontoplan für Österreich
 -- Ferdinand Gassauer, Tue, 5 Feb 2002
 -- checked and completed, Thu, 7 Feb 2002, Dieter Simader
@@ -152,3 +153,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

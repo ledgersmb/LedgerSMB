@@ -1,3 +1,4 @@
+begin;
 -- Oct 8, 2003
 -- verified D Simader
 -- Oct 13, 2003
@@ -138,3 +139,4 @@ INSERT INTO gifi (accno,description) VALUES ('3.E.21', 'oneri straordinari');
 INSERT INTO gifi (accno,description) VALUES ('3.E.22', 'Imposte sul reddito dell\'esercizio');
 INSERT INTO gifi (accno,description) VALUES ('3.E.26', 'Utile o perdita di esercizio');
 
+commit;

@@ -1,3 +1,4 @@
+begin;
 INSERT INTO gifi (accno, description) VALUES ('1&(6a)', 'Line 1 & (6a)');
 INSERT INTO gifi (accno, description) VALUES ('1', 'Line 1');
 INSERT INTO gifi (accno, description) VALUES ('10', 'Line 10');
@@ -20,3 +21,4 @@ INSERT INTO gifi (accno, description) VALUES ('5b', 'Line 5b');
 INSERT INTO gifi (accno, description) VALUES ('6a', 'Line 6a');
 INSERT INTO gifi (accno, description) VALUES ('8', 'Line 8');
 INSERT INTO gifi (accno, description) VALUES ('capitalized', 'capitalized');
+commit;

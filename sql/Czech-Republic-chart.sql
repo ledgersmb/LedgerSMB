@@ -1,3 +1,4 @@
+begin;
 -- Czech chart of accounts
 -- Tomas.Fencl@centrum.cz
 --    Kompletní úètová osnova platná v roce 2001
@@ -327,3 +328,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

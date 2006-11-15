@@ -1,3 +1,4 @@
+begin;
 -- DATEV SKR03
 --
 INSERT INTO gifi (accno,description) VALUES ('0000100', 'Aufwand Geschäftsbetrieb');
@@ -548,3 +549,4 @@ INSERT INTO gifi (accno,description) VALUES ('0988900', 'Statistisches Konto AfA
 INSERT INTO gifi (accno,description) VALUES ('0989800', 'Statistisches Konto AfA (Kalkul.)');
 INSERT INTO gifi (accno,description) VALUES ('0989900', 'Statistisches Konto AfA');
 INSERT INTO gifi (accno,description) VALUES ('0999999', 'Fehlerauffangkonto');
+commit;

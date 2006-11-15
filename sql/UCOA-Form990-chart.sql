@@ -1,3 +1,4 @@
+begin;
 -- UCOA Form 990
 --
 INSERT INTO chart (accno, description, charttype, gifi_accno, category, link) VALUES ('1000','Cash','H','','A','');
@@ -239,3 +240,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'lbs');
 
+commit;

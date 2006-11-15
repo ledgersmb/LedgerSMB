@@ -1,3 +1,4 @@
+begin;
 --Hungarian GIFI / Magyar gyûjtõkódok -- amelyek csak példaként szolgálnak
 INSERT INTO gifi (accno,description) VALUES ('114','Tárgyi eszközök');
 INSERT INTO gifi (accno,description) VALUES ('119','Tárgyi eszközök ÉCS');
@@ -23,3 +24,4 @@ INSERT INTO gifi (accno,description) VALUES ('5','KÖLTSÉGEK');
 INSERT INTO gifi (accno,description) VALUES ('8','RÁFORDÍTÁSOK');
 INSERT INTO gifi (accno,description) VALUES ('9','BEVÉTELEK');
 --
+commit;

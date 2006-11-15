@@ -1,3 +1,4 @@
+begin;
 -- General COA
 --
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('420','Büroeinrichtung','A','A','','420');
@@ -274,3 +275,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

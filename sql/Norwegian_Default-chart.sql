@@ -1,3 +1,4 @@
+begin;
 -- Default chart of accounts
 -- charset: ISO-8859-1
 --   http://www.nif.idrett.no/ftp/Lover/doc/kontoplan.htm
@@ -307,3 +308,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

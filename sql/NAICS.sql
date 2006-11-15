@@ -1,3 +1,4 @@
+begin;
 -- 1997 NAICS
 -- leave it SIC (Standard Industrial Code)
 -- useful for other countries too
@@ -2343,3 +2344,4 @@ INSERT INTO sic (code,description) VALUES ('92811','National Security');
 INSERT INTO sic (code,description) VALUES ('928110','National Security');
 INSERT INTO sic (code,description) VALUES ('92812','International Affairs');
 INSERT INTO sic (code,description) VALUES ('928120','International Affairs');
+commit;

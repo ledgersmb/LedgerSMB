@@ -1,3 +1,4 @@
+begin;
 -- Chart of Account for Poland
 -- From: Peter Dabrowski <meritage@mail.com>
 -- Sun, 23 March 2003
@@ -345,3 +346,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 --
 
 
+commit;

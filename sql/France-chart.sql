@@ -1,3 +1,4 @@
+begin;
 -- Chart of Accounts for France
 -- From: Oscar Buijten <oscar@elbie.com>
 -- Mon, 6 Aug 2001
@@ -961,3 +962,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

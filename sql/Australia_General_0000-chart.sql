@@ -1,3 +1,4 @@
+begin;
 INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VALUES ('2000', 'CURRENT LIABILITIES', 'H', 'L', '', '');
 INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VALUES ('2600', 'LONG TERM LIABILITIES', 'H', 'L', '', '');
 INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VALUES ('4000', 'SALES REVENUE', 'H', 'I', '', '');
@@ -123,3 +124,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

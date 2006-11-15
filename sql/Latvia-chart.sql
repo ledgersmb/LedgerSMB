@@ -1,3 +1,4 @@
+begin;
 -- Latvian COA
 -- prepared by Kaspars Melkis <info@isolis.lv>
 -- Sept. 14, 2003
@@ -263,3 +264,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
+commit;

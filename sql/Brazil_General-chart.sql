@@ -1,3 +1,4 @@
+begin;
 -- General Brazilien Portuguese COA
 -- sample only
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1000','RECURSOS ATUAIS','H','','A','');
@@ -80,3 +81,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

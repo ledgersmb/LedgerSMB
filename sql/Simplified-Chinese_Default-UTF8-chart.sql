@@ -1,3 +1,4 @@
+begin;
 -- Default chart of accounts -- sample only
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2190','应付所得税','A','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2600','长期负债','H','','L','');
@@ -88,3 +89,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

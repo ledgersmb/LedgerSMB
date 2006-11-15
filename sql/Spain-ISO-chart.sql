@@ -1,3 +1,4 @@
+begin;
 -- Chart of Accounts for Spain (Cuadro del Plan de Contabilidad español)
 -- From: Federico Montesino Pouzols <fedemp@arrok.com>
 -- 23 Apr 2002
@@ -142,3 +143,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'Kg');
 --
+commit;

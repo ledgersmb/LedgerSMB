@@ -1,3 +1,4 @@
+begin;
 -- sample COA for UK
 --
 INSERT INTO chart (accno,description,charttype,gifi_accno,category,link) VALUES ('0010','Freehold Property','A','','A','');
@@ -119,3 +120,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',  (SELECT
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
+commit;

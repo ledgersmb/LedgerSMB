@@ -1,3 +1,4 @@
+begin;
 -- Einfacher Deutscher Kontenrahmen => Very Easy German Default Chart  
 -- Vorbereitet von / Prepared by Paul Tammes May 9th, 2002. Kommentar / Comments : finance@bermuda-holding.com
 -- Englische Texte für eigene Zwecke und um Refernz in LedgerSMB Dokumentation zu erleichtern.
@@ -226,3 +227,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

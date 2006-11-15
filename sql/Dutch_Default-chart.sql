@@ -1,3 +1,4 @@
+begin;
 --
 -- Dutch Chart of Accounts
 -- AJ Hettema, Mon, 20 Aug 2001
@@ -90,3 +91,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

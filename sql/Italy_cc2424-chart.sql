@@ -1,3 +1,4 @@
+begin;
 --
 -- Chart of Accounts for Italy
 --
@@ -268,3 +269,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id 
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
+commit;

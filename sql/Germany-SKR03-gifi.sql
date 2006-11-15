@@ -1,3 +1,4 @@
+begin;
 -- Kontenrahmen für Deutschland
 --
 INSERT INTO gifi (accno,description) VALUES ('0001', 'Aufw. f. die Ingangsetzung u. Erweit. des Geschäftsbetr.');
@@ -1081,3 +1082,4 @@ INSERT INTO gifi (accno,description) VALUES ('9750', 'Sonstige Vergütungen (Tei
 INSERT INTO gifi (accno,description) VALUES ('9790', 'Restanteil (Teilhafter)');
 INSERT INTO gifi (accno,description) VALUES ('9890', 'Statistisches Konto für passive Lohnveredelung');
 INSERT INTO gifi (accno,description) VALUES ('9899', 'Gegenkonto zu 9890');
+commit;

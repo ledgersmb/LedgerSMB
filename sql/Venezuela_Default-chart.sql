@@ -1,3 +1,4 @@
+begin;
 -- Venezuela General COA
 -- modify as needed
 --
@@ -98,3 +99,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
+commit;

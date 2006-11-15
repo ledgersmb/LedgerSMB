@@ -1,3 +1,4 @@
+begin;
 -- Swedish-gifi.sql
 INSERT  INTO gifi (accno,description) VALUES ('200','Kassa och bank ');
 INSERT  INTO gifi (accno,description) VALUES ('202','Aktier och andelar ');
@@ -97,3 +98,4 @@ INSERT  INTO gifi (accno,description) VALUES ('594','Övriga avgående bokslutsd
 INSERT  INTO gifi (accno,description) VALUES ('596','Redovisad förlust enligt bokföringen');
 INSERT  INTO gifi (accno,description) VALUES ('598','Skatter');
 INSERT  INTO gifi (accno,description) VALUES ('599','Redovisad vinst enligt bokföringen');
+commit;

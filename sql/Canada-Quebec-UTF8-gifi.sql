@@ -1,3 +1,4 @@
+begin;
 -- French Canadian GIFI
 -- Céline des Ligneris
 -- checked DS. March 3, 2004
@@ -717,3 +718,4 @@ INSERT INTO gifi (accno,description) VALUES ('9985','Éléments inhabituels');
 INSERT INTO gifi (accno,description) VALUES ('9990','Impôts sur le revenu exigibles de l\'exercice');
 INSERT INTO gifi (accno,description) VALUES ('9995','Provision pour impôts sur le revenu différés');
 INSERT INTO gifi (accno,description) VALUES ('9999','Revenu net/perte nette après impôts et éléments');
+commit;

@@ -1,3 +1,4 @@
+begin;
 -- Nederlandstalig Rekeningschema conform het Decimaal Stelsel.
 -- Dutch Chart of Accounts following the Decimal Standards as set by the famous Philips Accounting Department
 -- PDF Tammes, Fri, 29 Mar 2002 ( remarks or questions to finance@bermuda-holding.com )
@@ -243,3 +244,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

@@ -1,3 +1,4 @@
+begin;
 --Hungarian chart of accounts 
 -- Magyar fõkönyvi számlák, amelyek csak példaként szolgálnak
 --
@@ -59,3 +60,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF:EUR:USD');
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
+commit;

@@ -1,3 +1,4 @@
+begin;
 -- contribué par Jens-Ingo Brodesser, jens-ingo@all2all.org, Moving Art Studio ASBL, ALL2ALL The Independent Network
 -- le 15/07/2003
 
@@ -66,3 +67,4 @@ INSERT INTO gifi (accno,description) VALUES ('76','Produits exceptionnels');
 INSERT INTO gifi (accno,description) VALUES ('77','Régularisations d''impôts et reprises provisions fiscales');
 INSERT INTO gifi (accno,description) VALUES ('78','Prélèvements s/réserves immunisées et impôts différés');
 INSERT INTO gifi (accno,description) VALUES ('79','Affectations et prélèvements');
+commit;

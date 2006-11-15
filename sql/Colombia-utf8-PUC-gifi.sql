@@ -1,3 +1,4 @@
+begin;
 --
 --
 -- Data for Plan Ãnico de Cuentas (PUC) Gifi Table
@@ -2471,3 +2472,4 @@ INSERT INTO gifi (accno,description) VALUES ('94', 'RESPONSABILIDADES CONTINGENT
 INSERT INTO gifi (accno,description) VALUES ('95', 'ACREEDORAS FISCALES POR CONTRA (DB) ');
 INSERT INTO gifi (accno,description) VALUES ('96', 'ACREEDORAS DE CONTROL POR CONTRA (DB) ');
 INSERT INTO gifi (accno,description) VALUES ('5', 'GASTOS');
+commit;

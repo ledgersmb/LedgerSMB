@@ -1,3 +1,4 @@
+begin;
 -- GIFI codes as set by the Canadian Government
 -- It's a dirty job, but it seems somebody allready did it
 -- PDF Tammes, Tue , 02 Apr 2002
@@ -757,3 +758,4 @@ INSERT INTO gifi (accno,description) VALUES ('9999', 'Net Income/Loss After Taxe
 -- Any amount reported in this item should be equal to the amount reported at Item 3680 - Net income/loss, 
 -- in the retained earnings section. 
 --
+commit;

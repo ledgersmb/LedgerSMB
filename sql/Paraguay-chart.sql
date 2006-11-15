@@ -1,3 +1,4 @@
+begin;
 --
 -- LedgerSMB Sample COA - Paraguay
 -- Version: 2.4.6
@@ -264,3 +265,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

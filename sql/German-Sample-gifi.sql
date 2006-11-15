@@ -1,3 +1,4 @@
+begin;
 -- Einfacher Kontoplan für Deutschland
 --
 INSERT INTO gifi (accno,description) VALUES ('A0', 'Anlagevermögen');
@@ -17,3 +18,4 @@ INSERT INTO gifi (accno,description) VALUES ('P1', 'Rückstellungen');
 INSERT INTO gifi (accno,description) VALUES ('P2', 'Fremdkapital Langfristig');
 INSERT INTO gifi (accno,description) VALUES ('P3', 'Fremdkapital Kurzfristig');
 INSERT INTO gifi (accno,description) VALUES ('P4', 'Passive Rechnungsabgrenzung');
+commit;

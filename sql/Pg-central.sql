@@ -1,3 +1,4 @@
+begin;
 -- Central DB structure
 -- This is the central database stuff which is used across all datasets
 -- in the ledger-smb.conf it is called 'ledgersmb' by default, but obviously
@@ -77,3 +78,4 @@ last_used TIMESTAMP default now(),
 users_id INTEGER  -- NOT NULL references users(id)
 );
 
+commit;

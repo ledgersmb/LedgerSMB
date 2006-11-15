@@ -1,3 +1,4 @@
+begin;
 --
 INSERT INTO gifi (accno,description) VALUES ('1','AKTIVEN');
 INSERT INTO gifi (accno,description) VALUES ('2','PASSIVEN');
@@ -53,3 +54,4 @@ INSERT INTO gifi (accno,description) VALUES ('91000','ERFOLGSRECHNUNG');
 INSERT INTO gifi (accno,description) VALUES ('92000','BILANZ');
 INSERT INTO gifi (accno,description) VALUES ('93000','GEWINNVERWENDUNG');
 INSERT INTO gifi (accno,description) VALUES ('99000','SAMMEL- UND FEHLBUCHUNGEN');
+commit;

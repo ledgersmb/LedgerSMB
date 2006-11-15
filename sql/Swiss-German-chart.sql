@@ -1,3 +1,4 @@
+begin;
 -- Swiss chart of accounts
 -- adapted to numeric representation of chart no.
 --
@@ -170,3 +171,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
+commit;

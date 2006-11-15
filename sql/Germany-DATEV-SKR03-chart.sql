@@ -1,3 +1,4 @@
+begin;
 -- DATEV SKR03
 --
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('0002700','EDV-Software','A','A','','0002700');
@@ -237,3 +238,4 @@ INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '015
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '0177100'),0.07);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '0177500'),0.16);
 
+commit;

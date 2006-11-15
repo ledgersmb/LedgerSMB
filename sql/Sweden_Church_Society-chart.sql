@@ -1,3 +1,4 @@
+begin;
 -- Johan Hambraeus
 -- May 7, 2006
 --
@@ -241,3 +242,4 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
+commit;

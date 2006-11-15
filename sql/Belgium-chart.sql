@@ -1,3 +1,4 @@
+begin;
 -- selon PLAN COMPTABLE MINIMUM NORMALISE BELGE
 -- contribu. par Jens-Ingo Brodesser, jens-ingo@all2all.org
 -- verified May 19, 2006
@@ -444,3 +445,4 @@ id FROM chart WHERE accno = '340'));
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR:USD');
 
+commit;

@@ -1,3 +1,4 @@
+begin;
 -- Paraguay GIFI
 -- Plan de Cuentas Fiscal para Paraguay
 --
@@ -106,3 +107,4 @@ INSERT INTO gifi (accno,description) VALUES ('4-30','Pérdidas');
 INSERT INTO gifi (accno,description) VALUES ('5-10','Más: (o menos) efectos de los precios cambiantes');
 INSERT INTO gifi (accno,description) VALUES ('5-20','Más: (o menos) ajuste de ejercicios anteriores');
 INSERT INTO gifi (accno,description) VALUES ('5-50','Impuesto a la Renta');
+commit;
