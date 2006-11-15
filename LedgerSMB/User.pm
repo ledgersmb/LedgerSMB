@@ -458,7 +458,10 @@ sub process_query {
 	$ENV{PGDATABASE} = $form->{db};
 	
 	$results = `psql -f $filename 2>&1`;
-	if ($? or ($results =~ /error/i)){
+	if ($?){
+		$form->error($!);
+	}
+ 	elsif ($results =~ /error/i){
 		$form->error($results);
 	}
 }
