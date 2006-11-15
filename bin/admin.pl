@@ -47,7 +47,6 @@ $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
 	$form->error(__FILE__.':'.__LINE__.': '."Locale not loaded: $!\n");
 $locale->encoding('UTF-8');
 $form->{charset} = 'UTF-8';
-#$form->{charset} = $locale->encoding;
 
 eval { require DBI; };
 $form->error(__FILE__.':'.__LINE__.': '.$locale->text('DBI not installed!')) if ($@);
@@ -1096,37 +1095,6 @@ sub create_dataset {
 	# add Default at beginning
 	unshift @charts, qq|<input name="chart" class="radio" type="radio" value="Default" checked />Default|;
 
-	$selectencoding = qq|<option></option>
-	<option value="SQL_ASCII">ASCII</option>
-	<option value="EUC_JP">Japanese EUC</option>
-	<option value="EUC_CN">Chinese EUC</option>
-	<option value="EUC_KR">Korean EUC</option>
-	<option value="JOHAB">Korean EUC (Hangle base)</option>
-	<option value="EUC_TW">Taiwan EUC</option>
-	<option value="UNICODE">Unicode (UTF-8)</option>
-	<option value="MULE_INTERNAL">Mule internal type</option>
-	<option value="LATIN1">ISO 8859-1/ECMA 94 (Latin alphabet no. 1)</option>
-	<option value="LATIN2">ISO 8859-2/ECMA 94 (Latin alphabet no. 2)</option>
-	<option value="LATIN3">ISO 8859-3/ECMA 94 (Latin alphabet no. 3)</option>
-	<option value="LATIN4">ISO 8859-4/ECMA 94 (Latin alphabet no. 4)</option>
-	<option value="LATIN5">ISO 8859-9/ECMA 128 (Latin alphabet no. 5)</option>
-	<option value="LATIN6">ISO 8859-10/ECMA 144 (Latin alphabet no. 6)</option>
-	<option value="LATIN7">ISO 8859-13 (Latin alphabet no. 7)</option>
-	<option value="LATIN8">ISO 8859-14 (Latin alphabet no. 8)</option>
-	<option value="LATIN9">ISO 8859-15 (Latin alphabet no. 9)</option>
-	<option value="LATIN10">ISO 8859-16/ASRO SR 14111 (Latin alphabet no. 10)</option>
-	<option value="ISO_8859_5">ISO 8859-5/ECMA 113 (Latin/Cyrillic)</option>
-	<option value="ISO_8859_6">ISO 8859-6/ECMA 114 (Latin/Arabic)</option>
-	<option value="ISO_8859_7">ISO 8859-7/ECMA 118 (Latin/Greek)</option>
-	<option value="ISO_8859_8">ISO 8859-8/ECMA 121 (Latin/Hebrew)</option>
-	<option value="KOI8">KOI8-R(U)</option>
-	<option value="WIN">Windows CP1251</option>
-	<option value="ALT">Windows CP866</option>
-	<option value="WIN1256">Windows CP1256 (Arabic)</option>
-	<option value="TCVN">Windows CP1258 (Vietnamese)</option>
-	<option value="WIN874">Windows CP874 (Thai)</option>
-	|;
-
 	$form->{title} = "LedgerSMB ".$locale->text('Accounting')
 					." ".$locale->text('Database Administration')
 					." / ".$locale->text('Create Dataset');
@@ -1155,10 +1123,6 @@ sub create_dataset {
 		<tr>
 			<th align="right" nowrap="nowrap">|.$locale->text('Create Dataset').qq|</th>
 			<td><input name="db" /></td>
-		</tr>
-		<tr>
-			<th align="right" nowrap="nowrap">|.$locale->text('Multibyte Encoding').qq|</th>
-			<td><select name="encoding">$selectencoding</select></td>
 		</tr>
 		<tr>
 			<th align="right" nowrap="nowrap">|.$locale->text('Create Chart of Accounts').qq|</th>

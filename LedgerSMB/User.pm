@@ -369,11 +369,8 @@ sub dbsources {
 sub dbcreate {
 	my ($self, $form) = @_;
 
-	my %dbcreate = ( 'Pg' => qq|CREATE DATABASE "$form->{db}"| );
+	my %dbcreate = ( 'Pg' => qq|CREATE DATABASE "$form->{db}" WITH ENCODING = 'UNICODE'| );
 
-	$dbcreate{Pg} .= " WITH ENCODING = '$form->{encoding}'" 
-		if $form->{encoding};
-  
 	$form->{sid} = $form->{dbdefault};
 	&dbconnect_vars($form, $form->{dbdefault});
 	# The below line connects to Template1 or another template file in order
