@@ -984,7 +984,7 @@ sub dbdriver_defaults {
 	%driverdefaults = ( 'Pg' => { dbport => '',
 								  dbuser => 'ledger-smb',
 								  dbdefault => 'template1',
-								  dbhost => '',
+								  dbhost => 'localhost',
 								  connectstring => $locale->text('Connect to')
 								} );
 
