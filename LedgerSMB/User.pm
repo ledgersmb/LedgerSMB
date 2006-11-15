@@ -281,9 +281,16 @@ sub dbconnect_vars {
 
 	if ($form->{dbhost}) {
 		$form->{dbconnect} .= ";host=$form->{dbhost}";
+
+	} else {
+		$form->{dbconnect} .= ";host=localhost";
 	}
+
+
 	if ($form->{dbport}) {
 		$form->{dbconnect} .= ";port=$form->{dbport}";
+	} else {
+		$form->{dbconnect} .= ";port=5432";
 	}
   
 }
