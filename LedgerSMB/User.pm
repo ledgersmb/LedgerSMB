@@ -453,20 +453,14 @@ sub process_query {
   
 	return unless (-f $filename);
   
-	open(FH, "$filename") or $form->error(__FILE__.':'.__LINE__.": $filename : $!\n");
 	$ENV{PGPASSWORD} = $form->{dbpasswd};
 	$ENV{PGUSER} = $form->{dbuser};
 	$ENV{PGDATABASE} = $form->{db};
 	
-	open(PSQL, "| psql") or $form->error(__FILE__.':'.__LINE__.": psql : $! \n");
-	print PSQL "\\o spool/log \n";
-	print PSQL "BEGIN;\n";
-	while (<FH>){
-		print PSQL $_;
+	$results = `psql -f $filename 2>&1`;
+	if ($? or ($results =~ /error/i)){
+		$form->error($results);
 	}
-	print PSQL "COMMIT;\n";
-	close FH;
- 
 }
   
 
