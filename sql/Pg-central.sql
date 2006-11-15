@@ -44,9 +44,6 @@ COMMENT ON TABLE users_conf IS 'This is a completely dumb table that is a place 
 COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(id) is correct'; 
 COMMENT ON COLUMN users_conf.password IS 'This means we have to get rid of the current password stuff and move to presumably md5()';
 
--- Per conversation with ChrisM, if the admin user has a null password a couple of things happen.
--- 1. It is implicit that this is an initial install
--- 2. If the admin password does not match the ledger-smb.conf admin password, we throw a hijack alert
 -- The two below statements must be run from a single session
 INSERT INTO users(username) VALUES ('admin');
 INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
