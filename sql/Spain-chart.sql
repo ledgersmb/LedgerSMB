@@ -1,7 +1,7 @@
 -- Chart of Accounts for Spain (Cuadro del Plan de Contabilidad español)
 -- From: Federico Montesino Pouzols <fedemp@arrok.com>
 -- 23 Apr 2002
--- 
+--
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('099999999','Grupo 1: financiación básica','H','','','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('100000000','Capital','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('110000000','Reservas','A','','A','');
@@ -19,7 +19,7 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('210000000','Inmovilizaciones inmateriales','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('220000000','Inmovilizaciones materiales','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('230000000','Inmovilizaciones materiales en curso','A','','A','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('240000000','Inversiones financieras en empresas del grupo y asociadas','A','','A','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('240000000','Inversiones financieras en empresas del grupo y asociadas','A','', 'A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('250000000','Otras inversiones financieras permanentes','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('260000000','Fianzas y depósitos constituidos a largo plazo','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('270000000','Gastos a distribuir en varios ejercicios','A','','A','');
@@ -36,7 +36,7 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('360000000','Subproductos, residuos y materiales recuperados','A','','A','IC');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('390000000','Provisiones por depreciación de existencias','A','','A','');
 --
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('399999999','Grupo 4: acreedores y deudores por operaciones de tráfico','H','','','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('399999999','Grupo 4: acreedores y deudores por operaciones de tráfico','H','', '','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('400000000','Proveedores','A','','P','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('410000000','Acreedores varios','A','','P','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('430000000','Clientes','A','','P','');
@@ -91,7 +91,7 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('690000000','Dotaciones a las provisiones','A','','E','');
 --
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('699999999','Grupo 7: ventas e ingresos','H','','','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('700000000','Ventas de mercaderías, de producción propia, de servicios, etc.','A','','I','AR:IC_sale:IC_income');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('700000000','Ventas de servicios y productos','A','','I','AR:IC_sale:IC_income');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('708000000','Devoluciones de ventas y operaciones similares','A','','I','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('710000000','Variación de existencias','A','','I','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('730000000','Trabajos realizados para la empresa','A','','I','');
@@ -107,24 +107,24 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 --
 -- IVA: 4, 7 or 16%
 -- IVA soportado
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000000'), 0.0);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000001'), 0.04);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000002'), 0.07);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000003'), 0.16);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '472000000'), 0.0);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '472000001'), 0.04);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '472000002'), 0.07);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '472000003'), 0.16);
 -- Recargo equivalente: 0.5, 1 or 4%
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000004'), 0.005);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000005'), 0.01);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000006'), 0.04);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '472000004'), 0.005);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '472000005'), 0.01);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '472000006'), 0.04);
 --
 -- IVA repercutido
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000000'), 0.0);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000001'), 0.04);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000002'), 0.07);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000003'), 0.16);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '477000000'), 0.0);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '477000001'), 0.04);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '477000002'), 0.07);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '477000003'), 0.16);
 -- Recargo equivalente: 0.5, 1 or 4%
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000004'), 0.005);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000005'), 0.01);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000006'), 0.04);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '477000004'), 0.005);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '477000005'), 0.01);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '477000006'), 0.04);
 --
 -- update defaults
 --
@@ -139,6 +139,6 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '668000000'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
-
- INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'Kg');
+ INSERT INTO defaults (setting_key, value) VALUES ('weightunit' , 'Kg';
 --
+

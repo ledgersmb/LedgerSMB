@@ -1,25 +1,25 @@
---Hungarian GIFI / Magyar gy˚jtıkÛdok -- amelyek csak pÈldakÈnt szolg·lnak
-INSERT INTO gifi (accno,description) VALUES ('114','T·rgyi eszkˆzˆk');
-INSERT INTO gifi (accno,description) VALUES ('119','T·rgyi eszkˆzˆk …CS');
-INSERT INTO gifi (accno,description) VALUES ('261','¡ruk');
-INSERT INTO gifi (accno,description) VALUES ('311','Vevık');
-INSERT INTO gifi (accno,description) VALUES ('381','PÈnzt·r');
+--Hungarian GIFI / Magyar gy√ªjt√µk√≥dok -- amelyek csak p√©ldak√©nt szolg√°lnak
+INSERT INTO gifi (accno,description) VALUES ('114','T√°rgyi eszk√∂z√∂k');
+INSERT INTO gifi (accno,description) VALUES ('119','T√°rgyi eszk√∂z√∂k √âCS');
+INSERT INTO gifi (accno,description) VALUES ('261','√Åruk');
+INSERT INTO gifi (accno,description) VALUES ('311','Vev√µk');
+INSERT INTO gifi (accno,description) VALUES ('381','P√©nzt√°r');
 INSERT INTO gifi (accno,description) VALUES ('384','Bank');
-INSERT INTO gifi (accno,description) VALUES ('454','Sz·llÌtÛk');
-INSERT INTO gifi (accno,description) VALUES ('466','VisszaigÈnyelhetı ¡FA');
-INSERT INTO gifi (accno,description) VALUES ('467','Fizetendı ¡FA');
-INSERT INTO gifi (accno,description) VALUES ('520','BÈrleti dÌj');
+INSERT INTO gifi (accno,description) VALUES ('454','Sz√°ll√≠t√≥k');
+INSERT INTO gifi (accno,description) VALUES ('466','Visszaig√©nyelhet√µ √ÅFA');
+INSERT INTO gifi (accno,description) VALUES ('467','Fizetend√µ √ÅFA');
+INSERT INTO gifi (accno,description) VALUES ('520','B√©rleti d√≠j');
 INSERT INTO gifi (accno,description) VALUES ('521','Telefon');
-INSERT INTO gifi (accno,description) VALUES ('599','EgyÈb kˆltsÈgek');
-INSERT INTO gifi (accno,description) VALUES ('814','EL¡B…');
-INSERT INTO gifi (accno,description) VALUES ('870','¡rfolyamvesztesÈg');
-INSERT INTO gifi (accno,description) VALUES ('911','¡rbevÈtel');
-INSERT INTO gifi (accno,description) VALUES ('970','¡rfolyamnyeresÈg');
-INSERT INTO gifi (accno,description) VALUES ('1','BEFEKTETETT ESZK÷Z÷K');
-INSERT INTO gifi (accno,description) VALUES ('2','K…SZLETEK');
-INSERT INTO gifi (accno,description) VALUES ('3','K÷VETEL…SEK');
-INSERT INTO gifi (accno,description) VALUES ('4','K÷TELEZETTS…GEK');
-INSERT INTO gifi (accno,description) VALUES ('5','K÷LTS…GEK');
-INSERT INTO gifi (accno,description) VALUES ('8','R¡FORDÕT¡SOK');
-INSERT INTO gifi (accno,description) VALUES ('9','BEV…TELEK');
+INSERT INTO gifi (accno,description) VALUES ('599','Egy√©b k√∂lts√©gek');
+INSERT INTO gifi (accno,description) VALUES ('814','EL√ÅB√â');
+INSERT INTO gifi (accno,description) VALUES ('870','√Årfolyamvesztes√©g');
+INSERT INTO gifi (accno,description) VALUES ('911','√Årbev√©tel');
+INSERT INTO gifi (accno,description) VALUES ('970','√Årfolyamnyeres√©g');
+INSERT INTO gifi (accno,description) VALUES ('1','BEFEKTETETT ESZK√ñZ√ñK');
+INSERT INTO gifi (accno,description) VALUES ('2','K√âSZLETEK');
+INSERT INTO gifi (accno,description) VALUES ('3','K√ñVETEL√âSEK');
+INSERT INTO gifi (accno,description) VALUES ('4','K√ñTELEZETTS√âGEK');
+INSERT INTO gifi (accno,description) VALUES ('5','K√ñLTS√âGEK');
+INSERT INTO gifi (accno,description) VALUES ('8','R√ÅFORD√çT√ÅSOK');
+INSERT INTO gifi (accno,description) VALUES ('9','BEV√âTELEK');
 --

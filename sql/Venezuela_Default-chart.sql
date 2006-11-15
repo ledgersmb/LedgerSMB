@@ -10,23 +10,23 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1120','Venezuela','A','','A','AR_paid:AP_paid');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1130','Banesco JD','A','','A','AR_paid:AP_paid');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1200','Cuentas por Cobrar','A','','A','AR');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1205','Provisión Cuentas Incobrables','A','','A','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1205','ProvisiÃ³n Cuentas Incobrables','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1500','INVENTARIO','H','','A','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1520','Mercancía en Almacén','A','','A','IC');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1530','Mercancía en Consignación','A','','A','IC');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1520','MercancÃ­a en AlmacÃ©n','A','','A','IC');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1530','MercancÃ­a en ConsignaciÃ³n','A','','A','IC');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1800','ACTIVOS CAPITALES','H','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1820','Mobiliario y Equipo','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1825','Amort. Acum. -Inv. y Equip.','A','','A','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1840','Vehículo','A','','A','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1845','Amort. Acum. -Vehículo','A','','A','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1840','VehÃ­culo','A','','A','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1845','Amort. Acum. -VehÃ­culo','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1850','Edificio','A','','A','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('1855','Amort. Acum. -Edificio','A','','A','');
 -- PASIVO
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2000','PASIVO CORTO PLAZO','H','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2100','Cuentas por Pagar','A','','L','AP');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2600','PASIVO LARGO PLAZO','H','','L','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2620','Préstamos Bancarios','A','','L','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2680','Préstamos de Accionistas','A','','L','AP_paid');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2620','PrÃ©stamos Bancarios','A','','L','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2680','PrÃ©stamos de Accionistas','A','','L','AP_paid');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2700','APARTADOS','H','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2710','Apartados Indem. Laborales','A','','L','');
 -- CAPITAL
@@ -36,7 +36,7 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('3410','Reserva Legal','A','','Q','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('3420','Reserva Voluntaria','A','','Q','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('3500','UTILIDADES RETENIDAS','H','','Q','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('3590','Utilidades Retenidas - años anteriores','A','','Q','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('3590','Utilidades Retenidas - aÃ±os anteriores','A','','Q','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('3600','Ganancia del Ejercicio','A','','Q','');
 -- INGRESO
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('4000','INGRESOS PRINCIPALES','H','','I','');
@@ -60,23 +60,23 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5430','Utilidades','A','','E','HR_expense');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5435','Indemnizaciones','A','','E','HR_expense');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5440','Movilizaciones y Traslados','A','','E','HR_expense');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5445','Gastos de Representación','A','','E','HR_expense');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5450','Instrucción y Mejoramiento','A','','E','HR_expense');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5445','Gastos de RepresentaciÃ³n','A','','E','HR_expense');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5450','InstrucciÃ³n y Mejoramiento','A','','E','HR_expense');
 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5600','GASTOS GENERALES','H','','E','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5610','Honorarios Profesionales','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5615','Propaganda','A','','E','AP_amount');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5660','Gasto de Amortización','A','','E','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5660','Gasto de AmortizaciÃ³n','A','','E','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5685','Seguros','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5690','Intereses y Gastos Bancarios','A','','E','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5700','Artículos de Oficina','A','','E','AP_amount');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5700','ArtÃ­culos de Oficina','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5760','Alquileres','A','','E','AP_amount');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5765','Reparación y Mantenimiento','A','','E','AP_amount');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5780','Teléfono','A','','E','AP_amount');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5765','ReparaciÃ³n y Mantenimiento','A','','E','AP_amount');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5780','TelÃ©fono','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5785','Viajes y Entretenimiento','A','','E','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5790','Servicios','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5795','Patentes','A','','E','AP_amount');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5810','Pérdidas Paridad Cambiaria','A','','E','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5810','PÃ©rdidas Paridad Cambiaria','A','','E','');
 --
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('2150','IVA','A','','L','AR_tax:AP_tax:IC_taxpart:IC_taxservice');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5510','ISRL','A','','E','');

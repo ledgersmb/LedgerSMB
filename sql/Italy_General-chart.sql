@@ -89,7 +89,7 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6480035','IVA ulteriore detrazione','A','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6480040','Crediti d\'imposta diversi','A','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6480045','IVA pro-rata indetraibile','A','','L','');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6480050','IVA da contabilit‡ separata','A','','L','');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6480050','IVA da contabilit√† separata','A','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6480055','IVA c/riepilogativo','A','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6600000','RATEI E RISCONTI PASSIVI','H','','L','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('6690005','Ratei passivi','A','','L','');
@@ -106,7 +106,7 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025000','SPESE DI GESTIONE','H','','E','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025005','Energia elettrica','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025015','Spese telefoniche','A','','E','AP_amount');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025025','Spese pubblicit‡/propaganda','A','','E','AP_amount');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025025','Spese pubblicit√†/propaganda','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025030','Spese di assicurazione','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025040','Pulizia locali','A','','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('7025055','Viaggi e soggiorni amministratori','A','','E','AP_amount');
@@ -149,8 +149,8 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8015015','Noleggio impianti e macchinari','A','','I','AR_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8041000','INCREMENTI IMMOBILIZZAZIONI IMMATERIALI','H','','I','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8041005','Brevetti','A','','I','AP_amount');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8041010','Spese di costituzione societ‡','A','','I','AP_amount');
-insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8041020','Spese pubblicit‡ e propaganda','A','','I','AP_amount');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8041010','Spese di costituzione societ√†','A','','I','AP_amount');
+insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8041020','Spese pubblicit√† e propaganda','A','','I','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8045000','ALTRI RICAVI E PROVENTI','H','','I','');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('8045001','Cessione di materie prime, sussidiarie e semilavorati','A','','I','AR_amount');
 --

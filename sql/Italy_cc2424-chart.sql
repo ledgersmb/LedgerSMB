@@ -16,7 +16,7 @@
 -- i problemi relativi alle sottoclassificazioni previste dal codice civile,
 -- che pero' non hanno un codice standard corrispondente.
 --
--- La codifica GIFI è contenuta in un file separato.
+-- La codifica GIFI Ã¨ contenuta in un file separato.
 --
 -- Questo file e' scritto usando soltanto la codifica ASCII, per evitare
 -- problemi di qualunque genere nella scelta della codifica. Pertanto,
