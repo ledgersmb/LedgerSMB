@@ -89,6 +89,11 @@ sub session_check {
 sub session_create {
 	my ($form) = @_;
 
+	if (! $ENV{HTTP_HOST}){
+		#don't create cookies or sessions for CLI use
+		return 1;
+	}
+
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH}; 
 
