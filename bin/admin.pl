@@ -981,8 +981,8 @@ sub pgpp_database_administration {
 sub dbdriver_defaults {
 
 	# load some defaults for the selected driver
-	%driverdefaults = ( 'Pg' => { dbport => '',
-								  dbuser => 'ledger-smb',
+	%driverdefaults = ( 'Pg' => { dbport => '5432',
+								  dbuser => '',
 								  dbdefault => 'template1',
 								  dbhost => 'localhost',
 								  connectstring => $locale->text('Connect to')
