@@ -1763,7 +1763,9 @@ sub post_yearend {
 		  FROM gl
 		 WHERE reference = ?|;
 
-	($form->{id}) = $dbh->prepare($query)->fetchrow_array($uid);
+	my $sth = $dbh->prepare($query);
+	$sth->execute($uid);
+	($form->{id}) = $sth->fetchrow_array;
 
 	$query = qq|
 		UPDATE gl 
