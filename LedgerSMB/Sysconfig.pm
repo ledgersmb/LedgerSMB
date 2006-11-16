@@ -82,7 +82,7 @@ $memberfile = $config{paths}{memberfile} if $config{paths}{memberfile};
 $userspath = $config{paths}{userspath} if $config{paths}{userspath};
 $localepath = $config{paths}{localepath} if $config{paths}{localepath};
 $spool = $config{paths}{spool} if $config{paths}{spool};
-$templates = $config{paths}{tempates} if $config{paths}{tempates};
+$templates = $config{paths}{templates} if $config{paths}{templates};
 
 $gzip = $config{programs}{gzip} if $config{programs}{gzip};
 
