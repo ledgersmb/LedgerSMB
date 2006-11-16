@@ -50,7 +50,7 @@ sub invoice_details {
 		SELECT ?::date - ?::date
                        AS terms, value
 		  FROM defaults
-		 WHERE setting_key = 'weightunit'/|;
+		 WHERE setting_key = 'weightunit'|;
 	my $sth = $dbh->prepare($query);
 	$sth->execute($form->{duedate}, $form->{transdate})
 		|| $form->dberror($query);
