@@ -250,7 +250,7 @@ sub save_customer {
 		$sth = $dbh->prepare($query);
 		$sth->execute($form->{id}) || $form->dberror($query);
 
-		if (! $dbh->selectrow_array($query)) {
+		if (! $sth->fetchrow_array) {
 			$query = qq|
 				INSERT INTO customer (id)
 				     VALUES (?)|;
