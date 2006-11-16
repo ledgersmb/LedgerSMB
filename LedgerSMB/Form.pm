@@ -57,7 +57,8 @@ sub new {
 	elsif ($ARGV[0]) {
 		$_ = $ARGV[0];
 	}
-
+	
+	my $self = {};
 	%$self = split /[&=]/;
 	for (keys %$self) { $self->{$_} = unescape("", $self->{$_}) }
 
