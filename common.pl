@@ -52,6 +52,7 @@ sub redirect {
 	for (@common_attrs){
 		$form->{$_} = $temphash{$_};
 	}
+	$form->{script} = $script;
 
 	if (!$myconfig){ # needed for login
 		%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
