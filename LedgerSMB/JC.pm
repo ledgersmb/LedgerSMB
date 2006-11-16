@@ -141,7 +141,7 @@ sub jcitems_links {
 		my $sth = $dbh->prepare($query);
 		$sth->execute($form->{project_id});
 
-		if ($sth->fetchrow_array($query)) {
+		if ($sth->fetchrow_array) {
 			$form->{project} = 'job';
 			$query = qq|
 				SELECT id
