@@ -212,6 +212,10 @@ sub save_project {
 	$form->{projectnumber} 
 		= $form->update_defaults($myconfig, "projectnumber", $dbh) 
 			unless $form->{projectnumber};
+	my $enddate;
+	my $startdate;
+	$enddate = $form->{enddate} if $form->{enddate};
+	$startdate = $form->{startdate} if $form->{startdate};
 
 	if ($form->{id}) {
 
@@ -233,7 +237,7 @@ sub save_project {
 	$sth = $dbh->prepare($query);
 	$sth->execute(
 		$form->{projectnumber}, $form->{description}, 
-		$form->{startdate}, $form->{enddate}, $form->{customer_id}
+		$startdate, $enddate, $form->{customer_id}
 		) || $form->dberror($query);
 	$form->run_custom_queries('project', 'UPDATE');
   
