@@ -455,7 +455,7 @@ sub get_warehouse {
 
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{id}) || $form->dberror($query);
-	($form->{description}) = $sth->fetchrow_array($query);
+	($form->{description}) = $sth->fetchrow_array;
 	$sth->finish;
 
 	# see if it is in use
@@ -467,7 +467,7 @@ sub get_warehouse {
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{id});
 
-	($form->{orphaned}) = $sth->fetchrow_array($query);
+	($form->{orphaned}) = $sth->fetchrow_array;
 	if (($form->{orphaned} * 1) == 0){
 		$form->{orphaned} = 1;
 	} else {
@@ -571,7 +571,7 @@ sub get_department {
 
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{id});
-	($form->{description}, $form->{role}) = $sth->fetchrow_array($query);
+	($form->{description}, $form->{role}) = $sth->fetchrow_array;
 	$sth->finish;
 
 	for (keys %$ref) { $form->{$_} = $ref->{$_} }
@@ -584,7 +584,7 @@ sub get_department {
 
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{id});
-	($form->{orphaned}) = $sth->fetchrow_array($query);
+	($form->{orphaned}) = $sth->fetchrow_array;
 	if (($form->{orphaned} * 1) == 0){
 		$form->{orphaned} = 1;
 	} else {

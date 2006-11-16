@@ -708,7 +708,7 @@ sub post_payments {
 
 			$sth = $dbh->prepare($query);
 			$sth->execute($paymentaccno);
-			($accno_id) = $sth->fetchrow_array($query);
+			($accno_id) = $sth->fetchrow_array;
 
 			# add payment
 			$query = qq|

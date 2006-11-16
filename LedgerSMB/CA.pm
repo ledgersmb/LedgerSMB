@@ -316,7 +316,7 @@ sub all_transactions {
 
 			$sth = $dbh->prepare($query);
 			$sth->execute(@queryargs);
-			($form->{balance}) = $sth->fetchrow_array($query);
+			($form->{balance}) = $sth->fetchrow_array;
 			$sth->finish;
 			@queryargs = ();
 		}
