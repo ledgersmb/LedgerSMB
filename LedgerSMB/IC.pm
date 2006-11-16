@@ -547,7 +547,11 @@ sub save {
       
 			($null, $pricegroup_id) 
 				= split /--/, $form->{"pricegroup_$i"};
-      
+
+			my $validfrom;
+			my $validto;
+			$validfrom = $form->{"validfrom_$i"} if $form->{"validfrom_$i"};
+			$validto = $form->{"validto_$i"} if $form->{"validto_$i"};
 			$query = qq|
 				INSERT INTO partscustomer 
 				            (parts_id, customer_id,
