@@ -762,7 +762,7 @@ sub project_description {
 
 	$sth = $dbh->prepare($query);
 	$sth->execute($id);
-	($_) = $sth->fetchrow_array($query);
+	($_) = $sth->fetchrow_array;
 
 	$_;
 
@@ -1573,7 +1573,7 @@ sub reverse_invoice {
 	my $sth;
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{id});
-	my ($id) = $sth->fetchrow_array($query);
+	my ($id) = $sth->fetchrow_array;
 
 	return unless $id;
 

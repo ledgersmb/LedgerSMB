@@ -101,7 +101,7 @@ sub post_invoice {
 		$sth = $dbh->prepare($query);
 		$sth->execute($form->{id});
     
-	 	 if ($sth->fetchrow_array($query)) {
+	 	 if ($sth->fetchrow_array) {
 			$query = qq|
 				SELECT p.id, p.inventory_accno_id, 
 				       p.income_accno_id
