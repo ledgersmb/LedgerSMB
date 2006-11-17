@@ -94,6 +94,13 @@ sub debug {
 
 } 
 
+sub encode_all {
+	# TODO;
+}
+
+sub decode_all {
+	# TODO
+}
 
 sub escape {
 	my ($self, $str, $beenthere) = @_;
@@ -111,6 +118,7 @@ sub escape {
 
 sub unescape {
 	my ($self, $str) = @_;
+
 
 	$str =~ tr/+/ /;
 	$str =~ s/\\$//;
@@ -740,7 +748,7 @@ sub parse_template {
 			}
 		}
 
-		if (/<\? lsmb if /) {
+		if (/<\?lsmb if /) {
 
 			# check if it is set and display
 			chop;
