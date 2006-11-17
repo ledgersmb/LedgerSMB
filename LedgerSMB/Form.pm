@@ -740,7 +740,7 @@ sub parse_template {
 			}
 		}
 
-		if (/<\? lsmb if /) {
+		if (/<\?lsmb if /) {
 
 			# check if it is set and display
 			chop;
