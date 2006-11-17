@@ -104,17 +104,20 @@ Logins in SQL-Ledger can contain any printable characters.  In LedgerSMB these
 are restricted to alphanumeric characters and the symbols ., @, and -.
 
 4.2: Session handling
-SQL-Ledger as of 2.6.17 uses session tokens for authentication.  These tokens
+SQL-Ledger as of 2.6.17 used session tokens for authentication.  These tokens
 are based on the current timestamp and therefore insecure.  Furthermore, these
 tokens are not tracked on the server, so one can easily forge credentials for
-either the main application or the administrative interface.
+either the main application or the administrative interface.  While this was 
+corrected in 2.6.18, the solutions chosen by SQL-Ledger (caching the crypted 
+password by the browser) is not in line with commonly accepted best security
+practices.
 
 LedgerSMB stores the sessions in the database.  These are generated as md5 sums
 of random numbers and are believed to be reasonably secure.  The sessions time
-out after a period of inactivity.  As of the initial release both
-SQL-Ledger-style session ID's and the newer version are required to access the
-application.  In future versions, the SQL-Ledger style session ID's will 
-probably be removed.
+out after a period of inactivity.  In the initial release both
+SQL-Ledger-style session ID's and the newer version were required to access the
+application.  In newer versions, the SQL-Ledger style session ID's have been 
+removed.
 
 4.3: Database Changes
 Under certain circumstances where the Chart of Accounts is improperly modified,
