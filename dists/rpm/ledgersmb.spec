@@ -1,12 +1,12 @@
 # RPM spec written for and tested on Fedora Core 6
 Summary: LedgerSMB - Open Source accounting software
 Name: ledger-smb
-Version: svn
+Version: 1.2.0b2
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
 Group: Applications/Productivity
-Source0: http://prdownloads.sourceforge.net/ledger-smb/%{name}-%{version}.tar.gz
+Source0: %{name}-%{version}.tar.gz
 Source1: Class-Std-v0.0.8.tar.gz
 Source2: Config-Std-v0.0.4.tar.gz
 Source3: Locale-Maketext-Lexicon-0.62.tar.gz

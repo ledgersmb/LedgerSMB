@@ -2,18 +2,8 @@ Known issues in LedgerSMB 1.2, Beta 1:
 
 Installation/upgrade is not automated yet.
 
-Changes since last Beta:
+A few known issues with the documentation:
+CLI API docs don't mention cookie handling
+Need better documentation on role of UTF-8
 
-Currencies not showing up on orders and invoices
-
-Internal server error on login screen when can't connect to db.
-
-A couple of dataset creation issues.
-
-A few documentation fixes
-
-Updates RPM Spec file
-
-Better error handling in Admin.pl
-
-Database scripts now run as transactions.
+Also intermediate rounding causes issues with discounts because the rounding is applied to 2 decimal places to the unit rather than the extended price.
