@@ -12,8 +12,6 @@ ALTER TABLE customer ADD PRIMARY KEY (id);
 
 ALTER TABLE customertax ADD PRIMARY KEY (customer_id, chart_id);
 
-ALTER TABLE defaults ADD PRIMARY KEY (version);
-
 ALTER TABLE department ADD PRIMARY KEY (id);
 
 ALTER TABLE dpt_trans ADD PRIMARY KEY (trans_id);
