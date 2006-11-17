@@ -1,3 +1,4 @@
+BEGIN;
 ALTER TABLE chart ADD PRIMARY KEY (id);
 -- linuxpoet:
 -- adding primary key to acc_trans
@@ -285,3 +286,4 @@ END;
 -- end function
 
 UPDATE defaults SET version = '2.6.18';
+COMMIT;
