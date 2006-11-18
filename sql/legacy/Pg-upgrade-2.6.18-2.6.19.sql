@@ -151,7 +151,7 @@ ALTER TABLE tax ALTER COLUMN taxmodule_id SET NOT NULL;
 
 -- Fixed session table and add users table --
 CREATE TABLE users (id serial UNIQUE, username varchar(30) PRIMARY KEY);
-COMMENT ON TABLE users 'username is the primary key because we don\'t want duplicate users';
+COMMENT ON TABLE users IS 'username is the primary key because we don\'t want duplicate users';
 CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
                         acs text,
                         address text,
@@ -176,7 +176,6 @@ CREATE TABLE users_conf(id integer primary key references users(id) deferrable i
                         password varchar(32) check(length(password) = 32),
                         print text,
                         printer text,
-			crypted_password text;
                         role text,
                         sid text,
                         signature text,
@@ -191,6 +190,7 @@ COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(
 COMMENT ON COLUMN users_conf.password IS 'This means we have to get rid of the current password stuff and move to presumably md5()';
 
 LOCK session in EXCLUSIVE MODE;
+DELETE FROM session;
 ALTER TABLE session ADD CONSTRAINT session_token_check check (length(token::text) = 32);
 ALTER TABLE session ADD column user_id integer not null references users(id);
 
@@ -204,9 +204,9 @@ INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
 
 -- Functions
 
-CREATE FUNCTION create_user(text) RETURNS int4 AS $$
+CREATE FUNCTION create_user(text) RETURNS bigint AS $$
    INSERT INTO users(username) VALUES ('$1');
-   SELECT currval('user_id_seq');
+   SELECT currval('users_id_seq');
    $$ LANGUAGE 'SQL';
 
 COMMENT ON FUNCTION create_user(text) IS $$ Function to create user Returns users.id if successful, else it is an error. $$;
@@ -229,57 +229,61 @@ COMMENT ON TABLE defaults IS $$This table replaces the old one column per value 
 
 
 INSERT INTO defaults (setting_key, value) 
-SELECT 'inventory_accno_id', inventory_accno_id FROM old_defaults
+SELECT 'inventory_accno_id', inventory_accno_id::text FROM old_defaults
 UNION
-SELECT 'income_accno_id', income_accno_id FROM old_defaults
+SELECT 'income_accno_id', income_accno_id::text FROM old_defaults
 UNION
-SELECT 'expense_accno_id', expense_accno_id FROM old_defaults
+SELECT 'expense_accno_id', expense_accno_id::text FROM old_defaults
 UNION
-SELECT 'fxloss_accno_id', fxloss_accno_id FROM old_defaults
+SELECT 'fxloss_accno_id', fxloss_accno_id::text FROM old_defaults
 UNION
-SELECT 'fxgain_accno_id', fxgain_accno_id FROM old_defaults
+SELECT 'fxgain_accno_id', fxgain_accno_id::text FROM old_defaults
 UNION
-SELECT 'sinumber', sinumber FROM old_defaults
+SELECT 'sinumber', sinumber::text FROM old_defaults
 UNION
-SELECT 'sonumber', sonumber FROM old_defaults
+SELECT 'sonumber', sonumber::text FROM old_defaults
 UNION
-SELECT 'yearend', yearend FROM old_defaults
+SELECT 'yearend', yearend::text FROM old_defaults
 UNION
-SELECT 'weightunit', weightunit FROM old_defaults
+SELECT 'weightunit', weightunit::text FROM old_defaults
 UNION
-SELECT 'businessnumber', businessnumber FROM old_defaults
+SELECT 'businessnumber', businessnumber::text FROM old_defaults
 UNION
-SELECT 'version', '1.2.0'
+SELECT 'version', '1.2.0'::text
 UNION
-SELECT 'curr', curr FROM old_defaults
+SELECT 'curr', curr::text FROM old_defaults
 UNION
-SELECT 'closedto', closedto FROM old_defaults
+SELECT 'closedto', closedto::text FROM old_defaults
 UNION
-SELECT 'revtrans', revtrans FROM old_defaults
+SELECT 'revtrans', (CASE WHEN revtrans IS NULL THEN NULL
+			WHEN revtrans THEN '1' 
+			ELSE '0' END) FROM old_defaults
 UNION
-SELECT 'ponumber', ponumber FROM old_defaults
+SELECT 'ponumber', ponumber::text FROM old_defaults
 UNION
-SELECT 'sqnumber', sqnumber FROM old_defaults
+SELECT 'sqnumber', sqnumber::text FROM old_defaults
 UNION
-SELECT 'rfqnumber', rfqnumber FROM old_defaults
+SELECT 'rfqnumber', rfqnumber::text FROM old_defaults
 UNION
-SELECT 'audittrail', audittrail FROM old_defaults
+SELECT 'audittrail', (CASE WHEN audittrail IS NULL THEN NULL
+			WHEN audittrail THEN '1' 
+			ELSE '0' END) FROM old_defaults
 UNION
-SELECT 'vinumber', vinumber FROM old_defaults
+SELECT 'vinumber', vinumber::text FROM old_defaults
 UNION
-SELECT 'employeenumber', employeenumber FROM old_defaults
+SELECT 'employeenumber', employeenumber::text FROM old_defaults
 UNION
-SELECT 'partnumber', partnumber FROM old_defaults
+SELECT 'partnumber', partnumber::text FROM old_defaults
 UNION
-SELECT 'customernumber', customernumber FROM old_defaults
+SELECT 'customernumber', customernumber::text FROM old_defaults
 UNION
-SELECT 'vendornumber', vendornumber FROM old_defaults
+SELECT 'vendornumber', vendornumber::text FROM old_defaults
 UNION
-SELECT 'glnumber', glnumber FROM old_defaults
+SELECT 'glnumber', glnumber::text FROM old_defaults
 UNION
-SELECT 'projectnumber', projectnumber FROM old_defaults
+SELECT 'projectnumber', projectnumber::text FROM old_defaults
 UNION
-SELECT 'appname', 'LedgerSMB';
+SELECT 'appname', 'LedgerSMB'::text;
 
 DROP TABLE old_defaults;
 
@@ -305,9 +309,7 @@ RETURNS BOOL AS
         EXECUTE ''ALTER TABLE custom_''||table_name || '' ADD COLUMN ''
                 || new_field_name || '' '' || field_datatype;
         RETURN TRUE;
-' LANGUAGE PLPGSQL;
-
 END;
-
+' LANGUAGE PLPGSQL;
 
 COMMIT;
