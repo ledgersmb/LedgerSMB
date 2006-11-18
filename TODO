@@ -1,49 +1,22 @@
-* indicates items which will make the next release
 % are tasks that are good for helping get up to speed in the code.
 
 Higher priorities
-- Fix the db upgrade routine so that it can be safely used between software 
-  versions
-- Create a new naming system that allows us to track db schema changes between
-    different versions of SQL-Ledger and LedgerSMB and 
-- make utf-8 default
 - Prevent printing without posting. 
-- Add last cost field to laber/overhead creation screen.
-- %code cleanup (move to established coding standards, not structural yet) 
-	In Progress
 - %xhtml compliant code
-- central default database (maybe authentication abstraction here?)
-- Fix reconcilliation summary report.
-- Remove Dieter's sessionid timestamp since it serves no purpose.
 - authentication abstraction for Kerberos, LDAP authentication, and the like.
 - Authentication module for PostgreSQL databases.
 - %Account transactions available from Balance Sheets and Income Statements via 
 links.
-- Replace the defaults table with one that is more normalized.
-- Fix printing for Windows. 
-  This turns out to be incredibly trivial.
 
 Medium-longer term
 - Database schema cleanup/rewrite
 - Move all config information onto the Form object.
-- Port SL-POS functionality into the fork.
 - published API
-- Command-line wrapper that is easy to use....
-- SOAP or HTTP based interfaces (OpenLedger?)
-- Credit Card Processing
 - %Tighten up integrity controls in schema by replacing the insert/update with
   a single insert and adding foreign keys.
-- Portable Data Terminal integration.
-- %Merge web directories so that maintaining frames and no-frames browsers 
-  is not a problem.
-	No-frame browsers are important in some areas where screen resolution
-	is limited and text-based keyboard entry is used.  I don't think
-	support should be dropped for these browsers-- Chris Travers.
 - Move to a template-based display system with main application logic being in
   a separate Perl module.
-- Convert to use persistant database connections.
 - Basic payroll module
-- Multiple Shipto's associated with customers/vendors.
 - Enforce transaction safety and protect against lost updates when editing 
   transactions
 - %Add a javascript calendar to all date fields.  Must not cause problems when
