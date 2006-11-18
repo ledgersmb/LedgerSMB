@@ -565,7 +565,7 @@ sub save {
 				$form->{"pricebreak_$i"}, 
 				$form->{"customerprice_$i"}, 
 				$form->{"customercurr_$i"},
-				$form->{"validfrom_$i"}, $form->{"validto_$i"}
+				$validfrom, $validto
 				)|| $form->dberror($query);
 		}
 	}
