@@ -813,6 +813,8 @@ sub parse_template {
 		use Cwd;
 		$self->{cwd} = cwd();
 		$self->{tmpdir} = "$self->{cwd}/${LedgerSMB::Sysconfig::userspath}";
+		$self->{tmpdir} = "${LedgerSMB::Sysconfig::userspath}" if
+			${LedgerSMB::Sysconfig::userspath} =~ /^\//;
 
 		unless (chdir("${LedgerSMB::Sysconfig::userspath}")) {
 			$err = $!;
