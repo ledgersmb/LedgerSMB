@@ -2301,17 +2301,7 @@ sub like {
 
 	my ($self, $str) = @_;
 
-	if ($str !~ /(%|_)/) {
-
-		if ($str =~ /(^").*("$)/) {
-			$str =~ s/(^"|"$)//g; 
-		} else { 
-			$str = "%$str%";
-		}
-	}
-
-	$str =~ s/'/''/g;
-	$str;
+	"%$str%";
 }
 
 

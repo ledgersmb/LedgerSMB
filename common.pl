@@ -1,4 +1,3 @@
-#!c:\vanilla-perl\perl\bin\perl
 #
 ######################################################################
 # LedgerSMB Accounting and ERP
