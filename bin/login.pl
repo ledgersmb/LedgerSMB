@@ -348,7 +348,7 @@ sub login {
 
 
 sub logout {
-	$form->{callback} = "login.pl?&login=$form->{login}";
+	undef $form->{callback};
 	$form->{endsession} = 1;
 	Session::session_destroy($form);
 	$form->redirect;
