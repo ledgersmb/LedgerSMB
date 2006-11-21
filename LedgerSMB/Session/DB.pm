@@ -78,7 +78,7 @@ sub session_check {
 		my ($sessionLogin, $sessionTransaction) = $checkQuery->fetchrow_array;
 
 		my $login = $form->{login};
-		$login =~ s/[^a-zA-Z0-9._+@-]//g;
+		$login =~ s/[^a-zA-Z0-9._+@'-]//g;
 
 		if(($sessionLogin eq $login) and ($sessionTransaction eq $transactionID)){
 
@@ -214,7 +214,7 @@ sub password_check {
 
 	my ($form, $username, $password) = @_;
 
-	$username =~ s/[^a-zA-Z0-9._+@-]//g;
+	$username =~ s/[^a-zA-Z0-9._+@'-]//g;
 
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
