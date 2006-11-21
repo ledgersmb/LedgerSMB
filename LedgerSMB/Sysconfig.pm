@@ -8,6 +8,8 @@ use LedgerSMB::Form;
 use Config::Std;
 use DBI qw(:sql_types); 
 
+binmode STDOUT, ':utf8';
+
 # For Win32, change $pathsep to ';';
 $pathsep=':';
 
