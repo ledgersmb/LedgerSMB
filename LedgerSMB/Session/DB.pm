@@ -31,19 +31,32 @@ package Session;
 
 sub session_check {
 
+	use Time::HiRes qw(gettimeofday);
+
 	my ($cookie, $form) = @_;
-	my ($sessionid, $token) = split /:/, $cookie;
+	my ($sessionID, $transactionID, $token) = split /:/, $cookie;
 
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH}; 
 
-	my $checkQuery = $dbh->prepare("SELECT sl_login FROM session WHERE session_id = ? AND token = ? AND last_used > now() - ?::interval");
+	my $checkQuery = $dbh->prepare("SELECT u.username, s.transaction_id 
+									  FROM session as s, users as u 
+									 WHERE s.session_id = ? 
+									   AND s.token = ?
+									   AND s.users_id = u.id
+									   AND s.last_used > now() - ?::interval");
 
-	my $updateAge = $dbh->prepare("UPDATE session SET last_used = now() WHERE session_id = ?;");
+	my $updateAge = $dbh->prepare("UPDATE session 
+									  SET last_used = now(),
+										  transaction_id = ?
+									WHERE session_id = ?;");
 
 	#must be an integer
-	$sessionid =~ s/[^0-9]//g;
-	$sessionid = int $sessionid;
+	$sessionID =~ s/[^0-9]//g;
+	$sessionID = int $sessionID;
+
+	$transactionID =~ s/[^0-9]//g;
+	$transactionID = int $transactionID;
 
 	#must be 32 chars long and contain hex chars
 	$token =~ s/[^0-9a-f]//g;
@@ -55,24 +68,39 @@ sub session_check {
 		$timeout = "$myconfig{timeout} seconds";
 	}
 
-	$checkQuery->execute($sessionid, $token, $timeout) 
+	$checkQuery->execute($sessionID, $token, $timeout) 
 		|| $form->dberror(__FILE__.':'.__LINE__.': Looking for session: ');
 	my $sessionValid = $checkQuery->rows;
 
 	if($sessionValid){
 
 		#user has a valid session cookie, now check the user
-		my ($sessionLogin) = $checkQuery->fetchrow_array;
+		my ($sessionLogin, $sessionTransaction) = $checkQuery->fetchrow_array;
 
 		my $login = $form->{login};
-		$login =~ s/[^a-zA-Z0-9@.-]//g;
+		$login =~ s/[^a-zA-Z0-9._+@-]//g;
 
-		if($sessionLogin eq $login){
-			$updateAge->execute($sessionid) || $form->dberror(__FILE__.':'.__LINE__.': Updating session age: ');
+		if(($sessionLogin eq $login) and ($sessionTransaction eq $transactionID)){
+
+			#microseconds are more than random enough for transaction_id
+			my ($ignore, $newTransactionID) = gettimeofday();
+
+			$newTransactionID = int $newTransactionID;
+	
+			$updateAge->execute($newTransactionID, $sessionID) 
+				|| $form->dberror(__FILE__.':'.__LINE__.': Updating session age: ');
+
+			$newCookieValue = $sessionID . ':'.$newTransactionID.':' . $token;
+
+			#now update the cookie in the browser
+			print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
 			return 1;
 
 		} else {
-			#something's wrong, they have the cookie, but wrong user. Hijack attempt?
+			#something's wrong, they have the cookie, but wrong user or the wrong transaction id. Hijack attempt?
+			#destroy the session
+			my $sessionDestroy = $dbh->prepare("");
+
 			#delete the cookie in the browser
 			print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
 			return 0;
@@ -87,6 +115,13 @@ sub session_check {
 }
 
 sub session_create {
+
+	use Time::HiRes qw(gettimeofday);
+
+	#microseconds are more than random enough for transaction_id
+	my ($ignore, $newTransactionID) = gettimeofday();
+	$newTransactionID = int $newTransactionID;
+
 	my ($form) = @_;
 
 	if (! $ENV{HTTP_HOST}){
@@ -98,26 +133,34 @@ sub session_create {
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH}; 
 
 	# TODO Change this to use %myconfig
-	my $deleteExisting = $dbh->prepare("DELETE FROM session WHERE sl_login = ? AND age(last_used) > ?::interval");  
+	my $deleteExisting = $dbh->prepare("DELETE FROM session
+											  USING users
+											  WHERE users.username = ?
+												AND users.id = session.users_id
+												AND age(last_used) > ?::interval");  
 
 	my $seedRandom = $dbh->prepare("SELECT setseed(?);");
 
 	my $fetchSequence = $dbh->prepare("SELECT nextval('session_session_id_seq'), md5(random());");
 	
-	my $createNew = $dbh->prepare("INSERT INTO session (session_id, sl_login, token) VALUES(?, ?, ?);");
+	my $createNew = $dbh->prepare("INSERT INTO session (session_id, users_id, token, transaction_id) 
+										VALUES(?, (SELECT id
+													 FROM users
+													WHERE username = ?), ?, ?);");
 
 
 	# this is assuming that $form->{login} is safe, which might be a bad assumption
 	# so, I'm going to remove some chars, which might make previously valid logins invalid
 	my $login = $form->{login};
-	$login =~ s/[^a-zA-Z0-9@.-]//g;
+	$login =~ s/[^a-zA-Z0-9._+@'-]//g;
 
 	#delete any existing stale sessions with this login if they exist
 	if (!$myconfig{timeout}){
 	   $myconfig{timeout} = 86400;
 	}
 
-	$deleteExisting->execute($login, "$myconfig{timeout} seconds") || $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
+	$deleteExisting->execute($login, "$myconfig{timeout} seconds") 
+		|| $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
 
 	#doing the random stuff in the db so that LedgerSMB won't
 	#require a good random generator - maybe this should be reviewed, pgsql's isn't great either
@@ -125,13 +168,16 @@ sub session_create {
 	my ($newSessionID, $newToken) = $fetchSequence->fetchrow_array;
 
 	#create a new session
-	$createNew->execute($newSessionID, $login, $newToken) || $form->dberror(__FILE__.':'.__LINE__.': Create new session: ');
+	$createNew->execute($newSessionID, $login, $newToken, $newTransactionID) 
+		|| $form->dberror(__FILE__.':'.__LINE__.': Create new session: ');
 
 	#reseed the random number generator
 	my $randomSeed = 1.0 * ('0.'. (time() ^ ($$ + ($$ <<15))));
-	$seedRandom->execute($randomSeed)|| $form->dberror(__FILE__.':'.__LINE__.': Reseed random generator: ');
 
-	$newCookieValue = $newSessionID . ':' . $newToken;
+	$seedRandom->execute($randomSeed) 
+		|| $form->dberror(__FILE__.':'.__LINE__.': Reseed random generator: ');
+
+	$newCookieValue = $newSessionID . ':'.$newTransactionID.':' . $newToken;
 
 	#now set the cookie in the browser
 	#TODO set domain from ENV, also set path to install path
@@ -144,13 +190,18 @@ sub session_destroy {
 	my ($form) = @_;
 
 	my $login = $form->{login};
-	$login =~ s/[^a-zA-Z0-9@.-]//g;
+	$login =~ s/[^a-zA-Z0-9._+@'-]//g;
 
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
-	my $deleteExisting = $dbh->prepare("DELETE FROM session WHERE sl_login = ?;");
-	$deleteExisting->execute($login) || $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
+	my $deleteExisting = $dbh->prepare("DELETE FROM session 
+											  USING users
+											  WHERE users.username = ?
+												AND users.id = session.users_id;");
+
+	$deleteExisting->execute($login)
+		|| $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
 
 	#delete the cookie in the browser
 	print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
@@ -162,6 +213,8 @@ sub password_check {
 	use Digest::MD5;
 
 	my ($form, $username, $password) = @_;
+
+	$username =~ s/[^a-zA-Z0-9._+@-]//g;
 
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
@@ -188,7 +241,8 @@ sub password_check {
 												 WHERE users_conf.id = users.id
 												   AND users.username = ?;");
 
-			$updatePassword->execute($password, $username) || $form->dberror(__FILE__.':'.__LINE__.': Converting password : ');
+			$updatePassword->execute($password, $username) 
+				|| $form->dberror(__FILE__.':'.__LINE__.': Converting password : ');
 
 			return 1;
 
