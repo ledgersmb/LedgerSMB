@@ -299,7 +299,7 @@ sub redirect {
 	my ($self, $msg) = @_;
 	use List::Util qw(first);
 
-	if ($self->{callback}) {
+	if ($self->{callback} || !$msg) {
 
 		main::redirect();
 	} else {

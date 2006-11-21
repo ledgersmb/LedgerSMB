@@ -348,10 +348,10 @@ sub login {
 
 
 sub logout {
-	undef $form->{callback};
+	$form->{callback} = "";
 	$form->{endsession} = 1;
 	Session::session_destroy($form);
-	$form->redirect;
+    $form->redirect;
 }
 
 
