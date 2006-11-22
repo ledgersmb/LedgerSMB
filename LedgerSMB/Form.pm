@@ -1629,7 +1629,7 @@ sub add_shipto {
 				shiptoaddress2, shiptocity, shiptostate,
 				shiptozipcode, shiptocountry, shiptocontact,
 				shiptophone, shiptofax, shiptoemail) 
-			VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			|;
 
 		$sth = $self->{dbh}->prepare($query) || $self->dberror($query);
