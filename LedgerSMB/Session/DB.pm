@@ -219,16 +219,19 @@ sub password_check {
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
-	my $fetchPassword = $dbh->prepare("SELECT uc.password, uc.crypted_password
+	my $fetchPassword = $dbh->prepare("SELECT u.username, uc.password, uc.crypted_password
 										 FROM users as u, users_conf as uc
 										WHERE u.username = ?
 										  AND u.id = uc.id;");
 
 	$fetchPassword->execute($username) || $form->dberror(__FILE__.':'.__LINE__.': Fetching password : ');
 
-	my ($md5Password, $cryptPassword) = $fetchPassword->fetchrow_array;
+	my ($dbusername, $md5Password, $cryptPassword) = $fetchPassword->fetchrow_array;
 
-	if ($cryptPassword){
+	if ($dbusername ne $username) {
+		# User data retrieved from db not for the requested user
+		return 0;
+	} elsif ($cryptPassword){
 		#First time login from old system, check crypted password
 
 		if ((crypt $password, substr($username, 0, 2)) eq $cryptPassword) {	
@@ -250,12 +253,12 @@ sub password_check {
 			return 0; #password failed
 		}
 
-	}elsif ($md5Password){
+	} elsif ($md5Password){
 
 		if ($md5Password ne (Digest::MD5::md5_hex $password) ) {
 			return 0;
 		}
-		else{
+		else {
 			return 1;
 		}
 	
