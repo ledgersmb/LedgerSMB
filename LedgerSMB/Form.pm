@@ -1643,7 +1643,7 @@ sub add_shipto {
 		$sth->execute(
 			$id, $self->{shiptoname}, $self->{shiptoaddress1},
 			$self->{shiptoaddress2}, $self->{shiptocity},
-			$self->{shiptostate}, $self->{shiptostate},	
+			$self->{shiptostate}, 
 			$self->{shiptozipcode}, $self->{shiptocountry},
 			$self->{shiptocontact}, $self->{shiptophone},
 			$self->{shiptofax}, $self->{shiptoemail}
