@@ -25,6 +25,8 @@ spool      = spool
 userspath  = users
 # templates base directory
 templates  = templates
+# images base directory
+images  = images
 # member file
 memberfile = users/members
 localepath = locale/po

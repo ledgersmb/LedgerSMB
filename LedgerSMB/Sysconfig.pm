@@ -33,6 +33,9 @@ $spool = "spool";
 # path to user configuration files
 $userspath = "users";
 
+# images base directory
+$images = "images";
+
 # templates base directory
 $templates = "templates";
 
@@ -85,6 +88,7 @@ $userspath = $config{paths}{userspath} if $config{paths}{userspath};
 $localepath = $config{paths}{localepath} if $config{paths}{localepath};
 $spool = $config{paths}{spool} if $config{paths}{spool};
 $templates = $config{paths}{templates} if $config{paths}{templates};
+$images = $config{paths}{images} if $config{paths}{images};
 
 $gzip = $config{programs}{gzip} if $config{programs}{gzip};
 

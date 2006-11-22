@@ -572,6 +572,7 @@ sub parse_template {
 
 	my %include = ();
 	my $ok;
+	$self->{images} = "${LedgerSMB::Sysconfig::images}/$self->{templates}";
 
 	if ($self->{language_code}) {
 
