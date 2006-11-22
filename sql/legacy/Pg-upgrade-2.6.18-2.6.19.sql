@@ -287,6 +287,62 @@ SELECT 'appname', 'LedgerSMB'::text;
 
 DROP TABLE old_defaults;
 
+CREATE OR REPLACE FUNCTION del_exchangerate() RETURNS TRIGGER AS '
+
+declare
+  t_transdate date;
+  t_curr char(3);
+  t_id int;
+  d_curr text;
+
+begin
+
+  select into d_curr substr(value,1,3) from defaults where setting_key = ''curr'';
+  
+  if TG_RELNAME = ''ar'' then
+    select into t_curr, t_transdate curr, transdate from ar where id = old.id;
+  end if;
+  if TG_RELNAME = ''ap'' then
+    select into t_curr, t_transdate curr, transdate from ap where id = old.id;
+  end if;
+  if TG_RELNAME = ''oe'' then
+    select into t_curr, t_transdate curr, transdate from oe where id = old.id;
+  end if;
+
+  if d_curr != t_curr then
+
+    select into t_id a.id from acc_trans ac
+    join ar a on (a.id = ac.trans_id)
+    where a.curr = t_curr
+    and ac.transdate = t_transdate
+
+    except select a.id from ar a where a.id = old.id
+    
+    union
+    
+    select a.id from acc_trans ac
+    join ap a on (a.id = ac.trans_id)
+    where a.curr = t_curr
+    and ac.transdate = t_transdate
+    
+    except select a.id from ap a where a.id = old.id
+    
+    union
+    
+    select o.id from oe o
+    where o.curr = t_curr
+    and o.transdate = t_transdate
+    
+    except select o.id from oe o where o.id = old.id;
+
+    if not found then
+      delete from exchangerate where curr = t_curr and transdate = t_transdate;
+    end if;
+  end if;
+return old;
+
+end;
+' language 'plpgsql';
 
 CREATE OR REPLACE FUNCTION add_custom_field (VARCHAR, VARCHAR, VARCHAR)
 RETURNS BOOL AS
