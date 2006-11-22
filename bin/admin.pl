@@ -102,7 +102,7 @@ sub adminlogin {
 	print qq|
 	<body class="admin" onload="sf()">
 	<div align="center">
-		<a href="http://www.ledgersmb.org/"><img src="ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
+		<a href="http://www.ledgersmb.org/"><img src="images/ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
 		<h1 class="login">|.$locale->text('Version').qq| $form->{version} <br />|.$locale->text('Administration').qq|</h1>
 		<form method="post" action="admin.pl" name="admin">
 		<table>
