@@ -7,6 +7,8 @@
 #  Author: Keld Jørn Simonsen <keld@dkuug.dk>
 #          Jonas Smedegaard <jonas@jones.dk>
 #
+#  LedgerSMB update 2006: Mads Kiilerich <mads@kiilerich.com>
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -21,22 +23,37 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
 #######################################################################
-
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB 1.2.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-11-22 01:23+0100\n"
+"Last-Translator: Mads Kiilerich <mads@kiilerich.com>\n"
+"Language-Team: \n"
+
+#. ($form->{login})
+msgid "%1 is already a member!"
+msgstr "%1 er allerede medlem!"
+
+#. ($form->{customer})
+msgid "%1: Customer not on file!"
+msgstr "%1: Kunde ikke i databasen!"
+
+#. ($form->{"vendor_$i"})
+msgid "%1: Vendor not on file!"
+msgstr "%1: Leverandør ikke i databasen!"
 
 msgid "A"
-msgstr "A"
+msgstr ""
 
 msgid "AP"
 msgstr "Kreditorer"
 
 msgid "AP Aging"
-msgstr "Aldersfordeling"
+msgstr "Kreditor opfølgning"
 
 msgid "AP Outstanding"
 msgstr "Udestående kreditorer"
@@ -51,7 +68,7 @@ msgid "AR"
 msgstr "Debitorer"
 
 msgid "AR Aging"
-msgstr "Aldersfordeling"
+msgstr "Debitor opfølgning"
 
 msgid "AR Outstanding"
 msgstr "Udestående debitorer"
@@ -63,7 +80,7 @@ msgid "AR Transactions"
 msgstr "Debitorposteringer"
 
 msgid "AR/AP"
-msgstr ""
+msgstr "Debitorer/Kreditorer"
 
 msgid "About"
 msgstr "Om"
@@ -75,7 +92,7 @@ msgid "Access Control"
 msgstr "Adgangskontrol"
 
 msgid "Access Denied!"
-msgstr ""
+msgstr "Adgang nægtet!"
 
 msgid "Account"
 msgstr "Konto"
@@ -105,7 +122,7 @@ msgid "Accounting"
 msgstr "Bogføring"
 
 msgid "Accounting Menu"
-msgstr "Konto-menu"
+msgstr "Bogførings-menu"
 
 msgid "Accounts"
 msgstr "Konti"
@@ -116,11 +133,11 @@ msgstr "Påløbet"
 msgid "Activate Audit trail"
 msgstr "Aktivér revisionssporing"
 
-msgid "Activate Audit trails"
-msgstr "Aktivér revisionssporing"
-
 msgid "Active"
 msgstr "Aktiv"
+
+msgid "Actual"
+msgstr "Faktisk"
 
 msgid "Add"
 msgstr "Tilføj"
@@ -135,7 +152,7 @@ msgid "Add Account"
 msgstr "Ny konto"
 
 msgid "Add Assembly"
-msgstr "Ny sammensætning"
+msgstr "Nyt produkt"
 
 msgid "Add Business"
 msgstr "Ny forretning"
@@ -165,19 +182,19 @@ msgid "Add General Ledger Transaction"
 msgstr "Ny postering i hovedbog"
 
 msgid "Add Group"
-msgstr "Ny gruppe"
+msgstr "Ny varegruppe"
 
 msgid "Add Job"
-msgstr ""
+msgstr "Nyt projekt"
 
 msgid "Add Labor/Overhead"
-msgstr "Nyt arbejde/overhead"
+msgstr "Ny tidsregistrering"
 
 msgid "Add Language"
 msgstr "Nyt sprog"
 
 msgid "Add POS Invoice"
-msgstr "Ny POS faktura"
+msgstr "Ny salgssted faktura"
 
 msgid "Add Part"
 msgstr "Ny vare"
@@ -207,10 +224,13 @@ msgid "Add Sales Order"
 msgstr "Ny salgsordre"
 
 msgid "Add Service"
-msgstr "Ny tjeneste"
+msgstr "Ny serviceydelse"
 
-msgid "Add Timecard"
+msgid "Add Stores Card"
 msgstr ""
+
+msgid "Add Time Card"
+msgstr "Ny timeseddel"
 
 msgid "Add Transaction"
 msgstr "Ny postering"
@@ -222,16 +242,28 @@ msgid "Add Vendor"
 msgstr "Ny leverandør"
 
 msgid "Add Vendor Invoice"
-msgstr "Ny indkøbsfaktura"
+msgstr "Ny leverandørfaktura"
 
 msgid "Add Warehouse"
-msgstr "Nyt varehus"
+msgstr "Nyt lager"
 
 msgid "Address"
 msgstr "Adresse"
 
+msgid "Adjust Till"
+msgstr "Juster kassebeholdning"
+
+msgid "Adjusting Till: (till) Source: (source)"
+msgstr "Justerer kassebeholdningen for X bilag N"
+
+msgid "Adjusting till due to data entry error."
+msgstr "Juster kassebeholdning på grund af indtastningsfejl."
+
 msgid "Administration"
 msgstr "Administration"
+
+msgid "Administrative login"
+msgstr "Administrativ login"
 
 msgid "Administrator"
 msgstr "Administrator"
@@ -239,17 +271,23 @@ msgstr "Administrator"
 msgid "After Deduction"
 msgstr "Efter fradrag"
 
+msgid "Aged"
+msgstr "Udgået"
+
+msgid "Aged Overdue"
+msgstr "Udgået pga. dato"
+
 msgid "All"
 msgstr "Alt"
 
 msgid "All Accounts"
 msgstr "Alle konti"
 
-msgid "All Datasets up to date!"
-msgstr "Alle datasæt opdaterede"
-
 msgid "All Items"
-msgstr "Alle dele"
+msgstr "Alle varenumre"
+
+msgid "Allocated"
+msgstr "Allokeret"
 
 msgid "Allowances"
 msgstr "Fradrag"
@@ -263,14 +301,18 @@ msgstr "Forfaldent"
 msgid "Amount missing!"
 msgstr "Beløb mangler!"
 
+msgid "Application Login"
+msgstr "Applikation login"
+
 msgid "Apr"
 msgstr "apr"
 
 msgid "April"
 msgstr "april"
 
-msgid "Are you sure you want to delete Invoice Number"
-msgstr "Er du sikker på du vil fjerne fakturanummer"
+#. ($form->{invnumber})
+msgid "Are you sure you want to delete Invoice Number %1?"
+msgstr "Er du sikker på du vil fjerne fakturanummer %1?"
 
 msgid "Are you sure you want to delete Order Number"
 msgstr "Er du sikker på at du vil fjerne ordrenummer"
@@ -278,26 +320,33 @@ msgstr "Er du sikker på at du vil fjerne ordrenummer"
 msgid "Are you sure you want to delete Quotation Number"
 msgstr "Er du sikker på at du vil slette tilbudsnummer"
 
-msgid "Are you sure you want to delete Timecard for"
-msgstr ""
-
 msgid "Are you sure you want to delete Transaction"
 msgstr "Er du sikker på du vil fjerne postering"
+
+#. ($form->{reference})
+msgid "Are you sure you want to delete Transaction %1"
+msgstr "Er du sikker på du vil fjerne postering %1"
+
+msgid "Are you sure you want to delete time card for"
+msgstr "Er du sikker på at du vil slette timesedlen for"
 
 msgid "Are you sure you want to remove the marked entries from the queue?"
 msgstr "Er du sikker på at du vil fjerne de markerede poster fra køen?"
 
+msgid "As of"
+msgstr "Som af"
+
 msgid "Assemblies"
-msgstr "Sammensætninger"
+msgstr "Produkter"
 
 msgid "Assemblies restocked!"
-msgstr "Sammensætninger genlagret"
+msgstr "Produkter sat på lager igen!"
 
 msgid "Assembly"
-msgstr "Sammensætning"
+msgstr "Produkt"
 
 msgid "Assembly stocked!"
-msgstr ""
+msgstr "Produkt sag på lager!"
 
 msgid "Asset"
 msgstr "Aktiv"
@@ -317,12 +366,6 @@ msgstr "Revisionssporing aktiveret"
 msgid "Audit trail removed up to"
 msgstr "Revisionssporing fjernet indtil"
 
-msgid "Audit trails disabled"
-msgstr "Revisionssporing deaktiveret"
-
-msgid "Audit trails enabled"
-msgstr "Revisionssporing aktiveret"
-
 msgid "Aug"
 msgstr "aug"
 
@@ -330,22 +373,23 @@ msgid "August"
 msgstr "august"
 
 msgid "Average Cost"
-msgstr ""
+msgstr "Gennemsnitlig kostpris"
 
 msgid "Avg Cost"
-msgstr ""
+msgstr "Gns. kost"
 
 msgid "BIC"
-msgstr "BIC"
+msgstr "BIC/SWIFT"
 
 msgid "BOM"
-msgstr "BOM"
+msgstr "Stykliste"
 
 msgid "Backup"
 msgstr "Sikkerhedskopi"
 
-msgid "Backup sent to"
-msgstr "Sikkerhedskopier sendt til"
+#. ($myconfig{email})
+msgid "Backup sent to %1"
+msgstr "Sikkerhedskopi sendt til %1"
 
 msgid "Balance"
 msgstr "Balance"
@@ -356,8 +400,15 @@ msgstr "Status"
 msgid "Based on"
 msgstr "Baseret på"
 
+msgid "Batch Printing"
+msgstr "Masseudskrift"
+
 msgid "Bcc"
 msgstr "Blind kopi"
+
+#. ($form->{bcc})
+msgid "Bcc: %1"
+msgstr "Bcc: %1"
 
 msgid "Before Deduction"
 msgstr "Før fradrag"
@@ -370,6 +421,9 @@ msgstr "Under"
 
 msgid "Billing Address"
 msgstr "Fakturaadresse"
+
+msgid "Billion"
+msgstr "Milliard"
 
 msgid "Bin"
 msgstr "Varelager"
@@ -390,46 +444,61 @@ msgid "Business"
 msgstr "Forretning"
 
 msgid "Business Number"
-msgstr "CVR-nummer"
+msgstr "Forretningsnummer"
 
 msgid "Business deleted!"
-msgstr "Forretning slettet"
+msgstr "Forretning slettet!"
 
 msgid "Business saved!"
-msgstr "Forretning gemt"
+msgstr "Forretning gemt!"
 
 msgid "C"
-msgstr "C"
+msgstr ""
 
 msgid "COGS"
-msgstr "Indkøb"
+msgstr "Kostpris"
 
-msgid "COGS account does not exist!"
+msgid "Calculate"
+msgstr "Beregn"
+
+msgid "Cannot add stores card for a completed job!"
 msgstr ""
 
-msgid "Cannot add timecard for a completed job!"
+msgid "Cannot add time card for a completed job!"
+msgstr "Kan ikke tilføje timeseddel for afsluttet projekt!"
+
+msgid "Cannot change stores card for a completed job!"
 msgstr ""
 
-msgid "Cannot change timecard for a completed job!"
-msgstr ""
+msgid "Cannot change time card for a completed job!"
+msgstr "Kan ikke ændre timeseddel for afsluttet projekt!"
 
-msgid "Cannot create Assembly"
-msgstr ""
+msgid "Cannot create Assembly; Income account does not exist!"
+msgstr "Kan ikke oprette produkt; indtægtskontoen findes ikke!"
 
-msgid "Cannot create Labor"
-msgstr ""
+msgid "Cannot create Labor; COGS account does not exist!"
+msgstr "Kan ikke registrere tid; kostpriskonto findes ikke!"
+
+msgid "Cannot create Labor; Inventory account does not exist!"
+msgstr "Kan ikke registrere tid; lagerbeholdningskonto findes ikke!"
 
 msgid "Cannot create Lock!"
-msgstr "Cannot create Lock!"
+msgstr "Kan ikke låse!"
 
-msgid "Cannot create Part"
-msgstr ""
+msgid "Cannot create Part; COGS account does not exist!"
+msgstr "Kan ikke oprette vare; kostpriskonto findes ikke!"
 
-msgid "Cannot create Service"
-msgstr ""
+msgid "Cannot create Part; Income account does not exist!"
+msgstr "Kan ikke oprette vare; indtægtskonto findes ikke!"
 
-msgid "Cannot delete Timecard!"
-msgstr ""
+msgid "Cannot create Part; Inventory account does not exist!"
+msgstr "Kan ikke oprette vare; lagerbeholdningskonto findes ikke!"
+
+msgid "Cannot create Service; Expense account does not exist!"
+msgstr "Kan ikke oprette serviceydelse; udgiftskontoen findes ikke!"
+
+msgid "Cannot create Service; Income account does not exist!"
+msgstr "Kan ikke oprette serviceydelse; indtægtskontoen findes ikke!"
 
 msgid "Cannot delete account!"
 msgstr "Kan ikke slette konto!"
@@ -444,13 +513,16 @@ msgid "Cannot delete invoice!"
 msgstr "Kan ikke slette faktura!"
 
 msgid "Cannot delete item!"
-msgstr "Kan ikke slette enhed!"
+msgstr "Kan ikke slette varenummer!"
 
 msgid "Cannot delete order!"
 msgstr "Kan ikke slette ordre!"
 
 msgid "Cannot delete quotation!"
 msgstr "Kan ikke slette tilbud"
+
+msgid "Cannot delete time card!"
+msgstr "Kan ikke slette timeseddel!"
 
 msgid "Cannot delete transaction!"
 msgstr "Kan ikke slette postering!"
@@ -477,7 +549,7 @@ msgid "Cannot post transaction for a closed period!"
 msgstr "Kan ikke bogføre postering for en afsluttet periode!"
 
 msgid "Cannot post transaction with a debit and credit entry for the same account!"
-msgstr ""
+msgstr "Kan ikke bogføre med kredit og debit på samme konto!"
 
 msgid "Cannot post transaction!"
 msgstr "Kan ikke bogføre postering!"
@@ -500,32 +572,46 @@ msgstr "Kan ikke gemme præferencer!"
 msgid "Cannot save quotation!"
 msgstr "Kan ikke gemme tilbud"
 
-msgid "Cannot save timecard for a closed period!"
+msgid "Cannot save stores card for a closed period!"
 msgstr ""
 
-msgid "Cannot save timecard!"
+msgid "Cannot save stores card!"
 msgstr ""
+
+msgid "Cannot save taxes!"
+msgstr "Kan ikke gemme moms/afgifter!"
+
+msgid "Cannot save time card for a closed period!"
+msgstr "Kan ikke gemme timeseddel for en afslutted periode!"
+
+msgid "Cannot save time card!"
+msgstr "Kan ikke gemme timeseddel!"
 
 msgid "Cannot set account for more than one of AR, AP or IC"
 msgstr "Kan ikke sætte konto for mere end én af AR, AP eller IC"
 
-msgid "Cannot set multiple options for"
-msgstr "Kan ikke sætte flere muligheder for"
-
-msgid "Cannot set multiple options for Item"
-msgstr ""
+#. ($item)
+msgid "Cannot set multiple options for %1"
+msgstr "Kan ikke sætte flere muligheder for %1"
 
 msgid "Cannot stock Assembly!"
-msgstr ""
+msgstr "Kan ikke sætte produkt på lager!"
 
 msgid "Cannot stock assemblies!"
-msgstr "Kan ikke genbesætte sammensætninger"
+msgstr "Kan ikke sætte produkter på lager igen!"
 
 msgid "Cash"
 msgstr "Kontanter"
 
+msgid "Cash Breakdown:"
+msgstr "Kontant fordeling:"
+
 msgid "Cc"
-msgstr "Kopi"
+msgstr "Cc"
+
+#. ($form->{cc})
+msgid "Cc: %1"
+msgstr "Cc: %1"
 
 msgid "Change"
 msgstr "Ændr"
@@ -536,8 +622,14 @@ msgstr "Ændr adgangskode for administrator"
 msgid "Change Password"
 msgstr "Ændr adgangskode"
 
-msgid "Charge"
-msgstr ""
+msgid "Change password"
+msgstr "Ændr adgangskode"
+
+msgid "Chargeable"
+msgstr "Fakturerbar"
+
+msgid "Chargeout Rate"
+msgstr "Timepris"
 
 msgid "Chart of Accounts"
 msgstr "Kontoplan"
@@ -545,8 +637,11 @@ msgstr "Kontoplan"
 msgid "Check"
 msgstr "Check"
 
+msgid "Check ID"
+msgstr "Check ID"
+
 msgid "Check Inventory"
-msgstr "Kontrollér lager"
+msgstr "Kontrollér lagerbeholdning"
 
 msgid "Checks"
 msgstr "Kontroller"
@@ -561,13 +656,23 @@ msgid "Click on login name to edit!"
 msgstr "Klik på brugernavn for at redigere"
 
 msgid "Clocked"
-msgstr ""
+msgstr "Målt"
 
 msgid "Close Books up to"
 msgstr "Afslut bogføring op til"
 
+msgid "Close Next"
+msgstr "Luk næste"
+
+msgid "Close Till"
+msgstr "Kasseopgørelse"
+
 msgid "Closed"
 msgstr "Afsluttet"
+
+#. ($form->{login})
+msgid "Closing Till For %1"
+msgstr "Kasseopgørelse for %1"
 
 msgid "Code"
 msgstr "Kode"
@@ -585,19 +690,34 @@ msgid "Compare to"
 msgstr "Sammenlign med"
 
 msgid "Completed"
-msgstr ""
+msgstr "Færdig"
 
 msgid "Components"
 msgstr "Komponenter"
 
 msgid "Confirm"
-msgstr ""
+msgstr "Bekræft"
 
 msgid "Confirm!"
 msgstr "Bekræft!"
 
+msgid "Congratulations!  Your till is exactly balanced."
+msgstr "Tillykke! Din kasse stemte!"
+
 msgid "Connect to"
 msgstr "Forbind til"
+
+msgid "Consolidate"
+msgstr "Konsolider"
+
+msgid "Consolidate Orders"
+msgstr "Konsolider ordrer"
+
+msgid "Consolidate Purchase Orders"
+msgstr "Konsolider indkøbsordrer"
+
+msgid "Consolidate Sales Orders"
+msgstr "Konsolider salgsordrer"
 
 msgid "Contact"
 msgstr "Kontakt"
@@ -627,7 +747,7 @@ msgid "Could not save!"
 msgstr "Kunne ikke gemme!"
 
 msgid "Could not transfer Inventory!"
-msgstr "Kunne ikke overføre lager!"
+msgstr "Kunne ikke overføre lagerbeholdning!"
 
 msgid "Country"
 msgstr "Land"
@@ -641,8 +761,21 @@ msgstr "Opret datasæt"
 msgid "Credit"
 msgstr "Kredit"
 
+msgid "Credit Card Track"
+msgstr ""
+
+msgid "Credit Invoice"
+msgstr "Kreditor faktura"
+
 msgid "Credit Limit"
 msgstr "Kreditgrænse"
+
+msgid "Cumulative Error:"
+msgstr "Opsamlet fejl:"
+
+#. ($difference)
+msgid "Cumulative Error: %1"
+msgstr "Opsamlet fejl: %1"
 
 msgid "Curr"
 msgstr "Val"
@@ -684,7 +817,7 @@ msgid "DBI not installed!"
 msgstr "DBI ikke installeret"
 
 msgid "DOB"
-msgstr ""
+msgstr "Født"
 
 msgid "Database"
 msgstr "Database"
@@ -693,16 +826,20 @@ msgid "Database Administration"
 msgstr "Administration af database"
 
 msgid "Database Driver not checked!"
-msgstr "Databasedriver ikke kontrolleret"
+msgstr "Databasedriver ikke valgt!"
 
 msgid "Database Host"
-msgstr "Database-vært"
+msgstr "Database-host"
 
 msgid "Database User missing!"
 msgstr "Bruger af database mangler!"
 
 msgid "Dataset"
 msgstr "Datasæt"
+
+#. ($form->{db})
+msgid "Dataset %1 successfully created!"
+msgstr "Datasæt %1 success-fuldt oprettet!"
 
 msgid "Dataset is newer than version!"
 msgstr "Datasæt er nyere end version!"
@@ -732,19 +869,26 @@ msgid "Date received missing!"
 msgstr "Modtagelsesdato mangler!"
 
 msgid "Date worked"
-msgstr ""
+msgstr "Udført"
+
+#. ($now)
+msgid "Date: %1"
+msgstr "Dato: %1"
 
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 msgid "Day(s)"
-msgstr ""
+msgstr "Dag(e)"
 
 msgid "Days"
-msgstr ""
+msgstr "Dage"
 
 msgid "Debit"
 msgstr "Debet"
+
+msgid "Debit Invoice"
+msgstr "Debitor faktura"
 
 msgid "Dec"
 msgstr "dec"
@@ -754,9 +898,6 @@ msgstr "december"
 
 msgid "Decimalplaces"
 msgstr "Decimalpladser"
-
-msgid "Decrease"
-msgstr "Formindsk"
 
 msgid "Deduct after"
 msgstr "Fratræk efter"
@@ -771,7 +912,7 @@ msgid "Deductions"
 msgstr "Fradrag"
 
 msgid "Default Template"
-msgstr ""
+msgstr "Standard skabelon"
 
 msgid "Defaults"
 msgstr "Standardopsætning"
@@ -789,10 +930,11 @@ msgid "Delete Dataset"
 msgstr "Fjern datasæt"
 
 msgid "Delete Schedule"
-msgstr ""
+msgstr "Slet planlægning"
 
-msgid "Deleting a language will also delete the templates for the language"
-msgstr ""
+#. ($form->{invnumber})
+msgid "Deleting a language will also delete the templates for the language %1"
+msgstr "Sletning af et sprog vil også slette skabelonerne for sproget %1"
 
 msgid "Delivery Date"
 msgstr "Leveringsdato"
@@ -827,11 +969,15 @@ msgstr "Detalje"
 msgid "Difference"
 msgstr "Difference"
 
-msgid "Directory"
-msgstr "Katalog"
+#. (${LedgerSMB::Sysconfig::templates})
+msgid "Directory %1 does not exist"
+msgstr "Directory %1 findes ikke"
 
 msgid "Discount"
 msgstr "Rabat"
+
+msgid "Discover"
+msgstr "Discover"
 
 msgid "Done"
 msgstr "Færdig"
@@ -854,17 +1000,18 @@ msgstr "Forfaldsdato mangler!"
 msgid "E-mail"
 msgstr "E-post"
 
-msgid "E-mail Statement to"
-msgstr "Send opgørelse til"
+#. ($form->{$form->{ct}})
+msgid "E-mail Statement to %1"
+msgstr "E-post opgørelse sendt til %1"
 
 msgid "E-mail address missing!"
 msgstr "E-post-adresse mangler!"
 
 msgid "E-mail message"
-msgstr ""
+msgstr "E-post besked"
 
 msgid "E-mailed"
-msgstr "Sendt per e-post"
+msgstr "Sendt som e-post"
 
 msgid "Edit"
 msgstr "Redigér"
@@ -879,7 +1026,7 @@ msgid "Edit Account"
 msgstr "Redigér konto"
 
 msgid "Edit Assembly"
-msgstr "Redigér sammensætning"
+msgstr "Redigér produkt"
 
 msgid "Edit Business"
 msgstr "Redigér forretning"
@@ -909,25 +1056,26 @@ msgid "Edit General Ledger Transaction"
 msgstr "Redigér en postering i hovedbog"
 
 msgid "Edit Group"
-msgstr "Redigér gruppe"
+msgstr "Redigér varegruppe"
 
 msgid "Edit Job"
-msgstr ""
+msgstr "Redigér projekt"
 
 msgid "Edit Labor/Overhead"
-msgstr "Redigér arbejde/overhead"
+msgstr "Redigér tidsregistrering"
 
 msgid "Edit Language"
 msgstr "Redigér sprog"
 
 msgid "Edit POS Invoice"
-msgstr "Redigér POS faktura"
+msgstr "Redigér salgssted faktura"
 
 msgid "Edit Part"
 msgstr "Redigér vare"
 
-msgid "Edit Preferences for"
-msgstr "Redigér opsætning for"
+#. ($form->{login})
+msgid "Edit Preferences for %1"
+msgstr "Redigér opsætning for %1"
 
 msgid "Edit Pricegroup"
 msgstr "Redigér prisgruppe"
@@ -954,13 +1102,13 @@ msgid "Edit Sales Order"
 msgstr "Redigér salgsordre"
 
 msgid "Edit Service"
-msgstr "Redigér tjeneste"
+msgstr "Redigér serviceydelse"
 
 msgid "Edit Template"
 msgstr "Redigér skabelon"
 
-msgid "Edit Timecard"
-msgstr ""
+msgid "Edit Time Card"
+msgstr "Redigér timeseddel"
 
 msgid "Edit User"
 msgstr "Redigér bruger"
@@ -969,10 +1117,25 @@ msgid "Edit Vendor"
 msgstr "Redigér leverandør"
 
 msgid "Edit Vendor Invoice"
-msgstr "Redigér projekt"
+msgstr "Redigér leverandørfaktura"
 
 msgid "Edit Warehouse"
-msgstr "Redigér varehus"
+msgstr "Redigér lager"
+
+msgid "Eight"
+msgstr "Otte"
+
+msgid "Eighteen"
+msgstr "Atten"
+
+msgid "Eighty"
+msgstr "Firs"
+
+msgid "Eleven"
+msgstr "Elleve"
+
+msgid "Eleven-o"
+msgstr "Elleve"
 
 msgid "Employee"
 msgstr "Medarbejder"
@@ -1005,7 +1168,7 @@ msgid "Enddate"
 msgstr "Slutdato"
 
 msgid "Ends"
-msgstr ""
+msgstr "Slutter"
 
 msgid "Enforce transaction reversal for all dates"
 msgstr "Gennemtving explicitte rettelser af posteringer for alle datoer"
@@ -1016,11 +1179,11 @@ msgstr "Angiv op til 3 bogstaver adskilt med kolon (fx DKK:EUR:USD) for dine ind
 msgid "Equity"
 msgstr "Egenkapital"
 
-msgid "Every"
-msgstr ""
+msgid "Error"
+msgstr "Fejl"
 
-msgid "Excempt age <"
-msgstr ""
+msgid "Every"
+msgstr "Hver"
 
 msgid "Exch"
 msgstr "Vxl"
@@ -1034,14 +1197,17 @@ msgstr "Valutakurs for betaling mangler!"
 msgid "Exchange rate missing!"
 msgstr "Vekselkurs mangler!"
 
+msgid "Exempt age <"
+msgstr ""
+
 msgid "Existing Datasets"
 msgstr "Eksisterende datasæt"
 
+msgid "Expected"
+msgstr "Forventet"
+
 msgid "Expense"
 msgstr "Udgift"
-
-msgid "Expense account does not exist!"
-msgstr ""
 
 msgid "Expense/Asset"
 msgstr "Udgift/Aktiv"
@@ -1053,7 +1219,7 @@ msgid "FX"
 msgstr "FX"
 
 msgid "Failed to save order!"
-msgstr ""
+msgstr "Kunne ikke gemme ordren!"
 
 msgid "Fax"
 msgstr "Fax"
@@ -1064,8 +1230,20 @@ msgstr "feb"
 msgid "February"
 msgstr "februar"
 
+msgid "Fifteen"
+msgstr "Femten"
+
+msgid "Fifty"
+msgstr "Halvtreds"
+
+msgid "Five"
+msgstr "Fem"
+
+msgid "Five Hundred"
+msgstr "Femhundrede"
+
 msgid "For"
-msgstr ""
+msgstr "Gentag"
 
 msgid "Foreign Exchange Gain"
 msgstr "Gevinst på valutahandel"
@@ -1073,14 +1251,23 @@ msgstr "Gevinst på valutahandel"
 msgid "Foreign Exchange Loss"
 msgstr "Tab på valutahandel"
 
+msgid "Forty"
+msgstr "Fyrre"
+
+msgid "Four"
+msgstr "Fire"
+
+msgid "Fourteen"
+msgstr "Fjorten"
+
 msgid "Friday"
-msgstr ""
+msgstr "Fredag"
 
 msgid "From"
 msgstr "Fra"
 
 msgid "From Warehouse"
-msgstr ""
+msgstr "Fra lager"
 
 msgid "GIFI"
 msgstr "GIFI"
@@ -1095,10 +1282,10 @@ msgid "GIFI saved!"
 msgstr "GIFI gemt!"
 
 msgid "GL"
-msgstr ""
+msgstr "Hovedbog"
 
 msgid "GL Reference Number"
-msgstr ""
+msgstr "Hovedbog referencenummer"
 
 msgid "GL Transaction"
 msgstr "Postering i hovedbog"
@@ -1106,50 +1293,56 @@ msgstr "Postering i hovedbog"
 msgid "General Ledger"
 msgstr "Hovedbog"
 
+msgid "General Ledger Reports"
+msgstr "Hovedbog rapporter"
+
 msgid "Generate"
-msgstr ""
+msgstr "Generer"
 
 msgid "Generate Orders"
-msgstr ""
+msgstr "Generer ordrer"
 
 msgid "Generate Purchase Orders"
-msgstr ""
+msgstr "Generer indkøbsordrer"
 
 msgid "Generate Purchase Orders from Sales Order"
-msgstr ""
+msgstr "Generer indkøbsordrer fra salgsordrer"
 
 msgid "Generate Sales Order"
-msgstr ""
+msgstr "Generer salgsordre"
 
 msgid "Generate Sales Order from Purchase Orders"
-msgstr ""
+msgstr "Generer salgsordrer fra indkøbsordrer"
 
 msgid "Generate Sales Orders"
-msgstr ""
+msgstr "Generer salgsordrer"
+
+msgid "Gift Cert"
+msgstr "Gavekort"
 
 msgid "Goods & Services"
-msgstr "Varer og tjenester"
+msgstr "Varer og serviceydelser"
 
 msgid "Group"
 msgstr "Gruppe"
 
-msgid "Group Items"
-msgstr "Gruppedele"
-
 msgid "Group Translations"
 msgstr "Gruppeoversættelser"
 
+msgid "Group by"
+msgstr "Gruppér efter"
+
 msgid "Group deleted!"
-msgstr "Gruppe slettet!"
+msgstr "Varegruppe slettet!"
 
 msgid "Group missing!"
-msgstr "Gruppe mangler!"
+msgstr "Varegruppe mangler!"
 
 msgid "Group saved!"
-msgstr "Gruppe gemt!"
+msgstr "Varegruppe gemt!"
 
 msgid "Groups"
-msgstr "Grupper"
+msgstr "Varegrupper"
 
 msgid "HR"
 msgstr "HR"
@@ -1160,6 +1353,9 @@ msgstr "HTML-skabeloner"
 msgid "Heading"
 msgstr "Overskrift"
 
+msgid "Help"
+msgstr "Hjælp"
+
 msgid "History"
 msgstr "Historik"
 
@@ -1167,10 +1363,10 @@ msgid "Home Phone"
 msgstr "Telefon privat"
 
 msgid "Host"
-msgstr "Vært"
+msgstr "Host"
 
-msgid "Hostname missing!"
-msgstr "Værtsnavn mangler"
+msgid "Hundred"
+msgstr "Hundrede"
 
 msgid "IBAN"
 msgstr "IBAN"
@@ -1181,17 +1377,20 @@ msgstr "ID"
 msgid "Image"
 msgstr "Billede"
 
+msgid "Import Text"
+msgstr "Importer tekst"
+
 msgid "In-line"
 msgstr "Indlejret"
 
 msgid "Inactive"
-msgstr ""
+msgstr "Inaktiv"
 
 msgid "Include Exchange Rate Difference"
 msgstr "Inkludér difference i vekselkurs"
 
 msgid "Include Payment"
-msgstr ""
+msgstr "Inkludér betaling"
 
 msgid "Include in Report"
 msgstr "Inkludér i rapport"
@@ -1205,41 +1404,42 @@ msgstr "Indtægt"
 msgid "Income Statement"
 msgstr "Driftsregnskab"
 
-msgid "Income account does not exist!"
-msgstr ""
-
 msgid "Incorrect Dataset version!"
 msgstr "Forkert version af datasæt!"
 
-msgid "Increase"
-msgstr "Forøg"
-
 msgid "Individual Items"
-msgstr "Individuelle enheder"
+msgstr "Enkelte varenumre"
 
 msgid "Internal Notes"
 msgstr "Interne noter"
 
-msgid "Inventory"
-msgstr "Artikler"
+msgid "Invalid redirect"
+msgstr "Ugyldig viderestilling"
 
-msgid "Inventory account does not exist!"
-msgstr ""
+msgid "Inventory"
+msgstr "Lagerbeholdning"
+
+msgid "Inventory Activity"
+msgstr "Ændring i lagerbeholdning"
 
 msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
-msgstr "Lagerbeholdning skal være nul for at du kan forælde denne sammensætning"
+msgstr "Lagerbeholdning skal være nul for at du kan lade dette produkt udgå!"
 
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
-msgstr "Lagerbeholdning skal være nul for at du kan forælde denne enhed"
+msgstr "Lagerbeholdning skal være nul for at du kan lade denne vare udgå"
 
 msgid "Inventory saved!"
-msgstr "Lager gemt!"
+msgstr "Lagerbeholdning gemt!"
 
 msgid "Inventory transferred!"
-msgstr "Lager overført!"
+msgstr "Lagerbeholdning overført!"
 
 msgid "Invoice"
 msgstr "Faktura"
+
+#. ($form->{invnumber})
+msgid "Invoice %1 posted!"
+msgstr "Faktura %1 slettet!"
 
 msgid "Invoice Date"
 msgstr "Fakturadato"
@@ -1262,17 +1462,20 @@ msgstr "Fakturaer"
 msgid "Is this a summary account to record"
 msgstr "Samlekonto for"
 
+msgid "Item"
+msgstr "Varenummer"
+
 msgid "Item already on pricelist!"
 msgstr "Enkeltdel allerede på prisliste!"
 
 msgid "Item deleted!"
-msgstr "Enkeltdel slettet!"
+msgstr "Varenummer slettet!"
 
 msgid "Item not on file!"
-msgstr "Enkeltdel er ikke i databasen!"
+msgstr "Varenummer er ikke i databasen!"
 
 msgid "Items"
-msgstr "Enkeltdele"
+msgstr "Varenumre"
 
 msgid "Jan"
 msgstr "jan"
@@ -1281,25 +1484,31 @@ msgid "January"
 msgstr "januar"
 
 msgid "Job"
-msgstr ""
+msgstr "Projekt"
+
+msgid "Job Description"
+msgstr "Projektbeskrivelse"
 
 msgid "Job Name"
-msgstr ""
+msgstr "Projektnavn"
 
 msgid "Job Number"
-msgstr ""
+msgstr "Projektnummer"
 
 msgid "Job Number missing!"
-msgstr ""
+msgstr "Projektnummer mangler!"
 
 msgid "Job deleted!"
-msgstr ""
+msgstr "Projekt slettet!"
 
 msgid "Job saved!"
-msgstr ""
+msgstr "Projekt gemt!"
+
+msgid "Job/Project Number"
+msgstr "Projektnummer"
 
 msgid "Jobs"
-msgstr ""
+msgstr "Projekter"
 
 msgid "Jul"
 msgstr "jul"
@@ -1317,10 +1526,13 @@ msgid "LaTeX Templates"
 msgstr "LaTeX-skabeloner"
 
 msgid "Labor Code"
-msgstr ""
+msgstr "Opgave"
+
+msgid "Labor Code missing!"
+msgstr "Opgave mangler!"
 
 msgid "Labor/Overhead"
-msgstr "Arbejde/overhead"
+msgstr "Tidsregistrering"
 
 msgid "Language"
 msgstr "Sprog"
@@ -1338,19 +1550,23 @@ msgid "Languages not defined!"
 msgstr "Sprog ikke definerede!"
 
 msgid "Last Cost"
-msgstr ""
+msgstr "Sidste kostpris"
 
 msgid "Last Numbers & Default Accounts"
 msgstr "Løbenumre og standardkonti"
 
 msgid "Lead"
-msgstr ""
+msgstr "Lev.tid"
 
 msgid "Leadtime"
-msgstr "forsinkelsestid"
+msgstr "Leveringstid"
 
-msgid "Leave host and port field empty unless you want to make a remote connection."
-msgstr "Lad felterne \"vært\" og \"port\" være tomme medmindre du vil etablere en ekstern forbindelse."
+msgid "LedgerSMB website"
+msgstr "LedgerSMB web-side"
+
+#. ($form->{till_cash})
+msgid "Less Cash in Till At Start: %1"
+msgstr "Mindre initiel kassebeholdning: %1"
 
 msgid "Liability"
 msgstr "Passiv"
@@ -1368,37 +1584,37 @@ msgid "Link Accounts"
 msgstr "Forbind konti"
 
 msgid "List"
-msgstr "Vís"
+msgstr "Vis"
 
 msgid "List Accounts"
-msgstr "Vís konti"
+msgstr "Vis konti"
 
 msgid "List Businesses"
-msgstr "Vís forretninger"
+msgstr "Vis forretninger"
 
 msgid "List Departments"
-msgstr "Vís afdelinger"
+msgstr "Vis afdelinger"
 
 msgid "List GIFI"
-msgstr "Vís GIFI"
+msgstr "Vis GIFI"
 
 msgid "List Languages"
-msgstr "Vís sprog"
+msgstr "Vis sprog"
 
 msgid "List Price"
 msgstr "Listepris"
 
 msgid "List Projects"
-msgstr "Vís projekter"
+msgstr "Vis projekter"
 
 msgid "List SIC"
-msgstr "Vís SIC"
+msgstr "Vis SIC"
 
 msgid "List Transactions"
-msgstr "Vís bogføringer"
+msgstr "Vis bogføringer"
 
 msgid "List Warehouses"
-msgstr "Vís varehuse"
+msgstr "Vis lagre"
 
 msgid "Lock System"
 msgstr "Lås system"
@@ -1434,7 +1650,7 @@ msgid "Marked entries printed!"
 msgstr "Markerede poster udskrevet!"
 
 msgid "Markup"
-msgstr "Markup"
+msgstr "Bruttofortjeneste"
 
 msgid "Maximum"
 msgstr "Maksimum"
@@ -1454,26 +1670,32 @@ msgstr "Menubredde"
 msgid "Message"
 msgstr "Besked"
 
+msgid "Message: "
+msgstr "Besked: "
+
 msgid "Method"
 msgstr "Metode"
 
 msgid "Microfiche"
 msgstr "Mikrofilm"
 
+msgid "Million"
+msgstr "Million"
+
 msgid "Model"
 msgstr "Model"
 
 msgid "Monday"
-msgstr ""
+msgstr "Mandag"
 
 msgid "Month"
 msgstr "Måned"
 
 msgid "Month(s)"
-msgstr ""
+msgstr "Måned(er)"
 
 msgid "Months"
-msgstr ""
+msgstr "Måneder"
 
 msgid "Multibyte Encoding"
 msgstr "Multibyte Encoding"
@@ -1491,16 +1713,28 @@ msgid "New Templates"
 msgstr "Nye skabeloner"
 
 msgid "New Window"
-msgstr ""
+msgstr "Nyt vindue"
 
 msgid "Next"
-msgstr ""
+msgstr "Næste"
 
 msgid "Next Date"
-msgstr ""
+msgstr "Næste dato"
 
 msgid "Next Number"
-msgstr ""
+msgstr "Næste nummer"
+
+msgid "Nine"
+msgstr "Ni"
+
+msgid "Nine Hundred"
+msgstr "Nihundrede"
+
+msgid "Nineteen"
+msgstr "Nitten"
+
+msgid "Ninety"
+msgstr "Halvfems"
 
 msgid "No"
 msgstr "Nej"
@@ -1512,31 +1746,47 @@ msgid "No Dataset selected!"
 msgstr "Intet datasæt valgt"
 
 msgid "No Employees on file!"
-msgstr ""
+msgstr "Ingen medarbejdere i databasen!"
+
+msgid "No GlobalDBH Configured or Could not Connect"
+msgstr "Ingen GlobalDBH konfigureret eller kunne ikke forbinde"
+
+msgid "No History!"
+msgstr "Ingen historik!"
 
 msgid "No Labor codes on file!"
-msgstr ""
+msgstr "Ingen opgaver i databasen!"
 
-msgid "No email address for"
-msgstr "Ingen epostadresse for"
+msgid "No Parts on file!"
+msgstr "Ingen varer i databasen!"
+
+msgid "No Services on file!"
+msgstr "Ingen serviceydelser i databasen!"
+
+#. ($myconfig{name})
+msgid "No email address for %1"
+msgstr "Ingen e-mail-adresse for %1"
 
 msgid "No open Jobs!"
-msgstr ""
+msgstr "Ingen åbne projekter!"
 
 msgid "No open Projects!"
-msgstr ""
+msgstr "Ingen åbne projekter!"
 
 msgid "No."
 msgstr "Nummer"
 
+msgid "Non-chargeable"
+msgstr "Ikke-fakturerbar"
+
 msgid "Non-taxable"
-msgstr "Ikke-beskattet"
+msgstr "Uden moms/afgift"
 
 msgid "Non-taxable Purchases"
-msgstr "Ikke-beskattede køb"
+msgstr "Køb uden moms/afgift"
 
 msgid "Non-taxable Sales"
-msgstr "Ikke-beskattede salg"
+msgstr "Salg uden moms/afgift"
 
 msgid "Non-tracking Items"
 msgstr ""
@@ -1546,6 +1796,9 @@ msgstr "Bemærkninger"
 
 msgid "Nothing entered!"
 msgstr "Ingenting indtastet!"
+
+msgid "Nothing open!"
+msgstr "Intet åbent!"
 
 msgid "Nothing selected!"
 msgstr "Ingenting valgt!"
@@ -1571,11 +1824,12 @@ msgstr "Nummer"
 msgid "Number Format"
 msgstr "Numerisk format"
 
-msgid "Number missing in Row"
-msgstr "Tal mangler i række"
+#. ($i)
+msgid "Number missing in Row %1"
+msgstr "Tal mangler i række %1"
 
 msgid "O"
-msgstr "O"
+msgstr ""
 
 msgid "OH"
 msgstr ""
@@ -1592,11 +1846,17 @@ msgstr "oktober"
 msgid "On Hand"
 msgstr "På lager"
 
+msgid "One"
+msgstr "En"
+
+msgid "One-o"
+msgstr "En"
+
+msgid "Onhand"
+msgstr "På lager"
+
 msgid "Open"
 msgstr "Åbn"
-
-msgid "Oracle Database Administration"
-msgstr "Oracle Administration af database"
 
 msgid "Order"
 msgstr "Ordre"
@@ -1620,19 +1880,22 @@ msgid "Order deleted!"
 msgstr "Ordre slettet"
 
 msgid "Order generation failed!"
-msgstr ""
+msgstr "Ordregenerering fejlet!"
 
 msgid "Order saved!"
-msgstr "Ordre gemt"
+msgstr "Ordre gemt!"
+
+msgid "Ordering"
+msgstr "Ordning"
 
 msgid "Orders generated!"
-msgstr ""
+msgstr "Ordrer genereret!"
 
 msgid "Orphaned"
 msgstr "Fritstående"
 
 msgid "Out of balance transaction!"
-msgstr "Ubalanceret overførsel"
+msgstr "Ubalanceret overførsel!"
 
 msgid "Out of balance!"
 msgstr "Ikke i balance!"
@@ -1640,17 +1903,26 @@ msgstr "Ikke i balance!"
 msgid "Outstanding"
 msgstr "Udestående"
 
+msgid "Over"
+msgstr "Over"
+
+msgid "Overdue"
+msgstr "Overskredet"
+
 msgid "PDF"
 msgstr "PDF"
 
+msgid "PO"
+msgstr "Indkøbsordre"
+
 msgid "PO Number"
-msgstr ""
+msgstr "Indkøbsordrenummer"
 
 msgid "POS"
-msgstr "POS"
+msgstr "Salgssted"
 
 msgid "POS Invoice"
-msgstr "POS faktura"
+msgstr "Salgssted faktura"
 
 msgid "Packing List"
 msgstr "Følgeseddel"
@@ -1671,13 +1943,16 @@ msgid "Part"
 msgstr "Vare"
 
 msgid "Part Number"
-msgstr ""
-
-msgid "Partnumber"
 msgstr "Varenummer"
 
 msgid "Parts"
-msgstr "Dele"
+msgstr "Varer"
+
+msgid "Parts Requirements"
+msgstr "Efterspurgte varer"
+
+msgid "Passed incorrect query type to get_cutstom_queries."
+msgstr "Gav forkert forespørgselstype til get_cutstom_queries."
 
 msgid "Password"
 msgstr "Adgangskode"
@@ -1686,10 +1961,10 @@ msgid "Password changed!"
 msgstr "Adgangskode ændret"
 
 msgid "Password does not match!"
-msgstr ""
+msgstr "Adgangskoden er ikke korrekt!"
 
 msgid "Passwords do not match!"
-msgstr ""
+msgstr "Adgangskoderne er ikke ens!"
 
 msgid "Payables"
 msgstr "Udeståender"
@@ -1707,7 +1982,7 @@ msgid "Payments"
 msgstr "Betalinger"
 
 msgid "Payments posted!"
-msgstr ""
+msgstr "Bogførte betalinger"
 
 msgid "Payroll Deduction"
 msgstr "Fradrag i løn"
@@ -1730,14 +2005,14 @@ msgstr "Pakkeliste"
 msgid "Pick Lists"
 msgstr "Pakkelister"
 
+msgid "Please see attatched report for list of invoices paid."
+msgstr "Se venligst vedlagte rapport over betalte fakturaer."
+
 msgid "Port"
 msgstr "Port"
 
-msgid "Port missing!"
-msgstr "Port mangler"
-
 msgid "Pos"
-msgstr ""
+msgstr "Pos"
 
 msgid "Post"
 msgstr "Bogfør"
@@ -1748,11 +2023,24 @@ msgstr "Bogfør som ny"
 msgid "Posted!"
 msgstr "Bogført!"
 
-msgid "Posting"
-msgstr ""
+#. ($form->{reference})
+msgid "Posting GL Transaction %1"
+msgstr "Posterer i hovedbog %1"
+
+#. ($form->{invnumber})
+msgid "Posting Sales Invoice %1"
+msgstr "Posterer salgsfaktura %1"
+
+#. ($form->{invnumber})
+msgid "Posting Transaction %1"
+msgstr "Posterer postering %1"
+
+#. ($form->{invnumber})
+msgid "Posting Vendor Invoice %1"
+msgstr "Posterer leverandørfaktura %1"
 
 msgid "Posting failed!"
-msgstr ""
+msgstr "Bogføring fejlede!"
 
 msgid "Postscript"
 msgstr "Postscript"
@@ -1794,19 +2082,13 @@ msgid "Print and Post"
 msgstr "Udskriv og send"
 
 msgid "Print and Post as new"
-msgstr ""
+msgstr "Udskriv og send som ny"
 
 msgid "Print and Save"
 msgstr "Udskriv og gem"
 
 msgid "Print and Save as new"
-msgstr ""
-
-msgid "Print and post as new"
-msgstr ""
-
-msgid "Print and save as new"
-msgstr ""
+msgstr "Udskriv og gem som ny"
 
 msgid "Printed"
 msgstr "Udskrevet"
@@ -1815,10 +2097,7 @@ msgid "Printer"
 msgstr "Printer"
 
 msgid "Printing"
-msgstr ""
-
-msgid "Printing ... "
-msgstr "Udskriver ... "
+msgstr "Udskriver"
 
 msgid "Process Transactions"
 msgstr ""
@@ -1836,7 +2115,7 @@ msgid "Project Description Translations"
 msgstr "Oversættelser af projektbeskrivelse"
 
 msgid "Project Name"
-msgstr ""
+msgstr "Projektnavn"
 
 msgid "Project Number"
 msgstr "Projektnummer"
@@ -1857,10 +2136,10 @@ msgid "Project saved!"
 msgstr "Projekt gemt!"
 
 msgid "Project/Job Name"
-msgstr ""
+msgstr "Projektnavn"
 
 msgid "Project/Job Number"
-msgstr ""
+msgstr "Projectnummer"
 
 msgid "Projects"
 msgstr "Projekter"
@@ -1878,16 +2157,19 @@ msgid "Qty"
 msgstr "Mængde"
 
 msgid "Quantity exceeds available units to stock!"
-msgstr "Mængde overstiger tilgægeligt antal på lager!"
+msgstr "Mængde overstiger tilgængeligt antal på lager!"
 
 msgid "Quarter"
 msgstr "Kvartal"
 
+msgid "Queue"
+msgstr "Kø"
+
+msgid "Queued"
+msgstr "Sat i kø"
+
 msgid "Quotation"
 msgstr "Tilbud"
-
-msgid "Quotation "
-msgstr "Tilbud "
 
 msgid "Quotation Date"
 msgstr "Tilbudsdato"
@@ -1913,9 +2195,6 @@ msgstr "R"
 msgid "RFQ"
 msgstr "Tilbudsønske"
 
-msgid "RFQ "
-msgstr "Tilbudsønske "
-
 msgid "RFQ Number"
 msgstr "Nummer for tilbudsønske"
 
@@ -1932,7 +2211,7 @@ msgid "Rate missing!"
 msgstr "Sats mangler!"
 
 msgid "Recd"
-msgstr "Modtaget"
+msgstr "Modt"
 
 msgid "Receipt"
 msgstr "Kvittering"
@@ -1950,7 +2229,10 @@ msgid "Receive"
 msgstr "Modtagelse"
 
 msgid "Receive Merchandise"
-msgstr "Modtagelse af varer"
+msgstr "Modtag varer"
+
+msgid "Received"
+msgstr "Modtaget"
 
 msgid "Reconciliation"
 msgstr "Afstemning"
@@ -1961,11 +2243,12 @@ msgstr "Afstemningsrapport"
 msgid "Record in"
 msgstr "Bogfør på"
 
-msgid "Recurring Transaction"
-msgstr ""
+#. ($description)
+msgid "Recurring Transaction for %1"
+msgstr "Gentagen transaktion for %1"
 
 msgid "Recurring Transactions"
-msgstr ""
+msgstr "Gentagne transaktioner"
 
 msgid "Reference"
 msgstr "Reference"
@@ -1979,9 +2262,6 @@ msgstr "Fjern"
 msgid "Remove Audit trail up to"
 msgstr "Fjern revisionssporing indtil"
 
-msgid "Remove Audit trails up to"
-msgstr "Fjern revisionssporing indtil"
-
 msgid "Removed spoolfiles!"
 msgstr "Fjernede køfiler!"
 
@@ -1989,7 +2269,7 @@ msgid "Removing marked entries from queue ..."
 msgstr "Fjerner markerede poster fra kø ..."
 
 msgid "Repeat"
-msgstr ""
+msgstr "Gentag"
 
 msgid "Report for"
 msgstr "Rapport for"
@@ -1998,7 +2278,7 @@ msgid "Reports"
 msgstr "Rapporter"
 
 msgid "Req"
-msgstr ""
+msgstr "Krævet"
 
 msgid "Request for Quotation"
 msgstr "Ønske om tilbud"
@@ -2009,14 +2289,24 @@ msgstr "Ønske om tilbud"
 msgid "Required by"
 msgstr "Bestilt af"
 
+msgid "Requirements"
+msgstr "Krav"
+
+#. ($amount)
+msgid "Reset Till By %1"
+msgstr "Nulstil kasse med %1"
+
 msgid "Retained Earnings"
 msgstr "Realiseret overskud"
+
+msgid "Revenue"
+msgstr "Indtægt"
 
 msgid "Role"
 msgstr "Rolle"
 
 msgid "S"
-msgstr "S"
+msgstr ""
 
 msgid "SIC"
 msgstr "SIC"
@@ -2028,10 +2318,13 @@ msgid "SIC saved!"
 msgstr "SIC gemt!"
 
 msgid "SKU"
-msgstr "SKU"
+msgstr "Varenummer"
+
+msgid "SO"
+msgstr "Salgsordre"
 
 msgid "SSN"
-msgstr "CIR"
+msgstr "CPR"
 
 msgid "Sale"
 msgstr "Salg"
@@ -2042,14 +2335,11 @@ msgstr "Salg"
 msgid "Sales Invoice"
 msgstr "Salgsfaktura"
 
-msgid "Sales Invoice "
-msgstr "Salgsfaktura "
-
 msgid "Sales Invoice."
 msgstr "Salgsfaktura."
 
 msgid "Sales Invoice/AR Transaction Number"
-msgstr ""
+msgstr "Salgsfaktura/debitorposteringnummer"
 
 msgid "Sales Invoices"
 msgstr "Salgsfakturaer"
@@ -2070,7 +2360,7 @@ msgid "Salesperson"
 msgstr "Sælger"
 
 msgid "Saturday"
-msgstr ""
+msgstr "Lørdag"
 
 msgid "Save"
 msgstr "Gem"
@@ -2079,7 +2369,7 @@ msgid "Save Pricelist"
 msgstr "Gem prisliste"
 
 msgid "Save Schedule"
-msgstr ""
+msgstr "Gem planlægning"
 
 msgid "Save as new"
 msgstr "Gem som ny"
@@ -2087,14 +2377,15 @@ msgstr "Gem som ny"
 msgid "Save to File"
 msgstr "Gem i fil"
 
-msgid "Saving"
-msgstr ""
+#. ($flabel, $form->{$ordnumber})
+msgid "Saving %1 %2"
+msgstr "Gemmer %1 %2"
 
 msgid "Schedule"
-msgstr ""
+msgstr "Planlæg"
 
 msgid "Scheduled"
-msgstr ""
+msgstr "Planlagt"
 
 msgid "Screen"
 msgstr "Skærm"
@@ -2106,31 +2397,25 @@ msgid "Select"
 msgstr "Vælg"
 
 msgid "Select Customer"
-msgstr ""
+msgstr "Vælg kunde"
 
 msgid "Select Vendor"
-msgstr ""
+msgstr "Vælg leverandør"
 
 msgid "Select a Printer!"
-msgstr ""
-
-msgid "Select a printer!"
-msgstr ""
+msgstr "Vælg en printer!"
 
 msgid "Select all"
 msgstr "Vælg alt"
 
-msgid "Select from one of the items below"
-msgstr "Vælg fra en af tingene nedenfor, og tryk \"Fortsæt\""
-
 msgid "Select from one of the names below"
-msgstr "Vælg en af navnene nedenfor"
+msgstr "Vælg et af navnene nedenfor"
 
 msgid "Select from one of the projects below"
 msgstr "Vælg et af projekterne nedenfor"
 
 msgid "Select items"
-msgstr ""
+msgstr "Vælg varenumre"
 
 msgid "Select payment"
 msgstr "Vælg betaling"
@@ -2139,7 +2424,7 @@ msgid "Select postscript or PDF!"
 msgstr "Vælg postscript eller PDF"
 
 msgid "Select txt, postscript or PDF!"
-msgstr ""
+msgstr "Vælg txt, postscript eller PDF"
 
 msgid "Sell"
 msgstr "Sælg"
@@ -2148,10 +2433,10 @@ msgid "Sell Price"
 msgstr "Salgspris"
 
 msgid "Send by E-Mail"
-msgstr "Sendt med epost"
+msgstr "Send som e-post"
 
 msgid "Sending"
-msgstr ""
+msgstr "Sender"
 
 msgid "Sep"
 msgstr "sep"
@@ -2166,25 +2451,40 @@ msgid "Serial Number"
 msgstr "Serienummer"
 
 msgid "Service"
-msgstr "Tjeneste"
+msgstr "Serviceydelse"
 
 msgid "Service Code"
-msgstr ""
+msgstr "Serviceydelsesnummer"
+
+msgid "Service Code missing!"
+msgstr "Serviceydelsesnummer mangler!"
 
 msgid "Service/Labor Code"
-msgstr ""
+msgstr "Serviceydelse/opgave"
 
 msgid "Services"
-msgstr "Tjenester"
+msgstr "Serviceydelser"
 
 msgid "Session Timeout"
-msgstr ""
+msgstr "Session timeout"
 
 msgid "Session expired!"
-msgstr ""
+msgstr "Session udløbet1"
 
 msgid "Setup Templates"
 msgstr "Skabeloner for opsætning"
+
+msgid "Seven"
+msgstr "Syv"
+
+msgid "Seven Hundred"
+msgstr "Syvhundrede"
+
+msgid "Seventeen"
+msgstr "Sytten"
+
+msgid "Seventy"
+msgstr "Halvfjerds"
 
 msgid "Ship"
 msgstr "Afsend"
@@ -2219,6 +2519,21 @@ msgstr "Kort"
 msgid "Signature"
 msgstr "Underskrift"
 
+msgid "Six"
+msgstr "Seks"
+
+msgid "Sixteen"
+msgstr "Seksten"
+
+msgid "Sixty"
+msgstr "Tres"
+
+msgid "Sold"
+msgstr "Solgt"
+
+msgid "Sort by"
+msgstr "Sortér efter"
+
 msgid "Source"
 msgstr "Bilag"
 
@@ -2243,11 +2558,16 @@ msgstr "Stat/provins"
 msgid "Statement"
 msgstr "Opgørelse"
 
+#. ($form->{todate})
+msgid "Statement - %1"
+msgstr "Opgørelse - %1"
+
 msgid "Statement Balance"
 msgstr "Balanceopgørelse"
 
-msgid "Statement sent to"
-msgstr "Opgørelse sendt til"
+#. ($form->{$form->{ct}})
+msgid "Statement sent to %1"
+msgstr "Opgørelse sendt til %1"
 
 msgid "Statements sent to printer!"
 msgstr "Opgørelser sendt til printer"
@@ -2256,19 +2576,32 @@ msgid "Stock"
 msgstr "Lager"
 
 msgid "Stock Assembly"
-msgstr "Lagr sammensætning"
+msgstr "Sæt produkt på lager"
 
-msgid "Stocking Date"
+msgid "Stock Finished Goods"
+msgstr "Sæt færdige varer på lager"
+
+msgid "Stores Card"
+msgstr ""
+
+msgid "Stores Card saved!"
+msgstr ""
+
+msgid "Stores Cards"
 msgstr ""
 
 msgid "Stylesheet"
-msgstr "Stilark"
+msgstr "Stylesheet"
 
 msgid "Sub-contract GIFI"
-msgstr "Kode for underleverandør"
+msgstr "Underleverandørs GIFI"
 
 msgid "Subject"
 msgstr "Emne"
+
+#. ($form->{subject})
+msgid "Subject: %1"
+msgstr "Emne: %1"
 
 msgid "Subtotal"
 msgstr "Subtotal"
@@ -2277,10 +2610,13 @@ msgid "Summary"
 msgstr "Oversigt"
 
 msgid "Sunday"
-msgstr ""
+msgstr "Søndag"
+
+msgid "Superuser"
+msgstr "Superuser"
 
 msgid "Supervisor"
-msgstr ""
+msgstr "Supervisor"
 
 msgid "System"
 msgstr "System"
@@ -2288,29 +2624,41 @@ msgstr "System"
 msgid "System Defaults"
 msgstr "Standardopsætning for system"
 
-msgid "Tax"
-msgstr "Afgift/Moms"
+msgid "System currently down for maintenance!"
+msgstr "Systemet er i øjeblikket ude af drift på grund af vedligeholdelse!"
 
-msgid "Tax Accounts"
-msgstr "Afgift/Momskonti"
+msgid "Tax"
+msgstr "Moms/afgift"
+
+msgid "Tax Account"
+msgstr "Moms/afgiftkonti"
 
 msgid "Tax Included"
-msgstr "Inkl. afgifter og moms"
+msgstr "Inkl. moms og afgifter"
 
 msgid "Tax Number"
-msgstr "Skattenummer"
+msgstr "CVR"
 
 msgid "Tax Number / SSN"
-msgstr "Skattenumme/CIR"
+msgstr "CVR / CPR"
+
+msgid "Tax Rules"
+msgstr "Afgifter"
 
 msgid "Tax collected"
-msgstr "Skat opkrævet"
+msgstr "Opkrævet moms/afgifter"
 
 msgid "Tax paid"
-msgstr "Skat betalt"
+msgstr "Betalt moms/afgifter"
 
 msgid "Taxable"
-msgstr "Afgifts/momspligtig"
+msgstr "Moms/afgiftspligtig"
+
+msgid "Taxes"
+msgstr "Moms/afgifter"
+
+msgid "Taxes saved!"
+msgstr "Moms/afgifter gemt!"
 
 msgid "Template saved!"
 msgstr "Skabelon gemt!"
@@ -2318,11 +2666,14 @@ msgstr "Skabelon gemt!"
 msgid "Templates"
 msgstr "Skabeloner"
 
+msgid "Ten"
+msgstr "Ti"
+
 msgid "Terms"
 msgstr "Netto"
 
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 msgid "Text Templates"
 msgstr "Skabeloner for tekst"
@@ -2330,53 +2681,80 @@ msgstr "Skabeloner for tekst"
 msgid "The following Datasets are not in use and can be deleted"
 msgstr "De følgende datasæt er ikke i brug og kan slettes"
 
-msgid "The following Datasets need to be updated"
-msgstr "De følgende datasæt skal opdateres"
+msgid "Thirteen"
+msgstr "Tretten"
+
+msgid "Thirty"
+msgstr "Tredive"
 
 msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
 msgstr "Dette er en indledende kontrol af eksisterende kilder. Ingenting vil blive oprettet eller slettet på dette trin"
 
+msgid "This is your first time logging into LedgerSMB.  Please set your administrative password"
+msgstr "Dette er første gang der logges på LedgerSMB. Sæt venligst en administrativ adgangskode"
+
+msgid "Thousand"
+msgstr "Tusind"
+
+msgid "Three"
+msgstr "Tre"
+
 msgid "Thursday"
-msgstr ""
+msgstr "Torsdag"
 
 msgid "Till"
 msgstr "Indtil"
 
+msgid "Time"
+msgstr "Klokkeslæt"
+
+msgid "Time Card"
+msgstr "Timeseddel"
+
+msgid "Time Card deleted!"
+msgstr "Timeseddel slettet!"
+
+msgid "Time Card saved!"
+msgstr "Timeseddel gemt!"
+
+msgid "Time Cards"
+msgstr "Timesedler"
+
 msgid "Time In"
-msgstr ""
+msgstr "Starttid"
 
 msgid "Time Out"
-msgstr ""
-
-msgid "Timecard"
-msgstr ""
-
-msgid "Timecard deleted!"
-msgstr ""
-
-msgid "Timecard saved!"
-msgstr ""
-
-msgid "Timecards"
-msgstr ""
+msgstr "Sluttid"
 
 msgid "Times"
-msgstr ""
+msgstr "Gange"
 
 msgid "To"
 msgstr "til"
 
+#. ($locale->date(\%myconfig, $form->{transdateto}, 1)
+msgid "To %1"
+msgstr "Til %1"
+
 msgid "To Warehouse"
-msgstr ""
+msgstr "Til lager"
 
 msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
 msgstr "Skift brugernavnet for en eksisterende bruger og gem for at tilføje en ny bruger til en gruppe. Den nye bruger vil så bive gemt med de samme indstillinger under det nye brugernavn."
+
+#. ($form->{email})
+msgid "To: %1"
+msgstr "To: %1"
 
 msgid "Top Level"
 msgstr "Topniveau"
 
 msgid "Total"
 msgstr "I alt"
+
+#. ($form->{sub_sub})
+msgid "Total Cash in Drawer: %1"
+msgstr "Totalt kontant i skuffen: %1"
 
 msgid "Tracking Items"
 msgstr ""
@@ -2391,7 +2769,7 @@ msgid "Transaction Date missing!"
 msgstr "Posteringsdato mangler!"
 
 msgid "Transaction Dates"
-msgstr ""
+msgstr "Posteringsdato"
 
 msgid "Transaction deleted!"
 msgstr "Postering slettet!"
@@ -2412,10 +2790,10 @@ msgid "Transfer"
 msgstr "Overførsel"
 
 msgid "Transfer Inventory"
-msgstr "Oversigt over overførsler"
+msgstr "Overfør lagerbeholdning"
 
 msgid "Transfer from"
-msgstr ""
+msgstr "Overfør fra"
 
 msgid "Transfer to"
 msgstr "Overfør til"
@@ -2438,17 +2816,59 @@ msgstr "Oversættelser gemt!"
 msgid "Trial Balance"
 msgstr "Foreløbig status"
 
+msgid "Trillion"
+msgstr "Billion"
+
 msgid "Tuesday"
-msgstr ""
+msgstr "Tirsdag"
+
+msgid "Twelve"
+msgstr "Tolv"
+
+msgid "Twenty"
+msgstr "Tyve"
+
+msgid "Twenty Eight"
+msgstr "Otteogtyve"
+
+msgid "Twenty Five"
+msgstr "Femogtyve"
+
+msgid "Twenty Four"
+msgstr "Fireogtyve"
+
+msgid "Twenty Nine"
+msgstr "Niogtyve"
+
+msgid "Twenty One"
+msgstr "Enogtyve"
+
+msgid "Twenty One-o"
+msgstr "Enogtyve"
+
+msgid "Twenty Seven"
+msgstr "Syvogtyve"
+
+msgid "Twenty Six"
+msgstr "Seksogtyve"
+
+msgid "Twenty Three"
+msgstr "Treogtyve"
+
+msgid "Twenty Two"
+msgstr "Toogtyve"
+
+msgid "Two"
+msgstr "To"
 
 msgid "Type of Business"
 msgstr "Type forretning"
 
+msgid "Under"
+msgstr "Under"
+
 msgid "Unit"
 msgstr "Enhed"
-
-msgid "Unit of measure"
-msgstr "Måleenhed"
 
 msgid "Unlock System"
 msgstr "Unlock System"
@@ -2456,14 +2876,12 @@ msgstr "Unlock System"
 msgid "Update"
 msgstr "Opdatér"
 
-msgid "Update Dataset"
-msgstr "Opdatér datasæt"
-
 msgid "Updated"
 msgstr "Opdateret"
 
-msgid "Upgrading to Version"
-msgstr "Opgraderer til version"
+#. ($form->{version})
+msgid "Upgrading to Version %1 ..."
+msgstr "Opgraderer til version %1 ..."
 
 msgid "Use Templates"
 msgstr "Brug skabeloner"
@@ -2477,6 +2895,9 @@ msgstr "Bruger slettet!"
 msgid "User saved!"
 msgstr "Bruger gemt!"
 
+msgid "Valid To"
+msgstr "Gældende indtil"
+
 msgid "Valid until"
 msgstr "Gældende indtil"
 
@@ -2487,16 +2908,13 @@ msgid "Vendor History"
 msgstr "Leverandørhistorik"
 
 msgid "Vendor Invoice"
-msgstr "Indkøbsfaktura"
-
-msgid "Vendor Invoice "
-msgstr "Indkøbsfaktura "
+msgstr "Leverandørfaktura"
 
 msgid "Vendor Invoice."
-msgstr "Indkøbsfaktura."
+msgstr "Leverandørfaktura."
 
 msgid "Vendor Invoice/AP Transaction Number"
-msgstr ""
+msgstr "Leverandørfaktura/kreditorposteringnummer"
 
 msgid "Vendor Invoices"
 msgstr "Leverandørfakturaer"
@@ -2522,32 +2940,35 @@ msgstr "Leverandører"
 msgid "Version"
 msgstr "Version"
 
+msgid "Visa/MC"
+msgstr "Visa/MC"
+
 msgid "Warehouse"
-msgstr "Varehus"
+msgstr "Lager"
 
 msgid "Warehouse deleted!"
-msgstr "Varehus slettet!"
+msgstr "Lager slettet!"
 
 msgid "Warehouse saved!"
-msgstr "Varehus gemt!"
+msgstr "Lager gemt!"
 
 msgid "Warehouses"
-msgstr "Varehuse"
+msgstr "Lagre"
 
 msgid "Warning!"
 msgstr "Advarsel!"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "Onsdag"
 
 msgid "Week"
-msgstr ""
+msgstr "Uge"
 
 msgid "Week(s)"
-msgstr ""
+msgstr "Uge(r)"
 
 msgid "Weeks"
-msgstr ""
+msgstr "Uger"
 
 msgid "Weight"
 msgstr "Vægt"
@@ -2556,13 +2977,13 @@ msgid "Weight Unit"
 msgstr "Vægtenhed"
 
 msgid "What type of item is this?"
-msgstr "Hvilken type ting er dette?"
+msgstr "Hvilken type varenummer er dette?"
 
 msgid "Work Order"
-msgstr "Arbejdsnummer"
+msgstr "Arbejdsseddel"
 
 msgid "Work Orders"
-msgstr "Arbejdsordrer"
+msgstr "Arbejdssedler"
 
 msgid "Work Phone"
 msgstr "Telefon arbejde"
@@ -2571,7 +2992,7 @@ msgid "Year"
 msgstr "År"
 
 msgid "Year(s)"
-msgstr ""
+msgstr "År"
 
 msgid "Yearend"
 msgstr "Årsslutning"
@@ -2586,13 +3007,20 @@ msgid "Yearend posting failed!"
 msgstr "Postering af årsslutning mislykkedes!"
 
 msgid "Years"
-msgstr ""
+msgstr "År"
 
 msgid "Yes"
 msgstr "Ja"
 
 msgid "You are logged out"
-msgstr ""
+msgstr "Du er logget ud"
+
+msgid "You are logged out!"
+msgstr "Du er logget ud1"
+
+#. ($difference)
+msgid "You are over by %1"
+msgstr "Du har %1 for meget"
 
 msgid "You are posting an existing transaction!"
 msgstr ""
@@ -2601,43 +3029,47 @@ msgid "You are printing and posting an existing transaction!"
 msgstr ""
 
 msgid "You are printing and saving an existing order"
-msgstr ""
+msgstr "Du udskriver og gemmer en eksisterende ordre"
 
 msgid "You are printing and saving an existing quotation"
-msgstr ""
+msgstr "Du udskriver og gemmer et eksisterende tilbud"
 
 msgid "You are printing and saving an existing transaction!"
 msgstr ""
 
 msgid "You are saving an existing order"
-msgstr ""
+msgstr "Du gemmer en eksisterende ordre"
 
 msgid "You are saving an existing quotation"
-msgstr ""
+msgstr "Du gemmer et eksisterende tilbud"
 
 msgid "You are saving an existing transaction!"
 msgstr ""
 
+#. ($difference * -1)
+msgid "You are under by %1"
+msgstr "Du har %1 for lidt"
+
 msgid "You did not enter a name!"
 msgstr "Du angav ikke et navn"
 
-msgid "You must enter a host and port for local and remote connections!"
-msgstr "Du skal angive en vært og en port for lokale og eksterne forbindelser!"
+msgid "Zero"
+msgstr "Nul"
 
 msgid "Zip/Postal Code"
-msgstr ""
+msgstr "Postnummer"
 
 msgid "account cannot be set to any other type of account"
 msgstr "konto kan ikke sættes til nogen anden type konto"
+
+msgid "action= not defined!"
+msgstr "action= ikke defineret!"
 
 msgid "as at"
 msgstr "som ved"
 
 msgid "days"
 msgstr "dage"
-
-msgid "does not exist"
-msgstr "eksisterer ikke"
 
 msgid "done"
 msgstr "færdig"
@@ -2646,44 +3078,23 @@ msgid "ea"
 msgstr "stk"
 
 msgid "failed"
-msgstr ""
-
-msgid "for"
-msgstr ""
+msgstr "fejlede"
 
 msgid "for Period"
 msgstr "for perioden"
 
-msgid "is already a member!"
-msgstr "er allerede et medlem"
-
 msgid "localhost"
 msgstr "lokalt"
 
-msgid "locked!"
-msgstr "låst"
-
-msgid "partsgroup"
-msgstr ""
-
-msgid "posted!"
-msgstr "bogført!"
-
 msgid "sent"
 msgstr "sendt"
-
-msgid "successfully created!"
-msgstr "oprettet!"
 
 msgid "successfully deleted!"
 msgstr "slettet!"
 
 msgid "time(s)"
-msgstr ""
+msgstr "gang(e)"
 
 msgid "unexpected error!"
-msgstr ""
-
-msgid "website"
-msgstr "på Internet"
+msgstr "uventet fejl!"
 
