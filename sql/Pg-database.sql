@@ -817,7 +817,7 @@ create unique index language_code_key on language (code);
 create index jcitems_id_key on jcitems (id);
 
 --
-CREATE FUNCTION del_yearend() RETURNS OPAQUE AS '
+CREATE FUNCTION del_yearend() RETURNS TRIGGER AS '
 begin
   delete from yearend where trans_id = old.id;
   return NULL;
@@ -828,7 +828,7 @@ end;
 CREATE TRIGGER del_yearend AFTER DELETE ON gl FOR EACH ROW EXECUTE PROCEDURE del_yearend();
 -- end trigger
 --
-CREATE FUNCTION del_department() RETURNS OPAQUE AS '
+CREATE FUNCTION del_department() RETURNS TRIGGER AS '
 begin
   delete from dpt_trans where trans_id = old.id;
   return NULL;
@@ -845,7 +845,7 @@ CREATE TRIGGER del_department AFTER DELETE ON gl FOR EACH ROW EXECUTE PROCEDURE 
 CREATE TRIGGER del_department AFTER DELETE ON oe FOR EACH ROW EXECUTE PROCEDURE del_department();
 -- end trigger
 --
-CREATE FUNCTION del_customer() RETURNS OPAQUE AS '
+CREATE FUNCTION del_customer() RETURNS TRIGGER AS '
 begin
   delete from shipto where trans_id = old.id;
   delete from customertax where customer_id = old.id;
@@ -858,7 +858,7 @@ end;
 CREATE TRIGGER del_customer AFTER DELETE ON customer FOR EACH ROW EXECUTE PROCEDURE del_customer();
 -- end trigger
 --
-CREATE FUNCTION del_vendor() RETURNS OPAQUE AS '
+CREATE FUNCTION del_vendor() RETURNS TRIGGER AS '
 begin
   delete from shipto where trans_id = old.id;
   delete from vendortax where vendor_id = old.id;
@@ -871,7 +871,7 @@ end;
 CREATE TRIGGER del_vendor AFTER DELETE ON vendor FOR EACH ROW EXECUTE PROCEDURE del_vendor();
 -- end trigger
 --
-CREATE FUNCTION del_exchangerate() RETURNS OPAQUE AS '
+CREATE FUNCTION del_exchangerate() RETURNS TRIGGER AS '
 
 declare
   t_transdate date;
@@ -881,7 +881,7 @@ declare
 
 begin
 
-  select into d_curr substr(curr,1,3) from defaults;
+  select into d_curr substr(value,1,3) from defaults where setting_key = ''curr'';
   
   if TG_RELNAME = ''ar'' then
     select into t_curr, t_transdate curr, transdate from ar where id = old.id;
@@ -938,7 +938,7 @@ CREATE TRIGGER del_exchangerate BEFORE DELETE ON ap FOR EACH ROW EXECUTE PROCEDU
 CREATE TRIGGER del_exchangerate BEFORE DELETE ON oe FOR EACH ROW EXECUTE PROCEDURE del_exchangerate();
 -- end trigger
 --
-CREATE FUNCTION check_inventory() RETURNS OPAQUE AS '
+CREATE FUNCTION check_inventory() RETURNS TRIGGER AS '
 
 declare
   itemid int;
@@ -964,7 +964,7 @@ CREATE TRIGGER check_inventory AFTER UPDATE ON oe FOR EACH ROW EXECUTE PROCEDURE
 -- end trigger
 --
 --
-CREATE FUNCTION check_department() RETURNS OPAQUE AS '
+CREATE FUNCTION check_department() RETURNS TRIGGER AS '
 
 declare
   dpt_id int;
@@ -998,7 +998,7 @@ CREATE TRIGGER check_department AFTER INSERT OR UPDATE ON gl FOR EACH ROW EXECUT
 CREATE TRIGGER check_department AFTER INSERT OR UPDATE ON oe FOR EACH ROW EXECUTE PROCEDURE check_department();
 -- end trigger
 --
-CREATE FUNCTION del_recurring() returns opaque as '
+CREATE FUNCTION del_recurring() RETURNS TRIGGER AS '
 BEGIN
   DELETE FROM recurring WHERE id = old.id;
   DELETE FROM recurringemail WHERE id = old.id;
