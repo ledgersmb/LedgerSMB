@@ -1,7 +1,7 @@
 # RPM spec written for and tested on Fedora Core 6
 Summary: LedgerSMB - Open Source accounting software
 Name: ledger-smb
-Version: 1.2.0b2
+Version: 1.2.0b3
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
@@ -99,7 +99,6 @@ cp -rp *.pl favicon.ico index.html ledger-smb.eps ledger-smb.gif ledger-smb.png 
   bin LedgerSMB sql utils locale drivers \
   Config Class Locale \
   $RPM_BUILD_ROOT%{_datadir}/%{name}/
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/{setup.pl,SL2LS.pl} # FIXME - install somewhere else...
 rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}/locale/legacy
 
 # users - written to by cgi
@@ -150,7 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %doc doc/{COPYRIGHT,faq.html,LedgerSMB-manual.pdf,README,release_notes}
-%doc BUGS Changelog CONTRIBUTORS INSTALL LICENSE README.sql-ledger README.translations TODO UPGRADE
+%doc BUGS Changelog CONTRIBUTORS INSTALL LICENSE README.translations TODO UPGRADE
 
 
 %changelog
