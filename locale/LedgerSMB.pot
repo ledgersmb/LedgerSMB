@@ -2586,7 +2586,7 @@ msgid "Parts Requirements"
 msgstr ""
 
 #: LedgerSMB/Form.pm:1336
-msgid "Passed incorrect query type to get_cutstom_queries."
+msgid "Passed incorrect query type to run_custom_queries."
 msgstr ""
 
 #: bin/admin.pl:1053 bin/admin.pl:1062 bin/admin.pl:107 bin/admin.pl:150 bin/admin.pl:489 bin/admin.pl:608 bin/admin.pl:920 bin/am.pl:2139 bin/login.pl:142 bin/login.pl:199 bin/pw.pl:67
