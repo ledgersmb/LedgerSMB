@@ -1329,11 +1329,10 @@ sub save_preferences {
 	# update name
 	$query = qq|
 		UPDATE employee
-		   SET name = ?,
-		       role = ?
+		   SET name = ?
 		 WHERE login = ?|;
 
-	@queryargs = ($form->{name}, $form->{role}, $form->{login});
+	@queryargs = ($form->{name}, $form->{login});
 	$dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
 
 	# get default currency
@@ -1351,6 +1350,11 @@ sub save_preferences {
 
 	my $myconfig = LedgerSMB::User->new($form->{login});
 
+	map {$myconfig->{$_} = $form->{$_} if exists $form->{$_}}
+		qw(name email dateformat signature numberformat vclimit tel fax
+		company menuwidth countrycode address timeout stylesheet
+		printer password);
+		
 	foreach my $item (keys %$form) {
 		$myconfig->{$item} = $form->{$item};
 	}
