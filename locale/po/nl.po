@@ -2737,8 +2737,8 @@ msgid "Parts Requirements"
 msgstr "Benodigde Onderdelen"
 
 #: LedgerSMB/Form.pm:1357
-msgid "Passed incorrect query type to get_cutstom_queries."
-msgstr "Onjuist type zoekopdracht doorgegeven aan get_cutstom_queries."
+msgid "Passed incorrect query type to run_custom_queries."
+msgstr "Onjuist type zoekopdracht doorgegeven aan run_custom_queries."
 
 #: bin/admin.pl:1008 bin/admin.pl:1168 bin/admin.pl:1177 bin/admin.pl:122
 #: bin/admin.pl:165 bin/admin.pl:507 bin/admin.pl:626 bin/am.pl:2139

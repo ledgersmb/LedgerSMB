@@ -1337,7 +1337,7 @@ sub run_custom_queries {
 	my $dbh = $self->{dbh};
 	if ($query_type !~ /^(select|insert|update)$/i){
 		$self->error($locale->text(
-			"Passed incorrect query type to get_cutstom_queries."
+			"Passed incorrect query type to run_custom_queries."
 		));
 	}
 	my @rc;
