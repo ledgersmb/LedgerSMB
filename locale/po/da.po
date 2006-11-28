@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-11-22 01:23+0100\n"
+"PO-Revision-Date: 2006-11-27 23:20+0100\n"
 "Last-Translator: Mads Kiilerich <mads@kiilerich.com>\n"
 "Language-Team: \n"
 
@@ -1847,7 +1847,7 @@ msgid "On Hand"
 msgstr "På lager"
 
 msgid "One"
-msgstr "En"
+msgstr "Et"
 
 msgid "One-o"
 msgstr "En"
@@ -2694,7 +2694,7 @@ msgid "This is your first time logging into LedgerSMB.  Please set your administ
 msgstr "Dette er første gang der logges på LedgerSMB. Sæt venligst en administrativ adgangskode"
 
 msgid "Thousand"
-msgstr "Tusind"
+msgstr "Tusinde"
 
 msgid "Three"
 msgstr "Tre"
