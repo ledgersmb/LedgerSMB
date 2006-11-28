@@ -31,6 +31,14 @@
 #
 #=====================================================================
 
+# The conversion routines can be tested with for example:
+# perl <<EOF
+#   use LedgerSMB::CP; 
+#   my $c = CP->new('da'); 
+#   $c->init; 
+#   for(0 .. 202, 999 .. 1002, 1999 .. 2002, 999999 .. 1000002, 999999999 .. 1000000002) 
+#     {print $_.":".$c->num2text($_)."\n";};'
+# EOF
 
 sub init {
 	my $self = shift;
@@ -38,7 +46,7 @@ sub init {
 	my $langtag = substr($locale->language_tag, 0, 2);
 	$self->{'numrules'} = 'en';
 	$self->{'numrules'} = $langtag if 
-		grep {/$langtag/} (qw/ca de es et fr hu it nl ru/);
+		grep {/$langtag/} (qw/ca de es et fr hu it nl ru da/);
 	$self->{'numrules'} = 'es' if $self->{'numrules'} eq 'ca';
 	$self->{'numrules'} = 'de' if $self->{'numrules'} eq 'ru';
 
@@ -106,6 +114,7 @@ sub num2text {
 	return $self->num2text_et($amount) if $self->{'numrules'} eq 'et';
 	return $self->num2text_fr($amount) if $self->{'numrules'} eq 'fr';
 	return $self->num2text_it($amount) if $self->{'numrules'} eq 'it';
+	return $self->num2text_da($amount) if $self->{'numrules'} eq 'da';
 	return $self->num2text_en($amount);
 }
 
@@ -928,6 +937,91 @@ sub format_ten_it {
 	
 }
 
+
+# A special (swedish-like) spelling of danish check numbers
+sub num2text_da {
+	my ($self, $amount) = @_;
+
+	# Handle 0
+	return $self->{numbername}{0} unless $amount;
+
+	# List of collected digits
+	my @textnumber = ();
+
+	# split amount into chunks of 3
+	my @num = reverse split //, abs($amount);
+	my @numblock = ();
+	my @a = ();
+	while (@num) {
+		@a = ();
+		for (1 .. 3) {
+			push @a, shift @num;
+		}
+		push @numblock, join / /, reverse @a;
+	}
+	
+	my $i;
+	my $bigplural;
+	while (@numblock) {
+		$i = $#numblock;
+		$numblock[$i] *= 1;
+		
+		if ($numblock[$i] == 0) {
+			pop @numblock;
+			next;
+		}
+
+		# Plural suffix "er" for million and up, not for tusinde
+		$bigpluralsuffix = "";
+		$bigpluralsuffix = "er" if ($i > 1 && $numblock[$i] > 1);
+	 
+		if ($numblock[$i] > 99) {
+		        @num = split //, $numblock[$i];
+
+			# the one from hundreds
+		        push @textnumber, $self->{numbername}{$num[0]};
+		 
+			# add hundred designation
+			push @textnumber, $self->{numbername}{100};
+
+			# reduce numblock
+			$numblock[$i] -= $num[0] * 100;
+		}
+
+		if ($numblock[$i] > 9) {
+		        @num = split //, $numblock[$i];
+
+			# the one from tens
+			push @textnumber, $self->{numbername}{$num[0]};
+		 
+			# add ten designation
+			push @textnumber, $self->{numbername}{10};
+
+			# reduce numblock
+			$numblock[$i] -= $num[0] * 10;
+		}
+		
+		if ($numblock[$i] > 0) {
+			# the ones left in the block
+		        if($numblock[$i] == 1 && $i != 1) {
+			    push @textnumber, $self->{numbername}{'1o'}; # Special case for "Et" tusinde
+			} else {
+			    push @textnumber, $self->{numbername}{$numblock[$i]};
+			}
+		}
+		
+		# add thousand, million, etc
+		if ($i) {
+			$amount = 10**($i * 3);
+			push @textnumber, $self->{numbername}{$amount}.$bigpluralsuffix;
+		}
+		
+		pop @numblock;
+	}
+
+	join '', @textnumber;
+
+}
 
 1;
 
