@@ -1311,9 +1311,23 @@ sub save_preferences {
 
 	# connect to database
 	my $dbh = $form->{dbh};
+
+	# get username, is same as requested?
 	my @queryargs;
-	# update name
 	my $query = qq|
+		SELECT login
+		  FROM employee
+		 WHERE login = ?|;
+	@queryargs = ($form->{login});
+	my $sth = $dbh->prepare($query);
+	$sth->execute(@queryargs) || $form->dberror($query);
+	my ($dbusername) = $sth->fetchrow_array;
+	$sth->finish;
+
+	return 0 if ($dbusername ne $form->{login});
+
+	# update name
+	$query = qq|
 		UPDATE employee
 		   SET name = ?,
 		       role = ?

@@ -2235,7 +2235,7 @@ sub save_preferences {
   }
 
   if (AM->save_preferences(\%myconfig, \%$form)) {
-    $form->redirect($locale->text('Preferences saved!'));
+    $form->info($locale->text('Preferences saved!'));
   } else {
     $form->error($locale->text('Cannot save preferences!'));
   }
