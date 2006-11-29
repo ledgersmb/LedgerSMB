@@ -840,7 +840,7 @@ sub post_invoice {
 		$sth = $dbh->prepare($query);
 		$sth->execute($form->{id});
 
-	 	if ($dbh->selectrow_array($query)) {
+	 	if ($sth->fetchrow_array) {
 	 	 	&reverse_invoice($dbh, $form);
 	 	} else {
 			$query = qq|INSERT INTO ar (id) VALUES (?)|;
