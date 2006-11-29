@@ -233,7 +233,7 @@ sub delete_account {
 	$sth->execute($form->{id});
 	my ($rowcount) = $sth->fetchrow_array(); 
 	
-	if ($dbh->selectrow_array($query)) {
+	if ($rowcount) {
 		$form->error(
 			"Cannot delete accounts with associated transactions!"
 			);
@@ -345,7 +345,7 @@ sub get_gifi {
 
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{accno}) || $form->dberror($query);
-	($numrows) = $dbh->selectrow_array($query);
+	($numrows) = $sth->fetchrow_array;
 	if (($numrows * 1) == 0){
 		$form->{orphaned} = 1;
 	} else {

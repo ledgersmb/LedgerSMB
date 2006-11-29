@@ -406,7 +406,7 @@ sub post_payment {
 
 			my $sth = $dbh->prepare($query);
 			$sth->execute($form->{"id_$i"});
-			my ($id) = $dbh->selectrow_array($query);
+			my ($id) = $sth->fetchrow_array;
 
 			$amount = 
 				$form->round_amount(
@@ -671,7 +671,7 @@ sub post_payments {
 			$sth = $sbh->prepare($query);
 			$sth->execute($form->{currency}, $form->{"id_$i"})
 				|| $form->dberror($query, 'CP.pm', 671);
-			my ($exchangerate) = $dbh->selectrow_array($query);
+			my ($exchangerate) = $sth->fetchrow_array;
 
 			$exchangerate ||= 1;
 
