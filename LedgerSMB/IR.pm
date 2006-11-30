@@ -355,8 +355,6 @@ sub post_invoice {
 						$form->{"sellprice_$i"} * $qty, 
 						2);
 
-					$ref->{project_id} ||= 'NULL';
-
 					if ($linetotal) {
 						$query = qq|
 							INSERT INTO acc_trans 

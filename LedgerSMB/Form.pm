@@ -3069,7 +3069,7 @@ sub audittrail {
 					$audittrail->{tablename},
 					$audittrail->{reference},
 					$audittrail->{formname},
-					$audittrail->{action}.
+					$audittrail->{action},
 					$employee_id,
 					$audittrail->{transdate}
 				);
@@ -3084,7 +3084,7 @@ sub audittrail {
 					$audittrail->{tablename},
 					$audittrail->{reference},
 					$audittrail->{formname},
-					$audittrail->{action}.
+					$audittrail->{action},
 					$employee_id,
 				);
 			}
