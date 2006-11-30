@@ -127,9 +127,9 @@ sub post_transaction {
 		   SET reference = |.$dbh->quote($form->{reference}).qq|,
 		      description = |.$dbh->quote($form->{description}).qq|,
 		      notes = |.$dbh->quote($form->{notes}).qq|,
-		      transdate = '$form->{transdate}',
-		      department_id = $department_id
-		WHERE id = $form->{id}|;
+		      transdate = ?,
+		      department_id = ?
+		WHERE id = ?|;
 
 	$dbh->prepare($query);
 	$sth->execute($form->{transdate}, $department_id, $form->{id}) 
