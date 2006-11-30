@@ -604,9 +604,12 @@ sub form_footer {
     } else {
 
       if ($transdate > $closedto) {
-	for ('update', 'post', 'schedule') { $a{$_} = 1 }
+	for ('update', 'post', 'schedule') { $allowed{$_} = 1 }
+        for (keys %button) { delete $button{$_} if ! $allowed{$_} }
       }
-      for (keys %button) { delete $button{$_} if ! $a{$_} }
+      elsif ($closedto){
+	%buttons = ();
+      }
     }
 
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }

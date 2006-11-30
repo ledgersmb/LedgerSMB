@@ -671,11 +671,15 @@ sub form_footer {
 
       if ($transdate > $closedto) {
 	
-	for ("update", "ship_to", "print", "e_mail", "post", "schedule") { $a{$_} = 1 }
+	for ("update", "ship_to", "print", "e_mail", "post", "schedule") { 
+		$allowed{$_} = 1 }
 	$a{'print_and_post'} = 1 if ${LedgerSMB::Sysconfig::latex};
 	
+        for (keys %button) { delete $button{$_} if ! $allowed{$_} }
       }
-      for (keys %button) { delete $button{$_} if ! $a{$_} }
+      elsif ($closedto){
+	%button = ();
+      }
     }
     
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
