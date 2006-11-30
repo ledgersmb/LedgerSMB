@@ -3063,7 +3063,7 @@ sub audittrail {
 						trans_id, tablename, reference,
 						formname, action, employee_id, 
 						transdate)
-					VALUES (?, ?, ?, ?, ?, ?)|;
+					VALUES (?, ?, ?, ?, ?, ?, ?)|;
 				@queryargs = (
 					$audittrail->{id}, 
 					$audittrail->{tablename},
@@ -3078,7 +3078,7 @@ sub audittrail {
 					INSERT INTO audittrail 
 						(trans_id, tablename, reference,
 						formname, action, employee_id)
-					VALUES (?, ?, ?, ?, ?)|;
+					VALUES (?, ?, ?, ?, ?, ?)|;
 				@queryargs = (
 					$audittrail->{id}, 
 					$audittrail->{tablename},
