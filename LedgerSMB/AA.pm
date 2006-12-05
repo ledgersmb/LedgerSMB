@@ -346,10 +346,10 @@ sub post_transaction {
 				            transdate, fx_transaction)
 				     VALUES (?, (SELECT id FROM chart
 					          WHERE accno = ?),
-				            ? * ?, ?, ?)|;
+				            ?, ?, ?)|;
 
 			@queryargs = ($form->{id}, $ref->{accno}, 
-				$ref->{amount}, $ml, $form->{transdate}, 
+				$ref->{amount} * $ml, $form->{transdate}, 
 				$ref->{fx_transaction});
 			$dbh->prepare($query)->execute(@queryargs) 
 				|| $form->dberror($query);

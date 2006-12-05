@@ -419,10 +419,10 @@ sub post_payment {
 				            amount)
 				     VALUES (?, ?, 
 				            ?, 
-				            ? * ?)|;
+				            ?)|;
 			$sth = $dbh->prepare($query);
 			$sth->execute($form->{"id_$i"}, $id, 
-				$form->{date_paid}, $amount, $ml) 
+				$form->{date_paid}, $amount * $ml) 
 					|| $form->dberror($query, 'CP.pm', 427);
 
 			# add payment
@@ -433,11 +433,12 @@ sub post_payment {
 				     VALUES (?, (SELECT id 
 				                   FROM chart
 				                  WHERE accno = ?),
-				 	    ?, ? * ? * -1, ?, ?)|;
+				 	    ?, ?, ?, ?)|;
 			$sth = $dbh->prepare($query);
 			$sth->execute(
 				$form->{"id_$i"}, $paymentaccno, 
-				$form->{datepaid}, $form->{"paid_$i"}, $ml,
+				$form->{datepaid}, 
+				$form->{"paid_$i"} * $ml * -1,
 				$form->{source}, $form->{memo})
 					|| $form->dberror(
 						$query, 'CP.pm', 444);
@@ -458,12 +459,12 @@ sub post_payment {
 					     VALUES (?, (SELECT id 
 					                   FROM chart
 					                  WHERE accno = ?),
-					             ?, ? * ? * -1, '0', '1', 
+					             ?, ?, '0', '1', 
 					             ?)|;
 				$sth = $dbh->prepare($query);
 				$sth->execute(
 					$form->{"id_$i"}, $paymentaccno,
-					$form->{datepaid}, $amount, $ml, 
+					$form->{datepaid}, $amount * $ml * -1, 
 					$form->{source})
 						|| $form->dberror(
 							$query, 'CP.pm', 470);
@@ -693,12 +694,12 @@ sub post_payments {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, transdate, 
 				            amount)
-				     VALUES (?, ?, ?, ? * ?)|;
+				     VALUES (?, ?, ?, ?)|;
 
 			$sth = $dbh->prepare($query);
 			$sth->execute(
 				$form->{"id_$i"}, $id, $form->{datepaid},
-				$amount, $ml)
+				$amount * $ml)
 					|| $form->dberror($query, 'CP.pm', 
 						701);
 
@@ -715,12 +716,13 @@ sub post_payments {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, transdate,
 				            amount, source, memo)
-				    VALUES (?, ?, ?, ? * ? * -1, ?, ?)|;
+				    VALUES (?, ?, ?, ?, ?, ?)|;
 
 			$sth = $dbh->prepare($query);
 			$sth->execute(
 				$form->{"id_$i"}, $accno_id, $form->{datepaid},
-				$paid, $ml, $form->{source}, $form->{memo})
+				$paid * $ml * -1, $form->{source}, 
+				$form->{memo})
 					|| $form->dberror($query, 'CP.pm', 
 						723);
 
