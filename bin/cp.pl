@@ -373,8 +373,11 @@ sub invoices_due {
     
     $totalamount += $form->{"amount_$i"};
     $totaldue += $form->{"due_$i"};
-    $totalpaid += $form->{"paid_$i"};
-
+    if ($form->{"paid_$i"} !~ /NaN/){
+        $totalpaid += $form->{"paid_$i"};
+    } else {
+        $form->{"paid_$i"} = '';
+    }
     for (qw(amount due paid)) { $form->{"${_}_$i"} = $form->format_amount(\%myconfig, $form->{"${_}_$i"}, 2) }
 
     $column_data{invnumber} = qq|<td>$form->{"invnumber_$i"}</td>
@@ -995,7 +998,11 @@ sub list_invoices {
     
     $totalamount += $form->{"amount_$i"};
     $totaldue += $form->{"due_$i"};
-    $totalpaid += $form->{"paid_$i"};
+    if ($form->{"paid_$i"} =~ /NaN/){
+        $form->{"paid_$i"} = '';
+    } else {
+        $totalpaid += $form->{"paid_$i"};
+    }
 
     for (qw(amount due paid)) { $form->{"${_}_$i"} = $form->format_amount(\%myconfig, $form->{"${_}_$i"}, 2) }
 
