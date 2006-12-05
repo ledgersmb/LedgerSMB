@@ -373,7 +373,11 @@ sub invoices_due {
     
     $totalamount += $form->{"amount_$i"};
     $totaldue += $form->{"due_$i"};
-    $totalpaid += $form->{"paid_$i"};
+    if ($form->{"paid_$i"} =~ /NaN/){
+        $form->{"paid_$i"} = '';
+    } else {
+        $totalpaid += $form->{"paid_$i"};
+    }
 
     for (qw(amount due paid)) { $form->{"${_}_$i"} = $form->format_amount(\%myconfig, $form->{"${_}_$i"}, 2) }
 
@@ -387,6 +391,9 @@ sub invoices_due {
     $column_data{due} = qq|<td align=right>$form->{"due_$i"}</td>
       <input type=hidden name="due_$i" value=$form->{"due_$i"}>|;
 
+    if ($form->{"paid_$i"} =~ /NaN/){
+        $form->{"paid_$i"} = '';
+    }
     $column_data{paid} = qq|<td align=right><input name="paid_$i" size=10 value=$form->{"paid_$i"}></td>|;
 
     if ($same_id eq $form->{"$form->{vc}_id_$i"}) {
@@ -992,10 +999,13 @@ sub list_invoices {
   for $i (1 .. $form->{rowcount}) {
 
     for (qw(amount due paid)) { $form->{"${_}_$i"} = $form->parse_amount(\%myconfig, $form->{"${_}_$i"}) }
-    
+
+
     $totalamount += $form->{"amount_$i"};
     $totaldue += $form->{"due_$i"};
-    $totalpaid += $form->{"paid_$i"};
+    if ($form->{"paid_$i"} !~ /NaN/){
+       $totalpaid += $form->{"paid_$i"};
+    }
 
     for (qw(amount due paid)) { $form->{"${_}_$i"} = $form->format_amount(\%myconfig, $form->{"${_}_$i"}, 2) }
 
@@ -1008,6 +1018,9 @@ sub list_invoices {
       <input type=hidden name="amount_$i" value=$form->{"amount_$i"}>|;
     $column_data{due} = qq|<td align=right width=15%>$form->{"due_$i"}</td>
       <input type=hidden name="due_$i" value=$form->{"due_$i"}>|;
+    if ($form->{"paid_$i"} =~ /NaN/){
+        $form->{"paid_$i"} = '';
+    }
 
     $column_data{paid} = qq|<td align=right width=15%><input name="paid_$i" size=10 value=$form->{"paid_$i"}></td>|;
 
