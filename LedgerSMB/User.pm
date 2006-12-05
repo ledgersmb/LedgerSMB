@@ -471,7 +471,7 @@ sub dbsources_unused {
 	$form->error(__FILE__.':'.__LINE__.": $memfile locked!") if (-f "${memfile}.LCK");
   
 	# open members file
-	open(FH, "$memfile") or $form->error(__FILE__.':'.__LINE__.": $memfile : $!");
+	open(FH, '<', "$memfile") or $form->error(__FILE__.':'.__LINE__.": $memfile : $!");
 
 	while (<FH>) {
 		if (/^dbname=/) {

@@ -238,7 +238,7 @@ sub login {
 
 	#this needs to be done via db
 	#if (! $form->{beenthere}) {
-	#	open(FH, "${LedgerSMB::Sysconfig::memberfile}") or $form->error(__FILE__.':'.__LINE__.": $memberfile : $!");
+	#	open(FH, '<', "${LedgerSMB::Sysconfig::memberfile}") or $form->error(__FILE__.':'.__LINE__.": $memberfile : $!");
 	#	@a = <FH>;
 	#	close(FH);
 	#
@@ -282,7 +282,7 @@ sub login {
 			# upgrade dataset and log in again
 
 			#locking needs to be done via db function
-			#open FH, ">${LedgerSMB::Sysconfig::userspath}/nologin" or $form->error($!);
+			#open FH, '>', "${LedgerSMB::Sysconfig::userspath}/nologin" or $form->error($!);
 
 			for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) { $form->{$_} = $user->{$_} }
 

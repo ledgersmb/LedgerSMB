@@ -84,7 +84,7 @@ sub debug {
 	my ($self, $file) = @_;
 
 	if ($file) {
-		open(FH, "> $file") or die $!;
+		open(FH, '>', "$file") or die $!;
 		for (sort keys %$self) { print FH "$_ = $self->{$_}\n" }
 		close(FH);
 	} else {
@@ -577,13 +577,13 @@ sub parse_template {
 	if ($self->{language_code}) {
 
 		if (-f "$self->{templates}/$self->{language_code}/$self->{IN}") {
-			open(IN, "$self->{templates}/$self->{language_code}/$self->{IN}") or $self->error("$self->{IN} : $!");
+			open(IN, '<', "$self->{templates}/$self->{language_code}/$self->{IN}") or $self->error("$self->{IN} : $!");
 		} else {
-			open(IN, "$self->{templates}/$self->{IN}") or $self->error("$self->{IN} : $!");
+			open(IN, '<', "$self->{templates}/$self->{IN}") or $self->error("$self->{IN} : $!");
 		}
 
 	} else {
-		open(IN, "$self->{templates}/$self->{IN}") or $self->error("$self->{IN} : $!");
+		open(IN, '<', "$self->{templates}/$self->{IN}") or $self->error("$self->{IN} : $!");
 	}
 
 	@_ = <IN>;
@@ -600,11 +600,11 @@ sub parse_template {
 
 	if ($self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email') {
 		my $out = $self->{OUT};
-		$self->{OUT} = ">$self->{tmpfile}";
+		$self->{OUT} = "$self->{tmpfile}";
 	}
 
 	if ($self->{OUT}) {
-		open(OUT, "$self->{OUT}") or $self->error("$self->{OUT} : $!");
+		open(OUT, '>', "$self->{OUT}") or $self->error("$self->{OUT} : $!");
 
 	} else {
 		open(OUT, ">-") or $self->error("STDOUT : $!");
@@ -786,7 +786,7 @@ sub parse_template {
 			# assume loop after 10 includes of the same file
 			next if ($include{$var} > 10);
 
-			unless (open(INC, "$self->{templates}/$self->{language_code}/$var")) {
+			unless (open(INC, '<', "$self->{templates}/$self->{language_code}/$var")) {
 				$err = $!;
 				$self->cleanup;
 				$self->error("$self->{templates}/$self->{language_code}/$var : $err");
@@ -890,7 +890,7 @@ sub parse_template {
 				$myconfig->{signature} =~ s/\\n/$br\n/g;
 				$mail->{message} .= "$br\n-- $br\n$myconfig->{signature}\n$br" if $myconfig->{signature};
 
-				unless (open(IN, $self->{tmpfile})) {
+				unless (open(IN, '<', $self->{tmpfile})) {
 					$err = $!;
 					$self->cleanup;
 					$self->error("$self->{tmpfile} : $err");
@@ -920,7 +920,7 @@ sub parse_template {
 
 			$self->{OUT} = $out;
 
-			unless (open(IN, $self->{tmpfile})) {
+			unless (open(IN, '<', $self->{tmpfile})) {
 				$err = $!;
 				$self->cleanup;
 				$self->error("$self->{tmpfile} : $err");
@@ -935,7 +935,7 @@ sub parse_template {
 			for my $i (1 .. $self->{copies}) {
 				if ($self->{OUT}) {
 
-					unless (open(OUT, $self->{OUT})) {
+					unless (open(OUT, '>', $self->{OUT})) {
 						$err = $!;
 						$self->cleanup;
 						$self->error("$self->{OUT} : $err");
@@ -1115,7 +1115,7 @@ sub cleanup {
 	my @err = ();
 
 	if (-f "$self->{errfile}") {
-		open(FH, "$self->{errfile}");
+		open(FH, '<', "$self->{errfile}");
 		@err = <FH>;
 		close(FH);
 	}
@@ -1140,7 +1140,7 @@ sub rerun_latex {
 	my $a = 0;
 
 	if (-f "$self->{errfile}") {
-		open(FH, "$self->{errfile}");
+		open(FH, '<', "$self->{errfile}");
 		$a = grep /(longtable Warning:|Warning:.*?LastPage)/, <FH>;
 		close(FH);
 	}

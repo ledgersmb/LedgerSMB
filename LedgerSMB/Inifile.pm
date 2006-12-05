@@ -57,7 +57,7 @@ sub add_file {
 
 	for (@{$self->{ORDER}}) { $menuorder{$_} = 1 }
   
-	open FH, "$file" or Form->error("$file : $!");
+	open FH, '<', "$file" or Form->error("$file : $!");
 
 	while (<FH>) {
 		next if /^(#|;|\s)/;

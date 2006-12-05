@@ -30,7 +30,7 @@ while (1){ # loop infinitely
   sleep $cycle_delay;
 }
 sub on_notify {
-  open (MAIL, "| $sendmail");
+  open (MAIL, '|-', "$sendmail");
   $sth = $dbh->prepare("
 	SELECT partnumber, description, onhand, rop FROM parts
 	WHERE onhand <= rop

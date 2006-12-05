@@ -110,7 +110,7 @@ foreach $file (@progfiles) {
     }
   }
 
-  open FH, ">$file" or die "$! : $file";
+  open FH, '>', "$file" or die "$! : $file";
 
   if ($charset) {
     print FH qq|\$self{charset} = '$charset';\n\n|;
@@ -179,7 +179,7 @@ $self{subs} = {
 
   if (!$noMissing) {  
     if (@missing) {
-      open FH, ">$file.missing" or die "$! : missing";
+      open FH, '>', "$file.missing" or die "$! : missing";
 
       print FH qq|# module $file
 # add the missing texts and run locales.pl to rebuild
@@ -206,7 +206,7 @@ $self{subs} = {
   
   # redo the all file
   if ($buildAll) {
-    open FH, ">all" or die "$! : all";
+    open FH, '>', "all" or die "$! : all";
 
     print FH q|# These are all the texts to build the translations files.
 # to build unique strings edit the module files instead
@@ -255,7 +255,7 @@ sub scanfile {
 
   my $fh = new FileHandle;
   return unless (-e $file or $file !~ /custom/);
-  open $fh, "$file" or die "$! : $file";
+  open $fh, '<', "$file" or die "$! : $file";
 
   $file =~ s/\.pl//;
   $file =~ s/$bindir\///;
@@ -344,7 +344,7 @@ sub scanmenu {
   my $file = shift;
 
   my $fh = new FileHandle;
-  open $fh, "$file" or die "$! : $file";
+  open $fh, '<', "$file" or die "$! : $file";
 
   my @a = grep /^\[/, <$fh>;
   close($fh);

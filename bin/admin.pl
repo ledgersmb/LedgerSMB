@@ -589,12 +589,12 @@ sub form_header {
 
 
 	# access control
-	open(FH, $menufile) or $form->error(__FILE__.':'.__LINE__.': '."$menufile : $!");
+	open(FH, '<', $menufile) or $form->error(__FILE__.':'.__LINE__.': '."$menufile : $!");
 	# scan for first menu level
 	@a = <FH>;
 	close(FH);
 
-	if (open(FH, "custom_$menufile")) {
+	if (open(FH, '<', "custom_$menufile")) {
 		push @a, <FH>;
 	}
 
@@ -801,10 +801,10 @@ sub save {
 
 			foreach $file (@templates) {
 
-				open(TEMP, "${LedgerSMB::Sysconfig::templates}/$file") or $form->error(__FILE__.':'.__LINE__.': '."$templates/$file : $!");
+				open(TEMP, '<', "${LedgerSMB::Sysconfig::templates}/$file") or $form->error(__FILE__.':'.__LINE__.': '."$templates/$file : $!");
 
 				$file =~ s/$form->{mastertemplates}-//;
-				open(NEW, ">$form->{templates}/$file") or $form->error(__FILE__.':'.__LINE__.': '."$form->{templates}/$file : $!");
+				open(NEW, '>', "$form->{templates}/$file") or $form->error(__FILE__.':'.__LINE__.': '."$form->{templates}/$file : $!");
 
 				while ($line = <TEMP>) {
 					print NEW $line;
@@ -1297,7 +1297,7 @@ sub unlock_system {
 sub lock_system {
 
 	# This needs to be done with a db tool
-	#open(FH, ">${LedgerSMB::Sysconfig::userspath}/nologin") or $form->error($locale->text('Cannot create Lock!'));
+	#open(FH, '>', "${LedgerSMB::Sysconfig::userspath}/nologin") or $form->error($locale->text('Cannot create Lock!'));
 	#close(FH);
 	$form->{callback} = "$form->{script}?action=list_users&amp;path=$form->{path}";
 	$form->redirect($locale->text('Lockfile created!'));

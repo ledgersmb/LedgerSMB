@@ -50,7 +50,7 @@ if (length($membersfile) < 2){
 
 my @users = ();
 
-open(FH, "$membersfile") || die ("Couldn't open members file!");
+open(FH, '<', "$membersfile") || die ("Couldn't open members file!");
 
 while (<FH>) {
 
