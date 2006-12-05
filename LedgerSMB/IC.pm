@@ -479,11 +479,17 @@ sub save {
 			for $i (1 .. $form->{assembly_rows}) {
 				$form->{"qty_$i"} = $form->parse_amount(
 					$myconfig, $form->{"qty_$i"});
-				$sth->execute(
-					$form->{id}, $form->{"id_$i"},
-					$form->{"qty_$i"}, $form->{"bom_$i"},
-					$form->{"adj_$i"}
-					) || $form->dberror($query);
+                if(!$form->{"bom_$i"}){
+                    $form->{"bom_$i"} = undef;
+                }
+            
+                if ($form->{"id_$i"} && $form->{"qty_$i"}){
+                    $sth->execute(
+					    $form->{id}, $form->{"id_$i"},
+				    	$form->{"qty_$i"}, $form->{"bom_$i"} || 0,
+					    $form->{"adj_$i"}
+					        ) || $form->dberror($query);
+                }
 			}
 		}
 		# adjust onhand for the parts
