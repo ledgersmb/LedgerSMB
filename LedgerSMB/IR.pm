@@ -269,8 +269,7 @@ sub post_invoice {
 				 WHERE description = '$uid'|;
 			($invoice_id) = $dbh->selectrow_array($query);
 
-				$form->debug;
-
+			
 			$query = qq|
 				UPDATE invoice 
 				   SET trans_id = ?,
