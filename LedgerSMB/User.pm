@@ -71,10 +71,6 @@ sub new {
 		chomp($self->{dbname});
 		chomp($self->{dbhost});
 
-		if(! int($self->{dbport})){#in case there's a space or junk in the dbport
-			$self->{dbport} = '5432';
-		}
-
 		$self->{dbconnect} = 'dbi:Pg:dbname='.$self->{dbname}.';host='.$self->{dbhost}.';port='.$self->{dbport};
 
 		if($self->{username}){
@@ -142,13 +138,10 @@ sub fetch_config {
 			$myconfig{$key} = $value;
 		}
 
-		if(! int($myconfig{'dbport'})){#in case there's a space or junk in the dbport
-			$myconfig{'dbport'} = '5432';
-		}
+		chomp($myconfig{'dbport'});
+		chomp($myconfig{'dbname'});
+		chomp($myconfig{'dbhost'});
 
-		if (! $myconfig{'dbhost'}){ # necessary to avoid many issues
-			$myconfig{'dbhost'} = 'localhost';
-		}
 		$myconfig{'login'} = $login;
 		$myconfig{'dbconnect'} = 'dbi:Pg:dbname='.$myconfig{'dbname'}.';host='.$myconfig{'dbhost'}.';port='.$myconfig{'dbport'};
 	}
@@ -277,21 +270,8 @@ sub dbconnect_vars {
 	$form->{dboptions} = $dboptions{$form->{dbdriver}}{$form->{dateformat}};
 
 	$form->{dbconnect} = "dbi:$form->{dbdriver}:dbname=$db";
-
-
-	if ($form->{dbhost}) {
-		$form->{dbconnect} .= ";host=$form->{dbhost}";
-
-	} else {
-		$form->{dbconnect} .= ";host=localhost";
-	}
-
-
-	if ($form->{dbport}) {
-		$form->{dbconnect} .= ";port=$form->{dbport}";
-	} else {
-		$form->{dbconnect} .= ";port=5432";
-	}
+	$form->{dbconnect} .= ";host=$form->{dbhost}";
+	$form->{dbconnect} .= ";port=$form->{dbport}";
   
 }
 
@@ -720,6 +700,14 @@ sub save_member {
 	my $userCheck = $dbh->prepare("SELECT id FROM users WHERE username = ?");
 	$userCheck->execute($self->{login});
 	my ($userID) = $userCheck->fetchrow_array;
+
+        if (! $self->{dbhost}) {
+                $self->{dbhost} = 'localhost';
+        }
+        if (! $self->{dbport}) {
+                $self->{dbport} = '5432';
+        }
+
 	my $userConfExists = 0;
 
 	if($userID){
