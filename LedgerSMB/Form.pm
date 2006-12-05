@@ -196,8 +196,8 @@ sub error {
 
 	} else {
 
-		if ($self->{error_function}) {
-			&{ $self->{error_function} }($msg);
+		if ($ENV{error_function}) {
+			&{ $ENV{error_function} }($msg);
 		} else {
 			die "Error: $msg\n";
 		}
@@ -223,8 +223,8 @@ sub info {
 
 	} else {
 
-		if ($self->{info_function}) {
-			&{ $self->{info_function} }($msg);
+		if ($ENV{info_function}) {
+			&{ $ENV{info_function} }($msg);
 		} else {
 			print "$msg\n";
 		}
