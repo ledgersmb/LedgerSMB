@@ -124,7 +124,7 @@ if ($filename) {
   
 if (-f "VERSION") {
   # get installed version from VERSION file
-  open(FH, "VERSION");
+  open(FH, '<', "VERSION");
   @a = <FH>;
   close(FH);
   $version = $a[0];
@@ -429,13 +429,13 @@ sub install_smb {
   &decompress;
 
   if ($newinstall) {
-    open(FH, "ledger-smb.conf.default");
+    open(FH, '<', "ledger-smb.conf.default");
     @f = <FH>;
     close(FH);
     unless ($latex) {
       grep { s/^\$latex.*/\$latex = 0;/ } @f;
     }
-    open(FH, ">ledger-smb.conf");
+    open(FH, '>', "ledger-smb.conf");
     print FH @f;
     close(FH);
 
@@ -450,12 +450,12 @@ sub install_smb {
     $filename = "ledger-smb-httpd.conf";
 
     # do we have write permission?
-    if (!open(FH, ">>$httpddir/$filename")) {
-      open(FH, ">$filename");
+    if (!open(FH, '>>', "$httpddir/$filename")) {
+      open(FH, '>', "$filename");
       $norw = 1;
     }
 
-    open (HTTPD, '< sql-ledger-httpd.conf');
+    open (HTTPD, '<', 'sql-ledger-httpd.conf');
     while ($line = <HTTPD>){
         print FH $line;
     }
@@ -506,7 +506,7 @@ Webserver directives were written to
       if (!$confd) {
 	if (!(`grep "^# LedgerSMB" $httpd`)) {
 
-	  open(FH, ">>$httpd");
+	  open(FH, '>>', "$httpd");
 
 	  print FH qq|
 
@@ -618,7 +618,7 @@ sub decompress {
 sub create_lockfile {
 
   if (-d "$userspath") {
-    open(FH, ">$userspath/nologin");
+    open(FH, '>', "$userspath/nologin");
     close(FH);
   }
   

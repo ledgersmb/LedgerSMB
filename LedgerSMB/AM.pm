@@ -1278,7 +1278,7 @@ sub load_template {
 	my ($self, $myconfig, $form) = @_;
 
 	$self->check_template_name(\%$myconfig, \%$form);
-	open(TEMPLATE, "$form->{file}") or $form->error("$form->{file} : $!");
+	open(TEMPLATE, '<', "$form->{file}") or $form->error("$form->{file} : $!");
 
 	while (<TEMPLATE>) {
 		$form->{body} .= $_;
@@ -1294,7 +1294,7 @@ sub save_template {
 	my ($self, $myconfig, $form) = @_;
 
 	$self->check_template_name(\%$myconfig, \%$form);
-	open(TEMPLATE, ">$form->{file}") or $form->error("$form->{file} : $!");
+	open(TEMPLATE, '>', "$form->{file}") or $form->error("$form->{file} : $!");
 
 	# strip 
 	$form->{body} =~ s/\r//g;
@@ -1606,9 +1606,9 @@ sub backup {
 	my $boundary = time;
 	my $tmpfile = "${LedgerSMB::Sysconfig::userspath}/$boundary.$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
 	$tmpfile .= ".gz" if ${LedgerSMB::Sysconfig::gzip};
-	$form->{OUT} = ">$tmpfile";
+	$form->{OUT} = "$tmpfile";
 
-	open(OUT, "$form->{OUT}") or $form->error("$form->{OUT} : $!");
+	open(OUT, '>', "$form->{OUT}") or $form->error("$form->{OUT} : $!");
 
 	# get sequences, functions and triggers
 
@@ -1649,7 +1649,7 @@ sub backup {
 
 	if ($form->{media} eq 'file') {
 
-		open(IN, "$tmpfile") or $form->error("$tmpfile : $!");
+		open(IN, '<', "$tmpfile") or $form->error("$tmpfile : $!");
 		open(OUT, ">-") or $form->error("STDOUT : $!");
 
 		print OUT qq|Content-Type: application/file;\n| .

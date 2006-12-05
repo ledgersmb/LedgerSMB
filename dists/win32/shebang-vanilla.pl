@@ -7,7 +7,7 @@
   closedir DIR;
 
   foreach $file (@perlfiles) {
-    open FH, "+<$file";
+    open FH, '+<', "$file";
     
     @file = <FH>;
 

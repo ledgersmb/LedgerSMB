@@ -342,13 +342,13 @@ sub print_spool {
 	foreach my $i (1 .. $form->{rowcount}) {
 
 		if ($form->{"checked_$i"}) {
-			open(OUT, $form->{OUT}) or $form->error("$form->{OUT} : $!");
+			open(OUT, '>', $form->{OUT}) or $form->error("$form->{OUT} : $!");
 			binmode(OUT);
 
 			$spoolfile = qq|$spool/$form->{"spoolfile_$i"}|;
 
 			# send file to printer
-			open(IN, $spoolfile) or $form->error("$spoolfile : $!");
+			open(IN, '<', $spoolfile) or $form->error("$spoolfile : $!");
 			binmode(IN);
 
 			while (<IN>) {
