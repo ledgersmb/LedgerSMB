@@ -215,7 +215,7 @@ sub get_openinvoices {
 	my $where = qq|WHERE a.$form->{vc}_id = $vc_id
 					 AND a.amount != a.paid|;
 
-	$curr = $dbh->quote($form->{curr});
+	$curr = $dbh->quote($form->{currency});
 	$where .= qq| AND a.curr = $curr| if $form->{currency};
 
 	my $sortorder = "transdate, invnumber";
