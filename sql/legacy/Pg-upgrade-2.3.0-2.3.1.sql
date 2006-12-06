@@ -1,5 +1,5 @@
 -- function check_department
-create function check_department() returns opaque as '
+create function check_department() returns trigger as '
 
 declare
   dpt_id int;
@@ -28,7 +28,7 @@ end;
 create table dpt_trans (trans_id int, department_id int);
 
 -- function del_department
-create function del_department() returns opaque as '
+create function del_department() returns trigger as '
 begin
   delete from dpt_trans where trans_id = old.id;
   return NULL;
@@ -73,7 +73,7 @@ alter table customer add column business_id int;
 alter table customer add column taxnumber text;
 alter table customer add column sic_code text;
 --
-create function del_customer() returns opaque as '
+create function del_customer() returns trigger as '
 begin
   delete from shipto where trans_id = old.id;
   delete from customertax where customer_id = old.id;
@@ -82,7 +82,7 @@ end;
 ' language 'plpgsql';
 -- end function
 --
-create function del_vendor() returns opaque as '
+create function del_vendor() returns trigger as '
 begin
   delete from shipto where trans_id = old.id;
   delete from vendortax where vendor_id = old.id;
@@ -105,7 +105,7 @@ alter table vendor add discount float4;
 alter table vendor add creditlimit float;
 --
 -- function del_exchangerate
-create function del_exchangerate() returns opaque as '
+create function del_exchangerate() returns trigger as '
 
 declare
   t_transdate date;
@@ -180,18 +180,12 @@ alter table orderitems add serialnumber text;
 --
 --
 create sequence orderitemsid maxvalue 100000 cycle;
-alter table orderitems add id int;
-alter table orderitems alter id set default nextval('orderitemsid');
+-- add id to orderitems, fill in id
+alter table orderitems add id int default nextval('orderitemsid');
 --
 create table warehouse (id int default nextval('id'), description text);
 --
 create table inventory (warehouse_id int, parts_id int, oe_id int, orderitems_id int, qty float4, shippingdate date);
---
--- update orderitems, fill in id
-create table temp (id int default nextval('orderitemsid'), tempid oid);
-insert into temp (tempid) select oid from orderitems;
-update orderitems set id = temp.id from temp where orderitems.oid = temp.tempid;
-drop table temp;
 --
 create index orderitems_id_key on orderitems (id);
 --
@@ -203,7 +197,7 @@ alter table oe add shipvia text;
 alter table inventory add employee_id int;
 --
 --
-create function check_inventory() returns opaque as '
+create function check_inventory() returns trigger as '
 
 declare
   itemid int;
@@ -235,7 +229,7 @@ create table yearend (
 );
 --
 -- function del_yearend
-create function del_yearend() returns opaque as '
+create function del_yearend() returns trigger as '
 begin
   delete from yearend where trans_id = old.id;
   return NULL;

@@ -4,7 +4,7 @@ drop trigger del_vendor on vendor;
 drop function del_customer();
 drop function del_vendor();
 --
-create function del_customer() returns opaque as '
+create function del_customer() returns trigger as '
 begin
   delete from shipto where trans_id = old.id;
   delete from customertax where customer_id = old.id;
@@ -17,7 +17,7 @@ end;
 create trigger del_customer after delete on customer for each row execute procedure del_customer();
 -- end trigger
 --
-create function del_vendor() returns opaque as '
+create function del_vendor() returns trigger as '
 begin
   delete from shipto where trans_id = old.id;
   delete from vendortax where vendor_id = old.id;
