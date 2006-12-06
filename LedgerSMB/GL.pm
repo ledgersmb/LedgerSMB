@@ -131,7 +131,7 @@ sub post_transaction {
 		      department_id = ?
 		WHERE id = ?|;
 
-	$dbh->prepare($query);
+	$sth = $dbh->prepare($query);
 	$sth->execute($form->{transdate}, $department_id, $form->{id}) 
 		|| $form->dberror($query);
 
