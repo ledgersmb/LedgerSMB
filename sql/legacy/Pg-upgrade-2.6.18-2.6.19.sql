@@ -198,7 +198,6 @@ ALTER TABLE session ADD column user_id integer not null references users(id);
 ALTER TABLE session ALTER COLUMN user_id DROP NOT NULL;
 
 -- Admin user --
-BEGIN;
 INSERT INTO users(username) VALUES ('admin');
 INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
 

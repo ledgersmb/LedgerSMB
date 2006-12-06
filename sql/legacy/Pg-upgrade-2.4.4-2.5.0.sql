@@ -10,7 +10,7 @@ create table recurring (id int, reference text, startdate date, nextdate date, e
 create table recurringemail (id int, formname text, format text, message text);
 create table recurringprint (id int, formname text, format text, printer text);
 --
-create function del_recurring() returns opaque as '
+create function del_recurring() returns trigger as '
 begin
   delete from recurring where id = old.id;
   delete from recurringemail where id = old.id;

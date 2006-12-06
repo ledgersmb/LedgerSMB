@@ -76,7 +76,7 @@ alter table ap add terms int2;
 --
 drop trigger check_inventory on oe;
 drop function check_inventory();
-create function check_inventory() returns opaque as '
+create function check_inventory() returns trigger as '
 
 declare
   itemid int;
