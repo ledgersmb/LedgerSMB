@@ -67,6 +67,10 @@ sub date {
 	$spc =~ s/\w//g;
 	$spc = substr($spc, 0, 1);
 
+	if (!$longformat && $date =~ /^\d{4}\D/){ # reparsing date at this point
+	                                          # causes problems!
+		return $date;
+	}
 	if ($date =~ /\D/) {
 
 		if ($myconfig->{dateformat} =~ /^yy/) {
