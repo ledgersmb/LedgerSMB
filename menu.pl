@@ -152,39 +152,36 @@ if ($form->{action}) {
 
 sub check_password {
   
-	if ($myconfig{password}) {
+	require "bin/pw.pl";
 
-		require "bin/pw.pl";
-
-		if ($form->{password}) {
-			if (! Session::password_check($form, $form->{login}, $form->{password})) {
-				if ($ENV{HTTP_USER_AGENT}) {
-					&getpassword;
-				} else {
-					$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Access Denied!'));
-				}
-				exit;
-			} else {
-				Session::session_create($form);
-			}
-			
-		} else {
+	if ($form->{password}) {
+		if (! Session::password_check($form, $form->{login}, $form->{password})) {
 			if ($ENV{HTTP_USER_AGENT}) {
-				$ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-				@cookies = split /;/, $ENV{HTTP_COOKIE};
-				foreach (@cookies) {
-					($name,$value) = split /=/, $_, 2;
-					$cookie{$name} = $value;
-				}
-
-				#check for valid session
-				if(!Session::session_check($cookie{"LedgerSMB"}, $form)){
-					&getpassword(1);
-					exit;
-				}
+				&getpassword;
 			} else {
+				$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Access Denied!'));
+			}
+			exit;
+		} else {
+			Session::session_create($form);
+		}
+		
+	} else {
+		if ($ENV{HTTP_USER_AGENT}) {
+			$ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+			@cookies = split /;/, $ENV{HTTP_COOKIE};
+			foreach (@cookies) {
+				($name,$value) = split /=/, $_, 2;
+				$cookie{$name} = $value;
+			}
+
+			#check for valid session
+			if(!Session::session_check($cookie{"LedgerSMB"}, $form)){
+				&getpassword(1);
 				exit;
 			}
+		} else {
+			exit;
 		}
 	}
 }
