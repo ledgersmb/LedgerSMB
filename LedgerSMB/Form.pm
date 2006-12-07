@@ -2854,6 +2854,8 @@ sub update_defaults {
 }
 
 sub db_prepare_vars {
+	my $self = shift;
+
 	for (@_){
 		if (!$self->{$_} and $self->{$_} ne "0"){
 			undef $self->{$_};
