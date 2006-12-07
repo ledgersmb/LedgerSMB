@@ -1859,7 +1859,8 @@ sub print_timecard {
   }
 
   if ($form->{media} !~ /(screen|queue)/) {
-    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{printmode} = '|-';
 
     if ($form->{printed} !~ /$form->{formname}/) {
       $form->{printed} .= " $form->{formname}";
@@ -1894,7 +1895,8 @@ sub print_timecard {
     }
 
     $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{printmode} = '>';
     
     $form->{queued} = "$form->{formname} $filename";
     $form->update_status(\%myconfig);

@@ -863,7 +863,8 @@ sub print_form {
   }
   
   if ($form->{media} ne 'screen') {
-    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{printmode} = '|-';
   }
 
   $form->{discount} = $form->format_amount(\%myconfig, $form->{discount} * 100);

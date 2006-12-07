@@ -115,8 +115,11 @@ sub print {
   }
 
   $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-  $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename" if 
-  	$form->{media} ne 'screen';
+  
+  if ($form->{media} ne 'screen'){
+      $form->{OUT} = "${LedgerSMB::Sysconfig::spool}/$filename";
+      $form{printmode} = '>';
+  }
 
   $form->{queued} .= " $form->{formname} $filename";
   $form->{queued} =~ s/^ //;
@@ -216,7 +219,8 @@ sub print_check {
                    id          => $form->{id} );
 
     $form->{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
-    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{printmode} = '>';
 
     $form->{queued} .= " $form->{formname} $filename";
     $form->{queued} =~ s/^ //;
@@ -228,6 +232,7 @@ sub print_check {
 
 
     $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{printmode} = '|-';
     
     if ($form->{printed} !~ /$form->{formname}/) {
 
@@ -424,7 +429,8 @@ sub print_transaction {
     }
 
     $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{printmode} = '>';
 
     $form->{queued} .= " $form->{formname} $filename";
     $form->{queued} =~ s/^ //;
@@ -444,7 +450,8 @@ sub print_transaction {
   }
 
   if ($form->{media} !~ /(queue|screen)/) {
-    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{printmode} = '|-';
     
     if ($form->{printed} !~ /$form->{formname}/) {
 
