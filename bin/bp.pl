@@ -271,7 +271,8 @@ sub print {
 
   for $i (1 .. $form->{rowcount}) {
     if ($form->{"checked_$i"}) {
-      $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+      $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+      $form->{printmode} = '|-';
       $form->info($locale->text('Printing')." ...");
 
       if (BP->print_spool(\%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool})) {

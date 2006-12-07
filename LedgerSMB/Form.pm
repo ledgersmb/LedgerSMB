@@ -605,13 +605,16 @@ sub parse_template {
 	$tmpfile =~ s/\./_$self->{fileid}./ if $self->{fileid};
 	$self->{tmpfile} = "${LedgerSMB::Sysconfig::userspath}/${fileid}_${tmpfile}";
 
+    my $temphash;
 	if ($self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email') {
-		my $out = $self->{OUT};
+		$temphash{out} = $self->{OUT};
 		$self->{OUT} = "$self->{tmpfile}";
+        $temphash{printmode} = $self->{printmode};
+        $self->{printmode} = '>';
 	}
 
 	if ($self->{OUT}) {
-		open(OUT, '>', "$self->{OUT}") or $self->error("$self->{OUT} : $!");
+		open(OUT, $self->{printmode}, "$self->{OUT}") or $self->error("$self->{OUT} : $!");
 
 	} else {
 		open(OUT, ">-") or $self->error("STDOUT : $!");
@@ -925,7 +928,7 @@ sub parse_template {
 
 		} else {
 
-			$self->{OUT} = $out;
+			$self->{OUT} = $temphash{out};
 
 			unless (open(IN, '<', $self->{tmpfile})) {
 				$err = $!;
@@ -942,7 +945,7 @@ sub parse_template {
 			for my $i (1 .. $self->{copies}) {
 				if ($self->{OUT}) {
 
-					unless (open(OUT, '>', $self->{OUT})) {
+					unless (open(OUT, $self->{printmode}, $self->{OUT})) {
 						$err = $!;
 						$self->cleanup;
 						$self->error("$self->{OUT} : $err");

@@ -1427,8 +1427,8 @@ sub print_form {
   $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
 
   if ($form->{media} !~ /(screen|queue|email)/) {
-    $form->{OUT} = "| ${LedgerSMB::SysConfig::printer}{$form->{media}}";
-    
+    $form->{OUT} = "${LedgerSMB::SysConfig::printer}{$form->{media}}";
+    $form->{printmode} = '|-';
     $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
     $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;
 
@@ -1458,6 +1458,7 @@ sub print_form {
 
     $form->{plainpaper} = 1;
     $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
+    $form->{printmode} = '|-';
 
     if ($form->{emailed} !~ /$form->{formname}/) {
       $form->{emailed} .= " $form->{formname}";
@@ -1513,7 +1514,9 @@ sub print_form {
     }
 
     $filename .= ($form->{format} eq 'postscript') ? '.ps' : '.pdf';
-    $form->{OUT} = ">${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::spool}/$filename";
+    $form->{printmode} = '>';
+
 
     $form->{queued} .= " $form->{formname} $filename";
     $form->{queued} =~ s/^ //;

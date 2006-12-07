@@ -1892,6 +1892,7 @@ sub e_mail {
 sub send_email {
 
   $form->{OUT} = "${LedgerSMB::Sysconfig::sendmail}";
+  $form->{printmode} = '|-';
 
   $form->{subject} = $locale->text('Statement - [_1]', $form->{todate}) unless $form->{subject};
   $form->isblank("email", $locale->text('E-mail address missing!'));
@@ -1926,7 +1927,8 @@ sub print {
      
  
   if ($form->{media} !~ /(screen|email)/) {
-    $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{printmode} = '|-';
     $form->{"$form->{ct}_id"} = "";
     $SIG{INT} = 'IGNORE';
   } else {
