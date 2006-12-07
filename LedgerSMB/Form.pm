@@ -929,6 +929,7 @@ sub parse_template {
 		} else {
 
 			$self->{OUT} = $temphash{out};
+            $self->{printmode} = $temphash{printmode} if $temphash{printmode};
 
 			unless (open(IN, '<', $self->{tmpfile})) {
 				$err = $!;
