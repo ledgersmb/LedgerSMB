@@ -154,7 +154,7 @@ sub save_employee {
 		       managerid = ?
 		 WHERE id = ?|;
 	$sth = $dbh->prepare($query);
-	$form->db_prepare_vars('startdate', 'enddate');
+	$form->db_prepare_vars('dob', 'startdate', 'enddate');
 	$sth->execute(
 					$form->{employeenumber}, $form->{name}, $form->{address1},
 					$form->{address2}, $form->{city}, $form->{state},
