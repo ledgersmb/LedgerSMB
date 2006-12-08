@@ -59,7 +59,7 @@ sub transactions {
 	if ($form->{type} =~ /_quotation$/) {
 		$quotation = '1';
 		$ordnumber = 'quonumber';
-	}
+    }
   
 	my $number = $form->like(lc $form->{$ordnumber});
 	my $name = $form->like(lc $form->{$form->{vc}});
@@ -378,8 +378,9 @@ sub save {
 
 	my $rowcount = $form->{rowcount};
 	for my $i (1 .. $rowcount) {
+		$form->{"ship_$i"} = 0 unless $form->{"ship_$i"}; 
 		$form->db_prepare_vars("orderitems_id_$i", "id_$i", 
-			"description_$i", "project_id_$i", "ship_$i");
+			"description_$i", "project_id_$i");
 
 		for (qw(qty ship)) { 
 			$form->{"${_}_$i"} = $form->parse_amount(
