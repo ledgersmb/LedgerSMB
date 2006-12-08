@@ -1782,6 +1782,7 @@ sub save_inventory {
   
 
 	for my $i (1 .. $form->{rowcount}) {
+		$form->{"ship_$i"} = 0 unless $form->{"ship_$i"};
 
 		$ship = (abs($form->{"ship_$i"}) > abs($form->{"qty_$i"})) 
 			? $form->{"qty_$i"} 
