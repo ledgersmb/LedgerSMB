@@ -31,6 +31,14 @@ Available methods: (in order, most to least severe)
 
 =item debug
 
+=item longmess
+
+This uses Carp to make a debug message with the full stack backtrace, including function arguments, where Carp can infer them.
+
+=item dump
+
+This uses Data::Dumper to dump the contents of a data structure as a debug message.
+
 =back
 
 =cut
@@ -41,6 +49,7 @@ use warnings;
 use IO::File;
 use Data::Dumper;
 use LedgerSMB::Sysconfig;
+use Carp ();
 
 
 our $fh;
@@ -76,11 +85,14 @@ sub warn { shift->print('warn',@_) }
 sub notice { shift->print('notice',@_) }
 sub info { shift->print('info',@_) }
 sub debug { shift->print('debug',@_) }
+
+sub longmess { shift->print('debug',Carp::longmess(@_)) }
+
 sub dump { 
 	my $self = shift;
 	my $d = Data::Dumper->new([@_]);
 	$d->Sortkeys(1);
-	$self->print('dump',$d->Dump());
+	$self->print('debug',$d->Dump());
 }
 
 1;
