@@ -473,9 +473,10 @@ sub item_selected {
       $form->{"discount_$i"} = $form->{discount} * 100;
       $form->{"reqdate_$i"} = $form->{reqdate} if $form->{type} !~ /_quotation/;
 
-      for (qw(id partnumber sku description sellprice listprice lastcost bin unit weight assembly taxaccounts pricematrix onhand notes inventory_accno_id income_accno_id expense_accno_id)) {
+      for (qw(id partnumber sku description listprice lastcost bin unit weight assembly taxaccounts pricematrix onhand notes inventory_accno_id income_accno_id expense_accno_id)) {
 	$form->{"${_}_$i"} = $form->{"new_${_}_$j"};
       }
+      $form->{"sellprice_$i"} = $form->{"new_sellprice_$j"} if not $form->{"sellprice_$i"};
 
       $form->{"partsgroup_$i"} = qq|$form->{"new_partsgroup_$j"}--$form->{"new_partsgroup_id_$j"}|;
 
