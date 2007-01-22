@@ -333,7 +333,7 @@ sub post_payment {
 		SELECT (SELECT value FROM defaults 
 		         WHERE setting_key='fxgain_accno_id'), 
 		       (SELECT value FROM defaults
-		         WHERE setting_key='fxloss_accno_id'|;
+		         WHERE setting_key='fxloss_accno_id')|;
 
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
 
@@ -585,7 +585,7 @@ sub post_payments {
 		SELECT (SELECT value FROM defaults 
 		         WHERE setting_key='fxgain_accno_id'), 
 		       (SELECT value FROM defaults
-		         WHERE setting_key='fxloss_accno_id'|;
+		         WHERE setting_key='fxloss_accno_id')|;
 
 	my ($fxgain_accno_id, $fxloss_accno_id) = $dbh->selectrow_array($query);
 
