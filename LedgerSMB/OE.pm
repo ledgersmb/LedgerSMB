@@ -2595,24 +2595,28 @@ sub consolidate_orders {
 				UPDATE oe SET
 					ordnumber = |.$dbh->quote($ordnumber).qq|,
 					transdate = current_date,
-					vendor_id = $form->{vendor_id},
-					customer_id = $form->{customer_id},
-					amount = $amount,
-					netamount = $netamount,
-					reqdate = |.$form->dbquote($ref->{reqdate}, SQL_DATE).qq|,
-					taxincluded = '$ref->{taxincluded}',
-					shippingpoint = |.$dbh->quote($ref->{shippingpoint}).qq|,
-					notes = |.$dbh->quote($ref->{notes}).qq|,
-					curr = '$curr',
-					employee_id = $ref->{employee_id},
-					intnotes = |.$dbh->quote($ref->{intnotes}).qq|,
-					shipvia = |.$dbh->quote($ref->{shipvia}).qq|,
-					language_code = '$ref->{language_code}',
-					ponumber = |.$dbh->quote($form->{ponumber}).qq|,
-					department_id = $department_id
-				WHERE id = $id|;
+					vendor_id = ?,
+					customer_id = ?,
+					amount = ?,
+					netamount = ?,
+					reqdate = ?,
+					taxincluded = ?,
+					shippingpoint = ?,
+					notes = ?,
+					curr = ?,
+					employee_id = ?,
+					intnotes = ?,
+					shipvia = ?,
+					language_code = ?,
+					ponumber = ?,
+					department_id = ?
+				WHERE id = ?|;
 			$sth = $dbh->prepare($query);
 			$sth->execute (
+				$form->{vendor_id}, $form->{customer_id}, $amount, $netamount,
+				$form->{reqdate}, $form->{taxincluded}, $form->{shippingpoint},
+				$form->{notes}, $curr, $ref->{employee_id}, $form->{intnotes},
+				$form->{shipvia}, $ref->{language_code}, $form->{po_number},
 				$department_id, $id
 				) || $form->dberror($query);
 	  
