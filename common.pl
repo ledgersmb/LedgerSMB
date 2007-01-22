@@ -44,9 +44,9 @@ sub redirect {
 		$temphash{$_} = $form->{$_};
 	}
 
-	require "bin/$script";
 	undef $form;
 	$form = new Form($argv);
+	require "bin/$script";
 
 	for (@common_attrs){
 		$form->{$_} = $temphash{$_};
