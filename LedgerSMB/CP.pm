@@ -516,13 +516,13 @@ sub post_payment {
 			# update AR/AP transaction
 			$query = qq|
 				UPDATE $form->{arap} 
-				   SET paid = $amount,
-				       datepaid = '$form->{datepaid}'
-				 WHERE id = $form->{"id_$i"}|;
+				   SET paid = ?,
+				       datepaid = ?
+				 WHERE id = ?|;
 
 			$sth = $dbh->prepare($query);
 			$sth->execute(
-				$amount, $$form->{datepaid}, $form->{"id_$i"})
+				$amount, $form->{datepaid}, $form->{"id_$i"})
 					|| $form->dberror($query, 'CP.pm', 
 						530);
 
