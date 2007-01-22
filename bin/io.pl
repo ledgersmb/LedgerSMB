@@ -1176,14 +1176,16 @@ sub print_options {
   
   print qq|
   <tr>
-    <td colspan=3>|.$locale->text('Group by').qq| ->
+    <td colspan=6>|.$locale->text('Group by').qq| ->
     <input name=groupprojectnumber type=checkbox class=checkbox $form->{groupprojectnumber}>
     |.$locale->text('Project').qq|
     <input name=grouppartsgroup type=checkbox class=checkbox $form->{grouppartsgroup}>
     |.$locale->text('Group').qq|
     </td>
 
-    <td colspan=3>|.$locale->text('Sort by').qq| ->
+  </tr>
+  <tr>
+    <td colspan=6>|.$locale->text('Sort by').qq| ->
     <input name=sortby type=radio class=radio value=runningnumber $sortby{runningnumber}>
     |.$locale->text('Item').qq|
     <input name=sortby type=radio class=radio value=partnumber $sortby{partnumber}>
