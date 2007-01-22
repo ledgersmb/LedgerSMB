@@ -1839,11 +1839,11 @@ sub save_inventory {
 
 			$query = qq|
 				UPDATE orderitems SET
-					serialnumber = '$serialnumber',
-					ship = $ship,
-					reqdate = '$form->{shippingdate}'
-					WHERE trans_id = $form->{id}
-				AND id = $form->{"orderitems_id_$i"}|;
+					serialnumber = ?,
+					ship = ?,
+					reqdate = ?
+					WHERE trans_id = ?
+				AND id = ?|;
  			$sth2 = $dbh->prepare($query); 
 			$sth2->execute(
 					$serialnumber, $ship, 
