@@ -298,7 +298,7 @@ sub all_transactions {
 					   OR lower(ac.memo) LIKE $var
 					   OR a.id IN (SELECT DISTINCT trans_id
 					 FROM invoice
-					WHERE lower(description) LIKE 'var))";
+					WHERE lower(description) LIKE $var))";
 
 		$apwhere .= " AND (lower(ct.name) LIKE $var
 					   OR lower(ac.memo) LIKE $var
