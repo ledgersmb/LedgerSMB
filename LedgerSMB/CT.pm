@@ -1108,7 +1108,7 @@ sub pricelist {
 
 	$sth->finish;
 
-	$dbh->connect;
+	$dbh->commit;
 
 }
 
