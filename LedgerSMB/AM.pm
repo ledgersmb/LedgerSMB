@@ -258,7 +258,7 @@ sub delete_account {
 		 WHERE inventory_accno_id = ?|;
 
 	$sth = $dbh->prepare($query);
-	$dbh->execute($form->{id}) || $form->dberror($query);
+	$sth->execute($form->{id}) || $form->dberror($query);
 
 	for (qw(income_accno_id expense_accno_id)){
 		$query = qq|
