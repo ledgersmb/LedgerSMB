@@ -164,7 +164,7 @@ sub post_transaction {
 
 			($null, $project_id) = split /--/, 
 				$form->{"projectnumber_$i"};
-			$project_id ||= 'NULL';
+			$project_id ||= undef;
 
 
 			$query = qq|
