@@ -2240,11 +2240,9 @@ sub lastname_used {
 
 	$trans_id *= 1;
 
-	my $DAYS = ($myconfig->{dbdriver} eq 'DB2') ? "DAYS" : "";
-
 	$query = qq|
 		SELECT ct.name AS $vc, a.curr AS currency, a.${vc}_id,
-			current_date + ct.terms $DAYS AS duedate, 
+			current_date + ct.terms AS duedate, 
 			a.department_id, d.description AS department, ct.notes, 
 			ct.curr AS currency
 		FROM $arap a
