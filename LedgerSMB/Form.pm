@@ -2856,6 +2856,7 @@ sub db_prepare_vars {
 
 	for (@_){
 		if (!$self->{$_} and $self->{$_} ne "0"){
+			print "Undef'ing $_";
 			undef $self->{$_};
 		}
 	}
