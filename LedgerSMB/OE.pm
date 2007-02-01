@@ -2580,7 +2580,7 @@ sub consolidate_orders {
 
 			#fixme:  Change this
 			$query = qq|
-				INSERT INTO oe (ordnumber) VALUES ($uid)|;
+				INSERT INTO oe (ordnumber) VALUES ('$uid')|;
 			$dbh->do($query) || $form->dberror($query);
 
 			$query = qq|
