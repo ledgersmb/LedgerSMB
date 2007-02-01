@@ -5,6 +5,14 @@
 version="1.2.0b2";
 build_d="../release";
 
+if test -d blib; then
+  rm -rf blib
+fi
+
+if test -d _build; then
+  rm -rf _build
+fi
+
 if test -d $build_d/ledger-smb; then
   rm -rf $build_d/ledger-smb
 fi
