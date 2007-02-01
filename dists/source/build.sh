@@ -2,8 +2,16 @@
 
 # Simple script to prepare for release
 
-version="1.2.0b3";
+version="1.2.0b4";
 build_d="../release";
+
+if test -d blib; then
+  rm -rf blib
+fi
+
+if test -d _build; then
+  rm -rf _build
+fi
 
 if test -d $build_d/ledger-smb; then
   rm -rf $build_d/ledger-smb

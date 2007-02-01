@@ -1,7 +1,7 @@
 # RPM spec written for and tested on Fedora Core 6
 Summary: LedgerSMB - Open Source accounting software
 Name: ledger-smb
-Version: 1.2.0b3
+Version: 1.2.0b4
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
@@ -12,7 +12,7 @@ Source2: Config-Std-v0.0.4.tar.gz
 Source3: Locale-Maketext-Lexicon-0.62.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
-Requires: perl >= 5.8, httpd, postgresql-server >= 8.1, tetex-latex
+Requires: perl >= 5.8, httpd, postgresql >= 8.1, tetex-latex
 Requires: perl-DBD-Pg, perl-DBI, perl-version, perl-Smart-Comments, perl-MIME-Lite
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
