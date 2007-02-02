@@ -717,7 +717,7 @@ sub form_footer {
 
     if ($form->{id}) {
 
-      if ($form->{locked} || $transdate <= $closedto) {
+      if ($form->{locked} || ($transdate && $transdate <= $closedto)) {
 	for ("post", "print_and_post", "delete") { delete $button{$_} }
       }
 	
@@ -730,7 +730,7 @@ sub form_footer {
       for ("post_as_new", "print_and_post_as_new", "delete") { delete $button{$_} }
       delete $button{"print_and_post"} if ! ${LedgerSMB::Sysconfig::latex};
       
-      if ($transdate <= $closedto) {
+      if ($transdate && $transdate <= $closedto) {
 	for ("post", "print_and_post") { delete $button{$_} }
       }
     }
