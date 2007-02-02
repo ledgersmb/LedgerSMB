@@ -50,5 +50,7 @@ recommend as follows:
       "update users_conf set password = md5('my_password');"
       Naturally you would use your password instead of my_password.
 
+6)  Edit the ledger-smb.conf file as appropriate.
+
 Congratulations, you have manually installed LedgerSMB 1.2.
 
