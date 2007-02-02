@@ -1940,7 +1940,7 @@ sub invoice {
     $buysell = 'buy';
   }
  
-  for (qw(id subject message cc bcc printed emailed queued)) { delete $form->{$_} }
+  for (qw(id subject message printed emailed queued)) { delete $form->{$_} }
   $form->{$form->{vc}} =~ s/--.*//g;
   $form->{type} = "invoice";
  
@@ -1983,7 +1983,7 @@ sub invoice {
     for (qw(qty sellprice discount)) { $form->{"${_}_$i"} = $form->format_amount(\%myconfig, $form->{"${_}_$i"}) }
   }
 
-  for (qw(id subject message cc bcc printed emailed queued audittrail)) { delete $form->{$_} }
+  for (qw(id subject message printed emailed queued audittrail)) { delete $form->{$_} }
 
   &display_form;
 
