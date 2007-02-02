@@ -570,7 +570,7 @@ sub new_item {
   }
 
   $i = $form->{rowcount};
-  for (qw(partnumber description)) { $form->{"${_}_$i"} = $form->quote($form->{"${_}_$i"}) }
+  for (qw(partnumber description sellprice unit)) { $form->{"${_}_$i"} = $form->quote($form->{"${_}_$i"}) }
 
   $form->header;
 
