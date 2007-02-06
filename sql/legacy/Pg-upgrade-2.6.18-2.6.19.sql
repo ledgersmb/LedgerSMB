@@ -150,70 +150,70 @@ UPDATE tax SET taxmodule_id = 1;
 ALTER TABLE tax ALTER COLUMN taxmodule_id SET NOT NULL;
 
 -- Fixed session table and add users table --
-CREATE TABLE users (id serial UNIQUE, username varchar(30) PRIMARY KEY);
+--CREATE TABLE users (id serial UNIQUE, username varchar(30) PRIMARY KEY);
 COMMENT ON TABLE users IS 'username is the primary key because we don\'t want duplicate users';
-CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
-                        acs text,
-                        address text,
-                        businessnumber text,
-                        company text,
-                        countrycode text,
-                        currency text,
-                        dateformat text,
-                        dbconnect text,
-                        dbdriver text default 'Pg',
-                        dbhost text default 'localhost',
-                        dbname text,
-                        dboptions text,
-                        dbpasswd text,
-                        dbport text,
-                        dbuser text,
-                        email text,
-                        fax text,
-                        menuwidth text,
-                        name text,
-                        numberformat text,
-                        password varchar(32) check(length(password) = 32),
-                        print text,
-                        printer text,
-                        role text,
-                        sid text,
-                        signature text,
-                        stylesheet text,
-                        tel text,
-                        templates text,
-			crypted_password text,
-                        timeout numeric,
-                        vclimit numeric);
+--CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
+--                        acs text,
+--                        address text,
+--                        businessnumber text,
+--                        company text,
+--                        countrycode text,
+--                        currency text,
+--                        dateformat text,
+--                        dbconnect text,
+--                        dbdriver text default 'Pg',
+--                        dbhost text default 'localhost',
+--                        dbname text,
+--                        dboptions text,
+--                        dbpasswd text,
+--                        dbport text,
+--                        dbuser text,
+--                        email text,
+--                        fax text,
+--                        menuwidth text,
+--                        name text,
+--                        numberformat text,
+--                        password varchar(32) check(length(password) = 32),
+--                        print text,
+--                        printer text,
+--                        role text,
+--                        sid text,
+--                        signature text,
+--                        stylesheet text,
+--                        tel text,
+--                        templates text,
+--			crypted_password text,
+--                        timeout numeric,
+--                        vclimit numeric);
 COMMENT ON TABLE users_conf IS 'This is a completely dumb table that is a place holder to get usersconf into the database. Next major release will have a much more sane implementation';
 COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(id) is correct';
 COMMENT ON COLUMN users_conf.password IS 'This means we have to get rid of the current password stuff and move to presumably md5()';
 
-LOCK session in EXCLUSIVE MODE;
-DELETE FROM session;
-ALTER TABLE session ADD CONSTRAINT session_token_check check (length(token::text) = 32);
-ALTER TABLE session ADD column user_id integer not null references users(id);
+--LOCK session in EXCLUSIVE MODE;
+--DELETE FROM session;
+--ALTER TABLE session ADD CONSTRAINT session_token_check check (length(token::text) = 32);
+--ALTER TABLE session ADD column user_id integer not null references users(id);
 
 -- comment this out when user db is working:
-ALTER TABLE session ALTER COLUMN user_id DROP NOT NULL;
+--ALTER TABLE session ALTER COLUMN user_id DROP NOT NULL;
 
 -- Admin user --
-INSERT INTO users(username) VALUES ('admin');
-INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
+--INSERT INTO users(username) VALUES ('admin');
+--INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
 
 -- Functions
 
-CREATE FUNCTION create_user(text) RETURNS bigint AS $$
-   INSERT INTO users(username) VALUES ('$1');
-   SELECT currval('users_id_seq');
-   $$ LANGUAGE 'SQL';
+--CREATE FUNCTION create_user(text) RETURNS bigint AS $$
+--   INSERT INTO users(username) VALUES ('$1');
+--   SELECT currval('users_id_seq');
+--   $$ LANGUAGE 'SQL';
 
 COMMENT ON FUNCTION create_user(text) IS $$ Function to create user Returns users.id if successful, else it is an error. $$;
 
-CREATE FUNCTION update_user(int4,text) RETURNS int4 AS $$
-   UPDATE users SET username = '$2' WHERE id = $1;
-   SELECT 1;
-   $$ LANGUAGE 'SQL';
+--CREATE FUNCTION update_user(int4,text) RETURNS int4 AS $$
+--   UPDATE users SET username = '$2' WHERE id = $1;
+--   SELECT 1;
+--   $$ LANGUAGE 'SQL';
 
 COMMENT ON FUNCTION update_user(int4,text) IS $$ Takes int4 which is users.id and text which is username. Will update username based on id. Username is unique $$;
 

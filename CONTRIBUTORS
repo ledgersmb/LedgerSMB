@@ -44,7 +44,8 @@ Tony Fraser <tony @ sybaspace.com> provided some database fixes.
 John Hasler <john @ dhh.gt.org> has provided some double-entry information for
 the manual and miscellaneous documentation corrections.
 
-Louis B. Moore has provided the documentation on the command-line API.
+Louis B. Moore has provided the documentation on the command-line API and helped
+with upgrade scripts.
 
 Original Authors of SQL-Ledger:
 ===================================
