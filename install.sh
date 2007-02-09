@@ -7,7 +7,7 @@ sed -i "s|WORKING_DIR|$CWD|"
 echo "Which user does your web server run as?"
 read username
 
-chmod $username spool templates css
+chown $username spool templates css
 
 echo "Where do we copy the ledger-smb-httpd.conf file to?"
 read location
