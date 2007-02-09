@@ -47,6 +47,9 @@ the manual and miscellaneous documentation corrections.
 Louis B. Moore has provided the documentation on the command-line API and helped
 with upgrade scripts.
 
+Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
+documentation for Debian installations.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
