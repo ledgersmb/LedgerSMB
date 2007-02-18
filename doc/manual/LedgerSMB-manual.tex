@@ -232,7 +232,7 @@ must create a dataset to for each.
 When creating a dataset, the application asks for both a username and a 
 superusername.  If the superuser's information is not filled in, Ledger-SMB will
 attempt to populate an existing dataset, but if this information is filled in,
-the progam will log into the PostgreSQL cluster with the superusername and
+the program will log into the PostgreSQL cluster with the superusername and
 password, create the database, and attempt to add Plpgsql to it.
 
 \subsection{How to Create a User}
@@ -374,23 +374,28 @@ on hand because you have decreased that one.
 
 \subsubsection{Accrual}
 
-You deliver some goods to a customer and give him the bill which, as
-agreed, he promises to pay within 90 days.  You record the sale as
-completed, debiting the customer's account in Accounts Payable (an asset
-account) for the amount due.  This is accrual.  Later, when the payment
-comes, you credit his account and debit cash.  You purchase some goods on
-credit, taking delivery and promising to pay within 90 days.  You debit
-inventory (an asset account) and credit the supplier's account in Accounts
-Payable (a Liability account).  This is also accrual.  Later, when you pay
-the bill, you credit cash and debit the supplier's account.  Accrual just
-means recognizing and recording transactions when they actually occur
-rather than waiting until cash changes hands.
+Early accounting systems were usually run on a cash basis.  One generally did 
+not consider money owed to affect the financial health of a company, so expenses
+posted when paid as did income.
 
-You won't have to think about most of this stuff while doing your
-bookkeeping with LedgerSMB, but understanding it will help you set up your
-accounts, handle unusual situations, and understand the reports.  If you
-need to learn more about double entry bookkeeping see the following
-references or consult an accountant.
+The problem with this approach is that it becomes very difficult or impossible 
+to truly understand the exact nature of the financial health of a business.  One
+cannot get the full picture of the financial health of a business because 
+outstanding debts are not considered.  Futhermore, this does not allow for 
+revenue to be tied to cost effectively, so it becomes difficult to assess how
+profitable a given activity truly is.
+
+To solve this problem, accrual-based systems were designed.  The basic principle
+is that income and expense should be posted as they are incurred, or accrued.  
+This allows one to track income relative to expense for specific projects or 
+operations, and make better decisions about which activities will help one 
+maximize profitability.
+
+To show how these systems differ, imagine that you bill a customer for time and 
+materials for a project you have just completed.  The customer pays the bill 
+after 30 days.  In a cash based system, you would post the income at the time 
+when the customer pays, while in an accrual system, the income is posted at the
+time when the project is completed.
 
 \subsubsection{References}
 
@@ -525,7 +530,7 @@ or even just MMYY are all options.
 ventor.
 \item[DESCRIPTION] expands to the description of the part.  Valid only for parts.
 \item[ITEM] expands to the item field.  Valid only for parts.
-\item[PARTSGROUP] expands to the partsgroup.  Valid only for parts.
+\item[PERISCOPE] expands to the partsgroup.  Valid only for parts.
 \item[PHONE] expands to the telephoen number for customers and vendors.
 \end{description}
 
