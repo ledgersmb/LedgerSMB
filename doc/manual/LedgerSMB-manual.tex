@@ -471,7 +471,16 @@ in the System submenu.
 
 
 \subsection{Taxes, Defaults, and Preferences}
+One of the new features in 1.2 is the modular sales tax system and the simple
+sales tax module.  This allows one to install different tax modules and then 
+select which taxes are applied by which programming modules.  The sales tax 
+module has access to everything on the submitted form so it is able to make
+complex determinations on what is taxable based on arbitrary criteria.
 
+The tax rules drop-down box allows one to select any installed tax module 
+(LedgerSMB 1.2 ships only with the simple module), while the ordering is an
+integer which allows one to specify a tax run which occurs on the form after
+any rules with lower entries in this box.  This allows for compounding of sales tax (for example, when PST applies to the total and GST as well).
 
 \subsubsection{Adding A Sales Tax Account}
 

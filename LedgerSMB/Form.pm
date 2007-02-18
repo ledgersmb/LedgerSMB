@@ -575,6 +575,9 @@ sub parse_template {
 	$self->{images} = "${LedgerSMB::Sysconfig::images}/$self->{templates}";
 
 	if ($self->{language_code}) {
+		if ($self->{language_code} =~ /(\.\.|\/|\*)/){
+			$self->error("Invalid Language Code");
+		}
 
 		if (-f "$self->{templates}/$self->{language_code}/$self->{IN}") {
 			open(IN, '<', "$self->{templates}/$self->{language_code}/$self->{IN}") or $self->error("$self->{IN} : $!");
