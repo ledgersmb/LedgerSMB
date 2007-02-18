@@ -12,6 +12,9 @@ SLOWN=SQL-Ledger_Owner
 LSDB=lsmbprod
 LSOWN=ledgersmb
 
+# Installation directory
+
+IDIR=`pwd`
 
 psql template1 -c "DROP DATABASE ${LSDB};"
 
@@ -22,7 +25,7 @@ sed -i -e "s/SQL_ASCII/LATIN1/" sl2ls.sql
 
 createdb -O ${LSOWN} ${LSDB}
 
-psql ${LSDB} ${LSOWN} -c "\i /usr/local/ledger-smb/sql/Pg-central.sql"
+psql ${LSDB} ${LSOWN} -c "\i ${IDIR}/sql/Pg-central.sql"
 
 psql template1 -c "ALTER USER ${LSOWN} WITH superuser;"
 
@@ -30,7 +33,7 @@ psql ${LSDB} ${LSOWN} -c "\i sl2ls.sql"
 
 psql template1 -c "ALTER USER ${LSOWN} WITH nosuperuser;"
 
-cd /usr/local/ledger-smb/sql/legacy/
+cd ${IDIR}/sql/legacy/
 
 psql ${LSDB} ${LSOWN} -c "SELECT version FROM defaults;"
 
@@ -54,7 +57,7 @@ psql ${LSDB} ${LSOWN} -c "SELECT version FROM defaults;"
 
 psql ${LSDB} ${LSOWN} -c "update users_conf set password = md5('apasswrd');"
 
-cd /usr/local/ledger-smb
+cd ${IDIR}
 
 ./import_members.pl users/members
 

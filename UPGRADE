@@ -13,6 +13,10 @@ Also this document assumes that the reader is already familiar with the release
 notes.  If you have not already done so, please read the release_notes file in
 the doc/ directory.
 
+Before you begin, make sure that you are running at least PostgreSQL 8.0.  If 
+you are running a prior version, you will need to dump your data, upgrade the 
+database server and restore the data before proceeding.
+
 MANUAL UPGRADE:
 ===============================================================================
 
@@ -77,6 +81,8 @@ sql/Pg-central.sql file into it.
 
 7)  Copy the files from the LedgerSMB tarball over your existing installation.
 8)  Delete the users directory.
+
+9)  Edit the ledger-smb.conf file as appropriate.
 
 Congratulations, you have manually upgraded to LedgerSMB 1.2.
 
