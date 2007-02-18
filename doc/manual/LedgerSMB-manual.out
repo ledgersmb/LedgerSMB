@@ -162,46 +162,53 @@
 \BOOKMARK [2][-]{subsection.15.4}{Customizing Logos}{section.15}
 \BOOKMARK [2][-]{subsection.15.5}{How are They Stored in the Filesystem?}{section.15}
 \BOOKMARK [2][-]{subsection.15.6}{Upgrade Issues}{section.15}
+\BOOKMARK [1][-]{section.16}{An Introduction to the CLI}{part.1}
+\BOOKMARK [2][-]{subsection.16.1}{Conventions}{section.16}
+\BOOKMARK [2][-]{subsection.16.2}{Preliminaries}{section.16}
+\BOOKMARK [2][-]{subsection.16.3}{First Script: lsmb01-cli-example.sh}{section.16}
+\BOOKMARK [3][-]{subsubsection.16.3.1}{Script 1 \(Bash\)}{subsection.16.3}
+\BOOKMARK [2][-]{subsection.16.4}{Second Script: lsmb02-cli-example.pl}{section.16}
+\BOOKMARK [3][-]{subsubsection.16.4.1}{Script 2 \(Perl\)}{subsection.16.4}
 \BOOKMARK [0][-]{part.2}{II Technical Overview}{}
-\BOOKMARK [1][-]{section.16}{Basic Architecture}{part.2}
-\BOOKMARK [2][-]{subsection.16.1}{The Software Stack}{section.16}
-\BOOKMARK [2][-]{subsection.16.2}{Capacity Planning}{section.16}
-\BOOKMARK [3][-]{subsubsection.16.2.1}{Scalability Strategies}{subsection.16.2}
-\BOOKMARK [3][-]{subsubsection.16.2.2}{Database Maintenance}{subsection.16.2}
-\BOOKMARK [3][-]{subsubsection.16.2.3}{Known issues}{subsection.16.2}
-\BOOKMARK [1][-]{section.17}{Customization Possibilities}{part.2}
-\BOOKMARK [2][-]{subsection.17.1}{Brief Guide to the Source Code}{section.17}
-\BOOKMARK [2][-]{subsection.17.2}{Data Entry Screens}{section.17}
-\BOOKMARK [3][-]{subsubsection.17.2.1}{Examples}{subsection.17.2}
-\BOOKMARK [2][-]{subsection.17.3}{Extensions}{section.17}
-\BOOKMARK [3][-]{subsubsection.17.3.1}{Examples}{subsection.17.3}
-\BOOKMARK [2][-]{subsection.17.4}{Templates}{section.17}
-\BOOKMARK [3][-]{subsubsection.17.4.1}{Examples}{subsection.17.4}
-\BOOKMARK [2][-]{subsection.17.5}{Reports}{section.17}
-\BOOKMARK [3][-]{subsubsection.17.5.1}{Examples}{subsection.17.5}
-\BOOKMARK [1][-]{section.18}{Integration Possibilities}{part.2}
-\BOOKMARK [2][-]{subsection.18.1}{Reporting Tools}{section.18}
-\BOOKMARK [3][-]{subsubsection.18.1.1}{Examples}{subsection.18.1}
-\BOOKMARK [2][-]{subsection.18.2}{Line of Business Tools on PostgreSQL}{section.18}
-\BOOKMARK [3][-]{subsubsection.18.2.1}{Known Issues}{subsection.18.2}
-\BOOKMARK [3][-]{subsubsection.18.2.2}{Strategies}{subsection.18.2}
-\BOOKMARK [3][-]{subsubsection.18.2.3}{Examples}{subsection.18.2}
-\BOOKMARK [2][-]{subsection.18.3}{Line of Business Tools on other RDBMS's}{section.18}
-\BOOKMARK [3][-]{subsubsection.18.3.1}{Strategies}{subsection.18.3}
-\BOOKMARK [3][-]{subsubsection.18.3.2}{Integration Products and Open Source Projects}{subsection.18.3}
-\BOOKMARK [1][-]{section.19}{Customization Guide}{part.2}
-\BOOKMARK [2][-]{subsection.19.1}{General Information}{section.19}
-\BOOKMARK [2][-]{subsection.19.2}{Customizing Templates}{section.19}
-\BOOKMARK [3][-]{subsubsection.19.2.1}{Page Breaks in LaTeX}{subsection.19.2}
-\BOOKMARK [3][-]{subsubsection.19.2.2}{Conditionals}{subsection.19.2}
-\BOOKMARK [3][-]{subsubsection.19.2.3}{Loops}{subsection.19.2}
-\BOOKMARK [3][-]{subsubsection.19.2.4}{File Inclusion}{subsection.19.2}
-\BOOKMARK [3][-]{subsubsection.19.2.5}{Cross-referencing and multiple passes of LaTeX}{subsection.19.2}
-\BOOKMARK [3][-]{subsubsection.19.2.6}{Variable Substitution}{subsection.19.2}
-\BOOKMARK [2][-]{subsection.19.3}{Customizing Forms}{section.19}
-\BOOKMARK [2][-]{subsection.19.4}{Customizing Modules}{section.19}
-\BOOKMARK [3][-]{subsubsection.19.4.1}{Database Access}{subsection.19.4}
-\BOOKMARK [2][-]{subsection.19.5}{CLI Examples}{section.19}
+\BOOKMARK [1][-]{section.17}{Basic Architecture}{part.2}
+\BOOKMARK [2][-]{subsection.17.1}{The Software Stack}{section.17}
+\BOOKMARK [2][-]{subsection.17.2}{Capacity Planning}{section.17}
+\BOOKMARK [3][-]{subsubsection.17.2.1}{Scalability Strategies}{subsection.17.2}
+\BOOKMARK [3][-]{subsubsection.17.2.2}{Database Maintenance}{subsection.17.2}
+\BOOKMARK [3][-]{subsubsection.17.2.3}{Known issues}{subsection.17.2}
+\BOOKMARK [1][-]{section.18}{Customization Possibilities}{part.2}
+\BOOKMARK [2][-]{subsection.18.1}{Brief Guide to the Source Code}{section.18}
+\BOOKMARK [2][-]{subsection.18.2}{Data Entry Screens}{section.18}
+\BOOKMARK [3][-]{subsubsection.18.2.1}{Examples}{subsection.18.2}
+\BOOKMARK [2][-]{subsection.18.3}{Extensions}{section.18}
+\BOOKMARK [3][-]{subsubsection.18.3.1}{Examples}{subsection.18.3}
+\BOOKMARK [2][-]{subsection.18.4}{Templates}{section.18}
+\BOOKMARK [3][-]{subsubsection.18.4.1}{Examples}{subsection.18.4}
+\BOOKMARK [2][-]{subsection.18.5}{Reports}{section.18}
+\BOOKMARK [3][-]{subsubsection.18.5.1}{Examples}{subsection.18.5}
+\BOOKMARK [1][-]{section.19}{Integration Possibilities}{part.2}
+\BOOKMARK [2][-]{subsection.19.1}{Reporting Tools}{section.19}
+\BOOKMARK [3][-]{subsubsection.19.1.1}{Examples}{subsection.19.1}
+\BOOKMARK [2][-]{subsection.19.2}{Line of Business Tools on PostgreSQL}{section.19}
+\BOOKMARK [3][-]{subsubsection.19.2.1}{Known Issues}{subsection.19.2}
+\BOOKMARK [3][-]{subsubsection.19.2.2}{Strategies}{subsection.19.2}
+\BOOKMARK [3][-]{subsubsection.19.2.3}{Examples}{subsection.19.2}
+\BOOKMARK [2][-]{subsection.19.3}{Line of Business Tools on other RDBMS's}{section.19}
+\BOOKMARK [3][-]{subsubsection.19.3.1}{Strategies}{subsection.19.3}
+\BOOKMARK [3][-]{subsubsection.19.3.2}{Integration Products and Open Source Projects}{subsection.19.3}
+\BOOKMARK [1][-]{section.20}{Customization Guide}{part.2}
+\BOOKMARK [2][-]{subsection.20.1}{General Information}{section.20}
+\BOOKMARK [2][-]{subsection.20.2}{Customizing Templates}{section.20}
+\BOOKMARK [3][-]{subsubsection.20.2.1}{Page Breaks in LaTeX}{subsection.20.2}
+\BOOKMARK [3][-]{subsubsection.20.2.2}{Conditionals}{subsection.20.2}
+\BOOKMARK [3][-]{subsubsection.20.2.3}{Loops}{subsection.20.2}
+\BOOKMARK [3][-]{subsubsection.20.2.4}{File Inclusion}{subsection.20.2}
+\BOOKMARK [3][-]{subsubsection.20.2.5}{Cross-referencing and multiple passes of LaTeX}{subsection.20.2}
+\BOOKMARK [3][-]{subsubsection.20.2.6}{Variable Substitution}{subsection.20.2}
+\BOOKMARK [2][-]{subsection.20.3}{Customizing Forms}{section.20}
+\BOOKMARK [2][-]{subsection.20.4}{Customizing Modules}{section.20}
+\BOOKMARK [3][-]{subsubsection.20.4.1}{Database Access}{subsection.20.4}
+\BOOKMARK [2][-]{subsection.20.5}{CLI Examples}{section.20}
 \BOOKMARK [0][-]{part.3}{III Appendix}{}
 \BOOKMARK [1][-]{section.A}{Where to Go for More Information}{part.3}
 \BOOKMARK [1][-]{section.B}{Quick Tips}{part.3}
