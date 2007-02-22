@@ -2216,7 +2216,7 @@ sub lastname_used {
 	my ($self, $myconfig, $dbh2, $vc, $module) = @_;
 
 	my $dbh = $self->{dbh};
-
+	$vc ||= $form->{vc}; # add default to correct for improper passing
 	my $arap = ($vc eq 'customer') ? "ar" : "ap";
 	my $where = "1 = 1";
 	my $sth;
