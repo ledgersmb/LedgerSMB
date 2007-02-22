@@ -50,6 +50,9 @@ with upgrade scripts.
 Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
 documentation for Debian installations.
 
+Chifung Fan [email omitted] contributed bugfixes.
+
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
