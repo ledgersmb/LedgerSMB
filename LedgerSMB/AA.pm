@@ -90,7 +90,7 @@ sub post_transaction {
 		push @{ $form->{acc_trans}{taxes} }, {
 			accno => $accno,
 			amount => $tax{fxamount}{$accno},
-			project_id => 'NULL',
+			project_id => undef,
 			fx_transaction => 0 };
 
 		$amount = $tax{fxamount}{$accno} * $form->{exchangerate};
@@ -103,7 +103,7 @@ sub post_transaction {
 			push @{ $form->{acc_trans}{taxes} }, {
 				accno => $accno,
 				amount => $amount,
-				project_id => 'NULL',
+				project_id => undef,
 				fx_transaction => 1 };
 		}
 
@@ -138,7 +138,7 @@ sub post_transaction {
 			$diff = $amount{amount}{$i} - ($amount - $diff);
 
 			($null, $project_id) = split /--/, $form->{"projectnumber_$i"};
-			$project_id ||= 'NULL';
+			$project_id ||= undef;
 			($accno) = split /--/, $form->{"${ARAP}_amount_$i"};
 
 			if ($keepcleared) {
@@ -264,7 +264,7 @@ sub post_transaction {
 
 	# record last payment date in ar/ap table
 	$form->{datepaid} = $form->{transdate} unless $form->{datepaid};
-	my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : 'NULL';
+	my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : 'NOW';
 
 	$form->{invnumber} = $form->update_defaults($myconfig, $invnumber) unless $form->{invnumber};
 
@@ -368,8 +368,8 @@ sub post_transaction {
 			            (trans_id, chart_id, amount, transdate)
 			     VALUES (?, (SELECT id FROM chart
 			                  WHERE accno = '?'), 
-			                  ? * -1 * $ml, ?)|;
-		@queryargs = ($form->{id}, $accno, $invamount, 
+			                  ?, ?)|;
+		@queryargs = ($form->{id}, $accno, $invamount * -1 * $ml, 
 			$form->{transdate});
 
 		$dbh->prepare($query)->execute(@queryargs) 
@@ -425,9 +425,10 @@ sub post_transaction {
 					            amount,transdate)
 					     VALUES (?, (SELECT id FROM chart
 					                  WHERE accno = ?),
-					            ? * $ml, ?)|;
+					            ?, ?)|;
 
-				@queryargs = ($form->{id}, $paid{amount}{$i},
+				@queryargs = ($form->{id}, 
+					$paid{amount}{$i} * $ml,
 					$form->{"datepaid_$i"});
 				$dbh->prepare($query)->execute(@queryargs) 
 					|| $form->dberror($query);
@@ -451,9 +452,10 @@ sub post_transaction {
 					            cleared)
 					     VALUES (?, (SELECT id FROM chart
 						          WHERE accno = ?),
-					            ? * -1 * $ml, ?, ?, ?, ?)|;
+					            ?, ?, ?, ?, ?)|;
 
-				@queryargs = ($form->{id}, $accno, $amount, 
+				@queryargs = ($form->{id}, $accno, 
+					$amount * -1 * $ml, 
 					$form->{"datepaid_$i"}, 
 					$form->{"source_$i"}, 
 					$form->{"memo_$i"},
@@ -486,11 +488,12 @@ sub post_transaction {
 							            fx_transaction, 
 							            cleared)
 							     VALUES (?, ?, 
-							            ? * $ml, 
+							            ?, 
 							            ?, '1', ?)|;
 
 						@queryargs = ($form->{id}, 
-							$accno_id, $amount,
+							$accno_id, 
+							$amount * $ml,
 							$form->{"datepaid_$i"},
 							$cleared);
 						$sth = $dbh->prepare($query);
@@ -513,11 +516,12 @@ sub post_transaction {
 						                   FROM chart
 						                  WHERE accno 
 						                        = ?),
-						            ? * -1 * $ml, ?, 
+						            ?, ?, 
 						            '1', ?, ?)|;
 
 					@queryargs = ($form->{id}, $accno,
-						$amount, $form->{"datepaid_$i"},
+						$amount * -1 * $ml, 
+						$form->{"datepaid_$i"},
 						$cleared, $form->{"source_$i"});
 					$sth = $dbh->prepare($query) ;
 					$sth->execute(@queryargs)
