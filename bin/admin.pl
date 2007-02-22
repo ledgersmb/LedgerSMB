@@ -357,7 +357,7 @@ sub form_header {
 	}
 
 	opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/." or $form->error(__FILE__.':'.__LINE__.': '."$templates : $!");
-	@all = grep !/(\.\.?|^\.?)/, readdir TEMPLATEDIR;
+	@all = grep !/(^\.\.?|^\.svn)/, readdir TEMPLATEDIR;
 	closedir TEMPLATEDIR;
 
 	@allhtml = sort grep /\.html/, @all;
