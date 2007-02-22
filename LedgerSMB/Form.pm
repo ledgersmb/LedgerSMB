@@ -2408,7 +2408,7 @@ sub update_status {
 	my $dbh = $self->{dbh};
 
 	my %queued = split / +/, $self->{queued};
-	my $spoolfile = ($queued{$self->{formname}}) ? "'$queued{$self->{formname}}'" : 'NULL';
+	my $spoolfile = ($queued{$self->{formname}}) ? "'$queued{$self->{formname}}'" : undef;
 
 	my $query = qq|DELETE FROM status
 					WHERE formname = ?
