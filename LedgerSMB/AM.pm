@@ -1701,7 +1701,7 @@ sub closebooks {
 		UPDATE defaults SET value = ? 
 		 WHERE setting_key = ?|;
 	my $sth = $dbh->prepare($query);
-	for (qw(revtrans, closedto, audittrail)){
+	for (qw(revtrans closedto audittrail)){
 		
 		if ($form->{$_}){
 			$val = 1;
