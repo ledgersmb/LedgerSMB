@@ -2209,6 +2209,7 @@ sub lastname_used {
 
 	my ($self, $myconfig, $dbh2, $vc, $module) = @_;
 
+	$vc ||= $self->{vc};
 	my $dbh = $self->{dbh};
 
 	my $arap = ($vc eq 'customer') ? "ar" : "ap";
