@@ -1,0 +1,199 @@
+/* stylesheet for ledger-smb */
+
+/* general stuff */
+A:link { color: blue; text-decoration: none; }
+A:visited { color: blue; text-decoration: none; }
+A:active { color: blue; text-decoration: underline; }
+A:hover { color: blue;
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+body {
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  color: black;
+  font-size: 8pt;
+  margin: 1px;
+  background-color: white;
+  scrollbar-arrow-color: white;
+  scrollbar-3dlight-color: #dddddd;
+  scrollbar-highlight-color: #aaaaaa;
+  scrollbar-face-color: #aaaaaa;
+  scrollbar-shadow-color: #aaaaaa;
+  scrollbar-track-color: #cccccc;
+  scrollbar-darkshadow-color: #666666;
+}
+
+td {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 8pt;
+}
+
+th {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 8pt;
+  font-weight: normal;
+}
+
+/* login and admin */
+.login {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+body.login {
+  background: #dddddd;
+  color: black;
+}
+h1.login {
+  font-size: 18pt;
+}
+table.login {
+  background-color: #bbbbbb;
+  padding: 20px;
+}
+td.login {
+  text-align: center;
+}
+th.login {
+  text-align: right;
+}
+
+body.admin {
+  background-color: white;
+  color: black;
+}
+
+body.menu {
+  background-color: white;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
+}
+
+body.menu img {
+  display: none;
+}
+
+.menuOut {
+  cursor: pointer;
+  background-color: white;
+  font-size: 8px;
+  color: black;
+  border: none;
+  padding: 2px;
+  text-align: left;
+}
+
+.menuOver {
+  cursor: pointer;
+  background-color: white;
+  font-size: 8px;
+  color: black;
+  border: none;
+  padding: 2px;
+  text-align: left;
+  font-weight: normal;
+}
+
+.submenu {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  padding-left: 5px;
+}
+
+.menuOut a {
+  color: black;
+}
+
+.menuOver a {
+  color: black;
+}
+
+.submenu a {
+  color: blue;
+  text-decoration: none;
+}
+
+.submenu a:hover {
+  text-decoration: none;
+  color: blue;
+}
+
+.listtop { font-size: 8pt; background-color: #e0e0e0; color: black; }
+.listheading { font-size: 8pt; background-color: #eeeeee; color: black; }
+A.listheading:link, A.listheading:active, A.listheading:visited {
+  color: black;
+  text-decoration: none; }
+.listrow1 { font-size: 8pt; background-color: #f8f8f8; color: black; vertical-align: top; }
+.listrow0 { font-size: 8pt; background-color: #f0f0f0; color: black; vertical-align: top; }
+.listsubtotal { font-size: 8pt; background-color: #eeeeee; color: black; }
+.listtotal { font-size: 8pt; background-color: #e0e0e0; color: black; }
+
+textarea {
+  font-family: Courier New;
+  border: 1px solid black;
+  font-size: 8pt;
+  background-color: #eeeeee;
+  font-weight: normal;
+}
+
+input {
+  font-family: Courier New;
+  border: 1px solid black;
+  font-size: 8pt;
+  background-color: #eeeeee;
+  font-weight: normal;
+}
+
+select {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+}
+
+.submit {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
+  font-weight: normal;
+}
+
+.checkbox, .radio {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+}
+
+.plus0 {    /* font color for negative numbers */
+  color: red;
+}
+
+.plus1 {
+  color: green;
+}
+
+hr {
+  background-color: #eeeeee;
+}
+
+h2.confirm {
+  color: blue;
+  font-size: 14pt;
+}
+
+h2.error {
+  color: red;
+  font-size: 14pt;
+}
+
+
+/* media stuff */
+
+@media screen {
+  .noscreen {   /* items with this class won't display */
+    display: none;
+  }
+}
+
+@media print {
+  .noprint {   /* items with this class won't print */
+    display: none;
+  }
+}
