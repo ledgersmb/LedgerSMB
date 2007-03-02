@@ -368,11 +368,8 @@ sub dbcreate {
 	}
 	#Reassign for the work below
 
-
 	&dbconnect_vars($form, $form->{db});
 
-	$form->debug;
-  
 	my $dbh = DBI->connect(
 		$form->{dbconnect}, 
 		$form->{dbuser}, 
