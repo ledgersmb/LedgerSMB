@@ -368,7 +368,10 @@ sub dbcreate {
 	}
 	#Reassign for the work below
 
+
 	&dbconnect_vars($form, $form->{db});
+
+	$form->debug;
   
 	my $dbh = DBI->connect(
 		$form->{dbconnect}, 
@@ -433,6 +436,8 @@ sub process_query {
 	$ENV{PGPASSWORD} = $form->{dbpasswd};
 	$ENV{PGUSER} = $form->{dbuser};
 	$ENV{PGDATABASE} = $form->{db};
+	$ENV{PGHOST} = $form->{dbhost};
+	$ENV{PGPORT} = $form->{dbport};
 	
 	$results = `psql -f $filename 2>&1`;
 	if ($?){

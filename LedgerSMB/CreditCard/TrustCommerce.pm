@@ -15,7 +15,7 @@
 #
 # Simple TrustCommerce API using Net::TCLink
 
-package TrustCommerce;
+package LedgerSMB::CreditCard::TrustCommerce;
 use LedgerSMB::CreditCard::Config;
 use LedgerSMB::CreditCard::TrustCommerce::Config;
 use Net::TCLink;
