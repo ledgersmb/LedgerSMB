@@ -941,7 +941,8 @@ sub check_password {
 			exit;
 		}
 		else{
-			Session::session_create($root);
+			$form->{login} = 'admin';
+			Session::session_create($form);
 		}
 	}
 	else {
