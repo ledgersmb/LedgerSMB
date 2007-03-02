@@ -45,6 +45,9 @@ recommend as follows:
   b) run "psql" with appropriate options to connect to your database.
   c) Run the SQL script Pg-central.sql.
 
+  Note that the psql connection should use the same username that you intend to
+  use for the user authentication connection.
+
 5)  Set the admin password:
   a)  From psql, determine what admin password you wish to use.  Then type:
       "update users_conf set password = md5('my_password');"
