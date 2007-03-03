@@ -86,7 +86,7 @@ sub jcitems_links {
   if (@{ $form->{all_project} }) {
     $form->{selectprojectnumber} = "<option>\n";
     foreach $ref (@{ $form->{all_project} }) {
-      $form->{selectprojectnumber} .= qq|<option value="$ref->{projectnumber}--$ref->{id}">$ref->{projectnumber}\n|;
+      $form->{selectprojectnumber} .= qq|<option value="$ref->{projectnumber}--$ref->{id}">$ref->{description} ($ref->{description})</option>\n|;
       if ($form->{projectnumber} eq "$ref->{projectnumber}--$ref->{id}") {
 	$form->{projectdescription} = $ref->{description};
       }
