@@ -761,8 +761,11 @@ sub parse_template {
 			s/.*?<\?lsmb if (.+?) \?>/$1/;
 
 			if (/\s/) {
-				@a = split;
-				$ok = eval "$self->{$a[0]} $a[1] $a[2]";
+				@args = split;
+				if ($args[1] !~ /^(==|eq|>|gt|>|lt|>=|ge|le|<=|ne|!=)$/){
+					$self->error("Unknown/forbidden operator");
+				}
+				$ok = eval "$self->{$args[0]} $args[1] $args[2]";
 			} else {
 				$ok = $self->{$_};
 			}
