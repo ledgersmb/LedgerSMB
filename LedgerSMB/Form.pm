@@ -760,15 +760,18 @@ sub parse_template {
 			chop;
 			s/.*?<\?lsmb if (.+?) \?>/$1/;
 
-			if (/\s/) {
-				@args = split;
-				if ($args[1] !~ /^(==|eq|>|gt|>|lt|>=|ge|le|<=|ne|!=)$/){
-					$self->error("Unknown/forbidden operator");
-				}
-				$ok = eval "$self->{$args[0]} $args[1] $args[2]";
-			} else {
+			# commenting this out for security reasons.  If needed,
+			# please uncomment.  Functionality below will be in 1.3
+			# Chris Travers
+			#if (/\s/) {
+			#	@args = split;
+			#	if ($args[1] !~ /^(==|eq|>|gt|>|lt|>=|ge|le|<=|ne|!=)$/){
+			#		$self->error("Unknown/forbidden operator");
+			#	}
+			#	$ok = eval "$self->{$args[0]} $args[1] $args[2]";
+			#} else {
 				$ok = $self->{$_};
-			}
+			#}
 
 			if ($ok) {
 				while ($_ = shift) {
