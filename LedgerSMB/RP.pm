@@ -711,7 +711,7 @@ sub get_accounts {
 			$ywhere = " 
 				AND ac.trans_id NOT IN 
 				(SELECT trans_id FROM yearend
-				  WHERE transdate <= ".dbh->quote($todate).")";
+				  WHERE transdate <= ".$dbh->quote($todate).")";
 		}
        
 		if ($fromdate) {
