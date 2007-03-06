@@ -1,23 +1,10 @@
-% are tasks that are good for helping get up to speed in the code.
+For 1.3:
 
-Higher priorities
-- Prevent printing without posting. 
-- %xhtml compliant code
-- authentication abstraction for Kerberos, LDAP authentication, and the like.
-- Authentication module for PostgreSQL databases.
-- %Account transactions available from Balance Sheets and Income Statements via 
-links.
+1)  Refactor admin.pl.  Merge user management with main UI and create separate 
+dataset management interface. (in progress, Chris)
 
-Medium-longer term
-- Database schema cleanup/rewrite
-- Move all config information onto the Form object.
-- published API
-- %Tighten up integrity controls in schema by replacing the insert/update with
-  a single insert and adding foreign keys.
-- Move to a template-based display system with main application logic being in
-  a separate Perl module.
-- Basic payroll module
-- Enforce transaction safety and protect against lost updates when editing 
-  transactions
-- %Add a javascript calendar to all date fields.  Must not cause problems when
-  Javascript is not available.
+2)  Add real security enforcement (in progress, Chris, part of admin reworking)
+
+3)  Refactor contact management code
+
+4)  Setup wizard.
