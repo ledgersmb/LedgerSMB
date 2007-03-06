@@ -1,7 +1,8 @@
 Changelog for LedgerSMB 1.3.0
-* Improved error handling/display
-* Basic RESTful web services dispatcher
-* Timecard lists project descriptions as well as numbers
+* Improved error handling/display (Jason)
+* Basic RESTful web services dispatcher (Jason)
+* Timecard lists project descriptions as well as numbers (Chris)
+* Chart of Accounts files organized hierarchically by country code (Chris)
 
 
 Changelog for LedgerSMB 1.2.0
