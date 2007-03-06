@@ -14,7 +14,31 @@ MANUAL INSTALL:
 
 1)  Untar in desired location.
 
-2)  Check Dependencies
+2)  Decide where to put the user/session management tables.  In general, we
+recommend as follows:
+  a)  Single dataset installations should use the user tables in the dataset.
+  b)  Multicompany installations should use user tables in a separate dataset
+      from any accounting data.
+
+3)  Create central database
+
+  a) cd to the sql/ directory of the new ledger directory.
+  b) run "psql" with appropriate options to connect to your database.
+  c) Run the SQL script Pg-central.sql.
+
+  Note that the psql connection should use the same username that you intend to
+  use for the user authentication connection.
+
+4)  Set the admin password:
+  a)  From psql, determine what admin password you wish to use.  Then type:
+      "update users_conf set password = md5('my_password');"
+      Naturally you would use your password instead of my_password.
+
+
+5)  Edit the ledger-smb.conf file as appropriate.
+Congratulations, you have manually installed LedgerSMB 1.2.
+
+6)  Check Dependencies
 
 The Build.PL script can be used to test for unmet dependencies and run other
 tests.  It doesn't install anything yet, but it will tell you what you are 
@@ -32,28 +56,4 @@ Dependencies which are recommended are needed only for specific functionality
 and may not be required in all circumstances.  These include:
   * Net::TCLink for credit card processing in a POS environment
   * Parse::RecDescent for the CLI script host
-
-3)  Decide where to put the user/session management tables.  In general, we
-recommend as follows:
-  a)  Single dataset installations should use the user tables in the dataset.
-  b)  Multicompany installations should use user tables in a separate dataset
-      from any accounting data.
-
-4)  Create central database
-
-  a) cd to the sql/ directory of the new ledger directory.
-  b) run "psql" with appropriate options to connect to your database.
-  c) Run the SQL script Pg-central.sql.
-
-  Note that the psql connection should use the same username that you intend to
-  use for the user authentication connection.
-
-5)  Set the admin password:
-  a)  From psql, determine what admin password you wish to use.  Then type:
-      "update users_conf set password = md5('my_password');"
-      Naturally you would use your password instead of my_password.
-
-6)  Edit the ledger-smb.conf file as appropriate.
-
-Congratulations, you have manually installed LedgerSMB 1.2.
 
