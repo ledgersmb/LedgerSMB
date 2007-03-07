@@ -8,3 +8,7 @@ dataset management interface. (in progress, Chris)
 3)  Refactor contact management code
 
 4)  Setup wizard.
+
+Additional prerequisites include:
+1)  Refactoring HR code. (In progress, Chris)
+
