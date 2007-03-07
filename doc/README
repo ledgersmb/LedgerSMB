@@ -1,5 +1,5 @@
                 LedgerSMB Small Medium Business Accounting
-                     Version 1.1.1c
+                     Version 1.2.0
 
 
 DESCRIPTION:
@@ -10,12 +10,12 @@ Netscape, Mozilla, Galeon, Explorer, Links, Lynx,
 Konqueror, Voyager, W3M and Opera clients on Linux,
 FreeBSD, Solaris, Windows, Mac computers and PDA's.
 
-Data is stored in a SQL database server, either locally or
-remote, the display is through a text or GUI web browser.
-The system is linked by a chart of accounts.  All transactions
-for AR, AP and GL are stored in a transaction table. Hyper-links
-from the chart of accounts let you view transactions posted
-through AR, AP and GL.
+Data is stored in a PostgreSQLSQL database server, either 
+locally or remote, the display is through a text or GUI web 
+browser. The system is linked by a chart of accounts.  All 
+transactions for AR, AP and GL are stored in a transaction 
+table. Hyper-links from the chart of accounts let you view 
+transactions posted through AR, AP and GL.
 
 Configuration files let you specify to which SQL database server
 to connect to, personal preferences such as company name,
@@ -70,71 +70,13 @@ Some of the translation files are not 100% complete.
 If strings are missing, English is used instead.
 
 
-INSTALLATION 
-------------------------------
-unpack the tar.gz file in /usr/local
-
-  tar xzvf ledger-smb-x.y.z.tar.gz
-
-you should now have everything in /usr/local/ledger-smb
-
-rename ledger-smb.conf.default to ledger-smb.conf
-
-edit ledger-smb.conf
-
-create a file ledger-smb-httpd.conf in the same location
-where your httpd.conf is and copy the next section into the file
-
-  Alias /ledger-smb /usr/local/ledger-smb/
-  <Directory /usr/local/ledger-smb>
-    AllowOverride All
-    AddHandler cgi-script .pl
-    AddDefaultCharset On
-    Options ExecCGI Includes FollowSymlinks
-    Order Allow,Deny
-    Allow from All
-  </Directory>
-
-  <Directory /usr/local/ledger-smb/users>
-    Order Deny,Allow
-    Deny from All
-  </Directory>
-
-edit httpd.conf and add
-
-  # LedgerSMB
-  Include /config_directory/ledger-smb-httpd.conf
-
-Note: use an absolute or relative path to include
-the configuration in your httpd.conf file.
-
-i.e. /etc/httpd/ledger-smb-httpd.conf
-     etc/apache2/ledger-smb-httpd.conf
-     
-restart your web server.
-
-
-Note: /usr/local/ledger-smb is only a suggested
-path, you can install in any directory.
-
-Some versions of Apache 2.0 use a conf directory for
-configuration files. If this is the case copy
-ledger-smb-httpd.conf into this directory and leave
-httpd.conf as is.
-
-
-SET PERMISSION:
----------------
-change directory to /usr/local/ledger-smb
-
-# chown -hR nobody:nogroup templates css spool
-
-replace nobody:nogroup with the web server user and group.
-Some systems use apache:apache, www, www-data, ...
-
-
 FTP INSTALLATION:
 -----------------
+If you control the server and have shell access, the
+instructions in the INSTALL document are preferred 
+instead of those given here.  This is simply a set of 
+notes for those who must install on a shared server.
+
 If you do not have access to the server's configuration
 files install LedgerSMB in userspace by ftp'ing all the
 files to your server.
@@ -156,83 +98,11 @@ d) protect the templates directory with an .htpasswd file
 order allow,deny
 deny from all
 
-e) set up your PostgreSQL database and the tables.
+e) set up your PostgreSQL database and the tables.  The basic
+procedure is specified in the INSTALL file.
 
 You will most likely only have access to PostgreSQL with
 some other tools like pgadmin.
-
-1) create a database user or use an assigned database user
-2) create a blank database or use one which was created for you
-3) load your web browser and connect to
-http://host.domain.com/private_html/ledger-smb/admin.pl
-to create the tables.
-
-TODO:  Add bit about setting admin password
-
-Select the "Database Administration" link
-
-Host [database host]               Port [      ]
-User [database user]           Password [for your database]
-Connect to [your database]
-
-click on "Create Dataset"
-
-The next screen is for choosing a Chart of Accounts
-
-Create Dataset [your database]
-Multibyte Encoding [                 ]
-
-Select a chart of accounts and click on "Continue".
-
-Your tables will now be created and the chart of accounts
-will be loaded.
-
-Go to the next step, "SET UP A USER"
-
-
-PREPARE YOUR SQL DATABASE SERVER:
----------------------------------
-
-  add one database user with create database privileges
-  to manage the datasets and tables for LedgerSMB
-  
-  # su postgres
-  $ createuser -d ledger-smb
-  Shall the new user be allowed to create databases? (y/n) y
-  Shall the new user be allowed to create more new users? (y/n) n
-  
-  if you use passwords to access postgres use this command
-  $ createuser -d -P ledger-smb
-
-  
-SET UP A DATABASE AND TABLES:
------------------------------
-Load your web browser and connect to
-http://localhost/ledger-smb/admin.pl
-
-Select the "Database Administration" link,
-enter the user you created in the previous step.
-
-If the database has been pre-created for you (by
-your  hosting company, you must leave the superuser
-credentials blank.  If you want to create the
-database, fill in the superuser name and password.
-
-The "Create Dataset" link queries the server
-for existing datasets and displays them in a
-table. Enter a name for the new dataset (use
-lowercase letters only!) and select one of the
-Chart of Accounts and click on Continue.
-
-You cannot manage any other datasets from this
-interface, only the datasets used by LedgerSMB
-
-Template1 is only used to query
-the server, none of the information stored
-in template1 is manipulated in any way.
-You can connect to any other database you
-own, template1 is only a default.
-
 
 SET UP A USER:
 -------------
@@ -248,16 +118,6 @@ LOAD THE ACCOUNTING PROGRAM:
 ----------------------------
 Load your web browser and connect to
 http://localhost/ledger-smb/login.pl
-
-
-UPGRADING TO A NEWER VERSION:
------------------------------
-TODO:  Add bit about upgrading to 1.2 here.
-
-
-UPGRADING WITH setup.pl:
-------------------------
-run setup.pl from the command line and follow the prompts.
 
 
 INSTALLATION CHECKLIST:
