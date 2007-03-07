@@ -1,3 +1,4 @@
+BEGIN;
 
 CREATE TABLE location ( 
 	id SERIAL PRIMARY KEY,
@@ -175,3 +176,5 @@ BEGIN
 	END LOOP;
 END;
 $$ language plpgsql;
+
+COMMIT;
