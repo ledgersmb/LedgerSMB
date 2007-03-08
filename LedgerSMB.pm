@@ -3114,4 +3114,12 @@ sub audittrail {
 	$rv;
 }
 
+sub merge {
+	my $self = shift @_;
+	my $src = shift @_;
+	for $arg (@_){
+		$self->{$arg} = $src->{$arg};
+	}
+}
+
 1;
