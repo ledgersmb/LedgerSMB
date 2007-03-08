@@ -8,25 +8,28 @@ This module creates object instances based on LedgerSMB's in-database ORM.
 
 =head1 METHODS
 
-Most methods are dynamically created. The following methods are static, however.
+=item find_method ($hashref, $function_name, @args)
 
-=item make_object hashref, string, 
 
-This creates a new data object instance based on information in the PostgreSQL
-catalogs.
+=head1 Copyright (C) 2007, The LedgerSMB core team.
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
 =back
 
 =cut
 
-use LedgerSMB;
 package LedgerSMB::DBObject;
+use LedgerSMB;
 use strict;
 no strict 'refs';
 use warnings;
 
-sub AUTOLOAD {
-	my ($ref) = shift @_;
+@ISA = (LedgerSMB);
+
+sub exec_method {
+	my ($self) = shift @_;
 	my ($funcname) = shift @_;
 
 	my $query = 
@@ -36,6 +39,11 @@ sub AUTOLOAD {
 	my $ref;
 
 	$ref = $sth->fetchrow_hashref(NAME_lc);
+
+	if (!$ref){ # no such function
+		$self->error($locale->text("No such function: ") .$funcname;
+		die;
+	}
 	my $m_name = $ref->{proname};
 	my $args = $ref->{proargnames};
 	my @proc_args;
@@ -53,5 +61,5 @@ sub AUTOLOAD {
 			@proc_args = @_;
 		}
 	}
-	LedgerSMB::callproc($funcname, @proc_args);
+	$self->callproc($funcname, @proc_args);
 }
