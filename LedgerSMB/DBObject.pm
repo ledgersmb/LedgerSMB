@@ -25,45 +25,33 @@ use strict;
 no strict 'refs';
 use warnings;
 
-sub make_object {
-	my ($request, $name, $package_name) = @_;
-	my $self = {};
-	$self->{__dbh} = $request->{dbh};
-	$self->{__name} = $name;
-	$self->{__methods} = [];
+sub AUTOLOAD {
+	my ($ref) = shift @_;
+	my ($funcname) = shift @_;
 
 	my $query = 
-		"SELECT proname, proargnames FROM pg_proc
-		  WHERE proname ilike ?";
+		"SELECT proname, proargnames FROM pg_proc WHERE proname = ?";
 	my $sth = $self->{__dbh}->prepare($query);
-	$sth->execute("$name".'_%');
+	$sth->execute($funcname);
 	my $ref;
 
-	while ($ref = $sth->fetchrow_hashref(NAME_lc)){
-		my $m_name = $ref->{proname};
-		my $args = $ref->{proargnames};
-		my $subcode
-		if ($m_name ~= s/$name\_//){
-			push @{$self->{__methods}}, $m_name;
-			if ($args){
-				$subcode = "sub {
-					LedgerSMB::callproc($self->{proname}"
-				for $arg (@$args){
-					if ($arg =~ s/in_//){
-						$subcode .= ", \$self->{$arg}";
-					}
+	$ref = $sth->fetchrow_hashref(NAME_lc);
+	my $m_name = $ref->{proname};
+	my $args = $ref->{proargnames};
+	my @proc_args;
+
+	if ($m_name ~= s/$name\_//){
+		push @{$self->{__methods}}, $m_name;
+		if ($args){
+			for $arg (@$args){
+				if ($arg =~ s/^in_//){
+					push @proc_args, $ref->{$arg};
 				}
-				$subcode .= "); }"
-				*{$package_name . "::" . $m_name}
-					= eval $subcode;
-				
-			}
-			else {
-				$subcode = "sub {
-					LedgerSMB::callproc($self->{proname}, ".
-					"\@_); }"
 			}
 		}
-		*{$package_name . "::" . $m_name} = eval $subcode;
-	}	
+		else {
+			@proc_args = @_;
+		}
+	}
+	LedgerSMB::callproc($funcname, @proc_args);
 }
