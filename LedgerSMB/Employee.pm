@@ -38,18 +38,6 @@ sub AUTOLOAD {
 	$self->exec_method($procname);
 }
 
-sub new {
-	my $lsmb = shift @_;
-	if (! $lsmb->isa(LedgerSMB)){
-		$self->error("Employee called without LedgerSMB object arg");
-	my $self = {};
-	for $attr (keys $lsmb){
-		$self->{$attr} = $lsmb->{$attr};
-	}
-	bless $self;
-}
-
-
 sub save {
 	my $hashref = shift ($self->exec_method("employee_save"));
 	$self->merge($hashref, 'id');
@@ -71,3 +59,5 @@ sub list_managers {
 sub search {
 	$self->{search_results} = $self->exec_method("employee_search");
 }
+
+1;

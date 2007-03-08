@@ -1,6 +1,8 @@
 BEGIN;
 
-CREATE TABLE location ( 
+ALTER TABLE employee RENAME TO employees;
+
+CREATE TABLE locations ( 
 	id SERIAL PRIMARY KEY,
 	companyname text,
 	address1 text,
@@ -11,13 +13,15 @@ CREATE TABLE location (
 	zipcode text
 );	
 
-CREATE SEQUENCE employee_id_seq;
-SELECT setval('employee_id_seq', (select max(id) + 1 FROM employee));
+CREATE SEQUENCE employees_id_seq;
+SELECT setval('employees_id_seq', (select max(id) + 1 FROM employees));
 
-ALTER TABLE employee ADD COLUMN locations_id integer;
-ALTER TABLE employee ADD FOREIGN KEY (locations_id) REFERENCES location(id);
-ALTER TABLE employee ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE employee ALTER COLUMN id SET DEFAULT  nextval('employee_id_seq');
+ALTER TABLE employees ADD COLUMN locations_id integer;
+ALTER TABLE employees ADD FOREIGN KEY (locations_id) REFERENCES locations(id);
+ALTER TABLE employees ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE employees ALTER COLUMN id SET DEFAULT  nextval('employee_id_seq');
+
+DROP RULE employee_id_track_i ON employees; -- no longer needed
 
 CREATE OR REPLACE FUNCTION location_save
 (in_id int, in_companyname text, in_address1 text, in_address2 text, 
@@ -27,7 +31,7 @@ $$
 DECLARE
 	location_id integer;
 BEGIN
-	UPDATE location
+	UPDATE locations
 	SET companyname = in_companyname,
 		address1 = in_address1,
 		address2 = in_address2,
@@ -61,7 +65,7 @@ create or replace function employee_save
 AS
 $$
 BEGIN
-	UPDATE employee
+	UPDATE employees
 	SET location_id = in_location_id,
 		employeenumber = in_employeenumber,
 		name = in_name,
@@ -89,7 +93,7 @@ BEGIN
 	IF FOUND THEN
 		return in_id;
 	END IF;
-	INSERT INTO employee
+	INSERT INTO employees
 	(location_id, employeenumber, name, address1, address2, 
 		city, state, zipcode, country, workphone, homephone,
 		startdate, enddate, notes, role, sales, email, ssn,
@@ -107,25 +111,25 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION employee_get
 (in_id integer)
-returns employee as
+returns employees as
 $$
 DECLARE
-	emp employee%ROWTYPE;
+	emp employees%ROWTYPE;
 BEGIN
-	SELECT * INTO emp FROM employee WHERE id = in_id;
+	SELECT * INTO emp FROM employees WHERE id = in_id;
 	RETURN emp;
 END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION employee_list_managers
 (in_id integer)
-RETURNS SETOF employee as
+RETURNS SETOF employees as
 $$
 DECLARE
-	emp employee%ROWTYPE;
+	emp employees%ROWTYPE;
 BEGIN
 	FOR emp IN 
-		SELECT * FROM employee 
+		SELECT * FROM employees 
 		WHERE sales = '1' AND role='manager'
 			AND id <> coalesce(in_id, -1)
 		ORDER BY name
@@ -139,7 +143,7 @@ CREATE OR REPLACE FUNCTION employee_delete
 (in_id integer) returns void as
 $$
 BEGIN
-	DELETE FROM employee WHERE id = in_id;
+	DELETE FROM employees WHERE id = in_id;
 	RETURN;
 END;
 $$ language plpgsql;
@@ -147,7 +151,7 @@ $$ language plpgsql;
 -- as long as we need the datatype, might as well get some other use out of it!
 CREATE OR REPLACE VIEW employee_search AS
 SELECT e.*, m.name AS manager 
-FROM employee e JOIN employee m ON (e.managerid = m.id);
+FROM employees e JOIN employees m ON (e.managerid = m.id);
 
 CREATE OR REPLACE FUNCTION employee_search
 (in_startdatefrom date, in_startdateto date, in_name varchar, in_notes text,

@@ -3,6 +3,8 @@ Changelog for LedgerSMB 1.3.0
 * Basic RESTful web services dispatcher (Jason)
 * Timecard lists project descriptions as well as numbers (Chris)
 * Chart of Accounts files organized hierarchically by country code (Chris)
+* Employee table is now Employees and no longer part of global sequence. (Chris)
+
 
 
 Changelog for LedgerSMB 1.2.0

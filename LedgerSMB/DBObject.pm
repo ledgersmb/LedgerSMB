@@ -31,6 +31,18 @@ use warnings;
 
 @ISA = (LedgerSMB);
 
+sub new {
+	my $lsmb = shift @_;
+	if (! $lsmb->isa(LedgerSMB)){
+		$self->error("Constructor called without LedgerSMB object arg");
+	my $self = {};
+	for $attr (keys $lsmb){
+		$self->{$attr} = $lsmb->{$attr};
+	}
+	bless $self;
+}
+
+
 sub exec_method {
 	my ($self) = shift @_;
 	my ($funcname) = shift @_;
