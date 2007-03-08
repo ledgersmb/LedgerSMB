@@ -151,7 +151,7 @@ $$ language plpgsql;
 -- as long as we need the datatype, might as well get some other use out of it!
 CREATE OR REPLACE VIEW employee_search AS
 SELECT e.*, m.name AS manager 
-FROM employees e JOIN employees m ON (e.managerid = m.id);
+FROM employees e LEFT JOIN employees m ON (e.managerid = m.id);
 
 CREATE OR REPLACE FUNCTION employee_search
 (in_startdatefrom date, in_startdateto date, in_name varchar, in_notes text,
