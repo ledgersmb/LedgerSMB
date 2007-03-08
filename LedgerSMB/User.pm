@@ -185,7 +185,7 @@ sub login {
 		# no error check for employee table, ignore if it does not exist
 		my $login = $self->{login};
 		$login =~ s/@.*//;
-		$query = qq|SELECT id FROM employee WHERE login = ?|;
+		$query = qq|SELECT id FROM employees WHERE login = ?|;
 		$sth = $dbh->prepare($query);
 		$sth->execute($login);
 
@@ -198,7 +198,7 @@ sub login {
 					\%myconfig, "employeenumber", $dbh);
       
 			$query = qq|
-				INSERT INTO employee 
+				INSERT INTO employees 
 				            (login, employeenumber, name, 
 				            workphone, role)
 				     VALUES (?, ?, ?, ?, ?)|;
@@ -810,10 +810,10 @@ sub save_member {
 			{AutoCommit => 0}) 
 				or $self->error($DBI::errstr);
 
-		# add login to employee table if it does not exist
+		# add login to employees table if it does not exist
 		my $login = $self->{login};
 		$login =~ s/@.*//;
-		my $sth = $dbh->prepare("SELECT id FROM employee WHERE login = ?;");
+		my $sth = $dbh->prepare("SELECT id FROM employees WHERE login = ?;");
 		$sth->execute($login);
 
 		my ($id) = $sth->fetchrow_array;
@@ -822,7 +822,7 @@ sub save_member {
 		my @values;
 		if ($id) {
 
-			$query = qq|UPDATE employee SET
+			$query = qq|UPDATE employees SET
 			role = ?,
 			email = ?, 
 			name = ?
@@ -835,7 +835,7 @@ sub save_member {
 			my ($employeenumber) = Form::update_defaults(
 				"", \%$self, "employeenumber", $dbh);
 			$query = qq|
-				INSERT INTO employee 
+				INSERT INTO employees 
 				            (login, employeenumber, name, 
 				            workphone, role, email, sales)
 				    VALUES (?, ?, ?, ?, ?, ?, '1')|;
@@ -863,7 +863,7 @@ sub delete_login {
   
 	my $login = $form->{login};
 	$login =~ s/@.*//;
-	my $query = qq|SELECT id FROM employee WHERE login = ?|; 
+	my $query = qq|SELECT id FROM employees WHERE login = ?|; 
 	my $sth = $dbh->prepare($query);
 	$sth->execute($login) || $form->dberror(__FILE__.':'.__LINE__.': '.$query);
   
@@ -871,7 +871,7 @@ sub delete_login {
 	$sth->finish;
 	
 	my $query = qq|
-		UPDATE employee 
+		UPDATE employees 
 		   SET login = NULL,
 		       enddate = current_date
 		 WHERE login = ?|;

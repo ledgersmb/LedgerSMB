@@ -45,7 +45,7 @@ sub get_employee {
 	my $notid = "";
 
 	if ($form->{id}) {
-		$query = qq|SELECT e.* FROM employee e WHERE e.id = ?|;
+		$query = qq|SELECT e.* FROM employees e WHERE e.id = ?|;
 		$sth = $dbh->prepare($query);
 		$sth->execute($form->{id}) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
   
@@ -64,7 +64,7 @@ sub get_employee {
 		# get manager
 		$form->{managerid} *= 1;
 
-		$sth = $dbh->prepare("SELECT name FROM employee WHERE id = ?");
+		$sth = $dbh->prepare("SELECT name FROM employees WHERE id = ?");
 		$sth->execute($form->{managerid});
 		($form->{manager}) = $sth->fetchrow_array;
     
@@ -110,10 +110,10 @@ sub save_employee {
 		my $uid = localtime;
 		$uid .= "$$";
 
-		$query = qq|INSERT INTO employee (name) VALUES ('$uid')|;
+		$query = qq|INSERT INTO employees (name) VALUES ('$uid')|;
 		$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
     
-		$query = qq|SELECT id FROM employee WHERE name = '$uid'|;
+		$query = qq|SELECT id FROM employees WHERE name = '$uid'|;
 		$sth = $dbh->prepare($query);
 		$sth->execute || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
 
@@ -130,7 +130,7 @@ sub save_employee {
 			if ! $form->{employeenumber};
 
 	$query = qq|
-		UPDATE employee 
+		UPDATE employees 
 		   SET employeenumber = ?,
 		       name = ?,
 		       address1 = ?,
@@ -182,7 +182,7 @@ sub delete_employee {
 	# delete employee
 	
 	my $query = qq|
-		DELETE FROM employee 
+		DELETE FROM employees 
 		      WHERE id = |.$dbh->quote($form->{id});
 	$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
 
@@ -235,8 +235,8 @@ sub employees {
 
 	my $query = qq|
 		   SELECT e.*, m.name AS manager
-		     FROM employee e
-		LEFT JOIN employee m ON (m.id = e.managerid)
+		     FROM employees e
+		LEFT JOIN employees m ON (m.id = e.managerid)
 		    WHERE $where
 		 ORDER BY $sortorder|;
 

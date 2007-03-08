@@ -694,8 +694,8 @@ sub transactions {
 		          a.ponumber $acc_trans_flds
 		     FROM $table a
 		     JOIN $form->{vc} vc ON (a.$form->{vc}_id = vc.id)
-		LEFT JOIN employee e ON (a.employee_id = e.id)
-		LEFT JOIN employee m ON (e.managerid = m.id)
+		LEFT JOIN employees e ON (a.employee_id = e.id)
+		LEFT JOIN employees m ON (e.managerid = m.id)
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
 		LEFT JOIN department d ON (a.department_id = d.id) 
@@ -916,7 +916,7 @@ sub get_name {
 		          e.name AS employee, e.id AS employee_id
 		     FROM $form->{vc} c
 		LEFT JOIN business b ON (b.id = c.business_id)
-		LEFT JOIN employee e ON (e.id = c.employee_id)
+		LEFT JOIN employees e ON (e.id = c.employee_id)
 		    WHERE c.id = ?|;
 
 	@queryargs = ($form->{"$form->{vc}_id"});

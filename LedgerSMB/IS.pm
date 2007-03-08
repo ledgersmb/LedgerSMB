@@ -1752,7 +1752,7 @@ sub retrieve_invoice {
 			          a.customer_id,
 			          a.language_code, a.ponumber
 			     FROM ar a
-			LEFT JOIN employee e ON (e.id = a.employee_id)
+			LEFT JOIN employees e ON (e.id = a.employee_id)
 			    WHERE a.id = ?|;
 
 		$sth = $dbh->prepare($query);

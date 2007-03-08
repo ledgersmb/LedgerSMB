@@ -68,7 +68,7 @@ sub get_jcitems {
 			       pr.production, pr.completed, 
 			       pr.parts_id AS project
 			  FROM jcitems j
-			  JOIN employee e ON (e.id = j.employee_id)
+			  JOIN employees e ON (e.id = j.employee_id)
 			  JOIN parts p ON (p.id = j.parts_id)
 			  JOIN project pr ON (pr.id = j.project_id)
 			 WHERE j.id = ?|;
@@ -483,7 +483,7 @@ sub jcitems {
 		  FROM jcitems j
 		  JOIN parts p ON (p.id = j.parts_id)
 		  JOIN project pr ON (pr.id = j.project_id)
-		  JOIN employee e ON (e.id = j.employee_id)
+		  JOIN employees e ON (e.id = j.employee_id)
 		 WHERE $where
 		ORDER BY employee, employeenumber, $sortorder|;
 

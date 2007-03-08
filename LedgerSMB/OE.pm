@@ -84,8 +84,8 @@ sub transactions {
 			m.name AS manager, o.curr, o.ponumber
 		FROM oe o
 		JOIN $form->{vc} ct ON (o.$form->{vc}_id = ct.id)
-		LEFT JOIN employee e ON (o.employee_id = e.id)
-		LEFT JOIN employee m ON (e.managerid = m.id)
+		LEFT JOIN employees e ON (o.employee_id = e.id)
+		LEFT JOIN employees m ON (e.managerid = m.id)
 		LEFT JOIN exchangerate ex 
 			ON (ex.curr = o.curr AND ex.transdate = o.transdate)
 		WHERE o.quotation = ?
@@ -138,7 +138,7 @@ sub transactions {
 		}
 
 		$query .= qq|
-			LEFT JOIN employee e ON (o.employee_id = e.id)
+			LEFT JOIN employees e ON (o.employee_id = e.id)
 			LEFT JOIN exchangerate ex 
 				ON (ex.curr = o.curr 
 					AND ex.transdate = o.transdate)
@@ -796,7 +796,7 @@ sub retrieve {
 				o.ponumber
 			FROM oe o
 			JOIN $form->{vc} vc ON (o.$form->{vc}_id = vc.id)
-			LEFT JOIN employee e ON (o.employee_id = e.id)
+			LEFT JOIN employees e ON (o.employee_id = e.id)
 			LEFT JOIN department d ON (o.department_id = d.id)
 			WHERE o.id = ?|;
 		$sth = $dbh->prepare($query);

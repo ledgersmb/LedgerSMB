@@ -156,7 +156,7 @@ sub get_spoolfiles {
 			       '' AS ordnumber, '' AS quonumber, '0' AS invoice,
 			       '$arap{$form->{type}}[0]' AS module, s.spoolfile
 			  FROM jcitems j
-			  JOIN employee e ON (e.id = j.employee_id)
+			  JOIN employees e ON (e.id = j.employee_id)
 			  JOIN status s ON (s.trans_id = j.id)
 			 WHERE s.formname = ?
 			       AND s.spoolfile IS NOT NULL|;

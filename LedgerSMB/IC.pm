@@ -1238,7 +1238,7 @@ sub all_parts {
 					          ON (a.vendor_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
+					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $invwhere|;
@@ -1265,7 +1265,7 @@ sub all_parts {
 					          ON (a.customer_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
+					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $invwhere|;
@@ -1331,7 +1331,7 @@ sub all_parts {
 					          ON (a.customer_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
+					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $ordwhere 
@@ -1371,7 +1371,7 @@ sub all_parts {
 					          ON (a.vendor_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
+					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $ordwhere
@@ -1438,7 +1438,7 @@ sub all_parts {
 					          ON (a.customer_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
+					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $quowhere
@@ -1478,7 +1478,7 @@ sub all_parts {
 					          ON (a.vendor_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
+					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $quowhere

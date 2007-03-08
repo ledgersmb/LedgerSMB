@@ -55,7 +55,7 @@ sub create_links {
 			      FROM $form->{db} ct
 			 LEFT JOIN business b ON (ct.business_id = b.id)
 			 LEFT JOIN shipto s ON (ct.id = s.trans_id)
-			 LEFT JOIN employee e ON (ct.employee_id = e.id)
+			 LEFT JOIN employees e ON (ct.employee_id = e.id)
 			 LEFT JOIN pricegroup g ON (g.id = ct.pricegroup_id)
 			 LEFT JOIN language l ON (l.code = ct.language_code)
 			     WHERE ct.id = ?|;
@@ -655,8 +655,8 @@ sub search {
 		          l.description AS language, m.name AS manager
 		     FROM $form->{db} ct
 		LEFT JOIN business b ON (ct.business_id = b.id)
-		LEFT JOIN employee e ON (ct.employee_id = e.id)
-		LEFT JOIN employee m ON (m.id = e.managerid)
+		LEFT JOIN employees e ON (ct.employee_id = e.id)
+		LEFT JOIN employees m ON (m.id = e.managerid)
 		LEFT JOIN pricegroup g ON (ct.pricegroup_id = g.id)
 		LEFT JOIN language l ON (l.code = ct.language_code)
 		    WHERE $where|;
@@ -713,8 +713,8 @@ sub search {
 				      FROM $form->{db} ct
 				      JOIN $ar a ON (a.$form->{db}_id = ct.id)
 				 LEFT JOIN business b ON (ct.business_id = b.id)
-				 LEFT JOIN employee e ON (a.employee_id = e.id)
-				 LEFT JOIN employee m ON (m.id = e.managerid)
+				 LEFT JOIN employees e ON (a.employee_id = e.id)
+				 LEFT JOIN employees m ON (m.id = e.managerid)
 				     WHERE $where
 				           AND a.invoice = '0'
 				           $transwhere
@@ -749,8 +749,8 @@ sub search {
 				     FROM $form->{db} ct
 				     JOIN $ar a ON (a.$form->{db}_id = ct.id)
 				LEFT JOIN business b ON (ct.business_id = b.id)
-				LEFT JOIN employee e ON (a.employee_id = e.id)
-				LEFT JOIN employee m ON (m.id = e.managerid)
+				LEFT JOIN employees e ON (a.employee_id = e.id)
+				LEFT JOIN employees m ON (m.id = e.managerid)
 				    WHERE $where
 				          AND a.invoice = '1'
 				          $transwhere
@@ -781,8 +781,8 @@ sub search {
 				     FROM $form->{db} ct
 				     JOIN oe o ON (o.$form->{db}_id = ct.id)
 				LEFT JOIN business b ON (ct.business_id = b.id)
-				LEFT JOIN employee e ON (o.employee_id = e.id)
-				LEFT JOIN employee m ON (m.id = e.managerid)
+				LEFT JOIN employees e ON (o.employee_id = e.id)
+				LEFT JOIN employees m ON (m.id = e.managerid)
 				    WHERE $where
 				      AND o.quotation = '0'
 				          $transwhere
@@ -815,8 +815,8 @@ sub search {
 				     FROM $form->{db} ct
 				     JOIN oe o ON (o.$form->{db}_id = ct.id)
 				LEFT JOIN business b ON (ct.business_id = b.id)
-				LEFT JOIN employee e ON (o.employee_id = e.id)
-				LEFT JOIN employee m ON (m.id = e.managerid)
+				LEFT JOIN employees e ON (o.employee_id = e.id)
+				LEFT JOIN employees m ON (m.id = e.managerid)
 				    WHERE $where
 				          AND o.quotation = '1'
 				          $transwhere
@@ -1022,7 +1022,7 @@ sub get_history {
 		          $invjoin
 		     JOIN parts p ON (p.id = i.parts_id)
 		LEFT JOIN project pr ON (pr.id = i.project_id)
-		LEFT JOIN employee e ON (e.id = a.employee_id)
+		LEFT JOIN employees e ON (e.id = a.employee_id)
 				 WHERE $where
 			  ORDER BY $sortorder|;
 

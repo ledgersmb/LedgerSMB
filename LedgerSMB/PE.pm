@@ -1499,7 +1499,7 @@ sub get_jcitems {
 		          p.partnumber
 		     FROM jcitems j
 		     JOIN project pr ON (pr.id = j.project_id)
-		     JOIN employee e ON (e.id = j.employee_id)
+		     JOIN employees e ON (e.id = j.employee_id)
 		     JOIN parts p ON (p.id = j.parts_id)
 		LEFT JOIN $form->{vc} c ON (c.id = pr.$form->{vc}_id)
 		    WHERE pr.parts_id IS NULL

@@ -547,7 +547,7 @@ sub get_my_emp_num {
 	my $dbh = $form->{dbh};
 	# we got a connection, check the version
 	my $query = qq|
-		SELECT employeenumber FROM employee 
+		SELECT employeenumber FROM employees 
 		 WHERE login = ?|;
 	my $sth = $dbh->prepare($query);
 	$sth->execute($form->{login}) || $form->dberror($query);
@@ -1662,7 +1662,7 @@ sub get_employee {
 	$login =~ s/@.*//;
 
 	my $query = qq|SELECT name, id 
-					 FROM employee 
+					 FROM employees 
 					WHERE login = ?|;
 
 	$sth = $self->{dbh}->prepare($query);
@@ -2084,7 +2084,7 @@ sub create_links {
 				c.language_code, a.ponumber
 			FROM $arap a
 			JOIN $vc c ON (a.${vc}_id = c.id)
-			LEFT JOIN employee e ON (e.id = a.employee_id)
+			LEFT JOIN employees e ON (e.id = a.employee_id)
 			LEFT JOIN department d ON (d.id = a.department_id)
 			WHERE a.id = ?|;
 
