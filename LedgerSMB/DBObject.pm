@@ -10,6 +10,9 @@ This module creates object instances based on LedgerSMB's in-database ORM.
 
 =item find_method ($hashref, $function_name, @args)
 
+=item merge ($hashref, @attrs)
+copies @attrs from $hashref to $self.
+
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 This file is licensed under the Gnu General Public License version 2, or at your
@@ -63,3 +66,5 @@ sub exec_method {
 	}
 	$self->callproc($funcname, @proc_args);
 }
+
+

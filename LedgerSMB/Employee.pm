@@ -11,9 +11,6 @@ This module creates object instances based on LedgerSMB's in-database ORM.
 The following method is static:
 =item new ($LedgerSMB object);
 
-=item merge ($hashref, @attrs)
-copies @attrs from $hashref to $self.
-
 The following methods are passed through to stored procedures via Autoload.
 =item save
 =item get
@@ -34,7 +31,7 @@ your software.
 package LedgerSMB::Employee;
 use LedgerSMB;
 use LedgerSMB::DBObject;
-@ISA = (LedgerSMB, LedgerSMB::DBObject);
+@ISA = (LedgerSMB::DBObject);
 
 sub AUTOLOAD {
 	my $procname = "employee_$LedgerSMB::Employee::Autoload";
@@ -52,14 +49,6 @@ sub new {
 	bless $self;
 }
 
-
-sub merge {
-	my $self = shift @_;
-	my $src = shift @_;
-	for $arg (@_){
-		$self->{$arg} = $src->{$arg};
-	}
-}
 
 sub save {
 	my $hashref = shift ($self->exec_method("employee_save"));
