@@ -251,10 +251,10 @@ sub delete_account {
 	# set inventory_accno_id, income_accno_id, expense_accno_id to defaults
 	$query = qq|
 		UPDATE parts
-		   SET inventory_accno_id = (SELECT value
+		   SET inventory_accno_id = (SELECT value::int
 		                               FROM defaults
 					      WHERE setting_key = 
-							'inventory_accno_id')
+							'inventory_accno_id')::
 		 WHERE inventory_accno_id = ?|;
 
 	$sth = $dbh->prepare($query);
@@ -263,7 +263,7 @@ sub delete_account {
 	for (qw(income_accno_id expense_accno_id)){
 		$query = qq|
 			UPDATE parts
-			   SET $_ = (SELECT value
+			   SET $_ = (SELECT value::int
 			               FROM defaults
 			              WHERE setting_key = '$_')
 			 WHERE $_ = ?|;
