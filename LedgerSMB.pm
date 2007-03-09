@@ -525,6 +525,9 @@ sub round_amount {
 }
 
 sub callproc {
+	for my $arg (@_){
+		print "Callproc arg: $arg\n";
+	}
 	my $self = shift @_;
 	my $procname = shift @_;
 	my $argstr = "";

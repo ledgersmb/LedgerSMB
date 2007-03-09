@@ -68,20 +68,21 @@ sub exec_method {
 		die;
 	}
 	my $m_name = $ref->{proname};
+	my @call_args;
 
 	if ($args){
 		for my $arg (@proc_args){
 			if ($arg =~ s/^in_//){
 				print "Arg: $arg\n";
-				push @proc_args, $self->{$arg};
+				push @call_args, $self->{$arg};
 			}
 		}
 	}
 	else {
-		@proc_args = @_;
+		@call_args = @_;
 	}
 	print "Arg2s: @_ \n";
-	$self->callproc($funcname, @proc_args);
+	$self->callproc($funcname, @call_args);
 }
 
 1;
