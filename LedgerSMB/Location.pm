@@ -37,8 +37,10 @@ our $VERSION = '1.0.0';
 our @ISA = qw(LedgerSMB::DBObject);
 
 sub AUTOLOAD {
-	my $procname = "location_$LedgerSMB::Location::Autoload";
-	$self->exec_method($procname);
+	my $self = shift;
+	$AUTOLOAD =~ s/^.*:://;
+	my $procname = "location_$AUTOLOAD";
+	$self->exec_method($procname, @_);
 }
 
 sub save {

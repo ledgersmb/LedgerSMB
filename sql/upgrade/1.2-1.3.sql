@@ -155,7 +155,7 @@ FROM employees e LEFT JOIN employees m ON (e.managerid = m.id);
 
 CREATE OR REPLACE FUNCTION employee_search
 (in_startdatefrom date, in_startdateto date, in_name varchar, in_notes text,
-	in_enddateto date, in_enddatefrom date)
+	in_enddateto date, in_enddatefrom date, in_sales boolean)
 RETURNS SETOF employee_search AS
 $$
 DECLARE
