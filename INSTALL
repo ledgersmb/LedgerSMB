@@ -25,9 +25,12 @@ recommend as follows:
   a) cd to the sql/ directory of the new ledger directory.
   b) run "psql" with appropriate options to connect to your database.
   c) Run the SQL script Pg-central.sql.
+  d) If you are going to put your data here too, run the following command:
+	CREATE LANGUAGE PLPGSQL;
 
   Note that the psql connection should use the same username that you intend to
-  use for the user authentication connection.
+  use for the user authentication connection.  If you use a different username
+  you may find that you get an Access Denied message.
 
 4)  Set the admin password:
   a)  From psql, determine what admin password you wish to use.  Then type:
@@ -57,3 +60,30 @@ and may not be required in all circumstances.  These include:
   * Net::TCLink for credit card processing in a POS environment
   * Parse::RecDescent for the CLI script host
 
+
+
+TROUBLESHOOTING
+===========================================================================
+Error:  Access Denied in admin.pl
+
+Likely causes:
+1)  The password entered may not match the password set in step 4.  You can 
+    repreat that step prior to the creation of user accounts as often as you 
+    wish.
+
+    After the creation of user accounts, the commant to reset the admin password
+    is:
+    UPDATE users_conf SET password=mp5('password') WHERE id = 
+        (select id FROM user WHERE username = 'admin');
+
+    Of course, substitute 'password' for your chosen password.
+
+2)  The central database may have been created with a different user than you 
+    are using for the connection and you may not have permission to access the
+    required database entities.  To correct this, assuming that the desired 
+    database username is ledgersmb, the following commands from psql:
+      GRANT ALL ON users TO ledgersmb;
+      GRANT ALL ON users_id_seq TO ledgersmb;
+      GRANT ALL ON users_conf TO ledgersmb;
+      GRANT ALL ON session TO ledgersmb;
+      GRANT ALL ON session_session_id_seq TO ledgersmb;
