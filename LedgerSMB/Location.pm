@@ -32,6 +32,8 @@ your software.
 package LedgerSMB::Location;
 use LedgerSMB;
 use LedgerSMB::DBObject;
+our $VERSION = '1.0.0';
+
 @ISA = (LedgerSMB::DBObject);
 
 sub AUTOLOAD {

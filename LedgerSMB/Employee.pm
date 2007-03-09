@@ -31,7 +31,10 @@ your software.
 package LedgerSMB::Employee;
 use LedgerSMB;
 use LedgerSMB::DBObject;
+our $VERSION = '1.0.0';
+
 @ISA = (LedgerSMB::DBObject);
+
 
 sub AUTOLOAD {
 	my $procname = "employee_$LedgerSMB::Employee::Autoload";

@@ -51,6 +51,7 @@ use Data::Dumper;
 use LedgerSMB::Sysconfig;
 use Carp ();
 
+our $VERSION = '1.0.0';
 
 our $fh;
 
