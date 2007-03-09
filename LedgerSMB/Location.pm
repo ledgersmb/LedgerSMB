@@ -34,7 +34,7 @@ use LedgerSMB;
 use LedgerSMB::DBObject;
 our $VERSION = '1.0.0';
 
-@ISA = (LedgerSMB::DBObject);
+our @ISA = qw(LedgerSMB::DBObject);
 
 sub AUTOLOAD {
 	my $procname = "location_$LedgerSMB::Location::Autoload";
@@ -48,7 +48,7 @@ sub save {
 
 sub get {
 	$ref = shift @{$self->exec_method('location_get')};
-	$self->merge($ref, keys $ref);
+	$self->merge($ref, keys %{$ref});
 }
 
 sub search {

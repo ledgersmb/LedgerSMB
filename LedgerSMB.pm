@@ -525,16 +525,18 @@ sub round_amount {
 }
 
 sub callproc {
+	my $self = shift @_;
 	my $procname = shift @_;
 	my $argstr = "";
 	my @results;
-	for (1 .. $#_){
+	for (1 .. scalar @_){
 		$argstr .= "?, ";
 	}
 	$argstr =~ s/\, $//;
-	$query = "SELECT * FROM $procname";
-	$query =~ s/\(\)/$argstr/;
+	$query = "SELECT * FROM $procname()";
+	$query =~ s/\(\)/($argstr)/;
 	my $sth = $self->{dbh}->prepare($query);
+	$sth->execute(@_);
 	while (my $ref = $sth->fetchrow_hashref(NAME_lc)){
 		push @results, $ref;
 	}

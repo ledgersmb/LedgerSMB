@@ -33,33 +33,34 @@ use LedgerSMB;
 use LedgerSMB::DBObject;
 our $VERSION = '1.0.0';
 
-@ISA = (LedgerSMB::DBObject);
+our @ISA = qw(LedgerSMB::DBObject);
 
 
 sub AUTOLOAD {
+	my $self = shift;
 	my $procname = "employee_$LedgerSMB::Employee::Autoload";
-	$self->exec_method($procname);
+	$self->exec_method($procname, @_);
 }
 
 sub save {
-	my $hashref = shift ($self->exec_method("employee_save"));
+	my $self = shift;
+	my $hashref = shift @{$self->exec_method("employee_save")};
 	$self->merge($hashref, 'id');
 }
 
 sub get {
-	my $hashref = shift ($self->exec_method("employee_get"));
-	$self->merge($hashref, keys $hashref);
-}
-
-sub delete {
-	$self->exec_method("employee_delete");
+	my $self = shift;
+	my $hashref = shift @{$self->exec_method("employee_get")};
+	$self->merge($hashref, keys %{$hashref});
 }
 
 sub list_managers {
+	my $self = shift;
 	$self->{manager_list} = $self->exec_method("employee_list_managers");
 }
 
 sub search {
+	my $self = shift;
 	$self->{search_results} = $self->exec_method("employee_search");
 }
 

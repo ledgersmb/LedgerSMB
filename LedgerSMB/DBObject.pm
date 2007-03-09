@@ -29,14 +29,17 @@ use strict;
 no strict 'refs';
 use warnings;
 
-@ISA = (LedgerSMB);
+our @ISA = qw(LedgerSMB);
 
 sub new {
 	my $lsmb = shift @_;
-	if (! $lsmb->isa(LedgerSMB)){
-		$self->error("Constructor called without LedgerSMB object arg");
 	my $self = {};
-	for $attr (keys $lsmb){
+	if (! $lsmb->isa('LedgerSMB')){
+		$self->error("Constructor called without LedgerSMB object arg");
+	}
+
+	my $attr;
+	for $attr (keys %{$lsmb}){
 		$self->{$attr} = $lsmb->{$attr};
 	}
 	bless $self;
@@ -49,34 +52,36 @@ sub exec_method {
 
 	my $query = 
 		"SELECT proname, proargnames FROM pg_proc WHERE proname = ?";
-	my $sth = $self->{__dbh}->prepare($query);
+	my $sth = $self->{dbh}->prepare($query);
 	$sth->execute($funcname);
 	my $ref;
 
-	$ref = $sth->fetchrow_hashref(NAME_lc);
+	$ref = $sth->fetchrow_hashref('NAME_lc');
+	my $args = $ref->{proargnames};
+	$args =~ s/\{(.*)\}/$1/;
+	my @proc_args = split /,/, $args;
+	print "Ref: $ref\n";
+	print "Args: $ref->{proargnames}\n";
 
 	if (!$ref){ # no such function
-		$self->error($locale->text("No such function: ") .$funcname;
+		$self->error("No such function: ", $funcname);
 		die;
 	}
 	my $m_name = $ref->{proname};
-	my $args = $ref->{proargnames};
-	my @proc_args;
 
-	if ($m_name ~= s/$name\_//){
-		push @{$self->{__methods}}, $m_name;
-		if ($args){
-			for $arg (@$args){
-				if ($arg =~ s/^in_//){
-					push @proc_args, $ref->{$arg};
-				}
+	if ($args){
+		for my $arg (@proc_args){
+			if ($arg =~ s/^in_//){
+				print "Arg: $arg\n";
+				push @proc_args, $self->{$arg};
 			}
 		}
-		else {
-			@proc_args = @_;
-		}
 	}
+	else {
+		@proc_args = @_;
+	}
+	print "Arg2s: @_ \n";
 	$self->callproc($funcname, @proc_args);
 }
 
-
+1;
