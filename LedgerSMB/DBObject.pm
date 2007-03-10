@@ -32,12 +32,13 @@ use warnings;
 our @ISA = qw(LedgerSMB);
 
 sub new {
+	my $self = shift @_;
 	my $lsmb = shift @_;
-	my $self = {};
 	if (! $lsmb->isa('LedgerSMB')){
 		$self->error("Constructor called without LedgerSMB object arg");
 	}
 
+	$self = {};
 	my $attr;
 	for $attr (keys %{$lsmb}){
 		$self->{$attr} = $lsmb->{$attr};
@@ -60,8 +61,6 @@ sub exec_method {
 	my $args = $ref->{proargnames};
 	$args =~ s/\{(.*)\}/$1/;
 	my @proc_args = split /,/, $args;
-	print "Ref: $ref\n";
-	print "Args: $ref->{proargnames}\n";
 
 	if (!$ref){ # no such function
 		$self->error("No such function: ", $funcname);
@@ -73,7 +72,6 @@ sub exec_method {
 	if ($args){
 		for my $arg (@proc_args){
 			if ($arg =~ s/^in_//){
-				print "Arg: $arg\n";
 				push @call_args, $self->{$arg};
 			}
 		}
@@ -81,7 +79,6 @@ sub exec_method {
 	else {
 		@call_args = @_;
 	}
-	print "Arg2s: @_ \n";
 	$self->callproc($funcname, @call_args);
 }
 
