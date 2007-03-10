@@ -9,6 +9,11 @@ Also this document assumes that the reader is already familiar with the release
 notes.  If you have not already done so, please read the release_notes file in
 the doc/ directory.
 
+DISTRO AND OS-SPECIFIC NOTES:
+===============================================================================
+Debian users should read README.debian
+
+
 MANUAL INSTALL:
 ===============================================================================
 
@@ -25,6 +30,7 @@ recommend as follows:
   a) cd to the sql/ directory of the new ledger directory.
   b) run "psql" with appropriate options to connect to your database.
   c) Run the SQL script Pg-central.sql.
+        From psql, the command is:  \i /path/to/Pg-Central.sql
   d) If you are going to put your data here too, run the following command:
 	CREATE LANGUAGE PLPGSQL;
 
@@ -39,6 +45,8 @@ recommend as follows:
 
 
 5)  Edit the ledger-smb.conf file as appropriate.
+  a)  Make sure to set the section under GlobalDBH to point to hte databae you
+      imported Pg-central into.
 Congratulations, you have manually installed LedgerSMB 1.2.
 
 6)  Check Dependencies
