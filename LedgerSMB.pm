@@ -3117,8 +3117,20 @@ sub audittrail {
 }
 
 sub merge {
-	my ($self, $src)  = @_;
-	for $arg (keys %$src){
+	my ($self, $src) = @_;
+	for my $arg ($self, $src){
+		shift;
+	}
+	my @keys;
+	if (scalar @keys){
+		@keys = @_;
+		print "Keys: ". scalar @keys . "\n";
+	}
+	else {
+		@keys = keys %{$src};
+		print "Keys: ". scalar @keys . "\n";
+	}
+	for my $arg (keys %$src){
 		$self->{$arg} = $src->{$arg};
 	}
 }
