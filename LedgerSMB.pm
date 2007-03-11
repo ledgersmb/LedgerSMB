@@ -161,6 +161,42 @@ sub redirect {
 	}
 }
 
+sub format_string {
+
+	my ($self, @fields) = @_;
+
+	my $format = $self->{format};
+
+	if ($self->{format} =~ /(postscript|pdf)/) {
+		$format = 'tex';
+	}
+
+	my %replace = ( 
+		'order' => { 
+			html => [ '<', '>', '\n', '\r' ],
+			txt  => [ '\n', '\r' ],
+			tex  => [ quotemeta('\\'), '&', '\n','\r', 
+				'\$', '%', '_', '#',
+				quotemeta('^'), '{', '}', '<', '>', '£' 
+				] },
+		html => { '<'  => '&lt;', '>' => '&gt;','\n' => '<br />', 
+			'\r' => '<br />' },
+		txt  => { '\n' => "\n", '\r' => "\r" },
+		tex  => {'&' => '\&', '$' => '\$', '%' => '\%', '_' => '\_',
+			'#' => '\#', quotemeta('^') => '\^\\', '{' => '\{', 
+			'}' => '\}', '<' => '$<$', '>' => '$>$',
+			'\n' => '\newline ', '\r' => '\newline ', 
+			'£' => '\pounds ', quotemeta('\\') => '/'} 
+	);
+
+	my $key;
+
+	foreach $key (@{ $replace{order}{$format} }) {
+		for (@fields) { $self->{$_} =~ s/$key/$replace{$format}{$key}/g }
+	}
+
+}
+
 
 sub format_amount {
 
