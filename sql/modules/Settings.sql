@@ -1,3 +1,5 @@
+-- VERSION 1.3.0
+
 CREATE OR REPLACE FUNCTION setting_set (in_key varchar, in_value varchar) 
 RETURNS VOID AS
 $$

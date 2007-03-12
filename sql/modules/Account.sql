@@ -1,3 +1,5 @@
+-- VERSION 1.3.0
+
 CREATE OR REPLACE FUNCTION account_get (in_id) RETURNS chart AS
 $$
 DECLARE

@@ -1,4 +1,4 @@
-
+-- VERSION 1.3.0
 CREATE OR REPLACE FUNCTION location_save
 (in_id int, in_companyname text, in_address1 text, in_address2 text, 
 	in_city text, in_state text, in_zipcode text, in_country text) 

@@ -1,3 +1,4 @@
+-- VERSION 1.3.0
 CREATE OR REPLACE FUNCTION employee_save
 (in_id integer, in_location_id integer, in_employeenumber varchar(32), 
 	in_name varchar(64), in_address1 varchar(32), in_address2 varchar(32),
