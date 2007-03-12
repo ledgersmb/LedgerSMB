@@ -2092,9 +2092,9 @@ sub config {
 
 <form method=post action=$form->{script}>
 
-<input type=hidden name=old_password value=$myconfig{password}>
+<input type=hidden name=old_password value="$myconfig{password}">
 <input type=hidden name=type value=preferences>
-<input type=hidden name=role value=$myconfig{role}>
+<input type=hidden name=role value="$myconfig{role}">
 
 <table width=100%>
   <tr><th class=listtop>$form->{title}</th></tr>
@@ -2138,7 +2138,7 @@ sub config {
 	    <table>
 	      <tr>
 		<th align="right">|.$locale->text('Password').qq|</th>
-		<td><input type=password name=new_password size=10 value=$myconfig{password}></td>
+		<td><input type=password name=new_password size=10 value="$myconfig{password}"></td>
 	      </tr>
 	      <tr>
 		<th align="right">|.$locale->text('Confirm').qq|</th>
