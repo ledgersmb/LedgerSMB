@@ -13,8 +13,16 @@ The following method is static:
 
 The following methods are passed through to stored procedures:
 =item get ($self->{key})
+
+=item get_default_accounts() (via AUTOLOAD) returns a list of accounts.
+
 =item set ($self->{key}, $self->{value})
-=item get_default_accounts()
+
+=item parse_incriment ($self->{key})
+This function updates a default entry in the database, incrimenting the last 
+set of digits not including <?lsmb ?> tags or non-digits, and then parses the 
+returned value, doing tag substitution.  The final value is then returned by 
+the function.
 
 The above list may grow over time, and may depend on other installed modules.
 
@@ -49,7 +57,7 @@ sub get {
 	$self->merge($hashref, 'value');
 }
 
-sub parse {
+sub parse_incriment {
 
 	my $self = shift;
 	my $myconfig = shift;
