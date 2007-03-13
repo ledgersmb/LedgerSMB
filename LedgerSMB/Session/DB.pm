@@ -133,11 +133,11 @@ sub session_create {
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH}; 
 
 	# TODO Change this to use %myconfig
-	my $deleteExisting = $dbh->prepare("DELETE FROM session
-											  USING users
-											  WHERE users.username = ?
-												AND users.id = session.users_id
-												AND age(last_used) > ?::interval");  
+	my $deleteExisting = $dbh->prepare(
+		"DELETE 
+		   FROM session
+		  WHERE session.users_id = (select id from users where username = ?) 
+		        AND age(last_used) > ?::interval");  
 
 	my $seedRandom = $dbh->prepare("SELECT setseed(?);");
 
@@ -195,10 +195,10 @@ sub session_destroy {
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
-	my $deleteExisting = $dbh->prepare("DELETE FROM session 
-											  USING users
-											  WHERE users.username = ?
-												AND users.id = session.users_id;");
+	my $deleteExisting = $dbh->prepare("
+		DELETE FROM session 
+		       WHERE users_id = (select id from users where username = ?)
+	");
 
 	$deleteExisting->execute($login)
 		|| $form->dberror(__FILE__.':'.__LINE__.': Delete from session: ');
