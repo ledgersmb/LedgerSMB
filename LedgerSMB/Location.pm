@@ -32,12 +32,14 @@ your software.
 package LedgerSMB::Location;
 use LedgerSMB;
 use LedgerSMB::DBObject;
+use strict;
 our $VERSION = '1.0.0';
 
 our @ISA = qw(LedgerSMB::DBObject);
 
 sub AUTOLOAD {
 	my $self = shift;
+	my $AUTOLOAD = $LedgerSMB::Location::AUTOLOAD;
 	$AUTOLOAD =~ s/^.*:://;
 	my $procname = "location_$AUTOLOAD";
 	$self->exec_method($procname, @_);

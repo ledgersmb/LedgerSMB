@@ -31,12 +31,14 @@ your software.
 package LedgerSMB::Employee;
 use LedgerSMB;
 use LedgerSMB::DBObject;
+use strict;
 our $VERSION = '1.0.0';
 
 our @ISA = qw(LedgerSMB::DBObject);
 
 sub AUTOLOAD {
 	my $self = shift;
+	my $AUTOLOAD = $LedgerSMB::Employee::AUTOLOAD;
 	$AUTOLOAD =~ s/^.*:://;
 	my $procname = "employee_$AUTOLOAD";
 	$self->exec_method($procname, @_);

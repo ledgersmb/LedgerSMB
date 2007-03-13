@@ -30,25 +30,29 @@ your software.
 package LedgerSMB::Setting;
 use LedgerSMB;
 use LedgerSMB::DBObject;
+use strict;
 our $VERSION = '1.0.0';
 
 our @ISA = qw(LedgerSMB::DBObject);
 
 sub AUTOLOAD {
 	my $self = shift;
+	my $AUTOLOAD = $LedgerSMB::Setting::AUTOLOAD;
 	$AUTOLOAD =~ s/^.*:://;
 	my $procname = "setting_$AUTOLOAD";
 	$self->exec_method($procname, @_);
 }
 
 sub get {
-	$self = shift;
-	$hashref = @{$self->exec_method('setting_get');
+	my $self = shift;
+	my $hashref = shift @{$self->exec_method('setting_get')};
 	$self->merge($hashref, 'value');
+}
 
 sub parse {
 
-	$self = shift;
+	my $self = shift;
+	my $myconfig = shift;
 
 	# Long-run, we may want to run this via Parse::RecDescent, but this is
 	# at least a start for here.  Chris T.

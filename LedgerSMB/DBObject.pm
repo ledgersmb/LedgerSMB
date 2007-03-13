@@ -26,7 +26,6 @@ your software.
 package LedgerSMB::DBObject;
 use LedgerSMB;
 use strict;
-no strict 'refs';
 use warnings;
 
 our @ISA = qw(LedgerSMB);
@@ -86,13 +85,16 @@ sub run_custom_queries {
 	my ($self, $tablename, $query_type, $linenum) = @_;
 	my $dbh = $self->{dbh};
 	if ($query_type !~ /^(select|insert|update)$/i){
-		$self->error($locale->text(
-			"Passed incorrect query type to run_custom_queries."
-		));
+		# Commenting out this next bit until we figure out how the locale object
+		# will operate.  Chris
+		#$self->error($locale->text(
+		#	"Passed incorrect query type to run_custom_queries."
+		#));
 	}
 	my @rc;
 	my %temphash;
 	my @templist;
+	my $did_insert;
 	my @elements;
 	my $query;
 	my $ins_values;
@@ -152,7 +154,7 @@ sub run_custom_queries {
 	if ($query_type eq 'INSERT'){
 		for (@rc){
 			$query = shift (@{$_});
-			$sth = $dbh->prepare($query) 
+			my $sth = $dbh->prepare($query) 
 				|| $self->db_error($query);
 			$sth->execute(@{$_}, $self->{id})
 				|| $self->dberror($query);;
@@ -165,12 +167,10 @@ sub run_custom_queries {
 	} elsif ($query_type eq 'SELECT'){
 		for (@rc){
 			$query = shift @{$_};
-			$sth = $self->{dbh}->prepare($query);
+			my $sth = $self->{dbh}->prepare($query);
 			$sth->execute($self->{id});
-			$ref = $sth->fetchrow_hashref(NAME_lc);
-			for (keys %{$ref}){
-				$self->{$_} = $ref->{$_};
-			}
+			my $ref = $sth->fetchrow_hashref('NAME_lc');
+			$self->merge($ref, keys(%$ref));
 		}
 	}
 	@rc;
