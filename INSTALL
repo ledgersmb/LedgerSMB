@@ -69,6 +69,40 @@ and may not be required in all circumstances.  These include:
   * Parse::RecDescent for the CLI script host
 
 
+FTP INSTALLATION:
+============================================================================
+If you control the server and have shell access, the
+instructions above are preferred over those given here.
+instead of those given here.  This is simply a set of 
+notes for those who must install on a shared server.
+
+If you do not have access to the server's configuration
+files install LedgerSMB in userspace by ftp'ing all the
+files to your server.
+
+a) untar ledger-smb in your private_html directory
+b) turn on script execution for the folder ledger-smb
+You can control this with an .htaccess file
+
+  Options +ExecCGI
+  DirectoryIndex login.pl
+
+c) protect the users directory with an .htpasswd file
+
+order allow,deny
+deny from all
+
+d) protect the templates directory with an .htpasswd file
+
+order allow,deny
+deny from all
+
+e) set up your PostgreSQL database and the tables.  The basic
+procedure is specified in the INSTALL file.
+
+You will most likely only have access to PostgreSQL with
+some other tools like pgadmin.
+
 
 TROUBLESHOOTING
 ===========================================================================
