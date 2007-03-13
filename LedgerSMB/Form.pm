@@ -1864,7 +1864,7 @@ sub all_employees {
 	my @whereargs = ();
 	# setup employees/sales contacts
 	my $query = qq|SELECT id, name
-					 FROM employee
+					 FROM employees
 					WHERE 1 = 1|;
 
 	if ($transdate) {

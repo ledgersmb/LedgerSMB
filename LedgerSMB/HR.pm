@@ -80,7 +80,7 @@ sub get_employee {
 	# get managers
 	  $query = qq|
 		  SELECT id, name
-		    FROM employee
+		    FROM employees
 		   WHERE sales = '1'
 		         AND role = 'manager'
 		         $notid

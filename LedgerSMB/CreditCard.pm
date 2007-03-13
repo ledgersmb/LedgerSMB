@@ -15,12 +15,13 @@
 # POS Credit card processing-- could be extended for ecommerce
 
 package CreditCard;
-use LedgerSMB::CreditCard::Config;
-BEGIN { 
-	$gateway_module =  ${Config::gateway_module};
-	require "LedgerSMB/CreditCard/$gateway_module.pm";
-	import $gateway_module qw(sale credit); 
-}
+use LedgerSMB;
+use LedgerSMB::DBObject;
+
+our @ISA qw(LedgerSMB::DBObject);
+# use LedgerSMB::CreditCard::Config;  # moving elsewhere
+
+## TODO:  Add code for credit card number validation and the like
 
 1;
 
