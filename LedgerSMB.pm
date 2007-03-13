@@ -35,6 +35,7 @@
 
 use Math::BigFloat lib=>'GMP';
 use LedgerSMB::Sysconfig;
+use strict;
 
 package LedgerSMB;
 
@@ -366,11 +367,11 @@ sub callproc {
 		$argstr .= "?, ";
 	}
 	$argstr =~ s/\, $//;
-	$query = "SELECT * FROM $procname()";
+	my $query = "SELECT * FROM $procname()";
 	$query =~ s/\(\)/($argstr)/;
 	my $sth = $self->{dbh}->prepare($query);
 	$sth->execute(@_);
-	while (my $ref = $sth->fetchrow_hashref(NAME_lc)){
+	while (my $ref = $sth->fetchrow_hashref('NAME_lc')){
 		push @results, $ref;
 	}
 	@results;
@@ -380,6 +381,7 @@ sub datetonum {
 
 	my ($self, $myconfig, $date, $picture) = @_;
 
+	my ($yy, $mm, $dd);
 	if ($date && $date =~ /\D/) {
 
 		if ($myconfig->{dateformat} =~ /^yy/) {
@@ -423,7 +425,7 @@ sub db_init {
 	my $sth = $self->{dbh}->prepare($query);
 	$sth->execute;
 	my $ref;
-	while ($ref = $sth->fetchrow_hashref(NAME_lc)){
+	while ($ref = $sth->fetchrow_hashref('NAME_lc')){
 		push @{$self->{custom_db_fields}{$ref->{extends}}},
 			$ref->{field_def};
 	}
@@ -434,7 +436,7 @@ sub dbconnect_noauto {
 	my ($self, $myconfig) = @_;
 
 	# connect to database
-	$dbh = DBI->connect($myconfig->{dbconnect}, $myconfig->{dbuser}, $myconfig->{dbpasswd}, {AutoCommit => 0}) or $self->dberror;
+	my $dbh = DBI->connect($myconfig->{dbconnect}, $myconfig->{dbuser}, $myconfig->{dbpasswd}, {AutoCommit => 0}) or $self->dberror;
 
 	# set db options
 	if ($myconfig->{dboptions}) {
@@ -456,6 +458,7 @@ sub redo_rows {
 	}
 
 	my $i = 0;
+	my $j;
 	# fill rows
 	foreach my $item (sort { $a->{num} <=> $b->{num} } @ndx) {
 		$i++;
