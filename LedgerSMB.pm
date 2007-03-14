@@ -41,6 +41,7 @@ package LedgerSMB;
 
 
 sub new {
+	# This will probably be the last to be revised.
 
 	my $type = shift;
 
@@ -81,6 +82,7 @@ sub new {
 
 
 sub debug {
+	# Use Data Dumper for this one.
 
 	my ($self, $file) = @_;
 
@@ -97,16 +99,16 @@ sub debug {
 
 
 sub escape {
-	my ($self, $str, $beenthere) = @_;
+	my ($self, $str) = @_;
 
+	my $regex = qr/([^a-zA-Z0-9_.-])/;
+	$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
 	# for Apache 2 we escape strings twice
-	if (($ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/) && !$beenthere) {
-		$str = $self->escape($str, 1) if $1 == 0 && $2 < 44;
+	if (($ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/)) {
+		$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge 
+			if $1 == 0 && $2 < 44;
 	}
-
-	$str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
 	$str;
-
 }
 
 

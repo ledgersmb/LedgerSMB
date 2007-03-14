@@ -24,17 +24,20 @@ your software.
 =cut
 
 package LedgerSMB::DBObject;
-use LedgerSMB;
+use Scalar::Util;
+use base qw(LedgerSMB);
 use strict;
 use warnings;
-
-our @ISA = qw(LedgerSMB);
 
 our $AUTOLOAD;
 
 sub AUTOLOAD {
 	my ($self) = shift;
-	$self->exec_method($AUTOLOAD, @_);
+	my $type = (Scalar::Util::reftype $self) =~  m/::(.*?)$/;
+	print "Type: $type\n";
+	$type =~ m/::(.*?)$/; 
+	$type  = lc $1;
+	$self->exec_method("$type" . "_" . $AUTOLOAD, @_);
 }
 
 sub new {
@@ -55,7 +58,10 @@ sub new {
 
 sub exec_method {
 	my ($self) = shift @_;
-	my ($funcname) = shift @_;
+	my %args = @_; 
+	my $funcname = $args{funcname}; 
+	my @in_args = @{$args{args}};
+	my @call_args;
 
 	my $query = 
 		"SELECT proname, proargnames FROM pg_proc WHERE proname = ?";
@@ -73,7 +79,7 @@ sub exec_method {
 		die;
 	}
 	my $m_name = $ref->{proname};
-	my @call_args;
+
 
 	if ($args){
 		for my $arg (@proc_args){

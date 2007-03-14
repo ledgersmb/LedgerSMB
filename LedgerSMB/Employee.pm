@@ -41,29 +41,30 @@ sub AUTOLOAD {
 	my $AUTOLOAD = $LedgerSMB::Employee::AUTOLOAD;
 	$AUTOLOAD =~ s/^.*:://;
 	my $procname = "employee_$AUTOLOAD";
-	$self->exec_method($procname, @_);
+	$self->exec_method(procname => "employee_$AUTOLOAD", args => \@_);
+	my @call_args;
 }
 
 sub save {
 	my $self = shift;
-	my $hashref = shift @{$self->exec_method("employee_save")};
+	my $hashref = shift @{$self->exec_method(procname => "employee_save")};
 	$self->merge($hashref, 'id');
 }
 
 sub get {
 	my $self = shift;
-	my $hashref = shift @{$self->exec_method("employee_get")};
+	my $hashref = shift @{$self->exec_method(procname => "employee_get")};
 	$self->merge($hashref, keys %{$hashref});
 }
 
 sub list_managers {
 	my $self = shift;
-	$self->{manager_list} = $self->exec_method("employee_list_managers");
+	$self->{manager_list} = $self->exec_method(procname => "employee_list_managers");
 }
 
 sub search {
 	my $self = shift;
-	$self->{search_results} = $self->exec_method("employee_search");
+	$self->{search_results} = $self->exec_method(procname => "employee_search");
 }
 
 1;

@@ -47,13 +47,12 @@ sub AUTOLOAD {
 	my $self = shift;
 	my $AUTOLOAD = $LedgerSMB::Setting::AUTOLOAD;
 	$AUTOLOAD =~ s/^.*:://;
-	my $procname = "setting_$AUTOLOAD";
-	$self->exec_method($procname, @_);
+	$self->exec_method(procname => "setting_$AUTOLOAD", args =>\@_);
 }
 
 sub get {
 	my $self = shift;
-	my $hashref = shift @{$self->exec_method('setting_get')};
+	my $hashref = shift @{$self->exec_method(procname => 'setting_get')};
 	$self->merge($hashref, 'value');
 }
 
