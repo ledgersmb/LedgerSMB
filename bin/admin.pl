@@ -1051,8 +1051,8 @@ sub dbselect_source {
 	<input name="callback" type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}" />
 	<input type="hidden" name="path" value="$form->{path}" />
 	<br />
-	<button type="submit" class="submit" name="action" value="create_dataset">|.$locale->text('Create Dataset').qq|</button>
-	<button type="submit" class="submit" name="action" value="delete_dataset">|.$locale->text('Delete Dataset').qq|</button>
+	<button type="submit" class="submit" name="action" value="create_dataset">|.$locale->text('Create Company').qq|</button>
+	<button type="submit" class="submit" name="action" value="delete_dataset">|.$locale->text('Delete Company').qq|</button>
 	</form>
 	<p>|.$locale->text('This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!')
 	.qq|</p>
