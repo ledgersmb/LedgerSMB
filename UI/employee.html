@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title><?lsmb titlebar ?></title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
+	<link rel="stylesheet" href="UI/employee.css" type="text/css" />
+
+	<meta http-equiv="content-type" 
+		content="text/html; charset=<?lsmb charset ?>" />	
+	<meta name="robots" content="noindex,nofollow" />
+</head>
+<!-- 
+General comments:  There are a few major notes for people wanting to do CSS on this
+page.  The divs of class 2column are meant to be displayed as columns, while the spans
+of class group_input_field are expected to be displayed as a block.  Due to XHTML 
+specification requirements, these cannot be swapped for elements with the default 
+formatting desired.
+-->
+<body>
+<div class="header" id="formheading"><?lsmb text(title) ?></div>
+<form action="employee.pl" method="post">
+  <input type="hidden" name="id" value="<?lsmb id ?>" />
+  <div class="2column" id="form_column1">
+    <div class="input_row" id="number_row">
+      <span class="input_label"><?lsmb text('Number') ?></span>
+      <span class="input_field">
+        <input type="text" name="employeenumber" maxlength="32"
+		value="<?lsmb employeenumber ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="name_row">
+      <span class="input_label"><?lsmb text('Name') ?></span>
+      <span class="input_field">
+        <input type="text" name="name" maxlength="64" value="<?lsmb name ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="address_row">
+      <span class="input_label"><?lsmb text('Address') ?></span>
+      <span class="input_field_set">
+        <span class="group_input_field">
+          <input type="text" name="address1" maxlength="32" value="<?lsmb address1 ?>" />
+        </span>
+        <span class="group_input_field">
+          <input type="text" name="address2" maxlength="32" value="<?lsmb address2 ?>" />
+        </span>
+      </span>
+    </div>
+    <div class="input_row" id="city_row">
+      <span class="input_label"><?lsmb text('City') ?></span>
+      <span class="input_field">
+        <input type="text" name="city" maxlength="64" value="<?lsmb city ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="state_row">
+      <span class="input_label"><?lsmb text('State/Province') ?></span>
+      <span class="input_field">
+        <input type="text" name="state" maxlength="32" value="<?lsmb state ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="zipcode_row">
+      <span class="input_label"><?lsmb text('Zip/Postal Code') ?></span>
+      <span class="input_field">
+        <input type="text" name="zipcode" maxlength="10" value="<?lsmb zipcode ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="country_row">
+      <span class="input_label"><?lsmb text('Country') ?></span>
+      <span class="input_field">
+        <input type="text" name="country" maxlength="32" value="<?lsmb country ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="email_row">
+      <span class="input_label"><?lsmb text('Email') ?></span>
+      <span class="input_field">
+        <input type="text" name="email" maxlength="35" value="<?lsmb email ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="sales_row">
+      <span class="input_label"><?lsmb text('Sales') ?></span>
+      <span class="input_field">
+        <input name="sales" class="checkbox" type="checkbox" value="1" 
+              <?lsmb IF sales ?>checked<?lsmb END ?> />
+      </span>
+    </div>
+    <div class="input_row" id="role_row">
+      <span class="input_label"><?lsmb text('Role') ?></span>
+      <span class="input_field">
+        <select name="role">
+          <option value="user" <?lsmb IF role eq 'user' ?> SELECTED <?lsmb END ?>>
+		<?lsmb text('User') ?></option> 
+          <option value="supervisor" 
+		<?lsmb IF role eq 'supervisor' ?> SELECTED <?lsmb END ?>>
+		<?lsmb text('Supervisor') ?></option> 
+          <option value="manager" <?lsmb IF role eq 'manager' ?> SELECTED <?lsmb END ?>>
+		<?lsmb text('Manager') ?></option> 
+          <option value="admin" <?lsmb IF role eq 'admin' ?> SELECTED <?lsmb END ?>>
+		<?lsmb text('Admin') ?></option> 
+        </select>
+      </span>
+    </div>
+
+  </div>
+  <div class="2column" id="form_column2">
+    <div class="input_row" id="workphone_row">
+      <span class="input_label"><?lsmb text('Work Phone') ?></span>
+      <span class="input_field">
+        <input type="text" maxlength="20" name="workphone" value="<?lsmb workphone ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="homephone_row">
+      <span class="input_label"><?lsmb text('Home Phone') ?></span>
+      <span class="input_field">
+        <input type="text" maxlength="20" name="homephone" value="<?lsmb workphone ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="startdate_row">
+      <span class="input_label"><?lsmb text('Start Date') ?></span>
+      <span class="input_field">
+        <input type="text" name="startdate" maxlength="11" value="<?lsmb startdate ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="enddate_row">
+      <span class="input_label"><?lsmb text('End Date') ?></span>
+      <span class="input_field">
+        <input type="text" name="enddate" maxlength="11" value="<?lsmb enddate ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="ssn_row">
+      <span class="input_label"><?lsmb text('SSN') ?></span>
+      <span class="input_field">
+        <input type="text" maxlength="20" name="ssn" value="<?lsmb ssn ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="dob_row">
+      <span class="input_label"><?lsmb text('DOB') ?></span>
+      <span class="input_field">
+        <input type="text" maxlength="11" name="dob" value="<?lsmb dob ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="iban_row">
+      <span class="input_label"><?lsmb text('IBAN') ?></span>
+      <span class="input_field">
+        <input type="text" maxlength="34" name="iban" value="<?lsmb iban ?>" />
+      </span>
+    </div>
+    <div class="input_row" id="bic_row">
+      <span class="input_label"><?lsmb text('BIC') ?></span>
+      <span class="input_field">
+        <input type="text" maxlength="11" name="iban" value="<?lsmb bic ?>" />
+      </span>
+    </div>
+  </div>
+  <div id="notes_div">
+    <div class="input_label"><?lsmb text('notes') ?></div>
+    <div class="input_field">
+      <textarea rows="3" cols="60" name="notes"><?lsmb notes ?></textarea>
+    </div>
+  </div>
+</form>
+</body>
+</html>
