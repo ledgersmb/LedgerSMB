@@ -57,7 +57,7 @@ sub get {
 	$self->merge($hashref, 'value');
 }
 
-sub parse_incriment {
+sub parse_increment {
 
 	my $self = shift;
 	my $myconfig = shift;

@@ -30,6 +30,13 @@ use warnings;
 
 our @ISA = qw(LedgerSMB);
 
+our $AUTOLOAD;
+
+sub AUTOLOAD {
+	my ($self) = shift;
+	$self->exec_method($AUTOLOAD, @_);
+}
+
 sub new {
 	my $self = shift @_;
 	my $lsmb = shift @_;
