@@ -29,21 +29,9 @@ your software.
 =cut
 
 package LedgerSMB::Employee;
-use LedgerSMB;
-use LedgerSMB::DBObject;
+use base qw(LedgerSMB::DBObject);
 use strict;
 our $VERSION = '1.0.0';
-
-our @ISA = qw(LedgerSMB::DBObject);
-
-sub AUTOLOAD {
-	my $self = shift;
-	my $AUTOLOAD = $LedgerSMB::Employee::AUTOLOAD;
-	$AUTOLOAD =~ s/^.*:://;
-	my $procname = "employee_$AUTOLOAD";
-	$self->exec_method(procname => "employee_$AUTOLOAD", args => \@_);
-	my @call_args;
-}
 
 sub save {
 	my $self = shift;

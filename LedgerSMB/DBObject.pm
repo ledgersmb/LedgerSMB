@@ -8,7 +8,16 @@ This module creates object instances based on LedgerSMB's in-database ORM.
 
 =head1 METHODS
 
-=item find_method ($hashref, $function_name, @args)
+=item new ($class, base => $LedgerSMB::hash)
+
+This is the base constructor for all child classes.  It must be used with base
+argument because this is necessary for database connectivity and the like.
+
+Of course the base object can be any object that inherits LedgerSMB, so you can
+use any subclass of that.  The per-session dbh is passed between the objects 
+this way as is any information that is needed.
+
+=item exec_method ($self, procname => $function_name, args => \@args)
 
 =item merge ($hashref, @attrs)
 copies @attrs from $hashref to $self.
@@ -33,26 +42,25 @@ our $AUTOLOAD;
 
 sub AUTOLOAD {
 	my ($self) = shift;
-	my $type = (Scalar::Util::reftype $self) =~  m/::(.*?)$/;
-	print "Type: $type\n";
-	$type =~ m/::(.*?)$/; 
+	my $type = Scalar::Util::blessed $self;
+	$type =~  m/::(.*?)$/;
 	$type  = lc $1;
-	$self->exec_method("$type" . "_" . $AUTOLOAD, @_);
+	print "Type: $type\n";
+	$self->exec_method(procname => "$type" . "_" . $AUTOLOAD, args => \@_);
 }
 
 sub new {
-	my $self = shift @_;
-	my $lsmb = shift @_;
-	if (! $lsmb->isa('LedgerSMB')){
+	my $class = shift @_;
+	my %args = @_; 
+	my $base = $args{base}; 
+	my $self = bless {}, $class;
+	if (! $base->isa('LedgerSMB')){
 		$self->error("Constructor called without LedgerSMB object arg");
 	}
 
-	$self = {};
 	my $attr;
-	for $attr (keys %{$lsmb}){
-		$self->{$attr} = $lsmb->{$attr};
-	}
-	bless $self;
+	$self->merge($base);
+	$self;
 }
 
 

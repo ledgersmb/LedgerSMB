@@ -103,10 +103,9 @@ sub escape {
 
 	my $regex = qr/([^a-zA-Z0-9_.-])/;
 	$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-	# for Apache 2 we escape strings twice
-	if (($ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/)) {
-		$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge 
-			if $1 == 0 && $2 < 44;
+	# for Apache 2.0.x prior to 2.0.44 we escape strings twic;
+	if ($ENV{SERVER_SIGNATURE} =~  /Apache\/2\.0\.(\d+)/ && $1 < 44) {
+		$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
 	}
 	$str;
 }
