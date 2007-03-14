@@ -96,14 +96,18 @@ $sendmail = $config{mail}{sendmail} if $config{mail}{sendmail};
 $smtphost = $config{mail}{smtphost} if $config{mail}{smtphost};
 $smtptimeout = $config{mail}{smtptimeout} if $config{mail}{smtptimeout};
 
-$globalDBConnect = $config{globaldb}{DBConnect} if $config{globaldb}{DBConnect};
+# We used to have a global dbconnect but have moved to single entries
+$globalDBhost = $config{globaldb}{DBhost} if $config{globaldb}{DBhost};
+$globalDBport = $config{globaldb}{DBport} if $config{globaldb}{DBport};
+$globalDBname = $config{globaldb}{DBname} if $config{globaldb}{DBname};
 $globalDBUserName = $config{globaldb}{DBUserName} if $config{globaldb}{DBUserName};
 $globalDBPassword = $config{globaldb}{DBPassword} if $config{globaldb}{DBPassword};
 
 #putting this in an if clause for now so not to break other devel users
-if ($config{globaldb}{DBConnect}){
-	$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, 
-		$globalDBPassword);
+if ($config{globaldb}{DBname}){
+	$GLOBALDBH = DBI->connect("dbi:Pg:dbname=$globalDBname host=$globalDBhost
+	                                 port=$globalDBport user=$globalDBUserName
+	                                 password=$globalDBPassword");
 	if (!$GLOBALDBH){
 		$form = new Form;
 		$form->error("No GlobalDBH Configured or Could not Connect");
