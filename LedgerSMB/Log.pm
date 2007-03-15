@@ -13,6 +13,7 @@ This module is loosly based on Apache::Log.
 
 Available methods: (in order, most to least severe)
 
+
 =over 4
 
 =item emerg
@@ -53,28 +54,16 @@ use Carp ();
 
 our $VERSION = '1.0.0';
 
-our $fh;
+our $log_line;
 
 sub print { 
 	if (!$LedgerSMB::Sysconfig::logging){
 		return 0;
 	}
 	shift;
-	unless($fh) { 
-		# TODO: this is grosly wrong, but so is this module in the first place.
-		# the log messages *should* end up in the apache log, but that will
-		# hopefully be corrected in the future.
+ 	$log_line = sprintf('[%s] [%s] %i %s', scalar(localtime), +shift, $$, join(' ',@_))."\n";
+	print STDERR $log_line;
 
-		$fh=IO::File->new('>>users/ledger-smb.log');
-		$fh->autoflush(1);
-		__PACKAGE__->print('general',"Log file opened");
-	}
-
-	$fh->print(sprintf('[%s] [%s] %i %s',
-				scalar(localtime),
-				+shift,
-				$$,
-				join(' ',@_))."\n");
 }
 
 
