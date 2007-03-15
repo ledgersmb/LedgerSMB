@@ -2520,6 +2520,7 @@ sub generate_sales_orders {
   }
  
   $order = new Form;
+  $order->{dbh} = $form->{dbh};
   for (keys %{ $form->{order} }) {
     
     for (qw(type vc defaultcurrency login)) { $order->{$_} = $form->{$_} }
