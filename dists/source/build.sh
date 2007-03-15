@@ -2,7 +2,7 @@
 
 # Simple script to prepare for release
 
-version="1.2.0rc3";
+version="1.2.0rc4";
 build_d="../release";
 
 if test -d blib; then
