@@ -105,9 +105,10 @@ $globalDBPassword = $config{globaldb}{DBPassword} if $config{globaldb}{DBPasswor
 
 #putting this in an if clause for now so not to break other devel users
 if ($config{globaldb}{DBname}){
-	$GLOBALDBH = DBI->connect("dbi:Pg:dbname=$globalDBname host=$globalDBhost
-	                                 port=$globalDBport user=$globalDBUserName
-	                                 password=$globalDBPassword");
+	my $dbconnect = "dbi:Pg:dbname=$globalDBname host=$globalDBhost
+		port=$globalDBport user=$globalDBUserName
+		password=$globalDBPassword"; # for easier debugging
+	$GLOBALDBH = DBI->connect($dbconnect);
 	if (!$GLOBALDBH){
 		$form = new Form;
 		$form->error("No GlobalDBH Configured or Could not Connect");

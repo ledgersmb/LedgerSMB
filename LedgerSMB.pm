@@ -52,11 +52,21 @@ non-whitespace characters.
 This function determines the likely number of rows needed to hold text in a 
 textbox.  It returns either that number or max, which ever is lower.
 
+=item merge ($hashref, keys => @list, index => $number);
+This command merges the $hashref into the current object.  If keys are 
+specified, only those keys are used.  Otherwise all keys are merged.
+
+If an index is specified, the merged keys are given a form of 
+"$key" . "_$index", otherwise the key is used on both sides.
+
 =item redirect (msg => $string)
 
 This function redirects to the script and argument set determined by 
 $self->{callback}, and if this is not set, goes to an info screen and prints
 $msg.
+
+=item redo_rows (fields =>, new =>, count =>,  rows => $integer);
+This function is undergoing serious redesign at the moment.
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
@@ -501,7 +511,12 @@ sub db_init {
 	my %args = @_;
 	my $myconfig = $args{user};
 
-	$self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
+	my $dbh = DBI->connect($myconfig->{dbconnect}, $myconfig->{dbuser}, 
+		$myconfig->{dbpasswd}, {AutoCommit => 0}) or $self->dberror;
+
+	if ($myconfig->{dboptions}) {
+		$dbh->do($myconfig->{dboptions});
+	}
 
 	my $query = 
 		"SELECT t.extends, 
@@ -518,27 +533,15 @@ sub db_init {
 	}
 }
 
-# Will merge this into db_init in the future.  
-# Deprecated and hence undocumented.  Chris.
-sub dbconnect_noauto {
-
-	my ($self, $myconfig) = @_;
-
-	# connect to database
-	my $dbh = DBI->connect($myconfig->{dbconnect}, $myconfig->{dbuser}, $myconfig->{dbpasswd}, {AutoCommit => 0}) or $self->dberror;
-
-	# set db options
-	if ($myconfig->{dboptions}) {
-		$dbh->do($myconfig->{dboptions});
-	}
-
-	$dbh;
-}
-
-
+# This needs some *real* work.
 sub redo_rows {
 
-	my ($self, $flds, $new, $count, $numrows) = @_;
+	$self = shift @_;
+	%args = @_;
+	@flds = @{$args{fields}};
+	$new = $args{new};
+	$count = $args{count};
+	$numrows = $args{rows};
 
 	my @ndx = ();
 
@@ -552,7 +555,7 @@ sub redo_rows {
 	foreach my $item (sort { $a->{num} <=> $b->{num} } @ndx) {
 		$i++;
 		$j = $item->{ndx} - 1;
-		for (@{$flds}) { $self->{"${_}_$i"} = $new->[$j]->{$_} }
+		for (@flds) { $self->{"${_}_$i"} = $new->[$j]->{$_} }
 	}
 
 	# delete empty rows
@@ -567,17 +570,19 @@ sub merge {
 	for my $arg ($self, $src){
 		shift;
 	}
-	my @keys;
-	if (scalar @keys){
-		@keys = @_;
-		print "Keys: ". scalar @keys . "\n";
-	}
-	else {
+	my %args = @_;
+	my @keys = @{$args{keys}};
+	my $index = $args{index};
+	if (! scalar @keys){
 		@keys = keys %{$src};
-		print "Keys: ". scalar @keys . "\n";
 	}
 	for my $arg (keys %$src){
-		$self->{$arg} = $src->{$arg};
+		if ($index){
+			$dst_arg = $arg . "_$index";
+		} else {
+			$dst_arg = $arg;
+		}
+		$self->{$dst_arg} = $src->{$arg};
 	}
 }
 
