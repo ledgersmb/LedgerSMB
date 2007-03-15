@@ -103,10 +103,6 @@ sub escape {
 
 	my $regex = qr/([^a-zA-Z0-9_.-])/;
 	$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-	# for Apache 2.0.x prior to 2.0.44 we escape strings twic;
-	if ($ENV{SERVER_SIGNATURE} =~  /Apache\/2\.0\.(\d+)/ && $1 < 44) {
-		$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-	}
 	$str;
 }
 
@@ -361,17 +357,19 @@ sub round_amount {
 
 sub callproc {
 	my $self = shift @_;
-	my $procname = shift @_;
+	my %args = @_;
+	my $procname = $args{procname};
+	my @args = @{$args{args}};
 	my $argstr = "";
 	my @results;
-	for (1 .. scalar @_){
+	for (1 .. scalar @args){
 		$argstr .= "?, ";
 	}
 	$argstr =~ s/\, $//;
 	my $query = "SELECT * FROM $procname()";
 	$query =~ s/\(\)/($argstr)/;
 	my $sth = $self->{dbh}->prepare($query);
-	$sth->execute(@_);
+	$sth->execute(@args);
 	while (my $ref = $sth->fetchrow_hashref('NAME_lc')){
 		push @results, $ref;
 	}
