@@ -12,6 +12,10 @@ in database objects (LedgerSMB::DBObject)
 =item new ()
 This method creates a new base request instance. 
 
+=item date_to_number (user => $LedgerSMB::User, date => $string);
+This function takes the date in the format provided and returns a numeric 
+string in YYMMDD format.  This may be moved to User in the future.
+
 =item debug (file => $path);
 
 This dumps the current object to the file if that is defined and otherwise to 
@@ -28,7 +32,12 @@ This function returns the $string encoded using %hexhex using ordinary notation.
 =item format_amount (user => $LedgerSMB::User::hash, amount => $string, precision => $integer, neg_format => (-|DRCR));
 
 The function takes a monetary amount and formats it according to the user 
-preferences, the negative format (- or DR/CR).
+preferences, the negative format (- or DR/CR).  Note that it may move to
+LedgerSMB::User at some point in the future.
+
+=item parse_amount (user => $LedgerSMB::User::hash, amount => $variable);
+If $amount is a Bigfloat, it is returned as is.  If it is a string, it is 
+parsed according to the user preferences stored in the LedgerSMB::User object.
 
 =item format_fields (fields => \@array);
 This function converts fields to their appropriate representation in 
@@ -368,10 +377,12 @@ sub format_amount {
 	$amount;
 }
 
-
+# This should probably go to the User object too.
 sub parse_amount {
-
-	my ($self, $myconfig, $amount) = @_;
+	my $self = shift @_;
+	my %args = @_;
+	my $myconfig = $args{user};
+	my $amount = $args{amount};
 
 	if ($amount eq '' or $amount == undef){
 		return 0;
@@ -447,9 +458,12 @@ sub call_procedure {
 	@results;
 }
 
-sub datetonum {
-
-	my ($self, $myconfig, $date, $picture) = @_;
+# This should probably be moved to User too...
+sub date_to_number {
+	my $self = shift @_;
+	my %args = @_;
+	my $myconfig = $args{user};
+	my $date = $args{date};
 
 	my ($yy, $mm, $dd);
 	if ($date && $date =~ /\D/) {
@@ -483,7 +497,10 @@ sub datetonum {
 # Database routines used throughout
 
 sub db_init {
-	my ($self, $myconfig) = @_;
+	my $self = shift @_;
+	my %args = @_;
+	my $myconfig = $args{user};
+
 	$self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
 
 	my $query = 
@@ -501,6 +518,8 @@ sub db_init {
 	}
 }
 
+# Will merge this into db_init in the future.  
+# Deprecated and hence undocumented.  Chris.
 sub dbconnect_noauto {
 
 	my ($self, $myconfig) = @_;
