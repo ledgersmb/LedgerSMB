@@ -67,7 +67,7 @@ $localepath = 'locale/po';
 	     );
 
 my %config;
-read_config('ledger-smb.conf' => %config) or die;
+read_config('ledgersmb.conf' => %config) or die;
 
 $logging = $config{''}{logging} if $config{''}{logging};
 $check_max_invoices = $config{''}{check_max_invoices} if
