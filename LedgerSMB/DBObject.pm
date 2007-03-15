@@ -99,7 +99,7 @@ sub exec_method {
 	else {
 		@call_args = @_;
 	}
-	$self->callproc(procname => $funcname, args => \@call_args);
+	$self->call_procedure(procname => $funcname, args => \@call_args);
 }
 
 sub run_custom_queries {

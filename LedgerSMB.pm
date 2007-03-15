@@ -1,9 +1,46 @@
-#=====================================================================
-# LedgerSMB 
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-# 
-# Copyright (C) 2006
+=head1 NAME
+
+LedgerSMB::DBObject - LedgerSMB class for building objects from db relations
+
+=head1 SYOPSIS
+
+This module creates object instances based on LedgerSMB's in-database ORM.  
+
+=head1 METHODS
+
+=item new ()
+This method creates a new base request instance. 
+
+=item debug (file => $path);
+
+This dumps the current object to the file if that is defined and otherwise to 
+standard output.
+
+=item escape (string => $string);
+
+This function returns the current string escaped using %hexhex notation.
+
+=item unescape (string => $string);
+
+This function returns the $string encoded using %hexhex using ordinary notation.
+
+=item is_blank (msg=> $string, name => $string)
+This function invokes self->error($msg) if the property contains no 
+non-whitespace characters.
+
+=item num_text_rows (string => $string, cols => $number, max => $number);
+
+This function determines the likely number of rows needed to hold text in a 
+textbox.  It returns either that number or max, which ever is lower.
+
+=item redirect (msg => $string)
+
+This function redirects to the script and argument set determined by 
+$self->{callback}, and if this is not set, goes to an info screen and prints
+$msg.
+
+=head1 Copyright (C) 2006, The LedgerSMB core team.
+
 # This work contains copyrighted information from a number of sources all used
 # with permission.
 #
@@ -24,17 +61,11 @@
 #               Moritz Bunkus (tex)
 #               Jim Rawlings <jim@your-dba.com> (DB2)
 #======================================================================
-#
-# This file has undergone whitespace cleanup.
-#
-#======================================================================
-#
-# main package
-#
-#======================================================================
+=cut
 
 use Math::BigFloat lib=>'GMP';
 use LedgerSMB::Sysconfig;
+use Data::Dumper;
 use strict;
 
 package LedgerSMB;
@@ -82,24 +113,28 @@ sub new {
 
 
 sub debug {
-	# Use Data Dumper for this one.
-
-	my ($self, $file) = @_;
+	my $self = shift @_;
+	my %args = @_;
+	my $file = $args{file};
+	my $d = Data::Dumper->new([@_]);
+	$d->Sortkeys(1);
 
 	if ($file) {
 		open(FH, '>', "$file") or die $!;
-		for (sort keys %$self) { print FH "$_ = $self->{$_}\n" }
+		print FH $d->Dump();
 		close(FH);
 	} else {
 		print "\n";
-		for (sort keys %$self) { print "$_ = $self->{$_}\n" }
+		print $d->Dump();	
 	}
 
 } 
 
 
 sub escape {
-	my ($self, $str) = @_;
+	my ($self) = @_;
+	my %args = @_;
+	my $str = $args{string};
 
 	my $regex = qr/([^a-zA-Z0-9_.-])/;
 	$str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
@@ -108,7 +143,9 @@ sub escape {
 
 
 sub unescape {
-	my ($self, $str) = @_;
+	my ($self) = @_;
+	my %args = @_;
+	my $str = $args{string};
 
 	$str =~ tr/+/ /;
 	$str =~ s/\\$//;
@@ -120,15 +157,36 @@ sub unescape {
 
 }
 
+sub is_blank {
+	my $self = shift @_;
+	my %args = @_;
+	my $name = $args{name};
+	my $msg = $args{msg};
+	
+	$self->error($msg) if $self->{$name} =~ /^\s*$/;
+}
 
-sub numtextrows {
-
-	my ($self, $str, $cols, $maxrows) = @_;
-
+sub num_text_rows {
+	my $self = shift @_;
+	my %args = @_;
+	my $string = $args{string};
+	my $cols = $args{cols};
+	my $maxrows = $args{max};
+	
 	my $rows = 0;
 
-	for (split /\n/, $str) { 
-		$rows += int (((length) - 2)/$cols) + 1 
+	for (split /\n/, $string) {
+		my $line = $_;
+		while (length($line) > $cols){
+			my $fragment = substr($line, 0, $cols + 1);
+			my $fragment = s/^(.*)\S*$/$1/;
+			$line = s/$fragment//;
+			if ($line eq $fragment){ # No word breaks!
+				$line = "";
+			}
+			++$rows;
+		}
+		++$rows;
 	}
 
 	$maxrows = $rows unless defined $maxrows;
@@ -138,17 +196,10 @@ sub numtextrows {
 }
 
 
-sub isblank {
-	my ($self, $name, $msg) = @_;
-	$self->error($msg) if $self->{$name} =~ /^\s*$/;
-}
-
-
-
 sub redirect {
-
-	my ($self, $msg) = @_;
-	use List::Util qw(first);
+	my $self = shift @_;
+	my %args = @_;
+	my $msg = $args{msg};
 
 	if ($self->{callback} || !$msg) {
 
@@ -159,9 +210,12 @@ sub redirect {
 	}
 }
 
-sub format_string {
+sub format_fields {
+	# We should look at moving this into LedgerSMB::Template.  Chris
 
-	my ($self, @fields) = @_;
+	my $self = shift @_;
+	my %args = @_;
+	my @fields = @{$args{fields}};
 
 	my $format = $self->{format};
 
@@ -355,7 +409,7 @@ sub round_amount {
 	return $amount;
 }
 
-sub callproc {
+sub call_procedure {
 	my $self = shift @_;
 	my %args = @_;
 	my $procname = $args{procname};
