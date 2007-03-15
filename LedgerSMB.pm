@@ -1,10 +1,11 @@
 =head1 NAME
 
-LedgerSMB::DBObject - LedgerSMB class for building objects from db relations
+LedgerSMB  The Base class for many LedgerSMB objects, including DBObject.
 
 =head1 SYOPSIS
 
-This module creates object instances based on LedgerSMB's in-database ORM.  
+This module creates a basic request handler with utility functions available
+in database objects (LedgerSMB::DBObject)
 
 =head1 METHODS
 
@@ -23,6 +24,15 @@ This function returns the current string escaped using %hexhex notation.
 =item unescape (string => $string);
 
 This function returns the $string encoded using %hexhex using ordinary notation.
+
+=item format_amount (user => $LedgerSMB::User::hash, amount => $string, precision => $integer, neg_format => (-|DRCR));
+
+The function takes a monetary amount and formats it according to the user 
+preferences, the negative format (- or DR/CR).
+
+=item format_fields (fields => \@array);
+This function converts fields to their appropriate representation in 
+HTML/SGML/XML or LaTeX.
 
 =item is_blank (msg=> $string, name => $string)
 This function invokes self->error($msg) if the property contains no 
@@ -211,7 +221,8 @@ sub redirect {
 }
 
 sub format_fields {
-	# We should look at moving this into LedgerSMB::Template.  Chris
+	# We should look at moving this into LedgerSMB::Template.
+	# And cleaning it up......  Chris
 
 	my $self = shift @_;
 	my %args = @_;
@@ -250,9 +261,15 @@ sub format_fields {
 }
 
 
+# TODO:  Either we should have an amount class with formats and such attached
+# Or maybe we should move this into the user class...
 sub format_amount {
-
-	my ($self, $myconfig, $amount, $places, $dash) = @_;
+	my $self = shift @_;
+	my %args = @_;
+	my $myconfig = $args{user};
+	my $amount = $args{amount};
+	my $places = $args{precision};
+	my $dash = $args{neg_format};
 
 	my $negative ;
 	if ($amount){
