@@ -72,7 +72,8 @@ $msg.
 =item redo_rows (fields => \@list, count => $integer, [index => $string);
 This function is undergoing serious redesign at the moment.  If index is 
 defined, that field is used for ordering the rows.  If not, runningnumber is 
-used.
+used.  Behavior is not defined when index points to a field containing 
+non-numbers.
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
@@ -98,6 +99,7 @@ used.
 #======================================================================
 =cut
 
+use CGI;
 use Math::BigFloat lib=>'GMP';
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
@@ -107,43 +109,29 @@ package LedgerSMB;
 
 
 sub new {
-	# This will probably be the last to be revised.
-	# Based on SQL-Ledger's Form::new
+	my $type = shift @_;
+	my $argstr = shift @_;
 
-	my $type = shift;
-
-	my $argstr = shift;
-
-	read(STDIN, $_, $ENV{CONTENT_LENGTH});
-
-	if ($argstr){
-		 $_ = $argstr;
-	}
-	elsif ($ENV{QUERY_STRING}) {
-		$_ = $ENV{QUERY_STRING};
-	}
-
-	elsif ($ARGV[0]) {
-		$_ = $ARGV[0];
-	}
-	
 	my $self = {};
-	%$self = split /[&=]/;
-	for (keys %$self) { $self->{$_} = unescape("", $self->{$_}) }
-
-	if (substr($self->{action}, 0, 1) !~ /( |\.)/) {
-		$self->{action} = lc $self->{action};
-		$self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
-	}
-
-	$self->{menubar} = 1 if $self->{path} =~ /lynx/i;
-	#menubar will be deprecated, replaced with below
-	$self->{lynx} = 1 if $self->{path} =~ /lynx/i;
-
 	$self->{version} = "1.3.0 Alpha 0 Pre";
 	$self->{dbversion} = "1.2.0";
-
 	bless $self, $type;
+	
+	my $query =  ($argstr) ? new CGI($argstr) : new CGI;
+	my $params = $query->Vars;
+
+	$self->merge($params);
+
+	$self->{action} =~ s/\W/_/g;
+	$self->{action} = lc $self->{action};
+
+	if ($self->{path} =~ /lynx/i){
+		$self->{menubar} = 1; 
+		#menubar will be deprecated, replaced with below
+		$self->{lynx} = 1;
+	}
+
+	$self;
 
 }
 
@@ -177,22 +165,6 @@ sub escape {
 	$str;
 }
 
-
-sub unescape {
-	# Based on SQL-Ledger's Form::unescape
-	my ($self) = @_;
-	my %args = @_;
-	my $str = $args{string};
-
-	$str =~ tr/+/ /;
-	$str =~ s/\\$//;
-
-	$str =~ s/%([0-9a-fA-Z]{2})/pack("c",hex($1))/eg;
-	$str =~ s/\r?\n/\n/g;
-
-	$str;
-
-}
 
 sub is_blank {
 	my $self = shift @_;
