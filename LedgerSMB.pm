@@ -69,8 +69,10 @@ This function redirects to the script and argument set determined by
 $self->{callback}, and if this is not set, goes to an info screen and prints
 $msg.
 
-=item redo_rows (fields => \@list, count => $integer);
-This function is undergoing serious redesign at the moment.
+=item redo_rows (fields => \@list, count => $integer, [index => $string);
+This function is undergoing serious redesign at the moment.  If index is 
+defined, that field is used for ordering the rows.  If not, runningnumber is 
+used.
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
@@ -569,7 +571,24 @@ sub redo_rows {
 	my %args = @_;
 	my @flds = @{$args{fields}};
 	my $count = $args{count};
+	my $index = ($args{index}) ? $args{index} : 'runningnumber';
 
+	my @rows;
+	my $i; # incriment counter use only
+	for $i (1 .. $count){
+		my $temphash = {_inc => $i};
+		for my $fld (@flds){
+			$temphash->{$fld} = $self->{"$fld"."_$i"}
+		}
+		push @rows, $temphash;
+	}
+	$i = 1;
+	for my $row (sort {$a->{index} <=> $b->{index}} @rows){
+		for my $fld (@flds){
+			$self->{"$fld"."_$i"} = $row->{$fld};
+		}
+		++$i;
+	}
 }
 
 
