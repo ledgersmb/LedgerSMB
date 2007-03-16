@@ -80,9 +80,17 @@ sql/Pg-central.sql file into it.
 6)  Import the users.  Run the import-members script to do this.
 
 7)  Copy the files from the LedgerSMB tarball over your existing installation.
+
 8)  Delete the users directory.
 
-9)  Edit the ledger-smb.conf file as appropriate.
+9)  Upgrade your templates.  Run the following command:
+	perl upgrade_templates.pl $templatedir
+    Where $templatedir is the directory of your templates.
+
+10)  Edit the ledger-smb.conf file as appropriate.
+
+11) You can test basic parts of the installation by running Build ./test at 
+    this point.
 
 Congratulations, you have manually upgraded to LedgerSMB 1.2.
 
