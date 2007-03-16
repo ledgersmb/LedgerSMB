@@ -47,6 +47,10 @@ HTML/SGML/XML or LaTeX.
 This function returns true if $self->{$string} only consists of whitespace
 characters or is an empty string.
 
+=item is_run_mode ('(cli|cgi|mod_perl)')
+This function returns 1 if the run mode is what is specified.  Otherwise
+returns 0.
+
 =item num_text_rows (string => $string, cols => $number, max => $number);
 
 This function determines the likely number of rows needed to hold text in a 
@@ -197,6 +201,21 @@ sub is_blank {
 		$rc = 1;
 	} else {
 		$rc = 0;
+	}
+	$rc;
+}
+
+sub is_run_mode {
+	my $self = shift @_;
+	my $mode = lc shift @_;
+	my $rc = 0;
+	if ($mode eq 'cgi' && $ENV{GATEWAY_INTERFACE}){
+		$rc = 1;
+	}
+	elsif ($mode eq 'cli' && ! ($ENV{GATEWAY_INTERFACE} || $ENV{MOD_PERL})){
+		$rc = 1;
+	} elsif ($mode eq 'mod_perl' &&  $ENV{MOD_PERL}){
+		$rc = 1;
 	}
 	$rc;
 }
@@ -546,10 +565,10 @@ sub db_init {
 
 sub redo_rows {
 
-	$self = shift @_;
-	%args = @_;
-	@flds = @{$args{fields}};
-	$count = $args{count};
+	my $self = shift @_;
+	my %args = @_;
+	my @flds = @{$args{fields}};
+	my $count = $args{count};
 
 }
 
@@ -566,6 +585,7 @@ sub merge {
 		@keys = keys %{$src};
 	}
 	for my $arg (keys %$src){
+		my $dst_arg;
 		if ($index){
 			$dst_arg = $arg . "_$index";
 		} else {
