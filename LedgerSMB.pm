@@ -43,9 +43,9 @@ parsed according to the user preferences stored in the LedgerSMB::User object.
 This function converts fields to their appropriate representation in 
 HTML/SGML/XML or LaTeX.
 
-=item is_blank (msg=> $string, name => $string)
-This function invokes self->error($msg) if the property contains no 
-non-whitespace characters.
+=item is_blank (name => $string)
+This function returns true if $self->{$string} only consists of whitespace
+characters or is an empty string.
 
 =item num_text_rows (string => $string, cols => $number, max => $number);
 
@@ -65,7 +65,7 @@ This function redirects to the script and argument set determined by
 $self->{callback}, and if this is not set, goes to an info screen and prints
 $msg.
 
-=item redo_rows (fields =>, new =>, count =>,  rows => $integer);
+=item redo_rows (fields => \@list, count => $integer);
 This function is undergoing serious redesign at the moment.
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
@@ -102,6 +102,7 @@ package LedgerSMB;
 
 sub new {
 	# This will probably be the last to be revised.
+	# Based on SQL-Ledger's Form::new
 
 	my $type = shift;
 
@@ -172,6 +173,7 @@ sub escape {
 
 
 sub unescape {
+	# Based on SQL-Ledger's Form::unescape
 	my ($self) = @_;
 	my %args = @_;
 	my $str = $args{string};
@@ -190,9 +192,13 @@ sub is_blank {
 	my $self = shift @_;
 	my %args = @_;
 	my $name = $args{name};
-	my $msg = $args{msg};
-	
-	$self->error($msg) if $self->{$name} =~ /^\s*$/;
+	my $rc;
+	if ($self->{$name} =~ /^\s*$/){
+		$rc = 1;
+	} else {
+		$rc = 0;
+	}
+	$rc;
 }
 
 sub num_text_rows {
@@ -218,7 +224,9 @@ sub num_text_rows {
 		++$rows;
 	}
 
-	$maxrows = $rows unless defined $maxrows;
+	if (! defined $maxrows){
+		$maxrows = $rows;
+	}
 
 	return ($rows > $maxrows) ? $maxrows : $rows;
 
@@ -240,6 +248,7 @@ sub redirect {
 }
 
 sub format_fields {
+	# Based on SQL-Ledger's Form::format_string
 	# We should look at moving this into LedgerSMB::Template.
 	# And cleaning it up......  Chris
 
@@ -283,6 +292,7 @@ sub format_fields {
 # TODO:  Either we should have an amount class with formats and such attached
 # Or maybe we should move this into the user class...
 sub format_amount {
+	# Based on SQL-Ledger's Form::format_amount
 	my $self = shift @_;
 	my %args = @_;
 	my $myconfig = $args{user};
@@ -470,6 +480,7 @@ sub call_procedure {
 
 # This should probably be moved to User too...
 sub date_to_number {
+	#based on SQL-Ledger's Form::datetonum
 	my $self = shift @_;
 	my %args = @_;
 	my $myconfig = $args{user};
@@ -533,35 +544,13 @@ sub db_init {
 	}
 }
 
-# This needs some *real* work.
 sub redo_rows {
 
 	$self = shift @_;
 	%args = @_;
 	@flds = @{$args{fields}};
-	$new = $args{new};
 	$count = $args{count};
-	$numrows = $args{rows};
 
-	my @ndx = ();
-
-	for (1 .. $count) { 
-		push @ndx, { num => $new->[$_-1]->{runningnumber}, ndx => $_ } 
-	}
-
-	my $i = 0;
-	my $j;
-	# fill rows
-	foreach my $item (sort { $a->{num} <=> $b->{num} } @ndx) {
-		$i++;
-		$j = $item->{ndx} - 1;
-		for (@flds) { $self->{"${_}_$i"} = $new->[$j]->{$_} }
-	}
-
-	# delete empty rows
-	for $i ($count + 1 .. $numrows) {
-		for (@{$flds}) { delete $self->{"${_}_$i"} }
-	}
 }
 
 
