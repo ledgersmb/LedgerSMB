@@ -199,23 +199,15 @@ sub form_footer {
 
 sub list_users {
 
-	#currently, this is disabled, but will set a value in the central db
-	#$nologin = qq|<button type="submit" class="submit" name="action" value="lock_system">|.$locale->text('Lock System').qq|</button>|;
-	#
-	#if (-e "${LedgerSMB::Sysconfig::userspath}/nologin") {
-	#	$nologin = qq|<button type="submit" class="submit" name="action" value="unlock_system">|.$locale->text('Unlock System').qq|</button>|;
-	#}
 
 	# use the central database handle
 	my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
-	my $fetchMembers = $dbh->selectall_arrayref("SELECT uc.name, uc.company, uc.templates,
-														uc.dbuser, uc.dbdriver, uc.dbname, 
-														uc.dbhost, u.username
-												   FROM users as u, users_conf as uc
-												  WHERE u.id = uc.id	
-													AND u.id > 1
-											   ORDER BY u.username;", { Slice => {} });	
+	my $fetchMembers = $dbh->selectall_arrayref("SELECT uc.name, uc.company, uc.templates, uc.dbuser, uc.dbdriver, uc.dbname, uc.dbhost, u.username 
+							    FROM users as u, users_conf as uc
+							    WHERE u.id = uc.id	
+							    AND u.id > 1
+							    ORDER BY u.username;", { Slice => {} });	
 
 	my @memberArray = ();
 	my @member = ();
