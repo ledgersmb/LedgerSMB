@@ -1431,6 +1431,17 @@ sub delete_translation {
 
 }
 
+sub timecard_get_currency {
+	my $self = shift @_;
+	my $form = shift @_;
+	my $dbh = $form->{dbh};
+	my $query = qq|SELECT curr FROM customer WHERE id = ?|;
+        my $sth = $dbh->prepare($query);
+	$sth->execute($form->{customer_id});
+	my ($curr) = $sth->fetchrow_array;
+	$form->{currency} = $curr;
+}
+
 
 sub project_sales_order {
    my ($self, $myconfig, $form) = @_;

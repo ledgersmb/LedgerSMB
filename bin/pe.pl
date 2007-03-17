@@ -2551,6 +2551,8 @@ sub generate_sales_orders {
     
     for (qw(intnotes employee employee_id)) { delete $order->{$_} }
 
+    PE->timecard_get_currency(\%$order);
+    
     if (OE->save(\%myconfig, \%$order)) {
       if (! PE->allocate_projectitems(\%myconfig, \%$order)) {
 	OE->delete(\%myconfig, \%$order, ${LedgerSMB::Sysconfig::spool});
