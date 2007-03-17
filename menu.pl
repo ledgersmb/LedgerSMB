@@ -156,7 +156,7 @@ sub check_password {
 
 	if ($form->{password}) {
 		if (! Session::password_check($form, $form->{login}, $form->{password})) {
-			if ($ENV{HTTP_USER_AGENT}) {
+			if ($ENV{GATEWAY_INTERFACE}) {
 				&getpassword;
 			} else {
 				$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Access Denied!'));
@@ -167,7 +167,7 @@ sub check_password {
 		}
 		
 	} else {
-		if ($ENV{HTTP_USER_AGENT}) {
+		if ($ENV{GATEWAY_INTERFACE}) {
 			$ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
 			@cookies = split /;/, $ENV{HTTP_COOKIE};
 			foreach (@cookies) {

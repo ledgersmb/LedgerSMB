@@ -33,10 +33,10 @@ if (!$@){
 
 $| = 1;
 
-#not sure how safe this is. If the browser sends a blank HTTP_USER_AGENT
+#not sure how safe this is. If the browser sends a blank GATEWAY_INTERFACE
 #will this script destroy part of the install? 
 #This script should probably be made inaccessible via HTTP until this feature is working
-if (($ENV{HTTP_USER_AGENT})||($ENV{HTTP_HOST})) {
+if (($ENV{GATEWAY_INTERFACE})||($ENV{HTTP_HOST})) {
 	print "Content-type: text/html\n\nThis does not work yet! use $0 from the command line";
 	exit;
 }
