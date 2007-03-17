@@ -48,6 +48,24 @@ use LedgerSMB::Session;
 
 $form = new Form;
 
+# For 1.3, this logic should be in LedgerSMB.pm
+if ($form->{path}) {
+
+	if ($form->{path} ne 'bin/lynx'){ $form->{path} = 'bin/mozilla';}	
+
+} else {
+
+	$form->{terminal} = "lynx";
+
+	if ($ENV{HTTP_USER_AGENT} !~ /lynx/i) {
+		$form->{terminal} = "mozilla";
+	}
+
+	$form->{path} = "bin/$form->{terminal}";
+
+
+}
+
 $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or 
 	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 $locale->encoding('UTF-8');
@@ -129,7 +147,7 @@ sub login_screen {
 					<a href="http://www.ledgersmb.org/" target="_top"><img src="ledger-smb.png" width="200" heith="100" border="0" alt="LedgerSMB Logo" /></a>
 					<h1 class="login" align="center">|.$locale->text('Version').qq| $form->{version}</h1>
 					<p>
-					<form method="post" action="$form->{script}" name="login">
+					<form method="post" action="login.pl" name="login">
 					<table width="100%">
 						<tr>
 							<td align="center">
@@ -230,11 +248,11 @@ sub selectdataset {
 
 
 sub login {
-
 	$form->{stylesheet} = "ledger-smb.css";
 	$form->{favicon} = "favicon.ico";
 
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('You did not enter a name!')) unless ($form->{login});
+
 
 	#this needs to be done via db
 	#if (! $form->{beenthere}) {
