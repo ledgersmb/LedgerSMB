@@ -76,6 +76,10 @@ sub new {
 
 	bless $self, $type;
 
+	if ($self->{action} =~ /:/){
+		$self->error("Access Denied");
+	}
+	$self;
 }
 
 
