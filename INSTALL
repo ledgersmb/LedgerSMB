@@ -24,32 +24,50 @@ recommend as follows:
   a)  Single dataset installations should use the user tables in the dataset.
   b)  Multicompany installations should use user tables in a separate dataset
       from any accounting data.
-
-3)  Create central database
-
-  a) cd to the sql/ directory of the new ledger directory.
-  b) run "psql" with appropriate options to connect to your database.
-  c) Run the SQL script Pg-central.sql.
-        From psql, the command is:  \i /path/to/Pg-Central.sql
-  d) If you are going to put your data here too, run the following command:
-	CREATE LANGUAGE PLPGSQL;
-
-  Note that the psql connection should use the same username that you intend to
-  use for the user authentication connection.  If you use a different username
-  you may find that you get an Access Denied message.
-
-4)  Set the admin password:
-  a)  From psql, determine what admin password you wish to use.  Then type:
-      "update users_conf set password = md5('my_password');"
-      Naturally you would use your password instead of my_password.
+To be integrated into the documentation, these minimalist steps have made
+installation/migration of ledger-smb much easier for me:
 
 
-5)  Edit the ledger-smb.conf file as appropriate.
+3) Create a admin database role named 'ledgersmb':
+
+    bash$ createuser --no-superuser --createdb --no-createrole -U postgres
+     --pwprompt --encrypted ledgersmb
+
+
+4) Create a central user database database, owned by admin role:
+
+    bash$ createdb -U ledgersmb -O ledgersmb ledgersmb
+
+
+5) Run the included SQL commands to configure the central user database:
+
+    bash$ psql -U ledgersmb -d ledgersmb -f (ledgerpath)/sql/Pg-central.sql
+
+
+6) Update your admin password in the central user database
+    (change MYPASSWORD to your preferred administrative password).
+
+    bash$ psql -U ledgersmb -d ledgersmb
+
+    ledgersmb=> UPDATE users_conf SET password = md5('MYPASSWORD') WHERE id = 1;
+
+7) Quit the interactive SQL console:
+
+    ledgersmb=> \q
+
+Configure apache, visit admin.pl, login with MYPASSWORD, create datasets
+with user ledgersmb, superuser postgres, create users pointing to datasets,
+etc.
+
+
+8)  Edit the ledger-smb.conf file as appropriate.
   a)  Make sure to set the section under GlobalDBH to point to hte databae you
       imported Pg-central into.
-Congratulations, you have manually installed LedgerSMB 1.2.
 
-6)  Check Dependencies
+9)  Add configuration to Apache:
+    bash$ sh configure_apache.sh
+
+10) Check Dependencies
 
 The Build.PL script can be used to test for unmet dependencies and run other
 tests.  It doesn't install anything yet, but it will tell you what you are 
@@ -67,6 +85,15 @@ Dependencies which are recommended are needed only for specific functionality
 and may not be required in all circumstances.  These include:
   * Net::TCLink for credit card processing in a POS environment
   * Parse::RecDescent for the CLI script host
+
+11) Restart Apache (instructions may vary with your Linux distro).
+
+12) Create Datasets and Users:
+   Visit http://hostname/ledger-smb/admin.pl, login with MYPASSWORD, 
+   Create datasets with user ledgersmb, superuser postgres
+   Create users pointing to datasets.
+
+Congratulations, you have manually installed LedgerSMB 1.2.
 
 
 FTP INSTALLATION:
