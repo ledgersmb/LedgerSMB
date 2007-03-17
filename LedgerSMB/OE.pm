@@ -486,18 +486,11 @@ sub save {
 			@queryargs = ();
 			# save detail record in orderitems table
 			$query = qq|INSERT INTO orderitems (|;
-			if ($form->{"orderitems_id_$i"}){
-				$query .= "id, ";
-			}
 			$query .= qq|
 				trans_id, parts_id, description, qty, sellprice,
 				discount, unit, reqdate, project_id, ship, 
 				serialnumber, notes)
                    		VALUES (|;
-			if ($form->{"orderitems_id_$i"}){
-				$query .= "?, ";
-				push @queryargs, $form->{"orderitems_id_$i"};
-			}
       			$query .= qq| ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
 			$sth = $dbh->prepare($query);
 			push (@queryargs, 
