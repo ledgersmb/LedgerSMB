@@ -184,7 +184,7 @@ sub error {
 
 	my ($self, $msg) = @_;
 
-	if ($ENV{HTTP_USER_AGENT}) {
+	if ($ENV{GATEWAY_INTERFACE}) {
 
 		$self->{msg} = $msg;
 		$self->{format} = "html";
@@ -214,7 +214,7 @@ sub error {
 sub info {
 	my ($self, $msg) = @_;
 
-	if ($ENV{HTTP_USER_AGENT}) {
+	if ($ENV{GATEWAY_INTERFACE}) {
 		$msg =~ s/\n/<br>/g;
 
 		delete $self->{pre};
@@ -275,7 +275,7 @@ sub header {
 
 	my ($stylesheet, $favicon, $charset);
 
-	if ($ENV{HTTP_USER_AGENT}) {
+	if ($ENV{GATEWAY_INTERFACE}) {
 
 		if ($self->{stylesheet} && (-f "css/$self->{stylesheet}")) {
 			$stylesheet = qq|<link rel="stylesheet" href="css/$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;

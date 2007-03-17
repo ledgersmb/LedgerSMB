@@ -900,7 +900,7 @@ sub config_vars {
 sub error {
 	my ($self, $msg) = @_;
 
-	if ($ENV{HTTP_USER_AGENT}) {
+	if ($ENV{GATEWAY_INTERFACE}) {
 		print qq|Content-Type: text/html\n\n|.
 			qq|<body bgcolor=ffffff>\n\n|.
 			qq|<h2><font color=red>Error!</font></h2>\n|.
