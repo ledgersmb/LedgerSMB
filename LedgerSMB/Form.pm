@@ -65,6 +65,8 @@ sub new {
 	if (substr($self->{action}, 0, 1) !~ /( |\.)/) {
 		$self->{action} = lc $self->{action};
 		$self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
+		$self->{nextsub} = lc $self->{nextsub};
+		$self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
 	}
 
 	$self->{menubar} = 1 if $self->{path} =~ /lynx/i;
@@ -76,7 +78,7 @@ sub new {
 
 	bless $self, $type;
 
-	if ($self->{action} =~ /:/){
+	if (($self->{action} =~ /:/) || ($self->{nextsub} =~ /:/)){
 		$self->error("Access Denied");
 	}
 	$self;
