@@ -137,11 +137,7 @@ if ($form->{action}) {
 
 	&check_password;
 
-	if (substr($form->{action}, 0, 1) =~ /( |\.)/) {
-		&{ $form->{nextsub} };
-	} else {
-		&{ $form->{action} };
-	}
+	&{ $form->{action} };
 
 } else {
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('action= not defined!'));
