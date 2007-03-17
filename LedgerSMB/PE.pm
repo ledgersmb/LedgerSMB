@@ -1431,23 +1431,33 @@ sub delete_translation {
 
 }
 
+sub timecard_get_currency {
+	my $self = shift @_;
+	my $form = shift @_;
+	my $dbh = $form->{dbh};
+	my $query = qq|SELECT curr FROM customer WHERE id = ?|;
+        my $sth = $dbh->prepare($query);
+	$sth->execute($form->{customer_id});
+	my ($curr) = $sth->fetchrow_array;
+	$form->{currency} = $curr;
+}
 
 sub project_sales_order {
-   my ($self, $myconfig, $form) = @_;
+	my ($self, $myconfig, $form) = @_;
   
-  # connect to database
-  my $dbh = $form->{dbh};
+	# connect to database
+	my $dbh = $form->{dbh};
 
-  my $query = qq|SELECT current_date|;
-  my ($transdate) = $dbh->selectrow_array($query);
+	my $query = qq|SELECT current_date|;
+	my ($transdate) = $dbh->selectrow_array($query);
   
-  $form->all_years($myconfig, $dbh);
+	$form->all_years($myconfig, $dbh);
   
-  $form->all_projects($myconfig, $dbh, $transdate);
+	$form->all_projects($myconfig, $dbh, $transdate);
   
-  $form->all_employees($myconfig, $dbh, $transdate);
+	$form->all_employees($myconfig, $dbh, $transdate);
 
-  $dbh->commit;
+	$dbh->commit;
 
 }
 

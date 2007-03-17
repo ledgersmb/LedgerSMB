@@ -2528,7 +2528,7 @@ sub generate_sales_orders {
 
     $i = 0;
     $order->{"$order->{vc}_id"} = $_;
-    
+
     AA->get_name(\%myconfig, \%$order);
 
     foreach $ref (@ {$form->{order}{$_} }) {
@@ -2550,6 +2550,8 @@ sub generate_sales_orders {
     $order->{reqdate} = $order->{transdate};
     
     for (qw(intnotes employee employee_id)) { delete $order->{$_} }
+    PE->timecard_get_currency(\%$order);
+    
 
     if (OE->save(\%myconfig, \%$order)) {
       if (! PE->allocate_projectitems(\%myconfig, \%$order)) {
