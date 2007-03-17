@@ -34,6 +34,9 @@ ALTER TABLE makemodel ADD PRIMARY KEY (parts_id);
 
 ALTER TABLE oe ADD PRIMARY KEY (id);
 
+SELECT setval('orderitemsid', 1);
+UPDATE orderitems SET id = nextval('orderitemsid');
+
 ALTER TABLE orderitems ADD PRIMARY KEY (id);
 
 ALTER TABLE parts ADD PRIMARY KEY (id);
