@@ -99,6 +99,8 @@ and may not be required in all circumstances.  These include:
 12) Create Datasets and Users:
    Visit http://hostname/ledger-smb/admin.pl, login with MYPASSWORD, 
    Create datasets with user ledgersmb, superuser postgres
+      (omit the superuser if creating inside the database you imported 
+      Pg-central into).
    Create users pointing to datasets.
 
 Congratulations, you have manually installed LedgerSMB 1.2.
