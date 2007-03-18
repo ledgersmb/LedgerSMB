@@ -17,15 +17,13 @@ Debian users should read README.debian
 MANUAL INSTALL:
 ===============================================================================
 
-1)  Untar in desired location.
+1)  Untar in desired location (for example, /usr/local/).
 
 2)  Decide where to put the user/session management tables.  In general, we
 recommend as follows:
   a)  Single dataset installations should use the user tables in the dataset.
   b)  Multicompany installations should use user tables in a separate dataset
       from any accounting data.
-To be integrated into the documentation, these minimalist steps have made
-installation/migration of ledger-smb much easier for me:
 
 
 3) Create a admin database role named 'ledgersmb':
@@ -40,6 +38,8 @@ installation/migration of ledger-smb much easier for me:
 
 
 5) Run the included SQL commands to configure the central user database:
+   (ledgerpath) is wherever you untarred the file.  If you untarred to 
+   /usr/local/ then it will be /usr/local/ledger-smb.
 
     bash$ psql -U ledgersmb -d ledgersmb -f (ledgerpath)/sql/Pg-central.sql
 
@@ -55,9 +55,14 @@ installation/migration of ledger-smb much easier for me:
 
     ledgersmb=> \q
 
+7b) If you want to store the company information in the same database, run the 
+    following command:
+    bash$ createlang -U postgres -d ledgersmb plpgsql;
+
 8)  Edit the ledger-smb.conf file as appropriate.
-  a)  Make sure to set the section under GlobalDBH to point to hte databae you
-      imported Pg-central into.
+  b)  Copy the ledger-smb.conf.default to ledger-smb.conf
+  a)  Make sure to set the section under [globaldbh] to point to thee database 
+      you imported Pg-central into.
 
 9)  Add configuration to Apache:
     bash$ sh configure_apache.sh
@@ -81,7 +86,8 @@ and may not be required in all circumstances.  These include:
   * Net::TCLink for credit card processing in a POS environment
   * Parse::RecDescent for the CLI script host
 
-11) Restart Apache (instructions may vary with your Linux distro).
+11) Restart Apache (instructions may vary with your Linux distro or operating
+    system).
 
 12) Create Datasets and Users:
    Visit http://hostname/ledger-smb/admin.pl, login with MYPASSWORD, 
@@ -131,7 +137,7 @@ TROUBLESHOOTING
 Error:  Access Denied in admin.pl
 
 Likely causes:
-1)  The password entered may not match the password set in step 4.  You can 
+1)  The password entered may not match the password set in step 6.  You can 
     repreat that step prior to the creation of user accounts as often as you 
     wish.
 
@@ -151,3 +157,33 @@ Likely causes:
       GRANT ALL ON users_conf TO ledgersmb;
       GRANT ALL ON session TO ledgersmb;
       GRANT ALL ON session_session_id_seq TO ledgersmb;
+
+--------------------------------------------------
+
+Error: "No GlobalDBH Configured or Could not Connect"
+
+LedgerSMB 1.2 uses a dedicated connection to the central database for user 
+authentication.  When the attempt to connect to that database fails, the error
+message above is displayed.   In this case, check the following parameters 
+under the [globaldbh] of the ledger-smb.conf file.
+
+1)  DBUserName should match the database user you imported Pg-central as (if
+    you followed the instructions above, that would be ledgersmb).
+2)  DBPassword needs to match the database password to used to connect to.
+
+You can test the above causes by running (from the command line):
+bash$ psql -U [DBUserName]
+password: [DBPassword]
+
+When you enter the password, it will not show up on the screen.
+
+The other line that you should pay attention to is the DBConnect line.  
+Parameters in the form of name=value need to match those for your host.  The 
+following parameters need to be set correctly in that line:
+
+dbname=ledgersmb (or whatever database you imported Pg-Central.sql into).
+host=localhost (don't change this unless you know what you are doing!)
+port=5432      (don't change this unless you know what you are doing!)
+
+The full line should then be something like:
+DBConnect: dbi:Pg:dbname=ledgersmb;host=localhost;port=5432
