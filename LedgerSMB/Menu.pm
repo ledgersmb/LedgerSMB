@@ -48,7 +48,13 @@ sub menuitem {
 		? $self->{$item}{target} : "";
 
 	my $level = $form->escape($item);
-	my $str = qq|<a style="display:block;"|. 
+	my $style;
+	if ($form->{menubar}){
+		$style = "";
+	} else {
+		$style = "display:block;";
+	}
+	my $str = qq|<a style="$style"|. 
 		qq|href="$module?path=$form->{path}&amp;action=$action&amp;|.
 		qq|level=$level&amp;login=$form->{login}&amp;|.
 		qq|timeout=$form->{timeout}&amp;sessionid=$form->{sessionid}|.

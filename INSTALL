@@ -143,10 +143,10 @@ Likely causes:
 
     After the creation of user accounts, the commant to reset the admin password
     is:
-    UPDATE users_conf SET password=mp5('password') WHERE id = 
+    UPDATE users_conf SET password=mp5('MYPASSWORD') WHERE id = 
         (select id FROM user WHERE username = 'admin');
 
-    Of course, substitute 'password' for your chosen password.
+    Of course, substitute 'MYPASSWORD' for your chosen password.
 
 2)  The central database may have been created with a different user than you 
     are using for the connection and you may not have permission to access the
