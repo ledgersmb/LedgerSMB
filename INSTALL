@@ -59,11 +59,15 @@ recommend as follows:
 
 7b) If you want to store the company information in the same database, run the 
     following command:
+
     bash$ createlang -U postgres -d ledgersmb plpgsql;
 
+    If not, then you can skip to step 8.
+
 8)  Edit the ledger-smb.conf file as appropriate.
-  b)  Copy the ledger-smb.conf.default to ledger-smb.conf
-  a)  Make sure to set the section under [globaldbh] to point to thee database 
+
+  a)  Copy the ledger-smb.conf.default to ledger-smb.conf
+  b)  Make sure to set the section under [globaldbh] to point to the database 
       you imported Pg-central into.
 
 9)  Add configuration to Apache:
