@@ -120,7 +120,7 @@ order allow,deny
 deny from all
 
 e) set up your PostgreSQL database and the tables.  The basic
-procedure is specified in the INSTALL file.
+procedure is specified above.
 
 You will most likely only have access to PostgreSQL with
 some other tools like pgadmin.
