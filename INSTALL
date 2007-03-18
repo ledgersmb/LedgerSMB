@@ -55,11 +55,6 @@ installation/migration of ledger-smb much easier for me:
 
     ledgersmb=> \q
 
-Configure apache, visit admin.pl, login with MYPASSWORD, create datasets
-with user ledgersmb, superuser postgres, create users pointing to datasets,
-etc.
-
-
 8)  Edit the ledger-smb.conf file as appropriate.
   a)  Make sure to set the section under GlobalDBH to point to hte databae you
       imported Pg-central into.
