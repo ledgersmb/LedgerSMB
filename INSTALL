@@ -21,7 +21,9 @@ MANUAL INSTALL:
 
 2)  Decide where to put the user/session management tables.  In general, we
 recommend as follows:
+
   a)  Single dataset installations should use the user tables in the dataset.
+
   b)  Multicompany installations should use user tables in a separate dataset
       from any accounting data.
 
@@ -83,6 +85,7 @@ and that a number of numeric tests are passed.
 
 Dependencies which are recommended are needed only for specific functionality
 and may not be required in all circumstances.  These include:
+
   * Net::TCLink for credit card processing in a POS environment
   * Parse::RecDescent for the CLI script host
 
@@ -99,6 +102,7 @@ Congratulations, you have manually installed LedgerSMB 1.2.
 
 FTP INSTALLATION:
 ============================================================================
+
 If you control the server and have shell access, the
 instructions above are preferred over those given here.
 instead of those given here.  This is simply a set of 
@@ -109,6 +113,7 @@ files install LedgerSMB in userspace by ftp'ing all the
 files to your server.
 
 a) untar ledger-smb in your private_html directory
+
 b) turn on script execution for the folder ledger-smb
 You can control this with an .htaccess file
 
@@ -134,9 +139,11 @@ some other tools like pgadmin.
 
 TROUBLESHOOTING
 ===========================================================================
+
 Error:  Access Denied in admin.pl
 
 Likely causes:
+
 1)  The password entered may not match the password set in step 6.  You can 
     repreat that step prior to the creation of user accounts as often as you 
     wish.
@@ -152,6 +159,7 @@ Likely causes:
     are using for the connection and you may not have permission to access the
     required database entities.  To correct this, assuming that the desired 
     database username is ledgersmb, the following commands from psql:
+
       GRANT ALL ON users TO ledgersmb;
       GRANT ALL ON users_id_seq TO ledgersmb;
       GRANT ALL ON users_conf TO ledgersmb;
@@ -169,6 +177,7 @@ under the [globaldbh] of the ledger-smb.conf file.
 
 1)  DBUserName should match the database user you imported Pg-central as (if
     you followed the instructions above, that would be ledgersmb).
+
 2)  DBPassword needs to match the database password to used to connect to.
 
 You can test the above causes by running (from the command line):
