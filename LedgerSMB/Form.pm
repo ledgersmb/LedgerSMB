@@ -79,11 +79,8 @@ sub new {
 
 	bless $self, $type;
 
-	$self->{path} =~ s#\\#/#g;
-	if (($self->{path}) && ($self->{path} !~ m#^bin/#) 
-				|| ($self->{path} =~ m#(\w*/){2,}#)){
-		$self->error("Access Denied");
-	}
+	if ($form->{path} ne 'bin/lynx'){ $form->{path} = 'bin/mozilla';}	
+
 	if (($self->{script} =~ m#(..|\\|/)#)){
 		$self->error("Access Denied");
 	}

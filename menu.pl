@@ -110,8 +110,6 @@ $SIG{__DIE__} = sub { $form->error(__FILE__.':'.__LINE__.': '.$_[0]) };
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout) unless ($form->{type} eq 'preferences');
 $form->db_init(\%myconfig);
 
-if ($form->{path} ne 'bin/lynx'){ $form->{path} = 'bin/mozilla';}	
-
 # did sysadmin lock us out
 if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
