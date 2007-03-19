@@ -69,6 +69,7 @@ sub new {
 		$self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
 	}
 
+
 	$self->{menubar} = 1 if $self->{path} =~ /lynx/i;
 	#menubar will be deprecated, replaced with below
 	$self->{lynx} = 1 if $self->{path} =~ /lynx/i;
@@ -77,6 +78,17 @@ sub new {
 	$self->{dbversion} = "1.2.0";
 
 	bless $self, $type;
+
+	$self->{path} =~ s#\\#/#g;
+	if (($self->{path}) && ($self->{path} !~ m#^bin/#) 
+				|| ($self->{path} =~ m#(\w*/){2,}#)){
+		$self->error("Access Denied");
+	}
+	if (($self->{script} =~ m#(..|\\|/)#)){
+		$self->error("Access Denied");
+	}
+		
+		
 
 	if (($self->{action} =~ /:/) || ($self->{nextsub} =~ /:/)){
 		$self->error("Access Denied");
