@@ -35,6 +35,9 @@
 
 use Math::BigFloat lib=>'GMP';
 use LedgerSMB::Sysconfig;
+use List::Util qw(first);
+use LedgerSMB::Mailer;
+use Time::Local;
 
 package Form;
 
@@ -44,8 +47,6 @@ sub new {
 	my $type = shift;
 
 	my $argstr = shift;
-
-	use List::Util qw(first);
 
 	read(STDIN, $_, $ENV{CONTENT_LENGTH});
 
@@ -327,7 +328,6 @@ sub header {
 sub redirect {
 
 	my ($self, $msg) = @_;
-	use List::Util qw(first);
 
 	if ($self->{callback} || !$msg){
 
@@ -902,7 +902,6 @@ sub parse_template {
 
 		if ($self->{media} eq 'email') {
 
-			use LedgerSMB::Mailer;
 
 			my $mail = new Mailer;
 
@@ -1261,7 +1260,6 @@ sub add_date {
 
 	my ($self, $myconfig, $date, $repeat, $unit) = @_;
 
-	use Time::Local;
 
 	my $diff = 0;
 	my $spc = $myconfig->{dateformat};
@@ -2981,8 +2979,6 @@ sub split_date {
 sub from_to {
 
 	my ($self, $yy, $mm, $interval) = @_;
-
-	use Time::Local;
 
 	my @t;
 	my $dd = 1;
