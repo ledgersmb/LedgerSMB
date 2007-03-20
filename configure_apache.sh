@@ -9,8 +9,8 @@ read username
 
 chown $username spool templates css
 
-echo "Where do we copy the ledger-smb-httpd.conf file to?"
+echo "Where do we copy the ledgersmb-httpd.conf file to?"
 read location
-cp ledger-smb-httpd.conf $location
+cp ledgersmb-httpd.conf $location
 
 echo "Please restart your web server for the changes to take effect."
