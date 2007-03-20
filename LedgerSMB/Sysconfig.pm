@@ -78,8 +78,6 @@ $ENV{PERL5LIB} .= ":".(join ':', @{$config{environment}{PERL5LIB}}) if
 
 %printer = %{$config{printers}} if $config{printers};
 
-$memberfile = $config{paths}{memberfile} if $config{paths}{memberfile};
-$userspath = $config{paths}{userspath} if $config{paths}{userspath};
 $localepath = $config{paths}{localepath} if $config{paths}{localepath};
 $spool = $config{paths}{spool} if $config{paths}{spool};
 $templates = $config{paths}{templates} if $config{paths}{templates};
@@ -90,19 +88,25 @@ $sendmail = $config{mail}{sendmail} if $config{mail}{sendmail};
 $smtphost = $config{mail}{smtphost} if $config{mail}{smtphost};
 $smtptimeout = $config{mail}{smtptimeout} if $config{mail}{smtptimeout};
 
-$globalDBConnect = $config{globaldb}{DBConnect} if $config{globaldb}{DBConnect};
+# We used to have a global dbconnect but have moved to single entries
+$globalDBhost = $config{globaldb}{DBhost} if $config{globaldb}{DBhost};
+$globalDBport = $config{globaldb}{DBport} if $config{globaldb}{DBport};
+$globalDBname = $config{globaldb}{DBname} if $config{globaldb}{DBname};
 $globalDBUserName = $config{globaldb}{DBUserName} if $config{globaldb}{DBUserName};
 $globalDBPassword = $config{globaldb}{DBPassword} if $config{globaldb}{DBPassword};
 
 #putting this in an if clause for now so not to break other devel users
-if ($config{globaldb}{DBConnect}){
-	$GLOBALDBH = DBI->connect($globalDBConnect, $globalDBUserName, 
-		$globalDBPassword);
+if ($config{globaldb}{DBname}){
+	my $dbconnect = "dbi:Pg:dbname=$globalDBname host=$globalDBhost
+		port=$globalDBport user=$globalDBUserName
+		password=$globalDBPassword"; # for easier debugging
+	$GLOBALDBH = DBI->connect($dbconnect);
 	if (!$GLOBALDBH){
 		$form = new Form;
 		$form->error("No GlobalDBH Configured or Could not Connect");
 	}
 }
+
 # These lines prevent other apps in mod_perl from seeing the global db 
 # connection info
 
