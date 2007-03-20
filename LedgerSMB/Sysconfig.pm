@@ -87,7 +87,8 @@ $localepath = $config{paths}{localepath} if $config{paths}{localepath};
 $spool = $config{paths}{spool} if $config{paths}{spool};
 $templates = $config{paths}{templates} if $config{paths}{templates};
 $tempdir = $config{paths}{tempdir} if $config{paths}{tempdir};
-
+$userspath = ($config{paths}{userspath}) 
+	? $config($config{paths}{userspath}) : $tempdir;
 $gzip = $config{programs}{gzip} if $config{programs}{gzip};
 
 $sendmail = $config{mail}{sendmail} if $config{mail}{sendmail};
