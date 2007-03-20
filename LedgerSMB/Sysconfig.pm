@@ -1,6 +1,6 @@
 #  This is the new configuration file for LedgerSMB.  Eventually all system 
 # configuration directives will go here,  This will probably not fully replace
-# the ledger-smb.conf until 1.3, however.
+# the ledgersmb.conf until 1.3, however.
 
 package LedgerSMB::Sysconfig;
 
@@ -62,7 +62,7 @@ $localepath = 'locale/po';
 	     );
 
 my %config;
-read_config('ledger-smb.conf' => %config) or die;
+read_config('ledgersmb.conf' => %config) or die;
 
 $logging = $config{''}{logging} if $config{''}{logging};
 $check_max_invoices = $config{''}{check_max_invoices} if

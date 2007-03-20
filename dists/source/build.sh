@@ -25,5 +25,6 @@ cd $build_d/ledger-smb
 pwd
 find -name '*.svn' -exec rm -rf '{}' ';'
 rm ledger-smb.conf
+rm ledgersmb.conf
 cd ..
 tar -zcvf ledger-smb-$version.tar.gz ledger-smb
