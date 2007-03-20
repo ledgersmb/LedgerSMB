@@ -77,22 +77,27 @@ $script =~ s/\.pl//;
 # pull in DBI
 use DBI qw(:sql_types);
 
-# grab user config. This is ugly and unecessary if/when 
-# we get rid of myconfig and use User as a real object 
-%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
+# send warnings to browser
+$SIG{__WARN__} = sub { $form->info($_[0]) };
 
-if ($@) {
-	$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
+# send errors to browser
+$SIG{__DIE__} = sub { $form->error(__FILE__.':'.__LINE__.': '.$_[0]) };
+
+# did sysadmin lock us out
+if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
+	$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
 		$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-	$form->{charset} = $locale->encoding;
 	$form->{charset} = 'UTF-8';
 	$locale->encoding('UTF-8');
 
 	$form->{callback} = "";
-	$msg1 = $locale->text('You are logged out!');
-	$msg2 = $locale->text('Login');
-	$form->redirect("$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
+	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
 }
+
+&check_password;
+# grab user config. This is ugly and unecessary if/when 
+# we get rid of myconfig and use User as a real object 
+%myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
 
 # locale messages
 $locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
@@ -101,19 +106,16 @@ $locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
 $form->{charset} = 'UTF-8';
 $locale->encoding('UTF-8');
 
-# send warnings to browser
-$SIG{__WARN__} = sub { $form->info($_[0]) };
-
-# send errors to browser
-$SIG{__DIE__} = sub { $form->error(__FILE__.':'.__LINE__.': '.$_[0]) };
+if ($@) {
+	$form->{callback} = "";
+	$msg1 = $locale->text('You are logged out!');
+	$msg2 = $locale->text('Login');
+	$form->redirect("$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
+}
 
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout) unless ($form->{type} eq 'preferences');
-$form->db_init(\%myconfig);
 
-# did sysadmin lock us out
-if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
-	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
-}
+$form->db_init(\%myconfig);
 
 # pull in the main code
 require "bin/$form->{script}";
@@ -133,7 +135,6 @@ if ($form->{action}) {
 	# window title bar, user info
 	$form->{titlebar} = "LedgerSMB ".$locale->text('Version'). " $form->{version} - $myconfig{name} - $myconfig{dbname}";
 
-	&check_password;
 
 	&{ $form->{action} };
 
