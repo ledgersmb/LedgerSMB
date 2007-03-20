@@ -69,39 +69,39 @@ $localepath = 'locale/po';
 my %config;
 read_config('ledgersmb.conf' => %config) or die;
 
-$logging = $config{''}{logging} if $config{''}{logging};
-$check_max_invoices = $config{''}{check_max_invoices} if
-	$config{''}{check_max_invoices};
-$language = $config{''}{language} if $config{''}{language};
-$session = $config{''}{session} if $config{''}{session};
-$latex = $config{''}{latex} if $config{''}{latex};
-
-$ENV{PATH} .= $pathsep.(join $pathsep, @{$config{environment}{PATH}}) if
-	$config{environment}{PATH};
-$ENV{PERL5LIB} .= ":".(join ':', @{$config{environment}{PERL5LIB}}) if
-	$config{environment}{PERL5LIB};
+# Root variables
+for $var (qw(pathsep logging check_max_invoices language session latex)){
+    ${$var} = $config{''}{$var} if $config{''}{$var};
+}
 
 %printer = %{$config{printers}} if $config{printers};
 
-$memberfile = $config{paths}{memberfile} if $config{paths}{memberfile};
-$userspath = $config{paths}{userspath} if $config{paths}{userspath};
-$localepath = $config{paths}{localepath} if $config{paths}{localepath};
-$spool = $config{paths}{spool} if $config{paths}{spool};
-$templates = $config{paths}{templates} if $config{paths}{templates};
-$images = $config{paths}{images} if $config{paths}{images};
+# ENV Paths
+for $var (qw(PATH PERL5LIB)){
+$ENV{$var} .= $pathsep.(join $pathsep, @{$config{environment}{$var}}) if
+	$config{environment}{$var};
+}
 
-$gzip = $config{programs}{gzip} if $config{programs}{gzip};
+# Application-specific paths
+for $var (qw(localepath spool templates images)){
+	${$var} = $config{paths}{$var} if $config{paths}{$var};
+}
 
-$sendmail = $config{mail}{sendmail} if $config{mail}{sendmail};
-$smtphost = $config{mail}{smtphost} if $config{mail}{smtphost};
-$smtptimeout = $config{mail}{smtptimeout} if $config{mail}{smtptimeout};
+# Programs
+for $var (qw(gzip)){
+	${$var} = $config{programs}{$var} if $config{programs}{$var};
+}
+
+# mail configuration
+for $var (qw(sendmail smpthost smtptimeout)){
+	${$var} = $config{mail}{$var} if $config{mail}{$var};
+}
+
 
 # We used to have a global dbconnect but have moved to single entries
-$globalDBhost = $config{globaldb}{DBhost} if $config{globaldb}{DBhost};
-$globalDBport = $config{globaldb}{DBport} if $config{globaldb}{DBport};
-$globalDBname = $config{globaldb}{DBname} if $config{globaldb}{DBname};
-$globalDBUserName = $config{globaldb}{DBUserName} if $config{globaldb}{DBUserName};
-$globalDBPassword = $config{globaldb}{DBPassword} if $config{globaldb}{DBPassword};
+for $var (qw(DBhost DBport DBname DBUserName DBPassword)){
+	${"global".$var} = $config{globaldb}{$var} if $config{globaldb}{$var};
+}
 
 #putting this in an if clause for now so not to break other devel users
 if ($config{globaldb}{DBname}){
