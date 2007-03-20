@@ -83,16 +83,16 @@ $SIG{__WARN__} = sub { $form->info($_[0]) };
 # send errors to browser
 $SIG{__DIE__} = sub { $form->error(__FILE__.':'.__LINE__.': '.$_[0]) };
 
-# did sysadmin lock us out
-if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
-	$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
-		$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-	$form->{charset} = 'UTF-8';
-	$locale->encoding('UTF-8');
-
-	$form->{callback} = "";
-	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
-}
+## did sysadmin lock us out
+#if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
+#	$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
+#		$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+#	$form->{charset} = 'UTF-8';
+#	$locale->encoding('UTF-8');
+#
+#	$form->{callback} = "";
+#	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
+#}
 
 &check_password;
 # grab user config. This is ugly and unecessary if/when 
