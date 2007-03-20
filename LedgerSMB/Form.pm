@@ -2739,7 +2739,7 @@ sub save_intnotes {
 	# no id return
 	return unless $self->{id};
 
-	my $dbh = $self->dbconnect($myconfig);
+	my $dbh = $self->{dbh};
 
 	my $query = qq|UPDATE $vc SET intnotes = ? WHERE id = ?|;
 
