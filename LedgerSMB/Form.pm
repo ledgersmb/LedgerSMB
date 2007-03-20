@@ -45,6 +45,8 @@ sub new {
 
 	my $argstr = shift;
 
+	use List::Util qw(first);
+
 	read(STDIN, $_, $ENV{CONTENT_LENGTH});
 
 	if ($argstr){
@@ -79,13 +81,14 @@ sub new {
 
 	bless $self, $type;
 
-	if ($form->{path} ne 'bin/lynx'){ $form->{path} = 'bin/mozilla';}	
+	if ($self->{path} ne 'bin/lynx'){ $self->{path} = 'bin/mozilla';}	
 
 	if (($self->{script} =~ m#(..|\\|/)#)){
 		$self->error("Access Denied");
 	}
-		
-		
+	if (not	first {$_ eq $self->{script}} @{LedgerSMB::Sysconfig::scripts}){
+		$self->error('Access Denied');
+	}
 
 	if (($self->{action} =~ /:/) || ($self->{nextsub} =~ /:/)){
 		$self->error("Access Denied");
@@ -213,9 +216,8 @@ sub error {
 
 		if ($ENV{error_function}) {
 			&{ $ENV{error_function} }($msg);
-		} else {
-			die "Error: $msg\n";
 		}
+		die "Error: $msg\n";
 	}
 }
 
