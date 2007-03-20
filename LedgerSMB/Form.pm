@@ -71,6 +71,7 @@ sub new {
 		$self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
 	}
 
+	$self->{login} =~ s/[^a-zA-Z0-9._+@'-]//g;
 
 	$self->{menubar} = 1 if $self->{path} =~ /lynx/i;
 	#menubar will be deprecated, replaced with below
@@ -78,6 +79,7 @@ sub new {
 
 	$self->{version} = "1.2.0 Release Candidate 4";
 	$self->{dbversion} = "1.2.0";
+
 
 	bless $self, $type;
 
@@ -93,6 +95,8 @@ sub new {
 	if (($self->{action} =~ /:/) || ($self->{nextsub} =~ /:/)){
 		$self->error("Access Denied");
 	}
+
+	for (keys %$self){ $self->{$_} =~ s/\000//g }
 	$self;
 }
 
