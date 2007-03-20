@@ -34,6 +34,9 @@ $userspath = "users";
 # templates base directory
 $templates = "templates";
 
+# Temporary files stored at"
+$tempdir = ($ENV{TEMP} || '/tmp');
+
 # member file
 $memberfile = "users/members";
 
@@ -64,6 +67,8 @@ $localepath = 'locale/po';
 my %config;
 read_config('ledgersmb.conf' => %config) or die;
 
+# We should clean this code up for 1.3 :-) Chris T.
+
 $logging = $config{''}{logging} if $config{''}{logging};
 $check_max_invoices = $config{''}{check_max_invoices} if
 	$config{''}{check_max_invoices};
@@ -81,6 +86,7 @@ $ENV{PERL5LIB} .= ":".(join ':', @{$config{environment}{PERL5LIB}}) if
 $localepath = $config{paths}{localepath} if $config{paths}{localepath};
 $spool = $config{paths}{spool} if $config{paths}{spool};
 $templates = $config{paths}{templates} if $config{paths}{templates};
+$tempdir = $config{paths}{tempdir} if $config{paths}{tempdir};
 
 $gzip = $config{programs}{gzip} if $config{programs}{gzip};
 

@@ -88,7 +88,8 @@ sub new {
 	if (($self->{script} =~ m#(..|\\|/)#)){
 		$self->error("Access Denied");
 	}
-	if (not	first {$_ eq $self->{script}} @{LedgerSMB::Sysconfig::scripts}){
+	if (($self->{script}) and not first {$_ eq $self->{script}} 
+					@{LedgerSMB::Sysconfig::scripts}){
 		$self->error('Access Denied');
 	}
 
@@ -627,7 +628,7 @@ sub parse_template {
 	my $fileid = time;
 	my $tmpfile = $self->{IN};
 	$tmpfile =~ s/\./_$self->{fileid}./ if $self->{fileid};
-	$self->{tmpfile} = "${LedgerSMB::Sysconfig::userspath}/${fileid}_${tmpfile}";
+	$self->{tmpfile} = "${LedgerSMB::Sysconfig::tempdir}/${fileid}_${tmpfile}";
 
     my $temphash;
 	if ($self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email') {
@@ -851,19 +852,16 @@ sub parse_template {
 	# Convert the tex file to postscript
 	if ($self->{format} =~ /(postscript|pdf)/) {
 
-		use Cwd;
-		$self->{cwd} = cwd();
-		$self->{tmpdir} = "$self->{cwd}/${LedgerSMB::Sysconfig::userspath}";
-		$self->{tmpdir} = "${LedgerSMB::Sysconfig::userspath}" if
-			${LedgerSMB::Sysconfig::userspath} =~ /^\//;
+		$self->{tmpdir} = "${LedgerSMB::Sysconfig::tempdir}";
 
-		unless (chdir("${LedgerSMB::Sysconfig::userspath}")) {
+		unless (chdir($self->{tmpdir})) {
 			$err = $!;
 			$self->cleanup;
-			$self->error("chdir : $err");
+			$self->debug;
+			$self->error("chdir : $self->{tmpdir} : $err");
 		}
 
-		$self->{tmpfile} =~ s/${LedgerSMB::Sysconfig::userspath}\///g;
+		$self->{tmpfile} =~ s/$self->{tmpdir}\///g;
 
 		$self->{errfile} = $self->{tmpfile};
 		$self->{errfile} =~ s/tex$/err/;
