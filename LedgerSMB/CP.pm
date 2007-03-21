@@ -669,7 +669,7 @@ sub post_payments {
 				 WHERE e.curr = ?
 				       AND a.id = ?|;
 
-			$sth = $sbh->prepare($query);
+			$sth = $dbh->prepare($query);
 			$sth->execute($form->{currency}, $form->{"id_$i"})
 				|| $form->dberror($query, 'CP.pm', 671);
 			my ($exchangerate) = $sth->fetchrow_array;
