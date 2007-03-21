@@ -38,6 +38,7 @@ use LedgerSMB::Sysconfig;
 use List::Util qw(first);
 use LedgerSMB::Mailer;
 use Time::Local;
+use Cwd;
 
 package Form;
 
@@ -86,16 +87,13 @@ sub new {
 
 	if ($self->{path} ne 'bin/lynx'){ $self->{path} = 'bin/mozilla';}	
 
-	if (($self->{script} =~ m#(..|\\|/)#)){
-		$self->error("Access Denied");
-	}
-	if (($self->{script}) and not first {$_ eq $self->{script}} 
+	if (($self->{script}) and not List::Util::first {$_ eq $self->{script}} 
 					@{LedgerSMB::Sysconfig::scripts}){
-		$self->error('Access Denied');
+		$self->error('Access Denied', __line__, __file__);
 	}
 
 	if (($self->{action} =~ /:/) || ($self->{nextsub} =~ /:/)){
-		$self->error("Access Denied");
+		$self->error("Access Denied", __line__, __file__);
 	}
 
 	for (keys %$self){ $self->{$_} =~ s/\000//g }
@@ -591,6 +589,8 @@ sub get_my_emp_num {
 sub parse_template {
 
 	my ($self, $myconfig) = @_;
+
+	$self->{cwd} = Cwd::getcwd();
 
 	my ($chars_per_line, $lines_on_first_page, $lines_on_second_page) = (0, 0, 0);
 	my ($current_page, $current_line) = (1, 1);
