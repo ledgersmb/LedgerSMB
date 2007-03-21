@@ -367,7 +367,7 @@ sub post_transaction {
 			INSERT INTO acc_trans 
 			            (trans_id, chart_id, amount, transdate)
 			     VALUES (?, (SELECT id FROM chart
-			                  WHERE accno = '?'), 
+			                  WHERE accno = ?), 
 			                  ?, ?)|;
 		@queryargs = ($form->{id}, $accno, $invamount * -1 * $ml, 
 			$form->{transdate});
