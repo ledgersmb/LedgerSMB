@@ -78,6 +78,16 @@ sub new {
 
 	bless $self, $type;
 
+	$self->{path} =~ s#\\#/#g;
+	if (($self->{path}) && ($self->{path} !~ m#^bin/#) 
+				|| ($self->{path} =~ m#(\w*/){2,}#)){
+		$self->error("Access Denied");
+	}
+	if (($self->{script} =~ m#(..|\\|/)#)){
+		$self->error("Access Denied");
+	}
+		
+
 	if (($self->{action} =~ /:/) || ($self->{nextsub} =~ /:/)){
 		$self->error("Access Denied");
 	}
