@@ -423,7 +423,7 @@ sub post_payment {
 			$sth = $dbh->prepare($query);
 			$sth->execute($form->{"id_$i"}, $id, 
 				$form->{date_paid}, $amount * $ml) 
-					|| $form->dberror($query, 'CP.pm', 427);
+					|| $form->dberror($query, __file__, __line__);
 
 			# add payment
 			$query = qq|
