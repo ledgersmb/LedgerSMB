@@ -640,6 +640,7 @@ sub parse_template {
 
 	if ($self->{OUT}) {
 		open(OUT, $self->{printmode}, "$self->{OUT}") or $self->error("$self->{OUT} : $!");
+		chmod(0600, "$self->{OUT}");
 
 	} else {
 		open(OUT, ">-") or $self->error("STDOUT : $!");
@@ -978,6 +979,7 @@ sub parse_template {
 						$self->cleanup;
 						$self->error("$self->{OUT} : $err");
 					}
+					chmod (0600, "$self->{OUT}");
 
 				} else {
 
