@@ -295,7 +295,6 @@ sub list_users {
 		<button type="submit" class="submit" name="action" value="change_admin_password">|.$locale->text('Change Admin Password').qq|</button>
 
 		$dbdrivers
-		$nologin
 
 		<button type="submit" class="submit" name="action" value="logout">|.$locale->text('Logout').qq|</button>
 		</form>
@@ -736,7 +735,7 @@ sub save {
 	# add base directory to $form->{templates}
 	$form->{templates} = "${LedgerSMB::Sysconfig::templates}/$form->{templates}";
 
-	$myconfig = LedgerSMB::User->new("${LedgerSMB::Sysconfig::memberfile}", "$form->{login}");
+	$myconfig = LedgerSMB::User->new("$form->{login}");
 
 	# redo acs variable and delete all the acs codes
 	@acs = split /;/, $form->{acs};
