@@ -417,11 +417,13 @@ sub post_payment {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, transdate, 
 				            amount)
-				     VALUES (?, ?, ?, ?)|;
+				     VALUES (?, ?, 
+				            ?, 
+				            ?)|;
 			$sth = $dbh->prepare($query);
 			$sth->execute($form->{"id_$i"}, $id, 
 				$form->{date_paid}, $amount * $ml) 
-					|| $form->dberror($query, 'CP.pm', 427);
+					|| $form->dberror($query, __file__, __line__);
 
 			# add payment
 			$query = qq|
@@ -435,7 +437,8 @@ sub post_payment {
 			$sth = $dbh->prepare($query);
 			$sth->execute(
 				$form->{"id_$i"}, $paymentaccno, 
-				$form->{datepaid}, $form->{"paid_$i"} * $ml *-1,
+				$form->{datepaid}, 
+				$form->{"paid_$i"} * $ml * -1,
 				$form->{source}, $form->{memo})
 					|| $form->dberror(
 						$query, 'CP.pm', 444);
@@ -456,7 +459,8 @@ sub post_payment {
 					     VALUES (?, (SELECT id 
 					                   FROM chart
 					                  WHERE accno = ?),
-					             ?, ?, '0', '1', ?)|;
+					             ?, ?, '0', '1', 
+					             ?)|;
 				$sth = $dbh->prepare($query);
 				$sth->execute(
 					$form->{"id_$i"}, $paymentaccno,
@@ -665,7 +669,7 @@ sub post_payments {
 				 WHERE e.curr = ?
 				       AND a.id = ?|;
 
-			$sth = $sbh->prepare($query);
+			$sth = $dbh->prepare($query);
 			$sth->execute($form->{currency}, $form->{"id_$i"})
 				|| $form->dberror($query, 'CP.pm', 671);
 			my ($exchangerate) = $sth->fetchrow_array;
@@ -677,10 +681,11 @@ sub post_payments {
 				  FROM chart c
 				  JOIN acc_trans a ON (a.chart_id = c.id)
 				 WHERE $where
-				       AND a.trans_id = $form->{"id_$i"}|;
+				       AND a.trans_id = ?|;
 
 			$sth = $dbh->prepare($query);
 			$sth->execute($form->{"id_$i"});
+			($id) = $sth->fetchrow_array();
 
 			$paid = ($form->{"paid_$i"} > $form->{"due_$i"}) ? $form->{"due_$i"} : $form->{"paid_$i"};
 			$amount = $form->round_amount($paid * $exchangerate, 2);
@@ -786,9 +791,9 @@ sub post_payments {
 			# update AR/AP transaction
 			$query = qq|
 				UPDATE $form->{arap} 
-				   SET paid = $amount,
-				       datepaid = '$form->{datepaid}'
-				 WHERE id = $form->{"id_$i"}|;
+				   SET paid = ?,
+				       datepaid = ?
+				 WHERE id = ?|;
 
 			$sth = $dbh->prepare($query);
 			$sth->execute(
