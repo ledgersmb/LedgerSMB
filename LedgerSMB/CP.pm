@@ -681,7 +681,7 @@ sub post_payments {
 				  FROM chart c
 				  JOIN acc_trans a ON (a.chart_id = c.id)
 				 WHERE $where
-				       AND a.trans_id = $form->{"id_$i"}|;
+				       AND a.trans_id = ?|;
 
 			$sth = $dbh->prepare($query);
 			$sth->execute($form->{"id_$i"});
@@ -790,9 +790,9 @@ sub post_payments {
 			# update AR/AP transaction
 			$query = qq|
 				UPDATE $form->{arap} 
-				   SET paid = $amount,
-				       datepaid = '$form->{datepaid}'
-				 WHERE id = $form->{"id_$i"}|;
+				   SET paid = ?,
+				       datepaid = ?
+				 WHERE id = ?|;
 
 			$sth = $dbh->prepare($query);
 			$sth->execute(
