@@ -428,7 +428,7 @@ sub post_transaction {
 					            ?, ?)|;
 
 				@queryargs = ($form->{id}, 
-					$paid{amount}{$i} * $ml,
+					$paid{amount}{$i} * $ml, $accno,
 					$form->{"datepaid_$i"});
 				$dbh->prepare($query)->execute(@queryargs) 
 					|| $form->dberror($query);
