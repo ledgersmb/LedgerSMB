@@ -69,6 +69,8 @@ $0 =~ tr/\\/\//;
 $pos = rindex $0, '/';
 $script = substr($0, $pos + 1);
 
+$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
+	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 # we use $script for the language module
 $form->{script} = $script;
 # strip .pl for translation files
@@ -100,8 +102,6 @@ $SIG{__DIE__} = sub { $form->error(__FILE__.':'.__LINE__.': '.$_[0]) };
 %myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
 
 # locale messages
-$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
-	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 #$form->{charset} = $locale->encoding;
 $form->{charset} = 'UTF-8';
 $locale->encoding('UTF-8');
