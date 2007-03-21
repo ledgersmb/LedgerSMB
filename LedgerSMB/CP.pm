@@ -685,6 +685,7 @@ sub post_payments {
 
 			$sth = $dbh->prepare($query);
 			$sth->execute($form->{"id_$i"});
+			($id) = $sth->fetchrow_array();
 
 			$paid = ($form->{"paid_$i"} > $form->{"due_$i"}) ? $form->{"due_$i"} : $form->{"paid_$i"};
 			$amount = $form->round_amount($paid * $exchangerate, 2);
