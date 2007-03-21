@@ -136,6 +136,9 @@ sub fetch_config {
 	$fetchUserPrefs->execute($login);
 
 	my $userHashRef = $fetchUserPrefs->fetchrow_hashref;
+	if (!$userHashRef) {
+		&error($self, "Access Denied");
+	}
 
 	while ( my ($key, $value) = each(%{$userHashRef}) ) {
 		$myconfig{$key} = $value;
