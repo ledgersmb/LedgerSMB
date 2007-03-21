@@ -120,6 +120,13 @@ sub display_form {
 
 
 sub create_links {
+  if ($form->{script} eq 'ap.pl'){
+	$form->{ARAP} = 'AP';
+	$form->{vc} = 'vendor';
+  } elsif ($form->{script} eq 'ar.pl'){
+        $form->{ARAP} = 'AR';
+        $form->{vc} = 'customer';
+  }
 
   $form->create_links($form->{ARAP}, \%myconfig, $form->{vc});
   
