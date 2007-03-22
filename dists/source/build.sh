@@ -9,7 +9,7 @@ else
    $pgdoc = "true";
 fi
 
-version="1.2.0rc4";
+version="1.2.0-rc5";
 build_d="../release";
 
 if test -d blib; then
