@@ -2546,7 +2546,7 @@ sub consolidate_orders {
 				$amount += $ref->{amount};
 				$netamount += $ref->{netamount};
 
-				$id = $dbh->quore($id);
+				$id = $dbh->quote($id);
 				foreach $item 
 					(@{ $oe{orderitems}{$curr}{$id} }) {
 
@@ -2605,9 +2605,7 @@ sub consolidate_orders {
 					department_id = $department_id
 				WHERE id = $id|;
 			$sth = $dbh->prepare($query);
-			$sth->execute (
-				$department_id, $id
-				) || $form->dberror($query);
+			$sth->execute () || $form->dberror($query);
 	  
 
 			# add items

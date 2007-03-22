@@ -2524,12 +2524,15 @@ sub generate_sales_orders {
   for (keys %{ $form->{order} }) {
     
     for (qw(type vc defaultcurrency login)) { $order->{$_} = $form->{$_} }
+    for (qw(currency)) { $order->{$_} = $form->{$_} }
     for (split / /, $form->{taxaccounts}) { $order->{"${_}_rate"} = $form->{"${_}_rate"} }
 
     $i = 0;
     $order->{"$order->{vc}_id"} = $_;
 
     AA->get_name(\%myconfig, \%$order);
+    PE->timecard_get_currency(\%$order);
+
 
     foreach $ref (@ {$form->{order}{$_} }) {
       $i++;
@@ -2543,16 +2546,15 @@ sub generate_sales_orders {
     }
     $order->{rowcount} = $i;
     
-    for (qw(currency)) { $order->{$_} = $form->{$_} }
 
     $order->{ordnumber} = $order->update_defaults(\%myconfig, 'sonumber');
     $order->{transdate} = $order->current_date(\%myconfig);
     $order->{reqdate} = $order->{transdate};
     
     for (qw(intnotes employee employee_id)) { delete $order->{$_} }
-    PE->timecard_get_currency(\%$order);
     
-
+    $order->debug;
+    $order->error();
     if (OE->save(\%myconfig, \%$order)) {
       if (! PE->allocate_projectitems(\%myconfig, \%$order)) {
 	OE->delete(\%myconfig, \%$order, ${LedgerSMB::Sysconfig::spool});

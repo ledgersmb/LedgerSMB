@@ -2,6 +2,13 @@
 
 # Simple script to prepare for release
 
+if test -n "$1" # Arguments are presented.  set up argument list and related
+then
+   $pgdoc = "postgresql_autodoc -U $1 -d $2"
+else
+   $pgdoc = "true";
+fi
+
 version="1.2.0rc4";
 build_d="../release";
 
@@ -26,5 +33,7 @@ pwd
 find -name '*.svn' -exec rm -rf '{}' ';'
 rm ledger-smb.conf
 rm ledgersmb.conf
-cd ..
+cd doc/database
+$pg_doc
+cd ../../..
 tar -zcvf ledger-smb-$version.tar.gz ledger-smb

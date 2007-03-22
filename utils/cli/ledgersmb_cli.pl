@@ -152,8 +152,7 @@ sub if_handler {
 }
 
 sub login {
-	$myconfig = new LedgerSMB::User 
-		"${LedgerSMB::Sysconfig::memberfile}", "$form->{login}";
+	$myconfig = new LedgerSMB::User("$form->{login}");
 	$form->db_init($myconfig);
 }
 
