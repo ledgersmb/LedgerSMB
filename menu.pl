@@ -69,7 +69,7 @@ $0 =~ tr/\\/\//;
 $pos = rindex $0, '/';
 $script = substr($0, $pos + 1);
 
-$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
+$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
 	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 # we use $script for the language module
 $form->{script} = $script;
