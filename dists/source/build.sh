@@ -10,6 +10,7 @@ else
 fi
 
 version="1.2.0-rc5";
+rpmversion="1.2.0rc5";
 build_d="../release";
 
 if test -d blib; then
@@ -20,15 +21,15 @@ if test -d _build; then
   rm -rf _build
 fi
 
-if test -d $build_d/ledger-smb; then
-  rm -rf $build_d/ledger-smb
+if test -d $build_d/ledgersmb; then
+  rm -rf $build_d/ledgersmb
 fi
 if test ! -d $build_d; then
   mkdir $build_d
 fi
-mkdir $build_d/ledger-smb
-cp -R * $build_d/ledger-smb
-cd $build_d/ledger-smb
+mkdir $build_d/ledgersmb
+cp -R * $build_d/ledgersmb
+cd $build_d/ledgersmb
 pwd
 find -name '*.svn' -exec rm -rf '{}' ';'
 rm ledger-smb.conf
@@ -36,4 +37,5 @@ rm ledgersmb.conf
 cd doc/database
 $pg_doc
 cd ../../..
-tar -zcvf ledger-smb-$version.tar.gz ledger-smb
+tar -zcvf ledgersmb-$version.tar.gz ledgersmb
+cp ledgersmb-$version.tar.gz ledgersmb-$rpmversion.tar.gz
