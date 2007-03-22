@@ -14,6 +14,8 @@ DISTRO AND OS-SPECIFIC NOTES
 ============================
  
 Debian users should read README.debian
+
+OpenBSD users, please consult the README.OpenBSD
  
 For Unix systems, '$' signifies the bash prompt, '=>' the psql prompt.
  
