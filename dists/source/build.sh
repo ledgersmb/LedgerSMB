@@ -4,9 +4,9 @@
 
 if test -n "$1" # Arguments are presented.  set up argument list and related
 then
-   $pgdoc = "postgresql_autodoc -U $1 -d $2"
+   pgdoc="postgresql_autodoc -U $1 -d $2"
 else
-   $pgdoc = "true";
+   pgdoc="true";
 fi
 
 version="1.2.0-rc5";
