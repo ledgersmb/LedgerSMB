@@ -1046,7 +1046,6 @@ sub dbselect_source {
 	<input type="hidden" name="path" value="$form->{path}" />
 	<br />
 	<button type="submit" class="submit" name="action" value="create_dataset">|.$locale->text('Create Dataset').qq|</button>
-	<button type="submit" class="submit" name="action" value="delete_dataset">|.$locale->text('Delete Dataset').qq|</button>
 	</form>
 	<p>|.$locale->text('This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!')
 	.qq|</p>
@@ -1184,95 +1183,6 @@ sub dbcreate {
 		<p><button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button></p>
 	</form>
 	</center>
-	</body>
-	</html>
-	|;
-}
-
-
-sub delete_dataset {
-
-	if (@dbsources = LedgerSMB::User->dbsources_unused(\%$form)) {
-
-		foreach $item (sort @dbsources) {
-			$dbsources .= qq|<input name="db" class="radio" type="radio" value="$item" />&nbsp;$item |;
-		}
-
-	} else {
-		$form->error(__FILE__.':'.__LINE__.': '.$locale->text('Nothing to delete!'));
-	}
-
-	$form->{title} = "LedgerSMB ".$locale->text('Accounting')
-					." ".$locale->text('Database Administration')
-					." / ".$locale->text('Delete Dataset');
-
-	$form->{login} = "admin";
-	$form->header;
-
-	print qq|
-	<body class="admin">
-	<h2>$form->{title}</h2>
-	<form method="post" action="$form->{script}" />
-	<input type="hidden" name="dbdriver" value="$form->{dbdriver}" />
-	<input type="hidden" name="dbuser" value="$form->{dbuser}" />
-	<input type="hidden" name="dbhost" value="$form->{dbhost}" />
-	<input type="hidden" name="dbport" value="$form->{dbport}" />
-	<input type="hidden" name="dbpasswd" value="$form->{dbpasswd}" />
-	<input type="hidden" name="dbdefault" value="$form->{dbdefault}" />
-	<input name=callback type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}">
-	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="nextsub" value="dbdelete" />
-	<table width="100%">
-		<tr class="listheading">
-			<th>|.$locale->text('The following Datasets are not in use and can be deleted').qq|</th>
-		</tr>
-		<tr>
-			<td>
-			$dbsources
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<hr size="3" noshade />
-				<br />
-				<button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button>
-			</td>
-		</tr>
-	</table>
-	</form>
-	</body>
-	</html>
-	|;
-
-}
-
-
-sub dbdelete {
-
-	if (!$form->{db}) {
-		$form->error(__FILE__.':'.__LINE__.': '.$locale->text('No Dataset selected!'));
-	}
-
-	LedgerSMB::User->dbdelete(\%$form);
-
-	$form->{title} = "LedgerSMB ".$locale->text('Accounting')
-					." ".$locale->text('Database Administration')
-					." / ".$locale->text('Delete Dataset');
-
-	$form->{login} = "admin";
-	$form->header;
-
-	print qq|
-	<body class="admin">
-	<center>
-	<h2>$form->{title}</h2>
-	$form->{db} |.$locale->text('successfully deleted!')
-	.qq|
-	<form method="post" action="$form->{script}" />
-	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="nextsub" value="list_users" />
-	<p><button type="submit" class="submit" name="action" value="continue">|.$locale->text('Continue').qq|</button></p>
-	</form>
 	</body>
 	</html>
 	|;

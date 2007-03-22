@@ -451,60 +451,6 @@ sub process_query {
 }
   
 
-
-sub dbdelete {
-	my ($self, $form) = @_;
-
-	$form->{sid} = $form->{dbdefault};
-	&dbconnect_vars($form, $form->{dbdefault});
-	my $dbh = DBI->connect(
-		$form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd}) 
-			or $form->dberror(__FILE__.':'.__LINE__);
-	my $query = qq|DROP DATABASE "$form->{db}"|;
-	$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.$query);
-
-	$dbh->disconnect;
-
-}
-  
-
-
-sub dbsources_unused {
-	my ($self, $form, $memfile) = @_;
-
-	my @dbexcl = ();
-	my @dbsources = ();
-  
-	$form->error(__FILE__.':'.__LINE__.": $memfile locked!") if (-f "${memfile}.LCK");
-  
-	# open members file
-	open(FH, '<', "$memfile") or $form->error(__FILE__.':'.__LINE__.": $memfile : $!");
-
-	while (<FH>) {
-		if (/^dbname=/) {
-			my ($null,$item) = split /=/;
-			push @dbexcl, $item;
-		}
-	}
-
-	close FH;
-
-	$form->{only_acc_db} = 1;
-	my @db = &dbsources("", $form);
-
-	push @dbexcl, $form->{dbdefault};
-
-	foreach $item (@db) {
-		unless (grep /$item$/, @dbexcl) {
-			push @dbsources, $item;
-		}
-	}
-
-	return @dbsources;
-
-}
-
-
 sub dbneedsupdate {
 	my ($self, $form) = @_;
 
