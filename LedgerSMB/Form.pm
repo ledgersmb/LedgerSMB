@@ -591,6 +591,14 @@ sub parse_template {
 	my ($self, $myconfig) = @_;
 
 	$self->{cwd} = Cwd::getcwd();
+	for (qw(IN OUT)){
+		if ($self->{$_} =~ m#[:/\\]#){
+			$self->error("Access denied");
+		}
+	}
+	if ($self->{language_code} =~ m#[:/\\.*]#){
+		$self->error("Access Denied");
+	}
 
 	my ($chars_per_line, $lines_on_first_page, $lines_on_second_page) = (0, 0, 0);
 	my ($current_page, $current_line) = (1, 1);
