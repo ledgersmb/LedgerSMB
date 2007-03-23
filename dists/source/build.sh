@@ -32,6 +32,7 @@ cp -R * $build_d/ledgersmb
 cd $build_d/ledgersmb
 pwd
 find -name '*.svn' -exec rm -rf '{}' ';'
+find -name '*.rej' -exec rm -rf '{}' ';'
 rm ledger-smb.conf
 rm ledgersmb.conf
 cd doc/database

@@ -1,6 +1,7 @@
 Since last Release Candidate:
 * A few bind variable errors have been corrected.
 * ledger-smb.conf is now ledgersmb.conf
+* Database schema information added to doc/database
 
 Changelog for LedgerSMB 1.2.0
 
