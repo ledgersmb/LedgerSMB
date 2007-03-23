@@ -83,7 +83,7 @@ if ($form->{action}) {
 
 sub login_screen {
 
-	$form->{stylesheet} = "ledger-smb.css";
+	$form->{stylesheet} = "ledgersmb.css";
 	$form->{favicon} = "favicon.ico";
 
 	$form->{endsession} = 1;
@@ -167,8 +167,8 @@ sub login_screen {
 sub selectdataset {
 	my ($login) = @_;
 
-	if (-f "css/ledger-smb.css") {
-		$form->{stylesheet} = "ledger-smb.css";
+	if (-f "css/ledgersmb.css") {
+		$form->{stylesheet} = "ledgersmb.css";
 	}
 
 	$form->header(1);
@@ -231,7 +231,7 @@ sub selectdataset {
 
 sub login {
 
-	$form->{stylesheet} = "ledger-smb.css";
+	$form->{stylesheet} = "ledgersmb.css";
 	$form->{favicon} = "favicon.ico";
 
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('You did not enter a name!')) unless ($form->{login});

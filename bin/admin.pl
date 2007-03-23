@@ -51,7 +51,7 @@ $form->{charset} = 'UTF-8';
 eval { require DBI; };
 $form->error(__FILE__.':'.__LINE__.': '.$locale->text('DBI not installed!')) if ($@);
 
-$form->{stylesheet} = "ledger-smb.css";
+$form->{stylesheet} = "ledgersmb.css";
 $form->{favicon} = "favicon.ico";
 $form->{timeout} = 600;
 
@@ -155,8 +155,8 @@ sub add_user {
 
 	$form->{title} = "LedgerSMB ".$locale->text('Accounting')." ".$locale->text('Administration')." / ".$locale->text('Add User');
 
-	if (-f "css/ledger-smb.css") {
-		$myconfig->{stylesheet} = "ledger-smb.css";
+	if (-f "css/ledgersmb.css") {
+		$myconfig->{stylesheet} = "ledgersmb.css";
 	}
 
 	$myconfig->{vclimit} = 1000;
