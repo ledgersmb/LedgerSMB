@@ -43,6 +43,7 @@ use LedgerSMB::Session;
 
 $form = new Form;
 
+
 $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
 	$form->error(__FILE__.':'.__LINE__.': '."Locale not loaded: $!\n");
 $locale->encoding('UTF-8');
@@ -56,7 +57,6 @@ $form->{favicon} = "favicon.ico";
 $form->{timeout} = 600;
 
 require "bin/pw.pl";
-
 # customization
 if (-f "bin/custom/$form->{script}") {
 	eval { require "bin/custom/$form->{script}"; };
@@ -143,7 +143,7 @@ sub login {
 
 
 sub logout {
-
+	$form->{login} = 'admin';
 	$form->{callback} = "admin.pl?action=adminlogin";
 	Session::session_destroy($form);
 	$form->redirect($locale->text('You are logged out'));
