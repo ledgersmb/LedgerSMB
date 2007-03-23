@@ -109,7 +109,7 @@ sub acc_menu {
 		print q|
 
 		<body class="menu">
-		<img class="cornerlogo" src="images/ledger-smb_small.png" width="100" height="50" border="1" alt="ledger-smb" />
+		<img class="cornerlogo" src="images/ledgersmb_small.png" width="100" height="50" border="1" alt="LedgerSMB" />
 		|;
 
 		if ($form->{js}) {

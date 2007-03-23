@@ -2678,7 +2678,7 @@ sub company_logo {
 
 </pre>
 <center>
-<a href="http://www.ledgersmb.org/" target="_blank"><img src="images/ledger-smb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
+<a href="http://www.ledgersmb.org/" target="_blank"><img src="images/ledgersmb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
 <h1 class="login">|.$locale->text('Version').qq| $form->{version}</h1>
 
 <p>

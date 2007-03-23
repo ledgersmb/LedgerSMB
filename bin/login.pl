@@ -126,7 +126,7 @@ sub login_screen {
 		<table class="login" border="3" cellpadding="20">
 			<tr>
 				<td class="login" align="center">
-					<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledger-smb.png" width="200" heith="100" border="0" alt="LedgerSMB Logo" /></a>
+					<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" width="200" heith="100" border="0" alt="LedgerSMB Logo" /></a>
 					<h1 class="login" align="center">|.$locale->text('Version').qq| $form->{version}</h1>
 					<p>
 					<form method="post" action="$form->{script}" name="login">
@@ -180,7 +180,7 @@ sub selectdataset {
 	<table class="login" border="3" cellpadding="20">
 		<tr>
 			<td class="login" align="center">
-				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledger-smb.png" width="100" heith="100" border="0" alt="LedgerSMB Logo" /></a>
+				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" width="100" heith="100" border="0" alt="LedgerSMB Logo" /></a>
 				<h1 class="login" align="center">|.$locale->text('Version').qq| $form->{version}</h1>
 				<p>
 				<form method="post" action="$form->{script}">

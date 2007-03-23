@@ -131,6 +131,16 @@ sub new {
 		$self->{lynx} = 1;
 	}
 
+	$self->{path} =~ s#\\#/#g;
+	if (($self->{path}) && ($self->{path} !~ m#^bin/#) 
+				|| ($self->{path} =~ m#(\w*/){2,}#)){
+		$self->error("Access Denied");
+	}
+	if (($self->{script} =~ m#(..|\\|/)#)){
+		$self->error("Access Denied");
+	}
+		
+
 	$self;
 
 }
