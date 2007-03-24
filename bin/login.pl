@@ -236,41 +236,12 @@ sub login {
 
 	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('You did not enter a name!')) unless ($form->{login});
 
-	#this needs to be done via db
-	#if (! $form->{beenthere}) {
-	#	open(FH, '<', "${LedgerSMB::Sysconfig::memberfile}") or $form->error(__FILE__.':'.__LINE__.": $memberfile : $!");
-	#	@a = <FH>;
-	#	close(FH);
-	#
-	#	foreach $item (@a) {
-	#
-	#		if ($item =~ /^\[(.*?)\]/) {
-	#			$login = $1;
-	#			$found = 1;
-	#		}
-	#
-	#		if ($item =~ /^company=/) {
-	#			if ($login =~ /$form->{login}\@/ && $found) {
-	#				($null, $name) = split /=/, $item, 2;
-	#				$login{$login} = $name;
-	#			}
-	#			$found = 0;
-	#		}
-	#	}
-	#
-	#	if (keys %login > 1) {
-	#		&selectdataset(\%login);
-	#		exit;
-	#	}
-	#}
-
 
 	if (!${LedgerSMB::Sysconfig::GLOBALDBH}){
 		$locale->text("No GlobalDBH Configured or Could not Connect");
 	}
 	$user = LedgerSMB::User->new($form->{login});
 
-	# if we get an error back, bale out
 	if (($errno = $user->login(\%$form)) <= -1) {
 
 		$errno *= -1;
@@ -280,9 +251,11 @@ sub login {
 
 		if ($errno == 4) {
 			# upgrade dataset and log in again
-
-			#locking needs to be done via db function
-			#open FH, '>', "${LedgerSMB::Sysconfig::userspath}/nologin" or $form->error($!);
+			if (!$LedgerSMB::Sysconfig::db_autoupdate){
+				$form->error(
+					$locale->text("Dabase Version too Old")
+				);
+			}
 
 			for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) { $form->{$_} = $user->{$_} }
 
@@ -295,8 +268,6 @@ sub login {
 			print qq|<body>|;
 			print $locale->text('Upgrading to Version [_1] ...', $form->{version});
 
-			# required for Oracle
-			$form->{dbdefault} = $sid;
 
 			$user->dbupdate(\%$form);
 
