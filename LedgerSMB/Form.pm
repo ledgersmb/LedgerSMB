@@ -866,7 +866,6 @@ sub parse_template {
 		unless (chdir($self->{tmpdir})) {
 			$err = $!;
 			$self->cleanup;
-			$self->debug;
 			$self->error("chdir : $self->{tmpdir} : $err");
 		}
 
