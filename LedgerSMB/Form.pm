@@ -3024,7 +3024,7 @@ sub from_to {
 	}
 
 	$mm--;
-	@t = localtime(timelocal(0,0,0,$dd,$mm,$yy) - $bd);
+	@t = localtime(Time::Local::timelocal(0,0,0,$dd,$mm,$yy) - $bd);
 
 	$t[4]++;
 	$t[4] = substr("0$t[4]",-2);
