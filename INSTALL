@@ -17,8 +17,7 @@ Debian users should read README.debian
 
 OpenBSD users, please consult the README.OpenBSD
  
-For Unix systems, '$' signifies the bash prompt, '=>' the psql prompt.
- 
+For Unix systems, '$' signifies the bash prompt, '=>' the psql prompt. 
  
 MANUAL INSTALL
 ==============
@@ -299,3 +298,9 @@ And that section of ledger-smb.conf looks like:
 DBConnect: dbi:Pg:dbname=ledgersmb;host=localhost;port=5432
 DBUserName: ledgersmb
 DBPassword: MYROLEPASSWORD
+
+
+OTHER ISSUES:
+===================================
+Before submitting a bug, please consult the COMPATABILITY list.  This documents
+which versions of software have known interoperability problems with LedgerSMB.
