@@ -86,28 +86,9 @@ $script = substr($0, $pos + 1);
 #	exit;
 #}
 
+$ARGV[0] = $_;
+require "bin/$script";
 
-if ($form{path}) {
-
-	if ($form{path} ne 'bin/lynx'){ $form{path} = 'bin/mozilla';}	
-
-	$ARGV[0] = "$_&script=$script";
-	require "bin/$script";
-
-} else {
-
-	$form{terminal} = "lynx";
-
-	if ($ENV{HTTP_USER_AGENT} !~ /lynx/i) {
-		$form{terminal} = "mozilla";
-	}
-
-	$ARGV[0] = "path=bin/$form{terminal}&script=$script";
-	map { $ARGV[0] .= "&${_}=$form{$_}" } keys %form;
-
-	require "bin/$script";
-
-}
 
 # end of main
 
