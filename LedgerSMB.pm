@@ -528,6 +528,8 @@ sub db_init {
 	my $dbh = DBI->connect($myconfig->{dbconnect}, $myconfig->{dbuser}, 
 		$myconfig->{dbpasswd}, {AutoCommit => 0}) or $self->dberror;
 
+	$dbh->{pg_server_prepare} = 0;
+
 	if ($myconfig->{dboptions}) {
 		$dbh->do($myconfig->{dboptions});
 	}
