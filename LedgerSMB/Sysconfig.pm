@@ -70,7 +70,8 @@ my %config;
 read_config('ledgersmb.conf' => %config) or die;
 
 # Root variables
-for $var (qw(pathsep logging check_max_invoices language session latex)){
+for $var (qw(pathsep logging check_max_invoices language session latex
+	db_autoupdate)){
     ${$var} = $config{''}{$var} if $config{''}{$var};
 }
 
