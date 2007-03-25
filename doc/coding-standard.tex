@@ -65,4 +65,10 @@ In general, when more than one line of code is being copied and
 pasted, it should instead be moved into its own function where it can
 be called by all entry points.
 
+\section{Security Practices}
+\subsection{Open}
+Perl's Open command should be called using its 3-argument form.  The 2-argument 
+form is considered dangerous because input could be used to override the file 
+mode.
+
 \end{document}

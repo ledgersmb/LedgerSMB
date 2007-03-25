@@ -155,6 +155,22 @@ sub quote {
 
 }
 
+sub format_date {
+	# takes an iso date in, and converts it to the date for printing
+	my ($self, $date) = @_;
+	my $datestring;
+	if ($date =~ /^\d{4}\D/){ # is an ISO date
+		$datestring = $self->{db_dateformat};
+		my ($yyyy, $mm, $dd) = split(/\W/, $date);
+		$datestring =~ s/y+/$yyyy/;
+		$datestring =~ s/mm/$mm/;
+		$datestring =~ s/dd/$dd/;
+	} else { # return date
+		$datestring = $date;
+	}
+	$datestring;		
+}
+
 
 sub unquote {
 	my ($self, $str) = @_;
@@ -2970,31 +2986,29 @@ sub split_date {
 
 sub from_to {
 
-	my ($self, $yy, $mm, $interval) = @_;
-
-	use Time::Local;
+	my ($self, $yyyy, $mm, $interval) = @_;
 
 	my @t;
 	my $dd = 1;
-	my $fromdate = "$yy${mm}01";
+	my $fromdate = "$yyyy-${mm}-01";
 	my $bd = 1;
 
 	if (defined $interval) {
 
 		if ($interval == 12) {
-			$yy++;
+			$yyyy++;
 		} else {
 
 			if (($mm += $interval) > 12) {
 				$mm -= 12;
-				$yy++;
+				$yyyy++;
 			}
 
 			if ($interval == 0) {
 				@t = localtime(time);
 				$dd = $t[3];
 				$mm = $t[4] + 1;
-				$yy = $t[5] + 1900;
+				$yyyy = $t[5] + 1900;
 				$bd = 0;
 			}
 		}
@@ -3003,21 +3017,21 @@ sub from_to {
 
 		if (++$mm > 12) {
 			$mm -= 12;
-			$yy++;
+			$yyyy++;
 		}
 	}
 
 	$mm--;
-	@t = localtime(timelocal(0,0,0,$dd,$mm,$yy) - $bd);
+	@t = localtime(Time::Local::timelocal(0,0,0,$dd,$mm,$yyyy) - $bd);
 
 	$t[4]++;
 	$t[4] = substr("0$t[4]",-2);
 	$t[3] = substr("0$t[3]",-2);
 	$t[5] += 1900;
 
-	($fromdate, "$t[5]$t[4]$t[3]");
+	($self->format_date($fromdate), 
+		$self->format_date("$t[5]-$t[4]-$t[3]"));
 }
-
 
 sub audittrail {
 
