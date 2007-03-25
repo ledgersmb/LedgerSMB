@@ -60,5 +60,11 @@ if (-f "bin/custom/$form->{login}_pos.pl") {
   eval { require "bin/custom/$form->{login}_pos.pl"; };
 }
 
+# Necessary for Partsgroup lookups
+if ($form->{action} =~ s/^\s//){
+	$form->{my_partsgroup} = $form->{action};
+	$form->{action} = "lookup_partsgroup";
+}
+
 1;
 # end

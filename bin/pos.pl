@@ -579,8 +579,6 @@ sub form_footer {
       
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
 
-    print qq|<p>
-    <input type=text size=1 value="B" accesskey="B" title="[Alt-B]">\n|;
   
     if ($form->{partsgroup}) {
       $form->{partsgroup} =~ s/\r//g;
@@ -916,8 +914,8 @@ sub print_and_post {
   
 sub lookup_partsgroup {
 
-  $form->{action} =~ s/\r//;
-  $form->{action} = substr($form->{action}, 1);
+  $form->{my_partsgroup} =~ s/\r//;
+  $form->{action} = $form->{my_partsgroup};
 
   if ($form->{language_code}) {
     # get english
