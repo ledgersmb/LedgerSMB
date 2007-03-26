@@ -1967,34 +1967,15 @@ CAPTION: Payroll as a GL Transaction (Purely fictitious numbers)
 
 Payroll as a GL Transaction (Purely fictitious numbers)
 
-[Table, & separates fields, 5 fields per row. ]
-Account &
-Debit &
-Credit &
-5101 Wages and Salaries &
-500 &
-
-2032 Accrued Wages &
-&
-450 
-2033 Fed. Income Tax wthd &
-&
-30 
-2034 State Inc. Tax. wthd &
-&
-15 
-2035 Social Security wthd &
-&
-3 
-2036 Medicare wthd &
-&
-2 
-2032 Accrued Wages &
-450 &
-
-1060 Checking Acct &
-&
-450 
+Account                   & Debit & Credit 
+5101 Wages and Salaries   &   500 &
+2032 Accrued Wages        &       &    450 
+2033 Fed. Income Tax wthd &       &     30 
+2034 State Inc. Tax. wthd &       &     15 
+2035 Social Security wthd &       &      3 
+2036 Medicare wthd        &       &      2 
+2032 Accrued Wages        &   450 &
+1060 Checking Acct        &       &    450 
 
 
 
