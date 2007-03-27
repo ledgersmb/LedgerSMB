@@ -56,6 +56,11 @@ require "bin/arap.pl";
 1;
 # end of main
 
+# This may need to get more sophisticated in the future
+# Anyway, it provides one point of control for date handling.
+sub default_date {
+	$form->{date} ||= 'current_date'
+}
 
 sub payment {
 
@@ -1137,7 +1142,10 @@ sub payment_footer {
 }
 
 
-sub post { &{"post_$form->{payment}"} }
+sub post {
+	&default_date; 
+	&{"post_$form->{payment}"}; 
+}
 
 
 sub post_payments {

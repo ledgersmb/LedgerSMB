@@ -1225,7 +1225,7 @@ sub transactions {
     $form->{$form->{vc}} = $form->unescape($form->{$form->{vc}});
     ($form->{$form->{vc}}, $form->{"$form->{vc}_id"}) = split(/--/, $form->{$form->{vc}});
   }
-  
+  my @column_index;  
   AA->transactions(\%myconfig, \%$form);
 
   $href = "$form->{script}?action=transactions";
@@ -1356,7 +1356,6 @@ sub transactions {
       $href .= "&l_$item=Y";
     }
   }
-
   if (!$form->{summary}) {
     foreach $item (qw(source debit credit accno description projectnumber)) {
       push @column_index, $item;
