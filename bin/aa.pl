@@ -1220,7 +1220,6 @@ sub search {
 
 
 sub transactions {
-
   if ($form->{$form->{vc}}) {
     $form->{$form->{vc}} = $form->unescape($form->{$form->{vc}});
     ($form->{$form->{vc}}, $form->{"$form->{vc}_id"}) = split(/--/, $form->{$form->{vc}});

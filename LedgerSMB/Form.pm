@@ -1579,6 +1579,9 @@ sub update_exchangerate {
 		@queryargs = ($sell);
 	}
 
+	if (!$set){
+		$self->error("Exchange rate missing!");
+	}
 	if ($sth->fetchrow_array) {
 		$query = qq|UPDATE exchangerate
 					   SET $set

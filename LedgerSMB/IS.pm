@@ -1412,7 +1412,7 @@ sub post_invoice {
 		$form->{duedate}, $form->{shippingpoint}, $form->{shipvia},
 		$form->{terms}, $form->{notes}, $form->{intnotes}, 
 		$form->{taxincluded}, $form->{currency}, $form->{department_id},
-		$form->{employee_id}, $till, $form->{language_code}, 
+		$form->{employee_id}, $form->{till}, $form->{language_code}, 
 		$form->{ponumber}, $form->{id})
 			 || $form->dberror($query);
 

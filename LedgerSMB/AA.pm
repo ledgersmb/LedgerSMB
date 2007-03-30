@@ -837,7 +837,6 @@ sub transactions {
 
 	$query .= "WHERE $where
 			ORDER BY $sortorder";
-
 	my $sth = $dbh->prepare($query);
 	$sth->execute(@paidargs) || $form->dberror($query);
 
