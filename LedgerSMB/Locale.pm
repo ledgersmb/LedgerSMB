@@ -116,9 +116,6 @@ sub date {
 		$mm = substr("0$mm", -2);
 		$longdate = "$yy$spc$mm$spc$dd"; 
 
-		if (defined $longformat) {
-			$longdate = &text($self, $longmonth[--$mm])." $dd $yy";
-		}
 
 	} else {
 
@@ -127,10 +124,11 @@ sub date {
 		$mm = substr("0$mm", -2);
 		$longdate = "$mm$spc$dd$spc$yy"; 
 
-		if (defined $longformat) {
-			$longdate = &text($self, $longmonth[--$mm])." $dd $yy";
-		}
 	}
+	if (defined $longformat) {
+		$longdate = &text($self, $longmonth[--$mm])." $dd $yy";
+	}
+	$longdate;
 }
 
 1;
