@@ -92,7 +92,7 @@ sub new {
 		$self->error('Access Denied', __line__, __file__);
 	}
 
-	if (($self->{action} =~ /:/) || ($self->{nextsub} =~ /:/)){
+	if (($self->{action} =~ /(:|')/) || ($self->{nextsub} =~ /(:|')/)){
 		$self->error("Access Denied", __line__, __file__);
 	}
 
@@ -2327,8 +2327,8 @@ sub current_date {
 			$dateformat = 'yyyymmdd';
 		}
 
-		$query = qq|SELECT to_date(?, ?) 
-				+ ?::interval AS thisdate|;
+		$query = qq|SELECT (to_date(?, ?) 
+				+ ?::interval)::date AS thisdate|;
 		@queryargs = ($thisdate, $dateformat, $days);
 
 	} else {
