@@ -1343,7 +1343,6 @@ sub check_form {
   
   $form->error($locale->text('Cannot post payment for a closed period!')) if ($datepaid <= $closedto);
 
-  # this is just to format the year
   $form->{datepaid} = $locale->date(\%myconfig, $form->{datepaid});
   
   $amount = $form->parse_amount(\%myconfig, $form->{amount});
