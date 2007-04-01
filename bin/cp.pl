@@ -1287,7 +1287,7 @@ sub print_form {
   $form->{IN} = "$form->{formname}.tex";
 
   if ($form->{media} ne 'screen') {
-    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = ${LedgerSMB::Sysconfig::printer}{$form->{media}};
     $form->{printmode} = '|-';
   }
 

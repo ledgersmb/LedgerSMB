@@ -228,7 +228,7 @@ sub print_check {
     %queued = split / /, $form->{queued};
 
 
-    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = ${LedgerSMB::Sysconfig::printer}{$form->{media}};
     $form->{printmode} = '|-';
     if ($form->{printed} !~ /$form->{formname}/) {
 
@@ -446,7 +446,7 @@ sub print_transaction {
   }
 
   if ($form->{media} !~ /(queue|screen)/) {
-    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = ${LedgerSMB::Sysconfig::printer}{$form->{media}};
     $form->{printmode} = '|-';
     
     if ($form->{printed} !~ /$form->{formname}/) {

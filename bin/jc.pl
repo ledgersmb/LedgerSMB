@@ -1859,7 +1859,7 @@ sub print_timecard {
   }
 
   if ($form->{media} !~ /(screen|queue)/) {
-    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = ${LedgerSMB::Sysconfig::printer}{$form->{media}};
     $form->{printmode} = '|-';
     
     if ($form->{printed} !~ /$form->{formname}/) {

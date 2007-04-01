@@ -1430,7 +1430,7 @@ sub print_form {
   $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
 
   if ($form->{media} !~ /(screen|queue|email)/) {
-    $form->{OUT} = "${LedgerSMB::SysConfig::printer}{$form->{media}}";
+    $form->{OUT} = ${LedgerSMB::Sysconfig::printer}{$form->{media}};
     $form->{printmode} = '|-';
     $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
     $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;

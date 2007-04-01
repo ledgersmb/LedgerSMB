@@ -865,7 +865,7 @@ sub print_form {
   }
   
   if ($form->{media} ne 'screen') {
-    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = ${LedgerSMB::Sysconfig::printer}{$form->{media}};
     $form->{printmode} = '|-';
   }
 

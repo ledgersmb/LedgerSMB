@@ -1927,7 +1927,7 @@ sub print {
      
  
   if ($form->{media} !~ /(screen|email)/) {
-    $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+    $form->{OUT} = ${LedgerSMB::Sysconfig::printer}{$form->{media}};
     $form->{printmode} = '|-';
     $form->{"$form->{ct}_id"} = "";
     $SIG{INT} = 'IGNORE';
