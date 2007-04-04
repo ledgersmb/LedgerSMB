@@ -124,8 +124,8 @@ sub add {
 
 
 sub openinvoices {
-  undef %column_data;
-  undef %column_heading;
+  undef $column_data;
+  undef $column_heading;
 
   $ENV{REMOTE_ADDR} =~ /(\d+)\.(\d+)\.(\d+)\.(\d+)/;
   $form->{till} = $4;
@@ -139,7 +139,7 @@ sub openinvoices {
   }
 
   $form->{title} = $locale->text('Open');
-  transactions;
+  &transactions;
   
 }
 
@@ -582,7 +582,7 @@ sub form_footer {
       
     for (sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button) { $form->print_button(\%button, $_) }
 
-  
+ 
     if ($form->{partsgroup}) {
       $form->{partsgroup} =~ s/\r//g;
       $form->{partsgroup} = $form->quote($form->{partsgroup});

@@ -39,10 +39,6 @@ LedgerSMB::User at some point in the future.
 If $amount is a Bigfloat, it is returned as is.  If it is a string, it is 
 parsed according to the user preferences stored in the LedgerSMB::User object.
 
-=item format_fields (fields => \@array);
-This function converts fields to their appropriate representation in 
-HTML/SGML/XML or LaTeX.
-
 =item is_blank (name => $string)
 This function returns true if $self->{$string} only consists of whitespace
 characters or is an empty string.
@@ -136,7 +132,7 @@ sub new {
 
 	}
 
-	if (($self->{script} =~ m#(\.\.|\\|/)#)){
+	if (($self->{script} =~ m#(..|\\|/)#)){
 		$self->error("Access Denied");
 	}
 		
@@ -249,48 +245,6 @@ sub redirect {
 		$self->info($msg);
 	}
 }
-
-sub format_fields {
-	# Based on SQL-Ledger's Form::format_string
-	# We should look at moving this into LedgerSMB::Template.
-	# And cleaning it up......  Chris
-
-	my $self = shift @_;
-	my %args = @_;
-	my @fields = @{$args{fields}};
-
-	my $format = $self->{format};
-
-	if ($self->{format} =~ /(postscript|pdf)/) {
-		$format = 'tex';
-	}
-
-	my %replace = ( 
-		'order' => { 
-			html => [ '<', '>', '\n', '\r' ],
-			txt  => [ '\n', '\r' ],
-			tex  => [ quotemeta('\\'), '&', '\n','\r', 
-				'\$', '%', '_', '#',
-				quotemeta('^'), '{', '}', '<', '>', '£' 
-				] },
-		html => { '<'  => '&lt;', '>' => '&gt;','\n' => '<br />', 
-			'\r' => '<br />' },
-		txt  => { '\n' => "\n", '\r' => "\r" },
-		tex  => {'&' => '\&', '$' => '\$', '%' => '\%', '_' => '\_',
-			'#' => '\#', quotemeta('^') => '\^\\', '{' => '\{', 
-			'}' => '\}', '<' => '$<$', '>' => '$>$',
-			'\n' => '\newline ', '\r' => '\newline ', 
-			'£' => '\pounds ', quotemeta('\\') => '/'} 
-	);
-
-	my $key;
-
-	foreach $key (@{ $replace{order}{$format} }) {
-		for (@fields) { $self->{$_} =~ s/$key/$replace{$format}{$key}/g }
-	}
-
-}
-
 
 # TODO:  Either we should have an amount class with formats and such attached
 # Or maybe we should move this into the user class...
