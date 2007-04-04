@@ -41,9 +41,11 @@
 # 
 #======================================================================
 
+use Error qw(:try);
 
 require "bin/arap.pl";
 
+use LedgerSMB::Template;
 use LedgerSMB::PE;
 use LedgerSMB::RP;
 
@@ -993,6 +995,18 @@ sub generate_income_statement {
 
   $form->{IN} = "income_statement.html";
   
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
   $form->parse_template;
 
 }
@@ -1027,6 +1041,18 @@ sub generate_balance_sheet {
 
   $form->{templates} = $myconfig{templates};
 	  
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
   $form->parse_template;
 
 }
@@ -2022,6 +2048,18 @@ sub print_form {
 	
 	for ("c0", "c30", "c60", "c90", "") { $form->{"${_}total"} = $form->format_amount(\%myconfig, $form->{"${_}total"}, 2) }
 
+        if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+          my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+          try {
+            $template->render($form);
+            $form->header;
+            print $template->{'output'};
+            exit;
+          } catch Error::Simple with {
+            my $E = shift;
+            $form->error($E->stacktrace);
+          };
+        }
 	$form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 	
       }

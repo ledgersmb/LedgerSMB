@@ -3,7 +3,7 @@
 
 <table width="100%">
 
-  <?lsmb include letterhead.html ?>
+  <?lsmb INCLUDE letterhead.html ?>
   
   <tr>
     <td width=10>&nbsp;</td>
@@ -26,27 +26,27 @@
 	<tr valign=top>
 	  <td><?lsmb name ?>
 	  <br><?lsmb address1 ?>
-	  <?lsmb if address2 ?>
+	  <?lsmb IF address2 ?>
 	  <br><?lsmb address2 ?>
-	  <?lsmb end address2 ?>
+	  <?lsmb END ?>
 	  <br><?lsmb city ?>
-	  <?lsmb if state ?>
+	  <?lsmb IF state ?>
 	  , <?lsmb state ?>
-	  <?lsmb end state ?>
+	  <?lsmb END ?>
 	  <?lsmb zipcode ?>
-	  <?lsmb if country ?>
+	  <?lsmb IF country ?>
 	  <br><?lsmb country ?>
-	  <?lsmb end country ?>
+	  <?lsmb END ?>
 	  <br>
-          <?lsmb if customerphone ?>
+          <?lsmb IF customerphone ?>
 	  <br>Tel: <?lsmb customerphone ?>
-          <?lsmb end customerphone ?>
-          <?lsmb if customerfax ?>
+          <?lsmb END ?>
+          <?lsmb IF customerfax ?>
 	  <br>Fax: <?lsmb customerfax ?>
-          <?lsmb end customerfax ?>
-          <?lsmb if email ?>
+          <?lsmb END ?>
+          <?lsmb IF email ?>
 	  <br><?lsmb email ?>
-          <?lsmb end email ?>
+          <?lsmb END ?>
 	  </td>
 	</tr>
       </table>
@@ -71,18 +71,19 @@
 	  <th width="10%">90</th>
 	</tr>
         
-	<?lsmb foreach invnumber ?>
+	<?lsmb FOREACH invnumber ?>
+	<?lsmb loop_count = loop.count - 1 ?>
 	<tr>
-	  <td><?lsmb invnumber ?></td>
-          <td><?lsmb ordnumber ?></td>
-	  <td><?lsmb invdate ?></td>
-	  <td><?lsmb duedate ?></td>
-	  <td align=right><?lsmb c0 ?></td>
-	  <td align=right><?lsmb c30 ?></td>
-	  <td align=right><?lsmb c60 ?></td>
-	  <td align=right><?lsmb c90 ?></td>
+	  <td><?lsmb invnumber.${loop_count} ?></td>
+          <td><?lsmb ordnumber.${loop_count} ?></td>
+	  <td><?lsmb invdate.${loop_count} ?></td>
+	  <td><?lsmb duedate.${loop_count} ?></td>
+	  <td align=right><?lsmb c0.${loop_count} ?></td>
+	  <td align=right><?lsmb c30.${loop_count} ?></td>
+	  <td align=right><?lsmb c60.${loop_count} ?></td>
+	  <td align=right><?lsmb c90.${loop_count} ?></td>
 	</tr>
-        <?lsmb end invnumber ?>
+        <?lsmb END ?>
 	
         <tr>
 	  <td colspan=8><hr size=1></td>

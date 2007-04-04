@@ -40,6 +40,9 @@
 #
 #=====================================================================
 
+use Error qw(:try);
+
+use LedgerSMB::Template;
 use LedgerSMB::Tax;
 
 1;
@@ -872,6 +875,18 @@ sub print_form {
   delete $form->{stylesheet};
   $form->{cd_open} = $pos_config{rp_cash_drawer_open};
   
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
   $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
   if ($form->{printed} !~ /$form->{formname}/) {

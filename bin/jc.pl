@@ -39,6 +39,9 @@
 #
 #======================================================================
 
+use Error qw(:try);
+
+use LedgerSMB::Template;
 use LedgerSMB::JC;
 
 1;
@@ -1913,6 +1916,18 @@ sub print_timecard {
     $status{audittrail} .= $form->audittrail("", \%myconfig, \%audittrail);
   }
 
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
   $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
   if (defined %$old_form) {

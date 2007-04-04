@@ -9,9 +9,9 @@
 <br>as at <?lsmb this_period ?>
 </h2>
 
-<?lsmb if department ?>
+<?lsmb IF department ?>
 <h4>Department: <?lsmb department ?></h4>
-<?lsmb end department ?>
+<?lsmb END ?>
 
 <table border=0>
 <tr>
@@ -20,14 +20,15 @@
   <th><?lsmb last_period ?></th>
 </tr>
 
-<?lsmb foreach asset_account ?>
+<?lsmb FOREACH asset_account ?>
+<?lsmb loop_count = loop.count - 1 ?>
 <tr>
   <td> </td>
-  <td><?lsmb asset_account ?></td>
-  <td align=right><?lsmb asset_this_period ?></td>
-  <td align=right><?lsmb asset_last_period ?></td>
+  <td><?lsmb asset_account.${loop_count} ?></td>
+  <td align=right><?lsmb asset_this_period.${loop_count} ?></td>
+  <td align=right><?lsmb asset_last_period.${loop_count} ?></td>
 </tr>
-<?lsmb end asset_account ?>
+<?lsmb END ?>
 
 <tr>
   <td colspan=2> </td>
@@ -45,14 +46,15 @@
   <th align=left colspan=4>LIABILITIES<b><hr align=left width=250 size=5 noshade></th>
 </tr>
 
-<?lsmb foreach liability_account ?>
+<?lsmb FOREACH liability_account ?>
+<?lsmb loop_count = loop.count - 1 ?>
 <tr>
   <td></td>
-  <td><?lsmb liability_account ?></td>
-  <td align=right><?lsmb liability_this_period ?></td>
-  <td align=right><?lsmb liability_last_period ?></td>
+  <td><?lsmb liability_account.${loop_count} ?></td>
+  <td align=right><?lsmb liability_this_period.${loop_count} ?></td>
+  <td align=right><?lsmb liability_last_period.${loop_count} ?></td>
 </tr>
-<?lsmb end liability_account ?>
+<?lsmb END ?>
 
 <tr>
   <td colspan=2> </td>
@@ -71,14 +73,15 @@
   <th align=left colspan=4>SHAREHOLDER'S EQUITY<br><hr align=left width=250 size=5 noshade></th>
 </tr>
 
-<?lsmb foreach equity_account ?>
+<?lsmb FOREACH equity_account ?>
+<?lsmb loop_count = loop.count - 1 ?>
 <tr>
   <td></td>
-  <td><?lsmb equity_account ?></td>
-  <td align=right><?lsmb equity_this_period ?></td>
-  <td align=right><?lsmb equity_last_period ?></td>
+  <td><?lsmb equity_account.${loop_count} ?></td>
+  <td align=right><?lsmb equity_this_period.${loop_count} ?></td>
+  <td align=right><?lsmb equity_last_period.${loop_count} ?></td>
 </tr>
-<?lsmb end equity_account ?>
+<?lsmb END ?>
 
 <tr>
   <td colspan=2> </td>

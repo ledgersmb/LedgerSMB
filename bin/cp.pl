@@ -45,7 +45,9 @@
 #
 #======================================================================
 
+use Error qw(:try);
 
+use LedgerSMB::Template;
 use LedgerSMB::CP;
 use LedgerSMB::OP;
 use LedgerSMB::IS;
@@ -1277,6 +1279,18 @@ sub print_form {
     $form->{printmode} = '|-';
   }
 
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
   $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
 
 }

@@ -48,6 +48,7 @@
 
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
+use Error qw(:try);
 
 $| = 1;
 

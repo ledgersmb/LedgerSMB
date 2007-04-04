@@ -136,7 +136,7 @@ sub new {
 
 	}
 
-	if (($self->{script} =~ m#(..|\\|/)#)){
+	if (($self->{script} =~ m#(\.\.|\\|/)#)){
 		$self->error("Access Denied");
 	}
 		

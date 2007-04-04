@@ -3,7 +3,7 @@
 
 <table width="100%">
 
-  <?lsmb include letterhead.html ?>
+  <?lsmb INCLUDE letterhead.html ?>
   
   <tr>
     <td width=10>&nbsp;</td>
@@ -26,68 +26,68 @@
         <tr valign=top>
           <td><?lsmb name ?>
           <br><?lsmb address1 ?>
-	  <?lsmb if address2 ?>
+	  <?lsmb IF address2 ?>
           <br><?lsmb address2 ?>
-	  <?lsmb end address2 ?>
+	  <?lsmb END ?>
           <br><?lsmb city ?>
-	  <?lsmb if state ?>
+	  <?lsmb IF state ?>
 	  , <?lsmb state ?>
-	  <?lsmb end state ?>
+	  <?lsmb END ?>
 	  <?lsmb zipcode ?>
-	  <?lsmb if country ?>
+	  <?lsmb IF country ?>
 	  <br><?lsmb country ?>
-	  <?lsmb end country ?>
+	  <?lsmb END ?>
           <br>
 
-          <?lsmb if contact ?>
+          <?lsmb IF contact ?>
           <br><?lsmb contact ?>
           <br>
-          <?lsmb end contact ?>
+          <?lsmb END ?>
 
-          <?lsmb if customerphone ?>
+          <?lsmb IF customerphone ?>
           <br>Tel: <?lsmb customerphone ?>
-          <?lsmb end customerphone ?>
+          <?lsmb END ?>
 
-          <?lsmb if customerfax ?>
+          <?lsmb IF customerfax ?>
           <br>Fax: <?lsmb customerfax ?>
-          <?lsmb end customerfax ?>
+          <?lsmb END ?>
 
-          <?lsmb if email ?>
+          <?lsmb IF email ?>
           <br><?lsmb email ?>
-          <?lsmb end email ?>
+          <?lsmb END ?>
           </td>
 
           <td><?lsmb shiptoname ?>
           <br><?lsmb shiptoaddress1 ?>
-	  <?lsmb if shiptoaddress2 ?>
+	  <?lsmb IF shiptoaddress2 ?>
           <br><?lsmb shiptoaddress2 ?>
-	  <?lsmb end shiptoaddress2 ?>
+	  <?lsmb END ?>
           <br><?lsmb shiptocity ?>
-	  <?lsmb if shiptostate ?>
+	  <?lsmb IF shiptostate ?>
 	  , <?lsmb shiptostate ?>
-	  <?lsmb end shiptostate ?>
+	  <?lsmb END ?>
 	  <?lsmb shiptozipcode ?>
-	  <?lsmb if shiptocountry ?>
+	  <?lsmb IF shiptocountry ?>
 	  <br><?lsmb shiptocountry ?>
-	  <?lsmb end shiptocountry ?>
+	  <?lsmb END ?>
           <br>
 
-          <?lsmb if shiptocontact ?>
+          <?lsmb IF shiptocontact ?>
           <br><?lsmb shiptocontact ?>
           <br>
-          <?lsmb end shiptocontact ?>
+          <?lsmb END ?>
 
-          <?lsmb if shiptophone ?>
+          <?lsmb IF shiptophone ?>
           <br>Tel: <?lsmb shiptophone ?>
-          <?lsmb end shiptophone ?>
+          <?lsmb END ?>
 
-          <?lsmb if shiptofax ?>
+          <?lsmb IF shiptofax ?>
           <br>Fax: <?lsmb shiptofax ?>
-          <?lsmb end shiptofax ?>
+          <?lsmb END ?>
 
-          <?lsmb if shiptoemail ?>
+          <?lsmb IF shiptoemail ?>
           <br><?lsmb shiptoemail ?>
-          <?lsmb end shiptoemail ?>
+          <?lsmb END ?>
           </td>
         </tr>
       </table>
@@ -141,62 +141,62 @@
           <th align=right><font color=ffffff>Extended</th>
         </tr>
 
-        <?lsmb foreach number ?>
+        <?lsmb FOREACH number ?>
+        <?lsmb loop_count = loop.count - 1 ?>
         <tr valign=top>
-          <td align=right><?lsmb runningnumber ?>.</td>
-          <td><?lsmb number ?></td>
-          <td><?lsmb description ?></td>
-          <td><?lsmb deliverydate ?></td>
-          <td align=right><?lsmb qty ?></td>
-          <td><?lsmb unit ?></td>
-          <td align=right><?lsmb sellprice ?></td>
-          <td align=right><?lsmb discountrate ?></td>
-          <td align=right><?lsmb linetotal ?></td>
+          <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
+          <td><?lsmb number.${loop_count} ?></td>
+          <td><?lsmb description.${loop_count} ?></td>
+          <td><?lsmb deliverydate.${loop_count} ?></td>
+          <td align=right><?lsmb qty.${loop_count} ?></td>
+          <td><?lsmb unit.${loop_count} ?></td>
+          <td align=right><?lsmb sellprice.${loop_count} ?></td>
+          <td align=right><?lsmb discountrate.${loop_count} ?></td>
+          <td align=right><?lsmb linetotal.${loop_count} ?></td>
         </tr>
-        <?lsmb end number ?>
+        <?lsmb END ?>
 
         <tr>
           <td colspan=9><hr noshade></td>
         </tr>
     
         <tr>
-          <?lsmb if taxincluded ?>
+          <?lsmb IF taxincluded ?>
           <th colspan=7 align=right>Total</th>
           <td colspan=2 align=right><?lsmb invtotal ?></td>
-          <?lsmb end taxincluded ?>
-
-          <?lsmb if not taxincluded ?>
+          <?lsmb ELSE ?>
           <th colspan=7 align=right>Subtotal</th>
           <td colspan=2 align=right><?lsmb subtotal ?></td>
-          <?lsmb end taxincluded ?>
+          <?lsmb END ?>
         </tr>
 
-        <?lsmb foreach tax ?>
+        <?lsmb FOREACH tax ?>
+	<?lsmb loop_count = loop.count - 1 ?>
         <tr>
-          <th colspan=7 align=right><?lsmb taxdescription ?> on <?lsmb taxbase ?> @ <?lsmb taxrate ?> %</th>
-          <td colspan=2 align=right><?lsmb tax ?></td>
+          <th colspan=7 align=right><?lsmb taxdescription.${loop_count} ?> on <?lsmb taxbase.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
+          <td colspan=2 align=right><?lsmb tax.${loop_count} ?></td>
         </tr>
-        <?lsmb end tax ?>
+        <?lsmb END ?>
 
-        <?lsmb if paid ?>
+        <?lsmb IF paid ?>
         <tr>
           <th colspan=7 align=right>Paid</th>
           <td colspan=2 align=right>- <?lsmb paid ?></td>
         </tr>
-        <?lsmb end paid ?>
+        <?lsmb END ?>
 
         <tr>
           <td colspan=5>&nbsp;</td>
           <td colspan=4><hr noshade></td>
         </tr>
 
-        <?lsmb if total ?>
+        <?lsmb IF total ?>
         <tr>
           <td colspan=5>&nbsp;</td>
           <th colspan=2 align=right nowrap>Balance Due</th>
           <th colspan=2 align=right><?lsmb total ?></th>
         </tr>
-        <?lsmb end total ?>
+        <?lsmb END ?>
 
         <tr>
       </table>
@@ -209,9 +209,9 @@
     <td>
       <table width="100%">
         <tr valign=top>
-          <?lsmb if notes ?>
+          <?lsmb IF notes ?>
           <td><?lsmb notes ?></td>
-          <?lsmb end notes ?>
+          <?lsmb END ?>
 
 	  <td><?lsmb text_amount ?> ***** <?lsmb decimal ?>/100</td>
 	  
@@ -223,7 +223,7 @@
     </td>
   </tr>
 
-  <?lsmb if paid_1 ?>
+  <?lsmb IF paid_1 ?>
   <tr>
     <td>&nbsp;</td>
 
@@ -246,22 +246,23 @@
           <th align=left>Source</th>
           <th align=left>Amount</th>
         </tr>
-  <?lsmb end paid_1 ?>
+  <?lsmb END ?>
 
-        <?lsmb foreach payment ?>
+        <?lsmb FOREACH payment ?>
+	<?lsmb loop_count = loop.count - 1 ?>
         <tr>
-          <td><?lsmb paymentdate ?></td>
-          <td><?lsmb paymentaccount ?></td>
-          <td><?lsmb paymentsource ?></td>
-          <td><?lsmb payment ?></td>
+          <td><?lsmb paymentdate.${loop_count} ?></td>
+          <td><?lsmb paymentaccount.${loop_count} ?></td>
+          <td><?lsmb paymentsource.${loop_count} ?></td>
+          <td><?lsmb payment.${loop_count} ?></td>
         </tr>
-        <?lsmb end payment ?>
+        <?lsmb END ?>
 
-  <?lsmb if paid_1 ?>
+  <?lsmb IF paid_1 ?>
       </table>
     </td>
   </tr>
-  <?lsmb end paid_1 ?>
+  <?lsmb END ?>
 
   <tr height=10></tr>
 
@@ -293,15 +294,16 @@
     </td>
   </tr>
 
-  <?lsmb foreach tax ?>
+  <?lsmb FOREACH tax ?>
+  <?lsmb loop_count = loop.count - 1 ?>
   <tr>
     <td>&nbsp;</td>
 
-    <th colspan=9 align=left><font size=-2><?lsmb taxdescription ?> Registration <?lsmb taxnumber ?></th>
+    <th colspan=9 align=left><font size=-2><?lsmb taxdescription.${loop_count} ?> Registration <?lsmb taxnumber.${loop_count} ?></th>
   </tr>
-  <?lsmb end tax ?>
+  <?lsmb END ?>
 
-  <?lsmb if taxincluded ?>
+  <?lsmb IF taxincluded ?>
   <tr>
     <td>&nbsp;</td>
   </tr>
@@ -309,7 +311,7 @@
   <tr>
     <th colspan=8 align=left><font size=-2>Taxes shown are included in price.</th>
   </tr>
-  <?lsmb end taxincluded ?>
+  <?lsmb END ?>
 
 </table>
 

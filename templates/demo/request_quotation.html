@@ -3,7 +3,7 @@
 
 <table width="100%">
 
-  <?lsmb include letterhead.html ?>
+  <?lsmb INCLUDE letterhead.html ?>
   
   <tr>
     <td width=10>&nbsp;</td>
@@ -26,58 +26,58 @@
 	<tr valign=top>
 	  <td><?lsmb name ?>
 	  <br><?lsmb address1 ?>
-	  <?lsmb if address2 ?>
+	  <?lsmb IF address2 ?>
 	  <br><?lsmb address2 ?>
-	  <?lsmb end address2 ?>
+	  <?lsmb END ?>
 	  <br><?lsmb city ?>
-	  <?lsmb if state ?>
+	  <?lsmb IF state ?>
 	  , <?lsmb state ?>
-	  <?lsmb end state ?>
+	  <?lsmb END ?>
 	  <?lsmb zipcode ?>
-	  <?lsmb if country ?>
+	  <?lsmb IF country ?>
 	  <br><?lsmb country ?>
-	  <?lsmb end country ?>
+	  <?lsmb END ?>
           <br>
 	  
-	  <?lsmb if contact ?>
+	  <?lsmb IF contact ?>
 	  <br>Attn: <?lsmb contact ?>
-	  <?lsmb end contact ?>
+	  <?lsmb END ?>
 	  
-	  <?lsmb if vendorphone ?>
+	  <?lsmb IF vendorphone ?>
 	  <br>Tel: <?lsmb vendorphone ?>
-	  <?lsmb end vendorphone ?>
+	  <?lsmb END ?>
 	  
-	  <?lsmb if vendorfax ?>
+	  <?lsmb IF vendorfax ?>
 	  <br>Fax: <?lsmb vendorfax ?>
-	  <?lsmb end vendorfax ?>
+	  <?lsmb END ?>
 	  </td>
 
 	  <td><?lsmb shiptoname ?>
 	  <br><?lsmb shiptoaddress1 ?>
-	  <?lsmb if shiptoaddress2 ?>
+	  <?lsmb IF shiptoaddress2 ?>
 	  <br><?lsmb shiptoaddr2 ?>
-	  <?lsmb end shiptoaddress2 ?>
+	  <?lsmb END ?>
 	  <br><?lsmb shiptocity ?>
-	  <?lsmb if shiptostate ?>
+	  <?lsmb IF shiptostate ?>
 	  , <?lsmb shiptostate ?>
-	  <?lsmb end shiptostate ?>
+	  <?lsmb END ?>
 	  <?lsmb shiptozipcode ?>
-	  <?lsmb if shiptocountry ?>
+	  <?lsmb IF shiptocountry ?>
 	  <br><?lsmb shiptocountry ?>
-	  <?lsmb end shiptocountry ?>
+	  <?lsmb END ?>
           <br>
 
-	  <?lsmb if shiptocontact ?>
+	  <?lsmb IF shiptocontact ?>
 	  <br>Attn: <?lsmb shiptocontact ?>
-	  <?lsmb end shiptocontact ?>
+	  <?lsmb END ?>
 	  
-	  <?lsmb if shiptophone ?>
+	  <?lsmb IF shiptophone ?>
 	  <br>Tel: <?lsmb shiptophone ?>
-	  <?lsmb end shiptophone ?>
+	  <?lsmb END ?>
 	  
-	  <?lsmb if shiptofax ?>
+	  <?lsmb IF shiptofax ?>
 	  <br>Fax: <?lsmb shiptofax ?>
-	  <?lsmb end shiptofax ?>
+	  <?lsmb END ?>
 	  </td>
 	</tr>
       </table>
@@ -138,15 +138,16 @@
 	  <th>Extended</th>
 	</tr>
 
-        <?lsmb foreach number ?>
+        <?lsmb FOREACH number ?>
+	<?lsmb loop_count = loop.count - 1 ?>
         <tr valign=top>
-          <td align=right><?lsmb runningnumber ?>.</td>
-	  <td><?lsmb number ?></td>
-	  <td><?lsmb description ?></td>
-	  <td align=right><?lsmb qty ?></td>
-	  <td><?lsmb unit ?></td>
+          <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
+	  <td><?lsmb number.${loop_count} ?></td>
+	  <td><?lsmb description.${loop_count} ?></td>
+	  <td align=right><?lsmb qty.${loop_count} ?></td>
+	  <td><?lsmb unit.${loop_count} ?></td>
 	</tr>
-	<?lsmb end number ?>
+	<?lsmb END ?>
 
 	<tr>
 	  <td colspan=8><hr noshade></td>
@@ -156,7 +157,7 @@
     </td>
   </tr>
 
-  <?lsmb if notes ?>
+  <?lsmb IF notes ?>
   <tr>
     <td>&nbsp;</td>
     
@@ -170,7 +171,7 @@
       </table>
     </td>
   </tr>
-  <?lsmb end notes ?>
+  <?lsmb END ?>
 
 </table>
 

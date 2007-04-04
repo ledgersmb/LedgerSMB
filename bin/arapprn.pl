@@ -39,6 +39,9 @@
 # printing routines for ar, ap
 #
 
+use Error qw(:try);
+use LedgerSMB::Template;
+
 # any custom scripts for this one
 if (-f "bin/custom/arapprn.pl") {
     eval { require "bin/custom/arapprn.pl"; };
@@ -258,6 +261,18 @@ sub print_check {
   $form->{fileid} = $invnumber;
   $form->{fileid} =~ s/(\s|\W)+//g;
 
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
   $form->parse_template(\%myconfig);
 
   if ($form->{previousform}) {
@@ -476,6 +491,18 @@ sub print_transaction {
   $form->{fileid} = $form->{invnumber};
   $form->{fileid} =~ s/(\s|\W)+//g;
 
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
   $form->parse_template(\%myconfig);
 
   if (%$old_form) {

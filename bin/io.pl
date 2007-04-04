@@ -38,7 +38,10 @@
 #
 #######################################################################
 
+use Error qw(:try); 
+
 use LedgerSMB::Tax;
+use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 
 # any custom scripts for this one
@@ -1544,9 +1547,21 @@ sub print_form {
  
   $form->{fileid} = $form->{"${inv}number"};
   $form->{fileid} =~ s/(\s|\W)+//g;
-  
-  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
+ 
+  if (($form->{'media'} eq 'screen') and ($form->{'format'} eq 'html')) {
+    my $template = LedgerSMB::Template->new(\%myconfig, $form->{'formname'}, 'HTML');
+    try {
+      $template->render($form);
+      $form->header;
+      print $template->{'output'};
+      exit;
+    } catch Error::Simple with {
+      my $E = shift;
+      $form->error($E->stacktrace);
+    };
+  }
 
+  $form->parse_template(\%myconfig, ${LedgerSMB::Sysconfig::userspath});
   # if we got back here restore the previous form
   if (defined %$old_form) {
     

@@ -88,7 +88,7 @@ sub new {
 
 	}
 
-	if (($self->{script} =~ m#(..|\\|/)#)){
+	if (($self->{script} =~ m#(\.\.|\\|/)#)){
 		$self->error("Access Denied");
 	}
 		
@@ -601,6 +601,7 @@ sub parse_template {
 
 	my ($chars_per_line, $lines_on_first_page, $lines_on_second_page) = (0, 0, 0);
 	my ($current_page, $current_line) = (1, 1);
+	print STDERR "Using deprecated Form::parse_template function\n";
 	my $pagebreak = "";
 	my $sum = 0;
 

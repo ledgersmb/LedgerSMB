@@ -3,7 +3,7 @@
 
 <table width="100%">
 
-  <?lsmb include letterhead.html ?>
+  <?lsmb INCLUDE letterhead.html ?>
   
   <tr>
     <td width=10>&nbsp;</td> 
@@ -26,31 +26,31 @@
 	<tr valign=top>
 	  <td><?lsmb shiptoname ?>
 	  <br><?lsmb shiptoaddress1 ?>
-	  <?lsmb if shiptoaddress2 ?>
+	  <?lsmb IF shiptoaddress2 ?>
 	  <br><?lsmb shiptoaddress2 ?>
-	  <?lsmb end shiptoaddress2 ?>
+	  <?lsmb END ?>
 	  <br><?lsmb shiptocity ?>
-	  <?lsmb if shiptostate ?>
+	  <?lsmb IF shiptostate ?>
 	  , <?lsmb shiptostate ?>
-	  <?lsmb end shiptostate ?>
+	  <?lsmb END ?>
 	  <?lsmb shiptozipcode ?>
-	  <?lsmb if shiptocountry ?>
+	  <?lsmb IF shiptocountry ?>
 	  <br><?lsmb shiptocountry ?>
-	  <?lsmb end shiptocountry ?>
+	  <?lsmb END ?>
 	  </td>
 	
 	  <td>
-	  <?lsmb if shiptocontact ?>
+	  <?lsmb IF shiptocontact ?>
 	  <br>Attn: <?lsmb shiptocontact ?>
-	  <?lsmb end shiptocontact ?>
+	  <?lsmb END ?>
 	  
-	  <?lsmb if shiptophone ?>
+	  <?lsmb IF shiptophone ?>
 	  <br>Tel: <?lsmb shiptophone ?>
-	  <?lsmb end shiptophone ?>
+	  <?lsmb END ?>
 	  
-	  <?lsmb if shiptofax ?>
+	  <?lsmb IF shiptofax ?>
 	  <br>Fax: <?lsmb shiptofax ?>
-	  <?lsmb end shiptofax ?>
+	  <?lsmb END ?>
 
 	  <?lsmb shiptoemail ?>
 	  </td>
@@ -71,9 +71,9 @@
 	  <th width=17% align=left>Order #</th>
 	  <th width=17% align=left>Date</th>
 	  <th width=17% align=left nowrap>Contact</th>
-	  <?lsmb if warehouse ?>
+	  <?lsmb IF warehouse ?>
 	  <th width=17% align=left>Warehouse</th>
-	  <?lsmb end warehouse ?>
+	  <?lsmb END ?>
 	  <th width=17% align=left>Shipping Point</th>
 	  <th width=15% align=left>Ship via</th>
 	</tr>
@@ -82,19 +82,17 @@
 	  <td><?lsmb invnumber ?>&nbsp;</td>
 	  <td><?lsmb ordnumber ?>&nbsp;</td>
 	  
-	  <?lsmb if shippingdate ?>
+	  <?lsmb IF shippingdate ?>
 	  <td><?lsmb shippingdate ?></td>
-	  <?lsmb end shippingdate ?>
-	  
-	  <?lsmb if not shippingdate ?>
+	  <?lsmb ELSE ?>
 	  <td><?lsmb transdate ?></td>
-	  <?lsmb end shippingdate ?>
+	  <?lsmb END ?>
   
           <td><?lsmb employee ?>&nbsp;</td>
 	  
-	  <?lsmb if warehouse ?>
+	  <?lsmb IF warehouse ?>
 	  <td><?lsmb warehouse ?>&nbsp;</td>
-	  <?lsmb end warehouse ?>
+	  <?lsmb END ?>
 
 	  <td><?lsmb shippingpoint ?>&nbsp;</td>
 	  <td><?lsmb shipvia ?>&nbsp;</td>
@@ -119,18 +117,19 @@
 	  <th>&nbsp;</th>
 	</tr>
 
-	<?lsmb foreach number ?>
+	<?lsmb FOREACH number ?>
+	<?lsmb loop_count = loop.count - 1 ?>
 	<tr valign=top>
-	  <td><?lsmb runningnumber ?></td>
-	  <td><?lsmb number ?></td>
-	  <td><?lsmb description ?></td>
-	  <td><?lsmb serialnumber ?></td>
-	  <td><?lsmb deliverydate ?></td>
-	  <td align=right><?lsmb qty ?></td>
-	  <td align=right><?lsmb ship ?></td>
-	  <td><?lsmb unit ?></td>
+	  <td><?lsmb runningnumber.${loop_count} ?></td>
+	  <td><?lsmb number.${loop_count} ?></td>
+	  <td><?lsmb description.${loop_count} ?></td>
+	  <td><?lsmb serialnumber.${loop_count} ?></td>
+	  <td><?lsmb deliverydate.${loop_count} ?></td>
+	  <td align=right><?lsmb qty.${loop_count} ?></td>
+	  <td align=right><?lsmb ship.${loop_count} ?></td>
+	  <td><?lsmb unit.${loop_count} ?></td>
 	</tr>
-	<?lsmb end number ?>
+	<?lsmb END ?>
 
       </table>
     </td>
@@ -142,7 +141,7 @@
     <td><hr noshade></td>
   </tr>
 
-  <?lsmb if notes ?>
+  <?lsmb IF notes ?>
   <tr>
     <td>&nbsp;</td>
     
@@ -155,7 +154,7 @@
       </table>
     </td>
   </tr>
-  <?lsmb end notes ?>
+  <?lsmb END ?>
 
   <tr>
     <td>&nbsp;</td>
