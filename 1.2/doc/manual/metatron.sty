@@ -1,0 +1,49 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{metatron}
+\RequirePackage{url, palatino, color}
+\RequirePackage[colorlinks, linkcolor=black, urlcolor=black]{hyperref}
+\RequirePackage[margin=3cm]{geometry}
+\newcommand{\product}[1]{#1\texttrademark}
+
+% For centralized management of company information
+\newcommand{\metaname}[1][]{Metatron Technology Consulting#1\space}
+\newcommand{\metaddress}{130 Henderson Terrace \\ Chelan, WA 98816}
+\newcommand{\metaphone}{(509)630-7794}
+
+% Necessary because \url does not allow for variable substitution
+\newcommand{\metaurl}[1][]{\href{http://www.metatrontech.com/#1}
+{http://www.metatrontech.com/#1}
+}
+
+% Simple email functions to make life easier.
+\newcommand{\mailto}[1]{\href{mailto:#1}{#1}}
+\newcommand{\metamail}[1]{\mailto{#1@metatrontech.com}}
+
+% Copyright notices (central management)
+% Internal (private) macro for base statements)
+\newcommand{\meta@base@copyright}{\textcopyright \space \today \space  
+\metaname}
+
+
+% For redistributables
+\newcommand{\copyrightredist}{
+
+Copyright\meta@base@copyright.  Permission is granted for verbatim 
+redistribution of this document provided that this copyright notice remains 
+intact. 
+
+}
+
+% For a standard "All rights reserved" copyright notice
+\newcommand{\copyrightstd}{
+
+Copyright \meta@base@copyright. All rights reserved.
+
+}
+
+% Other copyright notices may be added below.  Please keep them separate from
+% documents so that they can be maintained separately. 
+
+\urlstyle{same}
+\endinput

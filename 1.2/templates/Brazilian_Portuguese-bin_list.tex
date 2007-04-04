@@ -1,0 +1,135 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[top=2cm,bottom=1.5cm,left=2cm,right=1cm]{geometry}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{
+  \parbox[b]{.42\textwidth}{%
+    <?lsmb company ?>
+    
+    <?lsmb address ?>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{ledger-smb}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telephone & <?lsmb tel ?>\\
+  Facsimile & <?lsmb fax ?>
+  \end{tabular}
+
+  \rule[1.5ex]{\textwidth}{0.5pt}
+}
+
+ 
+<?lsmb pagebreak 65 27 37 ?>
+\end{tabularx}
+
+\newpage
+
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
+
+\vspace*{-12pt}
+
+\begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
+  \textbf{Pos} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
+<?lsmb end pagebreak ?>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.5\textwidth}{
+\textbf{From}
+\vspace{0.7cm}
+
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb if %address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
+
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+
+<?lsmb if country ?>
+<?lsmb country4 ?>
+<?lsmb end country ?>
+}
+\parbox[t]{.4\textwidth}{
+\textbf{Ship To}
+\vspace{0.7cm}
+
+<?lsmb shiptoname ?>
+
+<?lsmb shiptoaddress1 ?>
+
+<?lsmb if shiptoaddress2 ?>
+<?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
+
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
+
+<?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{B I N} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
+  \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
+  <?lsmb if warehouse ?>
+  & \textbf{Warehouse}
+  <?lsmb end warehouse ?>
+  & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  \hline
+  
+  <?lsmb ordnumber ?>
+  <?lsmb if shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb end shippingdate ?>
+  <?lsmb if not shippingdate ?>
+  & <?lsmb orddate ?>
+  <?lsmb end shippingdate ?>
+  & <?lsmb employee ?>
+  <?lsmb if warehouse ?>
+  & <?lsmb warehouse ?>
+  <?lsmb end warehouse ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+  
+\begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
+  \textbf{Pos} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
+
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb serialnumber ?> &
+  <?lsmb deliverydate ?> & <?lsmb qty ?> & <?lsmb ship ?> & <?lsmb unit ?> & <?lsmb bin ?> \\
+<?lsmb end number ?>
+\end{tabularx}
+
+
+\rule{\textwidth}{2pt}
+
+\end{document}
+

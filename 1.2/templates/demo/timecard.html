@@ -1,0 +1,124 @@
+<body bgcolor=ffffff>
+
+<table width="100%">
+
+  <?lsmb include letterhead.html ?>
+  
+  <tr>
+    <td width=10>&nbsp;</td>
+
+    <th colspan=3>
+      <h4>T I M E &nbsp;&nbsp; C A R D</h4>
+    </th>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% callspacing=0 cellpadding=0>
+        <tr valign=top>
+	  <td>
+	    <table>
+	      <tr>
+		<th align=left>Employee</th>
+		<td><?lsmb employee ?></td>
+	      </tr>
+	      <tr>
+		<th align=left>ID</th>
+		<td><?lsmb employee_id ?></td>
+	      </tr>
+	    </table>
+	  </td>
+   
+	  <td align=right>
+	    <table>
+	      <tr>
+		<th align=left nowrap>Card ID</th>
+		<td><?lsmb id ?></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Date</th>
+		<td><?lsmb transdate ?></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>In</th>
+		<td><?lsmb checkedin ?></td>
+	      </tr>
+              <tr>
+                <th align=left>Out</th>
+		<td><?lsmb checkedout ?></td>
+	      </tr>
+	      <tr>
+		<th align=left nowrap>Hours</th>
+		<td><?lsmb qty ?></td>
+	      </tr>
+	    </table>
+	  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  
+    <td>
+      <table width="100%">
+        <tr valign=bottom>
+	  <td>
+	    <table>
+	      <tr valign=top>
+	        <th align=left>Job/Project #</th>
+		<td><?lsmb projectnumber ?></td>
+	      </tr>
+	      <tr>
+	        <th align=left>Description</th>
+		<td><?lsmb projectdescription ?></td>
+	      </tr>
+	      <tr valign=top>
+	        <th align=left>Labor/Service Code</th>
+		<td><?lsmb partnumber ?></td>
+	      </tr>
+	      <tr>
+	        <th align=left>Description</th>
+		<td><?lsmb description ?></td>
+	      </tr>
+	    </table>
+	  </td>
+	  <td align=right>
+	    <table>
+	      <tr>
+	        <th align=right>Rate</th>
+		<td><?lsmb sellprice ?></td>
+	      </tr>
+	      <tr>
+		<th align=right>Total</th>
+		<td><?lsmb total ?></td>
+	      </tr>
+	    </table>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <?lsmb if notes ?>
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <?lsmb notes ?>
+    </td>
+  </tr>
+  <?lsmb end notes ?>
+
+</table>
+
+</body>
+</html>
+

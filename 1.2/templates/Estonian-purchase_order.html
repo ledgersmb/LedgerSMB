@@ -1,0 +1,247 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+
+  <?lsmb include letterhead.html ?>
+  
+  <tr>
+    <td width=10>&nbsp;</td>
+  
+    <th colspan=3>
+      <h4>H A N K E T E L L I M U S</h4>
+    </th>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width=100% callspacing=0 cellpadding=0>
+	<tr bgcolor=000000>
+	  <th align=left width="50%"><font color=ffffff>Kellele:</th>
+	  <th align=left width="50%"><font color=ffffff>Tarneaadress:</th>
+	</tr>
+
+	<tr valign=top>
+	  <td><?lsmb name ?>
+	  <br><?lsmb address1 ?>
+	  <?lsmb if address2 ?>
+	  <br><?lsmb address2 ?>
+	  <?lsmb end address2 ?>
+	  <br><?lsmb city ?>
+	  <?lsmb if state ?>
+	  , <?lsmb state ?>
+	  <?lsmb end state ?>
+	  <?lsmb zipcode ?>
+	  <?lsmb if country ?>
+	  <br><?lsmb country ?>
+	  <?lsmb end country ?>
+          <br>
+
+	  <?lsmb if contact ?>
+	  <br>Kontaktisik: <?lsmb contact ?>
+	  <?lsmb end contact ?>
+	  
+	  <?lsmb if vendorphone ?>
+	  <br>Tel: <?lsmb vendorphone ?>
+	  <?lsmb end vendorphone ?>
+	  
+	  <?lsmb if vendorfax ?>
+	  <br>Faks: <?lsmb vendorfax ?>
+	  <?lsmb end vendorfax ?>
+	  </td>
+
+	  <td><?lsmb shiptoname ?>
+	  <br><?lsmb shiptoaddress1 ?>
+	  <?lsmb if shiptoaddress2 ?>
+	  <br><?lsmb shiptoaddress2 ?>
+	  <?lsmb end shiptoaddress2 ?>
+	  <br><?lsmb shiptocity ?>
+	  <?lsmb if shiptostate ?>
+	  , <?lsmb shiptostate ?>
+	  <?lsmb end shiptostate ?>
+	  <?lsmb shiptozipcode ?>
+	  <?lsmb if shiptocountry ?>
+	  <br><?lsmb shiptocountry ?>
+	  <?lsmb end shiptocountry ?>
+          <br>
+
+	  <?lsmb if shiptocontact ?>
+	  <br>Kontaktisik: <?lsmb shiptocontact ?>
+	  <?lsmb end shiptocontact ?>
+	  
+	  <?lsmb if shiptophone ?>
+	  <br>Tel: <?lsmb shiptophone ?>
+	  <?lsmb end shiptophone ?>
+	  
+	  <?lsmb if shiptofax ?>
+	  <br>Faks: <?lsmb shiptofax ?>
+	  <?lsmb end shiptofax ?>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% border=1>
+	<tr>
+	  <th width=17% align=left>Tellimus #</th>
+	  <th width=17% align=left>Tellimuse KuupÃ€ev</th>
+	  <th width=17% align=left>Tarne TÃ€htaeg</th>
+	  <th width=17% align=left>Kontakt</th>
+	  <th width=17% align=left>Tarneaadress</th>
+	  <th width=15% align=left>Tarneviis</th>
+	</tr>
+
+	<tr>
+	  <td><?lsmb ordnumber ?></td>
+	  <td><?lsmb orddate ?></td>
+	  <td><?lsmb reqdate ?></td>
+	  <td><?lsmb employee ?></td>
+	  <td><?lsmb shippingpoint ?>&nbsp;</td>
+	  <td><?lsmb shipvia ?>&nbsp;</td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <table width="100%">
+	<tr bgcolor=000000>
+	  <th align=right><font color=ffffff>AR.</th>
+	  <th align=left><font color=ffffff>Number</th>
+	  <th align=left><font color=ffffff>Kirjeldus</th>
+	  <th><font color=ffffff>Kogus</th>
+	  <th>&nbsp;</th>
+	  <th><font color=ffffff>Hind</th>
+	  <th><font color=ffffff>%</th>
+	  <th><font color=ffffff>Summa</th>
+	</tr>
+
+        <?lsmb foreach number ?>
+	<tr valign=top>
+	  <td align=right><?lsmb runningnumber ?>.</td>
+	  <td><?lsmb number ?></td>
+	  <td><?lsmb description ?></td>
+	  <td align=right><?lsmb qty ?></td>
+	  <td><?lsmb unit ?></td>
+	  <td align=right><?lsmb sellprice ?></td>
+	  <td align=right><?lsmb discountrate ?></th>
+	  <td align=right><?lsmb linetotal ?></td>
+	</tr>
+        <?lsmb end number ?>
+
+	<tr>
+	  <td colspan=8><hr noshade></td>
+	</tr>
+	
+	<tr>
+          <?lsmb if taxincluded ?>
+	  <th colspan=7 align=right>Kokku</th>
+	  <th colspan=1 align=right><?lsmb ordtotal ?></th>
+          <?lsmb end taxincluded ?>
+	 
+          <?lsmb if not taxincluded ?>
+	  <th colspan=7 align=right>VahekokkuvÃµte</th>
+	  <td colspan=1 align=right><?lsmb subtotal ?></td>
+          <?lsmb end taxincluded ?>
+	</tr>
+
+        <?lsmb foreach tax ?>
+	<tr>
+	  <th colspan=7 align=right><?lsmb taxdescription ?> on <?lsmb taxbase ?> @ <?lsmb taxrate ?> %</th>
+	  <td colspan=1 align=right><?lsmb tax ?></td>
+	</tr>
+        <?lsmb end tax ?>
+
+	<tr>
+	  <td colspan=4>&nbsp;</td>
+	  <td colspan=4><hr noshade></td>
+	</tr>
+	
+        <?lsmb if not taxincluded ?>
+	  <th colspan=7 align=right>Kokku</th>
+	  <td colspan=1 align=right><?lsmb ordtotal ?></td>
+        <?lsmb end taxincluded ?>
+
+        <?lsmb if terms ?>
+	<tr>
+	  <td colspan=4>Maksetingimus <b><?lsmb terms ?></b> pÃ€eva</td>
+	  <th colspan=3 align=right>Kokku</th>
+	  <th colspan=1 align=right><?lsmb ordtotal ?></th>
+	</tr>
+        <?lsmb end terms ?>
+
+        <?lsmb if taxincluded ?>
+	<tr>
+	  <td colspan=2>Sisaldab kÃ€ibemaksu</td>
+	</tr>
+        <?lsmb end taxincluded ?>
+
+	<tr>
+	  <td>&nbsp;</td>
+	</tr>
+	
+        <?lsmb if ordtotal ?>
+	<tr>
+	  <td colspan=8 align=right>
+	  KÃµik hinnad toodud <b><?lsmb currency ?></b> vÃ€Ã€ringus
+	  </td>
+	</tr>
+        <?lsmb end ordtotal ?>
+
+      </table>
+    </td>
+  </tr>
+
+  <?lsmb if notes ?>
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+    <table width="100%">
+      <tr valign=top>
+	<td>Notes</td>
+	<td><?lsmb notes ?></td>
+      </tr>
+
+    </table>
+    </td>
+  </tr>
+  <?lsmb end notes ?>
+
+  <tr>
+    <td>&nbsp;</td>
+  
+    <td>
+      <table width="100%">
+	<tr valign=top>
+	  <td width="70%">&nbsp;</td>
+
+	  <td width="30%">
+	  X <hr noshade>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+
+</body>
+</html>
+
+
+
+
+
+
+

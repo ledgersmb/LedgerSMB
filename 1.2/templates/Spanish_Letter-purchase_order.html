@@ -1,0 +1,153 @@
+<head>
+  <title>Pedido de Instalaciones Industriales San José</title>
+</head>
+
+<body bgcolor="ffffff">
+    <!-- Cabecera -->
+    <table width="100%">
+	<tr valign=bottom>
+	  <td width="10">&nbsp;</td>
+	  <td>  
+	    <table width="100%">
+		<tr>
+		  <th colspan="4"> </th>
+		  <th align="left">
+		    <h4>P E D I D O</h4>
+		  </th>
+		</tr>
+		
+		<tr>
+		  <td colspan="5"> </td>
+		</tr>
+		
+		<tr>
+		  <td colspan="4"> </td>
+		  <td align="left"><?lsmb name ?></td>
+		</tr>
+		
+		<tr>
+		  <td>Número</td>
+		  <td>Fecha</td>
+		  <td>Cód. Proveedor</td> 
+		  <td width="10%"> </td>
+		  <td><?lsmb address1 ?></td>
+		</tr>
+		<tr>
+		  <td><b><?lsmb ordnumber ?></b></td>
+		  <td><b><?lsmb orddate ?></b></td>
+		  <td><b><?lsmb vendor_id ?></b></td>
+		  <td> </td>
+		  <td><?lsmb addr2 ?></td>
+		</tr>
+		<tr>
+		  <td colspan="4">
+		  <td><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?></td>
+		</tr>
+		<tr>
+		  <td colspan="4">
+		  <td><?lsmb addr4 ?></td>
+		</tr>
+	    </table>
+    </table>	    
+
+    <!-- Cuerpo -->
+    <table width=100% cellspacing=0 cellpadding=0>
+	<tr>
+	  <td>
+	    <table width="100%">
+		<tr bgcolor=000000>
+		  <!--      <th align=left><font color=ffffff>Número</th> -->
+		  <!--      <th><font color=ffffff>Cant.</th> -->
+		  <th align="left"><font color="ffffff">Cant.</th>
+		  <th align="left"><font color="ffffff">Descripción</th>
+		  <th align="left"><font color="ffffff">Precio</th>
+		  <!--  <th align="left"><font color="ffffff">Dto.</th> -->
+		  <th align="left"><font color="ffffff">Importe</th>
+		</tr>
+
+		<tr>
+		  <td colspan="4"><hr noshade></td>
+		</tr>    
+		
+<?lsmb foreach number ?>
+	<tr valign=top>
+	  <!--      <td><?lsmb number ?></td> -->
+	  <!--      <td><?lsmb unit ?></td> -->
+	  <td align="right"><?lsmb qty ?></td> 
+	  <td align="left"><?lsmb description ?></td>
+	  <td align="right"><?lsmb sellprice ?></td>
+	  <!--      <td align=right><?lsmb discount ?></td> -->
+	  <td align="right"><?lsmb linetotal ?></td>
+	</tr>
+<?lsmb end number ?>
+    
+    <tr>
+      <td colspan="4"><hr noshade></td>
+    </tr>    
+  </table>
+    
+    <!-- Subtotales, impuestos y totales -->
+    <table width="100%">
+    <tr>
+<?lsmb if taxincluded ?>
+    <th align="right">Total</th>
+    <td align="right"><?lsmb ordtotal ?></td>
+<?lsmb end taxincluded ?>
+<?lsmb if not taxincluded ?>
+    <th align="right">Base imponible</th>
+    <td align="right"><?lsmb subtotal ?> &euro;</td>
+<?lsmb end taxincluded ?>
+    </tr>
+
+<?lsmb foreach tax ?>
+    <tr>
+      <th align="right">IVA (<?lsmb taxrate ?>%) sobre <?lsmb taxbase ?>:</th>
+      <td align="right"><?lsmb tax ?> &euro;</td>
+    </tr>
+<?lsmb end tax ?>
+    
+<?lsmb if paid ?>
+    <tr>
+      <th align="right">Pagado:</th>
+      <td align="right"><?lsmb paid ?> &euro;</td>
+    </tr>
+<?lsmb end paid ?>
+    
+    <tr>
+      <td>&nbsp;</td>
+      <td><hr noshade></td>
+    </tr>
+
+    <tr>
+      <th align="right">Total:</th>
+      <th align="right"><?lsmb ordtotal ?> &euro;</th>
+    </tr>
+    
+    <tr>
+      <td colspan="4">&nbsp;</td>
+    </tr>
+    
+    </table>
+
+
+    <!-- Pie -->
+    <table width="100%">
+	<tr valign=top>
+<?lsmb if notes ?>
+	  <td>Notas</td>
+	  <td><?lsmb notes ?></td>
+<?lsmb end notes ?>
+  </tr>
+    
+<?lsmb if taxincluded ?>
+    <tr>
+      <th colspan="2" align="left"><font size=-2>Los precios incluyen impuestos.</th>
+    </tr>
+<?lsmb end taxincluded ?>
+    
+  </table>
+
+
+</body>
+</html>
+

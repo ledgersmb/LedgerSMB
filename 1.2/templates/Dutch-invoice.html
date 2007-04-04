@@ -1,0 +1,248 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+<tr valign=bottom>
+  <td width=10>&nbsp;</td>
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
+      </h4>
+    </td>
+
+    <td align=right>
+      <h4>
+      Tel: <?lsmb tel ?>
+      <br>Fax: <?lsmb fax ?>
+      </h4>
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan=3>
+      <h4>F A C T U U R</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Factuurdatum</th><td width=10>&nbsp;</td><td><?lsmb invdate ?></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Vervaldatum</th><td width=10>&nbsp;</td><td><?lsmb duedate ?></td>
+    </tr>
+
+    <tr>
+      <th align=right>Factuurnummer</th><td>&nbsp;</td><td><?lsmb invnumber ?></td></tr>
+    </tr>
+  
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Factuuradres:</th>
+      <th align=left><font color=ffffff>Verzendadres:</th>
+    </tr>
+
+    <tr>
+      <td><?lsmb name ?>
+      <br><?lsmb address1 ?>
+      <?lsmb if address2 ?>
+<br><?lsmb address2 ?>
+<?lsmb end address2 ?>
+      <br><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+      <?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
+      </td>
+      
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddress1 ?>
+      <?lsmb if shiptoaddress2 ?>
+<br><?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
+      <br><?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
+      <?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+<!--      <th align=right><font color=ffffff>Regel</th>  -->
+      <th align=left><font color=ffffff>Artikelnummer</th>
+      <th align=left><font color=ffffff>Omschrijving</th>
+      <th><font color=ffffff>Aantal</th>
+      <th>&nbsp;</th>
+      <th><font color=ffffff>Prijs</th>
+      <th><font color=ffffff>Korting</th>
+      <th><font color=ffffff>Totaal</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+<!--      <td align=right><?lsmb runningnumber ?>.</td>
+adjust the colspan if you include this to shift subtotal one to the right
+-->
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=right><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
+      <td align=right><?lsmb sellprice ?></td>
+      <td align=right><?lsmb discount ?></td>
+      <td align=right><?lsmb linetotal ?></td>
+    </tr>
+<?lsmb end number ?>
+
+<!--
+you can also use netprice instead of sellprice if you
+don't want to show the discount
+netprice = sellprice - discount
+to show the percentage for a discount use <?lsmb discountrate ?>
+-->
+
+    <tr>
+      <td colspan=7><hr noshade></td>
+    </tr>
+    
+    <tr>
+      <th colspan=5 align=right>Subtotaal</th>
+      <td colspan=2 align=right><?lsmb subtotal ?></td>
+    </tr>
+
+<?lsmb foreach tax ?>
+    <tr>
+      <th colspan=5 align=right>BTW <?lsmb taxrate ?>%</th>
+      <td colspan=2 align=right><?lsmb tax ?></td>
+    </tr>
+<?lsmb end tax ?>
+
+<?lsmb if paid ?>
+    <tr>
+      <th colspan=5 align=right>Betaald</th>
+      <td colspan=2 align=right>- <?lsmb paid ?></td>
+    </tr>
+<?lsmb end paid ?>
+
+    <tr>
+      <td colspan=3>&nbsp;</td>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    <tr>
+      <td colspan=3>Betalen binnen <b><?lsmb terms ?></b> dagen</td>
+      <th colspan=2 align=right>Openstaand</th>
+      <th colspan=2 align=right><?lsmb total ?></th>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<?lsmb if notes ?>
+      <td>Opmerkingen</td>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
+      <td align=right>
+      Alle prijzen in <b><?lsmb currency ?></b>
+      <br><?lsmb shippingpoint ?>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+  
+<tr>
+  <th colspan=7>
+  Gaarne u betaling overmaken op onderstaande giro- of bankrekening
+  <br>ten name van <?lsmb company ?>
+  <br>onder vermelding van het factuurnummer.
+  </th>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+    <td><font size=-3>
+    Op al onze aanbiedingen/leveringen zijn, met uitsluiting van eventuele inkoop- of andere voorwaarden van de opdrachtgever,
+<br>de Algemene Voorwaarden van <?lsmb company ?> van toepassing.
+<br>Deze Algemene Voorwaarden zijn gedeponeerd bij de Kamer van Koophandel te ........
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+    <tr>
+      <th colspan=7 align=left><font size=-2>BTW nummer:<?lsmb taxnumber ?></th>
+    </tr>
+
+    <tr>
+      <th colspan=7 align=left><font size=-2>Kamer van Koophandel te ...... nummer:<?lsmb businessnumber ?></th>
+    </tr>
+
+    <tr>
+      <th colspan=7 align=left><font size=-2>Girorekening:.........</th>
+    </tr>
+
+    <tr>
+      <th colspan=7 align=left><font size=-2>Bankrekening:..........</th>
+    </tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

@@ -1,0 +1,150 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <?lsmb company ?>
+      
+      <?lsmb address ?>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telefon & <?lsmb tel ?>\\
+    Telefaks & <?lsmb fax ?>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<?lsmb pagebreak 65 27 48 ?>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<?lsmb sumcarriedforward ?>} \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Ant.} &
+    \textbf{Enhet} & \textbf{Pris} & \textbf{Rabatt} & \textbf{Sum} \\
+  & carried forward from <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{2cm}
+
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
+
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
+
+\vspace{3.5cm}
+
+\textbf{S A L G S} \parbox{0.3cm}{\hfill} \textbf{O R D R E}
+\hfill
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Ordre dato} & <?lsmb orddate ?> \\
+<?lsmb if reqdate ?>
+  \textbf{Leveres innen} & <?lsmb reqdate ?> \\
+<?lsmb end reqdate ?>
+  \textbf{Ordrenr.} & <?lsmb ordnumber ?>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Ant.} &
+    \textbf{Enhet} & \textbf{Pris} & \textbf{Rabatt} & \textbf{Sum} \\
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> on <?lsmb taxbase ?> & <?lsmb tax ?>\\
+<?lsmb end tax ?>
+  \hline
+  \textbf{Total} & \textbf{<?lsmb ordtotal ?>}\\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  Alle priser i valuta \textbf{<?lsmb currency ?>}.
+
+\vspace{12pt}
+
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
+
+}
+
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+Ved spesialtilpassede ordre (påkrevd av kunden), skreddersydde produkter, utvidede eller
+oppgraderte produkter belastes et 10\% avbestillingsgebyr. Varer som
+ikke kan returneres er merket over.
+}
+
+\end{document}
+

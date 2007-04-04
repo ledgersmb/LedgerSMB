@@ -1,0 +1,99 @@
+
+<body bgcolor=ffffff>
+
+<body bgcolor=ffffff>
+
+<table width=640>
+       <tr>
+           <td>  </td>
+          <td colspan=3>
+<br>
+            <h3>Резервирование  N 000<?lsmb quonumber ?>   от <?lsmb quodate ?></h3>
+<hr>
+          </th>
+        </tr>
+  <tr>
+    <td width=10> </td>
+
+    <td>
+      <table width="100%">
+        <tr>
+          <td>
+            Поставщик: <b><?lsmb company ?></b>
+        <br>Покупатель:<b> <?lsmb name ?></b>
+             </td>
+        </tr>
+
+       </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> </td>
+  
+    <td>
+      <table border=1  width=100% cellpadding=2 cellspacing=0>
+        <tr>
+          <th>No.</th>
+          <th width="90%">Товар</th>
+          <th>Кол-во</th>
+          <th>Ед.</th>
+          <th>Цена</th>
+          <th>Сумма</th>
+        </tr>
+
+         <?lsmb foreach number ?>
+        <tr valign=top>
+           <td align=right><?lsmb runningnumber ?></td>
+           <td><?lsmb description ?></td>
+          <td align=right><?lsmb qty ?></td>
+          <td align=center>шт.</td>
+          <td align=right><?lsmb sellprice ?></td>
+          <td align=right><?lsmb linetotal ?></td>
+         </tr>
+        <?lsmb end number ?>
+
+        <tr>
+          <th colspan=5 align=right>Итого:</th>
+          <th align=right><?lsmb subtotal ?></th>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+        </tr>
+         <tr>
+        <td>  </td>
+        <td>
+        </tr>
+
+         <tr>
+        <td>  </td>
+        <td>
+
+       <table width="100%">
+          <tr>
+        <th colspan=2>
+<hr height=1>
+ </th>
+        </tr>
+          <tr>
+        <th width=50% align=left>
+<nobr>Руководитель ______________________________
+ </th>
+        <th align=right>
+<nobr>Бухгалтер ______________________________
+        </th>
+        </tr>
+        </table>
+  
+  </td>
+  </tr>
+      </table>
+
+</table>
+
+</body>
+</html>
+

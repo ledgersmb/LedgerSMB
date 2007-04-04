@@ -1,0 +1,149 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+
+  <?lsmb include letterhead.html ?>
+
+  <tr>
+    <td width=10>&nbsp;</td>
+    
+    <th colspan=3>
+      <h4>V E O S E &nbsp;&nbsp; S A A T E L E H T</h4>
+    </th>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% callspacing=0 cellpadding=0>
+        <tr bgcolor=000000>
+	  <th width=50% align=left><font color=ffffff>Kellele:</th>
+	  <th width="50%">&nbsp;</th>
+	</tr>
+
+	<tr valign=top>
+	  <td><?lsmb shiptoname ?>
+	  <br><?lsmb shiptoaddress1 ?>
+	  <?lsmb if shiptoaddress2 ?>
+	  <br><?lsmb shiptoaddress2 ?>
+	  <?lsmb end shiptoaddress2 ?>
+	  <br><?lsmb shiptocity ?>
+	  <?lsmb if shiptostate ?>
+	  , <?lsmb shiptostate ?>
+	  <?lsmb end shiptostate ?>
+	  <?lsmb shiptozipcode ?>
+	  <?lsmb if shiptocountry ?>
+	  <br><?lsmb shiptocountry ?>
+	  <?lsmb end shiptocountry ?>
+	  </td>
+
+	  <td>
+	  <?lsmb if shiptocontact ?>
+	  <br>Kontaktisik: <?lsmb shiptocontact ?>
+	  <?lsmb end shiptocontact ?>
+
+	  <?lsmb if shiptophone ?>
+	  <br>Tel: <?lsmb shiptophone ?>
+	  <?lsmb end shiptophone ?>
+
+	  <?lsmb if shiptofax ?>
+	  <br>Faks: <?lsmb shiptofax ?>
+	  <?lsmb end shiptofax ?>
+
+	  <?lsmb shiptoemail ?>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% border=1>
+        <tr>
+	  <th width=15% align=left>Arve #</th>
+	  <th width=15% align=left>Tellimus #</th>
+	  <th width=10% align=left>Kuupäev</th>
+	  <th width=15% align=left nowrap>Kontakt</th>
+	  <th width=15% align=left>Kaubaladu</th>
+	  <th width=10% align=left>Tarneaadress</th>
+	  <th width=10% align=left>Tarneviis</th>
+	</tr>
+
+        <tr>
+	  <td><?lsmb invnumber ?>&nbsp;</td>
+	  <td><?lsmb ordnumber ?>&nbsp;</td>
+          <?lsmb if shippingdate ?>
+	  <td><?lsmb shippingdate ?></td>
+          <?lsmb end shippingdate ?>
+
+	  <?lsmb if not shippingdate ?>
+	  <td><?lsmb transdate ?></td>
+	  <?lsmb end shippingdate ?>
+
+	  <td><?lsmb employee ?>&nbsp;</td>
+	  <td><?lsmb warehouse ?>&nbsp;</td>
+	  <td><?lsmb shippingpoint ?>&nbsp;</td>
+	  <td><?lsmb shipvia ?>&nbsp;</td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width="100%">
+	<tr bgcolor=000000>
+	  <th align=left><font color=ffffff>AR.</th>
+	  <th align=left><font color=ffffff>Number</th>
+	  <th align=left><font color=ffffff>Kirjeldus</th>
+	  <th><font color=ffffff>Kogus</th>
+	  <th><font color=ffffff>Saatmine</th>
+	  <th>&nbsp;</th>
+	  <th><font color=ffffff>Pakend</th>
+	</tr>
+
+        <?lsmb foreach number ?>
+	<tr valign=top>
+	  <td><?lsmb runningnumber ?>
+	  <td><?lsmb number ?></td>
+	  <td><?lsmb description ?></td>
+	  <td align=right><?lsmb qty ?></td>
+	  <td align=right>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+	  <td><?lsmb unit ?></td>
+	  <td align=right><?lsmb bin ?></td>
+	</tr>
+	<?lsmb end number ?>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td><hr noshade></td>
+  </tr>
+
+</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

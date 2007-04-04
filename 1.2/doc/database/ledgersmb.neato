@@ -1,0 +1,110 @@
+digraph g {
+node [ fontsize = "10", shape = record ];
+edge [];
+
+"acc_trans" [shape = record, label = "{<col0> \N| trans_id:  integer\lchart_id:  integer\lamount:  numeric\ltransdate:  date\lsource:  text\lcleared:  boolean\lfx_transaction:  boolean\lproject_id:  integer\lmemo:  text\linvoice_id:  integer\lentry_id:  serial\l}" ];
+
+"ap" [shape = record, label = "{<col0> \N| id:  integer\linvnumber:  text\ltransdate:  date\lvendor_id:  integer\ltaxincluded:  boolean\lamount:  numeric\lnetamount:  numeric\lpaid:  numeric\ldatepaid:  date\lduedate:  date\linvoice:  boolean\lordnumber:  text\lcurr:  character(3)\lnotes:  text\lemployee_id:  integer\ltill:  character varying(20)\lquonumber:  text\lintnotes:  text\ldepartment_id:  integer\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lshippingpoint:  text\lterms:  smallint\l}" ];
+
+"ar" [shape = record, label = "{<col0> \N| id:  integer\linvnumber:  text\ltransdate:  date\lcustomer_id:  integer\ltaxincluded:  boolean\lamount:  numeric\lnetamount:  numeric\lpaid:  numeric\ldatepaid:  date\lduedate:  date\linvoice:  boolean\lshippingpoint:  text\lterms:  smallint\lnotes:  text\lcurr:  character(3)\lordnumber:  text\lemployee_id:  integer\ltill:  character varying(20)\lquonumber:  text\lintnotes:  text\ldepartment_id:  integer\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\l}" ];
+
+"assembly" [shape = record, label = "{<col0> \N| id:  integer\lparts_id:  integer\lqty:  numeric\lbom:  boolean\ladj:  boolean\l}" ];
+
+"audittrail" [shape = record, label = "{<col0> \N| trans_id:  integer\ltablename:  text\lreference:  text\lformname:  text\laction:  text\ltransdate:  timestamp without time zone\lemployee_id:  integer\lentry_id:  bigserial\l}" ];
+
+"business" [shape = record, label = "{<col0> \N| id:  integer\ldescription:  text\ldiscount:  numeric\l}" ];
+
+"chart" [shape = record, label = "{<col0> \N| id:  integer\laccno:  text\ldescription:  text\lcharttype:  character(1)\lcategory:  character(1)\llink:  text\lgifi_accno:  text\lcontra:  boolean\l}" ];
+
+"custom_field_catalog" [shape = record, label = "{<col0> \N| field_id:  serial\ltable_id:  integer\lfield_name:  text\l}" ];
+
+"custom_table_catalog" [shape = record, label = "{<col0> \N| table_id:  serial\lextends:  text\ltable_name:  text\l}" ];
+
+"customer" [shape = record, label = "{<col0> \N| id:  integer\lname:  character varying(64)\laddress1:  character varying(32)\laddress2:  character varying(32)\lcity:  character varying(32)\lstate:  character varying(32)\lzipcode:  character varying(10)\lcountry:  character varying(32)\lcontact:  character varying(64)\lphone:  character varying(20)\lfax:  character varying(20)\lemail:  text\lnotes:  text\ldiscount:  numeric\ltaxincluded:  boolean\lcreditlimit:  numeric\lterms:  smallint\lcustomernumber:  character varying(32)\lcc:  text\lbcc:  text\lbusiness_id:  integer\ltaxnumber:  character varying(32)\lsic_code:  character varying(6)\liban:  character varying(34)\lbic:  character varying(11)\lemployee_id:  integer\llanguage_code:  character varying(6)\lpricegroup_id:  integer\lcurr:  character(3)\lstartdate:  date\lenddate:  date\l}" ];
+
+"customertax" [shape = record, label = "{<col0> \N| customer_id:  integer\lchart_id:  integer\l}" ];
+
+"defaults" [shape = record, label = "{<col0> \N| setting_key:  text\lvalue:  text\l}" ];
+
+"department" [shape = record, label = "{<col0> \N| id:  integer\ldescription:  text\lrole:  character(1)\l}" ];
+
+"dpt_trans" [shape = record, label = "{<col0> \N| trans_id:  integer\ldepartment_id:  integer\l}" ];
+
+"employee" [shape = record, label = "{<col0> \N| id:  integer\llogin:  text\lname:  character varying(64)\laddress1:  character varying(32)\laddress2:  character varying(32)\lcity:  character varying(32)\lstate:  character varying(32)\lzipcode:  character varying(10)\lcountry:  character varying(32)\lworkphone:  character varying(20)\lhomephone:  character varying(20)\lstartdate:  date\lenddate:  date\lnotes:  text\lrole:  character varying(20)\lsales:  boolean\lemail:  text\lssn:  character varying(20)\liban:  character varying(34)\lbic:  character varying(11)\lmanagerid:  integer\lemployeenumber:  character varying(32)\ldob:  date\l}" ];
+
+"exchangerate" [shape = record, label = "{<col0> \N| curr:  character(3)\ltransdate:  date\lbuy:  numeric\lsell:  numeric\l}" ];
+
+"gifi" [shape = record, label = "{<col0> \N| accno:  text\ldescription:  text\l}" ];
+
+"gl" [shape = record, label = "{<col0> \N| id:  integer\lreference:  text\ldescription:  text\ltransdate:  date\lemployee_id:  integer\lnotes:  text\ldepartment_id:  integer\l}" ];
+
+"inventory" [shape = record, label = "{<col0> \N| warehouse_id:  integer\lparts_id:  integer\ltrans_id:  integer\lorderitems_id:  integer\lqty:  numeric\lshippingdate:  date\lemployee_id:  integer\lentry_id:  serial\l}" ];
+
+"invoice" [shape = record, label = "{<col0> \N| id:  integer\ltrans_id:  integer\lparts_id:  integer\ldescription:  text\lqty:  integer\lallocated:  integer\lsellprice:  numeric\lfxsellprice:  numeric\ldiscount:  real\lassemblyitem:  boolean\lunit:  character varying(5)\lproject_id:  integer\ldeliverydate:  date\lserialnumber:  text\lnotes:  text\l}" ];
+
+"jcitems" [shape = record, label = "{<col0> \N| id:  integer\lproject_id:  integer\lparts_id:  integer\ldescription:  text\lqty:  numeric\lallocated:  numeric\lsellprice:  numeric\lfxsellprice:  numeric\lserialnumber:  text\lcheckedin:  timestamp with time zone\lcheckedout:  timestamp with time zone\lemployee_id:  integer\lnotes:  text\l}" ];
+
+"language" [shape = record, label = "{<col0> \N| code:  character varying(6)\ldescription:  text\l}" ];
+
+"makemodel" [shape = record, label = "{<col0> \N| parts_id:  integer\lmake:  text\lmodel:  text\l}" ];
+
+"oe" [shape = record, label = "{<col0> \N| id:  integer\lordnumber:  text\ltransdate:  date\lvendor_id:  integer\lcustomer_id:  integer\lamount:  numeric\lnetamount:  numeric\lreqdate:  date\ltaxincluded:  boolean\lshippingpoint:  text\lnotes:  text\lcurr:  character(3)\lemployee_id:  integer\lclosed:  boolean\lquotation:  boolean\lquonumber:  text\lintnotes:  text\ldepartment_id:  integer\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lterms:  smallint\l}" ];
+
+"orderitems" [shape = record, label = "{<col0> \N| id:  integer\ltrans_id:  integer\lparts_id:  integer\ldescription:  text\lqty:  numeric\lsellprice:  numeric\ldiscount:  numeric\lunit:  character varying(5)\lproject_id:  integer\lreqdate:  date\lship:  numeric\lserialnumber:  text\lnotes:  text\l}" ];
+
+"parts" [shape = record, label = "{<col0> \N| id:  integer\lpartnumber:  text\ldescription:  text\lunit:  character varying(5)\llistprice:  numeric\lsellprice:  numeric\llastcost:  numeric\lpriceupdate:  date\lweight:  numeric\lonhand:  numeric\lnotes:  text\lmakemodel:  boolean\lassembly:  boolean\lalternate:  boolean\lrop:  real\linventory_accno_id:  integer\lincome_accno_id:  integer\lexpense_accno_id:  integer\lbin:  text\lobsolete:  boolean\lbom:  boolean\limage:  text\ldrawing:  text\lmicrofiche:  text\lpartsgroup_id:  integer\lproject_id:  integer\lavgcost:  numeric\l}" ];
+
+"partscustomer" [shape = record, label = "{<col0> \N| parts_id:  integer\lcustomer_id:  integer\lpricegroup_id:  integer\lpricebreak:  numeric\lsellprice:  numeric\lvalidfrom:  date\lvalidto:  date\lcurr:  character(3)\lentry_id:  serial\l}" ];
+
+"partsgroup" [shape = record, label = "{<col0> \N| id:  integer\lpartsgroup:  text\l}" ];
+
+"partstax" [shape = record, label = "{<col0> \N| parts_id:  integer\lchart_id:  integer\ltaxcategory_id:  integer\l}" ];
+
+"partsvendor" [shape = record, label = "{<col0> \N| vendor_id:  integer\lparts_id:  integer\lpartnumber:  text\lleadtime:  smallint\llastcost:  numeric\lcurr:  character(3)\lentry_id:  serial\l}" ];
+
+"pricegroup" [shape = record, label = "{<col0> \N| id:  integer\lpricegroup:  text\l}" ];
+
+"project" [shape = record, label = "{<col0> \N| id:  integer\lprojectnumber:  text\ldescription:  text\lstartdate:  date\lenddate:  date\lparts_id:  integer\lproduction:  numeric\lcompleted:  numeric\lcustomer_id:  integer\l}" ];
+
+"recurring" [shape = record, label = "{<col0> \N| id:  integer\lreference:  text\lstartdate:  date\lnextdate:  date\lenddate:  date\lrepeat:  smallint\lunit:  character varying(6)\lhowmany:  integer\lpayment:  boolean\l}" ];
+
+"recurringemail" [shape = record, label = "{<col0> \N| id:  integer\lformname:  text\lformat:  text\lmessage:  text\l}" ];
+
+"recurringprint" [shape = record, label = "{<col0> \N| id:  integer\lformname:  text\lformat:  text\lprinter:  text\l}" ];
+
+"shipto" [shape = record, label = "{<col0> \N| trans_id:  integer\lshiptoname:  character varying(64)\lshiptoaddress1:  character varying(32)\lshiptoaddress2:  character varying(32)\lshiptocity:  character varying(32)\lshiptostate:  character varying(32)\lshiptozipcode:  character varying(10)\lshiptocountry:  character varying(32)\lshiptocontact:  character varying(64)\lshiptophone:  character varying(20)\lshiptofax:  character varying(20)\lshiptoemail:  text\lentry_id:  serial\l}" ];
+
+"sic" [shape = record, label = "{<col0> \N| code:  character varying(6)\lsictype:  character(1)\ldescription:  text\l}" ];
+
+"status" [shape = record, label = "{<col0> \N| trans_id:  integer\lformname:  text\lprinted:  boolean\lemailed:  boolean\lspoolfile:  text\l}" ];
+
+"tax" [shape = record, label = "{<col0> \N| chart_id:  integer\lrate:  numeric\ltaxnumber:  text\lvalidto:  date\lpass:  integer\ltaxmodule_id:  integer\l}" ];
+
+"taxcategory" [shape = record, label = "{<col0> \N| taxcategory_id:  serial\ltaxcategoryname:  text\ltaxmodule_id:  integer\l}" ];
+
+"taxmodule" [shape = record, label = "{<col0> \N| taxmodule_id:  serial\ltaxmodulename:  text\l}" ];
+
+"transactions" [shape = record, label = "{<col0> \N| id:  integer\ltable_name:  text\l}" ];
+
+"translation" [shape = record, label = "{<col0> \N| trans_id:  integer\llanguage_code:  character varying(6)\ldescription:  text\l}" ];
+
+"vendor" [shape = record, label = "{<col0> \N| id:  integer\lname:  character varying(64)\laddress1:  character varying(32)\laddress2:  character varying(32)\lcity:  character varying(32)\lstate:  character varying(32)\lzipcode:  character varying(10)\lcountry:  character varying(32)\lcontact:  character varying(64)\lphone:  character varying(20)\lfax:  character varying(20)\lemail:  text\lnotes:  text\lterms:  smallint\ltaxincluded:  boolean\lvendornumber:  character varying(32)\lcc:  text\lbcc:  text\lgifi_accno:  character varying(30)\lbusiness_id:  integer\ltaxnumber:  character varying(32)\lsic_code:  character varying(6)\ldiscount:  numeric\lcreditlimit:  numeric\liban:  character varying(34)\lbic:  character varying(11)\lemployee_id:  integer\llanguage_code:  character varying(6)\lpricegroup_id:  integer\lcurr:  character(3)\lstartdate:  date\lenddate:  date\l}" ];
+
+"vendortax" [shape = record, label = "{<col0> \N| vendor_id:  integer\lchart_id:  integer\l}" ];
+
+"warehouse" [shape = record, label = "{<col0> \N| id:  integer\ldescription:  text\l}" ];
+
+"yearend" [shape = record, label = "{<col0> \N| trans_id:  integer\ltransdate:  date\l}" ];
+
+
+"acc_trans" -> "chart" [label="acc_trans_chart_id_fkey"];
+"custom_field_catalog" -> "custom_table_catalog" [label="custom_field_catalog_table_id_fkey"];
+"partstax" -> "parts" [label="partstax_parts_id_fkey"];
+"partstax" -> "chart" [label="partstax_chart_id_fkey"];
+"partstax" -> "taxcategory" [label="partstax_taxcategory_id_fkey"];
+"tax" -> "chart" [label="tax_chart_id_fkey"];
+"tax" -> "taxmodule" [label="tax_taxmodule_id_fkey"];
+"taxcategory" -> "taxmodule" [label="taxcategory_taxmodule_id_fkey"];
+}
+
+
