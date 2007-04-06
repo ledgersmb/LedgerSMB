@@ -1254,8 +1254,8 @@ sub check_template_name {
 	if ($form->{file} =~ /^(.:)*?\/|:|\.\.\/|^\//){
 		$form->error("Directory transversal not allowed.");
 	}
-	if ($form->{file} =~ /^${LedgerSMB::Sysconfig::userspath}\//){
-		$form->error("Not allowed to access ${LedgerSMB::Sysconfig::userspath}/ with this method");
+	if ($form->{file} =~ /^${LedgerSMB::Sysconfig::backuppath}\//){
+		$form->error("Not allowed to access ${LedgerSMB::Sysconfig::backuppath}/ with this method");
 	}
 	my $whitelisted = 0;
 	for (@allowedsuff){
@@ -1604,7 +1604,7 @@ sub backup {
 	$t[4] = substr("0$t[4]", -2);
 
 	my $boundary = time;
-	my $tmpfile = "${LedgerSMB::Sysconfig::userspath}/$boundary.$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
+	my $tmpfile = "${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
 	$tmpfile .= ".gz" if ${LedgerSMB::Sysconfig::gzip};
 	$form->{OUT} = "$tmpfile";
 
@@ -1623,14 +1623,14 @@ sub backup {
 	my $suffix = "";
 
 	if ($form->{media} eq 'email') {
-		print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc $myconfig->{dbname}`;
+		print OUT `pg_dump -U $globalDBUserName -h $globalDBhost -Fc -p $globalDBport $globalDBname`;
 		close OUT;
 		use LedgerSMB::Mailer;
 		$mail = new Mailer;
 
 		$mail->{to} = qq|"$myconfig->{name}" <$myconfig->{email}>|;
 		$mail->{from} = qq|"$myconfig->{name}" <$myconfig->{email}>|;
-		$mail->{subject} = "LedgerSMB Backup / $myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix";
+		$mail->{subject} = "LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix";
 		@{ $mail->{attachments} } = ($tmpfile);
 		$mail->{version} = $form->{version};
 		$mail->{fileid} = "$boundary.";
@@ -1650,8 +1650,7 @@ sub backup {
 
 		print OUT qq|Content-Type: application/file;\n| .
 		qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
-		print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc $myconfig->{dbname}`;
-
+		print OUT `pg_dump -U $globalDBUserName -h $globalDBhost -Fc -p $globalDBport $globalDBname`;
 	}
 
 	unlink "$tmpfile";

@@ -37,6 +37,9 @@ $templates = "templates";
 # Temporary files stored at"
 $tempdir = ($ENV{TEMP} || '/tmp');
 
+# Backup path
+$backuppath = $tempdir;
+
 # member file
 $memberfile = "users/members";
 
