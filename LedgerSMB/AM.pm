@@ -1623,11 +1623,7 @@ sub backup {
 	my $suffix = "";
 
 	if ($form->{media} eq 'email') {
-		if (${LedgerSMB::Sysconfig::gzip}){
-			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | ${LedgerSMB::Sysconfig::gzip}`;
-		} else {
-			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
-		}
+		print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc $myconfig->{dbname}`;
 		close OUT;
 		use LedgerSMB::Mailer;
 		$mail = new Mailer;
@@ -1639,7 +1635,7 @@ sub backup {
 		$mail->{version} = $form->{version};
 		$mail->{fileid} = "$boundary.";
 		$mail->{format} = "plain";
-		$mail->{format} = "octet-stream" if ${LedgerSMB::Sysconfig::gzip};
+		$mail->{format} = "octet-stream";
 
 		$myconfig->{signature} =~ s/\\n/\n/g;
 		$mail->{message} = "-- \n$myconfig->{signature}";
@@ -1654,11 +1650,7 @@ sub backup {
 
 		print OUT qq|Content-Type: application/file;\n| .
 		qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
-		if (${LedgerSMB::Sysconfig::gzip}){
-			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | ${LedgerSMB::Sysconfig::gzip}`;
-		} else {
-			print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
-		}
+		print OUT `pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc $myconfig->{dbname}`;
 
 	}
 
