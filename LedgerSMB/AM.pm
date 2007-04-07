@@ -1617,7 +1617,7 @@ sub backup {
 	my $suffix = "";
 
 	if ($form->{media} eq 'email') {
-		print OUT qx(PGPASSWD="$globalDBPassword" pg_dump -U $globalDBUserName -h $globalDBhost -Fc -p $globalDBport $globalDBname);
+		print OUT qx(PGPASSWORD="$globalDBPassword" pg_dump -U $globalDBUserName -h $globalDBhost -Fc -p $globalDBport $globalDBname);
 		close OUT;
 		use LedgerSMB::Mailer;
 		$mail = new Mailer;
@@ -1644,7 +1644,7 @@ sub backup {
 
 		print OUT qq|Content-Type: application/file;\n| .
 		qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
-		print OUT qx(PGPASSWD="$globalDBPassword" pg_dump -U $globalDBUserName -h $globalDBhost -Fc -p $globalDBport $globalDBname);
+		print OUT qx(PGPASSWORD="$globalDBPassword" pg_dump -U $globalDBUserName -h $globalDBhost -Fc -p $globalDBport $globalDBname);
 	}
 
 	unlink "$tmpfile";
