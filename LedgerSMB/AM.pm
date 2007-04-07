@@ -1605,7 +1605,6 @@ sub backup {
 
 	my $boundary = time;
 	my $tmpfile = "${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
-	$tmpfile .= ".gz" if ${LedgerSMB::Sysconfig::gzip};
 	$form->{OUT} = "$tmpfile";
 
 	open(OUT, '>', "$form->{OUT}") or $form->error("$form->{OUT} : $!");
@@ -1613,11 +1612,6 @@ sub backup {
 	# get sequences, functions and triggers
 
 	my $today = scalar localtime;
-
-	$myconfig->{dbhost} = 'localhost' unless $myconfig->{dbhost};
-
-	$ENV{PGPASSWD} = $myconfig->{dbpasswd};
-	# drop tables and sequences
 
 	# compress backup if gzip defined
 	my $suffix = "";
