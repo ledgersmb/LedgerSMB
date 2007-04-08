@@ -1679,7 +1679,7 @@ sub delete_invoice {
 	# delete spool files
 	$query = qq|
 		SELECT spoolfile FROM status
-		 WHERE trans_id = $form->{id} AND spoolfile IS NOT NULL|;
+		 WHERE trans_id = ? AND spoolfile IS NOT NULL|;
 	$sth = $dbh->prepare($query);
 	$sth->execute($form->{id}) || $form->dberror($query);
 
