@@ -81,7 +81,7 @@ sub new {
 	$self->{lynx} = 1 if $self->{path} =~ /lynx/i;
 
 	$self->{version} = "1.2.1";
-	$self->{dbversion} = "1.2.1";
+	$self->{dbversion} = "1.2.0";
 
 
 	bless $self, $type;

@@ -254,7 +254,7 @@ sub delete_account {
 		   SET inventory_accno_id = (SELECT value::int
 		                               FROM defaults
 					      WHERE setting_key = 
-							'inventory_accno_id')::
+							'inventory_accno_id')
 		 WHERE inventory_accno_id = ?|;
 
 	$sth = $dbh->prepare($query);
