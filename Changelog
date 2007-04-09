@@ -1,6 +1,11 @@
 Changelog for LedgerSMB 1.2.1
 * Modifed AM.pm to correctly use globals from ledgersmb.conf (Joshua Drake)
 * Simplified backup functions in AM.pm (Joshua Drake)
+* Corrected serious sales tax posting bug (Chris Travers)
+* Corrected two sales tax display bugs (Chris Travers)
+* Corrected configure_apache.sh not rewriting WORKING_DIR (Chris Travers)
+* Corrected documentation about tax entry (Chris Travers)
+* Corrected logos not printing on PDF/PS invoices (Chris Travers)
 
 Changelog for LedgerSMB 1.2.0
 

@@ -638,6 +638,7 @@ sub parse_template {
 	my $tmpfile = $self->{IN};
 	$tmpfile =~ s/\./_$self->{fileid}./ if $self->{fileid};
 	$self->{tmpfile} = "${LedgerSMB::Sysconfig::tempdir}/${fileid}_${tmpfile}";
+	
 
 	my $temphash;
 	if ($self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email') {
