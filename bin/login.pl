@@ -298,8 +298,6 @@ sub login {
 
 			for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) { $form->{$_} = $user->{$_} }
 
-			$form->{dbpasswd} = unpack 'u', $form->{dbpasswd};
-
 			$form->{dbupdate} = "db$user->{dbname}";
 			$form->{$form->{dbupdate}} = 1;
 

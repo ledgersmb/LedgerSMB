@@ -5,7 +5,7 @@ use Module::Build;
 
 my $build = Module::Build->new (
 	dist_name => 'LedgerSMB',
-	dist_version => '1.2.0',
+	dist_version => '1.2.2',
 	license => 'GPL',
 	requires => {
 		'perl'				=> '>= 5.8.0',
