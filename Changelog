@@ -1,3 +1,7 @@
+Changelog for LedgerSMB 1.2.1
+* Modifed AM.pm to correctly use globals from ledgersmb.conf (Joshua Drake)
+* Simplified backup functions in AM.pm (Joshua Drake)
+
 Changelog for LedgerSMB 1.2.0
 
 Database:
@@ -12,7 +16,7 @@ Security:
 * Audited All Perl Modules for SQL Injection attacks (Chris T)
 * Forced edited files to have whitelisted extensions and no .. strings (Chris T)
 * Users are now stored in a separate database instead of fs. (Chris M)
-* User database schema now included (Josh D)
+* User database schema now included (Joshua D)
 
 Localization:
 * Moved localization files to standard codes (Seneca)
@@ -39,6 +43,9 @@ Code Quality and API:
 * Testing suite added (Seneca)
 * Moved all database calls to $form->{dbh} (CHris T)
 * Form->redirect no longer makes use of exec (Chris T)
+* LedgerSMB::Sysconfig now uses more reasonable ledgersmb.conf optiions (Joshua Drake)
+* Removal of Lock Application (Joshua Drake)
+* Removal of users/ depenency (Joshua Drake)
 
 Packaging:
 * Added first version of rpm spec from Mads Kiilerich (Chris T)
