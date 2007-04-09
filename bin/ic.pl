@@ -2982,7 +2982,8 @@ sub save {
       $amount = $form->{"sellprice_$i"} * (1 - $form->{"discount_$i"} / 100) * $form->{"qty_$i"};
       for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
       if (!$form->{taxincluded}) {
-        my @taxlist= Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+        my @taxlist= Tax::init_taxes($form, $form->{"taxaccounts_$i"}, 
+		$form->{taxaccounts});
 	$amount += Tax::calculate_taxes(\@taxlist, $form, $amount, 0);
       }
 

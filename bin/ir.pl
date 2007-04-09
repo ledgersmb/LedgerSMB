@@ -804,7 +804,8 @@ sub update {
 	for (split / /, $form->{taxaccounts}) { $form->{"${_}_base"} = 0 }
 	for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
 	if (!$form->{taxincluded}) {
-	  my @taxes = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+	  my @taxes = Tax::init_taxes($form, $form->{"taxaccounts_$i"},
+		$form->{"taxaccounts"});
 	  $amount += (Tax::calculate_taxes(\@taxes, $form, $amount, 0));
 	}
 

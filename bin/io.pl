@@ -508,7 +508,8 @@ sub item_selected {
       $amount = $form->{"sellprice_$i"} * (1 - $form->{"discount_$i"} / 100) * $form->{"qty_$i"};
       for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
       if (!$form->{taxincluded}) {
-        my @taxlist= Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+        my @taxlist= Tax::init_taxes($form, $form->{"taxaccounts_$i"}, 
+		$form->{taxaccounts});
 	$amount += Tax::calculate_taxes(\@taxlist, $form, $amount, 0);
       }
 
@@ -1222,7 +1223,6 @@ sub print {
 
 sub print_form {
   my ($old_form) = @_;
-
   $inv = "inv";
   $due = "due";
 
@@ -1370,7 +1370,6 @@ sub print_form {
   } else {
     IS->invoice_details(\%myconfig, \%$form);
   }
-
   if (exists $form->{longformat}) {
     $form->{"${due}date"} = $duedate;
     for ("${inv}date", "${due}date", "shippingdate", "transdate") { $form->{$_} = $locale->date(\%myconfig, $form->{$_}, $form->{longformat}) }

@@ -470,14 +470,13 @@ sub form_footer {
   }
 
   if (!$form->{taxincluded}) {
-    
     my @taxes = Tax::init_taxes($form, $form->{taxaccounts});
     $form->{invtotal} += Tax::calculate_taxes(\@taxes, $form, 
       $form->{invsubtotal}, 0);
     foreach $item (@taxes) {
       my $taccno = $item->account;
       $form->{"${taccno}_total"} = $form->format_amount(\%myconfig, 
-        $item->value, 2);
+        $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2);
       $tax .= qq|
         <tr>
       	<th align=right>$form->{"${taccno}_description"}</th>
@@ -818,7 +817,8 @@ sub update {
 	for (split / /, $form->{taxaccounts}) { $form->{"${_}_base"} = 0 }
         for (split / /, $form->{"taxaccounts_$i"}) { $form->{"${_}_base"} += $amount }
 	if (!$form->{taxincluded}) {
-	  my @taxes = Tax::init_taxes($form, $form->{"taxaccounts_$i"});
+	  my @taxes = Tax::init_taxes($form, $form->{"taxaccounts_$i"},
+		$form->{taxaccounts});
 	  $amount += Tax::calculate_taxes(\@taxes, $form, $amount, 0);
 	}
 	

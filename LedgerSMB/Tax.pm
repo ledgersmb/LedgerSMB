@@ -38,14 +38,11 @@ sub init_taxes {
 		my @tmpaccounts = @accounts;
 		$#accounts = 0;
 		for my $acct (split / /, $taxaccounts2){
-			if  ($taxaccounts =~ /$acct/){
+			if  ($taxaccounts =~ /\s$acct\s/){
 				push @accounts, $acct;
 			}
 		}
 		
-	}
-	if (! scalar @accounts){
-		return @accounts;
 	}
 	my $query = qq|SELECT t.taxnumber, c.description,
 			t.rate, t.chart_id, t.pass, m.taxmodulename
@@ -55,6 +52,9 @@ sub init_taxes {
 	my $sth = $dbh->prepare($query);
 	foreach $taxaccount (@accounts) {
 		next if (! defined $taxaccount);
+		if (defined $taxaccounts2){
+			next if $taxaccount !~ /$taxaccounts2/;
+		}
 		$sth->execute($taxaccount) || $form->dberror($query);
 		my $ref = $sth->fetchrow_hashref;
 

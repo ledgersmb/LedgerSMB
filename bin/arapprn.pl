@@ -322,7 +322,6 @@ sub print_transaction {
     $form->{subtotal} += $form->parse_amount(\%myconfig, $form->{"amount_$i"});
     
   }
-
   foreach $accno (split / /, $form->{taxaccounts}) {
     if ($form->{"tax_$accno"}) {
       $form->format_string("${accno}_description");
