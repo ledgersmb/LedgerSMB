@@ -30,10 +30,23 @@ package Tax;
 use Math::BigFloat;
 
 sub init_taxes {
-	my ($form, $taxaccounts) = @_;
+	my ($form, $taxaccounts, $taxaccounts2) = @_;
 	my $dbh = $form->{dbh};
 	@taxes = ();
 	my @accounts = split / /, $taxaccounts;
+	if (defined $taxaccounts2){
+		my @tmpaccounts = @accounts;
+		$#accounts = 0;
+		for my $acct (split / /, $taxaccounts2){
+			if  ($taxaccounts =~ /$acct/){
+				push @accounts, $acct;
+			}
+		}
+		
+	}
+	if (! scalar @accounts){
+		return @accounts;
+	}
 	my $query = qq|SELECT t.taxnumber, c.description,
 			t.rate, t.chart_id, t.pass, m.taxmodulename
 			FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
@@ -41,6 +54,7 @@ sub init_taxes {
 			WHERE c.accno = ?|;
 	my $sth = $dbh->prepare($query);
 	foreach $taxaccount (@accounts) {
+		next if (! defined $taxaccount);
 		$sth->execute($taxaccount) || $form->dberror($query);
 		my $ref = $sth->fetchrow_hashref;
 

@@ -354,7 +354,8 @@ sub invoice_details {
 			push(@{ $form->{linetotal} }, $form->{"linetotal_$i"});
       
  			@taxaccounts = Tax::init_taxes(
-				$form, $form->{"taxaccounts_$i"});
+				$form, $form->{"taxaccounts_$i"}, 
+				$form->{"taxaccounts"});
       
 			my $ml = 1;
 			my @taxrates = ();
@@ -950,7 +951,8 @@ sub post_invoice {
 			my $linetotal = $form->round_amount($amount, 2);
 			$fxdiff += $amount - $linetotal;
 			@taxaccounts = Tax::init_taxes(
-				$form, $form->{"taxaccounts_$i"});
+				$form, $form->{"taxaccounts_$i"}, 
+				$form->{"taxaccounts"});
 			$ml = 1;
 			$tax = Math::BigFloat->bzero();
 			$fxtax = Math::BigFloat->bzero();

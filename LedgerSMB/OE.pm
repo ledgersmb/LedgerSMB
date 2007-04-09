@@ -423,7 +423,8 @@ sub save {
 			);
       
 			@taxaccounts = Tax::init_taxes($form,
-				$form->{"taxaccounts_$i"});
+				$form->{"taxaccounts_$i"}, 
+				$form->{taxaccounts});
 			if ($form->{taxincluded}) {
 				$taxamount = Tax::calculate_taxes(\@taxaccounts,
 					$form, $linetotal, 1);

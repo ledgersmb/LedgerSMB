@@ -218,7 +218,8 @@ sub post_invoice {
 			$fxdiff += $amount - $linetotal;
 
 			@taxaccounts = Tax::init_taxes(
-				$form, $form->{"taxaccounts_$i"});
+				$form, $form->{"taxaccounts_$i"},
+				$form->{'taxaccounts'});
 
 			$tax = Math::BigFloat->bzero();
 			$fxtax = Math::BigFloat->bzero();
