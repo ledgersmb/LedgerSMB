@@ -13,7 +13,8 @@ Source3: Locale-Maketext-Lexicon-0.62.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
 Requires: perl >= 5.8, httpd, postgresql >= 8.1, tetex-latex
-Requires: perl-DBD-Pg, perl-DBI, perl-version, perl-Smart-Comments, perl-MIME-Lite
+Requires: perl-DBD-Pg, perl-DBI >= 1.48, perl-version, perl-Smart-Comments
+Requires: perl-MIME-Lite
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no

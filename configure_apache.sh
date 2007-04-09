@@ -2,7 +2,7 @@
 
 CWD=`pwd`
 
-sed -i "s|WORKING_DIR|$CWD|"
+sed -i "s|WORKING_DIR|$CWD|" ledgersmb-httpd.conf;
 
 echo "Which user does your web server run as?"
 read username
