@@ -1,3 +1,7 @@
+Changelog for 1.2.2
+* Corrected sales tax display bug in order entry screen
+
+
 Changelog for LedgerSMB 1.2.1
 * Modifed AM.pm to correctly use globals from ledgersmb.conf (Joshua Drake)
 * Simplified backup functions in AM.pm (Joshua Drake)

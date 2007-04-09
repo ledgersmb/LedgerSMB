@@ -608,7 +608,8 @@ sub form_footer {
       foreach my $item (@taxes) {
         my $taccno = $item->account;
 	$form->{"${taccno}_total"} = $form->format_amount(\%myconfig, 
-	  $item->value, 2);
+	  $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2);
+	
 	
 	$tax .= qq|
 	      <tr>
