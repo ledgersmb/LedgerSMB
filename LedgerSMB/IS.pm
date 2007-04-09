@@ -949,13 +949,12 @@ sub post_invoice {
 			$amount = $fxlinetotal * $form->{exchangerate};
 			my $linetotal = $form->round_amount($amount, 2);
 			$fxdiff += $amount - $linetotal;
-      
 			@taxaccounts = Tax::init_taxes(
 				$form, $form->{"taxaccounts_$i"});
 			$ml = 1;
-			$tax = 0;
-			$fxtax = 0;
-      
+			$tax = Math::BigFloat->bzero();
+			$fxtax = Math::BigFloat->bzero();
+
 	 	 	if ($form->{taxincluded}) {
 	 	 		$tax += $amount = 
 					Tax::calculate_taxes(
@@ -969,9 +968,11 @@ sub post_invoice {
 			} else {
 				$tax += $amount = Tax::calculate_taxes(
 					\@taxaccounts, $form, $linetotal, 0);
-
 				$fxtax += Tax::calculate_taxes(
 					\@taxaccounts, $form, $linetotal, 0);
+			}
+			for (@taxaccounts) {
+				$form->{acc_trans}{$form->{id}}{$_->account}{amount} += $_->value;
 			}
 
 			$grossamount = $form->round_amount($linetotal, 2);
@@ -1122,7 +1123,6 @@ sub post_invoice {
 	$invnetamount = $amount;
   
 	$amount = 0;
-
 	for (split / /, $form->{taxaccounts}) { 
 		$amount += 
 			$form->{acc_trans}{$form->{id}}{$_}{amount} = 
