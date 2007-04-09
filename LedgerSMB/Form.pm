@@ -39,6 +39,7 @@ use List::Util qw(first);
 use LedgerSMB::Mailer;
 use Time::Local;
 use Cwd;
+use File::Copy;
 
 package Form;
 
@@ -638,10 +639,16 @@ sub parse_template {
 	$tmpfile =~ s/\./_$self->{fileid}./ if $self->{fileid};
 	$self->{tmpfile} = "${LedgerSMB::Sysconfig::tempdir}/${fileid}_${tmpfile}";
 
-    my $temphash;
+	my $temphash;
 	if ($self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email') {
 		$temphash{out} = $self->{OUT};
 		$self->{OUT} = "$self->{tmpfile}";
+		File::Copy::copy(
+			"$self->{templates}/logo.png",
+			"${LedgerSMB::Sysconfig::tempdir}/");
+		File::Copy::copy(
+			"$self->{templates}/logo.eps",
+			"${LedgerSMB::Sysconfig::tempdir}/");
         $temphash{printmode} = $self->{printmode};
         $self->{printmode} = '>';
 	}
