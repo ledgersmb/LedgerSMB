@@ -100,6 +100,8 @@ $SIG{__DIE__} = sub { $form->error(__FILE__.':'.__LINE__.': '.$_[0]) };
 # grab user config. This is ugly and unecessary if/when 
 # we get rid of myconfig and use User as a real object 
 %myconfig = %{LedgerSMB::User->fetch_config($form->{login})};
+$locale = LedgerSMB::Locale->get_handle($myconfig{countrycode}) or
+	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
 # locale messages
 #$form->{charset} = $locale->encoding;
