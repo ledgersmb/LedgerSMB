@@ -100,9 +100,11 @@ b) Make sure to set the section under [globaldbh] to point to the
 central user and session database, using password MYROLEPASSWORD:
 
 [globaldb]
-DBConnect: dbi:Pg:dbname=ledgersmb;host=localhost;port=5432
-DBUserName: ledgersmb
-DBPassword: MYROLEPASSWORD
+DBname       = ledgersmb
+DBhost       = localhost
+DBport       = 5432
+DBUserName   = ledgersmb
+DBPassword   = MYROLEPASSWORD
  
  
 7) Add configuration to Apache:
