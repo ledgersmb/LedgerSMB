@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2
+LedgerSMB 1.2.2
 
 
 
@@ -82,7 +82,14 @@ is no longer limited to 3.
 
 2.4:  Localization Changes
 
-Localization functions now use Gettext .po files on all platforms.  This means that standard translation management tools will work with LSMB translations.
+Localization functions now use Gettext .po files on all platforms.  This means 
+that standard translation management tools will work with LSMB translations.
+
+Unfotunately, there is a known issue in the localization selection routines that
+was discovered as 1.2.2 was undergoing release validation.  The problem has 
+been fixed in the svn repository (branches/1.2/).  If you need a pre-release 
+tarball, please contact Chris Travers <chris.travers@gmail.com>.  The problem 
+will be corrected in 1.2.3.
 
 2.5:  Other changes
 
