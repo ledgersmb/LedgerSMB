@@ -1,6 +1,10 @@
-Changelog for 1.2.2
-* Corrected sales tax display bug in order entry screen
+Changelog for 1.2.3
+* Corrected per-user locale selection (Seneca)
 
+Changelog for 1.2.2
+* Corrected sales tax display bug in order entry screen (Chris T)
+* Corrected database update unable to connect (Seneca)
+* Corrected login problems on 1.2.1
 
 Changelog for LedgerSMB 1.2.1
 * Modifed AM.pm to correctly use globals from ledgersmb.conf (Joshua Drake)

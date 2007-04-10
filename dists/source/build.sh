@@ -9,8 +9,8 @@ else
    pgdoc="true";
 fi
 
-version="1.2.2";
-rpmversion="1.2.2";
+version="1.2.3";
+rpmversion="1.2.3";
 build_d="../release";
 
 if test -d blib; then
