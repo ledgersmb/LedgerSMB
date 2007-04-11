@@ -1614,7 +1614,7 @@ sub backup {
 	my $today = scalar localtime;
 
 	# compress backup if gzip defined
-	my $suffix = "";
+	my $suffix = "c";
 
 	if ($form->{media} eq 'email') {
 		print OUT qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc -p $myconfig->{dbport} $myconfig->{dbname});
