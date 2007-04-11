@@ -100,12 +100,20 @@ b) Make sure to set the section under [globaldbh] to point to the
 central user and session database, using password MYROLEPASSWORD:
 
 [globaldb]
+<<<<<<< .mine
+DBname       = ledgersmb
+DBhost       = localhost
+DBport       = 5432
+DBUserName   = ledgersmb
+DBPassword   = <set me to correct password>
+
+=======
 DBname       = ledgersmb
 DBhost       = localhost
 DBport       = 5432
 DBUserName   = ledgersmb
 DBPassword   = MYROLEPASSWORD
- 
+>>>>>>> .r1061
  
 7) Add configuration to Apache:
  

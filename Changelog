@@ -5,6 +5,7 @@ Changelog for 1.2.2
 * Corrected sales tax display bug in order entry screen (Chris T)
 * Corrected database update unable to connect (Seneca)
 * Corrected login problems on 1.2.1
+* Corrected INSTALL for [GlobalDBH] (Joshua Drake)
 
 Changelog for LedgerSMB 1.2.1
 * Modifed AM.pm to correctly use globals from ledgersmb.conf (Joshua Drake)
