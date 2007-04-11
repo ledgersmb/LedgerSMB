@@ -21,12 +21,8 @@ PATH: /usr/local/bin
 [paths]
 # spool directory for batch printing
 spool      = spool
-# path to user configuration files
-userspath  = users
 # templates base directory
 templates  = templates
-# member file
-memberfile = users/members
 localepath = locale/po
 
 [programs]
