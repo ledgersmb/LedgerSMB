@@ -10,9 +10,9 @@
 # with permission.
 #
 # This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
-# under the GNU General Public License version 2 or, at your option, any later 
-# version.  For a full list including contact information of contributors, 
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
 # maintainers, and copyright holders, see the CONTRIBUTORS file.
 #
 # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
@@ -54,18 +54,17 @@ require "common.pl";
 
 $| = 1;
 
-if ($ENV{CONTENT_LENGTH}) {
-	read(STDIN, $_, $ENV{CONTENT_LENGTH});
+if ( $ENV{CONTENT_LENGTH} ) {
+    read( STDIN, $_, $ENV{CONTENT_LENGTH} );
 }
 
-if ($ENV{QUERY_STRING}) {
-	$_ = $ENV{QUERY_STRING};
+if ( $ENV{QUERY_STRING} ) {
+    $_ = $ENV{QUERY_STRING};
 }
 
-if ($ARGV[0]) {
-	$_ = $ARGV[0];
+if ( $ARGV[0] ) {
+    $_ = $ARGV[0];
 }
-
 
 %form = split /[&=]/;
 
@@ -75,8 +74,7 @@ map { $form{$_} =~ s/\\$// } keys %form;
 # name of this script
 $0 =~ tr/\\/\//;
 $pos = rindex $0, '/';
-$script = substr($0, $pos + 1);
-
+$script = substr( $0, $pos + 1 );
 
 #This needs to be a db query
 #if (-e "${LedgerSMB::Sysconfig::userspath}/nologin" && $script ne 'admin.pl') {
@@ -88,7 +86,6 @@ $script = substr($0, $pos + 1);
 
 $ARGV[0] = $_;
 require "bin/$script";
-
 
 # end of main
 

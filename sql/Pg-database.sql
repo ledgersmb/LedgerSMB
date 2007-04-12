@@ -102,7 +102,7 @@ CREATE TABLE invoice (
   parts_id int,
   description text,
   qty NUMERIC,
-  allocated integer,
+  allocated NUMERIC,
   sellprice NUMERIC,
   fxsellprice NUMERIC,
   discount float4, -- jd: check into this

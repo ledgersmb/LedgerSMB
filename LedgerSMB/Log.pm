@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Log - LedgerSMB logging and debugging framework
@@ -56,33 +57,34 @@ our $VERSION = '1.0.0';
 
 our $log_line;
 
-sub print { 
-	if (!$LedgerSMB::Sysconfig::logging){
-		return 0;
-	}
-	shift;
- 	$log_line = sprintf('[%s] [%s] %i %s', scalar(localtime), +shift, $$, join(' ',@_))."\n";
-	print STDERR $log_line;
+sub print {
+    if ( !$LedgerSMB::Sysconfig::logging ) {
+        return 0;
+    }
+    shift;
+    $log_line = sprintf( '[%s] [%s] %i %s',
+        scalar(localtime), +shift, $$, join( ' ', @_ ) )
+      . "\n";
+    print STDERR $log_line;
 
 }
 
+sub emerg  { shift->print( 'emerg',  @_ ) }
+sub alert  { shift->print( 'alert',  @_ ) }
+sub crit   { shift->print( 'crit',   @_ ) }
+sub error  { shift->print( 'error',  @_ ) }
+sub warn   { shift->print( 'warn',   @_ ) }
+sub notice { shift->print( 'notice', @_ ) }
+sub info   { shift->print( 'info',   @_ ) }
+sub debug  { shift->print( 'debug',  @_ ) }
 
-sub emerg { shift->print('emerg',@_) }
-sub alert { shift->print('alert',@_) }
-sub crit { shift->print('crit',@_) }
-sub error { shift->print('error',@_) }
-sub warn { shift->print('warn',@_) }
-sub notice { shift->print('notice',@_) }
-sub info { shift->print('info',@_) }
-sub debug { shift->print('debug',@_) }
+sub longmess { shift->print( 'debug', Carp::longmess(@_) ) }
 
-sub longmess { shift->print('debug',Carp::longmess(@_)) }
-
-sub dump { 
-	my $self = shift;
-	my $d = Data::Dumper->new([@_]);
-	$d->Sortkeys(1);
-	$self->print('debug',$d->Dump());
+sub dump {
+    my $self = shift;
+    my $d = Data::Dumper->new( [@_] );
+    $d->Sortkeys(1);
+    $self->print( 'debug', $d->Dump() );
 }
 
 1;

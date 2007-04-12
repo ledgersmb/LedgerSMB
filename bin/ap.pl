@@ -8,9 +8,9 @@
 # with permission.
 #
 # This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
-# under the GNU General Public License version 2 or, at your option, any later 
-# version.  For a full list including contact information of contributors, 
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
 # maintainers, and copyright holders, see the CONTRIBUTORS file.
 #
 # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
@@ -52,9 +52,10 @@ require "bin/arap.pl";
 require "bin/arapprn.pl";
 require "bin/aa.pl";
 
-$form->{vc} = 'vendor';
+$form->{vc}   = 'vendor';
 $form->{ARAP} = 'AP';
 
 1;
+
 # end of main
 

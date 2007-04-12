@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+
 =head1 NAME
 
 find-use
@@ -27,7 +28,6 @@ Distributed under the terms of the LedgerSMB code.
 
 =cut
 
-
 use strict;
 use warnings;
 
@@ -35,25 +35,29 @@ open GREP, "grep -r '^use ' . |";
 use Module::CoreList;
 
 my %uselines;
-while(<GREP>) { 
-	next if /LedgerSMB::/;
-	next if /use warnings/;
-	next if /use strict/;
-	next if /use vars/;
-	chomp;
-	my ($file, $useline) = m/^([^:]+):use\s(.*?)$/;
-	$uselines{$useline}||=[];
-	push @{$uselines{$useline}}, $file;
+while (<GREP>) {
+    next if /LedgerSMB::/;
+    next if /use warnings/;
+    next if /use strict/;
+    next if /use vars/;
+    chomp;
+    my ( $file, $useline ) = m/^([^:]+):use\s(.*?)$/;
+    $uselines{$useline} ||= [];
+    push @{ $uselines{$useline} }, $file;
 }
 
 my %modules;
-foreach my $useline (keys %uselines) {
+foreach my $useline ( keys %uselines ) {
 
-	my ($module) = grep { $_ } $useline =~ /(?:base ['"]([a-z:]+)|([a-z:]+)(?:\s|;))/i;
-	my $version = Module::CoreList->first_release($module);
-	$modules{$module} = $version||0;
+    my ($module) =
+      grep { $_ } $useline =~ /(?:base ['"]([a-z:]+)|([a-z:]+)(?:\s|;))/i;
+    my $version = Module::CoreList->first_release($module);
+    $modules{$module} = $version || 0;
 }
 
-foreach my $mod (sort { $modules{$a} == 0 ? -1 : $modules{$b} == 0 ? 1 : 0  or $a cmp $b } keys %modules) { 
-	printf "%2.6f : %s\n", $modules{$mod}, $mod;
+foreach my $mod (
+    sort { $modules{$a} == 0 ? -1 : $modules{$b} == 0 ? 1 : 0 or $a cmp $b }
+    keys %modules )
+{
+    printf "%2.6f : %s\n", $modules{$mod}, $mod;
 }

@@ -1,8 +1,8 @@
 #=====================================================================
-# LedgerSMB 
+# LedgerSMB
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/
-# 
+#
 # Copyright (C) 2006
 # This work contains copyrighted information from a number of sources all used
 # with permission.
@@ -35,37 +35,36 @@
 package OP;
 
 sub overpayment {
-	my ($self, $myconfig, $form, $dbh, $amount, $ml) = @_;
- 
-	my $fxamount = $form->round_amount($amount * $form->{exchangerate}, 2);
-	my ($paymentaccno) = split /--/, $form->{account};
+    my ( $self, $myconfig, $form, $dbh, $amount, $ml ) = @_;
 
-	my ($null, $department_id) = split /--/, $form->{department};
-	$department_id *= 1;
+    my $fxamount = $form->round_amount( $amount * $form->{exchangerate}, 2 );
+    my ($paymentaccno) = split /--/, $form->{account};
 
-	my $uid = localtime;
-	$uid .= "$$";
+    my ( $null, $department_id ) = split /--/, $form->{department};
+    $department_id *= 1;
 
-	# add AR/AP header transaction with a payment
-	my $login = $dbh->quote($form->{login});
-	$query = qq|
+    my $uid = localtime;
+    $uid .= "$$";
+
+    # add AR/AP header transaction with a payment
+    my $login = $dbh->quote( $form->{login} );
+    $query = qq|
 		INSERT INTO $form->{arap} (invnumber, employee_id)
 		     VALUES ('$uid', (SELECT id FROM employee
 		      WHERE login = $login))|;
-	$dbh->do($query) || $form->dberror($query);
+    $dbh->do($query) || $form->dberror($query);
 
-	$query = qq|SELECT id FROM $form->{arap} WHERE invnumber = '$uid'|;
-	($uid) = $dbh->selectrow_array($query);
+    $query = qq|SELECT id FROM $form->{arap} WHERE invnumber = '$uid'|;
+    ($uid) = $dbh->selectrow_array($query);
 
-	my $invnumber = $form->{invnumber};
-	$invnumber = $form->update_defaults(
-		$myconfig, 
-			($form->{arap} eq 'ar') 
-			? "sinumber" 
-			: "vinumber", 
-		$dbh) unless $invnumber;
+    my $invnumber = $form->{invnumber};
+    $invnumber =
+      $form->update_defaults( $myconfig, ( $form->{arap} eq 'ar' )
+        ? "sinumber"
+        : "vinumber", $dbh )
+      unless $invnumber;
 
-	$query = qq|
+    $query = qq|
 		UPDATE $form->{arap} 
 		   set invnumber = ?,
 		       $form->{vc}_id = ?,
@@ -78,63 +77,64 @@ sub overpayment {
 		       curr = ?,
 		       department_id = ?
 		 WHERE id = ?|;
-	$sth = $dbh->prepare($query);
-	$sth->execute(
-		$invnumber, $form->{"$form->{vc}_id"}, $form->{datepaid},
-		$form->{datepaid}, $form->{datepaid}, $fxamount, 
-		$form->{currency}, $department_id, $uid
-		) || $form->dberror($query);
+    $sth = $dbh->prepare($query);
+    $sth->execute(
+        $invnumber,        $form->{"$form->{vc}_id"},
+        $form->{datepaid}, $form->{datepaid},
+        $form->{datepaid}, $fxamount,
+        $form->{currency}, $department_id,
+        $uid
+    ) || $form->dberror($query);
 
-	# add AR/AP
-	($accno) = split /--/, $form->{$form->{ARAP}};
-  
-	$query = qq|
+    # add AR/AP
+    ($accno) = split /--/, $form->{ $form->{ARAP} };
+
+    $query = qq|
 		INSERT INTO acc_trans (trans_id, chart_id, transdate, amount)
 		     VALUES (?, (SELECT id FROM chart 
 		                  WHERE accno = ?), ?, ?)|;
-	$sth = $dbh->prepare($query);
-	$sth->execute($uid, $accno, $form->{datepaid}, $fxamount * $ml) 
-		|| $form->dberror($query);
+    $sth = $dbh->prepare($query);
+    $sth->execute( $uid, $accno, $form->{datepaid}, $fxamount * $ml )
+      || $form->dberror($query);
 
-	# add payment
-	$query = qq|
+    # add payment
+    $query = qq|
 		INSERT INTO acc_trans (trans_id, chart_id, transdate, 
 		                      amount, source, memo)
 		     VALUES (?, (SELECT id FROM chart WHERE accno = ?),
 		            ?, ?, ?, ?)|;
-	$sth = $dbh->prepare($query);
-	$sth->execute(
-		$uid, $paymentaccno, $form->{datepaid}, $amount * $ml * -1,
-		$form->{source}, $form->{memo}
-	 	)|| $form->dberror($query);
+    $sth = $dbh->prepare($query);
+    $sth->execute( $uid, $paymentaccno, $form->{datepaid}, $amount * $ml * -1,
+        $form->{source}, $form->{memo} )
+      || $form->dberror($query);
 
-	# add exchangerate difference
-	if ($fxamount != $amount) {
-		$query = qq|
+    # add exchangerate difference
+    if ( $fxamount != $amount ) {
+        $query = qq|
 			INSERT INTO acc_trans (trans_id, chart_id, transdate,
 			            amount, cleared, fx_transaction, source)
 			     VALUES (?, (SELECT id FROM chart WHERE accno = ?),
 			            ?, ?, '1', '1', ?)|;
-		$sth = $dbh->prepare($query);
-		$sth->execute($uid, $paymentaccno, $form->{datepaid}, 
-			($fxamount - $amount) * $ml * -1, $form->{source}
-			) || $form->dberror($query);
-	}
-  
-	my %audittrail = ( 
-		tablename  => $form->{arap},
-		reference  => $invnumber,
-		formname   => 
-			($form->{arap} eq 'ar') 
-			? 'deposit' 
-			: 'pre-payment',
-		action     => 'posted',
-		id         => $uid );
- 
-	$form->audittrail($dbh, "", \%audittrail);
-  
-}
+        $sth = $dbh->prepare($query);
+        $sth->execute( $uid, $paymentaccno, $form->{datepaid},
+            ( $fxamount - $amount ) * $ml * -1,
+            $form->{source} )
+          || $form->dberror($query);
+    }
 
+    my %audittrail = (
+        tablename => $form->{arap},
+        reference => $invnumber,
+        formname  => ( $form->{arap} eq 'ar' )
+        ? 'deposit'
+        : 'pre-payment',
+        action => 'posted',
+        id     => $uid
+    );
+
+    $form->audittrail( $dbh, "", \%audittrail );
+
+}
 
 1;
 

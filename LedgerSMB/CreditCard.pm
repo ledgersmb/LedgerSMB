@@ -1,5 +1,5 @@
 #=====================================================================
-# LedgerSMB 
+# LedgerSMB
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/
 # Copyright (C) 2006
@@ -16,10 +16,11 @@
 
 package CreditCard;
 use LedgerSMB::CreditCard::Config;
-BEGIN { 
-	$gateway_module =  ${Config::gateway_module};
-	require "LedgerSMB/CreditCard/$gateway_module.pm";
-	import $gateway_module qw(sale credit); 
+
+BEGIN {
+    $gateway_module = ${Config::gateway_module};
+    require "LedgerSMB/CreditCard/$gateway_module.pm";
+    import $gateway_module qw(sale credit);
 }
 
 1;
