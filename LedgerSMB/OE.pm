@@ -925,7 +925,6 @@ sub retrieve {
 		$form->get_recurring;
 
 		@queries = $form->run_custom_queries('oe', 'SELECT');
-		$form->{dbh}->commit;
 	} else {
 
 		# get last name used
@@ -1738,7 +1737,6 @@ sub get_warehouses {
 	}
 	$sth->finish;
 
-	$dbh->commit;
 
 }
 
@@ -2153,7 +2151,6 @@ sub transfer {
 	}
 
 	my $rc = $dbh->commit;
-	$dbh->commit;
 
 	$rc;
 
