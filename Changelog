@@ -1,5 +1,7 @@
 Changelog for 1.2.3
 * Corrected per-user locale selection (Seneca)
+* Corrected partial commits for invoices and orders (Chris T)
+* Corrected data types for invoice.qty and invoice.allocated in new dbs (CHris T)
 
 Changelog for 1.2.2
 * Corrected sales tax display bug in order entry screen (Chris T)
