@@ -26,8 +26,8 @@ data structure entity may be grouped together even if each run may touch only a
 small part of the code so that these functions can be maintained together in a
 logical way.
 
-Nested blocks of code should be indented with a single tab.  This way,
-programmers can adjust the tab width of their editors to their preferences.
+Nested blocks of code should be indented with a single 4 spaces.  Tabs are OK, 
+but before release, a single commit will be made using perltidy -i=4.  
 
 Lines longer than 79 characters are not handled well by many terminals and
 should generally be avoided.  Continued lines should be indented by one more tab
