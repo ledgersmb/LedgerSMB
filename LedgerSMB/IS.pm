@@ -791,7 +791,6 @@ sub customer_details {
 	for (keys %$ref) { $form->{$_} = $ref->{$_} }
 
 	$sth->finish;
-	$dbh->commit;
 
 }
 
@@ -1560,7 +1559,6 @@ sub cogs {
 	$sth->finish;
 
 	$allocated;
-	$dbh->commit;
 }
 
 
@@ -1707,7 +1705,6 @@ sub delete_invoice {
 		}
 	}
   
-	$dbh->commit;
   
 	$rc;
   
@@ -1977,7 +1974,6 @@ sub retrieve_item {
 	}
   
 	$sth->finish;
-	$dbh->commit;
   
 }
 

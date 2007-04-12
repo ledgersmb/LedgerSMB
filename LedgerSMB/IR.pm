@@ -743,7 +743,6 @@ sub post_invoice {
  
 	$form->audittrail($dbh, "", \%audittrail);
  
-	my $rc = $dbh->commit;
 
 	foreach $item (keys %updparts) {
 		$item = $dbh->quote($item);
@@ -753,8 +752,8 @@ sub post_invoice {
 			       lastcost = lastcost($item)
 			 WHERE id = $item|;
 		$dbh->prepare($query) || $form->dberror($query);
-		$dbh->commit;
 	}
+	my $rc = $dbh->commit;
   
 	$rc;
   
@@ -1281,7 +1280,6 @@ sub retrieve_item {
 	}
   
 	$sth->finish;
-	$dbh->commit;
   
 }
 
@@ -1360,7 +1358,6 @@ sub vendor_details {
 	}
 
 	$sth->finish;
-	$dbh->commit;
 
 }
 
