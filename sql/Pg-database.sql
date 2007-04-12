@@ -101,7 +101,7 @@ CREATE TABLE invoice (
   trans_id int,
   parts_id int,
   description text,
-  qty integer,
+  qty NUMERIC,
   allocated integer,
   sellprice NUMERIC,
   fxsellprice NUMERIC,
