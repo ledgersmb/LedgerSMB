@@ -1014,12 +1014,12 @@ CREATE TRIGGER del_recurring AFTER DELETE ON ap FOR EACH ROW EXECUTE PROCEDURE d
 CREATE TRIGGER del_recurring AFTER DELETE ON gl FOR EACH ROW EXECUTE PROCEDURE del_recurring();
 -- end trigger
 --
-CREATE FUNCTION avgcost(int) RETURNS FLOAT AS '
+CREATE FUNCTION avgcost(int) RETURNS NUMERIC AS '
 
 DECLARE
 
-v_cost float;
-v_qty float;
+v_cost numeric;
+v_qty numeric;
 v_parts_id alias for $1;
 
 BEGIN
@@ -1046,11 +1046,11 @@ END;
 ' language 'plpgsql';
 -- end function
 --
-CREATE FUNCTION lastcost(int) RETURNS FLOAT AS '
+CREATE FUNCTION lastcost(int) RETURNS numeric AS '
 
 DECLARE
 
-v_cost float;
+v_cost numeric;
 v_parts_id alias for $1;
 
 BEGIN
