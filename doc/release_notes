@@ -157,3 +157,22 @@ places.
 
 SQL-Ledger is a registered trademark of DWS systems and is not affiliated with 
 this project or its members in any way.
+
+DEPRECATIONS:
+=============================
+The entire set of Perl modules and database structures should be seen as 
+deprecated from the perspective of add-on development.  For advice in making
+add-ons as upgrade-safe as possible, please email the -devel list.  Please 
+include a description of what you are trying to accomplish.
+
+KNOWN ISSUES:
+==============================
+Invoice and order data entry screens display incorrect total.  Correct amount 
+is posted to the database, and invoices print properly, however.  This is a
+display problem only.  A fix is expected to be available from the development 
+team shortly after this version is released but will not not have been through 
+full testing and this bug is not considered to be as severe as the
+bugs that are fixed in this release.  You can either upgrade to the latest svn 
+release in branches/1.2 or you can email a request to the list for the fix.
+
+
