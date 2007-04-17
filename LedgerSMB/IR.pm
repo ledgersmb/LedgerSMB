@@ -276,7 +276,7 @@ sub post_invoice {
 				   SET trans_id = ?,
 				       parts_id = ?,
 				       description = ?,
-				       qty = ? * -1,
+				       qty = ?,
 				       sellprice = ?,
 				       fxsellprice = ?,
 				       discount = ?,
@@ -290,7 +290,7 @@ sub post_invoice {
 			$sth = $dbh->prepare($query);
 			$sth->execute(
 				$form->{id},  $form->{"id_$i"}, 
-				$form->{"description_$i"}, $form->{"qty_$i"},
+				$form->{"description_$i"}, $form->{"qty_$i"} * -1,
 				$form->{"sellprice_$i"}, $fxsellprice,
 				$form->{"discount_$i"}, $allocated, 
 				$form->{"unit_$i"}, $form->{"deliverydate_$i"},
