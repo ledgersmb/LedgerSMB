@@ -3,6 +3,7 @@ Changelog for 1.2.4
 * Fixed error posting vendor invoice with fraction costs.  (Chris M)
 * Fixed sales tax display issue on invoice/order entry screen (Chris T)
 * Fixed inconsistant error when setting to recur 0 times (Chris T)
+* Fixed Access Denied when sending email (CHris T)
 
 Changelog for 1.2.3
 * Corrected per-user locale selection (Seneca)
