@@ -2626,6 +2626,9 @@ sub save_recurring {
 			$s{message}) 
 				= split /,/, $self->{recurring};
 
+		if ($s{howmany} == 0){
+			$self->error("Cannot set to recur 0 times");
+		}
 		for (qw(reference message)) { $s{$_} = $self->unescape($s{$_}) }
 		for (qw(repeat howmany payment)) { $s{$_} *= 1 }
 
