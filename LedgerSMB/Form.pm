@@ -609,7 +609,10 @@ sub parse_template {
 
     $self->{cwd} = Cwd::getcwd();
     for (qw(IN OUT)) {
-        if ( $self->{$_} =~ m#[:/\\]# ) {
+        if ( $self->{$_} =~ m#[:/\\]#  and 
+            ($self->{$_} != $LedgerSMB::Sysconfig::sendmail and ($_ eq 'OUT'))) 
+            {
+
             $self->error("Access denied");
         }
     }
