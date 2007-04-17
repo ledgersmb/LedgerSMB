@@ -484,12 +484,13 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     if ( !$form->{taxincluded} ) {
         my @taxset = Tax::init_taxes( $form, $form->{taxaccounts} );
-        $form->{invtotal} +=
-          $form->round_amount(
-            Tax::calculate_taxes( \@taxset, $form, $form->{invsubtotal}, 0 ),
-            2 );
         foreach $taxobj (@taxset) {
             $item = $taxobj->account;
+	    $form->{invtotal} += $form->round_amount(
+                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2);
+            $form->{"${item}_total"} =
+              $form->format_amount( \%myconfig,
+                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2 );
             if ( $form->{"${item}_base"} ) {
                 $form->{"${item}_total"} =
                   $form->format_amount( \%myconfig,
