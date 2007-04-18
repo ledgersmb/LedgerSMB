@@ -167,12 +167,8 @@ include a description of what you are trying to accomplish.
 
 KNOWN ISSUES:
 ==============================
-Invoice and order data entry screens display incorrect total.  Correct amount 
-is posted to the database, and invoices print properly, however.  This is a
-display problem only.  A fix is expected to be available from the development 
-team shortly after this version is released but will not not have been through 
-full testing and this bug is not considered to be as severe as the
-bugs that are fixed in this release.  You can either upgrade to the latest svn 
-release in branches/1.2 or you can email a request to the list for the fix.
-
+The POS printing system gives an access denied message because the printer
+triggers the directory transversal checks.  To work around this problem, ensure
+that you do not need to use absolute paths for the printer program (use lpr or
+put netdirect.pl in /usr/local/bin and reference without the full path).
 

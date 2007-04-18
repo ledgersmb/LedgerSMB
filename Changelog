@@ -5,6 +5,9 @@ Changelog for 1.2.4
 * Fixed inconsistant error when setting to recur 0 times (Chris T)
 * Fixed Access Denied when sending email (CHris T)
 * Added Makefile.PL as optional means of dependency checking (experimental, Chris T)
+* Updated INSTALL file to use correct globaldbh syntax (Chris T)
+* Updated UNGRADE file to recommend reading INSTALL first (Chris T)
+
 
 Changelog for 1.2.3
 * Corrected per-user locale selection (Seneca)

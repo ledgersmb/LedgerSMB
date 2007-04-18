@@ -305,9 +305,11 @@ DBConnect: dbi:Pg:dbname=ledgersmb;host=localhost;port=5432
 And that section of ledger-smb.conf looks like:
 
 [globaldb]
-DBConnect: dbi:Pg:dbname=ledgersmb;host=localhost;port=5432
-DBUserName: ledgersmb
-DBPassword: MYROLEPASSWORD
+DBname     = ledgersmb
+DBhost     = localhost
+DBport     = 5432
+DBUserName = ledgersmb
+DBPassword = MYROLEPASSWORD
 
 
 OTHER ISSUES:

@@ -17,6 +17,9 @@ Before you begin, make sure that you are running at least PostgreSQL 8.0.  If
 you are running a prior version, you will need to dump your data, upgrade the 
 database server and restore the data before proceeding.
 
+You may want to review the INSTALL file as well, as common troubleshooting 
+information and more detail may be found there.
+
 MANUAL UPGRADE:
 ===============================================================================
 
