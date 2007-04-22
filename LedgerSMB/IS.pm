@@ -333,7 +333,6 @@ sub invoice_details {
               ? $form->format_amount( $myconfig, $discount * -1,
                 $decimalplaces )
               : " ";
-            $linetotal = ($linetotal) ? $linetotal : " ";
 
             push( @{ $form->{discount} }, $discount );
             push(
@@ -348,6 +347,7 @@ sub invoice_details {
 
             $form->{"linetotal_$i"} =
               $form->format_amount( $myconfig, $linetotal, 2 );
+            $form->{"linetotal_$i"} = '0.00' unless $form->{"linetotal_$i"};
 
             push( @{ $form->{linetotal} }, $form->{"linetotal_$i"} );
 
@@ -602,6 +602,7 @@ sub invoice_details {
         $form->{$_} = $form->format_amount( $myconfig, $form->{$_} );
     }
     $form->{subtotal} = $form->format_amount( $myconfig, $form->{total}, 2 );
+    $form->{subtotal} = '0.00' unless $form->{subtotal};
     $form->{invtotal} =
       ( $form->{taxincluded} ) ? $form->{total} : $form->{total} + $tax;
 

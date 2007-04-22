@@ -36,9 +36,9 @@ sub init_taxes {
     my @accounts = split / /, $taxaccounts;
     if ( defined $taxaccounts2 ) {
         my @tmpaccounts = @accounts;
-        $#accounts = 0;
+        $#accounts = -1;
         for my $acct ( split / /, $taxaccounts2 ) {
-            if ( $taxaccounts =~ /\s$acct\s/ ) {
+            if ( $taxaccounts =~ /\b$acct\b/ ) {
                 push @accounts, $acct;
             }
         }
@@ -53,7 +53,7 @@ sub init_taxes {
     foreach $taxaccount (@accounts) {
         next if ( !defined $taxaccount );
         if ( defined $taxaccounts2 ) {
-            next if $taxaccount !~ /$taxaccounts2/;
+            next if $taxaccounts2 !~ /\b$taxaccount\b/;
         }
         $sth->execute($taxaccount) || $form->dberror($query);
         my $ref = $sth->fetchrow_hashref;
