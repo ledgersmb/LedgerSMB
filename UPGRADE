@@ -2,7 +2,7 @@ Upgrading to LedgerSMB 1.2
 
 From LedgerSMB (1.1.1 or earlier) 
 or 
-SQL-Ledger (2.6.19 or earlier)
+SQL-Ledger (2.6.27 or earlier)
 
 This document contains information on how to upgrade from earlier versions of 
 LedgerSMB or SQL-Ledger.  This upgrade is a major revision and may not go 
@@ -61,10 +61,22 @@ and may not be required in all circumstances.  These include:
   d) Run the SQL upgrade scripts in order starting with the one whose name
      begins with "Pg-upgrade-[version]" (each of these scripts will upgrade to
      the next database version which is also identified in the file name).
+     N.B.: use `ls -v` to see the scripts in version order and run them
+     in the order shown by this command.
+  e) If you have a problem running the scripts (errors due to ownership
+     or you just want to change ownership of the tables), connect to the
+     database as you did in c above and at the => prompt:
+     "/d"
+     You will see a list of all tables, sequences, triggers, etc.  After
+     creating a user (see the INSTALL file for details), you can change
+     ownership of the relation by running the following at the => prompt:
+     "ALTER TABLE|SEQUENCE|TRIGGER public.<relation_name> OWNER TO "new_owner";
+     Select the appropriate relation type and relation_name.
+     Rerun the upgrade scripts starting with the first one that failed.
 
-Note that this will create three tables that may not actually be used depending
-on your setup:  users, users_conf, and session.  In general if you have multiple
-datasets, these tables will only be used in one.
+Note that subpara d above will create three tables that may not actually be 
+used depending on your setup:  users, users_conf, and session.  In general if 
+you have multiple datasets, these tables will only be used in one.
 
 4)  Decide where to put the user/session management tables.  In general, we
 recommend as follows:
