@@ -1,0 +1,97 @@
+Upgrading to LedgerSMB 1.2 
+
+From LedgerSMB (1.1.1 or earlier) 
+or 
+SQL-Ledger (2.6.19 or earlier)
+
+This document contains information on how to upgrade from earlier versions of 
+LedgerSMB or SQL-Ledger.  This upgrade is a major revision and may not go 
+smoothly.  We recommend that the reader start by reading the section on manual
+installation and then start by trying the automated means mentioned later.
+
+Also this document assumes that the reader is already familiar with the release
+notes.  If you have not already done so, please read the release_notes file in
+the doc/ directory.
+
+Before you begin, make sure that you are running at least PostgreSQL 8.0.  If 
+you are running a prior version, you will need to dump your data, upgrade the 
+database server and restore the data before proceeding.
+
+MANUAL UPGRADE:
+===============================================================================
+
+1)  Back up old installation
+THis is a major upgrade.  If something goes wrong, you want to be able to get
+back to a known good state.  To back up the old installation do as follows:
+  a)  Copy the LedgerSMB install directory (for example /usr/local/ledger-smb) 
+      to another location
+  b)  Back up the database using pg_dump or other PostgreSQL backup program.
+  c)  (optional) Make a live bakup of the accounting database by creating a new
+      db with it as the template.  Something like:
+      createdb -U postgres -T ledgersmb accounting_backup
+
+
+2)  Check New Dependencies
+
+The Build.PL script can be used to test for unmet dependencies and run other
+tests.  It doesn't install anything yet, but it will tell you what you are 
+missing.  To check for dependencies, run "perl Build.PL" from the command line.
+Missing dependencies can generally be installed via a Linux distributor's
+package manager or by CPAN.
+
+Once this is done and dependencies are satisfied, you can check to see whether
+the installation nominally works by running "./Build test" from the command
+line.  The test suites currently check to make sure all the perl modules load
+and that a number of numeric tests are passed.
+
+Dependencies which are recommended are needed only for specific functionality
+and may not be required in all circumstances.  These include:
+  * Net::TCLink for credit card processing in a POS environment
+  * Parse::RecDescent for the CLI script host
+
+3)  Upgrade database
+
+  a) cd to the sql/legacy/ directory of the new ledger directory
+  b) run "psql" with appropriate options to connect to your database.
+  c) Note the db version by running the following query:
+     "SELECT version FROM defaults;"
+  d) Run the SQL upgrade scripts in order starting with the one whose name
+     begins with "Pg-upgrade-[version]" (each of these scripts will upgrade to
+     the next database version which is also identified in the file name).
+
+Note that this will create three tables that may not actually be used depending
+on your setup:  users, users_conf, and session.  In general if you have multiple
+datasets, these tables will only be used in one.
+
+4)  Decide where to put the user/session management tables.  In general, we
+recommend as follows:
+  a)  Single dataset installations should use the user tables in the dataset.
+  b)  Multicompany installations should use user tables in a separate dataset
+      from any accounting data.
+
+If you need to create another dataset, you can create the db and import the
+sql/Pg-central.sql file into it.
+
+5)  Set the admin password:
+  a)  From psql, determine what admin password you wish to use.  Then type:
+      "update users_conf set password = md5('my_password');"
+      Naturally you would use your password instead of my_password.
+
+6)  Import the users.  Run the import-members script to do this.
+
+7)  Copy the files from the LedgerSMB tarball over your existing installation.
+
+8)  Delete the users directory.
+
+9)  Upgrade your templates.  Run the following command:
+	perl upgrade_templates.pl $templatedir
+    Where $templatedir is the directory of your templates.
+
+10)  Edit the ledger-smb.conf file as appropriate.
+
+11) You can test basic parts of the installation by running Build ./test at 
+    this point.
+
+Congratulations, you have manually upgraded to LedgerSMB 1.2.
+
+TODO:  Add upgrade.pl script and automate the above process.

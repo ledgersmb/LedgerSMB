@@ -1,0 +1,178 @@
+RELEASE NOTES
+LedgerSMB 1.2.2
+
+
+
+1:  Welcome to LedgerSMB
+
+LedgerSMB is an accounting and ERP program initially aimed at small to midsize
+businesses.  Currently the financials and supply chain management modules are
+fairly complete, while other modules such as project management exist in a
+rudamentary form.  The initial features are identical to SQL-Ledger 2.6.17 from
+which it was derived, but the feature set is starting to diverge rapidly.
+
+1.1 System Requirements:
+
+* Perl 5.8.
+* Apache, IIS, or other web server that supports CGI.
+* PostgreSQL 8.0 or higher.  7.3 and 7.4 could be supported with some effort but
+will not work out of the box.
+* Any operating system that supports the above environment.
+* The following CPAN modules:
+	* Data::Dumper
+	* Locale::Maketext
+	* Locale::Maketext::Lexicon
+	* MIME::Base64
+	* Digest::MD5
+	* HTML::Entities
+	* DBI
+	* DBD::Pg
+	* Math::BigFloat
+	* IO::File
+	* Encode
+	* Locale::Country
+	* Locale::Language
+	* Time::Local
+	* Cwd
+	* Config::Std
+	* MIME::Lite
+
+	
+
+2:  What's New in 1.2?
+
+2.1: Database changes:
+
+All core tables now have defined primary keys.  This allows Slony-I to be 
+supported out of the box.
+
+Chris Browne has contributed a setup script for Slony.  It is in the 
+utils/replication directory.
+
+Also all user information has been moved into the database and the password 
+algorythm has been changed from crypt to md5.  This means that users will need 
+to convert their accounts prior to first login on the new system (if this is an
+upgrade).
+
+Also now the defaults table has moved from a one column per value structure to a simple key->value structure.
+
+
+2.2:  Security
+
+LedgerSMB 1.2 has been through a detailed SQL injection audit of the codebase
+inherited from SQL-Ledger.  As a result several vulnerabilities which were known
+to be exploitable were corrected along with hundreds of places where
+vulnerabilities may have been exploitable but we didn't have time to verify the
+what was involved in exploiting it.  We believe though that many or most of the
+issues were exploitable given a little time and effort.
+
+Also, we discovered the template editor's security system was moved from
+blacklisting to whitelisting, eliminating a whole class of possible security
+issues.
+
+2.3:  New Features
+
+Metatron Technology Consulting's SL-POS codebase was merged with this project,
+providing a framework for POS hardware support and more.
+
+Online credit card processing support has been added.
+
+LSMB now supports an arbitrary number of defined currencies for a business and 
+is no longer limited to 3.
+
+2.4:  Localization Changes
+
+Localization functions now use Gettext .po files on all platforms.  This means 
+that standard translation management tools will work with LSMB translations.
+
+2.5:  Other changes
+
+The ledger-smb.conf is now an inifile which will reduce the level of expertise 
+necessary to configure it for non-Perl users.
+
+3:  Known Issues
+Reposting invoices is known to cause inaccuracies cost of goods sold and
+inventory accounts.  This problem has been confirmed to affect SQL-Ledger 2.6.x 
+as well and is caused by problems involving the de-allocation and trasaction
+reversal routines.  It will be corrected (by removing the ability to truly
+repost invoices) in an upcoming version as we continue to re-engineer the
+application.
+
+4:  Differences between LedgerSMB and SQL-Ledger(TM)
+
+4.1: Login name restrictions
+Logins in SQL-Ledger can contain any printable characters.  In LedgerSMB these
+are restricted to alphanumeric characters and the symbols ., @, and -.
+
+4.2: Session handling
+SQL-Ledger as of 2.6.17 used session tokens for authentication.  These tokens
+are based on the current timestamp and therefore insecure.  Furthermore, these
+tokens are not tracked on the server, so one can easily forge credentials for
+either the main application or the administrative interface.  While this was 
+corrected in 2.6.18, the solutions chosen by SQL-Ledger (caching the crypted 
+password by the browser) is not in line with commonly accepted best security
+practices.
+
+LedgerSMB stores the sessions in the database.  These are generated as md5 sums
+of random numbers and are believed to be reasonably secure.  The sessions time
+out after a period of inactivity.  In the initial release both
+SQL-Ledger-style session ID's and the newer version were required to access the
+application.  In newer versions, the SQL-Ledger style session ID's have been 
+removed.
+
+4.3: Database Changes
+Under certain circumstances where the Chart of Accounts is improperly modified,
+it is possible to post transactions such that a portion of the transaction is
+put into a NULL account.  LedgerSMB does not allow NULL values in the chart id
+field of the transaction.
+
+Also, the transaction amount has been changed from FLOAT to NUMERIC so that
+arbitrary precision mathematics can be used in third party reports.  This ought
+to also allow SQL-Ledger to properly scale up better as SUM operations on
+floating points are unsafe for large numbers of records where accounting data is
+involved.
+
+5:  Roadmap
+This project has no defined roadmap but rather a set of statements and 
+objectives contained in the documentation manager and trackers of sourceforge.
+In general, our development is focused around the following principles:
+
+* LSMB as infrastructure:  LSMB should be accessible from other applications.
+
+* Universal applicability:  LSMB should be usable by any any business and should
+always do the right thing in the background.  Businesses should never find that 
+they have outgrown the software.
+
+* Focus on Small to Midsize Businesses:  LSMB's core market will remain in the
+small to midsize market.
+
+6:  Get Involved
+Contributors should start by joining the LedgerSMB users and devel lists.  Code
+contributions at the moment must be committed by either project maintainer and
+should be submitted either using the patches interface at Sourceforge or the
+devel mailing lists.
+
+Additionally, we can use help in QA, documentation, advocacy, and many other
+places. 
+
+SQL-Ledger is a registered trademark of DWS systems and is not affiliated with 
+this project or its members in any way.
+
+DEPRECATIONS:
+=============================
+The entire set of Perl modules and database structures should be seen as 
+deprecated from the perspective of add-on development.  For advice in making
+add-ons as upgrade-safe as possible, please email the -devel list.  Please 
+include a description of what you are trying to accomplish.
+
+KNOWN ISSUES:
+==============================
+Invoice and order data entry screens display incorrect total.  Correct amount 
+is posted to the database, and invoices print properly, however.  This is a
+display problem only.  A fix is expected to be available from the development 
+team shortly after this version is released but will not not have been through 
+full testing and this bug is not considered to be as severe as the
+bugs that are fixed in this release.  You can either upgrade to the latest svn 
+release in branches/1.2 or you can email a request to the list for the fix.
+
+

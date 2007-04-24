@@ -1,0 +1,148 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+<tr>
+  <td width=10>
+  </td> 
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
+      </h4>
+    </td>
+
+    <th colspan=2>
+      <h4 align=left>SZÁLLÍTÓLEVÉL</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Dátum</th><td width=10> </td><td><?lsmb invdate ?></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Szám</th><td></td><td><?lsmb invnumber ?></td></tr>
+    </tr>
+  
+    <tr>
+      <td> 
+      </td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Szállítási cím:</th>
+    </tr>
+
+    <tr>
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddr1 ?>
+      <br><?lsmb shiptoaddr2 ?>
+      <br><?lsmb shiptoaddr3 ?>
+      <br><?lsmb shiptoaddr4 ?>
+<?lsmb if shiptocontact ?>
+      <p>Kapcsolattartó: <?lsmb shiptocontact ?>
+<?lsmb end shiptocontact ?>
+
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Szám</th>
+      <th align=left><font color=ffffff>Szöveges leírás</th>
+      <th align=right><font color=ffffff>Menny.</th>
+      <th>&nbsp;</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=right><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
+    </tr>
+<?lsmb end number ?>
+
+    <tr>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<?lsmb if notes ?>
+      <td>Megjegyzés</td>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
+      <td align=right>
+      <?lsmb shippingpoint ?>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+    <td><font size=-3>
+    A visszaszállított áruk után 10 % újraraktározási
+    díjat kell fizetni. Engedélyt a visszaszállításra csak
+    a <?lsmb company ?> adhat ki. A visszárut csak elõre kifizetve és biztosítva
+    lehet visszaszállítani. <?lsmb company ?> nem tehetõ felelõssé a visszaszállítás
+    során keletkezett kárért.
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

@@ -1,0 +1,110 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <?lsmb company ?>
+
+      <?lsmb address ?>}\hfill
+    \begin{tabular}[b]{rrr@{}}
+    Tel & <?lsmb tel ?>\\
+    Fax & <?lsmb fax ?>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<?lsmb company ?>\hfill <?lsmb statementdate ?>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{1.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.5\textwidth}{
+<?lsmb name ?>\\
+<?lsmb address1 ?>\\
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>\\
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>\\
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>\\
+
+}
+\parbox[t]{.4\textwidth}{
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
+
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
+
+<?lsmb email ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{RELATÓRIO} \hfill \textbf{<?lsmb statementdate ?>}
+
+\vspace{2cm}
+
+\begin{tabular*}{\textwidth}{|l@{\extracolsep\fill}ccrrrr|}
+  \hline
+  \textbf{Número da Fatura \#} & \textbf{Data} & \textbf{Prazo} &
+  \textbf{Atual} & \textbf{30} & \textbf{60} & \textbf{90+} \\
+  \hline
+<?lsmb foreach invnumber ?>
+  <?lsmb invnumber ?> & <?lsmb invdate ?> & <?lsmb duedate ?> &
+  <?lsmb c0 ?> & <?lsmb c30 ?> & <?lsmb c60 ?> & <?lsmb c90 ?> \\
+<?lsmb end invnumber ?>
+  \multicolumn{7}{|l|}{\mbox{}} \\
+  \hline
+  \textbf{Subtotal} & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?> \\
+  \hline
+\end{tabular*}
+
+\vspace{0.5cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Totais} & \textbf{<?lsmb total ?>}
+\end{tabularx}
+
+\vfill
+
+Favor pagar com <?lsmb company ?>
+
+\end{document}
+

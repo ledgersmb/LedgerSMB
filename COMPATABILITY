@@ -1,0 +1,17 @@
+Known versions of software incompatible with LedgerSMB:
+-------------------------------
+The following PostgreSQL versions suffer from a bug which causes problems with 
+LedgerSMB:  8.2.2, 8.1.7, and 8.0.11
+
+These versions produce an error concerning wrong data types but the error shows 
+that the data types are indeed correct.
+
+-------------------------------
+
+W3M does not handle the <BUTTON> element properly and does not work.
+
+-------------------------------
+
+Pocket Internet Explorer:
+Javascript menus do not work with Pocket IE (on Windows CE).  Use the Lynx 
+interface instead by appending ?path=/bin/lynx to the end of the login.pl url.

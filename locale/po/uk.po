@@ -1,0 +1,2301 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2003-2005
+#
+# Ukrainian texts:
+#
+# Author: Ivan Petrouchtchak <iip@telus.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr "А"
+
+msgid "AP"
+msgstr "Витрати"
+
+msgid "AP Aging"
+msgstr "Старіння рахунків витрат"
+
+msgid "AP Outstanding"
+msgstr "Несплачені рахунки витрат"
+
+msgid "AP Transaction"
+msgstr "Проводка витрат"
+
+msgid "AP Transactions"
+msgstr "Проводки витрат"
+
+msgid "AR"
+msgstr "Доходи"
+
+msgid "AR Aging"
+msgstr "Старіння рахунків доходів"
+
+msgid "AR Outstanding"
+msgstr "Несплачені рахунки доходів"
+
+msgid "AR Transaction"
+msgstr "Проводка доходів"
+
+msgid "AR Transactions"
+msgstr "Проводки доходів"
+
+msgid "About"
+msgstr "Про програму"
+
+msgid "Above"
+msgstr "Вище"
+
+msgid "Access Control"
+msgstr "Контроль доступу"
+
+msgid "Account"
+msgstr "Рахунок"
+
+msgid "Account Number"
+msgstr "Номер рахунку"
+
+msgid "Account Number missing!"
+msgstr "Не вказаний номер рахунку!"
+
+msgid "Account Type"
+msgstr "Вид рахунку"
+
+msgid "Account Type missing!"
+msgstr "Не вказаний вид рахунку!"
+
+msgid "Account deleted!"
+msgstr "Рахунок видалений"
+
+msgid "Account does not exist!"
+msgstr "Рахунок не існує"
+
+msgid "Account saved!"
+msgstr "Рахунок збережено"
+
+msgid "Accounting"
+msgstr "Облік"
+
+msgid "Accounting Menu"
+msgstr "Меню обліку"
+
+msgid "Accounts"
+msgstr "Рахунки"
+
+msgid "Activate Audit trail"
+msgstr "Активувати сліди для аудиту"
+
+msgid "Activate Audit trails"
+msgstr "Активувати сліди для аудиту"
+
+msgid "Active"
+msgstr "Активний"
+
+msgid "Add"
+msgstr "Додати"
+
+msgid "Add AP Transaction"
+msgstr "Додати проводку витрат"
+
+msgid "Add AR Transaction"
+msgstr "Додати проводку доходів"
+
+msgid "Add Account"
+msgstr "Додати рахунок"
+
+msgid "Add Assembly"
+msgstr "Додати комплект"
+
+msgid "Add Business"
+msgstr "Додати бізнес"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Додати проводку переведення готівки"
+
+msgid "Add Customer"
+msgstr "Новий клієнт"
+
+msgid "Add Deduction"
+msgstr "Додати відрахування"
+
+msgid "Add Department"
+msgstr "Додати відділ"
+
+msgid "Add Employee"
+msgstr "Додати працівника"
+
+msgid "Add Exchange Rate"
+msgstr "Додати курс"
+
+msgid "Add GIFI"
+msgstr "Новий GIFI"
+
+msgid "Add General Ledger Transaction"
+msgstr "Нова проводка"
+
+msgid "Add Group"
+msgstr "Додати групу"
+
+msgid "Add Labor/Overhead"
+msgstr "Додати роботу/додаткові витрати"
+
+msgid "Add Language"
+msgstr "Додати мову"
+
+msgid "Add Part"
+msgstr "Новий Товар"
+
+msgid "Add Pricegroup"
+msgstr "Додати цінову групу"
+
+msgid "Add Project"
+msgstr "Новий Проект"
+
+msgid "Add Purchase Order"
+msgstr "Нове замовлення на купівлю"
+
+msgid "Add Quotation"
+msgstr "Котирування"
+
+msgid "Add Request for Quotation"
+msgstr "Додати запит на котирування"
+
+msgid "Add SIC"
+msgstr "Додати SIC"
+
+msgid "Add Sales Invoice"
+msgstr "Новий Рахуно-фактура"
+
+msgid "Add Sales Order"
+msgstr "Нове замовлення на продаж"
+
+msgid "Add Service"
+msgstr "Нова послуга"
+
+msgid "Add Transaction"
+msgstr "Нова проводка"
+
+msgid "Add User"
+msgstr "Новий користувач"
+
+msgid "Add Vendor"
+msgstr "Новий постачальник"
+
+msgid "Add Vendor Invoice"
+msgstr "Новий купівельний рахунок-фактура"
+
+msgid "Add Warehouse"
+msgstr "Додати склад"
+
+msgid "Address"
+msgstr "Адреса"
+
+msgid "Administration"
+msgstr "Адміністрування"
+
+msgid "Administrator"
+msgstr "Адміністратор"
+
+msgid "After Deduction"
+msgstr "Після відрахування"
+
+msgid "All"
+msgstr "Всі"
+
+msgid "All Accounts"
+msgstr "Всі рахунки"
+
+msgid "All Datasets up to date!"
+msgstr "Бази Даних не потребують поновлення!"
+
+msgid "All Items"
+msgstr "Всі елементи"
+
+msgid "Amount"
+msgstr "Сума"
+
+msgid "Amount Due"
+msgstr "Заплатити суму"
+
+msgid "Amount missing!"
+msgstr "Сума відсутня!"
+
+msgid "Apr"
+msgstr "квітня"
+
+msgid "April"
+msgstr "Квітень"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Ви певні, що хочете видалити даний рахунок?"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Ви певні, що хочете видалити дане  замовлення?"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Ви певні, що хочете видалити номер котирування?"
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "Ви певні, що хочете видалити дану проводку?"
+
+msgid "Assemblies"
+msgstr "Комплекти"
+
+msgid "Assemblies restocked!"
+msgstr "Комплекти інвентаризовані!"
+
+msgid "Assembly"
+msgstr "Комплект"
+
+msgid "Asset"
+msgstr "Актив"
+
+msgid "Attachment"
+msgstr "Додаток"
+
+msgid "Audit Control"
+msgstr "Контроль"
+
+msgid "Audit trail disabled"
+msgstr "Вимкнено сліди для аудиту"
+
+msgid "Audit trail enabled"
+msgstr "Увімкнено сліди для аудиту"
+
+msgid "Audit trail removed up to"
+msgstr "Слід для аудиту вилучено до"
+
+msgid "Audit trails disabled"
+msgstr "Вимкнено сліди для аудиту"
+
+msgid "Audit trails enabled"
+msgstr "Увімкнено сліди для аудиту"
+
+msgid "Aug"
+msgstr "серпня"
+
+msgid "August"
+msgstr "Серпень"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "BOM"
+msgstr "BOM"
+
+msgid "Backup"
+msgstr "Резервна копія"
+
+msgid "Backup sent to"
+msgstr "Резервна копія послана до"
+
+msgid "Balance"
+msgstr "Баланс"
+
+msgid "Balance Sheet"
+msgstr "Баланс-зведення"
+
+msgid "Based on"
+msgstr "Основано на"
+
+msgid "Bcc"
+msgstr "Прих.копія"
+
+msgid "Before Deduction"
+msgstr "Перед відрахуванням"
+
+msgid "Beginning Balance"
+msgstr "Початковий баланс"
+
+msgid "Below"
+msgstr "Нижче"
+
+msgid "Billing Address"
+msgstr "Адреса для надсилання рахунку"
+
+msgid "Bin"
+msgstr "Корзина"
+
+msgid "Bin List"
+msgstr "Список корзин"
+
+msgid "Bin Lists"
+msgstr "Списки корзин"
+
+msgid "Books are open"
+msgstr "Книга відкрита"
+
+msgid "Business"
+msgstr "Бізнес"
+
+msgid "Business Number"
+msgstr "Бізнес-номер"
+
+msgid "Business deleted!"
+msgstr "Бізнес видалено!"
+
+msgid "Business saved!"
+msgstr "Бізнес збережено"
+
+msgid "C"
+msgstr "С"
+
+msgid "COGS"
+msgstr "COGS"
+
+msgid "Cannot create Lock!"
+msgstr "Не вдається створити замок!"
+
+msgid "Cannot delete account!"
+msgstr "Не вдається видалити рахунок!"
+
+msgid "Cannot delete customer!"
+msgstr "Не вдається видалити клієнта!"
+
+msgid "Cannot delete default account!"
+msgstr "Не вдається видалити типовий рахунок!"
+
+msgid "Cannot delete invoice!"
+msgstr "Не вдається видалити рахунок-фактуру!"
+
+msgid "Cannot delete item!"
+msgstr "Не вдається видалити цей елемент!"
+
+msgid "Cannot delete order!"
+msgstr "Не вдається видалити замовлення!"
+
+msgid "Cannot delete quotation!"
+msgstr "Не вдається видалити котирування!"
+
+msgid "Cannot delete transaction!"
+msgstr "Не вдається видалити проводку!"
+
+msgid "Cannot delete vendor!"
+msgstr "Не вдається видалити постачальника!"
+
+msgid "Cannot post Payment!"
+msgstr "Не вдається виставити платіж!"
+
+msgid "Cannot post Receipt!"
+msgstr "Не вдається виставити квитанцію!"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "Не вдається виставити рахунок-фактуру для закритого періоду!"
+
+msgid "Cannot post invoice!"
+msgstr "Не вдається виставити рахунок-фактуру!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "Не вдається виставити платіж для закритого періоду!"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "Не вдається виставити проводку для закритого періоду!"
+
+msgid "Cannot post transaction!"
+msgstr "Не вдається виставити проводку!"
+
+msgid "Cannot remove files!"
+msgstr "Не вдається видалити файли!"
+
+msgid "Cannot save account!"
+msgstr "Не вдається зберегти рахунок!"
+
+msgid "Cannot save defaults!"
+msgstr "Не вдається зберегти типові значення!"
+
+msgid "Cannot save order!"
+msgstr "Не вдається зберегти замовлення!"
+
+msgid "Cannot save preferences!"
+msgstr "Не вдається зберегти вподобання!"
+
+msgid "Cannot save quotation!"
+msgstr "Не вдається зберегти котирування!"
+
+msgid "Cannot set multiple options for"
+msgstr "Не вдається наставити декілька параметрів для"
+
+msgid "Cannot stock assemblies!"
+msgstr "Не вдається інвентаризувати комплекти!"
+
+msgid "Cash"
+msgstr "Готівка"
+
+msgid "Cc"
+msgstr "Копія до"
+
+msgid "Change"
+msgstr "Змінити"
+
+msgid "Change Admin Password"
+msgstr "Змінити пароль Адміністратора"
+
+msgid "Change Password"
+msgstr "Змінити пароль"
+
+msgid "Chart of Accounts"
+msgstr "План Рахунків"
+
+msgid "Check"
+msgstr "Чек"
+
+msgid "Check Inventory"
+msgstr "Перевірити інвентар"
+
+msgid "Checks"
+msgstr "Чеки"
+
+msgid "City"
+msgstr "Місто"
+
+msgid "Cleared"
+msgstr "Проведено"
+
+msgid "Click on login name to edit!"
+msgstr "Натисніть на ім'я користувача, щоб редагувати!"
+
+msgid "Close Books up to"
+msgstr "Закрити книги до"
+
+msgid "Closed"
+msgstr "Закрито"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Code missing!"
+msgstr "Відсутній код"
+
+msgid "Company"
+msgstr "Підприємство"
+
+msgid "Company Name"
+msgstr "Назва підприємства"
+
+msgid "Compare to"
+msgstr "Порівняти з"
+
+msgid "Components"
+msgstr "Компоненти"
+
+msgid "Confirm"
+msgstr "Підтвердити"
+
+msgid "Confirm!"
+msgstr "Підтвердіть!"
+
+msgid "Connect to"
+msgstr "Підключитись до"
+
+msgid "Contact"
+msgstr "Контактна особа"
+
+msgid "Continue"
+msgstr "Продовжити"
+
+msgid "Copies"
+msgstr "Копій"
+
+msgid "Copy to COA"
+msgstr "Скопіювати до плану рахунків"
+
+msgid "Cost"
+msgstr "Затрати"
+
+msgid "Cost Center"
+msgstr "Центр затрат"
+
+msgid "Could not save pricelist!"
+msgstr "Не вдалось зберегти ціновий список!"
+
+msgid "Could not save!"
+msgstr "Не вдалось зберегти!"
+
+msgid "Could not transfer Inventory!"
+msgstr "Не вдалось перевести інвентар!"
+
+msgid "Country"
+msgstr "Країна"
+
+msgid "Create Chart of Accounts"
+msgstr "Створити план рахунків"
+
+msgid "Create Dataset"
+msgstr "Створити базу даних"
+
+msgid "Credit"
+msgstr "Кредит"
+
+msgid "Credit Limit"
+msgstr "Ліміт кредиту"
+
+msgid "Curr"
+msgstr "Валюта"
+
+msgid "Currency"
+msgstr "Валюта"
+
+msgid "Current"
+msgstr "Поточний"
+
+msgid "Current Earnings"
+msgstr "Поточний заробіток"
+
+msgid "Customer"
+msgstr "Клієнт"
+
+msgid "Customer History"
+msgstr "Історія клієнта"
+
+msgid "Customer Number"
+msgstr "Номер клієнта"
+
+msgid "Customer deleted!"
+msgstr "Клієнта видалено!"
+
+msgid "Customer missing!"
+msgstr "Не вказаний клієнт!"
+
+msgid "Customer not on file!"
+msgstr "Клієнта нема в списку!"
+
+msgid "Customer saved!"
+msgstr "Клієнта збережено!"
+
+msgid "Customers"
+msgstr "Клієнти"
+
+msgid "DBI not installed!"
+msgstr "Не встановлено драйвер DBI!"
+
+msgid "DOB"
+msgstr "DOB"
+
+msgid "Database"
+msgstr "База даних"
+
+msgid "Database Administration"
+msgstr "Адміністрування бази даних"
+
+msgid "Database Driver not checked!"
+msgstr "Не увімкнено драйвер бази даних!"
+
+msgid "Database Host"
+msgstr "Вузол бази даних"
+
+msgid "Database User missing!"
+msgstr "Відсутній користувач бази даних!"
+
+msgid "Dataset"
+msgstr "База даних"
+
+msgid "Dataset is newer than version!"
+msgstr "База даних новіша ніж версія!"
+
+msgid "Dataset missing!"
+msgstr "Відсутня база даних!"
+
+msgid "Dataset updated!"
+msgstr "Базу даних оновлено!"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Date Format"
+msgstr "Формат дати"
+
+msgid "Date Paid"
+msgstr "Дата оплати"
+
+msgid "Date Received"
+msgstr "Дата отримання"
+
+msgid "Date missing!"
+msgstr "Не вказана дата!"
+
+msgid "Date received missing!"
+msgstr "Відсутня дата отримання!"
+
+msgid "Day"
+msgstr "День"
+
+msgid "Days"
+msgstr "Дні(в)"
+
+msgid "Debit"
+msgstr "Дебит"
+
+msgid "Dec"
+msgstr "грудня"
+
+msgid "December"
+msgstr "Грудень"
+
+msgid "Decimalplaces"
+msgstr "Десятичні місця"
+
+msgid "Decrease"
+msgstr "Зменшити"
+
+msgid "Deduct after"
+msgstr "Відрахувати після"
+
+msgid "Deduction deleted!"
+msgstr "Відрахування видалено!"
+
+msgid "Deduction saved!"
+msgstr "Відрахування збережено!"
+
+msgid "Deductions"
+msgstr "Відрахування"
+
+msgid "Default Template"
+msgstr "Типовий шаблон"
+
+msgid "Defaults"
+msgstr "Типові значення"
+
+msgid "Defaults saved!"
+msgstr "Типові значення збережено!"
+
+msgid "Delete"
+msgstr "Видалити"
+
+msgid "Delete Account"
+msgstr "Видалити рахунок"
+
+msgid "Delete Dataset"
+msgstr "Видалити Базу Даних"
+
+msgid "Delete Schedule"
+msgstr "Видалити розклад"
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr "Видалення мови призведе також до видалення шаблонів для мови"
+
+msgid "Delivery Date"
+msgstr "Дата доставки"
+
+msgid "Department"
+msgstr "Відділ"
+
+msgid "Department deleted!"
+msgstr "Відділ видалено!"
+
+msgid "Department saved!"
+msgstr "Відділ збережено!"
+
+msgid "Departments"
+msgstr "Відділи"
+
+msgid "Deposit"
+msgstr "Депозит/вклад"
+
+msgid "Description"
+msgstr "Опис"
+
+msgid "Description Translations"
+msgstr "Переклади опису"
+
+msgid "Description missing!"
+msgstr "Опис відсутній!"
+
+msgid "Detail"
+msgstr "Подробиці"
+
+msgid "Difference"
+msgstr "Різниця"
+
+msgid "Directory"
+msgstr "Каталог"
+
+msgid "Discount"
+msgstr "Знижка"
+
+msgid "Done"
+msgstr "Зроблено"
+
+msgid "Drawing"
+msgstr "Малюнок"
+
+msgid "Driver"
+msgstr "Драйвер"
+
+msgid "Dropdown Limit"
+msgstr "Обмеження листового меню"
+
+msgid "Due Date"
+msgstr "Заплатити до"
+
+msgid "Due Date missing!"
+msgstr "Не вказаний термін оплати!"
+
+msgid "E-mail"
+msgstr "Ел. пошта"
+
+msgid "E-mail Statement to"
+msgstr "Послати по ел. пошті до"
+
+msgid "E-mail address missing!"
+msgstr "Не вказана адреса ел. пошти!"
+
+msgid "E-mail message"
+msgstr "Повідомлення ел. пошти"
+
+msgid "E-mailed"
+msgstr "Ел. пошту відіслано"
+
+msgid "Edit"
+msgstr "Редагувати"
+
+msgid "Edit AP Transaction"
+msgstr "Редагувати проводку витрат"
+
+msgid "Edit AR Transaction"
+msgstr "Редагувати проводку доходів"
+
+msgid "Edit Account"
+msgstr "Редагувати рахунок"
+
+msgid "Edit Assembly"
+msgstr "Редагувати комплект"
+
+msgid "Edit Business"
+msgstr "Редагувати бізнес"
+
+msgid "Edit Customer"
+msgstr "Редагувати Клієнта"
+
+msgid "Edit Deduction"
+msgstr "Редагувати відрахування"
+
+msgid "Edit Department"
+msgstr "Редагувати відділ"
+
+msgid "Edit Employee"
+msgstr "Редагувати працівника"
+
+msgid "Edit GIFI"
+msgstr "Редагувати GIFI"
+
+msgid "Edit General Ledger Transaction"
+msgstr "Редагувати проводку головної книги"
+
+msgid "Edit Group"
+msgstr "Редагувати групу"
+
+msgid "Edit Labor/Overhead"
+msgstr "Редагувати роботу/додаткові витрати"
+
+msgid "Edit Language"
+msgstr "Змінити мову"
+
+msgid "Edit Part"
+msgstr "Редагувати товар"
+
+msgid "Edit Preferences for"
+msgstr "Редагувати параметри для"
+
+msgid "Edit Pricegroup"
+msgstr "Редагувати цінову групу"
+
+msgid "Edit Project"
+msgstr "Редагувати проект"
+
+msgid "Edit Purchase Order"
+msgstr "Редагувати купівельне замовлення"
+
+msgid "Edit Quotation"
+msgstr "Редагувати котирування"
+
+msgid "Edit Request for Quotation"
+msgstr "Редагувати запит на котирування"
+
+msgid "Edit SIC"
+msgstr "Редагувати SIC"
+
+msgid "Edit Sales Invoice"
+msgstr "Редагувати рахунок-фактуру"
+
+msgid "Edit Sales Order"
+msgstr "Редагувати продажну накладну"
+
+msgid "Edit Service"
+msgstr "Редагувати послугу"
+
+msgid "Edit Template"
+msgstr "Редагувати шаблон"
+
+msgid "Edit User"
+msgstr "Редагувати користувача"
+
+msgid "Edit Vendor"
+msgstr "Редагувати постачальника"
+
+msgid "Edit Vendor Invoice"
+msgstr "Редагувати купівельний рахунок-фактуру"
+
+msgid "Edit Warehouse"
+msgstr "Редагувати склад"
+
+msgid "Employee"
+msgstr "Працівник"
+
+msgid "Employee Name"
+msgstr "Ім'я працівника"
+
+msgid "Employee Number"
+msgstr "Номер працівника"
+
+msgid "Employee deleted!"
+msgstr "Працівника видалено"
+
+msgid "Employee saved!"
+msgstr "Працівника збережено"
+
+msgid "Employees"
+msgstr "Працівники"
+
+msgid "Employer"
+msgstr "Роботодавець"
+
+msgid "Enddate"
+msgstr "Дата закінчення"
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "Заставити зворотну зміну проводок для всіх дат"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Введіть до 3 літер розділених двокрапками (i.e CAD:USD:EUR) для позначення місцевої і іноземних грошових одиниць"
+
+msgid "Equity"
+msgstr "Капітал"
+
+msgid "Every"
+msgstr "Кожні"
+
+msgid "Exch"
+msgstr "Курс"
+
+msgid "Exchange Rate"
+msgstr "Курс валюти"
+
+msgid "Exchange rate for payment missing!"
+msgstr "Не вказаний курс валюти для платежу!"
+
+msgid "Exchange rate missing!"
+msgstr "Не вказаний курс валюти!"
+
+msgid "Existing Datasets"
+msgstr "Існуючі бази даних"
+
+msgid "Expense"
+msgstr "Видатки"
+
+msgid "Expense/Asset"
+msgstr "Видаток/Актив"
+
+msgid "Extended"
+msgstr "Продовжено"
+
+msgid "FX"
+msgstr "FX"
+
+msgid "Fax"
+msgstr "Фах"
+
+msgid "Feb"
+msgstr "лютого"
+
+msgid "February"
+msgstr "Лютий"
+
+msgid "For"
+msgstr "Для"
+
+msgid "Foreign Exchange Gain"
+msgstr "Прибуток з Обміну Валюти"
+
+msgid "Foreign Exchange Loss"
+msgstr "Втрата на Обміні Валюти"
+
+msgid "From"
+msgstr "Від/З"
+
+msgid "GIFI"
+msgstr "GIFI"
+
+msgid "GIFI deleted!"
+msgstr "GIFI видалено!"
+
+msgid "GIFI missing!"
+msgstr "Не вказано GIFI!"
+
+msgid "GIFI saved!"
+msgstr "GIFI збережено!"
+
+msgid "GL"
+msgstr "ГК"
+
+msgid "GL Transaction"
+msgstr "Проводка ГК"
+
+msgid "General Ledger"
+msgstr "Головна книга"
+
+msgid "Generate"
+msgstr "Створити"
+
+msgid "Generate Orders"
+msgstr "Створити замовлення"
+
+msgid "Generate Purchase Orders"
+msgstr "Створити купівельні замовлення"
+
+msgid "Goods & Services"
+msgstr "Товари і Послуги"
+
+msgid "Group"
+msgstr "Група"
+
+msgid "Group Items"
+msgstr "Зрупувати елементи"
+
+msgid "Group Translations"
+msgstr "Згрупувати переклади"
+
+msgid "Group deleted!"
+msgstr "Групу видалено!"
+
+msgid "Group missing!"
+msgstr "Відсутня група!"
+
+msgid "Group saved!"
+msgstr "Групу збережено!"
+
+msgid "Groups"
+msgstr "Групи"
+
+msgid "HR"
+msgstr "HR"
+
+msgid "HTML Templates"
+msgstr "HTML Шаблони "
+
+msgid "Heading"
+msgstr "Розділ"
+
+msgid "History"
+msgstr "Історія"
+
+msgid "Home Phone"
+msgstr "Домашній телефон"
+
+msgid "Host"
+msgstr "Машина/Host"
+
+msgid "Hostname missing!"
+msgstr "Не вказана назва машини!"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "ID"
+msgstr "Ідентифікаційний номер"
+
+msgid "Image"
+msgstr "Зображення"
+
+msgid "In-line"
+msgstr "Включено (In-line)"
+
+msgid "Include Exchange Rate Difference"
+msgstr "Вкючити різницю курсів"
+
+msgid "Include Payment"
+msgstr "Включити плтіж"
+
+msgid "Include in Report"
+msgstr "Додати до звіту"
+
+msgid "Include in drop-down menus"
+msgstr "Додати до листових меню"
+
+msgid "Income"
+msgstr "Прибуток"
+
+msgid "Income Statement"
+msgstr "Звіт про доходи і видатки"
+
+msgid "Incorrect Dataset version!"
+msgstr "Невірна версія Бази Даних!"
+
+msgid "Increase"
+msgstr "Збільшити"
+
+msgid "Individual Items"
+msgstr "Індивідуальні елементи"
+
+msgid "Internal Notes"
+msgstr "Внутрішні примітки"
+
+msgid "Inventory"
+msgstr "Інвентар"
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "Кількість в інвентарі повинна бути нуль, перш ніж можна позначити комплект застарілим!"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "Кількість в інвентарі повинна бути нуль, перш ніж можна позначити ций товар застарілим!"
+
+msgid "Inventory saved!"
+msgstr "Інвентар збережено!"
+
+msgid "Inventory transferred!"
+msgstr "Інвентар перенесено!"
+
+msgid "Invoice"
+msgstr "Рахунок-фактура"
+
+msgid "Invoice Date"
+msgstr "Дата виставлення"
+
+msgid "Invoice Date missing!"
+msgstr "Не вказана дата виставлення рахунка-фактури"
+
+msgid "Invoice Number"
+msgstr "Номер рахунка-фактури"
+
+msgid "Invoice Number missing!"
+msgstr "Не вказаний номер рахунка-фактури"
+
+msgid "Invoice deleted!"
+msgstr "Рахунок-фактура видалений!"
+
+msgid "Invoices"
+msgstr "Рахунки-фактури"
+
+msgid "Is this a summary account to record"
+msgstr "Чи це підсумковий рахунок для запису?"
+
+msgid "Item already on pricelist!"
+msgstr "Елемент вже є в ціновому списку!"
+
+msgid "Item deleted!"
+msgstr "Річ видалено!"
+
+msgid "Item not on file!"
+msgstr "Речі нема в списку!"
+
+msgid "Items"
+msgstr "Елементи"
+
+msgid "Jan"
+msgstr "січня"
+
+msgid "January"
+msgstr "січень"
+
+msgid "Jul"
+msgstr "липня"
+
+msgid "July"
+msgstr "Липень"
+
+msgid "Jun"
+msgstr "червня"
+
+msgid "June"
+msgstr "Червень"
+
+msgid "LaTeX Templates"
+msgstr "Шаблони LaTeX"
+
+msgid "Labor/Overhead"
+msgstr "Робота/додаткові витрати"
+
+msgid "Language"
+msgstr "Мова"
+
+msgid "Language deleted!"
+msgstr "Мову видалено!"
+
+msgid "Language saved!"
+msgstr "Мову збережено!"
+
+msgid "Languages"
+msgstr "Мови"
+
+msgid "Languages not defined!"
+msgstr "Мови не визначено!"
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Останні номери і типові рахунки"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "Якщо ви не бажаєте встановити віддалений звязок, не заповнюйте поля машини і порту."
+
+msgid "Liability"
+msgstr "Пассив"
+
+msgid "Licensed to"
+msgstr "Ліцензовано для"
+
+msgid "Line Total"
+msgstr "Загальна Сума"
+
+msgid "Link"
+msgstr "Посилання"
+
+msgid "Link Accounts"
+msgstr "Повязати Рахунки"
+
+msgid "List"
+msgstr "Список"
+
+msgid "List Accounts"
+msgstr "Список Рахунків"
+
+msgid "List Businesses"
+msgstr "Список бізнесів"
+
+msgid "List Departments"
+msgstr "Список відділів"
+
+msgid "List GIFI"
+msgstr "Список GIFI"
+
+msgid "List Languages"
+msgstr "Список мов"
+
+msgid "List Price"
+msgstr "Ціна"
+
+msgid "List Projects"
+msgstr "Список проектів"
+
+msgid "List SIC"
+msgstr "Список SIC"
+
+msgid "List Transactions"
+msgstr "Список проводок"
+
+msgid "List Warehouses"
+msgstr "Список складів"
+
+msgid "Lock System"
+msgstr "Замкнути систему"
+
+msgid "Lockfile created!"
+msgstr "Замковий файл створено!"
+
+msgid "Lockfile removed!"
+msgstr "Замковий файл вилучено!"
+
+msgid "Login"
+msgstr "Вхід"
+
+msgid "Login name missing!"
+msgstr "Відсутнє ім'я користувача!"
+
+msgid "Logout"
+msgstr "Вихід"
+
+msgid "Make"
+msgstr "Виробництво"
+
+msgid "Manager"
+msgstr "Менеджер"
+
+msgid "Mar"
+msgstr "березня"
+
+msgid "March"
+msgstr "Березень"
+
+msgid "Marked entries printed!"
+msgstr "Позначені записи надруковано!"
+
+msgid "Markup"
+msgstr "Націнка"
+
+msgid "Maximum"
+msgstr "Максимум"
+
+msgid "May"
+msgstr "травня"
+
+msgid "May "
+msgstr "Травень"
+
+msgid "Memo"
+msgstr "Нотатка"
+
+msgid "Menu Width"
+msgstr "Ширина меню"
+
+msgid "Message"
+msgstr "Повідомлення"
+
+msgid "Method"
+msgstr "Метод"
+
+msgid "Microfiche"
+msgstr "Мікрофіша"
+
+msgid "Model"
+msgstr "Модель"
+
+msgid "Month"
+msgstr "Місяць"
+
+msgid "Months"
+msgstr "Місяці"
+
+msgid "Multibyte Encoding"
+msgstr "Мультибитне кодування"
+
+msgid "N/A"
+msgstr "Н/Д"
+
+msgid "Name"
+msgstr "Назва"
+
+msgid "Name missing!"
+msgstr "Не вказано назву!"
+
+msgid "New Templates"
+msgstr "Нові шаблони"
+
+msgid "New Window"
+msgstr "Нове вікно"
+
+msgid "Next"
+msgstr "Далі"
+
+msgid "Next Date"
+msgstr "Наступна дата"
+
+msgid "No"
+msgstr "Ні"
+
+msgid "No Database Drivers available!"
+msgstr "Недоступний драйвер Бази Даних!"
+
+msgid "No Dataset selected!"
+msgstr "Не позначено вибрану Базу Даних!"
+
+msgid "No email address for"
+msgstr "Не вказана адреса ел. пошти для"
+
+msgid "No."
+msgstr "No."
+
+msgid "Non-taxable"
+msgstr "Не оподатковується"
+
+msgid "Notes"
+msgstr "Примітки"
+
+msgid "Nothing entered!"
+msgstr "Нічого не введено!"
+
+msgid "Nothing selected!"
+msgstr "Нічого не вибрано!"
+
+msgid "Nothing to delete!"
+msgstr "Нема що видалити!"
+
+msgid "Nothing to print!"
+msgstr "Нема що дркувати!"
+
+msgid "Nothing to transfer!"
+msgstr "Нема що перенести"
+
+msgid "Nov"
+msgstr "листопада"
+
+msgid "November"
+msgstr "Листопад"
+
+msgid "Number"
+msgstr "Номер"
+
+msgid "Number Format"
+msgstr "Формат Числа"
+
+msgid "Number missing in Row"
+msgstr "Не вказаний номер у рядку"
+
+msgid "O"
+msgstr "О"
+
+msgid "Obsolete"
+msgstr "Застаріле"
+
+msgid "Oct"
+msgstr "жовтня"
+
+msgid "October"
+msgstr "Жовтень"
+
+msgid "On Hand"
+msgstr "На руках"
+
+msgid "Open"
+msgstr "Відкрито"
+
+msgid "Oracle Database Administration"
+msgstr "Адміністрування бази даних Oracle"
+
+msgid "Order"
+msgstr "Замовлення"
+
+msgid "Order Date"
+msgstr "Дата замовлення"
+
+msgid "Order Date missing!"
+msgstr "Не вказано дату замовлення!"
+
+msgid "Order Entry"
+msgstr "Виставлення замовлення"
+
+msgid "Order Number"
+msgstr "Номер замовлення"
+
+msgid "Order Number missing!"
+msgstr "Відсутній номер замовлення"
+
+msgid "Order deleted!"
+msgstr "Замовлення видалено!"
+
+msgid "Order generation failed!"
+msgstr "Створення замовлення зазнало невдачі!"
+
+msgid "Order saved!"
+msgstr "Замовлення збережено!"
+
+msgid "Orphaned"
+msgstr "Відокремлений/Осиротілий"
+
+msgid "Out of balance transaction!"
+msgstr "Незбалансована проводка"
+
+msgid "Out of balance!"
+msgstr "Не збалансовано!"
+
+msgid "Outstanding"
+msgstr "Не сплачено"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PO Number"
+msgstr "Номер купівельного замовлення"
+
+msgid "Packing List"
+msgstr "Пакувальний список"
+
+msgid "Packing List Date missing!"
+msgstr "Не вказано дату пакувального списку"
+
+msgid "Packing List Number missing!"
+msgstr "Не вказано номер пакувального списку"
+
+msgid "Packing Lists"
+msgstr "Пакувальні списки"
+
+msgid "Paid"
+msgstr "Заплачено"
+
+msgid "Part"
+msgstr "Частина"
+
+msgid "Partnumber"
+msgstr "Номер частини"
+
+msgid "Parts"
+msgstr "товари"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Password changed!"
+msgstr "Пароль змінено!"
+
+msgid "Password does not match!"
+msgstr "Пароль не співпадає!"
+
+msgid "Passwords do not match!"
+msgstr "Паролі не співпадають!"
+
+msgid "Payables"
+msgstr "Зобовязання (платіжні)"
+
+msgid "Payment"
+msgstr "Платіж"
+
+msgid "Payment date missing!"
+msgstr "Не вказано дату Платежу!"
+
+msgid "Payment posted!"
+msgstr "Платіж виставлено!"
+
+msgid "Payments"
+msgstr "Платежі"
+
+msgid "Payroll Deduction"
+msgstr "Відрахування від зарплати"
+
+msgid "Period"
+msgstr "Період"
+
+msgid "Pg Database Administration"
+msgstr "Адміністрування бази даних Pg"
+
+msgid "PgPP Database Administration"
+msgstr "Адміністрування бази даних PgPP"
+
+msgid "Phone"
+msgstr "Тел."
+
+msgid "Pick List"
+msgstr "Список комплектування"
+
+msgid "Pick Lists"
+msgstr "Списки комплектування"
+
+msgid "Port"
+msgstr "Порт"
+
+msgid "Port missing!"
+msgstr "Порт не вказано!"
+
+msgid "Post"
+msgstr "Виставити"
+
+msgid "Post as new"
+msgstr "Виставити як новий"
+
+msgid "Posted!"
+msgstr "Виставлено!"
+
+msgid "Postscript"
+msgstr "Postscript"
+
+msgid "Preferences"
+msgstr "Параметри"
+
+msgid "Preferences saved!"
+msgstr "Параметри збережено!"
+
+msgid "Prepayment"
+msgstr "Передплата"
+
+msgid "Price"
+msgstr "Ціна"
+
+msgid "Pricegroup"
+msgstr "Цінова група"
+
+msgid "Pricegroup deleted!"
+msgstr "Цінову групу видалено!"
+
+msgid "Pricegroup missing!"
+msgstr "Відсутня цінова група!"
+
+msgid "Pricegroup saved!"
+msgstr "Цінову групу збережено!"
+
+msgid "Pricegroups"
+msgstr "Цінові групи"
+
+msgid "Pricelist"
+msgstr "Ціновий список"
+
+msgid "Print"
+msgstr "Надрукувати"
+
+msgid "Print and Post"
+msgstr "Надрукувати і виставити"
+
+msgid "Print and Save"
+msgstr "Надрукувати і зберегти"
+
+msgid "Printed"
+msgstr "Надруковано"
+
+msgid "Printer"
+msgstr "Принтер"
+
+msgid "Printing"
+msgstr "Друкується"
+
+msgid "Printing ... "
+msgstr "Друкується ..."
+
+msgid "Process Transactions"
+msgstr "Опрацювати проводки"
+
+msgid "Profit Center"
+msgstr "Центр прибутку"
+
+msgid "Project"
+msgstr "Проект"
+
+msgid "Project Number"
+msgstr "Номер проекту"
+
+msgid "Project Number missing!"
+msgstr "Не вказаний номер проекту!"
+
+msgid "Project Transactions"
+msgstr "Проводки проекту"
+
+msgid "Project deleted!"
+msgstr "Проект видалено!"
+
+msgid "Project not on file!"
+msgstr "Проекту нема в списку!"
+
+msgid "Project saved!"
+msgstr "Проект збережено!"
+
+msgid "Projects"
+msgstr "Проекти"
+
+msgid "Purchase Order"
+msgstr "Купівельне замовлення"
+
+msgid "Purchase Order Number"
+msgstr "Номер купівельного замовлення"
+
+msgid "Purchase Orders"
+msgstr "Купівельні замовлення"
+
+msgid "Qty"
+msgstr "Кількість"
+
+msgid "Quarter"
+msgstr "Квартал"
+
+msgid "Quotation"
+msgstr "Котирування"
+
+msgid "Quotation "
+msgstr "Котирування "
+
+msgid "Quotation Date"
+msgstr "Дата котирування"
+
+msgid "Quotation Date missing!"
+msgstr "Відсутня дата котирування!"
+
+msgid "Quotation Number"
+msgstr "Номер котирування"
+
+msgid "Quotation Number missing!"
+msgstr "Відсутній номер котирування!"
+
+msgid "Quotation deleted!"
+msgstr "Котирування видалено!"
+
+msgid "Quotations"
+msgstr "Котирування"
+
+msgid "R"
+msgstr "R"
+
+msgid "RFQ"
+msgstr "RFQ"
+
+msgid "RFQ "
+msgstr "RFQ "
+
+msgid "RFQ Number"
+msgstr "RFQ номер"
+
+msgid "RFQs"
+msgstr "RFQs"
+
+msgid "ROP"
+msgstr "ROP"
+
+msgid "Rate"
+msgstr "Розцінка"
+
+msgid "Rate missing!"
+msgstr "Відсутня розцінка!"
+
+msgid "Recd"
+msgstr "Отримано"
+
+msgid "Receipt"
+msgstr "Квитанція"
+
+msgid "Receipt posted!"
+msgstr "Квитанцію виставлено!"
+
+msgid "Receipts"
+msgstr "Квитанції"
+
+msgid "Receivables"
+msgstr "Належності (дебити)"
+
+msgid "Receive"
+msgstr "Отримати"
+
+msgid "Receive Merchandise"
+msgstr "Отримати товари"
+
+msgid "Reconciliation"
+msgstr "Узгодження"
+
+msgid "Record in"
+msgstr "Внести в"
+
+msgid "Recurring Transaction"
+msgstr "Періодична проводка"
+
+msgid "Recurring Transactions"
+msgstr "Періодичні проводки"
+
+msgid "Reference"
+msgstr "Посилання"
+
+msgid "Remaining"
+msgstr "Залишилось"
+
+msgid "Remove"
+msgstr "Вилучити"
+
+msgid "Remove Audit trail up to"
+msgstr "Вилучити сліди для аудиту до"
+
+msgid "Remove Audit trails up to"
+msgstr "Вилучити сліди для аудиту до"
+
+msgid "Removed spoolfiles!"
+msgstr "Спул-файли видалено!"
+
+msgid "Repeat"
+msgstr "Повторити"
+
+msgid "Report for"
+msgstr "Звіт для"
+
+msgid "Reports"
+msgstr "Звіти"
+
+msgid "Req"
+msgstr "Запит"
+
+msgid "Request for Quotation"
+msgstr "Запит на котирування"
+
+msgid "Request for Quotations"
+msgstr "Запит на котирування"
+
+msgid "Required by"
+msgstr "Термін доставки"
+
+msgid "Retained Earnings"
+msgstr "Прибуток (нерозподілений)"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "S"
+msgstr "S"
+
+msgid "SIC"
+msgstr "SIC"
+
+msgid "SIC deleted!"
+msgstr "SIC видалено!"
+
+msgid "SIC saved!"
+msgstr "SIC збережено!"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "SSN"
+msgstr "Персональний номер"
+
+msgid "Sale"
+msgstr "Продаж"
+
+msgid "Sales"
+msgstr "Продаж"
+
+msgid "Sales Invoice"
+msgstr "Рахунок-фактура"
+
+msgid "Sales Invoice "
+msgstr "Рахунок-фактура "
+
+msgid "Sales Invoice."
+msgstr "Рахунок-фактура."
+
+msgid "Sales Invoices"
+msgstr "Рахунки-фактури"
+
+msgid "Sales Order"
+msgstr "Накладна продажу"
+
+msgid "Sales Order Number"
+msgstr "Номер накладної продажу"
+
+msgid "Sales Orders"
+msgstr "Накладні продажу"
+
+msgid "Salesperson"
+msgstr "Торговець/представник"
+
+msgid "Save"
+msgstr "Зберегти"
+
+msgid "Save Pricelist"
+msgstr "Зберегти ціновий список"
+
+msgid "Save Schedule"
+msgstr "Зберегти розклад"
+
+msgid "Save as new"
+msgstr "Зберегти як нове"
+
+msgid "Save to File"
+msgstr "Зберегти у Файлі"
+
+msgid "Saving"
+msgstr "Збереження"
+
+msgid "Schedule"
+msgstr "Розклад"
+
+msgid "Scheduled"
+msgstr "В розкладі"
+
+msgid "Screen"
+msgstr "Екран"
+
+msgid "Search"
+msgstr "Пошук"
+
+msgid "Select"
+msgstr "Вибрати"
+
+msgid "Select Vendor"
+msgstr "Виберіть постачальника"
+
+msgid "Select all"
+msgstr "Вибрати все"
+
+msgid "Select from one of the items below"
+msgstr "Виберіть одну із наступних речей"
+
+msgid "Select from one of the names below"
+msgstr "Виберіть одну із наступних назв"
+
+msgid "Select from one of the projects below"
+msgstr "Виберіть один із наступних проектів"
+
+msgid "Select items"
+msgstr "Виберіть елементи"
+
+msgid "Select payment"
+msgstr "Виберіть платіж"
+
+msgid "Select postscript or PDF!"
+msgstr "Виберіть postscript або PDF"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "Виберіть txt, postscript або PDF!"
+
+msgid "Sell"
+msgstr "Продати"
+
+msgid "Sell Price"
+msgstr "Відпускна Ціна"
+
+msgid "Send by E-Mail"
+msgstr "Вислати по ел. пошті"
+
+msgid "Sending"
+msgstr "Відсилається"
+
+msgid "Sep"
+msgstr "вересня"
+
+msgid "September"
+msgstr "Вересень"
+
+msgid "Serial No."
+msgstr "Серійний No."
+
+msgid "Serial Number"
+msgstr "Серійний номер"
+
+msgid "Service"
+msgstr "Послуга"
+
+msgid "Services"
+msgstr "Послуги"
+
+msgid "Session Timeout"
+msgstr "Таймаут сеансу"
+
+msgid "Session expired!"
+msgstr "Сеанс застарів!"
+
+msgid "Setup Templates"
+msgstr "Налаштувати шаблони"
+
+msgid "Ship"
+msgstr "Відіслати"
+
+msgid "Ship Merchandise"
+msgstr "Відіслати товари"
+
+msgid "Ship to"
+msgstr "Відіслати до"
+
+msgid "Ship via"
+msgstr "Відіслати через"
+
+msgid "Shipping"
+msgstr "Відісилання"
+
+msgid "Shipping Address"
+msgstr "Адреса для відсилання"
+
+msgid "Shipping Date"
+msgstr "Дата відсилання"
+
+msgid "Shipping Date missing!"
+msgstr "Відсутня дата відсилання!"
+
+msgid "Shipping Point"
+msgstr "Пункт відсилання"
+
+msgid "Short"
+msgstr "Скорочено"
+
+msgid "Signature"
+msgstr "Підпис"
+
+msgid "Source"
+msgstr "Джерело"
+
+msgid "Standard"
+msgstr "Стандартні"
+
+msgid "Standard Industrial Codes"
+msgstr "Стандартні індустріальні коди"
+
+msgid "Startdate"
+msgstr "Дата початку"
+
+msgid "State"
+msgstr "Штат"
+
+msgid "State/Province"
+msgstr "Штат/область"
+
+msgid "Statement"
+msgstr "Звіт"
+
+msgid "Statement Balance"
+msgstr "Балансовий Звіт"
+
+msgid "Statement sent to"
+msgstr "Звіт послано до"
+
+msgid "Statements sent to printer!"
+msgstr "Звіт послано до принтера!"
+
+msgid "Stock"
+msgstr "Інвентар"
+
+msgid "Stock Assembly"
+msgstr "Інвентар комплекту"
+
+msgid "Stylesheet"
+msgstr "Оформленння"
+
+msgid "Subject"
+msgstr "Тема"
+
+msgid "Subtotal"
+msgstr "Підсумок по розділу"
+
+msgid "Summary"
+msgstr "Зведення"
+
+msgid "Supervisor"
+msgstr "Начальник"
+
+msgid "System"
+msgstr "Система"
+
+msgid "System Defaults"
+msgstr "Типові системні значення"
+
+msgid "Tax"
+msgstr "Податок"
+
+msgid "Tax Accounts"
+msgstr "Податкові рахунки"
+
+msgid "Tax Included"
+msgstr "Податок включено"
+
+msgid "Tax Number"
+msgstr "Податковий номер"
+
+msgid "Tax Number / SSN"
+msgstr "Податковий номер / персональний номер"
+
+msgid "Tax collected"
+msgstr "Податок зібрано"
+
+msgid "Tax paid"
+msgstr "Податок заплачено"
+
+msgid "Taxable"
+msgstr "Оподатковується"
+
+msgid "Template saved!"
+msgstr "Шаблон збережено"
+
+msgid "Templates"
+msgstr "Шаблони"
+
+msgid "Terms"
+msgstr "Умови: "
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Text Templates"
+msgstr "Текстові шаблони"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "Наступні бази даних не використовуються і можуть бути видалені"
+
+msgid "The following Datasets need to be updated"
+msgstr "Наступні бази даних необхідно оновити"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "Попередня перевірка існуючих джерел. Поки що нічого не буде створено або видалено!"
+
+msgid "Till"
+msgstr "Каса"
+
+msgid "Times"
+msgstr "Разів"
+
+msgid "To"
+msgstr "До"
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Щоб додати користувача до групи, змініть ім'я користувача та ім'я входу й збережіть їх. Новий користувач із однаковими параметрами буде збережено під новим іменем входу."
+
+msgid "Top Level"
+msgstr "Верхній Рівень"
+
+msgid "Total"
+msgstr "Загальна Сума"
+
+msgid "Trade Discount"
+msgstr "Торгова знижка"
+
+msgid "Transaction"
+msgstr "Проводка"
+
+msgid "Transaction Date missing!"
+msgstr "Не вказана дата проводки"
+
+msgid "Transaction deleted!"
+msgstr "Проводка видалена"
+
+msgid "Transaction posted!"
+msgstr "Проводка здійснена"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "Зроблена ревесивну зміна проводок для всіх дат"
+
+msgid "Transaction reversal enforced up to"
+msgstr "Зроблена ревесивну зміна проводок аж до"
+
+msgid "Transactions"
+msgstr "Проводки"
+
+msgid "Transfer"
+msgstr "Перенесення"
+
+msgid "Transfer Inventory"
+msgstr "Перенести інвентар"
+
+msgid "Transfer to"
+msgstr "Перенести до"
+
+msgid "Translation"
+msgstr "Переклад"
+
+msgid "Translation deleted!"
+msgstr "Переклад видалено!"
+
+msgid "Translation not on file!"
+msgstr "Переклад немає в файлі!"
+
+msgid "Translations"
+msgstr "Переклади"
+
+msgid "Translations saved!"
+msgstr "Переклади збережено!"
+
+msgid "Trial Balance"
+msgstr "Пробний баланс"
+
+msgid "Type of Business"
+msgstr "Тип бізнесу"
+
+msgid "Unit"
+msgstr "Одиниця"
+
+msgid "Unit of measure"
+msgstr "Одиниця виміру"
+
+msgid "Unlock System"
+msgstr "Відімкнути систему"
+
+msgid "Update"
+msgstr "Оновити"
+
+msgid "Update Dataset"
+msgstr "Оновити базу даних"
+
+msgid "Updated"
+msgstr "Оновлено"
+
+msgid "Upgrading to Version"
+msgstr "Оновлення до версії"
+
+msgid "Use Templates"
+msgstr "Використовувати шаблони"
+
+msgid "User"
+msgstr "Користувач"
+
+msgid "User deleted!"
+msgstr "Користувач Видалений"
+
+msgid "User saved!"
+msgstr "Користувач збережений"
+
+msgid "Valid until"
+msgstr "Дійсний до"
+
+msgid "Vendor"
+msgstr "Постачальник"
+
+msgid "Vendor History"
+msgstr "Історія постачальника"
+
+msgid "Vendor Invoice"
+msgstr "Рахунок-фактура"
+
+msgid "Vendor Invoice "
+msgstr "Рахунок-фактура "
+
+msgid "Vendor Invoice."
+msgstr "Рахунок-фактура."
+
+msgid "Vendor Invoices"
+msgstr "Рахунки-фактури"
+
+msgid "Vendor Number"
+msgstr "Номер постачальника"
+
+msgid "Vendor deleted!"
+msgstr "Постачальник видалений"
+
+msgid "Vendor missing!"
+msgstr "Постачальник не існує"
+
+msgid "Vendor not on file!"
+msgstr "Потачальника нема у списку "
+
+msgid "Vendor saved!"
+msgstr "Постачальника збережено"
+
+msgid "Vendors"
+msgstr "Постачальники"
+
+msgid "Version"
+msgstr "Версія"
+
+msgid "Warehouse"
+msgstr "Склад"
+
+msgid "Warehouse deleted!"
+msgstr "Склад видалено!"
+
+msgid "Warehouse saved!"
+msgstr "Склад збережено!"
+
+msgid "Warehouses"
+msgstr "Склади"
+
+msgid "Warning!"
+msgstr "Попередження!"
+
+msgid "Week"
+msgstr "Тиждень"
+
+msgid "Weeks"
+msgstr "Тижні"
+
+msgid "Weight"
+msgstr "Вага"
+
+msgid "Weight Unit"
+msgstr "Одиниця ваги"
+
+msgid "What type of item is this?"
+msgstr "Який це вид/тип елемента"
+
+msgid "Work Order"
+msgstr "Наряд"
+
+msgid "Work Orders"
+msgstr "Наряди"
+
+msgid "Work Phone"
+msgstr "Робочий телефон"
+
+msgid "Year"
+msgstr "Рік"
+
+msgid "Yearend"
+msgstr "Кінець року"
+
+msgid "Yearend date missing!"
+msgstr "Відсутня дата кінця року!"
+
+msgid "Yearend posted!"
+msgstr "Кінець року виставлено!"
+
+msgid "Yearend posting failed!"
+msgstr "Виставлення кінця року зазнало невдачі!"
+
+msgid "Years"
+msgstr "Роки"
+
+msgid "Yes"
+msgstr "Tak"
+
+msgid "You are logged out"
+msgstr "Ви вийшли з системи"
+
+msgid "You are posting an existing transaction!"
+msgstr "Ви виставляєте проводку, яка вже існує!"
+
+msgid "You are printing and posting an existing transaction!"
+msgstr "Ви друкуєте і зберігаєте проводку, яка вже існує!"
+
+msgid "You are printing and saving an existing order"
+msgstr "Ви друкуєте і зберігаєте замовлення, яке вже існує!"
+
+msgid "You are printing and saving an existing quotation"
+msgstr "Ви друкуєте і зберігаєте котировку, яка вже існує!"
+
+msgid "You are saving an existing order"
+msgstr "Ви зберігаєте замовлення, яке вже існує!"
+
+msgid "You are saving an existing quotation"
+msgstr "Ви зберігаєте котировку, яка вже існує!"
+
+msgid "You did not enter a name!"
+msgstr "Не введено назву!"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "Необхідно ввести вузол і порт для місцевого і віддаленого з'єднання!"
+
+msgid "Zip/Postal Code"
+msgstr "Поштовий код"
+
+msgid "as at"
+msgstr "як в"
+
+msgid "days"
+msgstr "днів"
+
+msgid "does not exist"
+msgstr "не існує"
+
+msgid "done"
+msgstr "завершено"
+
+msgid "ea"
+msgstr "шт."
+
+msgid "failed"
+msgstr "зазнало невдачі"
+
+msgid "for"
+msgstr "для"
+
+msgid "for Period"
+msgstr "за період"
+
+msgid "is already a member!"
+msgstr "вже є членом!"
+
+msgid "localhost"
+msgstr "localhost"
+
+msgid "locked!"
+msgstr "замкнено!"
+
+msgid "posted!"
+msgstr "виставлено!"
+
+msgid "sent"
+msgstr "нідіслано"
+
+msgid "successfully created!"
+msgstr "успішно створено"
+
+msgid "successfully deleted!"
+msgstr "успішно видалено"
+
+msgid "time(s)"
+msgstr "раз(ів)"
+
+msgid "website"
+msgstr "веб-майданчик"
+

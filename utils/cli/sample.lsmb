@@ -1,0 +1,14 @@
+# Comments start with a pund sign
+ENV:PGUSER = postgres # how to set an environment variable
+login = demo  # How to set a form variable
+password = demo  
+LOGIN # Log in
+MODULE LedgerSMB::CT  # Load a module
+id = 10139
+vc = customer
+db = customer
+CALL CT->create_links(user, form) # call a function
+IF bcc4 # Conditional IF's can be nested
+testing = hi
+FI
+

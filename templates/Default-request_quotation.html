@@ -1,0 +1,179 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+
+  <?lsmb include letterhead.html ?>
+  
+  <tr>
+    <td width=10>&nbsp;</td>
+  
+    <th colspan=3>
+      <h4>R E Q U E S T &nbsp;&nbsp; F O R &nbsp;&nbsp; Q U O T A T I O N</h4>
+    </th>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width="100%">
+	<tr bgcolor=000000>
+	  <th align=left width="50%"><font color=ffffff>To:</th>
+	  <th align=left width="50%"><font color=ffffff>Ship To:</th>
+	</tr>
+
+	<tr valign=top>
+	  <td><?lsmb name ?>
+	  <br><?lsmb address1 ?>
+	  <?lsmb if address2 ?>
+	  <br><?lsmb address2 ?>
+	  <?lsmb end address2 ?>
+	  <br><?lsmb city ?>
+	  <?lsmb if state ?>
+	  , <?lsmb state ?>
+	  <?lsmb end state ?>
+	  <?lsmb zipcode ?>
+	  <?lsmb if country ?>
+	  <br><?lsmb country ?>
+	  <?lsmb end country ?>
+          <br>
+	  
+	  <?lsmb if contact ?>
+	  <br>Attn: <?lsmb contact ?>
+	  <?lsmb end contact ?>
+	  
+	  <?lsmb if vendorphone ?>
+	  <br>Tel: <?lsmb vendorphone ?>
+	  <?lsmb end vendorphone ?>
+	  
+	  <?lsmb if vendorfax ?>
+	  <br>Fax: <?lsmb vendorfax ?>
+	  <?lsmb end vendorfax ?>
+	  </td>
+
+	  <td><?lsmb shiptoname ?>
+	  <br><?lsmb shiptoaddress1 ?>
+	  <?lsmb if shiptoaddress2 ?>
+	  <br><?lsmb shiptoaddr2 ?>
+	  <?lsmb end shiptoaddress2 ?>
+	  <br><?lsmb shiptocity ?>
+	  <?lsmb if shiptostate ?>
+	  , <?lsmb shiptostate ?>
+	  <?lsmb end shiptostate ?>
+	  <?lsmb shiptozipcode ?>
+	  <?lsmb if shiptocountry ?>
+	  <br><?lsmb shiptocountry ?>
+	  <?lsmb end shiptocountry ?>
+          <br>
+
+	  <?lsmb if shiptocontact ?>
+	  <br>Attn: <?lsmb shiptocontact ?>
+	  <?lsmb end shiptocontact ?>
+	  
+	  <?lsmb if shiptophone ?>
+	  <br>Tel: <?lsmb shiptophone ?>
+	  <?lsmb end shiptophone ?>
+	  
+	  <?lsmb if shiptofax ?>
+	  <br>Fax: <?lsmb shiptofax ?>
+	  <?lsmb end shiptofax ?>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height=5></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width=100% border=1>
+	<tr>
+	  <th width=17% align=left>RFQ #</th>
+	  <th width=17% align=left>Date</th>
+	  <th width=17% align=left>Required by</th>
+	  <th width=17% align=left>Contact</th>
+	  <th width=17% align=left>Shipping Point</th>
+	  <th width=15% align=left>Ship via</th>
+	</tr>
+
+	<tr>
+	  <td><?lsmb quonumber ?></td>
+	  <td><?lsmb quodate ?></td>
+	  <td><?lsmb reqdate ?>&nbsp;</td>
+	  <td><?lsmb employee ?></td>
+	  <td><?lsmb shippingpoint ?>&nbsp;</td>
+	  <td><?lsmb shipvia ?>&nbsp;</td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr height="10"></tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>Please provide price and delivery time for the following items:</td>
+  </tr>
+
+  <tr height="10"></tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width="100%">
+	<tr>
+	  <th align=right>Item</th>
+	  <th align=left>Number</th>
+	  <th align=left><font color=ffffff>Description</th>
+	  <th>Qt'y</th>
+	  <th>&nbsp;</th>
+	  <th>Delivery</th>
+	  <th>Unit Price</th>
+	  <th>Extended</th>
+	</tr>
+
+        <?lsmb foreach number ?>
+        <tr valign=top>
+          <td align=right><?lsmb runningnumber ?>.</td>
+	  <td><?lsmb number ?></td>
+	  <td><?lsmb description ?></td>
+	  <td align=right><?lsmb qty ?></td>
+	  <td><?lsmb unit ?></td>
+	</tr>
+	<?lsmb end number ?>
+
+	<tr>
+	  <td colspan=8><hr noshade></td>
+	</tr>
+	
+      </table>
+    </td>
+  </tr>
+
+  <?lsmb if notes ?>
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width="100%">
+	<tr valign=top>
+	  <td>Notes</td>
+	  <td><?lsmb notes ?></td>
+	</tr>
+
+      </table>
+    </td>
+  </tr>
+  <?lsmb end notes ?>
+
+</table>
+
+</body>
+</html>
+

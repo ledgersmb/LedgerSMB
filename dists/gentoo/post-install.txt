@@ -1,0 +1,30 @@
+LedgerSMB has been installed into ${VHOST_HOSTNAME}
+
+You must add the following to your <VirtualHost> section for ${VHOST_HOSTNAME}
+by hand.
+
+-----8<---- BEGIN APACHE CONFIG -----------
+
+<Directory ${VHOST_HTDOCSDIR}/${VHOST_APPDIR}>
+  AllowOverride All
+  AddHandler cgi-script .pl
+  Options ExecCGI Includes FollowSymlinks
+  Order Allow,Deny
+  Allow from All
+</Directory>
+
+# Prevent unauthorized access to configuration 
+# and access control files
+<Directory ${VHOST_HTDOCSDIR}/${VHOST_APPDIR}/users>
+  Order Deny,Allow
+  Deny from All
+</Directory>
+ 
+-----8<---- END APACHE CONFIG -----------
+
+Once you've done that, go to admin.pl (probably at
+http://${VHOST_HOSTNAME}/${VHOST_APPDIR}/admin.pl) and set your 
+initial password and users.
+
+Good luck!
+

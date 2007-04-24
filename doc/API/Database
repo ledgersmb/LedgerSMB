@@ -1,0 +1,9 @@
+Most of the important database access is through the $form object.
+
+$form->{dbh} is a non-autocommit database handle.
+
+$form->dbinit initiates the $form->{dbh} and caches the custom fields table.
+
+$form->callproc($procname, @arguments) returns @hashref_records
+This is a wrapper for the stored procedures.  Prepares a parameterized query,
+fills in the arguments, and returns the results as a list of hashrefs.

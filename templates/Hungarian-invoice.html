@@ -1,0 +1,303 @@
+
+<body bgcolor=ffffff>
+
+<table width=100% >
+<tr valign=bottom>
+  <td width=10>&nbsp;</td>
+  <td>
+  
+  <table width=100% >
+  <tr>
+    <td align=center><!--<img src=logo.jpg>--><br>&nbsp;<br>
+     <font size=3><B> SZÁMLA</B></font>
+    </td>
+  </tr>
+
+  <tr>
+    <td align=right>
+    <!-- <?lsmb copysum ?> -->
+    </td>
+  </tr>
+  <tr>
+    <td align=right>
+       Másolat
+ </td>
+  </tr>
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0 >
+<tr>
+  <td><hr noshade></td>
+</tr>
+ 
+  <tr>
+    <td>
+    <table width=100% >
+    <tr >
+      <th align=left width="50%">Eladó:</th>
+      <th align=left width="50%">Vevõ:</th> 
+    </tr>
+    <tr valign=top>
+      <td><?lsmb company ?>
+      <br><?lsmb address ?>
+      <br>Adószám:<?lsmb businessnumber ?>
+      <br>tel:<?lsmb tel ?>  
+      <br>fax:<?lsmb fax ?>        
+      </td>
+ 
+
+      <td><?lsmb name ?>
+      <br><?lsmb address1 ?>
+      <?lsmb if address2 ?>
+<br><?lsmb address2 ?>
+<?lsmb end address2 ?>
+      <br><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+      <?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
+      </td>
+      
+    </tr>
+    </table>
+    </td>
+  </tr>
+<tr>
+  <td><hr noshade></td>
+</tr>
+
+<tr>
+<td>
+    <table width="100%">
+    <tr>
+      <th>Fizetési mód</th>
+      <th>Telj. dátuma</th>
+      <th>Számla kelte</th>
+      <th>Esedékesség</th>
+      <th>Megrendelés</th>
+      <th>Kiállította</th>
+      <th>Sorszám</th>
+    </tr>
+    <tr>
+    <td align=center><?lsmb shippingpoint ?></td>
+    <td align=center><?lsmb invdate ?></td>    
+    <td align=center><?lsmb crdate ?></td>        
+    <td align=center><?lsmb duedate ?></td>        
+    <td align=center><?lsmb ordnumber ?></td>    
+    <td align=center><?lsmb employee ?></td>    
+    <td align=center><font size=2><?lsmb invnumber ?></font></td>    
+    </tr>
+    </table>
+<td>
+<tr>
+<tr>
+  <td><hr noshade></td>
+</tr>
+  
+  <tr >
+    <td height=470 valign=top>
+    <table width=100% >
+    <tr>
+      <th align=right>&nbsp;</th>  
+      <th align=left>Áru</th>
+      <th align=left>Megnevezés</th>
+      <th align=left nowrap>VTSZ</th>
+      <th>Menny.</th>
+      <th>&nbsp;</th>
+      <th align=right>Nettó egységár</th>
+<!--      <th><font color=ffffff>Disc</th> -->
+      <th align=right>Nettó összeg</th>
+      <th align=right>ÁFA%</th>
+      <th align=right>ÁFA összeg</th>
+      <th align=right>Bruttó összeg</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+      <td align=center><?lsmb runningnumber ?>.</td>
+      <td nowrap align=left><?lsmb number ?></td>
+      <td nowrap align=left><?lsmb description ?></td>
+      <td nowrap align=center><?lsmb bin ?></td>
+      <td align=center><?lsmb qty ?></td>
+      <td align=center><?lsmb unit ?></td>
+      <td align=right><?lsmb netprice ?></td>
+<!--      <td align=right><?lsmb discount ?></td>  -->
+      <td align=right><?lsmb linetotal ?></td>
+      <td align=right><?lsmb linetaxrate ?></td>
+      <td align=right><?lsmb taxamount ?></td>
+      <td align=right><?lsmb linetotal2 ?></td>
+    </tr>
+<?lsmb end number ?>
+
+<!--
+you can also use netprice instead of sellprice if you
+don't want to show the discount
+netprice = sellprice - discount
+to show the percentage for a discount use <?lsmb discountrate ?>
+-->
+
+    <tr>
+      <td colspan=11><hr noshade></td>
+    </tr>
+    
+    <tr>
+<?lsmb if taxincluded ?>
+      <th colspan=9 align=right>Total</th>
+      <td colspan=2 align=right><?lsmb invtotal ?></td>
+<?lsmb end taxincluded ?>
+<?lsmb if not taxincluded ?>
+      <th colspan=9 align=right>Nettó összesen</th>
+      <td colspan=2 align=right><?lsmb subtotal ?></td>
+<?lsmb end taxincluded ?>
+    </tr>
+
+<?lsmb foreach tax ?>
+    <tr>
+      <th colspan=9 align=right>alap: <?lsmb taxbase ?> ráta: <?lsmb taxrate ?> %</th>
+      <td colspan=2 align=right><?lsmb tax ?></td>
+    </tr>
+<?lsmb end tax ?>
+
+<?lsmb if paid ?>
+    <tr>
+      <th colspan=9 align=right>Fizetve</th>
+      <td colspan=2 align=right>- <?lsmb paid ?></td>
+    </tr>
+<?lsmb end paid ?>
+
+    <tr>
+      <td colspan=6>&nbsp;</td>
+      <td colspan=5><hr noshade></td>
+    </tr>
+
+    <tr>
+<!--      <td colspan=6>Fizetési határidõ: <b><?lsmb terms ?></b> nap</td> -->
+      <th colspan=9 align=right>A számla végösszege:</th>
+      <th colspan=2 align=right><?lsmb total ?>&nbsp;Ft</th>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width=100% >
+    <tr valign=top>
+<?lsmb if notes ?>
+      <td><b>Megjegyzés:</b>&nbsp;<?lsmb notes ?></td>
+      <td ></td>
+<?lsmb end notes ?>
+      <td align=right>
+<!--      All prices in <b><?lsmb currency ?></b> Funds -->
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<?lsmb if paid ?>
+<tr>
+  <td colspan=7>
+    <table width=60% >
+      <tr>
+        <th align=left>Fizetések</th>
+      </tr>
+      <tr>
+        <td colspan=4>
+	  <hr noshade>
+	</td>
+      </tr>
+      <tr>
+        <th align=left>Dátum</th>
+	<th align=left>Számla</th>
+	<th align=left>Bizonylatszám</th>
+	<th align=left>Összeg</th>
+      </tr>
+<?lsmb end paid ?>
+
+<?lsmb foreach payment ?>
+      <tr>
+        <td><?lsmb paymentdate ?></td>
+	<td><?lsmb paymentaccount ?></td>
+	<td><?lsmb paymentsource ?></td>
+	<td><?lsmb payment ?></td>
+      </tr>
+<?lsmb end payment ?>
+
+<?lsmb if paid ?>
+    </table>
+  </td>
+</tr>
+
+<tr>
+  <td>&nbsp;</td>
+</tr>
+<?lsmb end paid ?>
+
+<tr>
+  <th colspan=7>
+<!--  <br>Thank you for your valued business! -->
+  </th>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+  <td>
+  <table width=100% >
+  <tr valign=top>
+  <td><font size=-3>
+<?lsmb intnotes ?>
+    </font>
+
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+<?lsmb foreach tax ?>
+  <tr>
+<!--    <th colspan=7 align=left><font size=-2><?lsmb taxdescription ?> Registration <?lsmb taxnumber ?></th> -->
+  </tr>
+<?lsmb end tax ?>
+
+<?lsmb if taxincluded ?>
+  <tr>
+    <th colspan=7 align=left><font size=-2>Taxes shown are included in price.</th>
+  </tr>
+<?lsmb end taxincluded ?>
+
+
+
+
+<!-- banking information
+  <tr>
+    <th colspan=7 align=left>Banking Information:
+    <br>Bank
+    <br>Transit No.
+    <br>Account No.
+    </td>
+  </tr>
+-->
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

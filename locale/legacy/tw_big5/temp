@@ -1,0 +1,7 @@
+$self{texts} = {
+};
+
+$self{subs} = {
+};
+
+1;
