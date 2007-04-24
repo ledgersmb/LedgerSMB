@@ -113,19 +113,10 @@ INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000002'), 0.07);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000003'), 0.16);
 -- Recargo equivalente: 0.5, 1 or 4%
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000004'), 0.005);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000005'), 0.01);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000006'), 0.04);
---
--- IVA repercutido
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000000'), 0.0);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000001'), 0.04);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000002'), 0.07);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000003'), 0.16);
--- Recargo equivalente: 0.5, 1 or 4%
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000004'), 0.005);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000005'), 0.01);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000006'), 0.04);
 --
 -- update defaults
 --

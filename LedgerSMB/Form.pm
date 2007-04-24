@@ -80,7 +80,7 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if $self->{path} =~ /lynx/i;
 
-    $self->{version}   = "1.2.4";
+    $self->{version}   = "1.2.5";
     $self->{dbversion} = "1.2.0";
 
     bless $self, $type;
@@ -515,7 +515,7 @@ sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
 
-    if ( ( $amount eq '' ) or ( $amount eq undef ) ) {
+    if ( ( $amount eq '' ) or ( ! defined $amount ) ) {
         $amount = 0;
     }
 
@@ -548,7 +548,14 @@ sub parse_amount {
         $amount = $1 * -1;
     }
     $amount =~ s/\s?CR//;
+
+    $amount =~ /(\d*)\.(\d*)/;
+
+    my $decimalplaces = length $1 + length $2;
+
     $amount = new Math::BigFloat($amount);
+    $amount->accuracy($decimalplaces);
+
     return ( $amount * 1 );
 }
 

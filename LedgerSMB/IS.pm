@@ -1875,8 +1875,7 @@ sub retrieve_item {
 
     if ( $form->{"partsgroup_$i"} ne "" ) {
         ( $null, $var ) = split /--/, $form->{"partsgroup_$i"};
-        $var = $dbh->quote($var);
-        if ( $var == 0 ) {
+        if ( ! $var ) {
 
             # search by partsgroup, this is for the POS
             $where .=
@@ -1884,6 +1883,7 @@ sub retrieve_item {
               . $dbh->quote( $form->{"partsgroup_$i"} );
         }
         else {
+            $var = $dbh->quote($var);
             $where .= qq| AND p.partsgroup_id = $var|;
         }
     }
