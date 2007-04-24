@@ -1,0 +1,2678 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2004
+#
+# Traditional Chinese texts:
+#
+#  Author: Edmund Lian <elian@inbrief.net>
+#          Kent Tong <kent@cpttm.org.mo>
+#
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr ""
+
+msgid "AP"
+msgstr "應付帳款"
+
+msgid "AP Aging"
+msgstr "應付帳齡分析"
+
+msgid "AP Outstanding"
+msgstr "應付未付"
+
+msgid "AP Transaction"
+msgstr "應付交易"
+
+msgid "AP Transactions"
+msgstr "應付交易"
+
+msgid "AR"
+msgstr "應收帳款"
+
+msgid "AR Aging"
+msgstr "應收帳齡分析"
+
+msgid "AR Outstanding"
+msgstr "應收未收"
+
+msgid "AR Transaction"
+msgstr "應收交易"
+
+msgid "AR Transactions"
+msgstr "應收交易"
+
+msgid "AR/AP"
+msgstr "應收/應付 "
+
+msgid "About"
+msgstr "關於"
+
+msgid "Above"
+msgstr "上文"
+
+msgid "Access Control"
+msgstr "權限控制"
+
+msgid "Access Denied!"
+msgstr "拒絕存取！"
+
+msgid "Account"
+msgstr "帳戶"
+
+msgid "Account Number"
+msgstr "帳戶編號"
+
+msgid "Account Number missing!"
+msgstr "未指明帳戶編號！"
+
+msgid "Account Type"
+msgstr "帳戶類別"
+
+msgid "Account Type missing!"
+msgstr "未指明帳戶類別！"
+
+msgid "Account deleted!"
+msgstr "已刪除帳戶！"
+
+msgid "Account does not exist!"
+msgstr "不存在帳戶！"
+
+msgid "Account saved!"
+msgstr "已儲存帳戶！"
+
+msgid "Accounting"
+msgstr "會計"
+
+msgid "Accounting Menu"
+msgstr "會計選單"
+
+msgid "Accounts"
+msgstr "帳戶"
+
+msgid "Accrual"
+msgstr "應計基礎"
+
+msgid "Activate Audit trails"
+msgstr "啟動審核線索"
+
+msgid "Active"
+msgstr "生效的"
+
+msgid "Add"
+msgstr "新增"
+
+msgid "Add AP Transaction"
+msgstr "新增應付交易"
+
+msgid "Add AR Transaction"
+msgstr "新增應收交易"
+
+msgid "Add Account"
+msgstr "新增帳戶"
+
+msgid "Add Assembly"
+msgstr "新增製成品"
+
+msgid "Add Business"
+msgstr "新增業務"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "新增現金轉移帳目"
+
+msgid "Add Customer"
+msgstr "新增客戶"
+
+msgid "Add Deduction"
+msgstr "新增扣除"
+
+msgid "Add Department"
+msgstr "新增部門"
+
+msgid "Add Employee"
+msgstr "新增職員"
+
+msgid "Add Exchange Rate"
+msgstr "新增外匯率"
+
+msgid "Add GIFI"
+msgstr "新增GIFI"
+
+msgid "Add General Ledger Transaction"
+msgstr "新增總帳交易"
+
+msgid "Add Group"
+msgstr "新增組別"
+
+msgid "Add Job"
+msgstr "新增工作"
+
+msgid "Add Labor/Overhead"
+msgstr "新增直接人工/經常費用"
+
+msgid "Add Language"
+msgstr "新增語言"
+
+msgid "Add POS Invoice"
+msgstr "新增POS發票"
+
+msgid "Add Part"
+msgstr "新增零件"
+
+msgid "Add Pricegroup"
+msgstr "新增價格組別"
+
+msgid "Add Project"
+msgstr "新增項目"
+
+msgid "Add Purchase Order"
+msgstr "新增採購單"
+
+msgid "Add Quotation"
+msgstr "新增報價單"
+
+msgid "Add Request for Quotation"
+msgstr "新增報價單要求"
+
+msgid "Add SIC"
+msgstr "新增標準工業分類代碼"
+
+msgid "Add Sales Invoice"
+msgstr "新增銷售發票"
+
+msgid "Add Sales Order"
+msgstr "新增銷貨單"
+
+msgid "Add Service"
+msgstr "新增服務"
+
+msgid "Add Timecard"
+msgstr "新增工時卡"
+
+msgid "Add Transaction"
+msgstr "新增交易"
+
+msgid "Add User"
+msgstr "新增使用者"
+
+msgid "Add Vendor"
+msgstr "新增供應商"
+
+msgid "Add Vendor Invoice"
+msgstr "新增供應商發票"
+
+msgid "Add Warehouse"
+msgstr "新增倉庫"
+
+msgid "Address"
+msgstr "地址"
+
+msgid "Administration"
+msgstr "系統管理"
+
+msgid "Administrator"
+msgstr "管理員"
+
+msgid "After Deduction"
+msgstr "扣除以後"
+
+msgid "All"
+msgstr "全部"
+
+msgid "All Accounts"
+msgstr "全部帳戶"
+
+msgid "All Datasets up to date!"
+msgstr "所有資料皆已更新！"
+
+msgid "All Items"
+msgstr "全部項目"
+
+msgid "Allowances"
+msgstr "津貼"
+
+msgid "Amount"
+msgstr "金額"
+
+msgid "Amount Due"
+msgstr "到期金額"
+
+msgid "Amount missing!"
+msgstr "沒有指定金額！"
+
+msgid "Apr"
+msgstr "四月"
+
+msgid "April"
+msgstr "四月"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "您是否確定要刪除發票編號"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "您是否確定要刪除訂單編號"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "您是否確定要刪除報價單編號"
+
+msgid "Are you sure you want to delete Timecard for"
+msgstr "您是否確定要刪除其工時卡："
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "您是否確定要刪除交易"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "您是否確定要消除有記號的條目？"
+
+msgid "Assemblies"
+msgstr "製成品"
+
+msgid "Assemblies restocked!"
+msgstr "製成品已重新進貨"
+
+msgid "Assembly"
+msgstr "製成品"
+
+msgid "Assembly stocked!"
+msgstr "製成品已進貨"
+
+msgid "Asset"
+msgstr "資產"
+
+msgid "Attachment"
+msgstr "附件"
+
+msgid "Audit Control"
+msgstr "審核控制"
+
+msgid "Audit trail removed up to"
+msgstr "移除到此為止的審核線索"
+
+msgid "Audit trails disabled"
+msgstr "審核線索已開動"
+
+msgid "Audit trails enabled"
+msgstr "審核線索已關閉"
+
+msgid "Aug"
+msgstr "八月"
+
+msgid "August"
+msgstr "八月"
+
+msgid "Average Cost"
+msgstr "平均成本"
+
+msgid "Avg Cost"
+msgstr "平均成本"
+
+msgid "BIC"
+msgstr "銀行識別編號(BIC)"
+
+msgid "BOM"
+msgstr "材料清單"
+
+msgid "Backup"
+msgstr "備份"
+
+msgid "Backup sent to"
+msgstr "備份寄送到"
+
+msgid "Balance"
+msgstr "餘額"
+
+msgid "Balance Sheet"
+msgstr "資產負債表"
+
+msgid "Based on"
+msgstr "基於"
+
+msgid "Bcc"
+msgstr "不顯示抄送"
+
+msgid "Before Deduction"
+msgstr "扣除之前"
+
+msgid "Beginning Balance"
+msgstr "起始餘額"
+
+msgid "Below"
+msgstr "以下"
+
+msgid "Billing Address"
+msgstr "帳單地址"
+
+msgid "Bin"
+msgstr "箱"
+
+msgid "Bin List"
+msgstr "箱的明細表"
+
+msgid "Bin Lists"
+msgstr "箱的明細表"
+
+msgid "Books are open"
+msgstr "帳簿已開啟"
+
+msgid "Break"
+msgstr "休息"
+
+msgid "Business"
+msgstr "業務"
+
+msgid "Business Number"
+msgstr "業務編號"
+
+msgid "Business deleted!"
+msgstr "已刪除業務！"
+
+msgid "Business saved!"
+msgstr "已儲存業務！"
+
+msgid "C"
+msgstr ""
+
+msgid "COGS"
+msgstr "貨銷成本"
+
+msgid "COGS account does not exist!"
+msgstr "貨銷成本帳戶不存在！"
+
+msgid "Cannot add timecard for a completed job!"
+msgstr "工作已完成，不能再加工時卡！"
+
+msgid "Cannot change timecard for a completed job!"
+msgstr "工作已完成，不能再改工時卡！"
+
+msgid "Cannot create Assembly"
+msgstr "不能建立製成品"
+
+msgid "Cannot create Labor"
+msgstr "不能建立直接人工"
+
+msgid "Cannot create Lock!"
+msgstr "不能建立鎖！"
+
+msgid "Cannot create Part"
+msgstr "不能建立零件"
+
+msgid "Cannot create Service"
+msgstr "不能建立服務"
+
+msgid "Cannot delete Timecard!"
+msgstr "不能建立工時卡"
+
+msgid "Cannot delete account!"
+msgstr "不能刪除帳戶！"
+
+msgid "Cannot delete customer!"
+msgstr "不能刪除客戶！"
+
+msgid "Cannot delete default account!"
+msgstr "不能刪除預設帳戶！"
+
+msgid "Cannot delete invoice!"
+msgstr "不能刪除發票！"
+
+msgid "Cannot delete item!"
+msgstr "不能刪除項目！"
+
+msgid "Cannot delete order!"
+msgstr "不能刪除定單！"
+
+msgid "Cannot delete quotation!"
+msgstr "不能刪除報價單！"
+
+msgid "Cannot delete transaction!"
+msgstr "不能刪除交易！"
+
+msgid "Cannot delete vendor!"
+msgstr "不能刪除供應商！"
+
+msgid "Cannot post Payment!"
+msgstr "不能加入款項！"
+
+msgid "Cannot post Receipt!"
+msgstr "不能加入收據！"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "不能在已關閉的時段內加入發票！"
+
+msgid "Cannot post invoice!"
+msgstr "不能加入發票！"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "不能在已關閉的時段內加入款項！"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "不能在已關閉的時段內加入交易！"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr "在交易同一帳戶不能又出現在借方又出現在貸方！"
+
+msgid "Cannot post transaction!"
+msgstr "不能加入交易！"
+
+msgid "Cannot remove files!"
+msgstr "不能移除檔案！"
+
+msgid "Cannot save account!"
+msgstr "不能儲存帳戶！"
+
+msgid "Cannot save defaults!"
+msgstr "不能儲存預設！"
+
+msgid "Cannot save order!"
+msgstr "不能儲存定單！"
+
+msgid "Cannot save preferences!"
+msgstr "不能儲存優先選擇！"
+
+msgid "Cannot save quotation!"
+msgstr "不能儲存報價單！"
+
+msgid "Cannot save timecard for a closed period!"
+msgstr "不能在已關閉的時段內儲存工時卡！"
+
+msgid "Cannot save timecard!"
+msgstr "不能儲存工時卡！"
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "不能設置多於一個應收帳款, 應付帳款或IC"
+
+msgid "Cannot set multiple options for"
+msgstr "不能對以下物件設定多個選項："
+
+msgid "Cannot set multiple options for Item"
+msgstr "不能對以物件設定多個選項"
+
+msgid "Cannot stock Assembly!"
+msgstr "不能把製成品入貨！"
+
+msgid "Cannot stock assemblies!"
+msgstr "不能把製成品入貨！"
+
+msgid "Cash"
+msgstr "現金"
+
+msgid "Cc"
+msgstr "抄送"
+
+msgid "Change"
+msgstr "更改"
+
+msgid "Change Admin Password"
+msgstr "更改管理員密碼"
+
+msgid "Change Password"
+msgstr "更改密碼"
+
+msgid "Charge"
+msgstr "收費"
+
+msgid "Chart of Accounts"
+msgstr "會計科目表"
+
+msgid "Check"
+msgstr "檢查"
+
+msgid "Check Inventory"
+msgstr "檢查存貨清單"
+
+msgid "Checks"
+msgstr "檢查"
+
+msgid "City"
+msgstr "城市"
+
+msgid "Cleared"
+msgstr "已清除"
+
+msgid "Click on login name to edit!"
+msgstr "請按登入名稱以進行修改！"
+
+msgid "Clocked"
+msgstr "計算出的時間"
+
+msgid "Close Books up to"
+msgstr "關閉到此為止的帳簿："
+
+msgid "Closed"
+msgstr "已關閉"
+
+msgid "Code"
+msgstr "編碼"
+
+msgid "Code missing!"
+msgstr "未指明編碼！"
+
+msgid "Company"
+msgstr "公司"
+
+msgid "Company Name"
+msgstr "公司名稱"
+
+msgid "Compare to"
+msgstr "對照"
+
+msgid "Completed"
+msgstr "完成了"
+
+msgid "Components"
+msgstr "零件"
+
+msgid "Confirm"
+msgstr "確認"
+
+msgid "Confirm!"
+msgstr "入帳成功！"
+
+msgid "Connect to"
+msgstr "連結到"
+
+msgid "Contact"
+msgstr "連絡人"
+
+msgid "Continue"
+msgstr "繼續"
+
+msgid "Contra"
+msgstr "相反"
+
+msgid "Copies"
+msgstr "副本"
+
+msgid "Copy to COA"
+msgstr "複製到 COA"
+
+msgid "Cost"
+msgstr "成本"
+
+msgid "Cost Center"
+msgstr "成本中心"
+
+msgid "Could not save pricelist!"
+msgstr "不能儲存價格清單！"
+
+msgid "Could not save!"
+msgstr "不能儲存！"
+
+msgid "Could not transfer Inventory!"
+msgstr "存貨清單不能轉移！"
+
+msgid "Country"
+msgstr "國家"
+
+msgid "Create Chart of Accounts"
+msgstr "建立帳戶圖表"
+
+msgid "Create Dataset"
+msgstr "建立資料集"
+
+msgid "Credit"
+msgstr "貸方"
+
+msgid "Credit Limit"
+msgstr "信用額度"
+
+msgid "Curr"
+msgstr "目前"
+
+msgid "Currency"
+msgstr "幣別"
+
+msgid "Current"
+msgstr "現有"
+
+msgid "Current Earnings"
+msgstr "現有收益"
+
+msgid "Customer"
+msgstr "客戶"
+
+msgid "Customer History"
+msgstr "客戶歷史"
+
+msgid "Customer Number"
+msgstr "客戶編號"
+
+msgid "Customer deleted!"
+msgstr "已刪除客戶！"
+
+msgid "Customer missing!"
+msgstr "未指明客戶！"
+
+msgid "Customer not on file!"
+msgstr "沒有此客戶的記錄！"
+
+msgid "Customer saved!"
+msgstr "已儲存客戶！"
+
+msgid "Customers"
+msgstr "客戶"
+
+msgid "DBI not installed!"
+msgstr "未安裝 DBI 模組！"
+
+msgid "DOB"
+msgstr "出生日期"
+
+msgid "Database"
+msgstr "資料庫"
+
+msgid "Database Administration"
+msgstr "資料庫管理"
+
+msgid "Database Driver not checked!"
+msgstr "未選定資料庫驅動程式！"
+
+msgid "Database Host"
+msgstr "資料庫主機"
+
+msgid "Database User missing!"
+msgstr "未指明資料庫使用者！"
+
+msgid "Dataset"
+msgstr "資料集"
+
+msgid "Dataset is newer than version!"
+msgstr "較新資料集！"
+
+msgid "Dataset missing!"
+msgstr "未指明資料集！"
+
+msgid "Dataset updated!"
+msgstr "已更新資料集！"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Date Format"
+msgstr "日期格式"
+
+msgid "Date Paid"
+msgstr "付款日期"
+
+msgid "Date Received"
+msgstr "收款日期"
+
+msgid "Date missing!"
+msgstr "未指明日期！"
+
+msgid "Date received missing!"
+msgstr "未指明收款日期！"
+
+msgid "Date worked"
+msgstr "工作日期"
+
+msgid "Day"
+msgstr "日"
+
+msgid "Day(s)"
+msgstr "日"
+
+msgid "Days"
+msgstr "日"
+
+msgid "Debit"
+msgstr "借方"
+
+msgid "Dec"
+msgstr "十二月"
+
+msgid "December"
+msgstr "十二月"
+
+msgid "Decimalplaces"
+msgstr "小數的位置"
+
+msgid "Decrease"
+msgstr "減少"
+
+msgid "Deduct after"
+msgstr "減少以後"
+
+msgid "Deduction deleted!"
+msgstr "已刪除減少！"
+
+msgid "Deduction saved!"
+msgstr "已儲存減少！"
+
+msgid "Deductions"
+msgstr "減除額"
+
+msgid "Default Template"
+msgstr "預設模版"
+
+msgid "Defaults"
+msgstr "預設"
+
+msgid "Defaults saved!"
+msgstr "已儲存預設！"
+
+msgid "Delete"
+msgstr "刪除"
+
+msgid "Delete Account"
+msgstr "刪除帳戶"
+
+msgid "Delete Dataset"
+msgstr "刪除資料集"
+
+msgid "Delete Schedule"
+msgstr "刪除時間表"
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr "刪除語言將會刪除它的模版"
+
+msgid "Delivery Date"
+msgstr "到期日"
+
+msgid "Department"
+msgstr "部門"
+
+msgid "Department deleted!"
+msgstr "已刪除部門！"
+
+msgid "Department saved!"
+msgstr "已儲存部門！"
+
+msgid "Departments"
+msgstr "部門"
+
+msgid "Deposit"
+msgstr "存款"
+
+msgid "Description"
+msgstr "說明"
+
+msgid "Description Translations"
+msgstr "翻譯描述"
+
+msgid "Description missing!"
+msgstr "未指明描述！"
+
+msgid "Detail"
+msgstr "詳情"
+
+msgid "Difference"
+msgstr "差異"
+
+msgid "Directory"
+msgstr "目錄"
+
+msgid "Discount"
+msgstr "折扣"
+
+msgid "Done"
+msgstr "已完成"
+
+msgid "Drawing"
+msgstr "圖畫"
+
+msgid "Driver"
+msgstr "驅動程式"
+
+msgid "Dropdown Limit"
+msgstr "限制"
+
+msgid "Due Date"
+msgstr "到期日"
+
+msgid "Due Date missing!"
+msgstr "未指明到期日！"
+
+msgid "E-mail"
+msgstr "電子郵件"
+
+msgid "E-mail Statement to"
+msgstr "電郵會計賬到"
+
+msgid "E-mail address missing!"
+msgstr "未指明電子郵件位址！"
+
+msgid "E-mail message"
+msgstr "電子郵件訊息"
+
+msgid "E-mailed"
+msgstr "已電郵"
+
+msgid "Edit"
+msgstr "編輯"
+
+msgid "Edit AP Transaction"
+msgstr "編輯應付交易"
+
+msgid "Edit AR Transaction"
+msgstr "編輯應收交易"
+
+msgid "Edit Account"
+msgstr "編輯帳戶"
+
+msgid "Edit Assembly"
+msgstr "編輯製成品"
+
+msgid "Edit Business"
+msgstr "編輯業務"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "編輯現金轉移"
+
+msgid "Edit Customer"
+msgstr "編輯客戶"
+
+msgid "Edit Deduction"
+msgstr "編輯減除額"
+
+msgid "Edit Department"
+msgstr "編輯部門"
+
+msgid "Edit Description Translations"
+msgstr "編輯翻譯描述"
+
+msgid "Edit Employee"
+msgstr "編輯職員"
+
+msgid "Edit GIFI"
+msgstr "編輯GIFI"
+
+msgid "Edit General Ledger Transaction"
+msgstr "編輯總帳"
+
+msgid "Edit Group"
+msgstr "編輯組別"
+
+msgid "Edit Job"
+msgstr "編輯工作"
+
+msgid "Edit Labor/Overhead"
+msgstr "編輯直接人工/經常費用"
+
+msgid "Edit Language"
+msgstr "編輯語言"
+
+msgid "Edit POS Invoice"
+msgstr "編輯POS"
+
+msgid "Edit Part"
+msgstr "編輯零件"
+
+msgid "Edit Preferences for"
+msgstr "設定使用者"
+
+msgid "Edit Pricegroup"
+msgstr "編輯價格組別"
+
+msgid "Edit Project"
+msgstr "編輯項目"
+
+msgid "Edit Purchase Order"
+msgstr "編輯採購單"
+
+msgid "Edit Quotation"
+msgstr "編輯報價單"
+
+msgid "Edit Request for Quotation"
+msgstr "編輯報價單要求"
+
+msgid "Edit SIC"
+msgstr "編輯標準工業分類代碼"
+
+msgid "Edit Sales Invoice"
+msgstr "編輯銷售發票"
+
+msgid "Edit Sales Order"
+msgstr "編輯銷貨單"
+
+msgid "Edit Service"
+msgstr "編輯服務"
+
+msgid "Edit Template"
+msgstr "編輯模版"
+
+msgid "Edit Timecard"
+msgstr "編輯工時卡"
+
+msgid "Edit User"
+msgstr "編輯使用者"
+
+msgid "Edit Vendor"
+msgstr "編輯供應商"
+
+msgid "Edit Vendor Invoice"
+msgstr "編輯供應商發票"
+
+msgid "Edit Warehouse"
+msgstr "編輯倉庫"
+
+msgid "Employee"
+msgstr "職員"
+
+msgid "Employee Name"
+msgstr "職員姓名"
+
+msgid "Employee Number"
+msgstr "職員編號"
+
+msgid "Employee deleted!"
+msgstr "已刪除職員！"
+
+msgid "Employee pays"
+msgstr "付款給職員"
+
+msgid "Employee saved!"
+msgstr "已儲存職員！"
+
+msgid "Employees"
+msgstr "職員"
+
+msgid "Employer"
+msgstr "雇主"
+
+msgid "Employer pays"
+msgstr "付款給雇主"
+
+msgid "Enddate"
+msgstr "結束日"
+
+msgid "Ends"
+msgstr "完結"
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "強制所有日期的交易回復"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "請鍵入以冒號分隔的英文字母, 每項不超過三個字 (如 CAD:USD:EUR), 作為您的本國及外國貨幣"
+
+msgid "Equity"
+msgstr "股權"
+
+msgid "Every"
+msgstr "每"
+
+msgid "Excempt age <"
+msgstr "不包括年齡 <"
+
+msgid "Exch"
+msgstr "匯率"
+
+msgid "Exchange Rate"
+msgstr "匯率"
+
+msgid "Exchange rate for payment missing!"
+msgstr "未指明付款的匯率！"
+
+msgid "Exchange rate missing!"
+msgstr "未指明匯率！"
+
+msgid "Existing Datasets"
+msgstr "既有的資料集"
+
+msgid "Expense"
+msgstr "費用"
+
+msgid "Expense account does not exist!"
+msgstr "費用帳戶不存在！"
+
+msgid "Expense/Asset"
+msgstr "費用/資產"
+
+msgid "Extended"
+msgstr "總價"
+
+msgid "FX"
+msgstr "外幣兌換"
+
+msgid "Failed to save order!"
+msgstr "儲存訂單時出錯！"
+
+msgid "Fax"
+msgstr "傳真"
+
+msgid "Feb"
+msgstr "二月"
+
+msgid "February"
+msgstr "二月"
+
+msgid "For"
+msgstr "重覆"
+
+msgid "Foreign Exchange Gain"
+msgstr "外匯收益"
+
+msgid "Foreign Exchange Loss"
+msgstr "外匯損失"
+
+msgid "Friday"
+msgstr "星期五"
+
+msgid "From"
+msgstr "從"
+
+msgid "From Warehouse"
+msgstr "從貨倉"
+
+msgid "GIFI"
+msgstr "財務訊息通用索引(GIFI)"
+
+msgid "GIFI deleted!"
+msgstr "GIFI已刪除！"
+
+msgid "GIFI missing!"
+msgstr "未指明 GIFI！"
+
+msgid "GIFI saved!"
+msgstr "已儲存！"
+
+msgid "GL"
+msgstr "總帳"
+
+msgid "GL Reference Number"
+msgstr "總帳索引編號"
+
+msgid "GL Transaction"
+msgstr "總帳交易"
+
+msgid "General Ledger"
+msgstr "總帳"
+
+msgid "Generate"
+msgstr "生成"
+
+msgid "Generate Orders"
+msgstr "生成訂單"
+
+msgid "Generate Purchase Orders"
+msgstr "生成採購單"
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr "由銷貨單生成採購單"
+
+msgid "Generate Sales Order"
+msgstr "生成銷貨單"
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr "由採購單生成銷貨單"
+
+msgid "Generate Sales Orders"
+msgstr "生成銷貨單"
+
+msgid "Goods & Services"
+msgstr "貨物及服務"
+
+msgid "Group"
+msgstr "組別"
+
+msgid "Group Items"
+msgstr "組別的項目"
+
+msgid "Group Translations"
+msgstr "組別的翻譯"
+
+msgid "Group deleted!"
+msgstr "組別已被刪除！"
+
+msgid "Group missing!"
+msgstr "未指明組別！"
+
+msgid "Group saved!"
+msgstr "組別已被儲存！"
+
+msgid "Groups"
+msgstr "所有組別"
+
+msgid "HR"
+msgstr "人事管理"
+
+msgid "HTML Templates"
+msgstr "HTML 模版"
+
+msgid "Heading"
+msgstr "標題"
+
+msgid "History"
+msgstr "歷史"
+
+msgid "Home Phone"
+msgstr "住宅電話"
+
+msgid "Host"
+msgstr "主機"
+
+msgid "Hostname missing!"
+msgstr "未指明主機名稱！"
+
+msgid "IBAN"
+msgstr "國際銀行帳號(IBAN)"
+
+msgid "ID"
+msgstr "識別編號"
+
+msgid "Image"
+msgstr "影像"
+
+msgid "In-line"
+msgstr "行內"
+
+msgid "Inactive"
+msgstr "非活躍的"
+
+msgid "Include Exchange Rate Difference"
+msgstr "包含外匯差距"
+
+msgid "Include Payment"
+msgstr "包括付款"
+
+msgid "Include in Report"
+msgstr "一併顯示"
+
+msgid "Include in drop-down menus"
+msgstr "包含在下拉式選單中"
+
+msgid "Income"
+msgstr "收入"
+
+msgid "Income Statement"
+msgstr "損益表"
+
+msgid "Income account does not exist!"
+msgstr "收入帳戶不存在！"
+
+msgid "Incorrect Dataset version!"
+msgstr "資料集版本錯誤！"
+
+msgid "Increase"
+msgstr "增加"
+
+msgid "Individual Items"
+msgstr "個別的項目"
+
+msgid "Internal Notes"
+msgstr "內部備忘錄"
+
+msgid "Inventory"
+msgstr "庫存"
+
+msgid "Inventory account does not exist!"
+msgstr "庫存數帳戶不存在！"
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "在停用此製成品之前, 存貨數量必需為零！"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "停用此項零件之前, 存貨數量必需為零！"
+
+msgid "Inventory saved!"
+msgstr "已儲存存貨！"
+
+msgid "Inventory transferred!"
+msgstr "轉移的存貨！"
+
+msgid "Invoice"
+msgstr "發票"
+
+msgid "Invoice Date"
+msgstr "發票日期"
+
+msgid "Invoice Date missing!"
+msgstr "未指明發票日期！"
+
+msgid "Invoice Number"
+msgstr "發票編號"
+
+msgid "Invoice Number missing!"
+msgstr "未指明發票編號！"
+
+msgid "Invoice deleted!"
+msgstr "已刪除發票！"
+
+msgid "Invoices"
+msgstr "發票"
+
+msgid "Is this a summary account to record"
+msgstr "此為總結科目嗎?"
+
+msgid "Item already on pricelist!"
+msgstr "項目己經在價格清單內！"
+
+msgid "Item deleted!"
+msgstr "已刪除項目！"
+
+msgid "Item not on file!"
+msgstr "沒有此項目的記錄！"
+
+msgid "Items"
+msgstr "項目"
+
+msgid "Jan"
+msgstr "一月"
+
+msgid "January"
+msgstr "一月"
+
+msgid "Job"
+msgstr "工作"
+
+msgid "Job Name"
+msgstr "工作名稱"
+
+msgid "Job Number"
+msgstr "工作編號"
+
+msgid "Job Number missing!"
+msgstr "未指明工作編號！"
+
+msgid "Job deleted!"
+msgstr "工作已被刪除！"
+
+msgid "Job saved!"
+msgstr "工作已被儲存！"
+
+msgid "Jobs"
+msgstr "工作"
+
+msgid "Jul"
+msgstr "七月"
+
+msgid "July"
+msgstr "七月"
+
+msgid "Jun"
+msgstr "六月"
+
+msgid "June"
+msgstr "六月"
+
+msgid "LaTeX Templates"
+msgstr "LaTex 模版"
+
+msgid "Labor Code"
+msgstr "直接人工代碼"
+
+msgid "Labor/Overhead"
+msgstr "直接人工/經常費用"
+
+msgid "Language"
+msgstr "語言"
+
+msgid "Language deleted!"
+msgstr "已刪除語言！"
+
+msgid "Language saved!"
+msgstr "已儲存語言！"
+
+msgid "Languages"
+msgstr "語言"
+
+msgid "Languages not defined!"
+msgstr "不能辨認語言！"
+
+msgid "Last Cost"
+msgstr "上次的成本"
+
+msgid "Last Numbers & Default Accounts"
+msgstr "上一筆編號及預設帳戶"
+
+msgid "Lead"
+msgstr "交付時間"
+
+msgid "Leadtime"
+msgstr "總需時"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "除非您想要進行遠端連線，否則請將主機及埠號留白。"
+
+msgid "Liability"
+msgstr "負債"
+
+msgid "Licensed to"
+msgstr "授權予"
+
+msgid "Line Total"
+msgstr "總列數"
+
+msgid "Link"
+msgstr "連結"
+
+msgid "Link Accounts"
+msgstr "連結帳戶"
+
+msgid "List"
+msgstr "列表"
+
+msgid "List Accounts"
+msgstr "列出帳號"
+
+msgid "List Businesses"
+msgstr "列出業務"
+
+msgid "List Departments"
+msgstr "列出部門"
+
+msgid "List GIFI"
+msgstr "列出 GIFI"
+
+msgid "List Languages"
+msgstr "列出語言"
+
+msgid "List Price"
+msgstr "列出價"
+
+msgid "List Projects"
+msgstr "列出項目"
+
+msgid "List SIC"
+msgstr "列出標準工業分類代碼"
+
+msgid "List Transactions"
+msgstr "列出所有交易"
+
+msgid "List Warehouses"
+msgstr "列出倉庫"
+
+msgid "Lock System"
+msgstr "系統鎖上"
+
+msgid "Lockfile created!"
+msgstr "已建立上鎖檔案！"
+
+msgid "Lockfile removed!"
+msgstr "已移除上鎖檔案！"
+
+msgid "Login"
+msgstr "登入"
+
+msgid "Login name missing!"
+msgstr "未指明登入名字！"
+
+msgid "Logout"
+msgstr "登出"
+
+msgid "Make"
+msgstr "生產商"
+
+msgid "Manager"
+msgstr "經理"
+
+msgid "Mar"
+msgstr "三月"
+
+msgid "March"
+msgstr "三月"
+
+msgid "Marked entries printed!"
+msgstr "已列印有記號的會計項目！"
+
+msgid "Markup"
+msgstr "漲價"
+
+msgid "Maximum"
+msgstr "最大"
+
+msgid "May"
+msgstr "五月"
+
+msgid "May "
+msgstr "五月"
+
+msgid "Memo"
+msgstr "備忘錄"
+
+msgid "Menu Width"
+msgstr "選擇單寬度"
+
+msgid "Message"
+msgstr "訊息"
+
+msgid "Method"
+msgstr "方法"
+
+msgid "Microfiche"
+msgstr "單片縮影膠片"
+
+msgid "Model"
+msgstr "型號"
+
+msgid "Monday"
+msgstr "星期一"
+
+msgid "Month"
+msgstr "月"
+
+msgid "Month(s)"
+msgstr "月"
+
+msgid "Months"
+msgstr "月"
+
+msgid "Multibyte Encoding"
+msgstr "多字元編碼"
+
+msgid "N/A"
+msgstr "不適用"
+
+msgid "Name"
+msgstr "名稱"
+
+msgid "Name missing!"
+msgstr "未指明名字！"
+
+msgid "New Templates"
+msgstr "新增模版"
+
+msgid "New Window"
+msgstr "新視窗"
+
+msgid "Next"
+msgstr "下一個"
+
+msgid "Next Date"
+msgstr "下一日"
+
+msgid "Next Number"
+msgstr "下一個號碼"
+
+msgid "No"
+msgstr "否"
+
+msgid "No Database Drivers available!"
+msgstr "沒有可用的資料庫驅動程式！"
+
+msgid "No Dataset selected!"
+msgstr "未選定資料集！"
+
+msgid "No Employees on file!"
+msgstr "沒有任何僱員的記錄！"
+
+msgid "No Labor codes on file!"
+msgstr "沒有任何直接人工代碼的記錄！"
+
+msgid "No email address for"
+msgstr "未指明電子郵件地址"
+
+msgid "No open Jobs!"
+msgstr "沒有已開啟的工作"
+
+msgid "No open Projects!"
+msgstr "沒有已開啟的項目"
+
+msgid "No."
+msgstr "編號"
+
+msgid "Non-taxable"
+msgstr "不應課稅"
+
+msgid "Non-taxable Purchases"
+msgstr "不應課稅的採購"
+
+msgid "Non-taxable Sales"
+msgstr "不應課稅的銷售"
+
+msgid "Non-tracking Items"
+msgstr "不用追蹤的項目"
+
+msgid "Notes"
+msgstr "備註"
+
+msgid "Nothing entered!"
+msgstr "沒有任何輸入！"
+
+msgid "Nothing selected!"
+msgstr "沒有選擇任何東西！"
+
+msgid "Nothing to delete!"
+msgstr "沒有可刪除的項目！"
+
+msgid "Nothing to print!"
+msgstr "沒有可列印的項目！"
+
+msgid "Nothing to transfer!"
+msgstr "沒有可轉移的項目！"
+
+msgid "Nov"
+msgstr "十一月"
+
+msgid "November"
+msgstr "十一月"
+
+msgid "Number"
+msgstr "編號"
+
+msgid "Number Format"
+msgstr "數字格式"
+
+msgid "Number missing in Row"
+msgstr "此列中缺少數值"
+
+msgid "O"
+msgstr ""
+
+msgid "OH"
+msgstr "已有存量"
+
+msgid "Obsolete"
+msgstr "停用"
+
+msgid "Oct"
+msgstr "十月"
+
+msgid "October"
+msgstr "十月"
+
+msgid "On Hand"
+msgstr "已有存量"
+
+msgid "Open"
+msgstr "開啟"
+
+msgid "Oracle Database Administration"
+msgstr "Oracle資料庫管理"
+
+msgid "Order"
+msgstr "訂單"
+
+msgid "Order Date"
+msgstr "下單日期"
+
+msgid "Order Date missing!"
+msgstr "未指明下單日期！"
+
+msgid "Order Entry"
+msgstr "下單項目"
+
+msgid "Order Number"
+msgstr "訂單編號"
+
+msgid "Order Number missing!"
+msgstr "未指明訂單編號！"
+
+msgid "Order deleted!"
+msgstr "已刪除訂單！"
+
+msgid "Order generation failed!"
+msgstr "生成訂單失敗！"
+
+msgid "Order saved!"
+msgstr "已儲存訂單！"
+
+msgid "Orders generated!"
+msgstr "已生成訂單！"
+
+msgid "Orphaned"
+msgstr "無主"
+
+msgid "Out of balance transaction!"
+msgstr "不協調交易！"
+
+msgid "Out of balance!"
+msgstr "不平衡！"
+
+msgid "Outstanding"
+msgstr "未收款交易"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PO Number"
+msgstr "採購單編號"
+
+msgid "POS"
+msgstr "銷售點(POS)"
+
+msgid "POS Invoice"
+msgstr "POS發票"
+
+msgid "Packing List"
+msgstr "出貨單"
+
+msgid "Packing List Date missing!"
+msgstr "未指明出貨單日期！"
+
+msgid "Packing List Number missing!"
+msgstr "未指明出貨單編號！"
+
+msgid "Packing Lists"
+msgstr "出貨單"
+
+msgid "Paid"
+msgstr "已付"
+
+msgid "Part"
+msgstr "零件"
+
+msgid "Part Number"
+msgstr "零件編號"
+
+msgid "Partnumber"
+msgstr "零件編號"
+
+msgid "Parts"
+msgstr "零件"
+
+msgid "Password"
+msgstr "密碼"
+
+msgid "Password changed!"
+msgstr "密碼已改！"
+
+msgid "Password does not match!"
+msgstr "密碼不符！"
+
+msgid "Passwords do not match!"
+msgstr "密碼不符！"
+
+msgid "Payables"
+msgstr "應付科目"
+
+msgid "Payment"
+msgstr "付款"
+
+msgid "Payment date missing!"
+msgstr "未指明付款日期！"
+
+msgid "Payment posted!"
+msgstr "已加入付款！"
+
+msgid "Payments"
+msgstr "付款"
+
+msgid "Payments posted!"
+msgstr "已加入付款！"
+
+msgid "Payroll Deduction"
+msgstr "薪金減除額"
+
+msgid "Period"
+msgstr "期間"
+
+msgid "Pg Database Administration"
+msgstr "Pg資料庫管理"
+
+msgid "PgPP Database Administration"
+msgstr "PgPP資料庫管理"
+
+msgid "Phone"
+msgstr "電話號碼"
+
+msgid "Pick List"
+msgstr "揀貨清單"
+
+msgid "Pick Lists"
+msgstr "揀貨清單"
+
+msgid "Port"
+msgstr "埠號"
+
+msgid "Port missing!"
+msgstr "未指明埠號！"
+
+msgid "Pos"
+msgstr "序號"
+
+msgid "Post"
+msgstr "加入"
+
+msgid "Post as new"
+msgstr "當新的加入"
+
+msgid "Posted!"
+msgstr "已加入！"
+
+msgid "Posting"
+msgstr "正加入"
+
+msgid "Posting failed!"
+msgstr "加入失敗！"
+
+msgid "Postscript"
+msgstr "Postscript"
+
+msgid "Preferences"
+msgstr "個人設定"
+
+msgid "Preferences saved!"
+msgstr "個人設定已儲存！"
+
+msgid "Prepayment"
+msgstr "預繳"
+
+msgid "Price"
+msgstr "價格"
+
+msgid "Pricegroup"
+msgstr "價格組別"
+
+msgid "Pricegroup deleted!"
+msgstr "已刪除價格組別！"
+
+msgid "Pricegroup missing!"
+msgstr "未指明價格組別！"
+
+msgid "Pricegroup saved!"
+msgstr "已儲存價格組別！"
+
+msgid "Pricegroups"
+msgstr "所有價格組別"
+
+msgid "Pricelist"
+msgstr "價格清單"
+
+msgid "Print"
+msgstr "列印"
+
+msgid "Print and Post"
+msgstr "列印並加入"
+
+msgid "Print and Post as new"
+msgstr "列印並加入作為新的"
+
+msgid "Print and Save"
+msgstr "列印並儲存"
+
+msgid "Print and Save as new"
+msgstr "列印並儲存作為新的"
+
+msgid "Print and post as new"
+msgstr "列印並加入作為新的"
+
+msgid "Print and save as new"
+msgstr "列印並儲存作為新的"
+
+msgid "Printed"
+msgstr "已列印"
+
+msgid "Printer"
+msgstr "印表機"
+
+msgid "Printing"
+msgstr "正列印"
+
+msgid "Printing ... "
+msgstr "正列印‧‧‧"
+
+msgid "Process Transactions"
+msgstr "處理所有交易"
+
+msgid "Production"
+msgstr "生產"
+
+msgid "Profit Center"
+msgstr "利潤中心"
+
+msgid "Project"
+msgstr "項目"
+
+msgid "Project Description Translations"
+msgstr "項目描述的翻譯"
+
+msgid "Project Name"
+msgstr "項目名稱"
+
+msgid "Project Number"
+msgstr "項目號碼"
+
+msgid "Project Number missing!"
+msgstr "未指明項目號碼！"
+
+msgid "Project Transactions"
+msgstr "項目交易"
+
+msgid "Project deleted!"
+msgstr "已刪除項目！"
+
+msgid "Project not on file!"
+msgstr "沒有此項目的記錄！"
+
+msgid "Project saved!"
+msgstr "已儲存項目！"
+
+msgid "Project/Job Name"
+msgstr "項目/工作名稱"
+
+msgid "Project/Job Number"
+msgstr "項目/工作號碼"
+
+msgid "Projects"
+msgstr "項目"
+
+msgid "Purchase Order"
+msgstr "採購單"
+
+msgid "Purchase Order Number"
+msgstr "採購單編號"
+
+msgid "Purchase Orders"
+msgstr "採購單"
+
+msgid "Qty"
+msgstr "數量"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "數量超過可庫存的數量！"
+
+msgid "Quarter"
+msgstr "季"
+
+msgid "Quotation"
+msgstr "報價單"
+
+msgid "Quotation "
+msgstr "報價單 "
+
+msgid "Quotation Date"
+msgstr "報價單日期"
+
+msgid "Quotation Date missing!"
+msgstr "未指明報價單日期！"
+
+msgid "Quotation Number"
+msgstr "報價單號碼"
+
+msgid "Quotation Number missing!"
+msgstr "未指明報價單號碼！"
+
+msgid "Quotation deleted!"
+msgstr "已刪除報價單！"
+
+msgid "Quotations"
+msgstr "報價單"
+
+msgid "R"
+msgstr ""
+
+msgid "RFQ"
+msgstr "報價請求(RFQ) "
+
+msgid "RFQ "
+msgstr "報價請求(RFQ)  "
+
+msgid "RFQ Number"
+msgstr "報價請求號碼"
+
+msgid "RFQs"
+msgstr "報價請求"
+
+msgid "ROP"
+msgstr "再訂點"
+
+msgid "Rate"
+msgstr "稅率"
+
+msgid "Rate missing!"
+msgstr "未指明稅率！"
+
+msgid "Recd"
+msgstr "已收到"
+
+msgid "Receipt"
+msgstr "收據"
+
+msgid "Receipt posted!"
+msgstr "已加入收據！"
+
+msgid "Receipts"
+msgstr "收據"
+
+msgid "Receivables"
+msgstr "應收帳戶"
+
+msgid "Receive"
+msgstr "收到"
+
+msgid "Receive Merchandise"
+msgstr "收到貨物"
+
+msgid "Reconciliation"
+msgstr "調節"
+
+msgid "Reconciliation Report"
+msgstr "調節報告"
+
+msgid "Record in"
+msgstr "記錄於"
+
+msgid "Recurring Transaction"
+msgstr "重覆出現的交易"
+
+msgid "Recurring Transactions"
+msgstr "重覆出現的交易"
+
+msgid "Reference"
+msgstr "參考資料"
+
+msgid "Remaining"
+msgstr "尚餘"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Remove Audit trails up to"
+msgstr "移除審核線索直至"
+
+msgid "Removed spoolfiles!"
+msgstr "移除列印暫存檔案"
+
+msgid "Removing marked entries from queue ..."
+msgstr "正從隊列中移除有記號的會計項目"
+
+msgid "Repeat"
+msgstr "重覆"
+
+msgid "Report for"
+msgstr "報表來源"
+
+msgid "Reports"
+msgstr "報表"
+
+msgid "Req"
+msgstr "需要"
+
+msgid "Request for Quotation"
+msgstr "要求報價單"
+
+msgid "Request for Quotations"
+msgstr "要求報價單"
+
+msgid "Required by"
+msgstr "要求交付日期"
+
+msgid "Retained Earnings"
+msgstr "保留盈餘"
+
+msgid "Role"
+msgstr "任務"
+
+msgid "S"
+msgstr ""
+
+msgid "SIC"
+msgstr "標準工業分類代碼"
+
+msgid "SIC deleted!"
+msgstr "已刪除標準工業分類代碼！"
+
+msgid "SIC saved!"
+msgstr "已儲存標準工業分類代碼！"
+
+msgid "SKU"
+msgstr "庫存單位"
+
+msgid "SSN"
+msgstr "社會保障編號"
+
+msgid "Sale"
+msgstr "銷售"
+
+msgid "Sales"
+msgstr "銷售"
+
+msgid "Sales Invoice"
+msgstr "銷售發票"
+
+msgid "Sales Invoice "
+msgstr "銷售發票 "
+
+msgid "Sales Invoice."
+msgstr "銷售發票。"
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr "銷售發票/應收帳交易編號"
+
+msgid "Sales Invoices"
+msgstr "銷售發票"
+
+msgid "Sales Order"
+msgstr "銷貨單"
+
+msgid "Sales Order Number"
+msgstr "銷貨單編號"
+
+msgid "Sales Orders"
+msgstr "銷貨單"
+
+msgid "Sales Quotation Number"
+msgstr "銷售報價單編號"
+
+msgid "Salesperson"
+msgstr "銷售人員"
+
+msgid "Saturday"
+msgstr "星期六"
+
+msgid "Save"
+msgstr "儲存"
+
+msgid "Save Pricelist"
+msgstr "儲存價格清單"
+
+msgid "Save Schedule"
+msgstr "儲存時間表"
+
+msgid "Save as new"
+msgstr "當新的儲存"
+
+msgid "Save to File"
+msgstr "儲存至檔案"
+
+msgid "Saving"
+msgstr "正在儲存"
+
+msgid "Schedule"
+msgstr "時間表"
+
+msgid "Scheduled"
+msgstr "編排了時間"
+
+msgid "Screen"
+msgstr "螢幕"
+
+msgid "Search"
+msgstr "搜尋"
+
+msgid "Select"
+msgstr "選擇"
+
+msgid "Select Customer"
+msgstr "選擇客戶"
+
+msgid "Select Vendor"
+msgstr "選擇供應商"
+
+msgid "Select a Printer!"
+msgstr "選擇印表機！"
+
+msgid "Select a printer!"
+msgstr "選擇印表機！"
+
+msgid "Select all"
+msgstr "全選"
+
+msgid "Select from one of the items below"
+msgstr "於下列項目中選擇一項"
+
+msgid "Select from one of the names below"
+msgstr "於下列姓名中選擇一個"
+
+msgid "Select from one of the projects below"
+msgstr "於下列項目中選擇一個"
+
+msgid "Select items"
+msgstr "選擇項目"
+
+msgid "Select payment"
+msgstr "選擇付款"
+
+msgid "Select postscript or PDF!"
+msgstr "選擇postscript或PDF！"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "選擇文字、postscript或PDF！"
+
+msgid "Sell"
+msgstr "售賣"
+
+msgid "Sell Price"
+msgstr "售價"
+
+msgid "Send by E-Mail"
+msgstr "以電子郵件寄送"
+
+msgid "Sending"
+msgstr "正在發送"
+
+msgid "Sep"
+msgstr "九月"
+
+msgid "September"
+msgstr "九月"
+
+msgid "Serial No."
+msgstr "序號"
+
+msgid "Serial Number"
+msgstr "序號"
+
+msgid "Service"
+msgstr "服務"
+
+msgid "Service Code"
+msgstr "服務編號"
+
+msgid "Service/Labor Code"
+msgstr "服務/直接人工編號"
+
+msgid "Services"
+msgstr "服務"
+
+msgid "Session Timeout"
+msgstr "使用期(Session)長短"
+
+msgid "Session expired!"
+msgstr "使用期(Session)已過！"
+
+msgid "Setup Templates"
+msgstr "設定模版"
+
+msgid "Ship"
+msgstr "付運"
+
+msgid "Ship Merchandise"
+msgstr "付運貨物"
+
+msgid "Ship to"
+msgstr "付運至"
+
+msgid "Ship via"
+msgstr "付運公司"
+
+msgid "Shipping"
+msgstr "付運"
+
+msgid "Shipping Address"
+msgstr "付運地址"
+
+msgid "Shipping Date"
+msgstr "付運日期"
+
+msgid "Shipping Date missing!"
+msgstr "未指明付運日期！"
+
+msgid "Shipping Point"
+msgstr "付運地點"
+
+msgid "Short"
+msgstr "短"
+
+msgid "Signature"
+msgstr "簽名"
+
+msgid "Source"
+msgstr "來源"
+
+msgid "Spoolfile"
+msgstr "列印暫存(spool)檔案"
+
+msgid "Standard"
+msgstr "標準"
+
+msgid "Standard Industrial Codes"
+msgstr "標準工業編碼"
+
+msgid "Startdate"
+msgstr "開始日期"
+
+msgid "State"
+msgstr "州"
+
+msgid "State/Province"
+msgstr "省"
+
+msgid "Statement"
+msgstr "會計帳"
+
+msgid "Statement Balance"
+msgstr "會計帳餘額"
+
+msgid "Statement sent to"
+msgstr "會計帳已送至"
+
+msgid "Statements sent to printer!"
+msgstr "會計帳已送至印表機！"
+
+msgid "Stock"
+msgstr "庫存"
+
+msgid "Stock Assembly"
+msgstr "把製成品入貨"
+
+msgid "Stocking Date"
+msgstr "入貨日期"
+
+msgid "Stylesheet"
+msgstr "樣式表"
+
+msgid "Sub-contract GIFI"
+msgstr "轉包合同GIFI"
+
+msgid "Subject"
+msgstr "標題"
+
+msgid "Subtotal"
+msgstr "小計"
+
+msgid "Summary"
+msgstr "摘要"
+
+msgid "Sunday"
+msgstr "星期日"
+
+msgid "Supervisor"
+msgstr "主管"
+
+msgid "System"
+msgstr "系統"
+
+msgid "System Defaults"
+msgstr "系統預設值"
+
+msgid "Tax"
+msgstr "稅金"
+
+msgid "Tax Accounts"
+msgstr "稅金科目"
+
+msgid "Tax Included"
+msgstr "已含稅金"
+
+msgid "Tax Number"
+msgstr "稅號"
+
+msgid "Tax Number / SSN"
+msgstr "稅號/社會保障編號"
+
+msgid "Tax collected"
+msgstr "已收稅金"
+
+msgid "Tax paid"
+msgstr "已付稅金"
+
+msgid "Taxable"
+msgstr "應稅"
+
+msgid "Template saved!"
+msgstr "已儲存模版！"
+
+msgid "Templates"
+msgstr "模版"
+
+msgid "Terms"
+msgstr "票期淨計"
+
+msgid "Text"
+msgstr "文字"
+
+msgid "Text Templates"
+msgstr "文字模版"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "下列資料集並未使用，可以刪除"
+
+msgid "The following Datasets need to be updated"
+msgstr "下列資料集需要更新"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "這是對既存資料來源的初步檢查。在此階段，不會刪除或新增任何資料！"
+
+msgid "Thursday"
+msgstr "星期四"
+
+msgid "Till"
+msgstr "直到"
+
+msgid "Time In"
+msgstr "上班時間"
+
+msgid "Time Out"
+msgstr "下班時間"
+
+msgid "Timecard"
+msgstr "工時卡"
+
+msgid "Timecard deleted!"
+msgstr "工時卡已被刪除！"
+
+msgid "Timecard saved!"
+msgstr "工時卡已被儲存！"
+
+msgid "Timecards"
+msgstr "工時卡"
+
+msgid "Times"
+msgstr "次"
+
+msgid "To"
+msgstr "至"
+
+msgid "To Warehouse"
+msgstr "到倉庫"
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "若要新增群組內的使用者，請編輯名稱，更改登入名，然後儲存。這樣一來, 新使用者會保留相同的變數，並以新的登入名存入。"
+
+msgid "Top Level"
+msgstr "頂層"
+
+msgid "Total"
+msgstr "總計"
+
+msgid "Tracking Items"
+msgstr "需要追蹤的項目"
+
+msgid "Trade Discount"
+msgstr "貿易折扣"
+
+msgid "Transaction"
+msgstr "交易"
+
+msgid "Transaction Date missing!"
+msgstr "未指明交易日期！"
+
+msgid "Transaction Dates"
+msgstr "交易日期"
+
+msgid "Transaction deleted!"
+msgstr "已刪除交易！"
+
+msgid "Transaction posted!"
+msgstr "已加入交易！"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "強制回復所有日期的交易"
+
+msgid "Transaction reversal enforced up to"
+msgstr "強制回復交易直到"
+
+msgid "Transactions"
+msgstr "所有交易"
+
+msgid "Transfer"
+msgstr "轉移"
+
+msgid "Transfer Inventory"
+msgstr "轉移存貨"
+
+msgid "Transfer from"
+msgstr "由這裡取貨"
+
+msgid "Transfer to"
+msgstr "存貨至"
+
+msgid "Translation"
+msgstr "翻譯"
+
+msgid "Translation deleted!"
+msgstr "已刪除翻譯！"
+
+msgid "Translation not on file!"
+msgstr "沒有此翻譯的記錄！"
+
+msgid "Translations"
+msgstr "翻譯"
+
+msgid "Translations saved!"
+msgstr "已儲存翻譯！"
+
+msgid "Trial Balance"
+msgstr "試算表"
+
+msgid "Tuesday"
+msgstr "星期二"
+
+msgid "Type of Business"
+msgstr "業務種類"
+
+msgid "Unit"
+msgstr "單位"
+
+msgid "Unit of measure"
+msgstr "度量單位"
+
+msgid "Unlock System"
+msgstr "系統解封"
+
+msgid "Update"
+msgstr "更新"
+
+msgid "Update Dataset"
+msgstr "更新資料集"
+
+msgid "Updated"
+msgstr "已更新"
+
+msgid "Upgrading to Version"
+msgstr "正升級至新版"
+
+msgid "Use Templates"
+msgstr "使用模版"
+
+msgid "User"
+msgstr "使用者"
+
+msgid "User deleted!"
+msgstr "已刪除使用者！"
+
+msgid "User saved!"
+msgstr "已儲存使用者！"
+
+msgid "Valid until"
+msgstr "有效至"
+
+msgid "Vendor"
+msgstr "供應商"
+
+msgid "Vendor History"
+msgstr "供應商歷史"
+
+msgid "Vendor Invoice"
+msgstr "供應商發票"
+
+msgid "Vendor Invoice "
+msgstr "供應商發票 "
+
+msgid "Vendor Invoice."
+msgstr "供應商發票。"
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr "供應商發票/應付帳交易編號"
+
+msgid "Vendor Invoices"
+msgstr "供應商發票"
+
+msgid "Vendor Number"
+msgstr "供應商號碼"
+
+msgid "Vendor deleted!"
+msgstr "已刪除供應商！"
+
+msgid "Vendor missing!"
+msgstr "未指明供應商！"
+
+msgid "Vendor not on file!"
+msgstr "沒有此供應商的記錄！"
+
+msgid "Vendor saved!"
+msgstr "已儲存供應商！"
+
+msgid "Vendors"
+msgstr "供應商"
+
+msgid "Version"
+msgstr "版本"
+
+msgid "Warehouse"
+msgstr "倉庫"
+
+msgid "Warehouse deleted!"
+msgstr "已刪除倉庫！"
+
+msgid "Warehouse saved!"
+msgstr "已儲存倉庫！"
+
+msgid "Warehouses"
+msgstr "倉庫"
+
+msgid "Warning!"
+msgstr "警告！"
+
+msgid "Wednesday"
+msgstr "星期三"
+
+msgid "Week"
+msgstr "星期"
+
+msgid "Week(s)"
+msgstr "星期"
+
+msgid "Weeks"
+msgstr "星期"
+
+msgid "Weight"
+msgstr "重量"
+
+msgid "Weight Unit"
+msgstr "重量單位"
+
+msgid "What type of item is this?"
+msgstr "此項目屬於甚麼類別？"
+
+msgid "Work Order"
+msgstr "工作單"
+
+msgid "Work Orders"
+msgstr "工作單"
+
+msgid "Work Phone"
+msgstr "工作電話"
+
+msgid "Year"
+msgstr "年"
+
+msgid "Year(s)"
+msgstr "年"
+
+msgid "Yearend"
+msgstr "年結"
+
+msgid "Yearend date missing!"
+msgstr "未指明年結日期！"
+
+msgid "Yearend posted!"
+msgstr "已加入年結！"
+
+msgid "Yearend posting failed!"
+msgstr "年結加入失敗！"
+
+msgid "Years"
+msgstr "年"
+
+msgid "Yes"
+msgstr "是"
+
+msgid "You are logged out"
+msgstr "你已登出"
+
+msgid "You are posting an existing transaction!"
+msgstr "您正在加入一個現存的交易！"
+
+msgid "You are printing and posting an existing transaction!"
+msgstr "您正在列印及加入一個現存的交易！"
+
+msgid "You are printing and saving an existing order"
+msgstr "您正在列印及儲存一張現存的訂單！"
+
+msgid "You are printing and saving an existing quotation"
+msgstr "您正在列印及儲存一張現存的報價單！"
+
+msgid "You are printing and saving an existing transaction!"
+msgstr "您正在列印及儲存一個現存的交易！"
+
+msgid "You are saving an existing order"
+msgstr "您正在儲存一張現存的訂單！"
+
+msgid "You are saving an existing quotation"
+msgstr "您正在儲存一張現存的報價單！"
+
+msgid "You are saving an existing transaction!"
+msgstr "您正在儲存一個現存的交易！"
+
+msgid "You did not enter a name!"
+msgstr "你並未鍵入名稱！"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "您必需鍵入主機及埠號，以進行本機或遠端連線！"
+
+msgid "Zip/Postal Code"
+msgstr "郵政編碼"
+
+msgid "account cannot be set to any other type of account"
+msgstr "帳戶不能被設置為其他類型帳戶"
+
+msgid "as at"
+msgstr "截至"
+
+msgid "days"
+msgstr "日"
+
+msgid "does not exist"
+msgstr "不存在"
+
+msgid "done"
+msgstr "完成"
+
+msgid "ea"
+msgstr "個"
+
+msgid "failed"
+msgstr "失敗"
+
+msgid "for"
+msgstr "為了"
+
+msgid "for Period"
+msgstr "期間"
+
+msgid "is already a member!"
+msgstr "已經是成員了！"
+
+msgid "localhost"
+msgstr "本地寄主"
+
+msgid "locked!"
+msgstr "已鎖上！"
+
+msgid "partsgroup"
+msgstr "零件組"
+
+msgid "posted!"
+msgstr "已加入！"
+
+msgid "sent"
+msgstr "已送出"
+
+msgid "successfully created!"
+msgstr "成功建立！"
+
+msgid "successfully deleted!"
+msgstr "成功刪除！"
+
+msgid "time(s)"
+msgstr "次"
+
+msgid "unexpected error!"
+msgstr "沒有預期的錯誤！"
+
+msgid "website"
+msgstr "網站"
+

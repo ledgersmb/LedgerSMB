@@ -1,0 +1,2726 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2005
+#
+# Russian texts:
+#
+#  Author:	Alexey Cherepanov
+#  E-mail:	alx@rdm.com.ru
+# This localisation based on Khaimin Vladimir's KOI8-R localisation.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr "A"
+
+msgid "AP"
+msgstr "Поступления"
+
+msgid "AP Aging"
+msgstr "Взаиморасчеты с поставщиками"
+
+msgid "AP Outstanding"
+msgstr "Задолженость поставщиков"
+
+msgid "AP Transaction"
+msgstr "Проводка закупки"
+
+msgid "AP Transactions"
+msgstr "Проводки закупки"
+
+msgid "AR"
+msgstr "Продажи"
+
+msgid "AR Aging"
+msgstr "Взаиморасчеты с клиентами"
+
+msgid "AR Outstanding"
+msgstr "Задолженость клиентов"
+
+msgid "AR Transaction"
+msgstr "Проводка продаж"
+
+msgid "AR Transactions"
+msgstr "Проводки продаж"
+
+msgid "AR/AP"
+msgstr "Продажа/Покупка"
+
+msgid "About"
+msgstr "О программе"
+
+msgid "Above"
+msgstr "Больше"
+
+msgid "Access Control"
+msgstr "Контроль доступа"
+
+msgid "Access Denied!"
+msgstr "Доступ запрещен"
+
+msgid "Account"
+msgstr "Счет"
+
+msgid "Account Number"
+msgstr "Код счета"
+
+msgid "Account Number missing!"
+msgstr "Не указан номер счета!"
+
+msgid "Account Type"
+msgstr "Тип счета"
+
+msgid "Account Type missing!"
+msgstr "Не указан тип счета!"
+
+msgid "Account deleted!"
+msgstr "Счет удален"
+
+msgid "Account does not exist!"
+msgstr "Счет не существует!"
+
+msgid "Account saved!"
+msgstr "Счет записан"
+
+msgid "Accounting"
+msgstr "Бухгалтерия"
+
+msgid "Accounting Menu"
+msgstr "Бухгалтерское меню"
+
+msgid "Accounts"
+msgstr "Счета"
+
+msgid "Accrual"
+msgstr "Накопление"
+
+msgid "Activate Audit trail"
+msgstr "Активировать пробную проверку балланса"
+
+msgid "Activate Audit trails"
+msgstr "Активировать пробную проверку балланса"
+
+msgid "Active"
+msgstr "Активный"
+
+msgid "Add"
+msgstr "Новый"
+
+msgid "Add AP Transaction"
+msgstr "Новая проводка поступлений"
+
+msgid "Add AR Transaction"
+msgstr "Новая проводка продаж"
+
+msgid "Add Account"
+msgstr "Новый счет"
+
+msgid "Add Assembly"
+msgstr "Новый комплект"
+
+msgid "Add Business"
+msgstr "Новый бизнес"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Новая проводка кассового перемещения"
+
+msgid "Add Customer"
+msgstr "Новый клиент"
+
+msgid "Add Deduction"
+msgstr "Новое Удержание"
+
+msgid "Add Department"
+msgstr "Новый отдел"
+
+msgid "Add Employee"
+msgstr "Новый сотрудник"
+
+msgid "Add Exchange Rate"
+msgstr "Новый курс"
+
+msgid "Add GIFI"
+msgstr "Новый GIFI"
+
+msgid "Add General Ledger Transaction"
+msgstr "Новая проводка"
+
+msgid "Add Group"
+msgstr "Новая группа"
+
+msgid "Add Job"
+msgstr "Добавить работу"
+
+msgid "Add Labor/Overhead"
+msgstr "Новая работа/накладные расходы"
+
+msgid "Add Language"
+msgstr "Новый язык"
+
+msgid "Add POS Invoice"
+msgstr "Новыая фактура ККМ"
+
+msgid "Add Part"
+msgstr "Новый продукт"
+
+msgid "Add Pricegroup"
+msgstr "Новый тип цен"
+
+msgid "Add Project"
+msgstr "Новый проект"
+
+msgid "Add Purchase Order"
+msgstr "Новый заказ поставщика"
+
+msgid "Add Quotation"
+msgstr "Новое резервирование"
+
+msgid "Add Request for Quotation"
+msgstr "Новый запрос на резервирование"
+
+msgid "Add SIC"
+msgstr "Новый SIC"
+
+msgid "Add Sales Invoice"
+msgstr "Новая фактура продажи"
+
+msgid "Add Sales Order"
+msgstr "Новый заказ клиента"
+
+msgid "Add Service"
+msgstr "Новая услуга"
+
+msgid "Add Stores Card"
+msgstr "Добавить карту хранения"
+
+msgid "Add Time Card"
+msgstr "Добавить карту времени"
+
+msgid "Add Transaction"
+msgstr "Новая проводка"
+
+msgid "Add User"
+msgstr "Новый пользователь"
+
+msgid "Add Vendor"
+msgstr "Новый поставщик"
+
+msgid "Add Vendor Invoice"
+msgstr "Новая фактура поступления"
+
+msgid "Add Warehouse"
+msgstr "Новый склад"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Administration"
+msgstr "Администрирование"
+
+msgid "Administrator"
+msgstr "Администратор"
+
+msgid "After Deduction"
+msgstr "После Удержания"
+
+msgid "All"
+msgstr "Все"
+
+msgid "All Accounts"
+msgstr "Все счета"
+
+msgid "All Datasets up to date!"
+msgstr "All Datasets up to date!"
+
+msgid "All Items"
+msgstr "Вся номеклатура"
+
+msgid "Allocated"
+msgstr "Размещено"
+
+msgid "Allowances"
+msgstr "Списания"
+
+msgid "Amount"
+msgstr "Сумма"
+
+msgid "Amount Due"
+msgstr "Сумма к получению"
+
+msgid "Amount missing!"
+msgstr "Пропущена сумма"
+
+msgid "Apr"
+msgstr "апр"
+
+msgid "April"
+msgstr "апрель"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Вы уверены, что хотите удалить данную фактуру?"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Вы уверены, что хотите удалить данный заказ?"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Вы уверены, что хотите удалить резерв?"
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "Вы уверены, что хотите удалить данную проводку?"
+
+msgid "Are you sure you want to delete time card for"
+msgstr "Вы уверены, что хотите удалить time card для"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "Вы действительно хотите отменить очередь для отмеченных позиций?"
+
+msgid "As of"
+msgstr "как"
+
+msgid "Assemblies"
+msgstr "Комплекты"
+
+msgid "Assemblies restocked!"
+msgstr "Комплект заполнен!"
+
+msgid "Assembly"
+msgstr "Комлект"
+
+msgid "Assembly stocked!"
+msgstr "Сборка помещена!"
+
+msgid "Asset"
+msgstr "Актив"
+
+msgid "Attachment"
+msgstr "Вложение"
+
+msgid "Audit Control"
+msgstr "Контроль"
+
+msgid "Audit trail disabled"
+msgstr "Пробная проверка балланса заблокирована"
+
+msgid "Audit trail enabled"
+msgstr "Пробная проверка балланса доступна"
+
+msgid "Audit trail removed up to"
+msgstr "Пробная проверка балланса отменена до"
+
+msgid "Audit trails disabled"
+msgstr "Пробная проверка балланса заблокирована"
+
+msgid "Audit trails enabled"
+msgstr "Пробная проверка балланса доступна"
+
+msgid "Aug"
+msgstr "авг"
+
+msgid "August"
+msgstr "август"
+
+msgid "Average Cost"
+msgstr "Средняя цена"
+
+msgid "Avg Cost"
+msgstr "Средняя цена"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "BOM"
+msgstr "Ведомость материалов"
+
+msgid "Backup"
+msgstr "Резервная копия"
+
+msgid "Backup sent to"
+msgstr "Резервная копия отослана на"
+
+msgid "Balance"
+msgstr "Баланс"
+
+msgid "Balance Sheet"
+msgstr "Баланс"
+
+msgid "Based on"
+msgstr "Основан на"
+
+msgid "Bcc"
+msgstr "Bcc"
+
+msgid "Before Deduction"
+msgstr "До Удержания"
+
+msgid "Beginning Balance"
+msgstr "Начальный баланс"
+
+msgid "Below"
+msgstr "Ниже"
+
+msgid "Billing Address"
+msgstr "Адрес доставки счета"
+
+msgid "Bin"
+msgstr "Bin"
+
+msgid "Bin List"
+msgstr "Список Bin"
+
+msgid "Bin Lists"
+msgstr "Списки Bin"
+
+msgid "Books are open"
+msgstr "Книга открыта"
+
+msgid "Break"
+msgstr "Прервать"
+
+msgid "Business"
+msgstr "Бизнес"
+
+msgid "Business Number"
+msgstr "Бизнес-код"
+
+msgid "Business deleted!"
+msgstr "Бизнес удален"
+
+msgid "Business saved!"
+msgstr "Бизнес сохранен"
+
+msgid "C"
+msgstr "C"
+
+msgid "COGS"
+msgstr "COGS"
+
+msgid "COGS account does not exist!"
+msgstr "Отсутствует счет проданных товаров"
+
+msgid "Cannot add stores card for a completed job!"
+msgstr "Невозможно добавить к завершенному заданию"
+
+msgid "Cannot add time card for a completed job!"
+msgstr "Невозможно добавить к завершенному заданию"
+
+msgid "Cannot change stores card for a completed job!"
+msgstr "Невозможно изменить завершенное задание"
+
+msgid "Cannot change time card for a completed job!"
+msgstr "Невозможно изменить завершенное задание"
+
+msgid "Cannot create Assembly"
+msgstr "Невозможно создать сборку"
+
+msgid "Cannot create Labor"
+msgstr "Невозможно создать работу"
+
+msgid "Cannot create Lock!"
+msgstr "Невозможно заблокировать!"
+
+msgid "Cannot create Part"
+msgstr "Невозможно создать часть"
+
+msgid "Cannot create Service"
+msgstr "Невозможно создатьуслугу"
+
+msgid "Cannot delete account!"
+msgstr "Невозможно удалить счет!"
+
+msgid "Cannot delete customer!"
+msgstr "Невозможно удалить покупателя"
+
+msgid "Cannot delete default account!"
+msgstr "Невозможно удалить основной счет!"
+
+msgid "Cannot delete invoice!"
+msgstr "Невозможно удалить фактуру!"
+
+msgid "Cannot delete item!"
+msgstr "Невозможно удалить номенклатуру!"
+
+msgid "Cannot delete order!"
+msgstr "Невозможно удалить заказ!"
+
+msgid "Cannot delete quotation!"
+msgstr "Невозможно удалить резерв!"
+
+msgid "Cannot delete time card!"
+msgstr "Невозможно удалить карту времени"
+
+msgid "Cannot delete transaction!"
+msgstr "Невозможно удалить проводку!"
+
+msgid "Cannot delete vendor!"
+msgstr "Невозможно удалить поставщика!"
+
+msgid "Cannot post Payment!"
+msgstr "Невозможно провести оплату!"
+
+msgid "Cannot post Receipt!"
+msgstr "Невозможно провести получение!"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "Невозможно провести фактуру в закрытом периоде!"
+
+msgid "Cannot post invoice!"
+msgstr "Невозможно провести фактуру!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "Невозможно провести оплату для закрытого периода!"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "Невозможно провести проводку в закрытом периоде!"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr "Невозможно провести проводку с дебетом и кредитом для обного и того же счета!"
+
+msgid "Cannot post transaction!"
+msgstr "Невозможно провести проводку!"
+
+msgid "Cannot remove files!"
+msgstr "Невозможно переместить файлы!"
+
+msgid "Cannot save account!"
+msgstr "Невозможно сохранить счет!"
+
+msgid "Cannot save defaults!"
+msgstr "Невозможно сохранить настройки по умолчании!"
+
+msgid "Cannot save order!"
+msgstr "Невозможно сохранить заказ!"
+
+msgid "Cannot save preferences!"
+msgstr "Невозможно сохранить настройки!"
+
+msgid "Cannot save quotation!"
+msgstr "Невозможно сохранить резерв"
+
+msgid "Cannot save stores card for a closed period!"
+msgstr "Невозможно сохранить карту для закрытого периода"
+
+msgid "Cannot save stores card!"
+msgstr "Невозможно сохранить карту"
+
+msgid "Cannot save time card for a closed period!"
+msgstr "Невозможно сохранить карту времени для закрытого периода"
+
+msgid "Cannot save time card!"
+msgstr "Невозможно сохранить карту времени"
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Невозможно установить в счете более чем одно значение из AR, AP или IC"
+
+msgid "Cannot set multiple options for"
+msgstr "Невозможно установить много опций для"
+
+msgid "Cannot set multiple options for Item"
+msgstr "Невозможно установить много опций для элемента"
+
+msgid "Cannot stock Assembly!"
+msgstr "Невозможно сформировать комплект!"
+
+msgid "Cannot stock assemblies!"
+msgstr "Невозможно сформировать комплект!"
+
+msgid "Cash"
+msgstr "Касса"
+
+msgid "Cc"
+msgstr "Cc"
+
+msgid "Change"
+msgstr "Изменить"
+
+msgid "Change Admin Password"
+msgstr "Изменить пароль Администратора"
+
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+msgid "Chargeable"
+msgstr "Возмещаемый"
+
+msgid "Chart of Accounts"
+msgstr "План счетов"
+
+msgid "Check"
+msgstr "Проверить"
+
+msgid "Check Inventory"
+msgstr "Проверить инвентарь"
+
+msgid "Checks"
+msgstr "Проверки"
+
+msgid "City"
+msgstr "Город"
+
+msgid "Cleared"
+msgstr "Очищено"
+
+msgid "Click on login name to edit!"
+msgstr "Для редактирования кликните на имя пользователя."
+
+msgid "Clocked"
+msgstr "Clocked"
+
+msgid "Close Books up to"
+msgstr "Закрыть книгу по"
+
+msgid "Closed"
+msgstr "Закрыт"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Code missing!"
+msgstr "Пропущен код"
+
+msgid "Company"
+msgstr "Организация"
+
+msgid "Company Name"
+msgstr "Наименование организации"
+
+msgid "Compare to"
+msgstr "Сравнить с"
+
+msgid "Completed"
+msgstr "Завершен"
+
+msgid "Components"
+msgstr "Компоненты"
+
+msgid "Confirm"
+msgstr "подтвердить"
+
+msgid "Confirm!"
+msgstr "Подтвердить!"
+
+msgid "Connect to"
+msgstr "Подключиться к"
+
+msgid "Contact"
+msgstr "Контактное лицо"
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Contra"
+msgstr "Против"
+
+msgid "Copies"
+msgstr "Копий"
+
+msgid "Copy to COA"
+msgstr "Копировать в ГПС"
+
+msgid "Cost"
+msgstr "Цена"
+
+msgid "Cost Center"
+msgstr "Учетный отдел"
+
+msgid "Could not save pricelist!"
+msgstr "Невозможно сохранить прайс!"
+
+msgid "Could not save!"
+msgstr "Невозможно сохранить!"
+
+msgid "Could not transfer Inventory!"
+msgstr "Невозможно пересестить инвентарь"
+
+msgid "Country"
+msgstr "Страна"
+
+msgid "Create Chart of Accounts"
+msgstr "Создать Таблицу плана счетов"
+
+msgid "Create Dataset"
+msgstr "Создать базу данных"
+
+msgid "Credit"
+msgstr "Кредит"
+
+msgid "Credit Limit"
+msgstr "Лимит кредита"
+
+msgid "Curr"
+msgstr "Валюта"
+
+msgid "Currency"
+msgstr "Валюта"
+
+msgid "Current"
+msgstr "Текущий"
+
+msgid "Current Earnings"
+msgstr "Текущая прибыль"
+
+msgid "Customer"
+msgstr "Клиент"
+
+msgid "Customer History"
+msgstr "История"
+
+msgid "Customer Number"
+msgstr "Код клиента"
+
+msgid "Customer deleted!"
+msgstr "Клиент удален!"
+
+msgid "Customer missing!"
+msgstr "Пропущен клиент!"
+
+msgid "Customer not on file!"
+msgstr "Клиент отсутствует в справочнике!"
+
+msgid "Customer saved!"
+msgstr "Клиент сохранен"
+
+msgid "Customers"
+msgstr "Клиенты"
+
+msgid "DBA"
+msgstr "DBA"
+
+msgid "DBI not installed!"
+msgstr "Не установлен драйвер DBI!"
+
+msgid "DOB"
+msgstr "Дата рождения"
+
+msgid "Database"
+msgstr "База данных"
+
+msgid "Database Administration"
+msgstr "Администрирование базы данных"
+
+msgid "Database Driver not checked!"
+msgstr "Не проверен драйвер базы данных!"
+
+msgid "Database Host"
+msgstr "Сервер базы данных"
+
+msgid "Database User missing!"
+msgstr "Пропущен пользователь базы данных!"
+
+msgid "Dataset"
+msgstr "База данных"
+
+msgid "Dataset is newer than version!"
+msgstr "База данных новее, чем текущая версия!"
+
+msgid "Dataset missing!"
+msgstr "Пропущена база данных"
+
+msgid "Dataset updated!"
+msgstr "База данных обновлена!"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Date Format"
+msgstr "Формат даты"
+
+msgid "Date Paid"
+msgstr "Дата оплаты"
+
+msgid "Date Received"
+msgstr "Дата получена"
+
+msgid "Date missing!"
+msgstr "Пропущена дата"
+
+msgid "Date received missing!"
+msgstr "Пропущена дата"
+
+msgid "Date worked"
+msgstr "Дата работ"
+
+msgid "Day"
+msgstr "День"
+
+msgid "Day(s)"
+msgstr "День"
+
+msgid "Days"
+msgstr "Дней"
+
+msgid "Debit"
+msgstr "Дебет"
+
+msgid "Dec"
+msgstr "дек"
+
+msgid "December"
+msgstr "декабрь"
+
+msgid "Decimalplaces"
+msgstr "десятичная точка"
+
+msgid "Decrease"
+msgstr "уменьшение"
+
+msgid "Deduct after"
+msgstr "Удержать после"
+
+msgid "Deduction deleted!"
+msgstr "Удержание удалено!"
+
+msgid "Deduction saved!"
+msgstr "Удержание сохранено!"
+
+msgid "Deductions"
+msgstr "Удержания"
+
+msgid "Default Template"
+msgstr "Шаблон по умолчанию"
+
+msgid "Defaults"
+msgstr "Настройки по умолчании"
+
+msgid "Defaults saved!"
+msgstr "Настройки по умолчании сохранены!"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete Account"
+msgstr "Удалмть счет"
+
+msgid "Delete Dataset"
+msgstr "Удалить базу данных"
+
+msgid "Delete Schedule"
+msgstr "Удалить расписание"
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr "Удаление языка приведет к удалению шаблонов"
+
+msgid "Delivery Date"
+msgstr "Дата получения"
+
+msgid "Department"
+msgstr "Отдел"
+
+msgid "Department deleted!"
+msgstr "Отдел удален!"
+
+msgid "Department saved!"
+msgstr "Отдел сохранен!"
+
+msgid "Departments"
+msgstr "Отделы"
+
+msgid "Deposit"
+msgstr "Депозит"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Description Translations"
+msgstr "Описание проводок"
+
+msgid "Description missing!"
+msgstr "Провущено Описание!"
+
+msgid "Detail"
+msgstr "Детализировать"
+
+msgid "Difference"
+msgstr "Разница"
+
+msgid "Directory"
+msgstr "Каталог"
+
+msgid "Discount"
+msgstr "Скидка"
+
+msgid "Done"
+msgstr "Выполнено"
+
+msgid "Drawing"
+msgstr "Изображение"
+
+msgid "Driver"
+msgstr "Драйвер"
+
+msgid "Dropdown Limit"
+msgstr "Ограничение падающего меню"
+
+msgid "Due Date"
+msgstr "Оплатить до"
+
+msgid "Due Date missing!"
+msgstr "Не указан срок оплаты!"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "E-mail Statement to"
+msgstr "Состояние E-mail для"
+
+msgid "E-mail address missing!"
+msgstr "Не указан адрес E-mail!"
+
+msgid "E-mail message"
+msgstr "E-mail сообщение"
+
+msgid "E-mailed"
+msgstr "Отправлено по e-mail"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Edit AP Transaction"
+msgstr "Редактировать проводку Поступления"
+
+msgid "Edit AR Transaction"
+msgstr "Редактировать проводку Продаж"
+
+msgid "Edit Account"
+msgstr "Редактировать счет"
+
+msgid "Edit Assembly"
+msgstr "Редактировать комплект"
+
+msgid "Edit Business"
+msgstr "Редактировать бизнес"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "Редактировать проводку Кассового Перемещения"
+
+msgid "Edit Customer"
+msgstr "Редактировать Клиента"
+
+msgid "Edit Deduction"
+msgstr "Редактировать Удержание"
+
+msgid "Edit Department"
+msgstr "Редактировать Отдел"
+
+msgid "Edit Description Translations"
+msgstr "Редактировать описание проводок"
+
+msgid "Edit Employee"
+msgstr "Редактировать сотрудника"
+
+msgid "Edit GIFI"
+msgstr "Редактировать GIFI"
+
+msgid "Edit General Ledger Transaction"
+msgstr "Редактировать проводку главной книги"
+
+msgid "Edit Group"
+msgstr "Редактировать группу"
+
+msgid "Edit Job"
+msgstr "Редактировать задание"
+
+msgid "Edit Labor/Overhead"
+msgstr "Редактировать работы/накладные расходы"
+
+msgid "Edit Language"
+msgstr "Редактировать Язык"
+
+msgid "Edit POS Invoice"
+msgstr "Редактировать ККМ-фактуру"
+
+msgid "Edit Part"
+msgstr "Редактировать товар"
+
+msgid "Edit Preferences for"
+msgstr "Редактировать настройки для"
+
+msgid "Edit Pricegroup"
+msgstr "Редактировать тип цен"
+
+msgid "Edit Project"
+msgstr "Редактировать Проект"
+
+msgid "Edit Purchase Order"
+msgstr "Редактировать Фактуру поставщика"
+
+msgid "Edit Quotation"
+msgstr "Редактировать резервирование"
+
+msgid "Edit Request for Quotation"
+msgstr "Редактировать запрос на резервирование"
+
+msgid "Edit SIC"
+msgstr "Редактировать SIC"
+
+msgid "Edit Sales Invoice"
+msgstr "Редактировать Фактуру клиента"
+
+msgid "Edit Sales Order"
+msgstr "Редактировать Заказ клиента"
+
+msgid "Edit Service"
+msgstr "Редактировать Услугу"
+
+msgid "Edit Template"
+msgstr "Редактировать Шаблон"
+
+msgid "Edit Time Card"
+msgstr "Редактировать карту времени"
+
+msgid "Edit User"
+msgstr "Редактировать сотрудника"
+
+msgid "Edit Vendor"
+msgstr "Редактировать поставщика"
+
+msgid "Edit Vendor Invoice"
+msgstr "Редактировать фактуру поставщику"
+
+msgid "Edit Warehouse"
+msgstr "Редактировать склад"
+
+msgid "Employee"
+msgstr "Сотрудник"
+
+msgid "Employee Name"
+msgstr "Имя сотрудника"
+
+msgid "Employee Number"
+msgstr "Код сотрудника"
+
+msgid "Employee deleted!"
+msgstr "Сотрудник удален!"
+
+msgid "Employee pays"
+msgstr "Зарплата сотрудника"
+
+msgid "Employee saved!"
+msgstr "Сотрудник сохранен!"
+
+msgid "Employees"
+msgstr "Сотрудники"
+
+msgid "Employer"
+msgstr "Работодатель"
+
+msgid "Employer pays"
+msgstr "Платежи работодателя"
+
+msgid "Enddate"
+msgstr "Дата окончания"
+
+msgid "Ends"
+msgstr "окончание"
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "Пересчитадь проводки полностью"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Для обозначения валюты введите до трех букв, разделённых двоеточием, (напр. CAD:USD:EUR)"
+
+msgid "Equity"
+msgstr "Капитал"
+
+msgid "Every"
+msgstr "каждый"
+
+msgid "Exch"
+msgstr "Курс"
+
+msgid "Exchange Rate"
+msgstr "Курс валюты"
+
+msgid "Exchange rate for payment missing!"
+msgstr "Пропущен курс оплаты!"
+
+msgid "Exchange rate missing!"
+msgstr "Пропущен курс!"
+
+msgid "Exempt age <"
+msgstr "Возраст <"
+
+msgid "Existing Datasets"
+msgstr "Существующие базы данных"
+
+msgid "Expense"
+msgstr "Расход"
+
+msgid "Expense account does not exist!"
+msgstr "Счет расхода отсутствует"
+
+msgid "Expense/Asset"
+msgstr "Расход/активы"
+
+msgid "Extended"
+msgstr "Сумма"
+
+msgid "FX"
+msgstr "FX"
+
+msgid "Failed to save order!"
+msgstr "Ошибка сохранения ордера"
+
+msgid "Fax"
+msgstr "Факс"
+
+msgid "Feb"
+msgstr "фев"
+
+msgid "February"
+msgstr "февраль"
+
+msgid "For"
+msgstr "для"
+
+msgid "Foreign Exchange Gain"
+msgstr "Курсовая прибыль"
+
+msgid "Foreign Exchange Loss"
+msgstr "Курсовые потери"
+
+msgid "Friday"
+msgstr "пятница"
+
+msgid "From"
+msgstr "с"
+
+msgid "From Warehouse"
+msgstr "со склада"
+
+msgid "GIFI"
+msgstr "GIFI"
+
+msgid "GIFI deleted!"
+msgstr "GIFI удален"
+
+msgid "GIFI missing!"
+msgstr "Пропущен GIFI"
+
+msgid "GIFI saved!"
+msgstr "GIFI сохранен!"
+
+msgid "GL"
+msgstr "Главная книга"
+
+msgid "GL Reference Number"
+msgstr "Номер справочника Главной книги"
+
+msgid "GL Transaction"
+msgstr "Проводки Главной книги"
+
+msgid "General Ledger"
+msgstr "Главная книга"
+
+msgid "Generate"
+msgstr "Создать"
+
+msgid "Generate Orders"
+msgstr "Создать ордеры"
+
+msgid "Generate Purchase Orders"
+msgstr "Создать ордеры покупки"
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr "Создать ордеры покупки из ордеров продажи"
+
+msgid "Generate Sales Order"
+msgstr "Создать ордеры продажи"
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr "Создать ордеры продажи из ордеров покупки"
+
+msgid "Generate Sales Orders"
+msgstr "Создать ордеры продажи"
+
+msgid "Goods & Services"
+msgstr "Товары и услуги"
+
+msgid "Group"
+msgstr "Группа"
+
+msgid "Group Items"
+msgstr "Группа номенклатуры"
+
+msgid "Group Translations"
+msgstr "Группа проводок"
+
+msgid "Group deleted!"
+msgstr "Группа удалена!"
+
+msgid "Group missing!"
+msgstr "Пропущена группа!"
+
+msgid "Group saved!"
+msgstr "Группа сохранена!"
+
+msgid "Groups"
+msgstr "Группы"
+
+msgid "HR"
+msgstr "Сотрудники"
+
+msgid "HTML Templates"
+msgstr "Шаблоны HTML"
+
+msgid "Heading"
+msgstr "Раздел"
+
+msgid "History"
+msgstr "История"
+
+msgid "Home Phone"
+msgstr "Домашний телефон"
+
+msgid "Host"
+msgstr "Сервер"
+
+msgid "Hostname missing!"
+msgstr "Пропущено имя сервера"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "ID"
+msgstr "Идентификатор"
+
+msgid "Image"
+msgstr "Картинка"
+
+msgid "In-line"
+msgstr "внутристрочный"
+
+msgid "Inactive"
+msgstr "Неактивный"
+
+msgid "Include Exchange Rate Difference"
+msgstr "Включить курсовую разность"
+
+msgid "Include Payment"
+msgstr "Включая оплату"
+
+msgid "Include in Report"
+msgstr "Включить в отчет"
+
+msgid "Include in drop-down menus"
+msgstr "Включить в падающее меню"
+
+msgid "Income"
+msgstr "Поступление"
+
+msgid "Income Statement"
+msgstr "Отчет о прибыли/убытках"
+
+msgid "Income account does not exist!"
+msgstr "Счет поступления отсутствует"
+
+msgid "Incorrect Dataset version!"
+msgstr "Неверная версия базы данных!"
+
+msgid "Increase"
+msgstr "Рост(увеличение)"
+
+msgid "Individual Items"
+msgstr "Номеклатурные позиции"
+
+msgid "Internal Notes"
+msgstr "Внутренние заметки"
+
+msgid "Inventory"
+msgstr "Инвентарный"
+
+msgid "Inventory account does not exist!"
+msgstr "Инвентарный счет отсутствует"
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "Прежде чем комплект считать усаревшим, инвентарное количество должно быть нулевым!"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "Прежде чем товар считать усаревшим, инвентарное количество должно быть нулевым!"
+
+msgid "Inventory saved!"
+msgstr "Инвентарь сохранен!"
+
+msgid "Inventory transferred!"
+msgstr "Инвентарь перемещен!"
+
+msgid "Invoice"
+msgstr "Счет-фактура"
+
+msgid "Invoice Date"
+msgstr "Дата выставления"
+
+msgid "Invoice Date missing!"
+msgstr "Не указана дата выставления счета-фактуры"
+
+msgid "Invoice Number"
+msgstr "Номер счета-фактуры"
+
+msgid "Invoice Number missing!"
+msgstr "Не указан номер счета-фактуры"
+
+msgid "Invoice deleted!"
+msgstr "Счет-фактура удалена!"
+
+msgid "Invoices"
+msgstr "Счет-фактуры"
+
+msgid "Is this a summary account to record"
+msgstr "Это итоговый счет для записи"
+
+msgid "Item already on pricelist!"
+msgstr "Номенклатура уже есть в прайс-листе!"
+
+msgid "Item deleted!"
+msgstr "Номенклатура удалена!"
+
+msgid "Item not on file!"
+msgstr "Нет номенклатуры в справочнике!"
+
+msgid "Items"
+msgstr "Номенклатура"
+
+msgid "Jan"
+msgstr "янв"
+
+msgid "January"
+msgstr "январь"
+
+msgid "Job"
+msgstr "Задание"
+
+msgid "Job Description"
+msgstr "Описание задания"
+
+msgid "Job Name"
+msgstr "Наименование задания"
+
+msgid "Job Number"
+msgstr "Номер заданя"
+
+msgid "Job Number missing!"
+msgstr "Пропущен номер задания!"
+
+msgid "Job deleted!"
+msgstr "Задание удалено!"
+
+msgid "Job saved!"
+msgstr "Задание сохранено"
+
+msgid "Jobs"
+msgstr "Задания"
+
+msgid "Jul"
+msgstr "июл"
+
+msgid "July"
+msgstr "июль"
+
+msgid "Jun"
+msgstr "июн"
+
+msgid "June"
+msgstr "июнь"
+
+msgid "LaTeX Templates"
+msgstr "Шаблоны LaTeX"
+
+msgid "Labor Code"
+msgstr "Код работы"
+
+msgid "Labor Code missing!"
+msgstr "Пропущен Код работы"
+
+msgid "Labor/Overhead"
+msgstr "Работа/накладные расходы"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Language deleted!"
+msgstr "Язык удален"
+
+msgid "Language saved!"
+msgstr "Язык сохранен"
+
+msgid "Languages"
+msgstr "Языки"
+
+msgid "Languages not defined!"
+msgstr "Языки не определены!"
+
+msgid "Last Cost"
+msgstr "Последняя цена"
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Последние номера документов и счета по-умолчании"
+
+msgid "Lead"
+msgstr "Lead"
+
+msgid "Leadtime"
+msgstr "Основное время"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "Оставте поле сервера и порта пустым до тех пор, пока вы не захотите сделать удалённого соединения."
+
+msgid "Liability"
+msgstr "Пассив"
+
+msgid "Licensed to"
+msgstr "Лицензией обладает:"
+
+msgid "Line Total"
+msgstr "Итоговая линия"
+
+msgid "Link"
+msgstr "Ссылка"
+
+msgid "Link Accounts"
+msgstr "Ссылки счетов"
+
+msgid "List"
+msgstr "Список"
+
+msgid "List Accounts"
+msgstr "Список счетов"
+
+msgid "List Businesses"
+msgstr "Список бизнесов"
+
+msgid "List Departments"
+msgstr "Список отделов"
+
+msgid "List GIFI"
+msgstr "Список GIFI"
+
+msgid "List Languages"
+msgstr "Список языков"
+
+msgid "List Price"
+msgstr "Список цен"
+
+msgid "List Projects"
+msgstr "Список проектов"
+
+msgid "List SIC"
+msgstr "Список SIC"
+
+msgid "List Transactions"
+msgstr "Список проводок"
+
+msgid "List Warehouses"
+msgstr "Список складов"
+
+msgid "Lock System"
+msgstr "Заблокировать систему"
+
+msgid "Lockfile created!"
+msgstr "Файл блокирования создан!"
+
+msgid "Lockfile removed!"
+msgstr "Файл блокирования удален!!"
+
+msgid "Login"
+msgstr "Пользователь"
+
+msgid "Login name missing!"
+msgstr "Пропушено имя пользователя!"
+
+msgid "Logout"
+msgstr "Выход"
+
+msgid "Make"
+msgstr "Создать"
+
+msgid "Manager"
+msgstr "Менеджер"
+
+msgid "Mar"
+msgstr "март"
+
+msgid "March"
+msgstr "март"
+
+msgid "Marked entries printed!"
+msgstr "Отмеченные позиции напечатаны!"
+
+msgid "Markup"
+msgstr "Наценка"
+
+msgid "Maximum"
+msgstr "Максимум"
+
+msgid "May"
+msgstr "май"
+
+msgid "May "
+msgstr "май"
+
+msgid "Memo"
+msgstr "Комментарий"
+
+msgid "Menu Width"
+msgstr "Ширина меню"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "Method"
+msgstr "Метод"
+
+msgid "Microfiche"
+msgstr "Микрофиша"
+
+msgid "Model"
+msgstr "Модель"
+
+msgid "Monday"
+msgstr "Понедельник"
+
+msgid "Month"
+msgstr "месяц"
+
+msgid "Month(s)"
+msgstr "месяц"
+
+msgid "Months"
+msgstr "месяцы"
+
+msgid "Multibyte Encoding"
+msgstr "Многобайтовая кодировка"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Name"
+msgstr "Наименование"
+
+msgid "Name missing!"
+msgstr "Пропущено наименование!"
+
+msgid "New Templates"
+msgstr "Новый шаблон"
+
+msgid "New Window"
+msgstr "Новое окно"
+
+msgid "Next"
+msgstr "Следующий"
+
+msgid "Next Date"
+msgstr "Следующая дата"
+
+msgid "Next Number"
+msgstr "Следующий номер"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "No Database Drivers available!"
+msgstr "Недоступен драйвер базы данных!"
+
+msgid "No Dataset selected!"
+msgstr "Не выбрана база данных"
+
+msgid "No Employees on file!"
+msgstr "No Employees on file!"
+
+msgid "No Labor codes on file!"
+msgstr "No Labor codes on file!"
+
+msgid "No Parts on file!"
+msgstr "No Parts on file!"
+
+msgid "No email address for"
+msgstr "Нет адреса e-mail для"
+
+msgid "No open Jobs!"
+msgstr "Нет открытых заданий"
+
+msgid "No open Projects!"
+msgstr "Нет открытых проектов"
+
+msgid "No."
+msgstr "Ном."
+
+msgid "Non-chargeable"
+msgstr "Невозмещаемые"
+
+msgid "Non-taxable"
+msgstr "Не подлежащие налогообложению"
+
+msgid "Non-taxable Purchases"
+msgstr "Закупки, не подлежащие налогообложению"
+
+msgid "Non-taxable Sales"
+msgstr "Продажи, не подлежащие налогообложению"
+
+msgid "Non-tracking Items"
+msgstr "Нетрассируемые элементы"
+
+msgid "Notes"
+msgstr "Комментарии"
+
+msgid "Nothing entered!"
+msgstr "Ничего не введено!"
+
+msgid "Nothing selected!"
+msgstr "Ничего не выбрано!"
+
+msgid "Nothing to delete!"
+msgstr "Ничего не удалено!"
+
+msgid "Nothing to print!"
+msgstr "Ничего не напечатано!"
+
+msgid "Nothing to transfer!"
+msgstr "Ничего не перемещено!"
+
+msgid "Nov"
+msgstr "ноя"
+
+msgid "November"
+msgstr "ноябрь"
+
+msgid "Number"
+msgstr "код"
+
+msgid "Number Format"
+msgstr "Числовой формат"
+
+msgid "Number missing in Row"
+msgstr "Пропущен код в строке"
+
+msgid "O"
+msgstr "O"
+
+msgid "OH"
+msgstr "OH"
+
+msgid "Obsolete"
+msgstr "Устаревший"
+
+msgid "Oct"
+msgstr "окт"
+
+msgid "October"
+msgstr "октябрь"
+
+msgid "On Hand"
+msgstr "Вналичии"
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Oracle Database Administration"
+msgstr "Администрирование базы данных Oracle"
+
+msgid "Order"
+msgstr "Заказ клиента"
+
+msgid "Order Date"
+msgstr "Дата заказа клиента"
+
+msgid "Order Date missing!"
+msgstr "Пропущена дата заказа"
+
+msgid "Order Entry"
+msgstr "Заказы"
+
+msgid "Order Number"
+msgstr "Номер заказа"
+
+msgid "Order Number missing!"
+msgstr "Пропущен номер заказа"
+
+msgid "Order deleted!"
+msgstr "Заказ удален!"
+
+msgid "Order generation failed!"
+msgstr "Ошибка создания ордера"
+
+msgid "Order saved!"
+msgstr "Заказ сохранен!"
+
+msgid "Orders generated!"
+msgstr "Ордеры созданы"
+
+msgid "Orphaned"
+msgstr "Без проводок"
+
+msgid "Out of balance transaction!"
+msgstr "Вне балланса проводок!"
+
+msgid "Out of balance!"
+msgstr "Вне балланса!"
+
+msgid "Outstanding"
+msgstr "Задолженость"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PO Number"
+msgstr "Номер ордера покупки"
+
+msgid "POS"
+msgstr "ККМ"
+
+msgid "POS Invoice"
+msgstr "ККМ Фактура"
+
+msgid "Packing List"
+msgstr "Упаковочный список"
+
+msgid "Packing List Date missing!"
+msgstr "Пропущена дата упаковочного списока!"
+
+msgid "Packing List Number missing!"
+msgstr "Пропущен номер упаковочного списока!"
+
+msgid "Packing Lists"
+msgstr "Упаковочные списоки"
+
+msgid "Paid"
+msgstr "Оплачено"
+
+msgid "Part"
+msgstr "Товар"
+
+msgid "Part Number"
+msgstr "Part Number"
+
+msgid "Partnumber"
+msgstr "Код"
+
+msgid "Parts"
+msgstr "Товары"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Password changed!"
+msgstr "Пароль изменен!"
+
+msgid "Password does not match!"
+msgstr "Неверный пароль!"
+
+msgid "Passwords do not match!"
+msgstr "Неверный пароль!"
+
+msgid "Payables"
+msgstr "Подлежащий оплате"
+
+msgid "Payment"
+msgstr "Оплата"
+
+msgid "Payment date missing!"
+msgstr "Пропущена дата оплаты!"
+
+msgid "Payment posted!"
+msgstr "Оплата проведена!"
+
+msgid "Payments"
+msgstr "Оплаты"
+
+msgid "Payments posted!"
+msgstr "Оплаты проведены!"
+
+msgid "Payroll Deduction"
+msgstr "Удержание по ведомости"
+
+msgid "Period"
+msgstr "Период"
+
+msgid "Pg Database Administration"
+msgstr "Администрирование базы данных PostgreSQL (Pg)"
+
+msgid "PgPP Database Administration"
+msgstr "Администрирование базы данных PostgreSQL (PgPP)"
+
+msgid "Phone"
+msgstr "Тел."
+
+msgid "Pick List"
+msgstr "Список для выбора"
+
+msgid "Pick Lists"
+msgstr "Списки для выбора"
+
+msgid "Port"
+msgstr "Порт"
+
+msgid "Port missing!"
+msgstr "Пропущен номер порта!"
+
+msgid "Pos"
+msgstr "ККМ"
+
+msgid "Post"
+msgstr "Сохранить"
+
+msgid "Post as new"
+msgstr "Сохранить как новый"
+
+msgid "Posted!"
+msgstr "Сохранено!"
+
+msgid "Posting"
+msgstr "Сохранение"
+
+msgid "Posting failed!"
+msgstr "Ошибка сохранения"
+
+msgid "Postscript"
+msgstr "Postscript"
+
+msgid "Preferences"
+msgstr "Настройки"
+
+msgid "Preferences saved!"
+msgstr "Настройки сохранены!"
+
+msgid "Prepayment"
+msgstr "Предварительная оплата"
+
+msgid "Price"
+msgstr "Цена"
+
+msgid "Pricegroup"
+msgstr "Тип цен"
+
+msgid "Pricegroup deleted!"
+msgstr "Удален тип цен"
+
+msgid "Pricegroup missing!"
+msgstr "Пропущен тип цен"
+
+msgid "Pricegroup saved!"
+msgstr "Записан тип цен"
+
+msgid "Pricegroups"
+msgstr "Типы цен"
+
+msgid "Pricelist"
+msgstr "Прайслист"
+
+msgid "Print"
+msgstr "Печать"
+
+msgid "Print and Post"
+msgstr "Напечатать и отправить"
+
+msgid "Print and Post as new"
+msgstr "Напечатать и отправить как новый"
+
+msgid "Print and Save"
+msgstr "Напечатать и сохранить"
+
+msgid "Print and Save as new"
+msgstr "Напечатать и сохранить как новый"
+
+msgid "Printed"
+msgstr "Напечатано"
+
+msgid "Printer"
+msgstr "Принтер"
+
+msgid "Printing"
+msgstr "Печать"
+
+msgid "Printing ... "
+msgstr "Печать..."
+
+msgid "Process Transactions"
+msgstr "Обработка проводок"
+
+msgid "Production"
+msgstr "Продукция"
+
+msgid "Profit Center"
+msgstr "Профит-центр"
+
+msgid "Project"
+msgstr "Проект"
+
+msgid "Project Description Translations"
+msgstr "Переводы описания проектов"
+
+msgid "Project Name"
+msgstr "Название проекта"
+
+msgid "Project Number"
+msgstr "Код проекта"
+
+msgid "Project Number missing!"
+msgstr "Пропущен код проекта"
+
+msgid "Project Transactions"
+msgstr "Проводки проекта"
+
+msgid "Project deleted!"
+msgstr "Проект удален"
+
+msgid "Project not on file!"
+msgstr "Проект отсутствует в справочнике!"
+
+msgid "Project saved!"
+msgstr "Проект сохранен!"
+
+msgid "Project/Job Name"
+msgstr "Название Проекта/Задания"
+
+msgid "Project/Job Number"
+msgstr "Номер Проекта/Задания"
+
+msgid "Projects"
+msgstr "Проекты"
+
+msgid "Purchase Order"
+msgstr "Заказ поставщику"
+
+msgid "Purchase Order Number"
+msgstr "Номер заказа поставщику"
+
+msgid "Purchase Orders"
+msgstr "Заказы поставщику"
+
+msgid "Qty"
+msgstr "Количество"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "Превышено количество единиц номенклатуры на скаде"
+
+msgid "Quarter"
+msgstr "Квартал"
+
+msgid "Quotation"
+msgstr "Резервирование"
+
+msgid "Quotation "
+msgstr "Резервирование"
+
+msgid "Quotation Date"
+msgstr "Дата резервирования"
+
+msgid "Quotation Date missing!"
+msgstr "Пропущена дата резервирования!"
+
+msgid "Quotation Number"
+msgstr "Номер резервирования"
+
+msgid "Quotation Number missing!"
+msgstr "Пропущен номер резервирования!"
+
+msgid "Quotation deleted!"
+msgstr "Резервирование удалено"
+
+msgid "Quotations"
+msgstr "Резервы"
+
+msgid "R"
+msgstr "R"
+
+msgid "RFQ"
+msgstr "Запрос на резервирование"
+
+msgid "RFQ "
+msgstr "Запрос на резервирование"
+
+msgid "RFQ Number"
+msgstr "Номер запроса на резервирование"
+
+msgid "RFQs"
+msgstr "Запросы на резервирование"
+
+msgid "ROP"
+msgstr "ROP"
+
+msgid "Rate"
+msgstr "Курс"
+
+msgid "Rate missing!"
+msgstr "Пропущен курс"
+
+msgid "Recd"
+msgstr "Recd"
+
+msgid "Receipt"
+msgstr "Получение"
+
+msgid "Receipt posted!"
+msgstr "Получение проведено!"
+
+msgid "Receipts"
+msgstr "Получения"
+
+msgid "Receivables"
+msgstr "Подлежащий получению"
+
+msgid "Receive"
+msgstr "Получить"
+
+msgid "Receive Merchandise"
+msgstr "Получить товары"
+
+msgid "Reconciliation"
+msgstr "Согласованность"
+
+msgid "Reconciliation Report"
+msgstr "Отчет о согласованности"
+
+msgid "Record in"
+msgstr "Отнести на счет"
+
+msgid "Recurring Transaction"
+msgstr "Повторяющаяся проводка"
+
+msgid "Recurring Transactions"
+msgstr "Повторяющиеся проводки"
+
+msgid "Reference"
+msgstr "Ссылка"
+
+msgid "Remaining"
+msgstr "Остаток"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Remove Audit trail up to"
+msgstr "Удалить пробную проверку балланса до"
+
+msgid "Remove Audit trails up to"
+msgstr "Удалить пробную проверку балланса до"
+
+msgid "Removed spoolfiles!"
+msgstr "Удалить файл очереди!"
+
+msgid "Removing marked entries from queue ..."
+msgstr "Удалить отмеченные позиции из очереди?"
+
+msgid "Repeat"
+msgstr "Повторить"
+
+msgid "Report for"
+msgstr "Отчет для"
+
+msgid "Reports"
+msgstr "Отчеты"
+
+msgid "Req"
+msgstr "Req"
+
+msgid "Request for Quotation"
+msgstr "Запрос на резервирование"
+
+msgid "Request for Quotations"
+msgstr "Запросы на резервирование"
+
+msgid "Required by"
+msgstr "Запрошен"
+
+msgid "Retained Earnings"
+msgstr "Нераспределенная прибыль"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "S"
+msgstr "S"
+
+msgid "SIC"
+msgstr "SIC"
+
+msgid "SIC deleted!"
+msgstr "SIC удален"
+
+msgid "SIC saved!"
+msgstr "SIC сохранен"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "SSN"
+msgstr "SSN"
+
+msgid "Sale"
+msgstr "Продажа"
+
+msgid "Sales"
+msgstr "Продажи"
+
+msgid "Sales Invoice"
+msgstr "Фактура клиента"
+
+msgid "Sales Invoice "
+msgstr "Фактура клиента"
+
+msgid "Sales Invoice."
+msgstr "Фактура клиента"
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr "Номер проводки Фактуры клиента"
+
+msgid "Sales Invoices"
+msgstr "Фактуры клиента"
+
+msgid "Sales Order"
+msgstr "Заказ клиента"
+
+msgid "Sales Order Number"
+msgstr "Номер заказа клиента"
+
+msgid "Sales Orders"
+msgstr "Заказы клиента"
+
+msgid "Sales Quotation Number"
+msgstr "Номер продажи резерва"
+
+msgid "Salesperson"
+msgstr "Продавец"
+
+msgid "Saturday"
+msgstr "Суббота"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Save Pricelist"
+msgstr "Сохранить прайслист"
+
+msgid "Save Schedule"
+msgstr "Сохранить расписание"
+
+msgid "Save as new"
+msgstr "Сохранить как новый"
+
+msgid "Save to File"
+msgstr "Сохранить в файл"
+
+msgid "Saving"
+msgstr "Сохранение"
+
+msgid "Schedule"
+msgstr "Расписание"
+
+msgid "Scheduled"
+msgstr "Назначено расписание"
+
+msgid "Screen"
+msgstr "Экран"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Select Customer"
+msgstr "Выбрать покупателя"
+
+msgid "Select Vendor"
+msgstr "Выбрать поставщика"
+
+msgid "Select a Printer!"
+msgstr "Выбрать принтер"
+
+msgid "Select a printer!"
+msgstr "Выберите Принтер"
+
+msgid "Select all"
+msgstr "Выбрать все"
+
+msgid "Select from one of the names below"
+msgstr "Выберите одно из наименований из списка"
+
+msgid "Select from one of the projects below"
+msgstr "Выберите один из проектов из списка"
+
+msgid "Select items"
+msgstr "Выберите элементы"
+
+msgid "Select payment"
+msgstr "Выберите оплату"
+
+msgid "Select postscript or PDF!"
+msgstr "Выберите postscript или PDF!"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "Выберите txt, postscript или PDF!"
+
+msgid "Sell"
+msgstr "Продажа"
+
+msgid "Sell Price"
+msgstr "Продажная цена"
+
+msgid "Send by E-Mail"
+msgstr "Отправить по E-Mail"
+
+msgid "Sending"
+msgstr "Отправка"
+
+msgid "Sep"
+msgstr "сен"
+
+msgid "September"
+msgstr "сентябрь"
+
+msgid "Serial No."
+msgstr "Серийный ном."
+
+msgid "Serial Number"
+msgstr "Серийный номер"
+
+msgid "Service"
+msgstr "Услуга"
+
+msgid "Service Code"
+msgstr "Код услуги"
+
+msgid "Service Code missing!"
+msgstr "Пропущен Код услуги!"
+
+msgid "Service/Labor Code"
+msgstr "Код услуги/работы"
+
+msgid "Services"
+msgstr "Услуги"
+
+msgid "Session Timeout"
+msgstr "Время задержки сессии"
+
+msgid "Session expired!"
+msgstr "Превышено время задержки сессии"
+
+msgid "Setup Templates"
+msgstr "Установить шаблоны"
+
+msgid "Ship"
+msgstr "Доставить"
+
+msgid "Ship Merchandise"
+msgstr "Погрузить товары"
+
+msgid "Ship to"
+msgstr "доставить для"
+
+msgid "Ship via"
+msgstr "доставить через"
+
+msgid "Shipping"
+msgstr "Доставка"
+
+msgid "Shipping Address"
+msgstr "Адрес доставки"
+
+msgid "Shipping Date"
+msgstr "Дата доставки"
+
+msgid "Shipping Date missing!"
+msgstr "Пропущена дата доставки"
+
+msgid "Shipping Point"
+msgstr "Место доставки"
+
+msgid "Short"
+msgstr "Краткосрочный"
+
+msgid "Signature"
+msgstr "Подпись"
+
+msgid "Source"
+msgstr "Источник"
+
+msgid "Spoolfile"
+msgstr "Файл очереди печати"
+
+msgid "Standard"
+msgstr "Стандартные"
+
+msgid "Standard Industrial Codes"
+msgstr "Стандартный промышленный код"
+
+msgid "Startdate"
+msgstr "Начальная дата"
+
+msgid "State"
+msgstr "Состояние"
+
+msgid "State/Province"
+msgstr "Штат/Провинция"
+
+msgid "Statement"
+msgstr "Ведомость"
+
+msgid "Statement Balance"
+msgstr "Балансовая ведомость"
+
+msgid "Statement sent to"
+msgstr "Ведомость отправлена для"
+
+msgid "Statements sent to printer!"
+msgstr "Ведомость отправлена на принтер!"
+
+msgid "Stock"
+msgstr "Сформировать"
+
+msgid "Stock Assembly"
+msgstr "Сформировать комплект"
+
+msgid "Stock Finished Goods"
+msgstr "Сформировать завершенную продукцию"
+
+msgid "Stores Card"
+msgstr "Stores Card"
+
+msgid "Stores Card saved!"
+msgstr "Stores Card saved!"
+
+msgid "Stores Cards"
+msgstr "Stores Cards"
+
+msgid "Stylesheet"
+msgstr "Оформление"
+
+msgid "Sub-contract GIFI"
+msgstr "Передоверенный GIFI"
+
+msgid "Subject"
+msgstr "Тема"
+
+msgid "Subtotal"
+msgstr "Итого по разделу"
+
+msgid "Summary"
+msgstr "Суммарно"
+
+msgid "Sunday"
+msgstr "Воскресенье"
+
+msgid "Supervisor"
+msgstr "Контролер"
+
+msgid "System"
+msgstr "Система"
+
+msgid "System Defaults"
+msgstr "Настройки системы поумолчании."
+
+msgid "Tax"
+msgstr "Налог"
+
+msgid "Tax Accounts"
+msgstr "Налоговые счета"
+
+msgid "Tax Included"
+msgstr "Налоги включены в сумму"
+
+msgid "Tax Number"
+msgstr "Код налога"
+
+msgid "Tax Number / SSN"
+msgstr "Код налога/SSN"
+
+msgid "Tax collected"
+msgstr "Собранные налоги"
+
+msgid "Tax paid"
+msgstr "Оплаченные налоги"
+
+msgid "Taxable"
+msgstr "Подлежит налогообложению"
+
+msgid "Template saved!"
+msgstr "Шаблон сохранен!"
+
+msgid "Templates"
+msgstr "Шаблоны"
+
+msgid "Terms"
+msgstr "Срок резервирования"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Text Templates"
+msgstr "Шаблоны TXT"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "Сдедующие базы данных не используются и могут быть удалены"
+
+msgid "The following Datasets need to be updated"
+msgstr "Следующие базы данных необходимо обновить"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "это предварительная проверка существующих источников. В этом состоянии ни что не будет создано и удалено!"
+
+msgid "Thursday"
+msgstr "Четверг"
+
+msgid "Till"
+msgstr "до"
+
+msgid "Time Card"
+msgstr "Time Card"
+
+msgid "Time Card deleted!"
+msgstr "Time Card deleted!"
+
+msgid "Time Card saved!"
+msgstr "Time Card saved!"
+
+msgid "Time Cards"
+msgstr "Time Cards"
+
+msgid "Time In"
+msgstr "Время входа"
+
+msgid "Time Out"
+msgstr "Время выхода"
+
+msgid "Times"
+msgstr "раз"
+
+msgid "To"
+msgstr "по"
+
+msgid "To Warehouse"
+msgstr "на склад"
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Для добавления пользователя в группу, отредактируйте его имя (логин) и сохраните. Для создания нового пользователя с теми же настройками - сохраните с новым именем пользователя."
+
+msgid "Top Level"
+msgstr "Верх"
+
+msgid "Total"
+msgstr "Всего"
+
+msgid "Tracking Items"
+msgstr "Tracking Items"
+
+msgid "Trade Discount"
+msgstr "Торговая скидка"
+
+msgid "Transaction"
+msgstr "Проводка"
+
+msgid "Transaction Date missing!"
+msgstr "Пропущена Дата проводки!"
+
+msgid "Transaction Dates"
+msgstr "Дата проводки"
+
+msgid "Transaction deleted!"
+msgstr "Проводка удалена!"
+
+msgid "Transaction posted!"
+msgstr "Проводка сохранена!"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "Проводки пересчитаны полностью"
+
+msgid "Transaction reversal enforced up to"
+msgstr "Проводки пересчитаны до"
+
+msgid "Transactions"
+msgstr "Проводки"
+
+msgid "Transfer"
+msgstr "Перемещение"
+
+msgid "Transfer Inventory"
+msgstr "Перемещение инвентаря"
+
+msgid "Transfer from"
+msgstr "Переместить от"
+
+msgid "Transfer to"
+msgstr "Переместить к"
+
+msgid "Translation"
+msgstr "Перевод"
+
+msgid "Translation deleted!"
+msgstr "Перевод удален!"
+
+msgid "Translation not on file!"
+msgstr "Нет перевода с списке!"
+
+msgid "Translations"
+msgstr "Переводы"
+
+msgid "Translations saved!"
+msgstr "Переводы сохранены!"
+
+msgid "Trial Balance"
+msgstr "Предварительный баланс"
+
+msgid "Tuesday"
+msgstr "Вторник"
+
+msgid "Type of Business"
+msgstr "Тип бизнеса"
+
+msgid "Unit"
+msgstr "Единица"
+
+msgid "Unit of measure"
+msgstr "Единица измерения"
+
+msgid "Unlock System"
+msgstr "Разблокировать систему"
+
+msgid "Update"
+msgstr "Обновить"
+
+msgid "Update Dataset"
+msgstr "Обновить базу данных"
+
+msgid "Updated"
+msgstr "Обновлено"
+
+msgid "Upgrading to Version"
+msgstr "Обновление до версии"
+
+msgid "Use Templates"
+msgstr "Использовать шаблоны"
+
+msgid "User"
+msgstr "Сотрудник"
+
+msgid "User deleted!"
+msgstr "Сотрудник удалён!"
+
+msgid "User saved!"
+msgstr "Сотрудник сохранен!"
+
+msgid "Valid until"
+msgstr "Действительно до"
+
+msgid "Vendor"
+msgstr "Поставщик"
+
+msgid "Vendor History"
+msgstr "История"
+
+msgid "Vendor Invoice"
+msgstr "Фактура поставщика"
+
+msgid "Vendor Invoice "
+msgstr "Фактура поставщика"
+
+msgid "Vendor Invoice."
+msgstr "Фактура поставщика."
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr "Номер проводки фактуры поставщика"
+
+msgid "Vendor Invoices"
+msgstr "Фактуры поставщика"
+
+msgid "Vendor Number"
+msgstr "Код поставщика"
+
+msgid "Vendor deleted!"
+msgstr "Поставщик удален!"
+
+msgid "Vendor missing!"
+msgstr "Пропущен поставщик!"
+
+msgid "Vendor not on file!"
+msgstr "Поставщика нет в справочнике!"
+
+msgid "Vendor saved!"
+msgstr "Поставщик сохранен!"
+
+msgid "Vendors"
+msgstr "Поставщики"
+
+msgid "Version"
+msgstr "Версия"
+
+msgid "Warehouse"
+msgstr "Склад"
+
+msgid "Warehouse deleted!"
+msgstr "Склад удален!"
+
+msgid "Warehouse saved!"
+msgstr "Склад сохранен!"
+
+msgid "Warehouses"
+msgstr "Склады"
+
+msgid "Warning!"
+msgstr "Внимание!"
+
+msgid "Wednesday"
+msgstr "Среда"
+
+msgid "Week"
+msgstr "Неделя"
+
+msgid "Week(s)"
+msgstr "Недели"
+
+msgid "Weeks"
+msgstr "Недели"
+
+msgid "Weight"
+msgstr "Вес"
+
+msgid "Weight Unit"
+msgstr "Единица веса"
+
+msgid "What type of item is this?"
+msgstr "Какой это тип номеклатуры?"
+
+msgid "Work Order"
+msgstr "Рабочий заказ"
+
+msgid "Work Orders"
+msgstr "Рабочие заказы"
+
+msgid "Work Phone"
+msgstr "Рабочий телефон"
+
+msgid "Year"
+msgstr "Год"
+
+msgid "Year(s)"
+msgstr "Год"
+
+msgid "Yearend"
+msgstr "Завершение года"
+
+msgid "Yearend date missing!"
+msgstr "Пропущена дата завершения года!"
+
+msgid "Yearend posted!"
+msgstr "Завершение года выполнено!"
+
+msgid "Yearend posting failed!"
+msgstr "Ошибка завершение года!"
+
+msgid "Years"
+msgstr "Годы"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "You are logged out"
+msgstr "Вы вышли из системы"
+
+msgid "You are posting an existing transaction!"
+msgstr "Выполнение существующей проводки!"
+
+msgid "You are printing and posting an existing transaction!"
+msgstr "Печать и выполнение существующей проводки!"
+
+msgid "You are printing and saving an existing order"
+msgstr "Печать и сохранение существующего ордера"
+
+msgid "You are printing and saving an existing quotation"
+msgstr "Печать и сохранение существующего резервирования"
+
+msgid "You are printing and saving an existing transaction!"
+msgstr "Печать и сохранение существующей проводки!"
+
+msgid "You are saving an existing order"
+msgstr "Сохранение существующего ордера"
+
+msgid "You are saving an existing quotation"
+msgstr "Сохранение существующего резервирования"
+
+msgid "You are saving an existing transaction!"
+msgstr "Сохранение существующей проводки!"
+
+msgid "You did not enter a name!"
+msgstr "Вы не ввели (имя)наименование!"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "Вы должны заполнить поле сервера и порта для локального и удалённого соединений!"
+
+msgid "Zip/Postal Code"
+msgstr "Индекс"
+
+msgid "account cannot be set to any other type of account"
+msgstr "счету не может быть присвоен другой тип"
+
+msgid "as at"
+msgstr "как в"
+
+msgid "days"
+msgstr "дней"
+
+msgid "does not exist"
+msgstr "не существует!"
+
+msgid "done"
+msgstr "выполнено"
+
+msgid "ea"
+msgstr "шт."
+
+msgid "failed"
+msgstr "ошибка"
+
+msgid "for"
+msgstr "для"
+
+msgid "for Period"
+msgstr "за период"
+
+msgid "is already a member!"
+msgstr "уже зарегистрирован"
+
+msgid "localhost"
+msgstr "localhost"
+
+msgid "locked!"
+msgstr "заблокирована!"
+
+msgid "posted!"
+msgstr "отправлено"
+
+msgid "sent"
+msgstr "отправлено"
+
+msgid "successfully created!"
+msgstr "успешно создана!"
+
+msgid "successfully deleted!"
+msgstr "успешно удалена!"
+
+msgid "time(s)"
+msgstr "раз"
+
+msgid "unexpected error!"
+msgstr "неожиданная ошибка"
+
+msgid "website"
+msgstr "сайт WWW"
+

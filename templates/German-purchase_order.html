@@ -1,0 +1,192 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+<tr valign=bottom>
+  <td width=10>&nbsp;</td>
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
+      </h4>
+    </td>
+
+    <td align=right>
+      <h4>
+      Telefon <?lsmb tel ?>
+      <br>Telefax <?lsmb fax ?>
+      </h4>
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan=3>
+      <h4>B E S T E L L U N G</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% callspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Bestellungsdatum</th><td width=10>&nbsp;</td><td><?lsmb orddate ?></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Lieferbar bis</th><td width=10>&nbsp;</td><td><?lsmb reqdate ?></td>
+    </tr>
+
+    <tr>
+      <th align=right>Bestellnummer</th><td>&nbsp;</td><td><?lsmb ordnumber ?></td></tr>
+    </tr>
+  
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>An:</th>
+    </tr>
+
+    <tr>
+      <td><?lsmb name ?>
+      <br><?lsmb address1 ?>
+      <?lsmb if address2 ?>
+<br><?lsmb address2 ?>
+<?lsmb end address2 ?>
+      <br><?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+      <?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+<!--      <th align=right><font color=ffffff>No.</th>  -->
+      <th align=left><font color=ffffff>Nummer</th>
+      <th align=left><font color=ffffff>Artikel</th>
+      <th><font color=ffffff>Anz</th>
+      <th>&nbsp;</th>
+      <th><font color=ffffff>Preis</th>
+      <th><font color=ffffff>Total</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+<!--      <td align=right><?lsmb runningnumber ?>.</td>
+adjust the colspan if you include this to shift subtotal one to the right
+-->
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=right><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
+      <td align=right><?lsmb sellprice ?></td>
+      <td align=right><?lsmb linetotal ?></td>
+    </tr>
+<?lsmb end number ?>
+
+    <tr>
+      <td colspan=6><hr noshade></td>
+    </tr>
+    
+    <tr>
+      <th colspan=4 align=right>Zwischensumme</th>
+      <td colspan=2 align=right><?lsmb subtotal ?></td>
+    </tr>
+
+<?lsmb foreach tax ?>
+    <tr>
+      <th colspan=4 align=right><?lsmb taxdescription ?> @ <?lsmb taxrate ?> %</th>
+      <td colspan=2 align=right><?lsmb tax ?></td>
+    </tr>
+<?lsmb end tax ?>
+
+    <tr>
+      <td colspan=2>&nbsp;</td>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    <tr>
+      <td colspan=2>Netto <b><?lsmb terms ?></b> Tage</td>
+      <th colspan=2 align=right>Total</th>
+      <th colspan=2 align=right><?lsmb total ?></th>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<?lsmb if notes ?>
+      <td>Bemerkungen</td>
+      <td><?lsmb notes ?></td>
+<?lsmb end notes ?>
+      <td align=right>
+      Alle Preise in <b><?lsmb currency ?></b>
+      <br><?lsmb shippingpoint ?>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+  
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+    <td><font size=-3>
+    &nbsp;
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+

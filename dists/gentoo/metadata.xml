@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>web-apps</herd>
+	<maintainer>
+		<email>jasonjayr@users.sourceforge.net</email>
+		<description>LedgerSMB Gentoo Maintainer</description>
+	</maintainer>
+	<longdescription lang="en">
+LedgerSMB is a fork of SQL-Ledger which seeks to provide better security and
+data integrity controls, better community support, open documentation, and more. 	
+	</longdescription>
+</pkgmetadata>

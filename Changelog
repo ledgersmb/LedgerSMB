@@ -1,0 +1,148 @@
+Changelog for 1.2.4
+* Fixed internal functions avgcost() and lastcost() to not use float (Joshua D)
+* Fixed error posting vendor invoice with fraction costs.  (Chris M)
+* Fixed sales tax display issue on invoice/order entry screen (Chris T)
+* Fixed inconsistant error when setting to recur 0 times (Chris T)
+* Fixed Access Denied when sending email (CHris T)
+* Added Makefile.PL as optional means of dependency checking (experimental, Chris T)
+* Updated INSTALL file to use correct globaldbh syntax (Chris T)
+* Updated UNGRADE file to recommend reading INSTALL first (Chris T)
+
+
+Changelog for 1.2.3
+* Corrected per-user locale selection (Seneca)
+* Corrected partial commits for invoices and orders (Chris T)
+* Corrected data types for invoice.qty and invoice.allocated in new dbs (CHris T)
+* Corrected suffix error in 1.2.1 to use .sqlc for backups (Joshua D)
+
+Changelog for 1.2.2
+* Corrected sales tax display bug in order entry screen (Chris T)
+* Corrected database update unable to connect (Seneca)
+* Corrected login problems on 1.2.1
+* Corrected INSTALL for [GlobalDBH] (Joshua Drake)
+
+Changelog for LedgerSMB 1.2.1
+* Modifed AM.pm to correctly use globals from ledgersmb.conf (Joshua Drake)
+* Simplified backup functions in AM.pm (Joshua Drake)
+* Corrected serious sales tax posting bug (Chris Travers)
+* Corrected two sales tax display bugs (Chris Travers)
+* Corrected configure_apache.sh not rewriting WORKING_DIR (Chris Travers)
+* Corrected documentation about tax entry (Chris Travers)
+* Corrected logos not printing on PDF/PS invoices (Chris Travers)
+
+Changelog for LedgerSMB 1.2.0
+
+Database:
+* Added script to configure Slony replication (Chris Browne)
+* Added defined primary keys to all tables (Chris T)
+* Database upgrades now use psql (Chris T)
+* Defaults table now uses a simple key->value system (Chris T)
+* Merged Pg-tables, Pg-functions, and Pg-indeces into Pg-database (Chris T)
+
+Security:
+* Added whitelist of allowed directories to file editor (Seneca)
+* Audited All Perl Modules for SQL Injection attacks (Chris T)
+* Forced edited files to have whitelisted extensions and no .. strings (Chris T)
+* Users are now stored in a separate database instead of fs. (Chris M)
+* User database schema now included (Joshua D)
+
+Localization:
+* Moved localization files to standard codes (Seneca)
+* Added cumulative tax support (Seneca)
+* Translations now use Gettext (Seneca)
+* Removed back-translation of function names for i18n (Seneca)
+* Corrected parsing of numbers so that they are multi-run safe (Chris T)
+* Added modular tax calculation support (no modules included yet) (Seneca)
+* Added "1 000.00" number format (Chris T)
+* Buttons are now localization-safe (Seneca)
+
+Code Quality and API:
+* Added logging module (Jason)
+* Added session method abstraction (Chris T)
+* Broke out price matrix calls into PriceMatrix.pm (Chris T)
+* Added $form->callproc($procname, @args) returns @hashrefs (Chris T)
+* Corrected rounding errors (Seneca)
+* Code cleanup and template correction (Chris Murtagh)
+* New template system (Chris T)
+* IC.pm, OE.pm, and IS.pm are aware of custom fields (Chris T)
+* Added LedgerSMB::Sysconfig for site-wide configuration (Chris T)
+* LedgerSMB::IC is aware of custom fields (Chris T)
+* LedgerSMB::PE is aware of custom fields (Chris T)
+* Testing suite added (Seneca)
+* Moved all database calls to $form->{dbh} (CHris T)
+* Form->redirect no longer makes use of exec (Chris T)
+* LedgerSMB::Sysconfig now uses more reasonable ledgersmb.conf optiions (Joshua Drake)
+* Removal of Lock Application (Joshua Drake)
+* Removal of users/ depenency (Joshua Drake)
+
+Packaging:
+* Added first version of rpm spec from Mads Kiilerich (Chris T)
+* Added Gentoo ebuilds documentation and metadata (Jason R)
+
+Point of Sale:
+* Added experimental TrustCommerce credit card processing (Chris T)
+* Merged most of the rest of the SL-POS interface (Chris T)
+* POS register now goes from add invoice to add invoice. (Chris T)
+* Added pole display and separate cash drawer open calls. (Chris T)
+
+User Interface:
+* Moved IS/IR/OE the lineitem column list to the LedgerSMB::Sysconfig Chris T) 
+* Invoice now has an Onhand column (Chris T)
+* Added simple text import function for invoices received (PDT's) (Chris T)
+
+Other:
+* ledger-smb.conf is now an ini file (Seneca)
+* Experimental scripting wrapper in utils/cli (Chris T)
+* doc/database directory now contains postgresql_autodoc output (Chris T)
+
+Changelog for LedgerSMB 1.1.1
+
+* Fixed problem with parts_short trigger not being created
+* Fixed problem with custom fields functions not being created
+* Pg driver is now checked by default. 
+
+Changelog for LedgerSMB 1.1.0
+
+Database
+* Added add_custom_field and drop_custom_field functions.
+	-- will be more integrated into API next version
+* Added utility to partially recover from SQL-Ledger data corruption issues.
+* Primary Key added to acc_trans table
+* DB Updates now use one transaction per update file.
+* FLOAT datatypes removed from database
+* Protection against duplicate transaction id's.
+* Added foreign key constraint to acc_trans.chart_id
+* Database backups now use pg_dump
+* Database creation routines now attempt to add plpgsql to the db if not there.
+* Transaction reversal is now enforced by default
+
+Security
+* One is required to change the admin password when it is blank (on first login etc).
+
+Usability
+* We now support adding custom automation into a custom.pl
+* Setup.pl use is now experimentally supported
+* Disabled editing sub-assemblies in one area where it is unsafe.
+* Utility included for near-real-time parts short email notifications.
+* Fixed Lynx support
+* Batch printing now available for checks
+* Warnings are printed when check stub is truncated
+* Sales Data Report added
+* SL2LS.pl now dies if it cannot open the files with instructions on how to proceed manually
+* Links between admin and login pages
+* Experimental support for Windows printing
+
+Changelog for LedgerSMB v 1.0.0p1
+* Fixed directory transversal/arbitrary code execution vulnerability.
+
+Changelog for LedgerSMB v 1.0.0
+
+(Changes relative to the pre-fork SQL-Ledger 2.6.17)
+
+* Corrected sessionid security hole allowing bypass of login to main application
+* Corrected sessionid security hole allowing one to list logins and more.
+* Changed acc_trans.amount to NUMERIC
+* Tightened browser caching rules to prevent problems with back button.
+* Added an open content manual to the main distribution.
+* New logo. 
+* Began whitespace reformatting of main application.

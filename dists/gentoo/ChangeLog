@@ -1,0 +1,11 @@
+# ChangeLog for www-apps/ledger-smb
+# Copyright 2006 The LedgerSMB Team; Distributed under the GPL v2
+# $Header:  $
+
+  26 Sep 2006; Jason Rodrigues <jasonjayr@users.sourceforge.net>
+  ledger-smb-1.1.1c.ebuild: 
+  first ebuild released to into SVN, and staging for release to wild
+  
+  26 Sep 2006; Jason Rodrigues <jasonjayr@users.sourceforge.net>
+  ledger-smb-1.1.1.ebuild: 
+  Initial version for ledger-smb project

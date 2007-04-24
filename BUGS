@@ -1,0 +1,9 @@
+Known issues in LedgerSMB 1.2, Beta 1:
+
+Installation/upgrade is not automated yet.
+
+A few known issues with the documentation:
+CLI API docs don't mention cookie handling
+Need better documentation on role of UTF-8
+
+Also intermediate rounding causes issues with discounts because the rounding is applied to 2 decimal places to the unit rather than the extended price.

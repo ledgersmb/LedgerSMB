@@ -1,0 +1,129 @@
+README
+------------
+$Id$
+Christopher Browne
+cbbrowne@gmail.com
+2006-09-29
+------------
+
+The script configure-replication.sh is intended to allow the gentle user
+to readily configure replication of the LedgerSMB database schema
+using the Slony-I replication system for PostgreSQL.
+
+For more general details about Slony-I, see <http://slony.info/>
+
+This script uses a number of environment variables to determine the
+shape of the configuration.  In many cases, the defaults should be at
+least nearly OK...
+
+Global:
+  CLUSTER - Name of Slony-I cluster
+  NUMNODES - Number of nodes to set up
+
+  PGUSER - name of PostgreSQL superuser controlling replication
+  PGPORT - default port number
+  PGDATABASE - default database name
+
+For each node, there are also four parameters; for node 1:
+  DB1 - database to connect to
+  USER1 - superuser to connect as
+  PORT1 - port
+  HOST1 - host
+
+It is quite likely that DB*, USER*, and PORT* should be drawn from the
+default PGDATABASE, PGUSER, and PGPORT values above; that sort of
+uniformity is usually a good thing.
+
+In contrast, HOST* values should be set explicitly for HOST1, HOST2,
+..., as you don't get much benefit from the redundancy replication
+provides if all your databases are on the same server!
+
+slonik config files are generated in a temp directory under /tmp.  The
+usage is thus:
+
+1.  preamble.slonik is a "preamble" containing connection info used by
+    the other scripts.
+
+   Verify the info in this one closely; you may want to keep this
+   permanently to use with other maintenance you may want to do on the
+   cluster.
+
+2.  create_set.slonik
+
+    This is the first script to run; it sets up the requested nodes as
+    being Slony-I nodes, adding in some Slony-I-specific config tables
+    and such.
+
+You can/should start slon processes any time after this step has run.
+
+3.  store_paths.slonik
+
+    This is the second script to run; it indicates how the slons
+    should intercommunicate.  It assumes that all slons can talk to
+    all nodes, which may not be a valid assumption in a
+    complexly-firewalled environment.
+
+4.  create_set.slonik
+
+    This sets up the replication set consisting of the whole bunch of
+    tables and sequences that make up the LedgerSMB database schema.
+
+    When you run this script, all that happens is that triggers are
+    added on the origin node (node #1) that start collecting updates;
+    replication won't start until #5...
+
+    There are two assumptions in this script that could be invalidated
+    by circumstances:
+
+     1.  That all of the LedgerSMB tables and sequences have been
+         included.
+
+         This becomes invalid if new tables get added to LedgerSMB and
+         don't get added to the TABLES list in the generator script.
+
+     2.  That all tables have been defined with primary keys.
+
+          This *should* be the case soon if not already.
+
+5.  subscribe_set_2.slonik
+
+     And 3, and 4, and 5, if you set the number of nodes higher...
+
+     This is the step that "fires up" replication.  
+
+     The assumption that the script generator makes is that all the
+     subscriber nodes will want to subscribe directly to the origin
+     node.  If you plan to have "sub-clusters", perhaps where there is
+     something of a "master" location at each data centre, you may
+     need to revise that.
+
+     The slon processes really ought to be running by the time you
+     attempt running this step.  To do otherwise would be rather
+     foolish.
+
+Once all of these slonik scripts have been run, replication may be
+expected to continue to run as long as slons stay running.
+
+If you have an outage, where a database server or a server hosting
+slon processes falls over, and it's not so serious that a database
+gets mangled, then no big deal: Just restart the postmaster and
+restart slon processes, and replication should pick up.
+
+If something does get mangled, then actions get more complicated:
+
+1 - If the failure was of the "origin" database, then you probably want
+   to use FAIL OVER to shift the "master" role to another system.
+
+2 - If a subscriber failed, and other nodes were drawing data from it,
+   then you could submit SUBSCRIBE SET requests to point those other
+   nodes to some node that is "less mangled."  That is not a real big
+   deal; note that this does NOT require that they get re-subscribed
+   from scratch; they can pick up (hopefully) whatever data they
+   missed and simply catch up by using a different data source.
+
+Once you have reacted to the loss by reconfiguring the surviving nodes
+to satisfy your needs, you may want to recreate the mangled node.  See
+the Slony-I Administrative Guide for more details on how to do that.
+It is not overly profound; you need to drop out the mangled node, and
+recreate it anew, which is not all that different from setting up
+another subscriber.

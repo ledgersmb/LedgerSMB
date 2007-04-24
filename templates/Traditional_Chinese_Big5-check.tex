@@ -1,0 +1,77 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{9pt}{9pt}\selectfont
+
+\parbox[t]{12cm}{
+  <?lsmb company ?>
+
+  <?lsmb address ?>}
+\hfill
+\parbox[t]{6cm}{\hfill <?lsmb source ?>}
+
+\vspace*{0.6cm}
+
+<?lsmb text_amount ?> \dotfill <?lsmb decimal ?>/100 \makebox[0.5cm]{\hfill}
+
+\vspace{0.5cm}
+
+\hfill <?lsmb datepaid ?> \makebox[2cm]{\hfill} <?lsmb amount ?>
+
+% different date format for datepaid
+% <?lsmb DD ?><?lsmb MM ?><?lsmb YYYY ?>
+
+\vspace{0.5cm}
+
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb address2 ?>
+
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
+
+<?lsmb country ?>
+
+\vspace{1.8cm}
+
+<?lsmb memo ?>
+
+\vspace{0.8cm}
+
+<?lsmb company ?>
+
+\vspace{0.5cm}
+
+<?lsmb name ?> \hfill <?lsmb datepaid ?> \hfill <?lsmb source ?>
+
+\vspace{0.5cm}
+\begin{tabularx}{\textwidth}{lXrr@{}}
+\textbf{Invoice \#} & \textbf{Invoice Date}
+  & \textbf{Amount Due} & \textbf{Applied} \\
+<?lsmb foreach invnumber ?>
+<?lsmb invnumber ?> & <?lsmb invdate ?> \dotfill
+  & <?lsmb due ?> & <?lsmb paid ?> \\
+<?lsmb end invnumber ?>
+\end{tabularx}
+
+\vspace{1cm}
+
+<?lsmb memo ?>
+
+\vfill
+<?lsmb message ?>
+\end{document}
+
