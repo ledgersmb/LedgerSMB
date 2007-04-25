@@ -1,5 +1,6 @@
 Changelog for 1.2.5
 * Partsgroup handling corrected on POS and Sales invoice screens (Chris T)
+* Closed books handling is corrected (Chris T)
 
 Changelog for 1.2.4
 * Fixed internal functions avgcost() and lastcost() to not use float (Joshua D)

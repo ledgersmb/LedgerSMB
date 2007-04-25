@@ -1692,7 +1692,7 @@ sub closebooks {
     for (qw(revtrans closedto audittrail)) {
 
         if ( $form->{$_} ) {
-            $val = 1;
+            $val = $form->{$_};
         }
         else {
             $val = 0;
