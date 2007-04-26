@@ -2921,7 +2921,7 @@ sub company_logo {
 <h1 class="login">| . $locale->text('Version') . qq| $form->{version}</h1>
 
 <p>
-| . $locale->text('Licensed to') . qq|
+| . $locale->text('Company') . qq| :
 <p>
 <b>
 $myconfig{company}
