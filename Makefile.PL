@@ -28,6 +28,7 @@ requires 'Cwd';
 requires 'Config::Std';
 requires 'MIME::Lite';
 requires 'Template';
+requires 'Error';
 
 build_requires 'Test::More';
 
