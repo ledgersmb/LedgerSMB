@@ -1083,7 +1083,8 @@ sub generate_income_statement {
     if ( ( $form->{'media'} eq 'screen' ) and ( $form->{'format'} eq 'html' ) )
     {
         my $template =
-          LedgerSMB::Template->new( \%myconfig, $form->{'formname'}, 'HTML' );
+          LedgerSMB::Template->new( user => \%myconfig, 
+             template => $form->{'formname'}, format => 'HTML' );
         try {
             $template->render($form);
             $form->header;
@@ -1139,7 +1140,8 @@ sub generate_balance_sheet {
     if ( ( $form->{'media'} eq 'screen' ) and ( $form->{'format'} eq 'html' ) )
     {
         my $template =
-          LedgerSMB::Template->new( \%myconfig, $form->{'formname'}, 'HTML' );
+          LedgerSMB::Template->new( user => \%myconfig, 
+             template => $form->{'formname'}, format => 'HTML' );
         try {
             $template->render($form);
             $form->header;
@@ -2293,8 +2295,9 @@ sub print_form {
                     and ( $form->{'format'} eq 'html' ) )
                 {
                     my $template =
-                      LedgerSMB::Template->new( \%myconfig, $form->{'formname'},
-                        'HTML' );
+                      LedgerSMB::Template->new( user => \%myconfig, 
+                        template => $form->{'formname'},
+                        format => 'HTML' );
                     try {
                         $template->render($form);
                         $form->header;

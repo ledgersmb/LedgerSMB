@@ -49,6 +49,7 @@ use LedgerSMB::CP;
 use LedgerSMB::OP;
 use LedgerSMB::IS;
 use LedgerSMB::IR;
+use LedgerSMB::Template;
 
 require "bin/arap.pl";
 
@@ -1475,7 +1476,8 @@ sub print_form {
     if ( ( $form->{'media'} eq 'screen' ) and ( $form->{'format'} eq 'html' ) )
     {
         my $template =
-          LedgerSMB::Template->new( \%myconfig, $form->{'formname'}, 'HTML' );
+          LedgerSMB::Template->new( user => \%myconfig, 
+          template => $form->{'formname'}, format => 'HTML' );
         try {
             $template->render($form);
             $form->header;
