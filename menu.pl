@@ -69,6 +69,9 @@ $0 =~ tr/\\/\//;
 $pos = rindex $0, '/';
 $script = substr( $0, $pos + 1 );
 
+$locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
+  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+
 # we use $script for the language module
 $form->{script} = $script;
 
@@ -78,33 +81,6 @@ $script =~ s/\.pl//;
 # pull in DBI
 use DBI qw(:sql_types);
 
-# grab user config. This is ugly and unecessary if/when
-# we get rid of myconfig and use User as a real object
-%myconfig = %{ LedgerSMB::User->fetch_config( $form->{login} ) };
-
-if ($@) {
-    $locale = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
-      or
-      $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
-    $form->{charset} = $locale->encoding;
-    $form->{charset} = 'UTF-8';
-    $locale->encoding('UTF-8');
-
-    $form->{callback} = "";
-    $msg1             = $locale->text('You are logged out!');
-    $msg2             = $locale->text('Login');
-    $form->redirect(
-        "$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
-}
-
-# locale messages
-$locale = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
-  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
-
-#$form->{charset} = $locale->encoding;
-$form->{charset} = 'UTF-8';
-$locale->encoding('UTF-8');
-
 # send warnings to browser
 $SIG{__WARN__} = sub { $form->info( $_[0] ) };
 
@@ -112,17 +88,42 @@ $SIG{__WARN__} = sub { $form->info( $_[0] ) };
 $SIG{__DIE__} =
   sub { $form->error( __FILE__ . ':' . __LINE__ . ': ' . $_[0] ) };
 
+## did sysadmin lock us out
+#if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
+#	$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
+#		$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+#	$form->{charset} = 'UTF-8';
+#	$locale->encoding('UTF-8');
+#
+#	$form->{callback} = "";
+#	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
+#}
+
+&check_password;
+
+# grab user config. This is ugly and unecessary if/when
+# we get rid of myconfig and use User as a real object
+%myconfig = %{ LedgerSMB::User->fetch_config( $form->{login} ) };
+$locale   = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
+  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+
+# locale messages
+#$form->{charset} = $locale->encoding;
+$form->{charset} = 'UTF-8';
+$locale->encoding('UTF-8');
+
+if ($@) {
+    $form->{callback} = "";
+    $msg1             = $locale->text('You are logged out!');
+    $msg2             = $locale->text('Login');
+    $form->redirect(
+        "$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
+}
+
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
   unless ( $form->{type} eq 'preferences' );
+
 $form->db_init( \%myconfig );
-
-if ( $form->{path} ne 'bin/lynx' ) { $form->{path} = 'bin/mozilla'; }
-
-# did sysadmin lock us out
-if ( -f "${LedgerSMB::Sysconfig::userspath}/nologin" ) {
-    $form->error( __FILE__ . ':' . __LINE__ . ': '
-          . $locale->text('System currently down for maintenance!') );
-}
 
 # pull in the main code
 require "bin/$form->{script}";
@@ -144,8 +145,6 @@ if ( $form->{action} ) {
         "LedgerSMB "
       . $locale->text('Version')
       . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
-
-    &check_password;
 
     &{ $form->{action} };
 

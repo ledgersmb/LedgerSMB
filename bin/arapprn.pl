@@ -256,9 +256,8 @@ sub print_check {
 
         %queued = split / /, $form->{queued};
 
-        $form->{OUT} = "| ${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+        $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
-
         if ( $form->{printed} !~ /$form->{formname}/ ) {
 
             $form->{printed} .= " $form->{formname}";
@@ -381,7 +380,6 @@ sub print_transaction {
           $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
 
     }
-
     foreach $accno ( split / /, $form->{taxaccounts} ) {
         if ( $form->{"tax_$accno"} ) {
             $form->format_string("${accno}_description");
@@ -530,7 +528,7 @@ sub print_transaction {
     }
 
     if ( $form->{media} !~ /(queue|screen)/ ) {
-        $form->{OUT}       = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+        $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
 
         if ( $form->{printed} !~ /$form->{formname}/ ) {

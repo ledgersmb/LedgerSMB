@@ -45,9 +45,6 @@
 #
 #======================================================================
 
-use Error qw(:try);
-
-use LedgerSMB::Template;
 use LedgerSMB::CP;
 use LedgerSMB::OP;
 use LedgerSMB::IS;
@@ -58,6 +55,12 @@ require "bin/arap.pl";
 1;
 
 # end of main
+
+# This may need to get more sophisticated in the future
+# Anyway, it provides one point of control for date handling.
+sub default_date {
+    $form->{date} ||= 'current_date';
+}
 
 sub payment {
 
@@ -420,12 +423,13 @@ sub invoices_due {
 
         $totalamount += $form->{"amount_$i"};
         $totaldue    += $form->{"due_$i"};
-        if ( $form->{"paid_$i"} !~ /NaN/ ) {
-            $totalpaid += $form->{"paid_$i"};
-        }
-        else {
+        if ( $form->{"paid_$i"} =~ /NaN/ ) {
             $form->{"paid_$i"} = '';
         }
+        else {
+            $totalpaid += $form->{"paid_$i"};
+        }
+
         for (qw(amount due paid)) {
             $form->{"${_}_$i"} =
               $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 );
@@ -441,6 +445,9 @@ sub invoices_due {
         $column_data{due} = qq|<td align=right>$form->{"due_$i"}</td>
       <input type=hidden name="due_$i" value=$form->{"due_$i"}>|;
 
+        if ( $form->{"paid_$i"} =~ /NaN/ ) {
+            $form->{"paid_$i"} = '';
+        }
         $column_data{paid} =
 qq|<td align=right><input name="paid_$i" size=10 value=$form->{"paid_$i"}></td>|;
 
@@ -1147,10 +1154,7 @@ sub list_invoices {
 
         $totalamount += $form->{"amount_$i"};
         $totaldue    += $form->{"due_$i"};
-        if ( $form->{"paid_$i"} =~ /NaN/ ) {
-            $form->{"paid_$i"} = '';
-        }
-        else {
+        if ( $form->{"paid_$i"} !~ /NaN/ ) {
             $totalpaid += $form->{"paid_$i"};
         }
 
@@ -1169,6 +1173,10 @@ sub list_invoices {
       <input type=hidden name="amount_$i" value=$form->{"amount_$i"}>|;
         $column_data{due} = qq|<td align=right width=15%>$form->{"due_$i"}</td>
       <input type=hidden name="due_$i" value=$form->{"due_$i"}>|;
+
+        if ( $form->{"paid_$i"} =~ /NaN/ ) {
+            $form->{"paid_$i"} = '';
+        }
 
         $column_data{paid} =
 qq|<td align=right width=15%><input name="paid_$i" size=10 value=$form->{"paid_$i"}></td>|;
@@ -1307,7 +1315,10 @@ sub payment_footer {
 
 }
 
-sub post { &{"post_$form->{payment}"} }
+sub post {
+    &default_date;
+    &{"post_$form->{payment}"};
+}
 
 sub post_payments {
 
@@ -1533,7 +1544,6 @@ sub check_form {
     $form->error( $locale->text('Cannot post payment for a closed period!') )
       if ( $datepaid <= $closedto );
 
-    # this is just to format the year
     $form->{datepaid} = $locale->date( \%myconfig, $form->{datepaid} );
 
     $amount = $form->parse_amount( \%myconfig, $form->{amount} );

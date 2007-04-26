@@ -35,6 +35,11 @@
 
 use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
+use List::Util qw(first);
+use LedgerSMB::Mailer;
+use Time::Local;
+use Cwd;
+use File::Copy;
 
 package Form;
 
@@ -68,35 +73,32 @@ sub new {
         $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
     }
 
+    $self->{login} =~ s/[^a-zA-Z0-9._+@'-]//g;
+
     $self->{menubar} = 1 if $self->{path} =~ /lynx/i;
 
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if $self->{path} =~ /lynx/i;
 
-    $self->{version}   = "1.3.0 Alpha 0 Pre";
+    $self->{version}   = "1.2.5";
     $self->{dbversion} = "1.2.0";
 
     bless $self, $type;
 
-    if ( $self->{path} eq "bin/lynx" ) {
-        $self->{menubar} = 1;
+    if ( $self->{path} ne 'bin/lynx' ) { $self->{path} = 'bin/mozilla'; }
 
-        #menubar will be deprecated, replaced with below
-        $self->{lynx} = 1;
-        $self->{path} = "bin/lynx";
-    }
-    else {
-        $self->{path} = "bin/mozilla";
-
+    if ( ( $self->{script} )
+        and not List::Util::first { $_ eq $self->{script} }
+        @{LedgerSMB::Sysconfig::scripts} )
+    {
+        $self->error( 'Access Denied', __line__, __file__ );
     }
 
-    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
-        $self->error("Access Denied");
+    if ( ( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ ) ) {
+        $self->error( "Access Denied", __line__, __file__ );
     }
 
-    if ( ( $self->{action} =~ /:/ ) || ( $self->{nextsub} =~ /:/ ) ) {
-        $self->error("Access Denied");
-    }
+    for ( keys %$self ) { $self->{$_} =~ s/\000//g }
     $self;
 }
 
@@ -114,6 +116,16 @@ sub debug {
         for ( sort keys %$self ) { print "$_ = $self->{$_}\n" }
     }
 
+}
+
+sub encode_all {
+
+    # TODO;
+}
+
+sub decode_all {
+
+    # TODO
 }
 
 sub escape {
@@ -153,24 +165,6 @@ sub quote {
 
     $str;
 
-}
-
-sub format_date {
-
-    # takes an iso date in, and converts it to the date for printing
-    my ( $self, $date ) = @_;
-    my $datestring;
-    if ( $date =~ /^\d{4}\D/ ) {    # is an ISO date
-        $datestring = $self->{db_dateformat};
-        my ( $yyyy, $mm, $dd ) = split( /\W/, $date );
-        $datestring =~ s/y+/$yyyy/;
-        $datestring =~ s/mm/$mm/;
-        $datestring =~ s/dd/$dd/;
-    }
-    else {                          # return date
-        $datestring = $date;
-    }
-    $datestring;
 }
 
 sub unquote {
@@ -234,9 +228,7 @@ sub error {
         if ( $ENV{error_function} ) {
             &{ $ENV{error_function} }($msg);
         }
-        else {
-            die "Error: $msg\n";
-        }
+        die "Error: $msg\n";
     }
 }
 
@@ -343,7 +335,6 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 sub redirect {
 
     my ( $self, $msg ) = @_;
-    use List::Util qw(first);
 
     if ( $self->{callback} || !$msg ) {
 
@@ -524,8 +515,8 @@ sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
 
-    if ( $amount eq '' or $amount == undef ) {
-        return 0;
+    if ( ( $amount eq '' ) or ( ! defined $amount ) ) {
+        $amount = 0;
     }
 
     if ( UNIVERSAL::isa( $amount, 'Math::BigFloat' ) )
@@ -557,7 +548,14 @@ sub parse_amount {
         $amount = $1 * -1;
     }
     $amount =~ s/\s?CR//;
+
+    $amount =~ /(\d*)\.(\d*)/;
+
+    my $decimalplaces = length $1 + length $2;
+
     $amount = new Math::BigFloat($amount);
+    $amount->accuracy($decimalplaces);
+
     return ( $amount * 1 );
 }
 
@@ -661,21 +659,28 @@ sub parse_template {
     my $fileid  = time;
     my $tmpfile = $self->{IN};
     $tmpfile =~ s/\./_$self->{fileid}./ if $self->{fileid};
-    $self->{tmpfile} =
-      "${LedgerSMB::Sysconfig::userspath}/${fileid}_${tmpfile}";
+    $self->{tmpfile} = "${LedgerSMB::Sysconfig::tempdir}/${fileid}_${tmpfile}";
 
-    my %temphash;
-
+    my $temphash;
     if ( $self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email' ) {
-        $temphash{out}       = $self->{OUT};
-        $self->{OUT}         = "$self->{tmpfile}";
+        $temphash{out} = $self->{OUT};
+        $self->{OUT} = "$self->{tmpfile}";
+        File::Copy::copy(
+            "$self->{templates}/logo.png",
+            "${LedgerSMB::Sysconfig::tempdir}/"
+        );
+        File::Copy::copy(
+            "$self->{templates}/logo.eps",
+            "${LedgerSMB::Sysconfig::tempdir}/"
+        );
         $temphash{printmode} = $self->{printmode};
-        $self->{printmode}   = '>';
+        $self->{printmode} = '>';
     }
 
     if ( $self->{OUT} ) {
         open( OUT, $self->{printmode}, "$self->{OUT}" )
           or $self->error("$self->{OUT} : $!");
+        chmod( 0600, "$self->{OUT}" );
 
     }
     else {
@@ -826,13 +831,19 @@ sub parse_template {
             chop;
             s/.*?<\?lsmb if (.+?) \?>/$1/;
 
-            if (/\s/) {
-                @a  = split;
-                $ok = eval "$self->{$a[0]} $a[1] $a[2]";
-            }
-            else {
-                $ok = $self->{$_};
-            }
+            # commenting this out for security reasons.  If needed,
+            # please uncomment.  Functionality below will be in 1.3
+            # Chris Travers
+            #if (/\s/) {
+            #	@args = split;
+            #	if ($args[1] !~ /^(==|eq|>|gt|>|lt|>=|ge|le|<=|ne|!=)$/){
+            #		$self->error("Unknown/forbidden operator");
+            #	}
+            #	$ok = eval "$self->{$args[0]} $args[1] $args[2]";
+            #} else {
+            $ok = $self->{$_};
+
+            #}
 
             if ($ok) {
                 while ( $_ = shift ) {
@@ -898,19 +909,15 @@ sub parse_template {
     # Convert the tex file to postscript
     if ( $self->{format} =~ /(postscript|pdf)/ ) {
 
-        use Cwd;
-        $self->{cwd}    = cwd();
-        $self->{tmpdir} = "$self->{cwd}/${LedgerSMB::Sysconfig::userspath}";
-        $self->{tmpdir} = "${LedgerSMB::Sysconfig::userspath}"
-          if ${LedgerSMB::Sysconfig::userspath} =~ /^\//;
+        $self->{tmpdir} = "${LedgerSMB::Sysconfig::tempdir}";
 
-        unless ( chdir("${LedgerSMB::Sysconfig::userspath}") ) {
+        unless ( chdir( $self->{tmpdir} ) ) {
             $err = $!;
             $self->cleanup;
-            $self->error("chdir : $err");
+            $self->error("chdir : $self->{tmpdir} : $err");
         }
 
-        $self->{tmpfile} =~ s/${LedgerSMB::Sysconfig::userspath}\///g;
+        $self->{tmpfile} =~ s/$self->{tmpdir}\///g;
 
         $self->{errfile} = $self->{tmpfile};
         $self->{errfile} =~ s/tex$/err/;
@@ -957,8 +964,6 @@ sub parse_template {
     if ( $self->{format} =~ /(postscript|pdf)/ || $self->{media} eq 'email' ) {
 
         if ( $self->{media} eq 'email' ) {
-
-            use LedgerSMB::Mailer;
 
             my $mail = new Mailer;
 
@@ -1017,8 +1022,8 @@ sub parse_template {
         }
         else {
 
-            $self->{OUT}       = $temphash{out};
-            $self->{printmode} = $temphash{printmode};
+            $self->{OUT} = $temphash{out};
+            $self->{printmode} = $temphash{printmode} if $temphash{printmode};
 
             unless ( open( IN, '<', $self->{tmpfile} ) ) {
                 $err = $!;
@@ -1040,6 +1045,7 @@ sub parse_template {
                         $self->cleanup;
                         $self->error("$self->{OUT} : $err");
                     }
+                    chmod( 0600, "$self->{OUT}" );
 
                 }
                 else {
@@ -1339,8 +1345,6 @@ sub add_date {
 
     my ( $self, $myconfig, $date, $repeat, $unit ) = @_;
 
-    use Time::Local;
-
     my $diff = 0;
     my $spc  = $myconfig->{dateformat};
     $spc =~ s/\w//g;
@@ -1435,6 +1439,16 @@ qq|<button class="submit" type="submit" name="action" value="$name" accesskey="$
 sub db_init {
     my ( $self, $myconfig ) = @_;
     $self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
+    %date_query = (
+        'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
+        'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
+        'dd/mm/yy' => 'set DateStyle to \'SQL, EUROPEAN\'',
+        'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
+        'dd.mm.yy' => 'set DateStyle to \'GERMAN\''
+    );
+
+    $self->{dbh}->do( $date_query{ $myconfig->{dateformat} } );
+    $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
@@ -1653,6 +1667,9 @@ sub update_exchangerate {
         @queryargs = ($sell);
     }
 
+    if ( !$set ) {
+        $self->error("Exchange rate missing!");
+    }
     if ( $sth->fetchrow_array ) {
         $query = qq|UPDATE exchangerate
 					   SET $set
@@ -2326,9 +2343,8 @@ sub lastname_used {
 
     my ( $self, $myconfig, $dbh2, $vc, $module ) = @_;
 
-    $vc ||= $self->{vc};
     my $dbh = $self->{dbh};
-
+    $vc ||= $self->{vc};    # add default to correct for improper passing
     my $arap = ( $vc eq 'customer' ) ? "ar" : "ap";
     my $where = "1 = 1";
     my $sth;
@@ -2395,8 +2411,8 @@ sub current_date {
             $dateformat = 'yyyymmdd';
         }
 
-        $query = qq|SELECT to_date(?, ?) 
-				+ ?::interval AS thisdate|;
+        $query = qq|SELECT (to_date(?, ?) 
+				+ ?::interval)::date AS thisdate|;
         @queryargs = ( $thisdate, $dateformat, $days );
 
     }
@@ -2415,6 +2431,7 @@ sub current_date {
 sub like {
 
     my ( $self, $str ) = @_;
+
     "%$str%";
 }
 
@@ -2523,7 +2540,9 @@ sub update_status {
 
     my %queued = split / +/, $self->{queued};
     my $spoolfile =
-      ( $queued{ $self->{formname} } ) ? "'$queued{$self->{formname}}'" : undef;
+      ( $queued{ $self->{formname} } )
+      ? "'$queued{$self->{formname}}'"
+      : 'NULL';
 
     my $query = qq|DELETE FROM status
 					WHERE formname = ?
@@ -2706,9 +2725,10 @@ sub save_recurring {
             $s{print},     $s{email},     $s{message}
         ) = split /,/, $self->{recurring};
 
-        if ( $s{howmany} == 0 ) {
+        if ($s{howmany} == 0){
             $self->error("Cannot set to recur 0 times");
         }
+
         for (qw(reference message)) { $s{$_} = $self->unescape( $s{$_} ) }
         for (qw(repeat howmany payment)) { $s{$_} *= 1 }
 
@@ -2840,7 +2860,7 @@ sub save_intnotes {
     # no id return
     return unless $self->{id};
 
-    my $dbh = $self->dbconnect($myconfig);
+    my $dbh = $self->{dbh};
 
     my $query = qq|UPDATE $vc SET intnotes = ? WHERE id = ?|;
 
@@ -3091,6 +3111,24 @@ sub split_date {
     }
 
     ( $rv, $yy, $mm, $dd );
+}
+
+sub format_date {
+
+    # takes an iso date in, and converts it to the date for printing
+    my ( $self, $date ) = @_;
+    my $datestring;
+    if ( $date =~ /^\d{4}\D/ ) {    # is an ISO date
+        $datestring = $self->{db_dateformat};
+        my ( $yyyy, $mm, $dd ) = split( /\W/, $date );
+        $datestring =~ s/y+/$yyyy/;
+        $datestring =~ s/mm/$mm/;
+        $datestring =~ s/dd/$dd/;
+    }
+    else {                          # return date
+        $datestring = $date;
+    }
+    $datestring;
 }
 
 sub from_to {

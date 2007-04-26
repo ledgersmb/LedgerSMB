@@ -576,7 +576,7 @@ sub item_selected {
                 $form->{"${_}_$i"} = $form->{"new_${_}_$j"};
             }
             $form->{"sellprice_$i"} = $form->{"new_sellprice_$j"}
-              unless $form->{"sellprice_$i"};
+              if not $form->{"sellprice_$i"};
 
             $form->{"partsgroup_$i"} =
               qq|$form->{"new_partsgroup_$j"}--$form->{"new_partsgroup_id_$j"}|;
@@ -622,8 +622,8 @@ sub item_selected {
                 $form->{"${_}_base"} += $amount;
             }
             if ( !$form->{taxincluded} ) {
-                my @taxlist =
-                  Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+                my @taxlist = Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
+                    $form->{taxaccounts} );
                 $amount += Tax::calculate_taxes( \@taxlist, $form, $amount, 0 );
             }
 
@@ -696,7 +696,7 @@ sub new_item {
     }
 
     $i = $form->{rowcount};
-    for (qw(partnumber description sellprice unit)) {
+    for (qw(partnumber description)) {
         $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
     }
 
@@ -1366,8 +1366,8 @@ sub print_options {
     <input name=grouppartsgroup type=checkbox class=checkbox $form->{grouppartsgroup}>
     | . $locale->text('Group') . qq|
     </td>
-
   </tr>
+
   <tr>
     <td colspan=6>| . $locale->text('Sort by') . qq| ->
     <input name=sortby type=radio class=radio value=runningnumber $sortby{runningnumber}>
@@ -1404,7 +1404,6 @@ sub print {
 
 sub print_form {
     my ($old_form) = @_;
-
     $inv = "inv";
     $due = "due";
 
@@ -1569,7 +1568,6 @@ sub print_form {
     else {
         IS->invoice_details( \%myconfig, \%$form );
     }
-
     if ( exists $form->{longformat} ) {
         $form->{"${due}date"} = $duedate;
         for ( "${inv}date", "${due}date", "shippingdate", "transdate" ) {
@@ -1640,9 +1638,8 @@ sub print_form {
     $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
 
     if ( $form->{media} !~ /(screen|queue|email)/ ) {
-        $form->{OUT}       = "${LedgerSMB::SysConfig::printer}{$form->{media}}";
+        $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
-
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
         $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;
 

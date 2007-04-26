@@ -121,47 +121,51 @@ sub fetch_config {
 
     my ( $self, $login ) = @_;
 
-    if ( $login ne "" ) {
-
-        # use central db
-        my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
-
-        # for now, this is querying the table directly... ugly
-        my $fetchUserPrefs = $dbh->prepare(
-            "SELECT acs, address, businessnumber,
-												   company, countrycode, currency,
-												   dateformat, dbdriver, dbhost, dbname, 
-												   dboptions, dbpasswd, dbport, dbuser, 
-												   email, fax, menuwidth, name, numberformat, 
-												   password, print, printer, role, sid, 
-												   signature, stylesheet, tel, templates, 
-												   timeout, vclimit, u.username
-											  FROM users_conf as uc, users as u
-											 WHERE u.username =  ?
-											   AND u.id = uc.id;"
-        );
-
-        $fetchUserPrefs->execute($login);
-
-        my $userHashRef = $fetchUserPrefs->fetchrow_hashref;
-
-        while ( my ( $key, $value ) = each( %{$userHashRef} ) ) {
-            $myconfig{$key} = $value;
-        }
-
-        chomp( $myconfig{'dbport'} );
-        chomp( $myconfig{'dbname'} );
-        chomp( $myconfig{'dbhost'} );
-
-        $myconfig{'login'} = $login;
-        $myconfig{'dbconnect'} =
-            'dbi:Pg:dbname='
-          . $myconfig{'dbname'}
-          . ';host='
-          . $myconfig{'dbhost'}
-          . ';port='
-          . $myconfig{'dbport'};
+    if ( !$login ) {
+        &error( $self, "Access Denied" );
     }
+
+    # use central db
+    my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+
+    # for now, this is querying the table directly... ugly
+    my $fetchUserPrefs = $dbh->prepare(
+        "SELECT acs, address, businessnumber,
+											   company, countrycode, currency,
+											   dateformat, dbdriver, dbhost, dbname, 
+											   dboptions, dbpasswd, dbport, dbuser, 
+											   email, fax, menuwidth, name, numberformat, 
+											   password, print, printer, role, sid, 
+											   signature, stylesheet, tel, templates, 
+											   timeout, vclimit, u.username
+										  FROM users_conf as uc, users as u
+										 WHERE u.username =  ?
+										   AND u.id = uc.id;"
+    );
+
+    $fetchUserPrefs->execute($login);
+
+    my $userHashRef = $fetchUserPrefs->fetchrow_hashref;
+    if ( !$userHashRef ) {
+        &error( $self, "Access Denied" );
+    }
+
+    while ( my ( $key, $value ) = each( %{$userHashRef} ) ) {
+        $myconfig{$key} = $value;
+    }
+
+    chomp( $myconfig{'dbport'} );
+    chomp( $myconfig{'dbname'} );
+    chomp( $myconfig{'dbhost'} );
+
+    $myconfig{'login'} = $login;
+    $myconfig{'dbconnect'} =
+        'dbi:Pg:dbname='
+      . $myconfig{'dbname'}
+      . ';host='
+      . $myconfig{'dbhost'}
+      . ';port='
+      . $myconfig{'dbport'};
 
     return \%myconfig;
 }
@@ -447,7 +451,7 @@ sub process_query {
     $ENV{PGUSER}     = $form->{dbuser};
     $ENV{PGDATABASE} = $form->{db};
     $ENV{PGHOST}     = $form->{dbhost};
-    $ENV{PGPORT}     = $form->{pgport};
+    $ENV{PGPORT}     = $form->{dbport};
 
     $results = `psql -f $filename 2>&1`;
     if ($?) {

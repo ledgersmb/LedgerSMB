@@ -485,8 +485,8 @@ sub save {
 
                 if ( $form->{"id_$i"} && $form->{"qty_$i"} ) {
                     $sth->execute(
-                        $form->{id},       $form->{"id_$i"},
-                        $form->{"qty_$i"}, $form->{"bom_$i"},
+                        $form->{id}, $form->{"id_$i"},
+                        $form->{"qty_$i"}, $form->{"bom_$i"} || 0,
                         $form->{"adj_$i"}
                     ) || $form->dberror($query);
                 }
@@ -603,24 +603,22 @@ sub update_assembly {
     }
     $sth->finish;
     $qty           = $dbh->quote($qty);
-    $formlistprice = $dbh->quote($formlistprice);
-    $listprice     = $dbh->quote($listprice);
-    $formsellprice = $dbh->quote($formsellprice);
-    $formlastcost  = $dbh->quote( $form->{lastcost} );
-    $lastcost      = $dbh->quote($lastcost);
-    $weight        = $dbh->quote($weight);
+    $formlistprice = $dbh->quote( $formlistprice - $listprice );
+    $formsellprice = $dbh->quote( $formsellprice - $sellprice );
+    $formlastcost  = $dbh->quote( $form->{lastcost} - $lastcost );
+    $weight        = $dbh->quote( $form->{weight} - $weight );
     $id            = $dbh->quote($id);
 
     $query = qq|
 		UPDATE parts
 		   SET listprice = listprice +
-		       $qty * ($formlistprice - $listprice),
+		       $qty * cast($formlistprice AS numeric),
 		       sellprice = sellprice +
-		       $qty * ($formsellprice - $sellprice),
+		       $qty * cast($formsellprice AS numeric),
 		       lastcost = lastcost +
-		       $qty * ($form->{lastcost} - $lastcost),
+		       $qty * cast($formlastcost AS numeric),
 		       weight = weight +
-		       $qty * ($form->{weight} - $weight)
+		       $qty * cast($weight AS numeric)
 		 WHERE id = $id|;
     $dbh->do($query) || $form->dberror($query);
 

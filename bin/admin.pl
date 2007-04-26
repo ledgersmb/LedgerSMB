@@ -155,7 +155,7 @@ sub login {
 }
 
 sub logout {
-
+    $form->{login}    = 'admin';
     $form->{callback} = "admin.pl?action=adminlogin";
     Session::session_destroy($form);
     $form->redirect( $locale->text('You are logged out') );
@@ -224,11 +224,13 @@ sub list_users {
     my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
     my $fetchMembers = $dbh->selectall_arrayref(
-"SELECT uc.name, uc.company, uc.templates, uc.dbuser, uc.dbdriver, uc.dbname, uc.dbhost, u.username 
-							    FROM users as u, users_conf as uc
-							    WHERE u.id = uc.id	
-							    AND u.id > 1
-							    ORDER BY u.username;", { Slice => {} }
+        "SELECT uc.name, uc.company, uc.templates,
+														uc.dbuser, uc.dbdriver, uc.dbname, 
+														uc.dbhost, u.username
+												   FROM users as u, users_conf as uc
+												  WHERE u.id = uc.id	
+													AND u.id > 1
+											   ORDER BY u.username;", { Slice => {} }
     );
 
     my @memberArray = ();
@@ -327,7 +329,6 @@ sub list_users {
       . qq|</button>
 
 		$dbdrivers
-		$nologin
 
 		<button type="submit" class="submit" name="action" value="logout">|
       . $locale->text('Logout')
@@ -407,7 +408,7 @@ sub form_header {
 
     opendir TEMPLATEDIR, "${LedgerSMB::Sysconfig::templates}/."
       or $form->error( __FILE__ . ':' . __LINE__ . ': ' . "$templates : $!" );
-    @all = grep !/(^\.\.?|^\.svn)/, readdir TEMPLATEDIR;
+    @all = grep !/(^\.\.?$|^\.svn)/, readdir TEMPLATEDIR;
     closedir TEMPLATEDIR;
 
     @allhtml = sort grep /\.html/, @all;
@@ -820,8 +821,7 @@ sub save {
     $form->{templates} =
       "${LedgerSMB::Sysconfig::templates}/$form->{templates}";
 
-    $myconfig = LedgerSMB::User->new( "${LedgerSMB::Sysconfig::memberfile}",
-        "$form->{login}" );
+    $myconfig = LedgerSMB::User->new("$form->{login}");
 
     # redo acs variable and delete all the acs codes
     @acs = split /;/, $form->{acs};
@@ -1044,7 +1044,8 @@ sub check_password {
             exit;
         }
         else {
-            Session::session_create($root);
+            $form->{login} = 'admin';
+            Session::session_create($form);
         }
     }
     else {
@@ -1318,107 +1319,6 @@ sub dbcreate {
       . qq|</button></p>
 	</form>
 	</center>
-	</body>
-	</html>
-	|;
-}
-
-sub delete_dataset {
-
-    if ( @dbsources = LedgerSMB::User->dbsources_unused( \%$form ) ) {
-
-        foreach $item ( sort @dbsources ) {
-            $dbsources .=
-qq|<input name="db" class="radio" type="radio" value="$item" />&nbsp;$item |;
-        }
-
-    }
-    else {
-        $form->error( __FILE__ . ':' . __LINE__ . ': '
-              . $locale->text('Nothing to delete!') );
-    }
-
-    $form->{title} =
-        "LedgerSMB "
-      . $locale->text('Accounting') . " "
-      . $locale->text('Database Administration') . " / "
-      . $locale->text('Delete Dataset');
-
-    $form->{login} = "admin";
-    $form->header;
-
-    print qq|
-	<body class="admin">
-	<h2>$form->{title}</h2>
-	<form method="post" action="$form->{script}" />
-	<input type="hidden" name="dbdriver" value="$form->{dbdriver}" />
-	<input type="hidden" name="dbuser" value="$form->{dbuser}" />
-	<input type="hidden" name="dbhost" value="$form->{dbhost}" />
-	<input type="hidden" name="dbport" value="$form->{dbport}" />
-	<input type="hidden" name="dbpasswd" value="$form->{dbpasswd}" />
-	<input type="hidden" name="dbdefault" value="$form->{dbdefault}" />
-	<input name=callback type="hidden" value="$form->{script}?action=list_users&amp;path=$form->{path}">
-	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="nextsub" value="dbdelete" />
-	<table width="100%">
-		<tr class="listheading">
-			<th>|
-      . $locale->text(
-        'The following Datasets are not in use and can be deleted')
-      . qq|</th>
-		</tr>
-		<tr>
-			<td>
-			$dbsources
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<hr size="3" noshade />
-				<br />
-				<button type="submit" class="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-			</td>
-		</tr>
-	</table>
-	</form>
-	</body>
-	</html>
-	|;
-
-}
-
-sub dbdelete {
-
-    if ( !$form->{db} ) {
-        $form->error( __FILE__ . ':' . __LINE__ . ': '
-              . $locale->text('No Dataset selected!') );
-    }
-
-    LedgerSMB::User->dbdelete( \%$form );
-
-    $form->{title} =
-        "LedgerSMB "
-      . $locale->text('Accounting') . " "
-      . $locale->text('Database Administration') . " / "
-      . $locale->text('Delete Dataset');
-
-    $form->{login} = "admin";
-    $form->header;
-
-    print qq|
-	<body class="admin">
-	<center>
-	<h2>$form->{title}</h2>
-	$form->{db} | . $locale->text('successfully deleted!') . qq|
-	<form method="post" action="$form->{script}" />
-	<input type="hidden" name="path" value="$form->{path}" />
-	<input type="hidden" name="nextsub" value="list_users" />
-	<p><button type="submit" class="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button></p>
-	</form>
 	</body>
 	</html>
 	|;

@@ -213,7 +213,11 @@ sub post_invoice {
             my $linetotal = $form->round_amount( $amount, 2 );
             $fxdiff += $amount - $linetotal;
 
-            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+            @taxaccounts = Tax::init_taxes(
+                $form,
+                $form->{"taxaccounts_$i"},
+                $form->{'taxaccounts'}
+            );
 
             $tax   = Math::BigFloat->bzero();
             $fxtax = Math::BigFloat->bzero();
@@ -264,8 +268,6 @@ sub post_invoice {
 				SELECT id FROM invoice
 				 WHERE description = '$uid'|;
             ($invoice_id) = $dbh->selectrow_array($query);
-
-            $form->debug;
 
             $query = qq|
 				UPDATE invoice 
@@ -721,8 +723,6 @@ sub post_invoice {
 
     $form->audittrail( $dbh, "", \%audittrail );
 
-    my $rc = $dbh->commit;
-
     foreach $item ( keys %updparts ) {
         $item  = $dbh->quote($item);
         $query = qq|
@@ -731,8 +731,8 @@ sub post_invoice {
 			       lastcost = lastcost($item)
 			 WHERE id = $item|;
         $dbh->prepare($query) || $form->dberror($query);
-        $dbh->commit;
     }
+    my $rc = $dbh->commit;
 
     $rc;
 
@@ -1244,7 +1244,6 @@ sub retrieve_item {
     }
 
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -1321,7 +1320,6 @@ sub vendor_details {
     }
 
     $sth->finish;
-    $dbh->commit;
 
 }
 

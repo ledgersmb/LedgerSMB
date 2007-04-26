@@ -127,18 +127,19 @@ sub add {
 }
 
 sub openinvoices {
-    undef $column_data;
-    undef $column_heading;
+    undef %column_data;
+    undef %column_heading;
+    $form->{customer}    = "";
+    $form->{customer_id} = 0;
+    delete $form->{l_subtotal};
+    delete $form->{subtotal};
 
     $ENV{REMOTE_ADDR} =~ /(\d+)\.(\d+)\.(\d+)\.(\d+)/;
     $form->{till} = $4;
 
     $form->{sort} = 'transdate';
 
-    for (
-        qw(open l_invnumber l_transdate l_name l_amount l_curr l_till l_subtotal)
-      )
-    {
+    for (qw(open l_invnumber l_transdate l_name l_amount l_curr l_till)) {
         $form->{$_} = 'Y';
     }
 
@@ -994,7 +995,7 @@ sub print_form {
     }
 
     if ( $form->{media} ne 'screen' ) {
-        $form->{OUT}       = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+        $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
     }
 

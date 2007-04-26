@@ -682,19 +682,20 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     if ( !$form->{taxincluded} ) {
 
         my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-        $form->{invtotal} +=
-          Tax::calculate_taxes( \@taxes, $form, $form->{invsubtotal}, 0 );
         foreach my $item (@taxes) {
             my $taccno = $item->account;
+	    $form->{invtotal} += $form->round_amount( 
+                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2);
             $form->{"${taccno}_total"} =
-              $form->format_amount( \%myconfig, $item->value, 2 );
+              $form->format_amount( \%myconfig,
+                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2 );
 
             $tax .= qq|
 	      <tr>
 		<th align=right>$form->{"${taccno}_description"}</th>
 		<td align=right>$form->{"${taccno}_total"}</td>
 	      </tr>
-	      | if $item->value;
+	      | if $form->{"${taccno}_base"};
         }
 
         $form->{invsubtotal} =

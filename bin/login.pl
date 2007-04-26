@@ -59,12 +59,6 @@ if ( -f "bin/custom/$form->{script}" ) {
     $form->error( __FILE__ . ':' . __LINE__ . ': ' . $@ ) if ($@);
 }
 
-# per login customization
-if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
-    eval { require "bin/custom/$form->{login}_$form->{script}"; };
-    $form->error( __FILE__ . ':' . __LINE__ . ': ' . $@ ) if ($@);
-}
-
 # window title bar, user info
 $form->{titlebar} =
   "LedgerSMB " . $locale->text('Version') . " $form->{version}";

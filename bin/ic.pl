@@ -3642,8 +3642,8 @@ sub save {
                 $form->{"${_}_base"} += $amount;
             }
             if ( !$form->{taxincluded} ) {
-                my @taxlist =
-                  Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+                my @taxlist = Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
+                    $form->{taxaccounts} );
                 $amount += Tax::calculate_taxes( \@taxlist, $form, $amount, 0 );
             }
 

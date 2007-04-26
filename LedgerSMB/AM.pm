@@ -247,7 +247,7 @@ sub delete_account {
     # set inventory_accno_id, income_accno_id, expense_accno_id to defaults
     $query = qq|
 		UPDATE parts
-		   SET inventory_accno_id = (SELECT value
+		   SET inventory_accno_id = (SELECT value::int
 		                               FROM defaults
 					      WHERE setting_key = 
 							'inventory_accno_id')
@@ -259,7 +259,7 @@ sub delete_account {
     for (qw(income_accno_id expense_accno_id)) {
         $query = qq|
 			UPDATE parts
-			   SET $_ = (SELECT value
+			   SET $_ = (SELECT value::int
 			               FROM defaults
 			              WHERE setting_key = '$_')
 			 WHERE $_ = ?|;
@@ -1247,12 +1247,12 @@ sub check_template_name {
     my ( $self, $myconfig, $form ) = @_;
 
     my @allowedsuff = qw(css tex txt html xml);
-    if ( $form->{file} =~ /^(.:)*?\/|\.\.\/|^\// ) {
+    if ( $form->{file} =~ /^(.:)*?\/|:|\.\.\/|^\// ) {
         $form->error("Directory transversal not allowed.");
     }
-    if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::userspath}\// ) {
+    if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::backuppath}\// ) {
         $form->error(
-"Not allowed to access ${LedgerSMB::Sysconfig::userspath}/ with this method"
+"Not allowed to access ${LedgerSMB::Sysconfig::backuppath}/ with this method"
         );
     }
     my $whitelisted = 0;
@@ -1352,10 +1352,6 @@ sub save_preferences {
       qw(name email dateformat signature numberformat vclimit tel fax
       company menuwidth countrycode address timeout stylesheet
       printer password);
-
-    foreach my $item ( keys %$form ) {
-        $myconfig->{$item} = $form->{$item};
-    }
 
     $myconfig->{password} = $form->{new_password}
       if ( $form->{old_password} ne $form->{new_password} );
@@ -1614,8 +1610,7 @@ sub backup {
 
     my $boundary = time;
     my $tmpfile =
-"${LedgerSMB::Sysconfig::userspath}/$boundary.$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
-    $tmpfile .= ".gz" if ${LedgerSMB::Sysconfig::gzip};
+"${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
     $form->{OUT} = "$tmpfile";
 
     open( OUT, '>', "$form->{OUT}" ) or $form->error("$form->{OUT} : $!");
@@ -1624,24 +1619,12 @@ sub backup {
 
     my $today = scalar localtime;
 
-    $myconfig->{dbhost} = 'localhost' unless $myconfig->{dbhost};
-
-    $ENV{PGPASSWD} = $myconfig->{dbpasswd};
-
-    # drop tables and sequences
-
     # compress backup if gzip defined
-    my $suffix = "";
+    my $suffix = "c";
 
     if ( $form->{media} eq 'email' ) {
-        if ( ${LedgerSMB::Sysconfig::gzip} ) {
-            print OUT
-`pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | ${LedgerSMB::Sysconfig::gzip}`;
-        }
-        else {
-            print OUT
-`pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
-        }
+        print OUT
+qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc -p $myconfig->{dbport} $myconfig->{dbname});
         close OUT;
         use LedgerSMB::Mailer;
         $mail = new Mailer;
@@ -1649,12 +1632,12 @@ sub backup {
         $mail->{to}   = qq|"$myconfig->{name}" <$myconfig->{email}>|;
         $mail->{from} = qq|"$myconfig->{name}" <$myconfig->{email}>|;
         $mail->{subject} =
-"LedgerSMB Backup / $myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix";
+"LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix";
         @{ $mail->{attachments} } = ($tmpfile);
         $mail->{version} = $form->{version};
         $mail->{fileid}  = "$boundary.";
         $mail->{format}  = "plain";
-        $mail->{format}  = "octet-stream" if ${LedgerSMB::Sysconfig::gzip};
+        $mail->{format}  = "octet-stream";
 
         $myconfig->{signature} =~ s/\\n/\n/g;
         $mail->{message} = "-- \n$myconfig->{signature}";
@@ -1669,15 +1652,8 @@ sub backup {
 
         print OUT qq|Content-Type: application/file;\n|
           . qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
-        if ( ${LedgerSMB::Sysconfig::gzip} ) {
-            print OUT
-`pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname} | ${LedgerSMB::Sysconfig::gzip}`;
-        }
-        else {
-            print OUT
-`pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} $myconfig->{dbname}`;
-        }
-
+        print OUT
+qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc -p $myconfig->{dbport} $myconfig->{dbname});
     }
 
     unlink "$tmpfile";
@@ -1716,7 +1692,7 @@ sub closebooks {
     for (qw(revtrans closedto audittrail)) {
 
         if ( $form->{$_} ) {
-            $val = 1;
+            $val = $form->{$_};
         }
         else {
             $val = 0;

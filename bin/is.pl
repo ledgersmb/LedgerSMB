@@ -539,20 +539,20 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     }
 
     if ( !$form->{taxincluded} ) {
-
         my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-        $form->{invtotal} +=
-          Tax::calculate_taxes( \@taxes, $form, $form->{invsubtotal}, 0 );
         foreach $item (@taxes) {
             my $taccno = $item->account;
+	    $form->{invtotal} += $form->round_amount( 
+                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2);
             $form->{"${taccno}_total"} =
-              $form->format_amount( \%myconfig, $item->value, 2 );
+              $form->format_amount( \%myconfig,
+                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2 );
             $tax .= qq|
         <tr>
       	<th align=right>$form->{"${taccno}_description"}</th>
       	<td align=right>$form->{"${taccno}_total"}</td>
         </tr>
-	| if $item->value;
+	| if $form->{"${taccno}_base"};
         }
 
         $form->{invsubtotal} =
@@ -777,12 +777,15 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
                 for ( "update", "ship_to", "print", "e_mail", "post",
                     "schedule" )
                 {
-                    $a{$_} = 1;
+                    $allowed{$_} = 1;
                 }
                 $a{'print_and_post'} = 1 if ${LedgerSMB::Sysconfig::latex};
 
+                for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
-            for ( keys %button ) { delete $button{$_} if !$a{$_} }
+            elsif ($closedto) {
+                %button = ();
+            }
         }
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
@@ -988,7 +991,8 @@ sub update {
                 }
                 if ( !$form->{taxincluded} ) {
                     my @taxes =
-                      Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+                      Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
+                        $form->{taxaccounts} );
                     $amount +=
                       Tax::calculate_taxes( \@taxes, $form, $amount, 0 );
                 }

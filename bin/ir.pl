@@ -484,12 +484,13 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     if ( !$form->{taxincluded} ) {
         my @taxset = Tax::init_taxes( $form, $form->{taxaccounts} );
-        $form->{invtotal} +=
-          $form->round_amount(
-            Tax::calculate_taxes( \@taxset, $form, $form->{invsubtotal}, 0 ),
-            2 );
         foreach $taxobj (@taxset) {
             $item = $taxobj->account;
+	    $form->{invtotal} += $form->round_amount(
+                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2);
+            $form->{"${item}_total"} =
+              $form->format_amount( \%myconfig,
+                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2 );
             if ( $form->{"${item}_base"} ) {
                 $form->{"${item}_total"} =
                   $form->format_amount( \%myconfig,
@@ -692,9 +693,12 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
         else {
 
             if ( $transdate > $closedto ) {
-                for ( 'update', 'post', 'schedule' ) { $a{$_} = 1 }
+                for ( 'update', 'post', 'schedule' ) { $allowed{$_} = 1 }
+                for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
-            for ( keys %button ) { delete $button{$_} if !$a{$_} }
+            elsif ($closedto) {
+                %buttons = ();
+            }
         }
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
@@ -963,8 +967,11 @@ sub update {
                     $form->{"${_}_base"} += $amount;
                 }
                 if ( !$form->{taxincluded} ) {
-                    my @taxes =
-                      Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+                    my @taxes = Tax::init_taxes(
+                        $form,
+                        $form->{"taxaccounts_$i"},
+                        $form->{"taxaccounts"}
+                    );
                     $amount +=
                       ( Tax::calculate_taxes( \@taxes, $form, $amount, 0 ) );
                 }

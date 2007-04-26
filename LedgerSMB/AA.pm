@@ -394,7 +394,7 @@ sub post_transaction {
 			INSERT INTO acc_trans 
 			            (trans_id, chart_id, amount, transdate)
 			     VALUES (?, (SELECT id FROM chart
-			                  WHERE accno = '?'), 
+			                  WHERE accno = ?), 
 			                  ?, ?)|;
         @queryargs =
           ( $form->{id}, $accno, $invamount * -1 * $ml, $form->{transdate} );
@@ -455,7 +455,7 @@ sub post_transaction {
 					            ?, ?)|;
 
                 @queryargs = (
-                    $form->{id},
+                    $form->{id}, $accno,
                     $paid{amount}{$i} * $ml,
                     $form->{"datepaid_$i"}
                 );
@@ -480,7 +480,7 @@ sub post_transaction {
 					            cleared)
 					     VALUES (?, (SELECT id FROM chart
 						          WHERE accno = ?),
-					            ? * -1 * $ml, ?, ?, ?, ?)|;
+					            ?, ?, ?, ?, ?)|;
 
                 @queryargs = (
                     $form->{id},          $accno,
@@ -545,7 +545,8 @@ sub post_transaction {
 						                   FROM chart
 						                  WHERE accno 
 						                        = ?),
-						            ?, ?, '1', ?, ?)|;
+						            ?, ?, 
+						            '1', ?, ?)|;
 
                     @queryargs = (
                         $form->{id}, $accno,
@@ -870,7 +871,6 @@ sub transactions {
 
     $query .= "WHERE $where
 			ORDER BY $sortorder";
-
     my $sth = $dbh->prepare($query);
     $sth->execute(@paidargs) || $form->dberror($query);
 

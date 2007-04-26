@@ -387,11 +387,9 @@ sub save {
 
     my $rowcount = $form->{rowcount};
     for my $i ( 1 .. $rowcount ) {
-        $form->db_prepare_vars(
-            "orderitems_id_$i", "id_$i",
-            "description_$i",   "project_id_$i",
-            "ship_$i"
-        );
+        $form->{"ship_$i"} = 0 unless $form->{"ship_$i"};
+        $form->db_prepare_vars( "orderitems_id_$i", "id_$i", "description_$i",
+            "project_id_$i" );
 
         for (qw(qty ship)) {
             $form->{"${_}_$i"} =
@@ -428,7 +426,8 @@ sub save {
               $form->round_amount( $form->{"sellprice_$i"} * $form->{"qty_$i"},
                 2 );
 
-            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
+                $form->{taxaccounts} );
             if ( $form->{taxincluded} ) {
                 $taxamount =
                   Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
@@ -485,18 +484,11 @@ sub save {
 
             # save detail record in orderitems table
             $query = qq|INSERT INTO orderitems (|;
-            if ( $form->{"orderitems_id_$i"} ) {
-                $query .= "id, ";
-            }
             $query .= qq|
 				trans_id, parts_id, description, qty, sellprice,
 				discount, unit, reqdate, project_id, ship, 
 				serialnumber, notes)
                    		VALUES (|;
-            if ( $form->{"orderitems_id_$i"} ) {
-                $query .= "?, ";
-                push @queryargs, $form->{"orderitems_id_$i"};
-            }
             $query .= qq| ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             push( @queryargs,
@@ -905,7 +897,6 @@ sub retrieve {
         $form->get_recurring;
 
         @queries = $form->run_custom_queries( 'oe', 'SELECT' );
-        $form->{dbh}->commit;
     }
     else {
 
@@ -1735,8 +1726,6 @@ sub get_warehouses {
     }
     $sth->finish;
 
-    $dbh->commit;
-
 }
 
 sub save_inventory {
@@ -1825,11 +1814,11 @@ sub save_inventory {
 
             $query = qq|
 				UPDATE orderitems SET
-					serialnumber = '$serialnumber',
-					ship = $ship,
-					reqdate = '$form->{shippingdate}'
-					WHERE trans_id = $form->{id}
-				AND id = $form->{"orderitems_id_$i"}|;
+					serialnumber = ?,
+					ship = ?,
+					reqdate = ?
+					WHERE trans_id = ?
+				AND id = ?|;
             $sth2 = $dbh->prepare($query);
             $sth2->execute( $serialnumber, $ship, $form->{shippingdate},
                 $form->{id}, $form->{"orderitems_id_$i"} )
@@ -2134,7 +2123,6 @@ sub transfer {
     }
 
     my $rc = $dbh->commit;
-    $dbh->commit;
 
     $rc;
 
@@ -2521,7 +2509,7 @@ sub consolidate_orders {
                 $amount    += $ref->{amount};
                 $netamount += $ref->{netamount};
 
-                $id = $dbh->quore($id);
+                $id = $dbh->quote($id);
                 foreach $item ( @{ $oe{orderitems}{$curr}{$id} } ) {
 
                     push @orderitems, $item;
@@ -2562,33 +2550,24 @@ sub consolidate_orders {
 				UPDATE oe SET
 					ordnumber = | . $dbh->quote($ordnumber) . qq|,
 					transdate = current_date,
-					vendor_id = ?,
-					customer_id = ?,
-					amount = ?,
-					netamount = ?,
-					reqdate = ?,
-					taxincluded = ?,
-					shippingpoint = ?,
-					notes = ?,
-					curr = ?,
-					employee_id = ?,
-					intnotes = ?,
-					shipvia = ?,
-					language_code = ?,
-					ponumber = ?,
-					department_id = ?
-				WHERE id = ?|;
+					vendor_id = $form->{vendor_id},
+					customer_id = $form->{customer_id},
+					amount = $amount,
+					netamount = $netamount,
+					reqdate = | . $form->dbquote( $ref->{reqdate}, SQL_DATE ) . qq|,
+					taxincluded = '$ref->{taxincluded}',
+					shippingpoint = | . $dbh->quote( $ref->{shippingpoint} ) . qq|,
+					notes = | . $dbh->quote( $ref->{notes} ) . qq|,
+					curr = '$curr',
+					employee_id = $ref->{employee_id},
+					intnotes = | . $dbh->quote( $ref->{intnotes} ) . qq|,
+					shipvia = | . $dbh->quote( $ref->{shipvia} ) . qq|,
+					language_code = '$ref->{language_code}',
+					ponumber = | . $dbh->quote( $form->{ponumber} ) . qq|,
+					department_id = $department_id
+				WHERE id = $id|;
             $sth = $dbh->prepare($query);
-            $sth->execute(
-                $form->{vendor_id},     $form->{customer_id},
-                $amount,                $netamount,
-                $form->{reqdate},       $form->{taxincluded},
-                $form->{shippingpoint}, $form->{notes},
-                $curr,                  $ref->{employee_id},
-                $form->{intnotes},      $form->{shipvia},
-                $ref->{language_code},  $form->{po_number},
-                $department_id,         $id
-            ) || $form->dberror($query);
+            $sth->execute() || $form->dberror($query);
 
             # add items
             foreach $item (@orderitems) {

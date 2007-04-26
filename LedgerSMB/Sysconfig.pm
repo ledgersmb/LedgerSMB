@@ -1,14 +1,12 @@
 #  This is the new configuration file for LedgerSMB.  Eventually all system
 # configuration directives will go here,  This will probably not fully replace
-# the ledger-smb.conf until 1.3, however.
+# the ledgersmb.conf until 1.3, however.
 
 package LedgerSMB::Sysconfig;
 
 use LedgerSMB::Form;
 use Config::Std;
 use DBI qw(:sql_types);
-
-binmode STDOUT, ':utf8';
 
 # For Win32, change $pathsep to ';';
 $pathsep = ':';
@@ -38,11 +36,14 @@ $spool = "spool";
 # path to user configuration files
 $userspath = "users";
 
-# images base directory
-$images = "images";
-
 # templates base directory
 $templates = "templates";
+
+# Temporary files stored at"
+$tempdir = ( $ENV{TEMP} || '/tmp' );
+
+# Backup path
+$backuppath = $tempdir;
 
 # member file
 $memberfile = "users/members";

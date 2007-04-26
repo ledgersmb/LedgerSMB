@@ -117,6 +117,14 @@ sub display_form {
 }
 
 sub create_links {
+    if ( $form->{script} eq 'ap.pl' ) {
+        $form->{ARAP} = 'AP';
+        $form->{vc}   = 'vendor';
+    }
+    elsif ( $form->{script} eq 'ar.pl' ) {
+        $form->{ARAP} = 'AR';
+        $form->{vc}   = 'customer';
+    }
 
     $form->create_links( $form->{ARAP}, \%myconfig, $form->{vc} );
 
@@ -1481,13 +1489,12 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
 }
 
 sub transactions {
-
     if ( $form->{ $form->{vc} } ) {
         $form->{ $form->{vc} } = $form->unescape( $form->{ $form->{vc} } );
         ( $form->{ $form->{vc} }, $form->{"$form->{vc}_id"} ) =
           split( /--/, $form->{ $form->{vc} } );
     }
-
+    my @column_index;
     AA->transactions( \%myconfig, \%$form );
 
     $href = "$form->{script}?action=transactions";
@@ -1640,7 +1647,6 @@ sub transactions {
             $href     .= "&l_$item=Y";
         }
     }
-
     if ( !$form->{summary} ) {
         foreach $item (qw(source debit credit accno description projectnumber))
         {

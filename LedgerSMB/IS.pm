@@ -333,7 +333,6 @@ sub invoice_details {
               ? $form->format_amount( $myconfig, $discount * -1,
                 $decimalplaces )
               : " ";
-            $linetotal = ($linetotal) ? $linetotal : " ";
 
             push( @{ $form->{discount} }, $discount );
             push(
@@ -348,10 +347,15 @@ sub invoice_details {
 
             $form->{"linetotal_$i"} =
               $form->format_amount( $myconfig, $linetotal, 2 );
+            $form->{"linetotal_$i"} = '0.00' unless $form->{"linetotal_$i"};
 
             push( @{ $form->{linetotal} }, $form->{"linetotal_$i"} );
 
-            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+            @taxaccounts = Tax::init_taxes(
+                $form,
+                $form->{"taxaccounts_$i"},
+                $form->{"taxaccounts"}
+            );
 
             my $ml       = 1;
             my @taxrates = ();
@@ -598,6 +602,7 @@ sub invoice_details {
         $form->{$_} = $form->format_amount( $myconfig, $form->{$_} );
     }
     $form->{subtotal} = $form->format_amount( $myconfig, $form->{total}, 2 );
+    $form->{subtotal} = '0.00' unless $form->{subtotal};
     $form->{invtotal} =
       ( $form->{taxincluded} ) ? $form->{total} : $form->{total} + $tax;
 
@@ -794,7 +799,6 @@ sub customer_details {
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
 
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -947,11 +951,14 @@ sub post_invoice {
             $amount = $fxlinetotal * $form->{exchangerate};
             my $linetotal = $form->round_amount( $amount, 2 );
             $fxdiff += $amount - $linetotal;
-
-            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
-            $ml          = 1;
-            $tax         = 0;
-            $fxtax       = 0;
+            @taxaccounts = Tax::init_taxes(
+                $form,
+                $form->{"taxaccounts_$i"},
+                $form->{"taxaccounts"}
+            );
+            $ml    = 1;
+            $tax   = Math::BigFloat->bzero();
+            $fxtax = Math::BigFloat->bzero();
 
             if ( $form->{taxincluded} ) {
                 $tax += $amount =
@@ -964,9 +971,12 @@ sub post_invoice {
             else {
                 $tax += $amount =
                   Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
-
                 $fxtax +=
                   Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
+            }
+            for (@taxaccounts) {
+                $form->{acc_trans}{ $form->{id} }{ $_->account }{amount} +=
+                  $_->value;
             }
 
             $grossamount = $form->round_amount( $linetotal, 2 );
@@ -1115,7 +1125,6 @@ sub post_invoice {
     $invnetamount = $amount;
 
     $amount = 0;
-
     for ( split / /, $form->{taxaccounts} ) {
         $amount += $form->{acc_trans}{ $form->{id} }{$_}{amount} =
           $form->round_amount( $form->{acc_trans}{ $form->{id} }{$_}{amount},
@@ -1400,7 +1409,7 @@ sub post_invoice {
         $form->{terms},         $form->{notes},
         $form->{intnotes},      $form->{taxincluded},
         $form->{currency},      $form->{department_id},
-        $form->{employee_id},   $till,
+        $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber},
         $form->{id}
     ) || $form->dberror($query);
@@ -1547,7 +1556,6 @@ sub cogs {
     $sth->finish;
 
     $allocated;
-    $dbh->commit;
 }
 
 sub reverse_invoice {
@@ -1666,7 +1674,7 @@ sub delete_invoice {
     # delete spool files
     $query = qq|
 		SELECT spoolfile FROM status
-		 WHERE trans_id = $form->{id} AND spoolfile IS NOT NULL|;
+		 WHERE trans_id = ? AND spoolfile IS NOT NULL|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -1691,8 +1699,6 @@ sub delete_invoice {
               if $spoolfile;
         }
     }
-
-    $dbh->commit;
 
     $rc;
 
@@ -1869,8 +1875,7 @@ sub retrieve_item {
 
     if ( $form->{"partsgroup_$i"} ne "" ) {
         ( $null, $var ) = split /--/, $form->{"partsgroup_$i"};
-        $var = $dbh->quote($var);
-        if ( $var == 0 ) {
+        if ( ! $var ) {
 
             # search by partsgroup, this is for the POS
             $where .=
@@ -1878,6 +1883,7 @@ sub retrieve_item {
               . $dbh->quote( $form->{"partsgroup_$i"} );
         }
         else {
+            $var = $dbh->quote($var);
             $where .= qq| AND p.partsgroup_id = $var|;
         }
     }
@@ -1960,7 +1966,6 @@ sub retrieve_item {
     }
 
     $sth->finish;
-    $dbh->commit;
 
 }
 
