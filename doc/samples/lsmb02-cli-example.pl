@@ -28,11 +28,9 @@
 use File::chdir;
 use HTML::Entities;
 
-
 print "\n\nLedger-SMB login: ";
 my $login = <STDIN>;
 chomp($login);
-
 
 print "\nLedger-SMB password: ";
 system("stty -echo");
@@ -43,56 +41,68 @@ print "\n\n";
 
 $cmd = "login=" . $login . '&password=' . $pwd . '&path=bin&action=login';
 
-$signin = runLScmd("./login.pl",$cmd);
+$signin = runLScmd( "./login.pl", $cmd );
 
 if ( $signin =~ m/Error:/ ) {
 
-	print "\nLogin error\n";
-	exit;
+    print "\nLogin error\n";
+    exit;
 
 }
-
 
 while (<main::DATA>) {
 
-	chomp;
-	@rec = split(/\|/);
+    chomp;
+    @rec = split(/\|/);
 
-	$arg = 'path=bin/mozilla&login=' . $login . '&password=' . $pwd .
-		'&action='       . escape(substr($rec[0],0,35)) .
-		'&db='           . $rec[1] .
-		'&name='         . escape(substr($rec[2],0,35)) .
-		'&vendornumber=' . $rec[3] .
-		'&address1='     . escape(substr($rec[4],0,35)) .
-		'&address2='     . escape(substr($rec[5],0,35)) .
-		'&city='         . escape(substr($rec[6],0,35)) .
-		'&state='        . escape(substr($rec[7],0,35)) .
-		'&zipcode='      . escape(substr($rec[8],0,35)) .
-		'&country='      . escape(substr($rec[9],0,35)) .
-		'&phone='        . escape(substr($rec[10],0,20)) .
-		'&tax_2150=1' .
-		'&taxaccounts=2150' .
-		'&taxincluded=0' .
-		'&terms=0';
+    $arg =
+        'path=bin/mozilla&login=' . $login
+      . '&password='
+      . $pwd
+      . '&action='
+      . escape( substr( $rec[0], 0, 35 ) ) . '&db='
+      . $rec[1]
+      . '&name='
+      . escape( substr( $rec[2], 0, 35 ) )
+      . '&vendornumber='
+      . $rec[3]
+      . '&address1='
+      . escape( substr( $rec[4], 0, 35 ) )
+      . '&address2='
+      . escape( substr( $rec[5], 0, 35 ) )
+      . '&city='
+      . escape( substr( $rec[6], 0, 35 ) )
+      . '&state='
+      . escape( substr( $rec[7], 0, 35 ) )
+      . '&zipcode='
+      . escape( substr( $rec[8], 0, 35 ) )
+      . '&country='
+      . escape( substr( $rec[9], 0, 35 ) )
+      . '&phone='
+      . escape( substr( $rec[10], 0, 20 ) )
+      . '&tax_2150=1'
+      . '&taxaccounts=2150'
+      . '&taxincluded=0'
+      . '&terms=0';
 
-	$rc=runLScmd("./ct.pl",$arg);
+    $rc = runLScmd( "./ct.pl", $arg );
 
-	if ($rc =~ m/Vendor saved!/) {
+    if ( $rc =~ m/Vendor saved!/ ) {
 
-		print "$rec[2] SAVED\n";
+        print "$rec[2] SAVED\n";
 
-	} else {
+    }
+    else {
 
-		print "$rec[2] ERROR\n";
+        print "$rec[2] ERROR\n";
 
-	}
+    }
 
 }
 
-
 $cmd = "login=" . $login . '&password=' . $pwd . '&path=bin&action=logout';
 
-$signin = runLScmd("./login.pl",$cmd);
+$signin = runLScmd( "./login.pl", $cmd );
 
 if ( $signin =~ m/Error:/ ) {
 
@@ -102,11 +112,9 @@ if ( $signin =~ m/Error:/ ) {
 
 exit;
 
-
 #*******************************************************
 # Subroutines
 #*******************************************************
-
 
 sub runLScmd {
 
@@ -131,14 +139,13 @@ sub escape {
 
     if ($str) {
 
-	decode_entities($str);
-	$str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
+        decode_entities($str);
+        $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
     }
 
     return $str;
 
 }
-
 
 #*******************************************************
 # Record Format

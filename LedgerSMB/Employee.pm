@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Employee - LedgerSMB class for managing Employees 
@@ -34,25 +35,27 @@ use strict;
 our $VERSION = '1.0.0';
 
 sub save {
-	my $self = shift;
-	my $hashref = shift @{$self->exec_method(procname => "employee_save")};
-	$self->merge($hashref, 'id');
+    my $self = shift;
+    my $hashref = shift @{ $self->exec_method( procname => "employee_save" ) };
+    $self->merge( $hashref, 'id' );
 }
 
 sub get {
-	my $self = shift;
-	my $hashref = shift @{$self->exec_method(procname => "employee_get")};
-	$self->merge($hashref, keys %{$hashref});
+    my $self = shift;
+    my $hashref = shift @{ $self->exec_method( procname => "employee_get" ) };
+    $self->merge( $hashref, keys %{$hashref} );
 }
 
 sub list_managers {
-	my $self = shift;
-	$self->{manager_list} = $self->exec_method(procname => "employee_list_managers");
+    my $self = shift;
+    $self->{manager_list} =
+      $self->exec_method( procname => "employee_list_managers" );
 }
 
 sub search {
-	my $self = shift;
-	$self->{search_results} = $self->exec_method(procname => "employee_search");
+    my $self = shift;
+    $self->{search_results} =
+      $self->exec_method( procname => "employee_search" );
 }
 
 1;

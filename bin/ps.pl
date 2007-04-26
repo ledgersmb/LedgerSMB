@@ -8,9 +8,9 @@
 # with permission.
 #
 # This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
-# under the GNU General Public License version 2 or, at your option, any later 
-# version.  For a full list including contact information of contributors, 
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
 # maintainers, and copyright holders, see the CONTRIBUTORS file.
 #
 # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
@@ -53,18 +53,19 @@ require "bin/pos.pl";
 require "pos.conf.pl";
 
 # customizations
-if (-f "bin/custom/pos.pl") {
-  eval { require "bin/custom/pos.pl"; };
+if ( -f "bin/custom/pos.pl" ) {
+    eval { require "bin/custom/pos.pl"; };
 }
-if (-f "bin/custom/$form->{login}_pos.pl") {
-  eval { require "bin/custom/$form->{login}_pos.pl"; };
+if ( -f "bin/custom/$form->{login}_pos.pl" ) {
+    eval { require "bin/custom/$form->{login}_pos.pl"; };
 }
 
 # Necessary for Partsgroup lookups
-if ($form->{action} =~ s/^\s//){
-	$form->{my_partsgroup} = $form->{action};
-	$form->{action} = "lookup_partsgroup";
+if ( $form->{action} =~ s/^\s// ) {
+    $form->{my_partsgroup} = $form->{action};
+    $form->{action}        = "lookup_partsgroup";
 }
 
 1;
+
 # end

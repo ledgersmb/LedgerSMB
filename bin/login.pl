@@ -8,9 +8,9 @@
 # with permission.
 #
 # This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
-# under the GNU General Public License version 2 or, at your option, any later 
-# version.  For a full list including contact information of contributors, 
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
 # maintainers, and copyright holders, see the CONTRIBUTORS file.
 #
 # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
@@ -34,7 +34,6 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #======================================================================
 
-
 1;
 use DBI;
 use LedgerSMB::User;
@@ -45,56 +44,57 @@ use LedgerSMB::Session;
 ## will need this later when session_destroy will be used
 #use LedgerSMB::Session;
 
-
 $form = new Form;
 
-$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or 
-	$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+$locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
+  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 $locale->encoding('UTF-8');
 $form->{charset} = 'UTF-8';
+
 #$form->{charset} = $locale->encoding;
 
 # customization
-if (-f "bin/custom/$form->{script}") {
-	eval { require "bin/custom/$form->{script}"; };
-	$form->error(__FILE__.':'.__LINE__.': '.$@) if ($@);
+if ( -f "bin/custom/$form->{script}" ) {
+    eval { require "bin/custom/$form->{script}"; };
+    $form->error( __FILE__ . ':' . __LINE__ . ': ' . $@ ) if ($@);
 }
 
 # per login customization
-if (-f "bin/custom/$form->{login}_$form->{script}") {
-	eval { require "bin/custom/$form->{login}_$form->{script}"; };
-	$form->error(__FILE__.':'.__LINE__.': '.$@) if ($@);
+if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
+    eval { require "bin/custom/$form->{login}_$form->{script}"; };
+    $form->error( __FILE__ . ':' . __LINE__ . ': ' . $@ ) if ($@);
 }
 
 # window title bar, user info
-$form->{titlebar} = "LedgerSMB ".$locale->text('Version'). " $form->{version}";
+$form->{titlebar} =
+  "LedgerSMB " . $locale->text('Version') . " $form->{version}";
 
-if ($form->{action}) {
-	$form->{titlebar} .= " - $myconfig{name} - $myconfig{dbname}";
-	&{ $form->{action} };
+if ( $form->{action} ) {
+    $form->{titlebar} .= " - $myconfig{name} - $myconfig{dbname}";
+    &{ $form->{action} };
 
-} else {
-	&login_screen;
 }
-
+else {
+    &login_screen;
+}
 
 1;
 
-
 sub login_screen {
 
-	$form->{stylesheet} = "ledgersmb.css";
-	$form->{favicon} = "favicon.ico";
+    $form->{stylesheet} = "ledgersmb.css";
+    $form->{favicon}    = "favicon.ico";
 
-	$form->{endsession} = 1;
+    $form->{endsession} = 1;
 
-	if ($form->{login}) {
-		$sf = q|function sf() { document.login.password.focus(); }|;
-	} else {
-		$sf = q|function sf() { document.login.login.focus(); }|;
-	}
+    if ( $form->{login} ) {
+        $sf = q|function sf() { document.login.password.focus(); }|;
+    }
+    else {
+        $sf = q|function sf() { document.login.login.focus(); }|;
+    }
 
-	my $headeradd = qq|
+    my $headeradd = qq|
 	<script language="JavaScript" type="text/javascript">
 	<!--
 		var agt = navigator.userAgent.toLowerCase();
@@ -116,9 +116,9 @@ sub login_screen {
 	// End -->
 	</script>|;
 
-	$form->header(1, $headeradd);
+    $form->header( 1, $headeradd );
 
-	print qq|
+    print qq|
 
 <body class="login" onload="jsp(); sf();">
 	<br /><br />
@@ -127,7 +127,9 @@ sub login_screen {
 			<tr>
 				<td class="login" align="center">
 					<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" width="200" heith="100" border="0" alt="LedgerSMB Logo" /></a>
-					<h1 class="login" align="center">|.$locale->text('Version').qq| $form->{version}</h1>
+					<h1 class="login" align="center">|
+      . $locale->text('Version')
+      . qq| $form->{version}</h1>
 					<p>
 					<form method="post" action="$form->{script}" name="login">
 					<table width="100%">
@@ -135,11 +137,11 @@ sub login_screen {
 							<td align="center">
 								<table>
 									<tr>
-										<th align="right">|.$locale->text('Name').qq|</th>
+										<th align="right">| . $locale->text('Name') . qq|</th>
 											<td><input class="login" name="login" size="30" value="$form->{login}" /></td>
 									</tr> 
 									<tr>
-										<th align="right">|.$locale->text('Password').qq|</th>
+										<th align="right">| . $locale->text('Password') . qq|</th>
 										<td><input class="login" type="password" name="password" size="30" /></td>
 									</tr>
 								</table>
@@ -149,31 +151,32 @@ sub login_screen {
 					</table>
 						<input type="hidden" name="path" value="$form->{path}" />
 						<input type="hidden" name="js" value="$form->{js}" />
-						<button type="submit" name="action" value="login">|.$locale->text('Login').qq|</button>
+						<button type="submit" name="action" value="login">|
+      . $locale->text('Login')
+      . qq|</button>
 					</form>
 					</p>
 				</td>
 			</tr>
 		</table>
 	<p><a href="admin.pl"
-		>|.$locale->text("Administrative login").qq|</a></p>
+		>| . $locale->text("Administrative login") . qq|</a></p>
 	</center>
 </body>
 </html>|;
 
 }
 
-
 sub selectdataset {
-	my ($login) = @_;
+    my ($login) = @_;
 
-	if (-f "css/ledgersmb.css") {
-		$form->{stylesheet} = "ledgersmb.css";
-	}
+    if ( -f "css/ledgersmb.css" ) {
+        $form->{stylesheet} = "ledgersmb.css";
+    }
 
-	$form->header(1);
+    $form->header(1);
 
-	print qq|
+    print qq|
 <body class="login" onload="document.forms[0].password.focus()" />
 	<br /><br />
 	<center>
@@ -181,7 +184,9 @@ sub selectdataset {
 		<tr>
 			<td class="login" align="center">
 				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" width="100" heith="100" border="0" alt="LedgerSMB Logo" /></a>
-				<h1 class="login" align="center">|.$locale->text('Version').qq| $form->{version}</h1>
+				<h1 class="login" align="center">|
+      . $locale->text('Version')
+      . qq| $form->{version}</h1>
 				<p>
 				<form method="post" action="$form->{script}">
 					<input type="hidden" name="beenthere" value="1" />
@@ -192,29 +197,32 @@ sub selectdataset {
 							<td align="center">
 								<table>
 									<tr>
-										<th align="right">|.$locale->text('Name').qq|</th>
+										<th align="right">| . $locale->text('Name') . qq|</th>
 										<td>$form->{login}</td>
 									</tr> 
 									<tr>
-										<th align="right">|.$locale->text('Password').qq|</th>
+										<th align="right">| . $locale->text('Password') . qq|</th>
 										<td><input class="login" type="password" name="password" size="30" value="$form->{password}" /></td>
 									</tr>
 									<tr>
-										<th align="right">|.$locale->text('Company').qq|</th>
+										<th align="right">| . $locale->text('Company') . qq|</th>
 										<td>|;
 
-		$checked = "checked";
-		foreach $login (sort { $login{$a} cmp $login{$b} } keys %{ $login }) {
-			print qq| <br /><input class="login" type="radio" name="login" value="$login" $checked>$login{$login} |;
-			$checked = "";
-		}
+    $checked = "checked";
+    foreach $login ( sort { $login{$a} cmp $login{$b} } keys %{$login} ) {
+        print
+qq| <br /><input class="login" type="radio" name="login" value="$login" $checked>$login{$login} |;
+        $checked = "";
+    }
 
-	print qq|
+    print qq|
 										</td>
 									</tr>
 								</table>
 								<br />
-								<button type="submit" name="action" value="login">|.$locale->text('Login').qq|</button>
+								<button type="submit" name="action" value="login">|
+      . $locale->text('Login')
+      . qq|</button>
 							</td>
 						</tr>
 					</table>
@@ -228,101 +236,105 @@ sub selectdataset {
 
 }
 
-
 sub login {
 
-	$form->{stylesheet} = "ledgersmb.css";
-	$form->{favicon} = "favicon.ico";
+    $form->{stylesheet} = "ledgersmb.css";
+    $form->{favicon}    = "favicon.ico";
 
-	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('You did not enter a name!')) unless ($form->{login});
+    $form->error( __FILE__ . ':' . __LINE__ . ': '
+          . $locale->text('You did not enter a name!') )
+      unless ( $form->{login} );
 
+    if ( !${LedgerSMB::Sysconfig::GLOBALDBH} ) {
+        $locale->text("No GlobalDBH Configured or Could not Connect");
+    }
+    $user = LedgerSMB::User->new( $form->{login} );
 
-	if (!${LedgerSMB::Sysconfig::GLOBALDBH}){
-		$locale->text("No GlobalDBH Configured or Could not Connect");
-	}
-	$user = LedgerSMB::User->new($form->{login});
+    if ( ( $errno = $user->login( \%$form ) ) <= -1 ) {
 
-	if (($errno = $user->login(\%$form)) <= -1) {
+        $errno *= -1;
+        $err[1] = $locale->text('Access Denied!');
+        $err[2] = $locale->text('Incorrect Dataset version!');
+        $err[3] = $locale->text('Dataset is newer than version!');
 
-		$errno *= -1;
-		$err[1] = $locale->text('Access Denied!');
-		$err[2] = $locale->text('Incorrect Dataset version!');
-		$err[3] = $locale->text('Dataset is newer than version!');
+        if ( $errno == 4 ) {
 
-		if ($errno == 4) {
-			# upgrade dataset and log in again
-			if (!$LedgerSMB::Sysconfig::db_autoupdate){
-				$form->error(
-					$locale->text("Dabase Version too Old")
-				);
-			}
+            # upgrade dataset and log in again
+            if ( !$LedgerSMB::Sysconfig::db_autoupdate ) {
+                $form->error( $locale->text("Dabase Version too Old") );
+            }
 
-			for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) { $form->{$_} = $user->{$_} }
+            for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) {
+                $form->{$_} = $user->{$_};
+            }
 
-			$form->{dbpasswd} = unpack 'u', $form->{dbpasswd};
+            $form->{dbpasswd} = unpack 'u', $form->{dbpasswd};
 
-			$form->{dbupdate} = "db$user->{dbname}";
-			$form->{$form->{dbupdate}} = 1;
+            $form->{dbupdate} = "db$user->{dbname}";
+            $form->{ $form->{dbupdate} } = 1;
 
-			$form->header;
-			print qq|<body>|;
-			print $locale->text('Upgrading to Version [_1] ...', $form->{version});
+            $form->header;
+            print qq|<body>|;
+            print $locale->text( 'Upgrading to Version [_1] ...',
+                $form->{version} );
 
+            $user->dbupdate( \%$form );
 
-			$user->dbupdate(\%$form);
+            # remove lock
+            #unlink "${LedgerSMB::Sysconfig::userspath}/nologin";
 
-			# remove lock
-			#unlink "${LedgerSMB::Sysconfig::userspath}/nologin";
+            print $locale->text('done');
 
-			print $locale->text('done');
+            print
+"<p><a href=\"menu.pl?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;path=$form->{path}&amp;action=display&amp;main=company_logo&amp;js=$form->{js}>\">"
+              . $locale->text('Continue') . "</a>";
+            print qq|</body>|;
+            exit;
+        }
 
-			print "<p><a href=\"menu.pl?login=$form->{login}&amp;sessionid=$form->{sessionid}&amp;path=$form->{path}&amp;action=display&amp;main=company_logo&amp;js=$form->{js}>\">".$locale->text('Continue')."</a>";
-			print qq|</body>|;
-			exit;
-		}
+        $form->error( __FILE__ . ':' . __LINE__ . ': ' . $err[$errno] );
+    }
 
-		$form->error(__FILE__.':'.__LINE__.': '.$err[$errno]);
-	}
+    # made it this far, setup callback for the menu
+    $form->{callback} = "menu.pl?action=display&password=$form->{password}";
+    for (qw(login path js)) { $form->{callback} .= "&$_=$form->{$_}" }
 
-	# made it this far, setup callback for the menu
-	$form->{callback} = "menu.pl?action=display&password=$form->{password}";
-	for (qw(login path js)) { $form->{callback} .= "&$_=$form->{$_}" }
+    # check for recurring transactions
+    if ( $user->{acs} !~ /Recurring Transactions/ ) {
 
-	# check for recurring transactions
-	if ($user->{acs} !~ /Recurring Transactions/) {
+        if ( $user->check_recurring( \%$form ) ) {
+            $form->{callback} .= "&main=recurring_transactions";
+        }
+        else {
+            $form->{callback} .= "&main=company_logo";
+        }
 
-		if ($user->check_recurring(\%$form)) {
-			$form->{callback} .= "&main=recurring_transactions";
-		} else {
-			$form->{callback} .= "&main=company_logo";
-		}
+    }
+    else {
 
-	} else {
+        if ( $user->{role} eq 'user' ) {
+            $form->{callback} .= "&main=company_logo";
+        }
+        else {
 
-		if ($user->{role} eq 'user') {
-			$form->{callback} .= "&main=company_logo";
-		} else {
+            if ( $user->check_recurring( \%$form ) ) {
+                $form->{callback} .= "&main=recurring_transactions";
+            }
+            else {
+                $form->{callback} .= "&main=company_logo";
+            }
+        }
+    }
 
-			if ($user->check_recurring(\%$form)) {
-				$form->{callback} .= "&main=recurring_transactions";
-			} else {
-				$form->{callback} .= "&main=company_logo";
-			}
-		}
-	}
-
-	Session::session_create($form);
-	$form->redirect;
+    Session::session_create($form);
+    $form->redirect;
 
 }
-
-
 
 sub logout {
-	$form->{callback} = "";
-	$form->{endsession} = 1;
-	Session::session_destroy($form);
+    $form->{callback}   = "";
+    $form->{endsession} = 1;
+    Session::session_destroy($form);
     $form->redirect;
 }
-
 

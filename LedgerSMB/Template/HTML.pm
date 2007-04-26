@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Template::HTML  Template support module for LedgerSMB
@@ -29,29 +30,31 @@ use CGI;
 package LedgerSMB::Template::HTML;
 
 sub get_template {
-	my $name = shift;
-	return "${name}.html";
+    my $name = shift;
+    return "${name}.html";
 }
 
 sub preprocess {
-	my $rawvars = shift;
-	my $vars;
-	my $type = ref $rawvars;
+    my $rawvars = shift;
+    my $vars;
+    my $type = ref $rawvars;
 
-#XXX fix escaping function
-	if ($type eq 'ARRAY') {
-	} elsif ($type eq 'HASH') {
-		for (keys %{$rawvars}) {
-			$vars->{$_} = preprocess($rawvars[$_]);
-		}
-	} else {
-		return CGI::escapeHTML($rawvars); 
-	}
+    #XXX fix escaping function
+    if ( $type eq 'ARRAY' ) {
+    }
+    elsif ( $type eq 'HASH' ) {
+        for ( keys %{$rawvars} ) {
+            $vars->{$_} = preprocess( $rawvars[$_] );
+        }
+    }
+    else {
+        return CGI::escapeHTML($rawvars);
+    }
 }
 
 sub postprocess {
-	my $parent = shift;
-	return;
+    my $parent = shift;
+    return;
 }
 
 1;

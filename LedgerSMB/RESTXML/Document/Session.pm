@@ -16,18 +16,15 @@ use strict;
 use warnings;
 use base qw(LedgerSMB::RESTXML::Document::Base);
 
-
-sub handle_get { 
-	my ($self, $args) = @_;	
-
+sub handle_get {
+    my ( $self, $args ) = @_;
 
 }
 
-sub handle_post { 
-	my ($self, $args) = @_;
-	print "Content-type: text/html\n\nhi";
-	
-}
+sub handle_post {
+    my ( $self, $args ) = @_;
+    print "Content-type: text/html\n\nhi";
 
+}
 
 1;

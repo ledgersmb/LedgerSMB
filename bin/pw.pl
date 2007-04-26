@@ -8,9 +8,9 @@
 # with permission.
 #
 # This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed 
-# under the GNU General Public License version 2 or, at your option, any later 
-# version.  For a full list including contact information of contributors, 
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
 # maintainers, and copyright holders, see the CONTRIBUTORS file.
 #
 # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
@@ -35,17 +35,21 @@
 #======================================================================
 
 1;
+
 # end of main
 
-
 sub getpassword {
-  my ($s) = @_;
+    my ($s) = @_;
 
-  $form->{endsession} = 1;
+    $form->{endsession} = 1;
 
-  $sessionexpired = qq|<p><span style="font-weight:bold; color:red;">|.$locale->text('Session expired!').qq|</span></p>| if $s;
-  
-  my $headeradd = qq|
+    $sessionexpired =
+        qq|<p><span style="font-weight:bold; color:red;">|
+      . $locale->text('Session expired!')
+      . qq|</span></p>|
+      if $s;
+
+    my $headeradd = qq|
 <script language="JavaScript" type="text/javascript">
 <!--
 function sf(){
@@ -54,8 +58,8 @@ function sf(){
 // End -->
 </script>|;
 
-  $form->header(undef, $headeradd);
-  print qq|
+    $form->header( undef, $headeradd );
+    print qq|
 <body onload="sf()">
 
   $sessionexpired
@@ -64,18 +68,20 @@ function sf(){
 
 <table>
   <tr>
-    <th align=right>|.$locale->text('Password').qq|</th>
+    <th align=right>| . $locale->text('Password') . qq|</th>
     <td><input type="password" name="password" size="30"></td>
-    <td><button type="submit" value="continue">|.$locale->text('Continue').qq|</button></td>
+    <td><button type="submit" value="continue">|
+      . $locale->text('Continue')
+      . qq|</button></td>
   </tr>
 </table>
 
 |;
 
-  for (qw(script endsession password)) { delete $form->{$_} }
-  $form->hide_form;
-  
-  print qq|
+    for (qw(script endsession password)) { delete $form->{$_} }
+    $form->hide_form;
+
+    print qq|
 </form>
 
 </body>
@@ -83,5 +89,4 @@ function sf(){
 |;
 
 }
-
 

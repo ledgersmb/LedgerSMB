@@ -1,5 +1,5 @@
 #=====================================================================
-# LedgerSMB 
+# LedgerSMB
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/
 # Copyright (C) 2006
@@ -14,12 +14,11 @@
 #
 # TrustCommerce configuration Information goes Here
 
-
 package TrustCommerce;
 
-
-%baseparams = ( custid => '000000',
-	password => 'password',
+%baseparams = (
+    custid   => '000000',
+    password => 'password',
 );
 
 $debug = 0;

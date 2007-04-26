@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Setting - LedgerSMB class for managing Business Locations
@@ -44,107 +45,118 @@ our $VERSION = '1.0.0';
 our @ISA = qw(LedgerSMB::DBObject);
 
 sub AUTOLOAD {
-	my $self = shift;
-	my $AUTOLOAD = $LedgerSMB::Setting::AUTOLOAD;
-	$AUTOLOAD =~ s/^.*:://;
-	$self->exec_method(procname => "setting_$AUTOLOAD", args =>\@_);
+    my $self     = shift;
+    my $AUTOLOAD = $LedgerSMB::Setting::AUTOLOAD;
+    $AUTOLOAD =~ s/^.*:://;
+    $self->exec_method( procname => "setting_$AUTOLOAD", args => \@_ );
 }
 
 sub get {
-	my $self = shift;
-	my $hashref = shift @{$self->exec_method(procname => 'setting_get')};
-	$self->merge($hashref, 'value');
+    my $self = shift;
+    my $hashref = shift @{ $self->exec_method( procname => 'setting_get' ) };
+    $self->merge( $hashref, 'value' );
 }
 
 sub parse_increment {
 
-	my $self = shift;
-	my $myconfig = shift;
+    my $self     = shift;
+    my $myconfig = shift;
 
-	# Long-run, we may want to run this via Parse::RecDescent, but this is
-	# at least a start for here.  Chris T.
+    # Long-run, we may want to run this via Parse::RecDescent, but this is
+    # at least a start for here.  Chris T.
 
-	# Replaces Form::UpdateDefaults
+    # Replaces Form::UpdateDefaults
 
-	$_ = $self->incriment;
-	# check for and replace
-	# <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
-	# <?lsmb NAME 1 1 3 ?>, <?lsmb BUSINESS ?>, <?lsmb BUSINESS 10 ?>, <?lsmb CURR... ?>
-	# <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
-	# <?lsmb PHONE ?> for customer and vendors
+    $_ = $self->incriment;
 
-	my $dbvar = $_;
-	my $var = $_;
-	my $str;
-	my $param;
+# check for and replace
+# <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
+# <?lsmb NAME 1 1 3 ?>, <?lsmb BUSINESS ?>, <?lsmb BUSINESS 10 ?>, <?lsmb CURR... ?>
+# <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
+# <?lsmb PHONE ?> for customer and vendors
 
-	if (/<\?lsmb /) {
+    my $dbvar = $_;
+    my $var   = $_;
+    my $str;
+    my $param;
 
-		while (/<\?lsmb /) {
+    if (/<\?lsmb /) {
 
-			s/<\?lsmb .*? \?>//;
-			last unless $&;
-		$param = $&;
-			$str = "";
+        while (/<\?lsmb /) {
 
-			if ($param =~ /<\?lsmb date \?>/i) {
-				$str = ($self->split_date($myconfig->{dateformat}, $self->{transdate}))[0];
-				$var =~ s/$param/$str/;
-			}
+            s/<\?lsmb .*? \?>//;
+            last unless $&;
+            $param = $&;
+            $str   = "";
 
-			if ($param =~ /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i) {
+            if ( $param =~ /<\?lsmb date \?>/i ) {
+                $str = (
+                    $self->split_date(
+                        $myconfig->{dateformat},
+                        $self->{transdate}
+                    )
+                )[0];
+                $var =~ s/$param/$str/;
+            }
 
-				my $fld = lc $&;
-				$fld =~ s/<\?lsmb //;
+            if ( $param =~
+/<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i
+              )
+            {
 
-				if ($fld =~ /name/) {
-					if ($self->{type}) {
-						$fld = $self->{vc};
-					}
-				}
+                my $fld = lc $&;
+                $fld =~ s/<\?lsmb //;
 
-				my $p = $param;
-				$p =~ s/(<|>|%)//g;
-				my @p = split / /, $p;
-				my @n = split / /, uc $self->{$fld};
+                if ( $fld =~ /name/ ) {
+                    if ( $self->{type} ) {
+                        $fld = $self->{vc};
+                    }
+                }
 
-				if ($#p > 0) {
+                my $p = $param;
+                $p =~ s/(<|>|%)//g;
+                my @p = split / /, $p;
+                my @n = split / /, uc $self->{$fld};
 
-					for (my $i = 1; $i <= $#p; $i++) {
-						$str .= substr($n[$i-1], 0, $p[$i]);
-					}
+                if ( $#p > 0 ) {
 
-				} else {
-					($str) = split /--/, $self->{$fld};
-				}
+                    for ( my $i = 1 ; $i <= $#p ; $i++ ) {
+                        $str .= substr( $n[ $i - 1 ], 0, $p[$i] );
+                    }
 
-				$var =~ s/$param/$str/;
-				$var =~ s/\W//g if $fld eq 'phone';
-			}
+                }
+                else {
+                    ($str) = split /--/, $self->{$fld};
+                }
 
-			if ($param =~ /<\?lsmb (yy|mm|dd)/i) {
+                $var =~ s/$param/$str/;
+                $var =~ s/\W//g if $fld eq 'phone';
+            }
 
-				my $p = $param;
-				$p =~ s/(<|>|%)//g;
-				my $spc = $p;
-				$spc =~ s/\w//g;
-				$spc = substr($spc, 0, 1);
-				my %d = ( yy => 1, mm => 2, dd => 3 );
-				my @p = ();
+            if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
 
-				my @a = $self->split_date($myconfig->{dateformat}, $self->{transdate});
-				for (sort keys %d) { push @p, $a[$d{$_}] if ($p =~ /$_/) }
-				$str = join $spc, @p;
-				$var =~ s/$param/$str/;
-			}
+                my $p = $param;
+                $p =~ s/(<|>|%)//g;
+                my $spc = $p;
+                $spc =~ s/\w//g;
+                $spc = substr( $spc, 0, 1 );
+                my %d = ( yy => 1, mm => 2, dd => 3 );
+                my @p = ();
 
-			if ($param =~ /<\?lsmb curr/i) {
-				$var =~ s/$param/$self->{currency}/;
-			}
-		}
-	}
+                my @a = $self->split_date( $myconfig->{dateformat},
+                    $self->{transdate} );
+                for ( sort keys %d ) { push @p, $a[ $d{$_} ] if ( $p =~ /$_/ ) }
+                $str = join $spc, @p;
+                $var =~ s/$param/$str/;
+            }
 
-	$self->{value} = $var;
-	$var;
+            if ( $param =~ /<\?lsmb curr/i ) {
+                $var =~ s/$param/$self->{currency}/;
+            }
+        }
+    }
+
+    $self->{value} = $var;
+    $var;
 }
 

@@ -4,8 +4,10 @@ use LedgerSMB::RESTXML::Handler;
 
 # To Enable the REST API,  Delete these 5 lines.
 print "Content-type: text/plain\n\n";
-print "REST API disabled by default until authentication is working correctly\n";
-print "If you understand the security implications of this, and wish to enable the REST api\n";
+print
+  "REST API disabled by default until authentication is working correctly\n";
+print
+"If you understand the security implications of this, and wish to enable the REST api\n";
 print "Then open rest.pl, and remove these 5 lines";
 exit;
 

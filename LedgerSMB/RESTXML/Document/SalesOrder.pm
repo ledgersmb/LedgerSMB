@@ -3,15 +3,12 @@ use strict;
 use warnings;
 use base qw(LedgerSMB::RESTXML::Document::Base);
 
+sub handle_get {
+    my ( $self, $args ) = @_;
 
-
-sub handle_get { 
-	my ($self, $args) = @_;	
-	
-	print "Content-type: text/html\n\n";
-	print "It still works";
+    print "Content-type: text/html\n\n";
+    print "It still works";
 
 }
-
 
 1;

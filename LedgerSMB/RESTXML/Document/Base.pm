@@ -5,26 +5,27 @@ use XML::Twig;
 use LedgerSMB::Log;
 use Carp;
 
-sub handle_post { 
-	my ($self, $args) = @_;
+sub handle_post {
+    my ( $self, $args ) = @_;
 
-	return $args->{handler}->unsupported('the POST method is not implemented.');
+    return $args->{handler}->unsupported('the POST method is not implemented.');
 }
 
-sub handle_put { 
-	my ($self, $args) = @_;
-	return $self->{handler}->unsupported('the PUT method is not implemented.');
+sub handle_put {
+    my ( $self, $args ) = @_;
+    return $self->{handler}->unsupported('the PUT method is not implemented.');
 }
 
 sub handle_delete {
-	my ($self, $args) = @_;
-	return $self->{handler}->unsupported('the DELETE method is not implemented.');
+    my ( $self, $args ) = @_;
+    return $self->{handler}
+      ->unsupported('the DELETE method is not implemented.');
 }
 
 sub handle_get {
-	my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
-	return $self->{handler}->unsupported('the GET method is not implemented.');
+    return $self->{handler}->unsupported('the GET method is not implemented.');
 }
 
 =head3 hash_to_twig
@@ -45,18 +46,25 @@ nodes at once.
 
 =cut
 
-sub hash_to_twig { 
-	my ($self, $args) = @_;
+sub hash_to_twig {
+    my ( $self, $args ) = @_;
 
-	my $hash = $args->{hash} || croak "Need a hash to convert to use hash_to_twig";
-	my $name = $args->{name} || croak "Need a root element name to use hash_to_twig";
-	my @keyorder = keys %$hash;	
-	
-	@keyorder = sort @keyorder unless defined($args->{sort}) and $args->{sort} == 0;
+    my $hash = $args->{hash}
+      || croak "Need a hash to convert to use hash_to_twig";
+    my $name = $args->{name}
+      || croak "Need a root element name to use hash_to_twig";
+    my @keyorder = keys %$hash;
 
-	return XML::Twig::Elt->new($name,$args->{root_attr}||{}, map  {
-		XML::Twig::Elt->new($_, {'#CDATA'=>1}, $hash->{$_})
-	} @keyorder );
+    @keyorder = sort @keyorder
+      unless defined( $args->{sort} )
+      and $args->{sort} == 0;
+
+    return XML::Twig::Elt->new(
+        $name,
+        $args->{root_attr} || {},
+        map { XML::Twig::Elt->new( $_, { '#CDATA' => 1 }, $hash->{$_} ) }
+          @keyorder
+    );
 }
 
 1;

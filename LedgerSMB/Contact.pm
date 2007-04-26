@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Contact - LedgerSMB class for managing Contacts

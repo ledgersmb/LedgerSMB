@@ -1,5 +1,5 @@
 #=====================================================================
-# LedgerSMB 
+# LedgerSMB
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/
 # Copyright (C) 2006
@@ -19,6 +19,7 @@ use LedgerSMB;
 use LedgerSMB::DBObject;
 
 our @ISA qw(LedgerSMB::DBObject);
+
 # use LedgerSMB::CreditCard::Config;  # moving elsewhere
 
 ## TODO:  Add code for credit card number validation and the like

@@ -1,12 +1,11 @@
 #!/usr/bin/perl
 
-use vars qw($email_to $cc_to $email_from $sendmail $database $db_user 
-	$db_passwd $template_head $template_foot);
+use vars qw($email_to $cc_to $email_from $sendmail $database $db_user
+  $db_passwd $template_head $template_foot);
 
 # The address to send the mail to.  On UNIX systems, multiple addresses can be
 # separated by a space.
 $email_to = 'manager@example';
-
 
 # The email address this email is from:
 $email_from = 'noreply@example';
@@ -28,8 +27,7 @@ $cycle_delay = 60;
 # The password for the db user:
 $db_passwd = "mypasswd";
 
-$template_top =
-"From: $email_from
+$template_top = "From: $email_from
 Subject: Parts Short Notice
 
 Hi.  This is the SL-Short listener.  You are receiving this message because

@@ -1,8 +1,8 @@
 #=====================================================================
-# LedgerSMB 
+# LedgerSMB
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/
-# 
+#
 # Copyright (C) 2006
 # This work contains copyrighted information from a number of sources all used
 # with permission.
@@ -33,103 +33,102 @@
 
 package HR;
 
-
 sub get_employee {
-	my ($self, $myconfig, $form) = @_;
+    my ( $self, $myconfig, $form ) = @_;
 
-	my $dbh = $form->{dbh};
+    my $dbh = $form->{dbh};
 
-	my $query;
-	my $sth;
-	my $ref;
-	my $notid = "";
+    my $query;
+    my $sth;
+    my $ref;
+    my $notid = "";
 
-	if ($form->{id}) {
-		$query = qq|SELECT e.* FROM employees e WHERE e.id = ?|;
-		$sth = $dbh->prepare($query);
-		$sth->execute($form->{id}) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
-  
-		$ref = $sth->fetchrow_hashref(NAME_lc);
-  
-		# check if employee can be deleted, orphaned
-		$form->{status} = "orphaned" unless $ref->{login};
+    if ( $form->{id} ) {
+        $query = qq|SELECT e.* FROM employees e WHERE e.id = ?|;
+        $sth   = $dbh->prepare($query);
+        $sth->execute( $form->{id} )
+          || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
+        $ref = $sth->fetchrow_hashref(NAME_lc);
 
-		$ref->{employeelogin} = $ref->{login};
-		delete $ref->{login};
-		for (keys %$ref) { $form->{$_} = $ref->{$_} }
+        # check if employee can be deleted, orphaned
+        $form->{status} = "orphaned" unless $ref->{login};
 
-		$sth->finish;
+        $ref->{employeelogin} = $ref->{login};
+        delete $ref->{login};
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
 
-		# get manager
-		$form->{managerid} *= 1;
+        $sth->finish;
 
-		$sth = $dbh->prepare("SELECT name FROM employees WHERE id = ?");
-		$sth->execute($form->{managerid});
-		($form->{manager}) = $sth->fetchrow_array;
-    
-		
-		$notid = qq|AND id != |.$dbh->quote($form->{id});
-    
-	} else {
+        # get manager
+        $form->{managerid} *= 1;
 
-		($form->{startdate}) = $dbh->selectrow_array("SELECT current_date");
-  
-	}
-  
-	# get managers
-	  $query = qq|
+        $sth = $dbh->prepare("SELECT name FROM employees WHERE id = ?");
+        $sth->execute( $form->{managerid} );
+        ( $form->{manager} ) = $sth->fetchrow_array;
+
+        $notid = qq|AND id != | . $dbh->quote( $form->{id} );
+
+    }
+    else {
+
+        ( $form->{startdate} ) = $dbh->selectrow_array("SELECT current_date");
+
+    }
+
+    # get managers
+    $query = qq|
 		  SELECT id, name
 		    FROM employees
 		   WHERE sales = '1'
 		         AND role = 'manager'
 		         $notid
 		ORDER BY 2|;
-	$sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
+    $sth = $dbh->prepare($query);
+    $sth->execute || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
-	while ($ref = $sth->fetchrow_hashref(NAME_lc)) {
-		push @{ $form->{all_manager} }, $ref;
-	}
-	$sth->finish;
+    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        push @{ $form->{all_manager} }, $ref;
+    }
+    $sth->finish;
 
-	$dbh->commit;
+    $dbh->commit;
 
 }
 
-
-
 sub save_employee {
-	my ($self, $myconfig, $form) = @_;
+    my ( $self, $myconfig, $form ) = @_;
 
-	my $dbh = $form->{dbh};
-	my $query;
-	my $sth;
+    my $dbh = $form->{dbh};
+    my $query;
+    my $sth;
 
-	if (! $form->{id}) {
-		my $uid = localtime;
-		$uid .= "$$";
+    if ( !$form->{id} ) {
+        my $uid = localtime;
+        $uid .= "$$";
 
-		$query = qq|INSERT INTO employees (name) VALUES ('$uid')|;
-		$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
-    
-		$query = qq|SELECT id FROM employees WHERE name = '$uid'|;
-		$sth = $dbh->prepare($query);
-		$sth->execute || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
+        $query = qq|INSERT INTO employees (name) VALUES ('$uid')|;
+        $dbh->do($query)
+          || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
-		($form->{id}) = $sth->fetchrow_array;
-		$sth->finish;
-	}
+        $query = qq|SELECT id FROM employees WHERE name = '$uid'|;
+        $sth   = $dbh->prepare($query);
+        $sth->execute
+          || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
-	my ($null, $managerid) = split /--/, $form->{manager};
-	$managerid *= 1;
-	$form->{sales} *= 1;
+        ( $form->{id} ) = $sth->fetchrow_array;
+        $sth->finish;
+    }
 
-	$form->{employeenumber} = $form->update_defaults(
-		$myconfig, "employeenumber", $dbh) 
-			if ! $form->{employeenumber};
+    my ( $null, $managerid ) = split /--/, $form->{manager};
+    $managerid     *= 1;
+    $form->{sales} *= 1;
 
-	$query = qq|
+    $form->{employeenumber} =
+      $form->update_defaults( $myconfig, "employeenumber", $dbh )
+      if !$form->{employeenumber};
+
+    $query = qq|
 		UPDATE employees 
 		   SET employeenumber = ?,
 		       name = ?,
@@ -153,109 +152,106 @@ sub save_employee {
 		       bic = ?,
 		       managerid = ?
 		 WHERE id = ?|;
-	$sth = $dbh->prepare($query);
-	$form->{dob} ||= undef;
-	$form->{startdate} ||= undef;
-	$form->{enddate} ||= undef;
-	$sth->execute(
-					$form->{employeenumber}, $form->{name}, $form->{address1},
-					$form->{address2}, $form->{city}, $form->{state},
-					$form->{zipcode}, $form->{country}, $form->{workphone},
-					$form->{homephone}, $form->{startdate}, $form->{enddate},
-					$form->{notes}, $form->{role}, $form->{sales}, $form->{email},
-					$form->{ssn}, $form->{dob}, $form->{iban}, $form->{bic},
-					$managerid, $form->{id}
-				) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
+    $sth = $dbh->prepare($query);
+    $form->{dob}       ||= undef;
+    $form->{startdate} ||= undef;
+    $form->{enddate}   ||= undef;
+    $sth->execute(
+        $form->{employeenumber}, $form->{name},      $form->{address1},
+        $form->{address2},       $form->{city},      $form->{state},
+        $form->{zipcode},        $form->{country},   $form->{workphone},
+        $form->{homephone},      $form->{startdate}, $form->{enddate},
+        $form->{notes},          $form->{role},      $form->{sales},
+        $form->{email},          $form->{ssn},       $form->{dob},
+        $form->{iban},           $form->{bic},       $managerid,
+        $form->{id}
+    ) || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
-
-	$dbh->commit;
+    $dbh->commit;
 
 }
-
 
 sub delete_employee {
-	my ($self, $myconfig, $form) = @_;
+    my ( $self, $myconfig, $form ) = @_;
 
-	# connect to database
-	my $dbh = $form->{dbh};
+    # connect to database
+    my $dbh = $form->{dbh};
 
-	# delete employee
-	
-	my $query = qq|
+    # delete employee
+
+    my $query = qq|
 		DELETE FROM employees 
-		      WHERE id = |.$dbh->quote($form->{id});
-	$dbh->do($query) || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
+		      WHERE id = | . $dbh->quote( $form->{id} );
+    $dbh->do($query)
+      || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
-	$dbh->commit;
+    $dbh->commit;
 
 }
 
-
 sub employees {
-	my ($self, $myconfig, $form) = @_;
+    my ( $self, $myconfig, $form ) = @_;
 
-	# connect to database
-	my $dbh = $form->{dbh};
+    # connect to database
+    my $dbh = $form->{dbh};
 
-	my $where = "1 = 1";
-	$form->{sort} = ($form->{sort}) ? $form->{sort} : "name";
-	my @a = qw(name);
-	my $sortorder = $form->sort_order(\@a);
-  
-	my $var;
-  
-	if ($form->{startdatefrom}) {
-		$where .= " AND e.startdate >= ".
-			$dbh->quote($form->{startdatefrom});
-	}
-	if ($form->{startdateto}) {
-		$where .= " AND e.startddate <= ".
-			$dbh->quote($form->{startdateto});
-	}
-	if ($form->{name} ne "") {
-		$var = $dbh->quote($form->like(lc $form->{name}));
-		$where .= " AND lower(e.name) LIKE $var";
-	}
-	if ($form->{notes} ne "") {
-		$var = $dbh->quote($form->like(lc $form->{notes}));
-		$where .= " AND lower(e.notes) LIKE $var";
-	}
-	if ($form->{sales} eq 'Y') {
-		$where .= " AND e.sales = '1'";
-	}
-	if ($form->{status} eq 'orphaned') {
-		$where .= qq| AND e.login IS NULL|;
-	}
-	if ($form->{status} eq 'active') {
-		$where .= qq| AND e.enddate IS NULL|;
-	}
-	if ($form->{status} eq 'inactive') {
-		$where .= qq| AND e.enddate <= current_date|;
-	}
+    my $where = "1 = 1";
+    $form->{sort} = ( $form->{sort} ) ? $form->{sort} : "name";
+    my @a         = qw(name);
+    my $sortorder = $form->sort_order( \@a );
 
-	my $query = qq|
+    my $var;
+
+    if ( $form->{startdatefrom} ) {
+        $where .=
+          " AND e.startdate >= " . $dbh->quote( $form->{startdatefrom} );
+    }
+    if ( $form->{startdateto} ) {
+        $where .= " AND e.startddate <= " . $dbh->quote( $form->{startdateto} );
+    }
+    if ( $form->{name} ne "" ) {
+        $var = $dbh->quote( $form->like( lc $form->{name} ) );
+        $where .= " AND lower(e.name) LIKE $var";
+    }
+    if ( $form->{notes} ne "" ) {
+        $var = $dbh->quote( $form->like( lc $form->{notes} ) );
+        $where .= " AND lower(e.notes) LIKE $var";
+    }
+    if ( $form->{sales} eq 'Y' ) {
+        $where .= " AND e.sales = '1'";
+    }
+    if ( $form->{status} eq 'orphaned' ) {
+        $where .= qq| AND e.login IS NULL|;
+    }
+    if ( $form->{status} eq 'active' ) {
+        $where .= qq| AND e.enddate IS NULL|;
+    }
+    if ( $form->{status} eq 'inactive' ) {
+        $where .= qq| AND e.enddate <= current_date|;
+    }
+
+    my $query = qq|
 		   SELECT e.*, m.name AS manager
 		     FROM employees e
 		LEFT JOIN employees m ON (m.id = e.managerid)
 		    WHERE $where
 		 ORDER BY $sortorder|;
 
-	my $sth = $dbh->prepare($query);
-	$sth->execute || $form->dberror(__FILE__.':'.__LINE__.':'.$query);
+    my $sth = $dbh->prepare($query);
+    $sth->execute || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
-	while (my $ref = $sth->fetchrow_hashref(NAME_lc)) {
-		$ref->{address} = "";
-		for (qw(address1 address2 city state zipcode country)) { 
-			$ref->{address} .= "$ref->{$_} "; 
-		}
-		push @{ $form->{all_employee} }, $ref;
-	}
+    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $ref->{address} = "";
+        for (qw(address1 address2 city state zipcode country)) {
+            $ref->{address} .= "$ref->{$_} ";
+        }
+        push @{ $form->{all_employee} }, $ref;
+    }
 
-	$sth->finish;
-	$dbh->commit;
+    $sth->finish;
+    $dbh->commit;
 
 }
-
 
 1;
 
