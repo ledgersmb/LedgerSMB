@@ -23,6 +23,4 @@ ALTER TABLE employees ALTER COLUMN id SET DEFAULT  nextval('employee_id_seq');
 
 DROP RULE employee_id_track_i ON employees; -- no longer needed
 
-CREATE TABLE account_links AS
-
 COMMIT;
