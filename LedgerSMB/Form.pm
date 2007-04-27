@@ -571,6 +571,9 @@ sub round_amount {
     $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) )
       if $places < 0;
 
+    $amount->precision(undef); #we are assuming whole cents so do not round
+                               #immediately on arithmatic
+
     return $amount;
 }
 
