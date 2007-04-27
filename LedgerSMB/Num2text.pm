@@ -1083,5 +1083,203 @@ sub num2text_da {
 
 }
 
+
+sub num2text_sl {
+  my ($self, $amount) = @_;
+
+  return $self->{numbername}{0} unless $amount;
+
+  my @textnumber = ();
+
+  # split amount into chunks of 3
+  my @num = reverse split //, abs($amount);
+  my @numblock = ();
+  my ($i, $appendn);
+  my @a = ();
+
+  my $skip1k = 0;
+  my $skip1m = 0;
+  my $skip1b = 0;
+
+  my $checkvalue = abs($amount) % 10**6;
+  $checkvalue /= 1000;
+  if (1 <= $checkvalue && $checkvalue <= 2) {
+    $skip1k = 1;
+  }
+
+  $checkvalue = abs($amount) % 10**9;
+  $checkvalue /= 10**6;
+  if (1 <= $checkvalue && $checkvalue <= 2) {
+    $skip1m = 1;
+  }
+
+  $checkvalue = abs($amount) % 10**15;
+  $checkvalue /= 10**12;
+  if (1 <= $checkvalue && $checkvalue <= 2) {
+    $skip1b = 1;
+  }
+
+  my $check1m = abs($amount) % 10**8;
+  my $check1md = abs($amount) % 10**11;
+  my $check1b = abs($amount) % 10**14;
+
+  while (@num) {
+    @a = ();
+    for (1 .. 3) {
+      push @a, shift @num;
+    }
+    push @numblock, join / /, reverse @a;
+  }
+  
+  my $belowhundred = !$#numblock;
+  
+  while (@numblock) {
+
+    $i = $#numblock;
+    @num = split //, $numblock[$i];
+    $appendn = "";
+    
+    $numblock[$i] *= 1;
+    
+    if ($numblock[$i] == 0) {
+      pop @numblock;
+      next;
+    }
+
+    if ($numblock[$i] > 99) {
+      # the one from hundreds
+      if ( $num[0] > 2 ) {
+	push @textnumber, $self->{numbername}{$num[0]};
+      } elsif ( $num[0] > 1 ) {
+	push @textnumber, 'dve';
+      }
+
+      # add hundred designation
+      push @textnumber, $self->{numbername}{10**2};
+
+      # reduce numblock
+      $numblock[$i] -= $num[0] * 100;
+    }
+
+# Appends, where for 1 they shall be eliminated later below:
+    if ($i == 2) {    
+      if (2*10**6 <= $check1m && $check1m < 3*10**6) {
+        $appendn = 'a';
+      } elsif (3*10**6 <= $check1m && $check1m < 5*10**6) {
+        $appendn = 'e';
+      } else {
+        $appendn = 'ov';
+      }
+    }
+    if ($i == 4) {    
+      if (2*10**12 <= $check1b && $check1b < 3*10**12) {
+        $appendn = 'a';
+      } elsif (3*10**12 <= $check1b && $check1b < 5*10**12) {
+        $appendn = 'e';
+      } else {
+        $appendn = 'ov';
+      }
+    }
+
+    if ($numblock[$i] > 9) {
+      # tens
+      push @textnumber, $self->format_ten($numblock[$i], $belowhundred);
+    } elsif ($numblock[$i] > 1) {
+      # ones
+      if (2*10**9 <= $check1md && $check1md < 3*10**9) {
+	push @textnumber, 'dve';
+      } else {
+	push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } elsif ($numblock[$i] == 1) {
+      if ($i == 0) {
+	push @textnumber, $self->{numbername}{$numblock[$i]};
+      } else {
+	if ($i >= 5) {
+	    push @textnumber, $self->{numbername}{$numblock[$i]}.'-!-too big number-!-?!';
+	} elsif ($i == 4) {
+	  if ($skip1b == 0) {
+	    push @textnumber, $self->{numbername}{$numblock[$i]};
+	  }
+	} elsif ($i == 3) {
+	  if (1*10**9 <= $check1md && $check1md < 2*10**9) {
+	    push @textnumber, 'ena';
+	  } else {
+	    push @textnumber, $self->{numbername}{$numblock[$i]};
+	  }
+	} elsif ($i == 2) {
+	  if ($skip1m == 0) {
+	    push @textnumber, $self->{numbername}{$numblock[$i]};
+	  }
+	} elsif ($i == 1) {
+	  if ($skip1k == 0) {
+	    push @textnumber, $self->{numbername}{$numblock[$i]};
+	  }
+	} else {
+	  push @textnumber, $self->{numbername}{$numblock[$i]};
+	}
+      }
+      $appendn = "";
+    }
+    
+# Appends, where also for 1 they shall be considered as below;
+# if specified above with the others, they would be eliminated
+# by a command just a few lines above...
+#
+    if ($i == 3) {    
+      if (1*10**9 <= $check1md && $check1md < 2*10**9) {
+        $appendn = 'a';
+      } elsif (2*10**9 <= $check1md && $check1md < 3*10**9) {
+        $appendn = 'i';
+      } elsif (3*10**9 <= $check1md && $check1md < 5*10**9) {
+        $appendn = 'e';
+      }
+    }
+
+    # add thousand, million
+    if ($i) {
+      $amount = 10**($i * 3);
+      push @textnumber, $self->{numbername}{$amount}.$appendn;
+    }
+    
+    pop @numblock;
+
+    @textnumber = 'NAPAKA! ¿TEVILKA JE PREVELIKA!' if ($i > 4);
+    
+  }
+
+  join '', @textnumber;
+
+}
+
+
+sub format_ten_sl {
+  my ($self, $amount, $belowhundred) = @_;
+  
+  my $textnumber = "";
+  my @num = split //, $amount;
+
+  if ($amount > 20) {
+    if ($num[1] == 0) { 
+      $textnumber = $self->{numbername}{$amount}; 
+    } elsif ($num[1] == 1) { 
+      $amount = $num[0] * 10;
+      $textnumber = $self->{numbername}{$num[1]}.'ain'.$self->{numbername}{$amount};
+    } else {
+      $amount = $num[0] * 10;
+      $textnumber = $self->{numbername}{$num[1]}.'in'.$self->{numbername}{$amount};
+    }
+  } else {
+    $textnumber = $self->{numbername}{$amount};
+  }
+  
+  $textnumber;
+  
+}
+
+
+1;
+
+
 1;
 
