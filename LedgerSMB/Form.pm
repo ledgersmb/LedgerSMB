@@ -554,7 +554,6 @@ sub parse_amount {
     my $decimalplaces = length $1 + length $2;
 
     $amount = new Math::BigFloat($amount);
-    #$amount->accuracy($decimalplaces);
 
     return ( $amount * 1 );
 }
@@ -571,6 +570,7 @@ sub round_amount {
     $amount = Math::BigFloat->new($amount)->ffround( -$places ) if $places >= 0;
     $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) )
       if $places < 0;
+    $amount->precision(undef);
 
     return $amount;
 }
