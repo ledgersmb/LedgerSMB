@@ -1022,7 +1022,7 @@ sub post_invoice {
 						  FROM parts p
 						  JOIN assembly a 
 						       ON (a.parts_id = p.id)
-						 WHERE a.id = $form->{"id_$i"}
+						 WHERE a.id = ?
 						 GROUP BY p.assembly|;
                     $sth = $dbh->prepare($query);
                     $sth->execute( $form->{"id_$i"} )
