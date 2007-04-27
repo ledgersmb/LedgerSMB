@@ -554,7 +554,7 @@ sub parse_amount {
     my $decimalplaces = length $1 + length $2;
 
     $amount = new Math::BigFloat($amount);
-    $amount->accuracy($decimalplaces);
+    #$amount->accuracy($decimalplaces);
 
     return ( $amount * 1 );
 }
