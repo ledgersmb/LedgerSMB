@@ -572,7 +572,9 @@ sub round_amount {
       if $places < 0;
 
     $amount->precision(undef); #we are assuming whole cents so do not round
-                               #immediately on arithmatic
+                               #immediately on arithmatic.  This is necessary
+                               #because Math::BigFloat is arithmatically
+                               #correct wrt accuracy and precision.
 
     return $amount;
 }
