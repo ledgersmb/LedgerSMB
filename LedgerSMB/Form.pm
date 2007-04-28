@@ -41,6 +41,9 @@ use Time::Local;
 use Cwd;
 use File::Copy;
 
+use charnames ':full';
+use open ':utf8';
+
 package Form;
 
 sub new {
@@ -98,7 +101,7 @@ sub new {
         $self->error( "Access Denied", __line__, __file__ );
     }
 
-    for ( keys %$self ) { $self->{$_} =~ s/\000//g }
+    for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
     $self;
 }
 
@@ -138,6 +141,7 @@ sub escape {
         $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;
     }
 
+    $str = utf8::encode('utf8', $str);
     $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
     $str;
 
@@ -150,6 +154,7 @@ sub unescape {
     $str =~ s/\\$//;
 
     $str =~ s/%([0-9a-fA-Z]{2})/pack("c",hex($1))/eg;
+    $str = utf8::decode('utf8', $str) unless utf8::is_utf8($str);
     $str =~ s/\r?\n/\n/g;
 
     $str;
