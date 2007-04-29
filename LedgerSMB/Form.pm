@@ -141,7 +141,7 @@ sub escape {
         $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;
     }
 
-    $str = utf8::encode('utf8', $str);
+    utf8::encode($str);
     $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
     $str;
 
@@ -153,8 +153,9 @@ sub unescape {
     $str =~ tr/+/ /;
     $str =~ s/\\$//;
 
+    utf8::encode($str) if utf8::is_utf8($str);
     $str =~ s/%([0-9a-fA-Z]{2})/pack("c",hex($1))/eg;
-    $str = utf8::decode('utf8', $str) unless utf8::is_utf8($str);
+    utf8::decode($str);
     $str =~ s/\r?\n/\n/g;
 
     $str;
