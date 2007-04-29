@@ -1581,6 +1581,7 @@ sub dbconnect {
     my $dbh = DBI->connect( $myconfig->{dbconnect},
         $myconfig->{dbuser}, $myconfig->{dbpasswd} )
       or $self->dberror;
+    $dbh->{pg_enable_utf8} = 1;
 
     # set db options
     if ( $myconfig->{dboptions} ) {
@@ -1600,6 +1601,7 @@ sub dbconnect_noauto {
         $myconfig->{dbconnect}, $myconfig->{dbuser},
         $myconfig->{dbpasswd}, { AutoCommit => 0 }
     ) or $self->dberror;
+    $dbh->{pg_enable_utf8} = 1;
 
     # set db options
     if ( $myconfig->{dboptions} ) {

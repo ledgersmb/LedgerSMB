@@ -490,6 +490,7 @@ sub db_init {
     ) or $self->dberror;
 
     $dbh->{pg_server_prepare} = 0;
+    $dbh->{pg_enable_utf8} = 1;
 
     if ( $myconfig->{dboptions} ) {
         $dbh->do( $myconfig->{dboptions} );

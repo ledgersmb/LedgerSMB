@@ -124,6 +124,7 @@ sub connect_db {
     my $dbh = DBI->connect( $myconfig->{dbconnect},
         $myconfig->{dbuser}, $myconfig->{dbpasswd} )
       or carp "Error connecting to the db :$DBI::errstr";
+    $dbh->{pg_enable_utf8} = 1;
 
     return $dbh;
 }
