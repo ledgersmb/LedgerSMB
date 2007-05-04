@@ -123,6 +123,7 @@ if ( $config{globaldb}{DBname} ) {
         $form = new Form;
         $form->error("No GlobalDBH Configured or Could not Connect");
     }
+    $GLOBALDBH->{pg_enable_utf8} = 1;
 }
 
 # These lines prevent other apps in mod_perl from seeing the global db

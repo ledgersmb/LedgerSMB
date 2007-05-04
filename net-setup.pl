@@ -779,6 +779,7 @@ sub check_pgconnect {
                 die "You have postgres version $version installed, "
                   . "we require a minimum of 8.0\n";
             }
+            $dbh->{pg_enable_utf8} = 1;
         };
         if ($@) {
             system("tput clear");

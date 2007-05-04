@@ -23,6 +23,7 @@ my $dbh = DBI->connect(
         RaiseError => 1,
     }
 );
+$dbh->{pg_enable_utf8} = 1;
 
 my $sth;
 

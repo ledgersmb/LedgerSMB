@@ -41,6 +41,9 @@ use Time::Local;
 use Cwd;
 use File::Copy;
 
+use charnames ':full';
+use open ':utf8';
+
 package Form;
 
 sub new {
@@ -98,7 +101,7 @@ sub new {
         $self->error( "Access Denied", __line__, __file__ );
     }
 
-    for ( keys %$self ) { $self->{$_} =~ s/\000//g }
+    for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
     $self;
 }
 
@@ -138,6 +141,7 @@ sub escape {
         $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;
     }
 
+    utf8::encode($str);
     $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
     $str;
 
@@ -149,7 +153,9 @@ sub unescape {
     $str =~ tr/+/ /;
     $str =~ s/\\$//;
 
+    utf8::encode($str) if utf8::is_utf8($str);
     $str =~ s/%([0-9a-fA-Z]{2})/pack("c",hex($1))/eg;
+    utf8::decode($str);
     $str =~ s/\r?\n/\n/g;
 
     $str;
@@ -1582,6 +1588,7 @@ sub dbconnect {
     my $dbh = DBI->connect( $myconfig->{dbconnect},
         $myconfig->{dbuser}, $myconfig->{dbpasswd} )
       or $self->dberror;
+    $dbh->{pg_enable_utf8} = 1;
 
     # set db options
     if ( $myconfig->{dboptions} ) {
@@ -1601,6 +1608,7 @@ sub dbconnect_noauto {
         $myconfig->{dbconnect}, $myconfig->{dbuser},
         $myconfig->{dbpasswd}, { AutoCommit => 0 }
     ) or $self->dberror;
+    $dbh->{pg_enable_utf8} = 1;
 
     # set db options
     if ( $myconfig->{dboptions} ) {

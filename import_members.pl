@@ -234,6 +234,7 @@ sub save_member {
             $self->{dbconnect}, $self->{dbuser},
             $self->{dbpasswd}, { AutoCommit => 0 }
         ) or $self->error($DBI::errstr);
+        $dbh->{pg_enable_utf8} = 1;
 
         # add login to employee table if it does not exist
         my $login = $self->{login};

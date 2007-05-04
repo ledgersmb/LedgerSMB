@@ -27,7 +27,6 @@
 package LedgerSMB::Locale;
 use base 'Locale::Maketext';
 use Locale::Maketext::Lexicon;
-use HTML::Entities;
 use Encode;
 
 Locale::Maketext::Lexicon->import(
@@ -40,7 +39,7 @@ Locale::Maketext::Lexicon->import(
 
 sub text {
     my ( $self, $text, @params ) = @_;
-    return encode_entities( $self->maketext( $text, @params ) );
+    return $self->maketext( $text, @params );
 }
 
 ##sub date {
