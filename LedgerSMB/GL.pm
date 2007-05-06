@@ -163,7 +163,6 @@ sub post_transaction {
 
             ( $null, $project_id ) = split /--/, $form->{"projectnumber_$i"};
             $project_id ||= undef;
-            $form->{"cleared_$i"} ||= "0";
 
             $query = qq|
 				INSERT INTO acc_trans 
@@ -180,8 +179,8 @@ sub post_transaction {
                 $form->{id},                  $accno,
                 $amount,                      $form->{transdate},
                 $form->{"source_$i"},         $project_id,
-                $form->{"fx_transaction_$i"}, $form->{"memo_$i"},
-                $form->{"cleared_$i"}
+                ($form->{"fx_transaction_$i"} || 0), $form->{"memo_$i"},
+                ($form->{"cleared_$i"} || 0)
             ) || $form->dberror($query);
 
             $posted = 1;

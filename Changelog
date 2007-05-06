@@ -7,7 +7,7 @@ Changelog for LedgerSMB 1.3.0
 * Stored procedure-based ORM for data model encapsulation in db (ChrisT)
 * New UI and template system using TT (Seneca)
 * Form.pm deprecated.  New Object Oriented and data-driven model (Chris T)
-
+* Added ledgersmb-smallgray.css (Jeff K)
 
 Changelog for LedgerSMB 1.2.0
 
