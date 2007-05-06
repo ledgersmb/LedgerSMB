@@ -171,8 +171,9 @@ sub transactions {
     }
 
     if ( $form->{$ordnumber} ne "" ) {
-        $query .= " AND lower(?) LIKE ?";
-        push @queryargs, $ordnumber, $number;
+	$ordnumber = ($ordnumber eq 'ordnumber') ? 'ordnumber' : 'quonumber';
+        $query .= " AND lower($ordnumber) LIKE ?";
+        push @queryargs, $number;
         $form->{open}   = 1;
         $form->{closed} = 1;
     }
