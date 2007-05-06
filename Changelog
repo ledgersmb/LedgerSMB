@@ -5,6 +5,8 @@ Changelog for 1.2.5
 * Fixed FX issue with posting cash transfers (Chris T)
 * Corrected multibyte handling in form generation (Seneca)
 * Corrected NaN issues in invoice printing (Seneca)
+* Corrected PO and order number searches not working (Chris T).
+* Corrected Exchange Rate display issue (CHris T).
 
 Changelog for 1.2.4
 * Fixed internal functions avgcost() and lastcost() to not use float (Joshua D)
