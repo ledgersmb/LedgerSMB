@@ -163,6 +163,7 @@ sub post_transaction {
 
             ( $null, $project_id ) = split /--/, $form->{"projectnumber_$i"};
             $project_id ||= undef;
+            $form->{"cleared_$i"} ||= "0";
 
             $query = qq|
 				INSERT INTO acc_trans 
