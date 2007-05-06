@@ -434,7 +434,14 @@ sub call_procedure {
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute(@args);
+    my @types = @{$sth->{TYPE}};
+    my @names = @{$sth->{NAME_lc}};
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+	for (0 .. $#names){
+            if ($types[$_] eq 'NUMERIC'){
+                $ref->{$names[$_]} = Math::BigFloat->new($ref->{$names[$_]});
+            }
+        }
         push @results, $ref;
     }
     @results;
