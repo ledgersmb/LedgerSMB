@@ -19,11 +19,13 @@ foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
 	foreach my $places ('3', '2', '1', '0') {
 		Math::BigFloat->round_mode('+inf');
 		$expected = Math::BigFloat->new($value)->ffround(-$places);
+		$expected->precision(undef);
 		is($form->round_amount($value, $places), $expected,
 			"$value to $places decimal places - $expected");
 
 		Math::BigFloat->round_mode('-inf');
 		$expected = Math::BigFloat->new(-$value)->ffround(-$places);
+		$expected->precision(undef);
 		is($form->round_amount(-$value, $places), $expected,
 			"-$value to $places decimal places - $expected");
 	}
