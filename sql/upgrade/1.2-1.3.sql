@@ -19,7 +19,7 @@ SELECT setval('employees_id_seq', (select max(id) + 1 FROM employees));
 ALTER TABLE employees ADD COLUMN locations_id integer;
 ALTER TABLE employees ADD FOREIGN KEY (locations_id) REFERENCES locations(id);
 ALTER TABLE employees ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE employees ALTER COLUMN id SET DEFAULT  nextval('employee_id_seq');
+ALTER TABLE employees ALTER COLUMN id SET DEFAULT  nextval('employees_id_seq');
 
 DROP RULE employee_id_track_i ON employees; -- no longer needed
 
