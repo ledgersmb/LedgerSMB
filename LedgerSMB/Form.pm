@@ -1734,9 +1734,9 @@ sub get_exchangerate {
         ($exchangerate) = $sth->fetchrow_array;
     }
 
-    $exchangerate;
     $sth->finish;
     $self->{dbh}->commit;
+    $exchangerate;
 }
 
 sub check_exchangerate {
