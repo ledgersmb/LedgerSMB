@@ -2,6 +2,9 @@ Changelog for 1.2.5
 * Partsgroup handling corrected on POS and Sales invoice screens (Chris T)
 * Closed books handling is corrected (Chris T)
 * Corrected intermediate rounding issues involving sales tax (Chris T)
+* Fixed FX issue with posting cash transfers (Chris T)
+* Corrected multibyte handling in form generation (Seneca)
+* Corrected NaN issues in invoice printing (Seneca)
 
 Changelog for 1.2.4
 * Fixed internal functions avgcost() and lastcost() to not use float (Joshua D)
