@@ -57,6 +57,9 @@ Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css
 Matt S Trout, <mst @ shadowcatsystems.co.uk> CPAN: MSTROUT, 
 IRC: mst#irc.perl.org contributed the initial Makefile.PL
 
+Chris Nighswonger, <cnighswonger @ foundations.edu> contributed the
+shebang-strawberry.pl
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
