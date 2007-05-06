@@ -58,8 +58,12 @@ ALTER TABLE sic ADD PRIMARY KEY (code);
 
 ALTER TABLE status ADD PRIMARY KEY (trans_id);
 
-ALTER TABLE tax ADD PRIMARY KEY (chart_id);
-ALTER TABLE tax ADD FOREIGN KEY (chart_id) REFERENCES chart (id);
+-- Removing the primary key below since this is not quite the best way
+-- do this.  The tax table could have multiple rows per chart_id.
+-- We need a better fix for 1.3 (perhaps changing date to timestamp and
+-- and defaulting to infinity.
+-- ALTER TABLE tax ADD PRIMARY KEY (chart_id);
+-- ALTER TABLE tax ADD FOREIGN KEY (chart_id) REFERENCES chart (id);
 
 ALTER TABLE translation ADD PRIMARY KEY (trans_id, language_code);
 
