@@ -101,7 +101,7 @@ ledgersmb=> \q
 
 a) Copy 'ledgersmb.conf.default' to 'ledgersmb.conf'
 
-b) Make sure to set the section under [globaldbh] to point to the
+b) Make sure to set the section under [globaldb] to point to the
 central user and session database, using password MYROLEPASSWORD:
 
 [globaldb]
