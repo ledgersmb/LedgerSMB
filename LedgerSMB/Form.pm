@@ -2353,7 +2353,7 @@ sub create_links {
     }
     else {
 
-        for (qw(current_date curr closedto revtrans)) {
+        for (qw(curr closedto revtrans)) {
             $query = qq|
 				SELECT value FROM defaults 
 				 WHERE setting_key = '$_'|;
@@ -2365,15 +2365,13 @@ sub create_links {
             if ( $_ eq 'curr' ) {
                 $self->{currencies} = $val;
             }
-            elsif ( $_ eq 'current_date' ) {
-                $self->{transdate} = $val;
-            }
             else {
                 $self->{$_} = $val;
             }
             $sth->finish;
         }
-
+        
+	$self->{transdate} = $self->current_date;
         if ( !$self->{"$self->{vc}_id"} ) {
             $self->lastname_used( $myconfig, $dbh, $vc, $module );
         }
