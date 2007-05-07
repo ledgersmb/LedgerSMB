@@ -178,7 +178,7 @@ sub transactions {
         $form->{closed} = 1;
     }
     if ( $form->{ponumber} ne "" ) {
-        $query .= " AND lower(ponumber) LIKE ?";
+        $query .= " AND lower(ponumber) LIKE '%' || lower(?) || '%'";
         push @queryargs, $form->{ponumber};
     }
 
