@@ -1418,6 +1418,7 @@ sub add_date {
 
             $mm = ( $diff % 12 );
             $mm = '12' if $mm == 0;
+            $yy-- if $mm == 12;
             $diff = 0;
         }
 
