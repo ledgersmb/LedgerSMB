@@ -53,8 +53,12 @@ and may not be required in all circumstances.  These include:
 
   a) cd to the sql/legacy/ directory of the new ledger directory
   b) run "psql" with appropriate options to connect to your database.
-  c) Note the db version by running the following query:
-     "SELECT version FROM defaults;"
+  c) Note the db schema version by running the following query:
+     "SELECT value from defaults where setting_key = 'version';" (1.2.0 or 
+     later)
+       or
+     "SELECT version FROM defaults;" (SQL-Ledger 2.6.x or LedgerSMB 1.1.x 
+     or earlier)
   d) Run the SQL upgrade scripts in order starting with the one whose name
      begins with "Pg-upgrade-[version]" (each of these scripts will upgrade to
      the next database version which is also identified in the file name).

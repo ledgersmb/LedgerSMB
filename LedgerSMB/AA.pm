@@ -875,6 +875,7 @@ sub transactions {
     $sth->execute(@paidargs) || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+	$form->db_parse_numeric(sth => $sth, hashref => $ref);
         $ref->{exchangerate} = 1 unless $ref->{exchangerate};
 
         if ( $ref->{linetotal} <= 0 ) {
@@ -963,7 +964,7 @@ sub get_name {
     $sth->execute(@queryargs) || $form->dberror($query);
 
     $ref = $sth->fetchrow_hashref(NAME_lc);
-
+    $form->db_parse_numeric(sth => $sth, hashref => $ref);
     if ( $form->{id} ) {
         for (qw(currency employee employee_id intnotes)) {
             delete $ref->{$_};
@@ -1028,7 +1029,9 @@ sub get_name {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} ) || $form->dberror($query);
 
-    while ( my ( $amount, $exch ) = $sth->fetchrow_array ) {
+    while ( my @ref = $sth->fetchrow_array ) {
+        $form->db_parse_numeric(sth => $sth, arrayref => \@ref);
+        my ($amount, $exch) = @ref;
         $exch = 1 unless $exch;
         $form->{creditremaining} -= $amount * $exch;
     }
@@ -1099,6 +1102,7 @@ sub get_name {
     my %a = ();
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth => $sth, hashref => $hashref);
 
         if ( $tax{ $ref->{accno} } ) {
             if ( not exists $a{ $ref->{accno} } ) {

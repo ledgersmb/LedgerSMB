@@ -382,7 +382,7 @@ sub save_gifi {
     }
 
     $sth = $dbh->prepare($query);
-    $sth->execute(@queryargs) || $form->dberror;
+    $sth->execute(@queryargs) || $form->dberror($query);
     $sth->finish;
     $dbh->commit;
 

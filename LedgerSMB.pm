@@ -438,7 +438,7 @@ sub call_procedure {
     my @names = @{$sth->{NAME_lc}};
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 	for (0 .. $#names){
-            if ($types[$_] eq 'NUMERIC'){
+            if ($types[$_] == 3){
                 $ref->{$names[$_]} = Math::BigFloat->new($ref->{$names[$_]});
             }
         }

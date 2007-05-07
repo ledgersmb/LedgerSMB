@@ -220,6 +220,7 @@ sub transactions {
 
     my %oid = ();
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+	$form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $ref->{exchangerate} = 1 unless $ref->{exchangerate};
         if ( $ref->{id} != $oid{id}{ $ref->{id} } ) {
             push @{ $form->{OE} }, $ref;
@@ -774,6 +775,7 @@ sub retrieve {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 
@@ -848,6 +850,7 @@ sub retrieve {
         my $listprice;
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
             ($decimalplaces) = ( $ref->{sellprice} =~ /\.(\d+)/ );
             $decimalplaces = length $decimalplaces;
@@ -941,11 +944,16 @@ sub exchangerate_defaults {
     # get exchange rates for transdate or max
     foreach $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
         $eth1->execute( $var, $form->{transdate} );
-        ( $form->{$var} ) = $eth1->fetchrow_array;
+        my @exchangelist;
+        @exchangelist = $eth1->fetchrow_array;
+        $form->db_parse_numeric(sth=>$eth1, arrayref=>\@exchangelist);
+        $form->{$var} = shift @array;
         if ( !$form->{$var} ) {
             $eth2->execute($var);
+            @exchangelist = $eth2->fetchrow_array;
+            $form->db_parse_numeric(sth=>$eth2, arrayref=>\@exchangelist);
 
-            ( $form->{$var} ) = $eth2->fetchrow_array;
+            ( $form->{$var} ) = @exchangelist; 
             ( $null, $form->{$var} ) = split / /, $form->{$var};
             $form->{$var} = 1 unless $form->{$var};
             $eth2->finish;
@@ -1116,7 +1124,10 @@ sub order_details {
             $sth->execute( $form->{"id_$i"}, $form->{warehouse_id} )
               || $form->dberror;
 
-            ($qty) = $sth->fetchrow_array;
+            my @qtylist = $sth->fetchrow_array;
+            $form->db_parse_numeric(sth=>$sth, arrayref=>\@qtylist);
+
+            ($qty) = @qtylist; $sth->fetchrow_array;
             $sth->finish;
 
             $form->{"qty_$i"} = 0 if $qty == 0;
@@ -1604,6 +1615,7 @@ sub assembly_details {
     $sth->execute($id) || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         for (qw(partnumber description partsgroup)) {
             $form->{"a_$_"} = $ref->{$_};
@@ -1774,7 +1786,9 @@ sub save_inventory {
             $wth->execute( $form->{"id_$i"}, $warehouse_id )
               || $form->dberror;
 
-            ($qty) = $wth->fetchrow_array;
+            @qtylist = $wth->fetchrow_array;
+            $form->db_parse_numeric(sth=>$wth, arrayref=>\@qtylist);
+            ($qty) = @qtylist;
             $wth->finish;
 
             if ( $ship > $qty ) {
@@ -2066,6 +2080,7 @@ sub get_inventory {
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $ref->{qty} = $ref->{onhand} - $ref->{qty};
         push @{ $form->{all_inventory} }, $ref if $ref->{qty} > 0;
     }
@@ -2153,6 +2168,7 @@ sub get_soparts {
             $sth->execute( $form->{"ndx_$i"} );
 
             while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+                $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
                 &add_items_required( "", $dbh, $form, $ref->{id},
                     $ref->{required}, $ref->{assembly} );
             }
@@ -2188,6 +2204,7 @@ sub add_items_required {
         $sth->execute || $form->dberror($query);
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=> $sth, hashref=> $ref);
             &add_items_required( "", $dbh, $form, $ref->{id},
                 $required * $ref->{qty},
                 $ref->{assembly} );
@@ -2204,6 +2221,7 @@ sub add_items_required {
         $sth = $dbh->prepare($query);
         $sth->execute($parts_id) || $form->dberror($query);
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         for ( keys %$ref ) {
             $form->{orderitems}{$parts_id}{$_} = $ref->{$_};
         }
@@ -2292,6 +2310,7 @@ sub generate_orders {
         $sth = $dbh->prepare($query);
         $sth->execute($vendor_id) || $form->dberror($query);
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=> $ref);
             $curr                 = $ref->{curr};
             $taxincluded          = $ref->{taxincluded};
             $tax{ $ref->{accno} } = $ref->{rate};

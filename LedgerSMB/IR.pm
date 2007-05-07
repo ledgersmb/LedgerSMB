@@ -337,6 +337,7 @@ sub post_invoice {
                 my $totalqty = $form->{"qty_$i"};
 
                 while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+                    $form->db_parse_numeric(sth=>$sth, hashref => $ref);
 
                     my $qty = $ref->{qty} + $ref->{allocated};
 
@@ -1034,6 +1035,7 @@ sub retrieve_invoice {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         for ( keys %$ref ) {
             $form->{$_} = $ref->{$_};
         }
@@ -1093,6 +1095,7 @@ sub retrieve_invoice {
         my $ptref;
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
             $dec = length $dec;
@@ -1103,6 +1106,7 @@ sub retrieve_invoice {
             my $taxrate = 0;
 
             while ( $ptref = $tth->fetchrow_hashref(NAME_lc) ) {
+                $form->db_parse_numeric(sth => $tth, hashref => $ptref);
                 $ref->{taxaccounts} .= "$ptref->{accno} ";
                 $taxrate += $form->{"$ptref->{accno}_rate"};
             }
@@ -1215,6 +1219,7 @@ sub retrieve_item {
     my $ptref;
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         my ($dec) = ( $ref->{sellprice} =~ /\.(\d+)/ );
         $dec = length $dec;
@@ -1277,7 +1282,9 @@ sub exchangerate_defaults {
     # get exchange rates for transdate or max
     foreach $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
         $eth1->execute( $var, $form->{transdate} );
-        ( $form->{$var} ) = $eth1->fetchrow_array;
+        @array = $eth1->fetchrow_array;
+	$form->db_parse_numeric(sth=> $eth1, arrayref=>\@array);
+        $form->{$var} = shift @array;
         if ( !$form->{$var} ) {
             $eth2->execute($var);
 

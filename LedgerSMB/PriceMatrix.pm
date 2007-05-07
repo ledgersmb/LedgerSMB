@@ -122,6 +122,7 @@ sub price_matrix {
 
         while ( $mref = $pmh->fetchrow_hashref(NAME_lc) ) {
 
+            $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
             # check date
             if ( $mref->{validfrom} ) {
                 next
@@ -193,6 +194,7 @@ sub price_matrix {
         $pmh->execute( $ref->{id} );
 
         $mref = $pmh->fetchrow_hashref(NAME_lc);
+        $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
 
         if ( $mref->{partnumber} ne "" ) {
             $ref->{partnumber} = $mref->{partnumber};

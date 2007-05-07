@@ -1516,6 +1516,7 @@ sub cogs {
     my $qty;
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+	$form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         if ( ( $qty = ( ( $ref->{qty} * -1 ) - $ref->{allocated} ) ) >
             $totalqty )
         {
@@ -1751,6 +1752,7 @@ sub retrieve_invoice {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $form->db_parse_numeric(sth=> $sth, hashref=>$ref_);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 
@@ -1808,7 +1810,7 @@ sub retrieve_invoice {
         my $ptref;
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-
+            $form->db_parse_numeric(sth=>$sth, hashref => $ref);
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
             $dec = length $dec;
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
@@ -1935,6 +1937,7 @@ sub retrieve_item {
     my $transdate = $form->datetonum( $myconfig, $form->{transdate} );
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth => $sth, hashref => $ref);
 
         my ($dec) = ( $ref->{sellprice} =~ /\.(\d+)/ );
         $dec = length $dec;
