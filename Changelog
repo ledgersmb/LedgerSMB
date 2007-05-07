@@ -7,6 +7,8 @@ Changelog for 1.2.5
 * Corrected NaN issues in invoice printing (Seneca)
 * Corrected PO and order number searches not working (Chris T).
 * Corrected Exchange Rate display issue (CHris T).
+* Corrected number parsing issues with 1.000,00 formats (Chris T).
+* Corrected a number of date handling issues and added tests (Seneca).
 
 Changelog for 1.2.4
 * Fixed internal functions avgcost() and lastcost() to not use float (Joshua D)
