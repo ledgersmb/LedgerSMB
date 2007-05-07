@@ -1383,6 +1383,9 @@ sub add_date {
 
     my $diff = 0;
     my $spc  = $myconfig->{dateformat};
+    my $yy;
+    my $mm;
+    my $dd;
     $spc =~ s/\w//g;
     $spc = substr( $spc, 0, 1 );
 
@@ -1406,7 +1409,7 @@ sub add_date {
         else {
 
             # ISO
-            ( $yy, $mm, $dd ) =~ /(....)(..)(..)/;
+            ( $yy, $mm, $dd ) = ($date =~ /(....)(..)(..)/);
         }
 
         if ( $unit eq 'days' ) {
@@ -1423,7 +1426,7 @@ sub add_date {
             my $whole = int( $diff / 12 );
             $yy += $whole;
 
-            $mm   = ( $diff % 12 );
+            $mm = ( $diff % 12 );
             $mm = '12' if $mm == 0;
             $yy-- if $mm == 12;
             $diff = 0;
