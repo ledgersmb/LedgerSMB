@@ -328,5 +328,7 @@ foreach my $format (0 .. $#formats) {
 	cmp_ok($form->add_date(\%myconfig, $start, 2, 'years'), 'eq',
 		$results, "add_date, $fmt, 2 years, 2000-01-29");
 }
+cmp_ok($form->add_date(\%myconfig, '20000129', 2, 'years'), 'eq',
+	'20020129', 'add_date, yyyymmdd, 2 years, 20000129');
 ok(!defined $form->add_date(\%myconfig),
 	'add_date, undef if no date');

@@ -1376,6 +1376,9 @@ sub add_date {
 
     my $diff = 0;
     my $spc  = $myconfig->{dateformat};
+    my $yy;
+    my $mm;
+    my $dd;
     $spc =~ s/\w//g;
     $spc = substr( $spc, 0, 1 );
 
@@ -1399,7 +1402,7 @@ sub add_date {
         else {
 
             # ISO
-            ( $yy, $mm, $dd ) =~ /(....)(..)(..)/;
+            ( $yy, $mm, $dd ) = ($date =~ /(....)(..)(..)/);
         }
 
         if ( $unit eq 'days' ) {
