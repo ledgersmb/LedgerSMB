@@ -3,7 +3,6 @@
 # Note: This file assumes good dates, SL behaviour with bad dates is undefined
 #
 
-#LedgerSMB/Form.pm:3153:sub from_to
 #LedgerSMB/Form.pm:1361:sub add_date {
 
 use strict;
@@ -33,6 +32,10 @@ my @formats = ( ['mm-dd-yy', '-', 2, '02-29-00', '03-01-00'],
 
 my @months = ('January', 'February', 'March', 'April', 'May ', 'June', 
 	'July', 'August', 'September', 'October', 'November', 'December');
+
+my %month_num = ('01' => '31', '02' => '28', '03' => '31', '04' => '30',
+		 '05' => '31', '06' => '30', '07' => '31', '08' => '31',
+		 '09' => '30', '10' => '31', '11' => '30', '12' => '31');
 
 my $today = `date +\%F`;
 chomp $today;
@@ -82,21 +85,33 @@ foreach my $format (0 .. $#formats) {
 
 # $form->current_date checks
 # Note that $form->current_date always uses the database
+# Note that $form->current_date can take four digit years with all formats
+# Note that $form->current_date will always accept a dateformat of 'yyyymmdd'
 foreach my $format (0 .. $#formats) {
 	%myconfig = (dateformat => $formats[$format][0]);
 	my $fmt = $formats[$format][0];
 	my $sep = $formats[$format][1];
 	my $yearcount = $formats[$format][2];
-	is($form->current_date(\%myconfig), $today, 
-		"current_date, $fmt: $today");
+	my $tv = $fmt;
+	$tv =~ s/(yy)?yy/$today_parts{'yyyy'}/;
+	$tv =~ s/mm/$today_parts{'mm'}/;
+	$tv =~ s/dd/$today_parts{'dd'}/;
+	is($form->current_date(\%myconfig), 
+		$today, "current_date, $fmt: $today");
 	is($form->current_date(\%myconfig, $formats[$format][3]), 
 		'2000-02-29', "current_date, $fmt: 2000-02-29");
 	is($form->current_date(\%myconfig, $formats[$format][3], 1), 
 		'2000-03-01', "current_date, $fmt: 2000-03-01");
+	is($form->current_date(\%myconfig, $tv), 
+		$today, "current_date, $fmt: $tv");
+	$tv = "$today_parts{'yyyy'}$today_parts{'mm'}$today_parts{'dd'}";
+	is($form->current_date(\%myconfig, $tv), 
+		$today, "current_date, $fmt: $tv");
 }
 
 # $form->datetonum checks
 # Note that $form->datetonum assumes the year range 2000-2099
+# Note that $form->datetonum is identity if there is no date or non-digit
 foreach my $format (0 .. $#formats) {
 	%myconfig = (dateformat => $formats[$format][0]);
 	my $fmt = $formats[$format][0];
@@ -105,10 +120,13 @@ foreach my $format (0 .. $#formats) {
 	cmp_ok($form->datetonum(\%myconfig, $formats[$format][3]), 'eq',
 		'20000229', "datetonum, $fmt");
 }
+cmp_ok($form->datetonum(\%myconfig), 'eq', '', "datetonum, empty string");
+cmp_ok($form->datetonum(\%myconfig, '1234'), 'eq', '1234', "datetonum, 1234");
 
 # $form->split_date checks
 # Note that $form->split_date assumes the year range 2000-2099
 # Note that $form->split_date only outputs two digit years
+# Note that $form->split_date if a date provided without non-digit, identity
 foreach my $format (0 .. $#formats) {
 	%myconfig = (dateformat => $formats[$format][0]);
 	my $fmt = $formats[$format][0];
@@ -125,7 +143,7 @@ foreach my $format (0 .. $#formats) {
 	cmp_ok($output[3], 'eq', '29', "split_date specified, day");
 	cmp_ok($output[0], 'eq', $rv, "split_date specified, unit");
 	@output = $form->split_date($fmt);
-	my $rv = $fmt;
+	$rv = $fmt;
 	$rv =~ s/\Q$sep\E//g;
 	$rv =~ s/(yy)?yy/$output[1]/;
 	$rv =~ s/mm/$output[2]/;
@@ -141,6 +159,9 @@ foreach my $format (0 .. $#formats) {
 		"split_date unspecified, month");
 	cmp_ok($output[3], 'eq', $today_parts{'dd'}, 
 		"split_date unspecified, day");
+	@output = $form->split_date($fmt, '12345');
+	cmp_ok($output[0], 'eq', '12345', 
+		'split_date, 12345');
 }
 
 # $form->format_date checks
@@ -160,3 +181,98 @@ foreach my $format (0 .. $#formats) {
 		$formats[$format][3], "format_date, $fmt, non-ISO");
 }
 
+# $form->from_to checks
+# Note that $form->from_to requires $form->format_date
+# Note that $form->from_to outputs four digit years
+# Note that $form->from_to outputs 1999-12-31 (formatted) if no input given
+# Note that $form->from_to outputs the last day of the previous year if only year given
+# Note that $form->from_to outputs the last day of the chosen month if month given
+# Note that $form->from_to $interval of 0 is current day
+# Note that $form->from_to $interval is an integral quantity of months
+# Note that $form->from_to will fail if ($interval + $month) > 22 
+# (2 + 23), 25 - 12, 13 - 1, 12
+foreach my $format (0 .. $#formats) {
+	$form->{db_dateformat} = $formats[$format][0];
+	my $fmt = $formats[$format][0];
+	my $sep = $formats[$format][1];
+	my $yearcount = $formats[$format][2];
+	my $results = $fmt;
+	$results =~ s/(yy)?yy/1999/;
+	$results =~ s/mm/12/;
+	$results =~ s/dd/31/;
+	cmp_ok($form->from_to(), 'eq',
+		$results, "from_to, $fmt, unspecified");
+	$results =~ s/1999/2006/;
+	cmp_ok($form->from_to('07'), 'eq',
+		$results, "from_to, $fmt, 07");
+	cmp_ok($form->from_to('2007'), 'eq',
+		$results, "from_to, $fmt, 2007");
+	$results =~ s/2006/2007/;
+	$results =~ s/12/05/;
+	cmp_ok($form->from_to('07', '05'), 'eq',
+		$results, "from_to, $fmt, 07-05");
+	cmp_ok($form->from_to('2007', '05'), 'eq',
+		$results, "from_to, $fmt, 2007-05");
+	$results =~ s/05/02/;
+	$results =~ s/31/28/;
+	cmp_ok($form->from_to('07', '02'), 'eq',
+		$results, "from_to, $fmt, 07-02");
+	cmp_ok($form->from_to('2007', '02'), 'eq',
+		$results, "from_to, $fmt, 2007-02");
+	$results =~ s/2007/2000/;
+	$results =~ s/28/29/;
+	cmp_ok($form->from_to('00', '02'), 'eq',
+		$results, "from_to, $fmt, 00-02 leap day");
+	cmp_ok($form->from_to('2000', '02'), 'eq',
+		$results, "from_to, $fmt, 2000-02 leap day");
+	$results =~ s/29/31/;
+	$results =~ s/02/01/;
+	cmp_ok($form->from_to('00', '01'), 'eq',
+		$results, "from_to, $fmt, 00-01 year edge");
+	cmp_ok($form->from_to('2000', '01'), 'eq',
+		$results, "from_to, $fmt, 2000-01 year edge");
+	$results =~ s/01/12/;
+	cmp_ok($form->from_to('00', '12'), 'eq',
+		$results, "from_to, $fmt, 00-12 year edge");
+	cmp_ok($form->from_to('2000', '12'), 'eq',
+		$results, "from_to, $fmt, 2000-12 year edge");
+	$results =~ s/12/02/;
+	$results =~ s/31/29/;
+	cmp_ok($form->from_to('00', '02', '1'), 'eq',
+		$results, "from_to, $fmt, 00-02, 1 interval");
+	cmp_ok($form->from_to('2000', '02', '1'), 'eq',
+		$results, "from_to, $fmt, 2000-02, 1 interval");
+	$results =~ s/29/28/;
+	my $month;
+	my $lastmonth;
+	for (2 .. 11) {
+		$month = sprintf '%02d', $_ + 1;
+		$lastmonth = sprintf '%02d', $_;
+		$results =~ s/$lastmonth/$month/;
+		$results =~ s/$month_num{$lastmonth}/$month_num{$month}/;
+		cmp_ok($form->from_to('00', '02', $_), 'eq',
+			$results, "from_to, $fmt, 00-02, $_ interval");
+		cmp_ok($form->from_to('2000', '02', $_), 'eq',
+			$results, "from_to, $fmt, 2000-02, $_ interval");
+	}
+	$results =~ s/2000/2001/;
+	for (0 .. 10) {
+		$month = sprintf '%02d', $_ + 1;
+		$lastmonth = sprintf '%02d', $_;
+		$lastmonth = '12' if $lastmonth eq '00';
+		$results =~ s/([^0])$lastmonth/${1}$month/;
+		$results =~ s/^$lastmonth/$month/;
+		$results =~ s/$month_num{$lastmonth}/$month_num{$month}/;
+		cmp_ok($form->from_to('00', '02', $_ + 12), 'eq',
+			$results, "from_to, $fmt, 00-02, $_ + 12 interval");
+		cmp_ok($form->from_to('2000', '02', $_ + 12), 'eq',
+			$results, "from_to, $fmt, 2000-02, $_ + 12 interval");
+	}
+	$results =~ s/2001/$today_parts{'yyyy'}/;
+	$results =~ s/11/$today_parts{'mm'}/;
+	$results =~ s/30/$today_parts{'dd'}/;
+	cmp_ok($form->from_to('00', '02', '0'), 'eq',
+		$results, "from_to, $fmt, 00-02, 0 interval (today)");
+	cmp_ok($form->from_to('2000', '02', '0'), 'eq',
+		$results, "from_to, $fmt, 2000-02, 0 interval (today)");
+}
