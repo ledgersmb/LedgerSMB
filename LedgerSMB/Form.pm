@@ -1416,12 +1416,13 @@ sub add_date {
             my $whole = int( $diff / 12 );
             $yy += $whole;
 
-            $mm   = ( $diff % 12 ) + 1;
+            $mm = ( $diff % 12 );
+            $mm = '12' if $mm == 0;
             $diff = 0;
         }
 
         if ( $unit eq 'years' ) {
-            $yy++;
+            $yy += $repeat;
         }
 
         $mm--;
