@@ -91,6 +91,7 @@ sub inventory_activity {
     $sth->execute() || $form->dberror($query);
     @cols = qw(description sold revenue partnumber received expense);
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $ref->{net_income} = $ref->{revenue} - $ref->{expense};
         map { $ref->{$_} =~ s/^\s*// } @cols;
         map { $ref->{$_} =~ s/\s*$// } @cols;
@@ -1224,6 +1225,7 @@ sub get_accounts {
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
 
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         # get last heading account
         @accno = grep { $_ le "$ref->{accno}" } @headingaccounts;
         $accno = pop @accno;
@@ -1347,6 +1349,7 @@ sub trial_balance {
         $sth->execute || $form->dberror($query);
 
         while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
             $ref->{amount} = $form->round_amount( $ref->{amount}, 2 );
             $balance{ $ref->{accno} } = $ref->{amount};
 
@@ -1381,6 +1384,7 @@ sub trial_balance {
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $trb{ $ref->{accno} }{description} = $ref->{description};
         $trb{ $ref->{accno} }{charttype}   = 'H';
         $trb{ $ref->{accno} }{category}    = $ref->{category};
@@ -1472,6 +1476,7 @@ sub trial_balance {
 
     # calculate debit and credit for the period
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $trb{ $ref->{accno} }{description} = $ref->{description};
         $trb{ $ref->{accno} }{charttype}   = 'A';
         $trb{ $ref->{accno} }{category}    = $ref->{category};
@@ -1511,7 +1516,9 @@ sub trial_balance {
                   || $form->dberror($query);
 
                 ( $debit, $credit ) = ( 0, 0 );
-                while ( ( $debit, $credit ) = $drcr->fetchrow_array ) {
+                while ( my @drcrlist = $drcr->fetchrow_array ) {
+                    $form->db_parse_numeric(sth=>$drcr, arrayref=>\@drcrlist);
+                    ($debit, $credit) = @drcrlist;
                     $ref->{debit}  += $debit;
                     $ref->{credit} += $credit;
                 }
@@ -1758,6 +1765,7 @@ sub aging {
                 $sth->execute(@var);
 
                 while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+		    $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
                     $ref->{module} =
                       ( $ref->{invoice} )
                       ? $invoice
@@ -1780,6 +1788,7 @@ sub aging {
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         push @{ $form->{all_language} }, $ref;
     }
     $sth->finish;
@@ -2197,6 +2206,7 @@ sub tax_report {
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $ref->{tax} = $form->round_amount( $ref->{tax}, 2 );
         if ( $form->{report} =~ /nontaxable/ ) {
             push @{ $form->{TR} }, $ref if $ref->{netamount};
@@ -2368,6 +2378,7 @@ sub payments {
         $sth->execute || $form->dberror($query);
 
         while ( my $pr = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
             push @{ $form->{ $ref->{id} } }, $pr;
         }
         $sth->finish;

@@ -499,7 +499,7 @@ sub post_payment {
             $form->{"paid_$i"} =
               $form->round_amount( $form->{"paid_$i"} * $exchangerate, 2 );
 
-            $pth->execute( $form->{"id_$i"} ) || $form->dberror;
+            $pth->execute( $form->{"id_$i"} ) || $form->dberror($pth->statement);
             ($amount) = $pth->fetchrow_array;
             $pth->finish;
 
@@ -774,7 +774,7 @@ sub post_payments {
 
             $paid = $form->round_amount( $paid * $exchangerate, 2 );
 
-            $pth->execute( $form->{"id_$i"} ) || $form->dberror;
+            $pth->execute( $form->{"id_$i"} ) || $form->dberror($pth->statement);
             ($amount) = $pth->fetchrow_array;
             $pth->finish;
 

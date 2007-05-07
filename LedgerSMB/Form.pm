@@ -581,6 +581,25 @@ sub round_amount {
     return $amount;
 }
 
+sub db_parse_numeric {
+    my $self = shift;
+    my %args = @_;
+    my ($sth, $arrayref, $hashref) = ($args{sth}, $args{arrayref}, 
+          $args{hashref});
+    my @types = @{$sth->{TYPE}};
+    my @names = @{$sth->{NAME_lc}};
+    for (0 .. $#names){
+        if ($types[$_] == 3){
+            $arrayref[$_] = Math::BigFloat->new($arrayref[$_]) 
+              if defined $arrayref;
+            $hashref->{$names[$_]} = Math::BigFloat->new($hashref->{$names[$_]})
+              if defined $hashref;
+        }
+
+    }
+    return ($hashref || $arrayref);
+}
+
 sub callproc {
     my $procname = shift @_;
     my $argstr   = "";
@@ -1414,7 +1433,7 @@ sub add_date {
 
         $mm--;
 
-        @t = localtime( timelocal( 0, 0, 0, $dd, $mm, $yy ) + $diff );
+        @t = localtime( Time::Local::timelocal( 0, 0, 0, $dd, $mm, $yy ) + $diff );
 
         $t[4]++;
         $mm = substr( "0$t[4]", -2 );
@@ -1739,6 +1758,7 @@ sub get_exchangerate {
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
+	$exchangerate = Math::BigFloat->new($exchangerate);
     }
 
     $sth->finish;
@@ -2184,6 +2204,10 @@ sub create_links {
     # get last customers or vendors
     my ( $query, $sth );
 
+    if (!$self->{dbh}) {
+        $self->db_init($myconfig);
+    }
+
     $dbh = $self->{dbh};
 
     my %xkeyref = ();
@@ -2245,6 +2269,7 @@ sub create_links {
         $sth->execute( $self->{id} ) || $self->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $self->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         foreach $key ( keys %$ref ) {
             $self->{$key} = $ref->{$key};
@@ -2720,19 +2745,19 @@ sub save_recurring {
     $query = qq|DELETE FROM recurring
 				 WHERE id = ?|;
 
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
     $query = qq|DELETE FROM recurringemail
 				 WHERE id = ?|;
 
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
     $query = qq|DELETE FROM recurringprint
 				 WHERE id = ?|;
 
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
     if ( $self->{recurring} ) {
@@ -2763,10 +2788,10 @@ sub save_recurring {
 
         # calculate nextdate
         $query = qq|
-			SELECT current_date - date ? AS a,
-				date ? - current_date AS b|;
+			SELECT current_date - ?::date AS a,
+				?::date - current_date AS b|;
 
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $self->dberror($query);
         $sth->execute( $s{startdate}, $enddate );
         my ( $a, $b ) = $sth->fetchrow_array;
 
@@ -2782,15 +2807,8 @@ sub save_recurring {
         my $nextdate = $enddate;
         if ( $advance > 0 ) {
             if ( $advance < ( $s{repeat} * $s{howmany} ) ) {
-                %interval = (
-                    'Pg' =>
-                      "(date '$s{startdate}' + interval '$advance $s{unit}')",
-                    'DB2' => qq|(date ('$s{startdate}') + "$advance $s{unit}")|,
-                );
 
-                $interval{Oracle} = $interval{PgPP} = $interval{Pg};
-
-                $query = qq|SELECT $interval{$myconfig->{dbdriver}}|;
+                $query = qq|SELECT (date '$s{startdate}' + interval '$advance $s{unit}')|;
 
                 ($nextdate) = $dbh->selectrow_array($query);
             }
@@ -3269,7 +3287,7 @@ sub audittrail {
                         $sth->bind_param( $i++, $newtrail{$key}{$_} );
                     }
                     $sth->bind_param( $i++, $employee_id );
-                    $sth->execute || $self->dberror;
+                    $sth->execute() || $self->dberror($query);
                     $sth->finish;
                 }
             }
