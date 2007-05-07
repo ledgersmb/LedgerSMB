@@ -3,8 +3,6 @@
 # Note: This file assumes good dates, SL behaviour with bad dates is undefined
 #
 
-#LedgerSMB/Form.pm:1361:sub add_date {
-
 use strict;
 use warnings;
 use Test::More 'no_plan';
@@ -276,3 +274,59 @@ foreach my $format (0 .. $#formats) {
 	cmp_ok($form->from_to('2000', '02', '0'), 'eq',
 		$results, "from_to, $fmt, 2000-02, 0 interval (today)");
 }
+
+# $form->add_date checks
+# returns undef if no date passed 
+# valid units: days, weeks, months, years
+# all uses in LSMB use days unit
+# has no error handling capabilities
+foreach my $format (0 .. $#formats) {
+	$form->{db_dateformat} = $formats[$format][0];
+	%myconfig = (dateformat => $formats[$format][0]);
+	my $fmt = $formats[$format][0];
+	my $sep = $formats[$format][1];
+	my $yearcount = $formats[$format][2];
+	my $start = $fmt;
+	$start =~ s/(yy)?yy/2000/;
+	$start =~ s/mm/01/;
+	$start =~ s/dd/29/;
+	my $results = $start;
+	$results =~ s/29/30/;
+	cmp_ok($form->add_date(\%myconfig, $start, 1, 'days'), 'eq',
+		$results, "add_date, $fmt, 1 days, 2000-01-29");
+	$results =~ s/30/31/;
+	cmp_ok($form->add_date(\%myconfig, $start, 2, 'days'), 'eq',
+		$results, "add_date, $fmt, 2 days, 2000-01-29");
+	$results =~ s/31/05/;
+	$results =~ s/01/02/;
+	cmp_ok($form->add_date(\%myconfig, $start, 1, 'weeks'), 'eq',
+		$results, "add_date, $fmt, 1 weeks, 2000-01-29");
+	$results =~ s/05/12/;
+	cmp_ok($form->add_date(\%myconfig, $start, 2, 'weeks'), 'eq',
+		$results, "add_date, $fmt, 2 weeks, 2000-01-29");
+	$results =~ s/12/29/;
+	cmp_ok($form->add_date(\%myconfig, $start, 1, 'months'), 'eq',
+		$results, "add_date, $fmt, 1 months, 2000-01-29");
+	$results =~ s/02/03/;
+	cmp_ok($form->add_date(\%myconfig, $start, 2, 'months'), 'eq',
+		$results, "add_date, $fmt, 2 months, 2000-01-29");
+	$results = $start;
+	$results =~ s/01/11/;
+	cmp_ok($form->add_date(\%myconfig, $start, 10, 'months'), 'eq',
+		$results, "add_date, $fmt, 10 months, 2000-01-29");
+	$results = $start;
+	$results =~ s/01/12/;
+	cmp_ok($form->add_date(\%myconfig, $start, 11, 'months'), 'eq',
+		$results, "add_date, $fmt, 11 months, 2000-01-29");
+	$results = $start;
+	$results =~ s/2000/2001/;
+	cmp_ok($form->add_date(\%myconfig, $start, 12, 'months'), 'eq',
+		$results, "add_date, $fmt, 12 months, 2000-01-29");
+	cmp_ok($form->add_date(\%myconfig, $start, 1, 'years'), 'eq',
+		$results, "add_date, $fmt, 1 years, 2000-01-29");
+	$results =~ s/2001/2002/;
+	cmp_ok($form->add_date(\%myconfig, $start, 2, 'years'), 'eq',
+		$results, "add_date, $fmt, 2 years, 2000-01-29");
+}
+ok(!defined $form->add_date(\%myconfig),
+	'add_date, undef if no date');
