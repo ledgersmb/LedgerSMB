@@ -2425,7 +2425,7 @@ sub current_date {
 
         $query = qq|SELECT (to_date(?, ?) 
 				+ ?::interval)::date AS thisdate|;
-        @queryargs = ( $thisdate, $dateformat, $days );
+        @queryargs = ( $thisdate, $dateformat, sprintf('%d days', $days) );
 
     }
     else {
