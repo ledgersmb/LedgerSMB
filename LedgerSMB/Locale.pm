@@ -105,12 +105,6 @@ sub date {
         $mm = substr( "0$mm", -2 );
         $longdate = "$dd$spc$mm$spc$yy";
 
-        if ( defined $longformat ) {
-            $longdate = "$dd";
-            $longdate .= ( $spc eq '.' ) ? ". " : " ";
-            $longdate .= &text( $self, $longmonth[ --$mm ] ) . " $yy";
-        }
-
     }
     elsif ( $myconfig->{dateformat} =~ /^yy/ ) {
 
