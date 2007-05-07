@@ -2342,6 +2342,7 @@ sub create_links {
             }
             $sth->finish;
         }
+	$self->{transdate} = $self->current_date;
 
     }
     else {
