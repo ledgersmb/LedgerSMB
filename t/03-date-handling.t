@@ -50,6 +50,7 @@ chomp $today_parts{'dd'};
 # $locale->date checks
 # Note that $locale->date assumes the year range 2000-2099
 # Note that $locale->date does not perform language-specific long forms
+# Note that $locale->date also takes in yyyymmdd
 foreach my $format (0 .. $#formats) {
 	%myconfig = (dateformat => $formats[$format][0]);
 	my $fmt = $formats[$format][0];
@@ -61,6 +62,8 @@ foreach my $format (0 .. $#formats) {
 		'', "date, $fmt: empty string");
 	cmp_ok($locale_en->date(\%myconfig, $formats[$format][3]), 'eq',
 		$result, "date, $fmt: short");
+	cmp_ok($locale_en->date(\%myconfig, '20000229'), 'eq',
+		$result, "date, $fmt: chopped");
 	for my $mm (1 .. 12) {
 		my $start = $fmt;
 		my $temp = sprintf('%02d', $mm);
@@ -78,6 +81,7 @@ foreach my $format (0 .. $#formats) {
 }
 
 # $form->current_date checks
+# Note that $form->current_date always uses the database
 foreach my $format (0 .. $#formats) {
 	%myconfig = (dateformat => $formats[$format][0]);
 	my $fmt = $formats[$format][0];
