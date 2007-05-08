@@ -460,8 +460,8 @@ sub call_procedure {
 sub is_allowed_role {
     my $self = shift @_;
     my %args = @_;
-    my @roles = @{$args{allowed_roles}}
-    for $role (@roles){
+    my @roles = @{$args{allowed_roles}};
+    for my $role (@roles){
         if (scalar(grep /^$role$/, $self->{_roles})){
             return 1;
         }

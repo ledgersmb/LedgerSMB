@@ -47,21 +47,30 @@ sub AUTOLOAD {
     $type =~ m/::(.*?)$/;
     $type = lc $1;
     print "Type: $type\n";
-    $self->exec_method( procname => "$type" . "_" . $AUTOLOAD, args => \@_
-        order_by => $order_by);
+    $self->exec_method( procname => "$type" . "_" . $AUTOLOAD, args => \@_);
 }
 
 sub new {
     my $class = shift @_;
     my %args  = @_;
     my $base  = $args{base};
+    my $mode  = $args{copy};
+    my @mergelist = @{$args{merge}};
     my $self  = bless {}, $class;
     if ( !$base->isa('LedgerSMB') ) {
         $self->error("Constructor called without LedgerSMB object arg");
     }
 
     my $attr;
-    $self->merge($base);
+    if (lc($mode) eq 'base'){
+        $self->merge($base, 'dbh', '_roles');
+    }
+    elsif (lc($mode) eq 'list'){
+        $self->merge($base, @mergelist);
+    }
+    else {
+        $self->merge($base);
+    }
     $self;
 }
 
@@ -142,7 +151,6 @@ sub run_custom_queries {
     }
     for ( keys %temphash ) {
         my @data;
-        my $ins_values;
         $query = "$query_type ";
         if ( $query_type eq 'UPDATE' ) {
             $query = "DELETE FROM $_ WHERE row_id = ?";
