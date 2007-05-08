@@ -2,8 +2,9 @@
 
 use strict;
 use warnings;
-use Test::More tests => 30;
+use Test::More tests => 31;
 
+use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
 use_ok('LedgerSMB::AM');
 use_ok('LedgerSMB::BP');

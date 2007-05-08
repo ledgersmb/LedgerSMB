@@ -3,7 +3,7 @@
 
 LedgerSMB  The Base class for many LedgerSMB objects, including DBObject.
 
-=head1 SYOPSIS
+=head1 SYNOPSIS
 
 This module creates a basic request handler with utility functions available
 in database objects (LedgerSMB::DBObject)
