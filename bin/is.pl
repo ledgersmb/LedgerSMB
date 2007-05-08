@@ -105,8 +105,7 @@ sub invoice_links {
 
     $form->{oldlanguage_code} = $form->{language_code};
 
-    $form->get_partsgroup( \%myconfig,
-        { language_code => $form->{language_code}, searchitems => 'nolabor' } );
+    $form->get_partsgroup( \%myconfig, { all => 1} );
 
     if ( @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = "<option>\n";
