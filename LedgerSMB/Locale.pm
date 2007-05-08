@@ -1,3 +1,28 @@
+=head1 NAME
+
+LedgerSMB::Locale  Locale handling class for LedgerSMB
+
+=head1 SYNOPSIS
+
+Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
+
+=head1 METHODS
+
+=item get_handle ($language_code)
+Returns a locale handle for accessing the other methods.  Inherited from 
+Locale::Maketext.
+
+=item text ($string)
+Returns the translation for the given string.  This is a legacy wrapper that
+merely calls $self->maketext.
+
+=item date ($myconfig, $date, $longformat)
+Returns the given date after formatting it.  If $longformat is set, the date 
+will be givin in the form of "_('September') 23 2007".  If $longformat is not
+set, the date will be output in the format specified by $myconfig->{dateformat}.
+
+=head1 Copyright (C) 2006, The LedgerSMB core team.
+
 #=====================================================================
 #
 # Locale support module for LedgerSMB
@@ -14,15 +39,25 @@
 # Version 2 or, at your option, any later version.  See COPYRIGHT file for
 # details.
 #
+# This file contains source code included with or based on SQL-Ledger which
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
+# maintainers, and copyright holders, see the CONTRIBUTORS file.
+#
+# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+# Copyright (C) 2000
+#
+#  Author: DWS Systems Inc.
+#     Web: http://www.sql-ledger.org
+#
+# Contributors: Thomas Bayen <bayen@gmx.de>
+#               Antti Kaihola <akaihola@siba.fi>
+#               Moritz Bunkus (tex)
+#               Jim Rawlings <jim@your-dba.com> (DB2)
 #
 #======================================================================
-# This package contains locale related functions:
-#`
-# get_handle - gets a locale handle
-# text - outputs HTML escaped translation for input text
-# date - formats date for the locale
-#
-#====================================================================
+=cut
 
 package LedgerSMB::Locale;
 use base 'Locale::Maketext';
@@ -49,8 +84,8 @@ sub text {
 sub date {
     my ( $self, $myconfig, $date, $longformat ) = @_;
 
-    my @longmonth = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec));
-    @longmonth = (
+##    my @longmonth = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec));
+    my @longmonth = (
         "January",   "February", "March",    "April",
         "May ",      "June",     "July",     "August",
         "September", "October",  "November", "December"
