@@ -111,7 +111,7 @@ sub add {
       unless $form->{callback};
 
     &create_links;
-
+    $form->{reference} = $form->update_defaults(\%myconfig, 'glnumber');
     $form->{rowcount} = ( $form->{transfer} ) ? 3 : 9;
     if ( $form->{pos_adjust} ) {
         &pos_adjust;
