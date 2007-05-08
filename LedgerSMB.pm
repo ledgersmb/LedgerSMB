@@ -48,6 +48,11 @@ characters or is an empty string.
 This function returns 1 if the run mode is what is specified.  Otherwise
 returns 0.
 
+=item is_allowed_role(allowed_roles => @role_names)
+This function returns 1 if the user's roles include any of the roles in
+@role_names.  Currently it returns 1 when this is not found as well but when 
+role permissions are introduced, this will change to 0.
+
 =item num_text_rows (string => $string, cols => $number, max => $number);
 
 This function determines the likely number of rows needed to hold text in a 
@@ -449,6 +454,19 @@ sub call_procedure {
         push @results, $ref;
     }
     @results;
+}
+
+# Keeping this here due to common requirements
+sub is_allowed_role {
+    my $self = shift @_;
+    my %args = @_;
+    my @roles = @{$args{allowed_roles}}
+    for $role (@roles){
+        if (scalar(grep /^$role$/, $self->{_roles})){
+            return 1;
+        }
+    }
+    return 1; # TODO change to 0 when the role system is implmented
 }
 
 # This should probably be moved to User too...
