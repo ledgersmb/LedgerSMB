@@ -56,6 +56,9 @@ INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES 
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5420', 'Dépenses d\'assurance-emploi', 'A', 'E', '', '8622');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5430', 'Dépenses RRQ', 'A', 'E', '', '8622');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5440', 'Dépenses CSST', 'A', 'E', '', '8622');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5450', 'Dépenses FSS', 'A', 'E', '', '8622');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5460', 'Dépenses RQAP', 'A', 'E', '', '8622');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5470', 'Dépenses vacances', 'A', 'E', '', '8622');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5600', 'DÉPENSES ADMINISTRATIVES ET GÉNÉRALES', 'H', 'E', '', '');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5610', 'Frais comptables et juridiques', 'A', 'E', 'AP_amount', '8862');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5615', 'Publicité et promotion', 'A', 'E', 'AP_amount', '8520');
