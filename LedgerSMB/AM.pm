@@ -1536,6 +1536,7 @@ sub taxes {
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         push @{ $form->{taxrates} }, $ref;
         $taxaccounts .= " " . $ref{accno};
     }
