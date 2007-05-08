@@ -14,10 +14,10 @@ INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES 
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1065', 'Petite caisse', 'A', 'A', 'AR_paid:AP_paid', '1001');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1200', 'Comptes clients', 'A', 'A', 'AR', '1060');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1205', 'Provisions pour créances douteuses', 'A', 'A', '', '1063');
-INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1500', 'STOCKS', 'H', 'A', '', '1120');
-INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1520', 'Stocks / Général', 'A', 'A', 'IC', '1122');
-INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1530', 'Stocks / Pièces de rechange', 'A', 'A', 'IC', '1122');
-INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1540', 'Stocks / Matières premières', 'A', 'A', 'IC', '1122');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1500', 'INVENTAIRE', 'H', 'A', '', '1120');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1520', 'Inventaire / Général', 'A', 'A', 'IC', '1122');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1530', 'Inventaire / Pièces de rechange', 'A', 'A', 'IC', '1122');
+INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1540', 'Inventaire / Matières premières', 'A', 'A', 'IC', '1122');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1800', 'AUTRES IMMOBILISATIONS', 'H', 'A', '', '1900');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('1820', 'Meubles et accessoires', 'A', 'A', '', '1787');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno,contra) VALUES ('1825', 'Amortissement cumulé des meubles et des accessoires', 'A', 'A', '', '1788', '1');
