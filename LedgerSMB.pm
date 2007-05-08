@@ -424,6 +424,7 @@ sub call_procedure {
     my %args     = @_;
     my $procname = $args{procname};
     my @args     = @{ $args{args} };
+    my $order_by = $args{order_by};
     my $argstr   = "";
     my @results;
     for ( 1 .. scalar @args ) {
@@ -431,6 +432,9 @@ sub call_procedure {
     }
     $argstr =~ s/\, $//;
     my $query = "SELECT * FROM $procname()";
+    if ($order_by){
+        $query .= " ORDER BY $order_by";
+    }
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute(@args);

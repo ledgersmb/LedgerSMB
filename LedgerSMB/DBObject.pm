@@ -47,7 +47,8 @@ sub AUTOLOAD {
     $type =~ m/::(.*?)$/;
     $type = lc $1;
     print "Type: $type\n";
-    $self->exec_method( procname => "$type" . "_" . $AUTOLOAD, args => \@_ );
+    $self->exec_method( procname => "$type" . "_" . $AUTOLOAD, args => \@_
+        order_by => $order_by);
 }
 
 sub new {
@@ -64,8 +65,19 @@ sub new {
     $self;
 }
 
+sub set_ordering {
+    my $self = shift  @_;
+    my %args = @_;
+
+    if (not defined $self->{_order_method}){
+        $self->{_order_method} = {};
+    }   
+
+    $self->{_order_method}->{$args{method}} = $args{column};
+}
+
 sub exec_method {
-    my ($self)   = shift @_;
+    my $self   = shift @_;
     my %args     = @_;
     my $funcname = $args{funcname};
     my @in_args  = @{ $args{args} };
