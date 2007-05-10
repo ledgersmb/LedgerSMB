@@ -11,6 +11,7 @@ Changelog for 1.2.5
 * Corrected number parsing issues with 1.000,00 formats (Chris T).
 * Corrected a number of date handling issues and added tests (Seneca).
 * Applied invoice performance patch from Ashley Gittins (Chris T)
+* Applide performance improvements to lastname_used (Chris T)
 
 Changelog for 1.2.4
 * Fixed internal functions avgcost() and lastcost() to not use float (Joshua D)
