@@ -101,6 +101,8 @@ sub invoice_details {
         # account numbers
         $pth->execute( $form->{"id_$i"} );
         $ref = $pth->fetchrow_hashref(NAME_lc);
+        $form->db_parse_numeric(sth=>$pth, hashref=>$ref);
+
         for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
         $pth->finish;
 
@@ -1307,7 +1309,7 @@ sub post_invoice {
 					            transdate, source, 
 					            fx_transaction, cleared)
 					     VALUES (?, (SELECT id FROM chart
-					                   WHERE accno = >),
+					                   WHERE accno = ?),
 					            ?, ?, ?, '1', ?)|;
 
                 $sth = $dbh->prepare($query);

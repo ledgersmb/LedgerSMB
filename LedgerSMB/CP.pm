@@ -270,7 +270,7 @@ sub get_openinvoices {
     my $spoolfile;
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         # if this is a foreign currency transaction get exchangerate
         $ref->{exchangerate} =
           $form->get_exchangerate( $dbh, $ref->{curr}, $ref->{transdate},
@@ -394,7 +394,9 @@ sub post_payment {
 
             my $sth = $dbh->prepare($query);
             $sth->execute( $form->{currency}, $form->{"id_$i"} );
-            my ($exchangerate) = $sth->fetchrow_array();
+            my @exchange = $sth->fetchrow_array();
+            $form->db_parse_numeric(sth=>$sth, arrayref=>\@exchange);
+            my $exchangerate = shift @exchange;
 
             $exchangerate = 1 unless $exchangerate;
 

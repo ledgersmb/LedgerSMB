@@ -439,7 +439,7 @@ sub all_transactions {
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         # gl
         if ( $ref->{type} eq "gl" ) {
             $ref->{module} = "gl";
@@ -531,6 +531,7 @@ sub transaction {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
             if ( $ref->{fx_transaction} ) {
                 $form->{transfer} = 1;

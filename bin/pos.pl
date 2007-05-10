@@ -278,13 +278,7 @@ sub form_header {
         if ( $form->{language_code} ne $form->{oldlanguage_code} ) {
 
             # rebuild partsgroup
-            $form->get_partsgroup(
-                \%myconfig,
-                {
-                    language_code => $form->{language_code},
-                    searchitems   => 'nolabor'
-                }
-            );
+            $form->get_partsgroup(\%myconfig, { all => 1});
             $form->{partsgroup} = "";
             for ( @{ $form->{all_partsgroup} } ) {
                 $form->{partsgroup} .= "$_->{partsgroup}--$_->{translation}\n";
