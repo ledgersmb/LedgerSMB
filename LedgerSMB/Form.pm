@@ -2403,29 +2403,15 @@ sub lastname_used {
     }
 
     my $query = qq|
-		SELECT id 
-		FROM $arap
-		WHERE id IN 
-			(SELECT MAX(id) 
-			FROM $arap
-			WHERE $where AND ${vc}_id > 0)|;
-
-    my ($trans_id) = $dbh->selectrow_array($query);
-
-    $trans_id *= 1;
-
-    $query = qq|
-		SELECT ct.name AS $vc, a.curr AS currency, a.${vc}_id,
+		SELECT ct.name AS $vc, ct.curr AS currency, ct.id AS ${vc}_id,
 			current_date + ct.terms AS duedate, 
-			a.department_id, d.description AS department, ct.notes, 
+			ct.notes, 
 			ct.curr AS currency
-		FROM $arap a
-		JOIN $vc ct ON (a.${vc}_id = ct.id)
-		LEFT JOIN department d ON (a.department_id = d.id)
-		WHERE a.id = ?|;
+		FROM $vc ct
+		WHERE ct.id = (select customer_id from $arap where $where AND ${vc}_id IS NOT NULL order by id DESC limit 1)|;
 
     $sth = $dbh->prepare($query);
-    $sth->execute($trans_id) || $self->dberror($query);
+    $sth->execute() || $self->dberror($query);
 
     my $ref = $sth->fetchrow_hashref(NAME_lc);
     for ( keys %$ref ) { $self->{$_} = $ref->{$_} }
