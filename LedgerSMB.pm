@@ -571,7 +571,10 @@ sub merge {
         shift;
     }
     my %args  = @_;
-    my @keys  = @{ $args{keys} };
+    my @keys;
+    if (defined $args{keys}){
+         @keys  = @{ $args{keys} };
+    }
     my $index = $args{index};
     if ( !scalar @keys ) {
         @keys = keys %{$src};
