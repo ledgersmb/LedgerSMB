@@ -1490,6 +1490,7 @@ sub db_init {
 
     $self->{dbh}->do( $date_query{ $myconfig->{dateformat} } );
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
+    #$self->{dbh}->do('set log_statement to \'all\'');
 
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
@@ -2159,8 +2160,10 @@ sub all_years {
 
     # get years
     my $query = qq|
-		SELECT (SELECT MIN(transdate) FROM acc_trans),
-		       (SELECT MAX(transdate) FROM acc_trans)|;
+                SELECT (SELECT transdate FROM acc_trans ORDER BY transdate asc
+                                LIMIT 1),
+                       (SELECT transdate FROM acc_trans ORDER BY transdate desc
+                                LIMIT 1)|;
 
     my ( $startdate, $enddate ) = $dbh->selectrow_array($query);
 
