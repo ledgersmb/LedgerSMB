@@ -5,7 +5,7 @@ use Module::Build;
 
 my $build = Module::Build->new (
 	dist_name => 'LedgerSMB',
-	dist_version => '1.1.99',
+	dist_version => '1.2.99',
 	license => 'GPL',
 	requires => {
 		'perl'				=> '>= 5.8.0',
@@ -29,6 +29,8 @@ my $build = Module::Build->new (
 		'Error'				=> 0,
 		'Template'			=> 0,
 		'Test::More'			=> 0,
+		'Test::Trap'			=> 0,
+		'Test::Exception'		=> 0,
 		},
 	recommends => {
 		'HTML::LinkExtor'		=> 0,

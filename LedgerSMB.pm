@@ -166,9 +166,9 @@ sub debug {
 }
 
 sub escape {
-    my ($self) = @_;
-    my %args   = @_;
-    my $str    = $args{string};
+    my $self = shift;
+    my %args = @_;
+    my $str  = $args{string};
 
     my $regex = qr/([^a-zA-Z0-9_.-])/;
     $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
@@ -221,8 +221,8 @@ sub num_text_rows {
         my $line = $_;
         while ( length($line) > $cols ) {
             my $fragment = substr( $line, 0, $cols + 1 );
-            my $fragment = s/^(.*)\S*$/$1/;
-            $line = s/$fragment//;
+            $fragment =~ s/^(.*)\W.*$/$1/;
+            $line =~ s/$fragment//;
             if ( $line eq $fragment ) {    # No word breaks!
                 $line = "";
             }
@@ -595,3 +595,4 @@ sub merge {
 }
 
 1;
+

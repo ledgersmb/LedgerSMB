@@ -31,6 +31,8 @@ requires 'Template';
 requires 'Error';
 
 build_requires 'Test::More';
+build_requires 'Test::Trap';
+build_requires 'Test::Exception';
 
 feature 'POS module credit card processing support',
     -default => 0,
