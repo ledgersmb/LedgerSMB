@@ -179,6 +179,9 @@ sub is_blank {
     my $self = shift @_;
     my %args = @_;
     my $name = $args{name};
+    if (not defined $name){
+        # TODO: Raise error 
+    }
     my $rc;
     if ( $self->{$name} =~ /^\s*$/ ) {
         $rc = 1;
