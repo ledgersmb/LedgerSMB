@@ -53,6 +53,7 @@ sub all_accounts {
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $amount{ $ref->{accno} } = $ref->{amount};
     }
 
@@ -317,7 +318,9 @@ sub all_transactions {
 
             $sth = $dbh->prepare($query);
             $sth->execute(@queryargs);
-            ( $form->{balance} ) = $sth->fetchrow_array;
+            my @balance = $sth->fetchrow_array;
+            $form->db_parse_numeric(sth=>$sth, arrayref=>\@balance);
+            ( $form->{balance} ) = @balance; 
             $sth->finish;
             @queryargs = ();
         }
@@ -455,7 +458,7 @@ sub all_transactions {
     my %accno;
 
     while ( my $ca = $sth->fetchrow_hashref(NAME_lc) ) {
-
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ca);
         # gl
         if ( $ca->{module} eq "gl" ) {
             $ca->{module} = "gl";
@@ -482,7 +485,9 @@ sub all_transactions {
                 $dr->execute( $ca->{id} );
                 $ca->{accno} = ();
 
-                while ( ( $chart_id, $accno ) = $dr->fetchrow_array ) {
+                while ( my @dr_results = $dr->fetchrow_array ) {
+                    $form->db_parse_numeric(sth=>$dr, arrayref=>\@dr_results);
+                    ($chart_id, $accno) = @dr_results;
                     $accno{$accno} = 1 if $chart_id ne $ca->{chart_id};
                 }
 
@@ -499,7 +504,9 @@ sub all_transactions {
                 $cr->execute( $ca->{id} );
                 $ca->{accno} = ();
 
-                while ( ( $chart_id, $accno ) = $cr->fetchrow_array ) {
+                while ( my @cr_results = $cr->fetchrow_array ) {
+                    $form->db_parse_numeric(sth=>$cr, arrayref=>\@cr_results);
+                    ($chart_id, $accno) = @cr_results;
                     $accno{$accno} = 1 if $chart_id ne $ca->{chart_id};
                 }
 
