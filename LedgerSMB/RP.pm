@@ -1222,7 +1222,6 @@ sub get_accounts {
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
-
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
 
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
