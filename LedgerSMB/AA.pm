@@ -1124,7 +1124,7 @@ sub get_name {
         $query = qq|
 			   SELECT c.accno, c.description, c.link, 
                                   c.category,
-			          ac.project_id
+			          ac.project_id,
 			          a.department_id
 			     FROM chart c
 			     JOIN acc_trans ac ON (ac.chart_id = c.id)
