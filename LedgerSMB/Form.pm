@@ -2152,8 +2152,10 @@ sub all_years {
 
     # get years
     my $query = qq|
-		SELECT (SELECT MIN(transdate) FROM acc_trans),
-		       (SELECT MAX(transdate) FROM acc_trans)|;
+                SELECT (SELECT transdate FROM acc_trans ORDER BY transdate asc
+                                LIMIT 1),
+                       (SELECT transdate FROM acc_trans ORDER BY transdate desc
+                                LIMIT 1)|;
 
     my ( $startdate, $enddate ) = $dbh->selectrow_array($query);
 
