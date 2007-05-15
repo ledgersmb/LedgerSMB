@@ -10,6 +10,7 @@ use Test::Exception;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
 
+use LedgerSMB::Sysconfig;
 use LedgerSMB;
 
 sub redirect {
@@ -197,3 +198,54 @@ $lsmb->{callback} = 1;
 is($trap->stdout, "redirected\n", 'redirect: callback, no message redirect');
 @r = trap{$lsmb->redirect('msg' => "hello world\n")};
 is($trap->stdout, "redirected\n", 'redirect: callback and message redirect');
+
+# $lsmb->call_procedure checks
+$lsmb = new LedgerSMB;
+$lsmb->{dbh} = ${LedgerSMB::Sysconfig::GLOBALDBH};
+@r = $lsmb->call_procedure('procname' => 'character_length', 
+	'args' => ['month']);
+is($#r, 0, 'call_procedure: correct return length (one row)');
+is($r[0]->{'character_length'}, 5, 
+	'call_procedure: single arg, non-numeric return');
+
+@r = $lsmb->call_procedure('procname' => 'trunc', 'args' => [57.1, 0]);
+is($r[0]->{'trunc'}, Math::BigFloat->new('57'), 
+	'call_procedure: two args, numeric return');
+
+@r = $lsmb->call_procedure('procname' => 'pi', 'args' => []);
+like($r[0]->{'pi'}, qr/^3.14/, 
+	'call_procedure: empty arg list, non-numeric return');
+
+# These tests are ugly and shouldn't work
+@r = $lsmb->call_procedure(
+	'procname' => 'power(2, 2) UNION ALL SELECT * FROM pi', 
+	'args' => [], 'order_by' => 'power DESC');
+is($#r, 1, 'call_procedure: correct return length (two rows)');
+is($r[0]->{'power'}, 4, 'call_procedure: DESC ordering');
+@r = $lsmb->call_procedure(
+	'procname' => 'power(2, 2) UNION ALL SELECT * FROM pi', 
+	'args' => [], 'order_by' => 'power ASC');
+is($r[1]->{'power'}, 4, 'call_procedure: ASC ordering');
+
+##
+##TODO: {
+##	local $TODO = 'Breaks when no arglist given';
+##	@r = $lsmb->call_procedure('procname' => 'pi');
+##	like($r[0]->{'pi'}, qr/^3.14/, 
+##		'call_procedure: no args, non-numeric return');
+##}
+
+# $lsmb->merge checks
+$lsmb = new LedgerSMB;
+$lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'keys' => ['apple', 'pear']);
+ok(!defined $lsmb->{peach}, 'merge: Did not add unselected key');
+is($lsmb->{apple}, 1, 'merge: Added unselected key apple');
+is($lsmb->{pear}, 2, 'merge: Added unselected key pear');
+like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: left existing key');
+
+$lsmb = new LedgerSMB;
+$lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3});
+is($lsmb->{apple}, 1, 'merge: No key, added apple');
+is($lsmb->{pear}, 2, 'merge: No key, added pear');
+is($lsmb->{peach}, 3, 'merge: No key, added peach');
+like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: No key, left existing key');

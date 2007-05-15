@@ -581,7 +581,8 @@ sub merge {
     if ( !scalar @keys ) {
         @keys = keys %{$src};
     }
-    for my $arg ( keys %$src ) {
+    #for my $arg ( keys %$src ) {
+    for my $arg ( @keys ) {
         my $dst_arg;
         if ($index) {
             $dst_arg = $arg . "_$index";
