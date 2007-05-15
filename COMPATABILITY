@@ -15,3 +15,10 @@ W3M does not handle the <BUTTON> element properly and does not work.
 Pocket Internet Explorer:
 Javascript menus do not work with Pocket IE (on Windows CE).  Use the Lynx 
 interface instead by appending ?path=/bin/lynx to the end of the login.pl url.
+
+-------------------------------
+
+Internet Explorer < 7.0
+This browser submits incorrect data when using the <BUTTON> element and is not
+supported.  Users of Windows XP and Vista may try Internet Explorer 7 or 
+Firefox at their option. Users of older versions of WIndows should use Firefox.
