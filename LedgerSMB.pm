@@ -373,7 +373,7 @@ sub parse_amount {
     my $myconfig = $args{user};
     my $amount   = $args{amount};
 
-    if ( $amount eq '' or $amount == undef ) {
+    if ( $amount eq '' or ! defined $amount) {
         return 0;
     }
 

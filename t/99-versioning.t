@@ -35,11 +35,11 @@ is($form->{version}, $ver, 'Form version matches VERSION');
 
 SKIP: {
 	skip 'LedgerSMB is trunk', 1 if $lsmb->{version} =~ /trunk$/i;
-	cmp_ok($lsmb->{version}, '>=', $lsmb->{dbversion}, 
+	cmp_ok($lsmb->{version}, 'ge', $lsmb->{dbversion}, 
 		'lsmb: version >= dbversion');
 }
 SKIP: {
 	skip 'Form is trunk', 1 if $form->{version} =~ /trunk$/i;
-	cmp_ok($form->{version}, '>=', $form->{dbversion}, 
+	cmp_ok($form->{version}, 'ge', $form->{dbversion}, 
 		'form: version >= dbversion');
 }

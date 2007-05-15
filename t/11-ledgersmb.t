@@ -12,6 +12,10 @@ use Math::BigFloat;
 
 use LedgerSMB;
 
+sub redirect {
+	print "redirected\n";
+}
+
 ##line	subroutine
 ##108	new
 ##235	redirect
@@ -133,6 +137,12 @@ SKIP: {
 	ok(!-e "t/var/lsmb-11.$$", "debug: t/var/lsmb-11.$$ removed");
 };
 
+$lsmb->{file} = 't/this is a bad directory, I do not exist/foo';
+@r = trap {$lsmb->debug('file' => $lsmb->{file}, $lsmb)};
+like($trap->die, qr/No such file or directory at LedgerSMB\.pm/,
+	"debug: open failure causes death");
+ok(!-e $lsmb->{file}, "debug: file creation failed");
+
 # $lsmb->new checks
 $lsmb = new LedgerSMB;
 ok(defined $lsmb, 'new: blank, defined');
@@ -170,3 +180,20 @@ TODO: {
 	is($trap->die, "Error: Access Denied\n",
 		'new: directory traversal caught');
 }
+
+# $lsmb->redirect checks
+$lsmb = new LedgerSMB;
+ok(!defined $lsmb->{callback}, 'redirect: No callback set');
+@r = trap{$lsmb->redirect};
+is($trap->stdout, "redirected\n", 'redirect: No message or callback redirect');
+TODO: {
+	local $TODO = '$lsmb->info for LedgerSMB';
+	@r = trap{$lsmb->redirect('msg' => 'hello world')};
+	is($trap->stdout, "hello world\n", 
+		'redirect: message, no callback redirect');
+}
+$lsmb->{callback} = 1;
+@r = trap{$lsmb->redirect};
+is($trap->stdout, "redirected\n", 'redirect: callback, no message redirect');
+@r = trap{$lsmb->redirect('msg' => "hello world\n")};
+is($trap->stdout, "redirected\n", 'redirect: callback and message redirect');

@@ -156,6 +156,21 @@ is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'x'), '1.00',
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
 	'amount' => '1.00', 'precision' => 2, 'neg_format' => 'x'), '1.00',
 	"lsmb: 1.00 with dash 'x'");
+is($form->format_amount({'numberformat' => '1000.00'} , '1.00'), '1',
+	"form: 1.00 with no precision or dash");
+is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
+	'amount' => '1.00'), '1',
+	"lsmb: 1.00 with no precision or dash");
+is($form->format_amount({'numberformat' => '1000.00'} , '1.50'), '1.5',
+	"form: 1.50 with no precision or dash");
+is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
+	'amount' => '1.50'), '1.5',
+	"lsmb: 1.50 with no precision or dash");
+is($form->format_amount({'numberformat' => '1000.00'} , '0.0', undef, '0'), '0',
+	"form: 0.0 with no precision, dash '0'");
+is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
+	'amount' => '0.0', 'neg_format' => '0'), '0',
+	"lsmb: 0.0 with no precision, dash '0'");
 
 foreach my $format (0 .. $#formats) {
 	%myconfig = (numberformat => $formats[$format][0]);
@@ -287,8 +302,12 @@ foreach my $format (0 .. $#formats) {
 
 	cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
 		"form: Empty string returns 0");
+	cmp_ok($form->parse_amount(\%myconfig), '==', 0,
+		"form: undef string returns 0");
 	cmp_ok($form->parse_amount(\%myconfig, 'foo'), 'eq',
 		Math::BigFloat->bnan(), "form: Invalid string returns NaN");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig), '==', 0,
+		"lsmb: undef string returns 0");
 	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
 		"lsmb: Empty string returns 0");
 	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo'), 'eq',
