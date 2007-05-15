@@ -501,7 +501,7 @@ sub format_amount {
 
         if ( $dash eq "0" && $places ) {
 
-            if ( $myconfig->{numberformat} eq '1.000,00' ) {
+            if ( $myconfig->{numberformat} =~ /0,00$/ ) {
                 $amount = "0" . "," . "0" x $places;
             }
             else {
