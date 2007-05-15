@@ -64,7 +64,7 @@ foreach my $format (0 .. $#formats) {
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
 	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
-			'7t777t777d77', '-12d34') {
+			'7t777t777d77', '-12d34', '0d00') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
 		$expected =~ s/d/$dec/gx;
@@ -73,14 +73,22 @@ foreach my $format (0 .. $#formats) {
 		$value =~ s/d/\./gx;
 		##$value = Math::BigFloat->new($value);
 		$value = $form->parse_amount(\%myfooconfig,$value);
-		is($form->format_amount(\%myconfig, $value, 2, 'x'), $expected,
+		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
 			"form: $value formatted as $formats[$format][0] - $expected");
 		is($lsmb->format_amount('user' => \%myconfig, 
 			'amount' => $value, 'precision' => 2, 
-			'neg_format' => 'x'), $expected,
+			'neg_format' => '0'), $expected,
 			"lsmb: $value formatted as $formats[$format][0] - $expected");
 	}
 }
+
+$expected = $form->parse_amount({'numberformat' => '1000.00'}, '0.00');
+is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, 'x'), 'x',
+	"form: 0.00 with dash x");
+is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
+	'amount' => $expected, 'precision' => 2, 
+	'neg_format' => 'x'), 'x',
+	"lsmb: 0.00 with dash x");
 
 foreach my $format (0 .. $#formats) {
 	%myconfig = (numberformat => $formats[$format][0]);
