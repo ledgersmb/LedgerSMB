@@ -2,6 +2,9 @@
 
 use strict;
 use warnings;
+
+$ENV{TMPDIR} = 't/var';
+
 use Test::More 'no_plan';
 use Test::Exception;
 use Test::Trap qw(trap $trap);
@@ -129,3 +132,41 @@ SKIP: {
 	is(unlink("t/var/lsmb-11.$$"), 1, "debug: removing t/var/lsmb-11.$$");
 	ok(!-e "t/var/lsmb-11.$$", "debug: t/var/lsmb-11.$$ removed");
 };
+
+# $lsmb->new checks
+$lsmb = new LedgerSMB;
+ok(defined $lsmb, 'new: blank, defined');
+isa_ok($lsmb, 'LedgerSMB', 'new: blank, correct type');
+ok(defined $lsmb->{action}, 'new: blank, action defined');
+ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
+ok(defined $lsmb->{path}, 'new: blank, path defined');
+ok(defined $lsmb->{version}, 'new: blank, version defined');
+
+$lsmb = new LedgerSMB('action=Apple%20sauce');
+ok(defined $lsmb, 'new: action set, defined');
+isa_ok($lsmb, 'LedgerSMB', 'new: action set, correct type');
+ok(defined $lsmb->{action}, 'new: action set, action defined');
+is($lsmb->{action}, 'apple_sauce', 'new: action set, action processed');
+ok(defined $lsmb->{dbversion}, 'new: action set, dbversion defined');
+ok(defined $lsmb->{path}, 'new: action set, path defined');
+ok(defined $lsmb->{version}, 'new: action set, version defined');
+
+$lsmb = new LedgerSMB('path=bin/lynx');
+ok(defined $lsmb, 'new: lynx, defined');
+isa_ok($lsmb, 'LedgerSMB', 'new: lynx, correct type');
+ok(defined $lsmb->{action}, 'new: lynx, action defined');
+ok(defined $lsmb->{dbversion}, 'new: lynx, dbversion defined');
+ok(defined $lsmb->{path}, 'new: lynx, path defined');
+is($lsmb->{path}, 'bin/lynx', 'new: lynx, path carried through');
+ok(defined $lsmb->{lynx}, 'new: lynx, lynx defined');
+is($lsmb->{lynx}, 1, 'new: lynx, lynx enabled');
+ok(defined $lsmb->{menubar}, 'new: lynx, menubar defined (deprecated)');
+is($lsmb->{menubar}, 1, 'new: lynx, menubar enabled (deprecated)');
+ok(defined $lsmb->{version}, 'new: lynx, version defined');
+
+TODO: {
+	local $TODO = 'Error handling for LedgerSMB';
+	@r = trap{new LedgerSMB('script=foo/bar.pl')};
+	is($trap->die, "Error: Access Denied\n",
+		'new: directory traversal caught');
+}
