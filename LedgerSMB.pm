@@ -268,7 +268,7 @@ sub format_amount {
 
     my $negative;
     if ($amount) {
-        $amount = $self->parse_amount( $myconfig, $amount );
+        $amount = $self->parse_amount( 'user' => $myconfig, 'amount' => $amount );
         $negative = ( $amount < 0 );
         $amount =~ s/-//;
     }

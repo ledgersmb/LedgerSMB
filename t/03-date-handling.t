@@ -9,6 +9,7 @@ use Test::More 'no_plan';
 use Math::BigFloat;
 
 use LedgerSMB::Sysconfig;
+use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 
@@ -18,6 +19,9 @@ my $locale_es = LedgerSMB::Locale->get_handle('es');
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
+my $lsmb = new LedgerSMB;
+ok(defined $lsmb);
+isa_ok($lsmb, 'LedgerSMB');
 $form->{dbh} = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
 my @formats = ( ['mm-dd-yy', '-', 2, '02-29-00', '03-01-00'], 
@@ -116,10 +120,18 @@ foreach my $format (0 .. $#formats) {
 	my $sep = $formats[$format][1];
 	my $yearcount = $formats[$format][2];
 	cmp_ok($form->datetonum(\%myconfig, $formats[$format][3]), 'eq',
-		'20000229', "datetonum, $fmt");
+		'20000229', "form: datetonum, $fmt");
+	cmp_ok($lsmb->date_to_number('user' => \%myconfig, 
+		'date' => $formats[$format][3]), 'eq',
+		'20000229', "lsmb: date_to_number, $fmt");
 }
-cmp_ok($form->datetonum(\%myconfig), 'eq', '', "datetonum, empty string");
-cmp_ok($form->datetonum(\%myconfig, '1234'), 'eq', '1234', "datetonum, 1234");
+cmp_ok($form->datetonum(\%myconfig), 'eq', '', "form: datetonum, empty string");
+cmp_ok($form->datetonum(\%myconfig, '1234'), 'eq', '1234', 
+	"form: datetonum, 1234");
+cmp_ok($lsmb->date_to_number('user' => \%myconfig), 'eq', '', 
+	"lsmb: date_to_number, empty date");
+cmp_ok($lsmb->date_to_number('user' => \%myconfig, 'date' => '1234'), 
+	'eq', '1234', "lsmb: date_to_number, 1234");
 
 # $form->split_date checks
 # Note that $form->split_date assumes the year range 2000-2099

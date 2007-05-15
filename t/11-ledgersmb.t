@@ -11,8 +11,6 @@ use LedgerSMB;
 
 ##line	subroutine
 ##108	new
-##145	debug
-##204	num_text_rows
 ##235	redirect
 ##254	format_amount
 ##364	parse_amount
@@ -26,6 +24,8 @@ use LedgerSMB;
 my $lsmb = new LedgerSMB;
 my %myconfig;
 my $utfstr;
+my @r;
+
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 
@@ -109,3 +109,23 @@ is($lsmb->num_text_rows('string' => "1\n\n2", 'cols' => 10),
 	3, 'num_text_rows: 3 rows, no breakage, blank line, no max row count');
 is($lsmb->num_text_rows('string' => "012345 67890123456789", 'cols' => 10),
 	3, 'num_text_rows: 3 rows, word and non column breakage, no max row count');
+
+# $lsmb->debug checks
+$lsmb = new LedgerSMB;
+@r = trap{$lsmb->debug($lsmb)};
+like($trap->stdout, qr|\n\$VAR1 = bless\( {[\n\s]+'action' => '',[\n\s]+'dbversion' => '\d+\.\d+\.\d+',[\n\s]+'path' => 'bin/mozilla',[\n\s]+'version' => '$lsmb->{version}'[\n\s]+}, 'LedgerSMB' \);|,
+	'debug: $lsmb, no file');
+SKIP: {
+	skip 'Environment for file test not clean' if -f "t/var/lsmb-11.$$";
+	$lsmb->{file} = "t/var/lsmb-11.$$";
+	$lsmb->debug('file' => $lsmb->{file}, $lsmb);
+	ok(-f "t/var/lsmb-11.$$", "debug: output file t/var/lsmb-11.$$ created");
+	open(my $FH, '<', "t/var/lsmb-11.$$");
+	my @str = <$FH>;
+	close($FH);
+	chomp(@str);
+	like(join("\n", @str), qr|\$VAR1 = 'file';\n\$VAR2 = 't/var/lsmb-11.$$';\n\$VAR3 = bless\( {[\n\s]+'action' => '',[\n\s]+'dbversion' => '\d+\.\d+\.\d+',[\n\s]+'file' => 't/var/lsmb-11.$$',[\n\s]+'path' => 'bin/mozilla',[\n\s]+'version' => '$lsmb->{version}'[\n\s]+}, 'LedgerSMB' \);|,
+		'debug: $lsmb with file, contents');
+	is(unlink("t/var/lsmb-11.$$"), 1, "debug: removing t/var/lsmb-11.$$");
+	ok(!-e "t/var/lsmb-11.$$", "debug: t/var/lsmb-11.$$ removed");
+};

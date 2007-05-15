@@ -5,12 +5,16 @@ use warnings;
 use Test::More 'no_plan';
 use Math::BigFloat;
 
+use LedgerSMB;
 use LedgerSMB::Form;
 
 my $form = new Form;
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
+my $lsmb = new LedgerSMB;
+ok(defined $lsmb);
+isa_ok($lsmb, 'LedgerSMB');
 
 my $expected;
 foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9', 
@@ -21,24 +25,32 @@ foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
 		$expected = Math::BigFloat->new($value)->ffround(-$places);
 		$expected->precision(undef);
 		is($form->round_amount($value, $places), $expected,
-			"$value to $places decimal places - $expected");
+			"form: $value to $places decimal places - $expected");
+		is($lsmb->round_amount($value, $places), $expected,
+			"lsmb: $value to $places decimal places - $expected");
 
 		Math::BigFloat->round_mode('-inf');
 		$expected = Math::BigFloat->new(-$value)->ffround(-$places);
 		$expected->precision(undef);
 		is($form->round_amount(-$value, $places), $expected,
-			"-$value to $places decimal places - $expected");
+			"form: -$value to $places decimal places - $expected");
+		is($lsmb->round_amount(-$value, $places), $expected,
+			"lsmb: -$value to $places decimal places - $expected");
 	}
 	foreach my $places ('-1', '-2') {
 		Math::BigFloat->round_mode('+inf');
 		$expected = Math::BigFloat->new($value)->ffround(-($places-1));
 		is($form->round_amount($value, $places), $expected,
-			"$value to $places decimal places - $expected");
+			"form: $value to $places decimal places - $expected");
+		is($lsmb->round_amount($value, $places), $expected,
+			"lsmb: $value to $places decimal places - $expected");
 
 		Math::BigFloat->round_mode('-inf');
 		$expected = Math::BigFloat->new(-$value)->ffround(-($places-1));
 		is($form->round_amount(-$value, $places), $expected,
-			"-$value to $places decimal places - $expected");
+			"form: -$value to $places decimal places - $expected");
+		is($lsmb->round_amount(-$value, $places), $expected,
+			"lsmb: -$value to $places decimal places - $expected");
 	}
 }
 
@@ -62,7 +74,11 @@ foreach my $format (0 .. $#formats) {
 		##$value = Math::BigFloat->new($value);
 		$value = $form->parse_amount(\%myfooconfig,$value);
 		is($form->format_amount(\%myconfig, $value, 2, 'x'), $expected,
-			"$value formatted as $formats[$format][0] - $expected");
+			"form: $value formatted as $formats[$format][0] - $expected");
+		is($lsmb->format_amount('user' => \%myconfig, 
+			'amount' => $value, 'precision' => 2, 
+			'neg_format' => 'x'), $expected,
+			"lsmb: $value formatted as $formats[$format][0] - $expected");
 	}
 }
 
@@ -83,8 +99,16 @@ foreach my $format (0 .. $#formats) {
 		#$value = $form->parse_amount(\%myconfig,$value);
 		is($form->format_amount(\%myconfig, 
 			$form->format_amount(\%myconfig, $value, 2, 'x'), 
-			2, 'x'), 
-			$expected, "Double formatting of $value as $formats[$format][0] - $expected");
+			2, 'x'), $expected, 
+			"form: Double formatting of $value as $formats[$format][0] - $expected");
+		is($lsmb->format_amount('user' => \%myconfig, 
+			'amount' => 
+				$lsmb->format_amount('user' => \%myconfig, 
+				'amount' => $value, 
+				'precision' => 2, 
+				'neg_format' => 'x'), 
+			'precision' => 2, 'neg_format' => 'x'), $expected, 
+			"lsmb: Double formatting of $value as $formats[$format][0] - $expected");
 	}
 }
 
@@ -106,21 +130,34 @@ foreach my $format (0 .. $#formats) {
 			$value = Math::BigFloat->new($value);
 		}
 		cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
-			"$expected parsed as $formats[$format][0] - $value");
+			"form: $expected parsed as $formats[$format][0] - $value");
+		cmp_ok($lsmb->parse_amount('user' => \%myconfig, 
+			'amount' => $expected), '==',  $value,
+			"lsmb: $expected parsed as $formats[$format][0] - $value");
 	}
 	$expected = '12 CR';
 	my $value = Math::BigFloat->new('12');
 	cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
-		"$expected parsed as $formats[$format][0] - $value");
+		"form: $expected parsed as $formats[$format][0] - $value");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => $expected),
+		'==',  $value,
+		"lsmb: $expected parsed as $formats[$format][0] - $value");
 	$expected = '21 DR';
 	$value = Math::BigFloat->new('-21');
 	cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
-		"$expected parsed as $formats[$format][0] - $value");
+		"form: $expected parsed as $formats[$format][0] - $value");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => $expected),
+		'==',  $value,
+		"lsmb: $expected parsed as $formats[$format][0] - $value");
 	
 	cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
-		"Empty string returns 0");
+		"form: Empty string returns 0");
 	cmp_ok($form->parse_amount(\%myconfig, 'foo'), 'eq',
-		Math::BigFloat->bnan(), "Invalid string returns NaN");
+		Math::BigFloat->bnan(), "form: Invalid string returns NaN");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
+		"lsmb: Empty string returns 0");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo'), 'eq',
+		Math::BigFloat->bnan(), "lsmb: Invalid string returns NaN");
 }
 
 foreach my $format (0 .. $#formats) {
@@ -143,23 +180,42 @@ foreach my $format (0 .. $#formats) {
 		cmp_ok($form->parse_amount(\%myconfig, 
 			$form->parse_amount(\%myconfig, $expected)),
 			'==',  $value,
-			"$expected parsed as $formats[$format][0] - $value");
+			"form: $expected parsed as $formats[$format][0] - $value");
+		cmp_ok($lsmb->parse_amount('user' => \%myconfig, 
+			'amount' => $lsmb->parse_amount('user' => \%myconfig, 
+				'amount' => $expected)),
+			'==',  $value,
+			"lsmb: $expected parsed as $formats[$format][0] - $value");
 	}
 	$expected = '12 CR';
 	my $value = Math::BigFloat->new('12');
 	cmp_ok($form->parse_amount(\%myconfig, 
 		$form->parse_amount(\%myconfig, $expected)),
 		'==',  $value,
-		"$expected parsed as $formats[$format][0] - $value");
+		"form: $expected parsed as $formats[$format][0] - $value");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 
+		'amount' => $lsmb->parse_amount('user' => \%myconfig, 
+			'amount' => $expected)),
+		'==',  $value,
+		"lsmb: $expected parsed as $formats[$format][0] - $value");
 	$expected = '21 DR';
 	$value = Math::BigFloat->new('-21');
 	cmp_ok($form->parse_amount(\%myconfig, 
 		$form->parse_amount(\%myconfig, $expected)),
 		'==',  $value,
-		"$expected parsed as $formats[$format][0] - $value");
+		"form: $expected parsed as $formats[$format][0] - $value");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 
+		'amount' => $lsmb->parse_amount('user' => \%myconfig, 
+			'amount' => $expected)),
+		'==',  $value,
+		"lsmb: $expected parsed as $formats[$format][0] - $value");
 
 	cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
-		"Empty string returns 0");
+		"form: Empty string returns 0");
 	cmp_ok($form->parse_amount(\%myconfig, 'foo'), 'eq',
-		Math::BigFloat->bnan(), "Invalid string returns NaN");
+		Math::BigFloat->bnan(), "form: Invalid string returns NaN");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
+		"lsmb: Empty string returns 0");
+	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo'), 'eq',
+		Math::BigFloat->bnan(), "lsmb: Invalid string returns NaN");
 }
