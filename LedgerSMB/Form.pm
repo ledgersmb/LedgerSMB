@@ -452,35 +452,30 @@ sub format_amount {
                 $amount =~ s/,$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1 000.00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1 000.00' ) {
                 $amount =~ s/\d{3,}?/$& /g;
                 $amount =~ s/\s$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq "1'000.00" ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq "1'000.00" ) {
                 $amount =~ s/\d{3,}?/$&'/g;
                 $amount =~ s/'$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1.000,00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1.000,00' ) {
                 $amount =~ s/\d{3,}?/$&./g;
                 $amount =~ s/\.$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= ",$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1000,00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1000,00' ) {
                 $amount = "$whole";
                 $amount .= ",$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1000.00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1000.00' ) {
                 $amount = "$whole";
                 $amount .= ".$dec" if ( $dec ne "" );
             }
@@ -538,11 +533,10 @@ sub parse_amount {
         $amount =~ s/\.//g;
         $amount =~ s/,/./;
     }
-    if ( $numberformat eq '1 000.00' ) {
+    elsif ( $numberformat eq '1 000.00' ) {
         $amount =~ s/\s//g;
     }
-
-    if ( $numberformat eq "1'000.00" ) {
+    elsif ( $numberformat eq "1'000.00" ) {
         $amount =~ s/'//g;
     }
 
@@ -550,7 +544,7 @@ sub parse_amount {
     if ( $amount =~ s/\((\d*\.?\d*)\)/$1/ ) {
         $amount = $1 * -1;
     }
-    if ( $amount =~ s/(\d*\.?\d*)\s?DR/$1/ ) {
+    elsif ( $amount =~ s/(\d*\.?\d*)\s?DR/$1/ ) {
         $amount = $1 * -1;
     }
     $amount =~ s/\s?CR//;
@@ -1348,12 +1342,10 @@ sub datetonum {
         if ( $myconfig->{dateformat} =~ /^yy/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
         }
-
-        if ( $myconfig->{dateformat} =~ /^mm/ ) {
+        elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
             ( $mm, $dd, $yy ) = split /\D/, $date;
         }
-
-        if ( $myconfig->{dateformat} =~ /^dd/ ) {
+        elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
             ( $dd, $mm, $yy ) = split /\D/, $date;
         }
 
@@ -1389,12 +1381,10 @@ sub add_date {
             if ( $myconfig->{dateformat} =~ /^yy/ ) {
                 ( $yy, $mm, $dd ) = split /\D/, $date;
             }
-
-            if ( $myconfig->{dateformat} =~ /^mm/ ) {
+            elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
                 ( $mm, $dd, $yy ) = split /\D/, $date;
             }
-
-            if ( $myconfig->{dateformat} =~ /^dd/ ) {
+            elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
                 ( $dd, $mm, $yy ) = split /\D/, $date;
             }
 
@@ -1408,12 +1398,10 @@ sub add_date {
         if ( $unit eq 'days' ) {
             $diff = $repeat * 86400;
         }
-
-        if ( $unit eq 'weeks' ) {
+        elsif ( $unit eq 'weeks' ) {
             $diff = $repeat * 604800;
         }
-
-        if ( $unit eq 'months' ) {
+        elsif ( $unit eq 'months' ) {
             $diff = $mm + $repeat;
 
             my $whole = int( $diff / 12 );
@@ -1424,8 +1412,7 @@ sub add_date {
             $yy-- if $mm == 12;
             $diff = 0;
         }
-
-        if ( $unit eq 'years' ) {
+        elsif ( $unit eq 'years' ) {
             $yy += $repeat;
         }
 
@@ -1443,12 +1430,10 @@ sub add_date {
             if ( $myconfig->{dateformat} =~ /^yy/ ) {
                 $date = "$yy$spc$mm$spc$dd";
             }
-
-            if ( $myconfig->{dateformat} =~ /^mm/ ) {
+            elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
                 $date = "$mm$spc$dd$spc$yy";
             }
-
-            if ( $myconfig->{dateformat} =~ /^dd/ ) {
+            elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
                 $date = "$dd$spc$mm$spc$yy";
             }
 
@@ -3054,13 +3039,13 @@ sub split_date {
 
     my ( $self, $dateformat, $date ) = @_;
 
-    my @d = localtime;
     my $mm;
     my $dd;
     my $yy;
     my $rv;
 
     if ( !$date ) {
+        my @d = localtime;
         $dd = $d[3];
         $mm = ++$d[4];
         $yy = substr( $d[5], -2 );
@@ -3089,8 +3074,7 @@ sub split_date {
             $rv = "$yy$mm$dd";
         }
     }
-
-    if ( $dateformat =~ /^mm/ ) {
+    elsif ( $dateformat =~ /^mm/ ) {
 
         if ($date) {
 
@@ -3111,8 +3095,7 @@ sub split_date {
             $rv = "$mm$dd$yy";
         }
     }
-
-    if ( $dateformat =~ /^dd/ ) {
+    elsif ( $dateformat =~ /^dd/ ) {
 
         if ($date) {
 

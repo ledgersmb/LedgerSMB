@@ -301,35 +301,30 @@ sub format_amount {
                 $amount =~ s/,$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1 000.00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1 000.00' ) {
                 $amount =~ s/\d{3,}?/$& /g;
                 $amount =~ s/\s$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq "1'000.00" ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq "1'000.00" ) {
                 $amount =~ s/\d{3,}?/$&'/g;
                 $amount =~ s/'$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1.000,00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1.000,00' ) {
                 $amount =~ s/\d{3,}?/$&./g;
                 $amount =~ s/\.$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= ",$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1000,00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1000,00' ) {
                 $amount = "$whole";
                 $amount .= ",$dec" if ( $dec ne "" );
-            }
-
-            if ( $myconfig->{numberformat} eq '1000.00' ) {
+            } 
+	    elsif ( $myconfig->{numberformat} eq '1000.00' ) {
                 $amount = "$whole";
                 $amount .= ".$dec" if ( $dec ne "" );
             }
@@ -390,11 +385,10 @@ sub parse_amount {
         $amount =~ s/\.//g;
         $amount =~ s/,/./;
     }
-    if ( $numberformat eq '1 000.00' ) {
+    elsif ( $numberformat eq '1 000.00' ) {
         $amount =~ s/\s//g;
     }
-
-    if ( $numberformat eq "1'000.00" ) {
+    elsif ( $numberformat eq "1'000.00" ) {
         $amount =~ s/'//g;
     }
 
@@ -402,7 +396,7 @@ sub parse_amount {
     if ( $amount =~ s/\((\d*\.?\d*)\)/$1/ ) {
         $amount = $1 * -1;
     }
-    if ( $amount =~ s/(\d*\.?\d*)\s?DR/$1/ ) {
+    elsif ( $amount =~ s/(\d*\.?\d*)\s?DR/$1/ ) {
         $amount = $1 * -1;
     }
     $amount =~ s/\s?CR//;
@@ -486,12 +480,10 @@ sub date_to_number {
         if ( $myconfig->{dateformat} =~ /^yy/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
         }
-
-        if ( $myconfig->{dateformat} =~ /^mm/ ) {
+        elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
             ( $mm, $dd, $yy ) = split /\D/, $date;
         }
-
-        if ( $myconfig->{dateformat} =~ /^dd/ ) {
+        elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
             ( $dd, $mm, $yy ) = split /\D/, $date;
         }
 
@@ -581,7 +573,6 @@ sub merge {
     if ( !scalar @keys ) {
         @keys = keys %{$src};
     }
-    #for my $arg ( keys %$src ) {
     for my $arg ( @keys ) {
         my $dst_arg;
         if ($index) {

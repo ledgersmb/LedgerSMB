@@ -411,3 +411,7 @@ is($form->sort_order($aryref, {name => 0, projectnumber => 3, startdate => 1}),
 $form = new Form;
 @r = trap{$form->print_button({'pear' => {'key' => 'P', 'value' => 'Pears'}}, 'pear')};
 is($trap->stdout, "<button class=\"submit\" type=\"submit\" name=\"action\" value=\"pear\" accesskey=\"P\" title=\"Pears [Alt-P]\">Pears</button>\n", 'print_button');
+
+## $form->like checks
+$form = new Form;
+is($form->like('hello world'), '%hello world%', 'like');

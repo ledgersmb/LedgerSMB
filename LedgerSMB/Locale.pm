@@ -113,12 +113,10 @@ sub date {
         if ( $myconfig->{dateformat} =~ /^yy/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
         }
-
-        if ( $myconfig->{dateformat} =~ /^mm/ ) {
+        elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
             ( $mm, $dd, $yy ) = split /\D/, $date;
         }
-
-        if ( $myconfig->{dateformat} =~ /^dd/ ) {
+        elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
             ( $dd, $mm, $yy ) = split /\D/, $date;
         }
 
