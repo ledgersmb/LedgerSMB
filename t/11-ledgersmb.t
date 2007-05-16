@@ -249,3 +249,28 @@ is($lsmb->{apple}, 1, 'merge: No key, added apple');
 is($lsmb->{pear}, 2, 'merge: No key, added pear');
 is($lsmb->{peach}, 3, 'merge: No key, added peach');
 like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: No key, left existing key');
+
+$lsmb = new LedgerSMB;
+$lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
+is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
+is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
+is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
+like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: Index 1, left existing key');
+
+# $lsmb->is_allowed_role checks
+$lsmb = new LedgerSMB;
+$lsmb->{_roles} = ('apple', 'pear');
+is($lsmb->is_allowed_role('allowed_roles' => ['pear']), 1, 
+	'is_allowed_role: allowed role');
+
+TODO: {
+	local $TODO = 'role system unimplemented';
+	$lsmb->{_roles} = ['apple', 'pear'];
+	is($lsmb->is_allowed_role('allowed_roles' => ['peach']), 0, 
+		'is_allowed_role: disallowed role');
+	is($lsmb->is_allowed_role('allowed_roles' => []), 0, 
+		'is_allowed_role: no allowable roles');
+	delete $lsmb->{_roles};
+	is($lsmb->is_allowed_role('allowed_roles' => ['apple']), 0, 
+		'is_allowed_role: no roles for user');
+}

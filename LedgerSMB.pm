@@ -410,12 +410,19 @@ sub round_amount {
 
     # These rounding rules follow from the previous implementation.
     # They should be changed to allow different rules for different accounts.
-    Math::BigFloat->round_mode('+inf') if $amount >= 0;
-    Math::BigFloat->round_mode('-inf') if $amount < 0;
+    if ($amount >= 0) {
+        Math::BigFloat->round_mode('+inf');
+    } 
+    else {
+        Math::BigFloat->round_mode('-inf');
+    } 
 
-    $amount = Math::BigFloat->new($amount)->ffround( -$places ) if $places >= 0;
-    $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) )
-      if $places < 0;
+    if ($places >= 0) {
+        $amount = Math::BigFloat->new($amount)->ffround( -$places );
+    } 
+    else {
+        $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) );
+    } 
 
     return $amount;
 }

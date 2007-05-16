@@ -156,11 +156,38 @@ is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'x'), '1.00',
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
 	'amount' => '1.00', 'precision' => 2, 'neg_format' => 'x'), '1.00',
 	"lsmb: 1.00 with dash 'x'");
+
+# Triggers the $amount .= "\.$dec" if ($dec ne ""); check to false
 is($form->format_amount({'numberformat' => '1000.00'} , '1.00'), '1',
-	"form: 1.00 with no precision or dash");
+	"form: 1.00 with no precision or dash (1000.00)");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
 	'amount' => '1.00'), '1',
-	"lsmb: 1.00 with no precision or dash");
+	"lsmb: 1.00 with no precision or dash (1000.00)");
+is($form->format_amount({'numberformat' => '1,000.00'} , '1.00'), '1',
+	"form: 1.00 with no precision or dash (1,000.00)");
+is($lsmb->format_amount('user' => {'numberformat' => '1,000.00'}, 
+	'amount' => '1.00'), '1',
+	"lsmb: 1.00 with no precision or dash (1,000.00)");
+is($form->format_amount({'numberformat' => '1 000.00'} , '1.00'), '1',
+	"form: 1.00 with no precision or dash (1 000.00)");
+is($lsmb->format_amount('user' => {'numberformat' => '1 000.00'}, 
+	'amount' => '1.00'), '1',
+	"lsmb: 1.00 with no precision or dash (1 000.00)");
+is($form->format_amount({'numberformat' => '1\'000.00'} , '1.00'), '1',
+	"form: 1.00 with no precision or dash (1'000.00)");
+is($lsmb->format_amount('user' => {'numberformat' => '1\'000.00'}, 
+	'amount' => '1.00'), '1',
+	"lsmb: 1.00 with no precision or dash (1'000.00)");
+is($form->format_amount({'numberformat' => '1.000,00'} , '1,00'), '1',
+	"form: 1,00 with no precision or dash (1.000,00)");
+is($lsmb->format_amount('user' => {'numberformat' => '1.000,00'}, 
+	'amount' => '1,00'), '1',
+	"lsmb: 1,00 with no precision or dash (1.000,00)");
+is($form->format_amount({'numberformat' => '1000,00'} , '1,00'), '1',
+	"form: 1,00 with no precision or dash (1000,00)");
+is($lsmb->format_amount('user' => {'numberformat' => '1000,00'}, 
+	'amount' => '1,00'), '1',
+	"lsmb: 1,00 with no precision or dash (1000,00)");
 is($form->format_amount({'numberformat' => '1000.00'} , '1.50'), '1.5',
 	"form: 1.50 with no precision or dash");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
