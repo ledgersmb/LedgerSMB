@@ -107,7 +107,7 @@ sub access_control {
     }
 
     my @a = split /;/, $myconfig->{acs};
-    my $excl = ();
+    my %excl = ();
 
     # remove --AR, --AP from array
     grep { ( $a, $b ) = split /--/; s/--$a$//; } @a;
