@@ -57,6 +57,9 @@ Jeff Kowalczyk [email omitted] contributed to the INSTALL documentation.
 Matt S Trout, <mst @ shadowcatsystems.co.uk> CPAN: MSTROUT, 
 IRC: mst#irc.perl.org contributed the initial Makefile.PL
 
+David Bandel <david.bandel @ gmail.com> contributed some fixes to the UPGRADE 
+documentation.
+
 Ashley Gittins contributed <agittins @ purple.dropbear.id.au> has contributed 
 some performance fixes and has contributed a great deal of work to our web site.
 
