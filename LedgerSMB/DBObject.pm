@@ -9,6 +9,8 @@ This module creates object instances based on LedgerSMB's in-database ORM.
 
 =head1 METHODS
 
+=over
+
 =item new ($class, base => $LedgerSMB::hash)
 
 This is the base constructor for all child classes.  It must be used with base
@@ -21,15 +23,16 @@ this way as is any information that is needed.
 =item exec_method ($self, procname => $function_name, args => \@args)
 
 =item merge ($hashref, @attrs)
+
 copies @attrs from $hashref to $self.
 
+=back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
+
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
-
-=back
 
 =cut
 

@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB  The Base class for many LedgerSMB objects, including DBObject.
@@ -9,10 +10,14 @@ in database objects (LedgerSMB::DBObject)
 
 =head1 METHODS
 
+=over
+
 =item new ()
+
 This method creates a new base request instance. 
 
 =item date_to_number (user => $LedgerSMB::User, date => $string);
+
 This function takes the date in the format provided and returns a numeric 
 string in YYMMDD format.  This may be moved to User in the future.
 
@@ -36,18 +41,22 @@ preferences, the negative format (- or DR/CR).  Note that it may move to
 LedgerSMB::User at some point in the future.
 
 =item parse_amount (user => $LedgerSMB::User::hash, amount => $variable);
+
 If $amount is a Bigfloat, it is returned as is.  If it is a string, it is 
 parsed according to the user preferences stored in the LedgerSMB::User object.
 
 =item is_blank (name => $string)
+
 This function returns true if $self->{$string} only consists of whitespace
 characters or is an empty string.
 
 =item is_run_mode ('(cli|cgi|mod_perl)')
+
 This function returns 1 if the run mode is what is specified.  Otherwise
 returns 0.
 
 =item is_allowed_role(allowed_roles => @role_names)
+
 This function returns 1 if the user's roles include any of the roles in
 @role_names.  Currently it returns 1 when this is not found as well but when 
 role permissions are introduced, this will change to 0.
@@ -58,6 +67,7 @@ This function determines the likely number of rows needed to hold text in a
 textbox.  It returns either that number or max, which ever is lower.
 
 =item merge ($hashref, keys => @list, index => $number);
+
 This command merges the $hashref into the current object.  If keys are 
 specified, only those keys are used.  Otherwise all keys are merged.
 
@@ -71,33 +81,37 @@ $self->{callback}, and if this is not set, goes to an info screen and prints
 $msg.
 
 =item redo_rows (fields => \@list, count => $integer, [index => $string);
+
 This function is undergoing serious redesign at the moment.  If index is 
 defined, that field is used for ordering the rows.  If not, runningnumber is 
 used.  Behavior is not defined when index points to a field containing 
 non-numbers.
 
+=back
+
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
-# This work contains copyrighted information from a number of sources all used
-# with permission.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
-# under the GNU General Public License version 2 or, at your option, any later
-# version.  For a full list including contact information of contributors,
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2000
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-# Contributors: Thomas Bayen <bayen@gmx.de>
-#               Antti Kaihola <akaihola@siba.fi>
-#               Moritz Bunkus (tex)
-#               Jim Rawlings <jim@your-dba.com> (DB2)
-#======================================================================
+ # This work contains copyrighted information from a number of sources 
+ # all used with permission.
+ #
+ # This file contains source code included with or based on SQL-Ledger
+ # which is Copyright Dieter Simader and DWS Systems Inc. 2000-2005
+ # and licensed under the GNU General Public License version 2 or, at
+ # your option, any later version.  For a full list including contact
+ # information of contributors, maintainers, and copyright holders, 
+ # see the CONTRIBUTORS file.
+ #
+ # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+ # Copyright (C) 2000
+ #
+ #  Author: DWS Systems Inc.
+ #     Web: http://www.sql-ledger.org
+ #
+ # Contributors: Thomas Bayen <bayen@gmx.de>
+ #               Antti Kaihola <akaihola@siba.fi>
+ #               Moritz Bunkus (tex)
+ #               Jim Rawlings <jim@your-dba.com> (DB2)
+ #====================================================================
 =cut
 
 use CGI;

@@ -10,9 +10,17 @@ This module creates object instances based on LedgerSMB's in-database ORM.
 =head1 METHODS
 
 The following method is static:
+
+=over
+
 =item new ($LedgerSMB object);
 
+=back
+
 The following methods are passed through to stored procedures:
+
+=over
+
 =item get ($self->{key})
 
 =item get_default_accounts() (via AUTOLOAD) returns a list of accounts.
@@ -20,19 +28,21 @@ The following methods are passed through to stored procedures:
 =item set ($self->{key}, $self->{value})
 
 =item parse_incriment ($self->{key})
+
 This function updates a default entry in the database, incrimenting the last 
 set of digits not including <?lsmb ?> tags or non-digits, and then parses the 
 returned value, doing tag substitution.  The final value is then returned by 
 the function.
 
+=back
+
 The above list may grow over time, and may depend on other installed modules.
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
+
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
-
-=back
 
 =cut
 

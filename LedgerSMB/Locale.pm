@@ -8,6 +8,8 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 
 =head1 METHODS
 
+=over
+
 =item get_handle ($language_code)
 Returns a locale handle for accessing the other methods.  Inherited from 
 Locale::Maketext.
@@ -21,42 +23,45 @@ Returns the given date after formatting it.  If $longformat is set, the date
 will be givin in the form of "_('September') 23 2007".  If $longformat is not
 set, the date will be output in the format specified by $myconfig->{dateformat}.
 
+=back
+
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
-#=====================================================================
-#
-# Locale support module for LedgerSMB
-# LedgerSMB::Locale
-#
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-#
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.  It is released under the GNU General Public License
-# Version 2 or, at your option, any later version.  See COPYRIGHT file for
-# details.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
-# under the GNU General Public License version 2 or, at your option, any later
-# version.  For a full list including contact information of contributors,
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2000
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-# Contributors: Thomas Bayen <bayen@gmx.de>
-#               Antti Kaihola <akaihola@siba.fi>
-#               Moritz Bunkus (tex)
-#               Jim Rawlings <jim@your-dba.com> (DB2)
-#
-#======================================================================
+ #====================================================================
+ #
+ # Locale support module for LedgerSMB
+ # LedgerSMB::Locale
+ #
+ # LedgerSMB
+ # Small Medium Business Accounting software
+ # http://www.ledgersmb.org/
+ #
+ #
+ # Copyright (C) 2006
+ # This work contains copyrighted information from a number of sources
+ # all used with permission.  It is released under the GNU General 
+ # Public License Version 2 or, at your option, any later version.
+ # See COPYRIGHT file for details.
+ #
+ # This file contains source code included with or based on SQL-Ledger
+ # which is Copyright Dieter Simader and DWS Systems Inc. 2000-2005
+ # and licensed under the GNU General Public License version 2 or, at
+ # your option, any later version.  For a full list including contact
+ # information of contributors, maintainers, and copyright holders,
+ # see the CONTRIBUTORS file.
+ #
+ # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+ # Copyright (C) 2000
+ #
+ #  Author: DWS Systems Inc.
+ #     Web: http://www.sql-ledger.org
+ #
+ # Contributors: Thomas Bayen <bayen@gmx.de>
+ #               Antti Kaihola <akaihola@siba.fi>
+ #               Moritz Bunkus (tex)
+ #               Jim Rawlings <jim@your-dba.com> (DB2)
+ #
+ #====================================================================
 =cut
 
 package LedgerSMB::Locale;

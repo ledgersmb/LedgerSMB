@@ -5,23 +5,28 @@ LedgerSMB::Template::HTML  Template support module for LedgerSMB
 
 =head1 METHODS
 
+=over
+
 =item get_template ()
 
 =item preprocess ($vars)
+
 This method returns a reference to a hash that contains a copy of the passed
 hashref's data with HTML entities converted to escapes. 
 
 =item postprocess ()
 
+=back
+
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
-# This work contains copyrighted information from a number of sources all used
-# with permission.  
-#
-# It is released under the GNU General Public License Version 2 or, at your 
-# option, any later version.  See COPYRIGHT file for details.  For a full list 
-# including contact information of contributors, maintainers, and copyright 
-# holders, see the CONTRIBUTORS file.
+This work contains copyrighted information from a number of sources all used
+with permission.  
+
+It is released under the GNU General Public License Version 2 or, at your 
+option, any later version.  See COPYRIGHT file for details.  For a full list 
+including contact information of contributors, maintainers, and copyright 
+holders, see the CONTRIBUTORS file.
 =cut
 
 use Error qw(:try);

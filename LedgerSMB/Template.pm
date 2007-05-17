@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Template - Template support module for LedgerSMB 
@@ -9,13 +10,15 @@ forthcoming.
 
 =head1 METHODS
 
+=over
+
 =item new(user => \%myconfig, template => $string, format => 'HTML', [language => $string,] [include_path => $path]);
 
-	This command instantiates a new template:
-	template is the file name of the template to be processed.
-	format is the type of format to be used.  Currently only HTML is supported
-	language (optional) specifies the language for template selection.
-	include_path allows one to override the template directory and use this with user interface templates.
+This command instantiates a new template:
+template is the file name of the template to be processed.
+format is the type of format to be used.  Currently only HTML is supported
+language (optional) specifies the language for template selection.
+include_path allows one to override the template directory and use this with user interface templates.
 
 =item render($hashref)
 
@@ -27,9 +30,11 @@ Currently email and server-side printing are not supported.
 This command checks for valid langages.  Returns 1 if the language is valid, 
 0 if it is not.
 
+=back
+
 =head1 Copyright 2007, The LedgerSMB Core Team
 
-This file is licensed under the Gnu General Public License version 2, or at your
+This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
