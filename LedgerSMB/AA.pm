@@ -1122,16 +1122,15 @@ sub get_name {
     if ( !$form->{id} && $form->{type} !~ /_(order|quotation)/ ) {
 
         $query = qq|
-			   SELECT c.accno, c.description, c.link, c.category,
-			          ac.project_id, p.projectnumber, 
-			          a.department_id, d.description AS department
+			   SELECT c.accno, c.description, c.link, 
+                                  c.category,
+			          ac.project_id
+			          a.department_id
 			     FROM chart c
 			     JOIN acc_trans ac ON (ac.chart_id = c.id)
 			     JOIN $arap a ON (a.id = ac.trans_id)
-			LEFT JOIN project p ON (ac.project_id = p.id)
-			LEFT JOIN department d ON (d.id = a.department_id)
 			    WHERE a.$form->{vc}_id = ?
-			          AND a.id IN (SELECT max(id) 
+			          AND a.id = (SELECT max(id) 
 			                         FROM $arap
 			                        WHERE $form->{vc}_id = 
 			                              ?)
@@ -1144,9 +1143,7 @@ sub get_name {
         my $i = 0;
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-            $form->{department}    = $ref->{department};
             $form->{department_id} = $ref->{department_id};
-
             if ( $ref->{link} =~ /_amount/ ) {
                 $i++;
                 $form->{"$form->{ARAP}_amount_$i"} =
@@ -1165,6 +1162,10 @@ sub get_name {
         }
 
         $sth->finish;
+        $query = "select description from department where id = ?";
+        $sth = $dbh->prepare($query);
+        $sth->execute($form->{department_id});
+        ($form->{department}) = $sth->fetchrow_array;
         $form->{rowcount} = $i if ( $i && !$form->{type} );
     }
 
