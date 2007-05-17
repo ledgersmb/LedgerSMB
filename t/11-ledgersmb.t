@@ -140,7 +140,7 @@ SKIP: {
 
 $lsmb->{file} = 't/this is a bad directory, I do not exist/foo';
 @r = trap {$lsmb->debug('file' => $lsmb->{file}, $lsmb)};
-like($trap->die, qr/No such file or directory at LedgerSMB\.pm/,
+like($trap->die, qr/No such file or directory/,
 	"debug: open failure causes death");
 ok(!-e $lsmb->{file}, "debug: file creation failed");
 

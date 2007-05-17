@@ -1,35 +1,25 @@
 #!/usr/bin/perl
-##format_amount	in 02-number-handling.t
-##parse_amount	in 02-number-handling.t
-##round_amount	in 02-number-handling.t
-##current_date	in 03-date-handling.t
-##split_date	in 03-date-handling.t
-##format_date	in 03-date-handling.t
-##from_to	in 03-date-handling.t
-##datetonum	in 03-date-handling.t
-##add_date	in 03-date-handling.t
+#
+# t/10-form.t
+#
+# Tests various functions in LedgerSMB::Form that aren't tested elsewhere.
+#
 
-##escape	in 10-form.t
-##unescape	in 10-form.t
-##quote		in 10-form.t
-##unquote	in 10-form.t
-##numtextrows	in 10-form.t
-##debug		in 10-form.t
-##hide_form	in 10-form.t
-##info		in 10-form.t
-##error		in 10-form.t
-##isblank	in 10-form.t
-##header	in 10-form.t
-##sort_columns	in 10-form.t
-##sort_order	in 10-form.t
-##print_button	in 10-form.t
+# format_amount	in 02-number-handling.t
+# parse_amount	in 02-number-handling.t
+# round_amount	in 02-number-handling.t
+# current_date	in 03-date-handling.t
+# split_date	in 03-date-handling.t
+# format_date	in 03-date-handling.t
+# from_to	in 03-date-handling.t
+# datetonum	in 03-date-handling.t
+# add_date	in 03-date-handling.t
 
-##encode_all	null
-##decode_all	null
+# encode_all	empty
+# decode_all	empty
 
 ##sub new {
 ##sub dberror {
-##sub redirect {
 ##sub db_parse_numeric {
 ##sub callproc {
 ##sub get_my_emp_num {
@@ -89,6 +79,10 @@ sub form_info_func {
 
 sub form_error_func {
 	print $_[0];
+}
+
+sub redirect {
+	print "redirected\n";
 }
 
 my $form = new Form;
@@ -222,6 +216,7 @@ SKIP: {
 	is($form->info('hello world'), 'hello world', 
 		'info: CLI, function call');
 };
+delete $ENV{info_function};
 
 ## $form->error checks
 $form = new Form;
@@ -415,3 +410,17 @@ is($trap->stdout, "<button class=\"submit\" type=\"submit\" name=\"action\" valu
 ## $form->like checks
 $form = new Form;
 is($form->like('hello world'), '%hello world%', 'like');
+
+## $form->redirect checks
+$form = new Form;
+ok(!defined $form->{callback}, 'redirect: No callback set');
+@r = trap{$form->redirect};
+is($trap->stdout, "redirected\n", 'redirect: No message or callback redirect');
+@r = trap{$form->redirect('hello world')};
+is($trap->stdout, "hello world\n", 
+	'redirect: message, no callback redirect');
+$form->{callback} = 1;
+@r = trap{$form->redirect};
+is($trap->stdout, "redirected\n", 'redirect: callback, no message redirect');
+@r = trap{$form->redirect("hello world\n")};
+is($trap->stdout, "redirected\n", 'redirect: callback and message redirect');

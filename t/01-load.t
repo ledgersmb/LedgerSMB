@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 31;
+use Test::More tests => 30;
 
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
@@ -17,12 +17,11 @@ use_ok('LedgerSMB::HR');
 use_ok('LedgerSMB::IC');
 use_ok('LedgerSMB::IR');
 use_ok('LedgerSMB::IS');
-use_ok('LedgerSMB::Inifile');
+use_ok('LedgerSMB::Menufile');
 use_ok('LedgerSMB::JC');
 use_ok('LedgerSMB::Locale');
 use_ok('LedgerSMB::Log');
 use_ok('LedgerSMB::Mailer');
-use_ok('LedgerSMB::Menu');
 use_ok('LedgerSMB::Num2text');
 use_ok('LedgerSMB::OE');
 use_ok('LedgerSMB::OP');

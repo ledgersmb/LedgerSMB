@@ -16,7 +16,7 @@
 #######################################################################
 
 $menufile = "menu.ini";
-use LedgerSMB::Menu;
+use LedgerSMB::Menufile;
 
 1;
 
@@ -26,7 +26,7 @@ sub display {
 
     if ( $form->{lynx} ) {
 
-        $menu = new Menu "$menufile";
+        $menu = new LedgerSMB::Menufile "$menufile";
         $menu->add_file("custom_$menufile") if -f "custom_$menufile";
         $menu->add_file("$form->{login}_$menufile")
           if -f "$form->{login}_$menufile";
@@ -81,7 +81,7 @@ sub acc_menu {
     }
     else {
 
-        my $menu = new Menu "$menufile";
+        my $menu = new LedgerSMB::Menufile "$menufile";
         $menu->add_file("custom_$menufile") if -f "custom_$menufile";
         $menu->add_file("$form->{login}_$menufile")
           if -f "$form->{login}_$menufile";
@@ -136,7 +136,7 @@ sub section_menu {
 
     if ( $form->{lynx} ) {
 
-        $menu = new Menu "$menufile", $form->{level};
+        $menu = new LedgerSMB::Menufile "$menufile", $form->{level};
 
         $menu->add_file("custom_$menufile") if -f "custom_$menufile";
         $menu->add_file("$form->{login}_$menufile")
@@ -344,7 +344,7 @@ sub menubar {
 
     if ( $form->{lynx} ) {
 
-        $menu = new Menu "$menufile", "";
+        $menu = new LedgerSMB::Menufile "$menufile", "";
 
         # build menubar
         @menuorder = $menu->access_control( \%myconfig, "" );

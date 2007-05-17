@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Locale  Locale handling class for LedgerSMB
