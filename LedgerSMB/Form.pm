@@ -302,15 +302,14 @@ sub header {
 
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
+        $self->{charset} ||= "utf-8";
         if ( $self->{stylesheet} && ( -f "css/$self->{stylesheet}" ) ) {
             $stylesheet =
 qq|<link rel="stylesheet" href="css/$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
         }
 
-        if ( $self->{charset} ) {
-            $charset =
+        $charset =
 qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}" />\n|;
-        }
 
         $self->{titlebar} =
           ( $self->{title} )
