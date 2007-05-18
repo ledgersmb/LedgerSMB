@@ -1,0 +1,10 @@
+Test file number allocation:
+00 - 09: General base checks
+10 - 39: Module checks, no LSMB database required
+     40: Set up test LSMB database
+41 - 59: Operational checks, LSMB database required
+60 - 88: Interface checks
+     89: Clean up test LSMB database
+90 - 99: Packaging checks
+
+Environment variables can be used as flags to disable/enable tests >= 40
