@@ -307,10 +307,9 @@ sub header {
 qq|<link rel="stylesheet" href="css/$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
         }
 
-        if ( $self->{charset} ) {
-            $charset =
+        $self->{charset} ||= "utf-8";
+        $charset =
 qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}" />\n|;
-        }
 
         $self->{titlebar} =
           ( $self->{title} )
