@@ -521,6 +521,37 @@ sub date_to_number {
     $date;
 }
 
+# To be replaced with a generic interface to an Error class
+sub error {
+
+    my ( $self, $msg ) = @_;
+
+    if ( $ENV{GATEWAY_INTERFACE} ) {
+
+        $self->{msg}    = $msg;
+        $self->{format} = "html";
+        $self->format_string('msg');
+
+        delete $self->{pre};
+
+        if ( !$self->{header} ) {
+            $self->header;
+        }
+
+        print
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
+
+        exit;
+
+    }
+    else {
+
+        if ( $ENV{error_function} ) {
+            &{ $ENV{error_function} }($msg);
+        }
+        die "Error: $msg\n";
+    }
+}
 # Database routines used throughout
 
 sub db_init {
