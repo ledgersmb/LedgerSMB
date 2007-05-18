@@ -2395,7 +2395,7 @@ sub lastname_used {
 			ct.notes, 
 			ct.curr AS currency
 		FROM $vc ct
-		WHERE ct.id = (select customer_id from $arap where $where AND ${vc}_id IS NOT NULL order by id DESC limit 1)|;
+		WHERE ct.id = (select ${vc}_id from $arap where $where AND ${vc}_id IS NOT NULL order by id DESC limit 1)|;
 
     $sth = $dbh->prepare($query);
     $sth->execute() || $self->dberror($query);
