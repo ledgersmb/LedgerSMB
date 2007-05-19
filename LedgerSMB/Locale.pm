@@ -84,8 +84,8 @@ sub text {
 sub date {
     my ( $self, $myconfig, $date, $longformat ) = @_;
 
-##    my @longmonth = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec));
-    my @longmonth = (
+    my @longmonth = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec));
+    @longmonth = (
         "January",   "February", "March",    "April",
         "May ",      "June",     "July",     "August",
         "September", "October",  "November", "December"

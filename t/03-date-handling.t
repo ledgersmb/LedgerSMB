@@ -30,6 +30,8 @@ my @formats = ( ['mm-dd-yy', '-', 2, '02-29-00', '03-01-00'],
 
 my @months = ('January', 'February', 'March', 'April', 'May ', 'June', 
 	'July', 'August', 'September', 'October', 'November', 'December');
+my @mon = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+	'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 
 my %month_num = ('01' => '31', '02' => '28', '03' => '31', '04' => '30',
 		 '05' => '31', '06' => '30', '07' => '31', '08' => '31',
@@ -69,6 +71,7 @@ foreach my $format (0 .. $#formats) {
 		my $start = $fmt;
 		my $temp = sprintf('%02d', $mm);
 		my $month_en = $locale_en->text($months[$mm - 1]);
+		my $month_en_2 = $locale_en->text($mon[$mm - 1]);
 		my $month_es = $locale_es->text($months[$mm - 1]);
 		$start =~ s/dd/29/;
 		$start =~ s/yyyy/2000/;
@@ -78,7 +81,12 @@ foreach my $format (0 .. $#formats) {
 			"$month_es 29 2000", "date, $start, $fmt: long, es");
 		cmp_ok($locale_en->date(\%myconfig, $start, 1), 'eq',
 			"$month_en 29 2000", "date, $start, $fmt: long, en");
+		cmp_ok($locale_en->date(\%myconfig, $start, ''), 'eq',
+			"$month_en_2 29 2000", "date, $start, $fmt: '', en") if
+			$start !~ /^\d{4}\D/; # Ack... special case
 	}
+	cmp_ok($locale_en->date(\%myconfig, '2007-05-18', ''), 'eq',
+		"2007-05-18", "date, 2007-05-18, $fmt: '', en");
 }
 
 # $form->current_date checks
