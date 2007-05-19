@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 LedgerSMB::Locale  Locale handling class for LedgerSMB
@@ -9,17 +10,24 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 =head1 METHODS
 
 =item get_handle ($language_code)
+
 Returns a locale handle for accessing the other methods.  Inherited from 
 Locale::Maketext.
 
 =item text ($string)
+
 Returns the translation for the given string.  This is a legacy wrapper that
 merely calls $self->maketext.
 
 =item date ($myconfig, $date, $longformat)
-Returns the given date after formatting it.  If $longformat is set, the date 
-will be givin in the form of "_('September') 23 2007".  If $longformat is not
-set, the date will be output in the format specified by $myconfig->{dateformat}.
+
+Returns the given date after formatting it.  $longformat is a ternary flag that
+determines how the date is formatted.  If $longformat is true, the date will be
+given in the form of "_('September') 23 2007".  If $longformat is false but
+defined, the date will be in the form of "_('Sep') 23 2007" unless the date is
+given in the form 'yyyy.mm.dd', in which case it is returned as-is.  If
+$longformat is not defined, the date will be output in the format specified by
+$myconfig->{dateformat}.
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
@@ -60,6 +68,7 @@ set, the date will be output in the format specified by $myconfig->{dateformat}.
 =cut
 
 package LedgerSMB::Locale;
+
 use base 'Locale::Maketext';
 use Locale::Maketext::Lexicon;
 use Encode;
