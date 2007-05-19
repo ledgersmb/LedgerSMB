@@ -39,11 +39,12 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+package LedgerSMB::Template;
+
 use Error qw(:try);
 use Template;
 use LedgerSMB::Sysconfig;
-
-package LedgerSMB::Template;
 
 sub new {
 	my $class = shift;
@@ -89,6 +90,7 @@ sub render {
 	my $self = shift;
 	my $vars = shift;
 	my $template;
+	my $format = "LedgerSMB::Template::$self->{format}";
 
 	$template = Template->new({
 		INCLUDE_PATH => $self->{include_path},
@@ -97,22 +99,22 @@ sub render {
 		DELIMITER => ';',
 		}) || throw Error::Simple Template->error(); 
 
-	eval "require LedgerSMB::Template::$self->{format}";
+	eval "require $format";
 	if ($@) {
 		throw Error::Simple $@;
 	}
 
-	my $cleanvars = &{"LedgerSMB::Template::$self->{format}::preprocess"}($vars);
+	my $cleanvars = $format->can('preprocess')->($vars);
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
 		$cleanvars->{text} = \&$self->{locale}->text();
 	}
 	if (not $template->process(
-		&{"LedgerSMB::Template::$self->{format}::get_template"}($self->{template}), 
+		$format->can('get_template')->($self->{template}), 
 			$cleanvars, \$self->{output}, binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
 
-	&{"LedgerSMB::Template::$self->{format}::postprocess"}($self);
+	$format->can('postprocess')->($self);
 
 	return $self->{output};
 }

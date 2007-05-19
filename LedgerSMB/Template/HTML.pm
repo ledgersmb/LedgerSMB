@@ -9,12 +9,16 @@ LedgerSMB::Template::HTML  Template support module for LedgerSMB
 
 =item get_template ()
 
+Returns the appropriate template filename for this format.
+
 =item preprocess ($vars)
 
 This method returns a reference to a hash that contains a copy of the passed
 hashref's data with HTML entities converted to escapes. 
 
 =item postprocess ()
+
+Currently does nothing.
 
 =back
 
@@ -29,10 +33,10 @@ including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 
+package LedgerSMB::Template::HTML;
+
 use Error qw(:try);
 use CGI;
-
-package LedgerSMB::Template::HTML;
 
 sub get_template {
     my $name = shift;
@@ -46,15 +50,19 @@ sub preprocess {
 
     #XXX fix escaping function
     if ( $type eq 'ARRAY' ) {
+        for (@{$rawvars}) {
+            push @{$vars}, preprocess( $_ );
+        }
     }
     elsif ( $type eq 'HASH' ) {
         for ( keys %{$rawvars} ) {
-            $vars->{$_} = preprocess( $rawvars[$_] );
+            $vars->{$_} = preprocess( $rawvars->{$_} );
         }
     }
     else {
         return CGI::escapeHTML($rawvars);
     }
+    return $vars;
 }
 
 sub postprocess {

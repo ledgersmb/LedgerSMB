@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 30;
+use Test::More tests => 32;
 
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
@@ -32,6 +32,8 @@ use_ok('LedgerSMB::RP');
 use_ok('LedgerSMB::Session');
 use_ok('LedgerSMB::Sysconfig');
 use_ok('LedgerSMB::Tax');
+use_ok('LedgerSMB::Template');
+use_ok('LedgerSMB::Template::HTML');
 use_ok('LedgerSMB::User');
 
 SKIP: {
