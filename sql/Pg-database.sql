@@ -351,8 +351,7 @@ CREATE TABLE oe (
   id serial PRIMARY KEY,
   ordnumber text,
   transdate date default current_date,
-  vendor_id int,
-  customer_id int,
+  entity_id integer references entity(id) NOT NULL,
   amount NUMERIC,
   netamount NUMERIC,
   reqdate date,
@@ -370,9 +369,18 @@ CREATE TABLE oe (
   language_code varchar(6),
   ponumber text,
   terms int2 DEFAULT 0
+  oe_class_id int references oe_type(id) NOT NULL
 );
 
---- Chris, we need to talk about oe and the relationship between customer_id and vendor_id
+CREATE TABLE oe_class (
+  id smallint unique check(id IN (1,2),
+  oe_class text primary key;
+  
+INSERT INTO oe_class(id,oe_class) values (1,'Sales Order');
+INSERT INTO oe_class(id,oe_class) values (2,'Purchase Order');
+
+COMMENT ON TABLE oe_class IS $$ This could probably be done better. But I need to remove the customer_id/vendor_id relationship and instead rely on a classification $$;
+
 
 --
 CREATE TABLE orderitems (
