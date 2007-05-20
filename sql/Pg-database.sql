@@ -75,7 +75,8 @@ CREATE TABLE location (
   city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
   country_id integer not null REFERENCES country(id));
 
-   
+-- END entity   
+
 --
 CREATE TABLE makemodel (
   parts_id int PRIMARY KEY,
@@ -84,7 +85,7 @@ CREATE TABLE makemodel (
 );
 --
 CREATE TABLE gl (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id serial PRIMARY KEY,
   reference text,
   description text,
   transdate date DEFAULT current_date,
@@ -94,7 +95,7 @@ CREATE TABLE gl (
 );
 --
 CREATE TABLE chart (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id serial PRIMARY KEY,
   accno text NOT NULL,
   description text,
   charttype char(1) DEFAULT 'A',
@@ -174,7 +175,7 @@ CREATE TABLE invoice (
 );
 --
 CREATE TABLE customer (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar(64),
   address1 varchar(32),
   address2 varchar(32),
@@ -209,7 +210,7 @@ CREATE TABLE customer (
 --
 --
 CREATE TABLE parts (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id serial PRIMARY KEY,
   partnumber text,
   description text,
   unit varchar(5),
@@ -248,7 +249,7 @@ CREATE TABLE assembly (
 );
 --
 CREATE TABLE ar (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id serial PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
   customer_id int,
@@ -275,7 +276,7 @@ CREATE TABLE ar (
 );
 --
 CREATE TABLE ap (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id serial PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
   vendor_id int,
@@ -347,7 +348,7 @@ CREATE TABLE vendortax (
 );
 --
 CREATE TABLE oe (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   ordnumber text,
   transdate date default current_date,
   vendor_id int,
@@ -396,7 +397,7 @@ CREATE TABLE exchangerate (
 );
 --
 create table employee (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   login text,
   name varchar(64),
   address1 varchar(32),
@@ -438,7 +439,7 @@ create table shipto (
 );
 --
 CREATE TABLE vendor (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   name varchar(64),
   address1 varchar(32),
   address2 varchar(32),
@@ -473,7 +474,7 @@ CREATE TABLE vendor (
 );
 --
 CREATE TABLE project (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   projectnumber text,
   description text,
   startdate date,
@@ -485,7 +486,7 @@ CREATE TABLE project (
 );
 --
 CREATE TABLE partsgroup (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   partsgroup text
 );
 --
@@ -498,7 +499,7 @@ CREATE TABLE status (
 );
 --
 CREATE TABLE department (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   description text,
   role char(1) default 'P'
 );
@@ -511,7 +512,7 @@ CREATE TABLE dpt_trans (
 --
 -- business table
 CREATE TABLE business (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   description text,
   discount numeric
 );
@@ -524,7 +525,7 @@ CREATE TABLE sic (
 );
 --
 CREATE TABLE warehouse (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   description text
 );
 --
@@ -555,7 +556,7 @@ CREATE TABLE partsvendor (
 );
 --
 CREATE TABLE pricegroup (
-  id int default nextval('id') PRIMARY KEY,
+  id serial PRIMARY KEY,
   pricegroup text
 );
 --
