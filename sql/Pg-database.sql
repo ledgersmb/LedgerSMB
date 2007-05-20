@@ -3,15 +3,6 @@ begin;
 CREATE SEQUENCE id start 10000;
 SELECT nextval ('id');
 --
-CREATE SEQUENCE invoiceid;
-SELECT nextval ('invoiceid');
---
-CREATE SEQUENCE orderitemsid;
-SELECT nextval ('orderitemsid');
---
-CREATE SEQUENCE jcitemsid;
-SELECT nextval ('jcitemsid');
---
 
 CREATE TABLE transactions (
   id int PRIMARY KEY,
@@ -97,7 +88,7 @@ CREATE TABLE acc_trans (
 );
 --
 CREATE TABLE invoice (
-  id int DEFAULT nextval ( 'invoiceid' ) PRIMARY KEY,
+  id int serial PRIMARY KEY,
   trans_id int,
   parts_id int,
   description text,
@@ -313,7 +304,7 @@ CREATE TABLE oe (
 );
 --
 CREATE TABLE orderitems (
-  id int default nextval('orderitemsid') PRIMARY KEY,
+  id int serial PRIMARY KEY,
   trans_id int,
   parts_id int,
   description text,
@@ -562,7 +553,7 @@ CREATE TABLE recurringprint (
 );
 --
 CREATE TABLE jcitems (
-  id int default nextval('jcitemsid') PRIMARY KEY,
+  id int serial PRIMARY KEY,
   project_id int,
   parts_id int,
   description text,
