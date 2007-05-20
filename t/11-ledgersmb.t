@@ -17,6 +17,10 @@ sub redirect {
 	print "redirected\n";
 }
 
+sub lsmb_error_func {
+	print $_[0];
+}
+
 ##line	subroutine
 ##108	new
 ##235	redirect
@@ -175,12 +179,15 @@ ok(defined $lsmb->{menubar}, 'new: lynx, menubar defined (deprecated)');
 is($lsmb->{menubar}, 1, 'new: lynx, menubar enabled (deprecated)');
 ok(defined $lsmb->{version}, 'new: lynx, version defined');
 
-TODO: {
-	local $TODO = 'Error handling for LedgerSMB';
-	@r = trap{new LedgerSMB('script=foo/bar.pl')};
-	is($trap->die, "Error: Access Denied\n",
-		'new: directory traversal caught');
-}
+@r = trap{new LedgerSMB('script=foo/bar.pl')};
+is($trap->die, "Error: Access Denied\n",
+	'new: directory traversal 1 caught');
+@r = trap{new LedgerSMB('script=foo\\bar.pl')};
+is($trap->die, "Error: Access Denied\n",
+	'new: directory traversal 2 caught');
+@r = trap{new LedgerSMB('script=..')};
+is($trap->die, "Error: Access Denied\n",
+	'new: directory traversal 3 caught');
 
 # $lsmb->redirect checks
 $lsmb = new LedgerSMB;
