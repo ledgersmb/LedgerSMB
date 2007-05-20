@@ -176,18 +176,7 @@ CREATE TABLE invoice (
 --
 CREATE TABLE customer (
   id serial PRIMARY KEY,
-  name varchar(64),
-  address1 varchar(32),
-  address2 varchar(32),
-  city varchar(32),
-  state varchar(32),
-  zipcode varchar(10),
-  country varchar(32),
-  contact varchar(64),
-  phone varchar(20),
-  fax varchar(20),
-  email text,
-  notes text,
+  entity_id int references entity(id),
   discount numeric, 
   taxincluded bool default 'f',
   creditlimit NUMERIC default 0,
@@ -204,9 +193,14 @@ CREATE TABLE customer (
   language_code varchar(6),
   pricegroup_id int,
   curr char(3),
-  startdate date,
+  startdate date DEFAULT CURRENT_DATE,
   enddate date
 );
+
+COMMENT ON TABLE customer IS $$ This is now a metadata table that holds information specific to customers. Source info is not part of the entity management $$;
+COMMENT ON COLUMN customer.entity_id IS $$ This is the relationship between entities and customers $$;
+
+
 --
 --
 CREATE TABLE parts (
@@ -252,7 +246,7 @@ CREATE TABLE ar (
   id serial PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
-  customer_id int,
+  entity_id int REFERENCES entity(id),
   taxincluded bool,
   amount NUMERIC,
   netamount NUMERIC,
@@ -274,12 +268,15 @@ CREATE TABLE ar (
   language_code varchar(6),
   ponumber text
 );
+
+COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
+
 --
 CREATE TABLE ap (
   id serial PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
-  vendor_id int,
+  entity_id int REFERENCES entity(id),
   taxincluded bool DEFAULT 'f',
   amount NUMERIC,
   netamount NUMERIC,
@@ -301,6 +298,9 @@ CREATE TABLE ap (
   shippingpoint text,
   terms int2 DEFAULT 0
 );
+
+COMMENT ON COLUMN ap.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
+
 --
 CREATE TABLE taxmodule (
   taxmodule_id serial PRIMARY KEY,
@@ -371,6 +371,9 @@ CREATE TABLE oe (
   ponumber text,
   terms int2 DEFAULT 0
 );
+
+--- Chris, we need to talk about oe and the relationship between customer_id and vendor_id
+
 --
 CREATE TABLE orderitems (
   id int serial PRIMARY KEY,
@@ -398,22 +401,13 @@ CREATE TABLE exchangerate (
 --
 create table employee (
   id serial PRIMARY KEY,
+  entity_id integer references entity(id) not null,
   login text,
-  name varchar(64),
-  address1 varchar(32),
-  address2 varchar(32),
-  city varchar(32),
-  state varchar(32),
-  zipcode varchar(10),
-  country varchar(32),
-  workphone varchar(20),
-  homephone varchar(20),
   startdate date default current_date,
   enddate date,
   notes text,
   role varchar(20),
   sales bool default 'f',
-  email text,
   ssn varchar(20),
   iban varchar(34),
   bic varchar(11),
@@ -421,6 +415,9 @@ create table employee (
   employeenumber varchar(32),
   dob date
 );
+
+COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
+
 --
 create table shipto (
   trans_id int,
@@ -437,21 +434,13 @@ create table shipto (
   shiptoemail text,
   entry_id SERIAL PRIMARY KEY
 );
+
+-- SHIPTO really needs to be pushed into entities too
+
 --
 CREATE TABLE vendor (
   id serial PRIMARY KEY,
-  name varchar(64),
-  address1 varchar(32),
-  address2 varchar(32),
-  city varchar(32),
-  state varchar(32),
-  zipcode varchar(10),
-  country varchar(32),
-  contact varchar(64),
-  phone varchar(20),
-  fax varchar(20),
-  email text,
-  notes text,
+  entity_id int references entity(id) not null,
   terms int2 default 0,
   taxincluded bool default 'f',
   vendornumber varchar(32),
@@ -472,6 +461,9 @@ CREATE TABLE vendor (
   startdate date,
   enddate date
 );
+
+COMMENT ON TABLE vendor IS $$ Now a meta data table $$;
+
 --
 CREATE TABLE project (
   id serial PRIMARY KEY,
@@ -571,6 +563,9 @@ CREATE TABLE partscustomer (
   curr char(3),
   entry_id SERIAL PRIMARY KEY
 );
+
+-- How does partscustomer.customer_id relate here?
+
 --
 CREATE TABLE language (
   code varchar(6) PRIMARY KEY,
