@@ -1,13 +1,81 @@
 begin;
 --
-CREATE SEQUENCE id start 10000;
-SELECT nextval ('id');
---
-
 CREATE TABLE transactions (
   id int PRIMARY KEY,
   table_name text
 );
+
+-- BEGIN new entity management
+CREATE TABLE entity (
+  id serial PRIMARY KEY,
+  name text check (name ~ '[[:alnum:]_]'),,
+  entity_class integer not null);
+
+COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
+COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
+
+CREATE TABLE entity_class (
+  id serial primary key,
+  class text check (class ~ '[[:alnum:]_]') NOT NULL,
+  active boolean not null default TRUE);
+  
+COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
+  
+CREATE UNIQUE index entity_class_unique_idx ON entity_class(lower(class));
+
+COMMENT ON INDEX entity_class_unique_idx IS $$ Helps truly define unique. Which we could do that with Primary Keys $$;
+
+ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
+
+INSERT INTO entity_class (class) VALUES ('Vendor');
+INSERT INTO entity_class (class) VALUES ('Customer');
+INSERT INTO entity_class (class) VALUES ('Employee');
+INSERT INTO entity_class (class) VALUES ('Contact');
+INSERT INTO entity_class (class) VALUES ('Lead');
+INSERT INTO entity_class (class) VALUES ('Referral');
+
+CREATE TABLE company (
+  id serial UNIQUE,
+  legal_name text check (legal_name ~ '[[:alnum:]_]'),
+  entity_class_id integer not null references entity_class(id),
+  primary_location_id integer references address(id),
+  tax_id text,
+  PRIMARY KEY (legal_name,primary_location_id));
+
+
+COMMENT ON COLUMN company.primary_location_id IS $$ This is the location that should show up by default for any forms $$;
+COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;
+
+CREATE TABLE country (
+  id serial PRIMARY KEY,
+  name text check (name ~ '[[:alnum:]_]') NOT NULL,
+  short_name text check (short_name ~ '[[:alnum:]_]') NOT NULL),
+  itu text);
+  
+COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 $$;
+
+
+CREATE UNIQUE INDEX country_name_idx on country(lower(name));
+
+CREATE TABLE person (
+ id serial PRIMARY KEY,
+ salutation_id integer references salution(id),
+ entity_class_id integer references entity_class(id),
+ first_name check (first_name ~ '[[:alnum:]_]') NOT NULL,
+ middle_name text,
+ last_name check (last_name ~ '[[:alnum:]_]') NOT NULL,
+ primary_location_id integer references location(id),
+ 
+
+CREATE TABLE location (
+  id serial PRIMARY KEY,
+  line_one text check (line_one ~ '[[:alnum:]_]') NOT NULL,
+  line_two text,
+  line_three text,
+  city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
+  country_id integer not null REFERENCES country(id));
+
+   
 --
 CREATE TABLE makemodel (
   parts_id int PRIMARY KEY,
@@ -806,6 +874,261 @@ create index translation_trans_id_key on translation (trans_id);
 create unique index language_code_key on language (code);
 --
 create index jcitems_id_key on jcitems (id);
+
+-- Popular some entity data
+
+INSERT INTO country(short_name,name) VALUES ('AC','Ascension Island');
+INSERT INTO country(short_name,name) VALUES ('AD','Andorra');
+INSERT INTO country(short_name,name) VALUES ('AE','United Arab Emirates');
+INSERT INTO country(short_name,name) VALUES ('AF','Afghanistan');
+INSERT INTO country(short_name,name) VALUES ('AG','Antigua and Barbuda');
+INSERT INTO country(short_name,name) VALUES ('AI','Anguilla');
+INSERT INTO country(short_name,name) VALUES ('AL','Albania');
+INSERT INTO country(short_name,name) VALUES ('AM','Armenia');
+INSERT INTO country(short_name,name) VALUES ('AN','Netherlands Antilles');
+INSERT INTO country(short_name,name) VALUES ('AO','Angola');
+INSERT INTO country(short_name,name) VALUES ('AQ','Antarctica');
+INSERT INTO country(short_name,name) VALUES ('AR','Argentina');
+INSERT INTO country(short_name,name) VALUES ('AS','American Samoa');
+INSERT INTO country(short_name,name) VALUES ('AT','Austria');
+INSERT INTO country(short_name,name) VALUES ('AU','Australia');
+INSERT INTO country(short_name,name) VALUES ('AW','Aruba');
+INSERT INTO country(short_name,name) VALUES ('AX','Aland Islands');
+INSERT INTO country(short_name,name) VALUES ('AZ','Azerbaijan');
+INSERT INTO country(short_name,name) VALUES ('BA','Bosnia and Herzegovina');
+INSERT INTO country(short_name,name) VALUES ('BB','Barbados');
+INSERT INTO country(short_name,name) VALUES ('BD','Bangladesh');
+INSERT INTO country(short_name,name) VALUES ('BE','Belgium');
+INSERT INTO country(short_name,name) VALUES ('BF','Burkina Faso');
+INSERT INTO country(short_name,name) VALUES ('BG','Bulgaria');
+INSERT INTO country(short_name,name) VALUES ('BH','Bahrain');
+INSERT INTO country(short_name,name) VALUES ('BI','Burundi');
+INSERT INTO country(short_name,name) VALUES ('BJ','Benin');
+INSERT INTO country(short_name,name) VALUES ('BM','Bermuda');
+INSERT INTO country(short_name,name) VALUES ('BN','Brunei Darussalam');
+INSERT INTO country(short_name,name) VALUES ('BO','Bolivia');
+INSERT INTO country(short_name,name) VALUES ('BR','Brazil');
+INSERT INTO country(short_name,name) VALUES ('BS','Bahamas');
+INSERT INTO country(short_name,name) VALUES ('BT','Bhutan');
+INSERT INTO country(short_name,name) VALUES ('BV','Bouvet Island');
+INSERT INTO country(short_name,name) VALUES ('BW','Botswana');
+INSERT INTO country(short_name,name) VALUES ('BY','Belarus');
+INSERT INTO country(short_name,name) VALUES ('BZ','Belize');
+INSERT INTO country(short_name,name) VALUES ('CA','Canada');
+INSERT INTO country(short_name,name) VALUES ('CC','Cocos (Keeling) Islands');
+INSERT INTO country(short_name,name) VALUES ('CD','Congo, Democratic Republic');
+INSERT INTO country(short_name,name) VALUES ('CF','Central African Republic');
+INSERT INTO country(short_name,name) VALUES ('CG','Congo');
+INSERT INTO country(short_name,name) VALUES ('CH','Switzerland');
+INSERT INTO country(short_name,name) VALUES ('CI','Cote D\'Ivoire (Ivory Coast)');
+INSERT INTO country(short_name,name) VALUES ('CK','Cook Islands');
+INSERT INTO country(short_name,name) VALUES ('CL','Chile');
+INSERT INTO country(short_name,name) VALUES ('CM','Cameroon');
+INSERT INTO country(short_name,name) VALUES ('CN','China');
+INSERT INTO country(short_name,name) VALUES ('CO','Colombia');
+INSERT INTO country(short_name,name) VALUES ('CR','Costa Rica');
+INSERT INTO country(short_name,name) VALUES ('CS','Czechoslovakia (former)');
+INSERT INTO country(short_name,name) VALUES ('CU','Cuba');
+INSERT INTO country(short_name,name) VALUES ('CV','Cape Verde');
+INSERT INTO country(short_name,name) VALUES ('CX','Christmas Island');
+INSERT INTO country(short_name,name) VALUES ('CY','Cyprus');
+INSERT INTO country(short_name,name) VALUES ('CZ','Czech Republic');
+INSERT INTO country(short_name,name) VALUES ('DE','Germany');
+INSERT INTO country(short_name,name) VALUES ('DJ','Djibouti');
+INSERT INTO country(short_name,name) VALUES ('DK','Denmark');
+INSERT INTO country(short_name,name) VALUES ('DM','Dominica');
+INSERT INTO country(short_name,name) VALUES ('DO','Dominican Republic');
+INSERT INTO country(short_name,name) VALUES ('DZ','Algeria');
+INSERT INTO country(short_name,name) VALUES ('EC','Ecuador');
+INSERT INTO country(short_name,name) VALUES ('EE','Estonia');
+INSERT INTO country(short_name,name) VALUES ('EG','Egypt');
+INSERT INTO country(short_name,name) VALUES ('EH','Western Sahara');
+INSERT INTO country(short_name,name) VALUES ('ER','Eritrea');
+INSERT INTO country(short_name,name) VALUES ('ES','Spain');
+INSERT INTO country(short_name,name) VALUES ('ET','Ethiopia');
+INSERT INTO country(short_name,name) VALUES ('FI','Finland');
+INSERT INTO country(short_name,name) VALUES ('FJ','Fiji');
+INSERT INTO country(short_name,name) VALUES ('FK','Falkland Islands (Malvinas)');
+INSERT INTO country(short_name,name) VALUES ('FM','Micronesia');
+INSERT INTO country(short_name,name) VALUES ('FO','Faroe Islands');
+INSERT INTO country(short_name,name) VALUES ('FR','France');
+INSERT INTO country(short_name,name) VALUES ('FX','France, Metropolitan');
+INSERT INTO country(short_name,name) VALUES ('GA','Gabon');
+INSERT INTO country(short_name,name) VALUES ('GB','Great Britain (UK)');
+INSERT INTO country(short_name,name) VALUES ('GD','Grenada');
+INSERT INTO country(short_name,name) VALUES ('GE','Georgia');
+INSERT INTO country(short_name,name) VALUES ('GF','French Guiana');
+INSERT INTO country(short_name,name) VALUES ('GH','Ghana');
+INSERT INTO country(short_name,name) VALUES ('GI','Gibraltar');
+INSERT INTO country(short_name,name) VALUES ('GL','Greenland');
+INSERT INTO country(short_name,name) VALUES ('GM','Gambia');
+INSERT INTO country(short_name,name) VALUES ('GN','Guinea');
+INSERT INTO country(short_name,name) VALUES ('GP','Guadeloupe');
+INSERT INTO country(short_name,name) VALUES ('GQ','Equatorial Guinea');
+INSERT INTO country(short_name,name) VALUES ('GR','Greece');
+INSERT INTO country(short_name,name) VALUES ('GS','S. Georgia and S. Sandwich Isls.');
+INSERT INTO country(short_name,name) VALUES ('GT','Guatemala');
+INSERT INTO country(short_name,name) VALUES ('GU','Guam');
+INSERT INTO country(short_name,name) VALUES ('GW','Guinea-Bissau');
+INSERT INTO country(short_name,name) VALUES ('GY','Guyana');
+INSERT INTO country(short_name,name) VALUES ('HK','Hong Kong');
+INSERT INTO country(short_name,name) VALUES ('HM','Heard and McDonald Islands');
+INSERT INTO country(short_name,name) VALUES ('HN','Honduras');
+INSERT INTO country(short_name,name) VALUES ('HR','Croatia (Hrvatska)');
+INSERT INTO country(short_name,name) VALUES ('HT','Haiti');
+INSERT INTO country(short_name,name) VALUES ('HU','Hungary');
+INSERT INTO country(short_name,name) VALUES ('ID','Indonesia');
+INSERT INTO country(short_name,name) VALUES ('IE','Ireland');
+INSERT INTO country(short_name,name) VALUES ('IL','Israel');
+INSERT INTO country(short_name,name) VALUES ('IM','Isle of Man');
+INSERT INTO country(short_name,name) VALUES ('IN','India');
+INSERT INTO country(short_name,name) VALUES ('IO','British Indian Ocean Territory');
+INSERT INTO country(short_name,name) VALUES ('IQ','Iraq');
+INSERT INTO country(short_name,name) VALUES ('IR','Iran');
+INSERT INTO country(short_name,name) VALUES ('IS','Iceland');
+INSERT INTO country(short_name,name) VALUES ('IT','Italy');
+INSERT INTO country(short_name,name) VALUES ('JE','Jersey');
+INSERT INTO country(short_name,name) VALUES ('JM','Jamaica');
+INSERT INTO country(short_name,name) VALUES ('JO','Jordan');
+INSERT INTO country(short_name,name) VALUES ('JP','Japan');
+INSERT INTO country(short_name,name) VALUES ('KE','Kenya');
+INSERT INTO country(short_name,name) VALUES ('KG','Kyrgyzstan');
+INSERT INTO country(short_name,name) VALUES ('KH','Cambodia');
+INSERT INTO country(short_name,name) VALUES ('KI','Kiribati');
+INSERT INTO country(short_name,name) VALUES ('KM','Comoros');
+INSERT INTO country(short_name,name) VALUES ('KN','Saint Kitts and Nevis');
+INSERT INTO country(short_name,name) VALUES ('KP','Korea (North)');
+INSERT INTO country(short_name,name) VALUES ('KR','Korea (South)');
+INSERT INTO country(short_name,name) VALUES ('KW','Kuwait');
+INSERT INTO country(short_name,name) VALUES ('KY','Cayman Islands');
+INSERT INTO country(short_name,name) VALUES ('KZ','Kazakhstan');
+INSERT INTO country(short_name,name) VALUES ('LA','Laos');
+INSERT INTO country(short_name,name) VALUES ('LB','Lebanon');
+INSERT INTO country(short_name,name) VALUES ('LC','Saint Lucia');
+INSERT INTO country(short_name,name) VALUES ('LI','Liechtenstein');
+INSERT INTO country(short_name,name) VALUES ('LK','Sri Lanka');
+INSERT INTO country(short_name,name) VALUES ('LR','Liberia');
+INSERT INTO country(short_name,name) VALUES ('LS','Lesotho');
+INSERT INTO country(short_name,name) VALUES ('LT','Lithuania');
+INSERT INTO country(short_name,name) VALUES ('LU','Luxembourg');
+INSERT INTO country(short_name,name) VALUES ('LV','Latvia');
+INSERT INTO country(short_name,name) VALUES ('LY','Libya');
+INSERT INTO country(short_name,name) VALUES ('MA','Morocco');
+INSERT INTO country(short_name,name) VALUES ('MC','Monaco');
+INSERT INTO country(short_name,name) VALUES ('MD','Moldova');
+INSERT INTO country(short_name,name) VALUES ('MG','Madagascar');
+INSERT INTO country(short_name,name) VALUES ('MH','Marshall Islands');
+INSERT INTO country(short_name,name) VALUES ('MK','F.Y.R.O.M. (Macedonia)');
+INSERT INTO country(short_name,name) VALUES ('ML','Mali');
+INSERT INTO country(short_name,name) VALUES ('MM','Myanmar');
+INSERT INTO country(short_name,name) VALUES ('MN','Mongolia');
+INSERT INTO country(short_name,name) VALUES ('MO','Macau');
+INSERT INTO country(short_name,name) VALUES ('MP','Northern Mariana Islands');
+INSERT INTO country(short_name,name) VALUES ('MQ','Martinique');
+INSERT INTO country(short_name,name) VALUES ('MR','Mauritania');
+INSERT INTO country(short_name,name) VALUES ('MS','Montserrat');
+INSERT INTO country(short_name,name) VALUES ('MT','Malta');
+INSERT INTO country(short_name,name) VALUES ('MU','Mauritius');
+INSERT INTO country(short_name,name) VALUES ('MV','Maldives');
+INSERT INTO country(short_name,name) VALUES ('MW','Malawi');
+INSERT INTO country(short_name,name) VALUES ('MX','Mexico');
+INSERT INTO country(short_name,name) VALUES ('MY','Malaysia');
+INSERT INTO country(short_name,name) VALUES ('MZ','Mozambique');
+INSERT INTO country(short_name,name) VALUES ('NA','Namibia');
+INSERT INTO country(short_name,name) VALUES ('NC','New Caledonia');
+INSERT INTO country(short_name,name) VALUES ('NE','Niger');
+INSERT INTO country(short_name,name) VALUES ('NF','Norfolk Island');
+INSERT INTO country(short_name,name) VALUES ('NG','Nigeria');
+INSERT INTO country(short_name,name) VALUES ('NI','Nicaragua');
+INSERT INTO country(short_name,name) VALUES ('NL','Netherlands');
+INSERT INTO country(short_name,name) VALUES ('NO','Norway');
+INSERT INTO country(short_name,name) VALUES ('NP','Nepal');
+INSERT INTO country(short_name,name) VALUES ('NR','Nauru');
+INSERT INTO country(short_name,name) VALUES ('NT','Neutral Zone');
+INSERT INTO country(short_name,name) VALUES ('NU','Niue');
+INSERT INTO country(short_name,name) VALUES ('NZ','New Zealand (Aotearoa)');
+INSERT INTO country(short_name,name) VALUES ('OM','Oman');
+INSERT INTO country(short_name,name) VALUES ('PA','Panama');
+INSERT INTO country(short_name,name) VALUES ('PE','Peru');
+INSERT INTO country(short_name,name) VALUES ('PF','French Polynesia');
+INSERT INTO country(short_name,name) VALUES ('PG','Papua New Guinea');
+INSERT INTO country(short_name,name) VALUES ('PH','Philippines');
+INSERT INTO country(short_name,name) VALUES ('PK','Pakistan');
+INSERT INTO country(short_name,name) VALUES ('PL','Poland');
+INSERT INTO country(short_name,name) VALUES ('PM','St. Pierre and Miquelon');
+INSERT INTO country(short_name,name) VALUES ('PN','Pitcairn');
+INSERT INTO country(short_name,name) VALUES ('PR','Puerto Rico');
+INSERT INTO country(short_name,name) VALUES ('PS','Palestinian Territory, Occupied');
+INSERT INTO country(short_name,name) VALUES ('PT','Portugal');
+INSERT INTO country(short_name,name) VALUES ('PW','Palau');
+INSERT INTO country(short_name,name) VALUES ('PY','Paraguay');
+INSERT INTO country(short_name,name) VALUES ('QA','Qatar');
+INSERT INTO country(short_name,name) VALUES ('RE','Reunion');
+INSERT INTO country(short_name,name) VALUES ('RO','Romania');
+INSERT INTO country(short_name,name) VALUES ('RS','Serbia');
+INSERT INTO country(short_name,name) VALUES ('RU','Russian Federation');
+INSERT INTO country(short_name,name) VALUES ('RW','Rwanda');
+INSERT INTO country(short_name,name) VALUES ('SA','Saudi Arabia');
+INSERT INTO country(short_name,name) VALUES ('SB','Solomon Islands');
+INSERT INTO country(short_name,name) VALUES ('SC','Seychelles');
+INSERT INTO country(short_name,name) VALUES ('SD','Sudan');
+INSERT INTO country(short_name,name) VALUES ('SE','Sweden');
+INSERT INTO country(short_name,name) VALUES ('SG','Singapore');
+INSERT INTO country(short_name,name) VALUES ('SH','St. Helena');
+INSERT INTO country(short_name,name) VALUES ('SI','Slovenia');
+INSERT INTO country(short_name,name) VALUES ('SJ','Svalbard & Jan Mayen Islands');
+INSERT INTO country(short_name,name) VALUES ('SK','Slovak Republic');
+INSERT INTO country(short_name,name) VALUES ('SL','Sierra Leone');
+INSERT INTO country(short_name,name) VALUES ('SM','San Marino');
+INSERT INTO country(short_name,name) VALUES ('SN','Senegal');
+INSERT INTO country(short_name,name) VALUES ('SO','Somalia');
+INSERT INTO country(short_name,name) VALUES ('SR','Suriname');
+INSERT INTO country(short_name,name) VALUES ('ST','Sao Tome and Principe');
+INSERT INTO country(short_name,name) VALUES ('SU','USSR (former)');
+INSERT INTO country(short_name,name) VALUES ('SV','El Salvador');
+INSERT INTO country(short_name,name) VALUES ('SY','Syria');
+INSERT INTO country(short_name,name) VALUES ('SZ','Swaziland');
+INSERT INTO country(short_name,name) VALUES ('TC','Turks and Caicos Islands');
+INSERT INTO country(short_name,name) VALUES ('TD','Chad');
+INSERT INTO country(short_name,name) VALUES ('TF','French Southern Territories');
+INSERT INTO country(short_name,name) VALUES ('TG','Togo');
+INSERT INTO country(short_name,name) VALUES ('TH','Thailand');
+INSERT INTO country(short_name,name) VALUES ('TJ','Tajikistan');
+INSERT INTO country(short_name,name) VALUES ('TK','Tokelau');
+INSERT INTO country(short_name,name) VALUES ('TM','Turkmenistan');
+INSERT INTO country(short_name,name) VALUES ('TN','Tunisia');
+INSERT INTO country(short_name,name) VALUES ('TO','Tonga');
+INSERT INTO country(short_name,name) VALUES ('TP','East Timor');
+INSERT INTO country(short_name,name) VALUES ('TR','Turkey');
+INSERT INTO country(short_name,name) VALUES ('TT','Trinidad and Tobago');
+INSERT INTO country(short_name,name) VALUES ('TV','Tuvalu');
+INSERT INTO country(short_name,name) VALUES ('TW','Taiwan');
+INSERT INTO country(short_name,name) VALUES ('TZ','Tanzania');
+INSERT INTO country(short_name,name) VALUES ('UA','Ukraine');
+INSERT INTO country(short_name,name) VALUES ('UG','Uganda');
+INSERT INTO country(short_name,name) VALUES ('UK','United Kingdom');
+INSERT INTO country(short_name,name) VALUES ('UM','US Minor Outlying Islands');
+INSERT INTO country(short_name,name) VALUES ('US','United States');
+INSERT INTO country(short_name,name) VALUES ('UY','Uruguay');
+INSERT INTO country(short_name,name) VALUES ('UZ','Uzbekistan');
+INSERT INTO country(short_name,name) VALUES ('VA','Vatican City State (Holy See)');
+INSERT INTO country(short_name,name) VALUES ('VC','Saint Vincent & the Grenadines');
+INSERT INTO country(short_name,name) VALUES ('VE','Venezuela');
+INSERT INTO country(short_name,name) VALUES ('VG','British Virgin Islands');
+INSERT INTO country(short_name,name) VALUES ('VI','Virgin Islands (U.S.)');
+INSERT INTO country(short_name,name) VALUES ('VN','Viet Nam');
+INSERT INTO country(short_name,name) VALUES ('VU','Vanuatu');
+INSERT INTO country(short_name,name) VALUES ('WF','Wallis and Futuna Islands');
+INSERT INTO country(short_name,name) VALUES ('WS','Samoa');
+INSERT INTO country(short_name,name) VALUES ('YE','Yemen');
+INSERT INTO country(short_name,name) VALUES ('YT','Mayotte');
+INSERT INTO country(short_name,name) VALUES ('YU','Yugoslavia (former)');
+INSERT INTO country(short_name,name) VALUES ('ZA','South Africa');
+INSERT INTO country(short_name,name) VALUES ('ZM','Zambia');
+INSERT INTO country(short_name,name) VALUES ('ZR','Zaire');
+INSERT INTO country(short_name,name) VALUES ('ZW','Zimbabwe');
+
+
 
 --
 CREATE FUNCTION del_yearend() RETURNS TRIGGER AS '
