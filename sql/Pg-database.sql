@@ -554,7 +554,7 @@ CREATE TABLE yearend (
 );
 --
 CREATE TABLE partsvendor (
-  vendor_id int,
+  entity_id int references entity(id) not null,
   parts_id int,
   partnumber text,
   leadtime int2,
@@ -796,7 +796,6 @@ create index ap_id_key on ap (id);
 create index ap_transdate_key on ap (transdate);
 create index ap_invnumber_key on ap (invnumber);
 create index ap_ordnumber_key on ap (ordnumber);
-create index ap_vendor_id_key on ap (vendor_id);
 create index ap_employee_id_key on ap (employee_id);
 create index ap_quonumber_key on ap (quonumber);
 --
@@ -804,7 +803,6 @@ create index ar_id_key on ar (id);
 create index ar_transdate_key on ar (transdate);
 create index ar_invnumber_key on ar (invnumber);
 create index ar_ordnumber_key on ar (ordnumber);
-create index ar_customer_id_key on ar (customer_id);
 create index ar_employee_id_key on ar (employee_id);
 create index ar_quonumber_key on ar (quonumber);
 --
@@ -859,7 +857,6 @@ create index vendor_id_key on vendor (id);
 create index vendor_name_key on vendor (lower(name));
 create index vendor_vendornumber_key on vendor (vendornumber);
 create index vendor_contact_key on vendor (lower(contact));
-create index vendortax_vendor_id_key on vendortax (vendor_id);
 --
 create index shipto_trans_id_key on shipto (trans_id);
 --
@@ -873,7 +870,6 @@ create index status_trans_id_key on status (trans_id);
 --
 create index department_id_key on department (id);
 --
-create index partsvendor_vendor_id_key on partsvendor (vendor_id);
 create index partsvendor_parts_id_key on partsvendor (parts_id);
 --
 create index pricegroup_pricegroup_key on pricegroup (pricegroup);
