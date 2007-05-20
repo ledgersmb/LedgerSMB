@@ -820,7 +820,6 @@ create index customer_customer_id_key on customertax (customer_id);
 --
 create index employee_id_key on employee (id);
 create unique index employee_login_key on employee (login);
-create index employee_name_key on employee (lower(name));
 --
 create index exchangerate_ct_key on exchangerate (curr, transdate);
 --
