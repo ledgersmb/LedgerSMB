@@ -8,7 +8,7 @@ CREATE TABLE transactions (
 -- BEGIN new entity management
 CREATE TABLE entity (
   id serial PRIMARY KEY,
-  name text check (name ~ '[[:alnum:]_]'),,
+  name text check (name ~ '[[:alnum:]_]'),
   entity_class integer not null);
 
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
@@ -34,38 +34,16 @@ INSERT INTO entity_class (class) VALUES ('Contact');
 INSERT INTO entity_class (class) VALUES ('Lead');
 INSERT INTO entity_class (class) VALUES ('Referral');
 
-CREATE TABLE company (
-  id serial UNIQUE,
-  legal_name text check (legal_name ~ '[[:alnum:]_]'),
-  entity_class_id integer not null references entity_class(id),
-  primary_location_id integer references address(id),
-  tax_id text,
-  PRIMARY KEY (legal_name,primary_location_id));
-
-
-COMMENT ON COLUMN company.primary_location_id IS $$ This is the location that should show up by default for any forms $$;
-COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;
-
 CREATE TABLE country (
   id serial PRIMARY KEY,
   name text check (name ~ '[[:alnum:]_]') NOT NULL,
-  short_name text check (short_name ~ '[[:alnum:]_]') NOT NULL),
+  short_name text check (short_name ~ '[[:alnum:]_]') NOT NULL,
   itu text);
   
 COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 $$;
 
 
 CREATE UNIQUE INDEX country_name_idx on country(lower(name));
-
-CREATE TABLE person (
- id serial PRIMARY KEY,
- salutation_id integer references salution(id),
- entity_class_id integer references entity_class(id),
- first_name check (first_name ~ '[[:alnum:]_]') NOT NULL,
- middle_name text,
- last_name check (last_name ~ '[[:alnum:]_]') NOT NULL,
- primary_location_id integer references location(id),
- 
 
 CREATE TABLE location (
   id serial PRIMARY KEY,
@@ -74,6 +52,33 @@ CREATE TABLE location (
   line_three text,
   city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
   country_id integer not null REFERENCES country(id));
+
+CREATE TABLE company (
+  id serial UNIQUE,
+  legal_name text check (legal_name ~ '[[:alnum:]_]'),
+  entity_class_id integer not null references entity_class(id),
+  primary_location_id integer references location(id),
+  tax_id text,
+  PRIMARY KEY (legal_name,primary_location_id));
+
+
+COMMENT ON COLUMN company.primary_location_id IS $$ This is the location that should show up by default for any forms $$;
+COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;
+
+CREATE TABLE salutation (
+ id serial unique,
+ salutation text primary key);
+
+CREATE TABLE person (
+ id serial PRIMARY KEY,
+ salutation_id integer references salutation(id),
+ entity_class_id integer references entity_class(id),
+ first_name text check (first_name ~ '[[:alnum:]_]') NOT NULL,
+ middle_name text,
+ last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
+ primary_location_id integer references location(id));
+ 
+
 
 -- END entity   
 
@@ -157,7 +162,7 @@ CREATE TABLE acc_trans (
 );
 --
 CREATE TABLE invoice (
-  id int serial PRIMARY KEY,
+  id serial PRIMARY KEY,
   trans_id int,
   parts_id int,
   description text,
@@ -347,6 +352,17 @@ CREATE TABLE vendortax (
   PRIMARY KEY (vendor_id, chart_id)
 );
 --
+
+CREATE TABLE oe_class (
+  id smallint unique check(id IN (1,2)),
+  oe_class text primary key);
+  
+INSERT INTO oe_class(id,oe_class) values (1,'Sales Order');
+INSERT INTO oe_class(id,oe_class) values (2,'Purchase Order');
+
+COMMENT ON TABLE oe_class IS $$ This could probably be done better. But I need to remove the customer_id/vendor_id relationship and instead rely on a classification $$;
+
+
 CREATE TABLE oe (
   id serial PRIMARY KEY,
   ordnumber text,
@@ -368,23 +384,15 @@ CREATE TABLE oe (
   shipvia text,
   language_code varchar(6),
   ponumber text,
-  terms int2 DEFAULT 0
-  oe_class_id int references oe_type(id) NOT NULL
+  terms int2 DEFAULT 0,
+  oe_class_id int references oe_class(id) NOT NULL
 );
 
-CREATE TABLE oe_class (
-  id smallint unique check(id IN (1,2),
-  oe_class text primary key;
-  
-INSERT INTO oe_class(id,oe_class) values (1,'Sales Order');
-INSERT INTO oe_class(id,oe_class) values (2,'Purchase Order');
-
-COMMENT ON TABLE oe_class IS $$ This could probably be done better. But I need to remove the customer_id/vendor_id relationship and instead rely on a classification $$;
 
 
 --
 CREATE TABLE orderitems (
-  id int serial PRIMARY KEY,
+  id serial PRIMARY KEY,
   trans_id int,
   parts_id int,
   description text,
@@ -625,7 +633,7 @@ CREATE TABLE recurringprint (
 );
 --
 CREATE TABLE jcitems (
-  id int serial PRIMARY KEY,
+  id serial PRIMARY KEY,
   project_id int,
   parts_id int,
   description text,
