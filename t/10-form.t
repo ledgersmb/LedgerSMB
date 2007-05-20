@@ -73,6 +73,9 @@
 
 use strict;
 use warnings;
+
+$ENV{TMPDIR} = 't/var';
+
 use Test::More;
 plan skip_all => 'Trap tests could crash Perl on Windows' if $^O eq 'MSWin32';
 eval "use Test::Trap";
@@ -84,8 +87,6 @@ use Math::BigFloat;
 use IO::String;
 
 use LedgerSMB::Form;
-
-$ENV{TMPDIR} = "t/var";
 
 sub form_info_func {
 	return $_[0];
