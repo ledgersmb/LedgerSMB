@@ -14,6 +14,7 @@ use Error qw(:try);
 use LedgerSMB::AM;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Locale;
 use LedgerSMB::Template;
 use LedgerSMB::Template::HTML;
 
@@ -23,6 +24,9 @@ my $form;
 my $myconfig;
 my $template;
 my $FH;
+my $locale;
+
+$locale = LedgerSMB::Locale->get_handle('fr');
 
 # AM->check_template_name checks
 # check_template operates by calling $form->error if the checks fail
@@ -109,6 +113,27 @@ is(join("\n", @r), $form->{body}, 'AM, save_template: Good save');
 is(unlink($form->{file}), 1, 'AM, save_template: removing testfile');
 ok(!-e $form->{file}, 'AM, save_template: testfile removed');
 
+# LedgerSMB::Template::HTML checks
+is(LedgerSMB::Template::HTML::get_template('04-template'), '04-template.html',
+	'HTML, get_template: Returned correct template file name');
+is(LedgerSMB::Template::HTML::preprocess('04-template'), '04-template',
+	'HTML, preprocess: Returned simple string unchanged');
+is(LedgerSMB::Template::HTML::preprocess('14 > 12'), '14 &gt; 12',
+	'HTML, preprocess: Returned properly escaped string');
+is_deeply(LedgerSMB::Template::HTML::preprocess([0, 'apple', 'mango&durian']), 
+	[0, 'apple', 'mango&amp;durian'],
+	'HTML, preprocess: Returned properly escaped array ref contents');
+is_deeply(LedgerSMB::Template::HTML::preprocess({'fruit' => '&veggies', 
+		'test' => 1}), 
+	{'fruit' => '&amp;veggies', 'test' => 1},
+	'HTML, preprocess: Returned properly escaped hash ref contents');
+is_deeply(LedgerSMB::Template::HTML::preprocess({'fruit' => '&veggies', 
+		'test' => ['nest', 'bird', '0 < 15', 1]}), 
+	{'fruit' => '&amp;veggies', 'test' => ['nest', 'bird', '0 &lt; 15', 1]},
+	'HTML, preprocess: Returned properly escaped nested contents');
+is(LedgerSMB::Template::HTML::postprocess('04-template'), undef,
+	'HTML, postprocess: Return undef');
+
 # Template->new
 $myconfig = {'templates' => 't/data'};
 throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => 'x/0')} 
@@ -138,28 +163,10 @@ isa_ok($template, 'LedgerSMB::Template',
 	'Template, new: Object creation with valid language and path');
 is($template->{include_path}, 't/data',
 	'Template, new: Object creation with valid path overrides language');
+
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
 	'template' => '04-template');
-is(LedgerSMB::Template::HTML::get_template('04-template'), '04-template.html',
-	'HTML, get_template: Returned correct template file name');
-is(LedgerSMB::Template::HTML::preprocess('04-template'), '04-template',
-	'HTML, preprocess: Returned simple string unchanged');
-is(LedgerSMB::Template::HTML::preprocess('14 > 12'), '14 &gt; 12',
-	'HTML, preprocess: Returned properly escaped string');
-is_deeply(LedgerSMB::Template::HTML::preprocess([0, 'apple', 'mango&durian']), 
-	[0, 'apple', 'mango&amp;durian'],
-	'HTML, preprocess: Returned properly escaped array ref contents');
-is_deeply(LedgerSMB::Template::HTML::preprocess({'fruit' => '&veggies', 
-		'test' => 1}), 
-	{'fruit' => '&amp;veggies', 'test' => 1},
-	'HTML, preprocess: Returned properly escaped hash ref contents');
-is_deeply(LedgerSMB::Template::HTML::preprocess({'fruit' => '&veggies', 
-		'test' => ['nest', 'bird', '0 < 15', 1]}), 
-	{'fruit' => '&amp;veggies', 'test' => ['nest', 'bird', '0 &lt; 15', 1]},
-	'HTML, preprocess: Returned properly escaped nested contents');
-is(LedgerSMB::Template::HTML::postprocess('04-template'), undef,
-	'HTML, postprocess: Return undef');
 ok(defined $template, 
 	'Template, new: Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template', 
@@ -169,3 +176,33 @@ is($template->{include_path}, 't/data',
 is($template->render({'login' => 'foo'}), 
 	"I am a template.\nLook at me foo.\n",
 	'Template, render: Simple HTML template');
+
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
+	'template' => '04-template', 'locale' => $locale);
+ok(defined $template, 
+	'Template, new: Object creation with locale');
+isa_ok($template, 'LedgerSMB::Template', 
+	'Template, new: Object creation with locale');
+TODO: {
+	local $TODO = 'gettext substitution of passed in data';
+	is($template->render({'login' => 'April'}), 
+		"I am a template.\nLook at me Avril.\n",
+		'Template, render: HTML template with locale');
+}
+
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
+	'template' => '04-template-2');
+ok(defined $template, 
+	'Template, new: Object creation with non-existent template');
+throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
+	'render: File not found caught';
+
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'TODO', 
+	'template' => '04-template');
+ok(defined $template, 
+	'Template, new: Object creation with non-existent format');
+throws_ok{$template->render({'login' => 'foo'})} qr/Can't locate/,
+	'render: Invalid format caught';

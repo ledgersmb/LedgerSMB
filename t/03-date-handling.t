@@ -14,7 +14,7 @@ use LedgerSMB::Form;
 use LedgerSMB::Locale;
 
 my $form = new Form;
-my $locale_en = LedgerSMB::Locale->get_handle('en');
+my $locale_en = LedgerSMB::Locale->get_handle('en_CA');
 my $locale_es = LedgerSMB::Locale->get_handle('es');
 my %myconfig;
 ok(defined $form);
