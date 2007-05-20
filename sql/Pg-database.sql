@@ -816,8 +816,6 @@ create index chart_gifi_accno_key on chart (gifi_accno);
 --
 create index customer_id_key on customer (id);
 create index customer_customernumber_key on customer (customernumber);
-create index customer_name_key on customer (lower(name));
-create index customer_contact_key on customer (lower(contact));
 create index customer_customer_id_key on customertax (customer_id);
 --
 create index employee_id_key on employee (id);
@@ -854,9 +852,7 @@ create index parts_description_key on parts (lower(description));
 create index partstax_parts_id_key on partstax (parts_id);
 --
 create index vendor_id_key on vendor (id);
-create index vendor_name_key on vendor (lower(name));
 create index vendor_vendornumber_key on vendor (vendornumber);
-create index vendor_contact_key on vendor (lower(contact));
 --
 create index shipto_trans_id_key on shipto (trans_id);
 --
