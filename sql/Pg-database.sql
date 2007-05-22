@@ -37,6 +37,13 @@ INSERT INTO entity_class (id,class) VALUES (6,'Referral');
 
 SELECT setval('entity_class_id_seq',7);
 
+CREATE TABLE entity_class_to_entity (
+  entity_class_id integer not null references entity_class(id),
+  entity_id integer not null references entity(id)
+  );
+
+COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
+
 
 CREATE TABLE country (
   id serial PRIMARY KEY,
