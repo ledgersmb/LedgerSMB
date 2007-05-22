@@ -20,19 +20,23 @@ CREATE TABLE entity_class (
   active boolean not null default TRUE);
   
 COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
-  
+COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and permanent $$;  
+
 CREATE UNIQUE index entity_class_unique_idx ON entity_class(lower(class));
 
 COMMENT ON INDEX entity_class_unique_idx IS $$ Helps truly define unique. Which we could do that with Primary Keys $$;
 
 ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
 
-INSERT INTO entity_class (class) VALUES ('Vendor');
-INSERT INTO entity_class (class) VALUES ('Customer');
-INSERT INTO entity_class (class) VALUES ('Employee');
-INSERT INTO entity_class (class) VALUES ('Contact');
-INSERT INTO entity_class (class) VALUES ('Lead');
-INSERT INTO entity_class (class) VALUES ('Referral');
+INSERT INTO entity_class (id,class) VALUES (1,'Vendor');
+INSERT INTO entity_class (id,class) VALUES (2,'Customer');
+INSERT INTO entity_class (id,class) VALUES (3,'Employee');
+INSERT INTO entity_class (id,class) VALUES (4,'Contact');
+INSERT INTO entity_class (id,class) VALUES (5,'Lead');
+INSERT INTO entity_class (id,class) VALUES (6,'Referral');
+
+SELECT setval('entity_class_id_seq',7);
+
 
 CREATE TABLE country (
   id serial PRIMARY KEY,
