@@ -39,7 +39,8 @@ SELECT setval('entity_class_id_seq',7);
 
 CREATE TABLE entity_class_to_entity (
   entity_class_id integer not null references entity_class(id),
-  entity_id integer not null references entity(id)
+  entity_id integer not null references entity(id),
+  PRIMARY KEY(entity_class_id,entity_id)
   );
 
 COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
