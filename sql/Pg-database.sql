@@ -63,7 +63,8 @@ CREATE TABLE location (
   line_two text,
   line_three text,
   city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
-  country_id integer not null REFERENCES country(id));
+  country_id integer not null REFERENCES country(id)
+  mail_code text not null check (mail_code ~ '[[:alnum:]_]'));
 
 CREATE TABLE company (
   id serial UNIQUE,
