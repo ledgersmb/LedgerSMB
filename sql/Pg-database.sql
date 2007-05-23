@@ -84,14 +84,14 @@ CREATE TABLE salutation (
 
 CREATE TABLE person (
  id serial PRIMARY KEY,
+ entity_id integer references entity(id) not null,
  salutation_id integer references salutation(id),
- entity_class_id integer references entity_class(id),
  first_name text check (first_name ~ '[[:alnum:]_]') NOT NULL,
  middle_name text,
  last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
  primary_location_id integer references location(id));
  
-
+COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
 
 -- END entity   
 
