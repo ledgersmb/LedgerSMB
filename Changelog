@@ -1,3 +1,8 @@
+Changelog for 1.2.6
+* More date tests added (Seneca)
+* Fixed customer_id error in AP transactions (Chris T)
+* Added meta tags to set to utf-8 by default (Chris T)
+* Fixed the alias inconsistancy for the ledgersmb-httpd.conf (Chris T).
 
 Changelog for 1.2.5
 * Partsgroup handling corrected on POS and Sales invoice screens (Chris T)
