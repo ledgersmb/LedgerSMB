@@ -28,6 +28,7 @@ my $build = Module::Build->new (
 		'MIME::Lite'			=> 0,
 		'Error'				=> 0,
 		'Template'			=> 0,
+		'Template::Latex'		=> 0,
 		'Test::More'			=> 0,
 		'Test::Trap'			=> 0,
 		'Test::Exception'		=> 0,

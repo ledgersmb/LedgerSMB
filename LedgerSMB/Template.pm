@@ -3,10 +3,9 @@
 
 LedgerSMB::Template - Template support module for LedgerSMB 
 
-=head1 SYOPSIS
+=head1 SYNOPSIS
 
-This module renders templates to provide HTML interfaces.  LaTeX support
-forthcoming.
+This module renders templates.
 
 =head1 METHODS
 
@@ -24,6 +23,10 @@ include_path allows one to override the template directory and use this with use
 
 This command renders the template and writes the result to standard output.  
 Currently email and server-side printing are not supported.
+
+=item output
+
+This function outputs the rendered file in an appropriate manner.
 
 =item my $bool = _valid_language()
 
@@ -43,7 +46,6 @@ your software.
 package LedgerSMB::Template;
 
 use Error qw(:try);
-use Template;
 use LedgerSMB::Sysconfig;
 
 sub new {
@@ -55,7 +57,13 @@ sub new {
 	$self->{template} = $args{template};
 	$self->{format} = $args{format};
 	$self->{language} = $args{language};
-	$self->{output} = '';
+	if ($args{outputfile}) {
+		$self->{outputfile} =
+			"${LedgerSMB::Sysconfig::tempdir}/$args{outputfile}";
+	} else {
+		$self->{outputfile} =
+			"${LedgerSMB::Sysconfig::tempdir}/$args{template}-output";
+	}
 	$self->{include_path} = $args{path};
 	$self->{locale} = $args{locale};
 
@@ -89,15 +97,7 @@ sub _valid_language {
 sub render {
 	my $self = shift;
 	my $vars = shift;
-	my $template;
 	my $format = "LedgerSMB::Template::$self->{format}";
-
-	$template = Template->new({
-		INCLUDE_PATH => $self->{include_path},
-		START_TAG => quotemeta('<?lsmb'),
-		END_TAG => quotemeta('?>'),
-		DELIMITER => ';',
-		}) || throw Error::Simple Template->error(); 
 
 	eval "require $format";
 	if ($@) {
@@ -108,15 +108,44 @@ sub render {
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
 		$cleanvars->{text} = $self->{locale}->text();
 	}
-	if (not $template->process(
-		$format->can('get_template')->($self->{template}), 
-			$cleanvars, \$self->{output}, binmode => ':utf8')) {
-		throw Error::Simple $template->error();
+
+	$format->can('process')->($self, $cleanvars);
+	return $format->can('postprocess')->($self);
+}
+
+sub output {
+	my $self = shift;
+	my $method = shift;
+
+	if ('mail' eq lc $method) {
+		#XXX do something
+		$self->_http_output;
+	} elsif ('print' eq lc $method) {
+		#XXX do something
+		$self->_http_output;
+	} else {
+		$self->_http_output;
 	}
+}
 
-	$format->can('postprocess')->($self);
+sub _http_output {
+	my $self = shift;
+	my $FH;
 
-	return $self->{output};
+	if ($self->{mimetype} =~ /^text/) {
+		print "Content-Type: $self->{mimetype}; charset=utf-8\n\n";
+	} else {
+		print "Content-Type: $self->{mimetype}\n\n";
+	}
+	open($FH, '<', $self->{rendered}) or
+		throw Error::Simple 'Unable to open rendered file';
+	while (<$FH>) {
+		print $_;
+	}
+	close($FH);
+	unlink($self->{rendered}) or
+		throw Error::Simple 'Unable to delete output file';
+	exit;
 }
 
 1;

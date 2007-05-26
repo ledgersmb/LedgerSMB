@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Template::HTML  Template support module for LedgerSMB
+LedgerSMB::Template::PDF  Template support module for LedgerSMB
 
 =head1 METHODS
 
@@ -13,12 +13,11 @@ Returns the appropriate template filename for this format.
 
 =item preprocess ($vars)
 
-This method returns a reference to a hash that contains a copy of the passed
-hashref's data with HTML entities converted to escapes. 
+Currently does nothing.
 
 =item process ($parent, $cleanvars)
 
-Processes the template for HTML.
+Processes the template for PDF.
 
 =item postprocess ($parent)
 
@@ -37,37 +36,20 @@ including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 
-package LedgerSMB::Template::HTML;
+package LedgerSMB::Template::PDF;
 
 use Error qw(:try);
-use CGI;
-use Template;
+use Template::Latex;
 
 sub get_template {
-    my $name = shift;
-    return "${name}.html";
+	my $name = shift;
+	return "${name}.tex";
 }
-
 sub preprocess {
-    my $rawvars = shift;
-    my $vars;
-    my $type = ref $rawvars;
-
-    #XXX fix escaping function
-    if ( $type eq 'ARRAY' ) {
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_ );
-        }
-    }
-    elsif ( $type eq 'HASH' ) {
-        for ( keys %{$rawvars} ) {
-            $vars->{$_} = preprocess( $rawvars->{$_} );
-        }
-    }
-    else {
-        return CGI::escapeHTML($rawvars);
-    }
-    return $vars;
+	my $rawvars = shift;
+	my $vars;
+	my $type = ref $rawvars;
+	return $vars;
 }
 
 sub process {
@@ -75,24 +57,26 @@ sub process {
 	my $cleanvars = shift;
 	my $template;
 
-	$template = Template->new({
+	$template = Template::Latex->new({
+		LATEX_FORMAT => 'pdf',
 		INCLUDE_PATH => $parent->{include_path},
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
-		}) || throw Error::Simple Template->error(); 
+		}) || throw Error::Simple Template::Latex->error(); 
+
 	if (not $template->process(
 		get_template($parent->{template}), 
-		$cleanvars, "$parent->{outputfile}.html", binmode => ':utf8')) {
+		$cleanvars, "$parent->{outputfile}.pdf", binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
-	$parent->{mimetype} = 'text/html';
+	$parent->{mimetype} = 'application/pdf';
 }
 
 sub postprocess {
-    my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.html";
-    return "$parent->{outputfile}.html";
+	my $parent = shift;
+	$parent->{rendered} = "$parent->{outputfile}.pdf";
+	return "$parent->{outputfile}.pdf";
 }
 
 1;

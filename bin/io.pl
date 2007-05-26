@@ -1767,24 +1767,16 @@ sub print_form {
     $form->{fileid} = $form->{"${inv}number"};
     $form->{fileid} =~ s/(\s|\W)+//g;
 
-    if ( ( $form->{'media'} eq 'screen' ) and ( $form->{'format'} eq 'html' ) )
-    {
-        my $template =
-          LedgerSMB::Template->new( user => \%myconfig, 
-          template => $form->{'formname'}, format => 'HTML' );
-        try {
-            $template->render($form);
-            $form->header;
-            print $template->{'output'};
-            exit;
-        }
-        catch Error::Simple with {
-            my $E = shift;
-            $form->error( $E->stacktrace );
-        };
+    my $template = LedgerSMB::Template->new( user => \%myconfig, 
+      template => $form->{'formname'}, format => uc $form->{format} );
+    try {
+        $template->render($form);
+        $template->output($form->{media});
     }
-
-    $form->parse_template( \%myconfig, ${LedgerSMB::Sysconfig::userspath} );
+    catch Error::Simple with {
+        my $E = shift;
+        $form->error( $E->stacktrace );
+    };
 
     # if we got back here restore the previous form
     if ( defined %$old_form ) {

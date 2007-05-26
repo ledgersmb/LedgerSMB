@@ -1,5 +1,5 @@
 \documentclass{scrartcl}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{tabularx}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
@@ -11,20 +11,21 @@
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
-<?lsmb include letterhead.tex ?>
+<?lsmb INCLUDE letterhead.tex ?>
 
 
-<?lsmb pagebreak 65 27 48 ?>
-\end{tabularx}
-
-\newpage
-
-\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
-
-\begin{tabularx}{\textwidth}{@{}rlXrll@{}}
-  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
-  & \textbf{Serial Number} \\
-<?lsmb end pagebreak ?>
+% Break old pagebreak directive
+%<?xlsmb pagebreak 65 27 48 ?>
+%\end{tabularx}
+%
+%\newpage
+%
+%\markboth{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}
+%
+%\begin{tabularx}{\textwidth}{@{}rlXrll@{}}
+%  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
+%  & \textbf{Serial Number} \\
+%<?xlsmb end pagebreak ?>
 
 
 \vspace*{0.5cm}
@@ -40,27 +41,27 @@
 <?lsmb address2 ?>
 
 <?lsmb city ?>
-<?lsmb if state ?>
+<?lsmb IF state ?>
 \hspace{-0.1cm}, <?lsmb state ?>
-<?lsmb end state ?>
+<?lsmb END ?>
 <?lsmb zipcode ?>
 
 <?lsmb country ?>
 
 \vspace{0.3cm}
 
-<?lsmb if contact ?>
+<?lsmb IF contact ?>
 <?lsmb contact ?>
 \vspace{0.2cm}
-<?lsmb end contact ?>
+<?lsmb END ?>
 
-<?lsmb if customerphone ?>
+<?lsmb IF customerphone ?>
 Tel: <?lsmb customerphone ?>
-<?lsmb end customerphone ?>
+<?lsmb END ?>
 
-<?lsmb if customerfax ?>
+<?lsmb IF customerfax ?>
 Fax: <?lsmb customerfax ?>
-<?lsmb end customerfax ?>
+<?lsmb END ?>
 
 <?lsmb email ?>
 }
@@ -75,27 +76,27 @@ Fax: <?lsmb customerfax ?>
 <?lsmb shiptoaddress2 ?>
 
 <?lsmb shiptocity ?>
-<?lsmb if shiptostate ?>
+<?lsmb IF shiptostate ?>
 \hspace{-0.1cm}, <?lsmb shiptostate ?>
-<?lsmb end shiptostate ?>
+<?lsmb END ?>
 <?lsmb shiptozipcode ?>
 
 <?lsmb shiptocountry ?>
 
 \vspace{0.3cm}
 
-<?lsmb if shiptocontact ?>
+<?lsmb IF shiptocontact ?>
 <?lsmb shiptocontact ?>
 \vspace{0.2cm}
-<?lsmb end shiptocontact ?>
+<?lsmb END ?>
 
-<?lsmb if shiptophone ?>
+<?lsmb IF shiptophone ?>
 Tel: <?lsmb shiptophone ?>
-<?lsmb end shiptophone ?>
+<?lsmb END ?>
 
-<?lsmb if shiptofax ?>
+<?lsmb IF shiptofax ?>
 Fax: <?lsmb shiptofax ?>
-<?lsmb end shiptofax ?>
+<?lsmb END ?>
 
 <?lsmb shiptoemail ?>
 }
@@ -120,10 +121,15 @@ Fax: <?lsmb shiptofax ?>
 \begin{tabularx}{\textwidth}{@{}rlXrll@{}}
   \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
   & \textbf{Serial Number} \\
-<?lsmb foreach number ?>
-  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
-  <?lsmb unit ?> & <?lsmb serialnumber ?> \\
-<?lsmb end number ?>
+<?lsmb FOREACH number ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb runningnumber.${lc} ?> &
+  <?lsmb number.${lc} ?> &
+  <?lsmb description.${lc} ?> &
+  <?lsmb qty.${lc} ?> &
+  <?lsmb unit.${lc} ?> &
+  <?lsmb serialnumber.${lc} ?> \\
+<?lsmb END ?>
 \end{tabularx}
 
 

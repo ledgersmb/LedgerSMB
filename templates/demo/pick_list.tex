@@ -1,5 +1,5 @@
 \documentclass{scrartcl}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{tabularx}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
@@ -11,21 +11,22 @@
 
 \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
 
-<?lsmb include letterhead.tex ?>
+<?lsmb INCLUDE letterhead.tex ?>
 
- 
-<?lsmb pagebreak 65 27 37 ?>
-\end{tabularx}
 
-\newpage
-
-\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
-
-\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
-  \textbf{Item} & \textbf{Number} & \textbf{Description} &
-  \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
-
-<?lsmb end pagebreak ?>
+% Breaking old pagebreak directive
+%<?xlsmb pagebreak 65 27 37 ?>
+%\end{tabularx}
+%
+%\newpage
+%
+%\markboth{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}
+%
+%\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
+%  \textbf{Item} & \textbf{Number} & \textbf{Description} &
+%  \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
+%
+%<?xlsmb end pagebreak ?>
 
 \vspace*{0.5cm}
 
@@ -44,9 +45,9 @@
 <?lsmb shiptoaddress2 ?>
 
 <?lsmb shiptocity ?>
-<?lsmb if shiptostate ?>
+<?lsmb IF shiptostate ?>
 \hspace{-0.1cm}, <?lsmb shiptostate ?>
-<?lsmb end shiptostate ?>
+<?lsmb END ?>
 <?lsmb shiptozipcode ?>
 
 <?lsmb shiptocountry ?>
@@ -54,13 +55,13 @@
 \parbox[t]{.5\textwidth}{
   <?lsmb shiptocontact ?>
 
-  <?lsmb if shiptophone ?>
+  <?lsmb IF shiptophone ?>
   Tel: <?lsmb shiptophone ?>
-  <?lsmb end shiptophone ?>
+  <?lsmb END ?>
 
-  <?lsmb if shiptofax ?>
+  <?lsmb IF shiptofax ?>
   Fax: <?lsmb shiptofax ?>
-  <?lsmb end shiptofax ?>
+  <?lsmb END ?>
 
   <?lsmb shiptoemail ?>
 }
@@ -78,12 +79,11 @@
   & \textbf{Warehouse} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
   \hline
   <?lsmb invnumber ?> & <?lsmb ordnumber ?>
-  <?lsmb if shippingdate ?>
+  <?lsmb IF shippingdate ?>
   & <?lsmb shippingdate ?>
-  <?lsmb end shippingdate ?>
-  <?lsmb if not shippingdate ?>
+  <?lsmb ELSE ?>
   & <?lsmb transdate ?>
-  <?lsmb end shippingdate ?>
+  <?lsmb END ?>
   & <?lsmb employee ?> & <?lsmb warehouse ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
 \end{tabularx}
@@ -93,10 +93,14 @@
 \begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
   \textbf{Item} & \textbf{Number} & \textbf{Description} &
   \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
-<?lsmb foreach number ?>
-  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> &
-  <?lsmb qty ?> & [\hspace{1cm}] & <?lsmb unit ?> & <?lsmb bin ?> \\
-<?lsmb end number ?>
+<?lsmb FOREACH number ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb runningnumber.${lc} ?> &
+  <?lsmb number.${lc} ?> &
+  <?lsmb description.${lc} ?> &
+  <?lsmb qty.${lc} ?> & [\hspace{1cm}] &
+  <?lsmb unit.${lc} ?> & <?lsmb bin.${lc} ?> \\
+<?lsmb END ?>
 \end{tabularx}
 
 

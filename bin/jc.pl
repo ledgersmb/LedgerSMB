@@ -2205,7 +2205,16 @@ qq|$form->{"${item}hour"}:$form->{"${item}min"}:$form->{"${item}sec"}|;
           $form->audittrail( "", \%myconfig, \%audittrail );
     }
 
-    $form->parse_template( \%myconfig, ${LedgerSMB::Sysconfig::userspath} );
+    my $template = LedgerSMB::Template->new( user => \%myconfig, 
+      template => $form->{'formname'}, format => uc $form->{format} );
+    try {
+        $template->render($form);
+        $template->output($form->{media});
+    }
+    catch Error::Simple with {
+        my $E = shift;
+        $form->error( $E->stacktrace );
+    };
 
     if ( defined %$old_form ) {
 

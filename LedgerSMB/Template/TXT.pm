@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Template::HTML  Template support module for LedgerSMB
+LedgerSMB::Template::TXT  Template support module for LedgerSMB
 
 =head1 METHODS
 
@@ -13,12 +13,11 @@ Returns the appropriate template filename for this format.
 
 =item preprocess ($vars)
 
-This method returns a reference to a hash that contains a copy of the passed
-hashref's data with HTML entities converted to escapes. 
+Currently does nothing.
 
 =item process ($parent, $cleanvars)
 
-Processes the template for HTML.
+Processes the template for text.
 
 =item postprocess ($parent)
 
@@ -37,15 +36,14 @@ including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 
-package LedgerSMB::Template::HTML;
+package LedgerSMB::Template::TXT;
 
 use Error qw(:try);
-use CGI;
 use Template;
 
 sub get_template {
     my $name = shift;
-    return "${name}.html";
+    return "${name}.txt";
 }
 
 sub preprocess {
@@ -53,20 +51,6 @@ sub preprocess {
     my $vars;
     my $type = ref $rawvars;
 
-    #XXX fix escaping function
-    if ( $type eq 'ARRAY' ) {
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_ );
-        }
-    }
-    elsif ( $type eq 'HASH' ) {
-        for ( keys %{$rawvars} ) {
-            $vars->{$_} = preprocess( $rawvars->{$_} );
-        }
-    }
-    else {
-        return CGI::escapeHTML($rawvars);
-    }
     return $vars;
 }
 
@@ -81,18 +65,19 @@ sub process {
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
 		}) || throw Error::Simple Template->error(); 
+
 	if (not $template->process(
 		get_template($parent->{template}), 
-		$cleanvars, "$parent->{outputfile}.html", binmode => ':utf8')) {
+		$cleanvars, "$parent->{outputfile}.txt", binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
-	$parent->{mimetype} = 'text/html';
+	$parent->{mimetype} = 'text/plain';
 }
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.html";
-    return "$parent->{outputfile}.html";
+    $parent->{rendered} = "$parent->{outputfile}.txt";
+    return "$parent->{outputfile}.txt";
 }
 
 1;
