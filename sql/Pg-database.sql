@@ -45,7 +45,6 @@ CREATE TABLE entity_class_to_entity (
 
 COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
 
-
 CREATE TABLE country (
   id serial PRIMARY KEY,
   name text check (name ~ '[[:alnum:]_]') NOT NULL,
@@ -53,7 +52,6 @@ CREATE TABLE country (
   itu text);
   
 COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 $$;
-
 
 CREATE UNIQUE INDEX country_name_idx on country(lower(name));
 
@@ -63,9 +61,9 @@ CREATE TABLE location (
   line_two text,
   line_three text,
   city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
-   country_id integer not null REFERENCES country(id),
+  country_id integer not null REFERENCES country(id),
   mail_code text not null check (mail_code ~ '[[:alnum:]_]'));
-
+  
 CREATE TABLE company (
   id serial UNIQUE,
   entity_id integer not null references entity(id),
@@ -78,9 +76,24 @@ CREATE TABLE company (
 COMMENT ON COLUMN company.primary_location_id IS $$ This is the location that should show up by default for any forms $$;
 COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;  
 
+CREATE TABLE company_to_location (
+  location_id integer references location(id) not null,
+  company_id integer references company(id) not null,
+  PRIMARY KEY(location_id,company_id));
+
+
 CREATE TABLE salutation (
  id serial unique,
  salutation text primary key);
+
+INSERT INTO salutation (id,salutation) VALUES ('1','Dr.');
+INSERT INTO salutation (id,salutation) VALUES ('2','Miss.');
+INSERT INTO salutation (id,salutation) VALUES ('3','Mr.');
+INSERT INTO salutation (id,salutation) VALUES ('4','Mrs.');
+INSERT INTO salutation (id,salutation) VALUES ('5','Ms.');
+INSERT INTO salutation (id,salutation) VALUES ('6','Sir.');
+
+SELECT SETVAL('salutation_id_seq',7);
 
 CREATE TABLE person (
  id serial PRIMARY KEY,
@@ -92,6 +105,11 @@ CREATE TABLE person (
  primary_location_id integer references location(id));
  
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
+
+CREATE TABLE person_to_company (
+  location_id integer references location(id) not null,
+  person_id integer references person(id) not null,
+  PRIMARY KEY (location_id,person_id)); 
 
 CREATE TABLE entity_other_name (
  entity_id integer not null references entity(id),
@@ -114,9 +132,43 @@ CREATE TABLE company_to_entity (
  created date not null default current_date,
  PRIMARY KEY (company_id,entity_id));
  
+CREATE TABLE contact_class (
+  id serial UNIQUE,
+  class text check (class ~ '[[:alnum:]_]') NOT NULL, 
+  PRIMARY KEY (class));
+  
+CREATE UNIQUE INDEX contact_class_class_idx ON contact_class(lower(class));
 
+INSERT INTO contact_class (id,class) values (1,'Primary Phone');
+INSERT INTO contact_class (id,class) values (2,'Secondary Phone');
+INSERT INTO contact_class (id,class) values (3,'Cell Phone');
+INSERT INTO contact_class (id,class) values (4,'AIM');
+INSERT INTO contact_class (id,class) values (5,'Yahoo');
+INSERT INTO contact_class (id,class) values (6,'Gtalk');
+INSERT INTO contact_class (id,class) values (7,'MSN');
+INSERT INTO contact_class (id,class) values (8,'IRC');
+INSERT INTO contact_class (id,class) values (9,'Fax');
+INSERT INTO contact_class (id,class) values (10,'Generic Jabber');
+INSERT INTO contact_class (id,class) values (11,'Home Phone');
 
- 
+SELECT SETVAL('contact_class_id_seq',12);
+
+CREATE TABLE person_to_contact (
+  person_id integer references person(id) not null,
+  contact_class_id integer references contact_class(id) not null,
+  contact text check(contact ~ '[[:alnum:]_]') not null,
+  PRIMARY KEY (person_id,contact_class_id,contact));
+  
+COMMENT ON TABLE person_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single individual $$;
+  
+CREATE TABLE company_to_contact (
+  company_id integer references company(id) not null,
+  contact_class_id integer references contact_class(id) not null,
+  contact text check(contact ~ '[[:alnum:]_]') not null,
+  PRIMARY KEY (company_id,contact_class_id,contact));  
+
+COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
+  
 
 -- END entity   
 
