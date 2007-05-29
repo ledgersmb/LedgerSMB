@@ -63,20 +63,20 @@ CREATE TABLE location (
   line_two text,
   line_three text,
   city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
-  country_id integer not null REFERENCES country(id)
+  country_id integer not null REFERENCES country(id),
   mail_code text not null check (mail_code ~ '[[:alnum:]_]'));
 
 CREATE TABLE company (
   id serial UNIQUE,
+  entity_id integer not null references entity(id),
   legal_name text check (legal_name ~ '[[:alnum:]_]'),
   entity_class_id integer not null references entity_class(id),
   primary_location_id integer references location(id),
   tax_id text,
   PRIMARY KEY (legal_name,primary_location_id));
-
-
+  
 COMMENT ON COLUMN company.primary_location_id IS $$ This is the location that should show up by default for any forms $$;
-COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;
+COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;  
 
 CREATE TABLE salutation (
  id serial unique,
@@ -92,6 +92,31 @@ CREATE TABLE person (
  primary_location_id integer references location(id));
  
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
+
+CREATE TABLE entity_other_name (
+ entity_id integer not null references entity(id),
+ other_name text check (other_name ~ '[[:alnum:]_]'),
+ PRIMARY KEY (other_name, entity_id));
+ 
+COMMENT ON TABLE entity_other_name IS $$ Similar to company_other_name, a person may be jd, Joshua Drake, linuxpoet... all are the same person. $$;
+
+CREATE TABLE person_to_entity (
+ person_id integer not null references person(id),
+ entity_id integer not null references entity(id) check (entity_id != person_id),
+ related_how text,
+ created date not null default current_date,
+ PRIMARY KEY (person_id,entity_id));
+ 
+CREATE TABLE company_to_entity (
+ company_id integer not null references company(id),
+ entity_id integer not null references entity(id) check (entity_id != company_id),
+ related_how text,
+ created date not null default current_date,
+ PRIMARY KEY (company_id,entity_id));
+ 
+
+
+ 
 
 -- END entity   
 
