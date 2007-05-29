@@ -184,7 +184,7 @@ CREATE TABLE gl (
   reference text,
   description text,
   transdate date DEFAULT current_date,
-  employee_id int,
+  person_id integer references person(id),
   notes text,
   department_id int default 0
 );
@@ -284,7 +284,6 @@ CREATE TABLE customer (
   sic_code varchar(6),
   iban varchar(34),
   bic varchar(11),
-  employee_id int,
   language_code varchar(6),
   pricegroup_id int,
   curr char(3),
@@ -354,7 +353,7 @@ CREATE TABLE ar (
   notes text,
   curr char(3),
   ordnumber text,
-  employee_id int,
+  person_id integer references person(id) not null,
   till varchar(20),
   quonumber text,
   intnotes text,
@@ -382,7 +381,7 @@ CREATE TABLE ap (
   ordnumber text,
   curr char(3),
   notes text,
-  employee_id int,
+  person_id integer references person(id) not null,
   till varchar(20),
   quonumber text,
   intnotes text,
@@ -465,7 +464,7 @@ CREATE TABLE oe (
   shippingpoint text,
   notes text,
   curr char(3),
-  employee_id int,
+  person_id integer references person(id) not null,
   closed bool default 'f',
   quotation bool default 'f',
   quonumber text,
@@ -560,7 +559,6 @@ CREATE TABLE vendor (
   creditlimit numeric default 0,
   iban varchar(34),
   bic varchar(11),
-  employee_id int,
   language_code varchar(6),
   pricegroup_id int,
   curr char(3),
@@ -634,7 +632,7 @@ CREATE TABLE inventory (
   orderitems_id int,
   qty numeric,
   shippingdate date,
-  employee_id int,
+  person_id integer references person(id) not null,
   entry_id SERIAL PRIMARY KEY
 );
 --
@@ -685,7 +683,7 @@ CREATE TABLE audittrail (
   formname text,
   action text,
   transdate timestamp default current_timestamp,
-  employee_id int,
+  person_id integer references person(id) not null,
   entry_id BIGSERIAL PRIMARY KEY
 );
 --
@@ -734,7 +732,7 @@ CREATE TABLE jcitems (
   serialnumber text,
   checkedin timestamp with time zone,
   checkedout timestamp with time zone,
-  employee_id int,
+  person_id integer references person(id) not null,
   notes text
 );
 
@@ -789,12 +787,6 @@ DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
 INSERT INTO transactions (id, table_name) SELECT id, 'employee' FROM employee;
 
-CREATE RULE employee_id_track_i AS ON insert TO employee
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'employee');
-
-CREATE RULE employee_id_track_u AS ON update TO employee
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
 INSERT INTO transactions (id, table_name) SELECT id, 'gl' FROM gl;
 
 CREATE RULE gl_id_track_i AS ON insert TO gl
@@ -848,9 +840,6 @@ INSERT INTO transactions (id, table_name) SELECT id, 'vendor' FROM vendor;
 CREATE RULE vendor_id_track_i AS ON insert TO vendor
 DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'vendor');
 
-CREATE RULE employee_id_track_u AS ON update TO vendor 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
 INSERT INTO transactions (id, table_name) SELECT id, 'warehouse' FROM warehouse;
 
 CREATE RULE warehouse_id_track_i AS ON insert TO warehouse
@@ -886,14 +875,12 @@ create index ap_id_key on ap (id);
 create index ap_transdate_key on ap (transdate);
 create index ap_invnumber_key on ap (invnumber);
 create index ap_ordnumber_key on ap (ordnumber);
-create index ap_employee_id_key on ap (employee_id);
 create index ap_quonumber_key on ap (quonumber);
 --
 create index ar_id_key on ar (id);
 create index ar_transdate_key on ar (transdate);
 create index ar_invnumber_key on ar (invnumber);
 create index ar_ordnumber_key on ar (ordnumber);
-create index ar_employee_id_key on ar (employee_id);
 create index ar_quonumber_key on ar (quonumber);
 --
 create index assembly_id_key on assembly (id);
@@ -908,7 +895,6 @@ create index customer_id_key on customer (id);
 create index customer_customernumber_key on customer (customernumber);
 create index customer_customer_id_key on customertax (customer_id);
 --
-create index employee_id_key on employee (id);
 create unique index employee_login_key on employee (login);
 --
 create index exchangerate_ct_key on exchangerate (curr, transdate);
@@ -919,7 +905,6 @@ create index gl_id_key on gl (id);
 create index gl_transdate_key on gl (transdate);
 create index gl_reference_key on gl (reference);
 create index gl_description_key on gl (lower(description));
-create index gl_employee_id_key on gl (employee_id);
 --
 create index invoice_id_key on invoice (id);
 create index invoice_trans_id_key on invoice (trans_id);
@@ -931,7 +916,6 @@ create index makemodel_model_key on makemodel (lower(model));
 create index oe_id_key on oe (id);
 create index oe_transdate_key on oe (transdate);
 create index oe_ordnumber_key on oe (ordnumber);
-create index oe_employee_id_key on oe (employee_id);
 create index orderitems_trans_id_key on orderitems (trans_id);
 create index orderitems_id_key on orderitems (id);
 --
