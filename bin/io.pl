@@ -1771,7 +1771,7 @@ sub print_form {
       template => $form->{'formname'}, format => uc $form->{format} );
     try {
         $template->render($form);
-        $template->output($form->{media});
+        $template->output(%{$form});
     }
     catch Error::Simple with {
         my $E = shift;

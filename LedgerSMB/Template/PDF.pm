@@ -49,7 +49,8 @@ sub preprocess {
 	my $rawvars = shift;
 	my $vars;
 	my $type = ref $rawvars;
-	return $vars;
+	#XXX Fix escaping
+	return $rawvars;
 }
 
 sub process {

@@ -47,6 +47,7 @@ package LedgerSMB::Template;
 
 use Error qw(:try);
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Mailer;
 
 sub new {
 	my $class = shift;
@@ -115,14 +116,13 @@ sub render {
 
 sub output {
 	my $self = shift;
-	my $method = shift;
+	my %args = @_;
+	my $method = $args{method} || $args{media};
 
-	if ('mail' eq lc $method) {
-		#XXX do something
-		$self->_http_output;
+	if ('email' eq lc $method) {
+		$self->_email_output;
 	} elsif ('print' eq lc $method) {
-		#XXX do something
-		$self->_http_output;
+		$self->_lpr_output;
 	} else {
 		$self->_http_output;
 	}
@@ -148,4 +148,14 @@ sub _http_output {
 	exit;
 }
 
+sub _email_output {
+	my $self = shift;
+	my $mail = new LedgerSMB::Mailer;
+	#TODO stub
+}
+
+sub _lpr_output {
+	my $self = shift;
+	#TODO stub
+}
 1;

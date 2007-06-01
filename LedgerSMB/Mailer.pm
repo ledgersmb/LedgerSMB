@@ -33,7 +33,7 @@
 #
 #======================================================================
 
-package Mailer;
+package LedgerSMB::Mailer;
 
 use MIME::Lite;
 use MIME::Base64;

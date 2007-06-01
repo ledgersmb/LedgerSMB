@@ -3,13 +3,14 @@
 use strict;
 use warnings;
 
-$ENV{TMPDIR} = 't/var';
+#$ENV{TMPDIR} = 't/var';
+$ENV{TMPDIR} = '/Users/seneca/sourceforge-svn/ledger-smb/trunk/t/var';
 
 use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Test::Exception;
 
-use Error qw(:try);
+use Error qw(:try :warndie);
 
 use LedgerSMB::AM;
 use LedgerSMB::Form;
@@ -212,3 +213,40 @@ ok(defined $template,
 	'Template, new: Object creation with non-existent format');
 throws_ok{$template->render({'login' => 'foo'})} qr/Can't locate/,
 	'Template, render: Invalid format caught';
+
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
+	'template' => '04-template');
+ok(defined $template, 
+	'Template, new: Object creation with format and template');
+isa_ok($template, 'LedgerSMB::Template', 
+	'Template, new: Object creation with format and template');
+is($template->{include_path}, 't/data',
+	'Template, new: Object creation with format and template');
+is($template->render({'login' => 'foo\&bar'}), 't/var/04-template-output.pdf',
+	'Template, render: Simple PDF template, default filename');
+ok(-e 't/var/04-template-output.pdf', 'Template, render (PDF): File created');
+
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PS', 
+	'template' => '04-template');
+ok(defined $template, 
+	'Template, new: Object creation with format and template');
+isa_ok($template, 'LedgerSMB::Template', 
+	'Template, new: Object creation with format and template');
+is($template->{include_path}, 't/data',
+	'Template, new: Object creation with format and template');
+is($template->render({'login' => 'foo\&bar'}), 't/var/04-template-output.ps',
+	'Template, render: Simple Postscript template, default filename');
+ok(-e 't/var/04-template-output.ps', 'Template, render (PS): File created');
+##open($FH, '<', 't/var/04-template-output.html');
+##@r = <$FH>;
+##close($FH);
+##chomp(@r);
+##is(join("\n", @r), "I am a template.\nLook at me foo&amp;bar.", 
+##	'Template, render (HTML): Simple HTML template, correct output');
+##is(unlink('t/var/04-template-output.html'), 1,
+##	'Template, render: removing testfile');
+##ok(!-e 't/var/04-template-output.html',
+##	'Template, render (HTML): testfile removed');
+

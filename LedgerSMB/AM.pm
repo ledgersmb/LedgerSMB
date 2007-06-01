@@ -1628,7 +1628,7 @@ sub backup {
 qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc -p $myconfig->{dbport} $myconfig->{dbname});
         close OUT;
         use LedgerSMB::Mailer;
-        $mail = new Mailer;
+        $mail = new LedgerSMB::Mailer;
 
         $mail->{to}   = qq|"$myconfig->{name}" <$myconfig->{email}>|;
         $mail->{from} = qq|"$myconfig->{name}" <$myconfig->{email}>|;

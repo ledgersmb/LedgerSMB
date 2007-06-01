@@ -1084,7 +1084,7 @@ sub generate_income_statement {
          template => $form->{'formname'}, format => uc $form->{format} );
     try {
         $template->render($form);
-        $template->output($form->{media});
+        $template->output(%{$form});
     }
     catch Error::Simple with {
         my $E = shift;
@@ -1134,7 +1134,7 @@ sub generate_balance_sheet {
          template => $form->{'formname'}, format => uc $form->{format} );
     try {
         $template->render($form);
-        $template->output($form->{media});
+        $template->output(%{$form});
     }
     catch Error::Simple with {
         my $E = shift;
@@ -2282,7 +2282,7 @@ sub print_form {
 		    format => uc $form->{format} );
                 try {
                     $template->render($form);
-                    $template->output($form->{media});
+                    $template->output(%{$form});
                 }
                 catch Error::Simple with {
                     my $E = shift;

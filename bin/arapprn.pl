@@ -290,7 +290,7 @@ sub print_check {
         format => uc $form->{'format'} );
     try {
         $template->render($form);
-        $template->output($form->{'media'});
+        $template->output(%{$form});
     }
     catch Error::Simple with {
         my $E = shift;
@@ -558,7 +558,7 @@ sub print_transaction {
         format => uc $form->{format} );
     try {
         $template->render($form);
-        $template->output($form->{media});
+        $template->output(%{$form});
     }
     catch Error::Simple with {
         my $E = shift;
