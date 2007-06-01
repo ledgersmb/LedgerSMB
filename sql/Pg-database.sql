@@ -55,8 +55,23 @@ COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Se
 
 CREATE UNIQUE INDEX country_name_idx on country(lower(name));
 
+CREATE TABLE location_class (
+  id serial PRIMARY KEY,
+  class text check (class ~ '[[:alnum:]_]') not null,
+  authoritative boolean not null);
+  
+CREATE UNIQUE INDEX lower_class_unique ON location_class(lower(class));
+
+INSERT INTO location_class(id,class,authoritative) VALUES ('1','Billing',TRUE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('2','Sales',TRUE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('3','Shipping',TRUE);
+
+SELECT SETVAL('location_class_id_seq',4);
+  
+
 CREATE TABLE location (
   id serial PRIMARY KEY,
+  location_class integer not null references location(id),
   line_one text check (line_one ~ '[[:alnum:]_]') NOT NULL,
   line_two text,
   line_three text,
@@ -68,12 +83,9 @@ CREATE TABLE company (
   id serial UNIQUE,
   entity_id integer not null references entity(id),
   legal_name text check (legal_name ~ '[[:alnum:]_]'),
-  entity_class_id integer not null references entity_class(id),
-  primary_location_id integer references location(id),
   tax_id text,
-  PRIMARY KEY (legal_name,primary_location_id));
+  PRIMARY KEY (entity_id,legal_name));
   
-COMMENT ON COLUMN company.primary_location_id IS $$ This is the location that should show up by default for any forms $$;
 COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;  
 
 CREATE TABLE company_to_location (
@@ -101,10 +113,15 @@ CREATE TABLE person (
  salutation_id integer references salutation(id),
  first_name text check (first_name ~ '[[:alnum:]_]') NOT NULL,
  middle_name text,
- last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
- primary_location_id integer references location(id));
+ last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL
+ );
  
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
+
+CREATE TABLE person_to_location (
+  location_id integer not null references location(id),
+  person_id integer not null references person(id),
+  PRIMARY KEY (location_id,person_id));
 
 CREATE TABLE person_to_company (
   location_id integer references location(id) not null,
