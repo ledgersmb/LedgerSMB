@@ -944,19 +944,18 @@ sub get_name {
 
     # get customer/vendor
     my $query = qq|
-		   SELECT c.name AS $form->{vc}, c.discount, c.creditlimit, 
-		          c.terms, c.email, c.cc, c.bcc, c.taxincluded,
-		          c.address1, c.address2, c.city, c.state,
-		          c.zipcode, c.country, c.curr AS currency, 
+		   SELECT entity.name AS $form->{vc}, c.discount, 
+		          c.creditlimit, 
+		          c.terms, c.taxincluded,
+		          c.curr AS currency, 
 		          c.language_code, $duedate AS duedate, 
-		          c.notes AS intnotes,
 			  b.discount AS tradediscount, 
-		          b.description AS business,
-		          e.name AS employee, e.id AS employee_id
+		          b.description AS business
 		     FROM $form->{vc} c
+		     JOIN entity ON (entity.id = c.entity_id)
 		LEFT JOIN business b ON (b.id = c.business_id)
-		LEFT JOIN employees e ON (e.id = c.employee_id)
 		    WHERE c.id = ?|;
+    # TODO:  Add location join
 
     @queryargs = ( $form->{"$form->{vc}_id"} );
     my $sth = $dbh->prepare($query);
@@ -973,6 +972,8 @@ sub get_name {
 
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
     $sth->finish;
+
+    # TODO:  Retrieve contact records
 
     my $buysell = ( $form->{vc} eq 'customer' ) ? "buy" : "sell";
 
@@ -1005,7 +1006,7 @@ sub get_name {
     $query = qq|
 		SELECT SUM(amount - paid)
 		  FROM $arap
-		 WHERE $form->{vc}_id = ?|;
+		 WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} )
@@ -1023,7 +1024,8 @@ sub get_name {
 		                   WHERE e.curr = o.curr
 		                         AND e.transdate = o.transdate)
 		  FROM oe o
-		 WHERE o.$form->{vc}_id = ?
+		 WHERE o.entity_id = 
+		       (select entity_id from $form->{vc} WHERE id = ?)
 		       AND o.quotation = '0' AND o.closed = '0'|;
 
     $sth = $dbh->prepare($query);
@@ -1124,15 +1126,15 @@ sub get_name {
         $query = qq|
 			   SELECT c.accno, c.description, c.link, 
                                   c.category,
-			          ac.project_id
+			          ac.project_id,
 			          a.department_id
 			     FROM chart c
 			     JOIN acc_trans ac ON (ac.chart_id = c.id)
 			     JOIN $arap a ON (a.id = ac.trans_id)
-			    WHERE a.$form->{vc}_id = ?
+			    WHERE a.entity_id = ?
 			          AND a.id = (SELECT max(id) 
 			                         FROM $arap
-			                        WHERE $form->{vc}_id = 
+			                        WHERE entity_id = 
 			                              ?)
 			|;
 

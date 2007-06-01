@@ -621,7 +621,7 @@ sub get_my_emp_num {
 
     # we got a connection, check the version
     my $query = qq|
-		SELECT employeenumber FROM employees 
+		SELECT employeenumber FROM employee 
 		 WHERE login = ?|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{login} ) || $form->dberror($query);
@@ -1815,9 +1815,11 @@ sub get_employee {
     my $login = $self->{login};
     $login =~ s/@.*//;
 
-    my $query = qq|SELECT name, id 
-					 FROM employees 
-					WHERE login = ?|;
+    my $query = qq|
+		SELECT name, id
+		  FROM entity WHERE id IN (select entity_id
+					 FROM employee 
+					WHERE login = ?)|;
 
     $sth = $self->{dbh}->prepare($query);
     $sth->execute($login);
@@ -1910,16 +1912,18 @@ sub all_vc {
     if ( $count < $myconfig->{vclimit} ) {
 
         $self->{"${vc}_id"} *= 1;
+        $where = "AND $where" if $where;
 
         $query = qq|SELECT id, name
-					  FROM $vc
-					 WHERE 1=1
-						   $where
+					  FROM entity
+					 WHERE id IN (select entity_id 
+		                                        FROM $vc) 
+                                               $where
 
 					 UNION 
 
 					SELECT id,name
-					  FROM $vc
+					  FROM entity
 					 WHERE id = ?
 				  ORDER BY name|;
 
@@ -2018,24 +2022,27 @@ sub all_employees {
     my @whereargs = ();
 
     # setup employees/sales contacts
-    my $query = qq|SELECT id, name
-					 FROM employees
-					WHERE 1 = 1|;
+    my $query = qq|
+		SELECT id, name
+		FROM entity
+		WHERE id IN (SELECT entity_id FROM employee
+					WHERE|;
 
     if ($transdate) {
-        $query .= qq| AND (startdate IS NULL OR startdate <= ?)
-		AND (enddate IS NULL OR enddate >= ?)|;
+        $query .= qq| (startdate IS NULL OR startdate <= ?)
+		AND (enddate IS NULL OR enddate >= ?) AND|;
         @whereargs = ( $transdate, $transdate );
     }
     else {
-        $query .= qq| AND enddate IS NULL|;
+        $query .= qq| enddate IS NULL AND|;
     }
 
     if ($sales) {
-        $query .= qq| AND sales = '1'|;
+        $query .= qq| sales = '1' AND|;
     }
 
-    $query .= qq| ORDER BY name|;
+    $query =~ s/(WHERE|AND)$//;
+    $query .= qq|) ORDER BY name|;
     my $sth = $dbh->prepare($query);
     $sth->execute(@whereargs) || $self->dberror($query);
 
@@ -2245,7 +2252,7 @@ sub create_links {
 				c.language_code, a.ponumber
 			FROM $arap a
 			JOIN $vc c ON (a.${vc}_id = c.id)
-			LEFT JOIN employees e ON (e.id = a.employee_id)
+			LEFT JOIN employee e ON (e.id = a.employee_id)
 			LEFT JOIN department d ON (d.id = a.department_id)
 			WHERE a.id = ?|;
 
@@ -2375,7 +2382,6 @@ sub lastname_used {
     my $dbh = $self->{dbh};
     $vc ||= $self->{vc};    # add default to correct for improper passing
     my $arap = ( $vc eq 'customer' ) ? "ar" : "ap";
-    my $where = "1 = 1";
     my $sth;
 
     if ( $self->{type} =~ /_order/ ) {
@@ -2387,14 +2393,18 @@ sub lastname_used {
         $arap  = 'oe';
         $where = "quotation = '1'";
     }
-
+    $where = "AND $where " if $where;
+    $inv_notes = "ct.invoice_notes," if $vc eq 'customer';
     my $query = qq|
-		SELECT ct.name AS $vc, ct.curr AS currency, ct.id AS ${vc}_id,
+		SELECT entity.name, ct.curr AS currency, ct.id AS ${vc}_id,
 			current_date + ct.terms AS duedate, 
-			ct.notes, 
+			$inv_notes 
 			ct.curr AS currency
 		FROM $vc ct
-		WHERE ct.id = (select ${vc}_id from $arap where $where AND ${vc}_id IS NOT NULL order by id DESC limit 1)|;
+		JOIN entity ON (ct.entity_id = entity.id)
+		WHERE entity.id = (select entity_id from $arap 
+		                    where entity_id IS NOT NULL $where 
+                                 order by id DESC limit 1)|;
 
     $sth = $dbh->prepare($query);
     $sth->execute() || $self->dberror($query);
