@@ -3,8 +3,8 @@
 use strict;
 use warnings;
 
-#$ENV{TMPDIR} = 't/var';
-$ENV{TMPDIR} = '/Users/seneca/sourceforge-svn/ledger-smb/trunk/t/var';
+# Absolute directory name required to not trip up Template::Latex
+$ENV{TMPDIR} = "$ENV{PWD}/t/var";
 
 use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
@@ -226,6 +226,10 @@ is($template->{include_path}, 't/data',
 is($template->render({'login' => 'foo\&bar'}), 't/var/04-template-output.pdf',
 	'Template, render: Simple PDF template, default filename');
 ok(-e 't/var/04-template-output.pdf', 'Template, render (PDF): File created');
+is(unlink('t/var/04-template-output.pdf'), 1,
+	'Template, render (PDF): removing testfile');
+ok(!-e 't/var/04-template-output.pdf',
+	'Template, render (PDF): testfile removed');
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PS', 
@@ -239,6 +243,10 @@ is($template->{include_path}, 't/data',
 is($template->render({'login' => 'foo\&bar'}), 't/var/04-template-output.ps',
 	'Template, render: Simple Postscript template, default filename');
 ok(-e 't/var/04-template-output.ps', 'Template, render (PS): File created');
+is(unlink('t/var/04-template-output.ps'), 1,
+	'Template, render (PS): removing testfile');
+ok(!-e 't/var/04-template-output.ps',
+	'Template, render (PS): testfile removed');
 ##open($FH, '<', 't/var/04-template-output.html');
 ##@r = <$FH>;
 ##close($FH);

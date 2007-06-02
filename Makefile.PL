@@ -8,7 +8,7 @@ name 'LedgerSMB';
 version '1.2.3';
 license 'GPL';
 
-perl_version '5.8.0';
+perl_version '5.8.1';
 
 requires 'Data::Dumper';
 requires 'Locale::Maketext';

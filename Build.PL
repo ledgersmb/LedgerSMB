@@ -8,7 +8,7 @@ my $build = Module::Build->new (
 	dist_version => '1.2.99',
 	license => 'GPL',
 	requires => {
-		'perl'				=> '>= 5.8.0',
+		'perl'				=> '>= 5.8.1',
 		'Data::Dumper'			=> 0,
 		'Locale::Maketext'		=> 0,
 		'Locale::Maketext::Lexicon'	=> '>= 0.56',
