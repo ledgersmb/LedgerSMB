@@ -720,16 +720,19 @@ sub transactions {
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount, ($paid) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
-		          a.shipvia, a.shippingpoint, e.name AS employee, 
-		          vc.name,
-		          a.$form->{vc}_id, a.till, m.name AS manager, a.curr,
+		          a.shipvia, a.shippingpoint, ee.name AS employee, 
+		          vce.name,
+		          a.entity_id, a.till, me.name AS manager, a.curr,
 		          ex.$buysell AS exchangerate, 
 		          d.description AS department, 
 		          a.ponumber $acc_trans_flds
 		     FROM $table a
-		     JOIN $form->{vc} vc ON (a.$form->{vc}_id = vc.id)
-		LEFT JOIN employees e ON (a.employee_id = e.id)
-		LEFT JOIN employees m ON (e.managerid = m.id)
+		     JOIN $form->{vc} vc USING (entity_id)
+		LEFT JOIN employee e ON (a.person_id = e.entity_id)
+		LEFT JOIN employee m ON (e.managerid = m.id)
+		     JOIN entity ee ON (e.entity_id = ee.id)
+                     JOIN entity me ON (m.entity_id = me.id)
+		     JOIN entity vce ON (vc.entity_id = vce.id)
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
 		LEFT JOIN department d ON (a.department_id = d.id) 
