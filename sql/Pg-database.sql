@@ -297,7 +297,7 @@ CREATE TABLE customer (
   cc text,
   bcc text,
   business_id int,
-  taxnumber varchar(32),
+  invoice_notes text,
   sic_code varchar(6),
   iban varchar(34),
   bic varchar(11),

@@ -370,7 +370,7 @@ sub all_transactions {
 			       ac.source, a.till, ac.chart_id
 			  FROM ar a
 			  JOIN acc_trans ac ON (ac.trans_id = a.id)
-			  JOIN customer c ON (a.customer_id = c.id)
+			  JOIN customer c USING (entity_id)
 			$dpt_join
 			 WHERE ac.chart_id = ?
 			$fromdate_where
