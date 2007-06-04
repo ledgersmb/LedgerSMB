@@ -56,9 +56,10 @@ COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Se
 CREATE UNIQUE INDEX country_name_idx on country(lower(name));
 
 CREATE TABLE location_class (
-  id serial PRIMARY KEY,
+  id serial UNIQUE,
   class text check (class ~ '[[:alnum:]_]') not null,
-  authoritative boolean not null);
+  authoritative boolean not null,
+  PRIMARY KEY (class,authoritative));
   
 CREATE UNIQUE INDEX lower_class_unique ON location_class(lower(class));
 
@@ -78,6 +79,8 @@ CREATE TABLE location (
   city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
   country_id integer not null REFERENCES country(id),
   mail_code text not null check (mail_code ~ '[[:alnum:]_]'));
+  
+CREATE INDEX location_unique_class_idx ON location (id,location_class);
   
 CREATE TABLE company (
   id serial UNIQUE,
