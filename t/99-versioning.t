@@ -33,13 +33,44 @@ chomp $ver;
 is($lsmb->{version}, $ver, 'LedgerSMB version matches VERSION');
 is($form->{version}, $ver, 'Form version matches VERSION');
 
+my @dparts;
+my @lparts;
+my $age;
 SKIP: {
 	skip 'LedgerSMB is trunk', 1 if $lsmb->{version} =~ /trunk$/i;
-	cmp_ok($lsmb->{version}, 'ge', $lsmb->{dbversion}, 
-		'lsmb: version >= dbversion');
+	@dparts = split /\./, $lsmb->{dbversion};
+	@lparts = split /\./, $lsmb->{version};
+	$age = 0;
+	foreach my $dpart (@dparts) {
+		my $lpart = shift @lparts;
+		if (!defined $lpart) {
+			$age = 1;
+			last;
+		} elsif ($lpart > $dpart) {
+			last;
+		} elsif ($dpart > $lpart) {
+			$age = 1;
+			last;
+		}
+	}
+	ok($age == 0, 'lsmb: version >= dbversion');
 }
 SKIP: {
 	skip 'Form is trunk', 1 if $form->{version} =~ /trunk$/i;
-	cmp_ok($form->{version}, 'ge', $form->{dbversion}, 
-		'form: version >= dbversion');
+	@dparts = split /\./, $form->{dbversion};
+	@lparts = split /\./, $form->{version};
+	$age = 0;
+	foreach my $dpart (@dparts) {
+		my $lpart = shift @lparts;
+		if (!defined $lpart) {
+			$age = 1;
+			last;
+		} elsif ($lpart > $dpart) {
+			last;
+		} elsif ($dpart > $lpart) {
+			$age = 1;
+			last;
+		}
+	}
+	ok($age == 0, 'form: version >= dbversion');
 }

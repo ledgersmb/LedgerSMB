@@ -13,7 +13,7 @@ Returns the appropriate template filename for this format.
 
 =item preprocess ($vars)
 
-Currently does nothing.
+Returns $vars.
 
 =item process ($parent, $cleanvars)
 
@@ -21,7 +21,7 @@ Processes the template for text.
 
 =item postprocess ($parent)
 
-Currently does nothing.
+Returns the output filename.
 
 =back
 
@@ -48,10 +48,7 @@ sub get_template {
 
 sub preprocess {
     my $rawvars = shift;
-    my $vars;
-    my $type = ref $rawvars;
-
-    return $vars;
+    return $rawvars;
 }
 
 sub process {

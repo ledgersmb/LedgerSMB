@@ -18,6 +18,9 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Template;
 use LedgerSMB::Template::HTML;
+use LedgerSMB::Template::PS;
+use LedgerSMB::Template::PDF;
+use LedgerSMB::Template::TXT;
 
 $LedgerSMB::Sysconfig::tempdir = 't/var';
 
@@ -30,6 +33,10 @@ my $FH;
 my $locale;
 
 $locale = LedgerSMB::Locale->get_handle('fr');
+
+##############
+## AM tests ##
+##############
 
 # AM->check_template_name checks
 # check_template operates by calling $form->error if the checks fail
@@ -116,7 +123,10 @@ is(join("\n", @r), $form->{body}, 'AM, save_template: Good save');
 is(unlink($form->{file}), 1, 'AM, save_template: removing testfile');
 ok(!-e $form->{file}, 'AM, save_template: testfile removed');
 
-# LedgerSMB::Template::HTML checks
+######################################
+## LedgerSMB::Template::HTML checks ##
+######################################
+
 is(LedgerSMB::Template::HTML::get_template('04-template'), '04-template.html',
 	'HTML, get_template: Returned correct template file name');
 is(LedgerSMB::Template::HTML::preprocess('04-template'), '04-template',
@@ -136,6 +146,10 @@ is_deeply(LedgerSMB::Template::HTML::preprocess({'fruit' => '&veggies',
 	'HTML, preprocess: Returned properly escaped nested contents');
 is(LedgerSMB::Template::HTML::postprocess({outputfile => '04-template'}),
 	'04-template.html', 'HTML, postprocess: Return output filename');
+
+####################
+## Template tests ##
+####################
 
 # Template->new
 $myconfig = {'templates' => 't/data'};
@@ -159,36 +173,15 @@ is($template->{include_path}, 't/data/de;t/data',
 	'Template, new: Object creation with valid language has good include_path');
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de',
-	'path' => 't/data');
+	'path' => 't/data', 'outputfile' => 'test');
 ok(defined $template,
 	'Template, new: Object creation with valid language and path');
 isa_ok($template, 'LedgerSMB::Template', 
 	'Template, new: Object creation with valid language and path');
 is($template->{include_path}, 't/data',
 	'Template, new: Object creation with valid path overrides language');
-
-$template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
-	'template' => '04-template');
-ok(defined $template, 
-	'Template, new: Object creation with format and template');
-isa_ok($template, 'LedgerSMB::Template', 
-	'Template, new: Object creation with format and template');
-is($template->{include_path}, 't/data',
-	'Template, new: Object creation with format and template');
-is($template->render({'login' => 'foo&bar'}), 't/var/04-template-output.html',
-	'Template, render: Simple HTML template, default filename');
-ok(-e 't/var/04-template-output.html', 'Template, render (HTML): File created');
-open($FH, '<', 't/var/04-template-output.html');
-@r = <$FH>;
-close($FH);
-chomp(@r);
-is(join("\n", @r), "I am a template.\nLook at me foo&amp;bar.", 
-	'Template, render (HTML): Simple HTML template, correct output');
-is(unlink('t/var/04-template-output.html'), 1,
-	'Template, render: removing testfile');
-ok(!-e 't/var/04-template-output.html',
-	'Template, render (HTML): testfile removed');
+is($template->{outputfile}, 't/var/test',
+	'Template, new: Object creation with filename is correct');
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
@@ -214,17 +207,21 @@ ok(defined $template,
 throws_ok{$template->render({'login' => 'foo'})} qr/Can't locate/,
 	'Template, render: Invalid format caught';
 
+#####################
+## Rendering tests ##
+#####################
+
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
 	'template' => '04-template');
 ok(defined $template, 
-	'Template, new: Object creation with format and template');
+	'Template, new (PDF): Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template', 
-	'Template, new: Object creation with format and template');
+	'Template, new (PDF): Object creation with format and template');
 is($template->{include_path}, 't/data',
-	'Template, new: Object creation with format and template');
-is($template->render({'login' => 'foo\&bar'}), 't/var/04-template-output.pdf',
-	'Template, render: Simple PDF template, default filename');
+	'Template, new (PDF): Object creation with format and template');
+is($template->render({'login' => 'foo&bar'}), 't/var/04-template-output.pdf',
+	'Template, render (PDF): Simple PDF template, default filename');
 ok(-e 't/var/04-template-output.pdf', 'Template, render (PDF): File created');
 is(unlink('t/var/04-template-output.pdf'), 1,
 	'Template, render (PDF): removing testfile');
@@ -235,26 +232,61 @@ $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PS', 
 	'template' => '04-template');
 ok(defined $template, 
-	'Template, new: Object creation with format and template');
+	'Template, new (PS): Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template', 
-	'Template, new: Object creation with format and template');
+	'Template, new (PS): Object creation with format and template');
 is($template->{include_path}, 't/data',
-	'Template, new: Object creation with format and template');
+	'Template, new (PS): Object creation with format and template');
 is($template->render({'login' => 'foo\&bar'}), 't/var/04-template-output.ps',
-	'Template, render: Simple Postscript template, default filename');
+	'Template, render (PS): Simple Postscript template, default filename');
 ok(-e 't/var/04-template-output.ps', 'Template, render (PS): File created');
 is(unlink('t/var/04-template-output.ps'), 1,
 	'Template, render (PS): removing testfile');
 ok(!-e 't/var/04-template-output.ps',
 	'Template, render (PS): testfile removed');
-##open($FH, '<', 't/var/04-template-output.html');
-##@r = <$FH>;
-##close($FH);
-##chomp(@r);
-##is(join("\n", @r), "I am a template.\nLook at me foo&amp;bar.", 
-##	'Template, render (HTML): Simple HTML template, correct output');
-##is(unlink('t/var/04-template-output.html'), 1,
-##	'Template, render: removing testfile');
-##ok(!-e 't/var/04-template-output.html',
-##	'Template, render (HTML): testfile removed');
 
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'TXT', 
+	'template' => '04-template');
+ok(defined $template, 
+	'Template, new (TXT): Object creation with format and template');
+isa_ok($template, 'LedgerSMB::Template', 
+	'Template, new (TXT): Object creation with format and template');
+is($template->{include_path}, 't/data',
+	'Template, new (TXT): Object creation with format and template');
+is($template->render({'login' => 'foo&bar'}), 't/var/04-template-output.txt',
+	'Template, render: Simple text template, default filename');
+ok(-e 't/var/04-template-output.txt', 'Template, render (TXT): File created');
+open($FH, '<', 't/var/04-template-output.txt');
+@r = <$FH>;
+close($FH);
+chomp(@r);
+is(join("\n", @r), "I am a template.\nLook at me foo&bar.", 
+	'Template, render (TXT): Simple TXT template, correct output');
+is(unlink('t/var/04-template-output.txt'), 1,
+	'Template, render (TXT): removing testfile');
+ok(!-e 't/var/04-template-output.html',
+	'Template, render (TXT): testfile removed');
+
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
+	'template' => '04-template');
+ok(defined $template, 
+	'Template, new (HTML): Object creation with format and template');
+isa_ok($template, 'LedgerSMB::Template', 
+	'Template, new (HTML): Object creation with format and template');
+is($template->{include_path}, 't/data',
+	'Template, new (HTML): Object creation with format and template');
+is($template->render({'login' => 'foo&bar'}), 't/var/04-template-output.html',
+	'Template, render (HTML): Simple HTML template, default filename');
+ok(-e 't/var/04-template-output.html', 'Template, render (HTML): File created');
+open($FH, '<', 't/var/04-template-output.html');
+@r = <$FH>;
+close($FH);
+chomp(@r);
+is(join("\n", @r), "I am a template.\nLook at me foo&amp;bar.", 
+	'Template, render (HTML): Simple HTML template, correct output');
+is(unlink('t/var/04-template-output.html'), 1,
+	'Template, render (HTML): removing testfile');
+ok(!-e 't/var/04-template-output.html',
+	'Template, render (HTML): testfile removed');

@@ -45,12 +45,27 @@ sub get_template {
 	my $name = shift;
 	return "${name}.tex";
 }
+
 sub preprocess {
 	my $rawvars = shift;
 	my $vars;
 	my $type = ref $rawvars;
-	#XXX Fix escaping
-	return $rawvars;
+
+	if ($type eq 'ARRAY') {
+		for (@{$rawvars}) {
+			push @{$vars}, preprocess($_);
+		}
+	} elsif ($type eq 'HASH') {
+		for ( keys %{$rawvars} ) {
+			$vars->{$_} = preprocess($rawvars->{$_});
+		}
+	} else {
+		#XXX Fix escaping
+		$rawvars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
+		$rawvars =~ s/"(.*)"/``$1''/gs;
+		return $rawvars;
+	}
+	return $vars;
 }
 
 sub process {
@@ -63,12 +78,12 @@ sub process {
 		INCLUDE_PATH => $parent->{include_path},
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
-		DELIMITER => ';',
+		DELIMITER => ';'
 		}) || throw Error::Simple Template::Latex->error(); 
 
 	if (not $template->process(
 		get_template($parent->{template}), 
-		$cleanvars, "$parent->{outputfile}.pdf", binmode => ':utf8')) {
+		$cleanvars, "$parent->{outputfile}.pdf", binmode => 1)) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'application/pdf';
