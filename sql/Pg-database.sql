@@ -9,7 +9,8 @@ CREATE TABLE transactions (
 CREATE TABLE entity (
   id serial PRIMARY KEY,
   name text check (name ~ '[[:alnum:]_]'),
-  entity_class integer not null);
+  entity_class integer not null,
+  created date not null default current_date);
 
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
 COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
@@ -69,7 +70,6 @@ INSERT INTO location_class(id,class,authoritative) VALUES ('3','Shipping',TRUE);
 
 SELECT SETVAL('location_class_id_seq',4);
   
-
 CREATE TABLE location (
   id serial PRIMARY KEY,
   location_class integer not null references location(id),
@@ -87,6 +87,7 @@ CREATE TABLE company (
   entity_id integer not null references entity(id),
   legal_name text check (legal_name ~ '[[:alnum:]_]'),
   tax_id text,
+  created date default current_date not null,
   PRIMARY KEY (entity_id,legal_name));
   
 COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;  
@@ -116,7 +117,8 @@ CREATE TABLE person (
  salutation_id integer references salutation(id),
  first_name text check (first_name ~ '[[:alnum:]_]') NOT NULL,
  middle_name text,
- last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL
+ last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
+ created date not null default current_date
  );
  
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
