@@ -97,7 +97,6 @@ CREATE TABLE company_to_location (
   company_id integer references company(id) not null,
   PRIMARY KEY(location_id,company_id));
 
-
 CREATE TABLE salutation (
  id serial unique,
  salutation text primary key);
@@ -191,6 +190,20 @@ CREATE TABLE company_to_contact (
 
 COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
   
+-- Begin rocking notes interface
+CREATE TABLE note_class(id serial primary key, class text not null check (class ~ '[[:alnum:]_]'), vectors tsvector not null, created date not null default current_date);
+INSERT INTO note_class(id,class) VALUES (1,'Entity');
+INSERT INTO note_class(id,class) VALUES (2,'Invoice');
+CREATE UNIQUE INDEX note_class_idx ON notes_class(lower(class));
+
+CREATE TABLE note (id serial primary key, note_class integer not null references note_class(id), note text not null);
+CREATE TABLE entity_note() INHERITS notes_class();
+ALTER TABLE entity_note ADD CHECK (id = 1);
+CREATE INDEX entity_note_id_idx ON entity_note(id);
+CREATE TABLE invoice_note() INHERITS notes_class();
+CREATE INDEX invoice_note_id_idx ON invoice_note(id);
+ALTER TABLE invoice_note ADD CHECK (id = 2);
+
 
 -- END entity   
 

@@ -1,4 +1,4 @@
-Installing LedgerSMB 1.2 
+Installing LedgerSMB 1.3
 
 
 This document contains information on how to install LedgerSMB.  We recommend
@@ -39,18 +39,26 @@ recommend as follows:
   b)  Multicompany installations should use user tables in a separate dataset
       from any accounting data.
 
-4)  Create central database
+4)  Install Tsearch2 Full Text indexing engine for PostgreSQL (not optional)
+  a) If you installed PostgreSQL from source, Tsearch2 is in contrib.
+  b) If you installed from package, you will need the package
+  postgresql-contrib or equivelant
+  c) Use psql to apply the tsearch2.sql. The file is normally installed to
+  /usr/share/postgresql/contrib/tsearch2.sql or
+  //usr/share/postgresql/<version>/contrib/tsearch2.sql
+
+5)  Create central database
 
   a) cd to the sql/ directory of the new ledger directory.
   b) run "psql" with appropriate options to connect to your database.
   c) Run the SQL script Pg-central.sql.
 
-5)  Set the admin password:
+6)  Set the admin password:
   a)  From psql, determine what admin password you wish to use.  Then type:
       "update users_conf set password = md5('my_password');"
       Naturally you would use your password instead of my_password.
 
 6)  Edit the ledger-smb.conf file as appropriate.
 
-Congratulations, you have manually installed LedgerSMB 1.2.
+Congratulations, you have manually installed LedgerSMB 1.3.
 
