@@ -23,7 +23,7 @@ CREATE TABLE entity_class (
 COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
 COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and permanent $$;  
 
-CREATE UNIQUE index entity_class_unique_idx ON entity_class(lower(class));
+CREATE index entity_class_idx ON entity_class(lower(class));
 
 COMMENT ON INDEX entity_class_unique_idx IS $$ Helps truly define unique. Which we could do that with Primary Keys $$;
 
@@ -210,6 +210,7 @@ CREATE INDEX invoice_note_id_idx ON invoice_note(id);
 CREATE UNIQUE INDEX invoice_note_class_idx ON note_class(lower(class));
 CREATE INDEX invoice_note_vectors_idx ON invoice_note USING gist(vector);
 ALTER TABLE invoice_note ADD CHECK (id = 2);
+
 -- END entity   
 
 --
