@@ -25,7 +25,6 @@ COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and perm
 
 CREATE index entity_class_idx ON entity_class(lower(class));
 
-COMMENT ON INDEX entity_class_unique_idx IS $$ Helps truly define unique. Which we could do that with Primary Keys $$;
 
 ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
 
@@ -198,10 +197,12 @@ CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 
 CREATE TABLE note (id serial primary key, note_class integer not null references note_class(id), 
                    note text not null, vector tsvector not null, 
-                   created timestamp not null default now());
+                   created timestamp not null default now(),
+                   ref_key integer not null);
 
 CREATE TABLE entity_note() INHERITS (note);
 ALTER TABLE entity_note ADD CHECK (id = 1);
+ALTER TABLE entity_note ADD FOREIGN KEY (ref_key) REFERENCES entity(id);
 CREATE INDEX entity_note_id_idx ON entity_note(id);
 CREATE UNIQUE INDEX entity_note_class_idx ON note_class(lower(class));
 CREATE INDEX entity_note_vectors_idx ON entity_note USING gist(vector);
@@ -309,6 +310,12 @@ CREATE TABLE invoice (
   serialnumber text,
   notes text
 );
+
+-- Added for Entity but can't be added due to order
+ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
+
+--
+
 --
 CREATE TABLE customer (
   id serial PRIMARY KEY,
