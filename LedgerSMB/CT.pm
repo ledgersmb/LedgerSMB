@@ -608,7 +608,7 @@ sub search {
     if ( $form->{address} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{address} ) );
         $where .=
-" AND (lower(ct.address1) LIKE $var OR lower(ct.address2) LIKE '$var')";
+" AND (lower(ct.address1) ILIKE $var)";
     }
 
     if ( $form->{startdatefrom} ) {
