@@ -27,6 +27,20 @@ is($form->{version}, $ver, 'Form version matches VERSION');
 
 SKIP: {
 	skip 'Form is trunk', 1 if $form->{version} =~ /trunk$/i;
-	cmp_ok($form->{version}, 'ge', $form->{dbversion}, 
-		'form: version >= dbversion');
+	my @dparts = split /\./, $form->{dbversion};
+	my @lparts = split /\./, $form->{version};
+	my $age = 0;
+	foreach my $dpart (@dparts) {
+		my $lpart = shift @lparts;
+		if (!defined $lpart) {
+			$age = 1;
+			last;
+		} elsif ($lpart > $dpart) {
+			last;
+		} elsif ($dpart > $lpart) {
+			$age = 1;
+			last;
+		}
+	}
+	ok($age == 0, 'form: version >= dbversion');
 }
