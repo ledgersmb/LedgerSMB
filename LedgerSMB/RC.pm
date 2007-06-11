@@ -300,7 +300,7 @@ sub payment_transactions {
 			  FROM acc_trans ac
 			  JOIN chart ch ON (ac.chart_id = ch.id)
 			  JOIN ar a ON (a.id = ac.trans_id)
-			  JOIN customer n ON (n.id = a.customer_id)
+			  JOIN customer n USING (entity_id)
 			 WHERE ch.accno = | . $dbh->quote( $form->{accno} ) . qq|
 			       $fx_transaction $cleared|;
         $query .= " AND ac.transdate >= " . $dbh->quote( $form->{fromdate} )
@@ -335,7 +335,7 @@ sub payment_transactions {
         $query = qq|
 			SELECT c.name
 			  FROM customer c
-			  JOIN ar a ON (c.id = a.customer_id)
+			  JOIN ar a using (entity_id)
 			  JOIN acc_trans ac ON (a.id = ac.trans_id)
 			  JOIN chart ch ON (ac.chart_id = ch.id)
 			 WHERE ac.transdate = ?
@@ -368,7 +368,7 @@ sub payment_transactions {
         $query = qq|
 		SELECT c.name
 		  FROM customer c
-		  JOIN ar a ON (c.id = a.customer_id)
+		  JOIN ar a USING (entity_id)
 		  JOIN acc_trans ac ON (a.id = ac.trans_id)
 		  JOIN chart ch ON (ac.chart_id = ch.id)
 		 WHERE ac.transdate = ?

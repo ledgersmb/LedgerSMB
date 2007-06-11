@@ -67,7 +67,7 @@ sub get_vc {
 			SELECT count(*)
 			  FROM (SELECT DISTINCT vc.id
 				  FROM $form->{vc} vc, $item a, status s
-				 WHERE a.$form->{vc}_id = vc.id
+				 WHERE a.entity_id = vc.entity_id
 			               AND s.trans_id = a.id
 			               AND s.formname = ?
 			               AND s.spoolfile IS NOT NULL) AS total|;
@@ -91,7 +91,7 @@ sub get_vc {
 				SELECT DISTINCT vc.id, vc.name
 				  FROM $item a
 				  JOIN $form->{vc} vc 
-				       ON (a.$form->{vc}_id = vc.id)
+				       USING (entity_id)
 				  JOIN status s ON (s.trans_id = a.id)
 				 WHERE s.formname = ?
 				       AND s.spoolfile IS NOT NULL|;
@@ -207,11 +207,11 @@ sub get_spoolfiles {
 				 WHERE s.trans_id = a.id
 				       AND s.spoolfile IS NOT NULL
 				       AND s.formname = ?
-				       AND a.$form->{vc}_id = vc.id|;
+				       AND a.entity_id = vc.entity_id|;
 
             push( @queryargs, $form->{type} );
             if ( $form->{"$form->{vc}_id"} ) {
-                $query .= qq| AND a.$form->{vc}_id = $form->{"$form->{vc}_id"}|;
+                $query .= qq| AND a.entity_id = $form->{"entity_id"}|;
             }
             else {
 

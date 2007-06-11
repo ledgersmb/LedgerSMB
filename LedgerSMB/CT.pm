@@ -608,7 +608,7 @@ sub search {
     if ( $form->{address} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{address} ) );
         $where .=
-" AND (lower(ct.address1) LIKE $var OR lower(ct.address2) LIKE '$var')";
+" AND (lower(ct.address1) ILIKE $var)";
     }
 
     if ( $form->{startdatefrom} ) {
@@ -634,17 +634,12 @@ sub search {
 			                    FROM oe o, $form->{db} vc
 			                   WHERE vc.id = o.$form->{db}_id)|;
 
-        if ( $form->{db} eq 'customer' ) {
-            $where .= qq| AND ct.id NOT IN (SELECT a.customer_id
+        if ( $form->{db} =~ /(^customer$|^vendor$)/ ) {
+            $where .= qq| AND ct.id NOT IN (SELECT a.entity_id
 											  FROM ar a, customer vc
-											 WHERE vc.id = a.customer_id)|;
+											 WHERE vc.entity_id = a.entity_id)|;
         }
 
-        if ( $form->{db} eq 'vendor' ) {
-            $where .= qq| AND ct.id NOT IN (SELECT a.vendor_id
-											  FROM ap a, vendor vc
-											 WHERE vc.id = a.vendor_id)|;
-        }
 
         $form->{l_invnumber} = $form->{l_ordnumber} = $form->{l_quonumber} = "";
     }
@@ -888,7 +883,7 @@ sub get_history {
 
     if ( $form->{address} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{address} ) );
-        $where .= " AND lower(ct.address1) LIKE $var";
+        $where .= " AND lower(ct.address1) ILIKE $var";
     }
 
     for (qw(name contact email phone notes city state zipcode country)) {

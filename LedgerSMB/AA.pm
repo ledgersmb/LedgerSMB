@@ -766,7 +766,7 @@ sub transactions {
 
     my $where = "1 = 1";
     if ( $form->{"$form->{vc}_id"} ) {
-        $where .= qq| AND a.$form->{vc}_id = $form->{"$form->{vc}_id"}|;
+        $where .= qq| AND a.entity_id = $form->{entity_id}|;
     }
     else {
         if ( $form->{ $form->{vc} } ) {

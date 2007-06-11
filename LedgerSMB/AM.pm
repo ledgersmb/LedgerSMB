@@ -969,7 +969,7 @@ sub recurring_transactions {
                           AS expired
 		     FROM recurring s
 		     JOIN ar a ON (a.id = s.id)
-		     JOIN customer n ON (n.id = a.customer_id)
+		     JOIN customer n USING (entity_id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex 
@@ -1024,7 +1024,7 @@ sub recurring_transactions {
 		          AS expired
 		     FROM recurring s
 		     JOIN oe a ON (a.id = s.id)
-		     JOIN customer n ON (n.id = a.customer_id)
+		     JOIN customer USING (entity_id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex ON 

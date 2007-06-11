@@ -1742,10 +1742,10 @@ sub retrieve_invoice {
 			          a.intnotes,
 			          a.duedate, a.taxincluded, a.curr AS currency,
 			          a.employee_id, e.name AS employee, a.till, 
-			          a.customer_id,
+			          a.entity_id,
 			          a.language_code, a.ponumber
 			     FROM ar a
-			LEFT JOIN employees e ON (e.id = a.employee_id)
+			LEFT JOIN employees e ON (e.entity_id = a.employee_id)
 			    WHERE a.id = ?|;
 
         $sth = $dbh->prepare($query);

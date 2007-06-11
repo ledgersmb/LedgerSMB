@@ -1239,11 +1239,11 @@ sub all_parts {
 					          ON (p.id = i.parts_id)
 					     JOIN ar a ON (a.id = i.trans_id)
 					     JOIN customer ct 
-					          ON (a.customer_id = ct.id)
+					          USING (entity_id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employees e 
-					          ON (a.employee_id = e.id)
+					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $invwhere|;
                 $union = "
@@ -1305,14 +1305,14 @@ sub all_parts {
 					     JOIN parts p ON (i.parts_id = p.id)
 					     JOIN oe a ON (i.trans_id = a.id)
 					     JOIN customer ct 
-					          ON (a.customer_id = ct.id)
+					          USING (entity_id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $ordwhere 
-					          AND a.customer_id > 0|;
+					          AND a.entity_id IS NOT NULL|;
                 $union = "
 					UNION ALL";
             }
@@ -1411,14 +1411,14 @@ sub all_parts {
 					     JOIN parts p ON (i.parts_id = p.id)
 					     JOIN oe a ON (i.trans_id = a.id)
 					     JOIN customer ct 
-					          ON (a.customer_id = ct.id)
+					          USING (entity_id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employees e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $quowhere
-					          AND a.customer_id > 0|;
+					          AND a.entity_id IS NOT NULL|;
                 $union = "
 					UNION ALL";
             }

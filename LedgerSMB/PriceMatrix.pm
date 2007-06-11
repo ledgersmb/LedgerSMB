@@ -41,12 +41,12 @@ sub price_matrix_query {
     my $sth;
 
     my @queryargs;
+    my $entity_id     = $form->{dbh}->quote( $form->{entity_id} );
 
     if ( $form->{customer_id} ) {
         my $defaultcurrency = $form->{dbh}->quote( $form->{defaultcurrency} );
-        my $customer_id     = $form->{dbh}->quote( $form->{customer_id} );
         $query = qq|
-			SELECT p.id AS parts_id, 0 AS customer_id, 
+			SELECT p.id AS parts_id, 0 AS entity_id, 
 				0 AS pricegroup_id, 0 AS pricebreak, 
 				p.sellprice, NULL AS validfrom, NULL AS validto,
 				(SELECT substr(value,1,3) FROM defaults WHERE 
@@ -57,50 +57,49 @@ sub price_matrix_query {
 
 			UNION
 
-    			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
+    			SELECT p.parts_id, p.entity_id, p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			WHERE p.parts_id = ?
-			AND p.customer_id = $customer_id
+			AND p.entity_id = $entity_id
 
 			UNION
 
-    			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
+    			SELECT p.parts_id, p.entity_id, p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			JOIN customer c ON (c.pricegroup_id = g.id)
 			WHERE p.parts_id = ?
-			AND c.id = $customer_id
+			AND c.id = $entity_id
 
 			UNION
 
-    			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
+    			SELECT p.parts_id, p.entity_id, p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-			WHERE p.customer_id = 0
+			WHERE p.entity_id = 0
 			AND p.pricegroup_id = 0
 			AND p.parts_id = ?
 
-			ORDER BY customer_id DESC, pricegroup_id DESC, 
+			ORDER BY entity_id DESC, pricegroup_id DESC, 
 				pricebreak
 			|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
     elsif ( $form->{vendor_id} ) {
-        my $vendor_id = $form->{dbh}->quote( $form->{vendor_id} );
 
         # price matrix and vendor's partnumber
         $query = qq|
 			SELECT partnumber
 			FROM partsvendor
 			WHERE parts_id = ?
-			AND vendor_id = $vendor_id|;
+			AND entity_id = $entity_id|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
 

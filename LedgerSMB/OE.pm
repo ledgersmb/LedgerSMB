@@ -248,7 +248,7 @@ sub save {
     my ( $self, $myconfig, $form ) = @_;
 
     $form->db_prepare_vars(
-        "quonumber", "transdate",     "vendor_id",     "customer_id",
+        "quonumber", "transdate",     "vendor_id",     "entity_id",
         "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
         "currency",  "department_id", "employee_id",   "language_code",
         "ponumber",  "terms"
@@ -346,10 +346,10 @@ sub save {
         # $form->{id} is safe because it is only pulled *from* the db.
         $query = qq|
 			INSERT INTO oe 
-				(id, ordnumber, quonumber, transdate, vendor_id,
-				customer_id, reqdate, shippingpoint, shipvia,
+				(id, ordnumber, quonumber, transdate, 
+				entity_id, reqdate, shippingpoint, shipvia,
 				notes, intnotes, curr, closed, department_id,
-				employee_id, language_code, ponumber, terms,
+				person_id, language_code, ponumber, terms,
 				quotation)
 			VALUES 
 				($form->{id}, ?, ?, ?, ?,
@@ -358,12 +358,11 @@ sub save {
 				?, ?, ?, ?, ?)|;
         @queryargs = (
             $form->{ordnumber},     $form->{quonumber},
-            $form->{transdate},     $form->{vendor_id},
-            $form->{customer_id},   $form->{reqdate},
+            $form->{transdate},     $form->{entity_id}, $form->{reqdate},
             $form->{shippingpoint}, $form->{shipvia},
             $form->{notes},         $form->{intnotes},
             $form->{currency},      $form->{closed},
-            $form->{department_id}, $form->{employee_id},
+            $form->{department_id}, $form->{person_id},
             $form->{language_code}, $form->{ponumber},
             $form->{terms},         $quotation
         );
@@ -508,7 +507,7 @@ sub save {
     }
 
     # set values which could be empty
-    for (qw(vendor_id customer_id taxincluded closed quotation)) {
+    for (qw(entity_id taxincluded closed quotation)) {
         $form->{$_} *= 1;
     }
 
@@ -553,8 +552,7 @@ sub save {
 				ordnumber = ?, 
 				quonumber = ?,
 				transdate = ?,
-				vendor_id = ?,
-				customer_id = ?, 
+				entity_id = ?, 
 				amount = ?, 
 				netamount = ?,
 				reqdate = ?,
@@ -579,8 +577,7 @@ sub save {
 
         @queryargs = (
             $form->{ordnumber},     $form->{quonumber},
-            $form->{transdate},     $form->{vendor_id},
-            $form->{customer_id},   $amount,
+            $form->{transdate},     $form->{entity_id},   $amount,
             $netamount,             $form->{reqdate},
             $form->{taxincluded},   $form->{shippingpoint},
             $form->{shipvia},       $form->{notes},
@@ -2416,8 +2413,7 @@ sub generate_orders {
 			UPDATE oe SET
 				ordnumber = ?,
 				transdate = current_date,
-				vendor_id = ?,
-				customer_id = 0,
+				entity_id = ?
 				amount = ?,
 				netamount = ?,
 				taxincluded = ?,
@@ -2516,8 +2512,7 @@ sub consolidate_orders {
 
             # the orders
             @orderitems = ();
-            $form->{customer_id} = $form->{vendor_id} = 0;
-            $form->{"$form->{vc}_id"} = $vc_id;
+            $form->{entity_id} = $vc_id;
             $amount                   = 0;
             $netamount                = 0;
 
@@ -2570,8 +2565,8 @@ sub consolidate_orders {
 				UPDATE oe SET
 					ordnumber = | . $dbh->quote($ordnumber) . qq|,
 					transdate = current_date,
-					vendor_id = $form->{vendor_id},
-					customer_id = $form->{customer_id},
+					entity_id = | . 
+				            $dbh->quote($form->{entity_id}).qq|,
 					amount = $amount,
 					netamount = $netamount,
 					reqdate = | . $form->dbquote( $ref->{reqdate}, SQL_DATE ) . qq|,

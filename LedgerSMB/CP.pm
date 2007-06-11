@@ -129,7 +129,7 @@ sub get_openvc {
     my $arap = ( $form->{vc} eq 'customer' ) ? 'ar' : 'ap';
     my $query = qq|SELECT count(*)
 					 FROM $form->{vc} ct, $arap a
-					WHERE a.$form->{vc}_id = ct.id
+					WHERE a.entity_id = ct.entity_id
 					  AND a.amount != a.paid|;
 
     my ($count) = $dbh->selectrow_array($query);
@@ -138,7 +138,7 @@ sub get_openvc {
     my $ref;
     my $i = 0;
 
-    my $where = qq|WHERE a.$form->{vc}_id = ct.id
+    my $where = qq|WHERE a.entity_id = ct.entity_id
 					 AND a.amount != a.paid|;
 
     if ( $form->{ $form->{vc} } ) {
@@ -208,8 +208,8 @@ sub get_openinvoices {
     # connect to database
     my $dbh = $form->{dbh};
 
-    $vc_id = $dbh->quote( $form->{"$form->{vc}_id"} );
-    my $where = qq|WHERE a.$form->{vc}_id = $vc_id
+    $vc_id = $dbh->quote( $form->{"entity_id"} );
+    my $where = qq|WHERE a.entity__id = $vc_id
 					 AND a.amount != a.paid|;
 
     $curr = $dbh->quote( $form->{currency} );
@@ -251,9 +251,9 @@ sub get_openinvoices {
     }
 
     my $query = qq|SELECT a.id, a.invnumber, a.transdate, a.amount, a.paid,
-						  a.curr, c.name, a.$form->{vc}_id, c.language_code
+						  a.curr, c.name, a.entity_id, c.language_code
 					 FROM $form->{arap} a
-					 JOIN $form->{vc} c ON (c.id = a.$form->{vc}_id)
+					 JOIN $form->{vc} c ON (c.entity_id = a.entity_id)
 				   $where
 				 ORDER BY $sortorder|;
 

@@ -416,7 +416,7 @@ sub all_transactions {
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
-					 JOIN customer ct ON (a.customer_id = ct.id)
+					 JOIN customer ct USING (entity_id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $arwhere
 
