@@ -274,7 +274,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 
 <table border=0 width=100%>
   <tr><th class=listtop>$form->{title}</th></tr>
-  <tr height="5"></tr
+  <tr height="5"></tr>
   <tr valign=top>
     <td>
       <table>
