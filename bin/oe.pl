@@ -580,7 +580,7 @@ sub form_header {
     $form->header;
 
     print qq|
-<body onLoad="document.forms[0].${focus}.focus()" />
+<body onLoad="document.forms[0].${focus}.focus()">
 
 <form method=post action="$form->{script}">
 |;
@@ -3549,7 +3549,7 @@ sub select_vendor {
     $form->header;
 
     print qq|
-<body onload="document.forms[0].vendor.focus()" />
+<body onload="document.forms[0].vendor.focus()">
 
 <form method=post action=$form->{script}>
 

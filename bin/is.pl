@@ -396,7 +396,7 @@ sub form_header {
     $form->header;
 
     print qq|
-<body onLoad="document.forms[0].${focus}.focus()" />
+<body onLoad="document.forms[0].${focus}.focus()">
 
 <form method=post action="$form->{script}">
 |;

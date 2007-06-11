@@ -1115,7 +1115,7 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
     $form->header;
 
     print qq|
-<body onload="document.forms[0].${focus}.focus()" />
+<body onload="document.forms[0].${focus}.focus()">
 
 <form method=post action=$form->{script}>
 |;
