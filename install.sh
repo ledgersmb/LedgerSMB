@@ -2,7 +2,7 @@
 
 CWD=`pwd`
 
-sed -i "s|WORKING_DIR|$CWD|"
+sed -i.orig "s|WORKING_DIR|$CWD|"
 
 echo "Which user does your web server run as?"
 read username
