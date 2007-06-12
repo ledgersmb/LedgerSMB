@@ -20,8 +20,8 @@ psql template1 -c "DROP DATABASE ${LSDB};"
 
 pg_dump ${SLDB} > sl2ls.sql
 
-sed -i -e "s/${SLOWN}/${LSOWN}/" sl2ls.sql
-sed -i -e "s/SQL_ASCII/LATIN1/" sl2ls.sql
+sed -i.orig -e "s/${SLOWN}/${LSOWN}/" sl2ls.sql
+sed -i.orig -e "s/SQL_ASCII/LATIN1/" sl2ls.sql
 
 createdb -O ${LSOWN} ${LSDB}
 
