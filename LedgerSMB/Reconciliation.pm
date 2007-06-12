@@ -23,13 +23,16 @@ Of course the base object can be any object that inherits LedgerSMB, so you can
 use any subclass of that.  The per-session dbh is passed between the objects 
 this way as is any information that is needed.
 
-=item reconcile($self, $total, $entries)
+=item reconcile($self, $total, $month, $entries)
 
 Accepts the total balance, as well as a list of all entries from the bank
 statement as an array reference, and generates the pending report from
 this list. 
 The first entry is always the total balance of the general ledger as 
 compared to the balance held by the bank.
+
+Month is taken to be the date that the statement as represented by Entries
+is applicable to.
 
 Returns the new report ID. || An arrayref of entries.
 
@@ -54,6 +57,13 @@ Returns the error code assigned to this entry.
     0 for success
     1 for found in general ledger, but does not match $new_balance
     2 $source_control_number cannot be found in the general ledger
+    
+=item get_report($self, $report_id)
+
+Collects all the rows from the database in the given report. Returns an 
+arrayref of entries in the table for the given report_id.
+
+Returns undef in the event of no records found.
 
 =back
 
@@ -67,23 +77,31 @@ your software.
 
 package LedgerSMB::DBObject::Reconciliation;
 
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB);
+use LedgerSMB::DBObject;
 
 # don't need new
 
-sub reconcile {
+#sub reconcile {
+sub new_report {
 
     my $self = shift @_;
     my $total = shift @_;
+    my $month = shift @_;
     my $entries = shift @_; # expects an arrayref.
     
     # Total is in here somewhere, too
     
-    my $report_id = $self->new_report(); # gives us a report ID to insert with.
+    my $report_id = $self->new_report_id()[0]; # gives us a report ID to insert with.
     
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
-    unshift @{$entries}, {scn => 0, balance=> $total, old_balance=> $self->current_balance, code=> $self->compare_total($total) };    
+    unshift @{$entries}, {
+        scn => -1,
+        balance=> $total, 
+        old_balance=> $self->current_balance, 
+        date=>$month
+    };
     for my $entry (@{$entries}) {
         
         # Codes:
@@ -94,8 +112,9 @@ sub reconcile {
         $entry{code} = $self->add_entry( $entry );
         
     }
-    # Based on chatting with Chris T, we are going to use an arrayref of hashrefs to handle
-    # the varying return states.
+    
+    $self->pending_transactions($report_id, $date);
+    
     return $entries; # returns the report ID.
 }
 
@@ -105,7 +124,7 @@ sub approve {
     # the user should be embedded into the $self object.
     my $report_id = shift @_;
     
-    my $code = $self->report_approve($report_id,$self->{user}->{id}); # user 
+    my $code = $self->report_approve($report_id); # user 
     
     if ($code == 0) {  # no problem.
         return $code;
@@ -120,13 +139,20 @@ sub approve {
 sub correct_entry {
     
     my $self = shift @_;
-    my $report_id = shift @_;
-    my $scn = shift @_;
-    my $new_amount = shift @_;
+    my $report_id = $self->{report_id}; # shift @_;
+    my $scn = $self->{id}; #shift @_;
+    my $new_amount = $self->{new_amount}; #shift @_;
     
     # correct should return the new code value - whether or not it actually "matches"
     my $code = $self->correct($report_id, $scn, $new_amount);
     return $code[0]->{'correct'}; 
+}
+
+sub get_report {
+    
+    my $self = shift @_;
+    
+    return $self->report($self->{report_id});    
 }
 
 1;

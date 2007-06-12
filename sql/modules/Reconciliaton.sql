@@ -4,7 +4,7 @@ CREATE TABLE pending_reports (
     scn int,
     their_balance INT,
     our_balance INT,
-    code INT,
+    errorcode INT,
     user TEXT,
     corrections INT NOT NULL DEFAULT 0
     clear_time TIMESTAMP NOT NULL,
@@ -223,7 +223,7 @@ CREATE OR REPLACE FUNCTION reconciliation_report_approve (in_report_id INT) retu
 
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION reconciliation_new_report () returns INT as $$
+CREATE OR REPLACE FUNCTION reconciliation_new_report_id () returns INT as $$
 
     SELECT nextval('pending_report_report_id_seq');
 
@@ -344,3 +344,41 @@ create or replace function reconciliation_pending_transactions (in_report_id INT
     END;
     
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION reconciliation_report (in_report_id INT) RETURNS setof pending_reports as $$
+
+    DECLARE
+        row pending_reports;
+    BEGIN    
+        FOR row IN select * from pending_reports where report_id = in_report_id LOOP
+        
+            RETURN NEXT row;
+        
+        END LOOP;    
+    END;
+
+$$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION reconciliation_get_total (in_report_id INT) returns setof pending_reports AS $$
+
+    DECLARE
+        row pending_reports;
+    BEGIN
+    
+        SELECT INTO row FROM pending_reports 
+        WHERE ledger_id IS NULL 
+        and report_id = in_report_id 
+        AND scn = -1;
+        
+        IF NOT FOUND THEN -- I think this is a fairly major error condition
+        
+            RAISE EXCEPTION "No Bank Total found."
+            
+        ELSE
+            
+            return row;
+        
+        END IF;
+    END;
+
+$$ language 'plpgsql';
