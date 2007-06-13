@@ -225,18 +225,12 @@ sub save_customer {
     if ( !$form->{creditlimit} ) {
         $form->{creditlimit} = 0;
     }
+    my $updated = 0;
 
     if ( $form->{id} ) {
         $query = qq|
 			DELETE FROM customertax
 			 WHERE customer_id = ?|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        $query = qq|
-			DELETE FROM shipto
-			 WHERE trans_id = ?|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -249,116 +243,102 @@ sub save_customer {
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
-        if ( !$sth->fetchrow_array ) {
+        if ( $sth->fetchrow_array ) {
+            $sth->finish;
             $query = qq|
-				INSERT INTO customer (id)
-				     VALUES (?)|;
+		UPDATE customer 
+		SET discount = ?
+			taxincluded = ?
+			creditlimit = ?
+			terms = ?
+			customernumber = ?
+			cc = ?
+			bcc = ?
+			business_id = ?
+			sic_code = ?
+			language_code = ?
+			pricegroup_id = ?
+			curr = ?
+			startdate = ?
+			enddate = ?
+			invoice_notes = ?
+			bic = ?
+			iban = ?
+		WHERE id = ?|;
+            $sth = $dbh->prepare($query);
+            $sth->execute(
+                $form->{discount}, $form->{taxincluded}, $form->{creditlimit},
+                $form->{terms}, $form->{customernumber}, $form->{cc},
+                $form->{bcc}, $form->{business_id}, $form->{sic_code}, 
+                $form->{language_code}, $form->{pricegroup_id},
+                $form->{curr}, $form->{startdate}, $form->{enddate},
+                $form->{invoice_notes}, $form->{bic}, $form->{iban}, $form->{id}
+            ) || $form->dberror(__FILE__.":".__LINE__.":$query");
+            $updated = 1;
+        }
+    }
+    if (!$updated){
+            # Creating Entity
+            $query = qq|INSERT INTO entity (name, entity_class) VALUES (?, 2)|;
+            $sth = $dbh->prepare($query);
+            $sth->execute($form->{name});
+            $sth->finish;
+            ($form->{entity_id}) = 
+		$dbh->selectrow_array("SELECT currval('entity_id_seq')");
+            # Creating LOCATION
+            $query = qq|
+		INSERT INTO location
+			(line_one, line_two, city_province, mail_code, 
+			country_id)
+		VALUES
+			(?, ?, ?, ?, 
+				(SELECT id FROM country
+				WHERE short_name = ? OR name = ?))
+            |;
+            $sth = $dbh->prepare($query);
+            $sth->execute($form->{address1}, $form->{address2}, 
+                  "$form->{city}, $form->{state}", $form->{zipcode},
+                  $form->{country}, $form->{country}
+            ) || $form->dberror($query);
+            
+            ($form->{location_id}) = 
+		$dbh->selectrow_array("SELECT currval('location_id_seq')");
+            #Creating company
+            $query = qq|
+		INSERT INTO company
+			(entity_id, entity_class_id, legal_name, 
+			primary_location_id, tax_id)
+		VALUES
+			(?, 2, ?, ?, ?)
+            |;
+            $sth = $dbh->prepare($query) || $form->dberror($query);
+            $sth->execute($form->{entity_id}, $form->{name}, 
+                  $form->{location_id}, $form->{taxnumber});
+            #Creating customer record
+            $query = qq|
+		INSERT INTO customer 
+			(entity_id, discount, taxincluded, creditlimit, terms,
+				customernumber, cc, bcc, business_id, sic_code,
+				language_code, pricegroup_id, curr, startdate,
+				enddate, invoice_notes, bic, iban)
+					
+		VALUES (?, ?, ?, ?, ?,
+			?, ?, ?, ?, ?,
+			?, ?, ?, ?,
+			?, ?, ?, ?)|;
 
             $sth = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
-        }
-
-        # retrieve enddate
-        if ( $form->{type} && $form->{enddate} ) {
-            my $now;
-            $query = qq|
-				SELECT enddate, current_date AS now 
-				  FROM customer|;
-            ( $form->{enddate}, $now ) = $dbh->selectrow_array($query);
-            $form->{enddate} = $now if $form->{enddate} lt $now;
-        }
-
+            $sth->execute(
+                 $form->{entity_id}, $form->{discount}, $form->{taxincluded},
+                 $form->{creditlimit}, 
+                 $form->{terms}, $form->{customernumber}, $form->{cc},
+                 $form->{bcc}, $form->{business_id}, $form->{sic_code},
+                 $form->{language_code}, $form->{pricegroup_id}, $form->{curr},
+                 $form->{startdate} || undef, $form->{enddate} || undef, 
+                 $form->{invoice_notes},
+                 $form->{bic}, $form->{iban}
+            ) || $form->dberror($query);
     }
-    else {
-        my $uid = localtime;
-        $uid .= "$$";
-
-        $query = qq|INSERT INTO customer (name)
-					VALUES ('$uid')|;
-
-        $dbh->do($query) || $form->dberror($query);
-
-        $query = qq|SELECT id 
-					  FROM customer
-					 WHERE name = '$uid'|;
-
-        ( $form->{id} ) = $dbh->selectrow_array($query);
-
-    }
-
-    my $employee_id;
-    ( $null, $employee_id ) = split /--/, $form->{employee};
-    $employee_id *= 1;
-
-    my $pricegroup_id;
-    ( $null, $pricegroup_id ) = split /--/, $form->{pricegroup};
-    $pricegroup_id *= 1;
-
-    my $business_id;
-    ( $null, $business_id ) = split /--/, $form->{business};
-    $business_id *= 1;
-
-    my $language_code;
-    ( $null, $language_code ) = split /--/, $form->{language};
-
-    $form->{customernumber} =
-      $form->update_defaults( $myconfig, "customernumber", $dbh )
-      if !$form->{customernumber};
-
-    $query = qq|
-		UPDATE customer 
-		   SET customernumber = ?,
-		       name = ?,
-		       address1 = ?,
-		       address2 = ?,
-		       city = ?,
-		       state = ?,
-		       zipcode = ?,
-		       country = ?,
-		       contact = ?,
-		       phone = ?,
-		       fax = ?,
-		       email = ?,
-		       cc = ?,
-		       bcc = ?,
-		       notes = ?,
-		       discount = ?,
-		       creditlimit = ?,
-		       terms = ?,
-		       taxincluded = ?,
-		       business_id = ?,
-		       taxnumber = ?,
-		       sic_code = ?,
-		       iban = ?,
-		       bic = ?,
-		       employee_id = ?,
-		       pricegroup_id = ?,
-		       language_code = ?,
-		       curr = ?,
-		       startdate = ?,
-		       enddate = ?
-		 WHERE id = ?|;
-
-    $sth = $dbh->prepare($query);
-    if ( !$form->{startdate} ) {
-        undef $form->{startdate};
-    }
-    if ( !$form->{enddate} ) {
-        undef $form->{enddate};
-    }
-    $sth->execute(
-        $form->{customernumber}, $form->{name},        $form->{address1},
-        $form->{address2},       $form->{city},        $form->{state},
-        $form->{zipcode},        $form->{country},     $form->{contact},
-        $form->{phone},          $form->{fax},         $form->{email},
-        $form->{cc},             $form->{bcc},         $form->{notes},
-        $form->{discount},       $form->{creditlimit}, $form->{terms},
-        $form->{taxincluded},    $business_id,         $form->{taxnumber},
-        $form->{sic_code},       $form->{iban},        $form->{bic},
-        $employee_id,            $pricegroup_id,       $language_code,
-        $form->{curr},           $form->{startdate},   $form->{enddate},
-        $form->{id}
-    ) || $form->dberror($query);
 
     # save taxes
     foreach $item ( split / /, $form->{taxaccounts} ) {
