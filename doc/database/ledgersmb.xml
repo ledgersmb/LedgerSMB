@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- $Header: /cvsroot/autodoc/autodoc/xml.tmpl,v 1.2 2006/05/16 19:01:27 rbt Exp $ -->
 
-<book id="database.ledgersmb" xreflabel="ledgersmb database schema"><title>ledgersmb Model</title>
+<book id="database.lsmb13-new" xreflabel="lsmb13-new database schema"><title>lsmb13-new Model</title>
 
 
 
@@ -297,7 +297,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -309,8 +309,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -356,7 +354,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>vendor_id</structfield></term>
+              <term><structfield>entity_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -366,6 +364,18 @@
 
 
 
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+              </para>
+
+              <para>
+                 Used to be customer_id, but customer is now metadata. You need to push to entity 
               </para>
 
             </listitem>
@@ -536,7 +546,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
+              <term><structfield>person_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -544,6 +554,16 @@
 
 
 
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
 
 
               </para>
@@ -705,13 +725,6 @@
           <title>Indexes on ap</title>
 
           <varlistentry>
-            <term>ap_employee_id_key</term>
-            <listitem><para>employee_id</para></listitem>
-          </varlistentry>
-
-
-
-          <varlistentry>
             <term>ap_id_key</term>
             <listitem><para>id</para></listitem>
           </varlistentry>
@@ -742,13 +755,6 @@
           <varlistentry>
             <term>ap_transdate_key</term>
             <listitem><para>transdate</para></listitem>
-          </varlistentry>
-
-
-
-          <varlistentry>
-            <term>ap_vendor_id_key</term>
-            <listitem><para>vendor_id</para></listitem>
           </varlistentry>
 
         </variablelist>
@@ -783,7 +789,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -795,8 +801,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -842,7 +846,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>customer_id</structfield></term>
+              <term><structfield>entity_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -852,6 +856,18 @@
 
 
 
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+              </para>
+
+              <para>
+                 Used to be customer_id, but customer is now metadata. You need to push to entity 
               </para>
 
             </listitem>
@@ -1052,7 +1068,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
+              <term><structfield>person_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -1060,6 +1076,16 @@
 
 
 
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
 
 
               </para>
@@ -1187,20 +1213,6 @@
 
         <variablelist>
           <title>Indexes on ar</title>
-
-          <varlistentry>
-            <term>ar_customer_id_key</term>
-            <listitem><para>customer_id</para></listitem>
-          </varlistentry>
-
-
-
-          <varlistentry>
-            <term>ar_employee_id_key</term>
-            <listitem><para>employee_id</para></listitem>
-          </varlistentry>
-
-
 
           <varlistentry>
             <term>ar_id_key</term>
@@ -1504,7 +1516,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
+              <term><structfield>person_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -1512,6 +1524,16 @@
 
 
 
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
 
 
               </para>
@@ -1590,7 +1612,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -1602,8 +1624,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -1680,7 +1700,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -1692,8 +1712,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -1887,6 +1905,883 @@
           <listitem>
             <para>
               <xref linkend="public.table.tax"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.company"
+               xreflabel="public.company">
+        <title id="public.table.company-title">
+         Table:
+         
+         <structname>company</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>company</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>legal_name</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_class_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity-class"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>primary_location_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.location"/>
+
+
+              </para>
+
+              <para>
+                 This is the location that should show up by default for any forms 
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>tax_id</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+              <para>
+                 In the US this would be a EIN. 
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on company</title>
+
+          <varlistentry>
+            <term>company_legal_name_check</term>
+            <listitem><para>CHECK ((legal_name ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing company_to_contact via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company-to-contact"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company-to-entity"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company-to-location"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.company-to-contact"
+               xreflabel="public.company_to_contact">
+        <title id="public.table.company-to-contact-title">
+         Table:
+         
+         <structname>company_to_contact</structname>
+        </title>
+ 
+
+        <para>
+           To keep track of the relationship between multiple contact methods and a single company 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>company_to_contact</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>company_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.company"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>contact_class_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.contact-class"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>contact</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on company_to_contact</title>
+
+          <varlistentry>
+            <term>company_to_contact_contact_check</term>
+            <listitem><para>CHECK ((contact ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.company-to-entity"
+               xreflabel="public.company_to_entity">
+        <title id="public.table.company-to-entity-title">
+         Table:
+         
+         <structname>company_to_entity</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>company_to_entity</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>company_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.company"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>related_how</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>created</structfield></term>
+              <listitem><para>
+                <type>date</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+                <literal>DEFAULT (&apos;now&apos;::text)::date</literal>
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on company_to_entity</title>
+
+          <varlistentry>
+            <term>company_to_entity_check</term>
+            <listitem><para>CHECK ((entity_id &lt;&gt; company_id))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.company-to-location"
+               xreflabel="public.company_to_location">
+        <title id="public.table.company-to-location-title">
+         Table:
+         
+         <structname>company_to_location</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>company_to_location</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>location_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.location"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>company_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.company"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.contact-class"
+               xreflabel="public.contact_class">
+        <title id="public.table.contact-class-title">
+         Table:
+         
+         <structname>contact_class</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>contact_class</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>class</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on contact_class</title>
+
+          <varlistentry>
+            <term>contact_class_class_check</term>
+            <listitem><para>CHECK ((&quot;class&quot; ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing company_to_contact via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company-to-contact"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person-to-contact"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.country"
+               xreflabel="public.country">
+        <title id="public.table.country-title">
+         Table:
+         
+         <structname>country</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>country</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>short_name</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>itu</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+              <para>
+                 The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on country</title>
+
+          <varlistentry>
+            <term>country_name_check</term>
+            <listitem><para>CHECK ((name ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>country_short_name_check</term>
+            <listitem><para>CHECK ((short_name ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing location via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.location"/>
             </para>
           </listitem>
 
@@ -2108,6 +3003,10 @@
         </title>
  
 
+        <para>
+           This is now a metadata table that holds information specific to customers. Source info is not part of the entity management 
+        </para>
+
 
         <para>
           <variablelist>
@@ -2119,7 +3018,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -2132,24 +3031,6 @@
 
 
 
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>name</structfield></term>
-              <listitem><para>
-                <type>character varying(64)</type>
-
-
-
 
 
 
@@ -2160,176 +3041,28 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>address1</structfield></term>
+              <term><structfield>entity_id</structfield></term>
               <listitem><para>
-                <type>character varying(32)</type>
+                <type>integer</type>
 
 
 
 
 
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
 
 
               </para>
 
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>address2</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>city</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>state</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>zipcode</structfield></term>
-              <listitem><para>
-                <type>character varying(10)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>country</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>contact</structfield></term>
-              <listitem><para>
-                <type>character varying(64)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>phone</structfield></term>
-              <listitem><para>
-                <type>character varying(20)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>fax</structfield></term>
-              <listitem><para>
-                <type>character varying(20)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>email</structfield></term>
-              <listitem><para>
-                <type>text</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>notes</structfield></term>
-              <listitem><para>
-                <type>text</type>
-
-
-
-
-
-
-
+              <para>
+                 This is the relationship between entities and customers 
               </para>
 
             </listitem>
@@ -2466,22 +3199,6 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>taxnumber</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
               <term><structfield>sic_code</structfield></term>
               <listitem><para>
                 <type>character varying(6)</type>
@@ -2517,22 +3234,6 @@
               <term><structfield>bic</structfield></term>
               <listitem><para>
                 <type>character varying(11)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>employee_id</structfield></term>
-              <listitem><para>
-                <type>integer</type>
 
 
 
@@ -2602,6 +3303,8 @@
 
 
 
+                <literal>DEFAULT (&apos;now&apos;::text)::date</literal>
+
 
 
               </para>
@@ -2625,6 +3328,22 @@
             </listitem>
           </varlistentry>
 
+            <varlistentry>
+              <term><structfield>invoice_notes</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
         </variablelist>
 
 
@@ -2633,13 +3352,6 @@
 
         <variablelist>
           <title>Indexes on customer</title>
-
-          <varlistentry>
-            <term>customer_contact_key</term>
-            <listitem><para>lower((contact)::text)</para></listitem>
-          </varlistentry>
-
-
 
           <varlistentry>
             <term>customer_customernumber_key</term>
@@ -2651,13 +3363,6 @@
           <varlistentry>
             <term>customer_id_key</term>
             <listitem><para>id</para></listitem>
-          </varlistentry>
-
-
-
-          <varlistentry>
-            <term>customer_name_key</term>
-            <listitem><para>lower((name)::text)</para></listitem>
           </varlistentry>
 
         </variablelist>
@@ -2857,7 +3562,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -2869,8 +3574,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -3022,6 +3725,10 @@
         </title>
  
 
+        <para>
+           Is a metadata table specific to employees 
+        </para>
+
 
         <para>
           <variablelist>
@@ -3033,7 +3740,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -3046,10 +3753,34 @@
 
 
 
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
 
 
               </para>
@@ -3061,150 +3792,6 @@
               <term><structfield>login</structfield></term>
               <listitem><para>
                 <type>text</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>name</structfield></term>
-              <listitem><para>
-                <type>character varying(64)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>address1</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>address2</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>city</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>state</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>zipcode</structfield></term>
-              <listitem><para>
-                <type>character varying(10)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>country</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>workphone</structfield></term>
-              <listitem><para>
-                <type>character varying(20)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>homephone</structfield></term>
-              <listitem><para>
-                <type>character varying(20)</type>
 
 
 
@@ -3293,22 +3880,6 @@
 
 
                 <literal>DEFAULT false</literal>
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>email</structfield></term>
-              <listitem><para>
-                <type>text</type>
-
-
-
-
 
 
 
@@ -3419,22 +3990,583 @@
 
 
 
-        <variablelist>
-          <title>Indexes on employee</title>
 
-          <varlistentry>
-            <term>employee_id_key</term>
-            <listitem><para>id</para></listitem>
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.entity"
+               xreflabel="public.entity">
+        <title id="public.table.entity-title">
+         Table:
+         
+         <structname>entity</structname>
+        </title>
+ 
+
+        <para>
+           The primary entity table to map to all contacts 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>entity</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
           </varlistentry>
 
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>text</type>
 
 
-          <varlistentry>
-            <term>employee_name_key</term>
-            <listitem><para>lower((name)::text)</para></listitem>
+
+
+
+
+
+              </para>
+
+              <para>
+                 This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com 
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_class</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity-class"/>
+
+
+              </para>
+
+            </listitem>
           </varlistentry>
 
         </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on entity</title>
+
+          <varlistentry>
+            <term>entity_name_check</term>
+            <listitem><para>CHECK ((name ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing ap via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.ap"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.ar"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company-to-entity"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.customer"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.employee"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.entity-class-to-entity"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.entity-other-name"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.oe"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.partsvendor"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person-to-entity"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.vendor"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.entity-class"
+               xreflabel="public.entity_class">
+        <title id="public.table.entity-class-title">
+         Table:
+         
+         <structname>entity_class</structname>
+        </title>
+ 
+
+        <para>
+           Defines the class type such as vendor, customer, contact, employee 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>entity_class</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+              <para>
+                 The first 7 values are reserved and permanent 
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>class</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>active</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+                <literal>DEFAULT true</literal>
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on entity_class</title>
+
+          <varlistentry>
+            <term>entity_class_class_check</term>
+            <listitem><para>CHECK ((&quot;class&quot; ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing company via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.entity"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.entity-class-to-entity"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.entity-class-to-entity"
+               xreflabel="public.entity_class_to_entity">
+        <title id="public.table.entity-class-to-entity-title">
+         Table:
+         
+         <structname>entity_class_to_entity</structname>
+        </title>
+ 
+
+        <para>
+           Relation builder for classes to entity 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>entity_class_to_entity</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>entity_class_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity-class"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.entity-other-name"
+               xreflabel="public.entity_other_name">
+        <title id="public.table.entity-other-name-title">
+         Table:
+         
+         <structname>entity_other_name</structname>
+        </title>
+ 
+
+        <para>
+           Similar to company_other_name, a person may be jd, Joshua Drake, linuxpoet... all are the same person. 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>entity_other_name</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>entity_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>other_name</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on entity_other_name</title>
+
+          <varlistentry>
+            <term>entity_other_name_other_name_check</term>
+            <listitem><para>CHECK ((other_name ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
 
 
 
@@ -3663,7 +4795,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -3675,8 +4807,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -3738,7 +4868,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
+              <term><structfield>person_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -3746,6 +4876,14 @@
 
 
 
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
 
 
               </para>
@@ -3797,13 +4935,6 @@
           <varlistentry>
             <term>gl_description_key</term>
             <listitem><para>lower(description)</para></listitem>
-          </varlistentry>
-
-
-
-          <varlistentry>
-            <term>gl_employee_id_key</term>
-            <listitem><para>employee_id</para></listitem>
           </varlistentry>
 
 
@@ -3953,7 +5084,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
+              <term><structfield>person_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -3961,6 +5092,16 @@
 
 
 
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
 
 
               </para>
@@ -4027,7 +5168,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -4039,8 +5180,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;invoiceid&apos;::regclass)</literal>
 
 
 
@@ -4330,7 +5469,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -4342,8 +5481,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;jcitemsid&apos;::regclass)</literal>
 
 
 
@@ -4515,7 +5652,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
+              <term><structfield>person_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -4523,6 +5660,16 @@
 
 
 
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
 
 
               </para>
@@ -4635,6 +5782,239 @@
 
 
 
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.location"
+               xreflabel="public.location">
+        <title id="public.table.location-title">
+         Table:
+         
+         <structname>location</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>location</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>line_one</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>line_two</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>line_three</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>city_province</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>country_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.country"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>mail_code</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on location</title>
+
+          <varlistentry>
+            <term>location_city_province_check</term>
+            <listitem><para>CHECK ((city_province ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>location_line_one_check</term>
+            <listitem><para>CHECK ((line_one ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>location_mail_code_check</term>
+            <listitem><para>CHECK ((mail_code ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing company via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.company-to-location"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person-to-company"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
 
 
 
@@ -4778,7 +6158,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -4790,8 +6170,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -4837,7 +6215,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>vendor_id</structfield></term>
+              <term><structfield>entity_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -4847,20 +6225,14 @@
 
 
 
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>customer_id</structfield></term>
-              <listitem><para>
-                <type>integer</type>
+                <literal>NOT NULL</literal>
 
 
 
 
 
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
 
 
               </para>
@@ -4981,7 +6353,7 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
+              <term><structfield>person_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -4989,6 +6361,16 @@
 
 
 
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
 
 
               </para>
@@ -5144,6 +6526,32 @@
             </listitem>
           </varlistentry>
 
+            <varlistentry>
+              <term><structfield>oe_class_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.oe-class"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
         </variablelist>
 
 
@@ -5152,13 +6560,6 @@
 
         <variablelist>
           <title>Indexes on oe</title>
-
-          <varlistentry>
-            <term>oe_employee_id_key</term>
-            <listitem><para>employee_id</para></listitem>
-          </varlistentry>
-
-
 
           <varlistentry>
             <term>oe_id_key</term>
@@ -5191,6 +6592,117 @@
       </para>
     </section>
 
+      <section id="public.table.oe-class"
+               xreflabel="public.oe_class">
+        <title id="public.table.oe-class-title">
+         Table:
+         
+         <structname>oe_class</structname>
+        </title>
+ 
+
+        <para>
+           This could probably be done better. But I need to remove the customer_id/vendor_id relationship and instead rely on a classification 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>oe_class</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>smallint</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>oe_class</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on oe_class</title>
+
+          <varlistentry>
+            <term>oe_class_id_check</term>
+            <listitem><para>CHECK (((id = 1) OR (id = 2)))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing oe via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.oe"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
       <section id="public.table.orderitems"
                xreflabel="public.orderitems">
         <title id="public.table.orderitems-title">
@@ -5211,7 +6723,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -5223,8 +6735,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;orderitemsid&apos;::regclass)</literal>
 
 
 
@@ -5480,7 +6990,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -5492,8 +7002,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -6191,7 +7699,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -6203,8 +7711,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -6408,7 +7914,7 @@
 
 
             <varlistentry>
-              <term><structfield>vendor_id</structfield></term>
+              <term><structfield>entity_id</structfield></term>
               <listitem><para>
                 <type>integer</type>
 
@@ -6416,6 +7922,16 @@
 
 
 
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
 
 
               </para>
@@ -6542,14 +8058,679 @@
             <listitem><para>parts_id</para></listitem>
           </varlistentry>
 
+        </variablelist>
 
 
-          <varlistentry>
-            <term>partsvendor_vendor_id_key</term>
-            <listitem><para>vendor_id</para></listitem>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.person"
+               xreflabel="public.person">
+        <title id="public.table.person-title">
+         Table:
+         
+         <structname>person</structname>
+        </title>
+ 
+
+        <para>
+           Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id-&gt;entity_class_to_entity.entity_id. 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>person</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>salutation_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.salutation"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>first_name</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>middle_name</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>last_name</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>primary_location_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.location"/>
+
+
+              </para>
+
+            </listitem>
           </varlistentry>
 
         </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on person</title>
+
+          <varlistentry>
+            <term>person_first_name_check</term>
+            <listitem><para>CHECK ((first_name ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>person_last_name_check</term>
+            <listitem><para>CHECK ((last_name ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing ap via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.ap"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.ar"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.audittrail"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.gl"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.inventory"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.jcitems"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.oe"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person-to-company"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person-to-contact"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person-to-entity"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.person-to-company"
+               xreflabel="public.person_to_company">
+        <title id="public.table.person-to-company-title">
+         Table:
+         
+         <structname>person_to_company</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>person_to_company</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>location_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.location"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>person_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.person-to-contact"
+               xreflabel="public.person_to_contact">
+        <title id="public.table.person-to-contact-title">
+         Table:
+         
+         <structname>person_to_contact</structname>
+        </title>
+ 
+
+        <para>
+           To keep track of the relationship between multiple contact methods and a single individual 
+        </para>
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>person_to_contact</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>person_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>contact_class_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.contact-class"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>contact</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on person_to_contact</title>
+
+          <varlistentry>
+            <term>person_to_contact_contact_check</term>
+            <listitem><para>CHECK ((contact ~ &apos;[[:alnum:]_]&apos;::text))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.person-to-entity"
+               xreflabel="public.person_to_entity">
+        <title id="public.table.person-to-entity-title">
+         Table:
+         
+         <structname>person_to_entity</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>person_to_entity</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>person_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.person"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>entity_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>related_how</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>created</structfield></term>
+              <listitem><para>
+                <type>date</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+                <literal>DEFAULT (&apos;now&apos;::text)::date</literal>
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on person_to_entity</title>
+
+          <varlistentry>
+            <term>person_to_entity_check</term>
+            <listitem><para>CHECK ((entity_id &lt;&gt; person_id))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
 
 
 
@@ -6581,7 +8762,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -6593,8 +8774,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -6674,7 +8853,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -6686,8 +8865,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
@@ -7237,6 +9414,103 @@
 
 
 
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.salutation"
+               xreflabel="public.salutation">
+        <title id="public.table.salutation-title">
+         Table:
+         
+         <structname>salutation</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>salutation</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>salutation</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing person via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.person"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
 
 
 
@@ -8290,6 +10564,10 @@
         </title>
  
 
+        <para>
+           Now a meta data table 
+        </para>
+
 
         <para>
           <variablelist>
@@ -8301,7 +10579,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -8314,24 +10592,6 @@
 
 
 
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>name</structfield></term>
-              <listitem><para>
-                <type>character varying(64)</type>
-
-
-
 
 
 
@@ -8342,9 +10602,9 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>address1</structfield></term>
+              <term><structfield>entity_id</structfield></term>
               <listitem><para>
-                <type>character varying(32)</type>
+                <type>integer</type>
 
 
 
@@ -8352,164 +10612,14 @@
 
 
 
-              </para>
+                <literal>NOT NULL</literal>
 
-            </listitem>
-          </varlistentry>
 
-            <varlistentry>
-              <term><structfield>address2</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
 
 
 
 
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>city</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>state</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>zipcode</structfield></term>
-              <listitem><para>
-                <type>character varying(10)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>country</structfield></term>
-              <listitem><para>
-                <type>character varying(32)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>contact</structfield></term>
-              <listitem><para>
-                <type>character varying(64)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>phone</structfield></term>
-              <listitem><para>
-                <type>character varying(20)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>fax</structfield></term>
-              <listitem><para>
-                <type>character varying(20)</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>email</structfield></term>
-              <listitem><para>
-                <type>text</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><structfield>notes</structfield></term>
-              <listitem><para>
-                <type>text</type>
-
-
-
-
-
+                <literal>REFERENCES</literal> <xref linkend="public.table.entity"/>
 
 
               </para>
@@ -8728,22 +10838,6 @@
           </varlistentry>
 
             <varlistentry>
-              <term><structfield>employee_id</structfield></term>
-              <listitem><para>
-                <type>integer</type>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
               <term><structfield>language_code</structfield></term>
               <listitem><para>
                 <type>character varying(6)</type>
@@ -8833,22 +10927,8 @@
           <title>Indexes on vendor</title>
 
           <varlistentry>
-            <term>vendor_contact_key</term>
-            <listitem><para>lower((contact)::text)</para></listitem>
-          </varlistentry>
-
-
-
-          <varlistentry>
             <term>vendor_id_key</term>
             <listitem><para>id</para></listitem>
-          </varlistentry>
-
-
-
-          <varlistentry>
-            <term>vendor_name_key</term>
-            <listitem><para>lower((name)::text)</para></listitem>
           </varlistentry>
 
 
@@ -8943,18 +11023,6 @@
 
 
 
-        <variablelist>
-          <title>Indexes on vendortax</title>
-
-          <varlistentry>
-            <term>vendortax_vendor_id_key</term>
-            <listitem><para>vendor_id</para></listitem>
-          </varlistentry>
-
-        </variablelist>
-
-
-
 
 
 
@@ -8983,7 +11051,7 @@
             <varlistentry>
               <term><structfield>id</structfield></term>
               <listitem><para>
-                <type>integer</type>
+                <type>serial</type>
 
 
                 <literal>PRIMARY KEY</literal>
@@ -8995,8 +11063,6 @@
 
 
 
-
-                <literal>DEFAULT nextval(&apos;id&apos;::regclass)</literal>
 
 
 
