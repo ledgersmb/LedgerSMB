@@ -400,7 +400,6 @@ sub form_footer {
     $form->{invtotal} = $form->{invsubtotal};
 
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
-
     $taxincluded = "";
     if ( $form->{taxaccounts} ) {
         $taxincluded = qq|
@@ -444,6 +443,7 @@ sub form_footer {
 	      </tr>
 |;
     }
+    on_update() if ($form->{action} eq 'update');
 
     @column_index = qw(paid memo source cctrack AR_paid);
 
