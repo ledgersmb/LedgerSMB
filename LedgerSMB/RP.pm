@@ -1603,14 +1603,15 @@ sub aging {
 
     # select outstanding vendors or customers, depends on $ct
     $query = qq|
-		  SELECT DISTINCT ct.id, ct.name, ct.language_code
+		  SELECT DISTINCT ct.id, e.name, ct.language_code
 		    FROM $form->{ct} ct
-		    JOIN $form->{arap} a ON (a.$form->{ct}_id = ct.id)
+		    JOIN $form->{arap} a USING (entity_id)
+		    JOIN entity e ON (ct.entity_id = e.id)
 		   WHERE $where AND a.paid != a.amount 
 		         AND (a.$transdate <= ?)
-		ORDER BY ct.name|;
+		ORDER BY e.name|;
     my $sth = $dbh->prepare($query);
-    $sth->execute( $form->{todate} ) || $form->dberror;
+    $sth->execute( $form->{todate} ) || $form->dberror($query);
 
     my @ot = ();
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {

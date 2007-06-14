@@ -198,46 +198,31 @@ sub create_links {
 
 }
 
-sub save_customer {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
+sub _save_vc {
+    ($form) = @_;
     my $dbh = $form->{dbh};
-    my $query;
-    my $sth;
-    my $null;
-
-    # remove double spaces
-    $form->{name} =~ s/  / /g;
-
-    # remove double minus and minus at the end
-    $form->{name} =~ s/--+/-/g;
-    $form->{name} =~ s/-+$//;
-
-    # assign value discount, terms, creditlimit
-    $form->{discount} = $form->parse_amount( $myconfig, $form->{discount} );
-    $form->{discount} /= 100;
-    $form->{terms}       *= 1;
-    $form->{taxincluded} *= 1;
-    $form->{creditlimit} =
-      $form->parse_amount( $myconfig, $form->{creditlimit} );
-    if ( !$form->{creditlimit} ) {
-        $form->{creditlimit} = 0;
-    }
     my $updated = 0;
+    if ($form->{vc} eq 'customer'){
+       $form->{vc}  = 'customer';
+       $form->{entity_class} = 2;
+    } else {
+       $form->{vc} = 'vendor';
+       $form->{entity_class} = 1;
+    }
 
     if ( $form->{id} ) {
         $query = qq|
-			DELETE FROM customertax
-			 WHERE customer_id = ?|;
+		DELETE FROM $form->{vc}tax
+		 WHERE entity_id = 
+		        (select entity_id from $form->{vc} 
+		         WHERE id = ?)|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $query = qq|
 			SELECT id 
-			  FROM customer
+			  FROM $form->{vc}
 			 WHERE id = ?|;
 
         $sth = $dbh->prepare($query);
@@ -246,12 +231,12 @@ sub save_customer {
         if ( $sth->fetchrow_array ) {
             $sth->finish;
             $query = qq|
-		UPDATE customer 
+		UPDATE $form->{vc}
 		SET discount = ?
 			taxincluded = ?
 			creditlimit = ?
 			terms = ?
-			customernumber = ?
+			$form->{vc}number = ?
 			cc = ?
 			bcc = ?
 			business_id = ?
@@ -268,7 +253,7 @@ sub save_customer {
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $form->{discount}, $form->{taxincluded}, $form->{creditlimit},
-                $form->{terms}, $form->{customernumber}, $form->{cc},
+                $form->{terms}, $form->{"$form->{vc}number"}, $form->{cc},
                 $form->{bcc}, $form->{business_id}, $form->{sic_code}, 
                 $form->{language_code}, $form->{pricegroup_id},
                 $form->{curr}, $form->{startdate}, $form->{enddate},
@@ -279,9 +264,9 @@ sub save_customer {
     }
     if (!$updated){
             # Creating Entity
-            $query = qq|INSERT INTO entity (name, entity_class) VALUES (?, 2)|;
+            $query = qq|INSERT INTO entity (name, entity_class) VALUES (?, ?)|;
             $sth = $dbh->prepare($query);
-            $sth->execute($form->{name});
+            $sth->execute($form->{name}, $form->{entity_class});
             $sth->finish;
             ($form->{entity_id}) = 
 		$dbh->selectrow_array("SELECT currval('entity_id_seq')");
@@ -309,10 +294,11 @@ sub save_customer {
 			(entity_id, entity_class_id, legal_name, 
 			primary_location_id, tax_id)
 		VALUES
-			(?, 2, ?, ?, ?)
+			(?, ?, ?, ?, ?)
             |;
             $sth = $dbh->prepare($query) || $form->dberror($query);
-            $sth->execute($form->{entity_id}, $form->{name}, 
+            $sth->execute($form->{entity_id}, $form->{entity_class}, 
+                  $form->{name}, 
                   $form->{location_id}, $form->{taxnumber});
             #Creating customer record
             $query = qq|
@@ -331,7 +317,7 @@ sub save_customer {
             $sth->execute(
                  $form->{entity_id}, $form->{discount}, $form->{taxincluded},
                  $form->{creditlimit}, 
-                 $form->{terms}, $form->{customernumber}, $form->{cc},
+                 $form->{terms}, $form->{"$form->{vc}number"}, $form->{cc},
                  $form->{bcc}, $form->{business_id}, $form->{sic_code},
                  $form->{language_code}, $form->{pricegroup_id}, $form->{curr},
                  $form->{startdate} || undef, $form->{enddate} || undef, 
@@ -339,7 +325,36 @@ sub save_customer {
                  $form->{bic}, $form->{iban}
             ) || $form->dberror($query);
     }
+}
 
+sub save_customer {
+
+    my ( $self, $myconfig, $form ) = @_;
+
+    # connect to database
+    my $dbh = $form->{dbh};
+    my $query;
+    my $sth;
+    my $null;
+
+    # remove double spaces
+    $form->{name} =~ s/  / /g;
+
+    # remove double minus and minus at the end
+    $form->{name} =~ s/--+/-/g;
+    $form->{name} =~ s/-+$//;
+
+    # assign value discount, terms, creditlimit
+    $form->{discount} = $form->parse_amount( $myconfig, $form->{discount} );
+    $form->{discount} /= 100;
+    $form->{terms}       *= 1;
+    $form->{taxincluded} *= 1;
+    $form->{creditlimit} =
+      $form->parse_amount( $myconfig, $form->{creditlimit} );
+    if ( !$form->{creditlimit} ) {
+        $form->{creditlimit} = 0;
+    }
+    &_save_vc($form);
     # save taxes
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
@@ -386,133 +401,7 @@ sub save_vendor {
     $form->{taxincluded} *= 1;
     $form->{creditlimit} =
       $form->parse_amount( $myconfig, $form->{creditlimit} );
-
-    if ( $form->{id} ) {
-        $query = qq|DELETE FROM vendortax
-					 WHERE vendor_id = ?|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        $query = qq|DELETE FROM shipto
-					 WHERE trans_id = ?|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        $query = qq|SELECT id 
-					  FROM vendor
-					 WHERE id = ?|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        if ( !$sth->fetchrow_array ) {
-            $query = qq|INSERT INTO vendor (id)
-						VALUES (?)|;
-
-            $sth = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
-        }
-
-        # retrieve enddate
-        if ( $form->{type} && $form->{enddate} ) {
-            my $now;
-            $query = qq|SELECT enddate, current_date AS now FROM vendor|;
-            ( $form->{enddate}, $now ) = $dbh->selectrow_array($query);
-            $form->{enddate} = $now if $form->{enddate} lt $now;
-        }
-
-    }
-    else {
-        my $uid = localtime;
-        $uid .= "$$";
-
-        $query = qq|INSERT INTO vendor (name)
-					VALUES ('$uid')|;
-
-        $dbh->do($query) || $form->dberror($query);
-
-        $query = qq|SELECT id 
-					  FROM vendor
-					 WHERE name = '$uid'|;
-
-        ( $form->{id} ) = $dbh->selectrow_array($query);
-
-    }
-
-    my $employee_id;
-    ( $null, $employee_id ) = split /--/, $form->{employee};
-    $employee_id *= 1;
-
-    my $pricegroup_id;
-    ( $null, $pricegroup_id ) = split /--/, $form->{pricegroup};
-    $pricegroup_id *= 1;
-
-    my $business_id;
-    ( $null, $business_id ) = split /--/, $form->{business};
-    $business_id *= 1;
-
-    my $language_code;
-    ( $null, $language_code ) = split /--/, $form->{language};
-
-    $form->{vendornumber} =
-      $form->update_defaults( $myconfig, "vendornumber", $dbh )
-      if !$form->{vendornumber};
-
-    $form->{startdate} = undef unless $form->{startdate};
-    $form->{enddate}   = undef unless $form->{enddate};
-
-    $query = qq|
-		UPDATE vendor 
-		   SET vendornumber = ?,
-		       name = ?,
-		       address1 = ?,
-		       address2 = ?,
-		       city = ?,
-		       state = ?,
-		       zipcode = ?,
-		       country = ?,
-		       contact = ?,
-		       phone = ?,
-		       fax = ?,
-		       email = ?,
-		       cc = ?,
-		       bcc = ?,
-		       notes = ?,
-		       discount = ?,
-		       creditlimit = ?,
-		       terms = ?,
-		       taxincluded = ?,
-		       gifi_accno = ?,
-		       business_id = ?,
-		       taxnumber = ?,
-		       sic_code = ?,
-		       iban = ?,
-		       bic = ?,
-		       employee_id = ?,
-		       language_code = ?,
-		       pricegroup_id = ?,
-		       curr = ?,
-		       startdate = ?,
-		       enddate = ?
-       	 	 WHERE id = ?|;
-
-    $sth = $dbh->prepare($query);
-
-    $sth->execute(
-        $form->{vendornumber}, $form->{name},        $form->{address1},
-        $form->{address2},     $form->{city},        $form->{state},
-        $form->{zipcode},      $form->{country},     $form->{contact},
-        $form->{phone},        $form->{fax},         $form->{email},
-        $form->{cc},           $form->{bcc},         $form->{notes},
-        $form->{discount},     $form->{creditlimit}, $form->{terms},
-        $form->{taxincluded},  $form->{gifi_accno},  $business_id,
-        $form->{taxnumber},    $form->{sic_code},    $form->{iban},
-        $form->{bic},          $employee_id,         $language_code,
-        $pricegroup_id,        $form->{curr},        $form->{startdate},
-        $form->{enddate},      $form->{id}
-    ) || $form->dberror($query);
+    &_save_vc($form);
 
     # save taxes
     foreach $item ( split / /, $form->{taxaccounts} ) {
