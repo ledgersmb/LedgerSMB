@@ -1,0 +1,29 @@
+Known versions of software incompatible with LedgerSMB:
+-------------------------------
+The following PostgreSQL versions suffer from a bug which causes problems with 
+LedgerSMB:  8.2.2, 8.1.7, and 8.0.11
+
+These versions produce an error concerning wrong data types but the error shows 
+that the data types are indeed correct.
+
+-------------------------------
+
+W3M does not handle the <BUTTON> element properly and does not work.
+
+-------------------------------
+
+Pocket Internet Explorer:
+Pocket IE does not handle BUTTON elements so is entirely unsupported.
+
+-------------------------------
+
+Minimo:
+Minimo's SSR settings can cause tables to be badly represented.  We recommend 
+disabling SSR.  Minimo is the preferred alternative to Pocket IE.
+
+-------------------------------
+
+Internet Explorer < 7.0
+This browser submits incorrect data when using the <BUTTON> element and is not
+supported.  Users of Windows XP and Vista may try Internet Explorer 7 or 
+Firefox at their option. Users of older versions of WIndows should use Firefox.
