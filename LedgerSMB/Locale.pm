@@ -14,7 +14,7 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 Returns a locale handle for accessing the other methods.  Inherited from 
 Locale::Maketext.
 
-=item text ($string)
+=item text ($string, @params)
 
 Returns the translation for the given string.  This is a legacy wrapper that
 merely calls $self->maketext.
