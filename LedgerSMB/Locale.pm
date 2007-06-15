@@ -16,7 +16,7 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 Returns a locale handle for accessing the other methods.  Inherited from 
 Locale::Maketext.
 
-=item text ($string)
+=item text ($string, @params)
 
 Returns the translation for the given string.  This is a legacy wrapper that
 merely calls $self->maketext.
@@ -136,41 +136,27 @@ sub date {
 
     }
     else {
-
         $date = substr( $date, 2 );
         ( $yy, $mm, $dd ) = ( $date =~ /(..)(..)(..)/ );
     }
 
     $dd *= 1;
-    $mm--;
     $yy += 2000 if length $yy == 2;
+    $dd = substr( "0$dd", -2 );
+    $mm = substr( "0$mm", -2 );
 
     if ( $myconfig->{dateformat} =~ /^dd/ ) {
-
-        $mm++;
-        $dd = substr( "0$dd", -2 );
-        $mm = substr( "0$mm", -2 );
         $longdate = "$dd$spc$mm$spc$yy";
-
     }
     elsif ( $myconfig->{dateformat} =~ /^yy/ ) {
-
-        $mm++;
-        $dd = substr( "0$dd", -2 );
-        $mm = substr( "0$mm", -2 );
         $longdate = "$yy$spc$mm$spc$dd";
-
     }
     else {
-
-        $mm++;
-        $dd = substr( "0$dd", -2 );
-        $mm = substr( "0$mm", -2 );
         $longdate = "$mm$spc$dd$spc$yy";
-
     }
+
     if ( defined $longformat ) {
-        $longdate = &text( $self, $longmonth[ --$mm ] ) . " $dd $yy";
+        $longdate = $self->text( $longmonth[ --$mm ] ) . " $dd $yy";
     }
     $longdate;
 }
