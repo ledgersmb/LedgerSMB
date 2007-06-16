@@ -21,6 +21,12 @@ Minimo:
 Minimo's SSR settings can cause tables to be badly represented.  We recommend 
 disabling SSR.  Minimo is the preferred alternative to Pocket IE.
 
+Note that on the Symbol MC50, Minimo 0.2 does not install or run.  The cab 
+installer for 0.16 does run but complains about the software being designed for
+a previous version of Windows Mobile.  Once the cab installation completes, the
+software can be run from the appropriate installation directory (in Program 
+Files).
+
 -------------------------------
 
 Internet Explorer < 7.0
