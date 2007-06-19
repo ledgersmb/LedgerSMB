@@ -130,6 +130,12 @@ sub post_transaction {
 		      department_id = ?
 		WHERE id = ?|;
 
+    if (defined $form->{approved}) {
+
+        $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
+        $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
+             || $form->dberror($query);
+    }
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{transdate}, $department_id, $form->{id} )
       || $form->dberror($query);

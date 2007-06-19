@@ -1096,6 +1096,12 @@ sub post_invoice {
                 $project_id,               $form->{"serialnumber_$i"},
                 $form->{"notes_$i"},       $invoice_id
             ) || $form->dberror($query);
+            if (defined $form->{approved}) {
+
+                $query = qq| UPDATE ar SET approved = ? WHERE id = ?|;
+                $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
+                     || $form->dberror($query);
+            }
 
             # add invoice_id
             $form->{acc_trans}{lineitems}[$ndx]->{invoice_id} = $invoice_id;

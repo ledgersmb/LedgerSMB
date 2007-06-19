@@ -92,9 +92,13 @@ sub overpayment {
     $query = qq|
 		INSERT INTO acc_trans (trans_id, chart_id, transdate, amount)
 		     VALUES (?, (SELECT id FROM chart 
-		                  WHERE accno = ?), ?, ?)|;
+		                  WHERE accno = ?), ?, ?, ?)|;
+    if (not defined $form->{approved}){
+        $form->{approved} = 1;
+    }
     $sth = $dbh->prepare($query);
-    $sth->execute( $uid, $accno, $form->{datepaid}, $fxamount * $ml )
+    $sth->execute( $uid, $accno, $form->{datepaid}, $fxamount * $ml, 
+         $form->{approved} )
       || $form->dberror($query);
 
     # add payment

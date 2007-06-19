@@ -295,6 +295,12 @@ sub post_invoice {
                 $project_id,               $form->{"serialnumber_$i"},
                 $form->{"notes_$i"},       $invoice_id
             ) || $form->dberror($query);
+            if (defined $form->{approved}) {
+
+                $query = qq| UPDATE ap SET approved = ? WHERE id = ?|;
+                $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
+                     || $form->dberror($query);
+            }
 
             if ( $form->{"inventory_accno_id_$i"} ) {
 

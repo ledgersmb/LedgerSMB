@@ -321,7 +321,12 @@ sub post_transaction {
     );
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
+    if (defined $form->{approved}) {
 
+        $query = qq| UPDATE $table SET approved = ? WHERE id = ?|;
+        $dbh->prepare($query)->execute($form->{approved}, $form->{id}) ||
+            $form->dberror($query);
+    }
     @queries = $form->run_custom_queries( $table, 'INSERT' );
 
     # update exchangerate
