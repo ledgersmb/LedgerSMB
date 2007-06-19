@@ -5,6 +5,32 @@ CREATE TABLE transactions (
   table_name text
 );
 
+CREATE TABLE batch_class (
+  batch_type varchar primary key
+);
+
+insert into batch_class (batch_type) values ('ap');
+insert into batch_class (batch_type) values ('payment');
+insert into batch_class (batch_type) values ('payment_reversal');
+insert into batch_class (batch_type) values ('gl');
+
+CREATE TABLE batch (
+  id serial,
+  batch_type references batch_class,
+  description 
+  approved_on date,
+  approved_by int references employee(id),
+  created_by int references employee(id),
+  locked_by int references session(id),
+  created_on date default now()
+);
+
+CREATE TABLE voucher (
+  trans_id int,
+  batch_id int,
+  id serial primary key
+);
+
 -- BEGIN new entity management
 CREATE TABLE entity (
   id serial PRIMARY KEY,
@@ -228,6 +254,7 @@ CREATE TABLE gl (
   transdate date DEFAULT current_date,
   person_id integer references person(id),
   notes text,
+  approved bool default true;
   department_id int default 0
 );
 --
@@ -290,6 +317,7 @@ CREATE TABLE acc_trans (
   project_id int,
   memo text,
   invoice_id int,
+  approved bool default true,
   entry_id SERIAL PRIMARY KEY
 );
 --
@@ -408,7 +436,9 @@ CREATE TABLE ar (
   department_id int default 0,
   shipvia text,
   language_code varchar(6),
-  ponumber text
+  ponumber text,
+  on_hold bool default false,
+  approved bool default true;
 );
 
 COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
@@ -438,6 +468,8 @@ CREATE TABLE ap (
   language_code varchar(6),
   ponumber text,
   shippingpoint text,
+  on_hold bool default false,
+  approved bool default true;
   terms int2 DEFAULT 0
 );
 
