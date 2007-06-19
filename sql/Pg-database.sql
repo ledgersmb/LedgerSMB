@@ -5,39 +5,11 @@ CREATE TABLE transactions (
   table_name text
 );
 
-CREATE TABLE batch_class (
-  id serial unique,
-  class varchar primary key
-);
-
-insert into batch_class (batch_class) values ('ap');
-insert into batch_class (batch_class) values ('ar');
-insert into batch_class (batch_class) values ('payment');
-insert into batch_class (batch_class) values ('payment_reversal');
-insert into batch_class (batch_class) values ('gl');
-
-CREATE TABLE batch (
-  id serial unique,
-  batch_class_id references class(id) not null,
-  description text,
-  approved_on date default null,
-  approved_by int references employee(entity_id),
-  created_by int references employee(entity_id),
-  locked_by int references session(id),
-  created_on date default now(),
-);
-
-CREATE TABLE voucher (
-  trans_id int,
-  batch_id int,
-  id serial primary key
-);
-
 -- BEGIN new entity management
 CREATE TABLE entity (
   id serial PRIMARY KEY,
   name text check (name ~ '[[:alnum:]_]'),
-  entity_class integer not null,
+  entity_class integer not null UNIQUE,
   created date not null default current_date);
 
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
@@ -256,7 +228,7 @@ CREATE TABLE gl (
   transdate date DEFAULT current_date,
   person_id integer references person(id),
   notes text,
-  approved bool default true;
+  approved bool default true,
   department_id int default 0
 );
 --
@@ -440,7 +412,7 @@ CREATE TABLE ar (
   language_code varchar(6),
   ponumber text,
   on_hold bool default false,
-  approved bool default true;
+  approved bool default true
 );
 
 COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
@@ -471,7 +443,7 @@ CREATE TABLE ap (
   ponumber text,
   shippingpoint text,
   on_hold bool default false,
-  approved bool default true;
+  approved bool default true,
   terms int2 DEFAULT 0
 );
 
@@ -588,7 +560,7 @@ CREATE TABLE exchangerate (
 --
 create table employee (
   entity_id integer references entity(id) not null PRIMARY KEY,
-  entity_class integer references entity_class(id) not null check (entity_class = 3)),
+  entity_class_id integer references entity_class(id) not null check (entity_class_id = 3),
   login text,
   startdate date default current_date,
   enddate date,
@@ -604,6 +576,38 @@ create table employee (
 );
 
 COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
+
+-- batch stuff
+
+CREATE TABLE batch_class (
+  id serial unique,
+  class varchar primary key
+);
+
+insert into batch_class (id,class) values (1,'ap');
+insert into batch_class (id,class) values (2,'ar');
+insert into batch_class (id,class) values (3,'payment');
+insert into batch_class (id,class) values (4,'payment_reversal');
+insert into batch_class (id,class) values (5,'gl');
+
+SELECT SETVAL('batch_class_id_seq',6);
+
+CREATE TABLE batch (
+  id serial primary key,
+  batch_class_id integer references batch_class(id) not null,
+  description text,
+  approved_on date default null,
+  approved_by int references employee(entity_id),
+  created_by int references employee(entity_id),
+  locked_by int references session(session_id),
+  created_on date default now()
+);
+
+CREATE TABLE voucher (
+  trans_id int,
+  batch_id int references batch(id) not null,
+  id serial primary key
+);
 
 --
 create table shipto (
@@ -626,8 +630,8 @@ create table shipto (
 
 --
 CREATE TABLE vendor (
-  id serial PRIMARY KEY,
-  entity_id int references entity(id) not null,
+  entity_id int references entity(id) not null PRIMARY KEY,
+  entity_class_id int references entity(entity_class) not null check (entity_class_id = 1),
   terms int2 default 0,
   taxincluded bool default 'f',
   vendornumber varchar(32),
@@ -867,7 +871,7 @@ DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'department');
 CREATE RULE department_id_track_u AS ON update TO department 
 DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transactions (id, table_name) SELECT id, 'employee' FROM employee;
+INSERT INTO transactions (id, table_name) SELECT entity_id, 'employee' FROM employee;
 
 INSERT INTO transactions (id, table_name) SELECT id, 'gl' FROM gl;
 
@@ -917,10 +921,10 @@ DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'project');
 CREATE RULE project_id_track_u AS ON update TO project 
 DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transactions (id, table_name) SELECT id, 'vendor' FROM vendor;
+INSERT INTO transactions (id, table_name) SELECT entity_id, 'vendor' FROM vendor;
 
 CREATE RULE vendor_id_track_i AS ON insert TO vendor
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'vendor');
+DO INSERT INTO transactions (id, table_name) VALUES (new.entity_id, 'vendor');
 
 INSERT INTO transactions (id, table_name) SELECT id, 'warehouse' FROM warehouse;
 
@@ -1006,7 +1010,7 @@ create index parts_partnumber_key on parts (lower(partnumber));
 create index parts_description_key on parts (lower(description));
 create index partstax_parts_id_key on partstax (parts_id);
 --
-create index vendor_id_key on vendor (id);
+create index vendor_entity_id_key on vendor (entity_id);
 create index vendor_vendornumber_key on vendor (vendornumber);
 --
 create index shipto_trans_id_key on shipto (trans_id);
