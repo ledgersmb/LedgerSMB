@@ -96,6 +96,16 @@ sub overpayment {
     if (not defined $form->{approved}){
         $form->{approved} = 1;
     }
+    if (!$form->{approved}){
+       if (not defined $form->{batch_id}){
+           $form->error($locale->text('Batch ID Missing'));
+       }
+       $query = qq| 
+			INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
+       $sth = $dbh->prepare($query);
+       $sth->execute($form->{batch_id}, $uid) ||
+            $form->dberror($query);
+       }
     $sth = $dbh->prepare($query);
     $sth->execute( $uid, $accno, $form->{datepaid}, $fxamount * $ml, 
          $form->{approved} )

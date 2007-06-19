@@ -1101,6 +1101,16 @@ sub post_invoice {
                 $query = qq| UPDATE ar SET approved = ? WHERE id = ?|;
                 $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
                      || $form->dberror($query);
+                if (!$form->{approved}){
+                   if (not defined $form->{batch_id}){
+                       $form->error($locale->text('Batch ID Missing'));
+                   }
+                   $query = qq| 
+			INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
+                   $sth = $dbh->prepare($query);
+                   $sth->execute($form->{batch_id}, $form->{id}) ||
+                        $form->dberror($query);
+               }
             }
 
             # add invoice_id

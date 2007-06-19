@@ -135,6 +135,16 @@ sub post_transaction {
         $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
         $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
              || $form->dberror($query);
+        if (!$form->{approved}){
+           if (not defined $form->{batch_id}){
+               $form->error($locale->text('Batch ID Missing'));
+           }
+           $query = qq| 
+			INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
+           $sth = $dbh->prepare($query);
+           $sth->execute($form->{batch_id}, $form->{id}) ||
+                $form->dberror($query);
+       }
     }
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{transdate}, $department_id, $form->{id} )

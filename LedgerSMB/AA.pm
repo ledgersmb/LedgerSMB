@@ -326,6 +326,16 @@ sub post_transaction {
         $query = qq| UPDATE $table SET approved = ? WHERE id = ?|;
         $dbh->prepare($query)->execute($form->{approved}, $form->{id}) ||
             $form->dberror($query);
+        if (!$form->{approved}){
+           if (not defined $form->{batch_id}){
+               $form->error($locale->text('Batch ID Missing'));
+           }
+           $query = qq| 
+		INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
+           $dbh->prepare($query)->execute($form->{batch_id}, $form->{id}) ||
+                $form->dberror($query);
+        }
+        
     }
     @queries = $form->run_custom_queries( $table, 'INSERT' );
 
