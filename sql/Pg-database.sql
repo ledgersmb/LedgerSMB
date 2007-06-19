@@ -6,24 +6,25 @@ CREATE TABLE transactions (
 );
 
 CREATE TABLE batch_class (
+  id serial unique,
   batch_type varchar primary key
 );
 
-insert into batch_class (batch_type) values ('ap');
-insert into batch_class (batch_type) values ('ar');
-insert into batch_class (batch_type) values ('payment');
-insert into batch_class (batch_type) values ('payment_reversal');
-insert into batch_class (batch_type) values ('gl');
+insert into batch_class (batch_class) values ('ap');
+insert into batch_class (batch_class) values ('ar');
+insert into batch_class (batch_class) values ('payment');
+insert into batch_class (batch_class) values ('payment_reversal');
+insert into batch_class (batch_class) values ('gl');
 
 CREATE TABLE batch (
-  id serial,
-  batch_type references batch_class,
-  description 
-  approved_on date,
-  approved_by int references employee(id),
-  created_by int references employee(id),
+  id serial unique,
+  batch_class_id references batch_class(id) not null,
+  description text,
+  approved_on date default null,
+  approved_by int references employee(entity_id),
+  created_by int references employee(entity_id),
   locked_by int references session(id),
-  created_on date default now()
+  created_on date default now(),
 );
 
 CREATE TABLE voucher (
@@ -586,8 +587,8 @@ CREATE TABLE exchangerate (
 );
 --
 create table employee (
-  id serial PRIMARY KEY,
-  entity_id integer references entity(id) not null,
+  entity_id integer references entity(id) not null PRIMARY KEY,
+  entity_class integer references entity_class(id) not null check (entity_class = 3)),
   login text,
   startdate date default current_date,
   enddate date,
