@@ -7,7 +7,7 @@ CREATE TABLE transactions (
 
 CREATE TABLE batch_class (
   id serial unique,
-  batch_type varchar primary key
+  class varchar primary key
 );
 
 insert into batch_class (batch_class) values ('ap');
@@ -18,7 +18,7 @@ insert into batch_class (batch_class) values ('gl');
 
 CREATE TABLE batch (
   id serial unique,
-  batch_class_id references batch_class(id) not null,
+  batch_class_id references class(id) not null,
   description text,
   approved_on date default null,
   approved_by int references employee(entity_id),
