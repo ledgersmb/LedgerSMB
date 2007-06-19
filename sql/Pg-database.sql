@@ -10,6 +10,7 @@ CREATE TABLE batch_class (
 );
 
 insert into batch_class (batch_type) values ('ap');
+insert into batch_class (batch_type) values ('ar');
 insert into batch_class (batch_type) values ('payment');
 insert into batch_class (batch_type) values ('payment_reversal');
 insert into batch_class (batch_type) values ('gl');
