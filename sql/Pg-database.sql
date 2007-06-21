@@ -77,8 +77,11 @@ CREATE TABLE location (
   line_three text,
   city_province text check (city_province ~ '[[:alnum:]_]') NOT NULL,
   country_id integer not null REFERENCES country(id),
-  mail_code text not null check (mail_code ~ '[[:alnum:]_]'));
-  
+  mail_code text not null check (mail_code ~ '[[:alnum:]_]'),
+  created date not null,
+  active boolean not null default TRUE,
+  inactive_date date default null,
+  );  
 CREATE INDEX location_unique_class_idx ON location (id,location_class);
   
 CREATE TABLE company (
