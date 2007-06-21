@@ -204,7 +204,7 @@ sub save_project {
 
     my $dbh = $form->{dbh};
 
-    $form->{customer_id} ||= 'NULL';
+    $form->{customer_id} ||= undef;
 
     $form->{projectnumber} =
       $form->update_defaults( $myconfig, "projectnumber", $dbh )

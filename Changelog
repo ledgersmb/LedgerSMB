@@ -5,7 +5,8 @@ Changelog for 1.2.6
 * Fixed the alias inconsistancy for the ledgersmb-httpd.conf (Chris T).
 * Fixed invalid html in ca.pl (reported by Donna Robinson) (Chris T)
 * Fixed error searching for customer by address (Chris T)
-* Fixed error db error saving project (Chris T)
+* Fixed error db error saving items with custom fields (Chris T)
+* Fixed db error saving project with NULL customer id (Chris T)
 
 Changelog for 1.2.5
 * Partsgroup handling corrected on POS and Sales invoice screens (Chris T)
