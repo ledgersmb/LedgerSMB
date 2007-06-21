@@ -14,7 +14,8 @@ in database objects (LedgerSMB::DBObject)
 
 =item new ()
 
-This method creates a new base request instance. 
+This method creates a new base request instance. In any mode but CLI, it also
+validates the session/user credentials.
 
 =item date_to_number (user => $LedgerSMB::User, date => $string);
 
@@ -118,6 +119,7 @@ use CGI;
 use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
+use LedgerSMB::Session;
 use strict;
 
 package LedgerSMB;
@@ -155,8 +157,60 @@ sub new {
         $self->error("Access Denied");
     }
 
+    $self->{_user} = LedgerSMB::User->fetch_config($self->{login});
+    my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
+        or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+    $self->{_locale} = $locale;
+    if ( $self->{password} ) {
+        if (
+            !Session::password_check(
+                $self, $self->{login}, $self->{password}
+            )
+          )
+        {
+            if ($self->is_run_mode('cgi', 'mod_perl')) {
+                _get_password();
+            }
+            else {
+                $self->error( __FILE__ . ':' . __LINE__ . ': '
+                      . $locale->text('Access Denied!') );
+            }
+            exit;
+        }
+        else {
+            Session::session_create($self);
+        }
+
+    }
+    else {
+        if ($self->is_run_mode('cgi', 'mod_perl')) {
+            my %cookie;
+            $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+            my @cookies = split /;/, $ENV{HTTP_COOKIE};
+            foreach (@cookies) {
+                my ( $name, $value ) = split /=/, $_, 2;
+                $cookie{$name} = $value;
+            }
+
+            #check for valid session
+            if ( !Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
+                _get_password(1);
+                exit;
+            }
+        }
+        else {
+            exit;
+        }
+    }
+
     $self;
 
+}
+
+sub _get_password {
+    # TODO:  Remove reliance on pw.pl and add template support.
+    require 'bin/pw.pl';
+    getpassword(@_);
 }
 
 sub debug {

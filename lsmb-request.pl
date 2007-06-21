@@ -45,16 +45,18 @@ if (!$1){
 $script = $1;
 
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
-  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+  or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 
 if (!$script){
 	$request->error($locale->text('No workflow script specified'));
 }
 
-eval { require "scripts/$script" } || $request->error($locale->text('Unable to open script' . ": $!";
+eval { require "scripts/$script" } 
+  || $request->error($locale->text('Unable to open script' . ": $!";
 
 $script =~ s/\.pl$//;
 $script = "LedgerSMB::Scripts::$script";
-$script->can($request->{action}) || $request->error($locale->text("Action Not Defined: ") . $request->{action};
+$script->can($request->{action}) 
+  || $request->error($locale->text("Action Not Defined: ") . $request->{action};
 
 $script->can($request->{action})->($request);
