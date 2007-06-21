@@ -3,6 +3,9 @@ Changelog for 1.2.6
 * Fixed customer_id error in AP transactions (Chris T)
 * Added meta tags to set to utf-8 by default (Chris T)
 * Fixed the alias inconsistancy for the ledgersmb-httpd.conf (Chris T).
+* Fixed invalid html in ca.pl (reported by Donna Robinson) (Chris T)
+* Fixed error searching for customer by address (Chris T)
+* Fixed error db error saving project (Chris T)
 
 Changelog for 1.2.5
 * Partsgroup handling corrected on POS and Sales invoice screens (Chris T)
