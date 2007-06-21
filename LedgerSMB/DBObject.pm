@@ -1,4 +1,5 @@
 
+
 =head1 NAME
 
 LedgerSMB::DBObject - LedgerSMB class for building objects from db relations
@@ -158,7 +159,7 @@ sub run_custom_queries {
         if ( $query_type eq 'UPDATE' ) {
             $query = "DELETE FROM $_ WHERE row_id = ?";
             my $sth = $dbh->prepare($query);
-            $sth->execute->( $self->{ "id" . "$linenum" } )
+            $sth->execute( $self->{ "id" . "$linenum" } )
               || $self->dberror($query);
         }
         elsif ( $query_type eq 'INSERT' ) {
