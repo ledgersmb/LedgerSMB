@@ -79,8 +79,8 @@ CREATE TABLE location (
   country_id integer not null REFERENCES country(id),
   mail_code text not null check (mail_code ~ '[[:alnum:]_]'),
   created date not null,
-  active boolean not null default TRUE,
-  inactive_date date default null,
+  inactive_date timestamp default null,
+  active boolean not null default TRUE
   );  
 CREATE INDEX location_unique_class_idx ON location (id,location_class);
   
