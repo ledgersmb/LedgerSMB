@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.2
+LedgerSMB 1.2.6
 
 
 
@@ -172,3 +172,4 @@ triggers the directory transversal checks.  To work around this problem, ensure
 that you do not need to use absolute paths for the printer program (use lpr or
 put netdirect.pl in /usr/local/bin and reference without the full path).
 
+Bugs Fixed in 1.2.6:

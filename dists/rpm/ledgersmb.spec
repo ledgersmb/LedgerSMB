@@ -1,7 +1,7 @@
 # RPM spec written for and tested on Fedora Core 6
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
-Version: 1.2.5
+Version: 1.2.6
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
