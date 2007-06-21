@@ -173,3 +173,29 @@ that you do not need to use absolute paths for the printer program (use lpr or
 put netdirect.pl in /usr/local/bin and reference without the full path).
 
 Bugs Fixed in 1.2.6:
+================================
+1) Customer_id field not found error when posting AP transaction.  This error 
+was caused by a mistake in the performance optimizations made in 1.2.5.
+
+2) Erroneous headers printed to balance sheet and income statement.
+
+3) Meta tags were added to force UTF-8 charsets, fixing occasional display
+issues with multibyte characters where Apache was misconfigured.
+
+4) ledgersmb-httpd.conf is now more internally consistant.  The alias directive
+was changed to /ledgersmb (from /ledger-smb).
+
+5) Minor html fixes were added to ca.pl, contributed by Donna Robertson
+
+6) Error when searching for customer by address is corrected. 
+
+7) Invalid format for integer error fixed when saving projects unconnected to 
+customers.
+
+None of the above fixes involved changes to API's that are widely used by the 
+application.  Impacts elsewhere from these bug fixes should be minimal.
+
+8) Unbound placeholder error when saving items with custom fields.  This error
+involved a centrally used API that is invoked when custom fields exist.  The fix
+is only likely to affect those installations which have custom fields attached
+to orders, invoices, or parts.
