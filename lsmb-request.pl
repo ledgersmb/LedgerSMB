@@ -52,11 +52,11 @@ if (!$script){
 }
 
 eval { require "scripts/$script" } 
-  || $request->error($locale->text('Unable to open script' . ": $!";
+  || $request->error($locale->text('Unable to open script') . ": $!");
 
 $script =~ s/\.pl$//;
 $script = "LedgerSMB::Scripts::$script";
 $script->can($request->{action}) 
-  || $request->error($locale->text("Action Not Defined: ") . $request->{action};
+  || $request->error($locale->text("Action Not Defined: ") . $request->{action});
 
 $script->can($request->{action})->($request);

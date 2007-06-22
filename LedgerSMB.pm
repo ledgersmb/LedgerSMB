@@ -163,6 +163,7 @@ sub new {
     my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
         or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
     $self->{_locale} = $locale;
+    $self->{stylesheet} = $self->{_user}->{stylesheet};
     if ( $self->{password} ) {
         if (
             !Session::password_check(
@@ -212,7 +213,7 @@ sub new {
 sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
-    @{$self->{hidden}};
+    @{$self->{hidden}} = [];
     for (keys %$self){
         next if $_ =~ /(^script$|^endsession$|^password$)/;
         my $attr = {};
@@ -220,14 +221,15 @@ sub _get_password {
         $attr->{value} = $self->{$_};
         push @{$self->{hidden}}, $attr;
     }
-    my $template = Template->new(
+    my $template = LedgerSMB::Template->new(
         user =>$self->{_user}, 
         locale => $self->{_locale},
         path => 'UI',
-        template => 'get_password.html',
+        template => 'get_password',
         format => 'HTML'
     );
     $template->render($self);
+    $template->output('http');
     exit;
 }
 
