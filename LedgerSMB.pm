@@ -121,6 +121,8 @@ use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use LedgerSMB::Session;
 use LedgerSMB::Template;
+use LedgerSMB::Locale;
+use LedgerSMB::User;
 use strict;
 
 package LedgerSMB;
@@ -133,7 +135,6 @@ sub new {
     $self->{version}   = "1.3.0 Alpha 0 Pre";
     $self->{dbversion} = "1.2.0";
     bless $self, $type;
-
     my $query = ($argstr) ? new CGI($argstr) : new CGI;
     my $params = $query->Vars;
 

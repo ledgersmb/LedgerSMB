@@ -15,10 +15,8 @@
 # POS Credit card processing-- could be extended for ecommerce
 
 package CreditCard;
-use LedgerSMB;
-use LedgerSMB::DBObject;
 
-our @ISA qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::DBObject);
 
 # use LedgerSMB::CreditCard::Config;  # moving elsewhere
 

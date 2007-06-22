@@ -33,7 +33,8 @@ sub lsmb_error_func {
 ##522	redo_rows
 ##547	merge
 
-my $lsmb = new LedgerSMB;
+
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 my %myconfig;
 my $utfstr;
 my @r;
@@ -42,7 +43,7 @@ ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 
 # $lsmb->escape checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $utfstr = "\xd8\xad";
 utf8::decode($utfstr);
 ok(!$lsmb->escape, 'escape: (undef)');
@@ -60,7 +61,7 @@ TODO: {
 }
 
 # $lsmb->is_blank checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $lsmb->{blank} = '    ';
 $lsmb->{notblank} = ' d   ';
 TODO: {
@@ -73,7 +74,7 @@ is($lsmb->is_blank('name' => 'notblank'), 0, 'is_blank: notblank');
 is($lsmb->is_blank('name' => 'blank'), 1, 'is_blank: blank');
 
 # $lsmb->is_run_mode checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $ENV{GATEWAY_INTERFACE} = 'foo';
 is($lsmb->is_run_mode('cgi'), 1, 'is_run_mode: CGI - CGI');
 is($lsmb->is_run_mode('cli'), 0, 'is_run_mode: CGI - CLI');
@@ -100,7 +101,7 @@ is($lsmb->is_run_mode('foo'), 0, 'is_run_mode: CLI - (bad mode)');
 is($lsmb->is_run_mode, 0, 'is_run_mode: CLI - (unknown mode)');
 
 # $lsmb->num_text_rows checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 is($lsmb->num_text_rows('string' => "apple\npear", 'cols' => 10, 'max' => 5),
 	2, 'num_text_rows: 2 rows, no column breakage, max 5 rows');
 is($lsmb->num_text_rows('string' => "apple\npear", 'cols' => 10, 'max' => 1),
@@ -123,7 +124,7 @@ is($lsmb->num_text_rows('string' => "012345 67890123456789", 'cols' => 10),
 	3, 'num_text_rows: 3 rows, word and non column breakage, no max row count');
 
 # $lsmb->debug checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 @r = trap{$lsmb->debug($lsmb)};
 like($trap->stdout, qr|\n\$VAR1 = bless\( {[\n\s]+'action' => '',[\n\s]+'dbversion' => '\d+\.\d+\.\d+',[\n\s]+'path' => 'bin/mozilla',[\n\s]+'version' => '$lsmb->{version}'[\n\s]+}, 'LedgerSMB' \);|,
 	'debug: $lsmb, no file');
@@ -149,7 +150,7 @@ like($trap->die, qr/No such file or directory/,
 ok(!-e $lsmb->{file}, "debug: file creation failed");
 
 # $lsmb->new checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 ok(defined $lsmb, 'new: blank, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: blank, correct type');
 ok(defined $lsmb->{action}, 'new: blank, action defined');
@@ -157,7 +158,7 @@ ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{path}, 'new: blank, path defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 
-$lsmb = new LedgerSMB('action=Apple%20sauce');
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin&action=Apple%20sauce');
 ok(defined $lsmb, 'new: action set, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: action set, correct type');
 ok(defined $lsmb->{action}, 'new: action set, action defined');
@@ -166,7 +167,7 @@ ok(defined $lsmb->{dbversion}, 'new: action set, dbversion defined');
 ok(defined $lsmb->{path}, 'new: action set, path defined');
 ok(defined $lsmb->{version}, 'new: action set, version defined');
 
-$lsmb = new LedgerSMB('path=bin/lynx');
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin&path=/bin/lynx');
 ok(defined $lsmb, 'new: lynx, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: lynx, correct type');
 ok(defined $lsmb->{action}, 'new: lynx, action defined');
@@ -179,18 +180,18 @@ ok(defined $lsmb->{menubar}, 'new: lynx, menubar defined (deprecated)');
 is($lsmb->{menubar}, 1, 'new: lynx, menubar enabled (deprecated)');
 ok(defined $lsmb->{version}, 'new: lynx, version defined');
 
-@r = trap{new LedgerSMB('script=foo/bar.pl')};
+@r = trap {$lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin&scrit=foo/bar.pl')};
 is($trap->die, "Error: Access Denied\n",
 	'new: directory traversal 1 caught');
-@r = trap{new LedgerSMB('script=foo\\bar.pl')};
+@r = trap {$lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin&scrit=foo\\bar.pl')};
 is($trap->die, "Error: Access Denied\n",
 	'new: directory traversal 2 caught');
-@r = trap{new LedgerSMB('script=..')};
+@r = trap {$lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin&scrit=..')};
 is($trap->die, "Error: Access Denied\n",
 	'new: directory traversal 3 caught');
 
 # $lsmb->redirect checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 ok(!defined $lsmb->{callback}, 'redirect: No callback set');
 @r = trap{$lsmb->redirect};
 is($trap->stdout, "redirected\n", 'redirect: No message or callback redirect');
@@ -207,7 +208,7 @@ is($trap->stdout, "redirected\n", 'redirect: callback, no message redirect');
 is($trap->stdout, "redirected\n", 'redirect: callback and message redirect');
 
 # $lsmb->call_procedure checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $lsmb->{dbh} = ${LedgerSMB::Sysconfig::GLOBALDBH};
 @r = $lsmb->call_procedure('procname' => 'character_length', 
 	'args' => ['month']);
@@ -243,21 +244,21 @@ is($r[1]->{'power'}, 4, 'call_procedure: ASC ordering');
 ##}
 
 # $lsmb->merge checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'keys' => ['apple', 'pear']);
 ok(!defined $lsmb->{peach}, 'merge: Did not add unselected key');
 is($lsmb->{apple}, 1, 'merge: Added unselected key apple');
 is($lsmb->{pear}, 2, 'merge: Added unselected key pear');
 like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: left existing key');
 
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3});
 is($lsmb->{apple}, 1, 'merge: No key, added apple');
 is($lsmb->{pear}, 2, 'merge: No key, added pear');
 is($lsmb->{peach}, 3, 'merge: No key, added peach');
 like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: No key, left existing key');
 
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
 is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
@@ -265,7 +266,7 @@ is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
 like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: Index 1, left existing key');
 
 # $lsmb->is_allowed_role checks
-$lsmb = new LedgerSMB;
+my $lsmb = LedgerSMB->new('script.pl?test=test&password=testing&login=admin');
 $lsmb->{_roles} = ('apple', 'pear');
 is($lsmb->is_allowed_role('allowed_roles' => ['pear']), 1, 
 	'is_allowed_role: allowed role');
