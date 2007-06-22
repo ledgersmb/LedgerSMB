@@ -189,7 +189,7 @@ SKIP: {
 $form = new Form;
 $form->{header} = 1;
 @r = trap{$form->hide_form};
-like($trap->stdout, qr/<input type="hidden" name="action" value="" \/>\n<input type="hidden" name="dbversion" value="\d+\.\d+\.\d+" \/>\n<input type="hidden" name="login" value="" \/>\n<input type="hidden" name="nextsub" value="" \/>\n<input type="hidden" name="path" value="bin\/mozilla" \/>\n<input type="hidden" name="version" value="1.2.5" \/>/, 
+like($trap->stdout, qr/<input type="hidden" name="action" value="" \/>\n<input type="hidden" name="dbversion" value="\d+\.\d+\.\d+" \/>\n<input type="hidden" name="login" value="" \/>\n<input type="hidden" name="nextsub" value="" \/>\n<input type="hidden" name="path" value="bin\/mozilla" \/>\n<input type="hidden" name="version" value="$form->{version}" \/>/, 
 	'hide_form: base');
 ok(!$form->{header}, 'hide_form: header flag cleared');
 
