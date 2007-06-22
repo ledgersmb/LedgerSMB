@@ -785,7 +785,6 @@ sub save {
 
     # check for duplicates
     if ( !$form->{edit} ) {
-
         $temp = LedgerSMB::User->new( $form->{login} );
 
         if ( $temp->{login} ) {

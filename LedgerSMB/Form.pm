@@ -75,8 +75,7 @@ sub new {
         $self->{nextsub} = lc $self->{nextsub};
         $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
     }
-
-    $self->{login} =~ s/[^a-zA-Z0-9._+@'-]//g;
+    $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     $self->{menubar} = 1 if $self->{path} =~ /lynx/i;
 
