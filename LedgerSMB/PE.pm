@@ -236,8 +236,10 @@ sub save_project {
     $sth->execute( $form->{projectnumber},
         $form->{description}, $startdate, $enddate, $form->{customer_id} )
       || $form->dberror($query);
-    $query = "SELECT currval('id')";
-    ($form->{id}) = $dbh->selectrow_array($query) || $form->dberror($query);
+    if (!$form->{id}){
+        $query = "SELECT currval('id')";
+        ($form->{id}) = $dbh->selectrow_array($query) || $form->dberror($query);
+    }
     $form->run_custom_queries( 'project', 'UPDATE' );
 
     $dbh->commit;
