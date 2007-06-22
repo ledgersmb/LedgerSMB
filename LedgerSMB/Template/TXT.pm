@@ -40,6 +40,7 @@ package LedgerSMB::Template::TXT;
 
 use Error qw(:try);
 use Template;
+use LedgerSMB::Template::TTI18N;
 
 sub get_template {
     my $name = shift;
@@ -65,7 +66,9 @@ sub process {
 
 	if (not $template->process(
 		get_template($parent->{template}), 
-		$cleanvars, "$parent->{outputfile}.txt", binmode => ':utf8')) {
+		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
+			'escape' => \&preprocess},
+		"$parent->{outputfile}.txt", binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'text/plain';

@@ -42,6 +42,7 @@ package LedgerSMB::Template::HTML;
 use Error qw(:try);
 use CGI;
 use Template;
+use LedgerSMB::Template::TTI18N;
 
 sub get_template {
     my $name = shift;
@@ -54,6 +55,7 @@ sub preprocess {
     my $type = ref $rawvars;
 
     #XXX fix escaping function
+    return $rawvars if $type =~ /^LedgerSMB::Locale/;
     if ( $type eq 'ARRAY' ) {
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_ );
@@ -83,7 +85,9 @@ sub process {
 		}) || throw Error::Simple Template->error(); 
 	if (not $template->process(
 		get_template($parent->{template}), 
-		$cleanvars, "$parent->{outputfile}.html", binmode => ':utf8')) {
+		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
+			'escape' => \&preprocess},
+		"$parent->{outputfile}.html", binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'text/html';

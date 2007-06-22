@@ -11,13 +11,16 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => 'HTML', [language => $string,] [include_path => $path]);
+=item new(user => \%myconfig, template => $string, format => 'HTML', [language => $string,] [include_path => $path], [no_auto_output => $bool], [method => $string] );
 
 This command instantiates a new template:
 template is the file name of the template to be processed.
 format is the type of format to be used.  Currently only HTML is supported
 language (optional) specifies the language for template selection.
 include_path allows one to override the template directory and use this with user interface templates.
+no_auto_output disables the automatic output of rendered templates.
+method is the output method to use, defaults to HTTP
+media is a synonym for method
 
 =item render($hashref)
 
@@ -63,10 +66,13 @@ sub new {
 			"${LedgerSMB::Sysconfig::tempdir}/$args{outputfile}";
 	} else {
 		$self->{outputfile} =
-			"${LedgerSMB::Sysconfig::tempdir}/$args{template}-output";
+			"${LedgerSMB::Sysconfig::tempdir}/$args{template}-output-$$";
 	}
 	$self->{include_path} = $args{path};
 	$self->{locale} = $args{locale};
+	$self->{noauto} = $args{noauto};
+	$self->{method} = $args{method};
+	$self->{method} ||= $args{media};
 
 	bless $self, $class;
 
@@ -112,13 +118,18 @@ sub render {
 	}
 
 	$format->can('process')->($self, $cleanvars);
-	return $format->can('postprocess')->($self);
+	#return $format->can('postprocess')->($self);
+	my $post = $format->can('postprocess')->($self);
+	if (!$self->{'noauto'}) {
+		$self->output;
+	}
+	return $post;
 }
 
 sub output {
 	my $self = shift;
 	my %args = @_;
-	my $method = $args{method} || $args{media};
+	my $method = $self->{method} || $args{method} || $args{media};
 
 	if ('email' eq lc $method) {
 		$self->_email_output;

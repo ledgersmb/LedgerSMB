@@ -40,6 +40,7 @@ package LedgerSMB::Template::PS;
 
 use Error qw(:try);
 use Template::Latex;
+use LedgerSMB::Template::TTI18N;
 
 sub get_template {
 	my $name = shift;
@@ -69,7 +70,9 @@ sub process {
 
 	if (not $template->process(
 		get_template($parent->{template}), 
-		$cleanvars, "$parent->{outputfile}.ps", binmode => ':utf8')) {
+		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
+			'escape' => \&preprocess},
+		"$parent->{outputfile}.ps", binmode => 1)) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'application/postscript';

@@ -40,6 +40,7 @@ package LedgerSMB::Template::PDF;
 
 use Error qw(:try);
 use Template::Latex;
+use LedgerSMB::Template::TTI18N;
 
 sub get_template {
 	my $name = shift;
@@ -51,6 +52,7 @@ sub preprocess {
 	my $vars;
 	my $type = ref $rawvars;
 
+	return $rawvars if $type =~ /^LedgerSMB::Locale/;
 	if ($type eq 'ARRAY') {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess($_);
@@ -83,7 +85,9 @@ sub process {
 
 	if (not $template->process(
 		get_template($parent->{template}), 
-		$cleanvars, "$parent->{outputfile}.pdf", binmode => 1)) {
+		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
+			'escape' => \&preprocess},
+		"$parent->{outputfile}.pdf", binmode => 1)) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'application/pdf';
