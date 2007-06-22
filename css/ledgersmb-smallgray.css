@@ -28,6 +28,10 @@ td {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 8pt;
 }
+span.warning_label {
+  font-weight: bold;
+  color: red
+}
 
 th {
   font-family: Verdana, Arial, Helvetica, sans-serif;

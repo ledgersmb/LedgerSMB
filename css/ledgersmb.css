@@ -23,6 +23,10 @@ body {
   scrollbar-darkshadow-color: #666666;
 }
 
+span.warning_label {
+  font-weight: bold;
+  color: red
+}
 td {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 10pt;

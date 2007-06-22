@@ -25,6 +25,10 @@ th {
   font-family: Verdana, Arial, Helvetica;
   font-size: 10pt;
 }
+span.warning_label {
+  font-weight: bold;
+  color: red
+}
 
 /* login and admin */
 .login {

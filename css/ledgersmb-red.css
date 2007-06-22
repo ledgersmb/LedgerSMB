@@ -15,6 +15,10 @@ body {
   background-color: white;
   color: black
 }
+span.warning_label {
+  font-weight: bold;
+  color: red
+}
 
 td {
   font-family: Verdana, Arial, Helvetica;
