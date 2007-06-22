@@ -120,6 +120,7 @@ use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use LedgerSMB::Session;
+use LedgerSMB::Template;
 use strict;
 
 package LedgerSMB;
@@ -169,7 +170,7 @@ sub new {
           )
         {
             if ($self->is_run_mode('cgi', 'mod_perl')) {
-                _get_password();
+                $self->_get_password();
             }
             else {
                 $self->error( __FILE__ . ':' . __LINE__ . ': '
@@ -194,7 +195,7 @@ sub new {
 
             #check for valid session
             if ( !Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
-                _get_password(1);
+                $self->_get_password(1);
                 exit;
             }
         }
@@ -208,9 +209,25 @@ sub new {
 }
 
 sub _get_password {
-    # TODO:  Remove reliance on pw.pl and add template support.
-    require 'bin/pw.pl';
-    getpassword(@_);
+    my ($self) = shift @_;
+    $self->{sessionexpired} = shift @_;
+    @{$self->{hidden}};
+    for (keys %$self){
+        next if $_ =~ /(^script$|^endsession$|^password$)/;
+        my $attr = {};
+        $attr->{name} = $_;
+        $attr->{value} = $self->{$_};
+        push @{$self->{hidden}}, $attr;
+    }
+    my $template = Template->new(
+        user =>$self->{_user}, 
+        locale => $self->{_locale},
+        path => 'UI',
+        template => 'get_password.html',
+        format => 'HTML'
+    );
+    $template->render($self);
+    exit;
 }
 
 sub debug {

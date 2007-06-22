@@ -34,59 +34,30 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #======================================================================
 
+use LedgerSMB::Template;
+
 1;
 
 # end of main
 
 sub getpassword {
-    my ($s) = @_;
-
-    $form->{endsession} = 1;
-
-    $sessionexpired =
-        qq|<p><span style="font-weight:bold; color:red;">|
-      . $locale->text('Session expired!')
-      . qq|</span></p>|
-      if $s;
-
-    my $headeradd = qq|
-<script language="JavaScript" type="text/javascript">
-<!--
-function sf(){
-    document.pw.password.focus();
-}
-// End -->
-</script>|;
-
-    $form->header( undef, $headeradd );
-    print qq|
-<body onload="sf()">
-
-  $sessionexpired
-
-<form method=post action=$form->{script} name=pw>
-
-<table>
-  <tr>
-    <th align=right>| . $locale->text('Password') . qq|</th>
-    <td><input type="password" name="password" size="30"></td>
-    <td><button type="submit" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button></td>
-  </tr>
-</table>
-
-|;
-
-    for (qw(script endsession password)) { delete $form->{$_} }
-    $form->hide_form;
-
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
+    $form->{sessionexpired} = shift @_;
+    @{$form->{hidden}};
+    for (keys %$form){
+        next if $_ =~ /(^script$|^endsession$|^password$)/;
+        my $attr = {};
+        $attr->{name} = $_;
+        $attr->{value} = $form->{$_};
+        push @{$form->{hidden}}, $attr;
+    }
+    my $template = Template->new(
+        user => \%myconfig, 
+        locale => $locale,
+        path => 'UI',
+        template => 'get_password.html',
+        format => 'HTML'
+    );
+    $template->render($form);
+    exit;
 }
 

@@ -106,8 +106,9 @@ sub render {
 	}
 
 	my $cleanvars = $format->can('preprocess')->($vars);
+
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
-		$cleanvars->{text} = $self->{locale}->text();
+		$cleanvars->{text} = sub { return $self->{locale}->text(@_)};
 	}
 
 	$format->can('process')->($self, $cleanvars);
