@@ -65,6 +65,16 @@ arrayref of entries in the table for the given report_id.
 
 Returns undef in the event of no records found.
 
+=item get_corrections($self, $report_id, $entry_id)
+
+Returns the corrections made for the selected report and entry.
+Returns undef in the event of no corrections found.
+
+=item entry ($self,$report_id,$entry_id)
+
+Returns a single entry from the pending reports table, either cleared or
+uncleared.
+
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
@@ -153,6 +163,20 @@ sub get_report {
     my $self = shift @_;
     
     return $self->report($self->{report_id});    
+}
+
+sub get_corrections {
+    
+    my $self = shift @_;
+    
+    return $self->corrections($self->{report_id},$self->{entry_id});
+}
+
+sub entry {
+    
+    my $self = shift @_;
+    
+    return $self->single_entry($self->{report_id},$self->{entry_id});
 }
 
 1;

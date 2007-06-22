@@ -13,6 +13,15 @@ CREATE TABLE pending_reports (
     overlook boolean not null default 'f'
 );
 
+CREATE TABLE report_corrections (
+    id serial primary key not null,
+    correction_id int not null default 1,
+    entry references pending_reports(id) not null,
+    user text not null,
+    reason text not null,
+    insert_time timestamptz not null default now()
+);
+
 -- to correct OUR wrong amount.
 CREATE OR REPLACE FUNCTION reconciliation_correct_ledger (in_report_id INT, in_id int, in_new_amount NUMERIC, reason TEXT) returns INT AS $$
 
@@ -371,13 +380,45 @@ CREATE OR REPLACE FUNCTION reconciliation_get_total (in_report_id INT) returns s
         AND scn = -1;
         
         IF NOT FOUND THEN -- I think this is a fairly major error condition
-        
-            RAISE EXCEPTION "No Bank Total found."
-            
+            RAISE EXCEPTION "No Bank Total found.";
         ELSE
-            
             return row;
+        END IF;
+    END;
+
+$$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION reconciliation_corrections (in_report_id INT, in_id INT) returns setof report_corrections AS $$
+
+    DECLARE
+        corr report_corrections;
+    BEGIN
+    
+        SELECT INTO corr FROM report_corrections WHERE report_id = in_report_id AND id = in_id LIMIT 1;
+        IF NOT FOUND THEN
+            RAISE EXCEPTION "No corrections for selected entry.";
+        ELSE
+            FOR corr IN select * from report_corrections WHERE report_id = in_report_id AND id = in_id LOOP
+                RETURN NEXT corr;
+            END LOOP;
+        END IF;
+    END;
+
+$$ language 'plplsql';
+
+CREATE OR REPLACE FUNCTION reconciliation_single_entry (in_report_id INT, in_id INT) returns setof pending_reports AS
+
+    DECLARE
+        row pending_reports;
+    BEGIN
+    
+        SELECT INTO row FROM pending_reports WHERE report_id = in_report_id and id = in_id LIMIT 1; 
+        -- if there's more than one, that's a Bad Thing
         
+        IF NOT FOUND THEN
+            RAISE EXCEPTION "Could not find selected report entry";
+        ELSE
+            RETURN row;
         END IF;
     END;
 
