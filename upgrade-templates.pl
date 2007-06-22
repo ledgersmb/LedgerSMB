@@ -17,7 +17,7 @@ sub process_dir {
         }
         elsif ( $entry !~ /^\./ ) {
             print "Processing path $path\n";
-            `perl -ibak -pe 's|\<\%(.*)\%\>|<?lsmb \$1 ?>|g' $path`;
+            `perl -ibak -pe 's|\<\%(.*?)\%\>|<?lsmb \$1 ?>|g' $path`;
         }
     }
 }
