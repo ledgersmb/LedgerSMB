@@ -96,17 +96,19 @@ sql/Pg-central.sql file into it.
       "update users_conf set password = md5('my_password');"
       Naturally you would use your password instead of my_password.
 
-6)  Import the users.  Run the import-members script to do this.
+6)  Create ledgersmb.conf using appropriate values from the old ledger-smb.conf
+    and connection data for the central authentication database.
+    ledgersmb.conf.default can be used as a base.
 
-7)  Copy the files from the LedgerSMB tarball over your existing installation.
+7)  Import the users.  Run the import-members script to do this.
 
-8)  Delete the users directory.
+8)  Copy the files from the LedgerSMB tarball over your existing installation.
 
-9)  Upgrade your templates.  Run the following command:
+9)  Delete the users directory.
+
+10) Upgrade your templates.  Run the following command:
 	perl upgrade_templates.pl $templatedir
     Where $templatedir is the directory of your templates.
-
-10)  Edit the ledger-smb.conf file as appropriate.
 
 11) You can test basic parts of the installation by running Build ./test at 
     this point.
