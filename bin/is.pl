@@ -219,7 +219,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
     $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
 
     $form->{AR} = $form->{AR_1} unless $form->{id};
-
+    $form->{transdate} = $form->{current_date} if (!$form->{transdate});
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'

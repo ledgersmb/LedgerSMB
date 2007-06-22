@@ -50,14 +50,15 @@ sub getpassword {
         $attr->{value} = $form->{$_};
         push @{$form->{hidden}}, $attr;
     }
-    my $template = Template->new(
+    my $template = LedgerSMB::Template->new(
         user => \%myconfig, 
         locale => $locale,
         path => 'UI',
-        template => 'get_password.html',
+        template => 'get_password',
         format => 'HTML'
     );
     $template->render($form);
+    $template->output('http');
     exit;
 }
 
