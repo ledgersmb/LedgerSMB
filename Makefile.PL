@@ -27,7 +27,7 @@ requires 'Time::Local';
 requires 'Cwd';
 requires 'Config::Std';
 requires 'MIME::Lite';
-requires 'Template';
+requires 'Template' => '2.14';
 requires 'Template::Latex';
 requires 'Error';
 

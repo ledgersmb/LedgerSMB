@@ -27,7 +27,7 @@ my $build = Module::Build->new (
 		'Config::Std'			=> 0,
 		'MIME::Lite'			=> 0,
 		'Error'				=> 0,
-		'Template'			=> 0,
+		'Template'			=> '>= 2.14',
 		'Template::Latex'		=> 0,
 		'Test::More'			=> 0,
 		'Test::Trap'			=> 0,
