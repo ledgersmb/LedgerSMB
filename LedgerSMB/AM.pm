@@ -1314,7 +1314,7 @@ sub save_preferences {
     my @queryargs;
     my $query = qq|
 		SELECT login
-		  FROM employees
+		  FROM employee 
 		 WHERE login = ?|;
     @queryargs = ( $form->{login} );
     my $sth = $dbh->prepare($query);
@@ -1326,7 +1326,7 @@ sub save_preferences {
 
     # update name
     $query = qq|
-		UPDATE employees
+		UPDATE employee 
 		   SET name = ?
 		 WHERE login = ?|;
 
@@ -1756,7 +1756,7 @@ sub post_yearend {
 
     $query = qq|
 		INSERT INTO gl (reference, employee_id)
-		     VALUES (?, (SELECT id FROM employees
+		     VALUES (?, (SELECT id FROM employee
 		                  WHERE login = ?))|;
 
     $dbh->prepare($query)->execute( $uid, $form->{login} )

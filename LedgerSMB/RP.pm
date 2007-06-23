@@ -2337,7 +2337,7 @@ sub payments {
 			     FROM acc_trans ac
 			     JOIN $form->{db} a ON (ac.trans_id = a.id)
 			     JOIN $table c ON (c.id = a.${table}_id)
-			LEFT JOIN employees e ON (a.employee_id = e.id)
+			LEFT JOIN employee e ON (a.employee_id = e.id)
 			          $dpt_join
 			    WHERE ac.chart_id = $ref->{id} $where|;
 
@@ -2364,7 +2364,7 @@ sub payments {
 				  FROM acc_trans ac
 				  JOIN gl g ON (g.id = ac.trans_id)
 				  LEFT 
-				  JOIN employees e ON (g.employee_id = e.id)
+				  JOIN employee e ON (g.employee_id = e.id)
 				       $dpt_join
 				 WHERE ac.chart_id = $ref->{id} $glwhere
 				       AND (ac.amount * $ml) > 0

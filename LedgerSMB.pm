@@ -14,8 +14,9 @@ in database objects (LedgerSMB::DBObject)
 
 =item new ()
 
-This method creates a new base request instance. In any mode but CLI, it also
-validates the session/user credentials.
+This method creates a new base request instance. It also validates the 
+session/user credentials, as appropriate for the run mode.  Finally, it sets up 
+the database connections for the user.
 
 =item date_to_number (user => $LedgerSMB::User, date => $string);
 
@@ -205,6 +206,7 @@ sub new {
             exit;
         }
     }
+    $self->_db_init;
 
     $self;
 
@@ -604,7 +606,6 @@ sub error {
 
         $self->{msg}    = $msg;
         $self->{format} = "html";
-        $self->format_string('msg');
 
         delete $self->{pre};
 
@@ -628,10 +629,10 @@ sub error {
 }
 # Database routines used throughout
 
-sub db_init {
+sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
-    my $myconfig = $args{user};
+    my $myconfig = $self->{_user};
 
     my $dbh = DBI->connect(
         $myconfig->{dbconnect}, $myconfig->{dbuser},

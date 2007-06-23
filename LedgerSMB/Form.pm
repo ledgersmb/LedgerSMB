@@ -2322,52 +2322,41 @@ sub create_links {
 
         $sth->finish;
 
-        for (qw(curr closedto revtrans)) {
-            $query = qq|
-				SELECT value FROM defaults 
-				 WHERE setting_key = '$_'|;
-
-            $sth = $dbh->prepare($query);
-            $sth->execute || $self->dberror($query);
-
-            ($val) = $sth->fetchrow_array();
-            if ( $_ eq 'curr' ) {
-                $self->{currencies} = $val;
-            }
-            else {
-                $self->{$_} = $val;
-            }
-            $sth->finish;
-        }
-	$self->{transdate} = $self->current_date;
 
     }
     else {
 
-        for (qw(current_date curr closedto revtrans)) {
-            $query = qq|
-				SELECT value FROM defaults 
-				 WHERE setting_key = '$_'|;
-
-            $sth = $dbh->prepare($query);
-            $sth->execute || $self->dberror($query);
-
-            ($val) = $sth->fetchrow_array();
-            if ( $_ eq 'curr' ) {
-                $self->{currencies} = $val;
-            }
-            elsif ( $_ eq 'current_date' ) {
-                $self->{transdate} = $val;
-            }
-            else {
-                $self->{$_} = $val;
-            }
-            $sth->finish;
-        }
-
         if ( !$self->{"$self->{vc}_id"} ) {
             $self->lastname_used( $myconfig, $dbh, $vc, $module );
         }
+    }
+    for (qw(current_date curr closedto revtrans)) {
+        if ($_ eq 'closedto'){
+            $query = qq|
+				SELECT value::date FROM defaults
+				 WHERE setting_key = '$_'|;
+        } elsif ($_ eq 'current_date') {
+            $query = qq| select $_|;
+        } else {
+            $query = qq|
+				SELECT value FROM defaults 
+				 WHERE setting_key = '$_'|;
+        }
+
+        $sth = $dbh->prepare($query);
+        $sth->execute || $self->dberror($query);
+
+        ($val) = $sth->fetchrow_array();
+        if ( $_ eq 'curr' ) {
+            $self->{currencies} = $val;
+        }
+        else {
+            $self->{$_} = $val;
+        }
+        $sth->finish;
+    }
+    if (!$self->{id}){
+        $self->{transdate} = $self->{current_date};
     }
 
     $self->all_vc( $myconfig, $vc, $module, $dbh, $self->{transdate}, $job );

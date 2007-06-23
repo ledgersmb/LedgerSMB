@@ -1215,7 +1215,7 @@ sub all_parts {
 					          ON (a.vendor_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employees e 
+					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $invwhere|;
@@ -1242,7 +1242,7 @@ sub all_parts {
 					          USING (entity_id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employees e 
+					LEFT JOIN employee e 
 					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $invwhere|;
@@ -1308,7 +1308,7 @@ sub all_parts {
 					          USING (entity_id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employees e 
+					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $ordwhere 
@@ -1348,7 +1348,7 @@ sub all_parts {
 					          ON (a.vendor_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employees e 
+					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $ordwhere
@@ -1414,7 +1414,7 @@ sub all_parts {
 					          USING (entity_id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employees e 
+					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $quowhere
@@ -1454,7 +1454,7 @@ sub all_parts {
 					          ON (a.vendor_id = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employees e 
+					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $quowhere
