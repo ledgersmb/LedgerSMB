@@ -127,13 +127,14 @@ use LedgerSMB::User;
 use strict;
 
 package LedgerSMB;
+our $VERSION = '1.2.99';
 
 sub new {
     my $type   = shift @_;
     my $argstr = shift @_;
 
     my $self = {};
-    $self->{version}   = "1.3.0 Alpha 0 Pre";
+    $self->{version} = $VERSION;
     $self->{dbversion} = "1.2.0";
     bless $self, $type;
     my $query = ($argstr) ? new CGI($argstr) : new CGI;
