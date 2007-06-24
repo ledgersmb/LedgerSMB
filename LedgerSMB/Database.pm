@@ -1,13 +1,21 @@
 #!/usr/bin/perl
 =head1 NAMR
-    LedgerSMB::Database
+
+LedgerSMB::Database
+
 =head1 SYNOPSIS
-    This module provides the APIs for database creation and management
+
+This module provides the APIs for database creation and management
+
 =head1 COPYRIGHT
-    This module is copyright (C) 2007, the LedgerSMB Core Team and subject to 
-    the GNU General Public License (GPL) version 2, or at your option, any later
-    version.  See the COPYRIGHT and LICENSE files for more information.
+
+This module is copyright (C) 2007, the LedgerSMB Core Team and subject to 
+the GNU General Public License (GPL) version 2, or at your option, any later
+version.  See the COPYRIGHT and LICENSE files for more information.
+
 =head1 METHODS
+
+=over
 
 =cut
 
@@ -21,17 +29,18 @@ use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
 
 =item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
-    This function creates a new database management object with the specified
-    characteristics.  The $dbname is the name of the database. the countrycode
-    is the two-letter ISO code.  The company name is the friendly name for 
-    dropdown boxes on the Login screen.
 
-    As some countries may have multiple available charts, you can also specify
-    a chart name as well.
+This function creates a new database management object with the specified
+characteristics.  The $dbname is the name of the database. the countrycode
+is the two-letter ISO code.  The company name is the friendly name for 
+dropdown boxes on the Login screen.
 
-    Note that the arguments can be any hashref. If it is a LedgerSMB object,
-    however, it will attempt to copy all attributes beginning with _ into the 
-    current object (_user, _locale, etc).
+As some countries may have multiple available charts, you can also specify
+a chart name as well.
+
+Note that the arguments can be any hashref. If it is a LedgerSMB object,
+however, it will attempt to copy all attributes beginning with _ into the 
+current object (_user, _locale, etc).
 
 =cut
 
@@ -54,7 +63,9 @@ sub new {
 }
 
 =item $db->create();
-    Creates a database with the characteristics in the object
+
+Creates a database with the characteristics in the object
+
 =cut
 
 sub create {
