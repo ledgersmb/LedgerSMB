@@ -137,6 +137,8 @@ sub print {
     }
 
     if ( $form->{printandpost} ) {
+        $form->{action} = 'post';
+        delete $form->{printandpost};
         &post;
     }
     else {
