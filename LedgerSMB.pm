@@ -160,6 +160,10 @@ sub new {
     if ( ( $self->{script} =~ m#(..|\\|/)# ) ) {
         $self->error("Access Denied");
     }
+    if (!$self->{login}){
+        #this is an ugly hack we need to rethink.
+        return $self;
+    }
 
     $self->{_user} = LedgerSMB::User->fetch_config($self->{login});
     my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
@@ -610,9 +614,9 @@ sub error {
 
         delete $self->{pre};
 
-        if ( !$self->{header} ) {
-            $self->header;
-        }
+        
+        print qq|Content-Type: text/html; charset=utf-8\n\n|;
+        print "<head></head>";
 
         print
           qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
