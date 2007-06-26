@@ -255,7 +255,7 @@ sub login {
 
             # upgrade dataset and log in again
             if ( !$LedgerSMB::Sysconfig::db_autoupdate ) {
-                $form->error( $locale->text("Dabase Version too Old") );
+                $form->error( $locale->text("Database Version too Old") );
             }
 
             for (qw(dbname dbhost dbport dbdriver dbuser dbpasswd)) {

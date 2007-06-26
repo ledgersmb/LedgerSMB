@@ -164,10 +164,13 @@ sub new {
         #this is an ugly hack we need to rethink.
         return $self;
     }
-
-    $self->{_user} = LedgerSMB::User->fetch_config($self->{login});
     my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
         or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+    if ( !${LedgerSMB::Sysconfig::GLOBALDBH} ) {
+        $locale->text("No GlobalDBH Configured or Could not Connect");
+    }
+
+    $self->{_user} = LedgerSMB::User->fetch_config($self->{login});
     $self->{_locale} = $locale;
     $self->{stylesheet} = $self->{_user}->{stylesheet};
     if ( $self->{password} ) {
@@ -242,9 +245,12 @@ sub _get_password {
 
 sub debug {
     my $self = shift @_;
-    my %args = @_;
-    my $file = $args{file};
-    my $d    = Data::Dumper->new( [@_] );
+    my $args = shift @_;
+    my $file;
+    if (scalar keys %$args){
+        my $file = $args->{'file'};
+    }
+    my $d    = Data::Dumper->new( [$self] );
     $d->Sortkeys(1);
 
     if ($file) {
@@ -650,7 +656,7 @@ sub _db_init {
     if ( $myconfig->{dboptions} ) {
         $dbh->do( $myconfig->{dboptions} );
     }
-
+    $self->{dbh} = $dbh;
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
 			|| ':' || f.field_name as field_def

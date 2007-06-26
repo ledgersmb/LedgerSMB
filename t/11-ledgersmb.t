@@ -127,11 +127,11 @@ is($lsmb->num_text_rows('string' => "012345 67890123456789", 'cols' => 10),
 my $lsmb = LedgerSMB->new();
 @r = trap{$lsmb->debug()};
 like($trap->stdout, qr|\n\$VAR1 = bless\( {[\n\s]+'action' => '',[\n\s]+'dbversion' => '\d+\.\d+\.\d+',[\n\s]+'path' => 'bin/mozilla',[\n\s]+'version' => '$lsmb->{version}'[\n\s]+}, 'LedgerSMB' \);|,
-	'debug: $lsmb, no file');
+	'debug: $lsmb->debug');
 SKIP: {
 	skip 'Environment for file test not clean' if -f "t/var/lsmb-11.$$";
 	$lsmb->{file} = "t/var/lsmb-11.$$";
-	$lsmb->debug('file' => $lsmb->{file}, $lsmb);
+	$lsmb->debug({'file' => $lsmb->{file}});
 	ok(-f "t/var/lsmb-11.$$", "debug: output file t/var/lsmb-11.$$ created");
 	open(my $FH, '<', "t/var/lsmb-11.$$");
 	my @str = <$FH>;

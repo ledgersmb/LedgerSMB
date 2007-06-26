@@ -36,14 +36,10 @@ use Data::Dumper;
 eval { require "custom.pl"; };
 
 $request = new LedgerSMB;
+$request->{action} = '__default' if (!$request->{action});
 
-$0 =~ m/([^\/\\]*.pl)$/;
-if (!$1){
-	$0 =~ m/([^\/\\]*.pl)[? ]/;
-}
-
+$0 =~ m/([^\/\\]*.pl)\?*.*$/;
 $script = $1;
-
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
   or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 
