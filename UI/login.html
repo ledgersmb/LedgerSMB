@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>LedgerSMB Version SVN Trunk</title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+	<link rel="stylesheet" href="css/ledgersmb.css" type="text/css" title="LedgerSMB stylesheet" />
+	<link rel="stylesheet" href="css/scripts/login.css" type="text/css" title="LedgerSMB stylesheet" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<meta name="robots" content="noindex,nofollow" />
+        
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		var agt = navigator.userAgent.toLowerCase();
+		var is_major = parseInt(navigator.appVersion);
+		var is_nav = ((agt.indexOf('mozilla') != -1) && (agt.indexOf('spoofer') == -1)
+					 && (agt.indexOf('compatible') == -1) && (agt.indexOf('opera') == -1)
+					 && (agt.indexOf('webtv') == -1));
+		var is_nav4lo = (is_nav && (is_major <= 4));
+
+		function jsp() {
+			if (is_nav4lo){
+				document.login.js.value = "0";
+			} else {
+				document.login.js.value = "1";
+			}
+		}
+
+		function sf() { document.login.login.focus(); }
+	// End -->
+	</script>
+</head>
+
+		 
+
+
+<body class="login" onload="jsp(); sf();">
+	<br /><br />
+	<center>
+		<div class="login" border="3">
+				<div class="login" align="center">
+					<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" width="200" heith="100" border="0" alt="LedgerSMB Logo" /></a>
+					<h1 class="login" align="center">Version SVN Trunk</h1>
+					<p>
+					<form method="post" action="login.pl" name="login">
+					<div width="100%" align="center">
+										<div><div class="label"><?lsmb text('Name') ?></div>
+											<div class="input"><input class="login" name="login" size="30" value="" /></div>
+</div>
+<div>
+  <div class="label"><?lsmb text('Password')?></div>
+  <div class="input"><input class="login" type="password" name="password" size="30" />
+  </div>
+</div>
+								</div>
+					</div>
+						<input type="hidden" name="path" value="bin/mozilla" />
+						<input type="hidden" name="js" value="" />
+						<button type="submit" name="action" value="login">Login</button>
+					</form>
+					</p>
+				</td>
+			</tr>
+		</div>
+	<p><a href="admin.pl"
+		><?lsmb text('Administrative login') ?></a></p>
+	</center>
+</body>
+</html>
