@@ -180,13 +180,13 @@ ok(defined $lsmb->{menubar}, 'new: lynx, menubar defined (deprecated)');
 is($lsmb->{menubar}, 1, 'new: lynx, menubar enabled (deprecated)');
 ok(defined $lsmb->{version}, 'new: lynx, version defined');
 
-@r = trap {$lsmb = LedgerSMB->new();
+@r = trap {$lsmb = LedgerSMB->new()};
 is($trap->die, "Error: Access Denied\n",
 	'new: directory traversal 1 caught');
-@r = trap {$lsmb = LedgerSMB->new();
+@r = trap {$lsmb = LedgerSMB->new()};
 is($trap->die, "Error: Access Denied\n",
 	'new: directory traversal 2 caught');
-@r = trap {$lsmb = LedgerSMB->new();
+@r = trap {$lsmb = LedgerSMB->new()};
 is($trap->die, "Error: Access Denied\n",
 	'new: directory traversal 3 caught');
 
