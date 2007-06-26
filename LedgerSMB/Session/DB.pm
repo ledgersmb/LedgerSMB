@@ -43,7 +43,6 @@ sub session_check {
         "SELECT u.username, s.transaction_id 
 									  FROM session as s, users as u 
 									 WHERE s.session_id = ? 
-									   AND s.token = ?
 									   AND s.users_id = u.id
 									   AND s.last_used > now() - ?::interval"
     );
@@ -73,7 +72,7 @@ sub session_check {
         $timeout = "$myconfig{timeout} seconds";
     }
 
-    $checkQuery->execute( $sessionID, $token, $timeout )
+    $checkQuery->execute( $sessionID, $timeout )
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
     my $sessionValid = $checkQuery->rows;

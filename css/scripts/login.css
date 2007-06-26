@@ -11,7 +11,7 @@ div.login {
 div.login div.login {
     width: 21em;
     height: 18em;
-    border-width: 1;
+    border-width: 1px;
     border-style: solid;
     padding-bottom: 2em;
 }

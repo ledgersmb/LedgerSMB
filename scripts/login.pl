@@ -30,28 +30,8 @@ sub login {
     if (!$request->{_user}){
         __default($request);
     }
-    our $user = new LedgerSMB::User($request->{login});
-    our $form = new Form; 
-    for (keys %$request){
-        $form->{$_} = $request->{$_};
-    }
-    my $menu_entrypoint;
-    require "bin/menu.pl";
-    if (($request->{_user}->{acs} !~ /Recurring Transactions/) || 
-        $request->{_user}->{role} ne 'user'){
-        if ($user->check_recurring($form) ) {
-            $form->{main} = "recurring_transactions";
-        }
-        else {
-            $form->{main} = "company_logo";
-        }
-
-    }
-    else {
-
-        $form->{main} = "company_logo";
-    }
-    &display;
+    require "scripts/menu.pl";
+    LedgerSMB::Scripts::menu::display($request);
 
 }
 

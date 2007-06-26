@@ -1,2 +1,2 @@
 #!/usr/bin/perl
-require "menu.pl";
+require "old-handler.pl";

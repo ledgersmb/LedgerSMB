@@ -48,7 +48,7 @@ if (!$script){
 }
 
 eval { require "scripts/$script" } 
-  || $request->error($locale->text('Unable to open script') . ": $!");
+  || $request->error($locale->text('Unable to open script') . ": $script : $!");
 
 $script =~ s/\.pl$//;
 $script = "LedgerSMB::Scripts::$script";

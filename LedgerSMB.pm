@@ -164,13 +164,13 @@ sub new {
         #this is an ugly hack we need to rethink.
         return $self;
     }
+    $self->{_user} = LedgerSMB::User->fetch_config($self->{login});
     my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
         or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
     if ( !${LedgerSMB::Sysconfig::GLOBALDBH} ) {
         $locale->text("No GlobalDBH Configured or Could not Connect");
     }
 
-    $self->{_user} = LedgerSMB::User->fetch_config($self->{login});
     $self->{_locale} = $locale;
     $self->{stylesheet} = $self->{_user}->{stylesheet};
     if ( $self->{password} ) {
