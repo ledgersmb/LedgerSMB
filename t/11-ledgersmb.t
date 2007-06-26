@@ -125,7 +125,7 @@ is($lsmb->num_text_rows('string' => "012345 67890123456789", 'cols' => 10),
 
 # $lsmb->debug checks
 my $lsmb = LedgerSMB->new();
-@r = trap{$lsmb->debug($lsmb)};
+@r = trap{$lsmb->debug()};
 like($trap->stdout, qr|\n\$VAR1 = bless\( {[\n\s]+'action' => '',[\n\s]+'dbversion' => '\d+\.\d+\.\d+',[\n\s]+'path' => 'bin/mozilla',[\n\s]+'version' => '$lsmb->{version}'[\n\s]+}, 'LedgerSMB' \);|,
 	'debug: $lsmb, no file');
 SKIP: {
