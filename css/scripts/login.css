@@ -2,28 +2,42 @@ div.login {
     background-color: white;
     margin-right: auto;
     margin-left: auto;
-    width: 24em;
+    width: 25em;
     padding: 2em;
+    padding-bottom: 1em;
     border-style: outset;
 }
 
 div.login div.login {
-    width: 20em;
-    height: 16em;
+    width: 21em;
+    height: 18em;
     border-width: 1;
     border-style: solid;
+    padding-bottom: 2em;
 }
 div.label {
-    width: 60px;
+    width: 5em;
     text-align: right;
     float: left;
-    margin: 0px;
+    border-width: 1;
+    margin: 0em;
+    padding-right: 0.5em;
+    margin-top: 0.5em;
 }
 div.input {
-    width: 200px;
+    width: 14em;
     margin: 0px;
     text-align: left;
-    float: right;
+    float: left;
+    border-width: 3;
+    margin: 0em;
+    margin-top: 0.5em;
+}
+
+img.logo {
+    border-style: none;
+    width: 16em;
+    height: 8em;
 }
 
 button {
