@@ -1,0 +1,31 @@
+div.login {
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    width: 24em;
+    padding: 2em;
+    border-style: outset;
+}
+
+div.login div.login {
+    width: 20em;
+    height: 16em;
+    border-width: 1;
+    border-style: solid;
+}
+div.label {
+    width: 60px;
+    text-align: right;
+    float: left;
+    margin: 0px;
+}
+div.input {
+    width: 200px;
+    margin: 0px;
+    text-align: left;
+    float: right;
+}
+
+button {
+    margin-top: 10px
+}
