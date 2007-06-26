@@ -23,10 +23,6 @@
 ##sub db_parse_numeric {
 ##sub callproc {
 ##sub get_my_emp_num {
-##sub parse_template {
-##sub format_line {
-##sub cleanup {
-##sub rerun_latex {
 ##sub format_string {
 ##sub db_init {
 ##sub run_custom_queries {
