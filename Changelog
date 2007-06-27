@@ -1,3 +1,8 @@
+Changelog for 1.2.7
+* Fixed user@company logins (Chris T)
+* Fixed closed books detection (Chris T)
+* Fixed AR/AP print and post endless loop (Chris T)
+
 Changelog for 1.2.6
 * More date tests added (Seneca)
 * Fixed customer_id error in AP transactions (Chris T)
@@ -7,6 +12,7 @@ Changelog for 1.2.6
 * Fixed error searching for customer by address (Chris T)
 * Fixed error db error saving items with custom fields (Chris T)
 * Fixed db error saving project with NULL customer id (Chris T)
+* Improved upgrade_templates' tag handling (Seneca)
 
 Changelog for 1.2.5
 * Partsgroup handling corrected on POS and Sales invoice screens (Chris T)

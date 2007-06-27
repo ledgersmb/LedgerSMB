@@ -50,10 +50,13 @@ sub send {
     my ($self) = @_;
 
     my $domain = $self->{from};
+    my $boundary = time;
+    $boundary = "LSMB-$boundary";
     $domain =~ s/(.*?\@|>)//g;
     my $msgid = "$boundary\@$domain";
 
     $self->{contenttype} = "text/plain" unless $self->{contenttype};
+    my $msgid = "$boundary\@$domain";
 
     my %h;
     for (qw(from to cc bcc)) {
@@ -77,7 +80,9 @@ sub send {
         'Subject' => $self->{subject},
         'Type'    => 'TEXT',
         'Data'    => $self->{message},
+        'Message-ID' => $msg_id,
     );
+    $msg->attr("Content-Type" => $self->{contenttype});
     $msg->add( 'Disposition-Notification-To' => $self->{from} )
       if $self->{notify};
     $msg->replace( 'X-Mailer' => "LedgerSMB $self->{version}" );
