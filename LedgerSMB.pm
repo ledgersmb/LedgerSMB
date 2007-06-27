@@ -214,6 +214,9 @@ sub new {
             exit;
         }
     }
+
+    $self->{stylesheet} = $self->{_user}->{stylesheet};
+
     $self->_db_init;
 
     $self;
@@ -248,7 +251,7 @@ sub debug {
     my $args = shift @_;
     my $file;
     if (scalar keys %$args){
-        my $file = $args->{'file'};
+        $file = $args->{'file'};
     }
     my $d    = Data::Dumper->new( [$self] );
     $d->Sortkeys(1);

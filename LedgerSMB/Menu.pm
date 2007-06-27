@@ -48,19 +48,18 @@ sub new {
                 my $orig_key = $key;
                 my $ref = $self;
                 while ($key =~ s/^([^-]*)--//){
-                    if (!defined $ref->{$1}){
-                        $ref->{$1} = {};
-                    }
-                    if (!defined $ref->{$1}->{subs}){
-                        $ref->{$1}->{subs} = {};
-                    }
-                    $ref = $ref->{$1}->{subs};
+                    $ref->{subs} ||= {};
+                    $ref->{subs}->{$1} ||= {};
+                    $ref = $ref->{subs}->{$1};
                 }
-                for (keys %{$config->{$orig_key}}){
-                     $ref->{$_} = $config{$orig_key}->{$_};
+                $ref->{subs} ||= {};
+		$ref->{subs}->{key} ||= {};
+                $ref = $ref->{subs}->{$key};
+                for (keys %{$config{$orig_key}}){
+                     $ref->{$_} = ${$config{$orig_key}}{$_};
                 }
-                $ref->{$key}{id} = $index;
-                $ref->{$key}{label} = $key;
+                $ref->{id} = $index;
+                $ref->{label} = $key;
                 ++$index;
             }
         }
