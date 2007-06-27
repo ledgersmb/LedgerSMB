@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Accounting Menu - LedgerSMB Version 1.2.7 - Chris Travers - metatron_ledger</title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<meta name="robots" content="noindex,nofollow" />
+        
+		<script type="text/javascript">
+
+			function SwitchMenu(obj) {
+				if (document.getElementById) {
+					var el = document.getElementById(obj);
+
+					if (el.style.display == "none") {
+						el.style.display = "block"; //display the block of info
+					} else {
+						el.style.display = "none";
+					}
+				}		
+			}
+
+
+			document.onselectstart = new Function("return false");
+		</script>
+</head>
+
+
+		<body class="menu">
+		<img class="cornderlogo" src="images/ledgersmb_small.png" width="100" height="50" border="1" alt="ledger-smb" />
+		 <div id="div_0" class="container">
+		<?lsmb MACRO menu(section) BLOCK ?>
+			<?lsmb IF item.id ?>
+				<div id="menu<?lsmb section.id ?>" class="menuOut" 
+					onclick="SwitchMenu('sub_<?lsmb section.id ?>')"> 
+					<?lsmb text(section.label) ?></div>
+				<div class="submenu" id="sub<?lsmb item.id ?>"> 
+				<div id="div_<?lsmb item.id ?>"> 
+			<?lsmb END ?>
+			<?lsmb IF section.subs.size > 0 ?>
+				<?lsmb FOREACH key = section.subs.keys.sort ?>
+					<?lsmb item = section.subs.$key ?>
+					<?lsmb IF item.subs ?>
+						<?lsmb subs = items.subs ?>
+						<?lsmb FOREACH subkey = subs.keys.sort ?>
+							<?lsmb sub = item.sub.$key ?>
+							<?lsmb menu(item) ?>
+						<?lsmb END ?>
+					<?lsmb ELSE ?>
+						<div class="submenu"> 
+						<a class="submenu" 
+							href="<?lsmb item.module ?>?login=<?lsmb login ?><?lsmb FOREACH key = item.keys ?>&<?lsmb key ?>=<?lsmb item.$key ?><?lsmb END ?>" 
+							target="main_window"><?lsmb text(item.label)?></a>
+						</div>
+					<?lsmb END ?>
+				<?lsmb END ?>
+			<?lsmb END  ?>
+				  			</div>
+				 			</div>
+                <?lsmb END ?>
+		<?lsmb menu(menu_items) ?>
+		</div>
+</body>
+
+</html>
