@@ -4,9 +4,9 @@
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }
 A:active { text-decoration: underline; }
-A:hover { color: transparent;
+A:hover { 
   background-color: transparent;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 body {
@@ -14,13 +14,6 @@ body {
   color: #444444;
   font-size: 10pt;
   background-color: #ffffff;
-  scrollbar-arrow-color: #FFFFFF;
-  scrollbar-3dlight-color: #dddddd;
-  scrollbar-highlight-color: #aaaaaa;
-  scrollbar-face-color: #aaaaaa;
-  scrollbar-shadow-color: #aaaaaa;
-  scrollbar-track-color: #cccccc;
-  scrollbar-darkshadow-color: #666666;
 }
 
 span.warning_label {
@@ -137,7 +130,6 @@ cornerlogo {
 .listtop { font-size: 10pt; background-color: black; color: white; }
 .listheading { font-size: 10pt; background-color: #004a80; color: white; }
 A.listheading:link, A.listheading:active, A.listheading:visited {
-  color: transparent;
   text-decoration: none; }
 .listrow1 { font-size: 10pt; background-color: #e6e6fa; color: black; vertical-align: top; }
 .listrow0 { font-size: 10pt; background-color: #ffe4e1; color: black; vertical-align: top; }

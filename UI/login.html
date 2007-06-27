@@ -41,33 +41,28 @@
 <body class="login" onload="jsp(); sf();">
 	<br /><br />
 	<center>
-		<div class="login" border="3">
-				<div class="login" align="center">
-					<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" class="logo" alt="LedgerSMB Logo" /></a>
-					<h1 class="login" align="center">Version SVN Trunk</h1>
-					<p>
-					<form method="post" action="login.pl" name="login">
-					<div width="100%" align="center">
-										<div><div class="label"><?lsmb text('Name') ?></div>
-											<div class="input"><input class="login" name="login" size="30" value="" /></div>
-</div>
-<div>
-  <div class="label"><?lsmb text('Password')?></div>
-  <div class="input"><input class="login" type="password" name="password" size="30" />
-  </div>
-</div>
-								</div>
+		<form method="post" action="login.pl" name="login">
+		<div class="login">
+			<div class="login" align="center">
+				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" class="logo" alt="LedgerSMB Logo" /></a>
+				<h1 class="login" align="center">Version SVN Trunk</h1>
+				<div align="center">
+					<div>
+						<div class="label"><?lsmb text('Name') ?></div>
+						<div class="input"><input class="login" name="login" size="30" value="" /></div>
 					</div>
-						<input type="hidden" name="path" value="bin/mozilla" />
-						<input type="hidden" name="js" value="" />
-						<button type="submit" name="action" value="login">Login</button>
-					</form>
-					</p>
-				</td>
-			</tr>
+					<div>
+						<div class="label"><?lsmb text('Password') ?></div>
+						<div class="input"><input class="login" type="password" name="password" size="30" /></div>
+					</div>
+				</div>
+				<input type="hidden" name="path" value="bin/mozilla" />
+				<input type="hidden" name="js" value="" />
+				<button type="submit" name="action" value="login"><?lsmb text('Login') ?></button>
+			</div>
 		</div>
-	<p><a href="admin.pl"
-		><?lsmb text('Administrative login') ?></a></p>
+		</form>
+		<p><a href="admin.pl"><?lsmb text('Administrative login') ?></a></p>
 	</center>
 </body>
 </html>
