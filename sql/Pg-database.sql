@@ -715,8 +715,7 @@ CREATE TABLE warehouse (
 );
 --
 CREATE TABLE inventory (
-  entity_id integer references entity(id) not null PRIMARY KEY,
-  entity_class_id integer references entity_class(id) not null check (entity_class_id = 3),
+  entity_id integer references employee(entity_id) not null,
   warehouse_id int,
   parts_id int,
   trans_id int,
