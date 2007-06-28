@@ -1494,7 +1494,7 @@ sub transactions {
         ( $form->{ $form->{vc} }, $form->{"$form->{vc}_id"} ) =
           split( /--/, $form->{ $form->{vc} } );
     }
-    my @column_index;
+    @column_index;
     AA->transactions( \%myconfig, \%$form );
 
     $href = "$form->{script}?action=transactions";
