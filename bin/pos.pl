@@ -419,22 +419,25 @@ sub form_footer {
 
     if ( !$form->{taxincluded} ) {
 
-        my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-        $form->{invtotal} +=
-          Tax::calculate_taxes( \@taxes, $form, $form->{invsubtotal}, 0 );
-
-        foreach my $item (@taxes) {
-            my $taccno = $item->account;
-
-            $form->{"${taccno}_total"} =
-              $form->format_amount( \%myconfig, $item->value, 2, 0 );
-
-            $tax .= qq|
-        <tr>
-	  <th align=right>$form->{"${taccno}_description"}</th>
-	  <td align=right>$form->{"${taccno}_total"}</td>
-        </tr>
-        | if $item->value;
+        my @taxset = Tax::init_taxes( $form, $form->{taxaccounts} );
+        foreach $taxobj (@taxset) {
+            $item = $taxobj->account;
+	    $form->{invtotal} += $form->round_amount(
+                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2);
+            $form->{"${item}_total"} =
+              $form->format_amount( \%myconfig,
+                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2 );
+            if ( $form->{"${item}_base"} ) {
+                $form->{"${item}_total"} =
+                  $form->format_amount( \%myconfig,
+                    $form->round_amount( $taxobj->value, 2 ), 2 );
+                $tax .= qq|
+		<tr>
+		  <th align=right>$form->{"${item}_description"}</th>
+		  <td align=right>$form->{"${item}_total"}</td>
+		</tr>
+|;
+            }
         }
 
         $form->{invsubtotal} =
