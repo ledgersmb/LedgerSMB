@@ -24,6 +24,11 @@ use LedgerSMB::Menu;
 
 sub display {
 
+    $form->{titlebar} =
+            "LedgerSMB "
+          . $locale->text('Version')
+          . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
+
     if ( $form->{lynx} ) {
 
         $menu = new Menu "$menufile";
@@ -115,7 +120,7 @@ sub acc_menu {
         print q|
 
 		<body class="menu">
-		<img class="cornderlogo" src="ledger-smb_small.png" width="100" height="50" border="1" alt="ledger-smb" />
+		<img class="cornderlogo" src="ledger-smb_small.png" width="100" height="50" border="1" alt="LedgerSMB" />
 		|;
 
         if ( $form->{js} ) {
