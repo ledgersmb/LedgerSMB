@@ -343,6 +343,7 @@ sub redirect {
     if ( $self->{callback} || !$msg ) {
 
         main::redirect();
+	exit;
     }
     else {
 
