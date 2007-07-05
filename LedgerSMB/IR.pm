@@ -1044,7 +1044,8 @@ sub retrieve_invoice {
 			SELECT a.invnumber, a.transdate, a.duedate,
 			       a.ordnumber, a.quonumber, a.paid, a.taxincluded,
 			       a.notes, a.intnotes, a.curr AS currency, 
-			       a.vendor_id, a.language_code, a.ponumber
+			       a.vendor_id, a.language_code, a.ponumber,
+			       a.on_hold
 			  FROM ap a
 			 WHERE id = ?|;
         $sth = $dbh->prepare($query);
@@ -1375,5 +1376,39 @@ sub item_links {
     $sth->finish;
 }
 
-1;
+sub toggle_on_hold {
+    
+    my $self = shift @_;
+    my $form = shift @_;
+    
+    if ($form->{id}) { # it's an existing (.. probably) invoice.
+        
+        my $dbh = $form->{dbh};
+        my $sth = $dbh->prepare("SELECT on_hold from ar where ar.id = ?");
+        $sth->execute($form->{id});
+        my $state = $sth->fetchrow_array;
+        my $sth;
+        my $n_s; # new state
+        if ($state[0] == 't') {
+            
+            # Turn it off
+            $n_s = 'f';
+            
+        } else {
+            $n_s = 't';
+        }
+        
+        my $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
+        my $code = $dbh->execute($ns, $form->{id});
+        
+        return 1;
+        
+    } else { # This shouldn't even be possible, but check for it anyway.
+        
+        # Definitely, DEFINITELY check it.        
+        # happily return 0. Find out about proper error states.
+        return 0;
+    }
+}
 
+1;

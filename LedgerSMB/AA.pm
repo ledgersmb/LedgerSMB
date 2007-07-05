@@ -886,6 +886,25 @@ sub transactions {
 			                                WHERE lower(description)
 			                                      LIKE '$var'))|;
     }
+    
+    if ($form->{invoice_type}) {
+        
+        if ( $form->{invoice_type} == 2 ) {
+        
+            $where .= qq|
+                AND a.on_hold = 'f'        
+            |;
+        }
+    
+        if ($form->{invoice_type} == 3) {
+        
+            $where .= qq|
+                AND a.on_hold = 't'
+            |;
+        }
+    }
+    
+    # the third state, all invoices, sets no explicit toggles. It just selects them all, as normal. 
 
     $query .= "WHERE $where
 			ORDER BY $sortorder";
@@ -972,7 +991,7 @@ sub get_name {
 		     FROM $form->{vc} c
 		     JOIN entity ON (entity.id = c.entity_id)
 		LEFT JOIN business b ON (b.id = c.business_id)
-		    WHERE c.id = ?|;
+		    WHERE c.entity_id = ?|;
     # TODO:  Add location join
 
     @queryargs = ( $form->{"$form->{vc}_id"} );

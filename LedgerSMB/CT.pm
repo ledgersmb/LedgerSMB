@@ -264,42 +264,46 @@ sub _save_vc {
     }
     if (!$updated){
             # Creating Entity
-            $query = qq|INSERT INTO entity (name, entity_class) VALUES (?, ?)|;
+            ($form->{entity_id}) = $dbh->selectrow_array("SELECT nextval('entity_id_seq')");
+            $query = qq|INSERT INTO entity (id, name, entity_class) VALUES (?, ?)|;
             $sth = $dbh->prepare($query);
-            $sth->execute($form->{name}, $form->{entity_class});
+            $sth->execute($form->{entity_id}, $form->{name}, $form->{entity_class});
             $sth->finish;
-            ($form->{entity_id}) = 
-		$dbh->selectrow_array("SELECT currval('entity_id_seq')");
+		
             # Creating LOCATION
+            ($form->{location_id}) = 
+		$dbh->selectrow_array("SELECT nextval('location_id_seq')");
             $query = qq|
 		INSERT INTO location
-			(line_one, line_two, city_province, mail_code, 
-			country_id)
+			(id, line_one, line_two, city_province, mail_code, 
+			country_id, location_class,created)
 		VALUES
 			(?, ?, ?, ?, 
 				(SELECT id FROM country
-				WHERE short_name = ? OR name = ?))
-            |;
+				WHERE short_name = ? OR name = ?),
+			 1, current_date)
+            |; # location class 1 is Billing. This is a sensible default.
             $sth = $dbh->prepare($query);
-            $sth->execute($form->{address1}, $form->{address2}, 
+            $sth->execute($form->{location_id}, $form->{address1}, $form->{address2}, 
                   "$form->{city}, $form->{state}", $form->{zipcode},
                   $form->{country}, $form->{country}
             ) || $form->dberror($query);
             
-            ($form->{location_id}) = 
-		$dbh->selectrow_array("SELECT currval('location_id_seq')");
+            
             #Creating company
+            # Removed entity_class_id ~Aurynn
+            # removed primary_location_id ~Aurynn
             $query = qq|
 		INSERT INTO company
-			(entity_id, entity_class_id, legal_name, 
-			primary_location_id, tax_id)
+			(entity_id, legal_name, tax_id)
 		VALUES
-			(?, ?, ?, ?, ?)
+			(?, ?, ?)
             |;
             $sth = $dbh->prepare($query) || $form->dberror($query);
-            $sth->execute($form->{entity_id}, $form->{entity_class}, 
+            $sth->execute($form->{entity_id}, # $form->{entity_class}, # removed entity_class_id ~Aurynn
                   $form->{name}, 
-                  $form->{location_id}, $form->{taxnumber});
+                  # $form->{location_id}, # removed by ~aurynn
+                  $form->{taxnumber});
             #Creating customer record
             $query = qq|
 		INSERT INTO customer 
@@ -331,7 +335,7 @@ sub save_customer {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
+    # connect to databaseµ
     my $dbh = $form->{dbh};
     my $query;
     my $sth;

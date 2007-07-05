@@ -519,13 +519,22 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
-      $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    
+    my $hold;
+    
+    if ($form->{on_hold}) {
+        
+        $hold = qq| <font size="17"><b> This invoice is On Hold </b></font> |;
+    }
 
     print qq|
   <tr>
     <td>
       <table width=100%>
 	<tr valign=bottom>
+	    | . $hold . qq|
+	
 	  <td>
 	    <table>
 	      <tr>
@@ -681,12 +690,14 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
+            'on_hold' =>
+              { ndx => 9, key=> 'O', value => $locale->text('On Hold') },
         );
 
         if ( $form->{id} ) {
 
             if ( $form->{locked} ) {
-                for ( "post", "delete" ) { delete $button{$_} }
+                for ( "post", "delete", 'on_hold' ) { delete $button{$_} }
             }
 
         }
@@ -1119,3 +1130,13 @@ sub yes {
 
 }
 
+sub on_hold {
+    
+    if ($form->{id}) {
+        
+        my $toggled = IS->toggle_on_old($form);
+    
+        #&invoice_links(); # is that it?
+        &edit(); # it was already IN edit for this to be reached.
+    }    
+}

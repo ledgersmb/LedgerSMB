@@ -568,13 +568,21 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
-      $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    
+    my $hold;
+    
+    if ($form->{on_hold}) {
+        
+        $hold = qq| <font size="17"><b> This invoice is On Hold </b></font> |;
+    }
 
     print qq|
   <tr>
     <td>
       <table width=100%>
 	<tr valign=bottom>
+	    | . $hold . qq|
 	  <td>
 	    <table>
 	      <tr>
@@ -723,6 +731,8 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
     # type=submit $locale->text('Sales Order')
 
     if ( !$form->{readonly} ) {
+        
+        # changes by Aurynn to add an On Hold button
 
         %button = (
             'update' =>
@@ -752,6 +762,8 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
               { ndx => 10, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
               { ndx => 11, key => 'D', value => $locale->text('Delete') },
+            'on_hold' =>
+              { ndx => 12, key => 'O', value => $locale->text('On Hold') },
         );
 
         if ( $form->{id} ) {
@@ -772,9 +784,9 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
         else {
 
             if ( $transdate > $closedto ) {
-
+                # Added on_hold, by Aurynn.
                 for ( "update", "ship_to", "print", "e_mail", "post",
-                    "schedule" )
+                    "schedule", "on_hold" )
                 {
                     $allowed{$_} = 1;
                 }
@@ -1177,3 +1189,13 @@ sub yes {
 
 }
 
+sub on_hold {
+    
+    if ($form->{id}) {
+        
+        my $toggled = IS->toggle_on_old($form);
+    
+        #&invoice_links(); # is that it?
+        &edit(); # it was already IN edit for this to be reached.
+    }    
+}

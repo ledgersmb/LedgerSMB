@@ -1201,10 +1201,11 @@ sub get_name {
     my $name = $self->like( lc $self->{$table} );
 
     my $query = qq|
-		SELECT * FROM $table
-		WHERE (lower(name) LIKE ? OR ${table}number LIKE ?)
+		SELECT * FROM $table t
+		JOIN entity e ON t.entity_id = e.id
+		WHERE (lower(e.name) LIKE ? OR t.${table}number LIKE ?)
 		$where
-		ORDER BY name|;
+		ORDER BY e.name|;
 
     unshift( @queryargs, $name, $name );
     my $sth = $self->{dbh}->prepare($query);
@@ -1726,7 +1727,7 @@ sub lastname_used {
     $where = "AND $where " if $where;
     $inv_notes = "ct.invoice_notes," if $vc eq 'customer';
     my $query = qq|
-		SELECT entity.name, ct.curr AS currency, ct.id AS ${vc}_id,
+		SELECT entity.name, ct.curr AS currency, entity_id AS ${vc}_id,
 			current_date + ct.terms AS duedate, 
 			$inv_notes 
 			ct.curr AS currency

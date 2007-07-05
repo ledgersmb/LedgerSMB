@@ -1759,7 +1759,8 @@ sub retrieve_invoice {
 			          a.duedate, a.taxincluded, a.curr AS currency,
 			          a.employee_id, e.name AS employee, a.till, 
 			          a.entity_id,
-			          a.language_code, a.ponumber
+			          a.language_code, a.ponumber,
+			          a.on_hold
 			     FROM ar a
 			LEFT JOIN employee e ON (e.entity_id = a.employee_id)
 			    WHERE a.id = ?|;
@@ -2037,6 +2038,45 @@ sub exchangerate_defaults {
     $form->{ $form->{currency} } ||= 1;
     $form->{ $form->{defaultcurrency} } = 1;
 
+}
+
+=pod
+
+=cut
+
+sub toggle_on_hold {
+    
+    my $self = shift @_;
+    my $form = shift @_;
+    
+    if ($form->{id}) { # it's an existing (.. probably) invoice.
+        
+        my $dbh = $form->{dbh};
+        my $sth = $dbh->prepare("SELECT on_hold from ar where ar.id = ?");
+        $sth->execute($form->{id});
+        my $state = $sth->fetchrow_array;
+        my $sth;
+        my $n_s; # new state
+        if ($state[0] == 't') {
+            
+            # Turn it off
+            $n_s = 'f';
+            
+        } else {
+            $n_s = 't';
+        }
+        
+        my $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
+        my $code = $dbh->execute($ns, $form->{id});
+        
+        return 1;
+        
+    } else { # This shouldn't even be possible, but check for it anyway.
+        
+        # Definitely, DEFINITELY check it.        
+        # happily return 0. Find out about proper error states.
+        return 0;
+    }
 }
 
 1;

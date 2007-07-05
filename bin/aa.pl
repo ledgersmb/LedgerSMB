@@ -1424,6 +1424,16 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
       </table>
     </td>
   </tr>
+  
+  <tr>
+    <td>        
+        |.$locale->text('All Invoices').qq|: <input type="radio" name="invoice_type" checked value="1"> 
+        |.$locale->text('Active').qq|: <input type="radio" name="invoice_type" value="2">  
+        |.$locale->text('On Hold').qq|: <input type="radio" name="invoice_type" value="3"> 
+        <br/>    
+    </td>
+  </tr>
+  
   <tr>
     <td>
       <table>
