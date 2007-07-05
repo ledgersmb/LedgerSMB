@@ -1077,7 +1077,6 @@ sub save_exchangerate {
     $self->update_exchangerate( $self->{dbh}, $currency, $transdate, $buy,
         $sell );
 
-    $dbh->commit;
 }
 
 sub get_exchangerate {
@@ -1098,7 +1097,6 @@ sub get_exchangerate {
     }
 
     $sth->finish;
-    $self->{dbh}->commit;
     $exchangerate;
 }
 
@@ -1118,7 +1116,6 @@ sub check_exchangerate {
     my ($exchangerate) = $sth->fetchrow_array;
 
     $sth->finish;
-    $self->{dbh}->commit;
 
     $exchangerate;
 }
@@ -1159,7 +1156,6 @@ sub add_shipto {
             $self->{shiptofax},      $self->{shiptoemail}
         ) || $self->dberror($query);
         $sth->finish;
-        $self->{dbh}->commit;
     }
 }
 
@@ -1181,7 +1177,6 @@ sub get_employee {
     $a[1] *= 1;
 
     $sth->finish;
-    $self->{dbh}->commit;
 
     @a;
 }
@@ -1225,7 +1220,6 @@ sub get_name {
     }
 
     $sth->finish;
-    $self->{dbh}->commit;
 
     $i;
 
@@ -1326,7 +1320,6 @@ sub all_vc {
 
     $sth->finish;
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
-    $self->{dbh}->commit;
 }
 
 sub all_taxaccounts {
@@ -1365,7 +1358,6 @@ sub all_taxaccounts {
             $sth->finish;
         }
     }
-    $self->{dbh}->commit;
 }
 
 sub all_employees {
@@ -1405,7 +1397,6 @@ sub all_employees {
     }
 
     $sth->finish;
-    $dbh->commit;
 }
 
 sub all_projects {
@@ -1453,7 +1444,6 @@ sub all_projects {
     }
 
     $sth->finish;
-    $dbh->commit;
 }
 
 sub all_departments {
@@ -1486,7 +1476,6 @@ sub all_departments {
 
     $sth->finish;
     $self->all_years($myconfig);
-    $dbh->commit;
 }
 
 sub all_years {
@@ -1539,7 +1528,6 @@ sub all_years {
         '12' => 'December'
     );
 
-    $dbh->commit;
 }
 
 sub create_links {
@@ -1715,7 +1703,6 @@ sub create_links {
     }
 
     $self->all_vc( $myconfig, $vc, $module, $dbh, $self->{transdate}, $job );
-    $self->{dbh}->commit;
 }
 
 sub lastname_used {
@@ -1755,7 +1742,6 @@ sub lastname_used {
     my $ref = $sth->fetchrow_hashref(NAME_lc);
     for ( keys %$ref ) { $self->{$_} = $ref->{$_} }
     $sth->finish;
-    $dbh->commit;
 }
 
 sub current_date {
@@ -1792,7 +1778,6 @@ sub current_date {
     $sth = $dbh->prepare($query);
     $sth->execute(@queryargs);
     ($thisdate) = $sth->fetchrow_array;
-    $dbh->commit;
     $thisdate;
 }
 
@@ -1894,7 +1879,6 @@ sub get_partsgroup {
     }
 
     $sth->finish;
-    $dbh->commit;
 }
 
 sub update_status {
@@ -1934,7 +1918,6 @@ sub update_status {
         $self->{formname} );
     $sth->finish;
 
-    $dbh->commit;
 }
 
 sub save_status {
@@ -2055,7 +2038,6 @@ sub get_recurring {
 
         chop $self->{recurring};
     }
-    $dbh->commit;
 }
 
 sub save_recurring {
@@ -2210,8 +2192,8 @@ sub save_recurring {
             $sth->finish;
         }
     }
-
     $dbh->commit;
+
 }
 
 sub save_intnotes {
@@ -2656,7 +2638,6 @@ sub audittrail {
 "$audittrail->{tablename}|$audittrail->{reference}|$audittrail->{formname}|$audittrail->{action}|$timestamp|";
     }
 
-    $dbh->commit;
     $rv;
 }
 
