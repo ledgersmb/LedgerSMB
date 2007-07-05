@@ -1155,7 +1155,7 @@ sub all_parts {
               if $form->{transdateto};
 
             if ( $form->{description} ne "" ) {
-                $var = dbh->quote( $form->like( lc $form->{description} ) );
+                $var = $dbh->quote( $form->like( lc $form->{description} ) );
                 $invwhere .= " AND lower(i.description) LIKE $var";
             }
 
