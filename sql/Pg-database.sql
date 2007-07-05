@@ -9,8 +9,10 @@ CREATE TABLE transactions (
 CREATE TABLE entity (
   id serial PRIMARY KEY,
   name text check (name ~ '[[:alnum:]_]'),
-  entity_class integer not null UNIQUE,
+  entity_class integer not null,
   created date not null default current_date);
+  
+CREATE UNIQUE INDEX entity_class_name_class_idx ON entity(name,entity_class);  
 
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
 COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
