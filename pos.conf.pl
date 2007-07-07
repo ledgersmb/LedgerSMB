@@ -97,7 +97,7 @@ $form->{pos_sources} = \%pos_sources;
 # Due to the architecture of SL, we need to use netcat to print.
 # Otherwise the document gets spooled twice and this interferes with timeliness.
 
-${LedgerSMB::Sysconfig::printer}{'Printer'} =
+${'LedgerSMB::Sysconfig::printer'}{'Printer'} =
 "utils/pos/directnet.pl $pos_config{rp_host} $pos_config{rp_proto} $pos_config{rp_port}";
 
 1;
