@@ -390,6 +390,8 @@ sub post_invoice {
                     $form->update_balance( $dbh, "invoice", "allocated",
                         qq|id = $ref->{id}|,
                         $qty * -1 );
+                    $form->update_balance( $dbh, "invoice", "allocated",
+				qq|id =$invoice_id|,$qty);
 
                     $allocated += $qty;
 
