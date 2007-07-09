@@ -271,36 +271,37 @@ sub post_invoice {
 				 WHERE description = '$uid'|;
             ($invoice_id) = $dbh->selectrow_array($query);
 
-            $query = qq|
-				UPDATE invoice 
-				   SET trans_id = ?,
-				       parts_id = ?,
-				       description = ?,
-				       qty = ?,
-				       sellprice = ?,
-				       fxsellprice = ?,
-				       discount = ?,
-				       allocated = ?,
-				       unit = ?,
-				       deliverydate = ?,
-				       project_id = ?,
-				       serialnumber = ?,
-				       notes = ?
-				 WHERE id = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute(
-                $form->{id},               $form->{"id_$i"},
-                $form->{"description_$i"}, $form->{"qty_$i"} * -1,
-                $form->{"sellprice_$i"},   $fxsellprice,
-                $form->{"discount_$i"},    $allocated,
-                $form->{"unit_$i"},        $form->{"deliverydate_$i"},
-                $project_id,               $form->{"serialnumber_$i"},
-                $form->{"notes_$i"},       $invoice_id
-            ) || $form->dberror($query);
 
             if ( $form->{"inventory_accno_id_$i"} ) {
 
-                # add purchase to inventory
+                #start patch bug 1749690 ###########################################################################################################
+		# if this is a exit for the product 
+		if($form->{"qty_$i"}<0) {
+                    # check for unallocated entries at the same price to match our entry
+                    $query = qq|
+				  SELECT i.id, i.qty, i.allocated, a.transdate
+			    	    FROM invoice i
+			            JOIN parts p ON (p.id = i.parts_id)
+				    JOIN ap a ON (a.id = i.trans_id)
+				   WHERE i.parts_id = ? AND (i.qty + i.allocated) < 0 AND i.sellprice = ?
+			    	ORDER BY transdate
+				    |;
+            	    $sth = $dbh->prepare($query);
+                    $sth->execute( $form->{"id_$i"}, $form->{"sellprice_$i"}) || $form->dberror($query);
+                    my $totalqty = $form->{"qty_$i"};
+            	    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+                        $form->db_parse_numeric(sth=>$sth, hashref => $ref);
+                    	my $qty = $ref->{qty} + $ref->{allocated};
+                        if ( ( $qty - $totalqty ) < 0 ) { $qty = $totalqty; }
+                    	# update allocated for sold item
+                        $form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, $qty * -1 );
+                        $allocated += $qty;
+                        last if ( ( $totalqty -= $qty ) >= 0 );
+            	    }
+		}
+                # stop patch bug 1749690 ###########################################################################################################
+
+        	# add purchase to inventory
                 push @{ $form->{acc_trans}{lineitems} },
                   {
                     chart_id      => $form->{"inventory_accno_id_$i"},
@@ -392,8 +393,6 @@ sub post_invoice {
                     $form->update_balance( $dbh, "invoice", "allocated",
                         qq|id = $ref->{id}|,
                         $qty * -1 );
-                    $form->update_balance( $dbh, "invoice", "allocated",
-				qq|id =$invoice_id|,$qty);
 
                     $allocated += $qty;
 
@@ -418,6 +417,33 @@ sub post_invoice {
                   };
 
             }
+            $query = qq|
+				UPDATE invoice 
+				   SET trans_id = ?,
+				       parts_id = ?,
+				       description = ?,
+				       qty = ?,
+				       sellprice = ?,
+				       fxsellprice = ?,
+				       discount = ?,
+				       allocated = ?,
+				       unit = ?,
+				       deliverydate = ?,
+				       project_id = ?,
+				       serialnumber = ?,
+				       notes = ?
+				 WHERE id = ?|;
+            $sth = $dbh->prepare($query);
+            $sth->execute(
+                $form->{id},               $form->{"id_$i"},
+                $form->{"description_$i"}, $form->{"qty_$i"} * -1,
+                $form->{"sellprice_$i"},   $fxsellprice,
+                $form->{"discount_$i"},    $allocated,
+                $form->{"unit_$i"},        $form->{"deliverydate_$i"},
+                $project_id,               $form->{"serialnumber_$i"},
+                $form->{"notes_$i"},       $invoice_id
+            ) || $form->dberror($query);
+
         }
     }
 
