@@ -37,6 +37,11 @@ package OP;
 sub overpayment {
     my ( $self, $myconfig, $form, $dbh, $amount, $ml ) = @_;
 
+    $invnumber =
+      $form->update_defaults( $myconfig, ( $form->{arap} eq 'ar' )
+        ? "sinumber"
+        : "vinumber", $dbh )
+      unless $invnumber;
     my $fxamount = $form->round_amount( $amount * $form->{exchangerate}, 2 );
     my ($paymentaccno) = split /--/, $form->{account};
 
@@ -58,11 +63,6 @@ sub overpayment {
     ($uid) = $dbh->selectrow_array($query);
 
     my $invnumber = $form->{invnumber};
-    $invnumber =
-      $form->update_defaults( $myconfig, ( $form->{arap} eq 'ar' )
-        ? "sinumber"
-        : "vinumber", $dbh )
-      unless $invnumber;
 
     $query = qq|
 		UPDATE $form->{arap} 

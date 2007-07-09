@@ -39,6 +39,8 @@ use LedgerSMB::Sysconfig;
 sub post_transaction {
 
     my ( $self, $myconfig, $form ) = @_;
+    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
+      unless $form->{invnumber};
 
     # connect to database
     my $dbh = $form->{dbh};
@@ -286,8 +288,6 @@ sub post_transaction {
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
     my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : 'NOW';
 
-    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
-      unless $form->{invnumber};
 
     $query = qq|
 		UPDATE $table 

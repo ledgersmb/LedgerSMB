@@ -208,6 +208,9 @@ sub save_customer {
     my $sth;
     my $null;
 
+    $form->{customernumber} =
+      $form->update_defaults( $myconfig, "customernumber", $dbh )
+      if !$form->{customernumber};
     # remove double spaces
     $form->{name} =~ s/  / /g;
 
@@ -301,9 +304,6 @@ sub save_customer {
     my $language_code;
     ( $null, $language_code ) = split /--/, $form->{language};
 
-    $form->{customernumber} =
-      $form->update_defaults( $myconfig, "customernumber", $dbh )
-      if !$form->{customernumber};
 
     $query = qq|
 		UPDATE customer 
@@ -388,6 +388,9 @@ sub save_vendor {
 
     # connect to database
     my $dbh = $form->{dbh};
+    $form->{vendornumber} =
+      $form->update_defaults( $myconfig, "vendornumber", $dbh )
+      if !$form->{vendornumber};
 
     my $query;
     my $sth;
@@ -476,9 +479,6 @@ sub save_vendor {
     my $language_code;
     ( $null, $language_code ) = split /--/, $form->{language};
 
-    $form->{vendornumber} =
-      $form->update_defaults( $myconfig, "vendornumber", $dbh )
-      if !$form->{vendornumber};
 
     $form->{startdate} = undef unless $form->{startdate};
     $form->{enddate}   = undef unless $form->{enddate};

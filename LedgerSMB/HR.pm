@@ -102,6 +102,9 @@ sub save_employee {
     my $dbh = $form->{dbh};
     my $query;
     my $sth;
+    $form->{employeenumber} =
+      $form->update_defaults( $myconfig, "employeenumber", $dbh )
+      if !$form->{employeenumber};
 
     if ( !$form->{id} ) {
         my $uid = localtime;
@@ -124,9 +127,6 @@ sub save_employee {
     $managerid     *= 1;
     $form->{sales} *= 1;
 
-    $form->{employeenumber} =
-      $form->update_defaults( $myconfig, "employeenumber", $dbh )
-      if !$form->{employeenumber};
 
     $query = qq|
 		UPDATE employee 

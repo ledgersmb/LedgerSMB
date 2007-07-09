@@ -808,6 +808,8 @@ sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
+    $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
+      unless $form->{invnumber};
 
     my $query;
     my $sth;
@@ -1368,8 +1370,6 @@ sub post_invoice {
     $form->{terms}       *= 1;
     $form->{taxincluded} *= 1;
 
-    $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
-      unless $form->{invnumber};
 
     # save AR record
     $query = qq|

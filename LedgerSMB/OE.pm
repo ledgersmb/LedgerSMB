@@ -246,6 +246,9 @@ sub transactions {
 
 sub save {
     my ( $self, $myconfig, $form ) = @_;
+    $form->{"$ordnumber"} =
+      $form->update_defaults( $myconfig, $numberfld, $dbh )
+      unless $form->{ordnumber};
 
     $form->db_prepare_vars(
         "quonumber", "transdate",     "vendor_id",     "customer_id",
@@ -278,9 +281,6 @@ sub save {
           : "rfqnumber";
     }
 
-    $form->{"$ordnumber"} =
-      $form->update_defaults( $myconfig, $numberfld, $dbh )
-      unless $form->{ordnumber};
 
     my $query;
     my $sth;
@@ -2298,6 +2298,7 @@ sub generate_orders {
     foreach $vendor_id ( keys %a ) {
 
         %tax = ();
+        my $ordnumber = $form->update_defaults( $myconfig, 'ponumber' );
 
         $query = qq|
 			SELECT v.curr, v.taxincluded, t.rate, c.accno
@@ -2401,7 +2402,6 @@ sub generate_orders {
 
         }
 
-        my $ordnumber = $form->update_defaults( $myconfig, 'ponumber' );
 
         my $null;
         my $employee_id;
@@ -2519,6 +2519,8 @@ sub consolidate_orders {
             $form->{"$form->{vc}_id"} = $vc_id;
             $amount                   = 0;
             $netamount                = 0;
+            $ordnumber ||=
+              $form->update_defaults( $myconfig, $numberfld, $dbh );
 
             foreach $id ( @{ $oe{orders}{$curr}{$vc_id} } ) {
 
@@ -2549,8 +2551,6 @@ sub consolidate_orders {
                 $dbh->do($query) || $form->dberror($query);
             }
 
-            $ordnumber ||=
-              $form->update_defaults( $myconfig, $numberfld, $dbh );
 
             #fixme:  Change this
             $query = qq|

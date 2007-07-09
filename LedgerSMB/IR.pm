@@ -41,6 +41,8 @@ sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
+    $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
+      unless $form->{invnumber};
 
     for ( 1 .. $form->{rowcount} ) {
         unless ( $form->{"deliverydate_$_"} ) {
@@ -671,8 +673,6 @@ sub post_invoice {
     # set values which could be empty
     $form->{taxincluded} *= 1;
 
-    $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
-      unless $form->{invnumber};
 
     # save AP record
     $query = qq|

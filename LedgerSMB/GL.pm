@@ -70,6 +70,8 @@ sub post_transaction {
     my $project_id;
     my $department_id;
     my $i;
+    $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
+      unless $form->{reference};
 
     # connect to database, turn off AutoCommit
     my $dbh = $form->{dbh};
@@ -117,8 +119,6 @@ sub post_transaction {
     ( $null, $department_id ) = split /--/, $form->{department};
     $department_id *= 1;
 
-    $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
-      unless $form->{reference};
     $form->{reference} ||= $form->{id};
 
     $query = qq|
