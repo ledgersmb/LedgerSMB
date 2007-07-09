@@ -34,9 +34,8 @@ sub display {
 
 sub expanding_menu {
     my ($request) = @_;
-    my $menu = new LedgerSMB::Menu(
-        {files => ['menu.ini'], user => $request->{_user}}
-    );
+    my $menu = new LedgerSMB::Menu({base => $request});
+    $menu->generate();
     my $template = LedgerSMB::Template->new(
          user => $request->{_user}, 
          locale => $request->{_locale},
@@ -45,10 +44,9 @@ sub expanding_menu {
          format => 'HTML',
     );
     $request->{subs} = [];
-    _attach_references({source => $menu, dest => $request->{subs}, path => ""});
     $menu->debug({file => '/tmp/debug-menu'});
     $request->debug({file => '/tmp/debug'});
-    $template->render($request);
+    $template->render($menu);
 }
 
 sub _attach_references {

@@ -18,7 +18,7 @@ included COPYRIGHT and LICENSE files for more information.
 package LedgerSMB::Menu;
 
 use Config::Std;
-use base(qw(LedgerSMB));
+use base(qw(LedgerSMB::DBObject));
 
 1;
 
@@ -26,45 +26,42 @@ use base(qw(LedgerSMB));
 
 =over
 
-=item new({files => ['path/to/file/glob' ... ], user = $user_ref})
+=item LedgerSMB::Menu->new()
 
-Creates a new Menu data structure with the files listed and the files in the 
-paths.
+Inherited from LedgerSMB::DBObject.  Please see that documnetation for details.
+
+=item $menu->generate()
+
+This function returns a list of menu items.  Each list item is a hashref:
+keys %menu_item would return the equivalent of qw(position id level label path 
+args).  Returns the complete list and sets $menu->{menu_items} to a referene to 
+th result set, This function does not return an entry for the top-level menu.
 
 =cut
 
+sub generate {
+    my ($self) = shift @_;
+    my @args;
 
-sub new {
-    my ($class, $args) = @_;
-    my $self = {};
-    bless ($self, $class);
-    my $index = 1;
-    for $file_glob (@{$args->{files}}){
-        for $file (glob($file_glob)){
-            my %config;
-            read_config($file => %config );
-            for $key (keys %config){
-                next if $args->{user}->{acs} =~ /$key/;
-                my $orig_key = $key;
-                my $ref = $self;
-                while ($key =~ s/^([^-]*)--//){
-                    $ref->{subs} ||= {};
-                    $ref->{subs}->{$1} ||= {};
-                    $ref = $ref->{subs}->{$1};
-                }
-                $ref->{subs} ||= {};
-		$ref->{subs}->{key} ||= {};
-                $ref = $ref->{subs}->{$key};
-                for (keys %{$config{$orig_key}}){
-                     $ref->{$_} = ${$config{$orig_key}}{$_};
-                }
-                $ref->{id} = $index;
-                $ref->{label} = $key;
-                ++$index;
+    @{$self->{menu_items}} = $self->exec_method(funcname => 'menu_generate');
+
+    $self->debug({file => '/tmp/menu'});
+
+    shift @{$self->{menu_items}};
+
+    for my $attribute (@{$self->{menu_items}}){
+        
+        @args = $self->_parse_array($attribute->{args});
+        delete $attribute->{args};
+        @{$attribute->{args}} = @args;
+	for (@{$attribute->{args}}){
+            if ($_ =~ /(module|menu|action)=/){
+               @elems = split(/=/, $_);
+               print STDERR join(','. @elems) . "\n";
+               $attribute->{$elems[0]} = $elems[1];
             }
         }
     }
-    return $self;
+    return @{$self->{menu_items}};
 }
-1;
-=back
+

@@ -1,3 +1,3 @@
 #!/usr/bin/perl
 
-require "old-handler.pl";
+require "lsmb-request.pl";

@@ -536,11 +536,12 @@ sub call_procedure {
     my $self     = shift @_;
     my %args     = @_;
     my $procname = $args{procname};
-    my @args     = @{ $args{args} };
+    my @call_args;
+    @call_args = @{ $args{args} } if defined $args{args};
     my $order_by = $args{order_by};
     my $argstr   = "";
     my @results;
-    for ( 1 .. scalar @args ) {
+    for ( 1 .. scalar @call_args ) {
         $argstr .= "?, ";
     }
     $argstr =~ s/\, $//;
@@ -550,7 +551,11 @@ sub call_procedure {
     }
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
-    $sth->execute(@args);
+    if (scalar @call_args){
+        $sth->execute(@call_args);
+    } else {
+        $sth->execute();
+    }
     my @types = @{$sth->{TYPE}};
     my @names = @{$sth->{NAME_lc}};
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {

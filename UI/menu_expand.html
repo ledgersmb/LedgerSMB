@@ -34,19 +34,12 @@
 
 		<body class="menu">
 		<img class="cornderlogo" src="images/ledgersmb_small.png" width="100" height="50" border="1" alt="ledger-smb" />
-	<?lsmb FOREACH item = subs ?>
-		<?lsmb old_id = id ?><?lsmb old_path = path ?>
-		<?lsmb id = item.id ?><?lsmb path = item.path ?>
-		<?lsmb IF (id != old_id) AND id ?>
-			<?lsmb desc_ids = [id, ''] ?>
-			<?lsmb asc_ids = [old_id, ''] ?>
-                	<?lsmb IF old_id.search(desc_ids.join('--')) ?>
-				<div id="sub_<?lsmb old_id ?>" class="Submenu">
-			<?lsmb ELSIF id.search(asc_ids.join('--')) ?>
-				</div>
-			<?lsmb END ?>
+	<?lsmb FOREACH item = menu_items ?>
+		<?lsmb href = "" ?>
+		<?lsmb WHILE item.level < old_level ?>
+ 			</div><?lsmb old_level = old_level - 1 ?>
 		<?lsmb END ?>
-		<div class="Menu" id="menu_<?lsmb id ?>">
+		<div class="Menu" id="menu_<?lsmb item.id ?>">
 			<a href="<?lsmb IF item.module ?><?lsmb item.module 
 				?><?lsmb ELSE ?>menu.pl<?lsmb END 
 				?>?login=<?lsmb login 
@@ -59,6 +52,10 @@
 					ELSE ?>Item<?lsmb END ?>"
 				><?lsmb text(item.label) ?></a>
 		</div>
+		<?lsmb IF item.menu ?>
+			<div id="sub_<?lsmb item.id ?>" class=submenu>
+		<?lsmb END ?>
+		<?lsmb old_level = item.level ?>
 	<?lsmb END ?>
                 
                 

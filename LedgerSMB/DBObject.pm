@@ -50,17 +50,24 @@ sub AUTOLOAD {
     my $type = Scalar::Util::blessed $self;
     $type =~ m/::(.*?)$/;
     $type = lc $1;
-    print "Type: $type\n";
     $self->exec_method( procname => "$type" . "_" . $AUTOLOAD, args => \@_);
 }
 
 sub new {
     my $class = shift @_;
-    my %args  = @_;
-    my $base  = $args{base};
-    my $mode  = $args{copy};
-    my @mergelist = @{$args{merge}};
+    my $args  = shift @_;
+    my $base  = $args->{base};
+    my $mode  = $args->{copy};
     my $self  = bless {}, $class;
+    my @mergelist;
+    if (defined $args->{merge}){
+        @mergelist = @{$args->{merge}};
+    } elsif (defined $mode && ( $mode eq 'list')) {
+        $self->error('Mergelist not set');
+    }
+    else {
+        @mergelist = [];
+    }
     if ( !$base->isa('LedgerSMB') ) {
         $self->error("Constructor called without LedgerSMB object arg");
     }
@@ -93,19 +100,23 @@ sub exec_method {
     my $self   = shift @_;
     my %args     = @_;
     my $funcname = $args{funcname};
-    my @in_args  = @{ $args{args} };
+    my @in_args;
+    @in_args = @{ $args{args}} if $args{args};
     my @call_args;
 
-    my $query = "SELECT proname, proargnames FROM pg_proc WHERE proname = ?";
+    my $query = "SELECT proname, pronargs, proargnames FROM pg_proc WHERE proname = ?";
     my $sth   = $self->{dbh}->prepare($query);
     $sth->execute($funcname);
     my $ref;
 
     $ref = $sth->fetchrow_hashref('NAME_lc');
     my $args = $ref->{proargnames};
-    $args =~ s/\{(.*)\}/$1/;
-    my @proc_args = split /,/, $args;
-
+    my @proc_args;
+    $ref->{pronargs} = 0 unless defined $ref->{pronargs};
+    if ($ref->{pronargs}){
+        $args =~ s/\{(.*)\}/$1/;
+        @proc_args = split /,/, $args if $args;
+    }
     if ( !$ref ) {    # no such function
         $self->error( "No such function: ", $funcname );
         die;
@@ -119,10 +130,10 @@ sub exec_method {
             }
         }
     }
-    else {
-        @call_args = @_;
-    }
-    $self->call_procedure( procname => $funcname, args => \@call_args );
+    for (@in_args) { push @call_args, $_ } ;
+    $self->{call_args} = \@call_args;
+    $self->debug({file => '/tmp/dbobject'});
+    $self->call_procedure( procname => $funcname, args => @call_args );
 }
 
 sub run_custom_queries {
@@ -222,6 +233,37 @@ sub run_custom_queries {
         }
     }
     @rc;
+}
+
+sub _parse_array {
+    my ($self, $value) = @_;
+    my $next;
+    my $separator;
+    my @return_array;
+
+    while ($value ne '{}') {
+        my $next = "";
+        my $separator = "";
+        if ($value =~ /^\{"/){
+            while ($next eq "" or ($next =~ /\\".$/)){
+                $value =~ s/^\{("[^"]*".)/\{/;
+                $next .= $1;
+                $next =~ /(.)$/;
+                $separator = $1;
+            }
+            $next =~ s/"(.*)"$separator$/$1/;
+            
+        } else {
+            $value =~ s/^\{([^,]*)(,|\})/\{/;
+            $next = $1;
+            $separator = $2;
+        }
+        $value .= '}' if $separator eq '}';
+        $next =~ s/\\\\/\\/g;
+        $next =~ s/\\"/"/g;
+        push @return_array, $next;
+    }
+    return @return_array;
 }
 
 1;
