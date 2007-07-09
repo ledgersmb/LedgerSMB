@@ -640,7 +640,7 @@ sub retrieve_assemblies {
     }
 
     if ( $form->{description} ne "" ) {
-        my $description = $dbh->( $form->like( lc $form->{description} ) );
+        my $description = $dbh->quote( $form->like( lc $form->{description} ) );
         $where .= " AND lower(p.description) LIKE $description";
     }
     $where .= qq| AND p.obsolete = '0'
