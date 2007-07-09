@@ -1599,13 +1599,8 @@ sub include_assembly {
     $form->{$id} = 1;
 
     my @a = qw(partnumber description bin);
-    if ( $form->{sort} eq 'partnumber' ) {
-        $sortorder = "TRUE";
-    }
-    else {
-        @a = grep !/$form->{sort}/, @a;
-        $sortorder = "$form->{sort} $form->{direction}, " . join ',', @a;
-    }
+    @a = grep !/$form->{sort}/, @a;
+    $sortorder = "$form->{sort} $form->{direction}, " . join ',', @a;
 
     @a = ();
     my $query = qq|
