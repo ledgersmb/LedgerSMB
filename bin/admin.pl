@@ -918,14 +918,16 @@ sub delete {
       ( $form->{templates} )
       ? "${LedgerSMB::Sysconfig::templates}/$form->{templates}"
       : "$templates/$form->{login}";
+    
+    my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
-    # scan %user for $templatedir
-    foreach $login ( keys %user ) {
-        last if ( $found = ( $form->{templates} eq $user{$login} ) );
-    }
+    my $found = $dbh->selectall_arrayref(qq|SELECT c.templates
+        FROM users_conf c INNER JOIN users u ON (c.id = u.id)
+        WHERE c.templates = ? AND u.username <> ?|,
+        undef, $form->{templates}, $form->{login});
 
     # if found keep directory otherwise delete
-    if ( !$found ) {
+    if ( !@$found ) {
 
         # delete it if there is a template directory
         $dir = "$form->{templates}";
@@ -934,8 +936,6 @@ sub delete {
             rmdir "$dir";
         }
     }
-
-    my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
     #users_conf
     my $deleteUser =
