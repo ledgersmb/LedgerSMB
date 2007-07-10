@@ -1617,7 +1617,6 @@ BEGIN
 END;
 ' LANGUAGE PLPGSQL;
 -- end function
-commit;
 CREATE TABLE menu_node (
     id serial NOT NULL,
     label character varying NOT NULL,
@@ -2490,3 +2489,4 @@ ALTER TABLE public.menu_friendly OWNER TO ledgersmb;
 -- PostgreSQL database dump complete
 --
 
+commit;
