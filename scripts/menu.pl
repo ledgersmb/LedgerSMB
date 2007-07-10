@@ -43,41 +43,8 @@ sub expanding_menu {
          template => 'menu_expand',
          format => 'HTML',
     );
-    $request->{subs} = [];
-    $menu->debug({file => '/tmp/debug-menu'});
-    $request->debug({file => '/tmp/debug'});
     $template->render($menu);
 }
 
-sub _attach_references {
-    no strict qw(refs);
-    my ($args) = @_;
-    my ($source, $dest, $path) 
-	= ($args->{source}, $args->{dest}, $args->{path});
-    my %hash;
-    if ($path and $source->{id}){
-        for (sort keys %$source){
-            next if $_ eq 'subs';
-            $hash{$_} = $source->{$_};
-        }
-        $hash{path} = $path;
-        push @{$dest}, \%hash;
-        foreach (sort keys %{$source->{subs}}) {
-            _attach_references({
-                 source => $source->{subs}->{$_}, 
-                 dest => $dest,
-                 path => "$path--$_",
-            });
-        }
-    } else {
-        foreach (sort keys %$source){
-            _attach_references({
-                source => $source->{$_},
-                dest => $dest,
-                path => "$_",
-            });
-        }
-    }
-}
 
 1;

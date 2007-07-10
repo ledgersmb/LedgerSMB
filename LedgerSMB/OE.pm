@@ -2515,8 +2515,12 @@ sub consolidate_orders {
             $form->{entity_id} = $vc_id;
             $amount                   = 0;
             $netamount                = 0;
+            my @orderids;
+            my $orderid_str = "";
 
             foreach $id ( @{ $oe{orders}{$curr}{$vc_id} } ) {
+                push(@orderids, $id);
+                $orderid_str .= "?, ";
 
                 # header
                 $ref = $oe{oe}{$curr}{$id};
@@ -2584,34 +2588,24 @@ sub consolidate_orders {
             $sth = $dbh->prepare($query);
             $sth->execute() || $form->dberror($query);
 
+            $orderid_str =~ s/, $//;
+
             # add items
-            foreach $item (@orderitems) {
-                for (
-                    qw(
-                    qty sellprice discount project_id ship)
-                  )
-                {
-                    $item->{$_} *= 1;
-                }
-                $query = qq|
+            $query = qq|
 				INSERT INTO orderitems 
 					(trans_id, parts_id, description,
 					qty, sellprice, discount, unit, reqdate,
 					project_id, ship, serialnumber, notes)
-				VALUES 
-					(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
+				SELECT ?, parts_id, description,
+					qty, sellprice, discount, unit, reqdate,
+					project_id, ship, serialnumber, notes
+				  FROM orderitems
+                                 WHERE trans_id IN ($orderid_str)|;
 
-                $sth = $dbh->prepare($query);
-                $sth->execute(
-                    $id,                   $item->{parts_id},
-                    $item->{description},  $item->{qty},
-                    $item->{sellprice},    $item->{discount},
-                    $item->{unit},         $form->{reqdate},
-                    $item->{project_id},   $item->{ship},
-                    $item->{serialnumber}, $item->{notes}
-                ) || $form->dberror($query);
+            $sth = $dbh->prepare($query);
+            $sth->execute($id, @orderids) || $form->dberror($query);
 
-            }
+           
         }
     }
 
