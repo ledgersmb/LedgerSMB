@@ -116,8 +116,8 @@ INSERT INTO entity_class (id,class) VALUES (6,'Referral');
 SELECT setval('entity_class_id_seq',7);
 
 CREATE TABLE entity_class_to_entity (
-  entity_class_id integer not null references entity_class(id),
-  entity_id integer not null references entity(id),
+  entity_class_id integer not null references entity_class(id) ON DELETE CASCADE,
+  entity_id integer not null references entity(id) ON DELETE CASCADE,
   PRIMARY KEY(entity_class_id,entity_id)
   );
 
@@ -174,7 +174,7 @@ COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;
 
 CREATE TABLE company_to_location (
   location_id integer references location(id) not null,
-  company_id integer references company(id) not null,
+  company_id integer not null references company(id) ON DELETE CASCADE,
   PRIMARY KEY(location_id,company_id));
 
 CREATE TABLE salutation (
@@ -204,31 +204,32 @@ COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a comm
 
 CREATE TABLE person_to_location (
   location_id integer not null references location(id),
-  person_id integer not null references person(id),
+  person_id integer not null references person(id) ON DELETE CASCADE,
   PRIMARY KEY (location_id,person_id));
 
 CREATE TABLE person_to_company (
   location_id integer references location(id) not null,
-  person_id integer references person(id) not null,
+  person_id integer not null references person(id) ON DELETE CASCADE,
+  company_id integer not null references company(id) ON DELETE CASCADE,
   PRIMARY KEY (location_id,person_id)); 
 
 CREATE TABLE entity_other_name (
- entity_id integer not null references entity(id),
+ entity_id integer not null references entity(id) ON DELETE CASCADE,
  other_name text check (other_name ~ '[[:alnum:]_]'),
  PRIMARY KEY (other_name, entity_id));
  
 COMMENT ON TABLE entity_other_name IS $$ Similar to company_other_name, a person may be jd, Joshua Drake, linuxpoet... all are the same person. $$;
 
 CREATE TABLE person_to_entity (
- person_id integer not null references person(id),
- entity_id integer not null references entity(id) check (entity_id != person_id),
+ person_id integer not null references person(id) ON DELETE CASCADE,
+ entity_id integer not null check (entity_id != person_id) references entity(id) ON DELETE CASCADE,
  related_how text,
  created date not null default current_date,
  PRIMARY KEY (person_id,entity_id));
  
 CREATE TABLE company_to_entity (
- company_id integer not null references company(id),
- entity_id integer not null references entity(id) check (entity_id != company_id),
+ company_id integer not null references company(id) ON DELETE CASCADE,
+ entity_id integer check (company_id != entity_id) not null references entity(id) ON DELETE CASCADE,
  related_how text,
  created date not null default current_date,
  PRIMARY KEY (company_id,entity_id));
@@ -251,11 +252,12 @@ INSERT INTO contact_class (id,class) values (8,'IRC');
 INSERT INTO contact_class (id,class) values (9,'Fax');
 INSERT INTO contact_class (id,class) values (10,'Generic Jabber');
 INSERT INTO contact_class (id,class) values (11,'Home Phone');
+INSERT INTO contact_class (id,class) values (12,'Email');
 
 SELECT SETVAL('contact_class_id_seq',12);
 
 CREATE TABLE person_to_contact (
-  person_id integer references person(id) not null,
+  person_id integer not null references person(id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
   PRIMARY KEY (person_id,contact_class_id,contact));
@@ -263,7 +265,7 @@ CREATE TABLE person_to_contact (
 COMMENT ON TABLE person_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single individual $$;
   
 CREATE TABLE company_to_contact (
-  company_id integer references company(id) not null,
+  company_id integer not null references company(id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
   PRIMARY KEY (company_id,contact_class_id,contact));  
@@ -283,7 +285,7 @@ CREATE TABLE note (id serial primary key, note_class integer not null references
 
 CREATE TABLE entity_note() INHERITS (note);
 ALTER TABLE entity_note ADD CHECK (id = 1);
-ALTER TABLE entity_note ADD FOREIGN KEY (ref_key) REFERENCES entity(id);
+ALTER TABLE entity_note ADD FOREIGN KEY (ref_key) REFERENCES entity(id) ON DELETE CASCADE;
 CREATE INDEX entity_note_id_idx ON entity_note(id);
 CREATE UNIQUE INDEX entity_note_class_idx ON note_class(lower(class));
 CREATE INDEX entity_note_vectors_idx ON entity_note USING gist(vector);
@@ -291,7 +293,10 @@ CREATE TABLE invoice_note() INHERITS (note);
 CREATE INDEX invoice_note_id_idx ON invoice_note(id);
 CREATE UNIQUE INDEX invoice_note_class_idx ON note_class(lower(class));
 CREATE INDEX invoice_note_vectors_idx ON invoice_note USING gist(vector);
+
+-- is this safe?
 ALTER TABLE invoice_note ADD CHECK (id = 2);
+
 
 -- END entity   
 
@@ -402,7 +407,8 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 --
 
 CREATE TABLE entity_credit_account (
-  entity_id int not null references entity(id),
+  id serial not null unique,
+  entity_id int not null references entity(id) ON DELETE CASCADE,
   entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
   discount numeric, 
   taxincluded bool default 'f',
@@ -416,12 +422,14 @@ CREATE TABLE entity_credit_account (
   pricegroup_id int,
   curr char(3),
   startdate date DEFAULT CURRENT_DATE,
-  enddate date
+  enddate date,
+  PRIMARY KEY(entity_id, meta_number)
 );
+
 
 CREATE TABLE entity_bank_account (
     id serial not null,
-    entity_id int references entity(id) not null,
+    entity_id int not null references entity(id) ON DELETE CASCADE,
     bic varchar,
     iban varchar,
     UNIQUE (id),
@@ -631,24 +639,26 @@ CREATE TABLE tax (
 );
 --
 CREATE TABLE customertax (
-  customer_id int,
+  customer_id int references entity_credit_account(id) on delete cascade,
   chart_id int,
   PRIMARY KEY (customer_id, chart_id)
 );
 --
 CREATE TABLE vendortax (
-  vendor_id int,
+  vendor_id int references entity_credit_account(id) on delete cascade,
   chart_id int,
   PRIMARY KEY (vendor_id, chart_id)
 );
 --
 
 CREATE TABLE oe_class (
-  id smallint unique check(id IN (1,2)),
+  id smallint unique check(id IN (1,2,3,4)),
   oe_class text primary key);
   
 INSERT INTO oe_class(id,oe_class) values (1,'Sales Order');
 INSERT INTO oe_class(id,oe_class) values (2,'Purchase Order');
+INSERT INTO oe_class(id,oe_class) values (3,'Quotation');
+INSERT INTO oe_class(id,oe_class) values (4,'RFQ');
 
 COMMENT ON TABLE oe_class IS $$ This could probably be done better. But I need to remove the customer_id/vendor_id relationship and instead rely on a classification $$;
 
@@ -706,7 +716,7 @@ CREATE TABLE exchangerate (
 );
 --
 create table employee (
-  entity_id integer references entity(id) not null PRIMARY KEY,
+  entity_id integer not null references entity(id) on delete cascade primary key,
   entity_class_id integer references entity_class(id) not null check (entity_class_id = 3),
   login text,
   startdate date default current_date,
@@ -851,7 +861,7 @@ CREATE TABLE yearend (
 );
 --
 CREATE TABLE partsvendor (
-  entity_id int references entity(id) not null,
+  entity_id int not null references entity_credit_account(id) on delete cascade,
   parts_id int,
   partnumber text,
   leadtime int2,
@@ -867,7 +877,7 @@ CREATE TABLE pricegroup (
 --
 CREATE TABLE partscustomer (
   parts_id int,
-  customer_id int,
+  customer_id int not null references entity_credit_account(id) on delete cascade,
   pricegroup_id int,
   pricebreak numeric,
   sellprice NUMERIC,
@@ -978,13 +988,6 @@ DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'chart');
 CREATE RULE chart_id_track_u AS ON update TO chart 
 DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transactions (id, table_name) SELECT id, 'customer' FROM customer;
-
-CREATE RULE customer_id_track_i AS ON insert TO customer
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'customer');
-
-CREATE RULE customer_id_track_u AS ON update TO customer 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
 INSERT INTO transactions (id, table_name) SELECT id, 'department' FROM department;
 
@@ -993,8 +996,6 @@ DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'department');
 
 CREATE RULE department_id_track_u AS ON update TO department 
 DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-INSERT INTO transactions (id, table_name) SELECT entity_id, 'employee' FROM employee;
 
 INSERT INTO transactions (id, table_name) SELECT id, 'gl' FROM gl;
 
@@ -1044,10 +1045,6 @@ DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'project');
 CREATE RULE project_id_track_u AS ON update TO project 
 DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-INSERT INTO transactions (id, table_name) SELECT entity_id, 'vendor' FROM vendor;
-
-CREATE RULE vendor_id_track_i AS ON insert TO vendor
-DO INSERT INTO transactions (id, table_name) VALUES (new.entity_id, 'vendor');
 
 INSERT INTO transactions (id, table_name) SELECT id, 'warehouse' FROM warehouse;
 
@@ -1100,8 +1097,6 @@ create index chart_category_key on chart (category);
 create index chart_link_key on chart (link);
 create index chart_gifi_accno_key on chart (gifi_accno);
 --
-create index customer_id_key on customer (id);
-create index customer_customernumber_key on customer (customernumber);
 create index customer_customer_id_key on customertax (customer_id);
 --
 create unique index employee_login_key on employee (login);
@@ -1133,8 +1128,6 @@ create index parts_partnumber_key on parts (lower(partnumber));
 create index parts_description_key on parts (lower(description));
 create index partstax_parts_id_key on partstax (parts_id);
 --
-create index vendor_entity_id_key on vendor (entity_id);
-create index vendor_vendornumber_key on vendor (vendornumber);
 --
 create index shipto_trans_id_key on shipto (trans_id);
 --
@@ -1443,32 +1436,6 @@ CREATE TRIGGER del_department AFTER DELETE ON ap FOR EACH ROW EXECUTE PROCEDURE 
 CREATE TRIGGER del_department AFTER DELETE ON gl FOR EACH ROW EXECUTE PROCEDURE del_department();
 -- end trigger
 CREATE TRIGGER del_department AFTER DELETE ON oe FOR EACH ROW EXECUTE PROCEDURE del_department();
--- end trigger
---
-CREATE FUNCTION del_customer() RETURNS TRIGGER AS '
-begin
-  delete from shipto where trans_id = old.id;
-  delete from customertax where customer_id = old.id;
-  delete from partscustomer where customer_id = old.id;
-  return NULL;
-end;
-' language 'plpgsql';
--- end function
---
-CREATE TRIGGER del_customer AFTER DELETE ON customer FOR EACH ROW EXECUTE PROCEDURE del_customer();
--- end trigger
---
-CREATE FUNCTION del_vendor() RETURNS TRIGGER AS '
-begin
-  delete from shipto where trans_id = old.id;
-  delete from vendortax where vendor_id = old.id;
-  delete from partsvendor where vendor_id = old.id;
-  return NULL;
-end;
-' language 'plpgsql';
--- end function
---
-CREATE TRIGGER del_vendor AFTER DELETE ON vendor FOR EACH ROW EXECUTE PROCEDURE del_vendor();
 -- end trigger
 --
 CREATE FUNCTION del_exchangerate() RETURNS TRIGGER AS '
