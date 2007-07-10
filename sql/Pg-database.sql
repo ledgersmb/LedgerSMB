@@ -409,10 +409,10 @@ CREATE VIEW vendor AS
     join entity_invoice_notes ein on ein.entity_id = emd.entity_id
     where emd.entity_class = 1;
 
-COMMENT ON TABLE entity_metadata IS $$ This is a metadata table for ALL entities in LSMB; it deprecates the use of customer and vendor specific tables (which were nearly identical and largely redundant), and replaces it with a single point of metadata. $$;
+COMMENT ON TABLE entity_credit_account IS $$ This is a metadata table for ALL entities in LSMB; it deprecates the use of customer and vendor specific tables (which were nearly identical and largely redundant), and replaces it with a single point of metadata. $$;
 
-COMMENT ON COLUMN entity_metadata.entity_id IS $$ This is the relationship between entities and their metadata. $$;
-COMMENT ON COLUMN entity_metadata.entity_class IS $$ A reference to entity_class, requiring that entity_metadata only apply to vendors and customers, using the entity_class table as the Point Of Truth. $$;
+COMMENT ON COLUMN entity_credit_account.entity_id IS $$ This is the relationship between entities and their metadata. $$;
+COMMENT ON COLUMN entity_credit_account.entity_class IS $$ A reference to entity_class, requiring that entity_credit_account only apply to vendors and customers, using the entity_class table as the Point Of Truth. $$;
 
 ALTER TABLE company ADD COLUMN sic_code varchar;
 
