@@ -636,7 +636,7 @@ create table shipto (
 --
 CREATE TABLE vendor (
   entity_id int references entity(id) not null PRIMARY KEY,
-  entity_class_id int references entity(entity_class) not null check (entity_class_id = 1),
+  entity_class_id int references entity_class(id) not null check (entity_class_id = 1),
   terms int2 default 0,
   taxincluded bool default 'f',
   vendornumber varchar(32),
@@ -2214,7 +2214,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 135	action	backup	352
 134	media	file	353
 135	media	email	354
-136	menu	1	532
 137	module	am.pl	355
 138	module	am.pl	356
 139	module	am.pl	357
@@ -2228,7 +2227,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 143	module	am.pl	365
 142	action	add_warehouse	366
 143	action	list_warehouse	367
-144	menu	1	533
 145	module	am.pl	368
 146	module	am.pl	369
 145	action	add_department	370
@@ -2384,6 +2382,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 193	target	_top	534
 192	menu	1	530
 192	new	1	531
+136	menu	1	535
+144	menu	1	536
 \.
 
 
