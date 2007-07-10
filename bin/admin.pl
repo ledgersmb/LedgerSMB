@@ -34,7 +34,6 @@
 #
 #======================================================================
 
-$menufile = "menu.ini";
 
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
@@ -647,41 +646,6 @@ sub form_header {
     }
 
     # access control
-    open( FH, '<', $menufile )
-      or $form->error( __FILE__ . ':' . __LINE__ . ': ' . "$menufile : $!" );
-
-    # scan for first menu level
-    @a = <FH>;
-    close(FH);
-
-    if ( open( FH, '<', "custom_$menufile" ) ) {
-        push @a, <FH>;
-    }
-
-    close(FH);
-
-    foreach $item (@a) {
-
-        next unless $item =~ /\[\w+/;
-        next if $item =~ /\#/;
-
-        $item =~ s/(\[|\])//g;
-        chop $item;
-
-        if ( $item =~ /--/ ) {
-
-            ( $level, $menuitem ) = split /--/, $item, 2;
-        }
-        else {
-
-            $level    = $item;
-            $menuitem = $item;
-            push @acsorder, $item;
-        }
-
-        push @{ $acs{$level} }, $menuitem;
-
-    }
 
     %role = (
         'admin'      => $locale->text('Administrator'),
