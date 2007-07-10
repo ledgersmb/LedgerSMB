@@ -1197,9 +1197,11 @@ sub get_name {
 
         @queryargs = ( $transdate, $transdate );
     }
-
+    
+    # Company name is stored in $self->{vendor} or $self->{customer}
     my $name = $self->like( lc $self->{$table} );
-
+    
+    # Vendor and Customer are now views into entity_credit_account.
     my $query = qq|
 		SELECT * FROM $table t
 		JOIN entity e ON t.entity_id = e.id
@@ -1207,23 +1209,20 @@ sub get_name {
 		$where
 		ORDER BY e.name|;
 
-    unshift( @queryargs, $name, $name );
+    unshift( @queryargs, $name, $name, $table );
     my $sth = $self->{dbh}->prepare($query);
 
     $sth->execute(@queryargs) || $self->dberror($query);
 
     my $i = 0;
     @{ $self->{name_list} } = ();
-
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         push( @{ $self->{name_list} }, $ref );
         $i++;
     }
-
     $sth->finish;
 
-    $i;
-
+    return $i;
 }
 
 sub all_vc {

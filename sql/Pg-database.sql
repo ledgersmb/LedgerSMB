@@ -324,21 +324,18 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 --
 
 --
-CREATE TABLE customer (
-  id serial PRIMARY KEY,
-  entity_id int references entity(id),
+
+CREATE TABLE entity_credit_account (
+  entity_id int not null references entity(id),
+  entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
   discount numeric, 
   taxincluded bool default 'f',
   creditlimit NUMERIC default 0,
   terms int2 default 0,
-  customernumber varchar(32),
+  meta_number varchar(32),
   cc text,
   bcc text,
   business_id int,
-  invoice_notes text,
-  sic_code varchar(6),
-  iban varchar(34),
-  bic varchar(11),
   language_code varchar(6),
   pricegroup_id int,
   curr char(3),
@@ -346,9 +343,78 @@ CREATE TABLE customer (
   enddate date
 );
 
-COMMENT ON TABLE customer IS $$ This is now a metadata table that holds information specific to customers. Source info is not part of the entity management $$;
-COMMENT ON COLUMN customer.entity_id IS $$ This is the relationship between entities and customers $$;
+CREATE TABLE entity_bank_account (
+    id serial not null,
+    entity_id int references entity(id) not null,
+    bic varchar,
+    iban varchar,
+    UNIQUE (id),
+    PRIMARY KEY (bic, iban)
+);
 
+CREATE TABLE entity_invoice_notes (
+    id serial not null,
+    entity_id int not null references entity(id),
+    note text,
+    unique (id)    
+);
+
+CREATE VIEW customer AS 
+    SELECT emd.entity_id, 
+        emd.entity_class, 
+        emd.discount,
+        emd.taxincluded,
+        emd.creditlimit,
+        emd.terms,
+        emd.meta_number as customernumber,
+        emd.cc,
+        emd.bcc,
+        emd.business_id,
+        emd.language_code,
+        emd.pricegroup_id,
+        emd.curr,
+        emd.startdate,
+        emd.enddate,
+        eba.bic, 
+        eba.iban, 
+        ein.note as 
+        invoice_notes 
+    FROM entity_credit_account emd 
+    join entity_bank_account eba on emd.entity_id = eba.entity_id
+    join entity_invoice_notes ein on ein.entity_id = emd.entity_id
+    where emd.entity_class = 2;
+    
+CREATE VIEW vendor AS 
+    SELECT emd.entity_id, 
+        emd.entity_class, 
+        emd.discount,
+        emd.taxincluded,
+        emd.creditlimit,
+        emd.terms,
+        emd.meta_number as vendornumber,
+        emd.cc,
+        emd.bcc,
+        emd.business_id,
+        emd.language_code,
+        emd.pricegroup_id,
+        emd.curr,
+        emd.startdate,
+        emd.enddate,
+        eba.bic, 
+        eba.iban, 
+        ein.note as 
+        invoice_notes 
+    FROM entity_credit_account emd 
+    join entity_bank_account eba on emd.entity_id = eba.entity_id
+    join entity_invoice_notes ein on ein.entity_id = emd.entity_id
+    where emd.entity_class = 1;
+
+COMMENT ON TABLE entity_metadata IS $$ This is a metadata table for ALL entities in LSMB; it deprecates the use of customer and vendor specific tables (which were nearly identical and largely redundant), and replaces it with a single point of metadata. $$;
+
+COMMENT ON COLUMN entity_metadata.entity_id IS $$ This is the relationship between entities and their metadata. $$;
+COMMENT ON COLUMN entity_metadata.entity_class IS $$ A reference to entity_class, requiring that entity_metadata only apply to vendors and customers, using the entity_class table as the Point Of Truth. $$;
+
+ALTER TABLE company ADD COLUMN sic_code varchar;
 
 --
 --
@@ -634,30 +700,6 @@ create table shipto (
 -- SHIPTO really needs to be pushed into entities too
 
 --
-CREATE TABLE vendor (
-  entity_id int references entity(id) not null PRIMARY KEY,
-  entity_class_id int references entity_class(id) not null check (entity_class_id = 1),
-  terms int2 default 0,
-  taxincluded bool default 'f',
-  vendornumber varchar(32),
-  cc text,
-  bcc text,
-  gifi_accno varchar(30),
-  business_id int,
-  taxnumber varchar(32),
-  sic_code varchar(6),
-  discount numeric,
-  creditlimit numeric default 0,
-  iban varchar(34),
-  bic varchar(11),
-  language_code varchar(6),
-  pricegroup_id int,
-  curr char(3),
-  startdate date,
-  enddate date
-);
-
-COMMENT ON TABLE vendor IS $$ Now a meta data table $$;
 
 --
 CREATE TABLE project (

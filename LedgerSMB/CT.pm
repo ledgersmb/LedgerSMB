@@ -209,7 +209,8 @@ sub _save_vc {
        $form->{vc} = 'vendor';
        $form->{entity_class} = 1;
     }
-
+    
+    # this should really all be replaced by an upsert.
     if ( $form->{id} ) {
         $query = qq|
 		DELETE FROM $form->{vc}tax
@@ -231,7 +232,7 @@ sub _save_vc {
         if ( $sth->fetchrow_array ) {
             $sth->finish;
             $query = qq|
-		UPDATE $form->{vc}
+		UPDATE enti
 		SET discount = ?
 			taxincluded = ?
 			creditlimit = ?
@@ -265,7 +266,7 @@ sub _save_vc {
     if (!$updated){
             # Creating Entity
             ($form->{entity_id}) = $dbh->selectrow_array("SELECT nextval('entity_id_seq')");
-            $query = qq|INSERT INTO entity (id, name, entity_class) VALUES (?, ?)|;
+            $query = qq|INSERT INTO entity (id, name, entity_class) VALUES (?, ?,?)|;
             $sth = $dbh->prepare($query);
             $sth->execute($form->{entity_id}, $form->{name}, $form->{entity_class});
             $sth->finish;
@@ -276,9 +277,9 @@ sub _save_vc {
             $query = qq|
 		INSERT INTO location
 			(id, line_one, line_two, city_province, mail_code, 
-			country_id, location_class,created)
+			country_id, location_class, created)
 		VALUES
-			(?, ?, ?, ?, 
+			(?, ?, ?, ?, ?, 
 				(SELECT id FROM country
 				WHERE short_name = ? OR name = ?),
 			 1, current_date)
@@ -291,43 +292,60 @@ sub _save_vc {
             
             
             #Creating company
-            # Removed entity_class_id ~Aurynn
-            # removed primary_location_id ~Aurynn
+            # Removed entity_class_id,
+            # removed primary_location_id,
+            # added sic_code  ~Aurynn
             $query = qq|
 		INSERT INTO company
-			(entity_id, legal_name, tax_id)
+			(entity_id, legal_name, tax_id, sic_code)
 		VALUES
-			(?, ?, ?)
+			(?, ?, ?, ?)
             |;
             $sth = $dbh->prepare($query) || $form->dberror($query);
             $sth->execute($form->{entity_id}, # $form->{entity_class}, # removed entity_class_id ~Aurynn
                   $form->{name}, 
                   # $form->{location_id}, # removed by ~aurynn
-                  $form->{taxnumber});
-            #Creating customer record
+                  $form->{taxnumber},
+                  $form->{sic_code});
+            # Creating entity_metadata record, replacing customer and vendor.
+            
             $query = qq|
-		INSERT INTO customer 
-			(entity_id, discount, taxincluded, creditlimit, terms,
-				customernumber, cc, bcc, business_id, sic_code,
-				language_code, pricegroup_id, curr, startdate,
-				enddate, invoice_notes, bic, iban)
-					
-		VALUES (?, ?, ?, ?, ?,
-			?, ?, ?, ?, ?,
-			?, ?, ?, ?,
-			?, ?, ?, ?)|;
+    		INSERT INTO entity_credit_account
+    			(entity_id, entity_class, discount, taxincluded, creditlimit, 
+    			    terms, meta_number, cc, bcc, business_id,
+    				language_code, pricegroup_id, curr, startdate,
+    				enddate)
 
+    		VALUES (?, ?, ?, ?, ?,
+    			?, ?, ?, ?,
+    			?, ?, ?, ?,
+    			?, ?)|;
+            
             $sth = $dbh->prepare($query);
             $sth->execute(
-                 $form->{entity_id}, $form->{discount}, $form->{taxincluded},
-                 $form->{creditlimit}, 
+                 $form->{entity_id}, $form->{entity_class}, $form->{discount}, 
+                 $form->{taxincluded}, $form->{creditlimit}, 
                  $form->{terms}, $form->{"$form->{vc}number"}, $form->{cc},
-                 $form->{bcc}, $form->{business_id}, $form->{sic_code},
+                 $form->{bcc}, $form->{business_id},
                  $form->{language_code}, $form->{pricegroup_id}, $form->{curr},
                  $form->{startdate} || undef, $form->{enddate} || undef, 
-                 $form->{invoice_notes},
-                 $form->{bic}, $form->{iban}
             ) || $form->dberror($query);
+            
+            $query = qq|
+                INSERT INTO entity_bank_account (entity_id, bic, iban) 
+                VALUES (?,?,?)
+            |;
+            $sth = $dbh->prepare($query);
+            $sth->execute($form->{entity_id}, $form->{bic}, $form->{iban}) || 
+                $form->dberror($query);
+            $query = qq|
+                insert into entity_invoice_notes (entity_id, note)
+                values (?, ?)
+            |;
+            $sth = $dbh->prepare($query);
+            $sth->execute($form->{entity_id}, $form->{notes}) || 
+                $form->dberror($query);
+            
     }
 }
 
