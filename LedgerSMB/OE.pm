@@ -246,24 +246,9 @@ sub transactions {
 
 sub save {
     my ( $self, $myconfig, $form ) = @_;
-    $form->{"$ordnumber"} =
-      $form->update_defaults( $myconfig, $numberfld, $dbh )
-      unless $form->{ordnumber};
-
-    $form->db_prepare_vars(
-        "quonumber", "transdate",     "vendor_id",     "customer_id",
-        "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
-        "currency",  "department_id", "employee_id",   "language_code",
-        "ponumber",  "terms"
-    );
-
-    # connect to database, turn off autocommit
-    my $dbh = $form->{dbh};
-    my @queryargs;
-    my $quotation;
     my $ordnumber;
+    my $quotation;
     my $numberfld;
-    $form->{vc} = ( $form->{vc} eq 'customer' ) ? 'customer' : 'vendor';
     if ( $form->{type} =~ /_order$/ ) {
         $quotation = "0";
         $ordnumber = "ordnumber";
@@ -282,6 +267,21 @@ sub save {
     }
 
 
+    $form->{"$ordnumber"} =
+      $form->update_defaults( $myconfig, $numberfld, $dbh )
+      unless $form->{"$ordnumber"};
+
+    $form->db_prepare_vars(
+        "quonumber", "transdate",     "vendor_id",     "customer_id",
+        "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
+        "currency",  "department_id", "employee_id",   "language_code",
+        "ponumber",  "terms"
+    );
+
+    # connect to database, turn off autocommit
+    my $dbh = $form->{dbh};
+    my @queryargs;
+    $form->{vc} = ( $form->{vc} eq 'customer' ) ? 'customer' : 'vendor';
     my $query;
     my $sth;
     my $null;
@@ -2519,11 +2519,15 @@ sub consolidate_orders {
             $form->{"$form->{vc}_id"} = $vc_id;
             $amount                   = 0;
             $netamount                = 0;
-            $ordnumber ||=
+            $ordnumber =
               $form->update_defaults( $myconfig, $numberfld, $dbh );
+            my @orderids;
+            my $orderid_str = "";
 
-            foreach $id ( @{ $oe{orders}{$curr}{$vc_id} } ) {
+            foreach $id ( @{ $oe{orders}{$curr}{$vc_id} } ) { 
 
+                push(@orderids, $id);
+                $orderid_str .= "?, ";
                 # header
                 $ref = $oe{oe}{$curr}{$id};
 
@@ -2588,34 +2592,23 @@ sub consolidate_orders {
             $sth = $dbh->prepare($query);
             $sth->execute() || $form->dberror($query);
 
+            $orderid_str =~ s/, $//;
             # add items
-            foreach $item (@orderitems) {
-                for (
-                    qw(
-                    qty sellprice discount project_id ship)
-                  )
-                {
-                    $item->{$_} *= 1;
-                }
-                $query = qq|
+            $query = qq|
 				INSERT INTO orderitems 
 					(trans_id, parts_id, description,
 					qty, sellprice, discount, unit, reqdate,
 					project_id, ship, serialnumber, notes)
-				VALUES 
-					(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
+				SELECT ?, parts_id, description, qty, 
+				       sellprice, discount, unit, reqdate, 
+				       project_id, 0, description, qty
+                                  FROM orderitems 
+				 WHERE trans_id IN ($orderid_str)|;
 
-                $sth = $dbh->prepare($query);
-                $sth->execute(
-                    $id,                   $item->{parts_id},
-                    $item->{description},  $item->{qty},
-                    $item->{sellprice},    $item->{discount},
-                    $item->{unit},         $form->{reqdate},
-                    $item->{project_id},   $item->{ship},
-                    $item->{serialnumber}, $item->{notes}
-                ) || $form->dberror($query);
+            $sth = $dbh->prepare($query);
+            $sth->execute($id, @orderids) || $form->dberror($query);
 
-            }
+       
         }
     }
 
