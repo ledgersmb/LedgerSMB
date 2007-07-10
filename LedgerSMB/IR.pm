@@ -41,6 +41,8 @@ sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
+    $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
+      unless $form->{invnumber};
 
     for ( 1 .. $form->{rowcount} ) {
         unless ( $form->{"deliverydate_$_"} ) {
@@ -406,6 +408,8 @@ sub post_invoice {
                     $form->update_balance( $dbh, "invoice", "allocated",
                         qq|id = $ref->{id}|,
                         $qty * -1 );
+                    $form->update_balance( $dbh, "invoice", "allocated",
+				qq|id =$invoice_id|,$qty);
 
                     $allocated += $qty;
 
@@ -430,33 +434,6 @@ sub post_invoice {
                   };
 
             }
-            $query = qq|
-				UPDATE invoice 
-				   SET trans_id = ?,
-				       parts_id = ?,
-				       description = ?,
-				       qty = ?,
-				       sellprice = ?,
-				       fxsellprice = ?,
-				       discount = ?,
-				       allocated = ?,
-				       unit = ?,
-				       deliverydate = ?,
-				       project_id = ?,
-				       serialnumber = ?,
-				       notes = ?
-				 WHERE id = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute(
-                $form->{id},               $form->{"id_$i"},
-                $form->{"description_$i"}, $form->{"qty_$i"} * -1,
-                $form->{"sellprice_$i"},   $fxsellprice,
-                $form->{"discount_$i"},    $allocated,
-                $form->{"unit_$i"},        $form->{"deliverydate_$i"},
-                $project_id,               $form->{"serialnumber_$i"},
-                $form->{"notes_$i"},       $invoice_id
-            ) || $form->dberror($query);
-
         }
     }
 
@@ -712,8 +689,6 @@ sub post_invoice {
     # set values which could be empty
     $form->{taxincluded} *= 1;
 
-    $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
-      unless $form->{invnumber};
 
     # save AP record
     $query = qq|

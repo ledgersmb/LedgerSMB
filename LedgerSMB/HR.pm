@@ -98,6 +98,9 @@ sub get_employee {
 
 sub save_employee {
     my ( $self, $myconfig, $form ) = @_;
+    $form->{employeenumber} =
+      $form->update_defaults( $myconfig, "employeenumber", $dbh )
+      if !$form->{employeenumber};
 
     my $dbh = $form->{dbh};
     my $query;
@@ -124,9 +127,6 @@ sub save_employee {
     $managerid     *= 1;
     $form->{sales} *= 1;
 
-    $form->{employeenumber} =
-      $form->update_defaults( $myconfig, "employeenumber", $dbh )
-      if !$form->{employeenumber};
 
     $query = qq|
 		UPDATE employee 

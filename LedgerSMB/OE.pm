@@ -253,7 +253,6 @@ sub save {
         "currency",  "department_id", "employee_id",   "language_code",
         "ponumber",  "terms"
     );
-
     # connect to database, turn off autocommit
     my $dbh = $form->{dbh};
     my @queryargs;
@@ -277,10 +276,11 @@ sub save {
           ? "sqnumber"
           : "rfqnumber";
     }
-
     $form->{"$ordnumber"} =
       $form->update_defaults( $myconfig, $numberfld, $dbh )
       unless $form->{ordnumber};
+
+
 
     my $query;
     my $sth;

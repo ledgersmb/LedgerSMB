@@ -568,6 +568,9 @@ sub get_customer {
 
 sub save_job {
     my ( $self, $myconfig, $form ) = @_;
+    $form->{projectnumber} =
+      $form->update_defaults( $myconfig, "projectnumber", $dbh )
+      unless $form->{projectnumber};
 
     my $dbh = $form->{dbh};
 
@@ -597,9 +600,6 @@ sub save_job {
         ( $form->{id} ) = $dbh->selectrow_array($query);
     }
 
-    $form->{projectnumber} =
-      $form->update_defaults( $myconfig, "projectnumber", $dbh )
-      unless $form->{projectnumber};
 
     $query = qq|
 		UPDATE project 

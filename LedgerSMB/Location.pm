@@ -1,4 +1,3 @@
-
 =head1 NAME
 
 LedgerSMB::Location - LedgerSMB class for managing Business Locations

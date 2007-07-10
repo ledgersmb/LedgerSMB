@@ -804,6 +804,8 @@ sub customer_details {
 
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
+    $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
+      unless $form->{invnumber};
 
     my $dbh = $form->{dbh};
 
@@ -891,8 +893,6 @@ sub post_invoice {
       ($exchangerate)
       ? $exchangerate
       : $form->parse_amount( $myconfig, $form->{exchangerate} );
-    $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
-      unless $form->{invnumber};
 
     my $i;
     my $item;

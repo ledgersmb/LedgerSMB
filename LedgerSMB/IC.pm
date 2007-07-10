@@ -204,6 +204,9 @@ sub get_part {
 
 sub save {
     my ( $self, $myconfig, $form ) = @_;
+    $form->{partnumber} =
+      $form->update_defaults( $myconfig, "partnumber", $dbh )
+      if !$form->{partnumber};
 
     ( $form->{inventory_accno} ) = split( /--/, $form->{IC_inventory} );
     ( $form->{expense_accno} )   = split( /--/, $form->{IC_expense} );
@@ -378,9 +381,6 @@ sub save {
     ( $null, $partsgroup_id ) = split /--/, $form->{partsgroup};
     $partsgroup_id *= 1;
 
-    $form->{partnumber} =
-      $form->update_defaults( $myconfig, "partnumber", $dbh )
-      if !$form->{partnumber};
 
     if ( !$form->{priceupdate} ) {
         $form->{priceupdate} = 'now';

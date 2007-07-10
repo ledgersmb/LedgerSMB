@@ -65,6 +65,8 @@ sub delete_transaction {
 sub post_transaction {
 
     my ( $self, $myconfig, $form ) = @_;
+    $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
+      unless $form->{reference};
 
     my $null;
     my $project_id;
@@ -117,8 +119,6 @@ sub post_transaction {
     ( $null, $department_id ) = split /--/, $form->{department};
     $department_id *= 1;
 
-    $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
-      unless $form->{reference};
     $form->{reference} ||= $form->{id};
 
     $query = qq|

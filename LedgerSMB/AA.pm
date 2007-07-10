@@ -42,6 +42,8 @@ sub post_transaction {
 
     # connect to database
     my $dbh = $form->{dbh};
+    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
+      unless $form->{invnumber};
 
     my $query;
     my $sth;
@@ -286,8 +288,6 @@ sub post_transaction {
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
     my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : 'NOW';
 
-    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
-      unless $form->{invnumber};
 
     $query = qq|
 		UPDATE $table 
