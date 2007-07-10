@@ -36,6 +36,7 @@ package OP;
 
 sub overpayment {
     my ( $self, $myconfig, $form, $dbh, $amount, $ml ) = @_;
+    my $invnumber = $form->{invnumber};
 
     $invnumber =
       $form->update_defaults( $myconfig, ( $form->{arap} eq 'ar' )
@@ -62,7 +63,6 @@ sub overpayment {
     $query = qq|SELECT id FROM $form->{arap} WHERE invnumber = '$uid'|;
     ($uid) = $dbh->selectrow_array($query);
 
-    my $invnumber = $form->{invnumber};
 
     $query = qq|
 		UPDATE $form->{arap} 
