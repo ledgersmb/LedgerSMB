@@ -43,8 +43,9 @@
 			<a href="<?lsmb IF item.module ?><?lsmb item.module 
 				?><?lsmb ELSE ?>menu.pl<?lsmb END 
 				?>?login=<?lsmb login 
-				?><?lsmb FOREACH key IN item.keys ?>&<?lsmb key
-				?>=<?lsmb item.$key ?><?lsmb END ?>"
+				?>&<?lsmb FOREACH arg IN item.args 
+				?><?lsmb arg 
+				?>&<?lsmb END ?>"
 				target = "main_window"
 				onclick="return <?lsmb IF item.module 
 					?>SwitchMenu(<?lsmb id ?>)<?lsmb END ?>"
