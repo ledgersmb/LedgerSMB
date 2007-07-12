@@ -12,6 +12,9 @@ use LedgerSMB::Menu;
 use LedgerSMB::Template;
 use strict;
 
+sub __default {
+}
+
 sub display {
     my ($request) = @_;
     my $template;
