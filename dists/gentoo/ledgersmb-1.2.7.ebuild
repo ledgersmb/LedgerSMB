@@ -6,7 +6,7 @@ inherit depend.apache webapp eutils
 
 DESCRIPTION="LedgerSMB"
 HOMEPAGE="http://ledger-smb.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
+SRC_URI="mirror://sourceforge/ledger-smb/${P}.tar.gz"
 #SRC_URI="http://eva.a.jjayr.com/lsmb-package/${P}.tar.gz"
 
 # don't use the gentoo mirrors yet, we're not there.
@@ -19,27 +19,26 @@ KEYWORDS="x86 ppc"
 IUSE=""
 
 DEPEND=""
-RDEPEND="
-	>=dev-db/postgresql-8
+RDEPEND=">=dev-db/postgresql-8
 	>=dev-lang/perl-5.8
 	dev-perl/DBI
 	net-www/apache
-	dev-perl/Class-MethodMaker-2.08
-	dev-perl/Log-Agent-0.307
-	dev-perl/Shell-EnvImporter-1.04
-	app-portage/g-cpan-0.15_rc3
-	perl-core/i18n-langtags-0.35
-	dev-perl/HTML-Tagset-3.10
-	perl-gcpan/Class-Std-0.0.8
-	perl-gcpan/Net-TCLink-3.4
-	dev-perl/Parse-RecDescent-1.94
-	dev-perl/MIME-Lite-3.01
-	perl-gcpan/Config-Std-0.0.4
-	perl-core/locale-maketext-1.10
-	dev-perl/HTML-Parser-3.56
-	virtual/perl-locale-maketext-1.10
-	dev-perl/locale-maketext-lexicon-0.62
-"
+	>=dev-perl/Class-MethodMaker-2.08
+	>=dev-perl/Log-Agent-0.307
+	>=dev-perl/Shell-EnvImporter-1.04
+	>=app-portage/g-cpan-0.15_rc3
+	>=perl-core/i18n-langtags-0.35
+	>=dev-perl/HTML-Tagset-3.10
+	>=perl-gcpan/Class-Std-0.0.8
+	>=perl-gcpan/Net-TCLink-3.4
+	>=dev-perl/Parse-RecDescent-1.94
+	>=dev-perl/MIME-Lite-3.01
+	>=perl-gcpan/Config-Std-0.0.4
+	>=perl-core/locale-maketext-1.10
+	>=dev-perl/HTML-Parser-3.56
+	>=virtual/perl-locale-maketext-1.10
+	>=dev-perl/locale-maketext-lexicon-0.62"
+
 S=${WORKDIR}/${PN}
 
 src_unpack() {
