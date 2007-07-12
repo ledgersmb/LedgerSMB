@@ -53,7 +53,6 @@ src_install() {
 	cp -R ${S}/* ${D}/${MY_HTDOCSDIR}
 
 	# LedgerSMB needs to write to the users directory
-	webapp_serverowned -R ${MY_HTDOCSDIR}/users/
 	webapp_serverowned -R ${MY_HTDOCSDIR}/spool/
 	webapp_postinst_txt en ${S}/dists/gentoo/post-install.txt
 
