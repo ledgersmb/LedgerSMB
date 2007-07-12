@@ -531,6 +531,9 @@ CREATE TABLE parts (
   project_id int,
   avgcost NUMERIC
 );
+
+CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber) 
+WHERE obsolete is false;
 --
 CREATE TABLE assembly (
   id int,
@@ -622,7 +625,7 @@ CREATE TABLE partstax (
   chart_id int,
   taxcategory_id int,
   PRIMARY KEY (parts_id, chart_id),
-  FOREIGN KEY (parts_id) REFERENCES parts (id),
+  FOREIGN KEY (parts_id) REFERENCES parts (id) on delete cascade,
   FOREIGN KEY (chart_id) REFERENCES chart (id),
   FOREIGN KEY (taxcategory_id) REFERENCES taxcategory (taxcategory_id)
 );
