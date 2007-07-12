@@ -1301,7 +1301,8 @@ sub order_details {
               $form->format_amount( $myconfig, $linetotal, 2 );
             push( @{ $form->{linetotal} }, $form->{"linetotal_$i"} );
 
-            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
+                $form->{'taxaccounts'} );
 
             my $ml       = 1;
             my @taxrates = ();
