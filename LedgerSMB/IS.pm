@@ -1049,10 +1049,45 @@ sub post_invoice {
                         qq|id = $form->{"id_$i"}|,
                         $form->{"qty_$i"} * -1
                     ) unless $form->{shipped};
-
-                    $allocated =
-                      &cogs( $dbh, $form, $form->{"id_$i"}, $form->{"qty_$i"},
+                    if($form->{"qty_$i"} > 0){
+                      $allocated =
+                        &cogs( $dbh, $form, $form->{"id_$i"}, $form->{"qty_$i"},
                         $project_id );
+                    }
+		    else {
+			#search for entries on ap invoices, that have been allocated already for that product.
+                	$query = qq|
+		        	    SELECT i.id, i.qty, i.allocated, a.transdate, i.sellprice
+				      FROM invoice i
+			              JOIN parts p ON (p.id = i.parts_id)
+			              JOIN ap a ON (a.id = i.trans_id)
+			             WHERE i.parts_id = ? AND i.allocated > 0 
+                                 ORDER BY transdate,id DESC
+                                     |;
+			$sth = $dbh->prepare($query);
+			$sth->execute( $form->{"id_$i"}) || $form->dberror($query);
+			my $totalqty = $form->{"qty_$i"};
+			my $total_inventory = 0;
+			while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+			    #deallocate the necessary entries
+			    $form->db_parse_numeric(sth=>$sth, hashref => $ref);
+			    my $qty = $ref->{allocated};
+			    if($totalqty + $qty > 0) { $qty = -$totalqty; }
+			    $allocated+=$qty;
+			    $form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, $qty * -1 );
+			    $total_inventory += $qty*$ref->{sellprice};
+			    last if ( ( $totalqty += $qty ) >= 0 );
+			}
+			# increase the inventory account for that product
+                        $query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, project_id) VALUES (?, ?, ?, ?, ?)|;
+			$sth = $dbh->prepare($query);
+    			$sth->execute($form->{id}, $form->{"expense_accno_id_$i"}, $total_inventory, $form->{transdate}, $form->{"project_id_$i"}) || $form->dberror($query);
+
+			$total_inventory = (-1)*$total_inventory;
+                        $query = qq|INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, project_id) VALUES (?, ?, ?, ?, ?)|;
+			$sth = $dbh->prepare($query);
+    			$sth->execute($form->{id}, $form->{"inventory_accno_id_$i"}, $total_inventory, $form->{transdate}, $form->{"project_id_$i"} ) || $form->dberror($query);
+		    }
                 }
             }
 
