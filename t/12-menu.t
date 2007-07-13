@@ -126,7 +126,7 @@ is_deeply([$ini->access_control($myconfig, 'AR')], ['AR--foo', 'AR--test'],
 
 # file not found check
 SKIP: {
-	skip 'file not found test, Test::Trap not usable', 2 if !$notrap;
+	skip 'file not found test, Test::Trap not usable', 2 if $notrap;
 	$ini = new Menu;
 	@r = trap{$ini->add_file('t/data/12-not-a-file')};
 	is_deeply($ini->{'ORDER'}, [],
