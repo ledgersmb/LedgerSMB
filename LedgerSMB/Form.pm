@@ -101,6 +101,11 @@ sub new {
     }
 
     for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
+    
+    if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
+        $self->error( "Access Denied", __line__, __file__ );
+    }
+    
     $self;
 }
 
