@@ -96,12 +96,17 @@ sub new {
     {
         $self->error( 'Access Denied', __line__, __file__ );
     }
-
+    
     if ( ( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ ) ) {
         $self->error( "Access Denied", __line__, __file__ );
     }
 
     for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
+    
+    if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
+        $self->error( 'Access Denied', __line__, __file__ );
+    }
+    
     $self;
 }
 
