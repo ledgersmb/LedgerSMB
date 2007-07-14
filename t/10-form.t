@@ -84,8 +84,6 @@ use Test::Trap qw(trap $trap);
 plan 'no_plan';
 
 use Math::BigFloat;
-use IO::String;
-
 use LedgerSMB::Form;
 
 sub form_info_func {
