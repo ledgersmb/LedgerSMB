@@ -1,4 +1,5 @@
 begin;
+CREATE SEQUENCE id;
 -- Central DB structure
 -- This is the central database stuff which is used across all datasets
 -- in the ledger-smb.conf it is called 'ledgersmb' by default, but obviously
@@ -149,7 +150,7 @@ SELECT SETVAL('location_class_id_seq',4);
   
 CREATE TABLE location (
   id serial PRIMARY KEY,
-  location_class integer not null references location(id),
+  location_class integer not null references location_class(id),
   line_one text check (line_one ~ '[[:alnum:]_]') NOT NULL,
   line_two text,
   line_three text,
@@ -308,7 +309,7 @@ CREATE TABLE makemodel (
 );
 --
 CREATE TABLE gl (
-  id serial PRIMARY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   reference text,
   description text,
   transdate date DEFAULT current_date,
@@ -545,7 +546,7 @@ CREATE TABLE assembly (
 );
 --
 CREATE TABLE ar (
-  id serial PRIMARY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
@@ -561,7 +562,7 @@ CREATE TABLE ar (
   notes text,
   curr char(3),
   ordnumber text,
-  person_id integer references person(id) not null,
+  person_id integer references person(id),
   till varchar(20),
   quonumber text,
   intnotes text,
@@ -570,6 +571,7 @@ CREATE TABLE ar (
   language_code varchar(6),
   ponumber text,
   on_hold bool default false,
+  reverse bool default false,
   approved bool default true
 );
 
@@ -577,7 +579,7 @@ COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now
 
 --
 CREATE TABLE ap (
-  id serial PRIMARY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   invnumber text,
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
@@ -591,7 +593,7 @@ CREATE TABLE ap (
   ordnumber text,
   curr char(3),
   notes text,
-  person_id integer references person(id) not null,
+  person_id integer references person(id),
   till varchar(20),
   quonumber text,
   intnotes text,
@@ -602,6 +604,7 @@ CREATE TABLE ap (
   shippingpoint text,
   on_hold bool default false,
   approved bool default true,
+  reverse bool default false,
   terms int2 DEFAULT 0
 );
 
@@ -670,7 +673,7 @@ CREATE TABLE oe (
   id serial PRIMARY KEY,
   ordnumber text,
   transdate date default current_date,
-  entity_id integer references entity(id) NOT NULL,
+  entity_id integer references entity(id),
   amount NUMERIC,
   netamount NUMERIC,
   reqdate date,
@@ -678,7 +681,7 @@ CREATE TABLE oe (
   shippingpoint text,
   notes text,
   curr char(3),
-  person_id integer references person(id) not null,
+  person_id integer references person(id),
   closed bool default 'f',
   quotation bool default 'f',
   quonumber text,
@@ -848,7 +851,7 @@ CREATE TABLE warehouse (
 );
 --
 CREATE TABLE inventory (
-  entity_id integer references employee(entity_id) not null,
+  entity_id integer references employee(entity_id),
   warehouse_id int,
   parts_id int,
   trans_id int,
@@ -917,7 +920,7 @@ CREATE TABLE translation (
 );
 --
 CREATE TABLE recurring (
-  id int PRIMARY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
   reference text,
   startdate date,
   nextdate date,
@@ -1731,13 +1734,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 1	AR	0	1
 2	Add Transaction	1	1
 3	Sales Invoice	1	2
-4	Reports	1	3
 5	Transactions	4	1
 6	Outstanding	4	2
 7	AR Aging	4	3
 9	Taxable Sales	4	4
 10	Non-Taxable	4	5
-11	Customers	1	4
 12	Add Customer	11	1
 13	Reports	11	2
 14	Search	13	1
@@ -1750,13 +1751,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 21	AP	0	3
 22	Add Transaction	21	1
 23	Vendor Invoice	21	2
-24	Reports	21	3
 25	Transactions	24	1
 26	Outstanding	24	2
 27	AP Aging	24	3
 28	Taxable	24	4
 29	Non-taxable	24	5
-30	Vendors	21	4
 31	Add Vendor	30	1
 32	Reports	30	2
 33	Search	32	1
@@ -1919,7 +1918,16 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 191	Preferences	0	17
 192	New Window	0	18
 193	Logout	0	19
+11	Customers	1	6
+4	Reports	1	5
+194	Credit Note	1	3
+195	Credit Invoice	1	4
+24	Reports	21	5
+30	Vendors	21	6
+196	Debit Note	21	3
+197	Debit Invoice	21	4
 \.
+
 
 
 --
@@ -2470,9 +2478,23 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 193	target	_top	534
 192	menu	1	530
 192	new	1	531
-136	menu	1	535
-144	menu	1	536
+0	menu	1	535
+136	menu	1	536
+144	menu	1	537
+194	module	ar.pl	538
+194	action	add	539
+195	action	add	540
+195	module	is.pl	541
+196	action	add	543
+196	module	ap.pl	544
+197	action	add	545
+197	module	ir.pl	547
+196	type	debit_note	549
+194	type	credit_note	548
+195	type	credit_invoice	542
+197	type	debit_invoice	546
 \.
+
 
 
 --
