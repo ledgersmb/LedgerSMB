@@ -1,37 +1,61 @@
-#=====================================================================
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
-# under the GNU General Public License version 2 or, at your option, any later
-# version.  For a full list including contact information of contributors,
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2000
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-# Contributors: Thomas Bayen <bayen@gmx.de>
-#               Antti Kaihola <akaihola@siba.fi>
-#               Moritz Bunkus (tex)
-#               Jim Rawlings <jim@your-dba.com> (DB2)
-#======================================================================
-#
-# This file has undergone whitespace cleanup.
-#
-#======================================================================
-#
-# main package
-#
-#======================================================================
+
+=head1 NAME
+
+Form
+
+=head1 SYNOPSIS
+
+This module provides general legacy support functions and the central object
+
+=head1 STATUS
+
+Deprecated
+
+=head1 COPYRIGHT
+
+ #====================================================================
+ # LedgerSMB
+ # Small Medium Business Accounting software
+ # http://www.ledgersmb.org/
+ #
+ # Copyright (C) 2006
+ # This work contains copyrighted information from a number of sources
+ # all used with permission.
+ #
+ # This file contains source code included with or based on SQL-Ledger
+ # which is Copyright Dieter Simader and DWS Systems Inc. 2000-2005
+ # and licensed under the GNU General Public License version 2 or, at
+ # your option, any later version.  For a full list including contact
+ # information of contributors, maintainers, and copyright holders,
+ # see the CONTRIBUTORS file.
+ #
+ # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+ # Copyright (C) 2000
+ #
+ #  Author: DWS Systems Inc.
+ #     Web: http://www.sql-ledger.org
+ #
+ # Contributors: Thomas Bayen <bayen@gmx.de>
+ #               Antti Kaihola <akaihola@siba.fi>
+ #               Moritz Bunkus (tex)
+ #               Jim Rawlings <jim@your-dba.com> (DB2)
+ #====================================================================
+ #
+ # This file has undergone whitespace cleanup.
+ #
+ #====================================================================
+ #
+ # main package
+ #
+ #====================================================================
+
+=head1 METHODS
+
+=over
+
+=cut
+
+#inline documentation
 
 use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
@@ -109,6 +133,13 @@ sub new {
     $self;
 }
 
+=item $form->debug([$file]);
+
+Outputs the sorted contents of $form.  If a filename is specified, log to it,
+otherwise output to STDOUT.
+
+=cut
+
 sub debug {
 
     my ( $self, $file ) = @_;
@@ -135,6 +166,14 @@ sub decode_all {
     # TODO
 }
 
+=item $form->escape($str[, $beenthere]);
+
+Returns the URI-encoded $str.  $beenthere is a boolean that when true forces a
+single encoding run.  When false, it escapes the string twice if it detects
+that it is running on a version of Apache 2.0 earlier than 2.0.44.
+
+=cut
+
 sub escape {
     my ( $self, $str, $beenthere ) = @_;
 
@@ -151,6 +190,12 @@ sub escape {
 
 }
 
+=item $form->unescape($str);
+
+Returns the unencoded form of the URI-encoded $str.
+
+=cut
+
 sub unescape {
     my ( $self, $str ) = @_;
 
@@ -166,6 +211,13 @@ sub unescape {
 
 }
 
+=item $form->quote($str);
+
+Replaces all double quotes in $str with '&quot;'.  Does nothing if $str is a
+reference.
+
+=cut
+
 sub quote {
     my ( $self, $str ) = @_;
 
@@ -177,6 +229,13 @@ sub quote {
 
 }
 
+=item $form->unquote($str);
+
+Replaces all '&quot;' in $str with double quotes.  Does nothing if $str is a
+reference.
+
+=cut
+
 sub unquote {
     my ( $self, $str ) = @_;
 
@@ -187,6 +246,19 @@ sub unquote {
     $str;
 
 }
+
+=item $form->hide_form([...]);
+
+Outputs hidden HTML form fields to STDOUT.  If values are passed into this
+function, only those $form values are output.  If no values are passed in, all
+$form values are output as well as deleting $form->{header}.  Values from the
+$form object are run through $form->quote, whereas keys/names are not.
+
+Sample output:
+
+ <input type="hidden" name="login" value="testuser" />
+
+=cut
 
 sub hide_form {
     my $self = shift;
@@ -210,6 +282,20 @@ sub hide_form {
         }
     }
 }
+
+
+=item $form->error($msg);
+
+Output an error message, $msg.  If a CGI environment is detected, this outputs
+an HTTP and HTML header section if required, and displays the message after
+running it through $form->format_string.  If it is not a CGI environment and
+$ENV{error_function} is set, call the specified function with $msg as the sole
+argument.  Otherwise, this function simply dies with $msg.
+
+This function does not return.  Execution is terminated at the end of the
+appropriate path.
+
+=cut
 
 sub error {
 
@@ -242,6 +328,16 @@ sub error {
     }
 }
 
+=item $form->info($msg);
+
+Output an informational message, $msg.  If a CGI environment is detected, this
+outputs an HTTP and HTML header section if required, and displays the message
+in bold tags without escaping.  If it is not a CGI environment and 
+$ENV{info_function} is set, call the specified function with $msg as the sole
+argument.  Otherwise, this function simply prints $msg to STDOUT.
+
+=cut
+
 sub info {
     my ( $self, $msg ) = @_;
 
@@ -270,6 +366,15 @@ sub info {
     }
 }
 
+=item $form->numtextrows($str, $cols[, $maxrows]);
+
+Returns the number of rows of $cols columns can be formed by $str.  If $maxrows
+is set and the number of rows is greater than $maxrows, this returns $maxrows.
+In the determination of rowcount, newline characters, "\n", are taken into
+account while spaces are not.
+
+=cut
+
 sub numtextrows {
 
     my ( $self, $str, $cols, $maxrows ) = @_;
@@ -286,15 +391,45 @@ sub numtextrows {
 
 }
 
+=item $form->dberror($msg);
+
+Outputs a message as in $form->error but with $DBI::errstr automatically
+appended to $msg.
+
+=cut
+
 sub dberror {
     my ( $self, $msg ) = @_;
     $self->error( "$msg\n" . $DBI::errstr );
 }
 
+=item $form->isblank($name, $msg);
+
+Calls $form->error($msg) if the value of $form->{$name} matches /^\s*$/.
+
+=cut
+
 sub isblank {
     my ( $self, $name, $msg ) = @_;
     $self->error($msg) if $self->{$name} =~ /^\s*$/;
 }
+
+=item $form->header([$init, $headeradd]);
+
+Outputs HTML and HTTP headers and sets $form->{header} to indicate that headers
+have been output.  If called with $form->{header} set or in a non-CGI
+environment, does not output anything.  $init is ignored.  $headeradd is data
+to be added to the <head> portion of the output headers.  $form->{stylesheet},
+$form->{title}, $form->{titlebar}, and $form->{pre} all affect the output of
+this function.
+
+If the stylesheet indicated by $form->{stylesheet} exists, output a link tag
+to reference it.  If $form->{title} is false, the title text is the value of
+$form->{titlebar}.  If $form->{title} is true, the title text takes the form of
+"$form->{title} - $form->{titlebar}".  The value of $form->{pre} is output 
+immediately after the closing of <head>.
+
+=cut
 
 sub header {
 
@@ -341,6 +476,15 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
     $self->{header} = 1;
 }
 
+=item $form->redirect([$msg]);
+
+If $form->{callback} is set or $msg is not set, call the redirect function in
+common.pl.  If main::redirect returns, exit.
+
+Otherwise, output $msg as an informational message with $form->info($msg).
+
+=cut
+
 sub redirect {
 
     my ( $self, $msg ) = @_;
@@ -356,6 +500,16 @@ sub redirect {
     }
 }
 
+=item $form->sort_columns(@columns);
+
+Sorts the list @columns.  If $form->{sort} is unset, do nothing.  If the value
+of $form->{sort} does not exist in @columns, returns the list formed by the
+value of $form->{sort} followed by the values of @columns.  If the value of
+$form->{sort} is in @columns, return the list formed by @columns with the value
+of $form->{sort} moved to the head of the list.
+
+=cut
+
 sub sort_columns {
 
     my ( $self, @columns ) = @_;
@@ -369,6 +523,24 @@ sub sort_columns {
 
     @columns;
 }
+
+=item $form->sort_order($columns[, $ordinal]);
+
+Returns a string that contains ordering details for the columns in SQL form.
+$columns is a reference to a list of columns, $ordinal is a reference to a hash
+that maps column names to ordinal positions.  This function depends upon the
+values of $form->{direction}, $form->{sort}, and $form->{oldsort}.
+
+If $form->{direction} is false, it becomes 'ASC'.  If $form->{direction} is true
+and $form->{sort} and $form->{oldsort} are equal, reverse the order specified by
+$form->{direction}.  $form->{oldsort} is set to the same value as $form->{sort}
+
+The actual sorting of $columns happens as in $form->sort_columns(@$columns).
+
+If $ordinal is set, the positions given by it are substituted for the names of
+columns returned.
+
+=cut
 
 sub sort_order {
 
@@ -415,6 +587,27 @@ sub sort_order {
     $sortorder = join ',', @a;
     $sortorder;
 }
+
+=item $form->format_amount($myconfig, $amount, $places, $dash);
+
+Returns $amount as formatted in the form specified by $form->{numberformat}.
+$places is the number of decimal places to have in the output.  $dash indicates
+how to represent conditions surrounding values.
+
+ +-------+----------+---------+------+
+ | $dash | -1.00    | 1.00    | 0.00 |
+ +-------+----------+---------+------+
+ |   -   | (1.00)   | 1.00    |   -  |
+ | DRCR  |  1.00 DR | 1.00 CR | DRCR |
+ |   0   | -1.00    | 1.00    | 0.00 |
+ |   x   | -1.00    | 1.00    |   x  |
+ | undef | -1.00    | 1.00    |      |
+ +-------+----------+---------+------+
+
+Sample behaviour of the formatted output of various numbers for select $dash
+values.
+
+=cut
 
 sub format_amount {
 
@@ -516,6 +709,15 @@ sub format_amount {
     $amount;
 }
 
+=item $form->parse_amount($myconfig, $amount);
+
+Return a Math::BigFloat containing the value of $amount where $amount is
+formatted as $myconfig->{numberformat}.  If $amount is '' or undefined, it is
+treated as zero.  DRCR and parenthesis notation is accepted in addition to
+negative sign notation.
+
+=cut
+
 sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
@@ -562,6 +764,12 @@ sub parse_amount {
     return ( $amount * 1 );
 }
 
+=item rount_amount($amount, $places);
+
+Rounds the provided $amount to $places decimal places.
+
+=cut
+
 sub round_amount {
 
     my ( $self, $amount, $places ) = @_;
@@ -582,6 +790,13 @@ sub round_amount {
 
     return $amount;
 }
+
+=item $form->db_parse_numeric('sth' => $sth, ['arrayref' => $arrayref, 'hashref' => $hashref])
+
+Converts numeric values in the result set $arrayref or $hashref to
+Math::BigFloat using $sth to determine which fields are numeric.
+
+=cut
 
 sub db_parse_numeric {
     my $self = shift;
@@ -637,6 +852,13 @@ sub get_my_emp_num {
     $form->{'emp_num'} = $id;
 }
 
+=item $form->format_string(@fields);
+
+Escape the values of $form selected by @fields for the format specified by
+$form->{format}.
+
+=cut
+
 sub format_string {
 
     my ( $self, @fields ) = @_;
@@ -691,6 +913,18 @@ sub format_string {
 
 }
 
+=item $form->datetonum($myconfig, $date[, $picture]);
+
+Converts $date from the format $myconfig->{dateformat} to the format 'yyyymmdd'.
+If the year extracted is only two-digits, the year given is assumed to be in the
+range 2000-2099.
+
+If $date does not contain any digits, datetonum does nothing.
+
+$picture is ignored.
+
+=cut
+
 sub datetonum {
 
     my ( $self, $myconfig, $date, $picture ) = @_;
@@ -719,6 +953,18 @@ sub datetonum {
 
     $date;
 }
+
+=item $form->add_date($myconfig, $date, $repeat, $unit);
+
+Returns the date $repeat $units from $date in the input format.  $date can
+either be in $myconfig->{dateformat} or 'yyyymmdd' (four digit year required for
+this option).  The valid values for $unit are 'days', 'weeks', 'months', and
+'years'.
+
+This function is unreliable for $unit values other than 'days' or 'weeks' and
+can die horribly.
+
+=cut
 
 sub add_date {
 
@@ -803,6 +1049,18 @@ sub add_date {
 
     $date;
 }
+
+=item $form->print_button($button, $name);
+
+Outputs a submit button to STDOUT.  $button is a hashref that contains data
+about buttons, $name is the key for the element in $button to output.  Each
+value in $button is a reference to a hash of two elements, 'key' and 'value'.
+
+$name is the value of the button that gets sent to the server when clicked,
+$button->{$name}{key} is the accesskey, and $button->{$name}{value} is the label
+for the button.
+
+=cut
 
 sub print_button {
     my ( $self, $button, $name ) = @_;
@@ -977,6 +1235,13 @@ sub dbconnect_noauto {
 
     $dbh;
 }
+
+=item $form->dbquote($var);
+
+If $var is an empty string, return NULL, otherwise return $var as quoted by
+$form->{dbh}->quote($var).
+
+=cut
 
 sub dbquote {
 
@@ -1757,6 +2022,15 @@ sub lastname_used {
     $sth->finish;
 }
 
+=item $form->current_date($myconfig[, $thisdate, $days]);
+
+If $thisdate is false, get the current date from the database.
+
+If $thisdate is true, get the date $days days from $thisdate in the date
+format specified by $myconfig->{dateformat} from the database.
+
+=cut
+
 sub current_date {
 
     my ( $self, $myconfig, $thisdate, $days ) = @_;
@@ -1793,6 +2067,12 @@ sub current_date {
     ($thisdate) = $sth->fetchrow_array;
     $thisdate;
 }
+
+=item $form->like($str);
+
+Returns '%$str%'
+
+=cut
 
 sub like {
 
@@ -2382,6 +2662,18 @@ sub db_prepare_vars {
     }
 }
 
+=item $form->split_date($dateformat[, $date]);
+
+Returns ($rv, $yy, $mm, $dd) for the provided $date, or the current date if no
+date is provided.  $rv is a seperator-free merging of the fields $yy, $mm, and
+$dd in the ordering supplied by $dateformat.  If the supplied $date does not
+contain non-digit characters, $rv is $date and the other return values are
+undefined.
+
+$yy is two digits.
+
+=cut
+
 sub split_date {
 
     my ( $self, $dateformat, $date ) = @_;
@@ -2467,6 +2759,17 @@ sub split_date {
     ( $rv, $yy, $mm, $dd );
 }
 
+=item $form->format_date($date);
+
+Returns $date converted from 'yyyy-mm-dd' format to the format specified by
+$form->{db_dateformat}.  If the supplied date does not match /^\d{4}\D/,
+return the supplied date.
+
+This function takes a four digit year and returns the date with a four digit
+year.
+
+=cut
+
 sub format_date {
 
     # takes an iso date in, and converts it to the date for printing
@@ -2484,6 +2787,17 @@ sub format_date {
     }
     $datestring;
 }
+
+=item $form->from_to($yyyy, $mm[, $interval]);
+
+Returns the date $yyyy-$mm-01 and the the last day of the month interval - 1
+months from then in the form ($form->format_date(fromdate),
+$form->format_date(later)).  If $interval is false but defined, the later date
+is the current date.
+
+This function dies horribly when $mm + $interval > 24
+
+=cut
 
 sub from_to {
 
@@ -2655,3 +2969,7 @@ sub audittrail {
 }
 
 1;
+
+=back
+
+
