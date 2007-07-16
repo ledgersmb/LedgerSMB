@@ -17,5 +17,5 @@ pod_coverage_ok("LedgerSMB");
 pod_coverage_ok("LedgerSMB::Database");
 pod_coverage_ok("LedgerSMB::Locale");
 pod_coverage_ok("LedgerSMB::Log");
-pod_coverage_ok("LedgerSMB::Menufile");
 pod_coverage_ok("LedgerSMB::Template::HTML");
+pod_coverage_ok("LedgerSMB::User");
