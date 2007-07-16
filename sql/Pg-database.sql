@@ -309,7 +309,7 @@ CREATE TABLE makemodel (
 );
 --
 CREATE TABLE gl (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
   reference text,
   description text,
   transdate date DEFAULT current_date,
@@ -546,7 +546,7 @@ CREATE TABLE assembly (
 );
 --
 CREATE TABLE ar (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
   invnumber text,
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
@@ -579,7 +579,7 @@ COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now
 
 --
 CREATE TABLE ap (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
   invnumber text,
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
@@ -964,101 +964,37 @@ CREATE TABLE jcitems (
 
 insert into transactions (id, table_name) SELECT id, 'ap' FROM ap;
 
-CREATE RULE ap_id_track_i AS ON insert TO ap 
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'ap');
-
-CREATE RULE ap_id_track_u AS ON update TO ap 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
 insert into transactions (id, table_name) SELECT id, 'ar' FROM ap;
-
-CREATE RULE ar_id_track_i AS ON insert TO ar 
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'ar');
-
-CREATE RULE ar_id_track_u AS ON update TO ar 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'business' FROM business;
-
-CREATE RULE business_id_track_i AS ON insert TO business 
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'business');
-
-CREATE RULE business_id_track_u AS ON update TO business 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'chart' FROM chart;
-
-CREATE RULE chart_id_track_i AS ON insert TO chart 
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'chart');
-
-CREATE RULE chart_id_track_u AS ON update TO chart 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-
-INSERT INTO transactions (id, table_name) SELECT id, 'department' FROM department;
-
-CREATE RULE department_id_track_i AS ON insert TO department
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'department');
-
-CREATE RULE department_id_track_u AS ON update TO department 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
 INSERT INTO transactions (id, table_name) SELECT id, 'gl' FROM gl;
 
-CREATE RULE gl_id_track_i AS ON insert TO gl
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'gl');
+CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
+$$
+BEGIN
+	IF tg_op = 'INSERT' THEN
+		INSERT INTO transactions (id, table_name) 
+		VALUES (new.id, TG_RELNAME);
+	ELSEIF tg_op = 'UPDATE' THEN
+		IF new.id = old.id THEN
+			return new;
+		ELSE
+			UPDATE transactions SET id = new.id WHERE id = old.id;
+		END IF;
+	ELSE 
+		DELETE FROM transactions WHERE id = old_id;
+	END IF;
+	RETURN new;
+END;
+$$ LANGUAGE PLPGSQL;
 
-CREATE RULE gl_id_track_u AS ON update TO gl 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
+CREATE TRIGGER ap_track_global_sequence before insert or update or delete on ap
+for each row execute procedure track_global_sequence();
 
-INSERT INTO transactions (id, table_name) SELECT id, 'oe' FROM oe;
+CREATE TRIGGER ar_track_global_sequence before insert or update or delete on ar
+for each row execute procedure track_global_sequence();
 
-CREATE RULE oe_id_track_i AS ON insert TO oe
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'oe');
-
-CREATE RULE oe_id_track_u AS ON update TO oe 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'parts' FROM parts;
-
-CREATE RULE parts_id_track_i AS ON insert TO parts
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'parts');
-
-CREATE RULE parts_id_track_u AS ON update TO parts 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'partsgroup' FROM partsgroup;
-
-CREATE RULE partsgroup_id_track_i AS ON insert TO partsgroup
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'partsgroup');
-
-CREATE RULE partsgroup_id_track_u AS ON update TO partsgroup 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'pricegroup' FROM pricegroup;
-
-CREATE RULE pricegroup_id_track_i AS ON insert TO pricegroup
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'pricegroup');
-
-CREATE RULE pricegroup_id_track_u AS ON update TO pricegroup 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'project' FROM project;
-
-CREATE RULE project_id_track_i AS ON insert TO project
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'project');
-
-CREATE RULE project_id_track_u AS ON update TO project 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
-
-
-INSERT INTO transactions (id, table_name) SELECT id, 'warehouse' FROM warehouse;
-
-CREATE RULE warehouse_id_track_i AS ON insert TO warehouse
-DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'employee');
-
-CREATE RULE warehouse_id_track_u AS ON update TO warehouse 
-DO UPDATE transactions SET id = new.id WHERE id = old.id;
+CREATE TRIGGER gl_track_global_sequence before insert or update or delete on gl
+for each row execute procedure track_global_sequence();
 
 CREATE TABLE custom_table_catalog (
 table_id SERIAL PRIMARY KEY,
