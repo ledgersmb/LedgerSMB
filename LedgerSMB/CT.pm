@@ -325,7 +325,7 @@ sub _save_vc {
             $sth->execute(
                  $form->{entity_id}, $form->{entity_class}, $form->{discount}, 
                  $form->{taxincluded}, $form->{creditlimit}, 
-                 $form->{terms}, $form->{"$form->{vc}number"}, $form->{cc},
+                 $form->{terms}, $form->{"$form->{db}number"}, $form->{cc},
                  $form->{bcc}, $form->{business_id},
                  $form->{language_code}, $form->{pricegroup_id}, $form->{curr},
                  $form->{startdate} || undef, $form->{enddate} || undef, 

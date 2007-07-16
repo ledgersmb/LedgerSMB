@@ -19,7 +19,6 @@ package LedgerSMB::Menu;
 
 use Config::Std;
 use base(qw(LedgerSMB::DBObject));
-
 1;
 
 =head1 METHODS

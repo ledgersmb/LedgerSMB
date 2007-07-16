@@ -39,6 +39,12 @@ use LedgerSMB::Sysconfig;
 sub post_transaction {
 
     my ( $self, $myconfig, $form ) = @_;
+    for (1 .. $form->{rowcount}){
+        $form->{"amount_$_"} = $form->parse_amount(
+               $myconfig, $form->{"amount_$_"} 
+         );
+        $form->{"amount_$_"} *= -1 if $form->{reverse};
+    }
 
     # connect to database
     my $dbh = $form->{dbh};
@@ -89,11 +95,10 @@ sub post_transaction {
 
     my %tax = ();
     my $accno;
-
     # add taxes
     foreach $accno (@taxaccounts) {
-        $fxtax += $tax{fxamount}{$accno} =
-          $form->parse_amount( $myconfig, $form->{"tax_$accno"} );
+        $form->{"tax_$accno"} *= -1 if $form->{reverse};
+        $fxtax += $tax{fxamount}{$accno} = $form->{"tax_$accno"};
         $tax += $tax{fxamount}{$accno};
 
         push @{ $form->{acc_trans}{taxes} },
@@ -125,8 +130,7 @@ sub post_transaction {
     my %amount      = ();
     my $fxinvamount = 0;
     for ( 1 .. $form->{rowcount} ) {
-        $fxinvamount += $amount{fxamount}{$_} =
-          $form->parse_amount( $myconfig, $form->{"amount_$_"} );
+        $fxinvamount += $amount{fxamount}{$_} = $form->{"amount_$_"};
     }
 
     $form->{taxincluded} *= 1;
@@ -207,7 +211,11 @@ sub post_transaction {
 
     # add payments
     for $i ( 1 .. $form->{paidaccounts} ) {
-        $fxamount = $form->parse_amount( $myconfig, $form->{"paid_$i"} );
+        $form->{"paid_$i"} = $form->parse_amount( 
+              $myconfig, $form->{"paid_$i"} 
+        );
+        $form->{"paid_$i"} *= -1 if $form->{reverse};
+        $fxamount = $form->{"paid_$i"};
 
         if ($fxamount) {
             $paid += $fxamount;
@@ -294,7 +302,7 @@ sub post_transaction {
 		SET invnumber = ?,
 			ordnumber = ?,
 			transdate = ?,
-			$form->{vc}_id = ?,
+			entity_id = ?,
 			taxincluded = ?,
 			amount = ?,
 			duedate = ?,
@@ -304,7 +312,7 @@ sub post_transaction {
 			curr = ?,
 			notes = ?,
 			department_id = ?,
-			employee_id = ?,
+			person_id = ?,
 			ponumber = ?
 		WHERE id = ?
 	|;

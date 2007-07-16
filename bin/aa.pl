@@ -92,6 +92,18 @@ sub add {
     $form->{callback} =
 "$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
+    if ($form->{type} eq "credit_note"){
+        $form->{reverse} = 1;
+        $form->{subtype} = 'credit_note';
+        $form->{type} = 'transaction';
+    } elsif ($form->{type} eq 'debit_note'){
+        $form->{reverse} = 1;
+        $form->{subtype} = 'debit_note';
+        $form->{type} = 'transaction';
+    }
+    else {
+        $form->{reverse} = 0;
+    }
 
     &create_links;
 
@@ -103,6 +115,18 @@ sub add {
 sub edit {
 
     $form->{title} = "Edit";
+    if ($form->{reverse}){
+        if ($form->{ARAP} eq 'AR'){
+            $form->{subtype} = 'credit_note';
+            $form->{type} = 'transaction';
+        } elsif ($form->{ARAP} eq 'AP'){
+            $form->{subtype} = 'debit_note';
+            $form->{type} = 'transaction';
+        } else {
+            $form->error("Unknown AR/AP selection value: $form->{ARAP}");
+        }
+
+    }
 
     &create_links;
     &display_form;
@@ -375,12 +399,29 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 sub form_header {
 
     $title = $form->{title};
-    $form->{title} = $locale->text("$title $form->{ARAP} Transaction");
+    if ($form->{reverse} == 0){
+       $form->{title} = $locale->text("$title $form->{ARAP} Transaction");
+    }
+    elsif($form->{reverse} == 1) {
+       if ($form->{subtype} eq 'credit_note'){
+           $form->{title} = $locale->text("$title Credit Note");
+       } elsif ($form->{subtype} eq 'debit_note'){
+           $form->{title} = $locale->text("$title Debit Note");
+       } else {
+           $form->error("Unknown subtype $form->{subtype} in $form->{ARAP} "
+              . "transaction.");
+       }
+    }
+    else {
+       $form->error('Reverse flag not true or false on AR/AP transaction');
+    }
 
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
-    # $locale->text('Add AR Transaction')
-    # $locale->text('Edit AR Transaction')
+    # $locale->text('Add Debit Note')
+    # $locale->text('Edit Debit Note')
+    # $locale->text('Add Credit Note')
+    # $locale->text('Edit Credit Note')
     # $locale->text('Add AP Transaction')
     # $locale->text('Edit AP Transaction')
 
@@ -496,14 +537,14 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 <body onload="document.forms[0].${focus}.focus()" />
 
 <form method=post action=$form->{script}>
-
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
 
 |;
 
     $form->hide_form(
-        qw(id printed emailed sort closedto locked oldtransdate audittrail recurring checktax)
+        qw(id printed emailed sort closedto locked oldtransdate audittrail 
+           recurring checktax reverse batch_id subtype)
     );
 
     if ( $form->{vc} eq 'customer' ) {

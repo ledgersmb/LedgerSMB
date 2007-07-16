@@ -50,8 +50,14 @@ require "bin/arap.pl";
 # end of main
 
 sub add {
-
-    $form->{title} = $locale->text('Add Vendor Invoice');
+    if ($form->{type} eq 'debit_invoice'){
+        $form->{title} = $locale->text('Add Debit Invoice');
+        $form->{subtype} = 'debit_invoice';
+        $form->{reverse} = 1;
+    } else {
+        $form->{title} = $locale->text('Add Vendor Invoice');
+        $form->{reverse} = 0;
+    }
 
     $form->{callback} =
 "$form->{script}?action=add&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}"
@@ -63,8 +69,13 @@ sub add {
 }
 
 sub edit {
-
-    $form->{title} = $locale->text('Edit Vendor Invoice');
+    if ($form->{reverse}){
+        $form->{title} = $locale->text('Add Debit Invoice');
+        $form->{subtype} = 'debit_invoice';
+    } else {
+        $form->{title} = $locale->text('Edit Vendor Invoice');
+    }
+   
 
     &invoice_links;
     &prepare_invoice;
@@ -367,7 +378,8 @@ sub form_header {
 
     $form->{vc} = "vendor";
     $form->hide_form(
-        qw(id title vc type terms creditlimit creditremaining closedto locked shipped oldtransdate recurring)
+        qw(id title vc type terms creditlimit creditremaining closedto locked 
+           shipped oldtransdate recurring reverse batch_id subtype)
     );
 
     print qq|

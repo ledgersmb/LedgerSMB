@@ -912,6 +912,9 @@ sub post_invoice {
 
     foreach $i ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
+        if ($form->{reverse}){
+            $form->{"qty_$i"} *= -1;
+        }
 
         if ( $form->{"qty_$i"} ) {
 
@@ -1120,6 +1123,7 @@ sub post_invoice {
 				       deliverydate = ?,
 				       project_id = ?,
 				       serialnumber = ?,
+			               reverse = ?,
 				       notes = ?
 				      WHERE id = ?|;
 
@@ -1131,7 +1135,8 @@ sub post_invoice {
                 $form->{"discount_$i"},    $allocated,
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $project_id,               $form->{"serialnumber_$i"},
-                $form->{"notes_$i"},       $invoice_id
+                $form->{reverse}, $form->{"notes_$i"},       
+                $invoice_id
             ) || $form->dberror($query);
             if (defined $form->{approved}) {
 
@@ -1793,7 +1798,7 @@ sub retrieve_invoice {
 			          a.intnotes,
 			          a.duedate, a.taxincluded, a.curr AS currency,
 			          a.employee_id, e.name AS employee, a.till, 
-			          a.entity_id,
+			          a.entity_id, a.reverse
 			          a.language_code, a.ponumber,
 			          a.on_hold
 			     FROM ar a
@@ -1863,6 +1868,7 @@ sub retrieve_invoice {
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
             $form->db_parse_numeric(sth=>$sth, hashref => $ref);
+            $ref->{qty} *= -1 if $form->{reverse};
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
             $dec = length $dec;
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;

@@ -144,6 +144,7 @@ sub _http_output {
 	my $self = shift;
 	my $FH;
 
+	print STDERR "Content-Type: $self->{mimetype}; charset=utf-8\n\n";
 	if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8\n\n";
 	} else {

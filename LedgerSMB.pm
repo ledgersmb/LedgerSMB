@@ -226,7 +226,7 @@ sub new {
 sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
-    @{$self->{hidden}} = [];
+    $self->{hidden} = [];
     for (keys %$self){
         next if $_ =~ /(^script$|^endsession$|^password$)/;
         my $attr = {};

@@ -37,7 +37,7 @@ sub display {
 
 sub expanding_menu {
     my ($request) = @_;
-    my $menu = new LedgerSMB::Menu({base => $request});
+    my $menu = LedgerSMB::Menu->new({base => $request});
     $menu->generate();
     my $template = LedgerSMB::Template->new(
          user => $request->{_user}, 

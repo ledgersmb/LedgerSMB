@@ -45,6 +45,7 @@ sub post_invoice {
       unless $form->{invnumber};
 
     for ( 1 .. $form->{rowcount} ) {
+        $form->{"qty_$_"} *= -1 if $form->{reverse};
         unless ( $form->{"deliverydate_$_"} ) {
             $form->{"deliverydate_$_"} = $form->{transdate};
         }
@@ -285,6 +286,7 @@ sub post_invoice {
 				       deliverydate = ?,
 				       project_id = ?,
 				       serialnumber = ?,
+				       reverse = ?
 				       notes = ?
 				 WHERE id = ?|;
             $sth = $dbh->prepare($query);
@@ -295,7 +297,8 @@ sub post_invoice {
                 $form->{"discount_$i"},    $allocated,
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $project_id,               $form->{"serialnumber_$i"},
-                $form->{"notes_$i"},       $invoice_id
+                $form->{reverse},          $form->{"notes_$i"},       
+                $invoice_id
             ) || $form->dberror($query);
             if (defined $form->{approved}) {
 
@@ -1070,7 +1073,7 @@ sub retrieve_invoice {
 			       a.ordnumber, a.quonumber, a.paid, a.taxincluded,
 			       a.notes, a.intnotes, a.curr AS currency, 
 			       a.vendor_id, a.language_code, a.ponumber,
-			       a.on_hold
+			       a.on_hold, a.reverse
 			  FROM ap a
 			 WHERE id = ?|;
         $sth = $dbh->prepare($query);
@@ -1138,7 +1141,7 @@ sub retrieve_invoice {
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-
+            $ref->{qty} *= -1 if $form->{reverse};
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
             $dec = length $dec;
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;

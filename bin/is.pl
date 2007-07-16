@@ -55,9 +55,14 @@ require "bin/io.pl";
 # end of main
 
 sub add {
-
-    $form->{title} = $locale->text('Add Sales Invoice');
-
+    if ($form->{type} eq 'credit_invoice'){
+        $form->{title} = $locale->text('Add Credit Invoice');
+        $form->{subtype} = 'credit_invoice';
+        $form->{reverse} = 1;
+    } else {
+        $form->{title} = $locale->text('Add Sales Invoice');
+        $form->{reverse} = 0;
+    }
     $form->{callback} =
 "$form->{script}?action=add&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}"
       unless $form->{callback};
@@ -70,8 +75,12 @@ sub add {
 
 sub edit {
 
-    $form->{title} = $locale->text('Edit Sales Invoice');
-
+    if ($form->{reverse}) {
+        $form->{title} = $locale->text('Add Credit Invoice');
+        $form->{subtype} = 'credit_invoice';
+    } else {
+        $form->{title} = $locale->text('Add Sales Invoice');
+    }
     &invoice_links;
     &prepare_invoice;
     &display_form;
@@ -402,7 +411,9 @@ sub form_header {
 |;
 
     $form->hide_form(
-        qw(id type media format printed emailed queued title vc terms discount creditlimit creditremaining tradediscount business closedto locked shipped oldtransdate recurring)
+        qw(id type media format printed emailed queued title vc terms discount 
+           creditlimit creditremaining tradediscount business closedto locked 
+           shipped oldtransdate recurring reverse batch_id subtype)
     );
 
     print qq|

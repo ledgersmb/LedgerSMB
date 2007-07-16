@@ -1241,15 +1241,20 @@ sub all_vc {
 
     my $sth;
 
-    my $query = qq|SELECT count(*) FROM $vc|;
+    if ($vc eq 'customer'){
+        $self->{vc_class} = 2;
+    } else {
+        $self->{vc_class} = 1;
+    }
+    my $query = qq|SELECT count(*) FROM entity_credit_account where entity_class = ?|;
     my $where;
-    my @queryargs = ();
+    my @queryargs = ($self->{vc_class});
 
     if ($transdate) {
-        $query .= qq| WHERE (startdate IS NULL OR startdate <= ?)
+        $query .= qq| AND (startdate IS NULL OR startdate <= ?)
 					AND (enddate IS NULL OR enddate >= ?)|;
 
-        @queryargs = ( $transdate, $transdate );
+        push (@queryargs, $transdate, $transdate );
     }
 
     $sth = $dbh->prepare($query);
@@ -1596,7 +1601,7 @@ sub create_links {
 				d.description AS department,
 				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
 				a.employee_id, e.name AS employee, 
-				c.language_code, a.ponumber
+				c.language_code, a.ponumber, a.reverse
 			FROM $arap a
 			JOIN $vc c ON (a.${vc}_id = c.id)
 			LEFT JOIN employee e ON (e.id = a.employee_id)
@@ -1664,6 +1669,9 @@ sub create_links {
             $ref->{exchangerate} =
               $self->get_exchangerate( $dbh, $self->{currency},
                 $ref->{transdate}, $fld );
+            if ($form->{reverse}){
+                $ref->{amount} *= -1;
+            }
 
             push @{ $self->{acc_trans}{ $xkeyref{ $ref->{accno} } } }, $ref;
         }
@@ -1741,7 +1749,7 @@ sub lastname_used {
 		                    where entity_id IS NOT NULL $where 
                                  order by id DESC limit 1)|;
 
-    $sth = $dbh->prepare($query);
+    $sth = $self->{dbh}->prepare($query);
     $sth->execute() || $self->dberror($query);
 
     my $ref = $sth->fetchrow_hashref(NAME_lc);
