@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2007.1.7)  26 APR 2007 16:34
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.1.7)  13 JUL 2007 15:51
 entering extended mode
 **LedgerSMB-manual.tex
 (./LedgerSMB-manual.tex
@@ -53,13 +53,11 @@ Package: color 1999/02/16 v1.0i Standard LaTeX Color (DPC)
 (/usr/share/texmf/tex/latex/graphics/color.cfg
 File: color.cfg 2005/02/03 v1.3 color configuration of teTeX/TeXLive
 )
-Package color Info: Driver file: dvips.def on input line 125.
+Package color Info: Driver file: pdftex.def on input line 125.
 
-(/usr/share/texmf/tex/latex/graphics/dvips.def
-File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
-)
-(/usr/share/texmf/tex/latex/graphics/dvipsnam.def
-File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+(/usr/share/texmf/tex/latex/graphics/pdftex.def
+File: pdftex.def 2002/06/19 v0.03k graphics/color for pdftex
+\Gread@gobject=\count87
 ))
 (/usr/share/texmf/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2003/11/30 v6.74m Hypertext links for LaTeX
@@ -69,8 +67,8 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
 \@linkdim=\dimen103
-\Hy@linkcounter=\count87
-\Hy@pagecounter=\count88
+\Hy@linkcounter=\count88
+\Hy@pagecounter=\count89
 
 (/usr/share/texmf/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2003/11/30 v6.74m Hyperref: PDFDocEncoding definition (HO)
@@ -88,7 +86,7 @@ Package hyperref Info: Backreferencing OFF on input line 1900.
 Implicit mode ON; LaTeX internals redefined
 Package hyperref Info: Bookmarks ON on input line 2004.
 LaTeX Info: Redefining \url on input line 2143.
-\Fld@menulength=\count89
+\Fld@menulength=\count90
 \Field@Width=\dimen104
 \Fld@charsize=\dimen105
 \Choice@toks=\toks15
@@ -98,32 +96,38 @@ Package hyperref Info: Link nesting OFF on input line 2623.
 Package hyperref Info: Hyper index ON on input line 2626.
 Package hyperref Info: backreferencing OFF on input line 2633.
 Package hyperref Info: Link coloring ON on input line 2636.
-\c@Item=\count90
-\c@Hfootnote=\count91
+\c@Item=\count91
+\c@Hfootnote=\count92
 )
-*hyperref using default driver hdvips*
-(/usr/share/texmf/tex/latex/hyperref/hdvips.def
-File: hdvips.def 2003/11/30 v6.74m Hyperref driver for dvips
+*hyperref using default driver hpdftex*
+(/usr/share/texmf/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2003/11/30 v6.74m Hyperref driver for pdfTeX
 
-(/usr/share/texmf/tex/latex/hyperref/pdfmark.def
-File: pdfmark.def 2003/11/30 v6.74m Hyperref definitions for pdfmark specials
-\pdf@docset=\toks17
-\pdf@box=\box26
-\pdf@toks=\toks18
-\pdf@defaulttoks=\toks19
-\Fld@listcount=\count92
-\@outlinefile=\write3
+(/usr/share/texmf/tex/latex/psnfss/pifont.sty
+Package: pifont 2004/09/15 PSNFSS-v9.2 Pi font support (SPQR) 
+LaTeX Font Info:    Try loading font information for U+pzd on input line 63.
+
+(/usr/share/texmf/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Try loading font information for U+psy on input line 64.
+
+(/usr/share/texmf/tex/latex/psnfss/upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
 ))
+\Fld@listcount=\count93
+\@outlinefile=\write3
+)
 (/usr/share/texmf/tex/latex/geometry/geometry.sty
 Package: geometry 2002/07/08 v3.2 Page Geometry
-\Gm@cnth=\count93
-\Gm@cntv=\count94
-\c@Gm@tempcnt=\count95
+\Gm@cnth=\count94
+\Gm@cntv=\count95
+\c@Gm@tempcnt=\count96
 \Gm@bindingoffset=\dimen106
 \Gm@wd@mp=\dimen107
 \Gm@odd@mp=\dimen108
 \Gm@even@mp=\dimen109
-\Gm@dimlist=\toks20
+\Gm@dimlist=\toks17
 
 (/usr/share/texmf/tex/latex/geometry/geometry.cfg)))
 (/usr/share/texmf/tex/generic/babel/babel.sty
@@ -134,7 +138,7 @@ Language: english 2004/06/14 v3.3o English support from the babel system
 
 (/usr/share/texmf/tex/generic/babel/babel.def
 File: babel.def 2004/11/20 v3.8d Babel common definitions
-\babel@savecnt=\count96
+\babel@savecnt=\count97
 \U@D=\dimen110
 )
 \l@british = a dialect from \language\l@english 
@@ -164,11 +168,44 @@ LaTeX Font Info:    Try loading font information for T1+ppl on input line 32.
 (/usr/share/texmf/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
+(/usr/share/texmf/tex/context/base/supp-pdf.tex
+(/usr/share/texmf/tex/context/base/supp-mis.tex
+loading : Context Support Macros / Miscellaneous (2004.10.26)
+\protectiondepth=\count98
+\scratchcounter=\count99
+\scratchtoks=\toks18
+\scratchdimen=\dimen111
+\scratchskip=\skip43
+\scratchmuskip=\muskip11
+\scratchbox=\box26
+\scratchread=\read1
+\scratchwrite=\write4
+\zeropoint=\dimen112
+\onepoint=\dimen113
+\onebasepoint=\dimen114
+\minusone=\count100
+\thousandpoint=\dimen115
+\onerealpoint=\dimen116
+\emptytoks=\toks19
+\nextbox=\box27
+\nextdepth=\dimen117
+\everyline=\toks20
+\!!counta=\count101
+\!!countb=\count102
+\recursecounter=\count103
+)
+loading : Context Support Macros / PDF (2004.03.26)
+\nofMPsegments=\count104
+\nofMParguments=\count105
+\MPscratchCnt=\count106
+\MPscratchDim=\dimen118
+\MPnumerator=\count107
+\everyMPtoPDFconversion=\toks21
+)
 Package hyperref Info: Link coloring ON on input line 32.
-
-(/usr/share/texmf/tex/latex/hyperref/nameref.sty
+ (/usr/share/texmf/tex/latex/hyperref/nameref.sty
 Package: nameref 2003/12/03 v2.21 Cross-referencing by name of section
-\c@section@level=\count97
+\c@section@level=\count108
 )
 LaTeX Info: Redefining \ref on input line 32.
 LaTeX Info: Redefining \pageref on input line 32.
@@ -193,7 +230,7 @@ truedimen: --
 includehead: --
 includefoot: --
 includemp: --
-driver: 
+driver: pdftex
 -------------------- Page layout dimensions and switches
 \paperwidth  614.295pt
 \paperheight 794.96999pt
@@ -241,23 +278,23 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 4.
  [1
 
-] [2] [3] [4] [5])
-\tf@toc=\write4
-\openout4 = `LedgerSMB-manual.toc'.
+{/usr/share/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5])
+\tf@toc=\write5
+\openout5 = `LedgerSMB-manual.toc'.
 
  (./LedgerSMB-manual.lof)
-\tf@lof=\write5
-\openout5 = `LedgerSMB-manual.lof'.
+\tf@lof=\write6
+\openout6 = `LedgerSMB-manual.lof'.
 
  [6]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 50.
-
-[7
+ [7
 
 ] [8] [9] [10] [11]
-Overfull \hbox (18.14574pt too wide) in paragraph at lines 402--404
-[][][][][][] 
+Overfull \hbox (0.23595pt too wide) in paragraph at lines 402--404
+[][]$\T1/ppl/m/n/10 http : / / www . accounting-[]and-[]bookkeeping-[]tips . co
+m / learning-[]accounting / accounting-[]basics-[]credit .
  []
 
 
@@ -270,12 +307,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 405--407
 
  []
 
-
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 408--411
 
  []
 
-[12]
+
 Underfull \hbox (badness 10000) in paragraph at lines 412--414
 
  []
@@ -329,107 +366,108 @@ Underfull \hbox (badness 10000) in paragraph at lines 58--1484
  []
 
 [31] [32] [33] [34] [35] [36] [37] [38] [39]
-Underfull \hbox (badness 10000) in paragraph at lines 2149--2152
+Underfull \hbox (badness 10000) in paragraph at lines 2164--2167
 
  []
 
-LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <8> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 2201.
 [40]
-Overfull \hbox (0.31456pt too wide) in paragraph at lines 2222--2225
+LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <8> not available
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 2216.
+
+Overfull \hbox (0.31456pt too wide) in paragraph at lines 2237--2240
 \T1/ppl/m/n/10 L[]T[]X tem-plates al-low one to gen-er-ate PDF and postscript d
 oc-u-ments and print di-rectly to a postscript-
  []
 
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <7> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 2231.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 2246.
+[41]
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string:
 (hyperref)                \kern -1.66702pt
-(hyperref)                removed on input line 2255.
+(hyperref)                removed on input line 2270.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\lower' on input line 2255.
+(hyperref)                removing `\lower' on input line 2270.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\hbox' on input line 2255.
+(hyperref)                removing `\hbox' on input line 2270.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string:
 (hyperref)                \kern -1.25pt
-(hyperref)                removed on input line 2255.
+(hyperref)                removed on input line 2270.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\spacefactor' on input line 2255.
+(hyperref)                removing `\spacefactor' on input line 2270.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\@m' on input line 2255.
+(hyperref)                removing `\@m' on input line 2270.
 
-[41]
-Overfull \hbox (45.1759pt too wide) in paragraph at lines 2327--2329
+[42]
+Overfull \hbox (45.1759pt too wide) in paragraph at lines 2342--2344
 []\T1/ppl/m/n/10 cd /usr/local/ledger-smb ./ct.pl "lo-gin=name&path=bin&passwor
 d=xxxxx&action=search&db=customer" 
  []
 
 
-Overfull \hbox (78.15541pt too wide) in paragraph at lines 2339--2341
+Overfull \hbox (78.15541pt too wide) in paragraph at lines 2354--2356
 []\T1/ppl/m/n/10 cd /usr/local/ledger-smb ./ct.pl "lo-gin=clarkkent&path=bin&pa
 ssword=lOis,lAn3&action=search&db=customer" 
  []
 
-[42]
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 2374.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 2389.
 
- (/usr/share/texmf/tex/latex/psnfss/t1pcr.fd
+(/usr/share/texmf/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 ) [43]
-Overfull \hbox (6.42152pt too wide) in paragraph at lines 2447--2447
+Overfull \hbox (6.42152pt too wide) in paragraph at lines 2462--2462
 []\T1/pcr/m/n/10 ARG="login=${LSLOGIN}&password=${LSPWD}&path=bin&action=search
 &db=customer"[] 
  []
 
 [44]
-Overfull \hbox (24.42152pt too wide) in paragraph at lines 2631--2631
+Overfull \hbox (24.42152pt too wide) in paragraph at lines 2646--2646
 []\T1/pcr/m/n/10 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  
 02111-1307, USA.[] 
  []
 
-
-Overfull \hbox (0.42152pt too wide) in paragraph at lines 2631--2631
+[45]
+Overfull \hbox (0.42152pt too wide) in paragraph at lines 2646--2646
 []\T1/pcr/m/n/10 $cmd = "login=" . $login . '&password=' . $pwd . '&path=bin&ac
 tion=login';[] 
  []
 
-[45]
-Overfull \hbox (6.42152pt too wide) in paragraph at lines 2631--2631
+[46]
+Overfull \hbox (6.42152pt too wide) in paragraph at lines 2646--2646
 []\T1/pcr/m/n/10 $cmd = "login=" . $login . '&password=' . $pwd . '&path=bin&ac
 tion=logout';[] 
  []
 
-[46]
-Overfull \hbox (156.42152pt too wide) in paragraph at lines 2631--2631
+[47]
+Overfull \hbox (156.42152pt too wide) in paragraph at lines 2646--2646
 []\T1/pcr/m/n/10 # action | db | name | vendornumber | address1 | address2 | ci
 ty | state | zipcode | country | phone[] 
  []
 
 
-Overfull \hbox (102.42152pt too wide) in paragraph at lines 2631--2631
+Overfull \hbox (102.42152pt too wide) in paragraph at lines 2646--2646
 []\T1/pcr/m/n/10 save|vendor|Parts are Us|1377|238 Riverview|Suite 11|Cheese He
 ad|WI|56743|USA|555-123-3322|[] 
  []
 
 
-Overfull \hbox (66.42152pt too wide) in paragraph at lines 2631--2631
+Overfull \hbox (66.42152pt too wide) in paragraph at lines 2646--2646
 []\T1/pcr/m/n/10 save|vendor|Widget Heaven|1378|41 S. Riparian Way||Show Me|MO|
 39793|USA|555-231-3309|[] 
  []
 
-[47]
-Overfull \hbox (216.42152pt too wide) in paragraph at lines 2631--2631
+
+Overfull \hbox (216.42152pt too wide) in paragraph at lines 2646--2646
 []\T1/pcr/m/n/10 save|vendor|Consolidated Spackle|1379|1010 Binary Lane|Dept 11
 01|Beverly Hills|CA|90210|USA|555-330-7639 x772|[] 
  []
@@ -437,32 +475,27 @@ Overfull \hbox (216.42152pt too wide) in paragraph at lines 2631--2631
 [48] (./sl-stack.tex) [49
 
 ] [50]
-Overfull \hbox (3.85573pt too wide) in paragraph at lines 2823--2826
+Overfull \hbox (3.85573pt too wide) in paragraph at lines 2838--2841
 []\T1/ppl/m/n/10 The css di-rec-tory in the root in-stall di-rec-tory con-tains
  CSS doc-u-ments to pro-vide var-i-ous stylesheets
  []
 
 [51] [52] [53] [54]
-Overfull \hbox (1.72615pt too wide) in paragraph at lines 3116--3122
+Overfull \hbox (1.72615pt too wide) in paragraph at lines 3131--3137
 \T1/ppl/m/n/10 the name of the tem-plate within the cur-rent tem-plate di-rec-t
 ory (usu-ally tem-plates/$username/).
  []
 
 [55] [56]
-Overfull \hbox (6.58676pt too wide) in paragraph at lines 3217--3222
+Overfull \hbox (6.58676pt too wide) in paragraph at lines 3232--3237
 \T1/ppl/m/n/10 The $form ob-ject pro-vides two meth-ods for ac-cess-ing the dat
 abase. The $form->dbconnect(%myconfig)
  []
 
 
-Overfull \hbox (40.4262pt too wide) in paragraph at lines 3217--3222
+Overfull \hbox (40.4262pt too wide) in paragraph at lines 3232--3237
 \T1/ppl/m/n/10 method com-mits each in-di-vid-ual state-ment as its own trans-a
 c-tion. The $form->dbconnect_noauto(%myconfig)
- []
-
-
-Overfull \hbox (48.90572pt too wide) in paragraph at lines 3225--3227
-\T1/ppl/m/n/10 his page at [][][][][][]. 
  []
 
 [57] [58
@@ -474,12 +507,22 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 
 [61] [62] [63] [64] [65]) [66] (./LedgerSMB-manual.aux) ) 
 Here is how much of TeX's memory you used:
- 3420 strings out of 94501
- 46793 string characters out of 1176790
- 125900 words of memory out of 1000000
- 6548 multiletter control sequences out of 10000+50000
- 19949 words of font info for 39 fonts, out of 500000 for 2000
+ 3986 strings out of 94500
+ 53384 string characters out of 1176767
+ 105595 words of memory out of 1000000
+ 6774 multiletter control sequences out of 10000+50000
+ 29317 words of font info for 55 fonts, out of 500000 for 2000
  580 hyphenation exceptions out of 1000
- 31i,9n,41p,245b,364s stack positions out of 1500i,500n,5000p,200000b,5000s
-
-Output written on LedgerSMB-manual.dvi (66 pages, 443772 bytes).
+ 34i,9n,41p,245b,277s stack positions out of 1500i,500n,5000p,200000b,5000s
+PDF statistics:
+ 1504 PDF objects out of 300000
+ 313 named destinations out of 131072
+ 1873 words of extra memory for PDF output out of 65536
+{/usr/share/texmf/font
+s/enc/dvips/psnfss/8r.enc}</usr/share/texmf/fonts/type1/urw/courier/ucrr8a.pfb>
+</usr/share/texmf/fonts/type1/bluesky/latex/line10.pfb></usr/share/texmf/fonts/
+type1/bluesky/cm/cmr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmmi10.pfb>
+</usr/share/texmf/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf/fonts/t
+ype1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplr8a.pf
+b>
+Output written on LedgerSMB-manual.pdf (66 pages, 399165 bytes).

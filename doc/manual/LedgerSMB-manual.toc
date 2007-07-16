@@ -139,36 +139,37 @@
 \contentsline {subsection}{\numberline {12.5}Reconciliation}{35}{subsection.12.5}
 \contentsline {subsection}{\numberline {12.6}Reports}{36}{subsection.12.6}
 \contentsline {subsubsection}{\numberline {12.6.1}GL as access to almost everything else}{36}{subsubsection.12.6.1}
-\contentsline {section}{\numberline {13}Recurring Transactions}{36}{section.13}
-\contentsline {section}{\numberline {14}Financial Statements and Reports}{36}{section.14}
+\contentsline {subsection}{\numberline {12.7}Using GL entries for Depreciation}{36}{subsection.12.7}
+\contentsline {section}{\numberline {13}Recurring Transactions}{37}{section.13}
+\contentsline {section}{\numberline {14}Financial Statements and Reports}{37}{section.14}
 \contentsline {subsection}{\numberline {14.1}Cash v. Accrual Basis}{37}{subsection.14.1}
 \contentsline {subsection}{\numberline {14.2}Viewing the Chart of Accounts and Transactions}{37}{subsection.14.2}
 \contentsline {subsection}{\numberline {14.3}Trial Balance}{37}{subsection.14.3}
 \contentsline {subsubsection}{\numberline {14.3.1}The Paper-based function of a Trial Balance}{37}{subsubsection.14.3.1}
-\contentsline {subsubsection}{\numberline {14.3.2}Running the Trial Balance Report}{37}{subsubsection.14.3.2}
-\contentsline {subsubsection}{\numberline {14.3.3}What if the Trial Balance doesn't Balance?}{37}{subsubsection.14.3.3}
-\contentsline {subsubsection}{\numberline {14.3.4}Trial Balance as a Summary of Account Activity}{37}{subsubsection.14.3.4}
+\contentsline {subsubsection}{\numberline {14.3.2}Running the Trial Balance Report}{38}{subsubsection.14.3.2}
+\contentsline {subsubsection}{\numberline {14.3.3}What if the Trial Balance doesn't Balance?}{38}{subsubsection.14.3.3}
+\contentsline {subsubsection}{\numberline {14.3.4}Trial Balance as a Summary of Account Activity}{38}{subsubsection.14.3.4}
 \contentsline {subsubsection}{\numberline {14.3.5}Trial Balance as a Budget Planning Tool}{38}{subsubsection.14.3.5}
 \contentsline {subsection}{\numberline {14.4}Income Statement}{38}{subsection.14.4}
-\contentsline {subsubsection}{\numberline {14.4.1}Uses of an Income Statement}{38}{subsubsection.14.4.1}
+\contentsline {subsubsection}{\numberline {14.4.1}Uses of an Income Statement}{39}{subsubsection.14.4.1}
 \contentsline {subsection}{\numberline {14.5}Balance Sheet}{39}{subsection.14.5}
 \contentsline {subsection}{\numberline {14.6}What if the Balance Sheet doesn't balance?}{39}{subsection.14.6}
 \contentsline {subsection}{\numberline {14.7}No Statement of Owner Equity?}{39}{subsection.14.7}
-\contentsline {section}{\numberline {15}The Template System}{39}{section.15}
+\contentsline {section}{\numberline {15}The Template System}{40}{section.15}
 \contentsline {subsection}{\numberline {15.1}Text Templates}{40}{subsection.15.1}
 \contentsline {subsection}{\numberline {15.2}HTML Templates}{40}{subsection.15.2}
 \contentsline {subsection}{\numberline {15.3}\LaTeX {}\ Templates}{41}{subsection.15.3}
-\contentsline {subsubsection}{\numberline {15.3.1}What is \LaTeX {}\ ?}{41}{subsubsection.15.3.1}
-\contentsline {subsubsection}{\numberline {15.3.2}Using L\kern -.1667em\lower .25em\hbox {Y}\kern -.125emX\spacefactor \@m {} to Edit \LaTeX {}\ Templates}{41}{subsubsection.15.3.2}
+\contentsline {subsubsection}{\numberline {15.3.1}What is \LaTeX {}\ ?}{42}{subsubsection.15.3.1}
+\contentsline {subsubsection}{\numberline {15.3.2}Using L\kern -.1667em\lower .25em\hbox {Y}\kern -.125emX\spacefactor \@m {} to Edit \LaTeX {}\ Templates}{42}{subsubsection.15.3.2}
 \contentsline {subsection}{\numberline {15.4}Customizing Logos}{42}{subsection.15.4}
 \contentsline {subsection}{\numberline {15.5}How are They Stored in the Filesystem?}{42}{subsection.15.5}
 \contentsline {subsection}{\numberline {15.6}Upgrade Issues}{42}{subsection.15.6}
-\contentsline {section}{\numberline {16}An Introduction to the CLI}{42}{section.16}
-\contentsline {subsection}{\numberline {16.1}Conventions}{42}{subsection.16.1}
-\contentsline {subsection}{\numberline {16.2}Preliminaries}{42}{subsection.16.2}
+\contentsline {section}{\numberline {16}An Introduction to the CLI}{43}{section.16}
+\contentsline {subsection}{\numberline {16.1}Conventions}{43}{subsection.16.1}
+\contentsline {subsection}{\numberline {16.2}Preliminaries}{43}{subsection.16.2}
 \contentsline {subsection}{\numberline {16.3}First Script: lsmb01-cli-example.sh}{43}{subsection.16.3}
-\contentsline {subsubsection}{\numberline {16.3.1}Script 1 (Bash)}{43}{subsubsection.16.3.1}
-\contentsline {subsection}{\numberline {16.4}Second Script: lsmb02-cli-example.pl}{44}{subsection.16.4}
+\contentsline {subsubsection}{\numberline {16.3.1}Script 1 (Bash)}{44}{subsubsection.16.3.1}
+\contentsline {subsection}{\numberline {16.4}Second Script: lsmb02-cli-example.pl}{45}{subsection.16.4}
 \contentsline {subsubsection}{\numberline {16.4.1}Script 2 (Perl)}{45}{subsubsection.16.4.1}
 \contentsline {part}{II\hspace {1em}Technical Overview}{49}{part.2}
 \contentsline {section}{\numberline {17}Basic Architecture}{49}{section.17}
