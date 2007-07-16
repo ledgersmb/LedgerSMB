@@ -368,7 +368,7 @@ projectnumber|1
 \.
 -- */
 CREATE TABLE acc_trans (
-  trans_id int,
+  trans_id int NOT NULL REFERENCES transactions(id),
   chart_id int NOT NULL REFERENCES chart (id),
   amount NUMERIC,
   transdate date DEFAULT current_date,
