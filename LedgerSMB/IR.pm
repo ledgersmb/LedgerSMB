@@ -467,6 +467,7 @@ sub post_invoice {
     for $i ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$i"} =
           $form->parse_amount( $myconfig, $form->{"paid_$i"} );
+        $form->{"paid_$i"} *= -1 if $form->{reverse};
         $form->{paid} += $form->{"paid_$i"};
         $form->{datepaid} = $form->{"datepaid_$i"}
           if ( $form->{"datepaid_$i"} );
