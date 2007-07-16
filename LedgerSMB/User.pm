@@ -1,40 +1,71 @@
-#=====================================================================
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
-# under the GNU General Public License version 2 or, at your option, any later
-# version.  For a full list including contact information of contributors,
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2000
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-#  Contributors: Jim Rawlings <jim@your-dba.com>
-#
-#======================================================================
-#
-# This file has undergone whitespace cleanup.
-#
-#======================================================================
-#
-# user related functions
-#
-#=====================================================================
+
+=head1 NAME
+
+LedgerSMB::User
+
+=head1 SYNOPSIS
+
+This module provides user support and database management functions.
+
+=head1 STATUS
+
+Deprecated
+
+=head1 COPYRIGHT
+
+ #====================================================================
+ # LedgerSMB
+ # Small Medium Business Accounting software
+ # http://www.ledgersmb.org/
+ #
+ # Copyright (C) 2006
+ # This work contains copyrighted information from a number of sources
+ # all used with permission.
+ #
+ # This file contains source code included with or based on SQL-Ledger
+ # which is Copyright Dieter Simader and DWS Systems Inc. 2000-2005
+ # and licensed under the GNU General Public License version 2 or, at
+ # your option, any later version.  For a full list including contact
+ # information of contributors, maintainers, and copyright holders,
+ # see the CONTRIBUTORS file.
+ #
+ # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+ # Copyright (C) 2000
+ #
+ #  Author: DWS Systems Inc.
+ #     Web: http://www.sql-ledger.org
+ #
+ #  Contributors: Jim Rawlings <jim@your-dba.com>
+ #
+ #====================================================================
+ #
+ # This file has undergone whitespace cleanup.
+ #
+ #====================================================================
+ #
+ # user related functions
+ #
+ #====================================================================
+
+=head1 METHODS
+
+=over
+
+=cut
+
+# inline documentation
 
 package LedgerSMB::User;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Session;
 use Data::Dumper;
+
+=item LedgerSMB::User->new($login);
+
+Create a LedgerSMB::User object.  If the user $login exists, set the fields
+with values retrieved from the database.
+
+=cut
 
 sub new {
 
@@ -89,6 +120,13 @@ sub new {
     bless $self, $type;
 }
 
+=item LedgerSMB::User->country_codes();
+
+Returns a hash where the keys are registered locales and the values are the
+textual representation of the locale name.
+
+=cut
+
 sub country_codes {
     use Locale::Country;
     use Locale::Language;
@@ -113,6 +151,14 @@ sub country_codes {
     %cc;
 
 }
+
+=item LedgerSMB::User->fetch_config($login);
+
+Returns a reference to a hash that contains the user config for the user $login.
+If that user does not exist, output 'Access denied' if in CGI and die in all
+cases.
+
+=cut
 
 sub fetch_config {
 
@@ -169,6 +215,12 @@ sub fetch_config {
 
     return \%myconfig;
 }
+
+=item $user->login($form);
+
+Disused auth function.
+
+=cut
 
 sub login {
 
@@ -258,6 +310,12 @@ sub login {
 
 }
 
+=item LedgerSMB::User->check_recurring($form);
+
+Disused function to return the number of current recurring events.
+
+=cut
+
 sub check_recurring {
     my ( $self, $form ) = @_;
 
@@ -276,6 +334,12 @@ sub check_recurring {
     $_;
 
 }
+
+=item LedgerSMB::User::dbconnect_vars($form, $db);
+
+Converts individual $form values into $form->{dboptions} and $form->{dbconnect}.
+
+=cut
 
 sub dbconnect_vars {
     my ( $form, $db ) = @_;
@@ -299,6 +363,12 @@ sub dbconnect_vars {
 
 }
 
+=item LedgerSMB::User->dbdrivers();
+
+Returns a list of all drivers set up with DBI whose names end in 'Pg'.
+
+=cut
+
 sub dbdrivers {
 
     my @drivers = DBI->available_drivers();
@@ -307,6 +377,14 @@ sub dbdrivers {
     return ( grep { /Pg$/ } @drivers );
 
 }
+
+=item LedgerSMB::User->dbsources($form);
+
+Returns a list of all databases in the same cluster as the database that $form
+is set to.  If $form->{only_acc_db} is set, only non-template databases that
+have a defaults table owned by $form->{dbuser} are returned.
+
+=cut
 
 sub dbsources {
     my ( $self, $form ) = @_;
@@ -367,6 +445,14 @@ sub dbsources {
     return @dbsources;
 
 }
+
+=item LedgerSMB::User->dbcreate($form);
+
+Create the database indicated by $form->{db} and load Pg-database.sql, the chart
+indicated by $form->{chart} and custom tables and functions
+(Pg-custom_tables.sql and Pg-custom_functions).
+
+=cut
 
 sub dbcreate {
     my ( $self, $form ) = @_;
@@ -449,6 +535,13 @@ sub dbcreate {
 
 }
 
+=item LedgerSMB::User->process_query($form, $dbh, $filename);
+
+Load the file $filename into the database indicated through form using psql.
+$dbh is ignored.
+
+=cut
+
 sub process_query {
     my ( $self, $form, $dbh, $filename ) = @_;
 
@@ -469,6 +562,12 @@ sub process_query {
     }
 }
 
+=item LedgerSMB::User->dbdelete($form);
+
+Disused function to drop the database $form->{db}.
+
+=cut
+
 sub dbdelete {
     my ( $self, $form ) = @_;
 
@@ -484,6 +583,13 @@ sub dbdelete {
     $dbh->disconnect;
 
 }
+
+=item LedgerSMB::User->dbsources_unused($form, $memfile);
+
+Disused function to identify all databases in a cluster with a defaults table
+that are not mentioned in the memberfile $memfile.
+
+=cut
 
 sub dbsources_unused {
     my ( $self, $form, $memfile ) = @_;
@@ -521,6 +627,13 @@ sub dbsources_unused {
     return @dbsources;
 
 }
+
+=item LedgerSMB::User->dbneedsupdate($form);
+
+Disused function to locate all databases owned by $form->{dbuser} that are not
+a template* database which have a defaults table with a version entry.
+
+=cut
 
 sub dbneedsupdate {
     my ( $self, $form ) = @_;
@@ -590,6 +703,12 @@ sub dbneedsupdate {
     %dbsources;
 
 }
+
+=item LedgerSMB::User->dbupdate($form);
+
+Applies database upgrade scripts to upgrade the database to the current level.
+
+=cut
 
 sub dbupdate {
     my ( $self, $form ) = @_;
@@ -671,6 +790,23 @@ sub dbupdate {
 
 }
 
+=item calc_version($version);
+
+Returns a numeric form for the version passed in.  The numeric form is derived
+by converting each dotted portion of the version to a three-digit number and
+appending them.
+
+ +----------+------------+
+ | $version |   returned |
+ +----------+------------+
+ |   1.0.0  |    1000000 |
+ |   1.2.33 |    1002033 |
+ | 189.2.33 |  189002033 |
+ |  1.2.3.4 | 1002003004 |
+ +----------+------------+
+
+=cut
+
 sub calc_version {
 
     my @v = split /\./, $_[0];
@@ -685,6 +821,12 @@ sub calc_version {
     return $version;
 
 }
+
+=item script_version
+
+Sorting function for database upgrade scripts.
+
+=cut
 
 sub script_version {
     my ( $my_a, $my_b ) = ( $a, $b );
@@ -710,6 +852,13 @@ sub script_version {
     return $res_a <=> $res_b;
 
 }
+
+=item $user->save_member();
+
+Updates the user config in the database for the user $user.  If no config for
+the user exists, the user to the database.
+
+=cut
 
 sub save_member {
 
@@ -900,6 +1049,12 @@ sub save_member {
     }
 }
 
+=item LedgerSMB::User->delete_login($form);
+
+Disused function to delete the user $form->{login}.
+
+=cut
+
 sub delete_login {
     my ( $self, $form ) = @_;
 
@@ -931,6 +1086,12 @@ sub delete_login {
 
 }
 
+=item LedgerSMB::User->config_vars();
+
+Disused function that returns a list of user config variable names.
+
+=cut
+
 sub config_vars {
 
     my @conf = qw(acs address businessnumber company countrycode
@@ -942,6 +1103,13 @@ sub config_vars {
     @conf;
 
 }
+
+=item $self->error($msg);
+
+Privately used error function.  Used in places where the more typically used
+$form->error cannot be used.  Always dies.
+
+=cut
 
 sub error {
     my ( $self, $msg ) = @_;
@@ -959,4 +1127,6 @@ sub error {
 }
 
 1;
+
+=back
 
