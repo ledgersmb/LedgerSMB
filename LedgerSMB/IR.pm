@@ -333,7 +333,7 @@ sub post_invoice {
 					   WHERE i.parts_id = ?
 					         AND (i.qty + i.allocated) > 0
 					ORDER BY transdate|;
-                $sth = $dbh->prepare($query);
+                my $sth = $dbh->prepare($query);
                 $sth->execute( $form->{"id_$i"} )
                   || $form->dberror($query);
 
@@ -363,7 +363,7 @@ sub post_invoice {
 							     VALUES (?, ?, ?, ?,
 							            ?, ?)|;
 
-                        $sth = $dbh->prepare($query);
+                        my $sth = $dbh->prepare($query);
                         $sth->execute(
                             $ref->{trans_id},   $ref->{inventory_accno_id},
                             $linetotal,         $ref->{transdate},
@@ -385,7 +385,7 @@ sub post_invoice {
                         $sth->execute(
                             $ref->{trans_id},   $ref->{expense_accno_id},
                             $linetotal * -1,    $ref->{transdate},
-                            $ref->{project_id}, $invoice_id
+                            $:ref->{project_id}, $invoice_id
                         ) || $form->dberror($query);
                     }
 

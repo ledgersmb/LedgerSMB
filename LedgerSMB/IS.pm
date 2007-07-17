@@ -1057,6 +1057,7 @@ sub post_invoice {
                             &cogs( $dbh, $form, $form->{"id_$i"}, 
                                    $form->{"qty_$i"}, $project_id );
                     } else {
+			my $total_inventory = 0;
 			$query = qq|
 			              SELECT i.id, i.qty, i.allocated, a.transdate
 					FROM invoice i
