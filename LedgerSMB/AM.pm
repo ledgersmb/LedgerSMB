@@ -1698,6 +1698,7 @@ sub closebooks {
         else {
             $val = 0;
         }
+        $val = undef if ($_ eq 'closedto' and $val == 0); 
         $sth->execute( $val, $_ );
     }
 
