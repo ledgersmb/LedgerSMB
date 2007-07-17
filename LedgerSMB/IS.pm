@@ -1535,7 +1535,7 @@ sub process_assembly {
 			            assemblyitem, unit)
 			     VALUES (?, ?, ?, ?, 0, 0, ?, 't', ?)|;
 
-        $sth = $dbh->prepare($query);
+        my $sth = $dbh->prepare($query);
         $sth->execute( $form->{id}, $ref->{description}, $ref->{parts_id},
             $ref->{qty}, $allocated, $ref->{unit} )
           || $form->dberror($query);
