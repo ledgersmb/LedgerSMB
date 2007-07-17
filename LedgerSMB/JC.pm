@@ -134,11 +134,11 @@ sub jcitems_links {
 
     if ( $form->{project_id} ) {
         $form->{orphaned} = 1;
-        $query = qq|SELECT parts_id FROM project WHERE id = ?|;
+        $query = qq|SELECT parts_id, customer_id FROM project WHERE id = ?|;
         my $sth = $dbh->prepare($query);
         $sth->execute( $form->{project_id} );
-
-        if ( $sth->fetchrow_array ) {
+        ($parts_id, $form->{customer_id} ) = $sth->fetchrow_array ;
+        if ( $parts_id ) {
             $form->{project} = 'job';
             $query = qq|
 				SELECT id
