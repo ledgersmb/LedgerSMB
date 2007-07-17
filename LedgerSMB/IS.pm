@@ -1090,7 +1090,7 @@ sub post_invoice {
  					(trans_id, chart_id, amount, 
  					transdate, project_id) 
  				VALUES (?, ?, ?, ?, ?)|;
-  			$sth = $dbh->prepare($query);
+  			my $sth = $dbh->prepare($query);
      			$sth->execute(
                                  $form->{id}, 
                                  $form->{"expense_accno_id_$i"}, 
@@ -1554,7 +1554,7 @@ sub process_assembly {
 			            assemblyitem, unit)
 			     VALUES (?, ?, ?, ?, 0, 0, ?, 't', ?)|;
 
-        $sth = $dbh->prepare($query);
+        my $sth = $dbh->prepare($query);
         $sth->execute( $form->{id}, $ref->{description}, $ref->{parts_id},
             $ref->{qty}, $allocated, $ref->{unit} )
           || $form->dberror($query);
