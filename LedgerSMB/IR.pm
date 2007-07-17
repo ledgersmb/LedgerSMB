@@ -385,7 +385,7 @@ sub post_invoice {
                         $sth->execute(
                             $ref->{trans_id},   $ref->{expense_accno_id},
                             $linetotal * -1,    $ref->{transdate},
-                            $:ref->{project_id}, $invoice_id
+                            $ref->{project_id}, $invoice_id
                         ) || $form->dberror($query);
                     }
 
