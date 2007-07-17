@@ -404,7 +404,7 @@ sub post_invoice {
 							     VALUES (?, ?, ?, ?,
 							            ?, ?)|;
 
-                        $sth = $dbh->prepare($query);
+                        my $sth = $dbh->prepare($query);
                         $sth->execute(
                             $ref->{trans_id},   $ref->{inventory_accno_id},
                             $linetotal,         $ref->{transdate},
