@@ -839,7 +839,7 @@ sub reverse_invoice {
 						            transdate, 
 						            project_id)
 						     VALUES (?, ?, ?, ?, ?)|;
-                    $sth = $dbh->prepare($query);
+                    my $sth = $dbh->prepare($query);
                     $sth->execute( $pthref->{trans_id},
                         $ref->{expense_accno_id},
                         $amount, $form->{transdate}, $ref->{project_id} )
