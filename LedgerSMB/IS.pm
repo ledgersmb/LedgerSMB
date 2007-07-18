@@ -1053,9 +1053,27 @@ sub post_invoice {
                     ) unless $form->{shipped};
                     
 		    if($form->{"qty_$i"}>0) {
-                        $allocated =
-                            &cogs( $dbh, $form, $form->{"id_$i"}, 
-                                   $form->{"qty_$i"}, $project_id );
+                         $query = qq|
+                               SELECT i.id, i.qty, i.allocated, a.transdate
+                               FROM invoice i
+                               JOIN parts p ON (p.id = i.parts_id)
+                               JOIN ar a ON (a.id = i.trans_id)
+                               WHERE i.parts_id = ? 
+                                     AND (i.qty + i.allocated) < 0 
+                                     AND i.sellprice = ?
+                               ORDER BY transdate|;
+                         $sth = $dbh->prepare($query);
+                         $sth->execute( $form->{"id_$i"}, $form->{"sellprice_$i"}) || $form->dberror($query);
+                         my $totalqty = $form->{"qty_$i"};
+                         while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+                     	    $form->db_parse_numeric(sth=>$sth, hashref => $ref);
+                     	    my $qty = $ref->{qty} + $ref->{allocated};
+                     	    if ( ( $qty + $totalqty ) < 0 ) { $qty = -$totalqty; }
+                     	    # update allocated for sold item
+                     	    $form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, (-1)*$qty);
+                     	    $allocated += $qty;
+                     	    last if ( ( $totalqty += $qty ) <= 0 );
+                         }
                     } else {
 			my $total_inventory = 0;
 			$query = qq|

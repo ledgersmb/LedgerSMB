@@ -274,10 +274,9 @@ sub post_invoice {
 
             if ( $form->{"inventory_accno_id_$i"} ) {
 
-                #start patch bug 1749690 ###########################################################################################################
+                my $totalqty = $form->{"qty_$i"};
 		# if this is a exit for the product 
 		if($form->{"qty_$i"}<0) {
-                    # check for unallocated entries at the same price to match our entry
                     $query = qq|
 				  SELECT i.id, i.qty, i.allocated, a.transdate
 			    	    FROM invoice i
@@ -298,8 +297,49 @@ sub post_invoice {
                         $allocated += $qty;
                         last if ( ( $totalqty -= $qty ) >= 0 );
             	    }
-		}
-                # stop patch bug 1749690 ###########################################################################################################
+ 		} else {
+ 		    # start patch bug 1755355 ###############################################################################
+ 		    # check for unallocated entries atthe same price to match our entry
+ 		    $query = qq|
+ 		                SELECT i.id, i.qty, i.allocated, a.transdate
+ 		                FROM invoice i
+ 		                JOIN parts p ON (p.id = i.parts_id)
+ 		                JOIN ap a ON (a.id = i.trans_id)
+ 		                WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 AND i.sellprice = ?
+ 		                ORDER BY transdate|;
+                     $sth = $dbh->prepare($query);
+ 		    $sth->execute( $form->{"id_$i"}, $form->{"sellprice_$i"}) || $form->dberror($query);
+ 		    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+ 			$form->db_parse_numeric(sth=>$sth, hashref => $ref);
+ 		        my $qty = $ref->{qty} + $ref->{allocated};
+ 		        if ( ( $qty - $totalqty ) > 0 ) { $qty = $totalqty; }
+ 		        # update allocated for sold item
+ 			$form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, $qty * -1 );
+ 		        $allocated += $qty;
+ 		        last if ( ( $totalqty -= $qty ) <= 0 );
+ 		    }
+ 		} else {
+ 		    # start patch bug 1755355 ###############################################################################
+ 		    # check for unallocated entries atthe same price to match our entry
+ 		    $query = qq|
+ 		                SELECT i.id, i.qty, i.allocated, a.transdate
+ 		                FROM invoice i
+ 		                JOIN parts p ON (p.id = i.parts_id)
+ 		                JOIN ap a ON (a.id = i.trans_id)
+ 		                WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 AND i.sellprice = ?
+ 		                ORDER BY transdate|;
+                     $sth = $dbh->prepare($query);
+ 		    $sth->execute( $form->{"id_$i"}, $form->{"sellprice_$i"}) || $form->dberror($query);
+ 		    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+ 			$form->db_parse_numeric(sth=>$sth, hashref => $ref);
+ 		        my $qty = $ref->{qty} + $ref->{allocated};
+ 		        if ( ( $qty - $totalqty ) > 0 ) { $qty = $totalqty; }
+ 		        # update allocated for sold item
+ 			$form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, $qty * -1 );
+ 		        $allocated += $qty;
+ 		        last if ( ( $totalqty -= $qty ) <= 0 );
+ 		    }
+                }
 
         	# add purchase to inventory
                 push @{ $form->{acc_trans}{lineitems} },
@@ -336,8 +376,6 @@ sub post_invoice {
                 my $sth = $dbh->prepare($query);
                 $sth->execute( $form->{"id_$i"} )
                   || $form->dberror($query);
-
-                my $totalqty = $form->{"qty_$i"};
 
                 while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
                     $form->db_parse_numeric(sth=>$sth, hashref => $ref);
