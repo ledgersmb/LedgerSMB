@@ -36,29 +36,33 @@ and may not be required in all circumstances.  These include:
 3)  Decide where to put the user/session management tables.  In general, we
 recommend as follows:
   a)  Single dataset installations should use the user tables in the dataset.
-  b)  Multicompany installations should use user tables in a separate dataset
+  b)  Multi-company installations should use user tables in a separate dataset
       from any accounting data.
 
 4)  Install Tsearch2 Full Text indexing engine for PostgreSQL (not optional)
   a) If you installed PostgreSQL from source, Tsearch2 is in contrib.
   b) If you installed from package, you will need the package
-  postgresql-contrib or equivelant
-  c) Use psql to apply the tsearch2.sql. The file is normally installed to
+  postgresql-contrib or equivalent
+  c) Use psql to apply the tsearch2.sql to template1. The file is normally 
+  installed to
   /usr/share/postgresql/contrib/tsearch2.sql or
   //usr/share/postgresql/<version>/contrib/tsearch2.sql
 
-5)  Create central database
+5)  Install tablefunc.sql for PostgreSQL (not optional)
+  See notes in 4 above for location of script and apply to template1.
 
-  a) cd to the sql/ directory of the new ledger directory.
-  b) run "psql" with appropriate options to connect to your database.
-  c) Run the SQL script Pg-central.sql.
+6)  Create central database
+  a) create the ledgersmb role (optional)
+  b) create the ledgersmb database (if using a multi-company central db)
+  c) cd to the sql/ directory of the new ledger directory.
+  d) load the Pg-database.sql script into ledgersmb or your database.
 
-6)  Set the admin password:
-  a)  From psql, determine what admin password you wish to use.  Then type:
+7)  Set the admin password:
+  From psql, determine what admin password you wish to use.  Then type:
       "update users_conf set password = md5('my_password');"
       Naturally you would use your password instead of my_password.
 
-6)  Edit the ledger-smb.conf file as appropriate.
+8)  Edit the ledger-smb.conf file as appropriate.
 
 Congratulations, you have manually installed LedgerSMB 1.3.
 
