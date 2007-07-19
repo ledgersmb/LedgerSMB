@@ -1120,6 +1120,29 @@ sub post_invoice {
                                  $linetotal, $form->{transdate}, 
                                  $form->{"project_id_$i"}, $ref->{id}
                             ) || $form->dberror($query);
+                            my $allocated1 = 0;
+                            my $totalqty1 = $qty;
+                            my $query_ap = qq|SELECT i.id, i.qty, i.allocated, a.transdate
+                        		        FROM invoice i
+                                                JOIN parts p ON (p.id = i.parts_id)
+                                                JOIN ap a ON (a.id = i.trans_id)
+                                               WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 AND i.sellprice = ?
+                                            ORDER BY transdate|;
+                            my $sth1 = $dbh->prepare($query_ap);
+                            $sth1->execute( 
+                                   $form->{"id_$i"}, $ref->{"sellprice"}
+                            ) || $form->dberror($query_ap);
+                            while ( my $ref1 = $sth1->fetchrow_hashref(NAME_lc) ) {
+                        	$form->db_parse_numeric(sth=>$sth1, hashref => $ref1);
+                                my $qty = $ref1->{qty} + $ref1->{allocated};
+                        	if ( ( $qty - $totalqty ) > 0 ) { $qty = $totalqty; }
+                                $form->update_balance( 
+                                        $dbh, "invoice", "allocated", 
+                                        qq|id = $ref1->{id}|, $qty );
+                                $allocated1 += $qty;
+                    		last if ( ( $totalqty1 -= $qty ) <= 0 );
+                            }
+                            $form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, $allocated1 * -1 );
 		            last if ( ( $totalqty += $qty ) >= 0 );
 		        }
 			
