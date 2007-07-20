@@ -431,6 +431,8 @@ qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
 sub generate_report {
 
     $form->{sort} = "transdate" unless $form->{sort};
+    $form->{amountfrom} = $form->parse_amount(\%myconfig, $form->{amountfrom});
+    $form->{amountto} = $form->parse_amount(\%myconfig, $form->{amountto});
 
     GL->all_transactions( \%myconfig, \%$form );
 
