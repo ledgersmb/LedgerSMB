@@ -72,6 +72,7 @@ CREATE TABLE session(
 session_id serial PRIMARY KEY,
 token VARCHAR(32) CHECK(length(token) = 32),
 last_used TIMESTAMP default now(),
+ttl int default 3600 not null,
 users_id INTEGER NOT NULL references users(id),
 transaction_id INTEGER NOT NULL
 );
@@ -79,8 +80,35 @@ transaction_id INTEGER NOT NULL
 --
 CREATE TABLE transactions (
   id int PRIMARY KEY,
-  table_name text
+  table_name text,
+  locked_by int references "session" (session_id) ON DELETE SET NULL
 );
+
+COMMENT on TABLE transactions IS 
+$$ This table tracks basic transactions across AR, AP, and GL related tables.  
+It provies a referential integrity enforcement mechanism for the financial data
+and also some common features such as discretionary (and pessimistic) locking 
+for long batch workflows. $$;
+
+CREATE FUNCTION lock_record (int, int) returns bool as 
+$$
+declare
+   locked int;
+begin;
+   SELECT locked_by into locked from transactions where id = $1;
+   IF NOT FOUND THEN
+	RETURN FALSE;
+   ELSEIF locked_by is not null AND locked_by <> $2 THEN
+        RETURN FALSE;
+   END IF;
+   UPDATE transactions set locked_by = $2 where id = $1;
+   RETURN TRUE;
+end;
+$$ language plpgsql;
+
+COMMENT ON column transactions.locked_by IS
+$$ This should only be used in pessimistic locking measures as required by large
+batch work flows. $$;
 
 -- BEGIN new entity management
 CREATE TABLE entity (
