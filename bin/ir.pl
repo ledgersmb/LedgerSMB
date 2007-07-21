@@ -469,7 +469,7 @@ sub form_header {
 }
 
 sub form_footer {
-
+    _calc_taxes();
     $form->{invtotal} = $form->{invsubtotal};
 
     if ( ( $rows = $form->numtextrows( $form->{notes}, 35, 8 ) ) < 2 ) {
@@ -483,7 +483,7 @@ sub form_footer {
 qq|<textarea name=notes rows=$rows cols=35 wrap=soft>$form->{notes}</textarea>|;
     $intnotes =
 qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
-
+    $tax = "";
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
     $taxincluded = "";
@@ -495,26 +495,17 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     }
 
     if ( !$form->{taxincluded} ) {
-        my @taxset = Tax::init_taxes( $form, $form->{taxaccounts} );
-        foreach $taxobj (@taxset) {
-            $item = $taxobj->account;
-	    $form->{invtotal} += $form->round_amount(
-                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2);
-            $form->{"${item}_total"} =
-              $form->format_amount( \%myconfig,
-                $form->{"${item}_rate"} * $form->{"${item}_base"}, 2 );
-            if ( $form->{"${item}_base"} ) {
-                $form->{"${item}_total"} =
-                  $form->format_amount( \%myconfig,
-                    $form->round_amount( $taxobj->value, 2 ), 2 );
-
+        foreach $item (keys %{$form->{taxes}}) {
+            my $taccno = $item;
+	    $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
+            $form->{"${taccno}_total"} =
+                $form->round_amount($form->{taxes}{$item}, 2);
                 $tax .= qq|
 		<tr>
 		  <th align=right>$form->{"${item}_description"}</th>
 		  <td align=right>$form->{"${item}_total"}</td>
 		</tr>
 |;
-            }
         }
 
         $form->{invsubtotal} =

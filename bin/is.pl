@@ -518,7 +518,7 @@ sub form_header {
 }
 
 sub form_footer {
-
+    _calc_taxes();
     $form->{invtotal} = $form->{invsubtotal};
 
     if ( ( $rows = $form->numtextrows( $form->{notes}, 35, 8 ) ) < 2 ) {
@@ -549,20 +549,17 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     }
 
     if ( !$form->{taxincluded} ) {
-        my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-        foreach $item (@taxes) {
-            my $taccno = $item->account;
-	    $form->{invtotal} += $form->round_amount( 
-                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2);
+        foreach $item (keys %{$form->{taxes}}) {
+            my $taccno = $item;
+	    $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
             $form->{"${taccno}_total"} =
-              $form->format_amount( \%myconfig,
-                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2 );
+                  $form->format_amount( \%myconfig,
+                    $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
             $tax .= qq|
         <tr>
       	<th align=right>$form->{"${taccno}_description"}</th>
       	<td align=right>$form->{"${taccno}_total"}</td>
-        </tr>
-	| if $form->{"${taccno}_base"};
+        </tr>|;
         }
 
         $form->{invsubtotal} =
@@ -834,7 +831,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
 }
 
 sub update {
-
+    $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
@@ -1011,13 +1008,8 @@ sub update {
                 for ( split / /, $form->{"taxaccounts_$i"} ) {
                     $form->{"${_}_base"} += $amount;
                 }
-                if ( !$form->{taxincluded} ) {
-                    my @taxes =
-                      Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
-                        $form->{taxaccounts} );
-                    $amount +=
-                      Tax::calculate_taxes( \@taxes, $form, $amount, 0 );
-                }
+
+
 
                 $form->{creditremaining} -= $amount;
 

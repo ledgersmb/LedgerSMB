@@ -84,6 +84,40 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 # $locale->text('Nov')
 # $locale->text('Dec')
 
+sub _calc_taxes {
+    for $i (1 .. $form->{rowcount}){
+        my $linetotal = 
+             $form->parse_amount(\%myconfig, $form->{"sellprice_$i"}) 
+             * $form->parse_amount(\%myconfig, $form->{"qty_$i"}) 
+             * (1 - $form->parse_amount(\%myconfig, $form->{"discount_$i"})
+                    / 100);
+        @taxaccounts = Tax::init_taxes(
+            $form, $form->{"taxaccounts_$i"},
+            $form->{'taxaccounts'}
+        );
+        my $tax;
+        my $fxtax;
+        my $amount;
+        if ( $form->{taxincluded} ) {
+            $tax += $amount =
+              Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
+
+            $form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
+        }
+        else {
+            $tax += $amount =
+              Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
+            $fxtax +=
+              Tax::calculate_taxes( \@taxaccounts, $form, $fxlinetotal, 0 )
+              if $fxlinetotal;
+        }        
+        for (@taxaccounts) {
+            $form->{taxes}{$_->account} = 0 if ! $form->{taxes}{$_->account};
+            $form->{taxes}{$_->account} += $_->value;
+        }
+    }
+}
+
 sub display_row {
     my $numrows = shift;
 
