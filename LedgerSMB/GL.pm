@@ -313,14 +313,14 @@ sub all_transactions {
     }
 
     if ( $form->{gifi_accno} ) {
-        $var = $dbh->quote( $form->{gifiaccno} );
+        $var = $dbh->quote( $form->{gifi_accno} );
         $glwhere .= " AND c.gifi_accno = $var";
         $arwhere .= " AND c.gifi_accno = $var";
         $apwhere .= " AND c.gifi_accno = $var";
     }
 
     if ( $form->{category} ne 'X' ) {
-        $var = $dbh->quote( $form->{gifiaccno} );
+        $var = $dbh->quote( $form->{category} );
         $glwhere .= " AND c.category = $var";
         $arwhere .= " AND c.category = $var";
         $apwhere .= " AND c.category = $var";
