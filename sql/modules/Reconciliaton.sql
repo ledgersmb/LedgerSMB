@@ -137,6 +137,8 @@ CREATE OR REPLACE FUNCTION reconciliation_correct_bank_charge (in_report_id int,
         pending_entry pending_reports;
     BEGIN
     
+        select into pending_entry from pending_reports where report_id = in_report_id and id = in_id;
+    
         IF NOT FOUND THEN
              -- Raise an exception.
              RAISE EXCEPTION "Cannot find entry with ID % in report %.", in_id, in_report_id;
@@ -163,6 +165,8 @@ CREATE OR REPLACE FUNCTION reconciliation_correct_unaccounted_charge (in_report_
         pending_entry pending_reports;
         note TEXT;
     BEGIN
+    
+        select into pending_entry from pending_reports where report_id = in_report_id and id = in_id;
     
         IF NOT FOUND THEN
              -- Raise an exception.
