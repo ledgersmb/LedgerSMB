@@ -739,7 +739,7 @@ sub generate_report {
         $column_data{credit} = "<td align=right>$ref->{credit}</td>";
 
         $column_data{accno} =
-"<td><a href=$href&accno=$ref->{accno}&callback=$callback>$ref->{accno}</a></td>";
+"<td><a href=$href&accno=$ref->{accno}&callback=$callback>$ref->{accno}</a> $ref->{accname}</td>";
         $column_data{gifi_accno} =
 "<td><a href=$href&gifi_accno=$ref->{gifi_accno}&callback=$callback>$ref->{gifi_accno}</a>&nbsp;</td>";
         $column_data{balance} = "<td align=right>"

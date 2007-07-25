@@ -415,7 +415,7 @@ sub all_transactions {
 						  g.description, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, g.notes, c.link,
 						  '' AS till, ac.cleared, d.description AS department,
-						  ac.memo
+						  ac.memo, c.description AS accname
 					 FROM gl AS g
 					 JOIN acc_trans ac ON (g.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -428,7 +428,7 @@ sub all_transactions {
 						  ct.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo
+						  ac.memo, c.description AS accname
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -442,7 +442,7 @@ sub all_transactions {
 						  ct.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo
+						  ac.memo, c.description AS accname
 					 FROM ap a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
