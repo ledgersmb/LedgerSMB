@@ -1071,6 +1071,15 @@ qq|<button class="submit" type="submit" name="action" value="$name" accesskey="$
 
 # Database routines used throughout
 
+=item $form->db_init($myconfig);
+
+Connect to the database that $myconfig is set to use and initialise the base
+parameters.  The connection handle becomes $form->{dbh} and
+$form->{custom_db_fields} is populated.  The connection initiated has
+autocommit disabled.
+
+=cut
+
 sub db_init {
     my ( $self, $myconfig ) = @_;
     $self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
@@ -1198,6 +1207,12 @@ sub run_custom_queries {
     @rc;
 }
 
+=item $form->dbconnect($myconfig);
+
+Returns an autocommit connection to the database specified in $myconfig.
+
+=cut
+
 sub dbconnect {
 
     my ( $self, $myconfig ) = @_;
@@ -1216,6 +1231,12 @@ sub dbconnect {
 
     $dbh;
 }
+
+=item $form->dbconnect_noauto($myconfig);
+
+Returns a non-autocommit connection to the database specified in $myconfig.
+
+=cut
 
 sub dbconnect_noauto {
 
@@ -1278,6 +1299,16 @@ sub update_balance {
     }
 }
 
+=item $form->update_exchangerate($dbh, $curr, $transdate, $buy, $sell);
+
+Updates the exchange rates $buy and $sell for the given $currency on $transdate.
+If there is not yet an exchange rate for $currency on $transdate, an entry is
+inserted.  This returns without doing anything if $curr eq ''.
+
+$dbh is not used, favouring $self->{dbh}.
+
+=cut
+
 sub update_exchangerate {
 
     my ( $self, $dbh, $curr, $transdate, $buy, $sell ) = @_;
@@ -1336,6 +1367,16 @@ sub update_exchangerate {
 
 }
 
+=item $form->save_exchangerate($myconfig, $currency, $transdate, $rate, $fld);
+
+Saves the exchange rate $rate for the given $currency on $transdate for the
+provided purpose in $fld.  $fld can be either 'buy' or 'sell'.
+
+$myconfig is not used.  $self->update_exchangerate is used for the majority of
+the work.
+
+=cut
+
 sub save_exchangerate {
 
     my ( $self, $myconfig, $currency, $transdate, $rate, $fld ) = @_;
@@ -1348,6 +1389,16 @@ sub save_exchangerate {
         $sell );
 
 }
+
+=item $form->get_exchangerate($dbh, $curr, $transdate, $fld);
+
+Returns the exchange rate in relation to the default currency for $currency on
+$transdate for the purpose indicated by $fld.  $fld can be either 'buy' or
+'sell' to get usable results.
+
+$dbh is not used, favouring $self->{dbh}.
+
+=cut
 
 sub get_exchangerate {
 
@@ -1370,6 +1421,16 @@ sub get_exchangerate {
     $exchangerate;
 }
 
+=item $form->check_exchangerate($myconfig, $currency, $transdate, $fld);
+
+Returns some true value when an entry for $currency on $transdate is true for
+the purpose indicated by $fld.  $fld can be either 'buy' or 'sell' to get
+usable results.  Returns false if $transdate is not set.
+
+$myconfig is not used.
+
+=cut
+
 sub check_exchangerate {
 
     my ( $self, $myconfig, $currency, $transdate, $fld ) = @_;
@@ -1382,7 +1443,7 @@ sub check_exchangerate {
 		WHERE curr = ? AND transdate = ?|;
 
     my $sth = $self->{dbh}->prepare($query);
-    $sth->execute( $currenct, $transdate );
+    $sth->execute( $currency, $transdate );
     my ($exchangerate) = $sth->fetchrow_array;
 
     $sth->finish;
