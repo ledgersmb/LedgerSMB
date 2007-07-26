@@ -1788,7 +1788,7 @@ sub check_exchangerate {
 		WHERE curr = ? AND transdate = ?|;
 
     my $sth = $self->{dbh}->prepare($query);
-    $sth->execute( $currenct, $transdate );
+    $sth->execute( $currency, $transdate );
     my ($exchangerate) = $sth->fetchrow_array;
 
     $sth->finish;
