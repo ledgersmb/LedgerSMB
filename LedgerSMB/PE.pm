@@ -885,7 +885,7 @@ sub delete_project {
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     $query = qq|DELETE FROM translation
-	      WHERE trans_id = $form->{id}|;
+	      WHERE trans_id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
