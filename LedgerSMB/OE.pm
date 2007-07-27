@@ -197,10 +197,10 @@ sub transactions {
     }
 
     if ( $form->{description} ne "" ) {
-        $var = $form->like( lc $form->{description} );
+        $var = $dbh->quote($form->like( lc $form->{description} ));
         $query .= " AND o.id IN (SELECT DISTINCT trans_id
                              FROM orderitems
-			     WHERE lower(description) LIKE '$var')";
+			     WHERE lower(description) LIKE $var)";
         push @queryargs, $var;
     }
 
@@ -1989,12 +1989,12 @@ sub get_inventory {
     if ( $form->{partnumber} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{partnumber} ) );
         $where .= "
-			AND lower(p.partnumber) LIKE '$var'";
+			AND lower(p.partnumber) LIKE $var";
     }
     if ( $form->{description} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{description} ) );
         $where .= "
-			AND lower(p.description) LIKE '$var'";
+			AND lower(p.description) LIKE $var";
     }
     if ( $form->{partsgroup} ne "" ) {
         ( $null, $var ) = split /--/, $form->{partsgroup};
