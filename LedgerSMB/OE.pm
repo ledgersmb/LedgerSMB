@@ -2108,7 +2108,7 @@ sub transfer {
     my $query = qq|
 		INSERT INTO inventory
 			(warehouse_id, parts_id, qty, shippingdate, employee_id)
-		VALUES (?, ?, ?, '$shippingdate', $form->{employee_id})|;
+		VALUES (?, ?, ?, ?, ?)|;
     $sth = $dbh->prepare($query) || $form->dberror($query);
 
     my $qty;
@@ -2131,7 +2131,8 @@ sub transfer {
             # from warehouse
             if ( $form->{"warehouse_id_$i"} ) {
                 $sth->execute( $form->{"warehouse_id_$i"},
-                    $form->{"id_$i"}, $qty * -1 )
+                    $form->{"id_$i"}, $qty * -1, $shippingdate, 
+                    $form->{employee_id})
                   || $form->dberror;
                 $sth->finish;
             }
