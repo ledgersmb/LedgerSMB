@@ -484,15 +484,15 @@ sub search {
     push @a, qw(name contact city state zipcode country notes phone email);
 
     if ( $form->{employee} ) {
-        $var = $form->like( lc $form->{employee} );
-        $where .= " AND lower(e.name) LIKE '$var'";
+        $var = $dbh->quote($form->like(lc $form->{employee}));
+        $where .= " AND lower(e.name) LIKE $var";
     }
 
     foreach $item (@a) {
 
         if ( $form->{$item} ne "" ) {
-            $var = $form->like( lc $form->{$item} );
-            $where .= " AND lower(ct.$item) LIKE '$var'";
+            $var = $dbh->quote($form->like( lc $form->{$item}) );
+            $where .= " AND lower(ct.$item) LIKE $var";
         }
     }
 
