@@ -882,7 +882,7 @@ sub get_history {
     $form->sort_order();
 
     if ( $form->{"$form->{db}number"} ne "" ) {
-        $var = $dbh->( $form->like( lc $form->{"$form->{db}number"} ) );
+        $var = $dbh->quote( $form->like( lc $form->{"$form->{db}number"} ) );
         $where .= " AND lower(ct.$form->{db}number) LIKE $var";
     }
 
@@ -900,8 +900,8 @@ sub get_history {
     }
 
     if ( $form->{employee} ne "" ) {
-        $var = $form->like( lc $form->{employee} );
-        $where .= " AND lower(e.name) LIKE '$var'";
+        $var = $dbh->quote($form->like(lc $form->{employee}));
+        $where .= " AND lower(e.name) LIKE $var";
     }
 
     $transwhere .=

@@ -861,12 +861,12 @@ sub transactions {
         $where .= qq|
 			AND (a.id IN (SELECT DISTINCT trans_id
 			                FROM acc_trans
-			               WHERE lower(memo) LIKE '$var')
+			               WHERE lower(memo) LIKE $var)
 			                     OR a.id IN 
 			                     (SELECT DISTINCT trans_id
 			                                 FROM invoice
 			                                WHERE lower(description)
-			                                      LIKE '$var'))|;
+			                                      LIKE $var))|;
     }
 
     $query .= "WHERE $where

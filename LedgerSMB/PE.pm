@@ -987,7 +987,7 @@ sub partsgroups {
 
     if ( $form->{partsgroup} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{partsgroup} ) );
-        $where .= " AND lower(partsgroup) LIKE '$var'";
+        $where .= " AND lower(partsgroup) LIKE $var";
     }
     $query .= qq| WHERE $where ORDER BY $sortorder|;
 
