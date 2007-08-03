@@ -817,6 +817,12 @@ sub db_parse_numeric {
     return ($hashref || $arrayref);
 }
 
+=item Form::callproc($procname);
+
+Broken function.  Use $lsmb::call_procedure instead.
+
+=cut
+
 sub callproc {
     my $procname = shift @_;
     my $argstr   = "";
@@ -833,6 +839,15 @@ sub callproc {
     }
     @results;
 }
+
+=item $form->get_my_emp_num($myconfig, \%$form);
+
+Function to get the employee number of the user $form->{login}.  $myconfig is
+only used to create %myconfig.  $form->{emp_num} is set to the retrieved value.
+
+This function is currently (2007-08-02) only used by pos.conf.pl.
+
+=cut
 
 sub get_my_emp_num {
     my ( $self, $myconfig, $form ) = @_;
@@ -2565,6 +2580,40 @@ sub save_intnotes {
     $dbh->commit;
 }
 
+=item $form->update_defaults($myconfig, $fld[, $dbh]);
+
+Updates the defaults entry for the setting $fld following rules specified by
+the existing value and returns the processed value that results.  If $form is
+false, such as the case when invoked as "Form::update_defaults('',...)", $dbh is
+used as the handle.  When $form is set, it uses $form->{dbh}, initialising the
+connection if it does not yet exist.  The entry $fld must exist prior to
+executing this function and this update function does not handle the general
+case of updating the defaults table.
+
+B<NOTE>: rules handling is currently broken.
+
+Rules followed by this function's processing:
+
+=over
+
+=item *
+
+If digits are found in the field, increment the left-most set.  This change,
+unlike the others is reflected in the UPDATE.
+
+=item *
+
+Replace <?lsmb date ?> with the date specified in $form->{transdate} formatted
+as $myconfig->{dateformat}.
+
+=item *
+
+Replace <?lsmb curr ?> with the value of $form->{currency}
+
+=back
+
+=cut
+
 sub update_defaults {
 
     my ( $self, $myconfig, $fld ) = @_;
@@ -2646,6 +2695,7 @@ sub update_defaults {
 /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i
               )
             {
+	        #SC: XXX hairy, undoc, possibly broken
 
                 my $fld = lc $&;
                 $fld =~ s/<\?lsmb //;
@@ -2678,6 +2728,7 @@ sub update_defaults {
 
             if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
 
+		# SC: XXX Does this even work anymore?
                 my $p = $param;
                 $p =~ s/(<|>|%)//g;
                 my $spc = $p;
@@ -2711,6 +2762,13 @@ sub update_defaults {
 
     $var;
 }
+
+=item $form->db_prepare_vars(var1, var2, ..., varI<n>)
+
+Undefines $form->{varI<m>}, 1 <= I<m> <= I<n>, iff $form-<{varI<m> is both
+false and not "0".
+
+=cut
 
 sub db_prepare_vars {
     my $self = shift;
@@ -3031,5 +3089,6 @@ sub audittrail {
 1;
 
 =back
+
 
 
