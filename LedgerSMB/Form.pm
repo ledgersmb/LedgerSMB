@@ -850,7 +850,7 @@ This function is currently (2007-08-02) only used by pos.conf.pl.
 =cut
 
 sub get_my_emp_num {
-    my ( $self, $myconfig, $form ) = @_;
+    my ( $self, $myconfig) = @_;
     %myconfig = %{$myconfig};
     my $dbh = $form->{dbh};
 

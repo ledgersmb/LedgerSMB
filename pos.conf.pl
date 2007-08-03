@@ -81,7 +81,7 @@ if ( lc( $pos_config{'till_type'} ) eq 'terminal' ) {
 }
 elsif ( lc( $pos_config{'till_type'} ) eq 'cashier' ) {
     use LedgerSMB::User;
-    $pos_config{'till'} = $form->get_my_emp_num( \%myconfig, \%$form );
+    $pos_config{'till'} = $form->get_my_emp_num(\%myconfig);
 }
 else {
     $form->error("No till type defined in pos.conf.pl!");
