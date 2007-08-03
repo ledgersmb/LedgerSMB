@@ -632,7 +632,6 @@ sub get_my_emp_num {
 		 WHERE login = ?|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{login} ) || $form->dberror($query);
-    $sth->execute;
 
     my ($id) = $sth->fetchrow_array;
     $sth->finish;
