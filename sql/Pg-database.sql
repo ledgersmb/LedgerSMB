@@ -188,7 +188,7 @@ CREATE TABLE location (
   created date not null,
   inactive_date timestamp default null,
   active boolean not null default TRUE
-  );  
+);
 CREATE INDEX location_unique_class_idx ON location (id,location_class);
   
 CREATE TABLE company (
@@ -313,7 +313,7 @@ CREATE TABLE note (id serial primary key, note_class integer not null references
                    ref_key integer not null);
 
 CREATE TABLE entity_note() INHERITS (note);
-ALTER TABLE entity_note ADD CHECK (id = 1);
+ALTER TABLE entity_note ADD CHECK (note_class = 1);
 ALTER TABLE entity_note ADD FOREIGN KEY (ref_key) REFERENCES entity(id) ON DELETE CASCADE;
 CREATE INDEX entity_note_id_idx ON entity_note(id);
 CREATE UNIQUE INDEX entity_note_class_idx ON note_class(lower(class));
@@ -448,7 +448,7 @@ CREATE TABLE entity_credit_account (
   bcc text,
   business_id int,
   language_code varchar(6),
-  pricegroup_id int,
+  pricegroup_id int references pricegroup(id),
   curr char(3),
   startdate date DEFAULT CURRENT_DATE,
   enddate date,
@@ -462,18 +462,13 @@ CREATE TABLE entity_bank_account (
     bic varchar,
     iban varchar,
     UNIQUE (id),
-    PRIMARY KEY (bic, iban)
-);
-
-CREATE TABLE entity_invoice_notes (
-    id serial not null,
-    entity_id int not null references entity(id),
-    note text,
-    unique (id)    
+    PRIMARY KEY (entity_id, bic, iban)
 );
 
 CREATE VIEW customer AS 
-    SELECT emd.entity_id, 
+    SELECT 
+        c.id,
+        emd.entity_id, 
         emd.entity_class, 
         emd.discount,
         emd.taxincluded,
@@ -490,15 +485,17 @@ CREATE VIEW customer AS
         emd.enddate,
         eba.bic, 
         eba.iban, 
-        ein.note as 
-        invoice_notes 
+        ein.note as invoice_notes 
     FROM entity_credit_account emd 
     join entity_bank_account eba on emd.entity_id = eba.entity_id
-    join entity_invoice_notes ein on ein.entity_id = emd.entity_id
+    join entity_note ein on ein.ref_key = emd.entity_id
+    join company c on c.entity_id = emd.entity_id
     where emd.entity_class = 2;
     
 CREATE VIEW vendor AS 
-    SELECT emd.entity_id, 
+    SELECT 
+        c.id, 
+        emd.entity_id, 
         emd.entity_class, 
         emd.discount,
         emd.taxincluded,
@@ -519,7 +516,8 @@ CREATE VIEW vendor AS
         invoice_notes 
     FROM entity_credit_account emd 
     join entity_bank_account eba on emd.entity_id = eba.entity_id
-    join entity_invoice_notes ein on ein.entity_id = emd.entity_id
+    join entity_note ein on ein.ref_key = emd.entity_id
+    join company c on c.entity_id = emd.entity_id
     where emd.entity_class = 1;
 
 COMMENT ON TABLE entity_credit_account IS $$ This is a metadata table for ALL entities in LSMB; it deprecates the use of customer and vendor specific tables (which were nearly identical and largely redundant), and replaces it with a single point of metadata. $$;

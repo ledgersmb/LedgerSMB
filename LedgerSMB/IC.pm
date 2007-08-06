@@ -1829,7 +1829,10 @@ sub create_links {
         my ($count) = $dbh->selectrow_array($query);
 
         if ( $count < $myconfig->{vclimit} ) {
-            $query = qq|SELECT id, name FROM vendor ORDER BY name|;
+            $query = qq|SELECT v.id, e.name 
+                FROM vendor v 
+                join entity e on e.id = v.entity_id 
+                ORDER BY e.name|;
             $sth   = $dbh->prepare($query);
             $sth->execute || $form->dberror($query);
 
@@ -1845,7 +1848,10 @@ sub create_links {
     ($count) = $dbh->selectrow_array($query);
 
     if ( $count < $myconfig->{vclimit} ) {
-        $query = qq|SELECT id, name FROM customer ORDER BY name|;
+        $query = qq|SELECT c.id, e.name 
+            FROM customer c 
+            join entity e on e.id = c.entity_id 
+            ORDER BY e.name|;
         $sth   = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 

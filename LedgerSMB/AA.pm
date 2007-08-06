@@ -33,8 +33,30 @@
 #
 #======================================================================
 
+
+
 package AA;
 use LedgerSMB::Sysconfig;
+
+=pod
+
+=head1 post_transaction()
+Post transaction uses the following variables in the $form variable:
+ * dbh - the database connection handle
+ * currency - The current users' currency
+ * defaultcurrency - The "normal" currency
+ * department - Unknown
+ * department_id - ID for the department
+ * exchangerate - Conversion between currency and defaultcurrency
+ * invnumber - invoice number
+ * reverse - ?
+ * rowcount - Number of rows in the invoice
+ * taxaccounts - Apply taxes?
+ * taxincluded - ?
+ * transdate - Date of the transaction
+ * vc - Vendor or customer - determines transaction type
+
+=cut
 
 sub post_transaction {
 
@@ -278,18 +300,31 @@ sub post_transaction {
 
         my $uid = localtime;
         $uid .= "$$";
-
+        
+        # The query is done like this as the login name maps to the users table
+        # which maps to the user conf table, which links to an entity, to which 
+        # a person is also attached. This is done in this fashion because we 
+        # are using the current username as the "person" inserting the new 
+        # AR/AP Transaction.
+        # ~A
         $query = qq|
-			INSERT INTO $table (invnumber)
-			     VALUES ('$uid')|;
+			INSERT INTO $table (invnumber, person_id)
+			     VALUES (?, (select p.id from person p, entity e, users u
+			                 where u.username = ?
+			                 AND e.id = u.entity_id
+			                 AND p.entity_id = e.id ))|;
 
-        $dbh->do($query) || $form->dberror($query);
+        # the second param is undef, as the DBI api expects a hashref of
+        # attributes to pass to $dbh->prepare. This is not used here.
+        # ~A
+        
+        $dbh->do($query,undef,$uid,$form->{login}) || $form->dberror($query);
 
         $query = qq|
 			SELECT id FROM $table
-			 WHERE invnumber = '$uid'|;
+			 WHERE invnumber = ?|;
 
-        ( $form->{id} ) = $dbh->selectrow_array($query);
+        ( $form->{id} ) = $dbh->selectrow_array($query,undef,$uid);
     }
 
     # record last payment date in ar/ap table
@@ -312,7 +347,6 @@ sub post_transaction {
 			curr = ?,
 			notes = ?,
 			department_id = ?,
-			person_id = ?,
 			ponumber = ?
 		WHERE id = ?
 	|;
@@ -324,7 +358,7 @@ sub post_transaction {
         $form->{duedate},       $paid,
         $datepaid,              $invnetamout,
         $form->{currency},      $form->{notes},
-        $form->{department_id}, $form->{employee_id},
+        $form->{department_id},
         $form->{ponumber},      $form->{id}
     );
 
@@ -752,9 +786,9 @@ sub transactions {
 		     FROM $table a
 		     JOIN $form->{vc} vc USING (entity_id)
 		LEFT JOIN employee e ON (a.person_id = e.entity_id)
-		LEFT JOIN employee m ON (e.managerid = m.id)
+		LEFT JOIN employee m ON (e.managerid = m.entity_id)
 		     JOIN entity ee ON (e.entity_id = ee.id)
-                     JOIN entity me ON (m.entity_id = me.id)
+             JOIN entity me ON (m.entity_id = me.id)
 		     JOIN entity vce ON (vc.entity_id = vce.id)
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
@@ -789,6 +823,7 @@ sub transactions {
 
     my $where = "1 = 1";
     if ( $form->{"$form->{vc}_id"} ) {
+        $form->{entity_id} = $form->{$form->{vc}."_id"};
         $where .= qq| AND a.entity_id = $form->{entity_id}|;
     }
     else {

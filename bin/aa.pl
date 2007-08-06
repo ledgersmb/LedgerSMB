@@ -1540,6 +1540,8 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
 }
 
 sub transactions {
+    # it shouldn't be putting it into vendor_id or customer_id, but into 
+    # entity_id, conforming to the new entity tables.
     if ( $form->{ $form->{vc} } ) {
         $form->{ $form->{vc} } = $form->unescape( $form->{ $form->{vc} } );
         ( $form->{ $form->{vc} }, $form->{"$form->{vc}_id"} ) =
