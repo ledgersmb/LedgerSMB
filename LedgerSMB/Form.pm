@@ -172,6 +172,8 @@ Returns the URI-encoded $str.  $beenthere is a boolean that when true forces a
 single encoding run.  When false, it escapes the string twice if it detects
 that it is running on a version of Apache 2.0 earlier than 2.0.44.
 
+Note that recurring transaction support depends on this function escaping ','.
+
 =cut
 
 sub escape {
@@ -185,6 +187,7 @@ sub escape {
     }
 
     utf8::encode($str);
+    # SC: Adding commas to the ignore list will break recurring transactions
     $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
     $str;
 
@@ -764,7 +767,7 @@ sub parse_amount {
     return ( $amount * 1 );
 }
 
-=item rount_amount($amount, $places);
+=item $form->round_amount($amount, $places);
 
 Rounds the provided $amount to $places decimal places.
 
@@ -840,7 +843,7 @@ sub callproc {
     @results;
 }
 
-=item $form->get_my_emp_num($myconfig, \%$form);
+=item $form->get_my_emp_num($myconfig);
 
 Function to get the employee number of the user $form->{login}.  $myconfig is
 only used to create %myconfig.  $form->{emp_num} is set to the retrieved value.
@@ -1121,6 +1124,15 @@ sub db_init {
           $ref->{field_def};
     }
 }
+
+=item $form->run_custom_queries($tablename, $query_type[, $linenum]);
+
+Runs queries against custom fields for the specified $query_type against
+$tablename.
+
+Valid values for $query_type are any casing of 'SELECT', 'INSERT', and 'UPDATE'.
+
+=cut
 
 sub run_custom_queries {
     my ( $self, $tablename, $query_type, $linenum ) = @_;
@@ -1465,6 +1477,17 @@ sub check_exchangerate {
     $exchangerate;
 }
 
+=item $form->add_shipto($dbh, $id);
+
+Inserts a new address into the table shipto if the value of any of the shipto
+address components in $form differs to the regular attribute in $form.  The
+inserted value of trans_id is $id, the other fields correspond with the shipto
+address components of $form.
+
+$dbh is unused.
+
+=cut
+
 sub add_shipto {
     my ( $self, $dbh, $id ) = @_;
 
@@ -1503,6 +1526,15 @@ sub add_shipto {
         $sth->finish;
     }
 }
+
+=item $form->get_employee($dbh);
+
+Returns a list containing the name and id of the employee $form->{login}.  Any
+portion of $form->{login} including and past '@' are ignored.
+
+$dbh is unused.
+
+=cut
 
 sub get_employee {
     my ( $self, $dbh ) = @_;
@@ -1710,6 +1742,17 @@ sub all_taxaccounts {
     }
 }
 
+=item $form->all_employees($myconfig, $dbh2, $transdate, $sales);
+
+Sets $form->{all_employee} to be a reference to an array referencing hashes of
+employee information.  The hashes are of the form {'id' => id, 'name' => name}.
+If $transdate is set, the query is limited to employees who are active on that
+day.  If $sales is true, only employees with the sales flag set are added.
+
+$dbh2 is unused.
+
+=cut 
+
 sub all_employees {
 
     my ( $self, $myconfig, $dbh2, $transdate, $sales ) = @_;
@@ -1796,6 +1839,19 @@ sub all_projects {
     $sth->finish;
 }
 
+=item $form->all_departments($myconfig, $dbh2, $vc);
+
+Set $form->{all_department} to be a reference to a list of hashrefs describing
+departments of the form {'id' => id, 'description' => description}.  If $vc
+is 'customer', further limit the results to those whose role is 'P' (Profit
+Center).
+
+This procedure is internally followed by a call to $form->all_years($myconfig).
+
+$dbh2 is not used.
+
+=cut
+
 sub all_departments {
 
     my ( $self, $myconfig, $dbh2, $vc ) = @_;
@@ -1827,6 +1883,17 @@ sub all_departments {
     $sth->finish;
     $self->all_years($myconfig);
 }
+
+=item $form->all_years($myconfig[, $dbh2]);
+
+Populates the hash $form->{all_month} with a mapping between a two-digit month
+number and the English month name.  Populates the list $form->{all_years} with
+the years between the year of the oldest transaction date in acc_trans and the
+newest, inclusive.
+
+$dbh2 is unused.
+
+=cut
 
 sub all_years {
 
@@ -2249,6 +2316,17 @@ sub get_partsgroup {
     $sth->finish;
 }
 
+=item $form->update_status($myconfig);
+
+DELETEs all status rows which have a formname of $form->{formname} and a 
+trans_id of $form->{id}.  INSERTs a new row into status where trans_id is
+$form->{id}, formname is $form->{formname}, printed and emailed are true if
+their respective $form attributes match /$form->{formname}/,,and spoolfile is
+the file extracted from the string $form->{queued} or NULL if there is no entry
+for $form->{formname}.
+
+=cut
+
 sub update_status {
 
     my ( $self, $myconfig ) = @_;
@@ -2408,6 +2486,70 @@ sub get_recurring {
     }
 }
 
+=item $form->save_recurring($dbh2, $myconfig);
+
+Saves or deletes recurring transaction scheduling.  $form->{id} is used to
+determine the id used in the various recurring tables.  A recurring transaction
+schedule is deleted by having $form->{recurring} be false.  For adding or
+updating a schedule, $form->{recurring} is a comma seperated field with partial
+subfield quoting of the form:
+
+  reference,startdate,repeat,unit,howmany,payment,print,email,message
+       text      date    int text     int     int  text  text    text
+
+=over
+
+=item reference
+
+A URI-encoded reference string for the recurrence set.
+
+=item startdate
+
+The index date for the recurrence.
+
+=item repeat
+
+The unitless repetition frequency.
+
+=item unit
+
+The interval unit used.  Can be 'days', 'weeks', 'months', or 'years',
+capitalisation and pluralisation ignored.
+
+=item howmany
+
+The number of recurrences for the transaction.
+
+=item payment
+
+Flag to indicate if a payment is included in the transaction.
+
+=item print
+
+A colon seperated list of formname:format:printer triplets.
+
+=item email
+
+A colon seperated list of formname:format pairs.
+
+=item message
+
+A URI-encoded message for the emails to be sent.
+
+=back
+
+Values for the nextdate and enddate columns of the recurring table are
+calculated using startdate, repeat, unit, howmany, and the current database
+date.  All other fields of the recurring, recurringemail, and recurringprint are
+obtained directly from $form->{recurring}.
+
+B<WARNING>: This function does not check the validity of most subfields of
+$form->{recurring}.
+
+$dbh2 is not used.
+
+=cut
+
 sub save_recurring {
 
     my ( $self, $dbh2, $myconfig ) = @_;
@@ -2443,6 +2585,10 @@ sub save_recurring {
             $s{print},     $s{email},     $s{message}
         ) = split /,/, $self->{recurring};
 
+        if ($s{unit} !~ /^(day|week|month|year)s?$/i){
+            $dbh->rollback;
+            $self->error("Invalid recurrence unit");
+        }
         if ($s{howmany} == 0){
             $self->error("Cannot set to recur 0 times");
         }
@@ -2454,11 +2600,11 @@ sub save_recurring {
         my $advance = $s{repeat} * ( $s{howmany} - 1 );
         my %interval;
         $interval{'Pg'} =
-          "(date '$s{startdate}' + interval '$advance $s{unit}')";
+          "(?::date + interval '$advance $s{unit}')";
 
         $query = qq|SELECT $interval{$myconfig->{dbdriver}}|;
 
-        my ($enddate) = $dbh->selectrow_array($query);
+        my ($enddate) = $dbh->selectrow_array($query, undef, $s{startdate});
 
         # calculate nextdate
         $query = qq|
@@ -2482,9 +2628,9 @@ sub save_recurring {
         if ( $advance > 0 ) {
             if ( $advance < ( $s{repeat} * $s{howmany} ) ) {
 
-                $query = qq|SELECT (date '$s{startdate}' + interval '$advance $s{unit}')|;
+                $query = qq|SELECT (?::date + interval '$advance $s{unit}')|;
 
-                ($nextdate) = $dbh->selectrow_array($query);
+                ($nextdate) = $dbh->selectrow_array($query, undef, $s{startdate});
             }
 
         }
@@ -2496,9 +2642,9 @@ sub save_recurring {
 
             $nextdate = $self->{recurringnextdate};
 
-            $query = qq|SELECT '$enddate' - date '$nextdate'|;
+            $query = qq|SELECT ?::date - ?::date|;
 
-            if ( $dbh->selectrow_array($query) < 0 ) {
+            if ( $dbh->selectrow_array($query, undef, $enddate, $nextdate) < 0 ) {
                 undef $nextdate;
             }
         }
@@ -2563,6 +2709,15 @@ sub save_recurring {
     $dbh->commit;
 
 }
+
+=item $form->save_intnotes($myconfig, $vc);
+
+Sets the intnotes field of the entry in the table $vc that has the id
+$form->{id} to the value of $form->{intnotes}.
+
+Does nothing if $form->{id} is not set.
+
+=cut
 
 sub save_intnotes {
 
@@ -3089,6 +3244,7 @@ sub audittrail {
 1;
 
 =back
+
 
 
 
