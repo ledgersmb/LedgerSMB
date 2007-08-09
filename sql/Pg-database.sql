@@ -112,13 +112,12 @@ batch work flows. $$;
 
 -- BEGIN new entity management
 CREATE TABLE entity (
-  id serial PRIMARY KEY,
+  id serial UNIQUE,
   name text check (name ~ '[[:alnum:]_]'),
   entity_class integer not null,
-  created date not null default current_date);
+  created date not null default current_date,
+  PRIMARY KEY(name,entity_class));
   
-CREATE UNIQUE INDEX entity_class_name_class_idx ON entity(name,entity_class);  
-
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
 COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
 
@@ -322,10 +321,6 @@ CREATE TABLE invoice_note() INHERITS (note);
 CREATE INDEX invoice_note_id_idx ON invoice_note(id);
 CREATE UNIQUE INDEX invoice_note_class_idx ON note_class(lower(class));
 CREATE INDEX invoice_note_vectors_idx ON invoice_note USING gist(vector);
-
--- is this safe?
-ALTER TABLE invoice_note ADD CHECK (id = 2);
-
 
 -- END entity   
 
