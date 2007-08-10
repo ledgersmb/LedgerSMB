@@ -2438,6 +2438,17 @@ sub save_status {
     $dbh->commit;
 }
 
+=item $form->get_recurring();
+
+Sets $form->{recurring} to contain info about the recurrence schedule for the
+action $form->{id}.  $form->{recurring} is of the same form used by
+$form->save_recurring($dbh2, $myconfig).
+
+  reference,startdate,repeat,unit,howmany,payment,print,email,message
+       text      date    int text     int     int  text  text    text
+
+=cut
+
 sub get_recurring {
 
     my ($self) = @_;
