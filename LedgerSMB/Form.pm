@@ -70,6 +70,20 @@ use open ':utf8';
 
 package Form;
 
+=item new Form([$argstr])
+
+Returns a reference to new Form object.  The initial set of attributes is
+obtained from $argstr, a CGI query string, or $ARGV[0].  All the values are
+run through unescape to undo any URI encoding.
+
+The version and dbversion attributes are set to hardcoded values; action,
+nextsub, path, script, and login are filtered to remove some dangerous values.
+Both menubar and lynx are set if path matches lynx.
+
+$form->error may be called to deny access on some attribute values.
+
+=cut
+
 sub new {
 
     my $type = shift;
@@ -156,10 +170,22 @@ sub debug {
 
 }
 
+=item $form->encode_all();
+
+Does nothing and is unused.  Contains merely the comment # TODO;
+
+=cut
+
 sub encode_all {
 
     # TODO;
 }
+
+=item $form->decode_all();
+
+Does nothing and is unused.  Contains merely the comment # TODO
+
+=cut
 
 sub decode_all {
 
@@ -1303,6 +1329,17 @@ sub dbquote {
     $_;
 }
 
+=item $form->update_balance($dbh, $table, $field, $where, $value);
+
+B<WARNING>: This is a dangerous private function.  All apps calling it must be
+careful to avoid SQL injection issues.
+
+If $value is set, sets the value of $field in $table to the sum of the current
+stored value and $value.  In order to not annihilate the values in $table,
+$where must contain a WHERE clause that limits the UPDATE to a single row.
+
+=cut
+
 sub update_balance {
 
     # This is a dangerous private function.  All apps calling it must
@@ -1558,12 +1595,25 @@ sub get_employee {
     @a;
 }
 
+=item $form->get_name($myconfig, $table[, $transdate])
+
+Sets $form->{name_list} to refer to a list of customers or vendors whose names
+or numbers match the value found in $form->{$table} and returns the number of
+matches.  $table can be 'vendor', 'customer', or 'employee'; if the optional
+field $transdate is provided, the result set is further limited to $table
+entries which were active on the provided date as determined by the start and
+end dates.  The elements of $form->{name_list} are references returned rows in
+hashref form and are sorted by the name field.  The fields of the hash are those
+of the view $table and the table entity.
+
+$myconfig is unused.
+
+=cut
+
 # this sub gets the id and name from $table
 sub get_name {
 
     my ( $self, $myconfig, $table, $transdate ) = @_;
-
-    # connect to database
 
     my @queryargs;
     my $where;
@@ -1574,7 +1624,11 @@ sub get_name {
 
         @queryargs = ( $transdate, $transdate );
     }
-    
+
+    # SC: Check for valid table/view name.  Other values will cause SQL errors.
+    if ($table !~ /^(vendor|customer|employee)$/i) {
+        $self->error('Invalid name source');
+    }
     # Company name is stored in $self->{vendor} or $self->{customer}
     my $name = $self->like( lc $self->{$table} );
     
@@ -1602,12 +1656,31 @@ sub get_name {
     return $i;
 }
 
+=item $form->all_vc($myconfig, $vc, $module, $dbh, $transdate, $job);
+
+Populates the list referred to by $form->{all_${vc}} with hashes of either
+vendor or customer id and name, ordered by the name.  This will be vendor
+details unless $vc is set to 'customer'.  This list can be limited to only
+vendors or customers which are usable on a given day by specifying $transdate.
+As a further restriction, $form->{all_${vc}} will not be populated if the
+number of vendors or customers that would be present in that list exceeds, or
+is equal to, $myconfig->{vclimit}.
+
+In addition to the possible population of $form->{all_${vc}},
+$form->{employee_id} is looked up if not already set, the list
+$form->{all_language} is populated using the language table and is sorted by the
+description, and $form->all_employees, $form->all_departments,
+$form->all_projects, and $form->all_taxaccounts are all run.
+
+$module and $dbh are unused.
+
+=cut
+
 sub all_vc {
 
     my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
 
     my $ref;
-    my $disconnect = 0;
 
     $dbh = $self->{dbh};
 
@@ -1617,6 +1690,7 @@ sub all_vc {
         $self->{vc_class} = 2;
     } else {
         $self->{vc_class} = 1;
+        $vc = 'vendor';
     }
     my $query = qq|SELECT count(*) FROM entity_credit_account where entity_class = ?|;
     my $where;
@@ -1624,6 +1698,8 @@ sub all_vc {
 
     if ($transdate) {
         $query .= qq| AND (startdate IS NULL OR startdate <= ?)
+					AND (enddate IS NULL OR enddate >= ?)|;
+        $where = qq| (startdate IS NULL OR startdate <= ?)
 					AND (enddate IS NULL OR enddate >= ?)|;
 
         push (@queryargs, $transdate, $transdate );
@@ -1703,6 +1779,18 @@ sub all_vc {
     $sth->finish;
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
 }
+
+=item $form->all_taxaccounts($myconfig, $dbh2[, $transdate]);
+
+Get the tax rates and numbers for all the taxes in $form->{taxaccounts}.  Does
+nothing if $form->{taxaccounts} is false.  Taxes are listed as a space seperated
+list of account numbers from the chart.  The retrieved values are placed within
+$form->{${accno}_rate} and $form->{${accno}_taxnumber}.  If $transdate is set,
+then only process taxes that were valid on $transdate.
+
+$myconfig and $dbh2 are unused.
+
+=cut
 
 sub all_taxaccounts {
 
@@ -1791,6 +1879,21 @@ sub all_employees {
 
     $sth->finish;
 }
+
+=item $form->all_projects($myconfig, $dbh2[, $transdate, $job]);
+
+Populates the list referred to as $form->{all_project} with hashes detailing
+all projects.  If $job is true, limit the projects to those whose ids  are not
+also present in parts with a project_id > 0.  If $transdate is set, the projects
+are limited to those valid on $transdate.  If $form->{language_code} is set,
+include the translation description in the project list and limit to
+translations with a matching language_code.  The result list,
+$form->{all_project}, is sorted by projectnumber.
+
+$myconfig and $dbh2 are unused.  $job appears to be part of attempted job-
+costing support.
+
+=cut
 
 sub all_projects {
 
@@ -1947,6 +2050,38 @@ sub all_years {
 
 }
 
+=item $form->create_links($module, $myconfig, $vc[, $job]);
+
+Populates the hash referred to as $form->{${module}_links} details about
+accounts that have $module in their link field.  The hash is keyed upon link
+elements such as 'AP_amount' and 'AR_tax' and they refer to lists of hashes
+containing accno and description for the appropriate accounts.  If the key does
+not contain 'tax', the account number is appended to the space seperated list
+$form->{accounts}.  $module is typically 'AR' or 'AP' and is the base type of
+the accounts looked up.
+
+If $form->{id} is not set, check $form->{"$form->{vc}_id"}.  If neither is set,
+use $form->lastname_used to populate the details.  If $form->{id} is set,
+populate the invnumber, transdate, ${vc}_id, datepaid, duedate, ordnumber,
+taxincluded, currency, notes, intnotes, ${vc}, department_id, department,
+oldinvtotal, oldtotalpaid, employee_id, employee, language_code, ponumber, 
+reverse, printed, emailed, queued, recurring, exchangerate, and acc_trans
+attributes of $form with details about the transaction $form->{id}.  All of
+these attributes, save for acc_trans, are scalar; $form->{acc_trans} refers to
+a hash keyed by link elements whose values are lists of references to hashes
+describing acc_trans table entries corresponding to the transaction $form->{id}.
+The elements in the acc_trans entry hashes are accno, description, source,
+amount, memo, transdate, cleared, project_id, projectnumber, and exchangerate.
+
+The closedto, revtrans, and currencies $form attributes are filled with values
+from the defaults table, while $form->{current_date} is populated with the
+current date.  If $form->{id} is not set, then $form->{transdate} also takes on
+the current date.
+
+After all this, it calls $form->all_vc to conclude.
+
+=cut
+
 sub create_links {
 
     my ( $self, $module, $myconfig, $vc, $job ) = @_;
@@ -1997,6 +2132,7 @@ sub create_links {
     $sth->finish;
 
     my $arap = ( $vc eq 'customer' ) ? 'ar' : 'ap';
+    $vc = 'vendor' unless $vc eq 'customer';
 
     if ( $self->{id} ) {
 
@@ -2125,13 +2261,34 @@ sub create_links {
     $self->all_vc( $myconfig, $vc, $module, $dbh, $self->{transdate}, $job );
 }
 
+=item $form->lastname_used($myconfig, $dbh2, $vc, $module);
+
+Fills the name, currency, ${vc}_id, duedate, and possibly invoice_notes
+attributes of $form with the last used values for the transaction type specified
+by both $vc and $form->{type}.  $vc can be either 'vendor' or 'customer' and if
+unspecified will take on the value given in $form->{vc}, defaulting to 'vendor'.
+If $form->{type} matches /_order/, the transaction type used is order, if it
+matches /_quotation/, quotations are looked through.  If $form->{type} does not
+match either of the above, then ar or ap transactions are used.
+
+$myconfig, $dbh2, and $module are unused.
+
+=cut
+
 sub lastname_used {
 
     my ( $self, $myconfig, $dbh2, $vc, $module ) = @_;
 
     my $dbh = $self->{dbh};
     $vc ||= $self->{vc};    # add default to correct for improper passing
-    my $arap = ( $vc eq 'customer' ) ? "ar" : "ap";
+    my $arap;
+    my $where;
+    if ($vc eq 'customer') {
+        $arap = 'ar';
+    } else {
+        $arap = 'ap';
+        $vc = 'vendor';
+    }
     my $sth;
 
     if ( $self->{type} =~ /_order/ ) {
@@ -2144,6 +2301,7 @@ sub lastname_used {
         $where = "quotation = '1'";
     }
     $where = "AND $where " if $where;
+    my $inv_notes;
     $inv_notes = "ct.invoice_notes," if $vc eq 'customer';
     my $query = qq|
 		SELECT entity.name, ct.curr AS currency, entity_id AS ${vc}_id,
@@ -2223,6 +2381,23 @@ sub like {
     "%$str%";
 }
 
+=item $form->redo_rows($flds, $new, $count, $numrows);
+
+$flds refers to a list of field names and $new refers to a list of row detail
+hashes with the elements of $flds as keys as well as runningnumber for an order
+or another multi-row item that normally expresses elements in the form
+$form->{${fieldname}_${index}}.
+
+For every $field in @{$flds} populates $form->{${field}_$i} with an appropriate
+value from a $new detail hash where $i is an index between 1 and $count.  The
+ordering of the details is done in terms of the runningnumber element of the
+row detail hashes in $new.
+
+All $form attributes with names of the form ${field}_$i where the index $i is
+between $count + 1 and $numrows is deleted.
+
+=cut
+
 sub redo_rows {
 
     my ( $self, $flds, $new, $count, $numrows ) = @_;
@@ -2248,6 +2423,24 @@ sub redo_rows {
     }
 }
 
+=item $form->get_partsgroup($myconfig[, $p]);
+
+Populates the list referred to as $form->{all_partsgroup}.  $p refers to a hash
+that describes which partsgroups to retrieve.  $p->{searchitems} can be 'part',
+'service', 'assembly', 'labor', or 'nolabor' and will limit the groups to those
+that contain the item type described.  $p->{searchitems} and $p->{all} conflict.
+If $p->{all} is set and $p->{language_code} is not, all partsgroups are
+retrieved.  If $p->{language_code} is set, also include the translation
+description specified by $p->{language_code} for the partsgroup.
+
+The results in $form->{all_partsgroup} are normally sorted by partsgroup name.
+If a language_code is specified, the results are then sorted by the translated
+description.
+
+$myconfig is unused.
+
+=cut
+
 sub get_partsgroup {
 
     my ( $self, $myconfig, $p ) = @_;
@@ -2264,22 +2457,14 @@ sub get_partsgroup {
     if ( $p->{searchitems} eq 'part' ) {
         $where = qq| WHERE (p.inventory_accno_id > 0
 					   AND p.income_accno_id > 0)|;
-    }
-
-    if ( $p->{searchitems} eq 'service' ) {
+    } elsif ( $p->{searchitems} eq 'service' ) {
         $where = qq| WHERE p.inventory_accno_id IS NULL|;
-    }
-
-    if ( $p->{searchitems} eq 'assembly' ) {
+    } elsif ( $p->{searchitems} eq 'assembly' ) {
         $where = qq| WHERE p.assembly = '1'|;
-    }
-
-    if ( $p->{searchitems} eq 'labor' ) {
+    } elsif ( $p->{searchitems} eq 'labor' ) {
         $where =
           qq| WHERE p.inventory_accno_id > 0 AND p.income_accno_id IS NULL|;
-    }
-
-    if ( $p->{searchitems} eq 'nolabor' ) {
+    } elsif ( $p->{searchitems} eq 'nolabor' ) {
         $where = qq| WHERE p.income_accno_id > 0|;
     }
 
@@ -2321,9 +2506,11 @@ sub get_partsgroup {
 DELETEs all status rows which have a formname of $form->{formname} and a 
 trans_id of $form->{id}.  INSERTs a new row into status where trans_id is
 $form->{id}, formname is $form->{formname}, printed and emailed are true if
-their respective $form attributes match /$form->{formname}/,,and spoolfile is
+their respective $form attributes match /$form->{formname}/, and spoolfile is
 the file extracted from the string $form->{queued} or NULL if there is no entry
 for $form->{formname}.
+
+$myconfig is unused.
 
 =cut
 
@@ -2365,6 +2552,15 @@ sub update_status {
     $sth->finish;
 
 }
+
+=item $form->save_status();
+
+Clears out any old status entries for $form->{id} and saves new status entries.
+Queued form names are extracted from $form->{queued}.  Printed and emailed form
+names are extracted from $form->{printed} and $form->{emailed}.  The queued,
+printed, and emailed fields are space seperated lists.
+
+=cut
 
 sub save_status {
 
@@ -3132,6 +3328,31 @@ sub from_to {
 
     ( $self->format_date($fromdate), $self->format_date("$t[5]-$t[4]-$t[3]") );
 }
+
+=item $form->audittrail($dbh, $myconfig, $audittrail);
+
+$audittrail is a hashref.  If $audittrail->{id} is false, this function
+retrieves the current time from the database and return a string of the form 
+"tablename|reference|formname|action|timestamp|" where all the values save
+timestamp are taken directly from the $audittrail hashref.
+
+If $audittrail->{id} is true but the value of audittrail in the defaults table
+is '0', do nothing and return.
+
+If $form->{audittrail} is true and $myconfig is false, $form->{audittrail} is
+treated as a pipe seperated list (trailing pipe required) of the form:
+  table1|ref1|form1|action1|date1|...|tablen|refn|formn|actionn|daten|
+
+All the entries described by $form->{audittrail} are inserted into the audit
+table, taking on a transaction id of $audittrail->{id} and the employee id of
+the calling user.
+
+Irrespective of $form->{audittrail} and $myconfig status, this function will add
+a record to the audittrail using the values contained within $audittrail,
+substituting the current date if $audittrail->{transdate} is not set and the
+employee id of the calling user.
+
+=cut
 
 sub audittrail {
 
