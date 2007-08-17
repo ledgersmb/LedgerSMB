@@ -1135,6 +1135,8 @@ sub save_pricelist {
 
             if ( $form->{db} eq 'customer' ) {
 
+                $form->{"validfrom_$i"} = undef if $form->{"validfrom_$i"} eq ''; 
+                $form->{"validto_$i"} = undef if $form->{"validto_$i"} eq '';
                 for (qw(pricebreak sellprice)) {
                     $form->{"${_}_$i"} =
                       $form->parse_amount( $myconfig, $form->{"${_}_$i"} );
