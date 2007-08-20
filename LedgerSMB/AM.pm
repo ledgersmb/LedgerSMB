@@ -1,42 +1,74 @@
-#=====================================================================
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
-# under the GNU General Public License version 2 or, at your option, any later
-# version.  For a full list including contact information of contributors,
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2000
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-#  Contributors: Jim Rawlings <jim@your-dba.com>
-#
-#======================================================================
-#
-# This file has undergone whitespace cleanup.
-#
-#======================================================================
-#
-# Administration module
-#    Chart of Accounts
-#    template routines
-#    preferences
-#
-#======================================================================
+
+=head1 NAME
+
+AM
+
+=head1 SYNOPSIS
+
+This module provides some administrative functions
+
+=head1 COPYRIGHT
+
+ #====================================================================
+ # LedgerSMB
+ # Small Medium Business Accounting software
+ # http://www.ledgersmb.org/
+ #
+ # Copyright (C) 2006
+ # This work contains copyrighted information from a number of sources
+ # all used with permission.
+ #
+ # This file contains source code included with or based on SQL-Ledger
+ # which is Copyright Dieter Simader and DWS Systems Inc. 2000-2005
+ # and licensed under the GNU General Public License version 2 or, at
+ # your option, any later version.  For a full list including contact
+ # information of contributors, maintainers, and copyright holders,
+ # see the CONTRIBUTORS file.
+ #
+ # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+ # Copyright (C) 2000
+ #
+ #  Author: DWS Systems Inc.
+ #     Web: http://www.sql-ledger.org
+ #
+ #  Contributors: Jim Rawlings <jim@your-dba.com>
+ #
+ #====================================================================
+ #
+ # This file has undergone whitespace cleanup.
+ #
+ #====================================================================
+ #
+ # Administration module
+ #    Chart of Accounts
+ #    template routines
+ #    preferences
+ #
+ #====================================================================
+
+=head1 METHODS
+
+=over
+
+=cut
 
 package AM;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
+
+=item AM->get_account($myconfig, $form);
+
+Populates the $form attributes accno, description, charttype, gifi_accno,
+category, link, and contra with details about the account that has the id
+$form->{id}.  If there are no acc_trans entries that refer to that account,
+$form->{orphaned} is made true, otherwise $form->{orphaned} is set to false.
+
+Also populates 'inventory_accno_id', 'income_accno_id', 'expense_accno_id',
+'fxgain_accno_id', and 'fxloss_accno_id' with the values from defaults.
+
+$myconfig is unused.
+
+=cut
 
 sub get_account {
 
@@ -95,6 +127,27 @@ sub get_account {
 
     $dbh->commit;
 }
+
+=item AM->save_account($myconfig, $form);
+
+Adds or updates an account in the chart of accounts.  If $form->{id} is set,
+the existing account with an id of $form->{id} is updated, otherwise a new
+account is created.  The values for accno, description, charttype, gifi_accno,
+category, and contra are taken directly from the $form attributes of the same
+name.  The link value is generated in $form->{link} as a colon seperated list of
+non-empty values from the $form attributes 'AR', 'AR_amount', 'AR_tax',
+'AR_paid', 'AP', 'AP_amount', 'AP_tax', 'AP_paid', 'IC', 'IC_income', 'IC_sale',
+'IC_expense', 'IC_cogs', 'IC_taxpart', and 'IC_taxservice'.
+
+If the account is a tax account, indicated by any of IC_taxpart, IC_taxservice,
+AR_tax, and AP_tax being true, and there is no entry in the tax table for the
+account, a tax entry is added for the account.  If none of those tax flags are
+set and this function is updating an existing account, all entries in the tax
+table for the account are deleted.
+
+$myconfig is unused.
+
+=cut
 
 sub save_account {
 
@@ -217,6 +270,18 @@ sub save_account {
     $rc;
 }
 
+=item AM->delete_account($myconfig, $form);
+
+Deletes the account with the id $form->{id}.  Calls $form->error if there are
+any acc_trans entries that reference it.  If any parts have that account for
+an inventory, income, or COGS (expense) account, switch the part to using the
+default account for that type.  Also deletes all tax, partstax, customertax, and
+vendortax table entries for the account.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_account {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -285,6 +350,16 @@ sub delete_account {
     $rc;
 }
 
+=item AM->gifi_accounts($myconfig, $form);
+
+Populates the list referred to as $form->{ALL} with hashes of gifi numbers and
+descriptions in order of the GIFI number.  The GIFI number referred to as
+'accno'.
+
+$myconfig is not used.
+
+=cut
+
 sub gifi_accounts {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -308,6 +383,16 @@ sub gifi_accounts {
     $dbh->commit;
 
 }
+
+=item AM->get_gifi($myconfig, $form);
+
+Sets $form->{description} to the description of the GIFI number $form->{accno}.
+Sets $form->{orphaned} to true if there are no entries in acc_trans that refer
+to this GIFI and to false otherwise.
+
+$myconfig is not used.
+
+=cut
 
 sub get_gifi {
 
@@ -350,6 +435,16 @@ sub get_gifi {
 
 }
 
+=item AM->save_gifi($myconfig, $form);
+
+Adds or updates a GIFI record.  If $form->{id} is set, update the gifi record
+that has that as an account number.  The new values for an added or updated
+record are stored in $form->{accno} and $form->{description}.
+
+$myconfig is not used.
+
+=cut
+
 sub save_gifi {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -388,6 +483,14 @@ sub save_gifi {
 
 }
 
+=item AM->delete_gifi($myconfig, $form);
+
+Deletes the gifi record with the GIFI number $form->{id}.
+
+$myconfig is not used.
+
+=cut
+
 sub delete_gifi {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -406,6 +509,16 @@ sub delete_gifi {
     $dbh->commit;
 
 }
+
+=item AM->warehouses($myconfig, $form);
+
+Populates the list referred to as $form->{ALL} with hashes describing
+warehouses, ordered according to the logic of $form->sort_order.  Each hash has
+an id and a description element.
+
+$myconfig is not used.
+
+=cut
 
 sub warehouses {
 
@@ -431,6 +544,16 @@ sub warehouses {
     $dbh->commit;
 
 }
+
+=item AM->get_warehouse($myconfig, $form);
+
+Sets $form->{description} to the name of the warehouse $form->{id}.  If no
+inventory is currently linked to the warehouse, set $form->{orphaned} to true,
+otherwise $form->{orphaned} is false.
+
+$myconfig is not used.
+
+=cut
 
 sub get_warehouse {
 
@@ -470,6 +593,16 @@ sub get_warehouse {
     $dbh->commit;
 }
 
+=item AM->save_warehouse($myconfig, $form);
+
+Add or update a warehouse.  If $form->{id} is set, that warehouse is updated
+instead of adding a new warehouse.  In both cases, the description of the
+warehouse is set to $form->{description}.
+
+$myconfig is not used.
+
+=cut
+
 sub save_warehouse {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -503,6 +636,14 @@ sub save_warehouse {
 
 }
 
+=item AM->delete_warehouse($myconfig, $form);
+
+Deletes the warehouse with the id $form->{id}.
+
+$myconfig is not used.
+
+=cut
+
 sub delete_warehouse {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -518,6 +659,16 @@ sub delete_warehouse {
     $dbh->commit;
 
 }
+
+=item AM->departments($myconfig, $form);
+
+Populate the list referred to as $form->{ALL} with hashes of details about
+departments.  The hashes all contain the id, description, and role of the
+department and are ordered by the description.
+
+$myconfig is unused.
+
+=cut
 
 sub departments {
 
@@ -542,6 +693,17 @@ sub departments {
     $dbh->commit;
 
 }
+
+=item AM->get_department($myconfig, $form);
+
+Fills $form->{description} and $form->{role} with details about the department
+with the id value of $form->{id}.  If the department has not been used as part
+of a transaction referred to in dpt_trans, set $form->{orphaned} to true, 
+otherwise it is set to false.
+
+$myconfig is unused.
+
+=cut
 
 sub get_department {
 
@@ -582,6 +744,17 @@ sub get_department {
     $dbh->commit;
 }
 
+=item AM->save_department($myconfig, $form);
+
+Add or update a department record.  If $form->{id} is set, the department with
+that id is updated, otherwise a new department is added.  The department role
+(either 'C' for cost centres or 'P' for profit centres) and description is
+taken from the $form attributes 'role' and 'description'.
+
+$myconfig is unused.
+
+=cut
+
 sub save_department {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -614,6 +787,14 @@ sub save_department {
 
 }
 
+=item AM->delete_department($myconfig, $form)
+
+Deletes the department with an id of $form->{id}.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_department {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -629,6 +810,18 @@ sub delete_department {
     $dbh->commit;
 
 }
+
+=item AM->business($myconfig, $form);
+
+Populates the list referred to as $form->{ALL} with hashes containing details
+about all known types of business.  Each hash contains the id, description, and
+discount for businesses of this type.  The discount is represented in numeric
+form, such that a 10% discount is stored and retrieved as 0.1.  The hashes are
+sorted by the business description.
+
+$myconfig is unused.
+
+=cut
 
 sub business {
 
@@ -655,6 +848,15 @@ sub business {
 
 }
 
+=item AM->get_business($myconfig, $form);
+
+Places the description and discount for the business with an id of $form->{id}
+into $form->{description} and $form->{discount}.
+
+$myconfig is unused.
+
+=cut
+
 sub get_business {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -673,6 +875,19 @@ sub get_business {
     $dbh->commit;
 
 }
+
+=item AM->save_business($myconfig, $form);
+
+Adds or updates a type of business.  If $form->{id} is set, the business type
+with a corresponding id is updated, otherwise a new type is added.  The new
+description is $form->{description}.  The discount taken as a percentage stored
+in $form->{discount}, which then value is divided by 100 in place and the
+multiplier is stored.  As an example, if $form->{discount} is 10 when this
+function is called, it is changed to 0.1 and stored as 0.1.
+
+$myconfig is unused.
+
+=cut
 
 sub save_business {
 
@@ -707,6 +922,14 @@ sub save_business {
 
 }
 
+=item AM->delete_business($myconfig, $form);
+
+Deletes the business type with the id $form->{id}.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_business {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -721,6 +944,18 @@ sub delete_business {
     $dbh->commit;
 
 }
+
+=item AM->sic($myconfig, $form);
+
+Populate the list referred to as $form->{ALL} with hashes containing SIC (some
+well known systems of which are NAICS and ISIC) data from the sic table.  code
+is the actual SIC code, description is a textual description of the code, and
+sictype is an indicator of whether or not the entry refers to a header.  The
+hashes will be sorted by either the code or description.
+
+$myconfig is unused.
+
+=cut
 
 sub sic {
 
@@ -755,6 +990,16 @@ sub sic {
 
 }
 
+=item AM->get_sic($myconfig, $form);
+
+Retrieves the sictype and description for the SIC indicated by
+$form->{code} and places the retrieved values into $form->{sictype} and
+$form->{description}.
+
+$myconfig is unused
+
+=cut
+
 sub get_sic {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -778,11 +1023,21 @@ sub get_sic {
 
 }
 
+=item AM->save_sic($myconfig, $form);
+
+Add or update a SIC entry.  If $form->{id} is set, take it as the original code
+to identify the entry update, otherwise treat it as a new entry.  $form->{code},
+$form->{description}, and $form->{sictype} contain the new values.  sictype is
+a single character to flag whether or not the entry is for a header ('H').
+
+$myconfig is unused.
+
+=cut
+
 sub save_sic {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     foreach my $item (qw(code description)) {
@@ -814,11 +1069,18 @@ sub save_sic {
 
 }
 
+=item AM->delete_sic($myconfig, $form);
+
+Deletes the SIC entry with the code $form->{code}.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_sic {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
     my $dbh = $form->{dbh};
 
     $query = qq|
@@ -829,6 +1091,20 @@ sub delete_sic {
     $dbh->commit;
 
 }
+
+=item AM->language($myconfig, $form);
+
+Populates the list referred to as $form->{ALL} with hashes containing the code
+and description of all languages entered in the language table.  The usual set
+of $form attributes affect the order in which the hashes are entered in the
+list.
+
+These language functions are unrelated to LedgerSMB::Locale, although these
+language codes are also used for non-UI templates and by LedgerSMB::PE.
+
+$myconfig is unused.
+
+=cut
 
 sub language {
 
@@ -864,6 +1140,15 @@ sub language {
 
 }
 
+=item AM->get_language($myconfig, $form);
+
+Sets $form->{description} to the description of the language that has the code
+$form->{code}.
+
+$myconfig is unused.
+
+=cut
+
 sub get_language {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -871,9 +1156,8 @@ sub get_language {
     # connect to database
     my $dbh = $form->{dbh};
 
-    ## needs fixing (SELECT *...)
     my $query = qq|
-		SELECT *
+		SELECT code, description
 		  FROM language
 		 WHERE code = ?|;
 
@@ -888,6 +1172,16 @@ sub get_language {
     $dbh->commit;
 
 }
+
+=item AM->save_language($myconfig, $form);
+
+Add or update a language entry.  If $form->{id} is set, the language entry that
+has that as a code is updated, otherwise a new entry is added.  $form->{code}
+and $form->{description} contain the new values for the entry.
+
+$myconfig is unused.
+
+=cut
 
 sub save_language {
 
@@ -926,6 +1220,14 @@ sub save_language {
 
 }
 
+=item AM->delete_language($myconfig, $form);
+
+Deletes the language entry with the code $form->{code}.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_language {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -938,9 +1240,38 @@ sub delete_language {
 		      WHERE code = | . $dbh->quote( $form->{code} );
 
     $dbh->do($query) || $form->dberror($query);
-    $dbh->{dbh};
 
 }
+
+=item AM->recurring_transactions($myconfig, $form);
+
+Populates lists referred to in the form of $form->{transactions}{$type}, where
+the possible values for $type are 'ar', 'ap', 'gl', 'so', and 'po', with hashes
+containing details about recurring transactions of the $type variety.  These
+hashes have the fields module (the frontend script that governs the transaction
+type), transaction (the transaction type), invoice (true if the transaction is
+an invoice), description (a field that is a customer, vendor, or in the case of
+a GL transaction, an arbitrary text field), amount (the cash value of the
+transaction), id (the id of the recurring transaction), reference (the
+reference value for the transaction), startdate (the date the recurring
+sequence started), nextdate (the date of the next occurrence of the event),
+enddate (the date the sequence ends), repeat (the number of units involved in
+the recurrence frequency), unit (the base recurrence unit), howmany (how many
+times the event occurs), payment (whether or not the event involves a payment),
+recurringemail (a colon separated list of forms to email as part of the event),
+recurringprint (a colon separated list of forms to print as part of the event),
+overdue (how many days until the next repetition of the event), vc (vendor,
+customer, or empty), exchangerate (the exchangerate involved on the day of the
+original transaction), curr (the currency of the event), and expired (if there
+will be no more recurrences).
+
+By default, these lists are sorted in order of the date of the next occurrence
+of the transaction.  This order can be affected by the usual attributes used
+by $form->sort_order.
+
+$myconfig is unused.
+
+=cut
 
 sub recurring_transactions {
 
@@ -1130,6 +1461,30 @@ sub recurring_transactions {
 
 }
 
+=item AM->recurring_details($myconfig, $form, $id);
+
+Retrieves details about the recurring transaction $id and places them into
+attributes of $form.  Sets id (the transaction id passed in, $id), reference 
+(a reference string for the recurring transaction), startdate (the date the
+recurrence series started on), nextdate (the date of the next occurrence of the
+event), enddate (the date of the final occurrence of the event), repeat (the
+number of units involved in a recurrence period), unit (the recurrence unit),
+howmany (the total number of recurrences in the recurrence series), payment
+(whether or not the transaction is associated with a payment), arid (true if an
+ar event), apid (true if an ap event), overdue (number of days an ar event was
+to the duedate), paid (number of days after an ar event it was paid), req (days
+until the requirement date from the transdate of an oe event), oeid (true if an
+oe event), customer_id (vendor id if sales order), vendor_id (vendor id if
+puchase order), vc ('customer' if customer_id set, 'vendor' if vendor_id set),
+invoice (true if both arid and arinvoice set or if both apid and apinvoice set),
+recurringemail (colon separated list of forms and formats to be emailed),
+message (the non-attachement message body for the emails), and recurringprint 
+(colon separated list of form names, formats, and printer names).
+
+$myconfig is unused.
+
+=cut
+
 sub recurring_details {
 
     my ( $self, $myconfig, $form, $id ) = @_;
@@ -1203,6 +1558,16 @@ sub recurring_details {
 
 }
 
+=item AM->update_recurring($myconfig, $form, $id)
+
+Updates nextdate for the recurring transaction $id to the next date of the
+sequence.  If the new value for nextdate is after enddate, nextdate is set to
+NULL.
+
+$myconfig is unused.
+
+=cut
+
 sub update_recurring {
 
     my ( $self, $myconfig, $form, $id ) = @_;
@@ -1228,19 +1593,29 @@ sub update_recurring {
 
     my ($last_repeat) = $dbh->selectrow_array($query);
     if ($last_repeat) {
-        $advance{ $myconfig->{dbdriver} } = "NULL";
+        $query = qq|
+    		UPDATE recurring 
+    		   SET nextdate = NULL
+    		 WHERE id = $id|;
+    } else {
+        $query = qq|
+    		UPDATE recurring 
+    		   SET nextdate = (date $nextdate + interval $interval)
+    		 WHERE id = $id|;
     }
-
-    $query = qq|
-		UPDATE recurring 
-		   SET nextdate = (date $nextdate + interval $interval)
-		 WHERE id = $id|;
 
     $dbh->do($query) || $form->dberror($query);
 
     $dbh->commit;
 
 }
+
+=item AM->check_template_name($myconfig, $form);
+
+Performs some sanity checking on the filename $form->{file} and calls
+$form->error if the filename is disallowed.
+
+=cut
 
 sub check_template_name {
 
@@ -1271,6 +1646,12 @@ sub check_template_name {
     }
 }
 
+=item AM->load_template($myconfig, $form);
+
+Populates $form->{body} with the contents of the file $form->{file}.
+
+=cut
+
 sub load_template {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -1287,6 +1668,13 @@ sub load_template {
 
 }
 
+=item AM->save_template($myconfig, $form);
+
+Overwrites the file $form->{file} with the contents of $form->{body}, excluding
+carriage returns.
+
+=cut
+
 sub save_template {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -1302,6 +1690,16 @@ sub save_template {
     close(TEMPLATE);
 
 }
+
+=item AM->save_preferences($myconfig, $form);
+
+Saves the preferences for the current user.  New values are taken from the $form
+attributes name, email, dateformat, signature, numberformat, vclimit, tel, fax,
+company, menuwidth, countrycode, address, timeout, stylesheet, printer,
+password, new_password, and old_password.  Password updates occur when
+new_password and old_password differ.
+
+=cut
 
 sub save_preferences {
 
@@ -1361,6 +1759,19 @@ sub save_preferences {
     1;
 
 }
+
+=item AM->save_defaults($myconfig, $form);
+
+Sets the values in the defaults table to values derived from $form.  glnumber,
+sinumber, vinumber, sonumber, ponumber, sqnumber, rfqnumber, partnumber,
+employeenumber, customernumber, vendornumber, projectnumber, yearend, curr,
+weightunit, and businessnumber are taken directly from the $form value with
+the corresponding name.  inventory_accno_id is the id of the account with the
+number specified in $form->{IC}.  In a similar manner, income_accno_id and
+$form->{IC_income}, expense_accno_id and $form->{IC_expense}, fxgain_accno_id
+and $form->{FX_gain}, and fxloss_accno_id and $form->{FX_loss} are related.
+
+=cut
 
 sub save_defaults {
 
@@ -1424,6 +1835,24 @@ sub save_defaults {
     $rc;
 
 }
+
+=item AM->defaultaccounts($myconfig, $form);
+
+Retrieves the numbers of default accounts and sets $form->{defaults}{$key} to
+the appropriate account numbers, where $key can be 'IC', 'IC_income', 'IC_sale',
+'IC_expense', 'IC_cogs', 'FX_gain', and 'FX_loss'.
+
+Sets the hashes refered to as $form->{accno}{IC_${type}}{$accno} to contain the
+id and description of all accounts with IC elements in their link fields.  The
+possible types are all the IC_* values with IC_cogs merged into IC_expense and
+IC_sale merged with IC_income.
+
+Fills the hashes referred to as $form->{accno}{FX_(gain|loss)} with the id and
+description of all income and expense accounts, keyed on the account number.
+
+$myconfig is unused.
+
+=cut
 
 sub defaultaccounts {
 
@@ -1515,6 +1944,18 @@ sub defaultaccounts {
 
 }
 
+=item AM->taxes($myconfig, $form);
+
+Retrieve details about all taxes in the database.  $form->{taxrates} refers to a
+list containing hashes with the chart id (id), account number (accno),
+description, rate, taxnumber, validto, pass, and taxmodulename for a tax.
+$form->{taxmodule_B<id>}, where B<id> is a taxmodule_id, is set to that
+taxmodule's name.
+
+$myconfig is unused.
+
+=cut
+
 sub taxes {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -1560,6 +2001,19 @@ sub taxes {
 
 }
 
+=item AM->save_taxes($myconfig, $form);
+
+Deletes B<all> entries from the tax table then re-inserts all taxes whose
+accounts are part of the space separated list $form->{taxaccounts}.  Each
+element of $form->{taxaccounts} is of the form 'chartid_I<i>' where chartid is
+the id of the chart entry for the tax and I<i> is a numeric index.  The values
+inserted for each tax are chart_id (from taxaccounts), rate (
+form->{taxrate_I<i>} / 100), validto ($form->{validto_I<i>}), taxnumber
+($form->{taxnumber_I<i>}), pass ($form->{pass_I<i>}), and taxmodule_id
+($form->{taxmodule_id_I<i>}).
+
+=cut
+
 sub save_taxes {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -1595,6 +2049,17 @@ sub save_taxes {
     $rc;
 
 }
+
+=item AM->backup($myconfig, $form);
+
+Prepares and outputs a database backup of the current "dataset" using
+"pg_dump -Fc".  The means of output is determined by $form->{media}, which can
+be either 'file' or 'email'.  If email is the desired form of output, the email
+address to send the backup to and who to claim it is from is determined by
+$myconfig->{email} and $myconfig->{name}.  File output sends the backup directly
+out over HTTP.
+
+=cut
 
 sub backup {
 
@@ -1661,6 +2126,15 @@ qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfi
 
 }
 
+=item AM->closedto($myconfig, $form);
+
+Populates $form->{closedto}, $form->{revtrans}, and $form->{audittrail} with
+their values in the defaults table.
+
+$myconfig is unused.
+
+=cut
+
 sub closedto {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -1680,6 +2154,17 @@ sub closedto {
     $dbh->commit;
 
 }
+
+=item AM->closebooks($myconfig, $form);
+
+Updates the revtrans, closedto, and audittrail entries in the defaults table
+using their corresponding $form values.  If $form->{removeaudittrail} is set,
+remove all audittrail entries with a transdate prior to the date given by
+$form->{removeaudittrail}.
+
+$myconfig is unused.
+
+=cut
 
 sub closebooks {
 
@@ -1702,17 +2187,28 @@ sub closebooks {
         $sth->execute( $val, $_ );
     }
 
-    if ( $form->{removeaudittrail} ) {
-        $query = qq|
-			DELETE FROM audittrail
-			 WHERE transdate < | . $dbh->quote( $form->{removeaudittrail} );
-
-        $dbh->do($query) || $form->dberror($query);
-    }
+## SC: Disabling audit trail removal
+##    if ( $form->{removeaudittrail} ) {
+##        $query = qq|
+##			DELETE FROM audittrail
+##			 WHERE transdate < ?|;
+##
+##        $dbh->do($query, undef, $form->{removeaudittrail}) || $form->dberror($query);
+##    }
 
     $dbh->commit;
 
 }
+
+=item AM->earningsaccounts($myconfig, $form);
+
+Populates the list referred to as $form->{chart} with hashes containing the
+account number (accno) and the description of all equity accounts, ordered by
+the account number.
+
+$myconfig is unused.
+
+=cut
 
 sub earningsaccounts {
 
@@ -1733,7 +2229,7 @@ sub earningsaccounts {
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
-    $form->{chart} = "";
+    $form->{chart} = [];
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         push @{ $form->{chart} }, $ref;
@@ -1743,11 +2239,28 @@ sub earningsaccounts {
     $dbh->commit;
 }
 
+=item AM->post_yearend($myconfig, $form);
+
+Posts the termination of a financial year.  Makes use of the $form attributes
+login, reference, notes, description, and transdate to populate the gl table
+entry.  The id of the gl transaction is placed in $form->{id}.  
+
+For every accno_$i in $form, where $i is between 1 and $form->{rowcount}, an
+acc_trans entry will be added if credit_$i or debit_$i is non-zero.
+
+A new yearend entry is populated with the id and transdate of the gl
+transaction.
+
+Adds an entry to the audittrail.
+
+$myconfig is unused.
+
+=cut
+
 sub post_yearend {
 
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database, turn off AutoCommit
     my $dbh = $form->{dbh};
 
     my $query;
@@ -1848,6 +2361,13 @@ sub post_yearend {
 
 }
 
+=item AM->get_all_defaults($form);
+
+Retrieves all settings from defaults and sets the appropriate $form values.
+Also runs AM->defaultaccounts.
+
+=cut
+
 sub get_all_defaults {
     my ( $self, $form ) = @_;
     my $dbh   = $form->{dbh};
@@ -1861,5 +2381,7 @@ sub get_all_defaults {
     $self->defaultaccounts( undef, $form );
     $dbh->commit;
 }
+
+=back
 
 1;

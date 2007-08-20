@@ -2524,11 +2524,11 @@ sub audit_control {
       . qq| <input name=audittrail class=radio type=radio value="0" $checked{audittrailN}> |
       . $locale->text('No')
       . qq|</td>
-	</tr>
+	</tr><!-- SC: Disabling audit trail deletion
 	<tr>
 	  <th align="right">| . $locale->text('Remove Audit trail up to') . qq|</th>
 	  <td><input name=removeaudittrail size=11 title="$myconfig{dateformat}"></td>
-	</tr>
+	</tr> -->
       </table>
     </td>
   </tr>
@@ -2578,12 +2578,13 @@ sub doclose {
         $msg .= $locale->text('Audit trail disabled');
     }
 
-    $msg .= "<p>";
-    if ( $form->{removeaudittrail} ) {
-        $msg .=
-            $locale->text('Audit trail removed up to') . " "
-          . $locale->date( \%myconfig, $form->{removeaudittrail}, 1 );
-    }
+##SC: Disabling audit trail deletion
+##    $msg .= "<p>";
+##    if ( $form->{removeaudittrail} ) {
+##        $msg .=
+##            $locale->text('Audit trail removed up to') . " "
+##          . $locale->date( \%myconfig, $form->{removeaudittrail}, 1 );
+##    }
 
     $form->redirect($msg);
 
