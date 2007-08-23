@@ -1712,7 +1712,6 @@ sub all_vc {
     my ($count) = $sth->fetchrow_array;
 
     $sth->finish;
-    @queryargs = ();
 
     # build selection list
     if ( $count < $myconfig->{vclimit} ) {
@@ -1733,6 +1732,7 @@ sub all_vc {
 					 WHERE id = ?
 				  ORDER BY name|;
 
+        shift @queryargs;
         push( @queryargs, $self->{"${vc}_id"} );
 
         $sth = $dbh->prepare($query);
