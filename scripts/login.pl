@@ -31,7 +31,7 @@ sub login {
         __default($request);
     }
     require "scripts/menu.pl";
-    LedgerSMB::Scripts::menu::display($request);
+    LedgerSMB::Scripts::menu::root_doc($request);
 
 }
 

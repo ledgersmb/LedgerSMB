@@ -15,7 +15,7 @@ use strict;
 sub __default {
 }
 
-sub display {
+sub root_doc {
     my ($request) = @_;
     my $template;
     if (!$request->{menubar}){
