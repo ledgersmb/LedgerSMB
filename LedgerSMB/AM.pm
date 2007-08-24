@@ -2159,8 +2159,8 @@ sub closedto {
 
 Updates the revtrans, closedto, and audittrail entries in the defaults table
 using their corresponding $form values.  If $form->{removeaudittrail} is set,
-remove all audittrail entries with a transdate prior to the date given by
-$form->{removeaudittrail}.
+this used to remove all audittrail entries with a transdate prior to the date
+given by $form->{removeaudittrail}, but has been disabled.
 
 $myconfig is unused.
 
@@ -2382,6 +2382,6 @@ sub get_all_defaults {
     $dbh->commit;
 }
 
-=back
-
 1;
+
+=back
