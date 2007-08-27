@@ -94,7 +94,7 @@ CREATE FUNCTION lock_record (int, int) returns bool as
 $$
 declare
    locked int;
-begin;
+begin
    SELECT locked_by into locked from transactions where id = $1;
    IF NOT FOUND THEN
 	RETURN FALSE;
@@ -429,6 +429,12 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 --
 
 --
+
+-- pricegroup added here due to references
+CREATE TABLE pricegroup (
+  id serial PRIMARY KEY,
+  pricegroup text
+);
 
 CREATE TABLE entity_credit_account (
   id serial not null unique,
@@ -895,11 +901,6 @@ CREATE TABLE partsvendor (
   lastcost NUMERIC,
   curr char(3),
   entry_id SERIAL PRIMARY KEY
-);
---
-CREATE TABLE pricegroup (
-  id serial PRIMARY KEY,
-  pricegroup text
 );
 --
 CREATE TABLE partscustomer (
