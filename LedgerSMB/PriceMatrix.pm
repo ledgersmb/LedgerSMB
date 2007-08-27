@@ -57,33 +57,36 @@ sub price_matrix_query {
 
 			UNION
 
-    			SELECT p.parts_id, p.entity_id, p.pricegroup_id, 
+    			SELECT p.parts_id, p.customer_id AS entity_id, 
+				p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			WHERE p.parts_id = ?
-			AND p.entity_id = $entity_id
+			AND p.customer_id = $entity_id
 
 			UNION
 
-    			SELECT p.parts_id, p.entity_id, p.pricegroup_id, 
+    			SELECT p.parts_id, p.customer_id AS  entity_id, 
+				p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-			JOIN customer c ON (c.pricegroup_id = g.id)
+			JOIN entity_credit_account c ON (c.pricegroup_id = g.id)
 			WHERE p.parts_id = ?
-			AND c.id = $entity_id
+			AND c.entity_id = $entity_id
 
 			UNION
 
-    			SELECT p.parts_id, p.entity_id, p.pricegroup_id, 
+    			SELECT p.parts_id, p.customer_id  AS entity_id, 
+				p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-			WHERE p.entity_id = 0
+			WHERE p.customer_id = 0
 			AND p.pricegroup_id = 0
 			AND p.parts_id = ?
 
@@ -99,7 +102,7 @@ sub price_matrix_query {
 			SELECT partnumber
 			FROM partsvendor
 			WHERE parts_id = ?
-			AND entity_id = $entity_id|;
+			AND vendor_id = $entity_id|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
 
