@@ -1700,8 +1700,8 @@ sub all_vc {
         $query .= qq| AND (startdate IS NULL OR startdate <= ?)
 					AND (enddate IS NULL OR enddate >= ?)|;
         $where = qq| (startdate IS NULL OR startdate <= ?)
-					AND (enddate IS NULL OR enddate >= ?)|;
-
+					AND (enddate IS NULL OR enddate >= ?) 
+					AND entity_class = ?|;
         push (@queryargs, $transdate, $transdate );
     }
 
@@ -1717,13 +1717,14 @@ sub all_vc {
     if ( $count < $myconfig->{vclimit} ) {
 
         $self->{"${vc}_id"} *= 1;
-        $where = "AND $where" if $where;
 
         $query = qq|SELECT id, name
 					  FROM entity
 					 WHERE id IN (select entity_id 
-		                                        FROM $vc) 
-                                               $where
+		                                        FROM 
+							entity_credit_account
+							WHERE
+                                               		$where)
 
 					 UNION 
 
@@ -1733,7 +1734,7 @@ sub all_vc {
 				  ORDER BY name|;
 
         shift @queryargs;
-        push( @queryargs, $self->{"${vc}_id"} );
+        push( @queryargs, $self->{vc_class}, $self->{"${vc}_id"} );
 
         $sth = $dbh->prepare($query);
         $sth->execute(@queryargs) || $self->dberror($query);

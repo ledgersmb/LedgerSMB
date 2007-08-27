@@ -51,18 +51,21 @@ recommend as follows:
 5)  Install tablefunc.sql for PostgreSQL (not optional)
   See notes in 4 above for location of script and apply to template1.
 
-6)  Create central database
+6)  Install pg_trgm.sql into database or template1.
+  See notes in 4 above for location of script.  Apply to template1.
+
+7)  Create central database
   a) create the ledgersmb role (optional)
   b) create the ledgersmb database (if using a multi-company central db)
   c) cd to the sql/ directory of the new ledger directory.
   d) load the Pg-database.sql script into ledgersmb or your database.
 
-7)  Set the admin password:
+8)  Set the admin password:
   From psql, determine what admin password you wish to use.  Then type:
       "update users_conf set password = md5('my_password');"
       Naturally you would use your password instead of my_password.
 
-8)  Edit the ledger-smb.conf file as appropriate.
+9)  Edit the ledgersmb.conf file as appropriate.
 
 Congratulations, you have manually installed LedgerSMB 1.3.
 
