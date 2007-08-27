@@ -1184,7 +1184,6 @@ sub post_invoice {
 				       deliverydate = ?,
 				       project_id = ?,
 				       serialnumber = ?,
-			               reverse = ?,
 				       notes = ?
 				      WHERE id = ?|;
 
@@ -1196,7 +1195,7 @@ sub post_invoice {
                 $form->{"discount_$i"},    $allocated,
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $project_id,               $form->{"serialnumber_$i"},
-                $form->{reverse}, $form->{"notes_$i"},       
+                $form->{"notes_$i"},       
                 $invoice_id
             ) || $form->dberror($query);
             if (defined $form->{approved}) {
