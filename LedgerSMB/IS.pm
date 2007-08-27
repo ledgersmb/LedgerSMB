@@ -865,7 +865,7 @@ sub post_invoice {
     if ( !$form->{id} ) {
 
         $query = qq|
-			INSERT INTO ar (invnumber, employee_id) 
+			INSERT INTO ar (invnumber, person_id) 
 			     VALUES ('$uid', ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{employee_id} ) || $form->dberror($query);
@@ -1508,7 +1508,7 @@ sub post_invoice {
 		       taxincluded = ?,
 		       curr = ?,
 		       department_id = ?,
-		       employee_id = ?,
+		       person_id = ?,
 		       till = ?,
 		       language_code = ?,
 		       ponumber = ?
@@ -1859,12 +1859,12 @@ sub retrieve_invoice {
 			          a.shippingpoint, a.shipvia, a.terms, a.notes, 
 			          a.intnotes,
 			          a.duedate, a.taxincluded, a.curr AS currency,
-			          a.employee_id, e.name AS employee, a.till, 
+			          a.person_id, e.name AS employee, a.till, 
 			          a.entity_id, a.reverse
 			          a.language_code, a.ponumber,
 			          a.on_hold
 			     FROM ar a
-			LEFT JOIN employee e ON (e.entity_id = a.employee_id)
+			LEFT JOIN employee e ON (e.entity_id = a.person_id)
 			    WHERE a.id = ?|;
 
         $sth = $dbh->prepare($query);

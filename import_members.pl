@@ -239,7 +239,7 @@ sub save_member {
         # add login to employee table if it does not exist
         my $login = $self->{login};
         $login =~ s/@.*//;
-        my $sth = $dbh->prepare("SELECT id FROM employee WHERE login = ?;");
+        my $sth = $dbh->prepare("SELECT entity_id FROM employee WHERE login = ?;");
         $sth->execute($login);
 
         my ($id) = $sth->fetchrow_array;
