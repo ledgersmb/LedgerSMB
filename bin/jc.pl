@@ -40,6 +40,7 @@
 #======================================================================
 
 use LedgerSMB::JC;
+use Math::BigFloat;
 
 1;
 
@@ -413,7 +414,7 @@ sub prepare_timecard {
         $form->{checkedin} = 0;
     }
 
-    $form->{clocked} = ( $form->{checkedout} - $form->{checkedin} ) / 3600;
+    $form->{clocked} = Math::BigFloat->new(( $form->{checkedout} - $form->{checkedin} ) / 3600);
     if ( $form->{clocked} ) {
         $form->{oldnoncharge} = $form->{clocked} - $form->{qty};
     }
@@ -1045,7 +1046,7 @@ sub update {
             $form->{checkedin} = 0;
         }
 
-        $form->{clocked} = ( $form->{checkedout} - $form->{checkedin} ) / 3600;
+        $form->{clocked} = Math::BigFloat->new(( $form->{checkedout} - $form->{checkedin} ) / 3600);
 
         for (qw(sellprice qty noncharge allocated)) {
             $form->{$_} = $form->parse_amount( \%myconfig, $form->{$_} );

@@ -76,6 +76,7 @@ sub get_jcitems {
           || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
@@ -488,6 +489,7 @@ sub jcitems {
     $sth->execute($dateformat) || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $ref->{project} = ( $ref->{parts_id} ) ? "job" : "project";
         $ref->{transdate} = $ref->{transdatea};
         delete $ref->{transdatea};
