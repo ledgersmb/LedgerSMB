@@ -17,7 +17,7 @@ Save customer will update or create as needed.
 
 =cut
 
-package LedgerSMB::Scripts::Customer;
+package LedgerSMB::Scripts::customer;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
@@ -40,7 +40,7 @@ of the customer informations.
 
 sub get {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
     my $result = $customer->get($customer->{id});
     
@@ -49,6 +49,16 @@ sub get {
         format => 'html');
     $template->render($results);
         
+}
+
+sub add {
+    my ($request) = @_;
+    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
+    
+    my $template = LedgerSMB::Template->new( user => $user, 
+	template => 'customer.html', language => $user->{language}, 
+        format => 'html');
+    $template->render($results);
 }
 
 =pod
@@ -68,7 +78,7 @@ as well as customer/Company name.
 =cut
 
 sub search {
-    my ($class, $request) = @_;
+    my ($request) = @_;
     my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
     my $results = $customer->search($customer->{search_pattern});
     
@@ -93,7 +103,7 @@ customer as needed, and will generate a new Company ID for the customer if neede
 
 sub save {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
     my $result = $customer->save_to_db();
     

@@ -247,7 +247,6 @@ sub _save_vc {
 			curr = ?
 			startdate = ?
 			enddate = ?
-			invoice_notes = ?
 			bic = ?
 			iban = ?
 		WHERE id = ?|;
@@ -258,7 +257,7 @@ sub _save_vc {
                 $form->{bcc}, $form->{business_id}, $form->{sic_code}, 
                 $form->{language_code}, $form->{pricegroup_id},
                 $form->{curr}, $form->{startdate}, $form->{enddate},
-                $form->{invoice_notes}, $form->{bic}, $form->{iban}, $form->{id}
+                $form->{bic}, $form->{iban}, $form->{id}
             ) || $form->dberror(__FILE__.":".__LINE__.":$query");
             $updated = 1;
         }
@@ -337,13 +336,6 @@ sub _save_vc {
             |;
             $sth = $dbh->prepare($query);
             $sth->execute($form->{entity_id}, $form->{bic}, $form->{iban}) || 
-                $form->dberror($query);
-            $query = qq|
-                insert into entity_invoice_notes (entity_id, note)
-                values (?, ?)
-            |;
-            $sth = $dbh->prepare($query);
-            $sth->execute($form->{entity_id}, $form->{notes}) || 
                 $form->dberror($query);
             
     }
