@@ -15,7 +15,7 @@ included COPYRIGHT and LICENSE files for more information.
 
 =cut
 
-package LedgerSMB::Menu;
+package LedgerSMB::DBObject::Menu;
 
 use Config::Std;
 use base(qw(LedgerSMB::DBObject));
