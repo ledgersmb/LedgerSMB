@@ -1702,7 +1702,9 @@ sub all_vc {
         $where = qq| (startdate IS NULL OR startdate <= ?)
 					AND (enddate IS NULL OR enddate >= ?) 
 					AND entity_class = ?|;
-        push (@queryargs, $transdate, $transdate );
+        push (@queryargs, $transdate, $transdate, $self->{vc_class});
+    } else {
+        $where = " true";
     }
 
     $sth = $dbh->prepare($query);
@@ -1734,7 +1736,7 @@ sub all_vc {
 				  ORDER BY name|;
 
         shift @queryargs;
-        push( @queryargs, $self->{vc_class}, $self->{"${vc}_id"} );
+        push( @queryargs, $self->{"${vc}_id"} );
 
         $sth = $dbh->prepare($query);
         $sth->execute(@queryargs) || $self->dberror($query);
