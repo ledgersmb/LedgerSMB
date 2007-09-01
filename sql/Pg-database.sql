@@ -530,6 +530,24 @@ ALTER TABLE company ADD COLUMN sic_code varchar;
 
 --
 --
+create table employee (
+  entity_id integer not null references entity(id) on delete cascade primary key,
+  entity_class_id integer references entity_class(id) not null check (entity_class_id = 3),
+  login text,
+  startdate date default current_date,
+  enddate date,
+  notes text,
+  role varchar(20),
+  sales bool default 'f',
+  ssn varchar(20),
+  iban varchar(34),
+  bic varchar(11),
+  managerid int,
+  employeenumber varchar(32),
+  dob date
+);
+
+COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
 CREATE TABLE parts (
   id serial PRIMARY KEY,
   partnumber text,
@@ -748,24 +766,6 @@ CREATE TABLE exchangerate (
   PRIMARY KEY (curr, transdate)
 );
 --
-create table employee (
-  entity_id integer not null references entity(id) on delete cascade primary key,
-  entity_class_id integer references entity_class(id) not null check (entity_class_id = 3),
-  login text,
-  startdate date default current_date,
-  enddate date,
-  notes text,
-  role varchar(20),
-  sales bool default 'f',
-  ssn varchar(20),
-  iban varchar(34),
-  bic varchar(11),
-  managerid int,
-  employeenumber varchar(32),
-  dob date
-);
-
-COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
 
 -- batch stuff
 
