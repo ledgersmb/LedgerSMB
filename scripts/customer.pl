@@ -51,6 +51,18 @@ sub get {
         
 }
 
+=pod
+
+=over
+
+=item add
+
+This method creates a blank screen for entering a customer's information.
+
+=back
+
+=cut 
+
 sub add {
     my ($request) = @_;
     my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
