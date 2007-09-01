@@ -13,6 +13,12 @@ use LedgerSMB::Template;
 use strict;
 
 sub __default {
+    my ($request) = @_;
+    if ($request->{menubar}){
+        # todo
+    } else {
+        expanding_menu($request);
+    }
 }
 
 sub root_doc {
@@ -27,18 +33,33 @@ sub root_doc {
              locale => $request->{_locale},
              path => 'UI',
              template => 'frameset',
-             format => 'HTML'
-        );
-    } else {
-        # TODO:  Create Lynx Initial Menu
-    }
-    $template->render($request);
-}
+		     format => 'HTML'
+		);
+	    } else {
+		# TODO:  Create Lynx Initial Menu
+	    }
+	    $template->render($request);
+	}
 
-sub expanding_menu {
-    my ($request) = @_;
-    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
-    $menu->generate();
+	sub expanding_menu {
+	    my ($request) = @_;
+	    if ($request->{'open'} !~ s/:$request->{id}:/:/){
+		$request->{'open'} .= ":$request->{id}:";
+	    }
+
+	    # The above system can lead to extra colons.
+	    $request->{'open'} =~ s/:+/:/g;
+
+	    
+
+	    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
+	    $menu->generate();
+	    for my $item (@{$menu->{menu_items}}){
+                if ($request->{'open'} =~ /:$item->{id}:/ ){
+                    $item->{'open'} = 'true';
+                }
+            }
+
     my $template = LedgerSMB::Template->new(
          user => $request->{_user}, 
          locale => $request->{_locale},

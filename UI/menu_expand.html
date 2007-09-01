@@ -48,16 +48,26 @@
 				?>?login=<?lsmb login 
 				?>&<?lsmb FOREACH arg IN item.args 
 				?><?lsmb arg 
-				?>&<?lsmb END ?>"
-				target = "main_window"
-				onclick="return <?lsmb IF item.menu 
-					?>SwitchMenu('sub_<?lsmb item.id ?>')<?lsmb END ?>"
+				?><?lsmb END 
+				?><?lsmb IF item.menu 
+					?>&id=<?lsmb item.id
+					?>&open=<?lsmb open 
+				?><?lsmb END ?>"
+				<?lsmb IF item.module ?> 
+					target = "main_window" 
+				<?lsmb END ?>
+				<?lsmb IF item.menu ?> 
+					onclick="return SwitchMenu('sub_<?lsmb item.id ?>')"
+				<?lsmb END ?>
 				class = "<?lsmb IF item.module ?>Menu<?lsmb
 					ELSE ?>Item<?lsmb END ?>"
 				><?lsmb text(item.label) ?></a>
 		</div>
 		<?lsmb IF item.menu ?>
-			<div id="sub_<?lsmb item.id ?>" class=submenu>
+			<div id="sub_<?lsmb item.id ?>" class=submenu
+			<?lsmb IF item.open ?>
+				style="display: block"
+			<?lsmb END ?>>
 		<?lsmb END ?>
 		<?lsmb old_level = item.level ?>
 	<?lsmb END ?>
