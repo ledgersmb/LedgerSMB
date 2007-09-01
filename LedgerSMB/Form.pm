@@ -1694,8 +1694,8 @@ sub all_vc {
     }
     my $query = qq|SELECT count(*) FROM entity_credit_account where entity_class = ?|;
     my $where;
-    my @queryargs = ($self->{vc_class});
-
+    my @queryargs2 = ($self->{vc_class});
+    my @queryargs;
     if ($transdate) {
         $query .= qq| AND (startdate IS NULL OR startdate <= ?)
 					AND (enddate IS NULL OR enddate >= ?)|;
@@ -1703,13 +1703,14 @@ sub all_vc {
 					AND (enddate IS NULL OR enddate >= ?) 
 					AND entity_class = ?|;
         push (@queryargs, $transdate, $transdate, $self->{vc_class});
+        push (@queryargs2, $transdate, $transdate);
     } else {
         $where = " true";
     }
 
     $sth = $dbh->prepare($query);
 
-    $sth->execute(@queryargs);
+    $sth->execute(@queryargs2);
 
     my ($count) = $sth->fetchrow_array;
 
@@ -1735,7 +1736,6 @@ sub all_vc {
 					 WHERE id = ?
 				  ORDER BY name|;
 
-        shift @queryargs;
         push( @queryargs, $self->{"${vc}_id"} );
 
         $sth = $dbh->prepare($query);
@@ -2141,21 +2141,25 @@ sub create_links {
 
         $query = qq|
 			SELECT a.invnumber, a.transdate,
-				a.${vc}_id, a.datepaid, a.duedate, a.ordnumber,
+				a.entity_id, a.datepaid, a.duedate, a.ordnumber,
 				a.taxincluded, a.curr AS currency, a.notes, 
-				a.intnotes, c.name AS $vc, a.department_id, 
+				a.intnotes, ce.name AS $vc, a.department_id, 
 				d.description AS department,
 				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
 				a.employee_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse
 			FROM $arap a
-			JOIN $vc c ON (a.${vc}_id = c.id)
-			LEFT JOIN employee e ON (e.id = a.employee_id)
+			JOIN entity_credit_account c USING (entity_id)
+			JOIN entity ce ON (e.id = c.entity_id)
+			LEFT JOIN employee er ON (er.entity_id = a.person_id)
+			LEFT JOIN entity e ON (er.entity_id = e.entity_id)
 			LEFT JOIN department d ON (d.id = a.department_id)
-			WHERE a.id = ?|;
+			WHERE a.id = ? AND c.entity_class = 
+				(select id FROM entity_class 
+				WHERE class ilike ?)|;
 
         $sth = $dbh->prepare($query);
-        $sth->execute( $self->{id} ) || $self->dberror($query);
+        $sth->execute( $self->{id}, $self->{vc} ) || $self->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
         $self->db_parse_numeric(sth=>$sth, hashref=>$ref);
