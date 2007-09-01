@@ -17,13 +17,13 @@
 
 			function SwitchMenu(obj) {
 				if (document.getElementById) {
-					var el = document.getElementById(obj);
+					var element = document.getElementById(obj);
 					
-					if (el.style.display == "block") {
-						el.style.display = "none";
+					if (element.style.display == "block") {
+						element.style.display = "none";
 
 					} else {
-						el.style.display = "block"; //display the block of info
+						element.style.display = "block"; //display the block of info
 					}
 					return false;
 				}		
