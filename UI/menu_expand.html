@@ -7,6 +7,7 @@
 	<meta http-equiv="Expires" content="-1" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<link rel="stylesheet" href="UI/menu_expand.css" type="text/css" title="LedgerSMB stylesheet" />
 
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
@@ -17,12 +18,14 @@
 			function SwitchMenu(obj) {
 				if (document.getElementById) {
 					var el = document.getElementById(obj);
-
-					if (el.style.display == "none") {
-						el.style.display = "block"; //display the block of info
-					} else {
+					
+					if (el.style.display == "block") {
 						el.style.display = "none";
+
+					} else {
+						el.style.display = "block"; //display the block of info
 					}
+					return false;
 				}		
 			}
 
@@ -47,8 +50,8 @@
 				?><?lsmb arg 
 				?>&<?lsmb END ?>"
 				target = "main_window"
-				onclick="return <?lsmb IF item.module 
-					?>SwitchMenu(<?lsmb id ?>)<?lsmb END ?>"
+				onclick="return <?lsmb IF item.menu 
+					?>SwitchMenu('sub_<?lsmb item.id ?>')<?lsmb END ?>"
 				class = "<?lsmb IF item.module ?>Menu<?lsmb
 					ELSE ?>Item<?lsmb END ?>"
 				><?lsmb text(item.label) ?></a>
