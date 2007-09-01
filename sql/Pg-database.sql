@@ -2543,6 +2543,35 @@ BEGIN
 	END LOOP;
 END;
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION menu_children(in_parent_id int) RETURNS SETOF menu_item
+AS $$
+declare 
+	item menu_item;
+	arg menu_attribute%ROWTYPE;
+begin
+        FOR item IN
+		SELECT n.position, n.id, c.level, n.label, c.path, '{}' 
+		FROM connectby('menu_node', 'id', 'parent', 'position', 
+				in_parent_id, 1, ',') 
+			c(id integer, parent integer, "level" integer, 
+				path text, list_order integer)
+		JOIN menu_node n USING(id)
+        LOOP
+		FOR arg IN 
+			SELECT *
+			FROM menu_attribute
+			WHERE node_id = item.id
+		LOOP
+			item.args := item.args || 
+				(arg.attribute || '=' || arg.value)::varchar;
+		END LOOP;
+                return next item;
+        end loop;
+end;
+$$ language plpgsql;
+
+COMMENT ON FUNCTION menu_children(int) IS $$ This function returns all menu items which are children of in_parent_id (the only input parameter. $$;
 --
 -- PostgreSQL database dump
 --

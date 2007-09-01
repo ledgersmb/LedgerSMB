@@ -40,11 +40,39 @@ th result set, This function does not return an entry for the top-level menu.
 
 sub generate {
     my ($self) = shift @_;
-    my @args;
 
     @{$self->{menu_items}} = $self->exec_method(funcname => 'menu_generate');
+    $self->__generate;
 
+    return @{$self->{menu_items}};
+}
+
+=over
+
+=item Menu::generate_secton($object)
+
+This class acts like Menu::Generate except it returns only a cross-section of 
+the menu.  Basically it returns all nodes which are direct children below
+$object->{parent_id}.
+
+=cut
+
+sub generate_section {
+    my ($self) = shift @_;
+
+    @{$self->{menu_items}} = $self->exec_method(funcname => 'menu_children');
+    $self->__generate;
+
+    return @{$self->{menu_items}};
+}
+
+
+# Private method which contains logic common to the full menu and section logic
+
+sub __generate {
+    my ($self) = @_;
     $self->debug({file => '/tmp/menu'});
+    my @args;
 
     shift @{$self->{menu_items}};
 
@@ -61,6 +89,3 @@ sub generate {
             }
         }
     }
-    return @{$self->{menu_items}};
-}
-

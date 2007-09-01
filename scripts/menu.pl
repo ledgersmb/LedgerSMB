@@ -8,7 +8,7 @@ package LedgerSMB::Scripts::menu;
 our $VERSION = '0.1';
 
 $menufile = "menu.ini";
-use LedgerSMB::Menu;
+use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Template;
 use strict;
 
@@ -37,7 +37,7 @@ sub root_doc {
 
 sub expanding_menu {
     my ($request) = @_;
-    my $menu = LedgerSMB::Menu->new({base => $request});
+    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
     my $template = LedgerSMB::Template->new(
          user => $request->{_user}, 
