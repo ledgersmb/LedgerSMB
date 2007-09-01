@@ -329,12 +329,13 @@ sub save_customer {
         if ( $form->{"tax_$item"} ) {
             $query = qq|
 				INSERT INTO customertax (customer_id, chart_id)
-				     VALUES (?, (SELECT id
+				     VALUES (currval('entity_credit_account_id_seq'), 
+				                 (SELECT id
 				                   FROM chart
 				                  WHERE accno = ?))|;
 
             $sth = $dbh->prepare($query);
-            $sth->execute( $form->{id}, $item )
+            $sth->execute( $item )
               || $form->dberror($query);
         }
     }
