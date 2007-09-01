@@ -1492,7 +1492,7 @@ sub post_invoice {
 		       ordnumber = ?,
 		       quonumber = ?,
 		       transdate = ?,
-		       customer_id = ?,
+		       entity_id = ?,
 		       amount = ?,
 		       netamount = ?,
 		       paid = ?,
@@ -1513,14 +1513,13 @@ sub post_invoice {
 		       ponumber = ?
 		 WHERE id = ?
              |;
-
     $sth = $dbh->prepare($query);
     $sth->execute(
         $form->{invnumber},     $form->{ordnumber},
-        $form->{quonumber},     $form->{transdate},
+        $form->{quonumber},     $form->{transdate} || 'now',
         $form->{customer_id},   $invamount,
         $invnetamount,          $form->{paid},
-        $form->{datepaid},      $form->{duedate},
+        $form->{datepaid} || 'now',      $form->{duedate} || 'now',
         $form->{shippingpoint}, $form->{shipvia},
         $form->{terms},         $form->{notes},
         $form->{intnotes},      $form->{taxincluded},
