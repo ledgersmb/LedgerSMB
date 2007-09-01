@@ -212,55 +212,10 @@ sub _save_vc {
     
     # this should really all be replaced by an upsert.
     if ( $form->{id} ) {
-        $query = qq|
-		DELETE FROM $form->{vc}tax
-		 WHERE entity_id = 
-		        (select entity_id from $form->{vc} 
-		         WHERE id = ?)|;
+        # This module is depricated, so we are just going to throw an error here
+        $form->error("Updating $form->{vc} not supported.  ".
+		"Please wait for us to move to the new codebase.");
 
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        $query = qq|
-			SELECT id 
-			  FROM $form->{vc}
-			 WHERE id = ?|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        if ( $sth->fetchrow_array ) {
-            $sth->finish;
-            $query = qq|
-		UPDATE enti
-		SET discount = ?
-			taxincluded = ?
-			creditlimit = ?
-			terms = ?
-			$form->{vc}number = ?
-			cc = ?
-			bcc = ?
-			business_id = ?
-			sic_code = ?
-			language_code = ?
-			pricegroup_id = ?
-			curr = ?
-			startdate = ?
-			enddate = ?
-			bic = ?
-			iban = ?
-		WHERE id = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute(
-                $form->{discount}, $form->{taxincluded}, $form->{creditlimit},
-                $form->{terms}, $form->{"$form->{vc}number"}, $form->{cc},
-                $form->{bcc}, $form->{business_id}, $form->{sic_code}, 
-                $form->{language_code}, $form->{pricegroup_id},
-                $form->{curr}, $form->{startdate}, $form->{enddate},
-                $form->{bic}, $form->{iban}, $form->{id}
-            ) || $form->dberror(__FILE__.":".__LINE__.":$query");
-            $updated = 1;
-        }
     }
     if (!$updated){
             # Creating Entity
@@ -307,7 +262,6 @@ sub _save_vc {
                   $form->{taxnumber},
                   $form->{sic_code});
             # Creating entity_metadata record, replacing customer and vendor.
-            
             $query = qq|
     		INSERT INTO entity_credit_account
     			(entity_id, entity_class, discount, taxincluded, creditlimit, 
@@ -350,7 +304,7 @@ sub save_customer {
     my $query;
     my $sth;
     my $null;
-
+    $form->{vc} = 'customer';
     # remove double spaces
     $form->{name} =~ s/  / /g;
 
