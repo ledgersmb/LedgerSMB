@@ -966,28 +966,6 @@ sub update {
     }
 
     @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
-    if ( $form->{taxincluded} ) {
-        $totaltax =
-          Tax::calculate_taxes( \@taxaccounts, $form, $form->{invtotal}, 1 );
-    }
-    else {
-        $totaltax =
-          Tax::calculate_taxes( \@taxaccounts, $form, $form->{invtotal}, 0 );
-    }
-    foreach $item (@taxaccounts) {
-        $taccno = $item->account;
-        if ( $form->{calctax} ) {
-            $form->{"calctax_$taccno"} = 1;
-            $form->{"tax_$taccno"} = $form->round_amount( $item->value, 2 );
-        }
-        $form->{"select$form->{ARAP}_tax_$taccno"} =
-          qq|<option>$taccno--$form->{"${taccno}_description"}|;
-    }
-
-    $form->{invtotal} =
-      ( $form->{taxincluded} )
-      ? $form->{invtotal}
-      : $form->{invtotal} + $totaltax;
 
     $j = 1;
     for $i ( 1 .. $form->{paidaccounts} ) {

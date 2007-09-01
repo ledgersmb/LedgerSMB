@@ -123,9 +123,10 @@ sub post_invoice {
             &reverse_invoice( $dbh, $form );
         }
         else {
-            $query = qq|INSERT INTO ap (id) VALUES (?)|;
+            $query = qq|INSERT INTO ap (id, vendor_id) VALUES (?, ?)|;
             $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
+            $sth->execute( $form->{id}, $form->{vendor_id} ) 
+		|| $form->dberror($query);
         }
     }
 
@@ -135,11 +136,12 @@ sub post_invoice {
     if ( !$form->{id} ) {
 
         $query = qq|
-			INSERT INTO ap (invnumber, employee_id)
-			VALUES ('$uid', (SELECT id FROM employee
+			INSERT INTO ap (invnumber, vendor_id, employee_id)
+			VALUES ('$uid', ?, (SELECT id FROM employee
 			                  WHERE login = ?))|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{login} ) || $form->dberror($query);
+        $sth->execute( $form->{vendor_id}, $form->{login}) 
+		|| $form->dberror($query);
 
         $query = qq|SELECT id FROM ap WHERE invnumber = '$uid'|;
         $sth   = $dbh->prepare($query);
