@@ -15,7 +15,7 @@ use strict;
 sub __default {
     my ($request) = @_;
     if ($request->{menubar}){
-        # todo
+        drilldown_menu($request);
     } else {
         expanding_menu($request);
     }
@@ -29,46 +29,64 @@ sub root_doc {
         $request->{main} = "am.pl?action=recurring_transactions"
             if $request->{main} eq 'recurring_transactions';
         $template = LedgerSMB::Template->new(
-             user =>$request->{_user}, 
-             locale => $request->{_locale},
-             path => 'UI',
-             template => 'frameset',
-		     format => 'HTML'
-		);
-	    } else {
-		# TODO:  Create Lynx Initial Menu
-	    }
-	    $template->render($request);
-	}
+            user =>$request->{_user}, 
+            locale => $request->{_locale},
+            path => 'UI',
+            template => 'frameset',
+	     format => 'HTML'
+	);
+    } else {
+        drilldown_menu($request);
+        return;
+    }
+    $template->render($request);
+}
 
-	sub expanding_menu {
-	    my ($request) = @_;
-	    if ($request->{'open'} !~ s/:$request->{id}:/:/){
-		$request->{'open'} .= ":$request->{id}:";
-	    }
+sub expanding_menu {
+    my ($request) = @_;
+    if ($request->{'open'} !~ s/:$request->{id}:/:/){
+	$request->{'open'} .= ":$request->{id}:";
+    }
 
-	    # The above system can lead to extra colons.
-	    $request->{'open'} =~ s/:+/:/g;
+    # The above system can lead to extra colons.
+    $request->{'open'} =~ s/:+/:/g;
 
-	    
+    
 
-	    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
-	    $menu->generate();
-	    for my $item (@{$menu->{menu_items}}){
-                if ($request->{'open'} =~ /:$item->{id}:/ ){
-                    $item->{'open'} = 'true';
-                }
-            }
+    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
+    $menu->generate();
+    for my $item (@{$menu->{menu_items}}){
+        if ($request->{'open'} =~ /:$item->{id}:/ ){
+            $item->{'open'} = 'true';
+        }
+    }
 
     my $template = LedgerSMB::Template->new(
          user => $request->{_user}, 
          locale => $request->{_locale},
-         path => 'UI',
-         template => 'menu_expand',
+         path => 'UI/menu',
+         template => 'expanding',
          format => 'HTML',
     );
     $template->render($menu);
 }
 
+sub drilldown_menu {
+    my ($request) = @_;
+    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
+
+    $menu->{parent_id} ||= 0;
+
+    print STDERR "Testing";
+    $menu->generate_section;
+    my $template = LedgerSMB::Template->new(
+         user => $request->{_user}, 
+         locale => $request->{_locale},
+         path => 'UI/menu',
+         template => 'drilldown',
+         format => 'HTML',
+    );
+    $template->render($menu);
+}
 
 1;
