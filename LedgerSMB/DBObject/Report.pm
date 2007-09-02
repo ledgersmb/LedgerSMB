@@ -4,7 +4,7 @@
 
 =cut
 
-package LedgerSMB::Report;
+package LedgerSMB::DBObject::Report;
 use base qw(LedgerSMB::DBObject);
 use strict;
 our $VERSION = '1.0.0';

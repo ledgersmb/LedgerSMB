@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Accounting Menu - LedgerSMB Version 1.2.7 - Chris Travers - metatron_ledger</title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<link rel="stylesheet" href="UI/report/basic.css" type="text/css" title="LedgerSMB stylesheet" />
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
+<div class="titlebar"><?lsmb title ?></div>
+<table>
+<tr>
+<?lsmb FOREACH col IN columns ?>
+	<th class="col_lable"><?lsmb col ?></th>
+<?lsmb END ?>
+</tr>
+<?lsmb FOREACH row IN report_rows ?>
+	<?lsmb IF styletoggle = 1 ;
+		SET styletoggle = 0;
+	 ELSE; 
+		SET styletoggle = 1;
+		END ?>
+	<tr class="row_<?lsmb styletoggle ?>">
+	<?lsmb FOREACH col IN columns ?>
+		<td><?lsmb row.$col ?></td>
+	<?lsmb END ?>
+	</tr>
+</table>
+
+</body>
+</html>
