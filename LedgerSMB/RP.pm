@@ -1641,131 +1641,50 @@ sub aging {
     $query = "";
     my $union = "";
 
-    if ( $form->{c0} ) {
         $query .= qq|
-			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-			       c.address1, c.address2, c.city, c.state, 
-			       c.zipcode, c.country, c.contact, c.email,
-		               c.phone as $form->{ct}phone, 
-			       c.fax as $form->{ct}fax,
-			       c.$form->{ct}number, 
-			       c.taxnumber as $form->{ct}taxnumber,
+			SELECT c.entity_id AS ctid, 
+			       c.meta_number as $form->{ct}number, '' as name,
+			       '' as address1, '' as address2, '' as city,
+			       '' as state, 
+			       '' as zipcode, 
+			       '' as country, '' as contact, '' as email,
+		               '' as $form->{ct}phone, 
+			       '' as $form->{ct}fax,
+			       '' as $form->{ct}taxnumber,
 		               a.invnumber, a.transdate, a.till, a.ordnumber, 
-			       a.ponumber, a.notes, (a.amount - a.paid) as c0, 
-			       0.00 as c30, 0.00 as c60, 0.00 as c90, 
+			       a.ponumber, a.notes, 
+			       CASE WHEN 
+			                 EXTRACT(days FROM age(a.transdate)/30) 
+			                 = 0
+			                 THEN (a.amount - a.paid) ELSE 0 END
+			            as c0, 
+			       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
+			                 = 1
+			                 THEN (a.amount - a.paid) ELSE 0 END
+			            as c30, 
+			       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
+			                 = 2
+			                 THEN (a.amount - a.paid) ELSE 0 END
+			            as c60, 
+			       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
+			                 > 2
+			                 THEN (a.amount - a.paid) ELSE 0 END
+			            as c90, 
 			       a.duedate, a.invoice, a.id, a.curr,
 			       (SELECT $buysell FROM exchangerate e
 			         WHERE a.curr = e.curr
 			              AND e.transdate = a.transdate) 
 			       AS exchangerate
 			  FROM $form->{arap} a
-			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-			 WHERE $where AND ( a.$transdate <= $interval{c0}
-			       AND a.$transdate >= $interval{c30} )|;
+			  JOIN entity_credit_account c USING (entity_id)|;
 
-        $union = qq|UNION|;
-
-    }
-
-    if ( $form->{c30} ) {
-
-        $query .= qq|
-
-			$union
-
-			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-			       c.address1, c.address2, c.city, c.state, 
-			       c.zipcode, c.country, c.contact, c.email,
-			       c.phone as $form->{ct}phone, 
-			       c.fax as $form->{ct}fax, c.$form->{ct}number, 
-			       c.taxnumber as $form->{ct}taxnumber,
-			       a.invnumber, a.transdate, a.till, a.ordnumber, 
-			       a.ponumber, a.notes, 0.00 as c0, 
-			       (a.amount - a.paid) as c30, 0.00 as c60, 
-			       0.00 as c90, a.duedate, a.invoice, a.id, a.curr,
-			       (SELECT $buysell FROM exchangerate e
-			         WHERE a.curr = e.curr
-			               AND e.transdate = a.transdate) 
-			       AS exchangerate
-			  FROM $form->{arap} a
-			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-			 WHERE $where AND (a.$transdate < $interval{c30}
-			        AND a.$transdate >= $interval{c60})|;
-
-        $union = qq|UNION|;
-
-    }
-
-    if ( $form->{c60} ) {
-
-        $query .= qq|
-			$union
-    
-			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-			       c.address1, c.address2, c.city, c.state, 
-			       c.zipcode, c.country, c.contact, c.email,
-			       c.phone as $form->{ct}phone, 
-			       c.fax as $form->{ct}fax, c.$form->{ct}number, 
-			       c.taxnumber as $form->{ct}taxnumber, 
-			       a.invnumber, a.transdate, a.till, a.ordnumber, 
-			       a.ponumber, a.notes, 0.00 as c0, 0.00 as c30, 
-			       (a.amount - a.paid) as c60, 0.00 as c90,
-			       a.duedate, a.invoice, a.id, a.curr,
-			       (SELECT $buysell FROM exchangerate e
-			         WHERE a.curr = e.curr
-			               AND e.transdate = a.transdate) 
-			       AS exchangerate
-			  FROM $form->{arap} a
-			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-			 WHERE $where AND (a.$transdate < $interval{c60}
-			       AND a.$transdate >= $interval{c90})|;
-
-        $union = qq|UNION|;
-
-    }
-
-    if ( $form->{c90} ) {
-
-        $query .= qq|
-			$union
-			SELECT c.id AS ctid, c.$form->{ct}number, c.name,
-			       c.address1, c.address2, c.city, c.state, 
-			       c.zipcode, c.country, c.contact, c.email,
-			       c.phone as $form->{ct}phone, 
-			       c.fax as $form->{ct}fax, c.$form->{ct}number, 
-			       c.taxnumber as $form->{ct}taxnumber, 
-			       a.invnumber, a.transdate, a.till, a.ordnumber, 
-			       a.ponumber, a.notes, 0.00 as c0, 0.00 as c30, 
-			       0.00 as c60, (a.amount - a.paid) as c90, 
-			       a.duedate, a.invoice, a.id, a.curr,
-			       (SELECT $buysell FROM exchangerate e
-			         WHERE a.curr = e.curr
-			               AND e.transdate = a.transdate) 
-			       AS exchangerate
-			  FROM $form->{arap} a
-			  JOIN $form->{ct} c ON (a.$form->{ct}_id = c.id)
-			 WHERE $where
-			       AND a.$transdate < $interval{c90}|;
-    }
-    $query .= qq| ORDER BY ctid, $transdate, invnumber|;
+    $query .= qq| ORDER BY ctid, curr, $transdate, invnumber|;
     $sth = $dbh->prepare($query) || $form->dberror($query);
-
     my @var = ();
 
-    if ( $form->{c0} + $form->{c30} + $form->{c60} + $form->{c90} ) {
-        foreach $curr ( split /:/, $form->{currencies} ) {
+    $sth->execute(@var);
 
-            foreach $item (@ot) {
-
-                @var = ();
-                for (qw(c0 c30 c60 c90)) {
-                    push @var, ( $item->{id}, $curr )
-                      if $form->{$_};
-                }
-
-                $sth->execute(@var);
-
-                while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
 		    $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
                     $ref->{module} =
                       ( $ref->{invoice} )
@@ -1776,12 +1695,9 @@ sub aging {
                       unless $ref->{exchangerate};
                     $ref->{language_code} = $item->{language_code};
                     push @{ $form->{AG} }, $ref;
-                }
-                $sth->finish;
 
-            }
-        }
     }
+    $sth->finish;
 
     # get language
     my $query = qq|SELECT * FROM language ORDER BY 2|;
