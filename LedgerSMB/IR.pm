@@ -414,39 +414,52 @@ sub post_invoice {
 
                     if ($linetotal) {
                         $query = qq|
-							INSERT INTO acc_trans 
-							            (trans_id, 
-							            chart_id, 
-							            amount, 
-							            transdate, 
-							            project_id, 
-							            invoice_id)
-							     VALUES (?, ?, ?, ?,
-							            ?, ?)|;
+				INSERT INTO acc_trans 
+				            (trans_id, 
+				            chart_id, 
+				            amount, 
+				            project_id, 
+				            invoice_id,
+				            transdate) 
+				     VALUES (?, ?, ?, ?,
+				            ?, (SELECT CASE WHEN ? > value::date
+				                            THEN ?
+				                            ELSE value::date +
+				                               '1 day'::interval
+				                        END AS value 
+				                  FROM defaults
+				                  WHERE setting_key = 'closedto'
+				))|;
 
                         my $sth = $dbh->prepare($query);
                         $sth->execute(
                             $ref->{trans_id},   $ref->{inventory_accno_id},
-                            $linetotal,         $ref->{transdate},
-                            $ref->{project_id}, $invoice_id
+                            $linetotal, 
+                            $ref->{project_id}, $invoice_id,
+                            $ref->{transdate}, $ref->{transdate},
                         ) || $form->dberror($query);
 
                         # add expense
                         $query = qq|
-							INSERT INTO acc_trans 
-							            (trans_id, 
-							            chart_id, 
-							            amount, 
-							            transdate, 
-							            project_id,
-							            invoice_id)
-							     VALUES (?, ?, ?, ?,
-							            ?, ?)|;
+				INSERT INTO acc_trans 
+				            (trans_id, chart_id, amount, 
+				            project_id, invoice_id,
+				            transdate) 
+				     VALUES (?, ?, ?, ?,
+				            ?, (SELECT CASE WHEN ? > value::date
+				                            THEN ?
+				                            ELSE value::date +
+				                               '1 day'::interval
+				                        END AS value 
+				                  FROM defaults
+				                  WHERE setting_key = 'closedto'
+				))|;
                         $sth = $dbh->prepare($query);
                         $sth->execute(
                             $ref->{trans_id},   $ref->{expense_accno_id},
-                            $linetotal * -1,    $ref->{transdate},
-                            $ref->{project_id}, $invoice_id
+                            $linetotal * -1,    
+                            $ref->{project_id}, $invoice_id,
+                            $ref->{transdate}, $ref->{transdate},
                         ) || $form->dberror($query);
                     }
 
