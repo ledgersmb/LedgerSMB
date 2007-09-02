@@ -2278,7 +2278,7 @@ sub print_form {
                 }
 
                 my $template = LedgerSMB::Template->new( user => \%myconfig, 
-                    template => $form->{'formname'}, 
+                    template => $form->{'formname'} || $form->{'type'}, 
 		    format => uc $form->{format} );
                 try {
                     $template->render($form);
