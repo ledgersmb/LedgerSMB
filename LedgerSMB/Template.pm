@@ -144,18 +144,22 @@ sub _http_output {
 	my $self = shift;
 	my $FH;
 
-	print STDERR "Content-Type: $self->{mimetype}; charset=utf-8\n\n";
 	if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8\n\n";
 	} else {
 		print "Content-Type: $self->{mimetype}\n\n";
 	}
-	open($FH, '<', $self->{rendered}) or
+	open($FH, '<:bytes', $self->{rendered}) or
 		throw Error::Simple 'Unable to open rendered file';
-	while (<$FH>) {
-		print $_;
+	my $data;
+	{
+		local $/;
+		$data = <$FH>;
 	}
 	close($FH);
+	binmode STDOUT, ':bytes';
+	print $data;
+	binmode STDOUT, ':utf8';
 	unlink($self->{rendered}) or
 		throw Error::Simple 'Unable to delete output file';
 	exit;
