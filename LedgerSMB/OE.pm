@@ -2394,7 +2394,7 @@ sub generate_orders {
 					(?, ?, ?, ?, 0, ?, ?)|;
             $sth = $dbh->prepare($query);
             $sth->execute( $id, $parts_id, $description,
-                $a{vendor_id}{parts_id}{qty},
+                $a{$vendor_id}{$parts_id}{qty},
                 $sellprice, $unit )
               || $form->dberror($query);
 
