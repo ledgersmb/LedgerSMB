@@ -1516,6 +1516,7 @@ sub get_jcitems {
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
 
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $tth->execute( $ref->{parts_id} );
         $ref->{taxaccounts} = "";
         while ( $ptref = $tth->fetchrow_hashref(NAME_lc) ) {
