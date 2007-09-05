@@ -1024,19 +1024,21 @@ sub save_partsgroup {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
+    my @group = ($form->{partsgroup});
 
     if ( $form->{id} ) {
         $query = qq|
 			UPDATE partsgroup 
-			   SET partsgroup = | . $dbh->quote( $form->{partsgroup} ) . qq|
-			 WHERE id = $form->{id}|;
+			   SET partsgroup = ?
+			 WHERE id = ?|;
+        push @group, $form->{id};
     }
     else {
         $query = qq|
 			INSERT INTO partsgroup (partsgroup)
-			     VALUES (| . $dbh->quote( $form->{partsgroup} ) . qq|)|;
+			     VALUES (?)|;
     }
-    $dbh->do($query) || $form->dberror($query);
+    $dbh->do($query, undef, @group) || $form->dberror($query);
 
     $dbh->commit;
 
