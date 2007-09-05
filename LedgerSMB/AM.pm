@@ -2021,8 +2021,11 @@ sub save_taxes {
     # connect to database
     my $dbh = $form->{dbh};
 
-    my $query = qq|DELETE FROM tax|;
-    $dbh->do($query) || $form->dberror($query);
+    my $query = qq|
+		UPDATE tax 
+		   SET validto = (now())::date 
+		 WHERE chart_id = ?|;
+    my $update_sth = $dbh->prepare($query) || $form->dberror($query);
 
     $query = qq|
 		INSERT INTO tax (chart_id, rate, taxnumber, validto, 
@@ -2036,11 +2039,13 @@ sub save_taxes {
           $form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
         my $validto = $form->{"validto_$i"};
         $validto = undef if not $validto;
+        
         my @queryargs = (
-            $chart_id, $rate, $form->{"taxnumber_$i"},
-            $validto, $form->{"pass_$i"}, $form->{"taxmodule_id_$i"}
+            $chart_id, $rate, $form->{"taxnumber_$i"}, $validto,
+            $form->{"pass_$i"}, $form->{"taxmodule_id_$i"}
         );
 
+        $update_sth->execute($chart_id) || $form->dberror($query);
         $sth->execute(@queryargs) || $form->dberror($query);
     }
 

@@ -44,18 +44,25 @@ sub init_taxes {
         }
 
     }
-    my $query = qq|SELECT t.taxnumber, c.description,
+    my $query = qq|
+		SELECT t.taxnumber, c.description,
 			t.rate, t.chart_id, t.pass, m.taxmodulename
 			FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
-			INNER JOIN taxmodule m ON (t.taxmodule_id = m.taxmodule_id)
-			WHERE c.accno = ?|;
+			INNER JOIN taxmodule m 
+				ON (t.taxmodule_id = m.taxmodule_id)
+			WHERE c.accno = ? 
+		              AND coalesce(validto::timestamp, 'infinity') 
+		                  >= coalesce(?::timestamp, now())
+			ORDER BY validto ASC
+			LIMIT 1
+		|;
     my $sth = $dbh->prepare($query);
     foreach $taxaccount (@accounts) {
         next if ( !defined $taxaccount );
         if ( defined $taxaccounts2 ) {
             next if $taxaccounts2 !~ /\b$taxaccount\b/;
         }
-        $sth->execute($taxaccount) || $form->dberror($query);
+        $sth->execute($taxaccount, $form->{transdate}) || $form->dberror($query);
         my $ref = $sth->fetchrow_hashref;
 
         my $module = $ref->{'taxmodulename'};
