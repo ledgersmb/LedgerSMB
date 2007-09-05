@@ -3281,6 +3281,7 @@ sub process_transactions {
             }
             $form->{id}     = $id;
             $form->{header} = $header;
+            $form->db_init(\%myconfig);
 
             # post, print, email
             if ( $pt->{arid} || $pt->{apid} || $pt->{oeid} ) {
