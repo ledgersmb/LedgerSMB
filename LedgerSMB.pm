@@ -528,6 +528,7 @@ sub round_amount {
     else {
         $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) );
     } 
+    $amount->precision(undef);
 
     return $amount;
 }

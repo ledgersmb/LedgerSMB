@@ -1350,6 +1350,9 @@ sub update_balance {
 
     my ( $self, $dbh, $table, $field, $where, $value ) = @_;
 
+    
+    $table = $dbh->quote_identifier($table);
+    $field = $dbh->quote_identifier($field);
     # if we have a value, go do it
     if ($value) {
 
@@ -1357,7 +1360,7 @@ sub update_balance {
         my $query = "SELECT $field FROM $table WHERE $where FOR UPDATE";
         my ($balance) = $dbh->selectrow_array($query);
 
-        $balance += $value;
+        $balance = $dbh->quote($balance + $value);
 
         # update balance
         $query = "UPDATE $table SET $field = $balance WHERE $where";
