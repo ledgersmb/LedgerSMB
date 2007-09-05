@@ -363,6 +363,9 @@ sub sort_columns {
     if ( $self->{sort} ) {
         if (@columns) {
             @columns = grep !/^$self->{sort}$/, @columns;
+            if ($self->{sort} !~ /^\d*$/){
+                $self->{sort} = $self->{dbh}->quote_identifier($self->{sort});
+            }
             splice @columns, 0, 0, $self->{sort};
         }
     }
