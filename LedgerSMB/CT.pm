@@ -958,7 +958,7 @@ sub save_pricelist {
 
     my $query = qq|
 		DELETE FROM parts$form->{db}
-		 WHERE $form->{db}_id = ?}|;
+		 WHERE $form->{db}_id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
