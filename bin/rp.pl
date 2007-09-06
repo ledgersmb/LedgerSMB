@@ -711,7 +711,7 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
           ? qq|<select name=$form->{vc}><option>\n$vc</select>|
           : qq|<input name=$form->{vc} size=35>|;
 
-        $postscript = "postscript" if $myconfig{printer};
+        $postscript = "ps" if $myconfig{printer};
 
         print qq|
 	<tr>
@@ -1997,7 +1997,7 @@ sub print_options {
 
     if ( ${LedgerSMB::Sysconfig::latex} ) {
         $format .= qq|
-            <option value=postscript $form->{DF}{postscript}>|
+            <option value=ps $form->{DF}{postscript}>|
           . $locale->text('Postscript') . qq|
 	    <option value=pdf $form->{DF}{pdf}>| . $locale->text('PDF');
     }
