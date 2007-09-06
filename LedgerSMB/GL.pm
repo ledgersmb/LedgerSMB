@@ -257,7 +257,7 @@ sub all_transactions {
     }
 
     if ( $form->{memo} ne "" ) {
-        $var = $form->like( lc $form->{memo} );
+        $var = $dbh->quote( $form->like( lc $form->{memo} ) );
         $glwhere .= " AND lower(ac.memo) LIKE $var";
         $arwhere .= " AND lower(ac.memo) LIKE $var";
         $apwhere .= " AND lower(ac.memo) LIKE $var";
