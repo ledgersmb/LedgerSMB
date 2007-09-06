@@ -1,6 +1,9 @@
 
 <body bgcolor=ffffff>
 
+<?lsmb FOREACH customer IN data ?>
+<?lsmb import(customer) ?>
+
 <table width="100%">
 
   <?lsmb INCLUDE letterhead.html ?>
@@ -133,6 +136,7 @@
 
 </table>
 
+<?lsmb END ?>
 </body>
 </html>
 

@@ -7,6 +7,8 @@
 
 \begin{document}
 
+<?lsmb FOREACH customer IN data ?>
+<?lsmb import(customer) ?>
 \pagestyle{myheadings}
 \thispagestyle{empty}
 
@@ -82,5 +84,9 @@ All amounts in \textbf{<?lsmb currency ?>} funds.
 
 Please make check payable to \textbf{<?lsmb company ?>}
 
+<?lsmb IF NOT loop.last ?>
+\pagebreak
+<?lsmb END ?>
+<?lsmb END ?>
 \end{document}
 <?lsmb END ?>

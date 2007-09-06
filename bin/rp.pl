@@ -2156,33 +2156,52 @@ sub print {
           if ( $form->{format} !~ /(postscript|pdf)/ );
     }
 
+    my @batch_data = ();
+    
     for $i ( 1 .. $form->{rowcount} ) {
+
         if ( $form->{"statement_$i"} ) {
             $form->{"$form->{ct}_id"} = $form->{"$form->{ct}_id_$i"};
             $language_code            = $form->{"language_code_$i"};
             $curr                     = $form->{"curr_$i"};
             $selected                 = 1;
-            last;
+            
+            if ( $form->{media} !~ /(screen|email)/ ) {
+                # SC: I may not need this anymore...
+                # But I'll wait until lpr output is working before deciding
+                $form->{OUT}       = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+                $form->{"$form->{ct}_id"} = "";
+                $SIG{INT} = 'IGNORE';
+            }
+            else {
+                $form->{"statement_1"}     = 1;
+                $form->{"language_code_1"} = $language_code;
+                $form->{"curr_1"}          = $curr;
+            }
+    
+            RP->aging( \%myconfig, \%$form );
+    
+            $printhash = &print_form;
+            
+            push @batch_data, $printhash;
         }
     }
 
     $form->error( $locale->text('Nothing selected!') ) unless $selected;
-
-    if ( $form->{media} !~ /(screen|email)/ ) {
-        $form->{OUT}       = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
-        $form->{printmode} = '|-';
-        $form->{"$form->{ct}_id"} = "";
-        $SIG{INT} = 'IGNORE';
+    
+    my $template = LedgerSMB::Template->new( 
+      user => \%myconfig,
+      template => $form->{'formname'} || $form->{'type'},
+      format => uc $form->{format}
+    );
+    try {
+        $template->render({data => \@batch_data});
+        $template->output($form);
     }
-    else {
-        $form->{"statement_1"}     = 1;
-        $form->{"language_code_1"} = $language_code;
-        $form->{"curr_1"}          = $curr;
-    }
-
-    RP->aging( \%myconfig, \%$form );
-
-    &print_form;
+    catch Error::Simple with {
+        my $E = shift;
+        $form->error( $E->stacktrace );
+    };
 
     $form->redirect( $locale->text('Statements sent to printer!') )
       if ( $form->{media} !~ /(screen|email)/ );
@@ -2276,18 +2295,11 @@ sub print_form {
                       $form->format_amount( \%myconfig, $form->{"${_}total"},
                         2 );
                 }
+                
+                my $printhash = {};
+                for (keys %$form) { $printhash->{$_} = $form->{$_}}
 
-                my $template = LedgerSMB::Template->new( user => \%myconfig, 
-                    template => $form->{'formname'} || $form->{'type'}, 
-		    format => uc $form->{format} );
-                try {
-                    $template->render($form);
-                    $template->output(%{$form});
-                }
-                catch Error::Simple with {
-                    my $E = shift;
-                    $form->error( $E->stacktrace );
-                };
+                return $printhash;
             }
         }
     }
