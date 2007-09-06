@@ -510,10 +510,9 @@ qq|<td><input name="source_$i" size=10 value="$form->{"source_$i"}"></td>|;
         $column_data{cctrack} = qq|<td><input type="text" name="cctrack_$i"
 	value="| . $form->{"cctrack_$i"} . qq|" size="3"></td>|;
 
-        if ( $pos_config{"coa_prefix"} ) {
+        if ( $pos_config{till_accno} ) {
             if ( !$form->{"AR_paid_$i"} ) {
-                $form->{"AR_paid_$i"} =
-                  $pos_config{"coa_prefix"} . '.' . $pos_config{"till"};
+                $form->{"AR_paid_$i"} = $pos_config{till_accno};
             }
             $column_data{AR_paid} = qq|<input type=hidden name="AR_paid_$i" 
                   value='$form->{"AR_paid_$i"}'>|;
