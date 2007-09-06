@@ -2180,6 +2180,10 @@ sub closebooks {
 		UPDATE defaults SET value = ? 
 		 WHERE setting_key = ?|;
     my $sth = $dbh->prepare($query);
+    my $sth_closedto = $dbh->prepare(qq|
+		UPDATE defaults SET value = to_char(?::date, 'YYYY-MM-DD') 
+		 WHERE setting_key = ?|);
+		
     for (qw(revtrans closedto audittrail)) {
 
         if ( $form->{$_} ) {
@@ -2188,8 +2192,11 @@ sub closebooks {
         else {
             $val = 0;
         }
-        $val = undef if ($_ == 'closedto' and $val = 0); 
-        $sth->execute( $val, $_ );
+        if ($_ eq 'closedto'){
+            $sth_closedto->execute( $val || undef, $_);
+        } else { 
+            $sth->execute( $val, $_ );
+        }
     }
 
 ## SC: Disabling audit trail removal
