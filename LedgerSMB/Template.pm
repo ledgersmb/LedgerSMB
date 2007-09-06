@@ -60,6 +60,7 @@ sub new {
 	$self->{myconfig} = $args{user};
 	$self->{template} = $args{template};
 	$self->{format} = $args{format};
+	$self->{format} = 'PS' if lc $self->{format} eq 'postscript';
 	$self->{language} = $args{language};
 	if ($args{outputfile}) {
 		$self->{outputfile} =
