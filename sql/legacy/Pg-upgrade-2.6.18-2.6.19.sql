@@ -191,7 +191,7 @@ SELECT 'version', '1.2.0'::text
 UNION
 SELECT 'curr', curr::text FROM old_defaults
 UNION
-SELECT 'closedto', closedto::text FROM old_defaults
+SELECT 'closedto', to_char(closedto, 'YYYY-MM-DD') FROM old_defaults
 UNION
 SELECT 'revtrans', (CASE WHEN revtrans IS NULL THEN NULL
 			WHEN revtrans THEN '1' 
