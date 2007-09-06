@@ -2152,13 +2152,13 @@ sub create_links {
 				a.intnotes, ce.name AS $vc, a.department_id, 
 				d.description AS department,
 				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
-				a.employee_id, e.name AS employee, 
+				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse
 			FROM $arap a
 			JOIN entity_credit_account c USING (entity_id)
-			JOIN entity ce ON (e.id = c.entity_id)
+			JOIN entity ce ON (ce.id = c.entity_id)
 			LEFT JOIN employee er ON (er.entity_id = a.person_id)
-			LEFT JOIN entity e ON (er.entity_id = e.entity_id)
+			LEFT JOIN entity e ON (er.entity_id = e.id)
 			LEFT JOIN department d ON (d.id = a.department_id)
 			WHERE a.id = ? AND c.entity_class = 
 				(select id FROM entity_class 

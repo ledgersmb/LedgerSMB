@@ -785,13 +785,20 @@ sub customer_details {
 
     # get rest for the customer
     my $query = qq|
-		SELECT customernumber, name, address1, address2, city,
-		       state, zipcode, country,
-		       contact, phone as customerphone, fax as customerfax,
-		       taxnumber AS customertaxnumber, sic_code AS sic, iban, 
+		SELECT c.customernumber, e.name, l.line_one as address1, 
+		       l.line_two as address2, l.city_province AS city,
+		       '' as state, l.mail_code AS zipcode, 
+		       country.name as country,
+		       '' as contact, '' as customerphone, '' as customerfax,
+		       '' AS customertaxnumber, sic_code AS sic, iban, 
 		       bic, startdate, enddate
-		  FROM customer
-		 WHERE id = ?|;
+		  FROM customer c
+		  JOIN company cm ON c.entity_id = cm.entity_id
+		  JOIN entity e ON (c.entity_id = e.id)
+		  JOIN company_to_location cl ON cm.id = cl.company_id
+		  JOIN location l ON cl.location_id = l.id
+		  JOIN country ON l.country_id = country.id
+		 WHERE e.id = ?|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{customer_id} ) || $form->dberror($query);
 
@@ -1858,11 +1865,12 @@ sub retrieve_invoice {
 			          a.intnotes,
 			          a.duedate, a.taxincluded, a.curr AS currency,
 			          a.person_id, e.name AS employee, a.till, 
-			          a.entity_id, a.reverse
+			          a.entity_id, a.reverse,
 			          a.language_code, a.ponumber,
 			          a.on_hold
 			     FROM ar a
-			LEFT JOIN employee e ON (e.entity_id = a.person_id)
+			LEFT JOIN employee em ON (em.entity_id = a.person_id)
+			INNER JOIN entity e ON e.id = em.entity_id
 			    WHERE a.id = ?|;
 
         $sth = $dbh->prepare($query);
