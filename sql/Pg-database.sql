@@ -2572,9 +2572,38 @@ end;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION menu_children(int) IS $$ This function returns all menu items which are children of in_parent_id (the only input parameter. $$;
---
--- PostgreSQL database dump
---
+
+CREATE OR REPLACE FUNCTION 
+menu_insert(in_parent_id int, in_position int, in_label text)
+returns int
+AS $$
+DECLARE
+	new_id int;
+BEGIN
+	UPDATE menu_node 
+	SET position = position * -1
+	WHERE parent = in_parent_id
+		AND position >= in_position;
+
+	INSERT INTO menu_node (parent, position, label)
+	VALUES (in_parent_id, in_position, in_label);
+
+	SELECT INTO new_id currval('menu_node_id_seq');
+
+	UPDATE menu_node 
+	SET position = (position * -1) + 1
+	WHERE parent = in_parent_id
+		AND position < 0;
+
+	RETURN new_id;
+END;
+$$ language plpgsql;
+
+comment on function menu_insert(int, int, text) is $$
+This function inserts menu items at arbitrary positions.  The arguments are, in
+order:  parent, position, label.  The return value is the id number of the menu
+item created. $$;
+
 
 CREATE VIEW menu_friendly AS
     SELECT t."level", t.path, t.list_order, (repeat(' '::text, (2 * t."level")) || (n.label)::text) AS label, n.id, n."position" FROM (connectby('menu_node'::text, 'id'::text, 'parent'::text, 'position'::text, '0'::text, 0, ','::text) t(id integer, parent integer, "level" integer, path text, list_order integer) JOIN menu_node n USING (id));
