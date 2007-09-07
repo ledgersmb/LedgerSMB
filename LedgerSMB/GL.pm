@@ -425,28 +425,28 @@ sub all_transactions {
 					UNION ALL
 
 				   SELECT a.id, 'ar' AS type, a.invoice, a.invnumber,
-						  ct.name, ac.transdate, ac.source,
+						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
 						  ac.memo, c.description AS accname
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
-					 JOIN customer ct USING (entity_id)
+					 JOIN entity e ON (a.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $arwhere
 
 				UNION ALL
 
 				   SELECT a.id, 'ap' AS type, a.invoice, a.invnumber,
-						  ct.name, ac.transdate, ac.source,
+						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
 						  ac.memo, c.description AS accname
 					 FROM ap a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
-					 JOIN vendor ct ON (a.vendor_id = ct.id)
+					 JOIN entity e ON (a.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $apwhere
 				 ORDER BY $sortorder|;
