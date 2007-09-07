@@ -1626,7 +1626,7 @@ sub aging {
 			       '' as $form->{ct}fax,
 			       '' as $form->{ct}taxnumber,
 		               a.invnumber, a.transdate, a.till, a.ordnumber, 
-			       a.ponumber, a.notes, 
+			       a.ponumber, a.notes, c.language_code, 
 			       CASE WHEN 
 			                 EXTRACT(days FROM age(a.transdate)/30) 
 			                 = 0
@@ -1667,7 +1667,6 @@ sub aging {
                     $ref->{module} = 'ps' if $ref->{till};
                     $ref->{exchangerate} = 1
                       unless $ref->{exchangerate};
-                    $ref->{language_code} = $item->{language_code};
                     push @{ $form->{AG} }, $ref;
 
     }
