@@ -1,3 +1,11 @@
 div.submenu {
 	display: none;
 }
+
+A.Menu::before {
+	content: '+';
+}
+
+A.Expanded::before {
+	content: '-';
+}

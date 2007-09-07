@@ -15,7 +15,8 @@
         
 		<script type="text/javascript">
 
-			function SwitchMenu(obj) {
+			function SwitchMenu(id) {
+				var obj = "sub_" + id;
 				if (document.getElementById) {
 					var element = document.getElementById(obj);
 					
@@ -24,6 +25,13 @@
 
 					} else {
 						element.style.display = "block"; //display the block of info
+					}
+					obj = 'a_' + id;
+					element = document.getElementById(obj);
+					if (element.className == 'Expanded'){
+						element.className = 'Menu';
+					} else {
+						element.className = 'Expanded';
 					}
 					return false;
 				}		
@@ -57,10 +65,13 @@
 					target = "main_window" 
 				<?lsmb END ?>
 				<?lsmb IF item.menu ?> 
-					onclick="return SwitchMenu('sub_<?lsmb item.id ?>')"
+					onclick="return SwitchMenu('<?lsmb item.id ?>')"
 				<?lsmb END ?>
-				class = "<?lsmb IF item.module ?>Menu<?lsmb
+				class = "<?lsmb IF (item.menu && item.open)
+					?>Expanded<?lsmb ELSIF item.menu
+					?>Menu<?lsmb
 					ELSE ?>Item<?lsmb END ?>"
+				id = "a_<?lsmb item.id ?>"
 				><?lsmb text(item.label) ?></a>
 		</div>
 		<?lsmb IF item.menu ?>
