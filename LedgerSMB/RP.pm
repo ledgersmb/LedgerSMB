@@ -1564,6 +1564,10 @@ sub trial_balance {
 
 sub aging {
     my ( $self, $myconfig, $form ) = @_;
+    
+    my $ref;
+    my $department_id;
+    my $null;
 
     my $dbh = $form->{dbh};
     my $invoice = ( $form->{arap} eq 'ar' ) ? 'is' : 'ir';
@@ -1579,45 +1583,11 @@ sub aging {
         ( $form->{todate} ) = $dbh->selectrow_array($query);
     }
 
-    my $where = "1 = 1";
-    my $name;
-    my $null;
-    my $ref;
     my $transdate = ( $form->{overdue} ) ? "duedate" : "transdate";
-
-    if ( $form->{"$form->{ct}_id"} ) {
-        $where .= qq| AND ct.id = | . $dbh->quote( $form->{"$form->{ct}_id"} );
-    }
-    else {
-        if ( $form->{ $form->{ct} } ne "" ) {
-            $name = $dbh->quote( $form->like( lc $form->{ $form->{ct} } ) );
-            $where .= qq| AND lower(ct.name) LIKE $name|
-              if $form->{ $form->{ct} };
-        }
-    }
 
     if ( $form->{department} ) {
         ( $null, $department_id ) = split /--/, $form->{department};
-        $where .= qq| AND a.department_id = | . $dbh->quote($department_id);
     }
-
-    # select outstanding vendors or customers, depends on $ct
-    $query = qq|
-		  SELECT DISTINCT ct.id, e.name, ct.language_code
-		    FROM $form->{ct} ct
-		    JOIN $form->{arap} a USING (entity_id)
-		    JOIN entity e ON (ct.entity_id = e.id)
-		   WHERE $where AND a.paid != a.amount 
-		         AND (a.$transdate <= ?)
-		ORDER BY e.name|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute( $form->{todate} ) || $form->dberror($query);
-
-    my @ot = ();
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @ot, $ref;
-    }
-    $sth->finish;
 
     my $buysell = ( $form->{arap} eq 'ar' ) ? 'buy' : 'sell';
 
@@ -1632,7 +1602,11 @@ sub aging {
     # for each company that has some stuff outstanding
     $form->{currencies} ||= ":";
 
-    $where = qq|a.paid != a.amount AND c.id = ? AND a.curr = ?|;
+    $where = qq|a.paid != a.amount|;
+    
+    if ( $form->{"$form->{ct}_id"} ) {
+        $where .= qq| AND c.entity_id = | . $dbh->quote( $form->{"$form->{ct}_id"} );
+    }
 
     if ($department_id) {
         $where .= qq| AND a.department_id = | . $dbh->quote($department_id);
@@ -1676,13 +1650,13 @@ sub aging {
 			              AND e.transdate = a.transdate) 
 			       AS exchangerate
 			  FROM $form->{arap} a
-			  JOIN entity_credit_account c USING (entity_id)|;
+			  JOIN entity_credit_account c USING (entity_id)
+			  WHERE $where|;
 
     $query .= qq| ORDER BY ctid, curr, $transdate, invnumber|;
     $sth = $dbh->prepare($query) || $form->dberror($query);
-    my @var = ();
 
-    $sth->execute(@var);
+    $sth->execute();
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
 		    $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
