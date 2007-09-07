@@ -1290,7 +1290,7 @@ sub recurring_transactions {
 
     $query = qq|
 		   SELECT 'ar' AS module, 'ar' AS transaction, a.invoice,
-		          n.name AS description, a.amount,
+		          e.name AS description, a.amount,
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, 
@@ -1300,7 +1300,7 @@ sub recurring_transactions {
                           AS expired
 		     FROM recurring s
 		     JOIN ar a ON (a.id = s.id)
-		     JOIN customer n USING (entity_id)
+		     JOIN entity e ON (a.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex 
@@ -1309,7 +1309,7 @@ sub recurring_transactions {
 		    UNION
 
 		  SELECT 'ap' AS module, 'ap' AS transaction, a.invoice,
-		          n.name AS description, a.amount,
+		          e.name AS description, a.amount,
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, 'vendor' AS vc,
@@ -1318,7 +1318,7 @@ sub recurring_transactions {
 		          AS expired
 		     FROM recurring s
 		     JOIN ap a ON (a.id = s.id)
-		     JOIN vendor n ON (n.id = a.vendor_id)
+		     JOIN entity e ON (a.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex ON 
@@ -1345,7 +1345,7 @@ sub recurring_transactions {
 		    UNION
 
 		   SELECT 'oe' AS module, 'so' AS transaction, FALSE AS invoice,
-		          n.name AS description, a.amount,
+		          e.name AS description, a.amount,
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, 
@@ -1355,7 +1355,7 @@ sub recurring_transactions {
 		          AS expired
 		     FROM recurring s
 		     JOIN oe a ON (a.id = s.id)
-		     JOIN customer USING (entity_id)
+		     JOIN entity e ON (a.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex ON 
@@ -1365,7 +1365,7 @@ sub recurring_transactions {
 		    UNION
 
 		   SELECT 'oe' AS module, 'po' AS transaction, FALSE AS invoice,
-		          n.name AS description, a.amount,
+		          e.name AS description, a.amount,
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, 'vendor' AS vc,
@@ -1374,7 +1374,7 @@ sub recurring_transactions {
 		          AS expired
 		     FROM recurring s
 		     JOIN oe a ON (a.id = s.id)
-		     JOIN vendor n ON (n.id = a.vendor_id)
+		     JOIN entity e ON (a.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex ON 
