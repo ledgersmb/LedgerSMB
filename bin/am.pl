@@ -3052,9 +3052,10 @@ sub recurring_transactions {
     %f = &formnames;
 
     foreach $transaction ( sort keys %{ $form->{transactions} } ) {
+    	my $transaction_count = scalar( @{ $form->{transactions}{$transaction} } );
         print qq|
         <tr>
-	  <th class="listheading" colspan=$colspan>$tr{$transaction}</th>
+	  <th class="listheading" colspan=$colspan>$tr{$transaction} ($transaction_count)</th>
 	</tr>
 |;
 
