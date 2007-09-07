@@ -544,6 +544,7 @@ sub sort_columns {
     my ( $self, @columns ) = @_;
 
     if ( $self->{sort} ) {
+        $self->{sort} =~ s/^"*(.*?)"*$/$1/;
         if (@columns) {
             @columns = grep !/^$self->{sort}$/, @columns;
             if ($self->{sort} !~ /^\d*$/){
