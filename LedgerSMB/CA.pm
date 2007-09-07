@@ -365,12 +365,12 @@ sub all_transactions {
 
 			UNION ALL
 
-			SELECT a.id, a.invnumber, c.name, ac.transdate,
+			SELECT a.id, a.invnumber, e.name, ac.transdate,
 			       a.invoice, ac.amount, 'ar' as module, ac.cleared,
 			       ac.source, a.till, ac.chart_id
 			  FROM ar a
 			  JOIN acc_trans ac ON (ac.trans_id = a.id)
-			  JOIN customer c USING (entity_id)
+			  JOIN entity e ON (a.entity_id = e.id)
 			$dpt_join
 			 WHERE ac.chart_id = ?
 			$fromdate_where
@@ -398,12 +398,12 @@ sub all_transactions {
         $query .= qq|
 			 UNION ALL
 
-			SELECT a.id, a.invnumber, v.name, ac.transdate,
+			SELECT a.id, a.invnumber, e.name, ac.transdate,
 			       a.invoice, ac.amount, 'ap' as module, ac.cleared,
 			       ac.source, a.till, ac.chart_id
 			  FROM ap a
 			  JOIN acc_trans ac ON (ac.trans_id = a.id)
-			  JOIN vendor v ON (a.vendor_id = v.id)
+			  JOIN entity e ON (a.entity_id = e.id)
 			$dpt_join
 			 WHERE ac.chart_id = ?
 			$fromdate_where
