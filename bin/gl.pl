@@ -341,9 +341,9 @@ qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=datefrom size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=datefrom size=11 title="$myconfig{dateformat}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=dateto size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=dateto size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 	<tr>
@@ -1140,7 +1140,7 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 	  <th align=right>| . $locale->text('Reference') . qq|</th>
 	  <td><input name=reference size=20 value="$form->{reference}"></td>
 	  <th align=right>| . $locale->text('Date') . qq|</th>
-	  <td><input name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+	  <td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	</tr>
 	$department
 	<tr>

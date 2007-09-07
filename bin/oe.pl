@@ -447,11 +447,11 @@ sub form_header {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
-		<td><input name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap=true>| . $locale->text('Required by') . qq|</th>
-		<td><input name=reqdate size=11 title="$myconfig{dateformat}" value=$form->{reqdate}></td>
+		<td><input class="date" name=reqdate size=11 title="$myconfig{dateformat}" value=$form->{reqdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -513,11 +513,11 @@ sub form_header {
         $ordnumber .= qq|
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Quotation Date') . qq|</th>
-		<td><input name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap=true>$reqlabel</th>
-		<td><input name=reqdate size=11 title="$myconfig{dateformat}" value=$form->{reqdate}></td>
+		<td><input class="date" name=reqdate size=11 title="$myconfig{dateformat}" value=$form->{reqdate}></td>
 	      </tr>
 |;
 
@@ -1445,9 +1445,9 @@ qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $vclabel|;
         </tr>
         <tr>
           <th align=right>| . $locale->text('From') . qq|</th>
-          <td><input name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+          <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
           <th align=right>| . $locale->text('To') . qq|</th>
-          <td><input name=transdateto size=11 title="$myconfig{dateformat}"></td>
+          <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
         </tr>
         <input type=hidden name=sort value=transdate>
 	$selectfrom
@@ -2756,7 +2756,7 @@ sub display_ship_receive {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>$shipped</th>
-		<td><input name=shippingdate size=11 value=$form->{shippingdate}></td>
+		<td><input class="date" name=shippingdate size=11 value=$form->{shippingdate}></td>
 	      </tr>
 	    </table>
 	  </td>

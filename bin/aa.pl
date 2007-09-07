@@ -807,7 +807,7 @@ qq|<td align=center><input name="paid_$i" size=11 value=$form->{"paid_$i"}></td>
 qq|<td align=center><select name="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
         $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
         $column_data{datepaid} =
-qq|<td align=center><input name="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" name="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
         $column_data{source} =
 qq|<td align=center><input name="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =
@@ -1434,9 +1434,9 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
 	</tr>
 	<tr>
 	  <th align=right nowrap>| . $locale->text('From') . qq|</th>
-	  <td><input name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=transdateto size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
       </table>

@@ -333,9 +333,9 @@ sub payments_header {
       . qq|&nbsp;|
       . $locale->text('From')
       . qq|</th>
-		<td><input name=duedatefrom value="$form->{duedatefrom}" title="$myconfig{dateformat}" size=11></td>
+		<td><input class="date" name=duedatefrom value="$form->{duedatefrom}" title="$myconfig{dateformat}" size=11></td>
 	        <th align=right>| . $locale->text('To') . qq|</th>
-		<td><input name=duedateto value="$form->{duedateto}" title="$myconfig{dateformat}" size=11></td>
+		<td><input class="date" name=duedateto value="$form->{duedateto}" title="$myconfig{dateformat}" size=11></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -357,7 +357,7 @@ sub payments_header {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Date') . qq|</th>
-		<td><input name=datepaid value="$form->{datepaid}" title="$myconfig{dateformat}" size=11></td>
+		<td><input class="date" name=datepaid value="$form->{datepaid}" title="$myconfig{dateformat}" size=11></td>
 	      </tr>
 	      $exchangerate
 	    </table>
@@ -1087,7 +1087,7 @@ sub payment_header {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Date') . qq|</th>
-		<td><input name=datepaid value="$form->{datepaid}" title="$myconfig{dateformat}" size=11></td>
+		<td><input class="date" name=datepaid value="$form->{datepaid}" title="$myconfig{dateformat}" size=11></td>
 		<input type=hidden name=olddatepaid value=$form->{olddatepaid}>
 	      </tr>
 	      $exchangerate

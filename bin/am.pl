@@ -2086,7 +2086,7 @@ sub display_taxes {
         print qq|</th>
 	  <td><input name="taxrate_$i" size=6 value=$form->{"taxrate_$i"}></td>
 	  <td><input name="taxnumber_$i" value="$form->{"taxnumber_$i"}"></td>
-	  <td><input name="validto_$i" size=11 value="$form->{"validto_$i"}" title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name="validto_$i" size=11 value="$form->{"validto_$i"}" title="$myconfig{dateformat}"></td>
 	  <td><input name="pass_$i" size=6 value="$form->{"pass_$i"}"></td>
 	  <td><select name="taxmodule_id_$i" size=1>|;
         foreach my $taxmodule ( sort keys %$form ) {
@@ -2515,7 +2515,7 @@ sub audit_control {
 	</tr>
 	<tr>
 	  <th align="right">| . $locale->text('Close Books up to') . qq|</th>
-	  <td><input name=closedto size=11 title="$myconfig{dateformat}" value=$form->{closedto}></td>
+	  <td><input class="date" name=closedto size=11 title="$myconfig{dateformat}" value=$form->{closedto}></td>
 	</tr>
 	<tr>
 	  <th align="right">| . $locale->text('Activate Audit trail') . qq|</th>
@@ -2527,7 +2527,7 @@ sub audit_control {
 	</tr><!-- SC: Disabling audit trail deletion
 	<tr>
 	  <th align="right">| . $locale->text('Remove Audit trail up to') . qq|</th>
-	  <td><input name=removeaudittrail size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=removeaudittrail size=11 title="$myconfig{dateformat}"></td>
 	</tr> -->
       </table>
     </td>
@@ -2803,7 +2803,7 @@ sub yearend {
       <table>
 	<tr>
 	  <th align="right">| . $locale->text('Yearend') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}" value=$todate></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}" value=$todate></td>
 	</tr>
 	<tr>
 	  <th align="right">| . $locale->text('Reference') . qq|</th>

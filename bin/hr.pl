@@ -149,9 +149,9 @@ qq|<input name="l_startdate" type=checkbox class=checkbox value=Y checked> |
 	  <th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
 	  <td>|
       . $locale->text('From')
-      . qq| <input name=startdatefrom size=11 title="$myconfig{dateformat}"> |
+      . qq| <input class="date" name=startdatefrom size=11 title="$myconfig{dateformat}"> |
       . $locale->text('To')
-      . qq| <input name=startdateto size=11 title="$myconfig{dateformat}"></td>
+      . qq| <input class="date" name=startdateto size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	<tr valign=top>
 	  <th align=right nowrap>| . $locale->text('Notes') . qq|</th>
@@ -708,11 +708,11 @@ sub employee_header {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
-		<td><input name=startdate size=11 title="$myconfig{dateformat}" value=$form->{startdate}></td>
+		<td><input class="date" name=startdate size=11 title="$myconfig{dateformat}" value=$form->{startdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Enddate') . qq|</th>
-		<td><input name=enddate size=11 title="$myconfig{dateformat}" value=$form->{enddate}></td>
+		<td><input class="date" name=enddate size=11 title="$myconfig{dateformat}" value=$form->{enddate}></td>
 	      </tr>
 
 	      <tr>

@@ -112,9 +112,9 @@ sub history {
 		  <table>
 		    <tr>
 		      <th>| . $locale->text('From') . qq|</th>
-		      <td><input name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+		      <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
 		      <th>| . $locale->text('To') . qq|</th>
-		      <td><input name=transdateto size=11 title="$myconfig{dateformat}"></td>
+		      <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
 		    </tr>
 		    <tr>
 		      <td></td>
@@ -252,9 +252,9 @@ sub transactions {
 		  <table>
 		    <tr>
 		      <th>| . $locale->text('From') . qq|</th>
-		      <td><input name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+		      <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
 		      <th>| . $locale->text('To') . qq|</th>
-		      <td><input name=transdateto size=11 title="$myconfig{dateformat}"></td>
+		      <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
 		    </tr>
 		    <tr>
 		      <td></td>
@@ -547,9 +547,9 @@ sub search_name {
 		<th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
 		<td>|
       . $locale->text('From')
-      . qq| <input name=startdatefrom size=11 title="$myconfig{dateformat}"> |
+      . qq| <input class="date" name=startdatefrom size=11 title="$myconfig{dateformat}"> |
       . $locale->text('To')
-      . qq| <input name=startdateto size=11 title="$myconfig{dateformat}"></td>
+      . qq| <input class="date" name=startdateto size=11 title="$myconfig{dateformat}"></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -1894,9 +1894,9 @@ s/(<option value="\Q$form->{employee}--$form->{employee_id}\E")/$1 selected/;
 	$tax
 	<tr>
 	  <th align=right>| . $locale->text('Startdate') . qq|</th>
-	  <td><input name=startdate size=11 title="$myconfig{dateformat}" value=$form->{startdate}></td>
+	  <td><input class="date" name=startdate size=11 title="$myconfig{dateformat}" value=$form->{startdate}></td>
 	  <th align=right>| . $locale->text('Enddate') . qq|</th>
-	  <td><input name=enddate size=11 title="$myconfig{dateformat}" value=$form->{enddate}></td>
+	  <td><input class="date" name=enddate size=11 title="$myconfig{dateformat}" value=$form->{enddate}></td>
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('Credit Limit') . qq|</th>

@@ -184,9 +184,9 @@ sub search {
 	$label{$form->{type}}{quonumber}
 	<tr>
 	  <th align=right nowrap>| . $locale->text('From') . qq|</th>
-	  <td><input name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=transdateto size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
       </table>

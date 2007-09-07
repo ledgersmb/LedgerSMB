@@ -1186,9 +1186,9 @@ sub receipts {
 	
         <tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 	  <input type=hidden name=sort value=transdate>

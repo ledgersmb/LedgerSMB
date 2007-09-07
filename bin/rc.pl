@@ -151,9 +151,9 @@ sub reconciliation {
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td colspan=3><input name=fromdate size=11 title="$myconfig{dateformat}"> <b>|
+	  <td colspan=3><input class="date" name=fromdate size=11 title="$myconfig{dateformat}"> <b>|
       . $locale->text('To')
-      . qq|</b> <input name=todate size=11 title="$myconfig{dateformat}"></td>
+      . qq|</b> <input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 	$cleared

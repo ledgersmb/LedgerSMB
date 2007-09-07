@@ -243,9 +243,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_projects>
         <tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
       </table>
@@ -271,9 +271,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
        <input type=hidden name=nextsub value=generate_inv_activity>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
        <tr>
 	  <th align=right>| . $locale->text('Period') . qq|</th>
@@ -305,9 +305,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_income_statement>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 |;
 
@@ -338,9 +338,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=comparefromdate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=comparefromdate size=11 title="$myconfig{dateformat}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=comparetodate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=comparetodate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 |;
 
@@ -394,7 +394,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_balance_sheet>
 	<tr>
 	  <th align=right>| . $locale->text('as at') . qq|</th>
-	  <td><input name=asofdate size=11 title="$myconfig{dateformat}" value=$form->{asofdate}></td>
+	  <td><input class="date" name=asofdate size=11 title="$myconfig{dateformat}" value=$form->{asofdate}></td>
 |;
 
         if ($selectfrom) {
@@ -410,7 +410,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 	</tr>
 
 	  <th align=right nowrap>| . $locale->text('Compare to') . qq|</th>
-	  <td><input name=compareasofdate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=compareasofdate size=11 title="$myconfig{dateformat}"></td>
 	  <td>
 |;
 
@@ -461,9 +461,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_trial_balance>
         <tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
       </table>
@@ -496,9 +496,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_tax_report>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 	$summary
@@ -628,9 +628,9 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
 
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 	$summary
@@ -720,7 +720,7 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectto
         <input type=hidden name=type value=statement>
@@ -802,9 +802,9 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
         <tr>

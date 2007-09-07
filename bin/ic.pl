@@ -992,9 +992,9 @@ sub search {
 	    <table>
 	      <tr>
 		<td nowrap><b>| . $locale->text('From') . qq|</b>
-		<input name=transdatefrom size=11 title="$myconfig{dateformat}">
+		<input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}">
 		<b>| . $locale->text('To') . qq|</b>
-		<input name=transdateto size=11 title="$myconfig{dateformat}"></td>
+		<input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
 	      </tr>
 	      <tr>
 		<td nowrap><input name=method class=radio type=radio value=accrual checked>|
@@ -2907,8 +2907,8 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
           . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, 2 )
           . qq|></td>
 	  $currency
-	  <td><input name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
-	  <td><input name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
+	  <td><input class="date" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
+	  <td><input class="date" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
 	</tr>
 |;
     }
