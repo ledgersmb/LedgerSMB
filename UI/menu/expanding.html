@@ -28,10 +28,11 @@
 					}
 					obj = 'a_' + id;
 					element = document.getElementById(obj);
-					if (element.className == 'Expanded'){
-						element.className = 'Menu';
+					if (element.className == 'Menu_Open'){
+						element.className 
+							= 'Menu_Closed';
 					} else {
-						element.className = 'Expanded';
+						element.className = 'Menu_Open';
 					}
 					return false;
 				}		
