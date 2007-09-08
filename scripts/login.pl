@@ -1,6 +1,5 @@
-#!/usr/bin/perl
 package LedgerSMB::Scripts::login;
-our $VERSION = 0.1;
+our $VERSION = 1.0;
 
 use LedgerSMB::Locale;
 use LedgerSMB::Form; # Required for now to integrate with menu module.
