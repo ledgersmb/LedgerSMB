@@ -489,7 +489,7 @@ CREATE VIEW customer AS
         ein.note as invoice_notes 
     FROM entity_credit_account emd 
     join entity_bank_account eba on emd.entity_id = eba.entity_id
-    join entity_note ein on ein.ref_key = emd.entity_id
+    Left join entity_note ein on ein.ref_key = emd.entity_id
     join company c on c.entity_id = emd.entity_id
     where emd.entity_class = 2;
     
@@ -517,7 +517,7 @@ CREATE VIEW vendor AS
         invoice_notes 
     FROM entity_credit_account emd 
     join entity_bank_account eba on emd.entity_id = eba.entity_id
-    join entity_note ein on ein.ref_key = emd.entity_id
+    left join entity_note ein on ein.ref_key = emd.entity_id
     join company c on c.entity_id = emd.entity_id
     where emd.entity_class = 1;
 
