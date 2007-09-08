@@ -215,7 +215,7 @@ sub get_openinvoices {
     my $dbh = $form->{dbh};
 
     $vc_id = $dbh->quote( $form->{"entity_id"} );
-    my $where = qq|WHERE a.entity__id = $vc_id
+    my $where = qq|WHERE a.entity_id = $vc_id
 					 AND a.amount != a.paid|;
 
     $curr = $dbh->quote( $form->{currency} );
@@ -257,9 +257,10 @@ sub get_openinvoices {
     }
 
     my $query = qq|SELECT a.id, a.invnumber, a.transdate, a.amount, a.paid,
-						  a.curr, c.name, a.entity_id, c.language_code
+						  a.curr, e.name, a.entity_id, c.language_code
 					 FROM $form->{arap} a
 					 JOIN $form->{vc} c ON (c.entity_id = a.entity_id)
+					 JOIN entity e ON (a.entity_id = e.id)
 				   $where
 				 ORDER BY $sortorder|;
 
