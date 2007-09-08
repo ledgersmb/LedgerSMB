@@ -8,7 +8,7 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
 	<link rel="stylesheet" href="css/ledgersmb.css" type="text/css" title="LedgerSMB stylesheet" />
-	<link rel="stylesheet" href="css/scripts/login.css" type="text/css" title="LedgerSMB stylesheet" />
+	<link rel="stylesheet" href="UI/login.css" type="text/css" title="LedgerSMB stylesheet" />
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 	<meta name="robots" content="noindex,nofollow" />
@@ -50,12 +50,32 @@
 				<h1 class="login" align="center">Version SVN Trunk</h1>
 				<div align="center">
 					<div class="labelledinput">
-						<div class="label"><?lsmb text('Name') ?></div>
-						<div class="input"><input class="login" name="login" size="30" value="" /></div>
+						<div class="label">
+							<label for="login">
+							<?lsmb text('Name') ?>
+							</label>
+						</div>
+						<div class="input">
+							<input class="login" 
+							name="login" size="30" 
+							value="" 
+							id="login" />
+						</div>
 					</div>
 					<div class="labelledinput">
-						<div class="label"><?lsmb text('Password') ?></div>
-						<div class="input"><input class="login" type="password" name="password" size="30" /></div>
+						<div class="label">
+							<label for="password">
+							<?lsmb text('Password') 
+							?>
+							</label>
+						</div>
+						<div class="input">
+							<input class="login" 
+							type="password" 
+							name="password" 
+							size="30"
+							id="password" />
+						</div>
 					</div>
 				</div>
 				<input type="hidden" name="path" value="bin/mozilla" />

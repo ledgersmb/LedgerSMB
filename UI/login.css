@@ -4,13 +4,13 @@ div.login {
     margin-left: auto;
     width: 25em;
     padding: 2em;
-    padding-bottom: 1em;
+    padding-bottom: 2em;
     border-style: outset;
 }
 
 div.login div.login {
     width: 21em;
-    height: 18em;
+    height: 20em;
     border-width: 1px;
     border-style: solid;
     padding-bottom: 2em;
