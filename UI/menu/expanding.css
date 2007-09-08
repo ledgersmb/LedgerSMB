@@ -2,10 +2,10 @@ div.submenu {
 	display: none;
 }
 
-A.Menu_Closed::before {
+A.Menu_Closed:before {
 	content: '+';
 }
 
-A.Menu_Open::before {
+A.Menu_Open:before {
 	content: '-';
 }

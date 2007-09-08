@@ -127,10 +127,11 @@ sub get_openvc {
     my $dbh = $form->{dbh};
 
     my $arap = ( $form->{vc} eq 'customer' ) ? 'ar' : 'ap';
-    my $query = qq|SELECT count(*)
-					 FROM $form->{vc} ct, $arap a
-					WHERE a.entity_id = ct.entity_id
-					  AND a.amount != a.paid|;
+    my $query = qq|
+		SELECT count(*)
+		  FROM entity_credit_account ct 
+		  JOIN $arap a USING (entity_id)
+		 WHERE a.amount != a.paid|;
 
     my ($count) = $dbh->selectrow_array($query);
 
@@ -138,8 +139,7 @@ sub get_openvc {
     my $ref;
     my $i = 0;
 
-    my $where = qq|WHERE a.entity_id = ct.entity_id
-					 AND a.amount != a.paid|;
+    my $where = qq|WHERE a.amount != a.paid|;
 
     if ( $form->{ $form->{vc} } ) {
         my $var = $dbh->quote( $form->like( lc $form->{ $form->{vc} } ) );
@@ -147,10 +147,16 @@ sub get_openvc {
     }
 
     # build selection list
-    $query = qq|SELECT DISTINCT ct.*
-				  FROM $form->{vc} ct, $arap a
-				$where
-			  ORDER BY name|;
+    $query = qq|
+	SELECT DISTINCT ct.*, e.name, c.*, l.*
+	  FROM entity_credit_account ct 
+	  JOIN $arap a USING (entity_id)
+	  JOIN company c USING (entity_id)
+	  JOIN entity e ON (e.id = a.entity_id)
+	  LEFT JOIN company_to_location c2l ON (c.id = c2l.company_id)
+	  LEFT JOIN location l ON (l.id = c2l.location_id)
+	$where
+	 ORDER BY name|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
