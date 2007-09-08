@@ -193,7 +193,7 @@ sub get_openvc {
         # Leaving it so we can change it when we go to a new system
         $query = qq|SELECT curr 
 					  FROM $form->{vc}
-					 WHERE id = $form->{name_list}->[0]->{id}|;
+					 WHERE entity_id = $form->{name_list}->[0]->{entity_id}|;
 
         ( $form->{currency} ) = $dbh->selectrow_array($query);
         $form->{currency} ||= $form->{defaultcurrency};
