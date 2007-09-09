@@ -64,6 +64,10 @@ creates the root document (currently a frameset).
 sub root_doc {
     my ($request) = @_;
     my $template;
+
+    $request->{title} = "LedgerSMB $request->{VERSION} -- ".
+	"$request->{login} -- $request->{_user}->{dbname}";
+
     if (!$request->{menubar}){
         $request->{main} = "splash.html" if $request->{main} eq 'company_logo';
         $request->{main} = "am.pl?action=recurring_transactions"

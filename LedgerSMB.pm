@@ -139,6 +139,7 @@ sub new {
     bless $self, $type;
     my $query = ($argstr) ? new CGI($argstr) : new CGI;
     my $params = $query->Vars;
+    $self->{VERSION} = $VERSION;
 
     $self->merge($params);
 
