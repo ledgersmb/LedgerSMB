@@ -62,10 +62,16 @@
 					?>id=<?lsmb item.id
 					?>&open=<?lsmb open 
 				?><?lsmb END ?>"
-				<?lsmb IF item.module ?> 
+				<?lsmb IF (item.module != 'menu.pl') &&
+					('login.pl' != item.module) ?> 
 					target = "main_window" 
+				<?lsmb ELSIF ('New Window' == item.label) ?>
+					target = 'new'
+				<?lsmb ELSIF ('login.pl' == item.module) ?>
+					target = '_top'
 				<?lsmb END ?>
-				<?lsmb IF item.menu ?> 
+				<?lsmb IF item.menu && 
+					('New Menu' != item.label) ?> 
 					onclick="return SwitchMenu('<?lsmb item.id ?>')"
 				<?lsmb END ?>
 				class = "<?lsmb IF (item.menu && item.open)
@@ -75,7 +81,7 @@
 				id = "a_<?lsmb item.id ?>"
 				><?lsmb text(item.label) ?></a>
 		</div>
-		<?lsmb IF item.menu ?>
+		<?lsmb IF item.menu && (item.label != 'New Window') ?>
 			<div id="sub_<?lsmb item.id ?>" class="submenu"
 			<?lsmb IF item.open ?>
 				style="display: block"
