@@ -1,38 +1,74 @@
-#=====================================================================
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
-# under the GNU General Public License version 2 or, at your option, any later
-# version.  For a full list including contact information of contributors,
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2003
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-#  Contributors:
-#
-#======================================================================
-#
-# This file has undergone whitespace cleanup.
-#
-#======================================================================
-#
-# Project module
-# also used for partsgroups
-#
-#======================================================================
+
+=head1 NAME
+
+PE
+
+=head1 SYNOPSIS
+
+Support functions for projects, partsgroups, and parts
+
+=head1 COPYRIGHT
+
+ #====================================================================
+ # LedgerSMB
+ # Small Medium Business Accounting software
+ # http://www.ledgersmb.org/
+ #
+ # Copyright (C) 2006
+ # This work contains copyrighted information from a number of sources
+ # all used with permission.
+ #
+ # This file contains source code included with or based on SQL-Ledger
+ # which is Copyright Dieter Simader and DWS Systems Inc. 2000-2005
+ # and licensed under the GNU General Public License version 2 or, at
+ # your option, any later version.  For a full list including contact
+ # information of contributors, maintainers, and copyright holders,
+ # see the CONTRIBUTORS file.
+ #
+ # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+ # Copyright (C) 2003
+ #
+ #  Author: DWS Systems Inc.
+ #     Web: http://www.sql-ledger.org
+ #
+ #  Contributors:
+ #
+ #====================================================================
+ #
+ # This file has undergone whitespace cleanup.
+ #
+ #====================================================================
+ #
+ # Project module
+ # also used for partsgroups
+ #
+ #====================================================================
+
+=head1 METHODS
+
+=over
+
+=cut
 
 package PE;
+
+=item PE->($myconfig, $form);
+
+Populates the list referred to as $form->{all_project} with hashes containing
+details about projects.  Each hash contains the project record's fields along
+with the name of any associated customer.  If $form->{status} is 'orphaned',
+only add projects that aren't referred to in any transactions, invoices,
+orders, or time cards.  If $form->{status} is 'active', only projects that have
+not reached their enddate are added; when $form->{status} is 'inactive', only
+add projects that have reached their enddates.  When $form->{year} and
+$form->{month} are set, use their values, along with that of $form->{interval},
+to set the startdatefrom and startdateto attributes of $form.  These attributes
+are used to prepare a date range for accepted start dates.  Both
+$form->{description} and $form->{projectnumber} are used to limit the results.
+
+Returns the number of projects added to the list.  $myconfig is unused.
+
+=cut
 
 sub projects {
     my ( $self, $myconfig, $form ) = @_;
@@ -106,13 +142,11 @@ sub projects {
 				    WHERE project_id > 0)
 		|;
 
-    }
-    if ( $form->{status} eq 'active' ) {
+    } elsif ( $form->{status} eq 'active' ) {
         $where .= qq| 
 			AND (pr.enddate IS NULL 
 			OR pr.enddate >= current_date)|;
-    }
-    if ( $form->{status} eq 'inactive' ) {
+    } elsif ( $form->{status} eq 'inactive' ) {
         $where .= qq| AND pr.enddate <= current_date|;
     }
 
@@ -135,6 +169,19 @@ sub projects {
     $i;
 
 }
+
+=item PE->get_project($myconfig, $form)
+
+If $form->{id} is set, populates the $form attributes projectnumber,
+description, startdate, enddate, parts_id, production, completed, and
+customer_id with details from the project record and name with the associated
+customer name.  If the project is not used in any transaction, invoice, order,
+or time card, $form->{orphaned} is set to true, otherwise false.
+
+Even if $form->{id} is false, PE->get_customer is run, along with any custom
+SELECT queries for the table 'project'.
+
+=cut
 
 sub get_project {
     my ( $self, $myconfig, $form ) = @_;
@@ -199,6 +246,18 @@ sub get_project {
 
 }
 
+=item PE->save_project($myconfig, $form)
+
+Updates a project, or adds a new one if $form->{id} is not set. 
+
+The $form attributes of startdate, enddate, customer_id, description, and
+projectnumber are used for the project record.  If $form->{projectnumber} is
+false, a new one is obtained through $form->update_defaults.  When a new
+project is added, $form->{id} is set to that new id.  Any custom queries for
+UPDATE on the project table are run.
+
+=cut
+
 sub save_project {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -246,6 +305,19 @@ sub save_project {
 
 }
 
+=item PE->list_stock($myconfig, $form);
+
+Populates the list referred to as $form->{all_project} with hashes that contain
+details about projects.
+
+Sets $form->{stockingdate} to the current date if it is not already set.
+
+This function is probably unused.
+
+$myconfig is unused.
+
+=cut
+
 sub list_stock {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -258,8 +330,7 @@ sub list_stock {
         $where = qq|
 			(pr.enddate IS NULL OR pr.enddate >= current_date)
 			AND pr.completed < pr.production|;
-    }
-    if ( $form->{status} eq 'inactive' ) {
+    } elsif ( $form->{status} eq 'inactive' ) {
         $where = qq|pr.completed = pr.production|;
     }
 
@@ -300,6 +371,14 @@ sub list_stock {
     $dbh->commit;
 
 }
+
+=item PE->jobs($myconfig, $form);
+
+This function is probably unused.
+
+$myconfig is unused.
+
+=cut
 
 sub jobs {
     my ( $self, $myconfig, $form ) = @_;
@@ -378,6 +457,12 @@ sub jobs {
     $dbh->commit;
 
 }
+
+=item PE->get_job($myconfig, $form);
+
+This function is probably unused as part of Dieter's incomplete job costing.
+
+=cut
 
 sub get_job {
     my ( $self, $myconfig, $form ) = @_;
@@ -501,6 +586,17 @@ sub get_job {
 
 }
 
+=item PE->get_customer($myconfig, $form[, $dbh]);
+
+Populates the list referred to as $form->{all_customer} with hashes containing
+the ids and names of customers unless the number of customers added would be
+greater than or equal to $myconfig->{vclimit}.  $form->{startdate} and
+$form->{enddate} form a date range to limit the results.  If
+$form->{customer_id} is set, then the customer with that id will be in the
+result set.
+
+=cut
+
 sub get_customer {
     my ( $self, $myconfig, $form, $dbh ) = @_;
 
@@ -565,6 +661,12 @@ sub get_customer {
     }
 
 }
+
+=item PE->save_job($myconfig, $form);
+
+Yet another save function.  This one is related to the incomplete job handling.
+
+=cut
 
 sub save_job {
     my ( $self, $myconfig, $form ) = @_;
@@ -688,6 +790,13 @@ sub save_job {
     $dbh->commit;
 
 }
+
+=item PE->stock_assembly($myconfig, $form)
+
+Looks like more of that job control code.  IC.pm has the functions actually
+used by assemblies.
+
+=cut
 
 sub stock_assembly {
     my ( $self, $myconfig, $form ) = @_;
@@ -875,6 +984,15 @@ sub stock_assembly {
 
 }
 
+=item PE->delete_project($myconfig, $form);
+
+Deletes the database entry in project identified by $form->{id} and associated
+translations.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_project {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -895,6 +1013,15 @@ sub delete_project {
 
 }
 
+=item PE->delete_partsgroup($myconfig, $form);
+
+Deletes the entry in partsgroup identified by $form->{id} and associated
+translations.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_partsgroup {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -914,6 +1041,14 @@ sub delete_partsgroup {
 
 }
 
+=item PE->delete_pricegroup($myconfig, $form);
+
+Deletes the pricegroup entry identified by $form->{id}.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_pricegroup {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -928,6 +1063,18 @@ sub delete_pricegroup {
     $rc;
 
 }
+
+=item PE->delete_job($myconfig, $form);
+
+An "enhanced" variant of PE->delete_project.  In addition to deleting the
+project identified by $form->{id} and the associated translations, also deletes
+all parts and assemblies with $form->{id} as a project_id.  This function adds
+an audit trail entry for the table 'project' and the action 'deleted' where the
+formname is taken from $form->{type}.
+
+$myconfig is unused.
+
+=cut
 
 sub delete_job {
     my ( $self, $myconfig, $form ) = @_;
@@ -969,6 +1116,19 @@ sub delete_job {
     $rc;
 
 }
+
+=item PE->partsgroups($myconfig, $form);
+
+Populates the list referred to as $form->{item_list} with hashes containing
+the id and partsgroup (name) for all the partsgroups in the database.  If
+$form->{partsgroup} is non-empty, the results are limited to the partsgroups
+that contain that value in their name (case insensitive).  If $form->{status}
+is 'orphaned', only partsgroups that are not associated with a part are added.
+The number of partsgroups added to $form->{item_list} is returned.
+
+$myconfig is unused.
+
+=cut
 
 sub partsgroups {
     my ( $self, $myconfig, $form ) = @_;
@@ -1020,27 +1180,49 @@ sub partsgroups {
 
 }
 
+=item PE->save_partsgroup($myconfig, $form);
+
+Save a partsgroup record.  If $form->{id} is set, update the description of
+the partsgroup with that id to be $form->{partsgroup}.  Otherwise, create a
+new partsgroup with that description.
+
+$myconfig is unused.
+
+=cut
+
 sub save_partsgroup {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
+    my @group = ($form->{partsgroup});
 
     if ( $form->{id} ) {
         $query = qq|
 			UPDATE partsgroup 
-			   SET partsgroup = | . $dbh->quote( $form->{partsgroup} ) . qq|
-			 WHERE id = $form->{id}|;
+			   SET partsgroup = ?
+			 WHERE id = ?|;
+        push @group,  $form->{id};
     }
     else {
         $query = qq|
 			INSERT INTO partsgroup (partsgroup)
-			     VALUES (| . $dbh->quote( $form->{partsgroup} ) . qq|)|;
+			     VALUES (?)|;
     }
-    $dbh->do($query) || $form->dberror($query);
+    $dbh->do($query, undef, @group) || $form->dberror($query);
 
     $dbh->commit;
 
 }
+
+=item PE->get_partsgroup($myconfig, $form);
+
+Sets $form->{partsgroup} to the description of the partsgroup identified by
+$form->{id}.  If there are no parts entries associated with that partsgroup,
+$form->{orphaned} is made true, otherwise it is set to false.
+
+$myconfig is unused.
+
+=cut
 
 sub get_partsgroup {
     my ( $self, $myconfig, $form ) = @_;
@@ -1070,6 +1252,19 @@ sub get_partsgroup {
     $dbh->commit;
 
 }
+
+=item PE->pricegroups($myconfig, $form);
+
+Populates the list referred to as $form->{item_list} with hashes containing
+details (id and pricegroup (description)) about pricegroups.  All the groups
+are added unless $form->{pricegroup} is set, in which case it will search for
+groups with that description, or $form->{status} is 'orphaned', which limits
+the results to those not related to any customers (partscustomer table).  The
+return value is the number of pricegroups added to the list.
+
+$myconfig is unused.
+
+=cut
 
 sub pricegroups {
     my ( $self, $myconfig, $form ) = @_;
@@ -1120,6 +1315,16 @@ sub pricegroups {
 
 }
 
+=item PE->save_pricegroup($myconfig, $form);
+
+Adds or updates a pricegroup.  If $form->{id} is set, update the pricegroup
+value using $form->{pricegroup}.  If $form->{id} is not set, adds a new
+pricegroup with a pricegroup value of $form->{pricegroup}.
+
+$myconfig is unused.
+
+=cut
+
 sub save_pricegroup {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -1142,6 +1347,14 @@ sub save_pricegroup {
     $dbh->commit;
 
 }
+
+=item PE->get_pricegroup($myconfig, $form);
+
+Sets $form->{pricegroup} to the description of the pricegroup identified by
+$form->{id}.  If the pricegroup is not mentioned in partscustomer,
+$form->{orphaned} is set true, otherwise false.
+
+=cut
 
 sub get_pricegroup {
     my ( $self, $myconfig, $form ) = @_;
@@ -1171,6 +1384,23 @@ sub get_pricegroup {
     $dbh->commit;
 
 }
+
+=item PE::description_translations('', $myconfig, $form);
+
+Populates the list referred to as $form->{translations} with hashes detailing
+non-obsolete goods and services and their translated descriptions.  The main
+details hash immediately precedes its set of translations and has the
+attributes id, partnumber, and description.  The translations have the
+attributes id (same as in the main hash), language, translation, and code.
+
+When $form->{id} is set, only adds an entry for the item having that id, but
+also populates $form->{all_language} using PE::get_language.  The attributes
+partnumber and description are searchable and if set, will limit the results to
+only those that match them.
+
+$myconfig is unused.  $form->{trans_id} is set to the last encountered part id.
+
+=cut
 
 sub description_translations {
     my ( $self, $myconfig, $form ) = @_;
@@ -1237,6 +1467,22 @@ sub description_translations {
 
 }
 
+=item PE::partsgroup_translations("", $myconfig, $form)
+
+Populates the list referred to as $form->{translations} with hashrefs containing
+details about partsgroups and their translated names.  A master hash contains
+the id and description of the partsgroup and is immediately followed by its
+translation hashes, which  contain the language, translation, and code of the
+translation.  The list contains the details for all partsgroups unless
+$form->{description} is set, in which case only partsgroups with a matching
+description are included, or $form->{id} is set.  When $form->{id} is set, only
+translations for the partgroup with that are included and $form->{all_language}
+is populated by get_language.
+
+$myconfig is unused.  $form->{trans_id} is set to the last id encountered.
+
+=cut
+
 sub partsgroup_translations {
     my ( $self, $myconfig, $form ) = @_;
     my $dbh = $form->{dbh};
@@ -1294,6 +1540,22 @@ sub partsgroup_translations {
 
 }
 
+=item PE::project_translations("", $myconfig, $form)
+
+Populates the list referred to as $form->{translations} with hashrefs containing
+details about projects and their translated names.  A master hash contains the
+id, project number, and description of the project and is immediately followed
+by its translation hashes, which have the same id as the master and also
+contain the language, translation, and code of the translation.  The list
+contains the details for all projects unless $form->{description} or 
+$form->{projectnumber} is set, in which case only projects that match the
+appropriate field are included, or $form->{id} is set.  When $form->{id} is
+set, only translations for the project with that id are included and
+$form->{all_language} is populated by get_language.
+
+$myconfig is unused.  $form->{trans_id} is set to the last encountered id.
+
+=cut
 sub project_translations {
     my ( $self, $myconfig, $form ) = @_;
     my $dbh = $form->{dbh};
@@ -1358,6 +1620,14 @@ sub project_translations {
 
 }
 
+=item PE::get_language("", $dbh, $form)
+
+Populates the list referred to as $form->{all_language} with hashes containing
+the code and description of all languages registered with the system in the
+language table.
+
+=cut
+
 sub get_language {
     my ( $self, $dbh, $form ) = @_;
 
@@ -1371,6 +1641,19 @@ sub get_language {
     $sth->finish;
 
 }
+
+=item PE::save_translation("", $myconfig, $form);
+
+Deletes all translations with the trans_id (part id, project id, or partsgroup
+id) of $form->{id} then adds new entries for $form->{id}.  The number of
+translation entries is obtained from $form->{translation_rows}.  The actual
+translation entries are derived from $form->{language_code_I<i>} and
+$form->{translation_I<i>}, where I<i> is some integer between 1 and
+$form->{translation_rows} inclusive.
+
+$myconfig is unused.
+
+=cut
 
 sub save_translation {
     my ( $self, $myconfig, $form ) = @_;
@@ -1400,6 +1683,14 @@ sub save_translation {
 
 }
 
+=item PE::delete_translation("", $myconfig, $form);
+
+Deletes all translation entries that have the trans_id of $form->{id}.
+
+$myconfig is unused.
+
+=cut
+
 sub delete_translation {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -1413,6 +1704,13 @@ sub delete_translation {
 
 }
 
+=item PE->timecard_get_currency($form);
+
+Sets $form->{currency} to the currency set for the customer who has the id
+$form->{customer_id}.
+
+=cut
+
 sub timecard_get_currency {
     my $self  = shift @_;
     my $form  = shift @_;
@@ -1423,6 +1721,13 @@ sub timecard_get_currency {
     my ($curr) = $sth->fetchrow_array;
     $form->{currency} = $curr;
 }
+
+=item PE::project_sales_order("", $myconfig, $form)
+
+Executes $form->all_years, $form->all_projects, and $form->all_employees, with
+a limiting transdate of the current date.
+
+=cut
 
 sub project_sales_order {
     my ( $self, $myconfig, $form ) = @_;
@@ -1442,6 +1747,43 @@ sub project_sales_order {
     $dbh->commit;
 
 }
+
+=item PE->get_jcitems($myconfig, $form);
+
+This function is used as part of the sales order generation accessible from the
+projects interface, to generate the list of possible orders.
+
+Populates the list referred to as $form->{jcitems} with hashes containing
+details about sales orders that can be generated that relate to projects.  Each
+of the hashes has the attributes id (timecard id), description (timecard
+description), qty (unallocated chargeable hours), sellprice (hourly rate),
+parts_id (service id), customer_id, project_id, transdate (date on timecard),
+notes, customer (customer name), projectnumber, partnumber, taxaccounts (space
+separated list that contains the account numbers of taxes that apply to the
+service), and amount (qty*sellprice).  If $form->{summary} is true, the
+description field contains the service description instead of the timecard
+description.
+
+All possible, unconsolidated sales orders are normally listed.  If
+$form->{projectnumber} is set, only orders associated with the project are
+listed.  $form->{employee} limits the list to timecards with the given employee.
+When $form->{year} and $form->{month} are set, the transdatefrom and transdateto
+attributes are populated with values derived from the year, month, and interval
+$form attributes.  $form->{transdatefrom} is used to limit the results to
+time cards checked in on or after that date.  $form->{transdateto} limits to
+time cards checked out on or before the provided date.  $form->{vc} must be
+'customer'.
+
+Regardless of the values added to $form->{jcitems}, this function sets
+$form->{currency} and $form->{defaultcurrency} to the first currency mentioned
+in defaults.  It also fills  $form->{taxaccounts} with a space separated list
+of the account numbers of all tax accounts and for each accno forms a
+$form->{${accno}_rate} attribute that contains the tax's rate as expressed in
+the tax table.
+
+$myconfig is unused.
+
+=cut
 
 sub get_jcitems {
     my ( $self, $myconfig, $form ) = @_;
@@ -1516,6 +1858,7 @@ sub get_jcitems {
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
 
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $tth->execute( $ref->{parts_id} );
         $ref->{taxaccounts} = "";
         while ( $ptref = $tth->fetchrow_hashref(NAME_lc) ) {
@@ -1553,6 +1896,19 @@ sub get_jcitems {
 
 }
 
+=item PE->allocate_projectitems($myconfig, $form);
+
+Updates the jcitems table to adjust the allocated quantities of time.  The
+time cards, and allocated time, to update is obtained from the various space
+separated lists $form->{jcitems_I<i>}, where I<i> is between 1 and the value of
+$form->{rowcount}.  Each element of those space separated lists is a colon
+separated pair where the first element is the time card id and the second
+element is the increase in allocated hours.
+
+$myconfig is unused.
+
+=cut
+
 sub allocate_projectitems {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -1573,4 +1929,6 @@ sub allocate_projectitems {
 }
 
 1;
+
+=back
 
