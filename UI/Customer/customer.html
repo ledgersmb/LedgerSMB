@@ -1,0 +1,139 @@
+<div class="customer">
+    
+    <font size="17"><?lsmb customer.name?></font>
+    
+<form name="customer" method="POST" action="vendor.pl">
+        <table>
+        
+        <tr>
+            <td><b>Shipping Address</b></td>
+            
+            <td><b>Billing Address (if different)</p></td>
+            
+        </tr>
+        
+        <hr/>
+        
+        <?lsmb FOREACH entry = customer.ordered  ?>
+        <tr>
+            <td>
+                <label for="shipping_<?entry?>"><?entry?>:</label>
+                <input id="shipping_<?entry?>" type="textarea" name="shipping_<?entry?>" value="<? customer.entry ?>">
+            </td>
+            <td>
+                <input type="textarea" name="billing_<? entry ?>" value="<? customer.entry ?>">
+            </td>            
+        </tr>
+        <?lsmb end ?>
+        <tr>
+            <td>
+                <label for="startdate">Starting Date:</label>
+                    <input id="startdate" type="textarea" name="startdate" value="<? customer.startdate ?>">
+            </td>
+            <td>
+                <label for="enddate">End date:</label>
+                    <input id="enddate" type="textarea" name="startdate" value="<? customer.enddate ?>">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for"creditlimit">Credit Limit:</label>
+                <input id="creditlimit" name="creditlimit" type="textarea" value="<?customer.creditlimit?>">
+            </td>
+            <td>
+                <label for="terms">Terms:</label>
+                <input id="terms" name="terms" type="textarea" value="<?customer.terms?>"> days
+            </td>
+            <td>
+                <label for="discount">Discount %:</label>
+                <input id="discount" name="discount" type="textarea" value="<?customer.discount?>">                
+            </td>
+        </tr>
+        <tr>
+            
+            <td>
+                <label for="taxnumber">Tax Number/SSN:</label>
+                <input id="taxnumber" name="taxnumber" type="textarea" value="<?customer.taxnumber?>">                
+            </td>
+            <td>
+                <label for"gifi_accno">Subcontract GFI:</label>
+                <input id="gifi_accno" name="gifi_accno" type="textarea" value="<?customer.gifi_accno?>">
+            </td>
+            <td>
+                <label for"sic_code">SIC Code:</label>
+                <input id="sic_code" name="sic_code" type="textarea" value="<?customer.sic_code?>">
+            </td>
+        </tr>
+        
+        <tr>
+            
+            <td></td>
+            <td>
+                <label for"bic">BIC:</label>
+                <input id="bic" name="bic" type="textarea" value="<?customer.bic?>">
+            </td>
+            <td>
+                <label for="iban">IBAN:</label>
+                <input id="iban" name="iban" type="textarea" value="<?customer.iban?>">
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <label for="notes">Notes:</label><br/>
+                <textarea name="notes" rows="3" cols="40" id="notes">
+                    <?customer.notes?>
+                </textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <hr/>
+            <br/>
+            <td>
+                <button class="submit" type="submit" name="action" value="save" accesskey="S" title="Save [Alt-S]">Save</button>
+                </td>
+            <td>
+                <button class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="ap_transaction" 
+                        accesskey="A" 
+                        title="AP Transaction [Alt-A]">AP Transaction</button>
+                </td>
+            <td>
+                <button class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="customer_invoice" 
+                        accesskey="I" 
+                        title="customer Invoice [Alt-I]">customer Invoice</button>
+            </td>
+            <td>
+                <button class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="purchase_order" 
+                        accesskey="O" 
+                        title="Purchase Order [Alt-O]">Purchase Order</button>
+            </td>
+            <td>
+                <button class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="rfq" 
+                        accesskey="Q" 
+                        title="RFQ [Alt-Q]">RFQ</button>
+            </td>
+            <td>
+                <button class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="pricelist" 
+                        accesskey="P" 
+                        title="Pricelist [Alt-P]">Pricelist</button>
+            </td>
+        </tr>        
+    </table>
+    </form>
+</div>

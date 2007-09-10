@@ -224,12 +224,12 @@ sub list_users {
 
     my $fetchMembers = $dbh->selectall_arrayref(
         "SELECT uc.name, uc.company, uc.templates,
-														uc.dbuser, uc.dbdriver, uc.dbname, 
-														uc.dbhost, u.username
-												   FROM users as u, users_conf as uc
-												  WHERE u.id = uc.id	
-													AND u.id > 1
-											   ORDER BY u.username;", { Slice => {} }
+    			uc.dbuser, uc.dbdriver, uc.dbname, 
+    			uc.dbhost, u.username
+    	   FROM users as u, users_conf as uc
+    	  WHERE u.id = uc.id	
+    		AND u.id > 1
+       ORDER BY u.username;", { Slice => {} }
     );
 
     my @memberArray = ();

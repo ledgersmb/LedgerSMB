@@ -1,0 +1,55 @@
+<?lsmb block main?>
+<div class="admin">
+    
+    <!-- first, a list of all active users -->
+    
+    <center>
+        <strong><font size="16"> Administration</font></strong>
+    </center>
+    
+    <?lsmb if message?>
+        <strong><font color="red"><?lsmb message?></font></strong>
+    <?lsmb end?>
+    <form name="userlist" method="POST" action="admin.pl">    
+    <table>
+        <tr>
+            <td></td>
+            <td>User ID</td>
+            <td>Username</td>
+            <td>Active</td>
+            <td>Date Added</td>
+        </tr>
+
+    <?lsmb FOREACH user = users.all ?>
+    
+        <tr>
+            <td></td>
+            <td>
+                <a href="/admin.pl?action=edit_user&amp;user=<?lsmb user.id?>">
+                    <?lsmb user.id?>
+                </a>
+            </td>
+            <td>
+                <?lsmb user.username?>
+            </td>
+            <td>
+                <?lsmb user.active?>
+            </td>
+            <td>
+                <?lsmb user.creation_date?>
+            </td>
+            
+        </tr>    
+    <?lsmb end?>
+    </table>
+    
+    <hr/>
+    <div class="buttons">
+        <button name="method" value="new_user">New User</button>
+        <button name="method" value="new_group">New Group</button>
+        <button name="method" value="delete_user">Delete User</button>
+        <button name="method" value="delete_group">Delete Group</button>
+    </div>    
+    </form>
+</div>
+<?end?>

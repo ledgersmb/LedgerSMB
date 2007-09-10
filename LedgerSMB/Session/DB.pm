@@ -41,17 +41,17 @@ sub session_check {
 
     my $checkQuery = $dbh->prepare(
         "SELECT u.username, s.transaction_id 
-									  FROM session as s, users as u 
-									 WHERE s.session_id = ? 
-									   AND s.users_id = u.id
-									   AND s.last_used > now() - ?::interval"
+                                      FROM session as s, users as u 
+                                     WHERE s.session_id = ? 
+                                       AND s.users_id = u.id
+                                       AND s.last_used > now() - ?::interval"
     );
 
     my $updateAge = $dbh->prepare(
         "UPDATE session 
-									  SET last_used = now(),
-										  transaction_id = ?
-									WHERE session_id = ?;"
+                                      SET last_used = now(),
+                                          transaction_id = ?
+                                    WHERE session_id = ?;"
     );
 
     #must be an integer
@@ -150,9 +150,9 @@ sub session_create {
     # TODO Change this to use %myconfig
     my $deleteExisting = $dbh->prepare(
         "DELETE 
-		   FROM session
-		  WHERE session.users_id = (select id from users where username = ?) 
-		        AND age(last_used) > ?::interval"
+           FROM session
+          WHERE session.users_id = (select id from users where username = ?) 
+                AND age(last_used) > ?::interval"
     );
 
     my $seedRandom = $dbh->prepare("SELECT setseed(?);");
@@ -162,9 +162,9 @@ sub session_create {
 
     my $createNew = $dbh->prepare(
         "INSERT INTO session (session_id, users_id, token, transaction_id) 
-										VALUES(?, (SELECT id
-													 FROM users
-													WHERE username = ?), ?, ?);"
+                                        VALUES(?, (SELECT id
+                                                     FROM users
+                                                    WHERE username = ?), ?, ?);"
     );
 
 # this is assuming that $form->{login} is safe, which might be a bad assumption
@@ -217,9 +217,9 @@ sub session_destroy {
     my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
     my $deleteExisting = $dbh->prepare( "
-		DELETE FROM session 
-		       WHERE users_id = (select id from users where username = ?)
-	" );
+        DELETE FROM session 
+               WHERE users_id = (select id from users where username = ?)
+    " );
 
     $deleteExisting->execute($login)
       || $form->dberror(
@@ -243,9 +243,9 @@ sub password_check {
 
     my $fetchPassword = $dbh->prepare(
         "SELECT u.username, uc.password, uc.crypted_password
-										 FROM users as u, users_conf as uc
-										WHERE u.username = ?
-										  AND u.id = uc.id;"
+           FROM users as u, users_conf as uc
+          WHERE u.username = ?
+            AND u.id = uc.id;"
     );
 
     $fetchPassword->execute($username)
@@ -269,11 +269,11 @@ sub password_check {
             #password was good, convert to md5 password and null crypted
             my $updatePassword = $dbh->prepare(
                 "UPDATE users_conf
-												   SET password = md5(?),
-													   crypted_password = null
-												  FROM users
-												 WHERE users_conf.id = users.id
-												   AND users.username = ?;"
+                                                   SET password = md5(?),
+                                                       crypted_password = null
+                                                  FROM users
+                                                 WHERE users_conf.id = users.id
+                                                   AND users.username = ?;"
             );
 
             $updatePassword->execute( $password, $username )

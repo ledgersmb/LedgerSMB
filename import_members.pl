@@ -150,18 +150,18 @@ sub save_member {
 
         my $userConfUpdate = $dbh->prepare(
             "UPDATE users_conf
-											   SET acs = ?, address = ?, businessnumber = ?,
-												   company = ?, countrycode = ?, currency = ?,
-												   dateformat = ?, dbdriver = ?,
-												   dbhost = ?, dbname = ?, dboptions = ?, 
-												   dbpasswd = ?, dbport = ?, dbuser = ?,
-												   email = ?, fax = ?, menuwidth = ?,
-												   name = ?, numberformat = ?, crypted_password = ?,
-												   print = ?, printer = ?, role = ?,
-												   sid = ?, signature = ?, stylesheet = ?,
-												   tel = ?, templates = ?, timeout = ?,
-												   vclimit = ?
-											 WHERE id = ?;"
+    		   SET acs = ?, address = ?, businessnumber = ?,
+    			   company = ?, countrycode = ?, currency = ?,
+    			   dateformat = ?, dbdriver = ?,
+    			   dbhost = ?, dbname = ?, dboptions = ?, 
+    			   dbpasswd = ?, dbport = ?, dbuser = ?,
+    			   email = ?, fax = ?, menuwidth = ?,
+    			   name = ?, numberformat = ?, crypted_password = ?,
+    			   print = ?, printer = ?, role = ?,
+    			   sid = ?, signature = ?, stylesheet = ?,
+    			   tel = ?, templates = ?, timeout = ?,
+    			   vclimit = ?
+    		 WHERE id = ?;"
         );
 
         $userConfUpdate->execute(
@@ -188,16 +188,16 @@ sub save_member {
 
         my $userConfInsert = $dbh->prepare(
             "INSERT INTO users_conf(acs, address, businessnumber,
-																   company, countrycode, currency,
-																   dateformat, dbdriver,
-																   dbhost, dbname, dboptions, dbpasswd,
-																   dbport, dbuser, email, fax, menuwidth,
-																   name, numberformat, print, printer, role, 
-																   sid, signature, stylesheet, tel, templates, 
-																   timeout, vclimit, id, crypted_password)
-											VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+    		 					   company, countrycode, currency,
+    		 					   dateformat, dbdriver,
+    		 					   dbhost, dbname, dboptions, dbpasswd,
+    		 					   dbport, dbuser, email, fax, menuwidth,
+    		 					   name, numberformat, print, printer, role, 
+    		 					   sid, signature, stylesheet, tel, templates, 
+    		 					   timeout, vclimit, id, crypted_password)
+    		 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+    		 	   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+    		 	   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
         );
 
         $userConfInsert->execute(

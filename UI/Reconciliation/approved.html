@@ -1,0 +1,28 @@
+<div>
+	<center>
+		Bank statement for <?lsmbaccount?> on <?lsmbdate?> has been approved!
+	</center>
+</div>
+
+<table border=0 style="opacity:50%;">
+	
+	<tr>
+		<td>Clear date</td>
+		<td>Transaction Type</td>
+		<td>Our Balance</td>
+		<td>Their Balance</td>
+		<td>Error Corrections</td>
+		<td>Error Code</td>
+	</tr>
+	
+	<?lsmb FOREACH row = records ?>
+		<tr>
+			<td><?lsmb row.clear_time ?></td>
+			<td><?lsmb row.transaction_type ?> </td>
+			<td><?lsmb row.our_balance ?></td>
+			<td><?lsmb row.their_balance?></td>
+			<td><?lsmb row.corrections  ?></td>
+			<td><?lsmb row.errorcode ?></td>
+		</tr>
+	<?lsmb END ?>
+</table>
