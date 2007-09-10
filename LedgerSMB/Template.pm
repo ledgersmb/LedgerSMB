@@ -11,7 +11,7 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => 'HTML', [language => $string,] [include_path => $path], [no_auto_output => $bool], [method => $string] );
+=item new(user => \%myconfig, template => $string, format => 'HTML', [language => $string,] [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool]] );
 
 This command instantiates a new template:
 template is the file name of the template to be processed.
@@ -19,6 +19,7 @@ format is the type of format to be used.  Currently only HTML is supported
 language (optional) specifies the language for template selection.
 include_path allows one to override the template directory and use this with user interface templates.
 no_auto_output disables the automatic output of rendered templates.
+no_escape disables escaping on the template variables.
 method is the output method to use, defaults to HTTP
 media is a synonym for method
 
@@ -62,6 +63,7 @@ sub new {
 	$self->{format} = $args{format};
 	$self->{format} = 'PS' if lc $self->{format} eq 'postscript';
 	$self->{language} = $args{language};
+	$self->{no_escape} = $args{no_escape};
 	if ($args{outputfile}) {
 		$self->{outputfile} =
 			"${LedgerSMB::Sysconfig::tempdir}/$args{outputfile}";
@@ -112,7 +114,12 @@ sub render {
 		throw Error::Simple $@;
 	}
 
-	my $cleanvars = $format->can('preprocess')->($vars);
+	my $cleanvars;
+	if ($self->{no_escape}) {
+		$cleanvars = $vars;
+	} else {
+		$cleanvars = $format->can('preprocess')->($vars);
+	}
 
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
 		$cleanvars->{text} = sub { return $self->{locale}->text(@_)};

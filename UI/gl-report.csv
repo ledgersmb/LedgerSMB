@@ -1,0 +1,3 @@
+<?lsmb FOREACH column IN columns ?><?lsmb heading.$column ?><?lsmb IF NOT loop.last ?>~<?lsmb END ?><?lsmb END ?>
+<?lsmb FOREACH row IN rows ?><?lsmb FOREACH column IN columns ?><?lsmb row.$column ?><?lsmb IF NOT loop.last ?>~<?lsmb END ?><?lsmb END ?>
+<?lsmb END ?><?lsmb FOREACH column IN columns ?><?lsmb totals.$column ?><?lsmb IF NOT loop.last ?>~<?lsmb END ?><?lsmb END ?>

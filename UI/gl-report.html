@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title><?lsmb form.titlebar ?></title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="noindex,nofollow" />
+        
+</head>
+
+		 
+
+<body>
+
+<table width=100%>
+  <tr>
+    <th class=listtop><?lsmb form.title ?></th>
+  </tr>
+  <tr height="5"></tr>
+  <tr>
+    <td><?lsmb options ?></td>
+  </tr>
+  <tr>
+    <td>
+      <table width=100%>
+	<tr class="listheading">
+<?lsmb FOREACH column IN columns ?>
+<?lsmb heading.$column ?>
+<?lsmb END ?>
+        </tr>
+
+<?lsmb FOREACH row IN rows ?>
+<?lsmb IF row.is_subtotal ?>
+   <tr class="listsubtotal">
+   <?lsmb FOREACH column IN columns ?>
+   <th align="right" class="listsubtotal"><?lsmb row.$column ?></th>
+   <?lsmb END ?>
+   </tr>
+<?lsmb ELSE ?>
+    <tr class="listrow<?lsmb row.i ?>">
+    <?lsmb FOREACH column IN columns ?>
+        <?lsmb IF column == 'balance' ?>
+   <td align="right">
+        <?lsmb ELSIF column == 'debit' ?>
+   <td align="right">
+        <?lsmb ELSIF column == 'credit' ?>
+   <td align="right">
+        <?lsmb ELSE ?>
+   <td>
+        <?lsmb END ?>
+   <?lsmb row.$column ?></td>
+   <?lsmb END ?>
+   </tr>
+<?lsmb END ?>
+<?lsmb END ?>
+	<tr class=listtotal>
+<?lsmb FOREACH column IN columns ?>
+<th align=right class=listtotal><?lsmb totals.$column ?></th>
+<?lsmb END ?>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size=3 noshade></td>
+  </tr>
+</table>
+
+<br />
+
+<form method=post action=gl.pl>
+<?lsmb FOREACH pair IN form.callback.split('&') ?>
+<?lsmb hidden = pair.split('=') ?>
+<?lsmb IF NOT loop.first ?>
+<input type="hidden" name="<?lsmb hidden.0 ?>" value="<?lsmb hidden.1 ?>" />
+<?lsmb END ?>
+<?lsmb END ?>
+<input type="hidden" name="callback" value="<?lsmb form.callback ?>" />
+<?lsmb FOREACH button IN buttons ?>
+<?lsmb button ?>
+<?lsmb END ?>
+<button type="submit" class="submit" name="action" value="csv_gl_report">
+<?lsmb text('CSV Report') ?>
+</button>
+</form>
+
+</body>
+</html>

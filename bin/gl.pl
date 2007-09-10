@@ -47,6 +47,7 @@
 
 use LedgerSMB::GL;
 use LedgerSMB::PE;
+use LedgerSMB::Template;
 
 require "bin/arap.pl";
 
@@ -640,31 +641,6 @@ sub generate_report {
     $column_header{balance} = "<th>" . $locale->text('Balance') . "</th>";
     $column_header{cleared} = qq|<th>| . $locale->text('R') . qq|</th>|;
 
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print "
-        </tr>
-";
-
     # add sort to callback
     $form->{callback} = "$callback&sort=$form->{sort}";
     $callback = $form->escape( $form->{callback} );
@@ -677,24 +653,17 @@ sub generate_report {
         $cml = -1 if $form->{contra};
     }
 
+    my @rows;
     if ( ( $form->{accno} || $form->{gifi_accno} ) && $form->{balance} ) {
+        my %column_data;
 
-        for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
-        $column_data{balance} = "<td align=right>"
-          . $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml,
-            2, 0 )
-          . "</td>";
+        for (@column_index) { $column_data{$_} = " " }
+        $column_data{balance} = 
+            $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml,
+            2, 0 );
 
-        $i++;
-        $i %= 2;
-        print qq|
-        <tr class=listrow$i>
-|;
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-        </tr>
-|;
+	$column_data{i} = 1;
+        push @rows, \%column_data;
     }
 
     # reverse href
@@ -702,13 +671,14 @@ sub generate_report {
     $form->sort_order();
     $href =~ s/direction=$form->{direction}/direction=$direction/;
 
-    $i = 0;
+    my $i = 0;
     foreach $ref ( @{ $form->{GL} } ) {
+        my %column_data;
 
         # if item ne sort print subtotal
         if ( $form->{l_subtotal} eq 'Y' ) {
             if ( $sameitem ne $ref->{ $form->{sort} } ) {
-                &gl_subtotal;
+                push @rows, &gl_subtotal_tt();
             }
         }
 
@@ -725,62 +695,45 @@ sub generate_report {
         $ref->{credit} =
           $form->format_amount( \%myconfig, $ref->{credit}, 2, "&nbsp;" );
 
-        for (qw(id transdate)) { $column_data{$_} = "<td>$ref->{$_}</td>" }
+        for (qw(id transdate)) { $column_data{$_} = "$ref->{$_}" }
 
         $column_data{reference} =
-"<td><a href=$ref->{module}.pl?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{reference}</td>";
+"<a href=$ref->{module}.pl?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{reference}";
 
         $ref->{notes} =~ s/\r?\n/<br>/g;
         for (qw(description source memo notes department)) {
-            $column_data{$_} = "<td>$ref->{$_}&nbsp;</td>";
+            $column_data{$_} = "$ref->{$_} ";
         }
 
-        $column_data{debit}  = "<td align=right>$ref->{debit}</td>";
-        $column_data{credit} = "<td align=right>$ref->{credit}</td>";
+        $column_data{debit}  = "$ref->{debit}";
+        $column_data{credit} = "$ref->{credit}";
 
         $column_data{accno} =
-"<td><a href=$href&accno=$ref->{accno}&callback=$callback>$ref->{accno}</a> $ref->{accname}</td>";
+"<a href=$href&accno=$ref->{accno}&callback=$callback>$ref->{accno}</a> $ref->{accname}";
         $column_data{gifi_accno} =
-"<td><a href=$href&gifi_accno=$ref->{gifi_accno}&callback=$callback>$ref->{gifi_accno}</a>&nbsp;</td>";
-        $column_data{balance} = "<td align=right>"
-          . $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml,
-            2, 0 )
-          . "</td>";
+"<a href=$href&gifi_accno=$ref->{gifi_accno}&callback=$callback>$ref->{gifi_accno}</a> ";
+        $column_data{balance} = $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml,
+            2, 0 );
         $column_data{cleared} =
-          ( $ref->{cleared} ) ? "<td>*</td>" : "<td>&nbsp;</td>";
+          ( $ref->{cleared} ) ? "*" : " ";
 
         if ( $ref->{id} != $sameid ) {
             $i++;
             $i %= 2;
         }
-        print "
-        <tr class=listrow$i>";
-        for (@column_index) { print "$column_data{$_}\n" }
-        print "</tr>";
+	$column_data{'i'} = $i;
+        push @rows, \%column_data;
 
         $sameid = $ref->{id};
     }
 
-    &gl_subtotal if ( $form->{l_subtotal} eq 'Y' );
+    push @rows, &gl_subtotal_tt() if ( $form->{l_subtotal} eq 'Y' );
 
-    for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+    for (@column_index) { $column_data{$_} = " " }
 
-    $column_data{debit} =
-      "<th align=right class=listtotal>"
-      . $form->format_amount( \%myconfig, $totaldebit, 2, "&nbsp;" ) . "</th>";
-    $column_data{credit} =
-      "<th align=right class=listtotal>"
-      . $form->format_amount( \%myconfig, $totalcredit, 2, "&nbsp;" ) . "</th>";
-    $column_data{balance} =
-        "<th align=right class=listtotal>"
-      . $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml, 2, 0 )
-      . "</th>";
-
-    print qq|
-	<tr class=listtotal>
-|;
-
-    for (@column_index) { print "$column_data{$_}\n" }
+    $column_data{debit} = $form->format_amount( \%myconfig, $totaldebit, 2, "&nbsp;" );
+    $column_data{credit} = $form->format_amount( \%myconfig, $totalcredit, 2, "&nbsp;" );
+    $column_data{balance} = $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml, 2, 0 );
 
     $i = 1;
     if ( $myconfig{acs} !~ /General Ledger--General Ledger/ ) {
@@ -819,40 +772,70 @@ qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
         delete $button{$item};
     }
 
-    print qq|
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-
-<form method=post action=$form->{script}>
-|;
-
-    $form->hide_form(qw(callback path login sessionid));
-
+    my @buttons;
     foreach $item ( sort { $a->{order} <=> $b->{order} } %button ) {
-        print $item->{code};
+        push @buttons, $item->{code};
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
+##SC: Taking this out for now...
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
+
+    my $template;
+    if ($form->{action} eq 'csv_gl_report') {
+        $template = LedgerSMB::Template->new(
+            user => \%myconfig, 
+            locale => $locale,
+            path => 'UI',
+            template => 'gl-report',
+            format => 'CSV'
+        );
+    } else {
+        $template = LedgerSMB::Template->new(
+            user => \%myconfig, 
+            locale => $locale,
+            path => 'UI',
+            template => 'gl-report',
+            format => 'HTML',
+            no_escape => 1
+        );
     }
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        options => $option,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        totals => \%column_data
+    });
 
-    print qq|
+}
 
-</form>
+sub csv_gl_report { &generate_report }
 
-</body>
-</html>
-|;
+sub gl_subtotal_tt {
 
+    my %column_data;
+    $subtotaldebit =
+      $form->format_amount( \%myconfig, $subtotaldebit, 2, "&nbsp;" );
+    $subtotalcredit =
+      $form->format_amount( \%myconfig, $subtotalcredit, 2, "&nbsp;" );
+
+    for (@column_index) { $column_data{$_} = " " }
+    $column_data{'is_subtotal'} = 1;
+
+    $column_data{debit} = $subtotaldebit;
+    $column_data{credit} = $subtotalcredit;
+
+    $subtotaldebit  = 0;
+    $subtotalcredit = 0;
+
+    $sameitem = $ref->{ $form->{sort} };
+
+    return \%column_data;
 }
 
 sub gl_subtotal {
