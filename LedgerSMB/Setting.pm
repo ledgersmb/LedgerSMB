@@ -27,7 +27,7 @@ The following methods are passed through to stored procedures:
 
 =item set ($self->{key}, $self->{value})
 
-=item parse_incriment ($self->{key})
+=item parse_increment ($self->{key})
 
 This function updates a default entry in the database, incrimenting the last 
 set of digits not including <?lsmb ?> tags or non-digits, and then parses the 
