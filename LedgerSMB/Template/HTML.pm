@@ -63,7 +63,7 @@ sub preprocess {
     }
     elsif ( $type eq 'HASH' ) {
         for ( keys %{$rawvars} ) {
-            $vars->{$_} = preprocess( $rawvars->{$_} );
+            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }
     }
     else {
