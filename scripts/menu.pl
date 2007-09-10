@@ -40,6 +40,9 @@ to the drilldown_menu.  Otherwise, it routes to expanding_menu.
 
 sub __default {
     my ($request) = @_;
+    if ($request->{new}){
+        root_doc($request);
+    }
     if ($request->{menubar}){
         drilldown_menu($request);
     } else {
