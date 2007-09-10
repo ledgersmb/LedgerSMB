@@ -507,6 +507,9 @@ sub parse_amount {
     }
     $amount =~ s/\s?CR//;
     $amount = new Math::BigFloat($amount);
+    if ($amount->is_nan){
+        $self->error("Invalid number detected during parsing");
+    }
     return ( $amount * 1 );
 }
 

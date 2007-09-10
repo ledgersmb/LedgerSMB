@@ -793,6 +793,9 @@ sub parse_amount {
     my $decimalplaces = length $1 + length $2;
 
     $amount = new Math::BigFloat($amount);
+    if ($amount->is_nan){
+        $self->error("Invalid number detected during parsing");
+    }
 
     return ( $amount * 1 );
 }
