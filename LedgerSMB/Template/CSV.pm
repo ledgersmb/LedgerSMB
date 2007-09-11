@@ -58,11 +58,7 @@ sub preprocess {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess( $_ );
 		}
-	} elsif ( $type eq 'HASH' ) {
-		for ( keys %{$rawvars} ) {
-			$vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
-		}
-	} else {
+	} elsif ( !$type ) { # Scalar
 		$vars = $rawvars;
 		$vars =~ s/\&nbsp;/ /;
 		$vars =~ s/(\t\n\r )+/ /g;
@@ -71,6 +67,10 @@ sub preprocess {
 		$vars =~ s/<.*?>//g;
 		$vars = qq|"$vars"| if $vars !~ /^\w+$/;
 		$vars = '' if $vars =~ /^""$/;
+	} else { # hashes and objects
+		for ( keys %{$rawvars} ) {
+			$vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
+		}
 	}
 	return $vars;
 }

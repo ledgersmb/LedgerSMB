@@ -51,8 +51,23 @@ sub preprocess {
 	my $rawvars = shift;
 	my $vars;
 	my $type = ref $rawvars;
-	#XXX fix escaping
-	return $rawvars;
+
+	return $rawvars if $type =~ /^LedgerSMB::Locale/;
+	if ($type eq 'ARRAY') {
+		for (@{$rawvars}) {
+			push @{$vars}, preprocess($_);
+		}
+	} else (!$type) {
+		#XXX Fix escaping
+		$rawvars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
+		$rawvars =~ s/"(.*)"/``$1''/gs;
+		return $rawvars;
+	} else {
+		for ( keys %{$rawvars} ) {
+			$vars->{$_} = preprocess($rawvars->{$_});
+		}
+	}
+	return $vars;
 }
 
 sub process {

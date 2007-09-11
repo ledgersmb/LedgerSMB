@@ -60,15 +60,14 @@ sub preprocess {
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_ );
         }
-    }
-    elsif ( $type eq 'HASH' ) {
+    } elsif (!$type) {
+        return CGI::escapeHTML($rawvars);
+    } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }
     }
-    else {
-        return CGI::escapeHTML($rawvars);
-    }
+    
     return $vars;
 }
 

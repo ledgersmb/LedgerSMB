@@ -57,15 +57,15 @@ sub preprocess {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess($_);
 		}
-	} elsif ($type eq 'HASH') {
-		for ( keys %{$rawvars} ) {
-			$vars->{$_} = preprocess($rawvars->{$_});
-		}
-	} else {
+	} else (!$type) {
 		#XXX Fix escaping
 		$rawvars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
 		$rawvars =~ s/"(.*)"/``$1''/gs;
 		return $rawvars;
+	} else {
+		for ( keys %{$rawvars} ) {
+			$vars->{$_} = preprocess($rawvars->{$_});
+		}
 	}
 	return $vars;
 }
