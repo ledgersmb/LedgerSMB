@@ -984,10 +984,15 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
         $ref->{partnumber} = qq|<a href="$pnumhref">$ref->{partnumber}</a>|;
         $ref->{sold}       = qq|<a href="$soldhref">$ref->{sold}</a>|;
         $ref->{received}   = qq|<a href="$rechref">$ref->{received}<a/>|;
+        $ref->{revenue}    =
+          $form->format_amount( \%myconfig, $ref->{revenue}, 2, '&nbsp;' );
+        $ref->{expenses}   =
+          $form->format_amount( \%myconfig, $ref->{expenses}, 2, '&nbsp;' );
+        $ref->{expense}    = $ref->{expenses};
         map { $column_data{$_} = "<td>&nbsp;</td>" } @column_index;
 
         print qq|
-      <tr class=listrow$i>
+      <tr class="listrow$i">
       |;
         map { print "<td>$ref->{$_}</td>\n" } @column_index;
 
