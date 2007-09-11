@@ -11,9 +11,7 @@
 	<meta name="robots" content="noindex,nofollow" />
         
 </head>
-
-		 
-
+<?lsmb PROCESS elements.html ?>
 <body>
 
 <table width=100%>
@@ -28,8 +26,11 @@
     <td>
       <table width=100%>
 	<tr class="listheading">
-<?lsmb FOREACH column IN columns ?>
-<?lsmb heading.$column ?>
+<?lsmb FOREACH column IN columns ?><?lsmb IF heading.$column.href ?>
+<th class="listheading"><a class="listheading" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a></th>
+<?lsmb ELSE ?>
+<th class="listheading"><?lsmb heading.$column ?></th>
+<?lsmb END ?>
 <?lsmb END ?>
         </tr>
 
@@ -52,7 +53,12 @@
         <?lsmb ELSE ?>
    <td>
         <?lsmb END ?>
-   <?lsmb row.$column ?></td>
+<?lsmb IF row.$column.href ?>
+   <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
+<?lsmb ELSE ?>
+   <?lsmb row.$column ?>
+<?lsmb END ?>
+   </td>
    <?lsmb END ?>
    </tr>
 <?lsmb END ?>
@@ -73,19 +79,13 @@
 <br />
 
 <form method=post action=gl.pl>
-<?lsmb FOREACH pair IN form.callback.split('&') ?>
-<?lsmb hidden = pair.split('=') ?>
+<?lsmb FOREACH pair IN form.callback.split('&') ?><?lsmb hidden = pair.split('=') ?>
 <?lsmb IF NOT loop.first ?>
-<input type="hidden" name="<?lsmb hidden.0 ?>" value="<?lsmb hidden.1 ?>" />
-<?lsmb END ?>
-<?lsmb END ?>
-<input type="hidden" name="callback" value="<?lsmb form.callback ?>" />
-<?lsmb FOREACH button IN buttons ?>
-<?lsmb button ?>
-<?lsmb END ?>
-<button type="submit" class="submit" name="action" value="csv_gl_report">
-<?lsmb text('CSV Report') ?>
-</button>
+<?lsmb PROCESS input element_data={type => 'hidden', name => hidden.0, value => hidden.1} ?>
+<?lsmb END ?><?lsmb END ?>
+<?lsmb PROCESS input element_data={type => 'hidden', name => 'callback', value => form.callback} ?>
+
+<?lsmb FOREACH button IN buttons ?><?lsmb PROCESS button element_data=button ?><?lsmb END ?>
 </form>
 
 </body>

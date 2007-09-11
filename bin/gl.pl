@@ -597,49 +597,28 @@ sub generate_report {
     $href     .= "&category=$form->{category}";
 
     $column_header{id} =
-        "<th><a class=listheading href=$href&sort=id>"
-      . $locale->text('ID')
-      . "</a></th>";
+        {text => $locale->text('ID'), href=> "$href&sort=id"};
     $column_header{transdate} =
-        "<th><a class=listheading href=$href&sort=transdate>"
-      . $locale->text('Date')
-      . "</a></th>";
+        {text => $locale->text('Date'), href=> "$href&sort=transdate"};
     $column_header{reference} =
-        "<th><a class=listheading href=$href&sort=reference>"
-      . $locale->text('Reference')
-      . "</a></th>";
+        {text => $locale->text('Reference'), href=> "$href&sort=reference"};
     $column_header{source} =
-        "<th><a class=listheading href=$href&sort=source>"
-      . $locale->text('Source')
-      . "</a></th>";
+        {text => $locale->text('Source'), href=> "$href&sort=source"};
     $column_header{memo} =
-        "<th><a class=listheading href=$href&sort=memo>"
-      . $locale->text('Memo')
-      . "</a></th>";
+        {text => $locale->text('Memo'), href=> "$href&sort=memo"};
     $column_header{description} =
-        "<th><a class=listheading href=$href&sort=description>"
-      . $locale->text('Description')
-      . "</a></th>";
+        {text => $locale->text('Description'), href=> "$href&sort=description"};
     $column_header{department} =
-        "<th><a class=listheading href=$href&sort=department>"
-      . $locale->text('Department')
-      . "</a></th>";
-    $column_header{notes} =
-      "<th class=listheading>" . $locale->text('Notes') . "</th>";
-    $column_header{debit} =
-      "<th class=listheading>" . $locale->text('Debit') . "</th>";
-    $column_header{credit} =
-      "<th class=listheading>" . $locale->text('Credit') . "</th>";
+        {text => $locale->text('Department'), href=> "$href&sort=department"};
+    $column_header{notes} = $locale->text('Notes');
+    $column_header{debit} = $locale->text('Debit');
+    $column_header{credit} = $locale->text('Credit');
     $column_header{accno} =
-        "<th><a class=listheading href=$href&sort=accno>"
-      . $locale->text('Account')
-      . "</a></th>";
+        {text => $locale->text('Account'), href=> "$href&sort=accno"};
     $column_header{gifi_accno} =
-        "<th><a class=listheading href=$href&sort=gifi_accno>"
-      . $locale->text('GIFI')
-      . "</a></th>";
-    $column_header{balance} = "<th>" . $locale->text('Balance') . "</th>";
-    $column_header{cleared} = qq|<th>| . $locale->text('R') . qq|</th>|;
+        {text => $locale->text('GIFI'), href=> "$href&sort=gifi_accno"};
+    $column_header{balance} = $locale->text('Balance');
+    $column_header{cleared} = $locale->text('R');
 
     # add sort to callback
     $form->{callback} = "$callback&sort=$form->{sort}";
@@ -691,16 +670,17 @@ sub generate_report {
         $totalcredit += $ref->{credit};
 
         $ref->{debit} =
-          $form->format_amount( \%myconfig, $ref->{debit}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{debit}, 2, " " );
         $ref->{credit} =
-          $form->format_amount( \%myconfig, $ref->{credit}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{credit}, 2, " " );
 
         for (qw(id transdate)) { $column_data{$_} = "$ref->{$_}" }
 
         $column_data{reference} =
-"<a href=$ref->{module}.pl?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{reference}";
+            {href => "$ref->{module}.pl?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+            text => $ref->{reference}};
 
-        $ref->{notes} =~ s/\r?\n/<br>/g;
+        #$ref->{notes} =~ s/\r?\n/<br>/g;
         for (qw(description source memo notes department)) {
             $column_data{$_} = "$ref->{$_} ";
         }
@@ -709,9 +689,11 @@ sub generate_report {
         $column_data{credit} = "$ref->{credit}";
 
         $column_data{accno} =
-"<a href=$href&accno=$ref->{accno}&callback=$callback>$ref->{accno}</a> $ref->{accname}";
+            {href => "$href&accno=$ref->{accno}&callback=$callback",
+            text => "$ref->{accno} $ref->{accname}"};
         $column_data{gifi_accno} =
-"<a href=$href&gifi_accno=$ref->{gifi_accno}&callback=$callback>$ref->{gifi_accno}</a> ";
+            {href => "$href&gifi_accno=$ref->{gifi_accno}&callback=$callback",
+            text => $ref->{gifi_accno}};
         $column_data{balance} = $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml,
             2, 0 );
         $column_data{cleared} =
@@ -731,41 +713,52 @@ sub generate_report {
 
     for (@column_index) { $column_data{$_} = " " }
 
-    $column_data{debit} = $form->format_amount( \%myconfig, $totaldebit, 2, "&nbsp;" );
-    $column_data{credit} = $form->format_amount( \%myconfig, $totalcredit, 2, "&nbsp;" );
+    $column_data{debit} = $form->format_amount( \%myconfig, $totaldebit, 2, " " );
+    $column_data{credit} = $form->format_amount( \%myconfig, $totalcredit, 2, " " );
     $column_data{balance} = $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml, 2, 0 );
 
     $i = 1;
+    my %button;
     if ( $myconfig{acs} !~ /General Ledger--General Ledger/ ) {
-        $button{'General Ledger--Add Transaction'}{code} =
-qq|<button class="submit" type="submit" name="action" value="gl_transaction">|
-          . $locale->text('GL Transaction')
-          . qq|</button> |;
-        $button{'General Ledger--Add Transaction'}{order} = $i++;
+        $button{'General Ledger--Add Transaction'} = {
+            name => 'action',
+            value => 'gl_transaction',
+            text => $locale->text('GL Transaction'),
+            type => 'submit',
+            class => 'submit',
+            order => $i++};
     }
     if ( $myconfig{acs} !~ /AR--AR/ ) {
-        $button{'AR--Add Transaction'}{code} =
-qq|<button class="submit" type="submit" name="action" value="ar_transaction">|
-          . $locale->text('AR Transaction')
-          . qq|</button> |;
-        $button{'AR--Add Transaction'}{order} = $i++;
-        $button{'AR--Sales Invoice'}{code} =
-qq|<button class="submit" type="submit" name="action" value="sales_invoice_">|
-          . $locale->text('Sales Invoice')
-          . qq|</button> |;
-        $button{'AR--Sales Invoice'}{order} = $i++;
+        $button{'AR--Add Transaction'} = {
+            name => 'action',
+            value => 'ar_transaction',
+            text => $locale->text('AR Transaction'),
+            type => 'submit',
+            class => 'submit',
+            order => $i++};
+        $button{'AR--Sales Invoice'} = {
+            name => 'action',
+            value => 'sales_invoice_',
+            text => $locale->text('Sales Invoice'),
+            type => 'submit',
+            class => 'submit',
+            order => $i++};
     }
     if ( $myconfig{acs} !~ /AP--AP/ ) {
-        $button{'AP--Add Transaction'}{code} =
-qq|<button class="submit" type="submit" name="action" value="ap_transaction">|
-          . $locale->text('AP Transaction')
-          . qq|</button> |;
-        $button{'AP--Add Transaction'}{order} = $i++;
-        $button{'AP--Vendor Invoice'}{code} =
-qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
-          . $locale->text('Vendor Invoice')
-          . qq|</button> |;
-        $button{'AP--Vendor Invoice'}{order} = $i++;
+        $button{'AP--Add Transaction'} = {
+            name => 'action',
+            value => 'ap_transaction',
+            text => $locale->text('AP Transaction'),
+            type => 'submit',
+            class => 'submit',
+            order => $i++};
+        $button{'AP--Vendor Invoice'} = {
+            name => 'action',
+            value => 'vendor_invoice_',
+            text => $locale->text('Vendor Invoice'),
+            type => 'submit',
+            class => 'submit',
+            order => $i++};
     }
 
     foreach $item ( split /;/, $myconfig{acs} ) {
@@ -773,9 +766,16 @@ qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
     }
 
     my @buttons;
-    foreach $item ( sort { $a->{order} <=> $b->{order} } %button ) {
-        push @buttons, $item->{code};
+    foreach my $item ( sort { $a->{order} <=> $b->{order} } %button ) {
+        push @buttons, $item if ref $item;
     }
+    push @buttons, {
+        name => 'action',
+        value => 'csv_gl_report',
+        text => $locale->text('CSV Report'),
+        type => 'submit',
+        class => 'submit',
+        };
 
 ##SC: Taking this out for now...
 ##    if ( $form->{lynx} ) {
@@ -799,7 +799,7 @@ qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
             path => 'UI',
             template => 'gl-report',
             format => 'HTML',
-            no_escape => 1
+        #    no_escape => 1
         );
     }
     $template->render({
@@ -820,9 +820,9 @@ sub gl_subtotal_tt {
 
     my %column_data;
     $subtotaldebit =
-      $form->format_amount( \%myconfig, $subtotaldebit, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $subtotaldebit, 2, " " );
     $subtotalcredit =
-      $form->format_amount( \%myconfig, $subtotalcredit, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $subtotalcredit, 2, " " );
 
     for (@column_index) { $column_data{$_} = " " }
     $column_data{'is_subtotal'} = 1;
