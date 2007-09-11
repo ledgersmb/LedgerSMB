@@ -38,7 +38,8 @@ eval { require "custom.pl"; };
 $request = new LedgerSMB;
 $request->{action} = '__default' if (!$request->{action});
 
-$0 =~ m/([^\/\\]*.pl)\?*.*$/;
+
+$ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
 $script = $1;
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
   or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
