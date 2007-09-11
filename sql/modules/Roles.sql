@@ -146,6 +146,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__create_ar_transaction');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (2, 'allow', 'lsmb_<?lsmb dbname ?>__create_ar_transaction');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (194, 'allow', 'lsmb_<?lsmb dbname ?>__create_ar_transaction');
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ar_transaction_voucher
 WITH INHERIT NOLOGIN
@@ -167,6 +169,8 @@ GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__create_ar_invoice;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (3, 'allow', 'lsmb_<?lsmb dbname ?>__create_ar_invoice');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (195, 'allow', 'lsmb_<?lsmb dbname ?>__create_ar_transaction');
 
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ar_invoice_voucher
@@ -242,9 +246,9 @@ GRANT INSERT ON oe TO lsmb_<?lsmb dbname ?>__create_sales_quotation;
 GRANT INSERT ON orderitems TO lsmb_<?lsmb dbname ?>__create_sales_quotation;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (50, 'allow', 'lsmb_<?lsmb dbname ?>__create_sales_quotation');
+values (67, 'allow', 'lsmb_<?lsmb dbname ?>__create_sales_quotation');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (51, 'allow', 'lsmb_<?lsmb dbname ?>__create_sales_quotation');
+values (68, 'allow', 'lsmb_<?lsmb dbname ?>__create_sales_quotation');
 
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_sales_orders
@@ -254,12 +258,28 @@ IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 GRANT SELECT ON oe TO lsmb_<?lsmb dbname ?>__list_sales_orders;
 GRANT SELECT ON orderitems TO lsmb_<?lsmb dbname ?>__list_sales_orders;
 
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (50, 'allow', 'lsmb_<?lsmb dbname ?>__list_sales_orders');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (53, 'allow', 'lsmb_<?lsmb dbname ?>__list_sales_orders');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (54, 'allow', 'lsmb_<?lsmb dbname ?>__list_sales_orders');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_sales_quotations
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
 GRANT SELECT ON oe TO lsmb_<?lsmb dbname ?>__list_sales_quotations;
 GRANT SELECT ON orderitems TO lsmb_<?lsmb dbname ?>__list_sales_quotations;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (67, 'allow', 'lsmb_<?lsmb dbname ?>__list_sales_quotations');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (70, 'allow', 'lsmb_<?lsmb dbname ?>__list_sales_quotations');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (71, 'allow', 'lsmb_<?lsmb dbname ?>__list_sales_quotations');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_ar
 WITH INHERIT NOLOGIN 
@@ -275,23 +295,81 @@ CREATE ROLE lsmb_<?lsmb dbname ?>__create_ap_transaction
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
+GRANT INSERT ON ap TO lsmb_<?lsmb dbname ?>__create_ap_transaction;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_ap_transaction;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (21, 'allow', 'lsmb_<?lsmb dbname ?>__create_ap_transaction');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (22, 'allow', 'lsmb_<?lsmb dbname ?>__create_ap_transaction');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (196, 'allow', 'lsmb_<?lsmb dbname ?>__create_ap_transaction');
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact,
 lsmb_<?lsmb dbname ?>__create_batch;
 
+GRANT INSERT ON ar TO lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher;
+
+-- TODO add Menu ACLs
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ap_invoice
 WITH INHERIT NOLOGIN
-IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact,
+lsmb_<?lsmb dbname ?>__create_ap_transaction;
+
+GRANT INSERT ON invoice TO lsmb_<?lsmb dbname ?>__create_ap_invoice;
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__create_ap_invoice;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (23, 'allow', 'lsmb_<?lsmb dbname ?>__create_ap_invoice');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (197, 'allow', 'lsmb_<?lsmb dbname ?>__create_ap_transaction');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ap_invoice_voucher
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact,
 lsmb_<?lsmb dbname ?>__create_batch;
 
+GRANT INSERT ON invoice TO lsmb_<?lsmb dbname ?>__create_ap_invoice_voucher;
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__create_ap_invoice_voucher;
+
+-- TODO add Menu ACLs
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_ap_transactions
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT SELECT ON ap TO lsmb_<?lsmb dbname ?>__list_ap_transactions;
+GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__list_ap_transactions;
+GRANT SELECT ON invoice TO lsmb_<?lsmb dbname ?>__list_ap_transactions
+GRANT SELECT ON inventory TO lsmb_<?lsmb dbname ?>__list_ap_transactions
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (21, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (24, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (25, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (26, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (27, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (28, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (29, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (30, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (32, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (34, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__ap_all_vouchers
 WITH INHERIT NOLOGIN 
@@ -309,17 +387,57 @@ WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 WITH INHERIT NOLOGIN;
 
+GRANT INSERT ON oe TO lsmb_<?lsmb dbname ?>__create_purchase_order;
+GRANT INSERT ON orderitems TO lsmb_<?lsmb dbname ?>__create_purchase_order;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (50, 'allow', 'lsmb_<?lsmb dbname ?>__create_purchase_order');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (52, 'allow', 'lsmb_<?lsmb dbname ?>__create_purchase_order');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_purchase_rfq
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT INSERT ON oe TO lsmb_<?lsmb dbname ?>__create_purchase_rfq;
+GRANT INSERT ON orderitems TO lsmb_<?lsmb dbname ?>__create_purchase_rfq;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (67, 'allow', 'lsmb_<?lsmb dbname ?>__create_purchase_rfq');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (69, 'allow', 'lsmb_<?lsmb dbname ?>__create_purchase_rfq');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_purchase_orders
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
+GRANT SELECT ON oe TO lsmb_<?lsmb dbname ?>__list_purchase_orders;
+GRANT SELECT ON orderitems TO lsmb_<?lsmb dbname ?>__list_purchase_orders;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (50, 'allow', 'lsmb_<?lsmb dbname ?>__list_purchase_orders');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (53, 'allow', 'lsmb_<?lsmb dbname ?>__list_purchase_orders');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (55, 'allow', 'lsmb_<?lsmb dbname ?>__list_purchase_orders');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_purchase_rfqs
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT SELECT ON oe TO lsmb_<?lsmb dbname ?>__list_purchase_rfqs;
+GRANT SELECT ON orderitems TO lsmb_<?lsmb dbname ?>__list_purchase_rfqs;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (67, 'allow', 'lsmb_<?lsmb dbname ?>__list_purchase_rfqs');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (70, 'allow', 'lsmb_<?lsmb dbname ?>__list_purchase_rfqs');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (72, 'allow', 'lsmb_<?lsmb dbname ?>__list_purchase_rfqs');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_ap
 WITH INHERIT NOLOGIN 
@@ -333,11 +451,32 @@ lsmb_<?lsmb dbname ?>__list_purchase_rfqs;
 -- POS
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_pos_invoice
 WITH INHERIT NOLOGIN
-IN ROLE lsmb_<?lsmb dbname ?>__create_sales_invoice,
-lsmb_<?lsmb dbname ?>__create_ar_invoice;
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT INSERT ON invoice TO lsmb_<?lsmb dbname ?>__create_pos_invoice;
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__create_pos_invoice;
+GRANT INSERT ON ar TO lsmb_<?lsmb dbname ?>__create_pos_invoice;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_pos_invoice;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (16, 'allow', 'lsmb_<?lsmb dbname ?>__create_pos_invoice');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (17, 'allow', 'lsmb_<?lsmb dbname ?>__create_pos_invoice');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (18, 'allow', 'lsmb_<?lsmb dbname ?>__create_pos_invoice');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__close_till
 WITH INHERIT NOLOGIN;
+
+GRANT INSERT ON gl TO lsmb_<?lsmb dbname ?>__close_till;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__close_till;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (16, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (19, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_all_open
 WITH INHERIT NOLOGIN;
