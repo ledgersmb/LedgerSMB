@@ -452,6 +452,7 @@ sub generate_report {
         'I' => $locale->text('Income'),
         'E' => $locale->text('Expense'),
     );
+    my @options;
 
     $form->{title} = $locale->text('General Ledger');
 
@@ -464,98 +465,83 @@ sub generate_report {
     if ( $form->{accno} ) {
         $href .= "&accno=" . $form->escape( $form->{accno} );
         $callback .= "&accno=" . $form->escape( $form->{accno}, 1 );
-        $option =
-          $locale->text('Account')
+        push @options, $locale->text('Account')
           . " : $form->{accno} $form->{account_description}";
     }
     if ( $form->{gifi_accno} ) {
         $href     .= "&gifi_accno=" . $form->escape( $form->{gifi_accno} );
         $callback .= "&gifi_accno=" . $form->escape( $form->{gifi_accno}, 1 );
-        $option   .= "\n<br>" if $option;
-        $option .=
-          $locale->text('GIFI')
+        push @options, $locale->text('GIFI')
           . " : $form->{gifi_accno} $form->{gifi_account_description}";
     }
     if ( $form->{source} ) {
         $href     .= "&source=" . $form->escape( $form->{source} );
         $callback .= "&source=" . $form->escape( $form->{source}, 1 );
-        $option   .= "\n<br>" if $option;
-        $option   .= $locale->text('Source') . " : $form->{source}";
+        push @options, $locale->text('Source') . " : $form->{source}";
     }
     if ( $form->{memo} ) {
         $href     .= "&memo=" . $form->escape( $form->{memo} );
         $callback .= "&memo=" . $form->escape( $form->{memo}, 1 );
-        $option   .= "\n<br>" if $option;
-        $option   .= $locale->text('Memo') . " : $form->{memo}";
+        push @options, $locale->text('Memo') . " : $form->{memo}";
     }
     if ( $form->{reference} ) {
         $href     .= "&reference=" . $form->escape( $form->{reference} );
         $callback .= "&reference=" . $form->escape( $form->{reference}, 1 );
-        $option   .= "\n<br>" if $option;
-        $option   .= $locale->text('Reference') . " : $form->{reference}";
+        push @options, $locale->text('Reference') . " : $form->{reference}";
     }
     if ( $form->{department} ) {
         $href .= "&department=" . $form->escape( $form->{department} );
         $callback .= "&department=" . $form->escape( $form->{department}, 1 );
         ($department) = split /--/, $form->{department};
-        $option .= "\n<br>" if $option;
-        $option .= $locale->text('Department') . " : $department";
+        push @options, $locale->text('Department') . " : $department";
     }
 
     if ( $form->{description} ) {
         $href     .= "&description=" . $form->escape( $form->{description} );
         $callback .= "&description=" . $form->escape( $form->{description}, 1 );
-        $option   .= "\n<br>" if $option;
-        $option   .= $locale->text('Description') . " : $form->{description}";
+        push @options, $locale->text('Description') . " : $form->{description}";
     }
     if ( $form->{notes} ) {
         $href     .= "&notes=" . $form->escape( $form->{notes} );
         $callback .= "&notes=" . $form->escape( $form->{notes}, 1 );
-        $option   .= "\n<br>" if $option;
-        $option   .= $locale->text('Notes') . " : $form->{notes}";
+        push @options, $locale->text('Notes') . " : $form->{notes}";
     }
 
     if ( $form->{datefrom} ) {
         $href     .= "&datefrom=$form->{datefrom}";
         $callback .= "&datefrom=$form->{datefrom}";
-        $option   .= "\n<br>" if $option;
-        $option .=
-            $locale->text('From') . " "
+        push @options, $locale->text('From') . " "
           . $locale->date( \%myconfig, $form->{datefrom}, 1 );
     }
     if ( $form->{dateto} ) {
         $href     .= "&dateto=$form->{dateto}";
         $callback .= "&dateto=$form->{dateto}";
+        my $option = $locale->text('To') . " "
+          . $locale->date( \%myconfig, $form->{dateto}, 1 );
         if ( $form->{datefrom} ) {
-            $option .= " ";
+            $options[$#options] .= " $option";
         }
         else {
-            $option .= "\n<br>" if $option;
+            push @options, $option;
         }
-        $option .=
-            $locale->text('To') . " "
-          . $locale->date( \%myconfig, $form->{dateto}, 1 );
     }
 
     if ( $form->{amountfrom} ) {
         $href     .= "&amountfrom=$form->{amountfrom}";
         $callback .= "&amountfrom=$form->{amountfrom}";
-        $option   .= "\n<br>" if $option;
-        $option .=
-            $locale->text('Amount') . " >= "
+        push @options, $locale->text('Amount') . " >= "
           . $form->format_amount( \%myconfig, $form->{amountfrom}, 2 );
     }
     if ( $form->{amountto} ) {
         $href     .= "&amountto=$form->{amountto}";
         $callback .= "&amountto=$form->{amountto}";
+        my $option .= $form->format_amount( \%myconfig, $form->{amountto}, 2 );
         if ( $form->{amountfrom} ) {
-            $option .= " <= ";
+            $options[$#options] .= " <= $option";
         }
         else {
-            $option .= "\n<br>" if $option;
-            $option .= $locale->text('Amount') . " <= ";
+            push @options, $locale->text('Amount') . " <= $option";
         }
-        $option .= $form->format_amount( \%myconfig, $form->{amountto}, 2 );
     }
 
     @columns =
@@ -803,9 +789,9 @@ sub generate_report {
         );
     }
     $template->render({
-        form => $form,
+        form => \%$form,
         buttons => \@buttons,
-        options => $option,
+        options => \@options,
         columns => \@column_index,
         heading => \%column_header,
         rows => \@rows,
