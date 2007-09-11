@@ -14,17 +14,17 @@
 <?lsmb PROCESS elements.html ?>
 <body>
 
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop><?lsmb form.title ?></th>
+    <th class="listtop"><?lsmb form.title ?></th>
   </tr>
-  <tr height="5"></tr>
+  <tr><td colspan="<?lsmb columns.size ?>"> </td></tr>
   <tr>
     <td><?lsmb options ?></td>
   </tr>
   <tr>
     <td>
-      <table width=100%>
+      <table width="100%">
 	<tr class="listheading">
 <?lsmb FOREACH column IN columns ?><?lsmb IF heading.$column.href ?>
 <th class="listheading"><a class="listheading" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a></th>
@@ -63,23 +63,23 @@
    </tr>
 <?lsmb END ?>
 <?lsmb END ?>
-	<tr class=listtotal>
+	<tr class="listtotal">
 <?lsmb FOREACH column IN columns ?>
-<th align=right class=listtotal><?lsmb totals.$column ?></th>
+<th align="right" class="listtotal"><?lsmb totals.$column ?></th>
 <?lsmb END ?>
         </tr>
       </table>
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade="noshade" /></td>
   </tr>
 </table>
 
 <br />
 
-<form method=post action=gl.pl>
-<?lsmb FOREACH pair IN form.callback.split('&') ?><?lsmb hidden = pair.split('=') ?>
+<form method="post" action="gl.pl">
+<?lsmb FOREACH pair IN form.callback.split('&amp;') ?><?lsmb hidden = pair.split('=') ?>
 <?lsmb IF NOT loop.first ?>
 <?lsmb PROCESS input element_data={type => 'hidden', name => hidden.0, value => hidden.1} ?>
 <?lsmb END ?><?lsmb END ?>
