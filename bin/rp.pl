@@ -994,8 +994,14 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
         print qq|
       <tr class="listrow$i">
       |;
-        map { print "<td>$ref->{$_}</td>\n" } @column_index;
-
+        for (@column_index) {
+            if ($_ eq 'description' or $_ eq 'partnumber') {
+                print '<td>';
+            } else {
+                print '<td align="right">';
+            }
+            print "$ref->{$_}</td>\n";
+        }
         print qq|
       </tr>
 |;
