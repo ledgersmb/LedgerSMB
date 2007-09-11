@@ -1,13 +1,83 @@
 -- Contacts
-
-CREATE ROLE lsmb_<?lsmb dbname ?>__create_contact
-WITH INHERIT NOLOGIN;
-
-CREATE ROLE lsmb_<?lsmb dbname ?>__edit_contact
-WITH INHERIT NOLOGIN;
-
 CREATE ROLE lsmb_<?lsmb dbname ?>__read_contact
 WITH INHERIT NOLOGIN;
+
+GRANT SELECT ON entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON company TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON person TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON entity_credit_account TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON company_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON company_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON company_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON customertax TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON employee TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON customer TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON contact_class TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON entity_class TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON entity_bank_account TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON entity_note TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON entity_class_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON entity_other_name TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON location_class TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON person_to_company TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON vendortax TO lsmb_<?lsmb dbname ?>__create_contact;
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__create_contact
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT INSERT ON entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON company TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON person TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON entity_credit_account TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON company_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON company_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON company_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON customertax TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON employee TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON customer TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON entity_bank_account TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON entity_note TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON entity_class_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON entity_other_name TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON person_to_company TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT INSERT ON vendortax TO lsmb_<?lsmb dbname ?>__create_contact;
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__edit_contact
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT UPDATE ON entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON company TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON person TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON entity_credit_account TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON company_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON company_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON company_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON customertax TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON employee TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON customer TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON entity_bank_account TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON entity_note TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON entity_class_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON entity_other_name TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON person_to_company TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT UPDATE ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT DELETE, INSERT  ON vendortax TO lsmb_<?lsmb dbname ?>__create_contact;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__contact_all_rights
 WITH INHERIT NOLOGIN 
@@ -19,35 +89,60 @@ lsmb_<?lsmb dbname ?>__read_contact;
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_batch
 WITH INHERIT NOLOGIN;
 
-CREATE ROLE lsmb_<?lsmb dbname ?>__create_list_batches
+GRANT INSERT ON batch TO lsmb_<?lsmb dbname ?>__create_batch;
+GRANT SELECT ON batch_class TO lsmb_<?lsmb dbname ?>__create_batch;
+GRANT INSERT ON voucher TO lsmb_<?lsmb dbname ?>__create_batch;
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__post_batches
 WITH INHERIT NOLOGIN;
 
-CREATE ROLE lsmb_<?lsmb dbname ?>__create_post_batches
-WITH INHERIT NOLOGIN;
-
+GRANT UPDATE ON ar TO lsmb_<?lsmb dbname ?>__post_batches;
+GRANT UPDATE ON ap TO lsmb_<?lsmb dbname ?>__post_batches;
+GRANT UPDATE ON acc_trans TO lsmb_<?lsmb dbname ?>__post_batches;
+GRANT UPDATE ON batch TO lsmb_<?lsmb dbname ?>__post_batches;
+GRANT UPDATE ON gl TO lsmb_<?lsmb dbname ?>__post_batches;
 
 -- AR
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ar_transaction
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
+GRANT INSERT ON ar TO lsmb_<?lsmb dbname ?>__create_ar_transaction;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_ar_transaction;
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ar_transaction_voucher
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact,
 lsmb_<?lsmb dbname ?>__create_batch;
 
+GRANT INSERT ON ar TO lsmb_<?lsmb dbname ?>__create_ar_transaction_voucher;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_ar_transaction_voucher;
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ar_invoice
 WITH INHERIT NOLOGIN
-IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact,
+lsmb_<?lsmb dbname ?>__create_ar_transaction;
+
+GRANT INSERT ON invoice TO lsmb_<?lsmb dbname ?>__create_ar_invoice;
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__create_ar_invoice;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_ar_invoice_voucher
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact,
-lsmb_<?lsmb dbname ?>__create_batch;
+lsmb_<?lsmb dbname ?>__create_batch,
+lsmb_<?lsmb dbname ?>__create_ar_transaction_voucher;
+
+GRANT INSERT ON invoice TO lsmb_<?lsmb dbname ?>__create_ar_invoice_voucher;
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__create_ar_invoice_voucher;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_ar_transactions
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT SELECT ON ar TO lsmb_<?lsmb dbname ?>__list_ar_transactions;
+GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__list_ar_transactions;
+GRANT SELECT ON invoice TO lsmb_<?lsmb dbname ?>__list_ar_transactions
+GRANT SELECT ON inventory TO lsmb_<?lsmb dbname ?>__list_ar_transactions
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__ar_all_vouchers
 WITH INHERIT NOLOGIN 
@@ -64,17 +159,29 @@ CREATE ROLE lsmb_<?lsmb dbname ?>__create_sales_order
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
+GRANT INSERT ON oe TO lsmb_<?lsmb dbname ?>__create_sales_order;
+GRANT INSERT ON orderitems TO lsmb_<?lsmb dbname ?>__create_sales_order;
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_sales_quotation
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT INSERT ON oe TO lsmb_<?lsmb dbname ?>__create_sales_quotation;
+GRANT INSERT ON orderitems TO lsmb_<?lsmb dbname ?>__create_sales_quotation;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_sales_orders
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
+GRANT SELECT ON oe TO lsmb_<?lsmb dbname ?>__list_sales_orders;
+GRANT SELECT ON orderitems TO lsmb_<?lsmb dbname ?>__list_sales_orders;
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_sales_quotations
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT SELECT ON oe TO lsmb_<?lsmb dbname ?>__list_sales_quotations;
+GRANT SELECT ON orderitems TO lsmb_<?lsmb dbname ?>__list_sales_quotations;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_ar
 WITH INHERIT NOLOGIN 
@@ -148,7 +255,8 @@ lsmb_<?lsmb dbname ?>__list_purchase_rfqs;
 -- POS
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_pos_invoice
 WITH INHERIT NOLOGIN
-IN ROLE lsmb_<?lsmb dbname ?>__create_sales_invoice;
+IN ROLE lsmb_<?lsmb dbname ?>__create_sales_invoice,
+lsmb_<?lsmb dbname ?>__create_ar_invoice;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__close_till
 WITH INHERIT NOLOGIN;
@@ -234,6 +342,14 @@ lsmb_<?lsmb dbname ?>__list_ap_transactions;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__run_yearend
 WITH INHERIT NOLOGIN;
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__create_list_batches
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__create_list_transactions;
+
+GRANT SELECT ON batch TO lsmb_<?lsmb dbname ?>__create_list_batches;
+GRANT SELECT ON batch_class TO lsmb_<?lsmb dbname ?>__create_list_batches;
+GRANT SELECT ON voucher TO lsmb_<?lsmb dbname ?>__create_list_batches;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_gl
 WITH INHERIT NOLOGIN
