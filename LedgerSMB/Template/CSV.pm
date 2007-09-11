@@ -60,13 +60,9 @@ sub preprocess {
 		}
 	} elsif ( !$type ) { # Scalar
 		$vars = $rawvars;
-		$vars =~ s/\&nbsp;/ /;
-		$vars =~ s/(\t\n\r )+/ /g;
 		$vars =~ s/(^ +| +$)//g;
-		$vars =~ s/~/\\~/g;
-		$vars =~ s/<.*?>//g;
-		$vars = qq|"$vars"| if $vars !~ /^\w+$/;
-		$vars = '' if $vars =~ /^""$/;
+		$vars =~ s/"/""/g;
+		$vars = qq|"$vars"| if $vars !~ /^\w*$/;
 	} else { # hashes and objects
 		for ( keys %{$rawvars} ) {
 			$vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
@@ -94,7 +90,7 @@ sub process {
 		"$parent->{outputfile}.csv", binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
-	$parent->{mimetype} = 'text/plain';
+	$parent->{mimetype} = 'text/csv';
 }
 
 sub postprocess {
