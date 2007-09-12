@@ -481,6 +481,15 @@ values (19, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_all_open
 WITH INHERIT NOLOGIN;
 
+GRANT SELECT ON ar TO lsmb_<?lsmb dbname ?>__list_all_open;
+GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__list_all_open;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (16, 'allow', 'lsmb_<?lsmb dbname ?>__list_all_open');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (18, 'allow', 'lsmb_<?lsmb dbname ?>__list_all_open');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__pos_cashier
 WITH INHERIT NOLOGIN
 lsmb_<?lsmb dbname ?>__create_pos_invoice,
@@ -495,8 +504,29 @@ lsmb_<?lsmb dbname ?>__list_all_open;
 CREATE ROLE lsmb_<?lsmb dbname ?>__reconcile
 WITH INHERIT NOLOGIN;
 
+GRANT INSERT ON pending_reports TO lsmb_<?lsmb dbname ?>__reconcile;
+GRANT INSERT on report_corrections TO lsmb_<?lsmb dbname ?>__reconcile;
+GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__reconcile;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconcile');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (45, 'allow', 'lsmb_<?lsmb dbname ?>_reconcile');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__approve_reconciliation
 WITH INHERIT NOLOGIN;
+
+GRANT UPDATE ON pending_reports TO lsmb_<?lsmb dbname ?>__reconcile;
+GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__reconcile;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconcile');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (41, 'allow', 'lsmb_<?lsmb dbname ?>_reconcile');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (44, 'allow', 'lsmb_<?lsmb dbname ?>_reconcile');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_reconcile
 WITH INHERIT NOLOGIN
@@ -505,11 +535,31 @@ lsmb_<?lsmb dbname ?>__approve_reconciliation;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__process_payment
 WITH INHERIT NOLOGIN
-IN ROLE ar_list_transactions;
+IN ROLE ap_list_transactions;
+
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__process_payment;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>__process_payment');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (38, 'allow', 'lsmb_<?lsmb dbname ?>__process_payment');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (39, 'allow', 'lsmb_<?lsmb dbname ?>__process_payment');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__process_receipt
 WITH INHERIT NOLOGIN
-IN ROLE ap_list_transactions;
+IN ROLE ar_list_transactions;
+
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__process_receipt;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>__process_receipt');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (36, 'allow', 'lsmb_<?lsmb dbname ?>__process_receipt');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (47, 'allow', 'lsmb_<?lsmb dbname ?>__process_receipt');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__cash_all
 WITH INHERIT NOLOGIN
@@ -519,6 +569,24 @@ lsmb_<?lsmb dbname ?>__process_receipt;
 
 -- Inventory Control
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_part
+WITH INHERIT NOLOGIN;
+
+GRANT INSERT ON parts TO lsmb_<?lsmb dbname ?>__create_part;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (77, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (78, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (79, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (80, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (81, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (82, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__edit_part
 WITH INHERIT NOLOGIN;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__inventory_reports
