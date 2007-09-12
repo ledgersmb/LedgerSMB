@@ -370,7 +370,6 @@ sub payments_header {
 }
 
 sub invoices_due {
-
     @column_index =
       qw(name invnumber transdate amount due checked paid memo source);
     push @column_index, "language" if $form->{selectlanguage};
@@ -715,7 +714,8 @@ sub update_payments {
 
         for (qw(amount due paid)) {
             $form->{"${_}_$i"} =
-              $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 );
+              $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
+		if $form->{"${_}_$i"};
         }
     }
 
@@ -891,7 +891,8 @@ qq|$form->{"all_$form->{vc}"}[0]->{name}--$form->{"all_$form->{vc}"}[0]->{id}|;
 
         for (qw(amount due paid)) {
             $form->{"${_}_$i"} =
-              $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 );
+              $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
+		if $form->{"${_}_$i"};
         }
     }
 
