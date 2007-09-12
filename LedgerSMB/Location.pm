@@ -59,21 +59,27 @@ sub AUTOLOAD {
 }
 
 sub save {
-    $ref = shift @{ $self->exec_method( procname => "location_save" ) };
+    my $self = shift;
+    my $ref = shift @{ $self->exec_method( procname => "location_save" ) };
     $self->merge( $ref, 'id' );
 }
 
 sub get {
-    $ref = shift @{ $self->exec_method( procname => 'location_get' ) };
+    my $self = shift;
+    my $ref = shift @{ $self->exec_method( procname => 'location_get' ) };
     $self->merge( $ref, keys %{$ref} );
 }
 
 sub search {
-    $self->{search_results} =
+    my $self = shift;
+    my $self->{search_results} =
       $self->exec_method( procname => 'location_search' );
 }
 
 sub list_all {
-    $self->{search_results} =
+    my $self = shift;
+    my $self->{search_results} =
       $self->exec_method( procname => 'location_list_all' );
 }
+
+1;

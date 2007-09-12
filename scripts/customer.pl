@@ -22,6 +22,8 @@ package LedgerSMB::Scripts::customer;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 
+require '../lsmb-request.pl';
+
 =pod
 
 =over

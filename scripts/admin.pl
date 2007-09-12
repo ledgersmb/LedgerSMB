@@ -1,4 +1,6 @@
-package LedgerSMB::Scripts::Admin;
+package LedgerSMB::Scripts::admin;
+
+require '../lsmb-request.pl';
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
