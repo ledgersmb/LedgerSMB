@@ -1527,7 +1527,7 @@ sub save_language {
 
             foreach $file (@templates) {
                 if ( -f "$myconfig{templates}/$file" ) {
-                    open( TEMP, '<,', "$myconfig{templates}/$file" )
+                    open( TEMP, '<', "$myconfig{templates}/$file" )
                       or $form->error("$myconfig{templates}/$file : $!");
 
                     open( NEW, '>', "$myconfig{templates}/$form->{code}/$file" )
