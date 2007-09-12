@@ -68,6 +68,9 @@ Donna Robinson [email omitted] contributed some fixes to the HTML code.
 Victor Sterpu <victor @ ambra.ro> has contributed some bug fixes to COGS 
 handling.
 
+Chad Phillips [email omitted]  Various bugfixes.  Also contributed a template
+widget system for 1.3.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
