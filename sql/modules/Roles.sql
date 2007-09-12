@@ -744,24 +744,60 @@ lsmb_<?lsmb dbname ?>__create_warehouse;
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_transaction
 WITH INHERIT NOLOGIN;
 
+GRANT INSERT ON gl TO lsmb_<?lsmb dbname ?>__create_transaction;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_transaction;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (73, 'allow', 'lsmb_<?lsmb dbname ?>__create_transaction');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (74, 'allow', 'lsmb_<?lsmb dbname ?>__create_transaction');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (75, 'allow', 'lsmb_<?lsmb dbname ?>__create_transaction');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>__create_transaction');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (40, 'allow', 'lsmb_<?lsmb dbname ?>__create_transaction');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_transaction_voucher
 WITH INHERIT NOLOGIN;
+
+GRANT INSERT ON gl TO lsmb_<?lsmb dbname ?>__create_transaction;
+GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_transaction;
+
+-- TODO Add menu permissions
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__list_transactions
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__list_ar_transactions,
 lsmb_<?lsmb dbname ?>__list_ap_transactions;
 
+GRANT SELECT ON gl TO lsmb_<?lsmb dbname ?>__list_transactions;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (73, 'allow', 'lsmb_<?lsmb dbname ?>__list_transactions');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (76, 'allow', 'lsmb_<?lsmb dbname ?>__list_transactions');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__run_yearend
 WITH INHERIT NOLOGIN;
 
-CREATE ROLE lsmb_<?lsmb dbname ?>__create_list_batches
-WITH INHERIT NOLOGIN
-IN ROLE lsmb_<?lsmb dbname ?>__create_list_transactions;
+GRANT INSERT, SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__run_yearend;
 
-GRANT SELECT ON batch TO lsmb_<?lsmb dbname ?>__create_list_batches;
-GRANT SELECT ON batch_class TO lsmb_<?lsmb dbname ?>__create_list_batches;
-GRANT SELECT ON voucher TO lsmb_<?lsmb dbname ?>__create_list_batches;
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (128, 'allow', 'lsmb_<?lsmb dbname ?>__run_yearend');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (132, 'allow', 'lsmb_<?lsmb dbname ?>__run_yearend');
+
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__list_batches
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__list_transactions;
+
+GRANT SELECT ON batch TO lsmb_<?lsmb dbname ?>__list_batches;
+GRANT SELECT ON batch_class TO lsmb_<?lsmb dbname ?>__list_batches;
+GRANT SELECT ON voucher TO lsmb_<?lsmb dbname ?>__list_batches;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_gl
 WITH INHERIT NOLOGIN
@@ -774,8 +810,12 @@ lsmb_<?lsmb dbname ?>__list_transactions;
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_project
 WITH INHERIT NOLOGIN;
 
-CREATE ROLE lsmb_<?lsmb dbname ?>__add_project_timecard
+CREATE ROLE lsmb_<?lsmb dbname ?>__edit_project
 WITH INHERIT NOLOGIN;
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__add_project_timecard
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
 -- ORDER GENERATION
 CREATE ROLE lsmb_<?lsmb dbname ?>__project_generate_orders
