@@ -586,23 +586,148 @@ values (81, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (82, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
 
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__edit_part
 WITH INHERIT NOLOGIN;
+
+GRANT UPDATE ON parts TO lsmb_<?lsmb dbname ?>__edit_part;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (77, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (85, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (86, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (87, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (88, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (89, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (90, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (91, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (93, 'allow', 'lsmb_<?lsmb dbname ?>__edit_part');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__inventory_reports
 WITH INHERIT NOLOGIN;
 
+GRANT SELECT ON ar TO lsmb_<?lsmb dbname ?>__inventory_reports;
+GRANT SELECT ON ap TO lsmb_<?lsmb dbname ?>__inventory_reports;
+GRANT SELECT ON inventory TO lsmb_<?lsmb dbname ?>__inventory_reports;
+GRANT SELECT ON invoice TO lsmb_<?lsmb dbname ?>__inventory_reports;
+GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__inventory_reports;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (77, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (85, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (88, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (94, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
+
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__create_pricegroup
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT INSERT ON pricegroup TO lsmb_<?lsmb dbname ?>__create_pricegroup;
+GRANT UPDATE ON entity_credit_account TO lsmb_<?lsmb dbname ?>__create_pricegroup;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (77, 'allow', 'lsmb_<?lsmb dbname ?>__create_pricegroup');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (83, 'allow', 'lsmb_<?lsmb dbname ?>__create_pricegroup');
+
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__edit_pricegroup
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
+
+GRANT UPDATE ON pricegroup TO lsmb_<?lsmb dbname ?>__edit_pricegroup;
+GRANT UPDATE ON entity_credit_account TO lsmb_<?lsmb dbname ?>__edit_pricegroup;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (77, 'allow', 'lsmb_<?lsmb dbname ?>__edit_pricegroup');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (85, 'allow', 'lsmb_<?lsmb dbname ?>__edit_pricegroup');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (92, 'allow', 'lsmb_<?lsmb dbname ?>__edit_pricegroup');
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__stock_assembly
 WITH INHERIT NOLOGIN;
 
+GRANT UPDATE ON parts TO lsmb_<?lsmb dbname ?>__stock_assembly;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (77, 'allow', 'lsmb_<?lsmb dbname ?>__stock_assembly');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (84, 'allow', 'lsmb_<?lsmb dbname ?>__stock_assembly');
+
+
 CREATE ROLE lsmb_<?lsmb dbname ?>__ship_inventory
-WITH INHERIT NOLOGIN;
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__list_sales_orders;
+
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__ship_inventory;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (63, 'allow', 'lsmb_<?lsmb dbname ?>__ship_inventory');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (64, 'allow', 'lsmb_<?lsmb dbname ?>__ship_inventory');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__receive_inventory
+WITH INHERIT NOLOGIN
+IN ROLE lsmb_<?lsmb dbname ?>__list_purchase_orders;
+
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__receive_inventory;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (63, 'allow', 'lsmb_<?lsmb dbname ?>__receive_inventory');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (65, 'allow', 'lsmb_<?lsmb dbname ?>__receive_inventory');
+
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__transfer_inventory
 WITH INHERIT NOLOGIN;
+
+GRANT INSERT ON inventory TO lsmb_<?lsmb dbname ?>__transfer_inventory;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (63, 'allow', 'lsmb_<?lsmb dbname ?>__transfer_inventory');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (66, 'allow', 'lsmb_<?lsmb dbname ?>__transfer_inventory');
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_warehouse
 WITH INHERIT NOLOGIN;
+
+GRANT INSERT ON warehouse TO lsmb_<?lsmb dbname ?>__create_warehouse;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (128, 'allow', 'lsmb_<?lsmb dbname ?>__create_warehouse');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (141, 'allow', 'lsmb_<?lsmb dbname ?>__create_warehouse');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (142, 'allow', 'lsmb_<?lsmb dbname ?>__create_warehouse');
+
+
+CREATE ROLE lsmb_<?lsmb dbname ?>__edit_warehouse
+WITH INHERIT NOLOGIN;
+
+GRANT UPDATE ON warehouse TO lsmb_<?lsmb dbname ?>__edit_warehouse;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (128, 'allow', 'lsmb_<?lsmb dbname ?>__edit_warehouse');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (141, 'allow', 'lsmb_<?lsmb dbname ?>__edit_warehouse');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (143, 'allow', 'lsmb_<?lsmb dbname ?>__edit_warehouse');
+
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_inventory
 WITH INHERIT NOLOGIN
@@ -611,6 +736,8 @@ lsmb_<?lsmb dbname ?>__inventory_reports,
 lsmb_<?lsmb dbname ?>__stock_assembly,
 lsmb_<?lsmb dbname ?>__ship_inventory,
 lsmb_<?lsmb dbname ?>__receive_inventory,
+lsmb_<?lsmb dbname ?>__transfer_inventory,
+lsmb_<?lsmb dbname ?>__edit_warehouse,
 lsmb_<?lsmb dbname ?>__create_warehouse;
 
 -- GL 
