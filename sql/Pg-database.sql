@@ -6,8 +6,44 @@ CREATE SEQUENCE id;
 -- can be named anything.
 
 -- USERS stuff --
-CREATE TABLE users (id serial UNIQUE, username varchar(30) primary key);
+CREATE TABLE users (
+    id serial UNIQUE, 
+    username varchar(30) primary key
+    entity_id not null references entity(id) on delete cascade
+);
 COMMENT ON TABLE users IS $$username is the actual primary key here because we do not want duplicate users$$;
+
+create table user_connection (
+    user_id int not null references user(id) on delete cascade,
+    dbname text not null,
+    host text not null default 'localhost',
+    port int not null default '5432'
+);
+
+CREATE VIEW users_conf as
+    select 
+        user.id, 
+        loc.address1 || '\n'|| loc.address2 ||'\n' || loc.address3,
+        em.employeenumber,
+        company,
+        loc.country,
+        currency,
+        dateformat,
+        'Pg',
+        u_cx.host
+        u_cx.dbname,
+        u_cx.dbport,
+        user.username,
+        p.email,
+        p.fax,
+        50,
+        p.first_name || ' ' || p.last_name,
+        p.number_format,
+        '', -- password
+        
+        
+;
+
 CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
                         acs text,
                         address text,
