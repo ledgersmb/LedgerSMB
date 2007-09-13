@@ -75,12 +75,14 @@ sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
 	my $template;
-
+	
 	$template = Template->new({
 		INCLUDE_PATH => $parent->{include_path},
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
+		DEBUG => ($parent->{debug})? 'dirs': undef,
+		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template->error(); 
 	if (not $template->process(
 		get_template($parent->{template}), 

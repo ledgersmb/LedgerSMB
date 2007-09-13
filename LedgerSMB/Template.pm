@@ -11,17 +11,58 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => 'HTML', [language => $string,] [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool]] );
+=item new(user => \%myconfig, template => $string, format => $string, [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool] );
 
 This command instantiates a new template:
-template is the file name of the template to be processed.
-format is the type of format to be used.  Currently only HTML is supported
-language (optional) specifies the language for template selection.
-include_path allows one to override the template directory and use this with user interface templates.
-no_auto_output disables the automatic output of rendered templates.
-no_escape disables escaping on the template variables.
-method is the output method to use, defaults to HTTP
-media is a synonym for method
+
+=over
+
+=item template
+
+The name of the template file to be processed.
+
+=item format
+
+The format to be used.  Currently HTML, PS, PDF, TXT and CSV are supported.
+
+=item language (optional)
+
+The language for template selection.
+
+=item include_path (optional)
+
+Overrides the template directory.  Used with user interface templates.
+
+=item no_auto_output (optional)
+
+Disables the automatic output of rendered templates.
+
+=item no_escape (optional)
+
+Disables escaping on the template variables.
+
+=item debug (optional)
+
+Enables template debugging.
+
+With the TT-based renderers, HTML, PS, PDF, TXT, and CSV, the portion of the
+template to get debugging messages is to be surrounded by
+<?lsmb DEBUG format 'foo' ?> statements.  Example:
+
+    <tr><td colspan="<?lsmb columns.size ?>"></td></tr>
+    <tr class="listheading">
+  <?lsmb FOREACH column IN columns ?>
+  <?lsmb DEBUG format '$file line $line : [% $text %]' ?>
+      <th class="listtop"><?lsmb heading.$column ?></th>
+  <?lsmb DEBUG format '' ?>
+  <?lsmb END ?>
+    </tr>
+
+=item method/media (optional)
+
+The output method to use, defaults to HTTP.  Media is a synonym for method
+
+=back
 
 =item render($hashref)
 
@@ -64,6 +105,7 @@ sub new {
 	$self->{format} = 'PS' if lc $self->{format} eq 'postscript';
 	$self->{language} = $args{language};
 	$self->{no_escape} = $args{no_escape};
+	$self->{debug} = $args{debug};
 	if ($args{outputfile}) {
 		$self->{outputfile} =
 			"${LedgerSMB::Sysconfig::tempdir}/$args{outputfile}";
