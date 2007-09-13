@@ -84,7 +84,6 @@ sub __generate {
 	for (@{$attribute->{args}}){
             if ($_ =~ /(module|menu|action)=/){
                @elems = split(/=/, $_);
-               print STDERR join(','. @elems) . "\n";
                $attribute->{$elems[0]} = $elems[1];
             }
         }
