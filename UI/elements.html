@@ -40,71 +40,89 @@
 
 <?lsmb # INPUT ELEMENT ?>
 <?lsmb BLOCK input ?>
-  <?lsmb input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with. ?>
-  <?lsmb SWITCH element_data.type;  # Merge in type-specific attributes.
-      CASE 'file';
-        input_type_keys = input_keys.merge(['accept']);
-        input_defaults = file_defaults;
-      CASE 'image';
-        input_type_keys = input_keys.merge(['alt', 'src']);
-      CASE ['checkbox'];
-        input_type_keys = input_keys.merge(['checked']);
-        input_defaults = checkbox_defaults;
-      CASE ['radio'];
-        input_type_keys = input_keys.merge(['checked']);
-      CASE ['password'];
-        input_defaults = password_defaults;
-      CASE 'text';
-        input_type_keys = input_keys.merge(['maxlength', 'readonly']);
-        input_defaults = text_defaults;
-      CASE;
-        input_type_keys = input_keys;
-    END;
-  ?>
-  <?lsmb PROCESS attributes  # Process regular attributes.
-    attribute_data = element_data 
-    attribute_defaults = input_defaults
-    element_keys = input_type_keys 
-    element_type = 'input'
-  ?>
-  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-    custom_attribute_data=element_data.attributes 
-  ?>
-  <input<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> />
+  <?lsmb IF element_data  # Only process element if one exists. ?>
+  	<?lsmb
+	    input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with.
+	    element_type = 'input';
+	    PROCESS auto_id;
+	  ?>
+	  <?lsmb SWITCH element_data.type;  # Merge in type-specific attributes.
+	      CASE 'file';
+	        input_type_keys = input_keys.merge(['accept']);
+	        input_defaults = file_defaults;
+	      CASE 'image';
+	        input_type_keys = input_keys.merge(['alt', 'src']);
+	      CASE ['checkbox'];
+	        input_type_keys = input_keys.merge(['checked']);
+	        input_defaults = checkbox_defaults;
+	      CASE ['radio'];
+	        input_type_keys = input_keys.merge(['checked']);
+	      CASE ['password'];
+	        input_defaults = password_defaults;
+	      CASE 'text';
+	        input_type_keys = input_keys.merge(['maxlength', 'readonly']);
+	        input_defaults = text_defaults;
+	      CASE;
+	        input_type_keys = input_keys;
+	    END;
+	  ?>
+	  <?lsmb PROCESS attributes  # Process regular attributes.
+	    attribute_data = element_data 
+	    attribute_defaults = input_defaults
+	    element_keys = input_type_keys 
+	  ?>
+	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
+	    custom_attribute_data=element_data.attributes 
+	  ?>
+	  <?lsmb PROCESS auto_label  # Process element label. ?>
+	  <input<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> />
+  <?lsmb END ?>
 <?lsmb END ?>
 
 <?lsmb # TEXTAREA ELEMENT ?>
 <?lsmb BLOCK textarea ?>
-  <?lsmb PROCESS attributes  # Process regular attributes.
-    attribute_data=element_data 
-    attribute_defaults = textarea_defaults
-    element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly', 'tabindex', 'accesskey', 'value']  # Attributes that apply to textareas.
-    element_type = 'textarea'
-  ?>
-  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-    custom_attribute_data=element_data.attributes 
-  ?>
-  <textarea<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></textarea>
+  <?lsmb IF element_data  # Only process element if one exists. ?>
+  	<?lsmb
+	    element_type = 'textarea';
+	    PROCESS auto_id;
+	  ?>
+	  <?lsmb PROCESS attributes  # Process regular attributes.
+	    attribute_data=element_data 
+	    attribute_defaults = textarea_defaults
+	    element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly', 'tabindex', 'accesskey', 'value']  # Attributes that apply to textareas.
+	  ?>
+	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
+	    custom_attribute_data=element_data.attributes 
+	  ?>
+	  <?lsmb PROCESS auto_label  # Process element label. ?>
+	  <textarea<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></textarea>
+  <?lsmb END ?>
 <?lsmb END ?>
 
 <?lsmb # SELECT ELEMENT ?>
 <?lsmb BLOCK select ?>
-  <?lsmb PROCESS attributes  # Process regular attributes.
-    attribute_data=element_data
-    attribute_defaults = {}  # Make sure old defaults are cleared out.
-    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey', 'tabindex']  # Attributes that apply to selects.
-    element_type = 'select'
-  ?>
-  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-    custom_attribute_data=element_data.attributes 
-  ?>
-  <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
-    <?lsmb  # Build options.
-      FOREACH option_data IN element_data.options;
-        PROCESS option;
-      END;
-    ?>
-  </select>
+  <?lsmb IF element_data  # Only process element if one exists. ?>
+  	<?lsmb
+	    element_type = 'select';
+	    PROCESS auto_id;
+	  ?>
+	  <?lsmb PROCESS attributes  # Process regular attributes.
+	    attribute_data=element_data
+	    attribute_defaults = {}  # Make sure old defaults are cleared out.
+	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey', 'tabindex']  # Attributes that apply to selects.
+	  ?>
+	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
+	    custom_attribute_data=element_data.attributes 
+	  ?>
+	  <?lsmb PROCESS auto_label  # Process element label. ?>
+	  <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
+	    <?lsmb  # Build options.
+	      FOREACH option_data IN element_data.options;
+	        PROCESS option;
+	      END;
+	    ?>
+	  </select>
+  <?lsmb END ?>
 <?lsmb END ?>
 
 <?lsmb # OPTION ELEMENT ?>
@@ -119,7 +137,6 @@
   <?lsmb PROCESS attributes  # Process regular attributes.
     attribute_data=option_data 
     element_keys=['tabindex', 'disabled', 'value']  # Attributes that apply to options.
-    element_type = 'option'
   ?>
   <?lsmb PROCESS custom_attributes  # Process custom attributes.
     custom_attribute_data=option_data.attributes 
@@ -129,30 +146,41 @@
 
 <?lsmb # BUTTON ELEMENT ?>
 <?lsmb BLOCK button ?>
-  <?lsmb PROCESS attributes  # Process regular attributes.
-    attribute_data=element_data 
-    attribute_defaults = button_defaults
-    element_keys=['name', 'value', 'accesskey', 'type', 'disabled', 'tabindex']  # Attributes that apply to buttons.
-    element_type = 'button'
-  ?>
-  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-    custom_attribute_data=element_data.attributes 
-  ?>
-  <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
+  <?lsmb IF element_data  # Only process element if one exists. ?>
+  	<?lsmb
+	    element_type = 'button';
+	    PROCESS auto_id;
+	  ?>
+	  <?lsmb PROCESS attributes  # Process regular attributes.
+	    attribute_data=element_data 
+	    attribute_defaults = button_defaults
+	    element_keys=['name', 'value', 'accesskey', 'type', 'disabled', 'tabindex']  # Attributes that apply to buttons.
+	  ?>
+	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
+	    custom_attribute_data=element_data.attributes 
+	  ?>
+	  <?lsmb PROCESS auto_label  # Process element label. ?>
+	  <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
+  <?lsmb END ?>
 <?lsmb END ?>
 
 <?lsmb # LABEL ELEMENT ?>
 <?lsmb BLOCK label ?>
-  <?lsmb PROCESS attributes 
-    attribute_data=element_data 
-    attribute_defaults = {}  # Make sure old defaults are cleared out.
-    element_keys=['for']  # Attributes that apply to labels.
-    element_type = 'label'
-  ?>
-  <?lsmb PROCESS custom_attributes 
-    custom_attribute_data=element_data.attributes 
-  ?>
-  <label<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></label>
+  <?lsmb IF element_data  # Only process element if one exists. ?>
+  	<?lsmb
+	    element_type = 'label';
+	    PROCESS auto_id;
+	  ?>
+	  <?lsmb PROCESS attributes 
+	    attribute_data=element_data 
+	    attribute_defaults = {}  # Make sure old defaults are cleared out.
+	    element_keys=['for']  # Attributes that apply to labels.
+	  ?>
+	  <?lsmb PROCESS custom_attributes 
+	    custom_attribute_data=element_data.attributes 
+	  ?>
+	  <label<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></label>
+  <?lsmb END ?>
 <?lsmb END ?>
 
 <?lsmb # REGULAR ATTRIBUTE PROCESSING -- all explicitly allowed attributes are processed here. ?>
@@ -170,23 +198,6 @@
       END;
     ?>
   <?lsmb END ?>
-  <?lsmb UNLESS attribute_data.defined('id') # id attribute should always be set, so auto-set it if it's not defined. ?>
-    <?lsmb element_id = "" ?>
-    <?lsmb  # Labal id's default to [for]-label.
-      IF element_type == 'label' AND attribute_data.defined('for');
-        element_id = attribute_data.for _ "-label";
-      ELSIF ((element_type == 'input' AND attribute_data.type == 'radio') OR element_type == 'button') AND attribute_data.defined('name') AND attribute_data.defined('value');
-        element_id = attribute_data.name _ "-" _ attribute_data.value;  # radios and buttons get name-value for uniqueness.
-      ELSIF (element_type == 'input' OR element_type == 'textarea' OR element_type == 'select') AND attribute_data.defined('name');
-        element_id = attribute_data.name;
-      END;
-    ?>
-    <?lsmb  # Add the id if it's been generated.  Replace underscores with dashes -- nicer CSS.
-      IF element_id;
-        all_attributes = ' id="' _ element_id.replace('[_]', '-') _ '"' _ all_attributes; 
-      END;
-    ?>
-  <?lsmb END ?>
 <?lsmb END ?>
 
 <?lsmb # CUSTOM ATTRIBUTE PROCESSING -- any other attributes passed in the 'attributes' key are processed here. ?>
@@ -197,4 +208,46 @@
       all_custom_attributes = all_custom_attributes _ " " _ element_attribute.key _ '="' _ element_attribute.value _ '"';
     END;
   ?>
+<?lsmb END ?>
+
+<?lsmb BLOCK auto_id  # Automatically builds the id tag for the element if possible. ?>
+  <?lsmb UNLESS element_data.defined('id') # id attribute should always be set, so auto-set it if it's not defined. ?>
+    <?lsmb element_id = "" ?>
+    <?lsmb  # Labal id's default to [for]-label.
+      IF element_type == 'label' AND element_data.defined('for');
+        element_id = element_data.for _ "-label";
+      ELSIF ((element_type == 'input' AND element_data.type == 'radio') OR element_type == 'button') AND element_data.defined('name') AND element_data.defined('value');
+        element_id = element_data.name _ "-" _ element_data.value;  # radios and buttons get name-value for uniqueness.
+      ELSIF (element_type == 'input' OR element_type == 'textarea' OR element_type == 'select') AND element_data.defined('name');
+        element_id = element_data.name;
+      END;
+    ?>
+    <?lsmb  # Add the id if it's been generated.  Replace underscores with dashes -- nicer CSS.
+      IF element_id;
+        element_data.id = element_id.replace('[_]', '-'); 
+      END;
+    ?>
+  <?lsmb END ?>
+<?lsmb END ?>
+
+<?lsmb BLOCK auto_label  # Sets a label for a form element if the special 'label' key is passed. ?>
+  <?lsmb IF element_data.defined('label')  # Check for label. ?>
+    <?lsmb  # Add a for attribute for the label if possible.
+      IF element_data.defined('id');
+        label_id = ' id="' _ element_data.id _ '-label"';
+        label_for = ' for="' _ element_data.id _ '"';
+      ELSE;
+        label_id = "";
+        label_for = "";
+      END;
+    ?>
+    <?lsmb  # Label inherits class of the related element if possible.
+      IF element_data.defined('class');
+        label_class = ' class="' _ element_data.class _ '"';
+      ELSE;
+        label_class = "";
+      END;
+    ?>
+    <label<?lsmb label_id ?><?lsmb label_for ?><?lsmb label_class ?>><?lsmb text(element_data.label) ?></label>
+  <?lsmb END ?>
 <?lsmb END ?>
