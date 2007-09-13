@@ -11,7 +11,7 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale] [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool] );
 
 This command instantiates a new template:
 
@@ -24,6 +24,12 @@ The name of the template file to be processed.
 =item format
 
 The format to be used.  Currently HTML, PS, PDF, TXT and CSV are supported.
+
+=item locale (optional)
+
+The locale object to use for regular gettext lookups.  Having this option adds
+the text function to the usable list for the templates.  Has no effect on the
+gettext function.
 
 =item language (optional)
 
