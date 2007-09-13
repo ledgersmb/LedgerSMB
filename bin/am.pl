@@ -38,6 +38,7 @@ use LedgerSMB::Form;
 use LedgerSMB::User;
 use LedgerSMB::RP;
 use LedgerSMB::GL;
+use LedgerSMB::Template;
 
 1;
 
@@ -368,106 +369,97 @@ sub list_account {
     $callback =
 "$form->{script}?action=list_account&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
+    $form->{callback} = $callback;
     @column_index = qw(accno gifi_accno description debit credit link);
 
-    $column_header{accno} =
-      qq|<th class=listtop>| . $locale->text('Account') . qq|</a></th>|;
-    $column_header{gifi_accno} =
-      qq|<th class=listtop>| . $locale->text('GIFI') . qq|</a></th>|;
-    $column_header{description} =
-      qq|<th class=listtop>| . $locale->text('Description') . qq|</a></th>|;
-    $column_header{debit} =
-      qq|<th class=listtop>| . $locale->text('Debit') . qq|</a></th>|;
-    $column_header{credit} =
-      qq|<th class=listtop>| . $locale->text('Credit') . qq|</a></th>|;
-    $column_header{link} =
-      qq|<th class=listtop>| . $locale->text('Link') . qq|</a></th>|;
-
-    $form->header;
-    $colspan = $#column_index + 1;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop colspan=$colspan>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-</tr>
-|;
+    $column_header{accno} = $locale->text('Account');
+    $column_header{gifi_accno} = $locale->text('GIFI');
+    $column_header{description} = $locale->text('Description');
+    $column_header{debit} = $locale->text('Debit');
+    $column_header{credit} = $locale->text('Credit');
+    $column_header{link} = $locale->text('Link');
 
     # escape callback
     $callback = $form->escape($callback);
 
-    foreach $ca ( @{ $form->{CA} } ) {
+    my @rows;
+    foreach my $ca ( @{ $form->{CA} } ) {
 
-        $ca->{debit}  = "&nbsp;";
-        $ca->{credit} = "&nbsp;";
+        my %column_data;
+        $ca->{debit}  = " ";
+        $ca->{credit} = " ";
 
         if ( $ca->{amount} > 0 ) {
             $ca->{credit} =
-              $form->format_amount( \%myconfig, $ca->{amount}, 2, "&nbsp;" );
+              $form->format_amount( \%myconfig, $ca->{amount}, 2, " " );
         }
         if ( $ca->{amount} < 0 ) {
             $ca->{debit} =
-              $form->format_amount( \%myconfig, -$ca->{amount}, 2, "&nbsp;" );
+              $form->format_amount( \%myconfig, -$ca->{amount}, 2, " " );
         }
 
-        $ca->{link} =~ s/:/<br>/og;
+        #$ca->{link} =~ s/:/<br>/og;
 
         $gifi_accno = $form->escape( $ca->{gifi_accno} );
 
         if ( $ca->{charttype} eq "H" ) {
-            print qq|<tr class="listheading">|;
-
-            $column_data{accno} =
-qq|<th><a class="listheading" href="$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{accno}</a></th>|;
-            $column_data{gifi_accno} =
-qq|<th class="listheading"><a href="$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{gifi_accno}</a>&nbsp;</th>|;
-            $column_data{description} =
-              qq|<th class="listheading">$ca->{description}&nbsp;</th>|;
-            $column_data{debit}  = qq|<th>&nbsp;</th>|;
-            $column_data{credit} = qq| <th>&nbsp;</th>|;
-            $column_data{link}   = qq|<th>&nbsp;</th>|;
+            $column_data{heading} = 'H';
+            $column_data{accno} = {
+              text => $ca->{accno},
+              href => "$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
+            $column_data{gifi_accno} = {
+              text => $ca->{gifi_accno},
+              href => "$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
+            $column_data{description} = $ca->{description};
+            $column_data{debit}  = " ";
+            $column_data{credit} = " ";
+            $column_data{link}   = " ";
 
         }
         else {
             $i++;
             $i %= 2;
-            print qq|
-<tr valign=top class="listrow$i">|;
-            $column_data{accno} =
-qq|<td><a href="$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{accno}</a></td>|;
-            $column_data{gifi_accno} =
-qq|<td><a href="$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ca->{gifi_accno}</a>&nbsp;</td>|;
-            $column_data{description} = qq|<td>$ca->{description}&nbsp;</td>|;
-            $column_data{debit}       = qq|<td align="right">$ca->{debit}</td>|;
-            $column_data{credit} = qq|<td align="right">$ca->{credit}</td>|;
-            $column_data{link}   = qq|<td>$ca->{link}&nbsp;</td>|;
+            $column_data{i} = $i;
+            $column_data{accno} = {
+              text => $ca->{accno},
+              href => "$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
+            $column_data{gifi_accno} = {
+              text => $ca->{gifi_accno},
+              href => "$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
+            $column_data{description} = $ca->{description};
+            $column_data{debit}       = $ca->{debit};
+            $column_data{credit} = $ca->{credit};
+            $column_data{link}   = $ca->{link};
 
         }
-
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print "</tr>\n";
+        push @rows, \%column_data;
     }
 
-    print qq|
-  <tr><td colspan="$colspan"><hr size="3" noshade /></td></tr>
-</table>
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'csv_list_account',
+        text => $locale->text('CSV Report'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        locale => $locale,
+        path => 'UI',
+        template => 'am-list-accounts',
+        format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
+    $template->render({
+        form => \%$form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+    });
 }
+
+sub csv_list_account { &list_account }
 
 sub delete_account {
 

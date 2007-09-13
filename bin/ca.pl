@@ -47,6 +47,7 @@
 #======================================================================
 
 use LedgerSMB::CA;
+use LedgerSMB::Template;
 
 1;
 
@@ -86,109 +87,92 @@ sub chart_of_accounts {
 
     @column_index = qw(accno gifi_accno description debit credit);
 
-    $column_header{accno} =
-      qq|<th class=listtop>| . $locale->text('Account') . qq|</th>\n|;
-    $column_header{gifi_accno} =
-      qq|<th class=listtop>| . $locale->text('GIFI') . qq|</th>\n|;
-    $column_header{description} =
-      qq|<th class=listtop>| . $locale->text('Description') . qq|</th>\n|;
-    $column_header{debit} =
-      qq|<th class=listtop>| . $locale->text('Debit') . qq|</th>\n|;
-    $column_header{credit} =
-      qq|<th class=listtop>| . $locale->text('Credit') . qq|</th>\n|;
+    $column_header{accno} = $locale->text('Account');
+    $column_header{gifi_accno} = $locale->text('GIFI');
+    $column_header{description} = $locale->text('Description');
+    $column_header{debit} = $locale->text('Debit');
+    $column_header{credit} = $locale->text('Credit');
 
     $form->{title} = $locale->text('Chart of Accounts');
+    $form->{callback} = 
+      qq|$form->{script}?path=$form->{path}&action=chart_of_accounts&login=$form->{login}&sessionid=$form->{sessionid}|;
 
-    $colspan = $#column_index + 1;
+    my @rows;
+    my $totaldebit = 0;
+    my $totalcredit = 0;
+    foreach my $ca ( @{ $form->{CA} } ) {
+        my %column_data;
 
-    $form->header;
+        my $description      = $form->escape( $ca->{description} );
+        my $gifi_description = $form->escape( $ca->{gifi_description} );
 
-    print qq|
-<body>
-  
-<table border=0 width=100%>
-  <tr><th class=listtop colspan=$colspan>$form->{title}</th></tr>
-  <tr height="5"></tr>
-  <tr class=listheading>|;
-
-    for (@column_index) { print $column_header{$_} }
-
-    print qq|
-  </tr>
-|;
-
-    foreach $ca ( @{ $form->{CA} } ) {
-
-        $description      = $form->escape( $ca->{description} );
-        $gifi_description = $form->escape( $ca->{gifi_description} );
-
-        $href =
+        my $href =
 qq|$form->{script}?path=$form->{path}&action=list&accno=$ca->{accno}&login=$form->{login}&sessionid=$form->{sessionid}&description=$description&gifi_accno=$ca->{gifi_accno}&gifi_description=$gifi_description|;
 
         if ( $ca->{charttype} eq "H" ) {
-            print qq|<tr class=listheading>|;
+            $column_data{heading} = 'H';
             for (qw(accno description)) {
-                $column_data{$_} = "<th class=listheading>$ca->{$_}</th>";
+                $column_data{$_} = $ca->{$_};
             }
-            $column_data{gifi_accno} =
-              "<th class=listheading>$ca->{gifi_accno}&nbsp;</th>";
+            $column_data{gifi_accno} = $ca->{gifi_accno};
         }
         else {
             $i++;
             $i %= 2;
-            print qq|<tr class=listrow$i>|;
-            $column_data{accno} = "<td><a href=$href>$ca->{accno}</a></td>";
-            $column_data{gifi_accno} =
-"<td><a href=$href&accounttype=gifi>$ca->{gifi_accno}</a>&nbsp;</td>";
-            $column_data{description} = "<td>$ca->{description}</td>";
+            $column_data{i} = $i;
+            $column_data{accno} = {
+                text => $ca->{accno},
+                href => $href};
+            $column_data{gifi_accno} = {
+                text => $ca->{gifi_accno},
+                href => "$href&accounttype=gifi"};
+            $column_data{description} = $ca->{description};
         }
 
         $column_data{debit} =
-            "<td align=right>"
-          . $form->format_amount( \%myconfig, $ca->{debit}, 2, "&nbsp;" )
-          . "</td>\n";
+          $form->format_amount( \%myconfig, $ca->{debit}, 2, " " );
         $column_data{credit} =
-            "<td align=right>"
-          . $form->format_amount( \%myconfig, $ca->{credit}, 2, "&nbsp;" )
-          . "</td>\n";
+          $form->format_amount( \%myconfig, $ca->{credit}, 2, " " );
 
         $totaldebit  += $ca->{debit};
         $totalcredit += $ca->{credit};
 
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-</tr>
-|;
+	push @rows, \%column_data;
     }
 
     for (qw(accno gifi_accno description)) {
-        $column_data{$_} = "<td>&nbsp;</td>";
+        $column_data{$_} = " ";
     }
 
-    $column_data{debit} =
-      "<th align=right class=listtotal>"
-      . $form->format_amount( \%myconfig, $totaldebit, 2, 0 ) . "</th>";
-    $column_data{credit} =
-      "<th align=right class=listtotal>"
-      . $form->format_amount( \%myconfig, $totalcredit, 2, 0 ) . "</th>";
+    $column_data{debit} = $form->format_amount( \%myconfig, $totaldebit, 2, 0 );
+    $column_data{credit} = $form->format_amount(\%myconfig, $totalcredit, 2, 0);
 
-    print "<tr class=listtotal>";
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'csv_chart_of_accounts',
+        text => $locale->text('CSV Report'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-    for (@column_index) { print "$column_data{$_}\n" }
-
-    print qq|
-</tr>
-<tr>
-  <td colspan=$colspan><hr size=3 noshade></td>
-</tr>
-</table>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        locale => $locale,
+        path => 'UI',
+        template => 'am-list-accounts',
+        format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
+    $template->render({
+        form => \%$form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+	totals => \%column_data,
+        rows => \@rows,
+    });
 }
+
+sub csv_chart_of_accounts { &chart_of_accounts }
 
 sub list {
 
