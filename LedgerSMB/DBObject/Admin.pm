@@ -76,7 +76,7 @@ sub save_user {
             
             # do remove function
             $status = $self->exec_method(procname => "remove_user_from_role",
-                args=>[ $self->{ modifying_user }, $role ] 
+                args=>[ $self->{ modifying_user }, $role ] );
         }
         elsif ($self->{incoming_roles}->{$role} and !($active_roles{$role} )) {
             
@@ -154,9 +154,10 @@ sub delete_user {
         return 1;
     } else {
         
-        my $error = LedgerSMB::Error->new("Delete user failed.");
-        $error->set_status($status);
-        return $error;
+        $self->error('Delete user failed.');
+        #my $error = LedgerSMB::Error->new("Delete user failed.");
+        #$error->set_status($status);
+        #return $error;
     }
 }
 
@@ -173,9 +174,10 @@ sub delete_group {
         return 1;
     } else {
         
-        my $error = LedgerSMB::Error->new("Delete group failed.");
-        $error->set_status($status);
-        return $error;
+        $self->error('Delete group failed.');
+        #my $error = LedgerSMB::Error->new("Delete group failed.");
+        #$error->set_status($status);
+        #return $error;
     }
 }
 

@@ -37,7 +37,7 @@ your software.
 package LedgerSMB::Contact;
 
 use base LedgerSMB::DBObject;
-use LedgerSMB::Error;
+#use LedgerSMB::Error;
 
 
 sub save {
@@ -63,13 +63,13 @@ sub save {
 
 sub get {
     
-    my $self=shift @_;
+    my $self = shift @_;
     my $id = shift @_;
     
     my $result = shift @{ $self->exec_method(
         procname => 'get',
         args=>[$id]
-    );
+    ) };
 }
 
 sub search {
