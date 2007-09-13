@@ -266,4 +266,15 @@ sub _parse_array {
     return @return_array;
 }
 
+sub set {
+    
+    my $self = shift @_;
+    my %args = @_;
+    
+    for my $arg (keys(%args)) {
+        $self->{$arg} = $args{$arg};
+    }
+    return 1;    
+}
+
 1;

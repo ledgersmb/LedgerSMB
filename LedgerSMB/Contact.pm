@@ -34,3 +34,55 @@ your software.
 
 =cut
 
+package LedgerSMB::Contact;
+
+use base LedgerSMB::DBObject;
+use LedgerSMB::Error;
+
+
+sub save {
+    
+    my $self = shift @_;
+    
+    # check for the various fields being appropriately set..
+    
+    if ($self->{person_id} && $self->{contact} && $self->{contact_class}) {
+        
+        my $id = shift @ {$self->exec_method( procname => "save_contact" ) };
+        $self->merge($id);
+        return $self->{id};
+    }
+    else {
+        
+        # raise an exception
+        my $err = LedgerSMB::Error->new();
+        $err->text("Unable to save contact information");
+        $err->throw();
+    }
+}
+
+sub get {
+    
+    my $self=shift @_;
+    my $id = shift @_;
+    
+    my $result = shift @{ $self->exec_method(
+        procname => 'get',
+        args=>[$id]
+    );
+}
+
+sub search {
+    
+    my $self = shift @_;
+    my ($pattern, $offset, $limit) = @_;
+    
+    my $results = $self->exec_method( 
+        procname => 'search', 
+        args=>[$pattern, $offset, $limit] 
+    );
+    
+    return $results;
+}
+
+1;
