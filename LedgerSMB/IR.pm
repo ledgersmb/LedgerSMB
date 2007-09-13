@@ -901,7 +901,7 @@ sub reverse_invoice {
 						            amount, transdate, 
 						            project_id)
 						     VALUES (?, ?, ?, ?, ?)|;
-                    $sth = $dbh->do($query);
+                    $sth = $dbh->prepare($query);
                     $sth->execute(
                         $pthref->{trans_id},
                         $ref->{inventory_accno_id},
