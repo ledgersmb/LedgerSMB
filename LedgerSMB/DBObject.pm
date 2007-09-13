@@ -50,7 +50,7 @@ sub AUTOLOAD {
     my $type = Scalar::Util::blessed $self;
     $type =~ m/::(.*?)$/;
     $type = lc $1;
-    $self->exec_method( procname => "$type" . "_" . $AUTOLOAD, args => \@_);
+    $self->exec_method( funcname => "$type" . "_" . $AUTOLOAD, args => \@_);
 }
 
 sub new {
