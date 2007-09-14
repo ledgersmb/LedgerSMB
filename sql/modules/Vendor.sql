@@ -27,6 +27,7 @@ CREATE OR REPLACE FUNCTION vendor_save (
     in_id int,
     
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
+    in_discount_terms int, in_threshold numeric,
     in_terms int, in_vendornumber varchar(32), in_cc text, in_bcc text, 
     in_business_id int, in_language varchar(6), in_pricegroup_id int, 
     in_curr char, in_startdate date, in_enddate date, 
@@ -78,7 +79,9 @@ CREATE OR REPLACE FUNCTION vendor_save (
                 curr,
                 startdate,
                 enddate,
-                meta_number
+                meta_number,
+                discount_terms,
+                threshold
             )
             VALUES (
                 new_entity_id,
@@ -95,7 +98,9 @@ CREATE OR REPLACE FUNCTION vendor_save (
                 in_curr,
                 in_startdate,
                 in_enddate,
-                in_vendornumber
+                in_vendornumber,
+                in_discount_terms,
+                in_threshold
             );
             INSERT INTO entity_bank_account (
                 entity_id,
@@ -127,7 +132,9 @@ CREATE OR REPLACE FUNCTION vendor_save (
                 curr = in_curr,
                 startdate = in_startdate,
                 enddate = in_enddate,
-                meta_number = in_vendornumber
+                meta_number = in_vendornumber,
+                threshold = in_threshold,
+                discount_terms = in_discount_terms
             where entity_id = v_row.entity_id;
             
             UPDATE entity_bank_account SET
