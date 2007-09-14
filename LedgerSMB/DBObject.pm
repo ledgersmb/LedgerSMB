@@ -252,6 +252,15 @@ sub _parse_array {
                 $separator = $1;
             }
             $next =~ s/"(.*)"$separator$/$1/;
+
+        } elsif ($value =~ /^{({+})/){
+            my $open_braces = $1;
+            my $close_braces = $open_braces;
+            $close_braces =~ s/{/}/g;
+            $value =~ /^{($open_braces.*$close_braces)/;
+            $next = $1;
+            $value =~ s/^{$next/{/;
+            $next = $self->parse_array($next);
             
         } else {
             $value =~ s/^\{([^,]*)(,|\})/\{/;
