@@ -2665,5 +2665,19 @@ ALTER TABLE public.menu_friendly OWNER TO ledgersmb;
 --
 -- PostgreSQL database dump complete
 --
+CREATE AGGREGATE as_array (
+	BASETYPE = ANYELEMENT,
+	STYPE = ANYARRAY,
+	SFUNC = ARRAY_APPEND,
+	INITCOND = '{}'
+);
+
+CREATE AGGREGATE compound_array (
+	BASETYPE = ANYARRAY,
+	STYPE = ANYARRAY,
+	SFUNC = ARRAY_CAT,
+	INITCOND = '{}'
+);
+
 
 commit;
