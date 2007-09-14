@@ -5,24 +5,68 @@ CREATE SEQUENCE id;
 -- in the ledger-smb.conf it is called 'ledgersmb' by default, but obviously
 -- can be named anything.
 
+
+-- BEGIN new entity management
+CREATE TABLE entity (
+  id serial UNIQUE,
+  name text check (name ~ '[[:alnum:]_]'),
+  entity_class integer not null,
+  created date not null default current_date,
+  PRIMARY KEY(name,entity_class));
+  
+COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
+COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
+
+CREATE TABLE entity_class (
+  id serial primary key,
+  class text check (class ~ '[[:alnum:]_]') NOT NULL,
+  active boolean not null default TRUE);
+  
+COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
+COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and permanent $$;  
+
+CREATE index entity_class_idx ON entity_class(lower(class));
+
+
+ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
+
+INSERT INTO entity_class (id,class) VALUES (1,'Vendor');
+INSERT INTO entity_class (id,class) VALUES (2,'Customer');
+INSERT INTO entity_class (id,class) VALUES (3,'Employee');
+INSERT INTO entity_class (id,class) VALUES (4,'Contact');
+INSERT INTO entity_class (id,class) VALUES (5,'Lead');
+INSERT INTO entity_class (id,class) VALUES (6,'Referral');
+
+SELECT setval('entity_class_id_seq',7);
+
+CREATE TABLE entity_class_to_entity (
+  entity_class_id integer not null references entity_class(id) ON DELETE CASCADE,
+  entity_id integer not null references entity(id) ON DELETE CASCADE,
+  PRIMARY KEY(entity_class_id,entity_id)
+  );
+
+COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
+
+
+
 -- USERS stuff --
 CREATE TABLE users (
     id serial UNIQUE, 
-    username varchar(30) primary key
-    entity_id not null references entity(id) on delete cascade
+    username varchar(30) primary key,
+    entity_id int not null references entity(id) on delete cascade
 );
 COMMENT ON TABLE users IS $$username is the actual primary key here because we do not want duplicate users$$;
 
 create table user_connection (
-    user_id int not null references user(id) on delete cascade,
+    user_id int not null references users(id) on delete cascade,
     dbname text not null,
     host text not null default 'localhost',
     port int not null default '5432'
 );
-
+/*
 CREATE VIEW users_conf as
     select 
-        user.id, 
+        users.id, 
         loc.address1 || '\n'|| loc.address2 ||'\n' || loc.address3,
         em.employeenumber,
         company,
@@ -30,20 +74,20 @@ CREATE VIEW users_conf as
         currency,
         dateformat,
         'Pg',
-        u_cx.host
+        u_cx.host,
         u_cx.dbname,
         u_cx.dbport,
-        user.username,
+        users.username,
         p.email,
         p.fax,
         50,
         p.first_name || ' ' || p.last_name,
         p.number_format,
-        '', -- password
+        '', -- password 
         
         
 ;
-
+*/
 CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
                         acs text,
                         address text,
@@ -82,7 +126,16 @@ COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(
 COMMENT ON COLUMN users_conf.password IS 'This means we have to get rid of the current password stuff and move to presumably md5()';
 
 -- The two below statements must be run from a single session
-INSERT INTO users(username) VALUES ('admin');
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+--INSERT INTO users(username) VALUES ('admin'); -- entity_id is declared NOT NULL !!
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+
+
+
 INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
 
 
@@ -146,47 +199,7 @@ COMMENT ON column transactions.locked_by IS
 $$ This should only be used in pessimistic locking measures as required by large
 batch work flows. $$;
 
--- BEGIN new entity management
-CREATE TABLE entity (
-  id serial UNIQUE,
-  name text check (name ~ '[[:alnum:]_]'),
-  entity_class integer not null,
-  created date not null default current_date,
-  PRIMARY KEY(name,entity_class));
-  
-COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
-COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
-
-CREATE TABLE entity_class (
-  id serial primary key,
-  class text check (class ~ '[[:alnum:]_]') NOT NULL,
-  active boolean not null default TRUE);
-  
-COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
-COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and permanent $$;  
-
-CREATE index entity_class_idx ON entity_class(lower(class));
-
-
-ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
-
-INSERT INTO entity_class (id,class) VALUES (1,'Vendor');
-INSERT INTO entity_class (id,class) VALUES (2,'Customer');
-INSERT INTO entity_class (id,class) VALUES (3,'Employee');
-INSERT INTO entity_class (id,class) VALUES (4,'Contact');
-INSERT INTO entity_class (id,class) VALUES (5,'Lead');
-INSERT INTO entity_class (id,class) VALUES (6,'Referral');
-
-SELECT setval('entity_class_id_seq',7);
-
-CREATE TABLE entity_class_to_entity (
-  entity_class_id integer not null references entity_class(id) ON DELETE CASCADE,
-  entity_id integer not null references entity(id) ON DELETE CASCADE,
-  PRIMARY KEY(entity_class_id,entity_id)
-  );
-
-COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
-
+-- LOCATION AND COUNTRY
 CREATE TABLE country (
   id serial PRIMARY KEY,
   name text check (name ~ '[[:alnum:]_]') NOT NULL,
