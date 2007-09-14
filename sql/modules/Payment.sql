@@ -95,7 +95,8 @@ CREATE TYPE payment_contact_invoice AS (
 
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_type int, in_currency char(3),
-	in_date_from date, in_date_to date, in_batch_id int)
+	in_date_from date, in_date_to date, in_batch_id int, 
+	in_ar_ap_accno text)
 RETURNS SETOF payment_contact_invoice AS
 $$
 DECLARE payment_item payment_contact_invoice;
@@ -135,8 +136,14 @@ BEGIN
 		                          WHERE batch_id = in_batch_id))
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
+		         AND EXISTS (select trans_id FROM acc_trans
+		                      WHERE trans_id = a.id AND
+		                            chart_id = (SELECT id frOM chart
+		                                         WHERE accno
+		                                               = in_ar_ap_accno)
+		                    )
 		GROUP BY e.id, e.name, c.meta_number, c.threshold
-		  HAVING sum(amount - a.paid) > c.threshold
+		  HAVING sum(a.amount - a.paid) > c.threshold
 	LOOP
 		RETURN NEXT payment_item;
 	END LOOP;
