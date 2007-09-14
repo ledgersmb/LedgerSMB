@@ -185,7 +185,8 @@ $$;
 
 CREATE OR REPLACE FUNCTION payment_post 
 (in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
-	in_cash_accno text, in_approved bool, in_payment_date, in_account_class)
+	in_cash_accno text, in_approved bool, in_payment_date date, 
+	in_account_class)
 RETURNS INT AS
 $$
 DECLARE out_entry_id int;
@@ -198,7 +199,7 @@ BEGIN
 	        END,
 	        in_trans_id, in_payment_date, in_approved, in_source);
 
-	INSERT INTO acc_trans (chart_id, amount
+	INSERT INTO acc_trans (chart_id, amount,
 	            trans_id, transdate, approved, source)
 	VALUES ((SELECT id FROM chart WHERE accno = in_cash_accno), 
 	        CASE WHEN in_account_class = 2 THEN in_amount * -1 
@@ -215,7 +216,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION payment_post 
 (in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
 	in_cash_accno text, in_approved bool, in_payment_date, in_account_class)
-$$
+IS $$
 This function takes the following arguments (prefaced with in_ in the db):
 trans_id:  Id for ar/ap transaction.
 source: text for source documnet identifier (for example, check number)
