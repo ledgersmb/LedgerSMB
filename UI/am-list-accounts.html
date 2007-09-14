@@ -12,7 +12,6 @@
 	<meta name="robots" content="noindex,nofollow" />
         
 </head>
-
 <?lsmb PROCESS elements.html ?> 
 
 <body>
@@ -54,10 +53,8 @@
 <br />
 
 <form method="post" action="<?lsmb form.script ?>">
-<?lsmb FOREACH pair IN form.callback.split('&amp;') ?><?lsmb hidden = pair.split('=') ?>
-<?lsmb IF NOT loop.first ?>
-<?lsmb PROCESS input element_data={type => 'hidden', name => hidden.0, value => hidden.1} ?>
-<?lsmb END ?><?lsmb END ?>
+<?lsmb FOREACH pair IN form.callback.split('&amp;') ?><?lsmb hidden = pair.split('=') ?><?lsmb IF NOT loop.first ?>
+<?lsmb PROCESS input element_data={type => 'hidden', name => hidden.0, value => hidden.1} ?><?lsmb END ?><?lsmb END ?>
 <?lsmb PROCESS input element_data={type => 'hidden', name => 'callback', value => form.callback} ?>
 
 <?lsmb FOREACH button IN buttons ?><?lsmb PROCESS button element_data=button ?><?lsmb END ?>
