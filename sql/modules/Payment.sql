@@ -23,6 +23,10 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION payment_get_open_accounts(int) IS
+$$ This function takes a single argument (1 for vendor, 2 for customer as 
+always) and returns all entities with open accounts of the appropriate type. $$;
+
 CREATE OR REPLACE FUNCTION get_all_accounts(in_account_class int) 
 RETURNS SETOF entity AS
 $$
@@ -37,6 +41,11 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION payment_get_open_accounts(int) IS
+$$ This function takes a single argument (1 for vendor, 2 for customer as 
+always) and returns all entities with accounts of the appropriate type. $$;
+
 
 CREATE TYPE payment_invoice AS (
 	invoice_id int,
@@ -84,6 +93,13 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3)) IS
+$$ This function takes three arguments:
+Type: 1 for vendor, 2 for customer
+Entity_id:  The entity_id of the customer or vendor
+Currency:  3 characters for currency ('USD' for example).
+Returns all open invoices for the entity in question. $$;
 
 CREATE TYPE payment_contact_invoice AS (
 	contact_id int,
@@ -150,4 +166,64 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+COMMENT ON FUNCTION payment_get_all_contact_invoices
+(in_account_class int, in_business_type int, in_currency char(3),
+        in_date_from date, in_date_to date, in_batch_id int, 
+        in_ar_ap_accno text) IS
+$$
+This function takes the following arguments (all prefaced with in_ in the db):
+account_class: 1 for vendor, 2 for customer
+business_type: integer of business.id.
+currency: char(3) of currency (for example 'USD')
+date_from, date_to:  These dates are inclusive.
+batch_id:  For payment batches, where fees are concerned.
+ar_ap_accno:  The AR/AP account number.
 
+This then returns a set of contact information with a 2 dimensional array 
+cnsisting of outstanding invoices.
+$$;
+
+CREATE OR REPLACE FUNCTION payment_post 
+(in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
+	in_cash_accno text, in_approved bool, in_payment_date, in_account_class)
+RETURNS INT AS
+$$
+DECLARE out_entry_id int;
+BEGIN
+	INSERT INTO acc_trans (chart_id, amount,
+	            trans_id, transdate, approved, source)
+	VALUES ((SELECT id FROM chart WHERE accno = in_ar_ap_accno), 
+	        CASE WHEN in_account_class = 1 THEN in_amount * -1 
+	             ELSE amount
+	        END,
+	        in_trans_id, in_payment_date, in_approved, in_source);
+
+	INSERT INTO acc_trans (chart_id, amount
+	            trans_id, transdate, approved, source)
+	VALUES ((SELECT id FROM chart WHERE accno = in_cash_accno), 
+	        CASE WHEN in_account_class = 2 THEN in_amount * -1 
+	             ELSE amount
+	        END,
+	        in_trans_id, in_payment_date, coalesce(in_approved, true), 
+	        in_source);
+
+	SELECT currval('acc_trans_entry_id_seq') INTO out_entry_id;
+	RETURN out_entry_id;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION payment_post 
+(in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
+	in_cash_accno text, in_approved bool, in_payment_date, in_account_class)
+$$
+This function takes the following arguments (prefaced with in_ in the db):
+trans_id:  Id for ar/ap transaction.
+source: text for source documnet identifier (for example, check number)
+amount:  numeric for the amount of the transaction
+ar_ap_accno:  AR/AP account number
+cash_accno:  Cash Account number, i.e. the account where the payment will be 
+held
+approved:  False, for a voucher.
+
+This function posts the payment or saves the payment voucher. 
+$$;
