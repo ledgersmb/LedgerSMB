@@ -401,3 +401,5 @@ comment on function admin_delete_group(text) IS $$
     Deletes the input group from the database. Not designed to be used to 
     remove a login-capable user.
 $$;
+
+-- TODO:  Add admin user
