@@ -127,8 +127,8 @@
 
 <?lsmb # OPTION ELEMENT ?>
 <?lsmb BLOCK option ?>
-  <?lsmb  # Selected is a special case -- no attribute key, so it's handled here.
-    IF option_data.defined('selected');
+  <?lsmb  # Selected is a special case -- no attribute key, so it's handled here by looking for the option value in the default_values key.
+    IF element_data.defined('default_values') AND element_data.default_values.grep('^' _ option_data.value _ '$').size;
       option_data.selected = " selected";
     ELSE;
       option_data.selected = "";
@@ -222,9 +222,9 @@
         element_id = element_data.name;
       END;
     ?>
-    <?lsmb  # Add the id if it's been generated.  Replace underscores with dashes -- nicer CSS.
+    <?lsmb  # Add the id if it's been generated.  Replace all non alphanumeric characters with dashes -- nicer CSS.
       IF element_id;
-        element_data.id = element_id.replace('[_]', '-'); 
+        element_data.id = element_id.replace('[^\p{IsAlnum}]', '-'); 
       END;
     ?>
   <?lsmb END ?>
