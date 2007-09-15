@@ -86,7 +86,7 @@ $form->error may be called to deny access on some attribute values.
 sub new {
     # Without the line below, we get unknown errors.  I guess this is an
     # indication of why this module is deprecated :-)-- CT
-    no strict;
+    no strict 'subs';
 
     my $type = shift;
 
