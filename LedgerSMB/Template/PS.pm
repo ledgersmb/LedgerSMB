@@ -57,7 +57,7 @@ sub preprocess {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess($_);
 		}
-	} else (!$type) {
+	} elsif (!$type) {
 		#XXX Fix escaping
 		$rawvars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
 		$rawvars =~ s/"(.*)"/``$1''/gs;
