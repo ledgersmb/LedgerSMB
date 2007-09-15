@@ -56,6 +56,7 @@ Deprecated
 =cut
 
 #inline documentation
+use strict;
 
 use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
@@ -84,9 +85,6 @@ $form->error may be called to deny access on some attribute values.
 =cut
 
 sub new {
-    # Without the line below, we get unknown errors.  I guess this is an
-    # indication of why this module is deprecated :-)-- CT
-    no strict 'subs';
 
     my $type = shift;
 
@@ -133,17 +131,17 @@ sub new {
         and not List::Util::first { $_ eq $self->{script} }
         @{LedgerSMB::Sysconfig::scripts} )
     {
-        $self->error( 'Access Denied', __line__, __file__ );
+        $self->error( 'Access Denied', __LINE__, __FILE__ );
     }
 
     if ( ( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ ) ) {
-        $self->error( "Access Denied", __line__, __file__ );
+        $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
     for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
     
     if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
-        $self->error( "Access Denied", __line__, __file__ );
+        $self->error( "Access Denied", __LINE__, __FILE__ );
     }
     
     $self;
@@ -353,7 +351,7 @@ sub error {
     else {
 
         if ( $ENV{error_function} ) {
-            &{ $ENV{error_function} }($msg);
+            __PACKAGE__->can($ENV{error_function})->($msg);
         }
         die "Error: $msg\n";
     }
@@ -389,7 +387,7 @@ sub info {
     else {
 
         if ( $ENV{info_function} ) {
-            &{ $ENV{info_function} }($msg);
+            __PACKAGE__->can($ENV{info_function})->($msg);
         }
         else {
             print "$msg\n";
@@ -604,7 +602,7 @@ sub sort_order {
 
     my @a = $self->sort_columns( @{$columns} );
 
-    if (%$ordinal) {
+    if (ref $ordinal eq 'HASH') {
         $a[0] =
           ( $ordinal->{ $a[$_] } )
           ? "$ordinal->{$a[0]} $self->{direction}"
@@ -958,8 +956,6 @@ sub datetonum {
 
     my ( $self, $myconfig, $date, $picture ) = @_;
 
-    my $date;
-
     if ( $date && $date =~ /\D/ ) {
 
         my $yy;
@@ -1137,7 +1133,7 @@ sub db_init {
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{custom_db_fields}{ $ref->{extends} } },
           $ref->{field_def};
     }
@@ -1242,7 +1238,7 @@ sub run_custom_queries {
             my $query = shift @{$_};
             my $sth   = $self->{dbh}->prepare($query);
             $sth->execute( $self->{id} );
-            my $ref = $sth->fetchrow_hashref(NAME_lc);
+            my $ref = $sth->fetchrow_hashref('NAME_lc');
             for ( keys %{$ref} ) {
                 $self->{$_} = $ref->{$_};
             }
@@ -1643,7 +1639,7 @@ sub get_name {
 
     my $i = 0;
     @{ $self->{name_list} } = ();
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push( @{ $self->{name_list} }, $ref );
         $i++;
     }
@@ -1739,7 +1735,7 @@ sub all_vc {
 
         @{ $self->{"all_$vc"} } = ();
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             push @{ $self->{"all_$vc"} }, $ref;
         }
 
@@ -1771,7 +1767,7 @@ sub all_vc {
 
     $self->{all_language} = ();
 
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_language} }, $ref;
     }
 
@@ -1872,7 +1868,7 @@ sub all_employees {
     my $sth = $dbh->prepare($query);
     $sth->execute(@whereargs) || $self->dberror($query);
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_employee} }, $ref;
     }
 
@@ -1934,7 +1930,7 @@ sub all_projects {
 
     @{ $self->{all_project} } = ();
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_project} }, $ref;
     }
 
@@ -1978,7 +1974,7 @@ sub all_departments {
 
     @{ $self->{all_department} } = ();
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_department} }, $ref;
     }
 
@@ -2111,7 +2107,7 @@ sub create_links {
 
     $self->{accounts} = "";
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 
         foreach my $key ( split /:/, $ref->{link} ) {
 
@@ -2161,7 +2157,7 @@ sub create_links {
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id}, $self->{vc} ) || $self->dberror($query);
 
-        $ref = $sth->fetchrow_hashref(NAME_lc);
+        $ref = $sth->fetchrow_hashref('NAME_lc');
         $self->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         foreach $key ( keys %$ref ) {
@@ -2178,7 +2174,7 @@ sub create_links {
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id} ) || $self->dberror($query);
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $self->{printed} .= "$ref->{formname} "
               if $ref->{printed};
             $self->{emailed} .= "$ref->{formname} "
@@ -2215,7 +2211,7 @@ sub create_links {
             $fld );
 
         # store amounts in {acc_trans}{$key} for multiple accounts
-        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $ref->{exchangerate} =
               $self->get_exchangerate( $dbh, $self->{currency},
                 $ref->{transdate}, $fld );
@@ -2324,7 +2320,7 @@ sub lastname_used {
     $sth = $self->{dbh}->prepare($query);
     $sth->execute() || $self->dberror($query);
 
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
+    my $ref = $sth->fetchrow_hashref('NAME_lc');
     for ( keys %$ref ) { $self->{$_} = $ref->{$_} }
     $sth->finish;
 }
@@ -2502,7 +2498,7 @@ sub get_partsgroup {
 
     $self->{all_partsgroup} = ();
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_partsgroup} }, $ref;
     }
 
@@ -2675,7 +2671,7 @@ sub get_recurring {
 
     for (qw(email print)) { $self->{"recurring$_"} = "" }
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         for ( keys %$ref ) { $self->{"recurring$_"} = $ref->{$_} }
         $self->{recurringemail} .= "$ref->{emaila}:";
         $self->{recurringprint} .= "$ref->{printa}:";
