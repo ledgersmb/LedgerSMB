@@ -67,7 +67,6 @@ use File::Copy;
 
 use charnames ':full';
 use open ':utf8';
-
 package Form;
 
 =item new Form([$argstr])
@@ -85,6 +84,9 @@ $form->error may be called to deny access on some attribute values.
 =cut
 
 sub new {
+    # Without the line below, we get unknown errors.  I guess this is an
+    # indication of why this module is deprecated :-)-- CT
+    no strict;
 
     my $type = shift;
 
@@ -617,7 +619,7 @@ sub sort_order {
         $a[0] .= " $self->{direction}";
     }
 
-    $sortorder = join ',', @a;
+    my $sortorder = join ',', @a;
     $sortorder;
 }
 
@@ -843,7 +845,7 @@ sub db_parse_numeric {
     my @names = @{$sth->{NAME_lc}};
     for (0 .. $#names){
         if ($types[$_] == 3){
-            $arrayref[$_] = Math::BigFloat->new($arrayref[$_]) 
+            $arrayref->[$_] = Math::BigFloat->new($arrayref->[$_]) 
               if defined $arrayref;
             $hashref->{$names[$_]} = Math::BigFloat->new($hashref->{$names[$_]})
               if defined $hashref;
@@ -851,29 +853,6 @@ sub db_parse_numeric {
 
     }
     return ($hashref || $arrayref);
-}
-
-=item Form::callproc($procname);
-
-Broken function.  Use $lsmb::call_procedure instead.
-
-=cut
-
-sub callproc {
-    my $procname = shift @_;
-    my $argstr   = "";
-    my @results;
-    for ( 1 .. $#_ ) {
-        $argstr .= "?, ";
-    }
-    $argstr =~ s/\, $//;
-    $query = "SELECT * FROM $procname";
-    $query =~ s/\(\)/$argstr/;
-    my $sth = $self->{dbh}->prepare($query);
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @results, $ref;
-    }
-    @results;
 }
 
 =item $form->get_my_emp_num($myconfig);
@@ -887,19 +866,19 @@ This function is currently (2007-08-02) only used by pos.conf.pl.
 
 sub get_my_emp_num {
     my ( $self, $myconfig) = @_;
-    %myconfig = %{$myconfig};
-    my $dbh = $form->{dbh};
+    my %myconfig = %{$myconfig};
+    my $dbh = $self->{dbh};
 
     # we got a connection, check the version
     my $query = qq|
 		SELECT employeenumber FROM employee 
 		 WHERE login = ?|;
     my $sth = $dbh->prepare($query);
-    $sth->execute( $form->{login} ) || $form->dberror($query);
+    $sth->execute( $self->{login} ) || $self->dberror($query);
 
     my ($id) = $sth->fetchrow_array;
     $sth->finish;
-    $form->{'emp_num'} = $id;
+    $self->{'emp_num'} = $id;
 }
 
 =item $form->format_string(@fields);
@@ -979,7 +958,13 @@ sub datetonum {
 
     my ( $self, $myconfig, $date, $picture ) = @_;
 
+    my $date;
+
     if ( $date && $date =~ /\D/ ) {
+
+        my $yy;
+        my $mm;
+        my $dd;
 
         if ( $myconfig->{dateformat} =~ /^yy/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
@@ -1072,7 +1057,7 @@ sub add_date {
 
         $mm--;
 
-        @t = localtime( Time::Local::timelocal( 0, 0, 0, $dd, $mm, $yy ) + $diff );
+        my @t = localtime( Time::Local::timelocal( 0, 0, 0, $dd, $mm, $yy ) + $diff );
 
         $t[4]++;
         $mm = substr( "0$t[4]", -2 );
@@ -1133,7 +1118,7 @@ autocommit disabled.
 sub db_init {
     my ( $self, $myconfig ) = @_;
     $self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
-    %date_query = (
+    my %date_query = (
         'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
         'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
         'dd/mm/yy' => 'set DateStyle to \'SQL, EUROPEAN\'',
@@ -1172,9 +1157,7 @@ sub run_custom_queries {
     my $dbh = $self->{dbh};
     if ( $query_type !~ /^(select|insert|update)$/i ) {
         $self->error(
-            $locale->text(
                 "Passed incorrect query type to run_custom_queries."
-            )
         );
     }
     my @rc;
@@ -1182,7 +1165,9 @@ sub run_custom_queries {
     my @templist;
     my @elements;
     my $query;
+    my $did_insert;
     my $ins_values;
+    my $sth;
     if ($linenum) {
         $linenum = "_$linenum";
     }
@@ -1254,10 +1239,10 @@ sub run_custom_queries {
     }
     elsif ( $query_type eq 'SELECT' ) {
         for (@rc) {
-            $query = shift @{$_};
-            $sth   = $self->{dbh}->prepare($query);
+            my $query = shift @{$_};
+            my $sth   = $self->{dbh}->prepare($query);
             $sth->execute( $self->{id} );
-            $ref = $sth->fetchrow_hashref(NAME_lc);
+            my $ref = $sth->fetchrow_hashref(NAME_lc);
             for ( keys %{$ref} ) {
                 $self->{$_} = $ref->{$_};
             }
@@ -1302,7 +1287,7 @@ sub dbconnect_noauto {
     my ( $self, $myconfig ) = @_;
 
     # connect to database
-    $dbh = DBI->connect(
+    my $dbh = DBI->connect(
         $myconfig->{dbconnect}, $myconfig->{dbuser},
         $myconfig->{dbpasswd}, { AutoCommit => 0 }
     ) or $self->dberror;
@@ -1478,6 +1463,7 @@ sub get_exchangerate {
     my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
 
     my $exchangerate = 1;
+    my $sth;
 
     if ($transdate) {
         my $query = qq|
@@ -1561,7 +1547,7 @@ sub add_shipto {
 			VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			|;
 
-        $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
+        my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
         $sth->execute(
             $id,                     $self->{shiptoname},
             $self->{shiptoaddress1}, $self->{shiptoaddress2},
@@ -1595,7 +1581,7 @@ sub get_employee {
 					 FROM employee 
 					WHERE login = ?)|;
 
-    $sth = $self->{dbh}->prepare($query);
+    my $sth = $self->{dbh}->prepare($query);
     $sth->execute($login);
     my (@a) = $sth->fetchrow_array();
     $a[1] *= 1;
@@ -1657,7 +1643,7 @@ sub get_name {
 
     my $i = 0;
     @{ $self->{name_list} } = ();
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         push( @{ $self->{name_list} }, $ref );
         $i++;
     }
@@ -1943,12 +1929,12 @@ sub all_projects {
 
     $query .= qq| ORDER BY projectnumber|;
 
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute(@queryargs) || $self->dberror($query);
 
     @{ $self->{all_project} } = ();
 
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         push @{ $self->{all_project} }, $ref;
     }
 
@@ -1972,7 +1958,7 @@ sub all_departments {
 
     my ( $self, $myconfig, $dbh2, $vc ) = @_;
 
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
 
     my $where = "1 = 1";
 
@@ -2015,7 +2001,7 @@ sub all_years {
 
     my ( $self, $myconfig, $dbh2 ) = @_;
 
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
 
     # get years
     my $query = qq|
@@ -2106,9 +2092,13 @@ sub create_links {
         $self->db_init($myconfig);
     }
 
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
 
     my %xkeyref = ();
+
+    my $val;
+    my $ref;
+    my $key;
 
     # now get the account numbers
     $query = qq|SELECT accno, description, link
@@ -2229,7 +2219,7 @@ sub create_links {
             $ref->{exchangerate} =
               $self->get_exchangerate( $dbh, $self->{currency},
                 $ref->{transdate}, $fld );
-            if ($form->{reverse}){
+            if ($self->{reverse}){
                 $ref->{amount} *= -1;
             }
 
@@ -2354,6 +2344,7 @@ sub current_date {
 
     my $dbh = $self->{dbh};
     my $query;
+    my @queryargs;
 
     $days *= 1;
     if ($thisdate) {
@@ -2379,9 +2370,9 @@ sub current_date {
         @queryargs = ();
     }
 
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute(@queryargs);
-    ($thisdate) = $sth->fetchrow_array;
+    my ($thisdate) = $sth->fetchrow_array;
     $thisdate;
 }
 
@@ -2430,7 +2421,7 @@ sub redo_rows {
     # fill rows
     foreach my $item ( sort { $a->{num} <=> $b->{num} } @ndx ) {
         $i++;
-        $j = $item->{ndx} - 1;
+        my $j = $item->{ndx} - 1;
         for ( @{$flds} ) { $self->{"${_}_$i"} = $new->[$j]->{$_} }
     }
 
@@ -2550,7 +2541,7 @@ sub update_status {
 					WHERE formname = ?
 					  AND trans_id = ?|;
 
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute( $self->{formname}, $self->{id} ) || $self->dberror($query);
 
     $sth->finish;
@@ -2583,7 +2574,7 @@ sub save_status {
 
     my ($self) = @_;
 
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
 
     my $formnames  = $self->{printed};
     my $emailforms = $self->{emailed};
@@ -2597,6 +2588,9 @@ sub save_status {
 
     my %queued;
     my $formname;
+
+    my $printed;
+    my $emailed;
 
     if ( $self->{queued} ) {
 
@@ -2615,7 +2609,7 @@ sub save_status {
 					VALUES (?, ?, ?, ?, ?)|;
 
                 $sth = $dbh->prepare($query);
-                $sth->execute( $self->{id}, $pinted, $emailed,
+                $sth->execute( $self->{id}, $printed, $emailed,
                     $queued{$formname}, $formname )
                   || $self->dberror($query);
                 $sth->finish;
@@ -2666,7 +2660,7 @@ sub get_recurring {
 
     my ($self) = @_;
 
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
     my $query = qq/
 		SELECT s.*, se.formname || ':' || se.format AS emaila,
 			se.message, sp.formname || ':' || 
@@ -2785,7 +2779,7 @@ sub save_recurring {
     $query = qq|DELETE FROM recurring
 				 WHERE id = ?|;
 
-    $sth = $dbh->prepare($query) || $self->dberror($query);
+    my $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
     $query = qq|DELETE FROM recurringemail
@@ -2954,7 +2948,7 @@ sub save_intnotes {
 
     my $query = qq|UPDATE $vc SET intnotes = ? WHERE id = ?|;
 
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute( $self->{intnotes}, $self->{id} ) || $self->dberror($query);
     $dbh->commit;
 }
@@ -3010,7 +3004,7 @@ sub update_defaults {
     my $query = qq|
 		SELECT value FROM defaults 
 		 WHERE setting_key = ? FOR UPDATE|;
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute($fld);
     ($_) = $sth->fetchrow_array();
 
@@ -3129,12 +3123,12 @@ sub update_defaults {
         }
     }
 
-    $query = qq|
+    my $query = qq|
 		UPDATE defaults
 		   SET value = ?
 		 WHERE setting_key = ?|;
 
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute( $dbvar, $fld ) || $self->dberror($query);
 
     $dbh->commit;
@@ -3384,6 +3378,8 @@ sub audittrail {
     if ( !$dbh ) {
         $dbh = $self->{dbh};
     }
+    my $sth;
+    my $query;
 
     # if we have an id add audittrail, otherwise get a new timestamp
 

@@ -27,7 +27,7 @@ COMMENT ON FUNCTION payment_get_open_accounts(int) IS
 $$ This function takes a single argument (1 for vendor, 2 for customer as 
 always) and returns all entities with open accounts of the appropriate type. $$;
 
-CREATE OR REPLACE FUNCTION get_all_accounts(in_account_class int) 
+CREATE OR REPLACE FUNCTION payment_get_all_accounts(in_account_class int) 
 RETURNS SETOF entity AS
 $$
 DECLARE out_entity entity%ROWTYPE;
