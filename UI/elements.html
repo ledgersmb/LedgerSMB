@@ -128,7 +128,7 @@
 <?lsmb # OPTION ELEMENT ?>
 <?lsmb BLOCK option ?>
   <?lsmb  # Selected is a special case -- no attribute key, so it's handled here by looking for the option value in the default_values key.
-    IF element_data.defined('default_values') AND element_data.default_values.grep('^' _ option_data.value _ '$').size;
+    IF element_data.defined('default_values') AND element_data.default_values.grep("^${option_data.value}$").size;
       option_data.selected = " selected";
     ELSE;
       option_data.selected = "";
