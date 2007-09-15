@@ -74,6 +74,8 @@ sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
 	my $template;
+	$parent->{outputfile} ||=
+		"${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
 
 	$template = Template::Latex->new({
 		LATEX_FORMAT => 'ps',

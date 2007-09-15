@@ -173,7 +173,7 @@ is($template->{include_path}, 't/data/de;t/data',
 	'Template, new: Object creation with valid language has good include_path');
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de',
-	'path' => 't/data', 'outputfile' => 'test');
+	'path' => 't/data', 'output_file' => 'test');
 ok(defined $template,
 	'Template, new: Object creation with valid language and path');
 isa_ok($template, 'LedgerSMB::Template', 
@@ -257,20 +257,10 @@ isa_ok($template, 'LedgerSMB::Template',
 is($template->{include_path}, 't/data',
 	'Template, new (TXT): Object creation with format and template');
 is($template->render({'login' => 'foo&bar'}),
-	"t/var/04-template-output-$$.txt",
-	'Template, render: Simple text template, default filename');
-ok(-e "t/var/04-template-output-$$.txt",
-	'Template, render (TXT): File created');
-open($FH, '<', "t/var/04-template-output-$$.txt");
-@r = <$FH>;
-close($FH);
-chomp(@r);
-is(join("\n", @r), "I am a template.\nLook at me foo&bar.", 
+	undef,
+	'Template, render: Simple text template, no filename');
+is($template->{output}, "I am a template.\nLook at me foo&bar.\n", 
 	'Template, render (TXT): Simple TXT template, correct output');
-is(unlink("t/var/04-template-output-$$.txt"), 1,
-	'Template, render (TXT): removing testfile');
-ok(!-e "t/var/04-template-output-$$.txt",
-	'Template, render (TXT): testfile removed');
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
@@ -282,24 +272,14 @@ isa_ok($template, 'LedgerSMB::Template',
 is($template->{include_path}, 't/data',
 	'Template, new (HTML): Object creation with format and template');
 is($template->render({'login' => 'foo&bar'}),
-	"t/var/04-template-output-$$.html",
-	'Template, render (HTML): Simple HTML template, default filename');
-ok(-e "t/var/04-template-output-$$.html",
-	'Template, render (HTML): File created');
-open($FH, '<', "t/var/04-template-output-$$.html");
-@r = <$FH>;
-close($FH);
-chomp(@r);
-is(join("\n", @r), "I am a template.\nLook at me foo&amp;bar.", 
+	undef,
+	'Template, render (HTML): Simple HTML template, no file');
+is($template->{output}, "I am a template.\nLook at me foo&amp;bar.", 
 	'Template, render (HTML): Simple HTML template, correct output');
-is(unlink("t/var/04-template-output-$$.html"), 1,
-	'Template, render (HTML): removing testfile');
-ok(!-e "t/var/04-template-output-$$.html",
-	'Template, render (HTML): testfile removed');
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
-	'template' => '04-gettext', 'outputfile' => '04-gettext',
+	'template' => '04-gettext', 'output_file' => '04-gettext',
 	'no_auto_output' => 1);
 ok(defined $template, 
 	'Template, new (HTML): Object creation with outputfile');
@@ -310,17 +290,18 @@ is($template->{include_path}, 't/data',
 is($template->render({'month' => 'June', 'login' => 'foo&bar', 
 	'fr' => $locale}), 't/var/04-gettext.html',
 	'Template, render (HTML): Gettext HTML template');
-ok(-e 't/var/04-gettext.html', 'Template, render (HTML): File created');
-open($FH, '<', 't/var/04-gettext.html');
+ok(-e "t/var/04-gettext.html",
+	'Template, render (HTML): File created');
+open($FH, '<', "t/var/04-gettext.html");
 @r = <$FH>;
 close($FH);
 chomp(@r);
 is(join("\n", @r), 
 	"I am a foo&amp;bar.\nLook at me Juin.\njuni\nAan foo&amp;bar", 
 	'Template, render (HTML): Gettext HTML template, correct output');
-is(unlink('t/var/04-gettext.html'), 1,
+is(unlink("t/var/04-gettext.html"), 1,
 	'Template, render (HTML): removing testfile');
-ok(!-e 't/var/04-gettext.html',
+ok(!-e "t/var/04-gettext.html",
 	'Template, render (HTML): testfile removed');
 
 ## XeTeX test, requires PDFLATEX to be xelatex and modified Template::Latex

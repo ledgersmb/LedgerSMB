@@ -56,7 +56,13 @@ sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
 	my $template;
+	my $output;
 
+	if ($parent->{outputfile}) {
+		$output = "$parent->{outputfile}.txt";
+	} else {
+		$output = \$parent->{output};
+	}
 	$template = Template->new({
 		INCLUDE_PATH => $parent->{include_path},
 		START_TAG => quotemeta('<?lsmb'),
@@ -70,7 +76,7 @@ sub process {
 		get_template($parent->{template}), 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
-		"$parent->{outputfile}.txt", binmode => ':utf8')) {
+		$output, binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'text/plain';
@@ -78,8 +84,8 @@ sub process {
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.txt";
-    return "$parent->{outputfile}.txt";
+    $parent->{rendered} = "$parent->{outputfile}.txt" if $parent->{outputfile};
+    return $parent->{rendered};
 }
 
 1;

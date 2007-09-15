@@ -11,7 +11,7 @@ This module renders templates.
 
 =over
 
-=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale] [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool] );
+=item new(user => \%myconfig, template => $string, format => $string, [locale => $locale] [language => $string], [include_path => $path], [no_auto_output => $bool], [method => $string], [no_escape => $bool], [debug => $bool], [output_file => $string] );
 
 This command instantiates a new template:
 
@@ -68,11 +68,19 @@ template to get debugging messages is to be surrounded by
 
 The output method to use, defaults to HTTP.  Media is a synonym for method
 
+=item output_file (optional)
+
+The base name of the file for output.
+
 =back
 
 =item render($hashref)
 
-This command renders the template and writes the result to standard output.  
+This command renders the template.  If no_auto_output was not specified during
+instantiation, this also writes the result to standard output and exits.
+Otherwise it returns the name of the output file if a file was created.  When
+no output file is created, the output is held in $self->{output}.
+
 Currently email and server-side printing are not supported.
 
 =item output
@@ -112,16 +120,12 @@ sub new {
 	$self->{language} = $args{language};
 	$self->{no_escape} = $args{no_escape};
 	$self->{debug} = $args{debug};
-	if ($args{outputfile}) {
-		$self->{outputfile} =
-			"${LedgerSMB::Sysconfig::tempdir}/$args{outputfile}";
-	} else {
-		$self->{outputfile} =
-			"${LedgerSMB::Sysconfig::tempdir}/$args{template}-output-$$";
-	}
+	$self->{outputfile} =
+		"${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
+		$args{output_file};
 	$self->{include_path} = $args{path};
 	$self->{locale} = $args{locale};
-	$self->{noauto} = $args{noauto};
+	$self->{noauto} = $args{no_auto_output};
 	$self->{method} = $args{method};
 	$self->{method} ||= $args{media};
 
@@ -191,13 +195,18 @@ sub output {
 		$self->_email_output;
 	} elsif ('print' eq lc $method) {
 		$self->_lpr_output;
-	} else {
+	} elsif (defined $self->{output}) {
 		$self->_http_output;
+		exit;
+	} else {
+		$self->_http_output_file;
 	}
 }
 
 sub _http_output {
 	my $self = shift;
+	my $data = shift;
+	$data ||= $self->{output};
 	my $FH;
 
 	if ($self->{mimetype} =~ /^text/) {
@@ -205,6 +214,15 @@ sub _http_output {
 	} else {
 		print "Content-Type: $self->{mimetype}\n\n";
 	}
+	binmode STDOUT, ':bytes';
+	print $data;
+	binmode STDOUT, ':utf8';
+}
+
+sub _http_output_file {
+	my $self = shift;
+	my $FH;
+
 	open($FH, '<:bytes', $self->{rendered}) or
 		throw Error::Simple 'Unable to open rendered file';
 	my $data;
@@ -213,9 +231,9 @@ sub _http_output {
 		$data = <$FH>;
 	}
 	close($FH);
-	binmode STDOUT, ':bytes';
-	print $data;
-	binmode STDOUT, ':utf8';
+	
+	$self->_http_output($data);
+	
 	unlink($self->{rendered}) or
 		throw Error::Simple 'Unable to delete output file';
 	exit;
