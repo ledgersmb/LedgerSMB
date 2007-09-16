@@ -11,6 +11,27 @@ templates
 
 =over
 
+=item LedgerSMB::Template::Elements->new()
+
+Returns a blessed hashref from this namespace.
+
+=back
+
+=cut
+
+package LedgerSMB::Template::Elements;
+use strict;
+
+
+sub new {
+    my ($class) = @_;
+    my $self = {};
+    bless $self, $class;
+    return $self;
+}
+
+=over
+
 =item $object->generate_hidden_elements([...]);
  
 Builds data structure for hidden form fields.  Values from the
@@ -26,8 +47,6 @@ A reference to this structure is returned as well.
 
 =cut
 
-package LedgerSMB::Template::Elements;
-use strict;
  
 sub generate_hidden_elements {
     my $self = shift;

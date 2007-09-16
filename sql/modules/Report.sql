@@ -1,6 +1,6 @@
 CREATE TYPE report_aging_item AS (
 	entity_id int,
-	meta_number varchar(24),
+	account_number varchar(24),
 	name text,
 	address1 text,
 	address2 text,
