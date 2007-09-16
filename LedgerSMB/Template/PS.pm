@@ -74,9 +74,17 @@ sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
 	my $template;
+	my $source;
 	$parent->{outputfile} ||=
 		"${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
 
+	if (ref $parent->{template} eq 'SCALAR') {
+		$source = $parent->{template};
+	} elsif (ref $parent->{template} eq 'ARRAY') {
+		$source = join "\n", @{$parent->{template}};
+	} else {
+		$source = get_template($parent->{template});
+	}
 	$template = Template::Latex->new({
 		LATEX_FORMAT => 'ps',
 		INCLUDE_PATH => $parent->{include_path},
@@ -88,7 +96,7 @@ sub process {
 		}) || throw Error::Simple Template::Latex->error(); 
 
 	if (not $template->process(
-		get_template($parent->{template}), 
+		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		"$parent->{outputfile}.ps", binmode => 1)) {

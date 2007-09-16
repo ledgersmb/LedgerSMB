@@ -19,7 +19,8 @@ This command instantiates a new template:
 
 =item template
 
-The name of the template file to be processed.
+The template to be processed.  This can either be a reference to the template
+in string form or the name of the file that is the template to be processed.
 
 =item format
 

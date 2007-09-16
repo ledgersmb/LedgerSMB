@@ -75,12 +75,20 @@ sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
 	my $template;
+	my $source;
 	my $output;
 
 	if ($parent->{outputfile}) {
 		$output = "$parent->{outputfile}.csv";
 	} else {
 		$output = \$parent->{output};
+	}
+	if (ref $parent->{template} eq 'SCALAR') {
+		$source = $parent->{template};
+	} elsif (ref $parent->{template} eq 'ARRAY') {
+		$source = join "\n", @{$parent->{template}};
+	} else {
+		$source = get_template($parent->{template});
 	}
 	$template = Template->new({
 		INCLUDE_PATH => $parent->{include_path},
@@ -92,7 +100,7 @@ sub process {
 		}) || throw Error::Simple Template->error(); 
 
 	if (not $template->process(
-		get_template($parent->{template}), 
+		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		$output, binmode => ':utf8')) {
