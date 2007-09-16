@@ -546,6 +546,9 @@ sub call_procedure {
     my $order_by = $args{order_by};
     my $argstr   = "";
     my @results;
+
+    $procname = $self->{dbh}->quote_identifier($procname);
+
     for ( 1 .. scalar @call_args ) {
         $argstr .= "?, ";
     }
