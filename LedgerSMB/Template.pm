@@ -74,6 +74,11 @@ The base name of the file for output.
 
 =back
 
+=item new_UI(user => \%myconfig, locale => $locale, template => $file, ...)
+
+Wrapper around the constructor that sets the path to 'UI', format to 'HTML',
+and leaves auto-output enabled.
+
 =item render($hashref)
 
 This command renders the template.  If no_auto_output was not specified during
@@ -144,8 +149,12 @@ sub new {
 		}
 	}
 
-
 	return $self;
+}
+
+sub new_UI {
+	my $class = shift;
+	return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
 }
 
 sub _valid_language {

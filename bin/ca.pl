@@ -238,13 +238,10 @@ sub list {
         value => 'Y',
         text => $locale->text('Subtotal'),
     });
-    $form->{sort} ||= ''; #SC: blah.  Find out why this breaks when undef
-    my $template = LedgerSMB::Template->new(
-        user => \%myconfig, 
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig,
         locale => $locale,
-        path => 'UI',
-        template => 'ca-list-selector',
-        format => 'HTML');
+        template => 'ca-list-selector');
     $template->render({
         form => $form,
 	includes => \@includes,
