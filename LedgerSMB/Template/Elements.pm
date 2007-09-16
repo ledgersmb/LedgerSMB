@@ -77,6 +77,7 @@ my $radios = {
     attributes => { foo => 'bar' },
     values => [ '1', '2', '3'],
     labels => [ 'Label one', '', 'Label three'],
+    default_value => '2',
 };
  
 =back
@@ -97,7 +98,7 @@ sub generate_radio_elements {
 
         # copy all additional attributes 
         while ( my ($key, $value) = each(%$radios) ) {
-            if ( $key !~ /^(values|labels|id|value)$/ ) {
+            if ( $key !~ /^(values|labels|id|(default_)?value)$/ ) {
                 $element->{$key} = $value;
             }
         }
@@ -113,6 +114,12 @@ sub generate_radio_elements {
         if ( $radios->{labels}[$i] ) {
             $element->{label} = $radios->{labels}[$i];
         }
+
+        # Add checked attribute if the default value applies to this element.
+        if ( defined($radios->{default_value}) && $radios->{default_value} eq $radio_value) {
+            $element->{checked} = 'checked';
+        }
+
         push @$elements, $element;
         $i++;
     }
