@@ -30,7 +30,8 @@ our $VERSION = '1.0.0';
 
 sub definition_invoice_aging {
     my ($self) = @_;
-    my @{$self->{entities}} = 
+
+    @{$self->{entities}} = 
         $self->exec_method(funcname => 'payment_get_all_accounts');
 
     my $entity_options = [];
@@ -42,7 +43,11 @@ sub definition_invoice_aging {
     }
 
     $self->{criteria} = [
-           {} 
+           {name => 'entity', type => 'select', label => 'Account', 
+                              options => $entity_options}, 
+    ];
+    $self->{hidden_elements} = [
+            {name => 'account_class', value => $self->{account_class}}
     ];
     $self->{columns} = [
             {id => 'entity_id',      label => 'Entity ID'}, 
@@ -62,9 +67,15 @@ sub definition_invoice_aging {
 	    {id => 'c30',            label => '30'},
 	    {id => 'c60',            label => '60'},
 	    {id => 'c90',            label => '90'},  
-	    {id => 'duedate'         label => 'Due'},
+	    {id => 'duedate',        label => 'Due'},
 	    {id => 'curr',           label => 'Currency'},
 	    {id => 'exchangerate',   label => 'Exchange Rate'},
+    ];
+    $self->{report_types} = [
+            {label => "Detailed",         value => "detailed"},
+            {label => "Summary",          value => "summary"},
+            {label => "Overdue",          value => "overdue"},
+            {label => "Overdue Summary",  value => "overdue_summary"},
     ];
 
 }
@@ -73,3 +84,4 @@ sub definition_invoice_aging {
 
 =cut
 
+1;
