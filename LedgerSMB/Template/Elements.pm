@@ -147,6 +147,7 @@ my $checkboxes = {
     attributes => { foo => 'bar' },
     values => [ '4', '', '3'],
     labels => [ 'Label one', '', 'Label three'],
+    default_values => [ 'checkbox_name1'],
     
 };
 
@@ -168,7 +169,7 @@ sub generate_checkbox_elements {
 
         # Additional attributes
         while ( my ($key, $value) = each(%$checkboxes) ) {
-            if ( $key !~ /^(names|values|labels|id|value|name)$/ ) {
+            if ( $key !~ /^(names|(default_)?values|labels|id|value|name)$/ ) {
                 $element->{$key} = $value;
             }
         }
@@ -185,6 +186,11 @@ sub generate_checkbox_elements {
         # Add label key if present for this element.
         if ( $checkboxes->{labels}[$i] ) {
             $element->{label} = $checkboxes->{labels}[$i];
+        }
+        # Add checked attribute if the default value applies to this element.
+        if ( defined($checkboxes->{default_values}) &&
+          grep {$_ eq $checkbox_name} @{$checkboxes->{default_values}}) {
+            $element->{checked} = 'checked';
         }
         push @$elements, $element;
         $i++;
