@@ -26,7 +26,7 @@ A reference to this structure is returned as well.
 
 =cut
 
-package LedgerSMB::Template::Element;
+package LedgerSMB::Template::Elements;
 use strict;
  
 sub generate_hidden_elements {
@@ -166,3 +166,5 @@ sub generate_checkbox_elements {
     
     return $elements;
 }
+
+1;
