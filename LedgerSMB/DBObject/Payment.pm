@@ -161,3 +161,23 @@ sub get_all_contact_invoices {
     }
     return @{$self->{contacts}};
 }
+
+=over
+
+=item list_open_projects
+
+This method uses the $payment->{date} attribute, and provides a list of open 
+projects.  The list is attached to $payment->{projects} and returned by the 
+function.
+
+=back
+
+=cut
+
+sub list_open_projects {
+    my ($self) = @_;
+    @{$self->{projects}} = $self->exec_method('project_list_open');
+    return  @{$self->{projects}};
+}
+
+1;
