@@ -102,6 +102,17 @@
 <?lsmb # SELECT ELEMENT ?>
 <?lsmb BLOCK select ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>
+    <?lsmb IF element_data.defined('default_values') ?>
+	    <?lsmb  # Undef items must be removed, or they choke in the options defaults check later.
+        i = 0;
+        FOREACH select_default IN element_data.default_values;
+          UNLESS select_default.defined;
+            element_data.default_values = element_data.default_values.splice(1, i);
+          END;
+          i = i + 1;
+        END;
+      ?>
+    <?lsmb END ?>
   	<?lsmb
 	    element_type = 'select';
 	    PROCESS auto_id;
