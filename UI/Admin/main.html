@@ -1,4 +1,3 @@
-<?lsmb block main?>
 <div class="admin">
     
     <!-- first, a list of all active users -->
@@ -7,9 +6,9 @@
         <strong><font size="16"> Administration</font></strong>
     </center>
     
-    <?lsmb if message?>
+    <?lsmb IF message?>
         <strong><font color="red"><?lsmb message?></font></strong>
-    <?lsmb end?>
+    <?lsmb END?>
     <form name="userlist" method="POST" action="admin.pl">    
     <table>
         <tr>
@@ -40,7 +39,7 @@
             </td>
             
         </tr>    
-    <?lsmb end?>
+    <?lsmb END?>
     </table>
     
     <hr/>
@@ -52,4 +51,3 @@
     </div>    
     </form>
 </div>
-<?end?>
