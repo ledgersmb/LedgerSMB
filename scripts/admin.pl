@@ -1,6 +1,7 @@
+#!/usr/bin/perl
 package LedgerSMB::Scripts::admin;
 
-require '../lsmb-request.pl';
+require 'lsmb-request.pl';
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
@@ -20,14 +21,14 @@ sub new_user {
         
         my $template = LedgerSMB::Template->new( user => $user, 
     	template => 'admin/edit_user.html', language => $user->{language}, 
-            format => 'html');
+            format => 'HTML');
     
         $template->render($entity);
     } else {
     
         my $template = LedgerSMB::Template->new( user => $user, 
     	template => 'admin/edit_user.html', language => $user->{language}, 
-            format => 'html');
+            format => 'HTML');
     
         $template->render();
     }
@@ -44,7 +45,7 @@ sub edit_user {
     
     my $template = LedgerSMB::Template->new( user => $user, 
 	template => 'admin/edit_user.html', language => $user->{language}, 
-        format => 'html');
+        format => 'HTML');
     
     $template->render($edited_user, $all_roles);
 }
@@ -59,7 +60,7 @@ sub edit_group {
     
     my $template = LedgerSMB::Template->new( user => $user, 
 	template => 'admin/edit_group.html', language => $user->{language}, 
-        format => 'html');
+        format => 'HTML');
         
     $template->render($all_roles);    
 }
@@ -73,7 +74,7 @@ sub create_group {
     
     my $template = LedgerSMB::Template->new( user => $user, 
 	template => 'admin/edit_group.html', language => $user->{language}, 
-        format => 'html');
+        format => 'HTML');
         
     $template->render($all_roles);
 }

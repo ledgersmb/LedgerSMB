@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 
 =pod
 
@@ -22,7 +23,7 @@ package LedgerSMB::Scripts::customer;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 
-require '../lsmb-request.pl';
+require 'lsmb-request.pl';
 
 =pod
 
