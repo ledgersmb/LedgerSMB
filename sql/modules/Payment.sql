@@ -228,3 +228,24 @@ approved:  False, for a voucher.
 
 This function posts the payment or saves the payment voucher. 
 $$;
+
+
+-- Move this to the projects module when we start on that. CT
+CREATE OR REPLACE FUNCTION project_list_open(in_date date) 
+RETURNS SETOF project AS
+$$
+DECLARE out_project project%ROWTYPE;
+BEGIN
+	FOR out_project IN
+		SELECT * from project
+		WHERE startdate <= in_date AND enddate >= in_date
+		      AND completed = 0
+	LOOP
+		return next out_project;
+	END LOOP;
+END;
+$$ language plpgsql;
+
+comment on function project_list_open(in_date date) is
+$$ This function returns all projects that were open as on the date provided as
+the argument.$$;
