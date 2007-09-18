@@ -1,0 +1,143 @@
+<div id="modify_user">
+    <font size="15">
+        <strong>
+            <?lsmb IF user.username ?>
+                Edit User <?lsmb user.username ?>
+            <?lsmb ELSE?>
+                New User
+            <?lsmb END?>
+        </strong>
+    </font>
+    
+    <form method="POST" action="admin.pl?action=new_user">
+        
+        <table>
+            
+            <tr>
+                <td>
+                    <select name="salutation">
+                        <?lsmb FOREACH sal = salutations ?>
+                            <option value="<?lsmb sal.id?>"><?lsmb sal.salutation?></option>
+                        <?END?>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    First Name :<input type="textarea" name="first_name" value="<?lsmb user.first_name?>"/>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    Last Name :<input type="textarea" name="last_name" value="<?lsmb user.last_name?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Employee # :<input type="textarea" name="employeenumber" value="<?lsmb user.employeenumber?>"/>
+                </td>
+            </tr>
+            <hr/>
+            <?lsmb UNLESS user.username?>
+            <tr>
+                <td>
+                    Username :<input type="textarea" name="username" value="<?lsmb user.last_name?>"/>
+                </td>
+            </tr>
+            <?lsmb END?>
+            <tr>
+                <td>Company Name</td>
+                <td>
+                    <input type="textarea" name="companyname" value="<?lsmb user.companyname?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Address 
+                </td>
+                <td>
+                    <input type="textarea" name="address1" value="<?lsmb user.address1?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="textarea" name="address2" value="<?lsmb user.address2?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="textarea" name="address3" value="<?lsmb user.address3?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td>
+                    <input type="textarea" name="city" value="<?lsmb user.city?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td>
+                    <input type="textarea" name="city" value="<?lsmb user.city?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>State/Province</td>
+                <td>
+                    <input type="textarea" name="state" value="<?lsmb user.state?>"/>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Zip/Postal code</td>
+                <td>
+                    <input type="textarea" name="zipcode" value="<?lsmb user.zipcode?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>
+                    <input type="textarea" name="country" value="<?lsmb user.city?>"/>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Contact Information</td>
+                <td><hr/></td>
+            </tr>
+            
+            <tr>
+                <td>Home Phone</td>
+                <td>
+                    <input type="textarea" name="homephone" value="<?lsmb user.homephone?>"/>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Work Phone</td>
+                <td>
+                    <input type="textarea" name="workphone" value="<?lsmb user.workphone?>"/>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Email</td>
+                <td>
+                    <input type="textarea" name="e_mail" value="<?lsmb user.e_mail?>"/>
+                </td>
+            </tr>
+            
+        </table>
+        
+        <table>
+            <tr>
+                <td><button value="new_user">Submit</button></td>
+                <td><button name="method" value="cancel">Cancel</td>
+            </tr>
+        </table>
+    </form>
+</div>

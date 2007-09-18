@@ -126,7 +126,7 @@ sub new_user {
     my ($class, $request) = @_;
     
     my $template = LedgerSMB::Template->new( user=>$user, 
-        template=>'Admin/new_user', language=>$user->{language},
+        template=>'Admin/edit_user', language=>$user->{language},
         format=>'HTML', path=>'UI');
     
     $template->render();
@@ -143,6 +143,11 @@ sub new_group {
     $template->render();
 }
 
+sub cancel {
+        
+    __default(@_);
+}
+
 sub __default {
     
     my ($class, $request) = @_;
@@ -154,5 +159,4 @@ sub __default {
             format=>'HTML', path=>'UI');
     $template->render();
 }
-
 1;

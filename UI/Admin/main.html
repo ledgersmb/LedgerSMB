@@ -9,7 +9,7 @@
     <?lsmb IF message?>
         <strong><font color="red"><?lsmb message?></font></strong>
     <?lsmb END?>
-    <form name="userlist" method="POST" action="admin.pl">    
+    <form name="userlist" method="GET" action="admin.pl">    
     <table>
         <tr>
             <td></td>
@@ -44,10 +44,10 @@
     
     <hr/>
     <div class="buttons">
-        <button name="method" value="new_user">New User</button>
-        <button name="method" value="new_group">New Group</button>
-        <button name="method" value="delete_user">Delete User</button>
-        <button name="method" value="delete_group">Delete Group</button>
+        <button name="action" value="new_user">New User</button>
+        <button name="action" value="new_group">New Group</button>
+        <button name="action" value="delete_user">Delete User</button>
+        <button name="action" value="delete_group">Delete Group</button>
     </div>    
     </form>
 </div>
