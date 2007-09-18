@@ -491,7 +491,7 @@ s/option>\Q$form->{"AR_paid_$i"}\E/option selected>$form->{"AR_paid_$i"}/;
         $form->{"exchangerate_$i"} =
           $form->format_amount( \%myconfig, $form->{"exchangerate_$i"} );
 
-        if ( $form->{"paid__$i"} ) {
+        if ( $form->{"paid_$i"} ) {
             $column_data{paid} =
 qq|<td><input name="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
         }
