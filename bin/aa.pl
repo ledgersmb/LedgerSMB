@@ -406,12 +406,12 @@ sub form_header {
 
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
-                <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name=currency>$form->{selectcurrency}</select></td> |
+                <th align="right" nowrap>| . $locale->text('Currency') . qq|</th>
+		<td><select name="currency">$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
     $exchangerate .= qq|
-                <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
+                <input type="hidden" name="selectcurrency" value="$form->{selectcurrency}">
+		<input type="hidden" name="defaultcurrency" value="$form->{defaultcurrency}">
 |;
 
     if (   $form->{defaultcurrency}
@@ -419,19 +419,19 @@ sub form_header {
     {
         if ( $form->{forex} ) {
             $exchangerate .= qq|
-	<th align=right>| . $locale->text('Exchange Rate') . qq|</th>
-	<td><input type=hidden name=exchangerate value=$form->{exchangerate}>$form->{exchangerate}</td>
+	<th align="right">| . $locale->text('Exchange Rate') . qq|</th>
+	<td><input type="hidden" name="exchangerate" value="$form->{exchangerate}">$form->{exchangerate}</td>
 |;
         }
         else {
             $exchangerate .= qq|
-        <th align=right>| . $locale->text('Exchange Rate') . qq|</th>
-        <td><input name=exchangerate size=10 value=$form->{exchangerate}></td>
+        <th align="right">| . $locale->text('Exchange Rate') . qq|</th>
+        <td><input name="exchangerate" size="10" value="$form->{exchangerate}"></td>
 |;
         }
     }
     $exchangerate .= qq|
-<input type=hidden name=forex value=$form->{forex}>
+<input type="hidden" name="forex" value="$form->{forex}">
 </tr>
 |;
 
@@ -439,8 +439,8 @@ sub form_header {
     if ( $form->{taxaccounts} ) {
         $taxincluded = qq|
 	      <tr>
-		<td align=right><input name=taxincluded class=checkbox type=checkbox value=1 $form->{taxincluded}></td>
-		<th align=left nowrap>| . $locale->text('Tax Included') . qq|</th>
+		<td align="right"><input name="taxincluded" class="checkbox" type="checkbox" value="1" $form->{taxincluded}></td>
+		<th align="left" nowrap>| . $locale->text('Tax Included') . qq|</th>
 	      </tr>
 |;
     }
@@ -449,13 +449,13 @@ sub form_header {
         $rows = 2;
     }
     $notes =
-qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
+qq|<textarea name="notes" rows="$rows" cols="50" wrap="soft">$form->{notes}</textarea>|;
 
     $department = qq|
 	      <tr>
 		<th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td colspan=3><select name=department>$form->{selectdepartment}</select>
-		<input type=hidden name=selectdepartment value="|
+		<td colspan="3"><select name="department">$form->{selectdepartment}</select>
+		<input type="hidden" name="selectdepartment" value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 		</td>
 	      </tr>
@@ -466,10 +466,10 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
     $name =
       ( $form->{"select$form->{vc}"} )
       ? qq|<select name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
-      : qq|<input name="$form->{vc}" value="$form->{$form->{vc}}" size=35>|;
+      : qq|<input name="$form->{vc}" value="$form->{$form->{vc}}" size="35">|;
 
     $employee = qq|
-                <input type=hidden name=employee value="$form->{employee}">
+                <input type="hidden" name="employee" value="$form->{employee}">
 |;
 
     if ( $form->{selectemployee} ) {
@@ -480,9 +480,9 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 
         $employee = qq|
 	      <tr>
-		<th align=right nowrap>$label</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
-		<input type=hidden name=selectemployee value="|
+		<th align="right" nowrap>$label</th>
+		<td><select name="employee">$form->{selectemployee}</select></td>
+		<input type="hidden" name="selectemployee" value="|
           . $form->escape( $form->{selectemployee}, 1 ) . qq|">
 	      </tr>
 |;
@@ -495,10 +495,10 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
     print qq|
 <body onload="document.forms[0].${focus}.focus()">
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=type value="$form->{formname}">
-<input type=hidden name=title value="$title">
+<input type="hidden" name="type" value="$form->{formname}">
+<input type="hidden" name="title" value="$title">
 
 |;
 
@@ -523,31 +523,31 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 
     print qq|
 
-<table width=100%>
-  <tr class=listtop>
-    <th class=listtop>$form->{title}</th>
+<table width="100%">
+  <tr class="listtop">
+    <th class="listtop">$form->{title}</th>
   </tr>
   <tr height="5"></tr>
-  <tr valign=top>
+  <tr valign="top">
     <td>
-      <table width=100%>
-        <tr valign=top>
+      <table width="100%">
+        <tr valign="top">
 	  <td>
 	    <table>
 	      <tr>
 		<th align="right" nowrap>$label</th>
-		<td colspan=3>$name</td>
-		<input type=hidden name="select$form->{vc}" value="|
+		<td colspan="3">$name</td>
+		<input type="hidden" name="select$form->{vc}" value="|
       . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">
 	      </tr>
 	      <tr>
 		<td></td>
-		<td colspan=3>
-		  <table width=100%>
+		<td colspan="3">
+		  <table width="100%">
 		    <tr>
-		      <th align=left nowrap>| . $locale->text('Credit Limit') . qq|</th>
+		      <th align="left" nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>$form->{creditlimit}</td>
-		      <th align=left nowrap>| . $locale->text('Remaining') . qq|</th>
+		      <th align="left" nowrap>| . $locale->text('Remaining') . qq|</th>
 		      <td class="plus$n">|
       . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
       . qq|</td>
@@ -560,28 +560,28 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 	      $taxincluded
 	    </table>
 	  </td>
-	  <td align=right>
+	  <td align="right">
 	    <table>
 	      $employee
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-		<td><input name=invnumber size=20 value="$form->{invnumber}"></td>
+		<th align="right" nowrap>| . $locale->text('Invoice Number') . qq|</th>
+		<td><input name="invnumber" size="20" value="$form->{invnumber}"></td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-		<td><input name=ordnumber size=20 value="$form->{ordnumber}"></td>
+		<th align="right" nowrap>| . $locale->text('Order Number') . qq|</th>
+		<td><input name="ordnumber" size="20" value="$form->{ordnumber}"></td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
-		<td><input name=transdate size=11 title="($myconfig{'dateformat'})" value="$form->{transdate}"></td>
+		<th align="right" nowrap>| . $locale->text('Invoice Date') . qq|</th>
+		<td><input name="transdate" size="11" title="($myconfig{'dateformat'})" value="$form->{transdate}"></td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
-		<td><input name=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate}></td>
+		<th align="right" nowrap>| . $locale->text('Due Date') . qq|</th>
+		<td><input name="duedate" size="11" title="$myconfig{'dateformat'}" value="$form->{duedate}"></td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
-		<td><input name=ponumber size=20 value="$form->{ponumber}"></td>
+		<th align="right" nowrap>| . $locale->text('PO Number') . qq|</th>
+		<td><input name="ponumber" size="20" value="$form->{ponumber}"></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -589,7 +589,7 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
       </table>
     </td>
   </tr>
-  <input type=hidden name=selectprojectnumber value="|
+  <input type="hidden" name="selectprojectnumber" value="|
       . $form->escape( $form->{selectprojectnumber}, 1 ) . qq|">
   <tr>
     <td>
@@ -625,23 +625,23 @@ s/option>\Q$form->{"$form->{ARAP}_amount_$i"}\E/option selected>$form->{"$form->
           $form->format_amount( \%myconfig, $form->{"amount_$i"}, 2 );
 
         $project = qq|
-	  <td align=right><select name="projectnumber_$i">$selectprojectnumber</select></td>
+	  <td align="right"><select name="projectnumber_$i">$selectprojectnumber</select></td>
 | if $form->{selectprojectnumber};
 
         if ( ( $rows = $form->numtextrows( $form->{"description_$i"}, 40 ) ) >
             1 )
         {
             $description =
-qq|<td><textarea name="description_$i" rows=$rows cols=40>$form->{"description_$i"}</textarea></td>|;
+qq|<td><textarea name="description_$i" rows="$rows" cols="40">$form->{"description_$i"}</textarea></td>|;
         }
         else {
             $description =
-qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></td>|;
+qq|<td><input name="description_$i" size="40" value="$form->{"description_$i"}"></td>|;
         }
 
         print qq|
 	<tr valign=top>
-	  <td><input name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
+	  <td><input name="amount_$i" size="10" value="$form->{"amount_$i"}" accesskey="$i"></td>
 	  <td></td>
 	  <td><select name="$form->{ARAP}_amount_$i">$selectamount</select></td>
 	  $description
@@ -660,8 +660,8 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 
         print qq|
         <tr>
-	  <td><input name="tax_$item" size=10 value=$form->{"tax_$item"}></td>
-	  <td align=right><input name="calctax_$item" class=checkbox type=checkbox value=1 $form->{"calctax_$item"}></td>
+	  <td><input name="tax_$item" size="10" value="$form->{"tax_$item"}"></td>
+	  <td align="right"><input name="calctax_$item" class="checkbox" type="checkbox" value="1" $form->{"calctax_$item"}></td>
 	  <td><select name="$form->{ARAP}_tax_$item">$form->{"select$form->{ARAP}_tax_$item"}</select></td>
 	</tr>
 |;
@@ -680,26 +680,26 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 
     print qq|
         <tr>
-	  <th align=left>$form->{invtotal}</th>
+	  <th align="left">$form->{invtotal}</th>
 	  <td></td>
-	  <td><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
+	  <td><select name="$form->{ARAP}">$form->{"select$form->{ARAP}"}</select></td>
         </tr>
 	<tr>
-	  <th align=right>| . $locale->text('Notes') . qq|</th>
+	  <th align="right">| . $locale->text('Notes') . qq|</th>
 	  <td></td>
-	  <td colspan=3>$notes</td>
+	  <td colspan="3">$notes</td>
 	</tr>
       </table>
     </td>
   </tr>
 
-  <tr class=listheading>
-    <th class=listheading>| . $locale->text('Payments') . qq|</th>
+  <tr class="listheading">
+    <th class="listheading">| . $locale->text('Payments') . qq|</th>
   </tr>
 
   <tr>
     <td>
-      <table width=100%>
+      <table width="100%">
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
@@ -754,23 +754,23 @@ s/option>\Q$form->{"$form->{ARAP}_paid_$i"}\E/option selected>$form->{"$form->{A
             }
             else {
                 $exchangerate =
-qq|<input name="exchangerate_$i" size=10 value=$form->{"exchangerate_$i"}>|;
+qq|<input name="exchangerate_$i" size="10" value=$form->{"exchangerate_$i"}>|;
             }
         }
 
         $form->hide_form("forex_$i");
 
         $column_data{paid} =
-qq|<td align=center><input name="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
+qq|<td align="center"><input name="paid_$i" size="11" value="$form->{"paid_$i"}"></td>|;
         $column_data{ARAP_paid} =
-qq|<td align=center><select name="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
-        $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
+qq|<td align="center"><select name="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
+        $column_data{exchangerate} = qq|<td align="center">$exchangerate</td>|;
         $column_data{datepaid} =
-qq|<td align=center><input name="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
+qq|<td align="center"><input name="datepaid_$i" size="11" value="$form->{"datepaid_$i"}"></td>|;
         $column_data{source} =
-qq|<td align=center><input name="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
+qq|<td align="center"><input name="source_$i" size="11" value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =
-qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></td>|;
+qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"></td>|;
 
         for (@column_index) { print qq|$column_data{$_}\n| }
 
@@ -786,7 +786,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 |;
@@ -1093,14 +1093,14 @@ sub delete {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 |;
 
     $form->{action} = "yes";
     $form->hide_form;
 
     print qq|
-<h2 class=confirm>$form->{title}</h2>
+<h2 class="confirm">$form->{title}</h2>
 
 <h4>|
       . $locale->text('Are you sure you want to delete Transaction')
@@ -1153,7 +1153,7 @@ sub search {
           qq|<select name="$form->{vc}"><option>\n$selectname</select>|;
     }
     else {
-        $selectname = qq|<input name=$form->{vc} size=35>|;
+        $selectname = qq|<input name="$form->{vc}" size="35">|;
     }
 
     # departments
@@ -1166,13 +1166,13 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         }
 
         $l_department =
-          qq|<input name="l_department" class=checkbox type=checkbox value=Y> |
+          qq|<input name="l_department" class="checkbox" type="checkbox" value="Y"> |
           . $locale->text('Department');
 
         $department = qq| 
         <tr> 
-	  <th align=right nowrap>| . $locale->text('Department') . qq|</th>
-	  <td colspan=3><select name=department>$form->{selectdepartment}</select></td>
+	  <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
+	  <td colspan="3"><select name="department">$form->{selectdepartment}</select></td>
 	</tr>
 |;
     }
@@ -1191,16 +1191,16 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 
         $employee = qq|
         <tr>
-	  <th align=right nowrap>$employeelabel</th>
-	  <td colspan=3><select name=employee>$form->{selectemployee}</select></td>
+	  <th align="right" nowrap>$employeelabel</th>
+	  <td colspan="3"><select name="employee">$form->{selectemployee}</select></td>
 	</tr>
 |;
 
         $l_employee =
-qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel|;
+qq|<input name="l_employee" class="checkbox" type="checkbox" value=Y> $employeelabel|;
 
         $l_manager =
-          qq|<input name="l_manager" class=checkbox type=checkbox value=Y> |
+          qq|<input name="l_manager" class="checkbox" type="checkbox" value=Y> |
           . $locale->text('Manager');
     }
 
@@ -1211,37 +1211,37 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
 
     $invnumber = qq|
 	<tr>
-	  <th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-	  <td colspan=3><input name=invnumber size=20></td>
+	  <th align="right" nowrap>| . $locale->text('Invoice Number') . qq|</th>
+	  <td colspan="3"><input name="invnumber" size="20"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-	  <td colspan=3><input name=ordnumber size=20></td>
+	  <th align="right" nowrap>| . $locale->text('Order Number') . qq|</th>
+	  <td colspan="3"><input name="ordnumber" size="20"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
-	  <td colspan=3><input name=ponumber size=20></td>
+	  <th align="right" nowrap>| . $locale->text('PO Number') . qq|</th>
+	  <td colspan="3"><input name="ponumber" size="20"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('Source') . qq|</th>
-	  <td colspan=3><input name=source size=40></td>
+	  <th align="right" nowrap>| . $locale->text('Source') . qq|</th>
+	  <td colspan="3"><input name="source" size="40"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('Description') . qq|</th>
-	  <td colspan=3><input name=description size=40></td>
+	  <th align="right" nowrap>| . $locale->text('Description') . qq|</th>
+	  <td colspan="3"><input name="description" size="40"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('Notes') . qq|</th>
-	  <td colspan=3><input name=notes size=40></td>
+	  <th align="right" nowrap>| . $locale->text('Notes') . qq|</th>
+	  <td colspan="3"><input name="notes" size="40"></td>
 	</tr>
 |;
 
     $openclosed = qq|
 	      <tr>
-		<td nowrap><input name=open class=checkbox type=checkbox value=Y checked> |
+		<td nowrap><input name="open" class="checkbox" type="checkbox" value="Y" checked> |
       . $locale->text('Open')
       . qq|</td>
-		<td nowrap><input name=closed class=checkbox type=checkbox value=Y> |
+		<td nowrap><input name="closed" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Closed')
       . qq|</td>
 	      </tr>
@@ -1249,10 +1249,10 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
 
     $summary = qq|
               <tr>
-		<td><input name=summary type=radio class=radio value=1 checked> |
+		<td><input name="summary" type="radio" class="radio" value="1" checked> |
       . $locale->text('Summary')
       . qq|</td>
-		<td><input name=summary type=radio class=radio value=0> |
+		<td><input name=summary type="radio" class="radio" value="0"> |
       . $locale->text('Detail') . qq|
 		</td>
 	      </tr>
@@ -1284,17 +1284,17 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
 
         $selectfrom = qq|
         <tr>
-	<th align=right>| . $locale->text('Period') . qq|</th>
-	<td colspan=3>
-	<select name=month>$form->{selectaccountingmonth}</select>
-	<select name=year>$form->{selectaccountingyear}</select>
-	<input name=interval class=radio type=radio value=0 checked>&nbsp;|
+	<th align="right">| . $locale->text('Period') . qq|</th>
+	<td colspan="3">
+	<select name="month">$form->{selectaccountingmonth}</select>
+	<select name="year">$form->{selectaccountingyear}</select>
+	<input name="interval" class="radio" type="radio" value="0" checked>&nbsp;|
           . $locale->text('Current') . qq|
-	<input name=interval class=radio type=radio value=1>&nbsp;|
+	<input name="interval" class="radio" type="radio" value="1">&nbsp;|
           . $locale->text('Month') . qq|
-	<input name=interval class=radio type=radio value=3>&nbsp;|
+	<input name="interval" class="radio" type="radio" value="3">&nbsp;|
           . $locale->text('Quarter') . qq|
-	<input name=interval class=radio type=radio value=12>&nbsp;|
+	<input name="interval" class="radio" type="radio" value="12">&nbsp;|
           . $locale->text('Year') . qq|
 	</td>
       </tr>
@@ -1303,65 +1303,65 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
 
     $name = $locale->text('Customer');
     $l_name =
-qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
+qq|<input name="l_name" class="checkbox" type="checkbox" value="Y" checked> $name|;
     $l_till =
-      qq|<input name="l_till" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_till" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Till');
 
     if ( $form->{vc} eq 'vendor' ) {
         $name   = $locale->text('Vendor');
         $l_till = "";
         $l_name =
-qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
+qq|<input name="l_name" class="checkbox" type="checkbox" value="Y" checked> $name|;
     }
 
     @a = ();
     push @a,
-      qq|<input name="l_runningnumber" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_runningnumber" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('No.');
-    push @a, qq|<input name="l_id" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_id" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('ID');
     push @a,
-qq|<input name="l_invnumber" class=checkbox type=checkbox value=Y checked> |
+qq|<input name="l_invnumber" class="checkbox" type="checkbox" value="Y" checked> |
       . $locale->text('Invoice Number');
     push @a,
-      qq|<input name="l_ordnumber" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_ordnumber" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Order Number');
-    push @a, qq|<input name="l_ponumber" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_ponumber" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('PO Number');
     push @a,
-qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
+qq|<input name="l_transdate" class="checkbox" type="checkbox" value="Y" checked> |
       . $locale->text('Invoice Date');
     push @a, $l_name;
     push @a, $l_employee if $l_employee;
     push @a, $l_manager if $l_employee;
     push @a, $l_department if $l_department;
     push @a,
-      qq|<input name="l_netamount" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_netamount" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Amount');
-    push @a, qq|<input name="l_tax" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_tax" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Tax');
     push @a,
-      qq|<input name="l_amount" class=checkbox type=checkbox value=Y checked> |
+      qq|<input name="l_amount" class="checkbox" type="checkbox" value="Y" checked> |
       . $locale->text('Total');
-    push @a, qq|<input name="l_curr" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_curr" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Currency');
-    push @a, qq|<input name="l_datepaid" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_datepaid" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Date Paid');
     push @a,
-      qq|<input name="l_paid" class=checkbox type=checkbox value=Y checked> |
+      qq|<input name="l_paid" class="checkbox" type="checkbox" value="Y" checked> |
       . $locale->text('Paid');
-    push @a, qq|<input name="l_duedate" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_duedate" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Due Date');
-    push @a, qq|<input name="l_due" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_due" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Amount Due');
-    push @a, qq|<input name="l_notes" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_notes" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Notes');
     push @a, $l_till if $l_till;
     push @a,
-      qq|<input name="l_shippingpoint" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_shippingpoint" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Shipping Point');
-    push @a, qq|<input name="l_shipvia" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_shipvia" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Ship via');
 
     $form->header;
@@ -1369,34 +1369,34 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<table width=100%>
-  <tr><th class=listtop>$form->{title}</th></tr>
+<table width="100%">
+  <tr><th class="listtop">$form->{title}</th></tr>
   <tr height="5"></tr>
   <tr>
     <td>
       <table>
         <tr>
-	  <th align=right>| . $locale->text('Account') . qq|</th>
-	  <td colspan=3><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
+	  <th align="right">| . $locale->text('Account') . qq|</th>
+	  <td colspan="3"><select name="$form->{ARAP}">$form->{"select$form->{ARAP}"}</select></td>
 	</tr>
 	<tr>
-	  <th align=right>$name</th>
-	  <td colspan=3>$selectname</td>
+	  <th align="right">$name</th>
+	  <td colspan="3">$selectname</td>
 	</tr>
 	$employee
 	$department
 	$invnumber
 	<tr>
-	  <th align=right>| . $locale->text('Ship via') . qq|</th>
-	  <td colspan=3><input name=shipvia size=40></td>
+	  <th align="right">| . $locale->text('Ship via') . qq|</th>
+	  <td colspan="3"><input name=shipvia size="40"></td>
 	</tr>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('From') . qq|</th>
-	  <td><input name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input name=transdateto size=11 title="$myconfig{dateformat}"></td>
+	  <th align="right" nowrap>| . $locale->text('From') . qq|</th>
+	  <td><input name="transdatefrom" size="11" title="$myconfig{dateformat}"></td>
+	  <th align="right">| . $locale->text('To') . qq|</th>
+	  <td><input name="transdateto" size="11" title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
       </table>
@@ -1406,9 +1406,9 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
     <td>
       <table>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('Include in Report') . qq|</th>
+	  <th align="right" nowrap>| . $locale->text('Include in Report') . qq|</th>
 	  <td>
-	    <table width=100%>
+	    <table width="100%">
 	      $openclosed
 	      $summary
 |;
@@ -1426,7 +1426,7 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
 
     print qq|
 	      <tr>
-		<td nowrap><input name="l_subtotal" class=checkbox type=checkbox value=Y> |
+		<td nowrap><input name="l_subtotal" class="checkbox" type="checkbox" value="Y"> |
       . $locale->text('Subtotal')
       . qq|</td>
 	      </tr>
@@ -1437,7 +1437,7 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 
@@ -1645,69 +1645,69 @@ sub transactions {
       ? $locale->text('Customer')
       : $locale->text('Vendor');
 
-    $column_header{runningnumber} = qq|<th class=listheading>&nbsp;</th>|;
+    $column_header{runningnumber} = qq|<th class="listheading">&nbsp;</th>|;
     $column_header{id} =
-        "<th><a class=listheading href=$href&sort=id>"
+        qq|<th><a class="listheading" href="$href&sort=id">|
       . $locale->text('ID')
       . "</a></th>";
     $column_header{transdate} =
-        "<th><a class=listheading href=$href&sort=transdate>"
+        qq|<th><a class="listheading" href="$href&sort=transdate">|
       . $locale->text('Date')
       . "</a></th>";
     $column_header{duedate} =
-        "<th><a class=listheading href=$href&sort=duedate>"
+        qq|<th><a class="listheading" href="$href&sort=duedate">|
       . $locale->text('Due Date')
       . "</a></th>";
     $column_header{invnumber} =
-        "<th><a class=listheading href=$href&sort=invnumber>"
+        qq|<th><a class="listheading" href="$href&sort=invnumber">|
       . $locale->text('Invoice')
       . "</a></th>";
     $column_header{ordnumber} =
-        "<th><a class=listheading href=$href&sort=ordnumber>"
+        qq|<th><a class="listheading" href="$href&sort=ordnumber">|
       . $locale->text('Order')
       . "</a></th>";
     $column_header{ponumber} =
-        "<th><a class=listheading href=$href&sort=ponumber>"
+        qq|<th><a class="listheading" href="$href&sort=ponumber">|
       . $locale->text('PO Number')
       . "</a></th>";
     $column_header{name} =
-      "<th><a class=listheading href=$href&sort=name>$name</a></th>";
+      qq|<th><a class="listheading" href="$href&sort=name">$name</a></th>|;
     $column_header{netamount} =
-      "<th class=listheading>" . $locale->text('Amount') . "</th>";
+      '<th class="listheading">' . $locale->text('Amount') . "</th>";
     $column_header{tax} =
-      "<th class=listheading>" . $locale->text('Tax') . "</th>";
+      '<th class="listheading">' . $locale->text('Tax') . "</th>";
     $column_header{amount} =
-      "<th class=listheading>" . $locale->text('Total') . "</th>";
+      '<th class="listheading">' . $locale->text('Total') . "</th>";
     $column_header{paid} =
-      "<th class=listheading>" . $locale->text('Paid') . "</th>";
+      '<th class="listheading">' . $locale->text('Paid') . "</th>";
     $column_header{datepaid} =
-        "<th><a class=listheading href=$href&sort=datepaid>"
+        qq|<th><a class="listheading" href="$href&sort=datepaid">|
       . $locale->text('Date Paid')
       . "</a></th>";
     $column_header{due} =
-      "<th class=listheading>" . $locale->text('Amount Due') . "</th>";
+      '<th class="listheading">' . $locale->text('Amount Due') . "</th>";
     $column_header{notes} =
-      "<th class=listheading>" . $locale->text('Notes') . "</th>";
+      '<th class="listheading">' . $locale->text('Notes') . "</th>";
     $column_header{employee} =
-      "<th><a class=listheading href=$href&sort=employee>$employee</th>";
+      qq|<th><a class="listheading" href="$href&sort=employee">$employee</th>|;
     $column_header{manager} =
-      "<th><a class=listheading href=$href&sort=manager>"
+      qq|<th><a class="listheading" href="$href&sort=manager">|
       . $locale->text('Manager') . "</th>";
     $column_header{till} =
-      "<th class=listheading><a class=listheading href=$href&sort=till>"
+      qq|<th class="listheading"><a class="listheading" href="$href&sort=till">|
       . $locale->text('Till') . "</th>";
 
     $column_header{shippingpoint} =
-        "<th><a class=listheading href=$href&sort=shippingpoint>"
+        qq|<th><a class="listheading" href="$href&sort=shippingpoint">|
       . $locale->text('Shipping Point')
       . "</a></th>";
     $column_header{shipvia} =
-        "<th><a class=listheading href=$href&sort=shipvia>"
+        qq|<th><a class="listheading" href="$href&sort=shipvia">|
       . $locale->text('Ship via')
       . "</a></th>";
 
     $column_header{curr} =
-        "<th><a class=listheading href=$href&sort=curr>"
+        qq|<th><a class="listheading" href="$href&sort=curr">|
       . $locale->text('Curr')
       . "</a></th>";
     for (qw(amount tax netamount paid due)) {
@@ -1715,28 +1715,28 @@ sub transactions {
     }
 
     $column_header{department} =
-        "<th><a class=listheading href=$href&sort=department>"
+        qq|<th><a class="listheading" href="$href&sort=department">|
       . $locale->text('Department')
       . "</a></th>";
 
     $column_header{accno} =
-        "<th><a class=listheading href=$href&sort=accno>"
+        qq|<th><a class="listheading" href="$href&sort=accno">|
       . $locale->text('Account')
       . "</a></th>";
     $column_header{source} =
-        "<th><a class=listheading href=$href&sort=source>"
+        qq|<th><a class="listheading" href="$href&sort=source">|
       . $locale->text('Source')
       . "</a></th>";
     $column_header{debit} =
-      "<th class=listheading>" . $locale->text('Debit') . "</th>";
+      '<th class="listheading">' . $locale->text('Debit') . "</th>";
     $column_header{credit} =
-      "<th class=listheading>" . $locale->text('Credit') . "</th>";
+      '<th class="listheading">' . $locale->text('Credit') . "</th>";
     $column_header{projectnumber} =
-        "<th><a class=listheading href=$href&sort=projectnumber>"
+        qq|<th><a class="listheading" href="$href&sort=projectnumber">|
       . $locale->text('Project')
       . "</a></th>";
     $column_header{description} =
-        "<th><a class=listheading href=$href&sort=linedescription>"
+        qq|<th><a class="listheading" href="$href&sort=linedescription">|
       . $locale->text('Description')
       . "</a></th>";
 
@@ -1748,9 +1748,9 @@ sub transactions {
     print qq|
 <body>
 
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop>$form->{title}</th>
+    <th class="listtop">$form->{title}</th>
   </tr>
   <tr height="5"></tr>
   <tr>
@@ -1758,8 +1758,8 @@ sub transactions {
   </tr>
   <tr>
     <td>
-      <table width=100%>
-	<tr class=listheading>
+      <table width="100%">
+	<tr class="listheading">
 |;
 
     for (@column_index) { print "\n$column_header{$_}" }
@@ -1802,18 +1802,18 @@ sub transactions {
             }
 
             for (qw(netamount amount paid)) {
-                $column_data{"fx_$_"} = "<td align=right>"
+                $column_data{"fx_$_"} = '<td align="right">'
                   . $form->format_amount( \%myconfig, $ref->{"fx_$_"}, 2,
                     "&nbsp;" )
                   . "</td>";
             }
 
-            $column_data{fx_tax} = "<td align=right>"
+            $column_data{fx_tax} = '<td align="right">'
               . $form->format_amount( \%myconfig,
                 $ref->{fx_amount} - $ref->{fx_netamount},
                 2, "&nbsp;" )
               . "</td>";
-            $column_data{fx_due} = "<td align=right>"
+            $column_data{fx_due} = '<td align="right">'
               . $form->format_amount( \%myconfig,
                 $ref->{fx_amount} - $ref->{fx_paid},
                 2, "&nbsp;" )
@@ -1829,21 +1829,21 @@ sub transactions {
 
         }
 
-        $column_data{runningnumber} = "<td align=right>$i</td>";
+        $column_data{runningnumber} = qq|<td align="right">$i</td>|;
 
         for (qw(netamount amount paid debit credit)) {
             $column_data{$_} =
-                "<td align=right>"
+                '<td align="right">'
               . $form->format_amount( \%myconfig, $ref->{$_}, 2, "&nbsp;" )
               . "</td>";
         }
 
-        $column_data{tax} = "<td align=right>"
+        $column_data{tax} = '<td align="right">'
           . $form->format_amount( \%myconfig,
             $ref->{amount} - $ref->{netamount},
             2, "&nbsp;" )
           . "</td>";
-        $column_data{due} = "<td align=right>"
+        $column_data{due} = '<td align="right">'
           . $form->format_amount( \%myconfig, $ref->{amount} - $ref->{paid},
             2, "&nbsp;" )
           . "</td>";
@@ -1867,7 +1867,7 @@ sub transactions {
         $module = ( $ref->{till} ) ? "ps.pl" : $module;
 
         $column_data{invnumber} =
-"<td><a href=$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{invnumber}&nbsp;</a></td>";
+qq|<td><a href="$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback">$ref->{invnumber}&nbsp;</a></td>|;
 
         for (qw(notes description)) { $ref->{$_} =~ s/\r?\n/<br>/g }
         for (
@@ -1879,19 +1879,19 @@ sub transactions {
         for (qw(id curr)) { $column_data{$_} = "<td>$ref->{$_}</td>" }
 
         $column_data{accno} =
-qq|<td><a href=ca.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=list_transactions&accounttype=standard&accno=$ref->{accno}&fromdate=$form->{transdatefrom}&todate=$form->{transdateto}&sort=transdate&l_subtotal=$form->{l_subtotal}&prevreport=$callback>$ref->{accno}</a></td>|;
+qq|<td><a href="ca.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=list_transactions&accounttype=standard&accno=$ref->{accno}&fromdate=$form->{transdatefrom}&todate=$form->{transdateto}&sort=transdate&l_subtotal=$form->{l_subtotal}&prevreport=$callback">$ref->{accno}</a></td>|;
 
         $column_data{name} =
-qq|<td><a href=ct.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=edit&id=$ref->{"$form->{vc}_id"}&db=$form->{vc}&callback=$callback>$ref->{name}</a></td>|;
+qq|<td><a href="ct.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=edit&id=$ref->{"$form->{vc}_id"}&db=$form->{vc}&callback=$callback">$ref->{name}</a></td>|;
 
         if ( $ref->{id} != $sameid ) {
             $j++;
             $j %= 2;
         }
 
-        print "
-        <tr class=listrow$j>
-";
+        print qq|
+        <tr class="listrow$j">
+|;
 
         for (@column_index) { print "\n$column_data{$_}" }
 
@@ -1910,56 +1910,56 @@ qq|<td><a href=ct.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{s
 
     # print totals
     print qq|
-        <tr class=listtotal>
+        <tr class="listtotal">
 |;
 
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
 
     $column_data{netamount} =
-        "<th class=listtotal align=right>"
+        '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totalnetamount, 2, "&nbsp;" )
       . "</th>";
-    $column_data{tax} = "<th class=listtotal align=right>"
+    $column_data{tax} = '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totalamount - $totalnetamount,
         2, "&nbsp;" )
       . "</th>";
     $column_data{amount} =
-      "<th class=listtotal align=right>"
+      '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totalamount, 2, "&nbsp;" ) . "</th>";
     $column_data{paid} =
-      "<th class=listtotal align=right>"
+      '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totalpaid, 2, "&nbsp;" ) . "</th>";
     $column_data{due} =
-      "<th class=listtotal align=right>"
+      '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totalamount - $totalpaid, 2,
         "&nbsp;" )
       . "</th>";
     $column_data{debit} =
-      "<th class=listtotal align=right>"
+      '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totaldebit, 2, "&nbsp;" ) . "</th>";
     $column_data{credit} =
-      "<th class=listtotal align=right>"
+      '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totalcredit, 2, "&nbsp;" ) . "</th>";
 
     if ( $form->{l_curr} && $form->{sort} eq 'curr' && $form->{l_subtotal} ) {
         $column_data{fx_netamount} =
-            "<th class=listtotal align=right>"
+            '<th class="listtotal" align="right">'
           . $form->format_amount( \%myconfig, $totalfxnetamount, 2, "&nbsp;" )
           . "</th>";
-        $column_data{fx_tax} = "<th class=listtotal align=right>"
+        $column_data{fx_tax} = '<th class="listtotal" align="right">'
           . $form->format_amount( \%myconfig,
             $totalfxamount - $totalfxnetamount,
             2, "&nbsp;" )
           . "</th>";
         $column_data{fx_amount} =
-            "<th class=listtotal align=right>"
+            '<th class="listtotal" align="right">'
           . $form->format_amount( \%myconfig, $totalfxamount, 2, "&nbsp;" )
           . "</th>";
         $column_data{fx_paid} =
-            "<th class=listtotal align=right>"
+            '<th class="listtotal" align="right">'
           . $form->format_amount( \%myconfig, $totalfxpaid, 2, "&nbsp;" )
           . "</th>";
-        $column_data{fx_due} = "<th class=listtotal align=right>"
+        $column_data{fx_due} = '<th class="listtotal" align="right">'
           . $form->format_amount( \%myconfig, $totalfxamount - $totalfxpaid,
             2, "&nbsp;" )
           . "</th>";
@@ -2005,12 +2005,12 @@ qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 
 <br>
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 |;
 
     $form->hide_form(
@@ -2042,46 +2042,46 @@ sub subtotal {
 
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
 
-    $column_data{tax} = "<th class=listsubtotal align=right>"
+    $column_data{tax} = '<th class="listsubtotal" align="right">'
       . $form->format_amount( \%myconfig, $subtotalamount - $subtotalnetamount,
         2, "&nbsp;" )
       . "</th>";
     $column_data{amount} =
-        "<th class=listsubtotal align=right>"
+        '<th class="listsubtotal" align="right">'
       . $form->format_amount( \%myconfig, $subtotalamount, 2, "&nbsp;" )
       . "</th>";
     $column_data{paid} =
-        "<th class=listsubtotal align=right>"
+        '<th class="listsubtotal" align="right">'
       . $form->format_amount( \%myconfig, $subtotalpaid, 2, "&nbsp;" )
       . "</th>";
-    $column_data{due} = "<th class=listsubtotal align=right>"
+    $column_data{due} = '<th class="listsubtotal" align="right">'
       . $form->format_amount( \%myconfig, $subtotalamount - $subtotalpaid,
         2, "&nbsp;" )
       . "</th>";
     $column_data{debit} =
-        "<th class=listsubtotal align=right>"
+        '<th class="listsubtotal" align="right">'
       . $form->format_amount( \%myconfig, $subtotaldebit, 2, "&nbsp;" )
       . "</th>";
     $column_data{credit} =
-        "<th class=listsubtotal align=right>"
+        '<th class="listsubtotal" align="right">'
       . $form->format_amount( \%myconfig, $subtotalcredit, 2, "&nbsp;" )
       . "</th>";
 
     if ( $form->{l_curr} && $form->{sort} eq 'curr' && $form->{l_subtotal} ) {
-        $column_data{fx_tax} = "<th class=listsubtotal align=right>"
+        $column_data{fx_tax} = '<th class="listsubtotal" align="right">'
           . $form->format_amount( \%myconfig,
             $subtotalfxamount - $subtotalfxnetamount,
             2, "&nbsp;" )
           . "</th>";
         $column_data{fx_amount} =
-            "<th class=listsubtotal align=right>"
+            '<th class="listsubtotal" align="right">'
           . $form->format_amount( \%myconfig, $subtotalfxamount, 2, "&nbsp;" )
           . "</th>";
         $column_data{fx_paid} =
-            "<th class=listsubtotal align=right>"
+            '<th class="listsubtotal" align="right">'
           . $form->format_amount( \%myconfig, $subtotalfxpaid, 2, "&nbsp;" )
           . "</th>";
-        $column_data{fx_due} = "<th class=listsubtotal align=right>"
+        $column_data{fx_due} = '<th class="listsubtotal" align="right">'
           . $form->format_amount( \%myconfig,
             $subtotalfxmount - $subtotalfxpaid,
             2, "&nbsp;" )
@@ -2098,7 +2098,7 @@ sub subtotal {
     $subtotalfxamount    = 0;
     $subtotalfxpaid      = 0;
 
-    print "<tr class=listsubtotal>";
+    print '<tr class="listsubtotal">';
 
     for (@column_index) { print "\n$column_data{$_}" }
 

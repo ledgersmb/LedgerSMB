@@ -153,9 +153,9 @@ sub select_name {
     $label = ucfirst $table;
     $column_data{ndx} = qq|<th>&nbsp;</th>|;
     $column_data{name} =
-      qq|<th class=listheading>| . $locale->text($label) . qq|</th>|;
+      qq|<th class="listheading">| . $locale->text($label) . qq|</th>|;
     $column_data{address} =
-        qq|<th class=listheading colspan=5>|
+        qq|<th class="listheading" colspan="5">|
       . $locale->text('Address')
       . qq|</th>|;
 
@@ -167,17 +167,17 @@ sub select_name {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop>$title</th>
+    <th class="listtop">$title</th>
   </tr>
-  <tr space=5></tr>
+  <tr space="5"></tr>
   <tr>
     <td>
-      <table width=100%>
-	<tr class=listheading>|;
+      <table width="100%">
+	<tr class="listheading">|;
 
     for (@column_index) { print "\n$column_data{$_}" }
 
@@ -194,9 +194,9 @@ sub select_name {
         $ref->{name} = $form->quote( $ref->{name} );
 
         $column_data{ndx} =
-qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
+qq|<td><input name="ndx" class="radio" type="radio" value="$i" $checked></td>|;
         $column_data{name} =
-qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</td>|;
+qq|<td><input name="new_name_$i" type="hidden" value="$ref->{name}">$ref->{name}</td>|;
         $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}</td>|;
         for (qw(city state zipcode country)) {
             $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
@@ -205,14 +205,14 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
         $j++;
         $j %= 2;
         print qq|
-	<tr class=listrow$j>|;
+	<tr class="listrow$j">|;
 
         for (@column_index) { print "\n$column_data{$_}" }
 
         print qq|
 	</tr>
 
-<input name="new_id_$i" type=hidden value=$ref->{id}>
+<input name="new_id_$i" type="hidden" value="$ref->{id}">
 
 |;
 
@@ -223,11 +223,11 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 
-<input name=lastndx type=hidden value=$i>
+<input name="lastndx" type="hidden" value="$i">
 
 |;
 
@@ -239,8 +239,8 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
     $form->hide_form;
 
     print qq|
-<input type=hidden name=nextsub value=name_selected>
-<input type=hidden name=vc value="$table">
+<input type="hidden" name="nextsub" value="name_selected">
+<input type="hidden" name="vc" value="$table">
 <br>
 <button class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
@@ -378,19 +378,19 @@ sub select_project {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=rownumber value=$form->{rownumber}>
+<input type=hidden name="rownumber" value="$form->{rownumber}">
 
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop>$title</th>
+    <th class="listtop">$title</th>
   </tr>
-  <tr space=5></tr>
+  <tr space="5"></tr>
   <tr>
     <td>
-      <table width=100%>
-	<tr class=listheading>|;
+      <table width="100%">
+	<tr class="listheading">|;
 
     for (@column_index) { print "\n$column_data{$_}" }
 
@@ -405,22 +405,22 @@ sub select_project {
         $ref->{name} = $form->quote( $ref->{name} );
 
         $column_data{ndx} =
-qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
+qq|<td><input name="ndx" class="radio" type="radio" value="$i" $checked></td>|;
         $column_data{projectnumber} =
-qq|<td><input name="new_projectnumber_$i" type=hidden value="$ref->{projectnumber}">$ref->{projectnumber}</td>|;
+qq|<td><input name="new_projectnumber_$i" type="hidden" value="$ref->{projectnumber}">$ref->{projectnumber}</td>|;
         $column_data{description} = qq|<td>$ref->{description}</td>|;
 
         $j++;
         $j %= 2;
         print qq|
-        <tr class=listrow$j>|;
+        <tr class="listrow$j">|;
 
         for (@column_index) { print "\n$column_data{$_}" }
 
         print qq|
         </tr>
 
-<input name="new_id_$i" type=hidden value=$ref->{id}>
+<input name="new_id_$i" type="hidden" value="$ref->{id}">
 
 |;
 
@@ -431,11 +431,11 @@ qq|<td><input name="new_projectnumber_$i" type=hidden value="$ref->{projectnumbe
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 
-<input name=lastndx type=hidden value=$i>
+<input name="lastndx" type="hidden" value="$i">
 
 |;
 
@@ -447,7 +447,7 @@ qq|<td><input name="new_projectnumber_$i" type=hidden value="$ref->{projectnumbe
     $form->hide_form;
 
     print qq|
-<input type=hidden name=nextsub value=project_selected>
+<input type="hidden" name="nextsub" value="project_selected">
 <br>
 <button class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
@@ -549,13 +549,13 @@ sub repost {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 |;
 
     $form->hide_form;
 
     print qq|
-<h2 class=confirm>| . $locale->text('Warning!') . qq|</h2>
+<h2 class="confirm">| . $locale->text('Warning!') . qq|</h2>
 
 <h4>$msg</h4>
 
@@ -591,8 +591,8 @@ sub schedule {
     if ( $form->{paidaccounts} ) {
         $postpayment = qq|
  	<tr>
-	  <th align=right nowrap>| . $locale->text('Include Payment') . qq|</th>
-	  <td><input name=recurringpayment type=checkbox class=checkbox value=1 $recurringpayment></td>
+	  <th align="right" nowrap>| . $locale->text('Include Payment') . qq|</th>
+	  <td><input name="recurringpayment" type="checkbox" class="checkbox" value="1" $recurringpayment></td>
 	</tr>
 |;
     }
@@ -600,8 +600,8 @@ sub schedule {
     if ( $form->{recurringnextdate} ) {
         $nextdate = qq|
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Next Date') . qq|</th>
-		<td><input name=recurringnextdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringnextdate}></td>
+		<th align="right" nowrap>| . $locale->text('Next Date') . qq|</th>
+		<td><input name="recurringnextdate" size="11" title="($myconfig{'dateformat'})" value="$form->{recurringnextdate}"></td>
 	      </tr>
 |;
     }
@@ -623,7 +623,7 @@ sub schedule {
         $email = qq|
 	<table>
 	  <tr>
-	    <th colspan=2 class=listheading>| . $locale->text('E-mail') . qq|</th>
+	    <th colspan="2" class="listheading">| . $locale->text('E-mail') . qq|</th>
 	  </tr>
 	  
 	  <tr>
@@ -648,7 +648,7 @@ sub schedule {
 
             $email .= qq|
 		<tr>
-		  <td><input name="email$item" type=checkbox class=checkbox value=1 $checked></td>
+		  <td><input name="email$item" type="checkbox" class="checkbox" value="1" $checked></td>
 		  <th align=left>$formname{$item}</th>
 		  <td><select name="emailformat$item">$selectformat</select></td>
 		</tr>
@@ -665,11 +665,11 @@ sub schedule {
         $message = qq|
 	<table>
 	  <tr>
-	    <th class=listheading>| . $locale->text('E-mail message') . qq|</th>
+	    <th class="listheading">| . $locale->text('E-mail message') . qq|</th>
 	  </tr>
 
 	  <tr>
-	    <td><textarea name="recurringmessage" rows=10 cols=60 wrap=soft>$form->{recurringmessage}</textarea></td>
+	    <td><textarea name="recurringmessage" rows="10" cols="60" wrap="soft">$form->{recurringmessage}</textarea></td>
 	  </tr>
 	</table>
 |;
@@ -698,7 +698,7 @@ sub schedule {
         $print = qq|
 	<table>
 	  <tr>
-	    <th colspan=2 class=listheading>| . $locale->text('Print') . qq|</th>
+	    <th colspan="2" class="listheading">| . $locale->text('Print') . qq|</th>
 	  </tr>
 
 	  <tr>
@@ -722,8 +722,8 @@ sub schedule {
 
             $print .= qq|
 		<tr>
-		  <td><input name="print$item" type=checkbox class=checkbox value=1 $checked></td>
-		  <th align=left>$formname{$item}</th>
+		  <td><input name="print$item" type="checkbox" class="checkbox" value=1 $checked></td>
+		  <th align="left">$formname{$item}</th>
 		  <td><select name="printprinter$item">$selectprinter</select></td>
 		  <td><select name="printformat$item">$selectformat</select></td>
 		</tr>
@@ -762,18 +762,18 @@ sub schedule {
     $repeat = qq|
 	    <table>
 	      <tr>
-		<th colspan=3  class=listheading>| . $locale->text('Repeat') . qq|</th>
+		<th colspan="3" class="listheading">| . $locale->text('Repeat') . qq|</th>
 	      </tr>
 
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Every') . qq|</th>
-		<td><select name=recurringrepeat>$selectrepeat</td>
-		<td><select name=recurringunit>$selectunit</td>
+		<th align="right" nowrap>| . $locale->text('Every') . qq|</th>
+		<td><select name="recurringrepeat">$selectrepeat</td>
+		<td><select name="recurringunit">$selectunit</td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('For') . qq|</th>
-		<td><input name=recurringhowmany size=3 value=$form->{recurringhowmany}></td>
-		<th align=left nowrap>| . $locale->text('time(s)') . qq|</th>
+		<th align="right" nowrap>| . $locale->text('For') . qq|</th>
+		<td><input name="recurringhowmany" size="3" value="$form->{recurringhowmany}"></td>
+		<th align="left" nowrap>| . $locale->text('time(s)') . qq|</th>
 	      </tr>
 	    </table>
 |;
@@ -785,13 +785,13 @@ sub schedule {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<table width=100%>
-  <tr class=listtop>
-    <th class=listtop>$title</th>
+<table width="100%">
+  <tr class="listtop">
+    <th class="listtop">$title</th>
   </tr>
-  <tr space=5></tr>
+  <tr space="5"></tr>
   <tr>
     <td>
       <table>
@@ -799,12 +799,12 @@ sub schedule {
 	  <td>
 	    <table>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Reference') . qq|</th>
-		<td><input name=recurringreference size=20 value="$form->{recurringreference}"></td>
+		<th align="right" nowrap>| . $locale->text('Reference') . qq|</th>
+		<td><input name="recurringreference" size="20" value="$form->{recurringreference}"></td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
-		<td><input name=recurringstartdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringstartdate}></td>
+		<th align="right" nowrap>| . $locale->text('Startdate') . qq|</th>
+		<td><input name="recurringstartdate" size="11" title="($myconfig{'dateformat'})" value="$form->{recurringstartdate}"></td>
 	      </tr>
 	      $nextdate
 	    </table>
@@ -825,11 +825,11 @@ sub schedule {
   <tr>
     <td>
       <table>
-	<tr valign=top>
+	<tr valign="top">
 	  <td>$repeat</td>
 	  <td>$print</td>
 	</tr>
-	<tr valign=top>  
+	<tr valign="top">  
 	  <td>$email</td>
 	  <td>$message</td>
 	</tr>
@@ -837,7 +837,7 @@ sub schedule {
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 

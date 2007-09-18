@@ -589,7 +589,7 @@ sub select_payment {
 
     $title = $locale->text('Select payment');
 
-    $column_data{ndx}      = qq|<th width=1%>&nbsp;</th>|;
+    $column_data{ndx}      = qq|<th width="1%">&nbsp;</th>|;
     $column_data{datepaid} = qq|<th>| . $locale->text('Date') . qq|</th>|;
     $column_data{source}   = qq|<th>| . $locale->text('Source') . qq|</th>|;
     $column_data{memo}     = qq|<th>| . $locale->text('Memo') . qq|</th>|;
@@ -600,17 +600,17 @@ sub select_payment {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop>$title</th>
+    <th class="listtop">$title</th>
   </tr>
-  <tr space=5></tr>
+  <tr space="5"></tr>
   <tr>
     <td>
-      <table width=100%>
-	<tr class=listheading>|;
+      <table width="100%">
+	<tr class="listheading">|;
 
     for (@column_index) { print "\n$column_data{$_}" }
 
@@ -629,8 +629,8 @@ sub select_payment {
         $ok   = 1;
 
         $column_data{ndx} =
-qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
-        $column_data{paid} = qq|<td align=right>$paid</td>|;
+qq|<td><input name="ndx" class="radio" type="radio" value="$i" $checked></td>|;
+        $column_data{paid} = qq|<td align="right">$paid</td>|;
 
         $checked = "";
 
@@ -652,7 +652,7 @@ qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 |;
@@ -664,7 +664,7 @@ qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
     print qq|
 
 <br>
-<input type=hidden name=nextsub value=payment_selected>
+<input type="hidden" name="nextsub" value="payment_selected">
 |;
 
     if ($ok) {
@@ -697,8 +697,8 @@ sub print_options {
         $form->{"selectlanguage"} =~ s/ selected//;
         $form->{"selectlanguage"} =~
           s/(<option value="\Q$form->{language_code}\E")/$1 selected/;
-        $lang = qq|<select name=language_code>$form->{selectlanguage}</select>
-    <input type=hidden name=selectlanguage value="|
+        $lang = qq|<select name="language_code">$form->{selectlanguage}</select>
+    <input type="hidden" name="selectlanguage" value="|
           . $form->escape( $form->{selectlanguage}, 1 ) . qq|">|;
     }
 
@@ -707,11 +707,11 @@ sub print_options {
     $form->{selectformname} =~
       s/(<option value="\Q$form->{formname}\E")/$1 selected/;
 
-    $type = qq|<select name=formname>$form->{selectformname}</select>
-  <input type=hidden name=selectformname value="|
+    $type = qq|<select name="formname">$form->{selectformname}</select>
+  <input type="hidden" name="selectformname" value="|
       . $form->escape( $form->{selectformname}, 1 ) . qq|">|;
 
-    $media = qq|<select name=media>
+    $media = qq|<select name="media">
           <option value="screen">| . $locale->text('Screen');
 
     $form->{selectformat} = qq|<option value="html">html\n|;
@@ -730,22 +730,22 @@ sub print_options {
         $media .= qq|<option value="queue">| . $locale->text('Queue');
     }
 
-    $format = qq|<select name=format>$form->{selectformat}</select>|;
+    $format = qq|<select name="format">$form->{selectformat}</select>|;
     $format =~ s/(<option value="\Q$form->{format}\E")/$1 selected/;
     $format .= qq|
-  <input type=hidden name=selectformat value="|
+  <input type="hidden" name="selectformat" value="|
       . $form->escape( $form->{selectformat}, 1 ) . qq|">|;
     $media .= qq|</select>|;
     $media =~ s/(<option value="\Q$form->{media}\E")/$1 selected/;
 
     print qq|
-  <table width=100%>
+  <table width="100%">
     <tr>
       <td>$type</td>
       <td>$lang</td>
       <td>$format</td>
       <td>$media</td>
-      <td align=right width=90%>
+      <td align="right" width="90%">
   |;
 
     if ( $form->{printed} =~ /$form->{formname}/ ) {
