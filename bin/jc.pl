@@ -491,7 +491,7 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 
         $projectlabel = $locale->text('Job Number');
         $laborlabel   = $locale->text('Labor Code');
-        $rate = qq|<input type=hidden name=sellprice value=$form->{sellprice}>|;
+        $rate = qq|<input type="hidden" name="sellprice" value="$form->{sellprice}">|;
 
     }
     else {
@@ -509,13 +509,13 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
             $rate = qq|
 		<tr>
 		  <th align=right nowrap>| . $locale->text('Chargeout Rate') . qq|</th>
-		  <td><input name=sellprice value=$form->{sellprice}></td>
+		  <td><input name="sellprice" value="$form->{sellprice}"></td>
 		  <th align=right nowrap>| . $locale->text('Total') . qq|</th>
 		  <td>$form->{amount}</td>
 		</tr>
 		<tr>
 		  <th align=right nowrap>| . $locale->text('Allocated') . qq|</th>
-		  <td><input name=allocated value=$form->{allocated}></td>
+		  <td><input name="allocated" value="$form->{allocated}"></td>
 		</tr>
 |;
         }
@@ -531,18 +531,18 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 		  <th align=right nowrap>| . $locale->text('Allocated') . qq|</th>
 		  <td>$form->{allocated}</td>
 		</tr>
-		<input type=hidden name=sellprice value=$form->{sellprice}>
-		<input type=hidden name=allocated value=$form->{allocated}>
+		<input type=hidden name=sellprice value="$form->{sellprice}">
+		<input type=hidden name=allocated value="$form->{allocated}">
 |;
         }
     }
 
     if ( $myconfig{role} eq 'user' ) {
         $charge =
-          qq|<input type=hidden name=qty value=$form->{qty}>$form->{qty}|;
+          qq|<input type=hidden name=qty value="$form->{qty}">$form->{qty}|;
     }
     else {
-        $charge = qq|<input name=qty value=$form->{qty}>|;
+        $charge = qq|<input name=qty value="$form->{qty}">|;
     }
 
     if ( ( $rows = $form->numtextrows( $form->{notes}, 40, 6 ) ) < 2 ) {
@@ -598,7 +598,7 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Date worked') . qq|</th>
-		<td><input name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+		<td><input name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>$laborlabel</th>
@@ -613,9 +613,9 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 		<td>
 		  <table>
 		    <tr>
-		      <td><input name=inhour title="hh" size=3 maxlength=2 value=$form->{inhour}></td>
-		      <td><input name=inmin title="mm" size=3 maxlength=2 value=$form->{inmin}></td>
-		      <td><input name=insec title="ss" size=3 maxlength=2 value=$form->{insec}></td>
+		      <td><input name=inhour title="hh" size=3 maxlength=2 value="$form->{inhour}"></td>
+		      <td><input name=inmin title="mm" size=3 maxlength=2 value="$form->{inmin}"></td>
+		      <td><input name=insec title="ss" size=3 maxlength=2 value="$form->{insec}"></td>
 		    </tr>
 		  </table>
 		</td>
@@ -623,9 +623,9 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 		<td>
 		  <table>
 		    <tr>
-		      <td><input name=outhour title="hh" size=3 maxlength=2 value=$form->{outhour}></td>
-		      <td><input name=outmin title="mm" size=3 maxlength=2 value=$form->{outmin}></td>
-		      <td><input name=outsec title="ss" size=3 maxlength=2 value=$form->{outsec}></td>
+		      <td><input name=outhour title="hh" size=3 maxlength=2 value="$form->{outhour}"></td>
+		      <td><input name=outmin title="mm" size=3 maxlength=2 value="$form->{outmin}"></td>
+		      <td><input name=outsec title="ss" size=3 maxlength=2 value="$form->{outsec}"></td>
 		    </tr>
 		  </table>
 		</td>
@@ -636,7 +636,7 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
               </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Non-chargeable') . qq|</th>
-		<td><input name=noncharge value=$form->{noncharge}></td>
+		<td><input name=noncharge value="$form->{noncharge}"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Chargeable') . qq|</th>
@@ -870,7 +870,7 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Date') . qq|</th>
-		<td><input name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+		<td><input name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Part Number') . qq|</th>
@@ -882,9 +882,9 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Qty') . qq|</th>
-		<td><input name=qty size=6 value=$form->{qty}>
+		<td><input name=qty size=6 value="$form->{qty}">
 		<b>| . $locale->text('Cost') . qq|</b>
-		<input name=sellprice size=10 value=$form->{sellprice}></td>
+		<input name=sellprice size=10 value="$form->{sellprice}"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Total') . qq|</th>
@@ -2059,13 +2059,13 @@ sub print_options {
     $media =~ s/(<option value="\Q$form->{media}\E")/$1 selected/;
 
     print qq|
-  <table width=100%>
+  <table width="100%">
     <tr>
       <td>$type</td>
       <td>$lang</td>
       <td>$format</td>
       <td>$media</td>
-      <td align=right width=90%>
+      <td align="right" width="90%">
   |;
 
     if ( $form->{printed} =~ /$form->{formname}/ ) {

@@ -240,7 +240,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_projects>
         <tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value="$form->{fromdate}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
@@ -268,7 +268,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
        <input type=hidden name=nextsub value=generate_inv_activity>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value="$form->{fromdate}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
@@ -302,7 +302,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_income_statement>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value="$form->{fromdate}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
@@ -391,7 +391,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_balance_sheet>
 	<tr>
 	  <th align=right>| . $locale->text('as at') . qq|</th>
-	  <td><input name=asofdate size=11 title="$myconfig{dateformat}" value=$form->{asofdate}></td>
+	  <td><input name=asofdate size=11 title="$myconfig{dateformat}" value="$form->{asofdate}"></td>
 |;
 
         if ($selectfrom) {
@@ -458,7 +458,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_trial_balance>
         <tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value="$form->{fromdate}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
@@ -493,7 +493,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         <input type=hidden name=nextsub value=generate_tax_report>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value="$form->{fromdate}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
@@ -518,7 +518,7 @@ qq|<input name=accno class=radio type=radio value=$ref->{accno} $checked>&nbsp;$
         }
 
         print qq|
-  <input type=hidden name=db value=$form->{db}>
+  <input type=hidden name=db value="$form->{db}">
   <input type=hidden name=sort value=transdate>
 
 	  </td>
@@ -619,13 +619,13 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
         print qq|
         <input type=hidden name=nextsub value=generate_tax_report>
 
-        <input type=hidden name=db value=$form->{db}>
+        <input type=hidden name=db value="$form->{db}">
         <input type=hidden name=sort value=transdate>
-        <input type=hidden name=report value=$form->{report}>
+        <input type=hidden name=report value="$form->{report}">
 
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value="$form->{fromdate}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
@@ -721,11 +721,11 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
 	</tr>
 	$selectto
         <input type=hidden name=type value=statement>
-        <input type=hidden name=format value=$postscript>
+        <input type=hidden name=format value="$postscript">
 	<input type=hidden name=media value="$myconfig{printer}">
 
-	<input type=hidden name=nextsub value=$nextsub>
-	<input type=hidden name=action value=$nextsub>
+	<input type=hidden name=nextsub value="$nextsub">
+	<input type=hidden name=action value="$nextsub">
 	$summary
 	<tr>
 	  <table>
@@ -799,7 +799,7 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
+	  <td><input name=fromdate size=11 title="$myconfig{dateformat}" value="$form->{fromdate}"></td>
 	  <th align=right>| . $locale->text('To') . qq|</th>
 	  <td><input name=todate size=11 title="$myconfig{dateformat}"></td>
 	</tr>
@@ -815,7 +815,7 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
 	  <td align=left colspan=3>| . $locale->text('Subtotal') . qq|</th>
 	</tr>
 	  
-	  <input type=hidden name=db value=$form->{db}>
+	  <input type=hidden name=db value="$form->{db}">
 	  <input type=hidden name=sort value=transdate>
 |;
 
@@ -1705,8 +1705,8 @@ qq|<td><select name="language_code_$i">$form->{"selectlanguage_$i"}</select></td
 
             $column_data{statement} =
 qq|<td><input name="statement_$i" type=checkbox class=checkbox value=1 $ref->{checked}>
-      <input type=hidden name="$form->{ct}_id_$i" value=$ref->{ctid}>
-      <input type=hidden name="curr_$i" value=$ref->{curr}>
+      <input type=hidden name="$form->{ct}_id_$i" value="$ref->{ctid}">
+      <input type=hidden name="curr_$i" value="$ref->{curr}">
       </td>|;
 
         }
@@ -1871,7 +1871,7 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
 
     print qq|
 	</tr>
-	<input type=hidden name=rowcount value=$i>
+	<input type=hidden name=rowcount value="$i">
       </table>
     </td>
   </tr>
@@ -2006,7 +2006,7 @@ sub print_options {
     {
         print qq|
       <td>| . $locale->text('Copies') . qq|
-      <input name=copies size=2 value=$form->{copies}></td>
+      <input name=copies size=2 value="$form->{copies}"></td>
 |;
     }
 

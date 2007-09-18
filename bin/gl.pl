@@ -307,9 +307,9 @@ qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=sort value=transdate>
+<input type="hidden" name="sort" value="transdate">
 
 <table width=100%>
   <tr>
@@ -403,7 +403,7 @@ qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
   </tr>
 </table>
 
-<input type=hidden name=nextsub value=generate_report>
+<input type="hidden" name="nextsub" value="generate_report">
 |;
 
     $form->hide_form(qw(path login sessionid));
@@ -1006,7 +1006,7 @@ sub display_rows {
                     $checked = ( $form->{"fx_transaction_$i"} ) ? "1" : "";
                     $x = ($checked) ? "x" : "";
                     $fx_transaction = qq|
-      <td><input type=hidden name="fx_transaction_$i" value="$checked">$x</td>
+      <td><input type="hidden" name="fx_transaction_$i" value="$checked">$x</td>
     |;
                 }
 
@@ -1034,8 +1034,8 @@ sub display_rows {
         print qq|<tr valign=top>
     $accno
     $fx_transaction
-    <td><input name="debit_$i" size=12 value="$form->{"debit_$i"}" accesskey=$i></td>
-    <td><input name="credit_$i" size=12 value=$form->{"credit_$i"}></td>
+    <td><input name="debit_$i" size=12 value="$form->{"debit_$i"}" accesskey="$i"></td>
+    <td><input name="credit_$i" size=12 value="$form->{"credit_$i"}"></td>
     $source
     $memo
     $project
@@ -1140,7 +1140,7 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 	  <th align=right>| . $locale->text('Reference') . qq|</th>
 	  <td><input name=reference size=20 value="$form->{reference}"></td>
 	  <th align=right>| . $locale->text('Date') . qq|</th>
-	  <td><input name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+	  <td><input name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}"></td>
 	</tr>
 	$department
 	<tr>

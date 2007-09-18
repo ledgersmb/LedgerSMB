@@ -386,7 +386,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
     }
     else {
         $description =
-          qq|<input name=description size=40 value="$form->{description}">|;
+          qq|<input name="description" size="40" value="$form->{description}">|;
     }
 
     for ( split / /, $form->{taxaccounts} ) {
@@ -414,7 +414,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
           $form->unescape( $form->{selectpartsgroup} );
 
         $partsgroup =
-          qq|<input type=hidden name=selectpartsgroup value="|
+          qq|<input type="hidden" name="selectpartsgroup" value="|
           . $form->escape( $form->{selectpartsgroup}, 1 ) . qq|">|;
 
         $form->{partsgroup} = $form->quote( $form->{partsgroup} );
@@ -422,26 +422,26 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
           s/(<option value="\Q$form->{partsgroup}\E")/$1 selected/;
 
         $partsgroup .=
-          qq|\n<select name=partsgroup>$form->{selectpartsgroup}</select>|;
+          qq|\n<select name="partsgroup">$form->{selectpartsgroup}</select>|;
         $group = $locale->text('Group');
     }
 
     # tax fields
     foreach $item ( split / /, $form->{taxaccounts} ) {
         $tax .= qq|
-      <input class=checkbox type=checkbox name="IC_tax_$item" value=1 $form->{"IC_tax_$item"}>&nbsp;<b>$form->{"IC_tax_${item}_description"}</b>
-      <br><input type=hidden name=IC_tax_${item}_description value="$form->{"IC_tax_${item}_description"}">
+      <input class="checkbox" type="checkbox" name="IC_tax_$item" value="1" $form->{"IC_tax_$item"}>&nbsp;<b>$form->{"IC_tax_${item}_description"}</b>
+      <br><input type="hidden" name="IC_tax_${item}_description" value="$form->{"IC_tax_${item}_description"}">
 |;
     }
 
     $sellprice = qq|
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Sell Price') . qq|</th>
-		<td><input name=sellprice size=11 value=$form->{sellprice}></td>
+		<td><input name="sellprice" size="11" value="$form->{sellprice}"></td>
 	      </tr>
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('List Price') . qq|</th>
-		<td><input name=listprice size=11 value=$form->{listprice}></td>
+		<td><input name="listprice" size="11" value="$form->{listprice}"></td>
 	      </tr>
 |;
 
@@ -450,7 +450,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
                 <th align="right" nowrap="true">|
       . $locale->text('Average Cost')
       . qq|</th>
-                <td><input type=hidden name=avgcost value=$form->{avgcost}>$form->{avgcost}</td>
+                <td><input type="hidden" name="avgcost" value="$form->{avgcost}">$form->{avgcost}</td>
               </tr>
 |;
 
@@ -459,14 +459,14 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
                 <th align="right" nowrap="true">|
       . $locale->text('Last Cost')
       . qq|</th>
-                <td><input name=lastcost size=11 value=$form->{lastcost}></td>
+                <td><input name="lastcost" size="11" value="$form->{lastcost}"></td>
               </tr>
 	      <tr>
 	        <th align="right" nowrap="true">|
       . $locale->text('Markup')
       . qq| %</th>
-		<td><input name=markup size=5 value=$form->{markup}></td>
-		<input type=hidden name=oldmarkup value=$markup>
+		<td><input name="markup" size="5" value="$form->{markup}"></td>
+		<input type="hidden" name="oldmarkup" value="$markup">
 	      </tr>
 |;
 
@@ -475,7 +475,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
         $onhand = qq|
 	      <tr>
 		<th align="right" nowrap>| . $locale->text('On Hand') . qq|</th>
-		<th align=left nowrap class="plus$n">&nbsp;|
+		<th align="left" nowrap class="plus$n">&nbsp;|
           . $form->format_amount( \%myconfig, $form->{onhand} )
           . qq|</th>
 	      </tr>
@@ -484,7 +484,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
         $rop = qq|
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('ROP') . qq|</th>
-		<td><input name=rop size=10 value=$form->{rop}></td>
+		<td><input name="rop" size="10" value="$form->{rop}"></td>
 	      </tr>
 |;
 
@@ -551,12 +551,12 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 		  <table>
 		    <tr>
 		      <td>
-			<input name=weight size=10 value=$form->{weight}>
+			<input name="weight" size="10" value="$form->{weight}">
 		      </td>
 		      <th>
 			&nbsp;
 			$form->{weightunit}
-			<input type=hidden name=weightunit value=$form->{weightunit}>
+			<input type="hidden" name="weightunit" value="$form->{weightunit}">
 		      </th>
 		    </tr>
 		  </table>
@@ -578,12 +578,12 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 		  <table>
 		    <tr>
 		      <td>
-			<input name=weight size=10 value=$form->{weight}>
+			<input name="weight" size="10" value="$form->{weight}">
 		      </td>
 		      <th>
 			&nbsp;
 			$form->{weightunit}
-			<input type=hidden name=weightunit value=$form->{weightunit}>
+			<input type="hidden" name="weightunit" value="$form->{weightunit}">
 		      </th>
 		    </tr>
 		  </table>
@@ -601,12 +601,12 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 		    <tr>
 		      <td>
 			&nbsp;$form->{weight}
-			<input type=hidden name=weight value=$form->{weight}>
+			<input type="hidden" name="weight" value="$form->{weight}">
 		      </td>
 		      <th>
 			&nbsp;
 			$form->{weightunit}
-			<input type=hidden name=weightunit value=$form->{weightunit}>
+			<input type="hidden" name="weightunit" value="$form->{weightunit}">
 		      </th>
 		    </tr>
 		  </table>
@@ -627,7 +627,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
             $stock = qq|
               <tr>
 	        <th align="right" nowrap>| . $locale->text('Stock') . qq|</th>
-		<td><input name=stock size=10 value=$form->{stock}></td>
+		<td><input name="stock" size="10" value="$form->{stock}"></td>
 	      </tr>
 |;
 
@@ -636,14 +636,14 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 	        <th align="right" nowrap="true">|
               . $locale->text('Last Cost')
               . qq|</th> 
-		<td><input type=hidden name=lastcost value=$form->{lastcost}>$form->{lastcost}</td>
+		<td><input type="hidden" name="lastcost" value="$form->{lastcost}">$form->{lastcost}</td>
 	      </tr>
 	      <tr>
 	        <th align="right" nowrap="true">|
               . $locale->text('Markup')
               . qq| %</th>
-		<td><input name=markup size=5 value=$form->{markup}></td>
-		<input type=hidden name=oldmarkup value=$markup>
+		<td><input name="markup" size="5" value="$form->{markup}"></td>
+		<input type="hidden" name="oldmarkup" value="$markup">
 	      </tr>
 |;
 
@@ -799,7 +799,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 	    <table width="100%">
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-		<td><input name=priceupdate size=11 title="$myconfig{dateformat}" value=$form->{priceupdate}></td>    
+		<td><input name="priceupdate" size="11" title="$myconfig{dateformat}" value="$form->{priceupdate}"></td>    
 	      </tr>
 	      $sellprice
 	      $lastcost
@@ -2239,9 +2239,9 @@ qq|<button class="submit" type="submit" name="action" value="add_labor_overhead"
 
 <br>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=item value=$form->{searchitems}>
+<input type=hidden name=item value="$form->{searchitems}">
 |;
 
     $form->hide_form(qw(callback path login sessionid));
@@ -2791,13 +2791,13 @@ s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
 	<tr>
 	  $vendor
 	  <td><input name="partnumber_$i" size=20 value="$form->{"partnumber_$i"}"></td>
-	  <td><input name="lastcost_$i" size=10 value=|
+	  <td><input name="lastcost_$i" size=10 value="|
           . $form->format_amount( \%myconfig, $form->{"lastcost_$i"}, 2 )
-          . qq|></td>
+          . qq|"></td>
 	  $currency
-	  <td nowrap><input name="leadtime_$i" size=5 value=|
+	  <td nowrap><input name="leadtime_$i" size=5 value="|
           . $form->format_amount( \%myconfig, $form->{"leadtime_$i"} )
-          . qq|> <b>|
+          . qq|"> <b>|
           . $locale->text('days')
           . qq|</b></td>
 	</tr>
@@ -2900,12 +2900,12 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
 	  $customer
 	  $pricegroup
 
-	  <td><input name="pricebreak_$i" size=5 value=|
+	  <td><input name="pricebreak_$i" size=5 value="|
           . $form->format_amount( \%myconfig, $form->{"pricebreak_$i"} )
-          . qq|></td>
-	  <td><input name="customerprice_$i" size=10 value=|
+          . qq|"></td>
+	  <td><input name="customerprice_$i" size=10 value="|
           . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, 2 )
-          . qq|></td>
+          . qq|"></td>
 	  $currency
 	  <td><input name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
 	  <td><input name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
@@ -3409,7 +3409,7 @@ sub select_name {
 
 <form method=post action="$form->{script}">
 
-<input type=hidden name=vr value=$vr>
+<input type=hidden name=vr value="$vr">
 
 <table width=100%>
   <tr>
@@ -3436,7 +3436,7 @@ sub select_name {
         $ref->{name} = $form->quote( $ref->{name} );
 
         $column_data{ndx} =
-qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
+qq|<td><input name=ndx class=radio type=radio value="$i" $checked></td>|;
         $column_data{name} =
 qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</td>|;
         $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}|;
@@ -3454,7 +3454,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
         print qq|
 	</tr>
 
-<input name="new_id_$i" type=hidden value=$ref->{id}>
+<input name="new_id_$i" type=hidden value="$ref->{id}">
 
 |;
 
@@ -3469,7 +3469,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
   </tr>
 </table>
 
-<input name=lastndx type=hidden value=$i>
+<input name=lastndx type=hidden value="$i">
 
 |;
 
@@ -3480,7 +3480,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
 
     print qq|
 <input type=hidden name=nextsub value=name_selected>
-<input type=hidden name=vc value=$table>
+<input type=hidden name=vc value="$table">
 <br>
 <button class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
@@ -3873,15 +3873,15 @@ sub list_assemblies {
           . $form->format_amount( \%myconfig, $ref->{rop}, '', "&nbsp;" )
           . qq|</td>|;
         $column_data{stock} =
-            qq|<td width=10%><input name="qty_$i" size=10 value=|
+            qq|<td width=10%><input name="qty_$i" size=10 value="|
           . $form->format_amount( \%myconfig, $ref->{stock} )
-          . qq|></td>
-    <input type=hidden name="stock_$i" value=$ref->{stock}>|;
+          . qq|"></td>
+    <input type=hidden name="stock_$i" value="$ref->{stock}">|;
 
         $j++;
         $j %= 2;
         print
-qq|<tr class=listrow$j><input name="id_$i" type=hidden value=$ref->{id}>\n|;
+qq|<tr class="listrow$j"><input name="id_$i" type=hidden value="$ref->{id}">\n|;
 
         for (@column_index) { print "\n$column_data{$_}" }
 

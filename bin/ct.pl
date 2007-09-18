@@ -478,7 +478,7 @@ sub search_name {
 
 <form method=post action=$form->{script}>
 
-<input type=hidden name=db value=$form->{db}>
+<input type=hidden name=db value="$form->{db}">
 
 <table width=100%>
   <tr>
@@ -1847,7 +1847,7 @@ s/(<option value="\Q$form->{employee}--$form->{employee_id}\E")/$1 selected/;
       . qq|</th>
 	      </tr>
 	      <tr>
-		<td><input name=none size=35 value=| . ( "=" x 35 ) . qq|></td>
+		<td><input name=none size=35 value="| . ( "=" x 35 ) . qq|"></td>
 	      </tr>
 	      <tr>
 		<td><input name=shiptoname size=35 maxlength=64 value="$form->{shiptoname}"></td>
@@ -1894,9 +1894,9 @@ s/(<option value="\Q$form->{employee}--$form->{employee_id}\E")/$1 selected/;
 	$tax
 	<tr>
 	  <th align=right>| . $locale->text('Startdate') . qq|</th>
-	  <td><input name=startdate size=11 title="$myconfig{dateformat}" value=$form->{startdate}></td>
+	  <td><input name=startdate size=11 title="$myconfig{dateformat}" value="$form->{startdate}"></td>
 	  <th align=right>| . $locale->text('Enddate') . qq|</th>
-	  <td><input name=enddate size=11 title="$myconfig{dateformat}" value=$form->{enddate}></td>
+	  <td><input name=enddate size=11 title="$myconfig{dateformat}" value="$form->{enddate}"></td>
 	</tr>
 	<tr>
 	  <th align=right>| . $locale->text('Credit Limit') . qq|</th>
@@ -2430,29 +2430,29 @@ qq|<td><select name="partsgroup_$i">$selectpartsgroup</select></td>|;
         if ( $form->{db} eq 'customer' ) {
 
             $column_data{pricebreak} =
-                qq|<td align=right><input name="pricebreak_$i" size=5 value=|
+                qq|<td align=right><input name="pricebreak_$i" size=5 value="|
               . $form->format_amount( \%myconfig, $form->{"pricebreak_$i"} )
-              . qq|></td>|;
+              . qq|"></td>|;
             $column_data{sellprice} =
-                qq|<td align=right><input name="sellprice_$i" size=10 value=|
+                qq|<td align=right><input name="sellprice_$i" size=10 value="|
               . $form->format_amount( \%myconfig, $form->{"sellprice_$i"}, 2 )
-              . qq|></td>|;
+              . qq|"></td>|;
 
             $column_data{validfrom} =
-qq|<td><input name="validfrom_$i" size=11 value=$form->{"validfrom_$i"}></td>|;
+qq|<td><input name="validfrom_$i" size=11 value="$form->{"validfrom_$i"}"></td>|;
             $column_data{validto} =
-qq|<td><input name="validto_$i" size=11 value=$form->{"validto_$i"}></td>|;
+qq|<td><input name="validto_$i" size=11 value="$form->{"validto_$i"}"></td>|;
         }
 
         if ( $form->{db} eq 'vendor' ) {
             $column_data{leadtime} =
-                qq|<td align=right><input name="leadtime_$i" size=5 value=|
+                qq|<td align=right><input name="leadtime_$i" size=5 value="|
               . $form->format_amount( \%myconfig, $form->{"leadtime_$i"} )
-              . qq|></td>|;
+              . qq|"></td>|;
             $column_data{lastcost} =
-                qq|<td align=right><input name="lastcost_$i" size=10 value=|
+                qq|<td align=right><input name="lastcost_$i" size=10 value="|
               . $form->format_amount( \%myconfig, $form->{"lastcost_$i"}, 2 )
-              . qq|></td>|;
+              . qq|"></td>|;
         }
 
         $column_data{curr} =
@@ -2716,7 +2716,7 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
   </tr>
 </table>
 
-<input name=lastndx type=hidden value=$i>
+<input name="lastndx" type="hidden" value="$i">
 
 |;
 

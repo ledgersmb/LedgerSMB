@@ -340,9 +340,9 @@ qq|<textarea name=notes rows=$rows cols=40 wrap=soft>$form->{notes}</textarea>|;
 	$name
 	<tr>
 	  <th align=right>| . $locale->text('Startdate') . qq|</th>
-	  <td><input name=startdate size=11 title="($myconfig{dateformat})" value=$form->{startdate}></td>
+	  <td><input name=startdate size=11 title="($myconfig{dateformat})" value="$form->{startdate}"></td>
 	  <th align=right>| . $locale->text('Enddate') . qq|</th>
-	  <td><input name=enddate size=11 title="($myconfig{dateformat})" value=$form->{enddate}></td>
+	  <td><input name=enddate size=11 title="($myconfig{dateformat})" value="$form->{enddate}"></td>
 	</tr>
 	$production
       </table>
@@ -383,19 +383,19 @@ qq|<textarea name=notes rows=$rows cols=40 wrap=soft>$form->{notes}</textarea>|;
 		  <table>
 		    <tr>
 		      <th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-		      <td><input name=priceupdate size=11 title="$myconfig{dateformat}" value=$form->{priceupdate}></td>
+		      <td><input name=priceupdate size=11 title="$myconfig{dateformat}" value="$form->{priceupdate}"></td>
 		    </tr>
 		    <tr>
 		      <th align="right" nowrap="true">|
       . $locale->text('List Price')
       . qq|</th>
-		      <td><input name=listprice size=11 value=$form->{listprice}></td>
+		      <td><input name=listprice size=11 value="$form->{listprice}"></td>
 		    </tr>
 		    <tr>
 		      <th align="right" nowrap="true">|
       . $locale->text('Sell Price')
       . qq|</th>
-		      <td><input name=sellprice size=11 value=$form->{sellprice}></td>
+		      <td><input name=sellprice size=11 value="$form->{sellprice}"></td>
 		    </tr>
 		    <tr>
 		      <th align="right" nowrap="true">| . $locale->text('Weight') . qq|</th>
@@ -403,12 +403,12 @@ qq|<textarea name=notes rows=$rows cols=40 wrap=soft>$form->{notes}</textarea>|;
 			<table>
 			  <tr>
 			    <td>
-			      <input name=weight size=10 value=$form->{weight}>
+			      <input name=weight size=10 value="$form->{weight}">
 			    </td>
 			    <th>
 			      &nbsp;
 			      $form->{weightunit}
-			      <input type=hidden name=weightunit value=$form->{weightunit}>
+			      <input type=hidden name=weightunit value="$form->{weightunit}">
 			    </th>
 			  </tr>
 			</table>
@@ -599,8 +599,8 @@ sub list_stock {
         $j %= 2;
 
         print qq|
-        <tr valign=top class=listrow$j>
-	<input type=hidden name="id_$i" value=$ref->{id}>
+        <tr valign=top class="listrow$j">
+	<input type=hidden name="id_$i" value="$ref->{id}">
 |;
 
         for (@column_index) { print "$column_data{$_}\n" }
@@ -820,19 +820,19 @@ sub search {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=sort value=$sort>
-<input type=hidden name=type value=$form->{type}>
+<input type=hidden name=sort value="$sort">
+<input type=hidden name=type value="$form->{type}">
 
-<table width=100%>
+<table width="100%">
   <tr>
     <th class=listtop>$form->{title}</th>
   </tr>
   <tr height="5"></tr>
   <tr>
     <td>
-      <table width=100%>
+      <table width="100%">
         $number
 	$fromto
 	$selectperiod
@@ -854,7 +854,7 @@ sub search {
   </tr>
 </table>
 
-<input type=hidden name=nextsub value=$report>
+<input type="hidden" name="nextsub" value="$report">
 |;
 
     $form->hide_form(qw(path login sessionid title));
@@ -1215,15 +1215,15 @@ qq|<textarea name="description" rows=$rows cols=60 style="width: 100%" wrap=soft
 	$name
 	<tr>
 	  <th align=right>| . $locale->text('Startdate') . qq|</th>
-	  <td><input name=startdate size=11 title="($myconfig{dateformat})" value=$form->{startdate}></td>
+	  <td><input name=startdate size=11 title="($myconfig{dateformat})" value="$form->{startdate}"></td>
 	  <th align=right>| . $locale->text('Enddate') . qq|</th>
-	  <td><input name=enddate size=11 title="($myconfig{dateformat})" value=$form->{enddate}></td>
+	  <td><input name=enddate size=11 title="($myconfig{dateformat})" value="$form->{enddate}"></td>
 	</tr>
       </table>
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 |;
@@ -1530,12 +1530,12 @@ sub partsgroup_header {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=$form->{type}>
+<input type="hidden" name="id" value="$form->{id}">
+<input type="hidden" name="type" value="$form->{type}">
 
-<table width=100%>
+<table width="100%">
   <tr>
     <th class=listtop>$form->{title}</th>
   </tr>
@@ -1735,10 +1735,10 @@ sub pricegroup_header {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=$form->{type}>
+<input type="hidden" name="id" value="$form->{id}">
+<input type="hidden" name="type" value="$form->{type}">
 
 <table width=100%>
   <tr>
@@ -2334,7 +2334,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
         print qq|
 	</tr>
 
-<input name="new_id_$i" type=hidden value=$ref->{id}>
+<input name="new_id_$i" type=hidden value="$ref->{id}">
 
 |;
 
@@ -2349,7 +2349,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
   </tr>
 </table>
 
-<input name=lastndx type=hidden value=$i>
+<input name=lastndx type=hidden value="$i">
 
 |;
 
