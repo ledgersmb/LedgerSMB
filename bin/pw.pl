@@ -64,11 +64,11 @@ function sf(){
 
   $sessionexpired
 
-<form method=post action=$form->{script} name=pw>
+<form method="post" action="$form->{script}" name="pw">
 
 <table>
   <tr>
-    <th align=right>| . $locale->text('Password') . qq|</th>
+    <th align="right">| . $locale->text('Password') . qq|</th>
     <td><input type="password" name="password" size="30"></td>
     <td><button type="submit" value="continue">|
       . $locale->text('Continue')

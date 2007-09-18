@@ -262,10 +262,10 @@ sub payments_header {
     if ( $form->{defaultcurrency} ) {
         $exchangerate = qq|
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name=currency>$form->{selectcurrency}</select></td>
-		<input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=oldcurrency value=$form->{oldcurrency}>
+		<th align="right" nowrap>| . $locale->text('Currency') . qq|</th>
+		<td><select name="currency">$form->{selectcurrency}</select></td>
+		<input type="hidden" name="selectcurrency" value="$form->{selectcurrency}">
+		<input type="hidden" name="oldcurrency" value="$form->{oldcurrency}">
 	      </tr>
 |;
     }
@@ -277,16 +277,16 @@ sub payments_header {
         if ( $form->{forex} ) {
             $exchangerate .= qq|
  	      <tr>
-		<th align=right nowrap>| . $locale->text('Exchange Rate') . qq|</th>
-		<td colspan=3><input type=hidden name=exchangerate size=10 value=$form->{exchangerate}>$form->{exchangerate}</td>
+		<th align="right" nowrap>| . $locale->text('Exchange Rate') . qq|</th>
+		<td colspan="3"><input type="hidden" name="exchangerate" size="10" value="$form->{exchangerate}">$form->{exchangerate}</td>
 	      </tr>
 |;
         }
         else {
             $exchangerate .= qq|
  	      <tr>
-		<th align=right nowrap>| . $locale->text('Exchange Rate') . qq|</th>
-		<td colspan=3><input name=exchangerate size=10 value=$form->{exchangerate}></td>
+		<th align="right" nowrap>| . $locale->text('Exchange Rate') . qq|</th>
+		<td colspan="3"><input name="exchangerate" size="10" value="$form->{exchangerate}"></td>
 	      </tr>
 |;
         }
@@ -295,8 +295,8 @@ sub payments_header {
     $department = qq|
               <tr>
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td><select name=department>$form->{selectdepartment}</select>
-		<input type=hidden name=selectdepartment value="|
+		<td><select name="department">$form->{selectdepartment}</select>
+		<input type="hidden" name="selectdepartment" value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 	      </td>
 	    </tr>
@@ -307,7 +307,7 @@ sub payments_header {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 |;
 
     $form->hide_form(
@@ -315,48 +315,48 @@ sub payments_header {
     );
 
     print qq|
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop>$form->{title}</th>
+    <th class="listtop">$form->{title}</th>
   </tr>
   <tr height="5"></tr>
   <tr>
     <td>
-      <table width=100%>
-        <tr valign=top>
+      <table width="100%">
+        <tr valign="top">
 	  <td>
 	    <table>
 	      <tr>
-	        <th align=right>|
+	        <th align="right">|
       . $locale->text('Due Date')
       . qq|&nbsp;|
       . $locale->text('From')
       . qq|</th>
-		<td><input name=duedatefrom value="$form->{duedatefrom}" title="$myconfig{dateformat}" size=11></td>
-	        <th align=right>| . $locale->text('To') . qq|</th>
-		<td><input name=duedateto value="$form->{duedateto}" title="$myconfig{dateformat}" size=11></td>
+		<td><input name="duedatefrom" value="$form->{duedatefrom}" title="$myconfig{dateformat}" size="11"></td>
+	        <th align="right">| . $locale->text('To') . qq|</th>
+		<td><input name="duedateto" value="$form->{duedateto}" title="$myconfig{dateformat}" size="11"></td>
 	      </tr>
 	    </table>
 	  </td>
 	  </td>
-	  <td align=right>
+	  <td align="right">
 	    <table>
 	      $department
 	      <tr>
-	        <th align=right nowrap>| . $locale->text( $form->{ARAP} ) . qq|</th>
-		<td colspan=3><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select>
+	        <th align="right" nowrap>| . $locale->text( $form->{ARAP} ) . qq|</th>
+		<td colspan="3"><select name="$form->{ARAP}">$form->{"select$form->{ARAP}"}</select>
 		</td>
-		<input type=hidden name="select$form->{ARAP}" value="$form->{"select$form->{ARAP}"}">
+		<input type="hidden" name="select$form->{ARAP}" value="$form->{"select$form->{ARAP}"}">
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Account') . qq|</th>
-		<td colspan=3><select name=account>$form->{selectaccount}</select>
-		<input type=hidden name=selectaccount value="$form->{selectaccount}">
+		<th align="right" nowrap>| . $locale->text('Account') . qq|</th>
+		<td colspan="3"><select name="account">$form->{selectaccount}</select>
+		<input type="hidden" name="selectaccount" value="$form->{selectaccount}">
 		</td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Date') . qq|</th>
-		<td><input name=datepaid value="$form->{datepaid}" title="$myconfig{dateformat}" size=11></td>
+		<th align="right" nowrap>| . $locale->text('Date') . qq|</th>
+		<td><input name="datepaid" value="$form->{datepaid}" title="$myconfig{dateformat}" size="11"></td>
 	      </tr>
 	      $exchangerate
 	    </table>
@@ -381,12 +381,12 @@ sub invoices_due {
     $vclabel = $locale->text($vclabel);
 
     print qq|
-  <input type=hidden name=column_index value="id @column_index">
+  <input type="hidden" name="column_index" value="id @column_index">
   <tr>
     <td>
-      <table width=100%>
+      <table width="100"%>
 	<tr>
-	  <th class=listheading colspan=$colspan>$invoice</th>
+	  <th class="listheading" colspan="$colspan">$invoice</th>
 	</tr>
 |;
 
@@ -435,20 +435,20 @@ sub invoices_due {
         }
 
         $column_data{invnumber} = qq|<td>$form->{"invnumber_$i"}</td>
-      <input type=hidden name="invnumber_$i" value="$form->{"invnumber_$i"}">
-      <input type=hidden name="id_$i" value=$form->{"id_$i"}>|;
+      <input type="hidden" name="invnumber_$i" value="$form->{"invnumber_$i"}">
+      <input type="hidden" name="id_$i" value="$form->{"id_$i"}">|;
         $column_data{transdate} = qq|<td>$form->{"transdate_$i"}</td>
-      <input type=hidden name="transdate_$i" value=$form->{"transdate_$i"}>|;
-        $column_data{amount} = qq|<td align=right>$form->{"amount_$i"}</td>
-      <input type=hidden name="amount_$i" value=$form->{"amount_$i"}>|;
-        $column_data{due} = qq|<td align=right>$form->{"due_$i"}</td>
-      <input type=hidden name="due_$i" value=$form->{"due_$i"}>|;
+      <input type="hidden" name="transdate_$i" value="$form->{"transdate_$i"}">|;
+        $column_data{amount} = qq|<td align="right">$form->{"amount_$i"}</td>
+      <input type="hidden" name="amount_$i" value="$form->{"amount_$i"}">|;
+        $column_data{due} = qq|<td align="right">$form->{"due_$i"}</td>
+      <input type="hidden" name="due_$i" value="$form->{"due_$i"}">|;
 
         if ( $form->{"paid_$i"} =~ /NaN/ ) {
             $form->{"paid_$i"} = '';
         }
         $column_data{paid} =
-qq|<td align=right><input name="paid_$i" size=10 value=$form->{"paid_$i"}></td>|;
+qq|<td align="right"><input name="paid_$i" size="10" value="$form->{"paid_$i"}"></td>|;
 
         if ( $same_id eq $form->{"$form->{vc}_id_$i"} ) {
             for (qw(name memo source language)) {
@@ -458,9 +458,9 @@ qq|<td align=right><input name="paid_$i" size=10 value=$form->{"paid_$i"}></td>|
         else {
             $column_data{name} = qq|<td>$form->{"name_$i"}</td>|;
             $column_data{memo} =
-qq|<td align=right><input name="memo_$i" size=10 value="$form->{"memo_$i"}"></td>|;
+qq|<td align="right"><input name="memo_$i" size="10" value="$form->{"memo_$i"}"></td>|;
             $column_data{source} =
-qq|<td align=right><input name="source_$i" size=10 value="$form->{"source_$i"}"></td>|;
+qq|<td align="right"><input name="source_$i" size="10" value="$form->{"source_$i"}"></td>|;
 
             if ( $form->{selectlanguage} ) {
                 $selectlanguage = $form->{selectlanguage};
@@ -473,17 +473,17 @@ qq|<td><select name="language_code_$i">$selectlanguage</select></td>|;
         }
 
         $column_data{name} .= qq|
-      <input type=hidden name="name_$i" value="$form->{"name_$i"}">
-      <input type=hidden name="$form->{vc}_id_$i" value="$form->{"$form->{vc}_id_$i"}">|;
+      <input type="hidden" name="name_$i" value="$form->{"name_$i"}">
+      <input type="hidden" name="$form->{vc}_id_$i" value="$form->{"$form->{vc}_id_$i"}">|;
 
         $form->{"checked_$i"} = ( $form->{"checked_$i"} ) ? "checked" : "";
         $column_data{checked} =
-qq|<td align=center><input name="checked_$i" type=checkbox class=checkbox $form->{"checked_$i"}></td>|;
+qq|<td align="center"><input name="checked_$i" type="checkbox" class="checkbox" $form->{"checked_$i"}></td>|;
 
         $j++;
         $j %= 2;
         print qq|
-	<tr class=listrow$j>
+	<tr class="listrow$j">
 |;
         for (@column_index) { print "$column_data{$_}\n" }
         print qq|
@@ -497,20 +497,20 @@ qq|<td align=center><input name="checked_$i" type=checkbox class=checkbox $form-
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
 
     $column_data{amount} =
-        qq|<th class=listtotal align=right>|
+        qq|<th class="listtotal" align="right">|
       . $form->format_amount( \%myconfig, $totalamount, 2, "&nbsp;" )
       . qq|</th>|;
     $column_data{due} =
-        qq|<th class=listtotal align=right>|
+        qq|<th class="listtotal" align="right">|
       . $form->format_amount( \%myconfig, $totaldue, 2, "&nbsp;" )
       . qq|</th>|;
     $column_data{paid} =
-        qq|<th class=listtotal align=right>|
+        qq|<th class="listtotal" align="right">|
       . $form->format_amount( \%myconfig, $totalpaid, 2, "&nbsp;" )
       . qq|</th>|;
 
     print qq|
-        <tr class=listtotal>
+        <tr class="listtotal">
 |;
     for (@column_index) { print "$column_data{$_}\n" }
     print qq|
@@ -518,7 +518,7 @@ qq|<td align=center><input name="checked_$i" type=checkbox class=checkbox $form-
       </table>
     </td>
   </tr>
-<input type=hidden name=selectlanguage value="|
+<input type="hidden" name="selectlanguage" value="|
       . $form->escape( $form->{selectlanguage}, 1 ) . qq|">
 |;
 
@@ -533,8 +533,8 @@ sub payments_footer {
 
     if ( ${LedgerSMB::Sysconfig::latex} ) {
 
-        $media = qq|<select name=media>
-          <option value=screen>| . $locale->text('Screen');
+        $media = qq|<select name="media">
+          <option value="screen">| . $locale->text('Screen');
 
         if ( %{LedgerSMB::Sysconfig::printer} ) {
             for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
@@ -544,17 +544,17 @@ sub payments_footer {
         }
 
         $media .= qq|</select>|;
-        $format = qq|<select name=format>
-            <option value=postscript $form->{DF}{postscript}>|
+        $format = qq|<select name="format">
+            <option value="postscript" $form->{DF}{postscript}>|
           . $locale->text('Postscript') . qq|
-	    <option value=pdf $form->{DF}{pdf}>|
+	    <option value="pdf" $form->{DF}{pdf}>|
           . $locale->text('PDF')
           . qq|</select>|;
     }
 
     print qq|
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 |;
@@ -940,10 +940,10 @@ sub payment_header {
     if ( $form->{defaultcurrency} ) {
         $exchangerate = qq|
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name=currency>$form->{selectcurrency}</select></td>
-		<input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=oldcurrency value=$form->{oldcurrency}>
+		<th align="right" nowrap>| . $locale->text('Currency') . qq|</th>
+		<td><select name="currency">$form->{selectcurrency}</select></td>
+		<input type="hidden" name="selectcurrency" value="$form->{selectcurrency}">
+		<input type="hidden" name="oldcurrency" value="$form->{oldcurrency}">
 	      </tr>
 |;
     }
@@ -955,16 +955,16 @@ sub payment_header {
         if ( $form->{forex} ) {
             $exchangerate .= qq|
  	      <tr>
-		<th align=right nowrap>| . $locale->text('Exchange Rate') . qq|</th>
-		<td colspan=3><input type=hidden name=exchangerate size=10 value=$form->{exchangerate}>$form->{exchangerate}</td>
+		<th align="right" nowrap>| . $locale->text('Exchange Rate') . qq|</th>
+		<td colspan="3"><input type="hidden" name="exchangerate" size="10" value="$form->{exchangerate}">$form->{exchangerate}</td>
 	      </tr>
 |;
         }
         else {
             $exchangerate .= qq|
  	      <tr>
-		<th align=right nowrap>| . $locale->text('Exchange Rate') . qq|</th>
-		<td colspan=3><input name=exchangerate size=10 value=$form->{exchangerate}></td>
+		<th align="right" nowrap>| . $locale->text('Exchange Rate') . qq|</th>
+		<td colspan="3"><input name="exchangerate" size="10" value="$form->{exchangerate}"></td>
 	      </tr>
 |;
         }
@@ -972,8 +972,8 @@ sub payment_header {
 
     $vc =
       ( $form->{"select$form->{vc}"} )
-      ? qq|<select name=$form->{vc}>$form->{"select$form->{vc}"}\n</select>|
-      : qq|<input name=$form->{vc} size=35 value="$form->{$form->{vc}}">|;
+      ? qq|<select name="$form->{vc}">$form->{"select$form->{vc}"}\n</select>|
+      : qq|<input name="$form->{vc}" size="35" value="$form->{$form->{vc}}">|;
 
     if ( $form->{all_vc} ) {
         $allvc = "checked";
@@ -988,8 +988,8 @@ sub payment_header {
     $department = qq|
               <tr>
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td><select name=department>$form->{selectdepartment}</select>
-		<input type=hidden name=selectdepartment value="|
+		<td><select name="department">$form->{selectdepartment}</select>
+		<input type="hidden" name="selectdepartment" value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 	      </td>
 	    </tr>
@@ -1000,7 +1000,7 @@ sub payment_header {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 |;
 
     $form->hide_form(
@@ -1009,34 +1009,34 @@ sub payment_header {
 
     print qq|
 
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop>$form->{title}</th>
+    <th class="listtop">$form->{title}</th>
   </tr>
   <tr height="5"></tr>
   <tr>
     <td>
-      <table width=100%>
-        <tr valign=top>
+      <table width="100%">
+        <tr valign="top">
 	  <td>
 	    <table>
 	      <tr>
-	        <td align=right>
-		<input name=all_vc type=checkbox class=checkbox value=Y $allvc>
-		<input type=hidden name="oldall_vc" value="$form->{all_vc}"></td>
-		<th align=left>| . $locale->text('All') . qq|</th>
+	        <td align="right">
+		<input name="all_vc" type="checkbox" class="checkbox" value="Y" $allvc>
+		<input type="hidden" name="oldall_vc" value="$form->{all_vc}"></td>
+		<th align="left">| . $locale->text('All') . qq|</th>
 	      </tr>
 	      <tr>
-		<th align=right>$vclabel</th>
+		<th align="right">$vclabel</th>
 		<td>$vc</td>
-                <input type=hidden name="select$form->{vc}" value="|
+                <input type="hidden" name="select$form->{vc}" value="|
       . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">
-                <input type=hidden name="$form->{vc}_id" value=$form->{"$form->{vc}_id"}>
-		<input type=hidden name="old$form->{vc}" value="$form->{"old$form->{vc}"}">
+                <input type="hidden" name="$form->{vc}_id" value="$form->{"$form->{vc}_id"}">
+		<input type="hidden" name="old$form->{vc}" value="$form->{"old$form->{vc}"}">
 	      </tr>
-	      <tr valign=top>
-		<th align=right nowrap>| . $locale->text('Address') . qq|</th>
-		<td colspan=2>
+	      <tr valign="top">
+		<th align="right" nowrap>| . $locale->text('Address') . qq|</th>
+		<td colspan="2">
 		  <table>
 		    <tr>
 		      <td>$form->{address1}</td>
@@ -1057,16 +1057,16 @@ sub payment_header {
 		    </tr>
 		  </table>
 		</td>
-		<input type=hidden name=address1 value="$form->{address1}">
-		<input type=hidden name=address2 value="$form->{address2}">
-		<input type=hidden name=city value="$form->{city}">
-		<input type=hidden name=state value="$form->{state}">
-		<input type=hidden name=zipcode value="$form->{zipcode}">
-		<input type=hidden name=country value="$form->{country}">
+		<input type="hidden" name="address1" value="$form->{address1}">
+		<input type="hidden" name="address2" value="$form->{address2}">
+		<input type="hidden" name="city" value="$form->{city}">
+		<input type="hidden" name="state" value="$form->{state}">
+		<input type="hidden" name="zipcode" value="$form->{zipcode}">
+		<input type="hidden" name="country" value="$form->{country}">
 	      </tr>
 	      <tr>
-		<th align=right>| . $locale->text('Memo') . qq|</th>
-		<td colspan=2><input name="memo" size=30 value="$form->{memo}"></td>
+		<th align="right">| . $locale->text('Memo') . qq|</th>
+		<td colspan="2"><input name="memo" size="30" value="$form->{memo}"></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -1074,33 +1074,33 @@ sub payment_header {
 	    <table>
 	      $department
 	      <tr>
-	        <th align=right nowrap>| . $locale->text( $form->{ARAP} ) . qq|</th>
-		<td colspan=3><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select>
+	        <th align="right" nowrap>| . $locale->text( $form->{ARAP} ) . qq|</th>
+		<td colspan="3"><select name="$form->{ARAP}">$form->{"select$form->{ARAP}"}</select>
 		</td>
-		<input type=hidden name="select$form->{ARAP}" value="$form->{"select$form->{ARAP}"}">
+		<input type="hidden" name="select$form->{ARAP}" value="$form->{"select$form->{ARAP}"}">
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Account') . qq|</th>
-		<td colspan=3><select name=account>$form->{selectaccount}</select>
-		<input type=hidden name=selectaccount value="$form->{selectaccount}">
+		<th align="right" nowrap>| . $locale->text('Account') . qq|</th>
+		<td colspan="3"><select name="account">$form->{selectaccount}</select>
+		<input type="hidden" name="selectaccount" value="$form->{selectaccount}">
 		</td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Date') . qq|</th>
-		<td><input name=datepaid value="$form->{datepaid}" title="$myconfig{dateformat}" size=11></td>
-		<input type=hidden name=olddatepaid value=$form->{olddatepaid}>
+		<th align="right" nowrap>| . $locale->text('Date') . qq|</th>
+		<td><input name="datepaid" value="$form->{datepaid}" title="$myconfig{dateformat}" size="11"></td>
+		<input type="hidden" name="olddatepaid" value="$form->{olddatepaid}">
 	      </tr>
 	      $exchangerate
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Source') . qq|</th>
-		<td colspan=3><input name=source value="$form->{source}" size=10></td>
+		<th align="right" nowrap>| . $locale->text('Source') . qq|</th>
+		<td colspan="3"><input name="source" value="$form->{source}" size="10"></td>
 	      </tr>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Amount') . qq|</th>
-		<td colspan=3><input name=amount size=10 value=|
+		<th align="right" nowrap>| . $locale->text('Amount') . qq|</th>
+		<td colspan="3"><input name="amount" size="10" value="|
       . $form->format_amount( \%myconfig, $form->{amount}, 2 )
-      . qq|></td>
-		<input type=hidden name=oldamount value=$form->{amount}>
+      . qq|"></td>
+		<input type="hidden" name="oldamount" value="$form->{amount}">
 	      </tr>
 	    </table>
 	  </td>
@@ -1121,12 +1121,12 @@ sub list_invoices {
     $invoice = $locale->text('Invoices');
 
     print qq|
-  <input type=hidden name=column_index value="id @column_index">
+  <input type="hidden" name="column_index" value="id @column_index">
   <tr>
     <td>
-      <table width=100%>
+      <table width="100%">
 	<tr>
-	  <th class=listheading colspan=$colspan>$invoice</th>
+	  <th class="listheading" colspan="$colspan">$invoice</th>
 	</tr>
 |;
 
@@ -1165,31 +1165,31 @@ sub list_invoices {
         }
 
         $column_data{invnumber} = qq|<td>$form->{"invnumber_$i"}</td>
-      <input type=hidden name="invnumber_$i" value="$form->{"invnumber_$i"}">
-      <input type=hidden name="id_$i" value=$form->{"id_$i"}>|;
-        $column_data{transdate} = qq|<td width=15%>$form->{"transdate_$i"}</td>
-      <input type=hidden name="transdate_$i" value=$form->{"transdate_$i"}>|;
+      <input type="hidden" name="invnumber_$i" value="$form->{"invnumber_$i"}">
+      <input type="hidden" name="id_$i" value="$form->{"id_$i"}">|;
+        $column_data{transdate} = qq|<td width="15%">$form->{"transdate_$i"}</td>
+      <input type="hidden" name="transdate_$i" value="$form->{"transdate_$i"}">|;
         $column_data{amount} =
-          qq|<td align=right width=15%>$form->{"amount_$i"}</td>
-      <input type=hidden name="amount_$i" value=$form->{"amount_$i"}>|;
-        $column_data{due} = qq|<td align=right width=15%>$form->{"due_$i"}</td>
-      <input type=hidden name="due_$i" value=$form->{"due_$i"}>|;
+          qq|<td align="right" width="15%">$form->{"amount_$i"}</td>
+      <input type="hidden" name="amount_$i" value="$form->{"amount_$i"}">|;
+        $column_data{due} = qq|<td align="right" width="15%">$form->{"due_$i"}</td>
+      <input type="hidden" name="due_$i" value="$form->{"due_$i"}">|;
 
         if ( $form->{"paid_$i"} =~ /NaN/ ) {
             $form->{"paid_$i"} = '';
         }
 
         $column_data{paid} =
-qq|<td align=right width=15%><input name="paid_$i" size=10 value=$form->{"paid_$i"}></td>|;
+qq|<td align="right" width="15%"><input name="paid_$i" size="10" value="$form->{"paid_$i"}"></td>|;
 
         $form->{"checked_$i"} = ( $form->{"checked_$i"} ) ? "checked" : "";
         $column_data{checked} =
-qq|<td align=center width=10%><input name="checked_$i" type=checkbox class=checkbox $form->{"checked_$i"}></td>|;
+qq|<td align="center" width="10%"><input name="checked_$i" type="checkbox" class="checkbox" $form->{"checked_$i"}></td>|;
 
         $j++;
         $j %= 2;
         print qq|
-	<tr class=listrow$j>
+	<tr class="listrow$j">
 |;
         for (@column_index) { print "$column_data{$_}\n" }
         print qq|
@@ -1200,20 +1200,20 @@ qq|<td align=center width=10%><input name="checked_$i" type=checkbox class=check
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
 
     $column_data{amount} =
-        qq|<th class=listtotal align=right>|
+        qq|<th class="listtotal" align="right">|
       . $form->format_amount( \%myconfig, $totalamount, 2, "&nbsp;" )
       . qq|</th>|;
     $column_data{due} =
-        qq|<th class=listtotal align=right>|
+        qq|<th class="listtotal" align="right">|
       . $form->format_amount( \%myconfig, $totaldue, 2, "&nbsp;" )
       . qq|</th>|;
     $column_data{paid} =
-        qq|<th class=listtotal align=right>|
+        qq|<th class="listtotal" align="right">|
       . $form->format_amount( \%myconfig, $totalpaid, 2, "&nbsp;" )
       . qq|</th>|;
 
     print qq|
-        <tr class=listtotal>
+        <tr class="listtotal">
 |;
     for (@column_index) { print "$column_data{$_}\n" }
     print qq|
@@ -1240,13 +1240,13 @@ sub payment_footer {
             $form->{"selectlanguage"} =~
               s/(<option value="\Q$form->{language_code}\E")/$1 selected/;
             $lang =
-              qq|<select name=language_code>$form->{selectlanguage}</select>
-      <input type=hidden name=selectlanguage value="|
+              qq|<select name="language_code">$form->{selectlanguage}</select>
+      <input type="hidden" name="selectlanguage" value="|
               . $form->escape( $form->{selectlanguage}, 1 ) . qq|">|;
         }
 
-        $media = qq|<select name=media>
-          <option value=screen>| . $locale->text('Screen');
+        $media = qq|<select name="media">
+          <option value="screen">| . $locale->text('Screen');
 
         if ( %{LedgerSMB::Sysconfig::printer} ) {
             for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
@@ -1256,17 +1256,17 @@ sub payment_footer {
         }
 
         $media .= qq|</select>|;
-        $format = qq|<select name=format>
-            <option value=postscript $form->{DF}{postscript}>|
+        $format = qq|<select name="format">
+            <option value="postscript" $form->{DF}{postscript}>|
           . $locale->text('Postscript') . qq|
-	    <option value=pdf $form->{DF}{pdf}>|
+	    <option value="pdf" $form->{DF}{pdf}>|
           . $locale->text('PDF')
           . qq|</select>|;
     }
 
     print qq|
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 |;

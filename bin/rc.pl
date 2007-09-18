@@ -86,11 +86,11 @@ sub reconciliation {
     if ( $form->{report} ) {
         $form->{title} = $locale->text('Reconciliation Report');
         $cleared = qq|
-        <input type=hidden name=report value=1>
+        <input type="hidden" name="report" value="1">
         <tr>
-	  <td align=right><input type=checkbox class=checkbox name=outstanding value=1 checked></td>
+	  <td align="right"><input type="checkbox" class="checkbox" name="outstanding" value="1" checked></td>
 	  <td>| . $locale->text('Outstanding') . qq|</td>
-	  <td align=right><input type=checkbox class=checkbox name=cleared value=1></td>
+	  <td align="right"><input type="checkbox" class="checkbox" name="cleared" value="1"></td>
 	  <td>| . $locale->text('Cleared') . qq|</td>
 	</tr>
 |;
@@ -113,17 +113,17 @@ sub reconciliation {
 
         $selectfrom = qq|
         <tr>
-	  <th align=right>| . $locale->text('Period') . qq|</th>
-	  <td colspan=3>
-	  <select name=month>$form->{selectaccountingmonth}</select>
-	  <select name=year>$form->{selectaccountingyear}</select>
-	  <input name=interval class=radio type=radio value=0 checked>&nbsp;|
+	  <th align="right">| . $locale->text('Period') . qq|</th>
+	  <td colspan="3">
+	  <select name="month">$form->{selectaccountingmonth}</select>
+	  <select name="year">$form->{selectaccountingyear}</select>
+	  <input name="interval" class="radio" type="radio" value="0" checked>&nbsp;|
           . $locale->text('Current') . qq|
-	  <input name=interval class=radio type=radio value=1>&nbsp;|
+	  <input name="interval" class="radio" type="radio" value="1">&nbsp;|
           . $locale->text('Month') . qq|
-	  <input name=interval class=radio type=radio value=3>&nbsp;|
+	  <input name="interval" class="radio" type="radio" value="3">&nbsp;|
           . $locale->text('Quarter') . qq|
-	  <input name=interval class=radio type=radio value=12>&nbsp;|
+	  <input name="interval" class="radio" type="radio" value="12">&nbsp;|
           . $locale->text('Year') . qq|
 	  </td>
 	</tr>
@@ -135,39 +135,39 @@ sub reconciliation {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<table width=100%>
+<table width="100%">
   <tr>
-    <th class=listtop>$form->{title}</th>
+    <th class="listtop">$form->{title}</th>
   </tr>
   <tr height="5"></tr>
   <tr>
     <td>
       <table>
 	<tr>
-	  <th align=right nowrap>| . $locale->text('Account') . qq|</th>
-	  <td colspan=3><select name=accno>$selection</select></td>
+	  <th align="right" nowrap>| . $locale->text('Account') . qq|</th>
+	  <td colspan="3"><select name="accno">$selection</select></td>
 	</tr>
 	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td colspan=3><input name=fromdate size=11 title="$myconfig{dateformat}"> <b>|
+	  <th align="right">| . $locale->text('From') . qq|</th>
+	  <td colspan="3"><input name="fromdate" size="11" title="$myconfig{dateformat}"> <b>|
       . $locale->text('To')
-      . qq|</b> <input name=todate size=11 title="$myconfig{dateformat}"></td>
+      . qq|</b> <input name="todate" size="11" title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 	$cleared
         <tr>
 	  <td></td>
-	  <td colspan=3><input type=radio style=radio name=summary value=1 checked> |
+	  <td colspan="3"><input type="radio" style="radio" name="summary" value="1" checked> |
       . $locale->text('Summary') . qq|
-	  <input type=radio style=radio name=summary value=0> |
+	  <input type="radio" style="radio" name="summary" value="0"> |
       . $locale->text('Detail')
       . qq|</td>
 	</tr>
 	<tr>
 	  <td></td>
-	  <td colspan=3><input type=checkbox class=checkbox name=fx_transaction value=1 checked> |
+	  <td colspan="3"><input type="checkbox" class="checkbox" name="fx_transaction" value="1" checked> |
       . $locale->text('Include Exchange Rate Difference')
       . qq|</td>
 	</tr>
@@ -175,12 +175,12 @@ sub reconciliation {
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 
 <br>
-<input type=hidden name=nextsub value=get_payments>
+<input type="hidden" name="nextsub" value="get_payments">
 |;
 
     $form->hide_form(qw(path login sessionid));
@@ -226,23 +226,23 @@ sub till_closing {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
+<form method="post" action="$form->{script}">
+<input type="hidden" name="path" value="$form->{path}">
+<input type="hidden" name="login" value="$form->{login}">
+<input type="hidden" name="sessionid" value="$form->{sessionid}">
 
-<input type=hidden name=callback value="$form->{callback}">
-<input type=hidden name=sum value="| . $form->{sum} * -1 . qq|">
-<table width=100%>
+<input type="hidden" name="callback" value="$form->{callback}">
+<input type="hidden" name="sum" value="| . $form->{sum} * -1 . qq|">
+<table width="100%">
   <tr>
-    <th class=listtop>$form->{title}</th>
+    <th class="listtop">$form->{title}</th>
   </tr>
 </table> 
-<table width=100%>
+<table width="100%">
 |;
 
     print "<tr>";
-    map { print "<td class=listheading>" . $locale->text($_) . "</td>"; }
+    map { print '<td class="listheading">' . $locale->text($_) . "</td>"; }
       @colheadings;
     print "</tr>";
     my $j;
@@ -257,9 +257,9 @@ sub till_closing {
         }
         ++$j;
         $j = $j % 2;
-        print qq|<tr class=listrow$j><td>| . $pos_sources{$source} . qq|</td>
+        print qq|<tr class="listrow$j"><td>| . $pos_sources{$source} . qq|</td>
              <td><input name="amount_$source">
-             <input type=hidden name="expected_$source" 
+             <input type="hidden" name="expected_$source" 
 		value="$amount"></td>
              <td>${curren}$amount</td>
              <td id="error_$source">&nbsp;</td></tr>|;
@@ -331,7 +331,7 @@ function check_errors(){
         my $subval = 'sub_' . $calcval;
         $calcval = 'calc_' . $calcval;
         print qq|<tr>
-      <td><input type=text name=$calcval value="$form->{$calcval}"></td>
+      <td><input type="text" name="$calcval" value="$form->{$calcval}"></td>
       <th>X ${curren}${unit} = </th>
       <td><input type="text" name="$subval" value="$form->{$subval}"></td>
     </tr>|;
@@ -339,10 +339,10 @@ function check_errors(){
     print qq|<tr>
     <td>&nbsp;</td>
     <th>| . $locale->text("Subtotal") . qq|:</th>
-    <td><input type=text name=sub_sub value="$form->{sub_sub}"></td>
+    <td><input type="text" name="sub_sub" value="$form->{sub_sub}"></td>
   </tr>
   </table>
-<input type=button name=calculate class=submit onClick="custom_calc_total()" 
+<input type="button" name="calculate" class="submit" onClick="custom_calc_total()" 
    value='| . $locale->text('Calculate') . qq|'>
 |;
     print qq|</table><button type="submit" name="action" value="close_till">|
@@ -506,18 +506,18 @@ sub display_form {
 
     $column_header{cleared} = qq|<th>| . $locale->text('R') . qq|</th>|;
     $column_header{source} =
-      "<th class=listheading>" . $locale->text('Source') . "</a></th>";
+      '<th class="listheading">' . $locale->text('Source') . "</a></th>";
     $column_header{name} =
-      "<th class=listheading>" . $locale->text('Description') . "</a></th>";
+      '<th class="listheading">' . $locale->text('Description') . "</a></th>";
     $column_header{transdate} =
-      "<th class=listheading>" . $locale->text('Date') . "</a></th>";
+      '<th class="listheading">' . $locale->text('Date') . "</a></th>";
 
     $column_header{debit} =
-      "<th class=listheading>" . $locale->text('Debit') . "</a></th>";
+      '<th class="listheading">' . $locale->text('Debit') . "</a></th>";
     $column_header{credit} =
-      "<th class=listheading>" . $locale->text('Credit') . "</a></th>";
+      '<th class="listheading">' . $locale->text('Credit') . "</a></th>";
     $column_header{balance} =
-      "<th class=listheading>" . $locale->text('Balance') . "</a></th>";
+      '<th class="listheading">' . $locale->text('Balance') . "</a></th>";
 
     if ( $form->{fromdate} ) {
         $option .= "\n<br>" if ($option);
@@ -539,13 +539,13 @@ sub display_form {
     print qq|
 <body>
 
-<form method=post action=$form->{script}>
+<form method="post" action="$form->{script}">
 
-<input type=hidden name=source value="$form->{source}">
-<input type=hidden name=cumulative_error value="$form->{cumulative_error}">
-<table width=100%>
+<input type="hidden" name="source" value="$form->{source}">
+<input type="hidden" name="cumulative_error" value="$form->{cumulative_error}">
+<table width="100%">
   <tr>
-    <th class=listtop>$form->{title}</th>
+    <th class="listtop">$form->{title}</th>
   </tr>
   <tr height="5"></tr>
   <tr>
@@ -553,8 +553,8 @@ sub display_form {
   </tr>
   <tr>
     <td>
-      <table width=100%>
-	<tr class=listheading>
+      <table width="100%">
+	<tr class="listheading">
 |;
 
     for (@column_index) { print "\n$column_header{$_}" }
@@ -615,7 +615,7 @@ sub display_form {
         for ( @{ $temp{name} } ) { $column_data{name} .= "$_<br>" }
         $column_data{name} .= "</td>";
         $column_data{source} = qq|<td>$temp{source}&nbsp;</td>
-    <input type=hidden name="id_$i" value=$ref->{id}>|;
+    <input type="hidden" name="id_$i" value="$ref->{id}">|;
 
         $column_data{debit}  = "<td>&nbsp;</td>";
         $column_data{credit} = "<td>&nbsp;</td>";
@@ -626,7 +626,7 @@ sub display_form {
 
             $totaldebits += $ref->{amount} * -1;
 
-            $column_data{debit} = "<td align=right>"
+            $column_data{debit} = '<td align="right">'
               . $form->format_amount( \%myconfig, $ref->{amount} * -1,
                 2, "&nbsp;" )
               . "</td>";
@@ -637,20 +637,20 @@ sub display_form {
             $totalcredits += $ref->{amount};
 
             $column_data{credit} =
-                "<td align=right>"
+                '<td align="right">'
               . $form->format_amount( \%myconfig, $ref->{amount}, 2, "&nbsp;" )
               . "</td>";
 
         }
 
         $column_data{balance} =
-          "<td align=right>"
+          '<td align="right">'
           . $form->format_amount( \%myconfig, $balance, 2, 0 ) . "</td>";
 
         if ( $ref->{fx_transaction} ) {
 
             $column_data{cleared} =
-              ($clearfx) ? qq|<td align=center>*</td>| : qq|<td>&nbsp;</td>|;
+              ($clearfx) ? qq|<td align="center">*</td>| : qq|<td>&nbsp;</td>|;
             $cleared += $ref->{amount} * $ml if $clearfx;
 
         }
@@ -659,7 +659,7 @@ sub display_form {
             if ( $form->{report} ) {
 
                 if ( $ref->{cleared} ) {
-                    $column_data{cleared} = qq|<td align=center>*</td>|;
+                    $column_data{cleared} = qq|<td align="center">*</td>|;
                     $clearfx = 1;
                 }
                 else {
@@ -673,19 +673,19 @@ sub display_form {
                 if ( $ref->{oldcleared} ) {
                     $cleared += $ref->{amount} * $ml;
                     $clearfx = 1;
-                    $column_data{cleared} = qq|<td align=center>*</td>
-	  <input type=hidden name="cleared_$i" value=$ref->{cleared}>
-	  <input type=hidden name="oldcleared_$i" value=$ref->{oldcleared}>
-	  <input type=hidden name="source_$i" value="$ref->{source}">
-          <input type=hidden name="amount_$1" value="$ref->{amount}">|;
+                    $column_data{cleared} = qq|<td align="center">*</td>
+	  <input type="hidden" name="cleared_$i" value="$ref->{cleared}">
+	  <input type="hidden" name="oldcleared_$i" value="$ref->{oldcleared}">
+	  <input type="hidden" name="source_$i" value="$ref->{source}">
+          <input type="hidden" name="amount_$1" value="$ref->{amount}">|;
                 }
                 else {
                     $cleared += $ref->{amount} * $ml if $checked;
                     $clearfx = ($checked) ? 1 : 0;
                     $column_data{cleared} =
-qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=1 $checked>
-	  <input type=hidden name="source_$i" value="$ref->{source}">
-          <input type=hidden name="amount_$i" value="$ref->{amount}">
+qq|<td align="center"><input name="cleared_$i" type="checkbox" class="checkbox" value="1" $checked>
+	  <input type="hidden" name="source_$i" value="$ref->{source}">
+          <input type="hidden" name="amount_$i" value="$ref->{amount}">
           </td>|;
                 }
 
@@ -693,12 +693,12 @@ qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=
         }
 
         $column_data{transdate} = qq|<td>$temp{transdate}&nbsp;</td>
-    <input type=hidden name="transdate_$i" value=$ref->{transdate}>|;
+    <input type="hidden" name="transdate_$i" value="$ref->{transdate}">|;
 
         $j++;
         $j %= 2;
         print qq|
-	<tr class=listrow$j>
+	<tr class="listrow$j">
 |;
 
         for (@column_index) { print "\n$column_data{$_}" }
@@ -715,15 +715,15 @@ qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
 
     $column_data{debit} =
-      "<th class=listtotal align=right>"
+      '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totaldebits, 2, "&nbsp;" ) . "</th>";
     $column_data{credit} =
-        "<th class=listtotal align=right>"
+        '<th class="listtotal" align="right">'
       . $form->format_amount( \%myconfig, $totalcredits, 2, "&nbsp;" )
       . "</th>";
 
     print qq|
-	<tr class=listtotal>
+	<tr class="listtotal">
 |;
 
     for (@column_index) { print "\n$column_data{$_}" }
@@ -760,18 +760,18 @@ qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=
     if ( $form->{'pos'} ) {
         $difference = qq|
               <tr>
-                 <th align=right><select name=over_under>
-                     <option value=under>|
+                 <th align="right"><select name="over_under">
+                     <option value="under">|
           . $locale->text('Under')
           . qq|</option>
-                     <option value=over>| . $locale->text('Over') . qq|</option>
-                   </select><input type=hidden name=pos value='true'>
+                     <option value="over">| . $locale->text('Over') . qq|</option>
+                   </select><input type="hidden" name="pos" value='true'>
                  </th>
-		<td width=10%></td>
-		<td align=right><input name=null size=11 
+		<td width="10%"></td>
+		<td align="right"><input name="null" size="11" 
                     value='| . $form->{null2} . qq|'></td>
-		<input type=hidden name=difference 
-                     value=$difference>
+		<input type="hidden" name="difference" 
+                     value="$difference">
                 
     |;
         if ( $form->{'over_under'} ) {
@@ -782,10 +782,10 @@ qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=
     else {
         $difference = qq|
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Difference') . qq|</th>
-                <td width=10%></td>
-		<td align=right><input name=null size=11 value=$difference></td>
-		<input type=hidden name=difference value=$difference>
+		<th align="right" nowrap>| . $locale->text('Difference') . qq|</th>
+                <td width="10%"></td>
+		<td align="right"><input name="null" size="11" value="$difference"></td>
+		<input type="hidden" name="difference" value="$difference">
 	      </tr>|;
     }
 
@@ -803,14 +803,14 @@ qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=
    
   <tr>
     <td>
-      <table width=100%>
+      <table width="100%">
         <tr>
-	  <td align=right>
+	  <td align="right">
 	    <table>
 	      <tr>
-		<th align=right nowrap>| . $locale->text('Statement Balance') . qq|</th>
-		<td width=10%></td>
-		<td align=right><input name=statementbalance size=11 value=$form->{statementbalance}></td>
+		<th align="right" nowrap>| . $locale->text('Statement Balance') . qq|</th>
+		<td width="10%"></td>
+		<td align="right"><input name="statementbalance" size="11" value="$form->{statementbalance}"></td>
 	      </tr>
 		$difference
 	    </table>
@@ -820,7 +820,7 @@ qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=
     </td>
   </tr>
   <tr>
-    <td><hr size=3 noshade></td>
+    <td><hr size="3" noshade></td>
   </tr>
 </table>
 |;
