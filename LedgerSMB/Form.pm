@@ -94,17 +94,17 @@ sub new {
         and not List::Util::first { $_ eq $self->{script} }
         @{LedgerSMB::Sysconfig::scripts} )
     {
-        $self->error( 'Access Denied', __line__, __file__ );
+        $self->error( 'Access Denied', __LINE__, __FILE__ );
     }
     
     if ( ( $self->{action} =~ /(:|')/ ) || ( $self->{nextsub} =~ /(:|')/ ) ) {
-        $self->error( "Access Denied", __line__, __file__ );
+        $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
     for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
     
     if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
-        $self->error( 'Access Denied', __line__, __file__ );
+        $self->error( 'Access Denied', __LINE__, __FILE__ );
     }
     
     $self;
@@ -619,7 +619,7 @@ sub callproc {
     $query = "SELECT $procname";
     $query =~ s/\(\)/$argstr/;
     my $sth = $self->{dbh}->prepare($query);
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @results, $ref;
     }
     @results;
@@ -1507,7 +1507,7 @@ sub db_init {
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{custom_db_fields}{ $ref->{extends} } },
           $ref->{field_def};
     }
@@ -1603,7 +1603,7 @@ sub run_custom_queries {
             $query = shift @{$_};
             $sth   = $self->{dbh}->prepare($query);
             $sth->execute( $self->{id} );
-            $ref = $sth->fetchrow_hashref(NAME_lc);
+            $ref = $sth->fetchrow_hashref('NAME_lc');
             for ( keys %{$ref} ) {
                 $self->{$_} = $ref->{$_};
             }
@@ -1896,7 +1896,7 @@ sub get_name {
     my $i = 0;
     @{ $self->{name_list} } = ();
 
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push( @{ $self->{name_list} }, $ref );
         $i++;
     }
@@ -1963,7 +1963,7 @@ sub all_vc {
 
         @{ $self->{"all_$vc"} } = ();
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             push @{ $self->{"all_$vc"} }, $ref;
         }
 
@@ -1995,7 +1995,7 @@ sub all_vc {
 
     $self->{all_language} = ();
 
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_language} }, $ref;
     }
 
@@ -2072,7 +2072,7 @@ sub all_employees {
     my $sth = $dbh->prepare($query);
     $sth->execute(@whereargs) || $self->dberror($query);
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_employee} }, $ref;
     }
 
@@ -2120,7 +2120,7 @@ sub all_projects {
 
     @{ $self->{all_project} } = ();
 
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_project} }, $ref;
     }
 
@@ -2152,7 +2152,7 @@ sub all_departments {
 
     @{ $self->{all_department} } = ();
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_department} }, $ref;
     }
 
@@ -2240,7 +2240,7 @@ sub create_links {
 
     $self->{accounts} = "";
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 
         foreach my $key ( split /:/, $ref->{link} ) {
 
@@ -2285,7 +2285,7 @@ sub create_links {
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id} ) || $self->dberror($query);
 
-        $ref = $sth->fetchrow_hashref(NAME_lc);
+        $ref = $sth->fetchrow_hashref('NAME_lc');
         $self->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         foreach $key ( keys %$ref ) {
@@ -2302,7 +2302,7 @@ sub create_links {
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id} ) || $self->dberror($query);
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $self->{printed} .= "$ref->{formname} "
               if $ref->{printed};
             $self->{emailed} .= "$ref->{formname} "
@@ -2339,7 +2339,7 @@ sub create_links {
             $fld );
 
         # store amounts in {acc_trans}{$key} for multiple accounts
-        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $self->db_parse_numeric(sth=>$sth, hashref=>$ref);
             $ref->{exchangerate} =
               $self->get_exchangerate( $dbh, $self->{currency},
@@ -2418,7 +2418,7 @@ sub lastname_used {
     $sth = $dbh->prepare($query);
     $sth->execute() || $self->dberror($query);
 
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
+    my $ref = $sth->fetchrow_hashref('NAME_lc');
     for ( keys %$ref ) { $self->{$_} = $ref->{$_} }
     $sth->finish;
     $dbh->commit;
@@ -2555,7 +2555,7 @@ sub get_partsgroup {
 
     $self->{all_partsgroup} = ();
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_partsgroup} }, $ref;
     }
 
@@ -2639,7 +2639,7 @@ sub save_status {
 					VALUES (?, ?, ?, ?, ?)|;
 
                 $sth = $dbh->prepare($query);
-                $sth->execute( $self->{id}, $pinted, $emailed,
+                $sth->execute( $self->{id}, $printed, $emailed,
                     $queued{$formname}, $formname )
                   || $self->dberror($query);
                 $sth->finish;
@@ -2694,7 +2694,7 @@ sub get_recurring {
 
     for (qw(email print)) { $self->{"recurring$_"} = "" }
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         for ( keys %$ref ) { $self->{"recurring$_"} = $ref->{$_} }
         $self->{recurringemail} .= "$ref->{emaila}:";
         $self->{recurringprint} .= "$ref->{printa}:";
