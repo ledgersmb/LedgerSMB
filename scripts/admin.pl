@@ -12,6 +12,8 @@ sub new_user {
     my ($class, $request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
+    my $sal = $admin->get_salutations();
+    
     if ($request->type() == 'POST') {
         
         # do the save stuff
@@ -23,14 +25,23 @@ sub new_user {
     	template => 'Admin/edit_user', language => $user->{language}, 
             format => 'HTML', path=>'UI');
     
-        $template->render($entity);
+        $template->render(
+            {   
+                user=>$entity,
+                salutations=> $sal
+            }
+        );
     } else {
     
         my $template = LedgerSMB::Template->new( user => $user, 
     	template => 'Admin/edit_user', language => $user->{language}, 
             format => 'HTML', path=>'UI');
     
-        $template->render();
+        $template->render(
+            {
+                salutations=>$sal  
+            }
+        );
     }
 }
 
@@ -154,7 +165,7 @@ sub __default {
     
     # check for login
     my $template;
-        $template = LedgerSMB::Template->new( user=>$user, 
+    $template = LedgerSMB::Template->new( user=>$user, 
             template=>'Admin/main', language=>$user->{language},
             format=>'HTML', path=>'UI');
     $template->render();

@@ -18,35 +18,47 @@
                     <select name="salutation">
                         <?lsmb FOREACH sal = salutations ?>
                             <option value="<?lsmb sal.id?>"><?lsmb sal.salutation?></option>
-                        <?END?>
+                        <?lsmb END?>
                     </select>
                 </td>
             </tr>
             
             <tr>
+                <td>First Name</td>
                 <td>
-                    First Name :<input type="textarea" name="first_name" value="<?lsmb user.first_name?>"/>
+                    <input type="textarea" name="first_name" value="<?lsmb user.first_name?>"/>
                 </td>
             </tr>
             
             <tr>
+                <td>Last Name</td>
                 <td>
-                    Last Name :<input type="textarea" name="last_name" value="<?lsmb user.last_name?>"/>
+                    <input type="textarea" name="last_name" value="<?lsmb user.last_name?>"/>
                 </td>
             </tr>
             <tr>
+                <td>Employee #</td>
                 <td>
-                    Employee # :<input type="textarea" name="employeenumber" value="<?lsmb user.employeenumber?>"/>
+                    <input type="textarea" name="employeenumber" value="<?lsmb user.employeenumber?>"/>
                 </td>
             </tr>
             <hr/>
             <?lsmb UNLESS user.username?>
             <tr>
+                <td>Username</td>
                 <td>
-                    Username :<input type="textarea" name="username" value="<?lsmb user.last_name?>"/>
+                    <input type="textarea" name="username" value="<?lsmb user.last_name?>"/>
                 </td>
             </tr>
             <?lsmb END?>
+            
+            <tr>
+                <td><br/></td>
+                <td>
+                    <hr/>
+                </td>
+            </tr>
+            
             <tr>
                 <td>Company Name</td>
                 <td>
@@ -106,7 +118,7 @@
             </tr>
             
             <tr>
-                <td>Contact Information</td>
+                <td><br/></td>
                 <td><hr/></td>
             </tr>
             

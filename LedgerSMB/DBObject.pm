@@ -27,6 +27,11 @@ this way as is any information that is needed.
 
 copies @attrs from $hashref to $self.
 
+=item set (@attrs)
+
+Copies the given key=>vars to $self. Allows for finer control of 
+merging hashes into self.
+
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.

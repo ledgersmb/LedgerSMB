@@ -181,4 +181,16 @@ sub delete_group {
     }
 }
 
+sub get_salutations {
+    
+    my $self = shift;
+    
+    my $sth = $self->{dbh}->prepare("SELECT * FROM salutation ORDER BY id ASC");
+    
+    $sth->execute();
+    
+    # Returns a list of hashrefs
+    return $sth->fetchall_arrayref( {} );
+}
+
 1;
