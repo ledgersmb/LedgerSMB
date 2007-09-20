@@ -9,12 +9,14 @@ use LedgerSMB::DBObject::Admin;
 sub new_user {
     
     # uses the same page as create_user, only pre-populated.
-    my ($class, $request) = @_;
+    #my ($class, $request) = @_;
+    my $class = shift @_;
+    my $request = shift @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
     my $sal = $admin->get_salutations();
     
-    if ($request->type() == 'POST') {
+    if ($request->type() eq 'POST') {
         
         # do the save stuff
         
@@ -130,17 +132,6 @@ sub delete_user {
         format=>'HTML', path=>'UI');
         
     $template->render($status);
-}
-
-sub new_user {
-    
-    my ($class, $request) = @_;
-    
-    my $template = LedgerSMB::Template->new( user=>$user, 
-        template=>'Admin/edit_user', language=>$user->{language},
-        format=>'HTML', path=>'UI');
-    
-    $template->render();
 }
 
 sub new_group {

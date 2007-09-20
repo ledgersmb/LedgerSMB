@@ -60,13 +60,13 @@ sub AUTOLOAD {
 
 sub new {
     my $class = shift @_;
-    my $args  = shift @_;
-    my $base  = $args->{base};
-    my $mode  = $args->{copy};
+    my %args  = @_;
+    my $base  = $args{base};
+    my $mode  = $args{copy};
     my $self  = bless {}, $class;
     my @mergelist;
-    if (defined $args->{merge}){
-        @mergelist = @{$args->{merge}};
+    if ( defined $args{merge} ){
+        @mergelist = @{ $args{merge} };
     } elsif (defined $mode && ( $mode eq 'list')) {
         $self->error('Mergelist not set');
     }
@@ -289,6 +289,7 @@ sub set {
         $self->{$arg} = $args{$arg};
     }
     return 1;    
+
 }
 
 1;

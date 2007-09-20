@@ -56,5 +56,5 @@ $script = "LedgerSMB::Scripts::$script";
 $script->can($request->{action}) 
   || $request->error($locale->text("Action Not Defined: ") . $request->{action});
 
-$script->can($request->{action})->($request);
+$script->can( $request->{action} )->($request);
 1;

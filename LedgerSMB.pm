@@ -740,5 +740,20 @@ sub merge {
     }
 }
 
+sub type {
+    
+    my $self = shift @_;
+    
+    if (!$ENV{REQUEST_METHOD} or 
+        ( $ENV{REQUEST_METHOD} ne ("HEAD" or "GET" or "POST") ) ) {
+        
+        $self->error("Request method unset or set to unknown value");
+    }
+    
+    return $ENV{REQUEST_METHOD};
+}
+
+sub DESTROY {}
+
 1;
 
