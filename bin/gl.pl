@@ -1343,7 +1343,8 @@ sub post {
         $credit += $cr;
     }
 
-    if ( $form->round_amount( $debit, 2 ) != $form->round_amount( $credit, 2 ) )
+    if ($form->round_amount( $debit, 2 ) != $form->round_amount( $credit, 2 ) ||
+      $debit->is_nan || $credit->is_nan)
     {
         $form->error( $locale->text('Out of balance transaction!') );
     }
