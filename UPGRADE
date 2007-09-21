@@ -1,6 +1,6 @@
 Upgrading to LedgerSMB 1.2 
 
-From LedgerSMB (1.1.1 or earlier) 
+From LedgerSMB (1.1.12 or earlier) 
 or 
 SQL-Ledger (2.6.27 or earlier)
 
@@ -70,7 +70,7 @@ and may not be required in all circumstances.  These include:
   e) If you have a problem running the scripts (errors due to ownership
      or you just want to change ownership of the tables), connect to the
      database as you did in c above and at the => prompt:
-     "/d"
+     "\d"
      You will see a list of all tables, sequences, triggers, etc.  After
      creating a user (see the INSTALL file for details), you can change
      ownership of the relation by running the following at the => prompt:

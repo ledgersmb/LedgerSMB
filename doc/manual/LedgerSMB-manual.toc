@@ -1,11 +1,11 @@
 \select@language {english}
-\contentsline {part}{I\hspace {1em}Ledger-SMB and Business Processes}{7}{part.1}
-\contentsline {section}{\numberline {1}Introduction to Ledger-SMB}{7}{section.1}
-\contentsline {subsection}{\numberline {1.1}Why Ledger-SMB}{7}{subsection.1.1}
-\contentsline {subsubsection}{\numberline {1.1.1}Advantages of Ledger-SMB}{7}{subsubsection.1.1.1}
+\contentsline {part}{I\hspace {1em}LedgerSMB and Business Processes}{7}{part.1}
+\contentsline {section}{\numberline {1}Introduction to LedgerSMB}{7}{section.1}
+\contentsline {subsection}{\numberline {1.1}Why LedgerSMB}{7}{subsection.1.1}
+\contentsline {subsubsection}{\numberline {1.1.1}Advantages of LedgerSMB}{7}{subsubsection.1.1.1}
 \contentsline {subsubsection}{\numberline {1.1.2}Key Features}{7}{subsubsection.1.1.2}
-\contentsline {subsection}{\numberline {1.2}Limitations of Ledger-SMB}{9}{subsection.1.2}
-\contentsline {subsection}{\numberline {1.3}System Requirements of Ledger-SMB}{9}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.2}Limitations of LedgerSMB}{9}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}System Requirements of LedgerSMB}{9}{subsection.1.3}
 \contentsline {section}{\numberline {2}User Account and Database Administration Basics}{9}{section.2}
 \contentsline {subsection}{\numberline {2.1}Companies and Datasets}{10}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}How to Create a User}{10}{subsection.2.2}
@@ -44,7 +44,7 @@
 \contentsline {subsubsection}{\numberline {4.7.2}SIC}{16}{subsubsection.4.7.2}
 \contentsline {subsubsection}{\numberline {4.7.3}Overview of Template Editing}{17}{subsubsection.4.7.3}
 \contentsline {subsubsection}{\numberline {4.7.4}Year-end}{17}{subsubsection.4.7.4}
-\contentsline {subsection}{\numberline {4.8}Options in the ledger-smb.conf}{17}{subsection.4.8}
+\contentsline {subsection}{\numberline {4.8}Options in the ledgersmb.conf}{17}{subsection.4.8}
 \contentsline {section}{\numberline {5}Goods and Services}{17}{section.5}
 \contentsline {subsection}{\numberline {5.1}Basic Terms}{18}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}The Price Matrix}{18}{subsection.5.2}
@@ -132,7 +132,7 @@
 \contentsline {subsection}{\numberline {12.1}GL Basics}{33}{subsection.12.1}
 \contentsline {subsubsection}{\numberline {12.1.1}Paper-based accounting systems and the GL}{33}{subsubsection.12.1.1}
 \contentsline {subsubsection}{\numberline {12.1.2}Double Entry Examples on Paper}{34}{subsubsection.12.1.2}
-\contentsline {subsubsection}{\numberline {12.1.3}The GL in Ledger-SMB}{34}{subsubsection.12.1.3}
+\contentsline {subsubsection}{\numberline {12.1.3}The GL in LedgerSMB}{34}{subsubsection.12.1.3}
 \contentsline {subsection}{\numberline {12.2}Cash Transfer}{34}{subsection.12.2}
 \contentsline {subsection}{\numberline {12.3}GL Transactions}{35}{subsection.12.3}
 \contentsline {subsection}{\numberline {12.4}Payroll as a GL transaction}{35}{subsection.12.4}
@@ -212,15 +212,15 @@
 \contentsline {subsubsection}{\numberline {20.4.1}Database Access}{57}{subsubsection.20.4.1}
 \contentsline {subsection}{\numberline {20.5}CLI Examples}{57}{subsection.20.5}
 \contentsline {part}{III\hspace {1em}Appendix}{58}{part.3}
-\contentsline {section}{\numberline {A}Where to Go for More Information}{58}{section.A}
-\contentsline {section}{\numberline {B}Quick Tips}{58}{section.B}
+\contentsline {section}{\numberline {A}Where to Go for More Information}{58}{appendix.A}
+\contentsline {section}{\numberline {B}Quick Tips}{58}{appendix.B}
 \contentsline {subsection}{\numberline {B.1}Understanding Shipping Addresses and Carriers}{58}{subsection.B.1}
 \contentsline {subsection}{\numberline {B.2}Handling bad debts}{58}{subsection.B.2}
-\contentsline {section}{\numberline {C}Step by Steps for Vertical Markets}{58}{section.C}
+\contentsline {section}{\numberline {C}Step by Steps for Vertical Markets}{58}{appendix.C}
 \contentsline {subsection}{\numberline {C.1}Common Installation Errors}{58}{subsection.C.1}
 \contentsline {subsection}{\numberline {C.2}Retail With Light Manufacturing}{58}{subsection.C.2}
-\contentsline {section}{\numberline {D}Glossary}{60}{section.D}
-\contentsline {section}{\numberline {E}GNU Free Documentation License}{61}{section.E}
+\contentsline {section}{\numberline {D}Glossary}{60}{appendix.D}
+\contentsline {section}{\numberline {E}GNU Free Documentation License}{61}{appendix.E}
 \contentsline {subsection}{1. APPLICABILITY AND DEFINITIONS}{61}{section*.3}
 \contentsline {subsection}{2. VERBATIM COPYING}{62}{section*.3}
 \contentsline {subsection}{3. COPYING IN QUANTITY}{62}{section*.3}

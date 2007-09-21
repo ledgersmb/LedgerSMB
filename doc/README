@@ -1,5 +1,5 @@
                 LedgerSMB Small Medium Business Accounting
-                     Version 1.2.0
+                     Version 1.2.8
 
 
 DESCRIPTION:
@@ -10,7 +10,7 @@ Netscape, Mozilla, Galeon, Explorer, Links, Lynx,
 Konqueror, Voyager, W3M and Opera clients on Linux,
 FreeBSD, Solaris, Windows, Mac computers and PDA's.
 
-Data is stored in a PostgreSQLSQL database server, either 
+Data is stored in a PostgreSQL database server, either 
 locally or remote, the display is through a text or GUI web 
 browser. The system is linked by a chart of accounts.  All 
 transactions for AR, AP and GL are stored in a transaction 
@@ -51,7 +51,7 @@ Non specific, see requirements.
 
 REQUIREMENTS:
 -------------
-1 - Perl, 5.8+
+1 - Perl, 5.8.1+
 2 - http server (Apache, NCSA, httpi, thttpd, ...)
 3 - SQL Server (PostgreSQL 8.0+)
 4 - DBD (DBD-Pg)
@@ -77,7 +77,7 @@ Please see the INSTALL file in the root installation directory of LedgerSMB.
 SET UP A USER:
 -------------
 Load your web browser and connect to
-http://localhost/ledger-smb/admin.pl
+http://localhost/ledgersmb/admin.pl
 
 Click on "Add User". In the Database
 section select the driver and enter
@@ -87,7 +87,7 @@ the user you used to create the dataset.
 LOAD THE ACCOUNTING PROGRAM:
 ----------------------------
 Load your web browser and connect to
-http://localhost/ledger-smb/login.pl
+http://localhost/ledgersmb/login.pl
 
 
 INSTALLATION CHECKLIST:
@@ -95,8 +95,8 @@ INSTALLATION CHECKLIST:
 1. untar LedgerSMB somewhere (i.e /usr/local, /opt)
 2. change permission for the users, templates, css and spool directory
 3. edit httpd.conf
-4. edit ledger-smb.conf
-5. add the database user ledger-smb
+4. edit ledgersmb.conf
+5. add the database user ledgersmb
 6. load admin.pl
 7. create datasets for companies
 8. add users
@@ -108,8 +108,8 @@ INSTALLATION CHECKLIST:
       Host:     for local connections leave blank
       Dataset:  the dataset created in step 7
       Port:     for local connections leave blank
-      User:     ledger-smb
-      Password: password for ledger-smb
+      User:     ledgersmb
+      Password: password for ledgersmb
 
 
 IF SOMETHING DOESN'T WORK:
@@ -123,4 +123,4 @@ where you can seek free help.
 For commercial support see http://www.ledgersmb.org/
 
 =====================================================================
-September 24, 2006
+September 21, 2007

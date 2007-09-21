@@ -243,7 +243,7 @@ step 5). You can repreat that step as often as you need to get login
 to admin.pl working, but in case your 'admin' user is not id=1, try
 using the expanded version of the SQL:
 
-ledgersmb==> UPDATE users_conf SET password=mp5('MYPASSWORD')
+ledgersmb==> UPDATE users_conf SET password=md5('MYPASSWORD')
 WHERE id = (SELECT id FROM user
 WHERE username = 'admin');
 
