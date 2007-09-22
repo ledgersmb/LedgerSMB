@@ -1501,7 +1501,7 @@ sub list_templates {
     unshift @{ $form->{ALL} },
       { code => '.', description => $locale->text('Default Template') };
 
-    $href =
+    my $href =
 "$form->{script}?action=list_templates&direction=$form->{direction}&oldsort=$form->{oldsort}&file=$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->sort_order();
@@ -1509,99 +1509,68 @@ sub list_templates {
     $form->{callback} =
 "$form->{script}?action=list_templates&direction=$form->{direction}&oldsort=$form->{oldsort}&file=$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
-    $callback = $form->escape( $form->{callback} );
+    my $callback = $form->escape( $form->{callback} );
 
     chomp $myconfig{templates};
     $form->{file} =~ s/$myconfig{templates}//;
     $form->{file} =~ s/\///;
-    $form->{title} = $form->{file};
+    $form->{title} = $form->{template};
 
-    @column_index = $form->sort_columns(qw(code description));
+    my @column_index = $form->sort_columns(qw(code description));
 
-    $column_header{code} =
-        qq|<th><a class="listheading" href=$href&sort=code>|
-      . $locale->text('Code')
-      . qq|</a></th>|;
-    $column_header{description} =
-        qq|<th><a class="listheading" href=$href&sort=description>|
-      . $locale->text('Description')
-      . qq|</a></th>|;
+    $column_header{code} = { text => $locale->text('Code'),
+        href => "$href&sort=code" };
+    $column_header{description} = { text => $locale->text('Description'),
+        href => "$href&sort=description" };
 
-    $form->header;
+    my @rows;
+    my $i = 0;
+    foreach my $ref ( @{ $form->{ALL} } ) {
 
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
-    foreach $ref ( @{ $form->{ALL} } ) {
-
+        my %column_data;
         $i++;
         $i %= 2;
+        $column_data{i} = $i;
 
-        print qq|
-        <tr valign=top class=listrow$i>
-|;
+        $column_data{code} = { text => $ref->{code}, href =>
+            qq|$form->{script}?action=display_form&file=$myconfig{templates}/$ref->{code}/$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&code=$ref->{code}&callback=$callback|};
+        $column_data{description} = $ref->{description};
 
-        $column_data{code} =
-qq|<td><a href=$form->{script}?action=display_form&file=$myconfig{templates}/$ref->{code}/$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&code=$ref->{code}&callback=$callback>$ref->{code}</td>|;
-        $column_data{description} = qq|<td>$ref->{description}</td>|;
-
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-	</tr>
-|;
+	push @rows, \%column_data;
+    
     }
 
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-  <td><hr size=3 noshade></td>
-  </tr>
-</table>
+    $form->{type} = 'language';
+    my @hiddens = qw(sessionid login path calllback type);
 
-<br>
-<form method=post action=$form->{script}>
+## SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-<input name=callback type=hidden value="$form->{callback}">
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'add_language',
+        text => $locale->text('Add Lanugage'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-<input type=hidden name=type value=language>
-
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
-|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-  
-  </body>
-  </html> 
-|;
-
+    # SC: I'm not concerned about the wider description as code is 6 chars max
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-list-departments');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        hiddens => \@hiddens,
+    });
 }
 
 sub display_form {
