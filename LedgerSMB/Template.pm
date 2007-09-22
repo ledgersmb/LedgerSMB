@@ -217,12 +217,18 @@ sub _http_output {
 	my $self = shift;
 	my $data = shift;
 	$data ||= $self->{output};
-	my $FH;
+	my $format = "LedgerSMB::Template::$self->{format}";
+	my $disposition = "\n";
+	my $name = $format->can('postprocess')->($self);
 
+	if ($name) {
+		$name =~ s#^.*/##;
+		$disposition .= qq|Content-Disposition: attachment; filename="$name"|;
+	}
 	if ($self->{mimetype} =~ /^text/) {
-		print "Content-Type: $self->{mimetype}; charset=utf-8\n\n";
+		print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
 	} else {
-		print "Content-Type: $self->{mimetype}\n\n";
+		print "Content-Type: $self->{mimetype}$disposition\n\n";
 	}
 	binmode STDOUT, ':bytes';
 	print $data;
