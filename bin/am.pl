@@ -493,70 +493,58 @@ sub list_gifi {
     $form->{title} = $locale->text('GIFI');
 
     # construct callback
-    $callback =
+    my $callback =
 "$form->{script}?action=list_gifi&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+    $form->{callback} = $callback;
 
-    @column_index = qw(accno description);
+    my @column_index = qw(accno description);
+    my %column_header;
+    my @rows;
 
-    $column_header{accno} =
-      qq|<th class="listheading">| . $locale->text('GIFI') . qq|</a></th>|;
-    $column_header{description} =
-        qq|<th class="listheading">|
-      . $locale->text('Description')
-      . qq|</a></th>|;
+    $column_header{accno} = $locale->text('GIFI');
+    $column_header{description} = $locale->text('Description');
 
-    $form->header;
-    $colspan = $#column_index + 1;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop colspan=$colspan>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-</tr>
-|;
-
-    # escape callback
-    $callback = $form->escape($callback);
-
+    my $i = 0;
     foreach $ca ( @{ $form->{ALL} } ) {
 
+        my %column_data;
         $i++;
         $i %= 2;
-
-        print qq|
-<tr valign=top class=listrow$i>|;
+        $column_data{i} = $i;
 
         $accno = $form->escape( $ca->{accno} );
-        $column_data{accno} =
-qq|<td><a href=$form->{script}?action=edit_gifi&coa=1&accno=$accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ca->{accno}</td>|;
-        $column_data{description} = qq|<td>$ca->{description}&nbsp;</td>|;
+        $column_data{accno} = {text => $ca->{accno}, href =>
+          qq|$form->{script}?action=edit_gifi&coa=1&accno=$accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback|};
+        $column_data{description} = $ca->{description};
 
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print "</tr>\n";
+        push @rows, \%column_data;
     }
 
-    print qq|
-  <tr>
-    <td colspan=$colspan><hr size=3 noshade></td>
-  </tr>
-</table>
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'csv_list_gifi',
+        text => $locale->text('CSV Report'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        locale => $locale,
+        path => 'UI',
+        template => 'am-list-accounts',
+        format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
+    $template->render({
+        form => \%$form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+    });
 }
+
+sub csv_list_gifi { &list_gifi }
 
 sub add_gifi {
     $form->{title} = "Add";
