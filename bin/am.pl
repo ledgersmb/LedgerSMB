@@ -895,7 +895,7 @@ sub list_business {
 
     AM->business( \%myconfig, \%$form );
 
-    $href =
+    my $href =
 "$form->{script}?action=list_business&direction=$form->{direction}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->sort_order();
@@ -903,100 +903,65 @@ sub list_business {
     $form->{callback} =
 "$form->{script}?action=list_business&direction=$form->{direction}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
-    $callback = $form->escape( $form->{callback} );
+    my $callback = $form->escape( $form->{callback} );
 
     $form->{title} = $locale->text('Type of Business');
 
-    @column_index = qw(description discount);
+    my @column_index = qw(description discount);
 
-    $column_header{description} =
-        qq|<th width=90%><a class="listheading" href=$href>|
-      . $locale->text('Description')
-      . qq|</a></th>|;
-    $column_header{discount} =
-      qq|<th class="listheading">| . $locale->text('Discount') . qq| %</th>|;
+    my %column_header;
+    $column_header{description} = { text => $locale->text('Description'),
+        href => $href };
+    $column_header{discount} = $locale->text('Discount %');
 
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
-    foreach $ref ( @{ $form->{ALL} } ) {
-
+    my @rows;
+    $i = 0;
+    foreach my $ref ( @{ $form->{ALL} } ) {
+    
+        my %column_data;
         $i++;
         $i %= 2;
+        $column_data{i} = $i;
 
-        print qq|
-        <tr valign=top class=listrow$i>
-|;
+        $column_data{discount} =
+          $form->format_amount( \%myconfig, $ref->{discount} * 100, 2, " " );
+        $column_data{description} = { text => $ref->{description}, href =>
+            qq|$form->{script}?action=edit_business&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback|};
 
-        $discount =
-          $form->format_amount( \%myconfig, $ref->{discount} * 100, 2,
-            "&nbsp" );
-
-        $column_data{description} =
-qq|<td><a href=$form->{script}?action=edit_business&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{description}</td>|;
-        $column_data{discount} = qq|<td align="right">$discount</td>|;
-
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-	</tr>
-|;
+	push @rows, \%column_data;
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-  <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<form method=post action=$form->{script}>
-|;
 
     $form->{type} = "business";
 
-    $form->hide_form(qw(type callback path login sessionid));
+    my @hiddens = qw(type callback path login sessionid);
 
-    print qq|
-<button class="submit" type="submit" name="action" value="add_business">|
-      . $locale->text('Add Business')
-      . qq|</button>|;
+## SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'add_business',
+        text => $locale->text('Add Business'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-    print qq|
-  
-  </form>
-  
-  </body>
-  </html> 
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-list-departments');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        hiddens => \@hiddens,
+    });
 }
 
 sub business_header {

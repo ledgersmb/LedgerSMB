@@ -30,7 +30,7 @@
   <?lsmb c = "listrow${row.i}" ?>
 <tr class="<?lsmb c ?>">
   <?lsmb FOREACH column IN columns ?>
-  <td class="<?lsmb c ?>" <?lsmb IF (column == 'cost' || column == 'profit') ?>align="center"<?lsmb END ?>>
+  <td class="<?lsmb c ?>" <?lsmb IF (column == 'cost' || column == 'profit') ?>align="center"<?lsmb ELSIF column == 'discount' ?>align="right"<?lsmb END ?>>
     <?lsmb IF row.$column.href ?>
     <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
     <?lsmb ELSE; row.$column; END ?>
