@@ -594,6 +594,11 @@ sub save {
     $sth = $dbh->prepare($query);
     $sth->execute(@queryargs) || $form->dberror($query);
 
+    if ( $amount->is_nan ) {
+        $dbh->rollback;
+        return;
+    }
+
     if ( !$did_insert ) {
         @queries = $form->run_custom_queries( 'oe', 'UPDATE' );
     }
