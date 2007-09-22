@@ -1279,97 +1279,67 @@ sub list_language {
     $form->{callback} =
 "$form->{script}?action=list_language&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
-    $callback = $form->escape( $form->{callback} );
+    my $callback = $form->escape( $form->{callback} );
 
     $form->{title} = $locale->text('Languages');
 
-    @column_index = $form->sort_columns(qw(code description));
+    my @column_index = $form->sort_columns(qw(code description));
+    my %column_header;
 
-    $column_header{code} =
-        qq|<th><a class="listheading" href=$href&sort=code>|
-      . $locale->text('Code')
-      . qq|</a></th>|;
-    $column_header{description} =
-        qq|<th><a class="listheading" href=$href&sort=description>|
-      . $locale->text('Description')
-      . qq|</a></th>|;
+    $column_header{code} = { text => $locale->text('Code'),
+        href => "$href&sort=code" };
+    $column_header{description} = { text => $locale->text('Description'),
+        href => "$href&sort=description" };
 
-    $form->header;
+    my @rows;
+    my $i = 0;
+    foreach my $ref ( @{ $form->{ALL} } ) {
 
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
-    foreach $ref ( @{ $form->{ALL} } ) {
-
+        my %column_data;
         $i++;
         $i %= 2;
+        $column_data{i} = $i;
 
-        print qq|
-        <tr valign=top class=listrow$i>
-|;
+        $column_data{code} = {text => $ref->{code}, href =>
+            qq|$form->{script}?action=edit_language&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback|};
+        $column_data{description} = $ref->{description};
 
-        $column_data{code} =
-qq|<td><a href=$form->{script}?action=edit_language&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{code}</td>|;
-        $column_data{description} = qq|<td>$ref->{description}</td>|;
-
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-	</tr>
-|;
+        push @rows, \%column_data;
+    
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-  <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<form method=post action=$form->{script}>
-|;
 
     $form->{type} = "language";
 
-    $form->hide_form(qw(type callback path login sessionid));
+    my @hiddens = qw(type callback path login sessionid);
 
-    print qq|
-<button class="submit" type="submit" name="action" value="add_language">|
-      . $locale->text('Add Language')
-      . qq|</button>|;
+## SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'add_language',
+        text => $locale->text('Add Lanugage'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-    print qq|
-  </form>
-  
-  </body>
-  </html> 
-|;
-
+    # SC: I'm not concerned about the wider description as code is 6 chars max
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-list-departments');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        hiddens => \@hiddens,
+    });
 }
 
 sub language_header {
