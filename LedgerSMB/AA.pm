@@ -580,7 +580,10 @@ sub post_transaction {
             }
         }
     }
-
+    if ($invamount->is_nan) {
+        $dbh->rollback;
+	return;
+    }
     # save printed and queued
     $form->save_status($dbh);
 

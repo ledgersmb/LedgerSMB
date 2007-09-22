@@ -518,6 +518,10 @@ sub post_payment {
             $sth->execute( $amount, $form->{datepaid}, $form->{"id_$i"} )
               || $form->dberror( $query, 'CP.pm', 530 );
 
+            if ($amount->is_nan) {
+                $dbh->rollback;
+                return;
+            }
             %audittrail = (
                 tablename => $form->{arap},
                 reference => $form->{source},
@@ -792,6 +796,11 @@ sub post_payments {
             $sth = $dbh->prepare($query);
             $sth->execute( $amount, $form->{datepaid}, $form->{"id_$i"} )
               || $form->dberror( $query, 'CP.pm', 796 );
+
+            if ($amount->is_nan) {
+                $dbh->rollback;
+                return;
+            }
 
             %audittrail = (
                 tablename => $form->{arap},

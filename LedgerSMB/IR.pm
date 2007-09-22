@@ -773,6 +773,11 @@ sub post_invoice {
     $form->{name} =~ s/--$form->{vendor_id}//;
     $form->add_shipto( $dbh, $form->{id} );
 
+    if ($invamount->is_nan) {
+        $dbh->rollback;
+        return;
+    }
+    
     my %audittrail = (
         tablename => 'ap',
         reference => $form->{invnumber},

@@ -1515,6 +1515,11 @@ sub post_invoice {
     $form->{name} =~ s/--$form->{customer_id}//;
     $form->add_shipto( $dbh, $form->{id} );
 
+    if ($invamount->is_nan) {
+        $dbh->rollback;
+        return;
+    }
+
     # save printed, emailed and queued
     $form->save_status($dbh);
 
