@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title><?lsmb form.titlebar ?></title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="noindex,nofollow" />
+        
+</head>
+<?lsmb PROCESS elements.html ?> 
+
+<body>
+
+<table width="100%">
+  <tr>
+    <th class="listtop" colspan="<?lsmb columns.size ?>"><?lsmb form.title ?></th>
+  </tr>
+  <tr><td colspan="<?lsmb columns.size ?>"></td></tr>
+  <tr class="listheading">
+<?lsmb FOREACH column IN columns ?>
+    <th class="listheading"<?lsmb IF column == 'description' ?> width="90%"<?lsmb END ?>><?lsmb IF heading.$column.href ?><a class="listheading" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a><?lsmb ELSE; heading.$column; END ?></th>
+<?lsmb END ?>
+  </tr>
+<?lsmb FOREACH row IN rows ?>
+  <?lsmb c = "listrow${row.i}" ?>
+<tr class="<?lsmb c ?>">
+  <?lsmb FOREACH column IN columns ?>
+  <td class="<?lsmb c ?>" <?lsmb IF (column == 'cost' || column == 'profit') ?>align="center"<?lsmb END ?>>
+    <?lsmb IF row.$column.href ?>
+    <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
+    <?lsmb ELSE; row.$column; END ?>
+  </td>
+  <?lsmb END ?>
+</tr>
+<?lsmb END ?>
+  <tr><td colspan="<?lsmb columns.size ?>"><hr size="3" /></td></tr>
+</table>
+
+<br />
+
+<form method="post" action="<?lsmb form.script ?>">
+<?lsmb FOREACH hidden IN hiddens ?>
+<?lsmb PROCESS input element_data={type => 'hidden', name => hidden, value => form.$hidden} ?>
+<?lsmb END ?>
+
+<?lsmb FOREACH button IN buttons ?><?lsmb PROCESS button element_data=button ?><?lsmb END ?>
+</form>
+</body>
+</html>

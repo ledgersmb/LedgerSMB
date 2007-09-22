@@ -723,7 +723,7 @@ sub list_department {
 
     AM->departments( \%myconfig, \%$form );
 
-    $href =
+    my $href =
 "$form->{script}?action=list_department&direction=$form->{direction}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->sort_order();
@@ -731,105 +731,68 @@ sub list_department {
     $form->{callback} =
 "$form->{script}?action=list_department&direction=$form->{direction}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
-    $callback = $form->escape( $form->{callback} );
+    my $callback = $form->escape( $form->{callback} );
 
     $form->{title} = $locale->text('Departments');
 
-    @column_index = qw(description cost profit);
+    my @column_index = qw(description cost profit);
+    my %column_header;
 
-    $column_header{description} =
-        qq|<th width=90%><a class="listheading" href=$href>|
-      . $locale->text('Description')
-      . qq|</a></th>|;
-    $column_header{cost} =
-        qq|<th class="listheading" nowrap>|
-      . $locale->text('Cost Center')
-      . qq|</th>|;
-    $column_header{profit} =
-        qq|<th class="listheading" nowrap>|
-      . $locale->text('Profit Center')
-      . qq|</th>|;
+    $column_header{description} = { text => $locale->text('Description'),
+        href => $href};
+    $column_header{cost} = $locale->text('Cost Center');
+    $column_header{profit} = $locale->text('Profit Center');
 
-    $form->header;
 
-    print qq|
-<body>
+    my @rows;
+    my $i = 0;
+    foreach my $ref ( @{ $form->{ALL} } ) {
 
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
-    foreach $ref ( @{ $form->{ALL} } ) {
-
+        my %column_data;
         $i++;
         $i %= 2;
+        $column_data{i} = $i;
 
-        print qq|
-        <tr valign=top class=listrow$i>
-|;
+        $column_data{cost}   = ( $ref->{role} eq "C" ) ? "*" : " ";
+        $column_data{profit} = ( $ref->{role} eq "P" ) ? "*" : " ";
 
-        $costcenter   = ( $ref->{role} eq "C" ) ? "*" : "&nbsp;";
-        $profitcenter = ( $ref->{role} eq "P" ) ? "*" : "&nbsp;";
+        $column_data{description} = { text => $ref->{description}, 
+            href => qq|$form->{script}?action=edit_department&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback|,};
 
-        $column_data{description} =
-qq|<td><a href=$form->{script}?action=edit_department&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{description}</td>|;
-        $column_data{cost}   = qq|<td align=center>$costcenter</td>|;
-        $column_data{profit} = qq|<td align=center>$profitcenter</td>|;
-
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-	</tr>
-|;
+        push @rows, \%column_data;
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-  <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<form method=post action=$form->{script}>
-|;
 
     $form->{type} = "department";
 
-    $form->hide_form(qw(type callback path login sessionid));
+    my @hiddens = qw(type callback path login sessionid);
 
-    print qq|
-<button class="submit" type="submit" name="action" value="add_department">|
-      . $locale->text('Add Department')
-      . qq|"</button>|;
+    ## SC: removing this for now
+    #if ( $form->{lynx} ) {
+    #    require "bin/menu.pl";
+    #    &menubar;
+    #}
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'add_department',
+        text => $locale->text('Add Department'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-    print qq|
-  </form>
-  
-  </body>
-  </html> 
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-list-departments');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        hiddens => \@hiddens,
+    });
 }
 
 sub department_header {
