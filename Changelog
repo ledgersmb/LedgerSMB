@@ -3,7 +3,7 @@ Changelog for 1.2.8
 * Fixed AR/AP reversal issues (Victor S, 1752439, 1753358)
 * Fixed various scoping errors (Chris T, 1703347, 1753360)
 * Fixed: Timecards ignore price matrix (Chris T, 1754099)
-* Fixed scoping issues in IS.pm (Chris T, 1754576)
+* Fixed scoping issues in IS.pm (Chris T, 1754576, 1754579, 1768678)
 * Fixed bugs with reversing invoices (Victor S, 1756387, 1755928, 1755355)
 * Cause the GL report amount boxes to respect number format (Chrish T, 1754976)
 * Corrected cumulative tax display issues (Chris T, 1745757)
