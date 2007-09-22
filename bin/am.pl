@@ -1514,7 +1514,7 @@ sub list_templates {
     chomp $myconfig{templates};
     $form->{file} =~ s/$myconfig{templates}//;
     $form->{file} =~ s/\///;
-    $form->{title} = $form->{template};
+    $form->{title} = "$form->{format}: $form->{template}";
 
     my @column_index = $form->sort_columns(qw(code description));
 
@@ -1549,15 +1549,6 @@ sub list_templates {
 ##        &menubar;
 ##    }
 
-    my @buttons;
-    push @buttons, {
-        name => 'action',
-        value => 'add_language',
-        text => $locale->text('Add Lanugage'),
-        type => 'submit',
-        class => 'submit',
-    };
-
     # SC: I'm not concerned about the wider description as code is 6 chars max
     my $template = LedgerSMB::Template->new_UI(
         user => \%myconfig, 
@@ -1565,7 +1556,6 @@ sub list_templates {
         template => 'am-list-departments');
     $template->render({
         form => $form,
-        buttons => \@buttons,
         columns => \@column_index,
         heading => \%column_header,
         rows => \@rows,
