@@ -60,7 +60,7 @@ sub AUTOLOAD {
 
 sub new {
     my $class = shift @_;
-    my %args  = @_;
+    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $base  = $args{base};
     my $mode  = $args{copy};
     my $self  = bless {}, $class;
