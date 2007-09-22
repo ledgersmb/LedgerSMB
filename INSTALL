@@ -16,15 +16,15 @@ MANUAL INSTALL:
 
 2)  Check Dependencies
 
-The Build.PL script can be used to test for unmet dependencies and run other
+The Makefile.PL script can be used to test for unmet dependencies and run other
 tests.  It doesn't install anything yet, but it will tell you what you are 
-missing.  To check for dependencies, run "perl Build.PL" from the command line.
-Missing dependencies can generally be installed via a Linux distributor's
-package manager or by CPAN. (Build.PL itself uses Module::Build, which is
-available in packages like perl-Module-Build or libmodule-build-perl.)
+missing.  To check for dependencies, run "perl Makefile.PL" from the command
+line.  Missing dependencies can generally be installed via a Linux distributor's
+package manager or by CPAN. (Makefile.PL itself uses Module::Install, which is
+available in packages like perl-Module-Install or libmodule-install-perl.)
 
 Once this is done and dependencies are satisfied, you can check to see whether
-the installation nominally works by running "./Build test" from the command
+the installation nominally works by running "make test" from the command
 line.  The test suites currently check to make sure all the perl modules load
 and that a number of numeric tests are passed.
 
