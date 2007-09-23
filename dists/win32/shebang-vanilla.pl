@@ -16,7 +16,11 @@ foreach $file (@perlfiles) {
 
     $line = shift @file;
 
-    print FH "#!c:\\vanilla-perl\\perl\\bin\\perl\n";
+    if ($line =~ /^#!/) {
+        print FH "#!c:\\vanilla-perl\\perl\\bin\\perl\n";
+    } else {
+        print FH $line;
+    }
     print FH @file;
 
     close(FH);
