@@ -40,7 +40,7 @@ holders, see the CONTRIBUTORS file.
 package LedgerSMB::Template::HTML;
 
 use Error qw(:try);
-use CGI;
+use CGI::Simple::Standard qw(:html);
 use Template;
 use LedgerSMB::Template::TTI18N;
 
@@ -61,7 +61,7 @@ sub preprocess {
             push @{$vars}, preprocess( $_ );
         }
     } elsif (!$type) {
-        return CGI::escapeHTML($rawvars);
+        return escapeHTML($rawvars);
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );

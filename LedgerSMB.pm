@@ -116,8 +116,8 @@ non-numbers.
  #====================================================================
 =cut
 
-use CGI;
-use Math::BigFloat lib => 'GMP';
+use CGI::Simple;
+use Math::BigFloat;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use LedgerSMB::Session;
@@ -137,7 +137,7 @@ sub new {
     $self->{version} = $VERSION;
     $self->{dbversion} = "1.2.0";
     bless $self, $type;
-    my $query = ($argstr) ? new CGI($argstr) : new CGI;
+    my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
     my $params = $query->Vars;
     $self->{VERSION} = $VERSION;
 
@@ -158,7 +158,7 @@ sub new {
 
     }
 
-    if ( ( $self->{script} =~ m#(..|\\|/)# ) ) {
+    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
         $self->error("Access Denied");
     }
     if (!$self->{login}){

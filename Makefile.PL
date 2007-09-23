@@ -5,7 +5,7 @@ use warnings;
 use inc::Module::Install 0.65;
 
 name 'LedgerSMB';
-version '1.2.3';
+version '1.2.99';
 license 'GPL';
 
 perl_version '5.8.1';
@@ -30,6 +30,7 @@ requires 'MIME::Lite';
 requires 'Template' => '2.14';
 requires 'Template::Latex';
 requires 'Error';
+requires 'CGI::Simple';
 
 build_requires 'Test::More';
 build_requires 'Test::Trap';
@@ -47,6 +48,15 @@ feature 'Developer tool dependencies',
     -default => 0,
     'Getopt::Long' => 0,
     'FileHandle' => 0;
+
+#feature 'Excel output',
+#    -default => 0,
+#    'Excel::Template::Plus' => 0;
+#
+#feature 'OpenOffice.org output',
+#    -default => 0,
+#    'XML::Twig' => 0,
+#    'OpenOffice::OODoc' => 0;
 
 auto_install;
 WriteAll;
