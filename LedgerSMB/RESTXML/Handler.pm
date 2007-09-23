@@ -78,8 +78,8 @@ sub cgi_report_error {
 sub cgi_read_query {
     my $self = shift;
 
-    use CGI;
-    my $cgi = CGI->new();
+    use CGI::Simple;
+    my $cgi = CGI::Simple->new();
 
     return $cgi;
 }
