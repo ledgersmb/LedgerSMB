@@ -94,7 +94,77 @@ sub _row_handler {
 sub _cell_handler {
 	my $cell = $ods->getCell(-1, $rowcount, $currcol);
 	$ods->cellValue($cell, $_->{att}->{text});
+	if (@basestyle) {
+		$ods->cellStyle($cell, $basestyle[0][0]);
+	}
 	$currcol++;
+}
+
+sub _format_handler {
+	my ($t, $format) = @_;
+	my $style = "ce$stylecount";
+
+	my @width = ('none', '0.018cm solid', '0.035cm solid',
+		'0.018cm dashed', '0.018cm dotted', '0.141cm solid',
+		'0.039cm double', '0.002cm solid');
+	my %properties;
+	if (@basestyle) {
+		%properties = %{$basestyle[0][1]};
+	}
+	while (my ($attr, $val) = each %{$format->{att}}) {
+		if ($attr eq 'bottom') {
+			$properties{cell}{'fo:border-bottom'} = "$width[$val] #000000";
+		} elsif ($attr eq 'top') {
+			$properties{cell}{'fo:border-top'} = "$width[$val] #000000";
+		} elsif ($attr eq 'left') {
+			$properties{cell}{'fo:border-left'} = "$width[$val] #000000";
+		} elsif ($attr eq 'right') {
+			$properties{cell}{'fo:border-right'} = "$width[$val] #000000";
+		} elsif ($attr eq 'border') {
+			$properties{cell}{'fo:border'} = "$width[$val] #000000";
+		} elsif ($attr eq 'align') {
+			$properties{text}{'fo:text-align'} = $val;
+		} elsif ($attr eq 'valign') {
+			# takes top, vcenter, bottom, or vjustify
+			# needs top, middle, or bottom
+			if ($val =~ /^v/) {
+				$properties{text}{'fo:vertical-align'} = 'middle';
+			} else {
+				$properties{text}{'fo:vertical-align'} = $val;
+			}
+		} elsif ($attr eq 'bold') {
+			if ($properties{text}{'fo:font-weight'} and !$val) {
+				delete $properties{'fo:font-weight'};
+			} elsif ($val) {
+				$properties{text}{'fo:font-weight'} = 'bold';
+			}
+		} elsif ($attr eq 'italic') {
+			if ($properties{'fo:font-style'} and !$val) {
+				delete $properties{text}{'fo:font-style'};
+			} elsif ($val) {
+				$properties{text}{'fo:font-style'} = 'italic';
+			}
+		}
+	}
+	$ods->createStyle(
+		$style,
+		family => 'table-cell',
+		properties => $properties{cell}, 
+		);
+	$ods->updateStyle(
+		$style,
+		properties => {
+			-area => 'text',
+			%{$properties{text}}
+			}
+		);
+	unshift @basestyle, [$style, \%properties];
+	$stylecount++;
+}
+
+sub _format_cleanup_handler {
+	my ($t, $format) = @_;
+	shift @basestyle;
 }
 
 sub _ods_process {
@@ -105,18 +175,21 @@ sub _ods_process {
 	local $sheet;
 	local $rowcount;
 	local $currcol;
+	local $stylecount = 1;
+	local @basestyle;
 	my $parser = XML::Twig->new(
 		start_tag_handlers => {
 			worksheet => \&_worksheet_handler,
 			row => \&_row_handler,
+			cell => \&_cell_handler,
+			format => \&_format_handler,
 			},
 		twig_handlers => {
-			cell => \&_cell_handler,
+			format => \&_format_cleanup_handler,
 			}
 		);
 	$parser->parse($template);
 	$parser->flush;
-	#$ods->normalizeSheet($sheet, $rowcount, $colcount);
 	$ods->save;
 }
 

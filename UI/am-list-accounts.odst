@@ -1,11 +1,11 @@
 <workbook>
 	<worksheet name="test" rows="<?lsmb rows.size + 1 ?>" columns="<?lsmb columns.size ?>">
-		<format bottom="1"><row>
+		<format bottom="6"><row>
 	<?lsmb FOREACH column IN columns ?>
-	<?lsmb IF heading.$column.text ?>
-			<cell text="<?lsmb heading.$column.text ?>" />
-	<?lsmb ELSE ?>
-			<cell text="<?lsmb heading.$column ?>" />
+	<?lsmb IF heading.$column.text ?><format italic="1">
+			<cell text="<?lsmb heading.$column.text ?>" /></format>
+	<?lsmb ELSE ?><format bold="1">
+			<cell text="<?lsmb heading.$column ?>" /></format>
 	<?lsmb END; END ?>
 		</row></format>
 	<?lsmb FOREACH row IN rows ?>
