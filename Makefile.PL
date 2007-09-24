@@ -28,7 +28,6 @@ requires 'Cwd';
 requires 'Config::Std';
 requires 'MIME::Lite';
 requires 'Template' => '2.14';
-requires 'Template::Latex';
 requires 'Error';
 requires 'CGI::Simple';
 
@@ -49,14 +48,19 @@ feature 'Developer tool dependencies',
     'Getopt::Long' => 0,
     'FileHandle' => 0;
 
-#feature 'Excel output',
-#    -default => 0,
-#    'Excel::Template::Plus' => 0;
-#
-#feature 'OpenOffice.org output',
-#    -default => 0,
-#    'XML::Twig' => 0,
-#    'OpenOffice::OODoc' => 0;
+# Rendering options
+feature 'PDF and Postscript output'
+    -default => 0,
+    'Template::Latex' => 0;
+
+feature 'OpenOffice.org output',
+    -default => 0,
+    'XML::Twig' => 0,
+    'OpenOffice::OODoc' => 0;
+
+feature 'Excel output',
+    -default => 0,
+    'Excel::Template::Plus' => 0;
 
 auto_install;
 WriteAll;

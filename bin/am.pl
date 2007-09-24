@@ -436,20 +436,23 @@ sub list_account {
     }
 
     my @buttons;
-    push @buttons, {
-        name => 'action',
-        value => 'csv_list_account',
-        text => $locale->text('CSV Report'),
-        type => 'submit',
-        class => 'submit',
-    };
+    for my $type (qw(CSV XLS ODS)) {
+        push @buttons, {
+            name => 'action',
+            value => lc "${type}_list_account",
+            text => $locale->text("$type Report"),
+            type => 'submit',
+            class => 'submit',
+        };
+    }
 
+    my $format = uc substr($form->{action}, 0, 3);
     my $template = LedgerSMB::Template->new(
         user => \%myconfig, 
         locale => $locale,
         path => 'UI',
         template => 'am-list-accounts',
-        format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
+        format => ($format ne 'LIS')? $format: 'HTML');
     $template->render({
         form => \%$form,
         buttons => \@buttons,
@@ -460,6 +463,8 @@ sub list_account {
 }
 
 sub csv_list_account { &list_account }
+sub xls_list_account { &list_account }
+sub ods_list_account { &list_account }
 
 sub delete_account {
 
