@@ -107,6 +107,12 @@ sub _format_handler {
 	my @width = ('none', '0.018cm solid', '0.035cm solid',
 		'0.018cm dashed', '0.018cm dotted', '0.141cm solid',
 		'0.039cm double', '0.002cm solid');
+
+	# SC: There are multiple types of properties that can be associated
+	#     with a style.  However, the OO::OOD style creation code appears
+	#     to only allow for a single type to be added to the style at a
+	#     time.  As a result, %properties is split into property groupings
+	#     to allow for each group to get the correct type.
 	my %properties;
 	if (@basestyle) {
 		%properties = %{$basestyle[0][1]};
@@ -134,7 +140,7 @@ sub _format_handler {
 			}
 		} elsif ($attr eq 'bold') {
 			if ($properties{text}{'fo:font-weight'} and !$val) {
-				delete $properties{'fo:font-weight'};
+				delete $properties{text}{'fo:font-weight'};
 			} elsif ($val) {
 				$properties{text}{'fo:font-weight'} = 'bold';
 			}
