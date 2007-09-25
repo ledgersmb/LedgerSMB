@@ -23,10 +23,6 @@ this way as is any information that is needed.
 
 =item exec_method ($self, procname => $function_name, args => \@args)
 
-=item merge ($hashref, @attrs)
-
-copies @attrs from $hashref to $self.
-
 =item set (@attrs)
 
 Copies the given key=>vars to $self. Allows for finer control of 
@@ -122,7 +118,7 @@ sub exec_method {
         $args =~ s/\{(.*)\}/$1/;
         @proc_args = split /,/, $args if $args;
     }
-    if ( !$ref ) {    # no such function
+    if ( !$ref->{proname} ) {    # no such function
         $self->error( "No such function: ", $funcname );
         die;
     }
@@ -138,7 +134,7 @@ sub exec_method {
     for (@in_args) { push @call_args, $_ } ;
     $self->{call_args} = \@call_args;
     $self->debug({file => '/tmp/dbobject'});
-    $self->call_procedure( procname => $funcname, args => \@call_args );
+    return $self->call_procedure( procname => $funcname, args => \@call_args );
 }
 
 sub run_custom_queries {
@@ -237,7 +233,7 @@ sub run_custom_queries {
             $self->merge( $ref, keys(%$ref) );
         }
     }
-    @rc;
+    return @rc;
 }
 
 sub _parse_array {
