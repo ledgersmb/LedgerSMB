@@ -186,7 +186,7 @@ $$;
 CREATE OR REPLACE FUNCTION payment_post 
 (in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
 	in_cash_accno text, in_approved bool, in_payment_date date, 
-	in_account_class)
+	in_account_class int)
 RETURNS INT AS
 $$
 DECLARE out_entry_id int;
@@ -215,7 +215,8 @@ $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_post 
 (in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
-	in_cash_accno text, in_approved bool, in_payment_date, in_account_class)
+	in_cash_accno text, in_approved bool, in_payment_date, 
+        in_account_class int)
 IS $$
 This function takes the following arguments (prefaced with in_ in the db):
 trans_id:  Id for ar/ap transaction.
@@ -249,3 +250,28 @@ $$ language plpgsql;
 comment on function project_list_open(in_date date) is
 $$ This function returns all projects that were open as on the date provided as
 the argument.$$;
+
+
+
+-- Move this to the projects module when we start on that. CT
+CREATE OR REPLACE FUNCTION department_list(in_role char)
+RETURNS SETOF department AS
+$$
+DECLARE out_department department%ROWTYPE;
+BEGIN
+       FOR out_department IN
+               SELECT * from department
+               WHERE role = in_role
+       LOOP
+               return next out_department;
+       END LOOP;
+END;
+$$ language plpgsql;
+
+comment on function department_list(in_role char) is
+$$ This function returns all department that match the role provided as
+the argument.$$;
+
+
+
+
