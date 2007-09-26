@@ -154,7 +154,7 @@ sub _prepare_float {
 sub _prepare_fraction {
 	my ($style) = shift;
 	my %properties;
-	my @sides = split /[ /]/, $style;
+	my @sides = split /[ \/]/, $style;
 
 	$properties{'number:min-integer-digits'} = length($sides[0] =~ /0+$/);
 	$properties{'number:min-numerator-digits'} = length($sides[1]);
@@ -348,14 +348,19 @@ sub _format_handler {
 			#SC: Number formatting is when I hit the point of,
 			#    "Screw the OO::OOD API, XML::Twig is simpler".
 			#    @children's elements are passed right into the
-			#    style via XML::Twig::Elt's insert_new_elt.  That
-			#    API, while decent enough for the text styles, is
-			#    not so pleasant with complex number styles.
+			#    style via XML::Twig::Elt's insert_new_elt.  The
+			#    OO:OOD API, while decent enough for the text
+			#    styles, is not so pleasant with complex number
+			#    styles.
 			my @children;
 			my %nproperties;
 			my @nextras;
 			my $nstyle;
-			if ($val == 0) {
+			my $fval = sprintf '%02d', $val;
+			@extras = ('references', {'style:data-style-name' => "N$fval"});
+			if ($sstyles{$fval}) {
+				# pass through
+			} elsif ($val == 0) {
 				$celltype{$style} = 'float';
 			} elsif ($val == 1) {
 				$celltype{$style} = ['float', "N$stylecount"];
@@ -370,7 +375,7 @@ sub _format_handler {
 				$nstyle = 'number-style';
 				%nproperties = %{&_prepare_float('#,##0')}
 			} elsif ($val == 4) {
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N04"];
 				$nstyle = 'number-style';
 				%nproperties = %{&_prepare_float('#,##0.00')}
 			} elsif ($val == 5) { ## ($#,##0_);($#,##0)
@@ -381,34 +386,34 @@ sub _format_handler {
 			} elsif ($val == 8) {
 				$celltype{$style} = 'currency';
 			} elsif ($val == 9) { ##      0%
-				$celltype{$style} = ['percentage', "N$stylecount"];
+				$celltype{$style} = ['percentage', "N09"];
 				$nstyle = 'percentage-style';
-				%nproperties = %{&_prepare_float('0')}
+				%nproperties = %{&_prepare_float('0')};
 				push @children, ['number:text', {}, '%'];
 			} elsif ($val == 10) { ##    0.00%
-				$celltype{$style} = ['percentage', "N$stylecount"];
+				$celltype{$style} = ['percentage', "N10"];
 				$nstyle = 'percentage-style';
-				%nproperties = %{&_prepare_float('0.00')}
+				%nproperties = %{&_prepare_float('0.00')};
 				push @children, ['number:text', {}, '%'];
 			} elsif ($val == 11) { ##  0.00E+00
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N11"];
 				$nstyle = 'number-style';
 				push @children, ['number:scientific-number', {
-						%{&_prepare_float('0.00')}
+						%{&_prepare_float('0.00')},
 						'number:min-exponent-digits' => 2
 						}];
 			} elsif ($val == 12) { ## # ?/?
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N12"];
 				$nstyle = 'number-style';
 				push @children, ['number:fraction',
 					%{&_prepare_fraction('# ?/?')}];
 			} elsif ($val == 13) { ## # ??/??
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N13"];
 				$nstyle = 'number-style';
 				push @children, ['number:fraction',
 					%{&_prepare_fraction('# ??/??')}];
 			} elsif ($val == 14) { ##  m/d/yy
-				$celltype{$style} = ['date', "N$stylecount"];
+				$celltype{$style} = ['date', "N14"];
 				$nstyle = 'date-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -420,7 +425,7 @@ sub _format_handler {
 					['number:year'],
 					);
 			} elsif ($val == 15) { ## d-mmm-yy
-				$celltype{$style} = ['date', "N$stylecount"];
+				$celltype{$style} = ['date', "N15"];
 				$nstyle = 'date-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -433,7 +438,7 @@ sub _format_handler {
 					['number:year'],
 					);
 			} elsif ($val == 16) { ## d-mmm
-				$celltype{$style} = ['date', "N$stylecount"];
+				$celltype{$style} = ['date', "N16"];
 				$nstyle = 'date-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -444,7 +449,7 @@ sub _format_handler {
 						'number:textual' => 'true'}],
 					);
 			} elsif ($val == 17) { ## mmm-yy
-				$celltype{$style} = ['date', "N$stylecount"];
+				$celltype{$style} = ['date', "N17"];
 				$nstyle = 'date-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -455,7 +460,7 @@ sub _format_handler {
 					['number:year'],
 					);
 			} elsif ($val == 18) { ## h:mm AM/PM
-				$celltype{$style} = ['time', "N$stylecount"];
+				$celltype{$style} = ['time', "N18"];
 				$nstyle = 'time-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -468,7 +473,7 @@ sub _format_handler {
 					['number:am-pm']
 					);
 			} elsif ($val == 19) { ## h:mm:ss AM/PM
-				$celltype{$style} = ['time', "N$stylecount"];
+				$celltype{$style} = ['time', "N19"];
 				$nstyle = 'time-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -484,7 +489,7 @@ sub _format_handler {
 					['number:am-pm']
 					);
 			} elsif ($val == 20) { ## h:mm
-				$celltype{$style} = ['time', "N$stylecount"];
+				$celltype{$style} = ['time', "N20"];
 				$nstyle = 'time-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -495,7 +500,7 @@ sub _format_handler {
 						{'number:style' => 'long'}],
 					);
 			} elsif ($val == 21) { ## h:mm:ss
-				$celltype{$style} = ['time', "N$stylecount"];
+				$celltype{$style} = ['time', "N21"];
 				$nstyle = 'time-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -509,7 +514,7 @@ sub _format_handler {
 						{'number:style' => 'long'}],
 					);
 			} elsif ($val == 22) { ## m/d/yy h:mm
-				$celltype{$style} = ['date', "N$stylecount"];
+				$celltype{$style} = ['date', "N22"];
 				$nstyle = 'date-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -526,7 +531,7 @@ sub _format_handler {
 						{'number:style' => 'long'}],
 					);
 			} elsif ($val == 37) { ##  (#,##0_);(#,##0)
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N37"];
 				$nstyle = 'number-style';
 				my %base = (
 					'number:min-integer-digits' => 1,
@@ -539,14 +544,14 @@ sub _format_handler {
 					['number:text', {}, ')'],
 					['style:map', {
 						'style:condition' => 'value()>=0',
-						'style:apply-style-name' => "NP$stylecount",
+						'style:apply-style-name' => "NP37",
 						}],
 					);
 				
-				&_create_positive_style("NP$stylecount",
+				&_create_positive_style("NP37",
 					$nstyle, \%base);
 			} elsif ($val == 38) { ## (#,##0_);[Red](#,##0)
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N38"];
 				$nstyle = 'number-style';
 				my %base = %{&_prepare_float('#,##0')};
 
@@ -558,14 +563,14 @@ sub _format_handler {
 					['number:text', {}, ')'],
 					['style:map',{
 						'style:condition' => 'value()>=0',
-						'style:apply-style-name' => "NP$stylecount",
+						'style:apply-style-name' => "NP38",
 						}]
 					);
 				
-				&_create_positive_style("NP$stylecount",
+				&_create_positive_style("NP38",
 					$nstyle, \%base);
 			} elsif ($val == 39) { ## (#,##0.00_);(#,##0.00)
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N39"];
 				$nstyle = 'number-style';
 				my %base = %{&_prepare_float('#,##0.00')};
 
@@ -575,14 +580,14 @@ sub _format_handler {
 					['number:text', {}, ')'],
 					['style:map',{
 						'style:condition' => 'value()>=0',
-						'style:apply-style-name' => "NP$stylecount",
+						'style:apply-style-name' => "NP39",
 						}]
 					);
 				
-				&_create_positive_style("NP$stylecount",
+				&_create_positive_style("NP39",
 					$nstyle, \%base);
 			} elsif ($val == 40) { ## (#,##0.00_);[Red](#,##0.00)
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N40"];
 				$nstyle = 'number-style';
 				my %base = %{&_prepare_float('#,##0.00')};
 
@@ -594,11 +599,11 @@ sub _format_handler {
 					['number:text', {}, ')'],
 					['style:map', {
 						'style:condition' => 'value()>=0',
-						'style:apply-style-name' => "NP$stylecount",
+						'style:apply-style-name' => "NP40",
 						}],
 					);
 
-				&_create_positive_style("NP$stylecount",
+				&_create_positive_style("NP40",
 					$nstyle, \%base);
 			} elsif ($val == 41) {
 				$celltype{$style} = 'float';
@@ -609,7 +614,7 @@ sub _format_handler {
 			} elsif ($val == 44) {
 				$celltype{$style} = 'currency';
 			} elsif ($val == 45) {  ## mm:ss
-				$celltype{$style} = ['time', "N$stylecount"];
+				$celltype{$style} = ['time', "N45"];
 				$nstyle = 'time-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -621,7 +626,7 @@ sub _format_handler {
 						{'number:style' => 'long'}],
 					);
 			} elsif ($val == 46) { ## [h]:mm:ss
-				$celltype{$style} = ['time', "N$stylecount"];
+				$celltype{$style} = ['time', "N46"];
 				$nstyle = 'time-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true',
@@ -634,8 +639,9 @@ sub _format_handler {
 					['number:text', {}, ':'],
 					['number:seconds',
 						{'number:style' => 'long'}],
+					);
 			} elsif ($val == 47) { ## mm:ss.0
-				$celltype{$style} = ['time', "N$stylecount"];
+				$celltype{$style} = ['time', "N47"];
 				$nstyle = 'time-style';
 				@nextras = ('references' => {
 					'number:automatic-order' => 'true'});
@@ -648,7 +654,7 @@ sub _format_handler {
 						'number:decimal-places' => 1}],
 					);
 			} elsif ($val == 48) { ##   ##0.0E+0
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', "N48"];
 				$nstyle = 'number-style';
 				%nproperties = ();
 				push @children, ['number:scientific-number',
@@ -658,17 +664,21 @@ sub _format_handler {
 			} elsif ($val == 49) {
 				$celltype{$style} = 'string';
 			}
-			my $cstyle = $ods->createStyle(
-				"N$stylecount",
-				namespace => 'number',
-				type => $nstyle,
-				properties => \%nproperties,
-				@nextras,
-				);
-			for my $child (@children) {
-				$cstyle->insert_new_elt('last_child', @$child);
+			# $nstyle is set on new styles
+			if ($nstyle) {
+				my $cstyle = $ods->createStyle(
+					$celltype{$style}[1],
+					namespace => 'number',
+					type => $nstyle,
+					properties => \%nproperties,
+					@nextras,
+					);
+				for my $child (@children) {
+					$cstyle->insert_new_elt('last_child',
+						@$child);
+				}
+				$sstyles{$fval} = $fval;
 			}
-			@extras = ('references', {'style:data-style-name' => "N$stylecount"});
 		}
 	}
 	$ods->createStyle(
@@ -710,6 +720,7 @@ sub _ods_process {
 	local $currcol;
 	local $stylecount = 1;
 	local @basestyle;
+	local %sstyles;
 	local %celltype;
 	my $parser = XML::Twig->new(
 		start_tag_handlers => {
