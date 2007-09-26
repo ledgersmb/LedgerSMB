@@ -44,6 +44,7 @@ holders, see the CONTRIBUTORS file.
 package LedgerSMB::Template::ODS;
 
 use Error qw(:try);
+use Data::Dumper;
 use CGI::Simple::Standard qw(:html);
 use Template;
 use XML::Twig;
@@ -356,22 +357,22 @@ sub _format_handler {
 			my %nproperties;
 			my @nextras;
 			my $nstyle;
-			my $fval = sprintf '%02d', $val;
-			@extras = ('references', {'style:data-style-name' => "N$fval"});
+			my $fval = sprintf 'N%02d', $val;
+			@extras = ('references', {'style:data-style-name' => $fval});
 			if ($sstyles{$fval}) {
 				# pass through
 			} elsif ($val == 0) {
 				$celltype{$style} = 'float';
 			} elsif ($val == 1) {
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', 'N01'];
 				$nstyle = 'number-style';
 				%nproperties = %{&_prepare_float('0')}
 			} elsif ($val == 2) {
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', 'N02'];
 				$nstyle = 'number-style';
 				%nproperties = %{&_prepare_float('0.00')}
 			} elsif ($val == 3) {
-				$celltype{$style} = ['float', "N$stylecount"];
+				$celltype{$style} = ['float', 'N03'];
 				$nstyle = 'number-style';
 				%nproperties = %{&_prepare_float('#,##0')}
 			} elsif ($val == 4) {
@@ -677,32 +678,39 @@ sub _format_handler {
 					$cstyle->insert_new_elt('last_child',
 						@$child);
 				}
-				$sstyles{$fval} = $fval;
+				$sstyles{$fval} = 1;
 			}
 		}
 	}
-	$ods->createStyle(
-		$style,
-		family => 'table-cell',
-		properties => $properties{cell}, 
-		@extras,
-		);
-	$ods->updateStyle(
-		$style,
-		properties => {
-			-area => 'text',
-			%{$properties{text}}
-			}
-		);
-	$ods->updateStyle(
-		$style,
-		properties => {
-			-area => 'paragraph',
-			%{$properties{paragraph}}
-			}
-		);
-	unshift @basestyle, [$style, \%properties];
-	$stylecount++;
+
+	# Maintain a hash table to keep the final style list size down
+	$Data::Dumper::Sortkeys = 1;
+	my $mystyle = Digest::MD5::md5_hex(Dumper(\%properties, \@extras));
+	if (!$sstyles{$mystyle}) {
+		$ods->createStyle(
+			$style,
+			family => 'table-cell',
+			properties => $properties{cell}, 
+			@extras,
+			);
+		$ods->updateStyle(
+			$style,
+			properties => {
+				-area => 'text',
+				%{$properties{text}}
+				}
+			);
+		$ods->updateStyle(
+			$style,
+			properties => {
+				-area => 'paragraph',
+				%{$properties{paragraph}}
+				}
+			);
+		$stylecount++;
+		$sstyles{$mystyle} = [$style, \%properties];
+	}
+	unshift @basestyle, $sstyles{$mystyle};
 }
 
 sub _format_cleanup_handler {
