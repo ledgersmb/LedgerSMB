@@ -145,6 +145,8 @@ sub _prepare_float {
 
 	if ($#sides == 1) { # decimal places
 		$properties{'number:decimal-places'} = length $sides[1];
+	} else {
+		$properties{'number:decimal-places'} = 0;
 	}
 	$properties{'number:min-integer-digits'} = length($sides[0] =~ /0+$/);
 	$properties{'number:grouping'} = 'true' if $sides[0] =~ /.,...$/;
