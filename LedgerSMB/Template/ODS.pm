@@ -92,8 +92,16 @@ sub _row_handler {
 
 sub _cell_handler {
 	my $cell = $ods->getCell(-1, $rowcount, $currcol);
+	
 	if (@style_stack and $celltype{$style_stack[0][0]}) {
 		$ods->cellValueType($cell, $celltype{$style_stack[0][0]}[0]);
+	} elsif ($_->{att}->{type}) {
+		my $type = $_->{att}->{type};
+		if ($type =~ /^(string|blank|url)$/i) {
+			$ods->cellValueType($cell, 'string');
+		} elsif ($type =~ /^(number|formula)$/i) {
+			$ods->cellValueType($cell, 'float');
+		}
 	}
 	$ods->cellValue($cell, $_->{att}->{text});
 	if (@style_stack) {
@@ -183,7 +191,7 @@ sub _create_positive_style {
 
 sub _format_handler {
 	my ($t, $format) = @_;
-	my $style = sprintf "ce%d", (length(keys %style_table) + 1);
+	my $style = sprintf "ce%d", (scalar (keys %style_table) + 1);
 
 	my @extras;
 	local @width = ('none', '0.018cm solid', '0.035cm solid',
@@ -719,6 +727,7 @@ sub _format_handler {
 sub _format_cleanup_handler {
 	my ($t, $format) = @_;
 	shift @style_stack;
+	$t->purge;
 }
 
 sub _ods_process {
@@ -742,6 +751,7 @@ sub _ods_process {
 			worksheet => \&_worksheet_handler,
 			row => \&_row_handler,
 			cell => \&_cell_handler,
+			formula => \&_cell_handler,
 			format => \&_format_handler,
 			},
 		twig_handlers => {
@@ -749,7 +759,7 @@ sub _ods_process {
 			}
 		);
 	$parser->parse($template);
-	$parser->flush;
+	$parser->purge;
 	$ods->save;
 }
 
