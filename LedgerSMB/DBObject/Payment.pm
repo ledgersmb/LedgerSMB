@@ -166,9 +166,8 @@ sub get_all_contact_invoices {
 
 =item list_open_projects
 
-This method uses the $payment->{date} attribute, and provides a list of open 
-projects.  The list is attached to $payment->{projects} and returned by the 
-function.
+This method gets the current date attribute, and provides a list of open
+projects.  The list is attached to $self->{projects} and returned.
 
 =back
 
@@ -176,8 +175,31 @@ function.
 
 sub list_open_projects {
     my ($self) = @_;
-    @{$self->{projects}} = $self->exec_method('project_list_open');
+    my ($date) = $self->{dbh}->selectrow_array('select current_date');
+    @{$self->{projects}} = $self->call_procedure( 
+         procname => 'project_list_open',  args => [$date] 
+    );
     return  @{$self->{projects}};
+}
+
+=over
+=item list_open_projects
+
+This method gets the type of document as a parameter, and provides a list of departments
+of the required type.
+The list is attached to $self->{departments} and returned.
+
+=back
+=cut
+
+sub list_departments {
+  my ($self) = shift @_;
+  my @args = @_;
+  @{$self->{departments}} = $self->call_procedure( 
+      procname => 'department_list', 
+      args => \@args
+  );
+  return @{$self->{departments}};
 }
 
 1;
