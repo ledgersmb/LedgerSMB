@@ -1,24 +1,35 @@
 <workbook>
-	<worksheet name="test" rows="<?lsmb rows.size + 1 ?>" columns="<?lsmb columns.size ?>">
-		<format bottom="6"><row>
+	<worksheet name="test" rows="<?lsmb rows.size + 1 ?>" columns="<?lsmb columns.size + 1 ?>">
+		<format bottom="5" bg_color="lime" bottom_color="magenta"><row>
 	<?lsmb FOREACH column IN columns ?>
 	<?lsmb IF heading.$column.text ?><format italic="1">
 			<cell text="<?lsmb heading.$column.text ?>" /></format>
 	<?lsmb ELSE ?><format bold="1">
 			<cell text="<?lsmb heading.$column ?>" /></format>
 	<?lsmb END; END ?>
+	<format num_format="17">
+	<cell text="2007-08-05" />
+	</format>
 		</row></format>
+		<format align="right">
 	<?lsmb FOREACH row IN rows ?>
 		<row>
 		<?lsmb FOREACH column IN columns ?>
+		<?lsmb IF loop.first ?><format num_format="3">
+		<?lsmb END ?>
 			<?lsmb IF row.$column.href ?>
+			<format font_shadow="1">
 			<cell text="<?lsmb row.$column.text ?>" />
+			</format>
 			<?lsmb ELSE ?>
+			<format font_outline="1">
 			<cell text="<?lsmb row.$column ?>" />
+			</format>
 			<?lsmb END ?>
+		<?lsmb IF loop.first ?></format><?lsmb END ?>
 		<?lsmb END ?>
 		</row>
-	<?lsmb END ?>
+	<?lsmb END ?></format>
 	<?lsmb IF totals; t = [] ?>
 	<row>
 		<?lsmb FOREACH column IN columns ?>

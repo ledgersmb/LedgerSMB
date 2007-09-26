@@ -78,10 +78,8 @@ sub preprocess {
 }
 
 sub _worksheet_handler {
-	if ($sheet) {
-		$rowcount = -1;
-		$currcol = 0;
-	}
+	$rowcount = -1;
+	$currcol = 0;
 	$sheet = $ods->getTable(0, $_->{att}->{rows}, $_->{att}->{columns});
 	$ods->renameTable($sheet, $_->{att}->{name});
 }
@@ -93,6 +91,9 @@ sub _row_handler {
 
 sub _cell_handler {
 	my $cell = $ods->getCell(-1, $rowcount, $currcol);
+	if (@basestyle and $celltype{$basestyle[0][0]}) {
+		$ods->cellValueType($cell, $celltype{$basestyle[0][0]}[0]);
+	}
 	$ods->cellValue($cell, $_->{att}->{text});
 	if (@basestyle) {
 		$ods->cellStyle($cell, $basestyle[0][0]);
@@ -100,13 +101,131 @@ sub _cell_handler {
 	$currcol++;
 }
 
+sub _border_set {
+	my ($format, $properties, $border) = @_;
+	my $edge = $border;
+	$edge =~ s/^border-?//;
+
+	my $val;
+	if ($edge) {
+		$val = $format->{att}{$edge};
+	} else {
+		$val = $format->{att}{'border'};
+	}
+
+	if ($properties->{cell}{"fo:$border"}){
+		$properties->{cell}{"fo:$border"} =~ s/^.* (\#......)$/$val $1/;
+	} else {
+		$properties->{cell}{"fo:$border"} = "$width[$val] #000000";
+	}
+	if ($edge and $format->{att}->{"${edge}_color"}) {
+		my $colour = $format->{att}->{"${edge}_color"};
+		if ($colour =~ /^\d+$/) {
+			$colour = $colour[$colour];
+		} elsif ($color !~ /^\#......$/) {
+			$colour = $colour_name{$colour};
+		}
+		$properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+	} elsif ($format->{att}->{border_color}) {
+		my $colour = $format->{att}->{"${edge}_color"};
+		if ($colour =~ /^\d+$/) {
+			$colour = $colour[$colour];
+		} elsif ($color !~ /^\#......$/) {
+			$colour = $colour_name{$colour};
+		}
+		$properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+	}
+}
+
+sub _prepare_float {
+	my ($style) = shift;
+	my %properties;
+	my @sides = split /\./, $style;
+
+	if ($#sides == 1) { # decimal places
+		$properties{'number:decimal-places'} = length $sides[1];
+	}
+	$properties{'number:min-integer-digits'} = length($sides[0] =~ /0+$/);
+	$properties{'number:grouping'} = 'true' if $sides[0] =~ /.,...$/;
+
+	\%properties;
+}
+
+sub _prepare_fraction {
+	my ($style) = shift;
+	my %properties;
+	my @sides = split /[ /]/, $style;
+
+	$properties{'number:min-integer-digits'} = length($sides[0] =~ /0+$/);
+	$properties{'number:min-numerator-digits'} = length($sides[1]);
+	$properties{'number:min-denominator-digits'} = length($sides[2]);
+
+	\%properties;
+}
+
+sub _create_positive_style {
+	my ($name, $type, $base) = @_;
+	my $pstyle = $ods->createStyle(
+		$name,
+		namespace => 'number',
+		type => $type,
+		properties => $base,
+		references => {
+			'style:volatile' => 'true',
+			},
+		);
+	$pstyle->insert_new_elt('last-child', 
+		'number:text', {}, ' ');
+}
+
 sub _format_handler {
 	my ($t, $format) = @_;
 	my $style = "ce$stylecount";
 
-	my @width = ('none', '0.018cm solid', '0.035cm solid',
+	my @extras;
+	local @width = ('none', '0.018cm solid', '0.035cm solid',
 		'0.018cm dashed', '0.018cm dotted', '0.141cm solid',
 		'0.039cm double', '0.002cm solid');
+	# SC: Subtract 8 from the attribute to get the index
+	#     http://search.cpan.org/src/JMCNAMARA/Spreadsheet-WriteExcel-2.11/doc/palette.html
+	local @colour = (odfColor(0, 0, 0), odfColor(255, 255, 255),
+		odfColor(255, 0, 0), odfColor(0, 255, 0),
+		odfColor(0, 0, 255), odfColor(255, 255, 0),
+		odfColor(255, 0, 255), odfColor(0, 255, 255),
+		odfColor(128, 0, 0), odfColor(0, 128, 0),
+		odfColor(0, 0, 128), odfColor(128, 128, 0),
+		odfColor(128, 0, 128), odfColor(0, 128, 128),
+		odfColor(192, 192, 192), odfColor(128, 128, 128),
+		odfColor(153, 153, 255), odfColor(153, 51, 102),
+		odfColor(255, 255, 204), odfColor(204, 255, 255),
+		odfColor(102, 0, 102), odfColor(255, 128, 128),
+		odfColor(0, 102, 204), odfColor(204, 204, 255),
+		odfColor(0, 0, 128), odfColor(255, 0, 255),
+		odfColor(255, 255, 0), odfColor(0, 255, 255),
+		odfColor(128, 0, 128), odfColor(120, 0, 0),
+		odfColor(0, 128, 128), odfColor(0, 0, 255),
+		odfColor(0, 204, 255), odfColor(204, 255, 255),
+		odfColor(204, 255, 204), odfColor(255, 255, 153),
+		odfColor(153, 204, 255), odfColor(255, 153, 204),
+		odfColor(204, 153, 255), odfColor(192, 192, 192),
+		odfColor(51, 102, 255), odfColor(51, 204, 204),
+		odfColor(153, 204, 0), odfColor(255, 204, 0),
+		odfColor(255, 153, 0), odfColor(255, 102, 0),
+		odfColor(102, 102, 153), odfColor(150, 150, 150),
+		odfColor(0, 51, 102), odfColor(51, 153, 102),
+		odfColor(0, 51, 0), odfColor(51, 51, 0),
+		odfColor(153, 51, 0), odfColor(153, 51, 102),
+		odfColor(51, 51, 153), odfColor(51, 51, 51),
+		);
+	local %colour_name = ('black' => $colour[0], 'white' => $colour[1],
+		'red' => $colour[2], 'lime' => $colour[3],
+		'blue' => $colour[4], 'yellow' => $colour[5],
+		'magenta' => $colour[6], 'cyan' => $colour[7],
+		'brown' => $colour[8], 'green' => $colour[9],
+		'navy' => $colour[10], 'purple' => $colour[12],
+		'silver' => $colour[14], 'gray' => $colour[15],
+		'grey' => $colour[15], 'orange' => $colour[45],
+		);
 
 	# SC: There are multiple types of properties that can be associated
 	#     with a style.  However, the OO::OOD style creation code appears
@@ -116,28 +235,67 @@ sub _format_handler {
 	my %properties;
 	if (@basestyle) {
 		%properties = %{$basestyle[0][1]};
+		if ($celltype{$basestyle[0][0]}) {
+			$celltype{$style} = $celltype{$basestyle[0][0]};
+			@extras = ('references', {'style:data-style-name' => $celltype{$style}[1]});
+		}
 	}
+	&_border_set(\%properties, $format, 'border') if $format->{att}->{border};
 	while (my ($attr, $val) = each %{$format->{att}}) {
 		if ($attr eq 'bottom') {
-			$properties{cell}{'fo:border-bottom'} = "$width[$val] #000000";
+			&_border_set($format, \%properties, 'border-bottom');
 		} elsif ($attr eq 'top') {
-			$properties{cell}{'fo:border-top'} = "$width[$val] #000000";
+			&_border_set($format, \%properties, 'border-top');
 		} elsif ($attr eq 'left') {
-			$properties{cell}{'fo:border-left'} = "$width[$val] #000000";
+			&_border_set($format, \%properties, 'border-left');
 		} elsif ($attr eq 'right') {
-			$properties{cell}{'fo:border-right'} = "$width[$val] #000000";
-		} elsif ($attr eq 'border') {
-			$properties{cell}{'fo:border'} = "$width[$val] #000000";
+			&_border_set($format, \%properties, 'border-right');
+		} elsif ($attr eq 'bg_color' or $attr eq 'bg_colour') {
+			if ($val =~ /^\d+$/) {
+				$properties{cell}{'fo:background-color'} = 
+					$colour[$val - 8];
+			} elsif ($val =~ /^\#[0-9A-Fa-f]{6}$/) {
+				$properties{cell}{'fo:background-color'} = $val;
+			} else {
+				$properties{cell}{'fo:background-color'} = 
+					$colour_name{$val};
+			}
+		} elsif ($attr eq 'color' or $attr eq 'colour') {
+			if ($val =~ /^\d+$/) {
+				$properties{text}{'fo:color'} = 
+					$colour[$val - 8];
+			} elsif ($val =~ /^\#[0-9A-Fa-f]{6}$/) {
+				$properties{text}{'fo:color'} = $val;
+			} else {
+				$properties{text}{'fo:color'} = 
+					$colour_name{$val};
+			}
 		} elsif ($attr eq 'align') {
-			$properties{text}{'fo:text-align'} = $val;
+			if (lc $val eq 'right') { 
+				$properties{paragraph}{'fo:text-align'} = 'end';
+			} elsif (lc $val eq 'left') {
+				$properties{paragraph}{'fo:text-align'} = 'start';
+			} else {
+				$properties{paragraph}{'fo:text-align'} = $val;
+			}
 		} elsif ($attr eq 'valign') {
 			# takes top, vcenter, bottom, or vjustify
 			# needs top, middle, or bottom
-			if ($val =~ /^v/) {
-				$properties{text}{'fo:vertical-align'} = 'middle';
+			if ($val =~ /^v/i) {
+				$properties{paragraph}{'style:vertical-align'} = 'middle';
 			} else {
-				$properties{text}{'fo:vertical-align'} = $val;
+				$properties{paragraph}{'style:vertical-align'} = $val;
 			}
+		} elsif ($attr eq 'hidden') {
+			if ($properties{cell}{'style:cell-protect'} and !$val) {
+				delete $properties{cell}{'style:cell-protect'};
+			} elsif ($val) {
+				$properties{cell}{'style:cell-protect'} = 'formula-hidden';
+			}
+		} elsif ($attr eq 'font') {
+			$properties{text}{'style:font-name'} = $val;
+		} elsif ($attr eq 'size') {
+			$properties{text}{'fo:font-size'} = "${val}pt";
 		} elsif ($attr eq 'bold') {
 			if ($properties{text}{'fo:font-weight'} and !$val) {
 				delete $properties{text}{'fo:font-weight'};
@@ -145,23 +303,392 @@ sub _format_handler {
 				$properties{text}{'fo:font-weight'} = 'bold';
 			}
 		} elsif ($attr eq 'italic') {
-			if ($properties{'fo:font-style'} and !$val) {
+			if ($properties{text}{'fo:font-style'} and !$val) {
 				delete $properties{text}{'fo:font-style'};
 			} elsif ($val) {
 				$properties{text}{'fo:font-style'} = 'italic';
 			}
+		} elsif ($attr eq 'font_strikeout') {
+			if (!$val) {
+				$properties{text}{'style:text-line-through-type'} = 'none';
+			} elsif ($val) {
+				$properties{text}{'style:text-line-through-type'} = 'single';
+			}
+		} elsif ($attr eq 'font_shadow') {
+			if ($properties{text}{'fo:text-shadow'} and !$val) {
+				delete $properties{text}{'fo:text-shadow'};
+			} elsif ($val) {
+				$properties{text}{'fo:text-shadow'} = '2pt';
+			}
+		} elsif ($attr eq 'font_outline') {
+			if ($properties{text}{'style:text-outline'} and !$val) {
+				delete $properties{text}{'style:text-outline'};
+			} elsif ($val) {
+				$properties{text}{'style:text-outline'} = 'true';
+			}
+		} elsif ($attr eq 'shrink') {
+			if ($properties{cell}{'style:shrink-to-fit'} and !$val) {
+				delete $properties{cell}{'style:shrink-to-fit'};
+			} elsif ($val) {
+				$properties{cell}{'style:shrink-to-fit'} = 'true';
+			}
+		} elsif ($attr eq 'text_wrap') {
+			if (!$val) {
+				$properties{cell}{'style:wrap-option'} = 'no-wrap';
+			} else {
+				$properties{text}{'style:wrap-option'} = 'wrap';
+			}
+		} elsif ($attr eq 'text_justlast') {
+			if ($properties{paragraph}{'fo:text-align-last'} and !$val) {
+				delete $properties{paragraph}{'fo:text-align-last'};
+			} elsif ($val) {
+				$properties{paragraph}{'fo:text-align-last'} = 'justify';
+			}
+		} elsif ($attr eq 'num_format') {
+			#SC: Number formatting is when I hit the point of,
+			#    "Screw the OO::OOD API, XML::Twig is simpler".
+			#    @children's elements are passed right into the
+			#    style via XML::Twig::Elt's insert_new_elt.  That
+			#    API, while decent enough for the text styles, is
+			#    not so pleasant with complex number styles.
+			my @children;
+			my %nproperties;
+			my @nextras;
+			my $nstyle;
+			if ($val == 0) {
+				$celltype{$style} = 'float';
+			} elsif ($val == 1) {
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				%nproperties = %{&_prepare_float('0')}
+			} elsif ($val == 2) {
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				%nproperties = %{&_prepare_float('0.00')}
+			} elsif ($val == 3) {
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				%nproperties = %{&_prepare_float('#,##0')}
+			} elsif ($val == 4) {
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				%nproperties = %{&_prepare_float('#,##0.00')}
+			} elsif ($val == 5) { ## ($#,##0_);($#,##0)
+			} elsif ($val == 6) {
+				$celltype{$style} = 'currency';
+			} elsif ($val == 7) {
+				$celltype{$style} = 'currency';
+			} elsif ($val == 8) {
+				$celltype{$style} = 'currency';
+			} elsif ($val == 9) { ##      0%
+				$celltype{$style} = ['percentage', "N$stylecount"];
+				$nstyle = 'percentage-style';
+				%nproperties = %{&_prepare_float('0')}
+				push @children, ['number:text', {}, '%'];
+			} elsif ($val == 10) { ##    0.00%
+				$celltype{$style} = ['percentage', "N$stylecount"];
+				$nstyle = 'percentage-style';
+				%nproperties = %{&_prepare_float('0.00')}
+				push @children, ['number:text', {}, '%'];
+			} elsif ($val == 11) { ##  0.00E+00
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				push @children, ['number:scientific-number', {
+						%{&_prepare_float('0.00')}
+						'number:min-exponent-digits' => 2
+						}];
+			} elsif ($val == 12) { ## # ?/?
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				push @children, ['number:fraction',
+					%{&_prepare_fraction('# ?/?')}];
+			} elsif ($val == 13) { ## # ??/??
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				push @children, ['number:fraction',
+					%{&_prepare_fraction('# ??/??')}];
+			} elsif ($val == 14) { ##  m/d/yy
+				$celltype{$style} = ['date', "N$stylecount"];
+				$nstyle = 'date-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:month'],
+					['number:text', {}, '/'],
+					['number:day'],
+					['number:text', {}, '/'],
+					['number:year'],
+					);
+			} elsif ($val == 15) { ## d-mmm-yy
+				$celltype{$style} = ['date', "N$stylecount"];
+				$nstyle = 'date-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:day'],
+					['number:text', {}, '-'],
+					['number:month', {
+						'number:textual' => 'true'}],
+					['number:text', {}, '-'],
+					['number:year'],
+					);
+			} elsif ($val == 16) { ## d-mmm
+				$celltype{$style} = ['date', "N$stylecount"];
+				$nstyle = 'date-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:day'],
+					['number:text', {}, '-'],
+					['number:month', {
+						'number:textual' => 'true'}],
+					);
+			} elsif ($val == 17) { ## mmm-yy
+				$celltype{$style} = ['date', "N$stylecount"];
+				$nstyle = 'date-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:month', {
+						'number:textual' => 'true'}],
+					['number:text', {}, '-'],
+					['number:year'],
+					);
+			} elsif ($val == 18) { ## h:mm AM/PM
+				$celltype{$style} = ['time', "N$stylecount"];
+				$nstyle = 'time-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:hours'],
+					['number:text', {}, ':'],
+					['number:minutes',
+						{'number:style' => 'long'}],
+					['number:text', {}, ' '],
+					['number:am-pm']
+					);
+			} elsif ($val == 19) { ## h:mm:ss AM/PM
+				$celltype{$style} = ['time', "N$stylecount"];
+				$nstyle = 'time-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:hours'],
+					['number:text', {}, ':'],
+					['number:minutes',
+						{'number:style' => 'long'}],
+					['number:text', {}, ':'],
+					['number:seconds',
+						{'number:style' => 'long'}],
+					['number:text', {}, ' '],
+					['number:am-pm']
+					);
+			} elsif ($val == 20) { ## h:mm
+				$celltype{$style} = ['time', "N$stylecount"];
+				$nstyle = 'time-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:hours'],
+					['number:text', {}, ':'],
+					['number:minutes',
+						{'number:style' => 'long'}],
+					);
+			} elsif ($val == 21) { ## h:mm:ss
+				$celltype{$style} = ['time', "N$stylecount"];
+				$nstyle = 'time-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:hours'],
+					['number:text', {}, ':'],
+					['number:minutes',
+						{'number:style' => 'long'}],
+					['number:text', {}, ':'],
+					['number:seconds',
+						{'number:style' => 'long'}],
+					);
+			} elsif ($val == 22) { ## m/d/yy h:mm
+				$celltype{$style} = ['date', "N$stylecount"];
+				$nstyle = 'date-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:month'],
+					['number:text', {}, '/'],
+					['number:day'],
+					['number:text', {}, '/'],
+					['number:year'],
+					['number:text', {}, ' '],
+					['number:hours'],
+					['number:text', {}, ':'],
+					['number:minutes',
+						{'number:style' => 'long'}],
+					);
+			} elsif ($val == 37) { ##  (#,##0_);(#,##0)
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				my %base = (
+					'number:min-integer-digits' => 1,
+					'number:grouping' => 'true',
+					);
+
+				@children = (
+					['number:text', {}, '('],
+					['number:number', \%base],
+					['number:text', {}, ')'],
+					['style:map', {
+						'style:condition' => 'value()>=0',
+						'style:apply-style-name' => "NP$stylecount",
+						}],
+					);
+				
+				&_create_positive_style("NP$stylecount",
+					$nstyle, \%base);
+			} elsif ($val == 38) { ## (#,##0_);[Red](#,##0)
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				my %base = %{&_prepare_float('#,##0')};
+
+				@children = (
+					['style:text-properties',
+						{'fo:color' => '#ff0000'}],
+					['number:text', {}, '('],
+					['number:number', \%base],
+					['number:text', {}, ')'],
+					['style:map',{
+						'style:condition' => 'value()>=0',
+						'style:apply-style-name' => "NP$stylecount",
+						}]
+					);
+				
+				&_create_positive_style("NP$stylecount",
+					$nstyle, \%base);
+			} elsif ($val == 39) { ## (#,##0.00_);(#,##0.00)
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				my %base = %{&_prepare_float('#,##0.00')};
+
+				@children = (
+					['number:text', {}, '('],
+					['number:number', \%base],
+					['number:text', {}, ')'],
+					['style:map',{
+						'style:condition' => 'value()>=0',
+						'style:apply-style-name' => "NP$stylecount",
+						}]
+					);
+				
+				&_create_positive_style("NP$stylecount",
+					$nstyle, \%base);
+			} elsif ($val == 40) { ## (#,##0.00_);[Red](#,##0.00)
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				my %base = %{&_prepare_float('#,##0.00')};
+
+				@children = (
+					['style:text-properties',
+						{'fo:color' => '#ff0000'}],
+					['number:text', {}, '('],
+					['number:number', \%base],
+					['number:text', {}, ')'],
+					['style:map', {
+						'style:condition' => 'value()>=0',
+						'style:apply-style-name' => "NP$stylecount",
+						}],
+					);
+
+				&_create_positive_style("NP$stylecount",
+					$nstyle, \%base);
+			} elsif ($val == 41) {
+				$celltype{$style} = 'float';
+			} elsif ($val == 42) {
+				$celltype{$style} = 'currency';
+			} elsif ($val == 43) {
+				$celltype{$style} = 'float';
+			} elsif ($val == 44) {
+				$celltype{$style} = 'currency';
+			} elsif ($val == 45) {  ## mm:ss
+				$celltype{$style} = ['time', "N$stylecount"];
+				$nstyle = 'time-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:minutes',
+						{'number:style' => 'long'}],
+					['number:text', {}, ':'],
+					['number:seconds',
+						{'number:style' => 'long'}],
+					);
+			} elsif ($val == 46) { ## [h]:mm:ss
+				$celltype{$style} = ['time', "N$stylecount"];
+				$nstyle = 'time-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true',
+					'number:truncate-on-overflow' => 'false'});
+				@children = (
+					['number:hours', {}],
+					['number:text', {}, ':'],
+					['number:minutes',
+						{'number:style' => 'long'}],
+					['number:text', {}, ':'],
+					['number:seconds',
+						{'number:style' => 'long'}],
+			} elsif ($val == 47) { ## mm:ss.0
+				$celltype{$style} = ['time', "N$stylecount"];
+				$nstyle = 'time-style';
+				@nextras = ('references' => {
+					'number:automatic-order' => 'true'});
+				@children = (
+					['number:minutes',
+						{'number:style' => 'long'}],
+					['number:text', {}, ':'],
+					['number:seconds',
+						{'number:style' => 'long',
+						'number:decimal-places' => 1}],
+					);
+			} elsif ($val == 48) { ##   ##0.0E+0
+				$celltype{$style} = ['float', "N$stylecount"];
+				$nstyle = 'number-style';
+				%nproperties = ();
+				push @children, ['number:scientific-number',
+					{%{&_prepare_float(0.0)},
+					'number:min-exponent-digits' => 1
+					}];
+			} elsif ($val == 49) {
+				$celltype{$style} = 'string';
+			}
+			my $cstyle = $ods->createStyle(
+				"N$stylecount",
+				namespace => 'number',
+				type => $nstyle,
+				properties => \%nproperties,
+				@nextras,
+				);
+			for my $child (@children) {
+				$cstyle->insert_new_elt('last_child', @$child);
+			}
+			@extras = ('references', {'style:data-style-name' => "N$stylecount"});
 		}
 	}
 	$ods->createStyle(
 		$style,
 		family => 'table-cell',
 		properties => $properties{cell}, 
+		@extras,
 		);
 	$ods->updateStyle(
 		$style,
 		properties => {
 			-area => 'text',
 			%{$properties{text}}
+			}
+		);
+	$ods->updateStyle(
+		$style,
+		properties => {
+			-area => 'paragraph',
+			%{$properties{paragraph}}
 			}
 		);
 	unshift @basestyle, [$style, \%properties];
@@ -183,6 +710,7 @@ sub _ods_process {
 	local $currcol;
 	local $stylecount = 1;
 	local @basestyle;
+	local %celltype;
 	my $parser = XML::Twig->new(
 		start_tag_handlers => {
 			worksheet => \&_worksheet_handler,
