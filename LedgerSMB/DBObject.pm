@@ -54,6 +54,8 @@ sub AUTOLOAD {
     $self->exec_method( funcname => "$type" . "_" . $AUTOLOAD, args => \@_);
 }
 
+sub DESTROY {} 
+
 sub new {
     my $class = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
@@ -104,13 +106,14 @@ sub exec_method {
     my @in_args;
     @in_args = @{ $args{args}} if $args{args};
     my @call_args;
-
+     
     my $query = "SELECT proname, pronargs, proargnames FROM pg_proc WHERE proname = ?";
     my $sth   = $self->{dbh}->prepare($query);
     $sth->execute($funcname);
     my $ref;
 
     $ref = $sth->fetchrow_hashref('NAME_lc');
+    
     my $args = $ref->{proargnames};
     my @proc_args;
     $ref->{pronargs} = 0 unless defined $ref->{pronargs};
@@ -118,19 +121,23 @@ sub exec_method {
         $args =~ s/\{(.*)\}/$1/;
         @proc_args = split /,/, $args if $args;
     }
+    
     if ( !$ref->{proname} ) {    # no such function
-        $self->error( "No such function: ", $funcname );
-        die;
+     
+        $self->error( "No such function:  $funcname");
+#        die;
     }
+    
     my $m_name = $ref->{proname};
 
-    if ($args) {
-        for my $arg (@proc_args) {
-            if ( $arg =~ s/^in_// ) {
-                push @call_args, $self->{$arg};
-            }
-        }
-    }
+#    if ($args) {
+#        for my $arg (@proc_args) {
+#            if ( $arg =~ s/^in_// ) {
+                # push @call_args, $arg;
+#            }
+#        }
+#    }
+
     for (@in_args) { push @call_args, $_ } ;
     $self->{call_args} = \@call_args;
     $self->debug({file => '/tmp/dbobject'});
