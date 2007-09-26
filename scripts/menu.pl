@@ -71,6 +71,7 @@ sub root_doc {
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
 	"$request->{login} -- $request->{_user}->{dbname}";
 
+    $request->call_procedure(procname => );
     if (!$request->{menubar}){
         $request->{main} = "splash.html" if $request->{main} eq 'company_logo';
         $request->{main} = "am.pl?action=recurring_transactions"

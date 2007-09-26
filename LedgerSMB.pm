@@ -89,6 +89,11 @@ defined, that field is used for ordering the rows.  If not, runningnumber is
 used.  Behavior is not defined when index points to a field containing 
 non-numbers.
 
+=item set (@attrs)
+
+Copies the given key=>vars to $self. Allows for finer control of 
+merging hashes into self.
+
 =back
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
@@ -754,6 +759,18 @@ sub type {
 }
 
 sub DESTROY {}
+
+sub set {
+    
+    my $self = shift @_;
+    my %args = @_;
+    
+    for my $arg (keys(%args)) {
+        $self->{$arg} = $args{$arg};
+    }
+    return 1;    
+
+}
 
 1;
 

@@ -23,10 +23,8 @@ this way as is any information that is needed.
 
 =item exec_method ($self, procname => $function_name, args => \@args)
 
-=item set (@attrs)
-
-Copies the given key=>vars to $self. Allows for finer control of 
-merging hashes into self.
+Provides the basic mapping of parameters to the SQL stored procedure function 
+arguments.
 
 =back
 
@@ -281,18 +279,6 @@ sub _parse_array {
         push @return_array, $next;
     }
     return @return_array;
-}
-
-sub set {
-    
-    my $self = shift @_;
-    my %args = @_;
-    
-    for my $arg (keys(%args)) {
-        $self->{$arg} = $args{$arg};
-    }
-    return 1;    
-
 }
 
 1;
