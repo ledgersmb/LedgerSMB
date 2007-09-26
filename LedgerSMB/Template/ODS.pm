@@ -81,7 +81,7 @@ sub preprocess {
 sub _worksheet_handler {
 	$rowcount = -1;
 	$currcol = 0;
-	$sheet = $ods->getTable(0, $_->{att}->{rows}, $_->{att}->{columns});
+	my $sheet = $ods->getTable(0, $_->{att}->{rows}, $_->{att}->{columns});
 	$ods->renameTable($sheet, $_->{att}->{name});
 }
 
@@ -92,12 +92,12 @@ sub _row_handler {
 
 sub _cell_handler {
 	my $cell = $ods->getCell(-1, $rowcount, $currcol);
-	if (@basestyle and $celltype{$basestyle[0][0]}) {
-		$ods->cellValueType($cell, $celltype{$basestyle[0][0]}[0]);
+	if (@style_stack and $celltype{$style_stack[0][0]}) {
+		$ods->cellValueType($cell, $celltype{$style_stack[0][0]}[0]);
 	}
 	$ods->cellValue($cell, $_->{att}->{text});
-	if (@basestyle) {
-		$ods->cellStyle($cell, $basestyle[0][0]);
+	if (@style_stack) {
+		$ods->cellStyle($cell, $style_stack[0][0]);
 	}
 	$currcol++;
 }
@@ -183,7 +183,7 @@ sub _create_positive_style {
 
 sub _format_handler {
 	my ($t, $format) = @_;
-	my $style = "ce$stylecount";
+	my $style = sprintf "ce%d", (length(keys %style_table) + 1);
 
 	my @extras;
 	local @width = ('none', '0.018cm solid', '0.035cm solid',
@@ -236,11 +236,13 @@ sub _format_handler {
 	#     time.  As a result, %properties is split into property groupings
 	#     to allow for each group to get the correct type.
 	my %properties;
-	if (@basestyle) {
-		%properties = %{$basestyle[0][1]};
-		if ($celltype{$basestyle[0][0]}) {
-			$celltype{$style} = $celltype{$basestyle[0][0]};
-			@extras = ('references', {'style:data-style-name' => $celltype{$style}[1]});
+	if (@style_stack) {
+		%properties = %{$style_stack[0][1]};
+		if ($celltype{$style_stack[0][0]}) {
+			$celltype{$style} = $celltype{$style_stack[0][0]};
+			@extras = ('references', {
+				'style:data-style-name' => $celltype{$style}[1]
+				});
 		}
 	}
 	&_border_set(\%properties, $format, 'border') if $format->{att}->{border};
@@ -361,7 +363,7 @@ sub _format_handler {
 			my $nstyle;
 			my $fval = sprintf 'N%02d', $val;
 			@extras = ('references', {'style:data-style-name' => $fval});
-			if ($sstyles{$fval}) {
+			if ($style_table{$fval}) {
 				# pass through
 			} elsif ($val == 0) {
 				$celltype{$style} = 'float';
@@ -680,7 +682,7 @@ sub _format_handler {
 					$cstyle->insert_new_elt('last_child',
 						@$child);
 				}
-				$sstyles{$fval} = 1;
+				$style_table{$fval} = 1;
 			}
 		}
 	}
@@ -688,7 +690,7 @@ sub _format_handler {
 	# Maintain a hash table to keep the final style list size down
 	$Data::Dumper::Sortkeys = 1;
 	my $mystyle = Digest::MD5::md5_hex(Dumper(\%properties, \@extras));
-	if (!$sstyles{$mystyle}) {
+	if (!$style_table{$mystyle}) {
 		$ods->createStyle(
 			$style,
 			family => 'table-cell',
@@ -709,15 +711,14 @@ sub _format_handler {
 				%{$properties{paragraph}}
 				}
 			);
-		$stylecount++;
-		$sstyles{$mystyle} = [$style, \%properties];
+		$style_table{$mystyle} = [$style, \%properties];
 	}
-	unshift @basestyle, $sstyles{$mystyle};
+	unshift @style_stack, $style_table{$mystyle};
 }
 
 sub _format_cleanup_handler {
 	my ($t, $format) = @_;
-	shift @basestyle;
+	shift @style_stack;
 }
 
 sub _ods_process {
@@ -725,13 +726,17 @@ sub _ods_process {
 
 	# the handlers need these vars in common
 	local $ods = ooDocument(file => $filename, create => 'spreadsheet');
-	local $sheet;
 	local $rowcount;
 	local $currcol;
-	local $stylecount = 1;
-	local @basestyle;
-	local %sstyles;
 	local %celltype;
+
+	# SC: The elements of the style table for regular styles and stack are
+	#     arrays where the stack name is the first element and the style
+	#     properties are the second.  The name is used for setting styles,
+	#     while the properties are used in handling nested styles.
+	local @style_stack;    # stack of styles, 0 is active style
+	local %style_table;    # hash table for created styles
+	
 	my $parser = XML::Twig->new(
 		start_tag_handlers => {
 			worksheet => \&_worksheet_handler,
