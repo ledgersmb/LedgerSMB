@@ -81,8 +81,17 @@ sub preprocess {
 sub _worksheet_handler {
 	$rowcount = -1;
 	$currcol = 0;
-	my $sheet = $ods->getTable(0, $_->{att}->{rows}, $_->{att}->{columns});
-	$ods->renameTable($sheet, $_->{att}->{name});
+	my $rows = $_->{att}->{rows};
+	my $columns = $_->{att}->{columns};
+	$rows ||= 1000;
+	$columns ||= 52;
+	my $sheet;
+	if ($_->is_first_child) {
+		$sheet = $ods->getTable(0, $rows, $columns);
+		$ods->renameTable($sheet, $_->{att}->{name});
+	} else {
+		$sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
+	}
 }
 
 sub _row_handler {
@@ -727,7 +736,6 @@ sub _format_handler {
 sub _format_cleanup_handler {
 	my ($t, $format) = @_;
 	shift @style_stack;
-	$t->purge;
 }
 
 sub _ods_process {

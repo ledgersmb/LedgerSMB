@@ -38,4 +38,9 @@
 	</row>
 	<?lsmb END ?>
 	</worksheet>
+	<worksheet name="test2" rows='3' columns='1'>
+	<row><cell text='1' type='number' /></row>
+	<row><cell text='2' type='number' /></row>
+	<row><formula text='sum(A1:A2)' type='formula' /></row>
+	</worksheet>
 </workbook>
