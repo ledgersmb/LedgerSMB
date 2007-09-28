@@ -137,6 +137,9 @@ sub new {
 
 	bless $self, $class;
 
+	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
+		throw Error::Simple "Invalid format";
+	}
 	if (!$self->{include_path}){
 		$self->{include_path} = $self->{'myconfig'}->{'templates'};
 		if (defined $self->{language}){
@@ -169,6 +172,9 @@ sub _valid_language {
 sub render {
 	my $self = shift;
 	my $vars = shift;
+	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
+		throw Error::Simple "Invalid format";
+	}
 	my $format = "LedgerSMB::Template::$self->{format}";
 
 	eval "require $format";
@@ -217,6 +223,9 @@ sub _http_output {
 	my $self = shift;
 	my $data = shift;
 	$data ||= $self->{output};
+	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
+		throw Error::Simple "Invalid format";
+	}
 	my $format = "LedgerSMB::Template::$self->{format}";
 	my $disposition = "\n";
 	my $name = $format->can('postprocess')->($self);
