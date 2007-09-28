@@ -23,7 +23,7 @@ mkdir $build_d/ledger-smb
 cp -R * $build_d/ledger-smb
 cd $build_d/ledger-smb
 pwd
-find -name '*.svn' -exec rm -rf '{}' ';'
+find . -name '*.svn' -exec rm -rf '{}' ';'
 rm ledger-smb.conf
 cd ..
 tar -zcvf ledger-smb-$version.tar.gz ledger-smb
