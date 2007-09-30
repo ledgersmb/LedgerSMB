@@ -29,45 +29,8 @@ refered to as LEDGERPATH for the remainder of this INSTALL file).
 LedgerSMB files should be owned by the apache user, apache:apache on
 many systems.
 
-2) Install the procedural language on your database server
 
-Note:  installing here on the template1 database will permit it
-to propogate to every future database created, both those used
-by LedgerSMB (which require it) and to other databases you
-may create for other applications (which may not need it).
-If that is not what you want, consider first creating a
-template2-plpgsql database, adapting this command to install
-the language on that application specific template, leaving
-your template1 clean.  Then you can use your template2-plpgsql
-database as a starting point for any datasets you create
-for LedgerSMB.
-
-We start by ensuring that the plpgsql language has not already
-been installed.  If that first query does not result in a
-record where the 'lanname' field is 'plpgsql', then you need
-to install the procedural language.
-
-# su - postgres
-$ psql
-
-=> \c template1
-=> SELECT * FROM pg_language;
-=> \q
-
-$ createlang plpgsql template1
-$ psql
-
-=> ALTER ROLE postgres WITH PASSWORD 'YOURPASSWORD';
-
-Some distributions will create a postgres database user without
-ever prompting the user for an administrative password for
-the user.  If you start as root, su - postgres and invoke
-psql from the postgres shell prompt, you would never need the
-postgres database user's password.  But you will need to know
-the password later when you start creating accounting datasets.
-So might as well create one now.
-
-3) Create a postgresql admin database role, by convention named
+2) Create a postgresql admin database role, by convention named
 'ledgersmb':
 
 $ createuser --no-superuser --createdb --no-createrole \
@@ -89,7 +52,7 @@ Further commands and database interaction should be conducted using
 the new LedgerSMB admin role 'ledgersmb'.
 
 
-4) Create a central user database, owned by the LedgerSMB admin role,
+3) Create a central user database, owned by the LedgerSMB admin role,
 'ledgersmb':
 
 $ createdb -U ledgersmb -O ledgersmb ledgersmb
@@ -100,7 +63,7 @@ The equivalent SQL statement is:
 OWNER=ledgersmb;
 
 
-5) On the database that will store your user and session information,
+4) On the database that will store your user and session information,
 run the included Pg-central.sql SQL commands to configure the user
 and session tables and functions:
 
@@ -119,7 +82,7 @@ PLPGSQL installed in the dataset as well.  However that is beyond the
 scope of these instructions.
 
 
-6) The SQL commands in step 5) created an LedgerSMB-managed admin user,
+5) The SQL commands in step 4) created an LedgerSMB-managed admin user,
 e.g. a row in the users and users_conf table. You must now update the
 'admin' user's password in users_conf from the default password.
 
@@ -134,7 +97,7 @@ is separate, but can be the same spelling as MYROLEPASSWORD).
 ledgersmb=> \q
 
 
-7) Edit the LEDGERPATH/ledgersmb.conf file:
+6) Edit the LEDGERPATH/ledgersmb.conf file:
 
 a) Copy 'ledgersmb.conf.default' to 'ledgersmb.conf'
 
@@ -149,27 +112,12 @@ DBUserName   = ledgersmb
 DBPassword   = MYROLEPASSWORD
 
 
-8) Add configuration to Apache:
+7) Add configuration to Apache:
 
 $ sh configure_apache.sh
 
-You will be prompted for the user which runs your apache server.
-This user is usually known as: apache, www-data, nobody or
-something similiar.
 
-You will also be prompted for the directory where you want to install
-the modified apache configuration file for LedgerSMB.  On an apache2
-installation (at least on a Debian server) that would be:
-
-	/etc/apache2/sites-available
-
-$ cd /etc/apache2/sites-available
-$ a2en ledgersmb-http.conf
-
-That will create a symlink in your ../sites-enabled/ directory
-and prompt you to restart your server.
-
-9) Check Dependencies:
+8) Check Dependencies:
 
 The Build.PL script can be used to test for unmet dependencies and
 run other tests. It doesn't install anything yet, but it will tell
@@ -182,22 +130,10 @@ distribution's package manager, or by CPAN. (Build.PL itself uses
 Module::Build, which is available in packages like perl-Module-Build
 or libmodule-build-perl.)
 
-Alternately you can use the Makefile.PL as follows:
-
-$ perl Makefile.PL
-
-That should serve essentially the same function as running
-Build.PL would.
-
 Once this is done and dependencies are satisfied, you can check to
 see whether the installation nominally works by running:
 
 $ ./Build test
-
-or, if you are using the makefile, try this instead:
-
-$ make 
-$ make test
 
 The test suites currently check to make sure all the perl modules
 load and that a number of numeric tests are passed.
@@ -210,17 +146,10 @@ include:
 
 * Parse::RecDescent for the CLI script host
 
-Finally, if you are using the makefile, instead of the Build
-method, to install the application, as the root user, use this:
 
-# make install
-
-10) Restart Apache (instructions vary with your Linux distro or operating
+9) Restart Apache (instructions vary with your Linux distro or operating
 system).
 
-On a Debian system try: 
-
-# /etc/init.d/apache2 reload
 
 Create Datasets and Users
 =========================
