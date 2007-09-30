@@ -84,7 +84,7 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM chart WHERE accno = '5810'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
-INSERT INTO defaults (setting_key, value) VALUES ('curr', 'USD:CAD:EUR';
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'USD:CAD:EUR');
 
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2310'),'0.1',NULL);
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2320'),'0.14',NULL);

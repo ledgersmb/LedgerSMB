@@ -340,9 +340,14 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select 
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '775060000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '775140000'), invnumber = '1000', sonumber = '1000', ponumber = '1000', curr = 'PLN:USD:EUR');
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '775140000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
+INSERT INTO defaults (setting_key, value) VALUES ('invnumber', '1000');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'PLN:USD:EUR');
+INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
+
+UPDATE defaults SET value = '1000' WHERE setting_key = 'sonumber';
+UPDATE defaults SET value = '1000' WHERE setting_key = 'ponumber';
 --
 
 
