@@ -425,11 +425,11 @@ INSERT INTO chart (accno, description, charttype, category, link, gifi_accno, co
 INSERT INTO chart (accno, description, charttype, category, link, gifi_accno, contra) VALUES ('763750', '+Val.s/mat.informatique', 'A', 'I', '', '76', '0');
 INSERT INTO chart (accno, description, charttype, category, link, gifi_accno, contra) VALUES ('406', 'Acomptes versés - Vooruitbetalingen', 'A', 'A', 'AP_paid', '40', '0');
 --
-INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '411590'), 0.06);
-INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '411591'), 0.21);
-INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '451540'), 0.06);
-INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '451541'), 0.21);
-INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '640700'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '411590'), 0.06);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '411591'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '451540'), 0.06);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '451541'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '640700'), 0.21);
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT 
 id FROM chart WHERE accno = '340'));
