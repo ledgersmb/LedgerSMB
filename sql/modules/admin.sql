@@ -402,4 +402,24 @@ comment on function admin_delete_group(text) IS $$
     remove a login-capable user.
 $$;
 
+CREATE OR REPLACE FUNCTION admin_list_roles(in_username text)
+RETURNS SETOF text AS
+$$
+DECLARE out_rolename RECORD;
+BEGIN
+	FOR out_rolename IN 
+		SELECT rolname FROM pg_authid 
+		WHERE oid IN (SELECT id FROM connectby(
+			'(SELECT m.member, m.roleid, r.oid FROM pg_authid r 
+			LEFT JOIN pg_auth_members m ON (r.oid = m.roleid)) a',
+			'oid', 'member', 'oid', '320461', '0', ','
+			) c(id integer, parent integer, "level" integer, 
+				path text, list_order integer)
+			)
+	LOOP
+		RETURN NEXT out_rolename.rolname;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
 -- TODO:  Add admin user

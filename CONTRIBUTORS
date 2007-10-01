@@ -12,11 +12,13 @@ Wrote the session handling fix, has begun reformatting the files to fit the
 current coding standards, and other contributions.
 
 Joshua Drake <jd @ commandprompt . com>
-Contributed database fixes.
+Contributed database fixes, the contact/company/entity schema, and other 
+db-centric changes.
 
 Seneca Cunningham <tentra @ gmail.com> 
 Contributed code fixes and support for advanced tax rules.  She has also 
-re-engineered the localization framework.
+re-engineered the localization framework.  She has also provided support for 
+Excel, ODS, and other formats for reports.
 
 Jason Rodrigues <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
 the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
