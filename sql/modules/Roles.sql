@@ -1371,3 +1371,5 @@ IN ROLE lsmb_<?lsmb dbname ?>__create_language,
 lsmb_<?lsmb dbname ?>__create_part_translation,
 lsmb_<?lsmb dbname ?>__create_project_translation;
 
+GRANT SELECT ON custom_field_catalog TO public;
+GRANT SELECT ON custom_table_catalog TO public;
