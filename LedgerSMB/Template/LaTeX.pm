@@ -118,10 +118,12 @@ sub process {
 		"$parent->{outputfile}.$format", binmode => 1)) {
 		throw Error::Simple $template->error();
 	}
-	if ($format eq 'dvi') {
+	if (lc $format eq 'dvi') {
 		$parent->{mimetype} = 'application/x-dvi';
+	} elsif (lc $format eq 'pdf') {
+		$parent->{mimetype} = 'application/pdf';
 	} else {
-		$parent->{mimetype} = 'application/$format';
+		$parent->{mimetype} = 'application/postscript';
 	}
 	$parent->{rendered} = "$parent->{outputfile}.$format";
 }
