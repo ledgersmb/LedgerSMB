@@ -3,11 +3,15 @@
 use strict;
 use warnings;
 use Test::More 'no_plan';
+use Test::Trap qw(trap $trap);
 use Math::BigFloat;
 
 use LedgerSMB;
 use LedgerSMB::Form;
 
+my $lsmb_nan_message = "Content-Type: text/html; charset=utf-8\n\n<head></head><body><h2 class=\"error\">Error!</h2> <p><b>Invalid number detected during parsing</b></body>";
+my $form_nan_message = '<body><h2 class="error">Error!</h2> <p><b>Invalid number detected during parsing</b></body>';
+my @r;
 my $form = new Form;
 my %myconfig;
 ok(defined $form);
@@ -116,11 +120,20 @@ is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2), '',
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
 	'amount' => $expected, 'precision' => 2), '',
 	"lsmb: 0.00 with undef dash");
-is($form->format_amount({'apples' => '1000.00'} , 'foo', 2), 'NaN',
-	"form: No numberformat set, invalid amount");
-is($lsmb->format_amount('user' => {'apples' => '1000.00'}, 
-	'amount' => 'foo', 'precision' => 2), 'NaN',
-	"lsmb: No numberformat set, invalid amount");
+$ENV{GATEWAY_INTERFACE} = 'yes';
+$form->{pre} = 'Blah';
+$form->{header} = 'Blah';
+@r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
+is($trap->exit, 0,
+	'form: No numberformat set, invalid amount (NaN check)');
+is($trap->stdout, $form_nan_message,
+	'form: No numberformat set, invalid amount message (NaN check)');
+@r = trap{$lsmb->format_amount('user' => {'apples' => '1000.00'},
+	'amount' => 'foo', 'precision' => 2)};
+is($trap->exit, 0,
+	'lsmb: No numberformat set, invalid amount (NaN check)');
+is($trap->stdout, $lsmb_nan_message,
+	'lsmb: No numberformat set, invalid amount message (NaN check)');
 cmp_ok($form->format_amount({'apples' => '1000.00'} , '1.00', 2), '==', 1,
 	"form: No numberformat set, valid amount");
 cmp_ok($lsmb->format_amount('user' => {'apples' => '1000.00'}, 
@@ -269,12 +282,18 @@ foreach my $format (0 .. $#formats) {
 	
 	cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
 		"form: Empty string returns 0");
-	cmp_ok($form->parse_amount(\%myconfig, 'foo'), 'eq',
-		Math::BigFloat->bnan(), "form: Invalid string returns NaN");
+	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
+	is($trap->exit, 0,
+		'form: Invalid string gives NaN exit');
+	is($trap->stdout, $form_nan_message,
+		'form: Invalid string gives NaN message');
 	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
 		"lsmb: Empty string returns 0");
-	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo'), 'eq',
-		Math::BigFloat->bnan(), "lsmb: Invalid string returns NaN");
+	@r = trap{$lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo')};
+	is($trap->exit, 0,
+		'lsmb: Invalid string gives NaN exit');
+	is($trap->stdout, $lsmb_nan_message,
+		'lsmb: Invalid string gives NaN message');
 }
 
 foreach my $format (0 .. $#formats) {
@@ -331,12 +350,18 @@ foreach my $format (0 .. $#formats) {
 		"form: Empty string returns 0");
 	cmp_ok($form->parse_amount(\%myconfig), '==', 0,
 		"form: undef string returns 0");
-	cmp_ok($form->parse_amount(\%myconfig, 'foo'), 'eq',
-		Math::BigFloat->bnan(), "form: Invalid string returns NaN");
+	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
+	is($trap->exit, 0,
+		'form: Invalid string gives NaN exit');
+	is($trap->stdout, $form_nan_message,
+		'form: Invalid string gives NaN message');
 	cmp_ok($lsmb->parse_amount('user' => \%myconfig), '==', 0,
 		"lsmb: undef string returns 0");
 	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
 		"lsmb: Empty string returns 0");
-	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo'), 'eq',
-		Math::BigFloat->bnan(), "lsmb: Invalid string returns NaN");
+	@r = trap{$lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo')};
+	is($trap->exit, 0,
+		'lsmb: Invalid string gives NaN exit');
+	is($trap->stdout, $lsmb_nan_message,
+		'lsmb: Invalid string gives NaN message');
 }
