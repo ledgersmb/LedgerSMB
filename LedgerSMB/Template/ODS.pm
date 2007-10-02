@@ -39,9 +39,13 @@ It is released under the GNU General Public License Version 2 or, at your
 option, any later version.  See COPYRIGHT file for details.  For a full list 
 including contact information of contributors, maintainers, and copyright 
 holders, see the CONTRIBUTORS file.
+
 =cut
 
 package LedgerSMB::Template::ODS;
+
+use strict;
+use warnings;
 
 use Error qw(:try);
 use Data::Dumper;
@@ -50,6 +54,65 @@ use Template;
 use XML::Twig;
 use OpenOffice::OODoc;
 use LedgerSMB::Template::TTI18N;
+
+# SC: The ODS handlers need these vars in common
+my $ods;
+my $rowcount;
+my $currcol;
+my %celltype;
+
+# SC: The elements of the style table for regular styles and stack are
+#     arrays where the stack name is the first element and the style
+#     properties are the second.  The name is used for setting styles,
+#     while the properties are used in handling nested styles.
+my @style_stack;    # stack of styles, 0 is active style
+my %style_table;    # hash table for created styles
+
+# SC: Subtract 8 from the attribute to get the index
+#     http://search.cpan.org/src/JMCNAMARA/Spreadsheet-WriteExcel-2.11/doc/palette.html
+my @colour = (odfColor(0, 0, 0), odfColor(255, 255, 255),
+	odfColor(255, 0, 0), odfColor(0, 255, 0),
+	odfColor(0, 0, 255), odfColor(255, 255, 0),
+	odfColor(255, 0, 255), odfColor(0, 255, 255),
+	odfColor(128, 0, 0), odfColor(0, 128, 0),
+	odfColor(0, 0, 128), odfColor(128, 128, 0),
+	odfColor(128, 0, 128), odfColor(0, 128, 128),
+	odfColor(192, 192, 192), odfColor(128, 128, 128),
+	odfColor(153, 153, 255), odfColor(153, 51, 102),
+	odfColor(255, 255, 204), odfColor(204, 255, 255),
+	odfColor(102, 0, 102), odfColor(255, 128, 128),
+	odfColor(0, 102, 204), odfColor(204, 204, 255),
+	odfColor(0, 0, 128), odfColor(255, 0, 255),
+	odfColor(255, 255, 0), odfColor(0, 255, 255),
+	odfColor(128, 0, 128), odfColor(120, 0, 0),
+	odfColor(0, 128, 128), odfColor(0, 0, 255),
+	odfColor(0, 204, 255), odfColor(204, 255, 255),
+	odfColor(204, 255, 204), odfColor(255, 255, 153),
+	odfColor(153, 204, 255), odfColor(255, 153, 204),
+	odfColor(204, 153, 255), odfColor(192, 192, 192),
+	odfColor(51, 102, 255), odfColor(51, 204, 204),
+	odfColor(153, 204, 0), odfColor(255, 204, 0),
+	odfColor(255, 153, 0), odfColor(255, 102, 0),
+	odfColor(102, 102, 153), odfColor(150, 150, 150),
+	odfColor(0, 51, 102), odfColor(51, 153, 102),
+	odfColor(0, 51, 0), odfColor(51, 51, 0),
+	odfColor(153, 51, 0), odfColor(153, 51, 102),
+	odfColor(51, 51, 153), odfColor(51, 51, 51),
+	);
+my %colour_name = ('black' => $colour[0], 'white' => $colour[1],
+	'red' => $colour[2], 'lime' => $colour[3],
+	'blue' => $colour[4], 'yellow' => $colour[5],
+	'magenta' => $colour[6], 'cyan' => $colour[7],
+	'brown' => $colour[8], 'green' => $colour[9],
+	'navy' => $colour[10], 'purple' => $colour[12],
+	'silver' => $colour[14], 'gray' => $colour[15],
+	'grey' => $colour[15], 'orange' => $colour[45],
+	);
+
+my @line_width = ('none', '0.018cm solid', '0.035cm solid',
+	'0.018cm dashed', '0.018cm dotted', '0.141cm solid',
+	'0.039cm double', '0.002cm solid'
+	);
 
 sub get_template {
 	my $name = shift;
@@ -154,13 +217,13 @@ sub _border_set {
 	if ($properties->{cell}{"fo:$border"}){
 		$properties->{cell}{"fo:$border"} =~ s/^.* (\#......)$/$val $1/;
 	} else {
-		$properties->{cell}{"fo:$border"} = "$width[$val] #000000";
+		$properties->{cell}{"fo:$border"} = "$line_width[$val] #000000";
 	}
 	if ($edge and $format->{att}->{"${edge}_color"}) {
 		my $colour = $format->{att}->{"${edge}_color"};
 		if ($colour =~ /^\d+$/) {
 			$colour = $colour[$colour];
-		} elsif ($color !~ /^\#......$/) {
+		} elsif ($colour !~ /^\#......$/) {
 			$colour = $colour_name{$colour};
 		}
 		$properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
@@ -168,7 +231,7 @@ sub _border_set {
 		my $colour = $format->{att}->{"${edge}_color"};
 		if ($colour =~ /^\d+$/) {
 			$colour = $colour[$colour];
-		} elsif ($color !~ /^\#......$/) {
+		} elsif ($colour !~ /^\#......$/) {
 			$colour = $colour_name{$colour};
 		}
 		$properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
@@ -221,51 +284,7 @@ sub _create_positive_style {
 sub _format_handler {
 	my ($t, $format) = @_;
 	my $style = sprintf "ce%d", (scalar (keys %style_table) + 1);
-
 	my @extras;
-	local @width = ('none', '0.018cm solid', '0.035cm solid',
-		'0.018cm dashed', '0.018cm dotted', '0.141cm solid',
-		'0.039cm double', '0.002cm solid');
-	# SC: Subtract 8 from the attribute to get the index
-	#     http://search.cpan.org/src/JMCNAMARA/Spreadsheet-WriteExcel-2.11/doc/palette.html
-	local @colour = (odfColor(0, 0, 0), odfColor(255, 255, 255),
-		odfColor(255, 0, 0), odfColor(0, 255, 0),
-		odfColor(0, 0, 255), odfColor(255, 255, 0),
-		odfColor(255, 0, 255), odfColor(0, 255, 255),
-		odfColor(128, 0, 0), odfColor(0, 128, 0),
-		odfColor(0, 0, 128), odfColor(128, 128, 0),
-		odfColor(128, 0, 128), odfColor(0, 128, 128),
-		odfColor(192, 192, 192), odfColor(128, 128, 128),
-		odfColor(153, 153, 255), odfColor(153, 51, 102),
-		odfColor(255, 255, 204), odfColor(204, 255, 255),
-		odfColor(102, 0, 102), odfColor(255, 128, 128),
-		odfColor(0, 102, 204), odfColor(204, 204, 255),
-		odfColor(0, 0, 128), odfColor(255, 0, 255),
-		odfColor(255, 255, 0), odfColor(0, 255, 255),
-		odfColor(128, 0, 128), odfColor(120, 0, 0),
-		odfColor(0, 128, 128), odfColor(0, 0, 255),
-		odfColor(0, 204, 255), odfColor(204, 255, 255),
-		odfColor(204, 255, 204), odfColor(255, 255, 153),
-		odfColor(153, 204, 255), odfColor(255, 153, 204),
-		odfColor(204, 153, 255), odfColor(192, 192, 192),
-		odfColor(51, 102, 255), odfColor(51, 204, 204),
-		odfColor(153, 204, 0), odfColor(255, 204, 0),
-		odfColor(255, 153, 0), odfColor(255, 102, 0),
-		odfColor(102, 102, 153), odfColor(150, 150, 150),
-		odfColor(0, 51, 102), odfColor(51, 153, 102),
-		odfColor(0, 51, 0), odfColor(51, 51, 0),
-		odfColor(153, 51, 0), odfColor(153, 51, 102),
-		odfColor(51, 51, 153), odfColor(51, 51, 51),
-		);
-	local %colour_name = ('black' => $colour[0], 'white' => $colour[1],
-		'red' => $colour[2], 'lime' => $colour[3],
-		'blue' => $colour[4], 'yellow' => $colour[5],
-		'magenta' => $colour[6], 'cyan' => $colour[7],
-		'brown' => $colour[8], 'green' => $colour[9],
-		'navy' => $colour[10], 'purple' => $colour[12],
-		'silver' => $colour[14], 'gray' => $colour[15],
-		'grey' => $colour[15], 'orange' => $colour[45],
-		);
 
 	# SC: There are multiple types of properties that can be associated
 	#     with a style.  However, the OO::OOD style creation code appears
@@ -740,14 +759,14 @@ sub _format_handler {
 				-area => 'text',
 				%{$properties{text}}
 				}
-			);
+			) if $properties{text};
 		$ods->updateStyle(
 			$style,
 			properties => {
 				-area => 'paragraph',
 				%{$properties{paragraph}}
 				}
-			);
+			) if $properties{paragraph};
 		$style_table{$mystyle} = [$style, \%properties];
 	}
 	unshift @style_stack, $style_table{$mystyle};
@@ -761,18 +780,7 @@ sub _format_cleanup_handler {
 sub _ods_process {
 	my ($filename, $template, $user) = @_;
 
-	# the handlers need these vars in common
-	local $ods = ooDocument(file => $filename, create => 'spreadsheet');
-	local $rowcount;
-	local $currcol;
-	local %celltype;
-
-	# SC: The elements of the style table for regular styles and stack are
-	#     arrays where the stack name is the first element and the style
-	#     properties are the second.  The name is used for setting styles,
-	#     while the properties are used in handling nested styles.
-	local @style_stack;    # stack of styles, 0 is active style
-	local %style_table;    # hash table for created styles
+	$ods = ooDocument(file => $filename, create => 'spreadsheet');
 	
 	my $parser = XML::Twig->new(
 		start_tag_handlers => {
@@ -825,7 +833,7 @@ sub process {
 	}
 	&_ods_process("$parent->{outputfile}.ods", $output, $parent->{myconfig});
 
-	parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+	$parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
 }
 
 sub postprocess {
