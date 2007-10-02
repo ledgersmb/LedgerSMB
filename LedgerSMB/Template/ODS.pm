@@ -114,33 +114,6 @@ my @line_width = ('none', '0.018cm solid', '0.035cm solid',
 	'0.039cm double', '0.002cm solid'
 	);
 
-sub get_template {
-	my $name = shift;
-	return "${name}.odst";
-}
-
-sub preprocess {
-    my $rawvars = shift;
-    my $vars;
-    my $type = ref $rawvars;
-
-    #XXX fix escaping function
-    return $rawvars if $type =~ /^LedgerSMB::Locale/;
-    if ( $type eq 'ARRAY' ) {
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_ );
-        }
-    } elsif (!$type) {
-        return escapeHTML($rawvars);
-    } else { # Hashes and objects
-        for ( keys %{$rawvars} ) {
-            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
-        }
-    }
-    
-    return $vars;
-}
-
 sub _worksheet_handler {
 	$rowcount = -1;
 	$currcol = 0;
@@ -778,7 +751,7 @@ sub _format_cleanup_handler {
 }
 
 sub _ods_process {
-	my ($filename, $template, $user) = @_;
+	my ($filename, $template) = @_;
 
 	$ods = ooDocument(file => $filename, create => 'spreadsheet');
 	
@@ -797,6 +770,33 @@ sub _ods_process {
 	$parser->parse($template);
 	$parser->purge;
 	$ods->save;
+}
+
+sub get_template {
+	my $name = shift;
+	return "${name}.odst";
+}
+
+sub preprocess {
+    my $rawvars = shift;
+    my $vars;
+    my $type = ref $rawvars;
+
+    #XXX fix escaping function
+    return $rawvars if $type =~ /^LedgerSMB::Locale/;
+    if ( $type eq 'ARRAY' ) {
+        for (@{$rawvars}) {
+            push @{$vars}, preprocess( $_ );
+        }
+    } elsif (!$type) {
+        return escapeHTML($rawvars);
+    } else { # Hashes and objects
+        for ( keys %{$rawvars} ) {
+            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
+        }
+    }
+    
+    return $vars;
 }
 
 sub process {
@@ -831,7 +831,7 @@ sub process {
 		\$output, binmode => ':utf8')) {
 		throw Error::Simple $template->error();
 	}
-	&_ods_process("$parent->{outputfile}.ods", $output, $parent->{myconfig});
+	&_ods_process("$parent->{outputfile}.ods", $output);
 
 	$parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
 }
