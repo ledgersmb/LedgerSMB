@@ -17,9 +17,10 @@ use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Template;
+use LedgerSMB::Template::Elements;
+use LedgerSMB::Template::CSV;
 use LedgerSMB::Template::HTML;
-use LedgerSMB::Template::PDF;
-use LedgerSMB::Template::PS;
+use LedgerSMB::Template::LaTeX;
 use LedgerSMB::Template::TXT;
 
 $LedgerSMB::Sysconfig::tempdir = 't/var';
@@ -153,19 +154,19 @@ is(LedgerSMB::Template::HTML::postprocess({outputfile => '04-template'}),
 
 # Template->new
 $myconfig = {'templates' => 't/data'};
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => 'x/0')} 
+throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => 'x/0', 'format' => 'HTML')} 
 	qr/Invalid language/, 'Template, new: Invalid language caught 1';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '1\\2')} 
+throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '1\\2', 'format' => 'HTML')} 
 	qr/Invalid language/, 'Template, new: Invalid language caught 2';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '1:2')} 
+throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '1:2', 'format' => 'HTML')} 
 	qr/Invalid language/, 'Template, new: Invalid language caught 3';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '..')} 
+throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '..', 'format' => 'HTML')} 
 	qr/Invalid language/, 'Template, new: Invalid language caught 4';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '.svn')} 
+throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '.svn', 'format' => 'HTML')} 
 	qr/Invalid language/,
 	'Template, new: Invalid language caught 5';
 $template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de');
+$template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de', 'format' => 'HTML');
 ok(defined $template, 'Template, new: Object creation with valid language');
 isa_ok($template, 'LedgerSMB::Template', 
 	'Template, new: Object creation with valid language');
@@ -173,7 +174,7 @@ is($template->{include_path}, 't/data/de;t/data',
 	'Template, new: Object creation with valid language has good include_path');
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de',
-	'path' => 't/data', 'output_file' => 'test');
+	'path' => 't/data', 'output_file' => 'test', 'format' => 'HTML');
 ok(defined $template,
 	'Template, new: Object creation with valid language and path');
 isa_ok($template, 'LedgerSMB::Template', 
@@ -279,6 +280,21 @@ is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
+	'template' => \'Look at me <?lsmb login ?>.', 'no_auto_output' => 1);
+ok(defined $template, 
+	'Template, new (HTML): Object creation with string template');
+isa_ok($template, 'LedgerSMB::Template', 
+	'Template, new (HTML): Object creation with string template');
+is($template->{include_path}, 't/data',
+	'Template, new (HTML): Object creation with string template');
+is($template->render({'login' => 'foo&bar'}),
+	undef,
+	'Template, render (HTML): Simple HTML string template, no file');
+is($template->{output}, "Look at me foo&amp;bar.", 
+	'Template, render (HTML): Simple HTML string template, correct output');
+
+$template = undef;
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML', 
 	'template' => '04-gettext', 'output_file' => '04-gettext',
 	'no_auto_output' => 1);
 ok(defined $template, 
@@ -327,3 +343,12 @@ SKIP: {
 	ok(!-e "t/var/04-gettext-output-$$.pdf",
 		'Template, render (PDF): testfile removed');
 }
+
+###################################
+## LedgerSMB::Template::Elements ##
+###################################
+
+$template = undef;
+$form = undef;
+
+$form = new Form;

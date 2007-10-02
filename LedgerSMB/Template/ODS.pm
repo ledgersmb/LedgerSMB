@@ -119,6 +119,26 @@ sub _cell_handler {
 	$currcol++;
 }
 
+sub _formula_handler {
+	my $cell = $ods->getCell(-1, $rowcount, $currcol);
+	
+	if (@style_stack and $celltype{$style_stack[0][0]}) {
+		$ods->cellValueType($cell, $celltype{$style_stack[0][0]}[0]);
+	} elsif ($_->{att}->{type}) {
+		my $type = $_->{att}->{type};
+		if ($type =~ /^(string|blank|url)$/i) {
+			$ods->cellValueType($cell, 'string');
+		} elsif ($type =~ /^(number|formula)$/i) {
+			$ods->cellValueType($cell, 'float');
+		}
+	}
+	$ods->cellFormula($cell, "oooc:=$_->{att}->{text}");
+	if (@style_stack) {
+		$ods->cellStyle($cell, $style_stack[0][0]);
+	}
+	$currcol++;
+}
+
 sub _border_set {
 	my ($format, $properties, $border) = @_;
 	my $edge = $border;
@@ -759,7 +779,7 @@ sub _ods_process {
 			worksheet => \&_worksheet_handler,
 			row => \&_row_handler,
 			cell => \&_cell_handler,
-			formula => \&_cell_handler,
+			formula => \&_formula_handler,
 			format => \&_format_handler,
 			},
 		twig_handlers => {

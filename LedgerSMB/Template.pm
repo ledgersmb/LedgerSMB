@@ -26,6 +26,16 @@ in string form or the name of the file that is the template to be processed.
 
 The format to be used.  Currently HTML, PS, PDF, TXT and CSV are supported.
 
+=item format_options (optional)
+
+A hash of format-specific options.  See the appropriate LSMB::T::foo for
+details.
+
+=item output_options (optional)
+
+A hash of output-specific options.  See the appropriate output method for
+details.
+
 =item locale (optional)
 
 The locale object to use for regular gettext lookups.  Having this option adds
@@ -122,7 +132,6 @@ sub new {
 	$self->{myconfig} = $args{user};
 	$self->{template} = $args{template};
 	$self->{format} = $args{format};
-	$self->{format} = 'PS' if lc $self->{format} eq 'postscript';
 	$self->{language} = $args{language};
 	$self->{no_escape} = $args{no_escape};
 	$self->{debug} = $args{debug};
@@ -134,7 +143,21 @@ sub new {
 	$self->{noauto} = $args{no_auto_output};
 	$self->{method} = $args{method};
 	$self->{method} ||= $args{media};
+	$self->{format_args} = $args{format_options};
+	$self->{output_args} = $args{output_options};
 
+	# SC: Muxing pre-format_args LaTeX format specifications.  Now with
+	#     DVI support.
+	if (lc $self->{format} eq 'dvi') {
+		$self->{format} = 'LaTeX';
+		$self->{format_args}{filetype} = 'dvi';
+	} elsif (lc $self->{format} eq 'pdf') {
+		$self->{format} = 'LaTeX';
+		$self->{format_args}{filetype} = 'pdf';
+	} elsif (lc $self->{format} eq 'ps' or lc $self->{format} eq 'postscript') {
+		$self->{format} = 'LaTeX';
+		$self->{format_args}{filetype} = 'ps';
+	}	
 	bless $self, $class;
 
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {

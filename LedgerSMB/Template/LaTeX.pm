@@ -1,7 +1,16 @@
 
 =head1 NAME
 
-LedgerSMB::Template::PDF  Template support module for LedgerSMB
+LedgerSMB::Template::LaTeX  Template support module for LedgerSMB
+
+=head1 SYNOPSIS
+
+Muxed LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
+
+=head1 DETAILS
+
+The final output format is determined by the format_option of filetype.  The
+valid filetype specifiers are 'pdf', 'ps', and 'dvi'.
 
 =head1 METHODS
 
@@ -17,7 +26,7 @@ Currently does nothing.
 
 =item process ($parent, $cleanvars)
 
-Processes the template for PDF.
+Processes the template for the appropriate output format.
 
 =item postprocess ($parent)
 
@@ -36,7 +45,7 @@ including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 
-package LedgerSMB::Template::PDF;
+package LedgerSMB::Template::LaTeX;
 
 use Error qw(:try);
 use Template::Latex;
@@ -85,8 +94,15 @@ sub process {
 	} else {
 		$source = get_template($parent->{template});
 	}
+	$Template::Latex::DEBUG = 1 if $parent->{debug};
+	my $format = 'ps';
+	if ($parent->{format_args}{filetype} eq 'dvi') {
+		$format = 'dvi';
+	} elsif ($parent->{format_args}{filetype} eq 'pdf') {
+		$format = 'pdf';
+	}
 	$template = Template::Latex->new({
-		LATEX_FORMAT => 'pdf',
+		LATEX_FORMAT => $format,
 		INCLUDE_PATH => $parent->{include_path},
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
@@ -99,16 +115,20 @@ sub process {
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
-		"$parent->{outputfile}.pdf", binmode => 1)) {
+		"$parent->{outputfile}.$format", binmode => 1)) {
 		throw Error::Simple $template->error();
 	}
-	$parent->{mimetype} = 'application/pdf';
+	if ($format eq 'dvi') {
+		$parent->{mimetype} = 'application/x-dvi';
+	} else {
+		$parent->{mimetype} = 'application/$format';
+	}
+	$parent->{rendered} = "$parent->{outputfile}.$format";
 }
 
 sub postprocess {
 	my $parent = shift;
-	$parent->{rendered} = "$parent->{outputfile}.pdf";
-	return "$parent->{outputfile}.pdf";
+	return $parent->{rendered};
 }
 
 1;

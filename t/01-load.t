@@ -32,10 +32,10 @@ use_ok('LedgerSMB::Session');
 use_ok('LedgerSMB::Sysconfig');
 use_ok('LedgerSMB::Tax');
 use_ok('LedgerSMB::Template');
+use_ok('LedgerSMB::Template::Elements');
 use_ok('LedgerSMB::Template::CSV');
 use_ok('LedgerSMB::Template::HTML');
-use_ok('LedgerSMB::Template::PDF');
-use_ok('LedgerSMB::Template::PS');
+use_ok('LedgerSMB::Template::LaTeX');
 use_ok('LedgerSMB::Template::TXT');
 use_ok('LedgerSMB::User');
 
