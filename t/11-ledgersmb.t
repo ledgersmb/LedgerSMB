@@ -224,17 +224,6 @@ is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
 like($r[0]->{'pi'}, qr/^3.14/, 
 	'call_procedure: empty arg list, non-numeric return');
 
-# These tests are ugly and shouldn't work
-@r = $lsmb->call_procedure(
-	'procname' => 'power(2, 2) UNION ALL SELECT * FROM pi', 
-	'args' => [], 'order_by' => 'power DESC');
-is($#r, 1, 'call_procedure: correct return length (two rows)');
-is($r[0]->{'power'}, 4, 'call_procedure: DESC ordering');
-@r = $lsmb->call_procedure(
-	'procname' => 'power(2, 2) UNION ALL SELECT * FROM pi', 
-	'args' => [], 'order_by' => 'power ASC');
-is($r[1]->{'power'}, 4, 'call_procedure: ASC ordering');
-
 ##
 ##TODO: {
 ##	local $TODO = 'Breaks when no arglist given';
