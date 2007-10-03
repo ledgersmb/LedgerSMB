@@ -80,16 +80,16 @@ sub new {
         # for now, this is querying the table directly... ugly
         my $fetchUserPrefs = $dbh->prepare(
             "SELECT acs, address, businessnumber,
-												   company, countrycode, currency,
-												   dateformat, dbdriver, dbhost, dbname, 
-												   dboptions, dbpasswd, dbport, dbuser, 
-												   email, fax, menuwidth, name, numberformat, 
-												   password, print, printer, role, sid, 
-												   signature, stylesheet, tel, templates, 
-												   timeout, vclimit, u.username
-											  FROM users_conf as uc, users as u
-											 WHERE u.username =  ?
-											   AND u.id = uc.id;"
+                   company, countrycode, currency,
+                   dateformat, dbdriver, dbhost, dbname, 
+                   dboptions, dbpasswd, dbport, dbuser, 
+                   email, fax, menuwidth, name, numberformat, 
+                   password, print, printer, role, sid, 
+                   signature, stylesheet, tel, templates, 
+                   timeout, vclimit, u.username
+              FROM users_conf as uc, users as u
+             WHERE u.username =  ?
+               AND u.id = uc.id;"
         );
 
         $fetchUserPrefs->execute($login);
@@ -175,23 +175,37 @@ sub fetch_config {
     my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
     # for now, this is querying the table directly... ugly
-    my $fetchUserPrefs = $dbh->prepare(
-        "SELECT acs, address, businessnumber,
-											   company, countrycode, currency,
-											   dateformat, dbdriver, dbhost, dbname, 
-											   dboptions, dbpasswd, dbport, dbuser, 
-											   email, fax, menuwidth, name, numberformat, 
-											   password, print, printer, role, sid, 
-											   signature, stylesheet, tel, templates, 
-											   timeout, vclimit, u.username
-										  FROM users_conf as uc, users as u
-										 WHERE u.username =  ?
-										   AND u.id = uc.id;"
-    );
+#    my $fetchUserPrefs = $dbh->prepare(
+#        "SELECT acs, address, businessnumber,
+#               company, countrycode, currency,
+#               dateformat, dbdriver, dbhost, dbname, 
+#               dboptions, dbpasswd, dbport, dbuser, 
+#               email, fax, menuwidth, name, numberformat, 
+#               password, print, printer, role, sid, 
+#               signature, stylesheet, tel, templates, 
+#               timeout, vclimit, u.username
+#          FROM users_conf as uc, users as u
+#         WHERE u.username =  ?
+#           AND u.id = uc.id;"
+#    );
 
-    $fetchUserPrefs->execute($login);
+    my $fetchUserSettings = $dbh->prepare("
+        SELECT 
+            u.username, 
+            uc.dbname, 
+            uc.port, 
+            uc.host
+            
+        FROM users u 
+        JOIN user_connection uc ON uc.user_id = u.id
+        WHERE u.username = ?
+    ");
+    
+    $fetchUserSettings->execute($login);
 
-    my $userHashRef = $fetchUserPrefs->fetchrow_hashref;
+    #$fetchUserPrefs->execute($login);
+
+    my $userHashRef = $fetchUserSettings->fetchrow_hashref;
     if ( !$userHashRef ) {
         &error( $self, "Access Denied" );
     }
@@ -200,18 +214,18 @@ sub fetch_config {
         $myconfig{$key} = $value;
     }
 
-    chomp( $myconfig{'dbport'} );
+    chomp( $myconfig{'port'} );
     chomp( $myconfig{'dbname'} );
-    chomp( $myconfig{'dbhost'} );
+    chomp( $myconfig{'host'} );
 
     $myconfig{'login'} = $login;
     $myconfig{'dbconnect'} =
         'dbi:Pg:dbname='
       . $myconfig{'dbname'}
       . ';host='
-      . $myconfig{'dbhost'}
+      . $myconfig{'host'}
       . ';port='
-      . $myconfig{'dbport'};
+      . $myconfig{'port'};
 
     return \%myconfig;
 }
@@ -252,8 +266,8 @@ sub login {
 
         # we got a connection, check the version
         my $query = qq|
-			SELECT value FROM defaults 
-			 WHERE setting_key = 'version'|;
+            SELECT value FROM defaults 
+             WHERE setting_key = 'version'|;
         my $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror( __FILE__ . ':' . __LINE__ . $query );
 
@@ -276,10 +290,10 @@ sub login {
               $form->update_defaults( \%myconfig, "employeenumber", $dbh );
 
             $query = qq|
-				INSERT INTO employee 
-				            (login, employeenumber, name, 
-				            workphone, role)
-				     VALUES (?, ?, ?, ?, ?)|;
+                INSERT INTO employee 
+                            (login, employeenumber, name, 
+                            workphone, role)
+                     VALUES (?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $login,         $employeenumber, $myconfig{name},
@@ -325,8 +339,8 @@ sub check_recurring {
     $dbh->{pg_encode_utf8} = 1;
 
     my $query = qq|
-		SELECT count(*) FROM recurring
-		 WHERE enddate >= current_date AND nextdate <= current_date|;
+        SELECT count(*) FROM recurring
+         WHERE enddate >= current_date AND nextdate <= current_date|;
     ($_) = $dbh->selectrow_array($query);
 
     $dbh->disconnect;
@@ -421,9 +435,9 @@ sub dbsources {
                 $dbh->{pg_enable_utf8} = 1;
 
                 $query = qq|
-					SELECT tablename FROM pg_tables
-					 WHERE tablename = 'defaults'
-					   AND tableowner = ?|;
+                    SELECT tablename FROM pg_tables
+                     WHERE tablename = 'defaults'
+                       AND tableowner = ?|;
                 my $sth = $dbh->prepare($query);
                 $sth->execute( $form->{dbuser} )
                   || $form->dberror( __FILE__ . ':' . __LINE__ . $query );
@@ -652,10 +666,10 @@ sub dbneedsupdate {
     if ( $form->{dbdriver} =~ /Pg/ ) {
 
         $query = qq|
-			SELECT d.datname 
-			  FROM pg_database d, pg_user u
-			 WHERE d.datdba = u.usesysid
-			       AND u.usename = ?|;
+            SELECT d.datname 
+              FROM pg_database d, pg_user u
+             WHERE d.datdba = u.usesysid
+                   AND u.usename = ?|;
         my $sth = $dbh->prepare($query);
         $sth->execute( $form->{dbuser} )
           || $form->dberror( __FILE__ . ':' . __LINE__ . $query );
@@ -673,17 +687,17 @@ sub dbneedsupdate {
             $dbh->{pg_enable_utf8};
 
             $query = qq|
-				SELECT tablename 
-				  FROM pg_tables
-				 WHERE tablename = 'defaults'|;
+                SELECT tablename 
+                  FROM pg_tables
+                 WHERE tablename = 'defaults'|;
             my $sth = $dbh->prepare($query);
             $sth->execute
               || $form->dberror( __FILE__ . ':' . __LINE__ . $query );
 
             if ( $sth->fetchrow_array ) {
                 $query = qq|
-					SELECT value FROM defaults
-					 WHERE setting_key = 'version'|;
+                    SELECT value FROM defaults
+                     WHERE setting_key = 'version'|;
                 my $sth = $dbh->prepare($query);
                 $sth->execute;
 
@@ -746,8 +760,8 @@ sub dbupdate {
 
         # check version
         $query = qq|
-			SELECT value FROM defaults
-			 WHERE setting_key = 'version'|;
+            SELECT value FROM defaults
+             WHERE setting_key = 'version'|;
         my $sth = $dbh->prepare($query);
 
         # no error check, let it fall through
@@ -904,18 +918,18 @@ sub save_member {
         # for now, this is updating the table directly... ugly
         my $userConfUpdate = $dbh->prepare(
             "UPDATE users_conf
-											   SET acs = ?, address = ?, businessnumber = ?,
-												   company = ?, countrycode = ?, currency = ?,
-												   dateformat = ?, dbdriver = ?,
-												   dbhost = ?, dbname = ?, dboptions = ?, 
-												   dbpasswd = ?, dbport = ?, dbuser = ?,
-												   email = ?, fax = ?, menuwidth = ?,
-												   name = ?, numberformat = ?,
-												   print = ?, printer = ?, role = ?,
-												   sid = ?, signature = ?, stylesheet = ?,
-												   tel = ?, templates = ?, timeout = ?,
-												   vclimit = ?
-											 WHERE id = ?;"
+                                               SET acs = ?, address = ?, businessnumber = ?,
+                                                   company = ?, countrycode = ?, currency = ?,
+                                                   dateformat = ?, dbdriver = ?,
+                                                   dbhost = ?, dbname = ?, dboptions = ?, 
+                                                   dbpasswd = ?, dbport = ?, dbuser = ?,
+                                                   email = ?, fax = ?, menuwidth = ?,
+                                                   name = ?, numberformat = ?,
+                                                   print = ?, printer = ?, role = ?,
+                                                   sid = ?, signature = ?, stylesheet = ?,
+                                                   tel = ?, templates = ?, timeout = ?,
+                                                   vclimit = ?
+                                             WHERE id = ?;"
         );
 
         $userConfUpdate->execute(
@@ -943,8 +957,8 @@ sub save_member {
 
             $userConfUpdate = $dbh->prepare(
                 "UPDATE users_conf
-												SET password = md5(?)
-											  WHERE id = ?"
+                                                SET password = md5(?)
+                                              WHERE id = ?"
             );
 
             $userConfUpdate->execute( $self->{password}, $userID );
@@ -956,16 +970,16 @@ sub save_member {
 
         my $userConfInsert = $dbh->prepare(
             "INSERT INTO users_conf(acs, address, businessnumber,
-																   company, countrycode, currency,
-																   dateformat, dbdriver,
-																   dbhost, dbname, dboptions, dbpasswd,
-																   dbport, dbuser, email, fax, menuwidth,
-																   name, numberformat, print, printer, role, 
-																   sid, signature, stylesheet, tel, templates, 
-																   timeout, vclimit, id, password)
-											VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-												   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, md5(?));"
+                                                                   company, countrycode, currency,
+                                                                   dateformat, dbdriver,
+                                                                   dbhost, dbname, dboptions, dbpasswd,
+                                                                   dbport, dbuser, email, fax, menuwidth,
+                                                                   name, numberformat, print, printer, role, 
+                                                                   sid, signature, stylesheet, tel, templates, 
+                                                                   timeout, vclimit, id, password)
+                                            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+                                                   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+                                                   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, md5(?));"
         );
 
         $userConfInsert->execute(
@@ -1017,10 +1031,10 @@ sub save_member {
         if ($id) {
 
             $query = qq|UPDATE employee SET
-			role = ?,
-			email = ?, 
-			name = ?
-			WHERE login = ?|;
+            role = ?,
+            email = ?, 
+            name = ?
+            WHERE login = ?|;
 
             @values = ( $self->{role}, $self->{email}, $self->{name}, $login );
 
@@ -1030,10 +1044,10 @@ sub save_member {
             my ($employeenumber) =
               Form::update_defaults( "", \%$self, "employeenumber", $dbh );
             $query = qq|
-				INSERT INTO employee 
-				            (login, employeenumber, name, 
-				            workphone, role, email, sales)
-				    VALUES (?, ?, ?, ?, ?, ?, '1')|;
+                INSERT INTO employee 
+                            (login, employeenumber, name, 
+                            workphone, role, email, sales)
+                    VALUES (?, ?, ?, ?, ?, ?, '1')|;
 
             @values = (
                 $login,       $employeenumber, $self->{name},
@@ -1075,10 +1089,10 @@ sub delete_login {
     $sth->finish;
 
     my $query = qq|
-		UPDATE employee 
-		   SET login = NULL,
-		       enddate = current_date
-		 WHERE login = ?|;
+        UPDATE employee 
+           SET login = NULL,
+               enddate = current_date
+         WHERE login = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute($login);
     $dbh->commit;

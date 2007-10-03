@@ -10,7 +10,6 @@ sub new_user {
     
     # uses the same page as create_user, only pre-populated.
     #my ($class, $request) = @_;
-    my $class = shift @_;
     my $request = shift @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
@@ -154,7 +153,7 @@ sub __default {
     
     my ($class, $request) = @_;
     
-    # check for login
+    # TODO: check for login stuff.
     my $template;
     $template = LedgerSMB::Template->new( user=>$user, 
             template=>'Admin/main', language=>$user->{language},

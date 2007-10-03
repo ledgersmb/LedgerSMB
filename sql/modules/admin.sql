@@ -423,3 +423,10 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 -- TODO:  Add admin user
+
+
+CREATE OR REPLACE FUNCTION admin_audit_log () returns int as $$
+    
+    
+    
+$$ language plpgsql;

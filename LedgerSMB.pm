@@ -178,50 +178,49 @@ sub new {
     }
 
     $self->{_locale} = $locale;
-    $self->{stylesheet} = $self->{_user}->{stylesheet};
-    if ( $self->{password} ) {
-        if (
-            !Session::password_check(
-                $self, $self->{login}, $self->{password}
-            )
-          )
-        {
-            if ($self->is_run_mode('cgi', 'mod_perl')) {
-                $self->_get_password();
-            }
-            else {
-                $self->error( __FILE__ . ':' . __LINE__ . ': '
-                      . $locale->text('Access Denied!') );
-            }
-            exit;
-        }
-        else {
-            Session::session_create($self);
-        }
+#    if ( $self->{password} ) {
+#        if (
+#            !Session::password_check(
+#                $self, $self->{ login }, $self->{ password }
+#            )
+#          )
+#        {
+#            if ($self->is_run_mode('cgi', 'mod_perl')) {
+#                $self->_get_password();
+#            }
+#            else {
+#                $self->error( __FILE__ . ':' . __LINE__ . ': '
+#                      . $locale->text('Access Denied!') );
+#            }
+#            exit;
+#        }
+#        else {
+#            Session::session_create($self);
+#        }
 
-    }
-    else {
-        if ($self->is_run_mode('cgi', 'mod_perl')) {
-            my %cookie;
-            $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-            my @cookies = split /;/, $ENV{HTTP_COOKIE};
-            foreach (@cookies) {
-                my ( $name, $value ) = split /=/, $_, 2;
-                $cookie{$name} = $value;
-            }
+#    }
+#    else {
+#        if ($self->is_run_mode('cgi', 'mod_perl')) {
+#            my %cookie;
+#            $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+#            my @cookies = split /;/, $ENV{HTTP_COOKIE};
+#            foreach (@cookies) {
+#                my ( $name, $value ) = split /=/, $_, 2;
+#                $cookie{$name} = $value;
+#            }
 
             #check for valid session
-            if ( !Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
-                $self->_get_password(1);
-                exit;
-            }
-        }
-        else {
-            exit;
-        }
-    }
+#            if ( !Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
+#                $self->_get_password(1);
+#                exit;
+#            }
+#        }
+#        else {
+#            exit;
+#        }
+#    }
 
-    $self->{stylesheet} = $self->{_user}->{stylesheet};
+#    $self->{stylesheet} = $self->{_user}->{stylesheet};
 
     $self->_db_init;
 
@@ -668,8 +667,8 @@ sub _db_init {
     my $myconfig = $self->{_user};
 
     my $dbh = DBI->connect(
-        $myconfig->{dbconnect}, $myconfig->{dbuser},
-        $myconfig->{dbpasswd}, { AutoCommit => 0 }
+        $myconfig->{ dbconnect }, $myconfig->{ username },
+        $self->{ password }, { AutoCommit => 0 }
     ) or $self->dberror;
 
     $dbh->{pg_server_prepare} = 0;
@@ -750,7 +749,7 @@ sub type {
     my $self = shift @_;
     
     if (!$ENV{REQUEST_METHOD} or 
-        ( $ENV{REQUEST_METHOD} ne ("HEAD" or "GET" or "POST") ) ) {
+        ( !grep {$ENV{REQUEST_METHOD} eq $_} ("HEAD", "GET", "POST") ) ) {
         
         $self->error("Request method unset or set to unknown value");
     }
