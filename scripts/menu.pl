@@ -71,8 +71,10 @@ sub root_doc {
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
 	"$request->{login} -- $request->{_user}->{dbname}";
 
-    $request->call_procedure(procname => );
-    if (!$request->{menubar}){
+    if ($request->{menubar}){
+        drilldown_menu($request);
+        return;
+    } else {
         $request->{main} = "splash.html" if $request->{main} eq 'company_logo';
         $request->{main} = "am.pl?action=recurring_transactions"
             if $request->{main} eq 'recurring_transactions';
@@ -83,9 +85,6 @@ sub root_doc {
             template => 'frameset',
 	     format => 'HTML'
 	);
-    } else {
-        drilldown_menu($request);
-        return;
     }
     $template->render($request);
 }
