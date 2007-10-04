@@ -1059,106 +1059,13 @@ sub post_invoice {
                         qq|id = $form->{"id_$i"}|,
                         $form->{"qty_$i"} * -1
                     ) unless $form->{shipped};
-                    if($form->{"qty_$i"} > 0){
-                        #start patch bug 1755355
-                        # check for unallocated entries at the same price to match our entry
-                        $query = qq|
-                              SELECT i.id, i.qty, i.allocated, a.transdate
-                              FROM invoice i
-                              JOIN parts p ON (p.id = i.parts_id)
-                              JOIN ar a ON (a.id = i.trans_id)
-                              WHERE i.parts_id = ? AND (i.qty + i.allocated) < 0 AND i.sellprice = ?
-                              ORDER BY transdate|;
-                        $sth = $dbh->prepare($query);
-                        $sth->execute( $form->{"id_$i"}, $form->{"sellprice_$i"}) || $form->dberror($query);
-                        my $totalqty = $form->{"qty_$i"};
-                        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-                    	    $form->db_parse_numeric(sth=>$sth, hashref => $ref);
-                    	    my $qty = $ref->{qty} + $ref->{allocated};
-                    	    if ( ( $qty + $totalqty ) < 0 ) { $qty = -$totalqty; }
-                    	    # update allocated for sold item
-                    	    $form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, (-1)*$qty);
-                    	    $allocated += $qty;
-                    	    last if ( ( $totalqty += $qty ) <= 0 );
-                        }
-                	$allocated +=  &cogs( $dbh, $form, $form->{"id_$i"}, $totalqty, $project_id );
-                        #stop  patch bug 1755355
-                    }
-		    else {
- 			$query = qq|
- 			              SELECT i.id, i.qty, i.allocated, a.transdate
- 					FROM invoice i
- 				        JOIN parts p ON (p.id = i.parts_id)
-                                         JOIN ar a ON (a.id = i.trans_id)
- 				       WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 AND i.sellprice = ?
- 				    ORDER BY transdate
- 				|;
-                         $sth = $dbh->prepare($query);
- 	                $sth->execute( 
-                                $form->{"id_$i"}, $form->{"sellprice_$i"}
-                         ) || $form->dberror($query);
-			my $totalqty = $form->{"qty_$i"};
-			my $total_inventory = 0;
-			while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
- 		    	    $form->db_parse_numeric(sth=>$sth, hashref => $ref);
- 			    my $qty = $ref->{qty} + $ref->{allocated};
- 			    if ( ( $qty + $totalqty ) > 0 ) { $qty = -$totalqty; }
- 		    	    # update allocated for sold item
- 		            $form->update_balance( 
-                                     $dbh, "invoice", "allocated", 
-                                     qq|id = $ref->{id}|, $qty * -1 
-                             );
-                            my $linetotal = $qty*$ref->{sellprice};
- 			    $allocated += $qty;
-                            $query = qq|
-                                 INSERT INTO acc_trans 
-                                             (trans_id, chart_id, amount, 
-                                             transdate, project_id, invoice_id) 
-                                      VALUES (?, ?, ?, ?, ?, ?)|;
-                            my $sth1 = $dbh->prepare($query);
-                            $sth1->execute(
-                                 $form->{id}, $form->{"expense_accno_id_$i"}, 
-                                 $linetotal, $form->{transdate}, 
-                                 $form->{"project_id_$i"}, $ref->{id}
-                            ) || $form->dberror($query);
 
-                            $linetotal = (-1)*$linetotal;
-                            $query = qq|
-                                INSERT INTO acc_trans 
-                                            (trans_id, chart_id, amount, 
-                                            transdate, project_id, invoice_id) 
-                                     VALUES (?, ?, ?, ?, ?, ?)|;
-                            $sth1 = $dbh->prepare($query);
-        	            $sth1->execute(
-                                 $form->{id}, $form->{"inventory_accno_id_$i"}, 
-                                 $linetotal, $form->{transdate}, 
-                                 $form->{"project_id_$i"}, $ref->{id}
-                            ) || $form->dberror($query);
-                            # start patch bug 1755928 ################################################################################
-                            my $allocated1 = 0;
-                            my $totalqty1 = $qty;
-                            my $query_ap = qq|SELECT i.id, i.qty, i.allocated, a.transdate
-                        		        FROM invoice i
-                                                JOIN parts p ON (p.id = i.parts_id)
-                                                JOIN ap a ON (a.id = i.trans_id)
-                                               WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 AND i.sellprice = ?
-                                            ORDER BY transdate|;
-                            my $sth1 = $dbh->prepare($query_ap);
-                            $sth1->execute( $form->{"id_$i"}, $ref->{"sellprice"}) || $form->dberror($query_ap);
-                            while ( my $ref1 = $sth1->fetchrow_hashref(NAME_lc) ) {
-                        	$form->db_parse_numeric(sth=>$sth1, hashref => $ref1);
-                                my $qty = $ref1->{qty} + $ref1->{allocated};
-                        	if ( ( $qty - $totalqty ) > 0 ) { $qty = $totalqty; }
-                                $form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref1->{id}|, $qty );
-                                $allocated1 += $qty;
-                    		last if ( ( $totalqty1 -= $qty ) <= 0 );
-                            }
-                            $form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, $allocated1 * -1 );
-                    	    # stop  patch bug 1755928 ################################################################################
+                    $allocated = cogs(
+                        $dbh,              $form,      
+                        $form->{"id_$i"},  $form->{"qty_$i"}, 
+                        $project_id,       $form->{"sellprice_$i"},
+                    ); 
 
- 		            last if ( ( $totalqty += $qty ) >= 0 );
- 		        }
-		    }
                 }
             }
 
@@ -1620,66 +1527,147 @@ sub process_assembly {
 }
 
 sub cogs {
-    my ( $dbh2, $form, $id, $totalqty, $project_id ) = @_;
+    my ( $dbh2, $form, $id, $totalqty, $project_id, $sellprice) = @_;
     my $dbh   = $form->{dbh};
-    my $query = qq|
+    my $query;
+    my $allocated = 0;
+    if ($totalqty == 0) {
+        return 0;
+    }
+    elsif ($totalqty > 0) {
+    # If the quantity is positive, we do a standard FIFO COGS calculation. 
+    # In this case, we are going to order the queue by transdate and trans_id
+    # as this is the best way of doing this perpetually.  We don't want out 
+    # of order entry to screw with the books.  Of course if someone wants to
+    # implement LIFO, this would be the place to do it. -- CT
+
+        my $query = qq|
 		   SELECT i.id, i.trans_id, i.qty, i.allocated, i.sellprice,
 		          i.fxsellprice, p.inventory_accno_id, 
-		          p.expense_accno_id
-		     FROM invoice i, parts p, ap a 
-		    WHERE i.parts_id = p.id
-		      AND i.trans_id = a.id
-		      AND i.parts_id = ?
-		      AND (i.qty + i.allocated) < 0
-		 ORDER BY trans_id|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute($id) || $form->dberror($query);
+		          p.expense_accno_id, 
+		          (i.qty * -1) - i.allocated AS available
+		     FROM invoice i
+		     JOIN parts p ON (i.parts_id = p.id) 
+		     JOIN ap a ON (i.trans_id = a.id)
+		    WHERE i.parts_id = ? AND (i.qty + i.allocated) < 0
+		 ORDER BY a.transdate, i.trans_id|;
+        my $sth = $dbh->prepare($query);
+        $sth->execute($id) || $form->dberror($query);
 
-    my $allocated = 0;
-    my $qty;
+        my $qty;
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-	$form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-        if ( ( $qty = ( ( $ref->{qty} * -1 ) - $ref->{allocated} ) ) >
-            $totalqty )
-        {
-            $qty = $totalqty;
+        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+            if ( $ref->{available} >= $totalqty ) {
+                $qty = $totalqty;
+            }
+            else {
+                $qty = $ref->{available};
+            }
+
+            $form->update_balance( $dbh, "invoice", "allocated",
+                qq|id = $ref->{id}|, $qty );
+
+            # total expenses and inventory
+            # sellprice is the cost of the item
+            my $linetotal = $form->round_amount($ref->{sellprice} * $qty, 2);
+
+            # add expense
+            push @{ $form->{acc_trans}{lineitems} },
+              {
+                chart_id   => $ref->{expense_accno_id},
+                amount     => $linetotal * -1,
+                project_id => $project_id,
+                invoice_id => $ref->{id}
+              };
+
+            # deduct inventory
+            push @{ $form->{acc_trans}{lineitems} },
+              {
+                chart_id   => $ref->{inventory_accno_id},
+                amount     => $linetotal,
+                project_id => $project_id,
+                invoice_id => $ref->{id}
+              };
+
+            # subtract from allocated
+            $allocated -= $qty;
+
+            last if ( ( $totalqty -= $qty ) <= 0 );
         }
 
-        $form->update_balance( $dbh, "invoice", "allocated",
-            qq|id = $ref->{id}|, $qty );
+        $sth->finish;
+    }
+    else {
+    # In this case, the quantity is negative.  So we are looking at a 
+    # reversing  entry for partial COGS.   The two workflows supported here 
+    # are those involved in voiding an invoice or returning some items on it.
+    # If there are unallocated items for the current invoice at the end, we 
+    # will throw an error until we have an understanding of other workflows 
+    # that need to be supported.  -- CT
+        $query = qq|
+        	      SELECT i.id, i.qty, i.allocated, a.transdate
+		             i.qty - i.allocated AS available,
+		             p.expense_accno_id, p.inventory_accno_id
+		        FROM invoice i
+		        JOIN parts p ON (p.id = i.parts_id)
+		        JOIN ar a ON (a.id = i.trans_id)
+	               WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 
+                             AND i.sellprice = ?
+		    ORDER BY transdate
+				|;
+        $sth = $dbh->prepare($query);
+        $sth->execute($id, $sellprice) || $form->dberror($query);
+        my $qty;
+        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref => $ref);
+            if ($totalqty > $ref->{available}){
+                $qty = $ref->{available};
+            } else {
+                $qty = $totalqty;
+            }
+	    # update allocated for sold item
+            $form->update_balance( 
+                            $dbh, "invoice", "allocated", 
+                            qq|id = $ref->{id}|, $qty * -1 
+            );
+            $allocated += $qty;
+            my $linetotal = $qty*$ref->{sellprice};
+            $query = qq|
+		INSERT INTO acc_trans 
+		            (trans_id, chart_id, amount, 
+                             transdate, project_id, invoice_id) 
+		     VALUES (?, ?, ?, ?, ?, ?)|;
 
-        # total expenses and inventory
-        # sellprice is the cost of the item
-        my $linetotal = $form->round_amount( $ref->{sellprice} * $qty, 2 );
+            my $sth1 = $dbh->prepare($query);
+            $sth1->execute(
+                         $form->{id}, $ref->{"expense_accno_id"}, 
+                         $linetotal, $form->{transdate}, 
+                         $project_id, $ref->{id}
+            ) || $form->dberror($query);
 
-        # add expense
-        push @{ $form->{acc_trans}{lineitems} },
-          {
-            chart_id   => $ref->{expense_accno_id},
-            amount     => $linetotal * -1,
-            project_id => $project_id,
-            invoice_id => $ref->{id}
-          };
+            $query = qq|
+		INSERT INTO acc_trans 
+		            (trans_id, chart_id, amount, transdate, 
+		             project_id, invoice_id) 
+		     VALUES (?, ?, ?, ?, ?, ?)|;
 
-        # deduct inventory
-        push @{ $form->{acc_trans}{lineitems} },
-          {
-            chart_id   => $ref->{inventory_accno_id},
-            amount     => $linetotal,
-            project_id => $project_id,
-            invoice_id => $ref->{id}
-          };
+            $sth1 = $dbh->prepare($query);
+            $sth1->execute(
+                 $form->{id}, $ref->{"inventory_accno_id"}, 
+                 -$linetotal, $form->{transdate}, 
+                 $project_id, $ref->{id}
+            ) || $form->dberror($query);
 
-        # add allocated
-        $allocated += -$qty;
-
-        last if ( ( $totalqty -= $qty ) <= 0 );
+            $totalqty -= $qty;
+            last if $totalqty == 0;
+        }
+        if ($totalqty < 0){
+            $form->error("Too many reversed items on an invoice");
+        }
     }
 
-    $sth->finish;
-
-    $allocated;
+    return $allocated;
 }
 
 sub reverse_invoice {
