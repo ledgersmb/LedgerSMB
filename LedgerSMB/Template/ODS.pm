@@ -745,6 +745,12 @@ sub _format_handler {
 	unshift @style_stack, $style_table{$mystyle};
 }
 
+sub _named_format {
+	my ($name, $t, $format) = @_;
+	$format->{att}{$name} = 1;
+	&_format_handler($t, $format);
+}
+
 sub _format_cleanup_handler {
 	my ($t, $format) = @_;
 	shift @style_stack;
@@ -762,9 +768,19 @@ sub _ods_process {
 			cell => \&_cell_handler,
 			formula => \&_formula_handler,
 			format => \&_format_handler,
+			bold => sub { &_named_format('bold', @_) },
+			hidden => sub { &_named_format('hidden', @_) },
+			italic => sub { &_named_format('italic', @_) },
+			shadow => sub { &_named_format('shadow', @_) },
+			strikeout => sub { &_named_format('strikeout', @_) },
 			},
 		twig_handlers => {
 			format => \&_format_cleanup_handler,
+			bold => \&_format_cleanup_handler,
+			hidden => \&_format_cleanup_handler,
+			italic => \&_format_cleanup_handler,
+			shadow => \&_format_cleanup_handler,
+			strikeout => \&_format_cleanup_handler,
 			}
 		);
 	$parser->parse($template);

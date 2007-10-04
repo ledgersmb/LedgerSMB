@@ -18,9 +18,9 @@
 		<?lsmb IF loop.first ?><format num_format="3">
 		<?lsmb END ?>
 			<?lsmb IF row.$column.href ?>
-			<format font_shadow="1">
+			<italic>
 			<cell text="<?lsmb row.$column.text ?>" />
-			</format>
+			</italic>
 			<?lsmb ELSE ?>
 			<format font_outline="1">
 			<cell text="<?lsmb row.$column ?>" />
