@@ -69,7 +69,7 @@
 	PROCESS input element_data={
 		type => 'hidden',
 		name => hidden,
-		value => hiddens.$hidden
+		value => hiddens.item($hidden)
 		}; END ?>
 <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
 </form>
