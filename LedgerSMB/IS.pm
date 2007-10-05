@@ -1595,13 +1595,13 @@ sub cogs {
     # will throw an error until we have an understanding of other workflows 
     # that need to be supported.  -- CT
         $query = qq|
-        	      SELECT i.id, i.qty, i.allocated, a.transdate
-		             i.qty - i.allocated AS available,
+        	      SELECT i.id, i.qty, i.allocated, a.transdate,
+		             -1 * (i.allocated + i.qty) AS available,
 		             p.expense_accno_id, p.inventory_accno_id
 		        FROM invoice i
 		        JOIN parts p ON (p.id = i.parts_id)
 		        JOIN ar a ON (a.id = i.trans_id)
-	               WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 
+	               WHERE i.parts_id = ? AND (i.qty +  i.allocated) > 0 
                              AND i.sellprice = ?
 		    ORDER BY transdate
 				|;
@@ -1610,7 +1610,7 @@ sub cogs {
         my $qty;
         while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
             $form->db_parse_numeric(sth=>$sth, hashref => $ref);
-            if ($totalqty > $ref->{available}){
+            if ($totalqty < $ref->{available}){
                 $qty = $ref->{available};
             } else {
                 $qty = $totalqty;
@@ -1618,7 +1618,7 @@ sub cogs {
 	    # update allocated for sold item
             $form->update_balance( 
                             $dbh, "invoice", "allocated", 
-                            qq|id = $ref->{id}|, $qty * -1 
+                            qq|id = $ref->{id}|, $qty  
             );
 
             # Note:  No COGS calculations on reversed short sale invoices.  
@@ -1626,6 +1626,7 @@ sub cogs {
             # such short invoices.  -- CT
 
             $totalqty -= $qty;
+            $allocated -= $qty;
             last if $totalqty == 0;
         }
         # If the total quantity is still less than zero, we must assume that
@@ -1640,10 +1641,10 @@ sub cogs {
         if ($totalqty < 0){
             $query = qq|
 		  SELECT i.allocated, i.sellprice, p.inventory_accno_id, 
-		         p.expense_accno_id 
+		         p.expense_accno_id, i.id 
 		    FROM invoice i
 		    JOIN parts p ON (i.parts_id = p.id)
-		    JOIN ap ON (i.trans_id = a.id)
+		    JOIN ap a ON (i.trans_id = a.id)
 		   WHERE (i.allocated + i.qty) < 0
 		         AND i.parts_id = ?
 		ORDER BY a.transdate DESC, a.id DESC
@@ -1653,11 +1654,10 @@ sub cogs {
             $sth->execute($id);
 
             while (my $ref = $sth->fetchrow_hashref(NAME_lc)){
-                my $qty = $ref->{allocated};
+                my $qty = $ref->{allocated} * -1;
 
-                %qty = ($qty > $totalqty) ? $totalqty : $qty;
+                $qty = ($qty < $totalqty) ? $totalqty : $qty;
 
-                $allocated += $qty;
                 my $linetotal = $qty*$ref->{sellprice};
                 push @{ $form->{acc_trans}{lineitems} },
                   {
@@ -1674,9 +1674,13 @@ sub cogs {
                     project_id => $project_id,
                     invoice_id => $ref->{id}
                   };
+                  $form->update_balance( 
+                            $dbh, "invoice", "allocated", 
+                            qq|id = $ref->{id}|, $qty 
+                  );
 
                 $totalqty -= $qty;
-                $allocated += $qty;
+                $allocated -= $qty;
 
                 last if $totalqty == 0;
             }
@@ -1694,7 +1698,6 @@ sub cogs {
                    "  Aborting.");
         }
     }
-
     return $allocated;
 }
 
