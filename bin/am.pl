@@ -403,7 +403,7 @@ sub list_account {
         $gifi_accno = $form->escape( $ca->{gifi_accno} );
 
         if ( $ca->{charttype} eq "H" ) {
-            $column_data{heading} = 'H';
+            $column_data{class} = 'heading';
             $column_data{accno} = {
               text => $ca->{accno},
               href => "$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
@@ -429,7 +429,7 @@ sub list_account {
             $column_data{description} = $ca->{description};
             $column_data{debit}       = $ca->{debit};
             $column_data{credit} = $ca->{credit};
-            $column_data{link}   = $ca->{link};
+	    $column_data{link}   = {text => $ca->{link}, delimiter => ':'};
 
         }
         push @rows, \%column_data;
@@ -445,20 +445,30 @@ sub list_account {
             class => 'submit',
         };
     }
+    my %hiddens = (
+        callback => $callback,
+        action => 'list_account',
+        path => $form->{path},
+        login => $form->{login},
+        sessionid => $form->{sessionid},
+        );
 
+    my %row_alignment = ('credit' => 'right', 'debit' => 'right');
     my $format = uc substr($form->{action}, 0, 3);
     my $template = LedgerSMB::Template->new(
         user => \%myconfig, 
         locale => $locale,
         path => 'UI',
-        template => 'am-list-accounts',
+        template => 'form-dynatable',
         format => ($format ne 'LIS')? $format: 'HTML');
     $template->render({
-        form => \%$form,
+        form => $form,
         buttons => \@buttons,
+	hiddens => \%hiddens,
         columns => \@column_index,
         heading => \%column_header,
         rows => \@rows,
+	row_alignment => \%row_alignment,
     });
 }
 
@@ -496,11 +506,17 @@ sub list_gifi {
     AM->gifi_accounts( \%myconfig, \%$form );
 
     $form->{title} = $locale->text('GIFI');
+    my %hiddens;
 
     # construct callback
     my $callback =
 "$form->{script}?action=list_gifi&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
     $form->{callback} = $callback;
+    $hiddens{callback} = $callback;
+    $hiddens{action} = 'list_gifi';
+    $hiddens{path} = $form->{path};
+    $hiddens{login} = $form->{login};
+    $hiddens{sessionid} = $form->{sessionid};
 
     my @column_index = qw(accno description);
     my %column_header;
@@ -538,10 +554,11 @@ sub list_gifi {
         user => \%myconfig, 
         locale => $locale,
         path => 'UI',
-        template => 'am-list-accounts',
+	template => 'form-dynatable',
         format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
     $template->render({
         form => \%$form,
+        hiddens => \%hiddens,
         buttons => \@buttons,
         columns => \@column_index,
         heading => \%column_header,

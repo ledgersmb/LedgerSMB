@@ -445,6 +445,14 @@ sub generate_report {
     $callback =
 "$form->{script}?action=generate_report&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
+    my %hiddens = (
+        'action' => 'generate_report',
+        'direction' => $form->{direction},
+        'oldsort' => $form->{oldsort},
+        'path' => $form->{path},
+        'login' => $form->{login},
+        'sessionid' => $form->{sessionid},
+        );
     %acctype = (
         'A' => $locale->text('Asset'),
         'L' => $locale->text('Liability'),
@@ -465,33 +473,39 @@ sub generate_report {
     if ( $form->{accno} ) {
         $href .= "&accno=" . $form->escape( $form->{accno} );
         $callback .= "&accno=" . $form->escape( $form->{accno}, 1 );
+        $hiddens{accno} = $form->{accno};
         push @options, $locale->text('Account')
           . " : $form->{accno} $form->{account_description}";
     }
     if ( $form->{gifi_accno} ) {
         $href     .= "&gifi_accno=" . $form->escape( $form->{gifi_accno} );
         $callback .= "&gifi_accno=" . $form->escape( $form->{gifi_accno}, 1 );
+        $hiddens{gifi_accno} = $form->{gifi_accno};
         push @options, $locale->text('GIFI')
           . " : $form->{gifi_accno} $form->{gifi_account_description}";
     }
     if ( $form->{source} ) {
         $href     .= "&source=" . $form->escape( $form->{source} );
         $callback .= "&source=" . $form->escape( $form->{source}, 1 );
+        $hiddens{source} = $form->{source};
         push @options, $locale->text('Source') . " : $form->{source}";
     }
     if ( $form->{memo} ) {
         $href     .= "&memo=" . $form->escape( $form->{memo} );
         $callback .= "&memo=" . $form->escape( $form->{memo}, 1 );
+        $hiddens{memo} = $form->{memo};
         push @options, $locale->text('Memo') . " : $form->{memo}";
     }
     if ( $form->{reference} ) {
         $href     .= "&reference=" . $form->escape( $form->{reference} );
         $callback .= "&reference=" . $form->escape( $form->{reference}, 1 );
+        $hiddens{reference} = $form->{reference};
         push @options, $locale->text('Reference') . " : $form->{reference}";
     }
     if ( $form->{department} ) {
         $href .= "&department=" . $form->escape( $form->{department} );
         $callback .= "&department=" . $form->escape( $form->{department}, 1 );
+        $hiddens{department} = $form->{department};
         ($department) = split /--/, $form->{department};
         push @options, $locale->text('Department') . " : $department";
     }
@@ -499,23 +513,27 @@ sub generate_report {
     if ( $form->{description} ) {
         $href     .= "&description=" . $form->escape( $form->{description} );
         $callback .= "&description=" . $form->escape( $form->{description}, 1 );
+        $hiddens{description} = $form->{description};
         push @options, $locale->text('Description') . " : $form->{description}";
     }
     if ( $form->{notes} ) {
         $href     .= "&notes=" . $form->escape( $form->{notes} );
         $callback .= "&notes=" . $form->escape( $form->{notes}, 1 );
+        $hiddens{notes} = $form->{notes};
         push @options, $locale->text('Notes') . " : $form->{notes}";
     }
 
     if ( $form->{datefrom} ) {
         $href     .= "&datefrom=$form->{datefrom}";
         $callback .= "&datefrom=$form->{datefrom}";
+        $hiddens{datefrom} = $form->{datefrom};
         push @options, $locale->text('From') . " "
           . $locale->date( \%myconfig, $form->{datefrom}, 1 );
     }
     if ( $form->{dateto} ) {
         $href     .= "&dateto=$form->{dateto}";
         $callback .= "&dateto=$form->{dateto}";
+        $hiddens{dateto} = $form->{dateto};
         my $option = $locale->text('To') . " "
           . $locale->date( \%myconfig, $form->{dateto}, 1 );
         if ( $form->{datefrom} ) {
@@ -529,12 +547,14 @@ sub generate_report {
     if ( $form->{amountfrom} ) {
         $href     .= "&amountfrom=$form->{amountfrom}";
         $callback .= "&amountfrom=$form->{amountfrom}";
+        $hiddens{amountfrom} = $form->{amountfrom};
         push @options, $locale->text('Amount') . " >= "
           . $form->format_amount( \%myconfig, $form->{amountfrom}, 2 );
     }
     if ( $form->{amountto} ) {
         $href     .= "&amountto=$form->{amountto}";
         $callback .= "&amountto=$form->{amountto}";
+        $hiddens{amountto} = $form->{amountto};
         my $option .= $form->format_amount( \%myconfig, $form->{amountto}, 2 );
         if ( $form->{amountfrom} ) {
             $options[$#options] .= " <= $option";
@@ -571,16 +591,19 @@ sub generate_report {
             # add column to href and callback
             $callback .= "&l_$item=Y";
             $href     .= "&l_$item=Y";
+            $hiddens{"l_$item"} = 'Y';
         }
     }
 
     if ( $form->{l_subtotal} eq 'Y' ) {
         $callback .= "&l_subtotal=Y";
         $href     .= "&l_subtotal=Y";
+        $hiddens{l_subtotal} = 'Y';
     }
 
     $callback .= "&category=$form->{category}";
     $href     .= "&category=$form->{category}";
+    $hiddens{category} = $form->{category};
 
     $column_header{id} =
         {text => $locale->text('ID'), href=> "$href&sort=id"};
@@ -609,6 +632,8 @@ sub generate_report {
     # add sort to callback
     $form->{callback} = "$callback&sort=$form->{sort}";
     $callback = $form->escape( $form->{callback} );
+    $hiddens{sort} = $form->{sort};
+    $hiddens{callback} = $form->{callback};
 
     $cml = 1;
 
@@ -761,7 +786,7 @@ sub generate_report {
         text => $locale->text('CSV Report'),
         type => 'submit',
         class => 'submit',
-        };
+    };
 
 ##SC: Taking this out for now...
 ##    if ( $form->{lynx} ) {
@@ -769,33 +794,29 @@ sub generate_report {
 ##        &menubar;
 ##    }
 
+    my %row_alignment = (
+        'balance' => 'right',
+        'debit' => 'right',
+        'credit' => 'right'
+        );
     my $template;
-    if ($form->{action} eq 'csv_gl_report') {
-        $template = LedgerSMB::Template->new(
-            user => \%myconfig, 
-            locale => $locale,
-            path => 'UI',
-            template => 'gl-report',
-            format => 'CSV'
-        );
-    } else {
-        $template = LedgerSMB::Template->new(
-            user => \%myconfig, 
-            locale => $locale,
-            path => 'UI',
-            template => 'gl-report',
-            format => 'HTML',
-        #    no_escape => 1
-        );
-    }
+    my $format = uc substr($form->{action}, 0, 3);
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig,
+        locale => $locale,
+        path => 'UI',
+        template => 'form-dynatable',
+        format => ($format ne 'CSV')? 'HTML': 'CSV');
     $template->render({
         form => \%$form,
         buttons => \@buttons,
+        hiddens => \%hiddens,
         options => \@options,
         columns => \@column_index,
         heading => \%column_header,
         rows => \@rows,
-        totals => \%column_data
+        row_alignment => \%row_alignment,
+        totals => \%column_data,
     });
 
 }
@@ -811,7 +832,7 @@ sub gl_subtotal_tt {
       $form->format_amount( \%myconfig, $subtotalcredit, 2, " " );
 
     for (@column_index) { $column_data{$_} = " " }
-    $column_data{'is_subtotal'} = 1;
+    $column_data{class} = 'subtotal';
 
     $column_data{debit} = $subtotaldebit;
     $column_data{credit} = $subtotalcredit;

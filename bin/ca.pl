@@ -84,6 +84,7 @@ use LedgerSMB::Template;
 sub chart_of_accounts {
 
     CA->all_accounts( \%myconfig, \%$form );
+    my %hiddens;
 
     @column_index = qw(accno gifi_accno description debit credit);
 
@@ -96,6 +97,11 @@ sub chart_of_accounts {
     $form->{title} = $locale->text('Chart of Accounts');
     $form->{callback} = 
       qq|$form->{script}?path=$form->{path}&action=chart_of_accounts&login=$form->{login}&sessionid=$form->{sessionid}|;
+    $hiddens{callback} = $form->{callback};
+    $hiddens{path} = $form->{path};
+    $hiddens{action} = 'chart_of_accounts';
+    $hiddens{login} = $form->{login};
+    $hiddens{sessionid} = $form->{sessionid};
 
     my @rows;
     my $totaldebit = 0;
@@ -110,7 +116,7 @@ sub chart_of_accounts {
 qq|$form->{script}?path=$form->{path}&action=list&accno=$ca->{accno}&login=$form->{login}&sessionid=$form->{sessionid}&description=$description&gifi_accno=$ca->{gifi_accno}&gifi_description=$gifi_description|;
 
         if ( $ca->{charttype} eq "H" ) {
-            $column_data{heading} = 'H';
+            $column_data{class} = 'heading';
             for (qw(accno description)) {
                 $column_data{$_} = $ca->{$_};
             }
@@ -160,15 +166,17 @@ qq|$form->{script}?path=$form->{path}&action=list&accno=$ca->{accno}&login=$form
         user => \%myconfig, 
         locale => $locale,
         path => 'UI',
-        template => 'am-list-accounts',
+        template => 'form-dynatable',
         format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
     $template->render({
         form => \%$form,
         buttons => \@buttons,
+        hiddens => \%hiddens,
         columns => \@column_index,
         heading => \%column_header,
-	totals => \%column_data,
+        totals => \%column_data,
         rows => \@rows,
+        row_alignment => {'credit' => 'right', 'debit' => 'right'},
     });
 }
 

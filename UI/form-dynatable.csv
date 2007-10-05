@@ -1,3 +1,3 @@
 <?lsmb FOREACH column IN columns ?><?lsmb IF heading.$column.text; heading.$column.text; ELSE; heading.$column; END ?><?lsmb IF NOT loop.last ?>,<?lsmb END ?><?lsmb END ?>
-<?lsmb FOREACH row IN rows ?><?lsmb FOREACH column IN columns ?><?lsmb IF row.$column.href; row.$column.text; ELSE; row.$column; END ?><?lsmb IF NOT loop.last ?>,<?lsmb END ?><?lsmb END ?>
+<?lsmb FOREACH row IN rows ?><?lsmb FOREACH column IN columns ?><?lsmb IF row.$column.text; row.$column.text; ELSE; row.$column; END ?><?lsmb IF NOT loop.last ?>,<?lsmb END ?><?lsmb END ?>
 <?lsmb END ?><?lsmb IF totals; t = []; FOREACH column IN columns; t.push(totals.$column); END; t.join(','); END ?>
