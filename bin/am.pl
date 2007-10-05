@@ -1693,182 +1693,48 @@ sub defaults {
     # get defaults for account numbers and last numbers
     AM->get_all_defaults( \%$form );
 
+    my %selects = (
+        'FX_loss' => {name => 'FX_loss', options => []},
+        'FX_gain' => {name => 'FX_gain', options => []},
+        'IC_expense' => {name => 'IC_expense', options => []},
+        'IC_income' => {name => 'IC_income', options => []},
+        'IC_inventory' => {name => 'IC_inventory', options => []},
+        'IC' => {name => 'IC', options => []},
+        );
     foreach $key ( keys %{ $form->{accno} } ) {
         foreach $accno ( sort keys %{ $form->{accno}{$key} } ) {
-            $form->{account}{$key} .=
-              "<option>$accno--$form->{accno}{$key}{$accno}{description}\n";
-            $form->{accno}{ $form->{accno}{$key}{$accno}{id} } = $accno;
+            push @{$selects{$key}{options}}, {
+                text => "$accno--$form->{accno}{$key}{$accno}{description}",
+                value => "$accno--$form->{accno}{$key}{$accno}{description}",
+                };
+            $selects{$key}{default_values} = "$accno--$form->{accno}{$key}{$accno}{description}" if
+                ($form->{defaults}{$key} == $form->{accno}{$key}{$accno}{id});
         }
-    }
-
-    for (qw(IC IC_inventory IC_income IC_expense FX_gain FX_loss)) {
-        $form->{account}{$_} =~
-s/>$form->{accno}{$form->{defaults}{$_}}/ selected>$form->{accno}{$form->{defaults}{$_}}/;
     }
 
     for (qw(accno defaults)) { delete $form->{$_} }
 
-    $form->{title} = $locale->text('System Defaults');
+##SC: temporary commenting out
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=type value=defaults>
-
-<table width=100%>
-  <tr><th class=listtop>$form->{title}</th></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align="right">| . $locale->text('Business Number') . qq|</th>
-	  <td><input name=businessnumber size=25 value="$form->{businessnumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Weight Unit') . qq|</th>
-	  <td><input name=weightunit size=5 value="$form->{weightunit}"></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <th class="listheading">|
-      . $locale->text('Last Numbers & Default Accounts')
-      . qq|</th>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Inventory') . qq|</th>
-	  <td><select name=IC>$form->{account}{IC}</select></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Income') . qq|</th>
-	  <td><select name=IC_income>$form->{account}{IC_income}</select></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Expense') . qq|</th>
-	  <td><select name=IC_expense>$form->{account}{IC_expense}</select></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>|
-      . $locale->text('Foreign Exchange Gain')
-      . qq|</th>
-	  <td><select name=FX_gain>$form->{account}{FX_gain}</select></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>|
-      . $locale->text('Foreign Exchange Loss')
-      . qq|</th>
-	  <td><select name=FX_loss>$form->{account}{FX_loss}</select></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <th align=left>|
-      . $locale->text(
-'Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies'
-      )
-      . qq|</th>
-  </tr>
-  <tr>
-    <td>
-    <input name=curr size=40 value="$form->{curr}">
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('GL Reference Number') . qq|</th>
-	  <td><input name=glnumber size=40 value="$form->{glnumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>|
-      . $locale->text('Sales Invoice/AR Transaction Number')
-      . qq|</th>
-	  <td><input name=sinumber size=40 value="$form->{sinumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Sales Order Number') . qq|</th>
-	  <td><input name=sonumber size=40 value="$form->{sonumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>|
-      . $locale->text('Vendor Invoice/AP Transaction Number')
-      . qq|</th>
-	  <td><input name=vinumber size=40 value="$form->{vinumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>|
-      . $locale->text('Purchase Order Number')
-      . qq|</th>
-	  <td><input name=ponumber size=40 value="$form->{ponumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>|
-      . $locale->text('Sales Quotation Number')
-      . qq|</th>
-	  <td><input name=sqnumber size=40 value="$form->{sqnumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('RFQ Number') . qq|</th>
-	  <td><input name=rfqnumber size=40 value="$form->{rfqnumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Part Number') . qq|</th>
-	  <td><input name=partnumber size=40 value="$form->{partnumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Job/Project Number') . qq|</th>
-	  <td><input name=projectnumber size=40 value="$form->{projectnumber}"></td>
-        </tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Employee Number') . qq|</th>
-	  <td><input name=employeenumber size=40 value="$form->{employeenumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Customer Number') . qq|</th>
-	  <td><input name=customernumber size=40 value="$form->{customernumber}"></td>
-	</tr>
-	<tr>
-	  <th align="right" nowrap>| . $locale->text('Vendor Number') . qq|</th>
-	  <td><input name=vendornumber size=40 value="$form->{vendornumber}"></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
-    $form->hide_form(qw(path login sessionid));
-
-    print qq|
-<button type="submit" class="submit" name="action" value="save">|
-      . $locale->text('Save')
-      . qq|</button>|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
-
+    my %hiddens = (
+        path => $form->{path},
+        login => $form->{login},
+        sessionid => $form->{sessionid},
+        type => 'defaults',
+        );
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-defaults');
+    $template->render({
+        form => $form,
+	hiddens => \%hiddens,
+	selects => \%selects,
+    });
 }
 
 sub taxes {
