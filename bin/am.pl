@@ -2054,84 +2054,35 @@ sub audit_control {
     $form->{title} = $locale->text('Audit Control');
 
     AM->closedto( \%myconfig, \%$form );
+    my %checked;
 
     if ( $form->{revtrans} ) {
-        $checked{revtransY} = "checked";
-    }
-    else {
-        $checked{revtransN} = "checked";
+        $checked{revtransY} = 'checked';
+    } else {
+        $checked{revtransN} = 'checked';
     }
 
     if ( $form->{audittrail} ) {
-        $checked{audittrailY} = "checked";
+        $checked{audittrailY} = 'checked';
+    } else {
+        $checked{audittrailN} = 'checked';
     }
-    else {
-        $checked{audittrailN} = "checked";
-    }
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
-
-<table width=100%>
-  <tr><th class=listtop>$form->{title}</th></tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align="right">|
-      . $locale->text('Enforce transaction reversal for all dates')
-      . qq|</th>
-	  <td><input name=revtrans class=radio type=radio value="1" $checked{revtransY}> |
-      . $locale->text('Yes')
-      . qq| <input name=revtrans class=radio type=radio value="0" $checked{revtransN}> |
-      . $locale->text('No')
-      . qq|</td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Close Books up to') . qq|</th>
-	  <td><input class="date" name=closedto size=11 title="$myconfig{dateformat}" value=$form->{closedto}></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Activate Audit trail') . qq|</th>
-	  <td><input name=audittrail class=radio type=radio value="1" $checked{audittrailY}> |
-      . $locale->text('Yes')
-      . qq| <input name=audittrail class=radio type=radio value="0" $checked{audittrailN}> |
-      . $locale->text('No')
-      . qq|</td>
-	</tr><!-- SC: Disabling audit trail deletion
-	<tr>
-	  <th align="right">| . $locale->text('Remove Audit trail up to') . qq|</th>
-	  <td><input class="date" name=removeaudittrail size=11 title="$myconfig{dateformat}"></td>
-	</tr> -->
-      </table>
-    </td>
-  </tr>
-</table>
-
-<hr size=3 noshade>
-
-<br>
-<input type=hidden name=nextsub value=doclose>
-<input type=hidden name=action value=continue>
-<button type="submit" class="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-
-</form>
-
-</body>
-</html>
-|;
-
+    my %hiddens = (
+        path => $form->{path},
+        login => $form->{login},
+        sessionid => $form->{sessionid},
+        );
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-audit-control');
+    $template->render({
+        user => \%myconfig,
+        form => $form,
+        checked => \%checked,
+	hiddens => \%hiddens,
+    });
 }
 
 sub doclose {

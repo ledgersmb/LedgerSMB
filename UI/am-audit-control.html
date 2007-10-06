@@ -1,0 +1,49 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb text('Audit Control') ?></th></tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td>
+      <table>
+	<tr>
+	  <th align="right"><?lsmb text('Enforce transaction reversal for all dates') ?></th>
+          <td>
+<?lsmb PROCESS input element_data={type => 'radio', name => 'revtrans', label => text('Yes'), value => 1, ${checked.revtransY} => checked.revtransY} ?>
+<?lsmb PROCESS input element_data={type => 'radio', name => 'revtrans', label => text('No'), value => 0, ${checked.revtransN} => checked.revtransN} ?>
+          </td>
+	</tr>
+	<tr>
+	  <th align="right"><?lsmb text('Close Books up to') ?></th>
+	  <td><input class="date" name="closedto" size="11" title="<?lsmb user.dateformat ?>" value="<?lsmb form.closedto ?>" /></td>
+	</tr>
+	<tr>
+	  <th align="right"><?lsmb text('Activate Audit trail') ?></th>
+          <td>
+<?lsmb PROCESS input element_data={type => 'radio', name => 'audittrail', label => text('Yes'), value => 1, ${checked.audittrailY} => checked.audittrailY} ?>
+<?lsmb PROCESS input element_data={type => 'radio', name => 'audittrail', label => text('No'), value => 0, ${checked.audittrailN} => checked.audittrailN} ?>
+          </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<hr size="3" noshade="noshade" />
+
+<br />
+
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END;
+PROCESS button element_data={name => 'action', value => 'doclose' text => text('Continue')} ?>
+
+</form>
+
+</body>
+</html>
