@@ -1763,31 +1763,14 @@ sub taxes {
 sub display_taxes {
 
     $form->{title} = $locale->text('Taxes');
+    my %hiddens = (
+        path => $form->{path},
+        login => $form->{login},
+        sessionid => $form->{sessionid},
+        type => 'taxes',
+        );
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=type value=taxes>
-
-<table width=100%>
-  <tr><th class=listtop>$form->{title}</th></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th></th>
-	  <th>| . $locale->text('Rate') . qq| (%)</th>
-	  <th>| . $locale->text('Number') . qq|</th>
-	  <th>| . $locale->text('Valid To') . qq|</th>
-	  <th>| . $locale->text('Ordering') . qq|</th>
-	  <th>| . $locale->text('Tax Rules') . qq|</th>
-	</tr>
-|;
-
+    my @rows;
     for ( split( / /, $form->{taxaccounts} ) ) {
 
         ( $null, $i ) = split /_/, $_;
@@ -1795,81 +1778,52 @@ sub display_taxes {
         $form->{"taxrate_$i"} =
           $form->format_amount( \%myconfig, $form->{"taxrate_$i"} );
 
-        $form->hide_form("taxdescription_$i");
+        $hiddens{"taxdescription_$i"} = $form->{"taxdescription_$i"};
 
-        print qq|
-	<tr>
-	  <th align="right">|;
-
-        if ( $form->{"taxdescription_$i"} eq $sametax ) {
-            print "";
-        }
-        else {
-            print qq|$form->{"taxdescription_$i"}|;
-        }
-
-        print qq|</th>
-	  <td><input name="taxrate_$i" size=6 value=$form->{"taxrate_$i"}></td>
-	  <td><input name="taxnumber_$i" value="$form->{"taxnumber_$i"}"></td>
-	  <td><input class="date" name="validto_$i" size=11 value="$form->{"validto_$i"}" title="$myconfig{dateformat}"></td>
-	  <td><input name="pass_$i" size=6 value="$form->{"pass_$i"}"></td>
-	  <td><select name="taxmodule_id_$i" size=1>|;
+        my %select = (name => "taxmodule_id_$i", options => []);
         foreach my $taxmodule ( sort keys %$form ) {
             next if ( $taxmodule !~ /^taxmodule_/ );
             next if ( $taxmodule =~ /^taxmodule_id_/ );
             my $modulenum = $taxmodule;
             $modulenum =~ s/^taxmodule_//;
-            print '<option label="'
-              . $form->{$taxmodule}
-              . '" value="'
-              . $modulenum . '"';
-            print " SELECTED "
+            push @{$select{options}},
+                {text => $form->{$taxmodule}, value => $modulenum};
+            $select{default_values} = $modulenum
               if $form->{$taxmodule} eq $form->{"taxmodulename_$i"};
-            print ">" . $form->{$taxmodule} . "</option>\n";
         }
-        print qq|</select></td>
-	</tr> |;
-        $sametax = $form->{"taxdescription_$i"};
+        if ( $form->{"taxdescription_$i"} eq $sametax ) {
+            push @rows, ["", \%select];
+        } else {
+            push @rows, [$form->{"taxdescription_$i"}, \%select];
+        }
+
+	$sametax = $form->{"taxdescription_$i"};
 
     }
 
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
-    $form->hide_form(qw(taxaccounts path login sessionid));
+    $hiddens{taxaccounts} = $form->{taxaccounts};
     foreach my $taxmodule ( sort keys %$form ) {
         next if ( $taxmodule !~ /^taxmodule_/ );
         next if ( $taxmodule =~ /^taxmodule_id_/ );
-        $form->hide_form("$taxmodule");
+        $hiddens{$taxmodule};
     }
 
-    print qq|
-<button type="submit" class="submit" name="action" value="update">|
-      . $locale->text('Update')
-      . qq|</button>
-<button type="submit" class="submit" name="action" value="save_taxes">|
-      . $locale->text('Save')
-      . qq|</button>|;
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-taxes');
+    $template->render({
+        form => $form,
+	hiddens => \%hiddens,
+	selects => \%selects,
+	rows => \@rows,
+    });
 }
 
 sub update {
