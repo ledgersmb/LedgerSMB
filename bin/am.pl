@@ -1891,196 +1891,100 @@ sub update {
 
 sub config {
 
+    my %selects;
+    $selects{dateformat} = {
+        name => 'dateformat',
+        default_values => $myconfig{dateformat},
+        options => [],
+        };
     foreach $item (qw(mm-dd-yy mm/dd/yy dd-mm-yy dd/mm/yy dd.mm.yy yyyy-mm-dd))
     {
-        $dateformat .=
-          ( $item eq $myconfig{dateformat} )
-          ? "<option selected>$item\n"
-          : "<option>$item\n";
+        push @{$selects{dateformat}{options}}, {text => $item, value => $item};
     }
 
+    $selects{numberformat} = {
+        name => 'numberformat',
+        default_values => $myconfig{numberformat},
+        options => [],
+        };
     my @formats = qw(1,000.00 1000.00 1.000,00 1000,00 1'000.00);
     push @formats, '1 000.00';
     foreach $item (@formats) {
-        $numberformat .=
-          ( $item eq $myconfig{numberformat} )
-          ? "<option selected>$item\n"
-          : "<option>$item\n";
+        push @{$selects{numberformat}{options}}, {text => $item, value => $item};
     }
 
-    for (qw(name company address signature)) {
-        $myconfig{$_} = $form->quote( $myconfig{$_} );
-    }
+##    for (qw(name company address signature)) {
+##        $myconfig{$_} = $form->quote( $myconfig{$_} );
+##    }
     for (qw(address signature)) { $myconfig{$_} =~ s/\\n/\n/g }
 
+    $selects{countrycode} = {
+        name => 'countrycode',
+        default_values => ($myconfig{countrycode})? $myconfig{countrycode}: 'en',
+        options => [],
+        };
     %countrycodes = LedgerSMB::User->country_codes;
-    $countrycodes = '';
-    my $selectedcode =
-      ( $myconfig{countrycode} ) ? $myconfig{countrycode} : 'en';
-
     foreach $key ( sort { $countrycodes{$a} cmp $countrycodes{$b} }
         keys %countrycodes )
     {
-        $countrycodes .=
-          ( $selectedcode eq $key )
-          ? "<option selected value=$key>$countrycodes{$key}\n"
-          : "<option value=$key>$countrycodes{$key}\n";
+        push @{$selects{countrycode}{options}}, {
+            text => $countrycodes{$key},
+            value => $key
+            };
     }
 
     opendir CSS, "css/.";
     @all = grep /.*\.css$/, readdir CSS;
     closedir CSS;
 
+    $selects{stylesheet} = {
+        name => 'usestylesheet',
+	default_values => $myconfig{stylesheet},
+        options => [],
+        };
     foreach $item (@all) {
-        if ( $item eq $myconfig{stylesheet} ) {
-            $selectstylesheet .= qq|<option selected>$item\n|;
-        }
-        else {
-            $selectstylesheet .= qq|<option>$item\n|;
-        }
+        push @{$selects{stylesheet}{options}}, {text => $item, value => $item};
     }
-    $selectstylesheet .= "<option>\n";
+    push @{$selects{stylesheet}{options}}, {text => 'none', value => '0'};
 
     if ( %{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} ) {
-        $selectprinter = "<option>\n";
+        $selects{printer} = {
+            name => 'printer',
+            default_values => $myconfig{printer},
+            options => [],
+            };
         foreach $item ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
-            if ( $myconfig{printer} eq $item ) {
-                $selectprinter .= qq|<option value="$item" selected>$item\n|;
-            }
-            else {
-                $selectprinter .= qq|<option value="$item">$item\n|;
-            }
+            push @{$selects{printer}{options}}, {text => $item, value => $item};
         }
-
-        $printer = qq|
-	      <tr>
-		<th align="right">| . $locale->text('Printer') . qq|</th>
-		<td><select name=printer>$selectprinter</select></td>
-	      </tr>
-|;
     }
 
     $form->{title} =
       $locale->text( 'Edit Preferences for [_1]', $form->{login} );
 
-    $form->header;
+##SC: Temporary commenting out
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=old_password value="$myconfig{password}">
-<input type=hidden name=type value=preferences>
-<input type=hidden name=role value="$myconfig{role}">
-
-<table width=100%>
-  <tr><th class=listtop>$form->{title}</th></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr valign=top>
-	  <td>
-	    <table>
-	      <tr>
-		<th align="right">| . $locale->text('Name') . qq|</th>
-		<td><input name=name size=20 value="$myconfig{name}"></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('E-mail') . qq|</th>
-		<td><input name=email size=35 value="$myconfig{email}"></td>
-	      </tr>
-	      <tr valign=top>
-		<th align="right">| . $locale->text('Signature') . qq|</th>
-		<td><textarea name=signature rows=3 cols=35>$myconfig{signature}</textarea></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Phone') . qq|</th>
-		<td><input name=tel size=14 value="$myconfig{tel}"></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Fax') . qq|</th>
-		<td><input name=fax size=14 value="$myconfig{fax}"></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Company') . qq|</th>
-		<td><input name=company size=35 value="$myconfig{company}"></td>
-	      </tr>
-	      <tr valign=top>
-		<th align="right">| . $locale->text('Address') . qq|</th>
-		<td><textarea name=address rows=4 cols=35>$myconfig{address}</textarea></td>
-	      </tr>
-	    </table>
-	  </td>
-	  <td>
-	    <table>
-	      <tr>
-		<th align="right">| . $locale->text('Password') . qq|</th>
-		<td><input type=password name=new_password size=10 value="$myconfig{password}"></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Confirm') . qq|</th>
-		<td><input type=password name=confirm_password size=10></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Date Format') . qq|</th>
-		<td><select name=dateformat>$dateformat</select></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Number Format') . qq|</th>
-		<td><select name=numberformat>$numberformat</select></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Dropdown Limit') . qq|</th>
-		<td><input name=vclimit size=10 value="$myconfig{vclimit}"></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Menu Width') . qq|</th>
-		<td><input name=menuwidth size=10 value="$myconfig{menuwidth}"></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Language') . qq|</th>
-		<td><select name=countrycode>$countrycodes</select></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Session Timeout') . qq|</th>
-		<td><input name=timeout size=10 value="$myconfig{timeout}"></td>
-	      </tr>
-	      <tr>
-		<th align="right">| . $locale->text('Stylesheet') . qq|</th>
-		<td><select name=usestylesheet>$selectstylesheet</select></td>
-	      </tr>
-	      $printer
-	    </table>
-	  </td>
-	</tr>
-      </table>
-    </td>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
-    $form->hide_form(qw(path login sessionid));
-
-    print qq|
-<button type="submit" class="submit" name="action" value="save">|
-      . $locale->text('Save')
-      . qq|</button>|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
-
+    my %hiddens = (
+        path => $form->{path},
+        login => $form->{login},
+        sessionid => $form->{sessionid},
+        type => 'preferences',
+        role => $myconfig{role},
+        old_password => $myconfig{password},
+        );
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-userconfig');
+    $template->render({
+        form => $form,
+        user => \%myconfig,
+	hiddens => \%hiddens,
+	selects => \%selects,
+    });
 }
 
 sub save_defaults {
