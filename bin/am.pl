@@ -2096,8 +2096,8 @@ sub doclose {
 
         if ( $form->{closedto} ) {
             $msg =
-                $locale->text('Transaction reversal enforced up to') . " "
-              . $locale->date( \%myconfig, $form->{closedto}, 1 );
+                $locale->text('Transaction reversal enforced up to [_1]',
+                $locale->date( \%myconfig, $form->{closedto}, 1 ));
         }
         else {
             $msg = $locale->text('Books are open');
