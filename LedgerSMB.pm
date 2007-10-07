@@ -646,7 +646,6 @@ sub _db_init {
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
     my ($login, $password) = split(/:/, $auth);
-    print STDERR "$auth\n";
     $self->{login} = $login;
     $self->{company} ||= 'lsmb13';
     my $dbname = $self->{company};
