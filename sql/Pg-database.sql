@@ -53,7 +53,12 @@ COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to en
 CREATE TABLE users (
     id serial UNIQUE, 
     username varchar(30) primary key,
-    entity_id int not null references entity(id) on delete cascade
+    entity_id int not null references employee(entity_id) on delete cascade,
+    language text references country(short_name),
+    stylesheet text default 'ledgersmb.css' not null,
+    printer text,
+    dateformat text default 'yyyy-mm-dd' not null,
+    numberformat text default '1000.00' not null
 );
 COMMENT ON TABLE users IS $$username is the actual primary key here because we do not want duplicate users$$;
 

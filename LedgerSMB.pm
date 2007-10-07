@@ -646,6 +646,7 @@ sub _db_init {
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
     my ($login, $password) = split(/:/, $auth);
+    print STDERR "$auth\n";
     $self->{login} = $login;
     $self->{company} ||= 'lsmb13';
     my $dbname = $self->{company};
@@ -659,16 +660,6 @@ sub _db_init {
     ); 
      my $dbh = $self->{dbh};
 
-    # This is the general version check
-    my $sth = $dbh->prepare("
-            SELECT value FROM defaults 
-             WHERE setting_key = 'version'");
-    $sth->execute;
-
-    my ($dbversion) = $sth->fetchrow_array;
-    if ($dbversion ne $self->{dbversion}){
-        $self->error("Database is not the expected version.");
-    }
 
 
     if (($self->{script} eq 'login.pl') && ($self->{action} eq 
@@ -679,9 +670,20 @@ sub _db_init {
     elsif (!$dbh){
         $self->_get_password;
     }
-
     $dbh->{pg_server_prepare} = 0;
     $dbh->{pg_enable_utf8} = 1;
+
+    # This is the general version check
+    my $sth = $dbh->prepare("
+            SELECT value FROM defaults 
+             WHERE setting_key = 'version'");
+    $sth->execute;
+    my ($dbversion) = $sth->fetchrow_array;
+    if ($dbversion ne $self->{dbversion}){
+        $self->error("Database is not the expected version.");
+    }
+
+
 
     
     # TODO:  Add date handling settings and the like.
