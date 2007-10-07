@@ -165,14 +165,15 @@ sub fetch_config {
     #I'm hoping that this function will go and is a temporary bridge
     #until we get rid of %myconfig elsewhere in the code
 
-    my ( $self, $login ) = @_;
+    my ( $self, $lsmb ) = @_;
+
+    my $login = $lsmb->{login};
+    my $dbh = $lsmb->{dbh};
 
     if ( !$login ) {
         &error( $self, "Access Denied" );
     }
 
-    # use central db
-    my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
     # for now, this is querying the table directly... ugly
 #    my $fetchUserPrefs = $dbh->prepare(
@@ -230,99 +231,6 @@ sub fetch_config {
     return \%myconfig;
 }
 
-=item $user->login($form);
-
-Disused auth function.
-
-=cut
-
-sub login {
-
-    my ( $self, $form ) = @_;
-
-    my $rc = -1;
-
-    if ( $self->{login} ne "" ) {
-        if (
-            !Session::password_check(
-                $form, $form->{login}, $form->{password}
-            )
-          )
-        {
-            return -1;
-        }
-
-        #this is really dumb, but %myconfig will have to stay until 1.3
-        while ( my ( $key, $value ) = each( %{$self} ) ) {
-            $myconfig{$key} = $value;
-        }
-
-        # check if database is down
-        my $dbh =
-          DBI->connect( $myconfig{dbconnect}, $myconfig{dbuser},
-            $myconfig{dbpasswd} )
-          or $self->error( __FILE__ . ':' . __LINE__ . ': ' . $DBI::errstr );
-        $dbh->{pg_enable_utf8} = 1;
-
-        # we got a connection, check the version
-        my $query = qq|
-            SELECT value FROM defaults 
-             WHERE setting_key = 'version'|;
-        my $sth = $dbh->prepare($query);
-        $sth->execute || $form->dberror( __FILE__ . ':' . __LINE__ . $query );
-
-        my ($dbversion) = $sth->fetchrow_array;
-        $sth->finish;
-
-        # add login to employee table if it does not exist
-        # no error check for employee table, ignore if it does not exist
-        my $login = $self->{login};
-        $login =~ s/@.*//;
-        $query = qq|SELECT entity_id FROM employee WHERE login = ?|;
-        $sth   = $dbh->prepare($query);
-        $sth->execute($login);
-
-        my ($id) = $sth->fetchrow_array;
-        $sth->finish;
-
-        if ( !$id ) {
-            my ($employeenumber) =
-              $form->update_defaults( \%myconfig, "employeenumber", $dbh );
-
-            $query = qq|
-                INSERT INTO employee 
-                            (login, employeenumber, name, 
-                            workphone, role)
-                     VALUES (?, ?, ?, ?, ?)|;
-            $sth = $dbh->prepare($query);
-            $sth->execute(
-                $login,         $employeenumber, $myconfig{name},
-                $myconfig{tel}, $myconfig{role}
-            );
-        }
-        $dbh->disconnect;
-
-        $rc = 0;
-
-        if ( $form->{dbversion} ne $dbversion ) {
-            $rc = -3;
-            $dbupdate =
-              ( calc_version($dbversion) < calc_version( $form->{dbversion} ) );
-        }
-
-        if ($dbupdate) {
-            $rc = -4;
-
-            # if DB2 bale out
-            if ( $myconfig{dbdriver} eq 'DB2' ) {
-                $rc = -2;
-            }
-        }
-    }
-
-    $rc;
-
-}
 
 =item LedgerSMB::User->check_recurring($form);
 

@@ -22,6 +22,28 @@ sub __default {
     $template->render($request);
 }
 
+sub authenticate {
+    my ($request) = @_;
+    if (!$request->{dbh}){
+        $request->{company} = 'lsmb13';
+        $request->_db_init;
+    }
+    $request->debug({file => '/tmp/request'});
+    if ($request->{dbh} || $request->{log_out}){
+        print "Content-Type: text/html\n";
+        print "Set-Cookie: LedgerSMB=Login;\n";
+	print "Status: 200 Success\n\n";
+        if ($request->{log_out}){
+            exit;
+        }
+    }
+    else {
+        print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
+        print "Status: 401 Unauthorized\n\n";
+	print "Please enter your credentials.\n";
+        exit; 
+    }
+}
 
 sub login {
     my ($request) = @_;

@@ -1113,9 +1113,17 @@ autocommit disabled.
 
 sub db_init {
     my ( $self, $myconfig ) = @_;
+
+    # Handling of HTTP Basic Auth headers
+    my $auth = $ENV{'HTTP_AUTHORIZATION'};
+    $auth =~ s/Basic //i; # strip out basic authentication preface
+    $auth = MIME::Base64::decode($auth);
+    my ($login, $password) = split(/:/, $auth);
+
     $self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
     my %date_query = (
         'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
+
         'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
         'dd/mm/yy' => 'set DateStyle to \'SQL, EUROPEAN\'',
         'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',

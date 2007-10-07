@@ -28,16 +28,21 @@
 #                  (ver. < 1.2) and the md5 one (ver. >= 1.2)
 #====================================================================
 package Session;
+use MIME::Base64;
+use strict;
 
 sub session_check {
 
     use Time::HiRes qw(gettimeofday);
 
     my ( $cookie, $form ) = @_;
-    my ( $sessionID, $transactionID, $token ) = split /:/, $cookie;
+    if ($cookie eq 'Login'){
+        return session_create($form);
+    }
+    my $timeout;
 
-    # use the central database handle
-    my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+    
+    my $dbh = $form->{dbh};
 
     my $checkQuery = $dbh->prepare(
         "SELECT u.username, s.transaction_id 
@@ -54,6 +59,10 @@ sub session_check {
          WHERE session_id = ?;"
     );
 
+    my ($sessionID, $transactionID, $company) = split(/:/, $cookie);
+
+    $form->{company} ||= $company;
+
     #must be an integer
     $sessionID =~ s/[^0-9]//g;
     $sessionID = int $sessionID;
@@ -61,15 +70,11 @@ sub session_check {
     $transactionID =~ s/[^0-9]//g;
     $transactionID = int $transactionID;
 
-    #must be 32 chars long and contain hex chars
-    $token =~ s/[^0-9a-f]//g;
-    $token = substr( $token, 0, 32 );
-
-    if ( !$myconfig{timeout} ) {
+    if ( !$form->{timeout} ) {
         $timeout = "1 day";
     }
     else {
-        $timeout = "$myconfig{timeout} seconds";
+        $timeout = "$form->{timeout} seconds";
     }
 
     $checkQuery->execute( $sessionID, $timeout )
@@ -99,8 +104,8 @@ sub session_check {
               || $form->dberror(
                 __FILE__ . ':' . __LINE__ . ': Updating session age: ' );
 
-            $newCookieValue =
-              $sessionID . ':' . $newTransactionID . ':' . $token;
+            my $newCookieValue =
+              $sessionID . ':' . $newTransactionID . ':' . $form->{company};
 
             #now update the cookie in the browser
             print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
@@ -129,6 +134,8 @@ sub session_check {
 }
 
 sub session_create {
+    my ($lsmb) = @_;
+    my $lsmb;
 
     use Time::HiRes qw(gettimeofday);
 
@@ -136,7 +143,6 @@ sub session_create {
     my ( $ignore, $newTransactionID ) = gettimeofday();
     $newTransactionID = int $newTransactionID;
 
-    my ($form) = @_;
 
     if ( !$ENV{HTTP_HOST} ) {
 
@@ -145,7 +151,7 @@ sub session_create {
     }
 
     # use the central database handle
-    my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+    my $dbh = $lsmb->{dbh};
 
     # TODO Change this to use %myconfig
     my $deleteExisting = $dbh->prepare(
@@ -167,43 +173,56 @@ sub session_create {
                                                     WHERE username = ?), ?, ?);"
     );
 
-# this is assuming that $form->{login} is safe, which might be a bad assumption
-# so, I'm going to remove some chars, which might make previously valid logins invalid
-    my $login = $form->{login};
+# this is assuming that the login is safe, which might be a bad assumption
+# so, I'm going to remove some chars, which might make previously valid 
+# logins invalid --CM
+
+# I am changing this to use HTTP Basic Auth credentials for now.  -- CT
+
+    my $auth = $ENV{HTTP_AUTHORIZATION};
+    $auth =~ s/^Basic //i;
+    my ($login, undef) = split(/:/, MIME::Base64::decode($auth));
     $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     #delete any existing stale sessions with this login if they exist
-    if ( !$myconfig{timeout} ) {
-        $myconfig{timeout} = 86400;
+    if ( $lsmb->{timeout} ) {
+        $lsmb->{timeout} = 86400;
     }
 
-    $deleteExisting->execute( $login, "$myconfig{timeout} seconds" )
-      || $form->dberror(
+    $deleteExisting->execute( $login, "$lsmb->{timeout} seconds" )
+      || $lsmb->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
 #doing the random stuff in the db so that LedgerSMB won't
-#require a good random generator - maybe this should be reviewed, pgsql's isn't great either
+#require a good random generator - maybe this should be reviewed, 
+#pgsql's isn't great either  -CM
+#
+#I think we should be OK.  The random number generator is only a small part 
+#of the credentials in 1.3.x, and for people that need greater security, there
+#is always Kerberos....  -- CT
     $fetchSequence->execute()
-      || $form->dberror( __FILE__ . ':' . __LINE__ . ': Fetch sequence id: ' );
+      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ': Fetch sequence id: ' );
     my ( $newSessionID, $newToken ) = $fetchSequence->fetchrow_array;
 
     #create a new session
     $createNew->execute( $newSessionID, $login, $newToken, $newTransactionID )
-      || $form->dberror( __FILE__ . ':' . __LINE__ . ': Create new session: ' );
+      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ': Create new session: ' );
 
     #reseed the random number generator
     my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );
 
     $seedRandom->execute($randomSeed)
-      || $form->dberror(
+      || $lsmb->dberror(
         __FILE__ . ':' . __LINE__ . ': Reseed random generator: ' );
 
-    $newCookieValue = $newSessionID . ':' . $newTransactionID . ':' . $newToken;
+
+    my $newCookieValue = $newSessionID . ':' . $newTransactionID . ':' 
+	. $lsmb->{company};
 
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
     print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
-    $form->{LedgerSMB} = $newCookieValue;
+    $lsmb->{LedgerSMB} = $newCookieValue;
 }
 
 sub session_destroy {

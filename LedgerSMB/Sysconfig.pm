@@ -116,17 +116,17 @@ for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
 }
 
 #putting this in an if clause for now so not to break other devel users
-if ( $config{globaldb}{DBname} ) {
-    my $dbconnect = "dbi:Pg:dbname=$globalDBname host=$globalDBhost
-		port=$globalDBport user=$globalDBUserName
-		password=$globalDBPassword";    # for easier debugging
-    $GLOBALDBH = DBI->connect($dbconnect);
-    if ( !$GLOBALDBH ) {
-        $form = new Form;
-        $form->error("No GlobalDBH Configured or Could not Connect");
-    }
-    $GLOBALDBH->{pg_enable_utf8} = 1;
-}
+#if ( $config{globaldb}{DBname} ) {
+#    my $dbconnect = "dbi:Pg:dbname=$globalDBname host=$globalDBhost
+#		port=$globalDBport user=$globalDBUserName
+#		password=$globalDBPassword";    # for easier debugging
+#    $GLOBALDBH = DBI->connect($dbconnect);
+#    if ( !$GLOBALDBH ) {
+#        $form = new Form;
+#        $form->error("No GlobalDBH Configured or Could not Connect");
+#    }
+#    $GLOBALDBH->{pg_enable_utf8} = 1;
+#}
 
 # These lines prevent other apps in mod_perl from seeing the global db
 # connection info

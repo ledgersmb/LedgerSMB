@@ -149,8 +149,7 @@ token VARCHAR(32) CHECK(length(token) = 32),
 last_used TIMESTAMP default now(),
 ttl int default 3600 not null,
 users_id INTEGER NOT NULL references users(id),
-transaction_id INTEGER NOT NULL,
-javascript_auth BOOL DEFAULT FALSE
+transaction_id INTEGER NOT NULL
 );
 
 --

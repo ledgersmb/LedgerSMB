@@ -154,7 +154,7 @@ sub new {
     if ( $self->{path} eq "bin/lynx" ) {
         $self->{menubar} = 1;
 
-        #menubar will be deprecated, replaced with below
+        # Applying the path is deprecated.  Use menubar instead.  CT.
         $self->{lynx} = 1;
         $self->{path} = "bin/lynx";
     }
@@ -166,63 +166,40 @@ sub new {
     if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
         $self->error("Access Denied");
     }
-    if (!$self->{login}){
-        #this is an ugly hack we need to rethink.
+    if (!$self->{script}) {
+        $self->{script} = 'login.pl';
+    }
+    if (($self->{script} eq 'login.pl') &&
+        ($self->{action} eq 'authenticate' || !$self->{action})){
         return $self;
     }
-    $self->{_user} = LedgerSMB::User->fetch_config($self->{login});
     my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
-        or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-    if ( !${LedgerSMB::Sysconfig::GLOBALDBH} ) {
-        $locale->text("No GlobalDBH Configured or Could not Connect");
-    }
+       or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
     $self->{_locale} = $locale;
-#    if ( $self->{password} ) {
-#        if (
-#            !Session::password_check(
-#                $self, $self->{ login }, $self->{ password }
-#            )
-#          )
-#        {
-#            if ($self->is_run_mode('cgi', 'mod_perl')) {
-#                $self->_get_password();
-#            }
-#            else {
-#                $self->error( __FILE__ . ':' . __LINE__ . ': '
-#                      . $locale->text('Access Denied!') );
-#            }
-#            exit;
-#        }
-#        else {
-#            Session::session_create($self);
-#        }
-
-#    }
-#    else {
-#        if ($self->is_run_mode('cgi', 'mod_perl')) {
-#            my %cookie;
-#            $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-#            my @cookies = split /;/, $ENV{HTTP_COOKIE};
-#            foreach (@cookies) {
-#                my ( $name, $value ) = split /=/, $_, 2;
-#                $cookie{$name} = $value;
-#            }
-
-            #check for valid session
-#            if ( !Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
-#                $self->_get_password(1);
-#                exit;
-#            }
-#        }
-#        else {
-#            exit;
-#        }
-#    }
-
-#    $self->{stylesheet} = $self->{_user}->{stylesheet};
-
     $self->_db_init;
+    $self->{_user} = LedgerSMB::User->fetch_config($self);
+    if ($self->is_run_mode('cgi', 'mod_perl')) {
+        my %cookie;
+        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+        my @cookies = split /;/, $ENV{HTTP_COOKIE};
+        foreach (@cookies) {
+            my ( $name, $value ) = split /=/, $_, 2;
+            $cookie{$name} = $value;
+        }
+
+       #check for valid session unless this is an iniital authentication
+       #request -- CT
+       if (!($self->{action} eq 'authenticate' 
+                   || $self->{script} eq 'login.pl')
+            || !Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
+            $self->_get_password("Session Expired");
+            exit;
+       }
+    }
+
+    $self->{stylesheet} = $self->{_user}->{stylesheet};
+
 
     $self;
 
@@ -233,7 +210,7 @@ sub _get_password {
     $self->{sessionexpired} = shift @_;
     $self->{hidden} = [];
     for (keys %$self){
-        next if $_ =~ /(^script$|^endsession$|^password$)/;
+        next if $_ =~ /(^script$|^endsession$|^password$|^hidden$)/;
         my $attr = {};
         $attr->{name} = $_;
         $attr->{value} = $self->{$_};
@@ -664,20 +641,57 @@ sub error {
 sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
-    my $myconfig = $self->{_user};
+    #my $myconfig = $self->{_user};
 
+    # Handling of HTTP Basic Auth headers
+    my $auth = $ENV{'HTTP_AUTHORIZATION'};
+    $auth =~ s/Basic //i; # strip out basic authentication preface
+    $auth = MIME::Base64::decode($auth);
+    my ($login, $password) = split(/:/, $auth);
+    $self->{login} = $login;
+    $self->{company} ||= 'lsmb13';
+    my $dbname = $self->{company};
+
+    # Note that we have to request the login/password again if the db
+    # connection fails since this probably means bad credentials are entered.
+    # Just in case, however, I think it is a good idea to include the DBI
+    # error string.  CT
     my $dbh = DBI->connect(
-        $myconfig->{ dbconnect }, $myconfig->{ username },
-        $self->{ password }, { AutoCommit => 0 }
-    ) or $self->dberror;
+        "dbi:Pg:dbname=$dbname;host=localhost;port=5432", "$login", "$password", { AutoCommit => 0 }
+    ); 
+    $self->{dbh} = $dbh;
+
+    # This is the general version check
+    my $sth = $dbh->prepare("
+            SELECT value FROM defaults 
+             WHERE setting_key = 'version'");
+    $sth->execute;
+
+    my ($dbversion) = $sth->fetchrow_array;
+    if ($dbversion ne $self->{dbversion}){
+        $self->error("Database is not the expected version.");
+    }
+
+
+    if ($self->{script} eq 'login.pl' && $self->{action} eq 
+        'authenticate'){
+
+        return;
+    }
+    elsif (!$dbh){
+        $self->_get_password;
+    }
 
     $dbh->{pg_server_prepare} = 0;
     $dbh->{pg_enable_utf8} = 1;
 
-    if ( $myconfig->{dboptions} ) {
-        $dbh->do( $myconfig->{dboptions} );
-    }
+    
+    # TODO:  Add date handling settings and the like.
+
     $self->{dbh} = $dbh;
+    if ($self->{script} eq 'autheticate' && $self->script eq 'login.pl'){
+        return;
+    }
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
 			|| ':' || f.field_name as field_def

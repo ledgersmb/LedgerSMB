@@ -1527,6 +1527,12 @@ sub process_assembly {
 }
 
 sub cogs {
+    # This is nearly entirely rewritten since 1.2.8 based in part on the works
+    # of Victor Sterpu and Dieter Simader (see CONTRIBUTORS for more 
+    # information).  However, there are a number of areas where I have 
+    # substantially rewritten the logic.  This function is heavily annotated 
+    # largely because COGS/invoices are still scheduled to be re-engineered in
+    # 1.4 so it is a good idea to have records of opinions in the code.-- CT
     my ( $dbh2, $form, $id, $totalqty, $project_id, $sellprice) = @_;
     my $dbh   = $form->{dbh};
     my $query;
@@ -1606,13 +1612,13 @@ sub cogs {
     # will throw an error until we have an understanding of other workflows 
     # that need to be supported.  -- CT
         $query = qq|
-        	      SELECT i.id, i.qty, i.allocated, a.transdate
-		             i.qty - i.allocated AS available,
+        	      SELECT i.id, i.qty, i.allocated, a.transdate,
+		             -1 * (i.allocated + i.qty) AS available,
 		             p.expense_accno_id, p.inventory_accno_id
 		        FROM invoice i
 		        JOIN parts p ON (p.id = i.parts_id)
 		        JOIN ar a ON (a.id = i.trans_id)
-	               WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 
+	               WHERE i.parts_id = ? AND (i.qty +  i.allocated) > 0 
                              AND i.sellprice = ?
 		    ORDER BY transdate
 				|;
@@ -1621,7 +1627,7 @@ sub cogs {
         my $qty;
         while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
             $form->db_parse_numeric(sth=>$sth, hashref => $ref);
-            if ($totalqty > $ref->{available}){
+            if ($totalqty < $ref->{available}){
                 $qty = $ref->{available};
             } else {
                 $qty = $totalqty;
@@ -1629,44 +1635,86 @@ sub cogs {
 	    # update allocated for sold item
             $form->update_balance( 
                             $dbh, "invoice", "allocated", 
-                            qq|id = $ref->{id}|, $qty * -1 
+                            qq|id = $ref->{id}|, $qty  
             );
-            $allocated += $qty;
-            my $linetotal = $qty*$ref->{sellprice};
-            $query = qq|
-		INSERT INTO acc_trans 
-		            (trans_id, chart_id, amount, 
-                             transdate, project_id, invoice_id) 
-		     VALUES (?, ?, ?, ?, ?, ?)|;
 
-            my $sth1 = $dbh->prepare($query);
-            $sth1->execute(
-                         $form->{id}, $ref->{"expense_accno_id"}, 
-                         $linetotal, $form->{transdate}, 
-                         $project_id, $ref->{id}
-            ) || $form->dberror($query);
-
-            $query = qq|
-		INSERT INTO acc_trans 
-		            (trans_id, chart_id, amount, transdate, 
-		             project_id, invoice_id) 
-		     VALUES (?, ?, ?, ?, ?, ?)|;
-
-            $sth1 = $dbh->prepare($query);
-            $sth1->execute(
-                 $form->{id}, $ref->{"inventory_accno_id"}, 
-                 -$linetotal, $form->{transdate}, 
-                 $project_id, $ref->{id}
-            ) || $form->dberror($query);
+            # Note:  No COGS calculations on reversed short sale invoices.  
+            # This merely prevents COGS calculations in the future agaisnt
+            # such short invoices.  -- CT
 
             $totalqty -= $qty;
+            $allocated -= $qty;
             last if $totalqty == 0;
         }
+        # If the total quantity is still less than zero, we must assume that
+        # this is just an invoice which has been voided or products returns 
+        # but is not merely representing a voided short sale, and therefore 
+        # we need to unallocate the items from AP.  There has been some debate
+        # as to how to approach this, and I think it is safest to unallocate
+        # the most recently allocated AP items of the same type regardless of
+        # the relevant dates of the invoices.  I can see cases where this 
+        # might require adjustments, however.  -- CT
+
+        if ($totalqty < 0){
+            $query = qq|
+		  SELECT i.allocated, i.sellprice, p.inventory_accno_id, 
+		         p.expense_accno_id, i.id 
+		    FROM invoice i
+		    JOIN parts p ON (i.parts_id = p.id)
+		    JOIN ap a ON (i.trans_id = a.id)
+		   WHERE (i.allocated + i.qty) < 0
+		         AND i.parts_id = ?
+		ORDER BY a.transdate DESC, a.id DESC
+            |;
+
+            my $sth = $dbh->prepare($query);
+            $sth->execute($id);
+
+            while (my $ref = $sth->fetchrow_hashref(NAME_lc)){
+                my $qty = $ref->{allocated} * -1;
+
+                $qty = ($qty < $totalqty) ? $totalqty : $qty;
+
+                my $linetotal = $qty*$ref->{sellprice};
+                push @{ $form->{acc_trans}{lineitems} },
+                  {
+                    chart_id   => $ref->{expense_accno_id},
+                    amount     => $linetotal,
+                    project_id => $project_id,
+                    invoice_id => $ref->{id}
+                  };
+
+                push @{ $form->{acc_trans}{lineitems} },
+                  {
+                    chart_id   => $ref->{inventory_accno_id},
+                    amount     => -$linetotal,
+                    project_id => $project_id,
+                    invoice_id => $ref->{id}
+                  };
+                  $form->update_balance( 
+                            $dbh, "invoice", "allocated", 
+                            qq|id = $ref->{id}|, $qty 
+                  );
+
+                $totalqty -= $qty;
+                $allocated -= $qty;
+
+                last if $totalqty == 0;
+            }
+        }
+
+        # If we still have less than 0 total quantity, this is not a return
+        # or a void.  Throw an error.  If there are valid workflows that throw
+        # this error, they will require more work to address and will not work
+        # safely with the current system.  -- CT
         if ($totalqty < 0){
             $form->error("Too many reversed items on an invoice");
         }
+        elsif ($totalqty > 0){
+            $form->error("Unexpected and invalid quantity allocated.".
+                   "  Aborting.");
+        }
     }
-
     return $allocated;
 }
 
