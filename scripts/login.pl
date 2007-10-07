@@ -28,7 +28,6 @@ sub authenticate {
         $request->{company} = 'lsmb13';
         $request->_db_init;
     }
-    $request->debug({file => '/tmp/request'});
     if ($request->{dbh} || $request->{log_out}){
         print "Content-Type: text/html\n";
         print "Set-Cookie: LedgerSMB=Login;\n";

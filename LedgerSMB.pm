@@ -173,12 +173,8 @@ sub new {
         ($self->{action} eq 'authenticate' || !$self->{action})){
         return $self;
     }
-    my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
-       or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
-    $self->{_locale} = $locale;
     $self->_db_init;
-    $self->{_user} = LedgerSMB::User->fetch_config($self);
     if ($self->is_run_mode('cgi', 'mod_perl')) {
         my %cookie;
         $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
@@ -190,13 +186,15 @@ sub new {
 
        #check for valid session unless this is an iniital authentication
        #request -- CT
-       if (!($self->{action} eq 'authenticate' 
-                   || $self->{script} eq 'login.pl')
-            || !Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
+       if (!Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
             $self->_get_password("Session Expired");
             exit;
        }
+       $self->{_user} = LedgerSMB::User->fetch_config($self);
     }
+    #my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
+     #or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+       #self->{_locale} = $locale;
 
     $self->{stylesheet} = $self->{_user}->{stylesheet};
 
@@ -656,10 +654,10 @@ sub _db_init {
     # connection fails since this probably means bad credentials are entered.
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
-    my $dbh = DBI->connect(
+    $self->{dbh} = DBI->connect(
         "dbi:Pg:dbname=$dbname;host=localhost;port=5432", "$login", "$password", { AutoCommit => 0 }
     ); 
-    $self->{dbh} = $dbh;
+     my $dbh = $self->{dbh};
 
     # This is the general version check
     my $sth = $dbh->prepare("
@@ -673,8 +671,8 @@ sub _db_init {
     }
 
 
-    if ($self->{script} eq 'login.pl' && $self->{action} eq 
-        'authenticate'){
+    if (($self->{script} eq 'login.pl') && ($self->{action} eq 
+        'authenticate')){
 
         return;
     }
@@ -688,10 +686,6 @@ sub _db_init {
     
     # TODO:  Add date handling settings and the like.
 
-    $self->{dbh} = $dbh;
-    if ($self->{script} eq 'autheticate' && $self->script eq 'login.pl'){
-        return;
-    }
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
 			|| ':' || f.field_name as field_def

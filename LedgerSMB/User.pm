@@ -190,43 +190,6 @@ sub fetch_config {
 #           AND u.id = uc.id;"
 #    );
 
-    my $fetchUserSettings = $dbh->prepare("
-        SELECT 
-            u.username, 
-            uc.dbname, 
-            uc.port, 
-            uc.host
-            
-        FROM users u 
-        JOIN user_connection uc ON uc.user_id = u.id
-        WHERE u.username = ?
-    ");
-    
-    $fetchUserSettings->execute($login);
-
-    #$fetchUserPrefs->execute($login);
-
-    my $userHashRef = $fetchUserSettings->fetchrow_hashref;
-    if ( !$userHashRef ) {
-        &error( $self, "Access Denied" );
-    }
-
-    while ( my ( $key, $value ) = each( %{$userHashRef} ) ) {
-        $myconfig{$key} = $value;
-    }
-
-    chomp( $myconfig{'port'} );
-    chomp( $myconfig{'dbname'} );
-    chomp( $myconfig{'host'} );
-
-    $myconfig{'login'} = $login;
-    $myconfig{'dbconnect'} =
-        'dbi:Pg:dbname='
-      . $myconfig{'dbname'}
-      . ';host='
-      . $myconfig{'host'}
-      . ';port='
-      . $myconfig{'port'};
 
     return \%myconfig;
 }

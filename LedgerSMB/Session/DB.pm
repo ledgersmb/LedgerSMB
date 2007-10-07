@@ -135,23 +135,21 @@ sub session_check {
 
 sub session_create {
     my ($lsmb) = @_;
-    my $lsmb;
 
     use Time::HiRes qw(gettimeofday);
+    my $dbh = $lsmb->{dbh};
+    my $login = $lsmb->{login};
 
     #microseconds are more than random enough for transaction_id
     my ( $ignore, $newTransactionID ) = gettimeofday();
     $newTransactionID = int $newTransactionID;
 
 
-    if ( !$ENV{HTTP_HOST} ) {
+    if ( !$ENV{GATEWAY_INTERFACE} ) {
 
         #don't create cookies or sessions for CLI use
         return 1;
     }
-
-    # use the central database handle
-    my $dbh = $lsmb->{dbh};
 
     # TODO Change this to use %myconfig
     my $deleteExisting = $dbh->prepare(
@@ -160,7 +158,6 @@ sub session_create {
           WHERE session.users_id = (select id from users where username = ?) 
                 AND age(last_used) > ?::interval"
     );
-
     my $seedRandom = $dbh->prepare("SELECT setseed(?);");
 
     my $fetchSequence =
@@ -181,14 +178,12 @@ sub session_create {
 
     my $auth = $ENV{HTTP_AUTHORIZATION};
     $auth =~ s/^Basic //i;
-    my ($login, undef) = split(/:/, MIME::Base64::decode($auth));
-    $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     #delete any existing stale sessions with this login if they exist
-    if ( $lsmb->{timeout} ) {
+    if ( !$lsmb->{timeout} ) {
         $lsmb->{timeout} = 86400;
     }
-
+    print STDERR "Breakpoint\n";
     $deleteExisting->execute( $login, "$lsmb->{timeout} seconds" )
       || $lsmb->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
@@ -218,7 +213,7 @@ sub session_create {
 
     my $newCookieValue = $newSessionID . ':' . $newTransactionID . ':' 
 	. $lsmb->{company};
-
+    print STDERR "Breakpoint\n";
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
     print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
