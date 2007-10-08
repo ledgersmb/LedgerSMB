@@ -1769,14 +1769,14 @@ sub get_exchangerate {
         my $query = qq|
 			SELECT $fld FROM exchangerate
 			WHERE curr = ? AND transdate = ?|;
-        $sth = $self->{dbh}->prepare($query);
+        my $sth = $self->{dbh}->prepare($query);
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
 	$exchangerate = Math::BigFloat->new($exchangerate);
+        $sth->finish;
     }
 
-    $sth->finish;
     $self->{dbh}->commit;
     $exchangerate;
 }
