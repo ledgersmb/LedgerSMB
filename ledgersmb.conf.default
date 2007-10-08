@@ -46,11 +46,9 @@ sendmail   = /usr/bin/sendmail -t
 Laser      = lpr -Plaser
 Epson      = lpr -PEpson
 
-[globaldb]
-# These paramaters *must* be set correctly
-# for LedgerSMB >= 1.2 to work
-DBname       = ledgersmb
-DBhost       = localhost
-DBport       = 5432
-DBUserName   = ledgersmb
-DBPassword   = set me to correct password
+[database]
+# Sets database connection parameters.  Note that default_db can be left blank
+# if you want to force people to enter a company name at login.
+port = 5432
+default_db = lsmb13
+host = localhost
