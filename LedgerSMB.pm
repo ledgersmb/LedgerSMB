@@ -649,7 +649,6 @@ sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
 
-    $self->debug({file => '/tmp/dbconnect'});
 
     # Handling of HTTP Basic Auth headers
     my $auth = $ENV{'HTTP_AUTHORIZATION'};

@@ -115,6 +115,19 @@ sub new {
     }
     $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
+    if (!$self->{company} && $ENV{HTTP_COOKIE}){
+        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+        my %cookie;
+        my @cookies = split /;/, $ENV{HTTP_COOKIE};
+        foreach (@cookies) {
+            my ( $name, $value ) = split /=/, $_, 2;
+            $cookie{$name} = $value;
+        }
+         my $ccookie = $cookie{LedgerSMB};
+         $ccookie =~ s/.*:([^:]*)$/$1/;
+         $self->{company} = $ccookie;
+    }
+
     $self->{menubar} = 1 if $self->{path} =~ /lynx/i;
 
     #menubar will be deprecated, replaced with below
@@ -1119,8 +1132,14 @@ sub db_init {
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
     my ($login, $password) = split(/:/, $auth);
+    $self->{login} = $login;
+    if (!$self->{company}){ 
+        $self->{company} = $LedgerSMB::Sysconfig::default_db;
+    }
+    my $dbname = $self->{company};
 
     $self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
+    my $dbh = $self->{dbh};
     my %date_query = (
         'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
 
@@ -1132,6 +1151,16 @@ sub db_init {
 
     $self->{dbh}->do( $date_query{ $myconfig->{dateformat} } );
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
+
+    # This is the general version check
+    my $sth = $dbh->prepare("
+            SELECT value FROM defaults 
+             WHERE setting_key = 'version'");
+    $sth->execute;
+    my ($dbversion) = $sth->fetchrow_array;
+    if ($dbversion ne $self->{dbversion}){
+        $self->error("Database is not the expected version.");
+    }
 
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
