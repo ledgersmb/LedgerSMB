@@ -1,21 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title><?lsmb titlebar ?></title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="noindex,nofollow" />
+</head>
 
 <body>
 
-<h2 align=center>
+<h2 align="center">
 <?lsmb company ?>
-<br><?lsmb address ?>
+<br /><?lsmb address ?>
 
-<p>BALANCE SHEET
-<br>as at <?lsmb this_period ?>
+<br /><?lsmb text('Balance Sheet') ?>
+<br />as at <?lsmb this_period ?>
 </h2>
 
 <?lsmb IF department ?>
-<h4>Department: <?lsmb department ?></h4>
+<h4><?lsmb text('Department:') ?> <?lsmb department ?></h4>
 <?lsmb END ?>
 
-<table border=0>
+<table border="0">
 <tr>
-  <th align=left width=400 colspan=2>ASSETS<br><hr align=left width=250 size=5 noshade></th>
+  <th align="left" width="400" colspan="2" style="text-transform: uppercase"><?lsmb text('Assets') ?><br /><hr align="left" width="250" size="5" noshade="noshade" /></th>
   <th><?lsmb this_period ?></th>
   <th><?lsmb last_period ?></th>
 </tr>
@@ -25,25 +38,25 @@
 <tr>
   <td> </td>
   <td><?lsmb asset_account.${loop_count} ?></td>
-  <td align=right><?lsmb asset_this_period.${loop_count} ?></td>
-  <td align=right><?lsmb asset_last_period.${loop_count} ?></td>
+  <td align="right"><?lsmb asset_this_period.${loop_count} ?></td>
+  <td align="right"><?lsmb asset_last_period.${loop_count} ?></td>
 </tr>
 <?lsmb END ?>
 
 <tr>
-  <td colspan=2> </td>
-  <td><hr noshade size=1></td>
-  <td><hr noshade size=1></td>
+  <td colspan="2"> </td>
+  <td><hr noshade="noshade" size="1" /></td>
+  <td><hr noshade="noshade" size="1" /></td>
 </tr>
 
-<tr valign=top>
-  <th align=left colspan=2>TOTAL ASSETS</th>
-  <td align=right><?lsmb total_assets_this_period ?><hr noshade size=2></td>
-  <td align=right><?lsmb total_assets_last_period ?><hr noshade size=2></td>
+<tr valign="top">
+  <th align="left" colspan="2" style="text-transform: uppercase"><?lsmb text('Total Assets') ?></th>
+  <td align="right"><?lsmb total_assets_this_period ?><hr noshade="noshade" size="2" /></td>
+  <td align="right"><?lsmb total_assets_last_period ?><hr noshade="noshade" size="2" /></td>
 </tr>
 
 <tr>
-  <th align=left colspan=4>LIABILITIES<b><hr align=left width=250 size=5 noshade></th>
+  <th align="left" colspan="4" style="text-transform: uppercase"><?lsmb text('Liabilities') ?><hr align="left" width="250" size="5" noshade="noshade" /></th>
 </tr>
 
 <?lsmb FOREACH liability_account ?>
@@ -51,26 +64,26 @@
 <tr>
   <td></td>
   <td><?lsmb liability_account.${loop_count} ?></td>
-  <td align=right><?lsmb liability_this_period.${loop_count} ?></td>
-  <td align=right><?lsmb liability_last_period.${loop_count} ?></td>
+  <td align="right"><?lsmb liability_this_period.${loop_count} ?></td>
+  <td align="right"><?lsmb liability_last_period.${loop_count} ?></td>
 </tr>
 <?lsmb END ?>
 
 <tr>
-  <td colspan=2> </td>
-  <td><hr noshade size=1></td>
-  <td><hr noshade size=1></td>
+  <td colspan="2"> </td>
+  <td><hr noshade="noshade" size="1" /></td>
+  <td><hr noshade="noshade" size="1" /></td>
 </tr>
 
-<tr valign=top>
+<tr valign="top">
   <td></td>
-  <th align=left>TOTAL LIABILITIES</th>
-  <td align=right><?lsmb total_liabilities_this_period ?><br><hr noshade size=2</td>
-  <td align=right><?lsmb total_liabilities_last_period ?><br><hr noshade size=2</td>
+  <th align="left" style="text-transform: uppercase"><?lsmb text('Total Liabilities') ?></th>
+  <td align="right"><?lsmb total_liabilities_this_period ?><br /><hr noshade="noshade" size="2" /></td>
+  <td align="right"><?lsmb total_liabilities_last_period ?><br /><hr noshade="noshade" size="2" /></td>
 </tr>
 
 <tr>
-  <th align=left colspan=4>SHAREHOLDER'S EQUITY<br><hr align=left width=250 size=5 noshade></th>
+  <th align="left" colspan="4" style="text-transform: uppercase"><?lsmb text("Shareholder's Equity") ?><br /><hr align="left" width="250" size="5" noshade="noshade" /></th>
 </tr>
 
 <?lsmb FOREACH equity_account ?>
@@ -78,28 +91,28 @@
 <tr>
   <td></td>
   <td><?lsmb equity_account.${loop_count} ?></td>
-  <td align=right><?lsmb equity_this_period.${loop_count} ?></td>
-  <td align=right><?lsmb equity_last_period.${loop_count} ?></td>
+  <td align="right"><?lsmb equity_this_period.${loop_count} ?></td>
+  <td align="right"><?lsmb equity_last_period.${loop_count} ?></td>
 </tr>
 <?lsmb END ?>
 
 <tr>
-  <td colspan=2> </td>
-  <td><hr noshade size=1></td>
-  <td><hr noshade size=1></td>
+  <td colspan="2"> </td>
+  <td><hr noshade="noshade" size="1" /></td>
+  <td><hr noshade="noshade" size="1" /></td>
 </tr>
 
-<tr valign=top>
+<tr valign="top">
   <td></td>
-  <th align=left>TOTAL EQUITY</th>
-  <td align=right><?lsmb total_equity_this_period ?><br><hr noshade size=2</td>
-  <td align=right><?lsmb total_equity_last_period ?><br><hr noshade size=2</td>
+  <th align="left" style="text-transform: uppercase"><?lsmb text('Total Equity') ?></th>
+  <td align="right"><?lsmb total_equity_this_period ?><br /><hr noshade="noshade" size="2" /></td>
+  <td align="right"><?lsmb total_equity_last_period ?><br /><hr noshade="noshade" size="2" /></td>
 </tr>
 
-<tr valign=top>
-  <th align=left colspan=2>TOTAL LIABILITIES & EQUITY</th>
-  <td align=right><?lsmb total_this_period ?><br><hr noshade size=2></td>
-  <td align=right><?lsmb total_last_period ?><br><hr noshade size=2></td>
+<tr valign="top">
+  <th align="left" colspan="2" style="text-transform: uppercase"><?lsmb escape(text('Total Liabilities & Equity')) ?></th>
+  <td align="right"><?lsmb total_this_period ?><br /><hr noshade="noshade" size="2" /></td>
+  <td align="right"><?lsmb total_last_period ?><br /><hr noshade="noshade" size="2" /></td>
 </tr>
 </table>
 
