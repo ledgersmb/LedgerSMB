@@ -1,3 +1,3 @@
-Dataset creation is now fixed (and mandatory).  Only Default and Canadian English (General) COA's currently work.
+SVN /trunk/ currently doesn't work due to rewriting the auth stuff.  If you are developing templates, etc. use rev 1691 for now (svn up -r 1691)
 
 Chris T

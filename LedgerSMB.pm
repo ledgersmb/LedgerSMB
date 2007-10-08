@@ -137,8 +137,10 @@ our $VERSION = '1.2.99';
 sub new {
     my $type   = shift @_;
     my $argstr = shift @_;
-
+    my %cookie;
     my $self = {};
+
+
     $self->{version} = $VERSION;
     $self->{dbversion} = "1.2.0";
     bless $self, $type;
@@ -147,6 +149,15 @@ sub new {
     $self->{VERSION} = $VERSION;
 
     $self->merge($params);
+
+    if ($self->is_run_mode('cgi', 'mod_perl')) {
+        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+        my @cookies = split /;/, $ENV{HTTP_COOKIE};
+        foreach (@cookies) {
+            my ( $name, $value ) = split /=/, $_, 2;
+            $cookie{$name} = $value;
+        }
+    }
 
     $self->{action} =~ s/\W/_/g;
     $self->{action} = lc $self->{action};
@@ -173,17 +184,15 @@ sub new {
         ($self->{action} eq 'authenticate' || !$self->{action})){
         return $self;
     }
+    if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
+         my $ccookie = $cookie{LedgerSMB};
+         $ccookie =~ s/.*:([^:]*)$/$1/;
+         $self->{company} = $ccookie;
+    }
 
     $self->_db_init;
-    if ($self->is_run_mode('cgi', 'mod_perl')) {
-        my %cookie;
-        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-        my @cookies = split /;/, $ENV{HTTP_COOKIE};
-        foreach (@cookies) {
-            my ( $name, $value ) = split /=/, $_, 2;
-            $cookie{$name} = $value;
-        }
 
+    if ($self->is_run_mode('cgi', 'mod_perl')) {
        #check for valid session unless this is an iniital authentication
        #request -- CT
        if (!Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
@@ -193,13 +202,13 @@ sub new {
        $self->{_user} = LedgerSMB::User->fetch_config($self);
     }
     #my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
-     #or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-       #self->{_locale} = $locale;
+    $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
+     or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
-    $self->{stylesheet} = $self->{_user}->{stylesheet};
+    $self->{stylesheet} = 'ledgersmb.css'; # temporary
+    #$self->{stylesheet} = $self->{_user}->{stylesheet};
 
-
-    $self;
+    return $self;
 
 }
 
@@ -639,7 +648,8 @@ sub error {
 sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
-    #my $myconfig = $self->{_user};
+
+    $self->debug({file => '/tmp/dbconnect'});
 
     # Handling of HTTP Basic Auth headers
     my $auth = $ENV{'HTTP_AUTHORIZATION'};
@@ -647,7 +657,9 @@ sub _db_init {
     $auth = MIME::Base64::decode($auth);
     my ($login, $password) = split(/:/, $auth);
     $self->{login} = $login;
-    $self->{company} ||= 'lsmb13';
+    if (!$self->{company}){ 
+        $self->{company} = $LedgerSMB::Sysconfig::default_db;
+    }
     my $dbname = $self->{company};
 
     # Note that we have to request the login/password again if the db
@@ -655,10 +667,9 @@ sub _db_init {
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
     $self->{dbh} = DBI->connect(
-        "dbi:Pg:dbname=$dbname;host=localhost;port=5432", "$login", "$password", { AutoCommit => 0 }
+        "dbi:Pg:dbname=$dbname", "$login", "$password", { AutoCommit => 0 }
     ); 
      my $dbh = $self->{dbh};
-
 
 
     if (($self->{script} eq 'login.pl') && ($self->{action} eq 

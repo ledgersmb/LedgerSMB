@@ -204,9 +204,7 @@ Disused function to return the number of current recurring events.
 sub check_recurring {
     my ( $self, $form ) = @_;
 
-    my $dbh =
-      DBI->connect( $self->{dbconnect}, $self->{dbuser}, $self->{dbpasswd} )
-      or $form->dberror( __FILE__ . ':' . __LINE__ );
+    my $dbh = $form->{dbh};
     $dbh->{pg_encode_utf8} = 1;
 
     my $query = qq|

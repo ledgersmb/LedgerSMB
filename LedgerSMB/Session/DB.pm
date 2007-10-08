@@ -35,8 +35,11 @@ sub session_check {
 
     use Time::HiRes qw(gettimeofday);
 
+    my $path = ($ENV{SCRIPT_NAME});
+    $path =~ s|[^/]*$||;
+
     my ( $cookie, $form ) = @_;
-    if ($cookie eq 'Login'){
+   if ($cookie eq 'Login'){
         return session_create($form);
     }
     my $timeout;
@@ -46,20 +49,20 @@ sub session_check {
 
     my $checkQuery = $dbh->prepare(
         "SELECT u.username, s.transaction_id 
-           FROM session as s, users as u 
-          WHERE s.session_id = ? 
-            AND s.users_id = u.id
+           FROM session as s
+	   JOIN users as u ON (s.users_id = u.id)
+          WHERE s.session_id = ?
+            AND token = ?
             AND s.last_used > now() - ?::interval"
     );
 
     my $updateAge = $dbh->prepare(
         "UPDATE session 
-           SET last_used = now(),
-               transaction_id = ?
+           SET last_used = now()
          WHERE session_id = ?;"
     );
 
-    my ($sessionID, $transactionID, $company) = split(/:/, $cookie);
+    my ($sessionID, $token, $company) = split(/:/, $cookie);
 
     $form->{company} ||= $company;
 
@@ -67,8 +70,6 @@ sub session_check {
     $sessionID =~ s/[^0-9]//g;
     $sessionID = int $sessionID;
 
-    $transactionID =~ s/[^0-9]//g;
-    $transactionID = int $transactionID;
 
     if ( !$form->{timeout} ) {
         $timeout = "1 day";
@@ -77,7 +78,7 @@ sub session_check {
         $timeout = "$form->{timeout} seconds";
     }
 
-    $checkQuery->execute( $sessionID, $timeout )
+    $checkQuery->execute( $sessionID, $token, $timeout )
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
     my $sessionValid = $checkQuery->rows;
@@ -90,25 +91,20 @@ sub session_check {
         my $login = $form->{login};
 
         $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
-
-        if (    ( $sessionLogin eq $login )
-            and ( $sessionTransaction eq $transactionID ) )
+        if (( $sessionLogin eq $login ))
         {
 
-            #microseconds are more than random enough for transaction_id
-            my ( $ignore, $newTransactionID ) = gettimeofday();
 
-            $newTransactionID = int $newTransactionID;
 
-            $updateAge->execute( $newTransactionID, $sessionID )
+            $updateAge->execute( $sessionID )
               || $form->dberror(
                 __FILE__ . ':' . __LINE__ . ': Updating session age: ' );
 
             my $newCookieValue =
-              $sessionID . ':' . $newTransactionID . ':' . $form->{company};
+              $sessionID . ':' . $token . ':' . $form->{company};
 
             #now update the cookie in the browser
-            print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
+            print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=$path;\n|;
             return 1;
 
         }
@@ -119,7 +115,7 @@ sub session_check {
             my $sessionDestroy = $dbh->prepare("");
 
             #delete the cookie in the browser
-            print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
+            print qq|Set-Cookie: LedgerSMB=; path=$path;\n|;
             return 0;
         }
 
@@ -128,14 +124,15 @@ sub session_check {
 
         #cookie is not valid
         #delete the cookie in the browser
-        print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
+        print qq|Set-Cookie: LedgerSMB=; path=$path;\n|;
         return 0;
     }
 }
 
 sub session_create {
     my ($lsmb) = @_;
-
+    my $path = ($ENV{SCRIPT_NAME});
+    $path =~ s|[^/]*$||;
     use Time::HiRes qw(gettimeofday);
     my $dbh = $lsmb->{dbh};
     my $login = $lsmb->{login};
@@ -155,8 +152,7 @@ sub session_create {
     my $deleteExisting = $dbh->prepare(
         "DELETE 
            FROM session
-          WHERE session.users_id = (select id from users where username = ?) 
-                AND age(last_used) > ?::interval"
+          WHERE session.users_id = (select id from users where username = ?)"
     );
     my $seedRandom = $dbh->prepare("SELECT setseed(?);");
 
@@ -184,7 +180,7 @@ sub session_create {
         $lsmb->{timeout} = 86400;
     }
     print STDERR "Breakpoint\n";
-    $deleteExisting->execute( $login, "$lsmb->{timeout} seconds" )
+    $deleteExisting->execute( $login)
       || $lsmb->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
@@ -211,13 +207,14 @@ sub session_create {
         __FILE__ . ':' . __LINE__ . ': Reseed random generator: ' );
 
 
-    my $newCookieValue = $newSessionID . ':' . $newTransactionID . ':' 
+    my $newCookieValue = $newSessionID . ':' . $newToken . ':' 
 	. $lsmb->{company};
     print STDERR "Breakpoint\n";
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
-    print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
+    print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=$path;\n|;
     $lsmb->{LedgerSMB} = $newCookieValue;
+    $lsmb->{dbh}->commit;
 }
 
 sub session_destroy {

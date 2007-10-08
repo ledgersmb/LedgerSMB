@@ -131,8 +131,8 @@ for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
 # These lines prevent other apps in mod_perl from seeing the global db
 # connection info
 
-my $globalDBConnect = undef;
-my $globalUserName  = undef;
-my $globalPassword  = undef;
+$ENV{PGHOST} = $config{database}{host};
+$ENV{PGPORT} = $config{database}{port};
+our $defaultdb = $config{database}{default_db};
 
 1;
