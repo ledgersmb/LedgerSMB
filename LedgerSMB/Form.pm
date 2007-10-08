@@ -762,6 +762,8 @@ formatted as $myconfig->{numberformat}.  If $amount is '' or undefined, it is
 treated as zero.  DRCR and parenthesis notation is accepted in addition to
 negative sign notation.
 
+Calls $form->error if the value is NaN.
+
 =cut
 
 sub parse_amount {
@@ -1496,20 +1498,19 @@ sub get_exchangerate {
     my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
 
     my $exchangerate = 1;
-    my $sth;
 
     if ($transdate) {
         my $query = qq|
 			SELECT $fld FROM exchangerate
 			WHERE curr = ? AND transdate = ?|;
-        $sth = $self->{dbh}->prepare($query);
+        my $sth = $self->{dbh}->prepare($query);
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
 	$exchangerate = Math::BigFloat->new($exchangerate);
+        $sth->finish;
     }
 
-    $sth->finish;
     $exchangerate;
 }
 
@@ -3522,6 +3523,7 @@ sub audittrail {
 1;
 
 =back
+
 
 
 
