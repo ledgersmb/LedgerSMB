@@ -99,13 +99,8 @@ $SIG{__DIE__} =
 #	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
 #}
 
-&check_password;
 
 # grab user config. This is ugly and unecessary if/when
-# we get rid of myconfig and use User as a real object
-%myconfig = %{ LedgerSMB::User->fetch_config( $form->{login} ) };
-$locale   = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
-  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 
 # locale messages
 #$form->{charset} = $locale->encoding;
@@ -124,7 +119,12 @@ map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
   unless ( $form->{type} eq 'preferences' );
 
 $form->db_init( \%myconfig );
+&check_password;
 
+# we get rid of myconfig and use User as a real object
+%myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
+$locale   = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
+  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 # pull in the main code
 require "bin/$form->{script}";
 
@@ -161,46 +161,22 @@ else {
 sub check_password {
 
     require "bin/pw.pl";
+    if ( $ENV{GATEWAY_INTERFACE} ) {
+        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+        @cookies = split /;/, $ENV{HTTP_COOKIE};
+        foreach (@cookies) {
+            ( $name, $value ) = split /=/, $_, 2;
+            $cookie{$name} = $value;
+        }
 
-    if ( $form->{password} ) {
-        if (
-            !Session::password_check(
-                $form, $form->{login}, $form->{password}
-            )
-          )
-        {
-            if ( $ENV{GATEWAY_INTERFACE} ) {
-                &getpassword;
-            }
-            else {
-                $form->error( __FILE__ . ':' . __LINE__ . ': '
-                      . $locale->text('Access Denied!') );
-            }
+        #check for valid session
+        if ( !Session::session_check( $cookie{"LedgerSMB"}, $form ) ) {
+            &getpassword(1);
             exit;
         }
-        else {
-            Session::session_create($form);
-        }
-
     }
     else {
-        if ( $ENV{GATEWAY_INTERFACE} ) {
-            $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-            @cookies = split /;/, $ENV{HTTP_COOKIE};
-            foreach (@cookies) {
-                ( $name, $value ) = split /=/, $_, 2;
-                $cookie{$name} = $value;
-            }
-
-            #check for valid session
-            if ( !Session::session_check( $cookie{"LedgerSMB"}, $form ) ) {
-                &getpassword(1);
-                exit;
-            }
-        }
-        else {
-            exit;
-        }
+        exit;
     }
 }
 

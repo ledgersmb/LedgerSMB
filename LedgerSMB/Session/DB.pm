@@ -32,13 +32,13 @@ use MIME::Base64;
 use strict;
 
 sub session_check {
-
     use Time::HiRes qw(gettimeofday);
+    my ( $cookie, $form ) = @_;
+
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
 
-    my ( $cookie, $form ) = @_;
    if ($cookie eq 'Login'){
         return session_create($form);
     }

@@ -1139,8 +1139,12 @@ sub db_init {
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     my $dbname = $self->{company};
+    my $dbconfig = { dbconnect => "dbi:Pg:dbname=$dbname",
+                  dbuser    => $login,
+                  dbpasswd  => $password
+    };
 
-    $self->{dbh} = $self->dbconnect_noauto($myconfig) || $self->dberror();
+    $self->{dbh} = $self->dbconnect_noauto($dbconfig) || $self->dberror();
     my $dbh = $self->{dbh};
     my %date_query = (
         'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
