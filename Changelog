@@ -1,3 +1,10 @@
+Cangelog for 1.2.9
+* Removed GNUisms from find arguments (Seneca)
+* Corrected SQL errors in Belgium, and other COAs (Seneca, 1804712)
+* Added COA load test script (Seneca)
+* Rewritten COGS system (Chris T)
+* Scoping issues fixed (Seneca, 1809384)
+
 Changelog for 1.2.8
 * Fix SQL errors saving customer price lists (Chris T, 1754172)
 * Fixed AR/AP reversal issues (Victor S, 1752439, 1753358)
