@@ -9,6 +9,7 @@ use Config::Std;
 use DBI qw(:sql_types);
 
 binmode STDOUT, ':utf8';
+binmode STDERR, ':utf8';
 
 # For Win32, change $pathsep to ';';
 $pathsep = ':';
@@ -133,6 +134,6 @@ for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
 
 $ENV{PGHOST} = $config{database}{host};
 $ENV{PGPORT} = $config{database}{port};
-our $defaultdb = $config{database}{default_db};
+our $default_db = $config{database}{default_db};
 
 1;
