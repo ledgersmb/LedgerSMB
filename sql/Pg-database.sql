@@ -980,7 +980,7 @@ CREATE TABLE translation (
 );
 --
 CREATE TABLE user_preference (
-    user_id int PRIMARY KEY REFERENCES users(id),
+    id int PRIMARY KEY REFERENCES users(id),
     language varchar(6) REFERENCES language(code),
     stylesheet text default 'ledgersmb.css' not null,
     printer text,

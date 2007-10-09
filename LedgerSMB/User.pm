@@ -174,24 +174,14 @@ sub fetch_config {
         &error( $self, "Access Denied" );
     }
 
+    $query = qq|
+		SELECT * FROM user_preference 
+		 WHERE id = (SELECT id FROM users WHERE username = ?)|;
+    my $sth = $dbh->prepare($query);
+    $sth->execute($lsmb->{login});
+    $myconfig = $sth->fetchrow_hashref(NAME_lc);
 
-    # for now, this is querying the table directly... ugly
-#    my $fetchUserPrefs = $dbh->prepare(
-#        "SELECT acs, address, businessnumber,
-#               company, countrycode, currency,
-#               dateformat, dbdriver, dbhost, dbname, 
-#               dboptions, dbpasswd, dbport, dbuser, 
-#               email, fax, menuwidth, name, numberformat, 
-#               password, print, printer, role, sid, 
-#               signature, stylesheet, tel, templates, 
-#               timeout, vclimit, u.username
-#          FROM users_conf as uc, users as u
-#         WHERE u.username =  ?
-#           AND u.id = uc.id;"
-#    );
-
-
-    return \%myconfig;
+    return $myconfig;
 }
 
 
