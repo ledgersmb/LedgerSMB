@@ -824,6 +824,7 @@ qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$re
 
     }
 
+    $form->{login} = 'test';
     print qq|
 
 $gifi
@@ -1096,11 +1097,6 @@ sub generate_income_statement {
 sub generate_balance_sheet {
 
 	##SC: START HTML
-    $form->{padding} = "&nbsp;&nbsp;";
-    $form->{bold}    = "<b>";
-    $form->{endbold} = "</b>";
-    $form->{br}      = "<br>";
-
     RP->balance_sheet( \%myconfig, \%$form );
 
     $form->{asofdate} = $form->current_date( \%myconfig )
@@ -1111,10 +1107,11 @@ sub generate_balance_sheet {
     ( $form->{department} ) = split /--/, $form->{department};
 
     # define Current Earnings account
-    $padding = ( $form->{l_heading} ) ? $form->{padding} : "";
     push(
-        @{ $form->{equity_account} }, { current_earnings => 1,
-        text => $locale->text('Current Earnings')}
+        @{ $form->{equity_account} }, {
+            current_earnings => 1,
+            text => $locale->text('Current Earnings')
+            },
     );
 
     $form->{this_period} = $locale->date( \%myconfig, $form->{asofdate}, 0 );

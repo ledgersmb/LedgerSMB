@@ -46,7 +46,7 @@
 		account_data.text; ?></a><?lsmb
 	ELSIF account_data.subtotal; ?><b>&nbsp;&nbsp;<?lsmb
 		account_data.text; ?></b><?lsmb
-	ELSIF account_data.current_earnings; ?>&nbsp;&nbsp;<?lsmb
+	ELSIF account_data.current_earnings; IF l_heading ?>&nbsp;&nbsp;<?lsmb END;
 		account_data.text;
 	ELSE;
 		account_data;
