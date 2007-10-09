@@ -1095,6 +1095,7 @@ sub generate_income_statement {
 
 sub generate_balance_sheet {
 
+	##SC: START HTML
     $form->{padding} = "&nbsp;&nbsp;";
     $form->{bold}    = "<b>";
     $form->{endbold} = "</b>";
@@ -1112,26 +1113,30 @@ sub generate_balance_sheet {
     # define Current Earnings account
     $padding = ( $form->{l_heading} ) ? $form->{padding} : "";
     push(
-        @{ $form->{equity_account} },
-        $padding . $locale->text('Current Earnings')
+        @{ $form->{equity_account} }, { current_earnings => 1,
+        text => $locale->text('Current Earnings')}
     );
 
     $form->{this_period} = $locale->date( \%myconfig, $form->{asofdate}, 0 );
     $form->{last_period} =
       $locale->date( \%myconfig, $form->{compareasofdate}, 0 );
 
-    $form->{IN} = "balance_sheet.html";
-
     # setup company variables for the form
-    for (qw(company address businessnumber nativecurr)) {
+    for (qw(company address businessnumber nativecurr login)) {
         $form->{$_} = $myconfig{$_};
     }
     $form->{address} =~ s/\\n/<br>/g;
+	##SC: END HTML
 
     $form->{templates} = $myconfig{templates};
 
-    my $template = LedgerSMB::Template->new( user => \%myconfig, 
-         template => $form->{'formname'}, format => uc $form->{format} );
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'balance_sheet',
+        format => $form->{format}? uc $form->{format}: 'HTML',
+        no_auto_output => 1,
+        );
     try {
         $template->render($form);
         $template->output(%{$form});
@@ -1140,7 +1145,6 @@ sub generate_balance_sheet {
         my $E = shift;
         $form->error( $E->stacktrace );
     };
-
 }
 
 sub generate_projects {

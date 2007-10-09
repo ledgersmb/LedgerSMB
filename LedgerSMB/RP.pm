@@ -539,15 +539,18 @@ sub balance_sheet {
 
         foreach $key ( sort keys %{ $form->{$category} } ) {
 
-            $str = ( $form->{l_heading} ) ? $form->{padding} : "";
+##            $str = ( $form->{l_heading} ) ? $form->{padding} : "";
+            $str = "";
 
             if ( $form->{$category}{$key}{charttype} eq "A" ) {
                 $str .=
                   ( $form->{l_accno} )
                   ? "$form->{$category}{$key}{accno} - $form->{$category}{$key}{description}"
                   : "$form->{$category}{$key}{description}";
+                $str = {account => $form->{$category}{$key}{accno}, text => $str};
+                $str->{gifi_account} = 1 if $form->{accounttype} eq 'gifi';
             }
-            if ( $form->{$category}{$key}{charttype} eq "H" ) {
+            elsif ( $form->{$category}{$key}{charttype} eq "H" ) {
                 if (   $account{$category}{subtotal}
                     && $form->{l_subtotal} )
                 {
@@ -555,7 +558,10 @@ sub balance_sheet {
                     $dash = "- ";
                     push(
                         @{ $form->{"$account{$category}{label}_account"} },
-"$str$form->{bold}$account{$category}{subdescription}$form->{endbold}"
+                        {
+                            text => "$account{$category}{subdescription}",
+                            subtotal => 1
+                            },
                     );
                     push(
                         @{ $form->{"$account{$category}{label}_this_period"} },
@@ -585,8 +591,10 @@ sub balance_sheet {
                     }
                 }
 
-                $str =
-"$form->{bold}$form->{$category}{$key}{description}$form->{endbold}";
+                $str = {
+                    text => "$form->{$category}{$key}{description}",
+                    heading => 1
+                    };
 
                 $account{$category}{subthis} = $form->{$category}{$key}{this};
                 $account{$category}{sublast} = $form->{$category}{$key}{last};
@@ -637,11 +645,14 @@ sub balance_sheet {
             }
         }
 
-        $str = ( $form->{l_heading} ) ? $form->{padding} : "";
+	#$str = ( $form->{l_heading} ) ? $form->{padding} : "";
+        $str = "";
         if ( $account{$category}{subtotal} && $form->{l_subtotal} ) {
             push(
-                @{ $form->{"$account{$category}{label}_account"} },
-"$str$form->{bold}$account{$category}{subdescription}$form->{endbold}"
+                @{ $form->{"$account{$category}{label}_account"} }, {
+                    text => "$account{$category}{subdescription}",
+                    subtotal => 1,
+                    },
             );
             push(
                 @{ $form->{"$account{$category}{label}_this_period"} },

@@ -10,7 +10,48 @@
 
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<meta name="robots" content="noindex,nofollow" />
+	<style type="text/css">
+		a {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+		}
+		a:link {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+		}
+		a:visited {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+		}
+		a:hover {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+			border-bottom: thin dashed;
+		}
+	</style>
 </head>
+
+<?lsmb USE dumper(indent=0, pad="<br />") ?>
+<?lsmb BLOCK account; # Handle account labels
+	RETURN UNLESS account_data.defined;
+	IF account_data.heading; ?><b><?lsmb
+		account_data.text; ?></b><?lsmb
+	ELSIF account_data.gifi_account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;login=<?lsmb login ?>&amp;sessionid=<?lsmb sessionid ?>&amp;l_transdate=Y&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_gifi_accno=Y&amp;category=X&amp;gifi_accno=<?lsmb account_data.account ?>"><?lsmb
+		account_data.text; ?></a><?lsmb
+	ELSIF account_data.account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;login=<?lsmb login ?>&amp;sessionid=<?lsmb sessionid ?>&amp;l_transdate=Y&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_accno=Y&amp;category=X&amp;accno=<?lsmb account_data.account ?>"><?lsmb
+		account_data.text; ?></a><?lsmb
+	ELSIF account_data.subtotal; ?><b>&nbsp;&nbsp;<?lsmb
+		account_data.text; ?></b><?lsmb
+	ELSIF account_data.current_earnings; ?>&nbsp;&nbsp;<?lsmb
+		account_data.text;
+	ELSE;
+		account_data;
+	END;
+END ?>
 
 <body>
 
@@ -19,7 +60,7 @@
 <br /><?lsmb address ?>
 
 <br /><?lsmb text('Balance Sheet') ?>
-<br />as at <?lsmb this_period ?>
+<br /><?lsmb text('as at [_1]', this_period) ?>
 </h2>
 
 <?lsmb IF department ?>
@@ -37,7 +78,7 @@
 <?lsmb loop_count = loop.count - 1 ?>
 <tr>
   <td> </td>
-  <td><?lsmb asset_account.${loop_count} ?></td>
+  <td><?lsmb PROCESS account account_data=asset_account.${loop_count} ?></td>
   <td align="right"><?lsmb asset_this_period.${loop_count} ?></td>
   <td align="right"><?lsmb asset_last_period.${loop_count} ?></td>
 </tr>
@@ -63,7 +104,7 @@
 <?lsmb loop_count = loop.count - 1 ?>
 <tr>
   <td></td>
-  <td><?lsmb liability_account.${loop_count} ?></td>
+  <td><?lsmb PROCESS account account_data=liability_account.${loop_count} ?></td>
   <td align="right"><?lsmb liability_this_period.${loop_count} ?></td>
   <td align="right"><?lsmb liability_last_period.${loop_count} ?></td>
 </tr>
@@ -90,7 +131,7 @@
 <?lsmb loop_count = loop.count - 1 ?>
 <tr>
   <td></td>
-  <td><?lsmb equity_account.${loop_count} ?></td>
+  <td><?lsmb PROCESS account account_data=equity_account.${loop_count} ?></td>
   <td align="right"><?lsmb equity_this_period.${loop_count} ?></td>
   <td align="right"><?lsmb equity_last_period.${loop_count} ?></td>
 </tr>
