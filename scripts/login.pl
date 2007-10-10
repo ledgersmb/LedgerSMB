@@ -25,12 +25,15 @@ sub __default {
 sub authenticate {
     my ($request) = @_;
     if (!$request->{dbh}){
-        $request->{company} = 'lsmb13';
+        $request->{company} = 'ledgersmb-taxtest';
         $request->_db_init;
     }
+    my $path = $ENV{SCRIPT_NAME};
+    $path =~ s|[^/]*$||;
     if ($request->{dbh} || $request->{log_out}){
         print "Content-Type: text/html\n";
-        print "Set-Cookie: LedgerSMB=Login;\n";
+##        print "Set-Cookie: LedgerSMB=Login;\n";
+        print "Set-Cookie: LedgerSMB=Login; path=$path\n";
 	print "Status: 200 Success\n\n";
         if ($request->{log_out}){
             exit;
