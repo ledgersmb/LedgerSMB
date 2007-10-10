@@ -205,8 +205,7 @@ sub new {
     $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
-    $self->{stylesheet} = 'ledgersmb.css'; # temporary
-    #$self->{stylesheet} = $self->{_user}->{stylesheet};
+    $self->{stylesheet} = $self->{_user}->{stylesheet};
 
     return $self;
 

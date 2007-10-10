@@ -183,7 +183,7 @@ sub list_open_projects {
 }
 
 =over
-=item list_open_projects
+=item list_departments
 
 This method gets the type of document as a parameter, and provides a list of departments
 of the required type.
@@ -201,5 +201,39 @@ sub list_departments {
   );
   return @{$self->{departments}};
 }
+
+=item list_open_vc
+
+This method gets the type of vc (vendor or customer) as a parameter, and provides a list of departments
+of the required type.
+The list is attached to $self->{departments} and returned.
+
+=back
+=cut
+
+sub list_departments {
+  my ($self) = shift @_;
+  my @args = @_;
+  @{$self->{departments}} = $self->call_procedure(
+     procname => 'department_list',
+     args => \@args
+   );
+  return @{$self->{departments}};
+}
+                      
+=item get_open_currencies
+
+This method gets a list of the open currencies inside the database, it requires that  
+$self->{account_class} (must be 1 or 2)  exist to work.
+
+=back
+=cut
+
+sub get_open_currencies {
+  my ($self) = shift @_;
+  @{$self->{openCurrencies}} = $self->exec_method( funcname => 'payments_get_open_currencies');
+  return @{$self->{openCurrencies}};
+}
+
 
 1;

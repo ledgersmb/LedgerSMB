@@ -17,18 +17,34 @@
 <body>
 <form name="create_batch" method="post">
 <div class="labelledinput">
-  <div class="label">
+  <div class="input">
     <?lsmb text("Batch Number") ?>
   </div>
   <div class="value">
-    <input name="batchnumber" type="text" value="<?lsmb batchnumber ?>">
+    <input name="batchnumber" type="text" value="<?lsmb batchnumber ?>"/>
   </div>
 <div class="labelledinput">
   <div class="label">
     <?lsmb text("Description") ?>
   </div>
+  <div class="input">
+    <input name="description" type="text" value="<?lsmb batchnumber ?>"/>
+  </div>
 </div>
-<?lsmb FOREACH item = _hidden ?>
+<div class="labelledinput">
+  <div class="label">
+     <?lsmb text("Batch Date") ?>
+  </div>
+  <div class="input">
+     <input type=text class=date name="batch_date" 
+            value="<?lsmb batch_date ?>" />
+  </div>
+</div>
+<div id="buttons">
+<button value="create_batch" type="submit" class="submit">
+<?lsmb text('Continue') ?></button>
+</div>
+<?lsmb FOREACH item = hidden ?>
 <input type=hidden name="<?lsmb item.name ?>" value="<?lsmb item.value ?>">
 <?lsmb END ?>
 </form>

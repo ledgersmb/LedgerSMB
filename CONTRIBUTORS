@@ -73,6 +73,8 @@ handling.
 Chad Phillips [email omitted]  Various bugfixes.  Also contributed a template
 widget system for 1.3.
 
+David Mora contributed the new Payment template/system.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>

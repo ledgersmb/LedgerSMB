@@ -215,7 +215,7 @@ $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_post 
 (in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
-	in_cash_accno text, in_approved bool, in_payment_date, 
+	in_cash_accno text, in_approved bool, in_payment_date date, 
         in_account_class int)
 IS $$
 This function takes the following arguments (prefaced with in_ in the db):
@@ -272,6 +272,21 @@ comment on function department_list(in_role char) is
 $$ This function returns all department that match the role provided as
 the argument.$$;
 
-
-
-
+CREATE OR REPLACE FUNCTION payments_get_open_currencies(in_account_class int)returns setof char(3) AS
+$$
+DECLARE resultrow record;
+BEGIN
+        FOR resultrow IN
+          SELECT curr FROM ar
+          WHERE amount <> paid
+          AND in_account_class=2
+          UNION
+          SELECT curr FROM ap
+          WHERE amount <> paid
+          AND in_account_class=1
+          ORDER BY curr
+          LOOP
+         return next resultrow.curr;
+        END LOOP;
+END;
+$$ language plpgsql;
