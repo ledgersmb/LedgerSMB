@@ -115,14 +115,14 @@ if ($@) {
         "$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
 }
 
-map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
-  unless ( $form->{type} eq 'preferences' );
-
 $form->db_init( \%myconfig );
 &check_password;
 
 # we get rid of myconfig and use User as a real object
 %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
+map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
+  unless ( $form->{type} eq 'preferences' );
+
 $locale   = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 # pull in the main code
