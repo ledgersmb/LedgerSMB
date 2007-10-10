@@ -164,7 +164,9 @@ sub new {
 		throw Error::Simple "Invalid format";
 	}
 	if (!$self->{include_path}){
-		$self->{include_path} = $self->{'myconfig'}->{'templates'};
+## SC: hardcoding due to config migration
+##		$self->{include_path} = $self->{'myconfig'}->{'templates'};
+		$self->{include_path} = 'templates/demo';
 		if (defined $self->{language}){
 			if (!$self->_valid_language){
 				throw Error::Simple 'Invalid language';
