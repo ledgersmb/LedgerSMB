@@ -1,4 +1,22 @@
 
+=pod
+
+=head1 NAME
+
+LedgerSMB::Scripts::payment - LedgerSMB class defining the Controller functions for payment handling.
+
+=head1 SYNOPSIS
+
+Defines the controller functions and workflow logic for payment processing.
+
+=head1 COPYRIGHT
+
+Copyright (c) 2007, David Mora R and Christian Ceballos B.
+
+Licensed to the public under the terms of the GNU GPL version 2 or later.
+
+Original copyright notice below. 
+
 #=====================================================================
 # PLAXIS
 # Copyright (c) 2007
@@ -22,12 +40,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#======================================================================
-#
-# NEW PAYMENTS AND CHECK MODULE
-# 
-#
-#======================================================================
+
+
+=head1 METHODS
+
+=cut
 
 
 package LedgerSMB::Scripts::payment;
