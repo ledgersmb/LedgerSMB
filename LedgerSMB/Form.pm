@@ -1358,7 +1358,7 @@ sub datetonum {
     my ( $self, $myconfig, $date, $picture ) = @_;
 
     if ( $date && $date =~ /\D/ ) {
-        if ( $date && $date =~ /^\d{4}-\d\d-\d\d$/ ) {
+        if ( $date =~ /^\d{4}-\d\d-\d\d$/ ) {
             # SC: Handle standard form of YYYY-MM-DD
             ( $yy, $mm, $dd ) = split /\D/, $date;
         } elsif ( $myconfig->{dateformat} =~ /^yy/ ) {
