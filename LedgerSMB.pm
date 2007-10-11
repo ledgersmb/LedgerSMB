@@ -589,13 +589,13 @@ sub date_to_number {
     my ( $yy, $mm, $dd );
     if ( $date && $date =~ /\D/ ) {
 
-        if ( $myconfig->{dateformat} =~ /^yy/ ) {
+        if ( $date =~ /^\d{4}-\d\d-\d\d$/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
-        }
-        elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
+        } elsif ( $myconfig->{dateformat} =~ /^yy/ ) {
+            ( $yy, $mm, $dd ) = split /\D/, $date;
+        } elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
             ( $mm, $dd, $yy ) = split /\D/, $date;
-        }
-        elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
+        } elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
             ( $dd, $mm, $yy ) = split /\D/, $date;
         }
 
@@ -790,4 +790,5 @@ sub set {
 }
 
 1;
+
 

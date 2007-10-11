@@ -977,13 +977,13 @@ sub datetonum {
         my $mm;
         my $dd;
 
-        if ( $myconfig->{dateformat} =~ /^yy/ ) {
+        if ( $date =~ /^\d{4}-\d\d-\d\d$/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
-        }
-        elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
+        } if ( $myconfig->{dateformat} =~ /^yy/ ) {
+            ( $yy, $mm, $dd ) = split /\D/, $date;
+        } elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
             ( $mm, $dd, $yy ) = split /\D/, $date;
-        }
-        elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
+        } elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
             ( $dd, $mm, $yy ) = split /\D/, $date;
         }
 
