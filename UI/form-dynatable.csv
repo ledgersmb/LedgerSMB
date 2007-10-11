@@ -1,3 +1,29 @@
-<?lsmb FOREACH column IN columns ?><?lsmb IF heading.$column.text; heading.$column.text; ELSE; heading.$column; END ?><?lsmb IF NOT loop.last ?>,<?lsmb END ?><?lsmb END ?>
-<?lsmb FOREACH row IN rows ?><?lsmb FOREACH column IN columns ?><?lsmb IF row.$column.text; row.$column.text; ELSE; row.$column; END ?><?lsmb IF NOT loop.last ?>,<?lsmb END ?><?lsmb END ?>
-<?lsmb END ?><?lsmb IF totals; t = []; FOREACH column IN columns; t.push(totals.$column); END; t.join(','); END ?>
+<?lsmb FOREACH column IN columns;
+	IF heading.$column.text;
+		heading.$column.text;
+	ELSE;
+		heading.$column;
+	END;
+	IF NOT loop.last
+		?>,<?lsmb
+	END;
+END ?>
+<?lsmb FOREACH row IN rows;
+	FOREACH column IN columns;
+		IF row.$column.text.defined;
+			row.$column.text;
+		ELSE;
+			row.$column;
+		END;
+		IF NOT loop.last
+			?>,<?lsmb
+		END;
+	END ?>
+<?lsmb END;
+IF totals;
+	t = [];
+	FOREACH column IN columns;
+		t.push(totals.$column);
+	END;
+	t.join(',');
+END ?>

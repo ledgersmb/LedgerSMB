@@ -17,7 +17,7 @@
 		<?lsmb FOREACH column IN columns ?>
 		<?lsmb IF loop.first ?><format num_format="3">
 		<?lsmb END ?>
-			<?lsmb IF row.$column.href ?>
+			<?lsmb IF row.$column.text.defined ?>
 			<italic>
 			<cell text="<?lsmb row.$column.text ?>" />
 			</italic>

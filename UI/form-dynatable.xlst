@@ -11,7 +11,7 @@
 	<?lsmb FOREACH row IN rows ?>
 		<row>
 		<?lsmb FOREACH column IN columns ?>
-			<?lsmb IF row.$column.href ?>
+			<?lsmb IF row.$column.text.defined ?>
 			<cell text="<?lsmb row.$column.text ?>" />
 			<?lsmb ELSE ?>
 			<cell text="<?lsmb row.$column ?>" />
