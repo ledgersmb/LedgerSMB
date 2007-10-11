@@ -56,6 +56,7 @@ sub get_part {
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
     my $ref = $sth->fetchrow_hashref(NAME_lc);
+    $form->db_parse_numeric(sth => $sth, hashref => $ref);
 
     # copy to $form variables
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
