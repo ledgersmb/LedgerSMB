@@ -49,6 +49,7 @@ use LedgerSMB::Template;
 use LedgerSMB::PE;
 use LedgerSMB::RP;
 
+#$form->{login} = 'test';
 1;
 
 # end of main
@@ -1019,11 +1020,6 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
 
 sub generate_income_statement {
 
-    $form->{padding} = "&nbsp;&nbsp;";
-    $form->{bold}    = "<b>";
-    $form->{endbold} = "</b>";
-    $form->{br}      = "<br>";
-
     RP->income_statement( \%myconfig, \%$form );
 
     ( $form->{department} )    = split /--/, $form->{department};
@@ -1034,25 +1030,20 @@ sub generate_income_statement {
     $form->{todate} = $form->current_date( \%myconfig ) unless $form->{todate};
 
     # if there are any dates construct a where
-    if ( $form->{fromdate} || $form->{todate} ) {
-
-        unless ( $form->{todate} ) {
-            $form->{todate} = $form->current_date( \%myconfig );
-        }
-
-        $longtodate  = $locale->date( \%myconfig, $form->{todate}, 1 );
-        $shorttodate = $locale->date( \%myconfig, $form->{todate}, 0 );
-
-        $longfromdate  = $locale->date( \%myconfig, $form->{fromdate}, 1 );
-        $shortfromdate = $locale->date( \%myconfig, $form->{fromdate}, 0 );
-
-        $form->{this_period} = "$shortfromdate<br>\n$shorttodate";
-        $form->{period} =
-            $locale->text('for Period')
-          . qq|<br>\n$longfromdate |
-          . $locale->text('To')
-          . qq| $longtodate|;
+    unless ( $form->{todate} ) {
+        $form->{todate} = $form->current_date( \%myconfig );
     }
+
+    $longtodate  = $locale->date( \%myconfig, $form->{todate}, 1 );
+    $shorttodate = $locale->date( \%myconfig, $form->{todate}, 0 );
+
+    $longfromdate  = $locale->date( \%myconfig, $form->{fromdate}, 1 );
+    $shortfromdate = $locale->date( \%myconfig, $form->{fromdate}, 0 );
+
+    $form->{this_period_from} = $shortfromdate;
+    $form->{this_period_to} = $shorttodate;
+    # example output: 2006-01-01 To 2007-01-01
+    $form->{period} = $locale->text('[_1] To [_2]', $longfromdate, $longtodate);
 
     if ( $form->{comparefromdate} || $form->{comparetodate} ) {
         $longcomparefromdate =
@@ -1065,24 +1056,27 @@ sub generate_income_statement {
         $shortcomparetodate =
           $locale->date( \%myconfig, $form->{comparetodate}, 0 );
 
-        $form->{last_period} = "$shortcomparefromdate<br>\n$shortcomparetodate";
-        $form->{period} .=
-            "<br>\n$longcomparefromdate "
-          . $locale->text('To')
-          . qq| $longcomparetodate|;
+        $form->{last_period_from} = $shortcomparefromdate;
+        $form->{last_period_to} = $shortcomparetodate;
+        $form->{compare_period} = $locale->text('[_1] To [_2]',
+            $longcomparefromdate, $longcomparetodate);
     }
 
     # setup variables for the form
-    @a = qw(company address businessnumber);
-    for (@a) { $form->{$_} = $myconfig{$_} }
+    my @vars = qw(company address businessnumber);
+    for (@vars) { $form->{$_} = $myconfig{$_} }
+	##SC: START HTML
     $form->{address} =~ s/\\n/<br>/g;
+	##SC: END HTML
 
-    $form->{templates} = $myconfig{templates};
 
-    $form->{IN} = "income_statement.html";
-
-    my $template = LedgerSMB::Template->new( user => \%myconfig, 
-         template => $form->{'formname'}, format => uc $form->{format} );
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'income_statement',
+        format => 'HTML',
+	#no_escape => '1'
+        );
     try {
         $template->render($form);
         $template->output(%{$form});
@@ -1096,7 +1090,6 @@ sub generate_income_statement {
 
 sub generate_balance_sheet {
 
-	##SC: START HTML
     RP->balance_sheet( \%myconfig, \%$form );
 
     $form->{asofdate} = $form->current_date( \%myconfig )
@@ -1122,6 +1115,7 @@ sub generate_balance_sheet {
     for (qw(company address businessnumber nativecurr login)) {
         $form->{$_} = $myconfig{$_};
     }
+	##SC: START HTML
     $form->{address} =~ s/\\n/<br>/g;
 	##SC: END HTML
 
