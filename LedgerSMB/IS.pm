@@ -1611,6 +1611,11 @@ sub cogs {
     # If there are unallocated items for the current invoice at the end, we 
     # will throw an error until we have an understanding of other workflows 
     # that need to be supported.  -- CT
+    #
+    # Note:  Victor's original patch selected items to reverse based on 
+    # sell price.  This causes issues with restocking fees and the like so
+    # I am removing that restriction.  This should be discussed more fully 
+    # however.  -- CT
         $query = qq|
         	      SELECT i.id, i.qty, i.allocated, a.transdate,
 		             -1 * (i.allocated + i.qty) AS available,
@@ -1619,11 +1624,10 @@ sub cogs {
 		        JOIN parts p ON (p.id = i.parts_id)
 		        JOIN ar a ON (a.id = i.trans_id)
 	               WHERE i.parts_id = ? AND (i.qty +  i.allocated) > 0 
-                             AND i.sellprice = ?
 		    ORDER BY transdate
 				|;
         $sth = $dbh->prepare($query);
-        $sth->execute($id, $sellprice) || $form->dberror($query);
+        $sth->execute($id) || $form->dberror($query);
         my $qty;
         while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
             $form->db_parse_numeric(sth=>$sth, hashref => $ref);
@@ -1662,7 +1666,7 @@ sub cogs {
 		    FROM invoice i
 		    JOIN parts p ON (i.parts_id = p.id)
 		    JOIN ap a ON (i.trans_id = a.id)
-		   WHERE (i.allocated + i.qty) < 0
+		   WHERE allocated > 0
 		         AND i.parts_id = ?
 		ORDER BY a.transdate DESC, a.id DESC
             |;

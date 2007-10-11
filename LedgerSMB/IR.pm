@@ -40,6 +40,9 @@ use Math::BigFloat;
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
+    if ($form->{id}){
+        delete_invoice($self, $myconfig, $form);
+    }
     my $dbh = $form->{dbh};
     $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
       unless $form->{invnumber};
@@ -937,6 +940,7 @@ sub reverse_invoice {
 sub delete_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
+
     # connect to database
     my $dbh = $form->{dbh};
 
@@ -963,10 +967,6 @@ sub delete_invoice {
 
     &reverse_invoice( $dbh, $form );
 
-    # delete AP record
-    $query = qq|DELETE FROM ap WHERE id = ?|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
 
     # delete spool files
     $query = qq|
@@ -1005,7 +1005,13 @@ sub delete_invoice {
               if $spoolfile;
         }
     }
-
+    $query = "DELETE FROM invoice WHERE trans_id = ?";
+    $sth = $dbh->prepare($query);
+    $sth->execute($form->{id});
+    # delete AP record
+    $query = qq|DELETE FROM ap WHERE id = ?|;
+    my $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
     my $rc = $dbh->commit;
 
     $rc;
