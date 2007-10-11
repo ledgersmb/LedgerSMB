@@ -254,19 +254,19 @@ sub _http_output {
 		throw Error::Simple "Invalid format";
 	}
 	my $format = "LedgerSMB::Template::$self->{format}";
-	my $disposition = "\n";
+	my $disposition = "";
 	my $name = $format->can('postprocess')->($self);
 
 	if ($name) {
 		$name =~ s#^.*/##;
-		$disposition .= qq|Content-Disposition: attachment; filename="$name"|;
+		$disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
 	}
 	if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
 	} else {
 		print "Content-Type: $self->{mimetype}$disposition\n\n";
+		binmode STDOUT, ':bytes';
 	}
-	binmode STDOUT, ':bytes';
 	print $data;
 	binmode STDOUT, ':utf8';
 }
