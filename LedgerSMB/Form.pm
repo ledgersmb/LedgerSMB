@@ -688,7 +688,7 @@ sub parse_template {
 
     }
     else {
-        open( IN, "$self->{templates}/$self->{IN}" )
+        open( IN, '<', "$self->{templates}/$self->{IN}" )
           or $self->error("$self->{IN} : $!");
     }
 
