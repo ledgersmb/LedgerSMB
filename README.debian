@@ -6,7 +6,7 @@ via CPAN.
 
 A simple way to do this is to:
 
-apt-get install `cat required.deb.txt`
+apt-get install `cat required_debs.txt`
 cpan 
 > install Class::Std
 > install Config::Std
