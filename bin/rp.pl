@@ -49,7 +49,6 @@ use LedgerSMB::Template;
 use LedgerSMB::PE;
 use LedgerSMB::RP;
 
-#$form->{login} = 'test';
 1;
 
 # end of main
@@ -1148,6 +1147,9 @@ sub generate_projects {
     &list_accounts;
 
 }
+sub csv_generate_projects { &generate_projects }
+sub xls_generate_projects { &generate_projects }
+sub ods_generate_projects { &generate_projects }
 
 # Antonio Gallardo
 #
@@ -1175,19 +1177,37 @@ sub generate_trial_balance {
     &list_accounts;
 
 }
+sub csv_generate_trial_balance { &generate_trial_balance }
+sub xls_generate_trial_balance { &generate_trial_balance }
+sub ods_generate_trial_balance { &generate_trial_balance }
 
 sub list_accounts {
 
     $title = $form->escape( $form->{title} );
+    my %hiddens = (
+        path => $form->{path},
+        sessionid => $form->{sessionid},
+        login => $form->{login},
+        accounttype => $form->{accounttype},
+        fromdate => $form->{fromdate},
+        todate => $form->{todate},
+        l_heading => $form->{l_heading},
+        l_subtotal => $form->{l_subtotal},
+        all_accounts => $form->{all_accounts},
+        department => $form->{department},
+        projectnumber => $form->{projectnumber},
+        project_id => $form->{project_id},
+    );
 
+    my @options;
     if ( $form->{department} ) {
         ($department) = split /--/, $form->{department};
-        $options    = $locale->text('Department') . " : $department<br>";
+        push @options, $locale->text('Department: [_1]', $department);
         $department = $form->escape( $form->{department} );
     }
     if ( $form->{projectnumber} ) {
         ($projectnumber) = split /--/, $form->{projectnumber};
-        $options .= $locale->text('Project Number') . " : $projectnumber<br>";
+        push @options, $locale->text('Project Number: [_1]', $projectnumber);
         $projectnumber = $form->escape( $form->{projectnumber} );
     }
 
@@ -1202,64 +1222,35 @@ sub list_accounts {
         }
 
         $form->{period} = "$fromdate - $todate";
-    }
-    else {
+    } else {
         $form->{period} =
           $locale->date( \%myconfig, $form->current_date( \%myconfig ), 1 );
 
     }
-    $options .= $form->{period};
+    push @options, $form->{period};
 
-    @column_index = qw(accno description begbalance debit credit endbalance);
+    my @column_index = qw(accno description begbalance debit credit endbalance);
 
-    $column_header{accno} =
-      qq|<th class=listheading>| . $locale->text('Account') . qq|</th>|;
-    $column_header{description} =
-      qq|<th class=listheading>| . $locale->text('Description') . qq|</th>|;
-    $column_header{debit} =
-      qq|<th class=listheading>| . $locale->text('Debit') . qq|</th>|;
-    $column_header{credit} =
-      qq|<th class=listheading>| . $locale->text('Credit') . qq|</th>|;
-    $column_header{begbalance} =
-      qq|<th class=listheading>| . $locale->text('Balance') . qq|</th>|;
-    $column_header{endbalance} =
-      qq|<th class=listheading>| . $locale->text('Balance') . qq|</th>|;
+    my %column_header;
+    $column_header{accno} = $locale->text('Account');
+    $column_header{description} = $locale->text('Description');
+    $column_header{debit} = $locale->text('Debit');
+    $column_header{credit} = $locale->text('Credit');
+    $column_header{begbalance} = $locale->text('Balance');
+    $column_header{endbalance} = $locale->text('Balance');
 
     if ( $form->{accounttype} eq 'gifi' ) {
-        $column_header{accno} =
-          qq|<th class=listheading>| . $locale->text('GIFI') . qq|</th>|;
+        $column_header{accno} = $locale->text('GIFI');
     }
 
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$options</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr>|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
     # sort the whole thing by account numbers and display
+    my @rows;
     foreach $ref ( sort { $a->{accno} cmp $b->{accno} } @{ $form->{TB} } ) {
 
-        $description = $form->escape( $ref->{description} );
+        my %column_data;
+        my $description = $form->escape( $ref->{description} );
 
-        $href =
+        my $href =
 qq|ca.pl?path=$form->{path}&action=list_transactions&accounttype=$form->{accounttype}&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&sort=transdate&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&department=$department&projectnumber=$projectnumber&project_id=$form->{project_id}&title=$title&nextsub=$form->{nextsub}&prevreport=$form->{callback}|;
 
         if ( $form->{accounttype} eq 'gifi' ) {
@@ -1276,57 +1267,45 @@ qq|ca.pl?path=$form->{path}&action=list_transactions&accounttype=$form->{account
         $ml = ( $ref->{category} =~ /(A|E)/ ) ? -1 : 1;
         $ml *= -1 if $ref->{contra};
 
-        $debit = $form->format_amount( \%myconfig, $ref->{debit}, 2, "&nbsp;" );
+        $debit = $form->format_amount( \%myconfig, $ref->{debit}, 2, " " );
         $credit =
-          $form->format_amount( \%myconfig, $ref->{credit}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{credit}, 2, " " );
         $begbalance =
           $form->format_amount( \%myconfig, $ref->{balance} * $ml, 2,
-            "&nbsp;" );
+            " " );
         $endbalance =
           $form->format_amount( \%myconfig,
-            ( $ref->{balance} + $ref->{amount} ) * $ml,
-            2, "&nbsp;" );
+            ( $ref->{balance} + $ref->{amount} ) * $ml, 2, " " );
 
         if ( $ref->{charttype} eq "H" && $subtotal && $form->{l_subtotal} ) {
 
             if ($subtotal) {
 
                 for (qw(accno begbalance endbalance)) {
-                    $column_data{$_} = "<th>&nbsp;</th>";
+                    $column_data{$_} = " ";
                 }
 
                 $subtotalbegbalance =
                   $form->format_amount( \%myconfig, $subtotalbegbalance, 2,
-                    "&nbsp;" );
+                    " " );
                 $subtotalendbalance =
                   $form->format_amount( \%myconfig, $subtotalendbalance, 2,
-                    "&nbsp;" );
+                    " " );
                 $subtotaldebit =
                   $form->format_amount( \%myconfig, $subtotaldebit, 2,
-                    "&nbsp;" );
+                    " " );
                 $subtotalcredit =
                   $form->format_amount( \%myconfig, $subtotalcredit, 2,
-                    "&nbsp;" );
+                    " " );
 
-                $column_data{description} =
-                  "<th class=listsubtotal>$subtotaldescription</th>";
-                $column_data{begbalance} =
-                  "<th align=right class=listsubtotal>$subtotalbegbalance</th>";
-                $column_data{endbalance} =
-                  "<th align=right class=listsubtotal>$subtotalendbalance</th>";
-                $column_data{debit} =
-                  "<th align=right class=listsubtotal>$subtotaldebit</th>";
-                $column_data{credit} =
-                  "<th align=right class=listsubtotal>$subtotalcredit</th>";
+                $column_data{description} = $subtotaldescription;
+                $column_data{begbalance} = $subtotalbegbalance;
+                $column_data{endbalance} = $subtotalendbalance;
+                $column_data{debit} = $subtotaldebit;
+                $column_data{credit} = $subtotalcredit;
+                $column_data{class} = 'subtotal';
 
-                print qq|
-	  <tr class=listsubtotal>
-|;
-                for (@column_index) { print "$column_data{$_}\n" }
-
-                print qq|
-	  </tr>
-|;
+                push @rows, \%column_data;
             }
         }
 
@@ -1339,40 +1318,34 @@ qq|ca.pl?path=$form->{path}&action=list_transactions&accounttype=$form->{account
             $subtotalendbalance  = 0;
 
             if ( $form->{l_heading} ) {
-                if ( !$form->{all_accounts} ) {
-                    if ( ( $subtotaldebit + $subtotalcredit ) == 0 ) {
-                        $subtotal = 0;
-                        next;
-                    }
+                if ( !$form->{all_accounts} and
+                    ( $subtotaldebit + $subtotalcredit ) == 0 ) {
+                    $subtotal = 0;
+                    next;
                 }
-            }
-            else {
+            } else {
                 $subtotal = 0;
-                if (
-                    $form->{all_accounts}
-                    || ( $form->{l_subtotal}
-                        && ( ( $subtotaldebit + $subtotalcredit ) != 0 ) )
-                  )
-                {
+                if ( $form->{all_accounts} || ( $form->{l_subtotal} &&
+                        ( ( $subtotaldebit + $subtotalcredit ) != 0 ) )) {
                     $subtotal = 1;
                 }
                 next;
             }
 
             for (qw(accno debit credit begbalance endbalance)) {
-                $column_data{$_} = "<th>&nbsp;</th>";
+                $column_data{$_} = " ";
             }
-            $column_data{description} =
-              "<th class=listheading>$ref->{description}</th>";
+            $column_data{description} = $ref->{description};
+            $column_data{class} = 'heading';
         }
 
         if ( $ref->{charttype} eq "A" ) {
-            $column_data{accno} = "<td><a href=$href>$ref->{accno}</a></td>";
-            $column_data{description} = "<td>$ref->{description}</td>";
-            $column_data{debit}       = "<td align=right>$debit</td>";
-            $column_data{credit}      = "<td align=right>$credit</td>";
-            $column_data{begbalance}  = "<td align=right>$begbalance</td>";
-            $column_data{endbalance}  = "<td align=right>$endbalance</td>";
+            $column_data{accno} = {text => $ref->{accno}, href => $href};
+            $column_data{description} = $ref->{description};
+            $column_data{debit}       = $debit;
+            $column_data{credit}      = $credit;
+            $column_data{begbalance}  = $begbalance;
+            $column_data{endbalance}  = $endbalance;
 
             $totaldebit  += $ref->{debit};
             $totalcredit += $ref->{credit};
@@ -1386,91 +1359,95 @@ qq|ca.pl?path=$form->{path}&action=list_transactions&accounttype=$form->{account
         }
 
         if ( $ref->{charttype} eq "H" ) {
-            print qq|
-      <tr class=listheading>
-|;
+            $column_data{class} = 'heading';
         }
         if ( $ref->{charttype} eq "A" ) {
             $i++;
             $i %= 2;
-            print qq|
-      <tr class=listrow$i>
-|;
+            $column_data{i} = $i;
         }
 
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-      </tr>
-|;
+        push @rows, \%column_data;
     }
 
     # print last subtotal
     if ( $subtotal && $form->{l_subtotal} ) {
+        my %column_data;
         for (qw(accno begbalance endbalance)) {
-            $column_data{$_} = "<th>&nbsp;</th>";
+            $column_data{$_} = " ";
         }
         $subtotalbegbalance =
-          $form->format_amount( \%myconfig, $subtotalbegbalance, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $subtotalbegbalance, 2, " " );
         $subtotalendbalance =
-          $form->format_amount( \%myconfig, $subtotalendbalance, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $subtotalendbalance, 2, " " );
         $subtotaldebit =
-          $form->format_amount( \%myconfig, $subtotaldebit, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $subtotaldebit, 2, " " );
         $subtotalcredit =
-          $form->format_amount( \%myconfig, $subtotalcredit, 2, "&nbsp;" );
-        $column_data{description} =
-          "<th class=listsubtotal>$subtotaldescription</th>";
-        $column_data{begbalance} =
-          "<th align=right class=listsubtotal>$subtotalbegbalance</th>";
-        $column_data{endbalance} =
-          "<th align=right class=listsubtotal>$subtotalendbalance</th>";
-        $column_data{debit} =
-          "<th align=right class=listsubtotal>$subtotaldebit</th>";
-        $column_data{credit} =
-          "<th align=right class=listsubtotal>$subtotalcredit</th>";
+          $form->format_amount( \%myconfig, $subtotalcredit, 2, " " );
+        $column_data{description} = $subtotaldescription;
+        $column_data{begbalance} = $subtotalbegbalance;
+        $column_data{endbalance} = $subtotalendbalance;
+        $column_data{debit} = $subtotaldebit;
+        $column_data{credit} = $subtotalcredit;
+        $column_data{class} = 'subtotal';
 
-        print qq|
-    <tr class=listsubtotal>
-|;
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-    </tr>
-|;
+        push @rows, \%column_data;
     }
 
-    $totaldebit = $form->format_amount( \%myconfig, $totaldebit, 2, "&nbsp;" );
+    my %column_data;
+
+    $totaldebit = $form->format_amount( \%myconfig, $totaldebit, 2, " " );
     $totalcredit =
-      $form->format_amount( \%myconfig, $totalcredit, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $totalcredit, 2, " " );
 
     for (qw(accno description begbalance endbalance)) {
-        $column_data{$_} = "<th>&nbsp;</th>";
+        $column_data{$_} = "";
     }
 
-    $column_data{debit} = qq|<th align=right class=listtotal>$totaldebit</th>|;
-    $column_data{credit} =
-      qq|<th align=right class=listtotal>$totalcredit</th>|;
+    $column_data{debit} = $totaldebit;
+    $column_data{credit} = $totalcredit;
 
-    print qq|
-        <tr class=listtotal>
-|;
-
-    for (@column_index) { print "$column_data{$_}\n" }
-
-    print qq|
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-</body>
-</html>
-|;
-
+    my @buttons;
+    for my $type (qw(CSV XLS ODS)) {
+        push @buttons, {
+            name => 'action',
+            value => lc "${type}_$form->{nextsub}",
+            text => $locale->text("$type Report"),
+            type => 'submit',
+            class => 'submit',
+        };
+    }
+    my $format;
+    if ($form->{action} eq 'continue') {
+	$format = 'HTML';
+    } else {
+        $format = uc substr $form->{action}, 0, 3;
+    	push @column_index, 'class';
+        $column_header{class} = 'rowtype';
+    }
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-dynatable',
+        path => 'UI',
+        format => $format,
+        );
+    $template->render({
+        form => $form,
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+        options => \@options,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        totals => \%column_data,
+        row_alignment => {
+            'credit' => 'right',
+            'debit' => 'right',
+            'begbalance' => 'right',
+            'endbalance' => 'right'
+            },
+    });
 }
 
 sub generate_ar_aging {
