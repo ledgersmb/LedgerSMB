@@ -1,11 +1,10 @@
-div.submenu {
+li.menu_closed {
+}
+
+li.menu_closed > ul {
 	display: none;
 }
 
-A.Menu_Closed:before {
-	content: '+';
-}
-
-A.Menu_Open:before {
-	content: '-';
+li.menu_open > ul {
+	display: block;
 }

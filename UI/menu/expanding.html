@@ -7,8 +7,16 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="UI/menu/expanding.css" type="text/css" title="LedgerSMB stylesheet" />
-	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<!-- 
+		Please note that the below style tag is NOT in line with 
+		how we do things. However, it seems necessary in order to work 
+		around a Firefox bug in the the application of the styles. 
+		- CT
+	-->
+	<style type="text/css" media="all">
+		@import url("UI/menu/expanding.css");
+		@import url("css/<?lsmb stylesheet ?>");
+	</style>
 
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
@@ -17,23 +25,16 @@
 		<script type="text/javascript">
 
 			function SwitchMenu(id) {
-				var obj = "sub_" + id;
+				var obj = "menu_" + id;
 				if (document.getElementById) {
 					var element = document.getElementById(obj);
 					
-					if (element.style.display == "block") {
-						element.style.display = "none";
-
-					} else {
-						element.style.display = "block"; //display the block of info
-					}
-					obj = 'a_' + id;
 					element = document.getElementById(obj);
-					if (element.className == 'Menu_Open'){
+					if (element.className == 'menu_open'){
 						element.className 
-							= 'Menu_Closed';
+							= 'menu_closed';
 					} else {
-						element.className = 'Menu_Open';
+						element.className = 'menu_open';
 					}
 					return false;
 				}		
@@ -47,21 +48,30 @@
 
 		<body class="menu">
 		<img class="cornderlogo" src="images/ledgersmb_small.png" width="100" height="50" border="1" alt="LedgerSMB" />
+	<ul id="top_menu" class="menu_open">
+	<?lsmb old_level = 0 ?>
 	<?lsmb FOREACH item = menu_items ?>
 		<?lsmb href = "" ?>
+			<!-- <?lsmb item.level ?> :: <?lsmb old_level ?> -->
 		<?lsmb WHILE item.level < old_level ?>
- 			</div><?lsmb old_level = old_level - 1 ?>
+ 			</li></ul><?lsmb old_level = old_level - 1 ?>
 		<?lsmb END ?>
-		<div class="Menu" id="menu_<?lsmb item.id ?>">
+                <?lsmb IF old_level > 0 && item.level <= old_level ?></li><?lsmb END ?>
+		<?lsmb old_level = item.level ?>
+		<li id="menu_<?lsmb item.id ?>"
+				class = "<?lsmb IF (item.menu && item.open)
+					?>menu_open<?lsmb ELSIF item.menu
+					?>menu_closed<?lsmb
+					ELSE ?>menu_item<?lsmb END ?>">
 			<a href="<?lsmb IF item.module ?><?lsmb item.module 
 				?><?lsmb ELSE ?>menu.pl<?lsmb END 
 				?>?login=<?lsmb login 
-				?>&<?lsmb FOREACH arg IN item.args 
+				?>&amp;<?lsmb FOREACH arg IN item.args 
 				?><?lsmb arg 
-				?>&<?lsmb END 
+				?>&amp;<?lsmb END 
 				?><?lsmb IF item.menu 
 					?>id=<?lsmb item.id
-					?>&open=<?lsmb open 
+					?>&amp;open=<?lsmb open 
 				?><?lsmb END ?>"
 				<?lsmb IF (item.module != 'menu.pl') &&
 					('login.pl' != item.module) ?> 
@@ -75,21 +85,15 @@
 					('New Menu' != item.label) ?> 
 					onclick="return SwitchMenu('<?lsmb item.id ?>')"
 				<?lsmb END ?>
-				class = "<?lsmb IF (item.menu && item.open)
-					?>Menu_Open<?lsmb ELSIF item.menu
-					?>Menu_Closed<?lsmb
-					ELSE ?>Menu_Item<?lsmb END ?>"
 				id = "a_<?lsmb item.id ?>"
 				><?lsmb text(item.label) ?></a>
-		</div>
 		<?lsmb IF item.menu && (item.label != 'New Window') ?>
-			<div id="sub_<?lsmb item.id ?>" class="submenu"
-			<?lsmb IF item.open ?>
-				style="display: block"
-			<?lsmb END ?>>
+			<ul id="sub_<?lsmb item.id ?>" class="submenu">
 		<?lsmb END ?>
-		<?lsmb old_level = item.level ?>
 	<?lsmb END ?>
+		<?lsmb WHILE 0 < old_level ?>
+ 			</li></ul><?lsmb old_level = old_level - 1 ?>
+		<?lsmb END ?>
                 
                 
 </body>

@@ -105,7 +105,6 @@ there nodes which are supposed to be open are marked.
 
 sub expanding_menu {
     my ($request) = @_;
-    print STDERR 'Breakpoint\n';
     if ($request->{'open'} !~ s/:$request->{id}:/:/){
 	$request->{'open'} .= ":$request->{id}:";
     }

@@ -34,12 +34,13 @@ use strict;
 sub session_check {
     use Time::HiRes qw(gettimeofday);
     my ( $cookie, $form ) = @_;
-
+    print STFERR "Checking Session\n";
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
 
    if ($cookie eq 'Login'){
+        print STDERR "creating session\n";
         return session_create($form);
     }
     my $timeout;
@@ -179,7 +180,6 @@ sub session_create {
     if ( !$lsmb->{timeout} ) {
         $lsmb->{timeout} = 86400;
     }
-    print STDERR "Breakpoint\n";
     $deleteExisting->execute( $login)
       || $lsmb->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );

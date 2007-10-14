@@ -13,7 +13,8 @@ function submit_form() {
 	var http = get_http_request_object();
         var username = document.login.login.value;
 	var password = document.login.password.value;
-	http.open("get", 'login.pl?action=authenticate', false, 
+	http.open("get", 'login.pl?action=authenticate&company='
+		+ document.login.company.value, false, 
 		username, password);
 	http.send("");
 	alert(http.status);

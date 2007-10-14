@@ -193,7 +193,7 @@ sub new {
     $self->_db_init;
 
     if ($self->is_run_mode('cgi', 'mod_perl')) {
-       #check for valid session unless this is an iniital authentication
+       #check for valid session unless this is an inital authentication
        #request -- CT
        if (!Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
             $self->_get_password("Session Expired");
