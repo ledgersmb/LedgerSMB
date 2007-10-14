@@ -2118,6 +2118,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 58	action	search	139
 57	type	generate_sales_order	135
 58	type	generate_purchase_order	138
+60	menu	1	550
 61	module	oe.pl	140
 61	action	search	141
 62	module	oe.pl	143
@@ -2225,7 +2226,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 101	menu	1	248
 102	module	pe.pl	249
 102	action	project_sales_order	250
-102	menu	1	255
+103	menu	1	255
 104	module	pe.pl	256
 104	type	project	258
 104	action	search	257
