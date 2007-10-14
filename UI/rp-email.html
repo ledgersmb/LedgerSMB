@@ -1,0 +1,74 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+
+<table width="100%">
+  <tr class="listtop">
+    <th><?lsmb text('E-mail Statement to [_1]', form.${form.ct}) ?></th>
+  </tr>
+  <tr height="5"><td> </td></tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+	  <th align="right" nowrap="nowrap"><?lsmb text('E-mail') ?></th>
+	  <td><?lsmb PROCESS input element_data={name => 'email', size=> '30', value => form.email} ?></td>
+	  <th align="right" nowrap="nowrap"><?lsmb text('Cc') ?></th>
+	  <td><?lsmb PROCESS input element_data={name => 'cc', size=> '30', value => form.cc} ?></td>
+	</tr>
+	<tr>
+	  <th align="right" nowrap="nowrap"><?lsmb text('Subject') ?></th>
+	  <td><?lsmb PROCESS input element_data={name => 'subject', size=> '30', value => form.subject} ?></td>
+<?lsmb IF user.role == 'admin' OR user.role == 'manager' ?>
+	  <th align="right" nowrap="nowrap"><?lsmb text('Bcc') ?></th>
+	  <td><?lsmb PROCESS input element_data={name => 'bcc', size=> '30', value => form.bcc} ?></td><?lsmb
+ELSE ?><th> </th><td> </td><?lsmb
+END ?>
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+	  <th align="left" nowrap="nowrap"><?lsmb text('Message') ?></th>
+	</tr>
+	<tr>
+	  <td><?lsmb PROCESS textarea element_data={
+    name =>'message',
+    value => form.message,
+    rows => '15',
+    cols => '60',
+    wrap => 'soft'} ?></td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+
+<table>
+  <tr>
+    <td><?lsmb PROCESS select element_data=form.print.template ?></td>
+    <td><?lsmb PROCESS select element_data=form.print.format ?></td>
+    <td><?lsmb PROCESS select element_data=form.print.medium ?></td>
+  </tr>
+</table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size="3" noshade="noshade" /></td>
+  </tr>
+</table>
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>

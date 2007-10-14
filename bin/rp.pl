@@ -1492,48 +1492,39 @@ qq|$form->{script}?path=$form->{path}&action=generate_ap_aging&login=$form->{log
 
 sub aging {
 
-    $form->header;
+    my %hiddens;
+    my @buttons;
+    my @options;
+    my %column_header;
+    my @column_index;
+    my %row_alignment;
 
-    $column_header{statement} = qq|<th class=listheading width=1%>&nbsp;</th>|;
-    $column_header{ct} =
-        qq|<th class=listheading width=60%>|
-      . $locale->text( ucfirst $form->{ct} )
-      . qq|</th>|;
-    $column_header{language} =
-      qq|<th class=listheading>| . $locale->text('Language') . qq|</th>|;
-    $column_header{invnumber} =
-      qq|<th class=listheading>| . $locale->text('Invoice') . qq|</th>|;
-    $column_header{ordnumber} =
-      qq|<th class=listheading>| . $locale->text('Order') . qq|</th>|;
-    $column_header{transdate} =
-      qq|<th class=listheading nowrap>| . $locale->text('Date') . qq|</th>|;
-    $column_header{duedate} =
-      qq|<th class=listheading nowrap>| . $locale->text('Due Date') . qq|</th>|;
-    $column_header{c0} =
-        qq|<th class=listheading width=10% nowrap>|
-      . $locale->text('Current')
-      . qq|</th>|;
-    $column_header{c30} = qq|<th class=listheading width=10% nowrap>30</th>|;
-    $column_header{c60} = qq|<th class=listheading width=10% nowrap>60</th>|;
-    $column_header{c90} = qq|<th class=listheading width=10% nowrap>90</th>|;
-    $column_header{total} =
-        qq|<th class=listheading width=10% nowrap>|
-      . $locale->text('Total')
-      . qq|</th>|;
+    $column_header{statement} = ' ';
+    $column_header{ct} = $locale->text( ucfirst $form->{ct} );
+    $column_header{language} = $locale->text('Language');
+    $column_header{invnumber} = $locale->text('Invoice');
+    $column_header{ordnumber} = $locale->text('Order');
+    $column_header{transdate} = $locale->text('Date');
+    $column_header{duedate} = $locale->text('Due Date');
+    $column_header{c0} = $locale->text('Current');
+    $column_header{c30} = '30';
+    $column_header{c60} = '60';
+    $column_header{c90} = '90';
+    $column_header{total} = $locale->text('Total');
 
     @column_index = qw(statement ct);
 
     if ( @{ $form->{all_language} } && $form->{arap} eq 'ar' ) {
         push @column_index, "language";
-        $form->{selectlanguage} = qq|<option>\n|;
+        $form->{language_options} = [];
 
         for ( @{ $form->{all_language} } ) {
-            $form->{selectlanguage} .=
-              qq|<option value="$_->{code}">$_->{description}\n|;
+            push @{$form->{language_options}},
+              {text => $_->{description}, value => $_->{code}};
         }
     }
 
-    @c = ();
+    my @c = ();
     for (qw(c0 c30 c60 c90)) {
         if ( $form->{$_} ) {
             push @c, $_;
@@ -1547,96 +1538,64 @@ sub aging {
     push @column_index, @c;
     push @column_index, "total";
 
-    $option = $locale->text('Aged');
     if ( $form->{overdue} ) {
-        $option = $locale->text('Aged Overdue');
+        push @options, $locale->text('Aged Overdue');
         $form->{callback} .= "&overdue=$form->{overdue}";
+    } else {
+        push @options, $locale->text('Aged');
     }
 
     if ( $form->{department} ) {
-        $option .= "\n<br>" if $option;
         ($department) = split /--/, $form->{department};
-        $option .= $locale->text('Department') . " : $department";
+        push @options, $locale->text('Department: [_1]', $department);
         $department = $form->escape( $form->{department}, 1 );
         $form->{callback} .= "&department=$department";
     }
 
     if ( $form->{arap} eq 'ar' ) {
         if ( $form->{customer} ) {
-            $option .= "\n<br>" if $option;
-            $option .= $form->{customer};
+            push @options, $form->{customer};
         }
     }
     if ( $form->{arap} eq 'ap' ) {
         shift @column_index;
         if ( $form->{vendor} ) {
-            $option .= "\n<br>" if $option;
-            $option .= $form->{vendor};
+            push @options, $form->{vendor};
         }
     }
 
     $todate = $locale->date( \%myconfig, $form->{todate}, 1 );
-    $option .= "\n<br>" if $option;
-    $option .=
-      $locale->text('for Period') . " " . $locale->text('To') . " $todate";
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-|;
+    push @options, $locale->text('for Period To [_1]', $todate);
 
     $ctid = 0;
     $i    = 0;
     $k    = 0;
     $l    = $#{ $form->{AG} };
 
-    foreach $ref ( @{ $form->{AG} } ) {
+    my @currencies;
+    foreach my $ref ( @{ $form->{AG} } ) {
 
         if ( $curr ne $ref->{curr} ) {
+            my %column_data;
             $ctid = 0;
-            for (@column_index) { $column_data{$_} = qq|<th>&nbsp;</th>| }
+            for (@column_index) { $column_data{$_} = ' ' }
             if ($curr) {
-                $c0total =
-                  $form->format_amount( \%myconfig, $c0total, 2, "&nbsp" );
-                $c30total =
-                  $form->format_amount( \%myconfig, $c30total, 2, "&nbsp" );
-                $c60total =
-                  $form->format_amount( \%myconfig, $c60total, 2, "&nbsp" );
-                $c90total =
-                  $form->format_amount( \%myconfig, $c90total, 2, "&nbsp" );
-                $total = $form->format_amount( \%myconfig, $total, 2, "&nbsp" );
+                $c0total = $form->format_amount(\%myconfig, $c0total, 2, ' ');
+                $c30total = $form->format_amount(\%myconfig, $c30total, 2, ' ');
+                $c60total = $form->format_amount(\%myconfig, $c60total, 2, ' ');
+                $c90total = $form->format_amount(\%myconfig, $c90total, 2, ' ');
+                $total = $form->format_amount(\%myconfig, $total, 2, ' ' );
 
                 for (qw(ct statement language)) {
-                    $column_data{$_} = qq|<td>&nbsp;</td>|;
+                    $column_data{$_} = ' ';
                 }
-                $column_data{c0}    = qq|<th align=right>$c0total</th>|;
-                $column_data{c30}   = qq|<th align=right>$c30total</th>|;
-                $column_data{c60}   = qq|<th align=right>$c60total</th>|;
-                $column_data{c90}   = qq|<th align=right>$c90total</th>|;
-                $column_data{total} = qq|<th align=right>$total</th>|;
+                $column_data{c0}    = $c0total;
+                $column_data{c30}   = $c30total;
+                $column_data{c60}   = $c60total;
+                $column_data{c90}   = $c90total;
+                $column_data{total} = $total;
 
-                print qq|
-	<tr class=listtotal>
-|;
-
-                for (@column_index) { print "$column_data{$_}\n" }
-
-                print qq|
-	  </tr>
-|;
+                push @{$currencies[0]{totals}}, \%column_data;
 
                 $c0subtotal  = 0;
                 $c30subtotal = 0;
@@ -1652,44 +1611,34 @@ sub aging {
 
             }
 
+            push @currencies, {};
             $curr = $ref->{curr};
-            print qq|
-        <tr>
-	  <td></td>
-	  <th>$curr</th>
-	</tr>
-	
-	<tr class=listheading>
-|;
-
-            for (@column_index) { print "$column_header{$_}\n" }
-
-            print qq|
-	</tr>
-|;
+            $currencies[0]{curr} = $curr;
         }
 
         $k++;
+        my %column_data;
 
         if ( $ctid != $ref->{ctid} ) {
 
             $i++;
 
-            $column_data{ct} = qq|<td>$ref->{name}</td>|;
+            $column_data{ct} = $ref->{name};
 
-            if ( $form->{selectlanguage} ) {
-                $form->{"selectlanguage_$i"} = $form->{selectlanguage};
-                $form->{"selectlanguage_$i"} =~
-                  s/(<option value="\Q$ref->{language_code}\E")/$1 selected/;
-                $column_data{language} =
-qq|<td><select name="language_code_$i">$form->{"selectlanguage_$i"}</select></td>|;
-            }
+            $column_data{language} = {
+                name => "language_code_$i",
+                options => $form->{language_options},
+                default_value => $ref->{language_code},
+                } if $form->{language_options};
 
-            $column_data{statement} =
-qq|<td><input name="statement_$i" type=checkbox class=checkbox value=1 $ref->{checked}>
-      <input type=hidden name="$form->{ct}_id_$i" value=$ref->{ctid}>
-      <input type=hidden name="curr_$i" value=$ref->{curr}>
-      </td>|;
+            $column_data{statement} = {
+                name => "statement_$i",
+                type => 'checkbox',
+                value => '1',
+                };
+            $column_data{statement}{checked} = 'checked' if $ref->{checked};
+            $hiddens{"$form->{ct}_id_$i"} = $ref->{ctid};
+            $hiddens{"curr_$i"} = $ref->{curr};
 
         }
 
@@ -1716,109 +1665,77 @@ qq|<td><input name="statement_$i" type=checkbox class=checkbox value=1 $ref->{ch
         $total    += $ref->{total};
 
         $ref->{c0} =
-          $form->format_amount( \%myconfig, $ref->{c0}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{c0}, 2, ' ' );
         $ref->{c30} =
-          $form->format_amount( \%myconfig, $ref->{c30}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{c30}, 2, ' ' );
         $ref->{c60} =
-          $form->format_amount( \%myconfig, $ref->{c60}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{c60}, 2, ' ' );
         $ref->{c90} =
-          $form->format_amount( \%myconfig, $ref->{c90}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{c90}, 2, ' ' );
         $ref->{total} =
-          $form->format_amount( \%myconfig, $ref->{total}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{total}, 2, ' ' );
 
         $href =
 qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{login}&sessionid=$form->{sessionid}&callback=|
           . $form->escape( $form->{callback} );
 
-        $column_data{invnumber} =
-          qq|<td><a href=$href>$ref->{invnumber}</a></td>|;
-        for (qw(ordnumber transdate duedate)) {
-            $column_data{$_} = qq|<td>$ref->{$_}</td>|;
-        }
-        for (qw(c0 c30 c60 c90 total)) {
-            $column_data{$_} = qq|<td align=right>$ref->{$_}</td>|;
+        $column_data{invnumber} = {text => $ref->{invnumber}, href => $href};
+        for (qw(c0 c30 c60 c90 total ordnumber transdate duedate)) {
+            $column_data{$_} = $ref->{$_};
         }
 
         if ( !$form->{summary} ) {
 
             $j++;
             $j %= 2;
-            print qq|
-        <tr class=listrow$j>
-|;
+            $column_data{i} = $j;
 
-            for (@column_index) { print "$column_data{$_}\n" }
-
-            print qq|
-        </tr>
-|;
-
+            push @{$currencies[0]{rows}}, \%column_data;
             for (qw(ct statement language)) {
-                $column_data{$_} = qq|<td>&nbsp;</td>|;
+                $column_data{$_} = ' ';
             }
 
         }
 
-        # print subtotal
+        # prepare subtotal
         $nextid = ( $k <= $l ) ? $form->{AG}->[$k]->{ctid} : 0;
         if ( $ctid != $nextid ) {
 
             $c0subtotal =
-              $form->format_amount( \%myconfig, $c0subtotal, 2, "&nbsp" );
+              $form->format_amount( \%myconfig, $c0subtotal, 2, ' ' );
             $c30subtotal =
-              $form->format_amount( \%myconfig, $c30subtotal, 2, "&nbsp" );
+              $form->format_amount( \%myconfig, $c30subtotal, 2, ' ' );
             $c60subtotal =
-              $form->format_amount( \%myconfig, $c60subtotal, 2, "&nbsp" );
+              $form->format_amount( \%myconfig, $c60subtotal, 2, ' ' );
             $c90subtotal =
-              $form->format_amount( \%myconfig, $c90subtotal, 2, "&nbsp" );
+              $form->format_amount( \%myconfig, $c90subtotal, 2, ' ' );
             $subtotal =
-              $form->format_amount( \%myconfig, $subtotal, 2, "&nbsp" );
+              $form->format_amount( \%myconfig, $subtotal, 2, ' ' );
 
             if ( $form->{summary} ) {
-                $column_data{c0}    = qq|<td align=right>$c0subtotal</th>|;
-                $column_data{c30}   = qq|<td align=right>$c30subtotal</th>|;
-                $column_data{c60}   = qq|<td align=right>$c60subtotal</th>|;
-                $column_data{c90}   = qq|<td align=right>$c90subtotal</th>|;
-                $column_data{total} = qq|<td align=right>$subtotal</th>|;
+                $column_data{c0}    = $c0subtotal;
+                $column_data{c30}   = $c30subtotal;
+                $column_data{c60}   = $c60subtotal;
+                $column_data{c90}   = $c90subtotal;
+                $column_data{total} = $subtotal;
 
                 $j++;
                 $j %= 2;
-                print qq|
-      <tr class=listrow$j>
-|;
+                $column_data{i} = $j;
 
-                for (@column_index) { print "$column_data{$_}\n" }
+                push @{$currencies[0]{rows}}, \%column_data;
 
-                print qq|
-      </tr>
-|;
+            } else {
+                for (@column_index) { $column_data{$_} = ' ' }
 
-            }
-            else {
+                $column_data{c0} = $c0subtotal;
+                $column_data{c30} = $c30subtotal;
+                $column_data{c60} = $c60subtotal;
+                $column_data{c90} = $c90subtotal;
+                $column_data{total} = $subtotal;
+                $column_data{class} = 'subtotal';
 
-                for (@column_index) { $column_data{$_} = qq|<th>&nbsp;</th>| }
-
-                $column_data{c0} =
-                  qq|<th class=listsubtotal align=right>$c0subtotal</th>|;
-                $column_data{c30} =
-                  qq|<th class=listsubtotal align=right>$c30subtotal</th>|;
-                $column_data{c60} =
-                  qq|<th class=listsubtotal align=right>$c60subtotal</th>|;
-                $column_data{c90} =
-                  qq|<th class=listsubtotal align=right>$c90subtotal</th>|;
-                $column_data{total} =
-                  qq|<th class=listsubtotal align=right>$subtotal</th>|;
-
-                # print subtotals
-                print qq|
-	<tr class=listsubtotal>
-|;
-                for (@column_index) { print "$column_data{$_}\n" }
-
-                print qq|
-	</tr>
-|;
-
+                push @{$currencies[0]{rows}}, \%column_data;
             }
 
             $c0subtotal  = 0;
@@ -1830,64 +1747,44 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
         }
     }
 
-    print qq|
-        </tr>
-        <tr class=listtotal>
-|;
+    my %column_data;
+    for (@column_index) { $column_data{$_} = ' ' }
 
-    for (@column_index) { $column_data{$_} = qq|<th>&nbsp;</th>| }
+    $c0total  = $form->format_amount( \%myconfig, $c0total,  2, ' ' );
+    $c30total = $form->format_amount( \%myconfig, $c30total, 2, ' ' );
+    $c60total = $form->format_amount( \%myconfig, $c60total, 2, ' ' );
+    $c90total = $form->format_amount( \%myconfig, $c90total, 2, ' ' );
+    $total    = $form->format_amount( \%myconfig, $total,    2, ' ' );
 
-    $c0total  = $form->format_amount( \%myconfig, $c0total,  2, "&nbsp;" );
-    $c30total = $form->format_amount( \%myconfig, $c30total, 2, "&nbsp;" );
-    $c60total = $form->format_amount( \%myconfig, $c60total, 2, "&nbsp;" );
-    $c90total = $form->format_amount( \%myconfig, $c90total, 2, "&nbsp;" );
-    $total    = $form->format_amount( \%myconfig, $total,    2, "&nbsp;" );
+    $column_data{c0}    = $c0total;
+    $column_data{c30}   = $c30total;
+    $column_data{c60}   = $c60total;
+    $column_data{c90}   = $c90total;
+    $column_data{total} = $total;
+    
+    $currencies[0]{total} = \%column_data;
 
-    $column_data{c0}    = qq|<th align=right class=listtotal>$c0total</th>|;
-    $column_data{c30}   = qq|<th align=right class=listtotal>$c30total</th>|;
-    $column_data{c60}   = qq|<th align=right class=listtotal>$c60total</th>|;
-    $column_data{c90}   = qq|<th align=right class=listtotal>$c90total</th>|;
-    $column_data{total} = qq|<th align=right class=listtotal>$total</th>|;
-
-    for (@column_index) { print "$column_data{$_}\n" }
-
-    print qq|
-	</tr>
-	<input type=hidden name=rowcount value=$i>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-|;
+    $row_alignment{c0}     = 'right';
+    $row_alignment{c30}    = 'right';
+    $row_alignment{c60}    = 'right';
+    $row_alignment{c90}    = 'right';
+    $row_alignment{total}  = 'right';
+    $hiddens{rowcount} = $i;
 
     &print_options if ( $form->{arap} eq 'ar' );
 
-    print qq|
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
 
+    my @buttons;
     if ( $form->{arap} eq 'ar' ) {
 
-        $form->hide_form(
-            qw(todate title summary overdue c0 c30 c60 c90 callback arap ct department path login sessionid)
-        );
-
-        print qq|
-<input type=hidden name=$form->{ct} value="$form->{$form->{ct}}">
-|;
+        $hiddens{$_} = $form->{$_} foreach qw(todate title summary overdue c0 c30 c60 c90 callback arap ct department path login sessionid);
+        $hiddens{$form->{ct}} = $form->{$form->{ct}};
 
         # type=submit $locale->text('Select all')
         # type=submit $locale->text('Print')
         # type=submit $locale->text('E-mail')
 
-        %button = (
+        my %button = (
             'select_all' =>
               { ndx => 1, key => 'A', value => $locale->text('Select all') },
             'print' =>
@@ -1898,23 +1795,62 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
         {
-            $form->print_button( \%button, $_ );
+            push @buttons, {
+                accesskey => $button{$_}->{key},
+                text => $button{$_}->{value},
+                title => "$button{$_}->{value} [Alt-$button{$_}->{key}]",
+                value => $_,
+                name => 'action',
+                };
         }
 
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
+##SC: Temporary commenting
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
+
+    for my $type (qw(CSV XLS ODS)) {
+        push @buttons, {
+            name => 'action',
+            value => lc "${type}_$form->{nextsub}",
+            text => $locale->text("$type Report"),
+            type => 'submit',
+            class => 'submit',
+        };
     }
-
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
+    my $format;
+    if ($form->{action} eq 'continue') {
+	$format = 'HTML';
+    } else {
+        $format = uc substr $form->{action}, 0, 3;
+    	push @column_index, 'class';
+        $column_header{class} = 'rowtype';
+    }
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'rp-aging',
+        path => 'UI',
+        format => $format,
+        );
+    $template->render({
+        form => $form,
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+        options => \@options,
+        columns => \@column_index,
+        heading => \%column_header,
+        currencies => [reverse @currencies],
+        row_alignment => {
+            'credit' => 'right',
+            'debit' => 'right',
+            'begbalance' => 'right',
+            'endbalance' => 'right'
+            },
+    });
 }
 
 sub select_all {
@@ -1932,75 +1868,62 @@ sub print_options {
     $form->{sendmode} = "attachment";
     $form->{copies} = 1 unless $form->{copies};
 
-    $form->{PD}{ $form->{type} }     = "selected";
-    $form->{DF}{ $form->{format} }   = "selected";
-    $form->{SM}{ $form->{sendmode} } = "selected";
+    $form->{print}{format} = {name => 'format', default_values => $form->{format}};
+    $form->{print}{template} = {name => 'type', default_values => $form->{type}};
 
-    $format = qq|
-            <option value=html $form->{PD}{format}>html|;
+    my @formats = ();
+    my @media = ();
+    my @templates = ();
 
-    $type = qq|
-	    <option value=statement $form->{PD}{statement}>|
-      . $locale->text('Statement');
+    push @formats, {text => 'HTML', value => 'html'};
+    push @templates, {text => $locale->text('Statement'), value => 'statement'};
 
     if ( $form->{media} eq 'email' ) {
-        $media = qq|
-            <td><select name=sendmode>
-	    <option value=attachment $form->{SM}{attachment}>|
-          . $locale->text('Attachment') . qq|
-	    <option value=inline $form->{SM}{inline}>| . $locale->text('In-line');
-    }
-    else {
-        $media = qq|
-            <td><select name=media>
-	    <option value=screen>| . $locale->text('Screen');
+        $form->{print}{medium} = {name => 'sendmode', default_values => $form->{sendmode}};
+        push @media, {text => $locale->text('Attachement'), value => 'attachement'};
+        push @media, {text => $locale->text('In-line'), value => 'inline'};
+	if ($form->{SM}{attachment}) {
+	    $form->{print}{medium}{default_values} = $form->{SM}{attachment};
+	} elsif ($form->{SM}{inline}) {
+	    $form->{print}{medium}{default_values} = $form->{SM}{inline};
+	}
+    } else {
+        $form->{print}{medium} = {name => 'media'};
+        push @media, {text => $locale->text('Screen'), value => 'screen'};
         if (   %{LedgerSMB::Sysconfig::printer}
             && ${LedgerSMB::Sysconfig::latex} )
         {
             for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
-                $media .= qq|
-            <option value="$_">$_|;
+                push @media, {text => $_, value => $_};
             }
         }
     }
 
-    $media =~ s/(<option value="\Q$form->{media}\E")/$1 selected/;
-    $media .= qq|</select></td>|;
-
     if ( ${LedgerSMB::Sysconfig::latex} ) {
-        $format .= qq|
-            <option value=ps $form->{DF}{postscript}>|
-          . $locale->text('Postscript') . qq|
-	    <option value=pdf $form->{DF}{pdf}>| . $locale->text('PDF');
+        push @formats, {text => $locale->text('PDF'), value => 'pdf'};
+        push @formats, {text => $locale->text('Postscript'), value => 'ps'};
     }
-
-    print qq|
-<table>
-  <tr>
-    <td><select name=type>$type</select></td>
-    <td><select name=format>$format</select></td>
-    $media
-|;
 
     if (   %{LedgerSMB::Sysconfig::printer}
         && ${LedgerSMB::Sysconfig::latex}
         && $form->{media} ne 'email' )
     {
-        print qq|
-      <td>| . $locale->text('Copies') . qq|
-      <input name=copies size=2 value=$form->{copies}></td>
-|;
+        $form->{print}{copies} = {
+            label => $locale->text('Copies'),
+            name => 'copies',
+            value => $form->{copies},
+            size => 2,
+            };
     }
 
-    print qq|
-  </tr>
-</table>
-|;
-
+    $form->{print}{template}{options} = \@templates;
+    $form->{print}{format}{options} = \@formats;
+    $form->{print}{medium}{options} = \@media;
 }
 
 sub e_mail {
 
+    my %hiddens;
     # get name and email addresses
     for $i ( 1 .. $form->{rowcount} ) {
         if ( $form->{"statement_$i"} ) {
@@ -2015,63 +1938,7 @@ sub e_mail {
     }
 
     $form->error( $locale->text('Nothing selected!') ) unless $selected;
-
-    if ( $myconfig{role} =~ /(admin|manager)/ ) {
-        $bcc = qq|
-          <th align=right nowrap=true>| . $locale->text('Bcc') . qq|</th>
-	  <td><input name=bcc size=30 value="$form->{bcc}"></td>
-|;
-    }
-
-    $title =
-      $locale->text( 'E-mail Statement to [_1]', $form->{ $form->{ct} } );
-
     $form->{media} = "email";
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<table width=100%>
-  <tr class=listtop>
-    <th>$title</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr>
-	  <th align=right nowrap>| . $locale->text('E-mail') . qq|</th>
-	  <td><input name=email size=30 value="$form->{email}"></td>
-	  <th align=right nowrap>| . $locale->text('Cc') . qq|</th>
-	  <td><input name=cc size=30 value="$form->{cc}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Subject') . qq|</th>
-	  <td><input name=subject size=30 value="$form->{subject}"></td>
-	  $bcc
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr>
-	  <th align=left nowrap>| . $locale->text('Message') . qq|</th>
-	</tr>
-	<tr>
-	  <td><textarea name=message rows=15 cols=60 wrap=soft>$form->{message}</textarea></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-|;
 
     &print_options;
 
@@ -2079,28 +1946,26 @@ sub e_mail {
         delete $form->{$_};
     }
 
-    $form->hide_form;
+    for (keys %$form) {
+        $hiddens{$_} = $form->{$_} unless ref $form->{$_};
+    }
 
-    print qq|
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<input type="hidden" name="nextsub" value="send_email">
-
-<br>
-<button name="action" class="submit" type="submit" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
-
+    my @buttons = ({
+        name => 'action',
+        value => 'send_email',
+        text => $locale->text('Continue'),
+    });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'rp-email',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
 sub send_email {
