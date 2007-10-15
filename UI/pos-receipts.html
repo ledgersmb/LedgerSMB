@@ -1,0 +1,64 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+
+<form method="post" action="<?lsmb form.script ?>">
+
+<table width="100%">
+  <tr>
+    <th class="listtop"><?lsmb form.title ?></th>
+  </tr>
+  <tr height="5"></tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+	  <th align="right"><?lsmb text('From') ?></th>
+	  <td><?lsmb PROCESS input element_data={
+              class => 'date',
+              name => 'fromdate',
+              size => 11,
+              title => user.dateformat,
+              value => form.fromdate} ?></td>
+	  <th align="right"><?lsmb text('To') ?></th>
+	  <td><?lsmb PROCESS input element_data={
+              class => 'date',
+              name => 'todate',
+              size => 11,
+              title => user.dateformat,
+              value => form.todate} ?></td>
+	</tr>
+
+<?lsmb IF form.selectaccountingyear.defined ?>
+        <tr>
+	<th align="right"><?lsmb text('Period') ?></th>
+	<td colspan="3">
+<?lsmb PROCESS select element_data=form.selectaccountingmonth;
+       PROCESS select element_data=form.selectaccountingyear;
+       PROCESS input element_data={type => 'radio', name => 'interval', value => '0', label => text('Current'), checked => 'checked'};
+       PROCESS input element_data={type => 'radio', name => 'interval', value => '1', label => text('Month')};
+       PROCESS input element_data={type => 'radio', name => 'interval', value => '3', label => text('Quarter')};
+       PROCESS input element_data={type => 'radio', name => 'interval', value => '12', label => text('Year')} ?>
+	</td>
+      </tr>
+<?lsmb END ?>	
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size="3" noshade="noshade" /></td>
+  </tr>
+</table>
+
+<br />
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END;
+PROCESS button element_data=buttons.0 ?>
+</form>
+</body>
+</html>

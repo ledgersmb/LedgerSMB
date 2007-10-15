@@ -1119,6 +1119,7 @@ sub print_options {
 
 sub receipts {
 
+    my %hiddens;
     $form->{title} = $locale->text('Receipts');
 
     $form->{db} = 'ar';
@@ -1130,99 +1131,56 @@ sub receipts {
     if ( @{ $form->{all_years} } ) {
 
         # accounting years
-        $form->{selectaccountingyear} = "<option>\n";
+        $form->{selectaccountingyear} = {name => 'year', options => []};
+        push @{$form->{selectaccountingyear}{options}}, {text => ' ', value => ''};
         for ( @{ $form->{all_years} } ) {
-            $form->{selectaccountingyear} .= qq|<option>$_\n|;
+            push @{$form->{selectaccountingyear}{options}}, {
+                text => $_,
+                value => $_,
+                };
         }
-        $form->{selectaccountingmonth} = "<option>\n";
+        $form->{selectaccountingmonth} = {name => 'month', options => []};
+        push @{$form->{selectaccountingmonth}{options}}, {text => ' ', value => ''};
         for ( sort keys %{ $form->{all_month} } ) {
-            $form->{selectaccountingmonth} .=
-              qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|\n|;
+            push @{$form->{selectaccountingmonth}{options}}, {
+                text => $locale->text($form->{all_month}{$_}),
+                value => $_,
+                };
         }
-
-        $selectfrom = qq|
-        <tr>
-	<th align=right>| . $locale->text('Period') . qq|</th>
-	<td colspan=3>
-	<select name=month>$form->{selectaccountingmonth}</select>
-	<select name=year>$form->{selectaccountingyear}</select>
-	<input name=interval class=radio type=radio value=0 checked>&nbsp;|
-          . $locale->text('Current') . qq|
-	<input name=interval class=radio type=radio value=1>&nbsp;|
-          . $locale->text('Month') . qq|
-	<input name=interval class=radio type=radio value=3>&nbsp;|
-          . $locale->text('Quarter') . qq|
-	<input name=interval class=radio type=radio value=12>&nbsp;|
-          . $locale->text('Year') . qq|
-	</td>
-      </tr>
-|;
     }
 
-    $form->header;
+    $hiddens{path} = $form->{path};
+    $hiddens{login} = $form->{login};
+    $hiddens{sessionid} = $form->{sessionid};
+    $hiddens{db} = $form->{db};
+    $hiddens{title} = $form->{title};
+    $hiddens{paymentsaccounts} = $paymentsaccounts;
+    $hiddens{till} = '1';
+    $hiddens{subtotal} = '1';
+    $hiddens{nextsub} = 'list_payments';
+    $hiddens{sort} = 'transdate';
 
-    print qq|
-<body>
+##SC: Temporary commenting
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-<form method=post action=$form->{script}>
-
-<input type=hidden name=title value="$form->{title}">
-<input type=hidden name=paymentaccounts value="$paymentaccounts">
-
-<input type=hidden name=till value=1>
-<input type=hidden name=subtotal value=1>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-      
-        <input type=hidden name=nextsub value=list_payments>
-	
-        <tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-	  <input type=hidden name=sort value=transdate>
-	  <input type=hidden name=db value=$form->{db}>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<input type="hidden" name="path" value="$form->{path}">
-<input type="hidden" name="login" value="$form->{login}">
-<input type="hidden" name="sessionid" value="$form->{sessionid}">
-
-<button type="submit" class="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
- 
-</form>
-
-</body>
-</html>
-|;
-
+    my @buttons = ({
+        name => 'action',
+        value => 'list_payments',
+        text => $locale->text('Continue'),
+    });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'pos-receipts',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
