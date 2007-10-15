@@ -1277,7 +1277,7 @@ sub delete {
     $form->{title} = $locale->text('Confirm!');
     my $query = $locale->text(
         'Are you sure you want to delete Transaction [_1]',
-        $form->{reference} )
+        $form->{reference} );
 
     my @buttons = ({
         name => 'action',
