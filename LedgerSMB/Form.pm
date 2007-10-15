@@ -1674,7 +1674,7 @@ sub get_name {
 		$where
 		ORDER BY e.name|;
 
-    unshift( @queryargs, $name, $name, $table );
+    unshift( @queryargs, $name, $self->like($self->{"${table}number"}) );
     my $sth = $self->{dbh}->prepare($query);
 
     $sth->execute(@queryargs) || $self->dberror($query);
