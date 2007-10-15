@@ -213,7 +213,7 @@ sub remove {
         'Are you sure you want to remove the marked entries from the queue?')
       . qq|</h4>
 
-<button name="action" class="submit" type="submit" value="yes">|
+<button name="action" class="submit" type="submit" value="remove_from_queue">|
       . $locale->text('Yes')
       . qq|</button>
 </form>
@@ -224,7 +224,7 @@ sub remove {
 
 }
 
-sub yes {
+sub remove_from_queue {
 
     $form->info( $locale->text('Removing marked entries from queue ...') );
     $form->{callback} .= "&header=1" if $form->{callback};
