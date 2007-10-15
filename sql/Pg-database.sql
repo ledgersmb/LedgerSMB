@@ -53,7 +53,7 @@ COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to en
 CREATE TABLE users (
     id serial UNIQUE, 
     username varchar(30) primary key,
-    entity_id int not null references entity(id) on delete cascade,
+    entity_id int not null references entity(id) on delete cascade
 );
 
 COMMENT ON TABLE users IS $$username is the actual primary key here because we do not want duplicate users$$;
