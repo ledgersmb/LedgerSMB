@@ -1,0 +1,84 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<script type='text/javascript'>
+function money_round(m){
+  var r;
+  r = Math.round(m * 100)/100;
+  return r;
+}
+
+function custom_calc_total(){
+<?lsmb sub_sum = []; round_line = [];
+FOREACH unit IN units;
+  sub_sum.push("document.forms[0].sub_${unit.unit_name}.value * 1");
+  round_line.push("document.forms[0].sub_${unit.unit_name}.value = money_round(document.forms[0].sub_${unit.unit_name}.value);");
+ ?>
+    document.forms[0].sub_<?lsmb unit.unit_name ?>.value = document.forms[0].calc_<?lsmb unit.unit_name ?>.value * <?lsmb unit.unit ?>;
+<?lsmb END ?>
+    document.forms[0].sub_sub.value = <?lsmb sub_sum.join(' + ') ?>
+    <?lsmb round_line.join(' ') ?>
+    document.forms[0].sub_sub.value = 
+        money_round(document.forms[0].sub_sub.value);
+    document.forms[0].amount_cash.value = money_round(
+        document.forms[0].sub_sub.value - <?lsmb pos.till_cash ?>);
+    check_errors();
+}
+function check_errors(){
+    var cumulative_error = 0;
+    var source_error = 0;
+    var err_cell;
+
+<?lsmb FOREACH source IN sources; s = source.source ?>
+    source_error = money_round(
+        document.forms[0].amount_<?lsmb s ?>.value -
+        document.forms[0].expected_<?lsmb s ?>.value
+        );
+    cumulative_error = cumulative_error + source_error;
+    err_cell = document.getElementById('error_<?lsmb s ?>');
+    err_cell.innerHTML = '<?lsmb pos.curren ?>' + source_error;
+<?lsmb END ?>
+
+    alert('<?lsmb text('Cumulative Error:') ?> ' + money_round(cumulative_error));
+}
+</script>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr>
+    <th class="listtop"><?lsmb form.title ?></th>
+  </tr>
+</table> 
+<table width="100%">
+<tr><?lsmb FOREACH column IN columns ?>
+<td class="listheading"><?lsmb text(column) ?></td>
+<?lsmb END ?></tr>
+<?lsmb FOREACH source IN sources ?><tr class="listrow<?lsmb source.i ?>">
+    <td><?lsmb source.label ?></td>
+    <td><?lsmb PROCESS input element_data={name => "amount_${source.source}"} ?></td>
+    <td><?lsmb source.currenamount ?></td>
+    <td id="error_<?lsmb source.source ?>"></td>
+</tr><?lsmb END ?><tr><td colspan="4">
+<table>
+    <?lsmb FOREACH unit IN units ?><tr>
+      <td><?lsmb PROCESS input element_data=unit.quantity ?></td>
+      <th>X <?lsmb unit.currenunit ?> = </th>
+      <td><?lsmb PROCESS input element_data=unit.value ?></td>
+    </tr><?lsmb END ?>
+    <tr>
+    <td>&nbsp;</td>
+    <th><?lsmb text('Subtotal:') ?></th>
+    <td><?lsmb PROCESS input element_data={name => 'sub_sub' value => form.sub_sub} ?></td>
+  </tr>
+  </table></td></tr>
+</table>
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+
+</body>
+</html>

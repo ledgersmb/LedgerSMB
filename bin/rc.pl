@@ -209,6 +209,7 @@ sub reconciliation {
 sub continue { &{ $form->{nextsub} } }
 
 sub till_closing {
+    my %hiddens;
     $form->{callback} =
 "$form->{script}?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
@@ -222,31 +223,16 @@ sub till_closing {
     $form->{title} = $locale->text( "Closing Till For [_1]", $form->{login} );
     require "pos.conf.pl";
     RC->getposlines( \%myconfig, \%$form );
-    $form->header;
-    print qq|
-<body>
 
-<form method=post action=$form->{script}>
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
+    $hiddens{path} = $form->{path};
+    $hiddens{login} = $form->{login};
+    $hiddens{sessionid} = $form->{sessionid};
+    $hiddens{callback} = $form->{callback};
+    $hiddens{sum} = "$form->{sum}" * -1;
 
-<input type=hidden name=callback value="$form->{callback}">
-<input type=hidden name=sum value="| . $form->{sum} * -1 . qq|">
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-</table> 
-<table width=100%>
-|;
-
-    print "<tr>";
-    map { print "<td class=listheading>" . $locale->text($_) . "</td>"; }
-      @colheadings;
-    print "</tr>";
     my $j;
     my $source;
+    my @sources;
     foreach $source ( sort keys %pos_sources ) {
         $amount = 0;
         foreach $ref ( @{ $form->{TB} } ) {
@@ -257,103 +243,56 @@ sub till_closing {
         }
         ++$j;
         $j = $j % 2;
-        print qq|<tr class=listrow$j><td>| . $pos_sources{$source} . qq|</td>
-             <td><input name="amount_$source">
-             <input type=hidden name="expected_$source" 
-		value="$amount"></td>
-             <td>${curren}$amount</td>
-             <td id="error_$source">&nbsp;</td></tr>|;
+        push @sources, {i => $j,
+            label => $pos_sources{$source},
+            source => $source,
+            currenamount => "${curren}${amount}",
+            };
+        $hiddens{"expected_$source"} = "$amount";
     }
-    print qq|
-<script type='text/javascript'>
- 
-function money_round(m){
-  var r;
-  r = Math.round(m * 100)/100;
-  return r;
-}
-
-function custom_calc_total(){
-  |;
-    my $subgen  = 'document.forms[0].sub_sub.value = ';
-    my $toround = '';
-    foreach my $unit ( @{ $pos_config{'breakdown'} } ) {
-
-        # XXX Needs to take into account currencies that don't use 2 dp
-        my $parsed = $form->parse_amount( \%pos_config, $unit );
-        my $calcval = $parsed;
-        $calcval = sprintf( '%03d', $calcval * 100 ) if $calcval < 1;
-        my $subval = 'sub_' . $calcval;
-        $calcval = 'calc_' . $calcval;
-        print qq|
-  document.forms[0].${subval}.value = document.forms[0].${calcval}.value * $parsed;
-    |;
-        $subgen  .= "document.forms[0].${subval}.value * 1 + ";
-        $toround .= qq|
-    	document.forms[0].${subval}.value = 
-    	money_round(document.forms[0].${subval}.value); |;
-    }
-    print $subgen . "0;";
-    print $toround;
-    print qq|document.forms[0].sub_sub.value = 
-           money_round(document.forms[0].sub_sub.value);
-  document.forms[0].amount_cash.value = money_round(
-	document.forms[0].sub_sub.value - $pos_config{till_cash});
-  check_errors();
-}
-function check_errors(){
-  var cumulative_error = 0;
-  var source_error = 0;
-  var err_cell;
-  |;
-    map {
-        print "  source_error = money_round(
-	document.forms[0].amount_$_.value - 
- 	document.forms[0].expected_$_.value);
-  cumulative_error = cumulative_error + source_error;
-  err_cell = document.getElementById('error_$_');
-  err_cell.innerHTML = '$curren' + source_error;\n";
-    } ( keys %pos_sources );
-    print qq|
-  alert('|
-      . $locale->text('Cumulative Error:')
-      . qq| $curren' + money_round(cumulative_error));
-}
-</script>
-
-<table>
-<col><col><col>|;
+    my @units;
     foreach my $unit ( @{ $pos_config{'breakdown'} } ) {
 
         # XXX Needs to take into account currencies that don't use 2 dp
         my $calcval = $form->parse_amount( \%pos_config, $unit );
         $calcval = sprintf( '%03d', $calcval * 100 ) if $calcval < 1;
         my $subval = 'sub_' . $calcval;
+        my $unit_name = $calcval;
         $calcval = 'calc_' . $calcval;
-        print qq|<tr>
-      <td><input type=text name=$calcval value="$form->{$calcval}"></td>
-      <th>X ${curren}${unit} = </th>
-      <td><input type="text" name="$subval" value="$form->{$subval}"></td>
-    </tr>|;
+        push @units, {
+            unit => $unit,
+            unit_name => "$unit_name",
+            currenunit => "${curren}${unit}",
+            quantity => {name => $calcval, value => $form->{$calcval}},
+            value => {name => $subval, value => $form->{$subval}},
+            };
     }
-    print qq|<tr>
-    <td>&nbsp;</td>
-    <th>| . $locale->text("Subtotal") . qq|:</th>
-    <td><input type=text name=sub_sub value="$form->{sub_sub}"></td>
-  </tr>
-  </table>
-<input type=button name=calculate class=submit onClick="custom_calc_total()" 
-   value='| . $locale->text('Calculate') . qq|'>
-|;
-    print qq|</table><button type="submit" name="action" value="close_till">|
-      . $locale->text("Close Till")
-      . qq|</button>|;
-    print qq|
-</form>
-
-</body>
-</html>
-|;
+    my @buttons = ({
+        name => 'calculate',
+        value => 'Calculate',
+        type => 'button',
+        text => $locale->text('Calculate'),
+        attributes => {onclick => 'custom_calc_total()'},
+    }, {
+        name => 'action',
+        value => 'close_till',
+        text => $locale->text('Close Till'),
+    });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'rc-till-closing',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        'pos' => \%pos_config, 
+        hiddens => \%hiddens,
+        columns => \@colheadings,
+        sources => \@sources,
+        units => \@units,
+        buttons => \@buttons,
+    });
 }
 
 sub close_till {
