@@ -178,7 +178,8 @@ sub search {
 
 sub remove {
 
-    $selected = 0;
+    my $selected = 0;
+    my %hiddens;
 
     for $i ( 1 .. $form->{rowcount} ) {
         if ( $form->{"checked_$i"} ) {
@@ -191,36 +192,30 @@ sub remove {
 
     $form->{title} = $locale->text('Confirm!');
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
     for (qw(action header)) { delete $form->{$_} }
-
-    foreach $key ( keys %$form ) {
-        print qq|<input type=hidden name=$key value="$form->{$key}">\n|;
+    foreach my $key ( keys %$form ) {
+        $hiddens{$key} = $form->{$key};
     }
 
-    print qq|
-<h2 class=confirm>$form->{title}</h2>
+    my $query = $locale->text(
+        'Are you sure you want to remove the marked entries from the queue?');
 
-<h4>|
-      . $locale->text(
-        'Are you sure you want to remove the marked entries from the queue?')
-      . qq|</h4>
-
-<button name="action" class="submit" type="submit" value="remove_from_queue">|
-      . $locale->text('Yes')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
+    my @buttons = ({
+        name => 'action',
+        value => 'remove_from_queue',
+        text => $locale->text('Yes'),
+    });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-confirmation',
+        );
+    $template->render({
+        form => $form,
+        query => $query,
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 
 }
 

@@ -51,6 +51,7 @@ use LedgerSMB::Template;
 
 require "bin/arap.pl";
 
+$form->{login} = 'test';
 1;
 
 # end of main
@@ -1267,35 +1268,36 @@ sub form_footer {
 
 sub delete {
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
+    my %hiddens;
     delete $form->{action};
+    foreach (keys %$form) {
+        $hiddens{$_} = $form->{$_} unless ref $form->{$_};
+    }
 
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>| . $locale->text('Confirm!') . qq|</h2>
-
-<h4>|
-      . $locale->text( 'Are you sure you want to delete Transaction [_1]',
+    $form->{title} = $locale->text('Confirm!');
+    my $query = $locale->text(
+        'Are you sure you want to delete Transaction [_1]',
         $form->{reference} )
-      . qq|</h4>
 
-<button name="action" class="submit" type="submit" value="yes">|
-      . $locale->text('Yes')
-      . qq|</button>
-</form>
-|;
-
+    my @buttons = ({
+        name => 'action',
+        value => 'delete_transaction',
+        text => $locale->text('Yes'),
+        });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-confirmation',
+        );
+    $template->render({
+        form => $form,
+        query => $query,
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
-sub yes {
+sub delete_transaction {
 
     if ( GL->delete_transaction( \%myconfig, \%$form ) ) {
         $form->redirect( $locale->text('Transaction deleted!') );
