@@ -39,6 +39,7 @@
 #======================================================================
 
 use LedgerSMB::BP;
+use LedgerSMB::Template;
 
 1;
 
@@ -56,26 +57,31 @@ sub search {
     # $locale->text('Quotations')
     # $locale->text('RFQs')
     # $locale->text('Time Cards')
+    my %hiddens;
 
     # setup customer/vendor selection
     BP->get_vc( \%myconfig, \%$form );
 
-    if ( @{ $form->{"all_$form->{vc}"} } ) {
-        $name = "<option>\n";
+    my %name;
+    if ( ref $form->{"all_$form->{vc}"} eq 'ARRAY' ) {
+        $name{type} = 'select';
+        $name{data} = {name => $form->{vc}, options => [{text => '', value => ''}]};
         for ( @{ $form->{"all_$form->{vc}"} } ) {
-            $name .= qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+            push @{$name{data}{options}}, {
+                text => $_->{name},
+                value => "$_->{name}--$_->{id}"
+                };
         }
-        $name = qq|<select name=$form->{vc}>$name</select>|;
-    }
-    else {
-        $name = qq|<input name=$form->{vc} size=35>|;
+    } else {
+        $name{type} = 'input';
+        $name{data} = {name => $form->{vc}, size => 35};
     }
 
     # $locale->text('Customer')
     # $locale->text('Vendor')
     # $locale->text('Employee')
 
-    %label = (
+    my %label = (
         invoice           => { title => 'Sales Invoices',  name => 'Customer' },
         packing_list      => { title => 'Packing Lists',   name => 'Customer' },
         pick_list         => { title => 'Pick Lists',      name => 'Customer' },
@@ -89,24 +95,18 @@ sub search {
         check             => { title => 'Check',           name => 'Vendor' },
     );
 
-    $label{invoice}{invnumber} = qq|
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-	  <td colspan=3><input name=invnumber size=20></td>
-	</tr>
-|;
-    $label{invoice}{ordnumber} = qq|
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-	  <td colspan=3><input name=ordnumber size=20></td>
-	</tr>
-|;
-    $label{sales_quotation}{quonumber} = qq|
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Quotation Number') . qq|</th>
-	  <td colspan=3><input name=quonumber size=20></td>
-	</tr>
-|;
+    $label{invoice}{invnumber} = {
+        label => $locale->text('Invoice Number'),
+        name => 'invnumber',
+        };
+    $label{invoice}{ordnumber} = {
+        label => $locale->text('Order Number'),
+        name => 'ordnumber',
+        };
+    $label{sales_quotation}{quonumber} = {
+        label => $locale->text('Quotation Number'),
+        name => 'quonumber',
+        };
 
     $label{packing_list}{invnumber}      = $label{invoice}{invnumber};
     $label{packing_list}{ordnumber}      = $label{invoice}{ordnumber};
@@ -119,103 +119,61 @@ sub search {
     $label{request_quotation}{quonumber} = $label{sales_quotation}{quonumber};
 
     # do one call to text
-    $form->{title} =
-        $locale->text('Print') . " "
-      . $locale->text( $label{ $form->{type} }{title} );
+    $form->{title} = $locale->text("Print $label{$form->{type}}{title}");
 
     # accounting years
     if ( @{ $form->{all_years} } ) {
 
         # accounting years
-        $form->{selectaccountingyear} = "<option>\n";
+        $form->{selectaccountingyear} = {
+            name => 'year',
+            options => [{text => '', value => ''}]
+            };
         for ( @{ $form->{all_years} } ) {
-            $form->{selectaccountingyear} .= qq|<option>$_\n|;
+            push @{$form->{selectaccountingyear}{options}}, {
+                text => $_,
+                value => $_
+                };
         }
-        $form->{selectaccountingmonth} = "<option>\n";
+        $form->{selectaccountingmonth} = {
+            name => 'month',
+            options => [{text => '', value => ''}]
+            };
         for ( sort keys %{ $form->{all_month} } ) {
-            $form->{selectaccountingmonth} .=
-              qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|\n|;
+            push @{$form->{selectaccountingmonth}{options}}, {
+                text => $locale->text($form->{all_month}{$_}),
+                value => $_
+                };
         }
-
-        $selectfrom = qq|
-        <tr>
-	<th align=right>| . $locale->text('Period') . qq|</th>
-	<td colspan=3>
-	<select name=month>$form->{selectaccountingmonth}</select>
-	<select name=year>$form->{selectaccountingyear}</select>
-	<input name=interval class=radio type=radio value=0 checked>&nbsp;|
-          . $locale->text('Current') . qq|
-	<input name=interval class=radio type=radio value=1>&nbsp;|
-          . $locale->text('Month') . qq|
-	<input name=interval class=radio type=radio value=3>&nbsp;|
-          . $locale->text('Quarter') . qq|
-	<input name=interval class=radio type=radio value=12>&nbsp;|
-          . $locale->text('Year') . qq|
-	</td>
-      </tr>
-|;
     }
 
-    $form->header;
+    $hiddens{vc} = $form->{vc};
+    $hiddens{type} = $form->{type};
+    $hiddens{title} = $form->{title};
+    $hiddens{sort} = 'transdate';
+    $hiddens{nextsub} = 'list_spool';
+    $hiddens{path} = $form->{path};
+    $hiddens{login} = $form->{login};
+    $hiddens{sessionid} = $form->{sessionid};
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
-    $form->hide_form(qw(vc type title));
-
-    print qq|
-<table width=100%>
-  <tr><th class=listtop>$form->{title}</th></tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right>| . $locale->text( $label{ $form->{type} }{name} ) . qq|</th>
-	  <td colspan=3>$name</td>
-	</tr>
-	$account
-	$label{$form->{type}}{invnumber}
-	$label{$form->{type}}{ordnumber}
-	$label{$form->{type}}{quonumber}
-	<tr>
-	  <th align=right nowrap>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<input type=hidden name=sort value=transdate>
-<input type=hidden name=nextsub value=list_spool>
-
-<br>
-<button class="submit" type="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-|;
-
-    $form->hide_form(qw(path login sessionid));
-
-    print qq|
-
-</form>
-
-</body>
-</html>
-|;
-
+    my @buttons = ({
+        name => 'action',
+        value => 'list_spool',
+        text => $locale->text('Continue'),
+    });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'bp-search',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig,
+        label => \%label,
+        name => \%name,
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
 sub remove {

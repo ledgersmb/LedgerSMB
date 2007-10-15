@@ -1,0 +1,74 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?>
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td> </td></tr>
+  <tr>
+    <td>
+      <table>
+	<tr>
+	  <th align="right"><?lsmb text(label.${form.type}.name) ?></th>
+<?lsmb IF name.type == 'input' ?>
+	  <td colspan="3"><?lsmb PROCESS input element_data=name.data ?></td>
+<?lsmb ELSE ?>
+	  <td colspan="3"><?lsmb PROCESS select element_data=name.data ?></td>
+<?lsmb END ?>
+	</tr>
+<?lsmb FOREACH num IN ['invnumber', 'ordnumber', 'quonumber'];
+  IF label.${form.type}.${num}.defined ?>
+	<tr>
+	  <th align="right" nowrap="nowrap"><?lsmb label.${form.type}.${num}.label ?></th>
+	  <td colspan="3"><?lsmb PROCESS input element_data={size => 20, name => label.${form.type}.${num}.name} ?></td>
+	</tr>
+<?lsmb END; END ?>
+	<tr>
+	  <th align="right" nowrap="nowrap"><?lsmb text('From') ?></th>
+	  <td><?lsmb PROCESS input element_data={class="date", name => "transdatefrom", size => "11", title=> user.dateformat} ?></td>
+	  <th align="right" nowrap="nowrap"><?lsmb text('To') ?></th>
+	  <td><?lsmb PROCESS input element_data={class="date", name => "transdateto", size => "11", title=> user.dateformat} ?></td>
+	</tr>
+<?lsmb IF form.all_years.defined ?>
+        <tr>
+	<th align="right"><?lsmb text('Period') ?></th>
+	<td colspan="3">
+  <?lsmb
+  PROCESS select element_data=form.selectaccountingmonth;
+  PROCESS select element_data=form.selectaccountingyear;
+  PROCESS input element_data={
+    name => 'interval', type => 'radio', value => '0', label => text('Current'),
+    checked => 'checked',
+    };
+  PROCESS input element_data={
+    name => 'interval', type => 'radio', value => '1', label => text('Month'),
+    };
+  PROCESS input element_data={
+    name => 'interval', type => 'radio', value => '3', label => text('Quarter'),
+    };
+  PROCESS input element_data={
+    name => 'interval', type => 'radio', value => '12', label => text('Year'),
+    };
+?>
+	</td>
+      </tr>
+<?lsmb END ?>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size="3" noshade="noshade" /></td>
+  </tr>
+</table>
+
+<br />
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>
