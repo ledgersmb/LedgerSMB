@@ -5,15 +5,15 @@ use warnings;
 use inc::Module::Install 0.65;
 
 name 'LedgerSMB';
-version '1.2.3';
+version '1.2.10';
 license 'GPL';
 
-perl_version '5.8.0';
+perl_version '5.8.1';
 
 requires 'Data::Dumper';
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon' => '0.56';
-requires 'DBI' => '0.46';
+requires 'DBI' => '1.00';
 requires 'MIME::Base64';
 requires 'Digest::MD5';
 requires 'HTML::Entities';

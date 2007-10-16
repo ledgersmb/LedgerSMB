@@ -5,17 +5,17 @@ use Module::Build;
 
 my $build = Module::Build->new (
 	dist_name => 'LedgerSMB',
-	dist_version => '1.2.8',
+	dist_version => '1.2.10',
 	license => 'GPL',
 	requires => {
-		'perl'				=> '>= 5.8.0',
+		'perl'				=> '>= 5.8.1',
 		'Data::Dumper'			=> 0,
 		'Locale::Maketext'		=> 0,
 		'Locale::Maketext::Lexicon'	=> '>= 0.56',
 		'MIME::Base64'			=> 0,
 		'Digest::MD5'			=> 0,
 		'HTML::Entities'		=> 0,
-		'DBI'				=> '>= 0.48',
+		'DBI'				=> '>= 1.00',
 		'DBD::Pg'			=> 0,
 		'Math::BigFloat'		=> 0,
 		'IO::File'			=> 0,
