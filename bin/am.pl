@@ -836,7 +836,7 @@ qq|<td><a href=$form->{script}?action=edit_department&id=$ref->{id}&path=$form->
     print qq|
 <button class="submit" type="submit" name="action" value="add_department">|
       . $locale->text('Add Department')
-      . qq|"</button>|;
+      . qq|</button>|;
 
     if ( $form->{lynx} ) {
         require "bin/menu.pl";
