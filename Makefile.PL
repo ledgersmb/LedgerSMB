@@ -13,7 +13,7 @@ perl_version '5.8.1';
 requires 'Data::Dumper';
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon' => '0.56';
-requires 'DBI' => '0.46';
+requires 'DBI' => '1.00';
 requires 'MIME::Base64';
 requires 'Digest::MD5';
 requires 'HTML::Entities';
