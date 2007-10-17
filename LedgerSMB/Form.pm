@@ -717,7 +717,7 @@ sub parse_template {
             "${LedgerSMB::Sysconfig::tempdir}/"
         );
         $temphash{printmode} = $self->{printmode};
-        $self->{printmode} = '>';
+        $self->{printmode} = '>:utf8';
     }
 
     if ( $self->{OUT} ) {
