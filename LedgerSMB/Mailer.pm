@@ -54,10 +54,9 @@ sub send {
     my $boundary = time;
     $boundary = "LSMB-$boundary";
     $domain =~ s/(.*?\@|>)//g;
-    my $msgid = "$boundary\@$domain";
+    my $msg_id = "$boundary\@$domain";
 
     $self->{contenttype} = "text/plain" unless $self->{contenttype};
-    my $msgid = "$boundary\@$domain";
 
     for (qw(from to cc bcc)) {
         $self->{$_} =~ s/\&lt;/</g;
