@@ -72,7 +72,8 @@ sub send {
         'Bcc'     => $self->{bcc},
         'Subject' => Encode::encode('MIME-Header', $self->{subject}),
         'Type'    => 'TEXT',
-        'Data'    => $self->{message},
+	'Data'    => Encode::encode_utf8($self->{message}),
+	'Encoding' => '8bit',
         'Message-ID' => $msg_id,
     );
     $msg->attr("Content-Type" => $self->{contenttype});
@@ -81,6 +82,7 @@ sub send {
     $msg->add( 'Disposition-Notification-To' => $self->{from} )
       if $self->{notify};
     $msg->replace( 'X-Mailer' => "LedgerSMB $self->{version}" );
+    $msg->binmode(':utf8');
 
     if ( @{ $self->{attachments} } ) {
         foreach my $attachment ( @{ $self->{attachments} } ) {
