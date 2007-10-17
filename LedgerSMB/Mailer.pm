@@ -59,27 +59,25 @@ sub send {
     $self->{contenttype} = "text/plain" unless $self->{contenttype};
     my $msgid = "$boundary\@$domain";
 
-    my %h;
     for (qw(from to cc bcc)) {
         $self->{$_} =~ s/\&lt;/</g;
         $self->{$_} =~ s/\&gt;/>/g;
         $self->{$_} =~ s/(\/|\\|\$)//g;
-        $h{$_} = $self->{$_};
     }
-
-    $h{subject} = "Subject: ".Encode::encode('MIME-Header', $self->{subject});
 
     my $msg = MIME::Lite->new(
         'From'    => $self->{from},
         'To'      => $self->{to},
         'Cc'      => $self->{cc},
         'Bcc'     => $self->{bcc},
-        'Subject' => $self->{subject},
+        'Subject' => Encode::encode('MIME-Header', $self->{subject}),
         'Type'    => 'TEXT',
         'Data'    => $self->{message},
         'Message-ID' => $msg_id,
     );
     $msg->attr("Content-Type" => $self->{contenttype});
+    $msg->attr("Content-Type.charset" => 'UTF-8') if
+        $self->{contenttype} =~ m#^text/#;
     $msg->add( 'Disposition-Notification-To' => $self->{from} )
       if $self->{notify};
     $msg->replace( 'X-Mailer' => "LedgerSMB $self->{version}" );
@@ -93,11 +91,13 @@ sub send {
               : "application";
 
             my $filename = $attachment;
+            my $type = "$application/$self->{format}";
+            $type .= '; charset="UTF-8"' if $application eq 'text';
 
             # strip path
             $filename =~ s/(.*\/|$self->{fileid})//g;
             $msg->attach(
-                'Type'        => "$application/$self->{format}",
+                'Type'        => $type,
                 'Path'        => $attachment,
                 'Filename'    => $filename,
                 'Disposition' => 'attachment',
