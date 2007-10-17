@@ -35,6 +35,7 @@
 
 package LedgerSMB::Mailer;
 
+use Encode;
 use MIME::Lite;
 use MIME::Base64;
 use LedgerSMB::Sysconfig;
@@ -63,11 +64,7 @@ sub send {
         $h{$_} = $self->{$_};
     }
 
-    $h{subject} =
-      ( $self->{subject} =~ /([\x00-\x1F]|[\x7B-\xFFFF])/ )
-      ? "Subject: =?$self->{charset}?B?"
-      . MIME::Base64::encode( $self->{subject}, "" ) . "?="
-      : "Subject: $self->{subject}";
+    $h{subject} = "Subject: ".Encode::encode('MIME-Header', $self->{subject});
 
     my $msg = MIME::Lite->new(
         'From'    => $self->{from},
