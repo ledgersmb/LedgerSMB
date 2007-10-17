@@ -1,174 +1,119 @@
 -- VERSION 1.3.0
 BEGIN;
-CREATE OR REPLACE FUNCTION employee_save
-(in_id integer, in_employeenumber varchar(32), 
-	in_salutation int, in_first_name varchar(64), in_last_name varchar(64),
-	in_address1 varchar(32), in_address2 varchar(32),
-	in_city varchar(32), in_state varchar(32), in_zipcode varchar(10),
-	in_country int, in_workphone varchar(20), 
-	in_homephone varchar(20), in_startdate date, in_enddate date, 
-	in_notes text, in_role varchar(20), in_sales boolean, in_email text, 
-	in_ssn varchar(20), in_dob date, in_iban varchar(34), 
-	in_bic varchar(11), in_managerid integer) 
-returns int AS $$ 
-DECLARE
-    e_id int;
-    e entity;
-    loc location;
-    l_id int;
-    per person;
-    p_id int;
-BEGIN
 
-    select * into e from entity where id = in_id and entity_class = 3;
+
+CREATE OR REPLACE FUNCTION employee_save(
+    in_person int, in_entity int, in_startdate date, in_enddate date,
+	in_role text, in_sales boolean, in_dob date, 
+    in_managerid integer, in_employeenumber text
+)
+returns int AS $$
+
+    DECLARE
+        e_ent entity_employee;
+        e entity;
+        p person;
+    BEGIN
+        select * into e from entity where id = in_entity and entity_class = 3;
+        
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No entity found for ID %', in_id;
+        END IF;
+        
+        select * into p from person where id = in_person;
+        
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'No person found for ID %', in_id;
+        END IF;
+        
+        -- Okay, we're good. Check to see if we update or insert.
+        
+        select * into e_ent from entity_employee where person_id = in_person 
+            and entity_id = in_entity;
+            
+        IF NOT FOUND THEN
+            -- insert.
+            
+            INSERT INTO entity_employee (person_id, entity_id, startdate, 
+                enddate, role, sales, manager_id, employeenumber, dob)
+            VALUES (in_person, in_entity, in_startdate, in_enddate, in_role, 
+                in_sales, in_managerid, in_employeenumber, in_dob);
+            
+            return in_entity;
+        ELSE
+        
+            -- update
+            
+            UPDATE entity_employee
+            SET
+                startdate = in_startdate,
+                enddate = in_enddate,
+                role = in_role,
+                sales = in_sales,
+                manager_id = in_managerid
+                employeenumber = in_employeenumber,
+                dob = in_dob
+            WHERE
+                entity_id = in_entity
+            AND
+                person_id = in_person;
+                
+            return in_entity;
+        END IF;
+    END;
+
+$$ language 'plpgsql';
+
+create view employees as
+    select 
+        e.salutation,
+        e.first_name,
+        e.last_name,
+        ee.*
+    FROM entity e
+    JOIN entity_employees ee on e.id = ee.entity_id
+    where e.entity_class = 3;
     
-    if found then
-        
-        select l.* into loc from location l 
-        left join person_to_location ptl on ptl.location_id = l.id
-        left join person p on p.id = ptl.person_id
-        where p.entity_id = in_id;
-        
-        select * into per from person p where p.entity_id = in_id;
-        
-        update location 
-        set
-            line_one = in_address1,
-        	line_two = in_address2,
-        	city_province = in_city,
-        	mail_code = in_zipcode,
-        	country_id = in_country
-        where id = loc.id;
-	
-    	UPDATE employee
-    	SET 
-    		employeenumber = in_employeenumber,
-    		startdate = in_startdate,
-    		enddate = in_enddate,
-    		role = in_role,
-    		sales = in_sales,
-    		ssn = in_ssn,
-    		dob = in_dob, 
-    		managerid = in_managerid
-    	WHERE entity_id = in_id;
-    	
-    	update entity_note
-    	set 
-    	    note = in_note
-    	where entity_id = in_id;
-    	
-    	UPDATE entity_bank_account 
-    	SET
-    	    bic = in_bic,
-    	    iban = in_iban
-    	WHERE entity_id = in_id;
-    	
-    	UPDATE person
-        SET
-            salutation_id = in_salutation,
-            first_name = in_first_name,
-            last_name = in_last_name
-        WHERE entity_id = in_id;
-        
-        UPDATE person_to_contact
-        set
-            contact = in_homephone
-        WHERE person_id = per.id
-          AND contact_class_id = 11;
-          
-        UPDATE person_to_contact
-        set
-          contact = in_workphone
-        WHERE person_id = per.id
-          AND contact_class_id = 1;
-          
-        UPDATE person_to_contact
-        set
-        contact = in_email
-        WHERE person_id = per.id
-        AND contact_class_id = 12;  
-        
-        return in_id;
-        
-	ELSIF NOT FOUND THEN	
-	    -- first, create a new entity
-    	-- Then, create an employee.
-	
-    	e_id := in_id; -- expect nextval entity_id to have been called.
-    	INSERT INTO entity (id, entity_class, name) VALUES (e_id, 3, in_first_name||' '||in_last_name);
-    	    
-    	INSERT INTO entity_bank_account (entity_id, iban, bic)
-    	VALUES (e_id, in_iban, in_bic);
-    	
-    	p_id := nextval('person_id_seq');
-    	insert into person (id, salutation_id, first_name, last_name, entity_id)
-    	VALUES
-    	(p_id, in_salutation, in_first_name, in_last_name, e_id);
-	    
-	    if in_notes is not null then
-	        insert into entity_note (note_class, note, ref_key, vector)
-	        values (1, in_notes, e_id, '');
-	    END IF;
-	    
-	    insert into person_to_contact (person_id, contact_class_id, contact)
-	    VALUES (p_id, 1, in_workphone); -- work phone #
-	    insert into person_to_contact (person_id, contact_class_id, contact)
-	    VALUES (p_id, 11, in_homephone); -- Home phone #
-	    insert into person_to_contact (person_id, contact_class_id, contact)
-	    VALUES (p_id, 12, in_email); -- email address.
-	    
-    	INSERT INTO employee
-    	(employeenumber, startdate, enddate, 
-    	    role, sales, ssn,
-    		dob, managerid, entity_id, entity_class_id)
-    	VALUES
-    	(in_employeenumber, in_startdate, in_enddate,
-    	    in_role, in_sales, in_ssn, 
-    	    in_dob,	in_managerid, e_id, 3);
-    		
-    	l_id := nextval('location_id_seq');
-    	insert into location (id, location_class, line_one, line_two, city_province, country_id, mail_code)
-    	VALUES (
-    	    l_id,
-    	    1,
-    	    in_address1,
-    	    in_address2,
-    	    in_city,
-    	    in_country, 
-    	    in_zipcode    	    
-    	);
-    	insert into person_to_location (person_id, location_id)
-    	VALUES (p_id, l_id);
-	
-    	return e_id;
-	END IF;
-END;
-$$ LANGUAGE 'plpgsql';
 
 -- why is this like this?
 CREATE OR REPLACE FUNCTION employee_get
 (in_id integer)
-returns employee as
+returns employees as
 $$
 DECLARE
-	emp employee%ROWTYPE;
+	emp employees%ROWTYPE;
 BEGIN
-	SELECT * INTO emp FROM employees WHERE id = in_id;
+	SELECT 
+	    e.salutation, 
+	    e.first_name,
+	    e.last_name,
+	    ee.* 
+	INTO emp 
+    FROM employees ee 
+    join entity e on ee.entity_id = e.id 
+    WHERE ee.entity_id = in_id;
+    
 	RETURN emp;
 END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION employee_list_managers
 (in_id integer)
-RETURNS SETOF employee as
+RETURNS SETOF employees as
 $$
 DECLARE
-	emp employee%ROWTYPE;
+	emp employees%ROWTYPE;
 BEGIN
 	FOR emp IN 
-		SELECT * FROM employee
-		WHERE sales = '1' AND role='manager'
-			AND entity_id <> coalesce(in_id, -1)
+		SELECT 
+		    e.salutation,
+		    e.first_name,
+		    e.last_name,
+		    ee.* 
+		FROM entity_employee ee
+		JOIN entity e on e.id = ee.entity_id
+		WHERE ee.sales = 't'::bool AND ee.role='manager'
+			AND ee.entity_id <> coalesce(in_id, -1)
 		ORDER BY name
 	LOOP
 		RETURN NEXT emp;
@@ -196,7 +141,7 @@ CREATE OR REPLACE VIEW employee_search AS
 SELECT e.*, em.name AS manager, emn.note, en.name as name
 FROM employee e 
 LEFT JOIN entity en on (e.entity_id = en.id)
-LEFT JOIN employee m ON (e.managerid = m.entity_id)
+LEFT JOIN entity_employee m ON (e.managerid = m.entity_id)
 LEFT JOIN entity em on (em.id = m.entity_id)
 LEFT JOIN entity_note emn on (emn.ref_key = em.id);
 
@@ -228,4 +173,17 @@ BEGIN
 	return;
 END;
 $$ language plpgsql;
+
+create or replace function employee_set_location 
+    (in_employee int, in_location int) 
+returns void as $$
+
+    INSERT INTO person_to_location (person_id,location_id) 
+        VALUES (in_employee, in_location);
+    
+    SELECT NULL;
+
+$$ language 'sql';
+
 COMMIT;
+

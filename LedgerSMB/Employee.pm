@@ -48,6 +48,10 @@ our $VERSION = '1.0.0';
 
 sub save {
     my $self = shift;
+    
+    my $person = shift @{ $self->exec_method (procname => 'person_save', 
+        args => [] )};
+    
     my $hashref = shift @{ $self->exec_method( procname => "employee_save" ) };
     $self->merge( $hashref, 'id' );
 }
@@ -68,6 +72,23 @@ sub search {
     my $self = shift;
     $self->{search_results} =
       $self->exec_method( procname => "employee_search" );
+}
+
+sub set_location {
+    
+    my $self = shift @_;
+    my $location = shift @_;
+    
+    my $code = $self->exec_method ( procname => 'employee_set_location', 
+        args=>[ $self->{id}, $location->{id} ] );
+    
+    if ($code) {
+        
+        # good, it worked.
+        
+        return 1;        
+    }
+    return 0;
 }
 
 1;

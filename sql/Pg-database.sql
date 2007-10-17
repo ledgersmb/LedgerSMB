@@ -10,7 +10,7 @@ CREATE SEQUENCE id;
 CREATE TABLE entity (
   id serial UNIQUE,
   name text check (name ~ '[[:alnum:]_]'),
-  entity_class integer not null,
+  entity_class integer references entity_class(id) not null ,
   created date not null default current_date,
   PRIMARY KEY(name,entity_class));
   
@@ -57,70 +57,6 @@ CREATE TABLE users (
 );
 
 COMMENT ON TABLE users IS $$username is the actual primary key here because we do not want duplicate users$$;
-
-create table user_connection (
-    user_id int not null references users(id) on delete cascade,
-    dbname text not null,
-    host text not null default 'localhost',
-    port int not null default '5432'
-);
-/*
-CREATE VIEW users_conf as
-    select 
-        users.id, 
-        loc.address1 || '\n'|| loc.address2 ||'\n' || loc.address3,
-        em.employeenumber,
-        company,
-        loc.country,
-        currency,
-        dateformat,
-        'Pg',
-        u_cx.host,
-        u_cx.dbname,
-        u_cx.dbport,
-        users.username,
-        p.email,
-        p.fax,
-        50,
-        p.first_name || ' ' || p.last_name,
-        p.number_format,
-        '', -- password 
-        
-        
-;
-*/
-CREATE TABLE users_conf(id integer primary key references users(id) deferrable initially deferred,
-                        acs text,
-                        address text,
-                        businessnumber text,
-                        company text,
-                        countrycode text,
-                        currency text,
-                        dateformat text,
-                        dbdriver text default 'Pg',
-                        dbhost text default 'localhost',
-                        dbname text,
-                        dboptions text,
-                        dbpasswd text,
-                        dbport text,
-                        dbuser text,
-                        email text,
-                        fax text,
-                        menuwidth text,
-                        name text,
-                        numberformat text,
-                        password varchar(32) check(length(password) = 32),
-						crypted_password text,
-                        print text,
-                        printer text,
-                        role text,
-                        sid text,
-                        signature text,
-                        stylesheet text,
-                        tel text,
-                        templates text,
-                        timeout numeric,
-                        vclimit numeric);
 
 COMMENT ON TABLE users_conf IS 'This is a completely dumb table that is a place holder to get usersconf into the database. Next major release will have a much more sane implementation';
 COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(id) is correct'; 
@@ -255,16 +191,55 @@ INSERT INTO salutation (id,salutation) VALUES ('6','Sir.');
 SELECT SETVAL('salutation_id_seq',7);
 
 CREATE TABLE person (
- id serial PRIMARY KEY,
- entity_id integer references entity(id) not null,
- salutation_id integer references salutation(id),
- first_name text check (first_name ~ '[[:alnum:]_]') NOT NULL,
- middle_name text,
- last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
- created date not null default current_date
+    id serial PRIMARY KEY,
+    entity_id integer references entity(id) not null,
+    salutation_id integer references salutation(id),
+    first_name text check (first_name ~ '[[:alnum:]_]') NOT NULL,
+    middle_name text,
+    last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
+    created date not null default current_date
  );
  
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
+
+create table entity_employee (
+    
+    person_id integer references person(id) not null,
+    entity_id integer references entity(id) not null,
+    startdate date not null default current_date,
+    enddate date,
+    role varchar(20),
+    sales bool default 'f',
+    manager_id integer references entity(id),
+    employeenumber varchar(32),
+    dob date
+    PRIMARY KEY (person_id, entity_id)
+);
+
+-- notes are from entity_note
+-- ssn, iban and bic are from entity_credit_account
+-- 
+
+create view employee as
+    SELECT 
+        ente.entity_id,
+        3,
+        u.username,
+        ente.startdate,
+        ente.enddate,
+        en.note,
+        eca.ssn,
+        eca.iban,
+        eca.bic,
+        ente.manager_id,
+        ente.employeenumber,
+        ente.dob
+    FROM
+        entity_employee ente
+    JOIN
+        entity_credit_account eca on eca.entity_id = ente.entity_id,
+        entity_note en on en.entity_id = ente.entity_id,
+        user u on u.entity_id = ente.entity_id;
 
 CREATE TABLE person_to_location (
   location_id integer not null references location(id),
@@ -473,25 +448,25 @@ CREATE TABLE pricegroup (
 );
 
 CREATE TABLE entity_credit_account (
-  id serial not null unique,
-  entity_id int not null references entity(id) ON DELETE CASCADE,
-  entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
-  discount numeric, 
-  discount_terms int default 0,
-  taxincluded bool default 'f',
-  creditlimit NUMERIC default 0,
-  terms int2 default 0,
-  meta_number varchar(32),
-  cc text,
-  bcc text,
-  business_id int,
-  language_code varchar(6),
-  pricegroup_id int references pricegroup(id),
-  curr char(3),
-  startdate date DEFAULT CURRENT_DATE,
-  enddate date,
-  threshold numeric default 0,
-  PRIMARY KEY(entity_id, meta_number)
+    id serial not null unique,
+    entity_id int not null references entity(id) ON DELETE CASCADE,
+    entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
+    discount numeric, 
+    discount_terms int default 0,
+    taxincluded bool default 'f',
+    creditlimit NUMERIC default 0,
+    terms int2 default 0,
+    meta_number varchar(32),
+    cc text,
+    bcc text,
+    business_id int,
+    language_code varchar(6),
+    pricegroup_id int references pricegroup(id),
+    curr char(3),
+    startdate date DEFAULT CURRENT_DATE,
+    enddate date,
+    threshold numeric default 0,
+    PRIMARY KEY(entity_id, meta_number)
 );
 
 
@@ -568,24 +543,13 @@ ALTER TABLE company ADD COLUMN sic_code varchar;
 
 --
 --
-create table employee (
-  entity_id integer not null references entity(id) on delete cascade primary key,
-  entity_class_id integer references entity_class(id) not null check (entity_class_id = 3),
-  login text,
-  startdate date default current_date,
-  enddate date,
-  notes text,
-  role varchar(20),
-  sales bool default 'f',
-  ssn varchar(20),
-  iban varchar(34),
-  bic varchar(11),
-  managerid int,
-  employeenumber varchar(32),
-  dob date
-);
+
+
+
+
 
 COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
+
 CREATE TABLE parts (
   id serial PRIMARY KEY,
   partnumber text,

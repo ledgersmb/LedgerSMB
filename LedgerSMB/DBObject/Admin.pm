@@ -6,16 +6,31 @@ use LedgerSMB::Location;
 use LedgerSMB::DBObject::Employee;
 use LedgerSMB::Contact;
 
-sub save_user {
+#[18:00:31] <aurynn> I'd like to split them employee/user and roles/prefs
+#[18:00:44] <aurynn> edit/create employee and add user features if needed.
+
+sub save {
+    
+    $self->error("Cannot save an Adminstrator object.");
+}
+
+sub save_employee {
     
     my $self = shift @_;
     
     my $entity_id = shift @{ $self->exec_method( procname => "save_user" ) };
     $self->merge($entity_id);
     
-    my $employee = LedgerSMB::DBObject::Employee->new(base=>$self, copy=>'list',
+    my $person = LedgerSMB::DBObject::Person->new(base=>$self, copy=>'list',     
         merge=>[
             'salutation',
+            'first_name',
+            'last_name',
+        ]
+    );
+    my $employee = LedgerSMB::DBObject::Employee->new(base=>$self, copy=>'list',
+        merge=>[
+            '',
             'first_name',
             'last_name',
             'employeenumber',
@@ -23,7 +38,7 @@ sub save_user {
     );
     
     $employee->{entity_id} = $entity_id->{id};    
-    $employee->save_employee();
+    $employee->save();
         
     my $loc = LedgerSMB::DBObject::Location->new(base=>$self, copy=>'list', 
         merge=>[
@@ -36,10 +51,11 @@ sub save_user {
             'companyname',            
         ]
     );
-    $loc->save_location();
-    $loc->join_to_person(person=>$employee);
     
-    
+    $loc->save();
+    $employee->set_location($loc->{id});
+    $loc->(person=>$employee);
+        
     my $workphone = LedgerSMB::Contact->new(base=>$self);
     my $homephone = LedgerSMB::Contact->new(base=>$self);
     my $email = LedgerSMB::Contact->new(base=>$self);
@@ -51,8 +67,28 @@ sub save_user {
     $homephone->save();
     $email->save();
     
-    my $roles = $self->exec_method( procname => "all_roles" );
-    my $user_roles = $self->exec_method(procname => "get_user_roles", args=>[ $self->{ modifying_user } ] );
+    # now, check for user-specific stuff. Is this person a user or not?
+    
+    my $user = LedgerSMB::DBObject::User->new(base=>$self, copy=>'list',
+        merge=>[
+            'username',
+            'password',
+            'is_a_user'
+        ]
+    );
+    
+    $user->get();
+    $user->save();
+}
+
+sub save_roles {
+    
+    my $self = shift @_;
+    
+    my $user = LedgerSMB::DBObject::User->new(base=>$self, copy=>'all');
+    
+    my $roles = $self->exec_method( procname => "admin_all_roles" );
+    my $user_roles = $self->exec_method(procname => "admin_get_user_roles", args=>[ $self->{ username } ] );
     
     my %active_roles;
     for my $role (@{$user_roles}) {
@@ -86,6 +122,7 @@ sub save_user {
             );
         }         
     }
+    
 }
 
 sub save_group {
