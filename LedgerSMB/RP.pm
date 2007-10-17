@@ -2289,7 +2289,7 @@ sub payments {
         $sth->execute || $form->dberror($query);
 
         while ( my $pr = $sth->fetchrow_hashref(NAME_lc) ) {
-            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+            $form->db_parse_numeric(sth=>$sth, hashref=>$pr);
             push @{ $form->{ $ref->{id} } }, $pr;
         }
         $sth->finish;
