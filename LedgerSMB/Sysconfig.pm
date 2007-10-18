@@ -92,8 +92,11 @@ for $var (
 
 # ENV Paths
 for $var (qw(PATH PERL5LIB)) {
-    $ENV{$var} .= $pathsep . ( join $pathsep, @{ $config{environment}{$var} } )
-      if $config{environment}{$var};
+    if (ref $config{environment}{$var} eq 'ARRAY') {
+        $ENV{$var} .= $pathsep . ( join $pathsep, @{ $config{environment}{$var} } );
+    } elsif ($config{environment}{$var}) {
+        $ENV{$var} .= $pathsep . $config{environment}{$var};
+    }
 }
 
 # Application-specific paths
