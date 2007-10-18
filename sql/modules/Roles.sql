@@ -2,43 +2,43 @@
 CREATE ROLE lsmb_<?lsmb dbname ?>__read_contact
 WITH INHERIT NOLOGIN;
 
-GRANT SELECT ON entity TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON company TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON location TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON person TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON entity_credit_account TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON company_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON company_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON company_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON customertax TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON employee TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON customer TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON contact_class TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON entity_class TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON entity_bank_account TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON entity_note TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON entity_class_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON entity_other_name TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON location_class TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON person_to_company TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON person_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON person_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT SELECT ON vendortax TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT SELECT ON entity TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON company TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON location TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON person TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON entity_credit_account TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON company_to_contact TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON company_to_entity TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON company_to_location TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON customertax TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON employee TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON customer TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON contact_class TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON entity_class TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON entity_bank_account TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON entity_note TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON entity_class_to_entity TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON entity_other_name TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON location_class TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON person_to_company TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON person_to_contact TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON person_to_contact TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON person_to_location TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON person_to_location TO lsmb_<?lsmb dbname ?>__read_contact;
+GRANT SELECT ON vendortax TO lsmb_<?lsmb dbname ?>__read_contact;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (1, 'allow', 'lsmb_<?lsmb dbname ?>__create_contact');
+values (1, 'allow', 'lsmb_<?lsmb dbname ?>__read_contact');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (11, 'allow', 'lsmb_<?lsmb dbname ?>__create_contact');
+values (11, 'allow', 'lsmb_<?lsmb dbname ?>__read_contact');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (14, 'allow', 'lsmb_<?lsmb dbname ?>__create_contact');
+values (14, 'allow', 'lsmb_<?lsmb dbname ?>__read_contact');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (21, 'allow', 'lsmb_<?lsmb dbname ?>__create_contact');
+values (21, 'allow', 'lsmb_<?lsmb dbname ?>__read_contact');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (30, 'allow', 'lsmb_<?lsmb dbname ?>__create_contact');
+values (30, 'allow', 'lsmb_<?lsmb dbname ?>__read_contact');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (33, 'allow', 'lsmb_<?lsmb dbname ?>__create_contact');
+values (33, 'allow', 'lsmb_<?lsmb dbname ?>__read_contact');
 
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_contact
