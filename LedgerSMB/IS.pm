@@ -913,6 +913,11 @@ sub post_invoice {
     my $ml;
     my $invoice_id;
     my $ndx;
+    for (keys %$form) {
+        if (UNIVERSAL::isa( $form->{$_}, 'Math::BigFloat' )){
+            $form->{$_} = $form->{$_}->bstr();
+        }
+    }
 
     foreach $i ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
@@ -1115,7 +1120,7 @@ sub post_invoice {
     $form->{paid} = 0;
     for $i ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$i"} =
-          $form->parse_amount( $myconfig, $form->{"paid_$i"} );
+          $form->parse_amount( $myconfig, $form->{"paid_$i"} )->bstr();
         $form->{paid} += $form->{"paid_$i"};
         $form->{datepaid} = $form->{"datepaid_$i"}
           if ( $form->{"paid_$i"} );

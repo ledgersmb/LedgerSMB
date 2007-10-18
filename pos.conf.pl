@@ -9,6 +9,11 @@ use LedgerSMB::Sysconfig;
 
 # Begin Editing Here
 
+if ($ENV{'REMOTE_ADDR'} =~ /^(127\.0\.0\.1|10\.0\.0\.8)$/){
+$ENV{'REMOTE_ADDR'} = '10.0.0.15';
+}
+
+
 $pos_config{'rem_host'} = $ENV{'REMOTE_ADDR'};
 
 $pos_config{'pd_host'}  = $pos_config{'rem_host'};
@@ -99,5 +104,6 @@ $form->{pos_sources} = \%pos_sources;
 
 ${'LedgerSMB::Sysconfig::printer'}{'Printer'} =
 "utils/pos/directnet.pl $pos_config{rp_host} $pos_config{rp_proto} $pos_config{rp_port}";
+
 
 1;

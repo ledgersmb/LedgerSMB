@@ -45,11 +45,11 @@ sub getposlines {
     my $dbh = $form->{dbh};
 
     my $query = qq| 
-		  SELECT sum(amount) AS amount, source FROM acc_trans
+		  SELECT sum(amount) AS amount, memo FROM acc_trans
 		   WHERE chart_id = (SELECT id FROM chart 
 		                    WHERE accno = ?)
 		         AND transdate = date 'NOW' AND cleared IS NOT TRUE
-		GROUP BY source|;
+		GROUP BY memo|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {

@@ -106,6 +106,7 @@ foreach (@users) {
 
     $myUser = $member{$_};
     &save_member($myUser);
+    ${LedgerSMB::Sysconfig::GLOBALDBH}->commit;
     print "Import of user '$_' seems to have succeeded.\n";
 
 }
@@ -220,63 +221,6 @@ sub save_member {
         );
 
     }
+    $dbh->commit;
 
-    if ( !$self->{'admin'} ) {
-
-        $self->{dbpasswd} =~ s/\\'/'/g;
-        $self->{dbpasswd} =~ s/\\\\/\\/g;
-
-        # format dbconnect and dboptions string
-        LedgerSMB::User::dbconnect_vars( $self, $self->{dbname} );
-
-        # check if login is in database
-        my $dbh = DBI->connect(
-            $self->{dbconnect}, $self->{dbuser},
-            $self->{dbpasswd}, { AutoCommit => 0 }
-        ) or $self->error($DBI::errstr);
-        $dbh->{pg_enable_utf8} = 1;
-
-        # add login to employee table if it does not exist
-        my $login = $self->{login};
-        $login =~ s/@.*//;
-        my $sth = $dbh->prepare("SELECT id FROM employee WHERE login = ?;");
-        $sth->execute($login);
-
-        my ($id) = $sth->fetchrow_array;
-        $sth->finish;
-        my $employeenumber;
-        my @values;
-        if ($id) {
-
-            $query = qq|UPDATE employee SET
-			role = ?,
-			email = ?, 
-			name = ?
-			WHERE login = ?|;
-
-            @values = ( $self->{role}, $self->{email}, $self->{name}, $login );
-
-        }
-        else {
-
-            my ($employeenumber) =
-              Form::update_defaults( "", \%$self, "employeenumber", $dbh );
-            $query = qq|
-				INSERT INTO employee 
-				            (login, employeenumber, name, 
-				            workphone, role, email, sales)
-				    VALUES (?, ?, ?, ?, ?, ?, '1')|;
-
-            @values = (
-                $login,       $employeenumber, $self->{name},
-                $self->{tel}, $self->{role},   $self->{email}
-            );
-        }
-
-        $sth = $dbh->prepare($query);
-        $sth->execute(@values);
-        $dbh->commit;
-        $dbh->disconnect;
-
-    }
 }

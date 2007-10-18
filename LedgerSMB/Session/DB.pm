@@ -254,7 +254,6 @@ sub password_check {
     my ( $dbusername, $md5Password, $cryptPassword ) =
       $fetchPassword->fetchrow_array;
     if ( $dbusername ne $username ) {
-
         # User data retrieved from db not for the requested user
         return 0;
     }

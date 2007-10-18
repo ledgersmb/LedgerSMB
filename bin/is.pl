@@ -53,6 +53,7 @@ require "bin/io.pl";
 1;
 
 # end of main
+sub on_update{}
 
 sub add {
 
@@ -808,6 +809,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 }
 
 sub update {
+    on_update();
     $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );

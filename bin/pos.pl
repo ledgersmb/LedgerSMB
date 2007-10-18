@@ -42,9 +42,38 @@
 
 use LedgerSMB::Tax;
 
+$form->{currency} = 'USD';
 1;
 
 # end
+sub custom_send_to_pd{
+  socket(SOCK, 2, 1, getprotobynumber($pos_config{'pd_proto'}));
+  connect(SOCK, $pos_config{'pd_dest'});
+  my $rn = $numrows - 1;
+  my $ds_string = sprintf (
+	'%s%s @ $%-7.2f%s%s%s', 
+	$pd_control{'new_line'},
+	$form->{"qty_$rn"},
+	$form->{"sellprice_$rn"},
+	$pd_control{'new_line'},
+	"Subtotal: \$".sprintf('%-7.2f', $form->{'invtotal'})
+  );
+  print SOCK $ds_string;
+  close SOCK;
+}
+
+sub on_update{
+   &custom_send_to_pd;
+   &custom_check_alert;
+}
+
+sub open_drawer{
+   require "pos.conf.pl";
+   open (PRINTER, "|-", ${'LedgerSMB::Sysconfig::printer'}{Printer});
+   print PRINTER $pos_config{'rp_cash_open'};
+   close PRINTER;
+   sleep 1;
+}
 
 sub check_alert {
     my $rc = $form->{'rowcount'};
@@ -77,14 +106,7 @@ sub on_update {
     &check_alert;
 }
 
-sub open_drawer {
-    open( PRINTER, "|-", ${LedgerSMB::Sysconfig::printer}{Printer} );
-    print PRINTER $pos_config{'rp_cash_open'};
-    close PRINTER;
-    sleep 1;
-}
-
-sub open {
+sub open_till {
     &open_drawer;
     &update;
 }
@@ -246,14 +268,6 @@ sub form_header {
 	      </tr>
 | if $form->{selectdepartment};
 
-    $employee = qq|
-	      <tr>
-	        <th align="right" nowrap>| . $locale->text('Salesperson') . qq|</th>
-		<td colspan="3"><select name="employee">$form->{selectemployee}</select></td>
-		<input type="hidden" name="selectemployee" value="|
-      . $form->escape( $form->{selectemployee}, 1 ) . qq|">
-	      </tr>
-| if $form->{selectemployee};
 
     if ( $form->{change} != $form->{oldchange} ) {
         $form->{creditremaining} -= $form->{oldchange};
@@ -347,7 +361,7 @@ sub form_header {
 	        <td></td>
 		<td colspan="3">
 		  <table>
-		    <tr>
+		    <!-- tr>
 		      <th align="right" nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>$form->{creditlimit}</td>
 		      <td width="10"></td>
@@ -355,7 +369,7 @@ sub form_header {
 		      <td class="plus$n">|
       . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
       . qq|</font></td>
-		    </tr>
+		    </tr -->
 		    $business
 		  </table>
 		</td>
@@ -603,12 +617,10 @@ qq|<td><select name="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         %button = (
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
-            'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print') },
-            'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+            'open_till' => { ndx => 3, key => 'O', value => $locale->text('Open Till') },
             'print_and_post' => {
                 ndx   => 4,
-                key   => 'R',
+                key   => 'P',
                 value => $locale->text('Print and Post')
             },
             'delete' =>
@@ -673,7 +685,6 @@ qq| <button class="submit" type="submit" name="action" value="$spc$item">$spc$it
 
 sub post {
 
-    $form->{media} = 'Printer';
     $form->isblank( "customer", $locale->text('Customer missing!') );
 
     # if oldcustomer ne customer redo form
@@ -686,7 +697,6 @@ sub post {
     }
 
     &validate_items;
-    &print;
 
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
@@ -706,7 +716,7 @@ sub post {
         ++$form->{paidaccounts};
         my $pa = $form->{paidaccounts};
         $form->{"paid_$pa"}         = $total - $paid;
-        $form->{"source_$pa"}       = 'cash';
+        $form->{"memo_$pa"}       = 'cash';
         $form->{"exchangerate_$pa"} = 0;
         $form->{"AR_paid_$pa"}      = $form->{AR_paid_1};
     }
@@ -884,7 +894,10 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
 
 }
 
+
 sub print {
+    open_drawer();
+    sleep 1;
     if ( !$form->{invnumber} ) {
         $form->{invnumber} = $form->update_defaults( \%myconfig, 'sinumber' );
     }
@@ -1029,7 +1042,7 @@ sub print_form {
 }
 
 sub print_and_post {
-
+    $form->{media} = 'Printer';  
     $form->error( $locale->text('Select a Printer!') )
       if ( $form->{media} eq 'screen' );
     $form->{printandpost} = 1;
