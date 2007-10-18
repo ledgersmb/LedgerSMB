@@ -87,10 +87,16 @@ $language = $config{''}{language} if $config{''}{language};
 $session  = $config{''}{session}  if $config{''}{session};
 $latex    = $config{''}{latex}    if $config{''}{latex};
 
-$ENV{PATH} .= $pathsep . ( join $pathsep, @{ $config{environment}{PATH} } )
-  if $config{environment}{PATH};
-$ENV{PERL5LIB} .= ":" . ( join ':', @{ $config{environment}{PERL5LIB} } )
-  if $config{environment}{PERL5LIB};
+if (ref $config{environment}{PATH} eq 'ARRAY') {
+    $ENV{PATH} .= $pathsep . ( join $pathsep, @{ $config{environment}{PATH} } );
+} elsif ($config{environment}{PATH}) {
+    $ENV{PATH} .= $pathsep . $config{environment}{PATH};
+}
+if (ref $config{environment}{PERL5LIB} eq 'ARRAY') {
+    $ENV{PERL5LIB} .= ":" . ( join ':', @{ $config{environment}{PERL5LIB} } );
+} elsif ($config{environment}{PERL5LIB}) {
+    $ENV{PERL5LIB} .= ":" . $config{environment}{PERL5LIB};
+}
 
 %printer = %{ $config{printers} } if $config{printers};
 
