@@ -7,16 +7,6 @@ CREATE SEQUENCE id;
 
 
 -- BEGIN new entity management
-CREATE TABLE entity (
-  id serial UNIQUE,
-  name text check (name ~ '[[:alnum:]_]'),
-  entity_class integer references entity_class(id) not null ,
-  created date not null default current_date,
-  PRIMARY KEY(name,entity_class));
-  
-COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
-COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
-
 CREATE TABLE entity_class (
   id serial primary key,
   class text check (class ~ '[[:alnum:]_]') NOT NULL,
@@ -26,6 +16,16 @@ COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, custo
 COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and permanent $$;  
 
 CREATE index entity_class_idx ON entity_class(lower(class));
+
+CREATE TABLE entity (
+  id serial UNIQUE,
+  name text check (name ~ '[[:alnum:]_]'),
+  entity_class integer references entity_class(id) not null ,
+  created date not null default current_date,
+  PRIMARY KEY(name,entity_class));
+  
+COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
+COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
 
 
 ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
@@ -57,25 +57,6 @@ CREATE TABLE users (
 );
 
 COMMENT ON TABLE users IS $$username is the actual primary key here because we do not want duplicate users$$;
-
-COMMENT ON TABLE users_conf IS 'This is a completely dumb table that is a place holder to get usersconf into the database. Next major release will have a much more sane implementation';
-COMMENT ON COLUMN users_conf.id IS 'Yes primary key with a FOREIGN KEY to users(id) is correct'; 
-COMMENT ON COLUMN users_conf.password IS 'This means we have to get rid of the current password stuff and move to presumably md5()';
-
--- The two below statements must be run from a single session
-/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
---INSERT INTO users(username) VALUES ('admin'); -- entity_id is declared NOT NULL !!
-
-INSERT INTO users_conf(id,password) VALUES (currval('users_id_seq'),NULL);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-
-
-
-
-
 
 -- Session tracking table
 
@@ -205,41 +186,17 @@ COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a comm
 create table entity_employee (
     
     person_id integer references person(id) not null,
-    entity_id integer references entity(id) not null,
+    entity_id integer references entity(id) not null unique,
     startdate date not null default current_date,
     enddate date,
     role varchar(20),
+    ssn text,
     sales bool default 'f',
     manager_id integer references entity(id),
     employeenumber varchar(32),
-    dob date
+    dob date,
     PRIMARY KEY (person_id, entity_id)
 );
-
--- notes are from entity_note
--- ssn, iban and bic are from entity_credit_account
--- 
-
-create view employee as
-    SELECT 
-        ente.entity_id,
-        3,
-        u.username,
-        ente.startdate,
-        ente.enddate,
-        en.note,
-        eca.ssn,
-        eca.iban,
-        eca.bic,
-        ente.manager_id,
-        ente.employeenumber,
-        ente.dob
-    FROM
-        entity_employee ente
-    JOIN
-        entity_credit_account eca on eca.entity_id = ente.entity_id,
-        entity_note en on en.entity_id = ente.entity_id,
-        user u on u.entity_id = ente.entity_id;
 
 CREATE TABLE person_to_location (
   location_id integer not null references location(id),
@@ -322,7 +279,7 @@ CREATE TABLE note (id serial primary key, note_class integer not null references
                    created timestamp not null default now(),
                    ref_key integer not null);
 
-CREATE TABLE entity_note() INHERITS (note);
+CREATE TABLE entity_note(entity_id int references entity(id)) INHERITS (note);
 ALTER TABLE entity_note ADD CHECK (note_class = 1);
 ALTER TABLE entity_note ADD FOREIGN KEY (ref_key) REFERENCES entity(id) ON DELETE CASCADE;
 CREATE INDEX entity_note_id_idx ON entity_note(id);
@@ -468,6 +425,34 @@ CREATE TABLE entity_credit_account (
     threshold numeric default 0,
     PRIMARY KEY(entity_id, meta_number)
 );
+-- notes are from entity_note
+-- ssn, iban and bic are from entity_credit_account
+-- 
+-- The view below is broken.  Disabling for now.
+/*
+create view employee as
+    SELECT 
+        ente.entity_id,
+        3,
+        u.username,
+        ente.startdate,
+        ente.enddate,
+        en.note,
+        ente.ssn,
+        eca.iban,
+        eca.bic,
+        ente.manager_id,
+        ente.employeenumber,
+        ente.dob
+    FROM
+        entity_employee ente
+    JOIN 
+        entity_credit_account eca on (eca.entity_id = ente.entity_id)
+    JOIN
+        entity_note en on (en.entity_id = ente.entity_id)
+    JOIN
+        users u on (u.entity_id = ente.entity_id);
+*/
 
 
 CREATE TABLE entity_bank_account (
@@ -548,7 +533,7 @@ ALTER TABLE company ADD COLUMN sic_code varchar;
 
 
 
-COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
+-- COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
 
 CREATE TABLE parts (
   id serial PRIMARY KEY,
@@ -609,7 +594,7 @@ CREATE TABLE ar (
   notes text,
   curr char(3),
   ordnumber text,
-  person_id integer references employee(entity_id),
+  person_id integer references entity_employee(entity_id),
   till varchar(20),
   quonumber text,
   intnotes text,
@@ -640,7 +625,7 @@ CREATE TABLE ap (
   ordnumber text,
   curr char(3),
   notes text,
-  person_id integer references employee(entity_id),
+  person_id integer references entity_employee(entity_id),
   till varchar(20),
   quonumber text,
   intnotes text,
@@ -790,13 +775,13 @@ CREATE TABLE batch (
   batch_class_id integer references batch_class(id) not null,
   description text,
   approved_on date default null,
-  approved_by int references employee(entity_id),
-  created_by int references employee(entity_id),
+  approved_by int references entity_employee(entity_id),
+  created_by int references entity_employee(entity_id),
   locked_by int references session(session_id),
   created_on date default now()
 );
 
-COMMENT ON batch.batch_class_id IS
+COMMENT ON COLUMN batch.batch_class_id IS
 $$ Note that this field is largely used for sorting the vouchers.  A given batch is NOT restricted to this type.$$;
 
 CREATE TABLE voucher (
@@ -807,10 +792,10 @@ CREATE TABLE voucher (
   PRIMARY KEY (batch_class, batch_id, trans_id)
 );
 
-COMMENT ON batch.batch_class IS $$ This is the authoritative class of the 
+COMMENT ON COLUMN voucher.batch_class IS $$ This is the authoritative class of the 
 voucher. $$;
 
-COMMENT ON voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
+COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
 
 --
 create table shipto (
@@ -891,7 +876,7 @@ CREATE TABLE warehouse (
 );
 --
 CREATE TABLE inventory (
-  entity_id integer references employee(entity_id),
+  entity_id integer references entity_employee(entity_id),
   warehouse_id int,
   parts_id int,
   trans_id int,
@@ -1088,8 +1073,6 @@ create index chart_link_key on chart (link);
 create index chart_gifi_accno_key on chart (gifi_accno);
 --
 create index customer_customer_id_key on customertax (customer_id);
---
-create unique index employee_login_key on employee (login);
 --
 create index exchangerate_ct_key on exchangerate (curr, transdate);
 --
