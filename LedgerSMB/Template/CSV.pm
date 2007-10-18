@@ -38,6 +38,9 @@ holders, see the CONTRIBUTORS file.
 
 package LedgerSMB::Template::CSV;
 
+use warnings;
+use strict;
+
 use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
@@ -54,12 +57,17 @@ sub preprocess {
 
 	#XXX fix escaping function
 	return $rawvars if $type =~ /^LedgerSMB::Locale/;
+	return unless defined $rawvars;
 	if ( $type eq 'ARRAY' ) {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess( $_ );
 		}
-	} elsif ( !$type ) { # Scalar
-		$vars = $rawvars;
+	} elsif ( !$type or $type eq 'SCALAR' ) { # Scalar
+		if ($type eq 'SCALAR' ) {
+			$vars = $$rawvars;
+		} else {
+			$vars = $rawvars;
+		}
 		$vars =~ s/(^ +| +$)//g;
 		$vars =~ s/"/""/g;
 		$vars = qq|"$vars"| if $vars !~ /^\w*$/;

@@ -47,6 +47,9 @@ holders, see the CONTRIBUTORS file.
 
 package LedgerSMB::Template::LaTeX;
 
+use warnings;
+use strict;
+
 use Error qw(:try);
 use Template::Latex;
 use LedgerSMB::Template::TTI18N;
@@ -62,15 +65,20 @@ sub preprocess {
 	my $type = ref $rawvars;
 
 	return $rawvars if $type =~ /^LedgerSMB::Locale/;
+	return unless defined $type;
 	if ($type eq 'ARRAY') {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess($_);
 		}
-	} elsif (!$type) {
+	} elsif (!$type or $type eq 'SCALAR') {
+		if ($type eq 'SCALAR') {
+			$vars = $$rawvars;
+		} else {
+			$vars = $rawvars;
+		}
 		#XXX Fix escaping
-		$rawvars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
-		$rawvars =~ s/"(.*)"/``$1''/gs;
-		return $rawvars;
+		$vars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
+		$vars =~ s/"(.*)"/``$1''/gs;
 	} else {
 		for ( keys %{$rawvars} ) {
 			$vars->{$_} = preprocess($rawvars->{$_});

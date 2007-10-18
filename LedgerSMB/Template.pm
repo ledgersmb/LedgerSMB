@@ -120,6 +120,9 @@ your software.
 
 package LedgerSMB::Template;
 
+use warnings;
+use strict;
+
 use Error qw(:try);
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
@@ -164,9 +167,9 @@ sub new {
 		throw Error::Simple "Invalid format";
 	}
 	if (!$self->{include_path}){
-## SC: hardcoding due to config migration
-##		$self->{include_path} = $self->{'myconfig'}->{'templates'};
-		$self->{include_path} = 'templates/demo';
+## SC: XXX hardcoding due to config migration, will need adjustment
+		$self->{include_path} = $self->{'myconfig'}->{'templates'};
+		$self->{include_path} ||= 'templates/demo';
 		if (defined $self->{language}){
 			if (!$self->_valid_language){
 				throw Error::Simple 'Invalid language';

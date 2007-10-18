@@ -48,6 +48,9 @@ holders, see the CONTRIBUTORS file.
 
 package LedgerSMB::Template::XLS;
 
+use warnings;
+use strict;
+
 use Error qw(:try);
 use CGI::Simple::Standard qw(:html);
 use Excel::Template::Plus;
@@ -65,12 +68,15 @@ sub preprocess {
 
     #XXX fix escaping function
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
+    return $rawvars unless defined $rawvars;
     if ( $type eq 'ARRAY' ) {
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_ );
         }
     } elsif (!$type) {
         return escapeHTML($rawvars);
+    } elsif ($type eq 'SCALAR') {
+        return escapeHTML($$rawvars);
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
@@ -110,7 +116,7 @@ sub process {
 	);
 	$template->write_file("$parent->{outputfile}.xls");
 
-	parent->{mimetype} = 'application/vnd.ms-excel';
+	$parent->{mimetype} = 'application/vnd.ms-excel';
 }
 
 sub postprocess {

@@ -38,6 +38,9 @@ holders, see the CONTRIBUTORS file.
 
 package LedgerSMB::Template::TXT;
 
+use warnings;
+use strict;
+
 use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;

@@ -800,12 +800,15 @@ sub preprocess {
 
     #XXX fix escaping function
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
+    return unless defined $rawvars;
     if ( $type eq 'ARRAY' ) {
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_ );
         }
     } elsif (!$type) {
         return escapeHTML($rawvars);
+    } elsif ($type eq 'SCALAR') {
+        return escapeHTML($$rawvars);
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
