@@ -236,7 +236,7 @@ sub till_closing {
     foreach $source ( sort keys %pos_sources ) {
         $amount = 0;
         foreach $ref ( @{ $form->{TB} } ) {
-            if ( $ref->{source} eq $source ) {
+            if ( $ref->{memo} eq $source ) {
                 $amount = $ref->{amount} * -1;
                 last;
             }
