@@ -781,6 +781,7 @@ insert into batch_class (id,class) values (2,'ar');
 insert into batch_class (id,class) values (3,'payment');
 insert into batch_class (id,class) values (4,'payment_reversal');
 insert into batch_class (id,class) values (5,'gl');
+insert into batch_class (id,class) values (6,'receipt');
 
 SELECT SETVAL('batch_class_id_seq',6);
 
@@ -795,11 +796,21 @@ CREATE TABLE batch (
   created_on date default now()
 );
 
+COMMENT ON batch.batch_class_id IS
+$$ Note that this field is largely used for sorting the vouchers.  A given batch is NOT restricted to this type.$$;
+
 CREATE TABLE voucher (
-  trans_id int,
+  trans_id int REFERENCES transactions(id) NOT NULL,
   batch_id int references batch(id) not null,
-  id serial primary key
+  id serial NOT NULL,
+  batch_class int references batch_class not null,
+  PRIMARY KEY (batch_class, batch_id, trans_id)
 );
+
+COMMENT ON batch.batch_class IS $$ This is the authoritative class of the 
+voucher. $$;
+
+COMMENT ON voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
 
 --
 create table shipto (
