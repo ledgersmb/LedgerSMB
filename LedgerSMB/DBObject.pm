@@ -128,13 +128,13 @@ sub exec_method {
     
     my $m_name = $ref->{proname};
 
-#    if ($args) {
-#        for my $arg (@proc_args) {
-#            if ( $arg =~ s/^in_// ) {
-                # push @call_args, $arg;
-#            }
-#        }
-#    }
+    if ($args) {
+        for my $arg (@proc_args) {
+            if ( $arg =~ s/^in_// ) {
+                 push @call_args, $self->{$arg};
+            }
+        }
+    }
 
     for (@in_args) { push @call_args, $_ } ;
     $self->{call_args} = \@call_args;

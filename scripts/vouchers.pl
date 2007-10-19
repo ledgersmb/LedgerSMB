@@ -37,6 +37,7 @@ sub create_vouchers {
     use LedgerSMB::Form;
 
     my $batch = LedgerSMB::Batch->new({base => $request});
+    $batch->{batch_class} = $request->{batch_type};
     $batch->create;
 
     my $vouchers_dispatch = 
@@ -49,27 +50,34 @@ sub create_vouchers {
     };
 
     # Note that the line below is generally considered incredibly bad form. 
-    # However, the code we are including is going to require it for now.
-    no strict;
+    # However, the code we are including is going to require it for now. -- CT
     our $form = new Form;
     our $locale = $request->{_locale};
+
     for (keys %$request){
         $form->{$_} = $request->{$_};
     }
 
+    $form->{batch_id} = $batch->{id};
     $form->{approved} = 0;
     $form->{transdate} = $request->{batch_date};
-    print STDERR "$request->{batch_type}\n";
-    require $vouchers_dispatch->{$request->{batch_type}}{script};
+
 
     my $script = $vouchers_dispatch->{$request->{batch_type}}{script};
+    { no strict; no warnings 'redefine'; do $script; }
+
     $script =~ s|.*/||;
     $form->{script} = $script;
+    $vouchers_dispatch->{$request->{batch_type}}{function}();
+}
 
-\    $vouchers_dispatch->{$request->{batch_type}}{function}();
+sub get_batch {
 }
 
 sub list_vouchers {
+}
+
+sub add_vouchers {
 }
 
 sub approve_batch {

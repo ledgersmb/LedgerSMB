@@ -276,7 +276,7 @@ BEGIN
 		batch (batch_class_id, description, control_code, created_by)
 	VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
 		in_description, in_batch_number, 
-			(select id FROM users WHERE username = session_user));
+			(select entity_id FROM users WHERE username = session_user));
 
 	return currval('batch_id_seq');
 END;	

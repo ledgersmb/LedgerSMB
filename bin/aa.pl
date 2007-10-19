@@ -541,10 +541,12 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 <input type=hidden name=title value="$title">
 
 |;
-
+    if (!defined $form->{approved}){
+        $form->{approved} = 1;
+    }
     $form->hide_form(
-        qw(id printed emailed sort closedto locked oldtransdate audittrail 
-           recurring checktax reverse batch_id subtype)
+        qw(batch_id approved id printed emailed sort closedto locked 
+           oldtransdate audittrail recurring checktax reverse batch_id subtype)
     );
 
     if ( $form->{vc} eq 'customer' ) {

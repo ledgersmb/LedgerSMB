@@ -1103,6 +1103,9 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
     else {
         $notes = qq|<input name=notes size=50 value="$form->{notes}">|;
     }
+    if (!defined $form->{approved}){
+        $form->{approved} = '1';
+    }
 
     $department = qq|
         <tr>
@@ -1131,10 +1134,11 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 <body onload="document.forms[0].${focus}.focus()" />
 
 <form method=post action=$form->{script}>
+         <input type="hidden" name="approved" value="$form->{approved}" />
 |;
 
     $form->hide_form(
-        qw(id transfer selectaccno closedto locked oldtransdate recurring));
+        qw(batch_id id transfer selectaccno closedto locked oldtransdate recurring));
 
     print qq|
 <input type=hidden name=title value="$title">

@@ -2299,7 +2299,7 @@ sub create_links {
         }
         $sth->finish;
     }
-    if (!$self->{id}){
+    if (!$self->{id} && !$self->{transdate}){
         $self->{transdate} = $self->{current_date};
     }
 

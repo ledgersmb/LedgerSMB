@@ -535,7 +535,7 @@ sub call_procedure {
     my @results;
 
     $procname = $self->{dbh}->quote_identifier($procname);
-
+    print STDERR join(':', @call_args) . "\n";
     for ( 1 .. scalar @call_args ) {
         $argstr .= "?, ";
     }

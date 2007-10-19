@@ -130,22 +130,24 @@ sub post_transaction {
 		WHERE id = ?|;
 
     if (defined $form->{approved}) {
-
-        $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
+        my $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
         $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
              || $form->dberror($query);
         if (!$form->{approved}){
            if (not defined $form->{batch_id}){
                $form->error($locale->text('Batch ID Missing'));
            }
-           $query = qq| 
-			INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
-           $sth = $dbh->prepare($query);
-           $sth->execute($form->{batch_id}, $form->{id}) ||
+           my $query = qq| 
+			INSERT INTO voucher (batch_id, trans_id, batch_class) 
+			VALUES (?, ?, (select id FROM batch_class 
+			                        WHERE class = ?))|;
+           my $sth2 = $dbh->prepare($query);
+           $sth2->execute($form->{batch_id}, $form->{id}, 'gl') ||
                 $form->dberror($query);
        }
     }
     $sth = $dbh->prepare($query);
+    print STDERR $query;
     $sth->execute( $form->{transdate}, $department_id, $form->{id} )
       || $form->dberror($query);
 
@@ -570,7 +572,9 @@ sub transaction {
         my $results = $sth->fetchall_hashref('setting_key');
         $form->{closedto}  = $results->{'closedto'}->{'value'};
         $form->{revtrans}  = $results->{'revtrans'}->{'value'};
-        $form->{transdate} = $results->{'revtrans'}->{'transdate'};
+        if (!$form->{transdate}){
+            $form->{transdate} = $results->{'revtrans'}->{'transdate'};
+        }
     }
 
     $sth->finish;
