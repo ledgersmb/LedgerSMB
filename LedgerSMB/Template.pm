@@ -228,6 +228,11 @@ sub render {
 	my $post = $format->can('postprocess')->($self);
 	if (!$self->{'noauto'}) {
 		$self->output;
+		# Clean up
+		if ($self->{rendered}) {
+			unlink($self->{rendered}) or
+				throw Error::Simple 'Unable to delete output file';
+		}
 	}
 	return $post;
 }
@@ -296,12 +301,46 @@ sub _http_output_file {
 
 sub _email_output {
 	my $self = shift;
-	my $mail = new LedgerSMB::Mailer;
-	#TODO stub
+	my $args = $self->{output_args};
+
+	my @mailmime;
+	if (!$self->{rendered} and !$args->{attach}) {
+		$args->{message} .= $self->{output};
+		@mailmime = ('contenttype', $self->{mimeytype});
+	}
+
+	my $mail = new LedgerSMB::Mailer(
+		from => $args->{from} || $self->{user}->{email},
+		to => $args->{to},
+		cc => $args->{cc},
+		bcc => $args->{bcc},
+		subject => $args->{subject},
+		notify => $args->{notify},
+		message => $args->{message},
+		@mailmime,
+	);
+	if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{rendered}) {
+		my @attachment;
+		my $name = $args->{filename};
+		if ($self->{rendered}) {
+			@attachment = ('file', $self->{rendered});
+			$name ||= $self->{rendered};
+		} else {
+			@attachment = ('data', $self->{output});
+		}
+		$mail->attach(
+			mimetype => $self->{mimetype},
+			filename => $name,
+			strip => $$,
+			@attachment,
+			);
+	}
+	$mail->send;
 }
 
 sub _lpr_output {
 	my $self = shift;
 	#TODO stub
 }
+
 1;

@@ -431,6 +431,7 @@ qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
 }
 
 sub generate_report {
+    my $output_options = shift;
 
     $form->{sort} = "transdate" unless $form->{sort};
     $form->{amountfrom} = $form->parse_amount(\%myconfig, $form->{amountfrom});
@@ -788,6 +789,13 @@ sub generate_report {
         type => 'submit',
         class => 'submit',
     };
+    push @buttons, {
+        name => 'action',
+        value => 'csv_email_gl_report',
+        text => $locale->text('Email CSV Report'),
+        type => 'submit',
+        class => 'submit',
+    };
 
 ##SC: Taking this out for now...
 ##    if ( $form->{lynx} ) {
@@ -807,7 +815,10 @@ sub generate_report {
         locale => $locale,
         path => 'UI',
         template => 'form-dynatable',
-        format => ($format ne 'CSV')? 'HTML': 'CSV');
+        format => ($format ne 'CSV')? 'HTML': 'CSV',
+        output_options => $output_options,
+        );
+    $template->{method} = 'email' if $output_options;
     $template->render({
         form => \%$form,
         buttons => \@buttons,
@@ -819,10 +830,19 @@ sub generate_report {
         row_alignment => \%row_alignment,
         totals => \%column_data,
     });
+    $form->info($locale->text('GL report sent to [_1]', $form->{login}));
 
 }
 
 sub csv_gl_report { &generate_report }
+sub csv_email_gl_report {
+    ##SC: XXX hardcoded test values
+    &generate_report({
+        to => 'seneca@localhost',
+        from => 'seneca@localhost',
+        subject => 'CSV GL report',
+    });
+}
 
 sub gl_subtotal_tt {
 
