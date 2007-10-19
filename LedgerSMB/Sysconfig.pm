@@ -110,7 +110,7 @@ for $var (qw(gzip)) {
 }
 
 # mail configuration
-for $var (qw(sendmail smpthost smtptimeout)) {
+for $var (qw(sendmail smtphost smtptimeout)) {
     ${$var} = $config{mail}{$var} if $config{mail}{$var};
 }
 
