@@ -1656,6 +1656,7 @@ sub load_template {
 
     my ( $self, $myconfig, $form ) = @_;
 
+    $form->{file} ||= lc "$myconfig->{templates}/$form->{template}.$form->{format}";
     $self->check_template_name( \%$myconfig, \%$form );
     open( TEMPLATE, '<', "$form->{file}" )
       or $form->error("$form->{file} : $!");
@@ -1679,6 +1680,7 @@ sub save_template {
 
     my ( $self, $myconfig, $form ) = @_;
 
+    $form->{file} ||= lc "$myconfig->{templates}/$form->{template}.$form->{format}";
     $self->check_template_name( \%$myconfig, \%$form );
     open( TEMPLATE, '>', "$form->{file}" )
       or $form->error("$form->{file} : $!");
@@ -2093,25 +2095,36 @@ sub backup {
     # compress backup if gzip defined
     my $suffix = "c";
 
+	##SC: START Testing changes
+	$myconfig->{name} = "test";
+	$myconfig->{email} = 'seneca@localhost';
+	$myconfig->{dbport} = 5432;
+	$myconfig->{dbuser} = 'seneca';
+	$myconfig->{dbhost} = 'localhost';
+	$myconfig->{dbname} = 'ledgersmb-taxtest';
+	##SC: END Testing changes
     if ( $form->{media} eq 'email' ) {
         print OUT
 qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc -p $myconfig->{dbport} $myconfig->{dbname});
         close OUT;
         use LedgerSMB::Mailer;
-        $mail = new LedgerSMB::Mailer;
+        $mail = new LedgerSMB::Mailer(
+            to => qq|"$myconfig->{name}" <$myconfig->{email}>|,
+            from => qq|"$myconfig->{name}" <$myconfig->{email}>|,
+            subject => "LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix",
+            message => qq|
+This PostgreSQL backup can be restored using the pg_restore command.
 
-        $mail->{to}   = qq|"$myconfig->{name}" <$myconfig->{email}>|;
-        $mail->{from} = qq|"$myconfig->{name}" <$myconfig->{email}>|;
-        $mail->{subject} =
-"LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix";
-        @{ $mail->{attachments} } = ($tmpfile);
-        $mail->{version} = $form->{version};
-        $mail->{fileid}  = "$boundary.";
-        $mail->{format}  = "plain";
-        $mail->{format}  = "octet-stream";
+-- 
+LedgerSMB|,
+            );
 
-        $myconfig->{signature} =~ s/\\n/\n/g;
-        $mail->{message} = "-- \n$myconfig->{signature}";
+        $mail->attach(
+            'file' => $tmpfile,
+            'filename' => $tmpfile,
+            'strip' => "$boundary.",
+            'mimetype' => 'application/octet-stream',
+            );
 
         $err = $mail->send;
     }
