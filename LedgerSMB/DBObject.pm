@@ -107,7 +107,7 @@ sub exec_method {
      
     my $query = "SELECT proname, pronargs, proargnames FROM pg_proc WHERE proname = ?";
     my $sth   = $self->{dbh}->prepare($query);
-    $sth->execute($funcname);
+    $sth->execute($funcname) || $self->error($DBI::errstr . "in exec_method");
     my $ref;
 
     $ref = $sth->fetchrow_hashref('NAME_lc');

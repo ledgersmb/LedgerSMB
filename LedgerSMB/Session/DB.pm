@@ -182,7 +182,7 @@ sub session_create {
     }
     $deleteExisting->execute( $login)
       || $lsmb->dberror(
-        __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
+        __FILE__ . ':' . __LINE__ . ': Delete from session: ' . $DBI::errstr);
 
 #doing the random stuff in the db so that LedgerSMB won't
 #require a good random generator - maybe this should be reviewed, 

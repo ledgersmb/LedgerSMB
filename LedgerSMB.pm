@@ -688,7 +688,7 @@ sub _db_init {
     $sth->execute;
     my ($dbversion) = $sth->fetchrow_array;
     if ($dbversion ne $self->{dbversion}){
-        $self->error("Database is not the expected version.");
+        $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}");
     }
 
 
@@ -708,6 +708,12 @@ sub _db_init {
         push @{ $self->{custom_db_fields}{ $ref->{extends} } },
           $ref->{field_def};
     }
+}
+
+# Deprecated, only here for old code
+sub dberror{
+   my $self = shift @_;
+   $self->error(@_);
 }
 
 sub redo_rows {

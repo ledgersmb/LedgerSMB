@@ -101,12 +101,11 @@ sub post_transaction {
         $uid .= "$$";
 
         $query = qq|
-		INSERT INTO gl (reference, employee_id)
-		     VALUES ('$uid', (SELECT id FROM employee
-		                       WHERE login = ?))|;
+		INSERT INTO gl (reference)
+		     VALUES ('$uid')|;
 
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{login} ) || $form->dberror($query);
+        $sth->execute() || $form->dberror($query);
 
         $query = qq|
 			SELECT id 

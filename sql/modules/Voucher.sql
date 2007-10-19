@@ -193,7 +193,7 @@ RETURNS BOOL AS
 $$
 DECLARE
 	control_amount NUMERIC;
-	voucher vouchers%ROWTYPE; 
+	voucher voucher%ROWTYPE; 
 	incriment NUMERIC;
 BEGIN
 --  CHECK CONTROL NUMBERS
@@ -204,7 +204,7 @@ BEGIN
 				SELECT id FROM gl 
 				WHERE coalesce(approved, false) != true)
 			AND trans_id IN (
-				SELECT transaction_id FROM vouchers 
+				SELECT transaction_id FROM voucher 
 				WHERE batch_id = ANY (in_batch_id))
 			AND coalesce(approved, false) != true
 			AND amount > 0
@@ -214,7 +214,7 @@ BEGIN
 
 		SELECT sum(ac.amount) INTO control_amount 
 		FROM acc_trans ac
-		JOIN vouchers v ON (v.transaction_id = ac.trans_id)
+		JOIN voucher v ON (v.transaction_id = ac.trans_id)
 		WHERE v.batch_id = ANY (in_batch_id)
 			AND ac.vr_id = v.id
 			AND coalesce(approved, false) = false
@@ -224,7 +224,7 @@ BEGIN
 		SELECT sum(amount) INTO control_amount
 		FROM acc_trans 
 		WHERE trans_id IN
-				(SELECT transaction_id FROM vouchers 
+				(SELECT transaction_id FROM voucher 
 				WHERE batch_id = ANY (in_batch_id))
 			AND trans_id IN
 				(SELECT trans_id FROM ap 
@@ -245,24 +245,39 @@ BEGIN
 		UPDATE acc_trans 
 		SET approved = true 
 		WHERE trans_id IN 
-			(SELECT transaction_id FROM vouchers
+			(SELECT transaction_id FROM voucher
 			WHERE batch_id = ANY (in_batch_id));
 
 		IF in_batch = 'gl' THEN
 
 			UPDATE gl SET approved = true
 			WHERE trans_id IN
-				(SELECT transaction_id FROM vouchers
+				(SELECT transaction_id FROM voucher
 				WHERE batch_id = ANY (in_batch_id));
 
 		ELSE 
 			UPDATE ap SET approved = true
 			WHERE trans_id IN
-				(SELECT transaction_id FROM vouchers
+				(SELECT transaction_id FROM voucher
 				WHERE batch_id = ANY (in_batch_id));
 		END IF;
 	END IF;
 
 	RETURN TRUE;
 END;
+$$ LANGUAGE PLPGSQL;
+
+
+CREATE OR REPLACE FUNCTION batch_create(
+in_batch_number text, in_description text, in_batch_class text) RETURNS int AS
+$$
+BEGIN
+	INSERT INTO 
+		batch (batch_class_id, description, control_code, created_by)
+	VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
+		in_description, in_batch_number, 
+			(select id FROM users WHERE username = session_user));
+
+	return currval('batch_id_seq');
+END;	
 $$ LANGUAGE PLPGSQL;

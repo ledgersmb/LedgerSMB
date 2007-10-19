@@ -57,7 +57,7 @@ sub redirect {
     $form->{script} = $script;
 
     if ( !$myconfig ) {    # needed for login
-        %myconfig = %{ LedgerSMB::User->fetch_config( $form->{login} ) };
+        %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
     }
     if ( !$form->{dbh} and ( $script ne 'admin.pl' ) ) {
         $form->db_init( \%myconfig );
