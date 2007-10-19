@@ -372,10 +372,16 @@ sub post_transaction {
            if (not defined $form->{batch_id}){
                $form->error($locale->text('Batch ID Missing'));
            }
+           if ($form->{arap} eq 'ar'){
+               $batch_class = 'receivable';
+           } else {
+               $batch_class = 'payable';
+           }
            $query = qq| 
-		INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
-           $dbh->prepare($query)->execute($form->{batch_id}, $form->{id}) ||
-                $form->dberror($query);
+		INSERT INTO voucher (batch_id, trans_id, batch_class)
+		VALUES (?, ?, (select id from batch_class where class = ?))|;
+           $dbh->prepare($query)->execute($form->{batch_id}, $form->{id}, 
+                $batch_class) || $form->dberror($query);
         }
         
     }
