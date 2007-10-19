@@ -1516,7 +1516,7 @@ sub aging {
 
     if ( @{ $form->{all_language} } && $form->{arap} eq 'ar' ) {
         push @column_index, "language";
-        $form->{language_options} = [];
+        $form->{language_options} = [{text => ' ', value => ''}];
 
         for ( @{ $form->{all_language} } ) {
             push @{$form->{language_options}},
@@ -1611,7 +1611,7 @@ sub aging {
 
             }
 
-            push @currencies, {};
+            unshift @currencies, {};
             $curr = $ref->{curr};
             $currencies[0]{curr} = $curr;
         }
@@ -1619,18 +1619,17 @@ sub aging {
         $k++;
         my %column_data;
 
-        if ( $ctid != $ref->{ctid} ) {
-
+        if ( $ctid != $ref->{ctid} or $form->{summary}) {
             $i++;
 
             $column_data{ct} = $ref->{name};
-
+    
             $column_data{language} = {
                 name => "language_code_$i",
                 options => $form->{language_options},
                 default_value => $ref->{language_code},
                 } if $form->{language_options};
-
+    
             $column_data{statement} = {
                 name => "statement_$i",
                 type => 'checkbox',
@@ -1639,8 +1638,8 @@ sub aging {
             $column_data{statement}{checked} = 'checked' if $ref->{checked};
             $hiddens{"$form->{ct}_id_$i"} = $ref->{ctid};
             $hiddens{"curr_$i"} = $ref->{curr};
-
         }
+
 
         $ctid = $ref->{ctid};
 
@@ -1689,13 +1688,16 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
             $j++;
             $j %= 2;
             $column_data{i} = $j;
+            my $rowref = {};
+            $rowref->{$_} = $column_data{$_} for keys %column_data;
 
-            push @{$currencies[0]{rows}}, \%column_data;
+            push @{$currencies[0]{rows}}, $rowref;
             for (qw(ct statement language)) {
                 $column_data{$_} = ' ';
             }
 
         }
+        $column_data{ct} = $ref->{name};
 
         # prepare subtotal
         $nextid = ( $k <= $l ) ? $form->{AG}->[$k]->{ctid} : 0;
@@ -1994,6 +1996,7 @@ sub print {
     }
 
     my @batch_data = ();
+    my $selected;
     
     for $i ( 1 .. $form->{rowcount} ) {
 

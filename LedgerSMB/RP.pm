@@ -1637,49 +1637,50 @@ sub aging {
     my $union = "";
 
         $query .= qq|
-			SELECT c.entity_id AS ctid, 
-			       c.meta_number as $form->{ct}number, '' as name,
-			       '' as address1, '' as address2, '' as city,
-			       '' as state, 
-			       '' as zipcode, 
-			       '' as country, '' as contact, '' as email,
-		               '' as $form->{ct}phone, 
-			       '' as $form->{ct}fax,
-			       '' as $form->{ct}taxnumber,
-		               a.invnumber, a.transdate, a.till, a.ordnumber, 
-			       a.ponumber, a.notes, c.language_code, 
-			       CASE WHEN 
-			                 EXTRACT(days FROM age(a.transdate)/30) 
-			                 = 0
-			                 THEN (a.amount - a.paid) ELSE 0 END
-			            as c0, 
-			       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
-			                 = 1
-			                 THEN (a.amount - a.paid) ELSE 0 END
-			            as c30, 
-			       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
-			                 = 2
-			                 THEN (a.amount - a.paid) ELSE 0 END
-			            as c60, 
-			       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
-			                 > 2
-			                 THEN (a.amount - a.paid) ELSE 0 END
-			            as c90, 
-			       a.duedate, a.invoice, a.id, a.curr,
-			       (SELECT $buysell FROM exchangerate e
-			         WHERE a.curr = e.curr
-			              AND e.transdate = a.transdate) 
-			       AS exchangerate
-			  FROM $form->{arap} a
-			  JOIN entity_credit_account c USING (entity_id)
-			  WHERE $where|;
+		SELECT c.entity_id AS ctid, 
+		       c.meta_number as $form->{ct}number, e.legal_name as name,
+		       '' as address1, '' as address2, '' as city,
+		       '' as state, 
+		       '' as zipcode, 
+		       '' as country, '' as contact, '' as email,
+	               '' as $form->{ct}phone, 
+		       '' as $form->{ct}fax,
+		       '' as $form->{ct}taxnumber,
+	               a.invnumber, a.transdate, a.till, a.ordnumber, 
+		       a.ponumber, a.notes, c.language_code, 
+		       CASE WHEN 
+		                 EXTRACT(days FROM age(a.transdate)/30) 
+		                 = 0
+		                 THEN (a.amount - a.paid) ELSE 0 END
+		            as c0, 
+		       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
+		                 = 1
+		                 THEN (a.amount - a.paid) ELSE 0 END
+		            as c30, 
+		       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
+		                 = 2
+		                 THEN (a.amount - a.paid) ELSE 0 END
+		            as c60, 
+		       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
+		                 > 2
+		                 THEN (a.amount - a.paid) ELSE 0 END
+		            as c90, 
+		       a.duedate, a.invoice, a.id, a.curr,
+		       (SELECT $buysell FROM exchangerate e
+		         WHERE a.curr = e.curr
+		              AND e.transdate = a.transdate) 
+		       AS exchangerate
+		  FROM $form->{arap} a
+		  JOIN entity_credit_account c USING (entity_id)
+		  JOIN company e USING (entity_id)
+		  WHERE $where|;
 
     $query .= qq| ORDER BY ctid, curr, $transdate, invnumber|;
     $sth = $dbh->prepare($query) || $form->dberror($query);
 
     $sth->execute();
 
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 		    $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
                     $ref->{module} =
                       ( $ref->{invoice} )
@@ -1694,18 +1695,17 @@ sub aging {
     $sth->finish;
 
     # get language
-    my $query = qq|SELECT * FROM language ORDER BY 2|;
+    my $query = qq|SELECT code, description FROM language ORDER BY 2|;
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         push @{ $form->{all_language} }, $ref;
     }
     $sth->finish;
 
     $dbh->commit;
-
 }
 
 sub get_customer {

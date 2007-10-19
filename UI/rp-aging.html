@@ -15,19 +15,19 @@
 <?lsmb PROCESS elements.html ?> 
 
 <body>
-
+<form method="post" action="<?lsmb form.script ?>">
 <table width="100%">
   <tr>
     <th class="listtop" colspan="<?lsmb columns.size ?>"><?lsmb form.title ?></th>
   </tr>
   <tr>
   <?lsmb IF options.defined ?>
-    <td><?lsmb FOREACH option IN options; option ?><br /><?lsmb END ?></td>
+    <td colspan="<?lsmb columns.size ?>"><?lsmb FOREACH option IN options; option ?><br /><?lsmb END ?></td>
   <?lsmb ELSE ?>
     <td colspan="<?lsmb columns.size ?>"></td></tr>
   <?lsmb END ?>
   </tr>
-  <?lsmb FOREACH currency IN rows ?>
+  <?lsmb FOREACH currency IN currencies ?>
   <tr><td colspan="<?lsmb columns.size ?>"><?lsmb currency.curr ?></td></tr>
   <tr class="listheading">
 <?lsmb FOREACH column IN columns ?>
@@ -52,8 +52,9 @@
     <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
     <?lsmb ELSIF row.$column.delimiter;
 	FOREACH l IN row.$column.text.split(row.$column.delimiter); l ?><br /><?lsmb END;
-    ELSIF row.$column.options; PROCESS option element_data=row.$column;
-    ELSIF column == 'statement'; PROCESS input element_data=row.$column;
+    ELSIF row.$column.options; PROCESS select element_data=row.$column;
+    ELSIF column == 'statement' AND row.$column.type.defined;
+        PROCESS input element_data=row.$column;
     ELSE; row.$column; END ?>
   </<?lsmb s ?>>
   <?lsmb END ?>
@@ -72,7 +73,6 @@
 
 <br />
 
-<form method="post" action="<?lsmb form.script ?>">
 <?lsmb IF form.arap == 'ar';
     PROCESS select element_data=form.print.template;
     PROCESS select element_data=form.print.format;
