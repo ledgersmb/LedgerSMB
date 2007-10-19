@@ -125,10 +125,14 @@ sub attach {
 	carp "Message not prepared" unless ref $self->{_message};
 
 	# strip path from output name
-	my $file = $args{filename};
-	my $strip = quotemeta $args{strip};
-	$file =~ s/(.*\/|$strip)//g;
+	my $file;
+	if ($args{filename}) {
+		my $strip = quotemeta $args{strip};
+		$file = $args{filename};
+		$file =~ s/(.*\/|$strip)//g;
+        }
 
+	# handle both string and file types of input
 	my @data;
 	if ($args{data}) {
 		@data = ('Data', $args{data});
