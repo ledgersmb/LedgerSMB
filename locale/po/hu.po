@@ -1,11 +1,12 @@
-# #-#-#-#-#  hu.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #-#-#-#-#  hu.po (LedgerSMB 1.2.9)  #-#-#-#-#
 # #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2003
 #
 # Hungarian texts:
 #
-#  Author: Kabai József <kabai@investor.hu>
+#  Author: Kabai József <kabai@investor.hu>  LedgerSMB <=1.1.1
+#  Author: Pongrácz István <pongracz.istvan@osbusiness.hu> LedgerSMB 1.2.8+
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +24,7 @@
 # ######################################################################
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB 1.2.9\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,13 +63,13 @@ msgid "AR Transactions"
 msgstr "Vevő tranzakciók"
 
 msgid "AR/AP"
-msgstr "VEVŐK/SZÁLLÍTÓK"
+msgstr "Vevők/Szállítók"
 
 msgid "About"
-msgstr " "
+msgstr "Névjegy"
 
 msgid "Above"
-msgstr ""
+msgstr "Fent"
 
 msgid "Access Control"
 msgstr "Hozzáférési jogok"
@@ -122,10 +123,10 @@ msgid "Add"
 msgstr "Új"
 
 msgid "Add AP Transaction"
-msgstr "Új Szállító Tranzakció"
+msgstr "Új szállítói tranzakció"
 
 msgid "Add AR Transaction"
-msgstr "Új Vevő Tranzakció"
+msgstr "Új vevő tranzakció"
 
 msgid "Add Account"
 msgstr "Új számla"
@@ -134,7 +135,7 @@ msgid "Add Assembly"
 msgstr "Új saját termék"
 
 msgid "Add Business"
-msgstr "ÚjÜzletág"
+msgstr "Új üzletág"
 
 msgid "Add Cash Transfer Transaction"
 msgstr "Új számlák közötti pénzmozgás"
@@ -143,16 +144,16 @@ msgid "Add Customer"
 msgstr "Új vevő"
 
 msgid "Add Deduction"
-msgstr ""
+msgstr "Levonás hozzáadása"
 
 msgid "Add Department"
-msgstr "ÚjOsztály"
+msgstr "Új osztály"
 
 msgid "Add Employee"
-msgstr "ÚjMunkatárs"
+msgstr "Új munkatárs"
 
 msgid "Add Exchange Rate"
-msgstr "Új Váltószám"
+msgstr "Új árfolyam"
 
 msgid "Add GIFI"
 msgstr "Új gyűjtőkód"
@@ -164,22 +165,22 @@ msgid "Add Group"
 msgstr "Új csoport"
 
 msgid "Add Job"
-msgstr "Új Munkaművelet"
+msgstr "Új munkaművelet"
 
 msgid "Add Labor/Overhead"
-msgstr "ÚjMunkaművelet"
+msgstr "Új Labor/Túlmunka"
 
 msgid "Add Language"
-msgstr "ÚjNyelv"
+msgstr "Új nyelv"
 
 msgid "Add POS Invoice"
-msgstr "Új Nyugta"
+msgstr "Új nyugta"
 
 msgid "Add Part"
 msgstr "Új cikk"
 
 msgid "Add Pricegroup"
-msgstr "ÚjÁrCsoport"
+msgstr "Új árcsoport"
 
 msgid "Add Project"
 msgstr "Új munkaszám"
@@ -188,13 +189,13 @@ msgid "Add Purchase Order"
 msgstr "Új beszerzési rendelés"
 
 msgid "Add Quotation"
-msgstr "Új Ajánlat"
+msgstr "Új ajánlat"
 
 msgid "Add Request for Quotation"
-msgstr "Új Ajánlat Kérés"
+msgstr "Új ajánlatkérés"
 
 msgid "Add SIC"
-msgstr "ÚjOsztályozóKód"
+msgstr "Új osztályozókód"
 
 msgid "Add Sales Invoice"
 msgstr "Új vevőszámla"
@@ -206,13 +207,13 @@ msgid "Add Service"
 msgstr "Új szolgáltatás"
 
 msgid "Add Stores Card"
-msgstr "Új Tároló Kártya"
+msgstr "Új tároló kártya"
 
 msgid "Add Time Card"
-msgstr "ÚjIdőKártya"
+msgstr "Új időkártya"
 
 msgid "Add Timecard"
-msgstr ""
+msgstr "Új időkártya"
 
 msgid "Add Transaction"
 msgstr "Új tranzakció"
@@ -227,7 +228,7 @@ msgid "Add Vendor Invoice"
 msgstr "Új beszerzési számla"
 
 msgid "Add Warehouse"
-msgstr "ÚjRaktár"
+msgstr "Új raktár"
 
 msgid "Address"
 msgstr "Cím"
@@ -239,7 +240,7 @@ msgid "Administrator"
 msgstr "Rendszergazda"
 
 msgid "After Deduction"
-msgstr ""
+msgstr "Levonás után"
 
 msgid "Aged"
 msgstr "Korosítás"
@@ -251,19 +252,19 @@ msgid "All"
 msgstr "Összes"
 
 msgid "All Accounts"
-msgstr "Minden Számla"
+msgstr "Minden számla"
 
 msgid "All Datasets up to date!"
 msgstr "Összes ügyféladatbázis frissítve!"
 
 msgid "All Items"
-msgstr "MindenTétel"
+msgstr "Minden tétel"
 
 msgid "Allocated"
 msgstr "Lefoglalva"
 
 msgid "Allowances"
-msgstr ""
+msgstr "Juttatások"
 
 msgid "Amount"
 msgstr "Összeg"
@@ -281,25 +282,25 @@ msgid "April"
 msgstr "Április"
 
 msgid "Are you sure you want to delete Invoice Number"
-msgstr "Biztos, hogy törölni akarja? Számlaszám:"
+msgstr "Biztos benne, hogy törölni akarja? Számlaszám:"
 
 msgid "Are you sure you want to delete Order Number"
-msgstr "Biztos, hogy törölni akarja? Megrendelésszám:"
+msgstr "Biztos benne, hogy törölni akarja? Megrendelésszám:"
 
 msgid "Are you sure you want to delete Quotation Number"
-msgstr "Biztos abban, hogy törölni akarja az Ajánlat számot"
+msgstr "Biztos benne, hogy törölni akarja? Ajánlatszám:"
 
 msgid "Are you sure you want to delete Timecard for"
-msgstr ""
+msgstr "Biztos benne, hogy törölni akarja az időkártyát"
 
 msgid "Are you sure you want to delete Transaction"
-msgstr "Biztos, hogy törölni akarja? Tranzakció:"
+msgstr "Biztos benne, hogy törölni akarja? Tranzakció:"
 
 msgid "Are you sure you want to delete time card for"
-msgstr "Biztosan ki akarja törölni az idő kártyát"
+msgstr "Biztos benne, ki akarja törölni az időkártyát"
 
 msgid "Are you sure you want to remove the marked entries from the queue?"
-msgstr "Biztos, hogy ki akarja törölni a megjelölt sorokat?"
+msgstr "Biztos benne, hogy ki akarja törölni a megjelölt sorokat?"
 
 msgid "As of"
 msgstr "As of"
@@ -308,13 +309,13 @@ msgid "Assemblies"
 msgstr "Saját termékek"
 
 msgid "Assemblies restocked!"
-msgstr "Saját termékek készletre véve"
+msgstr "Saját termékek készletre véve."
 
 msgid "Assembly"
-msgstr "Szerelvény"
+msgstr "Alkatrész"
 
 msgid "Assembly stocked!"
-msgstr "Szerelvényt raktárra vettem!"
+msgstr "Alktatrész készletre véve."
 
 msgid "Asset"
 msgstr "Eszköz"
@@ -344,10 +345,10 @@ msgid "Average Cost"
 msgstr "Átlag költség"
 
 msgid "Avg Cost"
-msgstr "Ált.költség"
+msgstr "Átlag költség"
 
 msgid "BIC"
-msgstr "Bank Azonosító Kód"
+msgstr "Bank azonosító kód"
 
 msgid "BOM"
 msgstr "Anyagjegyzék"
@@ -365,22 +366,22 @@ msgid "Balance Sheet"
 msgstr "Mérleg"
 
 msgid "Based on"
-msgstr ""
+msgstr "Alapján"
 
 msgid "Batch Printing"
-msgstr "KÉSŐBB_NYOMTAT"
+msgstr "Kötegelt nyomtatás"
 
 msgid "Bcc"
 msgstr "Titkos másolat"
 
 msgid "Before Deduction"
-msgstr ""
+msgstr "Levonás előtt"
 
 msgid "Beginning Balance"
 msgstr "Nyitóegyenleg"
 
 msgid "Below"
-msgstr ""
+msgstr "Alatt"
 
 msgid "Billing Address"
 msgstr "Számlázási cím"
@@ -392,10 +393,10 @@ msgid "Bin"
 msgstr "Raktárhely"
 
 msgid "Bin List"
-msgstr "TárolóHelyek"
+msgstr "Tároló helyek"
 
 msgid "Bin Lists"
-msgstr "PolcLista"
+msgstr "Polclista"
 
 msgid "Books are open"
 msgstr "Az ügyféladatbázisban bármit lehet törölni, módosítani"
@@ -422,46 +423,46 @@ msgid "COGS"
 msgstr "ELÁBÉ"
 
 msgid "COGS account does not exist!"
-msgstr "Nincs Költségszámla!"
+msgstr "Nincs ELÁBÉ számla!"
 
 msgid "Cannot add stores card for a completed job!"
-msgstr "Befejezett munkához nem adhatok tároló kártyát!"
+msgstr "Befejezett munkához nem adható tároló kártya!"
 
 msgid "Cannot add time card for a completed job!"
-msgstr "Befejezett munkához nem adhatok idő kártyát!"
+msgstr "Befejezett munkához nem adható időkártya!"
 
 msgid "Cannot add timecard for a completed job!"
-msgstr ""
+msgstr "Befejezett munkához nem adható időkártya!"
 
 msgid "Cannot change stores card for a completed job!"
 msgstr "Befejezett munkánál nem változtatható a tároló kártya!"
 
 msgid "Cannot change time card for a completed job!"
-msgstr "Befejezett munkánál nem változtatható az idő kártya!"
+msgstr "Befejezett munkánál nem változtatható az időkártya!"
 
 msgid "Cannot change timecard for a completed job!"
-msgstr ""
+msgstr "Befejezett munkánál nem változtatható az időkártya!"
 
 msgid "Cannot create Assembly"
-msgstr "Nem tudok Szerelvényt létrehozni"
+msgstr "Nem hozható létre alkatrész"
 
 msgid "Cannot create Labor"
-msgstr "Nem tudok Műveletet léterhozni"
+msgstr "Nem hozható létre Labor"
 
 msgid "Cannot create Lock!"
-msgstr "Cannot create Lock!"
+msgstr "Nem hozható létre Lock!"
 
 msgid "Cannot create Part"
-msgstr "Nem tudok Cikket létrehozni!"
+msgstr "Nem hozható létre cikk!"
 
 msgid "Cannot create Service"
-msgstr "Nem tudok Szolgáltatást létrehozni!"
+msgstr "Nem hozható létre szolgáltatás!"
 
 msgid "Cannot delete Timecard!"
-msgstr ""
+msgstr "Az időkártyát nem lehet törölni!"
 
 msgid "Cannot delete account!"
-msgstr "A számlát nem lehet törölni"
+msgstr "A számlát nem lehet törölni!"
 
 msgid "Cannot delete customer!"
 msgstr "A vevőt nem lehet törölni!"
@@ -479,22 +480,22 @@ msgid "Cannot delete order!"
 msgstr "A rendelést nem lehet törölni!"
 
 msgid "Cannot delete quotation!"
-msgstr "Nem lehet törölni az ajánlatot!"
+msgstr "Az ajánlatot nem lehet törölni!"
 
 msgid "Cannot delete time card!"
-msgstr "Nem tudom törölni az idő kártyát!"
+msgstr "Az időkártyát nem lehet törölni!"
 
 msgid "Cannot delete transaction!"
 msgstr "A tranzakciót nem lehet törölni!"
 
 msgid "Cannot delete vendor!"
-msgstr "Szállítót nem lehet törölni!"
+msgstr "A szállítót nem lehet törölni!"
 
 msgid "Cannot post Payment!"
 msgstr "A kifizetést nem tudom rögzíteni!"
 
 msgid "Cannot post Receipt!"
-msgstr "A befizetész nem tudom rögzíteni!"
+msgstr "A befizetést nem tudom rögzíteni!"
 
 msgid "Cannot post invoice for a closed period!"
 msgstr "A lezárt időszakban nem lehet számlát kiállítani!"
@@ -509,25 +510,25 @@ msgid "Cannot post transaction for a closed period!"
 msgstr "A lezárt időszakban nem lehet tranzakciót rögzíteni!!"
 
 msgid "Cannot post transaction with a debit and credit entry for the same account!"
-msgstr "Ugyanazon számlaszámon nem lehet credit és debit!"
+msgstr "Ugyanazon számlaszámon nem lehet tartozik és követel tranzakciót rögzíteni!"
 
 msgid "Cannot post transaction!"
 msgstr "A tranzakciót nem lehet rögzíteni!"
 
 msgid "Cannot remove files!"
-msgstr "Nem lehet a fájlt kitörölni!"
+msgstr "Nem lehet a fájlt törölni!"
 
 msgid "Cannot save account!"
 msgstr "A számlát nem lehet elmenteni!"
 
 msgid "Cannot save defaults!"
-msgstr "Nem tudom elmenteni a beállítást!"
+msgstr "Az alapbeállításokat nem lehet elmenteni!"
 
 msgid "Cannot save order!"
 msgstr "A rendelést nem lehet elmenteni!"
 
 msgid "Cannot save preferences!"
-msgstr "A beállításokat nem lehet elmenteni"
+msgstr "A beállításokat nem lehet elmenteni!"
 
 msgid "Cannot save quotation!"
 msgstr "Nem lehet elmenteni az ajánlatot!"
@@ -536,34 +537,34 @@ msgid "Cannot save stores card for a closed period!"
 msgstr "Lezárt periódushoz nem adható tároló kártya!"
 
 msgid "Cannot save stores card!"
-msgstr "Nem tudom elmenteni a tároló kártyát!"
+msgstr "Nem lehet elmenteni a tároló kártyát!"
 
 msgid "Cannot save taxes!"
-msgstr "Nem tudom elmenteni az adókat!"
+msgstr "Nem lehet elmenteni az adókat!"
 
 msgid "Cannot save time card for a closed period!"
-msgstr "Lezárt periódushoz nem adható idő kártya!"
+msgstr "Lezárt periódushoz nem adható időkártya!"
 
 msgid "Cannot save time card!"
-msgstr "Nem tudom elmenteni az idő kártyát!"
+msgstr "Nem lehet elmenteni az időkártyát!"
 
 msgid "Cannot save timecard for a closed period!"
-msgstr ""
+msgstr "Lezárt periódushoz nem adható időkártya!"
 
 msgid "Cannot save timecard!"
-msgstr ""
+msgstr "Nem lehet elmenteni az időkártyát!"
 
 msgid "Cannot set account for more than one of AR, AP or IC"
 msgstr "Gyűjtőszámla nem lehet egyszerre Vevők, Szállítók vagy Készlet"
 
 msgid "Cannot set multiple options for"
-msgstr "Nem tudom beállítani a töbszörös opciót"
+msgstr "Nem lehet beállítani a töbszörös opciót"
 
 msgid "Cannot set multiple options for Item"
-msgstr ""
+msgstr "Nem lehet beállítani a töbszörös opciót a tételre"
 
 msgid "Cannot stock Assembly!"
-msgstr "Nem tudom a szerelvényt raktárra venni!"
+msgstr "Nem lehet az alkatrészt raktárra venni!"
 
 msgid "Cannot stock assemblies!"
 msgstr "A saját terméket nem lehet készletre venni!"
@@ -584,13 +585,13 @@ msgid "Change Password"
 msgstr "Jelszó megváltoztatása"
 
 msgid "Charge"
-msgstr ""
+msgstr "Díj"
 
 msgid "Chargeable"
-msgstr "Fizetős"
+msgstr "Térítéses"
 
 msgid "Chargeout Rate"
-msgstr "Chargeout Rate"
+msgstr ""
 
 msgid "Chart of Accounts"
 msgstr "Számlatükör"
@@ -602,7 +603,7 @@ msgid "Check Inventory"
 msgstr "Készlet ellenőrzés"
 
 msgid "Checks"
-msgstr ""
+msgstr "Csekkek"
 
 msgid "City"
 msgstr "Ország"
@@ -632,7 +633,7 @@ msgid "Company"
 msgstr "Társaság"
 
 msgid "Company Name"
-msgstr "Vállalat név"
+msgstr "Vállalat neve"
 
 msgid "Compare to"
 msgstr "Összehasonlítva:"
@@ -641,7 +642,7 @@ msgid "Completed"
 msgstr "Befejezve"
 
 msgid "Components"
-msgstr "BeépülőKomponensek"
+msgstr "Beépülő komponensek"
 
 msgid "Confirm"
 msgstr "Megerősít"
@@ -656,13 +657,13 @@ msgid "Consolidate"
 msgstr "Konszolidál"
 
 msgid "Consolidate Orders"
-msgstr "Rendelések_Összevonása"
+msgstr "Rendelések összevonása"
 
 msgid "Consolidate Purchase Orders"
-msgstr "Szállító_Rendelések_Összevonása"
+msgstr "Szállító rendelések összevonása"
 
 msgid "Consolidate Sales Orders"
-msgstr "Vevő_Rendelések_Összevonása"
+msgstr "Vevő rendelések összevonása"
 
 msgid "Contact"
 msgstr "Kapcsolat"
@@ -686,10 +687,10 @@ msgid "Cost Center"
 msgstr "Költséghely"
 
 msgid "Could not save pricelist!"
-msgstr "Nem tudom elmenteni az árlistát!"
+msgstr "Nem lehet elmenteni az árlistát!"
 
 msgid "Could not save!"
-msgstr "Nem tudom elmenteni!"
+msgstr "Nem lehet elmenteni!"
 
 msgid "Could not transfer Inventory!"
 msgstr "Nem tudom a készletet áthelyezni!"
@@ -704,10 +705,10 @@ msgid "Create Dataset"
 msgstr "Új cégadatbázis"
 
 msgid "Credit"
-msgstr "Követel"
+msgstr "Követelés"
 
 msgid "Credit Invoice"
-msgstr "Credit Számla"
+msgstr "Követelés számla"
 
 msgid "Credit Limit"
 msgstr "Hitelkeret"
@@ -728,10 +729,10 @@ msgid "Customer"
 msgstr "Vevő"
 
 msgid "Customer History"
-msgstr "Vevő történelem"
+msgstr "Vevő történet"
 
 msgid "Customer Number"
-msgstr "Vevő Száma"
+msgstr "Vevő azonosító"
 
 msgid "Customer deleted!"
 msgstr "Vevő törölve!"
@@ -746,7 +747,7 @@ msgid "Customer saved!"
 msgstr "Vevő elmentve!"
 
 msgid "Customers"
-msgstr "Vevőadatok"
+msgstr "Vevők"
 
 msgid "DBA"
 msgstr "DBA"
@@ -818,7 +819,7 @@ msgid "Debit"
 msgstr "Tartozik"
 
 msgid "Debit Invoice"
-msgstr "Debit Számla"
+msgstr "Tartozik számla"
 
 msgid "Dec"
 msgstr "Dec."
@@ -833,19 +834,19 @@ msgid "Decrease"
 msgstr "Csökkenés"
 
 msgid "Deduct after"
-msgstr ""
+msgstr "Levonás ezután"
 
 msgid "Deduction deleted!"
-msgstr ""
+msgstr "Levonás törölve"
 
 msgid "Deduction saved!"
-msgstr ""
+msgstr "Levonás elmentve"
 
 msgid "Deductions"
-msgstr ""
+msgstr "Levonások"
 
 msgid "Default Template"
-msgstr "Alap Minta"
+msgstr "Alapértelmezett sablon"
 
 msgid "Defaults"
 msgstr "Alapértelmezések"
@@ -863,10 +864,10 @@ msgid "Delete Dataset"
 msgstr "Cégadatbázis törlése"
 
 msgid "Delete Schedule"
-msgstr "Ütemezés Törlése"
+msgstr "Ütemezés törlése"
 
 msgid "Deleting a language will also delete the templates for the language"
-msgstr "A nyelv törlése törli a nyomtató mintákat is"
+msgstr "A nyelv törlése törli a nyelvhez tartozó sablonokat is"
 
 msgid "Delivery Date"
 msgstr "Szállítás dátuma"
@@ -890,7 +891,7 @@ msgid "Description"
 msgstr "Szöveges leírás"
 
 msgid "Description Translations"
-msgstr "Megnevezés Fordítások"
+msgstr "Megnevezések fordítása"
 
 msgid "Description missing!"
 msgstr "Megnevezés hiányzik!"
@@ -941,40 +942,40 @@ msgid "E-mailed"
 msgstr "E-mail elküldve"
 
 msgid "Edit"
-msgstr "Módosítás"
+msgstr "Szerkesztés"
 
 msgid "Edit AP Transaction"
-msgstr "Módosít Szállító Tranzakció"
+msgstr "Szállító tranzakció szerkesztés"
 
 msgid "Edit AR Transaction"
-msgstr "Módosít Szállító Tranzakció"
+msgstr "Vevő tranzakció szerkesztése"
 
 msgid "Edit Account"
-msgstr "Számlaszám módosítása"
+msgstr "Számla szerkesztése"
 
 msgid "Edit Assembly"
-msgstr "Saját termék módosítása"
+msgstr "Saját termék szerkesztése"
 
 msgid "Edit Business"
-msgstr "Üzletág módosítás"
+msgstr "Üzletág szerkesztése"
 
 msgid "Edit Cash Transfer Transaction"
-msgstr "Számlák közötti pénzmozgás módosítása"
+msgstr "Számlák közötti pénzmozgás szerkesztése"
 
 msgid "Edit Customer"
-msgstr "Vevő módosítása"
+msgstr "Vevő szerkesztése"
 
 msgid "Edit Deduction"
-msgstr ""
+msgstr "Levonások szerkesztése"
 
 msgid "Edit Department"
-msgstr "Osztály módosítás"
+msgstr "Osztály szerkesztése"
 
 msgid "Edit Description Translations"
-msgstr "Megnevezés Fordítások Módosítás"
+msgstr "Megnevezés fordítások szerkesztése"
 
 msgid "Edit Employee"
-msgstr "Munkatárs Módosítás"
+msgstr "Munkatárs módosítás"
 
 msgid "Edit GIFI"
 msgstr "Gyűjtőkód módosítása"
@@ -986,7 +987,7 @@ msgid "Edit Group"
 msgstr "Csoport módosítása"
 
 msgid "Edit Job"
-msgstr "Munkaművelet Módosítás"
+msgstr "Munkaművelet módosítás"
 
 msgid "Edit Labor/Overhead"
 msgstr "Művelet módosítás"
@@ -1004,7 +1005,7 @@ msgid "Edit Preferences for"
 msgstr "Felhasználói paraméterek módosítása:"
 
 msgid "Edit Pricegroup"
-msgstr "Árcsoport Módosítás"
+msgstr "Árcsoport módosítás"
 
 msgid "Edit Project"
 msgstr "Projekt módosítása"
@@ -1013,10 +1014,10 @@ msgid "Edit Purchase Order"
 msgstr "Beszerzési rendelés módosítása"
 
 msgid "Edit Quotation"
-msgstr "Ajánlat Módosítás"
+msgstr "Ajánlatmódosítás"
 
 msgid "Edit Request for Quotation"
-msgstr "Ajánla Kérés Módosítás"
+msgstr "Ajánlatkérés módosítás"
 
 msgid "Edit SIC"
 msgstr "SIC módosítás"
@@ -1034,10 +1035,10 @@ msgid "Edit Template"
 msgstr "Sablon módosítása"
 
 msgid "Edit Time Card"
-msgstr "Idő Kártya Módosítás"
+msgstr "Időkártya szerkesztése"
 
 msgid "Edit Timecard"
-msgstr ""
+msgstr "Időkártya szerkesztése"
 
 msgid "Edit User"
 msgstr "Felhasználó módosítása"
@@ -1067,28 +1068,28 @@ msgid "Employee"
 msgstr "Alkalmazott"
 
 msgid "Employee Name"
-msgstr "Munkatárs Név"
+msgstr "Alkalmazott neve"
 
 msgid "Employee Number"
-msgstr "Alkalmazott Száma"
+msgstr "Alkalmazott száma"
 
 msgid "Employee deleted!"
-msgstr "Munkatárs törölve "
+msgstr "Alkalmazott törölve "
 
 msgid "Employee pays"
-msgstr ""
+msgstr "Alkalmazott fizet"
 
 msgid "Employee saved!"
-msgstr "Munkatárs elmentve!"
+msgstr "Alkalmazott elmentve!"
 
 msgid "Employees"
-msgstr "Munkatársak"
+msgstr "Alkalmazottak"
 
 msgid "Employer"
 msgstr "Munkaadó"
 
 msgid "Employer pays"
-msgstr ""
+msgstr "Munkaadó fizet"
 
 msgid "Enddate"
 msgstr "Végdátum"
@@ -1109,7 +1110,7 @@ msgid "Every"
 msgstr "Minden"
 
 msgid "Excempt age <"
-msgstr ""
+msgstr "Mentességi kor"
 
 msgid "Exch"
 msgstr "Árf"
@@ -1124,7 +1125,7 @@ msgid "Exchange rate missing!"
 msgstr "Átváltási árfolyam hiányzik!"
 
 msgid "Exempt age <"
-msgstr ""
+msgstr "Mentességi kor"
 
 msgid "Existing Datasets"
 msgstr "Létező cégadatbázisok"
@@ -1208,7 +1209,7 @@ msgid "GL"
 msgstr "Vegyes Könyvelés"
 
 msgid "GL Reference Number"
-msgstr "VegyKönyv RefSzám"
+msgstr "Vegyes könyvelés referenciaszám"
 
 msgid "GL Transaction"
 msgstr "Főkönyvi tranzakció!"
@@ -1220,25 +1221,25 @@ msgid "Generate"
 msgstr "Generál"
 
 msgid "Generate Orders"
-msgstr "Rendelés Generálás"
+msgstr "Rendelések generálása"
 
 msgid "Generate Purchase Orders"
-msgstr "Szállító Rendelés Generálás"
+msgstr "Beszerzési rendelés generálása"
 
 msgid "Generate Purchase Orders from Sales Order"
-msgstr "Értékesítésből Beszerzési Rendelés Generálás"
+msgstr "Értékesítési rendelésből beszerzési rendelés generálása"
 
 msgid "Generate Sales Order"
-msgstr "Vevő Rendelés Generálás"
+msgstr "Értékesítési rendelés generálása"
 
 msgid "Generate Sales Order from Purchase Orders"
-msgstr "Beszerzési Rendelésből Értékesitési Rendelés Generálás"
+msgstr "Beszerzési rendelésből értékesitési rendelés generálása"
 
 msgid "Generate Sales Orders"
-msgstr "Értékesítés Rendelés Generálás"
+msgstr "Értékesítési rendelések generálása"
 
 msgid "Goods & Services"
-msgstr "Áruk & Szolgáltatások"
+msgstr "Áruk és szolgáltatások"
 
 msgid "Group"
 msgstr "Csoport"
@@ -1247,7 +1248,7 @@ msgid "Group Items"
 msgstr "Tételek rendezése csoport alapján"
 
 msgid "Group Translations"
-msgstr "Csoport Fordítások"
+msgstr "Csoportok fordításai"
 
 msgid "Group by"
 msgstr "Csoportosítva"
@@ -1265,7 +1266,7 @@ msgid "Groups"
 msgstr "Csoportok"
 
 msgid "HR"
-msgstr "Személyzti"
+msgstr "Személyügy"
 
 msgid "HTML Templates"
 msgstr "HTML sablonok"
@@ -1289,7 +1290,7 @@ msgid "Hundred"
 msgstr "száz"
 
 msgid "IBAN"
-msgstr "Bank Számlaszám"
+msgstr "Bankszámlaszám"
 
 msgid "ID"
 msgstr "Azonosító"
@@ -1322,7 +1323,7 @@ msgid "Income Statement"
 msgstr "Eredménykimutatás"
 
 msgid "Income account does not exist!"
-msgstr "Nincs Bevétel számla!"
+msgstr "Nincs bevétel számla!"
 
 msgid "Incorrect Dataset version!"
 msgstr "Érvénytelen adatbázisverzió!"
@@ -1334,13 +1335,13 @@ msgid "Individual Items"
 msgstr "Összetevők"
 
 msgid "Internal Notes"
-msgstr "Belső Megjegyzés"
+msgstr "Belső megjegyzés"
 
 msgid "Inventory"
 msgstr "Készlet"
 
 msgid "Inventory account does not exist!"
-msgstr "Nincs Készlet számla!"
+msgstr "Nincs készlet számla!"
 
 msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr "Mielőtt ezt a saját terméket elévültnek nyilvánítja,a mennyiségnek nullának kell lennie!"
@@ -1403,25 +1404,25 @@ msgid "Job"
 msgstr "Művelet"
 
 msgid "Job Description"
-msgstr "Job Leírás"
+msgstr "Művelet leírás"
 
 msgid "Job Name"
-msgstr "Job Név"
+msgstr "Művelet név"
 
 msgid "Job Number"
-msgstr "Job Szám"
+msgstr "Műveletszám"
 
 msgid "Job Number missing!"
-msgstr "Hiányzó Job Szám"
+msgstr "Hiányzó műveletszám!"
 
 msgid "Job deleted!"
 msgstr "Művelet törölve!"
 
 msgid "Job saved!"
-msgstr "Művelet rögzítve!"
+msgstr "Művelet elmentve!"
 
 msgid "Job/Project Number"
-msgstr "Job/Projekt Szám"
+msgstr "Művelet/Projektszám"
 
 msgid "Jobs"
 msgstr "Műveletek"
@@ -1442,10 +1443,10 @@ msgid "LaTeX Templates"
 msgstr "LaTeX sablonok"
 
 msgid "Labor Code"
-msgstr "Munka Kód"
+msgstr "Munkaművelet kód"
 
 msgid "Labor Code missing!"
-msgstr "Munka Kód hiányzik!"
+msgstr "Munkaművelet kód hiányzik!"
 
 msgid "Labor/Overhead"
 msgstr "Munkaművelet"
@@ -1460,22 +1461,22 @@ msgid "Language saved!"
 msgstr "Nyelv elmentve!"
 
 msgid "Languages"
-msgstr "Nyelv"
+msgstr "Nyelvek"
 
 msgid "Languages not defined!"
 msgstr "Nincs definiált nyelv!"
 
 msgid "Last Cost"
-msgstr "Utolsó Költség"
+msgstr "Utolsó ár"
 
 msgid "Last Numbers & Default Accounts"
-msgstr "Legutolsó számok & Alapszámlák"
+msgstr "Legutolsó számok és alapértelmezett számlák"
 
 msgid "Lead"
 msgstr "Átfutás"
 
 msgid "Leadtime"
-msgstr "Utánpótlási idő"
+msgstr "Átfutási idő"
 
 msgid "Leave host and port field empty unless you want to make a remote connection."
 msgstr "Hagyja üresen a Hely és a Port mezőket, hacsak nem akar távoli kapcsolatot létesíteni"
@@ -1502,55 +1503,55 @@ msgid "List Accounts"
 msgstr "Számlák listázása"
 
 msgid "List Businesses"
-msgstr "ÜzletágLista"
+msgstr "Üzletág lista"
 
 msgid "List Departments"
-msgstr "OsztályLista"
+msgstr "Osztályok lista"
 
 msgid "List GIFI"
 msgstr "Gyűjtőkódok listázása"
 
 msgid "List Languages"
-msgstr "NyelvLista"
+msgstr "Nyelvlista"
 
 msgid "List Price"
 msgstr "Listaár"
 
 msgid "List Projects"
-msgstr "ProjektLista"
+msgstr "Projektlista"
 
 msgid "List SIC"
-msgstr "OsztályozóKódLista"
+msgstr "Osztályozó kódok listája"
 
 msgid "List Transactions"
 msgstr "Tranzakciók listázása"
 
 msgid "List Warehouses"
-msgstr "RaktárLista"
+msgstr "Raktárak"
 
 msgid "Lock System"
-msgstr "Lock System"
+msgstr "Rendszer zárolása"
 
 msgid "Lockfile created!"
-msgstr "Lockfile created!"
+msgstr "Zárolás létrehozva!"
 
 msgid "Lockfile removed!"
-msgstr "Lockfile removed!"
+msgstr "Zárolás feloldva!"
 
 msgid "Login"
 msgstr "Belépés"
 
 msgid "Login name missing!"
-msgstr "Login name missing!"
+msgstr "Belépési azonosító hiányzik!"
 
 msgid "Logout"
 msgstr "Kilépés"
 
 msgid "Make"
-msgstr "Gyártmány"
+msgstr "Készít"
 
 msgid "Manager"
-msgstr "Manager"
+msgstr "Menedzser"
 
 msgid "Mar"
 msgstr "Márc."
@@ -1565,7 +1566,7 @@ msgid "Markup"
 msgstr "Árrés"
 
 msgid "Maximum"
-msgstr ""
+msgstr "Maximum"
 
 msgid "May"
 msgstr "Máj."
@@ -1577,7 +1578,7 @@ msgid "Memo"
 msgstr "Memo"
 
 msgid "Menu Width"
-msgstr "Menü Szélesség"
+msgstr "Menü szélesség"
 
 msgid "Message"
 msgstr "Üzenet"
@@ -1652,28 +1653,28 @@ msgid "No Dataset selected!"
 msgstr "Nincs kiválasztott cégadatbázis!"
 
 msgid "No Employees on file!"
-msgstr "Nincs Alkalmazott a fájlban!"
+msgstr "Nincs alkalmazott a fájlban!"
 
 msgid "No History!"
-msgstr "Nincs történelem!"
+msgstr "Nincs történet!"
 
 msgid "No Labor codes on file!"
-msgstr "Nincs Munka Kód a fájlban!"
+msgstr "Nincs munka kód a fájlban!"
 
 msgid "No Parts on file!"
-msgstr "Nincs Árucikk a fájlban!"
+msgstr "Nincs árucikk a fájlban!"
 
 msgid "No Services on file!"
-msgstr "Nincs Szolgáltatás a fájlban!"
+msgstr "Nincs szolgáltatás a fájlban!"
 
 msgid "No email address for"
 msgstr "Nincs e-mail címe:"
 
 msgid "No open Jobs!"
-msgstr "Nincs nyitott Job!"
+msgstr "Nincs nyitott munka!"
 
 msgid "No open Projects!"
-msgstr "Nincs nyitott Projekt"
+msgstr "Nincs nyitott projekt"
 
 msgid "No."
 msgstr "Sz."
@@ -1685,10 +1686,10 @@ msgid "Non-taxable"
 msgstr "Adómentes"
 
 msgid "Non-taxable Purchases"
-msgstr "Adómentes Beszerzések"
+msgstr "Adómentes beszerzések"
 
 msgid "Non-taxable Sales"
-msgstr "Adómentes Eladások"
+msgstr "Adómentes eladások"
 
 msgid "Non-tracking Items"
 msgstr "Nem raktározott tétel"
@@ -1700,7 +1701,7 @@ msgid "Nothing entered!"
 msgstr "Nincs adat!"
 
 msgid "Nothing open!"
-msgstr "Nincs nyilva"
+msgstr "Nincs nyitva"
 
 msgid "Nothing selected!"
 msgstr "Nincs semmi kiválasztva!"
@@ -1781,7 +1782,7 @@ msgid "Order deleted!"
 msgstr "Rendelés törölve!"
 
 msgid "Order generation failed!"
-msgstr "Sikertelen Rendelés Generálás!"
+msgstr "Sikertelen rendelés létrehozás!"
 
 msgid "Order saved!"
 msgstr "Rendelés elmentve!"
@@ -1808,10 +1809,10 @@ msgid "PDF"
 msgstr "PDF"
 
 msgid "PO"
-msgstr "Besz.Rend"
+msgstr "Beszerzési rendelés"
 
 msgid "PO Number"
-msgstr "BeRendSzám"
+msgstr "Beszerzési rendelésszám"
 
 msgid "POS"
 msgstr "Nyugta"
@@ -1829,7 +1830,7 @@ msgid "Packing List Number missing!"
 msgstr "Szállítólevél száma hiányzik!"
 
 msgid "Packing Lists"
-msgstr "CsomagolásLista"
+msgstr "Szállítólevelek"
 
 msgid "Paid"
 msgstr "Fizetve"
@@ -1841,13 +1842,13 @@ msgid "Part Number"
 msgstr "Cikkszám"
 
 msgid "Partnumber"
-msgstr ""
+msgstr "Cikkszám"
 
 msgid "Parts"
 msgstr "Cikkek"
 
 msgid "Parts Requirements"
-msgstr "Cikk Szükséglet"
+msgstr "Cikk szükséglet"
 
 msgid "Password"
 msgstr "Jelszó"
@@ -1868,19 +1869,19 @@ msgid "Payment"
 msgstr "Kifizetés"
 
 msgid "Payment date missing!"
-msgstr "Pénzmozgás dátuma hiányzik!"
+msgstr "Kifizetés dátuma hiányzik!"
 
 msgid "Payment posted!"
-msgstr "Pénzmozgás rögzítve"
+msgstr "Kifizetés rögzítve"
 
 msgid "Payments"
 msgstr "Kifizetések"
 
 msgid "Payments posted!"
-msgstr "Kifizetés rögzítve!"
+msgstr "Kifizetések rögzítve!"
 
 msgid "Payroll Deduction"
-msgstr ""
+msgstr "Fizetési levonás"
 
 msgid "Period"
 msgstr "Időszak"
@@ -1889,16 +1890,16 @@ msgid "Pg Database Administration"
 msgstr "Postgresql adatbázis felügyelet"
 
 msgid "PgPP Database Administration"
-msgstr "PgPP Database Administration"
+msgstr "PgPP Adatbázis adminisztráció"
 
 msgid "Phone"
 msgstr "Telefon"
 
 msgid "Pick List"
-msgstr "KiszedésLista"
+msgstr "Kiszedési lista"
 
 msgid "Pick Lists"
-msgstr "KiszedésiListák"
+msgstr "Kiszedési listák"
 
 msgid "Port"
 msgstr "Port száma"
@@ -1907,7 +1908,7 @@ msgid "Port missing!"
 msgstr "Port száma  hiányzik!"
 
 msgid "Pos"
-msgstr ""
+msgstr "Poz."
 
 msgid "Post"
 msgstr "Rögzítés"
@@ -1952,7 +1953,7 @@ msgid "Pricegroup saved!"
 msgstr "Árcsoport elmentve!"
 
 msgid "Pricegroups"
-msgstr "ÁrCsoportok"
+msgstr "Árcsoportok"
 
 msgid "Pricelist"
 msgstr "Árlista"
@@ -1961,22 +1962,22 @@ msgid "Print"
 msgstr "Nyomtatás"
 
 msgid "Print and Post"
-msgstr "Nyomtat és Rögzít"
+msgstr "Nyomtat és rögzít"
 
 msgid "Print and Post as new"
-msgstr "Újat Nyomtat és Rögzít"
+msgstr "Újként nyomtat és rögzít"
 
 msgid "Print and Save"
-msgstr "Nyomtat és Ment"
+msgstr "Nyomtat és ment"
 
 msgid "Print and Save as new"
-msgstr "Újként Nyomtat és Ment"
+msgstr "Újként nyomtat és ment"
 
 msgid "Print and post as new"
-msgstr ""
+msgstr "Újként nyomtat és rögzít"
 
 msgid "Print and save as new"
-msgstr ""
+msgstr "Újként nyomtat és ment"
 
 msgid "Printed"
 msgstr "Kinyomtatva"
@@ -1988,58 +1989,58 @@ msgid "Printing"
 msgstr "Nyomtatva"
 
 msgid "Printing ... "
-msgstr ""
+msgstr "Nyomtatás ..."
 
 msgid "Process Transactions"
-msgstr "Tranzakció elvégzése"
+msgstr "Tranzakció végrehajtása"
 
 msgid "Production"
 msgstr "Gyártás"
 
 msgid "Profit Center"
-msgstr "Profit Center"
+msgstr "Profitcenter"
 
 msgid "Project"
-msgstr "Munkaszám"
+msgstr "Projekt"
 
 msgid "Project Description Translations"
-msgstr "Projekt Megnevezés Fordítás"
+msgstr "Projekt megnevezések fordításai"
 
 msgid "Project Name"
-msgstr "Project Megnevezés"
+msgstr "Project megnevezése"
 
 msgid "Project Number"
-msgstr "Munkaszám"
+msgstr "Projektszám"
 
 msgid "Project Number missing!"
-msgstr "Munkaszám száma hiányzik!"
+msgstr "Projektszám hiányzik!"
 
 msgid "Project Transactions"
-msgstr "Munkaszám Tranzakciók"
+msgstr "Projekt tranzakciók"
 
 msgid "Project deleted!"
-msgstr "Munkaszám törölve!"
+msgstr "Projekt törölve!"
 
 msgid "Project not on file!"
 msgstr "Projekt nincs meg"
 
 msgid "Project saved!"
-msgstr "Munkaszám elmentve!"
+msgstr "Projektszám elmentve!"
 
 msgid "Project/Job Name"
-msgstr "Projekt/Job Megnevezés"
+msgstr "Projekt/Munka megnevezés"
 
 msgid "Project/Job Number"
-msgstr "Projekt/Job Szám"
+msgstr "Projekt/Munkaszám"
 
 msgid "Projects"
-msgstr "Munkaszámok"
+msgstr "Projektszámok"
 
 msgid "Purchase Order"
 msgstr "Beszerzési rendelés"
 
 msgid "Purchase Order Number"
-msgstr "BeszRend Szám"
+msgstr "Beszerzési rendelés száma"
 
 msgid "Purchase Orders"
 msgstr "Beszerzési rendelések"
@@ -2060,52 +2061,52 @@ msgid "Queued"
 msgstr "Sorba állítva"
 
 msgid "Quotation"
-msgstr "ÚjAjánlat"
+msgstr "Ajánlatadás"
 
 msgid "Quotation "
 msgstr "Ajánlat"
 
 msgid "Quotation Date"
-msgstr "Ajánlat Dátum"
+msgstr "Ajánlat dátuma"
 
 msgid "Quotation Date missing!"
-msgstr "Hiányzó Ajánlat dátum!"
+msgstr "Hiányzó ajánlati dátum!"
 
 msgid "Quotation Number"
-msgstr "Ajánlat szám"
+msgstr "Ajánlat száma"
 
 msgid "Quotation Number missing!"
-msgstr "Hiányzó Ajánlat szám!"
+msgstr "Hiányzó ajánlatszám!"
 
 msgid "Quotation deleted!"
 msgstr "Ajánlat törölve"
 
 msgid "Quotations"
-msgstr "AJÁNLATOK"
+msgstr "Ajánlatok"
 
 msgid "R"
 msgstr "E"
 
 msgid "RFQ"
-msgstr "ÚjAjánlatKérés"
+msgstr "Új ajánlatkérés"
 
 msgid "RFQ "
-msgstr "Ajánlat kérés"
+msgstr "Ajánlatkérés"
 
 msgid "RFQ Number"
-msgstr "Ajánlat Kérés Szám"
+msgstr "Ajánlatkérési szám"
 
 msgid "RFQs"
-msgstr "AjánlatKérésLista"
+msgstr "Ajánlatkérések "
 
 msgid "ROP"
-msgstr "Rendelési pont"
+msgstr "Újrarendelési pont"
 
 msgid "Rate"
 msgstr "Árfolyam"
 
 msgid "Rate missing!"
-msgstr ""
+msgstr "Árfolyam hiányzik"
 
 msgid "Recd"
 msgstr "Kapott"
@@ -2174,16 +2175,16 @@ msgid "Req"
 msgstr "Kérés"
 
 msgid "Request for Quotation"
-msgstr "Ajánlat Kérés"
+msgstr "Ajánlatkérés"
 
 msgid "Request for Quotations"
-msgstr "Ajánlat kérés"
+msgstr "Ajánlatkérések"
 
 msgid "Required by"
 msgstr "Leszállítás"
 
 msgid "Requirements"
-msgstr "SzükségletSzámítás"
+msgstr "Szükséglet számítás"
 
 msgid "Retained Earnings"
 msgstr "Adózás előtti eredmény"
@@ -2195,13 +2196,13 @@ msgid "S"
 msgstr ""
 
 msgid "SIC"
-msgstr "OsztályozóKód"
+msgstr "Osztályozókód"
 
 msgid "SIC deleted!"
-msgstr "Osztályozó Kód törölve!"
+msgstr "Osztályozkód törölve!"
 
 msgid "SIC saved!"
-msgstr "Osztályozó Kód elmentve!"
+msgstr "Osztályozókód elmentve!"
 
 msgid "SKU"
 msgstr "Idegen azonosító"
@@ -2216,22 +2217,22 @@ msgid "Sale"
 msgstr "Eladás"
 
 msgid "Sales"
-msgstr "Eladás"
+msgstr "Értékesítés"
 
 msgid "Sales Invoice"
 msgstr "Vevőszámla"
 
 msgid "Sales Invoice "
-msgstr "Vevő számla"
+msgstr "Vevőszámla "
 
 msgid "Sales Invoice."
-msgstr "Vevő Számla"
+msgstr "Vevőszámla."
 
 msgid "Sales Invoice/AR Transaction Number"
-msgstr "Értékesítési Számla/Tranz. Szám"
+msgstr "Vevőszámla/tranzakció szám"
 
 msgid "Sales Invoices"
-msgstr "VevőSzámla"
+msgstr "Vevő számla"
 
 msgid "Sales Order"
 msgstr "Vevőrendelés"
@@ -2255,7 +2256,7 @@ msgid "Save"
 msgstr "Mentés"
 
 msgid "Save Pricelist"
-msgstr "Árlista ,emtése"
+msgstr "Árlista mentése"
 
 msgid "Save Schedule"
 msgstr "Ütemezés mentése"
@@ -2285,16 +2286,16 @@ msgid "Select"
 msgstr "Választás"
 
 msgid "Select Customer"
-msgstr "Válasszon Vevőt"
+msgstr "Válasszon vevőt"
 
 msgid "Select Vendor"
-msgstr "Válasszon Szállítót"
+msgstr "Válasszon szállítót"
 
 msgid "Select a Printer!"
-msgstr "Válasszon Nyomtatót"
+msgstr "Válasszon nyomtatót!"
 
 msgid "Select a printer!"
-msgstr ""
+msgstr "Válasszon nyomtatót!"
 
 msgid "Select all"
 msgstr "Mindent kijelöl"
@@ -2339,7 +2340,7 @@ msgid "September"
 msgstr "Szeptember"
 
 msgid "Serial No."
-msgstr "Sorozat szám"
+msgstr "Sorozatszám"
 
 msgid "Serial Number"
 msgstr "Sorszám"
@@ -2348,10 +2349,10 @@ msgid "Service"
 msgstr "Szolgáltatás"
 
 msgid "Service Code"
-msgstr "Szolgáltatási Kód"
+msgstr "Szolgáltatási kód"
 
 msgid "Service Code missing!"
-msgstr "Hiányzó Szolgáltatás Kód"
+msgstr "Hiányzó szolgáltatás kód"
 
 msgid "Service/Labor Code"
 msgstr "Szolgáltatás/Munka Kód"
@@ -2360,7 +2361,7 @@ msgid "Services"
 msgstr "Szolgáltatások"
 
 msgid "Session Timeout"
-msgstr "Kapcsolat Lejárai Idő"
+msgstr "Kapcsolat ideje lejárt"
 
 msgid "Session expired!"
 msgstr "Kapcsolat lejárt!"
@@ -2375,7 +2376,7 @@ msgid "Seventeen"
 msgstr "tizenhét"
 
 msgid "Seventy"
-msgstr "hatven"
+msgstr "hetven"
 
 msgid "Ship"
 msgstr "Szállítás"
@@ -2390,7 +2391,7 @@ msgid "Ship via"
 msgstr "Fizetési mód"
 
 msgid "Shipping"
-msgstr "SZÁLLÍTÁS"
+msgstr "Szállítás"
 
 msgid "Shipping Address"
 msgstr "Szállítási cím"
@@ -2429,10 +2430,10 @@ msgid "Spoolfile"
 msgstr "Sorban álló fájlok"
 
 msgid "Standard"
-msgstr "Sztenderd"
+msgstr "Standard"
 
 msgid "Standard Industrial Codes"
-msgstr "Osztályozó Kód"
+msgstr "Osztályozó kód"
 
 msgid "Startdate"
 msgstr "Kezdő dátum"
@@ -2462,19 +2463,19 @@ msgid "Stock Assembly"
 msgstr "Saját termék bevételezése"
 
 msgid "Stock Finished Goods"
-msgstr "Stock Finished Goods"
+msgstr "Befejezett saját termék bevételezése"
 
 msgid "Stocking Date"
-msgstr ""
+msgstr "Bevételezés ideje"
 
 msgid "Stores Card"
-msgstr "Tároló Kártya"
+msgstr "Tároló kártya"
 
 msgid "Stores Card saved!"
-msgstr "Tároló Kártya elmentve!"
+msgstr "Tároló kártya elmentve!"
 
 msgid "Stores Cards"
-msgstr "Tároló Kártyák"
+msgstr "Tároló kártyák"
 
 msgid "Stylesheet"
 msgstr "Stíluslap"
@@ -2498,7 +2499,7 @@ msgid "Supervisor"
 msgstr "Felügyelő"
 
 msgid "System"
-msgstr "Törzsadatok"
+msgstr "Rendszerműveletek"
 
 msgid "System Defaults"
 msgstr "Rendszer alapértelmezés"
@@ -2585,34 +2586,34 @@ msgid "Time"
 msgstr "Idő"
 
 msgid "Time Card"
-msgstr "IdőKártya"
+msgstr "Időkártya"
 
 msgid "Time Card deleted!"
-msgstr "Idő Kártya törölve!"
+msgstr "Időkártya törölve!"
 
 msgid "Time Card saved!"
-msgstr "Idő Kártya elmentve!"
+msgstr "Időkártya elmentve!"
 
 msgid "Time Cards"
-msgstr "IdőKártyaLista"
+msgstr "Időkártyák"
 
 msgid "Time In"
-msgstr "Beléspés ideje"
+msgstr "Belépés ideje"
 
 msgid "Time Out"
 msgstr "Kilépés ideje"
 
 msgid "Timecard"
-msgstr ""
+msgstr "Időkártya"
 
 msgid "Timecard deleted!"
-msgstr ""
+msgstr "Időkártya törölve!"
 
 msgid "Timecard saved!"
-msgstr ""
+msgstr "Időkártya elmentve!"
 
 msgid "Timecards"
-msgstr ""
+msgstr "Időkártyák"
 
 msgid "Times"
 msgstr "-szor"
@@ -2666,7 +2667,7 @@ msgid "Transfer"
 msgstr "Számlák közötti"
 
 msgid "Transfer Inventory"
-msgstr "KészletÁthelyezés"
+msgstr "Készlet áthelyezés"
 
 msgid "Transfer from"
 msgstr "Áthelyezés innen"
@@ -2735,7 +2736,7 @@ msgid "Two"
 msgstr "kettõ"
 
 msgid "Type of Business"
-msgstr "ÜzletágTípus"
+msgstr "Üzletágtípus"
 
 msgid "Unit"
 msgstr "Egység"
@@ -2780,7 +2781,7 @@ msgid "Vendor"
 msgstr "Szállító"
 
 msgid "Vendor History"
-msgstr "Szállító történelem"
+msgstr "Szállító történet"
 
 msgid "Vendor Invoice"
 msgstr "Beszerzési számla"
@@ -2789,7 +2790,7 @@ msgid "Vendor Invoice "
 msgstr "Szállító számla"
 
 msgid "Vendor Invoice."
-msgstr "Vevő Számla"
+msgstr "Vevő számla"
 
 msgid "Vendor Invoice/AP Transaction Number"
 msgstr "Szállító Számla/Tranz. Szám"
@@ -2873,13 +2874,13 @@ msgid "Yearend"
 msgstr "Évzárás"
 
 msgid "Yearend date missing!"
-msgstr "Hiányzó Évzáró dátum!"
+msgstr "Hiányzó évzáró dátum!"
 
 msgid "Yearend posted!"
-msgstr "Évzárás elmentve!"
+msgstr "Évzárás rögzítve!"
 
 msgid "Yearend posting failed!"
-msgstr "Sikertelen Évzárás mentés!"
+msgstr "Sikertelen évzárás rögzítés!"
 
 msgid "Years"
 msgstr "Évek"
@@ -2891,28 +2892,28 @@ msgid "You are logged out"
 msgstr "Ön kilépett"
 
 msgid "You are posting an existing transaction!"
-msgstr "Ön egy létező tranzakciót módosít!"
+msgstr "Ön egy már létező tranzakciót rögzít!"
 
 msgid "You are printing and posting an existing transaction!"
-msgstr "Ön egy létező tranzakciót rögzít és nyomtat!"
+msgstr "Ön egy már létező tranzakciót rögzít és nyomtat!"
 
 msgid "You are printing and saving an existing order"
-msgstr "Ön egy létező rendelést rögzít és nyomtat!"
+msgstr "Ön egy már létező rendelést nyomtat és ment!"
 
 msgid "You are printing and saving an existing quotation"
-msgstr "Ön egy létező ajánlatot rögzít és nyomtat!"
+msgstr "Ön egy már létező ajánlatot nyomtat és ment!"
 
 msgid "You are printing and saving an existing transaction!"
-msgstr "Ön létező tranzakciót rögzít és nyomtat!"
+msgstr "Ön egy már létező tranzakciót nyomtat és ment!"
 
 msgid "You are saving an existing order"
-msgstr "Ön egy létező rendelést módosít!"
+msgstr "Ön egy már létező rendelést ment"
 
 msgid "You are saving an existing quotation"
-msgstr "Ön egy létező ajánlatot módosít"
+msgstr "Ön egy már létező ajánlatot ment"
 
 msgid "You are saving an existing transaction!"
-msgstr "Ön egy létező tranzakciót rögzít!"
+msgstr "Ön egy már létező tranzakciót ment!"
 
 msgid "You did not enter a name!"
 msgstr "Nem írt be nevet!"
@@ -2963,7 +2964,7 @@ msgid "locked!"
 msgstr "lezárva"
 
 msgid "partsgroup"
-msgstr ""
+msgstr "cikkcsoport"
 
 msgid "posted!"
 msgstr "rögzítve!"
@@ -2985,3 +2986,4 @@ msgstr "Váratlan hiba!"
 
 msgid "website"
 msgstr "honlap"
+
