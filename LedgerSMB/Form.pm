@@ -61,7 +61,6 @@ use strict;
 use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
 use List::Util qw(first);
-use LedgerSMB::Mailer;
 use Time::Local;
 use Cwd;
 use File::Copy;
@@ -2024,6 +2023,36 @@ sub all_departments {
     $self->all_years($myconfig);
 }
 
+=item $form->all_languages($myconfig);
+
+Set $form->{all_language} to be a reference to a list of hashrefs describing
+languages using the form {'code' => code, 'description' => description}.
+
+=cut
+
+sub all_languages {
+
+    my ( $self ) = @_;
+
+    my $dbh = $self->{dbh};
+
+    my $query = qq|
+        SELECT code, description
+        FROM language
+	ORDER BY description|;
+
+    my $sth = $dbh->prepare($query);
+    $sth->execute || $self->dberror($query);
+
+    $self->{all_language} = [];
+
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        push @{ $self->{all_language} }, $ref;
+    }
+
+    $sth->finish;
+}
+
 =item $form->all_years($myconfig[, $dbh2]);
 
 Populates the hash $form->{all_month} with a mapping between a two-digit month
@@ -3527,8 +3556,5 @@ sub audittrail {
 1;
 
 =back
-
-
-
 
 
