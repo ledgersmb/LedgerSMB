@@ -1470,6 +1470,8 @@ qq|$form->{script}?path=$form->{path}&action=generate_ar_aging&login=$form->{log
 
 }
 
+sub csv_generate_ar_aging { &generate_ar_aging }
+
 sub generate_ap_aging {
 
     # split vendor
@@ -1824,11 +1826,12 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
         };
     }
     my $format;
-    if ($form->{action} eq 'continue') {
+    if ($form->{action} =~ /^(continue|generate_)/) {
 	$format = 'HTML';
     } else {
         $format = uc substr $form->{action}, 0, 3;
-    	push @column_index, 'class';
+        push @column_index, 'class';
+        @column_index = grep {!/^(language|statement)$/} @column_index;
         $column_header{class} = 'rowtype';
     }
     my $template = LedgerSMB::Template->new(
@@ -1882,7 +1885,7 @@ sub print_options {
 
     if ( $form->{media} eq 'email' ) {
         $form->{print}{medium} = {name => 'sendmode', default_values => $form->{sendmode}};
-        push @media, {text => $locale->text('Attachement'), value => 'attachement'};
+        push @media, {text => $locale->text('Attachment'), value => 'attachment'};
         push @media, {text => $locale->text('In-line'), value => 'inline'};
 	if ($form->{SM}{attachment}) {
 	    $form->{print}{medium}{default_values} = $form->{SM}{attachment};
@@ -1972,20 +1975,42 @@ sub e_mail {
 
 sub send_email {
 
-    $form->{OUT}       = "${LedgerSMB::Sysconfig::sendmail}";
-    $form->{printmode} = '|-';
-
     $form->{subject} = $locale->text( 'Statement - [_1]', $form->{todate} )
       unless $form->{subject};
     $form->isblank( "email", $locale->text('E-mail address missing!') );
 
-    RP->aging( \%myconfig, \%$form );
+    RP->aging( \%myconfig, $form );
 
-    &print_form;
+    my $data = &print_form;
 
+    delete $form->{header};
+    my $template = LedgerSMB::Template->new( 
+        user => \%myconfig,
+        template => $form->{'formname'} || $form->{'type'},
+        format => uc $form->{format},
+        method => 'email',
+        output_options => {
+            to => $form->{email},
+            cc => $form->{cc},
+            bcc => $form->{bcc},
+            from => $form->{form},
+            subject => $form->{subject},
+            message => $form->{message},
+            notify => $form->{read_receipt},
+            attach => ($form->{sendmode} eq 'attachment')? 1: 0,
+            },
+        );
+    try {
+        $template->render({data => [$data]});
+    }
+    catch Error::Simple with {
+        my $E = shift;
+        $form->error( $E->stacktrace );
+    };
     $form->redirect(
         $locale->text( 'Statement sent to [_1]', $form->{ $form->{ct} } ) );
 
+    exit;
 }
 
 sub print {
