@@ -7,7 +7,7 @@
   <tr class="listtop">
     <th><?lsmb text('E-mail Statement to [_1]', form.${form.ct}) ?></th>
   </tr>
-  <tr height="5"><td> </td></tr>
+  <tr><td> </td></tr>
   <tr>
     <td>
       <table width="100%">
@@ -38,7 +38,7 @@ END ?>
 	<tr>
 	  <td><?lsmb PROCESS textarea element_data={
     name =>'message',
-    value => form.message,
+    text => form.message,
     rows => '15',
     cols => '60',
     wrap => 'soft'} ?></td>
@@ -54,6 +54,12 @@ END ?>
     <td><?lsmb PROCESS select element_data=form.print.template ?></td>
     <td><?lsmb PROCESS select element_data=form.print.format ?></td>
     <td><?lsmb PROCESS select element_data=form.print.medium ?></td>
+    <td><div style="width: 15em"><?lsmb PROCESS input element_data={
+      name => 'read_receipt',
+      type => 'checkbox',
+      value => '1',
+      label => text('Request read receipt'),
+      } ?></div></td>
   </tr>
 </table>
     </td>
