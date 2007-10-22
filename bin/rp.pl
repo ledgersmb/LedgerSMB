@@ -865,11 +865,12 @@ $gifi
 sub continue { &{ $form->{nextsub} } }
 
 sub generate_inv_activity {
-    $form->header;
+    
+    my %hiddens;
+    my @options;
+    my $title = $form->{title};
 
     RP->inventory_activity( \%myconfig, \%$form );
-
-    $title = $form->escape( $form->{title} );
 
     #  if ($form->{department}) {
     #    ($department) = split /--/, $form->{department};
@@ -892,68 +893,52 @@ sub generate_inv_activity {
         }
 
         $form->{period} = "$fromdate - $todate";
-    }
-    else {
+    } else {
         $form->{period} =
           $locale->date( \%myconfig, $form->current_date( \%myconfig ), 1 );
 
     }
-    $options .= $form->{period};
+    push @options, $form->{period};
 
-    @column_index = qw(partnumber description sold revenue received expense);
+    my @column_index = qw(partnumber description sold revenue received expense);
 
-    $href =
+    my $href =
 qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&department=$department&projectnumber=$projectnumber&project_id=$form->{project_id}&title=$title&nextsub=$form->{nextsub}|;
 
-    $column_header{partnumber} = qq|
-	<th class=listheading><a class=listheading href="$href&sort_col=partnumber">|
-      . $locale->text('Part Number') . qq|</a></th>|;
-    $column_header{description} = qq|
-	<th class=listheading><a class=listheading href="$href&sort_col=description">|
-      . $locale->text('Description') . qq|</a></th>|;
-    $column_header{sold} = qq|
-	<th class=listheading><a class=listheading href="$href&sort_col=sold">|
-      . $locale->text('Sold') . qq|</a></th>|;
-    $column_header{revenue} = qq|
-	<th class=listheading><a class=listheading href="$href&sort_col=revenue">|
-      . $locale->text('Revenue') . qq|</a></th>|;
-    $column_header{received} = qq|
-	<th class=listheading><a class=listheading href="$href&sort_col=received">|
-      . $locale->text('Received') . qq|</a></th>|;
-    $column_header{expense} = qq|
-	<th class=listheading><a class=listheading href="$href&sort_col=expense">|
-      . $locale->text('Expense') . qq|</a></th>|;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$options</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr>|;
-
-    map { print "$column_header{$_}\n" } @column_index;
-
-    print qq|
-        </tr>
-|;
+    my %column_header;
+    $column_header{partnumber} = {
+        text => $locale->text('Part Number'),
+        href => "$href&sort_col=partnumber",
+        };
+    $column_header{description} = {
+        text => $locale->text('Description'),
+        href => "$href&sort_col=description",
+        };
+    $column_header{sold} = {
+        text => $locale->text('Sold'),
+        href => "$href&sort_col=sold",
+        };
+    $column_header{revenue} = {
+        text => $locale->text('Revenue'),
+        href => "$href&sort_col=revenue",
+        };
+    $column_header{received} = {
+        text => $locale->text('Received'),
+        href => "$href&sort_col=received",
+        };
+    $column_header{expense} = {
+        text => $locale->text('Expense'),
+        href => "$href&sort_col=expense",
+        };
 
     if ( $form->{sort_col} eq 'qty' || $form->{sort_col} eq 'revenue' ) {
         $form->{sort_type} = 'numeric';
     }
-    $i    = 0;
-    $cols = "l_transdate=Y&l_name=Y&l_invnumber=Y&summary=1";
-    $dates =
+    my $i    = 0;
+    my $cols = "l_transdate=Y&l_name=Y&l_invnumber=Y&summary=1";
+    my $dates =
 "transdatefrom=$form->{fromdate}&transdateto=$form->{todate}&year=$form->{fromyear}&month=$form->{frommonth}&interval=$form->{interval}";
-    $base =
+    my $base =
       "path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->{callback} = "rp.pl?action=continue&$base";
@@ -961,9 +946,12 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
     $callback         = "callback=$form->{callback}";
 
     # sort the whole thing by account numbers and display
-    foreach $ref ( @{ $form->{TB} } ) {
-        $description = $form->escape( $ref->{description} );
-        $i           = $i % 2;
+    my @rows;
+    foreach my $ref ( @{ $form->{TB} } ) {
+        my $description = $form->escape( $ref->{description} );
+        my %column_data;
+        $i = $i % 2;
+        $column_data{i} = $i;
 
         $pnumhref =
           "ic.pl?action=edit&id=$ref->{id}&$base&callback=$form->{callback}";
@@ -974,47 +962,52 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
 
         $ml = ( $ref->{category} =~ /(A|E)/ ) ? -1 : 1;
 
-        $debit = $form->format_amount( \%myconfig, $ref->{debit}, 2, "&nbsp;" );
+        $debit = $form->format_amount( \%myconfig, $ref->{debit}, 2, " " );
         $credit =
-          $form->format_amount( \%myconfig, $ref->{credit}, 2, "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{credit}, 2, " " );
         $begbalance =
-          $form->format_amount( \%myconfig, $ref->{balance} * $ml, 2,
-            "&nbsp;" );
+          $form->format_amount( \%myconfig, $ref->{balance} * $ml, 2, " " );
         $endbalance =
           $form->format_amount( \%myconfig,
             ( $ref->{balance} + $ref->{amount} ) * $ml,
-            2, "&nbsp;" );
+            2, " " );
 
-        $ref->{partnumber} = qq|<a href="$pnumhref">$ref->{partnumber}</a>|;
-        $ref->{sold}       = qq|<a href="$soldhref">$ref->{sold}</a>|;
-        $ref->{received}   = qq|<a href="$rechref">$ref->{received}<a/>|;
-        map { $column_data{$_} = "<td>&nbsp;</td>" } @column_index;
+        $column_data{partnumber} = {
+            text => $ref->{partnumber},
+            href => $pnumhref,
+            };
+        $column_data{sold} = {
+            text => $ref->{sold},
+            href => $soldhref,
+            };
+        $column_data{received} = {
+            text => $ref->{received},
+            href => $rechref,
+            };
 
-        print qq|
-      <tr class=listrow$i>
-      |;
-        map { print "<td>$ref->{$_}</td>\n" } @column_index;
-
-        print qq|
-      </tr>
-|;
+        push @rows, \%column_data;
         ++$i;
     }
 
-    print qq|
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-dynatable',
+        );
+    $template->render({
+        form => $form,
+        hiddens => \%hiddens,
+        options => \@options,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        row_alignment => {
+            sold => 'right',
+            revenue => 'right',
+            received => 'right',
+            expense => 'right',
+            },
+    });
 }
 
 sub generate_income_statement {
@@ -2080,29 +2073,18 @@ sub print_form {
     $form->{templates} = "$myconfig{templates}";
 
     # setup variables for the form
-    @a = qw(company address businessnumber tel fax);
-    for (@a) { $form->{$_} = $myconfig{$_} }
+    my @vars = qw(company address businessnumber tel fax);
+    for (@vars) { $form->{$_} = $myconfig{$_} }
     $form->{address} =~ s/\\n/\n/g;
 
-    $form->format_string(@a);
+    @vars = qw(name address1 address2 city state zipcode country contact);
+    push @vars, "$form->{ct}phone", "$form->{ct}fax", "$form->{ct}taxnumber";
+    push @vars, 'email' if !$form->{media} eq 'email';
 
-    $form->{IN} = "$form->{type}.html";
-
-    if ( $form->{format} eq 'postscript' ) {
-        $form->{IN} =~ s/html$/tex/;
-    }
-    if ( $form->{format} eq 'pdf' ) {
-        $form->{IN} =~ s/html$/tex/;
-    }
-
-    @a = qw(name address1 address2 city state zipcode country contact);
-    push @a, "$form->{ct}phone", "$form->{ct}fax", "$form->{ct}taxnumber";
-    push @a, 'email' if !$form->{media} eq 'email';
-
-    $i = 0;
+    my $i = 0;
     while ( @{ $form->{AG} } ) {
 
-        $ref = shift @{ $form->{AG} };
+        my $ref = shift @{ $form->{AG} };
 
         if ( $ctid != $ref->{ctid} ) {
 
@@ -2111,8 +2093,7 @@ sub print_form {
 
             if ( $form->{"statement_$i"} ) {
 
-                for (@a) { $form->{$_} = $ref->{$_} }
-                $form->format_string(@a);
+                for (@vars) { $form->{$_} = $ref->{$_} }
 
                 $form->{ $form->{ct} }    = $form->{name};
                 $form->{"$form->{ct}_id"} = $ref->{ctid};
