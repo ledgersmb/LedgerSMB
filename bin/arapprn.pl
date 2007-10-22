@@ -607,106 +607,76 @@ sub customer_details { IS->customer_details( \%myconfig, \%$form ) }
 
 sub select_payment {
 
-    @column_index =
+    my %hiddens;
+    my @column_index =
       ( "ndx", "datepaid", "source", "memo", "paid", "$form->{ARAP}_paid" );
 
     # list payments with radio button on a form
-    $form->header;
+    $form->{title} = $locale->text('Select payment');
 
-    $title = $locale->text('Select payment');
+    my %column_heading;
+    $column_heading{ndx}      = ' ';
+    $column_heading{datepaid} = $locale->text('Date');
+    $column_heading{source}   = $locale->text('Source');
+    $column_heading{memo}     = $locale->text('Memo');
+    $column_heading{paid}     = $locale->text('Amount');
+    $column_heading{"$form->{ARAP}_paid"} = $locale->text('Account');
 
-    $column_data{ndx}      = qq|<th width=1%>&nbsp;</th>|;
-    $column_data{datepaid} = qq|<th>| . $locale->text('Date') . qq|</th>|;
-    $column_data{source}   = qq|<th>| . $locale->text('Source') . qq|</th>|;
-    $column_data{memo}     = qq|<th>| . $locale->text('Memo') . qq|</th>|;
-    $column_data{paid}     = qq|<th>| . $locale->text('Amount') . qq|</th>|;
-    $column_data{"$form->{ARAP}_paid"} =
-      qq|<th>| . $locale->text('Account') . qq|</th>|;
+    my $checked = "checked";
+    my @rows;
+    my $j;
+    my $ok;
+    foreach my $i ( 1 .. $form->{paidaccounts} - 1 ) {
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$title</th>
-  </tr>
-  <tr space=5></tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>|;
-
-    for (@column_index) { print "\n$column_data{$_}" }
-
-    print qq|
-	</tr>
-|;
-
-    $checked = "checked";
-    foreach $i ( 1 .. $form->{paidaccounts} - 1 ) {
-
+        my %column_data;
         for (@column_index) {
-            $column_data{$_} = qq|<td>$form->{"${_}_$i"}</td>|;
+            $column_data{$_} = $form->{"${_}_$i"};
         }
-
-        $paid = $form->{"paid_$i"};
-        $ok   = 1;
-
-        $column_data{ndx} =
-qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
-        $column_data{paid} = qq|<td align=right>$paid</td>|;
+        $column_data{ndx} = {input => {
+            name => 'ndx',
+            type => 'radio',
+            value => $i,
+            }};
+        $column_data{ndx}{checked} = 'checked' if $checked;
+        $column_data{paid} = $form->{"paid_$i"};
 
         $checked = "";
+        $ok = 1;
 
         $j++;
         $j %= 2;
-        print qq|
-	<tr class=listrow$j>|;
+        $column_data{i} = $j;
 
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|
-	</tr>
-|;
-
+        push @rows, \%column_data;
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
 
     for (qw(action nextsub)) { delete $form->{$_} }
+    $hiddens{$_} = $form->{$_} foreach keys %$form;
+    $hiddens{nextsub} = 'payment_selected';
 
-    $form->hide_form;
-
-    print qq|
-
-<br>
-<input type=hidden name=nextsub value=payment_selected>
-|;
-
+    my @buttons;
     if ($ok) {
-        print qq|
-<button class="submit" type="submit" name="action" value="continue">|
-          . $locale->text('Continue')
-          . qq|</button>|;
+        push @buttons, {
+            name => 'action',
+            value => 'payment_selected',
+            text => $locale->text('Continue'),
+            };
     }
 
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig,
+        locale => $locale,
+        template => 'form-dynatable',
+        );
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+        columns => \@column_index,
+        heading => \%column_heading,
+        rows => \@rows,
+        row_alignment => {'paid' => 'right'},
+    });
 }
 
 sub payment_selected {
