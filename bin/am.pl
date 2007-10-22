@@ -2498,6 +2498,8 @@ sub recurring_transactions {
     # $locale->text('Year')
     # $locale->text('Years')
 
+    my %hiddens;
+    my %column_header;
     $form->{stylesheet} = $myconfig{stylesheet};
 
     $form->{title} = $locale->text('Recurring Transactions');
@@ -2513,69 +2515,35 @@ sub recurring_transactions {
 
     $form->sort_order();
 
-    # create the logo screen
-    $form->header;
-
-    @column_index = qw(ndx reference description);
+    my @column_index = qw(ndx reference description);
 
     push @column_index,
       qw(nextdate enddate id amount curr repeat howmany recurringemail recurringprint);
 
-    $column_header{reference} =
-        qq|<th><a class="listheading" href="$href&sort=reference">|
-      . $locale->text('Reference')
-      . q|</a></th>|;
-    $column_header{ndx} = q|<th class="listheading">&nbsp;</th>|;
-    $column_header{id} =
-      q|<th class="listheading">| . $locale->text('ID') . q|</th>|;
-    $column_header{description} =
-      q|<th class="listheading">| . $locale->text('Description') . q|</th>|;
-    $column_header{nextdate} =
-        qq|<th><a class="listheading" href="$href&sort=nextdate">|
-      . $locale->text('Next')
-      . q|</a></th>|;
-    $column_header{enddate} =
-        qq|<th><a class="listheading" href="$href&sort=enddate">|
-      . $locale->text('Ends')
-      . q|</a></th>|;
-    $column_header{amount} =
-      q|<th class="listheading">| . $locale->text('Amount') . q|</th>|;
-    $column_header{curr} = q|<th class="listheading">&nbsp;</th>|;
-    $column_header{repeat} =
-      q|<th class="listheading">| . $locale->text('Every') . q|</th>|;
-    $column_header{howmany} =
-      q|<th class="listheading">| . $locale->text('Times') . q|</th>|;
-    $column_header{recurringemail} =
-      q|<th class="listheading">| . $locale->text('E-mail') . q|</th>|;
-    $column_header{recurringprint} =
-      q|<th class="listheading">| . $locale->text('Print') . q|</th>|;
+    $column_header{reference} = {
+        text => $locale->text('Reference'),
+        href => "$href&sort=reference",
+        };
+    $column_header{ndx} = ' ';
+    $column_header{id} = $locale->text('ID');
+    $column_header{description} = $locale->text('Description');
+    $column_header{nextdate} = {
+        text => $locale->text('Next'),
+        href => "$href&sort=nextdate",
+        };
+    $column_header{enddate} = {
+        text => $locale->text('Ends'),
+        href => "$href&sort=enddate",
+        };
+    $column_header{amount} = $locale->text('Amount');
+    $column_header{curr} = ' ';
+    $column_header{repeat} = $locale->text('Every');
+    $column_header{howmany} = $locale->text('Times');
+    $column_header{recurringemail} = $locale->text('E-mail');
+    $column_header{recurringprint} = $locale->text('Print');
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class="listheading">
-|;
-
-    for (@column_index) { print "\n$column_header{$_}" }
-
-    print qq|
-        </tr>
-|;
-
-    $i       = 1;
-    $colspan = $#column_index + 1;
-
-    %tr = (
+    my $i = 1;
+    my %tr = (
         ar => $locale->text('AR'),
         ap => $locale->text('AP'),
         gl => $locale->text('GL'),
@@ -2583,22 +2551,27 @@ sub recurring_transactions {
         po => $locale->text('Purchase Orders'),
     );
 
-    %f = &formnames;
+    my %f = &formnames;
 
-    foreach $transaction ( sort keys %{ $form->{transactions} } ) {
+    my @transactions;
+    my $j;
+    my $k;
+    foreach my $transaction ( sort keys %{ $form->{transactions} } ) {
     	my $transaction_count = scalar( @{ $form->{transactions}{$transaction} } );
-        print qq|
-        <tr>
-	  <th class="listheading" colspan=$colspan>$tr{$transaction} ($transaction_count)</th>
-	</tr>
-|;
+        push @transactions, {type => $transaction,
+            title => "$tr{$transaction} ($transaction_count)",
+            transactions => [],
+            };
 
-        foreach $ref ( @{ $form->{transactions}{$transaction} } ) {
+        foreach my $ref ( @{ $form->{transactions}{$transaction} } ) {
 
+            my %column_data;
             for (@column_index) {
-                $column_data{$_} = "<td nowrap>$ref->{$_}</td>";
+                $column_data{$_} = "$ref->{$_}";
             }
 
+            my $unit;
+            my $repeat;
             if ( $ref->{repeat} > 1 ) {
                 $unit   = $locale->text( ucfirst $ref->{unit} );
                 $repeat = "$ref->{repeat} $unit";
@@ -2609,25 +2582,31 @@ sub recurring_transactions {
                 $repeat = $unit;
             }
 
-            $column_data{ndx} = qq|<td></td>|;
+            $column_data{ndx} = '';
 
             if ( !$ref->{expired} ) {
                 if ( $ref->{overdue} <= 0 ) {
                     $k++;
-                    $column_data{ndx} =
-qq|<td nowrap><input name="ndx_$k" class=checkbox type=checkbox value=$ref->{id} checked></td>|;
+                    $column_data{ndx} = {
+                        name => "ndx_$k",
+                        type => 'checkbox',
+                        value => $ref->{id},
+                        checked => 'checked',
+                        };
                 }
             }
 
-            $reference =
+            my $reference =
               ( $ref->{reference} )
               ? $ref->{reference}
               : $locale->text('Next Number');
-            $column_data{reference} =
-qq|<td nowrap><a href=$form->{script}?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}>$reference</a></td>|;
+            $column_data{reference} = {
+                text => $reference,
+                href => qq|$form->{script}?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
+                };
 
-            $module = "$ref->{module}.pl";
-            $type   = "";
+            my $module = "$ref->{module}.pl";
+            my $type   = "";
             if ( $ref->{module} eq 'ar' ) {
                 $module = "is.pl" if $ref->{invoice};
                 $ref->{amount} /= $ref->{exchangerate};
@@ -2643,78 +2622,77 @@ qq|<td nowrap><a href=$form->{script}?action=edit_recurring&id=$ref->{id}&vc=$re
                   : "purchase_order";
             }
 
-            $column_data{id} =
-qq|<td><a href="$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$type&readonly=1">$ref->{id}</a></td>|;
+            $column_data{id} = {
+                text => $ref->{id},
+                href => qq|$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$type&readonly=1|,
+                };
 
-            $column_data{repeat} = qq|<td align="right" nowrap>$repeat</td>|;
+            $column_data{repeat} = $repeat;
             $column_data{howmany} =
-              qq|<td align="right" nowrap>|
-              . $form->format_amount( \%myconfig, $ref->{howmany} ) . "</td>";
+                $form->format_amount( \%myconfig, $ref->{howmany} );
             $column_data{amount} =
-              qq|<td align="right" nowrap>|
-              . $form->format_amount( \%myconfig, $ref->{amount}, 2 ) . "</td>";
+                $form->format_amount( \%myconfig, $ref->{amount}, 2 );
 
-            $column_data{recurringemail} = "<td nowrap>";
-            @f = split /:/, $ref->{recurringemail};
+            my @temp_split;
+            my @f = split /:/, $ref->{recurringemail};
             for ( 0 .. $#f ) {
-                $column_data{recurringemail} .= "$f{$f[$_]}<br>";
+                push @temp_split, $f{$f[$_]};
             }
-            $column_data{recurringemail} .= "</td>";
+            $column_data{recurringemail} = {
+                text => join ':', @temp_split,
+                delimeter => ':',
+                };
 
-            $column_data{recurringprint} = "<td nowrap>";
+            @temp_split = ();
             @f = split /:/, $ref->{recurringprint};
             for ( 0 .. $#f ) {
-                $column_data{recurringprint} .= "$f{$f[$_]}<br>";
+                push @temp_split, $f{$f[$_]};
             }
-            $column_data{recurringprint} .= "</td>";
+            $column_data{recurringprint} = {
+                text => join ':', @temp_split,
+                delimeter => ':',
+                };
 
             $j++;
             $j %= 2;
-            print qq|
-      <tr class=listrow$j>
-|;
+            $column_data{i} = $j;
 
-            for (@column_index) { print "\n$column_data{$_}" }
-
-            print qq|
-      </tr>
-|;
+            push @{$transactions[$#transactions]{transactions}}, \%column_data;
         }
     }
 
-    print qq|
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-<input name=lastndx type=hidden value=$k>
-|;
+    $hiddens{path} = $form->{path};
+    $hiddens{login} = $form->{login};
+    $hiddens{sessionid} = $form->{sessionid};
+    $hiddens{lastndx} = $k;
 
-    $form->hide_form(qw(path login sessionid));
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'process_transactions',
+        text => $locale->text('Process Transactions'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-    print qq|
-<button class="submit" type="submit" name="action" value="process_transactions">|
-      . $locale->text('Process Transactions')
-      . qq|</button>|
-      if $k;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-</form>
-  
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-list-recurring');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        transactions => \@transactions,
+        hiddens => \%hiddens,
+    });
 }
 
 sub edit_recurring {

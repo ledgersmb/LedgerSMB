@@ -1,0 +1,66 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+
+<table width="100%">
+  <tr>
+    <th class="listtop"><?lsmb text('Recurring Transactions') ?></th>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td>
+      <table width=100%>
+        <tr class="listtop">
+<?lsmb FOREACH column IN columns ?>
+          <th class="listtop">
+  <?lsmb IF heading.$column.text.defined ?>
+  <a class="listtop" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a>
+  <?lsmb ELSE;
+    heading.$column;
+  END ?>
+          </th>
+<?lsmb END ?>
+        </tr>
+<?lsmb FOREACH transaction_type IN transactions ?>
+        <tr>
+	  <th class="listheading" colspan="<?lsmb columns.size ?>"><?lsmb transaction_type.title ?></th>
+	</tr>
+  <?lsmb FOREACH transaction IN transaction_type.transactions ?>
+      <tr class="listrow<?lsmb transaction.i ?>">
+    <?lsmb FOREACH column IN columns ?>
+        <td>
+      <?lsmb IF transaction.$column.delimiter.defined;
+        transaction.$column.text.replace(transaction.$column.delimiter, '<br />');
+      ELSIF transaction.$column.href.defined;
+        '<a href="'; transaction.$column.href; '">'; transaction.$column.text; '</a>';
+      ELSIF transaction.$column.type.defined;
+        PROCESS input element_data=transaction.$column;
+      ELSE;
+        transaction.$column;
+      END ?>
+        </td>
+    <?lsmb END ?>
+      </tr>
+  <?lsmb END ?>
+<?lsmb END ?>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size="3" noshade="noshade" /></td>
+  </tr>
+</table>
+
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END;
+PROCESS button element_data={name => 'action', value => 'process_transactions' text => text('Process Transactions')} ?>
+</form>
+  
+</body>
+</html>
