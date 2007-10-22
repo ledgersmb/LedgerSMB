@@ -50,10 +50,10 @@ use LedgerSMB::Sysconfig;
 
 our $VERSION = '0.13';
 
-=head2 LedgerSMB::Mailer->new([%args])
+=head2 LedgerSMB::Mailer->new(...)
 
 Create a new Mailer object.  If any arguments are passed in, a message
-that uses them will be automatically prepared.
+that uses them will be automatically prepared but not sent.
 
 =cut
 
@@ -67,7 +67,36 @@ sub new {
 	$self;
 }
 
-=head2 $mail->prepare_message
+=head2 $mail->prepare_message(to => $to, from => $from, ...)
+
+Prepares and encodes base message for sending or adding attachments.
+
+=head3 Arguments
+
+=over
+
+=item to, from, cc, bcc
+
+Address fields for the email.
+
+=item subject
+
+The subject for the email.
+
+=item message
+
+The message body for the email.
+
+=item contenttype
+
+The conttent type for the body of the message, not for any attachments.
+
+=item notify
+
+Sets the Disposition-Notification-To header (read receipt request) for the
+message.  This header will only be added if a from address is set.
+
+=back
 
 =cut
 
@@ -114,7 +143,15 @@ sub prepare_message {
 	$self->{_message}->binmode(':utf8');
 }
 
-=head2 $mail->attach
+=head2 $mail->attach(data => $data, filename => $name, strip => $strip)
+
+Add an attachment to the prepared message.  If $data is specified, use the
+value of that variable as the attachment value, otherwise attach the file
+given by $name.  If both a filename and data are given, the data is attached
+and given the name from filename.
+
+$strip is an optional string to remove from the filename send with the
+attachment.
 
 =cut
 
@@ -123,6 +160,15 @@ sub attach {
 	my %args = @_;
 
 	carp "Message not prepared" unless ref $self->{_message};
+	if (defined $args{filename}) {
+		if (!$args{filename}){
+			carp "Invalid filename provided";
+		} elsif (!defined $args{data} and !(-f $args{filename} and -r $args{filename})){
+			carp "Cannot access file: $args{filename}";
+		}
+	} else {
+		carp "No attachement supplied" unless defined $args{data};
+	}
 
 	# strip path from output name
 	my $file;
@@ -134,7 +180,7 @@ sub attach {
 
 	# handle both string and file types of input
 	my @data;
-	if ($args{data}) {
+	if (defined $args{data}) {
 		@data = ('Data', $args{data});
 	} else {
 		@data = ('Path', $args{filename});
@@ -158,6 +204,9 @@ sub send {
 	my $self = shift;
 	carp "Message not prepared" unless ref $self->{_message};
 
+	# SC: Set the X-Mailer header here so that it will be the last
+	#     header set.  This ensures that MIME::Lite will not rewrite
+	#     it during the preparation of the message.
 	$self->{_message}->replace( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
 	if ( ${LedgerSMB::Sysconfig::smtphost} ) {
 		$self->{_message}->send(

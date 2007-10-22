@@ -8,7 +8,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 14;
+use Test::More tests => 15;
 use Test::More;
 eval "use Test::Pod::Coverage";
 plan skip_all => "Test::Pod::Coverage required for testing POD coverage" if $@;
@@ -19,6 +19,7 @@ pod_coverage_ok("LedgerSMB::AM");
 pod_coverage_ok("LedgerSMB::Database");
 pod_coverage_ok("LedgerSMB::Locale");
 pod_coverage_ok("LedgerSMB::Log");
+pod_coverage_ok("LedgerSMB::Mailer");
 pod_coverage_ok("LedgerSMB::Template");
 pod_coverage_ok("LedgerSMB::Template::CSV");
 pod_coverage_ok("LedgerSMB::Template::HTML");
