@@ -841,6 +841,7 @@ sub search {
     my $tth = $dbh->prepare($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth => $sth, hashref => $ref);
         $tth->execute( $ref->{id} );
 
         while ( ($item) = $tth->fetchrow_array ) {
