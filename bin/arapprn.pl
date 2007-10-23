@@ -637,7 +637,7 @@ sub select_payment {
             type => 'radio',
             value => $i,
             }};
-        $column_data{ndx}{checked} = 'checked' if $checked;
+        $column_data{ndx}{input}{checked} = 'checked' if $checked;
         $column_data{paid} = $form->{"paid_$i"};
 
         $checked = "";
