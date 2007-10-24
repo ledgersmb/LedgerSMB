@@ -812,8 +812,20 @@ sub add_business {
 "$form->{script}?action=add_business&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &business_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $checked = &business_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-business-form');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
@@ -823,11 +835,22 @@ sub edit_business {
 
     AM->get_business( \%myconfig, \%$form );
 
-    &business_header;
-
     $form->{orphaned} = 1;
-    &form_footer;
 
+    my %hiddens;
+    my @buttons;
+    my $checked = &business_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-business-form');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 }
 
 sub list_business {
@@ -904,6 +927,7 @@ sub list_business {
 }
 
 sub business_header {
+    my $hiddens = shift;
 
     $form->{title} = $locale->text("$form->{title} Business");
 
@@ -914,40 +938,8 @@ sub business_header {
     $form->{discount} =
       $form->format_amount( \%myconfig, $form->{discount} * 100 );
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=business>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align="right">| . $locale->text('Type of Business') . qq|</th>
-	  <td><input name=description size=30 value="$form->{description}"></td>
-	<tr>
-	<tr>
-	  <th align="right">| . $locale->text('Discount') . qq| %</th>
-	  <td><input name=discount size=5 value=$form->{discount}></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
+    $hiddens->{id} = $form->{id};
+    $hiddens->{type} = 'business';
 
 }
 
