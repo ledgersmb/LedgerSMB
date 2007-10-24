@@ -487,8 +487,20 @@ sub add_gifi {
 
     $form->{coa} = 1;
 
-    &gifi_header;
-    &gifi_footer;
+    my %hiddens;
+    my @buttons;
+    &gifi_header(\%hiddens);
+    &gifi_footer(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-gifi-form');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
@@ -501,12 +513,25 @@ sub edit_gifi {
     $form->error( $locale->text('Account does not exist!') )
       unless $form->{accno};
 
-    &gifi_header;
-    &gifi_footer;
+    my %hiddens;
+    my @buttons;
+    &gifi_header(\%hiddens);
+    &gifi_footer(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-gifi-form');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
 sub gifi_header {
+    my $hiddens = shift;
 
     $form->{title} = $locale->text("$form->{title} GIFI");
 
@@ -515,52 +540,21 @@ sub gifi_header {
 
     for (qw(accno description)) { $form->{$_} = $form->quote( $form->{$_} ) }
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=id value="$form->{accno}">
-<input type=hidden name=type value=gifi>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align="right">| . $locale->text('GIFI') . qq|</th>
-	  <td><input name=accno size=20 value="$form->{accno}"></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Description') . qq|</th>
-	  <td><input name=description size=60 value="$form->{description}"></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td colspan=2><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
+    $hiddens->{id} = $form->{accno};
+    $hiddens->{type} = 'gifi';
 
 }
 
 sub gifi_footer {
+    my ($hiddens, $buttons) = @_;
 
-    $form->hide_form(qw(callback path login sessionid));
+    $hiddens->{$_} = $form->{$_} foreach qw(callback path login sessionid);
 
     # type=submit $locale->text('Save')
     # type=submit $locale->text('Copy to COA')
     # type=submit $locale->text('Delete')
 
-    %button = ();
+    my %button = ();
 
     $button{'save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
 
@@ -577,20 +571,20 @@ sub gifi_footer {
     }
 
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
-        $form->print_button( \%button, $_ );
+        push @{$buttons}, {
+            name => 'action',
+            value => $_,
+            accesskey => $button{$_}{key},
+            title => "$button{$_}{value} [Alt-$button{$_}{key}]",
+            text => $button{$_}{value},
+            };
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
+##SC: Temporary commenting
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
 }
 
