@@ -1985,8 +1985,21 @@ sub add_warehouse {
 "$form->{script}?action=add_warehouse&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &warehouse_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $rows = &warehouse_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-warehouse-form');
+    $template->render({
+        form => $form,
+        row_count => $rows,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
@@ -1996,16 +2009,29 @@ sub edit_warehouse {
 
     AM->get_warehouse( \%myconfig, \%$form );
 
-    &warehouse_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $rows = &warehouse_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
 
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-warehouse-form');
+    $template->render({
+        form => $form,
+        row_count => $rows,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 }
 
 sub list_warehouse {
 
     AM->warehouses( \%myconfig, \%$form );
+    my %hiddens;
 
-    $href =
+    my $href =
 "$form->{script}?action=list_warehouse&direction=$form->{direction}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->sort_order();
@@ -2013,95 +2039,64 @@ sub list_warehouse {
     $form->{callback} =
 "$form->{script}?action=list_warehouse&direction=$form->{direction}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
-    $callback = $form->escape( $form->{callback} );
+    my $callback = $form->escape( $form->{callback} );
 
     $form->{title} = $locale->text('Warehouses');
 
-    @column_index = qw(description);
+    my @column_index = qw(description);
+    my %column_header;
+    $column_header{description} = {
+        href => $href,
+        text => $locale->text('Description'),
+        };
 
-    $column_header{description} =
-        qq|<th width=100%><a class="listheading" href=$href>|
-      . $locale->text('Description')
-      . qq|</a></th>|;
+    my @rows;
+    my $i;
+    foreach my $ref ( @{ $form->{ALL} } ) {
 
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
-    foreach $ref ( @{ $form->{ALL} } ) {
-
+        my %column_data;
         $i++;
         $i %= 2;
+        $column_data{i} = $i;
 
-        print qq|
-        <tr valign=top class=listrow$i>
-|;
+        $column_data{description} = {
+            href => "$form->{script}?action=edit_warehouse&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+            text => $ref->{description},
+            };
 
-        $column_data{description} =
-qq|<td><a href=$form->{script}?action=edit_warehouse&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{description}</td>|;
-
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-	</tr>
-|;
+        push @rows, \%column_data;
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-  <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<form method=post action=$form->{script}>
-|;
 
     $form->{type} = "warehouse";
+    $hiddens{$_} = $form->{$_} foreach qw(type callback path login sessionid);
 
-    $form->hide_form(qw(type callback path login sessionid));
+##SC: Temporary commenting
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
+    my @buttons = ({
+        name => 'action',
+        value => 'add_warehouse',
+        text => $locale->text('Add Warehouse'),
+        });
 
-    print qq|
-<button class="submit" type="submit" name="action" value="add_warehouse">|
-      . $locale->text('Add Warehouse')
-      . qq|</button>|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-  
-  </body>
-  </html> 
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'form-dynatable');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+	hiddens => \%hiddens,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+    });
 }
 
 sub warehouse_header {
+    my $hiddens = shift;
 
     $form->{title} = $locale->text("$form->{title} Warehouse");
 
@@ -2110,40 +2105,11 @@ sub warehouse_header {
 
     $form->{description} = $form->quote( $form->{description} );
 
-    if ( ( $rows = $form->numtextrows( $form->{description}, 60 ) ) > 1 ) {
-        $description =
-qq|<textarea name="description" rows=$rows cols=60 wrap=soft>$form->{description}</textarea>|;
-    }
-    else {
-        $description =
-          qq|<input name=description size=60 value="$form->{description}">|;
-    }
+    $hiddens->{id} = $form->{id};
+    $hiddens->{type} = 'warehouse';
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=warehouse>
-
-<table width=100%>
-  <tr>
-    <th class=listtop colspan=2>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <th align="right">| . $locale->text('Description') . qq|</th>
-    <td>$description</td>
-  </tr>
-  <tr>
-    <td colspan=2><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
+    my $rows = $form->numtextrows( $form->{description}, 60 );
+    $rows;
 }
 
 sub save_warehouse {

@@ -122,6 +122,7 @@ package LedgerSMB::Template;
 
 use warnings;
 use strict;
+use Carp;
 
 use Error qw(:try);
 use LedgerSMB::Sysconfig;
@@ -212,6 +213,7 @@ sub render {
 
 	my $cleanvars;
 	if ($self->{no_escape}) {
+		carp 'no_escape mode enabled in rendering';
 		$cleanvars = $vars;
 	} else {
 		$cleanvars = $format->can('preprocess')->($vars);
@@ -271,6 +273,7 @@ sub _http_output {
 	}
 	if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
+		binmode STDOUT, ':utf8';
 	} else {
 		print "Content-Type: $self->{mimetype}$disposition\n\n";
 		binmode STDOUT, ':bytes';
