@@ -1,0 +1,239 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table border="0" width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td> </td></tr>
+  <tr valign="top">
+    <td>
+      <table>
+        <tr>
+          <th align="right"><?lsmb text('Account Number') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            name => 'accno',
+            size => '20',
+            value => form.accno} ?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Description') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            name => 'description',
+            size => '40',
+            value => form.description} ?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Account Type') ?></th>
+          <td>
+            <table>
+              <tr valign="top">
+                <td align="right">
+                  <?lsmb PROCESS input element_data={
+                          name => 'category',
+                          type => 'radio',
+                          label => text('Asset'),
+                          value => 'A',
+                          ${checked.A_} => checked.A_,
+                          } ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'category',
+                          type => 'radio',
+                          label => text('Liability'),
+                          ${checked.L_} => checked.L_,
+                          value => 'L'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'category',
+                          type => 'radio',
+                          label => text('Equity'),
+                          ${checked.Q_} => checked.Q_,
+                          value => 'Q'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'category',
+                          type => 'radio',
+                          label => text('Income'),
+                          ${checked.I_} => checked.I_,
+                          value => 'I'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'category',
+                          type => 'radio',
+                          label => text('Expense'),
+                          ${checked.E_} => checked.E_,
+                          value => 'E'} ?>
+                </td>
+                <td>
+                  <?lsmb PROCESS input element_data={
+                          name => 'contra',
+                          type => 'checkbox',
+                          label => text('Contra'),
+                          ${checked.contra} => checked.contra,
+                          value => '1'} ?>
+                </td>
+                <td align="right">
+                  <?lsmb PROCESS input element_data={
+                          name => 'charttype',
+                          type => 'radio',
+                          label => text('Heading'),
+                          ${checked.H} => checked.H,
+                          value => 'H'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'charttype',
+                          type => 'radio',
+                          label => text('Account'),
+                          ${checked.A} => checked.A,
+                          value => 'A'} ?>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+<?lsmb IF form.charttype == 'A' ?>
+        <tr>
+          <td colspan="2">
+            <table>
+              <tr>
+                <th align="left"><?lsmb text('Is this a summary account to record') ?></th>
+                <td>
+                  <?lsmb PROCESS input element_data={
+                          name => 'AR',
+                          type => 'checkbox',
+                          label => text('AR'),
+                          ${form.AR} => form.AR,
+                          value => 'AR'} ?> 
+                  <?lsmb PROCESS input element_data={
+                          name => 'AP',
+                          type => 'checkbox',
+                          label => text('AP'),
+                          ${form.AP} => form.AP,
+                          value => 'AP'} ?> 
+                  <?lsmb PROCESS input element_data={
+                          name => 'IC',
+                          type => 'checkbox',
+                          label => text('Inventory'),
+                          ${form.IC} => form.IC,
+                          value => 'IC'} ?> 
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2" align="left"><?lsmb text('Include in drop-down menus') ?></th>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">
+            <table width="100%">
+              <tr>
+                <th align="left"><?lsmb text('Receivables') ?></th>
+                <th align="left"><?lsmb text('Payables') ?></th>
+                <th align="left"><?lsmb text('Tracking Items') ?></th>
+                <th align="left"><?lsmb text('Non-tracking Items') ?></th>
+              </tr>
+              <tr>
+                <td align="right">
+                  <?lsmb PROCESS input element_data={
+                          name => 'AR_amount',
+                          type => 'checkbox',
+                          label => text('Income'),
+                          ${form.AR_amount} => form.AR_amount,
+                          value => 'AR_amount'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'AR_paid',
+                          type => 'checkbox',
+                          label => text('Payment'),
+                          ${form.AR_paid} => form.AR_paid,
+                          value => 'AR_paid'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'AR_tax',
+                          type => 'checkbox',
+                          label => text('Tax'),
+                          ${form.AR_tax} => form.AR_tax,
+                          value => 'AR_tax'} ?>
+                </td>
+                <td align="right">
+                  <?lsmb PROCESS input element_data={
+                          name => 'AP_amount',
+                          type => 'checkbox',
+                          label => text('Expense/Asset'),
+                          ${form.AP_amount} => form.AP_amount,
+                          value => 'AP_amount'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'AP_paid',
+                          type => 'checkbox',
+                          label => text('Payment'),
+                          ${form.AP_paid} => form.AP_paid,
+                          value => 'AP_paid'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'AP_tax',
+                          type => 'checkbox',
+                          label => text('Tax'),
+                          ${form.AP_tax} => form.AP_tax,
+                          value => 'AP_tax'} ?>
+                </td>
+                <td align="right">
+                  <?lsmb PROCESS input element_data={
+                          name => 'IC_sale',
+                          type => 'checkbox',
+                          label => text('Income'),
+                          ${form.IC_sale} => form.IC_sale,
+                          value => 'IC_sale'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'IC_cogs',
+                          type => 'checkbox',
+                          label => text('COGS'),
+                          ${form.IC_cogs} => form.IC_cogs,
+                          value => 'IC_cogs'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'IC_taxpart',
+                          type => 'checkbox',
+                          label => text('Tax'),
+                          ${form.IC_taxpart} => form.IC_taxpart,
+                          value => 'IC_taxpart'} ?>
+                </td>
+                <td align="right">
+                  <?lsmb PROCESS input element_data={
+                          name => 'IC_income',
+                          type => 'checkbox',
+                          label => text('Income'),
+                          ${form.IC_income} => form.IC_income,
+                          value => 'IC_income'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'IC_expense',
+                          type => 'checkbox',
+                          label => text('Expense'),
+                          ${form.IC_expense} => form.IC_expense,
+                          value => 'IC_expense'} ?><br />
+                  <?lsmb PROCESS input element_data={
+                          name => 'IC_taxservice',
+                          type => 'checkbox',
+                          label => text('Tax'),
+                          ${form.IC_taxservice} => form.IC_taxservice,
+                          value => 'IC_taxservice'} ?>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+<?lsmb END ?>
+        <tr><td> </td></tr>
+        <tr>
+          <th align="right"><?lsmb text('GIFI') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            name => 'gifi_accno',
+            size => '9',
+            value => form.gifi_accno} ?></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td><hr size="3" noshade="noshade" /></td></tr>
+</table>
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>

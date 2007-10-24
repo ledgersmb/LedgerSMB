@@ -66,8 +66,21 @@ sub add_account {
 "$form->{script}?action=list_account&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &account_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $checked = &account_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-account-form');
+    $template->render({
+        form => $form,
+        checked => $checked,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
@@ -84,15 +97,29 @@ sub edit_account {
         $form->{$item} = "checked";
     }
 
-    &account_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $checked = &account_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
 
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-account-form');
+    $template->render({
+        form => $form,
+        checked => $checked,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 }
 
 sub account_header {
 
+    my $hiddens = shift;
     $form->{title} = $locale->text("$form->{title} Account");
 
+    my %checked;
     $checked{ $form->{charttype} } = "checked";
     $checked{contra} = "checked" if $form->{contra};
     $checked{"$form->{category}_"} = "checked";
@@ -103,171 +130,54 @@ sub account_header {
     # type=submit $locale->text('Add Account')
     # type=submit $locale->text('Edit Account')
 
-    $form->header;
+    $hiddens->{type} = 'account';
+    $hiddens->{$_} eq $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
 
-    print qq|
-<body>
+    \%checked;
+}
 
-<form method=post action=$form->{script}>
+sub form_footer_buttons {
 
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=account>
+    my ($hiddens, $buttons) = @_;
+    $hiddens->{$_} = $form->{$_} foreach qw(callback path login sessionid);
 
-<input type=hidden name=inventory_accno_id value=$form->{inventory_accno_id}>
-<input type=hidden name=income_accno_id value=$form->{income_accno_id}>
-<input type=hidden name=expense_accno_id value=$form->{expense_accno_id}>
-<input type=hidden name=fxgain_accno_id values=$form->{fxgain_accno_id}>
-<input type=hidden name=fxloss_accno_id values=$form->{fxloss_accno_id}>
+    # type=submit $locale->text('Save')
+    # type=submit $locale->text('Save as new')
+    # type=submit $locale->text('Delete')
 
-<table border=0 width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr valign=top>
-    <td>
-      <table>
-	<tr>
-	  <th align="right">| . $locale->text('Account Number') . qq|</th>
-	  <td><input name=accno size=20 value="$form->{accno}"></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Description') . qq|</th>
-	  <td><input name=description size=40 value="$form->{description}"></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Account Type') . qq|</th>
-	  <td>
-	    <table>
-	      <tr valign=top>
-		<td><input name=category type=radio class=radio value=A $checked{A_}>&nbsp;|
-      . $locale->text('Asset')
-      . qq|\n<br>
-		<input name=category type=radio class=radio value=L $checked{L_}>&nbsp;|
-      . $locale->text('Liability')
-      . qq|\n<br>
-		<input name=category type=radio class=radio value=Q $checked{Q_}>&nbsp;|
-      . $locale->text('Equity')
-      . qq|\n<br>
-		<input name=category type=radio class=radio value=I $checked{I_}>&nbsp;|
-      . $locale->text('Income')
-      . qq|\n<br>
-		<input name=category type=radio class=radio value=E $checked{E_}>&nbsp;|
-      . $locale->text('Expense')
-      . qq|</td>
-		<td>
-		<input name=contra class=checkbox type=checkbox value=1 $checked{contra}>&nbsp;|
-      . $locale->text('Contra') . qq|
-		</td>
-		<td>
-		<input name=charttype type=radio class=radio value="H" $checked{H}>&nbsp;|
-      . $locale->text('Heading') . qq|<br>
-		<input name=charttype type=radio class=radio value="A" $checked{A}>&nbsp;|
-      . $locale->text('Account')
-      . qq|</td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-|;
+    %button = ();
 
-    if ( $form->{charttype} eq "A" ) {
-        print qq|
-	<tr>
-	  <td colspan=2>
-	    <table>
-	      <tr>
-		<th align=left>|
-          . $locale->text('Is this a summary account to record')
-          . qq|</th>
-		<td>
-		<input name=AR class=checkbox type=checkbox value=AR $form->{AR}>&nbsp;|
-          . $locale->text('AR')
-          . qq|&nbsp;<input name=AP class=checkbox type=checkbox value=AP $form->{AP}>&nbsp;|
-          . $locale->text('AP')
-          . qq|&nbsp;<input name=IC class=checkbox type=checkbox value=IC $form->{IC}>&nbsp;|
-          . $locale->text('Inventory')
-          . qq|</td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-	<tr>
-	  <th colspan=2>| . $locale->text('Include in drop-down menus') . qq|</th>
-	</tr>
-	<tr valign=top>
-	  <td colspan=2>
-	    <table width=100%>
-	      <tr>
-		<th align=left>| . $locale->text('Receivables') . qq|</th>
-		<th align=left>| . $locale->text('Payables') . qq|</th>
-		<th align=left>| . $locale->text('Tracking Items') . qq|</th>
-		<th align=left>| . $locale->text('Non-tracking Items') . qq|</th>
-	      </tr>
-	      <tr>
-		<td>
-		<input name=AR_amount class=checkbox type=checkbox value=AR_amount $form->{AR_amount}>&nbsp;|
-          . $locale->text('Income')
-          . qq|\n<br>
-		<input name=AR_paid class=checkbox type=checkbox value=AR_paid $form->{AR_paid}>&nbsp;|
-          . $locale->text('Payment')
-          . qq|\n<br>
-		<input name=AR_tax class=checkbox type=checkbox value=AR_tax $form->{AR_tax}>&nbsp;|
-          . $locale->text('Tax') . qq|
-		</td>
-		<td>
-		<input name=AP_amount class=checkbox type=checkbox value=AP_amount $form->{AP_amount}>&nbsp;|
-          . $locale->text('Expense/Asset')
-          . qq|\n<br>
-		<input name=AP_paid class=checkbox type=checkbox value=AP_paid $form->{AP_paid}>&nbsp;|
-          . $locale->text('Payment')
-          . qq|\n<br>
-		<input name=AP_tax class=checkbox type=checkbox value=AP_tax $form->{AP_tax}>&nbsp;|
-          . $locale->text('Tax') . qq|
-		</td>
-		<td>
-		<input name=IC_sale class=checkbox type=checkbox value=IC_sale $form->{IC_sale}>&nbsp;|
-          . $locale->text('Income')
-          . qq|\n<br>
-		<input name=IC_cogs class=checkbox type=checkbox value=IC_cogs $form->{IC_cogs}>&nbsp;|
-          . $locale->text('COGS')
-          . qq|\n<br>
-		<input name=IC_taxpart class=checkbox type=checkbox value=IC_taxpart $form->{IC_taxpart}>&nbsp;|
-          . $locale->text('Tax') . qq|
-		</td>
-		<td>
-		<input name=IC_income class=checkbox type=checkbox value=IC_income $form->{IC_income}>&nbsp;|
-          . $locale->text('Income')
-          . qq|\n<br>
-		<input name=IC_expense class=checkbox type=checkbox value=IC_expense $form->{IC_expense}>&nbsp;|
-          . $locale->text('Expense')
-          . qq|\n<br>
-		<input name=IC_taxservice class=checkbox type=checkbox value=IC_taxservice $form->{IC_taxservice}>&nbsp;|
-          . $locale->text('Tax') . qq|
-		</td>
-	      </tr>
-	    </table>
-	  </td>  
-	</tr>  
-	<tr>
-	</tr>
-|;
+    if ( $form->{id} ) {
+        $button{'save'} =
+          { ndx => 3, key => 'S', value => $locale->text('Save') };
+        $button{'save_as_new'} =
+          { ndx => 7, key => 'N', value => $locale->text('Save as new') };
+
+        if ( $form->{orphaned} ) {
+            $button{'delete'} =
+              { ndx => 16, key => 'D', value => $locale->text('Delete') };
+        }
+    }
+    else {
+        $button{'save'} =
+          { ndx => 3, key => 'S', value => $locale->text('Save') };
     }
 
-    print qq|
-        <tr>
-	  <th align="right">| . $locale->text('GIFI') . qq|</th>
-	  <td><input name=gifi_accno size=9 value="$form->{gifi_accno}"></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
+        push @{$buttons}, {
+            name => 'action',
+            value => $_,
+            accesskey => $button{$_}{key},
+            title => "$button{$_}{value} [Alt-$button{$_}{key}]",
+            text => $button{$_}{value},
+            };
+    }
 
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 }
 
 sub form_footer {
@@ -704,8 +614,21 @@ sub copy_to_coa {
     $form->{title}     = "Add";
     $form->{charttype} = "A";
 
-    &account_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $checked = &account_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-account-form');
+    $template->render({
+        form => $form,
+        checked => $checked,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
