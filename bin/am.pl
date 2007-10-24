@@ -1135,8 +1135,20 @@ sub add_language {
 "$form->{script}?action=add_language&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &language_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    &language_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-language-form');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
@@ -1149,11 +1161,22 @@ sub edit_language {
 
     AM->get_language( \%myconfig, \%$form );
     $form->{id} = $form->{code};
-
-    &language_header;
-
     $form->{orphaned} = 1;
-    &form_footer;
+
+    my %hiddens;
+    my @buttons;
+    &language_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-language-form');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
@@ -1233,6 +1256,7 @@ sub list_language {
 }
 
 sub language_header {
+    my $hiddens = shift;
 
     $form->{title} = $locale->text("$form->{title} Language");
 
@@ -1241,34 +1265,8 @@ sub language_header {
 
     for (qw(code description)) { $form->{$_} = $form->quote( $form->{$_} ) }
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=type value=language>
-<input type=hidden name=id value="$form->{code}">
-
-<table width=100%>
-  <tr>
-    <th class=listtop colspan=2>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <th align="right">| . $locale->text('Code') . qq|</th>
-    <td><input name=code size=10 value="$form->{code}"></td>
-  <tr>
-  <tr>
-    <th align="right">| . $locale->text('Description') . qq|</th>
-    <td><input name=description size=60 value="$form->{description}"></td>
-  </tr>
-    <td colspan=2><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
+    $hiddens->{type} = 'language';
+    $hiddens->{id} = $form->{code};
 }
 
 sub save_language {
@@ -1322,40 +1320,27 @@ sub save_language {
 sub delete_language {
 
     $form->{title} = $locale->text('Confirm!');
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
     for (qw(action nextsub)) { delete $form->{$_} }
 
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>$form->{title}</h2>
-
-<h4>|
-      . $locale->text(
+    my %hiddens;
+    $hiddens{$_} = $form->{$_} foreach keys %$form;
+    my @buttons = ({
+        name => 'action',
+        value => 'yes_delete_language',
+        text => $locale->text('Delete Language'),
+        });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'form-confirmation');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+        query => $locale->text(
 'Deleting a language will also delete the templates for the language [_1]',
-        $form->{invnumber}
-      )
-      . qq|</h4>
-
-<input type=hidden name=action value=continue>
-<input type=hidden name=nextsub value=yes_delete_language>
-<button name="action" class="submit" type="submit" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
-
+            $form->{id}),
+    });
 }
 
 sub yes_delete_language {
