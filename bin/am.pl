@@ -966,9 +966,21 @@ sub add_sic {
 "$form->{script}?action=add_sic&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &sic_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $checked = &sic_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
 
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-sic-form');
+    $template->render({
+        form => $form,
+        heading => $checked,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 }
 
 sub edit_sic {
@@ -980,11 +992,23 @@ sub edit_sic {
 
     AM->get_sic( \%myconfig, \%$form );
     $form->{id} = $form->{code};
-
-    &sic_header;
-
     $form->{orphaned} = 1;
-    &form_footer;
+
+    my %hiddens;
+    my @buttons;
+    my $checked = &sic_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
+
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-sic-form');
+    $template->render({
+        form => $form,
+        heading => $checked,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 
 }
 
@@ -992,7 +1016,7 @@ sub list_sic {
 
     AM->sic( \%myconfig, \%$form );
 
-    $href =
+    my $href =
 "$form->{script}?action=list_sic&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->sort_order();
@@ -1000,112 +1024,77 @@ sub list_sic {
     $form->{callback} =
 "$form->{script}?action=list_sic&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
-    $callback = $form->escape( $form->{callback} );
+    my $callback = $form->escape( $form->{callback} );
 
     $form->{title} = $locale->text('Standard Industrial Codes');
 
-    @column_index = $form->sort_columns(qw(code description));
+    my @column_index = $form->sort_columns(qw(code description));
 
-    $column_header{code} =
-        qq|<th><a class="listheading" href=$href&sort=code>|
-      . $locale->text('Code')
-      . qq|</a></th>|;
-    $column_header{description} =
-        qq|<th><a class="listheading" href=$href&sort=description>|
-      . $locale->text('Description')
-      . qq|</a></th>|;
+    my %column_header;
+    $column_header{code} = {
+        href => "$href&sort=code",
+        text => $locale->text('Code'),
+        };
+    $column_header{description} = {
+        href => "$href&sort=description",
+        text => $locale->text('Description'),
+        };
 
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class="listheading">
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
+    my @rows;
+    my $i = 0;
     foreach $ref ( @{ $form->{ALL} } ) {
 
+        my %column_data;
         $i++;
         $i %= 2;
 
         if ( $ref->{sictype} eq 'H' ) {
-            print qq|
-        <tr valign=top class="listheading">
-|;
-            $column_data{code} =
-qq|<th><a href=$form->{script}?action=edit_sic&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{code}</th>|;
-            $column_data{description} = qq|<th>$ref->{description}</th>|;
-
+            $column_data{class} = 'heading';
         }
-        else {
-            print qq|
-        <tr valign=top class=listrow$i>
-|;
+        $column_data{i} = $i;
+        $column_data{code} = {
+            text => $ref->{code},
+            href => "$form->{script}?action=edit_sic&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+            };
+        $column_data{description} = $ref->{description};
 
-            $column_data{code} =
-qq|<td><a href=$form->{script}?action=edit_sic&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{code}</td>|;
-            $column_data{description} = qq|<td>$ref->{description}</td>|;
-
-        }
-
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-	</tr>
-|;
+        push @rows, \%column_data;
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-  <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<form method=post action=$form->{script}>
-|;
 
     $form->{type} = "sic";
+    my @hiddens = qw(type callback path login sessionid);
 
-    $form->hide_form(qw(type callback path login sessionid));
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
-<button class="submit" type="submit" name="action" value="add_sic">|
-      . $locale->text('Add SIC')
-      . qq|</button>|;
+    my @buttons;
+    push @buttons, {
+        name => 'action',
+        value => 'add_sic',
+        text => $locale->text('Add SIC'),
+        type => 'submit',
+        class => 'submit',
+    };
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-  
-  </body>
-  </html> 
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-list-departments');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        hiddens => \@hiddens,
+    });
 }
 
 sub sic_header {
+    my $hiddens = shift;
 
     $form->{title} = $locale->text("$form->{title} SIC");
 
@@ -1116,40 +1105,10 @@ sub sic_header {
 
     $checked = ( $form->{sictype} eq 'H' ) ? "checked" : "";
 
-    $form->header;
+    $hiddens->{type} = 'sic';
+    $hiddens->{id} = $form->{code};
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=type value=sic>
-<input type=hidden name=id value="$form->{code}">
-
-<table width=100%>
-  <tr>
-    <th class=listtop colspan=2>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <th align="right">| . $locale->text('Code') . qq|</th>
-    <td><input name=code size=10 value="$form->{code}"></td>
-  <tr>
-  <tr>
-    <td></td>
-    <th align=left><input name=sictype class=checkbox type=checkbox value="H" $checked> |
-      . $locale->text('Heading')
-      . qq|</th>
-  <tr>
-  <tr>
-    <th align="right">| . $locale->text('Description') . qq|</th>
-    <td><input name=description size=60 value="$form->{description}"></td>
-  </tr>
-    <td colspan=2><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
+    $checked;
 }
 
 sub save_sic {
