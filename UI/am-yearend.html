@@ -1,0 +1,70 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td> </td></tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th align="right"><?lsmb text('Yearend') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            class => 'date',
+            name => 'todate',
+            size => 11,
+            title => user.dateformat,
+            } -?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Reference') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            name => 'reference',
+            size => 20,
+            value => text('Yearend'),
+            } -?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Description') ?></th>
+          <td><?lsmb PROCESS textarea element_data={
+            name => 'description',
+            rows => 3,
+            cols => 50,
+            } -?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Retained Earnings') ?></th>
+          <td><?lsmb PROCESS select element_data=accounts -?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Method') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            name => 'method',
+            type => 'radio',
+            value => 'accrual',
+            checked => 'checked',
+            label => text('Accrual'),
+            };
+          PROCESS input element_data={
+            name => 'method',
+            type => 'radio',
+            value => 'cash',
+            label => text('Cash'),
+            } -?></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<hr size="3" noshade="noshade" />
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>

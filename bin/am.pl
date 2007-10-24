@@ -2130,73 +2130,41 @@ sub delete_warehouse {
 sub yearend {
 
     AM->earningsaccounts( \%myconfig, \%$form );
-    $chart = "";
+    my %hiddens;
+    my $chart = "";
+    my %accounts = (
+        name => 'accno',
+        options => [],
+        );
     for ( @{ $form->{chart} } ) {
-        $chart .= "<option>$_->{accno}--$_->{description}";
+        push @{$accounts{options}}, {
+            text => "$_->{accno}--$_->{description}",
+            value => "$_->{accno}--$_->{description}",
+            };
     }
-
     $form->{title} = $locale->text('Yearend');
-    $form->header;
 
-    print qq|
-<body>
+    $hiddens{decimalplaces} = 2;
+    $hiddens{l_accno} = 'Y';
+    $hiddens{$_} = $form->{$_} foreach qw(path login sessionid);
 
-<form method=post action=$form->{script}>
+    my @buttons = ({
+        name => 'action',
+        value => 'generate_yearend',
+        text => $locale->text('Continue'),
+        });
 
-<input type=hidden name=decimalplaces value=2>
-<input type=hidden name=l_accno value=Y>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align="right">| . $locale->text('Yearend') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}" value=$todate></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Reference') . qq|</th>
-	  <td><input name=reference size=20 value="|
-      . $locale->text('Yearend')
-      . qq|"></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Description') . qq|</th>
-	  <td><textarea name=description rows=3 cols=50 wrap=soft></textarea></td>
-	</tr>
-	<tr>
-	  <th align="right">| . $locale->text('Retained Earnings') . qq|</th>
-	  <td><select name=accno>$chart</select></td>
-	</tr>
-	<tr>
-          <th align="right">| . $locale->text('Method') . qq|</th>
-          <td><input name=method class=radio type=radio value=accrual checked>&nbsp;|
-      . $locale->text('Accrual')
-      . qq|&nbsp;<input name=method class=radio type=radio value=cash>&nbsp;|
-      . $locale->text('Cash')
-      . qq|</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-
-<hr size=3 noshade>
-
-<input type=hidden name=nextsub value=generate_yearend>
-|;
-
-    $form->hide_form(qw(path login sessionid));
-
-    print qq|
-<button class="submit" type="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-yearend');
+    $template->render({
+        user => \%myconfig, 
+        form => $form,
+        buttons => \@buttons,
+	hiddens => \%hiddens,
+	accounts => \%accounts,
+    });
 }
 
 sub generate_yearend {
