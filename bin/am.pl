@@ -642,9 +642,21 @@ sub add_department {
 "$form->{script}?action=add_department&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &department_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $rows = &department_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
 
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-department-form');
+    $template->render({
+        form => $form,
+        row_count => $rows,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 }
 
 sub edit_department {
@@ -653,9 +665,21 @@ sub edit_department {
 
     AM->get_department( \%myconfig, \%$form );
 
-    &department_header;
-    &form_footer;
+    my %hiddens;
+    my @buttons;
+    my $rows = &department_header(\%hiddens);
+    &form_footer_buttons(\%hiddens, \@buttons);
 
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-department-form');
+    $template->render({
+        form => $form,
+        row_count => $rows,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+    });
 }
 
 sub list_department {
@@ -735,6 +759,7 @@ sub list_department {
 }
 
 sub department_header {
+    my $hiddens = shift;
 
     $form->{title} = $locale->text("$form->{title} Department");
 
@@ -743,50 +768,12 @@ sub department_header {
 
     $form->{description} = $form->quote( $form->{description} );
 
-    if ( ( $rows = $form->numtextrows( $form->{description}, 60 ) ) > 1 ) {
-        $description =
-qq|<textarea name="description" rows=$rows cols=60 wrap=soft>$form->{description}</textarea>|;
-    }
-    else {
-        $description =
-          qq|<input name=description size=60 value="$form->{description}">|;
-    }
+    my $rows = $form->numtextrows( $form->{description}, 60 );
 
-    $costcenter   = "checked" if $form->{role} eq "C";
-    $profitcenter = "checked" if $form->{role} eq "P";
+    $hiddens->{id} = $form->{id};
+    $hiddens->{type} = 'department';
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=department>
-
-<table width=100%>
-  <tr>
-    <th class=listtop colspan=2>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <th align="right">| . $locale->text('Description') . qq|</th>
-    <td>$description</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><input type=radio style=radio name=role value="C" $costcenter> |
-      . $locale->text('Cost Center') . qq|
-        <input type=radio style=radio name=role value="P" $profitcenter> |
-      . $locale->text('Profit Center') . qq|
-    </td>
-  <tr>
-    <td colspan=2><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
+    $rows;
 }
 
 sub save_department {
