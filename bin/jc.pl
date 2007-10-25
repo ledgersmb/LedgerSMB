@@ -1217,45 +1217,42 @@ sub print_and_save_as_new {
 
 sub resave {
 
+    my %hiddens;
+    my @buttons;
     if ( $form->{print_and_save} ) {
         $form->{nextsub} = "print_and_save";
+        @buttons = ({
+            name => 'action',
+            value => 'print_and_save',
+            text => $locale->text('Print and Save Transaction'),
+            });
         $msg =
           $locale->text('You are printing and saving an existing transaction!');
     }
     else {
         $form->{nextsub} = "save";
+        @buttons = ({
+            name => 'action',
+            value => 'save',
+            text => $locale->text('Save Transaction'),
+            });
         $msg = $locale->text('You are saving an existing transaction!');
     }
 
-    $form->{resave} = 1;
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-|;
-
     delete $form->{action};
-
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>| . $locale->text('Warning!') . qq|</h2>
-
-<h4>$msg</h4>
-
-<button name="action" class="submit" type="submit" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
-
+    $hiddens{$_} = $form->{$_} foreach keys %$form;
+    $hiddens{resave} = 1;
+    $form->{title} = $locale->text('Warning!');
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'form-confirmation');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+        query => $msg,
+    });
 }
 
 sub print_and_save {
@@ -1283,39 +1280,35 @@ sub print_and_save {
 
 sub delete_timecard {
 
-    $form->header;
-
-    $employee = $form->{employee};
+    my $employee = $form->{employee};
     $employee =~ s/--.*//g;
-    $projectnumber = $form->{projectnumber};
+    my $projectnumber = $form->{projectnumber};
     $projectnumber =~ s/--.*//g;
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
     delete $form->{action};
+    $form->{title} = $locale->text('Confirm!');
 
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>| . $locale->text('Confirm!') . qq|</h2>
-
-<h4>| . $locale->text('Are you sure you want to delete time card for') . qq|
-<p>$form->{transdate}
-<br>$employee
-<br>$projectnumber
-</h4>
-
-<p>
-<button name="action" class="submit" type="submit" value="yes">|
-      . $locale->text('Yes')
-      . qq|</button>
-</form>
-|;
-
+    my %hiddens;
+    $hiddens{$_} = $form->{$_} foreach keys %$form;
+    my @buttons = ({
+        name => 'action',
+        value => 'yes_delete_timecard',
+        text => $locale->text('Delete Timecard'),
+        });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'form-confirmation');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+        hiddens => \%hiddens,
+        query => $locale->text(
+            'Are you sure you want to delete time card for [_1] [_2] [_3]',
+            $form->{transdate},
+            $employee,
+            $projectnumber),
+    });
 }
 
 sub delete { &{"delete_$form->{type}"} }
