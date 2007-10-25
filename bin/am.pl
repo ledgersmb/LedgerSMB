@@ -180,50 +180,6 @@ sub form_footer_buttons {
 ##    }
 }
 
-sub form_footer {
-
-    $form->hide_form(qw(callback path login sessionid));
-
-    # type=submit $locale->text('Save')
-    # type=submit $locale->text('Save as new')
-    # type=submit $locale->text('Delete')
-
-    %button = ();
-
-    if ( $form->{id} ) {
-        $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save') };
-        $button{'save_as_new'} =
-          { ndx => 7, key => 'N', value => $locale->text('Save as new') };
-
-        if ( $form->{orphaned} ) {
-            $button{'delete'} =
-              { ndx => 16, key => 'D', value => $locale->text('Delete') };
-        }
-    }
-    else {
-        $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save') };
-    }
-
-    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
-        $form->print_button( \%button, $_ );
-    }
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
-}
-
 sub save_account {
 
     $form->isblank( "accno",    $locale->text('Account Number missing!') );
@@ -1427,6 +1383,7 @@ sub list_templates {
 
 sub display_form {
 
+    my %hiddens;
     AM->load_template( \%myconfig, \%$form );
 
     $form->{title} = $form->{file};
@@ -1434,91 +1391,65 @@ sub display_form {
     $form->{body} =~
 s/<%include (.*?)%>/<a href=$form->{script}\?action=display_form&file=$myconfig{templates}\/$form->{code}\/$1&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}>$1<\/a>/g;
 
-    # if it is anything but html
-    if ( $form->{file} !~ /\.html$/ ) {
-        $form->{body} = "<pre>\n$form->{body}\n</pre>";
-    }
-
-    $form->header;
-
-    print qq|
-<body>
-
-$form->{body}
-
-<form method=post action=$form->{script}>
-|;
-
     $form->{type} = "template";
+    $hiddens{$_} = $form->{$_} foreach qw(file type path login sessionid);
 
-    $form->hide_form(qw(file type path login sessionid));
+##SC: Temporary commenting
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
-<button name="action" type="submit" class="submit" value="edit">|
-      . $locale->text('Edit')
-      . qq|</button>|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
-
+    my @buttons = ({
+        name => 'action',
+        value => 'edit',
+        text => $locale->text('Edit Template'),
+        });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-display-template');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+	hiddens => \%hiddens,
+    });
 }
 
 sub edit_template {
 
     AM->load_template( \%myconfig, \%$form );
+    my %hiddens;
 
     $form->{title} = $locale->text('Edit Template');
 
     # convert &nbsp to &amp;nbsp;
     $form->{body} =~ s/&nbsp;/&amp;nbsp;/gi;
 
-    $form->header;
+    $hiddens{type} = 'template';
+    $hiddens{$_} = $form->{$_} foreach qw(file path login sessionid);
+    $hiddens{callback} = qq|$form->{script}?action=display_form&file=$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}|;
 
-    print qq|
-<body>
+##SC: Temporary commenting
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-<form method=post action=$form->{script}>
-
-<input name=file type=hidden value=$form->{file}>
-<input name=type type=hidden value=template>
-
-<input type=hidden name=path value=$form->{path}>
-<input type=hidden name=login value=$form->{login}>
-<input type=hidden name=sessionid value=$form->{sessionid}>
-
-<input name=callback type=hidden value="$form->{script}?action=display_form&file=$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}">
-
-<textarea name=body rows=25 cols=70>
-$form->{body}
-</textarea>
-
-<br>
-<button type="submit" class="submit" name="action" value="save">|
-      . $locale->text('Save')
-      . qq|</button>|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print q|
-  </form>
-
-
-</body>
-</html>
-|;
-
+    my @buttons = ({
+        name => 'action',
+        value => 'save',
+        text => $locale->text('Save Template'),
+        });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-edit-template');
+    $template->render({
+        form => $form,
+        buttons => \@buttons,
+	hiddens => \%hiddens,
+    });
 }
 
 sub save_template {
