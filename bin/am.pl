@@ -2209,7 +2209,7 @@ sub generate_yearend {
 
 sub company_logo {
 
-    $myconfig{address} =~ s/\\n/<br>/g;
+    $myconfig{address} =~ s/\\n/<br>/g; # Template cleans this up
     $myconfig{dbhost} = $locale->text('localhost') unless $myconfig{dbhost};
 
     $form->{stylesheet} = $myconfig{stylesheet};
@@ -2217,48 +2217,14 @@ sub company_logo {
     $form->{title} = $locale->text('About');
 
     # create the logo screen
-    $form->header;
-
-    print qq|
-<body>
-
-<pre>
-
-</pre>
-<center>
-<a href="http://www.ledgersmb.org/" target="_blank"><img src="images/ledgersmb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
-<h1 class="login">| . $locale->text('Version') . qq| $form->{version}</h1>
-
-<p>
-|.$locale->text('Company').qq| :
-<p>
-<b>
-$myconfig{company}
-<br>$myconfig{address}
-</b>
-
-<p>
-<table border=0>
-  <tr>
-    <th align="right">| . $locale->text('User') . qq|</th>
-    <td>$myconfig{name}</td>
-  </tr>
-  <tr>
-    <th align="right">| . $locale->text('Dataset') . qq|</th>
-    <td>$myconfig{dbname}</td>
-  </tr>
-  <tr>
-    <th align="right">| . $locale->text('Database Host') . qq|</th>
-    <td>$myconfig{dbhost}</td>
-  </tr>
-</table>
-
-</center>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale,
+        template => 'am-company-logo');
+    $template->render({
+        form => $form,
+        user => \%myconfig,
+    });
 }
 
 sub recurring_transactions {
