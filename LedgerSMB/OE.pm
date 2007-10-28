@@ -77,14 +77,19 @@ sub transactions {
     }
     my $query = qq|
 		SELECT o.id, o.ordnumber, o.transdate, o.reqdate,
-			o.amount, ct.name, o.netamount, o.$form->{vc}_id,
+			o.amount, c.legal_name AS name, o.netamount, o.entity_id AS $form->{vc}_id,
 			ex.$rate AS exchangerate, o.closed, o.quonumber, 
-			o.shippingpoint, o.shipvia, e.name AS employee, 
-			m.name AS manager, o.curr, o.ponumber
+			o.shippingpoint, o.shipvia,
+			pe.first_name \|\| ' ' \|\| pe.last_name AS employee, 
+			pm.first_name \|\| ' ' \|\| pm.last_name AS manager, 
+			o.curr, o.ponumber
 		FROM oe o
-		JOIN $form->{vc} ct ON (o.$form->{vc}_id = ct.id)
-		LEFT JOIN employee e ON (o.employee_id = e.id)
-		LEFT JOIN employee m ON (e.managerid = m.id)
+		JOIN $form->{vc} ct ON (o.entity_id = ct.id)
+		JOIN company c ON (c.entity_id = ct.entity_id)
+		LEFT JOIN person pe ON (o.person_id = pe.id)
+		LEFT JOIN employee e ON (pe.entity_id = e.entity_id)
+		LEFT JOIN person pm ON (e.managerid = pm.id)
+		LEFT JOIN employee m ON (pm.entity_id = m.entity_id)
 		LEFT JOIN exchangerate ex 
 			ON (ex.curr = o.curr AND ex.transdate = o.transdate)
 		WHERE o.quotation = ?
@@ -355,7 +360,7 @@ sub save {
 				($form->{id}, ?, ?, ?, ?,
 				?, ?, ?, ?,
 				?, ?, ?, ?, ?,
-				?, ?, ?, ?, ?)|;
+				?, ?, ?, ?)|;
         @queryargs = (
             $form->{ordnumber},     $form->{quonumber},
             $form->{transdate},     $form->{entity_id}, $form->{reqdate},
