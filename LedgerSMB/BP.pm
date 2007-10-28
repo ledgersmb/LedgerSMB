@@ -200,13 +200,14 @@ sub get_spoolfiles {
 
             $query .= qq| 
 				$union
-				SELECT a.id, vc.name, a.$invnumber AS invnumber, a.transdate,
+				SELECT a.id, c.legal_name AS name, a.$invnumber AS invnumber, a.transdate,
 				       a.ordnumber, a.quonumber, $invoice AS invoice,
 				       '$item' AS module, s.spoolfile
-				  FROM $item a, $form->{vc} vc, status s
+				  FROM $item a, $form->{vc} vc, status s, company c
 				 WHERE s.trans_id = a.id
 				       AND s.spoolfile IS NOT NULL
 				       AND s.formname = ?
+				       AND c.entity_id = vc.entity_id
 				       AND a.entity_id = vc.entity_id|;
 
             push( @queryargs, $form->{type} );
@@ -217,7 +218,7 @@ sub get_spoolfiles {
 
                 if ( $form->{ $form->{vc} } ne "" ) {
                     $item = $form->like( lc $form->{ $form->{vc} } );
-                    $query .= " AND lower(vc.name) LIKE ?";
+                    $query .= " AND lower(c.legal_name) LIKE ?";
                     push @queryargs, $item;
                 }
             }
@@ -331,6 +332,7 @@ sub delete_spool {
 sub print_spool {
 
     my ( $self, $myconfig, $form ) = @_;
+    ##SC: XXX May need to be changed after hooking up printing to templates
 
     # connect to database
     my $dbh = $form->{dbh};

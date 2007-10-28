@@ -246,6 +246,7 @@ sub print {
 
     for $i ( 1 .. $form->{rowcount} ) {
         if ( $form->{"checked_$i"} ) {
+            ##SC: XXX adjust later once printing hooked up to templates
             $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
             $form->{printmode} = '|-';
             $form->info( $locale->text('Printing') . " ..." );
@@ -269,77 +270,72 @@ sub print {
 
 sub list_spool {
 
+    my %hiddens;
+    my @buttons;
+
     $form->{ $form->{vc} } = $form->unescape( $form->{ $form->{vc} } );
     ( $form->{ $form->{vc} }, $form->{"$form->{vc}_id"} ) =
       split( /--/, $form->{ $form->{vc} } );
 
     BP->get_spoolfiles( \%myconfig, \%$form );
 
-    $title = $form->escape( $form->{title} );
-    $href =
+    my $title = $form->escape( $form->{title} );
+    my $href =
 "$form->{script}?action=list_spool&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&vc=$form->{vc}&type=$form->{type}&title=$title";
 
     $form->sort_order();
 
     $title = $form->escape( $form->{title}, 1 );
-    $callback =
+    my $callback =
 "$form->{script}?action=list_spool&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&vc=$form->{vc}&type=$form->{type}&title=$title";
 
+    my @options;
     if ( $form->{ $form->{vc} } ) {
         $callback .=
           "&$form->{vc}=" . $form->escape( $form->{ $form->{vc} }, 1 );
         $href .= "&$form->{vc}=" . $form->escape( $form->{ $form->{vc} } );
-        $option =
+        push @options, 
           ( $form->{vc} eq 'customer' )
-          ? $locale->text('Customer')
-          : $locale->text('Vendor');
-        $option .= " : $form->{$form->{vc}}";
+          ? $locale->text('Customer: [_1]', $form->{$form->{vc}})
+          : $locale->text('Vendor: [_1]', $form->{$form->{vc}});
     }
     if ( $form->{account} ) {
         $callback .= "&account=" . $form->escape( $form->{account}, 1 );
         $href   .= "&account=" . $form->escape( $form->{account} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Account') . " : $form->{account}";
+        push @options, $locale->text('Account: [_1]', $form->{account});
     }
     if ( $form->{invnumber} ) {
         $callback .= "&invnumber=" . $form->escape( $form->{invnumber}, 1 );
         $href   .= "&invnumber=" . $form->escape( $form->{invnumber} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Invoice Number') . " : $form->{invnumber}";
+        push @options, $locale->text('Invoice Number: [_1]', $form->{invnumber});
     }
     if ( $form->{ordnumber} ) {
         $callback .= "&ordnumber=" . $form->escape( $form->{ordnumber}, 1 );
         $href   .= "&ordnumber=" . $form->escape( $form->{ordnumber} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Order Number') . " : $form->{ordnumber}";
+        push @options, $locale->text('Order Number: [_1]', $form->{ordnumber});
     }
     if ( $form->{quonumber} ) {
         $callback .= "&quonumber=" . $form->escape( $form->{quonumber}, 1 );
         $href   .= "&quonumber=" . $form->escape( $form->{quonumber} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Quotation Number') . " : $form->{quonumber}";
+        push @options, $locale->text('Quotation Number: [_1]', $form->{quonumber});
     }
 
     if ( $form->{transdatefrom} ) {
         $callback .= "&transdatefrom=$form->{transdatefrom}";
         $href     .= "&transdatefrom=$form->{transdatefrom}";
-        $option   .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('From') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{transdatefrom}, 1 );
+        push @options, $locale->text('From [_1]',
+            $locale->date( \%myconfig, $form->{transdatefrom}, 1 ));
     }
     if ( $form->{transdateto} ) {
         $callback .= "&transdateto=$form->{transdateto}";
         $href     .= "&transdateto=$form->{transdateto}";
-        $option   .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('To') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{transdateto}, 1 );
+        push @options, $locale->text('To [_1]',
+            $locale->date( \%myconfig, $form->{transdateto}, 1 ));
     }
 
-    $name = ucfirst $form->{vc};
+    my $name = ucfirst $form->{vc};
 
-    @columns = qw(transdate);
+    my @columns = qw(transdate);
     if ( $form->{type} =~ /(invoice)/ ) {
         push @columns, "invnumber";
     }
@@ -357,63 +353,36 @@ sub list_spool {
     }
 
     push @columns, ( name, spoolfile );
-    @column_index = $form->sort_columns(@columns);
+    my @column_index = $form->sort_columns(@columns);
     unshift @column_index, "checked";
 
-    $column_header{checked} = "<th class=listheading>&nbsp;</th>";
-    $column_header{transdate} =
-        "<th><a class=listheading href=$href&sort=transdate>"
-      . $locale->text('Date')
-      . "</a></th>";
-    $column_header{invnumber} =
-        "<th><a class=listheading href=$href&sort=invnumber>"
-      . $locale->text('Invoice')
-      . "</a></th>";
-    $column_header{ordnumber} =
-        "<th><a class=listheading href=$href&sort=ordnumber>"
-      . $locale->text('Order')
-      . "</a></th>";
-    $column_header{quonumber} =
-        "<th><a class=listheading href=$href&sort=quonumber>"
-      . $locale->text('Quotation')
-      . "</a></th>";
-    $column_header{name} =
-        "<th><a class=listheading href=$href&sort=name>"
-      . $locale->text($name)
-      . "</a></th>";
-    $column_header{id} =
-        "<th><a class=listheading href=$href&sort=id>"
-      . $locale->text('ID')
-      . "</a></th>";
-    $column_header{spoolfile} =
-      "<th class=listheading>" . $locale->text('Spoolfile') . "</th>";
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-|;
-
-    for (@column_index) { print "\n$column_header{$_}" }
-
-    print qq|
-	</tr>
-|;
+    my %column_header;
+    $column_header{checked} = ' ';
+    $column_header{transdate} = {
+        href => "$href&sort=transdate",
+        text => $locale->text('Date'),
+        };
+    $column_header{invnumber} = {
+        href => "$href&sort=invnumber",
+        text => $locale->text('Invoice'),
+        };
+    $column_header{ordnumber} = {
+        href => "$href&sort=ordnumber",
+        text => $locale->text('Order'),
+        };
+    $column_header{quonumber} = {
+        href => "$href&sort=quonumber",
+        text => $locale->text('Quotation'),
+        };
+    $column_header{name} = {
+        href => "$href&sort=name",
+        text => $locale->text($name),
+        };
+    $column_header{id} = {
+        href => "$href&sort=id",
+        text => $locale->text('ID'),
+        };
+    $column_header{spoolfile} = $locale->text('Spoolfile');
 
     # add sort and escape callback, this one we use for the add sub
     $form->{callback} = $callback .= "&sort=$form->{sort}";
@@ -421,10 +390,12 @@ sub list_spool {
     # escape callback for href
     $callback = $form->escape($callback);
 
-    $i = 0;
+    my $i = 0;
+    my @rows;
 
-    foreach $ref ( @{ $form->{SPOOL} } ) {
+    foreach my $ref ( @{ $form->{SPOOL} } ) {
 
+	my %column_data;
         $i++;
 
         $form->{"checked_$i"} = "checked" if $form->{"checked_$i"};
@@ -437,93 +408,87 @@ sub list_spool {
         }
         $module = "$ref->{module}.pl";
 
-        $column_data{transdate} = "<td>$ref->{transdate}&nbsp;</td>";
+        $column_data{transdate} = $ref->{transdate};
 
         if ( ${LedgerSMB::Sysconfig::spool} eq $ref->{spoolfile} ) {
-            $column_data{checked} = qq|<td></td>|;
+            $column_data{checked} = '';
         }
         else {
-            $column_data{checked} =
-qq|<td><input name=checked_$i type=checkbox class=checkbox $form->{"checked_$i"} $form->{"checked_$i"}></td>|;
+            $column_data{checked} = {input => {
+                name => "checked_$i",
+                type => 'checkbox',
+                $form->{"checked_$i"} => $form->{"checked_$i"},
+                }};
         }
 
         for (qw(id invnumber ordnumber quonumber)) {
-            $column_data{$_} = qq|<td>$ref->{$_}</td>|;
+            $column_data{$_} = $ref->{$_};
         }
 
         if ( $ref->{module} eq 'oe' ) {
-            $column_data{invnumber} = qq|<td>&nbsp</td>|;
-            $column_data{ordnumber} =
-qq|<td><a href=$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback>$ref->{ordnumber}</a></td>
-      <input type=hidden name="reference_$i" value="$ref->{ordnumber}">|;
+            $hiddens{"reference_$i"} = $ref->{ordnumber};
+            $column_data{invnumber} = ' ';
+            $column_data{ordnumber} = {
+                href => "$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback",
+                text => $ref->{ordnumber},
+                };
 
-            $column_data{quonumber} =
-qq|<td><a href=$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback>$ref->{quonumber}</a></td>
-    <input type=hidden name="reference_$i" value="$ref->{quonumber}">|;
+            $hiddens{"reference_$i"} = $ref->{quonumber} unless $ref->{ordnumber};
+            $column_data{quonumber} = {
+                href => "$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback",
+                text => $ref->{quonumber},
+                };
 
         }
         elsif ( $ref->{module} eq 'jc' ) {
-            $column_data{id} =
-qq|<td><a href=$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback>$ref->{id}</a></td>
-    <input type=hidden name="reference_$i" value="$ref->{id}">|;
+            $hiddens{"reference_$i"} = $ref->{id};
+            $column_data{id} = {
+                href => "$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback",
+                text => $ref->{id},
+                };
         }
         else {
-            $column_data{invnumber} =
-qq|<td><a href=$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback>$ref->{invnumber}</a></td>
-    <input type=hidden name="reference_$i" value="$ref->{invnumber}">|;
+            $hiddens{"reference_$i"} = $ref->{invnumber};
+            $column_data{invnumber} = {
+                href => "$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&callback=$callback",
+                text => $ref->{invnumber},
+                };
         }
 
-        $column_data{name} = "<td>$ref->{name}</td>";
-        $column_data{spoolfile} =
-qq|<td><a href=${LedgerSMB::Sysconfig::spool}/$ref->{spoolfile}>$ref->{spoolfile}</a></td>
-
-|;
+        $column_data{name} = $ref->{name};
+        $column_data{spoolfile} = {
+            href => "${LedgerSMB::Sysconfig::spool}/$ref->{spoolfile}",
+            text => $ref->{spoolfile},
+            };
 
         ${LedgerSMB::Sysconfig::spool} = $ref->{spoolfile};
 
         $j++;
         $j %= 2;
-        print "
-        <tr class=listrow$j>
-";
+        $column_data{i} = $j;
 
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|
-<input type=hidden name="id_$i" value=$ref->{id}>
-<input type=hidden name="spoolfile_$i" value=$ref->{spoolfile}>
-
-        </tr>
-|;
+	$hiddens{"id_$i"} = $ref->{id};
+	$hiddens{"spoolfile_$i"} = $ref->{spoolfile};
+        push @rows, \%column_data;
 
     }
 
-    print qq|
-<input type=hidden name=rowcount value=$i>
+    $hiddens{rowcount} = $i;
 
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
+    $hiddens{$_} = $form->{$_} foreach
+        qw(callback title vc type sort module account path login sessionid);
 
-<br>
-|;
-
-    $form->hide_form(
-        qw(callback title vc type sort module account path login sessionid));
-
+    my @printers;
     if ( %{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} ) {
-        foreach $key ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
-            print qq|
-<input name=media type=radio class=radio value="$key" |;
-            print qq|checked| if $key eq $myconfig{printer};
-            print qq|>$key|;
+        foreach my $key ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
+            push @printers, {
+                type => 'radio',
+                name => 'media',
+                value => $key,
+                label => $key,
+                };
+            $printers[$#printers]{checked} = 'checked' if $key eq $myconfig{printer};
         }
-
-        print qq|<p>\n|;
 
         # type=submit $locale->text('Select all')
         # type=submit $locale->text('Print')
@@ -540,23 +505,39 @@ qq|<td><a href=${LedgerSMB::Sysconfig::spool}/$ref->{spoolfile}>$ref->{spoolfile
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
         {
-            $form->print_button( \%button, $_ );
+            push @buttons, {
+                name => 'action',
+                value => $_,
+                accesskey => $button{$_}{key},
+                title => "$button{$_}{value} [Alt-$button{$_}{key}]",
+                text => $button{$_}{value},
+                };
         }
 
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'bp-list-spool',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig,
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+        options => \@options,
+        rows => \@rows,
+        columns => \@column_index,
+        heading => \%column_header,
+        printers => \@printers,
+    });
 }
 
 sub select_all {
