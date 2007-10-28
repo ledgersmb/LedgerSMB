@@ -102,7 +102,7 @@ sub price_matrix_query {
 			SELECT partnumber
 			FROM partsvendor
 			WHERE parts_id = ?
-			AND vendor_id = $entity_id|;
+			AND entity_id = $entity_id|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
 
@@ -122,9 +122,9 @@ sub price_matrix {
     if ( $form->{customer_id} ) {
         $pmh->execute( $ref->{id}, $ref->{id}, $ref->{id}, $ref->{id} );
 
-        while ( $mref = $pmh->fetchrow_hashref(NAME_lc) ) {
+        while ( $mref = $pmh->fetchrow_hashref('NAME_lc') ) {
 
-            $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
+            $form->db_parse_numeric(sth=>$pmh, hashref=>$mref);
             # check date
             if ( $mref->{validfrom} ) {
                 next
@@ -195,8 +195,8 @@ sub price_matrix {
     if ( $form->{vendor_id} ) {
         $pmh->execute( $ref->{id} );
 
-        $mref = $pmh->fetchrow_hashref(NAME_lc);
-        $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
+        $mref = $pmh->fetchrow_hashref('NAME_lc');
+        $form->db_parse_numeric(sth=>$pmh, hashref=>$mref);
 
         if ( $mref->{partnumber} ne "" ) {
             $ref->{partnumber} = $mref->{partnumber};

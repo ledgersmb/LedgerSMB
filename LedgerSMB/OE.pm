@@ -762,21 +762,24 @@ sub retrieve {
 			SELECT o.ordnumber, o.transdate, o.reqdate, o.terms,
                 		o.taxincluded, o.shippingpoint, o.shipvia, 
 				o.notes, o.intnotes, o.curr AS currency, 
-				e.name AS employee, o.employee_id,
-				o.$form->{vc}_id, vc.name AS $form->{vc}, 
+				pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
+				o.person_id AS employee_id,
+				o.entity_id AS $form->{vc}_id, c.legal_name AS $form->{vc}, 
 				o.amount AS invtotal, o.closed, o.reqdate, 
 				o.quonumber, o.department_id, 
 				d.description AS department, o.language_code, 
 				o.ponumber
 			FROM oe o
-			JOIN $form->{vc} vc ON (o.$form->{vc}_id = vc.id)
-			LEFT JOIN employee e ON (o.employee_id = e.id)
+			JOIN company c ON (c.entity_id = o.entity_id)
+			JOIN $form->{vc} vc ON (c.entity_id = vc.entity_id)
+			LEFT JOIN person pe ON (o.person_id = pe.id)
+			LEFT JOIN employee e ON (pe.entity_id = e.entity_id)
 			LEFT JOIN department d ON (o.department_id = d.id)
 			WHERE o.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
-        $ref = $sth->fetchrow_hashref(NAME_lc);
+        $ref = $sth->fetchrow_hashref('NAME_lc');
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
@@ -785,7 +788,7 @@ sub retrieve {
         $sth   = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
-        $ref = $sth->fetchrow_hashref(NAME_lc);
+        $ref = $sth->fetchrow_hashref('NAME_lc');
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 
@@ -851,7 +854,7 @@ sub retrieve {
         my $sellprice;
         my $listprice;
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
             ($decimalplaces) = ( $ref->{sellprice} =~ /\.(\d+)/ );
