@@ -174,7 +174,9 @@ sub openinvoices {
 sub edit {
 
     $form->{title} = $locale->text('Edit POS Invoice');
-
+    if (!$form->{nextsub}){
+        $form->{nextsub} = 'add';
+    }
     $form->{callback} =
 "$form->{script}?action=$form->{nextsub}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 

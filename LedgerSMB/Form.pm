@@ -1260,7 +1260,6 @@ sub format_line {
 sub cleanup {
 
     my $self = shift;
-
     chdir("$self->{tmpdir}");
 
     my @err = ();
