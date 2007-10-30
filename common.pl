@@ -49,20 +49,20 @@ sub redirect {
 
     undef $form;
     $form = new Form($argv);
-    require "bin/$script";
 
     for (@common_attrs) {
         $form->{$_} = $temphash{$_};
     }
     $form->{script} = $script;
 
-    if ( !$myconfig ) {    # needed for login
+    if ( !%myconfig ) {    # needed for login
         %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
     }
     if ( !$form->{dbh} and ( $script ne 'admin.pl' ) ) {
         $form->db_init( \%myconfig );
     }
 
+    require "bin/$script";
     &{ $form->{action} };
 }
 
