@@ -382,7 +382,7 @@ CREATE TABLE invoice (
   allocated integer,
   sellprice NUMERIC,
   fxsellprice NUMERIC,
-  discount float4, -- jd: check into this
+  discount numeric,
   assemblyitem bool DEFAULT 'f',
   unit varchar(5),
   project_id int,
@@ -550,7 +550,7 @@ CREATE TABLE parts (
   makemodel bool DEFAULT 'f',
   assembly bool DEFAULT 'f',
   alternate bool DEFAULT 'f',
-  rop float4, -- jd: what is this
+  rop numeric, -- SC: ReOrder Point
   inventory_accno_id int,
   income_accno_id int,
   expense_accno_id int,
