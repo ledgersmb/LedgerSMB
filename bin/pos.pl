@@ -808,15 +808,10 @@ sub display_row {
             }
         }
 
-        if ( $i < $numrows ) {
-            $column_data{discount} =
+        $column_data{discount} =
                 qq|<td align="right"><input name="discount_$i" size="3" value="|
               . $form->format_amount( \%myconfig, $form->{"discount_$i"} )
               . qq|"></td>|;
-        }
-        else {
-            $column_data{discount} = qq|<td></td>|;
-        }
 
         $discount =
           $form->round_amount(

@@ -1003,16 +1003,19 @@ sub all_parts {
 			                        ON (p.id = j.parts_id))|;
     }
 
-    if ( $form->{itemstatus} eq 'active' ) {
-        $where .= " AND p.obsolete = '0'";
-    }
     if ( $form->{itemstatus} eq 'obsolete' ) {
         $where .= " AND p.obsolete = '1'";
     }
+    else { 
+        # Obsolete items should not show up on onhand, short, or active 
+        # reports --CT
+        $where .= " AND p.obsolete = '0'";
+    }
+
     if ( $form->{itemstatus} eq 'onhand' ) {
         $where .= " AND p.onhand > 0";
     }
-    if ( $form->{itemstatus} eq 'short' ) {
+    elsif ( $form->{itemstatus} eq 'short' ) {
         $where .= " AND p.onhand < p.rop";
     }
 
