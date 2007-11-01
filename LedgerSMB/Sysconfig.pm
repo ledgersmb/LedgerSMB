@@ -14,7 +14,7 @@ binmode STDERR, ':utf8';
 # For Win32, change $pathsep to ';';
 $pathsep = ':';
 
-$session = 'DB';
+$auth = 'DB';
 $logging = 0;      # No logging on by default
 
 @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
@@ -81,7 +81,7 @@ read_config( 'ledgersmb.conf' => %config ) or die;
 
 # Root variables
 for $var (
-    qw(pathsep logging check_max_invoices language session latex
+    qw(pathsep logging check_max_invoices language auth latex
     db_autoupdate)
   )
 {
