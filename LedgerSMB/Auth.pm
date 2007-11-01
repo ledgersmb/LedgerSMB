@@ -12,12 +12,12 @@
 
 #  This is a simple abstraction layer allowing other session handling mechanisms
 # (For example Kerberos tickets) as the application progresses.
-package Session;
+package LedgerSMB::Auth;
 
 use LedgerSMB::Sysconfig;
 
-if ( !${LedgerSMB::Sysconfig::session} ) {
-    ${LedgerSMB::Sysconfig::session} = 'DB';
+if ( !${LedgerSMB::Sysconfig::auth} ) {
+    ${LedgerSMB::Sysconfig::auth} = 'DB';
 }
 
-require "LedgerSMB/Session/" . ${LedgerSMB::Sysconfig::session} . ".pm";
+require "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";

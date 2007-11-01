@@ -4,6 +4,7 @@ our $VERSION = 1.0;
 use LedgerSMB::Locale;
 use LedgerSMB::Form; # Required for now to integrate with menu module.
 use LedgerSMB::User;
+use LedgerSMB::Auth;
 use strict;
 
 sub __default {
@@ -63,7 +64,7 @@ sub logout {
     my ($request) = @_;
     $request->{callback}   = "";
     $request->{endsession} = 1;
-    Session::session_destroy($request);
+    LedgerSMB::Auth::session_destroy($request);
     print "Location: login.pl\n";
     print "Content-type: text/html\n\n";
     exit;

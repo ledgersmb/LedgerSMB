@@ -81,193 +81,79 @@ CREATE TYPE voucher_list AS (
 	transaction_id integer,
 	amount numeric,
 	transaction_date date,
-	voucher_number text
+        batch_class text
 );
 
-CREATE OR REPLACE FUNCTION voucher_list_ap (in_batch_id integer) 
-RETURNS SETOF voucher_list AS 
+CREATE OR REPLACE FUNCTION voucher_list (in_batch_id integer)
+RETURNS SETOF voucher_list AS
 $$
-DECLARE
-	voucher_out voucher_list%ROWTYPE;
+declare voucher_item record;
 BEGIN
-	FOR voucher_out IN SELECT v.id, a.invnumber AS reference, 
-		c.name ||' -- ' || c.vendornumber AS description,
-		v.batch_id, a.id AS transaction_id,
-                a.amount, v.voucher_number
-	FROM vouchers v
-	JOIN ap a ON (a.id = v.trans_id)
-	JOIN vendor c ON (c.id = a.vendor_id)
-	WHERE v.br_id = in_batch_id
-
+    	FOR voucher_item IN
+		SELECT v.id, a.invnumber, e.name, v.batch_id, v.trans_id, 
+			a.amount - a.paid, a.transdate, 'Payable'
+		FROM voucher v
+		JOIN ap a ON (v.trans_id = a.id)
+		JOIN entity e ON (a.entity_id = e.id)
+		WHERE v.batch_id = in_batch_id 
+			AND v.batch_class = (select id from batch_class 
+					WHERE class = 'payable')
+		UNION
+		SELECT v.id, a.invnumber, e.name, v.batch_id, v.trans_id, 
+			a.amount - a.paid, a.transdate, 'Receivable'
+		FROM voucher v
+		JOIN ar a ON (v.trans_id = a.id)
+		JOIN entity e ON (a.entity_id = e.id)
+		WHERE v.batch_id = in_batch_id 
+			AND v.batch_class = (select id from batch_class 
+					WHERE class = 'receivable')
+		UNION
+		SELECT v.id, a.source, a.memo, v.batch_id, v.trans_id, 
+			a.amount, a.transdate, bc.class
+		FROM voucher v
+		JOIN acc_trans a ON (v.trans_id = a.trans_id)
+                JOIN batch_class bc ON (bc.id = v.batch_class)
+		WHERE v.batch_id = in_batch_id 
+			AND a.voucher_id = v.id
+			AND bc.class like 'payment%'
+			OR bc.class like 'receipt%'
+		UNION
+		SELECT v.id, g.reference, g.description, v.batch_id, v.trans_id,
+			sum(a.amount), g.transdate, 'gl'
+		FROM voucher v
+		JOIN gl g ON (g.id = v.trans_id)
+		JOIN acc_trans a ON (v.trans_id = a.trans_id)
+		WHERE a.amount > 0
+			AND v.batch_id = in_batch_id
+			AND v.batch_class IN (select id from batch_class 
+					where class = 'gl')
+		GROUP BY v.id, g.reference, g.description, v.batch_id, 
+			v.trans_id, g.transdate
+		ORDER BY 7, 1
 	LOOP
-		RETURN NEXT voucher_out;
+		RETURN NEXT voucher_item;
 	END LOOP;
-		
 END;
-$$ LANGUAGE PLPGSQL;
+$$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION voucher_list_payment (in_batch_id integer) 
-RETURNS SETOF voucher_list AS 
+CREATE TYPE batch_list_item AS (
+    id integer,
+    batch_class text,
+    description text,
+    created_by text,
+    created_on date,
+    total numeric
+);
+
+CREATE FUNCTION batch_list RETURNS SETOF batch_list_item AS
 $$
-DECLARE
-	voucher_out voucher_list%ROWTYPE;
-BEGIN
-	FOR voucher_out IN SELECT v.id, c.vendornumber AS reference, 
-		c.name AS description, in_batch_id AS batch_id,
-		v.transaction_id AS transaction_id, sum(ac.amount) AS amount,
-		v.voucher_number
-	FROM acc_trans ac
-	JOIN vouchers v ON (v.id = ac.vr_id AND v.transaction_id = ac.trans_id)
-	JOIN chart ch ON (ch.id = ac.chart_id)
-	JOIN ap a ON (a.id = ac.trans_id)
-	JOIN vendor c ON (c.id = a.vendor_id)
-	WHERE v.br_id = in_batch_id
-		AND ch.link LIKE '%AP_paid%'
-	GROUP BY v.id, c.name, c.vendornumber, v.voucher_number,
-                a.vendor_id, v.transaction_id
-
-
-	LOOP
-		RETURN NEXT voucher_out;
-	END LOOP;
-		
-END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION voucher_list_payment_reversal (in_batch_id integer) 
-RETURNS SETOF voucher_list AS 
-$$
-DECLARE
-	voucher_out voucher_list%ROWTYPE;
-BEGIN
-	FOR voucher_out IN 
-	SELECT v.id, ac.source AS reference, 
-		c.vendornumber || ' -- ' || c.name AS description,
-                sum(ac.amount) * -1 AS amount, in_batch_id AS batch_id,
-		v.transaction_id AS transaction_id, v.voucher_number
-	FROM acc_trans ac
-	JOIN vr v ON (v.id = ac.vr_id AND v.trans_id = ac.trans_id)
-	JOIN chart ch ON (ch.id = ac.chart_id)
-	JOIN ap a ON (a.id = ac.trans_id)
-	JOIN vendor c ON (c.id = a.vendor_id)
-	WHERE vr.br_id = in_batch_id
-	AND c.link LIKE '%AP_paid%'
-	GROUP BY v.id, c.name, c.vendornumber, v.voucher_number,
-	a.vendor_id, ac.source
+CREATE OR REPLACE FUNCTION batch_post in_batch_id INTEGER)
+returns int AS
+$$;
 
-	LOOP
-		RETURN NEXT voucher_out;
-	END LOOP;
-		
-END;
 $$ LANGUAGE PLPGSQL;
-
-CREATE OR REPLACE FUNCTION voucher_list_ap (in_batch_id integer) 
-RETURNS SETOF voucher_list AS 
-$$
-DECLARE
-	voucher_out voucher_list%ROWTYPE;
-BEGIN
-	FOR voucher_out IN 
-	SELECT v.id, g.reference, g.description, in_batch_id AS batch_id,
-                SUM(ac.amount) AS amount, g.id AS transaction_id, 
-		v.vouchernumber
-	FROM acc_trans ac
-	JOIN gl g ON (g.id = ac.trans_id)
-	JOIN vouchers v ON (v.trans_id = g.id)
-	WHERE v.batch_id = in_batch_id
-		AND ac.amount >= 0
-	GROUP BY g.id, g.reference, g.description, v.id,
-		v.voucher_number
-
-	LOOP
-		RETURN NEXT voucher_out;
-	END LOOP;
-		
-END;
-$$ LANGUAGE PLPGSQL;
-
-CREATE OR REPLACE FUNCTION batch_post (in_batch_id integer[], in_batch text, 
-	in_control_amount NUMERIC)
-RETURNS BOOL AS
-$$
-DECLARE
-	control_amount NUMERIC;
-	voucher voucher%ROWTYPE; 
-	incriment NUMERIC;
-BEGIN
---  CHECK CONTROL NUMBERS
-	IF in_batch = 'gl' THEN
-		SELECT sum(amount) INTO control_amount 
-		FROM acc_trans
-		WHERE trans_id IN (
-				SELECT id FROM gl 
-				WHERE coalesce(approved, false) != true)
-			AND trans_id IN (
-				SELECT transaction_id FROM voucher 
-				WHERE batch_id = ANY (in_batch_id))
-			AND coalesce(approved, false) != true
-			AND amount > 0
-		FOR UPDATE;
-
-	ELSE IF in_batch like '%payment%' THEN
-
-		SELECT sum(ac.amount) INTO control_amount 
-		FROM acc_trans ac
-		JOIN voucher v ON (v.transaction_id = ac.trans_id)
-		WHERE v.batch_id = ANY (in_batch_id)
-			AND ac.vr_id = v.id
-			AND coalesce(approved, false) = false
-		FOR UPDATE;
-
-	ELSE
-		SELECT sum(amount) INTO control_amount
-		FROM acc_trans 
-		WHERE trans_id IN
-				(SELECT transaction_id FROM voucher 
-				WHERE batch_id = ANY (in_batch_id))
-			AND trans_id IN
-				(SELECT trans_id FROM ap 
-				WHERE coalesce(approved, false) = false)
-			AND amount > 0
-		FOR UPDATE;
-
-	END IF;
-
-	IF control_amount != in_control_amount THEN
-		RETURN FALSE;
-	END IF;
-
---  TODO: POST TRANSACTIONALLY
-
-	IF in_batch like '%payment%' THEN
-	ELSE
-		UPDATE acc_trans 
-		SET approved = true 
-		WHERE trans_id IN 
-			(SELECT transaction_id FROM voucher
-			WHERE batch_id = ANY (in_batch_id));
-
-		IF in_batch = 'gl' THEN
-
-			UPDATE gl SET approved = true
-			WHERE trans_id IN
-				(SELECT transaction_id FROM voucher
-				WHERE batch_id = ANY (in_batch_id));
-
-		ELSE 
-			UPDATE ap SET approved = true
-			WHERE trans_id IN
-				(SELECT transaction_id FROM voucher
-				WHERE batch_id = ANY (in_batch_id));
-		END IF;
-	END IF;
-
-	RETURN TRUE;
-END;
-$$ LANGUAGE PLPGSQL;
-
-
 CREATE OR REPLACE FUNCTION batch_create(
 in_batch_number text, in_description text, in_batch_class text) RETURNS int AS
 $$

@@ -27,7 +27,7 @@
 # password_check - compares the password with the stored cryted password
 #                  (ver. < 1.2) and the md5 one (ver. >= 1.2)
 #====================================================================
-package Session;
+package LedgerSMB::Auth;
 use MIME::Base64;
 use strict;
 

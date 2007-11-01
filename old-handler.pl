@@ -55,7 +55,7 @@ $| = 1;
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
-use LedgerSMB::Session;
+use LedgerSMB::Auth;
 use Data::Dumper;
 require "common.pl";
 
@@ -170,7 +170,7 @@ sub check_password {
         }
 
         #check for valid session
-        if ( !Session::session_check( $cookie{"LedgerSMB"}, $form ) ) {
+        if ( !LedgerSMB::Auth::session_check( $cookie{"LedgerSMB"}, $form ) ) {
             &getpassword(1);
             exit;
         }

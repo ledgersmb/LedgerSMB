@@ -29,7 +29,6 @@ $| = 1;
 use LedgerSMB::User;
 use LedgerSMB;
 use LedgerSMB::Locale;
-use LedgerSMB::Session;
 use Data::Dumper;
 
 # for custom preprocessing logic

@@ -57,7 +57,7 @@ Deprecated
 
 package LedgerSMB::User;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Session;
+use LedgerSMB::Auth;
 use Data::Dumper;
 
 =item LedgerSMB::User->new($login);

@@ -125,7 +125,7 @@ use CGI::Simple;
 use Math::BigFloat;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
-use LedgerSMB::Session;
+use LedgerSMB::Auth;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
@@ -195,7 +195,7 @@ sub new {
     if ($self->is_run_mode('cgi', 'mod_perl')) {
        #check for valid session unless this is an inital authentication
        #request -- CT
-       if (!Session::session_check( $cookie{"LedgerSMB"}, $self) ) {
+       if (!LedgerSMB::Auth::session_check( $cookie{"LedgerSMB"}, $self) ) {
             $self->_get_password("Session Expired");
             exit;
        }
@@ -215,7 +215,7 @@ sub new {
 sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
-    Session::credential_prompt();
+    LedgerSMB::Auth::credential_prompt();
     exit;
 }
 
@@ -634,7 +634,7 @@ sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
 
-    my $creds = Session::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials();
   
     $self->{login} = $creds->{login};
     if (!$self->{company}){ 
