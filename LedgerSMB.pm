@@ -215,27 +215,7 @@ sub new {
 sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
-    $self->{hidden} = [];
-    for (keys %$self){
-        next if $_ =~ /(^script$|^endsession$|^password$|^hidden$)/;
-        my $attr = {};
-        $attr->{name} = $_;
-        $attr->{value} = $self->{$_};
-        push @{$self->{hidden}}, $attr;
-    }
-        print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
-        print "Status: 401 Unauthorized\n\n";
-	print "Please enter your credentials.\n";
-        exit;
-#    my $template = LedgerSMB::Template->new(
-#        user =>$self->{_user}, 
-#        locale => $self->{_locale},
-#        path => 'UI',
-#        template => 'get_password',
-#        format => 'HTML'
-#    );
-#    $template->render($self);
-#    $template->output('http');
+    Session::credential_prompt();
     exit;
 }
 
@@ -654,13 +634,9 @@ sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
 
-
-    # Handling of HTTP Basic Auth headers
-    my $auth = $ENV{'HTTP_AUTHORIZATION'};
-    $auth =~ s/Basic //i; # strip out basic authentication preface
-    $auth = MIME::Base64::decode($auth);
-    my ($login, $password) = split(/:/, $auth);
-    $self->{login} = $login;
+    my $creds = Session::get_credentials();
+  
+    $self->{login} = $creds->{login};
     if (!$self->{company}){ 
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
@@ -671,7 +647,7 @@ sub _db_init {
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
     $self->{dbh} = DBI->connect(
-        "dbi:Pg:dbname=$dbname", "$login", "$password", { AutoCommit => 0 }
+        "dbi:Pg:dbname=$dbname", "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     ); 
      my $dbh = $self->{dbh};
 

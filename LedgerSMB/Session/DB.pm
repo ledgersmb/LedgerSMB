@@ -241,6 +241,25 @@ sub session_destroy {
 
 }
 
+sub get_credentials {
+    # Handling of HTTP Basic Auth headers
+    my $auth = $ENV{'HTTP_AUTHORIZATION'};
+    $auth =~ s/Basic //i; # strip out basic authentication preface
+    $auth = MIME::Base64::decode($auth);
+    my $return_value = {};
+    ($return_value->{login}, $return_value->{password}) = split(/:/, $auth);
+
+    return $return_value;
+    
+}
+
+sub credential_prompt{
+    print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
+    print "Status: 401 Unauthorized\n\n";
+    print "Please enter your credentials.\n";
+    exit; 
+}
+
 sub password_check {
 
     use Digest::MD5;
