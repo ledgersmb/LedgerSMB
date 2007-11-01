@@ -211,6 +211,7 @@ sub new {
 
 }
 
+#This function needs to be moved into the session handler.
 sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
@@ -222,15 +223,19 @@ sub _get_password {
         $attr->{value} = $self->{$_};
         push @{$self->{hidden}}, $attr;
     }
-    my $template = LedgerSMB::Template->new(
-        user =>$self->{_user}, 
-        locale => $self->{_locale},
-        path => 'UI',
-        template => 'get_password',
-        format => 'HTML'
-    );
-    $template->render($self);
-    $template->output('http');
+        print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
+        print "Status: 401 Unauthorized\n\n";
+	print "Please enter your credentials.\n";
+        exit;
+#    my $template = LedgerSMB::Template->new(
+#        user =>$self->{_user}, 
+#        locale => $self->{_locale},
+#        path => 'UI',
+#        template => 'get_password',
+#        format => 'HTML'
+#    );
+#    $template->render($self);
+#    $template->output('http');
     exit;
 }
 
