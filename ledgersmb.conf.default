@@ -1,4 +1,4 @@
-session  : DB
+auth : DB
 logging  : 0
 
 # Set language for login and admin pages
