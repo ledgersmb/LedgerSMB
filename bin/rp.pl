@@ -2436,18 +2436,20 @@ sub tax_subtotal {
 
 sub list_payments {
 
+    my %hiddens;
+    my @options;
     if ( $form->{account} ) {
         ( $form->{paymentaccounts} ) = split /--/, $form->{account};
     }
     if ( $form->{department} ) {
         ( $department, $form->{department_id} ) = split /--/,
           $form->{department};
-        $option = $locale->text('Department') . " : $department";
+        push @options, $locale->text('Department: [_1]', $department);
     }
 
     RP->payments( \%myconfig, \%$form );
 
-    @columns = $form->sort_columns(qw(transdate name paid source memo));
+    my @columns = $form->sort_columns(qw(transdate name paid source memo));
 
     if ( $form->{till} ) {
         @columns =
@@ -2460,10 +2462,10 @@ sub list_payments {
     }
 
     # construct href
-    $title = $form->escape( $form->{title} );
+    my $title = $form->escape( $form->{title} );
     $form->{paymentaccounts} =~ s/ /%20/g;
 
-    $href =
+    my $href =
 "$form->{script}?path=$form->{path}&direction=$form->{direction}&sort=$form->{sort}&oldsort=$form->{oldsort}&action=list_payments&till=$form->{till}&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&fx_transaction=$form->{fx_transaction}&db=$form->{db}&l_subtotal=$form->{l_subtotal}&prepayment=$form->{prepayment}&paymentaccounts=$form->{paymentaccounts}&title="
       . $form->escape( $form->{title} );
 
@@ -2473,147 +2475,110 @@ sub list_payments {
 "$form->{script}?path=$form->{path}&direction=$form->{direction}&sort=$form->{sort}&oldsort=$form->{oldsort}&action=list_payments&till=$form->{till}&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&fx_transaction=$form->{fx_transaction}&db=$form->{db}&l_subtotal=$form->{l_subtotal}&prepayment=$form->{prepayment}&paymentaccounts=$form->{paymentaccounts}&title="
       . $form->escape( $form->{title}, 1 );
 
+    my $callback;
     if ( $form->{account} ) {
         $callback .= "&account=" . $form->escape( $form->{account}, 1 );
         $href   .= "&account=" . $form->escape( $form->{account} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Account') . " : $form->{account}";
+        push @options, $locale->text('Account: [_1]', $form->{account});
     }
     if ( $form->{department} ) {
         $callback .= "&department=" . $form->escape( $form->{department}, 1 );
         $href   .= "&department=" . $form->escape( $form->{department} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Department') . " : $form->{department}";
+        push @options, $locale->text('Department: [_1]', $form->{department});
     }
     if ( $form->{description} ) {
         $callback .= "&description=" . $form->escape( $form->{description}, 1 );
         $href   .= "&description=" . $form->escape( $form->{description} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Description') . " : $form->{description}";
+        push @options, $locale->text('Description: [_1]', $form->{description});
     }
     if ( $form->{source} ) {
         $callback .= "&source=" . $form->escape( $form->{source}, 1 );
         $href   .= "&source=" . $form->escape( $form->{source} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Source') . " : $form->{source}";
+        push @options, $locale->text('Source: [_1]', $form->{source});
     }
     if ( $form->{memo} ) {
         $callback .= "&memo=" . $form->escape( $form->{memo}, 1 );
         $href   .= "&memo=" . $form->escape( $form->{memo} );
-        $option .= "\n<br>" if ($option);
-        $option .= $locale->text('Memo') . " : $form->{memo}";
+        push @options, $locale->text('Memo: [_1]', $form->{memo});
     }
     if ( $form->{fromdate} ) {
-        $option .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('From') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{fromdate}, 1 );
+        push @options,
+            $locale->text('From [_1]',
+                $locale->date( \%myconfig, $form->{fromdate}, 1 ));
     }
     if ( $form->{todate} ) {
-        $option .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('To') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{todate}, 1 );
+        push @options, 
+            $locale->text('To [_1]',
+                $locale->date( \%myconfig, $form->{todate}, 1 ));
     }
 
     $callback = $form->escape( $form->{callback} );
 
-    $column_header{name} =
-        "<th><a class=listheading href=$href&sort=name>"
-      . $locale->text('Description')
-      . "</a></th>";
-    $column_header{transdate} =
-        "<th><a class=listheading href=$href&sort=transdate>"
-      . $locale->text('Date')
-      . "</a></th>";
-    $column_header{paid} =
-      "<th class=listheading>" . $locale->text('Amount') . "</a></th>";
-    $column_header{curr} =
-      "<th class=listheading>" . $locale->text('Curr') . "</a></th>";
-    $column_header{source} =
-        "<th><a class=listheading href=$href&sort=source>"
-      . $locale->text('Source')
-      . "</a></th>";
-    $column_header{memo} =
-        "<th><a class=listheading href=$href&sort=memo>"
-      . $locale->text('Memo')
-      . "</a></th>";
+    my %column_header;
+    $column_header{name} = {
+        href => "$href&sort=name",
+        text => $locale->text('Description'),
+        };
+    $column_header{transdate} = {
+        href => "$href&sort=transdate",
+        text => $locale->text('Date'),
+        };
+    $column_header{paid} = $locale->text('Amount');
+    $column_header{curr} = $locale->text('Curr');
+    $column_header{source} = {
+        href => "$href&sort=source",
+        text => $locale->text('Source'),
+        };
+    $column_header{memo} = {
+        href => "$href&sort=memo",
+        text => $locale->text('Memo'),
+        };
+    $column_header{employee} = {
+        href => "$href&sort=employee",
+        text => $locale->text('Salesperson'),
+        };
+    $column_header{till} = {
+        href => "$href&sort=till",
+        text => $locale->text('Till'),
+        };
 
-    $column_header{employee} =
-        "<th><a class=listheading href=$href&sort=employee>"
-      . $locale->text('Salesperson')
-      . "</a></th>";
-    $column_header{till} =
-        "<th><a class=listheading href=$href&sort=till>"
-      . $locale->text('Till')
-      . "</a></th>";
+    my @column_index = @columns;
 
-    @column_index = @columns;
-    $colspan      = $#column_index + 1;
-
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-|;
-
-    for (@column_index) { print "\n$column_header{$_}" }
-
-    print qq|
-        </tr>
-|;
-
-    foreach $ref ( sort { $a->{accno} cmp $b->{accno} } @{ $form->{PR} } ) {
+    my @accounts;
+    my $i;
+    foreach my $ref ( sort { $a->{accno} cmp $b->{accno} } @{ $form->{PR} } ) {
 
         next unless @{ $form->{ $ref->{id} } };
 
-        print qq|
-        <tr>
-	  <th colspan=$colspan align=left>$ref->{accno}--$ref->{description}</th>
-	</tr>
-|;
+        push @accounts, {header => "$ref->{accno}--$ref->{description}"};
 
         if ( @{ $form->{ $ref->{id} } } ) {
             $sameitem = $form->{ $ref->{id} }[0]->{ $form->{sort} };
         }
 
-        foreach $payment ( @{ $form->{ $ref->{id} } } ) {
+        my @rows;
+        foreach my $payment ( @{ $form->{ $ref->{id} } } ) {
 
             if ( $form->{l_subtotal} ) {
                 if ( $payment->{ $form->{sort} } ne $sameitem ) {
 
                     # print subtotal
-                    &payment_subtotal;
+                    push @rows, &payment_subtotal(\@column_index);
                 }
             }
 
             next if ( $form->{till} && !$payment->{till} );
 
-            $column_data{name}      = "<td>$payment->{name}&nbsp;</td>";
-            $column_data{transdate} = "<td>$payment->{transdate}&nbsp;</td>";
+            my %column_data;
+            $column_data{name}      = $payment->{name};
+            $column_data{transdate} = $payment->{transdate};
             $column_data{paid} =
-              "<td align=right>"
-              . $form->format_amount( \%myconfig, $payment->{paid}, 2,
-                "&nbsp;" )
-              . "</td>";
-            $column_data{curr}     = "<td>$payment->{curr}</td>";
-            $column_data{source}   = "<td>$payment->{source}&nbsp;</td>";
-            $column_data{memo}     = "<td>$payment->{memo}&nbsp;</td>";
-            $column_data{employee} = "<td>$payment->{employee}&nbsp;</td>";
-            $column_data{till}     = "<td>$payment->{till}&nbsp;</td>";
+                $form->format_amount(\%myconfig, $payment->{paid}, 2, ' ');
+            $column_data{curr}     = $payment->{curr};
+            $column_data{source}   = $payment->{source};
+            $column_data{memo}     = $payment->{memo};
+            $column_data{employee} = $payment->{employee};
+            $column_data{till}     = $payment->{till};
 
             $subtotalpaid     += $payment->{paid};
             $accounttotalpaid += $payment->{paid};
@@ -2621,104 +2586,70 @@ sub list_payments {
 
             $i++;
             $i %= 2;
-            print qq|
-	<tr class=listrow$i>
-|;
-
-            for (@column_index) { print "\n$column_data{$_}" }
-
-            print qq|
-        </tr>
-|;
+            $column_data{i} = $i;
+            push @rows, \%column_data;
 
             $sameitem = $payment->{ $form->{sort} };
 
         }
-
-        &payment_subtotal if $form->{l_subtotal};
+        push @rows, &payment_subtotal(\@column_index) if $form->{l_subtotal};
+        $accounts[$#accounts]{rows} = \@rows;
 
         # print account totals
-        for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+        my %column_data;
+        for (@column_index) { $column_data{$_} = ' ' }
 
         $column_data{paid} =
-            "<th class=listtotal align=right>"
-          . $form->format_amount( \%myconfig, $accounttotalpaid, 2, "&nbsp;" )
-          . "</th>";
+            $form->format_amount( \%myconfig, $accounttotalpaid, 2, ' ' );
 
-        print qq|
-	<tr class=listtotal>
-|;
-
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|
-        </tr>
-|;
-
+        $accounts[$#accounts]{totals} = \%column_data;
         $accounttotalpaid = 0;
 
     }
 
-    # print total
-    for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+    # prepare total
+    my %column_data;
+    for (@column_index) { $column_data{$_} = ' ' }
+    $column_data{paid} = $form->format_amount( \%myconfig, $totalpaid, 2, ' ' );
 
-    $column_data{paid} =
-      "<th class=listtotal align=right>"
-      . $form->format_amount( \%myconfig, $totalpaid, 2, "&nbsp;" ) . "</th>";
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
-        <tr class=listtotal>
-|;
-
-    for (@column_index) { print "\n$column_data{$_}" }
-
-    print qq|
-        </tr>
-
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
- 
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'rp-payments',
+        );
+    $template->render({
+        form => $form,
+        hiddens => \%hiddens,
+        options => \@options,
+        columns => \@column_index,
+        heading => \%column_header,
+        accounts => \@accounts,
+        totals => \%column_data,
+        row_alignment => {
+            paid => 'right',
+            },
+    });
 }
 
 sub payment_subtotal {
 
+    my $column_index = shift;
+    my %column_data;
     if ( $subtotalpaid != 0 ) {
-        for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+        for (@column_index) { $column_data{$_} = ' ' }
 
         $column_data{paid} =
-            "<th class=listsubtotal align=right>"
-          . $form->format_amount( \%myconfig, $subtotalpaid, 2, "&nbsp;" )
-          . "</th>";
-
-        print qq|
-  <tr class=listsubtotal>
-|;
-
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|
-  </tr>
-|;
+            $form->format_amount( \%myconfig, $subtotalpaid, 2, ' ' );
+        $column_data{class} = 'subtotal';
     }
 
     $subtotalpaid = 0;
-
+    \%column_data;
 }
 
