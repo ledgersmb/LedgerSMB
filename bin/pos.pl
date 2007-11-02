@@ -904,8 +904,6 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
 
 
 sub print {
-    open_drawer();
-    sleep 1;
     if ( !$form->{invnumber} ) {
         $form->{invnumber} = $form->update_defaults( \%myconfig, 'sinumber' );
     }
@@ -918,6 +916,8 @@ sub print {
         &update;
         exit;
     }
+    open_drawer();
+    sleep 1;
     for $i ( 1 .. $rc - 1 ) {
         if ( $form->{"qty_$i"} != $form->{"oldqty_$i"} ) {
             &update;
