@@ -1057,9 +1057,8 @@ sub generate_income_statement {
     # setup variables for the form
     my @vars = qw(company address businessnumber);
     for (@vars) { $form->{$_} = $myconfig{$_} }
-	##SC: START HTML
+    ##SC: The escaped form will be converted in-template
     $form->{address} =~ s/\\n/<br>/g;
-	##SC: END HTML
 
 
     my $template = LedgerSMB::Template->new(
@@ -1107,9 +1106,8 @@ sub generate_balance_sheet {
     for (qw(company address businessnumber nativecurr login)) {
         $form->{$_} = $myconfig{$_};
     }
-	##SC: START HTML
+    ##SC: The escaped form will be converted in-template
     $form->{address} =~ s/\\n/<br>/g;
-	##SC: END HTML
 
     $form->{templates} = $myconfig{templates};
 
