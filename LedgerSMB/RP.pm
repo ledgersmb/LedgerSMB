@@ -1856,12 +1856,13 @@ sub tax_report {
 
         $query = qq|
 			SELECT a.id, a.invoice, $transdate AS transdate,
-			       a.invnumber, n.name, a.netamount,
+			       a.invnumber, c.legal_name AS name, a.netamount,
 			       ac.amount * $ml AS tax, a.till
 			  FROM acc_trans ac
 			  JOIN $form->{db} a ON (a.id = ac.trans_id)
 			  JOIN chart ch ON (ch.id = ac.chart_id)
-			  JOIN $table n ON (n.id = a.${table}_id)
+			  JOIN $table n ON (n.entity_id = a.entity_id)
+			  JOIN company c ON (c.entity_id = n.entity_id)
 			 WHERE $where $accno $cashwhere |;
 
         if ( $form->{fromdate} ) {
@@ -1873,12 +1874,13 @@ sub tax_report {
  
 				SELECT a.id, a.invoice, 
 				       $transdate AS transdate, a.invnumber, 
-				       n.name, a.netamount, ac.
+				       c.legal_name AS name, a.netamount, ac.
 				       amount * $ml AS tax, a.till
 				  FROM acc_trans ac
 				  JOIN $form->{db} a ON (a.id = ac.trans_id)
 				  JOIN chart ch ON (ch.id = ac.chart_id)
-				  JOIN $table n ON (n.id = a.${table}_id)
+				  JOIN $table n ON (n.entity_id = a.entity_id)
+				  JOIN company c ON (c.entity_id = n.entity_id)
 				 WHERE a.datepaid >= '$form->{fromdate}' 
 				       $accno $cashwhere|;
             }
@@ -1889,19 +1891,20 @@ sub tax_report {
 
         $query = qq|
 			SELECT a.id, '0' AS invoice, $transdate AS transdate,
-			       a.invnumber, n.name, a.netamount, 
+			       a.invnumber, c.legal_name AS name, a.netamount, 
 			       ac.amount * $ml AS tax, a.notes AS description, 
 			       a.till
 			  FROM acc_trans ac
 			  JOIN $form->{db} a ON (a.id = ac.trans_id)
 			  JOIN chart ch ON (ch.id = ac.chart_id)
-			  JOIN $table n ON (n.id = a.${table}_id)
+			  JOIN $table n ON (n.entity_id = a.entity_id)
+			  JOIN company c ON (c.entity_id = a.entity_id)
 			 WHERE $where $accno AND a.invoice = '0' $cashwhere
 
 			UNION
 	      
 			SELECT a.id, '1' AS invoice, $transdate AS transdate,
-			       a.invnumber, n.name, 
+			       a.invnumber, c.legal_name AS name, 
 			       i.sellprice * i.qty * $ml AS netamount,
 			       i.sellprice * i.qty * $ml *
 			        (SELECT tx.rate FROM tax tx 
@@ -1913,7 +1916,8 @@ sub tax_report {
 			  FROM acc_trans ac
 			  JOIN $form->{db} a ON (a.id = ac.trans_id)
 			  JOIN chart ch ON (ch.id = ac.chart_id)
-			  JOIN $table n ON (n.id = a.${table}_id)
+			  JOIN $table n ON (n.entity_id = a.entity_id)
+			  JOIN company c ON (c.entity_id = n.entity_id)
 			  JOIN ${table}tax t 
 			       ON (t.${table}_id = n.id AND t.chart_id = ch.id)
 			  JOIN invoice i ON (i.trans_id = a.id)
@@ -1929,7 +1933,8 @@ sub tax_report {
 
 					SELECT a.id, '0' AS invoice, 
 					       $transdate AS transdate,
-					       a.invnumber, n.name, a.netamount,
+					       a.invnumber, c.legal_name AS name,
+					       a.netamount,
 					       ac.amount * $ml AS tax,
 					       a.notes AS description, a.till
 					  FROM acc_trans ac
@@ -1937,7 +1942,9 @@ sub tax_report {
 					       ON (a.id = ac.trans_id)
 					  JOIN chart ch ON (ch.id = ac.chart_id)
 					  JOIN $table n 
-					       ON (n.id = a.${table}_id)
+					       ON (n.entity_id = a.entity_id)
+					  JOIN company c 
+					       ON (c.entity_id = n.entity_id)
 					 WHERE a.datepaid >= '$form->{fromdate}'
 					       $accno AND a.invoice = '0'
 					       $cashwhere
@@ -1946,7 +1953,8 @@ sub tax_report {
 	      
 					SELECT a.id, '1' AS invoice, 
 					       $transdate AS transdate,
-					       a.invnumber, n.name,
+					       a.invnumber,
+					       c.legal_name AS name,
 					       i.sellprice * i.qty * $ml 
 					       AS netamount, i.sellprice 
 					       * i.qty * $ml *
@@ -1962,7 +1970,9 @@ sub tax_report {
 					       ON (a.id = ac.trans_id)
 					  JOIN chart ch ON (ch.id = ac.chart_id)
 					  JOIN $table n ON 
-					       (n.id = a.${table}_id)
+					       (n.entity_id = a.entity_id)
+					  JOIN company c ON
+					       (c.entity_id = n.entity_id)
 					  JOIN ${table}tax t 
 					       ON (t.${table}_id = n.id 
 					       AND t.chart_id = ch.id)
@@ -1985,10 +1995,11 @@ sub tax_report {
             $query = qq|
 				SELECT DISTINCT a.id, a.invoice, 
 				       $transdate AS transdate, a.invnumber, 
-				       n.name, a.netamount, a.till
+				       c.legal_name AS name, a.netamount, a.till
 				  FROM acc_trans ac
 				  JOIN $form->{db} a ON (a.id = ac.trans_id)
-				  JOIN $table n ON (n.id = a.${table}_id)
+				  JOIN $table n ON (n.entity_id = a.entity_id)
+				  JOIN company c ON (c.entity_id = n.entity_id)
 				 WHERE $where AND a.netamount = a.amount
 				       $cashwhere|;
 
@@ -1999,13 +2010,16 @@ sub tax_report {
 
 						SELECT DISTINCT a.id, a.invoice,
 						       $transdate AS transdate,
-						       a.invnumber, n.name, 
+						       a.invnumber,
+						       c.legal_name AS name, 
 						       a.netamount, a.till
 						  FROM acc_trans ac
 						  JOIN $form->{db} a 
 						       ON (a.id = ac.trans_id)
 						  JOIN $table n 
-						       ON (n.id = a.${table}_id)
+						       ON (n.entity_id = a.entity_id)
+						  JOIN company c
+						       ON (c.entity_id = n.entity_id)
 						 WHERE a.datepaid 
 						       >= '$form->{fromdate}'
 						       AND 
@@ -2021,34 +2035,37 @@ sub tax_report {
             $query = qq|
 				  SELECT a.id, '0' AS invoice, 
 				         $transdate AS transdate, a.invnumber, 
-				         n.name, a.netamount, 
+				         c.legal_name AS name, a.netamount, 
 				         a.notes AS description, a.till
 				    FROM acc_trans ac
 				    JOIN $form->{db} a ON (a.id = ac.trans_id)
-				    JOIN $table n ON (n.id = a.${table}_id)
+				    JOIN $table n ON (n.entity_id = a.entity_id)
+				    JOIN company c ON (c.entity_id = n.entity_id)
 				   WHERE $where AND a.invoice = '0'
 				         AND a.netamount = a.amount $cashwhere
-				GROUP BY a.id, $transdate, a.invnumber, n.name, 
+				GROUP BY a.id, $transdate, a.invnumber, name, 
 				         a.netamount, a.notes, a.till
 		
 				UNION
 		
 				  SELECT a.id, '1' AS invoice, 
 				         $transdate AS transdate, a.invnumber, 
-				         n.name,  sum(ac.sellprice * ac.qty) 
+				         c.legal_name AS name,
+					 sum(ac.sellprice * ac.qty) 
 				         * $ml AS netamount, ac.description, 
 				         a.till
 				    FROM invoice ac
 				    JOIN $form->{db} a ON (a.id = ac.trans_id)
-				    JOIN $table n ON (n.id = a.${table}_id)
+				    JOIN $table n ON (n.entity_id = a.entity_id)
+				    JOIN company c ON (c.entity_id = n.entity_id)
 				   WHERE $where AND a.invoice = '1' AND 
-				         (a.${table}_id NOT IN 
+				         (a.entity_id NOT IN 
 				         (SELECT ${table}_id FROM ${table}tax t 
 				         (${table}_id)
 					 ) OR ac.parts_id NOT IN 
 				         (SELECT parts_id FROM partstax p 
 				         (parts_id))) $cashwhere
-				GROUP BY a.id, a.invnumber, $transdate, n.name,
+				GROUP BY a.id, a.invnumber, $transdate, name,
 				         ac.description, a.till|;
 
             if ( $form->{fromdate} ) {
@@ -2057,7 +2074,8 @@ sub tax_report {
 						UNION
 						SELECT a.id, '0' AS invoice, 
 						       $transdate AS transdate,
-						       a.invnumber, n.name, 
+						       a.invnumber,
+						       c.legal_name AS name, 
 						       a.netamount, 
 						       a.notes AS description, 
 						       a.till
@@ -2065,14 +2083,16 @@ sub tax_report {
 						  JOIN $form->{db} a 
 						       ON (a.id = ac.trans_id)
 						  JOIN $table n 
-						       ON (n.id = a.${table}_id)
+						       ON (n.entity_id = a.entity_id)
+						  JOIN company c
+						       ON (c.entity_id = n.entity_id)
 						 WHERE a.datepaid 
 						       >= '$form->{fromdate}'
 						       AND a.invoice = '0'
 						       AND a.netamount 
 						       = a.amount $cashwhere
 						GROUP BY a.id, $transdate, 
-						       a.invnumber, n.name, 
+						       a.invnumber, name, 
 						       a.netamount, a.notes, 
 						       a.till
 		
@@ -2080,7 +2100,8 @@ sub tax_report {
 		
 						SELECT a.id, '1' AS invoice, 
 						       $transdate AS transdate,
-						       a.invnumber, n.name,
+						       a.invnumber,
+						       c.legal_name AS name,
 						       sum(ac.sellprice 
 						       * ac.qty) * $ml 
 						       AS netamount,
@@ -2089,11 +2110,13 @@ sub tax_report {
 						  JOIN $form->{db} a 
 						       ON (a.id = ac.trans_id)
 						  JOIN $table n 
-						       ON (n.id = a.${table}_id)
+						       ON (n.entity_id = a.entity_id)
+						  JOIN company c
+						       ON (c.entity_id = n.entity_id)
 						 WHERE a.datepaid 
 						       >= '$form->{fromdate}'
 						       AND a.invoice = '1' AND 
-						       (a.${table}_id NOT IN 
+						       (a.entity_id NOT IN 
 						       (SELECT ${table}_id 
 						          FROM ${table}tax t 
 						       (${table}_id)) OR
@@ -2103,7 +2126,7 @@ sub tax_report {
 						       (parts_id)))
 						       $cashwhere
 						GROUP BY a.id, a.invnumber, 
-						       $transdate, n.name,
+						       $transdate, name,
 						       ac.description, a.till|;
                 }
             }

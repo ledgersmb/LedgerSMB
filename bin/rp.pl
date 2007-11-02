@@ -2178,10 +2178,12 @@ sub generate_tax_report {
 
     RP->tax_report( \%myconfig, \%$form );
 
-    $descvar     = "$form->{accno}_description";
-    $description = $form->escape( $form->{$descvar} );
-    $ratevar     = "$form->{accno}_rate";
-    $taxrate     = $form->{"$form->{accno}_rate"};
+    my %hiddens;
+    my @options;
+    my $descvar     = "$form->{accno}_description";
+    my $description = $form->escape( $form->{$descvar} );
+    my $ratevar     = "$form->{accno}_rate";
+    my $taxrate     = $form->{"$form->{accno}_rate"};
 
     if ( $form->{accno} =~ /^gifi_/ ) {
         $descvar     = "gifi_$form->{accno}_description";
@@ -2190,10 +2192,10 @@ sub generate_tax_report {
         $taxrate     = $form->{"gifi_$form->{accno}_rate"};
     }
 
-    $department = $form->escape( $form->{department} );
+    my $department = $form->escape( $form->{department} );
 
     # construct href
-    $href =
+    my $href =
 "$form->{script}?path=$form->{path}&direction=$form->{direction}&oldsort=$form->{oldsort}&action=generate_tax_report&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&db=$form->{db}&method=$form->{method}&summary=$form->{summary}&accno=$form->{accno}&$descvar=$description&department=$department&$ratevar=$taxrate&report=$form->{report}";
 
     # construct callback
@@ -2202,26 +2204,27 @@ sub generate_tax_report {
 
     $form->sort_order();
 
-    $callback =
+    my $callback =
 "$form->{script}?path=$form->{path}&direction=$form->{direction}&oldsort=$form->{oldsort}&action=generate_tax_report&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&db=$form->{db}&method=$form->{method}&summary=$form->{summary}&accno=$form->{accno}&$descvar=$description&department=$department&$ratevar=$taxrate&report=$form->{report}";
 
     $form->{title} = $locale->text('GIFI') . " - "
       if ( $form->{accno} =~ /^gifi_/ );
 
-    $title = $form->escape( $form->{title} );
+    my $title = $form->escape( $form->{title} );
     $href .= "&title=$title";
     $title = $form->escape( $form->{title}, 1 );
     $callback .= "&title=$title";
 
     $form->{title} = qq|$form->{title} $form->{"$form->{accno}_description"} |;
 
-    @columns =
+    my @columns =
       $form->sort_columns(
         qw(id transdate invnumber name description netamount tax total));
 
     $form->{"l_description"} = "" if $form->{summary};
 
-    foreach $item (@columns) {
+    my @column_index;
+    foreach my $item (@columns) {
         if ( $form->{"l_$item"} eq "Y" ) {
             push @column_index, $item;
 
@@ -2238,10 +2241,12 @@ sub generate_tax_report {
 
     if ( $form->{department} ) {
         ($department) = split /--/, $form->{department};
-        $option = $locale->text('Department') . " : $department";
+        push @options, $locale->text('Department: [_1]', $department);
     }
 
     # if there are any dates
+    my $fromdate;
+    my $todate;
     if ( $form->{fromdate} || $form->{todate} ) {
         if ( $form->{fromdate} ) {
             $fromdate = $locale->date( \%myconfig, $form->{fromdate}, 1 );
@@ -2257,6 +2262,9 @@ sub generate_tax_report {
           $locale->date( \%myconfig, $form->current_date( \%myconfig ), 1 );
     }
 
+    my $name;
+    my $invoice;
+    my $arap;
     if ( $form->{db} eq 'ar' ) {
         $name    = $locale->text('Customer');
         $invoice = 'is.pl';
@@ -2268,76 +2276,54 @@ sub generate_tax_report {
         $arap    = 'ap.pl';
     }
 
-    $option .= "<br>" if $option;
-    $option .= "$form->{period}";
+    push @options, $form->{period};
 
-    $column_header{id} =
-        qq|<th><a class=listheading href=$href&sort=id>|
-      . $locale->text('ID')
-      . qq|</th>|;
-    $column_header{invnumber} =
-        qq|<th><a class=listheading href=$href&sort=invnumber>|
-      . $locale->text('Invoice')
-      . qq|</th>|;
-    $column_header{transdate} =
-        qq|<th><a class=listheading href=$href&sort=transdate>|
-      . $locale->text('Date')
-      . qq|</th>|;
-    $column_header{netamount} =
-      qq|<th class=listheading>| . $locale->text('Amount') . qq|</th>|;
-    $column_header{tax} =
-      qq|<th class=listheading>| . $locale->text('Tax') . qq|</th>|;
-    $column_header{total} =
-      qq|<th class=listheading>| . $locale->text('Total') . qq|</th>|;
+    my %column_header;
+    $column_header{id} = {
+        href => "$href&sort=id",
+        text => $locale->text('ID'),
+        };
+    $column_header{invnumber} = {
+        href => "$href&sort=invnumber",
+        text => $locale->text('Invoice')
+        };
+    $column_header{transdate} = {
+        href => "$href&sort=transdate",
+        text => $locale->text('Date'),
+        };
+    $column_header{netamount} = $locale->text('Amount');
+    $column_header{tax} = $locale->text('Tax');
+    $column_header{total} = $locale->text('Total');
 
-    $column_header{name} =
-      qq|<th><a class=listheading href=$href&sort=name>$name</th>|;
-
-    $column_header{description} =
-        qq|<th><a class=listheading href=$href&sort=description>|
-      . $locale->text('Description')
-      . qq|</th>|;
-
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop colspan=$colspan>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-	</tr>
-|;
+    $column_header{name} = {
+        href => "$href&sort=name",
+        text => $name,
+        };
+    $column_header{description} = {
+        href => "$href&sort=description",
+        text => $locale->text('Description'),
+        };
 
     # add sort and escape callback
     $callback = $form->escape( $callback . "&sort=$form->{sort}" );
 
+    my $sameitem;
     if ( @{ $form->{TR} } ) {
         $sameitem = $form->{TR}->[0]->{ $form->{sort} };
     }
 
-    foreach $ref ( @{ $form->{TR} } ) {
+    my $totalnetamount;
+    my @rows;
+    my $i;
+    foreach my $ref ( @{ $form->{TR} } ) {
 
-        $module = ( $ref->{invoice} ) ? $invoice : $arap;
+        my %column_data;
+        my $module = ( $ref->{invoice} ) ? $invoice : $arap;
         $module = 'ps.pl' if $ref->{till};
 
         if ( $form->{l_subtotal} eq 'Y' ) {
             if ( $sameitem ne $ref->{ $form->{sort} } ) {
-                &tax_subtotal;
+                push @rows, &tax_subtotal(\@column_index);
                 $sameitem = $ref->{ $form->{sort} };
             }
         }
@@ -2351,103 +2337,100 @@ sub generate_tax_report {
 
         for (qw(netamount tax total)) {
             $ref->{$_} =
-              $form->format_amount( \%myconfig, $ref->{$_}, 2, "&nbsp;" );
+              $form->format_amount( \%myconfig, $ref->{$_}, 2, ' ' );
         }
 
-        $column_data{id} = qq|<td>$ref->{id}</td>|;
-        $column_data{invnumber} =
-qq|<td><a href=$module?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{invnumber}</a></td>|;
+        $column_data{id} = $ref->{id};
+        $column_data{invnumber} = {
+            href => "$module?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+            text => $ref->{invnumber},
+            };
 
         for (qw(id transdate name partnumber description)) {
-            $column_data{$_} = qq|<td>$ref->{$_}</td>|;
+            $column_data{$_} = $ref->{$_};
         }
 
         for (qw(netamount tax total)) {
-            $column_data{$_} = qq|<td align=right>$ref->{$_}</td>|;
+            $column_data{$_} = $ref->{$_};
         }
 
         $i++;
         $i %= 2;
-        print qq|
-	<tr class=listrow$i>
-|;
+        $column_data{i} = $i;
 
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-	</tr>
-|;
-
+        push @rows, \%column_data;
     }
 
     if ( $form->{l_subtotal} eq 'Y' ) {
-        &tax_subtotal;
+        push @rows, &tax_subtotal(\@column_index);
     }
 
-    for (@column_index) { $column_data{$_} = qq|<th>&nbsp;</th>| }
-
-    print qq|
-        </tr>
-	<tr class=listtotal>
-|;
+    my %column_data;
+    for (@column_index) { $column_data{$_} = ' ' }
 
     $total = $form->format_amount( \%myconfig, $totalnetamount + $totaltax,
-        2, "&nbsp;" );
+        2, ' ' );
     $totalnetamount =
-      $form->format_amount( \%myconfig, $totalnetamount, 2, "&nbsp;" );
-    $totaltax = $form->format_amount( \%myconfig, $totaltax, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $totalnetamount, 2, ' ' );
+    $totaltax = $form->format_amount( \%myconfig, $totaltax, 2, ' ' );
 
-    $column_data{netamount} =
-      qq|<th class=listtotal align=right>$totalnetamount</th>|;
-    $column_data{tax}   = qq|<th class=listtotal align=right>$totaltax</th>|;
-    $column_data{total} = qq|<th class=listtotal align=right>$total</th>|;
+    $column_data{netamount} = $totalnetamount;
+    $column_data{tax}   = $totaltax;
+    $column_data{total} = $total;
 
-    for (@column_index) { print "$column_data{$_}\n" }
-
-    print qq|
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-dynatable',
+        );
+    $template->render({
+        form => $form,
+        hiddens => \%hiddens,
+        options => \@options,
+        columns => \@column_index,
+        heading => \%column_header,
+        rows => \@rows,
+        totals => \%column_data,
+        row_alignment => {
+            netamount => 'right',
+            tax => 'right',
+            total => 'right',
+            },
+    });
 }
 
 sub tax_subtotal {
 
-    for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+    my $column_index = shift;
+    my %column_data;
+    for (@{$column_index}) { $column_data{$_} = ' ' }
 
+    #SC: Yes, right now these are global, inherited from generate_tax_report
     $subtotal =
       $form->format_amount( \%myconfig, $subtotalnetamount + $subtotaltax,
-        2, "&nbsp;" );
+        2, ' ' );
     $subtotalnetamount =
-      $form->format_amount( \%myconfig, $subtotalnetamount, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $subtotalnetamount, 2, ' ' );
     $subtotaltax =
-      $form->format_amount( \%myconfig, $subtotaltax, 2, "&nbsp;" );
+      $form->format_amount( \%myconfig, $subtotaltax, 2, ' ' );
 
-    $column_data{netamount} =
-      "<th class=listsubtotal align=right>$subtotalnetamount</th>";
-    $column_data{tax} = "<th class=listsubtotal align=right>$subtotaltax</th>";
-    $column_data{total} = "<th class=listsubtotal align=right>$subtotal</th>";
+    $column_data{netamount} = {
+        class => 'subtotal',
+        text => $subtotalnetamount,
+        };
+    $column_data{tax} = {
+        class => 'subtotal',
+        text => $subtotaltax,
+        };
+    $column_data{total} = {
+        class => 'subtotal',
+        text => $subtotal,
+        };
 
     $subtotalnetamount = 0;
     $subtotaltax       = 0;
 
-    print qq|
-	<tr class=listsubtotal>
-|;
-    for (@column_index) { print "\n$column_data{$_}" }
-
-    print qq|
-        </tr>
-|;
+    \%column_data;
 
 }
 
