@@ -1,0 +1,95 @@
+      <tr>
+        <th align="right"><?lsmb text('Account') ?></th>
+        <td colspan="3"><?lsmb PROCESS select element_data=form.paymentaccounts ?></td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('Description') ?></th>
+        <td colspan="3"><?lsmb PROCESS input element_data={
+  name => 'description',
+  size => '35',
+  } ?></td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('Source') ?></th>
+        <td colspan="3"><?lsmb PROCESS input element_data={name => 'source'} ?></td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('Memo') ?></th>
+        <td colspan="3"><?lsmb PROCESS input element_data={
+  name => 'memo',
+  size => '30',
+  } ?></td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('From') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'fromdate',
+        size => '11',
+        title => user.dateformat,
+        value => form.fromdate,
+        } ?></td>
+        <th align="right"><?lsmb text('To') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'todate',
+        size => '11',
+        title => user.dateformat,
+        value => form.todate,
+        } ?></td>
+      </tr>
+<?lsmb IF form.selectaccountingyear.defined ?>
+      <tr>
+        <th align="right"><?lsmb text('Period') ?></th>
+        <td colspan="3">
+  <?lsmb PROCESS select element_data=form.selectaccountingmonth -?>
+  <?lsmb PROCESS select element_data=form.selectaccountingyear -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '0',
+    label => text('Current'),
+    checked => 'checked',
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '1',
+    label => text('Month'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '3',
+    label => text('Quarter'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '12',
+    label => text('Year'),
+    } -?>
+        </td>
+      </tr>
+<?lsmb END ?>
+      <tr>
+        <td align="right">
+<?lsmb PROCESS input element_data={
+  type => 'checkbox',
+  name => 'fx_transaction',
+  value => '1',
+  checked => 'checked',
+  } -?>
+        </td>
+        <td colspan="3"><?lsmb text('Include Exchange Rate Difference') ?></td>
+      </tr>
+      <tr>
+        <td align="right">
+<?lsmb PROCESS input element_data={
+  type => 'checkbox',
+  name => 'l_subtotal',
+  value => 'Y',
+  } -?>
+        </td>
+        <td colspan="3"><?lsmb text('Subtotal') ?></td>
+      </tr>

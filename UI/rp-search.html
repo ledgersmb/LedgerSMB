@@ -1,0 +1,53 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td> </td></tr>
+  <tr>
+    <td>
+      <table>
+<?lsmb IF form.selectdepartment.defined ?>
+        <tr>
+          <th align="right"><?lsmb text('Department') ?></th>
+          <td colspan="3"><?lsmb PROCESS select element_data=form.selectdepartment ?></td>
+        </tr>
+<?lsmb END ?>
+<?lsmb INCLUDE "rp-search-${subform}.html" ?>
+<?lsmb IF gifi ?>
+        <tr>
+          <th align="right"><?lsmb text('Accounts') ?></th>
+          <td>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'accounttype',
+    value => 'standard',
+    label => text('Standard'),
+    checked => 'checked',
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'accounttype',
+    value => 'gifi',
+    label => text('GIFI'),
+    } -?>
+          </td>
+        </tr>
+<?lsmb END ?>
+      </table>
+    </td>
+  </tr>
+  <tr><td><hr size="3" noshade="noshade" /></td></tr>
+</table>
+<br />
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>

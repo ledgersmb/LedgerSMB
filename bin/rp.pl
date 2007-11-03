@@ -96,7 +96,8 @@ use LedgerSMB::RP;
 
 sub report {
 
-    %report = (
+    my %hiddens;
+    my %report = (
         balance_sheet    => { title => 'Balance Sheet' },
         income_statement => { title => 'Income Statement' },
         trial_balance    => { title => 'Trial Balance' },
@@ -114,751 +115,224 @@ sub report {
 
     $form->{title} = $locale->text( $report{ $form->{report} }->{title} );
 
-    $gifi = qq|
-<tr>
-  <th align=right>| . $locale->text('Accounts') . qq|</th>
-  <td><input name=accounttype class=radio type=radio value=standard checked> |
-      . $locale->text('Standard') . qq|
-   
-      <input name=accounttype class=radio type=radio value=gifi> |
-      . $locale->text('GIFI') . qq|
-  </td>
-</tr>
-|;
+    my $gifi = 1;
 
     # get departments
-    $form->all_departments( \%myconfig, undef,
-        $report{ $form->{report} }->{vc} );
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
+    $form->all_departments(\%myconfig, undef, $report{$form->{report}}->{vc});
+    if ( ref $form->{all_department} eq 'ARRAY' ) {
+        $form->{selectdepartment} = {
+            name => 'department',
+            options => [{value => '', text => ''}],
+            };
+       push @{$form->{selectdepartment}{options}}, {
+           value => "$_->{description}--$_->{id}",
+           text => $_->{description},
+           } foreach @{$form->{all_department}};
     }
 
-    $department = qq|
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Department') . qq|</th>
-	  <td colspan=3><select name=department>$form->{selectdepartment}</select></td>
-	</tr>
-| if $form->{selectdepartment};
-
-    if ( @{ $form->{all_years} } ) {
+    if (ref $form->{all_years} eq 'ARRAY') {
 
         # accounting years
-        $form->{selectaccountingyear} = "<option>\n";
-        for ( @{ $form->{all_years} } ) {
-            $form->{selectaccountingyear} .= qq|<option>$_\n|;
-        }
+        $form->{selectaccountingyear} = {
+            name => 'year',
+            options => [{text => '', value => ''}],
+            };
+        push @{$form->{selectaccountingyear}{options}}, {
+            text => $_,
+            value => $_,
+            } foreach ( @{ $form->{all_years} } );
 
-        $form->{selectaccountingmonth} = "<option>\n";
-        for ( sort keys %{ $form->{all_month} } ) {
-            $form->{selectaccountingmonth} .=
-              qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|\n|;
-        }
-
-        $selectfrom = qq|
-        <tr>
-	  <th align=right>| . $locale->text('Period') . qq|</th>
-	  <td colspan=3>
-	  <select name=month>$form->{selectaccountingmonth}</select>
-	  <select name=year>$form->{selectaccountingyear}</select>
-	  <input name=interval class=radio type=radio value=0 checked>&nbsp;|
-          . $locale->text('Current') . qq|
-	  <input name=interval class=radio type=radio value=1>&nbsp;|
-          . $locale->text('Month') . qq|
-	  <input name=interval class=radio type=radio value=3>&nbsp;|
-          . $locale->text('Quarter') . qq|
-	  <input name=interval class=radio type=radio value=12>&nbsp;|
-          . $locale->text('Year') . qq|
-	  </td>
-	</tr>
-|;
-
-        $selectto = qq|
-        <tr>
-	  <th align=right></th>
-	  <td>
-	  <select name=month>$form->{selectaccountingmonth}</select>
-	  <select name=year>$form->{selectaccountingyear}</select>
-	  </td>
-	</tr>
-|;
+        $form->{selectaccountingmonth} = {
+            name => 'month',
+            options => [{text => '', value => ''}],
+            };
+        push @{$form->{selectaccountingmonth}{options}}, {
+            text => $locale->text( $form->{all_month}{$_} ),
+            value => $_,
+            } foreach ( sort keys %{ $form->{all_month} } );
     }
-
-    $summary = qq|
-	<tr>
-	  <th></th>
-	  <td><input name=summary type=radio class=radio value=1 checked> |
-      . $locale->text('Summary') . qq|
-	  <input name=summary type=radio class=radio value=0> |
-      . $locale->text('Detail') . qq|
-	  </td>
-	</tr>
-|;
 
     # get projects
     $form->all_projects( \%myconfig );
-    if ( @{ $form->{all_project} } ) {
-        $form->{selectproject} = "<option>\n";
-        for ( @{ $form->{all_project} } ) {
-            $form->{selectproject} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-        }
-
-        $project = qq|
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Project') . qq|</th>
-	  <td colspan=3><select name=projectnumber>$form->{selectproject}</select></td>
-	</tr>|;
-
+    if (ref $form->{all_project} eq 'ARRAY') {
+        $form->{selectproject} = {
+            name => 'projectnumber',
+            options => [{text => '', value => ''}],
+            };
+        push @{$form->{selectproject}{options}}, {
+            text => $_->{projectnumber},
+            value => "$_->{projectnumber}--$_->{id}",
+            } foreach ( @{ $form->{all_project} } );
     }
 
-    $form->header;
+    $hiddens{title} = $form->{title};
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=title value="$form->{title}">
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-      $department
-|;
-
+    my $subform;
     if ( $form->{report} eq "projects" ) {
-        print qq|
-        $project
-        <input type=hidden name=nextsub value=generate_projects>
-        <tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Include in Report') . qq|</th>
-	  <td><input name=l_heading class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Heading') . qq|
-	  <input name=l_subtotal class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Subtotal')
-          . qq|</td>
-	</tr>
-|;
-    }
-
-    if ( $form->{report} eq "inv_activity" ) {
-        $gifi = '';
-        print qq|
-       <input type=hidden name=nextsub value=generate_inv_activity>
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-       <tr>
-	  <th align=right>| . $locale->text('Period') . qq|</th>
-	  <td colspan=3>
-	  <select name=frommonth>$form->{selectaccountingmonth}</select>
-	  <select name=fromyear>$form->{selectaccountingyear}</select>
-	  <input name=interval class=radio type=radio value=0 checked>|
-          . $locale->text('Current') . qq|
-	  <input name=interval class=radio type=radio value=1>|
-          . $locale->text('Month') . qq|
-	  <input name=interval class=radio type=radio value=3>|
-          . $locale->text('Quarter') . qq|
-	  <input name=interval class=radio type=radio value=12>|
-          . $locale->text('Year') . qq|
-	  </td>
-	</tr>
-        </table>
-        <table>
-          <tr>
-            <th>| . $locale->text("Part Number") . qq|</th>
-            <td><input name=partnumber></td>
-            <th>| . $locale->text('Description') . qq|</th>
-            <td><input type=text name=description></td>
-          </tr>|;
-    }
-    if ( $form->{report} eq "income_statement" ) {
-        print qq|
-	$project
-        <input type=hidden name=nextsub value=generate_income_statement>
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-|;
-
-        if ($selectfrom) {
-            print qq|
-        <tr>
-	  <th align=right>| . $locale->text('Period') . qq|</th>
-	  <td colspan=3>
-	  <select name=frommonth>$form->{selectaccountingmonth}</select>
-	  <select name=fromyear>$form->{selectaccountingyear}</select>
-	  <input name=interval class=radio type=radio value=0 checked>&nbsp;|
-              . $locale->text('Current') . qq|
-	  <input name=interval class=radio type=radio value=1>&nbsp;|
-              . $locale->text('Month') . qq|
-	  <input name=interval class=radio type=radio value=3>&nbsp;|
-              . $locale->text('Quarter') . qq|
-	  <input name=interval class=radio type=radio value=12>&nbsp;|
-              . $locale->text('Year') . qq|
-	  </td>
-	</tr>
-|;
-        }
-
-        print qq|
-
-	<tr>
-	  <th align=right>| . $locale->text('Compare to') . qq|</th>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=comparefromdate size=11 title="$myconfig{dateformat}"></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=comparetodate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-|;
-
-        if ($selectto) {
-            print qq|
-        <tr>
-	  <th align=right>| . $locale->text('Period') . qq|</th>
-	  <td>
-	  <select name=comparemonth>$form->{selectaccountingmonth}</select>
-	  <select name=compareyear>$form->{selectaccountingyear}</select>
-	  </td>
-	</tr>
-|;
-        }
-
-        print qq|
-	<tr>
-	  <th align=right>| . $locale->text('Decimalplaces') . qq|</th>
-	  <td><input name=decimalplaces size=3 value=2></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right>| . $locale->text('Method') . qq|</th>
-	  <td colspan=3><input name=method class=radio type=radio value=accrual checked>|
-          . $locale->text('Accrual') . qq|
-	  &nbsp;<input name=method class=radio type=radio value=cash>|
-          . $locale->text('Cash')
-          . qq|</td>
-	</tr>
-
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Include in Report') . qq|</th>
-	  <td colspan=3><input name=l_heading class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Heading') . qq|
-	  <input name=l_subtotal class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Subtotal') . qq|
-	  <input name=l_accno class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Account Number')
-          . qq|</td>
-	</tr>
-|;
-    }
-
-    if ( $form->{report} eq "balance_sheet" ) {
-        print qq|
-        <input type=hidden name=nextsub value=generate_balance_sheet>
-	<tr>
-	  <th align=right>| . $locale->text('as at') . qq|</th>
-	  <td><input class="date" name=asofdate size=11 title="$myconfig{dateformat}" value=$form->{asofdate}></td>
-|;
-
-        if ($selectfrom) {
-            print qq|
-	  <td>
-	  <select name=asofmonth>$form->{selectaccountingmonth}</select>
-	  <select name=asofyear>$form->{selectaccountingyear}</select>
-	  </td>
-|;
-        }
-
-        print qq|
-	</tr>
-
-	  <th align=right nowrap>| . $locale->text('Compare to') . qq|</th>
-	  <td><input class="date" name=compareasofdate size=11 title="$myconfig{dateformat}"></td>
-	  <td>
-|;
-
-        if ($selectto) {
-            print qq|
-	  <select name=compareasofmonth>$form->{selectaccountingmonth}</select>
-	  <select name=compareasofyear>$form->{selectaccountingyear}</select>
-	  </td>
-|;
-        }
-
-        print qq|
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('Decimalplaces') . qq|</th>
-	  <td><input name=decimalplaces size=3 value=2></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right>| . $locale->text('Method') . qq|</th>
-	  <td colspan=3><input name=method class=radio type=radio value=accrual checked>|
-          . $locale->text('Accrual') . qq|
-	  &nbsp;<input name=method class=radio type=radio value=cash>|
-          . $locale->text('Cash')
-          . qq|</td>
-	</tr>
-
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Include in Report') . qq|</th>
-	  <td><input name=l_heading class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Heading') . qq|
-	  <input name=l_subtotal class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Subtotal') . qq|
-	  <input name=l_accno class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Account Number')
-          . qq|</td>
-	</tr>
-|;
-    }
-
-    if ( $form->{report} eq "trial_balance" ) {
-        print qq|
-        <input type=hidden name=nextsub value=generate_trial_balance>
-        <tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Include in Report') . qq|</th>
-	  <td><input name=l_heading class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Heading') . qq|
-	  <input name=l_subtotal class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('Subtotal') . qq|
-	  <input name=all_accounts class=checkbox type=checkbox value=Y>&nbsp;|
-          . $locale->text('All Accounts')
-          . qq|</td>
-	</tr>
-|;
-    }
-
-    if ( $form->{report} =~ /^tax_/ ) {
-        $gifi = "";
+        $hiddens{nextsub} = 'generate_projects';
+        $subform = 'generate_projects';
+    } elsif ( $form->{report} eq "inv_activity" ) {
+        $gifi = 0;
+        $hiddens{nextsub} = 'generate_inv_activity';
+        $subform = 'generate_inv_activity';
+    } elsif ( $form->{report} eq "income_statement" ) {
+        $hiddens{nextsub} = 'generate_income_statement';
+        $subform = 'generate_income_statement';
+    } elsif ( $form->{report} eq "balance_sheet" ) {
+        $hiddens{nextsub} = 'generate_balance_sheet';
+        $subform = 'generate_balance_sheet';
+    } elsif ( $form->{report} eq "trial_balance" ) {
+        $hiddens{nextsub} = 'generate_trial_balance';
+        $subform = 'generate_trial_balance';
+    } elsif ( $form->{report} =~ /^tax_/ ) {
+        $gifi = 0;
 
         $form->{db} = ( $form->{report} =~ /_collected/ ) ? "ar" : "ap";
 
         RP->get_taxaccounts( \%myconfig, \%$form );
 
-        print qq|
-        <input type=hidden name=nextsub value=generate_tax_report>
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-	$summary
-	<tr>
-	  <th align=right>| . $locale->text('Report for') . qq|</th>
-	  <td colspan=3>
-|;
+        $hiddens{nextsub} = 'generate_tax_report';
+        $hiddens{db} = $form->{db};
+        $hiddens{sort} = 'transdate';
+        $subform = 'generate_tax_report';
 
-        $checked = "checked";
+        my $checked = "checked";
+        $form->{taxaccountlist} = [];
         foreach $ref ( @{ $form->{taxaccounts} } ) {
-
-            print
-qq|<input name=accno class=radio type=radio value=$ref->{accno} $checked>&nbsp;$ref->{description}
-
-    <input name="$ref->{accno}_description" type=hidden value="$ref->{description}">
-    <input name="$ref->{accno}_rate" type=hidden value="$ref->{rate}">|;
-
-            $checked = "";
-
+            push @{$form->{taxaccountlist}}, {
+                name => 'accno',
+                type => 'radio',
+                value => $ref->{accno},
+                label => $ref->{description},
+                $checked => $checked,
+                };
+            $hiddens{"$ref->{accno}_description"} = $ref->{description};
+            $hiddens{"$ref->{accno}_rate"} = $ref->{rate};
+            $checked = undef;
         }
 
-        print qq|
-  <input type=hidden name=db value=$form->{db}>
-  <input type=hidden name=sort value=transdate>
-
-	  </td>
-	</tr>
-|;
-
-        if ( @{ $form->{gifi_taxaccounts} } ) {
-            print qq|
-        <tr>
-	  <th align=right>| . $locale->text('GIFI') . qq|</th>
-	  <td colspan=3>
-|;
-
+        if (ref $form->{gifi_taxaccounts} eq 'ARRAY') {
+            $form->{gifitaxaccountlist} = [];
             foreach $ref ( @{ $form->{gifi_taxaccounts} } ) {
-
-                print
-qq|<input name=accno class=radio type=radio value="gifi_$ref->{accno}">&nbsp;$ref->{description}
-
-      <input name="gifi_$ref->{accno}_description" type=hidden value="$ref->{description}">
-      <input name="gifi_$ref->{accno}_rate" type=hidden value="$ref->{rate}">|;
-
+                push @{$form->{taxaccountlist}}, {
+                    name => 'accno',
+                    type => 'radio',
+                    value => "gifi_$ref->{accno}",
+                    label => $ref->{description},
+                    };
+                $hiddens{"gifi_$ref->{accno}_description"} = $ref->{description};
+                $hiddens{"gifi_$ref->{accno}_rate"} = $ref->{rate};
             }
-
-            print qq|
-	  </td>
-	</tr>
-|;
         }
-
-        print qq|
-	<tr>
-	  <th align=right>| . $locale->text('Method') . qq|</th>
-	  <td colspan=3><input name=method class=radio type=radio value=accrual checked>|
-          . $locale->text('Accrual') . qq|
-	  &nbsp;<input name=method class=radio type=radio value=cash>|
-          . $locale->text('Cash')
-          . qq|</td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-        <tr>
-	  <th align=right>| . $locale->text('Include in Report') . qq|</th>
-	  <td>
-	    <table>
-	      <tr>
-		<td><input name="l_id" class=checkbox type=checkbox value=Y></td>
-		<td>| . $locale->text('ID') . qq|</td>
-		<td><input name="l_invnumber" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Invoice') . qq|</td>
-		<td><input name="l_transdate" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Date') . qq|</td>
-	      </tr>
-	      <tr>
-		<td><input name="l_name" class=checkbox type=checkbox value=Y checked></td>
-|;
-
-        if ( $form->{db} eq 'ar' ) {
-            print qq|<td>| . $locale->text('Customer') . qq|</td>|;
-        }
-        if ( $form->{db} eq 'ap' ) {
-            print qq|<td>| . $locale->text('Vendor') . qq|</td>|;
-        }
-
-        print qq|
-  	        <td><input name="l_description" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Description') . qq|</td>
-		<td><input name="l_netamount" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Amount') . qq|</td>
-		
-		<td><input name="l_tax" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Tax') . qq|</td>
-		
-                <td><input name="l_total" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Total') . qq|</td>
-	      </tr>
-	      <tr>
-	      </tr>
-	      <tr>
-	        <td><input name="l_subtotal" class=checkbox type=checkbox value=Y></td>
-		<td>| . $locale->text('Subtotal') . qq|</td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-|;
-
-    }
-
-    if ( $form->{report} =~ /^nontaxable_/ ) {
-        $gifi = "";
+    } elsif ( $form->{report} =~ /^nontaxable_/ ) {
+        $gifi = 0;
 
         $form->{db} = ( $form->{report} =~ /_sales/ ) ? "ar" : "ap";
-
-        print qq|
-        <input type=hidden name=nextsub value=generate_tax_report>
-
-        <input type=hidden name=db value=$form->{db}>
-        <input type=hidden name=sort value=transdate>
-        <input type=hidden name=report value=$form->{report}>
-
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-	$summary
-	<tr>
-	  <th align=right>| . $locale->text('Method') . qq|</th>
-	  <td colspan=3><input name=method class=radio type=radio value=accrual checked>|
-          . $locale->text('Accrual') . qq|
-	  &nbsp;<input name=method class=radio type=radio value=cash>|
-          . $locale->text('Cash')
-          . qq|</td>
-	</tr>
-        <tr>
-	  <th align=right>| . $locale->text('Include in Report') . qq|</th>
-	  <td colspan=3>
-	    <table>
-	      <tr>
-		<td><input name="l_id" class=checkbox type=checkbox value=Y></td>
-		<td>| . $locale->text('ID') . qq|</td>
-		<td><input name="l_invnumber" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Invoice') . qq|</td>
-		<td><input name="l_transdate" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Date') . qq|</td>
-	      </tr>
-	      <tr>
-		<td><input name="l_name" class=checkbox type=checkbox value=Y checked></td>
-|;
-
-        if ( $form->{db} eq 'ar' ) {
-            print qq|<td>| . $locale->text('Customer') . qq|</td>|;
-        }
-        if ( $form->{db} eq 'ap' ) {
-            print qq|<td>| . $locale->text('Vendor') . qq|</td>|;
-        }
-
-        print qq|
-	        <td><input name="l_description" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Description') . qq|</td>
-                <td><input name="l_netamount" class=checkbox type=checkbox value=Y checked></td>
-		<td>| . $locale->text('Amount') . qq|</td>
-	      </tr>
-	      <tr>
-	        <td><input name="l_subtotal" class=checkbox type=checkbox value=Y></td>
-		<td>| . $locale->text('Subtotal') . qq|</td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-|;
-
-    }
-
-    if (   ( $form->{report} eq "ar_aging" )
-        || ( $form->{report} eq "ap_aging" ) )
-    {
-        $gifi = "";
+        $hiddens{nextsub} = 'generate_tax_report';
+        $hiddens{db} = $form->{db};
+        $hiddens{sort} = 'transdate';
+        $hiddens{report} = $form->{report};
+        $subform = 'generate_tax_report';
+    } elsif (   ( $form->{report} eq "ar_aging" )
+        || ( $form->{report} eq "ap_aging" ) ) {
+        $gifi = 0;
+        $subform = 'aging';
 
         if ( $form->{report} eq 'ar_aging' ) {
             $label = $locale->text('Customer');
             $form->{vc} = 'customer';
+            $form->{uvc} = 'Customer';
         }
         else {
             $label = $locale->text('Vendor');
             $form->{vc} = 'vendor';
+            $form->{uvc} = 'Vendor';
         }
-
-        $nextsub = "generate_$form->{report}";
 
         # setup vc selection
         $form->all_vc( \%myconfig, $form->{vc},
             ( $form->{vc} eq 'customer' ) ? "AR" : "AP" );
 
-        for ( @{ $form->{"all_$form->{vc}"} } ) {
-            $vc .= qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+        my $vc;
+        if (ref $form->{"all_$form->{vc}"} eq 'ARRAY') {
+            $vc = {name => $form->{vc}, options => [{text => '', value => ''}]};
+            for ( @{ $form->{"all_$form->{vc}"} } ) {
+                push @{$vc->{options}}, {
+                    text => "$_->{name}",
+                    value => "$_->{name}--$_->{id}",
+                    };
+            }
+            $form->{vci} = {type => 'select', input => $vc};
+        } else {
+            $vc = {name => $form->{vc}, size => 35};
+            $form->{vci} = {type => 'input', input => $vc};
         }
 
-        $vc =
-          ($vc)
-          ? qq|<select name=$form->{vc}><option>\n$vc</select>|
-          : qq|<input name=$form->{vc} size=35>|;
-
-        $postscript = "ps" if $myconfig{printer};
-
-        print qq|
-	<tr>
-	  <th align=right>| . $locale->text($label) . qq|</th>
-	  <td>$vc</td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectto
-        <input type=hidden name=type value=statement>
-        <input type=hidden name=format value=$postscript>
-	<input type=hidden name=media value="$myconfig{printer}">
-
-	<input type=hidden name=nextsub value=$nextsub>
-	<input type=hidden name=action value=$nextsub>
-	$summary
-	<tr>
-	  <table>
-	    <tr>
-	      <th>| . $locale->text('Include in Report') . qq|</th>
-
-	      <td>
-	        <table>
-		  <tr>
-	            <td nowrap><input name=overdue type=radio class=radio value=0 checked> |
-          . $locale->text('Aged')
-          . qq|</td>
- 	            <td nowrap><input name=overdue type=radio class=radio value=1> |
-          . $locale->text('Overdue')
-          . qq|</td>
-	          </tr>
-		  <tr>
-		    <td nowrap width=70><input name=c0 type=checkbox class=checkbox value=1 checked> |
-          . $locale->text('Current')
-          . qq|</td>
-		    <td nowrap width=70><input name=c30 type=checkbox class=checkbox value=1 checked> 30</td>
-		    <td nowrap width=70><input name=c60 type=checkbox class=checkbox value=1 checked> 60</td>
-		    <td nowrap width=70><input name=c90 type=checkbox class=checkbox value=1 checked> 90</td>
-		    </td>
-		  </tr>
-		</table>
-	      </td>
-	    </tr>
-	  </table>
-	</tr>
-
-|;
-    }
-
-    # above action can be removed if there is more than one input field
-
-    if ( $form->{report} =~ /(receipts|payments)$/ ) {
-        $gifi = "";
+        $hiddens{type} = 'statement';
+        $hiddens{format} = 'ps' if $myconfig{printer};
+	$hiddens{media} = $myconfig{printer};
+        
+	my $nextsub = "generate_$form->{report}";
+	$hiddens{nextsub} = $nextsub;
+	$hiddens{action} = $nextsub;
+    } elsif ( $form->{report} =~ /(receipts|payments)$/ ) {
+        $gifi = 0;
+        $subform = 'payments';
 
         $form->{db} = ( $form->{report} =~ /payments$/ ) ? "ap" : "ar";
 
         RP->paymentaccounts( \%myconfig, \%$form );
 
-        $selection = "<option>\n";
+        my $paymentaccounts = '';
+        $form->{paymentaccounts} = {
+            name => 'account',
+            options => [{text => '', value => ''}],
+            };
         foreach $ref ( @{ $form->{PR} } ) {
             $paymentaccounts .= "$ref->{accno} ";
-            $selection       .= "<option>$ref->{accno}--$ref->{description}\n";
+            push @{$form->{paymentaccounts}{options}}, {
+                text => "$ref->{accno}--$ref->{description}",
+                value => "$ref->{accno}--$ref->{description}",
+                };
         }
 
         chop $paymentaccounts;
 
-        print qq|
-        <input type=hidden name=nextsub value=list_payments>
-        <tr>
-	  <th align=right nowrap>| . $locale->text('Account') . qq|</th>
-          <td colspan=3><select name=account>$selection</select>
-	    <input type=hidden name=paymentaccounts value="$paymentaccounts">
-	  </td>
-	</tr>
-        <tr>
-	  <th align=right nowrap>| . $locale->text('Description') . qq|</th>
-          <td colspan=3><input name=description size=35></td>
-	</tr>
-        <tr>
-	  <th align=right nowrap>| . $locale->text('Source') . qq|</th>
-          <td colspan=3><input name=source></td>
-	</tr>
-        <tr>
-	  <th align=right nowrap>| . $locale->text('Memo') . qq|</th>
-          <td colspan=3><input name=memo size=30></td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=fromdate size=11 title="$myconfig{dateformat}" value=$form->{fromdate}></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-        <tr>
-	  <td align=right><input type=checkbox class=checkbox name=fx_transaction value=1 checked></td>
-	  <td colspan=3>|
-          . $locale->text('Include Exchange Rate Difference')
-          . qq|</td>
-	</tr>
-        <tr>
-	  <td align=right><input name=l_subtotal class=checkbox type=checkbox value=Y></td>
-	  <td align=left colspan=3>| . $locale->text('Subtotal') . qq|</th>
-	</tr>
-	  
-	  <input type=hidden name=db value=$form->{db}>
-	  <input type=hidden name=sort value=transdate>
-|;
+        $hiddens{nextsub} = 'list_payments';
+        $hiddens{paymentaccounts} = $paymentaccounts;
+        $hiddens{db} = $form->{db};
+        $hiddens{sort} = 'transdate';
 
     }
 
     $form->{login} = 'test';
-    print qq|
+    $hiddens{$_} = $form->{$_} foreach qw(path login sessionid);
 
-$gifi
+##SC: Temporary commenting
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<input type="hidden" name="path" value="$form->{path}">
-<input type="hidden" name="login" value="$form->{login}">
-<input type="hidden" name="sessionid" value="$form->{sessionid}">
-
-<button type="submit" class="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-
-</form>
-|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-
-</body>
-</html>
-|;
+    my @buttons = ({
+        name => 'action',
+        value => 'continue',
+        text => $locale->text('Continue'),
+        });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'rp-search',
+        );
+    $template->render({
+        user => \%myconfig,
+        form => $form,
+        subform => $subform,
+        hiddens => \%hiddens,
+        options => \@options,
+        buttons => \@buttons,
+        gifi => $gifi,
+    });
 
 }
 
