@@ -1,0 +1,458 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td /></tr>
+  <tr valign="top">
+    <td>
+      <table>
+        <tr valign="top">
+          <td>
+            <table>
+              <tr>
+                <th align="right"><?lsmb text('Company Name') ?></th>
+                <td><?lsmb PROCESS input element_data={size => '32', name => 'name'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Contact') ?></th>
+                <td><?lsmb PROCESS input element_data={size => '32', name => 'contact'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('E-mail') ?></th>
+                <td><?lsmb PROCESS input element_data={size => '32', name => 'email'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Phone') ?></th>
+                <td><?lsmb PROCESS input element_data={size => '20', name => 'phone'} ?></td>
+              </tr>
+              <tr>
+<?lsmb IF form.db == 'customer' -?>
+                <th align="right"><?lsmb text('Salesperson') ?></th>
+                <td><?lsmb PROCESS input element_data={size => '32', name => 'employee'} ?></td>
+<?lsmb ELSIF form.db == 'vendor' -?>
+                <th align="right"><?lsmb text('Employee') ?></th>
+                <td><?lsmb PROCESS input element_data={size => '32', name => 'employee'} ?></td>
+<?lsmb END -?>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Notes') ?></th>
+                <td><?lsmb PROCESS textarea element_data={
+  rows => '3', cols => '32', name => 'notes'} ?></td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table>
+              <tr>
+                <th align="right"><?lsmb text("${form.label} Number") ?></th>
+                <td><?lsmb PROCESS input element_data={
+  size => '32', name => "${form.db}number"} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Address') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  size => '32', name => 'address'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('City') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  size => '32', name => 'city'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('State/Province') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  size => '32', name => 'state'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Zip/Postal Code') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  size => '10', name => 'zipcode'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Country') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  size => '32', name => 'country'} ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Startdate') ?></th>
+                <td>
+                   <?lsmb text('From'); ' '; PROCESS input element_data={
+  size => '11', name => 'startdatefrom', class => 'date', title => user.dateformat};
+                          text('To'); ' '; PROCESS input element_data={
+  size => '11', name => 'startdateto', class => 'date', title => user.dateformat} ?>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table>
+<?lsmb IF form.nextsub == 'list_history' ?>
+        <tr>
+          <td />
+          <td>
+            <table>
+              <tr>
+                <td>
+                  <table>
+                    <tr>
+                      <td align="right">
+                         <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'type',
+    value => 'invoice',
+    label => form.invlabel,
+    checked => 'checked',
+    } -?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right">
+                         <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'type',
+    value => 'order',
+    label => form.ordlabel,
+    } -?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right">
+                         <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'type',
+    value => 'quotation',
+    label => form.quolabel,
+    } -?>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table>
+                    <tr>
+                      <th><?lsmb text('From') ?></th>
+                      <td><?lsmb PROCESS input element_data={
+  size => '11', name => 'transdatefrom', class => 'date', title => user.dateformat} -?></td>
+                      <th><?lsmb text('To') ?></th>
+                      <td><?lsmb PROCESS input element_data={
+  size => '11', name => 'transdateto', class => 'date', title => user.dateformat} -?></td>
+                    </tr>
+                    <tr>
+                      <td />
+                      <td colspan="3">
+                        <?lsmb PROCESS input element_data={
+    name => 'open',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Open'),
+    checked => 'checked'
+    } -?>
+                        <?lsmb PROCESS input element_data={
+    name => 'closed',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Closed'),
+    } -?>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Include in Report') ?></th>
+            <td>
+              <table>
+                <tr>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'history',
+      type => 'radio',
+      value => 'summary',
+      label => text('Summary'),
+      checked => 'checked',
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'history',
+      type => 'radio',
+      value => 'detail',
+      label => text('Detail'),
+      } -?>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_partnumber',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Part Number'),
+      checked => 'checked',
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_description',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Description'),
+      checked => 'checked',
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_sellprice',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Sell Price'),
+      checked => 'checked',
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_curr',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Currency'),
+      } -?>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_qty',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Qty'),
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_unit',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Unit'),
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_discount',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Discount'),
+      } -?>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_deliverydate',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Delivery Date'),
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_projectnumber',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Project Number'),
+      } -?>
+                  </td>
+                  <td align="right">
+    <?lsmb PROCESS input element_data={
+      name => 'l_serialnumber',
+      type => 'checkbox',
+      value => 'Y',
+      label => text('Serial Number'),
+      } -?>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+<?lsmb ELSIF form.nextsub == 'list_names' ?>
+        <tr>
+          <td />
+          <td>
+  <?lsmb PROCESS input element_data={name => 'status', type => 'radio', value => 'all', label => text('All'), checked => 'checked'} -?>
+  <?lsmb PROCESS input element_data={name => 'status', type => 'radio', value => 'active', label => text('Active')} -?>
+  <?lsmb PROCESS input element_data={name => 'status', type => 'radio', value => 'inactive', label => text('Inactive')} -?>
+  <?lsmb PROCESS input element_data={name => 'status', type => 'radio', value => 'orphaned', label => text('Orphaned')} -?>
+          </td>
+        </tr>
+        <tr>
+          <td />
+          <td>
+            <table>
+              <tr>
+                <td>
+                  <table>
+                    <tr>
+                      <td align="right">
+  <?lsmb PROCESS input element_data={
+    name => 'l_transnumber',
+    type => 'checkbox',
+    value => 'Y',
+    label => form.translabel,
+    } -?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right">
+  <?lsmb PROCESS input element_data={
+    name => 'l_invnumber',
+    type => 'checkbox',
+    value => 'Y',
+    label => form.invlabel,
+    } -?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right">
+  <?lsmb PROCESS input element_data={
+    name => 'l_ordnumber',
+    type => 'checkbox',
+    value => 'Y',
+    label => form.ordlabel,
+    } -?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right">
+  <?lsmb PROCESS input element_data={
+    name => 'l_quonumber',
+    type => 'checkbox',
+    value => 'Y',
+    label => form.quolabel,
+    } -?>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table>
+                    <tr>
+                      <th><?lsmb text('From') ?></th>
+                      <td>
+  <?lsmb PROCESS input element_data={
+    name => 'transdatefrom',
+    class => 'date'
+    size => '11',
+    title => user.dateformat,
+    } -?>
+                      </td>
+                      <th><?lsmb text('To') ?></th>
+                      <td>
+  <?lsmb PROCESS input element_data={
+    name => 'transdateto',
+    class => 'date'
+    size => '11',
+    title => user.dateformat,
+    } -?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td />
+                      <td colspan="3">
+                        <?lsmb PROCESS input element_data={
+    name => 'open',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Open'),
+    checked => 'checked'
+    } -?>
+                        <?lsmb PROCESS input element_data={
+    name => 'closed',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Closed'),
+    } -?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td />
+                      <td colspan="3">
+                        <?lsmb PROCESS input element_data={
+    name => 'l_amount',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Amount'),
+    checked => 'checked'
+    } -?>
+                        <?lsmb PROCESS input element_data={
+    name => 'l_tax',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Tax'),
+    checked => 'checked'
+    } -?>
+                        <?lsmb PROCESS input element_data={
+    name => 'l_total',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Total'),
+    checked => 'checked'
+    } -?>
+                        <?lsmb PROCESS input element_data={
+    name => 'l_subtotal',
+    type => 'checkbox',
+    value => 'Y',
+    label => text('Subtotal'),
+    } -?>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Include in Report') ?></th>
+          <td>
+            <table>
+  <?lsmb FOREACH line IN form.includes -?>
+              <tr>
+    <?lsmb FOREACH item IN line -?>
+                <td align="right">
+        <?lsmb PROCESS input element_data=item -?>
+                </td>
+    <?lsmb END -?>
+              </tr>
+  <?lsmb END -?>
+            </table>
+          </td>
+        </tr>
+<?lsmb END ?>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size="3" noshade="noshade" /></td>
+  </tr>
+</table>
+
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END -?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+  </form>
+
+</body>
+</html>

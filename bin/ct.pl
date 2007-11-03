@@ -42,6 +42,7 @@
 #======================================================================
 
 use LedgerSMB::CT;
+use LedgerSMB::Template;
 
 1;
 
@@ -70,345 +71,227 @@ sub history {
     # $locale->text('Customer History')
     # $locale->text('Vendor History')
 
+    my %hiddens;
+    my @buttons;
     $history = 1;
     $label   = ucfirst $form->{db};
     $label .= " History";
 
     if ( $form->{db} eq 'customer' ) {
-        $invlabel = $locale->text('Sales Invoices');
-        $ordlabel = $locale->text('Sales Orders');
-        $quolabel = $locale->text('Quotations');
-    }
-    else {
-        $invlabel = $locale->text('Vendor Invoices');
-        $ordlabel = $locale->text('Purchase Orders');
-        $quolabel = $locale->text('Request for Quotations');
+        $form->{invlabel} = $locale->text('Sales Invoices');
+        $form->{ordlabel} = $locale->text('Sales Orders');
+        $form->{quolabel} = $locale->text('Quotations');
+    } else {
+        $form->{invlabel} = $locale->text('Vendor Invoices');
+        $form->{ordlabel} = $locale->text('Purchase Orders');
+        $form->{quolabel} = $locale->text('Request for Quotations');
     }
 
     $form->{title} = $locale->text($label);
 
     $form->{nextsub} = "list_history";
 
-    $transactions = qq|
- 	<tr>
-	  <td></td>
-	  <td>
-	    <table>
-	      <tr>
-	        <td>
-		  <table>
-		    <tr>
-		      <td><input name=type type=radio class=radio value=invoice checked> $invlabel</td>
-		    </tr>
-		    <tr>
-		      <td><input name=type type=radio class=radio value=order> $ordlabel</td>
-		    </tr>
-		    <tr>
-		      <td><input name="type" type=radio class=radio value=quotation> $quolabel</td>
-		    </tr>
-		  </table>
-		</td>
-		<td>
-		  <table>
-		    <tr>
-		      <th>| . $locale->text('From') . qq|</th>
-		      <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
-		      <th>| . $locale->text('To') . qq|</th>
-		      <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td colspan=3>
-	              <input name="open" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Open') . qq|
-	              <input name="closed" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Closed') . qq|
-		      </td>
-		    </tr>
-		  </table>
-		</td>
-	      </tr>
- 	    </table>
-	  </td>
-	</tr>
-|;
+    &search_name(\%hiddens, \@buttons);
 
-    $include = qq|
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Include in Report') . qq|</th>
-	  <td>
-	    <table>
-	      <tr>
-		<td><input name=history type=radio class=radio value=summary checked> |
-      . $locale->text('Summary')
-      . qq|</td>
-		<td><input name=history type=radio class=radio value=detail> |
-      . $locale->text('Detail') . qq|
-		</td>
-	      </tr>
-	      <tr>
-		<td>
-		<input name="l_partnumber" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Part Number') . qq|
-		</td>
-		<td>
-		<input name="l_description" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Description') . qq|
-		</td>
-		<td>
-		<input name="l_sellprice" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Sell Price') . qq|
-		</td>
-		<td>
-		<input name="l_curr" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Currency') . qq|
-		</td>
-	      </tr>
-	      <tr>
-		<td>
-		<input name="l_qty" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Qty') . qq|
-		</td>
-		<td>
-		<input name="l_unit" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Unit') . qq|
-		</td>
-		<td>
-		<input name="l_discount" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Discount') . qq|
-		</td>
-	      <tr>
-	      </tr>
-		<td>
-		<input name="l_deliverydate" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Delivery Date') . qq|
-		</td>
-		<td>
-		<input name="l_projectnumber" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Project Number') . qq|
-		</td>
-		<td>
-		<input name="l_serialnumber" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Serial Number') . qq|
-		</td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-|;
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    &search_name;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'ct-search',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
 sub transactions {
-
     if ( $form->{db} eq 'customer' ) {
-        $translabel = $locale->text('AR Transactions');
-        $invlabel   = $locale->text('Sales Invoices');
-        $ordlabel   = $locale->text('Sales Orders');
-        $quolabel   = $locale->text('Quotations');
+        $form->{translabel} = $locale->text('AR Transactions');
+        $form->{invlabel}   = $locale->text('Sales Invoices');
+        $form->{ordlabel}   = $locale->text('Sales Orders');
+        $form->{quolabel}   = $locale->text('Quotations');
+    } else {
+        $form->{translabel} = $locale->text('AP Transactions');
+        $form->{invlabel}   = $locale->text('Vendor Invoices');
+        $form->{ordlabel}   = $locale->text('Purchase Orders');
+        $form->{quolabel}   = $locale->text('Request for Quotations');
     }
-    else {
-        $translabel = $locale->text('AP Transactions');
-        $invlabel   = $locale->text('Vendor Invoices');
-        $ordlabel   = $locale->text('Purchase Orders');
-        $quolabel   = $locale->text('Request for Quotations');
-    }
-
-    $transactions = qq|
- 	<tr>
-	  <td></td>
-	  <td>
-	    <table>
-	      <tr>
-	        <td>
-		  <table>
-		    <tr>
-		      <td><input name="l_transnumber" type=checkbox class=checkbox value=Y> $translabel</td>
-		    </tr>
-		    <tr>
-		      <td><input name="l_invnumber" type=checkbox class=checkbox value=Y> $invlabel</td>
-		    </tr>
-		    <tr>
-		      <td><input name="l_ordnumber" type=checkbox class=checkbox value=Y> $ordlabel</td>
-		    </tr>
-		    <tr>
-		      <td><input name="l_quonumber" type=checkbox class=checkbox value=Y> $quolabel</td>
-		    </tr>
-		  </table>
-		</td>
-		<td>
-		  <table>
-		    <tr>
-		      <th>| . $locale->text('From') . qq|</th>
-		      <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
-		      <th>| . $locale->text('To') . qq|</th>
-		      <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td colspan=3>
-	              <input name="open" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Open') . qq|
-	              <input name="closed" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Closed') . qq|
-		      </td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td colspan=3>
-	              <input name="l_amount" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Amount') . qq|
-	              <input name="l_tax" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Tax') . qq|
-	              <input name="l_total" type=checkbox class=checkbox value=Y checked>&nbsp;|
-      . $locale->text('Total') . qq|
-	              <input name="l_subtotal" type=checkbox class=checkbox value=Y>&nbsp;|
-      . $locale->text('Subtotal') . qq|
-		      </td>
-		    </tr>
-		  </table>
-		</td>
-	      </tr>
- 	    </table>
-	  </td>
-	</tr>
-|;
-
 }
 
 sub include_in_report {
 
     $label = ucfirst $form->{db};
 
-    @a = ();
+    my @fields = ();
 
-    push @a, qq|<input name="l_ndx" type=checkbox class=checkbox value=Y> |
-      . $locale->text('No.');
-    push @a, qq|<input name="l_id" type=checkbox class=checkbox value=Y> |
-      . $locale->text('ID');
-    push @a,
-qq|<input name="l_$form->{db}number" type=checkbox class=checkbox value=Y> |
-      . $locale->text( $label . ' Number' );
-    push @a,
-qq|<input name="l_name" type=checkbox class=checkbox value=Y $form->{l_name}> |
-      . $locale->text('Company Name');
-    push @a,
-qq|<input name="l_contact" type=checkbox class=checkbox value=Y $form->{l_contact}> |
-      . $locale->text('Contact');
-    push @a,
-qq|<input name="l_email" type=checkbox class=checkbox value=Y $form->{l_email}> |
-      . $locale->text('E-mail');
-    push @a, qq|<input name="l_address" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Address');
-    push @a, qq|<input name="l_city" type=checkbox class=checkbox value=Y> |
-      . $locale->text('City');
-    push @a, qq|<input name="l_state" type=checkbox class=checkbox value=Y> |
-      . $locale->text('State/Province');
-    push @a, qq|<input name="l_zipcode" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Zip/Postal Code');
-    push @a, qq|<input name="l_country" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Country');
-    push @a,
-qq|<input name="l_phone" type=checkbox class=checkbox value=Y $form->{l_phone}> |
-      . $locale->text('Phone');
-    push @a, qq|<input name="l_fax" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Fax');
-    push @a, qq|<input name="l_cc" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Cc');
+    push @fields, {
+        name => 'l_ndx',
+        label => $locale->text('No.'),
+        };
+    push @fields, {
+        name => 'l_id',
+        label => $locale->text('ID'),
+        };
+    push @fields, {
+        name => "l_$form->{db}number",
+        label => $locale->text($label . ' Number'),
+        };
+    push @fields, {
+        name => 'l_name',
+        label => $locale->text('Company Name'),
+        $form->{l_name} => $form->{l_name},
+        };
+    push @fields, {
+        name => 'l_contact',
+        label => $locale->text('Contact'),
+        $form->{l_contact} => $form->{l_contact},
+        };
+    push @fields, {
+        name => 'l_email',
+        label => $locale->text('E-mail'),
+        $form->{l_email} => $form->{l_email},
+        };
+    push @fields, {
+        name => 'l_address',
+        label => $locale->text('Address'),
+        };
+    push @fields, {
+        name => 'l_city',
+        label => $locale->text('City'),
+        };
+    push @fields, {
+        name => 'l_state',
+        label => $locale->text('State/Province'),
+        };
+    push @fields, {
+        name => 'l_zipcode',
+        label => $locale->text('Zip/Postal Code'),
+        };
+    push @fields, {
+        name => 'l_country',
+        label => $locale->text('Country'),
+        };
+    push @fields, {
+        name => 'l_phone',
+        label => $locale->text('Phone'),
+        $form->{l_phone} => $form->{l_phone},
+        };
+    push @fields, {
+        name => 'l_fax',
+        label => $locale->text('Fax'),
+        };
+    push @fields, {
+        name => 'l_cc',
+        label => $locale->text('Cc'),
+        };
 
     if ( $myconfig{role} =~ /(admin|manager)/ ) {
-        push @a, qq|<input name="l_bcc" type=checkbox class=checkbox value=Y> |
-          . $locale->text('Bcc');
+        push @fields, {
+            name => 'l_bcc',
+            label => $locale->text('Bcc'),
+            };
     }
 
-    push @a, qq|<input name="l_notes" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Notes');
-    push @a, qq|<input name="l_discount" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Discount');
-    push @a,
-      qq|<input name="l_taxaccount" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Tax Account');
-    push @a,
-      qq|<input name="l_taxnumber" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Tax Number');
+    push @fields, {
+        name => 'l_notes',
+        label => $locale->text('Notes'),
+        };
+    push @fields, {
+        name => 'l_discount',
+        label => $locale->text('Discount'),
+        };
+    push @fields, {
+        name => 'l_taxaccount',
+        label => $locale->text('Tax Account'),
+        };
+    push @fields, {
+        name => 'l_taxnumber',
+        label => $locale->text('Tax Number'),
+        };
 
     if ( $form->{db} eq 'customer' ) {
-        push @a,
-          qq|<input name="l_employee" type=checkbox class=checkbox value=Y> |
-          . $locale->text('Salesperson');
-        push @a,
-          qq|<input name="l_manager" type=checkbox class=checkbox value=Y> |
-          . $locale->text('Manager');
-        push @a,
-          qq|<input name="l_pricegroup" type=checkbox class=checkbox value=Y> |
-          . $locale->text('Pricegroup');
+        push @fields, {
+            name => 'l_employee',
+            label => $locale->text('Salesperson'),
+            };
+        push @fields, {
+            name => 'l_manager',
+            label => $locale->text('Manager'),
+            };
+        push @fields, {
+            name => 'l_pricegroup',
+            label => $locale->text('Pricegroup'),
+            };
 
+    } else {
+        push @fields, {
+            name => 'l_employee',
+            label => $locale->text('Employee'),
+            };
+        push @fields, {
+            name => 'l_manager',
+            label => $locale->text('Manager'),
+            };
+        push @fields, {
+            name => 'l_gifi_accno',
+            label => $locale->text('GIFI'),
+            };
     }
-    else {
-        push @a,
-          qq|<input name="l_employee" type=checkbox class=checkbox value=Y> |
-          . $locale->text('Employee');
-        push @a,
-          qq|<input name="l_manager" type=checkbox class=checkbox value=Y> |
-          . $locale->text('Manager');
-        push @a,
-          qq|<input name="l_gifi_accno" type=checkbox class=checkbox value=Y> |
-          . $locale->text('GIFI');
 
-    }
+    push @fields, {
+        name => 'l_sic_code',
+        label => $locale->text('SIC'),
+        };
+    push @fields, {
+        name => 'l_iban',
+        label => $locale->text('IBAN'),
+        };
+    push @fields, {
+        name => 'l_bic',
+        label => $locale->text('BIC'),
+        };
+    push @fields, {
+        name => 'l_business',
+        label => $locale->text('Type of Business'),
+        };
+    push @fields, {
+        name => 'l_terms',
+        label => $locale->text('Terms'),
+        };
+    push @fields, {
+        name => 'l_langauge',
+        label => $locale->text('Language'),
+        };
+    push @fields, {
+        name => 'l_startdate',
+        label => $locale->text('Startdate'),
+        };
+    push @fields, {
+        name => 'l_enddate',
+        label => $locale->text('Enddate'),
+        };
 
-    push @a, qq|<input name="l_sic_code" type=checkbox class=checkbox value=Y> |
-      . $locale->text('SIC');
-    push @a, qq|<input name="l_iban" type=checkbox class=checkbox value=Y> |
-      . $locale->text('IBAN');
-    push @a, qq|<input name="l_bic" type=checkbox class=checkbox value=Y> |
-      . $locale->text('BIC');
-    push @a, qq|<input name="l_business" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Type of Business');
-    push @a, qq|<input name="l_terms" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Terms');
-    push @a, qq|<input name="l_language" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Language');
-    push @a,
-      qq|<input name="l_startdate" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Startdate');
-    push @a, qq|<input name="l_enddate" type=checkbox class=checkbox value=Y> |
-      . $locale->text('Enddate');
-
-    $include = qq|
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Include in Report') . qq|</th>
-	  <td>
-	    <table>
-|;
-
-    while (@a) {
-        $include .= qq|<tr>\n|;
+    $form->{includes} = [];
+    my $i = 0;
+    while (@fields) {
+        push @{$form->{includes}}, [];
         for ( 1 .. 5 ) {
-            $include .= qq|<td nowrap>| . shift @a;
-            $include .= qq|</td>\n|;
+            push @{$form->{includes}[$i]}, shift(@fields);
+            if ($form->{includes}[$i][$_ - 1]) {
+                $form->{includes}[$i][$_ - 1]{type} = 'checkbox';
+                $form->{includes}[$i][$_ - 1]{value} = 'Y';
+            }
         }
-        $include .= qq|</tr>\n|;
+        $i++;
     }
-
-    $include .= qq|
-	    </table>
-	  </td>
-	</tr>
-|;
-
 }
 
 sub search {
@@ -416,178 +299,50 @@ sub search {
     # $locale->text('Customers')
     # $locale->text('Vendors')
 
+    my %hiddens;
+    my @buttons;
     $form->{title} = $locale->text('Search') unless $form->{title};
 
     for (qw(name contact phone email)) { $form->{"l_$_"} = 'checked' }
 
     $form->{nextsub} = "list_names";
 
-    $orphan = qq|
-	<tr>
-	  <td></td>
-	  <td><input name=status class=radio type=radio value=all checked>&nbsp;|
-      . $locale->text('All') . qq|
-	  <input name=status class=radio type=radio value=active>&nbsp;|
-      . $locale->text('Active') . qq|
-	  <input name=status class=radio type=radio value=inactive>&nbsp;|
-      . $locale->text('Inactive') . qq|
-	  <input name=status class=radio type=radio value=orphaned>&nbsp;|
-      . $locale->text('Orphaned')
-      . qq|</td>
-	</tr>
-|;
-
     &transactions;
     &include_in_report;
-    &search_name;
+    &search_name(\%hiddens, \@buttons);
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
-	      
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'ct-search',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
 sub search_name {
 
-    $label = ucfirst $form->{db};
+    my $hiddens = shift;
+    my $buttons = shift;
 
-    if ( $form->{db} eq 'customer' ) {
-        $employee = qq|
- 	  <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
-	  <td><input name=employee size=32></td>
-|;
-    }
-    if ( $form->{db} eq 'vendor' ) {
-        $employee = qq|
- 	  <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
-	  <td><input name=employee size=32></td>
-|;
-    }
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=db value=$form->{db}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr valign=top>
-    <td>
-      <table>
-	<tr valign=top>
-	  <td>
-	    <table>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Company Name') . qq|</th>
-		<td><input name=name size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Contact') . qq|</th>
-		<td><input name=contact size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('E-mail') . qq|</th>
-		<td><input name=email size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Phone') . qq|</th>
-		<td><input name=phone size=20></td>
-	      </tr>
-	      <tr>
-		$employee
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Notes') . qq|</th>
-		<td colspan=3><textarea name=notes rows=3 cols=32></textarea></td>
-	      </tr>
-	    </table>
-	  </td>
-
-	  <td>
-	    <table>
-	      <tr>
-		<th align=right nowrap>| . $locale->text( $label . ' Number' ) . qq|</th>
-		<td><input name=$form->{db}number size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Address') . qq|</th>
-		<td><input name=address size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('City') . qq|</th>
-		<td><input name=city size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('State/Province') . qq|</th>
-		<td><input name=state size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Zip/Postal Code') . qq|</th>
-		<td><input name=zipcode size=10></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Country') . qq|</th>
-		<td><input name=country size=32></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
-		<td>|
-      . $locale->text('From')
-      . qq| <input class="date" name=startdatefrom size=11 title="$myconfig{dateformat}"> |
-      . $locale->text('To')
-      . qq| <input class="date" name=startdateto size=11 title="$myconfig{dateformat}"></td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <table>
-
-	$orphan
-	$transactions
-	$include
-
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<input type="hidden" name="nextsub" value="$form->{nextsub}">
-
-<input type="hidden" name="path" value="$form->{path}">
-<input type="hidden" name="login" value="$form->{login}">
-<input type="hidden" name="sessionid" value="$form->{sessionid}">
-
-<br>
-<button type="submit" class="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-|;
-
+    my $label = ucfirst $form->{db};
+    $form->{label} = $label;
+    $hiddens->{$_} = $form->{$_} foreach qw(db nextsub path login sessionid);
+    push @{$buttons}, {
+        name => 'action',
+        value => 'continue',
+        text => $locale->text('Continue'),
+        };
 }
 
 sub list_names {
