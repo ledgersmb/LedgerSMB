@@ -347,17 +347,21 @@ sub search_name {
 
 sub list_names {
 
+    my %hiddens;
+    my @buttons;
+    my @options;
+
     CT->search( \%myconfig, \%$form );
 
-    $href =
+    my $href =
 "$form->{script}?action=list_names&direction=$form->{direction}&oldsort=$form->{oldsort}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&status=$form->{status}&l_subtotal=$form->{l_subtotal}";
 
     $form->sort_order();
 
-    $callback =
+    my $callback =
 "$form->{script}?action=list_names&direction=$form->{direction}&oldsort=$form->{oldsort}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&status=$form->{status}&l_subtotal=$form->{l_subtotal}";
 
-    @columns = $form->sort_columns( id, name, "$form->{db}number", address,
+    my @columns = $form->sort_columns( id, name, "$form->{db}number", address,
         city,       state,      zipcode,   country,
         contact,    phone,      fax,       email,
         cc,         bcc,        employee,  manager,
@@ -372,7 +376,7 @@ sub list_names {
     unshift @columns, "ndx";
 
     $form->{l_invnumber} = "Y" if $form->{l_transnumber};
-    foreach $item (qw(inv ord quo)) {
+    foreach my $item (qw(inv ord quo)) {
         if ( $form->{"l_${item}number"} ) {
             for (qw(amount tax total)) {
                 $form->{"l_$item$_"} = $form->{"l_$_"};
@@ -383,7 +387,8 @@ sub list_names {
     }
     $form->{open} = $form->{closed} = "" if !$openclosed;
 
-    foreach $item (@columns) {
+    my @column_index;
+    foreach my $item (@columns) {
         if ( $form->{"l_$item"} eq "Y" ) {
             push @column_index, $item;
 
@@ -393,7 +398,7 @@ sub list_names {
         }
     }
 
-    foreach $item (qw(amount tax total transnumber)) {
+    foreach my $item (qw(amount tax total transnumber)) {
         if ( $form->{"l_$item"} eq "Y" ) {
             $callback .= "&l_$item=Y";
             $href     .= "&l_$item=Y";
@@ -401,69 +406,62 @@ sub list_names {
     }
 
     if ( $form->{status} eq 'all' ) {
-        $option = $locale->text('All');
-    }
-    if ( $form->{status} eq 'orphaned' ) {
-        $option = $locale->text('Orphaned');
-    }
-    if ( $form->{status} eq 'active' ) {
-        $option = $locale->text('Active');
-    }
-    if ( $form->{status} eq 'inactive' ) {
-        $option = $locale->text('Inactive');
+        push @options, $locale->text('All');
+    } elsif ( $form->{status} eq 'orphaned' ) {
+        push @options, $locale->text('Orphaned');
+    } elsif ( $form->{status} eq 'active' ) {
+        push @options, $locale->text('Active');
+    } elsif ( $form->{status} eq 'inactive' ) {
+        push @options, $locale->text('Inactive');
     }
 
     if ( $form->{name} ) {
         $callback .= "&name=" . $form->escape( $form->{name}, 1 );
         $href   .= "&name=" . $form->escape( $form->{name} );
-        $option .= "\n<br>" . $locale->text('Name') . " : $form->{name}";
+        push @options, $locale->text('Name: [_1]', $form->{name});
     }
     if ( $form->{address} ) {
         $callback .= "&address=" . $form->escape( $form->{address}, 1 );
         $href   .= "&address=" . $form->escape( $form->{address} );
-        $option .= "\n<br>" . $locale->text('Address') . " : $form->{address}";
+        push @options, $locale->text('Address: [_1]', $form->{address});
     }
     if ( $form->{city} ) {
         $callback .= "&city=" . $form->escape( $form->{city}, 1 );
         $href   .= "&city=" . $form->escape( $form->{city} );
-        $option .= "\n<br>" . $locale->text('City') . " : $form->{city}";
+        push @options, $locale->text('City: [_1]', $form->{city});
     }
     if ( $form->{state} ) {
         $callback .= "&state=" . $form->escape( $form->{state}, 1 );
         $href   .= "&state=" . $form->escape( $form->{state} );
-        $option .= "\n<br>" . $locale->text('State') . " : $form->{state}";
+        push @options, $locale->text('State: [_1]', $form->{state});
     }
     if ( $form->{zipcode} ) {
         $callback .= "&zipcode=" . $form->escape( $form->{zipcode}, 1 );
         $href .= "&zipcode=" . $form->escape( $form->{zipcode} );
-        $option .=
-          "\n<br>" . $locale->text('Zip/Postal Code') . " : $form->{zipcode}";
+        push @options, $locale->text('Zip/Postal Code: [_1]', $form->{zipcode});
     }
     if ( $form->{country} ) {
         $callback .= "&country=" . $form->escape( $form->{country}, 1 );
         $href   .= "&country=" . $form->escape( $form->{country} );
-        $option .= "\n<br>" . $locale->text('Country') . " : $form->{country}";
+        push @options, $locale->text('Country: [_1]', $form->{country});
     }
     if ( $form->{contact} ) {
         $callback .= "&contact=" . $form->escape( $form->{contact}, 1 );
         $href   .= "&contact=" . $form->escape( $form->{contact} );
-        $option .= "\n<br>" . $locale->text('Contact') . " : $form->{contact}";
+        push @options, $locale->text('Contact: [_1]', $form->{contact});
     }
     if ( $form->{employee} ) {
         $callback .= "&employee=" . $form->escape( $form->{employee}, 1 );
         $href   .= "&employee=" . $form->escape( $form->{employee} );
-        $option .= "\n<br>";
         if ( $form->{db} eq 'customer' ) {
-            $option .= $locale->text('Salesperson');
+            push @options, $locale->text('Salesperson: [_1]', $form->{employee});
+        } elsif ( $form->{db} eq 'vendor' ) {
+            push @options, $locale->text('Employee: [_1]', $form->{employee});
         }
-        if ( $form->{db} eq 'vendor' ) {
-            $option .= $locale->text('Employee');
-        }
-        $option .= " : $form->{employee}";
     }
 
-    $fromdate = "";
-    $todate   = "";
+    my $fromdate = "";
+    my $todate   = "";
     if ( $form->{startdatefrom} ) {
         $callback .= "&startdatefrom=$form->{startdatefrom}";
         $href     .= "&startdatefrom=$form->{startdatefrom}";
@@ -475,14 +473,14 @@ sub list_names {
         $todate = $locale->date( \%myconfig, $form->{startdateto}, 1 );
     }
     if ( $fromdate || $todate ) {
-        $option .=
-          "\n<br>" . $locale->text('Startdate') . " $fromdate - $todate";
+        push @options,
+            $locale->text('Startdate [_1] - [_2]', $fromdate, $todate);
     }
 
     if ( $form->{notes} ) {
         $callback .= "&notes=" . $form->escape( $form->{notes}, 1 );
         $href   .= "&notes=" . $form->escape( $form->{notes} );
-        $option .= "\n<br>" . $locale->text('Notes') . " : $form->{notes}";
+        push @options, $locale->text('Notes: [_1]', $form->{notes});
     }
     if ( $form->{"$form->{db}number"} ) {
         $callback .=
@@ -490,286 +488,248 @@ sub list_names {
           . $form->escape( $form->{"$form->{db}number"}, 1 );
         $href .=
           "&$form->{db}number=" . $form->escape( $form->{"$form->{db}number"} );
-        $option .= "\n<br>"
-          . $locale->text('Number')
-          . qq| : $form->{"$form->{db}number"}|;
+        push @options,
+            $locale->text('Number: [_1]', $form->{"$form->{db}number"});
     }
     if ( $form->{phone} ) {
         $callback .= "&phone=" . $form->escape( $form->{phone}, 1 );
         $href   .= "&phone=" . $form->escape( $form->{phone} );
-        $option .= "\n<br>" . $locale->text('Phone') . " : $form->{phone}";
+        push @options, $locale->text('Phone: [_1]', $form->{phone});
     }
     if ( $form->{email} ) {
         $callback .= "&email=" . $form->escape( $form->{email}, 1 );
         $href   .= "&email=" . $form->escape( $form->{email} );
-        $option .= "\n<br>" . $locale->text('E-mail') . " : $form->{email}";
+        push @options, $locale->text('E-mail: [_1]', $form->{email});
     }
     if ( $form->{transdatefrom} ) {
         $callback .= "&transdatefrom=$form->{transdatefrom}";
         $href     .= "&transdatefrom=$form->{transdatefrom}";
-        $option   .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('From') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{transdatefrom}, 1 );
+        push @options, $locale->text('From [_1]',
+            $locale->date( \%myconfig, $form->{transdatefrom}, 1 ));
     }
     if ( $form->{transdateto} ) {
         $callback .= "&transdateto=$form->{transdateto}";
         $href     .= "&transdateto=$form->{transdateto}";
         if ( $form->{transdatefrom} ) {
-            $option .= " ";
+            pop @options;
+            push @options, $locale->text('From [_1] To [_2]',
+                $locale->date( \%myconfig, $form->{transdatefrom}, 1 ),
+                $locale->date( \%myconfig, $form->{transdateto}, 1 ));
+        } else {
+            push @options, $locale->text('To [_1]',
+                $locale->date( \%myconfig, $form->{transdateto}, 1 ));
         }
-        else {
-            $option .= "\n<br>" if ($option);
-        }
-        $option .=
-            $locale->text('To') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{transdateto}, 1 );
     }
     if ( $form->{open} ) {
         $callback .= "&open=$form->{open}";
         $href     .= "&open=$form->{open}";
-        $option   .= "\n<br>" if ($option);
-        $option   .= $locale->text('Open');
+        push @options, $locale->text('Open');
     }
     if ( $form->{closed} ) {
         $callback .= "&closed=$form->{closed}";
         $href     .= "&closed=$form->{closed}";
-        $option   .= "\n<br>" if ($option);
-        $option   .= $locale->text('Closed');
+        push @options, $locale->text('Closed');
     }
 
     $form->{callback} = "$callback&sort=$form->{sort}";
     $callback = $form->escape( $form->{callback} );
 
-    $column_header{ndx} = qq|<th class=listheading>&nbsp;</th>|;
-    $column_header{id} =
-      qq|<th class=listheading>| . $locale->text('ID') . qq|</th>|;
-    $column_header{"$form->{db}number"} =
-        qq|<th><a class=listheading href=$href&sort=$form->{db}number>|
-      . $locale->text('Number')
-      . qq|</a></th>|;
-    $column_header{name} =
-        qq|<th><a class=listheading href=$href&sort=name>|
-      . $locale->text('Name')
-      . qq|</a></th>|;
-    $column_header{address} =
-      qq|<th class=listheading>| . $locale->text('Address') . qq|</th>|;
-    $column_header{city} =
-        qq|<th><a class=listheading href=$href&sort=city>|
-      . $locale->text('City')
-      . qq|</a></th>|;
-    $column_header{state} =
-        qq|<th><a class=listheading href=$href&sort=state>|
-      . $locale->text('State/Province')
-      . qq|</a></th>|;
-    $column_header{zipcode} =
-        qq|<th><a class=listheading href=$href&sort=zipcode>|
-      . $locale->text('Zip/Postal Code')
-      . qq|</a></th>|;
-    $column_header{country} =
-        qq|<th><a class=listheading href=$href&sort=country>|
-      . $locale->text('Country')
-      . qq|</a></th>|;
-    $column_header{contact} =
-        qq|<th><a class=listheading href=$href&sort=contact>|
-      . $locale->text('Contact')
-      . qq|</a></th>|;
-    $column_header{phone} =
-        qq|<th><a class=listheading href=$href&sort=phone>|
-      . $locale->text('Phone')
-      . qq|</a></th>|;
-    $column_header{fax} =
-        qq|<th><a class=listheading href=$href&sort=fax>|
-      . $locale->text('Fax')
-      . qq|</a></th>|;
-    $column_header{email} =
-        qq|<th><a class=listheading href=$href&sort=email>|
-      . $locale->text('E-mail')
-      . qq|</a></th>|;
-    $column_header{cc} =
-        qq|<th><a class=listheading href=$href&sort=cc>|
-      . $locale->text('Cc')
-      . qq|</a></th>|;
-    $column_header{bcc} =
-        qq|<th><a class=listheading href=$href&sort=cc>|
-      . $locale->text('Bcc')
-      . qq|</a></th>|;
-    $column_header{notes} =
-        qq|<th><a class=listheading href=$href&sort=notes>|
-      . $locale->text('Notes')
-      . qq|</a></th>|;
-    $column_header{discount} = qq|<th class=listheading>%</th>|;
-    $column_header{terms} =
-      qq|<th class=listheading>| . $locale->text('Terms') . qq|</th>|;
+    my %column_header;
+    $column_header{ndx} = ' ';
+    $column_header{id} = $locale->text('ID');
+    $column_header{"$form->{db}number"} = {
+        href => "$href&sort=$form->{db}number",
+        text => $locale->text('Number')
+        };
+    $column_header{name} = {
+        href => "$href&sort=name",
+        text => $locale->text('Name')
+        };
+    $column_header{address} = $locale->text('Address');
+    $column_header{city} = {
+        href => "$href&sort=city",
+        text => $locale->text('City')
+        };
+    $column_header{state} = {
+        href => "$href&sort=state",
+        text => $locale->text('State/Province')
+        };
+    $column_header{zipcode} = {
+        href => "$href&sort=zipcode",
+        text => $locale->text('Zip/Postal Code')
+        };
+    $column_header{country} = {
+        href => "$href&sort=country",
+        text => $locale->text('Country')
+        };
+    $column_header{contact} = {
+        href => "$href&sort=contact",
+        text => $locale->text('Contact'),
+        };
+    $column_header{phone} = {
+        href => "$href&sort=phone",
+        text => $locale->text('Phone')
+        };
+    $column_header{fax} = {
+        href => "$href&sort=fax",
+        text => $locale->text('Fax')
+        };
+    $column_header{email} = {
+        href => "$href&sort=email",
+        text => $locale->text('E-mail')
+        };
+    $column_header{cc} = {
+        href => "$href&sort=cc",
+        text => $locale->text('Cc')
+        };
+    $column_header{bcc} = {
+        href => "$href&sort=cc",
+        text => $locale->text('Bcc')
+        };
+    $column_header{notes} = {
+        href => "$href&sort=notes",
+        text => $locale->text('Notes')
+        };
+    $column_header{discount} = '%';
+    $column_header{terms} = $locale->text('Terms');
 
-    $column_header{taxnumber} =
-        qq|<th><a class=listheading href=$href&sort=taxnumber>|
-      . $locale->text('Tax Number')
-      . qq|</a></th>|;
-    $column_header{taxaccount} =
-      qq|<th class=listheading>| . $locale->text('Tax Account') . qq|</th>|;
-    $column_header{gifi_accno} =
-        qq|<th><a class=listheading href=$href&sort=gifi_accno>|
-      . $locale->text('GIFI')
-      . qq|</a></th>|;
-    $column_header{sic_code} =
-        qq|<th><a class=listheading href=$href&sort=sic_code>|
-      . $locale->text('SIC')
-      . qq|</a></th>|;
-    $column_header{business} =
-        qq|<th><a class=listheading href=$href&sort=business>|
-      . $locale->text('Type of Business')
-      . qq|</a></th>|;
-    $column_header{iban} =
-      qq|<th class=listheading>| . $locale->text('IBAN') . qq|</th>|;
-    $column_header{bic} =
-      qq|<th class=listheading>| . $locale->text('BIC') . qq|</th>|;
-    $column_header{startdate} =
-        qq|<th><a class=listheading href=$href&sort=startdate>|
-      . $locale->text('Startdate')
-      . qq|</a></th>|;
-    $column_header{enddate} =
-        qq|<th><a class=listheading href=$href&sort=enddate>|
-      . $locale->text('Enddate')
-      . qq|</a></th>|;
+    $column_header{taxnumber} = {
+        href => "$href&sort=taxnumber",
+        text => $locale->text('Tax Number')
+        };
+    $column_header{taxaccount} = $locale->text('Tax Account');
+    $column_header{gifi_accno} = {
+        href => "$href&sort=gifi_accno",
+        text => $locale->text('GIFI')
+        };
+    $column_header{sic_code} = {
+        href => "$href&sort=sic_code",
+        text => $locale->text('SIC')
+        };
+    $column_header{business} = {
+        href => "$href&sort=business",
+        text => $locale->text('Type of Business')
+        };
+    $column_header{iban} = $locale->text('IBAN');
+    $column_header{bic} = $locale->text('BIC');
+    $column_header{startdate} = {
+        href => "$href&sort=startdate",
+        text => $locale->text('Startdate')
+        };
+    $column_header{enddate} = {
+        href => "$href&sort=enddate",
+        text => $locale->text('Enddate')
+        };
 
-    $column_header{invnumber} =
-        qq|<th><a class=listheading href=$href&sort=invnumber>|
-      . $locale->text('Invoice')
-      . qq|</a></th>|;
-    $column_header{ordnumber} =
-        qq|<th><a class=listheading href=$href&sort=ordnumber>|
-      . $locale->text('Order')
-      . qq|</a></th>|;
-    $column_header{quonumber} =
-        qq|<th><a class=listheading href=$href&sort=quonumber>|
-      . $locale->text('Quotation')
-      . qq|</a></th>|;
+    $column_header{invnumber} = {
+        href => "$href&sort=invnumber",
+        text => $locale->text('Invoice')
+        };
+    $column_header{ordnumber} = {
+        href => "$href&sort=ordnumber",
+        text => $locale->text('Order')
+        };
+    $column_header{quonumber} = {
+        href => "$href&sort=quonumber",
+        text => $locale->text('Quotation')
+        };
 
     if ( $form->{db} eq 'customer' ) {
-        $column_header{employee} =
-            qq|<th><a class=listheading href=$href&sort=employee>|
-          . $locale->text('Salesperson')
-          . qq|</a></th>|;
+        $column_header{employee} = {
+            href => "$href&sort=employee",
+            text => $locale->text('Salesperson')
+            };
+    } else {
+        $column_header{employee} = {
+            href => "$href&sort=employee",
+            text => $locale->text('Employee')
+            };
     }
-    else {
-        $column_header{employee} =
-            qq|<th><a class=listheading href=$href&sort=employee>|
-          . $locale->text('Employee')
-          . qq|</a></th>|;
-    }
-    $column_header{manager} =
-        qq|<th><a class=listheading href=$href&sort=manager>|
-      . $locale->text('Manager')
-      . qq|</a></th>|;
+    $column_header{manager} = {
+        href => "$href&sort=manager",
+        text => $locale->text('Manager')
+        };
 
-    $column_header{pricegroup} =
-        qq|<th><a class=listheading href=$href&sort=pricegroup>|
-      . $locale->text('Pricegroup')
-      . qq|</a></th>|;
-    $column_header{language} =
-        qq|<th><a class=listheading href=$href&sort=language>|
-      . $locale->text('Language')
-      . qq|</a></th>|;
+    $column_header{pricegroup} = {
+        href => "$href&sort=pricegroup",
+        text => $locale->text('Pricegroup')
+        };
+    $column_header{language} = {
+        href => "$href&sort=language",
+        text => $locale->text('Language')
+        };
 
     $amount = $locale->text('Amount');
     $tax    = $locale->text('Tax');
     $total  = $locale->text('Total');
 
-    $column_header{invamount} = qq|<th class=listheading>$amount</th>|;
-    $column_header{ordamount} = qq|<th class=listheading>$amount</th>|;
-    $column_header{quoamount} = qq|<th class=listheading>$amount</th>|;
+    $column_header{invamount} = $amount;
+    $column_header{ordamount} = $amount;
+    $column_header{quoamount} = $amount;
 
-    $column_header{invtax} = qq|<th class=listheading>$tax</th>|;
-    $column_header{ordtax} = qq|<th class=listheading>$tax</th>|;
-    $column_header{quotax} = qq|<th class=listheading>$tax</th>|;
+    $column_header{invtax} = $tax;
+    $column_header{ordtax} = $tax;
+    $column_header{quotax} = $tax;
 
-    $column_header{invtotal} = qq|<th class=listheading>$total</th>|;
-    $column_header{ordtotal} = qq|<th class=listheading>$total</th>|;
-    $column_header{quototal} = qq|<th class=listheading>$total</th>|;
+    $column_header{invtotal} = $total;
+    $column_header{ordtotal} = $total;
+    $column_header{quototal} = $total;
 
     if ( $form->{status} ) {
         $label = ucfirst $form->{db} . "s";
         $form->{title} = $locale->text($label);
-    }
-    else {
+    } else {
         $label = ucfirst $form->{db};
         $form->{title} = $locale->text( $label . " Transactions" );
     }
 
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
-    $ordertype =
+    my $ordertype =
       ( $form->{db} eq 'customer' ) ? 'sales_order' : 'purchase_order';
-    $quotationtype =
+    my $quotationtype =
       ( $form->{db} eq 'customer' ) ? 'sales_quotation' : 'request_quotation';
     $subtotal = 0;
 
-    $i = 0;
-    foreach $ref ( @{ $form->{CT} } ) {
+    my $i = 0;
+    my @rows;
+    foreach my $ref ( @{ $form->{CT} } ) {
 
         if ( $ref->{ $form->{sort} } ne $sameitem && $form->{l_subtotal} ) {
-
-            # print subtotal
+            # append subtotal
             if ($subtotal) {
-                for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
-                &list_subtotal;
+                push @rows, &list_subtotal;
             }
         }
 
+        my %column_data;
         if ( $ref->{id} eq $sameid ) {
-            for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
-        }
-        else {
+            for (@column_index) { $column_data{$_} = ' ' }
+        } else {
 
             $i++;
 
             $ref->{notes} =~ s/\r?\n/<br>/g;
             for (@column_index) {
-                $column_data{$_} = "<td>$ref->{$_}&nbsp;</td>";
+                $column_data{$_} = $ref->{$_};
             }
-
-            $column_data{ndx} = "<td align=right>$i</td>";
+            $column_data{ndx} = $i;
 
             if ( $ref->{ $form->{sort} } eq $sameitem ) {
-                $column_data{ $form->{sort} } = "<td>&nbsp;</td>";
+                $column_data{ $form->{sort} } = ' ';
             }
 
             $column_data{address} =
-              "<td>$ref->{address1} $ref->{address2}&nbsp;</td>";
-            $column_data{name} =
-"<td><a href=$form->{script}?action=edit&id=$ref->{id}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&status=$form->{status}&callback=$callback>$ref->{name}&nbsp;</td>";
+              "$ref->{address1} $ref->{address2}";
+            $column_data{name} = {
+                text => $ref->{name},
+                href => "$form->{script}?action=edit&id=$ref->{id}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&status=$form->{status}&callback=$callback",
+                };
 
             $email = "";
             if ( $form->{sort} =~ /(email|cc)/ ) {
                 if ( $ref->{ $form->{sort} } ne $sameitem ) {
                     $email = 1;
                 }
-            }
-            else {
+            } else {
                 $email = 1;
             }
 
@@ -777,84 +737,61 @@ sub list_names {
                 foreach $item (qw(email cc bcc)) {
                     if ( $ref->{$item} ) {
                         $email = $ref->{$item};
-                        $email =~ s/</\&lt;/;
-                        $email =~ s/>/\&gt;/;
-
-                        $column_data{$item} =
-qq|<td><a href="mailto:$ref->{$item}">$email</a></td>|;
+                        $column_data{$item} = {
+                            href => "mailto:$ref->{$item}",
+                            text => $email,
+                            };
                     }
                 }
             }
         }
 
         if ( $ref->{formtype} eq 'invoice' ) {
-            $column_data{invnumber} =
-"<td><a href=$ref->{module}.pl?action=edit&id=$ref->{invid}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{invnumber}&nbsp;</td>";
+            $column_data{invnumber} = {
+                href => "$ref->{module}.pl?action=edit&id=$ref->{invid}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+                text => $ref->{invnumber},
+                };
 
             $column_data{invamount} =
-              "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{netamount}, 2,
-                "&nbsp;" )
-              . "</td>";
-            $column_data{invtax} = "<td align=right>"
-              . $form->format_amount( \%myconfig,
-                $ref->{amount} - $ref->{netamount},
-                2, "&nbsp;" )
-              . "</td>";
+                $form->format_amount( \%myconfig, $ref->{netamount}, 2, ' ' );
+            $column_data{invtax} = $form->format_amount( \%myconfig,
+                $ref->{amount} - $ref->{netamount}, 2, ' ' );
             $column_data{invtotal} =
-                "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{amount}, 2, "&nbsp;" )
-              . "</td>";
+                $form->format_amount( \%myconfig, $ref->{amount}, 2, ' ' );
 
             $invamountsubtotal += $ref->{netamount};
             $invtaxsubtotal    += ( $ref->{amount} - $ref->{netamount} );
             $invtotalsubtotal  += $ref->{amount};
             $subtotal = 1;
-        }
-
-        if ( $ref->{formtype} eq 'order' ) {
-            $column_data{ordnumber} =
-"<td><a href=$ref->{module}.pl?action=edit&id=$ref->{invid}&type=$ordertype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{ordnumber}&nbsp;</td>";
+        } elsif ( $ref->{formtype} eq 'order' ) {
+            $column_data{ordnumber} = {
+                href => "$ref->{module}.pl?action=edit&id=$ref->{invid}&type=$ordertype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+                text => $ref->{ordnumber},
+                };
 
             $column_data{ordamount} =
-              "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{netamount}, 2,
-                "&nbsp;" )
-              . "</td>";
-            $column_data{ordtax} = "<td align=right>"
-              . $form->format_amount( \%myconfig,
-                $ref->{amount} - $ref->{netamount},
-                2, "&nbsp;" )
-              . "</td>";
+                $form->format_amount( \%myconfig, $ref->{netamount}, 2, ' ' );
+            $column_data{ordtax} = $form->format_amount( \%myconfig,
+                $ref->{amount} - $ref->{netamount}, 2, ' ' );
             $column_data{ordtotal} =
-                "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{amount}, 2, "&nbsp;" )
-              . "</td>";
+                $form->format_amount( \%myconfig, $ref->{amount}, 2, ' ' );
 
             $ordamountsubtotal += $ref->{netamount};
             $ordtaxsubtotal    += ( $ref->{amount} - $ref->{netamount} );
             $ordtotalsubtotal  += $ref->{amount};
             $subtotal = 1;
-        }
-
-        if ( $ref->{formtype} eq 'quotation' ) {
-            $column_data{quonumber} =
-"<td><a href=$ref->{module}.pl?action=edit&id=$ref->{invid}&type=$quotationtype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{quonumber}&nbsp;</td>";
+        } elsif ( $ref->{formtype} eq 'quotation' ) {
+            $column_data{quonumber} = {
+                href => "$ref->{module}.pl?action=edit&id=$ref->{invid}&type=$quotationtype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+                text => $ref->{quonumber},
+                };
 
             $column_data{quoamount} =
-              "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{netamount}, 2,
-                "&nbsp;" )
-              . "</td>";
-            $column_data{quotax} = "<td align=right>"
-              . $form->format_amount( \%myconfig,
-                $ref->{amount} - $ref->{netamount},
-                2, "&nbsp;" )
-              . "</td>";
+                $form->format_amount( \%myconfig, $ref->{netamount}, 2, ' ' );
+            $column_data{quotax} = $form->format_amount( \%myconfig,
+                $ref->{amount} - $ref->{netamount}, 2, ' ' );
             $column_data{quototal} =
-                "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{amount}, 2, "&nbsp;" )
-              . "</td>";
+                $form->format_amount( \%myconfig, $ref->{amount}, 2, ' ' );
 
             $quoamountsubtotal += $ref->{netamount};
             $quotaxsubtotal    += ( $ref->{amount} - $ref->{netamount} );
@@ -864,57 +801,48 @@ qq|<td><a href="mailto:$ref->{$item}">$email</a></td>|;
 
         if ( $sameid ne "$ref->{id}" ) {
             if ( $form->{l_discount} ) {
-                $column_data{discount} = "<td align=right>"
-                  . $form->format_amount( \%myconfig, $ref->{discount} * 100,
-                    "", "&nbsp;" )
-                  . "</td>";
+                $column_data{discount} = 
+                    $form->format_amount( \%myconfig, $ref->{discount} * 100,
+                    "", ' ' );
             }
             if ( $form->{l_terms} ) {
-                $column_data{terms} = "<td align=right>"
-                  . $form->format_amount( \%myconfig, $ref->{terms}, "",
-                    "&nbsp;" )
-                  . "</td>";
+                $column_data{terms} = 
+                    $form->format_amount( \%myconfig, $ref->{terms}, "", ' ' );
             }
         }
 
         $j++;
         $j %= 2;
-        print "
-        <tr class=listrow$j>
-";
+        $column_data{i} = $j;
 
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-        </tr>
-|;
-
-        $sameitem = "$ref->{$form->{sort}}";
+        $sameitem = $ref->{$form->{sort}};
         $sameid   = $ref->{id};
 
+        push @rows, \%column_data;
     }
 
     if ( $form->{l_subtotal} && $subtotal ) {
-        for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
-        &list_subtotal;
+        push @rows, &list_subtotal;
     }
 
     $i = 1;
     if ( $myconfig{acs} !~ /AR--AR/ ) {
         if ( $form->{db} eq 'customer' ) {
-            $button{'AR--Customers--Add Customer'}{code} =
-qq|<button class="submit" type="submit" name="action" value="add_customer">|
-              . $locale->text('Add Customer')
-              . qq|</button> |;
+            $button{'AR--Customers--Add Customer'}{code} = {
+                name => 'action',
+                value => 'add_customer',
+                text => $locale->text('Add Customer'),
+                };
             $button{'AR--Customers--Add Customer'}{order} = $i++;
         }
     }
     if ( $myconfig{acs} !~ /AP--AP/ ) {
         if ( $form->{db} eq 'vendor' ) {
-            $button{'AP--Vendors--Add Vendor'}{code} =
-qq|<button class="submit" type="submit" name="action" value="add_vendor">|
-              . $locale->text('Add Vendor')
-              . qq|</button> |;
+            $button{'AP--Vendors--Add Vendor'}{code} = {
+                name => 'action',
+                value => 'add_vendor',
+                text => $locale->text('Add Vendor'),
+                };
             $button{'AP--Vendors--Add Vendor'}{order} = $i++;
         }
     }
@@ -923,103 +851,75 @@ qq|<button class="submit" type="submit" name="action" value="add_vendor">|
         delete $button{$item};
     }
 
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<form method=post action=$form->{script}>
-|;
-
-    $form->hide_form(qw(callback db path login sessionid));
+    $hiddens{$_} = $form->{$_} foreach qw(callback db path login sessionid);
 
     if ( $form->{status} ) {
         foreach $item ( sort { $a->{order} <=> $b->{order} } %button ) {
-            print $item->{code};
+            push @buttons, $item->{code};
         }
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-dynatable',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+        options => \@options,
+        rows => \@rows,
+        columns => \@column_index,
+        heading => \%column_header,
+    });
 }
 
 sub list_subtotal {
 
+    my %column_data;
     $column_data{invamount} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $invamountsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $invamountsubtotal, 2, ' ' );
     $column_data{invtax} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $invtaxsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $invtaxsubtotal, 2, ' ' );
     $column_data{invtotal} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $invtotalsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $invtotalsubtotal, 2, ' ' );
 
     $invamountsubtotal = 0;
     $invtaxsubtotal    = 0;
     $invtotalsubtotal  = 0;
 
     $column_data{ordamount} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $ordamountsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $ordamountsubtotal, 2, ' ' );
     $column_data{ordtax} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $ordtaxsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $ordtaxsubtotal, 2, ' ' );
     $column_data{ordtotal} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $ordtotalsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $ordtotalsubtotal, 2, ' ' );
 
     $ordamountsubtotal = 0;
     $ordtaxsubtotal    = 0;
     $ordtotalsubtotal  = 0;
 
     $column_data{quoamount} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $quoamountsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $quoamountsubtotal, 2, ' ' );
     $column_data{quotax} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $quotaxsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $quotaxsubtotal, 2, ' ' );
     $column_data{quototal} =
-        "<td align=right>"
-      . $form->format_amount( \%myconfig, $quototalsubtotal, 2, "&nbsp;" )
-      . "</td>";
+        $form->format_amount( \%myconfig, $quototalsubtotal, 2, ' ' );
 
     $quoamountsubtotal = 0;
     $quotaxsubtotal    = 0;
     $quototalsubtotal  = 0;
 
-    print "
-        <tr class=listsubtotal>
-";
-    for (@column_index) { print "$column_data{$_}\n" }
-
-    print qq|
-        </tr>
-|;
-
+    $column_data{class} = 'subtotal';
+    \%column_data;
 }
 
 sub list_history {
