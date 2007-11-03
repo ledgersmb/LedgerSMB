@@ -435,7 +435,10 @@ sub get_payments {
 }
 
 sub display_form {
+    my %hiddens;
+    my @buttons;
 
+    my @column_index;
     if ( $form->{report} ) {
         @column_index = qw(transdate source name cleared debit credit);
     }
@@ -443,99 +446,57 @@ sub display_form {
         @column_index = qw(transdate source name cleared debit credit balance);
     }
 
-    $column_header{cleared} = qq|<th>| . $locale->text('R') . qq|</th>|;
-    $column_header{source} =
-      "<th class=listheading>" . $locale->text('Source') . "</a></th>";
-    $column_header{name} =
-      "<th class=listheading>" . $locale->text('Description') . "</a></th>";
-    $column_header{transdate} =
-      "<th class=listheading>" . $locale->text('Date') . "</a></th>";
+    my %column_header;
+    $column_header{cleared} = $locale->text('R');
+    $column_header{source} = $locale->text('Source');
+    $column_header{name} = $locale->text('Description');
+    $column_header{transdate} = $locale->text('Date');
+    $column_header{debit} = $locale->text('Debit');
+    $column_header{credit} = $locale->text('Credit');
+    $column_header{balance} = $locale->text('Balance');
 
-    $column_header{debit} =
-      "<th class=listheading>" . $locale->text('Debit') . "</a></th>";
-    $column_header{credit} =
-      "<th class=listheading>" . $locale->text('Credit') . "</a></th>";
-    $column_header{balance} =
-      "<th class=listheading>" . $locale->text('Balance') . "</a></th>";
-
+    my @options;
     if ( $form->{fromdate} ) {
-        $option .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('From') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{fromdate}, 1 );
+        push @options,
+            $locale->text('From [_1]',
+            $locale->date( \%myconfig, $form->{fromdate}, 1 ));
     }
     if ( $form->{todate} ) {
-        $option .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('To') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{todate}, 1 );
+        push @options,
+            $locale->text('To [_1]',
+            $locale->date( \%myconfig, $form->{todate}, 1 ));
     }
 
     $form->{title} = "$form->{accno}--$form->{account}";
 
-    $form->header;
+    $hiddens{source} = $form->{source};
+    $hiddens{cumulative_error} = $form->{cumulative_error};
 
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=source value="$form->{source}">
-<input type=hidden name=cumulative_error value="$form->{cumulative_error}">
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-|;
-
-    for (@column_index) { print "\n$column_header{$_}" }
-
-    print qq|
-        </tr>
-|;
-
-    $ml = ( $form->{category} eq 'A' ) ? -1 : 1;
+    my $ml = ( $form->{category} eq 'A' ) ? -1 : 1;
     $form->{beginningbalance} *= $ml;
     $form->{fx_balance}       *= $ml;
 
     if ( !$form->{fx_transaction} ) {
         $form->{beginningbalance} -= $form->{fx_balance};
     }
-    $balance = $form->{beginningbalance};
+    my $balance = $form->{beginningbalance};
 
-    $i = 0;
-    $j = 0;
-
-    for (qw(cleared transdate source debit credit)) {
-        $column_data{$_} = "<td>&nbsp;</td>";
-    }
+    my $i = 0;
+    my $j = 0;
+    my @rows;
 
     if ( !$form->{report} ) {
-        $column_data{name} =
-          qq|<td>| . $locale->text('Beginning Balance') . qq|</td>|;
-        $column_data{balance} =
-          "<td align=right>"
-          . $form->format_amount( \%myconfig, $balance, 2, 0 ) . "</td>";
-        print qq|
-	<tr class=listrow$j>
-|;
-
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|
-	</tr>
-|;
+        my %column_data;
+        for (qw(cleared transdate source debit credit)) {
+            $column_data{$_} = ' ';
+        }
+        $column_data{name} = $locale->text('Beginning Balance');
+        $column_data{balance} = $form->format_amount(\%myconfig, $balance, 2, 0);
+        $column_data{i} = $j;
+        push @rows, \%column_data;
     }
 
-    foreach $ref ( @{ $form->{PR} } ) {
+    foreach my $ref ( @{ $form->{PR} } ) {
 
         $i++;
 
@@ -543,129 +504,93 @@ sub display_form {
             next if $ref->{fx_transaction};
         }
 
-        $checked = ( $ref->{cleared} ) ? "checked" : "";
+        my %column_data;
+        my $checked = ( $ref->{cleared} ) ? "checked" : undef;
 
-        %temp = ();
+        my %temp = ();
         if ( !$ref->{fx_transaction} ) {
             for (qw(name source transdate)) { $temp{$_} = $ref->{$_} }
         }
 
-        $column_data{name} = "<td>";
-        for ( @{ $temp{name} } ) { $column_data{name} .= "$_<br>" }
-        $column_data{name} .= "</td>";
-        $column_data{source} = qq|<td>$temp{source}&nbsp;</td>
-    <input type=hidden name="id_$i" value=$ref->{id}>|;
+        $column_data{name}{delimiter} = "|";
+        for ( @{ $temp{name} } ) { $column_data{name}{text} .= "$_|" }
 
-        $column_data{debit}  = "<td>&nbsp;</td>";
-        $column_data{credit} = "<td>&nbsp;</td>";
+        $column_data{source} = $temp{source};
+
+        $column_data{debit}  = ' ';
+        $column_data{credit} = ' ';
 
         $balance += $ref->{amount} * $ml;
 
+        $hiddens{"id_$i"} = $ref->{id};
         if ( $ref->{amount} < 0 ) {
-
             $totaldebits += $ref->{amount} * -1;
-
-            $column_data{debit} = "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{amount} * -1,
-                2, "&nbsp;" )
-              . "</td>";
-
-        }
-        else {
-
+            $column_data{debit} = 
+                $form->format_amount(\%myconfig, $ref->{amount} * -1, 2, ' ');
+        } else {
             $totalcredits += $ref->{amount};
-
             $column_data{credit} =
-                "<td align=right>"
-              . $form->format_amount( \%myconfig, $ref->{amount}, 2, "&nbsp;" )
-              . "</td>";
-
+                $form->format_amount(\%myconfig, $ref->{amount}, 2, ' ');
         }
 
-        $column_data{balance} =
-          "<td align=right>"
-          . $form->format_amount( \%myconfig, $balance, 2, 0 ) . "</td>";
+        $column_data{balance} = $form->format_amount(\%myconfig, $balance, 2, 0);
 
         if ( $ref->{fx_transaction} ) {
-
             $column_data{cleared} =
-              ($clearfx) ? qq|<td align=center>*</td>| : qq|<td>&nbsp;</td>|;
+              ($clearfx) ? '*': ' ';
             $cleared += $ref->{amount} * $ml if $clearfx;
-
-        }
-        else {
-
+        } else {
             if ( $form->{report} ) {
-
                 if ( $ref->{cleared} ) {
-                    $column_data{cleared} = qq|<td align=center>*</td>|;
+                    $column_data{cleared} = '*';
                     $clearfx = 1;
-                }
-                else {
-                    $column_data{cleared} = qq|<td>&nbsp;</td>|;
+                } else {
+                    $column_data{cleared} = ' ';
                     $clearfx = 0;
                 }
-
-            }
-            else {
-
+            } else {
                 if ( $ref->{oldcleared} ) {
                     $cleared += $ref->{amount} * $ml;
                     $clearfx = 1;
-                    $column_data{cleared} = qq|<td align=center>*</td>
-	  <input type=hidden name="cleared_$i" value=$ref->{cleared}>
-	  <input type=hidden name="oldcleared_$i" value=$ref->{oldcleared}>
-	  <input type=hidden name="source_$i" value="$ref->{source}">
-          <input type=hidden name="amount_$1" value="$ref->{amount}">|;
-                }
-                else {
+                    $hiddens{"cleared_$i"} = $ref->{cleared};
+                    $hiddens{"oldcleared_$i"} = $ref->{oldcleared};
+                    $hiddens{"source_$i"} = $ref->{source};
+                    $hiddens{"amount_$i"} = $ref->{amount};
+                    $column_data{cleared} = '*';
+                } else {
                     $cleared += $ref->{amount} * $ml if $checked;
                     $clearfx = ($checked) ? 1 : 0;
-                    $column_data{cleared} =
-qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=1 $checked>
-	  <input type=hidden name="source_$i" value="$ref->{source}">
-          <input type=hidden name="amount_$i" value="$ref->{amount}">
-          </td>|;
+                    $hiddens{"source_$i"} = $ref->{source};
+                    $hiddens{"amount_$i"} = $ref->{amount};
+                    $column_data{cleared} = {input => {
+                        type => 'checkbox',
+                        value => 1,
+                        name => "cleared_$i",
+                        $checked => $checked,
+                        }};
                 }
-
             }
         }
 
-        $column_data{transdate} = qq|<td>$temp{transdate}&nbsp;</td>
-    <input type=hidden name="transdate_$i" value=$ref->{transdate}>|;
+        $hiddens{"transdate_$i"} = $ref->{transdate};
+        $column_data{transdate} = $temp{transdate};
 
         $j++;
         $j %= 2;
-        print qq|
-	<tr class=listrow$j>
-|;
+        $column_data{i} = $j;
 
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|
-	</tr>
-|;
-
+        push @rows, \%column_data;
     }
-
     $form->{rowcount} = $i;
 
     # print totals
-    for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+    my %column_data;
+    for (@column_index) { $column_data{$_} = ' ' }
 
     $column_data{debit} =
-      "<th class=listtotal align=right>"
-      . $form->format_amount( \%myconfig, $totaldebits, 2, "&nbsp;" ) . "</th>";
+        $form->format_amount( \%myconfig, $totaldebits, 2, ' ' );
     $column_data{credit} =
-        "<th class=listtotal align=right>"
-      . $form->format_amount( \%myconfig, $totalcredits, 2, "&nbsp;" )
-      . "</th>";
-
-    print qq|
-	<tr class=listtotal>
-|;
-
-    for (@column_index) { print "\n$column_data{$_}" }
+        $form->format_amount( \%myconfig, $totalcredits, 2, ' ' );
 
     $form->{statementbalance} =
       $form->parse_amount( \%myconfig, $form->{statementbalance} );
@@ -679,119 +604,62 @@ qq|<td align=center><input name="cleared_$i" type=checkbox class=checkbox value=
     $form->{statementbalance} =
       $form->format_amount( \%myconfig, $form->{statementbalance}, 2, 0 );
 
-    print qq|
-	</tr>
-      </table>
-    </td>
-  </tr>
-|;
-
     if ( $form->{'pos'} ) {
-        $close_next = qq|<button type="submit" class="submit" name="action" 
-       value="close_next">| . $locale->text('Close Next') . qq|</button>|;
-        $done = "";
+        push @buttons, {
+            name => 'action',
+            value => 'close_next',
+            text => $locale->text('Close Next')
+            };
+    } else {
+        push @buttons, {
+            name => 'action',
+            value => 'done',
+            text => $locale->text('Done')
+            };
     }
-    else {
-        $close_next = "";
-        $done       = qq|<button type="submit" class="submit" name="action"
-       value="done">| . $locale->text('Done') . qq|</button>|;
-    }
+
+    $hiddens{difference} = $difference;
     if ( $form->{'pos'} ) {
-        $difference = qq|
-              <tr>
-                 <th align=right><select name=over_under>
-                     <option value=under>|
-          . $locale->text('Under')
-          . qq|</option>
-                     <option value=over>| . $locale->text('Over') . qq|</option>
-                   </select><input type=hidden name=pos value='true'>
-                 </th>
-		<td width=10%></td>
-		<td align=right><input name=null size=11 
-                    value='| . $form->{null2} . qq|'></td>
-		<input type=hidden name=difference 
-                     value=$difference>
-                
-    |;
-        if ( $form->{'over_under'} ) {
-            $o_u = $form->{'over_under'};
-            $difference =~ s/(value=$o_u)/SELECTED $1/g;
-        }
-    }
-    else {
-        $difference = qq|
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Difference') . qq|</th>
-                <td width=10%></td>
-		<td align=right><input name=null size=11 value=$difference></td>
-		<input type=hidden name=difference value=$difference>
-	      </tr>|;
+        $hiddens{'pos'} = 'true';
     }
 
-    if ( $form->{report} ) {
+    if (! $form->{report} ) {
+        $hiddens{$_} = $form->{$_} foreach
+            qw(fx_transaction summary rowcount accno account fromdate todate path login sessionid);
 
-        print qq|
-    </tr>
-  </table>
-|;
-
+        unshift @buttons, {
+            name => 'action',
+            value => 'select_all',
+            text => $locale->text('Select all'),
+            };
+        unshift @buttons, {
+            name => 'action',
+            value => 'update',
+            text => $locale->text('Update'),
+            };
     }
-    else {
 
-        print qq|
-   
-  <tr>
-    <td>
-      <table width=100%>
-        <tr>
-	  <td align=right>
-	    <table>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Statement Balance') . qq|</th>
-		<td width=10%></td>
-		<td align=right><input name=statementbalance size=11 value=$form->{statementbalance}></td>
-	      </tr>
-		$difference
-	    </table>
-	  </td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-        $form->hide_form(
-            qw(fx_transaction summary rowcount accno account fromdate todate path login sessionid)
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'rc-display-form',
         );
-
-        print qq|
-<br>
-<button type="submit" class="submit" name="action" value="update">|
-          . $locale->text('Update')
-          . qq|</button>
-<button type="submit" class="submit" name="action" value="select_all">|
-          . $locale->text('Select all')
-          . qq|</button>
-    $done
-    $close_next |;
-    }
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
+    $template->render({
+        form => $form,
+        hiddens => \%hiddens,
+        options => \@options,
+        rows => \@rows,
+        totals => \%column_data,
+        columns => \@column_index,
+        heading => \%column_header,
+        buttons => \@buttons,
+    });
 }
 
 sub update {
