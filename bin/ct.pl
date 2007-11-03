@@ -2203,8 +2203,7 @@ sub update {
                 &select_item;
                 exit;
 
-            }
-            else {
+            } else {
 
                 $sellprice  = $form->{"sellprice_$i"};
                 $pricebreak = $form->{"pricebreak_$i"};
@@ -2271,129 +2270,83 @@ sub update {
 }
 
 sub select_item {
+    my %hiddens;
 
-    @column_index =
+    my @column_index =
       qw(ndx partnumber description partsgroup unit sellprice lastcost);
 
-    $column_data{ndx} = qq|<th>&nbsp;</th>|;
-    $column_data{partnumber} =
-      qq|<th class=listheading>| . $locale->text('Number') . qq|</th>|;
-    $column_data{description} =
-      qq|<th class=listheading>| . $locale->text('Description') . qq|</th>|;
-    $column_data{partsgroup} =
-      qq|<th class=listheading>| . $locale->text('Group') . qq|</th>|;
-    $column_data{unit} =
-      qq|<th class=listheading>| . $locale->text('Unit') . qq|</th>|;
-    $column_data{sellprice} =
-      qq|<th class=listheading>| . $locale->text('Sell Price') . qq|</th>|;
-    $column_data{lastcost} =
-      qq|<th class=listheading>| . $locale->text('Cost') . qq|</th>|;
+    my %column_data;
+    $column_data{ndx} = ' ';
+    $column_data{partnumber} = locale->text('Number');
+    $column_data{description} = $locale->text('Description');
+    $column_data{partsgroup} = $locale->text('Group');
+    $column_data{unit} = $locale->text('Unit');
+    $column_data{sellprice} = $locale->text('Sell Price');
+    $column_data{lastcost} = $locale->text('Cost');
 
-    $form->header;
-
-    $title = $locale->text('Select items');
-
-    print qq|
-<body>
-
-<form method=post action="$form->{script}">
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$title</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class=listheading>|;
-
-    for (@column_index) { print "\n$column_data{$_}" }
-
-    print qq|
-        </tr>
-|;
+    $form->{title} = $locale->text('Select items');
 
     my $i = 0;
+    my @rows;
     foreach $ref ( @{ $form->{item_list} } ) {
         $i++;
+        my %column_data;
 
         for (qw(partnumber description unit)) {
             $ref->{$_} = $form->quote( $ref->{$_} );
         }
 
-        $column_data{ndx} =
-qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
+        $column_data{ndx} = {input => {
+            name => "ndx_$i",
+            type => 'checkbox',
+            value => $i,
+            }};
 
-        for (qw(partnumber description partsgroup unit)) {
-            $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
-        }
-
+        $column_data{$_} = $ref->{$_} foreach
+            qw(partnumber description partsgroup unit);
         $column_data{sellprice} =
-            qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{sellprice}, 2, "&nbsp;" )
-          . qq|</td>|;
+            $form->format_amount( \%myconfig, $ref->{sellprice}, 2, ' ' );
         $column_data{lastcost} =
-            qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{lastcost}, 2, "&nbsp;" )
-          . qq|</td>|;
+            $form->format_amount( \%myconfig, $ref->{lastcost}, 2, ' ' );
 
         $j++;
         $j %= 2;
+        $column_data{i} = $j;
 
-        print qq|
-        <tr class=listrow$j>|;
+        push @rows, \%column_data;
 
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|
-        </tr>
-|;
-
-        for (
-            qw(partnumber description partsgroup partsgroup_id sellprice lastcost unit id)
-          )
-        {
-            print
-              qq|<input type=hidden name="new_${_}_$i" value="$ref->{$_}">\n|;
-        }
+        $hiddens{"new_${_}_$i"} = $ref->{$_} foreach 
+            qw(partnumber description partsgroup partsgroup_id sellprice lastcost unit id);
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<input name=lastndx type=hidden value=$i>
-
-|;
 
     # delete action variable
     for (qw(nextsub item_list)) { delete $form->{$_} }
-
     $form->{action} = "item_selected";
 
-    $form->hide_form;
+    $hiddens{$_} = $form->{$_} foreach sort keys %$form;
+    $hiddens{nextsub} = 'item_selected';
+    $hiddens{lastndx} = $i;
 
-    print qq|
-<input type="hidden" name="nextsub" value="item_selected">
-
-<br>
-<button class="submit" type="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
+    my @buttons = ({
+        name => 'action',
+        value => 'item_selected',
+        text => $locale->text('Continue'),
+        });
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-dynatable',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+        options => \@options,
+        rows => \@rows,
+        columns => \@column_index,
+        heading => \%column_header,
+    });
 }
 
 sub item_selected {
