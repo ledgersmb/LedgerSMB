@@ -76,134 +76,73 @@ sub reconciliation {
 
     RC->paymentaccounts( \%myconfig, \%$form );
 
-    $selection = "";
+    $form->{accountselect} = {
+        name => 'accno',
+        options => [],
+        };
     for ( @{ $form->{PR} } ) {
-        $selection .= "<option>$_->{accno}--$_->{description}\n";
+        push @{$form->{accountselect}{options}}, {
+            value => "$_->{accno}--$_->{description}",
+            text => "$_->{accno}--$_->{description}",
+            };
     }
 
     $form->{title} = $locale->text('Reconciliation');
 
     if ( $form->{report} ) {
         $form->{title} = $locale->text('Reconciliation Report');
-        $cleared = qq|
-        <input type=hidden name=report value=1>
-        <tr>
-	  <td align=right><input type=checkbox class=checkbox name=outstanding value=1 checked></td>
-	  <td>| . $locale->text('Outstanding') . qq|</td>
-	  <td align=right><input type=checkbox class=checkbox name=cleared value=1></td>
-	  <td>| . $locale->text('Cleared') . qq|</td>
-	</tr>
-|;
-
+        $hiddens{report} = 1;
     }
 
     if ( @{ $form->{all_years} } ) {
 
         # accounting years
-        $form->{selectaccountingyear} = "<option>\n";
+        $form->{selectaccountingyear} = {
+            name => 'year',
+            options => [{text => '', value => ''}],
+            };
         for ( @{ $form->{all_years} } ) {
-            $form->{selectaccountingyear} .= qq|<option>$_\n|;
+            push @{$form->{selectaccountingyear}{options}},
+                {text => $_, value => $_};
         }
-        $form->{selectaccountingmonth} = "<option>\n";
+        $form->{selectaccountingmonth} = {
+            name => 'month',
+            options => [{text => '', value => ''}],
+            };
         for ( sort keys %{ $form->{all_month} } ) {
-            $form->{selectaccountingmonth} .=
-              qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|\n|;
+            push @{$form->{selectaccountingmonth}{options}}, {
+                value => $_,
+                text => $locale->text($form->{all_month}{$_})
+                };
         }
-
-        $selectfrom = qq|
-        <tr>
-	  <th align=right>| . $locale->text('Period') . qq|</th>
-	  <td colspan=3>
-	  <select name=month>$form->{selectaccountingmonth}</select>
-	  <select name=year>$form->{selectaccountingyear}</select>
-	  <input name=interval class=radio type=radio value=0 checked>&nbsp;|
-          . $locale->text('Current') . qq|
-	  <input name=interval class=radio type=radio value=1>&nbsp;|
-          . $locale->text('Month') . qq|
-	  <input name=interval class=radio type=radio value=3>&nbsp;|
-          . $locale->text('Quarter') . qq|
-	  <input name=interval class=radio type=radio value=12>&nbsp;|
-          . $locale->text('Year') . qq|
-	  </td>
-	</tr>
-|;
     }
 
-    $form->header;
+    $hiddens{nextsub} = 'get_payments';
+    $hiddens{$_} = $form->{$_} foreach qw(path login sessionid);
 
-    print qq|
-<body>
+    my @buttons = ({
+        name => 'action',
+        value => 'get_payments',
+        text => $locale->text('Continue'),
+        });
 
-<form method=post action=$form->{script}>
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Account') . qq|</th>
-	  <td colspan=3><select name=accno>$selection</select></td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td colspan=3><input class="date" name=fromdate size=11 title="$myconfig{dateformat}"> <b>|
-      . $locale->text('To')
-      . qq|</b> <input class="date" name=todate size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-	$cleared
-        <tr>
-	  <td></td>
-	  <td colspan=3><input type=radio style=radio name=summary value=1 checked> |
-      . $locale->text('Summary') . qq|
-	  <input type=radio style=radio name=summary value=0> |
-      . $locale->text('Detail')
-      . qq|</td>
-	</tr>
-	<tr>
-	  <td></td>
-	  <td colspan=3><input type=checkbox class=checkbox name=fx_transaction value=1 checked> |
-      . $locale->text('Include Exchange Rate Difference')
-      . qq|</td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<br>
-<input type=hidden name=nextsub value=get_payments>
-|;
-
-    $form->hide_form(qw(path login sessionid));
-
-    print qq|
-<button type="submit" class="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-
-</form>
-|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'rc-reconciliation',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
 sub continue { &{ $form->{nextsub} } }
