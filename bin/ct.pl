@@ -1262,152 +1262,83 @@ sub form_header {
       $form->format_amount( \%myconfig, $form->{discount}, "" );
     $form->{terms} = $form->format_amount( \%myconfig, $form->{terms}, "" );
 
-    if ( $myconfig{role} =~ /(admin|manager)/ ) {
-        $bcc = qq|
-        <tr>
-	  <th align=right nowrap>| . $locale->text('Bcc') . qq|</th>
-	  <td><input name=bcc size=35 value="$form->{bcc}"></td>
-	</tr>
-|;
-    }
-
     if ( $form->{currencies} ) {
-
         # currencies
-        for ( split /:/, $form->{currencies} ) {
-            $form->{selectcurrency} .= "<option>$_\n";
-        }
-        $form->{selectcurrency} =~ s/option>($form->{curr})/option selected>$1/;
-        $currency = qq|
-	  <th>| . $locale->text('Currency') . qq|</th>
-	  <td><select name=curr>$form->{selectcurrency}</select></td>
-|;
+        $form->{selectcurrency} = {
+            name => 'curr',
+            options => [],
+            default_values => $form->{curr},
+            };
+        push @{$form->{selectcurrency}{options}}, {
+            text => $_,
+            value => $_,
+            } foreach split /:/, $form->{currencies};
     }
 
-    foreach $item ( split / /, $form->{taxaccounts} ) {
-        if ( $form->{tax}{$item}{taxable} ) {
-            $taxable .=
-qq| <input name="tax_$item" value=1 class=checkbox type=checkbox checked>&nbsp;<b>$form->{tax}{$item}{description}</b>|;
-        }
-        else {
-            $taxable .=
-qq| <input name="tax_$item" value=1 class=checkbox type=checkbox>&nbsp;<b>$form->{tax}{$item}{description}</b>|;
-        }
+    $form->{taxable} = [];
+    foreach my $item ( split / /, $form->{taxaccounts} ) {
+        my $temp_tax = {
+            name => "tax_$item",
+            value => 1,
+            type => 'checkbox',
+            label => $form->{tax}{$item}{description}
+            };
+        $temp_tax->{checked} = 'checked' if $form->{tax}{$item}{taxable};
+        push @{$form->{taxable}}, $temp_tax;
     }
 
-    if ($taxable) {
-        $tax = qq|
-	<tr>
-	  <th align=right>| . $locale->text('Taxable') . qq|</th>
-	  <td colspan=5>
-	    <table>
-	      <tr>
-		<td>$taxable</td>
-		<td><input name=taxincluded class=checkbox type=checkbox value=1 $form->{taxincluded}></td>
-		<th align=left>| . $locale->text('Tax Included') . qq|</th>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-|;
+    if (ref $form->{all_business} eq 'ARRAY') {
+        $form->{selectbusiness} = {
+            name => 'business',
+            options => [{text => '', value => ''}],
+            };
+        push @{$form->{selectbusiness}{options}}, {
+            text => $_->{description},
+            value => "$_->{description}--$_->{id}",
+            } foreach @{$form->{all_business}};
+        $form->{selectbusiness}{default_values} = 
+            "$form->{business}--$form->{business_id}";
     }
 
-    $typeofbusiness = qq|
-          <th></th>
-	  <td></td>
-|;
-
-    if ( @{ $form->{all_business} } ) {
-        $form->{selectbusiness} = qq|<option>\n|;
-        for ( @{ $form->{all_business} } ) {
-            $form->{selectbusiness} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-
-        $form->{selectbusiness} =~
-s/(<option value="\Q$form->{business}--$form->{business_id}\E")>/$1 selected>/;
-
-        $typeofbusiness = qq|
- 	  <th align=right>| . $locale->text('Type of Business') . qq|</th>
-	  <td><select name=business>$form->{selectbusiness}</select></td>
-|;
-
+    if (ref $form->{all_pricegroup} eq 'ARRAY' && $form->{db} eq 'customer') {
+        $form->{selectpricegroup} = {
+            name => 'pricegroup',
+            options => [{text => '', value => ''}],
+            };
+        push @{$form->{selectpricegroup}{options}}, {
+            name => $_->{pricegroup},
+            value => "$_->{pricegroup}--$_->{id}",
+            } foreach @{$form->{all_pricegroup}};
+        $form->{selectpricegroup}{default_values} = 
+            "$form->{pricegroup}--$form->{pricegroup_id}";
     }
-
-    $pricegroup = qq|
-          <th></th>
-	  <td></td>
-|;
-
-    if ( @{ $form->{all_pricegroup} } && $form->{db} eq 'customer' ) {
-        $form->{selectpricegroup} = qq|<option>\n|;
-        for ( @{ $form->{all_pricegroup} } ) {
-            $form->{selectpricegroup} .=
-              qq|<option value="$_->{pricegroup}--$_->{id}">$_->{pricegroup}\n|;
-        }
-
-        $form->{selectpricegroup} =~
-s/(<option value="\Q$form->{pricegroup}--$form->{pricegroup_id}\E")/$1 selected/;
-
-        $pricegroup = qq|
- 	  <th align=right>| . $locale->text('Pricegroup') . qq|</th>
-	  <td><select name=pricegroup>$form->{selectpricegroup}</select></td>
-|;
-    }
-
-    $lang = qq|
-          <th></th>
-	  <td></td>
-|;
 
     if ( @{ $form->{all_language} } ) {
-        $form->{selectlanguage} = qq|<option>\n|;
-        for ( @{ $form->{all_language} } ) {
-            $form->{selectlanguage} .=
-qq|<option value="$_->{description}--$_->{code}">$_->{description}\n|;
-        }
-
-        $form->{selectlanguage} =~
-s/(<option value="\Q$form->{language}--$form->{language_code}\E")/$1 selected/;
-
-        $lang = qq|
- 	  <th align=right>| . $locale->text('Language') . qq|</th>
-	  <td><select name=language>$form->{selectlanguage}</select></td>
-|;
+        $form->{selectlanguage} = {
+            name => 'language',
+            options => [{text => '', value => ''}],
+            };
+        push @{$form->{selectlanguage}{options}}, {
+            text => $_->{description},
+            value => "$_->{description}--$_->{code}",
+            } foreach @{$form->{all_language}};
+        $form->{selectlangauge}{default_values} =
+            "$form->{language}--$form->{language_code}";
     }
 
-    $employeelabel = $locale->text('Salesperson');
+    $form->{selectemployee} = {
+        name => 'employee',
+        options => [{text => '', value => ''}],
+        default_values => "$form->{employee}--$form->{employee_id}",
+        };
+    push @{$form->{selectemployee}{options}}, {
+        text => $_->{name},
+        value => "$_->{name}--$_->{id}",
+        } foreach @{$form->{all_employee}};
 
-    $form->{selectemployee} = qq|<option>\n|;
-    for ( @{ $form->{all_employee} } ) {
-        $form->{selectemployee} .=
-          qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-    }
-
-    $form->{selectemployee} =~
-s/(<option value="\Q$form->{employee}--$form->{employee_id}\E")/$1 selected/;
-
-    if ( $form->{db} eq 'vendor' ) {
-        $gifi = qq|
-    	  <th align=right>| . $locale->text('Sub-contract GIFI') . qq|</th>
-	  <td><input name=gifi_accno size=9 value="$form->{gifi_accno}"></td>
-|;
-        $employeelabel = $locale->text('Employee');
-    }
-
-    if ( @{ $form->{all_employee} } ) {
-        $employee = qq|
-	        <th align=right>$employeelabel</th>|;
-
-        if ( $myconfig{role} ne 'user' || !$form->{id} ) {
-            $employee .= qq|
-		<td><select name=employee>$form->{selectemployee}</select></td>
-|;
-        }
-        else {
-            $employee .= qq|
-                <td>$form->{employee}</td>
-		<input type=hidden name=employee value="$form->{employee}--$form->{employee_id}">|;
+    if (ref $form->{all_employee} eq 'ARRAY') {
+        if ( $myconfig{role} eq 'user' && $form->{id} ) {
+            $hiddens{employee} = "$form->{employee}--$form->{employee_id}";
         }
     }
 
@@ -1415,194 +1346,8 @@ s/(<option value="\Q$form->{employee}--$form->{employee_id}\E")/$1 selected/;
     # $locale->text('Vendor Number')
 
     $label = ucfirst $form->{db};
+    $form->{label} = $label;
     $form->{title} = $locale->text("$form->{title} $label");
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr valign=top>
-	  <td width=50%>
-	    <table width=100%>
-	      <tr class=listheading>
-		<th class=listheading colspan=2 width=50%>|
-      . $locale->text('Billing Address')
-      . qq|</th>
-	      <tr>
-		<th align=right nowrap>| . $locale->text( $label . ' Number' ) . qq|</th>
-		<td><input name="$form->{db}number" size=35 maxlength=32 value="$form->{"$form->{db}number"}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Company Name') . qq|</th>
-		<td><input name=name size=35 maxlength=64 value="$form->{name}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Address') . qq|</th>
-		<td><input name=address1 size=35 maxlength=32 value="$form->{address1}"></td>
-	      </tr>
-	      <tr>
-		<th></th>
-		<td><input name=address2 size=35 maxlength=32 value="$form->{address2}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('City') . qq|</th>
-		<td><input name=city size=35 maxlength=32 value="$form->{city}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('State/Province') . qq|</th>
-		<td><input name=state size=35 maxlength=32 value="$form->{state}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Zip/Postal Code') . qq|</th>
-		<td><input name=zipcode size=10 maxlength=10 value="$form->{zipcode}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Country') . qq|</th>
-		<td><input name=country size=35 maxlength=32 value="$form->{country}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Contact') . qq|</th>
-		<td><input name=contact size=35 maxlength=64 value="$form->{contact}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Phone') . qq|</th>
-		<td><input name=phone size=20 maxlength=20 value="$form->{phone}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Fax') . qq|</th>
-		<td><input name=fax size=20 maxlength=20 value="$form->{fax}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('E-mail') . qq|</th>
-		<td><input name=email size=35 value="$form->{email}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Cc') . qq|</th>
-		<td><input name=cc size=35 value="$form->{cc}"></td>
-	      </tr>
-	      $bcc
-	    </table>
-	  </td>
-	  <td width=50%>
-	    <table width=100%>
-	      <tr>
-		<th class=listheading colspan=2>|
-      . $locale->text('Shipping Address')
-      . qq|</th>
-	      </tr>
-	      <tr>
-		<td><input name=none size=35 value=| . ( "=" x 35 ) . qq|></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptoname size=35 maxlength=64 value="$form->{shiptoname}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptoaddress1 size=35 maxlength=32 value="$form->{shiptoaddress1}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptoaddress2 size=35 maxlength=32 value="$form->{shiptoaddress2}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptocity size=35 maxlength=32 value="$form->{shiptocity}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptostate size=35 maxlength=32 value="$form->{shiptostate}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptozipcode size=10 maxlength=10 value="$form->{shiptozipcode}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptocountry size=35 maxlength=32 value="$form->{shiptocountry}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptocontact size=35 maxlength=64 value="$form->{shiptocontact}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptophone size=20 maxlength=20 value="$form->{shiptophone}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptofax size=20 maxlength=20 value="$form->{shiptofax}"></td>
-	      </tr>
-	      <tr>
-		<td><input name=shiptoemail size=35 value="$form->{shiptoemail}"></td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	$tax
-	<tr>
-	  <th align=right>| . $locale->text('Startdate') . qq|</th>
-	  <td><input class="date" name=startdate size=11 title="$myconfig{dateformat}" value=$form->{startdate}></td>
-	  <th align=right>| . $locale->text('Enddate') . qq|</th>
-	  <td><input class="date" name=enddate size=11 title="$myconfig{dateformat}" value=$form->{enddate}></td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('Credit Limit') . qq|</th>
-	  <td><input name=creditlimit size=9 value="$form->{creditlimit}"></td>
-	  <th align=right>| . $locale->text('Terms') . qq|</th>
-	  <td><input name=terms size=2 value="$form->{terms}"> <b>|
-      . $locale->text('days')
-      . qq|</b></td>
-	  <th align=right>| . $locale->text('Discount') . qq|</th>
-	  <td><input name=discount size=4 value="$form->{discount}">
-	  <b>%</b></td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('Tax Number / SSN') . qq|</th>
-	  <td><input name=taxnumber size=20 value="$form->{taxnumber}"></td>
-	  $gifi
-	  <th align=right>| . $locale->text('SIC') . qq|</th>
-	  <td><input name=sic_code size=6 maxlength=6 value="$form->{sic_code}"></td>
-	</tr>
-	<tr>
-	  $typeofbusiness
-	  <th align=right>| . $locale->text('BIC') . qq|</th>
-	  <td><input name=bic size=11 maxlength=11 value="$form->{bic}"></td>
-	  <th align=right>| . $locale->text('IBAN') . qq|</th>
-	  <td><input name=iban size=24 maxlength=34 value="$form->{iban}"></td>
-	</tr>
-	<tr>
-	  $pricegroup
-	  $lang
-	  $currency
-	</tr>
-	<tr valign=top>
-	  $employee
-	  <td colspan=4>
-	    <table>
-	      <tr valign=top>
-		<th align=left nowrap>| . $locale->text('Notes') . qq|</th>
-		<td><textarea name=notes rows=3 cols=40 wrap=soft>$form->{notes}</textarea></td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
 }
 
 sub form_footer {
@@ -1620,6 +1365,9 @@ sub form_footer {
     # type=submit $locale->text('Pricelist')
     # type=submit $locale->text('Delete')
     # type=submit $locale->text('POS')
+
+    my %hiddens;
+    my @buttons;
 
     %button = (
         'save' => { ndx => 1, key => 'S', value => $locale->text('Save') },
@@ -1646,73 +1394,73 @@ sub form_footer {
         'delete' => { ndx => 17, key => 'D', value => $locale->text('Delete') },
     );
 
-    %a = ();
+    my %blist = ();
 
     if ( $form->{db} eq 'customer' ) {
         if ( $myconfig{acs} !~ /AR--Customers--Add Customer/ ) {
-            $a{'save'} = 1;
+            $blist{'save'} = 1;
 
             if ( $form->{id} ) {
-                $a{'save_as_new'} = 1;
+                $blist{'save_as_new'} = 1;
                 if ( $form->{status} eq 'orphaned' ) {
-                    $a{'delete'} = 1;
+                    $blist{'delete'} = 1;
                 }
             }
         }
 
         if ( $myconfig{acs} !~ /AR--AR/ ) {
             if ( $myconfig{acs} !~ /AR--Add Transaction/ ) {
-                $a{'ar_transaction'} = 1;
+                $blist{'ar_transaction'} = 1;
             }
             if ( $myconfig{acs} !~ /AR--Sales Invoice/ ) {
-                $a{'sales_invoice'} = 1;
+                $blist{'sales_invoice'} = 1;
             }
         }
         if ( $myconfig{acs} !~ /POS--POS/ ) {
             if ( $myconfig{acs} !~ /POS--Sale/ ) {
-                $a{'pos'} = 1;
+                $blist{'pos'} = 1;
             }
         }
         if ( $myconfig{acs} !~ /Order Entry--Order Entry/ ) {
             if ( $myconfig{acs} !~ /Order Entry--Sales Order/ ) {
-                $a{'sales_order'} = 1;
+                $blist{'sales_order'} = 1;
             }
         }
         if ( $myconfig{acs} !~ /Quotations--Quotations/ ) {
             if ( $myconfig{acs} !~ /Quotations--Quotation/ ) {
-                $a{'quotation'} = 1;
+                $blist{'quotation'} = 1;
             }
         }
     }
 
     if ( $form->{db} eq 'vendor' ) {
         if ( $myconfig{acs} !~ /AP--Vendors--Add Vendor/ ) {
-            $a{'save'} = 1;
+            $blist{'save'} = 1;
 
             if ( $form->{id} ) {
-                $a{'save_as_new'} = 1;
+                $blist{'save_as_new'} = 1;
                 if ( $form->{status} eq 'orphaned' ) {
-                    $a{'delete'} = 1;
+                    $blist{'delete'} = 1;
                 }
             }
         }
 
         if ( $myconfig{acs} !~ /AP--AP/ ) {
             if ( $myconfig{acs} !~ /AP--Add Transaction/ ) {
-                $a{'ap_transaction'} = 1;
+                $blist{'ap_transaction'} = 1;
             }
             if ( $myconfig{acs} !~ /AP--Vendor Invoice/ ) {
-                $a{'vendor_invoice'} = 1;
+                $blist{'vendor_invoice'} = 1;
             }
         }
         if ( $myconfig{acs} !~ /Order Entry--Order Entry/ ) {
             if ( $myconfig{acs} !~ /Order Entry--Purchase Order/ ) {
-                $a{'purchase_order'} = 1;
+                $blist{'purchase_order'} = 1;
             }
         }
         if ( $myconfig{acs} !~ /Quotations--Quotations/ ) {
             if ( $myconfig{acs} !~ /Quotations--RFQ/ ) {
-                $a{'rfq'} = 1;
+                $blist{'rfq'} = 1;
             }
         }
     }
@@ -1721,30 +1469,43 @@ sub form_footer {
         $myconfig{acs} =~
           s/(Goods & Services--)Add (Service|Assembly).*;/$1--Add Part/g;
         if ( $myconfig{acs} !~ /Goods & Services--Add Part/ ) {
-            $a{'pricelist'} = 1;
+            $blist{'pricelist'} = 1;
         }
     }
 
-    $form->hide_form(qw(id taxaccounts path login sessionid callback db));
+    $hiddens{$_} = $form->{$_} foreach
+        qw(id taxaccounts path login sessionid callback db);
 
-    for ( keys %button ) { delete $button{$_} if !$a{$_} }
+    for ( keys %button ) { delete $button{$_} if !$blist{$_} }
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
-        $form->print_button( \%button, $_ );
+        push @buttons, {
+            name => 'action',
+            value => $_,
+            accesskey => $button{$_}{key},
+            title => "$button{$name}{value} [Alt-$button{$_}{key}]",
+            text => $button{$_}{value},
+            }; 
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-    print qq|
- 
-  </form>
-
-</body>
-</html>
-|;
-
+    $form->{dbnumber} = "$form->{db}number";
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'ct-form',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+        options => \@options,
+    });
 }
 
 sub pricelist {
@@ -1924,10 +1685,12 @@ sub vendor_pricelist {
 
 sub display_pricelist {
 
-    &pricelist_header;
+    my %hiddens;
+    &pricelist_header(\%hiddens);
     delete $form->{action};
     $form->hide_form;
-    &pricelist_footer;
+    $hiddens{$_} = $form->{$_} foreach sort keys %$form;
+    &pricelist_footer(\%hiddens);
 
 }
 

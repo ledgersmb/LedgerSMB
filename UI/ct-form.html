@@ -1,0 +1,436 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?>
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td /></tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr valign="top">
+          <td width="50%">
+            <table width="100%">
+              <tr class="listheading">
+                <th class="listheading" colspan="2" width="50%"><?lsmb text('Billing Address') ?></th>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text("${form.label} Number") ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => form.dbnumber,
+  size => '35',
+  maxlength => '32',
+  value => form.${form.dbnumber},
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Company Name') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'name',
+  size => '35',
+  maxlength => '64',
+  value => form.name,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Address') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'address1',
+  size => '35',
+  maxlength => '32',
+  value => form.address1,
+  } -?></td>
+              </tr>
+              <tr>
+                <th />
+                <td><?lsmb PROCESS input element_data={
+  name => 'address2',
+  size => '35',
+  maxlength => '32',
+  value => form.address2,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('City') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'city',
+  size => '35',
+  maxlength => '32',
+  value => form.city,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('State/Province') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'state',
+  size => '35',
+  maxlength => '32',
+  value => form.state,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Zip/Postal Code') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'zipcode',
+  size => '10',
+  maxlength => '10',
+  value => form.zipcode,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Country') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'country',
+  size => '35',
+  maxlength => '32',
+  value => form.country,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Contact') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'contact',
+  size => '35',
+  maxlength => '64',
+  value => form.contact,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Phone') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'phone',
+  size => '20',
+  maxlength => '20',
+  value => form.phone,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Fax') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'fax',
+  size => '20',
+  maxlength => '20',
+  value => form.fax,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('E-mail') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'email',
+  size => '35',
+  value => form.email,
+  } -?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Cc') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'cc',
+  size => '35',
+  value => form.cc,
+  } -?></td>
+              </tr>
+<?lsmb IF user.role.matches('(admin|manager)') -?>
+              <tr>
+                <th align="right"><?lsmb text('Bcc') ?></th>
+                <td><?lsmb PROCESS input element_data={
+  name => 'bcc',
+  size => '35',
+  value => form.bcc,
+  } -?></td>
+              </tr>
+<?lsmb END -?>
+            </table>
+          </td>
+          <td width="50%">
+            <table width="100%">
+              <tr>
+                <th class="listheading" colspan="2">
+                  <?lsmb text('Shipping Address') ?>
+                </th>
+              </tr>
+              <tr><td>&nbsp;<br />&nbsp;</td></tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptoname',
+  size => '35',
+  maxlength => '64',
+  value => form.shiptoname,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptoaddress1',
+  size => '35',
+  maxlength => '32',
+  value => form.shiptoaddress1,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptoaddress2',
+  size => '35',
+  maxlength => '32',
+  value => form.shiptoaddress2,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptocity',
+  size => '35',
+  maxlength => '32',
+  value => form.shiptocity,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptostate',
+  size => '35',
+  maxlength => '32',
+  value => form.shiptostate,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptozipcode',
+  size => '10',
+  maxlength => '10',
+  value => form.shiptozipcode,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptocountry',
+  size => '35',
+  maxlength => '32',
+  value => form.shiptocountry,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptocontact',
+  size => '35',
+  maxlength => '32',
+  value => form.shiptocontact,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptophone',
+  size => '20',
+  maxlength => '20',
+  value => form.shiptophone,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptofax',
+  size => '20',
+  maxlength => '20',
+  value => form.shiptofax,
+  } -?></td>
+              </tr>
+              <tr>
+                <td><?lsmb PROCESS input element_data={
+  name => 'shiptoemail',
+  size => '35',
+  value => form.shiptoemail,
+  } -?></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table>
+<?lsmb IF form.taxable -?>
+        <tr>
+          <th align="right"><?lsmb text('Taxable') ?></th>
+          <td colspan="5">
+            <table>
+              <tr>
+                <td>
+  <?lsmb FOREACH tax IN form.taxable;
+    PROCESS input element_data=tax;
+  END -?>
+                </td>
+                <td>
+  <?lsmb PROCESS input element_data={
+    name => 'taxincluded',
+    type => 'checkbox',
+    value => '1',
+    ${form.taxincluded} => form.taxincluded
+    } -?>
+                </td>
+                <th align="left"><?lsmb text('Tax Included') ?></th>
+              </tr>
+            </table>
+          </td>
+        </tr>
+<?lsmb END -?>
+        <tr>
+          <th align="right"><?lsmb text('Startdate') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  class => 'date',
+  name => 'startdate',
+  size => '11',
+  value => form.startdate,
+  title => user.dateformat,
+  } -?></td>
+          <th align="right"><?lsmb text('Enddate') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  class => 'date',
+  name => 'enddate',
+  size => '11',
+  value => form.enddate,
+  title => user.dateformat,
+  } -?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Credit Limit') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'creditlimit',
+  size => '9',
+  value => form.creditlimit,
+  } -?></td>
+          <th align="right"><?lsmb text('Terms') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'terms',
+  size => '2',
+  value => form.terms,
+  }; text('days') -?></td>
+          <th align="right"><?lsmb text('Discount') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'discount',
+  size => '4',
+  value => form.discount,
+  } -?>%</td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Tax Number / SSN') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'taxnumber',
+  size => '20',
+  value => form.taxnumber,
+  } -?></td>
+<?lsmb IF form.db == 'vendor' ?>
+          <th align="right"><?lsmb text('Sub-contract GIFI') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'gifi_accno',
+  size => '9',
+  value => form.gifi_accno,
+  } -?></td>
+<?lsmb ELSE ?>
+          <th />
+          <td />
+<?lsmb END ?>
+          <th align="right"><?lsmb text('SIC') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'sic_code',
+  size => '6',
+  maxlength => '6',
+  value => form.sic_code,
+  } -?>%</td>
+        </tr>
+        <tr>
+<?lsmb IF form.all_business -?>
+          <th align="right"><?lsmb text('Type of Business') ?></th>
+          <td><?lsmb PROCESS select element_data=form.selectbusiness -?></td>
+<?lsmb ELSE -?>
+          <th />
+          <td />
+<?lsmb END -?>
+          <th align="right"><?lsmb text('BIC') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'bic',
+  size => '11',
+  maxlength => '11',
+  value => form.bic,
+  } -?></td>
+          <th align="right"><?lsmb text('IBAN') ?></th>
+          <td><?lsmb PROCESS input element_data={
+  name => 'iban',
+  size => '24',
+  maxlength => '24',
+  value => form.iban,
+  } -?>%</td>
+        </tr>
+        <tr>
+<?lsmb IF form.all_pricegroup AND form.db == 'customer' -?>
+          <th align="right"><?lsmb text('Pricegroup') ?></th>
+          <td><?lsmb PROCESS select element_data=form.selectpricegroup -?></td>
+<?lsmb ELSE -?>
+          <th />
+          <td />
+<?lsmb END -?>
+<?lsmb IF form.all_language -?>
+          <th align="right"><?lsmb text('Language') ?></th>
+          <td><?lsmb PROCESS select element_data=form.selectlanguage -?></td>
+<?lsmb ELSE -?>
+          <th />
+          <td />
+<?lsmb END -?>
+<?lsmb IF form.currencies -?>
+          <th align="right"><?lsmb text('Currency') ?></th>
+          <td><?lsmb PROCESS select element_data=form.selectcurrency -?></td>
+<?lsmb ELSE -?>
+          <th />
+          <td />
+<?lsmb END -?>
+        </tr>
+        <tr valign="top">
+<?lsmb IF form.all_employee -?>
+          <th align="right">
+  <?lsmb IF form.db == 'vendor' -?>
+    <?lsmb text('Employee') -?>
+  <?lsmb ELSE -?>
+    <?lsmb text('Salesperson') -?>
+  <?lsmb END -?>
+          </th>
+          <td>
+  <?lsmb IF user.role != 'user' OR !form.id -?>
+    <?lsmb PROCESS select element_data=form.selectemployee -?>
+  <?lsmb ELSE -?>
+    <?lsmb form.employee -?>
+  <?lsmb END -?>
+          </td>
+<?lsmb ELSE -?>
+          <th />
+          <td />
+<?lsmb END -?>
+          <td colspan="4">
+            <table>
+              <tr valign="top">
+                <th align="left"><?lsmb text('Notes') ?></th>
+                <td>
+<?lsmb PROCESS textarea element_data={
+  name => 'notes',
+  rows => '3',
+  cols => '40',
+  text => form.notes,
+  } -?>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td><hr size="3" noshade="noshade" /></td></tr>
+</table>
+
+
+
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>
