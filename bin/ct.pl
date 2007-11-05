@@ -925,17 +925,19 @@ sub list_subtotal {
 sub list_history {
 
     CT->get_history( \%myconfig, \%$form );
+    my %hiddens;
+    my @buttons;
 
-    $href =
+    my $href =
 "$form->{script}?action=list_history&direction=$form->{direction}&oldsort=$form->{oldsort}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&transdatefrom=$form->{transdatefrom}&transdateto=$form->{transdateto}&history=$form->{history}";
 
     $form->sort_order();
 
-    $callback =
+    my $callback =
 "$form->{script}?action=list_history&direction=$form->{direction}&oldsort=$form->{oldsort}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$form->{type}&transdatefrom=$form->{transdatefrom}&transdateto=$form->{transdateto}&history=$form->{history}";
 
     $form->{l_fxsellprice} = $form->{l_curr};
-    @columns = $form->sort_columns( partnumber, description, qty, unit,
+    my @columns = $form->sort_columns( partnumber, description, qty, unit,
         sellprice,    fxsellprice,   curr, discount,
         deliverydate, projectnumber, serialnumber
     );
@@ -946,6 +948,7 @@ sub list_history {
             curr );
     }
 
+    my @column_index;
     foreach $item (@columns) {
         if ( $form->{"l_$item"} eq "Y" ) {
             push @column_index, $item;
@@ -956,21 +959,21 @@ sub list_history {
         }
     }
 
+    my @options;
     if ( $form->{history} eq 'detail' ) {
-        $option = $locale->text('Detail');
-    }
-    if ( $form->{history} eq 'summary' ) {
-        $option .= $locale->text('Summary');
+        push @options, $locale->text('Detail');
+    } elsif ( $form->{history} eq 'summary' ) {
+        push @options, $locale->text('Summary');
     }
     if ( $form->{name} ) {
         $callback .= "&name=" . $form->escape( $form->{name}, 1 );
         $href   .= "&name=" . $form->escape( $form->{name} );
-        $option .= "\n<br>" . $locale->text('Name') . " : $form->{name}";
+        push @options, $locale->text('Name: [_1]', $form->{name});
     }
     if ( $form->{contact} ) {
         $callback .= "&contact=" . $form->escape( $form->{contact}, 1 );
         $href   .= "&contact=" . $form->escape( $form->{contact} );
-        $option .= "\n<br>" . $locale->text('Contact') . " : $form->{contact}";
+        push @options, $locale->text('Contact: [_1]', $form->{contact});
     }
     if ( $form->{"$form->{db}number"} ) {
         $callback .=
@@ -978,124 +981,86 @@ sub list_history {
           . $form->escape( $form->{"$form->{db}number"}, 1 );
         $href .=
           "&$form->{db}number=" . $form->escape( $form->{"$form->{db}number"} );
-        $option .= "\n<br>"
-          . $locale->text('Number')
-          . qq| : $form->{"$form->{db}number"}|;
+        push @options, $locale->text('Number: [_1]',
+            $form->{"$form->{db}number"});
     }
     if ( $form->{email} ) {
         $callback .= "&email=" . $form->escape( $form->{email}, 1 );
         $href   .= "&email=" . $form->escape( $form->{email} );
-        $option .= "\n<br>" . $locale->text('E-mail') . " : $form->{email}";
+        push @options, $locale->text('E-mail: [_1]', $form->{email});
     }
     if ( $form->{transdatefrom} ) {
         $callback .= "&transdatefrom=$form->{transdatefrom}";
         $href     .= "&transdatefrom=$form->{transdatefrom}";
-        $option   .= "\n<br>" if ($option);
-        $option .=
-            $locale->text('From') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{transdatefrom}, 1 );
+        push @options, $locale->text('From [_1]',
+            $locale->date( \%myconfig, $form->{transdatefrom}, 1 ));
     }
     if ( $form->{transdateto} ) {
         $callback .= "&transdateto=$form->{transdateto}";
         $href     .= "&transdateto=$form->{transdateto}";
         if ( $form->{transdatefrom} ) {
-            $option .= " ";
+            pop @options;
+            push @options, $locale->text('From [_1] To [_2]',
+                $locale->date( \%myconfig, $form->{transdatefrom}, 1 ),
+                $locale->date( \%myconfig, $form->{transdateto}, 1 ));
+        } else {
+            push @options, $locale->text('To [_1]',
+                $locale->date( \%myconfig, $form->{transdateto}, 1 ));
         }
-        else {
-            $option .= "\n<br>" if ($option);
-        }
-        $option .=
-            $locale->text('To') . "&nbsp;"
-          . $locale->date( \%myconfig, $form->{transdateto}, 1 );
     }
     if ( $form->{open} ) {
         $callback .= "&open=$form->{open}";
         $href     .= "&open=$form->{open}";
-        $option   .= "\n<br>" if ($option);
-        $option   .= $locale->text('Open');
+        push @options, $locale->text('Open');
     }
     if ( $form->{closed} ) {
         $callback .= "&closed=$form->{closed}";
         $href     .= "&closed=$form->{closed}";
-        $option   .= "\n<br>" if ($option);
-        $option   .= $locale->text('Closed');
+        push @options, $locale->text('Closed');
     }
 
     $form->{callback} = "$callback&sort=$form->{sort}";
     $callback = $form->escape( $form->{callback} );
 
-    $column_header{partnumber} =
-        qq|<th><a class=listheading href=$href&sort=partnumber>|
-      . $locale->text('Part Number')
-      . qq|</a></th>|;
-    $column_header{description} =
-        qq|<th><a class=listheading href=$href&sort=description>|
-      . $locale->text('Description')
-      . qq|</a></th>|;
+    my %column_header;
+    $column_header{partnumber} = {
+        href => "$href&sort=partnumber",
+        text => $locale->text('Part Number')
+        };
+    $column_header{description} = {
+        href => "$href&sort=description",
+        text => $locale->text('Description')
+        };
 
     if ( $form->{history} eq 'summary' ) {
-        $column_header{sellprice} =
-          qq|<th class=listheading>| . $locale->text('Total') . qq|</th>|;
+        $column_header{sellprice} = $locale->text('Total');
+    } else {
+        $column_header{sellprice} = $locale->text('Sell Price');
     }
-    else {
-        $column_header{sellprice} =
-          qq|<th class=listheading>| . $locale->text('Sell Price') . qq|</th>|;
-    }
-    $column_header{fxsellprice} = qq|<th>&nbsp;</th>|;
+    $column_header{fxsellprice} = ' ';
 
-    $column_header{curr} =
-      qq|<th class=listheading>| . $locale->text('Curr') . qq|</th>|;
-    $column_header{discount} =
-      qq|<th class=listheading>| . $locale->text('Discount') . qq|</th>|;
-    $column_header{qty} =
-      qq|<th class=listheading>| . $locale->text('Qty') . qq|</th>|;
-    $column_header{unit} =
-      qq|<th class=listheading>| . $locale->text('Unit') . qq|</th>|;
-    $column_header{deliverydate} =
-        qq|<th><a class=listheading href=$href&sort=deliverydate>|
-      . $locale->text('Delivery Date')
-      . qq|</a></th>|;
-    $column_header{projectnumber} =
-        qq|<th><a class=listheading href=$href&sort=projectnumber>|
-      . $locale->text('Project Number')
-      . qq|</a></th>|;
-    $column_header{serialnumber} =
-        qq|<th><a class=listheading href=$href&sort=serialnumber>|
-      . $locale->text('Serial Number')
-      . qq|</a></th>|;
+    $column_header{curr} = $locale->text('Curr');
+    $column_header{discount} = $locale->text('Discount');
+    $column_header{qty} = $locale->text('Qty');
+    $column_header{unit} = $locale->text('Unit');
+    $column_header{deliverydate} = {
+        href => "$href&sort=deliverydate",
+        text => $locale->text('Delivery Date')
+        };
+    $column_header{projectnumber} = {
+        href => "$href&sort=projectnumber",
+        text => $locale->text('Project Number')
+        };
+    $column_header{serialnumber} = {
+        href => "$href&sort=serialnumber",
+        text => $locale->text('Serial Number')
+        };
 
     # $locale->text('Customer History')
     # $locale->text('Vendor History')
 
     $label = ucfirst $form->{db};
     $form->{title} = $locale->text( $label . " History" );
-
-    $colspan = $#column_index + 1;
-
-    $form->header;
-
-    print qq|
-<body>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-|;
-
-    for (@column_index) { print "$column_header{$_}\n" }
-
-    print qq|
-        </tr>
-|;
 
     $module = 'oe';
     if ( $form->{db} eq 'customer' ) {
@@ -1108,8 +1073,7 @@ sub list_history {
         if ( $form->{type} eq 'invoice' ) {
             $module = 'is';
         }
-    }
-    else {
+    } else {
         $invlabel = $locale->text('Vendor Invoice');
         $ordlabel = $locale->text('Purchase Order');
         $quolabel = $locale->text('RFQ');
@@ -1123,16 +1087,16 @@ sub list_history {
 
     $ml = ( $form->{db} eq 'vendor' ) ? -1 : 1;
 
-    foreach $ref ( @{ $form->{CT} } ) {
+    my @rows;
+    foreach my $ref ( @{ $form->{CT} } ) {
 
         if ( $ref->{id} ne $sameid ) {
-
             # print the header
-            print qq|
-        <tr class=listheading>
-	  <th colspan=$colspan><a class=listheading href=$form->{script}?action=edit&id=$ref->{ctid}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{name} $ref->{address}</a></th>
-	</tr>
-|;
+            push @rows, {
+                class => 'divider',
+                text => "$ref->{name} $ref->{address}"
+                href => "$form->{script}?action=edit&id=$ref->{ctid}&db=$form->{db}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+                };
         }
 
         if ( $form->{type} ne 'invoice' ) {
@@ -1146,92 +1110,74 @@ sub list_history {
             $i++;
             $i %= 2;
 
-            print qq|
-	  <tr class=listrow$i>
-|;
-
             if ( $form->{type} eq 'invoice' ) {
-                print
-qq|<th align=left colspan=$colspan><a href=${module}.pl?action=edit&id=$ref->{invid}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$invlabel $ref->{invnumber} / $ref->{employee}</a></th>|;
+                push @rows, {
+                    class => 'divider',
+                    href => "${module}.pl?action=edit&id=$ref->{invid}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+                    text => "$invlabel $ref->{invnumber} / $ref->{employee}";
+                    };
+            } elsif ( $form->{type} eq 'order' ) {
+                push @rows, {
+                    class => 'divider',
+                    href => "${module}.pl?action=edit&id=$ref->{invid}&type=$ordertype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+                    text => "$ordlabel $ref->{ordnumber} / $ref->{employee}"
+                    };
+            } elsif ( $form->{type} eq 'quotation' ) {
+                push @rows, {
+                    class => 'divider',
+                    href => "${module}.pl?action=edit&id=$ref->{invid}&type=$quotationtype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
+                    text => "$quolabel $ref->{quonumber} / $ref->{employee}"
+                    };
             }
-
-            if ( $form->{type} eq 'order' ) {
-                print
-qq|<th align=left colspan=$colspan><a href=${module}.pl?action=edit&id=$ref->{invid}&type=$ordertype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ordlabel $ref->{ordnumber} / $ref->{employee}</a></th>|;
-            }
-
-            if ( $form->{type} eq 'quotation' ) {
-                print
-qq|<th align=left colspan=$colspan><a href=${module}.pl?action=edit&id=$ref->{invid}&type=$quotationtype&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$quolabel $ref->{quonumber} / $ref->{employee}</a></th>|;
-            }
-
-            print qq|
-          </tr>
-|;
         }
 
-        for (@column_index) { $column_data{$_} = "<td>$ref->{$_}&nbsp;</td>" }
+        my %column_data;
+        for (@column_index) { $column_data{$_} = $ref->{$_} }
 
         if ( $form->{l_curr} ) {
             $column_data{fxsellprice} =
-                qq|<td align=right>|
-              . $form->format_amount( \%myconfig, $ref->{fxsellprice}, 2 )
-              . "</td>";
+                $form->format_amount( \%myconfig, $ref->{fxsellprice}, 2 );
         }
         $column_data{sellprice} =
-          qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{sellprice}, 2 ) . "</td>";
-
+            $form->format_amount( \%myconfig, $ref->{sellprice}, 2 );
         $column_data{qty} =
-          qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{qty} * $ml ) . "</td>";
-        $column_data{discount} = qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{discount} * 100,
-            "", "&nbsp;" )
-          . "</td>";
-        $column_data{partnumber} =
-qq|<td><a href=ic.pl?action=edit&id=$ref->{pid}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{partnumber}</td>|;
+            $form->format_amount( \%myconfig, $ref->{qty} * $ml );
+        $column_data{discount} = 
+            $form->format_amount( \%myconfig, $ref->{discount} * 100, "", ' ' );
+        $column_data{partnumber} = {
+            href => "ic.pl?action=edit&id=$ref->{pid}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"
+            text => $ref->{partnumber}
+            };
 
         $i++;
         $i %= 2;
-        print qq|
-        <tr class=listrow$i>
-|;
+        $column_data{i} = $i;
 
-        for (@column_index) { print "$column_data{$_}\n" }
-
-        print qq|
-        </tr>
-|;
+        push @rows, \%column_data;
 
         $sameid    = $ref->{id};
         $sameinvid = $ref->{invid};
 
     }
 
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
+##SC: Temporary removal
+##    if ( $form->{lynx} ) {
+##        require "bin/menu.pl";
+##        &menubar;
+##    }
 
-|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
-
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-dynatable',
+        );
+    $template->render({
+        form => $form,
+        options => \@options,
+        rows => \@rows,
+        columns => \@column_index,
+        heading => \%column_header,
+    });
 }
 
 sub edit {

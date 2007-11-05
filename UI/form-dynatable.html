@@ -39,8 +39,23 @@
 <?lsmb FOREACH row IN rows ?>
 <?lsmb IF row.class == 'heading';      s = 'th'; c = 'listheading';
 	ELSIF row.class == 'subtotal'; s = 'th'; c = 'listsubtotal';
+	ELSIF row.class == 'divider';  s = 'th'; c = 'listheading';
 	ELSE;                          s = 'td'; c = "listrow${row.i}"; END ?>
 <tr class="<?lsmb c ?>">
+  <?lsmb IF row.class == 'divider' ?>
+  <th colspan="<?lsmb columns.size ?>">
+    <?lsmb IF row.href.defined ?>
+    <a href="<?lsmb row.href?>"><?lsmb row.text ?></a>
+    <?lsmb ELSIF row.delimiter;
+	FOREACH l IN row.text.split(row.delimiter); l ?><br /><?lsmb END ?>
+    <?lsmb ELSIF row.input.defined;
+	PROCESS input element_data=row.input ?>
+    <?lsmb ELSIF row.select.defined;
+	PROCESS select element_data=row.select ?>
+    <?lsmb ELSE; row; END ?>
+  </th>
+</tr>
+  <?lsmb NEXT; END ?>
   <?lsmb FOREACH column IN columns ?>
   <<?lsmb s ?> class="<?lsmb c ?>" <?lsmb IF (!row.class.defined || row.class != 'heading') && row_alignment.$column ?>align="<?lsmb row_alignment.$column ?>"<?lsmb END ?>>
     <?lsmb IF row.$column.href.defined ?>
