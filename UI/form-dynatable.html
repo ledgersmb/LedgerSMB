@@ -43,10 +43,14 @@
 <tr class="<?lsmb c ?>">
   <?lsmb FOREACH column IN columns ?>
   <<?lsmb s ?> class="<?lsmb c ?>" <?lsmb IF (!row.class.defined || row.class != 'heading') && row_alignment.$column ?>align="<?lsmb row_alignment.$column ?>"<?lsmb END ?>>
-    <?lsmb IF row.$column.href ?>
+    <?lsmb IF row.$column.href.defined ?>
     <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
     <?lsmb ELSIF row.$column.delimiter;
 	FOREACH l IN row.$column.text.split(row.$column.delimiter); l ?><br /><?lsmb END ?>
+    <?lsmb ELSIF row.$column.input.defined;
+	PROCESS input element_data=row.$column.input ?>
+    <?lsmb ELSIF row.$column.select.defined;
+	PROCESS select element_data=row.$column.select ?>
     <?lsmb ELSE; row.$column; END ?>
   </<?lsmb s ?>>
   <?lsmb END ?>

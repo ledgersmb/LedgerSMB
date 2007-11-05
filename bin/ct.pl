@@ -1524,9 +1524,10 @@ sub pricelist {
 
     # currencies
     @curr = split /:/, $form->{currencies};
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+    $form->{selectcurrency} = [];
+    for (@curr) {push @{$form->{selectcurrency}}, {text => $_, value => $_}}
 
-    if ( @{ $form->{all_partsgroup} } ) {
+    if (ref $form->{all_partsgroup} eq 'ARRAY') {
         $form->{selectpartsgroup} = "";
         foreach $ref ( @{ $form->{all_partsgroup} } ) {
             $form->{selectpartsgroup} .= qq|$ref->{partsgroup}--$ref->{id}\n|;
@@ -1567,7 +1568,7 @@ sub pricelist {
 
 sub customer_pricelist {
 
-    @flds =
+    my @flds =
       qw(runningnumber id partnumber description sellprice unit partsgroup pricebreak curr validfrom validto);
 
     $form->{rowcount}--;
@@ -1635,7 +1636,7 @@ sub customer_pricelist {
 
 sub vendor_pricelist {
 
-    @flds =
+    my @flds =
       qw(runningnumber id sku partnumber description lastcost unit partsgroup curr leadtime);
 
     $form->{rowcount}--;
@@ -1686,49 +1687,30 @@ sub vendor_pricelist {
 sub display_pricelist {
 
     my %hiddens;
-    &pricelist_header(\%hiddens);
+    my $buttons = &pricelist_footer;
     delete $form->{action};
-    $form->hide_form;
     $hiddens{$_} = $form->{$_} foreach sort keys %$form;
-    &pricelist_footer(\%hiddens);
-
+    &pricelist_header(\%hiddens, $buttons);
 }
 
 sub pricelist_header {
+    my $hiddens = shift;
+    my $buttons = shift;
 
     $form->{title} = $form->{name};
 
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action="$form->{script}">
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-|;
+    my @column_index;
+    my %column_header;
 
     if ( $form->{db} eq 'customer' ) {
         @column_index = qw(partnumber description);
         push @column_index, "partsgroup" if $form->{selectpartsgroup};
         push @column_index, qw(pricebreak sellprice curr validfrom validto);
 
-        $column_header{pricebreak} =
-            qq|<th class=listheading nowrap>|
-          . $locale->text('Break')
-          . qq|</th>|;
-        $column_header{sellprice} =
-            qq|<th class=listheading nowrap>|
-          . $locale->text('Sell Price')
-          . qq|</th>|;
-        $column_header{validfrom} =
-          qq|<th class=listheading nowrap>| . $locale->text('From') . qq|</th>|;
-        $column_header{validto} =
-          qq|<th class=listheading nowrap>| . $locale->text('To') . qq|</th>|;
+        $column_header{pricebreak} = $locale->text('Break');
+        $column_header{sellprice} = $locale->text('Sell Price');
+        $column_header{validfrom} = $locale->text('From');
+        $column_header{validto} = $locale->text('To');
     }
 
     if ( $form->{db} eq 'vendor' ) {
@@ -1736,165 +1718,130 @@ sub pricelist_header {
         push @column_index, "partsgroup" if $form->{selectpartsgroup};
         push @column_index, qw(lastcost curr leadtime);
 
-        $column_header{sku} =
-          qq|<th class=listheading nowrap>| . $locale->text('SKU') . qq|</th>|;
-        $column_header{leadtime} =
-            qq|<th class=listheading nowrap>|
-          . $locale->text('Leadtime')
-          . qq|</th>|;
-        $column_header{lastcost} =
-          qq|<th class=listheading nowrap>| . $locale->text('Cost') . qq|</th>|;
+        $column_header{sku} = $locale->text('SKU');
+        $column_header{leadtime} = $locale->text('Leadtime');
+        $column_header{lastcost} = $locale->text('Cost');
     }
 
-    $column_header{partnumber} =
-      qq|<th class=listheading nowrap>| . $locale->text('Number') . qq|</th>|;
-    $column_header{description} =
-        qq|<th class=listheading nowrap width=80%>|
-      . $locale->text('Description')
-      . qq|</th>|;
-    $column_header{partsgroup} =
-      qq|<th class=listheading nowrap>| . $locale->text('Group') . qq|</th>|;
-    $column_header{curr} =
-      qq|<th class=listheading nowrap>| . $locale->text('Curr') . qq|</th>|;
-
-    print qq|
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class=listheading>
-|;
-
-    for (@column_index) { print "\n$column_header{$_}" }
-
-    print qq|
-       </tr>
-|;
+    $column_header{partnumber} = $locale->text('Number');
+    $column_header{description} = $locale->text('Description'); #80% width
+    $column_header{partsgroup} = $locale->text('Group');
+    $column_header{curr} = $locale->text('Curr');
 
     $sameid = "";
-    foreach $i ( 1 .. $form->{rowcount} ) {
-
-        $selectcurrency = $form->{selectcurrency};
-        $selectcurrency =~
-          s/option>\Q$form->{"curr_$i"}\E/option selected>$form->{"curr_$i"}/;
+    my @rows;
+    foreach my $i ( 1 .. $form->{rowcount} ) {
+        my %column_data;
 
         if ( $form->{selectpartsgroup} ) {
             if ( $i < $form->{rowcount} ) {
                 ($partsgroup) = split /--/, $form->{"partsgroup_$i"};
-                $column_data{partsgroup} = qq|<td>$partsgroup</td>
-	<input type=hidden name="partsgroup_$i" value="|
-                  . $form->quote( $form->{"partsgroup_$i"} ) . qq|">|;
+                $hiddens->{"partsgroup_$i"} = $form->{"partsgroup_$i"};
+                $column_data{partsgroup} = $partsgroup;
             }
         }
 
         if ( $i < $form->{rowcount} ) {
-
             if ( $form->{"id_$i"} eq $sameid ) {
                 for (qw(partnumber description partsgroup)) {
-                    $column_data{$_} = qq|<td>&nbsp;</td>
-	<input type=hidden name="${_}_$i" value="|
-                      . $form->quote( $form->{"${_}_$i"} ) . qq|">|;
+                    $hiddens->{"${_}_$i"} = $form->{"${_}_$i"};
+                    $column_data{$_} = ' ';
                 }
+            } else {
+                $column_data{sku} = {input => {
+                    name => "sku_$i",
+                    value => $form->{"sku_$i"}
+                    }};
+                $column_data{partnumber} = {input => {
+                    name => "partnumber_$i",
+                    value => $form->{"partnumber_$i"}
+                    }};
+                $column_data{description} =$form->{"description_$i"};
+	        $hiddens->{"description_$i"} = $form->{"description_$i"};
             }
-            else {
-
-                $column_data{sku} =
-                  qq|<td><input name="sku_$i" value="$form->{"sku_$i"}"></td>|;
-                $column_data{partnumber} =
-qq|<td><input name="partnumber_$i" value="$form->{"partnumber_$i"}"></td>|;
-
-                $column_data{description} =
-                  qq|<td>$form->{"description_$i"}&nbsp;</td>
-	<input type=hidden name="description_$i" value="|
-                  . $form->quote( $form->{"description_$i"} ) . qq|">|;
-
-            }
-
-            $column_data{partnumber} .= qq|
-        <input type=hidden name="id_$i" value="$form->{"id_$i"}">|;
-
-        }
-        else {
-
+	    $hiddens->{"id_$i"} = $form->{"id_$i"};
+        } else {
             if ( $form->{db} eq 'customer' ) {
-                $column_data{partnumber} =
-qq|<td><input name="partnumber_$i" value="$form->{"partnumber_$i"}"></td>|;
-            }
-            else {
-                $column_data{partnumber} = qq|<td>&nbsp;</td>|;
+                $column_data{partnumber} = {input => {
+                    name => "partnumber_$i",
+                    value => $form->{"partnumber_$i"}
+                    }};
+            } else {
+                $column_data{partnumber} = ' ';
             }
 
-            $column_data{partnumber} .= qq|
-        <input type=hidden name="id_$i" value="$form->{"id_$i"}">|;
+            $hiddens->{"id_$i"} = $form->{"id_$i"};
 
-            $column_data{sku} =
-              qq|<td><input name="sku_$i" value="$form->{"sku_$i"}"></td>|;
-            $column_data{description} =
-qq|<td><input name="description_$i" value="$form->{"description_$i"}"></td>|;
+            $column_data{sku} = {input => {
+                name => "sku_$i",
+                value => $form->{"sku_$i"}
+                }};
+            $column_data{partnumber} = {input => {
+                name => "partnumber_$i",
+                value => $form->{"partnumber_$i"}
+                }};
 
             if ( $form->{selectpartsgroup} ) {
-                $selectpartsgroup = "<option>";
+                @selectpartsgroup = ({text => '', value => ''});
                 foreach $line ( split /\n/, $form->{selectpartsgroup} ) {
-                    $selectpartsgroup .=
-                        qq|\n<option value="|
-                      . $form->quote($line) . qq|">|
-                      . ( split /--/, $line )[0];
+                    push @selectpartsgroup, {
+                        text => (split /--/, $line)[0],
+                        value => $line,
+                        };
                 }
-                $column_data{partsgroup} =
-qq|<td><select name="partsgroup_$i">$selectpartsgroup</select></td>|;
+                $column_data{partsgroup} = {'select' => {
+                    name => "partnumber_$i",
+                    options => \@selectpartsgroup,
+                    }};
             }
-
         }
 
         if ( $form->{db} eq 'customer' ) {
 
-            $column_data{pricebreak} =
-                qq|<td align=right><input name="pricebreak_$i" size=5 value=|
-              . $form->format_amount( \%myconfig, $form->{"pricebreak_$i"} )
-              . qq|></td>|;
-            $column_data{sellprice} =
-                qq|<td align=right><input name="sellprice_$i" size=10 value=|
-              . $form->format_amount( \%myconfig, $form->{"sellprice_$i"}, 2 )
-              . qq|></td>|;
-
-            $column_data{validfrom} =
-qq|<td><input name="validfrom_$i" size=11 value=$form->{"validfrom_$i"}></td>|;
-            $column_data{validto} =
-qq|<td><input name="validto_$i" size=11 value=$form->{"validto_$i"}></td>|;
+            $column_data{pricebreak} = {input => {
+                name => "pricebreak_$i",
+                size => 5,
+                value => $form->format_amount(\%myconfig, $form->{"pricebreak_$i"})
+                }};
+            $column_data{sellprice} = {input => {
+                name => "sellprice_$i",
+                size => 10,
+                value => $form->format_amount(\%myconfig, $form->{"sellprice_$i"}, 2)
+                }};
+            $column_data{validfrom} = {input => {
+                name => "validfrom_$i",
+                size => 11,
+                value => $form->{"validfrom_$i"},
+                }};
+            $column_data{validto} = {input => {
+                name => "validto_$i",
+                size => 11,
+                value => $form->{"validto_$i"},
+                }};
         }
 
         if ( $form->{db} eq 'vendor' ) {
-            $column_data{leadtime} =
-                qq|<td align=right><input name="leadtime_$i" size=5 value=|
-              . $form->format_amount( \%myconfig, $form->{"leadtime_$i"} )
-              . qq|></td>|;
-            $column_data{lastcost} =
-                qq|<td align=right><input name="lastcost_$i" size=10 value=|
-              . $form->format_amount( \%myconfig, $form->{"lastcost_$i"}, 2 )
-              . qq|></td>|;
+            $column_data{leadtime} = {input => {
+                name => "leadtime_$i",
+                size => 5,
+                value => $form->format_amount(\%myconfig, $form->{"leadtime_$i"})
+                }};
+            $column_data{lastcost} = {input => {
+                name => "lastcost_$i",
+                size => 10,
+                value => $form->format_amount( \%myconfig, $form->{"lastcost_$i"}, 2 )
+                }};
         }
 
-        $column_data{curr} =
-          qq|<td><select name="curr_$i">$selectcurrency</select></td>|;
-
-        print qq|<tr valign=top>|;
-
-        for (@column_index) { print "\n$column_data{$_}" }
-
-        print qq|</tr>|;
-
+        $column_data{curr} = {'select' => {
+            name => "curr_$i",
+            options => $form->{selectcurrency},
+            default_values => $form->{"curr_$i"},
+            }};
         $sameid = $form->{"id_$i"};
 
+        push @rows, \%column_data;
     }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
 
     # delete variables
     foreach $i ( 1 .. $form->{rowcount} ) {
@@ -1902,6 +1849,21 @@ qq|<td><input name="validto_$i" size=11 value=$form->{"validto_$i"}></td>|;
     }
     for (qw(title titlebar script none)) { delete $form->{$_} }
 
+    my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig, 
+        locale => $locale, 
+        template => 'form-dynatable',
+        );
+    $template->render({
+        form => $form,
+        user => \%myconfig, 
+        hiddens => $hiddens,
+        buttons => $buttons,
+        options => \@options,
+        rows => \@rows,
+        columns => \@column_index,
+        heading => \%column_header,
+    });
 }
 
 sub pricelist_footer {
@@ -1915,17 +1877,18 @@ sub pricelist_footer {
           { ndx => 3, key => 'S', value => $locale->text('Save Pricelist') },
     );
 
+    my @buttons;
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
-        $form->print_button( \%button, $_ );
+        push @buttons, {
+            name => 'action',
+            value => $_,
+            accesskey => $button{$_}{key},
+            title => "$button{$name}{value} [Alt-$button{$_}{key}]",
+            text => $button{$_}{value},
+            }; 
     }
 
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
+    \@buttons;
 }
 
 sub update {
@@ -1992,8 +1955,7 @@ sub update {
 
                     $form->{"pricebreak_$i"} = $pricebreak;
 
-                }
-                else {
+                } else {
 
                     foreach $j ( 1 .. $form->{rowcount} - 1 ) {
                         if ( $form->{"sku_$j"} eq $form->{"partnumber_$i"} ) {
@@ -2020,11 +1982,8 @@ sub update {
 
             }
 
-        }
-        else {
-
+        } else {
             $form->error( $locale->text('Item not on file!') );
-
         }
     }
 
