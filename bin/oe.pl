@@ -3419,7 +3419,7 @@ sub po_orderitems {
         }
 
         $column_data{qty} =
-qq|<td align="right"><input name="qty_$i" size="6" value="$form->{qty_$i}"></td>|;
+qq|<td align="right"><input name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>|;
 
         if ( $form->{"$form->{vc}_id_$i"} ) {
             $name = $form->{"$form->{vc}_$i"};
