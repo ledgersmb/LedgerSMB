@@ -261,10 +261,10 @@
     name => 'taxincluded',
     type => 'checkbox',
     value => '1',
+    label => text('Tax Included'),
     ${form.taxincluded} => form.taxincluded
     } -?>
                 </td>
-                <th align="left"><?lsmb text('Tax Included') ?></th>
               </tr>
             </table>
           </td>
@@ -355,7 +355,7 @@
   size => '24',
   maxlength => '24',
   value => form.iban,
-  } -?>%</td>
+  } -?></td>
         </tr>
         <tr>
 <?lsmb IF form.all_pricegroup AND form.db == 'customer' -?>
