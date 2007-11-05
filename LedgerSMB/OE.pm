@@ -2207,9 +2207,9 @@ sub add_items_required {
 			JOIN parts p ON (p.id = a.parts_id)
 			WHERE a.id = ?|;
         $sth = $dbh->prepare($query);
-        $sth->execute || $form->dberror($query);
+        $sth->execute($parts_id) || $form->dberror($query);
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $form->db_parse_numeric(sth=> $sth, hashref=> $ref);
             &add_items_required( "", $dbh, $form, $ref->{id},
                 $required * $ref->{qty},
