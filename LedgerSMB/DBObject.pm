@@ -26,6 +26,9 @@ this way as is any information that is needed.
 Provides the basic mapping of parameters to the SQL stored procedure function 
 arguments.
 
+=item __validate__ is called on every new() invocation.  It is blank in this 
+module but can be overridden in decendant modules.
+
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
@@ -53,6 +56,8 @@ sub AUTOLOAD {
 }
 
 sub DESTROY {} 
+
+sub __validate__ {}
 
 sub new {
     my $class = shift @_;
@@ -83,7 +88,8 @@ sub new {
     else {
         $self->merge($base);
     }
-    $self;
+    $self->__validate__();
+    return $self;
 }
 
 sub set_ordering {
