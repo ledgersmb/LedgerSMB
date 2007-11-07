@@ -426,7 +426,7 @@ sub process_query {
     $ENV{PGHOST}     = $form->{dbhost};
     $ENV{PGPORT}     = $form->{dbport};
 
-    $results = `psql -f $filename 2>&1`;
+    $results = system('psql -f $filename 2>&1');
     if ($?) {
         $form->error($!);
     }

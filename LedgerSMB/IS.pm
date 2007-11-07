@@ -20,7 +20,7 @@
 #     Web: http://www.sql-ledger.org
 #
 #  Contributors: Jim Rawlings <jim@your-dba.com>
-#`
+#
 #======================================================================
 #
 # This file has undergone whitespace cleanup.

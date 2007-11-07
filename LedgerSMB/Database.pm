@@ -71,7 +71,7 @@ Creates a database with the characteristics in the object
 sub create {
     my $self = (@_);
     $self->_init_environment();
-    `createdb $self->{dbname}`;
+    system('createdb $self->{dbname}');
     my $error = $!;
     if ($error){
         $self->error($!);
@@ -108,7 +108,8 @@ sub create {
 # Private method.  Executes the sql script in psql.
 sub _execute_script {
     my ($self, $script) = @_;
-    `psql $self->{dbname} < 'sql/$script.sql'`;
+    # Note that this needs to be changed so that it works with Win32!
+    system('psql $self->{dbname} < "sql/$script.sql"');
     return $!;
 }
 
