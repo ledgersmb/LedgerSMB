@@ -11,44 +11,6 @@ END;
 $$ language plpgsql;
 
 
-CREATE TYPE batch_list AS (
-id integer,
-batch_number text,
-description text,
-entered date,
-approved date,
-amount numeric,
-employee text,
-manager text);
-
-CREATE FUNCTION batch_search
-(in_batch text, in_description text, in_batch_number text, in_date_from date,
-	in_date_to date, in_date_include date, in_approved boolean) 
-RETURNS SETOF batch_list
-AS $$
-DECLARE
-	batch_out batch_list;
-BEGIN
-	FOR batch_out IN
-	SELECT b.id, b.batch, b.batch_number, b.description,
-                 b.entered, b.approved, b.amount,
-                 e.name AS employee, m.name AS manager
-	FROM batches b
-	LEFT JOIN employees e ON (b.employee_id = e.id)
-	LEFT JOIN employees m ON (b.managerid = m.id)
-	WHERE supplied_and_equal(in_batch, b.batch)
-		AND supplied_and_like(in_description, description)
-		AND supplied_and_like(in_batch_number, batch_number)
-		AND supplied_and_later(in_date_from, entered)
-		AND supplied_and_earlier(in_date_to, entered)
-		AND (coalesce(in_approved, 'f') = (approved IS NULL))
-
-	LOOP
-		RETURN NEXT batch_out;
-	END LOOP;
-END;
-$$ language PLPGSQL;
-
 CREATE FUNCTION batch_post (in_batch text, in_login varchar, in_entered date,
 	in_batch_number text, in_description text, in_id integer) 
 RETURNS integer AS
@@ -145,15 +107,107 @@ CREATE TYPE batch_list_item AS (
     total numeric
 );
 
-CREATE FUNCTION batch_list RETURNS SETOF batch_list_item AS
+CREATE OR REPLACE FUNCTION 
+batch_search(in_class_id int, in_description text, in_created_by_eid int, 
+	in_amount_gt numeric, 
+	in_amount_lt numeric, in_approved bool) 
+RETURNS SETOF batch_list_item AS
 $$
+DECLARE out_value batch_list_item;
+BEGIN
+	FOR out_value IN
+		SELECT b.id, c.class, b.description, u.username, b.created_on,
+			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
+				al.amount)) AS amount
+		FROM batch b
+		JOIN batch_class c ON (b.batch_class_id = c.id)
+		JOIN users u ON (u.entity_id = b.created_by)
+		JOIN voucher v ON (v.batch_id = b.id)
+		JOIN batch_class vc ON (v.batch_class = c.id)
+		LEFT JOIN ar ON (vc.id = 2 AND v.trans_id = ar.id)
+		LEFT JOIN ap ON (vc.id = 1 AND v.trans_id = ap.id)
+		LEFT JOIN acc_trans al ON 
+			((vc.id = 5 AND v.trans_id = al.trans_id) OR
+				(vc.id IN (3, 4, 7, 8) AND al.voucher_id = v.id) 
+				AND al.amount > 0)
+		WHERE c.id = coalesce(in_class_id, c.id) AND 
+			b.description LIKE 
+				'%' || coalesce(in_description, '') || '%' AND
+			coalesce(in_created_by_eid, b.created_by) 
+				= b.created_by 
+			AND ((coalesce(in_approved, false) = false AND
+				approved_on IS NULL) OR
+				(in_approved = true AND approved_on IS NOT NULL)
+			)
+		GROUP BY b.id, c.class, b.description, u.username, b.created_on
+		HAVING  
+			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
+				al.amount)) 
+			>= coalesce(in_amount_gt, 
+				sum(coalesce(ar.amount - ar.paid, 
+					ap.amount - ap.paid, 
+					al.amount)))
+			AND 
+			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
+				al.amount))
+			<= coalesce(in_amount_lt, 
+				sum(coalesce(ar.amount - ar.paid, 
+					ap.amount - ap.paid, 
+					al.amount)))
+		
+	LOOP
+		RETURN NEXT out_value;
+	END LOOP;
+END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION batch_post in_batch_id INTEGER)
-returns int AS
-$$;
 
+
+CREATE OR REPLACE FUNCTION batch_post(in_batch_id INTEGER)
+returns date AS
+$$
+BEGIN
+	UPDATE ar SET approved = true 
+	WHERE id IN (select trans_id FROM voucher 
+		WHERE batch_id = in_batch_id
+		AND batch_class = 2);
+	
+	UPDATE ap SET approved = true 
+	WHERE id IN (select trans_id FROM voucher 
+		WHERE batch_id = in_batch_id
+		AND batch_class = 1);
+
+	UPDATE gl SET approved = true 
+	WHERE id IN (select trans_id FROM voucher 
+		WHERE batch_id = in_batch_id
+		AND batch_class = 5);
+
+	UPDATE acc_trans SET approved = true 
+	WHERE id IN (select trans_id FROM voucher 
+		WHERE batch_id = in_batch_id
+		AND batch_class IN (3, 4, 7, 8);
+
+	UPDATE batch 
+	SET approved_on = now(),
+		approved_by = (select entity_id FROM users 
+			WHERE login = SESSION_USER)
+	WHERE batch_id = in_batch_id
+
+	RETURN now()::date
+END;;
 $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION batch_list_classes() RETURNS SETOF batch_class AS
+$$
+DECLARE out_val record;
+BEGIN
+	FOR out_val IN select * from batch_class
+ 	LOOP
+		return next out_val;
+	END LOOP;
+END;
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION batch_create(
 in_batch_number text, in_description text, in_batch_class text) RETURNS int AS
 $$
