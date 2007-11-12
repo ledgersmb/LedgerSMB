@@ -70,8 +70,6 @@ sub post_transaction {
 
     # connect to database
     my $dbh = $form->{dbh};
-    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
-      unless $form->{invnumber};
 
     my $query;
     my $sth;
@@ -94,6 +92,8 @@ sub post_transaction {
         $ml        = -1;
         $invnumber = "vinumber";
     }
+    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
+      unless $form->{invnumber};
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
         $form->{exchangerate} = 1;
