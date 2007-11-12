@@ -39,8 +39,6 @@ use LedgerSMB::Sysconfig;
 sub post_transaction {
 
     my ( $self, $myconfig, $form ) = @_;
-    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
-      unless $form->{invnumber};
 
     # connect to database
     my $dbh = $form->{dbh};
@@ -66,6 +64,8 @@ sub post_transaction {
         $ml        = -1;
         $invnumber = "vinumber";
     }
+    $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber)
+      unless $form->{invnumber};
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
         $form->{exchangerate} = 1;
