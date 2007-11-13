@@ -599,7 +599,7 @@ sub db_parse_numeric {
     for (0 .. $#names) {
         #   numeric            real/float4
         if ($types[$_] == 3 or $types[$_] == 2){
-            $arrayref[$_] = Math::BigFloat->new($arrayref[$_]) 
+            $arrayref->[$_] = Math::BigFloat->new($arrayref->[$_]) 
               if defined $arrayref;
             $hashref->{$names[$_]} = Math::BigFloat->new($hashref->{$names[$_]})
               if defined $hashref;

@@ -166,7 +166,7 @@ sub payment_transactions {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{accno} );
     my @balancelist = $sth->fetchrow_array();
-    $form->db_parse_numeric(sth=>$sth, arraylist=>\@balancelist);
+    $form->db_parse_numeric(sth=>$sth, arrayref=>\@balancelist);
     ( $form->{beginningbalance} ) = @balancelist;
 
     $query = qq|
@@ -179,7 +179,7 @@ sub payment_transactions {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{accno} );
     @balancelist = $sth->fetchrow_array();
-    $form->db_parse_numeric(sth=>$sth, arraylist=>\@balancelist);
+    $form->db_parse_numeric(sth=>$sth, arrayref=>\@balancelist);
     ( $form->{fx_balance} ) = @balancelist;
 
     $transdate = "";
@@ -198,7 +198,7 @@ sub payment_transactions {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{accno} );
     @balancelist = $sth->fetchrow_array();
-    $form->db_parse_numeric(sth=>$sth, arraylist=>\@balancelist);
+    $form->db_parse_numeric(sth=>$sth, arrayref=>\@balancelist);
     ( $form->{endingbalance} ) = @balancelist;
 
     # fx balance
@@ -211,7 +211,7 @@ sub payment_transactions {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{accno} );
     @balancelist = $sth->fetchrow_array();
-    $form->db_parse_numeric(sth=>$sth, arraylist=>\@balancelist);
+    $form->db_parse_numeric(sth=>$sth, arrayref=>\@balancelist);
     ( $form->{fx_endingbalance} ) = @balancelist;
 
     $cleared = qq| AND ac.cleared = '0'| unless $form->{fromdate};
