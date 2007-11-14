@@ -1060,9 +1060,10 @@ sub recurring_transactions {
     my %e = ();
     my %p = ();
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 
         $ref->{exchangerate} ||= 1;
+        $form->db_parse_numeric(sth => $sth, hashref => $ref);
 
         if ( $ref->{id} != $id ) {
 
