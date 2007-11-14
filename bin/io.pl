@@ -319,7 +319,7 @@ qq|<td align="right"><input name="qty_$i" title="$form->{"onhand_$i"}" size="5" 
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
           . qq|"></td>|;
         $column_data{unit} =
-          qq|<td><input name="unit_$i" size="5" value="$form->{"unit_$i"}"></td>|;
+          qq|<td><input name="unit_$i" size="5" maxlength="5" value="$form->{"unit_$i"}" /></td>|;
         $column_data{sellprice} =
           qq|<td align="right"><input name="sellprice_$i" size="9" value="|
           . $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
