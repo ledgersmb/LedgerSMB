@@ -5,6 +5,7 @@ use base LedgerSMB::DBObject;
 use LedgerSMB::Location;
 use LedgerSMB::DBObject::Employee;
 use LedgerSMB::Contact;
+use LedgerSMB::Entity;
 
 #[18:00:31] <aurynn> I'd like to split them employee/user and roles/prefs
 #[18:00:44] <aurynn> edit/create employee and add user features if needed.
@@ -18,19 +19,27 @@ sub save_employee {
     
     my $self = shift @_;
     
-    my $entity_id = shift @{ $self->exec_method( procname => "save_user" ) };
-    $self->merge($entity_id);
+    my $entity = LedgerSMB::DBObject::Entity->new(base=>$self, copy=>'none');
     
-    my $person = LedgerSMB::DBObject::Person->new(base=>$self, copy=>'list',     
+    $entity->set(name=>$self->{first_name}." ".$self->{last_name});
+    $entity->save();
+    
+    $self->{entity_id} = $entity->{id};
+    
+    
+    my $user_id = shift @{ $self->exec_method( procname => "admin_save_user" ) };
+    $self->merge($user_id);
+    
+    my $person = LedgerSMB::DBObject::Person->new( base=>$self, copy=>'list',     
         merge=>[
             'salutation',
             'first_name',
             'last_name',
         ]
     );
-    my $employee = LedgerSMB::DBObject::Employee->new(base=>$self, copy=>'list',
+    my $employee = LedgerSMB::DBObject::Employee->new( base=>$self, copy=>'list',
         merge=>[
-            '',
+            'salutation',
             'first_name',
             'last_name',
             'employeenumber',
@@ -76,16 +85,15 @@ sub save_employee {
             'is_a_user'
         ]
     );
-    
     $user->get();
     $user->save();
 }
 
-sub save_roles {
+sub save_roles_preferences {
     
     my $self = shift @_;
     
-    my $user = LedgerSMB::DBObject::User->new(base=>$self, copy=>'all');
+    my $user = LedgerSMB::DBObject::User->new( base=>$self, copy=>'all' );
     
     my $roles = $self->exec_method( procname => "admin_all_roles" );
     my $user_roles = $self->exec_method(procname => "admin_get_user_roles", args=>[ $self->{ username } ] );

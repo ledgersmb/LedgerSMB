@@ -48,10 +48,7 @@ our $VERSION = '1.0.0';
 
 sub save {
     my $self = shift;
-    
-    my $person = shift @{ $self->exec_method (procname => 'person_save', 
-        args => [] )};
-    
+        
     my $hashref = shift @{ $self->exec_method( procname => "employee_save" ) };
     $self->merge( $hashref, 'id' );
 }

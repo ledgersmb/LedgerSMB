@@ -5,6 +5,7 @@ require 'lsmb-request.pl';
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
+use LedgerSMB::DBObject::User;
 
 sub new_user {
     
@@ -23,7 +24,7 @@ sub new_user {
 
         
         my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Admin/edit_user', language => $user->{language}, 
+    	template => 'Admin/edit_user', language => $user->{ language }, 
             format => 'HTML', path=>'UI');
     
         $template->render(
@@ -153,11 +154,14 @@ sub __default {
     
     my ($class, $request) = @_;
     
-    # TODO: check for login stuff.
     my $template;
+    my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'all');
+    
+    $user->get_all_users();
+    
     $template = LedgerSMB::Template->new( user=>$user, 
             template=>'Admin/main', language=>$user->{language},
             format=>'HTML', path=>'UI');
-    $template->render();
+    $template->render($user);
 }
 1;

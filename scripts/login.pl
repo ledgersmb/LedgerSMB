@@ -7,13 +7,18 @@ use LedgerSMB::User;
 use LedgerSMB::Auth;
 use strict;
 
+# this is kind of silly, as it doesn't check if someone IS trying to log in.
+# If one looks at the login template (get_password.html), it does not post
+# to any action, so this code will always get called, thereby preventing
+# anyone from actually logging in.
+
 sub __default {
    my ($request) = @_;
     my $locale;
     $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language})
       or $request->error( __FILE__ . ':' . __LINE__ . 
-         ": Locale not loaded: $!\n" );
-    my $template = LedgerSMB::Template->new(
+         ": Locale not loaded: $!\n" );         
+     my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $locale,
         path => 'UI',
@@ -22,6 +27,8 @@ sub __default {
     );
     $template->render($request);
 }
+
+# Directly printing like this is made of fail.
 
 sub authenticate {
     my ($request) = @_;
@@ -33,10 +40,20 @@ sub authenticate {
     }
     my $path = $ENV{SCRIPT_NAME};
     $path =~ s|[^/]*$||;
-    if ($request->{dbh} || $request->{log_out}){
+    
+    if ($request->{dbh} && $request->{next}) {
+        
         print "Content-Type: text/html\n";
         print "Set-Cookie: LedgerSMB=Login; path=$path\n";
-	print "Status: 200 Success\n\n";
+	    print "Status: 302 Found\n";
+	    print "Location: ".$path.$request->{next}."\n";
+	    print "\n";
+	    exit;	    
+    }
+    elsif ($request->{dbh} || $request->{log_out}){
+        print "Content-Type: text/html\n";
+        print "Set-Cookie: LedgerSMB=Login; path=$path\n";
+	    print "Status: 200 Success\n\n";
         if ($request->{log_out}){
             exit;
         }
@@ -44,7 +61,7 @@ sub authenticate {
     else {
         print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
         print "Status: 401 Unauthorized\n\n";
-	print "Please enter your credentials.\n";
+	    print "Please enter your credentials.\n";
         exit; 
     }
 }
@@ -68,6 +85,24 @@ sub logout {
     print "Location: login.pl\n";
     print "Content-type: text/html\n\n";
     exit;
+}
+
+sub continue {
+    
+    my ($request) = @_;
+    
+    if ($request->{next} && $request->{password}) {
+                
+        $request->{user} = "admin";
+        
+        if (&authenticate($request)) {
+#            LedgerSMB::Handler::call_script();
+        }
+    }
+    else {
+        # well, wtf? This is kind of useless.
+        $request->error("Cannot continue to a Nonexistent page.");
+    }
 }
     
 1;

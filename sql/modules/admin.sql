@@ -264,11 +264,13 @@ CREATE OR REPLACE FUNCTION admin_save_user(
             -- create an actual user
             
             v_user_id := nextval('users_id_seq');
-            insert into users (id, name, entity_id) VALUES (
+            insert into users (id, username, entity_id) VALUES (
                 v_user_id,
                 in_username,
                 in_entity_id
             );
+            
+            insert into user_preference (id) values (v_user_id);
 
             -- Finally, issue the create user statement
             
@@ -411,5 +413,48 @@ $$ LANGUAGE PLPGSQL;
     
     
 --$$ language plpgsql;
+
+create or replace function admin_is_user (in_user text) returns bool as $$
+    DECLARE
+        pg_user pg_roles;
+    
+    BEGIN
+    
+        select * into pg_user from pg_roles where rolname = in_user;
+        
+        IF NOT FOUND THEN
+            return 'f'::bool;
+        END IF;
+        return 't'::bool;
+    
+    END;
+    
+$$ language plpgsql;
+
+create or replace function admin_is_user (in_user text) returns bool as $$
+    
+    BEGIN
+    
+    return 'f'::bool;
+    
+    END;
+    
+$$ language plpgsql;
+
+create or replace view user_listable as 
+    select 
+        u.id,
+        u.username,
+        e.created
+    from entity e
+    join users u on u.entity_id = e.id;
+        
+
+create or replace function user_get_all_users () returns setof user_listable as $$
+    
+    select * from user_listable;
+    
+$$ language sql;
+
 
 commit;

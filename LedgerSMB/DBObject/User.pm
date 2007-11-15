@@ -8,13 +8,13 @@ sub save {
     
     my $user = $self->get();
     
-    if ($user->{id} && $self->{is_a_user}) {
+    if ( $user->{id} && $self->{is_a_user} ) {
     
         # doesn't check for the password - that's done in the sproc.
-        $self->{id} = @{ $self->exec_method(procname=>'admin_save_user', 
-            args=>[$user->{id}, $self->{username}, $self->{password}] ) }[0]; 
-        else {
-        
+        $self->{id} = shift @{ $self->exec_method(procname=>'admin_save_user', 
+            args=>[$user->{id}, $self->{username}, $self->{password}] ) }; 
+        if (!$self->{id}) {
+            
             return 0;
         }
     }
@@ -25,6 +25,12 @@ sub save {
         $self->{id} = $user->{id};
         return $self->remove();
         
+    }
+    elsif ($self->{is_a_user}) {
+        
+        # No user ID, meaning, creating a new one.        
+        $self->{id} = shift @{ $self->exec_method(procname=>'admin_save_user', 
+            args=>[undef, $self->{username}, $self->{password}] ) };
     }
     return 1;
 }
@@ -47,6 +53,28 @@ sub remove {
     $self->{id} = undef; # never existed..
     
     return $code->[0];
+}
+
+sub save_prefs {
+    
+    my $self = shift @_; 
+    
+    my $pref_id = $self->exec_method(procname=>"admin_save_preferences", 
+        args=>[
+            'language',
+            'stylesheet',
+            'printer',
+            'dateformat',
+            'numberformat'
+        ]
+    );
+}
+
+sub get_all_users {
+    
+    my $self = shift @_;
+    
+    $self->{users} = $self->exec_method( procname=>"user_get_all_users" );
 }
 
 1;

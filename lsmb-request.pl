@@ -47,13 +47,21 @@ if (!$script){
 	$request->error($locale->text('No workflow script specified'));
 }
 
-eval { require "scripts/$script" } 
-  || $request->error($locale->text('Unable to open script') . ": scripts/$script : $!");
+&call_script( $script, $request );
 
-$script =~ s/\.pl$//;
-$script = "LedgerSMB::Scripts::$script";
-$script->can($request->{action}) 
-  || $request->error($locale->text("Action Not Defined: ") . $request->{action});
+sub call_script {
+    
+    my $script = shift @_;
+    my $request = shift @_;
 
-$script->can( $request->{action} )->($request);
+    eval { require "scripts/$script" } 
+      || $request->error($locale->text('Unable to open script') . ": scripts/$script : $!");
+
+    $script =~ s/\.pl$//;
+    $script = "LedgerSMB::Scripts::$script";
+    $script->can($request->{action}) 
+      || $request->error($locale->text("Action Not Defined: ") . $request->{action});
+
+    $script->can( $request->{action} )->($request);
+}
 1;

@@ -44,11 +44,13 @@ of the customer informations.
 sub get {
     
     my ($request) = @_;
-    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
-    my $result = $customer->get($customer->{id});
+    my $customer = LedgerSMB::DBObject::Company->new(base => $request, copy => 'all');
+    
+    $customer->set( entity_class=> '2' );
+    my $result = $customer->get();
     
     my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'customer.html', language => $user->{language}, 
+	template => 'Customer/customer.html', language => $user->{language}, 
         format => 'html');
     $template->render($results);
         
@@ -68,10 +70,10 @@ This method creates a blank screen for entering a customer's information.
 
 sub add {
     my ($request) = @_;
-    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
-    
+    my $customer = LedgerSMB::DBObject::Company->new(base => $request, copy => 'all');
+    $customer->set(entity_class=>2);
     my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'customer.html', language => $user->{language}, 
+	template => 'Customer/customer.html', language => $user->{language}, 
         format => 'html');
     $template->render($results);
 }
@@ -94,13 +96,30 @@ as well as customer/Company name.
 
 sub search {
     my ($request) = @_;
-    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
-    my $results = $customer->search($customer->{search_pattern});
     
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'customer_search.html', language => $user->{language}, 
-        format => 'html');
-    $template->render($results);
+    if ($request->type() eq 'POST') {
+        # assume it's asking us to do the search, now
+        
+        my $customer = LedgerSMB::DBObject::Company->new(base => $request, copy => 'all');
+        $customer->set(entity_class=>2);
+        my $results = $customer->search($customer->{search_pattern});
+
+        my $template = LedgerSMB::Template->new( user => $user, 
+    	template => 'Customer/customer.html', language => $user->{language}, 
+            format => 'html');
+        $template->render($results);
+        
+    }
+    else {
+        
+        # grab the happy search page out.
+        
+        my $template = LedgerSMB::Template->new( user => $user, 
+    	template => 'Customer/customer_search.html', language => $user->{language}, 
+            format => 'html');
+            
+        $template->render();
+    }
 }
 
 =pod
@@ -119,13 +138,26 @@ customer as needed, and will generate a new Company ID for the customer if neede
 sub save {
     
     my ($request) = @_;
-    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
-    my $result = $customer->save_to_db();
     
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'customer.html', language => $user->{language}, 
-        format => 'html');
-    $template->render($result);    
+    if ($request->type() == 'POST') {
+        
+        my $customer = LedgerSMB::DBObject::Customer->get(base=>$request, copy=>'all');
+        
+        unless ($customer) {
+            
+            $customer = LedgerSMB::DBObject::Customer->new(base=>$reqest, copy=>'all');
+        }
+        
+        my $result = $customer->save();
+
+        my $template = LedgerSMB::Template->new( user => $user, 
+    	template => 'Customer/customer.html', language => $user->{language}, 
+            format => 'html');
+        $template->render($result);
+    } 
+    else {
+        
+    }
 }
 
 1;

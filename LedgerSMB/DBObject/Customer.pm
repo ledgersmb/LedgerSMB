@@ -1,33 +1,47 @@
 package LedgerSMB::DBObject::Customer;
 
-use base qw(LedgerSMB);
+use base qw(LedgerSMB::DBObject::Company);
 use LedgerSMB::DBObject;
+use LedgerSMB::Entity;
 
-sub save_to_db {
+sub save {
+    
+    # this is doing way too much.
     
     my $self = shift @_;
     
-    my $id;
-    if ($self->{id} >= 1) {
-        $id = $self->{id};
+    my $entity;
+    
+    # this is a fairly effective way of telling if we need to create a new
+    # entity or not.
+    
+    if (!$self->{entity_id}) {
+        
+        $entity = LedgerSMB::Entity->new(base=>$request);
     }
     else {
-        $id = $self->next_customer_id();
-    }
-    $id = $self->save($id, $self->{discount}, $self->{tax_included}, 
-        $self->{creditlimit}, $self->{terms}, $self->{customernumber}, 
-        $self->{cc}, $self->{bcc}, $self->{business_id}, $self->{language},
-        $self->{pricegroup}, $self->{currency}, $self->{startdate}, 
-        $self->{enddate}
-    );
-    
-    # Undef in the created field causes the system to use now() as the current
-    # creation date.
-    $self->location_save(
-        $id, 1, $self->{line_one}, $self->{line_two}, $self->{line_three},
-        $self->{city_province}, $self->{mailing_code}, $self->{country}, undef
         
-    );
-    return $id;
+        $entity = LedgerSMB::Entity->get(id=>$self->{entity_id});
+    }
+    
+    $entity->set(name=> $reqeust->{first_name}." ".$request->{last_name} );
+    $entity->set(entity_class=>2);
+
+    $self->set(entity_id=>$entity->{id});
+    $self->set(entity_class=> 2);
+    
+    $entity->save();
+    if (!self->{entity_id}) {
+        
+        $self->{entity_id} = $entity->{id};
+    }
+    $self->SUPER::save();
+    
+    return $self->{id};
+}
+
+sub search {
+    
+    
 }
 1;
