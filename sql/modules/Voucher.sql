@@ -1,22 +1,22 @@
 
 CREATE OR REPLACE FUNCTION voucher_get_batch (in_batch_id integer) 
-RETURNS batches AS 
+RETURNS batch AS 
 $$
 DECLARE
-	batch_out batches%ROWTYPE;
+	batch_out batch%ROWTYPE;
 BEGIN
-	SELECT * INTO batch_out FROM batches b WHERE b.id = in_batch_id;
+	SELECT * INTO batch_out FROM batch b WHERE b.id = in_batch_id;
 	RETURN batch_out;
 END;
 $$ language plpgsql;
 
 
-CREATE FUNCTION batch_post (in_batch text, in_login varchar, in_entered date,
+CREATE OR REPLACE FUNCTION batch_post (in_batch text, in_login varchar, in_entered date,
 	in_batch_number text, in_description text, in_id integer) 
 RETURNS integer AS
 $$
 BEGIN
-	UPDATE batches
+	UPDATE batch
 	SET batch_number = in_batch_number,
 		description = in_description,
 		entered = in_entered
@@ -26,7 +26,7 @@ BEGIN
 		RETURN in_id;
 	END IF;
 
-	INSERT INTO batches (batch, employee_id, batch_number, description, 
+	INSERT INTO batch (batch, employee_id, batch_number, description, 
 		entered)
 	VALUES (in_batch, (SELECT id FROM employees WHERE login = in_login),
 		in_batch_number, description);
@@ -185,16 +185,16 @@ BEGIN
 	UPDATE acc_trans SET approved = true 
 	WHERE id IN (select trans_id FROM voucher 
 		WHERE batch_id = in_batch_id
-		AND batch_class IN (3, 4, 7, 8);
+		AND batch_class IN (3, 4, 7, 8));
 
 	UPDATE batch 
 	SET approved_on = now(),
 		approved_by = (select entity_id FROM users 
 			WHERE login = SESSION_USER)
-	WHERE batch_id = in_batch_id
+	WHERE batch_id = in_batch_id;
 
-	RETURN now()::date
-END;;
+	RETURN now()::date;
+END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION batch_list_classes() RETURNS SETOF batch_class AS

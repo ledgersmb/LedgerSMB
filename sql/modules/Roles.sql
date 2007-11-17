@@ -11,8 +11,6 @@ GRANT SELECT ON company_to_contact TO lsmb_<?lsmb dbname ?>__read_contact;
 GRANT SELECT ON company_to_entity TO lsmb_<?lsmb dbname ?>__read_contact;
 GRANT SELECT ON company_to_location TO lsmb_<?lsmb dbname ?>__read_contact;
 GRANT SELECT ON customertax TO lsmb_<?lsmb dbname ?>__read_contact;
-GRANT SELECT ON employee TO lsmb_<?lsmb dbname ?>__read_contact;
-GRANT SELECT ON customer TO lsmb_<?lsmb dbname ?>__read_contact;
 GRANT SELECT ON contact_class TO lsmb_<?lsmb dbname ?>__read_contact;
 GRANT SELECT ON entity_class TO lsmb_<?lsmb dbname ?>__read_contact;
 GRANT SELECT ON entity_bank_account TO lsmb_<?lsmb dbname ?>__read_contact;
@@ -59,8 +57,6 @@ GRANT INSERT ON company_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON company_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON company_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON customertax TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT INSERT ON employee TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT INSERT ON customer TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON entity_bank_account TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT ALL ON entity_bank_account_id_seq TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON entity_note TO lsmb_<?lsmb dbname ?>__create_contact;
@@ -100,8 +96,6 @@ GRANT UPDATE ON company_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT UPDATE ON company_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT UPDATE ON company_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT UPDATE ON customertax TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT UPDATE ON employee TO lsmb_<?lsmb dbname ?>__create_contact;
-GRANT UPDATE ON customer TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT UPDATE ON entity_bank_account TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT UPDATE ON entity_note TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT UPDATE ON entity_class_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
@@ -206,8 +200,8 @@ IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
 GRANT SELECT ON ar TO lsmb_<?lsmb dbname ?>__list_ar_transactions;
 GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__list_ar_transactions;
-GRANT SELECT ON invoice TO lsmb_<?lsmb dbname ?>__list_ar_transactions
-GRANT SELECT ON inventory TO lsmb_<?lsmb dbname ?>__list_ar_transactions
+GRANT SELECT ON invoice TO lsmb_<?lsmb dbname ?>__list_ar_transactions;
+GRANT SELECT ON inventory TO lsmb_<?lsmb dbname ?>__list_ar_transactions;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__list_ar_transactions');
@@ -318,7 +312,7 @@ IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 GRANT INSERT ON ap TO lsmb_<?lsmb dbname ?>__create_ap_transaction;
 GRANT ALL ON id TO lsmb_<?lsmb dbname ?>__create_ap_transaction;
 GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_ap_transaction;
-GRANT ALL ON acc_trans_entry_id TO lsmb_<?lsmb dbname ?>__create_ap_transaction;
+GRANT ALL ON acc_trans_entry_id_seq TO lsmb_<?lsmb dbname ?>__create_ap_transaction;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (21, 'allow', 'lsmb_<?lsmb dbname ?>__create_ap_transaction');
@@ -335,7 +329,7 @@ lsmb_<?lsmb dbname ?>__create_batch;
 GRANT INSERT ON ar TO lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher;
 GRANT ALL ON id TO lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher;
 GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher;
-GRANT ALL ON acc_trans_entry_id TO lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher;
+GRANT ALL ON acc_trans_entry_id_seq TO lsmb_<?lsmb dbname ?>__create_ap_transaction_voucher;
 
 -- TODO add Menu ACLs
 
@@ -374,8 +368,8 @@ IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
 
 GRANT SELECT ON ap TO lsmb_<?lsmb dbname ?>__list_ap_transactions;
 GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__list_ap_transactions;
-GRANT SELECT ON invoice TO lsmb_<?lsmb dbname ?>__list_ap_transactions
-GRANT SELECT ON inventory TO lsmb_<?lsmb dbname ?>__list_ap_transactions
+GRANT SELECT ON invoice TO lsmb_<?lsmb dbname ?>__list_ap_transactions;
+GRANT SELECT ON inventory TO lsmb_<?lsmb dbname ?>__list_ap_transactions;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (21, 'allow', 'lsmb_<?lsmb dbname ?>__list_ap_transactions');
@@ -413,7 +407,6 @@ lsmb_<?lsmb dbname ?>__list_ap_transactions;
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_purchase_order
 WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__read_contact;
-WITH INHERIT NOLOGIN;
 
 GRANT INSERT ON oe TO lsmb_<?lsmb dbname ?>__create_purchase_order;
 GRANT INSERT ON orderitems TO lsmb_<?lsmb dbname ?>__create_purchase_order;
@@ -530,7 +523,7 @@ values (18, 'allow', 'lsmb_<?lsmb dbname ?>__list_all_open');
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__pos_cashier
 WITH INHERIT NOLOGIN
-lsmb_<?lsmb dbname ?>__create_pos_invoice,
+IN ROLE lsmb_<?lsmb dbname ?>__create_pos_invoice,
 lsmb_<?lsmb dbname ?>__close_till;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__all_pos
@@ -542,11 +535,11 @@ lsmb_<?lsmb dbname ?>__list_all_open;
 CREATE ROLE lsmb_<?lsmb dbname ?>__reconcile
 WITH INHERIT NOLOGIN;
 
-GRANT INSERT ON pending_reports TO lsmb_<?lsmb dbname ?>__reconcile;
-GRANT INSERT on report_corrections TO lsmb_<?lsmb dbname ?>__reconcile;
+-- GRANT INSERT ON pending_reports TO lsmb_<?lsmb dbname ?>__reconcile;
+-- GRANT INSERT on report_corrections TO lsmb_<?lsmb dbname ?>__reconcile;
 GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__reconcile;
-GRANT ALL ON pending_reports_id_seq TO lsmb_<?lsmb dbname ?>__reconcile;
-GRANT ALL ON report_corrections_id_seq TO lsmb_<?lsmb dbname ?>__reconcile;
+-- GRANT ALL ON pending_reports_id_seq TO lsmb_<?lsmb dbname ?>__reconcile;
+-- GRANT ALL ON report_corrections_id_seq TO lsmb_<?lsmb dbname ?>__reconcile;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconcile');
@@ -557,7 +550,7 @@ values (45, 'allow', 'lsmb_<?lsmb dbname ?>_reconcile');
 CREATE ROLE lsmb_<?lsmb dbname ?>__approve_reconciliation
 WITH INHERIT NOLOGIN;
 
-GRANT UPDATE ON pending_reports TO lsmb_<?lsmb dbname ?>__reconcile;
+-- GRANT UPDATE ON pending_reports TO lsmb_<?lsmb dbname ?>__reconcile;
 GRANT SELECT ON acc_trans TO lsmb_<?lsmb dbname ?>__reconcile;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -575,7 +568,7 @@ lsmb_<?lsmb dbname ?>__approve_reconciliation;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__process_payment
 WITH INHERIT NOLOGIN
-IN ROLE ap_list_transactions;
+IN ROLE lsmb_<?lsmb dbname ?>__list_ap_transactions;
 
 GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__process_payment;
 GRANT ALL ON acc_trans_entry_id_seq TO lsmb_<?lsmb dbname ?>__process_payment;
@@ -591,7 +584,7 @@ values (39, 'allow', 'lsmb_<?lsmb dbname ?>__process_payment');
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__process_receipt
 WITH INHERIT NOLOGIN
-IN ROLE ar_list_transactions;
+IN ROLE lsmb_<?lsmb dbname ?>__ar_list_transactions;
 
 GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__process_receipt;
 GRANT ALL ON acc_trans_entry_id_seq TO lsmb_<?lsmb dbname ?>__process_receipt;
@@ -796,7 +789,7 @@ WITH INHERIT NOLOGIN;
 GRANT INSERT ON gl TO lsmb_<?lsmb dbname ?>__create_transaction;
 GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_transaction;
 GRANT ALL ON id TO lsmb_<?lsmb dbname ?>__create_transaction;
-GRANT ALL ON acc_trans_entry_id TO lsmb_<?lsmb dbname ?>__create_transaction;
+GRANT ALL ON acc_trans_entry_id_seq TO lsmb_<?lsmb dbname ?>__create_transaction;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (73, 'allow', 'lsmb_<?lsmb dbname ?>__create_transaction');
@@ -816,7 +809,7 @@ WITH INHERIT NOLOGIN;
 GRANT INSERT ON gl TO lsmb_<?lsmb dbname ?>__create_transaction_voucher;
 GRANT INSERT ON acc_trans TO lsmb_<?lsmb dbname ?>__create_transaction_voucher;
 GRANT ALL ON id TO lsmb_<?lsmb dbname ?>__create_transaction_voucher;
-GRANT ALL ON acc_trans_entry_id TO lsmb_<?lsmb dbname ?>__create_transaction_voucher;
+GRANT ALL ON acc_trans_entry_id_seq TO lsmb_<?lsmb dbname ?>__create_transaction_voucher;
 
 -- TODO Add menu permissions
 
@@ -1126,7 +1119,7 @@ WITH INHERIT NOLOGIN
 IN ROLE lsmb_<?lsmb dbname ?>__create_account,
 lsmb_<?lsmb dbname ?>__set_taxes,
 lsmb_<?lsmb dbname ?>__edit_account,
-lsmb_<?lsmb dbname ?>__create_gifi;
+lsmb_<?lsmb dbname ?>__create_gifi,
 lsmb_<?lsmb dbname ?>__edit_gifi;
 
 CREATE ROLE lsmb_<?lsmb dbname ?>__create_department

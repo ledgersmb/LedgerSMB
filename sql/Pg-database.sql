@@ -1935,7 +1935,7 @@ CREATE TABLE menu_attribute (
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 550, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 551, true);
 
 
 --
@@ -2462,7 +2462,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 194	type	credit_note	548
 195	type	credit_invoice	542
 197	type	debit_invoice	546
-36	account_class	1	550
+36	account_class	1	551
 \.
 
 
