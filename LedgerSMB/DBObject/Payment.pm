@@ -32,7 +32,7 @@ our $VERSION = '0.1.0';
 
 Inherited from LedgerSMB::DBObject.  Please see that documnetation for details.
 
-=item $oayment->get_open_accounts()
+=item $payment->get_open_accounts()
 
 This function returns a list of open accounts depending on the 
 $payment->{account_class} property.  If this property is 1, it returns a list 
@@ -49,6 +49,17 @@ calculation.
 
 =cut
 
+sub __validate__ {
+  my ($self) = shift @_;
+  #FIRST WE CHECK IF THE MAIN PROPERTY 'account_class' IS SET
+  if (!$self->{account_class}) {
+    $self->error("account_class must be set")
+  }; 
+  #NOW WE SET THE CURRENT DATE
+  ($self->{current_date}) = $self->{dbh}->selectrow_array('select current_date');
+}
+
+
 sub get_open_accounts {
     my ($self) = @_;
     @{$self->{accounts}} = 
@@ -58,7 +69,7 @@ sub get_open_accounts {
 
 =over
 
-=item $oayment->get_all_accounts()
+=item $payment->get_all_accounts()
 
 This function returns a list of open or closed accounts depending on the 
 $payment->{account_class} property.  If this property is 1, it returns a list 
@@ -80,10 +91,10 @@ sub get_all_accounts {
 
 =over
 
-=item $oayment->get_open_invoices()
+=item $payment->get_open_invoices()
 
 This function returns a list of open invoices depending on the 
-$payment->{account_class}, $payment->{entity_id}, and $payment->{currency} 
+$payment->{account_class}, $payment->{entity_id}, and $payment->{curr} 
 properties.  Account classes follow the conventions above.  This list is hence
 specific to a customer or vendor and currency as well.
 
@@ -175,9 +186,8 @@ projects.  The list is attached to $self->{projects} and returned.
 
 sub list_open_projects {
     my ($self) = @_;
-    my ($date) = $self->{dbh}->selectrow_array('select current_date');
     @{$self->{projects}} = $self->call_procedure( 
-         procname => 'project_list_open',  args => [$date] 
+         procname => 'project_list_open',  args => [$self->{current_date}] 
     );
     return  @{$self->{projects}};
 }
@@ -233,6 +243,87 @@ sub get_open_currencies {
   my ($self) = shift @_;
   @{$self->{openCurrencies}} = $self->exec_method( funcname => 'payments_get_open_currencies');
   return @{$self->{openCurrencies}};
+}
+
+=item list_accounting
+
+This method lists all accounts that match the role specified in account_class property and
+are availible to store the payment or receipts. 
+=back
+=cut
+
+sub list_accounting {
+ my ($self) = @_;
+ @{$self->{pay_accounts}} = $self->exec_method( funcname => 'chart_list_cash');
+ return @{$self->{pay_accounts}}; 
+}
+
+=item get_sources
+
+This method builds all the possible sources of money,
+in the future it will look inside the DB. 
+=back
+
+=cut
+
+sub get_sources {
+ my ($self, $locale) = @_;
+ @{$self->{cash_sources}} = ($locale->text('cash'),
+                             $locale->text('check'),
+                             $locale->text('deposit'),
+                             $locale->text('other'));
+ return @{$self->{cash_sources}}; 
+}
+
+=item get_exchange_rate(currency, date)
+
+This method gets the exchange rate for the specified currency and date
+
+=cut 
+
+sub get_exchange_rate { 
+ my ($self) = shift @_;
+ ($self->{currency}, $self->{date}) = @_;
+ ($self->{exchangerate}) = $self->exec_method(funcname => 'currency_get_exchangerate'); 
+  return $self->{exchangerate}->{currency_get_exchangerate};
+ 
+}
+
+=item get_default_currency
+
+This method gets the default currency 
+=back
+
+=cut
+
+sub get_default_currency {
+ my ($self) = shift @_;
+ ($self->{default_currency}) = $self->call_procedure(procname => 'defaults_get_defaultcurrency');
+ return $self->{default_currency}->{defaults_get_defaultcurrency};
+}
+
+=item get_current_date
+
+This method returns the system's current date
+
+=cut
+
+sub get_current_date {
+ my ($self) = shift @_;
+ return $self->{current_date}; 
+}
+
+=item get_vc_info
+
+This method returns the contact informatino for a customer or vendor according to
+$self->{account_class}
+
+=cut
+
+sub get_vc_info {
+ my ($self) = @_; 
+ #@{$self->{vendor_customer_info}} = $self->call_procedure(procname => 'vendor_customer_info');
+ #return @{$self->{vendor_customer_info}};
 }
 
 

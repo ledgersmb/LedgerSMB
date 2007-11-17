@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title><?lsmb titlebar ?></title>
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
+
+  <meta http-equiv="content-type" content="text/html; charset=<?lsmb charset ?>" />  
+  <meta name="robots" content="noindex,nofollow" />
+
+</head>
+
+<body id="payment-1-body">
+
+<form name="search" method="post" action="payment.pl">
+	
+<?lsmb PROCESS elements.html  # Include form elements helper. ?>
+
+<?lsmb PROCESS input element_data=sort ?>
+<?lsmb PROCESS input element_data=nextsub ?>
+<?lsmb PROCESS input element_data=selectcustomer ?>
+<?lsmb PROCESS input element_data=selectaccount ?>
+<?lsmb PROCESS input element_data=selectAR ?>
+<?lsmb PROCESS input element_data=selectadvance ?>
+<?lsmb PROCESS input element_data=defaultcurrency ?>
+<?lsmb PROCESS input element_data=datepaid ?>
+<?lsmb PROCESS input element_data=closedto ?>
+<?lsmb PROCESS input element_data=path ?>
+<?lsmb login.type = 'hidden' ; PROCESS input element_data=login ?>
+<?lsmb accountclass.type = 'hidden'; PROCESS input element_data=accountclass?>
+<?lsmb PROCESS input element_data=sessionid ?>
+<?lsmb PROCESS input element_data=vc ?>
+
+<?lsmb type.type = "hidden";
+       PROCESS input element_data=type;
+ ?>
+ 
+<?lsmb PROCESS input element_data=selectdepartment ?>
+<?lsmb PROCESS input element_data=callback ?>
+<?lsmb PROCESS input element_data=ARAP ?>
+<?lsmb PROCESS input element_data=nextsub ?>
+
+<table width=100%>
+  <tr id="top-bar" class="listtop">
+    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb text('Receipts') ?></th>
+  </tr>
+</table>
+
+<table id="search-form-table">
+	<tr id="search-form-row">
+		<td id="projects-label-column" class="label-left"><?lsmb text('Projects') ?></td>
+		<td id="projects-column" colspan="5">
+			<?lsmb PROCESS select element_data=projects ?>
+		</td>
+	</tr>
+	<tr id="cost-center-row">
+		<td id="cost-center-label-column" class="label-left"><?lsmb text('Departments') ?></td>
+		<td id="department-column">
+			<?lsmb PROCESS select element_data=department ?>
+  	</td>
+	</tr>
+	<tr id="vc-currency-row">
+		<td id="vc-label-column" class="label-left">
+		 <?lsmb IF (type.value == 'receipt') ?>
+		   <?lsmb text('Customer')?>
+		 <?lsmb ELSE; text('Vendor')?>
+		 <?lsmb END ?>		
+                     		 
+		</td>
+		<td id="vc-column">
+			<?lsmb PROCESS select element_data=vendor_customer ?>
+		</td>
+  	<td id="currency-label-column" class="label-left"><?lsmb text('Currency') ?></td>
+		<td id="currency-column">
+			<?lsmb PROCESS select element_data=curr ?>
+		</td>
+	</tr>
+  <tr id="daterange-row">
+		<td id="daterange-label-column" class="label-left"><?lsmb text('Period') ?></td>
+		<td id="month-year-column" colspan="5">
+			<?lsmb PROCESS select element_data=month ?>
+			<?lsmb PROCESS select element_data=year ?>
+			
+			<?lsmb 
+			  FOREACH interval_radio IN interval_radios;
+			    interval_radio.type  = "radio";
+			    interval_radio.class = "radio";
+			    PROCESS input element_data=interval_radio;
+			  END;
+			?>
+		</td>
+	</tr>
+	<tr id="total-row">
+		<td id="total-gt-label-column" class="label-left"><?lsmb text('Total') ?> &gt;=</td>
+		<td id="total-gt-column">
+			<?lsmb 
+			     amountfrom.type      = "text";
+			     amountfrom.size      = "10"  ;
+			     amountfrom.maxlenght = "10"  ;
+			     PROCESS input element_data=amountfrom;
+		         ?>
+		</td>
+		<td id="total-lt-label-column" class="label-left" align=right><?lsmb text('Total') ?> &lt;=</td>
+		<td id="total-lt-column">
+			<?lsmb 
+			     amountto.type        = "text";
+			     amountto.size        = "10"  ;
+			     amountto.maxlenght   = "10"  ;
+			     PROCESS input element_data=amountto;
+			?>
+		</td>
+	</tr>
+</table>
+			
+<hr />
+
+<?lsmb PROCESS button element_data=action ?>
+
+</form>
+</body>
+</html>

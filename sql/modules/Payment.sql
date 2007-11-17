@@ -57,7 +57,7 @@ CREATE TYPE payment_invoice AS (
 );
 
 CREATE OR REPLACE FUNCTION payment_get_open_invoices
-(in_account_class int, in_entity_id int, in_currency char(3))
+(in_account_class int, in_entity_id int, in_curr char(3))
 RETURNS SETOF payment_invoice AS
 $$
 DECLARE payment_inv payment_invoice;
@@ -87,7 +87,7 @@ BEGIN
 		  JOIN entity_credit_account c USING (entity_id)
 		 WHERE a.invoice_class = in_account_class
 		       AND c.entity_class = in_account_class
-		       AND a.curr = in_currency
+		       AND a.curr = in_curr
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
@@ -272,17 +272,20 @@ comment on function department_list(in_role char) is
 $$ This function returns all department that match the role provided as
 the argument.$$;
 
-CREATE OR REPLACE FUNCTION payments_get_open_currencies(in_account_class int)returns setof char(3) AS
+CREATE OR REPLACE FUNCTION payments_get_open_currencies(in_account_class int)
+RETURNS SETOF char(3) AS
 $$
 DECLARE resultrow record;
 BEGIN
         FOR resultrow IN
           SELECT curr FROM ar
           WHERE amount <> paid
-          AND in_account_class=2
+          OR paid IS NULL
+          AND in_account_class=2 
           UNION
           SELECT curr FROM ap
           WHERE amount <> paid
+          OR paid IS NULL
           AND in_account_class=1
           ORDER BY curr
           LOOP
@@ -290,3 +293,57 @@ BEGIN
         END LOOP;
 END;
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION currency_get_exchangerate(in_currency char(3), in_date date, in_account_class int) 
+RETURNS NUMERIC AS
+$$
+DECLARE 
+    out_exrate exchangerate.buy%TYPE;
+
+    BEGIN 
+        IF in_account_class = 1 THEN
+          SELECT INTO out_exrate buy 
+          FROM exchangerate
+          WHERE transdate = in_date AND curr = in_currency;
+        ELSE 
+          SELECT INTO out_exrate sell 
+          FROM exchangerate
+          WHERE transdate = in_date AND curr = in_currency;   
+        END IF;
+        RETURN out_exrate;
+    END;
+$$ language plpgsql;                                                                  
+COMMENT ON FUNCTION currency_get_exchangerate(in_currency char(3), in_date date, in_account_class int) IS
+$$ This function return the exchange rate of a given currency, date and exchange rate class (buy or sell). $$;
+
+
+CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_id int) 
+RETURNS SETOF entity AS
+$$
+DECLARE 
+    out_info entity%ROWTYPE;
+
+    BEGIN
+        FOR out_info IN
+  
+            SELECT e.id, e.name FROM entity e
+            JOIN company c ON (e.id = c.entity_id)
+            WHERE e.id = in_entity_id
+          
+          --SELECT e.id, c.legal_name, l.line_one, l.city_province, cy.name FROM entity e
+          --JOIN company c ON (e.id = c.entity_id)
+          --JOIN company_to_location cl ON (c.id = cl.company_id)
+          --JOIN location l ON (l.id = cl.location_id)
+          --JOIN country cy ON (cy.id = l.country_id)
+        LOOP
+          return next out_info;
+        END LOOP;
+        
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'ID % not found!!!!!', in_entity_id;
+        END IF;                              
+              
+    END;
+$$ language plpgsql;                                                                  
+COMMENT ON FUNCTION payment_get_vc_info(in_entity_id int) IS
+$$ This function return vendor or customer info, its under construction $$;
