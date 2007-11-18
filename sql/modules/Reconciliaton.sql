@@ -1,27 +1,4 @@
-CREATE TABLE pending_reports (
-    id bigserial primary key not null,
-    report_id int,
-    scn int,
-    their_balance INT,
-    our_balance INT,
-    errorcode INT,
-    user TEXT,
-    corrections INT NOT NULL DEFAULT 0
-    clear_time TIMESTAMP NOT NULL,
-    insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
-    ledger_id int REFERENCES acc_trans(entry_id),
-    overlook boolean not null default 'f'
-);
-
-CREATE TABLE report_corrections (
-    id serial primary key not null,
-    correction_id int not null default 1,
-    entry references pending_reports(id) not null,
-    user text not null,
-    reason text not null,
-    insert_time timestamptz not null default now()
-);
-
+BEGIN;
 -- to correct OUR wrong amount.
 CREATE OR REPLACE FUNCTION reconciliation_correct_ledger (in_report_id INT, in_id int, in_new_amount NUMERIC, reason TEXT) returns INT AS $$
 
@@ -32,30 +9,36 @@ CREATE OR REPLACE FUNCTION reconciliation_correct_ledger (in_report_id INT, in_i
         in_user TEXT;
         full_reason TEXT;
     BEGIN
-        select into in_user from current_user;
+        select session_user into in_user; -- safer than current_user
         
-        select into current_row from pending_reports where pending_reports.id = in_report_id and pending_reports.id = in_id;
-        select into l_row from acc_trans where entry_id = current_row.lid;
+        select * into current_row from pending_reports 
+	where pending_reports.id = in_report_id and pending_reports.id = in_id;
+        select * into l_row from acc_trans where entry_id = current_row.lid;
         
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No such id % in this report.', in_scn;
         END IF;
         
-        IF user <> current_row.user THEN
+        IF in_user <> current_row.entered_by THEN
         
             IF current_row.our_balance <> in_new_amount AND in_new_amount = current_row.their_balance THEN
-                update pending_reports pr
-                set pr.corrections = pending_reports.corrections + 1, 
-                pr.new_balance = in_new_amount,
+                update pending_reports
+                set corrections = corrections + 1, 
+                new_balance = in_new_amount,
                 error_code = 0
                 where id = in_report_id and scn = in_scn;
                 return 0;
                 
                 -- After that, it is required to update the general ledger.
-                full_reason := "User % is filing a reconciliation correction on the general ledger, changing amount % to amount %. 
-                Their reason given is: %", in_user, current_row.our_balance, in_new_amount, reason;
-                select update_ledger(current_row.lid, in_new_amount, full_reason)
-            ELSE IF current_row.our_balance = in_new_amount THEN
+                full_reason := 'User % is filing a reconciliation correction ' 
+			|| 'on the general ledger, changing amount % to ' ||
+			'amount %.\n' ||
+                	'Their reason given is: %', 
+			in_user, current_row.our_balance, in_new_amount, reason;
+
+                select update_ledger(current_row.lid, in_new_amount, 
+			full_reason);
+            ELSIF current_row.our_balance = in_new_amount THEN
                 -- This should be something, does it equal the original 
                 -- balance? If so, there's no change.
                 return current_row.error_code;
@@ -75,23 +58,26 @@ CREATE OR REPLACE FUNCTION reconciliation_correct_bank_statement (in_report_id I
         current_row RECORD;
         in_user TEXT;
     BEGIN
-        select into in_user from current_user;
-        select into current_row from pending_reports where pending_reports.id = in_report_id and pending_reports.scn = in_scn;
+        select SESSION_USER into in_user;
+        select * into current_row from pending_reports 
+	where pending_reports.id = in_report_id 
+		and pending_reports.scn = in_scn;
+
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No such SCN % in this report.', in_scn;
         END IF;
         
-        IF user <> current_row.user THEN
+        IF in_user <> current_row.entered_by THEN
         
             IF current_row.their_balance <> in_new_amount AND in_new_amount = current_row.our_balance THEN
-                update pending_reports pr
-                set pr.corrections = pending_reports.corrections + 1, 
-                pr.new_balance = in_new_amount,
+                update pending_reports
+                set corrections = corrections + 1, 
+                new_balance = in_new_amount,
                 error_code = 0
                 where id = in_report_id and scn = in_scn;
                 return 0;
             
-            ELSE IF current_row.their_balance = in_new_amount THEN
+            ELSIF current_row.their_balance = in_new_amount THEN
                 -- This should be something, does it equal the original 
                 -- balance? If so, there's no change.
                 return current_row.error_code;         
@@ -104,22 +90,23 @@ CREATE OR REPLACE FUNCTION reconciliation_correct_bank_statement (in_report_id I
 $$ language 'plpgsql';
 
 
-CREATE OR REPLACE reconciliation_correct_passthrough ( in_report_id int, in_id int ) returns INT AS $$
+CREATE OR REPLACE FUNCTION reconciliation_correct_passthrough ( in_report_id int, in_id int ) returns INT AS $$
 
     DECLARE
         in_user TEXT;
         pending_entry pending_reports;
     BEGIN
-        select into in_user from current_user;
+        select SESSION_USER into in_user;
         
-        select into pending_entry from pending_reports where report_id = in_report_id and id = in_id;
+        select * into pending_entry from pending_reports 
+	where report_id = in_report_id and id = in_id;
         
         IF NOT FOUND THEN
             -- Raise an exception.
-            RAISE EXCEPTION "Cannot find entry.";
-        ELSE IF pending_entry.errorcode <> 4 THEN 
+            RAISE EXCEPTION 'Cannot find entry.';
+        ELSIF pending_entry.errorcode <> 4 THEN 
             -- Only error codes of 4 may be "passed through" safely.
-            RAISE EXCEPTION "Selected entry not permitted to be passed through.";
+            RAISE EXCEPTION 'Selected entry not permitted to be passed through.';
             
         ELSE
             -- Then we mark it passthroughable, and "approve" will overlook it.
@@ -137,19 +124,20 @@ CREATE OR REPLACE FUNCTION reconciliation_correct_bank_charge (in_report_id int,
         pending_entry pending_reports;
     BEGIN
     
-        select into pending_entry from pending_reports where report_id = in_report_id and id = in_id;
+        select * into pending_entry from pending_reports 
+	where report_id = in_report_id and id = in_id;
     
         IF NOT FOUND THEN
              -- Raise an exception.
-             RAISE EXCEPTION "Cannot find entry with ID % in report %.", in_id, in_report_id;
-         ELSE IF pending_entry.errorcode <> 2 THEN 
+             RAISE EXCEPTION 'Cannot find entry with ID % in report %.', in_id, in_report_id;
+         ELSIF pending_entry.errorcode <> 2 THEN 
              -- Only error codes of 4 may be "passed through" safely.
-             RAISE EXCEPTION "Attempt to retroactively add a non-bank-charge entry to the ledger.";
+             RAISE EXCEPTION 'Attempt to retroactively add a non-bank-charge entry to the ledger.';
          
          ELSE
              -- Then we mark it passthroughable, and "approve" will overlook it.
              
-             select create_entry (pending_entry.their_balance, 'payable', pending_entry.clear_date, 'Bank charge');
+             select create_entry (pending_entry.their_balance, 'payable', pending_entry.clear_time, 'Bank charge');
              
              update pending_reports set errorcode = 0 where report_id = in_report_id and id = in_id;
              return 0;
@@ -166,22 +154,25 @@ CREATE OR REPLACE FUNCTION reconciliation_correct_unaccounted_charge (in_report_
         note TEXT;
     BEGIN
     
-        select into pending_entry from pending_reports where report_id = in_report_id and id = in_id;
+        select * into pending_entry from pending_reports 
+	where report_id = in_report_id and id = in_id;
     
         IF NOT FOUND THEN
              -- Raise an exception.
-             RAISE EXCEPTION "Cannot find entry with ID % in report %.", in_id, in_report_id;
-         ELSE IF pending_entry.errorcode <> 3 THEN 
+             RAISE EXCEPTION 'Cannot find entry with ID % in report %.', in_id, in_report_id;
+         ELSIF pending_entry.errorcode <> 3 THEN 
              -- Only error codes of 4 may be "passed through" safely.
-             RAISE EXCEPTION "Not an unaccounted charge; cannot be retroactively added to the ledger.";
+             RAISE EXCEPTION 'Not an unaccounted charge; cannot be retroactively added to the ledger.';
          
          ELSE
              -- Then we mark it passthroughable, and "approve" will overlook it.
              
-             note := 'Retroactive addition of an unaccounted entry, of value %. 
-             Being added by user % with the following explanation: %', pending_entry.their_balance, in_user, in_reason;
+             note := 'Retroactive addition of an unaccounted entry, of value '
+		|| pending_entry || '. \n' ||
+		'Being added by user ' || in_user || ' with the following ' ||
+		'explanation: ' || in_reason;
              
-             select create_entry (pending_entry.their_balance, 'payable', pending_entry.clear_date,note);
+             select create_entry (pending_entry.their_balance, 'payable', pending_entry.clear_time,note);
              
              update pending_reports set errorcode = 0 where report_id = in_report_id and id = in_id;
              return 0;
@@ -204,20 +195,20 @@ CREATE OR REPLACE FUNCTION reconciliation_report_approve (in_report_id INT) retu
         in_user TEXT;
     BEGIN
         
-        select into in_user current_user;
-        select into current_row distinct on user * from pending_reports where report_id = in_report_id;
+        select SESSION_USER into in_user;
+        select * into current_row from pending_reports where report_id = in_report_id;
         IF NOT FOUND THEN
-            RAISE EXCEPTION "Fatal Error: Pending report % not found", in_report_id;
+            RAISE EXCEPTION 'Fatal Error: Pending report % not found', in_report_id;
         END IF;
         
-        IF current_row.user = in_user THEN
-            RAISE EXCEPTION "Fatal Error: User % cannot self-approve report!", in_user;
+        IF current_row.entered_by = in_user THEN
+            RAISE EXCEPTION 'Fatal Error: User % cannot self-approve report!', in_user;
         END IF;
         
         SELECT INTO total_errors count(*) from pending_reports where report_id = in_report_id and error_code <> 0;
         
         IF total_errors <> 0 THEN
-            RAISE EXCEPTION "Fatal Error: Cannot approve while % uncorrected errors remain.", total_errors;
+            RAISE EXCEPTION 'Fatal Error: Cannot approve while % uncorrected errors remain.', total_errors;
         END IF;
         
         -- so far, so good. Different user, and no errors remain. Therefore, we can move it to completed reports.
@@ -226,8 +217,11 @@ CREATE OR REPLACE FUNCTION reconciliation_report_approve (in_report_id INT) retu
         -- in_user, to note who approved the report, than the user who
         -- filed it. This may require clunkier syntax..
         
-        insert into reports (report_id, scn, their_balance, our_balance, code, user, correction )
-            SELECT report_id, scn, their_balance, our_balance, code, user, corrections 
+        insert into reports 
+		(report_id, scn, their_balance, our_balance, coentered_by, 
+			correction )
+        SELECT report_id, scn, their_balance, our_balance, code, entered_by, 
+		corrections 
             FROM pending_reports 
             WHERE report_id = in_report_id;
         
@@ -236,22 +230,21 @@ CREATE OR REPLACE FUNCTION reconciliation_report_approve (in_report_id INT) retu
 
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION reconciliation_new_report_id () returns INT as $$
+CREATE OR REPLACE FUNCTION reconciliation_new_report_id () returns BIGINT as $$
 
-    SELECT nextval('pending_report_report_id_seq');
+    SELECT nextval('pending_reports_id_seq');
 
 $$ language 'sql';
 
 create or replace function reconciliation_add_entry(in_report_id INT, in_scn INT, in_amount INT, in_account INT, in_user TEXT, in_date TIMESTAMP) RETURNS INT AS $$
-    
-    DELCARE
+    DECLARE
         la RECORD;
         errorcode INT;
         our_value NUMERIC;
         lid INT;
     BEGIN
     
-        SELECT INTO la FROM acc_trans gl 
+        SELECT * INTO la FROM acc_trans gl 
         WHERE gl.source = in_scn 
         and gl.account = in_account 
         and gl.amount = in_amount;
@@ -275,7 +268,7 @@ create or replace function reconciliation_add_entry(in_report_id INT, in_scn INT
                 our_value := 0;
             END IF;
             
-        ELSE if la.amount <> in_amount THEN
+        ELSif la.amount <> in_amount THEN
         
             errorcode := 1;
             our_value := la.amount;
@@ -296,7 +289,7 @@ create or replace function reconciliation_add_entry(in_report_id INT, in_scn INT
                 their_balance,
                 our_balance,
                 error_code, 
-                user,
+                entered_by,
                 clear_time,
                 ledger_id
             ) 
@@ -338,7 +331,7 @@ create or replace function reconciliation_pending_transactions (in_report_id INT
                 their_balance,
                 our_balance,
                 error_code, 
-                user,
+                entered_by,
                 clear_time,
                 ledger_id
             ) 
@@ -372,19 +365,19 @@ CREATE OR REPLACE FUNCTION reconciliation_report (in_report_id INT) RETURNS seto
 
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION reconciliation_get_total (in_report_id INT) returns setof pending_reports AS $$
+CREATE OR REPLACE FUNCTION reconciliation_get_total (in_report_id INT) returns pending_reports AS $$
 
     DECLARE
         row pending_reports;
     BEGIN
     
-        SELECT INTO row FROM pending_reports 
+        SELECT * INTO row FROM pending_reports 
         WHERE ledger_id IS NULL 
         and report_id = in_report_id 
         AND scn = -1;
         
         IF NOT FOUND THEN -- I think this is a fairly major error condition
-            RAISE EXCEPTION "No Bank Total found.";
+            RAISE EXCEPTION 'No Bank Total found.';
         ELSE
             return row;
         END IF;
@@ -398,9 +391,9 @@ CREATE OR REPLACE FUNCTION reconciliation_corrections (in_report_id INT, in_id I
         corr report_corrections;
     BEGIN
     
-        SELECT INTO corr FROM report_corrections WHERE report_id = in_report_id AND id = in_id LIMIT 1;
+        SELECT * INTO corr FROM report_corrections WHERE report_id = in_report_id AND id = in_id LIMIT 1;
         IF NOT FOUND THEN
-            RAISE EXCEPTION "No corrections for selected entry.";
+            RAISE EXCEPTION 'No corrections for selected entry.';
         ELSE
             FOR corr IN select * from report_corrections WHERE report_id = in_report_id AND id = in_id LOOP
                 RETURN NEXT corr;
@@ -408,22 +401,25 @@ CREATE OR REPLACE FUNCTION reconciliation_corrections (in_report_id INT, in_id I
         END IF;
     END;
 
-$$ language 'plplsql';
+$$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION reconciliation_single_entry (in_report_id INT, in_id INT) returns setof pending_reports AS
-
+CREATE OR REPLACE FUNCTION reconciliation_single_entry 
+(in_report_id INT, in_id INT) 
+returns pending_reports AS
+$$
     DECLARE
         row pending_reports;
     BEGIN
     
-        SELECT INTO row FROM pending_reports WHERE report_id = in_report_id and id = in_id LIMIT 1; 
+        SELECT * INTO row FROM pending_reports WHERE report_id = in_report_id and id = in_id LIMIT 1; 
         -- if there's more than one, that's a Bad Thing
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION "Could not find selected report entry";
+            RAISE EXCEPTION 'Could not find selected report entry';
         ELSE
             RETURN row;
         END IF;
     END;
 
 $$ language 'plpgsql';
+COMMIT;

@@ -2640,5 +2640,29 @@ CREATE AGGREGATE compound_array (
 	INITCOND = '{}'
 );
 
+CREATE TABLE pending_reports (
+    id bigserial primary key not null,
+    report_id int,
+    scn int,
+    their_balance INT,
+    our_balance INT,
+    errorcode INT,
+    entered_by int references entity(id) not null,
+    corrections INT NOT NULL DEFAULT 0,
+    clear_time TIMESTAMP NOT NULL,
+    insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
+    ledger_id int REFERENCES acc_trans(entry_id),
+    overlook boolean not null default 'f'
+);
+
+
+CREATE TABLE report_corrections (
+    id serial primary key not null,
+    correction_id int not null default 1,
+    entry_in int references pending_reports(id) not null,
+    entered_by int not null,
+    reason text not null,
+    insert_time timestamptz not null default now()
+);
 
 commit;
