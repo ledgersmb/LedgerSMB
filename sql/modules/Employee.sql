@@ -50,7 +50,7 @@ returns int AS $$
                 enddate = in_enddate,
                 role = in_role,
                 sales = in_sales,
-                manager_id = in_managerid
+                manager_id = in_managerid,
                 employeenumber = in_employeenumber,
                 dob = in_dob
             WHERE
@@ -66,13 +66,13 @@ $$ language 'plpgsql';
 
 create view employees as
     select 
-        e.salutation,
-        e.first_name,
-        e.last_name,
+        s.salutation,
+        p.first_name,
+        p.last_name,
         ee.*
-    FROM entity e
-    JOIN entity_employees ee on e.id = ee.entity_id
-    where e.entity_class = 3;
+    FROM person p
+    JOIN entity_employee ee USING (entity_id)
+    JOIN salutation s ON (p.salutation_id = s.id);
     
 
 -- why is this like this?
@@ -84,13 +84,14 @@ DECLARE
 	emp employees%ROWTYPE;
 BEGIN
 	SELECT 
-	    e.salutation, 
-	    e.first_name,
-	    e.last_name,
+	    s.salutation, 
+	    p.first_name,
+	    p.last_name,
 	    ee.* 
 	INTO emp 
     FROM employees ee 
-    join entity e on ee.entity_id = e.id 
+    join person p USING (entity_id)
+    JOIN salutation s ON (p.salutation_id = s.id)
     WHERE ee.entity_id = in_id;
     
 	RETURN emp;
@@ -134,14 +135,13 @@ $$ language plpgsql;
 --
 -- % type is pg_trgm comparison.
 
-CREATE INDEX name_idx ON employee USING gist(name gist_trgm_ops);
 CREATE INDEX notes_idx ON entity_note USING gist(note gist_trgm_ops);
 
 CREATE OR REPLACE VIEW employee_search AS
 SELECT e.*, em.name AS manager, emn.note, en.name as name
-FROM employee e 
+FROM entity_employee e 
 LEFT JOIN entity en on (e.entity_id = en.id)
-LEFT JOIN entity_employee m ON (e.managerid = m.entity_id)
+LEFT JOIN entity_employee m ON (e.manager_id = m.entity_id)
 LEFT JOIN entity em on (em.id = m.entity_id)
 LEFT JOIN entity_note emn on (emn.ref_key = em.id);
 
@@ -179,10 +179,8 @@ create or replace function employee_set_location
 returns void as $$
 
     INSERT INTO person_to_location (person_id,location_id) 
-        VALUES (in_employee, in_location);
+        VALUES ($1, $2);
     
-    SELECT NULL;
-
 $$ language 'sql';
 
 COMMIT;
