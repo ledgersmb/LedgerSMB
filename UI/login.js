@@ -17,7 +17,6 @@ function submit_form() {
 		+ document.login.company.value, false, 
 		username, password);
 	http.send("");
-	alert(http.status);
         if (http.status != 200){
 		alert("Access Denied:  Bad username/Password");
 		return false;

@@ -196,6 +196,7 @@ sub new {
        #check for valid session unless this is an inital authentication
        #request -- CT
        if (!LedgerSMB::Auth::session_check( $cookie{"LedgerSMB"}, $self) ) {
+            print STDERR "Session did not check";
             $self->_get_password("Session Expired");
             exit;
        }
@@ -633,7 +634,6 @@ sub error {
 sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
-
     my $creds = LedgerSMB::Auth::get_credentials();
   
     $self->{login} = $creds->{login};

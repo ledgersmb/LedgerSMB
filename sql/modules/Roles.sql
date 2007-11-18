@@ -1366,3 +1366,13 @@ lsmb_<?lsmb dbname ?>__create_project_translation;
 
 GRANT SELECT ON custom_field_catalog TO public;
 GRANT SELECT ON custom_table_catalog TO public;
+
+-- Grants to all users;
+GRANT ALL ON defaults TO public;
+GRANT ALL ON "session" TO public;
+GRANT ALL ON session_session_id_seq TO PUBLIC;
+GRANT SELECT ON users TO public;
+GRANT SELECT ON user_preference TO public;
+GRANT SELECT ON custom_table_catalog TO PUBLIC;
+GRANT SELECT ON custom_field_catalog TO PUBLIC;
+grant select on menu_node, menu_attribute, menu_acl to public;

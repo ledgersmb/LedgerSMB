@@ -132,6 +132,7 @@ sub session_check {
 
 sub session_create {
     my ($lsmb) = @_;
+    print STDERR "Creating Session\n";
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
     use Time::HiRes qw(gettimeofday);
