@@ -229,7 +229,7 @@ CREATE INDEX location_address_one_gist__idx ON location USING gist(line_one gist
 CREATE INDEX location_address_two_gist__idx ON location USING gist(line_two gist_trgm_ops);
 CREATE INDEX location_address_three_gist__idx ON location USING gist(line_three gist_trgm_ops);
     
-CREATE INDEX location_city_prov_gist_idx ON location USING gist(city_province gist_trgm_ops);
+CREATE INDEX location_city_prov_gist_idx ON location USING gist(city gist_trgm_ops);
 CREATE INDEX entity_name_gist_idx ON entity USING gist(name gist_trgm_ops);
 
 CREATE OR REPLACE FUNCTION vendor_search(in_name TEXT, in_address TEXT, 
@@ -278,10 +278,10 @@ CREATE OR REPLACE FUNCTION vendor_retrieve(INT) returns setof vendor as $$
     where v.id = $1;
     
 $$ language 'sql';
-COMMIT;
 
-CREATE OR REPLACE FUNCTION vendor_next_vendor_id() returns int as $$
+CREATE OR REPLACE FUNCTION vendor_next_vendor_id() returns bigint as $$
     
     select nextval('company_id_seq');
     
 $$ language 'sql';
+COMMIT;

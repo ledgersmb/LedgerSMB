@@ -1,5 +1,6 @@
 BEGIN;
 
+
 CREATE TYPE customer_search_return AS (
         legal_name text,
         id int,
@@ -23,6 +24,10 @@ CREATE TYPE customer_search_return AS (
         note text
 );
 
+-- COMMENT ON TYPE customer_search_result IS
+-- $$ This structure will change greatly in 1.4.  
+-- If you want to reply on it heavily, be prepared for breakage later.  $$;
+
 CREATE OR REPLACE FUNCTION customer_save (
     in_id int,
     
@@ -37,7 +42,7 @@ CREATE OR REPLACE FUNCTION customer_save (
     in_notes text, 
     
     in_name text, in_tax_id TEXT,
-    in_threshold
+    in_threshold NUMERIC
     
 ) returns INT as $$
     
@@ -211,10 +216,10 @@ CREATE OR REPLACE FUNCTION customer_retrieve(INT) returns setof customer as $$
     where v.id = $1;
     
 $$ language 'sql';
-COMMIT;
 
-CREATE OR REPLACE FUNCTION customer_next_customer_id() returns int as $$
+CREATE OR REPLACE FUNCTION customer_next_customer_id() returns bigint as $$
     
     select nextval('company_id_seq');
     
-$$ language 'sql';ƒ
+$$ language 'sql';
+COMMIT;

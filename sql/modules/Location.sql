@@ -7,7 +7,7 @@ $$
 DECLARE
 	location_id integer;
 BEGIN
-	UPDATE locations
+	UPDATE location
 	SET companyname = in_companyname,
 		address1 = in_address1,
 		address2 = in_address2,
@@ -29,13 +29,13 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION location_get (in_id integer) returns locations AS
+CREATE OR REPLACE FUNCTION location_get (in_id integer) returns location AS
 $$
 DECLARE
-	location locations%ROWTYPE;
+	out_location location%ROWTYPE;
 BEGIN
-	SELECT * INTO location FROM locations WHERE id = in_id;
-	RETURN location;
+	SELECT * INTO out_location FROM location WHERE id = in_id;
+	RETURN out_location;
 END;
 $$ language plpgsql;
 
@@ -43,14 +43,14 @@ CREATE OR REPLACE FUNCTION location_search
 (in_companyname varchar, in_address1 varchar, in_address2 varchar, 
 	in_city varchar, in_state varchar, in_zipcode varchar, 
 	in_country varchar)
-RETURNS SETOF locations
+RETURNS SETOF location
 AS
 $$
 DECLARE
-	location locations%ROWTYPE;
+	out_location location%ROWTYPE;
 BEGIN
-	FOR location IN
-		SELECT * FROM locations 
+	FOR out_location IN
+		SELECT * FROM location 
 		WHERE companyname ilike '%' || in_companyname || '%'
 			AND address1 ilike '%' || in_address1 || '%'
 			AND address2 ilike '%' || in_address2 || '%'
@@ -59,21 +59,21 @@ BEGIN
 			AND in_zipcode ilike '%' || in_zipcode || '%'
 			AND in_country ilike '%' || in_country || '%'
 	LOOP
-		RETURN NEXT location;
+		RETURN NEXT out_location;
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION location_list_all () RETURNS SETOF locations AS
+CREATE OR REPLACE FUNCTION location_list_all () RETURNS SETOF location AS
 $$
 DECLARE 
-	location locations%ROWTYPE;
+	out_location location%ROWTYPE;
 BEGIN
-	FOR location IN
-		SELECT * FROM locations 
+	FOR out_location IN
+		SELECT * FROM location 
 		ORDER BY company_name, city, state, country
 	LOOP
-		RETURN NEXT location;
+		RETURN NEXT out_location;
 	END LOOP;
 END;
 $$ LANGUAGE plpgsql;
@@ -81,7 +81,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION location_delete (in_id integer) RETURNS VOID AS
 $$
 BEGIN
-	DELETE FROM locations WHERE id = in_id;
+	DELETE FROM location WHERE id = in_id;
 END;
 $$ language plpgsql;
 

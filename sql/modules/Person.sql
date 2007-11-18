@@ -46,7 +46,7 @@ RETURNS INT AS $$
                 
     
     END IF;
-
+END;
 $$ language plpgsql;
 
 commit;
