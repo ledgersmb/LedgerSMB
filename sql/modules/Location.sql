@@ -1,23 +1,25 @@
 -- VERSION 1.3.0
 CREATE OR REPLACE FUNCTION location_save
-(in_id int, in_companyname text, in_address1 text, in_address2 text, 
+(in_companyname text, in_address1 text, in_address2 text, 
 	in_city text, in_state text, in_zipcode text, in_country text) 
 returns integer AS
 $$
 DECLARE
 	location_id integer;
+	location_row RECORD;
 BEGIN
-	UPDATE location
-	SET companyname = in_companyname,
-		address1 = in_address1,
-		address2 = in_address2,
-		city = in_city,
-		state = in_state,
-		zipcode = in_zipcode,
+	
+	SELECT * INTO location_row FROM location
+	WHERE companyname = in_companyname AND
+		address1 = in_address1 AND
+		address2 = in_address2 AND
+		city = in_city AND
+		state = in_state AND
+		zipcode = in_zipcode AND
 		country = in_country
-	WHERE id = in_id;
+	LIMIT 1;
 	IF FOUND THEN
-		return in_id;
+		return location_row.id;
 	END IF;
 	INSERT INTO location 
 	(companyname, address1, address2, city, state, zipcode, country)
@@ -28,6 +30,15 @@ BEGIN
 	return location_id;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON function location_save
+(in_companyname text, in_address1 text, in_address2 text, 
+	in_city text, in_state text, in_zipcode text, in_country text) IS
+$$ Note that this does NOT override the data in the database.
+Instead we search for locations matching the desired specifications and if none 
+are found, we insert one.  Either way, the return value of the location can be
+used for mapping to other things.  This is necessary because locations are 
+only loosly coupled with entities, etc.$$;
 
 CREATE OR REPLACE FUNCTION location_get (in_id integer) returns location AS
 $$
