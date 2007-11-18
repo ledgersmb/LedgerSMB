@@ -44,14 +44,14 @@ of the customer informations.
 sub get {
     
     my ($request) = @_;
-    my $customer = LedgerSMB::DBObject::Company->new(base => $request, copy => 'all');
+    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
     
     $customer->set( entity_class=> '2' );
     my $result = $customer->get();
     
     my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'Customer/customer.html', language => $user->{language}, 
-        format => 'html');
+	template => 'Customer/customer', language => $user->{language}, 
+        format => 'HTML');
     $template->render($results);
         
 }
@@ -70,12 +70,16 @@ This method creates a blank screen for entering a customer's information.
 
 sub add {
     my ($request) = @_;
-    my $customer = LedgerSMB::DBObject::Company->new(base => $request, copy => 'all');
+    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
     $customer->set(entity_class=>2);
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'Customer/customer.html', language => $user->{language}, 
-        format => 'html');
-    $template->render($results);
+    my $template = LedgerSMB::Template->new( 
+	user => $user, 
+	template => 'customer', 
+	path => 'UI/Customer',
+	locale => $request->{_locale}, 
+        format => 'HTML');
+    $request->{script} = 'Customer/customer';
+    $template->render($request);
 }
 
 =pod
@@ -100,13 +104,13 @@ sub search {
     if ($request->type() eq 'POST') {
         # assume it's asking us to do the search, now
         
-        my $customer = LedgerSMB::DBObject::Company->new(base => $request, copy => 'all');
+        my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
         $customer->set(entity_class=>2);
         my $results = $customer->search($customer->{search_pattern});
 
         my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Customer/customer.html', language => $user->{language}, 
-            format => 'html');
+    	template => 'Customer/customer', language => $user->{language}, 
+            format => 'HTML');
         $template->render($results);
         
     }
@@ -114,9 +118,12 @@ sub search {
         
         # grab the happy search page out.
         
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Customer/customer_search.html', language => $user->{language}, 
-            format => 'html');
+        my $template = LedgerSMB::Template->new( 
+		user => $user,
+		path => 'UI/Customer' ,
+    		template => 'customer_search', 
+		locale => $request->{_locale}, 
+		format => 'HTML');
             
         $template->render();
     }
@@ -151,8 +158,8 @@ sub save {
         my $result = $customer->save();
 
         my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Customer/customer.html', language => $user->{language}, 
-            format => 'html');
+    	template => 'Customer/customer', language => $user->{language}, 
+            format => 'HTML');
         $template->render($result);
     } 
     else {

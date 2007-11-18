@@ -170,9 +170,9 @@ $$ language 'plpgsql';
 
 
 create or replace function _entity_location_save(
-    in_company_id int,
-    in_location_class int, in_line_one text, in_line_two text, 
-    in_city_province TEXT, in_mail_code text, in_country_code int,
+    in_company_id int, in_location_id int,
+    in_location_class int, in_line_one text, in_line_two text,
+    in_city TEXT, in_state TEXT, in_mail_code text, in_country_code int,
     in_created date
 ) returns int AS $$
 
@@ -180,46 +180,20 @@ create or replace function _entity_location_save(
         l_row location;
         l_id INT;
     BEGIN
-    
-        SELECT l.* INTO l_row FROM location l 
-        JOIN company_to_location ctl ON ctl.location_id = l.id
-        JOIN company c on ctl.company_id = c.id
-        where c.id = in_company_id;
-        
-        IF NOT FOUND THEN
-        
-            l_id := nextval('location_id_seq');
-            
-            INSERT INTO location (id, location_class, line_one, line_two, 
-                 city_province, country_id, mail_code, created)
-            VALUES (
-                l_id,
-                in_location_class,
-                in_line_one,
-                in_line_two,
-                in_city_province,
-                in_country_code,
-                in_mail_code,
-                in_created
-            );
-            
-            INSERT INTO company_to_location (location_id, company_id)
-            VALUES (l_id, in_company_id);
-        
-        ELSIF FOUND THEN
-        
-            l_id := l.id;
-            update location SET
-                location_class = in_location_class,
-                line_one = in_line_one,
-                line_two = in_line_two,
-                city_province = in_city_province,
-                country_id = in_country_code,
-                mail_code = in_mail_code
-            WHERE id = l_id;        
-        
-        END IF;
-        return l_id;
+	DELETE FROM company_to_location
+	WHERE company_id = in_company_id
+		AND location_class = in_location_class
+		AND location_id = in_location_id;
+
+	SELECT location_save(in_line_one, in_line_two, NULL, in_city,
+		in_state, in_mail_code, in_mail_code, in_country_code) 
+	INTO l_id;
+
+	INSERT INTO company_to_location 
+		(company_id, location_class, location_id)
+	VALUES  (in_company_id, in_location_class, l_id);
+
+	RETURN l_id;    
     END;
 
 $$ language 'plpgsql';

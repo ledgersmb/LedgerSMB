@@ -130,7 +130,6 @@ SELECT SETVAL('location_class_id_seq',4);
   
 CREATE TABLE location (
   id serial PRIMARY KEY,
-  location_class integer not null references location_class(id),
   line_one text check (line_one ~ '[[:alnum:]_]') NOT NULL,
   line_two text,
   line_three text,
@@ -156,6 +155,7 @@ COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;
 
 CREATE TABLE company_to_location (
   location_id integer references location(id) not null,
+  location_class integer not null references location_class(id),
   company_id integer not null references company(id) ON DELETE CASCADE,
   PRIMARY KEY(location_id,company_id));
 
@@ -201,6 +201,7 @@ create table entity_employee (
 
 CREATE TABLE person_to_location (
   location_id integer not null references location(id),
+  location_class integer not null references location_class(id),
   person_id integer not null references person(id) ON DELETE CASCADE,
   PRIMARY KEY (location_id,person_id));
 

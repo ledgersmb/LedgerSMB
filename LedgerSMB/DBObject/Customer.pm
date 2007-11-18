@@ -1,6 +1,6 @@
 package LedgerSMB::DBObject::Customer;
 
-use base qw(LedgerSMB::DBObject::Company);
+use base qw(LedgerSMB::DBObject);
 use LedgerSMB::DBObject;
 use LedgerSMB::Entity;
 

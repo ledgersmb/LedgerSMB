@@ -157,8 +157,8 @@ my $template;
   $template = LedgerSMB::Template->new(
   user     => $request->{_user},
   locale   => $request->{_locale},
-#  path     => 'UI/payments',
-  path     => 'UI',
+  path     => 'UI/payments',
+#  path     => 'UI',
   template => 'payment1',
   format => 'HTML', );
 $template->render($select);# And finally, Lets print the screen :)

@@ -1,6 +1,6 @@
 -- VERSION 1.3.0
 CREATE OR REPLACE FUNCTION location_save
-(in_companyname text, in_address1 text, in_address2 text, 
+(in_address1 text, in_address2 text, in_address3 text,
 	in_city text, in_state text, in_zipcode text, in_country text) 
 returns integer AS
 $$
@@ -10,9 +10,9 @@ DECLARE
 BEGIN
 	
 	SELECT * INTO location_row FROM location
-	WHERE companyname = in_companyname AND
-		address1 = in_address1 AND
-		address2 = in_address2 AND
+	WHERE line_one = in_address1 AND
+		line_two = in_address2 AND
+		line_three = in_address3 AND
 		city = in_city AND
 		state = in_state AND
 		zipcode = in_zipcode AND

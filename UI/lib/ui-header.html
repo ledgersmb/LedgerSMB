@@ -6,7 +6,16 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<?lsmb IF form.stylesheet ?>
 	<link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<?lsmb ELSE ?>
+	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<?lsmb END ?>
+	<?lsmb IF script ?>
+	<link rel="stylesheet" href="css/<?lsmb script ?>.css" type="text/css" title="LedgerSMB stylesheet" />
+	<?lsmb END ?>
+	
+
 
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<meta name="robots" content="noindex,nofollow" />

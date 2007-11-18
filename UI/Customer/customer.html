@@ -1,109 +1,102 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<title><?lsmb form.titlebar ?></title>
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="-1" />
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
-
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<meta name="robots" content="noindex,nofollow" />
-        
-</head>
+<?lsmb PROCESS 'ui-header.html' ?>
+<body>
+<div class="listtop"><strong><?lsmb text('Add/Edit Customer') ?></strong></div>
 <div class="customer">
-    
-    <font size="17"><?lsmb customer.name?></font>
-    
+    <?lsmb IF name ?> 
+    <font size="17"><?lsmb name?></font>
+    <?lsmb END ?>
 <form name="customer" method="POST" action="vendor.pl">
+	<label for="name"><?lsmb text('Name:') ?></label>
+	<input name="name" id="name" type="text" value="<?lsmb name ?>"><br/>
         <table>
-        
+       <?lsmb IF ordered ?> 
         <tr>
             <td><b><?lsmb text('Shipping Address') ?></b></td>
             
             <td><b><?lsmb text('Billing Address (if different)') ?></p></td>
             
         </tr>
+	<?lsmb END ?>
         
-        <hr/>
         
-        <?lsmb FOREACH entry = customer.ordered  ?>
+        <?lsmb FOREACH entry = ordered  ?>
         <tr>
             <td>
                 <label for="shipping_<?lsmb entry ?>"><?lsmb text(entry) ?>:
 		</label>
-                <input id="shipping_<?lsmb entry ?>" type="textarea" 
+                <input id="shipping_<?lsmb entry ?>" type="text" 
 			name="shipping_<?lsmb entry ?>" 
-			value="<?lsmb customer.entry ?>">
+			value="<?lsmb entry ?>">
             </td>
             <td>
-                <input type="textarea" name="billing_<?lsmb entry ?>" 
-			value="<?lsmb customer.entry ?>">
+                <input type="text" name="billing_<?lsmb entry ?>" 
+			value="<?lsmb entry ?>">
             </td>            
         </tr>
         <?lsmb END ?>
         <tr>
             <td>
                 <label for="startdate"><?lsmb text('Starting Date:') ?></label>
-                    <input id="startdate" type="textarea" name="startdate" 
-			value="<?lsmb customer.startdate ?>">
+                    <input id="startdate" type="text" name="startdate" 
+			class="date" value="<?lsmb startdate ?>">
             </td>
             <td>
                 <label for="enddate"><?lsmb('End date:') ?></label>
-                    <input id="enddate" type="textarea" name="startdate" 
-			value="<?lsmb customer.enddate ?>">
+                    <input id="enddate" type="text" name="startdate" 
+			class="date" value="<?lsmb enddate ?>">
             </td>
         </tr>
         <tr>
             <td>
                 <label for"creditlimit"><?lsmb text('Credit Limit:') ?></label>
-                <input id="creditlimit" name="creditlimit" type="textarea" 
-			value="<?lsmb customer.creditlimit ?>">
+                <input id="creditlimit" name="creditlimit" type="text" 
+			value="<?lsmb creditlimit ?>">
             </td>
             <td>
                 <label for="terms"><?lsmb text('Terms:') ?></label>
-                <input id="terms" name="terms" type="textarea" 
-			value="<?lsmb customer.terms ?>"> days
-            </td>
-            <td>
-                <label for="discount"><?lsmb text('Discount %:') ?></label>
-                <input id="discount" name="discount" type="textarea" 
-			value="<?lsmb customer.discount ?>">                
+                <input id="terms" name="terms" type="text" 
+			value="<?lsmb terms ?>"> days
             </td>
         </tr>
         <tr>
             
             <td>
                 <label for="taxnumber"><?lsmb text('Tax Number/SSN:') ?></label>
-                <input id="taxnumber" name="taxnumber" type="textarea" 
-			value="<?lsmb customer.taxnumber ?>">                
+                <input id="taxnumber" name="taxnumber" type="text" 
+			value="<?lsmb taxnumber ?>">                
             </td>
             <td>
                 <label for"gifi_accno"><?lsmb text('Subcontract GIFI:') ?>
 		</label>
-                <input id="gifi_accno" name="gifi_accno" type="textarea" 
-			value="<?lsmb customer.gifi_accno ?>">
+                <input id="gifi_accno" name="gifi_accno" type="text" 
+			value="<?lsmb gifi_accno ?>">
+            </td>
+        </tr>
+	<tr>
+            <td>
+                <label for="discount"><?lsmb text('Discount %:') ?></label>
+                <input id="discount" name="discount" type="text" size="3" 
+			maxlength="3" value="<?lsmb discount ?>">/
+		<input id="discountdays" name="discountdays" type="text" 
+		size="3" value="<?lsmb discount_days ?>">  
             </td>
             <td>
                 <label for"sic_code"><?lsmb text('SIC Code:') ?></label>
-                <input id="sic_code" name="sic_code" type="textarea" 
-			value="<?lsmb customer.sic_code ?>">
+                <input id="sic_code" name="sic_code" type="text" 
+			value="<?lsmb sic_code ?>">
             </td>
         </tr>
-        
         <tr>
             
-            <td></td>
             <td>
                 <label for"bic"><?lsmb text('BIC:') ?></label>
-                <input id="bic" name="bic" type="textarea" 
-			value="<?lsmb customer.bic ?>">
+                <input id="bic" name="bic" type="text" 
+			value="<?lsmb bic ?>">
             </td>
             <td>
                 <label for="iban"><?lsmb text('IBAN:') ?></label>
-                <input id="iban" name="iban" type="textarea" 
-			value="<?lsmb customer.iban ?>">
+                <input id="iban" name="iban" type="text" 
+			value="<?lsmb iban ?>">
             </td>
         </tr>
         
@@ -111,21 +104,22 @@
             <td>
                 <label for="notes"><?lsmb text('Notes:') ?></label><br/>
                 <textarea name="notes" rows="3" cols="40" id="notes"><?lsmb 
-			customer.notes
+			notes
 		?></textarea>
 		<!-- The prior funny whitespace may look funny but it prevents
 		additional whitespace from being added to the data every time 
 		it is saved -->
             </td>
         </tr>
+    </table>
 
-        <tr>
             <hr/>
-            <br/>
-            <td>
-                <button class="submit" type="submit" name="action" value="save" accesskey="S" title="Save [Alt-S]"><?lsmb text('Save') ?></button>
-                </td>
-            <td>
+                <button class="submit" 
+			type="submit" 
+			name="action" 
+			value="save" 
+			accesskey="S" 
+			title="Save [Alt-S]"><?lsmb text('Save') ?></button>
                 <button class="submit" 
                         type="submit" 
                         name="action" 
@@ -133,8 +127,6 @@
                         accesskey="A" 
                         title="AP Transaction [Alt-A]">
 			<?lsmb text('AP Transaction') ?></button>
-                </td>
-            <td>
                 <button class="submit" 
                         type="submit" 
                         name="action" 
@@ -142,8 +134,6 @@
                         accesskey="I" 
                         title="customer Invoice [Alt-I]">
 			<?lsmb text('Customer Invoice') ?></button>
-            </td>
-            <td>
                 <button class="submit" 
                         type="submit" 
                         name="action" 
@@ -151,16 +141,12 @@
                         accesskey="O" 
                         title="Purchase Order [Alt-O]">
 			<?lsmb text('Purchase Order') ?></button>
-            </td>
-            <td>
                 <button class="submit" 
                         type="submit" 
                         name="action" 
                         value="rfq" 
                         accesskey="Q" 
                         title="RFQ [Alt-Q]"><?lsmb text('RFQ') ?></button>
-            </td>
-            <td>
                 <button class="submit" 
                         type="submit" 
                         name="action" 
@@ -168,8 +154,15 @@
                         accesskey="P" 
                         title="Pricelist [Alt-P]">
 			<?lsmb text('Pricelist') ?></button>
-            </td>
-        </tr>        
-    </table>
     </form>
 </div>
+<div id="locations">
+    <div class="listtop"><?lsmb text('Locations') ?></div>
+	<!-- This entire form should probably be optionaly automated with AJAX
+	in oder to prevent user confusion -->
+    <form id="location_form" action="vendor.pl">
+	<!-- todo, add location management! -->
+    </form>
+</div>
+</body>
+</html>
