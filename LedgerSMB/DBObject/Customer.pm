@@ -9,7 +9,9 @@ sub save {
 
     # This saves both the entity and the credit account. -- CT
     $self->{entity_class} = 2;
-    $self->{id} = $self->exec_method(funcname => 'entity_credit_save');
+    
+    $self->{entity_id} = $self->exec_method(funcname => 'entity_credit_save');
+    $self->{dbh}->commit;
 }
 
 sub get_metadata {

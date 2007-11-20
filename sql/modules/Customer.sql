@@ -54,10 +54,6 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     
 ) returns INT as $$
     
-    -- does not require entity_class, as entity_class is a known given to be 1
-
-    -- Maybe we should make this generic and pass through?  -- CT
-    
     DECLARE
         t_entity_class int;
         new_entity_id int;
@@ -99,7 +95,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
             VALUES (
                 new_entity_id,
                 in_entity_class,
-                in_discount, 
+                in_discount / 100, 
                 in_taxincluded,
                 in_creditlimit,
                 in_terms,
@@ -116,6 +112,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
             -- entity note class
             insert into entity_note (note_class, note, ref_key, vector) VALUES (
                 1, in_notes, new_entity_id, '');
+
             return new_entity_id;
 
         ELSIF FOUND THEN

@@ -150,13 +150,16 @@ sub save {
     my ($request) = @_;
 
     my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
+    $customer->save();
+    $customer->get_metadata();
 
-    my $result = $customer->save();
-
-    my $template = LedgerSMB::Template->new( user => $request->{_user}, 
-    	template => 'customer', locale => $request->{_locale},
+    my $template = LedgerSMB::Template->new( 
+	user => $request->{_user}, 
+    	template => 'customer', 
+	locale => $request->{_locale},
 	path => 'UI/Customer',
-            format => 'HTML');
+        format => 'HTML'
+    );
     $template->render($customer);
 }
 

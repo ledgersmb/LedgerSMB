@@ -1,13 +1,21 @@
 <?lsmb script_css = "Customer/customer.css" ?><?lsmb PROCESS 'ui-header.html' ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body>
+    <?lsmb IF name ?> 
+    <div class="pageheading"><?lsmb name?></font>
+    <?lsmb END ?>
 <div class="navigation" id="nav_div">
+<ul class="navigation">
+	<li><a href="#customer_div"><?lsmb text('Account') ?></a></li>
+	<?lsmb IF entity_id ?>
+	<li><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
+	<li><a href="#contact_div"><?lsmb text('Contact Info') ?></a></li>
+	<li><a href="#bank_div"><?lsmb text('Bank Accounts') ?></a></li>
+	<?lsmb END ?>
+</ul>
 </div>
 <div class="container" id="customer_div">
 <div class="listtop"><strong><?lsmb text('Add/Edit Customer') ?></strong></div>
-    <?lsmb IF name ?> 
-    <font size="17"><?lsmb name?></font>
-    <?lsmb END ?>
 <form name="customer" method="POST" action="customer.pl">
 	<input type="hidden" name="entity_id" value="<?lsmb entity_id ?>">
 	<label for="name"><?lsmb text('Name:') ?></label>
@@ -43,7 +51,8 @@
         <?lsmb END ?>
         <tr>
             <td>
-                <label for="startdate"><?lsmb text('Starting Date:') ?></label>
+                <label for="startdate"><?lsmb text('Starting Date:') ?>
+			"<?lsmb startdate ?>"</label>
                     <input id="startdate" type="text" name="startdate" 
 			class="date" value="<?lsmb startdate ?>">
             </td>
@@ -81,11 +90,11 @@
         </tr>
 	<tr>
             <td>
-                <label for="discount"><?lsmb text('Discount %:') ?></label>
+                <label for="discount"><?lsmb text('Discount:') ?></label>
                 <input id="discount" name="discount" type="text" size="3" 
-			maxlength="3" value="<?lsmb discount ?>">/
-		<input id="discountdays" name="discountdays" type="text" 
-		size="3" value="<?lsmb discount_days ?>">  
+			maxlength="3" value="<?lsmb discount ?>">%/
+		<input id="discountdays" name="discount_terms" type="text" 
+		size="3" value="<?lsmb discount_terms ?>">  days
             </td>
             <td>
                 <label for="sic_code"><?lsmb text('SIC Code:') ?></label>
@@ -151,8 +160,8 @@
 			<?lsmb text('Pricelist') ?></button>
     </form>
 </div>
-<?lsmb #IF id ?>
-<div id="locations" class="container">
+<?lsmb IF entity_id ?>
+<div id="location_div" class="container">
     <div class="listtop"><?lsmb text('Locations') ?></div>
 	<!-- This entire form should probably be optionaly automated with AJAX
 	in oder to prevent user confusion -->
