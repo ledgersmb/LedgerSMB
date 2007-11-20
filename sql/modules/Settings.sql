@@ -7,6 +7,7 @@ BEGIN
 	UPDATE defaults SET value = in_value WHERE setting_key = in_key;
 	RETURN;
 END;
+$$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION setting_get (in_key varchar) RETURNS varchar AS
 $$
@@ -23,7 +24,7 @@ RETURNS SETOF defaults AS
 $$
 DECLARE
 	account defaults%ROWTYPE;
-BEGIN;
+BEGIN
 	FOR account IN 
 		SELECT * FROM defaults 
 		WHERE setting_key like '%accno_id'
@@ -33,13 +34,13 @@ BEGIN;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION setting_incriment (in_key varchar) returns varchar
+CREATE OR REPLACE FUNCTION setting_increment (in_key varchar) returns varchar
 AS
 $$
 DECLARE
 	base_value VARCHAR;
 	raw_value VARCHAR;
-	incriment INTEGER;
+	increment INTEGER;
 	inc_length INTEGER;
 	new_value VARCHAR;
 BEGIN
@@ -51,10 +52,10 @@ BEGIN
 	INTO base_value;
 
 	IF base_value like '0%' THEN
-		incriment := base_value::integer + 1;
-		SELECT char_length(incriment::text) INTO inc_length;
+		increment := base_value::integer + 1;
+		SELECT char_length(increment::text) INTO inc_length;
 
-		SELECT overlay(base_value placing incriment::varchar
+		SELECT overlay(base_value placing increment::varchar
 			from (select char_length(base_value) 
 				- inc_length + 1) for inc_length)
 		INTO new_value;

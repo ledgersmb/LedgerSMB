@@ -1,4 +1,31 @@
 -- VERSION 1.3.0
+
+CREATE OR REPLACE FUNCTION location_list_class()
+RETURNS SETOF location_class AS
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN
+		SELECT * FROM location_class ORDER BY id
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION location_list_country()
+RETURNS SETOF country AS
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN
+		SELECT * FROM country ORDER BY id
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION location_save
 (in_address1 text, in_address2 text, in_address3 text,
 	in_city text, in_state text, in_zipcode text, in_country text) 
@@ -16,13 +43,13 @@ BEGIN
 		city = in_city AND
 		state = in_state AND
 		zipcode = in_zipcode AND
-		country = in_country
+		country_id = in_country
 	LIMIT 1;
 	IF FOUND THEN
 		return location_row.id;
 	END IF;
 	INSERT INTO location 
-	(companyname, address1, address2, city, state, zipcode, country)
+	(companyname, address1, address2, city, state, zipcode, country_id)
 	VALUES
 	(in_companyname, in_address1, in_address2, in_city, in_state,
 		in_zipcode, in_country);

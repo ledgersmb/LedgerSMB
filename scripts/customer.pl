@@ -72,6 +72,9 @@ sub add {
     my ($request) = @_;
     my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
     $customer->set(entity_class=>2);
+
+    $customer->get_metadata();
+
     my $template = LedgerSMB::Template->new( 
 	user => $user, 
 	template => 'customer', 
@@ -79,7 +82,7 @@ sub add {
 	locale => $request->{_locale}, 
         format => 'HTML');
     $request->{script} = 'Customer/customer';
-    $template->render($request);
+    $template->render($customer);
 }
 
 =pod
@@ -145,26 +148,16 @@ customer as needed, and will generate a new Company ID for the customer if neede
 sub save {
     
     my ($request) = @_;
-    
-    if ($request->type() == 'POST') {
-        
-        my $customer = LedgerSMB::DBObject::Customer->get(base=>$request, copy=>'all');
-        
-        unless ($customer) {
-            
-            $customer = LedgerSMB::DBObject::Customer->new(base=>$reqest, copy=>'all');
-        }
-        
-        my $result = $customer->save();
 
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Customer/customer', language => $user->{language}, 
+    my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
+
+    my $result = $customer->save();
+
+    my $template = LedgerSMB::Template->new( user => $request->{_user}, 
+    	template => 'customer', locale => $request->{_locale},
+	path => 'UI/Customer',
             format => 'HTML');
-        $template->render($result);
-    } 
-    else {
-        
-    }
+    $template->render($customer);
 }
 
 1;

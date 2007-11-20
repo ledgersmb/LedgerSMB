@@ -5,39 +5,24 @@ use LedgerSMB::DBObject;
 use LedgerSMB::Entity;
 
 sub save {
-    
-    # this is doing way too much.
-    
     my $self = shift @_;
-    
-    my $entity;
-    
-    # this is a fairly effective way of telling if we need to create a new
-    # entity or not.
-    
-    if (!$self->{entity_id}) {
-        
-        $entity = LedgerSMB::Entity->new(base=>$request);
-    }
-    else {
-        
-        $entity = LedgerSMB::Entity->get(id=>$self->{entity_id});
-    }
-    
-    $entity->set(name=> $reqeust->{first_name}." ".$request->{last_name} );
-    $entity->set(entity_class=>2);
 
-    $self->set(entity_id=>$entity->{id});
-    $self->set(entity_class=> 2);
-    
-    $entity->save();
-    if (!self->{entity_id}) {
-        
-        $self->{entity_id} = $entity->{id};
-    }
-    $self->SUPER::save();
-    
-    return $self->{id};
+    # This saves both the entity and the credit account. -- CT
+    $self->{entity_class} = 2;
+    $self->{id} = $self->exec_method(funcname => 'entity_credit_save');
+}
+
+sub get_metadata {
+    my $self = shift @_;
+
+    @{$self->{location_class}} = 
+         $self->exec_method(funcname => 'location_list_class');
+
+    @{$self->{country}} = 
+         $self->exec_method(funcname => 'location_list_country');
+
+    @{$self->{contact_class}} = 
+         $self->exec_method(funcname => 'entity_list_contact_class');
 }
 
 sub search {

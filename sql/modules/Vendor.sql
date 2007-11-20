@@ -171,9 +171,9 @@ $$ language 'plpgsql';
 
 create or replace function _entity_location_save(
     in_company_id int, in_location_id int,
-    in_location_class int, in_line_one text, in_line_two text,
-    in_city TEXT, in_state TEXT, in_mail_code text, in_country_code int,
-    in_created date
+    in_location_class int, in_line_one text, in_line_two text, 
+    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
+    in_country_code int
 ) returns int AS $$
 
     DECLARE
@@ -185,7 +185,7 @@ create or replace function _entity_location_save(
 		AND location_class = in_location_class
 		AND location_id = in_location_id;
 
-	SELECT location_save(in_line_one, in_line_two, NULL, in_city,
+	SELECT location_save(in_line_one, in_line_two, in_line_three, in_city,
 		in_state, in_mail_code, in_mail_code, in_country_code) 
 	INTO l_id;
 

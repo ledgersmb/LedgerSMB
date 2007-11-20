@@ -1,5 +1,17 @@
 BEGIN;
 
+CREATE OR REPLACE FUNCTION entity_list_contact_class() 
+RETURNS SETOF contact_class AS
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN
+		SELECT * FROM contact_class ORDER BY id
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ language plpgsql;
 
 CREATE TYPE customer_search_return AS (
         legal_name text,
@@ -28,25 +40,23 @@ CREATE TYPE customer_search_return AS (
 -- $$ This structure will change greatly in 1.4.  
 -- If you want to reply on it heavily, be prepared for breakage later.  $$;
 
-CREATE OR REPLACE FUNCTION customer_save (
-    in_id int,
+CREATE OR REPLACE FUNCTION entity_credit_save (
+    in_id int, in_entity_class int,
     
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
     in_discount_terms int,
-    in_terms int, in_meta_number varchar(32), in_cc text, in_bcc text, 
-    in_business_id int, in_language varchar(6), in_pricegroup_id int, 
+    in_terms int, in_meta_number varchar(32), in_business_id int, 
+    in_language varchar(6), in_pricegroup_id int, 
     in_curr char, in_startdate date, in_enddate date, 
-    
-    in_bic text, in_iban text, 
-    
     in_notes text, 
-    
     in_name text, in_tax_id TEXT,
     in_threshold NUMERIC
     
 ) returns INT as $$
     
     -- does not require entity_class, as entity_class is a known given to be 1
+
+    -- Maybe we should make this generic and pass through?  -- CT
     
     DECLARE
         t_entity_class int;
@@ -55,20 +65,19 @@ CREATE OR REPLACE FUNCTION customer_save (
         l_id int;
     BEGIN
         
-        t_entity_class := 1;
         
         SELECT INTO v_row * FROM company WHERE id = in_id;
         
         IF NOT FOUND THEN
             -- do some inserts
             
-            new_entity_id := nextval('entity_id_seq');
+            select nextval('entity_id_seq') into new_entity_id;
             
             insert into entity (id, name, entity_class) 
-                VALUES (new_entity_id, in_name, t_entity_class);
+                VALUES (new_entity_id, in_name, in_entity_class);
             
-            INSERT INTO company ( id, entity_id, legal_name, tax_id ) 
-                VALUES ( in_id, new_entity_id, in_name, in_tax_id );
+            INSERT INTO company ( entity_id, legal_name, tax_id ) 
+                VALUES ( new_entity_id, in_name, in_tax_id );
             
             INSERT INTO entity_credit_account (
                 entity_id,
@@ -78,27 +87,23 @@ CREATE OR REPLACE FUNCTION customer_save (
                 creditlimit,
                 terms,
                 meta_number,
-                cc,
-                bcc,
                 business_id,
                 language_code,
                 pricegroup_id,
                 curr,
                 startdate,
                 enddate,
-                discountterms,
+                discount_terms,
                 threshold
             )
             VALUES (
                 new_entity_id,
-                t_entity_class,
+                in_entity_class,
                 in_discount, 
                 in_taxincluded,
                 in_creditlimit,
                 in_terms,
                 in_meta_number,
-                in_cc,
-                in_bcc,
                 in_business_id,
                 in_language,
                 in_pricegroup_id,
@@ -106,22 +111,13 @@ CREATE OR REPLACE FUNCTION customer_save (
                 in_startdate,
                 in_enddate,
                 in_discount_terms,
-                in_threashold
+                in_threshold
             );
-            INSERT INTO entity_bank_account (
-                entity_id,
-                bic,
-                iban
-            )
-            VALUES (
-                new_entity_id,
-                in_bic,
-                in_iban
-            );            
             -- entity note class
             insert into entity_note (note_class, note, ref_key, vector) VALUES (
                 1, in_notes, new_entity_id, '');
-             
+            return new_entity_id;
+
         ELSIF FOUND THEN
         
             update company set tax_id = in_tax_id where id = in_id;
@@ -131,8 +127,6 @@ CREATE OR REPLACE FUNCTION customer_save (
                 creditlimit = in_creditlimit,
                 terms = in_terms,
                 meta_number = in_meta_number,
-                cc = in_cc,
-                bcc = in_bcc,
                 business_id = in_business_id,
                 language_code = in_language,
                 pricegroup_id = in_pricegroup_id,
@@ -143,17 +137,13 @@ CREATE OR REPLACE FUNCTION customer_save (
                 discount_terms = in_discount_terms
             where entity_id = v_row.entity_id;
             
-            UPDATE entity_bank_account SET
-                bic = in_bic,
-                iban = in_iban
-            WHERE entity_id = v_row.entity_id;
             
             UPDATE entity_note SET
                 note = in_note
             WHERE ref_key = v_row.entity_id;
+            return in_id;
         
         END IF;
-        return in_id;
     END;
     
 $$ language 'plpgsql';
@@ -161,15 +151,14 @@ $$ language 'plpgsql';
 CREATE OR REPLACE FUNCTION customer_location_save (
     in_company_id int,
     in_location_class int, in_line_one text, in_line_two text, 
-    in_city_province TEXT, in_mail_code text, in_country_code int,
-    in_created date
+    in_line_three text,
+    in_city TEXT, in_state text, in_mail_code text, in_country_code int
 ) returns int AS $$
     BEGIN
     return _entity_location_save(
         in_company_id,
-        in_location_class, in_line_one, in_line_two, 
-        in_city_province , in_mail_code, in_country_code,
-        in_created);
+        in_location_class, in_line_one, in_line_two, in_line_three,
+        in_city, in_state, in_mail_code, in_country_code);
     END;
 
 $$ language 'plpgsql';
