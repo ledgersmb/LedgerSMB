@@ -28,7 +28,7 @@ $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION location_save
 (in_address1 text, in_address2 text, in_address3 text,
-	in_city text, in_state text, in_zipcode text, in_country text) 
+	in_city text, in_state text, in_zipcode text, in_country int) 
 returns integer AS
 $$
 DECLARE
@@ -42,16 +42,16 @@ BEGIN
 		line_three = in_address3 AND
 		city = in_city AND
 		state = in_state AND
-		zipcode = in_zipcode AND
+		mail_code = in_zipcode AND
 		country_id = in_country
 	LIMIT 1;
 	IF FOUND THEN
 		return location_row.id;
 	END IF;
 	INSERT INTO location 
-	(companyname, address1, address2, city, state, zipcode, country_id)
+	(line_one, line_two, line_three, city, state, mail_code, country_id)
 	VALUES
-	(in_companyname, in_address1, in_address2, in_city, in_state,
+	(in_address1, in_address2, in_address3, in_city, in_state,
 		in_zipcode, in_country);
 	SELECT lastval('location_id_seq') INTO location_id;
 	return location_id;

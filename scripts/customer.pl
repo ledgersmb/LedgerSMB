@@ -56,6 +56,28 @@ sub get {
         
 }
 
+
+sub add_location {
+    my ($request) = @_;
+    my $customer = LedgerSMB::DBObject::Customer->new({base => $request, copy => 'all'});
+    $customer->set( entity_class=> '2' );
+    $customer->save_location();
+    $customer->get();
+
+    
+    $customer->get_metadata();
+
+    my $template = LedgerSMB::Template->new( 
+	user => $user, 
+	template => 'customer', 
+	path => 'UI/Customer',
+	locale => $request->{_locale}, 
+        format => 'HTML');
+    $request->{script} = 'Customer/customer';
+    $template->render($customer);
+	
+}
+
 =pod
 
 =over

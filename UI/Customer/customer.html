@@ -165,7 +165,7 @@
     <div class="listtop"><?lsmb text('Locations') ?></div>
 	<!-- This entire form should probably be optionaly automated with AJAX
 	in oder to prevent user confusion -->
-    <form id="location_form" action="vendor.pl">
+    <form id="location_form" action="customer.pl">
 	<input type="hidden" name="entity_id" value="<?lsmb entity_id ?>">
 	<input type="hidden" name="location_id" value="<?lsmb location_id ?>">
     <table width="100%">
@@ -234,8 +234,9 @@
 		<?lsmb END ?>
 		</select>
 	</div>
-	<div><button type=submit class="submit" name=submit value="add_location"
-		id="loc_save_location">Save Location</button>
+	<div><button type=submit class="submit" name="action" 
+		value="add_location" id="loc_save_location">
+		<?lsmb text('Save Location') ?></button>
 	</div>
     </form>
 </div>

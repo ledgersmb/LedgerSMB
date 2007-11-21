@@ -186,7 +186,7 @@ create or replace function _entity_location_save(
 		AND location_id = in_location_id;
 
 	SELECT location_save(in_line_one, in_line_two, in_line_three, in_city,
-		in_state, in_mail_code, in_mail_code, in_country_code) 
+		in_state, in_mail_code, in_country_code) 
 	INTO l_id;
 
 	INSERT INTO company_to_location 
