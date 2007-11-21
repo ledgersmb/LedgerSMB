@@ -34,7 +34,7 @@ use strict;
 sub session_check {
     use Time::HiRes qw(gettimeofday);
     my ( $cookie, $form ) = @_;
-    print STFERR "Checking Session\n";
+    print STDERR "Checking Session\n";
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
