@@ -1379,4 +1379,4 @@ GRANT SELECT ON user_preference TO public;
 GRANT SELECT ON custom_table_catalog TO PUBLIC;
 GRANT SELECT ON custom_field_catalog TO PUBLIC;
 grant select on menu_node, menu_attribute, menu_acl to public;
-GRANT select on chart, gifi to public;
+GRANT select on chart, gifi, country to public;
