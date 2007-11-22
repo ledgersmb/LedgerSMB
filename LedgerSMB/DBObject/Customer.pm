@@ -12,7 +12,8 @@ sub save {
     # This saves both the entity and the credit account. -- CT
     $self->{entity_class} = $CUSTOMER_ENTITY_CLASS;
     
-    $self->{entity_id} = $self->exec_method(funcname => 'entity_credit_save');
+    ($ref) = $self->exec_method(funcname => 'entity_credit_save');
+    $self->{entity_id} = $ref->{entity_credit_save};
     $self->{dbh}->commit;
 }
 
@@ -32,6 +33,7 @@ sub get_metadata {
 sub save_location {
     $self = shift @_;
     $self->{entity_class} = $CUSTOMER_ENTITY_CLASS;
+    $self->{country_id} = $self->{country};
     $self->exec_method(funcname => 'customer_location_save');
 }
 

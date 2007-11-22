@@ -170,7 +170,7 @@ $$ language 'plpgsql';
 
 
 create or replace function _entity_location_save(
-    in_company_id int, in_location_id int,
+    in_entity_id int, in_location_id int,
     in_location_class int, in_line_one text, in_line_two text, 
     in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
     in_country_code int
@@ -179,9 +179,13 @@ create or replace function _entity_location_save(
     DECLARE
         l_row location;
         l_id INT;
+	t_company_id int;
     BEGIN
+	SELECT id INTO t_company_id
+	FROM company WHERE entity_id = in_entity_id;
+
 	DELETE FROM company_to_location
-	WHERE company_id = in_company_id
+	WHERE company_id = t_company_id
 		AND location_class = in_location_class
 		AND location_id = in_location_id;
 
@@ -191,7 +195,7 @@ create or replace function _entity_location_save(
 
 	INSERT INTO company_to_location 
 		(company_id, location_class, location_id)
-	VALUES  (in_company_id, in_location_class, l_id);
+	VALUES  (t_company_id, in_location_class, l_id);
 
 	RETURN l_id;    
     END;

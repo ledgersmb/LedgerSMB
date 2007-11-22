@@ -49,11 +49,12 @@ BEGIN
 		return location_row.id;
 	END IF;
 	INSERT INTO location 
-	(line_one, line_two, line_three, city, state, mail_code, country_id)
+	(line_one, line_two, line_three, city, state, mail_code, country_id,
+		created)
 	VALUES
 	(in_address1, in_address2, in_address3, in_city, in_state,
-		in_zipcode, in_country);
-	SELECT lastval('location_id_seq') INTO location_id;
+		in_zipcode, in_country, now());
+	SELECT currval('location_id_seq') INTO location_id;
 	return location_id;
 END;
 $$ LANGUAGE PLPGSQL;
