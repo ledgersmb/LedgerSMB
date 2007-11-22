@@ -198,6 +198,35 @@ sub _valid_language {
 	return 1;
 }
 
+sub _preprocess {
+	my ($self, $vars) = @_;
+	return unless $self->{myconfig};
+	use LedgerSMB;
+	if (UNIVERSAL::isa($vars, 'Math::BigFloat')){
+		$vars = 
+			LedgerSMB::format_amount('LedgerSMB', 
+				{amount => $vars.
+				user => $self->{myconfig} });
+	}
+	my $type = ref($vars);
+
+	if ($type eq 'SCALAR' || !$type){
+		return;
+	}
+	if ($type eq 'ARRAY'){
+		for (@$vars){
+			if (ref($_)){
+				$self->_preprocess($_);
+			}
+		}
+	}
+	else {
+		for my $key (keys %$vars){
+			$self->_preprocess($vars->{$key});
+		}
+	}
+}
+
 sub render {
 	my $self = shift;
 	my $vars = shift;
@@ -205,7 +234,9 @@ sub render {
 		throw Error::Simple "Invalid format";
 	}
 	my $format = "LedgerSMB::Template::$self->{format}";
-
+#	if ($self->{myconfig}){
+#	        $self->_preprocess($vars);
+#	}
 	eval "require $format";
 	if ($@) {
 		throw Error::Simple $@;

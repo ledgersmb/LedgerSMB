@@ -93,18 +93,7 @@ This method creates a blank screen for entering a customer's information.
 sub add {
     my ($request) = @_;
     my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
-    $customer->set(entity_class=>2);
-
-    $customer->get_metadata();
-
-    my $template = LedgerSMB::Template->new( 
-	user => $user, 
-	template => 'customer', 
-	path => 'UI/Customer',
-	locale => $request->{_locale}, 
-        format => 'HTML');
-    $request->{script} = 'Customer/customer';
-    $template->render($customer);
+    _render_main_screen($customer);
 }
 
 =pod
@@ -173,16 +162,47 @@ sub save {
 
     my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
     $customer->save();
+    _render_main_screen($customer);
+}
+
+sub edit{
+    my $request = shift @_;
+    my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
+    $customer->get();
+    _render_main_screen($customer);
+}
+
+sub _render_main_screen{
+    my $customer = shift @_;
     $customer->get_metadata();
 
+    $customer->{creditlimit} = "$customer->{creditlimit}"; 
+    $customer->{discount} = "$customer->{discount}"; 
+
     my $template = LedgerSMB::Template->new( 
-	user => $request->{_user}, 
+	user => $customer->{_user}, 
     	template => 'customer', 
-	locale => $request->{_locale},
+	locale => $customer->{_locale},
 	path => 'UI/Customer',
         format => 'HTML'
     );
     $template->render($customer);
+}
+
+sub save_contact {
+    my ($request) = @_;
+    my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
+    $customer->save_contact();
+    $customer->get;
+    _render_main_screen($customer);
+}
+
+sub save_bank_account {
+    my ($request) = @_;
+    my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
+    $customer->save_bank_account();
+    $customer->get;
+    _render_main_screen($customer);
 }
 
 1;

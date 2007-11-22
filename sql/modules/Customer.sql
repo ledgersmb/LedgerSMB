@@ -227,6 +227,35 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION entity__save_bank_account
+(in_entity_id int, in_bic text, in_iban text)
+RETURNS int AS
+$$
+DECLARE out_id int;
+BEGIN
+	INSERT INTO entity_bank_account(entity_id, bic, iban)
+	VALUES(in_entity_id, in_bic, in_iban);
+
+	SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+
+	RETURN out_id;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION company__save_contact
+(in_entity_id int, in_contact_class int, in_contact text)
+RETURNS INT AS
+$$
+DECLARE out_id int;
+BEGIN
+	INSERT INTO company_to_contact(company_id, contact_class_id, contact)
+	SELECT id, in_contact_class, in_contact FROM company
+	WHERE entity_id = in_entity_id;
+
+	RETURN 1;
+END;
+$$ LANGUAGE PLPGSQL;
+
 CREATE TYPE entity_note_list AS (
 	id int,
 	note text

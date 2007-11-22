@@ -16,6 +16,9 @@
 </div>
 <div class="container" id="customer_div">
 <div class="listtop"><strong><?lsmb text('Add/Edit Customer') ?></strong></div>
+<?lsmb FOREACH n = notes ?>
+<div class="entity_note"><?lsmb n.note ?></div>
+<?lsmb END ?>
 <form name="customer" method="POST" action="customer.pl">
 	<input type="hidden" name="entity_id" value="<?lsmb entity_id ?>">
 	<label for="name"><?lsmb text('Name:') ?></label>
@@ -107,9 +110,8 @@
         <tr>
             <td>
                 <label for="notes"><?lsmb text('Notes:') ?></label><br/>
-                <textarea name="notes" rows="3" cols="40" id="notes"><?lsmb 
-			notes
-		?></textarea>
+
+                <textarea name="notes" rows="3" cols="40" id="notes"></textarea>
 		<!-- CT: The prior funny whitespace may look funny but it 
 		prevents additional whitespace from being added to the data 
 		every time it is saved.  -->
@@ -199,7 +201,7 @@
 	<div> 
 		<label for="loc_type"><?lsmb text('Type:') ?></label>
 		<select id='loc_type' name="location_class">
-		<?lsmb FOREACH lc = location_class ?>
+		<?lsmb FOREACH lc = location_class_list ?>
 		<option value="<?lsmb lc.id ?>"><?lsmb lc.class ?></option>
 		<?lsmb END ?>
 		</select>
@@ -229,7 +231,7 @@
 	<div> 
 		<label for="country"><?lsmb text('Country:') ?></label>
 		<select name="country" id="country">
-		<?lsmb FOREACH c = country ?>
+		<?lsmb FOREACH c = country_list ?>
 		<option value="<?lsmb c.id ?>"><?lsmb c.name ?></option>
 		<?lsmb END ?>
 		</select>
@@ -270,7 +272,7 @@
 	<input type="hidden" name="contact_id" value="<?lsmb contact_id ?>">
 	<div><label for="contact_type"><?lsmb text('Type:') ?></label>
 		<select name="contact_class" id="contact_type">
-		<?lsmb FOREACH cc = contact_class ?>
+		<?lsmb FOREACH cc = contact_class_list ?>
 		<option value="<?lsmb cc.id ?>"><?lsmb cc.class ?></option>
 		<?lsmb END ?>
 		</select>
@@ -282,6 +284,7 @@
 	<div><button name="action" id="contact_action_save" 
 		value="save_contact"><?lsmb text('Save Contact') ?></button>
 	</div>
+</form>
 	
 </div>
 <div class="container" id="bank_div">
@@ -307,7 +310,7 @@
 </tr>
 <?lsmb END ?>
 </table>
-<form action="customer.pl">
+<form name="bank_acct" action="customer.pl">
 	<input type="hidden" name="entity_id" value="<?lsmb entity_id ?>">
 	<input type="hidden" name="bank_account_id" 
 		value="<?lsmb bank_account_id ?>">
