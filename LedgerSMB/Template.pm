@@ -205,8 +205,9 @@ sub _preprocess {
 	if (UNIVERSAL::isa($vars, 'Math::BigFloat')){
 		$vars = 
 			LedgerSMB::format_amount('LedgerSMB', 
-				{amount => $vars.
-				user => $self->{myconfig} });
+				amount => $vars,
+				user => $self->{myconfig},
+				precision => 2);
 	}
 	my $type = ref($vars);
 

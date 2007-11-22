@@ -344,6 +344,31 @@ SKIP: {
 		'Template, render (PDF): testfile removed');
 }
 
+#########################################
+## LedgerSMB::Template private methods ##
+#########################################
+
+use Math::BigFloat;
+$template = undef;
+$template = new LedgerSMB::Template('user' => {numberformat => '1.000,00'},
+	'format' => 'HTML', 'template' => '04-template', 'no_auto_output' => 1);
+ok(defined $template, 
+	'Template, private (_preprocess): Object creation with format and template');
+isa_ok($template, 'LedgerSMB::Template', 
+	'Template, private (_preprocess): Object creation with format and template');
+my $number = Math::BigFloat->new(17.5);
+isa_ok($number, 'Math::BigFloat', 
+	'Template, private (_preprocess): number');
+$template->_preprocess($number);
+cmp_ok($number, 'eq', '17,50',
+	'Template, private (_preprocess): Math::BigFloat conversion');
+$number = [Math::BigFloat->new(1008.51), 'hello'];
+$template->_preprocess($number);
+cmp_ok($number->[0], 'eq', '1.008,51',
+	'Template, private (_preprocess): Math::BigFloat conversion (array)');
+cmp_ok($number->[1], 'eq', 'hello',
+	'Template, private (_preprocess): no conversion (array)');
+
 ###################################
 ## LedgerSMB::Template::Elements ##
 ###################################
