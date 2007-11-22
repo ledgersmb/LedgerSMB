@@ -22,7 +22,7 @@ CREATE TYPE customer_search_return AS (
         taxincluded bool,
         creditlimit numeric,
         terms int2,
-        customernumber int,
+        customernumber text,
         business_id int,
         language_code text,
         pricegroup_id int,
@@ -222,7 +222,7 @@ BEGIN
 	FOR out_row IN
 		SELECT * from entity_bank_account where entity_id = in_entity_id
 	LOOP
-		RETURN NEXT;
+		RETURN NEXT out_row;
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;

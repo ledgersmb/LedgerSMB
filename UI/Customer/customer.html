@@ -180,7 +180,7 @@
     </tr>
 	<?lsmb FOREACH loc = locations ?>
     <tr>
-	<td class="type"><?lsmb loc.type ?></td>
+	<td class="type"><?lsmb loc.class ?></td>
 	<td class="line_one"><?lsmb loc.line_one ?></td>
 	<td class="city"><?lsmb loc.city ?></td>
 	<td class="state"><?lsmb loc.state ?></td>
@@ -198,7 +198,7 @@
     </table>
 	<div> 
 		<label for="loc_type"><?lsmb text('Type:') ?></label>
-		<select name='loc_type'>
+		<select id='loc_type' name="location_class">
 		<?lsmb FOREACH lc = location_class ?>
 		<option value="<?lsmb lc.id ?>"><?lsmb lc.class ?></option>
 		<?lsmb END ?>

@@ -35,6 +35,8 @@ sub save_location {
     $self->{entity_class} = $CUSTOMER_ENTITY_CLASS;
     $self->{country_id} = $self->{country};
     $self->exec_method(funcname => 'customer_location_save');
+
+    $self->{dbh}->commit;
 }
 
 sub save_contact {
@@ -45,7 +47,8 @@ sub save_bank_acct {
 
 sub get {
     my $self = shift @_;
-    $self->merge(shift @{$self->exec_method(funcname => 'customer__retrieve')});
+    ($ref) = $self->exec_method(funcname => 'customer__retrieve');
+    $self->merge($ref);
 
     $self->{name} = $self->{legal_name};
 
@@ -56,7 +59,7 @@ sub get {
 		funcname => 'company__list_contacts');
 
     @{$self->{contacts}} = $self->exec_method(
-		funcname => 'company__list_bank_accounts');
+		funcname => 'company__list_bank_account');
 
     @{$self->{notes}} = $self->exec_method(
 		funcname => 'company__list_notes');
