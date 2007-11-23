@@ -402,7 +402,7 @@ sub close_till {
     $form->{transdate} = $form->current_date( \%myconfig );
     GL->post_transaction( \%myconfig, \%$form );
     delete $form->{id};
-    $lines .= "Cumulative Error: $amount";
+    $lines .= "Cumulative Error: $amount\n\n";
     $form->{accno} = $form->{accno_1};
     RC->getbalance( \%myconfig, \%$form );
     $amount            = $form->{balance} * -1;
@@ -419,7 +419,7 @@ sub close_till {
     $head =
         "Closing Till $pos_config{till} for $form->{login}\n"
       . "Date: $form->{transdate}\n\n\n";
-    my @cashlines = [ $locale->text("Cash Breakdown:") ];
+    my @cashlines = ( $locale->text("Cash Breakdown:") );
     foreach my $unit ( @{ $pos_config{'breakdown'} } ) {
 
         # XXX Needs to take into account currencies that don't use 2 dp
@@ -428,34 +428,34 @@ sub close_till {
         $calcval = sprintf( '%03d', $calcval * 100 ) if $calcval < 1;
         my $subval = 'sub_' . $calcval;
         $calcval = 'calc_' . $calcval;
-        push @cashlines, "$form->{$calcval} x $parseval = $form->{$subval}";
+        push @cashlines, "$form->{$calcval} x $parsed = $form->{$subval}";
     }
     push @cashlines,
       $locale->text( "Total Cash in Drawer: [_1]", $form->{sub_sub} );
     push @cashlines,
-      $locale->text( "Less Cash in Till At Start: [_1]", $form->{till_cash} );
+      $locale->text( "Less Cash in Till At Start: [_1]", $pos_config{till_cash} );
     push @cashlines, "\n";
     $cash = join( "\n", @cashlines );
     $foot = $locale->text( "Cumulative Error: [_1]", $difference ) . "\n";
     $foot .=
       $locale->text( 'Reset Till By [_1]', $amount ) . "\n\n\n\n\n\n\n\n\n\n";
     open( PRN, "|-", ${LedgerSMB::Sysconfig::printer}{Printer} );
+
     print PRN $head;
     print PRN $lines;
-    print PRN $cash;
     print PRN $cash;
     print PRN $foot;
     close PRN;
 
-    if ( $difference > 0 ) {
+    if ( $difference < 0 ) {
         $message = $locale->text( "You are over by [_1]", $difference );
     }
-    elsif ( $difference < 0 ) {
+    elsif ( $difference > 0 ) {
         $message = $locale->text( "You are under by [_1]", $difference * -1 );
     }
     else {
         $message =
-          $local->text("Congratulations!  Your till is exactly balanced.");
+          $locale->text("Congratulations!  Your till is exactly balanced.");
     }
     $form->info($message);
 }
