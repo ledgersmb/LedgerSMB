@@ -34,13 +34,11 @@ use strict;
 sub session_check {
     use Time::HiRes qw(gettimeofday);
     my ( $cookie, $form ) = @_;
-    print STDERR "Checking Session\n";
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
 
    if ($cookie eq 'Login'){
-        print STDERR "creating session\n";
         return session_create($form);
     }
     my $timeout;
@@ -132,7 +130,6 @@ sub session_check {
 
 sub session_create {
     my ($lsmb) = @_;
-    print STDERR "Creating Session\n";
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
     use Time::HiRes qw(gettimeofday);
@@ -198,7 +195,8 @@ sub session_create {
 
     #create a new session
     $createNew->execute( $newSessionID, $login, $newToken, $newTransactionID )
-      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ': Create new session: ' );
+      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ": Create new session: \n".
+		$lsmb->{dbh}->errstr() );
 
     #reseed the random number generator
     my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );
@@ -210,7 +208,7 @@ sub session_create {
 
     my $newCookieValue = $newSessionID . ':' . $newToken . ':' 
 	. $lsmb->{company};
-    print STDERR "Breakpoint\n";
+
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
     print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=$path;\n|;
