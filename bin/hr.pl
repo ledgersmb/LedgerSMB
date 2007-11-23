@@ -528,17 +528,6 @@ sub employee_links {
 
     for ( keys %$form ) { $form->{$_} = $form->quote( $form->{$_} ) }
 
-    $form->all_departments;
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-        $form->{department} = "$form->{department}--$form->{department_id}"
-          if $form->{department_id};
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
     if ( @{ $form->{all_deduction} } ) {
         $form->{selectdeduction} = "<option>\n";
         for ( @{ $form->{all_deduction} } ) {
@@ -742,11 +731,6 @@ sub employee_header {
 		<th align=right nowrap>| . $locale->text('BIC') . qq|</th>
 		<td><input name=bic size=11 maxlength=11 value="$form->{bic}"></td>
 	      </tr>
-		<tr>
-		<th align=right nowrap>| . $locale->text('Department') . qq|</th>
-		<td><select name="department">
-		$form->{selectdepartment}
-		</select>
 	    </table>
 	  </td>
 	</tr>

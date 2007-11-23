@@ -139,15 +139,14 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     # departments
     if ( @{ $form->{all_department} } ) {
         $form->{selectdepartment} = "<option>\n";
+        $form->{department} = "$form->{department}--$form->{department_id}"
+          if $form->{department_id};
 
         for ( @{ $form->{all_department} } ) {
             $form->{selectdepartment} .=
 qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         }
     }
-    $form->{department} = "$form->{department}--$myconfig{department_id}"
-        if $myconfig{department_id};
-
 
     if ( @{ $form->{all_language} } ) {
         $form->{selectlanguage} = "<option>\n";
@@ -274,7 +273,7 @@ sub form_header {
     for (qw(vendor department)) {
         $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
         $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="[^"]*\Q$form->{$_}\E")/$1 selected/;
+        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
     }
 
     if ( $form->{selectlanguage} ) {

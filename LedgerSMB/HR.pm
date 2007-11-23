@@ -126,10 +126,6 @@ sub save_employee {
     my ( $null, $managerid ) = split /--/, $form->{manager};
     $managerid     *= 1;
     $form->{sales} *= 1;
-    my ($department, $department_id) = (undef, undef);
-    if ($form->{department}){
-	($department, $department_id) = split /--/, $form->{department};
-    }
 
 
     $query = qq|
@@ -154,7 +150,6 @@ sub save_employee {
 		       dob = ?,
 		       iban = ?,
 		       bic = ?,
-		       department_id = ?,
 		       managerid = ?
 		 WHERE id = ?|;
     $sth = $dbh->prepare($query);
@@ -168,8 +163,7 @@ sub save_employee {
         $form->{homephone},      $form->{startdate}, $form->{enddate},
         $form->{notes},          $form->{role},      $form->{sales},
         $form->{email},          $form->{ssn},       $form->{dob},
-        $form->{iban},           $form->{bic},       $department_id,
-	$managerid,
+        $form->{iban},           $form->{bic},       $managerid,
         $form->{id}
     ) || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
