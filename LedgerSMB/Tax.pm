@@ -34,6 +34,7 @@ sub init_taxes {
     my $dbh = $form->{dbh};
     @taxes = ();
     my @accounts = split / /, $taxaccounts;
+    my $transdate = $form->{transdate} || 'now()';
     if ( defined $taxaccounts2 ) {
         my @tmpaccounts = @accounts;
         $#accounts = -1;
@@ -48,14 +49,15 @@ sub init_taxes {
 			t.rate, t.chart_id, t.pass, m.taxmodulename
 			FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
 			INNER JOIN taxmodule m ON (t.taxmodule_id = m.taxmodule_id)
-			WHERE c.accno = ?|;
+			WHERE c.accno = ? AND coalesce(validto, 'now()') >= ? 
+			ORDER BY coalesce(validto, now()) DESC|;
     my $sth = $dbh->prepare($query);
     foreach $taxaccount (@accounts) {
         next if ( !defined $taxaccount );
         if ( defined $taxaccounts2 ) {
             next if $taxaccounts2 !~ /\b$taxaccount\b/;
         }
-        $sth->execute($taxaccount) || $form->dberror($query);
+        $sth->execute($taxaccount, $transdate) || $form->dberror($query);
         my $ref = $sth->fetchrow_hashref;
 
         my $module = $ref->{'taxmodulename'};
