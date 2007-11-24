@@ -2,6 +2,9 @@
 		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+        <!--  TODO:  Allow the ui-header to be used for this file 
+	Also, move all elements to elements.html
+	CT  -->
 	<title>LedgerSMB <?lsmb VERSION ?></title>
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
@@ -58,6 +61,7 @@ function setup_page() {
 }
 	</script>
 </head>
+<?lsmb PROCESS elements.html ?>
 
 		 
 
@@ -67,8 +71,11 @@ function setup_page() {
 	<center>
 		<form method="post" action="login.pl" name="login"
 			onsubmit="return submit_form()">
-		<input type="hidden" name="menubar" 
-			value="<?lsmb menubar ?>">
+		<?lsmb PROCESS input element_data = {
+			type = "hidden",
+			name = "menubar",
+			value = menubar
+		} ?> 
 		<div class="login">
 			<div class="login" align="center">
 				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" class="logo" alt="LedgerSMB Logo" /></a>
