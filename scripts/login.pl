@@ -18,6 +18,9 @@ sub __default {
     $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language})
       or $request->error( __FILE__ . ':' . __LINE__ . 
          ": Locale not loaded: $!\n" );         
+
+    $request->{stylesheet} = "ledgersmb.css";
+    $request->{titlebar} = "LedgerSMB $request->{VERSION}";
      my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $locale,

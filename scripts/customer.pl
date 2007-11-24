@@ -41,6 +41,7 @@ of the customer informations.
 
 =cut
 
+
 sub get {
     
     my ($request) = @_;
@@ -50,7 +51,8 @@ sub get {
     my $result = $customer->get();
     
     my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'Customer/customer', language => $user->{language}, 
+	template => 'contact', language => $user->{language}, 
+	path => 'UI/Contact',
         format => 'HTML');
     $template->render($results);
         
@@ -67,14 +69,7 @@ sub add_location {
     
     $customer->get_metadata();
 
-    my $template = LedgerSMB::Template->new( 
-	user => $user, 
-	template => 'customer', 
-	path => 'UI/Customer',
-	locale => $request->{_locale}, 
-        format => 'HTML');
-    $request->{script} = 'Customer/customer';
-    $template->render($customer);
+    _render_main_screen($customer);
 	
 }
 
@@ -93,6 +88,7 @@ This method creates a blank screen for entering a customer's information.
 sub add {
     my ($request) = @_;
     my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
+    $customer->set( entity_class=> '2' );
     _render_main_screen($customer);
 }
 
@@ -123,7 +119,7 @@ sub search {
         my $results = $customer->search($customer->{search_pattern});
 
         my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Customer/customer', language => $user->{language}, 
+    	template => 'Contact/customer', language => $user->{language}, 
             format => 'HTML');
         $template->render($results);
         
@@ -134,7 +130,7 @@ sub search {
         
         my $template = LedgerSMB::Template->new( 
 		user => $user,
-		path => 'UI/Customer' ,
+		path => 'UI/Contact' ,
     		template => 'customer_search', 
 		locale => $request->{_locale}, 
 		format => 'HTML');
@@ -178,12 +174,13 @@ sub _render_main_screen{
 
     $customer->{creditlimit} = "$customer->{creditlimit}"; 
     $customer->{discount} = "$customer->{discount}"; 
+    $customer->{script} = "customer.pl";
 
     my $template = LedgerSMB::Template->new( 
 	user => $customer->{_user}, 
-    	template => 'customer', 
+    	template => 'contact', 
 	locale => $customer->{_locale},
-	path => 'UI/Customer',
+	path => 'UI/Contact',
         format => 'HTML'
     );
     $template->render($customer);

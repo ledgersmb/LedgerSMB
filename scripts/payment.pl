@@ -51,6 +51,12 @@ use LedgerSMB::Template;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use strict; 
+
+# CT:  A few notes for future refactoring of this code:
+# 1:  I don't think it is a good idea to make the UI too dependant on internal
+#     code structures but I don't see a good alternative at the moment.
+# 2:  CamelCasing: -1
+
 =pod
 
 =item payment
