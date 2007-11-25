@@ -47,7 +47,7 @@ sub get {
     my ($request) = @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
     
-    $vendor->set( entity_class=> '2' );
+    $vendor->set( entity_class=> '1' );
     my $result = $vendor->get();
     
     my $template = LedgerSMB::Template->new( user => $user, 
@@ -62,7 +62,7 @@ sub get {
 sub add_location {
     my ($request) = @_;
     my $vendor= LedgerSMB::DBObject::Vendor->new({base => $request, copy => 'all'});
-    $vendor->set( entity_class=> '2' );
+    $vendor->set( entity_class=> '1' );
     $vendor->save_location();
     $vendor->get();
 
@@ -88,7 +88,7 @@ This method creates a blank screen for entering a vendor's information.
 sub add {
     my ($request) = @_;
     my $vendor= LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
-    $vendor->set( entity_class=> '2' );
+    $vendor->set( entity_class=> '1' );
     _render_main_screen($vendor);
 }
 
@@ -115,7 +115,7 @@ sub search {
         # assume it's asking us to do the search, now
         
         my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
-        $vendor->set(entity_class=>2);
+        $vendor->set(entity_class=>1);
         my $results = $vendor->search($vendor->{search_pattern});
 
         my $template = LedgerSMB::Template->new( user => $user, 
