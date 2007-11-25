@@ -1,15 +1,16 @@
+#!/usr/bin/perl
 
 =pod
 
 =head1 NAME
 
-LedgerSMB::Scripts::Vendor - LedgerSMB class defining the Controller
-functions, template instantiation and rendering for Vendor editing and display.
+LedgerSMB::Scripts::vendor - LedgerSMB class defining the Controller
+functions, template instantiation and rendering for vendor editing and display.
 
 =head1 SYOPSIS
 
-This module is the UI controller for the Vendor DB access; it provides the 
-View interface, as well as defines the Save Vendor. 
+This module is the UI controller for the vendor DB access; it provides the 
+View interface, as well as defines the Save vendor. 
 Save vendor will update or create as needed.
 
 
@@ -17,10 +18,12 @@ Save vendor will update or create as needed.
 
 =cut
 
-package LedgerSMB::Scripts::Vendor;
+package LedgerSMB::Scripts::vendor;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Vendor;
+
+require 'lsmb-request.pl';
 
 =pod
 
@@ -30,7 +33,7 @@ use LedgerSMB::DBObject::Vendor;
 
 Requires form var: id
 
-Extracts a single Vendor from the database, using its company ID as the primary
+Extracts a single vendor from the database, using its company ID as the primary
 point of uniqueness. Shows (appropriate to user privileges) and allows editing
 of the vendor informations.
 
@@ -38,17 +41,55 @@ of the vendor informations.
 
 =cut
 
+
 sub get {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
-    my $result = $vendor->get($vendor->{id});
+    
+    $vendor->set( entity_class=> '2' );
+    my $result = $vendor->get();
     
     my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'vendor.html', language => $user->{language}, 
-        format => 'html');
+	template => 'contact', language => $user->{language}, 
+	path => 'UI/Contact',
+        format => 'HTML');
     $template->render($results);
         
+}
+
+
+sub add_location {
+    my ($request) = @_;
+    my $vendor= LedgerSMB::DBObject::Vendor->new({base => $request, copy => 'all'});
+    $vendor->set( entity_class=> '2' );
+    $vendor->save_location();
+    $vendor->get();
+
+    
+    $vendor->get_metadata();
+
+    _render_main_screen($vendor);
+	
+}
+
+=pod
+
+=over
+
+=item add
+
+This method creates a blank screen for entering a vendor's information.
+
+=back
+
+=cut 
+
+sub add {
+    my ($request) = @_;
+    my $vendor= LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
+    $vendor->set( entity_class=> '2' );
+    _render_main_screen($vendor);
 }
 
 =pod
@@ -61,21 +102,41 @@ Requires form var: search_pattern
 
 Directly calls the database function search, and returns a set of all vendors
 found that match the search parameters. Search parameters search over address 
-as well as Vendor/Company name.
+as well as vendor/Company name.
 
 =back
 
 =cut
 
 sub search {
-    my ($class, $request) = @_;
-    my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
-    my $results = $vendor->search($vendor->{search_pattern});
+    my ($request) = @_;
     
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'vendor_search.html', language => $user->{language}, 
-        format => 'html');
-    $template->render($results);
+    if ($request->type() eq 'POST') {
+        # assume it's asking us to do the search, now
+        
+        my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
+        $vendor->set(entity_class=>2);
+        my $results = $vendor->search($vendor->{search_pattern});
+
+        my $template = LedgerSMB::Template->new( user => $user, 
+    	template => 'Contact/vendor', language => $user->{language}, 
+            format => 'HTML');
+        $template->render($results);
+        
+    }
+    else {
+        
+        # grab the happy search page out.
+        
+        my $template = LedgerSMB::Template->new( 
+		user => $user,
+		path => 'UI/Contact' ,
+    		template => 'vendor_search', 
+		locale => $request->{_locale}, 
+		format => 'HTML');
+            
+        $template->render();
+    }
 }
 
 =pod
@@ -84,7 +145,7 @@ sub search {
 
 =item save($self, $request, $user)
 
-Saves a Vendor to the database. The function will update or insert a new 
+Saves a vendor to the database. The function will update or insert a new 
 vendor as needed, and will generate a new Company ID for the vendor if needed.
 
 =back
@@ -93,87 +154,52 @@ vendor as needed, and will generate a new Company ID for the vendor if needed.
 
 sub save {
     
-    my ($class, $request) = @_;
-    my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
-    my $result = $vendor->save_to_db();
-    
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'vendor.html', language => $user->{language}, 
-        format => 'html');
-    $template->render($result);    
+    my ($request) = @_;
+
+    my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
+    $vendor->save();
+    _render_main_screen($vendor);
 }
 
-=pod
-
-=over
-
-=item vendor_invoice($self, $request, $user)
-
-Added based on existing New Vendor screen.
-
-=back
-
-=cut
-
-
-sub vendor_invoice {
-    
-    
+sub edit{
+    my $request = shift @_;
+    my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
+    $vendor->get();
+    _render_main_screen($vendor);
 }
 
-=pod
+sub _render_main_screen{
+    my $vendor = shift @_;
+    $vendor->get_metadata();
 
-=over
+    $vendor->{creditlimit} = "$vendor->{creditlimit}"; 
+    $vendor->{discount} = "$vendor->{discount}"; 
+    $vendor->{script} = "vendor.pl";
 
-=item purchase_order($self, $request, $user)
-
-Added based on existing New Vendor screen.
-
-=back
-
-=cut
-
-sub purchase_order {
-    
-    
+    my $template = LedgerSMB::Template->new( 
+	user => $vendor->{_user}, 
+    	template => 'contact', 
+	locale => $vendor->{_locale},
+	path => 'UI/Contact',
+        format => 'HTML'
+    );
+    $template->render($vendor);
 }
 
-=pod
-
-=over
-
-=item rfq($self, $request, $user)
-
-Added based on existing New Vendor screen.
-
-=back
-
-=cut
-
-sub rfq {
-    
-    $self->save(@_);
-    my ($class, $request) = @_;
-    # saves a new vendor, then generates something.
-    
+sub save_contact {
+    my ($request) = @_;
+    my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
+    $vendor ->save_contact();
+    $vendor ->get;
+    _render_main_screen($vendor );
 }
 
-=pod
-
-=over
-
-=item pricelist($self, $request, $user)
-
-Added based on existing New Vendor screen.
-
-=back
-
-=cut
-
-sub pricelist {
-    
-    
-    
+sub save_bank_account {
+    my ($request) = @_;
+    my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
+    $vendor ->save_bank_account();
+    $vendor ->get;
+    _render_main_screen($vendor );
 }
 
 1;
