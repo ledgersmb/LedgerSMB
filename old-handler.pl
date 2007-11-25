@@ -85,8 +85,8 @@ use DBI qw(:sql_types);
 $SIG{__WARN__} = sub { $form->info( $_[0] ) };
 
 # send errors to browser
-$SIG{__DIE__} =
-  sub { $form->error( __FILE__ . ':' . __LINE__ . ': ' . $_[0] ) };
+#$SIG{__DIE__} =
+#  sub { print STDERR  __FILE__ . ':' . __LINE__ . ': ' . $_[0]; };
 
 ## did sysadmin lock us out
 #if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {

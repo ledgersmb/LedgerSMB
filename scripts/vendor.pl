@@ -189,16 +189,16 @@ sub _render_main_screen{
 sub save_contact {
     my ($request) = @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
-    $vendor ->save_contact();
-    $vendor ->get;
+    $vendor->save_contact();
+    $vendor->get;
     _render_main_screen($vendor );
 }
 
 sub save_bank_account {
     my ($request) = @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
-    $vendor ->save_bank_account();
-    $vendor ->get;
+    $vendor->save_bank_account();
+    $vendor->get;
     _render_main_screen($vendor );
 }
 
