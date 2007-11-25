@@ -55,7 +55,7 @@ sub save_bank_account {
 sub get {
     my $self = shift @_;
 
-    $self->set_entity_class()
+    $self->set_entity_class();
     my ($ref) = $self->exec_method(funcname => 'entity__retrieve_credit');
     $self->merge($ref);
 

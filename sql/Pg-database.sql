@@ -2049,7 +2049,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 44	report	1	110
 46	menu	1	111
 47	menu	1	112
-48	module	hr.pl	113
+48	module	employee.pl	113
 48	action	add	114
 48	db	employee	115
 49	module	hr.pl	116

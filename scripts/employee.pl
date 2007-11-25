@@ -47,7 +47,7 @@ sub get {
     my ($request) = @_;
     my $employee = LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
     
-    $employee->set( entity_class=> '1' );
+    $employee->set( entity_class=> '3' );
     my $result = $employee->get();
     
     my $template = LedgerSMB::Template->new( user => $user, 
@@ -62,7 +62,7 @@ sub get {
 sub add_location {
     my ($request) = @_;
     my $employee= LedgerSMB::DBObject::Employee->new({base => $request, copy => 'all'});
-    $employee->set( entity_class=> '1' );
+    $employee->set( entity_class=> '3' );
     $employee->save_location();
     $employee->get();
 
@@ -88,7 +88,7 @@ This method creates a blank screen for entering a employee's information.
 sub add {
     my ($request) = @_;
     my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    $employee->set( entity_class=> '1' );
+    $employee->set( entity_class=> '3' );
     _render_main_screen($employee);
 }
 
@@ -115,7 +115,7 @@ sub search {
         # assume it's asking us to do the search, now
         
         my $employee = LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-        $employee->set(entity_class=>1);
+        $employee->set(entity_class=>3);
         my $results = $employee->search($employee->{search_pattern});
 
         my $template = LedgerSMB::Template->new( user => $user, 
