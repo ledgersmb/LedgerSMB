@@ -19,7 +19,7 @@ $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
-		SELECT * FROM country ORDER BY id
+		SELECT * FROM country ORDER BY name
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
@@ -123,4 +123,15 @@ BEGIN
 	DELETE FROM location WHERE id = in_id;
 END;
 $$ language plpgsql;
+
+CREATE TYPE location_result AS (
+	id int,
+	line_one text,
+	line_two text,
+	line_three text,
+	city text,
+	state text,
+	country text,
+	class text
+);
 

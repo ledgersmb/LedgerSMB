@@ -2666,4 +2666,12 @@ CREATE TABLE report_corrections (
     insert_time timestamptz not null default now()
 );
 
+CREATE INDEX company_name_gist__idx ON company USING gist(legal_name gist_trgm_ops);
+CREATE INDEX location_address_one_gist__idx ON location USING gist(line_one gist_trgm_ops);
+CREATE INDEX location_address_two_gist__idx ON location USING gist(line_two gist_trgm_ops);
+CREATE INDEX location_address_three_gist__idx ON location USING gist(line_three gist_trgm_ops);
+    
+CREATE INDEX location_city_prov_gist_idx ON location USING gist(city gist_trgm_ops);
+CREATE INDEX entity_name_gist_idx ON entity USING gist(name gist_trgm_ops);
+
 commit;
