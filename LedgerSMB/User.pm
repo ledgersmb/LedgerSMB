@@ -170,8 +170,10 @@ sub fetch_config {
     my $login = $lsmb->{login};
     my $dbh = $lsmb->{dbh};
 
-    if ( !$login ) {
-        &error( $self, "Access Denied" );
+    if ( !$login ) { # Assume this is for current connected user
+        my $sth = $dbh->prepare('SELECT SESSION_USER');
+        $sth->execute();
+        ($login) = $sth->fetchrow_array();
     }
 
     $query = qq|
