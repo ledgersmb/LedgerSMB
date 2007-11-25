@@ -162,7 +162,7 @@ sub session_create {
         "INSERT INTO session (session_id, users_id, token, transaction_id) 
                                         VALUES(?, (SELECT id
                                                      FROM users
-                                                    WHERE username = ?), ?, ?);"
+                                                    WHERE username = SESSION_USER), ?, ?);"
     );
 
 # this is assuming that the login is safe, which might be a bad assumption
@@ -194,7 +194,7 @@ sub session_create {
     my ( $newSessionID, $newToken ) = $fetchSequence->fetchrow_array;
 
     #create a new session
-    $createNew->execute( $newSessionID, $login, $newToken, $newTransactionID )
+    $createNew->execute( $newSessionID, $newToken, $newTransactionID )
       || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ": Create new session: \n".
 		$lsmb->{dbh}->errstr() );
 
