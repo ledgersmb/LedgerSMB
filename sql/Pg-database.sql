@@ -141,7 +141,6 @@ CREATE TABLE location (
   inactive_date timestamp default null,
   active boolean not null default TRUE
 );
-CREATE INDEX location_unique_class_idx ON location (id,location_class);
   
 CREATE TABLE company (
   id serial UNIQUE,

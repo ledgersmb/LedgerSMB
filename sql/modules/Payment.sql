@@ -66,13 +66,13 @@ BEGIN
 		SELECT a.id AS invoice_id, a.invnumber, 
 		       a.transdate AS invoice_date, a.amount, 
 		       CASE WHEN discount_terms 
-		                 > extract('days' FROM age(a.transdate))
+		                 < extract('days' FROM age(a.transdate))
 		            THEN 0
 		            ELSE (a.amount - a.paid) * c.discount / 100  
 		       END AS discount,
 		       a.amount - a.paid - 
 		       CASE WHEN discount_terms 
-		                 > extract('days' FROM age(a.transdate))
+		                 < extract('days' FROM age(a.transdate))
 		            THEN 0
 		            ELSE (a.amount - a.paid) * c.discount / 100  
 		       END AS due
@@ -88,6 +88,7 @@ BEGIN
 		 WHERE a.invoice_class = in_account_class
 		       AND c.entity_class = in_account_class
 		       AND a.curr = in_curr
+		       AND a.entity_id = coalesce(in_entity_id, a.entity_id)
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
