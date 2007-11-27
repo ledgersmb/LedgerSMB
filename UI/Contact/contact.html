@@ -35,13 +35,109 @@
 </ul>
 </div>
 <?lsmb IF entity_class == 3 ?>
+<div id="hr_div" class="container">
+	<div class="listtop"><strong><?lsmb text("$operation Employee") ?></strong></div>
+<form name="hr" action="<?lsmb script ?>" method="post">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "entity_id"
+		value = entity_id
+	} ?>
+<div class="input" id="person_name_div"><?lsmb text('Name:')?>&nbsp;
+<!-- TODO:  Add Saluatation -->
+<?lsmb PROCESS input element_data = {
+	label = text('First')
+	name = "first_name"
+	value = first_name
+	type = "text"
+	size = 20
+} ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Middle')
+	name = "middle_name"
+	value = middle_name
+	type = "text"
+	size = 20
+} ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Last')
+	name = "last_name"
+	value = last_name
+	type = "text"
+	size = 20
+} ?>
+</div>
+<div id="job_title_div">
+<!-- Note that the strange # ' constructs are only necessary to help VIM avoid
+problems with multi-word single-quoted constructs in PI tags. -CT  -->
+<?lsmb PROCESS input element_data = {
+	label = text('Job Title:')
+	name = "role"
+	value = role
+	type = "text"
+	size = 20
+} # ' ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Sales:')
+	value = 1
+	type = "checkbox"
+	checked = sales
+	name = "sales"
+} ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Employee Number')
+	value = employee_number
+	name = "employee_number"
+	type = "text"
+	size = 20
+} # ' ?>
+<label for="manager_select"><?lsmb text('Manager:') ?></label>
+<select id="manager_select" name="manager_id">
+<?lsmb FOREACH e = employee ?>
+<option value = e.entity_id <?lsmb (manager_id == e.entity_id) ? "SELECTED" : ""?><?lsmb e.name ?></option>
+<?lsmb END ?>
+</select>
+<div>
+<?lsmb PROCESS input element_data = {
+	label = text('DOB:')
+	name = "dob"
+	value = dob
+	type = "text"
+	class = "date"
+	size = 10
+}  ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Start Date:')
+	name = "start_date"
+	value = start_date
+	type = "text"
+	class = "date"
+	size = 10
+} # '  ?>
+<?lsmb PROCESS input element_data = {
+	label = text('End Date:')
+	name = "end_date"
+	value = end_date
+	class = "text"
+	type = "text"
+	size = 10
+} # ' ?>
+<div>
+<?lsmb PROCESS button element_data = {
+	text = text('Save')
+	class = "submit"
+	type = "submit"
+	value = "save_employee"
+} ?>
+</div>
+</form>
 <?lsmb ELSE ?>
 <div class="container" id="customer_div">
 <?lsmb SWITCH entity_class
 	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
-?><?lsmb END ?>
-<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
+	?><?lsmb END ?>
+	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
 <?lsmb FOREACH n = notes ?>
 <div class="entity_note"><?lsmb n.note ?></div>
 <?lsmb END ?>
@@ -64,7 +160,7 @@
 		name = "meta_number",
 		value = meta_number,
 		size = "20"
-	} ?><br/>
+	}  # ' ?><br/>
         <table>
         <tr>
             <td>
@@ -76,7 +172,7 @@
 			type = "text",
 			size = "12",
 			maxlength = "10"
-		} ?>
+		} #' ?>
             </td>
             <td>
 		<?lsmb PROCESS input element_data = {
@@ -87,7 +183,7 @@
 			type = "text",
 			size = "12",
 			maxlength = "10"
-		} ?>
+		} #' ?>
             </td>
         </tr>
         <tr>
@@ -98,7 +194,7 @@
 			value = creditlimit,
 			type = "text",
 			size = "20"
-		} ?>
+		} #' ?>
             </td>
             <td>
 		<?lsmb PROCESS input element_data = {
@@ -119,7 +215,7 @@
 			value = taxnumber,
 			type = "text",
 			size = "19"
-		} ?>
+		} #' ?>
             </td>
             <td>
 		<?lsmb PROCESS input element_data = {
@@ -128,7 +224,7 @@
 			value = gifi_accno,
 			type = "text",
 			size = "19"
-		} ?>
+		} #' ?>
             </td>
         </tr>
 	<tr>
@@ -332,7 +428,7 @@
 			value = mail_code,
 			type = "text",
 			size = "20"
-		} ?>
+		} #' ?>
 	</div>
 	<div> <!-- TODO:  Move to elements.html -CT -->
 		<label for="country"><?lsmb text('Country:') ?></label>
@@ -348,7 +444,7 @@
 		value = "add_location" 
 		id = "loc_save_location"
 		text = text('Save Location') 
-	} ?>
+	} #' ?>
 	</div>
     </form>
 </div>
@@ -403,14 +499,14 @@
 			value = contact
 			type = "text"
 			size = "20"
-		} ?>
+		} #' ?>
 	</div>
 	<div><?lsmb PROCESS button element_data = {
 		name = "action",
 		value = "save_contact",
 		text =  text('Save Contact'),
 		class = "submit"
-		} ?>
+		} #' ?>
 	</div>
 </form>
 	
@@ -456,7 +552,7 @@
 		name="bic" 
 		value=bic
 		size=20
-	} ?>
+	} #' ?>
 	</div>
 	<div><label for="iban">
 	<?lsmb PROCESS input element_data = {
@@ -465,7 +561,7 @@
 		name="iban" 
 		value=iban
 		size=20
-	} ?>
+	} #' ?>
 	</div>
 	<div><?lsmb PROCESS button element_data = {
 		name="action" 

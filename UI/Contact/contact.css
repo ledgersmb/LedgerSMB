@@ -18,3 +18,7 @@ ul.navigation li {
 	margin-left: 1em;
 	margin-bottom: 0em;
 }
+
+div label {
+	margin-left: 1em;
+}
