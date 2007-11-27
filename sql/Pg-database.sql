@@ -431,6 +431,12 @@ CREATE TABLE entity_credit_account (
 -- ssn, iban and bic are from entity_credit_account
 -- 
 -- The view below is broken.  Disabling for now.
+CREATE VIEW employee AS
+ SELECT s.salutation, p.first_name, p.last_name, ee.person_id, ee.entity_id, ee.startdate, ee.enddate, ee."role", ee.ssn, ee.sales, ee.manager_id, ee.employeenumber, ee.dob
+   FROM person p
+   JOIN entity_employee ee USING (entity_id)
+   JOIN salutation s ON p.salutation_id = s.id;
+
 /*
 create view employee as
     SELECT 
@@ -535,7 +541,7 @@ ALTER TABLE company ADD COLUMN sic_code varchar;
 
 
 
--- COMMENT ON TABLE employee IS $$ Is a metadata table specific to employees $$;
+-- COMMENT ON TABLE employee IS $$ Is a metadata table specific to employee $$;
 
 CREATE TABLE parts (
   id serial PRIMARY KEY,

@@ -1380,3 +1380,7 @@ GRANT SELECT ON custom_table_catalog TO PUBLIC;
 GRANT SELECT ON custom_field_catalog TO PUBLIC;
 grant select on menu_node, menu_attribute, menu_acl to public;
 GRANT select on chart, gifi, country to public;
+ grant select on employee to public;
+ GRANT SELECT ON parts, partsgroup TO public;
+ GRANT SELECT ON language TO public;
+GRANT SELECT ON business, exchangerate, shipto, tax TO public;

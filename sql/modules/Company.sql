@@ -1,4 +1,19 @@
 BEGIN;
+
+CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text)
+RETURNS INT AS
+$$
+DECLARE out_id int;
+BEGIN
+	-- TODO, change this to create vector too
+	INSERT INTO entity_note (ref_key, note_class, entity_id, note, vector)
+	VALUES (in_entity_id, 1, in_entity_id, in_note, '');
+
+	SELECT currval('note_id_seq') INTO out_id;
+	RETURN out_id;
+END;
+$$ LANGUAGE PLPGSQL;
+
 CREATE OR REPLACE FUNCTION entity_list_contact_class() 
 RETURNS SETOF contact_class AS
 $$
@@ -35,11 +50,12 @@ COMMENT ON TYPE entity_credit_search_return IS
 $$ This may change in 1.4 and should not be relied upon too much $$;
 
 CREATE OR REPLACE FUNCTION entity__retrieve_credit
-(in_entity_id int, in_entity_cass int) 
+(in_entity_id int, in_entity_class int) 
 RETURNS entity_credit_search_return AS
 $$
 DECLARE out_row customer_search_return;
 BEGIN
+	
 	SELECT c.legal_name, c.id, e.id, ec.entity_class, ec.discount,
 		ec.taxincluded, ec.creditlimit, ec.terms, ec.meta_number,
 		ec.business_id, ec.language_code, ec.pricegroup_id, 
@@ -49,11 +65,14 @@ BEGIN
 	JOIN entity e ON (c.entity_id = e.id)
 	JOIN entity_credit_account ec ON (c.entity_id = ec.entity_id)
 	WHERE e.id = in_entity_id
-		AND ec.entity_class = in_entity_class;
+		AND ec.entity_class = CASE WHEN in_entity_class = 3 THEN 2
+				ELSE in_entity_class END;
 
 	RETURN out_row;
 END;
 $$ LANGUAGE PLPGSQL;
+
+CREATE company
 
 CREATE OR REPLACE FUNCTION entity_credit_save (
     in_id int, in_entity_class int,
@@ -89,6 +108,9 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
             
             INSERT INTO company ( entity_id, legal_name, tax_id ) 
                 VALUES ( new_entity_id, in_name, in_tax_id );
+	IF in_entity_class NOT IN (1, 2) THEN
+		RETURN new_entity_id;
+	END IF;
             
             INSERT INTO entity_credit_account (
                 entity_id,
@@ -126,7 +148,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
             );
             -- entity note class
             insert into entity_note (note_class, note, ref_key, vector) VALUES (
-                1, in_notes, new_entity_id, '');
+                1, in_notes, new_entity_id, to_tsvector(in_notes));
 
             return new_entity_id;
 
@@ -251,12 +273,12 @@ CREATE TYPE entity_note_list AS (
 );
 
 CREATE OR REPLACE FUNCTION company__list_notes(in_entity_id int) 
-RETURNS SETOF entity_note_list AS 
+RETURNS SETOF entity_note AS 
 $$
 DECLARE out_row record;
 BEGIN
 	FOR out_row IN
-		SELECT id, note
+		SELECT *
 		FROM entity_note
 		WHERE ref_key = in_entity_id
 	LOOP

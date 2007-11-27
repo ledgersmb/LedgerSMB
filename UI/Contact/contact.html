@@ -17,23 +17,29 @@
 <?lsmb text("Edit Employee") ?>
 -->
 <ul class="navigation">
+	<?lsmb IF entity_class == 3 ?>
+	<li><a href="#hr_div"><?lsmb text('HR') ?></a></li>
+	<?lsmb ELSE ?>
 	<li><a href="#customer_div"><?lsmb text('Account') ?></a></li>
+	<?lsmb END ?>
 	<?lsmb IF entity_id ?>
 	<li><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
 	<li><a href="#contact_div"><?lsmb text('Contact Info') ?></a></li>
 	<li><a href="#bank_div"><?lsmb text('Bank Accounts') ?></a></li>
-	<!-- Commented out as not yet implemented -CT
 	<li><a href="#notes_div"><?lsmb text('Notes') ?></a></li>
+	<!-- Commented out as not yet implemented -CT
 	<li><a href="#history_div"><?lsmb text('History') ?></a></li>
+	<li><a href="#user_div"><?lsmb text('User') ?></a></li>
 	-->
 	<?lsmb END ?>
 </ul>
 </div>
+<?lsmb IF entity_class == 3 ?>
+<?lsmb ELSE ?>
 <div class="container" id="customer_div">
 <?lsmb SWITCH entity_class
 	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
-	?><?lsmb CASE 3 ?><?lsmb entity_classname = "Employee" 
 ?><?lsmb END ?>
 <div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
 <?lsmb FOREACH n = notes ?>
@@ -60,8 +66,6 @@
 		size = "20"
 	} ?><br/>
         <table>
-	<!-- TODO:  Create another tab for order history, and another one 
-		for notes -->
         <tr>
             <td>
 		<?lsmb PROCESS input element_data = {
@@ -182,28 +186,28 @@
                         class="submit" 
                         type="submit" 
                         name="action" 
-                        value="ap_transaction" 
+                        value="add_transaction" 
                         accesskey="A" 
-                        title="AP Transaction [Alt-A]"
-			text = text('AP Transaction') 
+                        title="Transaction [Alt-A]"
+			text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
 		} ?>
 		<?lsmb PROCESS button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
-                        value="customer_invoice" 
+                        value="add_invoice" 
                         accesskey="I" 
-                        title="customer Invoice [Alt-I]"
-			text = text('Customer Invoice') 
+                        title="Invoice [Alt-I]"
+			text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
 		} ?>
 		<?lsmb PROCESS button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
-                        value="purchase_order" 
+                        value="add_order" 
                         accesskey="O" 
-                        title="Purchase Order [Alt-O]"
-			text = text('Purchase Order') 
+                        title="Order [Alt-O]"
+			text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
 		} ?>
 		<?lsmb PROCESS button element_data = {
                         class="submit" 
@@ -211,8 +215,8 @@
                         name="action" 
                         value="rfq" 
                         accesskey="Q" 
-                        title="RFQ [Alt-Q]"
-			text = text('RFQ') 
+                        title="Quotation [Alt-Q]"
+			text = (entity_class == 1) ? text('RFQ') : text('Quotation')
 		} ?>
 		<?lsmb PROCESS button element_data = {
                         class="submit" 
@@ -225,6 +229,7 @@
 		} ?>
     </form>
 </div>
+<?lsmb END ?>
 <?lsmb IF entity_id ?>
 <div id="location_div" class="container">
     <div class="listtop"><?lsmb text('Locations') ?></div>
@@ -469,6 +474,34 @@
 		text = text('Save') 
 		} ?>
 	</div>
+</form>
+</div>
+<div id="notes_div">
+<div class="listtop"><?lsmb text('Notes') ?></div>
+<?lsmb FOREACH n = notes ?>
+<div class="note">
+<div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
+<div class="contents"><?lsmb n.note ?></div>
+<?lsmb END ?>
+<form action="<?lsmb script ?>" method="post">
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="entity_id" 
+		value=entity_id
+	} ?>
+<div class="input"><?lsmb PROCESS textarea element_data = {
+	label = text('Notes:')
+	name = notes
+} ?></div>
+<div class="input">
+<?lsmb PROCESS button element_data = {
+	text = text('Save')
+	class = 'submit'
+	name = 'action'
+	value = 'save_notes'
+} ?>
+
+</form>
 </div>
 <?lsmb END ?>
 </body>

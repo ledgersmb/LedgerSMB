@@ -52,6 +52,12 @@ sub save_bank_account {
     $self->{dbh}->commit;
 }
 
+sub save_notes {
+    my $self = shift @_;
+    $self->exec_method(funcname => 'entity__save_notes');
+    $self->{dbh}->commit;
+}
+
 sub get {
     my $self = shift @_;
 

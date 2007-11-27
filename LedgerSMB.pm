@@ -150,6 +150,15 @@ sub new {
 
     $self->merge($params);
 
+    # Adding this so that empty values are stored in the db as NULL's.  If
+    # stored procedures want to handle them differently, they must opt to do so.
+    # -- CT
+    for (keys %$self){
+        if ($self->{$_} eq ''){
+            $self->{$_} = undef;
+        }
+    }
+
     if ($self->is_run_mode('cgi', 'mod_perl')) {
         $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
         my @cookies = split /;/, $ENV{HTTP_COOKIE};

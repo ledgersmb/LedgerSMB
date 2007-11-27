@@ -1616,8 +1616,8 @@ sub get_employee {
     my $query = qq|
 		SELECT name, id
 		  FROM entity WHERE id IN (select entity_id
-					 FROM employee 
-					WHERE login = ?)|;
+					 FROM users 
+					WHERE username = ?)|;
 
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute($login);
@@ -1721,9 +1721,9 @@ sub all_vc {
     my $sth;
 
     if ($vc eq 'customer'){
-        $self->{vc_class} = 2;
-    } else {
         $self->{vc_class} = 1;
+    } else {
+        $self->{vc_class} = 2;
         $vc = 'vendor';
     }
     my $query = qq|SELECT count(*) FROM entity_credit_account where entity_class = ?|;

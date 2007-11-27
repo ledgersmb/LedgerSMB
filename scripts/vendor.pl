@@ -194,6 +194,7 @@ sub save_contact {
     _render_main_screen($vendor );
 }
 
+
 sub save_bank_account {
     my ($request) = @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
@@ -202,4 +203,12 @@ sub save_bank_account {
     _render_main_screen($vendor );
 }
 
+sub save_notes {
+    my ($request) = @_;
+    my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
+    $vendor->save_notes();
+    $vendor->get();
+    _render_main_screen($vendor );
+}
+    
 1;

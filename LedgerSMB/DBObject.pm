@@ -45,18 +45,6 @@ use base qw(LedgerSMB);
 use strict;
 use warnings;
 
-our $AUTOLOAD;
-
-sub AUTOLOAD {
-    my ($self) = shift;
-    my $type = Scalar::Util::blessed $self;
-    $type =~ m/::(.*?)$/;
-    $type = lc $1;
-    $self->exec_method( funcname => "$type" . "_" . $AUTOLOAD, args => \@_);
-}
-
-sub DESTROY {} 
-
 sub __validate__ {}
 
 sub new {

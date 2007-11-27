@@ -908,7 +908,7 @@ sub transactions {
 
         if ( $myconfig->{role} eq 'user' ) {
             my $login = $dbh->quote( $form->{login} );
-            $where .= " AND e.login = $login";
+            $where .= " AND e.entity_id = (select entity_id from users where username = $login";
         }
     }
 

@@ -202,4 +202,12 @@ sub save_bank_account {
     _render_main_screen($employee);
 }
 
+sub save_notes {
+    my ($request) = @_;
+    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
+    $employee->save_notes();
+    $employee->get();
+    _render_main_screen($employee);
+}
+    
 1;
