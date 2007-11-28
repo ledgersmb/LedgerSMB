@@ -72,7 +72,6 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE company
 
 CREATE OR REPLACE FUNCTION entity_credit_save (
     in_id int, in_entity_class int,
@@ -208,22 +207,6 @@ CREATE TYPE contact_list AS (
 	contact text
 );
 
-CREATE OR REPLACE FUNCTION company__list_contacts(in_entity_id int)
-RETURNS SETOF contact_list AS 
-$$
-DECLARE out_row RECORD;
-BEGIN
-	FOR out_row IN 
-		SELECT cc.class, c.contact
-		FROM company_to_contact c
-		JOIN contact_class cc ON (c.contact_class_id = cc.id)
-		JOIN company cp ON (c.company_id = cp.id)
-		WHERE cp.entity_id = in_entity_id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION company__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS

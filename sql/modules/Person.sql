@@ -79,4 +79,88 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION person__list_locations(in_entity_id int)
+RETURNS SETOF location_result AS
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN
+		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
+			l.state, c.name, lc.class
+		FROM location l
+		JOIN person_to_location ctl ON (ctl.location_id = l.id)
+		JOIN person p ON (ctl.person_id = p.id)
+		JOIN location_class lc ON (ctl.location_class = lc.id)
+		JOIN country c ON (c.id = l.country_id)
+		WHERE p.entity_id = in_entity_id
+		ORDER BY lc.id, l.id, c.name
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION person__list_contacts(in_entity_id int)
+RETURNS SETOF contact_list AS 
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN 
+		SELECT cc.class, c.contact
+		FROM person_to_contact c
+		JOIN contact_class cc ON (c.contact_class_id = cc.id)
+		JOIN person p ON (c.person_id = p.id)
+		WHERE p.entity_id = in_entity_id
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION person__save_contact
+(in_entity_id int, in_contact_class int, in_contact text)
+RETURNS INT AS
+$$
+DECLARE out_id int;
+BEGIN
+	INSERT INTO person_to_contact(person_id, contact_class_id, contact)
+	SELECT id, in_contact_class, in_contact FROM person
+	WHERE entity_id = in_entity_id;
+
+	RETURN 1;
+END;
+$$ LANGUAGE PLPGSQL;
+
+create or replace function person_location_save(
+    in_entity_id int, in_location_id int,
+    in_line_one text, in_line_two text, 
+    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
+    in_country_code int
+) returns int AS $$
+
+    DECLARE
+        l_row location;
+        l_id INT;
+	t_person_id int;
+    BEGIN
+	SELECT id INTO t_person_id
+	FROM person WHERE entity_id = in_entity_id;
+
+	DELETE FROM person_to_location
+	WHERE person_id = t_person_id
+		AND location_id = in_location_id;
+
+	SELECT location_save(in_line_one, in_line_two, in_line_three, in_city,
+		in_state, in_mail_code, in_country_code) 
+	INTO l_id;
+
+	INSERT INTO person_to_location 
+		(person_id, location_id)
+	VALUES  (t_person_id, l_id);
+
+	RETURN l_id;    
+    END;
+
+$$ language 'plpgsql';
+
 commit;

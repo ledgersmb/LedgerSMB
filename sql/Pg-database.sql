@@ -434,7 +434,7 @@ CREATE VIEW employee AS
  SELECT s.salutation, p.first_name, p.last_name, ee.person_id, ee.entity_id, ee.startdate, ee.enddate, ee."role", ee.ssn, ee.sales, ee.manager_id, ee.employeenumber, ee.dob
    FROM person p
    JOIN entity_employee ee USING (entity_id)
-   JOIN salutation s ON p.salutation_id = s.id;
+   LEFT JOIN salutation s ON p.salutation_id = s.id;
 
 /*
 create view employee as
@@ -521,7 +521,7 @@ CREATE VIEW vendor AS
         ein.note as 
         invoice_notes 
     FROM entity_credit_account emd 
-    join entity_bank_account eba on emd.entity_id = eba.entity_id
+    LEFT join entity_bank_account eba on emd.entity_id = eba.entity_id
     left join entity_note ein on ein.ref_key = emd.entity_id
     join company c on c.entity_id = emd.entity_id
     where emd.entity_class = 1;
