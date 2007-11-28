@@ -53,7 +53,7 @@ CREATE OR REPLACE FUNCTION entity__retrieve_credit
 (in_entity_id int, in_entity_class int) 
 RETURNS entity_credit_search_return AS
 $$
-DECLARE out_row customer_search_return;
+DECLARE out_row entity_credit_search_return;
 BEGIN
 	
 	SELECT c.legal_name, c.id, e.id, ec.entity_class, ec.discount,
