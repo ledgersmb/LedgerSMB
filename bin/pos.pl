@@ -936,7 +936,6 @@ sub print {
 
 sub print_form {
     my $old_form = shift;
-    &open_drawer;
 
     # if oldcustomer ne customer redo form
     $customer = $form->{customer};
