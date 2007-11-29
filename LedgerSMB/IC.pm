@@ -84,7 +84,8 @@ sub get_part {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $form->{assembly_rows} = 0;
-        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+            $form->db_parse_numeric(sth => $sth, hashref => $ref);
             $form->{assembly_rows}++;
             foreach my $key ( keys %{$ref} ) {
                 $form->{"${key}_$form->{assembly_rows}"} = $ref->{$key};
@@ -114,7 +115,7 @@ sub get_part {
             $sth = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
 
-            while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
                 push @{ $form->{makemodels} }, $ref;
             }
             $sth->finish;
@@ -172,7 +173,8 @@ sub get_part {
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+            $form->db_parse_numeric(sth => $sth, hashref => $ref);
             push @{ $form->{vendormatrix} }, $ref;
         }
         $sth->finish;
@@ -193,7 +195,8 @@ sub get_part {
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+            $form->db_parse_numeric(sth => $sth, hashref => $ref);
             push @{ $form->{customermatrix} }, $ref;
         }
         $sth->finish;
