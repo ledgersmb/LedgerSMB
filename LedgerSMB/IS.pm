@@ -244,6 +244,7 @@ sub invoice_details {
 
         if ( $form->{"qty_$i"} ) {
 
+            $form->{discount} = [] if ref $form->{discount} ne 'ARRAY';
             $form->{totalqty}  += $form->{"qty_$i"};
             $form->{totalship} += $form->{"qty_$i"};
             $form->{totalweight} +=

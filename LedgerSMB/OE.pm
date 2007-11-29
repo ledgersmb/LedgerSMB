@@ -1204,6 +1204,7 @@ sub order_details {
 
         if ( $form->{"qty_$i"} ) {
 
+            $form->{discount} = [] if ref $form->{discount} ne 'ARRAY';
             $form->{totalqty}  += $form->{"qty_$i"};
             $form->{totalship} += $form->{"ship_$i"};
             $form->{totalweight} +=

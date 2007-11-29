@@ -3575,6 +3575,7 @@ sub print_recurring {
     my $ok = 1;
 
     if ( $pt->{recurringprint} ) {
+        my $orig_callback = $form->{callback};
         @f = split /:/, $pt->{recurringprint};
         for ( $j = 0 ; $j <= $#f ; $j += 3 ) {
             $media = $f[ $j + 2 ];
@@ -3587,15 +3588,11 @@ sub print_recurring {
                   . $locale->text( $f{ $f[$j] } )
                   . " $form->{reference}" );
 
-            @a = (
-                "perl", "$form->{script}",
-"action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}"
-            );
-
             $form->error( $locale->text('Invalid redirect') )
               unless first { $_ eq $form->{script} }
-            @{LedgerSMB::Sysconfig::scripts};
-            $ok = !( system(@a) );
+              @{LedgerSMB::Sysconfig::scripts};
+	    $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
+	    $ok = !(main::redirect());
 
             if ($ok) {
                 $form->info( " ..... " . $locale->text('done') );
@@ -3605,6 +3602,7 @@ sub print_recurring {
                 last;
             }
         }
+        $form->{callback} = $orig_callback;
     }
 
     $ok;
@@ -3621,6 +3619,7 @@ sub email_recurring {
     if ( $pt->{recurringemail} ) {
 
         @f = split /:/, $pt->{recurringemail};
+        my $orig_callback = $form->{callback};
         for ( $j = 0 ; $j <= $#f ; $j += 2 ) {
 
             $form->info( "\n"
@@ -3637,15 +3636,11 @@ sub email_recurring {
 
             $message = $form->escape( $pt->{message}, 1 );
 
-            @a = (
-                "perl", "$form->{script}",
-"action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message"
-            );
-
             $form->error( $locale->text('Invalid redirect') )
               unless first { $_ eq $form->{script} }
-            @{LedgerSMB::Sysconfig::scripts};
-            $ok = !( system(@a) );
+              @{LedgerSMB::Sysconfig::scripts};
+	    $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
+            $ok = !( main::redirect() );
 
             if ($ok) {
                 $form->info( " ..... " . $locale->text('done') );
@@ -3655,6 +3650,7 @@ sub email_recurring {
                 last;
             }
         }
+        $form->{callback} = $orig_callback;
     }
 
     $ok;

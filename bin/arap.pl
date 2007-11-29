@@ -1024,6 +1024,8 @@ sub reprint {
           ( $form->{message} ) ? $form->{message} : $locale->text('sent');
 
         $form->save_intnotes( \%myconfig, $form->{module} );
+
+        0; #SC: Reversing the expected value to work with its caller
     }
 
 }

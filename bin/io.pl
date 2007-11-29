@@ -1553,9 +1553,9 @@ sub print_form {
 
     &{"$form->{vc}_details"};
 
-    @a = ();
+    my @vars = ();
     foreach $i ( 1 .. $form->{rowcount} ) {
-        push @a,
+        push @vars,
           (
             "partnumber_$i",    "description_$i",
             "projectnumber_$i", "partsgroup_$i",
@@ -1566,7 +1566,7 @@ sub print_form {
     for ( split / /, $form->{taxaccounts} ) { push @a, "${_}_description" }
 
     $ARAP = ( $form->{vc} eq 'customer' ) ? "AR" : "AP";
-    push @a, $ARAP;
+    push @vars, $ARAP;
 
     # format payment dates
     for $i ( 1 .. $form->{paidaccounts} - 1 ) {
@@ -1576,10 +1576,10 @@ sub print_form {
                 $form->{longformat} );
         }
 
-        push @a, "${ARAP}_paid_$i", "source_$i", "memo_$i";
+        push @vars, "${ARAP}_paid_$i", "source_$i", "memo_$i";
     }
 
-    $form->format_string(@a);
+    $form->format_string(@vars);
 
     ( $form->{employee} ) = split /--/, $form->{employee};
     ( $form->{warehouse}, $form->{warehouse_id} ) = split /--/,
@@ -1594,10 +1594,10 @@ sub print_form {
 
     # create the form variables
     if ($order) {
-        OE->order_details( \%myconfig, \%$form );
+        OE->order_details( \%myconfig, $form );
     }
     else {
-        IS->invoice_details( \%myconfig, \%$form );
+        IS->invoice_details( \%myconfig, $form );
     }
     if ( exists $form->{longformat} ) {
         $form->{"${due}date"} = $duedate;
@@ -1607,13 +1607,13 @@ sub print_form {
         }
     }
 
-    @a =
+    @vars =
       qw(name address1 address2 city state zipcode country contact phone fax email);
 
     $shipto = 1;
 
     # if there is no shipto fill it in from billto
-    foreach $item (@a) {
+    foreach $item (@vars) {
         if ( $form->{"shipto$item"} ) {
             $shipto = 0;
             last;
@@ -1630,16 +1630,16 @@ sub print_form {
         }
         else {
             if ( $form->{formname} !~ /bin_list/ ) {
-                for (@a) { $form->{"shipto$_"} = $form->{$_} }
+                for (@vars) { $form->{"shipto$_"} = $form->{$_} }
             }
         }
     }
 
     # some of the stuff could have umlauts so we translate them
-    push @a,
+    push @vars,
       qw(contact shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact shiptoemail shippingpoint shipvia notes intnotes employee warehouse);
 
-    push @a, ( "${inv}number", "${inv}date", "${due}date" );
+    push @vars, ( "${inv}number", "${inv}date", "${due}date" );
 
     for (qw(company address tel fax businessnumber)) {
         $form->{$_} = $myconfig{$_};
@@ -1648,7 +1648,7 @@ sub print_form {
 
     for (qw(name email)) { $form->{"user$_"} = $myconfig{$_} }
 
-    push @a, qw(company address tel fax businessnumber username useremail);
+    push @vars, qw(company address tel fax businessnumber username useremail);
 
     for (qw(notes intnotes)) { $form->{$_} =~ s/^\s+//g }
 
@@ -1657,7 +1657,7 @@ sub print_form {
         $form->{$_} =~ s/<%(.*?)%>/$form->{$1}/g;
     }
 
-    $form->format_string(@a);
+    $form->format_string(@vars);
 
     $form->{templates} = "$myconfig{templates}";
     $form->{IN}        = "$form->{formname}.$form->{format}";
@@ -1668,7 +1668,7 @@ sub print_form {
 
     $form->{pre} = '<body bgcolor="#ffffff">\n<pre>' if $form->{format} eq 'txt';
 
-    if ( $form->{media} !~ /(screen|queue|email)/ ) {
+    if ( $form->{media} !~ /(screen|queue|email)/ ) { # printer
         $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
@@ -1696,9 +1696,7 @@ sub print_form {
           $form->audittrail( "", \%myconfig, \%audittrail )
           if defined %$old_form;
 
-    }
-
-    if ( $form->{media} eq 'email' ) {
+    } elsif ( $form->{media} eq 'email' ) {
         $form->{subject} = qq|$form->{label} $form->{"${inv}number"}|
           unless $form->{subject};
 
@@ -1753,9 +1751,7 @@ sub print_form {
         $old_form->{audittrail} .=
           $form->audittrail( "", \%myconfig, \%audittrail )
           if defined %$old_form;
-    }
-
-    if ( $form->{media} eq 'queue' ) {
+    } elsif ( $form->{media} eq 'queue' ) {
         %queued = split / /, $form->{queued};
 
         if ( $filename = $queued{ $form->{formname} } ) {
