@@ -66,13 +66,13 @@ BEGIN
 		SELECT a.id AS invoice_id, a.invnumber, 
 		       a.transdate AS invoice_date, a.amount, 
 		       CASE WHEN discount_terms 
-		                 < extract('days' FROM age(a.transdate))
+		                 > extract('days' FROM age(a.transdate))
 		            THEN 0
 		            ELSE (a.amount - a.paid) * c.discount / 100  
 		       END AS discount,
 		       a.amount - a.paid - 
 		       CASE WHEN discount_terms 
-		                 < extract('days' FROM age(a.transdate))
+		                 > extract('days' FROM age(a.transdate))
 		            THEN 0
 		            ELSE (a.amount - a.paid) * c.discount / 100  
 		       END AS due
@@ -87,6 +87,7 @@ BEGIN
 		  JOIN entity_credit_account c USING (entity_id)
 		 WHERE a.invoice_class = in_account_class
 		       AND c.entity_class = in_account_class
+		       AND a.amount - a.paid <> 0
 		       AND a.curr = in_curr
 		       AND a.entity_id = coalesce(in_entity_id, a.entity_id)
 	LOOP
@@ -131,11 +132,14 @@ BEGIN
 		                   ELSE (a.amount - a.paid) * c.discount / 100
 		              END)::text, 
 		              (a.amount - a.paid -
-		              CASE WHEN c.discount_terms 
+		              (CASE WHEN c.discount_terms 
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
 		                   ELSE (a.amount - a.paid) * c.discount / 100
-		              END)::text]]) 
+		              END))::text]]),
+		              bool_and(lock_record(a.id, (select max(session_id) 				FROM "session" where users_id = (
+					select id from users WHERE username =
+					SESSION_USER))))
 		    FROM entity e
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
 		    JOIN (SELECT id, invnumber, transdate, amount, entity_id, 
@@ -146,6 +150,7 @@ BEGIN
 		                 paid, curr, 2 as invoice_class
 		            FROM ar
 		         ) a USING (entity_id)
+		    JOIN transactions t ON (a.id = t.id)
 		   WHERE a.invoice_class = in_account_class
 		         AND ((a.transdate >= in_date_from
 		               AND a.transdate <= in_date_to)
@@ -153,6 +158,12 @@ BEGIN
 		                          WHERE batch_id = in_batch_id))
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
+		         AND a.amount - a.paid <> 0
+			 AND t.locked_by NOT IN 
+				(select "session_id" FROM "session"
+				WHERE users_id IN 
+					(select id from users 
+					where username <> SESSION_USER))
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
 		                            chart_id = (SELECT id frOM chart

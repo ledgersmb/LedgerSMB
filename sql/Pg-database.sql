@@ -83,7 +83,7 @@ It provies a referential integrity enforcement mechanism for the financial data
 and also some common features such as discretionary (and pessimistic) locking 
 for long batch workflows. $$;
 
-CREATE FUNCTION lock_record (int, int) returns bool as 
+CREATE OR REPLACE FUNCTION lock_record (int, int) returns bool as 
 $$
 declare
    locked int;
@@ -91,7 +91,7 @@ begin
    SELECT locked_by into locked from transactions where id = $1;
    IF NOT FOUND THEN
 	RETURN FALSE;
-   ELSEIF locked_by is not null AND locked_by <> $2 THEN
+   ELSEIF locked is not null AND locked <> $2 THEN
         RETURN FALSE;
    END IF;
    UPDATE transactions set locked_by = $2 where id = $1;
@@ -371,6 +371,8 @@ CREATE TABLE acc_trans (
   memo text,
   invoice_id int,
   approved bool default true,
+  cleared_on date,
+  reconciled_on date,
   entry_id SERIAL PRIMARY KEY
 );
 --
@@ -611,7 +613,8 @@ CREATE TABLE ar (
   ponumber text,
   on_hold bool default false,
   reverse bool default false,
-  approved bool default true
+  approved bool default true,
+  description text
 );
 
 COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
@@ -644,7 +647,9 @@ CREATE TABLE ap (
   on_hold bool default false,
   approved bool default true,
   reverse bool default false,
-  terms int2 DEFAULT 0
+  terms int2 DEFAULT 0,
+  description text,
+  credit_account int
 );
 
 COMMENT ON COLUMN ap.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
