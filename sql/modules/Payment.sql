@@ -61,7 +61,7 @@ CREATE TYPE payment_invoice AS (
 );
 
 CREATE OR REPLACE FUNCTION payment_get_open_invoices
-(in_account_class int, in_entity_id int, in_curr char(3))
+(in_account_class int, in_entity_credit_id int, in_curr char(3))
 RETURNS SETOF payment_invoice AS
 $$
 DECLARE payment_inv payment_invoice;

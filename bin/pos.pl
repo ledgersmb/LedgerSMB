@@ -65,11 +65,6 @@ sub custom_send_to_pd{
   close SOCK;
 }
 
-sub on_update{
-   &custom_send_to_pd;
-   &custom_check_alert;
-}
-
 sub open_drawer{
    require "pos.conf.pl";
    open (PRINTER, "|-", ${'LedgerSMB::Sysconfig::printer'}{Printer});
@@ -947,7 +942,6 @@ sub print {
 
 sub print_form {
     my $old_form = shift;
-    &open_drawer;
 
     # if oldcustomer ne customer redo form
     $customer = $form->{customer};

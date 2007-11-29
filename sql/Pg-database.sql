@@ -614,6 +614,7 @@ CREATE TABLE ar (
   on_hold bool default false,
   reverse bool default false,
   approved bool default true,
+  credit_account int references entity_credit_account(id) not null,
   description text
 );
 
@@ -649,7 +650,7 @@ CREATE TABLE ap (
   reverse bool default false,
   terms int2 DEFAULT 0,
   description text,
-  credit_account int
+  credit_account int references entity_credit_account(id)
 );
 
 COMMENT ON COLUMN ap.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
