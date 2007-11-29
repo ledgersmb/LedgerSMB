@@ -1,13 +1,15 @@
-
+-- payment_get_open_accounts and the option to get all accounts need to be
+-- refactored and redesigned.  -- CT
 CREATE OR REPLACE FUNCTION payment_get_open_accounts(in_account_class int) 
 returns SETOF entity AS
 $$
 DECLARE out_entity entity%ROWTYPE;
 BEGIN
 	FOR out_entity IN
-		SELECT * FROM entity 
-		WHERE id IN (SELECT entity_id FROM entity_credit_account
-				WHERE entity_class = in_account_class)
+		SELECT ec.id, e.name, e.entity_class, e.created 
+		FROM entity e
+		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+			WHERE ec.entity_class = in_account_class
 		      AND CASE WHEN in_account_class = 1 THEN
 				id IN (SELECT entity_id FROM ap 
 					WHERE amount <> paid
@@ -33,9 +35,11 @@ $$
 DECLARE out_entity entity%ROWTYPE;
 BEGIN
 	FOR out_entity IN
-		SELECT * FROM entity
-		WHERE id IN (seLECT entity_id FROM entity_credit_account
-				WHERE entity_class = in_account_class)
+		SELECT  ec.id, 
+			e.name, e.entity_class, e.created 
+		FROM entity e
+		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+				WHERE e.entity_class = in_account_class
 	LOOP
 		RETURN NEXT out_entity;
 	END LOOP;
