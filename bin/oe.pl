@@ -243,6 +243,7 @@ sub prepare_order {
             $form->{$_} = $form->quote( $form->{$_} );
         }
 
+        my $i;
         foreach $ref ( @{ $form->{form_details} } ) {
             $i++;
             for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
