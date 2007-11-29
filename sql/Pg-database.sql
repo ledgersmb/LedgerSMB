@@ -850,11 +850,12 @@ CREATE TABLE partsgroup (
 );
 --
 CREATE TABLE status (
-  trans_id int PRIMARY KEY,
+  trans_id int,
   formname text,
   printed bool default 'f',
   emailed bool default 'f',
-  spoolfile text
+  spoolfile text,
+  PRIMARY KEY (trans_id, formname)
 );
 --
 CREATE TABLE department (
@@ -978,17 +979,19 @@ CREATE TABLE recurring (
 );
 --
 CREATE TABLE recurringemail (
-  id int PRIMARY KEY,
+  id int,
   formname text,
   format text,
-  message text
+  message text,
+  PRIMARY KEY (id, formname)
 );
 --
 CREATE TABLE recurringprint (
-  id int PRIMARY KEY,
+  id int,
   formname text,
   format text,
-  printer text
+  printer text,
+  PRIMARY KEY (id, formname)
 );
 --
 CREATE TABLE jcitems (
@@ -1696,7 +1699,7 @@ CREATE TABLE menu_node (
 );
 
 
-ALTER TABLE public.menu_node OWNER TO ledgersmb;
+--ALTER TABLE public.menu_node OWNER TO ledgersmb;
 
 --
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
@@ -2631,7 +2634,7 @@ CREATE VIEW menu_friendly AS
     SELECT t."level", t.path, t.list_order, (repeat(' '::text, (2 * t."level")) || (n.label)::text) AS label, n.id, n."position" FROM (connectby('menu_node'::text, 'id'::text, 'parent'::text, 'position'::text, '0'::text, 0, ','::text) t(id integer, parent integer, "level" integer, path text, list_order integer) JOIN menu_node n USING (id));
 
 
-ALTER TABLE public.menu_friendly OWNER TO ledgersmb;
+--ALTER TABLE public.menu_friendly OWNER TO ledgersmb;
 
 --
 -- PostgreSQL database dump complete
