@@ -1,80 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-        <!--  TODO:  Allow the ui-header to be used for this file 
-	Also, move all elements to elements.html
-	CT  -->
-	<title>LedgerSMB <?lsmb VERSION ?></title>
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="-1" />
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
-	<link rel="stylesheet" href="css/ledgersmb.css" type="text/css" title="LedgerSMB stylesheet" />
-	<link rel="stylesheet" href="UI/login.css" type="text/css" title="LedgerSMB stylesheet" />
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-	<meta name="robots" content="noindex,nofollow" />
-        
-	<script language="JavaScript" type="text/javascript" 
-		src="UI/login.js">
-	</script>
-	<script language="JavaScript" type="text/javascript" >
-function setup_page() {
-	var credential_html;
-
-	var cred_div = document.getElementById("credentials");
-	credential_html = 
-		'<div class="labelledinput">' +
-			'<div class="label">' +
-				'<label for="login">' +
-				"<?lsmb text('Name') ?>"+
-				"</label>" +
-			'</div>' +
-			'<div class="input">' +
-				'<input class="login" ' + 
-				'name="login" size="30" ' + 
-				'value="" id="login" '+ 
-				'accesskey="n" />' +
-			'</div>' +
-		'</div>' +
-		'<div class="labelledinput">' +
-			'<div class="label">' +
-				'<label for="password">' +
-				"<?lsmb text('Password') ?>" +
-				'</label>' +
-			'</div>' +
-			'<div class="input">' +
-				'<input class="login" ' + 
-					'type="password" ' +
-					'name="password" ' +
-					'size="30" ' +
-					'id="password" ' +
-					'accesskey="p" />' +
-			'</div>' +
-		'</div>';
-	if (<?lsmb IF blacklisted ?>false<?lsmb ELSE ?>true<?lsmb END ?>
-			&& get_http_request_object()){
-		cred_div.innerHTML = credential_html;
-	}
-	document.login.login.focus();
-}
-	</script>
-</head>
+<?lsmb INCLUDE 'ui-header.html' 
+	titlebar = "LedgerSMB $VERSION"
+	include_stylesheet = ["UI/login.css", "css/ledgersmb.css"]
+	include_script = ["UI/login.js"]
+?>
 <?lsmb PROCESS elements.html ?>
 
 		 
 
 
-<body class="login" onload="setup_page();">
+<body class="login" onload="setup_page('<?lsmb text('Name:')?>',
+	'<?lsmb text('Password:') ?>');">
 	<br /><br />
 	<center>
 		<form method="post" action="login.pl" name="login"
 			onsubmit="return submit_form()">
-		<?lsmb PROCESS input element_data = {
+		<?lsmb INCLUDE input element_data = {
 			type = "hidden",
 			name = "menubar",
 			value = menubar
+		} ?> 
+		<?lsmb INCLUDE input element_data = {
+			type = "hidden",
+			name = "blacklisted",
+			value = blacklisted
 		} ?> 
 		<div class="login">
 			<div class="login" align="center">
