@@ -1,0 +1,148 @@
+<?lsmb INCLUDE 'ui-header.html' 
+	titlebar = 'Payments'
+	include_stylesheet = [
+			'css/global.css' 
+			'UI/payments/payments.css'
+		]
+?>
+ <?lsmb PROCESS elements.html  # Include form elements helper. ?>
+<?lsmb contact_type = (account_class == 1) ? text('Vendor') : text('Customer') 
+?>
+<?lsmb payment_type = (account_class == 1) ? text('Payments') : text('Receipts') 
+?>
+<body id="payment_2_body">
+<div class="listtop"><?lsmb payment_type ?></div>
+ <form name="pay_dues" method="post" action="payment.pl">
+ <!-- Moving all hidden variables to the top.  -CT -->
+ <?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "project_id"
+	value = project_id
+ } ?>
+ <?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "department_id"
+	value = department_id
+ } ?>
+ <?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "approved"
+	value = approved
+ } ?>
+ <?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "currency"
+	value = currency
+ } ?>
+ <?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "payable_id"
+	value = payable_id
+ } ?>
+ <?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "batch_id"
+	value = batch_id
+ } ?>
+ <table width=100% id="info_table">
+  <tr valign=top id="info_row">
+   <td width=50% id="info_data">
+    <table>
+     <!-- the department will be shown if it was selected in the first step -->
+     <?lsmb IF department.value  # Only process element if one exists. As in project above ?>
+     <tr id="department-row">
+      <th align="right" nowrap id="department_label_column"><?lsmb  text('Department')  ?>:</th>
+      <td colspan="2" id="department_column">
+       <?lsmb  department ?>
+      </td>
+     </tr>
+     <?lsmb END ?>
+     <tr id="account_row">
+      <th align="right" nowrap id="account_label_column"><?lsmb text('Account') ?></th>
+      <td colspan="2" id="account_column"><?lsmb payable_accno ?>--<?lsmb payable_description ?></td>
+     </tr>
+     <tr id="date_row">
+      <th align="right" nowrap id="date_label_column"><?lsmb text('Date') ?></th>
+      <td colspan="2" id="date_column">
+	<?lsmb IF batch_id ?>
+		<?lsmb date_paid ?>
+	<?lsmb END ?>
+	<?lsmb INCLUDE input element_data= {
+		value = datepaid
+		name = "datepaid" 
+		size = 20
+		class = (batch_id) ? "hidden" : "date"
+		type = (batch_id) ? "hidden" : "text"
+	} ?> </td>
+     </tr>
+     <?lsmb  IF defaultcurrency != curr ?>
+      <tr id="exrate_row">
+       <th valig="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
+       <td id="exrate_column">
+         <?lsmb PROCESS input element_data= {
+		label = text('Exchange Rate')
+		type = text
+		class = "numeric"
+		name = 'exchange_rate'
+		value = exchange_rate
+		size = 20
+	} # ' ?>
+       </td>
+      </tr>
+     <?lsmb END ?>
+    </table>
+   </td>
+  </tr>
+ </table>
+ <table width="100%" border="1">
+  <tr class="listheading">
+   <?lsmb FOREACH column IN column_headers  # Loop through columns ?>
+   <th class="listheading"><?lsmb column.text ?></th>
+   <?lsmb END ?>
+  </tr>
+  <?lsmb # We have to clear i for later usage :)  ?>
+  <?lsmb i = '0' ?>
+  <?lsmb FOREACH row IN rows ?>
+  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" 
+	# TODO: Refactor -- CT ?>
+  <tr class="<?lsmb alterning_style ?>"=>
+    <td><a href="<?lsmb row.invoice.href ?>"><?lsmb row.invoice.number ?></a>
+        <input type="hidden" value="<?lsmb row.invoice.id ?>" />                 </td>
+    <!-- we can use an href to link this invoice number to the invoice - DM -->
+    <td><?lsmb row.invoice_date ?></td>
+    <td><?lsmb row.amount ?></td>
+    <td><?lsmb row.paid ?></td>
+    <td><?lsmb row.due ?></td>
+    <?lsmb IF defaultcurrency.text != curr.text ?>
+    <td><?lsmb row.exchange_rate ?></td>
+    <td><?lsmb row.due_fx ?></td>
+    <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.topay ?></div></td>
+    <?lsmb END ?> 
+    <!-- DM: This should be computed and updated to the div using  --> 
+    <td><?lsmb PROCESS input  element_data=row.topay_fx ?><div id="<?lsmb "div_topay_$i" ?>">
+    <hr />  
+    <table>
+     <!-- Row for payment cash accounts -->
+     <tr id="<?lsmb "account-row$i"?>">
+      <th align="right" nowrap id="<?lsmb "account_label_column$i" ?>"><?lsmb text('Account') ?></th>
+      <td colspan="2" id="<?lsmb "account_column$i" ?>"><?lsmb PROCESS select element_data=account ?></td>
+     </tr>
+     <tr id="<?lsmb "source_row$i" ?>">
+      <?lsmb # here goes all the posible sources wich we can used ?>
+      <th align="right" nowrap id="<?lsmb "source_label_column$i" ?>"><?lsmb text('Source') ?></th>
+      <td width="28%" id="<?lsmb "source_column$i" ?>"><?lsmb PROCESS select element_data=source ?></td>
+      <td><?lsmb PROCESS input element_data=source_text ?></td>   
+      <td nowrap align="left"><input  name="<?lsmb "optionalpay_$i" ?>" type="checkbox"  class="checkbox"></td>
+     </tr>
+    </table>
+   </div>
+   <?lsmb END ?>
+  </table>
+  <hr />
+  <?lsmb PROCESS button element_data=post ?>
+  <?lsmb PROCESS button element_data=post_and_print ?>
+  <?lsmb PROCESS select element_data=format ?>
+  <?lsmb PROCESS select element_data=media ?>
+  </form>
+ </body>
+</html>

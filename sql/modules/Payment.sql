@@ -93,7 +93,8 @@ BEGIN
 		       AND c.entity_class = in_account_class
 		       AND a.amount - a.paid <> 0
 		       AND a.curr = in_curr
-		       AND a.entity_id = coalesce(in_entity_id, a.entity_id)
+		       AND a.credit_account = coalesce(in_entity_credit_id, 
+				a.credit_account)
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
@@ -199,10 +200,31 @@ This then returns a set of contact information with a 2 dimensional array
 cnsisting of outstanding invoices.
 $$;
 
+CREATE OR REPLACE FUNCTION payment_bulk_post
+(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
+	in_ar_ap_accno text, in_cash_accno text, in_approved bool,
+	in_payment_date date, in_account_class int)
+RETURNS int AS
+$$
+DECLARE payment_trans numeric[];
+BEGIN
+END;
+$$ language plpgsql;
+
+COMMENT ON FUNCTION payment_bulk_post
+(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
+        in_ar_ap_accno text, in_cash_accno text, in_approved bool,
+        in_payment_date date, in_account_class int)
+IS
+$$ Note that in_transactions is a two-dimensional numeric array.  Of each 
+sub-array, the first element is the (integer) transaction id, and the second
+is the amount for that transaction.  If the total of the amounts do not add up 
+to in_total, then an error is generated. $$;
+
 CREATE OR REPLACE FUNCTION payment_post 
-(in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
-	in_cash_accno text, in_approved bool, in_payment_date date, 
-	in_account_class int)
+(in_trans_id int, in_batch_id int, in_source text, in_amount numeric, 
+	in_ar_ap_accno text, in_cash_accno text, in_approved bool, 
+	in_payment_date date, in_account_class int)
 RETURNS INT AS
 $$
 DECLARE out_entry_id int;
@@ -266,10 +288,9 @@ $$ language plpgsql;
 comment on function project_list_open(in_date date) is
 $$ This function returns all projects that were open as on the date provided as
 the argument.$$;
-
-
-
 -- Move this to the projects module when we start on that. CT
+
+
 CREATE OR REPLACE FUNCTION department_list(in_role char)
 RETURNS SETOF department AS
 $$
@@ -277,12 +298,13 @@ DECLARE out_department department%ROWTYPE;
 BEGIN
        FOR out_department IN
                SELECT * from department
-               WHERE role = in_role
+               WHERE role = coalesce(in_role, role)
        LOOP
                return next out_department;
        END LOOP;
 END;
 $$ language plpgsql;
+-- Move this into another module.
 
 comment on function department_list(in_role char) is
 $$ This function returns all department that match the role provided as

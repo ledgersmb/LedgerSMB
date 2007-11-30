@@ -68,6 +68,21 @@ TT2 system. (hopefully it will... )
 
 =cut
 
+sub payments {
+    my ($request)  = @_;
+    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    $payment->get_metadata();
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/payments',
+        template => 'payments_filter',
+        format   => 'HTML', 
+    );
+    $template->render($payment);
+}
+  
+
 sub payment {
  my ($request)    = @_;  
  my $locale       = $request->{_locale};

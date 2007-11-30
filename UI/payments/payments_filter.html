@@ -1,0 +1,93 @@
+<?lsmb INCLUDE 'ui-header.html'
+		include_stylesheet = [
+			'css/global.css' 
+			'UI/payments/payments.css'
+		]
+		titlebar = text('Selection')
+?>
+<?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
+<body id="payments-filter-body">
+<div class="listtop">
+	<!-- CT:  Strings for locales:
+	<?lsmb text('Filtering Receipts') ?>
+	<?lsmb text('Filtering Payments') ?> -->
+	<?lsmb IF account_class == 1 ?><?lsmb t = 'Payments' 
+	?><?lsmb ELSE ?><?lsmb t = 'Receipts' 
+	?><?lsmb END ?>
+	<?lsmb text("Filtering $t") ?>
+</div>
+<form name="search" method="post" action="payment.pl">
+	
+
+<?lsmb INCLUDE input element_data={
+	value = accountclass
+	type = "hidden"
+	name = "accountclass"
+} ?>
+<div id = "payments-filter-categories" class="inputgroup">
+<?lsmb IF projects ?>
+<div id = "payments-filter-projects" class="input">
+  <label for="project"><?lsmb text('Project') ?></label>
+  d<select name="project_id" id="project">
+  <?lsmb FOREACH p = projects ?>
+  <option value="<?lsmb p.id ?>"><?lsmb p.projectnumber ?></option>
+  <?lsmb END ?>
+</div>
+<?lsmb END ?>
+
+<?lsmb IF departments ?>
+<div id = "payments-filter-departments" class="input">
+  <label for="department"><?lsmb text('Department') ?></label>
+  <select name="department_id" id="department">
+  <?lsmb FOREACH d = departments ?>
+  <option value="<?lsmb d.id ?>"><?lsmb d.description ?></option>
+  <?lsmb END ?>
+</div>
+<?lsmb END ?>
+
+<?lsmb IF businesses ?>
+<div id = "payments-filter-businesses" class="input">
+  <label for="businesses"><?lsmb text('Business Class') ?></label>
+  <select name="businesses" id="businesses">
+  <?lsmb FOREACH b = businesses ?>
+  <option value="<?lsmb b.id ?>"><?lsmb b.description ?></option>
+  <?lsmb END ?>
+</div>
+<?lsmb END ?>
+</div>
+<div id = "payments-filter-daterow" class = "inputgroup">
+<?lsmb PROCESS input element_data = {
+	label = text('Date From:')
+	type = "text"
+	class = "date"
+	value = date_from
+	name = "date_from"
+	size = 12
+} # ' ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Date To:')
+	type = "text"
+	class = "date"
+	value = date_to
+	name = "date_to"
+	size = 12
+} # ' ?>
+</div>
+<div id = "payments-filter-currency-row" class="inputgroup" ?>
+<label for="currency"><?lsmb text('Currency')?></label>
+<select name="currency" id="currency">
+<?lsmb FOREACH c = currencies ?>
+<option value = "<?lsmb c ?>"><?lsmb c ?></option>
+<?lsmb END ?>
+</select>
+</div>
+</div>
+<?lsmb INCLUDE button element_data = {
+	type = "submit"
+	text = text('Continue')
+	class = "submit"
+	value = "display_payments"
+} ?>
+</form>
+</body>
+</html>

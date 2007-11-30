@@ -546,7 +546,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		value=bank_account_id
 	} ?>
 	<div><label for="bic">
-	<?lsmb PROCESS input element_data = {
+	<?lsmb INCLUDE input element_data = {
 		type="text" 
 		label = text('BIC/SWIFT Code:')
 		name="bic" 

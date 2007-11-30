@@ -51,14 +51,25 @@ calculation.
 
 sub __validate__ {
   my ($self) = shift @_;
-  #FIRST WE CHECK IF THE MAIN PROPERTY 'account_class' IS SET
+  # If the account class is not set, we don't know if it is a payment or a 
+  # receipt.  --CT
   if (!$self->{account_class}) {
     $self->error("account_class must be set")
   }; 
-  #NOW WE SET THE CURRENT DATE
+  # We should try to re-engineer this so that we don't have to include SQL in
+  # this file.  --CT
   ($self->{current_date}) = $self->{dbh}->selectrow_array('select current_date');
 }
 
+sub get_metadata {
+    my ($self) = @_;
+    $self->list_open_projects();
+    @{$self->{departments}} = $self->exec_method(funcname => 'department_list');
+    $self->get_open_currencies();
+    @{$self->{businesses}} = $self->exec_method(
+		funcname => 'business_type__list'
+    );
+}
 
 sub get_open_accounts {
     my ($self) = @_;
