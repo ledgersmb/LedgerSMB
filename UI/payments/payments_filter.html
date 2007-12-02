@@ -79,7 +79,7 @@
 <div id = "payments-filter-currency-row" class="inputgroup" ?>
 <label for="currency"><?lsmb text('Currency')?></label>
 <select name="currency" id="currency">
-<?lsmb FOREACH c = currencies ?><?lsmb k = c.keys.first ?>
+<?lsmb FOREACH c = currencies ?><?lsmb k = "payments_get_open_currencies" ?>
 <option value = "<?lsmb c.$k ?>"><?lsmb c.$k ?></option>
 <?lsmb END ?>
 </select>
