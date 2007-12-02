@@ -47,19 +47,7 @@ sub session_check {
     my $dbh = $form->{dbh};
 
     my $checkQuery = $dbh->prepare(
-        "SELECT u.username, s.transaction_id 
-           FROM session as s
-	   JOIN users as u ON (s.users_id = u.id)
-          WHERE s.session_id = ?
-            AND token = ?
-            AND s.last_used > now() - ?::interval"
-    );
-
-    my $updateAge = $dbh->prepare(
-        "UPDATE session 
-           SET last_used = now()
-         WHERE session_id = ?;"
-    );
+        "SELECT * FROM session_check(?, ?)");
 
     my ($sessionID, $token, $company) = split(/:/, $cookie);
 
@@ -77,7 +65,7 @@ sub session_check {
         $timeout = "$form->{timeout} seconds";
     }
 
-    $checkQuery->execute( $sessionID, $token, $timeout )
+    $checkQuery->execute( $sessionID, $token)
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
     my $sessionValid = $checkQuery->rows;
@@ -85,22 +73,19 @@ sub session_check {
     if ($sessionValid) {
 
         #user has a valid session cookie, now check the user
-        my ( $sessionLogin, $sessionTransaction ) = $checkQuery->fetchrow_array;
+        my ( $session_ref) =  $checkQuery->fetchrow_hashref('NAME_lc');
 
         my $login = $form->{login};
 
         $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
-        if (( $sessionLogin eq $login ))
+        if (( $session_ref ))
         {
 
 
 
-            $updateAge->execute( $sessionID )
-              || $form->dberror(
-                __FILE__ . ':' . __LINE__ . ': Updating session age: ' );
 
             my $newCookieValue =
-              $sessionID . ':' . $token . ':' . $form->{company};
+              $session_ref->{session_id} . ':' . $session_ref->{token} . ':' . $form->{company};
 
             #now update the cookie in the browser
             print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=$path;\n|;

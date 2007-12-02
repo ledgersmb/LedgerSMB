@@ -316,7 +316,7 @@ $$
 DECLARE resultrow record;
 BEGIN
         FOR resultrow IN
-          SELECT curr FROM ar
+          SELECT curr AS curr FROM ar
           WHERE amount <> paid
           OR paid IS NULL
           AND in_account_class=2 

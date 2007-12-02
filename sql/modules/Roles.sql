@@ -1,3 +1,4 @@
+GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
 -- Contacts
 CREATE ROLE lsmb_<?lsmb dbname ?>__read_contact
 WITH INHERIT NOLOGIN;
@@ -1382,5 +1383,6 @@ grant select on menu_node, menu_attribute, menu_acl to public;
 GRANT select on chart, gifi, country to public;
  grant select on employee to public;
  GRANT SELECT ON parts, partsgroup TO public;
- GRANT SELECT ON language TO public;
-GRANT SELECT ON business, exchangerate, shipto, tax TO public;
+ GRANT SELECT ON language, project TO public;
+GRANT SELECT ON business, exchangerate, department, shipto, tax TO public;
+
