@@ -28,10 +28,11 @@
 <?lsmb IF projects ?>
 <div id = "payments-filter-projects" class="input">
   <label for="project"><?lsmb text('Project') ?></label>
-  d<select name="project_id" id="project">
+  <select name="project_id" id="project">
   <?lsmb FOREACH p = projects ?>
   <option value="<?lsmb p.id ?>"><?lsmb p.projectnumber ?></option>
   <?lsmb END ?>
+  </select>
 </div>
 <?lsmb END ?>
 
@@ -42,6 +43,7 @@
   <?lsmb FOREACH d = departments ?>
   <option value="<?lsmb d.id ?>"><?lsmb d.description ?></option>
   <?lsmb END ?>
+  </select>
 </div>
 <?lsmb END ?>
 
@@ -52,6 +54,7 @@
   <?lsmb FOREACH b = businesses ?>
   <option value="<?lsmb b.id ?>"><?lsmb b.description ?></option>
   <?lsmb END ?>
+  </select>
 </div>
 <?lsmb END ?>
 </div>
