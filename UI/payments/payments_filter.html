@@ -50,7 +50,7 @@
 <?lsmb IF businesses ?>
 <div id = "payments-filter-businesses" class="input">
   <label for="businesses"><?lsmb text('Business Class') ?></label>
-  <select name="businesses" id="businesses">
+  <select name="business" id="businesses">
   <?lsmb FOREACH b = businesses ?>
   <option value="<?lsmb b.id ?>"><?lsmb b.description ?></option>
   <?lsmb END ?>
@@ -58,6 +58,15 @@
 </div>
 <?lsmb END ?>
 </div>
+<div class="input" id="account_input">
+	<label for="account"><?lsmb text('Account') ?>
+	<select name="ar_ap_accno">
+	<?lsmb FOREACH a = debt_accounts ?>
+	<option value="<?lsmb a.accno ?>" <?lsmb 
+		IF a.id == account ?> SELECTED <?lsmb END ?>>
+			<?lsmb a.accno ?>--<?lsmb a.description ?></option>
+	<?lsmb END ?>
+	</select>
 <div id = "payments-filter-daterow" class = "inputgroup">
 <?lsmb PROCESS input element_data = {
 	label = text('Date From:')
@@ -84,6 +93,14 @@
 <?lsmb END ?>
 </select>
 </div>
+</div>
+<div class = "input">
+<?lsmb INCLUDE input element_data = {
+	type = "text"
+	size = "20"
+	name = "source_start"
+	label = text('Start Source Numbering At:')
+} # '?>
 </div>
 <?lsmb INCLUDE button element_data = {
 	type = "submit"
