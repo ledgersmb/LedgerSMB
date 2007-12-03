@@ -66,9 +66,15 @@ sub get_metadata {
     $self->list_open_projects();
     @{$self->{departments}} = $self->exec_method(funcname => 'department_list');
     $self->get_open_currencies();
+    $self->{currencies} = [];
+    for my $c (@{$self->{openCurrencies}}){
+        push @{$self->{currencies}}, $c->{payments_get_open_currencies};
+    }
     @{$self->{businesses}} = $self->exec_method(
 		funcname => 'business_type__list'
     );
+    @{$self->{debt_accounts}} = $self->exec_method(
+		funcname => 'chart_get_ar_ap');
 }
 
 sub get_open_accounts {
@@ -337,5 +343,42 @@ sub get_vc_info {
  #return @{$self->{vendor_customer_info}};
 }
 
+=item get_payment_detail_data
+
+This method sets appropriate project, department, etc. fields.
+
+=cut
+
+sub get_payment_detail_data {
+    my ($self) = @_;
+    @{$self->{cash_accounts}} = $self->exec_method(
+		funcname => 'chart_list_cash');
+    $self->get_metadata();
+
+    my $source_inc;
+    my $source_src;
+    if (defined ($self->{source_start})){
+        $self->{source_start} =~ /(\d*)\D*$/;
+	$source_src = $1;
+	if ($source_src) {
+		$source_inc = $source_src;
+	} else {
+		$source_inc = $0;
+	}
+    }
+    @{$self->{contact_invoices}} = $self->exec_method(
+		funcname => 'payment_get_all_contact_invoices');
+    for my $inv (@{$self->{contact_invoices}}){
+        if (defined $self->{source_start}){
+		my $source = $self->{source_start};
+		$source =~ s/$source_src(\D*)$/$source_inc$1/;
+		++ $source_inc;
+		$inv->{source} = $source;
+	}
+	my $tmp_invoices = $inv->{invoices};
+        $inv->{invoices} = [];
+        @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
+    }
+}    
 
 1;
