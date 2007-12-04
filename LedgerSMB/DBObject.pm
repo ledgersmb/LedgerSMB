@@ -242,7 +242,7 @@ sub _parse_array {
     my @return_array;
 
     while ($value ne '{}') {
-        my $next = "";
+        my $next;
         my $separator = "";
         if ($value =~ /^\{"/){
             while ($next eq "" or ($next =~ /\\".$/)){
@@ -250,17 +250,19 @@ sub _parse_array {
                 $next .= $1;
                 $next =~ /(.)$/;
                 $separator = $1;
+               $next .= "quoted";
             }
             $next =~ s/"(.*)"$separator$/$1/;
 
-        } elsif ($value =~ /^{({+})/){
+        } elsif ($value =~ /^{({+)/){
             my $open_braces = $1;
             my $close_braces = $open_braces;
             $close_braces =~ s/{/}/g;
-            $value =~ /^{($open_braces.*$close_braces)/;
-            $next = $1;
-            $value =~ s/^{$next/{/;
-            $next = $self->parse_array($next);
+            $value =~ /^{($open_braces[^}]*$close_braces)/;
+            my $parse_next = $1;
+            $value =~ s/^{$parse_next/{/;
+           $value =~ s/^{,/{/;
+            @$next = $self->_parse_array($parse_next);
             
         } else {
             $value =~ s/^\{([^,]*)(,|\})/\{/;

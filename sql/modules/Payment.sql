@@ -130,7 +130,7 @@ BEGIN
 		         sum(a.amount - a.paid) AS total_due, 
 		         compound_array(ARRAY[[
 		              a.id::text, a.invnumber, a.transdate::text, 
-		              a.amount::text, 
+		              a.amount::text, a.paid::text,
 		              (CASE WHEN c.discount_terms 
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
@@ -148,12 +148,15 @@ BEGIN
 		    FROM entity e
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
 		    JOIN (SELECT id, invnumber, transdate, amount, entity_id, 
-		                 paid, curr, 1 as invoice_class 
+		                 paid, curr, 1 as invoice_class, 
+		                 entity_credit_account 
 		            FROM ap
 		           UNION
 		          SELECT id, invnumber, transdate, amount, entity_id,
-		                 paid, curr, 2 as invoice_class
+		                 paid, curr, 2 as invoice_class, 
+		                 entity_credit_account
 		            FROM ar
+			ORDER BY transdate
 		         ) a USING (entity_id)
 		    JOIN transactions t ON (a.id = t.id)
 		   WHERE a.invoice_class = in_account_class
@@ -163,6 +166,7 @@ BEGIN
 		                          WHERE batch_id = in_batch_id))
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
+		         AND a.entity_credit_account = c.id
 		         AND a.amount - a.paid <> 0
 			 AND t.locked_by NOT IN 
 				(select "session_id" FROM "session"
