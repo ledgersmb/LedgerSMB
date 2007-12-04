@@ -83,7 +83,7 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if $self->{path} =~ /lynx/i;
 
-    $self->{version}   = "1.2.9";
+    $self->{version}   = "1.2.10";
     $self->{dbversion} = "1.2.0";
 
     bless $self, $type;
@@ -432,7 +432,6 @@ sub format_amount {
     }
 
     if ( $places =~ /\d+/ ) {
-
         #$places = 4 if $places == 2;
         $amount = $self->round_amount( $amount, $places );
     }
@@ -569,7 +568,7 @@ sub parse_amount {
 
     $amount = new Math::BigFloat($amount);
 
-    return ( $amount * 1 );
+    return ($amount);
 }
 
 sub round_amount {
