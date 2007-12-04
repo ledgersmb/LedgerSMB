@@ -2087,7 +2087,7 @@ sub backup {
 "${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
     $form->{OUT} = "$tmpfile";
 
-    open( OUT, '>', "$form->{OUT}" ) or $form->error("$form->{OUT} : $!");
+    open( OUT, '>:raw', "$form->{OUT}" ) or $form->error("$form->{OUT} : $!");
 
     # get sequences, functions and triggers
 
@@ -2132,8 +2132,9 @@ LedgerSMB|,
 
     if ( $form->{media} eq 'file' ) {
 
-        open( IN, '<', "$tmpfile" ) or $form->error("$tmpfile : $!");
+        open( IN, '<:raw', "$tmpfile" ) or $form->error("$tmpfile : $!");
         open( OUT, ">-" ) or $form->error("STDOUT : $!");
+        binmode( OUT, ':raw' );
 
         print OUT qq|Content-Type: application/file;\n|
           . qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
@@ -2411,3 +2412,4 @@ sub get_all_defaults {
 1;
 
 =back
+
