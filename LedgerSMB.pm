@@ -211,6 +211,16 @@ sub new {
        }
        $self->{_user} = LedgerSMB::User->fetch_config($self);
     }
+    my %date_setting = (
+        'mm/dd/yy' => "SQL, US",
+        'mm-dd-yy' => "POSTGRES, US",
+        'dd/mm/yy' => "SQL, EUROPEAN",
+        'dd-mm-yy' => "POSTGRES, EUROPEAN",
+        'dd.mm.yy' => "GERMAN",
+    );
+
+    $self->{dbh}->do("set DateStyle to '" 
+		.$date_setting{$self->{_user}->{dateformat}}."'");
     #my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
     $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
@@ -348,7 +358,7 @@ sub format_amount {
     # Based on SQL-Ledger's Form::format_amount
     my $self     = shift @_;
     my %args     = @_;
-    my $myconfig = $args{user};
+    my $myconfig = $args{user} || $self->{_user};
     my $amount   = $args{amount};
     my $places   = $args{precision};
     my $dash     = $args{neg_format};
@@ -530,7 +540,6 @@ sub call_procedure {
     my @results;
 
     $procname = $self->{dbh}->quote_identifier($procname);
-    print STDERR join(':', @call_args) . "\n";
     for ( 1 .. scalar @call_args ) {
         $argstr .= "?, ";
     }
@@ -542,10 +551,11 @@ sub call_procedure {
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
     if (scalar @call_args){
-        $sth->execute(@call_args);
+        $sth->execute(@call_args) || $self->error($self->{dbh}->errstr);
     } else {
-        $sth->execute();
+        $sth->execute() || $self->error($self->{dbh}->errstr);
     }
+   
     my @types = @{$sth->{TYPE}};
     my @names = @{$sth->{NAME_lc}};
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
@@ -683,9 +693,6 @@ sub _db_init {
     }
 
 
-
-    
-    # TODO:  Add date handling settings and the like.
 
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
