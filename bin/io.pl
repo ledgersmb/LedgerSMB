@@ -1186,7 +1186,7 @@ sub e_mail {
         value => 'send_email',
         text => $locale->text('Continue'),
         });
-    my %template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template->new_UI(
         user => \%myconfig,
         locale => $locale,
         template => 'io-email',
@@ -1232,7 +1232,7 @@ sub print_options {
                 text => $lang->{description},
                 value => $lang->{code},
                 };
-        };
+        }
         $hiddens->{oldlanguage_code} = $form->{oldlanguage_code};
     }
 
@@ -1332,7 +1332,7 @@ sub print_options {
         name => 'format',
         default_values => $form->{selectformat},
         options => [{text => 'HTML', value => 'html'}],
-        }
+        };
     if ( ${LedgerSMB::Sysconfig::latex} ) {
         push @{$options{format}{options}}, {
             text => $locale->text('Postscript'),
@@ -1356,7 +1356,7 @@ sub print_options {
     # $locale->text('Queued')
     # $locale->text('Scheduled')
 
-    %status = (
+    $options{status} = (
         printed   => 'Printed',
         emailed   => 'E-mailed',
         queued    => 'Queued',
@@ -1369,7 +1369,7 @@ sub print_options {
 
     $options{sortby} = {};
     for (qw(runningnumber partnumber description bin)) {
-        $options{sortby}{$_} = "checked" if $form->sortby eq $_;
+        $options{sortby}{$_} = "checked" if $form->{sortby} eq $_;
     }
 
     \%options;
