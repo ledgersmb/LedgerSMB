@@ -1156,72 +1156,20 @@ sub create_form {
 
 sub e_mail {
 
-    $bcc = qq|<input type=hidden name=bcc value="$form->{bcc}">|;
-    if ( $myconfig{role} =~ /(admin|manager)/ ) {
-        $bcc = qq|
- 	  <th align=right nowrap=true>| . $locale->text('Bcc') . qq|</th>
-	  <td><input name=bcc size=30 value="$form->{bcc}"></td>
-|;
+    my %hiddens;
+    if ( $myconfig{role} !~ /(admin|manager)/ ) {
+        $hiddens{bcc} = $form->{bcc};
     }
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
     }
 
-    $name = $form->{ $form->{vc} };
-    $name =~ s/--.*//g;
-    $title = $locale->text('E-mail') . " $name";
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action="$form->{script}">
-
-<table width=100%>
-  <tr class=listtop>
-    <th class=listtop>$title</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('E-mail') . qq|</th>
-	  <td><input name=email size=30 value="$form->{email}"></td>
-	  <th align=right nowrap>| . $locale->text('Cc') . qq|</th>
-	  <td><input name=cc size=30 value="$form->{cc}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Subject') . qq|</th>
-	  <td><input name=subject size=30 value="$form->{subject}"></td>
-	  $bcc
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr>
-	  <th align=left nowrap>| . $locale->text('Message') . qq|</th>
-	</tr>
-	<tr>
-	  <td><textarea name=message rows=15 cols=60 wrap=soft>$form->{message}</textarea></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-|;
-
     $form->{oldmedia} = $form->{media};
     $form->{media}    = "email";
     $form->{format}   = "pdf";
 
-    &print_options;
+    my $print_options = &print_options(\%hiddens);
 
     for (
         qw(email cc bcc subject message formname sendmode format language_code action nextsub)
@@ -1230,28 +1178,25 @@ sub e_mail {
         delete $form->{$_};
     }
 
-    $form->hide_form;
+    $hiddens{$_} = $form->{$_} for keys %$form;
+    $hiddens{nextsub} = 'send_email';
 
-    print qq|
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<input type="hidden" name="nextsub" value="send_email">
-
-<br>
-<button name="action" class="submit" type="submit" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
-
+    my @buttons = ({
+        name => 'action',
+        value => 'send_email',
+        text => $locale->text('Continue'),
+        });
+    my %template = LedgerSMB::Template->new_UI(
+        user => \%myconfig,
+        locale => $locale,
+        template => 'io-email',
+        );
+    $template->render({
+        form => $form,
+        print => $print_options,
+        hiddens => \%hiddens,
+        buttons => \@buttons,
+    });
 }
 
 sub send_email {
@@ -1267,33 +1212,156 @@ sub send_email {
 
 sub print_options {
 
+    my $hiddens = shift;
+    my %options;
     $form->{sendmode} = "attachment";
     $form->{copies} = 1 unless $form->{copies};
 
     $form->{SM}{ $form->{sendmode} } = "selected";
 
-    if ( $form->{selectlanguage} ) {
-        $form->{"selectlanguage"} =
-          $form->unescape( $form->{"selectlanguage"} );
-        $form->{"selectlanguage"} =~ s/ selected//;
-        $form->{"selectlanguage"} =~
-          s/(<option value="\Q$form->{language_code}\E")/$1 selected/;
-
-        $lang = qq|<select name=language_code>$form->{selectlanguage}</select>
-    <input type=hidden name=oldlanguage_code value=$form->{oldlanguage_code}>
-    <input type=hidden name=selectlanguage value="|
-          . $form->escape( $form->{selectlanguage}, 1 ) . qq|">|;
+    delete $form->{all_language};
+    $form->all_languages;
+    if ( ref $form->{all_language} eq 'ARRAY') {
+        $options{lang} = {
+            name => 'language_code',
+            default_values => $form->{oldlanguage_code},
+            options => [{text => ' ', value => ''}],
+            };
+        for my $lang (@{$form->{all_language}}) {
+            push @{$options{lang}{options}}, {
+                text => $lang->{description},
+                value => $lang->{code},
+                };
+        };
+        $hiddens->{oldlanguage_code} = $form->{oldlanguage_code};
     }
 
-    $form->{selectformname} = $form->unescape( $form->{selectformname} );
-    $form->{selectformname} =~ s/ selected//;
-    $form->{selectformname} =~
-      s/(<option value="\Q$form->{formname}\E")/$1 selected/;
+    $options{formname} = {
+        name => 'formname',
+        default_values => $form->{formname},
+        options => [],
+        };
+    
+    # SC: Option values extracted from other bin/ scripts
+    if ($form->{type} eq 'sales_quotation') {
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Quotation'),
+            value => 'sales_quotation',
+            };
+    } elsif ($form->{type} eq 'request_quotation') {
+        push @{$options{formname}{options}}, {
+            text => $locale->text('RFQ'),
+            value => 'request_quotation',
+            };
+    } elsif ($form->{type} eq 'sales_order') {
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Sales Order'),
+            value => 'sales_order',
+            };
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Work Order'),
+            value => 'work_order',
+            };
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Pick List'),
+            value => 'pick_list',
+            };
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Packing List'),
+            value => 'packing_list',
+            };
+    } elsif ($form->{type} eq 'purchase_order') {
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Purchase Order'),
+            value => 'purchase_order',
+            };
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Bin List'),
+            value => 'bin_list',
+            };
+    } elsif ($form->{type} eq 'ship_order') {
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Pick List'),
+            value => 'pick_list',
+            };
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Packing List'),
+            value => 'packing_list',
+            };
+    } elsif ($form->{type} eq 'receive_order') {
+        push @{$options{formname}{options}}, {
+            text => $locale->text('Bin List'),
+            value => 'bin_list',
+            };
+    }
 
-    $type = qq|<select name=formname>$form->{selectformname}</select>
-  <input type=hidden name=selectformname value="|
-      . $form->escape( $form->{selectformname}, 1 ) . qq|">|;
+    if ( $form->{media} eq 'email' ) {
+        $options{media} = {
+            name => 'sendmode',
+            options => [{
+                text => $locale->text('Attachment'),
+                value => 'attachment'}, {
+                text => $locale->text('In-line'),
+                value => 'inline'}
+                ]};
+        $options{media}{default_values} = 'attachment' if $form->{SM}{attachment};
+        $options{media}{default_values} = 'inline' if $form->{SM}{inline};
+    } else {
+        $options{media} = {
+            name => 'media',
+            default_values => $form->{media},
+            options => [{
+                text => $locale->text('Screen'),
+                value => 'screen'}
+                ]};
+        if (   %{LedgerSMB::Sysconfig::printer}
+            && ${LedgerSMB::Sysconfig::latex} )
+        {
+            for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
+                push @{$options{media}{options}}, {text => $_, value => $_};
+            }
+        }
+        if ( ${LedgerSMB::Sysconfig::latex} )
+        {
+            push @{$options{media}{options}}, {text => $locale->text('Queue'),
+                value => 'queue'};
+        }
+    }
 
+    $options{format} = {
+        name => 'format',
+        default_values => $form->{selectformat},
+        options => [{text => 'HTML', value => 'html'}],
+        }
+    if ( ${LedgerSMB::Sysconfig::latex} ) {
+        push @{$options{media}{options}}, {
+            text => $locale->text('Postscript'),
+            value => 'postscript',
+            };
+        push @{$options{media}{options}}, {
+            text => $locale->text('PDF'),
+            value => 'pdf',
+            };
+    }
+
+    if (   %{LedgerSMB::Sysconfig::printer}
+        && ${LedgerSMB::Sysconfig::latex}
+        && $form->{media} ne 'email' )
+    {
+        $options{copies} = 1;
+    }
+
+    # $locale->text('Printed')
+    # $locale->text('E-mailed')
+    # $locale->text('Queued')
+    # $locale->text('Scheduled')
+
+    $options{status} = (
+        printed => 'Printed',
+        emailed => 'E-mailed',
+        queued => 'Queued',
+        recurring => 'Scheduled',
+    );
     if ( $form->{media} eq 'email' ) {
         $media = qq|<select name=sendmode>
 	    <option value=attachment $form->{SM}{attachment}>|
@@ -1372,52 +1440,16 @@ sub print_options {
         recurring => 'Scheduled'
     );
 
-    print qq|<td align=right width=90%>|;
+    $options{groupby} = {};
+    $options{groupby}{groupprojectnumber} = "checked" if $form->{groupprojectnumber};
+    $options{groupby}{grouppartsgroup} = "checked" if $form->{grouppartsgroup};
 
-    for (qw(printed emailed queued recurring)) {
-        if ( $form->{$_} =~ /$form->{formname}/ ) {
-            print $locale->text( $status{$_} ) . qq|<br>|;
-        }
-    }
-
-    print qq|
-    </td>
-  </tr>
-|;
-
-    $form->{groupprojectnumber} = "checked" if $form->{groupprojectnumber};
-    $form->{grouppartsgroup}    = "checked" if $form->{grouppartsgroup};
-
+    $options{sortby} = {};
     for (qw(runningnumber partnumber description bin)) {
-        $sortby{$_} = "checked" if $form->{sortby} eq $_;
+        $options{sortby}{$_} = "checked" if $form->sortby eq $_;
     }
 
-    print qq|
-  <tr>
-    <td colspan=6>| . $locale->text('Group by') . qq| ->
-    <input name=groupprojectnumber type=checkbox class=checkbox $form->{groupprojectnumber}>
-    | . $locale->text('Project') . qq|
-    <input name=grouppartsgroup type=checkbox class=checkbox $form->{grouppartsgroup}>
-    | . $locale->text('Group') . qq|
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan=6>| . $locale->text('Sort by') . qq| ->
-    <input name=sortby type=radio class=radio value=runningnumber $sortby{runningnumber}>
-    | . $locale->text('Item') . qq|
-    <input name=sortby type=radio class=radio value=partnumber $sortby{partnumber}>
-    | . $locale->text('Number') . qq|
-    <input name=sortby type=radio class=radio value=description $sortby{description}>
-    | . $locale->text('Description') . qq|
-    <input name=sortby type=radio class=radio value=bin $sortby{bin}>
-    | . $locale->text('Bin') . qq|
-    </td>
-    
-  </tr>
-</table>
-|;
-
+    \%options;
 }
 
 sub print {
@@ -1438,12 +1470,12 @@ sub print {
 
 sub print_form {
     my ($old_form) = @_;
-    $inv = "inv";
-    $due = "due";
+    my $inv = "inv";
+    my $due = "due";
 
-    $numberfld = "sinumber";
+    my $numberfld = "sinumber";
 
-    $display_form =
+    my $display_form =
       ( $form->{display_form} ) ? $form->{display_form} : "display_form";
 
     if ( $form->{formname} eq "invoice" ) {
@@ -1566,13 +1598,13 @@ sub print_form {
             "unit_$i",          "notes_$i"
           );
     }
-    for ( split / /, $form->{taxaccounts} ) { push @a, "${_}_description" }
+    for ( split / /, $form->{taxaccounts} ) { push @vars, "${_}_description" }
 
     $ARAP = ( $form->{vc} eq 'customer' ) ? "AR" : "AP";
     push @vars, $ARAP;
 
     # format payment dates
-    for $i ( 1 .. $form->{paidaccounts} - 1 ) {
+    for my $i ( 1 .. $form->{paidaccounts} - 1 ) {
         if ( exists $form->{longformat} ) {
             $form->{"datepaid_$i"} =
               $locale->date( \%myconfig, $form->{"datepaid_$i"},
@@ -1671,6 +1703,7 @@ sub print_form {
 
     $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
 
+    my %output_options;
     if ( $form->{media} !~ /(screen|queue|email)/ ) { # printing
         $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
@@ -1704,8 +1737,6 @@ sub print_form {
           unless $form->{subject};
 
         $form->{plainpaper} = 1;
-        $form->{OUT}        = "${LedgerSMB::Sysconfig::sendmail}";
-        $form->{printmode}  = '|-';
 
         if ( $form->{emailed} !~ /$form->{formname}/ ) {
             $form->{emailed} .= " $form->{formname}";
@@ -1719,6 +1750,14 @@ sub print_form {
         $cc  = $locale->text( 'Cc: [_1]', $form->{cc} ) . qq|\n| if $form->{cc};
         $bcc = $locale->text( 'Bcc: [_1]', $form->{bcc} ) . qq|\n|
           if $form->{bcc};
+
+        $output_options{subject} = $form->{subject};
+        $output_options{to} = $form->{email};
+        $output_options{cc} = $form->{cc};
+        $output_options{bcc} = $form->{bcc};
+	##SC: XXX the from address needs fixing
+        $output_options{from} = $myconfig{email};
+        $output_options{notify} = 1 if $form->{read_receipt};
 
         if ( defined %$old_form ) {
             $old_form->{intnotes} = qq|$old_form->{intnotes}\n\n|
@@ -1797,11 +1836,15 @@ sub print_form {
     $form->{fileid} = $form->{"${inv}number"};
     $form->{fileid} =~ s/(\s|\W)+//g;
 
-    my $template = LedgerSMB::Template->new( user => \%myconfig, 
-      template => $form->{'formname'}, format => uc $form->{format} );
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig, 
+        template => $form->{'formname'},
+        format => uc $form->{format},
+        method => $form->{media},
+        output_options => \%output_options,
+        );
     try {
         $template->render($form);
-        $template->output(%{$form});
     }
     catch Error::Simple with {
         my $E = shift;

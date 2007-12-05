@@ -1,0 +1,125 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?>
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr class="listtop">
+    <th class="listtop"><?lsmb text('E-mail [_1]', form.${form.vc}.remove('--.*')) ?></th>
+  </tr>
+  <tr>
+    <td> </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <th align="right"><?lsmb text('E-mail') ?></th>
+          <td><?lsmb PROCESS input element_data={name => 'email', size => 30, value => form.email} ?></td>
+          <th align="right"><?lsmb text('Cc') ?></th>
+          <td><?lsmb PROCESS input element_data={name => 'cc', size => 30, value => form.cc} ?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Subject') ?></th>
+          <td><?lsmb PROCESS input element_data={name => 'subject', size => 30, value => form.subject} ?></td>
+<?lsmb IF user.role == 'admin' OR user.role == 'manager' ?>
+          <th align="right"><?lsmb text('Bcc') ?></th>
+          <td><?lsmb PROCESS input element_data={name => 'bcc', size => 30, value => form.bcc} ?></td>
+<?lsmb ELSE ?>
+          <td colspan="2"> </td>
+<?lsmb END ?>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <th align="left"><?lsmb text('Message') ?></th>
+        </tr>
+        <tr>
+          <td><?lsmb PROCESS textarea element_data={name => 'message', rows => 15, cols => 60, text => form.message} ?></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <td><?lsmb PROCESS select element_data=print.formname ?></td>
+          <td><?lsmb IF print.lang.defined; 
+            PROCESS select element_data=print.lang; END ?>
+          </td>
+          <td><?lsmb PROCESS select element_data=print.format ?></td>
+          <td><?lsmb PROCESS select element_data=print.media ?></td>
+<?lsmb IF print.copies ?>
+          <td>
+  <?lsmb PROCESS input element_data={name => 'copies', size => '2', value => form.copies, label => text('Copies') } ?>
+          </td>
+<?lsmb ELSE ?>
+          <td> </td>
+<?lsmb END ?>
+          <td><div style="width: 15em"><?lsmb
+PROCESS input element_data={
+  name => 'read_receipt',
+  type => 'checkbox',
+  label => text('Request read receipt'),
+  }
+            ?></div></td>
+          <td align="right" width="90%">
+<?lsmb FOREACH formname IN ['printed', 'emailed', 'queued', 'recurring'];
+  IF form.$formname.match(form.formname);
+            text(print.status.$formname); '<br />';
+  END;
+END ?>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7"><?lsmb text('Group by') ?> -&gt; <?lsmb
+            PROCESS input element_data={name => 'groupprojectnumber',
+              type => 'checkbox', label => text('Project'),
+              value => 'groupprojectnumber',
+              ${print.groupby.groupprojectnumber} = print.groupby.groupprojectnumber};
+            PROCESS input element_data={name => 'grouppartsgroup',
+              type => 'checkbox', label => text('Group'),
+              value => 'grouppartsgroup',
+              ${print.groupby.grouppartsgroup} = print.groupby.grouppartsgroup};
+            ?>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7"><?lsmb text('Sort by') ?> -&gt; <?lsmb
+            PROCESS input element_data={name => 'sortby', type => 'radio',
+              label => text('Item'), value => 'runningnumber',
+              ${print.sortby.runningnumber} = print.sortby.runningnumber};
+            PROCESS input element_data={name => 'sortby', type => 'radio',
+              label => text('Number'), value => 'partnumber',
+              ${print.sortby.partnumber} = print.sortby.partnumber};
+            PROCESS input element_data={name => 'sortby', type => 'radio',
+              label => text('Description'), value => 'description',
+              ${print.sortby.description} = print.sortby.description};
+            PROCESS input element_data={name => 'sortby', type => 'radio',
+              label => text('Bin'), value => 'bin',
+              ${print.sortby.bin} = print.sortby.bin};
+            ?>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size="3" noshade="noshade" /></td>
+  </tr>
+</table>
+<br />
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>
