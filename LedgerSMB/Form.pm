@@ -2058,8 +2058,7 @@ sub all_languages {
 
 Populates the hash $form->{all_month} with a mapping between a two-digit month
 number and the English month name.  Populates the list $form->{all_years} with
-the years between the year of the oldest transaction date in acc_trans and the
-newest, inclusive.
+all years which contain transactions.
 
 $dbh2 is unused.
 
@@ -2067,7 +2066,7 @@ $dbh2 is unused.
 
 sub all_years {
 
-    my ( $self, $myconfig, $dbh2 ) = @_;
+    my ( $self, $myconfig ) = @_;
 
     my $dbh = $self->{dbh};
     $self->{all_years} = [];
