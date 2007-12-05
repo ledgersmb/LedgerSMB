@@ -120,8 +120,6 @@ sub exec_method {
 #        die;
     }
     
-    my $m_name = $ref->{proname};
-
     if ($args) {
         for my $arg (@proc_args) {
             if ( $arg =~ s/^in_// ) {
