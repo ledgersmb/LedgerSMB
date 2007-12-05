@@ -44,9 +44,20 @@ sub create_vouchers {
     {
         payable    => {script => 'bin/ap.pl', function => sub {add()}},
         receivable => {script => 'bin/ar.pl', function => sub {add()}},
-        payments   => {script => 'bin/cp.pl', function => sub {payments()}},
-        receipts   => {script => 'bin/cp.pl', function => sub {receipts()}},
         gl         => {script => 'bin/gl.pl', function => sub {add()}},
+        receipts   => {script => 'scripts/payments.pl', 
+	             function => sub {
+				my ($request) = @_;
+				$request->{account_class} = 2;
+				LedgerSMB::Scripts::payment::payments($request);
+				}},
+        payments   => {script => 'scripts/payments.pl', 
+	             function => sub {
+				my ($request) = @_;
+				$request->{account_class} = 1;
+				LedgerSMB::Scripts::payment::payments($request);
+				}},
+	
     };
 
     # Note that the line below is generally considered incredibly bad form. 
