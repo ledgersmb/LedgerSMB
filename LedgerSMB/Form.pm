@@ -1145,10 +1145,10 @@ sub db_init {
     };
 
     $self->{dbh} = $self->dbconnect_noauto($dbconfig) || $self->dberror();
+    $self->{dbh}->{pg_server_prepare} = 0;
     my $dbh = $self->{dbh};
     my %date_query = (
         'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
-
         'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
         'dd/mm/yy' => 'set DateStyle to \'SQL, EUROPEAN\'',
         'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
@@ -2070,33 +2070,17 @@ sub all_years {
     my ( $self, $myconfig, $dbh2 ) = @_;
 
     my $dbh = $self->{dbh};
+    $self->{all_years} = [];
 
     # get years
     my $query = qq|
-                SELECT (SELECT transdate FROM acc_trans ORDER BY transdate asc
-                                LIMIT 1),
-                       (SELECT transdate FROM acc_trans ORDER BY transdate desc
-                                LIMIT 1)|;
+	SELECT extract('YEARS' FROM transdate) FROM acc_trans 
+	GROUP BY extract('YEARS' FROM transdate) ORDER BY 1 DESC|;
 
-    my ( $startdate, $enddate ) = $dbh->selectrow_array($query);
-
-    if ( $myconfig->{dateformat} =~ /^yy/ ) {
-        ($startdate) = split /\W/, $startdate;
-        ($enddate)   = split /\W/, $enddate;
-    }
-    else {
-        (@_) = split /\W/, $startdate;
-        $startdate = $_[2];
-        (@_) = split /\W/, $enddate;
-        $enddate = $_[2];
-    }
-
-    $self->{all_years} = ();
-    $startdate = substr( $startdate, 0, 4 );
-    $enddate   = substr( $enddate,   0, 4 );
-
-    while ( $enddate >= $startdate ) {
-        push @{ $self->{all_years} }, $enddate--;
+    my $sth = $dbh->prepare($query);
+    $sth->execute();
+    while (my ($year) = $sth->fetchrow_array()){
+      push @{$self->{all_years}}, $year; 
     }
 
     #this should probably be changed to use locale
