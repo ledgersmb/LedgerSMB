@@ -1334,11 +1334,11 @@ sub print_options {
         options => [{text => 'HTML', value => 'html'}],
         }
     if ( ${LedgerSMB::Sysconfig::latex} ) {
-        push @{$options{media}{options}}, {
+        push @{$options{format}{options}}, {
             text => $locale->text('Postscript'),
             value => 'postscript',
             };
-        push @{$options{media}{options}}, {
+        push @{$options{format}{options}}, {
             text => $locale->text('PDF'),
             value => 'pdf',
             };
@@ -1349,83 +1349,6 @@ sub print_options {
         && $form->{media} ne 'email' )
     {
         $options{copies} = 1;
-    }
-
-    # $locale->text('Printed')
-    # $locale->text('E-mailed')
-    # $locale->text('Queued')
-    # $locale->text('Scheduled')
-
-    $options{status} = (
-        printed => 'Printed',
-        emailed => 'E-mailed',
-        queued => 'Queued',
-        recurring => 'Scheduled',
-    );
-    if ( $form->{media} eq 'email' ) {
-        $media = qq|<select name=sendmode>
-	    <option value=attachment $form->{SM}{attachment}>|
-          . $locale->text('Attachment') . qq|
-	    <option value=inline $form->{SM}{inline}>|
-          . $locale->text('In-line')
-          . qq|</select>|;
-    }
-    else {
-        $media = qq|<select name=media>
-	    <option value="screen">| . $locale->text('Screen');
-
-        if (   %{LedgerSMB::Sysconfig::printer}
-            && ${LedgerSMB::Sysconfig::latex} )
-        {
-            for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
-                $media .= qq|
-            <option value="$_">$_|;
-            }
-        }
-        if ( ${LedgerSMB::Sysconfig::latex} ) {
-            $media .= qq|
-            <option value="queue">| . $locale->text('Queue');
-        }
-        $media .= qq|</select>|;
-
-        # set option selected
-        $media =~ s/(<option value="\Q$form->{media}\E")/$1 selected/;
-
-    }
-
-    $form->{selectformat} = qq|<option value="html">html\n|;
-
-    #	    <option value="txt">|.$locale->text('Text');
-
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
-        $form->{selectformat} .= qq|
-            <option value="postscript">| . $locale->text('Postscript') . qq|
-	    <option value="pdf">| . $locale->text('PDF');
-    }
-
-    $format = qq|<select name=format>$form->{selectformat}</select>|;
-    $format =~ s/(<option value="\Q$form->{format}\E")/$1 selected/;
-    $format .= qq|
-  <input type=hidden name=selectformat value="|
-      . $form->escape( $form->{selectformat}, 1 ) . qq|">|;
-
-    print qq|
-<table width=100%>
-  <tr>
-    <td>$type</td>
-    <td>$lang</td>
-    <td>$format</td>
-    <td>$media</td>
-|;
-
-    if (   %{LedgerSMB::Sysconfig::printer}
-        && ${LedgerSMB::Sysconfig::latex}
-        && $form->{media} ne 'email' )
-    {
-        print qq|
-    <td nowrap>| . $locale->text('Copies') . qq|
-    <input name=copies size=2 value=$form->{copies}></td>
-|;
     }
 
     # $locale->text('Printed')
