@@ -210,5 +210,6 @@ sub save_notes {
     $vendor->get();
     _render_main_screen($vendor );
 }
+eval { do "scripts/custom/vendor.pl"};
     
 1;

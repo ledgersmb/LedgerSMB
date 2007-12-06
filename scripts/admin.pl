@@ -164,4 +164,7 @@ sub __default {
             format=>'HTML', path=>'UI');
     $template->render($user);
 }
+
+eval { do "scripts/custom/admin.pl"};
+
 1;

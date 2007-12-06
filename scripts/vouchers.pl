@@ -33,25 +33,26 @@ sub create_vouchers {
     #  This is because these scripts import all functions into the *current*
     #  namespace.  People using fastcgi and modperl should *not* cache this 
     #  module at the moment. -- CT
-    my ($request) = shift @_;
+    #  Also-- request is in 'our' scope here due to the redirect logic.
+    our ($request) = shift @_;
     use LedgerSMB::Form;
 
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{batch_class} = $request->{batch_type};
     $batch->create;
 
-    my $vouchers_dispatch = 
+    our $vouchers_dispatch = 
     {
         payable    => {script => 'bin/ap.pl', function => sub {add()}},
         receivable => {script => 'bin/ar.pl', function => sub {add()}},
         gl         => {script => 'bin/gl.pl', function => sub {add()}},
-        receipts   => {script => 'scripts/payments.pl', 
+        receipt   => {script => 'scripts/payment.pl', 
 	             function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 2;
 				LedgerSMB::Scripts::payment::payments($request);
 				}},
-        payments   => {script => 'scripts/payments.pl', 
+        payment   => {script => 'scripts/payment.pl', 
 	             function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 1;
@@ -73,13 +74,25 @@ sub create_vouchers {
     $form->{approved} = 0;
     $form->{transdate} = $request->{batch_date};
 
+    $request->{batch_id} = $batch->{id};
+    $request->{approved} = 0;
+    $request->{transdate} = $request->{batch_date};
+
 
     my $script = $vouchers_dispatch->{$request->{batch_type}}{script};
-    { no strict; no warnings 'redefine'; do $script; }
-
-    $script =~ s|.*/||;
     $form->{script} = $script;
-    $vouchers_dispatch->{$request->{batch_type}}{function}();
+    $form->{script} =~ s|.*/||;
+    if ($script =~ /^bin/){
+
+        { no strict; no warnings 'redefine'; do $script; }
+
+    } elsif ($script =~ /scripts/) {
+
+         { do $script } 
+
+    }
+
+    $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 }
 
 sub get_batch {
@@ -97,4 +110,5 @@ sub approve_batch {
 sub delete_batch {
 }
 
+eval { do "scripts/custom/Voucher.pl"};
 1;

@@ -82,15 +82,33 @@ sub payments {
     $template->render($payment);
 }
 
-sub display_payments {
+sub post_payments_bulk {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    $payment->get_payment_detail_data();
+    $payment->post_bulk();
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/payments',
         template => 'payments_filter',
+        format   => 'HTML', 
+    );
+    $template->render($payment);
+}
+
+sub display_payments {
+    my ($request) = @_;
+    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    $payment->get_payment_detail_data();
+	$payment->debug({file => '/tmp/delme'});
+    for (@{$payment->{contact_invoices}}){
+        $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due});
+    }
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/payments',
+        template => 'payments_detail',
         format   => 'HTML', 
     );
     $template->render($payment);
@@ -405,5 +423,6 @@ my $template = LedgerSMB::Template->new(
 eval {$template->render($select) };
 if ($@) { $request->error("$@");  }
 }
- 
+
+eval { do "scripts/custom/payment.pl"};
 1;

@@ -108,4 +108,5 @@ sub continue {
     }
 }
     
+eval { do "scripts/custom/login.pl"};
 1;

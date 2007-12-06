@@ -210,4 +210,5 @@ sub save_notes {
     _render_main_screen($employee);
 }
     
+eval { do "scripts/custom/employee.pl"};
 1;

@@ -210,4 +210,5 @@ sub save_notes {
     _render_main_screen($customer);
 }
     
+eval { do "scripts/custom/customer.pl"};
 1;

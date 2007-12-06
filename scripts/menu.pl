@@ -175,4 +175,5 @@ files.
 
 =cut
 
+eval { do "scripts/custom/menu.pl"};
 1;
