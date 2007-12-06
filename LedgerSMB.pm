@@ -131,6 +131,8 @@ use LedgerSMB::Locale;
 use LedgerSMB::User;
 use strict;
 
+$CGI::Simple::POST_MAX = -1;
+
 package LedgerSMB;
 our $VERSION = '1.2.99';
 
