@@ -125,7 +125,7 @@ $$
 DECLARE payment_item payment_contact_invoice;
 BEGIN
 	FOR payment_item IN
-		  SELECT e.id AS contact_id, e.name AS contact_name,
+		  SELECT c.id AS contact_id, e.name AS contact_name,
 		         c.meta_number AS account_number,
 		         sum(a.amount - a.paid) AS total_due, 
 		         compound_array(ARRAY[[
@@ -134,13 +134,13 @@ BEGIN
 		              (CASE WHEN c.discount_terms 
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
-		                   ELSE (a.amount - a.paid) * c.discount / 100
+		                   ELSE (a.amount - coalesce(a.paid, 0)) * coalesce(c.discount, 0) / 100
 		              END)::text, 
-		              (a.amount - a.paid -
+		              (a.amount - coalesce(a.paid, 0) -
 		              (CASE WHEN c.discount_terms 
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
-		                   ELSE (a.amount - a.paid) * c.discount / 100
+		                   ELSE (a.amount - coalesce(a.paid, 0)) * coalesce(c.discount, 0) / 100
 		              END))::text]]),
 		              bool_and(lock_record(a.id, (select max(session_id) 				FROM "session" where users_id = (
 					select id from users WHERE username =
@@ -160,26 +160,28 @@ BEGIN
 		         ) a USING (entity_id)
 		    JOIN transactions t ON (a.id = t.id)
 		   WHERE a.invoice_class = in_account_class
-		         AND ((a.transdate >= in_date_from
-		               AND a.transdate <= in_date_to)
+			 AND c.business_id = 
+				coalesce(in_business_type, c.business_id)
+		         AND ((a.transdate >= COALESCE(in_date_from, a.transdate)
+		               AND a.transdate <= COALESCE(in_date_to, a.transdate))
 		             OR a.id IN (select voucher.trans_id FROM voucher
 		                          WHERE batch_id = in_batch_id))
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
 		         AND a.entity_credit_account = c.id
 		         AND a.amount - a.paid <> 0
-			 AND t.locked_by NOT IN 
+			 AND NOT (t.locked_by IS NOT NULL AND t.locked_by IN 
 				(select "session_id" FROM "session"
 				WHERE users_id IN 
 					(select id from users 
-					where username <> SESSION_USER))
+					where username <> SESSION_USER)))
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
 		                            chart_id = (SELECT id frOM chart
 		                                         WHERE accno
 		                                               = in_ar_ap_accno)
 		                    )
-		GROUP BY e.id, e.name, c.meta_number, c.threshold
+		GROUP BY c.id, e.name, c.meta_number, c.threshold
 		  HAVING sum(a.amount - a.paid) > c.threshold
 	LOOP
 		RETURN NEXT payment_item;
@@ -206,18 +208,74 @@ $$;
 
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
-	in_ar_ap_accno text, in_cash_accno text, in_approved bool,
+	in_ar_ap_accno text, in_cash_accno text, 
 	in_payment_date date, in_account_class int)
 RETURNS int AS
 $$
-DECLARE payment_trans numeric[];
+DECLARE 
+	payment_trans numeric[];
+	out_count int;
+	t_voucher_id int;
+	t_trans_id int;
+	t_amount numeric;
 BEGIN
+	IF in_batch_id IS NULL THEN
+		t_voucher_id := NULL;
+	ELSE
+		INSERT INTO voucher (batch_id, trans_id)
+		values (in_batch_id, in_transactions[1][1]);
+
+		t_voucher_id := currval('voucher_id_seq');
+	END IF;
+	FOR out_count IN 
+		array_lower(in_transactions, 1) .. 
+		array_upper(in_transactions, 1)
+	LOOP
+		INSERT INTO acc_trans 
+			(trans_id, chart_id, amount, approved, voucher_id,
+			transdate)
+		VALUES
+			(in_transactions[out_count][1], 
+				case when in_account_class = 1 THEN 
+					(SELECT id FROM chart 
+					WHERE accno = in_cash_accno)
+				WHEN in_account_class = 2 THEN 
+					(SELECT id FROM chart 
+					WHERE accno = in_ar_ap_accno)
+				ELSE -1 END,
+
+				in_transactions[out_count][2],
+	
+				CASE WHEN t_voucher_id IS NULL THEN true
+				ELSE false END,
+				t_voucher_id, in_payment_date),
+
+			(in_transactions[out_count][1], 
+				case when in_account_class = 1 THEN 
+					(SELECT id FROM chart 
+					WHERE accno = in_ar_ap_accno)
+				WHEN in_account_class = 2 THEN 
+					(SELECT id FROM chart 
+					WHERE accno = in_cash_accno)
+				ELSE -1 END,
+
+				in_transactions[out_count][2]* -1,
+
+				CASE WHEN t_voucher_id IS NULL THEN true
+				ELSE false END,
+				t_voucher_id, in_payment_date);
+		insert into test_pay(id, amount) values (in_transactions[out_count][1],in_transactions[out_count][2]);	
+		UPDATE ap 
+		set paid = paid +in_transactions[out_count][2]
+		where id =in_transactions[out_count][1];
+	END LOOP;
+	return out_count;
 END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
-        in_ar_ap_accno text, in_cash_accno text, in_approved bool,
+        in_ar_ap_accno text, in_cash_accno text, 
         in_payment_date date, in_account_class int)
 IS
 $$ Note that in_transactions is a two-dimensional numeric array.  Of each 

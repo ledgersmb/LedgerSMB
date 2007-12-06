@@ -67,7 +67,6 @@ sub post_transaction {
     my ( $self, $myconfig, $form ) = @_;
     $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
       unless $form->{reference};
-
     my $null;
     my $project_id;
     my $department_id;

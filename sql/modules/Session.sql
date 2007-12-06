@@ -21,7 +21,7 @@ BEGIN
                 -- session
 
 		IF NOT FOUND THEN
-			SELECT id FROM users WHERE username = SESSION_USER;
+			PERFORM id FROM users WHERE username = SESSION_USER;
 			IF NOT FOUND THEN
 				RAISE EXCEPTION 'User Not Known';
 			END IF;

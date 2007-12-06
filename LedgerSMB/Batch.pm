@@ -8,6 +8,7 @@ sub create {
     my ($ref) = $self->exec_method(funcname => 'batch_create');
     print STDERR "$ref, $ref->{batch_create}, " . join (':', keys %$ref);
     $self->{id} = $ref->{batch_create};
+    $self->{dbh}->commit;
     return $ref->{id};
 }
 

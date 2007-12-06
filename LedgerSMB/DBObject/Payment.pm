@@ -381,4 +381,36 @@ sub get_payment_detail_data {
     }
 }    
 
+sub post_bulk {
+    my ($self) = @_;
+    my $total_count = 0;
+    $self->{payment_date} = $self->{datepaid};
+    for my $contact_row (1 .. $self->{contact_count}){
+        my $contact_id = $self->{"contact_$contact_row"};
+        next if (!$self->{"id_$contact_id"});
+        my $invoice_array = "{}"; # Pg Array
+	for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
+            my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
+            print STDERR "invoice_${contact_id}_${invoice_row}: $invoice_id\n";
+            my $pay_amount = ($self->{"paid_$contact_id"} eq 'all' ) 
+			? $self->{"net_$invoice_id"} 
+			: $self->{"payment_$invoice_id"};
+            if (!$pay_amount){
+                 $pay_amount = 0;
+            }
+            my $invoice_subarray = "{$invoice_id,$pay_amount}";
+	    if ($invoice_array eq '{}'){ # Omit comma
+                $invoice_array = "{$invoice_subarray}";
+	    } else {
+                $invoice_array =~ s/}$/,$invoice_subarray}/;
+            }
+        }
+        $self->{transactions} = $invoice_array;
+	$self->{source} = $self->{"source_$contact_id"};
+        $self->exec_method(funcname => 'payment_bulk_post');
+
+    }
+    $self->{dbh}->commit;
+}
+
 1;

@@ -37,7 +37,6 @@ eval { require "custom.pl"; };
 $request = new LedgerSMB;
 $request->{action} = '__default' if (!$request->{action});
 
-
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
 $script = $1;
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
@@ -56,7 +55,6 @@ sub call_script {
 
     eval { require "scripts/$script" } 
       || $request->error($locale->text('Unable to open script') . ": scripts/$script : $!");
-
     $script =~ s/\.pl$//;
     $script = "LedgerSMB::Scripts::$script";
     $script->can($request->{action}) 

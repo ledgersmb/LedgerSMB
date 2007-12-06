@@ -23,6 +23,12 @@
  } ?>
  <?lsmb INCLUDE input element_data = {
 	type = "hidden"
+	name = "account_class"
+	value = account_class
+
+ } ?>
+ <?lsmb INCLUDE input element_data = {
+	type = "hidden"
 	name = "department_id"
 	value = department_id
  } ?>
@@ -70,7 +76,9 @@
      <div id="date_row">
       <label for="date_paid"><?lsmb text('Posting Date:') ?></label>
 	<?lsmb IF batch_id ?>
-		<span id="date_paid"><?lsmb date_paid ?></span>
+		<?lsmb IF ! datepaid ?><?lsmb datepaid = batch_date 
+		?><?lsmb END ?>
+		<span id="date_paid"><?lsmb datepaid ?></span>
 	<?lsmb END ?>
 	<?lsmb INCLUDE input element_data= {
 		value = datepaid
@@ -129,6 +137,15 @@
 	<?lsmb END # foreach b ?></span>
     </div>
     <?lsmb END # if business ?>
+    <div class="input" id="cash_account_div">
+	<select name="cash_accno" id="cash_account">
+	<?lsmb FOREACH a = cash_accounts ?>
+	<option value="<?lsmb a.accno ?>">
+		<?lsmb a.accno ?>--<?lsmb a.description ?>
+	</option>
+	<?lsmb END # foreach a ?>
+	</select>
+    </div>
     <table id="payments_table">
     <tr class="listheading">
 	<th class="account_number"><?lsmb text('Account_number') ?></th>
@@ -137,11 +154,25 @@
         <th class="payment"><?lsmb text('Payment') ?></th>
         <th class="payment"><?lsmb text('Details') ?></th>
     </tr>
-    <?lsmb rc = 1 ?>
+    <?lsmb rc = 1 ?><?lsmb count = 0 ?>
     <?lsmb FOREACH r = contact_invoices ?>
-    <?lsmb rc = rc + 1; rc = rc % 2 ?>
+    <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
     <tr class="listrow<?lsmb rc ?>">
-       <td class="account_number" rowspan="2" ><?lsmb r.account_number ?></td>
+       <td class="account_number" rowspan="2" >
+		<?lsmb INCLUDE input element_data = {
+			type = "hidden"
+			name = "contact_$count"
+			value = r.contact_id
+		} ?>
+		<?lsmb INCLUDE input element_data = {
+			type = "checkbox"
+			name = "id_$r.contact_id"
+			value = r.contact_id
+			checked = (r.unselected) ? "" : "checked" 
+			
+		} ?>
+		<?lsmb r.account_number ?>
+	</td>
 	<td class="entity_name"><?lsmb r.contact_name ?></td>
 	<td class="invoice"><?lsmb r.total_due ?> <?lsmb currency ?></td>
         <td class="payment">
@@ -182,7 +213,9 @@
 			<th class="net_due_list"><?lsmb text('Net Due') ?> </th>
 			<th class="to_pay_list"><?lsmb text('To Pay') ?></th>
 		</tr>
+		<?lsmb icount = 0 ?>
 		<?lsmb FOREACH i = r.invoices ?>
+		<?lsmb icount = icount + 1 ?>
 		<tr>
 			<td class="invoice_date_list">&nbsp;<?lsmb i.2 ?></td>
 			<td class="invoice_list">&nbsp;<?lsmb i.1 ?></td>
@@ -204,13 +237,33 @@
 				type = "text"
 				class = "monetary"
 			} ?>
+			<?lsmb INCLUDE input element_data = {
+				type = "hidden"
+				name = "invoice_${r.contact_id}_$icount"
+				value = i.0
+			} ?>
+			<?lsmb INCLUDE input element_data = {
+				type = "hidden"
+				name = "net_$i.0"
+				value = i.6
+			} ?>
 			</td>
 		</tr>
 		<?lsmb END # foreach i ?>
+		<?lsmb INCLUDE input element_data = {
+			type = "hidden"
+			name = "invoice_count_${r.contact_id}"
+			value = icount
+		} ?>
 	</table>
     </tr>
    <?lsmb END # foreach r ?>
     </table>
+    <?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "contact_count"
+	value = count
+    } ?>
     <?lsmb INCLUDE button element_data = {
 	text = text('Post'),
 	value = 'post_payments_bulk'
