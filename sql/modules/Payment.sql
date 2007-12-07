@@ -117,7 +117,7 @@ CREATE TYPE payment_contact_invoice AS (
 );
 
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
-(in_account_class int, in_business_type int, in_currency char(3),
+(in_account_class int, in_business_id int, in_currency char(3),
 	in_date_from date, in_date_to date, in_batch_id int, 
 	in_ar_ap_accno text)
 RETURNS SETOF payment_contact_invoice AS
@@ -159,13 +159,13 @@ BEGIN
 			ORDER BY transdate
 		         ) a USING (entity_id)
 		    JOIN transactions t ON (a.id = t.id)
-		   WHERE a.invoice_class = in_account_class
+		   WHERE a.id IN (select voucher.trans_id FROM voucher
+		                          WHERE batch_id = in_batch_id)
+		          OR (a.invoice_class = in_account_class
 			 AND c.business_id = 
-				coalesce(in_business_type, c.business_id)
+				coalesce(in_business_id, c.business_id)
 		         AND ((a.transdate >= COALESCE(in_date_from, a.transdate)
-		               AND a.transdate <= COALESCE(in_date_to, a.transdate))
-		             OR a.id IN (select voucher.trans_id FROM voucher
-		                          WHERE batch_id = in_batch_id))
+		               AND a.transdate <= COALESCE(in_date_to, a.transdate)))
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
 		         AND a.entity_credit_account = c.id
@@ -180,7 +180,7 @@ BEGIN
 		                            chart_id = (SELECT id frOM chart
 		                                         WHERE accno
 		                                               = in_ar_ap_accno)
-		                    )
+		                    ))
 		GROUP BY c.id, e.name, c.meta_number, c.threshold
 		  HAVING sum(a.amount - a.paid) > c.threshold
 	LOOP
@@ -199,6 +199,7 @@ account_class: 1 for vendor, 2 for customer
 business_type: integer of business.id.
 currency: char(3) of currency (for example 'USD')
 date_from, date_to:  These dates are inclusive.
+1;3B
 batch_id:  For payment batches, where fees are concerned.
 ar_ap_accno:  The AR/AP account number.
 
