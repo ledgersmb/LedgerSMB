@@ -1427,6 +1427,9 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
 	  <th align=right>$name</th>
 	  <td colspan=3>$selectname</td>
 	</tr>
+	<tr><th align="right">|.$locale->text('Number').qq|</th>
+	    <td colspan="3"><input name="meta_number" size="36">
+        </tr>
 	$employee
 	$department
 	$invnumber

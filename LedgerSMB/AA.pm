@@ -828,6 +828,9 @@ sub transactions {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $where = "1 = 1";
+    if ($form->{"meta_number"}){
+        $where .= " AND vc.meta_number = " . $dbh->quote($form->{meta_number});
+    }
     if ( $form->{"$form->{vc}_id"} ) {
         $form->{entity_id} = $form->{$form->{vc}."_id"};
         $where .= qq| AND a.entity_id = $form->{entity_id}|;
@@ -835,7 +838,7 @@ sub transactions {
     else {
         if ( $form->{ $form->{vc} } ) {
             $var = $dbh->quote( $form->like( lc $form->{ $form->{vc} } ) );
-            $where .= " AND lower(vc.name) LIKE $var";
+            $where .= " AND lower(vce.name) LIKE $var";
         }
     }
 
