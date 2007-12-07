@@ -2189,10 +2189,12 @@ sub payments {
     my $ml = 1;
     if ( $form->{db} eq 'ar' ) {
         $table = 'customer';
+        $account_class = 2;
         $ml    = -1;
     }
     if ( $form->{db} eq 'ap' ) {
         $table = 'vendor';
+        $account_class = 1;
     }
 
     my $query;
@@ -2215,6 +2217,9 @@ sub payments {
     if ( $form->{fromdate} ) {
         $where .= " AND ac.transdate >= " . $dbh->quote( $form->{fromdate} );
     }
+    if ($form->{meta_number} ) {
+        $where .= " AND c.meta_number = " . $dbh->quote($form->{meta_number});
+    }
     if ( $form->{todate} ) {
         $where .= " AND ac.transdate <= " . $dbh->quote( $form->{todate} );
     }
@@ -2224,7 +2229,7 @@ sub payments {
 
     if ( $form->{description} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{description} ) );
-        $where .= " AND lower(c.name) LIKE $var";
+        $where .= " AND lower(ce.name) LIKE $var";
     }
     if ( $form->{source} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{source} ) );
@@ -2263,14 +2268,19 @@ sub payments {
         push @{ $form->{PR} }, $ref;
         $sth->finish;
 
-        $query = qq|
-			   SELECT c.name, ac.transdate, 
+         $query = qq|
+			   SELECT ce.name, ac.transdate, 
 			          sum(ac.amount) * $ml AS paid, ac.source, 
-			          ac.memo, e.name AS employee, a.till, a.curr
+			          ac.memo, ee.name AS employee, a.till, a.curr,
+			          c.meta_number
 			     FROM acc_trans ac
 			     JOIN $form->{db} a ON (ac.trans_id = a.id)
-			     JOIN $table c ON (c.id = a.${table}_id)
-			LEFT JOIN employee e ON (a.employee_id = e.id)
+			     JOIN entity_credit_account c ON 
+				(c.id = a.entity_credit_account)
+			     JOIN entity ce ON (ce.id = c.entity_id)
+			LEFT JOIN entity_employee e ON 
+					(a.person_id = e.entity_id)
+			LEFT JOIN entity ee ON (e.entity_id = ee.id)
 			          $dpt_join
 			    WHERE ac.chart_id = $ref->{id} $where|;
 
@@ -2283,26 +2293,28 @@ sub payments {
         }
 
         $query .= qq|
-			GROUP BY c.name, ac.transdate, ac.source, ac.memo,
-			         e.name, a.till, a.curr|;
+			GROUP BY ce.name, ac.transdate, ac.source, ac.memo,
+			         ee.name, a.till, a.curr, c.meta_number|;
 
-        if ( $form->{till} eq "" ) {
+        if ( $form->{till} eq "" && !$form->{meta_number}) {
 
-            $query .= qq|
+             $query .= qq|
  				UNION
 				SELECT g.description, ac.transdate, 
 				       sum(ac.amount) * $ml AS paid, ac.source,
-				       ac.memo, e.name AS employee, '' AS till,
-				       '' AS curr
+				       ac.memo, ee.name AS employee, '' AS till,
+				       '' AS curr, '' AS meta_number
 				  FROM acc_trans ac
 				  JOIN gl g ON (g.id = ac.trans_id)
 				  LEFT 
-				  JOIN employee e ON (g.employee_id = e.id)
+				  JOIN entity_employee e ON 
+					(g.person_id = e.entity_id)
+				  JOIN entity ee ON (e.entity_id = ee.id)
 				       $dpt_join
 				 WHERE ac.chart_id = $ref->{id} $glwhere
 				       AND (ac.amount * $ml) > 0
 				 GROUP BY g.description, ac.transdate, 
-			               ac.source, ac.memo, e.name|;
+			               ac.source, ac.memo, ee.name|;
 
         }
 

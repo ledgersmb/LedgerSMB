@@ -151,6 +151,7 @@ sub new {
     $self->{VERSION} = $VERSION;
 
     $self->merge($params);
+    $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
 
     # Adding this so that empty values are stored in the db as NULL's.  If
     # stored procedures want to handle them differently, they must opt to do so.

@@ -1877,6 +1877,7 @@ sub tax_subtotal {
     my %column_data;
     for (@{$column_index}) { $column_data{$_} = ' ' }
 
+
     #SC: Yes, right now these are global, inherited from generate_tax_report
     $subtotal =
       $form->format_amount( \%myconfig, $subtotalnetamount + $subtotaltax,
@@ -1910,6 +1911,7 @@ sub list_payments {
 
     my %hiddens;
     my @options;
+    my $vc = ($form->{db} eq 'ar') ? 'Customer' : 'Vendor';
     if ( $form->{account} ) {
         ( $form->{paymentaccounts} ) = split /--/, $form->{account};
     }
@@ -1921,11 +1923,12 @@ sub list_payments {
 
     RP->payments( \%myconfig, \%$form );
 
-    my @columns = $form->sort_columns(qw(transdate name paid source memo));
+    my @columns = $form->sort_columns(qw(transdate name paid source meta_number 
+memo));
 
     if ( $form->{till} ) {
         @columns =
-          $form->sort_columns(qw(transdate name paid curr source till));
+          $form->sort_columns(qw(transdate name paid curr source meta_number till));
         if ( $myconfig{role} ne 'user' ) {
             @columns =
               $form->sort_columns(
@@ -2001,9 +2004,9 @@ sub list_payments {
         href => "$href&sort=source",
         text => $locale->text('Source'),
         };
-    $column_header{memo} = {
-        href => "$href&sort=memo",
-        text => $locale->text('Memo'),
+    $column_header{meta_number} = {
+        href => "$href&sort=meta_number",
+        text => $locale->text("$vc Number"),
         };
     $column_header{employee} = {
         href => "$href&sort=employee",
@@ -2042,6 +2045,7 @@ sub list_payments {
             next if ( $form->{till} && !$payment->{till} );
 
             my %column_data;
+            $column_data{meta_number} = $payment->{meta_number};
             $column_data{name}      = $payment->{name};
             $column_data{transdate} = $payment->{transdate};
             $column_data{paid} =
