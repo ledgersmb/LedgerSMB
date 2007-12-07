@@ -1,0 +1,322 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS elements.html # Form elements helper template ?>
+
+<body id="sales-invoice-body" onload="document.forms[0].partnumber_1.focus()">
+<form method="post" action="<?lsmb script ?>">
+  
+  <?lsmb
+    FOREACH hidden_element IN form_elements.hidden_elements;
+      PROCESS input element_data=hidden_element;
+    END;
+  ?>
+
+<table class="main-table">
+  <tr id="top-bar" class="listtop">
+    <th id="top-bar-header" class="listtop" colspan="4"><label id="top-bar-label"><?lsmb title ?></label></th>
+  </tr>
+   <tr>
+    <td id="customer-info-column">
+      <table id="customer-info-table">
+        <tr id="customer-row">
+          <td id="customer-label-column" class="label-left"><?lsmb text('Customer') ?></td>
+          <td id="customer-column">
+            <?lsmb IF form_elements.customer.type == 'select';
+                PROCESS select element_data=form_elements.customer;
+            ELSE;
+                PROCESS input element_data=form_elements.customer;
+            END ?>
+          </td>
+        </tr>
+        <tr id="credit-limit-remaining-row">
+          <td>&nbsp;</td>
+          <td id="credit-limit-remaining-column">
+            <div id="credit-limit-container" class="container-inline">
+              <label id="credit-limit-label" class="label-left"><?lsmb text('Credit Limit') ?></label>
+              <?lsmb creditlimit ?>
+              <label id="remaining-label" class="label-left"><?lsmb text('Remaining') ?></label>
+              <?lsmb creditremaining ?>
+            </div>
+          </td>
+        </tr>
+        <tr id="AR-row">
+          <td id="AR-label-column" class="label-left"><?lsmb text('Record in') ?></td>
+          <td id="AR-column">
+            <?lsmb PROCESS select element_data=form_elements.AR ?>
+          </td>
+        </tr>
+        <tr id="currency-exchangerate-row">
+          <td id="currency-exchangerate-label-column" class="label-left"><?lsmb text('Currency') ?></td>
+          <td id="currency-exchangerate-column">
+            <div id="currency-exchangerate-container" class="container-inline">
+              <?lsmb PROCESS select element_data=form_elements.currency ?>
+              <?lsmb
+                IF exchangerate;
+                  '<label id="exchangerate-label" class="label-left">' _ text('Exchange Rate') _ '</label>';
+                  PROCESS input element_data=form_elements.exchangerate;
+                END;
+              ?>
+            </div>
+          </td>
+        </tr>
+        <tr id="shippingpoint-row">
+          <td id="shippingpoint-label-column" class="label-left"><?lsmb text('Shipping Point') ?></td>
+          <td id="shippingpoint-column">
+            <?lsmb PROCESS input element_data=form_elements.shippingpoint ?>
+          </td>
+        </tr>
+        <tr id="shipvia-row">
+          <td id="shipvia-label-column" class="label-left"><?lsmb text('Ship via') ?></td>
+          <td id="shipvia-column">
+            <?lsmb PROCESS input element_data=form_elements.shipvia ?>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td id="invoice-info-column">
+      <table id="invoice-info-table">
+        <tr id="invnumber-row">
+          <td id="invnumber-label-column" class="label-left"><?lsmb text('Invoice Number') ?></td>
+          <td id="invnumber-column">
+            <?lsmb PROCESS input element_data=form_elements.invnumber ?>
+          </td>
+        </tr>
+        <tr id="ordnumber-row">
+          <td id="ordnumber-label-column" class="label-left"><?lsmb text('Order Number') ?></td>
+          <td id="ordnumber-column">
+            <?lsmb PROCESS input element_data=form_elements.ordnumber ?>
+          </td>
+        </tr>
+        <tr id="transdate-row">
+          <td id="transdate-label-column" class="label-left"><?lsmb text('Invoice Date') ?></td>
+          <td id="transdate-column">
+            <?lsmb PROCESS input element_data=form_elements.transdate ?>
+          </td>
+        </tr>
+        <tr id="duedate-row">
+          <td id="duedate-label-column" class="label-left"><?lsmb text('Due Date') ?></td>
+          <td id="duedate-column">
+            <?lsmb PROCESS input element_data=form_elements.duedate ?>
+          </td>
+        </tr>
+        <tr id="ponumber-row">
+          <td id="ponumber-label-column" class="label-left"><?lsmb text('PO Number') ?></td>
+          <td id="ponumber-column">
+            <?lsmb PROCESS input element_data=form_elements.ponumber ?>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table id="items-table" class="main-table">
+  <tr id="items-header-row" class="listheading">
+    <?lsmb FOREACH column_name IN form_elements.line_item_columns ?>
+    <th id="items-<?lsmb column_name ?>-header" class="listheading"><?lsmb form_elements.line_item_column_data.$column_name ?></th>
+    <?lsmb END ?>
+  </tr>
+  
+<?lsmb FOREACH line_item IN form_elements.line_items ?>
+  <tr class="item-row">
+    <?lsmb FOREACH column_name IN form_elements.line_item_columns ?>
+    <td class="<?lsmb column_name ?>-column">
+      <?lsmb
+        IF column_name == 'description' && line_item.description.defined('text');
+          PROCESS textarea element_data=line_item.description;
+        ELSE;
+          PROCESS input element_data=line_item.$column_name;
+        END;
+      ?>
+      <?lsmb
+        IF line_item.$column_name.defined('skunumber');
+          PROCESS label element_data=line_item.$column_name.sku;
+          line_item.$column_name.skunumber;
+        END;
+      ?>
+    </td>
+    <?lsmb END ?>
+  </tr>
+  <?lsmb IF line_item.notes.size ?>
+  <tr class="notes-row">
+    <td colspan="2" class="delvar-column">
+      <?lsmb PROCESS input element_data=line_item.delvar ?>
+    </td>
+    <td class="notes-column">
+      <?lsmb
+        IF line_item.notes.defined('text');
+          PROCESS textarea element_data=line_item.notes;
+        ELSE;
+          PROCESS input element_data=line_item.notes;
+        END;
+      ?>
+    </td>
+    <?lsmb IF line_item.serialnumber.size ?>
+    <td colspan="6" class="serialnumber-column">
+      <?lsmb PROCESS input element_data=line_item.serialnumber ?>
+    </td>
+    <?lsmb END ?>
+  </tr>
+  <?lsmb END ?>
+  <?lsmb IF line_item.projectnumber.size || line_item.partsgroup.size ?>
+  <tr class="project-row">
+    <td colspan="<?lsmb form_elements.line_item_columns.size ?>" class="project-column">
+      <?lsmb
+        IF line_item.projectnumber.size;
+          PROCESS select element_data=line_item.projectnumber;
+        END;
+      ?>
+      <?lsmb IF line_item.partsgroup.size ?>
+        <?lsmb
+          IF line_item.partsgroup.defined('options');
+            PROCESS select element_data=line_item.partsgroup;
+          ELSE;
+            PROCESS label element_data=line_item.partsgroup.label;
+            line_item.partsgroup.partsgroup;
+          END;
+        ?>
+      <?lsmb END ?>
+    </td>
+  </tr>
+  <?lsmb END ?>
+<?lsmb END ?>
+  
+  <tr>
+    <td colspan="9">
+      <hr id="items-horizontal-rule" size="1" />
+    </td>
+  </tr>
+  <?lsmb IF form_elements.on_hold ?>
+  <tr>
+    <td colspan="9">
+      <?lsmb PROCESS label element_data=form_elements.on_hold ?>
+    </td>
+  </tr>
+  <?lsmb END ?>
+  <tr id="notes-totals-row">
+    <td id="notes-column" colspan="8">
+      <table id="notes-table">
+        <tr id="notes-label-row">
+          <th id="notes-label-header" class="label-right"><?lsmb text('Notes') ?></th>
+          <th id="internal-notes-label-header" class="label-right"><?lsmb text('Internal Notes') ?></th>
+        </tr>
+        <tr id="notes-row">
+          <td id="notes-column">
+            <?lsmb PROCESS textarea element_data=form_elements.notes ?>
+          </td>
+          <td id="internal-notes-column">
+            <?lsmb PROCESS textarea element_data=form_elements.intnotes ?>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td id="totals-column">
+      <table id="totals-table">
+        <tr id="subtotal-row">
+          <th id="subtotal-label-header" class="label-left"><?lsmb text('Subtotal') ?></th>
+          <td id="subtotal"><?lsmb invsubtotal ?></td>
+        </tr>
+        <?lsmb FOREACH tax_item IN form_elements.taxes ?>
+        <tr>
+          <th class="label-left tax-item-label"><?lsmb tax_item.description ?></th>
+          <td class="tax-item-amount"><?lsmb tax_item.amount ?></td>
+        </tr>
+        <?lsmb END ?>
+        <tr id="total-row">
+          <th id="total-label-header" class="label-left"><?lsmb text('Total') ?></th>
+          <td id="total"><?lsmb invtotal ?></td>
+        </tr>
+        <?lsmb IF _element.taxincluded ?>
+        <tr>
+          <td id="taxincluded-column">
+            <?lsmb PROCESS input element_data=form_elements.taxincluded ?>
+          </td>
+          <th id="taxincluded-label-header" class="label-right"><?lsmb text('Tax Included') ?></th>
+        </tr>
+        <?lsmb END ?>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table id="payments-table" class="main-table">
+  <tr id="payments-table-header-row" class="listheading">
+    <th id="payments-table-header" colspan="5" class="listheading"><?lsmb text('Payments') ?></th>
+  </tr>
+  <tr id="payments-headers">
+    <th id="payments-date-header"><?lsmb text('Date') ?></th>
+    <th id="payments-source-header"><?lsmb text('Source') ?></th>
+    <th id="payments-memo-header"><?lsmb text('Memo') ?></th>
+    <th id="payments-amount-header"><?lsmb text('Amount') ?></th>
+    <?lsmb IF currency != defaultcurrency ?>
+    <th id="payments-exch-header"><?lsmb text('Exch') ?></th>
+    <?lsmb END ?>
+    <th id="payments-account-header"><?lsmb text('Account') ?></th>
+  </tr>
+  
+  <?lsmb FOREACH payment_item IN form_elements.payment_items ?>
+  <tr>
+    <td class="payments-datepaid">
+      <?lsmb PROCESS input element_data=payment_item.datepaid ?>
+    </td>
+    <td class="payments-source">
+      <?lsmb PROCESS input element_data=payment_item.source ?>
+    </td>
+    <td class="payments-memo">
+      <?lsmb PROCESS input element_data=payment_item.memo ?>
+    </td>
+    <td class="payments-paid">
+      <?lsmb PROCESS input element_data=payment_item.paid ?>
+    </td>
+    <?lsmb IF currency != defaultcurrency ?>
+    <td class="payments-exch">
+      <?lsmb PROCESS input element_data=payment_item.exchangerate ?>
+    </td>
+    <?lsmb ELSE ?>
+      <?lsmb PROCESS input element_data=payment_item.exchangerate ?>
+    <?lsmb END ?>
+    <td class="payments-ar-paid">
+      <?lsmb PROCESS select element_data=payment_item.AR_paid ?>
+    </td>
+  </tr>
+  <?lsmb END ?>
+</table>
+
+<hr size="3" />
+
+<div id="type-selectors-container">
+  <?lsmb
+    PROCESS select element_data=form_elements.formname;
+    IF selectlanguage.defined;
+        PROCESS select element_data=form_elements.language;
+    END;
+    PROCESS select element_data=form_elements.format;
+    PROCESS select element_data=form_elements.media ?>
+</div>
+
+<div id="group-selectors-container">
+  <label id="group-by-selectors-label" class="label"><?lsmb text('Group by') ?> -&gt;</label>
+  <?lsmb 
+                FOREACH groupby IN form_elements.groupby;
+                  PROCESS input element_data=groupby;
+                END;
+  ?>
+</div>
+
+<div id="sort-selectors-container">
+  <label id="sort-by-selectors-label" class="label"><?lsmb text('Sort by') ?> -&gt;</label>
+  <?lsmb 
+                FOREACH sortby IN form_elements.sortby;
+                  PROCESS input element_data=sortby;
+                END;
+  ?>  
+</div>
+
+<hr id="horizontal-rule" />
+
+<?lsmb FOREACH button IN form_elements.buttons ?>
+  <?lsmb PROCESS button element_data=button ?>
+<?lsmb END ?>
+
+</form>
+</body>
+</html>

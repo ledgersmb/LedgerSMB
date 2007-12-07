@@ -186,6 +186,19 @@ sub _render_main_screen{
     $template->render($vendor);
 }
 
+sub search {
+    my ($request) = @_;
+    $request->{account_class} = 1;
+    my $template = LedgerSMB::Template->new( 
+	user => $request->{_user}, 
+    	template => 'search', 
+	locale => $request->{_locale},
+	path => 'UI/Contact',
+        format => 'HTML'
+    );
+    $template->render($request);
+}    
+
 sub save_contact {
     my ($request) = @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});

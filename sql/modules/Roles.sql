@@ -1385,6 +1385,6 @@ GRANT select on chart, gifi, country to public;
  GRANT SELECT ON parts, partsgroup TO public;
  GRANT SELECT ON language, project TO public;
 GRANT SELECT ON business, exchangerate, department, shipto, tax TO public;
-GRANT ALL ON recurring, recurringemail, recurringprint TO public; 
+GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
 --TODO, lock recurring down more
 
