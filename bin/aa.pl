@@ -1729,7 +1729,7 @@ sub transactions {
       . $locale->text('PO Number')
       . "</a></th>";
     $column_header{name} =
-      "<th><a class=listheading href=$href&sort=name>$name</a></th>";
+      "<th>".$locale->text('Account')."</th><th><a class=listheading href=$href&sort=name>$name</a></th>";
     $column_header{netamount} =
       "<th class=listheading>" . $locale->text('Amount') . "</th>";
     $column_header{tax} =
@@ -1940,7 +1940,7 @@ sub transactions {
 qq|<td><a href=ca.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=list_transactions&accounttype=standard&accno=$ref->{accno}&fromdate=$form->{transdatefrom}&todate=$form->{transdateto}&sort=transdate&l_subtotal=$form->{l_subtotal}&prevreport=$callback>$ref->{accno}</a></td>|;
 
         $column_data{name} =
-qq|<td><a href=ct.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=edit&id=$ref->{"$form->{vc}_id"}&db=$form->{vc}&callback=$callback>$ref->{name}</a></td>|;
+qq|<td>$ref->{meta_number}</td><td><a href=ct.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=edit&id=$ref->{"$form->{vc}_id"}&db=$form->{vc}&callback=$callback>$ref->{name}</a></td>|;
 
         if ( $ref->{id} != $sameid ) {
             $j++;

@@ -784,7 +784,7 @@ sub transactions {
 		          a.duedate, a.netamount, a.amount, ($paid) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, ee.name AS employee, 
-		          vce.name,
+		          vce.name, vc.meta_number,
 		          a.entity_id, a.till, me.name AS manager, a.curr,
 		          ex.$buysell AS exchangerate, 
 		          d.description AS department, 
@@ -812,14 +812,14 @@ sub transactions {
         shippingpoint => 14,
         employee      => 15,
         name          => 16,
-        manager       => 19,
-        curr          => 20,
-        department    => 22,
-        ponumber      => 23,
-        accno         => 24,
-        source        => 25,
-        project       => 26,
-        description   => 27
+        manager       => 20,
+        curr          => 21,
+        department    => 23,
+        ponumber      => 24,
+        accno         => 25,
+        source        => 26,
+        project       => 27,
+        description   => 28
     );
 
     my @a = ( transdate, invnumber, name );
