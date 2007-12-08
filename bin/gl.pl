@@ -131,7 +131,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         }
     }
 
-    &display_form(1);
+    &dislay_form(1);
 
 }
 

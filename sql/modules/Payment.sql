@@ -223,8 +223,8 @@ BEGIN
 	IF in_batch_id IS NULL THEN
 		t_voucher_id := NULL;
 	ELSE
-		INSERT INTO voucher (batch_id, trans_id)
-		values (in_batch_id, in_transactions[1][1]);
+		INSERT INTO voucher (batch_id, batch_class, trans_id)
+		values (in_batch_id, 3, in_transactions[1][1]);
 
 		t_voucher_id := currval('voucher_id_seq');
 	END IF;

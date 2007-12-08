@@ -3,6 +3,12 @@
         <td colspan="3"><?lsmb PROCESS select element_data=form.paymentaccounts ?></td>
       </tr>
       <tr>
+        <th aligh="right"><?lsmb text('Vendor Number') ?></th>
+        <td colpan="3"><?lsmb INCLUDE input element_data = {
+		name = "meta_number"
+		size = '35'
+	} ?></td>
+      <tr>
         <th align="right"><?lsmb text('Description') ?></th>
         <td colspan="3"><?lsmb PROCESS input element_data={
   name => 'description',

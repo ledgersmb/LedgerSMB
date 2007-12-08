@@ -1923,7 +1923,7 @@ sub list_payments {
 
     RP->payments( \%myconfig, \%$form );
 
-    my @columns = $form->sort_columns(qw(transdate name paid source meta_number 
+    my @columns = $form->sort_columns(qw(meta_number transdate name paid source 
 memo));
 
     if ( $form->{till} ) {

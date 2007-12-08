@@ -60,7 +60,7 @@
 <?lsmb IF businesses ?>
 <div id = "payments-filter-businesses" class="input">
   <label for="businesses"><?lsmb text('Business Class') ?></label>
-  <select name="business" id="businesses">
+  <select name="business_id" id="businesses">
   <?lsmb FOREACH b = businesses ?>
   <option value="<?lsmb b.id ?>"><?lsmb b.description ?></option>
   <?lsmb END ?>

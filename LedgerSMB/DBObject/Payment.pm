@@ -379,6 +379,7 @@ sub get_payment_detail_data {
         $inv->{invoices} = [];
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
     }
+    # $self->{dbh}->commit; # Commit locks
 }    
 
 sub post_bulk {
