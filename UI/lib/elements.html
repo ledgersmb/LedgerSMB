@@ -102,6 +102,18 @@
 <?lsmb # SELECT ELEMENT ?>
 <?lsmb BLOCK select ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>
+    <?lsmb IF element_data.defined('text_attr') ?>
+        <?lsmb text_attr =  element_data.text_attr ?>
+        <?lsmb element.text_attr = undef ?>
+    <?lsmb ELSE ?>
+	<?lsmb text_attr = 'text' ?>
+    <?lsmb END ?>
+    <?lsmb IF element_data.defined('value_attr') ?>
+        <?lsmb text_attr =  element_data.value_attr ?>
+        <?lsmb element.value_attr = undef ?>
+    <?lsmb ELSE ?>
+	<?lsmb value_attr = 'value' ?>
+    <?lsmb END ?>
     <?lsmb IF element_data.defined('default_values') ?>
 	    <?lsmb  # Undef items must be removed, or they choke in the options defaults check later.
         i = 0;
@@ -138,6 +150,12 @@
 
 <?lsmb # OPTION ELEMENT ?>
 <?lsmb BLOCK option ?>
+  <?lsmb IF element_data.defined('value_attr');
+	option_data.value = option_data.$value_attr;
+    END ?>
+  <?lsmb IF element_data.defined('text_attr');
+	option_data.text = option_data.$text_attr;
+    END ?>
   <?lsmb  # Selected is a special case -- no attribute key, so it's handled here by looking for the option value in the default_values key.
     IF element_data.defined('default_values') AND element_data.default_values.grep("^${option_data.value}$").size;
     option_data.selected = ' selected="selected"';
