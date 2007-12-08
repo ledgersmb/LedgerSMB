@@ -10,7 +10,7 @@
 <?lsmb ELSE -?>
 <?lsmb entity_type = 'Unsupported' -?>
 <?lsmb END -?>
-<?lsmb title = text("$entity_type Search") # ' -?>
+<?lsmb title = text("$entity_type Search") # " -?>
 <form method="post" action="<?lsmb script ?>">
 <?lsmb INCLUDE input element_data = {
 	type = "hidden"
@@ -28,7 +28,7 @@
             <table>
               <tr>
                 <th align="right"><?lsmb text('Company Name') ?></th>
-                <td><?lsmb INCLUDE input element_data={size = '32', name = 'name'} ?></td>
+                <td><?lsmb INCLUDE input element_data={size = '32', name = 'legal_name'} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Contact') ?></th>
@@ -51,17 +51,17 @@
                 <td><?lsmb INCLUDE input element_data={size = '32', name = 'employee'} ?></td>
 <?lsmb END -?>
               </tr>
-              <tr>
+              <!-- tr>
                 <th align="right"><?lsmb text('Notes') ?></th>
                 <td><?lsmb INCLUDE textarea element_data={
   rows = '3', cols = '32', name = 'notes'} ?></td>
-              </tr>
+              </tr -->
             </table>
           </td>
           <td>
             <table>
               <tr>
-                <th align="right"><?lsmb text("${form.label} Number") ?></th>
+                <th align="right"><?lsmb text("$entity_type Number") ?></th>
                 <td><?lsmb INCLUDE input element_data={
   size = '32', name = "meta_number"} ?></td>
               </tr>
@@ -83,7 +83,7 @@
               <tr>
                 <th align="right"><?lsmb text('Zip/Postal Code') ?></th>
                 <td><?lsmb INCLUDE input element_data={
-  size = '10', name = 'zipcode'} ?></td>
+  size = '10', name = 'mail_code'} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Country') ?></th>
@@ -91,7 +91,7 @@
   size = '32', name = 'country'} ?></td>
               </tr>
               <tr>
-                <th align="right"><?lsmb text('Startdate') ?></th>
+                <th align="right"><?lsmb text('Active') ?></th>
                 <td>
                    <?lsmb text('From'); ' '; INCLUDE input element_data={
   size = '11', name = 'startdatefrom', class = 'date', title = user.dateformat};

@@ -1,4 +1,83 @@
-BEGIN;
+-- BEGIN;
+
+CREATE TYPE company_search_result AS (
+	entity_id int,
+	company_id int,
+	entity_credit_id int,
+	meta_number text,
+	entity_class int,
+	legal_name text,
+	sic_code text,
+	business_type text,
+	curr text
+);
+
+CREATE OR REPLACE FUNCTION company__search
+(in_account_class int, in_contact text, in_contact_info text[], 
+	in_meta_number text, in_address text, in_city text, in_state text, 
+	in_mail_code text, in_country text, in_date_from date, in_date_to date,
+	in_business_id int)
+RETURNS SETOF company_search_result AS $$
+DECLARE
+	out_row company_search_result;
+	loop_count int;
+	t_contact_info text[];
+BEGIN
+	t_contact_info = in_contact_info;
+
+
+	FOR out_row IN
+		SELECT e.id, c.id, ec.id, ec.meta_number, ec.entity_class, 
+			c.legal_name, c.sic_code, b.description , ec.curr
+		FROM entity e
+		JOIN company c ON (e.id = c.entity_id)
+		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+		LEFT JOIN business b ON (ec.business_id = b.id)
+		WHERE ec.entity_class = in_account_class
+			AND (c.id IN (select company_id FROM company_to_contact
+				WHERE contact LIKE ALL(t_contact_info))
+				OR '' LIKE ALL(t_contact_info))
+			
+			AND ec.meta_number = 
+				coalesce(in_meta_number, ec.meta_number)
+--			AND c.id IN 
+--				(select company_id FROM company_to_location
+--				WHERE location_id IN 
+--					(SELECT id FROM location
+--					WHERE line_one 
+--						ilike '%' || 
+--							coalesce(in_address, '')
+--							|| '%'
+--						AND city ILIKE 
+--							'%' || 
+--							coalesce(in_city, '') 
+--							|| '%'
+--						AND state ILIKE
+--							'%' || 
+--							coalesce(in_state, '') 
+--							|| '%'
+--						AND mail_code ILIKE
+--							'%' || 
+--							coalesce(in_mail_code,
+--								'')
+--							|| '%'
+--						AND country_id IN 
+--							(SELECT id FROM country
+--							WHERE name LIKE '%' ||
+--								in_country ||'%'
+--								OR short_name
+--								ilike 
+--								in_country)))
+			AND ec.business_id = 
+				coalesce(in_business_id, ec.business_id)
+--			AND ec.startdate <= coalesce(in_date_to, 
+--						ec.startdate)
+--			AND ec.enddate >= coalesce(in_date_from, ec.enddate)
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ language plpgsql;	
 
 CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text)
 RETURNS INT AS
@@ -325,4 +404,4 @@ create or replace function _entity_location_save(
 
 $$ language 'plpgsql';
 
-COMMIT;
+-- COMMIT;

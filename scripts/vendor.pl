@@ -96,7 +96,7 @@ sub add {
 
 =over
 
-=item search($self, $request, $user)
+=item search_result($self, $request, $user)
 
 Requires form var: search_pattern
 
@@ -108,35 +108,87 @@ as well as vendor/Company name.
 
 =cut
 
-sub search {
+sub get_results {
     my ($request) = @_;
-    
-    if ($request->type() eq 'POST') {
-        # assume it's asking us to do the search, now
         
-        my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
-        $vendor->set(entity_class=>1);
-        my $results = $vendor->search($vendor->{search_pattern});
+    my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
+    $vendor->set(entity_class=>1);
+    $vendor->{contact_info} = qq|{"%$request->{email}%","%$request->{phone}%"}|;
+    my $results = $vendor->search();
+    if ($vendor->{order_by}){
+       # TODO:  Set ordering logic
+    };
 
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Contact/vendor', language => $user->{language}, 
-            format => 'HTML');
-        $template->render($results);
-        
+    # URL Setup
+    my $baseurl = "$request->{script}";
+    my $search_url = "$base_url?action=get_results";
+    my $get_url = "$base_url?action=get";
+    for (keys %$vendor){
+        next if $_ eq 'order_by';
+        $search_url .= "&$_=$form->{$_}";
     }
-    else {
-        
-        # grab the happy search page out.
-        
-        my $template = LedgerSMB::Template->new( 
+
+    # Column definitions for dynatable
+    @columns = qw(legal_name meta_number business_type curr);
+    my %column_heading;
+    $column_heading{legal_name} = {
+        text => $request->{_locale}->text('Name'),
+	href => "$search_url&order_by=legal_name",
+    };
+    $column_heading{meta_number} = {
+        text => $request->{_locale}->text('Vendor Number'),
+	href => "$search_url&order_by=meta_number",
+    };
+    $column_heading{business_type} = {
+        text => $request->{_locale}->text('Business Type'),
+	href => "$search_url&order_by=business_type",
+    };
+    $column_heading{curr} = {
+        text => $request->{_locale}->text('Currency'),
+	href => "$search_url&order_by=curr",
+    };
+
+    my @rows;
+    for $ref (@{$vendor->{search_results}}){
+	push @rows, 
+                {legal_name   => $ref->{legal_name},
+                meta_number   => {text => $ref->{meta_number},
+                                  href => "$get_url&id=$ref->{entity_id}"},
+		business_type => $ref->{business_type},
+                curr          => $ref->{curr},
+                };
+    }
+
+    my @buttons = (
+	{name => 'action',
+        value => 'csv_chart_of_accounts',
+        text => $vendor->{_locale}->text('CSV Report'),
+        type => 'submit',
+        class => 'submit',
+        },
+	{name => 'action',
+        value => 'add',
+        text => $vendor->{_locale}->text('Add Vendor'),
+        type => 'submit',
+        class => 'submit',
+	}
+    );
+
+    my $template = LedgerSMB::Template->new( 
 		user => $user,
-		path => 'UI/Contact' ,
-    		template => 'vendor_search', 
-		locale => $request->{_locale}, 
+		path => 'UI' ,
+    		template => 'form-dynatable', 
+		locale => $vendor->{_locale}, 
 		format => 'HTML');
             
-        $template->render();
-    }
+    $template->render({
+	form    => $vendor,
+	columns => \@columns,
+        hiddens => $vendor,
+	buttons => \@buttons,
+	heading => \%column_heading,
+	rows    => \@rows,
+    });
 }
 
 =pod
@@ -189,6 +241,7 @@ sub _render_main_screen{
 sub search {
     my ($request) = @_;
     $request->{account_class} = 1;
+    $request->{script} = 'vendor.pl';
     my $template = LedgerSMB::Template->new( 
 	user => $request->{_user}, 
     	template => 'search', 
