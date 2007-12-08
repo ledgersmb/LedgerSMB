@@ -2165,33 +2165,12 @@ sub all_years {
 
     $dbh = $self->{dbh};
 
+    $self->{all_years} = [];
+
     # get years
     my $query = qq|
-                SELECT (SELECT transdate FROM acc_trans ORDER BY transdate asc
-                                LIMIT 1),
-                       (SELECT transdate FROM acc_trans ORDER BY transdate desc
-                                LIMIT 1)|;
-
-    my ( $startdate, $enddate ) = $dbh->selectrow_array($query);
-
-    if ( $myconfig->{dateformat} =~ /^yy/ ) {
-        ($startdate) = split /\W/, $startdate;
-        ($enddate)   = split /\W/, $enddate;
-    }
-    else {
-        (@_) = split /\W/, $startdate;
-        $startdate = $_[2];
-        (@_) = split /\W/, $enddate;
-        $enddate = $_[2];
-    }
-
-    $self->{all_years} = ();
-    $startdate = substr( $startdate, 0, 4 );
-    $enddate   = substr( $enddate,   0, 4 );
-
-    while ( $enddate >= $startdate ) {
-        push @{ $self->{all_years} }, $enddate--;
-    }
+	SELECT extract('YEARS' FROM transdate) FROM acc_trans 
+	GROUP BY extract('YEARS' FROM transdate) ORDER BY 1 DESC|;
 
     #this should probably be changed to use locale
     %{ $self->{all_month} } = (
