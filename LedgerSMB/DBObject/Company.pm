@@ -33,6 +33,9 @@ sub get_metadata {
     @{$self->{location_class_list}} = 
          $self->exec_method(funcname => 'location_list_class');
 
+    @{$self->{business_types}} = 
+         $self->exec_method(funcname => 'business_type__list');
+
     @{$self->{country_list}} = 
          $self->exec_method(funcname => 'location_list_country');
 
@@ -56,6 +59,13 @@ sub save_notes {
     my $self = shift @_;
     $self->exec_method(funcname => 'entity__save_notes');
     $self->{dbh}->commit;
+}
+
+sub search {
+    my ($self) = @_;
+    @{$self->{search_results}} = 
+	$self->exec_method(funcname => 'company__search');
+    return @{$self->{search_results}};
 }
 
 sub get {

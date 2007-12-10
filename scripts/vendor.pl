@@ -48,14 +48,9 @@ sub get {
     my $vendor = LedgerSMB::DBObject::Vendor->new(base => $request, copy => 'all');
     
     $vendor->set( entity_class=> '1' );
-    my $result = $vendor->get();
-    
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'contact', language => $user->{language}, 
-	path => 'UI/Contact',
-        format => 'HTML');
-    $template->render($results);
-        
+    $vendor->get();
+    $vendor->get_metadata();
+    _render_main_screen($vendor);
 }
 
 
@@ -122,7 +117,7 @@ sub get_results {
     # URL Setup
     my $baseurl = "$request->{script}";
     my $search_url = "$base_url?action=get_results";
-    my $get_url = "$base_url?action=get";
+    my $get_url = "$base_url?action=get&account_class=$request->{account_class}";
     for (keys %$vendor){
         next if $_ eq 'order_by';
         $search_url .= "&$_=$form->{$_}";
@@ -153,19 +148,22 @@ sub get_results {
 	push @rows, 
                 {legal_name   => $ref->{legal_name},
                 meta_number   => {text => $ref->{meta_number},
-                                  href => "$get_url&id=$ref->{entity_id}"},
+                                  href => "$get_url&entity_id=$ref->{entity_id}"},
 		business_type => $ref->{business_type},
                 curr          => $ref->{curr},
                 };
     }
-
+# CT:  The CSV Report is broken.  I get:
+# Not an ARRAY reference at 
+# /usr/lib/perl5/site_perl/5.8.8/CGI/Simple.pm line 423
+# Disabling the button for now.
     my @buttons = (
-	{name => 'action',
-        value => 'csv_chart_of_accounts',
-        text => $vendor->{_locale}->text('CSV Report'),
-        type => 'submit',
-        class => 'submit',
-        },
+#	{name => 'action',
+#        value => 'csv_vendor_list',
+#        text => $vendor->{_locale}->text('CSV Report'),
+#        type => 'submit',
+#        class => 'submit',
+#        },
 	{name => 'action',
         value => 'add',
         text => $vendor->{_locale}->text('Add Vendor'),
@@ -179,7 +177,8 @@ sub get_results {
 		path => 'UI' ,
     		template => 'form-dynatable', 
 		locale => $vendor->{_locale}, 
-		format => 'HTML');
+		format => ($request->{FORMAT}) ? $request->{FORMAT}  : 'HTML',
+    );
             
     $template->render({
 	form    => $vendor,
@@ -189,6 +188,12 @@ sub get_results {
 	heading => \%column_heading,
 	rows    => \@rows,
     });
+}
+
+sub csv_vendor_list {
+    my ($request) = @_;
+    $request->{FORMAT} = 'CSV';
+    get_results($request); 
 }
 
 =pod
@@ -203,6 +208,7 @@ vendor as needed, and will generate a new Company ID for the vendor if needed.
 =back
 
 =cut
+
 
 sub save {
     

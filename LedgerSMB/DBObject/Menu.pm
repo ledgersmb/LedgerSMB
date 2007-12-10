@@ -71,7 +71,6 @@ sub generate_section {
 
 sub __generate {
     my ($self) = @_;
-    $self->debug({file => '/tmp/menu'});
     my @args;
 
     shift @{$self->{menu_items}};

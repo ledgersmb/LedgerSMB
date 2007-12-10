@@ -130,7 +130,6 @@ sub exec_method {
 
     for (@in_args) { push @call_args, $_ } ;
     $self->{call_args} = \@call_args;
-    $self->debug({file => '/tmp/dbobject'});
     return $self->call_procedure( procname => $funcname, args => \@call_args );
 }
 
