@@ -16,7 +16,7 @@ CREATE OR REPLACE FUNCTION company__search
 (in_account_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
 	in_mail_code text, in_country text, in_date_from date, in_date_to date,
-	in_business_id int)
+	in_business_id int, in_legal_name text)
 RETURNS SETOF company_search_result AS $$
 DECLARE
 	out_row company_search_result;
@@ -40,7 +40,11 @@ BEGIN
 			
 			AND ec.meta_number = 
 				coalesce(in_meta_number, ec.meta_number)
---			AND c.id IN 
+			AND c.legal_name like '%' || coalesce(in_legal_name, '') || '%'
+--			AND ((in_address IS NULL AND in_city IS NULL 
+--					AND in_state IS NULL 
+--					AND in_country IS NULL)
+--				OR (c.id IN 
 --				(select company_id FROM company_to_location
 --				WHERE location_id IN 
 --					(SELECT id FROM location
@@ -67,7 +71,7 @@ BEGIN
 --								in_country ||'%'
 --								OR short_name
 --								ilike 
---								in_country)))
+--								in_country)))))
 			AND ec.business_id = 
 				coalesce(in_business_id, ec.business_id)
 --			AND ec.startdate <= coalesce(in_date_to, 
@@ -116,7 +120,7 @@ CREATE TYPE entity_credit_search_return AS (
         taxincluded bool,
         creditlimit numeric,
         terms int2,
-        customernumber text,
+        meta_number text,
         business_id int,
         language_code text,
         pricegroup_id int,
@@ -286,6 +290,23 @@ CREATE TYPE contact_list AS (
 	contact text
 );
 
+CREATE OR REPLACE FUNCTION company__list_contacts(in_entity_id int) 
+RETURNS SETOF contact_list AS $$
+DECLARE out_row contact_list;
+BEGIN
+	FOR out_row IN
+		SELECT cl.class, c.contact
+		FROM company_to_contact c
+		JOIN contact_class cl ON (c.contact_class_id = cl.id)
+		WHERE company_id = 
+			(select id FROM company 
+			WHERE entity_id = in_entity_id)
+	LOOP
+		return next out_row;
+	END LOOP;
+END;
+$$ language plpgsql;
+			
 
 CREATE OR REPLACE FUNCTION company__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS

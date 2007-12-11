@@ -1,7 +1,7 @@
 BEGIN;
 
 -- TODO:  Move indexes to Pg-database
-
+/*  Disabling until we can do some more refactoring here.
 CREATE OR REPLACE FUNCTION vendor_search(in_name TEXT, in_address TEXT, 
     in_city_prov TEXT) 
     RETURNS SETOF vendor_search_return AS $$
@@ -40,5 +40,5 @@ CREATE OR REPLACE FUNCTION vendor_search(in_name TEXT, in_address TEXT,
     end;
     
 $$ language 'plpgsql';
-
+*/
 COMMIT;

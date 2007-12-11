@@ -265,6 +265,7 @@ CREATE TABLE company_to_contact (
   company_id integer not null references company(id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
+  description text not null,
   PRIMARY KEY (company_id,contact_class_id,contact));  
 
 COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
@@ -426,8 +427,10 @@ CREATE TABLE entity_credit_account (
     startdate date DEFAULT CURRENT_DATE,
     enddate date,
     threshold numeric default 0,
-    employee_id int references entity_employee(employee_id),
+    employee_id int references entity_employee(entity_id),
     primary_contact int references person(id),
+    ar_ap_account_id int references chart(id),
+    cash_account_id int references chart(id),
     PRIMARY KEY(entity_id, meta_number)
 );
 -- notes are from entity_note

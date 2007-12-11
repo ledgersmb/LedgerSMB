@@ -16,6 +16,7 @@ CREATE OR REPLACE FUNCTION customer_location_save (
 
 $$ language 'plpgsql';
 
+/* Disabling until we can work on this a little more.
 
 CREATE OR REPLACE FUNCTION customer_search(in_pattern TEXT) returns setof customer_search_return as $$
     
@@ -48,6 +49,7 @@ CREATE OR REPLACE FUNCTION customer_search(in_pattern TEXT) returns setof custom
     
     end;
     
-$$ language 'plpgsql';
+$$ language 'plpgsql'; 
+*/
 
 COMMIT;
