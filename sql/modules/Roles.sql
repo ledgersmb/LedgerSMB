@@ -1376,15 +1376,19 @@ GRANT ALL ON defaults TO public;
 GRANT ALL ON "session" TO public;
 GRANT ALL ON session_session_id_seq TO PUBLIC;
 GRANT SELECT ON users TO public;
-GRANT SELECT ON user_preference TO public;
+GRANT ALL ON user_preference TO public;
 GRANT SELECT ON custom_table_catalog TO PUBLIC;
 GRANT SELECT ON custom_field_catalog TO PUBLIC;
 grant select on menu_node, menu_attribute, menu_acl to public;
 GRANT select on chart, gifi, country to public;
- grant select on employee to public;
- GRANT SELECT ON parts, partsgroup TO public;
- GRANT SELECT ON language, project TO public;
+grant select on employee to public;
+GRANT SELECT ON parts, partsgroup TO public;
+GRANT SELECT ON language, project TO public;
 GRANT SELECT ON business, exchangerate, department, shipto, tax TO public;
 GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
+GRANT ALL ON transactions, entity_employee, customer, vendor TO public;
 --TODO, lock recurring down more
 
+-- CT:  The following grant is required for now, but will hopefully become less 
+-- important when we get to 1.4 and can more sensibly lock things down.
+GRANT ALL ON dpt_trans TO public;

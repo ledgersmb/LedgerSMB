@@ -791,7 +791,7 @@ SELECT SETVAL('batch_class_id_seq',6);
 CREATE TABLE batch (
   id serial primary key,
   batch_class_id integer references batch_class(id) not null,
-  description text,
+  control_code text,
   approved_on date default null,
   approved_by int references entity_employee(entity_id),
   created_by int references entity_employee(entity_id),
@@ -806,7 +806,7 @@ CREATE TABLE voucher (
   trans_id int REFERENCES transactions(id) NOT NULL,
   batch_id int references batch(id) not null,
   id serial NOT NULL,
-  batch_class int references batch_class not null,
+  batch_class int references batch_class(id) not null,
   PRIMARY KEY (batch_class, batch_id, trans_id)
 );
 
@@ -1710,18 +1710,17 @@ CREATE TABLE menu_node (
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_node', 'id'), 193, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_node', 'id'), 204, true);
 
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
 --
-
 COPY menu_node (id, label, parent, "position") FROM stdin;
 0	Top-level	\N	0
 1	AR	0	1
 2	Add Transaction	1	1
-3	Sales Invoice	1	2
+144	Departments	128	8
 5	Transactions	4	1
 6	Outstanding	4	2
 7	AR Aging	4	3
@@ -1738,7 +1737,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 20	Close Till	16	4
 21	AP	0	3
 22	Add Transaction	21	1
-23	Vendor Invoice	21	2
+145	Add Department	144	1
 25	Transactions	24	1
 26	Outstanding	24	2
 27	AP Aging	24	3
@@ -1753,12 +1752,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 38	Payment	35	3
 37	Receipts	35	2
 39	Payments	35	4
-40	Transfer	35	5
+146	List Departments	144	2
 42	Receipts	41	1
 43	Payments	41	2
 44	Reconciliation	41	3
-41	Reports	35	7
-45	Reconciliation	35	6
+147	Type of Business	128	9
 46	HR	0	5
 47	Employees	46	1
 48	Add Employee	47	1
@@ -1856,10 +1854,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 141	Warehouses	128	7
 142	Add Warehouse	141	1
 143	List Warehouse	141	2
-144	Departments	128	8
-145	Add Department	144	1
-146	List Departments	144	2
-147	Type of Business	128	9
 148	Add Business	147	1
 149	List Businesses	147	2
 150	Language	128	10
@@ -1906,17 +1900,27 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 191	Preferences	0	17
 192	New Window	0	18
 193	Logout	0	19
-11	Customers	1	6
-4	Reports	1	5
-194	Credit Note	1	3
-195	Credit Invoice	1	4
-24	Reports	21	5
-30	Vendors	21	6
-196	Debit Note	21	3
-197	Debit Invoice	21	4
+198	AR Voucher	1	2
+3	Sales Invoice	1	3
+11	Customers	1	7
+4	Reports	1	6
+194	Credit Note	1	4
+195	Credit Invoice	1	5
+199	AP Voucher	21	2
+23	Vendor Invoice	21	3
+24	Reports	21	6
+30	Vendors	21	7
+196	Debit Note	21	4
+197	Debit Invoice	21	5
+200	Vouchers	35	5
+40	Transfer	35	6
+41	Reports	35	8
+45	Reconciliation	35	7
+203	Receipts	200	3
+204	Reverse Receipts	200	4
+201	Payments	200	1
+202	Reverse Payment	200	2
 \.
-
-
 
 --
 -- Name: menu_node_parent_key; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 

@@ -441,10 +441,55 @@ DECLARE
         END LOOP;
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'ID % not found!!!!!', in_entity_id;
+            RAISE EXCEPTION 'ID % not found', in_entity_id;
         END IF;                              
               
     END;
 $$ language plpgsql;                                                                  
 COMMENT ON FUNCTION payment_get_vc_info(in_entity_id int) IS
 $$ This function return vendor or customer info, its under construction $$;
+
+CREATE OR REPLACE FUNCTION payment__retrieve
+(in_source text, in_meta_number text, in_account_class int, in_cash_accno text)
+RETURNS SETOF numeric AS
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN 
+		SELECT amount * -1 AS amount
+		FROM acc_trans
+		WHERE source = in_source
+			AND trans_id IN (
+				SELECT id FROM ar 
+				WHERE in_account_class = 2 AND
+					entity_credit_account = 
+						(select id 
+						FROM entity_credit_account
+						WHERE meta_number 
+							= in_meta_number
+							AND entity_class = 
+							in_account_class)
+				UNION
+				SELECT id FROM ap
+				WHERE in_account_class = 1 AND
+					entity_credit_account = 
+						(select id 
+						FROM entity_credit_account
+						WHERE meta_number 
+							= in_meta_number
+							AND entity_class = 
+							in_account_class)
+			AND chart_id = 
+				(SELECT id FROM chart 
+				WHERE accno = in_cash_accno)
+	LOOP
+		return next out_row.amount;
+	END LOOP;	
+END;
+$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION payment__reverse
+(in_source text, in_date_paid date, in_credit_id int, in_cash_accno text)
+RETURNS INT 
+AS $$
+	
+$$ LANGUAGE PLPGSQL;
