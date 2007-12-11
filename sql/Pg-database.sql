@@ -426,7 +426,7 @@ CREATE TABLE entity_credit_account (
     startdate date DEFAULT CURRENT_DATE,
     enddate date,
     threshold numeric default 0,
-    employee_id int references employee_entity(employee_id),
+    employee_id int references entity_employee(employee_id),
     primary_contact int references person(id),
     PRIMARY KEY(entity_id, meta_number)
 );
@@ -1032,19 +1032,19 @@ BEGIN
 			UPDATE transactions SET id = new.id WHERE id = old.id;
 		END IF;
 	ELSE 
-		DELETE FROM transactions WHERE id = old_id;
+		DELETE FROM transactions WHERE id = old.id;
 	END IF;
 	RETURN new;
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE TRIGGER ap_track_global_sequence before insert or update or delete on ap
+CREATE TRIGGER ap_track_global_sequence before insert or update on ap
 for each row execute procedure track_global_sequence();
 
-CREATE TRIGGER ar_track_global_sequence before insert or update or delete on ar
+CREATE TRIGGER ar_track_global_sequence before insert or update on ar
 for each row execute procedure track_global_sequence();
 
-CREATE TRIGGER gl_track_global_sequence before insert or update or delete on gl
+CREATE TRIGGER gl_track_global_sequence before insert or update on gl
 for each row execute procedure track_global_sequence();
 
 CREATE TABLE custom_table_catalog (
