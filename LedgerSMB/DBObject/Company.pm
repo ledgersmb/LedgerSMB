@@ -30,6 +30,20 @@ sub save_location {
 sub get_metadata {
     my $self = shift @_;
 
+    @{$self->{ar_ap_acc_list}} = 
+         $self->exec_method(funcname => 'chart_get_ar_ap');
+
+    for my $ref (@{$self->{ar_ap_acc_list}}){
+        $ref->{text} = "$ref->{accno}--$ref->{description}";
+    }
+
+    @{$self->{cash_acc_list}} = 
+         $self->exec_method(funcname => 'chart_list_cash');
+
+    for my $ref (@{$self->{cash_acc_list}}){
+        $ref->{text} = "$ref->{accno}--$ref->{description}";
+    }
+
     @{$self->{location_class_list}} = 
          $self->exec_method(funcname => 'location_list_class');
 

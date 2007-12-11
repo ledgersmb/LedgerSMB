@@ -262,6 +262,25 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
         </tr>
         <tr>
            <td> <?lsmb INCLUDE select element_data = {
+			name = "ar_ap_account_id"
+			default_values = [ar_ap_account_id]
+			options = ar_ap_acc_list
+			label = text((account_class == 1) ? 'AP' : 'AR')
+			text_attr = "text"
+			value_attr = "id"
+                } ?>
+           </td>
+           <td> <?lsmb INCLUDE select element_data = {
+			name = "payment_account_id"
+			default_values = [payment_account_id]
+			options = cash_acc_list
+			label = text('Payment')
+			text_attr = "text"
+			value_attr = "id"
+                } ?>
+           </td>
+        <tr>
+           <td> <?lsmb INCLUDE select element_data = {
 			name = "business_id"
 			options = business_types
 			default_values = [business_id]
@@ -270,7 +289,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			label = text('Business Type:') #'
 			} ?> 
 	  </td>
-	</td>
+	</tr>
     </table>
 
             <hr/>
