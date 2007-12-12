@@ -15,7 +15,7 @@ DECLARE
 	out_value varchar;
 BEGIN
 	SELECT value INTO out_value FROM defaults WHERE setting_key = in_key;
-	RETURN value;
+	RETURN out_value;
 END;
 $$ LANGUAGE plpgsql;
 

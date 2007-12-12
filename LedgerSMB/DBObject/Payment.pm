@@ -385,6 +385,11 @@ sub get_payment_detail_data {
 sub post_bulk {
     my ($self) = @_;
     my $total_count = 0;
+    my ($ref) = $self->callproc(
+          procname => 'setting_get', 
+          args     => ['queue_payments'],
+    );
+    my $queue_payments = $ref->{setting_get};
     $self->{payment_date} = $self->{datepaid};
     for my $contact_row (1 .. $self->{contact_count}){
         my $contact_id = $self->{"contact_$contact_row"};
@@ -408,10 +413,20 @@ sub post_bulk {
         }
         $self->{transactions} = $invoice_array;
 	$self->{source} = $self->{"source_$contact_id"};
-        $self->exec_method(funcname => 'payment_bulk_post');
-
+        if ($queue_payments){
+             my ($job_ref) = $self->exec_method(
+                 funcname => 'job__create'
+             )
+             $self->{job_id} = $job_ref->{job__create};
+             $self->exec_method(
+                 funcname => 'payment_bulk_queue_entry'
+             );
+        } else {
+            $self->exec_method(funcname => 'payment_bulk_post');
+        }
     }
-    $self->{dbh}->commit;
+    $self->{queue_payments} = $queue_payments;
+    return $self->{dbh}->commit;
 }
 
 1;

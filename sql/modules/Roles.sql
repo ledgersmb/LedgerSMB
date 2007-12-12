@@ -1387,7 +1387,9 @@ GRANT SELECT ON language, project TO public;
 GRANT SELECT ON business, exchangerate, department, shipto, tax TO public;
 GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
 GRANT ALL ON transactions, entity_employee, customer, vendor TO public;
---TODO, lock recurring down more
+GRANT ALL ON pending_job, payment_queue TO PUBLIC;
+GRANT ALL ON pending_job_id_seq TO public;
+--TODO, lock recurring, pending_job, payment_queue down more
 
 -- CT:  The following grant is required for now, but will hopefully become less 
 -- important when we get to 1.4 and can more sensibly lock things down.

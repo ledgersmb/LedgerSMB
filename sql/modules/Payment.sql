@@ -207,6 +207,88 @@ This then returns a set of contact information with a 2 dimensional array
 cnsisting of outstanding invoices.
 $$;
 
+CREATE OR REPLACE FUNCTION payment_create_queue_entry() RETURNS int AS
+$$
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION payment_bulk_queue
+(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
+	in_ar_ap_accno text, in_cash_accno text, 
+	in_payment_date date, in_account_class int)
+returns int as
+$$
+BEGIN
+	INSERT INTO payments_queue
+	(transactions, batch_id, source, total, ar_ap_accno, cash_accno,
+		payment_date, account_class)
+	VALUES 
+	(in_transactions, in_batch_id, in_source, in_total, in_ar_ap_accno,
+		in_cash_accno, in_payment_date, in_account_class);
+
+	RETURN array_upper(in_transactions, 1) - 
+		array_lower(in_transactions, 1);
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION job__process_payments(in_job_id int)
+RETURNS bool AS $$
+DECLARE 
+	queue_record RECORD
+	t_auth_name text,
+BEGIN
+	-- TODO:  Move the set session authorization into a utility function
+	SELECT created_by INTO t_auth_name FROM pending_jobs
+	WHERE id = in_job_id;
+
+	EXECUTE 'SET SESSION AUTHORIZATION ' quote_ident(t_auth_name);
+
+	FOR queue_record IN
+		SELECT * from payments_queue WHERE job_id = in_job_id
+	LOOP
+		PERFORM payment_bulk_post
+		(transactions, batch_id, source, total, ar_ap_accno, cash_accno,
+			payment_date, account_class);
+	END LOOP;
+		UPDATE pending_job
+		SET completed_at = timeofday()::timestamp,
+		    success = true
+		WHERE id = in_job_id;
+	RETURN TRUE;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION job__create(in_batch_class int, in_batch_id int)
+RETURNS int AS
+$$
+BEGIN
+	INSERT INTO pending_job (batch_class, batch_id)
+	VALUES (in_batch_class, in_batch_id);
+
+	RETURN currval('pending_job_id_seq');
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TYPE job__status AS (
+	completed int, -- 1 for completed, 0 for no
+	success int, -- 1 for success, 0 for no
+	completed_at timestamp,
+	error_condition text -- error if not successful
+);
+
+CREATE OR REPLACE FUNCTION job__status(in_job_id int) RETURNS job__status AS
+$$
+DECLARE out_row job__status;
+BEGIN
+	SELECT  (completed_at IS NULL)::INT, success::int, completed_at,
+		error_condition
+	INTO out_row 
+	FROM pending_job
+	WHERE id = in_job_id;
+
+	RETURN out_row;
+END;
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
 	in_ar_ap_accno text, in_cash_accno text, 
@@ -265,7 +347,6 @@ BEGIN
 				CASE WHEN t_voucher_id IS NULL THEN true
 				ELSE false END,
 				t_voucher_id, in_payment_date);
-		insert into test_pay(id, amount) values (in_transactions[out_count][1],in_transactions[out_count][2]);	
 		UPDATE ap 
 		set paid = paid +in_transactions[out_count][2]
 		where id =in_transactions[out_count][1];
@@ -449,21 +530,37 @@ $$ language plpgsql;
 COMMENT ON FUNCTION payment_get_vc_info(in_entity_id int) IS
 $$ This function return vendor or customer info, its under construction $$;
 
+CREATE TYPE payment_record AS (
+	amount numeric,
+	meta_number text,
+	company_paid text,
+        cash_account_id int,
+        cash_accno text,
+        cash_account_description text,
+        ar_ap_account_id int,
+        ar_ap_accno text,
+        ar_ap_description text
+);
+
 CREATE OR REPLACE FUNCTION payment__retrieve
 (in_source text, in_meta_number text, in_account_class int, in_cash_accno text)
-RETURNS SETOF numeric AS
+RETURNS SETOF payment_record AS
 $$
-DECLARE out_row RECORD;
+DECLARE out_row payment_record;
 BEGIN
 	FOR out_row IN 
-		SELECT amount * -1 AS amount
-		FROM acc_trans
-		WHERE source = in_source
-			AND trans_id IN (
-				SELECT id FROM ar 
-				WHERE in_account_class = 2 AND
-					entity_credit_account = 
-						(select id 
+		SELECT sum(case when at.amount > 0 then at.amount else 0 end) 
+				AS amount, ec.meta_number, 
+			c.legal_name, max(cc.id), max(cc.accno), 
+			max(cc.description), max(ac.id), max(ac.accno), 
+			max(ac.description)
+		FROM acc_trans at
+		JOIN entity_credit_account ec ON
+			(at.trans_id IN 
+				(select id FROM ar 
+				WHERE in_account_class = 2
+					AND entity_credit_account =
+						(SELECT id 
 						FROM entity_credit_account
 						WHERE meta_number 
 							= in_meta_number
@@ -478,18 +575,31 @@ BEGIN
 						WHERE meta_number 
 							= in_meta_number
 							AND entity_class = 
-							in_account_class)
-			AND chart_id = 
-				(SELECT id FROM chart 
-				WHERE accno = in_cash_accno)
+							in_account_class)))
+				
+		JOIN company c ON (ec.entity_id = c.entity_id)
+		LEFT JOIN chart cc ON (at.chart_id = cc.id AND
+			cc.link LIKE '%paid%')
+		JOIN chart ac ON (at.chart_id = ac.id AND
+			((in_account_class = 1 AND ac.link = 'AP') OR
+			 (in_account_class = 2 AND ac.link = 'AR')))
+		WHERE source = in_source
+		GROUP BY ec.meta_number, c.legal_name
+		HAVING max(cc.accno) = in_cash_accno
 	LOOP
-		return next out_row.amount;
+		return next out_row;
 	END LOOP;	
 END;
 $$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text)
 RETURNS INT 
 AS $$
-	
+DECLARE
+    count int;
+BEGIN
+    count := 0;
+    FOR 
+END;
 $$ LANGUAGE PLPGSQL;

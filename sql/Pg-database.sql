@@ -332,13 +332,7 @@ CREATE TABLE defaults (
   setting_key text primary key,
   value text
 );
-/*
-  inventory_accno_id int,
-  income_accno_id int,
-  expense_accno_id int,
-  fxgain_accno_id int,
-  fxloss_accno_id int,
-*/
+
 \COPY defaults FROM stdin WITH DELIMITER |
 sinumber|1
 sonumber|1
@@ -358,7 +352,14 @@ customernumber|1
 vendornumber|1
 glnumber|1
 projectnumber|1
+queue_payments|0
+poll_frequency|1
 \.
+
+COMMENT ON TABLE defaults IS $$
+Note that poll_frequency is in seconds.  poll_frequency and queue_payments 
+are not exposed via the admin interface as they are advanced features best
+handled via DBAs.  $$;
 -- */
 CREATE TABLE acc_trans (
   trans_id int NOT NULL REFERENCES transactions(id),
@@ -2694,5 +2695,60 @@ CREATE INDEX location_address_three_gist__idx ON location USING gist(line_three 
     
 CREATE INDEX location_city_prov_gist_idx ON location USING gist(city gist_trgm_ops);
 CREATE INDEX entity_name_gist_idx ON entity USING gist(name gist_trgm_ops);
+
+CREATE TABLE pending_job (
+	id serial not null unique,
+	batch_class int references batch_class(id),
+	entered_by text REFERENCES users(username)
+		not null default SESSION_USER,
+	entered_at timestamp default now(),
+	batch_id int references batch(id),
+	completed_at timestamp,
+	success bool,
+	error_condition text,
+	CHECK (completed_at IS NULL OR success IS NOT NULL),
+	CHECK (success IS NOT FALSE OR error_condition IS NOT NULL)
+);
+COMMENT ON table pending_job IS
+$$ Purpose:  This table stores pending/queued jobs to be processed async.
+Additionally, this functions as a log of all such processing for purposes of 
+internal audits, performance tuning, and the like. $$;
+
+CREATE INDEX pending_job_batch_id_pending ON pending_job(batch_id) where success IS NULL;
+
+CREATE INDEX pending_job_entered_by ON pending_job(entered_by);
+
+CREATE OR REPLACE FUNCTION trigger_pending_job() RETURNS TRIGGER
+AS
+$$
+BEGIN
+  IF NEW.success IS NULL THEN
+    NOTIFY job_entered;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER notify_pending_jobs BEFORE INSERT OR UPDATE ON pending_job
+FOR EACH ROW EXECUTE PROCEDURE trigger_pending_job();
+
+CREATE TABLE payments_queue (
+	transactions numeric[], 
+	batch_id int, 
+	source text, 
+	total numeric,
+	ar_ap_accno text, 
+	cash_accno text, 
+	payment_date date, 
+	account_class int,
+	job_id int references pending_job(id) 
+		DEFAULT currval('pending_job_id_seq')
+);
+
+CREATE INDEX payments_queue_job_id ON payments_queue(job_id);
+
+COMMENT ON table payments_queue IS 
+$$ This is a holding table and hence not a candidate for normalization.
+Jobs should be deleted from this table when they complete successfully.$$;
 
 commit;
