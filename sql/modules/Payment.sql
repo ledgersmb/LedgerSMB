@@ -230,7 +230,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION job__process_payments(in_job_id int)
+CREATE OR REPLACE FUNCTION job__process_payment(in_job_id int)
 RETURNS bool AS $$
 DECLARE 
 	queue_record RECORD

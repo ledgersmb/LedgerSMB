@@ -416,7 +416,7 @@ sub post_bulk {
         if ($queue_payments){
              my ($job_ref) = $self->exec_method(
                  funcname => 'job__create'
-             )
+             );
              $self->{job_id} = $job_ref->{job__create};
              $self->exec_method(
                  funcname => 'payment_bulk_queue_entry'
@@ -427,6 +427,11 @@ sub post_bulk {
     }
     $self->{queue_payments} = $queue_payments;
     return $self->{dbh}->commit;
+}
+
+sub check_job {
+    my ($self) = @_;
+    ($self->{job}) = $self->exec_method(funcname => 'job__status');
 }
 
 1;

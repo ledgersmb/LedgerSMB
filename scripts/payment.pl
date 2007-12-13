@@ -82,17 +82,43 @@ sub payments {
     $template->render($payment);
 }
 
-sub post_payments_bulk {
+sub check_job {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    $payment->post_bulk();
+    $payment->check_job;
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/payments',
-        template => 'payments_filter',
+        template => 'check_job',
         format   => 'HTML', 
     );
+    $template->render($payment);
+}
+
+sub post_payments_bulk {
+    my ($request) = @_;
+    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    $payment->post_bulk();
+    my $template;
+    if ($payment->{queue_payments}){
+        $payment->{job_label} = 'Payments';
+        $template = LedgerSMB::Template->new(
+            user     => $request->{_user},
+            locale   => $request->{_locale},
+            path     => 'UI/payments',
+            template => 'check_job',
+            format   => 'HTML', 
+        );
+    } else {
+        $template = LedgerSMB::Template->new(
+            user     => $request->{_user},
+            locale   => $request->{_locale},
+            path     => 'UI/payments',
+            template => 'payments_filter',
+            format   => 'HTML', 
+        );
+    }
     $template->render($payment);
 }
 

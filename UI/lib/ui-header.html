@@ -5,6 +5,10 @@
 	<title><?lsmb form.titlebar ? form.titlebar : titlebar ?></title>
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
+	<?lsmb IF refresh -?>
+	<meta http-equiv="refresh" 
+		content="<?lsmb refresh.delay ?>;<?lsmb refresh.url ?>">
+	<?lsmb END -?>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<?lsmb IF form.stylesheet ?>
 	<link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />

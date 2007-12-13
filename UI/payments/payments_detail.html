@@ -265,7 +265,7 @@
 	value = count
     } ?>
     <?lsmb INCLUDE button element_data = {
-	text = text('Post'),
+	text = text((batch_id) ? 'Save' : 'Post'),
 	value = 'post_payments_bulk'
 	class = "submit"
 	name = 'action'
