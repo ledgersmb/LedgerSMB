@@ -207,10 +207,6 @@ This then returns a set of contact information with a 2 dimensional array
 cnsisting of outstanding invoices.
 $$;
 
-CREATE OR REPLACE FUNCTION payment_create_queue_entry() RETURNS int AS
-$$
-$$ LANGUAGE PLPGSQL;
-
 CREATE OR REPLACE FUNCTION payment_bulk_queue
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
 	in_ar_ap_accno text, in_cash_accno text, 
@@ -233,21 +229,22 @@ $$ LANGUAGE PLPGSQL;
 CREATE OR REPLACE FUNCTION job__process_payment(in_job_id int)
 RETURNS bool AS $$
 DECLARE 
-	queue_record RECORD
-	t_auth_name text,
+	queue_record RECORD;
+	t_auth_name text;
 BEGIN
 	-- TODO:  Move the set session authorization into a utility function
-	SELECT created_by INTO t_auth_name FROM pending_jobs
+	SELECT entered_by INTO t_auth_name FROM pending_job
 	WHERE id = in_job_id;
 
-	EXECUTE 'SET SESSION AUTHORIZATION ' quote_ident(t_auth_name);
+	EXECUTE 'SET SESSION AUTHORIZATION ' || quote_ident(t_auth_name);
 
 	FOR queue_record IN
 		SELECT * from payments_queue WHERE job_id = in_job_id
 	LOOP
 		PERFORM payment_bulk_post
 		(transactions, batch_id, source, total, ar_ap_accno, cash_accno,
-			payment_date, account_class);
+			payment_date, account_class)
+		FROM payments_queue WHERE job_id = in_job_id;
 	END LOOP;
 		UPDATE pending_job
 		SET completed_at = timeofday()::timestamp,

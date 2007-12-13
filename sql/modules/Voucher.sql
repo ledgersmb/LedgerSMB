@@ -221,3 +221,28 @@ BEGIN
 	return currval('batch_id_seq');
 END;	
 $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION batch_delete(in_batch_id int) RETURNS int AS
+$$
+DECLARE 
+	t_transaction_ids int[];
+BEGIN
+
+	-- voucher_id is only set in acc_trans on payment/receipt vouchers and
+	-- their reversals. -CT
+	DELETE FROM acc_trans WHERE voucher_id IN 
+		(select voucher_id FROM voucher where batch_id = in_batch_id);
+
+	SELECT as_array(trans_id) INTO t_transaction_ids
+	FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5);
+
+	DELETE FROM acc_trans WHERE trans_id = ANY(t_transaction_ids);
+	DELETE FROM ap WHERE id = ANY(t_transaction_ids);
+	DELETE FROM gl WHERE id = ANY(t_transaction_ids);
+	DELETE FROM voucher WHERE batch_id = in_batch_id;
+	DELETE FROM batch WHERE id = in_batch_id;
+	DELETE FROM transactions WHERE id = ANY(t_transaction_ids);
+
+	RETURN 1;
+END;
+$$ language plpgsql;

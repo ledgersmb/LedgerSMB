@@ -105,22 +105,15 @@
 </select>
 </div>
 </div>
-<div class="listtop">
-	<!-- <?lsmb INCLUDE select element_data = {
+<div class="listtop"><?lsmb text('Payment Processing') ?></div>
+	<?lsmb INCLUDE select element_data = {
 		name = "cash_accno"
 		default_values = [cash_accno]
 		options = cash_accounts
 		value_attr = "accno"
 		text_attr = "text"
 		label = text('Pay From:') # '
-	} ?> -->
-	<select name="cash_accno" id="cash_account">
-	<?lsmb FOREACH a = cash_accounts ?>
-	<option value="<?lsmb a.accno ?>">
-		<?lsmb a.accno ?>--<?lsmb a.description ?>
-	</option>
-	<?lsmb END # foreach a ?>
-	</select>
+	} ?> 
 <div class = "input">
 <?lsmb INCLUDE input element_data = {
 	type = "text"

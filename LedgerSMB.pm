@@ -94,6 +94,11 @@ non-numbers.
 Copies the given key=>vars to $self. Allows for finer control of 
 merging hashes into self.
 
+=item remove_cgi_globals()
+
+Removes all elements starting with a . because these elements conflict with the
+ability to hide the entire structure for things like CSV lookups.
+
 =back
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
@@ -796,6 +801,14 @@ sub set {
 
 }
 
+sub remove_cgi_globals {
+    my ($self) = @_;
+    for my $key (keys %$self){
+        if ($key =~ /^\./){
+            delete $self->{key}
+        }
+    }
+}
 1;
 
 

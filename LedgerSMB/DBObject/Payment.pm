@@ -75,6 +75,11 @@ sub get_metadata {
     );
     @{$self->{debt_accounts}} = $self->exec_method(
 		funcname => 'chart_get_ar_ap');
+    @{$self->{cash_accounts}} = $self->exec_method(
+		funcname => 'chart_list_cash');
+    for my $ref(@{$self->{cash_accounts}}){
+        $ref->{text} = "$ref->{accno}--$ref->{description}";
+    }
 }
 
 sub get_open_accounts {
@@ -351,8 +356,6 @@ This method sets appropriate project, department, etc. fields.
 
 sub get_payment_detail_data {
     my ($self) = @_;
-    @{$self->{cash_accounts}} = $self->exec_method(
-		funcname => 'chart_list_cash');
     $self->get_metadata();
 
     my $source_inc;
@@ -385,11 +388,17 @@ sub get_payment_detail_data {
 sub post_bulk {
     my ($self) = @_;
     my $total_count = 0;
-    my ($ref) = $self->callproc(
+    my ($ref) = $self->call_procedure(
           procname => 'setting_get', 
           args     => ['queue_payments'],
     );
     my $queue_payments = $ref->{setting_get};
+    if ($queue_payments){
+        my ($job_ref) = $self->exec_method(
+                 funcname => 'job__create'
+        );
+        $self->{job_id} = $job_ref->{job__create};
+    }
     $self->{payment_date} = $self->{datepaid};
     for my $contact_row (1 .. $self->{contact_count}){
         my $contact_id = $self->{"contact_$contact_row"};
@@ -414,12 +423,11 @@ sub post_bulk {
         $self->{transactions} = $invoice_array;
 	$self->{source} = $self->{"source_$contact_id"};
         if ($queue_payments){
-             my ($job_ref) = $self->exec_method(
-                 funcname => 'job__create'
-             );
-             $self->{job_id} = $job_ref->{job__create};
              $self->exec_method(
-                 funcname => 'payment_bulk_queue_entry'
+                 funcname => 'payment_bulk_queue'
+             );
+             ($self->{job}) = $self->exec_method(
+		funcname => 'job__status'
              );
         } else {
             $self->exec_method(funcname => 'payment_bulk_post');

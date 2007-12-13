@@ -137,14 +137,18 @@
 	<?lsmb END # foreach b ?></span>
     </div>
     <?lsmb END # if business ?>
-    <div class="input" id="cash_account_div">
-	<select name="cash_accno" id="cash_account">
-	<?lsmb FOREACH a = cash_accounts ?>
-	<option value="<?lsmb a.accno ?>">
-		<?lsmb a.accno ?>--<?lsmb a.description ?>
-	</option>
-	<?lsmb END # foreach a ?>
-	</select>
+    <div class="info" id="cash_account_div">
+	<?lsmb INCLUDE input element_data = {
+		type = "hidden"
+		name = "cash_accno"
+		value = cash_accno
+	} ?>
+	<label><?lsmb text('Pay From') ?></label>
+	<?lsmb FOR c = cash_accounts -?>
+		<?lsmb IF c.accno == cash_accno -?>
+		<?lsmb c.accno ?>--<?lsmb c.description ?>
+		<?lsmb END # if c.accno -?>
+	<?lsmb END # for c -?>
     </div>
     <table id="payments_table">
     <tr class="listheading">
@@ -268,6 +272,12 @@
 	text = text((batch_id) ? 'Save' : 'Post'),
 	value = 'post_payments_bulk'
 	class = "submit"
+	name = 'action'
+	} ?>
+    <?lsmb INCLUDE button element_data = {
+	text = text('Add Payment Fees') # '
+	value = 'paycom_add_fees'
+	class = 'submit'
 	name = 'action'
 	} ?>
   </form>

@@ -6,7 +6,7 @@
 		]
 		titlebar = text('Checking Job') # '
 		refresh = {
-			url = "payment.pl?job_id=${job_id}&account_class=${account_class}"
+			url = "payment.pl?job_id=${job_id}&account_class=${account_class}&action=check_job"
 			delay = 20
 		}
 ?>
@@ -18,19 +18,17 @@
 	ELSE;
 		text('Status: Complete');
 	END ?></div>
-   <?lsmb IF job.completed ?>
+   <?lsmb IF ! job.completed ?>
    <div class="info">
 	<?lsmb IF job.success;
 		text('Completed Successfully');
 	ELSE;
 		text('Job Failed');
 	END ?></div>
-	<?lsmb IF ! job.success ?>
   <div class="info">
 	<?lsmb text('Error:') ?><br />
 	<?lsmb job.error_condition ?>
   </div>
-	<?lsmb END # if ! job.success ?>
   <?lsmb END # if job.completed ?>
 </body>
 </html>
