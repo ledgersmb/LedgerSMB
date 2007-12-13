@@ -17,10 +17,9 @@ my $dbh = db_init();
 
 my $sth;
 
-$dbh->do("LISTEN job_entered");
 while (1) {    # loop infinitely
     if ( $dbh->func('pg_notifies') ) {
-        &on_notify;
+        on_notify();
     }
     sleep $cycle_delay;
 }
@@ -85,5 +84,7 @@ sub db_init {
     if (!$cycle_delay){
         die "No Polling Frequency Set Up!";
     }
+    $dbh->do("LISTEN job_entered");
+    $dbh->commit;
     return $dbh;
 }
