@@ -149,12 +149,12 @@ BEGIN
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
 		    JOIN (SELECT id, invnumber, transdate, amount, entity_id, 
 		                 paid, curr, 1 as invoice_class, 
-		                 entity_credit_account 
+		                 entity_credit_account, on_hold
 		            FROM ap
 		           UNION
 		          SELECT id, invnumber, transdate, amount, entity_id,
 		                 paid, curr, 2 as invoice_class, 
-		                 entity_credit_account
+		                 entity_credit_account, on_hold
 		            FROM ar
 			ORDER BY transdate
 		         ) a USING (entity_id)
@@ -170,6 +170,7 @@ BEGIN
 		         AND a.curr = in_currency
 		         AND a.entity_credit_account = c.id
 		         AND a.amount - a.paid <> 0
+			 AND NOT a.on_hold
 			 AND NOT (t.locked_by IS NOT NULL AND t.locked_by IN 
 				(select "session_id" FROM "session"
 				WHERE users_id IN 
@@ -231,6 +232,7 @@ RETURNS bool AS $$
 DECLARE 
 	queue_record RECORD;
 	t_auth_name text;
+	t_counter int;
 BEGIN
 	-- TODO:  Move the set session authorization into a utility function
 	SELECT entered_by INTO t_auth_name FROM pending_job
@@ -238,18 +240,30 @@ BEGIN
 
 	EXECUTE 'SET SESSION AUTHORIZATION ' || quote_ident(t_auth_name);
 
-	FOR queue_record IN
-		SELECT * from payments_queue WHERE job_id = in_job_id
+	t_counter := 0;
+	
+	FOR queue_record IN 
+		SELECT * 
+		FROM payments_queue WHERE job_id = in_job_id
 	LOOP
 		PERFORM payment_bulk_post
-		(transactions, batch_id, source, total, ar_ap_accno, cash_accno,
-			payment_date, account_class)
-		FROM payments_queue WHERE job_id = in_job_id;
-	END LOOP;
-		UPDATE pending_job
-		SET completed_at = timeofday()::timestamp,
-		    success = true
-		WHERE id = in_job_id;
+			(queue_record.transactions, queue_record.batch_id, 
+				queue_record.source, queue_record.total, 
+				queue_record.ar_ap_accno, 
+				queue_record.cash_accno, 
+				queue_record.payment_date, 
+				queue_record.account_class);
+
+		t_counter := t_counter + 1;
+		RAISE NOTICE 'Processed record %, starting transaction %', 
+			t_counter, queue_record.transactions[1][1];
+	END LOOP;	
+	DELETE FROM payments_queue WHERE job_id = in_job_id;
+
+	UPDATE pending_job
+	SET completed_at = timeofday()::timestamp,
+	    success = true
+	WHERE id = in_job_id;
 	RETURN TRUE;
 END;
 $$ language plpgsql;
@@ -259,7 +273,7 @@ RETURNS int AS
 $$
 BEGIN
 	INSERT INTO pending_job (batch_class, batch_id)
-	VALUES (in_batch_class, in_batch_id);
+	VALUES (coalesce(in_batch_class, 3), in_batch_id);
 
 	RETURN currval('pending_job_id_seq');
 END;
@@ -300,7 +314,8 @@ DECLARE
 	t_amount numeric;
 BEGIN
 	IF in_batch_id IS NULL THEN
-		t_voucher_id := NULL;
+		-- t_voucher_id := NULL;
+		RAISE EXCEPTION 'Bulk Post Must be from Batch!';
 	ELSE
 		INSERT INTO voucher (batch_id, batch_class, trans_id)
 		values (in_batch_id, 3, in_transactions[1][1]);

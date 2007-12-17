@@ -29,6 +29,11 @@ arguments.
 =item __validate__ is called on every new() invocation.  It is blank in this 
 module but can be overridden in decendant modules.
 
+=item _db_array_scalars(@elements) creates a db array from scalars.
+
+=item _db_array_literal(@elements) creates a multiple dimension db array from 
+	preparsed db arrays or other data which does not need to be escaped.
+
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
@@ -272,6 +277,33 @@ sub _parse_array {
         push @return_array, $next;
     }
     return @return_array;
+}
+
+sub _db_array_scalars {
+    my $self = shift @_;
+    my @args = @_;
+    for my $arg (@args){
+        $arg =~ s/(["{},])/\\$1/g;
+        if ($arg =~ /(\s|\\)/){
+           $arg = qq|"$arg"|;
+        }
+    }
+    return _db_array_literal(@args);
+}
+
+sub _db_array_literal {
+    my $self = shift @_;
+    my @args = @_;
+    my $return_string = '{}';
+    for my $arg (@args){
+        if ($return_string eq '{}'){
+            $return_string = "{$arg}";
+        }
+        else {
+            $return_string =~ s/\}$/,$arg\}/
+        }
+    }
+    return $return_string;
 }
 
 1;

@@ -382,7 +382,7 @@ sub get_payment_detail_data {
         $inv->{invoices} = [];
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
     }
-    # $self->{dbh}->commit; # Commit locks
+    $self->{dbh}->commit; # Commit locks
 }    
 
 sub post_bulk {
@@ -398,6 +398,10 @@ sub post_bulk {
                  funcname => 'job__create'
         );
         $self->{job_id} = $job_ref->{job__create};
+
+         ($self->{job}) = $self->exec_method(
+		funcname => 'job__status'
+         );
     }
     $self->{payment_date} = $self->{datepaid};
     for my $contact_row (1 .. $self->{contact_count}){
@@ -406,28 +410,28 @@ sub post_bulk {
         my $invoice_array = "{}"; # Pg Array
 	for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
             my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
-            print STDERR "invoice_${contact_id}_${invoice_row}: $invoice_id\n";
             my $pay_amount = ($self->{"paid_$contact_id"} eq 'all' ) 
 			? $self->{"net_$invoice_id"} 
 			: $self->{"payment_$invoice_id"};
-            if (!$pay_amount){
-                 $pay_amount = 0;
-            }
+            next if ! $pay_amount;
+            $pay_amount = $pay_amount * 1;
             my $invoice_subarray = "{$invoice_id,$pay_amount}";
+            if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
+                $self->error("Invalid subarray: $invoice_subarray");
+            }
+            $invoice_subarray =~ s/[^0123456789{},.]//; 
 	    if ($invoice_array eq '{}'){ # Omit comma
                 $invoice_array = "{$invoice_subarray}";
 	    } else {
-                $invoice_array =~ s/}$/,$invoice_subarray}/;
+                $invoice_array =~ s/\}$/,$invoice_subarray\}/;
             }
         }
         $self->{transactions} = $invoice_array;
 	$self->{source} = $self->{"source_$contact_id"};
         if ($queue_payments){
+             $self->{batch_class} = 3;
              $self->exec_method(
                  funcname => 'payment_bulk_queue'
-             );
-             ($self->{job}) = $self->exec_method(
-		funcname => 'job__status'
              );
         } else {
             $self->exec_method(funcname => 'payment_bulk_post');

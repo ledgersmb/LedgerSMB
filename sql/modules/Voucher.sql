@@ -101,10 +101,12 @@ $$ language plpgsql;
 CREATE TYPE batch_list_item AS (
     id integer,
     batch_class text,
+    control_code text,
     description text,
     created_by text,
     created_on date,
-    total numeric
+    transaction_total numeric,
+    payment_total numeric
 );
 
 CREATE OR REPLACE FUNCTION 
@@ -116,9 +118,23 @@ $$
 DECLARE out_value batch_list_item;
 BEGIN
 	FOR out_value IN
-		SELECT b.id, c.class, b.description, u.username, b.created_on,
-			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
-				al.amount)) AS amount
+		SELECT b.id, c.class, b.control_code, b.description, u.username,
+			b.created_on,
+			sum(
+				CASE WHEN vc.id = 5 AND al.amount > 0 
+				     THEN al.amount
+				     WHEN vc.id NOT IN (3, 4, 6, 7) 
+                                     THEN coalesce(ar.amount, ap.amount, 0)
+				     ELSE 0
+                                END) AS transaction_total,
+			sum(
+				CASE WHEN alc.link = 'AR' AND vc.id IN (3,4,6,7)
+				     THEN al.amount
+				     WHEN alc.link = 'AP' AND vc.id IN (3,4,6,7)
+				     THEN al.amount * -1
+				     ELSE 0
+				END
+			   ) AS payment_total
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		JOIN users u ON (u.entity_id = b.created_by)
@@ -128,8 +144,9 @@ BEGIN
 		LEFT JOIN ap ON (vc.id = 1 AND v.trans_id = ap.id)
 		LEFT JOIN acc_trans al ON 
 			((vc.id = 5 AND v.trans_id = al.trans_id) OR
-				(vc.id IN (3, 4, 7, 8) AND al.voucher_id = v.id) 
+				(vc.id IN (3, 4, 6, 7) AND al.voucher_id = v.id)
 				AND al.amount > 0)
+		LEFT JOIN chart alc ON (al.chart_id = alc.id)
 		WHERE c.id = coalesce(in_class_id, c.id) AND 
 			b.description LIKE 
 				'%' || coalesce(in_description, '') || '%' AND
@@ -139,7 +156,8 @@ BEGIN
 				approved_on IS NULL) OR
 				(in_approved = true AND approved_on IS NOT NULL)
 			)
-		GROUP BY b.id, c.class, b.description, u.username, b.created_on
+		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
+			b.control_code
 		HAVING  
 			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
 				al.amount)) 
@@ -208,6 +226,18 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION batch_get_users() RETURNS SETOF users AS
+$$
+DECLARE out_record users%ROWTYPE;
+BEGIN
+	FOR out_record IN
+		SELECT * from users WHERE entity_id IN (select created_by from batch)
+	LOOP
+		RETURN NEXT out_record;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
 CREATE OR REPLACE FUNCTION batch_create(
 in_batch_number text, in_description text, in_batch_class text) RETURNS int AS
 $$
@@ -227,12 +257,34 @@ $$
 DECLARE 
 	t_transaction_ids int[];
 BEGIN
-
+	-- Adjust AR/AP tables for payment and payment reversal vouchers
 	-- voucher_id is only set in acc_trans on payment/receipt vouchers and
 	-- their reversals. -CT
-	DELETE FROM acc_trans WHERE voucher_id IN 
-		(select voucher_id FROM voucher where batch_id = in_batch_id);
+	update ar set paid = amount - 
+		(select sum(amount) * -1 from acc_trans 
+		join chart ON (acc_trans.chart_id = chart.id)
+		where link = 'AR' AND trans_id = ar.id
+			AND voucher_id NOT IN 
+				(select id from voucher 
+				WHERE batch_id = in_batch_id)) 
+	where id in (select trans_id from acc_trans where voucher_id IN 
+		(select id from voucher where batch_id = in_batch_id));
 
+	update ap set paid = amount - (select sum(amount) from acc_trans 
+		join chart ON (acc_trans.chart_id = chart.id)
+		where link = 'AP' AND trans_id = ap.id
+			AND voucher_id NOT IN 
+				(select id from voucher 
+				WHERE batch_id = in_batch_id)) 
+	where id in (select trans_id from acc_trans where voucher_id IN 
+		(select id from voucher where batch_id = in_batch_id));
+
+	DELETE FROM acc_trans WHERE voucher_id IN 
+		(select id FROM voucher where batch_id = in_batch_id);
+
+	-- The rest of this function involves the deletion of actual
+	-- transactions, vouchers, and batches, and jobs which are in progress.
+	-- -CT
 	SELECT as_array(trans_id) INTO t_transaction_ids
 	FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5);
 
@@ -240,6 +292,8 @@ BEGIN
 	DELETE FROM ap WHERE id = ANY(t_transaction_ids);
 	DELETE FROM gl WHERE id = ANY(t_transaction_ids);
 	DELETE FROM voucher WHERE batch_id = in_batch_id;
+	DELETE FROM payments_queue WHERE batch_id = in_batch_id;
+	DELETE FROM pending_job WHERE batch_id = in_batch_id;
 	DELETE FROM batch WHERE id = in_batch_id;
 	DELETE FROM transactions WHERE id = ANY(t_transaction_ids);
 
