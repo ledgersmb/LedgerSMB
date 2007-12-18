@@ -123,14 +123,16 @@ BEGIN
 			sum(
 				CASE WHEN vc.id = 5 AND al.amount > 0 
 				     THEN al.amount
-				     WHEN vc.id NOT IN (3, 4, 6, 7) 
-                                     THEN coalesce(ar.amount, ap.amount, 0)
+				     WHEN vc.id  = 1
+				     THEN ap.amount 
+				     WHEN vc.id = 2
+                                     THEN ap.amount
 				     ELSE 0
                                 END) AS transaction_total,
 			sum(
-				CASE WHEN alc.link = 'AR' AND vc.id IN (3,4,6,7)
+				CASE WHEN alc.link = 'AR' AND vc.id IN (6, 7)
 				     THEN al.amount
-				     WHEN alc.link = 'AP' AND vc.id IN (3,4,6,7)
+				     WHEN alc.link = 'AP' AND vc.id IN (3, 4)
 				     THEN al.amount * -1
 				     ELSE 0
 				END
@@ -139,39 +141,36 @@ BEGIN
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		JOIN users u ON (u.entity_id = b.created_by)
 		JOIN voucher v ON (v.batch_id = b.id)
-		JOIN batch_class vc ON (v.batch_class = c.id)
+		JOIN batch_class vc ON (v.batch_class = vc.id)
 		LEFT JOIN ar ON (vc.id = 2 AND v.trans_id = ar.id)
 		LEFT JOIN ap ON (vc.id = 1 AND v.trans_id = ap.id)
 		LEFT JOIN acc_trans al ON 
 			((vc.id = 5 AND v.trans_id = al.trans_id) OR
-				(vc.id IN (3, 4, 6, 7) AND al.voucher_id = v.id)
-				AND al.amount > 0)
+				(vc.id IN (3, 4, 6, 7) 
+					AND al.voucher_id = v.id))
 		LEFT JOIN chart alc ON (al.chart_id = alc.id)
-		WHERE c.id = coalesce(in_class_id, c.id) AND 
-			b.description LIKE 
-				'%' || coalesce(in_description, '') || '%' AND
-			coalesce(in_created_by_eid, b.created_by) 
-				= b.created_by 
-			AND ((coalesce(in_approved, false) = false AND
+		WHERE (c.id = in_class_id OR in_class_id IS NULL) AND 
+			(b.description LIKE 
+				'%' || in_description || '%' OR
+				in_description IS NULL) AND
+			(in_created_by_eid = b.created_by OR
+				in_created_by_eid IS NULL) AND
+			((in_approved = false OR in_approved IS NULL AND
 				approved_on IS NULL) OR
 				(in_approved = true AND approved_on IS NOT NULL)
 			)
 		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
 			b.control_code
 		HAVING  
+			(in_amount_gt IS NULL OR
 			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
 				al.amount)) 
-			>= coalesce(in_amount_gt, 
-				sum(coalesce(ar.amount - ar.paid, 
-					ap.amount - ap.paid, 
-					al.amount)))
+			>= in_amount_gt) 
 			AND 
+			(in_amount_lt IS NULL OR
 			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
 				al.amount))
-			<= coalesce(in_amount_lt, 
-				sum(coalesce(ar.amount - ar.paid, 
-					ap.amount - ap.paid, 
-					al.amount)))
+			<= in_amount_lt)
 		
 	LOOP
 		RETURN NEXT out_value;
