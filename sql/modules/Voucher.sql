@@ -71,25 +71,45 @@ BEGIN
 					WHERE class = 'ar')
 		UNION
 		-- TODO:  Add the class labels to the class table.
-		SELECT v.id, a.source, a.memo, v.batch_id, v.trans_id, 
+		SELECT v.id, a.source,
+			cr.meta_number || '--'  || co.legal_name , 
+			v.batch_id, v.trans_id, 
 			CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
-			     ELSE amount  END, a.transdate, 
+			     ELSE a.amount  END, a.transdate, 
 			CASE WHEN bc.class = 'payment' THEN 'Payment'
-			     WHEN bc.class = 'receipt' THEN 'Receipt'
 			     WHEN bc.class = 'payment_reversal' 
 			     THEN 'Payment Reversal'
-			     WHEN bc.class = 'receipt_reversal' 
-			     THEN 'Receipt Reversal'
-			     ELSE 'UNKNOWN'
 			END
 		FROM voucher v
 		JOIN acc_trans a ON (v.trans_id = a.trans_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
 		JOIN chart c ON (a.chart_id = c.id)
+		JOIN ap ON (ap.id = a.trans_id)
+		JOIN entity_credit_account cr 
+			ON (ap.entity_credit_account = cr.id)
+		JOIN company co ON (cr.entity_id = co.entity_id)
 		WHERE v.batch_id = in_batch_id 
 			AND a.voucher_id = v.id
 			AND (bc.class like 'payment%' AND c.link = 'AP')
-			OR (bc.class like 'receipt%' AND c.link = 'AR')
+		UNION
+		SELECT v.id, a.source, a.memo, v.batch_id, v.trans_id, 
+			CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
+			     ELSE a.amount  END, a.transdate, 
+			CASE WHEN bc.class = 'receipt' THEN 'Receipt'
+			     WHEN bc.class = 'receipt_reversal' 
+			     THEN 'Receipt Reversal'
+			END
+		FROM voucher v
+		JOIN acc_trans a ON (v.trans_id = a.trans_id)
+                JOIN batch_class bc ON (bc.id = v.batch_class)
+		JOIN chart c ON (a.chart_id = c.id)
+		JOIN ar ON (ar.id = a.trans_id)
+		JOIN entity_credit_account cr 
+			ON (ar.entity_credit_account = cr.id)
+		JOIN company co ON (cr.entity_id = co.entity_id)
+		WHERE v.batch_id = in_batch_id 
+			AND a.voucher_id = v.id
+			AND (bc.class like 'receipt%' AND c.link = 'AR')
 		UNION
 		SELECT v.id, g.reference, g.description, v.batch_id, v.trans_id,
 			sum(a.amount), g.transdate, 'gl'

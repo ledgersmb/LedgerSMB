@@ -113,7 +113,8 @@ CREATE TYPE payment_contact_invoice AS (
 	contact_name text,
 	account_number text,
 	total_due numeric,
-	invoices text[]
+	invoices text[],
+        has_vouchers int
 );
 
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
@@ -142,25 +143,30 @@ BEGIN
 		                   THEN 0
 		                   ELSE (a.amount - coalesce(a.paid, 0)) * coalesce(c.discount, 0) / 100
 		              END))::text]]),
+                              sum(case when v.batch_id = in_batch_id then 1
+		                  else 0 END),
 		              bool_and(lock_record(a.id, (select max(session_id) 				FROM "session" where users_id = (
 					select id from users WHERE username =
 					SESSION_USER))))
+                           
 		    FROM entity e
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
 		    JOIN (SELECT id, invnumber, transdate, amount, entity_id, 
 		                 paid, curr, 1 as invoice_class, 
 		                 entity_credit_account, on_hold
 		            FROM ap
+			   WHERE in_account_class = 1
 		           UNION
 		          SELECT id, invnumber, transdate, amount, entity_id,
 		                 paid, curr, 2 as invoice_class, 
 		                 entity_credit_account, on_hold
 		            FROM ar
+			   WHERE in_account_class = 2
 			ORDER BY transdate
 		         ) a USING (entity_id)
 		    JOIN transactions t ON (a.id = t.id)
-		   WHERE a.id IN (select voucher.trans_id FROM voucher
-		                          WHERE batch_id = in_batch_id)
+		  LEFT JOIN voucher v ON (v.trans_id = a.id)
+		   WHERE v.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
 			 AND c.business_id = 
 				coalesce(in_business_id, c.business_id)
@@ -184,6 +190,8 @@ BEGIN
 		                    ))
 		GROUP BY c.id, e.name, c.meta_number, c.threshold
 		  HAVING sum(a.amount - a.paid) > c.threshold
+			OR sum(case when v.batch_id = in_batch_id then 1
+                                  else 0 END) > 0
 	LOOP
 		RETURN NEXT payment_item;
 	END LOOP;
@@ -334,7 +342,7 @@ BEGIN
 	LOOP
 		INSERT INTO acc_trans 
 			(trans_id, chart_id, amount, approved, voucher_id,
-			transdate)
+			transdate, source)
 		VALUES
 			(in_transactions[out_count][1], 
 				case when in_account_class = 1 THEN t_cash_id
@@ -345,7 +353,7 @@ BEGIN
 	
 				CASE WHEN t_voucher_id IS NULL THEN true
 				ELSE false END,
-				t_voucher_id, in_payment_date),
+				t_voucher_id, in_payment_date, in_source),
 
 			(in_transactions[out_count][1], 
 				case when in_account_class = 1 THEN t_ar_ap_id
@@ -356,7 +364,7 @@ BEGIN
 
 				CASE WHEN t_voucher_id IS NULL THEN true
 				ELSE false END,
-				t_voucher_id, in_payment_date);
+				t_voucher_id, in_payment_date, in_source);
 		UPDATE ap 
 		set paid = paid +in_transactions[out_count][2]
 		where id =in_transactions[out_count][1];
@@ -565,28 +573,18 @@ BEGIN
 			max(cc.description), max(ac.id), max(ac.accno), 
 			max(ac.description)
 		FROM acc_trans at
-		JOIN entity_credit_account ec ON
-			(at.trans_id IN 
-				(select id FROM ar 
-				WHERE in_account_class = 2
-					AND entity_credit_account =
-						(SELECT id 
-						FROM entity_credit_account
-						WHERE meta_number 
-							= in_meta_number
-							AND entity_class = 
-							in_account_class)
-				UNION
-				SELECT id FROM ap
-				WHERE in_account_class = 1 AND
-					entity_credit_account = 
-						(select id 
-						FROM entity_credit_account
-						WHERE meta_number 
-							= in_meta_number
-							AND entity_class = 
-							in_account_class)))
-				
+		JOIN (select id, entity_credit_account 
+			FROM ar 
+			WHERE in_account_class = 2
+			UNION
+			SELECT id, entity_credit_account
+			FROM ap
+			WHERE in_account_class = 1) arap
+			ON (arap.id = at.trans_id)
+
+		JOIN entity_credit_account ec ON (
+			ec.entity_class = in_account_class
+			AND arap.entity_credit_account = ec.id)
 		JOIN company c ON (ec.entity_id = c.entity_id)
 		LEFT JOIN chart cc ON (at.chart_id = cc.id AND
 			cc.link LIKE '%paid%')
