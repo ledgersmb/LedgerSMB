@@ -312,6 +312,8 @@ DECLARE
 	t_voucher_id int;
 	t_trans_id int;
 	t_amount numeric;
+        t_ar_ap_id int;
+	t_cash_id int;
 BEGIN
 	IF in_batch_id IS NULL THEN
 		-- t_voucher_id := NULL;
@@ -322,21 +324,21 @@ BEGIN
 
 		t_voucher_id := currval('voucher_id_seq');
 	END IF;
+
+	select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
+	select id into t_cash_id from chart where accno = in_cash_accno;
+
 	FOR out_count IN 
-		array_lower(in_transactions, 1) .. 
-		array_upper(in_transactions, 1)
+			array_lower(in_transactions, 1) ..
+			array_upper(in_transactions, 1)
 	LOOP
 		INSERT INTO acc_trans 
 			(trans_id, chart_id, amount, approved, voucher_id,
 			transdate)
 		VALUES
 			(in_transactions[out_count][1], 
-				case when in_account_class = 1 THEN 
-					(SELECT id FROM chart 
-					WHERE accno = in_cash_accno)
-				WHEN in_account_class = 2 THEN 
-					(SELECT id FROM chart 
-					WHERE accno = in_ar_ap_accno)
+				case when in_account_class = 1 THEN t_cash_id
+				WHEN in_account_class = 2 THEN t_ar_ap_id
 				ELSE -1 END,
 
 				in_transactions[out_count][2],
@@ -346,12 +348,8 @@ BEGIN
 				t_voucher_id, in_payment_date),
 
 			(in_transactions[out_count][1], 
-				case when in_account_class = 1 THEN 
-					(SELECT id FROM chart 
-					WHERE accno = in_ar_ap_accno)
-				WHEN in_account_class = 2 THEN 
-					(SELECT id FROM chart 
-					WHERE accno = in_cash_accno)
+				case when in_account_class = 1 THEN t_ar_ap_id
+				WHEN in_account_class = 2 THEN t_cash_id
 				ELSE -1 END,
 
 				in_transactions[out_count][2]* -1,

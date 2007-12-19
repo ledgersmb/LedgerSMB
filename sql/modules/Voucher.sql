@@ -11,7 +11,7 @@ END;
 $$ language plpgsql;
 
 
-CREATE OR REPLACE FUNCTION batch_post (in_batch text, in_login varchar, in_entered date,
+CREATE OR REPLACE FUNCTION batch_update (in_batch text, in_login varchar, in_entered date,
 	in_batch_number text, in_description text, in_id integer) 
 RETURNS integer AS
 $$
@@ -53,32 +53,43 @@ declare voucher_item record;
 BEGIN
     	FOR voucher_item IN
 		SELECT v.id, a.invnumber, e.name, v.batch_id, v.trans_id, 
-			a.amount - a.paid, a.transdate, 'Payable'
+			a.amount, a.transdate, 'Payable'
 		FROM voucher v
 		JOIN ap a ON (v.trans_id = a.id)
 		JOIN entity e ON (a.entity_id = e.id)
 		WHERE v.batch_id = in_batch_id 
 			AND v.batch_class = (select id from batch_class 
-					WHERE class = 'payable')
+					WHERE class = 'ap')
 		UNION
 		SELECT v.id, a.invnumber, e.name, v.batch_id, v.trans_id, 
-			a.amount - a.paid, a.transdate, 'Receivable'
+			a.amount, a.transdate, 'Receivable'
 		FROM voucher v
 		JOIN ar a ON (v.trans_id = a.id)
 		JOIN entity e ON (a.entity_id = e.id)
 		WHERE v.batch_id = in_batch_id 
 			AND v.batch_class = (select id from batch_class 
-					WHERE class = 'receivable')
+					WHERE class = 'ar')
 		UNION
+		-- TODO:  Add the class labels to the class table.
 		SELECT v.id, a.source, a.memo, v.batch_id, v.trans_id, 
-			a.amount, a.transdate, bc.class
+			CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
+			     ELSE amount  END, a.transdate, 
+			CASE WHEN bc.class = 'payment' THEN 'Payment'
+			     WHEN bc.class = 'receipt' THEN 'Receipt'
+			     WHEN bc.class = 'payment_reversal' 
+			     THEN 'Payment Reversal'
+			     WHEN bc.class = 'receipt_reversal' 
+			     THEN 'Receipt Reversal'
+			     ELSE 'UNKNOWN'
+			END
 		FROM voucher v
 		JOIN acc_trans a ON (v.trans_id = a.trans_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
+		JOIN chart c ON (a.chart_id = c.id)
 		WHERE v.batch_id = in_batch_id 
 			AND a.voucher_id = v.id
-			AND bc.class like 'payment%'
-			OR bc.class like 'receipt%'
+			AND (bc.class like 'payment%' AND c.link = 'AP')
+			OR (bc.class like 'receipt%' AND c.link = 'AR')
 		UNION
 		SELECT v.id, g.reference, g.description, v.batch_id, v.trans_id,
 			sum(a.amount), g.transdate, 'gl'
@@ -200,15 +211,15 @@ BEGIN
 		AND batch_class = 5);
 
 	UPDATE acc_trans SET approved = true 
-	WHERE id IN (select trans_id FROM voucher 
+	WHERE trans_id IN (select trans_id FROM voucher 
 		WHERE batch_id = in_batch_id
 		AND batch_class IN (3, 4, 7, 8));
 
 	UPDATE batch 
 	SET approved_on = now(),
 		approved_by = (select entity_id FROM users 
-			WHERE login = SESSION_USER)
-	WHERE batch_id = in_batch_id;
+			WHERE username = SESSION_USER)
+	WHERE id = in_batch_id;
 
 	RETURN now()::date;
 END;
@@ -263,18 +274,18 @@ BEGIN
 		(select sum(amount) * -1 from acc_trans 
 		join chart ON (acc_trans.chart_id = chart.id)
 		where link = 'AR' AND trans_id = ar.id
-			AND voucher_id NOT IN 
+			AND (voucher_id IS NULL OR voucher_id NOT IN 
 				(select id from voucher 
-				WHERE batch_id = in_batch_id)) 
+				WHERE batch_id = in_batch_id))) 
 	where id in (select trans_id from acc_trans where voucher_id IN 
 		(select id from voucher where batch_id = in_batch_id));
 
 	update ap set paid = amount - (select sum(amount) from acc_trans 
 		join chart ON (acc_trans.chart_id = chart.id)
 		where link = 'AP' AND trans_id = ap.id
-			AND voucher_id NOT IN 
+			AND (voucher_id IS NULL OR voucher_id NOT IN 
 				(select id from voucher 
-				WHERE batch_id = in_batch_id)) 
+				WHERE batch_id = in_batch_id))) 
 	where id in (select trans_id from acc_trans where voucher_id IN 
 		(select id from voucher where batch_id = in_batch_id));
 

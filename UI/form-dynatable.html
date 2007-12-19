@@ -15,6 +15,7 @@
 <?lsmb PROCESS elements.html ?> 
 
 <body>
+<form method="post" action="<?lsmb form.script ?>">
 
 <table width="100%">
   <tr>
@@ -83,7 +84,6 @@
 
 <br />
 
-<form method="post" action="<?lsmb form.script ?>">
 <?lsmb FOREACH hidden IN hiddens.keys;
 	PROCESS input element_data={
 		type => 'hidden',

@@ -6,6 +6,11 @@ LedgerSMB:  8.2.2, 8.1.7, and 8.0.11
 These versions produce an error concerning wrong data types but the error shows 
 that the data types are indeed correct.
 
+PostgreSQL 8.3 will be supported on a best effort basis.  You will need the 
+tsearch2 compatibility libraries.  Additionally, due to the changes in implicit 
+casts, bugs may exist which cause database operations to abort.  We do accept 
+bug reports and will address them, however.
+
 -------------------------------
 
 W3M does not handle the <BUTTON> element properly and does not work.

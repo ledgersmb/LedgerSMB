@@ -366,14 +366,19 @@ sub get_payment_detail_data {
 	if ($source_src) {
 		$source_inc = $source_src;
 	} else {
-		$source_inc = $0;
+		$source_inc = 0;
 	}
     }
+    my $source_length = length($source_inc);
+   
     @{$self->{contact_invoices}} = $self->exec_method(
 		funcname => 'payment_get_all_contact_invoices');
     for my $inv (@{$self->{contact_invoices}}){
         if (defined $self->{source_start}){
 		my $source = $self->{source_start};
+		if (length($source_inc) < $source_length){
+                    $source_inc = sprintf('%0*s', $source_length, $source_inc);
+                }
 		$source =~ s/$source_src(\D*)$/$source_inc$1/;
 		++ $source_inc;
 		$inv->{source} = $source;

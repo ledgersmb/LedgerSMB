@@ -28,4 +28,16 @@ sub get_search_results {
     return @{$self->{search_results}};
 }
 
+sub post {
+    my ($self) = @_;
+    ($self->{post_return_ref}) = $self->exec_method(funcname => 'batch_post');
+    return $self->{post_return_ref};
+}
+
+sub delete {
+    my ($self) = @_;
+    ($self->{delete_ref}) = $self->exec_method(funcname => 'batch_delete');
+    return $self->{delete_ref};
+}
+
 1;
