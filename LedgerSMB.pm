@@ -276,7 +276,7 @@ sub escape {
 
     my $regex = qr/([^a-zA-Z0-9_.-])/;
     $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-    $str;
+    return $str;
 }
 
 sub is_blank {
@@ -471,7 +471,7 @@ sub format_amount {
 sub parse_amount {
     my $self     = shift @_;
     my %args     = @_;
-    my $myconfig = $args{user};
+    my $myconfig = $args{user} || $self->{_user};
     my $amount   = $args{amount};
 
     if ( $amount eq '' or ! defined $amount) {
@@ -809,6 +809,18 @@ sub remove_cgi_globals {
         }
     }
 }
+
+sub take_top_level {
+   my ($self) = @_;
+   my $return_hash = {};
+   for my $key (keys %$self){
+       if (!ref($self->{$key}) && $key !~ /^\./){
+          $return_hash->{$key} = $self->{$key}
+       }
+   }
+   return $return_hash;
+}
+
 1;
 
 

@@ -12,4 +12,5 @@ a working LedgerSMB installation.
 
 The database will be updated on first login.
 
-You will also want to migrate your configuration by running the SL2LS.pl script included in this directory.
+You will also want to migrate your configuration by running the SL2LS.pl script 
+included in this directory.

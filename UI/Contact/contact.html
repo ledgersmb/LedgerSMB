@@ -152,6 +152,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		value = entity_id
 	} ?>	
 	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "account_class"
+		value = account_class
+	} ?>	
+	<?lsmb PROCESS input element_data = {
 		label = text('Name:'),
 		type= "text",
 		name = "name",
@@ -289,6 +294,14 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			label = text('Business Type:') #'
 			} ?> 
 	  </td>
+          <td> <?lsmb INCLUDE input element_data = {
+			name = "threshold"
+			value = threshold
+			type = "text"
+			size = "20"
+			label = text('Threshold')
+			class = "numeric"
+               } ?>
 	</tr>
     </table>
 

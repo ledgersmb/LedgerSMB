@@ -126,7 +126,10 @@ CREATE TYPE entity_credit_search_return AS (
         pricegroup_id int,
         curr char(3),
         startdate date,
-        enddate date
+        enddate date,
+        ar_ap_account_id int,
+        cash_account_id int,
+        threshold numeric
 );
 
 COMMENT ON TYPE entity_credit_search_return IS
@@ -142,7 +145,8 @@ BEGIN
 	SELECT c.legal_name, c.id, e.id, ec.entity_class, ec.discount,
 		ec.taxincluded, ec.creditlimit, ec.terms, ec.meta_number,
 		ec.business_id, ec.language_code, ec.pricegroup_id, 
-		ec.curr::char(3), ec.startdate, ec.enddate
+		ec.curr::char(3), ec.startdate, ec.enddate, ec.ar_ap_account_id,
+		ec.cash_account_id, ec.threshold
 	INTO out_row
 	FROM company c
 	JOIN entity e ON (c.entity_id = e.id)
@@ -166,7 +170,9 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     in_curr char, in_startdate date, in_enddate date, 
     in_notes text, 
     in_name text, in_tax_id TEXT,
-    in_threshold NUMERIC
+    in_threshold NUMERIC,
+    in_ar_ap_account_id int, 
+    in_cash_account_id int
     
 ) returns INT as $$
     
@@ -178,7 +184,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     BEGIN
         
         -- TODO:  Move every table to an upsert mode independantly.
-        SELECT INTO v_row * FROM company WHERE id = in_id;
+        SELECT INTO v_row * FROM company WHERE legal_name = in_name;
         
         IF NOT FOUND THEN
             -- do some inserts
@@ -209,7 +215,9 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 startdate,
                 enddate,
                 discount_terms,
-                threshold
+                threshold,
+		ar_ap_account_id,
+                cash_account_id
             )
             VALUES (
                 new_entity_id,
@@ -226,7 +234,9 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_startdate,
                 in_enddate,
                 in_discount_terms,
-                in_threshold
+                in_threshold,
+                in_ar_ap_account_id,
+                in_cash_account_id
             );
             -- entity note class
             insert into entity_note (note_class, note, ref_key, vector) VALUES (
@@ -236,12 +246,14 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
 
         ELSIF FOUND THEN
         
-            update company set tax_id = in_tax_id where id = in_id;
+            update company set tax_id = in_tax_id where id = v_row.id;
             update entity_credit_account SET
                 discount = in_discount,
                 taxincluded = in_taxincluded,
                 creditlimit = in_creditlimit,
                 terms = in_terms,
+                ar_ap_account_id = in_ar_ap_account_id,
+                cash_account_id = in_cash_account_id,
                 meta_number = in_meta_number,
                 business_id = in_business_id,
                 language_code = in_language,
@@ -253,12 +265,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 discount_terms = in_discount_terms
             where entity_id = v_row.entity_id;
             
-            
-            UPDATE entity_note SET
-                note = in_note
-            WHERE ref_key = v_row.entity_id;
-            return in_id;
-        
+            return v_row.entity_id;    
         END IF;
     END;
     

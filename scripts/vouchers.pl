@@ -29,6 +29,15 @@ sub create_batch {
 }
 
 sub create_vouchers {
+    my ($request) = shift @_;
+    my $batch = LedgerSMB::Batch->new({base => $request});
+    $batch->{batch_class} = $request->{batch_type};
+    $batch->create;
+    add_vouchers($batch);
+}
+
+
+sub add_vouchers {
     #  This function is not safe for caching as long as the scripts are in bin.
     #  This is because these scripts import all functions into the *current*
     #  namespace.  People using fastcgi and modperl should *not* cache this 
@@ -36,11 +45,7 @@ sub create_vouchers {
     #  Also-- request is in 'our' scope here due to the redirect logic.
     our ($request) = shift @_;
     use LedgerSMB::Form;
-
     my $batch = LedgerSMB::Batch->new({base => $request});
-    $batch->{batch_class} = $request->{batch_type};
-    $batch->create;
-
     our $vouchers_dispatch = 
     {
         payable    => {script => 'bin/ap.pl', function => sub {add()}},
@@ -61,8 +66,6 @@ sub create_vouchers {
 	
     };
 
-    # Note that the line below is generally considered incredibly bad form. 
-    # However, the code we are including is going to require it for now. -- CT
     our $form = new Form;
     our $locale = $request->{_locale};
 
@@ -84,10 +87,13 @@ sub create_vouchers {
     $form->{script} =~ s|.*/||;
     if ($script =~ /^bin/){
 
+        # Note that the line below is generally considered incredibly bad form. 
+        # However, the code we are including is going to require it for now. 
+        # -- CT
         { no strict; no warnings 'redefine'; do $script; }
 
     } elsif ($script =~ /scripts/) {
-
+	# Maybe we should move this to a require statement?  --CT
          { do $script } 
 
     }
@@ -95,19 +101,242 @@ sub create_vouchers {
     $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 }
 
+sub search_batch {
+    my ($request) = @_;
+    my $batch_request = LedgerSMB::Batch->new(base => $request);
+    $batch_request->get_search_criteria();
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/batch',
+        template => 'filter',
+        format   => 'HTML', 
+    );
+    $template->render($batch_request);
+}
+
+sub list_batches {
+    my ($request) = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    my @search_results = $batch->get_search_results;
+    $batch->{script} = "vouchers.pl";
+
+    my @columns = 
+        qw(select id control_code description transaction_total payment_total);
+
+    my $base_href = "vouchers.pl";
+    my $search_href = "$base_href?action=list_batches";
+    my $batch_href = "$base_href?action=get_batch";
+
+    for my $key (
+       qw(class_id approved created_by description amount_gt amount_lt)
+    ){
+       $search_href .= "&$key=$batch->{key}";
+    }
+
+    my %column_heading = (
+        'select'          => $batch->{_locale}->text('Select'),
+        transaction_total => {
+             text => $batch->{_locale}->text('AR/AP/GL Total'),
+             href => "$search_href&order_by=transaction_total"
+        },
+        payment_total     => { 
+             text => $batch->{_locale}->text('Paid/Received Total'),
+             href => "$search_href&order_by=payment_total"
+        },
+        description       => {
+             text => $batch->{_locale}->text('Description'),
+             href => "$search_href&order_by=description"
+        },
+        control_code      => {
+             text => $batch->{_locale}->text('Batch Number'),
+             href => "$search_href&order_by=control_code"
+        },
+        id                => {
+             text => $batch->{_locale}->text('ID'),
+             href => "$search_href&order_by=control_code"
+        },
+    );
+    my $count = 0;
+    my @rows;
+    for my $result (@search_results){
+        ++$count;
+        $batch->{"row_$count"} = $result->{id};
+        push @rows, {
+            'select'          => {
+                                 input => {
+                                           type  => 'checkbox',
+                                           value => 1,
+                                           name  => "batch_$result->{id}"
+                                 }
+            },
+            transaction_total => $batch->format_amount(
+                                     amount => $result->{transaction_total}
+				),
+            payment_total     => $batch->format_amount (
+                                     amount => $result->{payment_total}
+                                ),
+            description => $result->{description},
+            control_code => {
+                             text  => $result->{control_code},
+                             href  => "$batch_href&batch_id=$result->{id}",
+
+            },
+            id => $result->{id},
+        };
+    }
+    $batch->{rowcount} = $count;
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI',
+        template => 'form-dynatable',
+        format   => ($batch->{format}) ? $batch->{format} : 'HTML', 
+    );
+
+    my $hiddens = $batch->take_top_level();
+    $batch->{rowcount} = "$count";
+    delete $batch->{search_results};
+
+    $template->render({ 
+	form    => $batch,
+	columns => \@columns,
+	heading => \%column_heading,
+        rows    => \@rows,
+        hiddens => $hiddens,
+        buttons => [{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Post'),
+                    value => 'batch_approve',
+                    class => 'submit',
+		},{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Delete'),
+                    value => 'batch_delete',
+                    class => 'submit',
+               }]
+    });
+        
+}
+
 sub get_batch {
+    my ($request)  = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    my $rows = [];
+
+    $batch->{id} ||= $batch->{batch_id};
+    # $batch->get;
+    my @vouchers = $batch->list_vouchers;
+
+    my $base_href = "vouchers.pl?action=get_batch&batch_id=$batch->{batch_id}";
+
+    my @columns = qw(id description batch_class reference amount date);
+    my $heading = {
+        id          => {
+                        text => $request->{_locale}->text('ID'),
+                        href => "$base_href&order_by=id"
+        },
+        description => { 
+                        href => "$base_href&order_by=description",
+                        text => $request->{_locale}->text('Description'),
+        },
+        batch_class => {
+                        text => $request->{_locale}->text('Class'),
+                        href => "$base_href&order_by=class"
+        },
+        amount      => {
+                        text => $request->{_locale}->text('Amount'),
+                        href => "$base_href&order_by=amount"
+        }, 
+        reference   => {
+                        text => $request->{_locale}->text('Source/Reference'),
+                        href => "$base_href&order_by=reference"
+        },
+        date        => {
+                        text => $request->{_locale}->text('Date'),
+                        href => "$base_href&order_by=date"
+        }
+    };
+
+    my $classcount;
+
+    for my $row (@vouchers) {
+       $classcount = ($classcount + 1) % 2;
+       $classcount ||= 0;
+       push @$rows, {
+           description => $row->{description},
+           id          => $row->{id},
+           batch_class => $row->{batch_class},
+           amount      => $batch->format_amount(amount => $row->{amount}),
+           date        => $row->{transaction_date},
+           reference   => $row->{reference},
+           class       => "listrow$classcount"
+         
+       };
+    }
+    $batch->{title} = "Batch ID: $batch->{batch_id}";
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI',
+        template => 'form-dynatable',
+        format   => ($batch->{format}) ? $batch->{format} : 'HTML', 
+    );
+    my $hiddens = $batch->take_top_level();
+    $template->render({ 
+	form    => $batch,
+	columns => \@columns,
+	heading => $heading,
+        rows    => $rows,
+        hiddens => $hiddens,
+        buttons => [{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Post'),
+                    value => 'batch_approve',
+                    class => 'submit',
+		},{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Delete'),
+                    value => 'batch_delete',
+                    class => 'submit',
+               }]
+    });
+        
+    
 }
 
-sub list_vouchers {
+sub list_batches_batch_delete {
+    batch_delete(@_);
 }
 
-sub add_vouchers {
+sub list_batches_batch_approve {
+    batch_approve(@_);
 }
 
-sub approve_batch {
+sub batch_approve {
+    my ($request) = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    for my $count (1 .. $batch->{rowcount}){
+        next unless $batch->{"batch_" . $batch->{"row_$count"}};
+        $batch->{batch_id} = $batch->{"row_$count"};
+        $batch->post;
+    }
+    search_batch($request);
 }
 
-sub delete_batch {
+sub batch_delete {
+    my ($request)  = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    for my $count (1 .. $batch->{rowcount}){
+        next unless $batch->{"batch_" . $batch->{"row_$count"}};
+        $batch->{batch_id} = $batch->{"row_$count"};
+        $batch->delete;
+    }
+    search_batch($request);
 }
 
 eval { do "scripts/custom/Voucher.pl"};

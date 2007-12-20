@@ -3,12 +3,6 @@ For 1.3:
 1)  Refactor admin.pl.  Merge user management with main UI and create separate 
 dataset management interface. (in progress, Chris)
 
-2)  Add real security enforcement (in progress, Chris, part of admin reworking)
+2)  Setup wizard.
 
-3)  Refactor contact management code
-
-4)  Setup wizard.
-
-Additional prerequisites include:
-1)  Refactoring HR code. (In progress, Chris)
 

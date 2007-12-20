@@ -14,8 +14,10 @@ sub set_entity_class {
 sub save {
     my $self = shift @_;
     $self->set_entity_class();
+    $self->{threshold} = $self->parse_amount(amount => $self->{threshold});
     my ($ref) = $self->exec_method(funcname => 'entity_credit_save');
     $self->{entity_id} = $ref->{entity_credit_save};
+    $self->{threshold} = $self->format_amount(amount => $self->{threshold});
     $self->{dbh}->commit;
 }
 
@@ -88,6 +90,7 @@ sub get {
     $self->set_entity_class();
     my ($ref) = $self->exec_method(funcname => 'entity__retrieve_credit');
     $self->merge($ref);
+    $self->{threshold} = $self->format_amount(amount => $self->{threshold});
 
     $self->{name} = $self->{legal_name};
 

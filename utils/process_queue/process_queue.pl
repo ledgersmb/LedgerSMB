@@ -28,19 +28,20 @@ sub on_notify {
     my $job_id = 1;
     while ($job_id){
         ($job_id) = $dbh->selectrow_array( 
-		"SELECT min(id) from pending_job
+		"SELECT id from pending_job
 		WHERE completed_at IS NULL
+		ORDER BY id LIMIT 1
                 FOR UPDATE" 
     	);
     	if ($job_id){
             $job_id = $dbh->quote($job_id);
             my ($job_class) = $dbh->selectrow_array(
 		"select class from batch_class where id = 
-			(select batch_class from pending_job where id = $job_id"
+			(select batch_class from pending_job where id = $job_id)"
             );
             # Right now, we assume that every pending job has a batch id.
             # Longer-run we may need to use a template handle as well. -CT
-            $dbh->execute('SELECT ' .
+            $dbh->do('SELECT ' .
                $dbh->quote_identifier("job__process_$job_class") . "($job_id)"
             );
             my $errstr = $dbh->errstr;
@@ -60,6 +61,7 @@ sub on_notify {
             # The line below is necessary because the job process functions
             # use set session authorization so one must reconnect to reset
             # administrative permissions. -CT
+            $dbh->disconnect;
             $dbh = db_init(); 
         }
     }

@@ -13,6 +13,11 @@
 <?lsmb payment_type = (account_class == 1) ? text('Payments') : text('Receipts') 
 ?>
 <body id="payment_2_body">
+<!-- CT:  This template produces invalid XHTML due to the use of nested tables.
+    Because nested tables are widely used (perhaps improperly) for layout,
+    most browsers should have no issues with them.  Furthermore, I cannot find
+    any cleaner solution to embedding tabular data within tabular data than
+    this -->
 <div class="listtop"><?lsmb payment_type ?></div>
  <form name="pay_dues" method="post" action="payment.pl">
  <!-- Moving all hidden variables to the top.  -CT -->
@@ -177,7 +182,11 @@
 		} ?>
 		<?lsmb r.account_number ?>
 	</td>
-	<td class="entity_name"><?lsmb r.contact_name ?></td>
+	<td class="entity_name"><span class="<?lsmb
+		IF r.has_vouchers; 'name_has_vouchers' ; 
+		ELSE ; 'name_has_no_vouchers' ; 
+		END
+		?>"><?lsmb r.contact_name ?></span></td>
 	<td class="invoice"><?lsmb r.total_due ?> <?lsmb currency ?></td>
         <td class="payment">
 		<?lsmb INCLUDE input element_data = {
@@ -223,8 +232,10 @@
 		<tr>
 			<td class="invoice_date_list">&nbsp;<?lsmb i.2 ?></td>
 			<td class="invoice_list">&nbsp;<?lsmb i.1 ?></td>
-		        <td class="total_due_list">&nbsp;<?lsmb i.3 ?></td>
-			<td class="paid_list">&nbsp;<?lsmb i.4 ?></td>
+		        <td class="total_due_list">&nbsp;
+				<?lsmb INCLUDE format_money number=i.3 ?></td>
+			<td class="paid_list">&nbsp;
+				<?lsmb INCLUDE format_money number=i.4 ?></td>
 			<td class="net_due_list">&nbsp;
 				<?lsmb INCLUDE format_money number= i.6 ?>
 				<?lsmb currency ?></td>
@@ -249,7 +260,7 @@
 			<?lsmb INCLUDE input element_data = {
 				type = "hidden"
 				name = "net_$i.0"
-				value = i.6
+				value = ${"payment_$r.contact_id_$i.0"}
 			} ?>
 			</td>
 		</tr>

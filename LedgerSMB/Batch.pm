@@ -31,13 +31,21 @@ sub get_search_results {
 sub post {
     my ($self) = @_;
     ($self->{post_return_ref}) = $self->exec_method(funcname => 'batch_post');
+    $self->{dbh}->commit;
     return $self->{post_return_ref};
 }
 
 sub delete {
     my ($self) = @_;
     ($self->{delete_ref}) = $self->exec_method(funcname => 'batch_delete');
+    $self->{dbh}->commit;
     return $self->{delete_ref};
+}
+
+sub list_vouchers {
+    my ($self) = @_;
+    @{$self->{vouchers}} = $self->exec_method(funcname => 'voucher_list');
+    return @{$self->{vouchers}};
 }
 
 1;
