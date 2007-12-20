@@ -290,8 +290,8 @@ BEGIN
 	-- Adjust AR/AP tables for payment and payment reversal vouchers
 	-- voucher_id is only set in acc_trans on payment/receipt vouchers and
 	-- their reversals. -CT
-	update ar set paid = amount - 
-		(select sum(amount) * -1 from acc_trans 
+	update ar set paid = amount + 
+		(select sum(amount) from acc_trans 
 		join chart ON (acc_trans.chart_id = chart.id)
 		where link = 'AR' AND trans_id = ar.id
 			AND (voucher_id IS NULL OR voucher_id NOT IN 

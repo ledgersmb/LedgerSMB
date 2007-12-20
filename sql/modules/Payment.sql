@@ -552,62 +552,104 @@ CREATE TYPE payment_record AS (
 	amount numeric,
 	meta_number text,
 	company_paid text,
-        cash_account_id int,
-        cash_accno text,
-        cash_account_description text,
-        ar_ap_account_id int,
-        ar_ap_accno text,
-        ar_ap_description text
+	accounts text[],
+        date_paid date
 );
 
-CREATE OR REPLACE FUNCTION payment__retrieve
-(in_source text, in_meta_number text, in_account_class int, in_cash_accno text)
+CREATE OR REPLACE FUNCTION payment__search 
+(in_source text, in_date_from date, in_date_to date, in_credit_id int, 
+	in_cash_accno text, in_account_class int)
 RETURNS SETOF payment_record AS
 $$
-DECLARE out_row payment_record;
+DECLARE 
+	out_row payment_record;
 BEGIN
 	FOR out_row IN 
-		SELECT sum(case when at.amount > 0 then at.amount else 0 end) 
-				AS amount, ec.meta_number, 
-			c.legal_name, max(cc.id), max(cc.accno), 
-			max(cc.description), max(ac.id), max(ac.accno), 
-			max(ac.description)
-		FROM acc_trans at
-		JOIN (select id, entity_credit_account 
-			FROM ar 
-			WHERE in_account_class = 2
+		select sum(CASE WHEN c.entity_class = 1 then a.amount * -1
+				ELSE a.amount END), c.meta_number, 
+			co.legal_name, 
+			compound_array(ARRAY[ARRAY[ch.id::text, ch.accno, 
+				ch.description]]), a.transdate
+		FROM entity_credit_account c
+		JOIN ( select entity_credit_account, id
+			FROM ar WHERE in_account_class = 2
 			UNION
-			SELECT id, entity_credit_account
-			FROM ap
-			WHERE in_account_class = 1) arap
-			ON (arap.id = at.trans_id)
-
-		JOIN entity_credit_account ec ON (
-			ec.entity_class = in_account_class
-			AND arap.entity_credit_account = ec.id)
-		JOIN company c ON (ec.entity_id = c.entity_id)
-		LEFT JOIN chart cc ON (at.chart_id = cc.id AND
-			cc.link LIKE '%paid%')
-		JOIN chart ac ON (at.chart_id = ac.id AND
-			((in_account_class = 1 AND ac.link = 'AP') OR
-			 (in_account_class = 2 AND ac.link = 'AR')))
-		WHERE source = in_source
-		GROUP BY ec.meta_number, c.legal_name
-		HAVING max(cc.accno) = in_cash_accno
+			SELECT entity_credit_account, id
+			FROM ap WHERE in_account_class = 1
+			) arap ON (arap.entity_credit_account = c.id)
+		JOIN acc_trans a ON (arap.id = a.trans_id)
+		JOIN chart ch ON (ch.id = a.chart_id)
+		JOIN company co ON (c.entity_id = co.entity_id)
+		WHERE (ch.accno = in_cash_accno)
+			AND (c.id = in_credit_id OR in_credit_id IS NULL)
+			AND (a.transdate >= in_date_from 
+				OR in_date_from IS NULL)
+			AND (a.transdate <= in_date_to OR in_date_to IS NULL)
+			AND (source = in_source OR in_source IS NULL)
+		GROUP BY c.meta_number, co.legal_name, a.transdate
 	LOOP
-		return next out_row;
-	END LOOP;	
+		RETURN NEXT out_row;
+	END LOOP;
 END;
-$$ LANGUAGE plpgsql;
+$$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION payment__reverse
-(in_source text, in_date_paid date, in_credit_id int, in_cash_accno text)
+(in_source text, in_date_paid date, in_credit_id int, in_cash_accno text, 
+	in_date_reversed date, in_account_class int)
 RETURNS INT 
 AS $$
 DECLARE
-    count int;
+	pay_row record;
 BEGIN
-    count := 0;
-    FOR 
+	FOR pay_row IN 
+		SELECT a.*, c.ar_ap_account_id
+		FROM acc_trans a
+		JOIN (select id, entity_credit_account 
+			FROM ar WHERE in_account_class = 2
+			UNION
+			SELECT id, entity_credit_account
+			FROM ap WHERE in_account_class = 1
+		) arap ON (a.trans_id = arap.id)
+		JOIN entity_credit_account c 
+			ON (arap.entity_credit_account = c.id)
+		JOIN chart ch ON (a.chart_id = ch.id)
+		WHERE coalesce(source, '') = coalesce(in_source, '')
+			AND transdate = in_date_paid
+			AND in_credit_id = c.id
+			AND in_cash_accno = ch.accno
+	LOOP
+		INSERT INTO acc_trans
+		(trans_id, chart_id, amount, transdate, source, memo) 
+		VALUES 
+		(pay_row.trans_id, pay_row.chart_id, pay_row.amount * -1, 
+			in_date_reversed, in_source, 'Reversing ' || 
+			COALESCE(in_source, '')), 
+		(pay_row.trans_id, pay_row.ar_ap_account_id, pay_row.amount,
+			in_date_reversed, in_source, 'Reversing ' ||
+			COALESCE(in_source, ''));
+		IF in_account_class = 1 THEN
+			UPDATE ap SET paid = amount - 
+				(SELECT sum(a.amount) 
+				FROM acc_trans a
+				JOIN chart c ON (a.chart_id = c.id)
+				WHERE c.link = 'AP'
+					AND trans_id = pay_row.trans_id
+				) 
+			WHERE id = pay_row.trans_id;
+		ELSIF in_account_class = 2 THEN
+			update ar SET paid = amount - 
+				(SELECT sum(a.amount) 
+				FROM acc_trans a
+				JOIN chart c ON (a.chart_id = c.id)
+				WHERE c.link = 'AR'
+					AND trans_id = pay_row.trans_id
+				) * -1
+			WHERE id = pay_row.trans_id;
+		ELSE
+			RAISE EXCEPTION 'Unknown account class for payments %',
+				in_account_class;
+		END IF;
+	END LOOP;
+	RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
