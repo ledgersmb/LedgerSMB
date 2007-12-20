@@ -1653,8 +1653,8 @@ sub get_name {
     my $where;
     if ($transdate) {
         $where = qq|
-			AND (startdate IS NULL OR startdate <= ?)
-					AND (enddate IS NULL OR enddate >= ?)|;
+			AND (c.startdate IS NULL OR c.startdate <= ?)
+					AND (c.enddate IS NULL OR c.enddate >= ?)|;
 
         @queryargs = ( $transdate, $transdate );
     }
@@ -1664,15 +1664,19 @@ sub get_name {
         $self->error('Invalid name source');
     }
     # Company name is stored in $self->{vendor} or $self->{customer}
+    if ($self->{"${table}number"} eq ''){
+        $self->{"${table}number"} = $self->{$table};
+    }
     my $name = $self->like( lc $self->{$table} );
     
     # Vendor and Customer are now views into entity_credit_account.
-    my $query = qq|
-		SELECT * FROM $table t
-		JOIN entity e ON t.entity_id = e.id
-		WHERE (lower(e.name) LIKE ? OR t.${table}number LIKE ?)
+    my $query = qq/
+		SELECT c.*, e.name FROM entity_credit_account c
+		JOIN entity e ON c.entity_id = e.id
+		WHERE (lower(e.name) LIKE ?
+		AND c.meta_number LIKE ?)
 		$where
-		ORDER BY e.name|;
+		ORDER BY e.name/;
 
     unshift( @queryargs, $name, $self->like($self->{"${table}number"}) );
     my $sth = $self->{dbh}->prepare($query);
@@ -1726,16 +1730,17 @@ sub all_vc {
         $self->{vc_class} = 2;
         $vc = 'vendor';
     }
-    my $query = qq|SELECT count(*) FROM entity_credit_account where entity_class = ?|;
+    my $query = qq|SELECT count(*) FROM entity_credit_account ec 
+		where ec.entity_class = ?|;
     my $where;
     my @queryargs2 = ($self->{vc_class});
     my @queryargs;
     if ($transdate) {
-        $query .= qq| AND (startdate IS NULL OR startdate <= ?)
-					AND (enddate IS NULL OR enddate >= ?)|;
-        $where = qq| (startdate IS NULL OR startdate <= ?)
-					AND (enddate IS NULL OR enddate >= ?) 
-					AND entity_class = ?|;
+        $query .= qq| AND (ec.startdate IS NULL OR ec.startdate <= ?)
+				AND (ec.enddate IS NULL OR ec.enddate >= ?)|;
+        $where = qq| (ec.startdate IS NULL OR ec.startdate <= ?)
+			AND (ec.enddate IS NULL OR ec.enddate >= ?) 
+			AND ec.entity_class = ?|;
         push (@queryargs, $transdate, $transdate, $self->{vc_class});
         push (@queryargs2, $transdate, $transdate);
     } else {
@@ -1755,20 +1760,14 @@ sub all_vc {
 
         $self->{"${vc}_id"} *= 1;
 
-        $query = qq|SELECT id, name
-					  FROM entity
-					 WHERE id IN (select entity_id 
-		                                        FROM 
-							entity_credit_account
-							WHERE
-                                               		$where)
-
-					 UNION 
-
-					SELECT id,name
-					  FROM entity
-					 WHERE id = ?
-				  ORDER BY name|;
+	# TODO:  Alter this so that it pulls up the entity_credit_account 
+	# instead of the entity_id.  --CT
+        $query = qq|
+		SELECT ec.id, e.name
+		  FROM entity e
+		  JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+		 WHERE ec.id = ? OR $where
+		ORDER BY name|;
 
         push( @queryargs, $self->{"${vc}_id"} );
 
@@ -2192,7 +2191,8 @@ sub create_links {
 
         $query = qq|
 			SELECT a.invnumber, a.transdate,
-				a.entity_id, a.datepaid, a.duedate, a.ordnumber,
+				a.entity_credit_account AS entity_id, 
+				a.datepaid, a.duedate, a.ordnumber,
 				a.taxincluded, a.curr AS currency, a.notes, 
 				a.intnotes, ce.name AS $vc, a.department_id, 
 				d.description AS department,

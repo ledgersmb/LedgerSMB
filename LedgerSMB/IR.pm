@@ -760,7 +760,7 @@ sub post_invoice {
 		       ordnumber = ?,
 		       quonumber = ?,
 		       transdate = ?,
-		       vendor_id = ?,
+		       entity_credit_account = ?,
 		       amount = ?,
 		       netamount = ?,
 		       paid = ?,

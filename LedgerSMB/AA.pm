@@ -337,7 +337,7 @@ sub post_transaction {
 		SET invnumber = ?,
 			ordnumber = ?,
 			transdate = ?,
-			entity_id = ?,
+			entity_credit_account = ?,
 			taxincluded = ?,
 			amount = ?,
 			duedate = ?,
@@ -1040,10 +1040,10 @@ sub get_name {
 		          c.language_code, $duedate AS duedate, 
 			  b.discount AS tradediscount, 
 		          b.description AS business
-		     FROM $form->{vc} c
+		     FROM entity_credit_account c
 		     JOIN entity ON (entity.id = c.entity_id)
 		LEFT JOIN business b ON (b.id = c.business_id)
-		    WHERE c.entity_id = ?|;
+		    WHERE c.id = ?|;
     # TODO:  Add location join
 
     @queryargs = ( $form->{"$form->{vc}_id"} );

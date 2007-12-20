@@ -1412,7 +1412,7 @@ sub post_invoice {
 		       ordnumber = ?,
 		       quonumber = ?,
 		       transdate = ?,
-		       entity_id = ?,
+		       entity_credit_account = ?,
 		       amount = ?,
 		       netamount = ?,
 		       paid = ?,
