@@ -1672,13 +1672,13 @@ sub get_name {
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
 		SELECT c.*, e.name FROM entity_credit_account c
-		JOIN entity e ON c.entity_id = e.id
+		JOIN entity e ON (c.entity_id = e.id)
 		WHERE (lower(e.name) LIKE ?
-		AND c.meta_number LIKE ?)
+		OR c.meta_number LIKE ?)
 		$where
 		ORDER BY e.name/;
 
-    unshift( @queryargs, $name, $self->like($self->{"${table}number"}) );
+    unshift( @queryargs, $name, $self->{"${table}number"} );
     my $sth = $self->{dbh}->prepare($query);
 
     $sth->execute(@queryargs) || $self->dberror($query);

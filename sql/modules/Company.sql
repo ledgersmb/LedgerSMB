@@ -97,6 +97,21 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION entity_credit_get_id_by_meta_number
+(in_meta_number text, in_account_class int) 
+returns int AS
+$$
+DECLARE out_credit_id int;
+BEGIN
+	SELECT id INTO out_credit_id 
+	FROM entity_credit_account 
+	WHERE meta_number = in_meta_number 
+		AND entity_class = in_account_class;
+
+	RETURN out_credit_id;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION entity_list_contact_class() 
 RETURNS SETOF contact_class AS
 $$

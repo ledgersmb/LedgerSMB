@@ -63,6 +63,21 @@ sub add_vouchers {
 				$request->{account_class} = 1;
 				LedgerSMB::Scripts::payment::payments($request);
 				}},
+        payment_reversal => {
+                      script => 'scripts/payment.pl',
+                    function => sub {
+				my ($request) = @_;
+				$request->{account_class} = 1;
+				LedgerSMB::Scripts::payment::get_search_criteria($request);
+				}},
+        receipt_reversal => {
+                      script => 'scripts/payment.pl',
+                    function => sub {
+				my ($request) = @_;
+				$request->{account_class} = 2;
+				LedgerSMB::Scripts::payment::get_search_criteria($request);
+				}},
+     
 	
     };
 

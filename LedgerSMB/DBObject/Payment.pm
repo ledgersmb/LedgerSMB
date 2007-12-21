@@ -82,6 +82,22 @@ sub get_metadata {
     }
 }
 
+sub search {
+    my ($self) = @_;
+    if ($self->{meta_number} && !$self->{credit_id}){
+        my ($ref) = $self->exec_method(
+		funcname => 'entity_credit_get_id_by_meta_number'
+        );
+        my @keys = keys %$ref;
+        my $key = shift @keys;
+        $self->{credit_id} = $ref->{$key};
+    }
+    @{$self->{search_results}} = $self->exec_method(
+		funcname => 'payment__search'
+    );
+    return @{$self->{search_results}};
+}
+
 sub get_open_accounts {
     my ($self) = @_;
     @{$self->{accounts}} = 
@@ -110,6 +126,24 @@ sub get_all_accounts {
         $self->exec_method(funcname => 'payment_get_all_accounts');
     return @{$self->{accounts}};
 }
+=over
+
+=item $payment->reverse()
+
+This function reverses a payment.  A payment is defined as one source 
+($payment->{source}) to one cash account ($payment->{cash_accno}) to one date 
+($payment->{date_paid}) to one vendor/customer ($payment->{credit_id}, 
+$payment->{account_class}).  This reverses the entries with that source.
+
+=back
+
+=cut
+
+sub reverse {
+    my ($self) = @_;
+    $self->exec_method(funcname => 'payment__reverse');
+    return $self->{dbh}->commit;
+}  
 
 =over
 
@@ -137,7 +171,7 @@ sub get_open_invoices {
 
 =over
 
-=item $oayment->get_all_contact_invoices()
+=item $payment->get_all_contact_invoices()
 
 This function returns a list of open accounts depending on the 
 $payment->{account_class} property.  If this property is 1, it returns a list 

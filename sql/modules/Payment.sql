@@ -551,8 +551,10 @@ $$ This function return vendor or customer info, its under construction $$;
 CREATE TYPE payment_record AS (
 	amount numeric,
 	meta_number text,
+        credit_id int,
 	company_paid text,
 	accounts text[],
+        source text,
         date_paid date
 );
 
@@ -565,11 +567,11 @@ DECLARE
 	out_row payment_record;
 BEGIN
 	FOR out_row IN 
-		select sum(CASE WHEN c.entity_class = 1 then a.amount * -1
-				ELSE a.amount END), c.meta_number, 
-			co.legal_name, 
+		select sum(CASE WHEN c.entity_class = 1 then a.amount
+				ELSE a.amount * -1 END), c.meta_number, 
+			c.id, co.legal_name,
 			compound_array(ARRAY[ARRAY[ch.id::text, ch.accno, 
-				ch.description]]), a.transdate
+				ch.description]]), a.source, a.transdate
 		FROM entity_credit_account c
 		JOIN ( select entity_credit_account, id
 			FROM ar WHERE in_account_class = 2
@@ -586,7 +588,9 @@ BEGIN
 				OR in_date_from IS NULL)
 			AND (a.transdate <= in_date_to OR in_date_to IS NULL)
 			AND (source = in_source OR in_source IS NULL)
-		GROUP BY c.meta_number, co.legal_name, a.transdate
+		GROUP BY c.meta_number, c.id, co.legal_name, a.transdate, 
+			a.source
+		ORDER BY a.transdate, c.meta_number, a.source
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
@@ -595,12 +599,18 @@ $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text, 
-	in_date_reversed date, in_account_class int)
+	in_date_reversed date, in_account_class int, in_batch_id int)
 RETURNS INT 
 AS $$
 DECLARE
 	pay_row record;
+        t_voucher_id int;
+        t_voucher_inserted bool;
 BEGIN
+        IF in_batch_id IS NOT NULL THEN
+		t_voucher_id := nextval('voucher_id_seq');
+		t_voucher_inserted := FALSE;
+	END IF;
 	FOR pay_row IN 
 		SELECT a.*, c.ar_ap_account_id
 		FROM acc_trans a
@@ -618,15 +628,34 @@ BEGIN
 			AND in_credit_id = c.id
 			AND in_cash_accno = ch.accno
 	LOOP
+		IF in_batch_id IS NOT NULL 
+			AND t_voucher_inserted IS NOT TRUE
+		THEN
+			INSERT INTO voucher 
+			(id, trans_id, batch_id, batch_class)
+			VALUES
+			(t_voucher_id, pay_row.trans_id, in_batch_id,
+				CASE WHEN in_account_class = 1 THEN 4
+				     WHEN in_account_class = 2 THEN 7
+				END);
+
+			t_voucher_inserted := TRUE;
+		END IF;
+
 		INSERT INTO acc_trans
-		(trans_id, chart_id, amount, transdate, source, memo) 
+		(trans_id, chart_id, amount, transdate, source, memo, approved,
+			voucher_id) 
 		VALUES 
 		(pay_row.trans_id, pay_row.chart_id, pay_row.amount * -1, 
 			in_date_reversed, in_source, 'Reversing ' || 
-			COALESCE(in_source, '')), 
+			COALESCE(in_source, ''), 
+			case when in_batch_id is not null then false 
+			else true end, t_voucher_id),
 		(pay_row.trans_id, pay_row.ar_ap_account_id, pay_row.amount,
 			in_date_reversed, in_source, 'Reversing ' ||
-			COALESCE(in_source, ''));
+			COALESCE(in_source, ''), 
+			case when in_batch_id is not null then false 
+			else true end, t_voucher_id);
 		IF in_account_class = 1 THEN
 			UPDATE ap SET paid = amount - 
 				(SELECT sum(a.amount) 
