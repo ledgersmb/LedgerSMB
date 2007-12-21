@@ -75,7 +75,6 @@ create view employees as
     JOIN salutation s ON (p.salutation_id = s.id);
     
 
--- why is this like this?
 CREATE OR REPLACE FUNCTION employee_get
 (in_id integer)
 returns employees as

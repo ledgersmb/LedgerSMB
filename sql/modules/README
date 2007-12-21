@@ -1,3 +1,26 @@
 This set of files is just for initial testing and proof of concept purposes.
 They will be moved out of here into appropriate upgrade scripts as necessary 
 and are intended only for collaborative development purposes.
+
+For people trying to get 1.3 up and running manually, the following load order 
+should work.  Note that many of these scripts declare types, so if you want to
+redefine functions, you will need to drop the types and reload the scripts.
+
+Account.sql
+Business_Type.sql
+Location.sql
+Company.sql
+Customer.sql 
+Date.sql
+Defaults.sql
+Employee.sql
+Entity.sql
+Payment.sql
+Person.sql
+Report.sql
+Voucher.sql
+
+Note that the Roles.sql is special and must be preprocessed to get it to work.
+A command like:
+sed -e 's/<?lsmb dbname ?>/[dbname]/g' Roles.sql > [dbname]_roles.sql would work
+where [dbname] represents the name of the database you are installing into.

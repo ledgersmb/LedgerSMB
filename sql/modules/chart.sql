@@ -1,3 +1,5 @@
+-- TODO:  Merge with account.sql -CT
+
 CREATE OR REPLACE FUNCTION chart_list_all()
 RETURNS SETOF chart AS
 $$

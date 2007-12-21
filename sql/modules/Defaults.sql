@@ -1,4 +1,4 @@
--- Probably want to move this to the Settings module
+-- Probably want to move this to the Settings module -CT
 
 CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency() 
 RETURNS SETOF char(3) AS
