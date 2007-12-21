@@ -1,8 +1,32 @@
+=head1 NAME
+
+LedgerSMB::DBObject::Company.pm, LedgerSMB Base Class for Customers/Vendors
+
+=head1 SYNOPSIS
+
+This library contains the base utility functions for creating, saving, and
+retrieving customers and vendors.
+
+=cut
 
 package LedgerSMB::DBObject::Company;
 
 use base qw(LedgerSMB::DBObject);
 use strict;
+
+=head1 METHODS
+
+=over
+
+=item $company->set_entity_class()
+
+This is a stub for a private method that subclasses are expected to overwrite. 
+It will be set to the account class of the entity (1 for vendor, 2 for customer,
+etc).
+
+=back
+
+=cut
 
 sub set_entity_class {
     my $self = shift @_;
@@ -10,6 +34,18 @@ sub set_entity_class {
  	       $self->error("Entity ID Not Set and No Entity Class Defined!");
     }
 }
+
+=over
+
+=item save()
+
+This stores the company record including a credit accoun tin the database.
+
+TODO:  Separate company from credit account storage.
+
+=back
+
+=cut
 
 sub save {
     my $self = shift @_;
@@ -21,6 +57,16 @@ sub save {
     $self->{dbh}->commit;
 }
 
+=over
+
+=item save_location
+
+This method saves an address for a company.
+
+=back
+
+=cut
+
 sub save_location {
     my $self = shift @_;
     $self->{country_id} = $self->{country};
@@ -28,6 +74,19 @@ sub save_location {
 
     $self->{dbh}->commit;
 }
+
+=over
+
+=item get_metadata()
+
+This retrieves various information vor building the user interface.  Among other
+things, it sets the following properties:
+$self->{ar_ap_acc_list} = qw(list of ar or ap accounts)
+$self->{cash_acc_list} = qw(list of cash accounts)
+
+=back
+
+=cut
 
 sub get_metadata {
     my $self = shift @_;
