@@ -692,12 +692,14 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	</tr>
 |;
     }
-
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
+	if($form->{"calctax_$item"}){
+             $form->{invtotal} += $form->{"tax_$item"};
+	}
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
-
+         
         $form->{"tax_$item"} =
           $form->format_amount( \%myconfig, $form->{"tax_$item"}, 2 );
 
@@ -705,7 +707,8 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
         <tr>
 	  <td><input name="tax_$item" size=10 value=$form->{"tax_$item"}></td>
 	  <td align=right><input name="calctax_$item" class=checkbox type=checkbox value=1 $form->{"calctax_$item"}></td>
-	  <td><select name="$form->{ARAP}_tax_$item">$form->{"select$form->{ARAP}_tax_$item"}</select></td>
+ 	  <td><select name="$form->{ARAP}_tax_$item">
+ 	<option value="$form->{ARAP}_tax_$item">$item--$form->{"${item}_description"}</option></select></td>
 	</tr>
 |;
 
