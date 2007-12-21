@@ -239,6 +239,7 @@ sub list_batches {
 sub get_batch {
     my ($request)  = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
+    $batch->{script} = 'vouchers.pl';
     my $rows = [];
 
     $batch->{id} ||= $batch->{batch_id};
@@ -247,8 +248,9 @@ sub get_batch {
 
     my $base_href = "vouchers.pl?action=get_batch&batch_id=$batch->{batch_id}";
 
-    my @columns = qw(id description batch_class reference amount date);
+    my @columns = qw(selected id description batch_class reference amount date);
     my $heading = {
+        selected    => $request->{_locale}->text('Selected'),
         id          => {
                         text => $request->{_locale}->text('ID'),
                         href => "$base_href&order_by=id"
@@ -276,7 +278,7 @@ sub get_batch {
     };
 
     my $classcount;
-
+    my $count = 1;
     for my $row (@vouchers) {
        $classcount = ($classcount + 1) % 2;
        $classcount ||= 0;
@@ -287,10 +289,21 @@ sub get_batch {
            amount      => $batch->format_amount(amount => $row->{amount}),
            date        => $row->{transaction_date},
            reference   => $row->{reference},
-           class       => "listrow$classcount"
-         
+           i           => "$classcount",
+           selected    => {
+                           input => {
+                                  type  => 'checkbox',
+                                  name  => "voucher_$row->{id}",
+                                  value => "1"
+                                  }
+                          }  
        };
+       $batch->{"row_$count"} = $row->{id};
+       ++$count;
     }
+
+    $batch->{rowcount} = $count;
+
     $batch->{title} = "Batch ID: $batch->{batch_id}";
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
@@ -309,14 +322,20 @@ sub get_batch {
         buttons => [{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $request->{_locale}->text('Post'),
+                    text  => $request->{_locale}->text('Post Batch'),
                     value => 'batch_approve',
                     class => 'submit',
 		},{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $request->{_locale}->text('Delete'),
+                    text  => $request->{_locale}->text('Delete Batch'),
                     value => 'batch_delete',
+                    class => 'submit',
+		},{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Delete Vouchers'),
+                    value => 'voucher_delete',
                     class => 'submit',
                }]
     });
@@ -330,6 +349,17 @@ sub list_batches_batch_delete {
 
 sub list_batches_batch_approve {
     batch_approve(@_);
+}
+
+sub get_batch_voucher_delete {
+    my ($request) = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    for my $count (1 .. $batch->{rowcount}){
+        my $voucher_id = $batch->{"row_$count"};
+        next unless $batch->{"voucher_$voucher_id"};
+        $batch->delete_voucher($voucher_id);
+    }
+    search_batch($request);
 }
 
 sub batch_approve {

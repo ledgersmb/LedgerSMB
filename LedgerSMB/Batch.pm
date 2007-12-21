@@ -11,6 +11,12 @@ sub create {
     return $ref->{id};
 }
 
+sub delete_voucher {
+    my ($self, $voucher_id) = @_;
+    $self->call_procedure(procname => 'voucher__delete', args => [$voucher_id]);
+    $self->{dbh}->commit;
+}
+
 sub get_search_criteria {
     $self = shift @_;
     @{$self->{batch_classes}} = $self->exec_method(

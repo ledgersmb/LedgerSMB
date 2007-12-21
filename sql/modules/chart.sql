@@ -1,3 +1,16 @@
+CREATE OR REPLACE FUNCTION chart_list_all()
+RETURNS SETOF chart AS
+$$
+DECLARE out_row chart%ROWTYPE;
+BEGIN
+	FOR out_row IN 
+		SELECT * FROM chart ORDER BY accno
+	LOOP
+		RETURN next out_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
 CREATE OR REPLACE FUNCTION chart_list_cash(in_account_class int)
 RETURNS SETOF chart AS
 $$

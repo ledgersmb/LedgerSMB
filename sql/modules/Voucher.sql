@@ -330,3 +330,41 @@ BEGIN
 	RETURN 1;
 END;
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION voucher__delete(in_voucher_id int)
+RETURNS int AS
+$$
+DECLARE 
+	voucher_row RECORD;
+BEGIN
+	SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
+	IF voucher_row.batch_class IN (1, 2, 5) THEN
+		DELETE from acc_trans WHERE trans_id = voucher_row.trans_id;
+		DELETE FROM ar WHERE id = voucher_row.trans_id;
+		DELETE FROM ap WHERE id = voucher_row.trans_id;
+		DELETE FROM gl WHERE id = voucher_row.trans_id;
+		DELETE FROM voucher WHERE id = voucher_row.id;
+		DELETE FROM transactions WHERE id = voucher_row.trans_id;
+	ELSE 
+		update ar set paid = amount + 
+			(select sum(amount) from acc_trans 
+			join chart ON (acc_trans.chart_id = chart.id)
+			where link = 'AR' AND trans_id = ar.id
+				AND (voucher_id IS NULL 
+				OR voucher_id <> voucher_row.id))
+		where id in (select trans_id from acc_trans 
+				where voucher_id = voucher_row.id);
+
+		update ap set paid = amount - (select sum(amount) from acc_trans 
+			join chart ON (acc_trans.chart_id = chart.id)
+			where link = 'AP' AND trans_id = ap.id
+				AND (voucher_id IS NULL 
+				OR voucher_id <> voucher_row.id))
+		where id in (select trans_id from acc_trans 
+				where voucher_id = voucher_row.id);
+
+		DELETE FROM acc_trans where voucher_id = voucher_row.id;
+	END IF;
+	RETURN 1;
+END;
+$$ LANGUAGE PLPGSQL;
