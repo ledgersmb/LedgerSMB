@@ -315,7 +315,6 @@ CREATE OR REPLACE FUNCTION payment_bulk_post
 RETURNS int AS
 $$
 DECLARE 
-	payment_trans numeric[];
 	out_count int;
 	t_voucher_id int;
 	t_trans_id int;
