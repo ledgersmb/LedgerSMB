@@ -702,7 +702,7 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
          
         $form->{"tax_$item"} =
           $form->format_amount( \%myconfig, $form->{"tax_$item"}, 2 );
-
+	# CT:  This should probably be moved to a hidden field and a text label.
         print qq|
         <tr>
 	  <td><input name="tax_$item" size=10 value=$form->{"tax_$item"}></td>
