@@ -40,6 +40,8 @@
 #     {print $_.":".$c->num2text($_)."\n";};'
 # EOF
 
+use utf8;
+
 sub init {
     my $self    = shift;
     my $locale  = $self->{'locale'};
@@ -512,13 +514,13 @@ sub num2text_es {
             if ( $numblock[$i] > 1 ) {
                 if ( $i == 2 || $i == 4 ) {
                     $a = $self->{numbername}{$num} . "es";
-                    $a =~ s/ó/o/;
+                    $a =~ s/Ã³/o/;
                     push @textnumber, $a;
                 }
                 elsif ( $i == 3 ) {
                     $num = 10**( $i * 2 );
                     $a   = "$self->{10**3} $self->{numbername}{$num}" . "es";
-                    $a =~ s/ó/o/;
+                    $a =~ s/Ã³/o/;
                     push @textnumber, $a;
                 }
                 else {
@@ -1244,7 +1246,7 @@ sub num2text_sl {
     
     pop @numblock;
 
-    @textnumber = 'NAPAKA! ¿TEVILKA JE PREVELIKA!' if ($i > 4);
+    @textnumber = 'NAPAKA! Â¿TEVILKA JE PREVELIKA!' if ($i > 4);
     
   }
 
@@ -1280,6 +1282,4 @@ sub format_ten_sl {
 
 1;
 
-
-1;
 
