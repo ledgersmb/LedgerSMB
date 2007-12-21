@@ -1816,6 +1816,26 @@ sub all_vc {
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
 }
 
+=item $form->all_accounts()
+
+Sets $form->{accounts} to all accounts.  Returns the list as well.
+Example:  my @account_list = $form->all_accounts();
+
+=cut
+
+sub all_accounts {
+    my ($self) = @_;
+    my $ref;
+    $self->{all_accounts} = [];
+    my $sth = $self->{dbh}->prepare('SELECT * FROM chart_list_all()');
+    $sth->execute || $self->dberror('SELECT * FROM chart_list_all()');
+    while ($ref = $sth->fetchrow_hashref('NAME_lc')){
+        push(@{$self->{all_accounts}}, $ref);
+    }
+    $sth->finish;
+    return @{$self->{all_accounts}};
+}
+
 =item $form->all_taxaccounts($myconfig, $dbh2[, $transdate]);
 
 Get the tax rates and numbers for all the taxes in $form->{taxaccounts}.  Does

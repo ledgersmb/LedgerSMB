@@ -238,6 +238,13 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 |;
     }
 
+    my @accounts = $form->all_accounts;
+    my $account_select = qq|<select name="chart_id" class="account>|;
+    for my $act (@accounts){
+        $account_select .= qq|<option value="$act->{id}">$act->{accno}--| .
+            qq|$act->{description}</option>|;
+    }
+
     if ( @{ $form->{all_years} } ) {
 
         # accounting years
@@ -324,7 +331,10 @@ qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
 	<tr>
 	  <th align=right>| . $locale->text('Reference') . qq|</th>
 	  <td><input name=reference size=20></td>
-
+        </tr>
+         <tr>
+          <th align="right">| . $locale->text('Account') . qq|</th>
+          <td>$account_select</td>
 	  </tr>
 	  <tr>
 	  <th align=right>| . $locale->text('Source') . qq|</th>

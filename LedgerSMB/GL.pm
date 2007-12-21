@@ -411,6 +411,12 @@ sub all_transactions {
     my @a = ( id, transdate, reference, source, description, accno );
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
+    my $chart_id;
+    if ($form->{chart_id}){
+        $chart_id = $dbh->quote($form->{chart_id});
+    } else {
+        $chart_id = 'NULL';
+    }
     my $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference,
 						  g.description, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, g.notes, c.link,
@@ -420,7 +426,9 @@ sub all_transactions {
 					 JOIN acc_trans ac ON (g.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
 				LEFT JOIN department d ON (d.id = g.department_id)
-					WHERE $glwhere
+					WHERE $glwhere 
+				              AND (ac.chart_id = $chart_id OR
+                                                   $chart_id IS NULL)
 
 					UNION ALL
 
@@ -435,6 +443,8 @@ sub all_transactions {
 					 JOIN entity e ON (a.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $arwhere
+				              AND (ac.chart_id = $chart_id OR
+                                                   $chart_id IS NULL)
 
 				UNION ALL
 
@@ -449,6 +459,8 @@ sub all_transactions {
 					 JOIN entity e ON (a.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $apwhere
+				              AND (ac.chart_id = $chart_id OR
+                                                   $chart_id IS NULL)
 				 ORDER BY $sortorder|;
 
     my $sth = $dbh->prepare($query);
