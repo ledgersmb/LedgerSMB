@@ -61,7 +61,7 @@ $$ LANGUAGE PLPGSQL;
 
 COMMENT ON function location_save
 (in_companyname text, in_address1 text, in_address2 text, 
-	in_city text, in_state text, in_zipcode text, in_country text) IS
+	in_city text, in_state text, in_zipcode text, in_country int) IS
 $$ Note that this does NOT override the data in the database.
 Instead we search for locations matching the desired specifications and if none 
 are found, we insert one.  Either way, the return value of the location can be
