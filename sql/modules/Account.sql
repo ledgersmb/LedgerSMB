@@ -3,7 +3,7 @@
 CREATE OR REPLACE FUNCTION account_get (in_id) RETURNS chart AS
 $$
 DECLARE
-	account chart%ROWTYPE
+	account chart%ROWTYPE;
 BEGIN
 	SELECT * INTO account FROM chart WHERE id = in_id;
 	RETURN account;
