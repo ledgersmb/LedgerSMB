@@ -412,22 +412,22 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION payment_post 
-(in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
-	in_cash_accno text, in_approved bool, in_payment_date date, 
-        in_account_class int)
-IS $$
-This function takes the following arguments (prefaced with in_ in the db):
-trans_id:  Id for ar/ap transaction.
-source: text for source documnet identifier (for example, check number)
-amount:  numeric for the amount of the transaction
-ar_ap_accno:  AR/AP account number
-cash_accno:  Cash Account number, i.e. the account where the payment will be 
-held
-approved:  False, for a voucher.
+-- COMMENT ON FUNCTION payment_post 
+-- (in_trans_id int, in_source text, in_amount numeric, in_ar_ap_accno text,
+--	in_cash_accno text, in_approved bool, in_payment_date date, 
+--      in_account_class int)
+--IS $$
+--This function takes the following arguments (prefaced with in_ in the db):
+--trans_id:  Id for ar/ap transaction.
+--source: text for source documnet identifier (for example, check number)
+--amount:  numeric for the amount of the transaction
+--ar_ap_accno:  AR/AP account number
+--cash_accno:  Cash Account number, i.e. the account where the payment will be 
+--held
+--approved:  False, for a voucher.
 
-This function posts the payment or saves the payment voucher. 
-$$;
+--This function posts the payment or saves the payment voucher. 
+--$$;
 
 
 -- Move this to the projects module when we start on that. CT
