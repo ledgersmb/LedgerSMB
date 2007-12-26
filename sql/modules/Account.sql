@@ -8,7 +8,7 @@ BEGIN
 	SELECT * INTO account FROM chart WHERE id = in_id;
 	RETURN account;
 END;
-$$ LANGAUGE plpgsql;
+$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION account_is_orphaned (in_id int) RETURNS bool AS
 $$
