@@ -30,20 +30,6 @@ CREATE TYPE report_aging_item AS (
 );
 
 
-CREATE AGGREGATE as_array (
-	BASETYPE = ANYELEMENT,
-	STYPE = ANYARRAY,
-	SFUNC = ARRAY_APPEND,
-	INITCOND = '{}'
-);
-
-CREATE AGGREGATE compound_array (
-	BASETYPE = ANYARRAY,
-	STYPE = ANYARRAY,
-	SFUNC = ARRAY_CAT,
-	INITCOND = '{}'
-);
-
 CREATE OR REPLACE FUNCTION 
 report_invoice_aging(in_entity_id int, in_entity_class int) 
 RETURNS SETOF report_aging_item
