@@ -1387,7 +1387,7 @@ GRANT SELECT ON language, project TO public;
 GRANT SELECT ON business, exchangerate, department, shipto, tax TO public;
 GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
 GRANT ALL ON transactions, entity_employee, customer, vendor TO public;
-GRANT ALL ON pending_job, payment_queue TO PUBLIC;
+GRANT ALL ON pending_job, payments_queue TO PUBLIC;
 GRANT ALL ON pending_job_id_seq TO public;
 --TODO, lock recurring, pending_job, payment_queue down more
 
