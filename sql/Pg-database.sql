@@ -375,6 +375,7 @@ CREATE TABLE acc_trans (
   approved bool default true,
   cleared_on date,
   reconciled_on date,
+  voucher_id int references voucher(id),
   entry_id SERIAL PRIMARY KEY
 );
 --
@@ -688,10 +689,10 @@ CREATE TABLE tax (
   chart_id int PRIMARY KEY,
   rate numeric,
   taxnumber text,
-  validto date,
+  validto timestamp default 'infinity',
   pass integer DEFAULT 0 NOT NULL,
   taxmodule_id int DEFAULT 1 NOT NULL,
-  FOREIGN KEY (chart_id) REFERENCES chart (id),
+  FOREIGN KEY (chart_id) REFERENCES chart (id, validto),
   FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id)
 );
 --
