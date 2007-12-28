@@ -487,8 +487,10 @@ qq|<textarea name="intnotes" rows="$rows" cols="35" wrap="soft">$form->{intnotes
             my $taccno = $item;
 	    $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
             $form->{"${taccno}_total"} =
-                $form->round_amount($form->{taxes}{$item}, 2);
-                $tax .= qq|
+                $form->format_amount(\%myconfig,
+                    $form->round_amount($form->{taxes}{$item}, 2),
+                2);
+            $tax .= qq|
 		<tr>
 		  <th align="right">$form->{"${item}_description"}</th>
 		  <td align="right">$form->{"${item}_total"}</td>
