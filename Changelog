@@ -1,3 +1,14 @@
+Changelog for 1.2.11
+* Simplified obtaining years with transactions (Chris T)
+* Fixed dataset creation (Chris T)
+* Tax display fixes for AR/AP transactions (Chris T, 1794077, 1790768)
+* Fixed encoding errors in numeral to text conversion (Seneca)
+* Fixed the displayed number format for AP invoice taxes (Seneca)
+* Fixed the selection of taxes when validto is involved (Seneca, anarcat's
+  addtion to 1818792) 
+
+
+
 Changelog for 1.2.10
 * Fixed bug 1765161, post button duplicates invoices.(Chris T)
 * Adding a minor fixes to COGS edge cases for reversed invoices. (Chris T)
