@@ -83,7 +83,7 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if $self->{path} =~ /lynx/i;
 
-    $self->{version}   = "1.2.10";
+    $self->{version}   = "1.2.11";
     $self->{dbversion} = "1.2.0";
 
     bless $self, $type;
