@@ -81,20 +81,22 @@ BEGIN
 		            ELSE (a.amount - a.paid) * c.discount / 100  
 		       END AS due
 		  FROM (SELECT id, invnumber, transdate, amount, entity_id,
-		               1 as invoice_class, paid, curr
+		               1 as invoice_class, paid, curr, 
+		               entity_credit_account
 		          FROM ap
                          UNION
 		        SELECT id, invnumber, transdate, amount, entity_id,
-		               2 AS invoice_class, paid, curr
+		               2 AS invoice_class, paid, curr,
+		               entity_credit_account
 		          FROM ar
 		       ) a
-		  JOIN entity_credit_account c USING (entity_id)
+		  JOIN entity_credit_account c ON (c.id = a.entity_credit_account
+			OR (a.entity_credit_account IS NULL and 
+				a.entity_id = c.entity_id))
 		 WHERE a.invoice_class = in_account_class
 		       AND c.entity_class = in_account_class
 		       AND a.amount - a.paid <> 0
 		       AND a.curr = in_curr
-		       AND a.credit_account = coalesce(in_entity_credit_id, 
-				a.credit_account)
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
