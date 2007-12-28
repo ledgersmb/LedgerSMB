@@ -1,0 +1,87 @@
+<?lsmb INCLUDE 'ui-header.html'
+	titlebar = text('Inventory Adjustment Entry') # '
+	include_stylesheet = [
+		'css/global.css'
+		stylesheet
+	]
+?><?lsmb PROCESS 'elements.html' ?>
+<body>
+	<form id='inv_adjust' name='inv_adjust' action='inventory.pl' 
+		method='post'>
+	<div class="listtop"><?lsmb text('Enter Inventory')?></div>
+	<div class="label" id="date_div">
+		<label for="date_span"><?lsmb text('Adjustment Date') ?></label>
+		<span id="date_span"><?lsmb transdte ?></span>
+		<?lsmb INCLUDE input element_data = {
+			name  = "transdate"
+			type  = "hidden"
+			value = transdate
+		} ?></div>
+	<table>
+	<tr class="listheading">
+		<th><?lsmb text('Partnumber') ?></th>
+		<th><?lsmb text('Description') ?></th>
+		<th><?lsmb text('Counted') ?></th>
+		<th><?lsmb text('On Hand') ?></th>
+		<th><?lsmb text('Adjustment') ?></th>
+	</tr>
+	<?lsmb FOREACH i = [ 1 .. rowcount ] -?>
+	<?lsmb ${"id_$i"} = (${"id_$i"}) ? ${"id_$i"} : "New_$i"
+		# ids are numeric -?>
+	<?lsmb INCLUDE input element_data = {
+		name  = "id_$i"
+		value = ${"id_$i"}
+		type  = "hidden"
+	} ?>	
+        <tr>
+		<td><?lsmb INCLUDE input element_data = {
+			name  = "partnumber_${id_$i}"
+			value = ${partnumber_${"id_$i"}}
+			class = "control_code"
+			type  = "text"
+			size  = "20"                        
+		} ?></td>
+		<td><?lsmb INCLUDE input element_data = {
+			name  = "description_${id_$i}"
+			value = ${description_${"id_$i"}}
+			type  = "hidden"
+		} ?><?lsmb ${description_${"id_$i"}} ?></td>
+		<td><?lsmb INCLUDE input element_data = {
+			name  = "counted_${id_$i}"
+			value = ${counted_${"id_$i"}}
+			class = "numeric"
+			type  = "text"
+			size  = "20"                    
+		} ?></td>
+		<td><?lsmb INCLUDE input element_data = {
+			name  = "onhand_${id_$i}"
+			value = ${onhand_${"id_$i"}}
+			type  = "hidden"
+		} ?><?lsmb ${onhand_${"id_$i"}} ?></td>
+		<td><?lsmb INCLUDE input element_data = {
+			name  = "qty_${id_$i}"
+			value = ${qty_${"id_$i"}}
+			type  = "hidden"
+		} ?><?lsmb ${qty_${"id_$i"}} ?></td>
+        </tr>
+	<?lsmb END # foreach i -?>
+	</table>
+	<div id="button_div">
+		<?lsmb INCLUDE button element_data = {
+			text  = text('Next')
+			type  = "submit"
+			class = "submit"
+			name  = "action"
+			value = "adjustment_next"
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+			text  = text('Save')
+			type  = "submit"
+			class = "submit"
+			name  = "action"
+			value = "adjustment_save"
+		} ?>
+		</div>
+	</form>
+</body>
+</html>

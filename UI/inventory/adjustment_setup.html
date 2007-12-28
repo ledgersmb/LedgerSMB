@@ -1,0 +1,31 @@
+<?lsmb INCLUDE 'ui-header.html'
+	titlebar = text('Inventory Adjustment Setup') # '
+	include_stylesheet = [
+		'css/global.css'
+		stylesheet
+	]
+?><?lsmb PROCESS 'elements.html' ?>
+<body>
+<form name="setup_inv_adjust" action="inventory.pl" method="post">
+<div id="date_input_div">
+	<?lsmb INCLUDE input element_data = {
+		name  = "transdate"
+		class = "date"
+		size  = "20"
+		value = transdate
+		type  = "text"
+		label = text('Date');
+	} ?>
+	</div>
+<div id="button_div">
+	<?lsmb INCLUDE input element_data = {
+		name  = "action"
+		type  = "submit"
+		text  = text('Continue')
+		class = "submit"
+		value = "enter_adjust"
+	} ?>
+	</div>
+</form>
+</body>
+</html>
