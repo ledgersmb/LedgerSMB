@@ -361,6 +361,50 @@ Note that poll_frequency is in seconds.  poll_frequency and queue_payments
 are not exposed via the admin interface as they are advanced features best
 handled via DBAs.  $$;
 -- */
+-- batch stuff
+
+CREATE TABLE batch_class (
+  id serial unique,
+  class varchar primary key
+);
+
+insert into batch_class (id,class) values (1,'ap');
+insert into batch_class (id,class) values (2,'ar');
+insert into batch_class (id,class) values (3,'payment');
+insert into batch_class (id,class) values (4,'payment_reversal');
+insert into batch_class (id,class) values (5,'gl');
+insert into batch_class (id,class) values (6,'receipt');
+
+SELECT SETVAL('batch_class_id_seq',6);
+
+CREATE TABLE batch (
+  id serial primary key,
+  batch_class_id integer references batch_class(id) not null,
+  control_code text,
+  description text,
+  approved_on date default null,
+  approved_by int references entity_employee(entity_id),
+  created_by int references entity_employee(entity_id),
+  locked_by int references session(session_id),
+  created_on date default now()
+);
+
+COMMENT ON COLUMN batch.batch_class_id IS
+$$ Note that this field is largely used for sorting the vouchers.  A given batch is NOT restricted to this type.$$;
+
+CREATE TABLE voucher (
+  trans_id int REFERENCES transactions(id) NOT NULL,
+  batch_id int references batch(id) not null,
+  id serial NOT NULL unique,
+  batch_class int references batch_class(id) not null,
+  PRIMARY KEY (batch_class, batch_id, trans_id)
+);
+
+COMMENT ON COLUMN voucher.batch_class IS $$ This is the authoritative class of the 
+voucher. $$;
+
+COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
+
 CREATE TABLE acc_trans (
   trans_id int NOT NULL REFERENCES transactions(id),
   chart_id int NOT NULL REFERENCES chart (id),
@@ -686,14 +730,15 @@ CREATE TABLE partstax (
 );
 --
 CREATE TABLE tax (
-  chart_id int PRIMARY KEY,
+  chart_id int,
   rate numeric,
   taxnumber text,
   validto timestamp default 'infinity',
   pass integer DEFAULT 0 NOT NULL,
   taxmodule_id int DEFAULT 1 NOT NULL,
-  FOREIGN KEY (chart_id) REFERENCES chart (id, validto),
-  FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id)
+  FOREIGN KEY (chart_id) REFERENCES chart (id),
+  FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id),
+  PRIMARY KEY (chart_id, validto)
 );
 --
 CREATE TABLE customertax (
@@ -773,49 +818,6 @@ CREATE TABLE exchangerate (
   PRIMARY KEY (curr, transdate)
 );
 --
-
--- batch stuff
-
-CREATE TABLE batch_class (
-  id serial unique,
-  class varchar primary key
-);
-
-insert into batch_class (id,class) values (1,'ap');
-insert into batch_class (id,class) values (2,'ar');
-insert into batch_class (id,class) values (3,'payment');
-insert into batch_class (id,class) values (4,'payment_reversal');
-insert into batch_class (id,class) values (5,'gl');
-insert into batch_class (id,class) values (6,'receipt');
-
-SELECT SETVAL('batch_class_id_seq',6);
-
-CREATE TABLE batch (
-  id serial primary key,
-  batch_class_id integer references batch_class(id) not null,
-  control_code text,
-  approved_on date default null,
-  approved_by int references entity_employee(entity_id),
-  created_by int references entity_employee(entity_id),
-  locked_by int references session(session_id),
-  created_on date default now()
-);
-
-COMMENT ON COLUMN batch.batch_class_id IS
-$$ Note that this field is largely used for sorting the vouchers.  A given batch is NOT restricted to this type.$$;
-
-CREATE TABLE voucher (
-  trans_id int REFERENCES transactions(id) NOT NULL,
-  batch_id int references batch(id) not null,
-  id serial NOT NULL,
-  batch_class int references batch_class(id) not null,
-  PRIMARY KEY (batch_class, batch_id, trans_id)
-);
-
-COMMENT ON COLUMN voucher.batch_class IS $$ This is the authoritative class of the 
-voucher. $$;
-
-COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
 
 --
 create table shipto (
