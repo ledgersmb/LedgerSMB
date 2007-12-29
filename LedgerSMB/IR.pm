@@ -812,7 +812,7 @@ sub post_invoice {
 			   SET avgcost = avgcost($item),
 			       lastcost = lastcost($item)
 			 WHERE id = $item|;
-        $dbh->prepare($query) || $form->dberror($query);
+        $dbh->do($query) || $form->dberror($query);
     }
     my $rc = $dbh->commit;
 
