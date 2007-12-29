@@ -47,8 +47,6 @@ CREATE TABLE entity_class_to_entity (
 
 COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
 
-
-
 -- USERS stuff --
 CREATE TABLE users (
     id serial UNIQUE, 
@@ -477,8 +475,28 @@ CREATE TABLE entity_credit_account (
     primary_contact int references person(id),
     ar_ap_account_id int references chart(id),
     cash_account_id int references chart(id),
-    PRIMARY KEY(entity_id, meta_number)
+    PRIMARY KEY(entity_id, meta_number, entity_class),
 );
+
+CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u 
+ON entity_credit_account(meta_number)
+WHERE entity_class = 2;
+
+COMMENT ON INDEX entity_credit_ar_accno_idx_u IS
+$$This index is used to ensure that AR accounts are not reused.$$;
+
+-- THe following credit accounts are used for inventory adjustments.
+INSERT INTO entity (name, entity_class) values ('Inventory Entity', 1);
+
+INSERT INTO company (legal_name, entity_id) 
+values ('Inventory Entity', currval('entity_id_seq');
+
+INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
+VALUES 
+(currval('entity_id_seq'), '00000', 1),
+(currval('entity_id_seq'), '00000', 2);
+
+
 -- notes are from entity_note
 -- ssn, iban and bic are from entity_credit_account
 -- 
