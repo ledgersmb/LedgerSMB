@@ -277,18 +277,29 @@ sub display_payments {
 }
   
 
+=item payment
+
+This method is used to set the filter screen and prints it, using the 
+TT2 system. (hopefully it will... )
+
+=back
+
+=cut
+
 sub payment {
  my ($request)    = @_;  
  my $locale       = $request->{_locale};
  my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+ 
 # Lets get the project data... 
  my  @projectOptions; 
  my  @arrayOptions  = $dbPayment->list_open_projects();
- push @projectOptions, {}; #A blank field on the select box 
+  push @projectOptions, {}; #A blank field on the select box 
  for my $ref (0 .. $#arrayOptions) {
        push @projectOptions, { value => $arrayOptions[$ref]->{id}."--".$arrayOptions[$ref]->{projectnumber}."--".$arrayOptions[$ref]->{description},
                                 text => $arrayOptions[$ref]->{projectnumber}."--".$arrayOptions[$ref]->{description}};
  }
+
 # Lets get the departments data...
   my @departmentOptions;
   my $role =  $request->{type} eq 'receipt' ? 'P' : 'C';
@@ -298,6 +309,7 @@ sub payment {
       push @departmentOptions, {  value => $arrayOptions[$ref]->{id}."--".$arrayOptions[$ref]->{description},
                                   text => $arrayOptions[$ref]->{description}};
   }
+
 # Lets get the customer or vendor :)
  my @vcOptions;
  @arrayOptions = $dbPayment->get_open_accounts();
@@ -373,7 +385,6 @@ my $template;
   user     => $request->{_user},
   locale   => $request->{_locale},
   path     => 'UI/payments',
-#  path     => 'UI',
   template => 'payment1',
   format => 'HTML', );
 $template->render($select);# And finally, Lets print the screen :)
@@ -393,42 +404,42 @@ and its used for all the mechanics of an invoices payment module.
 sub payment2 {
 my ($request) = @_;
 my $locale       = $request->{_locale};
-my   $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-
+my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+# VARIABLES
+my ($project_id, $project_number, $project_name, $department_id, $department_name );
 my @array_options;
-# LETS GET THE CUSTOMER/VENDOR INFORMATION	
- ($dbPayment->{entity_id}, my $vendor_customer_name) = split /--/ , $request->{'vendor-customer'};
-
+my @project;
+my @selected_checkboxes;
+my @department;
 my @array_options;
+my @currency_options;
 my $exchangerate;
+# LETS GET THE CUSTOMER/VENDOR INFORMATION	
+($Payment->{entity_id}, my $vendor_customer_name) = split /--/ , $request->{'vendor-customer'};
+my @vc_options;
 
+#@array_options = $Payment->get_vc_info();
+#$request->error($array_options[0]->{name});
 # LETS BUILD THE PROJECTS INFO
 # I DONT KNOW IF I NEED ALL THIS, BUT AS IT IS AVAILABLE I'LL STORE IT FOR LATER USAGE.
-my ($project_id, $project_number, $project_name)  = split /--/ ,  $request->{projects} ; 
-my @project = { name => 'project',  text => $project_number.' '.$project_name,  value => $project_id   };
+if ($request->{projects}) {
+  ($project_id, $project_number, $project_name)  = split /--/ ,  $request->{projects} ; 
+  @project = { name => 'projects',  text => $project_number.' '.$project_name,  value => $request->{projects}};
+}
 # LETS GET THE DEPARTMENT INFO
-my ($department_id, $department_name)             = split /--/, $request->{department};
-my @department = { name => 'department',  text => $department_name,  value => $department_id };
+if ($request->{department}) {
+ ($department_id, $department_name)             = split /--/, $request->{department};
+ @department = { name => 'department',  text => $department_name,  value => $request->{department}};
+} 
 # LETS GET ALL THE ACCOUNTS
-my @account_options;
-@array_options = $dbPayment->list_accounting();
-for my $ref (0 .. $#array_options) {
-      push @account_options, {    value => $array_options[$ref]->{id},
-                                  text =>  $array_options[$ref]->{description}};
-}
+my @account_options = $Payment->list_accounting();
 # LETS GET THE POSSIBLE SOURCES
-my @sources_options;
-@array_options = $dbPayment->get_sources(\%$locale);
-for my $ref (0 .. $#array_options) {
-   push @sources_options, { value => $array_options[$ref],
-                            text =>  $array_options[$ref]};
-}
+my @sources_options = $Payment->get_sources(\%$locale);
 # WE MUST PREPARE THE ENTITY INFORMATION
-  @array_options = $dbPayment->get_vc_info();
+@array_options = $Payment->get_vc_info();
 # LETS BUILD THE CURRENCIES INFORMATION 
 # FIRST, WE NEED TO KNOW THE DEFAULT CURRENCY
-my $default_currency = $dbPayment->get_default_currency(); 
-my @currency_options;
+my $default_currency = $Payment->get_default_currency(); 
 # LETS BUILD THE COLUMN HEADERS WE ALWAYS NEED 
 # THE OTHER HEADERS WILL BE BUILT IF THE RIGHT CONDITIONS ARE MET.
 # -----------------------------------------------
@@ -436,23 +447,15 @@ my @currency_options;
 # ON THE SCREEN ALL THE TIME, SO IF THEY ARE USING THE DEFAULT CURRENCY WE WONT PRINT IT
 my $currency_text  =  $request->{curr} eq $default_currency ? '' : '('.$request->{curr}.')';
 my $default_currency_text = $currency_text ? '('.$default_currency.')' : '';
-
-my @columnAS =  ({text => $locale->text('Invoice')},
-                       {text => $locale->text('Date')},
-                       {text => $locale->text('Total').$default_currency_text},
-                       {text => $locale->text('Paid').$default_currency_text},
-                       {text => $locale->text('Amount Due').$default_currency_text},
-                       {text => $locale->text('To pay').$default_currency_text} 
-                      );
-
 my @column_headers =  ({text => $locale->text('Invoice')},
                        {text => $locale->text('Date')},
                        {text => $locale->text('Total').$default_currency_text},
                        {text => $locale->text('Paid').$default_currency_text},
                        {text => $locale->text('Amount Due').$default_currency_text},
-                       {text => $locale->text('To pay').$default_currency_text} 
-                      );
+                       {text => $locale->text('To pay').$default_currency_text}
+                       );
  # WE NEED TO KNOW IF WE ARE USING A CURRENCY THAT NEEDS AN EXCHANGERATE
+ 
  if ($default_currency ne $request->{curr} ) {
  # FIRST WE PUSH THE OTHER COLUMN HEADERS WE NEED    
      push @column_headers, {text => $locale->text('Exchange Rate')},
@@ -462,99 +465,145 @@ my @column_headers =  ({text => $locale->text('Invoice')},
      @column_headers[5,6,7] = @column_headers[6,7,5];
  # DOES THE CURRENCY IN USE HAS AN EXCHANGE RATE?, IF SO 
  # WE MUST SET THE VALUE, OTHERWISE THE UI WILL HANDLE IT
-       $exchangerate = $dbPayment->get_exchange_rate($request->{curr}, $dbPayment->{current_date});
+   $exchangerate = $request->{exrate} ? 
+                   $request->{exrate} :
+                   $Payment->get_exchange_rate($request->{curr}, 
+                   $request->{datepaid} ? $request->{datepaid} : $Payment->{current_date});
    if ($exchangerate) {
      @currency_options = {
-          name => 'date_curr',
+          name => 'exrate',
           value => "$exchangerate", #THERE IS A STRANGE BEHAVIOUR WITH THIS, 
           text =>  "$exchangerate"  #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
                                     #THERE MUST BE A REASON FOR THIS, I MUST RETURN TO IT LATER
 	  };
    } else {
    @currency_options = {
-        name => 'date_curr'};
+        name => 'exrate'};
    }
  
  } else {
  # WE MUST SET EXCHANGERATE TO 1 FOR THE MATHS SINCE WE
  # ARE USING THE DEFAULT CURRENCY
    $exchangerate = 1;
- }
+   @currency_options = {
+                          name => 'exrate',
+                          value => 1, 
+                          text =>  1 
+                       };
+  }
+
+ # FINALLY WE ADD TO THE COLUMN HEADERS A LAST FIELD TO PRINT THE CLOSE INVOICE CHECKBOX TRICK :)
+ push @column_headers, {text => 'X'};
 # WE NEED TO QUERY THE DATABASE TO CHECK FOR OPEN INVOICES
 # IF WE DONT HAVE ANY INVOICES MATCHING THE FILTER PARAMETERS, WE WILL WARN THE USER AND STOP
 # THE PROCCESS. 
 my @invoice_data;
-@array_options  = $dbPayment->get_open_invoices(); 
+@array_options  = $Payment->get_open_invoices(); 
 if (!$array_options[0]->{invoice_id}) { 
   $request->error($locale->text("Nothing to do"));
 }
 for my $ref (0 .. $#array_options) {
-      push @invoice_data, {       invoice => { number => $array_options[$ref]->{invnumber},
-                                               href   => 'ar.pl?id='."$array_options[$ref]->{invoice_id}"
-                                              },  
-                                  invoice_date  => "$array_options[$ref]->{invoice_date}",
-                                  amount        => "$array_options[$ref]->{amount}",
-                                  due           => "$array_options[$ref]->{due}",
-                                  paid          => "$array_options[$ref]->{amount}" - "$array_options[$ref]->{due}",
-                                  exchange_rate => "$exchangerate",
-                                  due_fx        => "$exchangerate"? "$array_options[$ref]->{due}"/"$exchangerate" : 'N/A',
-                                  topay         =>  "$array_options[$ref]->{due}",
-                                  topay_fx      => { name  => "topay_fx_$ref",
-                                                     value => "$exchangerate" ? "$array_options[$ref]->{due}"/"$exchangerate" : 'N/A'
-                                                   }  
+ if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
+ #We have to set some things first ...
+   my $due_fx; my $topay_fx_value;
+   if ("$exchangerate") {
+       $topay_fx_value =   $due_fx = "$array_options[$ref]->{due}"/"$exchangerate";
+   } else {
+       $topay_fx_value = $due_fx = "N/A";
+   }
+   push @invoice_data, {       invoice => { number => $array_options[$ref]->{invnumber},
+                                            id     =>  $array_options[$ref]->{invoice_id},
+                                            href   => 'ar.pl?id='."$array_options[$ref]->{invoice_id}"
+                                           },  
+                               invoice_date      => "$array_options[$ref]->{invoice_date}",
+                               amount            => "$array_options[$ref]->{amount}",
+                               due               => "$array_options[$ref]->{due}",
+                               paid              => "$array_options[$ref]->{amount}" - "$array_options[$ref]->{due}",
+                               exchange_rate     => "$exchangerate",
+                               due_fx            =>  $due_fx, # This was set at the begining of the for statement
+                               topay             => "$array_options[$ref]->{due}",
+                               source_text       =>  $request->{"source_text_$array_options[$ref]->{invoice_id}"},
+                               optional          =>  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"},
+                               selected_account  =>  $request->{"account_$array_options[$ref]->{invoice_id}"},
+                               selected_source   =>  $request->{"source_$array_options[$ref]->{invoice_id}"},
+                               topay_fx          =>  { name  => "topay_fx_$array_options[$ref]->{invoice_id}",
+                                                       value => $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ? 
+                                                           $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} eq 'N/A' ?
+                                                           $topay_fx_value :
+                                                           $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} :
+                                                           $topay_fx_value
+                                                           # Ugly hack, but works ;) ... not sure if i should
+                                                           # change it.
+                                                 }  
                                                      
-                           };
+                           };# END PUSH 
+ }
+ else {
+  push @selected_checkboxes, {name => "checkbox_$array_options[$ref]->{invoice_id}", 
+                              value => "checked"} ;   
+ } #END IF                          
+}# END FOR
+if (!@invoice_data) { 
+ $request->error($locale->text("Nothing to do").'!');
 }
 # LETS BUILD THE SELECTION FOR THE UI
 my $select = {
   stylesheet => $request->{_user}->{stylesheet},
   header  =>  { text => $request->{type} eq 'receipt' ? $locale->text('Receipt') : $locale->text('Payment') },
-  project => @project,
-  department => @department,
-  account => { 
-             name    => 'account',
-             options => \@account_options},
+  login    => { name  => 'login', 
+                value => $request->{_user}->{login}   },
+  accountclass => {
+   name  => 'account_class',
+   value => $Payment->{account_class} 
+  },
+  project =>  @project ? @project : '' ,        # WE NEED TO VERIFY THAT THE ARRAY EXISTS, IF IT DOESNT, 
+  department => @department ? @department : '', # WE WILL PASS A NULL STRING, THIS FIXES THE ISSUES
+                                                # I WAS HAVING WITH THE NULL ARRAYS, STILL UGLY :P
+  account => \@account_options,
+  selected_account => $request->{account},
   datepaid => {
 	name => 'datepaid',
-	value => $dbPayment->{current_date}
+	value => $request->{datepaid} ? $request->{datepaid} : $Payment->{current_date}
   },
-  source => {
-    name => 'source',
-    options => \@sources_options
-  },
-  source_text => {
-
-	name => 'source_text',
-  },
-  
+  source => \@sources_options,
+  selected_source => $request->{source}, 
+  source_value => $request->{source_value},
   defaultcurrency => {
         text => $default_currency
   },
-  curr => {
-	  text => $request->{curr}  
+  curr => {       name  => 'curr',
+                  value => $request->{curr},
+          
   },
   column_headers => \@column_headers,
   rows		=>  \@invoice_data,
- 
+  vendorcustomer => { name => 'vendor-customer',
+                      value => $request->{'vendor-customer'}
+                     },
+    
   vc => { name => $vendor_customer_name,
           address =>  [ {text => 'Crra 83 #32 -1'},
           	  {text => '442 6464'},
 		  {text => 'Medellín'},
-		  {text => 'Colombia'}]},
-  
+		  {text => 'Colombia'}]
+        },
+  update => {
+    title  => 'UPDATE ALT+U',
+    name =>   'action',
+    value =>  'payment2', 
+    text => $locale->text('UPDATE')
+  },
   post => {
-    accesskey =>  'O',
-    title     =>  'POST ALT+O',
+    title  =>  'POST ALT+O',
     name => 'action',
     value => 'post', 
-    text => "POST"
+    text => $locale->text('POST')
   },
   post_and_print => {
-    accesskey =>  'R',
     title     =>  'POST AND PRINT ALT+R',
     name => 'action',
     value => 'post_and_print', 
-    text => "POST AND PRINT"
+    text => $locale->text("POST AND PRINT")
   },
    format => {
     name => 'FORMAT',
@@ -572,19 +621,20 @@ my $select = {
       {value => 3, text => "EMAIL" }
     ],
   },
- date_curr => @currency_options # I HAVE TO PUT THIS LAST, BECAUSE IT CAN BE NULL
-                                # THIS IS AN UGLY HACK THAT MUST BE FIXED.  
+ exrate => @currency_options,
+ selectedcheckboxes => @selected_checkboxes  ? \@selected_checkboxes : '',
+ notes => $request->{notes}
 };
 my $template = LedgerSMB::Template->new(
   user     => $request->{_user},
   locale   => $request->{_locale},
-#  path     => 'UI/payments',
-  path => 'UI',
+  path     => 'UI/payments',
   template => 'payment2',
   format => 'HTML' );
 eval {$template->render($select) };
-if ($@) { $request->error("$@");  }
+ if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
 }
+
 
 eval { do "scripts/custom/payment.pl"};
 1;

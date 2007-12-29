@@ -15,7 +15,10 @@
  <form name="pay_single_dues" method="post" action="payment.pl">
 
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
-
+ <?lsmb accountclass.type = 'hidden';
+        INCLUDE input element_data=accountclass ?>
+ <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login ?>
+       
  <table width=100%>
   <tr id="top_bar" class="listtop">
     <th id="top_bar_header" class="listtop"><?lsmb header.text ?></th>
@@ -27,7 +30,9 @@
     <table id="cv_info_table">
      <tr id="cv_row">
       <th class="label_left" id="cv_label_column"><?lsmb  text('Vendor') ?></th>
-       <td id="cv_column"><?lsmb vc.name ?></td>
+       <td id="cv_column">
+       		<?lsmb vc.name ?><?lsmb vendorcustomer.type = 'hidden'; INCLUDE input element_data=vendorcustomer?>       		
+       </td>
      </tr>
      <tr id="cv_address_row">
       <th valign="top" align="right" id="cv_address_label_column"><?lsmb text('Address') ?></th>
@@ -44,7 +49,7 @@
      </tr>
      <tr align="right" id="notes_row">
       <th valign="top" id="notes_column"><?lsmb text('Notes') ?></th>
-      <td><textarea id="notes" name="notes" cols="35" rows="3"></textarea></td>
+      <td><textarea id="notes" name="notes" cols="35" rows="3"><?lsmb notes ?></textarea></td>
      </tr>
     </table>
    </td>
@@ -56,7 +61,7 @@
       <th align="right" nowrap id="project_label_column"><?lsmb text('Projects') ?>:</th>
       <td colspan="2" id="project_column">
           <?lsmb project.text ?>
-	  <?lsmb  project.type="hidden"; PROCESS input element_data=project ?>
+	  <?lsmb  project.type="hidden"; INCLUDE input element_data=project ?>
      </td>
      </tr>
      <?lsmb END ?>
@@ -66,41 +71,61 @@
       <th align="right" nowrap id="department_label_column"><?lsmb  text('Department')  ?>:</th>
       <td colspan="2" id="department_column">
        <?lsmb  department.text ?>
-       <?lsmb  department.type="hidden"; PROCESS input element_data=department ?>
+       <?lsmb  department.type="hidden"; INCLUDE input element_data=department ?>
       </td>
      </tr>
      <?lsmb END ?>
      <tr id="account_row">
      <?lsmb  #here goes all the posible accounts were the paid can be done  ?>
       <th align="right" nowrap id="account_label_column"><?lsmb text('Account') ?></th>
-      <td colspan="2" id="account_column"><?lsmb PROCESS select element_data=account ?></td>
+      <td colspan="2" id="account_column">
+       <select id="account" name="account">
+        <?lsmb FOREACH item IN account -?>
+         <option value="<?lsmb item.id -?>" <?lsmb IF item.id ==  selected_account -?> selected <?lsmb END ?>><?lsmb item.description -?></option>
+        <?lsmb END -?>
+       </select> 
+     </td>
      </tr>
      <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date wich can be called with the onChange Method	  ?>
       <th align="right" nowrap id="date_label_column"><?lsmb text('Date') ?></th>
-      <td colspan="2" id="date_column"> <?lsmb PROCESS input element_data=datepaid ?> </td>
+      <td colspan="2" id="date_column"> <?lsmb INCLUDE input element_data=datepaid ?> </td>
      </tr>
      <tr id="source_row">
-     <?lsmb # here goes all the posible sources wich we can use ?>
+     <?lsmb # here goes all the posible sources wich we can use -?>
       <th align="right" nowrap id="source_label_column"><?lsmb text('Source')?></th>
-       <td width="28%" id="source_column"><?lsmb PROCESS select element_data=source ?></td>
-       <td id="source_text_column"><?lsmb PROCESS input element_data=source_text ?></td>
+      <td width="28%" id="source_column">
+         <select id="source" name="source">
+          <?lsmb FOREACH item IN source -?>
+           <option value="<?lsmb item -?>"<?lsmb IF item == selected_source -?> selected <?lsmb END ?>><?lsmb item -?></option>
+          <?lsmb END -?>
+         </select>
+      </td>
+      <td id="source_text_column">
+      <?lsmb INCLUDE input element_data={ name  => 'source_value' 
+                                          id    => 'source_value'
+                                          value => source_value } -?>
+      </td>
      </tr>
      <tr id="currency_row">
      <?lsmb #  here goes the selected currency in step 1 ?>
-      <th align="right" id="currency_label_column"><?lsmb text('Currency') ?>:</th>
-      <td id="currency_column"><?lsmb PROCESS label element_data=curr ?></td>
+      <th align="right" id="currency_label_column"><?lsmb text('Currency') -?>:</th>
+      <td id="currency_column">
+      		<?lsmb curr.value -?><?lsmb curr.type='hidden'; INCLUDE input element_data=curr -?>
+      </td>
      </tr>
      <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
      <?lsmb  IF defaultcurrency.text != curr.text # Only process element if one exists. ?>
       <tr id="exrate_row">
+      
        <th valig="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
        <td id="exrate_column">
-        <?lsmb  IF date_curr.value ?>
-         <?lsmb  date_curr.text ?>
-        <?lsmb  END ?>
-        <?lsmb  IF !date_curr.value ?>
-         <?lsmb PROCESS input element_data=date_curr ?>
-        <?lsmb  END ?>
+       <?lsmb  IF exrate.value -?>        
+         <?lsmb  exrate.text -?>
+         <?lsmb exrate.type='hidden'; INCLUDE input element_data=exrate -?>
+        <?lsmb  END -?>
+        <?lsmb  IF !exrate.value -?>
+         <?lsmb INCLUDE input element_data=exrate -?>
+        <?lsmb  END -?>
        </td>
       </tr>
      <?lsmb END ?>
@@ -108,7 +133,7 @@
    </td>
   </tr>
  </table>
- <table width="100%" border="1">
+ <table width="100%">
   <tr class="listheading">
    <?lsmb FOREACH column IN column_headers  # Loop through columns ?>
    <th class="listheading"><?lsmb column.text ?></th>
@@ -126,36 +151,67 @@
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
     <td><?lsmb row.due ?></td>
-    <?lsmb IF defaultcurrency.text != curr.text ?>
+    <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><?lsmb row.exchange_rate ?></td>
     <td><?lsmb row.due_fx ?></td>
     <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.topay ?></div></td>
     <?lsmb END ?> 
     <?lsmb #This should be computed and updated to the div using  ?> 
-    <td><?lsmb PROCESS input  element_data=row.topay_fx ?><div id="<?lsmb "div_topay_$i" ?>">
-    <hr />  
-    <table>
-     <tr id="<?lsmb "account-row$i"?>">
-      <?lsmb # here goes all the posible accounts were the paid can be  done ?>
-      <th align="right" nowrap id="<?lsmb "account_label_column$i" ?>"><?lsmb text('Account') ?></th>
-      <td colspan="2" id="<?lsmb "account_column$i" ?>"><?lsmb PROCESS select element_data=account ?></td>
-     </tr>
-     <tr id="<?lsmb "source_row$i" ?>">
-      <?lsmb # here goes all the posible sources wich we can used ?>
-      <th align="right" nowrap id="<?lsmb "source_label_column$i" ?>"><?lsmb text('Source') ?></th>
-      <td width="28%" id="<?lsmb "source_column$i" ?>"><?lsmb PROCESS select element_data=source ?></td>
-      <td><?lsmb PROCESS input element_data=source_text ?></td>   
-      <td nowrap align="left"><input  name="<?lsmb "optionalpay_$i" ?>" type="checkbox"  class="checkbox"></td>
-     </tr>
-    </table>
-   </div>
+    <td><?lsmb INCLUDE input  element_data=row.topay_fx ?>
+     <div id="<?lsmb "div_topay_$i" ?>">
+      <hr />  
+      <table>
+       <tr id="<?lsmb "account-row$i"?>">
+        <?lsmb # here goes all the posible accounts were the paid can be  done ?>
+        <th align="right" nowrap id="<?lsmb "account_label_column$i" ?>"><?lsmb text('Account') ?></th>
+        <td colspan="2" id="<?lsmb "account_column$i" ?>">
+         <select id="account_<?lsmb row.invoice.id -?>" name="account_<?lsmb row.invoice.id -?>">
+          <?lsmb FOREACH item IN account -?>
+           <option value="<?lsmb item.id -?>" <?lsmb IF item.id == row.selected_account -?> selected <?lsmb END ?>><?lsmb item.description -?></option>
+          <?lsmb END -?>
+         </select>
+        </td>
+       </tr>
+       <tr id="<?lsmb "source_row$i" ?>">
+        <?lsmb # here goes all the posible sources wich we can used ?>
+        <th align="right" nowrap id="<?lsmb "source_label_column$i" ?>"><?lsmb text('Source') ?></th>
+        <td width="28%" id="<?lsmb "source_column$i" ?>">
+         <select id="source_<?lsmb row.invoice.id -?>" name="source_<?lsmb row.invoice.id -?>">
+          <?lsmb FOREACH item IN source -?>
+           <option value="<?lsmb item -?>"<?lsmb IF item == row.selected_source -?> selected <?lsmb END ?>><?lsmb item -?></option>
+          <?lsmb END -?>
+         </select>
+        </td>
+        <td><?lsmb INCLUDE input element_data={
+                                              name  => "source_text_$row.invoice.id",
+                                              id    => "source_text_$row.invoice.id",
+                                              value => row.source_text 
+                                              } -?></td>   
+        <td nowrap align="left"><input  name="<?lsmb "optional_pay_$row.invoice.id" -?>"  id="<?lsmb "optional_pay_$row.invoice.id" -?>" type="checkbox"  class="checkbox"
+        <?lsmb IF row.optional -?> checked <?lsmb END -?>></td>
+       </tr>
+      </table>
+     </div>
+     </td>
+     <td valign="MIDDLE"><input type="checkbox" name="checkbox_<?lsmb
+     row.invoice.id ?>"></td>
    <?lsmb END ?>
+   </tr>
   </table>
   <hr />
-  <?lsmb PROCESS button element_data=post ?>
-  <?lsmb PROCESS button element_data=post_and_print ?>
-  <?lsmb PROCESS select element_data=format ?>
-  <?lsmb PROCESS select element_data=media ?>
+  <?lsmb post.accesskey   = 'U';
+         INCLUDE button element_data=update ?>
+  <?lsmb post.accesskey   = 'P';
+         INCLUDE button element_data=post ?>
+  <?lsmb post_and_print.accesskey = 'R';
+         INCLUDE button element_data=post_and_print ?>
+  <?lsmb INCLUDE select element_data=format ?>
+  <?lsmb INCLUDE select element_data=media ?>
+  <?lsmb FOREACH element_data IN selectedcheckboxes  ?>
+    <?lsmb element_data.type  ='hidden';
+    	   element_data.value ='checked'; 
+           INCLUDE input element_data?>
+  <?lsmb END ?>
   </form>
  </body>
 </html>
