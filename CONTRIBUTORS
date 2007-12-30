@@ -75,7 +75,7 @@ widget system for 1.3.
 
 David Mora contributed the new Payment template/system.
 
-Lena Brummett contributed a bug fix for avgcost and lastcost updates.
+Tony Brummett <tony @ blight.com> contributed a bug fix for avgcost and lastcost updates.
 
 Original Authors of SQL-Ledger:
 ===================================
