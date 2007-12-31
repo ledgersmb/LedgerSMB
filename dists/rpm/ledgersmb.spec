@@ -1,8 +1,8 @@
-# RPM spec written for and tested on Fedora Core 6
+# RPM spec written for and tested on CentOS 4 and CentOS 5 
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
-Version: 1.2.5
-Release: 2
+Version: 1.2.11
+Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
 Group: Applications/Productivity
@@ -90,11 +90,6 @@ cp -rp *.pl favicon.ico index.html ledger-smb.eps ledger-smb.gif ledger-smb.png 
   $RPM_BUILD_ROOT%{_datadir}/%{name}/
 rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}/locale/legacy
 
-# users - written to by cgi
-mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/users
-ln -s ../../..%{_localstatedir}/lib/%{name}/users \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/users
-
 # css - written to by cgi
 mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/css
 ln -s ../../..%{_localstatedir}/lib/%{name}/css \
@@ -141,6 +136,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec 31 2007 Christopher Murtagh <cmurtagh@ledgersmb.org> - 1.2.11
+- updating to 1.2.11
+- removing users directory
+
 * Wed Jun 13 2007 David Fetter <david@fetter.org> 1.25-2
 - Updated to 1.25
 - Use perl-* RPM packages rather than bundling them
