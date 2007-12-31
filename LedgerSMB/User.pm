@@ -35,6 +35,7 @@ package LedgerSMB::User;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Session;
 use Data::Dumper;
+use LedgerSMB::Form;
 
 sub new {
 
@@ -825,8 +826,11 @@ sub save_member {
         }
         else {
 
-            my ($employeenumber) =
-              Form::update_defaults( "", \%$self, "employeenumber", $dbh );
+            my $form = {dbh => $dbh};
+            bless($form, 'Form');
+
+            my ($employeenumber) = $form->update_defaults(\%$self, "employeenumber");
+
             $query = qq|
 				INSERT INTO employee 
 				            (login, employeenumber, name, 
