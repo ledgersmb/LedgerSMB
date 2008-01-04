@@ -724,6 +724,34 @@ CREATE TABLE ap (
 
 COMMENT ON COLUMN ap.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
 
+-- Payment stuff by David Mora
+
+CREATE TABLE payment (
+  id serial primary key,
+  reference text NOT NULL,
+  payment_class integer NOT NULL,
+  amount numeric NOT NULL,
+  payment_date date default current_date,
+  closed bool default FALSE,
+  person_id integer references person(id),
+  currency char(3),
+  notes text,
+  department_id integer default 0);
+
+COMMENT ON TABLE payment IS $$ This table will store the main data on a payment, prepayment, overpayment, etc... $$;
+COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment orders, it will be differentiate by payment_class  $$;
+COMMENT ON COLUMN payment.closed IS $$ This will store the current state of a payment/receipt order $$;
+CREATE  INDEX payment_id_idx ON Payment(id);
+
+CREATE TABLE payment_links (
+  payment_id integer references Payment(id),
+  transaction_id integer NOT NULL,
+  amount numeric);
+COMMENT ON TABLE payment_links IS $$ This table will link payment to ar/ap transactions $$;
+COMMENT ON COLUMN payment_links.transaction_id IS $$ This column lacks some data integrity controls that must be implemented in the future $$;
+  
+
+
 --
 CREATE TABLE taxmodule (
   taxmodule_id serial PRIMARY KEY,
