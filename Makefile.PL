@@ -49,7 +49,7 @@ feature 'Developer tool dependencies',
     'FileHandle' => 0;
 
 # Rendering options
-feature 'PDF and Postscript output'
+feature 'PDF and Postscript output',
     -default => 0,
     'Template::Latex' => 0;
 
