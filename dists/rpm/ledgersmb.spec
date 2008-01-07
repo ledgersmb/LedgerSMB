@@ -3,7 +3,7 @@ Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
 Version: 1.2.11
 Release: 1
-License: GPL
+License: GPLv2+
 URL: http://www.ledgersmb.org/
 Group: Applications/Productivity
 Source0: %{name}-%{version}.tar.gz

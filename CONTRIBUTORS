@@ -9,7 +9,8 @@ and other tasks.
 
 Christopher Murtagh <christopher.murtagh @ gmail.com>
 Wrote the session handling fix, has begun reformatting the files to fit the
-current coding standards, and other contributions.
+current coding standards, and other contributions.  He is the current maintainer of
+the RPM packages.
 
 Joshua Drake <jd @ commandprompt . com>
 Contributed database fixes.
