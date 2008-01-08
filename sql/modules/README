@@ -7,6 +7,7 @@ should work.  Note that many of these scripts declare types, so if you want to
 redefine functions, you will need to drop the types and reload the scripts.
 
 Account.sql
+Session.sql
 Business_Type.sql
 Location.sql
 Company.sql
