@@ -958,7 +958,8 @@ sub transactions {
     
     # the third state, all invoices, sets no explicit toggles. It just selects them all, as normal. 
 
-    $query .= "WHERE $where
+    $approved = ($form->{approved}) ? 'NULL' : 'FALSE';
+    $query .= "WHERE (coalesce($approved, TRUE) OR a.approved) AND $where
 			ORDER BY $sortorder";
     my $sth = $dbh->prepare($query);
     $sth->execute(@paidargs) || $form->dberror($query);
