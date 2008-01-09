@@ -131,7 +131,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         }
     }
 
-    &dislay_form(1);
+    display_form(1);
 
 }
 
@@ -951,7 +951,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
     $form->{rowcount} = $count + 1;
 
-    &display_form;
+    display_form;
 
 }
 

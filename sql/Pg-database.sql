@@ -475,7 +475,7 @@ CREATE TABLE entity_credit_account (
     primary_contact int references person(id),
     ar_ap_account_id int references chart(id),
     cash_account_id int references chart(id),
-    PRIMARY KEY(entity_id, meta_number, entity_class),
+    PRIMARY KEY(entity_id, meta_number, entity_class)
 );
 
 CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u 
@@ -489,7 +489,7 @@ $$This index is used to ensure that AR accounts are not reused.$$;
 INSERT INTO entity (name, entity_class) values ('Inventory Entity', 1);
 
 INSERT INTO company (legal_name, entity_id) 
-values ('Inventory Entity', currval('entity_id_seq');
+values ('Inventory Entity', currval('entity_id_seq'));
 
 INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
 VALUES 

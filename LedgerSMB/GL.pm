@@ -417,6 +417,15 @@ sub all_transactions {
     } else {
         $chart_id = 'NULL';
     }
+
+    if (!defined $form->{approved}){
+        $approved = 'true';
+    } elsif ($form->{approved} eq 'all')  {
+        $approved = 'NULL';
+    } else {
+        $approved = $dbh->quote($form->{approved});
+    }
+
     my $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference,
 						  g.description, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, g.notes, c.link,
@@ -429,6 +438,9 @@ sub all_transactions {
 					WHERE $glwhere 
 				              AND (ac.chart_id = $chart_id OR
                                                    $chart_id IS NULL)
+					      AND ($approved IS NULL OR
+						$approved = 
+					        (ac.approved AND g.approved))
 
 					UNION ALL
 
@@ -445,6 +457,9 @@ sub all_transactions {
 					WHERE $arwhere
 				              AND (ac.chart_id = $chart_id OR
                                                    $chart_id IS NULL)
+					      AND ($approved IS NULL OR
+						$approved = 
+					        (ac.approved AND a.approved))
 
 				UNION ALL
 
@@ -461,6 +476,9 @@ sub all_transactions {
 					WHERE $apwhere
 				              AND (ac.chart_id = $chart_id OR
                                                    $chart_id IS NULL)
+					      AND ($approved IS NULL OR
+						$approved = 
+					        (ac.approved AND a.approved))
 				 ORDER BY $sortorder|;
 
     my $sth = $dbh->prepare($query);

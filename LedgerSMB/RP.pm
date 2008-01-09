@@ -925,6 +925,13 @@ sub get_accounts {
         $project = qq|
 			AND ac.project_id = $project_id|;
     }
+    if (!defined $form->{approved}){
+        $approved = 'true';
+    } elsif ($form->{approved} eq 'all')  {
+        $approved = 'NULL';
+    } else {
+        $approved = $dbh->quote($form->{approved});
+    }
 
     if ( $form->{accounttype} eq 'gifi' ) {
 

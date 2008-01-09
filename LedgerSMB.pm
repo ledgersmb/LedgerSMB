@@ -197,7 +197,10 @@ sub new {
     if (!$self->{script}) {
         $self->{script} = 'login.pl';
     }
-    if (($self->{script} eq 'login.pl') &&
+    if ($self->{action} eq 'migrate_user'){
+        return $self;
+    }
+    if ($self->{script} eq 'login.pl' &&
         ($self->{action} eq 'authenticate' || !$self->{action})){
         return $self;
     }
