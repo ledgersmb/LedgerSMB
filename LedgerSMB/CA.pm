@@ -43,10 +43,22 @@ sub all_accounts {
     # connect to database
     my $dbh = $form->{dbh};
 
+    my $approved = ($form->{approved})? 'TRUE' : 'FALSE';
+
     my $query = qq|
 		   SELECT accno, SUM(acc_trans.amount) AS amount
-		     FROM chart, acc_trans
-		    WHERE chart.id = acc_trans.chart_id
+		     FROM chart
+		     JOIN acc_trans ON (chart.id = acc_trans.chart_id)
+		     JOIN transactions ON (acc_trans.trans_id = transactions.id)
+                     JOIN (SELECT id, approved, 'ap' AS tablename FROM ap 
+		          UNION
+                         SELECT id, approved, 'ar' as tablename FROM ar
+			 UNION 
+                         SELECT id, approved, 'gl' as tablename FROM gl
+		    ) g ON (g.id = acc_trans.trans_id 
+				AND transactions.table_name = g.tablename)
+		    WHERE ($approved OR acc_trans.approved)
+			  AND (g.approved OR $approved)
 		 GROUP BY accno|;
 
     my $sth = $dbh->prepare($query);
@@ -108,6 +120,7 @@ sub all_transactions {
 
     # connect to database
     my $dbh = $form->{dbh};
+    my $approved = ($form->{approved})? 'TRUE' : 'FALSE';
 
     # get chart_id
     my $query = qq|
@@ -246,6 +259,9 @@ sub all_transactions {
 							       AND 
 							       a.department_id 
 							       = ?
+							       AND ($approved OR
+							           (a.approved
+							       AND ac.approved))
 								 $project |;
 
                         push @queryargs, $form->{gifi_accno}, $form->{fromdate},
@@ -272,6 +288,9 @@ sub all_transactions {
 							       AND 
 							       a.department_id 
 							       = ?
+							       AND ($approved OR
+							           (a.approved
+							       AND ac.approved))
 							       $project |;
                         push @queryargs, $form->{accno}, $form->{fromdate},
                           $department_id;
@@ -292,8 +311,27 @@ sub all_transactions {
 						  FROM acc_trans ac
 						  JOIN chart c ON 
 						       (ac.chart_id = c.id)
+						  JOIN transactions t ON 
+						       (t.id = ac.trans_id)
+						  JOIN (SELECT id, approved
+						               'ar' AS tablename
+						          FROM ar
+						        UNION 
+						        SELECT id, approved, 
+							       'ap' AS tablename
+						          FROM ap
+						        UNION 
+						        SELECT id, approved, 
+							       'gl' AS tablename
+						          FROM gl
+						        ) a ON 
+						       (a.tablename = t.table_name
+						       AND a.id = t.id)
 						 WHERE c.gifi_accno = ?
 						       AND ac.transdate < ?
+						       AND ($approved OR
+							   (a.approved
+							       AND ac.approved))
 						$project |;
                     @queryargs = ( $form->{gifi_accno}, $form->{fromdate} );
                     if ($p_id) {
@@ -306,8 +344,27 @@ sub all_transactions {
 						  FROM acc_trans ac
 						  JOIN chart c 
 						       ON (ac.chart_id = c.id)
+						  JOIN transactions t ON 
+						       (t.id = ac.trans_id)
+						  JOIN (SELECT id, approved, 
+						               'ar' AS tablename
+						          FROM ar
+						        UNION 
+						        SELECT id, approved, 
+							       'ap' AS tablename
+						          FROM ap
+						        UNION 
+						        SELECT id, approved, 
+							       'gl' AS tablename
+						          FROM gl
+						        ) a ON 
+						       (a.tablename = t.table_name
+						       AND a.id = t.id)
 						 WHERE c.accno = ?
 						       AND ac.transdate < ?
+						       AND ($approved OR
+							   (a.approved
+							       AND ac.approved))
 						$project |;
                     @queryargs = ( $form->{accno}, $form->{fromdate} );
                     if ($p_id) {
@@ -344,6 +401,7 @@ sub all_transactions {
 			$fromdate_where
 			$todate_where
 			$dpt_where
+			       AND ($approved OR (a.approved AND ac.approved))
 			$project|;
         if ($d_id) {
             push @queryargs, $d_id;
@@ -373,6 +431,7 @@ sub all_transactions {
 			  JOIN entity e ON (a.entity_id = e.id)
 			$dpt_join
 			 WHERE ac.chart_id = ?
+			       AND ($approved OR (a.approved AND ac.approved))
 			$fromdate_where
 			$todate_where
 			$dpt_where
@@ -406,6 +465,7 @@ sub all_transactions {
 			  JOIN entity e ON (a.entity_id = e.id)
 			$dpt_join
 			 WHERE ac.chart_id = ?
+			       AND ($approved OR (a.approved AND ac.approved))
 			$fromdate_where
 			$todate_where
 			$dpt_where
@@ -440,6 +500,7 @@ sub all_transactions {
 				  JOIN acc_trans ac ON (ac.chart_id = c.id)
 				 WHERE ac.amount >= 0
 				   AND (c.link = 'AR' OR c.link = 'AP')
+				   AND ac.approved OR $approved
 				   AND ac.trans_id = ?|;
 
     my $dr = $dbh->prepare($query) || $form->dberror($query);
@@ -449,6 +510,7 @@ sub all_transactions {
 				  JOIN acc_trans ac ON (ac.chart_id = c.id)
 				 WHERE ac.amount < 0
 				   AND (c.link = 'AR' OR c.link = 'AP')
+				   AND ac.approved OR $approved
 				   AND ac.trans_id = ?|;
 
     my $cr = $dbh->prepare($query) || $form->dberror($query);
