@@ -1760,13 +1760,26 @@ CREATE TABLE menu_node (
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_node', 'id'), 204, true);
-
+SELECT pg_catalog.setval('menu_node_id_seq', 209, true);
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
 --
+
 COPY menu_node (id, label, parent, "position") FROM stdin;
+205	Transaction Approval	0	5
+128	System	0	16
+190	Stylesheet	0	17
+191	Preferences	0	18
+192	New Window	0	19
+193	Logout	0	20
+206	Batches	205	1
+46	HR	0	6
+50	Order Entry	0	7
+63	Shipping	0	8
+67	Quotations	0	9
+73	General Journal	0	10
+77	Goods and Services	0	11
 0	Top-level	\N	0
 1	AR	0	1
 2	Add Transaction	1	1
@@ -1801,17 +1814,14 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 36	Receipt	35	1
 38	Payment	35	3
 37	Receipts	35	2
-39	Payments	35	4
 146	List Departments	144	2
 42	Receipts	41	1
 43	Payments	41	2
 44	Reconciliation	41	3
 147	Type of Business	128	9
-46	HR	0	5
 47	Employees	46	1
 48	Add Employee	47	1
 49	Search	47	2
-50	Order Entry	0	6
 51	Sales Order	50	1
 52	Purchase Order	50	2
 53	Reports	50	3
@@ -1823,21 +1833,17 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 60	Consolidate	50	5
 61	Sales Orders	60	1
 62	Purchase Orders	60	2
-63	Shipping	0	7
 64	Ship	63	1
 65	Receive	63	2
 66	Transfer	63	3
-67	Quotations	0	8
 68	Quotation	67	1
 69	RFQ	67	2
 70	Reports	67	3
 71	Quotations	70	1
 72	RFQs	70	2
-73	General Journal	0	9
 74	Journal Entry	73	1
 75	Adjust Till	73	2
 76	Reports	73	3
-77	Goods and Services	0	10
 78	Add Part	77	1
 79	Add Service	77	2
 80	Add Assembly	77	3
@@ -1858,7 +1864,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 95	Translations	77	9
 96	Description	95	1
 97	Partsgroup	95	2
-98	Projects	0	11
 99	Add Project	98	1
 100	Add Timecard	98	2
 101	Generate	98	3
@@ -1869,14 +1874,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 106	Time Cards	103	3
 107	Translations	98	5
 108	Description	107	1
-109	Reports	0	12
 110	Chart of Accounts	109	1
 111	Trial Balance	109	2
 112	Income Statement	109	3
 113	Balance Sheet	109	4
 114	Inventory Activity	109	5
-115	Recurring Transactions	0	13
-116	Batch Printing	0	14
 117	Sales Invoices	116	1
 118	Sales Orders	116	2
 119	Checks	116	3
@@ -1888,7 +1890,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 125	Bin Lists	116	9
 126	RFQs	116	10
 127	Time Cards	116	11
-128	System	0	15
 129	Audit Control	128	1
 130	Taxes	128	2
 131	Defaults	128	3
@@ -1946,10 +1947,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 187	Timecard	172	15
 188	Text Templates	128	14
 189	POS Invoice	188	1
-190	Stylesheet	0	16
-191	Preferences	0	17
-192	New Window	0	18
-193	Logout	0	19
 198	AR Voucher	1	2
 3	Sales Invoice	1	3
 11	Customers	1	7
@@ -1970,7 +1967,12 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 204	Reverse Receipts	200	4
 201	Payments	200	1
 202	Reverse Payment	200	2
+98	Projects	0	12
+109	Reports	0	13
+115	Recurring Transactions	0	14
+116	Batch Printing	0	15
 \.
+
 
 --
 -- Name: menu_node_parent_key; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
@@ -2009,7 +2011,7 @@ CREATE TABLE menu_attribute (
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 551, true);
+SELECT pg_catalog.setval('menu_attribute_id_seq', 584, true);
 
 
 --
@@ -2017,6 +2019,10 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id
 --
 
 COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
+26	outstanding	1	584
+205	menu	1	574
+206	module	vouchers.pl	575
+206	action	search_batch	576
 1	menu	1	1
 2	module	ar.pl	2
 2	action	add	3
@@ -2102,9 +2108,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 37	type	receipt	89
 37	action	payments	88
 38	type	check	92
-39	module	cp.pl	93
-39	type	check	95
-39	action	payments	94
+194	module	ar.pl	538
+194	action	add	539
 40	module	gl.pl	96
 40	action	add	97
 40	transfer	1	98
@@ -2214,9 +2219,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 85	menu	1	204
 86	module	ic.pl	205
 87	action	search	206
-86	action	search	207
-87	module	ic.pl	208
-86	searchitems	all	209
 88	module	ic.pl	211
 88	action	requirements	212
 89	action	search	213
@@ -2522,8 +2524,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 0	menu	1	535
 136	menu	1	536
 144	menu	1	537
-194	module	ar.pl	538
-194	action	add	539
 195	action	add	540
 195	module	is.pl	541
 196	action	add	543
@@ -2535,9 +2535,26 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 195	type	credit_invoice	542
 197	type	debit_invoice	546
 36	account_class	1	551
+202	batch_type	payment_reversal	570
+204	batch_type	receipt_reversal	573
+200	menu	1	552
+198	action	create_batch	554
+198	batch_type	receivable	555
+198	module	vouchers.pl	553
+199	module	vouchers.pl	559
+199	action	create_batch	560
+199	batch_type	payable	561
+201	module	vouchers.pl	562
+201	action	create_batch	563
+203	module	vouchers.pl	565
+203	action	create_batch	566
+203	batch_type	receipts	567
+202	module	vouchers.pl	568
+202	action	create_batch	569
+204	module	vouchers.pl	571
+204	action	create_batch	572
+201	batch_type	payment	564
 \.
-
-
 
 --
 -- Name: menu_attribute_id_key; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
