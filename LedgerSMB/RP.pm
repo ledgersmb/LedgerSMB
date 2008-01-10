@@ -1473,7 +1473,7 @@ sub trial_balance {
 			    JOIN chart c ON (c.id = ac.chart_id)
 			         $dpt_join
 			   WHERE $where $dpt_where $project
-				         AND $approved OR (ac.approved)
+				         AND ($approved OR ac.approved)
 			GROUP BY c.accno, c.description, c.category, c.contra
 			ORDER BY accno|;
 
