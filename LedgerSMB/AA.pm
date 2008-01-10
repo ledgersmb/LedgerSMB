@@ -736,6 +736,7 @@ sub transactions {
     my $buysell = 'buy';
     my $acc_trans_join;
     my $acc_trans_flds;
+    my $approved = ($form->{approved}) ? 'TRUE' : 'FALSE';
 
     if ( $form->{vc} eq 'vendor' ) {
         $ml      = -1;
@@ -754,7 +755,9 @@ sub transactions {
 			SELECT SUM(ac.amount) * -1 * $ml
 			  FROM acc_trans ac
 			  JOIN chart c ON (c.id = ac.chart_id)
+		
 			 WHERE ac.trans_id = a.id
+			       AND ($approved OR ac.approved)
 			       AND (c.link LIKE '%${ARAP}_paid%' 
 			       OR c.link = '')|;
         if ( $form->{transdateto} ) {
@@ -957,9 +960,9 @@ sub transactions {
     }
     
     # the third state, all invoices, sets no explicit toggles. It just selects them all, as normal. 
+    # $approved is safe as it is set to either "TRUE" or "FALSE"
 
-    $approved = ($form->{approved}) ? 'NULL' : 'FALSE';
-    $query .= "WHERE (coalesce($approved, TRUE) OR a.approved) AND $where
+    $query .= "WHERE ($approved OR a.approved) AND $where
 			ORDER BY $sortorder";
     my $sth = $dbh->prepare($query);
     $sth->execute(@paidargs) || $form->dberror($query);
