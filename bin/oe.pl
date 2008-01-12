@@ -1048,9 +1048,9 @@ sub update {
                 for ( keys %{ $form->{item_list}[0] } ) {
                     $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
                 }
-
-                $form->{"discount_$i"} = $form->{discount} * 100;
-
+                if (! defined $form->{"discount_$i"}){
+                    $form->{"discount_$i"} = $form->{discount} * 100;
+                }
                 if ($sellprice) {
                     $form->{"sellprice_$i"} = $sellprice;
 
