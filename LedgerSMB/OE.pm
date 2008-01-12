@@ -2028,8 +2028,8 @@ sub get_inventory {
     my @a = ( partnumber, warehouse );
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
-    if ($fromwarehouse_id) {
-        if ($towarehouse_id) {
+    if ($fromwarehouse_id ne 'NULL') {
+        if ($towarehouse_id ne 'NULL') {
             $where .= "
 				AND NOT i.warehouse_id = $towarehouse_id";
         }
@@ -2041,8 +2041,9 @@ sub get_inventory {
 			FROM inventory i
 			JOIN parts p ON (p.id = i.parts_id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-			JOIN warehouse w ON (w.id = i.warehouse_id)
-			WHERE i.warehouse_id = $fromwarehouse_id
+			LEFT JOIN warehouse w ON (w.id = i.warehouse_id)
+			WHERE (i.warehouse_id = $fromwarehouse_id OR 
+				i.warehouse_id IS NULL))
 			$where
 			GROUP BY p.id, p.partnumber, p.description, 
 				pg.partsgroup, w.description, i.warehouse_id 
@@ -2074,7 +2075,7 @@ sub get_inventory {
 			FROM inventory i
 			JOIN parts p ON (p.id = i.parts_id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-			JOIN warehouse w ON (w.id = i.warehouse_id)
+			LEFT JOIN warehouse w ON (w.id = i.warehouse_id)
 			WHERE i.warehouse_id != $towarehouse_id
 				$where
 			GROUP BY p.id, p.partnumber, p.description, 
