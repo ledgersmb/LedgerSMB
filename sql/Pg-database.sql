@@ -1549,32 +1549,6 @@ CREATE TRIGGER del_exchangerate BEFORE DELETE ON ap FOR EACH ROW EXECUTE PROCEDU
 CREATE TRIGGER del_exchangerate BEFORE DELETE ON oe FOR EACH ROW EXECUTE PROCEDURE del_exchangerate();
 -- end trigger
 --
-CREATE FUNCTION check_inventory() RETURNS TRIGGER AS '
-
-declare
-  itemid int;
-  row_data inventory%rowtype;
-
-begin
-
-  if not old.quotation then
-    for row_data in select * from inventory where trans_id = old.id loop
-      select into itemid id from orderitems where trans_id = old.id and id = row_data.orderitems_id;
-
-      if itemid is null then
-	delete from inventory where trans_id = old.id and orderitems_id = row_data.orderitems_id;
-      end if;
-    end loop;
-  end if;
-return old;
-end;
-' language 'plpgsql';
--- end function
---
-CREATE TRIGGER check_inventory AFTER UPDATE ON oe FOR EACH ROW EXECUTE PROCEDURE check_inventory();
--- end trigger
---
---
 CREATE FUNCTION check_department() RETURNS TRIGGER AS '
 
 declare
