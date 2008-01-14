@@ -821,6 +821,10 @@ sub post_invoice {
 
     %$form->{acc_trans} = ();
 
+    if ($form->{id}){
+        delete_invoice($self, $myconfig, $form);
+    }
+
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     unless ( $form->{employee_id} ) {
         ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
@@ -1820,9 +1824,20 @@ sub delete_invoice {
     $form->audittrail( $dbh, "", \%audittrail );
 
     # delete AR record
-    my $query = qq|DELETE FROM ar WHERE id = ?|;
+    
+    my $query = qq|DELETE FROM invoice WHERE trans_id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
+    $sth->finish;
+    $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
+    $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
+    $sth->finish;
+
+    $query = qq|DELETE FROM ar WHERE id = ?|;
+    $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
+    $sth->finish;
 
     # delete spool files
     $query = qq|
