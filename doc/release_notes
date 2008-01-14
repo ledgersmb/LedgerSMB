@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.6
+LedgerSMB 1.2.11
 
 
 
@@ -70,7 +70,7 @@ Also, we discovered the template editor's security system was moved from
 blacklisting to whitelisting, eliminating a whole class of possible security
 issues.
 
-2.3:  New Features
+2.3:  New Features in 1.2.x
 
 Metatron Technology Consulting's SL-POS codebase was merged with this project,
 providing a framework for POS hardware support and more.
@@ -91,12 +91,30 @@ The ledger-smb.conf is now an inifile which will reduce the level of expertise
 necessary to configure it for non-Perl users.
 
 3:  Known Issues
+
+3.1: Reposting Invoices:
 Reposting invoices is known to cause inaccuracies cost of goods sold and
 inventory accounts.  This problem has been confirmed to affect SQL-Ledger 2.6.x 
 as well and is caused by problems involving the de-allocation and trasaction
 reversal routines.  It will be corrected (by removing the ability to truly
 repost invoices) in an upcoming version as we continue to re-engineer the
 application.
+
+Additionally there is a known issue where reposting invoices more than once causes
+a primary key issue on the transactions table.  A fix for this is distributed in
+sql/fixes.
+
+3.2: Tax rate changes
+LedgerSMB 1.2.x's database structure does not handle tax rate changes properly.  A 
+fix for this is in the sql/fixes directory.
+
+3.3: Warehouse Tracking
+LedgerSMB inherited an issue from SQL-Ledger where a shipped sales order deletes all
+known shipping information.  There is a fix for this in the sql/fixes directory.
+
+3.4: Recurring transactions
+LedgerSMB's database structure does not handle certain areas properly regarding 
+recurring transactions.  A fix for this issue is in the sql/fixes directory.
 
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 

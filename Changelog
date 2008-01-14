@@ -1,3 +1,14 @@
+Changelog for 1.2.12
+* Committed Tony Brummett's fix for last/avg costs updates (Chris T)
+* Committing fix for User.pm error handling (1860699, Chris T)
+* Some revisions in spec files (Chris M)
+* Changed LICENSE directive in rpm to the more descriptive gpl v2+ (Chris T)
+* Fixed bug 1835463, cannot transfer to warehouses (Chris T)
+* Adding fix for 1771834, inventory lost converting order to invoice (Chris T)
+* Fixed 1812792, (discount box blank after part lookup (Chris T)
+* Fixed bug 1839776-- reposting sales invoice causes duplication.(Chris T)
+
+
 Changelog for 1.2.11
 * Simplified obtaining years with transactions (Chris T)
 * Fixed dataset creation (Chris T)
