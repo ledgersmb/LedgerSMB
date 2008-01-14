@@ -244,7 +244,7 @@ sub _parse_array {
     my @return_array;
 
     while ($value ne '{}') {
-        my $next;
+        my $next = "";
         my $separator = "";
         if ($value =~ /^\{"/){
             while ($next eq "" or ($next =~ /\\".$/)){
