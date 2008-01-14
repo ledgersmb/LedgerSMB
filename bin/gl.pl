@@ -951,7 +951,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
     $form->{rowcount} = $count + 1;
 
-    display_form;
+    display_form();
 
 }
 
