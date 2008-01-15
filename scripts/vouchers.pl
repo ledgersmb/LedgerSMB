@@ -384,5 +384,5 @@ sub batch_delete {
     search_batch($request);
 }
 
-eval { do "scripts/custom/Voucher.pl"};
+eval { do "scripts/custom/vouchers.pl"};
 1;
