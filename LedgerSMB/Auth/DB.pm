@@ -209,7 +209,7 @@ sub session_destroy {
     $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     # use the central database handle
-    my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
+    my $dbh = $form->{dbh};
 
     my $deleteExisting = $dbh->prepare( "
         DELETE FROM session 
