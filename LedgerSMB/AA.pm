@@ -722,6 +722,8 @@ sub delete_transaction {
     $rc;
 }
 
+# This is going to get a little awkward because it involves delving into the 
+# acc_trans table in order to avoid catching unapproved payment vouchers.
 sub transactions {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -793,7 +795,7 @@ sub transactions {
 		          d.description AS department, 
 		          a.ponumber $acc_trans_flds
 		     FROM $table a
-		     JOIN entity_credit_account vc USING (entity_id)
+		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		LEFT JOIN employee e ON (a.person_id = e.entity_id)
 		LEFT JOIN employee m ON (e.manager_id = m.entity_id)
 		     JOIN entity ee ON (e.entity_id = ee.id)
