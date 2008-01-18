@@ -757,7 +757,6 @@ sub transactions {
 			SELECT SUM(ac.amount) * -1 * $ml
 			  FROM acc_trans ac
 			  JOIN chart c ON (c.id = ac.chart_id)
-		
 			 WHERE ac.trans_id = a.id
 			       AND ($approved OR ac.approved)
 			       AND (c.link LIKE '%${ARAP}_paid%' 
@@ -765,7 +764,7 @@ sub transactions {
         if ( $form->{transdateto} ) {
             $paid .= qq|
 			       AND ac.transdate <= ?|;
-            push @paidargs, $form->{transdateto};
+       #     push @paidargs, $form->{transdateto};
         }
         $form->{summary} = 1;
     }
@@ -783,8 +782,42 @@ sub transactions {
 			LEFT JOIN project pr ON (pr.id = ac.project_id)
 			LEFT JOIN invoice i ON (i.id = ac.invoice_id)|;
     }
-
-    my $query = qq|
+    my $query;
+    if ($form->{outstanding}){
+        # $form->{ARAP} is safe since it is set in calling scripts and not passed from the UA
+        if ($form->{transdateto} eq ''){
+            delete $form->{transdateto};
+        }
+        $query = qq|
+		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
+		          a.duedate, a.netamount, a.amount, a.amount - sum(acs.amount) AS paid,
+		          a.invoice, a.datepaid, a.terms, a.notes,
+		          a.shipvia, a.shippingpoint, 
+		          vce.name, vc.meta_number,
+		          a.entity_id, a.till, 
+		          ex.$buysell AS exchangerate, 
+		          d.description AS department, 
+		          a.ponumber $acc_trans_fields
+		     FROM $table a
+		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
+		     JOIN acc_trans acs ON (acs.trans_id = a.id)
+		     JOIN entity vce ON (vc.entity_id = vce.id)
+		     JOIN chart c ON (acs.chart_id = c.id)
+		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
+		          AND ex.transdate = a.transdate)
+		LEFT JOIN department d ON (a.department_id = d.id)
+		$acc_trans_join
+		    WHERE c.link = '$form->{ARAP}' AND 
+		          (|.$dbh->quote($form->{transdateto}) . qq| IS NULL OR 
+		           |.$dbh->quote($form->{transdateto}) . qq| <= acs.transdate)
+		 GROUP BY a.id, a.invnumber, a.ordnumber, a.transdate, a.duedate, a.netamount,
+		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
+		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description,
+		          a.ponumber, a.invoice, a.datepaid $acc_trans_fields
+		   HAVING sum(acs.amount)::numeric(15,2) <> 0|;
+    
+    } else {
+        $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount, ($paid) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
@@ -796,7 +829,7 @@ sub transactions {
 		          a.ponumber $acc_trans_flds
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
-		LEFT JOIN employee e ON (a.person_id = e.entity_id)
+		     JOIN employee e ON (a.person_id = e.entity_id)
 		LEFT JOIN employee m ON (e.manager_id = m.entity_id)
 		     JOIN entity ee ON (e.entity_id = ee.id)
                 LEFT JOIN entity me ON (m.entity_id = me.id)
@@ -805,6 +838,7 @@ sub transactions {
 		          AND ex.transdate = a.transdate)
 		LEFT JOIN department d ON (a.department_id = d.id) 
 		$acc_trans_join|;
+    }
 
     my %ordinal = (
         id            => 1,
@@ -832,7 +866,10 @@ sub transactions {
     push @a, "manager"  if $form->{l_manager};
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
-    my $where = "1 = 1";
+    my $where = "";
+    if (!$form->{outstanding}){
+        $where = "1 = 1";
+    }
     if ($form->{"meta_number"}){
         $where .= " AND vc.meta_number = " . $dbh->quote($form->{meta_number});
     }
@@ -963,9 +1000,16 @@ sub transactions {
     
     # the third state, all invoices, sets no explicit toggles. It just selects them all, as normal. 
     # $approved is safe as it is set to either "TRUE" or "FALSE"
-
-    $query .= "WHERE ($approved OR a.approved) AND $where
+    if ($form->{outstanding}){
+        if ($where ne ""){
+            $query =~ s/GROUP BY / $where \n GROUP BY /;
+        }
+        $query .= "\n ORDER BY $sortorder";
+    } else {
+        $query .= "WHERE ($approved OR a.approved) AND $where
 			ORDER BY $sortorder";
+    }
+
     my $sth = $dbh->prepare($query);
     $sth->execute(@paidargs) || $form->dberror($query);
 
@@ -984,12 +1028,6 @@ sub transactions {
 
         if ( $ref->{invoice} ) {
             $ref->{description} ||= $ref->{linedescription};
-        }
-
-        if ( $form->{outstanding} ) {
-            next
-              if $form->round_amount( $ref->{amount}, 2 ) ==
-              $form->round_amount( $ref->{paid}, 2 );
         }
 
         push @{ $form->{transactions} }, $ref;
