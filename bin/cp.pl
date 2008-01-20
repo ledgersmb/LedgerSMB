@@ -1392,11 +1392,6 @@ sub print_payments {
     %oldform = ();
     for ( keys %$form ) { $oldform{$_} = $form->{$_} }
 
-    @a =
-      qw(name company address text_amount text_decimal address1 address2 city state zipcode country memo);
-    for (@a) { $temp{$_} = $form->{$_} }
-
-    $form->format_string(@a);
 
     $ok             = 0;
     $j              = 0;
@@ -1464,6 +1459,11 @@ sub print_form {
     ( $form->{yyyy}, $form->{mm}, $form->{dd} ) = $datepaid =~ /(....)(..)(..)/;
 
     &{"$form->{vc}_details"};
+    @a =
+      qw(name company address text_amount text_decimal address1 address2 city state zipcode country memo);
+    for (@a) { $temp{$_} = $form->{$_} }
+
+    $form->format_string(@a);
 
     $form->{templates} = "$myconfig{templates}";
     $form->{IN}        = "$form->{formname}.tex";
