@@ -1066,9 +1066,9 @@ CREATE TABLE jcitems (
 );
 
 
-insert into transactions (id, table_name) SELECT id, 'ap' FROM ap;
+INSERT INTO transactions (id, table_name) SELECT id, 'ap' FROM ap;
 
-insert into transactions (id, table_name) SELECT id, 'ar' FROM ap;
+INSERT INTO transactions (id, table_name) SELECT id, 'ar' FROM ap;
 
 INSERT INTO transactions (id, table_name) SELECT id, 'gl' FROM gl;
 
@@ -1091,14 +1091,14 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE TRIGGER ap_track_global_sequence before insert or update on ap
-for each row execute procedure track_global_sequence();
+CREATE TRIGGER ap_track_global_sequence BEFORE INSERT OR UPDATE ON ap
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
-CREATE TRIGGER ar_track_global_sequence before insert or update on ar
-for each row execute procedure track_global_sequence();
+CREATE TRIGGER ar_track_global_sequence BEFORE INSERT OR UPDATE ON ar
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
-CREATE TRIGGER gl_track_global_sequence before insert or update on gl
-for each row execute procedure track_global_sequence();
+CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
 CREATE TABLE custom_table_catalog (
 table_id SERIAL PRIMARY KEY,
