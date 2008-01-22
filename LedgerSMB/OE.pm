@@ -206,7 +206,6 @@ sub transactions {
         $query .= " AND o.id IN (SELECT DISTINCT trans_id
                              FROM orderitems
 			     WHERE lower(description) LIKE $var)";
-        push @queryargs, $var;
     }
 
     if ( $form->{transdatefrom} ) {
