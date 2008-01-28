@@ -9,5 +9,5 @@ COMMENT ON CONSTRAINT tax_unique ON tax IS
 $$Checks on the base uniqueness of the chart_id, validto combination$$;
 
 CREATE UNIQUE INDEX tax_null_validto_unique_idx ON tax(chart_id) WHERE validto IS NULL;
-COMMENT ON INDEX tax_null_validto_unique_idx ON tax IS
+COMMENT ON INDEX tax_null_validto_unique_idx IS
 $$Part of primary key emulation for the tax table, ensures at most one NULL validto for each chart_id$$;
