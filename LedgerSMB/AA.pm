@@ -816,7 +816,7 @@ sub transactions {
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
 		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description,
 		          a.ponumber, a.invoice, a.datepaid $acc_trans_fields
-		   HAVING sum(acs.amount)::numeric(15,2) <> 0|;
+		   HAVING a.amount::numeric(15,2) <> (a.amount::numeric(15,2) - sum(acs.amount))::numeric(15,2) |;
     
     } else {
         $query = qq|
