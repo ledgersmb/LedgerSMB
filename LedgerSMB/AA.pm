@@ -746,10 +746,12 @@ sub transactions {
         $table   = 'ap';
         $buysell = 'sell';
     }
+    $form->{db_dateformat} = $myconfig->{dateformat};
 
     ( $form->{transdatefrom}, $form->{transdateto} ) =
       $form->from_to( $form->{year}, $form->{month}, $form->{interval} )
-      if $form->{year} && $form->{month};
+      if (($form->{year} && $form->{month}) && 
+          (!$form->{transdatefrom} && !$form->{transdateto}));
 
     my @paidargs = ();
     if ( $form->{outstanding} ) {

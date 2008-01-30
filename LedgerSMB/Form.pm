@@ -3408,7 +3408,7 @@ sub from_to {
     $t[3] = substr( "0$t[3]", -2 );
     $t[5] += 1900;
 
-    ( $self->format_date($fromdate), $self->format_date("$t[5]-$t[4]-$t[3]") );
+    return ( $self->format_date($fromdate), $self->format_date("$t[5]-$t[4]-$t[3]") );
 }
 
 =item $form->audittrail($dbh, $myconfig, $audittrail);
