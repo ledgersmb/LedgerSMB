@@ -809,7 +809,7 @@ sub transactions {
 		$acc_trans_join
 		    WHERE c.link = '$form->{ARAP}' AND 
 		          (|.$dbh->quote($form->{transdateto}) . qq| IS NULL OR 
-		           |.$dbh->quote($form->{transdateto}) . qq| <= acs.transdate)
+		           |.$dbh->quote($form->{transdateto}) . qq| >= acs.transdate)
 		 GROUP BY a.id, a.invnumber, a.ordnumber, a.transdate, a.duedate, a.netamount,
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
 		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description,
