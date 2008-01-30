@@ -141,7 +141,7 @@ sub session_create {
     my $seedRandom = $dbh->prepare("SELECT setseed(?);");
 
     my $fetchSequence =
-      $dbh->prepare("SELECT nextval('session_session_id_seq'), md5(random());");
+      $dbh->prepare("SELECT nextval('session_session_id_seq'), md5(random()::text);");
 
     my $createNew = $dbh->prepare(
         "INSERT INTO session (session_id, users_id, token, transaction_id) 
