@@ -1140,7 +1140,7 @@ sub format_line {
     my $pad;
     my $item;
 
-    while (/<\?lsmb (.+?) \?>/) {
+    TAG: while (/<\?lsmb (.+?) \?>/) {
 
         %a = ();
 
@@ -1168,12 +1168,11 @@ sub format_line {
                 $var =~ s/if\s+not\s+//;
                 s/<\?lsmb if\s+not\s+$var \?>.*?(<\?lsmb end\s+$var \?>|$)//s;
 
-            }
-            else {
+            } else {
                 s/<\?lsmb $var \?>//;
             }
 
-            next;
+            next TAG;
         }
 
         if ( $var =~ /^if\s+/ ) {
@@ -1186,12 +1185,12 @@ sub format_line {
                 s/<\?lsmb if\s+$var \?>.*?(<\?lsmb end\s+$var \?>|$)//s;
             }
 
-            next;
+            next TAG;
         }
 
         if ( $var =~ /^end\s+/ ) {
             s/<\?lsmb $var \?>//;
-            next;
+            next TAG;
         }
 
         if ( $a{align} || $a{width} || $a{offset} ) {
@@ -1347,10 +1346,11 @@ sub format_string {
 
     my $key;
 
-    foreach $key ( @{ $replace{order}{$format} } ) {
-        for (@fields) { $self->{$_} =~ s/$key/$replace{$format}{$key}/g }
+    CHAR: foreach $key ( @{ $replace{order}{$format} } ) {
+        FIELD: for (@fields) {
+            $self->{$_} =~ s/$key/$replace{$format}{$key}/g;
+        }
     }
-
 }
 
 sub datetonum {
@@ -2947,6 +2947,7 @@ sub update_defaults {
                         $self->{transdate}
                     )
                 )[0];
+		$param = quotemeta $param;
                 $var =~ s/$param/$str/;
             }
 
@@ -2965,21 +2966,19 @@ sub update_defaults {
                 }
 
                 my $p = $param;
-                $p =~ s/(<|>|%)//g;
+                $p =~ s/(:<\?lsmb\s*|\s*\?>)//g;
                 my @p = split / /, $p;
                 my @n = split / /, uc $self->{$fld};
 
                 if ( $#p > 0 ) {
-
-                    for ( my $i = 1 ; $i <= $#p ; $i++ ) {
+                    foreach my $i (1 .. $#p) {
                         $str .= substr( $n[ $i - 1 ], 0, $p[$i] );
                     }
-
-                }
-                else {
+                } else {
                     ($str) = split /--/, $self->{$fld};
                 }
 
+                $param = quotemeta $param;
                 $var =~ s/$param/$str/;
                 $var =~ s/\W//g if $fld eq 'phone';
             }
@@ -2987,21 +2986,23 @@ sub update_defaults {
             if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
 
                 my $p = $param;
-                $p =~ s/(<|>|%)//g;
+                $p =~ s/(<\?lsmb\s*|\s*\?>)//g;
                 my $spc = $p;
-                $spc =~ s/\w//g;
+		$spc =~ s/\w//g;
                 $spc = substr( $spc, 0, 1 );
                 my %d = ( yy => 1, mm => 2, dd => 3 );
                 my @p = ();
 
-                my @a = $self->split_date( $myconfig->{dateformat},
+                my @date = $self->split_date( $myconfig->{dateformat},
                     $self->{transdate} );
-                for ( sort keys %d ) { push @p, $a[ $d{$_} ] if ( $p =~ /$_/ ) }
+                for ( sort keys %d ) { push @p, $date[ $d{$_} ] if ( $p =~ /$_/i ) }
                 $str = join $spc, @p;
+                $param = quotemeta $param;
                 $var =~ s/$param/$str/;
             }
 
             if ( $param =~ /<\?lsmb curr/i ) {
+                $param = quotemeta $param;
                 $var =~ s/$param/$self->{currency}/;
             }
         }
