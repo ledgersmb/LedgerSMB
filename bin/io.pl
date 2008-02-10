@@ -1563,7 +1563,7 @@ sub print_form {
             "unit_$i",          "notes_$i"
           );
     }
-    for ( split / /, $form->{taxaccounts} ) { push @a, "${_}_description" }
+    for ( split / /, $form->{taxaccounts} ) { push @vars, "${_}_description" }
 
     $ARAP = ( $form->{vc} eq 'customer' ) ? "AR" : "AP";
     push @vars, $ARAP;
