@@ -1,3 +1,15 @@
+Changelog for 1.2.13
+* Fixed all known implicit cast issues with PostgreSQL 8.3 (Chris T)
+* Fixed Vendor Info Incorrectly Escaped in Check Printing Module(1844159,
+Chris T)
+* Fixed Serial numbers not preserved on order consolidation(1849585, Chris T)
+* Adding fix for double-incrementing id sequence(Chris T)
+* Fixed:  DBD::Pg Error Searching for PO by description (1876963, Chris T)
+* fixed syntax error in COMMENT ON INDEX statement (Seneca)
+* Fixed the display of taxes with '%' in PDF invoices (Seneca)
+* Fixed broken substitution in update_defaults (Seneca)
+
+
 Changelog for 1.2.12
 * Committed Tony Brummett's fix for last/avg costs updates (Chris T)
 * Committing fix for User.pm error handling (1860699, Chris T)
