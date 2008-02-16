@@ -1899,11 +1899,11 @@ sub create_links {
 			       c3.accno AS expense_accno, 
 			       c3.description AS expense_description
 			  FROM chart c1, chart c2, chart c3 
-			 WHERE c1.id IN (SELECT value FROM defaults 
+			 WHERE c1.id IN (SELECT value::int FROM defaults 
 			 WHERE setting_key = 'inventory_accno_id')
-			       AND c2.id IN (SELECT value FROM defaults
+			       AND c2.id IN (SELECT value::int FROM defaults
 			 WHERE setting_key = 'income_accno_id')
-			       AND c3.id IN (SELECT value FROM defaults
+			       AND c3.id IN (SELECT value::int FROM defaults
 			                      WHERE setting_key 
 			                            = 'expense_accno_id')|;
         $sth = $dbh->prepare($query);

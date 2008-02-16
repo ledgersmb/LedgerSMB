@@ -1017,31 +1017,31 @@ sub retrieve_invoice {
         # get default accounts and last invoice number
         $query = qq|
 			SELECT (select c.accno FROM chart c 
-			         WHERE c.id = (SELECT value FROM defaults 
+			         WHERE c.id = (SELECT value::int FROM defaults 
 			                        WHERE setting_key = 
 			                              'inventory_accno_id'))
 			       AS inventory_accno,
 
 			       (SELECT c.accno FROM chart c
-				 WHERE c.id = (SELECT value FROM defaults
+				 WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'income_accno_id'))
 			       AS income_accno,
 
 			       (SELECT c.accno FROM chart c
-			         WHERE c.id = (SELECT value FROM defaults
+			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'expense_accno_id'))
 			       AS expense_accno,
 
 			       (SELECT c.accno FROM chart c
-			         WHERE c.id = (SELECT value FROM defaults
+			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxgain_accno_id'))
 			       AS fxgain_accno,
 
 			       (SELECT c.accno FROM chart c
-			         WHERE c.id = (SELECT value FROM defaults
+			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxloss_accno_id'))
 			       AS fxloss_accno, 
@@ -1051,31 +1051,31 @@ sub retrieve_invoice {
     else {
         $query = qq|
 			SELECT (select c.accno FROM chart c 
-			         WHERE c.id = (SELECT value FROM defaults 
+			         WHERE c.id = (SELECT value::int FROM defaults 
 			                        WHERE setting_key = 
 			                              'inventory_accno_id'))
 			       AS inventory_accno,
 
 			       (SELECT c.accno FROM chart c
-				 WHERE c.id = (SELECT value FROM defaults
+				 WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'income_accno_id'))
 			       AS income_accno,
 
 			       (SELECT c.accno FROM chart c
-			         WHERE c.id = (SELECT value FROM defaults
+			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'expense_accno_id'))
 			       AS expense_accno,
 
 			       (SELECT c.accno FROM chart c
-			         WHERE c.id = (SELECT value FROM defaults
+			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxgain_accno_id'))
 			       AS fxgain_accno,
 
 			       (SELECT c.accno FROM chart c
-			         WHERE c.id = (SELECT value FROM defaults
+			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxloss_accno_id'))
 			       AS fxloss_accno, 

@@ -83,7 +83,7 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if $self->{path} =~ /lynx/i;
 
-    $self->{version}   = "1.2.12";
+    $self->{version}   = "1.2.10";
     $self->{dbversion} = "1.2.0";
 
     bless $self, $type;
@@ -2187,7 +2187,7 @@ sub all_years {
         '11' => 'November',
         '12' => 'December'
     );
-
+    @{$self->{all_years}} = @{$dbh->selectcol_arrayref($query)}; 
     $dbh->commit;
 }
 
@@ -3223,7 +3223,6 @@ sub audittrail {
                 my $key;
                 my $i;
                 my @flds = qw(tablename reference formname action transdate);
-
                 # put into hash and remove dups
                 while (@a) {
                     $key = "$a[2]$a[3]";
