@@ -237,10 +237,10 @@ sub payment_transactions {
     if ( $form->{fx_transaction} ) {
         $fx_transaction = qq|
 			AND NOT (ac.chart_id IN 
-				(SELECT value FROM defaults
+				(SELECT value::int FROM defaults
 					WHERE setting_key = 'fxgain_accno_id'
 				UNION
-				SELECT value FROM defaults
+				SELECT value::int FROM defaults
 					WHERE setting_key = 'fxloss_accno_id'))|;
     }
     else {
