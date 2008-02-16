@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.11
+LedgerSMB 1.2.13
 
 
 
@@ -16,7 +16,8 @@ which it was derived, but the feature set is starting to diverge rapidly.
 * Perl 5.8.
 * Apache, IIS, or other web server that supports CGI.
 * PostgreSQL 8.0 or higher.  7.3 and 7.4 could be supported with some effort but
-will not work out of the box.
+will not work out of the box.  8.3 is expected to raise issues but they will be 
+corrected as we become aware of the problems.
 * Any operating system that supports the above environment.
 * The following CPAN modules:
 	* Data::Dumper
@@ -189,6 +190,10 @@ The POS printing system gives an access denied message because the printer
 triggers the directory transversal checks.  To work around this problem, ensure
 that you do not need to use absolute paths for the printer program (use lpr or
 put netdirect.pl in /usr/local/bin and reference without the full path).
+
+Also the POS system requires some additional configuration both in the chart of 
+accounts and in the system itself.  Please edit the pos.conf.pl and create 
+appropriate till accounts.
 
 Bugs Fixed in 1.2.6:
 ================================
