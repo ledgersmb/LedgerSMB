@@ -170,7 +170,7 @@ BEGIN
 			   ) AS payment_total
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
-		JOIN users u ON (u.entity_id = b.created_by)
+		LEFT JOIN users u ON (u.entity_id = b.created_by)
 		JOIN voucher v ON (v.batch_id = b.id)
 		JOIN batch_class vc ON (v.batch_class = vc.id)
 		LEFT JOIN ar ON (vc.id = 2 AND v.trans_id = ar.id)
