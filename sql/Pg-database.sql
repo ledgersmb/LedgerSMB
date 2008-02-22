@@ -420,6 +420,8 @@ CREATE TABLE acc_trans (
   voucher_id int references voucher(id),
   entry_id SERIAL PRIMARY KEY
 );
+
+CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
 --
 CREATE TABLE invoice (
   id serial PRIMARY KEY,
