@@ -28,7 +28,7 @@ BEGIN
 			
 		END IF;
 		INSERT INTO session(users_id, token, last_used, transaction_id)
-		SELECT id, md5(random()), now(), 0 
+		SELECT id, md5(random()::text), now(), 0 
 		  FROM users WHERE username = SESSION_USER;
 		-- TODO-- remove transaction_id field from session table
 
