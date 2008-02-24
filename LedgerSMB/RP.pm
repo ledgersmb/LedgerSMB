@@ -48,12 +48,12 @@ sub inventory_activity {
     my $where = '';
     if ( $form->{fromdate} ) {
         $where .=
-          "AND coalesce(ar.duedate, ap.duedate) >= "
+          "AND coalesce(ar.transdate, ap.transdate) >= "
           . $dbh->quote( $form->{fromdate} );
     }
     if ( $form->{todate} ) {
         $where .=
-          "AND coalesce(ar.duedate, ap.duedate) < "
+          "AND coalesce(ar.transdate, ap.transdate) < "
           . $dbh->quote( $form->{todate} ) . " ";
     }
     if ( $form->{partnumber} ) {
