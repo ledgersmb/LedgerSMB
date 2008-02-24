@@ -665,7 +665,7 @@ sub post_payments {
 
             # get exchangerate for original
             $query = qq|
-				SELECT $buysell
+				SELECT $buysell AS fx
 				  FROM exchangerate e
 				  JOIN $form->{arap} a 
 				       ON (a.transdate = e.transdate)
@@ -675,7 +675,9 @@ sub post_payments {
             $sth = $dbh->prepare($query);
             $sth->execute( $form->{currency}, $form->{"id_$i"} )
               || $form->dberror( $query, 'CP.pm', 671 );
-            my ($exchangerate) = $sth->fetchrow_array;
+            my $ref = $sth->fetchrow_arrayref();
+            $form->db_parse_numeric(sth => $sth, arrayref => $ref);
+            my ($exchangerate) = @$ref;
 
             $exchangerate ||= 1;
 

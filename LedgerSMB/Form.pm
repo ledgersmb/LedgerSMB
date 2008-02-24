@@ -1541,7 +1541,9 @@ sub check_exchangerate {
 
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute( $currency, $transdate );
-    my ($exchangerate) = $sth->fetchrow_array;
+    my @array = $sth->fetchrow_array;
+    $self->db_parse_numeric(sth => $sth, arrayref => \@array);
+    my ($exchangerate) = @array;
 
     $sth->finish;
 
