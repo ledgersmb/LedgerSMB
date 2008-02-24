@@ -64,7 +64,7 @@ insert into chart (accno,description,charttype,gifi_accno,category,link) values 
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5790','Utilities','A','8812','E','AP_amount');
 insert into chart (accno,description,charttype,gifi_accno,category,link) values ('5800','Licenses','A','8760','E','AP_amount');
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.06);
+insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.05);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2320'),0.08);
 --
 

@@ -82,7 +82,7 @@ INSERT INTO gifi (accno,description) VALUES ('1400', 'Due From/Investment In Rel
 INSERT INTO gifi (accno,description) VALUES ('1401', 'Demand Notes From Related Parties');
 INSERT INTO gifi (accno,description) VALUES ('1402', 'Interest Receivable From Related Parties');
 INSERT INTO gifi (accno,description) VALUES ('1403', 'Loans/Advances Due From Related Parties');
-INSERT INTO gifi (accno,description) VALUES ('1460', 'Customer\'s Liability under Acceptances');
+INSERT INTO gifi (accno,description) VALUES ('1460', 'Customer''s Liability under Acceptances');
 INSERT INTO gifi (accno,description) VALUES ('1480', 'Other Current Assets');
 INSERT INTO gifi (accno,description) VALUES ('1481', 'Deferred Income Taxes');
 INSERT INTO gifi (accno,description) VALUES ('1482', 'Accrued Investment Income');
@@ -563,7 +563,7 @@ INSERT INTO gifi (accno,description) VALUES ('9060', 'Salaries & Wages');
 INSERT INTO gifi (accno,description) VALUES ('9061', 'Commissions');
 INSERT INTO gifi (accno,description) VALUES ('9062', 'Crew Share');
 INSERT INTO gifi (accno,description) VALUES ('9063', 'Bonuses');
-INSERT INTO gifi (accno,description) VALUES ('9064', 'Director\'s Fees');
+INSERT INTO gifi (accno,description) VALUES ('9064', 'Director''s Fees');
 INSERT INTO gifi (accno,description) VALUES ('9065', 'Management Salaries');
 INSERT INTO gifi (accno,description) VALUES ('9066', 'Employee Salaries');
 INSERT INTO gifi (accno,description) VALUES ('9110', 'Sub-Contracts');
