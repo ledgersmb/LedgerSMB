@@ -153,8 +153,6 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         }
     }
-    $form->{department} = "$form->{department}--$myconfig{department_id}"
-        if $myconfig{department_id};
 
     $form->{employee} = "$form->{employee}--$form->{employee_id}";
 
@@ -308,7 +306,7 @@ sub form_header {
     for (qw(customer department employee)) {
         $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
         $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="[^"]*\Q$form->{$_}\E")/$1 selected/;
+        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
     }
 
     $form->{exchangerate} =

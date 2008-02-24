@@ -528,16 +528,6 @@ sub employee_links {
 
     for ( keys %$form ) { $form->{$_} = $form->quote( $form->{$_} ) }
 
-    $form->all_departments;
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-    $form->{selectdepartment} =~ s/("$form->{department}")/$1 selected/;
     if ( @{ $form->{all_deduction} } ) {
         $form->{selectdeduction} = "<option>\n";
         for ( @{ $form->{all_deduction} } ) {
@@ -741,11 +731,6 @@ sub employee_header {
 		<th align=right nowrap>| . $locale->text('BIC') . qq|</th>
 		<td><input name=bic size=11 maxlength=11 value="$form->{bic}"></td>
 	      </tr>
-		<tr>
-		<th align=right nowrap>| . $locale->text('Department') . qq|</th>
-		<td><select name="department">
-		$form->{selectdepartment}
-		</select>
 	    </table>
 	  </td>
 	</tr>
@@ -1426,17 +1411,6 @@ sub update_employee {
     @flds  = qw(before after);
     $count = 0;
     @a     = ();
-    $form->all_departments;
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-    $form->{selectdepartment} =~ s/ selected//;
-    $form->{selectdepartment} =~ s/("$form->{department}")/$1 selected/;
     for $i ( 1 .. $form->{deduction_rows} ) {
         for (@flds) {
             $form->{"${_}_$i"} =

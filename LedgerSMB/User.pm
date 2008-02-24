@@ -138,7 +138,7 @@ sub fetch_config {
 											   email, fax, menuwidth, name, numberformat, 
 											   password, print, printer, role, sid, 
 											   signature, stylesheet, tel, templates, 
-											   timeout, vclimit, u.username, department_id
+											   timeout, vclimit, u.username
 										  FROM users_conf as uc, users as u
 										 WHERE u.username =  ?
 										   AND u.id = uc.id;"
