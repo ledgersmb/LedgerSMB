@@ -1792,7 +1792,9 @@ sub check_exchangerate {
 
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute( $currency, $transdate );
-    my ($exchangerate) = $sth->fetchrow_array;
+    my @array = $sth->fetchrow_array;
+    $self->db_parse_numeric(sth => $sth, arrayref => \@array);
+    my ($exchangerate) = @array;
 
     $sth->finish;
     $self->{dbh}->commit;
@@ -2152,6 +2154,9 @@ sub all_departments {
 
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_department} }, $ref;
+        if ($self->{department_id} == $ref->{id}){
+            $self->{department} = "$ref->{description}--$ref->{id}";
+        }
     }
 
     $sth->finish;
@@ -2195,6 +2200,7 @@ sub create_links {
 
     my ( $self, $module, $myconfig, $vc, $job ) = @_;
 
+    $self->{department_id} = $myconfig->{department_id};
     # get last customers or vendors
     my ( $query, $sth );
 
@@ -2369,6 +2375,8 @@ sub lastname_used {
     my ( $self, $myconfig, $dbh2, $vc, $module ) = @_;
 
     my $dbh = $self->{dbh};
+    $self->{department_id} = $myconfig->{department_id};
+
     $vc ||= $self->{vc};    # add default to correct for improper passing
     my $arap = ( $vc eq 'customer' ) ? "ar" : "ap";
     my $where = "1 = 1";
