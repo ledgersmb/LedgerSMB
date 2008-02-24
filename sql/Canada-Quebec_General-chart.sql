@@ -76,7 +76,7 @@ INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES 
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5800', 'Taxes d\'affaires, droits d\'adhésion et permis', 'A', 'E', 'AP_amount', '8760');
 INSERT INTO chart (accno,description,charttype,category,link,gifi_accno) VALUES ('5810', 'Perte sur change', 'A', 'E', '', '8231');
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.06);
+insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.05);
 insert into tax (chart_id,rate,pass) values ((select id from chart where accno = '2320'),0.075,1);
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1520'));
