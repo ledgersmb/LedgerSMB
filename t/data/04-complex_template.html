@@ -1,0 +1,643 @@
+<?lsmb INCLUDE 'ui-header.html'
+	include_stylesheet = [
+		stylesheet
+		'UI/Contact/contact.css'
+	] ?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+    <?lsmb IF name ?> 
+    <div class="pageheading"><?lsmb name?></font>
+    <?lsmb END ?>
+<div class="navigation" id="nav_div">
+<?lsmb IF entity_id ?><?lsmb operation = "Edit" ?><?lsmb ELSE
+?><?lsmb operation = "Add"
+?><?lsmb END ?> 
+<!-- CT: Keys for localization scripts:
+<?lsmb text("Add Customer") ?>
+<?lsmb text("Edit Customer") ?>
+<?lsmb text("Add Vendor") ?>
+<?lsmb text("Edit Vendor") ?>
+<?lsmb text("Add Employee") ?>
+<?lsmb text("Edit Employee") ?>
+-->
+<ul class="navigation">
+	<?lsmb IF entity_class == 3 ?>
+	<li><a href="#hr_div"><?lsmb text('HR') ?></a></li>
+	<?lsmb ELSE ?>
+	<li><a href="#customer_div"><?lsmb text('Account') ?></a></li>
+	<?lsmb END ?>
+	<?lsmb IF entity_id ?>
+	<li><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
+	<li><a href="#contact_div"><?lsmb text('Contact Info') ?></a></li>
+	<li><a href="#bank_div"><?lsmb text('Bank Accounts') ?></a></li>
+	<li><a href="#notes_div"><?lsmb text('Notes') ?></a></li>
+	<!-- Commented out as not yet implemented -CT
+	<li><a href="#history_div"><?lsmb text('History') ?></a></li>
+	<li><a href="#user_div"><?lsmb text('User') ?></a></li>
+	-->
+	<?lsmb END ?>
+</ul>
+</div>
+<?lsmb IF entity_class == 3 ?>
+<div id="hr_div" class="container">
+	<div class="listtop"><strong><?lsmb text("$operation Employee") ?></strong></div>
+<form name="hr" action="<?lsmb script ?>" method="post">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "entity_id"
+		value = entity_id
+	} ?>
+<div class="input" id="person_name_div"><?lsmb text('Name:')?>&nbsp;
+<!-- TODO:  Add Saluatation -->
+<?lsmb PROCESS input element_data = {
+	label = text('First')
+	name = "first_name"
+	value = first_name
+	type = "text"
+	size = 20
+} ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Middle')
+	name = "middle_name"
+	value = middle_name
+	type = "text"
+	size = 20
+} ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Last')
+	name = "last_name"
+	value = last_name
+	type = "text"
+	size = 20
+} ?>
+</div>
+<div id="job_title_div">
+<!-- Note that the strange # ' constructs are only necessary to help VIM avoid
+problems with multi-word single-quoted constructs in PI tags. -CT  -->
+<?lsmb PROCESS input element_data = {
+	label = text('Job Title:')
+	name = "role"
+	value = role
+	type = "text"
+	size = 20
+} # ' ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Sales:')
+	value = 1
+	type = "checkbox"
+	checked = sales
+	name = "sales"
+} ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Employee Number')
+	value = employee_number
+	name = "employee_number"
+	type = "text"
+	size = 20
+} # ' ?>
+<label for="manager_select"><?lsmb text('Manager:') ?></label>
+<select id="manager_select" name="manager_id">
+<?lsmb FOREACH e = employee ?>
+<option value = e.entity_id <?lsmb (manager_id == e.entity_id) ? "SELECTED" : ""?><?lsmb e.name ?></option>
+<?lsmb END ?>
+</select>
+<div>
+<?lsmb PROCESS input element_data = {
+	label = text('DOB:')
+	name = "dob"
+	value = dob
+	type = "text"
+	class = "date"
+	size = 10
+}  ?>
+<?lsmb PROCESS input element_data = {
+	label = text('Start Date:')
+	name = "start_date"
+	value = start_date
+	type = "text"
+	class = "date"
+	size = 10
+} # '  ?>
+<?lsmb PROCESS input element_data = {
+	label = text('End Date:')
+	name = "end_date"
+	value = end_date
+	class = "text"
+	type = "text"
+	size = 10
+} # ' ?>
+<div>
+<?lsmb PROCESS button element_data = {
+	text = text('Save')
+	class = "submit"
+	type = "submit"
+	value = "save_employee"
+} ?>
+</div>
+</form>
+<?lsmb ELSE ?>
+<div class="container" id="customer_div">
+<?lsmb SWITCH entity_class
+	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
+	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
+	?><?lsmb END ?>
+	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
+<?lsmb FOREACH n = notes ?>
+<div class="entity_note"><?lsmb n.note ?></div>
+<?lsmb END ?>
+<form name="customer" method="POST" action="<?lsmb script ?>">
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "entity_id"
+		value = entity_id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "account_class"
+		value = account_class
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		label = text('Name:'),
+		type= "text",
+		name = "name",
+		value = name,
+		size = "20"
+	} ?><br/>
+	<?lsmb PROCESS input element_data = {
+		label = text("$entity_classname Number:"),
+		type= "text",
+		name = "meta_number",
+		value = meta_number,
+		size = "20"
+	}  # " ?><br/>
+        <table>
+        <tr>
+            <td>
+		<?lsmb PROCESS input element_data = {
+			label = text('Starting Date:'),
+			name = "startdate",
+			class = "date",
+			value = startdate,
+			type = "text",
+			size = "12",
+			maxlength = "10"
+		} #' ?>
+            </td>
+            <td>
+		<?lsmb PROCESS input element_data = {
+			label = text('End Date:'),
+			name = "enddate",
+			class = "date",
+			value = enddate,
+			type = "text",
+			size = "12",
+			maxlength = "10"
+		} #' ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Credit Limit:'),
+			name = "creditlimit",
+			value = creditlimit,
+			type = "text",
+			size = "20"
+		} #' ?>
+            </td>
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Terms:'),
+			name = "terms",
+			value = terms,
+			type = "text",
+			size = "5"
+		} ?> <?lsmb text('days') ?>
+            </td>
+        </tr>
+        <tr>
+            
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Tax Number/SSN:'),
+			name = "taxnumber",
+			value = taxnumber,
+			type = "text",
+			size = "19"
+		} #' ?>
+            </td>
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Subcontract GIFI:'),
+			name = "gifi_accno",
+			value = gifi_accno,
+			type = "text",
+			size = "19"
+		} #' ?>
+            </td>
+        </tr>
+	<tr>
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Discount:'),
+			name = "discount",
+			value = discount,
+			type = "text",
+			size = "3",
+			maxlength = 3
+		} ?>% / 
+		<?lsmb INCLUDE input element_data = {
+			name = "discount_terms",
+			value = discount_terms,
+			type = "text",
+			size = "3",
+			maxlength = 3
+		} ?> <?lsmb text('days') ?>
+            </td>
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('SIC:'),
+			name = "sic_code",
+			value = sic_code,
+			type = "text",
+			size = "19",
+			class = 'sic'
+		} ?>
+            </td>
+        </tr>
+        <tr>
+           <td> <?lsmb INCLUDE select element_data = {
+			name = "ar_ap_account_id"
+			default_values = [ar_ap_account_id]
+			options = ar_ap_acc_list
+			label = text((account_class == 1) ? 'AP' : 'AR')
+			text_attr = "text"
+			value_attr = "id"
+                } ?>
+           </td>
+           <td> <?lsmb INCLUDE select element_data = {
+			name = "payment_account_id"
+			default_values = [payment_account_id]
+			options = cash_acc_list
+			label = text('Payment')
+			text_attr = "text"
+			value_attr = "id"
+                } ?>
+           </td>
+        <tr>
+           <td> <?lsmb INCLUDE select element_data = {
+			name = "business_id"
+			options = business_types
+			default_values = [business_id]
+			text_attr = "description"
+			value_attr = "id"
+			label = text('Business Type:') #'
+			} ?> 
+	  </td>
+          <td> <?lsmb INCLUDE input element_data = {
+			name = "threshold"
+			value = threshold
+			type = "text"
+			size = "20"
+			label = text('Threshold')
+			class = "numeric"
+               } ?>
+	</tr>
+    </table>
+
+            <hr/>
+		<?lsmb INCLUDE button element_data = {
+			text = text('Save'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="save" 
+			accesskey="S" 
+			title="Save [Alt-S]"
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="add_transaction" 
+                        accesskey="A" 
+                        title="Transaction [Alt-A]"
+			text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="add_invoice" 
+                        accesskey="I" 
+                        title="Invoice [Alt-I]"
+			text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="add_order" 
+                        accesskey="O" 
+                        title="Order [Alt-O]"
+			text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="rfq" 
+                        accesskey="Q" 
+                        title="Quotation [Alt-Q]"
+			text = (entity_class == 1) ? text('RFQ') : text('Quotation')
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="pricelist" 
+                        accesskey="P" 
+                        title="Pricelist [Alt-P]"
+			text = text('Pricelist') 
+		} ?>
+    </form>
+</div>
+<?lsmb END ?>
+<?lsmb IF entity_id ?>
+<div id="location_div" class="container">
+    <div class="listtop"><?lsmb text('Locations') ?></div>
+	<!-- This entire form should probably be optionaly automated with AJAX
+	in order to prevent user confusion -CT -->
+    <form id="location_form" action="<?lsmb script ?>">
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="entity_id" 
+		value=entity_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="location_id" 
+		value=location_id
+	} ?>
+    <table width="100%">
+    <tr class="listheading">
+        <th class="type"><?lsmb text('Type') ?></th>
+        <th class="line_one"><?lsmb text('Address1') ?></th>
+        <th class="city"><?lsmb text('City') ?></th>
+        <th class="state"><?lsmb text('State/Province') ?></th>
+        <th class="mail_code"><?lsmb text('ZIP/Post Code') ?></th>
+        <th class="country"><?lsmb text('Country') ?></th>
+	<th class="actions"><?lsmb text('Actions') ?></th>
+    </tr>
+	<?lsmb FOREACH loc = locations ?>
+    <tr>
+	<td class="type"><?lsmb loc.class ?></td>
+	<td class="line_one"><?lsmb loc.line_one ?></td>
+	<td class="city"><?lsmb loc.city ?></td>
+	<td class="state"><?lsmb loc.state ?></td>
+	<td class="mail_code"><?lsmb loc.mail_code ?></td>
+	<td class="country"><?lsmb loc.country ?></td>
+	<td class="actions">
+		<!--  TODO:  Automate links with AJAX -->
+		<a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb id 
+			?>&location_id=<?lsmb loc.id ?>">[edit]</a> 
+		<a href="<?lsmb script ?>?action=delete_location&entity_id=<?lsmb
+			id ?>&location_id=<?lmb loc.id ?>">[delete]</a>
+	</td>
+    </tr>
+	<?lsmb END ?>
+    </table>
+	<div> <!-- TODO:  Move to elements.html -CT -->
+		<label for="loc_type"><?lsmb text('Type:') ?></label>
+		<select id='loc_type' name="location_class">
+		<?lsmb FOREACH lc = location_class_list ?>
+		<option value="<?lsmb lc.id ?>"><?lsmb lc.class ?></option>
+		<?lsmb END ?>
+		</select>
+	</div>
+	<div> 
+		<?lsmb PROCESS input element_data = {
+			label = text('Address:'),
+			name = "line_one",
+			value = line_one,
+			type = "text",
+			size = "20"
+		} ?>
+	</div>
+	<div> 
+		<?lsmb PROCESS input element_data = {
+			name = "line_two",
+			value = line_two,
+			type = "text",
+			size = "20"
+		} ?>
+	</div>
+	<div> 
+		<?lsmb PROCESS input element_data = {
+			name = "line_three",
+			value = line_three,
+			type = "text",
+			size = "20"
+		} ?>
+	</div>
+	<div> 
+		<?lsmb PROCESS input element_data = {
+			label = text('City:'),
+			name = "city",
+			value = city,
+			type = "text",
+			size = "20"
+		} ?>
+	</div>
+	<div> 
+		<?lsmb PROCESS input element_data = {
+			label = text('State/Province:'),
+			name = "state",
+			value = state,
+			type = "text",
+			size = "20"
+		} ?>
+	</div>
+	<div> 
+		<?lsmb PROCESS input element_data = {
+			label = text('Zip/Post Code:'),
+			name = "mail_code",
+			value = mail_code,
+			type = "text",
+			size = "20"
+		} #' ?>
+	</div>
+	<div> <!-- TODO:  Move to elements.html -CT -->
+		<?lsmb INCLUDE select element_data = {
+			text_attr = "name"
+			value_attr = "id"
+			default_values = [country]
+			options = country_list
+			name = "country"
+			label = text('Country:') 
+		} ?>
+	</div>
+	<div><?lsmb PROCESS button element_data = {
+		class = "submit" 
+		name = "action" 
+		value = "add_location" 
+		id = "loc_save_location"
+		text = text('Save Location') 
+	} #' ?>
+	</div>
+    </form>
+</div>
+<div class="container" id="contact_div">
+	<div class="listtop"><?lsmb text('Contact Information') ?></div>
+	<table width="100%">
+	<tr class="listheading">
+		<th class="contact_class"><?lsmb text('Type:') ?></th>
+		<th class="contact"><?lsmb text('Contact Info:') ?></th>
+		<th class="contact_actions"><?lsmb text('Actions:') ?></th>
+	</tr>
+	<?lsmb FOREACH ct = contacts ?>
+	<tr>
+		<td class="contact_class"><?lsmb ct.class ?></td>
+		<td class="contact"><?lsmb ct.contact ?></td>
+		<td class="contact_actions">
+			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
+				?>&contact_id=<?lsmb ct.id 
+				?>&action=edit_contact"
+			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
+			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
+				?>&contact_id=<?lsmb ct.id 
+				?>&action=delete_contact"
+			>[<?lsmb text('Delete'); ?>]</a>
+		</td>
+	</tr>
+	<?lsmb END ?>
+	</table>
+	<form action="<?lsmb script ?>">
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="entity_id" 
+		value=entity_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="contact_id" 
+		value=contact_id
+	} ?>
+	<div><label for="contact_type"><?lsmb text('Type:') ?></label>
+		<select name="contact_class" id="contact_type">
+		<?lsmb FOREACH cc = contact_class_list ?>
+		<option value="<?lsmb cc.id ?>"><?lsmb cc.class ?></option>
+		<?lsmb END ?>
+		</select>
+		<!-- TODO:  Move the above select list to elements.html -CT -->
+	</div>
+	<div>
+		<?lsmb PROCESS input element_data = {
+			label = text('Contact Info:'),
+			name = "contact"
+			value = contact
+			type = "text"
+			size = "20"
+		} #' ?>
+	</div>
+	<div><?lsmb PROCESS button element_data = {
+		name = "action",
+		value = "save_contact",
+		text =  text('Save Contact'),
+		class = "submit"
+		} #' ?>
+	</div>
+</form>
+	
+</div>
+<div class="container" id="bank_div">
+<div class="listtop"><?lsmb text('Bank Accounts') ?></div>
+<table width="100%">
+<tr class="listheading">
+	<th class="bic"><?lsmb text('BIC/SWIFT Code') ?></th>
+	<th class="iban"><?lsmb text('Account Number') ?></th>
+	<th class="actions"><?lsmb text('Actions') ?></th>
+</tr>
+<?lsmb FOREACH ba = bank_account ?>
+<tr>
+	<td class="bic"><?lsmb ba.bic ?></td>
+	<td class="iban"><?lsmb ba.iban ?></td>
+	<td class="actions">
+		<a href="<?lsmb script ?>?action=edit_bank_acct&entity_id=<?lsmb
+			entity_id ?>&bank_account_id=<?lsmb ba.id ?>"
+			>[Edit]</a> 
+		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
+			entity_id ?>&bank_account_id=<?lsmb ba.id ?>"
+			>[Delete]</a> 
+	</td>
+</tr>
+<?lsmb END ?>
+</table>
+<form name="bank_acct" action="<?lsmb script ?>">
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="entity_id" 
+		value=entity_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="bank_account_id" 
+		value=bank_account_id
+	} ?>
+	<div><label for="bic">
+	<?lsmb INCLUDE input element_data = {
+		type="text" 
+		label = text('BIC/SWIFT Code:')
+		name="bic" 
+		value=bic
+		size=20
+	} #' ?>
+	</div>
+	<div><label for="iban">
+	<?lsmb PROCESS input element_data = {
+		type="text" 
+		label = text('Bank Account:')
+		name="iban" 
+		value=iban
+		size=20
+	} #' ?>
+	</div>
+	<div><?lsmb PROCESS button element_data = {
+		name="action" 
+		value="save_bank_account"
+		class="submit"
+		text = text('Save') 
+		} ?>
+	</div>
+</form>
+</div>
+<div id="notes_div">
+<div class="listtop"><?lsmb text('Notes') ?></div>
+<?lsmb FOREACH n = notes ?>
+<div class="note">
+<div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
+<div class="contents"><?lsmb n.note ?></div>
+<?lsmb END ?>
+<form action="<?lsmb script ?>" method="post">
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="entity_id" 
+		value=entity_id
+	} ?>
+<div class="input"><?lsmb PROCESS textarea element_data = {
+	label = text('Notes:<br />') # '
+	name = notes
+} ?></div>
+<div class="input">
+<?lsmb PROCESS button element_data = {
+	text = text('Save')
+	class = 'submit'
+	name = 'action'
+	value = 'save_notes'
+} ?>
+
+</form>
+</div>
+<?lsmb END ?>
+</body>
+</html>
