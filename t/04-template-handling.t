@@ -376,4 +376,14 @@ cmp_ok($number->[1], 'eq', 'hello',
 $template = undef;
 $form = undef;
 
-$form = new Form;
+my $lsmb = LedgerSMB->new();
+$locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
+  or $lsmb->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+
+
+$template = new LedgerSMB::Template('user' => {numberformat => '1.000,00'},
+	'format' => 'HTML', path => 't/data', locale => $locale, 'template' => '04-complex_template', 'no_auto_output' => 1);
+
+$template->render({});
+
+
