@@ -183,7 +183,6 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     in_terms int, in_meta_number varchar(32), in_business_id int, 
     in_language varchar(6), in_pricegroup_id int, 
     in_curr char, in_startdate date, in_enddate date, 
-    in_notes text, 
     in_name text, in_tax_id TEXT,
     in_threshold NUMERIC,
     in_ar_ap_account_id int, 
@@ -254,8 +253,6 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_cash_account_id
             );
             -- entity note class
-            insert into entity_note (note_class, note, ref_key, vector) VALUES (
-                1, in_notes, new_entity_id, to_tsvector(in_notes));
 
             return new_entity_id;
 
