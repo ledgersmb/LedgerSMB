@@ -57,6 +57,7 @@ GRANT INSERT ON entity_credit_account TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT ALL ON entity_credit_account_id_seq TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON company_to_contact TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON company_to_entity TO lsmb_<?lsmb dbname ?>__create_contact;
+GRANT ALL ON SEQUENCE not_id_seq TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON company_to_location TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON customertax TO lsmb_<?lsmb dbname ?>__create_contact;
 GRANT INSERT ON entity_bank_account TO lsmb_<?lsmb dbname ?>__create_contact;
