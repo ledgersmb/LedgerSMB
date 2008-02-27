@@ -396,17 +396,16 @@ CREATE OR REPLACE FUNCTION company__next_id() returns bigint as $$
 $$ language 'sql';
 
 CREATE OR REPLACE FUNCTION company__location_save (
-    in_company_id int,
+    in_entity_id int, in_location_id int,
     in_location_class int, in_line_one text, in_line_two text, 
-    in_city_province TEXT, in_mail_code text, in_country_code int,
+    in_city TEXT, in_state TEXT, in_mail_code text, in_country_code int,
     in_created date
 ) returns int AS $$
     BEGIN
     return _entity_location_save(
-        in_company_id,
+        in_entity_id, in_location_id,
         in_location_class, in_line_one, in_line_two, 
-        in_city_province , in_mail_code, in_country_code,
-        in_created);
+        '', in_city , in_state, in_mail_code, in_country_code);
     END;
 
 $$ language 'plpgsql';
