@@ -69,7 +69,7 @@ This method saves an address for a company.
 
 sub save_location {
     my $self = shift @_;
-    $self->{country_id} = $self->{country};
+    $self->{country_id} = $self->{country_code};
     $self->exec_method(funcname => 'company__location_save');
 
     $self->{dbh}->commit;
