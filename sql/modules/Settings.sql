@@ -48,7 +48,7 @@ BEGIN
 	WHERE setting_key = in_key
 	FOR UPDATE;
 
-	SELECT substring(raw_value from  '(\\d*)(\\D*|<\\?lsmb [^<>] \\?>)*$')
+	SELECT substring(raw_value from  '(' || E'\\' || 'd*)(' || E'\\' || 'D*|<' || E'\\' || '?lsmb [^<>] ' || E'\\' || '?>)*$')
 	INTO base_value;
 
 	IF base_value like '0%' THEN
