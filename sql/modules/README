@@ -14,6 +14,7 @@ Company.sql
 Customer.sql 
 Date.sql
 Defaults.sql
+Setting.sql
 Employee.sql
 Entity.sql
 Payment.sql
