@@ -52,7 +52,8 @@ $$
 declare voucher_item record;
 BEGIN
     	FOR voucher_item IN
-		SELECT v.id, a.invnumber, e.name, v.batch_id, v.trans_id, 
+		SELECT v.id, a.invnumber, e.name, 
+			v.batch_id, v.trans_id, 
 			a.amount, a.transdate, 'Payable'
 		FROM voucher v
 		JOIN ap a ON (v.trans_id = a.id)
@@ -61,7 +62,8 @@ BEGIN
 			AND v.batch_class = (select id from batch_class 
 					WHERE class = 'ap')
 		UNION
-		SELECT v.id, a.invnumber, e.name, v.batch_id, v.trans_id, 
+		SELECT v.id, a.invnumber, e.name, 
+			v.batch_id, v.trans_id, 
 			a.amount, a.transdate, 'Receivable'
 		FROM voucher v
 		JOIN ar a ON (v.trans_id = a.id)
@@ -69,9 +71,9 @@ BEGIN
 		WHERE v.batch_id = in_batch_id 
 			AND v.batch_class = (select id from batch_class 
 					WHERE class = 'ar')
-		UNION
+		UNION ALL
 		-- TODO:  Add the class labels to the class table.
-		SELECT v.id, a.source,
+		SELECT v.id, a.source, 
 			cr.meta_number || '--'  || co.legal_name , 
 			v.batch_id, v.trans_id, 
 			CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
@@ -81,7 +83,7 @@ BEGIN
 			     THEN 'Payment Reversal'
 			END
 		FROM voucher v
-		JOIN acc_trans a ON (v.trans_id = a.trans_id)
+		JOIN acc_trans a ON (v.id = a.voucher_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
 		JOIN chart c ON (a.chart_id = c.id)
 		JOIN ap ON (ap.id = a.trans_id)
@@ -91,9 +93,10 @@ BEGIN
 		WHERE v.batch_id = in_batch_id 
 			AND a.voucher_id = v.id
 			AND (bc.class like 'payment%' AND c.link = 'AP')
-		UNION
-		SELECT v.id, a.source, a.memo, v.batch_id, v.trans_id, 
-			CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
+		UNION ALL
+		SELECT v.id, a.source, a.memo, 
+			v.batch_id, v.trans_id, 
+			CASE WHEN bc.class LIKE 'receipt%' THEN a.amount * -1
 			     ELSE a.amount  END, a.transdate, 
 			CASE WHEN bc.class = 'receipt' THEN 'Receipt'
 			     WHEN bc.class = 'receipt_reversal' 
@@ -110,8 +113,9 @@ BEGIN
 		WHERE v.batch_id = in_batch_id 
 			AND a.voucher_id = v.id
 			AND (bc.class like 'receipt%' AND c.link = 'AR')
-		UNION
-		SELECT v.id, g.reference, g.description, v.batch_id, v.trans_id,
+		UNION ALL
+		SELECT v.id, g.reference, g.description, 
+			v.batch_id, v.trans_id,
 			sum(a.amount), g.transdate, 'gl'
 		FROM voucher v
 		JOIN gl g ON (g.id = v.trans_id)
@@ -152,8 +156,8 @@ BEGIN
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
 			b.created_on,
 			sum(
-				CASE WHEN vc.id = 5 AND al.amount > 0 
-				     THEN al.amount
+				CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
+				     THEN al.amount 
 				     WHEN vc.id  = 1
 				     THEN ap.amount 
 				     WHEN vc.id = 2
