@@ -62,7 +62,7 @@ use strict;
 =item payment
 
 This method is used to set the filter screen and prints it, using the 
-TT2 system. (hopefully it will... )
+TT2 system.
 
 =back
 
@@ -415,11 +415,14 @@ my @array_options;
 my @currency_options;
 my $exchangerate;
 # LETS GET THE CUSTOMER/VENDOR INFORMATION	
-($Payment->{entity_id}, my $vendor_customer_name) = split /--/ , $request->{'vendor-customer'};
+# TODO TODO TODO TODO TODO TODO TODO
+($Payment->{entity_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
+# WE NEED TO RETRIEVE A BILLING LOCATION, THIS IS HARDCODED FOR NOW... Should we change it? 
+$Payment->{location_class_id} = '1';
+#$request->error($Payment->{entity_id});
 my @vc_options;
-
-#@array_options = $Payment->get_vc_info();
-#$request->error($array_options[0]->{name});
+@vc_options = $Payment->get_vc_info();
+# TODO TODO TODO TODO TODO TODO TODO
 # LETS BUILD THE PROJECTS INFO
 # I DONT KNOW IF I NEED ALL THIS, BUT AS IT IS AVAILABLE I'LL STORE IT FOR LATER USAGE.
 if ($request->{projects}) {
@@ -427,8 +430,10 @@ if ($request->{projects}) {
   @project = { name => 'projects',  text => $project_number.' '.$project_name,  value => $request->{projects}};
 }
 # LETS GET THE DEPARTMENT INFO
+# WE HAVE TO SET $dbPayment->{department_id} NOW, THIS DATA WILL BE USED LATER WHEN WE
+# CALL FOR payment_get_open_invoices. :)
 if ($request->{department}) {
- ($department_id, $department_name)             = split /--/, $request->{department};
+ ($Payment->{department_id}, $department_name)             = split /--/, $request->{department};
  @department = { name => 'department',  text => $department_name,  value => $request->{department}};
 } 
 # LETS GET ALL THE ACCOUNTS
@@ -491,20 +496,17 @@ my @column_headers =  ({text => $locale->text('Invoice')},
                           text =>  1 
                        };
   }
-
- # FINALLY WE ADD TO THE COLUMN HEADERS A LAST FIELD TO PRINT THE CLOSE INVOICE CHECKBOX TRICK :)
+# FINALLY WE ADD TO THE COLUMN HEADERS A LAST FIELD TO PRINT THE CLOSE INVOICE CHECKBOX TRICK :)
  push @column_headers, {text => 'X'};
 # WE NEED TO QUERY THE DATABASE TO CHECK FOR OPEN INVOICES
-# IF WE DONT HAVE ANY INVOICES MATCHING THE FILTER PARAMETERS, WE WILL WARN THE USER AND STOP
-# THE PROCCESS. 
+# WE WONT DO ANYTHING IF WE DONT FIND ANY INVOICES, THE USER CAN STILL POST A PREPAYMENT
 my @invoice_data;
+my @topay_state; # WE WILL USE THIS TO HELP UI TO DETERMINE WHAT IS VISIBLE
 @array_options  = $Payment->get_open_invoices(); 
-if (!$array_options[0]->{invoice_id}) { 
-  $request->error($locale->text("Nothing to do"));
-}
+
 for my $ref (0 .. $#array_options) {
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
- #We have to set some things first ...
+# LETS SET THE EXCHANGERATE VALUES
    my $due_fx; my $topay_fx_value;
    if ("$exchangerate") {
        $topay_fx_value =   $due_fx = "$array_options[$ref]->{due}"/"$exchangerate";
@@ -532,20 +534,47 @@ for my $ref (0 .. $#array_options) {
                                                            $topay_fx_value :
                                                            $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} :
                                                            $topay_fx_value
-                                                           # Ugly hack, but works ;) ... not sure if i should
-                                                           # change it.
-                                                 }  
-                                                     
+                                                           # Ugly hack, but works ;) ... 
+                                                 }#END HASH
                            };# END PUSH 
+
+   push @topay_state, {
+                       id  => "topaystate_$array_options[$ref]->{invoice_id}",
+                       value => $request->{"topaystate_$array_options[$ref]->{invoice_id}"}
+                      }; #END PUSH
+                      
  }
  else {
   push @selected_checkboxes, {name => "checkbox_$array_options[$ref]->{invoice_id}", 
                               value => "checked"} ;   
  } #END IF                          
 }# END FOR
-if (!@invoice_data) { 
- $request->error($locale->text("Nothing to do").'!');
-}
+# And finally, we are going to store the information for the overpayment / prepayment / advanced payment
+# and all the stuff, this is only needed for the update function.
+my @overpayment;
+my @overpayment_account;
+# Got to build the account selection box first.
+my @overpayment_account = $Payment->list_overpayment_accounting();
+# Now we build the structure for the UI
+for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
+   if (!$request->{"overpayment_checkbox_$i"}) {  
+     if ( $request->{"overpayment_topay_$i"} ) {
+     # Now we split the account selected options
+     my ($id, $accno, $description) = split(/--/, $request->{"overpayment_account_$i"});
+
+        push @overpayment, {amount  => $request->{"overpayment_topay_$i"},
+                                   source1 => $request->{"overpayment_source1_$i"},
+                                   source2 => $request->{"overpayment_source2_$i"},
+                                   account => { id          => $id,
+                                                accno       => $accno,
+                                                description => $description
+                                              }  
+                                  };
+     } else {
+      $i = $request->{overpayment_qty} + 1; 
+     }
+   }  
+}  
 # LETS BUILD THE SELECTION FOR THE UI
 my $select = {
   stylesheet => $request->{_user}->{stylesheet},
@@ -577,34 +606,19 @@ my $select = {
   },
   column_headers => \@column_headers,
   rows		=>  \@invoice_data,
+  topay_state   => \@topay_state,
   vendorcustomer => { name => 'vendor-customer',
                       value => $request->{'vendor-customer'}
                      },
     
-  vc => { name => $vendor_customer_name,
-          address =>  [ {text => 'Crra 83 #32 -1'},
-          	  {text => '442 6464'},
-		  {text => 'Medellín'},
-		  {text => 'Colombia'}]
+  vc => { name => $Payment->{company_name}, # We will assume that the first Billing Information as default
+          address =>  [ {text => $vc_options[0]->{'line_one'}},
+                        {text =>  $vc_options[0]->{'line_two'}},
+                        {text =>  $vc_options[0]->{'line_three'}},
+                        {text => $vc_options[0]->{city}},
+		        {text => $vc_options[0]->{state}},
+		        {text => $vc_options[0]->{country}}]
         },
-  update => {
-    title  => 'UPDATE ALT+U',
-    name =>   'action',
-    value =>  'payment2', 
-    text => $locale->text('UPDATE')
-  },
-  post => {
-    title  =>  'POST ALT+O',
-    name => 'action',
-    value => 'post', 
-    text => $locale->text('POST')
-  },
-  post_and_print => {
-    title     =>  'POST AND PRINT ALT+R',
-    name => 'action',
-    value => 'post_and_print', 
-    text => $locale->text("POST AND PRINT")
-  },
    format => {
     name => 'FORMAT',
     options => [
@@ -623,7 +637,9 @@ my $select = {
   },
  exrate => @currency_options,
  selectedcheckboxes => @selected_checkboxes  ? \@selected_checkboxes : '',
- notes => $request->{notes}
+ notes => $request->{notes},
+ overpayment         => \@overpayment,
+ overpayment_account => \@overpayment_account
 };
 my $template = LedgerSMB::Template->new(
   user     => $request->{_user},

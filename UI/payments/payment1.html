@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title><?lsmb titlebar ?></title>
+  <title><?lsmb titlebar -?></title>
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="-1" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
@@ -16,46 +16,19 @@
 <body id="payment-1-body">
 
 <form name="search" method="post" action="payment.pl">
-	
-<?lsmb PROCESS elements.html  # Include form elements helper. ?>
-
-<?lsmb PROCESS input element_data=sort ?>
-<?lsmb PROCESS input element_data=nextsub ?>
-<?lsmb PROCESS input element_data=selectcustomer ?>
-<?lsmb PROCESS input element_data=selectaccount ?>
-<?lsmb PROCESS input element_data=selectAR ?>
-<?lsmb PROCESS input element_data=selectadvance ?>
-<?lsmb PROCESS input element_data=defaultcurrency ?>
-<?lsmb PROCESS input element_data=datepaid ?>
-<?lsmb PROCESS input element_data=closedto ?>
-<?lsmb PROCESS input element_data=path ?>
-<?lsmb login.type = 'hidden' ; PROCESS input element_data=login ?>
-<?lsmb accountclass.type = 'hidden'; PROCESS input element_data=accountclass?>
-<?lsmb PROCESS input element_data=sessionid ?>
-<?lsmb PROCESS input element_data=vc ?>
-
+<?lsmb PROCESS elements.html  # Include form elements helper. -?>
+<?lsmb login.type = 'hidden' ; PROCESS input element_data=login -?>
+<?lsmb accountclass.type = 'hidden'; PROCESS input element_data=accountclass -?>
 <?lsmb type.type = "hidden";
        PROCESS input element_data=type;
- ?>
- 
-<?lsmb PROCESS input element_data=selectdepartment ?>
-<?lsmb PROCESS input element_data=callback ?>
-<?lsmb PROCESS input element_data=ARAP ?>
-<?lsmb PROCESS input element_data=nextsub ?>
-
-<table width=100%>
+ -?>
+<table width="100%">
   <tr id="top-bar" class="listtop">
     <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb text('Receipts') ?></th>
   </tr>
 </table>
 
 <table id="search-form-table">
-	<tr id="search-form-row">
-		<td id="projects-label-column" class="label-left"><?lsmb text('Projects') ?></td>
-		<td id="projects-column" colspan="5">
-			<?lsmb PROCESS select element_data=projects ?>
-		</td>
-	</tr>
 	<tr id="cost-center-row">
 		<td id="cost-center-label-column" class="label-left"><?lsmb text('Departments') ?></td>
 		<td id="department-column">
@@ -78,19 +51,26 @@
 			<?lsmb PROCESS select element_data=curr ?>
 		</td>
 	</tr>
-  <tr id="daterange-row">
-		<td id="daterange-label-column" class="label-left"><?lsmb text('Period') ?></td>
-		<td id="month-year-column" colspan="5">
-			<?lsmb PROCESS select element_data=month ?>
-			<?lsmb PROCESS select element_data=year ?>
-			
+  	<tr id="daterange-row">
+		<td id="datefrom-label-column" class="label-left"><?lsmb text('Date from') ?> &gt;=</td>
+		<td id="datefrom-gt-column">
 			<?lsmb 
-			  FOREACH interval_radio IN interval_radios;
-			    interval_radio.type  = "radio";
-			    interval_radio.class = "radio";
-			    PROCESS input element_data=interval_radio;
-			  END;
-			?>
+			     datefrom.type      = "text";
+			     datefrom.size      = "10"  ;
+			     datefrom.maxlenght = "10"  ;
+			     datefrom.name      = "datefrom";
+			     INCLUDE input element_data=datefrom;
+		         -?>
+		</td>
+		<td id="dateto-label-column" class="label-left" align=right><?lsmb text('Date to') ?> &lt;=</td>
+		<td id="dateto-column">
+			<?lsmb 
+			     dateto.type        = "text";
+			     dateto.size        = "10"  ;
+			     dateto.maxlenght   = "10"  ;
+			     dateto.name	= "dateto";
+			     INCLUDE input element_data=dateto;
+			-?>
 		</td>
 	</tr>
 	<tr id="total-row">

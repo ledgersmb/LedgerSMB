@@ -6,16 +6,17 @@ $$
 DECLARE out_entity entity%ROWTYPE;
 BEGIN
 	FOR out_entity IN
-		SELECT ec.id, e.name, e.entity_class, e.created 
+		SELECT ec.id, cp.legal_name as name, e.entity_class, e.created 
 		FROM entity e
 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+		JOIN company cp ON (cp.entity_id = e.id)
 			WHERE ec.entity_class = in_account_class
 		      AND CASE WHEN in_account_class = 1 THEN
-				id IN (SELECT entity_id FROM ap 
+				e.id IN (SELECT entity_id FROM ap 
 					WHERE amount <> paid
 					GROUP BY entity_id)
 			       WHEN in_account_class = 2 THEN
-				id IN (SELECT entity_id FROM ar
+				e.id IN (SELECT entity_id FROM ar
 					WHERE amount <> paid
 					GROUP BY entity_id)
 			  END
@@ -61,12 +62,19 @@ CREATE TYPE payment_invoice AS (
 );
 
 CREATE OR REPLACE FUNCTION payment_get_open_invoices
-(in_account_class int, in_entity_credit_id int, in_curr char(3))
+(in_account_class int,
+ in_entity_credit_id int,
+ in_curr char(3),
+ in_datefrom date, 
+ in_dateto date,
+ in_amountfrom numeric,
+ in_amountto   numeric,
+ in_department_id int)
 RETURNS SETOF payment_invoice AS
 $$
 DECLARE payment_inv payment_invoice;
 BEGIN
-	FOR payment_inv IN
+        FOR payment_inv IN
 		SELECT a.id AS invoice_id, a.invnumber, 
 		       a.transdate AS invoice_date, a.amount, 
 		       CASE WHEN discount_terms 
@@ -79,15 +87,16 @@ BEGIN
 		                 > extract('days' FROM age(a.transdate))
 		            THEN 0
 		            ELSE (a.amount - a.paid) * c.discount / 100  
-		       END AS due
+		       END
+		        AS due
 		  FROM (SELECT id, invnumber, transdate, amount, entity_id,
 		               1 as invoice_class, paid, curr, 
-		               entity_credit_account
+		               entity_credit_account, department_id
 		          FROM ap
                          UNION
 		        SELECT id, invnumber, transdate, amount, entity_id,
 		               2 AS invoice_class, paid, curr,
-		               entity_credit_account
+		               entity_credit_account, department_id
 		          FROM ar
 		       ) a
 		  JOIN entity_credit_account c ON (c.id = a.entity_credit_account
@@ -97,13 +106,24 @@ BEGIN
 		       AND c.entity_class = in_account_class
 		       AND a.amount - a.paid <> 0
 		       AND a.curr = in_curr
+		       AND (a.transdate >= in_datefrom 
+		            OR in_datefrom IS NULL)
+		       AND (a.transdate <= in_dateto
+		            OR in_dateto IS NULL)
+		       AND (a.amount >= in_amountfrom 
+		            OR in_amountfrom IS NULL)
+		       AND (a.amount <= in_amountto
+		            OR in_amountto IS NULL)
+		       AND (a.department_id = in_department_id
+		            OR in_department_id IS NULL)     
+		                 
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3)) IS
+COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3), date, date, numeric, numeric) IS
 $$ This function takes three arguments:
 Type: 1 for vendor, 2 for customer
 Entity_id:  The entity_id of the customer or vendor
@@ -479,8 +499,6 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 -- I HAVE TO MAKE A COMMENT ON THIS FUNCTION
-
-
 -- Move this to the projects module when we start on that. CT
 CREATE OR REPLACE FUNCTION project_list_open(in_date date) 
 RETURNS SETOF project AS
@@ -566,37 +584,50 @@ $$ language plpgsql;
 COMMENT ON FUNCTION currency_get_exchangerate(in_currency char(3), in_date date, in_account_class int) IS
 $$ This function return the exchange rate of a given currency, date and exchange rate class (buy or sell). $$;
 
+--
+--  payment_location_result has the same arch as location_result, except for one field 
+--  This should be unified on the API when we get things working - David Mora
+--
+CREATE TYPE payment_location_result AS (
+        id int,
+        line_one text,
+        line_two text,
+        line_three text,
+        city text,
+        state text,
+        country text,
+        class text
+);
 
-CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_id int) 
-RETURNS SETOF entity AS
+
+--
+--  payment_get_vc_info has the same arch as company__list_locations, except for the filtering capabilities 
+--  This should be unified on the API when we get things working - David Mora
+--
+CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_id int, in_location_class_id int)
+RETURNS SETOF payment_location_result AS
 $$
-DECLARE 
-    out_info entity%ROWTYPE;
+DECLARE out_row RECORD;
+	BEGIN
+		FOR out_row IN
+                SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
+                       l.state, c.name, lc.class
+                FROM location l
+                JOIN company_to_location ctl ON (ctl.location_id = l.id)
+                JOIN company cp ON (ctl.company_id = cp.id)
+                JOIN location_class lc ON (ctl.location_class = lc.id)
+                JOIN country c ON (c.id = l.country_id)
+                WHERE cp.entity_id = in_entity_id AND
+                      lc.id = in_location_class_id
+                ORDER BY lc.id, l.id, c.name
+                LOOP
+                	RETURN NEXT out_row;
+		END LOOP;
+	END;
+$$ LANGUAGE PLPGSQL;
 
-    BEGIN
-        FOR out_info IN
-  
-            SELECT e.id, e.name FROM entity e
-            JOIN company c ON (e.id = c.entity_id)
-            WHERE e.id = in_entity_id
-          
-          --SELECT e.id, c.legal_name, l.line_one, l.city_province, cy.name FROM entity e
-          --JOIN company c ON (e.id = c.entity_id)
-          --JOIN company_to_location cl ON (c.id = cl.company_id)
-          --JOIN location l ON (l.id = cl.location_id)
-          --JOIN country cy ON (cy.id = l.country_id)
-        LOOP
-          return next out_info;
-        END LOOP;
-        
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'ID % not found', in_entity_id;
-        END IF;                              
-              
-    END;
-$$ language plpgsql;                                                                  
-COMMENT ON FUNCTION payment_get_vc_info(in_entity_id int) IS
-$$ This function return vendor or customer info, its under construction $$;
+COMMENT ON FUNCTION payment_get_vc_info(in_entity_id int, in_location_class_id int) IS
+$$ This function returns vendor or customer info $$;
 
 CREATE TYPE payment_record AS (
 	amount numeric,

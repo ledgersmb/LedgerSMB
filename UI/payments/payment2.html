@@ -7,11 +7,12 @@
   <meta http-equiv="Expires" content="-1" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
-
+  <script language="JavaScript"  src="UI/payments/javascript/maximize_minimize.js"></script>
   <meta http-equiv="content-type" content="text/html; charset=<?lsmb charset ?>" />  
   <meta name="robots" content="noindex,nofollow" />
 </head>
-<body id="payment_2_body">
+<body id="payment_2_body"
+onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
  <form name="pay_single_dues" method="post" action="payment.pl">
 
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
@@ -19,14 +20,14 @@
         INCLUDE input element_data=accountclass ?>
  <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login ?>
        
- <table width=100%>
+ <table width="100%">
   <tr id="top_bar" class="listtop">
     <th id="top_bar_header" class="listtop"><?lsmb header.text ?></th>
   </tr>
  </table>
- <table width=100% id="info_table">
-  <tr valign=top id="info_row">
-   <td width=50% id="info_data">
+ <table width="100%" id="info_table">
+  <tr valign="top" id="info_row">
+   <td width="50%" id="info_data">
     <table id="cv_info_table">
      <tr id="cv_row">
       <th class="label_left" id="cv_label_column"><?lsmb  text('Vendor') ?></th>
@@ -35,7 +36,7 @@
        </td>
      </tr>
      <tr id="cv_address_row">
-      <th valign="top" align="right" id="cv_address_label_column"><?lsmb text('Address') ?></th>
+      <th valign="top" align="right" id="cv_address_label_column"><?lsmb text('Location') ?></th>
       <td id="cv_address_column">
        <table id="cv_address_table">
        <?lsmb # this table will show the customer/vendor address, city, phone and others things that could help to reminds them?>
@@ -116,15 +117,14 @@
      <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
      <?lsmb  IF defaultcurrency.text != curr.text # Only process element if one exists. ?>
       <tr id="exrate_row">
-      
        <th valig="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
        <td id="exrate_column">
-       <?lsmb  IF exrate.value -?>        
-         <?lsmb  exrate.text -?>
-         <?lsmb exrate.type='hidden'; INCLUDE input element_data=exrate -?>
+        <?lsmb  IF exrate.value -?>        
+        <?lsmb  exrate.text -?>
+        <?lsmb  exrate.type='hidden'; INCLUDE input element_data=exrate -?>
         <?lsmb  END -?>
         <?lsmb  IF !exrate.value -?>
-         <?lsmb INCLUDE input element_data=exrate -?>
+        <?lsmb INCLUDE input element_data=exrate -?>
         <?lsmb  END -?>
        </td>
       </tr>
@@ -140,7 +140,7 @@
    <?lsmb END ?>
   </tr>
   <?lsmb # We have to clear i for later usage :)  ?>
-  <?lsmb i = '0' ?>
+  <?lsmb i = '0'; topay_subtotal = 0  -?>
   <?lsmb FOREACH row IN rows ?>
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
   <tr class="<?lsmb alterning_style ?>"=>
@@ -157,9 +157,15 @@
     <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.topay ?></div></td>
     <?lsmb END ?> 
     <?lsmb #This should be computed and updated to the div using  ?> 
-    <td><?lsmb INCLUDE input  element_data=row.topay_fx ?>
-     <div id="<?lsmb "div_topay_$i" ?>">
-      <hr />  
+    <td><?lsmb INCLUDE input element_data=row.topay_fx;
+    	       topay_subtotal = topay_subtotal + row.topay_fx.value -?>
+    <?lsmb # A DEGRADABLE JAVASCRIPT IS USED, BECAUSE OF THE VISUAL IMPACT
+    	   # THAT CAUSES THE SIZE OF THIS DIV -?>
+    <img src="UI/payments/img/up.gif" id="button_topay_<?lsmb row.invoice.id ?>" name="<?lsmb "button_topay_$i" ?>"
+     onClick="maximize_minimize('div_topay_<?lsmb row.invoice.id ?>',
+    'topaystate_<?lsmb row.invoice.id ?>' ,this,
+    'UI/payments/img/down.gif', 'UI/payments/img/up.gif')">
+     <div id="div_topay_<?lsmb row.invoice.id ?>">
       <table>
        <tr id="<?lsmb "account-row$i"?>">
         <?lsmb # here goes all the posible accounts were the paid can be  done ?>
@@ -193,25 +199,124 @@
       </table>
      </div>
      </td>
-     <td valign="MIDDLE"><input type="checkbox" name="checkbox_<?lsmb
-     row.invoice.id ?>"></td>
+     <td valign="MIDDLE"><input type="checkbox" name="checkbox_<?lsmb row.invoice.id ?>"></td>
    <?lsmb END ?>
    </tr>
-  </table>
-  <hr />
-  <?lsmb post.accesskey   = 'U';
-         INCLUDE button element_data=update ?>
-  <?lsmb post.accesskey   = 'P';
-         INCLUDE button element_data=post ?>
-  <?lsmb post_and_print.accesskey = 'R';
+   <?lsmb  IF exrate.text == 1 -?>
+     	<?lsmb  colspan = 5 # We will use this later on totals -?>
+   <?lsmb ELSE -?>
+   	<?lsmb  colspan = 8 # We will use this later on totals -?>
+   <?lsmb END -?>
+   <tr class="listsubtotal">
+   <th colspan="<?lsmb colspan -?>" align="right"><?lsmb text('Subtotal') -?></th>
+   <th colspan="2"><?lsmb topay_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
+   </tr>
+   </table>
+   <table width="100%">
+   <tr>
+    <th class="listheading" colspan="5" ><?lsmb text('OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT') ?></th>
+   </tr>
+   <tr>
+   <th class="listheading"><?lsmb text('Item') ?></th>
+   <th class="listheading"><?lsmb text('Account') ?></th>
+   <th class="listheading"><?lsmb text('Source') ?></th>
+   <th class="listheading"><?lsmb text('Amount') ?></th>
+   <th class="listheading">X</th>
+   </tr>
+   <?lsmb # We have to insert the overpayment data  -?>
+   <?lsmb overpayment_item = 0; overpayment_subtotal = 0 -?>
+   <?lsmb FOREACH item IN overpayment -?>
+   <?lsmb overpayment_item = overpayment_item + 1  -?>
+   <?lsmb j = overpayment_item % 2; alterning_style = "listrow$j" ?>
+   <tr class="<?lsmb alterning_style -?>">
+     <td align="center"><?lsmb overpayment_item ?> </td>
+     <td align="center">
+                        <?lsmb item.account.accno -?>--<?lsmb item.account.description -?>
+                        <input type="hidden" id="overpayment_account_<?lsmb overpayment_item -?>" name="overpayment_account_<?lsmb overpayment_item -?>" value="<?lsmb item.account.id -?>--<?lsmb item.account.accno ?>--<?lsmb item.account.description ?>" />
+     </td>
+     <td align="center">
+     	<?lsmb item.source1 -?>	<?lsmb item.source2 -?>
+     	<input type="hidden" id="overpayment_source1_<?lsmb overpayment_item -?>" name="overpayment_source1_<?lsmb overpayment_item -?>" value="<?lsmb item.source1 -?>" />
+     	<input type="hidden" id="overpayment_source2_<?lsmb overpayment_item -?>" name="overpayment_source2_<?lsmb overpayment_item -?>" value="<?lsmb item.source2 -?>" />
+     </td>
+     <td align="center">
+     	<?lsmb item.amount -?>
+     	<input type="hidden" id="overpayment_topay_<?lsmb overpayment_item -?>" name="overpayment_topay_<?lsmb overpayment_item -?>" value="<?lsmb item.amount ?>" />
+     	<?lsmb overpayment_subtotal = overpayment_subtotal + item.amount -?>
+     </td>
+     <td align="center"><input type="checkbox" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>   
+   </tr>        
+   <?lsmb END -?>
+   <?lsmb #Now we insert an empty field to process a new overpayment -?>
+   <?lsmb overpayment_item = overpayment_item + 1;
+          j = overpayment_item % 2;
+          alterning_style = "listrow$j"            -?>
+    <tr class="<?lsmb alterning_style -?>">
+     <td align="center"><?lsmb  overpayment_item -?></td>
+     <td align="center"> 
+          <select id="overpayment_account_<?lsmb overpayment_item -?>"  name="overpayment_account_<?lsmb overpayment_item -?>">
+        <?lsmb FOREACH item IN overpayment_account -?>
+           <option value="<?lsmb item.id ?>--<?lsmb item.accno ?>--<?lsmb item.description ?>"> <?lsmb item.accno ?>--<?lsmb item.description -?></option>
+        <?lsmb END -?>
+          </select>
+     </td>
+     <td align="center">
+        <select id="overpayment_source1_<?lsmb overpayment_item -?>" name="overpayment_source1_<?lsmb overpayment_item -?>">
+          <?lsmb FOREACH item IN source -?>
+           <option value="<?lsmb item -?>"><?lsmb item -?></option>
+          <?lsmb END -?>
+         </select>
+         <input name="overpayment_source2_<?lsmb overpayment_item ?>"     id="overpayment_source2_<?lsmb overpayment_item ?>"  />
+         <input type="hidden" name="overpayment_qty" id="overpayment_qty" value="<?lsmb overpayment_item ?>" />
+     </td>
+     <td align="center"><input name="overpayment_topay_<?lsmb overpayment_item -?>" id="overpayment_topay_<?lsmboverpayment_item ?>" /></td>
+     <td align="center"><input type="checkbox" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>
+   </tr>
+   <tr class="listsubtotal">
+   <th colspan="3" align="right"><?lsmb text('Subtotal') -?></th>
+   <th colspan="2"><?lsmb overpayment_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
+   </tr>
+   <tr class="listtotal">
+   <?lsmb payment_total = overpayment_subtotal + topay_subtotal -?>
+   <th colspan="3" align="right"><?lsmb text('Total') -?></th>
+   <th colspan="2"><?lsmb payment_total -?>&nbsp;<?lsmb curr.value -?></th>
+   </tr>
+   </table>
+   
+   <hr />
+  <?lsmb update.accesskey   = "U";
+         update.title       = "UPDATE ALT+U";
+         update.name        = "action";
+         update.value	    = "payment2";
+         update.text        = text("UPDATE");
+         INCLUDE button element_data=update -?>
+  <?lsmb post.accesskey   = "P";
+         post.title	  = "POST ALT+P";
+         post.name	  = "action";
+         post.value	  = "post";
+         post.text	  = text("POST"); 
+         INCLUDE button element_data=post -?>
+  <?lsmb post_and_print.accesskey = "R";
+         post_and_print.title     = "POST AND PRINT ALT+R";
+         post_and_print.name = "action";
+         post_and_print.value = "post_and_print";
+         post_and_print.text = text("POST AND PRINT");;
          INCLUDE button element_data=post_and_print ?>
   <?lsmb INCLUDE select element_data=format ?>
   <?lsmb INCLUDE select element_data=media ?>
   <?lsmb FOREACH element_data IN selectedcheckboxes  ?>
-    <?lsmb element_data.type  ='hidden';
+    <?lsmb # We should use a cipher here, to avoid XSS
+           element_data.type  ='hidden';
     	   element_data.value ='checked'; 
            INCLUDE input element_data?>
   <?lsmb END ?>
+  <div id=div_topay_state>
+  <?lsmb FOREACH item IN topay_state -?>
+        <?lsmb  item.type = "hidden";
+                item.name = item.id;
+                INCLUDE input element_data=item ?>
+  <?lsmb END -?>
+  </div>          
   </form>
  </body>
 </html>

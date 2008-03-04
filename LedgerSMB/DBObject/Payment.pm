@@ -314,6 +314,20 @@ sub list_accounting {
  return @{$self->{pay_accounts}}; 
 }
 
+=item list_overpayment_accounting
+
+This method lists all accounts that match the role specified in account_class property and
+are availible to store an overpayment / advanced payment / pre-payment. 
+=back
+=cut
+
+sub list_overpayment_accounting {
+ my ($self) = @_;
+ @{$self->{overpayment_accounts}} = $self->exec_method( funcname => 'chart_list_overpayment');
+ return @{$self->{overpayment_accounts}}; 
+}
+
+
 =item get_sources
 
 This method builds all the possible sources of money,
@@ -378,8 +392,8 @@ $self->{account_class}
 
 sub get_vc_info {
  my ($self) = @_; 
- #@{$self->{vendor_customer_info}} = $self->call_procedure(procname => 'vendor_customer_info');
- #return @{$self->{vendor_customer_info}};
+ @{$self->{vendor_customer_info}} = $self->exec_method(funcname => 'payment_get_vc_info');
+ return @{$self->{vendor_customer_info}};
 }
 
 =item get_payment_detail_data
