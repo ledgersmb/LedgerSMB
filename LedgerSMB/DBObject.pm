@@ -258,6 +258,7 @@ sub _parse_array {
 
         } elsif ($value =~ /^{({+)/){
             my $open_braces = $1;
+            $next = [];
             my $close_braces = $open_braces;
             $close_braces =~ s/{/}/g;
             $value =~ /^{($open_braces[^}]*$close_braces)/;
