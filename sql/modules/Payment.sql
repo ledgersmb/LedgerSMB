@@ -185,7 +185,7 @@ BEGIN
 		            FROM ar
 			   WHERE in_account_class = 2
 			ORDER BY transdate
-		         ) a USING (entity_id)
+		         ) a ON (a.entity_credit_account = c.id)
 		    JOIN transactions t ON (a.id = t.id)
 		  LEFT JOIN voucher v ON (v.trans_id = a.id)
 		   WHERE v.batch_id = in_batch_id
