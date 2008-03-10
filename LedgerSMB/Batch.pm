@@ -17,6 +17,7 @@ sub delete_voucher {
     $self->{dbh}->commit;
 }
 
+
 sub get_search_criteria {
     $self = shift @_;
     @{$self->{batch_classes}} = $self->exec_method(
@@ -26,6 +27,7 @@ sub get_search_criteria {
     @{$self->{batch_users}} = $self->exec_method(
          funcname => 'batch_get_users'
     );
+    unshift @{$self->{batch_users}}, {username => $self->{_locale}->text('Any'), id => '0', entity_id => ''};
 }
 
 sub get_search_results {
