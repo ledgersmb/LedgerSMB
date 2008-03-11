@@ -335,7 +335,7 @@ BEGIN
 END;
 $$ language plpgsql SECURITY DEFINER;
 
-REVOKE ALL ON FUNCTION batch__delete(int) FROM PUBLIC;
+REVOKE ALL ON FUNCTION batch_delete(int) FROM PUBLIC;
 
 CREATE OR REPLACE FUNCTION voucher__delete(in_voucher_id int)
 RETURNS int AS
@@ -375,4 +375,4 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
-REVOKE ALL ON voucher__delete FROM public;
+REVOKE ALL ON FUNCTION voucher__delete(int) FROM public;
