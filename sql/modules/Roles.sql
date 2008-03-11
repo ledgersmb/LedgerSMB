@@ -1395,3 +1395,13 @@ GRANT ALL ON pending_job_id_seq TO public;
 -- CT:  The following grant is required for now, but will hopefully become less 
 -- important when we get to 1.4 and can more sensibly lock things down.
 GRANT ALL ON dpt_trans TO public;
+
+-- Roles dependant on FUNCTIONS
+CREATE ROLE lsmb_<?lsmb dbname ?>__voucher_delete 
+WITH INHERIT NOLOGIN;
+
+GRANT EXECUTE ON FUNCTION voucher__delete(int) 
+TO lsmb_<?lsmb dbname ?>__voucher_delete;
+
+GRANT EXECUTE ON FUNCTION batch__delete(int) 
+TO lsmb_<?lsmb dbname ?>__voucher_delete;
