@@ -104,9 +104,18 @@ sub exec_method {
     @in_args = @{ $args{args}} if $args{args};
     my @call_args;
      
-    my $query = "SELECT proname, pronargs, proargnames FROM pg_proc WHERE proname = ?";
-    my $sth   = $self->{dbh}->prepare($query);
-    $sth->execute($funcname) || $self->error($DBI::errstr . "in exec_method");
+    my $query = "
+	SELECT proname, pronargs, proargnames FROM pg_proc 
+	 WHERE proname = ? 
+	       AND pronamespace = 
+	       coalesce((SELECT oid FROM pg_namespace WHERE nspname = ?), 
+	                pronamespace)
+    ";
+    my $sth   = $self->{dbh}->prepare(
+		$query
+    );
+    $sth->execute($funcname, $LedgerSMB::Sysconfig::db_namespace) 
+	|| $self->error($DBI::errstr . "in exec_method");
     my $ref;
 
     $ref = $sth->fetchrow_hashref('NAME_lc');

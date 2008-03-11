@@ -138,5 +138,6 @@ for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
 $ENV{PGHOST} = $config{database}{host};
 $ENV{PGPORT} = $config{database}{port};
 our $default_db = $config{database}{default_db};
+our $db_namespace = $config{database}{db_namespace};
 
 1;

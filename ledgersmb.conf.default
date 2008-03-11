@@ -52,3 +52,4 @@ Epson      = lpr -PEpson
 port = 5432
 default_db = lsmb13
 host = localhost
+db_namespace = public
