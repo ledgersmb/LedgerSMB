@@ -24,5 +24,11 @@ Voucher.sql
 
 Note that the Roles.sql is special and must be preprocessed to get it to work.
 A command like:
-sed -e 's/<?lsmb dbname ?>/[dbname]/g' Roles.sql > [dbname]_roles.sql would work
-where [dbname] represents the name of the database you are installing into.
+sed -e 's/<?lsmb dbname ?>/[dbname]/g' Roles.sql > [dbname]_roles.sql 
+would work where [dbname] represents the name of the database you are 
+installing into.
+
+Also Roles.sql MUST be run last because portions of it depend on function 
+declarations in the other scripts.
+
+
