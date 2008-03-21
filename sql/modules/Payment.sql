@@ -123,7 +123,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3), date, date, numeric, numeric) IS
+COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3), date, date, numeric, numeric, int) IS
 $$ This function takes three arguments:
 Type: 1 for vendor, 2 for customer
 Entity_id:  The entity_id of the customer or vendor
