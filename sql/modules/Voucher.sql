@@ -235,7 +235,7 @@ BEGIN
 		AND batch_class = 5);
 
 	UPDATE acc_trans SET approved = true 
-	WHERE trans_id IN (select trans_id FROM voucher 
+	WHERE voucher_id IN (select id FROM voucher 
 		WHERE batch_id = in_batch_id
 		AND batch_class IN (3, 4, 7, 8));
 
