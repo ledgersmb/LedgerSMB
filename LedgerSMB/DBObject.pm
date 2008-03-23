@@ -248,6 +248,8 @@ sub run_custom_queries {
 
 sub _parse_array {
     my ($self, $value) = @_;
+    return @$value if ref $value eq 'ARRAY';
+
     my $next;
     my $separator;
     my @return_array;
