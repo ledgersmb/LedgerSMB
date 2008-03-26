@@ -1313,7 +1313,7 @@ sub format_string {
             txt  => [ '\n', '\r' ],
             tex  => [
                 quotemeta('\\'), '&', '\n', '\r',
-                quotemeta('$'),  '%', '_',  '#',
+                quotemeta('$'),  '%', '#',
                 quotemeta('^'),  '{', '}',  '<',
                 '>',             '£'
             ]
@@ -1330,7 +1330,6 @@ sub format_string {
             '&'             => '\&',
             quotemeta('$')  => '\$',
             '%'             => '\%',
-            '_'             => '\_',
             '#'             => '\#',
             quotemeta('^')  => '\^\\',
             '{'             => '\{',
