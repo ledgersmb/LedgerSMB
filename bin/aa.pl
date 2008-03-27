@@ -114,6 +114,7 @@ sub add {
 
 sub edit {
 
+    &create_links;
     $form->{title} = "Edit";
     if ($form->{reverse}){
         if ($form->{ARAP} eq 'AR'){
@@ -128,7 +129,6 @@ sub edit {
 
     }
 
-    &create_links;
     &display_form;
 
 }
