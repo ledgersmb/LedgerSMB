@@ -1258,6 +1258,7 @@ sub format_line {
 
 sub cleanup {
 
+	return;
     my $self = shift;
     chdir("$self->{tmpdir}");
 
@@ -1312,10 +1313,11 @@ sub format_string {
             html => [ '<',  '>', '\n', '\r', '&' ],
             txt  => [ '\n', '\r' ],
             tex  => [
-                quotemeta('\\'), '&', '\n', '\r',
-                quotemeta('$'),  '%', '#',
+#                quotemeta('\\'), '&', '\n', '\r',
+                '&', '\n', '\r',
+                quotemeta('$'),  '%', '(?<!\\\\)_', '#',
                 quotemeta('^'),  '{', '}',  '<',
-                '>',             '£'
+                '>',             '£',
             ]
         },
         html => {
@@ -1334,17 +1336,23 @@ sub format_string {
             quotemeta('^')  => '\^\\',
             '{'             => '\{',
             '}'             => '\}',
+            '(?<!\\\\)_'    => '\_', # SC: Double escaping is annoying
             '<'             => '$<$',
             '>'             => '$>$',
             '\n'            => '\newline ',
             '\r'            => '\newline ',
             '£'            => '\pounds ',
-            quotemeta('\\') => '/'
+#            quotemeta('\\') => '/'
         }
     );
 
     my $key;
 
+    if ($format eq 'tex') {
+        FIELD: for (@fields) {
+            $self->{$_} =~ s{\\(?!pounds\b|newline\b|\$|%|#|&|\{|\}|\^\\|_)}{/}g;
+        }
+    }
     CHAR: foreach $key ( @{ $replace{order}{$format} } ) {
         FIELD: for (@fields) {
             $self->{$_} =~ s/$key/$replace{$format}{$key}/g;
