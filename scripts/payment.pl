@@ -247,13 +247,7 @@ sub post_payments_bulk {
             format   => 'HTML', 
         );
     } else {
-        $template = LedgerSMB::Template->new(
-            user     => $request->{_user},
-            locale   => $request->{_locale},
-            path     => 'UI/payments',
-            template => 'payments_filter',
-            format   => 'HTML', 
-        );
+        payments($request);
     }
     $template->render($payment);
 }

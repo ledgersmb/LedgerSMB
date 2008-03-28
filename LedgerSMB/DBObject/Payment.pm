@@ -472,7 +472,7 @@ sub post_bulk {
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
                 $self->error("Invalid subarray: $invoice_subarray");
             }
-            $invoice_subarray =~ s/[^0123456789{},.]//; 
+            $invoice_subarray =~ s/[^0123456789{},.-]//; 
 	    if ($invoice_array eq '{}'){ # Omit comma
                 $invoice_array = "{$invoice_subarray}";
 	    } else {
