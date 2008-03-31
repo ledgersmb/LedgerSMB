@@ -300,7 +300,7 @@ sub _db_array_scalars {
            $arg = qq|"$arg"|;
         }
     }
-    return _db_array_literal(@args);
+    return $self->_db_array_literal(@args);
 }
 
 sub _db_array_literal {
