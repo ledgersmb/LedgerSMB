@@ -150,20 +150,20 @@ BEGIN
 	FOR payment_item IN
 		  SELECT c.id AS contact_id, e.name AS contact_name,
 		         c.meta_number AS account_number,
-		         sum(a.amount - a.paid) AS total_due, 
+		         sum(p.due) AS total_due, 
 		         compound_array(ARRAY[[
 		              a.id::text, a.invnumber, a.transdate::text, 
-		              a.amount::text, a.paid::text,
+		              a.amount::text, (a.amount - p.due)::text,
 		              (CASE WHEN c.discount_terms 
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
-		                   ELSE (a.amount - coalesce(a.paid, 0)) * coalesce(c.discount, 0) / 100
+		                   ELSE (a.amount - coalesce((a.amount - p.due), 0)) * coalesce(c.discount, 0) / 100
 		              END)::text, 
-		              (a.amount - coalesce(a.paid, 0) -
+		              (coalesce(p.due, 0) -
 		              (CASE WHEN c.discount_terms 
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
-		                   ELSE (a.amount - coalesce(a.paid, 0)) * coalesce(c.discount, 0) / 100
+		                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
 		              END))::text]]),
                               sum(case when v.batch_id = in_batch_id then 1
 		                  else 0 END),
@@ -174,7 +174,7 @@ BEGIN
 		    FROM entity e
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
 		    JOIN (SELECT id, invnumber, transdate, amount, entity_id, 
-		                 paid, curr, 1 as invoice_class, 
+				 paid, curr, 1 as invoice_class, 
 		                 entity_credit_account, on_hold
 		            FROM ap
 			   WHERE in_account_class = 1
@@ -187,6 +187,16 @@ BEGIN
 			ORDER BY transdate
 		         ) a ON (a.entity_credit_account = c.id)
 		    JOIN transactions t ON (a.id = t.id)
+		    JOIN (SELECT trans_id, 
+		                 sum(CASE WHEN in_account_class = 1 THEN amount
+		                          WHEN in_account_class = 2 
+		                          THEN amount * -1
+		                     END) AS due 
+		            FROM acc_trans 
+		            JOIN chart ON (chart.id = acc_trans.chart_id)
+		           WHERE ((chart.link = 'AP' AND in_account_class = 1)
+		                 OR (chart.link = 'AR' AND in_account_class = 2))
+		        GROUP BY trans_id) p ON (a.id = p.trans_id)
 		  LEFT JOIN voucher v ON (v.trans_id = a.id)
 		   WHERE v.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
@@ -197,7 +207,8 @@ BEGIN
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
 		         AND a.entity_credit_account = c.id
-		         AND a.amount - a.paid <> 0
+			 AND p.due <> 0
+		         AND a.amount <> a.paid 
 			 AND NOT a.on_hold
 			 AND NOT (t.locked_by IS NOT NULL AND t.locked_by IN 
 				(select "session_id" FROM "session"
@@ -211,7 +222,7 @@ BEGIN
 		                                               = in_ar_ap_accno)
 		                    ))
 		GROUP BY c.id, e.name, c.meta_number, c.threshold
-		  HAVING sum(a.amount - a.paid) > c.threshold
+		  HAVING sum(p.due) > c.threshold
 			OR sum(case when v.batch_id = in_batch_id then 1
                                   else 0 END) > 0
 	LOOP
