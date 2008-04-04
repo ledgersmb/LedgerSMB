@@ -5,7 +5,12 @@ BEGIN
 	SELECT * FROM open_forms 
 	WHERE session_id = in_session_id AND id = in_form_id;
 
-	IF FOUND THEN RETURN TRUE;
+	IF FOUND THEN 
+		DELETE FROM open_forms 
+		WHERE session_id = in_session_id AND id = in_form_id;
+
+		RETURN TRUE;
+
 	ELSE RETURN FALSE;
 END;
 $$ language plpgsql;
