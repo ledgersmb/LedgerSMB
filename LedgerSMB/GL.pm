@@ -452,7 +452,8 @@ sub all_transactions {
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
-					 JOIN entity e ON (a.entity_id = e.id)
+					JOIN entity_credit_account ec ON (a.entity_credit_account = ec.id)
+					 JOIN entity e ON (ec.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $arwhere
 				              AND (ac.chart_id = $chart_id OR
@@ -471,7 +472,8 @@ sub all_transactions {
 					 FROM ap a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
-					 JOIN entity e ON (a.entity_id = e.id)
+					JOIN entity_credit_account ec ON (a.entity_credit_account = ec.id)
+					 JOIN entity e ON (ec.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $apwhere
 				              AND (ac.chart_id = $chart_id OR
