@@ -68,6 +68,11 @@ users_id INTEGER NOT NULL references users(id),
 transaction_id INTEGER NOT NULL
 );
 
+CREATE TABLE open_forms (
+id SERIAL PRIMARY KEY,
+session_id int REFERENCES session(session_id) ON DELETE CASCADE
+);
+
 --
 CREATE TABLE transactions (
   id int PRIMARY KEY,

@@ -1,3 +1,24 @@
+CREATE OR REPLACE FUNCTION form_check(in_session_id int, in_form_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+	SELECT * FROM open_forms 
+	WHERE session_id = in_session_id AND id = in_form_id;
+
+	IF FOUND THEN RETURN TRUE;
+	ELSE RETURN FALSE;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION form_open(in_session_id int)
+RETURNS INT AS
+$$
+BEGIN
+	INSERT INTO open_forms (session_id) VALUES (in_session_id);
+	RETURN currval('form_id_seq');
+END;
+$$ LANGUAGE PLPGSQL
+
 CREATE OR REPLACE FUNCTION session_check(in_session_id int, in_token text) 
 RETURNS session AS
 $$
