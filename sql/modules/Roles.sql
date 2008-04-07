@@ -583,13 +583,11 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (35, 'allow', 'lsmb_<?lsmb dbname ?>__process_payment');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (38, 'allow', 'lsmb_<?lsmb dbname ?>__process_payment');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (39, 'allow', 'lsmb_<?lsmb dbname ?>__process_payment');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__process_receipt"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ar_list_transactions";
+IN ROLE "lsmb_<?lsmb dbname ?>__list_ar_transactions";
 
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__process_receipt";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__process_receipt";
