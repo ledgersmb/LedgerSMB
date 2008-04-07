@@ -12,6 +12,7 @@ BEGIN
 		RETURN TRUE;
 
 	ELSE RETURN FALSE;
+	END IF;
 END;
 $$ language plpgsql;
 
@@ -22,7 +23,7 @@ BEGIN
 	INSERT INTO open_forms (session_id) VALUES (in_session_id);
 	RETURN currval('form_id_seq');
 END;
-$$ LANGUAGE PLPGSQL
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION session_check(in_session_id int, in_token text) 
 RETURNS session AS
