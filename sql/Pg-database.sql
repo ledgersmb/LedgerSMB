@@ -691,6 +691,7 @@ CREATE TABLE ar (
   reverse bool default false,
   approved bool default true,
   entity_credit_account int references entity_credit_account(id) not null,
+  force_closed bool,
   description text
 );
 
@@ -726,6 +727,7 @@ CREATE TABLE ap (
   reverse bool default false,
   terms int2 DEFAULT 0,
   description text,
+  force_closed bool,
   entity_credit_account int references entity_credit_account(id)
 );
 

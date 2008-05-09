@@ -813,6 +813,7 @@ sub transactions {
 		          (|.$dbh->quote($form->{transdateto}) . qq| IS NULL OR 
 		           |.$dbh->quote($form->{transdateto}) . qq| >= acs.transdate)
 			AND a.approved IS TRUE AND acs.approved IS TRUE
+			AND a.force_closed IS NOT TRUE
 		 GROUP BY a.id, a.invnumber, a.ordnumber, a.transdate, a.duedate, a.netamount,
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
 		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description,
