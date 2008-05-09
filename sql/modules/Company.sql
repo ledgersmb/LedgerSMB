@@ -144,6 +144,7 @@ CREATE TYPE entity_credit_search_return AS (
         enddate date,
         ar_ap_account_id int,
         cash_account_id int,
+	tax_id text,
         threshold numeric
 );
 
@@ -161,7 +162,7 @@ BEGIN
 		ec.taxincluded, ec.creditlimit, ec.terms, ec.meta_number,
 		ec.business_id, ec.language_code, ec.pricegroup_id, 
 		ec.curr::char(3), ec.startdate, ec.enddate, ec.ar_ap_account_id,
-		ec.cash_account_id, ec.threshold
+		ec.cash_account_id, c.tax_id, ec.threshold
 	INTO out_row
 	FROM company c
 	JOIN entity e ON (c.entity_id = e.id)

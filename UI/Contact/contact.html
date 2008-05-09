@@ -220,8 +220,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
             <td>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Tax Number/SSN:'),
-			name = "taxnumber",
-			value = taxnumber,
+			name = "tax_id",
+			value = tax_id,
 			type = "text",
 			size = "19"
 		} #' ?>
@@ -276,8 +276,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
                 } ?>
            </td>
            <td> <?lsmb INCLUDE select element_data = {
-			name = "payment_account_id"
-			default_values = [payment_account_id]
+			name = "cash_account_id"
+			default_values = [cash_account_id]
 			options = cash_acc_list
 			label = text('Payment')
 			text_attr = "text"
