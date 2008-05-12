@@ -77,7 +77,9 @@ session_id int REFERENCES session(session_id) ON DELETE CASCADE
 CREATE TABLE transactions (
   id int PRIMARY KEY,
   table_name text,
-  locked_by int references "session" (session_id) ON DELETE SET NULL
+  locked_by int references "session" (session_id) ON DELETE SET NULL,
+  approved_by int references "users" (entity_id),
+  approved_at timestamp
 );
 
 COMMENT on TABLE transactions IS 
@@ -357,12 +359,14 @@ glnumber|1
 projectnumber|1
 queue_payments|0
 poll_frequency|1
+separate_duties|1
 \.
 
 COMMENT ON TABLE defaults IS $$
 Note that poll_frequency is in seconds.  poll_frequency and queue_payments 
 are not exposed via the admin interface as they are advanced features best
-handled via DBAs.  $$;
+handled via DBAs.  Also, separate_duties is not yet included in the admin 
+interface.$$;
 -- */
 -- batch stuff
 
