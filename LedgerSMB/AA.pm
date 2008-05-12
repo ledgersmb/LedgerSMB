@@ -356,7 +356,7 @@ sub post_transaction {
         $form->{transdate},     $form->{"$form->{vc}_id"},
         $form->{taxincluded},   $invamount,
         $form->{duedate},       $paid,
-        $datepaid,              $invnetamout,
+        $datepaid,              $invnetamount,
         $form->{currency},      $form->{notes},
         $form->{department_id},
         $form->{ponumber},      $form->{id}
