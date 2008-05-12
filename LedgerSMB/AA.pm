@@ -286,7 +286,7 @@ sub post_transaction {
 
     # record last payment date in ar/ap table
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
-    my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : 'NOW';
+    my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : undef;
 
 
     $query = qq|
