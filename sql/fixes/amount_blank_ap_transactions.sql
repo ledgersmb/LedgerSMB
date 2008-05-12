@@ -13,6 +13,8 @@ SET netamount =
 	)
 WHERE netamount IS NULL;
 
+update ap set datepaid = NULL where paid = 0;
+
 UPDATE ar
 SET netamount = -1 *
 	(select sum(amount) from acc_trans 
@@ -26,4 +28,5 @@ SET netamount = -1 *
 	)
 WHERE netamount IS NULL;
 
+update ar set datepaid = NULL where paid = 0;
 commit;
