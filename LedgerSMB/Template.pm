@@ -374,8 +374,16 @@ sub _email_output {
 }
 
 sub _lpr_output {
-	my $self = shift;
-	#TODO stub
+	my ($self) = shift;
+	my $args = $self->{output_args};
+	if ($self->{format} != /(pdf|ps)/){
+		throw Error::Simple "Invalid Format";
+	}
+	my $lpr = $LedgerSMB::Sysconfig::printer{$args->{printer}};
+
+	open(LPR, '|-', $lpr);
+	print LPR $self->{output};
+	close(LPR);
 }
 
 1;

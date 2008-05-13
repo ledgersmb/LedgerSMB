@@ -1719,8 +1719,14 @@ $module and $dbh are unused.
 sub all_vc {
 
     my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
-
     my $ref;
+    my $table;
+
+    if ($module eq 'AR'){
+        $table = 'ar';
+    } elsif ($module eq 'AP'){
+        $table = 'ap';
+    }
 
     $dbh = $self->{dbh};
 
@@ -1784,8 +1790,18 @@ sub all_vc {
 
         $sth->finish;
 
+    } elsif ($self->{id}) {
+        $query = qq|
+		SELECT ec.id, e.name
+		  FROM entity e
+		  JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+		 WHERE ec.id = (select entity_credit_account FROM $table
+				WHERE id = ?)
+		ORDER BY name|;
+        $sth = $self->{dbh}->prepare($query);
+        $sth->execute($self->{id});
+        ($self->{"${vc}_id"}, $self->{$vc}) = $sth->fetchrow_array();
     }
-
     # get self
     if ( !$self->{employee_id} ) {
         ( $self->{employee}, $self->{employee_id} ) = split /--/,

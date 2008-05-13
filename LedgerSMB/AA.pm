@@ -308,17 +308,18 @@ sub post_transaction {
         # AR/AP Transaction.
         # ~A
         $query = qq|
-			INSERT INTO $table (invnumber, person_id)
-			     VALUES (?, (select p.id from person p, entity e, users u
+			INSERT INTO $table (invnumber, person_id, 
+				entity_credit_account)
+			     VALUES (?, (select e.id from person p, entity e, users u
 			                 where u.username = ?
 			                 AND e.id = u.entity_id
-			                 AND p.entity_id = e.id ))|;
+			                 AND p.entity_id = e.id ), ?)|;
 
         # the second param is undef, as the DBI api expects a hashref of
         # attributes to pass to $dbh->prepare. This is not used here.
         # ~A
         
-        $dbh->do($query,undef,$uid,$form->{login}) || $form->dberror($query);
+        $dbh->do($query,undef,$uid,$form->{login}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
 
         $query = qq|
 			SELECT id FROM $table
@@ -337,7 +338,6 @@ sub post_transaction {
 		SET invnumber = ?,
 			ordnumber = ?,
 			transdate = ?,
-			entity_credit_account = ?,
 			taxincluded = ?,
 			amount = ?,
 			duedate = ?,
@@ -350,10 +350,10 @@ sub post_transaction {
 			ponumber = ?
 		WHERE id = ?
 	|;
-
+    
     my @queryargs = (
         $form->{invnumber},     $form->{ordnumber},
-        $form->{transdate},     $form->{"$form->{vc}_id"},
+        $form->{transdate},     
         $form->{taxincluded},   $invamount,
         $form->{duedate},       $paid,
         $datepaid,              $invnetamount,
