@@ -1,3 +1,9 @@
+Changelog for 1.2.14
+* Fixed double escaping of tex under some circumstances (Seneca)
+* Added fix for bad summary information in AR/AP transactions (1800065,
+1800069, Chris T)
+* Fixed posting issue behind AR/AP transaction report anomilies (Chris T)
+
 Changelog for 1.2.13
 * Fixed all known implicit cast issues with PostgreSQL 8.3 (Chris T)
 * Fixed Vendor Info Incorrectly Escaped in Check Printing Module(1844159,

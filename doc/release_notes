@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.13
+LedgerSMB 1.2.14
 
 
 
@@ -116,6 +116,9 @@ known shipping information.  There is a fix for this in the sql/fixes directory.
 3.4: Recurring transactions
 LedgerSMB's database structure does not handle certain areas properly regarding 
 recurring transactions.  A fix for this issue is in the sql/fixes directory.
+
+3.5: AR/AP Transactions
+LedgerSMB from 1.2.0 through 1.2.13 had a bug which saved incorrect summary information for AR and AP transactions (but not invoices).  A fix for this has been included in sql/fixes and new transactions are not affected as of 1.2.14.
 
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 
