@@ -291,7 +291,7 @@ DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
-			l.state, c.name, lc.class
+			l.state, l.mail_code, c.name, lc.class
 		FROM location l
 		JOIN company_to_location ctl ON (ctl.location_id = l.id)
 		JOIN company cp ON (ctl.company_id = cp.id)
@@ -307,6 +307,7 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE TYPE contact_list AS (
 	class text,
+	description text,
 	contact text
 );
 
@@ -315,7 +316,7 @@ RETURNS SETOF contact_list AS $$
 DECLARE out_row contact_list;
 BEGIN
 	FOR out_row IN
-		SELECT cl.class, c.contact
+		SELECT cl.class, c.description, c.contact
 		FROM company_to_contact c
 		JOIN contact_class cl ON (c.contact_class_id = cl.id)
 		WHERE company_id = 
@@ -357,13 +358,14 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION company__save_contact
-(in_entity_id int, in_contact_class int, in_contact text)
+(in_entity_id int, in_contact_class int, in_description text, in_contact text)
 RETURNS INT AS
 $$
 DECLARE out_id int;
 BEGIN
-	INSERT INTO company_to_contact(company_id, contact_class_id, contact)
-	SELECT id, in_contact_class, in_contact FROM company
+	INSERT INTO company_to_contact(company_id, contact_class_id, 
+		description, contact)
+	SELECT id, in_contact_class, in_description, in_contact FROM company
 	WHERE entity_id = in_entity_id;
 
 	RETURN 1;

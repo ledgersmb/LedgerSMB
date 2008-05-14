@@ -86,7 +86,7 @@ DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
-			l.state, c.name, lc.class
+			l.state, l.mail_code, c.name, lc.class
 		FROM location l
 		JOIN person_to_location ctl ON (ctl.location_id = l.id)
 		JOIN person p ON (ctl.person_id = p.id)
@@ -106,7 +106,7 @@ $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN 
-		SELECT cc.class, c.contact
+		SELECT cc.class, c.description, c.contact
 		FROM person_to_contact c
 		JOIN contact_class cc ON (c.contact_class_id = cc.id)
 		JOIN person p ON (c.person_id = p.id)

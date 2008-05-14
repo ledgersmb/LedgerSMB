@@ -533,6 +533,15 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	</div>
 	<div>
 		<?lsmb PROCESS input element_data = {
+			label = text('Description:'),
+			name = "description"
+			value = description
+			type = "text"
+			size = "20"
+		} #' ?>
+	</div>
+	<div>
+		<?lsmb PROCESS input element_data = {
 			label = text('Contact Info:'),
 			name = "contact"
 			value = contact

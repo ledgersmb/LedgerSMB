@@ -787,7 +787,7 @@ sub customer_details {
     # get rest for the customer
     my $query = qq|
 		SELECT c.customernumber, e.name, l.line_one as address1, 
-		       l.line_two as address2, l.city_province AS city,
+		       l.line_two as address2, l.city AS city,
 		       '' as state, l.mail_code AS zipcode, 
 		       country.name as country,
 		       '' as contact, '' as customerphone, '' as customerfax,

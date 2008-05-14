@@ -131,6 +131,7 @@ CREATE TYPE location_result AS (
 	line_three text,
 	city text,
 	state text,
+        mail_code text,
 	country text,
 	class text
 );
