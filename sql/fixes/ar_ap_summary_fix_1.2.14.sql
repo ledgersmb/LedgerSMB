@@ -18,7 +18,7 @@ SET netamount =
 		where trans_id = ap.id 
 			AND ((chart_id IN 
 				(select id from chart where link = 'AP')
-				     AND amount < 0)
+				     AND amount > 0)
 				OR (chart_id IN 
 					(select id from chart 
 					where link like '%tax%')
@@ -49,7 +49,7 @@ SET netamount =
 		where trans_id = ar.id 
 			AND ((chart_id IN (select id from chart 
 				where link = 'AR')
-				     AND amount > 0)
+				     AND amount < 0)
 			OR (chart_id IN 
 				(select id from chart where link like '%tax%')
 				)
