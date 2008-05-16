@@ -54,7 +54,10 @@ if ( -f "bin/custom/$form->{login}_aa.pl" ) {
     eval { require "bin/custom/$form->{login}_aa.pl"; };
 }
 
+my $is_update;
+
 1;
+
 
 # end of main
 
@@ -694,7 +697,7 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
     }
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
-	if($form->{"calctax_$item"}){
+	if($form->{"calctax_$item"} && $is_update){
              $form->{invtotal} += $form->{"tax_$item"};
 	}
         $form->{"calctax_$item"} =
@@ -937,7 +940,7 @@ sub form_footer {
 
 sub update {
     my $display = shift;
-
+    $is_update = 1;
     if ( !$display ) {
 
         $form->{invtotal} = 0;
