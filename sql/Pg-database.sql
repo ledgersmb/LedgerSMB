@@ -78,7 +78,7 @@ CREATE TABLE transactions (
   id int PRIMARY KEY,
   table_name text,
   locked_by int references "session" (session_id) ON DELETE SET NULL,
-  approved_by int references "users" (entity_id),
+  approved_by int references entity (id),
   approved_at timestamp
 );
 
@@ -504,7 +504,9 @@ values ('Inventory Entity', currval('entity_id_seq'));
 
 INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
 VALUES 
-(currval('entity_id_seq'), '00000', 1),
+(currval('entity_id_seq'), '00000', 1);
+INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
+VALUES 
 (currval('entity_id_seq'), '00000', 2);
 
 

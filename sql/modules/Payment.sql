@@ -385,8 +385,12 @@ BEGIN
 	
 				CASE WHEN t_voucher_id IS NULL THEN true
 				ELSE false END,
-				t_voucher_id, in_payment_date, in_source),
+				t_voucher_id, in_payment_date, in_source);
 
+		INSERT INTO acc_trans 
+			(trans_id, chart_id, amount, approved, voucher_id,
+			transdate, source)
+		VALUES
 			(in_transactions[out_count][1], 
 				case when in_account_class = 1 THEN t_ar_ap_id
 				WHEN in_account_class = 2 THEN t_cash_id
@@ -743,7 +747,11 @@ BEGIN
 			in_date_reversed, in_source, 'Reversing ' || 
 			COALESCE(in_source, ''), 
 			case when in_batch_id is not null then false 
-			else true end, t_voucher_id),
+			else true end, t_voucher_id);
+		INSERT INTO acc_trans
+		(trans_id, chart_id, amount, transdate, source, memo, approved,
+			voucher_id) 
+		VALUES 
 		(pay_row.trans_id, pay_row.ar_ap_account_id, pay_row.amount,
 			in_date_reversed, in_source, 'Reversing ' ||
 			COALESCE(in_source, ''), 
