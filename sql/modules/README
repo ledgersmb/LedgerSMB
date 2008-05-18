@@ -6,6 +6,7 @@ For people trying to get 1.3 up and running manually, the following load order
 should work.  Note that many of these scripts declare types, so if you want to
 redefine functions, you will need to drop the types and reload the scripts.
 
+Drafts.sql
 Account.sql
 Session.sql
 Business_Type.sql
