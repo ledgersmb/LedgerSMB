@@ -65,7 +65,7 @@ sub new {
         $self->error('Mergelist not set');
     }
     else {
-        @mergelist = [];
+        @mergelist = ();
     }
     if ( !$base->isa('LedgerSMB') ) {
         $self->error("Constructor called without LedgerSMB object arg");
@@ -122,19 +122,16 @@ sub exec_method {
     
     my $args = $ref->{proargnames};
     my @proc_args;
-    $ref->{pronargs} = 0 unless defined $ref->{pronargs};
-    if ($ref->{pronargs}){
-        $args =~ s/\{(.*)\}/$1/;
-        @proc_args = split /,/, $args if $args;
-    }
-    
+
     if ( !$ref->{proname} ) {    # no such function
      
         $self->error( "No such function:  $funcname");
 #        die;
     }
-    
-    if ($args) {
+    $ref->{pronargs} = 0 unless defined $ref->{pronargs};
+
+    @proc_args = $self->_parse_array($args);    
+    if (@proc_args) {
         for my $arg (@proc_args) {
             if ( $arg =~ s/^in_// ) {
                  push @call_args, $self->{$arg};
@@ -249,14 +246,14 @@ sub run_custom_queries {
 sub _parse_array {
     my ($self, $value) = @_;
     return @$value if ref $value eq 'ARRAY';
-
+    return if !defined $value;
     my $next;
     my $separator;
     my @return_array;
 
     while ($value ne '{}') {
-        my $next = "";
-        my $separator = "";
+        $next = "";
+        $separator = "";
         if ($value =~ /^\{"/){
             while ($next eq "" or ($next =~ /\\".$/)){
                 $value =~ s/^\{("[^"]*".)/\{/;

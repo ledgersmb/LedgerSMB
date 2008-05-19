@@ -235,6 +235,7 @@ sub render {
 		throw Error::Simple "Invalid format";
 	}
 	my $format = "LedgerSMB::Template::$self->{format}";
+
 #	if ($self->{myconfig}){
 #	        $self->_preprocess($vars);
 #	}

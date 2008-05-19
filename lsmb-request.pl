@@ -49,10 +49,9 @@ if (!$script){
 &call_script( $script, $request );
 
 sub call_script {
-    
+        
     my $script = shift @_;
     my $request = shift @_;
-
     eval { require "scripts/$script" } 
       || $request->error($locale->text('Unable to open script') . ": scripts/$script : $!");
     $script =~ s/\.pl$//;

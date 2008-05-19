@@ -197,11 +197,12 @@ sub new {
     if (!$self->{script}) {
         $self->{script} = 'login.pl';
     }
-    if ($self->{action} eq 'migrate_user'){
-        return $self;
-    }
+#    if ($self->{action} eq 'migrate_user'){
+#        return $self;
+#    }
     if ($self->{script} eq 'login.pl' &&
-        ($self->{action} eq 'authenticate' || !$self->{action})){
+        ($self->{action} eq 'authenticate'  || $self->{action} eq '__default' 
+		|| !$self->{action})){
         return $self;
     }
     if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
