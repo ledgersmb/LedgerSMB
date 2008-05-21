@@ -41,7 +41,7 @@ BEGIN
 			AND (ec.meta_number = in_meta_number 
 				OR in_meta_number IS NULL)
 			AND (c.legal_name like '%' || in_legal_name || '%'
-				OR legal_name IS NULL)
+				OR in_legal_name IS NULL)
 			AND ((in_address IS NULL AND in_city IS NULL 
 					AND in_state IS NULL 
 					AND in_country IS NULL)
@@ -79,7 +79,7 @@ BEGIN
 					AND in_business_id IS NULL))
 			AND (ec.startdate <= coalesce(in_date_to, 
 						ec.startdate)
-				OR (ec.startdate IS NULL)
+				OR (ec.startdate IS NULL))
 			AND (ec.enddate >= coalesce(in_date_from, ec.enddate)
 				OR (ec.enddate IS NULL))
 	LOOP
