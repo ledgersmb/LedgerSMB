@@ -28,7 +28,7 @@ BEGIN
 
 	FOR out_row IN
 		SELECT e.id, c.id, ec.id, ec.meta_number, ec.entity_class, 
-			c.legal_name, c.sic_code, b.description , ec.curr
+			c.legal_name, c.sic_code, b.description , ec.curr::text
 		FROM entity e
 		JOIN company c ON (e.id = c.entity_id)
 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
@@ -38,45 +38,50 @@ BEGIN
 				WHERE contact LIKE ALL(t_contact_info))
 				OR '' LIKE ALL(t_contact_info))
 			
-			AND ec.meta_number = 
-				coalesce(in_meta_number, ec.meta_number)
-			AND c.legal_name like '%' || coalesce(in_legal_name, '') || '%'
---			AND ((in_address IS NULL AND in_city IS NULL 
---					AND in_state IS NULL 
---					AND in_country IS NULL)
---				OR (c.id IN 
---				(select company_id FROM company_to_location
---				WHERE location_id IN 
---					(SELECT id FROM location
---					WHERE line_one 
---						ilike '%' || 
---							coalesce(in_address, '')
---							|| '%'
---						AND city ILIKE 
---							'%' || 
---							coalesce(in_city, '') 
---							|| '%'
---						AND state ILIKE
---							'%' || 
---							coalesce(in_state, '') 
---							|| '%'
---						AND mail_code ILIKE
---							'%' || 
---							coalesce(in_mail_code,
---								'')
---							|| '%'
---						AND country_id IN 
---							(SELECT id FROM country
---							WHERE name LIKE '%' ||
---								in_country ||'%'
---								OR short_name
---								ilike 
---								in_country)))))
-			AND ec.business_id = 
+			AND (ec.meta_number = in_meta_number 
+				OR in_meta_number IS NULL)
+			AND (c.legal_name like '%' || in_legal_name || '%'
+				OR legal_name IS NULL)
+			AND ((in_address IS NULL AND in_city IS NULL 
+					AND in_state IS NULL 
+					AND in_country IS NULL)
+				OR (c.id IN 
+				(select company_id FROM company_to_location
+				WHERE location_id IN 
+					(SELECT id FROM location
+					WHERE line_one 
+						ilike '%' || 
+							coalesce(in_address, '')
+							|| '%'
+						AND city ILIKE 
+							'%' || 
+							coalesce(in_city, '') 
+							|| '%'
+						AND state ILIKE
+							'%' || 
+							coalesce(in_state, '') 
+							|| '%'
+						AND mail_code ILIKE
+							'%' || 
+							coalesce(in_mail_code,
+								'')
+							|| '%'
+						AND country_id IN 
+							(SELECT id FROM country
+							WHERE name LIKE '%' ||
+								in_country ||'%'
+								OR short_name
+								ilike 
+								in_country)))))
+			AND (ec.business_id = 
 				coalesce(in_business_id, ec.business_id)
---			AND ec.startdate <= coalesce(in_date_to, 
---						ec.startdate)
---			AND ec.enddate >= coalesce(in_date_from, ec.enddate)
+				OR (ec.business_id IS NULL 
+					AND in_business_id IS NULL))
+			AND (ec.startdate <= coalesce(in_date_to, 
+						ec.startdate)
+				OR (ec.startdate IS NULL)
+			AND (ec.enddate >= coalesce(in_date_from, ec.enddate)
+				OR (ec.enddate IS NULL))
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
