@@ -2307,7 +2307,9 @@ sub payments {
 					(a.person_id = e.entity_id)
 			LEFT JOIN entity ee ON (e.entity_id = ee.id)
 			          $dpt_join
-			    WHERE ac.chart_id = $ref->{id} $where|;
+			    WHERE ac.chart_id = $ref->{id} 
+			          AND ac.approved AND a.approved
+			          $where|;
 
         if ( $form->{till} ne "" ) {
             $query .= " AND a.invoice = '1' AND NOT a.till IS NULL";
@@ -2337,6 +2339,7 @@ sub payments {
 				  JOIN entity ee ON (e.entity_id = ee.id)
 				       $dpt_join
 				 WHERE ac.chart_id = $ref->{id} $glwhere
+			               AND ac.approved AND g.approved
 				       AND (ac.amount * $ml) > 0
 				 GROUP BY g.description, ac.transdate, 
 			               ac.source, ac.memo, ee.name|;

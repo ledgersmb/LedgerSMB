@@ -2160,7 +2160,7 @@ describing acc_trans table entries corresponding to the transaction $form->{id}.
 The elements in the acc_trans entry hashes are accno, description, source,
 amount, memo, transdate, cleared, project_id, projectnumber, and exchangerate.
 
-The closedto, revtrans, and currencies $form attributes are filled with values
+The closedto, separate_duties, revtrans, and currencies $form attributes are filled with values
 from the defaults table, while $form->{current_date} is populated with the
 current date.  If $form->{id} is not set, then $form->{transdate} also takes on
 the current date.
@@ -2325,7 +2325,7 @@ sub create_links {
             $self->lastname_used( $myconfig, $dbh, $vc, $module );
         }
     }
-    for (qw(current_date curr closedto revtrans)) {
+    for (qw(separate_duties current_date curr closedto revtrans)) {
         if ($_ eq 'closedto'){
             $query = qq|
 				SELECT value::date FROM defaults

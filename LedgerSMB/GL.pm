@@ -79,6 +79,9 @@ sub post_transaction {
     my $sth;
 
     my $id = $dbh->quote( $form->{id} );
+    if ($form->{separate_duties}){
+        $form->approved = '0';
+    }
     if ( $form->{id} ) {
 
         $query = qq|SELECT id FROM gl WHERE id = $id|;
@@ -545,7 +548,9 @@ sub transaction {
         $query = "SELECT setting_key, value
 					FROM defaults
 					WHERE setting_key IN 
-						('closedto', 'revtrans')";
+						('closedto', 
+						'revtrans', 
+						'separate_duties')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
@@ -595,12 +600,15 @@ sub transaction {
         $query = "SELECT current_date AS transdate, setting_key, value
 					FROM defaults
 					WHERE setting_key IN 
-						('closedto', 'revtrans')";
+						('closedto', 
+						'separate_duties',
+						'revtrans')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 
         my $results = $sth->fetchall_hashref('setting_key');
+        $form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $form->{closedto}  = $results->{'closedto'}->{'value'};
         $form->{revtrans}  = $results->{'revtrans'}->{'value'};
         if (!$form->{transdate}){

@@ -61,6 +61,9 @@ Post transaction uses the following variables in the $form variable:
 sub post_transaction {
 
     my ( $self, $myconfig, $form ) = @_;
+    if ($form->{separate_duties}){
+        $form->{approved} = '0';
+    }
     for (1 .. $form->{rowcount}){
         $form->{"amount_$_"} = $form->parse_amount(
                $myconfig, $form->{"amount_$_"} 

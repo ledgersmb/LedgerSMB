@@ -889,6 +889,11 @@ sub form_footer {
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
         );
 
+        if ($form->{separate_duties}){
+            $button{post}->{value} = $locale->text('Save');
+            $form->hide_form('separate_duties');
+        }
+
         if ( $form->{id} ) {
 
             if ( $form->{locked} || ( $transdate && $transdate <= $closedto ) )
