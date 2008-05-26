@@ -80,7 +80,7 @@ sub post_transaction {
 
     my $id = $dbh->quote( $form->{id} );
     if ($form->{separate_duties}){
-        $form->approved = '0';
+        $form->{approved} = '0';
     }
     if ( $form->{id} ) {
 
@@ -135,7 +135,7 @@ sub post_transaction {
         my $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
         $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
              || $form->dberror($query);
-        if (!$form->{approved}){
+        if (!$form->{approved} and $form->{batch_id}){
            if (not defined $form->{batch_id}){
                $form->error($locale->text('Batch ID Missing'));
            }

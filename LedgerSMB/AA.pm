@@ -371,10 +371,7 @@ sub post_transaction {
         $query = qq| UPDATE $table SET approved = ? WHERE id = ?|;
         $dbh->prepare($query)->execute($form->{approved}, $form->{id}) ||
             $form->dberror($query);
-        if (!$form->{approved}){
-           if (not defined $form->{batch_id}){
-               $form->error($locale->text('Batch ID Missing'));
-           }
+        if (!$form->{approved} && $form->{batch_id}){
            if ($form->{arap} eq 'ar'){
                $batch_class = 'receivable';
            } else {
