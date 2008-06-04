@@ -936,6 +936,7 @@ sub print {
 
 sub print_form {
     my $old_form = shift;
+    my $discount = $old_form->{discount};
 
     # if oldcustomer ne customer redo form
     $customer = $form->{customer};
@@ -964,6 +965,8 @@ sub print_form {
     }
 
     IS->invoice_details( \%myconfig, \%$form );
+
+    $form->{discount} = $discount;
 
     if ( $form->parse_amount( \%myconfig, $form->{total} ) <= 0 ) {
         $form->{total} = 0;
