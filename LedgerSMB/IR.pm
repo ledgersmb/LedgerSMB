@@ -907,16 +907,16 @@ sub reverse_invoice {
 
     # delete acc_trans
     $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
-    $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     # delete invoice entries
     $query = qq|DELETE FROM invoice WHERE trans_id = ?|;
-    $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     $query = qq|DELETE FROM shipto WHERE trans_id = ?|;
-    $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     $dbh->commit;

@@ -27,6 +27,7 @@ my $build = Module::Build->new (
 		'Config::Std'			=> 0,
 		'MIME::Lite'			=> 0,
 		'Test::More'			=> 0,
+		'Test::Trap'			=> 0,
 		},
 	recommends => {
 		'HTML::LinkExtor'		=> 0,
