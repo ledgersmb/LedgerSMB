@@ -1,5 +1,10 @@
 Installation Notes Appendix for Debian
 
+
+#
+# CURRENT DEPRECATED
+#
+
 In the dists/deb directory, there files which provide information on which 
 prerequisites can be installed via apt-get and which ones need to be installed 
 via CPAN.
