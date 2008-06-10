@@ -49,6 +49,7 @@ sub get {
     
     $customer->set( entity_class=> '2' );
     my $result = $customer->get();
+    $customer->get_credit_id();
     
     my $template = LedgerSMB::Template->new( user => $user, 
 	template => 'contact', language => $user->{language}, 
@@ -161,10 +162,26 @@ sub save {
     _render_main_screen($customer);
 }
 
+sub save_credit {
+    my ($request) = @_;
+    my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
+    $customer->save_credit();
+    $customer->get();
+    _render_main_screen($customer);
+}
+
+sub save_credit_new {
+    my ($request) = @_;
+    $request->{credit_id} = undef;
+    save_credit($request);
+}
+
+
 sub edit{
     my $request = shift @_;
     my $customer = LedgerSMB::DBObject::Customer->new({base => $request});
     $customer->get();
+    $customer->get_credit_id();
     _render_main_screen($customer);
 }
 

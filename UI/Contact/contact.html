@@ -24,7 +24,8 @@
 	<?lsmb IF entity_class == 3 ?>
 	<li><a href="#hr_div"><?lsmb text('HR') ?></a></li>
 	<?lsmb ELSE ?>
-	<li><a href="#customer_div"><?lsmb text('Account') ?></a></li>
+	<li><a href="#company_div"><?lsmb text('Company') ?></a></li>
+	<li><a href="#credit_div"><?lsmb text('Accounts') ?></a></li>
 	<?lsmb END ?>
 	<?lsmb IF entity_id ?>
 	<li><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
@@ -136,7 +137,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 </form>
 <?lsmb ELSE ?>
-<div class="container" id="customer_div">
+<div class="container" id="company_div">
 <?lsmb SWITCH entity_class
 	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
@@ -153,6 +154,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	} ?>	
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
+		name = "id"
+		value = id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
 		name = "account_class"
 		value = account_class
 	} ?>	
@@ -163,6 +169,83 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		value = name,
 		size = "20"
 	} ?><br/>
+        <table>
+        <tr>
+            
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Tax Number/SSN:'),
+			name = "tax_id",
+			value = tax_id,
+			type = "text",
+			size = "19"
+		} #' ?>
+            </td>
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('SIC:'),
+			name = "sic_code",
+			value = sic_code,
+			type = "text",
+			size = "19",
+			class = 'sic'
+		} ?>
+            </td>
+        </tr>
+    </table>
+
+            <hr/>
+		<?lsmb INCLUDE button element_data = {
+			text = text('Save'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="save" 
+			accesskey="S" 
+			title="Save [Alt-S]"
+		} ?>
+    </form>
+</div>
+<div id="credit_div">
+<div class="listtop"><strong>Accounts</strong</div>
+    <table width="100%">
+    <tr class="listheading">
+        <th class="account_class"><?lsmb text('Type') ?></th>
+        <th class="number"><?lsmb text("Number") ?></th>
+        <th class="credit_limit"><?lsmb text('Credit Limit') ?></th>
+        <th class="start_date"><?lsmb text('Start Date') ?></th>
+        <th class="end_date"><?lsmb text('End Date') ?></th>
+    </tr>
+    <?lsmb FOREACH cl_item = credit_list ?>
+    <tr>
+        <td><?lsmb IF cl_item.entity_class == 1 ?><?lsmb text('Vendor') ?>
+            <?lsmb ELSIF cl_item.entity_class == 2 ?><?lsmb text('Customer') ?>
+            <?lsmb END ?>
+        </td>
+        <td><?lsmb cl_item.meta_number ?></td>
+        <td><?lsmb cl_item.credit_limit ?></td>
+        <td><?lsmb cl_item.start_date ?></td>
+        <td><?lsmb cl_item.end_date ?></td>
+    </tr>    
+    <?lsmb END ?>
+    </table>
+    <form id="credit_form" name="credit_form" method="post" 
+	action="<?lsmb script ?>">
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "entity_id"
+		value = entity_id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "credit_id"
+		value = credit_id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "account_class"
+		value = account_class
+	} ?>	
 	<?lsmb PROCESS input element_data = {
 		label = text("$entity_classname Number:"),
 		type= "text",
@@ -214,28 +297,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "5"
 		} ?> <?lsmb text('days') ?>
             </td>
-        </tr>
-        <tr>
-            
-            <td>
-		<?lsmb INCLUDE input element_data = {
-			label = text('Tax Number/SSN:'),
-			name = "tax_id",
-			value = tax_id,
-			type = "text",
-			size = "19"
-		} #' ?>
-            </td>
-            <td>
-		<?lsmb INCLUDE input element_data = {
-			label = text('Subcontract GIFI:'),
-			name = "gifi_accno",
-			value = gifi_accno,
-			type = "text",
-			size = "19"
-		} #' ?>
-            </td>
-        </tr>
+	</tr>
 	<tr>
             <td>
 		<?lsmb INCLUDE input element_data = {
@@ -256,13 +318,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
             </td>
             <td>
 		<?lsmb INCLUDE input element_data = {
-			label = text('SIC:'),
-			name = "sic_code",
-			value = sic_code,
+			label = text('Subcontract GIFI:'),
+			name = "gifi_accno",
+			value = gifi_accno,
 			type = "text",
-			size = "19",
-			class = 'sic'
-		} ?>
+			size = "19"
+		} #' ?>
             </td>
         </tr>
         <tr>
@@ -284,6 +345,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			value_attr = "id"
                 } ?>
            </td>
+        </tr>
         <tr>
            <td> <?lsmb INCLUDE select element_data = {
 			name = "business_id"
@@ -303,17 +365,23 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			class = "numeric"
                } ?>
 	</tr>
-    </table>
-
-            <hr/>
+        </table>
 		<?lsmb INCLUDE button element_data = {
 			text = text('Save'),
 			class="submit" 
 			type="submit" 
 			name="action" 
-			value="save" 
-			accesskey="S" 
-			title="Save [Alt-S]"
+			value="save_credit" 
+			accesskey="C" 
+			title="Save Credit Account[Alt-C]"
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+			text = text('Save New'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="save_credit_new"  
+			title="Save Credit Account as New" #'
 		} ?>
 		<?lsmb INCLUDE button element_data = {
                         class="submit" 
@@ -360,6 +428,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
                         title="Pricelist [Alt-P]"
 			text = text('Pricelist') 
 		} ?>
+	
     </form>
 </div>
 <?lsmb END ?>

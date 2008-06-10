@@ -50,9 +50,26 @@ TODO:  Separate company from credit account storage.
 sub save {
     my $self = shift @_;
     $self->set_entity_class();
+    my ($ref) = $self->exec_method(funcname => 'company_save');
+    $self->{id} = $ref->{company_save};
+    $self->{dbh}->commit;
+}
+
+=over
+
+=item save_credit 
+
+This method saves the credit account for the company.
+
+=back
+
+=cut
+
+sub save_credit {
+    my $self = shift @_;
+    $self->set_entity_class();
     $self->{threshold} = $self->parse_amount(amount => $self->{threshold});
-    my ($ref) = $self->exec_method(funcname => 'entity_credit_save');
-    $self->{entity_id} = $ref->{entity_credit_save};
+    $self->exec_method(funcname => 'entity_credit_save');
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
     $self->{dbh}->commit;
 }
@@ -73,6 +90,24 @@ sub save_location {
     $self->exec_method(funcname => 'company__location_save');
 
     $self->{dbh}->commit;
+}
+
+=over
+
+=item get_credit_id 
+
+This method returns the current credit id from the screen.
+
+=back
+
+=cut
+
+sub get_credit_id {
+    my $self = shift @_;
+    my ($ref) = $self->exec_method(
+           funcname => 'entity_credit_get_id'
+    );
+    $self->{credit_id} = $ref->{'entity_credit_get_id'};
 }
 
 =over
@@ -116,6 +151,9 @@ sub get_metadata {
 
     @{$self->{contact_class_list}} = 
          $self->exec_method(funcname => 'entity_list_contact_class');
+
+    @{$self->{credit_list}} = 
+         $self->exec_method(funcname => 'entity__list_credit');
 }
 
 sub save_contact {

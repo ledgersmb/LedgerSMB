@@ -49,6 +49,7 @@ sub get {
     
     $vendor->set( entity_class=> '1' );
     $vendor->get();
+    $vendor->get_credit_id();
     $vendor->get_metadata();
     _render_main_screen($vendor);
 }
@@ -219,10 +220,27 @@ sub save {
     _render_main_screen($vendor);
 }
 
+sub save_credit {
+    
+    my ($request) = @_;
+
+    my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
+    $vendor->save_credit();
+    $vendor->get();
+    _render_main_screen($vendor);
+}
+
+sub save_credit_new {
+    my ($request) = @_;
+    $request->{credit_id} = undef;
+    save_credit($request);
+}
+
 sub edit{
     my $request = shift @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
     $vendor->get();
+    $vendor->get_credit_id();
     _render_main_screen($vendor);
 }
 

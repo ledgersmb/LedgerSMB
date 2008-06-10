@@ -4,6 +4,8 @@
 # the GNU General Public License.  For more information please see the included
 # LICENSE and COPYRIGHT files
 
+# THIS FILE NEEDS POD
+
 package LedgerSMB::Scripts::vouchers;
 our $VERSION = '0.1';
 
@@ -35,6 +37,8 @@ sub create_vouchers {
     $batch->create;
     add_vouchers($batch);
 }
+
+sub search_transactions {
 
 
 sub add_vouchers {
