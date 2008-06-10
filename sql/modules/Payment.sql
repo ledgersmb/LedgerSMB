@@ -165,7 +165,7 @@ BEGIN
 		                   THEN 0
 		                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
 		              END))::text]]),
-                              sum(case when v.batch_id = in_batch_id then 1
+                              sum(case when a.batch_id = in_batch_id then 1
 		                  else 0 END),
 		              bool_and(lock_record(a.id, (select max(session_id) 				FROM "session" where users_id = (
 					select id from users WHERE username =
@@ -173,17 +173,23 @@ BEGIN
                            
 		    FROM entity e
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
-		    JOIN (SELECT id, invnumber, transdate, amount, entity_id, 
+		    JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id, 
 				 paid, curr, 1 as invoice_class, 
-		                 entity_credit_account, on_hold
+		                 entity_credit_account, on_hold, v.batch_id
 		            FROM ap
+		       LEFT JOIN (select * from voucher where batch_class = 1) v 
+			         ON (ap.id = v.trans_id)
 			   WHERE in_account_class = 1
+			         AND (v.batch_class = 1 or v.batch_id IS NULL)
 		           UNION
-		          SELECT id, invnumber, transdate, amount, entity_id,
+		          SELECT ar.id, invnumber, transdate, amount, entity_id,
 		                 paid, curr, 2 as invoice_class, 
-		                 entity_credit_account, on_hold
+		                 entity_credit_account, on_hold, v.batch_id
 		            FROM ar
+		       LEFT JOIN (select * from voucher where batch_class = 2) v 
+			         ON (ar.id = v.trans_id)
 			   WHERE in_account_class = 2
+			         AND (v.batch_class = 2 or v.batch_id IS NULL)
 			ORDER BY transdate
 		         ) a ON (a.entity_credit_account = c.id)
 		    JOIN transactions t ON (a.id = t.id)
@@ -197,8 +203,7 @@ BEGIN
 		           WHERE ((chart.link = 'AP' AND in_account_class = 1)
 		                 OR (chart.link = 'AR' AND in_account_class = 2))
 		        GROUP BY trans_id) p ON (a.id = p.trans_id)
-		  LEFT JOIN voucher v ON (v.trans_id = a.id)
-		   WHERE v.batch_id = in_batch_id
+		   WHERE a.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
 			 AND c.business_id = 
 				coalesce(in_business_id, c.business_id)
@@ -223,7 +228,7 @@ BEGIN
 		                    ))
 		GROUP BY c.id, e.name, c.meta_number, c.threshold
 		  HAVING sum(p.due) > c.threshold
-			OR sum(case when v.batch_id = in_batch_id then 1
+			OR sum(case when a.batch_id = in_batch_id then 1
                                   else 0 END) > 0
 	LOOP
 		RETURN NEXT payment_item;
