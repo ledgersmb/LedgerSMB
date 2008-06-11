@@ -127,6 +127,7 @@ ability to hide the entire structure for things like CSV lookups.
 =cut
 
 use CGI::Simple;
+$CGI::Simple::DISABLE_UPLOADS = 0;
 use Math::BigFloat;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;

@@ -39,6 +39,7 @@ sub create_vouchers {
 }
 
 sub search_transactions {
+}
 
 
 sub add_vouchers {
