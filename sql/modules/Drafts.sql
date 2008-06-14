@@ -1,0 +1,88 @@
+CREATE TYPE draft_search_result AS (
+	id int,
+	transdate date,
+	description text,
+	amount numeric
+);
+
+CREATE OR REPLACE FUNCTION draft__search(in_type text, in_with_accno text, 
+in_from_date date, in_to_date date, in_amount_le numeric, in_amount_ge numeric)
+returns setof draft_search_result AS
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN
+		SELECT trans.id, trans.transdate, trans.description, 
+			sum(case when in_type = 'ap' AND chart.link = 'AP'
+				 THEN line.amount
+				 WHEN in_type = 'ar' AND chart.link = 'AR'
+				 THEN line.amount * -1
+				 WHEN in_type = 'gl' AND line.amount > 0
+				 THEN line.amount
+			 	 ELSE 0
+			    END) as amount
+		FROM (
+			SELECT id, transdate, description, approved from ap
+			WHERE in_type = 'ap'
+			UNION
+			SELECT id, transdate, description, approved from ar
+			WHERE in_type = 'ar'
+			UNION
+			SELECT id, transdate, description, approved from gl
+			WHERE in_type = 'gl'
+			) trans
+		JOIN acc_trans line ON (trans.id = line.trans_id)
+		JOIN chart ON (line.chart_id = chart.id)
+		WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
+			AND (in_to_date IS NULL 
+				or trans.transdate <= in_to_date)
+			AND trans.approved IS FALSE
+			AND trans.id NOT IN (select trans_id from voucher)
+		GROUP BY trans.id, trans.transdate, trans.description
+		HAVING (in_with_accno IS NULL or in_with_accno = 
+			ANY(as_array(chart.accno)))
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION draft_approve(in_id int) returns bool as
+$$
+declare 
+	t_table text;
+begin
+	SELECT table_name into t_table FROM transactions where id = in_id;
+
+        IF (t_table = 'ar') THEN
+		UPDATE ar set approved = true where id = in_id;
+	ELSIF (t_table = 'ap') THEN
+		UPDATE ap set approved = true where id = in_id;
+	ELSIF (t_table = 'gl') THEN
+		UPDATE gl set approved = true where id = in_id;
+	ELSE
+		raise exception 'Invalid table % in draft_approve for transaction %', t_table, in_id;
+	END IF;
+	RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+CREATE OR REPLACE FUNCTION draft_delete(in_id int) returns bool as
+$$
+declare 
+	t_table text;
+begin
+	SELECT table_name into t_table FROM transactions where id = in_id;
+        IF t_table = 'ar' THEN
+		DELETE FROM ar WHERE id = in_id AND approved IS FALSE;
+	ELSIF t_table = 'ap' THEN
+		DELETE FROM ap WHERE id = in_id AND approved IS FALSE;
+	ELSIF t_table = 'gl' THEN
+		DELETE FROM gl WHERE id = in_id AND approved IS FALSE;
+	ELSE
+		raise exception 'Invalid table % in draft_delete for transaction %', t_table, in_id;
+	END IF;
+	RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
