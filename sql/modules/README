@@ -9,13 +9,13 @@ redefine functions, you will need to drop the types and reload the scripts.
 Drafts.sql
 Account.sql
 Session.sql
-Business_Type.sql
+Business_type.sql
 Location.sql
 Company.sql
 Customer.sql 
 Date.sql
 Defaults.sql
-Setting.sql
+Settings.sql
 Employee.sql
 Entity.sql
 Payment.sql
