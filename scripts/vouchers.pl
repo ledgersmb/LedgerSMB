@@ -38,10 +38,6 @@ sub create_vouchers {
     add_vouchers($batch);
 }
 
-sub search_transactions {
-}
-
-
 sub add_vouchers {
     #  This function is not safe for caching as long as the scripts are in bin.
     #  This is because these scripts import all functions into the *current*

@@ -1,6 +1,7 @@
 CREATE TYPE draft_search_result AS (
 	id int,
 	transdate date,
+	reference text,
 	description text,
 	amount numeric
 );
@@ -12,7 +13,8 @@ $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
-		SELECT trans.id, trans.transdate, trans.description, 
+		SELECT trans.id, trans.transdate, trans.reference, 
+			trans.description, 
 			sum(case when in_type = 'ap' AND chart.link = 'AP'
 				 THEN line.amount
 				 WHEN in_type = 'ar' AND chart.link = 'AR'
@@ -22,13 +24,16 @@ BEGIN
 			 	 ELSE 0
 			    END) as amount
 		FROM (
-			SELECT id, transdate, description, approved from ap
+			SELECT id, transdate, invnumber as reference, 
+				description, approved from ap
 			WHERE in_type = 'ap'
 			UNION
-			SELECT id, transdate, description, approved from ar
+			SELECT id, transdate, invnumber as reference,
+				description, approved from ar
 			WHERE in_type = 'ar'
 			UNION
-			SELECT id, transdate, description, approved from gl
+			SELECT id, transdate, reference, description, 
+				approved from gl
 			WHERE in_type = 'gl'
 			) trans
 		JOIN acc_trans line ON (trans.id = line.trans_id)
@@ -63,7 +68,19 @@ begin
 	ELSE
 		raise exception 'Invalid table % in draft_approve for transaction %', t_table, in_id;
 	END IF;
-	RETURN FOUND;
+
+	IF NOT FOUND THEN
+		RETURN FALSE;
+	END IF;
+
+	UPDATE transactions 
+	SET approved_by = 
+			(select entity_id FROM users 
+			WHERE username = SESSION_USER), 
+		approved_at = now() 
+	WHERE id = in_id;
+
+	RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
