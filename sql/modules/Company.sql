@@ -235,7 +235,22 @@ CREATE OR REPLACE FUNCTION company_save (
     in_entity_id int, in_sic_code text
 ) RETURNS INT AS $$
 DECLARE t_entity_id INT;
+	t_company_id INT;
 BEGIN
+	IF in_entity_id IS NULL THEN
+		IF in_id IS NULL THEN
+			SELECT id INTO t_company_id FROM company
+			WHERE legal_name = in_name AND 
+				(tax_id = in_tax_id OR 
+					(tax_id IS NULL AND in_tax_id IS NULL));
+		END IF;
+		IF t_company_id IS NOT NULL THEN
+			SELECT entity_id INTO t_entity_id FROM company
+			WHERE id = t_company_id;
+		END IF;
+	ELSE
+		t_entity_id := in_entity_id;
+	END IF;
 	IF in_entity_id IS NULL THEN
 		INSERT INTO entity (name, entity_class)
 		VALUES (in_name, in_entity_class);
