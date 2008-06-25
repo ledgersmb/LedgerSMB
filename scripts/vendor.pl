@@ -149,7 +149,8 @@ sub get_results {
 	push @rows, 
                 {legal_name   => $ref->{legal_name},
                 meta_number   => {text => $ref->{meta_number},
-                                  href => "$get_url&entity_id=$ref->{entity_id}"},
+                                  href => "$get_url&entity_id=$ref->{entity_id}"		                           . "&meta_number=$ref->{meta_number}"
+		                 },
 		business_type => $ref->{business_type},
                 curr          => $ref->{curr},
                 };

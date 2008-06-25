@@ -185,7 +185,7 @@ sub get {
     my $self = shift @_;
 
     $self->set_entity_class();
-    my ($ref) = $self->exec_method(funcname => 'entity__retrieve_credit');
+    my ($ref) = $self->exec_method(funcname => 'company_retrieve');
     $self->merge($ref);
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
 

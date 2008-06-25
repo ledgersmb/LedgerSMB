@@ -220,11 +220,11 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION company_retrieve (in_id int) RETURNS company AS
+CREATE OR REPLACE FUNCTION company_retrieve (in_entity_id int) RETURNS company AS
 $$
 DECLARE t_company company;
 BEGIN
-	SELECT * INTO t_company FROM company WHERE id = in_id;
+	SELECT * INTO t_company FROM company WHERE entity_id = in_entity_id;
 	RETURN t_company;
 END;
 $$ language plpgsql;
