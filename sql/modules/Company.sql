@@ -237,8 +237,11 @@ CREATE OR REPLACE FUNCTION company_save (
 DECLARE t_entity_id INT;
 	t_company_id INT;
 BEGIN
+	t_company_id := in_id;
+
 	IF in_entity_id IS NULL THEN
 		IF in_id IS NULL THEN
+			RAISE NOTICE 'in_id is null';
 			SELECT id INTO t_company_id FROM company
 			WHERE legal_name = in_name AND 
 				(tax_id = in_tax_id OR 
@@ -247,32 +250,29 @@ BEGIN
 		IF t_company_id IS NOT NULL THEN
 			SELECT entity_id INTO t_entity_id FROM company
 			WHERE id = t_company_id;
+			
 		END IF;
 	ELSE
 		t_entity_id := in_entity_id;
 	END IF;
-	IF in_entity_id IS NULL THEN
+	IF t_entity_id IS NULL THEN
 		INSERT INTO entity (name, entity_class)
 		VALUES (in_name, in_entity_class);
 		t_entity_id := currval('entity_id_seq');
-	ELSE 
-		t_entity_id := in_entity_id;
 	END IF;
 
 	UPDATE company
 	SET legal_name = in_name,
 		tax_id = in_tax_id,
 		sic_code = in_sic_code
-	WHERE id = in_id;
+	WHERE id = t_company_id;
 
-	IF FOUND THEN
-		RETURN in_id;
-	ELSE
+	IF NOT FOUND THEN
 		INSERT INTO company(entity_id, legal_name, tax_id, sic_code)
 		VALUES (t_entity_id, in_name, in_tax_id, in_sic_code);
 
-		RETURN currval('company_id_seq');
 	END IF;
+	RETURN t_entity_id;
 END;
 $$ LANGUAGE PLPGSQL;
 
