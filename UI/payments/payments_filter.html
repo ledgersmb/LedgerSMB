@@ -58,6 +58,20 @@
 </div>
 <?lsmb END ?>
 
+<?lsmb IF account_class == 1 ?>
+<?lsmb vendor_customer_code = text("Vendor Number") # " ?>
+<?lsmb ELSIF account_class == 2 ?>
+<?lsmb vendor_customer_code = text("Customer Number") # " ?>
+<?lsmb END ?>
+
+<?lsmb PROCESS input element_data = {
+	name = "meta_number"
+	type = "text"
+	value = meta_number
+	label = vendor_customer_code
+	size = '15'
+} ?>
+
 <?lsmb IF businesses ?>
 <div id = "payments-filter-businesses" class="input">
   <label for="businesses"><?lsmb text('Business Class') ?></label>

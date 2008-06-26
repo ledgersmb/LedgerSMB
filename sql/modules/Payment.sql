@@ -142,7 +142,7 @@ CREATE TYPE payment_contact_invoice AS (
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
 	in_date_from date, in_date_to date, in_batch_id int, 
-	in_ar_ap_accno text)
+	in_ar_ap_accno text, in_meta_number text)
 RETURNS SETOF payment_contact_invoice AS
 $$
 DECLARE payment_item payment_contact_invoice;
@@ -215,6 +215,8 @@ BEGIN
 			 AND p.due <> 0
 		         AND a.amount <> a.paid 
 			 AND NOT a.on_hold
+			 AND (in_meta_number IS NULL 
+				OR in_meta_number = c.meta_number)
 			 AND NOT (t.locked_by IS NOT NULL AND t.locked_by IN 
 				(select "session_id" FROM "session"
 				WHERE users_id IN 
