@@ -6,6 +6,7 @@
         ]
 ?>
 <body>
+<div class="listtop"><?lsmb text('Create New Batch') ?></div>
 <form name="create_batch" method="post">
 <div class="labelledinput">
   <div class="input">
@@ -39,5 +40,24 @@
 <input type=hidden name="<?lsmb item.name ?>" value="<?lsmb item.value ?>">
 <?lsmb END ?>
 </form>
+<div class="listtop"><?lsmb text('Or Add To Batch') ?></div>
+<table>
+<tr class="listheading">
+  <th><?lsmb text('Batch Type') ?></th>
+  <th><?lsmb text('Control Number') ?></th>
+  <th><?lsmb text('Description') ?></th>
+  <th><?lsmb text('Created By') ?></th>
+  <th><?lsmb text('Created On') ?></th>
+</tr>
+<?lsmb FOR row = search_results ?>
+<tr>
+  <td><?lsmb text(row.batch_class) ?></td>
+  <td><a href="<?lsmb "vouchers.pl?action=add_vouchers&batch_type=$batch_type&id=$row.id" ?>"><?lsmb row.control_code ?></td>
+  <td><?lsmb row.description ?></td>
+  <td><?lsmb row.created_by ?></td>
+  <td><?lsmb row.created_on ?></td>
+</tr>
+<?lsmb END ?>
+</table>
 </body>
 </html>

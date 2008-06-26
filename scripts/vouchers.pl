@@ -20,6 +20,10 @@ sub create_batch {
     $request->{hidden} = [
         {name => "batch_type", value => $request->{batch_type}},
     ];
+
+    my $batch = LedgerSMB::Batch->new({base => $request});
+    $batch->get_search_results;
+
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $request->{_locale},
@@ -27,7 +31,7 @@ sub create_batch {
         template => 'create_batch',
         format => 'HTML'
     );
-    $template->render($request);
+    $template->render($batch);
 }
 
 sub create_vouchers {
