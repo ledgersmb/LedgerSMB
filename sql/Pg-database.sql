@@ -270,8 +270,8 @@ CREATE TABLE company_to_contact (
   company_id integer not null references company(id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
-  description text not null,
-  PRIMARY KEY (company_id,contact_class_id,contact));  
+  description text,
+  PRIMARY KEY (company_id, contact_class_id,  contact));  
 
 COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
   
