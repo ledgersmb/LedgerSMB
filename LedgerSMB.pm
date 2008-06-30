@@ -552,6 +552,10 @@ sub call_procedure {
     my $argstr   = "";
     my @results;
 
+    if (!defined $procname){
+        $self->error('Undefined function in call_procedure.');
+    }
+
     $procname = $self->{dbh}->quote_identifier($procname);
     for ( 1 .. scalar @call_args ) {
         $argstr .= "?, ";
@@ -566,7 +570,7 @@ sub call_procedure {
     if (scalar @call_args){
         $sth->execute(@call_args) || $self->error($self->{dbh}->errstr);
     } else {
-        $sth->execute() || $self->error($self->{dbh}->errstr);
+        $sth->execute() || $self->error($self->{dbh}->errstr . ':' . $query);
     }
    
     my @types = @{$sth->{TYPE}};

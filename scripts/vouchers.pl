@@ -22,7 +22,8 @@ sub create_batch {
     ];
 
     my $batch = LedgerSMB::Batch->new({base => $request});
-    $batch->get_search_results;
+    $batch->{class_id} = $batch->get_class_id($batch->{batch_type});
+    $batch->get_search_results();
 
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 

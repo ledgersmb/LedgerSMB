@@ -28,7 +28,7 @@ use_ok('LedgerSMB::PE');
 use_ok('LedgerSMB::PriceMatrix');
 use_ok('LedgerSMB::RC');
 use_ok('LedgerSMB::RP');
-use_ok('LedgerSMB::Session');
+use_ok('LedgerSMB::Auth');
 use_ok('LedgerSMB::Sysconfig');
 use_ok('LedgerSMB::Tax');
 use_ok('LedgerSMB::Template');

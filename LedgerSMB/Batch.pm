@@ -31,9 +31,24 @@ sub get_search_criteria {
 }
 
 sub get_search_results {
-    my ($self) = @_; 
-    @{$self->{search_results}} = $self->exec_method(funcname => 'batch_search');
+    my ($self, $args) = @_;
+    if ($args->{mini}){
+        $search_proc = "batch_search_mini";
+    } else {
+        $search_proc = "batch_search";
+    }
+    @{$self->{search_results}} = $self->exec_method(funcname => $search_proc);
     return @{$self->{search_results}};
+}
+
+sub get_class_id {
+    my ($self, $type) = @_;
+    @results = $self->call_procedure(
+                                    procname => 'batch_get_class_id', 
+                                     args     => [$type]
+    );
+    my $result = pop @results;
+    return $result->{batch_get_class_id};
 }
 
 sub post {

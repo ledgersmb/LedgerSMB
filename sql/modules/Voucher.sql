@@ -213,6 +213,44 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION batch_get_class_id (in_type text) returns int AS
+$$
+SELECT id FROM batch_class WHERE class = $1;
+$$ language sql;
+
+CREATE OR REPLACE FUNCTION 
+batch_search_mini
+(in_class_id int, in_description text, in_created_by_eid int, in_approved bool) 
+RETURNS SETOF batch_list_item AS
+$$
+DECLARE out_value batch_list_item;
+BEGIN
+	FOR out_value IN
+		SELECT b.id, c.class, b.control_code, b.description, u.username,
+			b.created_on, NULL
+		FROM batch b
+		JOIN batch_class c ON (b.batch_class_id = c.id)
+		LEFT JOIN users u ON (u.entity_id = b.created_by)
+		JOIN voucher v ON (v.batch_id = b.id)
+		WHERE (c.id = in_class_id OR in_class_id IS NULL) AND 
+			(b.description LIKE 
+				'%' || in_description || '%' OR
+				in_description IS NULL) AND
+			(in_created_by_eid = b.created_by OR
+				in_created_by_eid IS NULL) AND
+			((in_approved = false OR in_approved IS NULL AND
+				approved_on IS NULL) OR
+				(in_approved = true AND approved_on IS NOT NULL)
+			)
+		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
+			b.control_code
+	LOOP
+		RETURN NEXT out_value;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
 
 
 CREATE OR REPLACE FUNCTION batch_post(in_batch_id INTEGER)
