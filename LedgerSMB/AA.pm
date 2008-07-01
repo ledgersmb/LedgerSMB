@@ -311,14 +311,9 @@ sub post_transaction {
         # AR/AP Transaction.
         # ~A
         $query = qq|
-<<<<<<< .mine
-			INSERT INTO $table (invnumber, person_id)
-			     VALUES (?, (select e.id from person p, entity e, users u
-=======
 			INSERT INTO $table (invnumber, person_id, 
 				entity_credit_account)
 			     VALUES (?, (select e.id from person p, entity e, users u
->>>>>>> .r2156
 			                 where u.username = ?
 			                 AND e.id = u.entity_id
 			                 AND p.entity_id = e.id ), ?)|;

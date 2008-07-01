@@ -231,7 +231,6 @@ BEGIN
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		LEFT JOIN users u ON (u.entity_id = b.created_by)
-		JOIN voucher v ON (v.batch_id = b.id)
 		WHERE (c.id = in_class_id OR in_class_id IS NULL) AND 
 			(b.description LIKE 
 				'%' || in_description || '%' OR
