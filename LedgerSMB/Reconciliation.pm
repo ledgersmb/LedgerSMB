@@ -85,47 +85,35 @@ your software.
 
 =cut
 
-package LedgerSMB::DBObject::Reconciliation;
+package LedgerSMB::Reconciliation;
 
-use base qw(LedgerSMB);
+use base qw(LedgerSMB::DBObject);
 use LedgerSMB::DBObject;
+use LedgerSMB::Reconciliation::CSV;
 
 # don't need new
 
-#sub reconcile {
-sub new_report {
-
+sub import_file {
+    
     my $self = shift @_;
-    my $total = shift @_;
-    my $month = shift @_;
-    my $entries = shift @_; # expects an arrayref.
     
-    # Total is in here somewhere, too
+    # We need to know what the format is, for the text file. We should have a set of formats
+    # for the given file, listed in the DB, or based on modules available.
+    # 
+    # Probably based on modules.
     
-    my $report_id = $self->new_report_id()[0]; # gives us a report ID to insert with.
+    # my $module = 'LedgerSMB/Reconciliaton/CSV/'.$self->{file_format};
+    # require $module."pm";
+    # my $obj_name = $module;
+    # $obj_name =~ s/\//::/g;
+    # my $parser = $obj_name::new(base=>$self);
     
-    # Now that we have this, we need to create the internal report representation.
-    # Ideally, we OUGHT to not return anything here, save the report number.
-    unshift @{$entries}, {
-        scn => -1,
-        balance=> $total, 
-        old_balance=> $self->current_balance, 
-        date=>$month
-    };
-    for my $entry (@{$entries}) {
-        
-        # Codes:
-        # 0 is success
-        # 1 is found, but mismatch
-        # 2 is not found
-        $entry{report_id} = $report_id;
-        $entry{code} = $self->add_entry( $entry );
-        
-    }
+    # $self->filename is currently a lie. There's no facility in the LSMB 
+    # design to accomadate an uploaded file.
+    my $csv = LedgerSMB::Reconciliation::CSV->new(base=>$self);
+    $csv->process();
     
-    $self->pending_transactions($report_id, $date);
-    
-    return $entries; # returns the report ID.
+    return $self->{entries};
 }
 
 sub approve {
@@ -134,7 +122,7 @@ sub approve {
     # the user should be embedded into the $self object.
     my $report_id = shift @_;
     
-    my $code = $self->report_approve($report_id); # user 
+    my $code = $self->exec_method(funcname=>'report_approve', args=>[$report_id]); # user 
     
     if ($code == 0) {  # no problem.
         return $code;
@@ -146,6 +134,48 @@ sub approve {
     }
 }
 
+sub new_report {
+
+    my $self = shift @_;
+    my $total = shift @_;
+    my $month = shift @_;
+    my $entries = shift @_; # expects an arrayref.
+    
+    # Total is in here somewhere, too
+    
+    # gives us a report ID to insert with.
+    my $report_id = $self->exec_method(funcname=>'reconciliation__new_report_id');
+    
+    # Now that we have this, we need to create the internal report representation.
+    # Ideally, we OUGHT to not return anything here, save the report number.
+    unshift @{$entries}, {
+        scn => -1,
+        balance=> $total, 
+        old_balance=> $self->exec_method(funcname=>'reconciliation__current_balance'), 
+        date=>$month
+    };
+    for my $entry ( @{$entries} ) {
+        
+        # Codes:
+        # 0 is success
+        # 1 is found, but mismatch
+        # 2 is not found
+        $code = $self->exec_method(
+            funcname=>'reconciliation__add_entry', 
+            args=>[
+                $report_id,
+            ]
+        );
+        $entry{report_id} = $report_id;
+        $entry{code} = $self->add_entry( $entry );
+        
+    }
+    
+    $self->exec_method(funcname=>'reconciliation__pending_transactions', args=>[$report_id, $date]);
+    
+    return ($report_id, $entries); # returns the report ID.
+}
+
 sub correct_entry {
     
     my $self = shift @_;
@@ -154,7 +184,10 @@ sub correct_entry {
     my $new_amount = $self->{new_amount}; #shift @_;
     
     # correct should return the new code value - whether or not it actually "matches"
-    my $code = $self->correct($report_id, $scn, $new_amount);
+    my $code = $self->exec_method(
+        funcname=>'reconciliation__correct',
+        args=>[$report_id, $scn, $new_amount]
+    );
     return $code[0]->{'correct'}; 
 }
 
@@ -162,21 +195,39 @@ sub get_report {
     
     my $self = shift @_;
     
-    return $self->report($self->{report_id});    
+    return $self->exec_method(funcname=>'reconciliation__report', args=>[$self->{report_id}]);    
 }
 
 sub get_corrections {
     
     my $self = shift @_;
     
-    return $self->corrections($self->{report_id},$self->{entry_id});
+    return $self->exec_method(
+        funcname=>'reconciliation__corrections',
+        args=>[$self->{report_id}, $self->{entry_id}]
+    );
 }
 
 sub entry {
     
     my $self = shift @_;
     
-    return $self->single_entry($self->{report_id},$self->{entry_id});
+    return $self->exec_method(
+        funcname=>'reconciliation__single_entry',
+        args=>[$self->{report_id}, $self->{entry_id}]
+    );
 }
+
+sub search {
+    
+    my $self = shift @_;
+    
+    return $self->exec_method(
+        funcname=>'reconciliation__search',
+        args=>[$self->{date_begin}, $self->{date_end}, $self->{account}, $self->{status}]
+    );
+}
+
+
 
 1;

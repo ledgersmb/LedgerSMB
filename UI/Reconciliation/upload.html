@@ -1,0 +1,17 @@
+<div>
+    <div class="title">
+        New Reconciliation Report
+    </div>
+    <?lsmb IF error?>
+        <div class="error">Error detected in file upload: <?lsmb error?><br/>
+            Please check your CSV file and try again.
+        </div>
+    <?lsmb END?>
+    <form name="csv_upload" method="POST" action="/reconciliation.pl">
+        
+        <input type="hidden" name="action" value="new_report" />
+        <label for="file_upload">CSV File:</label>
+        <input type="file" name="csv_file" id="file_upload" />
+        <input type="submit" action="submit" value="Create New Report">
+    </form>
+</div>

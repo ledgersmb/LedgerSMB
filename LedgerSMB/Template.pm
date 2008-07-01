@@ -254,9 +254,10 @@ sub render {
 
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
 		$cleanvars->{text} = sub { return $self->{locale}->text(@_)};
-	} else {
-                $cleanvars->{text} = sub { return shift @_ };
-        }
+	} 
+	else {
+        $cleanvars->{text} = sub { return shift @_ };
+    }
 
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);

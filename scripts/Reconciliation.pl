@@ -40,22 +40,59 @@ sub display_report {
     my ($class, $request) = @_;
     my $recon = LedgerSMB::Employee->new(base => $request, copy => 'all'); 
     my $template = LedgerSMB::Template->new( user=>$user, 
-        template => "reconciliation_report.html", language => $user->{language},
+        template => "reconciliation/report.html", language => $user->{language},
             format=>'html'
         );
     my $report = $recon->get_report();
     my $total = $recon->get_total();
-    $template->render({report=>$report, total=>$total});
+    $template->render({report=>$report, total=>$total, recon=>$recon});
 }
+
+=pod
+
+=over
+
+=item search($self, $request, $user)
+
+Renders out a list of meta-reports based on the search criteria passed to the
+search function.
+Meta-reports are report_id, date_range, and likely errors.
+Search criteria accepted are 
+date_begin
+date_end
+account
+status
+
+=back
+
+=cut
 
 sub search {
     my ($class, $request) = @_;
-    my $search = LedgerSMB::Employee->new(base => $request, copy => 'all');
-    $employee->{search_results} = $employee->search();
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'employee_search.html', language => $user->{language}, 
-        format => 'html');
-    $template->render($employee);
+    
+    if ($request->type() eq "POST") {
+        # WE HAS DATUMS
+        # INTENTIONAL BAD PLURALIZATION OF LATIN
+        
+        my $template = LedgerSMB::Template->new(
+            user => $user,
+            template=>'reconciliation/search.html',
+            language=>$user->{language},
+            format=>'html'
+        );
+        return $template->render();
+        
+    } else {
+        my $search = LedgerSMB::Reconciliation->new(base => $request, copy => 'all');
+        my $results = $search->search();
+        my $total = $search->total();
+    
+    
+        my $template = LedgerSMB::Template->new( user => $user, 
+    	    template => 'reconciliation/report.html', language => $user->{language}, 
+            format => 'html');
+        return $template->render({report => $results, total => $total});
+    }
 }
 
 =pod
@@ -77,36 +114,71 @@ This is to prevent arbitrary editing of the database by unscrupulous users.
 sub correct {
     my ($class, $request) = @_;
     
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
-    
-    $recon->correct_entry();
-     
-    if ($recon->{corrected_id}) {
+    if ($request->type() eq "POST") {
         
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'reconciliation_report.html', language => $user->{language}, 
-            format => 'html');
-    
-        $template->render( { 
-            corrected=> $recon->{corrected_id}, 
-            report=> $recon->get_report(),
-            total=> $recon->get_total()
-        } );
-    } 
+        my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
+
+        $recon->correct_entry();
+        
+        #  Are we getting data?
+        if ($recon->{corrected_id}) {
+
+            my $template = LedgerSMB::Template->new( user => $user, 
+        	template => 'reconciliation/report.html', language => $user->{language}, 
+                format => 'html');
+
+            $template->render( { 
+                corrected=> $recon->{corrected_id}, 
+                report=> $recon->get_report(),
+                total=> $recon->get_total()
+            } );
+        } 
+        else {
+
+            # indicate we were unable to correct this entry, with the error code 
+            # spat back to us by the DB.
+            my $template = LedgerSMB::Template->new( user => $user, 
+        	template => 'reconciliation/report.html', language => $user->{language}, 
+                format => 'html');
+
+            $template->render( { 
+                recon   => $recon,
+                report  => $recon->get_report(),
+                total   => $recon->get_total()
+            } );
+        }
+    }
     else {
         
-        # indicate we were unable to correct this entry, with the error code 
-        # spat back to us by the DB.
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'reconciliation_report.html', language => $user->{language}, 
-            format => 'html');
-    
-        $template->render( { 
-            recon => $recon,
-            report=> $recon->get_report(),
-            total=> $recon->get_total()
-        } );
+        # We are not getting data sent
+        # ergo, we render out stuff.
+        
+        if ($request->{report_id} && $request->{entry_id}) {
+            
+            # draw the editor interface.
+            
+            my $template = LedgerSMB::Template->new(
+                user=>$user,
+                template=>"reconciliation/correct.html",
+                language=> $user->{language},
+                format=>'html'
+            );
+            my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
+            
+            $template->render($recon->details($request->{report_id}));
+        }
+        elsif ($request->{report_id}) {
+            
+            my $template = LedgerSMB::Template->new(
+                user=>$user,
+                template=>"reconciliation/correct.html",
+                language=> $user->{language},
+                format=>'html'
+            );
+            $class->display_report();
+        }
     }
+    
 }
 
 =pod
@@ -131,23 +203,58 @@ sub new_report {
     # probably select a list of statements that are available to build 
     # reconciliation reports with.
     
+    # This should do some fun stuff.
+    
     my $template;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
     my $return;
-    if ($request->{selection}) {
+    
+    if ($request->type() eq "POST") {
         
-        $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'reconciliation_report.html', language => $user->{language}, 
-            format => 'html');
+        # We can assume that we're doing something useful with new data.
+        # We can also assume that we've got a file.
+        my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
+        
+        # $self is expected to have both the file handling logic, as well as 
+        # the logic to load the processing module.
+        
+        # Why isn't this testing for errors?
+        my ($report_id, $entries) = $recon->new_report($recon->import_file());
+        if ($recon->is_error()) {
             
-        $template->render($recon->new_report());
-    } 
+            $template = LedgerSMB::Template->new(
+                user=>$user,
+                template=> 'reconciliation/upload.html',
+                language=>$user->{language},
+                format=>'html'
+            );
+            return $template->render({error=>$recon->error()});
+        }
+        
+        $template = LedgerSMB::Template->new( 
+            user=> $user,
+            template => 'reconciliation/new_report.html', 
+            language => $user->{language},
+            format=>'html'        
+        );
+        return $template->render(
+            {
+                entries=>$entries,
+                report_id=>$report_id
+            }
+        );
+    }
     else {
         
-        # Generate the list of available bank statements/bank statements that
-        # we have access to.
+        # we can assume we're to generate the "Make a happy new report!" page.
+        $template = LedgerSMB::Template->new( 
+            user => $user, 
+            template => 'reconciliation/upload.html', 
+            language => $user->{language}, 
+            format => 'html'
+        );
+        return $template->render();
     }
-    return $return;
+    return undef;
     
 }
 
@@ -177,30 +284,43 @@ sub approve {
     # been cleared. This will also provide for return-home links, auditing, 
     # etc.
     
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => request, copy=> 'all');
-    
-    my $template;
-    my $report;
-    if ($recon->approve()) {
+    if ($request->type() eq "POST") {
         
-        $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'reconciliation_approve.html', language => $user->{language}, 
-            format => 'html');
+        # we need a report_id for this.
+        
+        my $recon = LedgerSMB::DBObject::Reconciliation->new(base => request, copy=> 'all');
+
+        my $template;
+        my $code = $recon->approve($request->{report_id});
+        if ($code == 0) {
+
+            $template = LedgerSMB::Template->new( user => $user, 
+        	template => 'reconciliation/approve.html', language => $user->{language}, 
+                format => 'html');
+                
+            return $template->render();
+        }
+        else {
+            
+            # failure case
+            
+            $template = LedgerSMB::Template->new( 
+                user => $user, 
+        	    template => 'reconciliation/report.html', 
+        	    language => $user->{language}, 
+                format => 'html');
+            return $template->render(
+                {
+                    entries=>$recon->get_report($request->{report_id}),
+                    total=>$recon->get_total($request->{report_id}),
+                    error_code => $code
+                }
+            );
+        }
     }
     else {
-        
-        $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'reconciliation_report.html', language => $user->{language}, 
-            format => 'html');
-        $report = $recon->get_report();
-        
-        ## relies on foreknowledge in the template
-        ## we basically tell the template, we can't approve, this uncorrected
-        ## error is preventing us.
-        
-        $report->{ error } = { approval => 1 }; 
+        return $class->display_report($request);
     }
-    $template->render($report);
 }
 
 =pod
@@ -228,7 +348,7 @@ sub corrections {
     my $template;
         
     $template = LedgerSMB::Template->new( user => $user, 
-	template => 'reconciliation_corrected.html', language => $user->{language}, 
+	template => 'reconciliation/corrected.html', language => $user->{language}, 
         format => 'html');
     
     return $template->render(
@@ -238,8 +358,7 @@ sub corrections {
         }
     );
 }
-
-eval { do "scripts/custom/Reconciliation.pl"};
+# eval { do "scripts/custom/Reconciliation.pl" };
 1;
 
 =pod
