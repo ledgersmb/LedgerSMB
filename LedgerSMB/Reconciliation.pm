@@ -228,6 +228,14 @@ sub search {
     );
 }
 
+sub get_pending {
+    
+    my $self = shift @_;
+    return $self->exec_method(
+        funcname=>'reconciliation__pending',
+        args=>[$self->{month}]
+    );
+}
 
 
 1;

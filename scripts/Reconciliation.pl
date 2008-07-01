@@ -358,6 +358,48 @@ sub corrections {
         }
     );
 }
+
+=pod
+
+=over
+
+=item pending ($self, $request, $user)
+
+Requires {date} and {month}, to handle the month-to-month pending transactions
+in the database. No mechanism is provided to grab ALL pending transactions 
+from the acc_trans table.
+
+=back
+
+=cut
+
+
+sub pending {
+    
+    my ($class, $request) = @_;
+    
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>request, copy=>'all');
+    my $template;
+    
+    $template= LedgerSMB::Template->new(
+        user => $user,
+        template=>'reconciliation/pending.html',
+        language=>$user->{language},
+        format=>'html'
+    );
+    if ($request->type() eq "POST") {
+        return $template->render(
+            {
+                pending=>$recon->get_pending($request->{year}."-".$request->{month});
+            }
+        );
+    } 
+    else {
+        
+        return $template->render();
+    }
+}
+
 # eval { do "scripts/custom/Reconciliation.pl" };
 1;
 

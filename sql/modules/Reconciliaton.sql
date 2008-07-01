@@ -1,7 +1,8 @@
 CREATE TABLE reports (
     id bigserial primary key not null,
     report_id int NOT NULL,
-    scn int, -- What is SCN?
+    account text not null,
+    scn text not null, -- What is SCN?
     their_balance numeric,
     our_balance numeric,
     errorcode INT,
@@ -78,7 +79,7 @@ CREATE OR REPLACE FUNCTION reconciliation__correct_bank_statement (in_report_id 
         in_user TEXT;
     BEGIN
         select into in_user from current_user;
-        select into current_row from reports where reports.id = in_report_id and reports.scn = in_scn;
+        select into current_row from reports where reports.id = in_id and reports.report_id = in_report_id;
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No such SCN % in this report.', in_scn;
         END IF;
@@ -323,44 +324,21 @@ create or replace function reconciliation__add_entry(
     END;    
 $$ language 'plpgsql';
 
-create or replace function reconciliation__pending_transactions (in_report_id INT, in_month TIMESTAMP, in_user INT) RETURNS setof int as $$
+create or replace function reconciliation__pending_transactions (in_month DATE) RETURNS setof acc_trans as $$
     
     DECLARE
         gl_row acc_trans;
     BEGIN
-    
         FOR gl_row IN
             select gl.* from acc_trans gl, reports pr 
             where gl.cleared = 'f' 
             and date_trunc('month',gl.transdate) <= date_trunc('month', in_month)
-            and gl.entry_id <> pr.lid
+            and gl.entry_id <> pr.ledger_id -- there's no entries in the reports for this
         LOOP
-        
-            INSERT INTO reports (
-                report_id,
-                scn,
-                their_balance,
-                our_balance,
-                error_code, 
-                user,
-                clear_time,
-                ledger_id
-            ) 
-            VALUES (
-                in_report_id,   -- add it to the report ID
-                gl_row.source,  -- the source control number
-                0,              -- The banks' amount for the transaction
-                gl_row.amount,  -- our recorded amount
-                4,              -- The error code, meaning it's uncleared.
-                in_user,        -- the report-generating user
-                in_month,       -- basically, right now.
-                gl_row.entry_id -- the foreign key to the ledger
-            );
-        
+            RETURN NEXT gl_row;
         END LOOP;
     END;
-    
-$$ language plpgsql;
+$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION reconciliation__report (in_report_id INT) RETURNS setof reports as $$
 
