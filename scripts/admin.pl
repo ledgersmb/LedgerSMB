@@ -16,12 +16,13 @@ sub new_user {
     
     my $sal = $admin->get_salutations();
     
+    my $groups = $admin->get_roles();
+    
     if ($request->type() eq 'POST') {
         
         # do the save stuff
         
-        my $entity = $admin->save_user();
-
+        my $entity = $admin->save_new_user();
         
         my $template = LedgerSMB::Template->new( user => $user, 
     	template => 'Admin/edit_user', language => $user->{ language }, 
@@ -30,7 +31,8 @@ sub new_user {
         $template->render(
             {   
                 user=>$entity,
-                salutations=> $sal
+                salutations=>$sal,
+                roles=>$groups
             }
         );
     } else {
@@ -41,7 +43,8 @@ sub new_user {
     
         $template->render(
             {
-                salutations=>$sal  
+                salutations=>$sal,
+                roles=>$groups
             }
         );
     }
@@ -53,14 +56,38 @@ sub edit_user {
     my ($class, $request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
     
-    my $edited_user = $admin->get_entire_user();
-    my $all_roles = $admin->role_list();
+    my $all_roles = $admin->get_roles();
+
+    my $template = LedgerSMB::Template->new( 
+        user => $user, 
+        template => 'Admin/edit_user', 
+        language => $user->{language}, 
+        format => 'HTML', 
+        path=>'UI'
+    );
     
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'Admin/edit_user', language => $user->{language}, 
-        format => 'HTML', path=>'UI');
-    
-    $template->render($edited_user, $all_roles);
+    if ($request->type() eq 'POST') {
+        
+        $admin->save_user();
+        $admin->save_roles();
+        $template->render(
+            {
+                user=>$admin->get_entire_user(),
+                roles=>$all_roles,
+                user_roles=>$admin->get_user_roles($request->{username})
+            }
+        );
+    }
+    else {
+        my $edited_user = $admin->get_entire_user();
+        $template->render(
+            {
+                user=>$edited_user, 
+                roles=>$all_roles,
+                user_roles=>$admin->get_user_roles($request->{username})
+            }
+        );
+    }
 }
 
 sub edit_group {
@@ -69,13 +96,33 @@ sub edit_group {
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
     my $all_roles = $admin->role_list();
-    my $group = $admin->get_group();
     
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'Admin/edit_group', language => $user->{language}, 
-        format => 'HTML', path=>'UI');
+    my $template = LedgerSMB::Template->new( 
+        user => $user, 
+        template => 'Admin/edit_group', 
+        language => $user->{language}, 
+        format => 'HTML', 
+        path=>'UI'
+    );
         
-    $template->render($all_roles);    
+    if ($request->type() eq "POST") {
+
+        my $role = $admin->save_role();
+        return $template->render(
+            {
+                user=> $request->{role}, 
+                roles=>$all_roles,
+                user_roles=>$admin->get_user_roles($request->{role});
+            }
+        );
+    }
+    else {
+        return $template->render(
+            {
+            roles=>$all_roles
+            }
+        );
+    }    
 }
 
 sub create_group {
@@ -83,13 +130,26 @@ sub create_group {
     my ($class, $request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
-    my $all_roles = $admin->role_list();
-    
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'Admin/edit_group', language => $user->{language}, 
-        format => 'HTML', path=>'UI');
+    my $all_roles = $admin->get_roles();
+    my $template = LedgerSMB::Template->new( 
+        user => $user, 
+        template => 'Admin/edit_group', 
+        language => $user->{language}, 
+        format => 'HTML', 
+        path=>'UI'
+    );
+    if ($request->type() eq "POST") {
         
-    $template->render($all_roles);
+        my $role = $admin->save_role();
+        return $template->render(
+            {
+                user=> $role, roles=>$all_roles
+            }
+        );
+    }
+    else {
+        return $template->render({roles=>$all_roles});
+    }
 }
 
 sub delete_group {

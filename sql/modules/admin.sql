@@ -7,7 +7,7 @@ create table lsmb_roles (
     
 );
 
-CREATE OR REPLACE FUNCTION admin_add_user_to_role(in_user TEXT, in_role TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_user TEXT, in_role TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -31,13 +31,13 @@ CREATE OR REPLACE FUNCTION admin_add_user_to_role(in_user TEXT, in_role TEXT) re
         stmt := 'GRANT '|| quote_ident(in_role) ||' to '|| quote_ident(in_user);
         
         EXECUTE stmt;
-        
+        insert into lsmb_roles (user_id, role) values (in_user, in_role);
         return 1;
     END;
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_remove_user_from_role(in_user TEXT, in_role TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_user TEXT, in_role TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -67,7 +67,7 @@ CREATE OR REPLACE FUNCTION admin_remove_user_from_role(in_user TEXT, in_role TEX
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_add_function_to_group(in_func TEXT, in_role TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -97,7 +97,7 @@ CREATE OR REPLACE FUNCTION admin_add_function_to_group(in_func TEXT, in_role TEX
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_remove_function_from_group(in_func TEXT, in_role TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_role TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -128,7 +128,7 @@ CREATE OR REPLACE FUNCTION admin_remove_function_from_group(in_func TEXT, in_rol
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_add_table_to_group(in_table TEXT, in_role TEXT, in_perm TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__add_table_to_group(in_table TEXT, in_role TEXT, in_perm TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -165,7 +165,7 @@ CREATE OR REPLACE FUNCTION admin_add_table_to_group(in_table TEXT, in_role TEXT,
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_remove_table_from_group(in_table TEXT, in_role TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__remove_table_from_group(in_table TEXT, in_role TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -198,7 +198,7 @@ CREATE OR REPLACE FUNCTION admin_remove_table_from_group(in_table TEXT, in_role 
         
 $$ language 'plpgsql';
 
-create or replace function admin_get_user(in_user TEXT) returns setof users as $$
+create or replace function admin__get_user(in_user TEXT) returns setof users as $$
     
     DECLARE
         a_user users;
@@ -215,7 +215,7 @@ create or replace function admin_get_user(in_user TEXT) returns setof users as $
     END;    
 $$ language plpgsql;
 
-create or replace function admin_get_roles_for_user(in_user TEXT) returns setof lsmb_roles as $$
+create or replace function admin__get_roles_for_user(in_user TEXT) returns setof lsmb_roles as $$
     
     declare
         u_role lsmb_roles;
@@ -233,7 +233,7 @@ create or replace function admin_get_roles_for_user(in_user TEXT) returns setof 
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_save_user(
+CREATE OR REPLACE FUNCTION admin__save_user(
     in_id int, 
     in_entity_id INT,
     in_username text, 
@@ -297,7 +297,7 @@ create view role_view as
     select * from pg_auth_members m join pg_authid a ON (m.roleid = a.oid);
         
 
-create or replace function admin_is_group(in_group_name text) returns bool as $$
+create or replace function admin__is_group(in_group_name text) returns bool as $$
     
     DECLARE
         
@@ -317,7 +317,7 @@ create or replace function admin_is_group(in_group_name text) returns bool as $$
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_create_group(in_group_name TEXT, in_dbname TEXT) RETURNS int as $$
+CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT, in_dbname TEXT) RETURNS int as $$
     
     DECLARE
         
@@ -331,7 +331,7 @@ CREATE OR REPLACE FUNCTION admin_create_group(in_group_name TEXT, in_dbname TEXT
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin_delete_user(in_username TEXT) returns INT as $$
+CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $$
     
     DECLARE
         stmt text;
@@ -361,7 +361,7 @@ comment on function admin_delete_user(text) is $$
     Drops the provided user, as well as deletes the entity and user configuration data.
 $$;
 
-CREATE OR REPLACE FUNCTION admin_delete_group (in_dbname TEXT, in_group_name TEXT) returns bool as $$
+CREATE OR REPLACE FUNCTION admin__delete_group (in_dbname TEXT, in_group_name TEXT) returns bool as $$
     
     DECLARE
         stmt text;
@@ -385,7 +385,7 @@ comment on function admin_delete_group(text,text) IS $$
     remove a login-capable user.
 $$;
 
-CREATE OR REPLACE FUNCTION admin_list_roles(in_username text)
+CREATE OR REPLACE FUNCTION admin__list_roles(in_username text)
 RETURNS SETOF text AS
 $$
 DECLARE out_rolename RECORD;
@@ -414,7 +414,7 @@ $$ LANGUAGE PLPGSQL;
     
 --$$ language plpgsql;
 
-create or replace function admin_is_user (in_user text) returns bool as $$
+create or replace function admin__is_user (in_user text) returns bool as $$
     DECLARE
         pg_user pg_roles;
     
@@ -431,15 +431,6 @@ create or replace function admin_is_user (in_user text) returns bool as $$
     
 $$ language plpgsql;
 
-create or replace function admin_is_user (in_user text) returns bool as $$
-    
-    BEGIN
-    
-    return 'f'::bool;
-    
-    END;
-    
-$$ language plpgsql;
 
 create or replace view user_listable as 
     select 

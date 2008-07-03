@@ -15,7 +15,7 @@ sub save {
     $self->error("Cannot save an Adminstrator object.");
 }
 
-sub save_employee {
+sub save_user {
     
     my $self = shift @_;
     
@@ -27,7 +27,7 @@ sub save_employee {
     $self->{entity_id} = $entity->{id};
     
     
-    my $user_id = shift @{ $self->exec_method( procname => "admin_save_user" ) };
+    my $user_id = shift @{ $self->exec_method( procname => "admin__save_user" ) };
     $self->merge($user_id);
     
     my $person = LedgerSMB::DBObject::Person->new( base=>$self, copy=>'list',     
@@ -89,17 +89,17 @@ sub save_employee {
     $user->save();
 }
 
-sub save_roles_preferences {
+sub save_roles {
     
     my $self = shift @_;
     
     my $user = LedgerSMB::DBObject::User->new( base=>$self, copy=>'all' );
     
-    my $roles = $self->exec_method( procname => "admin_all_roles" );
-    my $user_roles = $self->exec_method(procname => "admin_get_user_roles", args=>[ $self->{ username } ] );
+    my $roles = $self->exec_method( procname => "admin__all_roles" );
+    my $user_roles = $self->exec_method(procname => "admin__get_user_roles", args=>[ $self->{ username } ] );
     
     my %active_roles;
-    for my $role (@{$user_roles}) {
+    for my $role (@{ $user_roles }) {
        
        # These are our user's roles.
         
@@ -112,25 +112,24 @@ sub save_roles_preferences {
         
         # These roles are were ALL checked on the page, so they're the active ones.
         
-        if ($active_roles{$role} && $self->{incoming_roles}->{$role}) {
+        if ($active_roles{$role} && $self->{$role}) {
             
             # do nothing.
         }
-        elsif ($active_roles{$role} && !($self->{incoming_roles}->{$role} )) {
+        elsif ($active_roles{$role} && !($self->{$role} )) {
             
             # do remove function
-            $status = $self->exec_method(procname => "remove_user_from_role",
+            $status = $self->exec_method(procname => "admin__remove_user_from_role",
                 args=>[ $self->{ modifying_user }, $role ] );
         }
         elsif ($self->{incoming_roles}->{$role} and !($active_roles{$role} )) {
             
             # do add function
-            $status = $self->exec_method(procname => "add_user_to_role",
+            $status = $self->exec_method(procname => "admin__add_user_to_role",
                args=>[ $self->{ modifying_user }, $role ] 
             );
         }         
     }
-    
 }
 
 sub save_group {
@@ -143,8 +142,8 @@ sub save_group {
      
      # first we grab all roles
      
-     my $roles = $self->exec_method( procname => "all_roles" );
-     my $user_roles = $self->exec_method(procname => "get_user_roles", 
+     my $roles = $self->exec_method( procname => "admin__all_roles" );
+     my $user_roles = $self->exec_method(procname => "admin__get_user_roles", 
         args=>[ $self->{ group_name } ] 
     );
 
@@ -170,7 +169,7 @@ sub save_group {
 
              # do remove function
              $status = $self->exec_method(
-                 procname => "remove_group_from_role",
+                 procname => "admin__remove_group_from_role",
                  args=>[ $self->{ modifying_user }, $role ] 
              );
          }
@@ -178,7 +177,7 @@ sub save_group {
 
              # do add function
              $status = $self->exec_method(
-                 procname => "add_group_to_role",
+                 procname => "admin__add_group_to_role",
                  args=>[ $self->{ modifying_user }, $role ] 
              );
          }         
@@ -190,7 +189,7 @@ sub delete_user {
     
     my $self = shift @_;
     
-    my $status = shift @{ $self->exec_method(procname=>'delete_user', 
+    my $status = shift @{ $self->exec_method(procname=>'admin__delete_user', 
         args=>[$self->{modifying_user}]) 
     };
     
@@ -210,7 +209,7 @@ sub delete_group {
     
     my $self = shift @_;
     
-    my $status = shift @{ $self->exec_method(procname=>'delete_group', 
+    my $status = shift @{ $self->exec_method(procname=>'admin__delete_group', 
         args=>[$self->{groupname}]) }
     ;
     
@@ -238,4 +237,12 @@ sub get_salutations {
     return $sth->fetchall_arrayref( {} );
 }
 
+
+sub get_roles {
+    
+    # These are direct, assignable roles. 
+    my $self = shift;
+    
+    return $self->exec_method( procname => "admin__all_roles" );
+}
 1;

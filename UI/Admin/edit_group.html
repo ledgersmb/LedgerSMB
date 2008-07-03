@@ -2,16 +2,36 @@
 
 <?lsmb IF user.username ?>
 
-    <center><b>Edit User</b></center>
+    <center><b>Edit Group</b></center>
 
 <?lsmb ELSE ?>
 
-    <center><b>Create User</b></center>
+    <center><b>Create Group</b></center>
 
 <?lsmb ENDIF ?>
 
 <form name="submit_user" action="/admin.pl?">
     
-    
-    
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="textarea" name="name" value="<?lsmb user.username?>"/></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><textarea cols="25" rows="4"><? lsmb user.description ?></textarea></td>
+        </tr>
+    </table>
+    <hr/>
+    <table>
+        <tr>
+        <?lsmb FOREACH group IN groups ?>
+        <?lsmb IF loop.count % 8 == 0?>
+        </tr>
+        <tr>
+        <?lsmb END?>
+            <td><input type="checkbox" name="<?lsmb loop.index?>" value="1"/><?lsmb group.rolname?></td>
+        <?lsmb END?>
+        </tr>
+    </table>
 </form>

@@ -146,6 +146,20 @@
         </table>
         
         <table>
+            
+            <!-- Groups section -->
+            <tr>
+            <?lsmb FOREACH group IN groups ?>
+            <?lsmb IF loop.count % 8 == 0?>
+            </tr>
+            <tr>
+            <?lsmb END?>
+                <td><input type="checkbox" name="<?lsmb loop.index?>" value="1"/><?lsmb group.rolname?></td>
+            <?lsmb END?>
+            </tr>
+        </table>
+        
+        <table>
             <tr>
                 <td><button value="new_user">Submit</button></td>
                 <td><button name="method" value="cancel">Cancel</td>
