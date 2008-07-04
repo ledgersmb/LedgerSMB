@@ -153,7 +153,13 @@
                           type => 'checkbox',
                           label => text('Overpayment'),
                           ${form.AR_overpayment} => form.AR_overpayment,
-                          value => 'AR_overpayment'} ?>        
+                          value => 'AR_overpayment'} ?><br />        
+                   <?lsmb INCLUDE input element_data={
+                          name => 'AR_discount',
+                          type => 'checkbox',
+                          label => text('Discount'),
+                          ${form.AR_discount} => form.AR_discount,
+                          value => 'AR_discount'} ?>
                           
                 </td>
                 <td align="right">
@@ -180,9 +186,15 @@
                           type => 'checkbox',
                           label => text('Overpayment'),
                           ${form.AP_overpayment} => form.AP_overpayment,
-                          value => 'AP_overpayment'} ?>        
+                          value => 'AP_overpayment'} ?><br /> 
+                  <?lsmb INCLUDE input element_data={
+                          name => 'AP_discount',
+                          type => 'checkbox',
+                          label => text('Discount'),
+                          ${form.AP_overpayment} => form.AP_discount,
+                          value => 'AP_discount'} ?>       
                 </td>
-                <td align="right">
+                <td align="right" valign="top">
                   <?lsmb INCLUDE input element_data={
                           name => 'IC_sale',
                           type => 'checkbox',
@@ -202,7 +214,7 @@
                           ${form.IC_taxpart} => form.IC_taxpart,
                           value => 'IC_taxpart'} ?>
                 </td>
-                <td align="right">
+                <td align="right" valign="top">
                   <?lsmb INCLUDE input element_data={
                           name => 'IC_income',
                           type => 'checkbox',

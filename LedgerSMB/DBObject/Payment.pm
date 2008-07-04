@@ -105,6 +105,16 @@ sub get_open_accounts {
     return @{$self->{accounts}};
 }
 
+
+sub get_entity_credit_account{
+  my ($self) = @_;
+  @{$self->{entity_accounts}} =
+    $self->exec_method(funcname => 'payment_get_entity_accounts'); 
+   return  @{$self->{entity_accounts}};
+
+}
+
+
 =over
 
 =item $payment->get_all_accounts()
@@ -499,4 +509,15 @@ sub check_job {
     ($self->{job}) = $self->exec_method(funcname => 'job__status');
 }
 
+=item post_payment
+
+This method uses payment_post to store a payment (not a bulk payment) on the database.
+
+=cut
+
+sub post_payment {
+ my ($self) = @_;
+ $self->exec_method(funcname => 'payment_post');
+ $self->{dbh}->commit();
+}
 1;

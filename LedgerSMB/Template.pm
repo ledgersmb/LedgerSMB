@@ -263,8 +263,8 @@ sub render {
 	#return $format->can('postprocess')->($self);
 	my $post = $format->can('postprocess')->($self);
 	if (!$self->{'noauto'}) {
-		$self->output;
 		# Clean up
+		$self->output;
 		if ($self->{rendered}) {
 			unlink($self->{rendered}) or
 				throw Error::Simple 'Unable to delete output file';
@@ -276,15 +276,17 @@ sub render {
 sub output {
 	my $self = shift;
 	my %args = @_;
+	$self->{output_args} = \%args;
 	my $method = $self->{method} || $args{method} || $args{media};
-
 	if ('email' eq lc $method) {
 		$self->_email_output;
 	} elsif ('print' eq lc $method) {
 		$self->_lpr_output;
-	} elsif (defined $self->{output}) {
+	} elsif (defined $self->{output} or $method = 'Screen') {
 		$self->_http_output;
 		exit;
+	} elsif (defined $method) {
+		$self->_lpr_output;
 	} else {
 		$self->_http_output_file;
 	}
@@ -376,15 +378,22 @@ sub _email_output {
 }
 
 sub _lpr_output {
-	my ($self) = shift;
+	my ($self, $in_args) = shift;
 	my $args = $self->{output_args};
-	if ($self->{format} != /(pdf|ps)/){
+	if ($self->{format} ne 'LaTeX') {
 		throw Error::Simple "Invalid Format";
 	}
-	my $lpr = $LedgerSMB::Sysconfig::printer{$args->{printer}};
+	my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
 
 	open(LPR, '|-', $lpr);
-	print LPR $self->{output};
+
+	# Output is not defined here.  In the future we should consider
+	# changing this to use the system command and hit the file as an arg.
+	#  -- CT
+	open (FILE, '<', "$self->{rendered}");
+	while (my $line = <FILE>){
+		print LPR $line;
+	}
 	close(LPR);
 }
 

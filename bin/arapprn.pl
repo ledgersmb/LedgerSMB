@@ -289,10 +289,13 @@ sub print_check {
 
     my $template = LedgerSMB::Template->new( 
         user => \%myconfig, template => $form->{'formname'}, 
-        format => uc $form->{'format'} );
+        format => uc $form->{'format'},
+	no_auto_output => 1,
+        output_args => $form,
+    );
     try {
         $template->render($form);
-        $template->output(%{$form});
+        $template->output($form);
     }
     catch Error::Simple with {
         my $E = shift;
@@ -557,6 +560,7 @@ sub print_transaction {
 
     my $template = LedgerSMB::Template->new(
         user => \%myconfig, template => $form->{'formname'}, 
+	no_auto_output => 1,
         format => uc $form->{format} );
     try {
         $template->render($form);

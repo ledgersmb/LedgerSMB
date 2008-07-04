@@ -77,8 +77,10 @@ sub preprocess {
 			$vars = $rawvars;
 		}
 		#XXX Fix escaping
-		$vars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
-		$vars =~ s/"(.*)"/``$1''/gs;
+		if (defined $vars){
+			$vars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
+			$vars =~ s/"(.*)"/``$1''/gs;
+		}
 	} else {
 		for ( keys %{$rawvars} ) {
 			$vars->{$_} = preprocess($rawvars->{$_});

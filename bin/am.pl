@@ -195,7 +195,7 @@ sub save_account {
         ) if length $a > 2;
 
         for (
-            qw(AR_amount AR_tax AR_paid AR_overpayment AP_amount AP_tax AP_paid AP_overpayment IC_taxpart IC_taxservice IC_sale IC_cogs IC_income IC_expense)
+            qw(AR_amount AR_tax AR_paid AR_overpayment AR_discount AP_amount AP_tax AP_paid AP_overpayment AP_discount IC_taxpart IC_taxservice IC_sale IC_cogs IC_income IC_expense)
           )
         {
             $form->error(
@@ -208,7 +208,7 @@ sub save_account {
 
     foreach $item ( "AR", "AP" ) {
         $i = 0;
-        for ( "${item}_amount", "${item}_paid", "${item}_tax", "${item}_overpayment" ) {
+        for ( "${item}_amount", "${item}_paid", "${item}_tax", "${item}_overpayment", "${item}_discount" ) {
             $i++ if $form->{$_};
         }
         $form->error(

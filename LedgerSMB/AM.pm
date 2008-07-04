@@ -159,10 +159,10 @@ sub save_account {
     $form->{link} = "";
     foreach my $item (
         $form->{AR},        $form->{AR_amount},  $form->{AR_tax}, $form->{AR_overpayment},
-        $form->{AR_paid},   $form->{AP},         $form->{AP_amount}, $form->{AP_overpayment},
-        $form->{AP_tax},    $form->{AP_paid},    $form->{IC},
-        $form->{IC_income}, $form->{IC_sale},    $form->{IC_expense},
-        $form->{IC_cogs},   $form->{IC_taxpart}, $form->{IC_taxservice}
+        $form->{AR_discount}, $form->{AR_paid},  $form->{AP},     $form->{AP_amount},
+        $form->{AP_overpayment}, $form->{AP_discount}, $form->{AP_tax},
+        $form->{AP_paid},    $form->{IC}, $form->{IC_income}, $form->{IC_sale},
+        $form->{IC_expense}, $form->{IC_cogs},   $form->{IC_taxpart}, $form->{IC_taxservice}
       )
     {
         $form->{link} .= "${item}:" if ($item);

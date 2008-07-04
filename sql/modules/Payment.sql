@@ -1,3 +1,24 @@
+CREATE OR REPLACE FUNCTION payment_get_entity_accounts
+(in_account_class int,
+ in_vc_name text,
+ in_vc_idn  int)
+ returns SETOF entity AS
+ $$
+ DECLARE out_entity entity%ROWTYPE;
+ BEGIN
+ 	FOR out_entity IN
+ 		SELECT ec.id, cp.legal_name as name, e.entity_class, e.created
+ 		FROM entity e
+ 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+ 		JOIN company cp ON (cp.entity_id = e.id)
+		WHERE ec.entity_class = in_account_class
+		AND (cp.legal_name ilike coalesce('%'||in_vc_name||'%','%%') OR cp.tax_id = in_vc_idn)
+	LOOP
+		RETURN NEXT out_entity;
+	END LOOP;
+ END;
+ $$ LANGUAGE PLPGSQL;
+
 -- payment_get_open_accounts and the option to get all accounts need to be
 -- refactored and redesigned.  -- CT
 CREATE OR REPLACE FUNCTION payment_get_open_accounts(in_account_class int) 
@@ -11,15 +32,15 @@ BEGIN
 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		JOIN company cp ON (cp.entity_id = e.id)
 			WHERE ec.entity_class = in_account_class
-		      AND CASE WHEN in_account_class = 1 THEN
-				e.id IN (SELECT entity_id FROM ap 
-					WHERE amount <> paid
-					GROUP BY entity_id)
-			       WHEN in_account_class = 2 THEN
-				e.id IN (SELECT entity_id FROM ar
-					WHERE amount <> paid
-					GROUP BY entity_id)
-			  END
+                   --  AND CASE WHEN in_account_class = 1 THEN
+	           --		e.id IN (SELECT entity_id FROM ap 
+	           --			WHERE amount <> paid
+		   --			GROUP BY entity_id)
+		   -- 	       WHEN in_account_class = 2 THEN
+		   --		e.id IN (SELECT entity_id FROM ar
+		   --			WHERE amount <> paid
+		   --			GROUP BY entity_id)
+		   --	  END
 	LOOP
 		RETURN NEXT out_entity;
 	END LOOP;
@@ -74,54 +95,57 @@ RETURNS SETOF payment_invoice AS
 $$
 DECLARE payment_inv payment_invoice;
 BEGIN
-        FOR payment_inv IN
-		SELECT a.id AS invoice_id, a.invnumber, 
-		       a.transdate AS invoice_date, a.amount, 
-		       CASE WHEN discount_terms 
-		                 > extract('days' FROM age(a.transdate))
-		            THEN 0
-		            ELSE (a.amount - a.paid) * c.discount / 100  
-		       END AS discount,
-		       a.amount - a.paid - 
-		       CASE WHEN discount_terms 
-		                 > extract('days' FROM age(a.transdate))
-		            THEN 0
-		            ELSE (a.amount - a.paid) * c.discount / 100  
-		       END
-		        AS due
-		  FROM (SELECT id, invnumber, transdate, amount, entity_id,
+	FOR payment_inv IN
+		SELECT a.id AS invoice_id, a.invnumber AS invnumber, 
+		       a.transdate AS invoice_date, a.amount AS amount, 
+		       (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+		        THEN 0
+		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
+		        END) AS discount, ac.due 
+                FROM  (SELECT id, invnumber, transdate, amount, entity_id,
 		               1 as invoice_class, paid, curr, 
 		               entity_credit_account, department_id
 		          FROM ap
                          UNION
-		        SELECT id, invnumber, transdate, amount, entity_id,
+		         SELECT id, invnumber, transdate, amount, entity_id,
 		               2 AS invoice_class, paid, curr,
 		               entity_credit_account, department_id
-		          FROM ar
-		       ) a
-		  JOIN entity_credit_account c ON (c.id = a.entity_credit_account
-			OR (a.entity_credit_account IS NULL and 
-				a.entity_id = c.entity_id))
-		 WHERE a.invoice_class = in_account_class
-		       AND c.entity_class = in_account_class
-		       AND a.amount - a.paid <> 0
-		       AND a.curr = in_curr
-		       AND (a.transdate >= in_datefrom 
-		            OR in_datefrom IS NULL)
-		       AND (a.transdate <= in_dateto
-		            OR in_dateto IS NULL)
-		       AND (a.amount >= in_amountfrom 
-		            OR in_amountfrom IS NULL)
-		       AND (a.amount <= in_amountto
-		            OR in_amountto IS NULL)
-		       AND (a.department_id = in_department_id
-		            OR in_department_id IS NULL)     
-		                 
+		         FROM ar
+		         ) a 
+		JOIN (SELECT trans_id, chart_id, sum(CASE WHEN in_account_class = 1 THEN amount
+		                                  WHEN in_account_class = 2 
+		                             THEN amount * -1
+		                             END) as due
+		        FROM acc_trans 
+		        GROUP BY trans_id, chart_id) ac ON (ac.trans_id = a.id)
+		        JOIN chart ON (chart.id = ac.chart_id)
+		        JOIN entity_credit_account c ON (c.id = a.entity_credit_account
+                        OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
+	 	        WHERE ((chart.link = 'AP' AND in_account_class = 1)
+		              OR (chart.link = 'AR' AND in_account_class = 2))
+              	        AND a.invoice_class = in_account_class
+		        AND c.entity_class = in_account_class
+		        AND c.id = in_entity_credit_id
+		        AND a.amount - a.paid <> 0
+		        AND a.curr = in_curr
+		        AND (a.transdate >= in_datefrom 
+		             OR in_datefrom IS NULL)
+		        AND (a.transdate <= in_dateto
+		             OR in_dateto IS NULL)
+		        AND (a.amount >= in_amountfrom 
+		             OR in_amountfrom IS NULL)
+		        AND (a.amount <= in_amountto
+		             OR in_amountto IS NULL)
+		        AND (a.department_id = in_department_id
+		             OR in_department_id IS NULL)     
+		        GROUP BY a.invnumber, a.transdate, a.amount, discount, ac.due, a.id, c.discount_terms
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+
 
 COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3), date, date, numeric, numeric, int) IS
 $$ This function takes three arguments:
@@ -426,101 +450,201 @@ sub-array, the first element is the (integer) transaction id, and the second
 is the amount for that transaction.  If the total of the amounts do not add up 
 to in_total, then an error is generated. $$;
 
+--
+-- WE NEED A PAYMENT TABLE 
+--
 
+CREATE TABLE payment (
+  id serial primary key,
+  reference text NOT NULL,
+  gl_id     integer references gl(id),
+  payment_class integer NOT NULL,
+  payment_date date default current_date,
+  closed bool default FALSE,
+  entity_id   integer references entity(id),
+  employee_id integer references entity_employee(entity_id),
+  currency char(3),
+  notes text,
+  department_id integer default 0);
+              
+COMMENT ON TABLE payment IS $$ This table will store the main data on a payment, prepayment, overpayment, et$$;
+COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment order  $$; 
+COMMENT ON COLUMN payment.closed IS $$ This will store the current state of a payment/receipt order $$;
+COMMENT ON COLUMN payment.gl_id IS $$ A payment should always be linked to a GL movement $$;
+CREATE  INDEX payment_id_idx ON payment(id);
+                  
+CREATE TABLE payment_links (
+  payment_id integer references Payment(id),
+  entry_id   integer references acc_trans(entry_id),
+  type       integer);
+COMMENT ON TABLE payment_links IS $$  
+ An explanation to the type field.
+ * A type 0 means the link is referencing an ar/ap  and was created
+   using an overpayment movement after the receipt was created 
+ * A type 1 means the link is referencing an ar/ap and  was made 
+   on the payment creation, its not the product of an overpayment movement 
+ * A type 2 means the link is not referencing an ar/ap and its the product
+   of the overpayment logic 
+
+ With this ideas in order we can do the following
+
+ To get the payment amount we will sum the entries with type > 0.
+ To get the linked amount we will sum the entries with type < 2.
+ The overpayment account can be obtained from the entries with type = 2.
+
+ This reasoning is hacky and i hope it can dissapear when we get to 1.4 - D.M.
+$$;
+ 
+  
 CREATE OR REPLACE FUNCTION payment_post 
-(in_payment_date   date,
- in_account_class  int,
- in_person_id      int,
- in_currency       char(3),
- in_notes          text,
- in_department     int,
- in_gl_description text,
- in_cash_accno     int[],
- in_cash_amount    int[],
- in_cash_approved  bool[],
- in_cash_source    text[],
- in_accno          int[],
- in_amount         int[],
- in_approved       bool[],
- in_source         text[],
- in_transaction_id int[],
- in_type           int[],
- in_approved bool)
+(in_datepaid      		  date,
+ in_account_class 		  int,
+ in_entity_id                     int,
+ in_curr        		  char(3),
+ in_notes                         text,
+ in_department_id                 int,
+ in_gl_description                text,
+ in_cash_account_id               int[],
+ in_amount                        numeric[],
+ in_cash_approved                 bool[],
+ in_source                        text[],
+ in_transaction_id                int[],
+ in_op_amount                     numeric[],
+ in_op_cash_account_id            int[],
+ in_op_source                     text[], 
+ in_op_memo                       text[],
+ in_op_account_id                 int[],                   
+ in_approved                      bool)
 RETURNS INT AS
 $$
 DECLARE var_payment_id int;
 DECLARE var_gl_id int;
+DECLARE var_entry record;
 DECLARE var_entry_id int[];
 DECLARE out_count int;
-
+DECLARE coa_id record;
+DECLARE var_employee int;
+DECLARE var_account_id int;
 BEGIN
-        -- FIRST WE HAVE TO INSERT THE PAYMENT
+        SELECT INTO var_employee entity_id FROM users WHERE username = SESSION_USER LIMIT 1;
+        -- 
+        -- SECOND WE HAVE TO INSERT THE PAYMENT, USING THE GL INFORMATION
         -- THE ID IS GENERATED BY payment_id_seq
         --
    	INSERT INTO payment (reference, payment_class, payment_date,
-	                      person_id, currency, notes, department_id) 
+	                      employee_id, currency, notes, department_id, entity_id) 
 	VALUES ((CASE WHEN in_account_class = 1 THEN
 	                                setting_increment('rcptnumber') -- I FOUND THIS ON sql/modules/Settings.sql 
 			             ELSE 						-- and it is very usefull				
 			                setting_increment('paynumber') 
 			             END),
-	         in_account_class, in_payment_date, in_person_id,
-                 in_currency, in_notes, in_department);
+	         in_account_class, in_datepaid, var_employee,
+                 in_curr, in_notes, in_department_id, in_entity_id);
         SELECT currval('payment_id_seq') INTO var_payment_id; -- WE'LL NEED THIS VALUE TO USE payment_link table
-        -- SECOND WE HAVE TO MAKE THE GL TO HOLD THE TRANSACTIONS
-        -- THE ID IS GENERATED BY gl_id_seq
-        --
-        INSERT INTO gl (reference, description, transdate,
-	                      person_id, notes, approved, department_id) 
-	VALUES (setting_increment('glnumber'),
-	         in_gl_description, in_payment_date, in_person_id,
-                 in_notes, in_department, coalesce(in_approved, true));
-        SELECT currval('id') INTO var_gl_id; -- WE'LL NEED THIS VALUE TO JOIN WITH PAYMENT
+        -- WE'LL NEED THIS VALUE TO JOIN WITH PAYMENT
         -- NOW COMES THE HEAVY PART, STORING ALL THE POSSIBLE TRANSACTIONS... 
         --
         -- FIRST WE SHOULD INSERT THE CASH ACCOUNTS
         --
         -- WE SHOULD HAVE THE DATA STORED AS (ACCNO, AMOUNT), SO
 	FOR out_count IN 
-			array_lower(in_cash_accno, 1) ..
-			array_upper(in_cash_accno, 1)
+			array_lower(in_cash_account_id, 1) ..
+			array_upper(in_cash_account_id, 1)
 	LOOP
 	        INSERT INTO acc_trans (chart_id, amount,
 		                       trans_id, transdate, approved, source)
-		VALUES ((SELECT id FROM chart WHERE accno = in_cash_accno[out_count]), 
-		        CASE WHEN in_account_class = 2 THEN in_cash_amount[out_count] * -1 
-		        ELSE in_cash_amount[out_count]
+		VALUES (in_cash_account_id[out_count], 
+		        CASE WHEN in_account_class = 2 THEN in_amount[out_count]  
+		        ELSE in_amount[out_count]* - 1
 		        END,
-		        var_gl_id, in_payment_date, coalesce(in_cash_approved[1], true), 
-		        in_cash_source[out_count]);
-		        --SELECT currval('acc_trans_entry_id_seq') INTO var_entry_id[out_count];--WE'LL NEED THIS FOR THE PAYMENT_LINK
+		        in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true), 
+		        in_source[out_count]);
+                INSERT INTO payment_links 
+		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
 	END LOOP;
-	--
-	-- NOW LETS HANDLE THE AR/AP/OVERPAYMENT ACCOUNT
-	--
-	FOR var_count IN
-		     array_lower(in_accno, 1) ..
-		     array_upper(in_accno, 1)
+	-- NOW LETS HANDLE THE AR/AP ACCOUNTS
+	-- WE RECEIVED THE TRANSACTIONS_ID AND WE CAN OBTAIN THE ACCOUNT FROM THERE
+	FOR out_count IN
+		     array_lower(in_transaction_id, 1) ..
+		     array_upper(in_transaction_id, 1)
 	LOOP
-	        INSERT INTO acc_trans (chart_id, amount,
-		                       trans_id, transdate, approved, source)
-		VALUES ((SELECT id FROM chart WHERE accno = in_accno[out_count]), 
+        SELECT INTO var_account_id chart_id FROM acc_trans as ac
+	        JOIN chart as c ON (c.id = ac.chart_id) 
+       	        WHERE 
+       	        trans_id = in_transaction_id[out_count] AND
+       	        ( c.link = 'AP' OR c.link = 'AR' );
+         INSERT INTO acc_trans (chart_id, amount,
+                                trans_id, transdate, approved, source)
+		VALUES (var_account_id, 
 		        CASE WHEN in_account_class = 2 THEN in_amount[out_count] * -1 
 		        ELSE in_amount[out_count]
 		        END,
-		        var_gl_id, in_payment_date, coalesce(in_approved[1], true), 
+		        in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true), 
 		        in_source[out_count]);
-	-- 
-	-- WE WILL INSERT THE LINK INTO PAYMENT_LINKS NOW
-	--	        
-		INSERT INTO payment_links 
-		VALUES (var_payment_id, currval(acc_trans_entry_id_seq),
-		                                  in_transaction_id[out_count], in_type[var_count]);
+         INSERT INTO payment_links 
+		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+
 	END LOOP;
-       return 0;
+--
+-- WE NEED TO HANDLE THE OVERPAYMENTS NOW
+--
+       --
+       -- FIRST WE HAVE TO MAKE THE GL TO HOLD THE OVERPAYMENT TRANSACTIONS
+       -- THE ID IS GENERATED BY gl_id_seq
+       --
+  IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
+       INSERT INTO gl (reference, description, transdate,
+                       person_id, notes, approved, department_id) 
+              VALUES (setting_increment('glnumber'),
+	              in_gl_description, in_datepaid, var_employee,
+	              in_notes, in_approved, in_department_id);
+       SELECT currval('id') INTO var_gl_id;   
+--
+-- WE NEED TO SET THE GL_ID FIELD ON PAYMENT'S TABLE
+--
+       UPDATE payment SET gl_id = var_gl_id 
+       WHERE id = var_payment_id;
+       -- NOW COMES THE HEAVY PART, STORING ALL THE POSSIBLE TRANSACTIONS... 
+       --
+       -- FIRST WE SHOULD INSERT THE OVERPAYMENT CASH ACCOUNTS
+       --
+	FOR out_count IN 
+			array_lower(in_op_cash_account_id, 1) ..
+			array_upper(in_op_cash_account_id, 1)
+	LOOP
+	        INSERT INTO acc_trans (chart_id, amount,
+		                       trans_id, transdate, approved, source)
+		VALUES (in_op_cash_account_id[out_count], 
+		        CASE WHEN in_account_class = 2 THEN in_op_amount[out_count]  
+		        ELSE in_op_amount[out_count] * - 1
+		        END,
+		        var_gl_id, in_datepaid, coalesce(in_approved, true), 
+		        in_op_source[out_count]);
+	        INSERT INTO payment_links 
+		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
+	END LOOP;
+	-- NOW LETS HANDLE THE OVERPAYMENT ACCOUNTS
+	FOR out_count IN
+		     array_lower(in_op_account_id, 1) ..
+		     array_upper(in_op_account_id, 1)
+	LOOP
+         INSERT INTO acc_trans (chart_id, amount,
+                                trans_id, transdate, approved, source, memo)
+		VALUES (in_op_account_id[out_count], 
+		        CASE WHEN in_account_class = 2 THEN in_op_amount[out_count] * -1 
+		        ELSE in_op_amount[out_count]
+		        END,
+		        var_gl_id, in_datepaid,  coalesce(in_approved, true), 
+		        in_op_source[out_count], in_op_memo[out_count]);
+		INSERT INTO payment_links 
+		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
+	END LOOP;	        
+ END IF;  
+ return 0;     
 END;
 $$ LANGUAGE PLPGSQL;
 -- I HAVE TO MAKE A COMMENT ON THIS FUNCTION
+
 -- Move this to the projects module when we start on that. CT
 CREATE OR REPLACE FUNCTION project_list_open(in_date date) 
 RETURNS SETOF project AS
@@ -568,15 +692,9 @@ $$
 DECLARE resultrow record;
 BEGIN
         FOR resultrow IN
-          SELECT curr AS curr FROM ar
-          WHERE amount <> paid
-          OR paid IS NULL
-          AND in_account_class=2 
+          SELECT DISTINCT curr FROM ar
           UNION
-          SELECT curr FROM ap
-          WHERE amount <> paid
-          OR paid IS NULL
-          AND in_account_class=1
+          SELECT DISTINCT curr FROM ap 
           ORDER BY curr
           LOOP
          return next resultrow.curr;
@@ -627,7 +745,7 @@ CREATE TYPE payment_location_result AS (
 --  payment_get_vc_info has the same arch as company__list_locations, except for the filtering capabilities 
 --  This should be unified on the API when we get things working - David Mora
 --
-CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_id int, in_location_class_id int)
+CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_credit_id int, in_location_class_id int)
 RETURNS SETOF payment_location_result AS
 $$
 DECLARE out_row RECORD;
@@ -640,7 +758,8 @@ DECLARE out_row RECORD;
                 JOIN company cp ON (ctl.company_id = cp.id)
                 JOIN location_class lc ON (ctl.location_class = lc.id)
                 JOIN country c ON (c.id = l.country_id)
-                WHERE cp.entity_id = in_entity_id AND
+                JOIN entity_credit_account ec ON (ec.entity_id = cp.entity_id)
+                WHERE ec.id = in_entity_credit_id AND
                       lc.id = in_location_class_id
                 ORDER BY lc.id, l.id, c.name
                 LOOP

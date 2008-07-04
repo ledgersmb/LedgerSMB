@@ -19,10 +19,16 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
  <?lsmb accountclass.type = 'hidden';
         INCLUDE input element_data=accountclass ?>
  <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login ?>
-       
+ <?lsmb #WE NEED TO KNOW HOW MANY COLUMNS ARE WE USING, PLEASE DO NOT MOVE THE NEXT LINE -?>
+ <?lsmb column_count = 0 -?>
+
  <table width="100%">
   <tr id="top_bar" class="listtop">
-    <th id="top_bar_header" class="listtop"><?lsmb header.text ?></th>
+    <th id="top_bar_header" class="listtop">
+    	<?lsmb header.text ?>
+        <?lsmb type.type = 'hidden' ; INCLUDE input element_data=type ?>
+    </th>
+    
   </tr>
  </table>
  <table width="100%" id="info_table">
@@ -136,6 +142,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
  <table width="100%">
   <tr class="listheading">
    <?lsmb FOREACH column IN column_headers  # Loop through columns ?>
+   <?lsmb column_count = column_count + 1 -?>
    <th class="listheading"><?lsmb column.text ?></th>
    <?lsmb END ?>
   </tr>
@@ -150,6 +157,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
     <td><?lsmb row.invoice_date ?></td>
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
+    <td><?lsmb row.discount ?></td>
     <td><?lsmb row.due ?></td>
     <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><?lsmb row.exchange_rate ?></td>
@@ -157,7 +165,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
     <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.topay ?></div></td>
     <?lsmb END ?> 
     <?lsmb #This should be computed and updated to the div using  ?> 
-    <td><?lsmb INCLUDE input element_data=row.topay_fx;
+    <td><?lsmb  row.topay_fx.id = row.topay_fx.name ;INCLUDE input element_data=row.topay_fx;
     	       topay_subtotal = topay_subtotal + row.topay_fx.value -?>
     <?lsmb # A DEGRADABLE JAVASCRIPT IS USED, BECAUSE OF THE VISUAL IMPACT
     	   # THAT CAUSES THE SIZE OF THIS DIV -?>
@@ -202,11 +210,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
      <td valign="MIDDLE"><input type="checkbox" name="checkbox_<?lsmb row.invoice.id ?>"></td>
    <?lsmb END ?>
    </tr>
-   <?lsmb  IF exrate.text == 1 -?>
-     	<?lsmb  colspan = 5 # We will use this later on totals -?>
-   <?lsmb ELSE -?>
-   	<?lsmb  colspan = 8 # We will use this later on totals -?>
-   <?lsmb END -?>
+   <?lsmb  colspan = column_count - 2 # We will use this later on totals -?>
    <tr class="listsubtotal">
    <th colspan="<?lsmb colspan -?>" align="right"><?lsmb text('Subtotal') -?></th>
    <th colspan="2"><?lsmb topay_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
@@ -214,12 +218,14 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
    </table>
    <table width="100%">
    <tr>
-    <th class="listheading" colspan="5" ><?lsmb text('OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT') ?></th>
+    <th class="listheading" colspan="7" ><?lsmb text('OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT') ?></th>
    </tr>
    <tr>
    <th class="listheading"><?lsmb text('Item') ?></th>
    <th class="listheading"><?lsmb text('Account') ?></th>
+   <th class="listheading"><?lsmb text('Cash Account')?></th>
    <th class="listheading"><?lsmb text('Source') ?></th>
+   <th class="listheading"><?lsmb text('Memo') ?></th>
    <th class="listheading"><?lsmb text('Amount') ?></th>
    <th class="listheading">X</th>
    </tr>
@@ -235,9 +241,20 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
                         <input type="hidden" id="overpayment_account_<?lsmb overpayment_item -?>" name="overpayment_account_<?lsmb overpayment_item -?>" value="<?lsmb item.account.id -?>--<?lsmb item.account.accno ?>--<?lsmb item.account.description ?>" />
      </td>
      <td align="center">
+                        <?lsmb item.cashaccount.accno -?>--<?lsmb item.cashaccount.description -?>
+                        <input type="hidden" id="overpayment_cash_account_<?lsmb overpayment_item -?>"
+                        name="overpayment_cash_account_<?lsmb overpayment_item -?>" 
+                        value="<?lsmb item.cashaccount.id -?>--<?lsmb item.cashaccount.accno ?>--<?lsmb
+                        item.cashaccount.description ?>" />
+     </td>
+     <td align="center">
      	<?lsmb item.source1 -?>	<?lsmb item.source2 -?>
      	<input type="hidden" id="overpayment_source1_<?lsmb overpayment_item -?>" name="overpayment_source1_<?lsmb overpayment_item -?>" value="<?lsmb item.source1 -?>" />
      	<input type="hidden" id="overpayment_source2_<?lsmb overpayment_item -?>" name="overpayment_source2_<?lsmb overpayment_item -?>" value="<?lsmb item.source2 -?>" />
+     </td>
+     <td align="center">
+        <?lsmb item.memo -?>
+        <input type="hidden" id="overpayment_memo_<?lsmb overpayment_item -?>" name="overpayment_memo_<?lsmb overpayment_item -?>" value="<?lsmb item.memo -?>" />
      </td>
      <td align="center">
      	<?lsmb item.amount -?>
@@ -260,6 +277,13 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
         <?lsmb END -?>
           </select>
      </td>
+     <td align="center"> 
+        <select id="overpayment_cash_account_<?lsmb overpayment_item -?>" name="overpayment_cash_account_<?lsmb overpayment_item -?>"> 
+         <?lsmb FOREACH item IN account -?>
+         <option value="<?lsmb item.id -?>--<?lsmb item.accno ?>--<?lsmb item.description ?>"><?lsmb item.description -?></option>
+         <?lsmb END -?>
+        </select>
+    </td>
      <td align="center">
         <select id="overpayment_source1_<?lsmb overpayment_item -?>" name="overpayment_source1_<?lsmb overpayment_item -?>">
           <?lsmb FOREACH item IN source -?>
@@ -269,16 +293,17 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
          <input name="overpayment_source2_<?lsmb overpayment_item ?>"     id="overpayment_source2_<?lsmb overpayment_item ?>"  />
          <input type="hidden" name="overpayment_qty" id="overpayment_qty" value="<?lsmb overpayment_item ?>" />
      </td>
+     <td align="center"><input name="overpayment_memo_<?lsmb overpayment_item -?>" id="overpayment_memo_<?lsmboverpayment_item ?>" /></td>     
      <td align="center"><input name="overpayment_topay_<?lsmb overpayment_item -?>" id="overpayment_topay_<?lsmboverpayment_item ?>" /></td>
      <td align="center"><input type="checkbox" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>
    </tr>
    <tr class="listsubtotal">
-   <th colspan="3" align="right"><?lsmb text('Subtotal') -?></th>
+   <th colspan="5" align="right"><?lsmb text('Subtotal') -?></th>
    <th colspan="2"><?lsmb overpayment_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
    </tr>
    <tr class="listtotal">
    <?lsmb payment_total = overpayment_subtotal + topay_subtotal -?>
-   <th colspan="3" align="right"><?lsmb text('Total') -?></th>
+   <th colspan="5" align="right"><?lsmb text('Total') -?></th>
    <th colspan="2"><?lsmb payment_total -?>&nbsp;<?lsmb curr.value -?></th>
    </tr>
    </table>
@@ -293,13 +318,13 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
   <?lsmb post.accesskey   = "P";
          post.title	  = "POST ALT+P";
          post.name	  = "action";
-         post.value	  = "post";
+         post.value	  = "post_payment";
          post.text	  = text("POST"); 
          INCLUDE button element_data=post -?>
   <?lsmb post_and_print.accesskey = "R";
          post_and_print.title     = "POST AND PRINT ALT+R";
          post_and_print.name = "action";
-         post_and_print.value = "post_and_print";
+         post_and_print.value = "post_and_print_payment";
          post_and_print.text = text("POST AND PRINT");;
          INCLUDE button element_data=post_and_print ?>
   <?lsmb INCLUDE select element_data=format ?>

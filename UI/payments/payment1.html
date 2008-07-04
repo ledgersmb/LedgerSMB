@@ -37,15 +37,22 @@
 	</tr>
 	<tr id="vc-currency-row">
 		<td id="vc-label-column" class="label-left">
-		 <?lsmb IF (type.value == 'receipt') ?>
-		   <?lsmb text('Customer')?>
-		 <?lsmb ELSE; text('Vendor')?>
-		 <?lsmb END ?>		
-                     		 
+		 <?lsmb IF (type.value == 'receipt') -?>
+		   <?lsmb text('Customer Name') -?>
+		 <?lsmb ELSE; text('Vendor Name') -?>
+		 <?lsmb END -?>                     		 
 		</td>
 		<td id="vc-column">
-			<?lsmb PROCESS select element_data=vendor_customer ?>
+			<input id="vc_name" name="vc_name"/>
 		</td>
+		<td id="vc-label-column2" align="right">
+			<?lsmb text('SSN')?>
+		</td>
+		<td id="vc-column2">
+			<input id="vc_ssn" name="vc_ssn" size="10"/>	
+		</td>
+	</tr>	
+	<tr>	
   	<td id="currency-label-column" class="label-left"><?lsmb text('Currency') ?></td>
 		<td id="currency-column">
 			<?lsmb PROCESS select element_data=curr ?>
