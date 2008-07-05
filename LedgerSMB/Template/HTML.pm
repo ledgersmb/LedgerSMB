@@ -69,7 +69,6 @@ sub preprocess {
     } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
         return escapeHTML($$rawvars);
     } else { # Hashes and objects
-	print STDERR "$_ is $type:$rawvars";
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }

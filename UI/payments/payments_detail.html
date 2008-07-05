@@ -188,7 +188,7 @@
 		END
 		?>"><?lsmb r.contact_name ?></span></td>
 	<td class="invoice"><?lsmb r.total_due ?> <?lsmb currency ?></td>
-        <td class="payment">
+        <td class="payment" class="details_select">
 		<?lsmb INCLUDE input element_data = {
 		name = "paid_$r.contact_id"
 		value = "some"
@@ -214,7 +214,7 @@
     </tr>
     <tr class="listrow<?lsmb rc ?>">
 	<td class="invoice_detail_list" colspan="3">
-	<table id = "invoice_data_table_<?lsmb r.contact_id ?>" width="100%">
+	<table id = "invoice_data_table_<?lsmb r.contact_id ?>" width="100%" class = "detail_table_visible">
 		<tr class="listheading">
 			<th class="invoice_date_list"><?lsmb text('Date') ?>
 			</th>
@@ -291,6 +291,26 @@
 	class = 'submit'
 	name = 'action'
 	} ?>
+    <?lsmb IF can_print ?>
+    <?lsmb INCLUDE select element_data = {
+        name = "media"
+        class = "select"
+        options = media_options
+        value = media 
+        } ?>
+    <?lsmb INCLUDE select element_data = {
+       name = "format"
+       class = "select"
+       options = format_options
+       value = format
+    } ?>
+    <?lsmb INCLUDE button element_data = {
+        text = text('Print')
+        value = 'print'
+        class = 'submit'
+        name = 'action'
+        } ?>
+    <?lsmb END # IF can_print ?> 
   </form>
  </body>
 </html>

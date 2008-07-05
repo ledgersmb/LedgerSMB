@@ -72,6 +72,7 @@ sub payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_metadata();
+	$payment->debug({file => '/tmp/delme'});
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -260,6 +261,23 @@ sub display_payments {
     for (@{$payment->{contact_invoices}}){
         $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due});
     }
+
+    @{$payment->{media_options}} = (
+            {text  => $request->{_locale}->text('Screen'), 
+             value => 'screen'});
+    for (keys %LedgerSMB::Sysconfig::printer){
+         push @{$payment->{media_options}}, 
+              {text  => $_,
+               value => $LedgerSMB::Sysconfig::printer{$_}};
+    }
+    if ($LedgerSMB::Sysconfig::latex){
+        @{$payment->{format_options}} = (
+              {text => 'PDF',        value => 'PDF'},
+              {text => 'Postscript', value => 'Postscript'},
+        );
+        $payment->{can_print} = 1;
+    }
+
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
