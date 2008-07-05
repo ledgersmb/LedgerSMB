@@ -71,7 +71,7 @@ sub preprocess {
 			push @{$vars}, preprocess($_);
 		}
 	} elsif (!$type or $type eq 'SCALAR') {
-		if ($type eq 'SCALAR') {
+		if ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 			$vars = $$rawvars;
 		} else {
 			$vars = $rawvars;
