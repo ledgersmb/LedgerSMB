@@ -807,7 +807,7 @@ sub preprocess {
         }
     } elsif (!$type) {
         return escapeHTML($rawvars);
-    } elsif ($type eq 'SCALAR') {
+    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
         return escapeHTML($$rawvars);
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
