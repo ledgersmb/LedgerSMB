@@ -375,7 +375,6 @@ sub format_amount {
     my $amount   = $args{amount};
     my $places   = $args{precision};
     my $dash     = $args{neg_format};
-    print STDERR "Formatting $amount in format $myconfig->{numberformat}\n";
 
     my $negative;
     if ($amount) {

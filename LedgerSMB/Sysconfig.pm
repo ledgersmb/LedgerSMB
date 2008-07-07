@@ -17,6 +17,8 @@ $pathsep = ':';
 $auth = 'DB';
 $logging = 0;      # No logging on by default
 
+$force_username_case = undef; # don't force case
+
 @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
 # Whitelist for redirect destination
@@ -82,7 +84,7 @@ read_config( 'ledgersmb.conf' => %config ) or die;
 # Root variables
 for $var (
     qw(pathsep logging check_max_invoices language auth latex
-    db_autoupdate)
+    db_autoupdate force_username_case)
   )
 {
     ${$var} = $config{''}{$var} if $config{''}{$var};

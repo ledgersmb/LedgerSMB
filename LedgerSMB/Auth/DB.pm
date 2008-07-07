@@ -29,6 +29,7 @@
 #====================================================================
 package LedgerSMB::Auth;
 use MIME::Base64;
+use LedgerSMB::Sysconfig;
 use strict;
 
 sub session_check {
@@ -232,6 +233,13 @@ sub get_credentials {
     $auth = MIME::Base64::decode($auth);
     my $return_value = {};
     ($return_value->{login}, $return_value->{password}) = split(/:/, $auth);
+    if (defined $LedgerSMB::Sysconfig::force_username_case){
+        if (lc($LedgerSMB::Sysconfig::force_username_case) eq 'lower'){
+            $return_value->{login} = lc($return_value->{login});
+        } elsif (lc($LedgerSMB::Sysconfig::force_username_case) eq 'upper'){
+            $return_value->{login} = uc($return_value->{login});
+        }
+    }
 
     return $return_value;
     
