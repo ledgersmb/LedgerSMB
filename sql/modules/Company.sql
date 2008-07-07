@@ -229,6 +229,39 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE TYPE company_billing_info AS (
+legal_name text,
+tax_id text,
+street1 text,
+street2 text,
+street3 text,
+city text,
+state text,
+mail_code text,
+country text
+);
+
+CREATE OR REPLACE FUNCTION company_get_billing_info (in_id int) 
+returns company_billing_info as
+$$
+DECLARE out_var company_billing_info;
+	t_id INT;
+BEGIN
+	select c.legal_name, c.tax_id, a.line_one, a.line_two, a.line_three, 
+		a.city, a.state, a.mail_code, cc.name
+	into out_var
+	FROM company c
+	JOIN company_to_location cl ON (c.id = cl.company_id)
+	JOIN location a ON (a.id = cl.location_id)
+	JOIN country cc ON (cc.id = a.country_id)
+	WHERE c.entity_id = (select entity_id 
+			from entity_credit_account where id = in_id)
+		AND a.id = (SELECT min(location_id) from company_to_location
+			where company_id = c.id and location_class = 1);
+	RETURN out_var;
+END;
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION company_save (
     in_id int, in_entity_class int,
     in_name text, in_tax_id TEXT,

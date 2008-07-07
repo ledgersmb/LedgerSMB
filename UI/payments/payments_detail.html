@@ -231,7 +231,17 @@
 		<?lsmb icount = icount + 1 ?>
 		<tr>
 			<td class="invoice_date_list">&nbsp;<?lsmb i.2 ?></td>
+			<?lsmb PROCESS input element_data = {
+				name = "invdate_$i.0"
+				type = "hidden"
+				value = i.2
+			} ?>
 			<td class="invoice_list">&nbsp;<?lsmb i.1 ?></td>
+			<?lsmb PROCESS input element_data = {
+				name = "invnumber_$i.0"
+				type = "hidden"
+				value = i.1
+			} ?>
 		        <td class="total_due_list">&nbsp;
 				<?lsmb INCLUDE format_money number=i.3 ?></td>
 			<td class="paid_list">&nbsp;
@@ -278,6 +288,11 @@
 	type = "hidden"
 	name = "contact_count"
 	value = count
+    } ?>
+    <?lsmb PROCESS input element_data = {
+		name = "multiple"
+		type = "hidden"
+		value = '1'
     } ?>
     <?lsmb INCLUDE button element_data = {
 	text = text((batch_id) ? 'Save' : 'Post'),

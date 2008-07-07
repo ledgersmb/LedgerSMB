@@ -61,6 +61,15 @@ sub __validate__ {
   ($self->{current_date}) = $self->{dbh}->selectrow_array('select current_date');
 }
 
+sub text_amount {
+    use LedgerSMB::Num2text;
+    print STDERR "num2text\n";
+    my ($self, $value) = @_;
+    $self->{locale} = $self->{_locale};
+    $self->init();
+    return $self->num2text($value);
+}
+
 sub get_metadata {
     my ($self) = @_;
     $self->list_open_projects();

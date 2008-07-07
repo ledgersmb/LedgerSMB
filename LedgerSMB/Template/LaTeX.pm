@@ -70,7 +70,7 @@ sub preprocess {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess($_);
 		}
-	} elsif (!$type or $type eq 'SCALAR') {
+	} elsif (!$type or $type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 		if ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 			$vars = $$rawvars;
 		} else {
@@ -120,7 +120,6 @@ sub process {
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template::Latex->error(); 
-
 	if (not $template->process(
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,

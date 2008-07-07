@@ -183,6 +183,13 @@ sub search {
     return @{$self->{search_results}};
 }
 
+sub get_billing_info {
+    my $self = shift @_;
+    $self->set_entity_class();
+    my ($ref) = $self->exec_method(funcname => 'company_get_billing_info');
+    $self->merge($ref);
+}
+
 sub get {
     my $self = shift @_;
 

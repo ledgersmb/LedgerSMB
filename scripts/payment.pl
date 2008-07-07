@@ -50,6 +50,7 @@ package LedgerSMB::Scripts::payment;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use Error::Simple;
 use strict; 
 
 # CT:  A few notes for future refactoring of this code:
@@ -72,7 +73,6 @@ sub payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_metadata();
-	$payment->debug({file => '/tmp/delme'});
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -81,6 +81,9 @@ sub payments {
         format   => 'HTML', 
     );
     $template->render($payment);
+}
+
+sub print {
 }
 
 sub get_search_criteria {
@@ -253,11 +256,82 @@ sub post_payments_bulk {
     $template->render($payment);
 }
 
+sub print {
+    use LedgerSMB::DBObject::Company;
+    my ($request) = @_;
+    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    $payment->{company} = $payment->{_user}->{company};
+    $payment->{address} = $payment->{_user}->{address};
+
+    my $template;
+
+    if ($payment->{multiple}){
+        $payment->{checks} = [];
+        print "Multiple checks printing";
+        for my $line (1 .. $payment->{contact_count}){
+            my $id = $payment->{"contact_$line"};
+            next if !defined $payment->{"id_$id"};
+            my $check = LedgerSMB::DBObject::Company->new(
+                                {base => $request, copy => 'base' }
+            );
+            $check->{entity_class} = $payment->{account_class};
+            $check->{id} = $id;
+            $check->get_billing_info;
+            $check->{amount} = $check->parse_amount(amount => '0');
+            $check->{invoices} = [];
+            $check->{source} = $payment->{"source_$id"};
+            for my $inv (1 .. $payment->{"invoice_count_$id"}){
+		print STDERR "Invoice $inv of " .$payment->{"invoice_count_$id"} . "\n";
+                my $invhash = {};
+                my $inv_id = $payment->{"invoice_${id}_$inv"};
+                for (qw(invnumber invdate)){
+                    $invhash->{$_} = $payment->{"${_}_$inv_id"};
+                }
+                if ($payment->{"paid_$id"} eq 'some'){
+                    $invhash->{paid} = $payment->parse_amount(amount => $payment->{"payment_$inv_id"});
+                } elsif ($payment->{"paid_$id"} eq 'all'){
+                    $invhash->{paid} = $payment->parse_amount(amount => $payment->{"net_$inv_id"});
+                } else {
+                    $payment->error("Invalid Payment Amount Option"); 
+                }
+                $check->{amount} += $invhash->{paid};
+                $invhash->{paid} = $check->format_amount(amount => $invhash->{paid});
+                push @{$check->{invoices}}, $invhash;
+            }
+            my $amt = $check->{amount}->copy;
+            $amt->bfloor();
+            $check->{text_amount} = $payment->text_amount($amt);
+            $check->{amount} = $check->format_amount(amount => $check->{amount});
+            $check->{decimal} = $check->format_amount(amount => ($check->{amount} - $amt) * 100);
+            print STDERR "amount = $check->{amount}, texamount = $check->{textamount}\n";
+            push @{$payment->{checks}}, $check;
+        }
+        $payment->debug({file => '/tmp/payment'});
+        $template = LedgerSMB::Template->new(
+            user => $payment->{_user}, template => 'check_multiple', 
+            format => uc $payment->{'format'},
+	    no_auto_output => 1,
+            output_args => $payment,
+        );
+        try {
+            $template->render($payment);
+            $template->output(%$payment);
+        }
+        catch Error::Simple with {
+            my $E = shift;
+            $payment->error( $E->stacktrace );
+        };
+
+    } else {
+
+    }
+
+}
+
 sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_payment_detail_data();
-	$payment->debug({file => '/tmp/delme'});
     for (@{$payment->{contact_invoices}}){
         $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due});
     }

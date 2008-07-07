@@ -73,10 +73,10 @@ sub new {
 
     my $attr;
     if (lc($mode) eq 'base'){
-        $self->merge($base, 'dbh', '_roles');
+        $self->merge($base, keys => ['dbh', '_roles', '_user', '_locale']);
     }
     elsif (lc($mode) eq 'list'){
-        $self->merge($base, @mergelist);
+        $self->merge($base, keys => \@mergelist);
     }
     else {
         $self->merge($base);

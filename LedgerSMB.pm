@@ -375,6 +375,7 @@ sub format_amount {
     my $amount   = $args{amount};
     my $places   = $args{precision};
     my $dash     = $args{neg_format};
+    print STDERR "Formatting $amount in format $myconfig->{numberformat}\n";
 
     my $negative;
     if ($amount) {
@@ -767,6 +768,7 @@ sub merge {
     if (defined $args{keys}){
          @keys  = @{ $args{keys} };
     }
+    print STDERR 'Merging ' . scalar @keys . " keys\n";
     my $index = $args{index};
     if ( !scalar @keys ) {
         @keys = keys %{$src};

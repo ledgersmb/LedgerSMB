@@ -181,6 +181,7 @@ sub new {
 					.";$self->{'include_path'}"
 		}
 	}
+        print STDERR "include path: $self->{'include_path'} \n";
 
 	return $self;
 }
@@ -293,12 +294,20 @@ sub output {
 }
 
 sub _http_output {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	$data ||= $self->{output};
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}
+
+	if (!defined $data and defined $self->{rendered}){
+		$data = "";
+		open (DATA, '<', $self->{rendered});
+		while (my $line = <DATA>){
+			$data .= $line;
+		}
+	}
+
 	my $format = "LedgerSMB::Template::$self->{format}";
 	my $disposition = "";
 	my $name = $format->can('postprocess')->($self);
