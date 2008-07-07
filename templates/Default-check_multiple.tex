@@ -1,10 +1,11 @@
+<?lsmb FILTER latex ?>
 \documentclass{scrartcl}
 \usepackage[latin1]{inputenc}
 \usepackage{tabularx}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
 
-<?lsmb INCLUDE check_base.tex ?>
+<?lsmb PROCESS check_base.tex ?>
 
 \begin{document}
 
@@ -12,20 +13,22 @@
 \thispagestyle{empty}
 
 \fontfamily{cmss}\fontsize{9pt}{9pt}\selectfont
-<?lsmb FOR check = checks_data ?>
+<?lsmb FOR check = checks ?>
 <?lsmb INCLUDE check_single 
 	source = check.source
 	text_amount = check.text_amount
+	decimal = check.decimal
 	amount = check.amount
-	name = check.name
-	address1 = check.address1
-	address2 = check.address2
+	legal_name = check.legal_name
+	street1 = check.street1 
+	street2 = check.street2 
 	city = check.city
 	state = check.state
-	zipcode = check.zipcode
+	mail_code = check.mail_code
 	memo = check.memo
 	invoices = check.invoices
 ?>
-\endpage
+\clearpage
 <?lsmb END # FOR check ?>
 \end{document}
+<?lsmb END # FILTER latex ?>

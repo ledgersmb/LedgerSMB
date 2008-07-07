@@ -19,17 +19,18 @@
 
 \vspace{0.5cm}
 
-<?lsmb name ?>
+<?lsmb legal_name ?>
 
-<?lsmb address1 ?>
+<?lsmb street1 ?>
 
-<?lsmb address2 ?>
+<?lsmb street2 ?>
 
 <?lsmb city ?>
-<?lsmb if state ?>
+<?lsmb IF state ?>
 \hspace{-0.1cm}, <?lsmb state ?>
-<?lsmb end state ?>
-<?lsmb zipcode ?>
+<?lsmb END # state ?>
+
+<?lsmb mail_code ?>
 
 <?lsmb country ?>
 
@@ -52,7 +53,7 @@
 <?lsmb FOR inv = invoices ?>
 <?lsmb inv.invnumber ?> & <?lsmb inv.invdate ?> \dotfill
   & <?lsmb inv.due ?> & <?lsmb inv.paid ?> \\
-<?lsmb end # FOREACH inv ?>
+<?lsmb END # FOREACH inv ?>
 \end{tabularx}
 
 \vspace{1cm}
