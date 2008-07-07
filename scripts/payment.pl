@@ -306,7 +306,6 @@ sub print {
             print STDERR "amount = $check->{amount}, texamount = $check->{textamount}\n";
             push @{$payment->{checks}}, $check;
         }
-        $payment->debug({file => '/tmp/payment'});
         $template = LedgerSMB::Template->new(
             user => $payment->{_user}, template => 'check_multiple', 
             format => uc $payment->{'format'},
