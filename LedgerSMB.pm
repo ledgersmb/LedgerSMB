@@ -768,7 +768,6 @@ sub merge {
     if (defined $args{keys}){
          @keys  = @{ $args{keys} };
     }
-    print STDERR 'Merging ' . scalar @keys . " keys\n";
     my $index = $args{index};
     if ( !scalar @keys ) {
         @keys = keys %{$src};
