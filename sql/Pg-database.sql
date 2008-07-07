@@ -359,12 +359,9 @@ glnumber|1
 projectnumber|1
 queue_payments|0
 poll_frequency|1
-<<<<<<< .mine
 rcptnumber|1
 paynumber|1
-=======
 separate_duties|1
->>>>>>> .r2141
 \.
 
 COMMENT ON TABLE defaults IS $$
