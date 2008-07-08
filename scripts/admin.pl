@@ -112,7 +112,7 @@ sub edit_group {
             {
                 user=> $request->{role}, 
                 roles=>$all_roles,
-                user_roles=>$admin->get_user_roles($request->{role});
+                user_roles=>$admin->get_user_roles($request->{role})
             }
         );
     }
@@ -212,7 +212,7 @@ sub cancel {
 
 sub __default {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     
     my $template;
     my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'all');
@@ -225,6 +225,6 @@ sub __default {
     $template->render($user);
 }
 
-eval { do "scripts/custom/admin.pl"};
+#eval { do "scripts/custom/admin.pl"};
 
 1;
