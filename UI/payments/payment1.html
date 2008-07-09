@@ -17,11 +17,15 @@
 
 <form name="search" method="post" action="payment.pl">
 <?lsmb PROCESS elements.html  # Include form elements helper. -?>
-<?lsmb login.type = 'hidden' ; PROCESS input element_data=login -?>
-<?lsmb accountclass.type = 'hidden'; PROCESS input element_data=accountclass -?>
-<?lsmb type.type = "hidden";
-       PROCESS input element_data=type;
- -?>
+<?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
+<?lsmb accountclass.type = 'hidden'; INCLUDE input element_data=accountclass -?>
+<?lsmb # The first_load field is required on payment2.html to initialize discounts the first time, on each subsequent update it wont exist-?>
+<?lsmb INCLUDE input element_data={
+            name => 'first_load',
+            id   => 'first_load',
+            type => 'hidden',
+            value => 'on'} ?>
+<?lsmb type.type = "hidden"; INCLUDE input element_data=type; -?>
 <table width="100%">
   <tr id="top-bar" class="listtop">
     <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb text('Receipts') ?></th>

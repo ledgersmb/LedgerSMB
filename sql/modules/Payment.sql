@@ -1,13 +1,24 @@
+
+CREATE TYPE payment_vc_info AS (
+	id int,
+	name text,
+	entity_class int,
+	discount int
+);
+
+
 CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 (in_account_class int,
  in_vc_name text,
  in_vc_idn  int)
- returns SETOF entity AS
+ returns SETOF payment_vc_info AS
  $$
- DECLARE out_entity entity%ROWTYPE;
+ DECLARE out_entity payment_vc_info;
+ 
+
  BEGIN
  	FOR out_entity IN
- 		SELECT ec.id, cp.legal_name as name, e.entity_class, e.created
+ 		SELECT ec.id, cp.legal_name as name, e.entity_class, ec.discount_account_id
  		FROM entity e
  		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
  		JOIN company cp ON (cp.entity_id = e.id)
@@ -110,6 +121,7 @@ BEGIN
 		         SELECT id, invnumber, transdate, amount, entity_id,
 		               2 AS invoice_class, paid, curr,
 		               entity_credit_account, department_id
+
 		         FROM ar
 		         ) a 
 		JOIN (SELECT trans_id, chart_id, sum(CASE WHEN in_account_class = 1 THEN amount
@@ -137,7 +149,8 @@ BEGIN
 		        AND (a.amount <= in_amountto
 		             OR in_amountto IS NULL)
 		        AND (a.department_id = in_department_id
-		             OR in_department_id IS NULL)     
+		             OR in_department_id IS NULL)
+		        AND due <> 0          
 		        GROUP BY a.invnumber, a.transdate, a.amount, discount, ac.due, a.id, c.discount_terms
 	LOOP
 		RETURN NEXT payment_inv;
@@ -554,7 +567,7 @@ BEGIN
 	        INSERT INTO acc_trans (chart_id, amount,
 		                       trans_id, transdate, approved, source)
 		VALUES (in_cash_account_id[out_count], 
-		        CASE WHEN in_account_class = 2 THEN in_amount[out_count]  
+		        CASE WHEN in_account_class = 1 THEN in_amount[out_count]  
 		        ELSE in_amount[out_count]* - 1
 		        END,
 		        in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true), 
@@ -576,7 +589,7 @@ BEGIN
          INSERT INTO acc_trans (chart_id, amount,
                                 trans_id, transdate, approved, source)
 		VALUES (var_account_id, 
-		        CASE WHEN in_account_class = 2 THEN in_amount[out_count] * -1 
+		        CASE WHEN in_account_class = 1 THEN in_amount[out_count] * -1 
 		        ELSE in_amount[out_count]
 		        END,
 		        in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true), 
@@ -740,7 +753,6 @@ CREATE TYPE payment_location_result AS (
         class text
 );
 
-
 --
 --  payment_get_vc_info has the same arch as company__list_locations, except for the filtering capabilities 
 --  This should be unified on the API when we get things working - David Mora
@@ -748,7 +760,7 @@ CREATE TYPE payment_location_result AS (
 CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_credit_id int, in_location_class_id int)
 RETURNS SETOF payment_location_result AS
 $$
-DECLARE out_row RECORD;
+DECLARE out_row payment_location_result;
 	BEGIN
 		FOR out_row IN
                 SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,

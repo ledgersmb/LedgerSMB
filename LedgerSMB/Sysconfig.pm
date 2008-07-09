@@ -7,7 +7,6 @@ package LedgerSMB::Sysconfig;
 use LedgerSMB::Form;
 use Config::Std;
 use DBI qw(:sql_types);
-
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 

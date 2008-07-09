@@ -555,6 +555,7 @@ my @array_options;
 my @currency_options;
 my $exchangerate;
 # LETS GET THE CUSTOMER/VENDOR INFORMATION	
+
 ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
 
 # WE NEED TO RETRIEVE A BILLING LOCATION, THIS IS HARDCODED FOR NOW... Should we change it? 
@@ -579,7 +580,8 @@ my @account_options = $Payment->list_accounting();
 # LETS GET THE POSSIBLE SOURCES
 my @sources_options = $Payment->get_sources(\%$locale);
 # WE MUST PREPARE THE ENTITY INFORMATION
-@array_options = $Payment->get_vc_info();
+#@array_options = $Payment->get_vc_info();# IS THIS WORKING?
+
 # LETS BUILD THE CURRENCIES INFORMATION 
 # FIRST, WE NEED TO KNOW THE DEFAULT CURRENCY
 my $default_currency = $Payment->get_default_currency(); 
@@ -595,6 +597,7 @@ my @column_headers =  ({text => $locale->text('Invoice')},
                        {text => $locale->text('Total').$default_currency_text},
                        {text => $locale->text('Paid').$default_currency_text},
                        {text => $locale->text('Discount').$default_currency_text},
+                       {text => $locale->text('Apply Disc')},
                        {text => $locale->text('Amount Due').$default_currency_text},
                        {text => $locale->text('To pay').$default_currency_text}
                        );
@@ -642,27 +645,46 @@ my @column_headers =  ({text => $locale->text('Invoice')},
 my @invoice_data;
 my @topay_state; # WE WILL USE THIS TO HELP UI TO DETERMINE WHAT IS VISIBLE
 @array_options  = $Payment->get_open_invoices(); 
-
+my $unhandled_overpayment;
 for my $ref (0 .. $#array_options) {
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
 # SHOULD I APPLY DISCCOUNTS?   
-
+      $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
+      
 # LETS SET THE EXCHANGERATE VALUES
    my $due_fx; my $topay_fx_value;
    if ("$exchangerate") {
        $topay_fx_value =   $due_fx = "$array_options[$ref]->{due}"/"$exchangerate" - "$array_options[$ref]->{discount}"/"$exchangerate";
+       if ($request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
+       $topay_fx_value = $due_fx = $due_fx - "$array_options[$ref]->{discount}"/"$exchangerate";
+        }
    } else {
        $topay_fx_value = $due_fx = "N/A";
    }
+# We need to check for unhandled overpayment, see the post function for details
+# First we will see if the discount should apply?
+     my  $temporary_discount = 0;
+     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($due_fx <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $array_options[$ref]->{discount}/"$exchangerate")) {
+         $temporary_discount = "$array_options[$ref]->{discount}"/"$exchangerate";
+      
+     } 
+# We need to compute the unhandled_overpayment, notice that all the values inside the if already have 
+# the exchangerate applied       
+      if ( $due_fx <  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) {
+         # We need to store all the overpayments so we can use it on the screen
+         $unhandled_overpayment = $unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} - $due_fx ;
+         $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = $due_fx;
+     }   
    push @invoice_data, {       invoice => { number => $array_options[$ref]->{invnumber},
                                             id     =>  $array_options[$ref]->{invoice_id},
                                             href   => 'ar.pl?id='."$array_options[$ref]->{invoice_id}"
                                            },  
                                invoice_date      => "$array_options[$ref]->{invoice_date}",
                                amount            => "$array_options[$ref]->{amount}",
-                               due               => "$array_options[$ref]->{due}" - "$array_options[$ref]->{discount}",
+                               due               => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"}? "$array_options[$ref]->{due}" - "$array_options[$ref]->{discount}": "$array_options[$ref]->{due}",
                                paid              => "$array_options[$ref]->{amount}" - "$array_options[$ref]->{due}",
-                               discount          => "$array_options[$ref]->{discount}",
+                               discount          => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? "$array_options[$ref]->{discount}" : 0 ,
+                               optional_discount =>  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"},
                                exchange_rate     => "$exchangerate",
                                due_fx            =>  $due_fx, # This was set at the begining of the for statement
                                topay             => "$array_options[$ref]->{due}" - "$array_options[$ref]->{discount}",
@@ -738,7 +760,10 @@ if (${LedgerSMB::Sysconfig::latex}) {
         push  @format_options, {value => 2, text => "PDF" }, {value => 3, text => "POSTSCRIPT" };
 }    
 # LETS BUILD THE SELECTION FOR THE UI
+# Notice that the first data inside this selection is the firs_load, this
+# will help payment2.html to know wether it is beeing called for the first time
 my $select = {
+  first_load => $request->{first_load},
   stylesheet => $request->{_user}->{stylesheet},
   header  =>  { text => $request->{type} eq 'receipt' ? $locale->text('Receipt') : $locale->text('Payment') },
   type    =>  { name  => 'type',
@@ -774,7 +799,7 @@ my $select = {
   vendorcustomer => { name => 'vendor-customer',
                       value => $request->{'vendor-customer'}
                      },
-    
+  unhandled_overpayment => { name => 'unhandledoverpayment', value => $unhandled_overpayment   }  ,
   vc => { name => $Payment->{company_name}, # We will assume that the first Billing Information as default
           address =>  [ {text => $vc_options[0]->{'line_one'}},
                         {text =>  $vc_options[0]->{'line_two'}},
@@ -808,6 +833,7 @@ eval {$template->render($select) };
 }
 
 
+
 =pod
 
 =item post_payment
@@ -824,7 +850,7 @@ my ($request) = @_;
 my $locale       = $request->{_locale};
 my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
 # LETS GET THE CUSTOMER/VENDOR INFORMATION	
-($Payment->{entity_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
+($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
 # LETS GET THE DEPARTMENT INFO
 # WE HAVE TO SET $dbPayment->{department_id} in order to process
 if ($request->{department}) {
@@ -849,10 +875,11 @@ $Payment->{approved} = 'true';
 # Variable definition
 #
 # We use the prefix op to refer to the overpayment variables.
-my $overpayment; # This variable might be fuzzy, we are using it to handle invalid data
-                 # i.e. a user set an overpayment qty inside an invoice.
+my $unhandled_overpayment = 0; # This variable might be fuzzy, we are using it to handle invalid data
+                           # i.e. a user set an overpayment qty inside an invoice.
 my @array_options; 
 my @amount;
+my @discount;
 my @cash_account_id;
 my @source;
 my @transaction_id;
@@ -865,25 +892,46 @@ my @op_account_id;
 # We need the invoices in order to process the income data, this is done this way
 # since the data we have isn't indexed in any way.
 #
-
+# Ok, we want to use the disccount information in order to do some accounting movements,
+# we will process it with the same logic for a regular payment, and see where does this leave us.
+@array_options = $Payment->get_entity_credit_account();# We need to know the disccount account
+my $discount_account_id = $array_options[0]->{discount};
 @array_options = $Payment->get_open_invoices(); 
 for my $ref (0 .. $#array_options) {
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
+         # First i have to determine if discounts will apply
+         # we will assume that a discount should apply only
+         # if this is the last payment of an invoice
+     my  $temporary_discount = 0;
+     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&("$array_options[$ref]->{due}"/"$request->{exrate}" <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $array_options[$ref]->{discount})) {
+         $temporary_discount = $array_options[$ref]->{discount};
+     }   
          #
          # The prefix cash is to set the movements of the cash accounts, 
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
-         # Maybe i should move this to another sub, so i can call it from payment2 as well :). D.M.
-     if ($array_options[$ref]->{amount} <  $request->{"topay_$array_options[$ref]->{invoice_id}"} ) {
-         # THERE IS AN OVERPAYMENT!, we should store it and see if we can use it on the UI 
-         $overpayment = $overpayment + $request->{"topay_$array_options[$ref]->{invoice_id}"} - $array_options[$ref]->{amount};
-         $request->{"topay_$array_options[$ref]->{invoice_id}"} = $request->{"topay_$array_options[$ref]->{invoice_id}"};
+     if ( "$array_options[$ref]->{due}"/"$request->{exrate}" <  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} + $temporary_discount ) {
+         # We need to store all the overpayments so we can use it on a new payment2 screen
+         $unhandled_overpayment = $unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} + $temporary_discount - $array_options[$ref]->{amount} ;
+         
      }
+         if ($request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
+             push @amount, $array_options[$ref]->{discount};
+             push @cash_account_id, $discount_account_id;
+             push @source, $locale->text('Applied discount');
+             push @transaction_id, $array_options[$ref]->{invoice_id};        
+         }
          push @amount,   $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}; # We'll use this for both cash and ap/ar accounts
          push @cash_account_id,  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"} ? $request->{"account_$array_options[$ref]->{invoice_id}"} : $request->{account};
          push @source, $request->{"source1_$array_options[$ref]->{invoice_id}"}.' '.$request->{"source2_$array_options[$ref]->{invoice_id}"}; # We'll use this for both source and ap/ar accounts
          push @transaction_id, $array_options[$ref]->{invoice_id};        
  }
+}
+# Check if there is an unhandled overpayment and run payment2 as needed
+
+if ($unhandled_overpayment) {
+&payment2($request);
+return 0;
 }
 #
 # Now we need the overpayment information.
@@ -891,7 +939,6 @@ for my $ref (0 .. $#array_options) {
 # We will use the prefix op to indicate it is an overpayment information.
 #
 # note: I love the for's C-like syntax.
-
 for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
    if (!$request->{"overpayment_checkbox_$i"}) { # Is overpayment marked as deleted ?  
      if ( $request->{"overpayment_topay_$i"} ) { # Is this overpayment an used field?
@@ -909,7 +956,6 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      } 
    }  
 }
-
 # Finally we store all the data inside the LedgerSMB::DBObject::Payment object. 
     $Payment->{cash_account_id}    =  $Payment->_db_array_scalars(@cash_account_id);
     $Payment->{amount}             =  $Payment->_db_array_scalars(@amount);
@@ -934,6 +980,7 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
     if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
                 
 }
+
 
 eval { do "scripts/custom/payment.pl"};
 1;

@@ -157,12 +157,19 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
     <td><?lsmb row.invoice_date ?></td>
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
+<<<<<<< .mine
     <td><?lsmb row.discount ?></td>
+    <td align="center"><input  name="<?lsmb "optional_discount_$row.invoice.id" -?>"  id="<?lsmb
+       "optional_discount_$row.invoice.id" -?>" type="checkbox"  class="checkbox"<?lsmb IF
+       row.optional_discount OR first_load -?> checked <?lsmb END -?> ></td>
+=======
+    <td><?lsmb row.discount ?></td>
+>>>>>>> .r2199
     <td><?lsmb row.due ?></td>
     <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><?lsmb row.exchange_rate ?></td>
-    <td><?lsmb row.due_fx ?></td>
-    <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.topay ?></div></td>
+    <td><?lsmb row.due ?></td>
+    <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div></td>
     <?lsmb END ?> 
     <?lsmb #This should be computed and updated to the div using  ?> 
     <td><?lsmb  row.topay_fx.id = row.topay_fx.name ;INCLUDE input element_data=row.topay_fx;
@@ -290,11 +297,24 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
            <option value="<?lsmb item -?>"><?lsmb item -?></option>
           <?lsmb END -?>
          </select>
-         <input name="overpayment_source2_<?lsmb overpayment_item ?>"     id="overpayment_source2_<?lsmb overpayment_item ?>"  />
+         <input name="overpayment_source2_<?lsmb overpayment_item -?>"  id="overpayment_source2_<?lsmb overpayment_item -?>"/>
          <input type="hidden" name="overpayment_qty" id="overpayment_qty" value="<?lsmb overpayment_item ?>" />
      </td>
+<<<<<<< .mine
+     <td align="center"><input name="overpayment_memo_<?lsmb overpayment_item -?>" id="overpayment_memo_<?lsmboverpayment_item ?>" /></td>     
+     <td align="center">
+      <input 
+      	name="overpayment_topay_<?lsmb overpayment_item -?>"
+      	id="overpayment_topay_<?lsmboverpayment_item ?>"
+        value="<?lsmb IF unhandled_overpayment.value > 0 -?>
+                    <?lsmb unhandled_overpayment.value -?>
+                <?lsmb END -?>"      
+      />
+     </td>
+=======
      <td align="center"><input name="overpayment_memo_<?lsmb overpayment_item -?>" id="overpayment_memo_<?lsmboverpayment_item ?>" /></td>     
      <td align="center"><input name="overpayment_topay_<?lsmb overpayment_item -?>" id="overpayment_topay_<?lsmboverpayment_item ?>" /></td>
+>>>>>>> .r2199
      <td align="center"><input type="checkbox" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>
    </tr>
    <tr class="listsubtotal">
