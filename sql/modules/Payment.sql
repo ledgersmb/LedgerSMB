@@ -710,11 +710,11 @@ DECLARE
 
     BEGIN 
         IF in_account_class = 1 THEN
-          SELECT INTO out_exrate buy 
+          SELECT buy INTO out_exrate 
           FROM exchangerate
           WHERE transdate = in_date AND curr = in_currency;
         ELSE 
-          SELECT INTO out_exrate sell 
+          SELECT sell INTO out_exrate 
           FROM exchangerate
           WHERE transdate = in_date AND curr = in_currency;   
         END IF;
