@@ -157,14 +157,11 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
     <td><?lsmb row.invoice_date ?></td>
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
-<<<<<<< .mine
+
     <td><?lsmb row.discount ?></td>
     <td align="center"><input  name="<?lsmb "optional_discount_$row.invoice.id" -?>"  id="<?lsmb
        "optional_discount_$row.invoice.id" -?>" type="checkbox"  class="checkbox"<?lsmb IF
        row.optional_discount OR first_load -?> checked <?lsmb END -?> ></td>
-=======
-    <td><?lsmb row.discount ?></td>
->>>>>>> .r2199
     <td><?lsmb row.due ?></td>
     <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><?lsmb row.exchange_rate ?></td>
@@ -300,7 +297,6 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
          <input name="overpayment_source2_<?lsmb overpayment_item -?>"  id="overpayment_source2_<?lsmb overpayment_item -?>"/>
          <input type="hidden" name="overpayment_qty" id="overpayment_qty" value="<?lsmb overpayment_item ?>" />
      </td>
-<<<<<<< .mine
      <td align="center"><input name="overpayment_memo_<?lsmb overpayment_item -?>" id="overpayment_memo_<?lsmboverpayment_item ?>" /></td>     
      <td align="center">
       <input 
@@ -311,10 +307,6 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
                 <?lsmb END -?>"      
       />
      </td>
-=======
-     <td align="center"><input name="overpayment_memo_<?lsmb overpayment_item -?>" id="overpayment_memo_<?lsmboverpayment_item ?>" /></td>     
-     <td align="center"><input name="overpayment_topay_<?lsmb overpayment_item -?>" id="overpayment_topay_<?lsmboverpayment_item ?>" /></td>
->>>>>>> .r2199
      <td align="center"><input type="checkbox" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>
    </tr>
    <tr class="listsubtotal">
