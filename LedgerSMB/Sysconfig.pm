@@ -34,8 +34,10 @@ $force_username_case = undef; # don't force case
 # if you have latex installed set to 1
 $latex = 1;
 
-$max_post_size = 1000000;
+# Defaults to 1 megabyte
+$max_post_size = 1024 * 1024;
 
+# defaults to 2
 $decimal_places = 2;
 # spool directory for batch printing
 $spool = "spool";
