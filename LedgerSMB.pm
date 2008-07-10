@@ -521,7 +521,14 @@ sub parse_amount {
 sub round_amount {
 
     my ( $self, $amount, $places ) = @_;
-
+    
+    #
+    # We will grab the default value, if it isnt defined
+    #
+    if (!$places){
+    $places = ${LedgerSMB::Sysconfig::decimal_places};
+    }
+    
     # These rounding rules follow from the previous implementation.
     # They should be changed to allow different rules for different accounts.
     if ($amount >= 0) {

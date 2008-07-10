@@ -654,9 +654,9 @@ for my $ref (0 .. $#array_options) {
 # LETS SET THE EXCHANGERATE VALUES
    my $due_fx; my $topay_fx_value;
    if ("$exchangerate") {
-       $topay_fx_value =   $due_fx = "$array_options[$ref]->{due}"/"$exchangerate" - "$array_options[$ref]->{discount}"/"$exchangerate";
+       $topay_fx_value =   $due_fx = $request->round_amount("$array_options[$ref]->{due}"/"$exchangerate");
        if ($request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
-       $topay_fx_value = $due_fx = $due_fx - "$array_options[$ref]->{discount}"/"$exchangerate";
+       $topay_fx_value = $due_fx = $request->round_amount($due_fx - "$array_options[$ref]->{discount}"/"$exchangerate");
         }
    } else {
        $topay_fx_value = $due_fx = "N/A";
@@ -664,16 +664,15 @@ for my $ref (0 .. $#array_options) {
 # We need to check for unhandled overpayment, see the post function for details
 # First we will see if the discount should apply?
      my  $temporary_discount = 0;
-     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($due_fx <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $array_options[$ref]->{discount}/"$exchangerate")) {
-         $temporary_discount = "$array_options[$ref]->{discount}"/"$exchangerate";
-      
-     } 
+     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($due_fx <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $request->round_amount($array_options[$ref]->{discount}/"$exchangerate"))) {
+         $temporary_discount = $request->round_amount("$array_options[$ref]->{discount}"/"$exchangerate");
+      } 
 # We need to compute the unhandled_overpayment, notice that all the values inside the if already have 
 # the exchangerate applied       
       if ( $due_fx <  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) {
          # We need to store all the overpayments so we can use it on the screen
-         $unhandled_overpayment = $unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} - $due_fx ;
-         $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = $due_fx;
+         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} - $due_fx );
+         $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
      }   
    push @invoice_data, {       invoice => { number => $array_options[$ref]->{invnumber},
                                             id     =>  $array_options[$ref]->{invoice_id},
@@ -686,7 +685,7 @@ for my $ref (0 .. $#array_options) {
                                discount          => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? "$array_options[$ref]->{discount}" : 0 ,
                                optional_discount =>  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"},
                                exchange_rate     => "$exchangerate",
-                               due_fx            =>  $due_fx, # This was set at the begining of the for statement
+                               due_fx            =>  "$due_fx", # This was set at the begining of the for statement
                                topay             => "$array_options[$ref]->{due}" - "$array_options[$ref]->{discount}",
                                source_text       =>  $request->{"source_text_$array_options[$ref]->{invoice_id}"},
                                optional          =>  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"},
@@ -695,9 +694,9 @@ for my $ref (0 .. $#array_options) {
                                topay_fx          =>  { name  => "topay_fx_$array_options[$ref]->{invoice_id}",
                                                        value => $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ? 
                                                            $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} eq 'N/A' ?
-                                                           $topay_fx_value :
+                                                           "$topay_fx_value" :
                                                            $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} :
-                                                           $topay_fx_value
+                                                           "$topay_fx_value"
                                                            # Ugly hack, but works ;) ... 
                                                  }#END HASH
                            };# END PUSH 
@@ -799,7 +798,7 @@ my $select = {
   vendorcustomer => { name => 'vendor-customer',
                       value => $request->{'vendor-customer'}
                      },
-  unhandled_overpayment => { name => 'unhandledoverpayment', value => $unhandled_overpayment   }  ,
+  unhandled_overpayment => { name => 'unhandledoverpayment', value => "$unhandled_overpayment"   }  ,
   vc => { name => $Payment->{company_name}, # We will assume that the first Billing Information as default
           address =>  [ {text => $vc_options[0]->{'line_one'}},
                         {text =>  $vc_options[0]->{'line_two'}},
@@ -912,7 +911,7 @@ for my $ref (0 .. $#array_options) {
          #
      if ( "$array_options[$ref]->{due}"/"$request->{exrate}" <  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} + $temporary_discount ) {
          # We need to store all the overpayments so we can use it on a new payment2 screen
-         $unhandled_overpayment = $unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} + $temporary_discount - $array_options[$ref]->{amount} ;
+         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} + $temporary_discount - $array_options[$ref]->{amount}) ;
          
      }
          if ($request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
