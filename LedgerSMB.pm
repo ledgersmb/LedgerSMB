@@ -57,7 +57,7 @@ characters or is an empty string.
 This function returns 1 if the run mode is what is specified.  Otherwise
 returns 0.
 
-=item is_allowed_role(allowed_roles => @role_names)
+=item is_allowed_role({allowed_roles => @role_names})
 
 This function returns 1 if the user's roles include any of the roles in
 @role_names.  Currently it returns 1 when this is not found as well but when 
@@ -589,15 +589,15 @@ sub call_procedure {
 
 # Keeping this here due to common requirements
 sub is_allowed_role {
-    my $self = shift @_;
-    my %args = @_;
-    my @roles = @{$args{allowed_roles}};
+    my ($self, $args) = @_;
+    my @roles = @{$args->{allowed_roles}};
     for my $role (@roles){
-        if (scalar(grep /^$role$/, $self->{_roles})){
+        my @roleset = grep m/^$role$/, @{$self->{_roles}};
+        if (scalar @roleset){
             return 1;
         }
     }
-    return 1; # TODO change to 0 when the role system is implmented
+    return 0; # TODO change to 0 when the role system is implmented
 }
 
 # This should probably be moved to User too...
@@ -722,6 +722,16 @@ sub _db_init {
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{custom_db_fields}{ $ref->{extends} } },
           $ref->{field_def};
+    }
+
+    # Adding role list to self 
+    $self->{_roles} = [];
+    $query = "select rolname from pg_roles 
+               where pg_has_role(SESSION_USER, 'USAGE')";
+    $sth = $dbh->prepare($query);
+    $sth->execute();
+    while (my @roles = $sth->fetchrow_array){
+        push @{$self->{_roles}}, $roles[0];
     }
 }
 
