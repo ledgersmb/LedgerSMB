@@ -2241,7 +2241,8 @@ sub create_links {
 				d.description AS department,
 				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
 				a.person_id, e.name AS employee, 
-				c.language_code, a.ponumber, a.reverse
+				c.language_code, a.ponumber, a.reverse,
+                                a.approved
 			FROM $arap a
 			JOIN entity_credit_account c USING (entity_id)
 			JOIN entity ce ON (ce.id = c.entity_id)
@@ -2257,6 +2258,10 @@ sub create_links {
 
         $ref = $sth->fetchrow_hashref('NAME_lc');
         $self->db_parse_numeric(sth=>$sth, hashref=>$ref);
+
+        if (!defined $ref->{approved}){
+           $ref->{approved} = 0;
+        }
 
         foreach $key ( keys %$ref ) {
             $self->{$key} = $ref->{$key};

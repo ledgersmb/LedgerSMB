@@ -83,7 +83,7 @@ read_config( 'ledgersmb.conf' => %config ) or die;
 # Root variables
 for $var (
     qw(pathsep logging check_max_invoices language auth latex
-    db_autoupdate force_username_case)
+    db_autoupdate force_username_case max_post_size)
   )
 {
     ${$var} = $config{''}{$var} if $config{''}{$var};

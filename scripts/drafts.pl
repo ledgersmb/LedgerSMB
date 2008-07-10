@@ -1,5 +1,5 @@
 
-package LedgerSMB::Scripts::vouchers;
+package LedgerSMB::Scripts::drafts;
 our $VERSION = '0.1';
 
 use LedgerSMB::DBObject::Draft;
@@ -8,6 +8,11 @@ use strict;
 
 sub search {
     my ($request) = @_;
+    $request->{class_types} = [
+	{text => $request->{_locale}->text('AR'),  value => 'ar'},
+	{text => $request->{_locale}->text('AP'),  value => 'ap'},
+	{text => $request->{_locale}->text('GL'),  value => 'GL'},
+    ];
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $request->{_locale},
@@ -20,12 +25,12 @@ sub search {
 
 sub list_drafts {
     my ($request) = @_;
-    my $draft= LedgerSMB::Draft->new(base => $request);
+    my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
     my @search_results = $draft->search;
     $draft->{script} = "drafts.pl";
 
     my @columns = 
-        qw(select id transdate reference description, amount);
+        qw(select id transdate reference description amount);
 
     my $base_href = "drafts.pl";
     my $search_href = "$base_href?action=list_transactions";
@@ -39,25 +44,25 @@ sub list_drafts {
 
     my %column_heading = (
         'select'          => $draft->{_locale}->text('Select'),
-        transaction_total => {
+        amount => {
              text => $draft->{_locale}->text('AR/AP/GL Total'),
              href => "$search_href&order_by=transaction_total"
-        },
-        payment_total     => { 
-             text => $draft->{_locale}->text('Paid/Received Total'),
-             href => "$search_href&order_by=payment_total"
         },
         description       => {
              text => $draft->{_locale}->text('Description'),
              href => "$search_href&order_by=description"
         },
-        control_code      => {
-             text => $draft->{_locale}->text('Batch Number'),
-             href => "$search_href&order_by=control_code"
-        },
         id                => {
              text => $draft->{_locale}->text('ID'),
-             href => "$search_href&order_by=control_code"
+             href => "$search_href&order_by=id"
+        },
+        reference         => {
+             text => $draft->{_locale}->text('Reference'),
+             href => "$search_href&order_by=reference"
+        },
+        transdate          => {
+             text => $draft->{_locale}->text('Date'),
+             href => "$search_href&order_by=transdate"
         },
     );
     my $count = 0;
@@ -73,18 +78,15 @@ sub list_drafts {
                                            name  => "draft_$result->{id}"
                                  }
             },
-            transaction_total => $draft->format_amount(
-                                     amount => $result->{transaction_total}
+            amount => $draft->format_amount(
+                                     amount => $result->{amount}
 				),
-            payment_total     => $draft->format_amount (
-                                     amount => $result->{payment_total}
-                                ),
-            description => $result->{description},
-            control_code => {
-                             text  => $result->{control_code},
-                             href  => "$draft_href&draft_id=$result->{id}",
-
+            reference => { 
+                  text => $result->{reference},
+                  href => "$request->{type}.pl?action=edit&id=$result->{id}",
             },
+            description => $result->{description},
+            transdate => $result->{transdate},
             id => $result->{id},
         };
     }

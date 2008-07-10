@@ -24,17 +24,19 @@ BEGIN
 			 	 ELSE 0
 			    END) as amount
 		FROM (
-			SELECT id, transdate, invnumber as reference, 
-				description, approved from ap
-			WHERE in_type = 'ap'
-			UNION
-			SELECT id, transdate, invnumber as reference,
-				description, approved from ar
-			WHERE in_type = 'ar'
-			UNION
 			SELECT id, transdate, reference, description, 
 				approved from gl
 			WHERE in_type = 'gl'
+			UNION
+			SELECT id, transdate, invnumber as reference, 
+				description::text,
+				approved from ap
+			WHERE in_type = 'ap'
+			UNION
+			SELECT id, transdate, invnumber as reference,
+				description, 
+				approved from ar
+			WHERE in_type = 'ar'
 			) trans
 		JOIN acc_trans line ON (trans.id = line.trans_id)
 		JOIN chart ON (line.chart_id = chart.id)
@@ -43,7 +45,7 @@ BEGIN
 				or trans.transdate <= in_to_date)
 			AND trans.approved IS FALSE
 			AND trans.id NOT IN (select trans_id from voucher)
-		GROUP BY trans.id, trans.transdate, trans.description
+		GROUP BY trans.id, trans.transdate, trans.description, trans.reference
 		HAVING (in_with_accno IS NULL or in_with_accno = 
 			ANY(as_array(chart.accno)))
 	LOOP

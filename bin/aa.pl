@@ -843,7 +843,6 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
 }
 
 sub form_footer {
-
     $form->hide_form(qw(callback path login sessionid));
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
@@ -888,6 +887,13 @@ sub form_footer {
             'delete' =>
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
         );
+        if (!$form->{approved}){
+           $button{approve} = { ndx => 3, key => 'O', value => $locale->text('Post') };
+           delete $button{post_as_new};
+           delete $button{print_and_post_as_new};
+           delete $button{post};
+           delete $button{print_and_post};
+        }
 
         if ($form->{separate_duties}){
             $button{post}->{value} = $locale->text('Save');
@@ -941,6 +947,18 @@ sub form_footer {
 </html>
 |;
 
+}
+
+sub approve {
+    use LedgerSMB::DBObject::Draft;
+    use LedgerSMB;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+
+    $draft->approve();
+    $form->info($locale->text('Draft Posted'));
 }
 
 sub update {
