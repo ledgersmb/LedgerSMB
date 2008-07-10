@@ -37,7 +37,7 @@ $latex = 1;
 # Defaults to 1 megabyte
 $max_post_size = 1024 * 1024;
 
-# defaults to 2
+# defaults to 2-- default number of places to round amounts to
 $decimal_places = 2;
 # spool directory for batch printing
 $spool = "spool";
