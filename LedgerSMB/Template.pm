@@ -181,7 +181,6 @@ sub new {
 					.";$self->{'include_path'}"
 		}
 	}
-        print STDERR "include path: $self->{'include_path'} \n";
 
 	return $self;
 }
