@@ -23,12 +23,42 @@ sub search {
     $template->render($request);
 }
 
+sub list_drafts_draft_approve {
+    my ($request) = @_;
+    my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
+    for my $row (1 .. $draft->{rowcount}){
+        if ($draft->{"draft_" .$draft->{"row_$row"}}){
+             $draft->{id} = $draft->{"row_$row"};
+             $draft->approve;
+        }
+    }
+    search($request);
+}
+
+sub list_drafts_draft_delete {
+    my ($request) = @_;
+    my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
+    for my $row (1 .. $draft->{rowcount}){
+        if ($draft->{"draft_" .$draft->{"row_$row"}}){
+             $draft->{id} = $draft->{"row_$row"};
+             $draft->delete;
+        }
+    }
+    search($request);
+}
+
 sub list_drafts {
     my ($request) = @_;
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
+    my $callback = 'drafts.pl?action=list_drafts';
+    for (qw(type reference amount_gy amount_lt)){
+        if (defined $draft->{$_}){
+            $callback .= "&$_=$draft->{$_}";
+        }
+    }
     my @search_results = $draft->search;
     $draft->{script} = "drafts.pl";
-
+    $draft->{callback} = $draft->escape(string => $callback);
     my @columns = 
         qw(select id transdate reference description amount);
 
@@ -83,7 +113,8 @@ sub list_drafts {
 				),
             reference => { 
                   text => $result->{reference},
-                  href => "$request->{type}.pl?action=edit&id=$result->{id}",
+                  href => "$request->{type}.pl?action=edit&id=$result->{id}" .
+				"&callback=$draft->{callback}",
             },
             description => $result->{description},
             transdate => $result->{transdate},
