@@ -4,7 +4,7 @@
 package LedgerSMB::Reconciliation::CSV;
 
 use base qw/LedgerSMB/;
-use Datetime;
+use DateTime;
 
 sub load_file {
     
@@ -16,7 +16,7 @@ sub load_file {
         local $/; # I think this is the right way to outrageously cheat
         open(FH,$filename);
         $contents = <FH>;
-    }
+    };
     return $contents;
 }
 
@@ -30,8 +30,8 @@ sub process {
         # Unpack for the format it is inexplicably in
         ($accno,
          $checkno,
-         $issuedate
-         $amount
+         $issuedate,
+         $amount,
          $cleared,
          $last_three) = unpack("A10A10A6A10A6A3",$line);
          
@@ -50,9 +50,9 @@ sub process {
         # First check the account number.
         # According to the docs I have, it's all numbers.
         
-        
+       ; 
     }
-    
+   
     return;
 }
 

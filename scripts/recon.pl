@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 =pod
 
 =head1 NAME
@@ -17,10 +18,10 @@ interfacing with the Core Logic and database layers.
 # NOTE:  This is a first draft modification to use the current parameter type.
 # It will certainly need some fine tuning on my part.  Chris
 
-package LedgerSMB::Scripts::Reconciliation;
+package LedgerSMB::Scripts::recon;
 
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Reconciliation;
+use LedgerSMB::Reconciliation;
 
 =pod
 
@@ -390,7 +391,7 @@ sub pending {
     if ($request->type() eq "POST") {
         return $template->render(
             {
-                pending=>$recon->get_pending($request->{year}."-".$request->{month});
+                pending=>$recon->get_pending($request->{year}."-".$request->{month})
             }
         );
     } 
