@@ -575,9 +575,9 @@ sub call_procedure {
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
     if (scalar @call_args){
-        $sth->execute(@call_args) || $self->error($self->{dbh}->errstr);
+        $sth->execute(@call_args) || $self->dberror($self->{dbh}->errstr);
     } else {
-        $sth->execute() || $self->error($self->{dbh}->errstr . ':' . $query);
+        $sth->execute() || $self->dberror($self->{dbh}->errstr . ':' . $query);
     }
    
     my @types = @{$sth->{TYPE}};
@@ -745,6 +745,11 @@ sub _db_init {
 # Deprecated, only here for old code
 sub dberror{
    my $self = shift @_;
+   if ($self->{dbh}->state eq '42501'){
+      $_[0] = $self->{_locale}->text('Access Denied'); 
+   }
+   print STDERR "Logging SQL State ".$self->{dbh}->state.", error ".
+           $self->{dbh}->err . ", string " .$self->{dbh}->errstr . "\n";
    $self->error(@_);
 }
 
