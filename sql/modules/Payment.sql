@@ -252,8 +252,6 @@ BEGIN
 			 AND p.due <> 0
 		         AND a.amount <> a.paid 
 			 AND NOT a.on_hold
-			 AND (in_meta_number IS NULL 
-				OR in_meta_number = c.meta_number)
 			 AND NOT (t.locked_by IS NOT NULL AND t.locked_by IN 
 				(select "session_id" FROM "session"
 				WHERE users_id IN 
@@ -266,9 +264,11 @@ BEGIN
 		                                               = in_ar_ap_accno)
 		                    ))
 		GROUP BY c.id, e.name, c.meta_number, c.threshold
-		  HAVING sum(p.due) > c.threshold
+		  HAVING (in_meta_number IS NULL 
+				OR in_meta_number = c.meta_number) AND 
+			(sum(p.due) > c.threshold
 			OR sum(case when a.batch_id = in_batch_id then 1
-                                  else 0 END) > 0
+                                  else 0 END) > 0)
 	LOOP
 		RETURN NEXT payment_item;
 	END LOOP;
