@@ -10,7 +10,7 @@ Defines the controller functions and workflow logic for payment processing.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007, David Mora R and Christian Ceballos B.
+Portions Copyright (c) 2007, David Mora R and Christian Ceballos B.
 
 Licensed to the public under the terms of the GNU GPL version 2 or later.
 
@@ -48,6 +48,7 @@ Original copyright notice below.
 
 package LedgerSMB::Scripts::payment;
 use LedgerSMB::Template;
+use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use Error::Simple;
@@ -81,9 +82,6 @@ sub payments {
         format   => 'HTML', 
     );
     $template->render($payment);
-}
-
-sub print {
 }
 
 sub get_search_criteria {
@@ -265,6 +263,19 @@ sub print {
 
     my $template;
 
+    # To be committed tonight separately -- CT
+    #
+    #if ($payment->{batch_id}){
+    #    my $batch = LedgerSMB::Batch->new(
+    #                     {base => $payment,
+    #                     copy  => 'base' }
+    #    );
+    #    $batch->{id} = $payment->{batch_id};
+    #    $batch->get;
+    #    $payment->{batch_description} = $batch->{description};
+    #    $payment->{batch_control_code} = $batch->{control_code};
+    #}
+
     if ($payment->{multiple}){
         $payment->{checks} = [];
         print "Multiple checks printing";
@@ -280,6 +291,17 @@ sub print {
             $check->{amount} = $check->parse_amount(amount => '0');
             $check->{invoices} = [];
             $check->{source} = $payment->{"source_$id"};
+
+            my $inv_count; 
+
+            if ($LedgerSMB::Sysconfig::check_max_invoices > 
+                           $payment->{"invoice_count_$id"})
+            {
+                $inv_count = $payment->{"invoice_count_$id"};
+            } else {
+                $inv_count = $LedgerSMB::Sysconfig::check_max_invoices;
+            }
+
             for my $inv (1 .. $payment->{"invoice_count_$id"}){
 		print STDERR "Invoice $inv of " .$payment->{"invoice_count_$id"} . "\n";
                 my $invhash = {};
