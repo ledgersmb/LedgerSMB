@@ -302,7 +302,7 @@ sub print {
                 $inv_count = $LedgerSMB::Sysconfig::check_max_invoices;
             }
 
-            for my $inv (1 .. $payment->{"invoice_count_$id"}){
+            for my $inv (1 .. $inv_count){
 		print STDERR "Invoice $inv of " .$payment->{"invoice_count_$id"} . "\n";
                 my $invhash = {};
                 my $inv_id = $payment->{"invoice_${id}_$inv"};
