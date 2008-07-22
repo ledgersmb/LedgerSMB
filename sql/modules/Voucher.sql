@@ -310,13 +310,16 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION batch_create(
-in_batch_number text, in_description text, in_batch_class text) RETURNS int AS
+in_batch_number text, in_description text, in_batch_class text, 
+in_batch_date date) 
+RETURNS int AS
 $$
 BEGIN
 	INSERT INTO 
-		batch (batch_class_id, description, control_code, created_by)
+		batch (batch_class_id, default_date, description, control_code,
+			created_by)
 	VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
-		in_description, in_batch_number, 
+		in_batch_date, in_description, in_batch_number, 
 			(select entity_id FROM users WHERE username = session_user));
 
 	return currval('batch_id_seq');

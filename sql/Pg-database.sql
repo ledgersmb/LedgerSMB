@@ -391,6 +391,7 @@ CREATE TABLE batch (
   batch_class_id integer references batch_class(id) not null,
   control_code text,
   description text,
+  default_date date not null,
   approved_on date default null,
   approved_by int references entity_employee(entity_id),
   created_by int references entity_employee(entity_id),

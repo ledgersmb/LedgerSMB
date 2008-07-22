@@ -370,11 +370,16 @@ sub format_amount {
 
     # Based on SQL-Ledger's Form::format_amount
     my $self     = shift @_;
-    my %args     = @_;
+    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $myconfig = $args{user} || $self->{_user};
     my $amount   = $args{amount};
     my $places   = $args{precision};
     my $dash     = $args{neg_format};
+    my $format   = $args{format};
+
+    if (!defined $format){
+       $format = $myconfig->{numberformat}
+    }
 
     my $negative;
     if ($amount) {
@@ -397,7 +402,7 @@ sub format_amount {
 
     if ($amount) {
 
-        if ( $myconfig->{numberformat} ) {
+        if ( $format ) {
 
             my ( $whole, $dec ) = split /\./, "$amount";
             $amount = join '', reverse split //, $whole;
@@ -407,35 +412,35 @@ sub format_amount {
                 $dec = substr( $dec, 0, $places );
             }
 
-            if ( $myconfig->{numberformat} eq '1,000.00' ) {
+            if ( $format eq '1,000.00' ) {
                 $amount =~ s/\d{3,}?/$&,/g;
                 $amount =~ s/,$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
             } 
-	    elsif ( $myconfig->{numberformat} eq '1 000.00' ) {
+	    elsif ( $format eq '1 000.00' ) {
                 $amount =~ s/\d{3,}?/$& /g;
                 $amount =~ s/\s$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
             } 
-	    elsif ( $myconfig->{numberformat} eq "1'000.00" ) {
+	    elsif ( $format eq "1'000.00" ) {
                 $amount =~ s/\d{3,}?/$&'/g;
                 $amount =~ s/'$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= "\.$dec" if ( $dec ne "" );
             } 
-	    elsif ( $myconfig->{numberformat} eq '1.000,00' ) {
+	    elsif ( $format eq '1.000,00' ) {
                 $amount =~ s/\d{3,}?/$&./g;
                 $amount =~ s/\.$//;
                 $amount = join '', reverse split //, $amount;
                 $amount .= ",$dec" if ( $dec ne "" );
             } 
-	    elsif ( $myconfig->{numberformat} eq '1000,00' ) {
+	    elsif ( $format eq '1000,00' ) {
                 $amount = "$whole";
                 $amount .= ",$dec" if ( $dec ne "" );
             } 
-	    elsif ( $myconfig->{numberformat} eq '1000.00' ) {
+	    elsif ( $format eq '1000.00' ) {
                 $amount = "$whole";
                 $amount .= ".$dec" if ( $dec ne "" );
             }
@@ -456,7 +461,7 @@ sub format_amount {
 
         if ( $dash eq "0" && $places ) {
 
-            if ( $myconfig->{numberformat} =~ /0,00$/ ) {
+            if ( $format =~ /0,00$/ ) {
                 $amount = "0" . "," . "0" x $places;
             }
             else {

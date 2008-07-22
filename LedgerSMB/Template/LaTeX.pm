@@ -70,7 +70,9 @@ sub preprocess {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess($_);
 		}
-	} elsif (!$type or $type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
+	} elsif (!$type or $type eq 'SCALAR' or $type eq 'Math::BigInt::GMP'
+		or $type eq 'CODE'
+	) {
 		if ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 			$vars = $$rawvars;
 		} else {
@@ -82,6 +84,7 @@ sub preprocess {
 			$vars =~ s/"(.*)"/``$1''/gs;
 		}
 	} else {
+		print STDERR "Type: $type\n";
 		for ( keys %{$rawvars} ) {
 			$vars->{$_} = preprocess($rawvars->{$_});
 		}

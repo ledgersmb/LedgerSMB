@@ -89,6 +89,10 @@ sub get_metadata {
     for my $ref(@{$self->{cash_accounts}}){
         $ref->{text} = "$ref->{accno}--$ref->{description}";
     }
+    if ($self->{batch_id} && !defined $self->{batch_date}){
+        my ($ref) = $self->exec_method(funcname => 'voucher_get_batch');
+        $self->{batch_date} = $ref->{default_date};
+    }
 }
 
 sub search {

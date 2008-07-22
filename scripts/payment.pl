@@ -256,6 +256,7 @@ sub post_payments_bulk {
 
 sub print {
     use LedgerSMB::DBObject::Company;
+    use LedgerSMB::Batch;
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->{company} = $payment->{_user}->{company};
@@ -263,18 +264,18 @@ sub print {
 
     my $template;
 
-    # To be committed tonight separately -- CT
-    #
-    #if ($payment->{batch_id}){
-    #    my $batch = LedgerSMB::Batch->new(
-    #                     {base => $payment,
-    #                     copy  => 'base' }
-    #    );
-    #    $batch->{id} = $payment->{batch_id};
-    #    $batch->get;
-    #    $payment->{batch_description} = $batch->{description};
-    #    $payment->{batch_control_code} = $batch->{control_code};
-    #}
+    if ($payment->{batch_id}){
+        my $batch = LedgerSMB::Batch->new(
+                         {base => $payment,
+                         copy  => 'base' }
+        );
+        $batch->{id} = $payment->{batch_id};
+        $batch->get;
+        $payment->{batch_description} = $batch->{description};
+        $payment->{batch_control_code} = $batch->{control_code};
+    }
+
+    $payment->{format_amount} = sub {return $payment->format_amount(@_); };
 
     if ($payment->{multiple}){
         $payment->{checks} = [];
@@ -323,9 +324,9 @@ sub print {
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
             $check->{text_amount} = $payment->text_amount($amt);
-            $check->{amount} = $check->format_amount(amount => $check->{amount});
+            $check->{amount} = $check->format_amount(amount => $check->{amount},
+                                                     format => '1000.00');
             $check->{decimal} = $check->format_amount(amount => ($check->{amount} - $amt) * 100);
-            print STDERR "amount = $check->{amount}, texamount = $check->{textamount}\n";
             push @{$payment->{checks}}, $check;
         }
         $template = LedgerSMB::Template->new(

@@ -71,4 +71,10 @@ sub list_vouchers {
     return @{$self->{vouchers}};
 }
 
+sub get {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method(funcname => 'voucher_get_batch');
+    $self->merge($ref);
+}
+
 1;

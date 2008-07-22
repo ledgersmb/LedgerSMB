@@ -373,9 +373,9 @@ sub post_transaction {
             $form->dberror($query);
         if (!$form->{approved} && $form->{batch_id}){
            if ($form->{arap} eq 'ar'){
-               $batch_class = 'receivable';
+               $batch_class = 'ar';
            } else {
-               $batch_class = 'payable';
+               $batch_class = 'ap';
            }
            $query = qq| 
 		INSERT INTO voucher (batch_id, trans_id, batch_class)
