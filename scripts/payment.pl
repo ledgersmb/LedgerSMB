@@ -74,6 +74,9 @@ sub payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_metadata();
+    if (!defined $payment->{batch_date}){
+        $payment->error("No Batch Date!");
+    }
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
