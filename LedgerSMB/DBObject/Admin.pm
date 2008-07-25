@@ -112,9 +112,10 @@ sub save_roles {
         
         # These roles are were ALL checked on the page, so they're the active ones.
         
-        if ($active_roles{$role} && $self->{$role}) {
+        if ( $active_roles{$role} && $self->{$role} ) {
             
             # do nothing.
+            ;
         }
         elsif ($active_roles{$role} && !($self->{$role} )) {
             

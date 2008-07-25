@@ -401,6 +401,26 @@ sub pending {
     }
 }
 
+sub __default {
+    
+    my ($class, $request) = @_;
+    
+    my $recon = LedgerSMB::DBObject::Reconciliation->new($request, copy=>'all');
+    my $template;
+    
+    $template = LedgerSMB::Template->new(
+        user => $user,
+        template => 'reconciliation/list.html',
+        language => $user->{language},
+        format=>'html'
+    );
+    return $template->render(
+        {
+            reports=>$recon->get_report_list()
+        }
+    );
+}
+
 # eval { do "scripts/custom/Reconciliation.pl" };
 1;
 

@@ -85,7 +85,7 @@ your software.
 
 =cut
 
-package LedgerSMB::Reconciliation;
+package LedgerSMB::DBObject::Reconciliation;
 
 use base qw(LedgerSMB::DBObject);
 use LedgerSMB::DBObject;
@@ -237,5 +237,13 @@ sub get_pending {
     );
 }
 
-
+sub get_report_list {
+    
+    my $self = shift @_;
+    
+    return $self->exec_method(
+        funcname=>'reconciliation__report_list',
+        args=>[$self->{account},$self->{report}]
+    );
+}
 1;

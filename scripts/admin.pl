@@ -199,7 +199,7 @@ sub new_group {
     my ($class, $request) = @_;
     
     my $template = LedgerSMB::Template->new( user=>$user, 
-        template=>'Admin/new_group', language=>$user->{language},
+        template=>'Admin/new_group.html', language=>$user->{language},
         format=>'HTML', path=>'UI');
     
     $template->render();
@@ -207,7 +207,7 @@ sub new_group {
 
 sub cancel {
         
-    __default(@_);
+    &mainpage(@_);
 }
 
 sub __default {
@@ -215,14 +215,32 @@ sub __default {
     my ($request) = @_;
     
     my $template;
+    
+    
+}
+
+sub mainpage {
+    
+    my ($request) = @_;
+    
+    my $template;
+    
+    # We need to test for a login here first.
+    
+    
+    
     my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'all');
     
-    $user->get_all_users();
+    my $ret = $user->get_all_users();
     
-    $template = LedgerSMB::Template->new( user=>$user, 
-            template=>'Admin/main', language=>$user->{language},
-            format=>'HTML', path=>'UI');
-    $template->render($user);
+    $template = LedgerSMB::Template->new( 
+        user=>$user, 
+        template=>'Admin/main.html', 
+        language=>$user->{language},
+        format=>'HTML', 
+        path=>'UI'
+    );
+    $template->render({users=>$ret});
 }
 
 #eval { do "scripts/custom/admin.pl"};
