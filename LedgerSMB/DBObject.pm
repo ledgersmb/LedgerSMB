@@ -76,6 +76,7 @@ sub new {
         $self->merge($base, keys => ['dbh', '_roles', '_user', '_locale']);
     }
     elsif (lc($mode) eq 'list'){
+        $self->merge($base, keys => ['dbh', '_roles', '_user', '_locale']);
         $self->merge($base, keys => \@mergelist);
     }
     else {
