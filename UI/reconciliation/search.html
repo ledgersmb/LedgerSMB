@@ -1,0 +1,25 @@
+<form name="reconciliation__search" method="POST" action="recon.pl">
+    <input type="hidden" name="action" value="search">
+    <div>
+    Date:<br/>
+    <input type="input" size="15" name="date_begin" alt="<?lsmb date_format ?>"/> to 
+        <input type="input" size="15" name="date_end" alt="<?lsmb date_format ?>"/><br/>
+    </div>
+    
+    <div>
+        Account:<br/>
+        <input type="input" size="15" name="account" alt="Chart account #"/>
+    </div>
+    
+    <div>
+        Status:<br/>
+        <select name="status">
+            
+            <option value="1">Approved</option>
+            <option value="0">Unapproved</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Search!">
+    </div>
+</form>
