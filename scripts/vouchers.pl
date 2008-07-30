@@ -15,6 +15,24 @@ use LedgerSMB::Voucher;
 use LedgerSMB::Template;
 use strict;
 
+# custom_batch_types hash provides hooks for handling additional batch types
+# beyond the default types.  Entries can be added in a custom file.
+# Each entry is a hash, keyed by name, with the following keys:
+#  * map_to int (maps to another type, not needed for new types in batch_class 
+#                table)
+#  * select_method (maps to the selection stored proc)
+#
+#  for example:
+#  $custom_batch_types->{ap_sample} = 
+#      {map_to       => 1, 
+#      select_method => 'custom_sample_ap_select'};
+#
+#      --CT
+
+our $custom_batch_types = {};
+
+eval { do "scripts/custom/vouchers.pl"};
+
 sub create_batch {
     my ($request) = @_;
     $request->{hidden} = [
@@ -74,14 +92,14 @@ sub add_vouchers {
                     function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 1;
-				LedgerSMB::Scripts::payment::get_search_criteria($request);
+				LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
 				}},
         receipt_reversal => {
                       script => 'scripts/payment.pl',
                     function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 2;
-				LedgerSMB::Scripts::payment::get_search_criteria($request);
+				LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
 				}},
      
 	
@@ -125,7 +143,7 @@ sub add_vouchers {
 sub search_batch {
     my ($request) = @_;
     my $batch_request = LedgerSMB::Batch->new(base => $request);
-    $batch_request->get_search_criteria();
+    $batch_request->get_search_criteria($custom_batch_types);
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -139,7 +157,7 @@ sub search_batch {
 sub list_batches {
     my ($request) = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
-    my @search_results = $batch->get_search_results;
+    my @search_results = $batch->get_search_results({custom_types => $custom_batch_types});
     $batch->{script} = "vouchers.pl";
 
     my @columns = 

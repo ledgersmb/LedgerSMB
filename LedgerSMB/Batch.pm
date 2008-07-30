@@ -20,9 +20,15 @@ sub delete_voucher {
 
 sub get_search_criteria {
     $self = shift @_;
+    my ($custom_types) = @_;
     @{$self->{batch_classes}} = $self->exec_method(
          funcname => 'batch_list_classes'
     );
+    for (keys %$custom_types){
+        if ($custom_types->{$_}->{map_to}){
+            push @{$self->{batch_classes}}, {id => $_, class => $_};
+        }
+    }
 
     @{$self->{batch_users}} = $self->exec_method(
          funcname => 'batch_get_users'
@@ -36,6 +42,12 @@ sub get_search_results {
         $search_proc = "batch_search_mini";
     } else {
         $search_proc = "batch_search";
+    }
+    if ($args->{custom_types}->{$self->{class_id}}->{select_method}){
+        $search_proc 
+             = $args->{custom_types}->{$self->{class_id}}->{select_method}; 
+    } elsif ($self->{class_id} =~ /[\D]/){
+          $self->error("Invalid Batch Type");
     }
     @{$self->{search_results}} = $self->exec_method(funcname => $search_proc);
     return @{$self->{search_results}};
