@@ -37,8 +37,10 @@ sub new_user {
         );
     } else {
     
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Admin/edit_user', language => $user->{language}, 
+        my $template = LedgerSMB::Template->new( 
+            user => $user, 
+    	    template => 'Admin/edit_user',
+    	    language => $user->{language}, 
             format => 'HTML', path=>'UI');
     
         $template->render(
@@ -212,11 +214,7 @@ sub cancel {
 
 sub __default {
     
-    my ($request) = @_;
-    
-    my $template;
-    
-    
+    &mainpage(@_);
 }
 
 sub mainpage {
