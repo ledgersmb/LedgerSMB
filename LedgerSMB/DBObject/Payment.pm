@@ -22,6 +22,7 @@ package LedgerSMB::DBObject::Payment;
 use base qw(LedgerSMB::DBObject);
 use strict;
 use Math::BigFloat lib => 'GMP';
+use Data::Dumper;
 our $VERSION = '0.1.0';
 
 =head1 METHODS
@@ -247,6 +248,7 @@ sub get_all_contact_invoices {
             }
             push(@$processed_invoices, $new_invoice);
         }
+        $contact->{invoice} = sort { $a->{invoice_date} cmp $b->{invoice_date} } @{ $processed_invoices };
         $contact->{invoice} = $processed_invoices;
     }
     return @{$self->{contacts}};
@@ -431,33 +433,36 @@ sub get_payment_detail_data {
 
     my $source_inc;
     my $source_src;
-    if (defined ($self->{source_start})){
+    if (defined ($self->{source_start})) {
         $self->{source_start} =~ /(\d*)\D*$/;
-	$source_src = $1;
-	if ($source_src) {
-		$source_inc = $source_src;
-	} else {
-		$source_inc = 0;
-	}
+	    $source_src = $1;
+    	if ($source_src) {
+    		$source_inc = $source_src;
+    	} else {
+    		$source_inc = 0;
+    	}
     }
     my $source_length = length($source_inc);
    
     @{$self->{contact_invoices}} = $self->exec_method(
 		funcname => 'payment_get_all_contact_invoices');
-    for my $inv (@{$self->{contact_invoices}}){
-        if (defined $self->{source_start}){
-		my $source = $self->{source_start};
-		if (length($source_inc) < $source_length){
-                    $source_inc = sprintf('%0*s', $source_length, $source_inc);
-                }
-		$source =~ s/$source_src(\D*)$/$source_inc$1/;
-		++ $source_inc;
-		$inv->{source} = $source;
-	}
-	my $tmp_invoices = $inv->{invoices};
+    for my $inv (@{$self->{contact_invoices}}) {
+        if (defined $self->{source_start}) {
+		    my $source = $self->{source_start};
+    		if (length($source_inc) < $source_length) {
+                $source_inc = sprintf('%0*s', $source_length, $source_inc);
+            }
+    		$source =~ s/$source_src(\D*)$/$source_inc$1/;
+    		++ $source_inc;
+    		$inv->{source} = $source;
+    	}
+	    my $tmp_invoices = $inv->{invoices};
         $inv->{invoices} = [];
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
+#        $self->error(Dumper($inv->{invoices}));
+        @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
     }
+    
     $self->{dbh}->commit; # Commit locks
 }    
 
