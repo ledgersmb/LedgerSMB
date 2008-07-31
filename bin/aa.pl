@@ -887,7 +887,7 @@ sub form_footer {
             'delete' =>
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
         );
-        if (!$form->{approved}){
+        if (!$form->{approved} && !$form->{batch_id}){
            $button{approve} = { ndx => 3, key => 'O', value => $locale->text('Post') };
            delete $button{post_as_new};
            delete $button{print_and_post_as_new};
@@ -895,13 +895,11 @@ sub form_footer {
            delete $button{print_and_post};
         }
 
-        if ($form->{separate_duties}){
+        if ($form->{separate_duties} || $form->{batch_id}){
             $button{post}->{value} = $locale->text('Save');
             $form->hide_form('separate_duties');
         }
-
         if ( $form->{id} ) {
-
             if ( $form->{locked} || ( $transdate && $transdate <= $closedto ) )
             {
                 for ( "post", "print_and_post", "delete" ) {
@@ -923,7 +921,7 @@ sub form_footer {
             }
             delete $button{"print_and_post"} if !${LedgerSMB::Sysconfig::latex};
 
-            if ( $transdate && $transdate <= $closedto ) {
+            if ( $transdate && ($transdate <= $closedto) ) {
                 for ( "post", "print_and_post" ) { delete $button{$_} }
             }
         }

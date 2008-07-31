@@ -72,10 +72,10 @@ sub add_vouchers {
     my $batch = LedgerSMB::Batch->new({base => $request});
     our $vouchers_dispatch = 
     {
-        payable    => {script => 'bin/ap.pl', function => sub {add()}},
-        receivable => {script => 'bin/ar.pl', function => sub {add()}},
+        ap         => {script => 'bin/ap.pl', function => sub {add()}},
+        ar         => {script => 'bin/ar.pl', function => sub {add()}},
         gl         => {script => 'bin/gl.pl', function => sub {add()}},
-        receipt   => {script => 'scripts/payment.pl', 
+        receipt    => {script => 'scripts/payment.pl', 
 	             function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 2;
@@ -124,6 +124,8 @@ sub add_vouchers {
     my $script = $vouchers_dispatch->{$request->{batch_type}}{script};
     $form->{script} = $script;
     $form->{script} =~ s|.*/||;
+    delete $form->{id};
+    delete $request->{id};
     if ($script =~ /^bin/){
 
         # Note that the line below is generally considered incredibly bad form. 
