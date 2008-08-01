@@ -353,6 +353,10 @@ sub print {
 
 }
 
+sub update_payments {
+    display_payments(@_);
+}
+
 sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});

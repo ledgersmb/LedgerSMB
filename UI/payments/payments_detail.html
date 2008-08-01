@@ -168,8 +168,9 @@
         <th class="payment"><?lsmb text('Payment') ?></th>
         <th class="payment"><?lsmb text('Details') ?></th>
     </tr>
-    <?lsmb rc = 1 ?><?lsmb count = 0 ?>
+    <?lsmb rc = 1 ?><?lsmb count = 0 ?><?lsmb grand_total = 0 ?>
     <?lsmb FOREACH r = contact_invoices ?>
+    <?lsmb contact_total = 0 ?>
     <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
     <tr class="listrow<?lsmb rc ?>">
        <td class="account_number" rowspan="2" >
@@ -178,11 +179,16 @@
 			name = "contact_$count"
 			value = r.contact_id
 		} ?>
+		<?lsmb IF action == "update_payments" -?>
+			<?lsmb IF !${"id_$r.contact_id"} -?>
+				<?lsmb r.unselected = 1 -?>
+			<?lsmb END # IF !${"id_$r.contact_id"} -?>
+		<?lsmb END # IF action ... -?>
 		<?lsmb INCLUDE input element_data = {
 			type = "checkbox"
 			name = "id_$r.contact_id"
 			value = r.contact_id
-			checked = (r.unselected) ? "" : "checked" 
+			checked = (r.unselected) ? undef : "checked" 
 			
 		} ?>
 		<?lsmb r.account_number ?>
@@ -198,20 +204,20 @@
 		name = "paid_$r.contact_id"
 		value = "some"
 		label = text('Some')
-		checked = ("${paid_$r.contact_id}" == 'some') ? checked : ""
+		checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
 		type = "radio"
 	 }	?>
 		<?lsmb INCLUDE input element_data = {
 		name = "paid_$r.contact_id"
 		value = "all"
 		label = text('All')
-		checked = ("${paid_$r.contact_id}" != 'some') ? checked : ""
+		checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 		type = "radio"
 	 }	?>
 	</td>
 	<td rowspan = 2><?lsmb INCLUDE input element_data = {
 		name = "source_$r.contact_id"
-		value = r.source 
+		value = (${"source_$r.contact_id"}) ? ${"source_$r.contact_id"} : r.source 
 		type = "text"
 		size = "20" 
 		label = text('Source')
@@ -267,6 +273,7 @@
 				type = "text"
 				class = "monetary"
 			} ?>
+			<?lsmb contact_total = contact_total + ${"payment_$r.contact_id_$i.0"} ?>
 			<?lsmb INCLUDE input element_data = {
 				type = "hidden"
 				name = "invoice_${r.contact_id}_$icount"
@@ -285,9 +292,40 @@
 			name = "invoice_count_${r.contact_id}"
 			value = icount
 		} ?>
+		<?lsmb IF !r.unselected;
+			IF (${"paid_$r.contact_id"} == 'all');
+				grand_total = grand_total + r.total_due;
+			ELSIF (${"paid_$r.contact_id"} == 'some');
+				grand_total = grand_total + contact_total;
+			ELSE;
+				contact_total = 'error';
+			END; # IF (paid...)
+		END # IF !r.unselected) ?>
+		<tr class="subtotal">
+			<td colspan="5" class="total_label">
+				<?lsmb text('Contact Total (if paying "some")') ?>
+			</td>
+			<td><span id='<?lsmb ${"contact_total_$r.id"} ?>'>
+			<?lsmb INCLUDE format_money number= contact_total ?>
+			</span><span class="currency">
+				<?lsmb currency ?></span>
+			</td>
+		</tr>
 	</table>
     </tr>
    <?lsmb END # foreach r ?>
+    <tr class="subtotal">
+        <td>&nbsp;</td>
+        <td class="total_label"><?lsmb text('Grand Total') ?></td>
+	<td>
+		<span id="grand_total">
+			<?lsmb INCLUDE format_money number = grand_total ?>
+		</span>
+		<span class="currency">
+			<?lsmb currency ?>
+		</span>
+	</td>
+   </tr>
     </table>
     <?lsmb INCLUDE input element_data = {
 	type = "hidden"
@@ -299,6 +337,12 @@
 		type = "hidden"
 		value = '1'
     } ?>
+    <?lsmb INCLUDE button element_data = {
+	text = text('Update'),
+	value = 'update_payments'
+	class = "submit"
+	name = 'action'
+	} ?>
     <?lsmb INCLUDE button element_data = {
 	text = text((batch_id) ? 'Save' : 'Post'),
 	value = 'post_payments_bulk'

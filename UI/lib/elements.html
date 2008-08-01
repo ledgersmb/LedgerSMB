@@ -220,7 +220,7 @@
   ?>
   <?lsmb FOREACH element_attribute IN all_keys  # Loop through each allowed attribute. ?>
     <?lsmb 
-      IF attribute_data.defined(element_attribute);  # Add the attribute to the element if it's been set.
+      IF attribute_data.defined(element_attribute) and (attribute_data.${element_attribute} != "");  # Add the attribute to the element if it's been set.
         all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_data.${element_attribute} _ '"';
       ELSIF attribute_defaults.defined(element_attribute);  # Fall back to default value if one is supplied.
         all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_defaults.${element_attribute} _ '"';
