@@ -966,7 +966,7 @@ Converts $date from the format $myconfig->{dateformat} to the format 'yyyymmdd'.
 If the year extracted is only two-digits, the year given is assumed to be in the
 range 2000-2099.
 
-If $date does not contain any digits, datetonum does nothing.
+If $date does not contain any non-digits, datetonum does nothing.
 
 $picture is ignored.
 
@@ -975,6 +975,11 @@ $picture is ignored.
 sub datetonum {
 
     my ( $self, $myconfig, $date, $picture ) = @_;
+
+    if ($date =~ /^\d{4}-\d{2}-\d{2}$/){
+        $date =~ s/-//;
+        return $date;
+    }
 
     if ( $date && $date =~ /\D/ ) {
 
