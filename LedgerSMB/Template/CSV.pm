@@ -62,7 +62,8 @@ sub preprocess {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess( $_ );
 		}
-	} elsif ( !$type or $type eq 'SCALAR' ) { # Scalar
+	} elsif ( !$type or $type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') { 
+			# Scalars or GMP objects (which are SCALAR refs) --CT
 		if ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 			$vars = $$rawvars;
 		} else {
