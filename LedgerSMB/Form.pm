@@ -977,7 +977,7 @@ sub datetonum {
     my ( $self, $myconfig, $date, $picture ) = @_;
 
     if ($date =~ /^\d{4}-\d{2}-\d{2}$/){
-        $date =~ s/-//;
+        $date =~ s/-//g;
         return $date;
     }
 
@@ -1003,7 +1003,6 @@ sub datetonum {
 
         $dd = substr( "0$dd", -2 );
         $mm = substr( "0$mm", -2 );
-
         $date = "$yy$mm$dd";
     }
 
