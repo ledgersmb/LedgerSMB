@@ -102,6 +102,20 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text)
+RETURNS INT AS
+$$
+DECLARE out_id int;
+BEGIN
+	-- TODO, change this to create vector too
+	INSERT INTO eca_note (ref_key, note_class, note, vector)
+	VALUES (in_credit_id, 3, in_note, '');
+
+	SELECT currval('note_id_seq') INTO out_id;
+	RETURN out_id;
+END;
+$$ LANGUAGE PLPGSQL;
+
 CREATE OR REPLACE FUNCTION entity_credit_get_id_by_meta_number
 (in_meta_number text, in_account_class int) 
 returns int AS
@@ -170,7 +184,9 @@ CREATE TYPE entity_credit_retrieve AS (
         enddate date,
         ar_ap_account_id int,
         cash_account_id int,
-        threshold numeric
+        threshold numeric,
+	control_code text,
+	credit_id int
 );
 
 COMMENT ON TYPE entity_credit_search_return IS
@@ -203,7 +219,7 @@ BEGIN
 			ec.meta_number, ec.business_id, ec.language_code, 
 			ec.pricegroup_id, ec.curr, ec.startdate, 
 			ec.enddate, ec.ar_ap_account_id, ec.cash_account_id, 
-			c.tax_id, ec.threshold
+			ec.threshold, e.control_code, ec.id
 		FROM company c
 		JOIN entity e ON (c.entity_id = e.id)
 		JOIN entity_credit_account ec ON (c.entity_id = ec.entity_id)
@@ -251,34 +267,39 @@ BEGIN
 		a.city, a.state, a.mail_code, cc.name
 	into out_var
 	FROM company c
-	JOIN company_to_location cl ON (c.id = cl.company_id)
+	JOIN company eca ON (eca.entity_id = c.entity_id)
+	JOIN company_to_location cl ON (eca.id = cl.credit_id)
 	JOIN location a ON (a.id = cl.location_id)
 	JOIN country cc ON (cc.id = a.country_id)
-	WHERE c.entity_id = (select entity_id 
-			from entity_credit_account where id = in_id)
-		AND a.id = (SELECT min(location_id) from company_to_location
-			where company_id = c.id and location_class = 1);
+	WHERE eca.id = in_id AND location_class = 1;
+
 	RETURN out_var;
 END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION company_save (
-    in_id int, in_entity_class int,
+    in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text
 ) RETURNS INT AS $$
 DECLARE t_entity_id INT;
 	t_company_id INT;
+	t_control_code TEXT;
 BEGIN
 	t_company_id := in_id;
+
+	IF in_control_code IS NULL THEN
+		t_control_code := setting_increment('company_control');
+	ELSE
+		t_control_code := in_control_code;
+	END IF;
 
 	IF in_entity_id IS NULL THEN
 		IF in_id IS NULL THEN
 			RAISE NOTICE 'in_id is null';
 			SELECT id INTO t_company_id FROM company
-			WHERE legal_name = in_name AND 
-				(tax_id = in_tax_id OR 
-					(tax_id IS NULL AND in_tax_id IS NULL));
+			WHERE entity_id = (SELECT id FROM entity WHERE 
+				control_code = t_control_code);
 		END IF;
 		IF t_company_id IS NOT NULL THEN
 			SELECT entity_id INTO t_entity_id FROM company
@@ -289,8 +310,8 @@ BEGIN
 		t_entity_id := in_entity_id;
 	END IF;
 	IF t_entity_id IS NULL THEN
-		INSERT INTO entity (name, entity_class)
-		VALUES (in_name, in_entity_class);
+		INSERT INTO entity (name, entity_class, control_code)
+		VALUES (in_name, in_entity_class, t_control_code);
 		t_entity_id := currval('entity_id_seq');
 	END IF;
 
@@ -404,10 +425,9 @@ BEGIN
 			l.state, l.mail_code, c.name, lc.class
 		FROM location l
 		JOIN company_to_location ctl ON (ctl.location_id = l.id)
-		JOIN company cp ON (ctl.company_id = cp.id)
 		JOIN location_class lc ON (ctl.location_class = lc.id)
 		JOIN country c ON (c.id = l.country_id)
-		WHERE cp.entity_id = in_entity_id
+		WHERE ctl.company_id = (select id from company where entity_id = in_entity_id)
 		ORDER BY lc.id, l.id, c.name
 	LOOP
 		RETURN NEXT out_row;
@@ -437,7 +457,6 @@ BEGIN
 	END LOOP;
 END;
 $$ language plpgsql;
-			
 
 CREATE OR REPLACE FUNCTION company__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
@@ -449,6 +468,26 @@ BEGIN
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION entity__save_bank_account
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text)
+RETURNS int AS
+$$
+DECLARE out_id int;
+BEGIN
+	INSERT INTO entity_bank_account(entity_id, bic, iban)
+	VALUES(in_entity_id, in_bic, in_iban);
+
+	SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+
+	IF in_credit_id IS NOT NULL THEN
+		UPDATE entity_credit_account SET bank_account = out_id
+		WHERE id = in_credit_id;
+	END IF;
+
+	RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -484,6 +523,7 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE TYPE entity_note_list AS (
 	id int,
+	note_class int,
 	note text
 );
 
@@ -496,12 +536,37 @@ BEGIN
 		SELECT *
 		FROM entity_note
 		WHERE ref_key = in_entity_id
+		ORDER BY created
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
 		
+CREATE OR REPLACE FUNCTION eca__list_notes(in_credit_id int) 
+RETURNS SETOF note AS 
+$$
+DECLARE out_row record;
+	t_entity_id int;
+BEGIN
+	SELECT entity_id INTO t_entity_id
+	FROM entity_credit_account
+	WHERE id = in_credit_id;
+
+	FOR out_row IN
+		SELECT *
+		FROM note
+		WHERE (note_class = 3 and ref_key = in_credit_id) or
+			(note_class = 1 and ref_key = t_entity_id)
+		ORDER BY created
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+REVOKE EXECUTE ON FUNCTION eca__list_notes(INT) FROM public;
+
 CREATE OR REPLACE FUNCTION company__next_id() returns bigint as $$
     
     select nextval('company_id_seq');
@@ -555,5 +620,6 @@ create or replace function _entity_location_save(
     END;
 
 $$ language 'plpgsql';
+
 
 -- COMMIT;
