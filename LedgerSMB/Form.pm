@@ -2248,7 +2248,8 @@ sub create_links {
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved
 			FROM $arap a
-			JOIN entity_credit_account c USING (entity_id)
+			JOIN entity_credit_account c 
+				ON (a.entity_credit_account = c.id)
 			JOIN entity ce ON (ce.id = c.entity_id)
 			LEFT JOIN employee er ON (er.entity_id = a.person_id)
 			LEFT JOIN entity e ON (er.entity_id = e.id)
