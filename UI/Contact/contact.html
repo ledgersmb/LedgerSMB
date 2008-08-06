@@ -48,6 +48,7 @@
 		name = "entity_id"
 		value = entity_id
 	} ?>
+
 <div class="input" id="person_name_div"><?lsmb text('Name:')?>&nbsp;
 <!-- TODO:  Add Saluatation -->
 <?lsmb PROCESS input element_data = {
@@ -143,9 +144,6 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<?lsmb FOREACH n = notes ?>
-<div class="entity_note"><?lsmb n.note ?></div>
-<?lsmb END ?>
 <form name="customer" method="POST" action="<?lsmb script ?>">
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
@@ -162,6 +160,13 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name = "account_class"
 		value = account_class
 	} ?>	
+	<?lsmb PROCESS input element_data = {
+		label = text('Control Code:'), #'
+		type= "text",
+		name = "control_code",
+		value = control_code,
+		size = "20"
+	} ?><br/>
 	<?lsmb PROCESS input element_data = {
 		label = text('Name:'),
 		type= "text",
@@ -205,6 +210,9 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			title="Save [Alt-S]"
 		} ?>
     </form>
+<?lsmb FOREACH n = notes ?>
+<div class="entity_note"><?lsmb n.note ?></div>
+<?lsmb END ?>
 </div>
 <?lsmb IF entity_id ?>
 <div id="credit_div">
@@ -447,6 +455,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
+		name="credit_id" 
+		value=credit_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
 		name="location_id" 
 		value=location_id
 	} ?>
@@ -470,10 +483,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<td class="country"><?lsmb loc.country ?></td>
 	<td class="actions">
 		<!--  TODO:  Automate links with AJAX -->
-		<a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb id 
-			?>&location_id=<?lsmb loc.id ?>">[edit]</a> 
+		<a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb entity_id 
+			?>&location_id=<?lsmb loc.id ?>&credit_id=<?lsmb 
+			credit_id ?>">[edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_location&entity_id=<?lsmb
-			id ?>&location_id=<?lmb loc.id ?>">[delete]</a>
+			entity_id ?>&location_id=<?lsmb loc.id 
+			?>&credit_id = <?lsmb credit_id ?>">[delete]</a>
 	</td>
     </tr>
 	<?lsmb END ?>
@@ -573,11 +588,13 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<td class="contact_actions">
 			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
 				?>&contact_id=<?lsmb ct.id 
-				?>&action=edit_contact"
+				?>&action=edit&credit_id=<?lsmb 
+				credit_id ?>"
 			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
 			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
 				?>&contact_id=<?lsmb ct.id 
-				?>&action=delete_contact"
+				?>&action=delete_contact&credit_id=<?lsmb 
+				credit_id ?>"
 			>[<?lsmb text('Delete'); ?>]</a>
 		</td>
 	</tr>
@@ -588,6 +605,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		type="hidden" 
 		name="entity_id" 
 		value=entity_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="credit_id" 
+		value=credit_id
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
@@ -661,6 +683,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
+		name="credit_id" 
+		value=credit_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
 		name="bank_account_id" 
 		value=bank_account_id
 	} ?>
@@ -697,6 +724,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div class="note">
 <div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
 <div class="contents"><?lsmb n.note ?></div>
+</div>
 <?lsmb END ?>
 <form action="<?lsmb script ?>" method="post">
 	<?lsmb PROCESS input element_data = {
@@ -704,6 +732,22 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name="entity_id" 
 		value=entity_id
 	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="credit_id" 
+		value=credit_id
+	} ?>
+<?lsmb IF credit_id -?>
+<div class="input"><?lsmb PROCESS select element_data = {
+			name = "note_class"
+			default_values = [note_class]
+			options = note_class_options
+			label = text("Note Class") #"
+			text_attr = "label"
+			value_attr = "value"
+	} ?>
+</div>
+<?lsmb END # IF credit_id -?>
 <div class="input"><?lsmb PROCESS textarea element_data = {
 	label = text('Notes:<br />')
 	name = 'note'
