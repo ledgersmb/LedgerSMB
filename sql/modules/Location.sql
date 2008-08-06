@@ -38,11 +38,11 @@ BEGIN
 	
 	SELECT * INTO location_row FROM location
 	WHERE line_one = in_address1 AND
-		line_two = in_address2 AND
-		line_three = in_address3 AND
+		coalesce(line_two, '') = coalesce(in_address2, '') AND
+		coalesce(line_three, '') = coalesce(in_address3, '') AND
 		city = in_city AND
-		state = in_state AND
-		mail_code = in_zipcode AND
+		coalesce(state, '') = coalesce(in_state, '') AND
+		coalesce(mail_code, '') = coalesce(in_zipcode, '') AND
 		country_id = in_country
 	LIMIT 1;
 	IF FOUND THEN
