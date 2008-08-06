@@ -241,7 +241,6 @@ sub edit{
     my $request = shift @_;
     my $vendor = LedgerSMB::DBObject::Vendor->new({base => $request});
     $vendor->get();
-    $vendor->get_credit_id();
     _render_main_screen($vendor);
 }
 
@@ -252,6 +251,11 @@ sub _render_main_screen{
     $vendor->{creditlimit} = "$vendor->{creditlimit}"; 
     $vendor->{discount} = "$vendor->{discount}"; 
     $vendor->{script} = "vendor.pl";
+    $vendor->{note_class_options} = [
+        {label => 'Entity', value => 1},
+        {label => 'Vendor Account', value => 3},
+    ];
+    $vendor->{threshold} = $vendor->format_amount(amount => $vendor->{threshold});
 
     my $template = LedgerSMB::Template->new( 
 	user => $vendor->{_user}, 
