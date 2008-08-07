@@ -267,8 +267,8 @@ BEGIN
 		a.city, a.state, a.mail_code, cc.name
 	into out_var
 	FROM company c
-	JOIN company eca ON (eca.entity_id = c.entity_id)
-	JOIN company_to_location cl ON (eca.id = cl.credit_id)
+	JOIN entity_credit_account eca ON (eca.entity_id = c.entity_id)
+	JOIN eca_to_location cl ON (eca.id = cl.credit_id)
 	JOIN location a ON (a.id = cl.location_id)
 	JOIN country cc ON (cc.id = a.country_id)
 	WHERE eca.id = in_id AND location_class = 1;
