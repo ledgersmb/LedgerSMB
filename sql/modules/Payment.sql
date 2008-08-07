@@ -269,7 +269,7 @@ BEGIN
 			(sum(p.due) > c.threshold
 			OR sum(case when a.batch_id = in_batch_id then 1
                                   else 0 END) > 0)
-        ORDER BY c.meta_number DESC
+        ORDER BY c.meta_number ASC
 	LOOP
 		RETURN NEXT payment_item;
 	END LOOP;
