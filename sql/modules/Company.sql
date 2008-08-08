@@ -247,6 +247,7 @@ $$ language plpgsql;
 
 CREATE TYPE company_billing_info AS (
 legal_name text,
+meta_number text,
 tax_id text,
 street1 text,
 street2 text,
@@ -263,7 +264,7 @@ $$
 DECLARE out_var company_billing_info;
 	t_id INT;
 BEGIN
-	select c.legal_name, c.tax_id, a.line_one, a.line_two, a.line_three, 
+	select c.legal_name, eca.meta_number, c.tax_id, a.line_one, a.line_two, a.line_three, 
 		a.city, a.state, a.mail_code, cc.name
 	into out_var
 	FROM company c
