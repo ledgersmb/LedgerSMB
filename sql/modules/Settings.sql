@@ -71,4 +71,4 @@ $$ LANGUAGE PLPGSQL;
 
 -- Table schema defaults
 
-ALTER TABLE entity ADD control_code TEXT default setting_increment('entity_control');
+ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
