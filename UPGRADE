@@ -88,6 +88,7 @@ recommend as follows:
   b)  Multicompany installations should use user tables in a separate dataset
       from any accounting data.
 
+For a single dataset, just import sql/Pg-central.sql into your database.
 If you need to create another dataset, you can create the db and import the
 sql/Pg-central.sql file into it.
 
