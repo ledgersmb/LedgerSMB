@@ -2,28 +2,14 @@
 
 # Simple script to prepare for release
 
-version="1.3.0_milestone_1";
+version="1.3.0_milestone_2";
 build_d="../release";
 
-if test -d blib; then
-  rm -rf blib
+if test -d $build_d/ledgersmb; then
+  rm -rf $build_d/ledgersmb
 fi
 
-if test -d _build; then
-  rm -rf _build
-fi
+svn export . $build_d/ledgersmb
 
-if test -d $build_d/ledger-smb; then
-  rm -rf $build_d/ledger-smb
-fi
-if test ! -d $build_d; then
-  mkdir $build_d
-fi
-mkdir $build_d/ledger-smb
-cp -R * $build_d/ledger-smb
-cd $build_d/ledger-smb
-pwd
-find . -name '*.svn' -exec rm -rf '{}' ';'
-rm ledger-smb.conf
-cd ..
-tar -zcvf ledger-smb-$version.tar.gz ledger-smb
+cd $build_d
+tar -zcvf ledgersmb-$version.tar.gz ledgersmb
