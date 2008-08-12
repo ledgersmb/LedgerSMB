@@ -198,7 +198,8 @@
 		ELSE ; 'name_has_no_vouchers' ; 
 		END
 		?>"><?lsmb r.contact_name ?></span></td>
-	<td class="invoice"><?lsmb r.total_due ?> <?lsmb currency ?></td>
+	<td class="invoice"><?lsmb INCLUDE format_money number=r.total_due ?> 
+		<?lsmb currency ?></td>
         <td class="payment" class="details_select">
 		<?lsmb INCLUDE input element_data = {
 		name = "paid_$r.contact_id"
@@ -293,12 +294,10 @@
 			value = icount
 		} ?>
 		<?lsmb IF !r.unselected;
-			IF (${"paid_$r.contact_id"} == 'all');
-				grand_total = grand_total + r.total_due;
-			ELSIF (${"paid_$r.contact_id"} == 'some');
+			IF (${"paid_$r.contact_id"} == 'some');
 				grand_total = grand_total + contact_total;
 			ELSE;
-				contact_total = 'error';
+				grand_total = grand_total + r.total_due;
 			END; # IF (paid...)
 		END # IF !r.unselected) ?>
 		<tr class="subtotal">

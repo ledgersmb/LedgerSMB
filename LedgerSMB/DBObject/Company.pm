@@ -88,8 +88,16 @@ This method saves an address for a company.
 
 sub save_location {
     my $self = shift @_;
+
     $self->{country_id} = $self->{country_code};
-    $self->exec_method(funcname => 'company__location_save');
+
+    if($self->{credit_id}){
+        $self->exec_method(funcname => 'eca__location_save');
+    } else {
+        my ($ref) = $self->exec_method(funcname => 'company__location_save');
+        my @vals = values %$ref;
+        $self->{location_id} = $vals[0];
+    }
 
     $self->{dbh}->commit;
 }
@@ -154,13 +162,15 @@ sub get_metadata {
     @{$self->{contact_class_list}} = 
          $self->exec_method(funcname => 'entity_list_contact_class');
 
-    @{$self->{credit_list}} = 
-         $self->exec_method(funcname => 'entity__list_credit');
 }
 
 sub save_contact {
     my ($self) = @_;
-    $self->exec_method(funcname => 'company__save_contact');
+    if ($self->{credit_id}){
+        $self->exec_method(funcname => 'eca__save_contact');
+    } else {
+        $self->exec_method(funcname => 'company__save_contact');
+    }
     $self->{dbh}->commit;
 }
 
@@ -172,7 +182,11 @@ sub save_bank_account {
 
 sub save_notes {
     my $self = shift @_;
-    $self->exec_method(funcname => 'entity__save_notes');
+    if ($self->{credit_id} && $self->{note_class} eq '3'){
+        $self->exec_method(funcname => 'eca__save_notes');
+    } else {
+        $self->exec_method(funcname => 'entity__save_notes');
+    }
     $self->{dbh}->commit;
 }
 
@@ -198,19 +212,65 @@ sub get {
     $self->merge($ref);
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
 
+    @{$self->{credit_list}} = 
+         $self->exec_method(funcname => 'entity__list_credit');
+
+    for (@{$self->{credit_list}}){
+	print STDERR "credit_id: $_->{credit_id}\n";
+        if (($_->{credit_id} eq $self->{credit_id}) 
+                   or ($_->{meta_number} eq $self->{meta_number})){
+		$self->merge($_);
+                last;
+        }
+    }
     $self->{name} = $self->{legal_name};
+    if ($self->{credit_id} and $self->{meta_number}){
+        $self->get_credit_id;
+    }
 
-    @{$self->{locations}} = $self->exec_method(
+    if ($self->{credit_id}){
+        @{$self->{locations}} = $self->exec_method(
+		funcname => 'eca__list_locations');
+        @{$self->{contacts}} = $self->exec_method(
+		funcname => 'eca__list_contacts');
+        @{$self->{notes}} = $self->exec_method(
+		funcname => 'eca__list_notes');
+        
+    }
+    else {
+        @{$self->{locations}} = $self->exec_method(
 		funcname => 'company__list_locations');
-
-    @{$self->{contacts}} = $self->exec_method(
+        @{$self->{contacts}} = $self->exec_method(
 		funcname => 'company__list_contacts');
+        @{$self->{notes}} = $self->exec_method(
+		funcname => 'company__list_notes');
+
+    }
+
+    if ($self->{location_id}){
+        for (@{$self->{locations}}){
+            if ($_->{id} = $self->{location_id}){
+                my $old_id = $self->{id};
+                $self->merge($_);
+                $self->{id} = $old_id;
+                last;
+            }
+        }
+    }
+
+    if ($self->{contact_id}){
+        for (@{$self->{contacts}}){
+            if ($_->{id} = $self->{contact_id}){
+                my $old_id = $self->{id};
+                $self->merge($_);
+                $self->{id} = $old_id;
+                last;
+            }
+        }
+    }
 
     @{$self->{bank_account}} = $self->exec_method(
 		funcname => 'company__list_bank_account');
-
-    @{$self->{notes}} = $self->exec_method(
-		funcname => 'company__list_notes');
 };
 
 1;
