@@ -187,7 +187,12 @@ BEGIN
 	FOR payment_item IN
 		  SELECT c.id AS contact_id, e.name AS contact_name,
 		         c.meta_number AS account_number,
-		         sum(p.due) AS total_due, 
+		              sum (coalesce(p.due, 0) -
+		              CASE WHEN c.discount_terms 
+		                        > extract('days' FROM age(a.transdate))
+		                   THEN 0
+		                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
+		              END) AS total_due,
 		         compound_array(ARRAY[[
 		              a.id::text, a.invnumber, a.transdate::text, 
 		              a.amount::text, (a.amount - p.due)::text,

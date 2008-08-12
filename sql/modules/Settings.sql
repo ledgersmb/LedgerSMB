@@ -68,3 +68,7 @@ BEGIN
 	return new_value;	
 END;
 $$ LANGUAGE PLPGSQL;
+
+-- Table schema defaults
+
+ALTER TABLE entity ADD control_code TEXT default setting_increment('entity_control');

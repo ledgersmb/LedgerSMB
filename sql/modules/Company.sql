@@ -623,4 +623,104 @@ create or replace function _entity_location_save(
 $$ language 'plpgsql';
 
 
+create or replace function eca__location_save(
+    in_credit_id int, in_location_id int,
+    in_location_class int, in_line_one text, in_line_two text, 
+    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
+    in_country_code int
+) returns int AS $$
+
+    DECLARE
+        l_row location;
+        l_id INT;
+    BEGIN
+
+	DELETE FROM eca_to_location
+	WHERE credit_id = in_credit_id
+		AND location_class = in_location_class
+		AND location_id = in_location_id;
+
+	SELECT location_save(in_line_one, in_line_two, in_line_three, in_city,
+		in_state, in_mail_code, in_country_code) 
+	INTO l_id;
+
+	INSERT INTO eca_to_location 
+		(credit_id, location_class, location_id)
+	VALUES  (in_credit_id, in_location_class, l_id);
+
+	RETURN l_id;    
+    END;
+
+$$ language 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION company_get_billing_info (in_id int) 
+returns company_billing_info as
+$$
+DECLARE out_var company_billing_info;
+	t_id INT;
+BEGIN
+	select c.legal_name, c.tax_id, a.line_one, a.line_two, a.line_three, 
+		a.city, a.state, a.mail_code, cc.name
+	into out_var
+	FROM company c
+	JOIN entity_credit_account eca ON (eca.entity_id = c.entity_id)
+	JOIN eca_to_location cl ON (eca.id = cl.credit_id)
+	JOIN location a ON (a.id = cl.location_id)
+	JOIN country cc ON (cc.id = a.country_id)
+	WHERE eca.id = in_id AND location_class = 1;
+
+	RETURN out_var;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION eca__list_locations(in_entity_id int)
+RETURNS SETOF location_result AS
+$$
+DECLARE out_row RECORD;
+BEGIN
+	FOR out_row IN
+		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
+			l.state, l.mail_code, c.name, lc.class
+		FROM location l
+		JOIN eca_to_location ctl ON (ctl.location_id = l.id)
+		JOIN location_class lc ON (ctl.location_class = lc.id)
+		JOIN country c ON (c.id = l.country_id)
+		WHERE ctl.credit_id = in_credit_id
+		ORDER BY lc.id, l.id, c.name
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION eca__list_contacts(in_credit_id int) 
+RETURNS SETOF contact_list AS $$
+DECLARE out_row contact_list;
+BEGIN
+	FOR out_row IN
+		SELECT cl.class, c.description, c.contact
+		FROM eca_to_contact c
+		JOIN contact_class cl ON (c.contact_class_id = cl.id)
+		WHERE credit_id = in_credit_id
+	LOOP
+		return next out_row;
+	END LOOP;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION eca__save_contact
+(in_credit_id int, in_contact_class int, in_description text, in_contact text)
+RETURNS INT AS
+$$
+DECLARE out_id int;
+BEGIN
+	INSERT INTO eca_to_contact(credit_id, contact_class_id, 
+		description, contact)
+	VALUES (in_credit_id, in_contact_class, in_description, in_contact);
+
+	RETURN 1;
+END;
+$$ LANGUAGE PLPGSQL;
+
 -- COMMIT;
