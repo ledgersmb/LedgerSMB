@@ -578,7 +578,7 @@ CREATE TABLE jcitems (
 );
 
 
-insert into transactions (id, table_name) SELECT id, 'ap' FROM ap;
+INSERT INTO transactions (id, table_name) SELECT id, 'ap' FROM ap;
 
 CREATE RULE ap_id_track_i AS ON insert TO ap 
 DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'ap');
@@ -586,7 +586,7 @@ DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'ap');
 CREATE RULE ap_id_track_u AS ON update TO ap 
 DO UPDATE transactions SET id = new.id WHERE id = old.id;
 
-insert into transactions (id, table_name) SELECT id, 'ar' FROM ap;
+INSERT INTO transactions (id, table_name) SELECT id, 'ar' FROM ap;
 
 CREATE RULE ar_id_track_i AS ON insert TO ar 
 DO INSERT INTO transactions (id, table_name) VALUES (new.id, 'ar');
