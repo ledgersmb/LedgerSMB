@@ -2,6 +2,23 @@ begin;
 CREATE SEQUENCE id;
 -- As of 1.3 there is no central db anymore. --CT
 
+CREATE TABLE chart (
+  id serial PRIMARY KEY,
+  accno text NOT NULL,
+  description text,
+  charttype char(1) DEFAULT 'A',
+  category char(1),
+  link text,
+  gifi_accno text,
+  contra bool DEFAULT 'f'
+);
+--
+-- pricegroup added here due to references
+CREATE TABLE pricegroup (
+  id serial PRIMARY KEY,
+  pricegroup text
+);
+
 -- BEGIN new entity management
 CREATE TABLE entity_class (
   id serial primary key,
@@ -43,40 +60,6 @@ CREATE TABLE entity_class_to_entity (
   );
 
 COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
-
-CREATE TABLE entity_credit_account (
-    id serial not null unique,
-    entity_id int not null references entity(id) ON DELETE CASCADE,
-    entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
-    discount numeric, 
-    discount_terms int default 0,
-    discount_account_id int references chart(id),
-    taxincluded bool default 'f',
-    creditlimit NUMERIC default 0,
-    terms int2 default 0,
-    meta_number varchar(32),
-    cc text,
-    bcc text,
-    business_id int,
-    language_code varchar(6),
-    pricegroup_id int references pricegroup(id),
-    curr char(3),
-    startdate date DEFAULT CURRENT_DATE,
-    enddate date,
-    threshold numeric default 0,
-    employee_id int references entity_employee(entity_id),
-    primary_contact int references person(id),
-    ar_ap_account_id int references chart(id),
-    cash_account_id int references chart(id),
-    PRIMARY KEY(entity_id, meta_number, entity_class)
-);
-
-CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u 
-ON entity_credit_account(meta_number)
-WHERE entity_class = 2;
-
-COMMENT ON INDEX entity_credit_ar_accno_idx_u IS
-$$This index is used to ensure that AR accounts are not reused.$$;
 
 -- USERS stuff --
 CREATE TABLE users (
@@ -198,20 +181,6 @@ COMMENT ON TABLE company_to_location IS
 $$ This table is used for locations generic to companies.  For contract-bound
 addresses, use eca_to_location instead $$;
 
-CREATE TABLE eca_to_location (
-  location_id integer references location(id) not null,
-  location_class integer not null references location_class(id),
-  credit_id integer not null references entity_credit_account(id) 
-	ON DELETE CASCADE,
-  PRIMARY KEY(location_id,credit_id));
-
-CREATE UNIQUE INDEX eca_to_location_billing_u ON eca_to_location(credit_id)
-	WHERE location_class = 1;
-
-COMMENT ON TABLE eca_to_location IS
-$$ This table is used for locations bound to contracts.  For generic contact
-addresses, use company_to_location instead $$;
-
 CREATE TABLE salutation (
  id serial unique,
  salutation text primary key);
@@ -324,6 +293,40 @@ CREATE TABLE company_to_contact (
 
 COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
   
+CREATE TABLE entity_credit_account (
+    id serial not null unique,
+    entity_id int not null references entity(id) ON DELETE CASCADE,
+    entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
+    discount numeric, 
+    discount_terms int default 0,
+    discount_account_id int references chart(id),
+    taxincluded bool default 'f',
+    creditlimit NUMERIC default 0,
+    terms int2 default 0,
+    meta_number varchar(32),
+    cc text,
+    bcc text,
+    business_id int,
+    language_code varchar(6),
+    pricegroup_id int references pricegroup(id),
+    curr char(3),
+    startdate date DEFAULT CURRENT_DATE,
+    enddate date,
+    threshold numeric default 0,
+    employee_id int references entity_employee(entity_id),
+    primary_contact int references person(id),
+    ar_ap_account_id int references chart(id),
+    cash_account_id int references chart(id),
+    PRIMARY KEY(entity_id, meta_number, entity_class)
+);
+
+CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u 
+ON entity_credit_account(meta_number)
+WHERE entity_class = 2;
+
+COMMENT ON INDEX entity_credit_ar_accno_idx_u IS
+$$This index is used to ensure that AR accounts are not reused.$$;
+
 CREATE TABLE eca_to_contact (
   credit_id integer not null references entity_credit_account(id) 
 	ON DELETE CASCADE,
@@ -335,6 +338,20 @@ CREATE TABLE eca_to_contact (
 COMMENT ON TABLE eca_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single vendor or customer account. For generic 
 contacts, use company_to_contact or person_to_contact instead.$$;
   
+CREATE TABLE eca_to_location (
+  location_id integer references location(id) not null,
+  location_class integer not null references location_class(id),
+  credit_id integer not null references entity_credit_account(id) 
+	ON DELETE CASCADE,
+  PRIMARY KEY(location_id,credit_id));
+
+CREATE UNIQUE INDEX eca_to_location_billing_u ON eca_to_location(credit_id)
+	WHERE location_class = 1;
+
+COMMENT ON TABLE eca_to_location IS
+$$ This table is used for locations bound to contracts.  For generic contact
+addresses, use company_to_location instead $$;
+
 -- Begin rocking notes interface
 -- Begin rocking notes interface
 CREATE TABLE note_class(id serial primary key, class text not null check (class ~ '[[:alnum:]_]'));
@@ -384,17 +401,6 @@ CREATE TABLE gl (
   notes text,
   approved bool default true,
   department_id int default 0
-);
---
-CREATE TABLE chart (
-  id serial PRIMARY KEY,
-  accno text NOT NULL,
-  description text,
-  charttype char(1) DEFAULT 'A',
-  category char(1),
-  link text,
-  gifi_accno text,
-  contra bool DEFAULT 'f'
 );
 --
 CREATE TABLE gifi (
@@ -530,14 +536,9 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 
 --
 
--- pricegroup added here due to references
-CREATE TABLE pricegroup (
-  id serial PRIMARY KEY,
-  pricegroup text
-);
-
 -- THe following credit accounts are used for inventory adjustments.
-INSERT INTO entity (name, entity_class) values ('Inventory Entity', 1);
+INSERT INTO entity (name, entity_class, control_code) 
+values ('Inventory Entity', 1, 'AUTO-01');
 
 INSERT INTO company (legal_name, entity_id) 
 values ('Inventory Entity', currval('entity_id_seq'));
