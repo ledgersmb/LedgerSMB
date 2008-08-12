@@ -345,9 +345,6 @@ sub all_transactions {
 			$todate_where
 			$dpt_where
 			$project|;
-        if ($d_id) {
-            push @queryargs, $d_id;
-        }
         push @queryargs, $id;
         if ($fdate) {
             push @queryargs, $fdate;
@@ -378,9 +375,6 @@ sub all_transactions {
 			$dpt_where
 			$project|;
 
-        if ($d_id) {
-            push @queryargs, $d_id;
-        }
         push @queryargs, $id;
         if ($fdate) {
             push @queryargs, $fdate;
@@ -411,9 +405,6 @@ sub all_transactions {
 			$dpt_where
 			$project |;
 
-        if ($d_id) {
-            push @queryargs, $d_id;
-        }
         push @queryargs, $id;
         if ($fdate) {
             push @queryargs, $fdate;
