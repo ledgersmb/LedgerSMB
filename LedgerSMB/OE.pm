@@ -2042,7 +2042,7 @@ sub get_inventory {
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 			LEFT JOIN warehouse w ON (w.id = i.warehouse_id)
 			WHERE (i.warehouse_id = $fromwarehouse_id OR 
-				i.warehouse_id IS NULL))
+				i.warehouse_id IS NULL)
 			$where
 			GROUP BY p.id, p.partnumber, p.description, 
 				pg.partsgroup, w.description, i.warehouse_id 
