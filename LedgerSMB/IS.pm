@@ -908,7 +908,6 @@ sub post_invoice {
 
     my $i;
     my $item;
-    my $allocated = 0;
     my $taxrate;
     my $tax;
     my $fxtax;
@@ -928,6 +927,7 @@ sub post_invoice {
     }
 
     foreach $i ( 1 .. $form->{rowcount} ) {
+        my $allocated = 0;
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
         if ($form->{reverse}){
             $form->{"qty_$i"} *= -1;
