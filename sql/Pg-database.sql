@@ -1,6 +1,10 @@
 begin;
 CREATE SEQUENCE id;
--- As of 1.3 there is no central db anymore. --CT
+-- Central DB structure
+-- This is the central database stuff which is used across all datasets
+-- in the ledger-smb.conf it is called 'ledgersmb' by default, but obviously
+-- can be named anything.
+
 
 -- BEGIN new entity management
 CREATE TABLE entity_class (
@@ -18,8 +22,7 @@ CREATE TABLE entity (
   name text check (name ~ '[[:alnum:]_]'),
   entity_class integer references entity_class(id) not null ,
   created date not null default current_date,
-  control_code text,
-  PRIMARY KEY(control_code, entity_class));
+  PRIMARY KEY(name,entity_class));
   
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
 COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
@@ -160,24 +163,6 @@ CREATE TABLE company_to_location (
   company_id integer not null references company(id) ON DELETE CASCADE,
   PRIMARY KEY(location_id,company_id));
 
-COMMENT ON TABLE company_to_location IS
-$$ This table is used for locations generic to companies.  For contract-bound
-addresses, use eca_to_location instead $$;
-
-CREATE TABLE eca_to_location (
-  location_id integer references location(id) not null,
-  location_class integer not null references location_class(id),
-  credit_id integer not null references entity_credit_account(id) 
-	ON DELETE CASCADE,
-  PRIMARY KEY(location_id,credit_id));
-
-CREATE UNIQUE INDEX eca_to_location_billing_u ON eca_to_location(credit_id)
-	WHERE location_class = 1;
-
-COMMENT ON TABLE eca_to_location IS
-$$ This table is used for locations bound to contracts.  For generic contact
-addresses, use company_to_location instead $$;
-
 CREATE TABLE salutation (
  id serial unique,
  salutation text primary key);
@@ -290,23 +275,10 @@ CREATE TABLE company_to_contact (
 
 COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
   
-CREATE TABLE eca_to_contact (
-  credit_id integer not null references entity_credit_account(id) 
-	ON DELETE CASCADE,
-  contact_class_id integer references contact_class(id) not null,
-  contact text check(contact ~ '[[:alnum:]_]') not null,
-  description text,
-  PRIMARY KEY (credit_id, contact_class_id,  contact));  
-
-COMMENT ON TABLE eca_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single vendor or customer account. For generic 
-contacts, use company_to_contact or person_to_contact instead.$$;
-  
--- Begin rocking notes interface
 -- Begin rocking notes interface
 CREATE TABLE note_class(id serial primary key, class text not null check (class ~ '[[:alnum:]_]'));
 INSERT INTO note_class(id,class) VALUES (1,'Entity');
 INSERT INTO note_class(id,class) VALUES (2,'Invoice');
-INSERT INTO note_class(id,class) VALUES (3,'Entity Credit Account');
 CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 
 CREATE TABLE note (id serial primary key, note_class integer not null references note_class(id), 
@@ -324,13 +296,6 @@ CREATE TABLE invoice_note() INHERITS (note);
 CREATE INDEX invoice_note_id_idx ON invoice_note(id);
 CREATE UNIQUE INDEX invoice_note_class_idx ON note_class(lower(class));
 CREATE INDEX invoice_note_vectors_idx ON invoice_note USING gist(vector);
-
-CREATE TABLE eca_note() 
-	INHERITS (note);
-ALTER TABLE eca_note ADD CHECK (note_class = 3);
-ALTER TABLE eca_note ADD FOREIGN KEY (ref_key) 
-	REFERENCES entity_credit_account(id) 
-	ON DELETE CASCADE;
 
 -- END entity   
 
@@ -2542,7 +2507,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 198	module	vouchers.pl	553
 199	module	vouchers.pl	559
 199	action	create_batch	560
-199	batch_type	ap	561
+199	batch_type	payable	561
 201	module	vouchers.pl	562
 201	action	create_batch	563
 203	module	vouchers.pl	565

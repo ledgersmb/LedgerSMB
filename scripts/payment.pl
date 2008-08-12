@@ -307,6 +307,7 @@ sub print {
             }
 
             for my $inv (1 .. $inv_count){
+		print STDERR "Invoice $inv of " .$payment->{"invoice_count_$id"} . "\n";
                 my $invhash = {};
                 my $inv_id = $payment->{"invoice_${id}_$inv"};
                 for (qw(invnumber invdate)){
