@@ -7,6 +7,7 @@ should work.  Note that many of these scripts declare types, so if you want to
 redefine functions, you will need to drop the types and reload the scripts.
 
 Drafts.sql
+chart.sql
 Account.sql
 Session.sql
 Business_type.sql
@@ -32,4 +33,8 @@ installing into.
 Also Roles.sql MUST be run last because portions of it depend on function 
 declarations in the other scripts.
 
+The following files are not ready to be loaded:
 
+admin.sql
+security.sql
+Reconciliaton.sql
