@@ -7,9 +7,9 @@ ALTER TABLE chart ADD PRIMARY KEY (id);
 
 LOCK acc_trans in EXCLUSIVE mode;
 ALTER TABLE acc_trans ADD COLUMN entry_id bigint;
-CREATE SEQUENCE acctrans_entry_id_seq;
-ALTER TABLE acc_trans ALTER COLUMN entry_id SET DEFAULT nextval('acctrans_entry_id_seq');
-UPDATE acc_trans SET entry_id = nextval('acctrans_entry_id_seq');
+CREATE SEQUENCE acc_trans_entry_id_seq;
+ALTER TABLE acc_trans ALTER COLUMN entry_id SET DEFAULT nextval('acc_trans_entry_id_seq');
+UPDATE acc_trans SET entry_id = nextval('acc_trans_entry_id_seq');
 ALTER TABLE acc_trans ADD PRIMARY key (entry_id);
 
 -- We should probably add a foreign key to chart.id
