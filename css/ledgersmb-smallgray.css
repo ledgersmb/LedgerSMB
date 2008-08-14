@@ -10,9 +10,9 @@ A:hover { color: blue;
 }
 
 body {
-  font-family: Arial, Verdana, Helvetica, sans-serif;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
   color: black;
-  font-size: 8pt;
+  font-size: 14.667px;
   margin: 1px;
   background-color: white;
   scrollbar-arrow-color: white;
@@ -25,8 +25,8 @@ body {
 }
 
 td {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 8pt;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
+  font-size: 14.667px;
 }
 span.warning_label {
   font-weight: bold;
@@ -34,21 +34,21 @@ span.warning_label {
 }
 
 th {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 8pt;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
+  font-size: 14.667px;
   font-weight: normal;
 }
 
 /* login and admin */
 .login {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
 }
 body.login {
   background: #dddddd;
   color: black;
 }
 h1.login {
-  font-size: 18pt;
+  font-size: 14.667px;
 }
 table.login {
   background-color: #bbbbbb;
@@ -68,8 +68,8 @@ body.admin {
 
 body.menu {
   background-color: white;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
+  font-size: 14.667px;
   color: black;
 }
 
@@ -77,92 +77,64 @@ body.menu img {
   display: none;
 }
 
-.menuOut {
+body.menu ul, body.menu li {
+  padding: 2px;
+  list-style: none;
   cursor: pointer;
   background-color: white;
-  font-size: 8px;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
+  font-size: 14.667px;
   color: black;
   border: none;
   padding: 2px;
   text-align: left;
 }
 
-.menuOver {
-  cursor: pointer;
-  background-color: white;
-  font-size: 8px;
-  color: black;
-  border: none;
-  padding: 2px;
-  text-align: left;
-  font-weight: normal;
+body.menu ul {
+  margin-top: 2px;
 }
 
-.submenu {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 8px;
-  padding-left: 5px;
-}
-
-.menuOut a {
-  color: black;
-}
-
-.menuOver a {
-  color: black;
-}
-
-.submenu a {
-  color: blue;
-  text-decoration: none;
-}
-
-.submenu a:hover {
-  text-decoration: none;
-  color: blue;
-}
-
-.listtop { font-size: 8pt; background-color: #e0e0e0; color: black; }
-.listheading { font-size: 8pt; background-color: #eeeeee; color: black; }
+.listtop { font-size: 14.667px; background-color: #e0e0e0; color: black; }
+.listheading { font-size: 14.667px; background-color: #eeeeee; color: black; }
 A.listheading:link, A.listheading:active, A.listheading:visited {
   color: black;
   text-decoration: none; }
-.listrow1 { font-size: 8pt; background-color: #f8f8f8; color: black; vertical-align: top; }
-.listrow0 { font-size: 8pt; background-color: #f0f0f0; color: black; vertical-align: top; }
-.listsubtotal { font-size: 8pt; background-color: #eeeeee; color: black; }
-.listtotal { font-size: 8pt; background-color: #e0e0e0; color: black; }
+.listrow1 { font-size: 14.667px; background-color: #f8f8f8; color: black; vertical-align: top; }
+.listrow0 { font-size: 14.667px; background-color: #f0f0f0; color: black; vertical-align: top; }
+.listsubtotal { font-size: 14.667px; background-color: #eeeeee; color: black; }
+.listtotal { font-size: 14.667px; background-color: #e0e0e0; color: black; }
 
 textarea {
-  font-family: Courier New;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
   border: 1px solid black;
-  font-size: 8pt;
+  font-size: 14.667px;
   background-color: #eeeeee;
   font-weight: normal;
 }
 
 input {
-  font-family: Courier New;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
   border: 1px solid black;
-  font-size: 8pt;
+  font-size: 14.667px;
   background-color: #eeeeee;
   font-weight: normal;
 }
 
 select {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
+  font-size: 14.667px;
 }
 
 .submit {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
+  font-size: 14.667px;
   color: black;
   font-weight: normal;
 }
 
 .checkbox, .radio {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: Andale Mono, Lucidatypewriter, Courier New, monospace;
+  font-size: 14.667px;
 }
 
 .plus0 {    /* font color for negative numbers */
@@ -179,12 +151,12 @@ hr {
 
 h2.confirm {
   color: blue;
-  font-size: 14pt;
+  font-size: 14.667px;
 }
 
 h2.error {
   color: red;
-  font-size: 14pt;
+  font-size: 14.667px;
 }
 
 
