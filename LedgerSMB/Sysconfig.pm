@@ -39,6 +39,10 @@ $max_post_size = 1024 * 1024;
 
 # defaults to 2-- default number of places to round amounts to
 $decimal_places = 2;
+
+# defaults to LedgerSMB-1.3 - default spelling of cookie
+$cookie_name = "LedgerSMB-1.3";
+
 # spool directory for batch printing
 $spool = "spool";
 
@@ -88,7 +92,7 @@ read_config( 'ledgersmb.conf' => %config ) or die;
 # Root variables
 for $var (
     qw(pathsep logging check_max_invoices language auth latex
-    db_autoupdate force_username_case max_post_size decimal_places)
+    db_autoupdate force_username_case max_post_size decimal_places cookie_name)
   )
 {
     ${$var} = $config{''}{$var} if $config{''}{$var};

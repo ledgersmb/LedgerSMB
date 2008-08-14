@@ -89,7 +89,7 @@ sub session_check {
               $session_ref->{session_id} . ':' . $session_ref->{token} . ':' . $form->{company};
 
             #now update the cookie in the browser
-            print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=$path;\n|;
+            print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;\n|;
             return 1;
 
         }
@@ -100,7 +100,7 @@ sub session_check {
             my $sessionDestroy = $dbh->prepare("");
 
             #delete the cookie in the browser
-            print qq|Set-Cookie: LedgerSMB=; path=$path;\n|;
+            print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;\n|;
             return 0;
         }
 
@@ -109,7 +109,7 @@ sub session_check {
 
         #cookie is not valid
         #delete the cookie in the browser
-        print qq|Set-Cookie: LedgerSMB=; path=$path;\n|;
+        print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;\n|;
         return 0;
     }
 }
@@ -197,7 +197,7 @@ sub session_create {
 
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
-    print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=$path;\n|;
+    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;\n|;
     $lsmb->{LedgerSMB} = $newCookieValue;
     $lsmb->{dbh}->commit;
 }
@@ -222,7 +222,7 @@ sub session_destroy {
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
     #delete the cookie in the browser
-    print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
+    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=/;\n|;
 
 }
 

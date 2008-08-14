@@ -170,7 +170,7 @@ sub check_password {
         }
 
         #check for valid session
-        if ( !LedgerSMB::Auth::session_check( $cookie{"LedgerSMB"}, $form ) ) {
+        if ( !LedgerSMB::Auth::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $form ) ) {
             &getpassword(1);
             exit;
         }

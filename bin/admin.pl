@@ -1020,7 +1020,7 @@ sub check_password {
             $cookie{$name} = $value;
         }
 
-        if ( !Session::session_check( $cookie{"LedgerSMB"}, $root ) ) {
+        if ( !Session::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $root ) ) {
             &adminlogin( $locale->text('Session expired!') );
             exit;
         }

@@ -47,7 +47,7 @@ sub authenticate {
     if ($request->{dbh} && $request->{next}) {
         
         print "Content-Type: text/html\n";
-        print "Set-Cookie: LedgerSMB=Login; path=$path\n";
+        print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
 	    print "Status: 302 Found\n";
 	    print "Location: ".$path.$request->{next}."\n";
 	    print "\n";
@@ -55,7 +55,7 @@ sub authenticate {
     }
     elsif ($request->{dbh} || $request->{log_out}){
         print "Content-Type: text/html\n";
-        print "Set-Cookie: LedgerSMB=Login; path=$path\n";
+        print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
 	    print "Status: 200 Success\n\n";
         if ($request->{log_out}){
             exit;

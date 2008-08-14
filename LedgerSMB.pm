@@ -207,7 +207,7 @@ sub new {
         return $self;
     }
     if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
-         my $ccookie = $cookie{LedgerSMB};
+         my $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
          $ccookie =~ s/.*:([^:]*)$/$1/;
          $self->{company} = $ccookie;
     }
@@ -217,7 +217,7 @@ sub new {
     if ($self->is_run_mode('cgi', 'mod_perl')) {
        #check for valid session unless this is an inital authentication
        #request -- CT
-       if (!LedgerSMB::Auth::session_check( $cookie{"LedgerSMB"}, $self) ) {
+       if (!LedgerSMB::Auth::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
             print STDERR "Session did not check";
             $self->_get_password("Session Expired");
             exit;
