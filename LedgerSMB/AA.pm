@@ -953,7 +953,7 @@ sub transactions {
 
     if ( $form->{till} ne "" ) {
         $where .= " AND a.invoice = '1'
-					AND a.till = $form->{till}";
+					AND a.till = '$form->{till}'";
 
         if ( $myconfig->{role} eq 'user' ) {
             my $login = $dbh->quote( $form->{login} );
