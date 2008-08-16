@@ -41,54 +41,55 @@ sub price_matrix_query {
     my $sth;
 
     my @queryargs;
+    my $transdate = $form->{dbh}->quote( $form->{transdate} );
 
     if ( $form->{customer_id} ) {
         my $defaultcurrency = $form->{dbh}->quote( $form->{defaultcurrency} );
         my $customer_id     = $form->{dbh}->quote( $form->{customer_id} );
         $query = qq|
-			SELECT p.id AS parts_id, 0 AS customer_id, 
-				0 AS pricegroup_id, 0 AS pricebreak, 
-				p.sellprice, NULL AS validfrom, NULL AS validto,
-				(SELECT substr(value,1,3) FROM defaults WHERE 
-					setting_key = 'curr') AS curr,
-			        '' AS pricegroup
-	     		FROM parts p
-			WHERE p.id = ?
-
-			UNION
-
-    			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
+    			SELECT p.parts_id, p.customer_id, NULL AS pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
-				p.validto, p.curr, g.pricegroup
+				p.validto, p.curr, NULL AS pricegroup, 
+				1 as priority
 			FROM partscustomer p
-			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			WHERE p.parts_id = ?
-			AND p.customer_id = $customer_id
+				AND coalesce(p.validfrom, $transdate) <= 
+					$transdate
+				AND coalesce(p.validto, $transdate) >= 
+					$transdate
+				AND p.customer_id = $customer_id
 
 			UNION
 
     			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
-				p.validto, p.curr, g.pricegroup
+				p.validto, p.curr, g.pricegroup, 2 AS priority
 			FROM partscustomer p
-			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
+			JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			JOIN customer c ON (c.pricegroup_id = g.id)
 			WHERE p.parts_id = ?
-			AND c.id = $customer_id
+				AND coalesce(p.validfrom, $transdate) <= 
+					$transdate
+				AND coalesce(p.validto, $transdate) >= 
+					$transdate
+				AND c.id = $customer_id
 
 			UNION
 
     			SELECT p.parts_id, p.customer_id, p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
-				p.validto, p.curr, g.pricegroup
+				p.validto, p.curr, g.pricegroup, 3 AS priority
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
 			WHERE p.customer_id = 0
-			AND p.pricegroup_id = 0
-			AND p.parts_id = ?
+				AND p.pricegroup_id = 0
+				AND coalesce(p.validfrom, $transdate) <= 
+					$transdate
+				AND coalesce(p.validto, $transdate) >= 
+					$transdate
+				AND p.parts_id = ?
 
-			ORDER BY customer_id DESC, pricegroup_id DESC, 
-				pricebreak
+			ORDER BY priority LIMIT 1;
 			|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
@@ -97,10 +98,10 @@ sub price_matrix_query {
 
         # price matrix and vendor's partnumber
         $query = qq|
-			SELECT partnumber
+			SELECT partnumber, lastcost
 			FROM partsvendor
 			WHERE parts_id = ?
-			AND vendor_id = $vendor_id|;
+				AND vendor_id = $vendor_id|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
 
@@ -109,7 +110,6 @@ sub price_matrix_query {
 
 sub price_matrix {
     my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig ) = @_;
-    $ref->{pricematrix} = "";
     my $customerprice;
     my $pricegroupprice;
     my $sellprice;
@@ -118,102 +118,28 @@ sub price_matrix {
 
     # depends if this is a customer or vendor
     if ( $form->{customer_id} ) {
-        $pmh->execute( $ref->{id}, $ref->{id}, $ref->{id}, $ref->{id} );
-
-        while ( $mref = $pmh->fetchrow_hashref(NAME_lc) ) {
-
-            $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
-            # check date
-            if ( $mref->{validfrom} ) {
-                next
-                  if $transdate <
-                  $form->datetonum( $myconfig, $mref->{validfrom} );
-            }
-            if ( $mref->{validto} ) {
-                next
-                  if $transdate >
-                  $form->datetonum( $myconfig, $mref->{validto} );
-            }
-
-            # convert price
-            $sellprice =
-              $form->round_amount(
-                $mref->{sellprice} * $form->{ $mref->{curr} },
-                $decimalplaces );
-
-            if ( $mref->{customer_id} ) {
-                $ref->{sellprice} = $sellprice
-                  if !$mref->{pricebreak};
-                $p{ $mref->{pricebreak} } = $sellprice;
-                $customerprice = 1;
-            }
-
-            if ( $mref->{pricegroup_id} ) {
-                if ( !$customerprice ) {
-                    $ref->{sellprice} = $sellprice
-                      if !$mref->{pricebreak};
-                    $p{ $mref->{pricebreak} } = $sellprice;
-                }
-                $pricegroupprice = 1;
-            }
-
-            if ( !$customerprice && !$pricegroupprice ) {
-                $p{ $mref->{pricebreak} } = $sellprice;
-            }
-
-        }
-        $pmh->finish;
-
-        if (%p) {
-            if ( $ref->{sellprice} ) {
-                $p{0} = $ref->{sellprice};
-            }
-            for ( sort { $a <=> $b } keys %p ) {
-                $ref->{pricematrix} .= "${_}:$p{$_} ";
-            }
-        }
-        else {
-            if ($init) {
-                $ref->{sellprice} =
-                  $form->round_amount( $ref->{sellprice}, $decimalplaces );
-            }
-            else {
-                $ref->{sellprice} =
-                  $form->round_amount(
-                    $ref->{sellprice} * ( 1 - $form->{tradediscount} ),
-                    $decimalplaces );
-            }
-            $ref->{pricematrix} = "0:$ref->{sellprice} "
-              if $ref->{sellprice};
-        }
-        chop $ref->{pricematrix};
-
+        $pmh->execute( $ref->{id}, $ref->{id}, $ref->{id} );
+    } elsif ( $form->{vendor_id} ) {
+        $pmh->execute( $ref->{id} );
+    } else {
+        $form->debug();
+        $form->error();
+        return;
     }
 
-    if ( $form->{vendor_id} ) {
-        $pmh->execute( $ref->{id} );
-
-        $mref = $pmh->fetchrow_hashref(NAME_lc);
-        $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
-
-        if ( $mref->{partnumber} ne "" ) {
-            $ref->{partnumber} = $mref->{partnumber};
-        }
-
-        if ( $mref->{lastcost} ) {
-
-            # do a conversion
-            $ref->{sellprice} =
-              $form->round_amount( $mref->{lastcost} * $form->{ $mref->{curr} },
-                $decimalplaces );
-        }
-        $pmh->finish;
-
-        $ref->{sellprice} *= 1;
-
-        # add 0:price to matrix
-        $ref->{pricematrix} = "0:$ref->{sellprice}";
-
+    if ( $mref = $pmh->fetchrow_hashref(NAME_lc) ) {
+       if ($form->{customer_id}){
+            $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
+            $sellprice = $mref->{sellprice} || $ref->{sellprice};
+            if ($mref->{pricebreak}){
+		$sellprice = $sellprice
+                           - ($sellprice * ($mref->{pricebreak} / 100));
+            }
+            $ref->{sellprice} = $sellprice;
+       } elsif ($form->{vendor_id}){
+            $sellprice = $mref->{lastcost} || $ref->{sellprice};
+            $ref->{sellprice} = $sellprice;    
+       }
     }
 
 }

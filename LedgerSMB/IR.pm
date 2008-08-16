@@ -1165,6 +1165,8 @@ sub retrieve_invoice {
         my $ptref;
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            PriceMatrix::price_matrix( $pmh, $ref, '', $decimalplaces, $form,
+                $myconfig );
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
@@ -1189,8 +1191,6 @@ sub retrieve_invoice {
               $form->round_amount(
                 $ref->{fxsellprice} * $form->{ $form->{currency} },
                 $decimalplaces );
-            PriceMatrix::price_matrix( $pmh, $ref, $decimalplaces, $form,
-                $myconfig );
 
             $ref->{sellprice} = $ref->{fxsellprice};
             $ref->{qty} *= -1;
@@ -1289,6 +1289,8 @@ sub retrieve_item {
     my $ptref;
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        PriceMatrix::price_matrix( $pmh, $ref, '', $decimalplaces, $form,
+            $myconfig );
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         my ($dec) = ( $ref->{sellprice} =~ /\.(\d+)/ );
@@ -1306,8 +1308,6 @@ sub retrieve_item {
         chop $ref->{taxaccounts};
 
         # get vendor price and partnumber
-        PriceMatrix::price_matrix( $pmh, $ref, $decimalplaces, $form,
-            $myconfig );
 
         $ref->{description} = $ref->{translation}
           if $ref->{translation};

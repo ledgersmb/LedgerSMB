@@ -15,7 +15,7 @@ $pathsep = ':';
 
 $session = 'DB';
 $logging = 0;      # No logging on by default
-
+$max_post_size = 1024 * 1024; # Default to 1MB
 @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
 # Whitelist for redirect destination

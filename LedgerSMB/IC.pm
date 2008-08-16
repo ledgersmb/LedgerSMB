@@ -543,7 +543,7 @@ sub save {
               $form->parse_amount( $myconfig, $form->{"${_}_$i"} );
         }
 
-        if ( $form->{"customerprice_$i"} ) {
+        if ( $form->{"customerprice_$i"} || $form->{"pricebreak_$i"} ) {
 
             ( $null, $customer_id ) = split /--/, $form->{"customer_$i"};
             $customer_id *= 1;
