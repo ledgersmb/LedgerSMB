@@ -3324,7 +3324,7 @@ sub check_customer {
               $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
         }
 
-        if ( $form->{"customerprice_$i"} ) {
+        if ( $form->{"customerprice_$i"} || $form->{"pricebreak_$i"} ) {
             if (   $form->{"pricebreak_$i"}
                 || $form->{"customer_$i"}
                 || $form->{"pricegroup_$i"} )

@@ -1996,6 +1996,8 @@ sub retrieve_invoice {
         my $ptref;
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            PriceMatrix::price_matrix( $pmh, $ref, $form->{transdate},
+                $decimalplaces, $form, $myconfig );
             $form->db_parse_numeric(sth=>$sth, hashref => $ref);
             $ref->{qty} *= -1 if $form->{reverse};
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
@@ -2017,8 +2019,6 @@ sub retrieve_invoice {
             # price matrix
             $ref->{sellprice} =
               ( $ref->{fxsellprice} * $form->{ $form->{currency} } );
-            PriceMatrix::price_matrix( $pmh, $ref, $form->{transdate},
-                $decimalplaces, $form, $myconfig );
             $ref->{sellprice} = $ref->{fxsellprice};
 
             $ref->{partsgroup} = $ref->{partsgrouptranslation}
@@ -2124,6 +2124,8 @@ sub retrieve_item {
     my $transdate = $form->datetonum( $myconfig, $form->{transdate} );
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        PriceMatrix::price_matrix( $pmh, $ref, $transdate, $decimalplaces,
+            $form, $myconfig );
         $form->db_parse_numeric(sth => $sth, hashref => $ref);
 
         my ($dec) = ( $ref->{sellprice} =~ /\.(\d+)/ );
@@ -2142,8 +2144,6 @@ sub retrieve_item {
         chop $ref->{taxaccounts};
 
         # get matrix
-        PriceMatrix::price_matrix( $pmh, $ref, $transdate, $decimalplaces,
-            $form, $myconfig );
 
         $ref->{description} = $ref->{translation}
           if $ref->{translation};
