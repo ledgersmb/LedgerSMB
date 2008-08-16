@@ -259,11 +259,6 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
         $form->{"select$key"} = "";
         foreach $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
-            if ( $key eq "$form->{ARAP}_tax" ) {
-                $form->{"select$form->{ARAP}_tax_$ref->{accno}"} =
-                  "<option>$ref->{accno}--$ref->{description}\n";
-                next;
-            }
             $form->{"select$key"} .=
               "<option>$ref->{accno}--$ref->{description}\n";
         }
