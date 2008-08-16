@@ -1403,5 +1403,5 @@ WITH INHERIT NOLOGIN;
 GRANT EXECUTE ON FUNCTION voucher__delete(int) 
 TO "lsmb_<?lsmb dbname ?>__voucher_delete";
 
-GRANT EXECUTE ON FUNCTION batch__delete(int) 
+GRANT EXECUTE ON FUNCTION batch_delete(int) 
 TO "lsmb_<?lsmb dbname ?>__voucher_delete";
