@@ -51,7 +51,7 @@ feature 'Developer tool dependencies',
 # Rendering options
 feature 'PDF and Postscript output',
     -default => 0,
-    'Template::Latex' => 0;
+    'Template::Plugin::Latex' => 0;
 
 feature 'OpenOffice.org output',
     -default => 0,
