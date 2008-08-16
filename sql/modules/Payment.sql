@@ -282,9 +282,9 @@ END;
 $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION payment_get_all_contact_invoices
-(in_account_class int, in_business_type int, in_currency char(3),
-        in_date_from date, in_date_to date, in_batch_id int, 
-        in_ar_ap_accno text) IS
+(in_account_class int, in_business_id int, in_currency char(3),
+	in_date_from date, in_date_to date, in_batch_id int, 
+	in_ar_ap_accno text, in_meta_number text) IS
 $$
 This function takes the following arguments (all prefaced with in_ in the db):
 account_class: 1 for vendor, 2 for customer
