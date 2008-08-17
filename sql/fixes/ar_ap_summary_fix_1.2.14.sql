@@ -2,7 +2,7 @@ BEGIN;
 
 UPDATE ap 
 SET netamount = 
-	CASE WHEN amount > 0 THEN -1 *
+	CASE WHEN amount > 0 THEN 
 		(select sum(amount) from acc_trans 
 		where trans_id = ap.id 
 			AND ((chart_id IN (select id from chart where link = 'AP')
