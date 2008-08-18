@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.14
+LedgerSMB 1.2.15
 
 
 
@@ -198,30 +198,22 @@ Also the POS system requires some additional configuration both in the chart of
 accounts and in the system itself.  Please edit the pos.conf.pl and create 
 appropriate till accounts.
 
-Bugs Fixed in 1.2.6:
+Major Bugs Fixed in 1.2.15:
 ================================
-1) Customer_id field not found error when posting AP transaction.  This error 
-was caused by a mistake in the performance optimizations made in 1.2.5.
+1) (Critical)  Denial of service potential by uploading files of arbitrary size.
+   Prior versions did not have an upload limit, so denial of service was possibe
+   by uploading arbitrarily large amounts of data.
 
-2) Erroneous headers printed to balance sheet and income statement.
+2) (Critical)  SQL Injection vulnerability possible in the AP transaction 
+   report.  A variable was incorrectly escaped.
 
-3) Meta tags were added to force UTF-8 charsets, fixing occasional display
-issues with multibyte characters where Apache was misconfigured.
+3)  Errors in transferring inventory between warehouses resolved.
 
-4) ledgersmb-httpd.conf is now more internally consistant.  The alias directive
-was changed to /ledgersmb (from /ledger-smb).
+4)  Pricematrix now recognizes both pricebreaks and sell price fields, and works
+    for customers, vendors, and pricegroups.  The current logic is that the
+    default pricing is overridden by temporary pricing for a generic pricegroup
+    then by the specific pricegroup, and lastly by the specific customer.
 
-5) Minor html fixes were added to ca.pl, contributed by Donna Robertson
+5)  Errors pulling transactions by department are resolved.
 
-6) Error when searching for customer by address is corrected. 
-
-7) Invalid format for integer error fixed when saving projects unconnected to 
-customers.
-
-None of the above fixes involved changes to API's that are widely used by the 
-application.  Impacts elsewhere from these bug fixes should be minimal.
-
-8) Unbound placeholder error when saving items with custom fields.  This error
-involved a centrally used API that is invoked when custom fields exist.  The fix
-is only likely to affect those installations which have custom fields attached
-to orders, invoices, or parts.
+For a list of all changes, see the Changelog.

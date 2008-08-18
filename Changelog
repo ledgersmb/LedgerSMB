@@ -1,3 +1,16 @@
+Changelog for 1.2.15
+* Uppercasing some SQL statements (Chris T)
+* Fixed for AR allocation corner case (Victor Q, 1881199)
+* Fixed for warehouse transfer error (Jeffk, 1877860)
+* Fixed error pulling transactions by department (Chris T, 1954974)
+* Fixed UTF-8 encoding for Czech COA (Vladamir B, 1906081)
+* Fixed upgrade script creating incorrectly named sequence (Chris T, 1987545)
+* Corrected POS transactions report (JeffK and Chris T, 2025931)
+* Added a max_post_size directive to the ledgersmb.conf (Chris M)
+* Fixed Price Matrix logic (Chris T, 1897245)
+* Fixed errors in the backported triggers for transaction table (Jeffk, 1928336)
+* Corrected corner case on ar_ap_summary_fix_1.2.14.sql (Chris T)
+
 Changelog for 1.2.14
 * Build.PL now requires Test::Trap (Chris T, 1872529)
 * Fixed double escaping of tex under some circumstances (Seneca)
