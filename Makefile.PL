@@ -5,7 +5,7 @@ use warnings;
 use inc::Module::Install 0.65;
 
 name 'LedgerSMB';
-version '1.2.14';
+version '1.2.15';
 license 'GPL';
 
 perl_version '5.8.1';
