@@ -674,7 +674,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION eca__list_locations(in_entity_id int)
+CREATE OR REPLACE FUNCTION eca__list_locations(in_credit_id int)
 RETURNS SETOF location_result AS
 $$
 DECLARE out_row RECORD;
