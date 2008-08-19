@@ -317,6 +317,7 @@ CREATE TABLE entity_credit_account (
     primary_contact int references person(id),
     ar_ap_account_id int references chart(id),
     cash_account_id int references chart(id),
+    bank_account int references entity_bank_account(id),
     PRIMARY KEY(entity_id, meta_number, entity_class)
 );
 
