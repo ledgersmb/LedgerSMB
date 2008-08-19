@@ -364,6 +364,7 @@ CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 CREATE TABLE note (id serial primary key, note_class integer not null references note_class(id), 
                    note text not null, vector tsvector not null, 
                    created timestamp not null default now(),
+                   created_by text DEFAULT SESSION_USER;
                    ref_key integer not null);
 
 CREATE TABLE entity_note(entity_id int references entity(id)) INHERITS (note);

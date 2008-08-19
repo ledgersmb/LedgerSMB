@@ -211,12 +211,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} ?>
     </form>
 <?lsmb FOREACH n = notes ?>
-<div class="entity_note"><?lsmb n.note ?></div>
+<div class="note_contents"><?lsmb n.note ?></div>
 <?lsmb END ?>
 </div>
 <?lsmb IF entity_id ?>
 <div id="credit_div">
-<div class="listtop"><strong>Accounts</strong</div>
+<div class="listtop"><strong>Accounts</strong></div>
     <table width="100%">
     <tr class="listheading">
         <th class="account_class"><?lsmb text('Type') ?></th>
@@ -226,7 +226,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
         <th class="end_date"><?lsmb text('End Date') ?></th>
     </tr>
     <?lsmb FOREACH cl_item = credit_list ?>
-    <tr>
+    <tr <?lsmb IF meta_number == cl_item.meta_number  ?> class="active"<?lsmb END ?>>
         <td><?lsmb IF cl_item.entity_class == 1 ?><?lsmb text('Vendor') ?>
             <?lsmb ELSIF cl_item.entity_class == 2 ?><?lsmb text('Customer') ?>
             <?lsmb END ?>
@@ -375,15 +375,17 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
                } ?>
 	</tr>
         </table>
-		<?lsmb INCLUDE button element_data = {
-			text = text('Save'),
+		<?lsmb IF credit_id;
+		INCLUDE button element_data = {
+			text = text('Save Changes'),
 			class="submit" 
 			type="submit" 
 			name="action" 
 			value="save_credit" 
 			accesskey="C" 
 			title="Save Credit Account[Alt-C]"
-		} ?>
+		};
+		END ?>
 		<?lsmb INCLUDE button element_data = {
 			text = text('Save New'),
 			class="submit" 
@@ -442,7 +444,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <?lsmb END ?>
 <?lsmb END ?>
-<?lsmb IF entity_id ?>
+<?lsmb IF entity_id && credit_id ?>
 <div id="location_div" class="container">
     <div class="listtop"><?lsmb text('Locations') ?></div>
 	<!-- This entire form should probably be optionaly automated with AJAX
@@ -474,7 +476,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<th class="actions"><?lsmb text('Actions') ?></th>
     </tr>
 	<?lsmb FOREACH loc = locations ?>
-    <tr>
+    <tr <?lsmb IF location_id == loc.id ?> class="active" <?lsmb END ?>>
 	<td class="type"><?lsmb loc.class ?></td>
 	<td class="line_one"><?lsmb loc.line_one ?></td>
 	<td class="city"><?lsmb loc.city ?></td>
@@ -723,7 +725,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <?lsmb FOREACH n = notes ?>
 <div class="note">
 <div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
-<div class="contents"><?lsmb n.note ?></div>
+<div class="author"><?lsmb text("Author: [_1]", n.created_by) ?></div>
+<div class="note_contents"><?lsmb n.note ?></div>
 </div>
 <?lsmb END ?>
 <form action="<?lsmb script ?>" method="post">
