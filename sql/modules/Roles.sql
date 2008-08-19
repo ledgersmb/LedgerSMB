@@ -26,6 +26,9 @@ GRANT SELECT ON person_to_location TO "lsmb_<?lsmb dbname ?>__read_contact";
 GRANT SELECT ON person_to_location TO "lsmb_<?lsmb dbname ?>__read_contact";
 GRANT SELECT ON company_to_location TO "lsmb_<?lsmb dbname ?>__read_contact";
 GRANT SELECT ON vendortax TO "lsmb_<?lsmb dbname ?>__read_contact";
+GRANT SELECT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__read_contact";
+GRANT SELECT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__read_contact";
+GRANT EXECUTE ON eca__list_notes(int)  TO "lsmb_<?lsmb dbname ?>__read_contact";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__read_contact');
@@ -73,6 +76,12 @@ GRANT INSERT ON person_to_location TO "lsmb_<?lsmb dbname ?>__create_contact";
 GRANT INSERT ON company_to_location TO "lsmb_<?lsmb dbname ?>__create_contact";
 GRANT DELETE ON company_to_location TO "lsmb_<?lsmb dbname ?>__create_contact";
 GRANT INSERT ON vendortax TO "lsmb_<?lsmb dbname ?>__create_contact";
+GRANT INSERT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__create_contact";
+GRANT DELETE ON eca_to_location TO "lsmb_<?lsmb dbname ?>__create_contact";
+GRANT INSERT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__create_contact";
+GRANT DELETE ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__create_contact";
+GRANT INSERT ON eca_note TO "lsmb_<?lsmb dbname ?>__create_contact";
+
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__create_contact');
