@@ -197,7 +197,7 @@ sub get_search_results {
         form    => $payment,
         columns => \@columns,
         heading => $heading,
-	hiddens => $payment->take_top_level,
+        hiddens => $payment->take_top_level,
         rows    => $rows,
         buttons => [{
                     value => 'reverse_payments',

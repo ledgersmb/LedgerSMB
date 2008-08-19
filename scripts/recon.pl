@@ -71,33 +71,49 @@ status
 
 =cut
 
+sub pending_search {
+    
+    &search(shift @_,"pending");
+}
+
+sub approved_search {
+    
+    &search(shift @_,"approved");
+}
+
 sub search {
-    my ($request) = @_;
+    my ($request,$type) = @_;
     
     if ($request->type() eq "POST") {
         # WE HAS DATUMS
         # INTENTIONAL BAD PLURALIZATION OF LATIN
 
         my $search = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
-        my $results = $search->search();
+        my $results = $search->search($type);
         my $total = $search->total();
     
     
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	    template => 'reconciliation/report', language => $user->{language}, 
+        my $template = LedgerSMB::Template->new( 
+            user => $user, 
+    	    template => 'reconciliation/report', 
+    	    language => $user->{language}, 
             format => 'HTML',
             path=>"UI");
         return $template->render({report => $results, total => $total});
         
         
     } else {
+        my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
+        
         
         my $template = LedgerSMB::Template->new(
             user => $user,
             template=>'reconciliation/search',
             language=>$user->{language},
             format=>'HTML',
-            path=>"UI"
+            path=>"UI",
+            mode=>$type,
+            accounts=>$recon->get_accounts();
         );
         return $template->render();
     }

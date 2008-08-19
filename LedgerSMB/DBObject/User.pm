@@ -1,6 +1,7 @@
 package LedgerSMB::DBObject::User;
 
 use base qw/LedgerSMB::DBObject/;
+use Data::Dumper;
 
 sub save {
     
@@ -11,7 +12,7 @@ sub save {
     if ( $user->{id} && $self->{is_a_user} ) {
     
         # doesn't check for the password - that's done in the sproc.
-        $self->{id} = shift @{ $self->exec_method(procname=>'admin__save_user', 
+        $self->{id} = shift @{ $self->exec_method(funcname=>'admin__save_user', 
             args=>[$user->{id}, $self->{username}, $self->{password}] ) }; 
         if (!$self->{id}) {
             
@@ -29,7 +30,7 @@ sub save {
     elsif ($self->{is_a_user}) {
         
         # No user ID, meaning, creating a new one.        
-        $self->{id} = shift @{ $self->exec_method(procname=>'admin__save_user', 
+        $self->{id} = shift @{ $self->exec_method(funcname=>'admin__save_user', 
             args=>[undef, $self->{username}, $self->{password}] ) };
     }
     return 1;
@@ -38,18 +39,18 @@ sub save {
 sub get {
     
     my $self = shift @_;
-    
-    my ($user_id, $username) = @{ $self->exec_method(procname=>'admin__get_user',
-        args=>[$self->{id}])};
+    my $id = shift;
+    my $user = @{ $self->exec_method(funcname=>'admin__get_user',
+        args=>[$id])}[0];
         
-    return {id=>$user_id, username=>$username};
+    return $user;
 }
 
 sub remove {
     
     my $self = shift;
     
-    my $code = $self->exec_method(procname=>"admin__delete_user", args=>[$self->{id}, $self->{username}]);
+    my $code = $self->exec_method(funcname=>"admin__delete_user", args=>[$self->{id}, $self->{username}]);
     $self->{id} = undef; # never existed..
     
     return $code->[0];
@@ -59,7 +60,7 @@ sub save_prefs {
     
     my $self = shift @_; 
     
-    my $pref_id = $self->exec_method(procname=>"admin__save_preferences", 
+    my $pref_id = $self->exec_method(funcname=>"admin__save_preferences", 
         args=>[
             'language',
             'stylesheet',
@@ -74,7 +75,8 @@ sub get_all_users {
     
     my $self = shift @_;
     
-    $self->{users} = $self->exec_method( procname=>"user__get_all_users" );
+    my @ret = $self->exec_method( funcname=>"user__get_all_users" );
+    $self->{users} = \@ret;
 }
 
 1;

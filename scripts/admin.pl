@@ -6,11 +6,12 @@ require 'lsmb-request.pl';
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
+use Data::Dumper;
 
 sub new_user {
     
     # uses the same page as create_user, only pre-populated.
-    #my ($class, $request) = @_;
+    #my ($request) = @_;
     my $request = shift @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
@@ -41,7 +42,9 @@ sub new_user {
             user => $user, 
     	    template => 'Admin/edit_user',
     	    language => $user->{language}, 
-            format => 'HTML', path=>'UI');
+            format => 'HTML', 
+            path=>'UI'
+        );
     
         $template->render(
             {
@@ -55,7 +58,7 @@ sub new_user {
 sub edit_user {
     
     # uses the same page as create_user, only pre-populated.
-    my ($class, $request) = @_;
+    my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
     
     my $all_roles = $admin->get_roles();
@@ -81,12 +84,12 @@ sub edit_user {
         );
     }
     else {
-        my $edited_user = $admin->get_entire_user();
+        my $edited_user = $admin->get_entire_user($request->{user});
         $template->render(
             {
                 user=>$edited_user, 
                 roles=>$all_roles,
-                user_roles=>$admin->get_user_roles($request->{username})
+                user_roles=>$admin->get_user_roles($request->{user})
             }
         );
     }
@@ -94,7 +97,7 @@ sub edit_user {
 
 sub edit_group {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
     my $all_roles = $admin->role_list();
@@ -129,7 +132,7 @@ sub edit_group {
 
 sub create_group {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
     my $all_roles = $admin->get_roles();
@@ -156,7 +159,7 @@ sub create_group {
 
 sub delete_group {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
@@ -177,7 +180,7 @@ sub delete_group {
 
 sub delete_user {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
@@ -198,10 +201,10 @@ sub delete_user {
 
 sub new_group {
     
-    my ($class, $request) = @_;
+    my ($request) = @_;
     
     my $template = LedgerSMB::Template->new( user=>$user, 
-        template=>'Admin/new_group.html', language=>$user->{language},
+        template=>'Admin/new_group', language=>$user->{language},
         format=>'HTML', path=>'UI');
     
     $template->render();
@@ -209,23 +212,19 @@ sub new_group {
 
 sub cancel {
         
-    &mainpage(@_);
+    &main(@_);
 }
 
 sub __default {
     
-    &mainpage(@_);
+    &main(@_);
 }
 
-sub mainpage {
+sub main {
     
     my ($request) = @_;
     
     my $template;
-    
-    # We need to test for a login here first.
-    
-    
     
     my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'all');
     
@@ -233,12 +232,12 @@ sub mainpage {
     
     $template = LedgerSMB::Template->new( 
         user=>$user, 
-        template=>'Admin/main.html', 
+        template=>'Admin/main', 
         language=>$user->{language},
         format=>'HTML', 
         path=>'UI'
     );
-    $template->render({users=>$ret});
+    $template->render( { users=>$user->{users} } );
 }
 
 #eval { do "scripts/custom/admin.pl"};

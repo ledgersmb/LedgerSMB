@@ -2,7 +2,7 @@ CREATE TABLE reports (
     id bigserial primary key not null,
     report_id int NOT NULL,
     account text not null,
-    scn text not null, -- What is SCN?
+    scn text not null, -- SCN is the check #
     their_balance numeric,
     our_balance numeric,
     errorcode INT,
@@ -13,6 +13,11 @@ CREATE TABLE reports (
     ledger_id int REFERENCES acc_trans(entry_id),
     overlook boolean not null default 'f',
     approved boolean not null default 'f'
+);
+
+CREATE TABLE coa_to_account (
+    chart_id int not null references chart(id),
+    account text not null CHECK (account ~ '[0-9]{7}(xxx)')
 );
 
 
@@ -57,7 +62,7 @@ CREATE OR REPLACE FUNCTION reconciliation__correct_ledger (in_report_id INT, in_
                 -- After that, it is required to update the general ledger.
                 full_reason := "User % is filing a reconciliation correction on the general ledger, changing amount % to amount %. 
                 Their reason given is: %", in_user, current_row.our_balance, in_new_amount, reason;
-                select update_ledger(current_row.lid, in_new_amount, full_reason)
+                perform select reconciliation__update_ledger(current_row.lid, in_new_amount, full_reason)
             ELSE IF current_row.our_balance = in_new_amount THEN
                 -- This should be something, does it equal the original 
                 -- balance? If so, there's no change.
@@ -243,7 +248,7 @@ $$ language 'sql';
 create or replace function reconciliation__add_entry(
     in_report_id INT, 
     in_scn INT, 
-    in_amount INT, 
+    in_amount numeric, 
     in_account INT, 
     in_user TEXT, 
     in_date TIMESTAMP
@@ -257,9 +262,13 @@ create or replace function reconciliation__add_entry(
     BEGIN
     
         SELECT INTO la FROM acc_trans gl 
-        WHERE gl.source = in_scn 
-        and gl.account = in_account 
-        and gl.amount = in_amount;
+        JOIN chart c on gl.chart_id = c.id
+        JOIN ap ON gl.trans_id = ap.id
+        JOIN coa_to_account cta on cta.chart_id = gl.chart_id
+        WHERE gl.source ~ in_scn -- does it look like it?
+        and cta.account = in_account 
+        and gl.amount = in_amount
+        AND gl.transdate = in_date;
         
         lid := NULL;
         IF NOT FOUND THEN
@@ -414,18 +423,28 @@ CREATE OR REPLACE FUNCTION reconciliation__search (
     in_date_begin DATE, 
     in_date_end DATE, 
     in_account TEXT,
-    in_status BOOLEAN
+    in_status TEXT
 ) RETURNS setof reports AS $$
 
     DECLARE
         row reports;
         statement text;
         where_stmt text;
+        v_status BOOLEAN;
+        v_accum NUMERIC;
     BEGIN
+        
+        if in_status = "pending" then
+            v_status = 'ft'::bool;
+        ELSIF in_status = "approved" THEN
+        
+            v_status = 't'::bool;
+        END IF;
+        
         IF in_date_begin IS NOT NULL
             or in_date_end IS NOT NULL
             or in_account IS NOT NULL
-            or in_status IS NOT NULL
+            or v_status IS NOT NULL
         THEN
             statement = "select pr.* from reports pr ";
             statement = statement + "join acc_trans at on pr.ledger_id = at.entry_id ";
@@ -446,9 +465,9 @@ CREATE OR REPLACE FUNCTION reconciliation__search (
             
             IF in_status IS NOT NULL THEN
                 
-                if in_status == 't'::bool THEN
+                if v_status == 't'::bool THEN
                     where_stmt = where_stmt + " approved = 't'::bool AND ";
-                ELSIF in_status == 'f'::bool THEN
+                ELSIF v_status == 'f'::bool THEN
                     where_stmt = where_stmt + " approved = 'f'::bool AND ";
                 END IF;
             
@@ -465,3 +484,17 @@ CREATE OR REPLACE FUNCTION reconciliation__search (
         
         END IF;
     END;
+$$ language 'plpgsql';
+
+create type recon_accounts as (
+    name text,
+    id int
+);
+
+create or replace function reconciliation__get_accounts () returns setof recon_accounts as $$
+    SELECT 
+        coa.accno || ' ' || coa.description as name,
+        coa.id as id
+    FROM chart coa, coa_to_account cta
+    WHERE cta.chart_id = coa.id;
+$$ language sql;

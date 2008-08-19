@@ -255,7 +255,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
             
             --- The entity is expected to already BE created. See admin.pm.
             
-            if admin_is_user(in_username) then
+            if admin__is_user(in_username) then
                 
                 -- uhm, this is bad.
                 RAISE EXCEPTION 'Fatal exception: Username already exists in Postgres; not
@@ -357,7 +357,7 @@ CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $
     
 $$ language 'plpgsql';
 
-comment on function admin_delete_user(text) is $$ 
+comment on function admin__delete_user(text) is $$ 
     Drops the provided user, as well as deletes the entity and user configuration data.
 $$;
 
@@ -380,7 +380,7 @@ CREATE OR REPLACE FUNCTION admin__delete_group (in_dbname TEXT, in_group_name TE
     END;
 $$ language 'plpgsql';
 
-comment on function admin_delete_group(text,text) IS $$ 
+comment on function admin__delete_group(text,text) IS $$ 
     Deletes the input group from the database. Not designed to be used to 
     remove a login-capable user.
 $$;
@@ -441,11 +441,28 @@ create or replace view user_listable as
     join users u on u.entity_id = e.id;
         
 
-create or replace function user_get_all_users () returns setof user_listable as $$
+create or replace function user__get_all_users () returns setof user_listable as $$
     
     select * from user_listable;
     
 $$ language sql;
+
+create or replace function admin__get_roles (in_database text) returns setof text as $$
+DECLARE
+    v_rol text;
+BEGIN
+    FOR v_rol in 
+        SELECT 
+            rolname
+        from 
+            pg_roles
+        where 
+            rolname ~ ('^lsmb_' || in_database)
+    LOOP
+        RETURN NEXT v_rol;
+    END LOOP;
+END;
+$$ language plpgsql;
 
 
 commit;

@@ -160,15 +160,24 @@ sub new_report {
         # 0 is success
         # 1 is found, but mismatch
         # 2 is not found
+        
+        # in_scn INT, 
+        #in_amount INT, 
+        #in_account INT, 
+        #in_user TEXT, 
+        #in_date TIMESTAMP
         $code = $self->exec_method(
             funcname=>'reconciliation__add_entry', 
             args=>[
                 $report_id,
+                $entry->{scn},
+                $entry->{amount}, # needs leading 0's trimmed.
+                $entry->{account},
+                $self->{user},
+                $self->{date}
             ]
         );
-        $entry{report_id} = $report_id;
-        $entry{code} = $self->add_entry( $entry );
-        
+        $entry{report_id} = $report_id;        
     }
     
     $self->exec_method(funcname=>'reconciliation__pending_transactions', args=>[$report_id, $date]);
@@ -221,7 +230,7 @@ sub entry {
 sub search {
     
     my $self = shift @_;
-    
+    my $type = shift;
     return $self->exec_method(
         funcname=>'reconciliation__search',
         args=>[$self->{date_begin}, $self->{date_end}, $self->{account}, $self->{status}]
@@ -244,6 +253,14 @@ sub get_report_list {
     return $self->exec_method(
         funcname=>'reconciliation__report_list',
         args=>[$self->{account},$self->{report}]
+    );
+}
+
+sub get_accounts {
+    
+    my $self = shift @_;
+    return $self->exec_method(
+        funcname=>'reconciliation__account_list',
     );
 }
 1;

@@ -10,7 +10,7 @@ sub save_user {
     
     my $self = shift @_;
     
-    my $entity_id = shift @{ $self->exec_method( procname => "save_user" ) };
+    my $entity_id = shift @{ $self->exec_method( funcname => "save_user" ) };
     $self->merge($entity_id);
     
     my $employee = LedgerSMB::DBObject::Employee->new(base=>$self, copy=>'list',
@@ -52,8 +52,8 @@ sub save_user {
     $contact->save_workphone(person=>$employee);
     $contact->save_email(person=>$employee);
     
-    my $roles = $self->exec_method( procname => "all_roles" );
-    my $user_roles = $self->exec_method(procname => "get_user_roles", args=>[ $self->{ modifying_user } ] );
+    my $roles = $self->exec_method( funcname => "all_roles" );
+    my $user_roles = $self->exec_method(funcname => "get_user_roles", args=>[ $self->{ modifying_user } ] );
     
     my %active_roles;
     for my $role (@{$user_roles}) {
@@ -76,13 +76,13 @@ sub save_user {
         elsif ($active_roles{$role} && !($self->{incoming_roles}->{$role} )) {
             
             # do remove function
-            $status = $self->exec_method(procname => "remove_user_from_role",
+            $status = $self->exec_method(funcname => "remove_user_from_role",
                 args=>[ $self->{ modifying_user }, $role ] 
         }
         elsif ($self->{incoming_roles}->{$role} and !($active_roles{$role} )) {
             
             # do add function
-            $status = $self->exec_method(procname => "add_user_to_role",
+            $status = $self->exec_method(funcname => "add_user_to_role",
                args=>[ $self->{ modifying_user }, $role ] 
             );
         }         
@@ -93,14 +93,14 @@ sub save_group {
     
      my $self = shift @_;
      
-     my $existant = shift @{ $self->exec_method (procname=> "is_group", args=>[$self->{modifying_group}]) };
+     my $existant = shift @{ $self->exec_method (funcname=> "is_group", args=>[$self->{modifying_group}]) };
      
-     my $group = shift @{ $self->exec_method (procname=> "save_group") };
+     my $group = shift @{ $self->exec_method (funcname=> "save_group") };
      
      # first we grab all roles
      
-     my $roles = $self->exec_method( procname => "all_roles" );
-     my $user_roles = $self->exec_method(procname => "get_user_roles", 
+     my $roles = $self->exec_method( funcname => "all_roles" );
+     my $user_roles = $self->exec_method(funcname => "get_user_roles", 
         args=>[ $self->{ group_name } ] 
     );
 
@@ -126,7 +126,7 @@ sub save_group {
 
              # do remove function
              $status = $self->exec_method(
-                 procname => "remove_group_from_role",
+                 funcname => "remove_group_from_role",
                  args=>[ $self->{ modifying_user }, $role ] 
              );
          }
@@ -134,7 +134,7 @@ sub save_group {
 
              # do add function
              $status = $self->exec_method(
-                 procname => "add_group_to_role",
+                 funcname => "add_group_to_role",
                  args=>[ $self->{ modifying_user }, $role ] 
              );
          }         
@@ -146,7 +146,7 @@ sub delete_user {
     
     my $self = shift @_;
     
-    my $status = shift @{ $self->exec_method(procname=>'delete_user', args=>[$self->{modifying_user}]) };
+    my $status = shift @{ $self->exec_method(funcname=>'delete_user', args=>[$self->{modifying_user}]) };
     
     if ($status) {
         
@@ -163,7 +163,7 @@ sub delete_group {
     
     my $self = shift @_;
     
-    my $status = shift @{ $self->exec_method(procname=>'delete_group', args=>[$self->{groupname}])};
+    my $status = shift @{ $self->exec_method(funcname=>'delete_group', args=>[$self->{groupname}])};
     
     if ($status) {
         
@@ -174,6 +174,22 @@ sub delete_group {
         $error->set_status($status);
         return $error;
     }
+}
+
+sub get_entire_user {
+    
+    my $self = shift @_;
+    my $id = shift @_;
+    my $user = LedgerSMB::DBObject::User->new(base=>$self,copy=>'all');
+    $user->get($id);
+    
+}
+
+sub get_roles {
+    
+    my $self = shift @_;
+    
+    return $self->exec_method(funcname=>'get_roles',args=>[$self->{company}]);
 }
 
 1;
