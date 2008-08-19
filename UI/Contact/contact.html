@@ -263,7 +263,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		size = "20"
 	}  # " ?><br/>
         <table>
-        <tr>
+        <tr id="date-row">
             <td>
 		<?lsmb PROCESS input element_data = {
 			label = text('Starting Date:'),
@@ -287,7 +287,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} #' ?>
             </td>
         </tr>
-        <tr>
+        <tr id="credit-row">
             <td>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Credit Limit:'),
@@ -307,7 +307,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} ?> <?lsmb text('days') ?>
             </td>
 	</tr>
-	<tr>
+	<tr id="discount-gifi-row">
             <td>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Discount:'),
@@ -335,7 +335,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} #' ?>
             </td>
         </tr>
-        <tr>
+        <tr id="account-link-row">
            <td> <?lsmb INCLUDE select element_data = {
 			name = "ar_ap_account_id"
 			default_values = [ar_ap_account_id]
@@ -355,7 +355,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
                 } ?>
            </td>
         </tr>
-        <tr>
+        <tr id="business-threshold-row">
            <td> <?lsmb INCLUDE select element_data = {
 			name = "business_id"
 			options = business_types
