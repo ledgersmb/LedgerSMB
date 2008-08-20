@@ -1561,6 +1561,13 @@ sub transactions {
         ( $form->{ $form->{vc} }, $form->{"$form->{vc}_id"} ) =
           split( /--/, $form->{ $form->{vc} } );
     }
+    if ($form->{vc} eq 'customer'){
+        $form->{entity_class} = 2;
+    } elsif ($form->{vc} eq 'vendor'){
+        $form->{entity_class} = 1;
+    } else {
+        $form->{entity_class} = "0";
+    }
     @column_index;
     AA->transactions( \%myconfig, \%$form );
 
@@ -1969,10 +1976,10 @@ sub transactions {
         for (qw(id curr)) { $column_data{$_} = "<td>$ref->{$_}</td>" }
 
         $column_data{accno} =
-qq|<td><a href=ca.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=list_transactions&accounttype=standard&accno=$ref->{accno}&fromdate=$form->{transdatefrom}&todate=$form->{transdateto}&sort=transdate&l_subtotal=$form->{l_subtotal}&prevreport=$callback>$ref->{accno}</a></td>|;
+qq|<td><a href=ca.pl?path=$form->{path}&action=list_transactions&accounttype=standard&accno=$ref->{accno}&fromdate=$form->{transdatefrom}&todate=$form->{transdateto}&sort=transdate&l_subtotal=$form->{l_subtotal}&prevreport=$callback>$ref->{accno}</a></td>|;
 
         $column_data{name} =
-qq|<td>$ref->{meta_number}</td><td><a href=ct.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=edit&id=$ref->{"$form->{vc}_id"}&db=$form->{vc}&callback=$callback>$ref->{name}</a></td>|;
+qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&action=edit&entity_id=$ref->{entity_id}&meta_number=$ref->{meta_number}&db=$form->{vc}&callback=$callback>$ref->{name}</a></td>|;
 
         if ( $ref->{id} != $sameid ) {
             $j++;

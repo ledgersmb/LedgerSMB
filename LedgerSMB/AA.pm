@@ -827,7 +827,7 @@ sub transactions {
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, ee.name AS employee, 
 		          vce.name, vc.meta_number,
-		          a.entity_id, a.till, me.name AS manager, a.curr,
+		          vc.entity_id, a.till, me.name AS manager, a.curr,
 		          ex.$buysell AS exchangerate, 
 		          d.description AS department, 
 		          a.ponumber $acc_trans_flds
