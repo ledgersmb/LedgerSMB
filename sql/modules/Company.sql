@@ -713,11 +713,17 @@ END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION eca__save_contact
-(in_credit_id int, in_contact_class int, in_description text, in_contact text)
+(in_credit_id int, in_contact_class int, in_description text, in_contact text,
+in_old_contact text, in_old_contact_class int)
 RETURNS INT AS
 $$
 DECLARE out_id int;
 BEGIN
+	DELETE FROM eca_to_contact 
+	WHERE credit_id = in_credit_id
+		AND contact = in_old_contact
+		AND contact_class_id = in_old_contact_class;
+		
 	INSERT INTO eca_to_contact(credit_id, contact_class_id, 
 		description, contact)
 	VALUES (in_credit_id, in_contact_class, in_description, in_contact);

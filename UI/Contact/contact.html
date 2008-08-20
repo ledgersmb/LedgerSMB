@@ -619,6 +619,16 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
+		name="old_contact_class" 
+		value=contact_class
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="old_contact" 
+		value=contact
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
 		name="contact_id" 
 		value=contact_id
 	} ?>
