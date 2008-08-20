@@ -375,7 +375,7 @@ sub invoice_details {
                 $tax += Tax::apply_taxes( \@taxaccounts, $form, $linetotal );
             }
 
-            foreach $item (@taxaccounts) {
+            foreach my $item (@taxaccounts) {
                 push @taxrates, 100 * $item->rate;
                 $taxaccounts{ $item->account } += $item->value;
                 if ( $form->{taxincluded} ) {
