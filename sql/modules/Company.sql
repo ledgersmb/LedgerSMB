@@ -16,7 +16,7 @@ CREATE OR REPLACE FUNCTION company__search
 (in_account_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
 	in_mail_code text, in_country text, in_date_from date, in_date_to date,
-	in_business_id int, in_legal_name text)
+	in_business_id int, in_legal_name text, in_control_code text)
 RETURNS SETOF company_search_result AS $$
 DECLARE
 	out_row company_search_result;
@@ -34,6 +34,8 @@ BEGIN
 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE ec.entity_class = in_account_class
+			AND (e.control_code = in_control_code 
+				or in_control_code IS NULL)
 			AND (c.id IN (select company_id FROM company_to_contact
 				WHERE contact LIKE ALL(t_contact_info))
 				OR '' LIKE ALL(t_contact_info))
@@ -438,6 +440,7 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE TYPE contact_list AS (
 	class text,
+	class_id int,
 	description text,
 	contact text
 );
@@ -447,7 +450,7 @@ RETURNS SETOF contact_list AS $$
 DECLARE out_row contact_list;
 BEGIN
 	FOR out_row IN
-		SELECT cl.class, c.description, c.contact
+		SELECT cl.class, cl.id, c.description, c.contact
 		FROM company_to_contact c
 		JOIN contact_class cl ON (c.contact_class_id = cl.id)
 		WHERE company_id = 
@@ -699,7 +702,7 @@ RETURNS SETOF contact_list AS $$
 DECLARE out_row contact_list;
 BEGIN
 	FOR out_row IN
-		SELECT cl.class, c.description, c.contact
+		SELECT cl.class, cl.id, c.description, c.contact
 		FROM eca_to_contact c
 		JOIN contact_class cl ON (c.contact_class_id = cl.id)
 		WHERE credit_id = in_credit_id

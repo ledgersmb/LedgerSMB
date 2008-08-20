@@ -30,6 +30,15 @@
                 <th align="right"><?lsmb text('Company Name') ?></th>
                 <td><?lsmb INCLUDE input element_data={size = '32', name = 'legal_name'} ?></td>
               </tr>
+             <tr>
+                <th align="right"><?lsmb text('Control Code') ?></th>
+		<td><?lsmb PROCESS input element_data = {
+			size = 32
+			name = "control_code"
+			type = "text"
+			value = control_code
+			} ?></td>
+             </tr>
               <tr>
                 <th align="right"><?lsmb text('Contact') ?></th>
                 <td><?lsmb INCLUDE input element_data={size = '32', name = 'contact'} ?></td>

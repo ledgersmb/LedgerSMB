@@ -161,17 +161,17 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		value = account_class
 	} ?>	
 	<?lsmb PROCESS input element_data = {
-		label = text('Control Code:'), #'
-		type= "text",
-		name = "control_code",
-		value = control_code,
+		label = text('Control Code:') #'
+		type= "text"
+		name = "control_code"
+		value = control_code
 		size = "20"
 	} ?><br/>
 	<?lsmb PROCESS input element_data = {
-		label = text('Name:'),
-		type= "text",
-		name = "name",
-		value = name,
+		label = text('Name:')
+		type= "text"
+		name = "name"
+		value = name
 		size = "20"
 	} ?><br/>
         <table>
@@ -231,7 +231,9 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
             <?lsmb ELSIF cl_item.entity_class == 2 ?><?lsmb text('Customer') ?>
             <?lsmb END ?>
         </td>
-        <td><?lsmb cl_item.meta_number ?></td>
+        <td><a href="<?lsmb script ?>?action=get&account_class=<?lsmb 
+		account_class ?>&entity_id=<?lsmb entity_id 
+		?>&meta_number=<?lsmb cl_item.meta_number ?>"><?lsmb cl_item.meta_number ?></a></td>
         <td><?lsmb cl_item.credit_limit ?></td>
         <td><?lsmb cl_item.start_date ?></td>
         <td><?lsmb cl_item.end_date ?></td>
@@ -589,7 +591,9 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<td class="contact"><?lsmb ct.contact ?></td>
 		<td class="contact_actions">
 			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
-				?>&contact_id=<?lsmb ct.id 
+				?>&contact=<?lsmb ct.contact 
+				?>&contact_class=<?lsmb ct.class_id
+				?>&description=<?lsmb ct.description 
 				?>&action=edit&credit_id=<?lsmb 
 				credit_id ?>"
 			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
@@ -618,13 +622,15 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name="contact_id" 
 		value=contact_id
 	} ?>
-	<div><label for="contact_type"><?lsmb text('Type:') ?></label>
-		<select name="contact_class" id="contact_type">
-		<?lsmb FOREACH cc = contact_class_list ?>
-		<option value="<?lsmb cc.id ?>"><?lsmb cc.class ?></option>
-		<?lsmb END ?>
-		</select>
-		<!-- TODO:  Move the above select list to elements.html -CT -->
+	<div>
+		<?lsmb PROCESS select element_data = {
+			name = "contact_class"
+			label = "Type"
+			text_attr = "class"
+			value_attr = "id"
+			default_values = [contact_class]		
+			options = contact_class_list
+		} ?>
 	</div>
 	<div>
 		<?lsmb PROCESS input element_data = {
