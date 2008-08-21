@@ -50,9 +50,10 @@ sub get {
     $customer->set( entity_class=> '2' );
     my $result = $customer->get();
     $customer->get_credit_id();
-    
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'contact', language => $user->{language}, 
+    my $template = LedgerSMB::Template->new( 
+	template => 'contact', 
+	user => $request->{_user},
+	locale => $request->{_locale},
 	path => 'UI/Contact',
         format => 'HTML');
     $template->render($results);
@@ -112,34 +113,120 @@ as well as customer/Company name.
 sub search {
     my ($request) = @_;
     
-    if ($request->type() eq 'POST') {
-        # assume it's asking us to do the search, now
         
-        my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
-        $customer->set(entity_class=>2);
-        my $results = $customer->search($customer->{search_pattern});
-
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Contact/customer', language => $user->{language}, 
-            format => 'HTML');
-        $template->render($results);
+    # grab the happy search page out.
         
-    }
-    else {
-        
-        # grab the happy search page out.
-        
-        my $template = LedgerSMB::Template->new( 
-		user => $user,
+    my $template = LedgerSMB::Template->new( 
+		user => $request->{_user},
 		path => 'UI/Contact' ,
-    		template => 'customer_search', 
+    		template => 'search', 
 		locale => $request->{_locale}, 
 		format => 'HTML');
             
-        $template->render();
-    }
+    $template->render($request);
 }
 
+=pod
+
+=item get_result($self, $request, $user)
+
+Requires form var: search_pattern
+
+Directly calls the database function search, and returns a set of all vendors
+found that match the search parameters. Search parameters search over address 
+as well as vendor/Company name.
+
+=back
+
+=cut
+
+sub get_results {
+    my ($request) = @_;
+        
+    my $customer = LedgerSMB::DBObject::Customer->new(base => $request, copy => 'all');
+    $customer->set(entity_class=>2);
+    $customer->{contact_info} = qq|{"%$request->{email}%","%$request->{phone}%"}|;
+    my $results = $customer->search();
+    if ($customer->{order_by}){
+       # TODO:  Set ordering logic
+    };
+
+    # URL Setup
+    my $baseurl = "$request->{script}";
+    my $search_url = "$base_url?action=get_results";
+    my $get_url = "$base_url?action=get&account_class=$request->{account_class}";
+    for (keys %$vendor){
+        next if $_ eq 'order_by';
+        $search_url .= "&$_=$form->{$_}";
+    }
+
+    # Column definitions for dynatable
+    @columns = qw(legal_name meta_number business_type curr);
+    my %column_heading;
+    $column_heading{legal_name} = {
+        text => $request->{_locale}->text('Name'),
+	href => "$search_url&order_by=legal_name",
+    };
+    $column_heading{meta_number} = {
+        text => $request->{_locale}->text('Customer Number'),
+	href => "$search_url&order_by=meta_number",
+    };
+    $column_heading{business_type} = {
+        text => $request->{_locale}->text('Business Type'),
+	href => "$search_url&order_by=business_type",
+    };
+    $column_heading{curr} = {
+        text => $request->{_locale}->text('Currency'),
+	href => "$search_url&order_by=curr",
+    };
+
+    my @rows;
+    for $ref (@{$customer->{search_results}}){
+	push @rows, 
+                {legal_name   => $ref->{legal_name},
+                meta_number   => {text => $ref->{meta_number},
+                                  href => "$get_url&entity_id=$ref->{entity_id}"		                           . "&meta_number=$ref->{meta_number}"
+		                 },
+		business_type => $ref->{business_type},
+                curr          => $ref->{curr},
+                };
+    }
+# CT:  The CSV Report is broken.  I get:
+# Not an ARRAY reference at 
+# /usr/lib/perl5/site_perl/5.8.8/CGI/Simple.pm line 423
+# Disabling the button for now.
+    my @buttons = (
+#	{name => 'action',
+#        value => 'csv_vendor_list',
+#        text => $vendor->{_locale}->text('CSV Report'),
+#        type => 'submit',
+#        class => 'submit',
+#        },
+	{name => 'action',
+        value => 'add',
+        text => $customer->{_locale}->text('Add Customer'),
+        type => 'submit',
+        class => 'submit',
+	}
+    );
+
+    my $template = LedgerSMB::Template->new( 
+		user => $user,
+		path => 'UI' ,
+    		template => 'form-dynatable', 
+		locale => $customer->{_locale}, 
+		format => ($request->{FORMAT}) ? $request->{FORMAT}  : 'HTML',
+    );
+            
+    $template->render({
+	form    => $customer,
+	columns => \@columns,
+        hiddens => $vendor,
+	buttons => \@buttons,
+	heading => \%column_heading,
+	rows    => \@rows,
+    });
+}
 =pod
 
 =over

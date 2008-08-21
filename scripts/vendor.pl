@@ -92,7 +92,7 @@ sub add {
 
 =over
 
-=item search_result($self, $request, $user)
+=item get_result($self, $request, $user)
 
 Requires form var: search_pattern
 
