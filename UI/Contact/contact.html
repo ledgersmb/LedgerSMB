@@ -594,17 +594,19 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<td class="contact_class"><?lsmb ct.class ?></td>
 		<td class="contact"><?lsmb ct.contact ?></td>
 		<td class="contact_actions">
-			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
-				?>&contact=<?lsmb ct.contact 
-				?>&contact_class=<?lsmb ct.class_id
-				?>&description=<?lsmb ct.description 
+			<a href="<?lsmb tt_url(script) 
+				?>?entity_id=<?lsmb tt_url(entity_id)
+				?>&contact=<?lsmb tt_url(ct.contact)
+				?>&contact_class=<?lsmb tt_url(ct.class_id)
+				?>&description=<?lsmb tt_url(ct.description)
 				?>&action=edit&credit_id=<?lsmb 
-				credit_id ?>"
+				tt_url(credit_id) ?>"
 			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
-			<a href="<?lsmb script ?>?entity_id=<?lsmb entity_id 
-				?>&contact_id=<?lsmb ct.id 
+			<a href="<?lsmb tt_url(script) 
+				?>?entity_id=<?lsmb tt_url(entity_id) 
+				?>&contact_id=<?lsmb tt_url(ct.id)
 				?>&action=delete_contact&credit_id=<?lsmb 
-				credit_id ?>"
+				tt_url(credit_id) ?>"
 			>[<?lsmb text('Delete'); ?>]</a>
 		</td>
 	</tr>

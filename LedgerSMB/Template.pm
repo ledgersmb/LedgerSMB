@@ -256,8 +256,16 @@ sub render {
 		$cleanvars->{text} = sub { return $self->{locale}->text(@_)};
 	} 
 	else {
-        $cleanvars->{text} = sub { return shift @_ };
-    }
+            $cleanvars->{text} = sub { return shift @_ };
+	
+        }
+        $cleanvars->{tt_url} = sub {
+               my $str  = shift @_;
+
+               my $regex = qr/([^a-zA-Z0-9_.-])/;
+               $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
+               return $str;
+        };
 
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);
