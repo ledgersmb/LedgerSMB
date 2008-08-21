@@ -207,6 +207,10 @@ div.note:hover {
 	overflow: auto;
 }
 
+tr.active {
+	background-color: #ddd;
+}
+
 /* media stuff */
 
 @media screen {

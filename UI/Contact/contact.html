@@ -740,13 +740,6 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <div id="notes_div">
 <div class="listtop"><?lsmb text('Notes') ?></div>
-<?lsmb FOREACH n = notes ?>
-<div class="note">
-<div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
-<div class="author"><?lsmb text("Author: [_1]", n.created_by) ?></div>
-<div class="note_contents"><?lsmb n.note ?></div>
-</div>
-<?lsmb END ?>
 <form action="<?lsmb script ?>" method="post">
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
@@ -782,6 +775,13 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 } ?>
 
 </form>
+<?lsmb FOREACH n = notes ?>
+<div class="note">
+<div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
+<div class="author"><?lsmb text("Author: [_1]", n.created_by) ?></div>
+<div class="note_contents"><?lsmb n.note ?></div>
+</div>
+<?lsmb END ?>
 </div>
 <?lsmb END ?>
 </body>
