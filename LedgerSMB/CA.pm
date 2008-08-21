@@ -151,7 +151,6 @@ sub all_transactions {
 
     my $fromdate_where;
     my $todate_where;
-    
     ( $form->{fromdate}, $form->{todate} ) =
       $form->from_to( $form->{year}, $form->{month}, $form->{interval} )
       if !$form->{fromdate} && !$form->{todate};
@@ -372,7 +371,6 @@ sub all_transactions {
                     }
                 }
             }
-
             $sth = $dbh->prepare($query);
             $sth->execute(@queryargs);
             my @balance = $sth->fetchrow_array;
@@ -385,7 +383,7 @@ sub all_transactions {
 
     $query = "";
     $union = "";
-
+    
     foreach my $id (@id) {
 
         # get all transactions
@@ -425,7 +423,9 @@ sub all_transactions {
 			       ac.source, a.till, ac.chart_id
 			  FROM ar a
 			  JOIN acc_trans ac ON (ac.trans_id = a.id)
-			  JOIN entity e ON (a.entity_id = e.id)
+			  JOIN entity_credit_account eca 
+			        ON (a.entity_credit_account = eca.id)
+			  JOIN entity e ON (eca.entity_id = e.id)
 			$dpt_join
 			 WHERE ac.chart_id = ?
 			       AND ($approved OR (a.approved AND ac.approved))
@@ -456,7 +456,9 @@ sub all_transactions {
 			       ac.source, a.till, ac.chart_id
 			  FROM ap a
 			  JOIN acc_trans ac ON (ac.trans_id = a.id)
-			  JOIN entity e ON (a.entity_id = e.id)
+			  JOIN entity_credit_account eca 
+			        ON (a.entity_credit_account = eca.id)
+			  JOIN entity e ON (eca.entity_id = e.id)
 			$dpt_join
 			 WHERE ac.chart_id = ?
 			       AND ($approved OR (a.approved AND ac.approved))
@@ -482,7 +484,6 @@ sub all_transactions {
     }
 
     $query .= qq| ORDER BY $sortorder |;
-
     $sth = $dbh->prepare($query);
     $sth->execute(@queryargs) || $form->dberror($query);
 

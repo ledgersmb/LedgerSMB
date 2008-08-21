@@ -186,7 +186,7 @@ h2.error {
   font-size: 14pt;
 }
 
-div.note {
+#notes_div div.note {
 	margin: 1em;
 	padding: 1em;
 	border: 2px;
@@ -197,7 +197,7 @@ div.note {
 	border-style: groove;
 }
 
-div.note:hover {
+#notes_div div.note:hover {
 	overflow:visible;
 	background-color: #ddd;
 	border-style: groove;
@@ -205,6 +205,10 @@ div.note:hover {
 	width: 90%;
 	min-height: 5em;
 	overflow: auto;
+}
+
+#company_div div.note {
+	display: none;
 }
 
 tr.active {
