@@ -60,6 +60,9 @@ sub edit_user {
     # uses the same page as create_user, only pre-populated.
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
+    my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
+    
+    $user->get($request->{user_id});
     
     my $all_roles = $admin->get_roles();
 
@@ -84,10 +87,9 @@ sub edit_user {
         );
     }
     else {
-        my $edited_user = $admin->get_entire_user($request->{user});
         $template->render(
             {
-                user=>$edited_user, 
+                user=>$user, 
                 roles=>$all_roles,
                 user_roles=>$admin->get_user_roles($request->{user})
             }

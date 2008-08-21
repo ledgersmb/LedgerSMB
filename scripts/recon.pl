@@ -113,7 +113,7 @@ sub search {
             format=>'HTML',
             path=>"UI",
             mode=>$type,
-            accounts=>$recon->get_accounts();
+            accounts=>$recon->get_accounts()
         );
         return $template->render();
     }

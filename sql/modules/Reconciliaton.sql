@@ -491,7 +491,7 @@ create type recon_accounts as (
     id int
 );
 
-create or replace function reconciliation__get_accounts () returns setof recon_accounts as $$
+create or replace function reconciliation__account_list () returns setof recon_accounts as $$
     SELECT 
         coa.accno || ' ' || coa.description as name,
         coa.id as id

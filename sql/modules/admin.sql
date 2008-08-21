@@ -198,13 +198,13 @@ CREATE OR REPLACE FUNCTION admin__remove_table_from_group(in_table TEXT, in_role
         
 $$ language 'plpgsql';
 
-create or replace function admin__get_user(in_user TEXT) returns setof users as $$
+create or replace function admin__get_user(in_user INT) returns setof users as $$
     
     DECLARE
         a_user users;
     BEGIN
         
-        select * into a_user from users where username = in_user;
+        select * into a_user from users where id = in_user;
         IF NOT FOUND THEN
             RAISE EXCEPTION 'cannot find user %', in_user;
         END IF;
@@ -215,15 +215,30 @@ create or replace function admin__get_user(in_user TEXT) returns setof users as 
     END;    
 $$ language plpgsql;
 
-create or replace function admin__get_roles_for_user(in_user TEXT) returns setof lsmb_roles as $$
+create or replace function admin__get_roles_for_user(in_user_id INT) returns setof text as $$
     
     declare
-        u_role lsmb_roles;
+        u_role text;
         a_user users;
     begin
-        select * into a_user from admin_get_user(in_user);
+        select * into a_user from admin__get_user(in_user_id);
         
-        FOR u_role IN select * from lsmb_roles lr WHERE lr.user_id = a_user.id LOOP
+        FOR u_role IN 
+        select r.rolname 
+        from 
+            pg_roles r,
+            (select 
+                m.roleid 
+             from 
+                pg_auth_members m, pg_roles b 
+             where 
+                m.member = b.oid 
+             and 
+                b.rolname = a_user.username
+            ) as ar
+         where 
+            r.oid = ar.roleid
+         LOOP
         
             RETURN NEXT u_role;
         
@@ -297,7 +312,7 @@ create view role_view as
     select * from pg_auth_members m join pg_authid a ON (m.roleid = a.oid);
         
 
-create or replace function admin__is_group(in_group_name text) returns bool as $$
+create or replace function admin__is_group(in_dbname TEXT, in_group_name text) returns bool as $$
     
     DECLARE
         
@@ -324,7 +339,7 @@ CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT, in_dbname TEX
         stmt text;
         
     BEGIN
-        stmt := 'create role '|| quote_ident(quote_ident(in_dbname) || '_lsmb_' || quote_ident(in_group_name) );
+        stmt := 'create role lsmb_'|| quote_ident(quote_ident(in_dbname) || '__' || quote_ident(in_group_name) );
         execute stmt;
         return 1;
     END;
@@ -373,7 +388,7 @@ CREATE OR REPLACE FUNCTION admin__delete_group (in_dbname TEXT, in_group_name TE
         if not found then
             return 'f'::bool;
         else
-            stmt := 'drop role ' || quote_ident(in_dbname || '_lsmb_' || in_group_name);
+            stmt := 'drop role lsmb_' || quote_ident(in_dbname || '__' || in_group_name);
             execute stmt;
             return 't'::bool;
         end if;
@@ -392,7 +407,7 @@ DECLARE out_rolename RECORD;
 BEGIN
 	FOR out_rolename IN 
 		SELECT rolname FROM pg_authid 
-		WHERE oid IN (SELECT id FROM connectby(
+		WHERE oid IN (SELECT id FROM connectby (
 			'(SELECT m.member, m.roleid, r.oid FROM pg_authid r 
 			LEFT JOIN pg_auth_members m ON (r.oid = m.roleid)) a',
 			'oid', 'member', 'oid', '320461', '0', ','
@@ -406,7 +421,6 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 -- TODO:  Add admin user
-
 
 --CREATE OR REPLACE FUNCTION admin_audit_log () returns int as $$
     
@@ -464,5 +478,18 @@ BEGIN
 END;
 $$ language plpgsql;
 
+create or replace function admin__user_preferences (in_user int) returns setof user_preference as $$
+    
+declare
+    v_row user_preferences;
+BEGIN
+    select * into v_row from user_preference where user_id = in_user;
+    
+    IF NOT FOUND THEN
+    
+        RAISE EXCEPTION "Could not find user preferences for id %", in_user;
+    ELSE
+        return next v_row;
+    END IF;
 
 commit;

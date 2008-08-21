@@ -96,7 +96,7 @@ sub save_roles {
     my $user = LedgerSMB::DBObject::User->new( base=>$self, copy=>'all' );
     
     my $roles = $self->exec_method( procname => "admin__all_roles" );
-    my $user_roles = $self->exec_method(procname => "admin__get_user_roles", args=>[ $self->{ username } ] );
+    my $user_roles = $self->exec_method(procname => "admin__get_user_roles", args=>[ $user->{id} ] );
     
     my %active_roles;
     for my $role (@{ $user_roles }) {

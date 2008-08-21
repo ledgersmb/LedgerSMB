@@ -2,7 +2,7 @@
 BEGIN;
 
 
-CREATE OR REPLACE FUNCTION employee_save(
+CREATE OR REPLACE FUNCTION employee__save(
     in_person int, in_entity int, in_startdate date, in_enddate date,
 	in_role text, in_sales boolean, in_dob date, 
     in_managerid integer, in_employeenumber text
@@ -75,7 +75,7 @@ create view employees as
     JOIN salutation s ON (p.salutation_id = s.id);
     
 
-CREATE OR REPLACE FUNCTION employee_get
+CREATE OR REPLACE FUNCTION employee__get
 (in_id integer)
 returns employees as
 $$
@@ -83,21 +83,16 @@ DECLARE
 	emp employees%ROWTYPE;
 BEGIN
 	SELECT 
-	    s.salutation, 
-	    p.first_name,
-	    p.last_name,
 	    ee.* 
 	INTO emp 
     FROM employees ee 
-    join person p USING (entity_id)
-    JOIN salutation s ON (p.salutation_id = s.id)
     WHERE ee.entity_id = in_id;
     
 	RETURN emp;
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION employee_list_managers
+CREATE OR REPLACE FUNCTION employee__list_managers
 (in_id integer)
 RETURNS SETOF employees as
 $$

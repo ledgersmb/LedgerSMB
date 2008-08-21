@@ -40,10 +40,43 @@ sub get {
     
     my $self = shift @_;
     my $id = shift;
-    my $user = @{ $self->exec_method(funcname=>'admin__get_user',
-        args=>[$id])}[0];
-        
-    return $user;
+    $self->{user} = @{ $self->exec_method(
+        funcname=>'admin__get_user',
+        args=>[$id]
+        )
+    }[0];
+    $self->{pref} = @{ $self->exec_method(
+        funcname=>'admin__user_preferences',
+        args=>[$id]
+        )
+    }[0];
+    $self->{person} = @{ $self->exec_method(
+        funcname=>'admin__user_preferences',
+        args=>[$self->{user}->{entity_id}]
+        )
+    }[0];
+    $self->{employee} = @{ $self->exec_method(
+        funcname=>'employee__get',
+        args=>[$id]
+        )
+    }[0];
+    $self->{entity} = @{ $self->exec_method( 
+        funcname=>'entity__get_entity',
+        args=>[ $self->{user}->{entity_id} ] 
+        ) 
+    }[0];
+    $self->{roles} = $self->exec_method(
+        funcname=>'admin__get_roles_for_user',
+        args=>[$id]
+    );
+    
+    
+    #$user->{user} = $u->get($id);
+    #$user->{pref} = $u->preferences($id);
+    #$user->{employee} = $u->employee($user->{user}->{entity_id});
+    #$user->{person} = $u->person($user->{user}->{entity_id});
+    #$user->{entity} = $u->entity($id);
+    #$user->{roles} = $u->roles($id);
 }
 
 sub remove {
@@ -77,6 +110,14 @@ sub get_all_users {
     
     my @ret = $self->exec_method( funcname=>"user__get_all_users" );
     $self->{users} = \@ret;
+}
+
+sub roles {
+    
+    my $self = shift @_;
+    my $id = shift @_;
+    
+    
 }
 
 1;

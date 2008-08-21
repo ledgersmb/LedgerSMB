@@ -180,9 +180,16 @@ sub get_entire_user {
     
     my $self = shift @_;
     my $id = shift @_;
-    my $user = LedgerSMB::DBObject::User->new(base=>$self,copy=>'all');
-    $user->get($id);
+    my $user = {};
+    my $u = LedgerSMB::DBObject::User->new(base=>$self,copy=>'all');
+    $user->{user} = $u->get($id);
+    $user->{pref} = $u->preferences($id);
+    $user->{employee} = $u->employee($user->{user}->{entity_id});
+    $user->{person} = $u->person($user->{user}->{entity_id});
+    $user->{entity} = $u->entity($id);
+    $user->{roles} = $u->roles($id);
     
+    return $user;
 }
 
 sub get_roles {
