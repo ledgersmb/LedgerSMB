@@ -114,8 +114,8 @@ sub search {
     my ($request) = @_;
     
         
-    # grab the happy search page out.
-        
+    $request->{script} = "customer.pl";
+    $request->{account_class} = 2; 
     my $template = LedgerSMB::Template->new( 
 		user => $request->{_user},
 		path => 'UI/Contact' ,

@@ -23,12 +23,7 @@ div.note_contents {
 	white-space:pre
 }
 
-#line-two {
-	position: relative;
-	left: 12ex;
-}
-
-#line-three {
+.addl-address {
 	position: relative;
 	left: 12ex;
 }
