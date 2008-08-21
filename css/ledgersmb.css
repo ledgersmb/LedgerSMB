@@ -186,6 +186,26 @@ h2.error {
   font-size: 14pt;
 }
 
+div.note {
+	margin: 1em;
+	padding: 1em;
+	border: 2px;
+	height: 5em;
+	width: 90%;
+	overflow: hidden;
+	background-color: #ddd;
+	border-style: groove;
+}
+
+div.note:hover {
+	overflow:visible;
+	background-color: #ddd;
+	border-style: groove;
+	height: 100%;
+	width: 90%;
+	min-height: 5em;
+	overflow: auto;
+}
 
 /* media stuff */
 

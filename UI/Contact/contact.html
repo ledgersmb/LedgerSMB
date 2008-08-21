@@ -211,7 +211,9 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} ?>
     </form>
 <?lsmb FOREACH n = notes ?>
+<div class="note">
 <div class="note_contents"><?lsmb n.note ?></div>
+</div>
 <?lsmb END ?>
 </div>
 <?lsmb IF entity_id ?>
