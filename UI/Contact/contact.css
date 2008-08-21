@@ -23,6 +23,15 @@ div.note_contents {
 	white-space:pre
 }
 
+#line-two {
+	position: relative;
+	left: 12ex;
+}
+
+#line-three {
+	position: relative;
+	left: 12ex;
+}
 
 div label {
 	margin-left: 1em;
