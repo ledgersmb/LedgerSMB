@@ -33,7 +33,7 @@ sub get_search_criteria {
     @{$self->{batch_users}} = $self->exec_method(
          funcname => 'batch_get_users'
     );
-    unshift @{$self->{batch_users}}, {username => $self->{_locale}->text('Any'), id => '0', entity_id => ''};
+    unshift @{$self->{batch_users}}, {username => $self->{_locale}->text('Any'), id => '0', entity_id => '0'};
 }
 
 sub get_search_results {
@@ -42,6 +42,9 @@ sub get_search_results {
         $search_proc = "batch_search_mini";
     } else {
         $search_proc = "batch_search";
+    }
+    if ($self->{created_by_eid} == 0){
+	delete $self->{created_by_eid};
     }
     if ($args->{custom_types}->{$self->{class_id}}->{select_method}){
         $search_proc 
