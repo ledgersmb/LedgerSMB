@@ -293,6 +293,15 @@ CREATE TABLE company_to_contact (
 
 COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
   
+CREATE TABLE entity_bank_account (
+    id serial not null,
+    entity_id int not null references entity(id) ON DELETE CASCADE,
+    bic varchar,
+    iban varchar,
+    UNIQUE (id),
+    PRIMARY KEY (entity_id, bic, iban)
+);
+
 CREATE TABLE entity_credit_account (
     id serial not null unique,
     entity_id int not null references entity(id) ON DELETE CASCADE,
@@ -364,7 +373,7 @@ CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 CREATE TABLE note (id serial primary key, note_class integer not null references note_class(id), 
                    note text not null, vector tsvector not null, 
                    created timestamp not null default now(),
-                   created_by text DEFAULT SESSION_USER;
+                   created_by text DEFAULT SESSION_USER,
                    ref_key integer not null);
 
 CREATE TABLE entity_note(entity_id int references entity(id)) INHERITS (note);
@@ -589,15 +598,6 @@ create view employee as
 */
 
 
-CREATE TABLE entity_bank_account (
-    id serial not null,
-    entity_id int not null references entity(id) ON DELETE CASCADE,
-    bic varchar,
-    iban varchar,
-    UNIQUE (id),
-    PRIMARY KEY (entity_id, bic, iban)
-);
-
 CREATE VIEW customer AS 
     SELECT 
         c.id,
@@ -777,7 +777,7 @@ CREATE TABLE ap (
   terms int2 DEFAULT 0,
   description text,
   force_closed bool,
-  entity_credit_account int references entity_credit_account(id)
+  entity_credit_account int references entity_credit_account(id) NOT NULL
 );
 
 COMMENT ON COLUMN ap.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
