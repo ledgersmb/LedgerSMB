@@ -741,9 +741,8 @@ qq|ca.pl?path=$form->{path}&action=list_transactions&accounttype=$form->{account
         $endbalance =
           $form->format_amount( \%myconfig,
             ( $ref->{balance} + $ref->{amount} ) * $ml, 2, " " );
-
-        if ( $ref->{charttype} eq "H" && $subtotal && $form->{l_subtotal} ) {
-
+        if ( ($ref->{charttype} eq "H") && $subtotal && $form->{l_subtotal} ) {
+            my %column_data;
             if ($subtotal) {
 
                 for (qw(accno begbalance endbalance)) {
