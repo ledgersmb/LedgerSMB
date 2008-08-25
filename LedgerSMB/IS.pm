@@ -36,10 +36,10 @@ use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 
+
 sub invoice_details {
     use LedgerSMB::CP;
     my ( $self, $myconfig, $form ) = @_;
-
     $form->{duedate} = $form->{transdate} unless ( $form->{duedate} );
 
     # connect to database
@@ -53,7 +53,6 @@ sub invoice_details {
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{duedate}, $form->{transdate} )
       || $form->dberror($query);
-
     ( $form->{terms}, $form->{weightunit} ) = $sth->fetchrow_array;
     $sth->finish;
 
@@ -376,15 +375,14 @@ sub invoice_details {
                   Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
                 $tax += Tax::apply_taxes( \@taxaccounts, $form, $linetotal );
             }
-
-            foreach $item (@taxaccounts) {
-                push @taxrates, 100 * $item->rate;
-                $taxaccounts{ $item->account } += $item->value;
+            for my $taxitem (@taxaccounts) {
+                push @taxrates, 100 * $taxitem->rate;
+                $taxaccounts{ $taxitem->account } += $taxitem->value;
                 if ( $form->{taxincluded} ) {
-                    $taxbase{ $item->account } += $taxbase;
+                    $taxbase{ $taxitem->account } += $taxbase;
                 }
                 else {
-                    $taxbase{ $item->account } += $linetotal;
+                    $taxbase{ $taxitem->account } += $linetotal;
                 }
             }
 
