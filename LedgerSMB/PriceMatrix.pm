@@ -122,7 +122,6 @@ sub price_matrix {
     } elsif ( $form->{vendor_id} ) {
         $pmh->execute( $ref->{id} );
     } else {
-        $form->error('Access Denied');
         return;
     }
 
