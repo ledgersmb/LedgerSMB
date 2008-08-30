@@ -47,7 +47,7 @@ declare
 BEGIN
     SELECT * INTO v_row FROM entity WHERE id = in_entity_id;
     IF NOT FOUND THEN
-        raise exception "Could not find entity with ID %", in_entity_id;
+        raise exception 'Could not find entity with ID %', in_entity_id;
     ELSE
         return next v_row;
     END IF;
