@@ -6,6 +6,9 @@ LedgerSMB:  8.2.2, 8.1.7, and 8.0.11
 These versions produce an error concerning wrong data types but the error shows 
 that the data types are indeed correct.
 
+LedgerSMB 1.2.15 and higher are fully supported on PostgreSQL 8.3.x.  Earlier 
+versions had some issues.
+
 -------------------------------
 
 W3M does not handle the <BUTTON> element properly and does not work.

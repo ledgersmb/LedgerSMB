@@ -1,3 +1,7 @@
+Changelog for 1.2.16
+* Correcting "Attempt to free unreferenced scalar" error on 5.10.0 (Chris T)
+* Correcting "Access Denied" when searching for timecards (Seneca)
+
 Changelog for 1.2.15
 * Uppercasing some SQL statements (Chris T)
 * Fixed for AR allocation corner case (Victor Q, 1881199)
