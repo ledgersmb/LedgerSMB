@@ -833,9 +833,9 @@ sub transactions {
 		          a.ponumber $acc_trans_flds
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
-		     JOIN employee e ON (a.person_id = e.entity_id)
+		LEFT JOIN employee e ON (a.person_id = e.entity_id)
 		LEFT JOIN employee m ON (e.manager_id = m.entity_id)
-		     JOIN entity ee ON (e.entity_id = ee.id)
+		LEFT JOIN entity ee ON (e.entity_id = ee.id)
                 LEFT JOIN entity me ON (m.entity_id = me.id)
 		     JOIN entity vce ON (vc.entity_id = vce.id)
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
