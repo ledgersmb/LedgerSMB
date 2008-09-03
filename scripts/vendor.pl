@@ -41,7 +41,6 @@ of the vendor informations.
 
 =cut
 
-
 sub get {
     
     my ($request) = @_;
@@ -67,6 +66,24 @@ sub add_location {
 
     _render_main_screen($vendor);
 	
+}
+
+sub generate_control_code {
+    my ($request) = @_;
+    my $vendor= LedgerSMB::DBObject::Vendor->new({base => $request, copy => 'all'});
+    
+    my ($ref) = $vendor->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+    ($vendor->{control_code}) = values %$ref;
+    $vendor->{dbh}->commit;
+    if ($vendor->{meta_number}){
+        edit($vendor);
+    } else {
+       _render_main_screen($vendor);
+    }
+    
 }
 
 =pod

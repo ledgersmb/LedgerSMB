@@ -166,7 +166,13 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name = "control_code"
 		value = control_code
 		size = "20"
-	} ?><br/>
+	} ?><?lsmb PROCESS button element_data = {
+		text = text('Generate')
+		type = "submit"
+		name = "action"
+		value = "generate_control_code"
+		class = "submit"
+        } ?><br/>
 	<?lsmb PROCESS input element_data = {
 		label = text('Name:')
 		type= "text"
@@ -301,14 +307,14 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "20"
 		} #' ?>
             </td>
-            <td>
+            <td><span id="terms-span">
 		<?lsmb INCLUDE input element_data = {
 			label = text('Terms:'),
 			name = "terms",
 			value = terms,
 			type = "text",
 			size = "5"
-		} ?> <?lsmb text('days') ?>
+		} ?> <?lsmb text('days') ?></span>
             </td>
 	</tr>
 	<tr id="discount-gifi-row">

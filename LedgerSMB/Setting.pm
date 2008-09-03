@@ -47,23 +47,14 @@ your software.
 =cut
 
 package LedgerSMB::Setting;
-use LedgerSMB;
-use LedgerSMB::DBObject;
+use base qw(LedgerSMB::DBObject);
 use strict;
 our $VERSION = '1.0.0';
 
-our @ISA = qw(LedgerSMB::DBObject);
-
-sub AUTOLOAD {
-    my $self     = shift;
-    my $AUTOLOAD = $LedgerSMB::Setting::AUTOLOAD;
-    $AUTOLOAD =~ s/^.*:://;
-    $self->exec_method( procname => "setting_$AUTOLOAD", args => \@_ );
-}
 
 sub get {
     my $self = shift;
-    my $hashref = shift @{ $self->exec_method( procname => 'setting_get' ) };
+    my $hashref = shift @{ $self->exec_method( funcname => 'setting_get' ) };
     $self->merge( $hashref, 'value' );
 }
 
