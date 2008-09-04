@@ -286,7 +286,7 @@ DVCS Participation Encouraged
 
 The LedgerSMB developers welcome contributions of code and
 real-world testing.  DVCS can be an effective way to conserve
-developer time, the LedgerSBM community's most limited resource.
+developer time, the LedgerSMB community's most limited resource.
 
 Developing with DVCS such as git will make it easier to
 communicate about LedgerSMB code. If you are doing work with
