@@ -1,0 +1,305 @@
+==========================================
+Distributed LedgerSMB Development With Git
+==========================================
+
+This document demonstrates how developer-integrators can work on
+local LedgerSMB customization and help with upstream LedgerSMB
+development using the distributed version control system, git.
+
+git is useful in the following areas:
+
+* Help with upstream development of LedgerSMB
+
+* Make it easier to communicate send and receive bugfixes in
+  prerelease/development versions of LedgerSMB
+
+* Making necessary customizations that are unsuitable for
+  upstream LedgerSMB
+
+* Putting customer templates and graphics under version control
+
+* Layering multiple customization branches to reproduce a
+  configuration required for a particular customer deployment
+
+* (One way of) putting the plaintext backup of the company
+  database under version control.  At any time you can and do
+  make snapshots, then examine the diff to see how each
+  LedgerSMB operation affects the database tables.
+
+
+Cloning the LedgerSMB Sourceforge Subversion Repository
+=======================================================
+
+In time we may have an official git mirror from which to clone
+(a very quick copy operation), but you can make your own clone
+of the LedgerSMB repository directly from Sourceforge:
+
+  $ git svn clone https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/ ledgersmb
+  Initialized empty Git repository in /path/to/ledgersmb/.git/
+  	A	ledger-smb/login.pl
+  	A	ledger-smb/menu.ini
+  	A	ledger-smb/ledger-smb.gif
+  	A	ledger-smb/is.pl
+  	A	ledger-smb/VERSION
+  (..., ..., go get coffee)
+
+
+An alternative method using rsync to bring down the entire
+subversion repository (not just the working copy) can be used
+for those experiencing sourceforge connection problems:
+
+  $ rsync -avz rsync://ledger-smb.svn.sourceforge.net/svn/ledger-smb/* /path/to/ledger-smb.svn
+
+
+Then clone from that local subversion repository URL, rewriting
+the root to match the SourceForge repository:
+
+  $ git svn clone --rewrite-root=https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/ file://path/to/ledger-smb.svn ledgersmb
+
+
+Fixing A Bug Using Git And Bugfix Branch
+========================================
+
+This section demonstrates fixing a trivial bug in LedgerSMB. The
+method of communicating the patch to fix the bug differs
+depending on whether you have commit priviledges to the
+SourceForge repository or are using the SourceForge bug tracker
+to send a patch.
+
+
+Example: SourceForge Bug SF2046815
+----------------------------------
+
+(Note: The following commit was actually made by einhverfr)
+
+During testing of LedgerSMB trunk, we found a simple bug in the
+schema definition, and filed the report as SF2046815:
+
+  ERROR: column e.control_code does not exist LINE 1:
+  ..._ap_account_id, ec.cash_account_id, ec.threshold,
+  e.control_... ^ QUERY: SELECT c.id, e.id, ec.entity_class,
+  ec.discount, ec.taxincluded, ec.creditlimit, ec.terms,
+  ec.meta_number, ec.business_id, ec.language_code,
+  ec.pricegroup_id, ec.curr, ec.startdate, ec.enddate,
+  ec.ar_ap_account_id, ec.cash_account_id, ec.threshold,
+  e.control_code, ec.id FROM company c JOIN entity e
+  ON (c.entity_id = e.id) JOIN entity_credit_account ec
+  ON (c.entity_id = ec.entity_id) WHERE e.id = $1 AND
+  ec.entity_class = CASE WHEN $2 = 3 THEN 2 WHEN $2 IS NULL THEN
+  ec.entity_class ELSE $2 END CONTEXT: PL/pgSQL
+  function "entity__list_credit" line 4 at FOR over SELECT rows
+
+
+This is a one-liner fix, but it is still worth it to make a
+branch, since fast branching and easy merging are strengths of
+git.  The practice scales up well when you want to maintain
+multiple branches and share them with others.
+
+For those new to git: Here, we have the prompt set up to display
+the current branch in parentheses.  If git is not currently on
+any branch, the SHA1 name of the current HEAD will be displayed:
+
+We intend our bugfix branch to be against the current trunk, so
+we check that remote branch out.  It is important to use the
+git-svn managed remotes only for branching purposes, never
+commit to them.
+
+  (1.2_jfkw) $ git checkout trunk
+  Note: moving to "trunk" which isn't a local branch
+  If you want to create a new branch from this checkout, you may do so
+  (now or later) by using -b with the checkout command again. Example:
+    git checkout -b <new_branch_name>
+  HEAD is now at cb92467... Adding meta_number to company_billing_info return set
+
+
+Update the branch to the latest revision before branching:
+
+  (cb92467...) $ git svn rebase --all
+  Current branch HEAD is up to date.
+
+
+Now, we'll make a bugfix-branch, I prefer it to be named after
+the SF bug:
+
+  (cb92467...) $ git checkout -b 1.3_SF2046815_missing_entity_control_code
+  Switched to a new branch "1.3_SF2046815_missing_entity_control_code"
+
+
+You can use the git branch command to list all local branches.
+For example, I'm keeping around all branches for bugs and
+features I've worked on:
+
+  $ git branch
+    1.2_SF1877860_typo
+    1.2_SF1928336_renames
+    1.2_SF2013331_cookie_name
+    1.2_SF2025931_till_equals_1
+    1.2_cdog
+    1.2_cdog_templates
+    1.2_generate_salesorders_detail_default
+    1.2_jfkw
+    1.2_partnumber_like_space_delimiter
+    1.2_print_pdf_default
+    1.2_project_generate_orders
+    1.2_receipts_on_invoice_screen
+    1.2_require_customernumber
+    1.2_require_customernumber_set_to_name
+    1.2_sql_ins_customer_ins_project
+    1.3_SF2013331_cookie_name
+    1.3_SF2017284_smallgray_css
+    1.3_SF2043569_install_doc
+  * 1.3_SF2046815_missing_entity_control_code
+    1.3_jfkw
+    master
+
+
+Again, note that the remote branches (trunk, 1.2) are seen with
+the git branch -a command.  You should never modify those, just
+think of them as read-only.  Git will keep track of the remote
+origin branch your local branch came from.
+
+Back to the bugfixing task at hand.  Edit the offending file:
+
+  (1.3_SF2046815_missing_entity_control_code) $ emacsclient -n sql/Pg-database.sql
+
+
+And in your editor, fix, save, test, etc.  When ready, view a
+diff of the branch tip (HEAD) to your working copy:
+
+  (1.3_SF2046815_missing_entity_control_code) $ git diff
+  diff --git a/sql/Pg-database.sql b/sql/Pg-database.sql
+  index e1d8251..5bf84c3 100644
+  --- a/sql/Pg-database.sql
+  +++ b/sql/Pg-database.sql
+  @@ -19,6 +19,7 @@ CREATE index entity_class_idx ON entity_class(lower(class));
+
+   CREATE TABLE entity (
+     id serial UNIQUE,
+  +  control_code text not null,
+     name text check (name ~ '[[:alnum:]_]'),
+     entity_class integer references entity_class(id) not null ,
+     created date not null default current_date,
+
+
+At this point you encounter something unique about git.  You
+have an intermediary layer between your working copy and HEAD,
+called the index.  The index has been described variously as
+'the next commit'.
+
+Use the git status command to see what has changed in your
+working copy:
+
+  (1.3_SF2046815_missing_entity_control_code) $ git status
+  # On branch 1.3_SF2046815_missing_entity_control_code
+  # Changed but not updated:
+  #   (use "git add <file>..." to update what will be committed)
+  #
+  #       modified:   sql/Pg-database.sql
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+
+And decide which files among these, in whole or just in part
+should be added to the index, which is to be the next commit.
+
+In this case, there's only one file changed, so you can add it
+to the next local commit by filename, or by adding all under the
+current directory (e.g. '.'):
+
+  (1.3_SF2046815_missing_entity_control_code) $ git add .
+
+
+Check the status now, where you see that file added to the index
+is designated 'to be committed'.
+
+  (1.3_SF2046815_missing_entity_control_code) $ git status
+  # On branch 1.3_SF2046815_missing_entity_control_code
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       modified:   sql/Pg-database.sql
+  #
+
+
+If you want to review the diff again once the index has been
+updated, use git diff --cached.
+
+
+Commiting Your Changes Locally
+------------------------------
+
+The above git status output looks good, we're ready to commit
+locally:
+
+  (1.3_SF2046815_missing_entity_control_code) $ git commit -m 'add missing entity.control_code column'
+  Created commit a3503cb: add missing entity.control_code column
+   1 files changed, 1 insertions(+), 0 deletions(-)
+
+
+Commiters: Push Upstream With dcommit
+-------------------------------------
+
+If you have commit rights to the SourceForge repository, you can
+git svn dcommit your local commits directly.
+
+Update your bugfix branch with git svn rebase first:
+
+  (1.3_SF2046815_missing_entity_control_code) $ git svn rebase
+  Current branch 1.3_SF2046815_missing_entity_control_code is up to date.
+
+
+Now, you can git svn dcommit one or more commits on this branch
+which are not yet in the upstream subversion repository:
+
+  (1.3_SF2046815_missing_entity_control_code) $ git svn dcommit
+  Committing to https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/trunk ...
+  Authentication realm: <https://ledger-smb.svn.sourceforge.net:443> SourceForge Subversion area
+  Username: einhverfr
+  Password for 'einhverfr':
+  	M	INSTALL
+  Committed r2253
+  	M	INSTALL
+  r2253 = dcc0556bd0e1db3a4fc0788f2e60b62fa0c3378d (trunk)
+  No changes between current HEAD and refs/remotes/trunk
+  Resetting to the latest refs/remotes/trunk
+
+(Note: The above upstream commit is simulated for the purposes
+of this tutorial)
+
+
+Or, Generate A Patch
+--------------------
+
+If you don't have commit rights, and you're simply patching a
+bug from the tracker, make a diff of your mature/completed bug
+branch to its origin branch appropriate documentation:
+
+  (1.3_SF2046815_missing_entity_control_code) $ git diff trunk > 1.3_SF2046815_missing_entity_control_code.diff
+
+
+And upload 1.3_SF2046815_missing_entity_control_code.diff as a
+patch with appropriate documentation.
+
+
+DVCS Participation Encouraged
+=============================
+
+The LedgerSMB developers welcome contributions of code and
+real-world testing.  DVCS can be an effective way to conserve
+developer time, the LedgerSBM community's most limited resource.
+
+Developing with DVCS such as git will make it easier to
+communicate about LedgerSMB code. If you are doing work with
+LedgerSMB, DVCS makes it easier to review and if appropriate, to
+merge your mature feature branch upstream.
+
+Future additions to this document may include using a git
+hosting service such as gitorious or github.  With a shared git
+repository you can share your branches with others who may want
+to collaborate or test.  Best of all you can ask the LedgerSMB
+committers to pull from your repository when your branch is
+mature enough to be accepted upstream.
+
+If you're interested in using DVCS and git in particular to
+contribute to LedgerSMB, The author is available on #ledgersmb
+as jfkw or on the mailing list ledgersmb-dev.
