@@ -281,6 +281,79 @@ And upload 1.3_SF2046815_missing_entity_control_code.diff as a
 patch with appropriate documentation.
 
 
+Example: Removing a File
+------------------------
+
+Dubbed 'the stupid content tracker', git can guess at content
+changes to track renames.  However, git handles the usual
+operations of add, delete, rename to best and most predictable
+effect if you use the git {mv,rm} form to explicitly tell git
+the intent of your layout changes.
+
+In this example, we are removing the outdated README.svn-status
+file.  We don't need to make a branch for this small change.
+
+Rebase your current remote-tracking branch to the latest
+revision:
+
+  (1.3_jfkw) $ git svn rebase
+  Current branch 1.3_jfkw is up to date.
+
+
+Delete the file:
+
+  (1.3_jfkw) $ git rm README.svn-status
+  rm 'README.svn-status'
+
+
+This updates the index.  Now examine 'your next commmit':
+
+  (1.3_jfkw) $ git status
+  # On branch 1.3_jfkw
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #	deleted:    README.svn-status
+
+
+Looks good, commit the change:
+
+  (1.3_jfkw) $ git commit -m 'remove outdated README.svn-status'
+  Created commit 855a980: remove outdated README.svn-status
+   1 files changed, 0 insertions(+), 3 deletions(-)
+   delete mode 100644 README.svn-status
+
+
+Here we find that git svn dcommit does the right thing with this
+kind of commit, too:
+
+  (1.3_jfkw) $ git svn dcommit
+  Committing to https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/trunk ...
+  	D	README.svn-status
+  Committed r2314
+  	D	README.svn-status
+  r2314 = 93d75d87fb9300045f53ee3c8a585b2ecc402e4f (trunk)
+  No changes between current HEAD and refs/remotes/trunk
+  Resetting to the latest refs/remotes/trunk
+
+
+Note that we weren't asked for the username and password again.
+
+For a reality check using a subversion checkout, this changeset
+appears indistinguishable from one made with subversion itself.
+
+  $ svn up /path/to/svn/ledgersmb13
+  D    /path/to/svn/ledgersmb13/README.svn-status
+  Updated to revision 2314.
+
+  $ svn log --limit 3 /path/to/svn/ledgersmb13
+  --------------------------------------------------------------------
+  r2314 | jfkw | 2008-09-04 18:12:12 -0400 (Thu, 04 Sep 2008) | 1 line
+
+  remove outdated README.svn-status
+  --------------------------------------------------------------------
+
+
 DVCS Participation Encouraged
 =============================
 
