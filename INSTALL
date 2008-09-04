@@ -7,10 +7,11 @@ release tarball.
 
 Subsitute your own values for file paths and definitions shown in ALL_CAPS.
 
+
 Install LedgerSMB 1.3 Source
 ------------------------------------
 
-LedgerSMB 1.3 is still in pre-beta, with no tarball release files. Check out
+LedgerSMB 1.3 is still in pre-alpha, with no tarball release files. Check out
 LedgerSMB 1.3 from svn trunk:
 
 $ svn co https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/trunk /path/to/ledgersmb13
@@ -19,9 +20,9 @@ $ svn co https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/trunk /path/t
 Change working directory to WORKING_DIR:
 ----------------------------------------
 
-WORKING_DIR is the location you have manually installed the LedgerSMB 1.3 source
-or checkout. LedgerSMB 1.3 in pre-alpha form is not currently packaged for any
-distribution.
+WORKING_DIR is the location where you have manually installed the LedgerSMB 1.3
+source or checkout. LedgerSMB 1.3 in pre-alpha form is not currently packaged
+for any distribution.
 
 $ cd /path/to/ledgersmb13/
 /path/to/ledgersmb13 $
@@ -56,6 +57,7 @@ The following sed command applies the repetitive substitution automatically.
 $ cat ledgersmb-httpd.conf | sed "s|WORKING_DIR|$(pwd)|" > ledgersmb-httpd-13.conf
 
 You can also apply the substitution manually in your preferred text editor.
+
 
 Install the Apache conf file
 ----------------------------
@@ -282,8 +284,8 @@ $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Person.sql
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Report.sql
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Voucher.sql
 
-At the time of this writing, the following files are in an earlier state of development and not ready to be
-loaded:
+At the time of this writing, the following files are in an earlier state of
+development and not ready to be loaded:
 
 admin.sql
 security.sql
@@ -293,7 +295,8 @@ Reconciliaton.sql
 Generate A Custom Roles SQL Statement File
 ------------------------------------------
 
-Preprocess the sql/modules/Roles.sql file with sed, generating a custom SQL file in WORKING_DIR:
+Preprocess the sql/modules/Roles.sql file with sed, generating a custom SQL file
+in WORKING_DIR:
 
 $ sed -e 's/<?lsmb dbname ?>/mycompany/g' /path/to/ledgersmb13/sql/modules/Roles.sql > /path/to/ledgersmb13/mycompany_roles.sql
 
@@ -458,4 +461,3 @@ modify the query:
 
 $ psql -U postgres -d mycompany -c "UPDATE user_preference SET stylesheet='ledgersmb-smallgray.css';"
 UPDATE 1
-
