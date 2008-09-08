@@ -34,7 +34,7 @@ In time we may have an official git mirror from which to clone
 (a very quick copy operation), but you can make your own clone
 of the LedgerSMB repository directly from Sourceforge:
 
-  $ git svn clone https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/ ledgersmb
+  $ git svn -s clone https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/ ledgersmb
   Initialized empty Git repository in /path/to/ledgersmb/.git/
   	A	ledger-smb/login.pl
   	A	ledger-smb/menu.ini
