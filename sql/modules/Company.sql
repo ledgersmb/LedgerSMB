@@ -394,7 +394,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
             VALUES (
                 in_entity_id,
                 in_entity_class,
-                in_discount / 100, 
+                in_discount, 
                 in_taxincluded,
                 in_creditlimit,
                 in_terms,
