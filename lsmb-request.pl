@@ -52,13 +52,14 @@ sub call_script {
         
     my $script = shift @_;
     my $request = shift @_;
+    $request->{script} = $script;
     eval { require "scripts/$script" } 
       || $request->error($locale->text('Unable to open script') . ": scripts/$script : $!");
     $script =~ s/\.pl$//;
     $script = "LedgerSMB::Scripts::$script";
+    $request->{_script_handle} = $script;
     $script->can($request->{action}) 
       || $request->error($locale->text("Action Not Defined: ") . $request->{action});
-
     $script->can( $request->{action} )->($request);
 }
 1;

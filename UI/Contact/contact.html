@@ -6,7 +6,7 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body>
     <?lsmb IF name ?> 
-    <div class="pageheading"><?lsmb name?></font>
+    <div class="pageheading"><?lsmb name?></div>
     <?lsmb END ?>
 <div class="navigation" id="nav_div">
 <?lsmb IF entity_id ?><?lsmb operation = "Edit" ?><?lsmb ELSE
@@ -144,7 +144,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form name="customer" method="POST" action="<?lsmb script ?>">
+<form name="customer" method="post" action="<?lsmb script ?>">
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "entity_id"
