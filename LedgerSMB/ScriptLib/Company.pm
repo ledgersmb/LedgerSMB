@@ -457,6 +457,23 @@ sub save_contact {
 
 =over
 
+=item save_contact_new($request)
+
+Saves contact info as a new line as per save_contact above.
+
+=cut
+
+sub save_contact_new{
+    my ($request) = @_;
+    delete $request->{old_contact};
+    delete $request->{old_contact_class};
+    save_contact($request);
+}
+
+=pod
+
+=over
+
 =item save_bank_account($request)
 
 Adds a bank account to a company and, if defined, an entity credit account.

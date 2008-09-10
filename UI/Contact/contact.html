@@ -678,6 +678,14 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		text =  text('Save Contact'),
 		class = "submit"
 		} #' ?>
+	<?lsmb IF contact.defined ?> 
+	<?lsmb PROCESS button element_data = {
+		name = "action",
+		value = "save_contact_new",
+		text =  text('Save As New'),
+		class = "submit"
+		} #' ?>
+ 	<?lsmb END # IF old_contact.defined ?>
 	</div>
 </form>
 	

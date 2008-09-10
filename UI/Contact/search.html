@@ -1,5 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html ?> 
+<?lsmb account_class = entity_class ?>
 <body>
 <?lsmb IF account_class == 1 -?>
 <?lsmb entity_type = 'Vendor' -?>
@@ -19,6 +20,7 @@
 } -?>
 <table width="100%">
   <tr><th class="listtop"><?lsmb title ?></th></tr>
+
   <tr><td /></tr>
   <tr valign="top">
     <td>
