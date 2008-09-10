@@ -26,7 +26,7 @@ use base qw(LedgerSMB::ScriptLib::Company);
 require 'lsmb-request.pl';
 
 sub set_entity_class {
-    my ($request) = @_;
+    my ($null, $request) = @_;
     $request->{entity_class} = 2;
     return 1;
 }
