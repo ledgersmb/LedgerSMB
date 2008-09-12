@@ -71,7 +71,8 @@ sub save_credit {
     my $self = shift @_;
     $self->set_entity_class();
     $self->{threshold} = $self->parse_amount(amount => $self->{threshold});
-    $self->exec_method(funcname => 'entity_credit_save');
+    my ($ref) = $self->exec_method(funcname => 'entity_credit_save');
+    $self->{credit_id} = (values %$ref)[0];
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
     $self->{dbh}->commit;
 }
@@ -218,7 +219,8 @@ sub get {
     for (@{$self->{credit_list}}){
 	print STDERR "credit_id: $_->{credit_id}\n";
         if (($_->{credit_id} eq $self->{credit_id}) 
-                   or ($_->{meta_number} eq $self->{meta_number})){
+                   or ($_->{meta_number} eq $self->{meta_number})
+                   or ($_->{id} eq $self->{credit_id})){
 		$self->merge($_);
                 last;
         }

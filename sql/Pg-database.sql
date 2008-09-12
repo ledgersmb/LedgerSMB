@@ -307,6 +307,7 @@ CREATE TABLE entity_credit_account (
     entity_id int not null references entity(id) ON DELETE CASCADE,
     entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
     discount numeric, 
+    description text,
     discount_terms int default 0,
     discount_account_id int references chart(id),
     taxincluded bool default 'f',

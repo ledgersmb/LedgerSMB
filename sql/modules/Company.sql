@@ -178,6 +178,7 @@ CREATE TYPE entity_credit_retrieve AS (
         creditlimit numeric,
         terms int2,
         meta_number text,
+	description text,
         business_id int,
         language_code text,
         pricegroup_id int,
@@ -218,7 +219,8 @@ BEGIN
 	FOR out_row IN 
 		SELECT  c.id, e.id, ec.entity_class, ec.discount,
 			ec.taxincluded, ec.creditlimit, ec.terms, 
-			ec.meta_number, ec.business_id, ec.language_code, 
+			ec.meta_number, ec.description, ec.business_id, 
+			ec.language_code, 
 			ec.pricegroup_id, ec.curr, ec.startdate, 
 			ec.enddate, ec.ar_ap_account_id, ec.cash_account_id, 
 			ec.threshold, e.control_code, ec.id
@@ -335,7 +337,7 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION entity_credit_save (
     in_credit_id int, in_entity_class int,
-    in_entity_id int,
+    in_entity_id int, in_description text,
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
     in_discount_terms int,
     in_terms int, in_meta_number varchar(32), in_business_id int, 
@@ -350,15 +352,29 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     DECLARE
         t_entity_class int;
         l_id int;
+	t_meta_number text; 
+	t_mn_default_key text;
     BEGIN
+	-- TODO:  Move to mapping table.
+            IF in_entity_class = 1 THEN
+	       t_mn_default_key := 'vendornumber';
+	    ELSIF in_entity_class = 2 THEN
+	       t_mn_default_key := 'customernumber';
+	    END IF;
+	    IF in_meta_number IS NULL THEN
+		t_meta_number := setting_increment(t_mn_default_key);
+	    ELSE
+		t_meta_number := in_meta_number;
+	    END IF;
             update entity_credit_account SET
                 discount = in_discount,
                 taxincluded = in_taxincluded,
                 creditlimit = in_creditlimit,
+		description = in_description,
                 terms = in_terms,
                 ar_ap_account_id = in_ar_ap_account_id,
                 cash_account_id = in_cash_account_id,
-                meta_number = in_meta_number,
+                meta_number = t_meta_number,
                 business_id = in_business_id,
                 language_code = in_language,
                 pricegroup_id = in_pricegroup_id,
@@ -376,6 +392,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 entity_id,
                 entity_class,
                 discount, 
+                description,
                 taxincluded,
                 creditlimit,
                 terms,
@@ -395,10 +412,11 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_entity_id,
                 in_entity_class,
                 in_discount, 
+                in_description,
                 in_taxincluded,
                 in_creditlimit,
                 in_terms,
-                in_meta_number,
+                t_meta_number,
                 in_business_id,
                 in_language,
                 in_pricegroup_id,
@@ -410,7 +428,6 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_ar_ap_account_id,
                 in_cash_account_id
             );
-            -- entity note class
             RETURN currval('entity_credit_account_id_seq');
        END IF;
 
