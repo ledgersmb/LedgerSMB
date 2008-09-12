@@ -166,7 +166,18 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name = "control_code"
 		value = control_code
 		size = "20"
-	} ?><?lsmb PROCESS button element_data = {
+	} ?>
+	<?lsmb IF !created_as_class;
+		created_as_class = entity_class;
+	END; # IF !created_as_class ?> 
+	<?lsmb PROCESS select element_data = {
+		name = "created_as_class"
+		options = entity_classes
+		default_values = [created_as_class]
+		text_attr = 'class'
+		value_attr = 'id'	
+	} ?>
+	<?lsmb PROCESS button element_data = {
 		text = text('Generate')
 		type = "submit"
 		name = "action"

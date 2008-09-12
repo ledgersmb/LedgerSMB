@@ -137,6 +137,9 @@ $self->{cash_acc_list} = qw(list of cash accounts)
 sub get_metadata {
     my $self = shift @_;
 
+    @{$self->{entity_classes}} = 
+		$self->exec_method(funcname => 'entity__list_classes');
+
     @{$self->{ar_ap_acc_list}} = 
          $self->exec_method(funcname => 'chart_get_ar_ap');
 

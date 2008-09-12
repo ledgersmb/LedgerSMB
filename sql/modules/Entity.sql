@@ -37,6 +37,19 @@ CREATE OR REPLACE FUNCTION entity_save(
 
 $$ language 'plpgsql';
 
+CREATE OR REPLACE FUNCTION entity__list_classes ()
+RETURNS SETOF entity_class AS $$
+DECLARE out_row entity_class;
+BEGIN
+	FOR out_row IN 
+		SELECT * FROM entity_class
+		WHERE active
+		ORDER BY id
+	LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION entity__get_entity (
     in_entity_id int
