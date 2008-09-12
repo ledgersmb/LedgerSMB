@@ -162,7 +162,7 @@
     </div>
     <table id="payments_table">
     <tr class="listheading">
-	<th class="account_number"><?lsmb text('Account_number') ?></th>
+	<th class="account"><?lsmb text('Account') ?></th>
 	<th class="entity_name"><?lsmb text('Name') ?></th>
 	<th class="invoice"><?lsmb text('Invoice Total') ?></th>
         <th class="payment"><?lsmb text('Payment') ?></th>
@@ -191,7 +191,8 @@
 			checked = (r.unselected) ? undef : "checked" 
 			
 		} ?>
-		<?lsmb r.account_number ?>
+		<?lsmb r.econtrol_code ?> -- 
+		<?lsmb r.account_number ?> -- <?lsmb r.eca_description ?>
 	</td>
 	<td class="entity_name"><span class="<?lsmb
 		IF r.has_vouchers; 'name_has_vouchers' ; 

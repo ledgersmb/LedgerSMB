@@ -169,6 +169,8 @@ Returns all open invoices for the entity in question. $$;
 
 CREATE TYPE payment_contact_invoice AS (
 	contact_id int,
+	econtrol_code text,
+	eca_description text,
 	contact_name text,
 	account_number text,
 	total_due numeric,
@@ -185,7 +187,9 @@ $$
 DECLARE payment_item payment_contact_invoice;
 BEGIN
 	FOR payment_item IN
-		  SELECT c.id AS contact_id, e.name AS contact_name,
+		  SELECT c.id AS contact_id, e.control_code as econtrol_code, 
+			c.description as eca_description, 
+			e.name AS contact_name,
 		         c.meta_number AS account_number,
 		              sum (coalesce(p.due, 0) -
 		              CASE WHEN c.discount_terms 
@@ -268,7 +272,8 @@ BEGIN
 		                                         WHERE accno
 		                                               = in_ar_ap_accno)
 		                    ))
-		GROUP BY c.id, e.name, c.meta_number, c.threshold
+		GROUP BY c.id, e.name, c.meta_number, c.threshold, 
+			e.control_code, c.description
 		  HAVING (in_meta_number IS NULL 
 				OR in_meta_number = c.meta_number) AND 
 			(sum(p.due) > c.threshold
