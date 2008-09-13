@@ -205,8 +205,17 @@ sub get_results {
     }
 
     # Column definitions for dynatable
-    @columns = qw(legal_name meta_number business_type curr);
+    @columns = qw(legal_name entity_control_code meta_number credit_description 
+		business_type curr);
     my %column_heading;
+    $column_heading{legal_name} = {
+        text => $request->{_locale}->text('Name'),
+	href => "$search_url&order_by=legal_name",
+    };
+    $column_heading{entity_control_code} = {
+        text => $request->{_locale}->text('Control Code'),
+	href => "$search_url&order_by=entity_control_code",
+    };
     $column_heading{legal_name} = {
         text => $request->{_locale}->text('Name'),
 	href => "$search_url&order_by=legal_name",
@@ -214,6 +223,10 @@ sub get_results {
     $column_heading{meta_number} = {
         text => $request->{_locale}->text('Vendor Number'),
 	href => "$search_url&order_by=meta_number",
+    };
+    $column_heading{credit_description} = {
+        text => $request->{_locale}->text('Description'),
+	href => "$search_url&order_by=credit_description",
     };
     $column_heading{business_type} = {
         text => $request->{_locale}->text('Business Type'),
@@ -228,6 +241,8 @@ sub get_results {
     for $ref (@{$company->{search_results}}){
 	push @rows, 
                 {legal_name   => $ref->{legal_name},
+		entity_control_code => $ref->{entity_control_code},
+		credit_description => $ref->{credit_description},
                 meta_number   => {text => $ref->{meta_number},
                                   href => "$get_url&entity_id=$ref->{entity_id}"		                           . "&meta_number=$ref->{meta_number}"
 		                 },

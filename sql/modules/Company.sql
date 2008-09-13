@@ -2,9 +2,11 @@
 
 CREATE TYPE company_search_result AS (
 	entity_id int,
+	entity_control_code text,
 	company_id int,
 	entity_credit_id int,
 	meta_number text,
+	credit_description text,
 	entity_class int,
 	legal_name text,
 	sic_code text,
@@ -27,7 +29,8 @@ BEGIN
 
 
 	FOR out_row IN
-		SELECT e.id, c.id, ec.id, ec.meta_number, ec.entity_class, 
+		SELECT e.id, e.control_code, c.id, ec.id, ec.meta_number, 
+			ec.description, ec.entity_class, 
 			c.legal_name, c.sic_code, b.description , ec.curr::text
 		FROM entity e
 		JOIN company c ON (e.id = c.entity_id)
@@ -151,12 +154,14 @@ CREATE TYPE entity_credit_search_return AS (
         legal_name text,
         id int,
         entity_id int,
+	entity_control_code text,
         entity_class int,
         discount numeric,
         taxincluded bool,
         creditlimit numeric,
         terms int2,
         meta_number text,
+	credit_description text,
         business_id int,
         language_code text,
         pricegroup_id int,
