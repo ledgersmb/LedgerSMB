@@ -241,9 +241,15 @@ sub get_salutations {
 
 sub get_roles {
     
-    # These are direct, assignable roles. 
-    my $self = shift;
-    
-    return $self->exec_method( procname => "admin__all_roles" );
+    my $self = shift @_;
+#    print STDERR "attempting to get roles";
+    my @s_rows = $self->call_procedure(procname=>'admin__get_roles',args=>[$self->{company}]);
+    my @rows;
+    for my $role (@s_rows) {
+        my $rolname = $role->{'admin__get_roles'};
+        $rolname =~ s/lsmb_ledgersmb_13__//gi;
+        push @rows, $rolname;
+    }
+    return \@rows;
 }
 1;

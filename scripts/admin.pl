@@ -63,9 +63,9 @@ sub edit_user {
     my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
     
     $user->get($request->{user_id});
-    
-    my $all_roles = $admin->get_roles();
 
+    my @all_roles = $admin->get_roles();
+    
     my $template = LedgerSMB::Template->new( 
         user => $user, 
         template => 'Admin/edit_user', 
@@ -82,16 +82,21 @@ sub edit_user {
             {
                 user=>$admin->get_entire_user(),
                 roles=>$all_roles,
-                user_roles=>$admin->get_user_roles($request->{username})
+                user_roles=>$admin->get_user_roles($request->{username}),
+                salutations=>$admin->get_salutations(),
             }
         );
     }
     else {
+#        print STDERR Dumper($user);
+#        print STDERR Dumper(@all_roles);
+#        print STDERR Dumper($user->{roles});
         $template->render(
             {
                 user=>$user, 
-                roles=>$all_roles,
-                user_roles=>$admin->get_user_roles($request->{user})
+                roles=>@all_roles,
+                user_roles=>$user->{roles},
+                salutations=>$admin->get_salutations(),
             }
         );
     }

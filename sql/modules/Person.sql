@@ -1,6 +1,6 @@
 begin;
 
-CREATE OR REPLACE FUNCTION person_save
+CREATE OR REPLACE FUNCTION person__save
 (in_entity_id integer, in_salutation_id int, 
 in_first_name text, in_middle_name text, in_last_name text    
 )
@@ -106,7 +106,7 @@ $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN 
-		SELECT cc.class, cc.id, c.description, c.contact
+		SELECT cc.class, cc.id, c.contact
 		FROM person_to_contact c
 		JOIN contact_class cc ON (c.contact_class_id = cc.id)
 		JOIN person p ON (c.person_id = p.id)

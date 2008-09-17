@@ -125,24 +125,28 @@ sub exec_method {
     my @proc_args;
 
     if ( !$ref->{proname} ) {    # no such function
-     
+        # If the function doesn't exist, $funcname gets zeroed?
         $self->error( "No such function:  $funcname");
 #        die;
     }
     $ref->{pronargs} = 0 unless defined $ref->{pronargs};
-
-    @proc_args = $self->_parse_array($args);    
-    if (@proc_args) {
-        for my $arg (@proc_args) {
-            if ( $arg =~ s/^in_// ) {
-                 push @call_args, $self->{$arg};
+    # If the user provided args..
+    if (length(@in_args) == 0) {
+        @proc_args = $self->_parse_array($args);
+        if (@proc_args) {
+            for my $arg (@proc_args) {
+                if ( $arg =~ s/^in_// ) {
+                     push @call_args, $self->{$arg};
+                }
             }
         }
+        for (@in_args) { push @call_args, $_ } ;
+        $self->{call_args} = \@call_args;
+        return $self->call_procedure( procname => $funcname, args => \@call_args );
     }
-
-    for (@in_args) { push @call_args, $_ } ;
-    $self->{call_args} = \@call_args;
-    return $self->call_procedure( procname => $funcname, args => \@call_args );
+    else {
+        return $self->call_procedure( procname => $funcname, args => \@in_args );
+    }
 }
 
 sub run_custom_queries {

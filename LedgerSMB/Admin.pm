@@ -192,11 +192,4 @@ sub get_entire_user {
     return $user;
 }
 
-sub get_roles {
-    
-    my $self = shift @_;
-    
-    return $self->exec_method(funcname=>'get_roles',args=>[$self->{company}]);
-}
-
 1;

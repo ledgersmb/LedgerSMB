@@ -17,13 +17,13 @@ returns int AS $$
         select * into e from entity where id = in_entity and entity_class = 3;
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'No entity found for ID %', in_id;
+            RAISE EXCEPTION 'No entity found for ID %', in_entity;
         END IF;
         
         select * into p from person where id = in_person;
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'No person found for ID %', in_id;
+            RAISE EXCEPTION 'No person found for ID %', in_person;
         END IF;
         
         -- Okay, we're good. Check to see if we update or insert.

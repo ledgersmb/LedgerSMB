@@ -463,7 +463,6 @@ $$ LANGUAGE PLPGSQL;
 CREATE TYPE contact_list AS (
 	class text,
 	class_id int,
-	description text,
 	contact text
 );
 

@@ -40,36 +40,53 @@ sub get {
     
     my $self = shift @_;
     my $id = shift;
-    $self->{user} = @{ $self->exec_method(
+    my @users = $self->exec_method(
         funcname=>'admin__get_user',
         args=>[$id]
-        )
-    }[0];
-    $self->{pref} = @{ $self->exec_method(
+        );
+    $self->{user} = $users[0];
+    my @prefs = $self->exec_method(
         funcname=>'admin__user_preferences',
         args=>[$id]
-        )
-    }[0];
-    $self->{person} = @{ $self->exec_method(
-        funcname=>'admin__user_preferences',
-        args=>[$self->{user}->{entity_id}]
-        )
-    }[0];
-    $self->{employee} = @{ $self->exec_method(
+        );
+    $self->{pref} = $prefs[0];
+#    $self->{person} = @{ $self->exec_method(
+#        funcname=>'admin__user_preferences',
+#        args=>[$self->{user}->{entity_id}]
+#        )
+#    }[0];
+    my @emp = $self->exec_method(
         funcname=>'employee__get',
-        args=>[$id]
-        )
-    }[0];
-    $self->{entity} = @{ $self->exec_method( 
+        args=>[$self->{user}->{entity_id}]
+        );
+    $self->{employee} = $emp[0];
+    my @ent = $self->exec_method( 
         funcname=>'entity__get_entity',
         args=>[ $self->{user}->{entity_id} ] 
-        ) 
-    }[0];
-    $self->{roles} = $self->exec_method(
+        );
+    $self->{entity} = $ent[0];
+    my @roles = $self->exec_method(
         funcname=>'admin__get_roles_for_user',
         args=>[$id]
     );
+    # Now, location and stuff.
+    my @loc = $self->exec_method(
+        funcname=>'person__list_locations',
+        args=>[ $self->{user}->{entity_id} ]
+    );
+    $self->{location} = \@loc;
+    my @contacts = $self->exec_method(
+        funcname=>"person__list_contacts",
+        args=>[$self->{user}->{entity_id} ]
+    );
+    my @rolstore;
+
+    for my $role (@roles) {
+        push @rolstore, $role->{'admin__get_roles_for_user'}; # Only one key=>value pair
+    }
+    $self->{roles} = \@rolstore;
     
+    print STDERR "Got all user information";
     
     #$user->{user} = $u->get($id);
     #$user->{pref} = $u->preferences($id);

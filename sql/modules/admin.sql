@@ -481,15 +481,17 @@ $$ language plpgsql;
 create or replace function admin__user_preferences (in_user int) returns setof user_preference as $$
     
 declare
-    v_row user_preferences;
+    v_row user_preference;
 BEGIN
-    select * into v_row from user_preference where user_id = in_user;
+    select * into v_row from user_preference where id = in_user;
     
     IF NOT FOUND THEN
     
-        RAISE EXCEPTION "Could not find user preferences for id %", in_user;
+        RAISE EXCEPTION 'Could not find user preferences for id %', in_user;
     ELSE
         return next v_row;
     END IF;
+END;
+$$ language plpgsql;
 
 commit;
