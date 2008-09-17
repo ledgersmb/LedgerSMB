@@ -360,9 +360,27 @@ sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_payment_detail_data();
+    $payment->{grand_total} = 0;
     for (@{$payment->{contact_invoices}}){
+        my $contact_total = 0;
         $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due});
+
+        if (($payment->{action} ne 'update_payments') 
+                  or (defined $payment->{"id_$_->{contact_id}"})){
+            if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
+                  for my $invoice (@{$_->{invoices}}){
+                      my $i_id = $invoice->[0];
+                      $contact_total 
+                              += $payment->{"paid_$_->{contact_id}_$i_id"};
+                  } 
+            } else {
+                  $contact_total = $_->{total_due};
+            }
+            $payment->{grand_total} += $contact_total;
+        }
+        $_->{contact_total} = $contact_total;
     }
+    $payment->debug({file => '/tmp/payment'});
 
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'), 

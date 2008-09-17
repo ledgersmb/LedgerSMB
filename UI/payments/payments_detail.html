@@ -168,9 +168,8 @@
         <th class="payment"><?lsmb text('Payment') ?></th>
         <th class="payment"><?lsmb text('Details') ?></th>
     </tr>
-    <?lsmb rc = 1 ?><?lsmb count = 0 ?><?lsmb grand_total = 0 ?>
+    <?lsmb rc = 1 ?><?lsmb count = 0 ?>
     <?lsmb FOREACH r = contact_invoices ?>
-    <?lsmb contact_total = 0 ?>
     <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
     <tr class="listrow<?lsmb rc ?>">
        <td class="account_number" rowspan="2" >
@@ -294,19 +293,12 @@
 			name = "invoice_count_${r.contact_id}"
 			value = icount
 		} ?>
-		<?lsmb IF !r.unselected;
-			IF (${"paid_$r.contact_id"} == 'some');
-				grand_total = grand_total + contact_total;
-			ELSE;
-				grand_total = grand_total + r.total_due;
-			END; # IF (paid...)
-		END # IF !r.unselected) ?>
 		<tr class="subtotal">
 			<td colspan="5" class="total_label">
 				<?lsmb text('Contact Total (if paying "some")') ?>
 			</td>
 			<td><span id='<?lsmb ${"contact_total_$r.id"} ?>'>
-			<?lsmb INCLUDE format_money number= contact_total ?>
+			<?lsmb INCLUDE format_money number= r.contact_total ?>
 			</span><span class="currency">
 				<?lsmb currency ?></span>
 			</td>
