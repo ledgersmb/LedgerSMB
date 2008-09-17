@@ -175,10 +175,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		options = entity_classes
 		default_values = [created_as_class]
 		text_attr = 'class'
-		value_attr = 'id'	
+		value_attr = 'id'
+		label = text('Class:')
 	} ?>
 	<?lsmb PROCESS button element_data = {
-		text = text('Generate')
+		text = text('Generate Control Code')
 		type = "submit"
 		name = "action"
 		value = "generate_control_code"
