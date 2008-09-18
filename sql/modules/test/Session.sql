@@ -54,4 +54,4 @@ SELECT (select count(*) from test_result where success is true)
 || ' failed' as message;
 
 DROP TABLE test_result;
-COMMIT;
+ROLLBACK;
