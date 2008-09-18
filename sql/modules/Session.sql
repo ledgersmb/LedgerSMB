@@ -30,6 +30,10 @@ RETURNS session AS
 $$
 DECLARE out_row session%ROWTYPE;
 BEGIN
+	DELETE FROM session
+	 WHERE last_used < now() - coalesce((SELECT value FROM defaults
+                                    WHERE setting_key = 'timeout')::interval,
+	                            '90 minutes'::interval);
         UPDATE session 
            SET last_used = now()
          WHERE session_id = in_session_id
@@ -39,7 +43,7 @@ BEGIN
 	       AND users_id = (select id from users 
 			where username = SESSION_USER);
 	IF FOUND THEN
-		SELECT * INTO out_row WHERE session_id = in_session_id;
+		SELECT * INTO out_row FROM session WHERE session_id = in_session_id;
 	ELSE
 		DELETE FROM SESSION 
 		WHERE users_id IN (select id from users
