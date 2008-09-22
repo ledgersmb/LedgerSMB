@@ -76,20 +76,20 @@ sub edit_user {
         path=>'UI'
     );
     
+    my $template_data = 
+            {
+                user=>$user, 
+                roles=>@all_roles,
+                countries=>$admin->get_countries(),
+                user_roles=>$user->{roles},
+                salutations=>$admin->get_salutations(),
+                locations=>$location->get_all($u_id,"person"),
+            };
     if ($request->type() eq 'POST') {
         
         $admin->save_user();
         $admin->save_roles();
-        $template->render(
-            {
-                user=>$admin->get_entire_user(),
-                roles=>$all_roles,
-                user_roles=>$admin->get_user_roles($request->{username}),
-                salutations=>$admin->get_salutations(),
-                locations=>$location->get_all($u_id,"person"),
-                countries=>$admin->get_countries(),
-            }
-        );
+        $template->render($test_data);
     }
     else {
 #        print STDERR Dumper($user);
@@ -99,18 +99,7 @@ sub edit_user {
         if ($request->{location_id}) {
             $loc = $location->get($request->{location_id});
         }
-        print STDERR Dumper($admin->get_salutations());
-        $template->render(
-            {
-                user=>$user, 
-                roles=>@all_roles,
-                user_roles=>$user->{roles},
-                salutations=>$admin->get_salutations(),
-                location=>$loc,
-                locations=>$location->get_all($u_id,"person"),
-                countries=>$admin->get_countries(),
-            }
-        );
+        $template->render($template_data);
     }
 }
 

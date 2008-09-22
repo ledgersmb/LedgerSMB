@@ -218,7 +218,7 @@ $$ language plpgsql;
 create or replace function admin__get_roles_for_user(in_user_id INT) returns setof text as $$
     
     declare
-        u_role text;
+        u_role record;
         a_user users;
     begin
         select * into a_user from admin__get_user(in_user_id);
@@ -240,7 +240,7 @@ create or replace function admin__get_roles_for_user(in_user_id INT) returns set
             r.oid = ar.roleid
          LOOP
         
-            RETURN NEXT u_role;
+            RETURN NEXT u_role.rolname;
         
         END LOOP;
         RETURN;
@@ -463,7 +463,7 @@ $$ language sql;
 
 create or replace function admin__get_roles (in_database text) returns setof text as $$
 DECLARE
-    v_rol text;
+    v_rol record;
 BEGIN
     FOR v_rol in 
         SELECT 
@@ -474,7 +474,7 @@ BEGIN
             rolname ~ ('^lsmb_' || in_database)
         order by rolname ASC
     LOOP
-        RETURN NEXT v_rol;
+        RETURN NEXT v_rol.rolname;
     END LOOP;
 END;
 $$ language plpgsql;

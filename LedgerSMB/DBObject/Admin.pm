@@ -258,9 +258,10 @@ sub get_countries {
     
     my $self = shift @_;
     
-    my $sth = $self->{dbh}->prepare("SELECT id, name FROM country");
-    my $code = $sth->execute();
-    
-    return $sth->fetchall_arrayref( {} ); # returns an array of hashrefs.
+    @{$self->{countries}} 
+          =$self->exec_method(funcname => 'location_list_country'); 
+	# returns an array of hashrefs.
+    $self->debug({file => '/tmp/user'});
+    return $self->{countries};
 }
 1;

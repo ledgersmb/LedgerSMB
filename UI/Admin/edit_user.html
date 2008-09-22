@@ -1,3 +1,5 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS 'elements.html' ?>
 <div id="modify_user">
     <font size="15">
         <strong>
@@ -136,11 +138,12 @@
                         <input type="textarea" name="zipcode" value="<?lsmb location.zipcode?>"/>
                     </td>
                     <td valign="top">
-                        <select name="country">
-                        <?lsmb FOREACH country IN countries?>
-                            <option value="<?lsmb country.id?>"><?lsmb country.name?></option>
-                        <?lsmb END?>
-                        </select>
+			<?lsmb PROCESS select element_data = {
+				name = "country"
+				options = countries
+				value_attr = "id"
+				text_attr = "name"
+			} ?>
                     </td>
                 </tr>
                 <tr>
