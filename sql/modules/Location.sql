@@ -27,7 +27,7 @@ END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION location_save
-(in_address1 text, in_address2 text, in_address3 text,
+(in_location_id int, in_address1 text, in_address2 text, in_address3 text,
 	in_city text, in_state text, in_zipcode text, in_country int) 
 returns integer AS
 $$
@@ -36,28 +36,53 @@ DECLARE
 	location_row RECORD;
 BEGIN
 	
-	SELECT * INTO location_row FROM location
-	WHERE line_one = in_address1 AND
-		coalesce(line_two, '') = coalesce(in_address2, '') AND
-		coalesce(line_three, '') = coalesce(in_address3, '') AND
-		city = in_city AND
-		coalesce(state, '') = coalesce(in_state, '') AND
-		coalesce(mail_code, '') = coalesce(in_zipcode, '') AND
-		country_id = in_country
-	LIMIT 1;
-	IF FOUND THEN
-		return location_row.id;
+	IF in_location_id IS NULL THEN
+	    -- Straight insert.
+	    location_id = nextval('location_id_seq');
+	    INSERT INTO location (
+	        id, 
+	        line_one, 
+	        line_two,
+	        line_three,
+	        city,
+	        state,
+	        zipcode,
+	        country)
+	    VALUES (
+	        location_id,
+	        in_address1,
+	        in_address2,
+	        in_address3,
+	        in_city,
+	        in_state,
+	        in_zipcode,
+	        in_country
+	        );
+	    return location_id;
+	ELSE
+	    -- Test it.
+	    SELECT * INTO location_row WHERE id = in_location_id;
+	    IF NOT FOUND THEN
+	        -- Tricky users are lying to us.
+	        RAISE EXCEPTION "location_save called with nonexistant location ID %", in_location_id;
+	    ELSE
+	        -- Okay, we're good.
+	        
+	        UPDATE location SET
+	            line_one = in_address1,
+	            line_two = in_address2,
+	            line_three = in_address3,
+	            city = in_city, 
+	            state = in_state,
+	            zipcode = in_zipcode,
+	            country = in_country
+	        WHERE id = in_location_id;
+	        return in_location_id;
+	    END IF;
 	END IF;
-	INSERT INTO location 
-	(line_one, line_two, line_three, city, state, mail_code, country_id,
-		created)
-	VALUES
-	(in_address1, in_address2, in_address3, in_city, in_state,
-		in_zipcode, in_country, now());
-	SELECT currval('location_id_seq') INTO location_id;
-	return location_id;
 END;
 $$ LANGUAGE PLPGSQL;
+
 
 COMMENT ON function location_save
 (in_companyname text, in_address1 text, in_address2 text, 

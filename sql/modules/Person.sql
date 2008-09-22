@@ -131,36 +131,108 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-create or replace function person_location_save(
-    in_entity_id int, in_location_id int,
-    in_line_one text, in_line_two text, 
-    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
+
+/*(
+    unknown, 
+    unknown, 
+    unknown, 
+    unknown, 
+    unknown, 
+    unknown, 
+    unknown, 
+    unknown)
+    
+*/
+create or replace function person__save_location(
+    in_entity_id int, 
+    in_location_id int,
+    in_line_one text, 
+    in_line_two text, 
+    in_line_three text,
+    in_city TEXT, 
+    in_state TEXT, 
+    in_mail_code text, 
     in_country_code int
 ) returns int AS $$
 
     DECLARE
         l_row location;
         l_id INT;
-	t_person_id int;
+	    t_person_id int;
     BEGIN
 	SELECT id INTO t_person_id
 	FROM person WHERE entity_id = in_entity_id;
-
-	DELETE FROM person_to_location
-	WHERE person_id = t_person_id
-		AND location_id = in_location_id;
-
-	SELECT location_save(in_line_one, in_line_two, in_line_three, in_city,
-		in_state, in_mail_code, in_country_code) 
-	INTO l_id;
-
-	INSERT INTO person_to_location 
-		(person_id, location_id)
-	VALUES  (t_person_id, l_id);
-
-	RETURN l_id;    
+    -- why does it delete?
+    
+    select * into l_row FROM location
+    WHERE id = in_location_id;
+    
+    IF NOT FOUND THEN
+        -- Create a new one.
+        l_id := location_save(
+            in_location_id, 
+    	    in_line_one, 
+    	    in_line_two, 
+    	    in_line_three, 
+    	    in_city,
+    		in_state, 
+    		in_mail_code, 
+    		in_country_code);
+    	
+        INSERT INTO person_to_location 
+    		(person_id, location_id)
+    	VALUES  (t_person_id, l_id);
+    ELSE
+        l_id := location_save(
+            in_location_id, 
+    	    in_line_one, 
+    	    in_line_two, 
+    	    in_line_three, 
+    	    in_city,
+    		in_state, 
+    		in_mail_code, 
+    		in_country_code);
+        -- Update the old one.
+    END IF;
+    return l_id;
     END;
-
 $$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION person__delete_location (
+    in_entity_id INT, in_location_id INT
+) returns int AS $$
+
+DECLARE
+    v_loc location;
+    
+BEGIN
+    
+    select loc.* into v_loc FROM location loc
+    JOIN person_to_location ptl ON loc.id = ptl.location_id
+    JOIN person p ON p.id = ptl.person_id
+    WHERE p.entity_id = in_entity_id 
+    AND loc.id = in_location_id;
+    
+    IF NOT FOUND THEN
+        RAISE EXCEPTION "Cannot find records to delete for entity % and location %", in_entity_id, in_location_id;
+    ELSE
+        DELETE FROM people_to_location WHERE location_id = in_location_id;
+        DELETE FROM location WHERE location_id = in_location_id;
+    END IF;
+
+END;
+
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION person__all_locations (
+    in_entity_id int
+) returns setof location AS $$
+
+    SELECT l.* FROM location l
+    JOIN person_to_location ptl ON ptl.location_id = l.id
+    JOIN person p on ptl.person_id = p.id
+    WHERE p.id = $1;
+
+$$ language sql;
 
 commit;

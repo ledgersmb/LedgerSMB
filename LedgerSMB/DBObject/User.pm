@@ -74,15 +74,19 @@ sub get {
         funcname=>'person__list_locations',
         args=>[ $self->{user}->{entity_id} ]
     );
-    $self->{location} = \@loc;
+    $self->{locations} = \@loc;
     my @contacts = $self->exec_method(
         funcname=>"person__list_contacts",
         args=>[$self->{user}->{entity_id} ]
     );
+    $self->{contacts} = \@contacts;
     my @rolstore;
 
     for my $role (@roles) {
-        push @rolstore, $role->{'admin__get_roles_for_user'}; # Only one key=>value pair
+        my $rolname = $role->{'admin__get_roles_for_user'};
+        my $company = $self->{company};
+        $rolname =~ s/lsmb_${company}__//gi;
+        push @rolstore, $rolname; # Only one key=>value pair
     }
     $self->{roles} = \@rolstore;
     

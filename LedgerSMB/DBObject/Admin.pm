@@ -247,9 +247,20 @@ sub get_roles {
     my @rows;
     for my $role (@s_rows) {
         my $rolname = $role->{'admin__get_roles'};
-        $rolname =~ s/lsmb_ledgersmb_13__//gi;
+        my $company = $self->{company};
+        $rolname =~ s/lsmb_${company}__//gi;
         push @rows, $rolname;
     }
     return \@rows;
+}
+
+sub get_countries {
+    
+    my $self = shift @_;
+    
+    my $sth = $self->{dbh}->prepare("SELECT id, name FROM country");
+    my $code = $sth->execute();
+    
+    return $sth->fetchall_arrayref( {} ); # returns an array of hashrefs.
 }
 1;

@@ -472,6 +472,7 @@ BEGIN
             pg_roles
         where 
             rolname ~ ('^lsmb_' || in_database)
+        order by rolname ASC
     LOOP
         RETURN NEXT v_rol;
     END LOOP;

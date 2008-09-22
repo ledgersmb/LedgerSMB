@@ -6,6 +6,7 @@ require 'lsmb-request.pl';
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
+use LedgerSMB::DBObject::Location;
 use Data::Dumper;
 
 sub new_user {
@@ -49,7 +50,8 @@ sub new_user {
         $template->render(
             {
                 salutations=>$sal,
-                roles=>$groups
+                roles=>$groups,
+                countries=>$admin->get_countries(),
             }
         );
     }
@@ -84,19 +86,29 @@ sub edit_user {
                 roles=>$all_roles,
                 user_roles=>$admin->get_user_roles($request->{username}),
                 salutations=>$admin->get_salutations(),
+                locations=>$location->get_all($u_id,"person"),
+                countries=>$admin->get_countries(),
             }
         );
     }
     else {
 #        print STDERR Dumper($user);
 #        print STDERR Dumper(@all_roles);
-#        print STDERR Dumper($user->{roles});
+        my $loc;
+        my $location = LedgerSMB::DBObject::Location->new(base=>$request);
+        if ($request->{location_id}) {
+            $loc = $location->get($request->{location_id});
+        }
+        print STDERR Dumper($admin->get_salutations());
         $template->render(
             {
                 user=>$user, 
                 roles=>@all_roles,
                 user_roles=>$user->{roles},
                 salutations=>$admin->get_salutations(),
+                location=>$loc,
+                locations=>$location->get_all($u_id,"person"),
+                countries=>$admin->get_countries(),
             }
         );
     }
@@ -245,6 +257,129 @@ sub main {
         path=>'UI'
     );
     $template->render( { users=>$user->{users} } );
+}
+
+sub edit_contact {
+    
+    my $request = shift @_;
+    
+    # Only ever a post, but check anyway
+    if ($request->type eq "POST") {
+        
+        # We have a contact ID, ie, something we made up.
+        my $c_id = $request->{contact_id};
+        my $u_id = $request->{user_id};
+        my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
+        $user->get($u_id);
+        
+        # so we have a user object.
+        # ->{contacts} is an arrayref to the list of contacts this user has
+        # $request->{contact_id} is a reference to this structure.
+        
+    }
+}
+
+sub delete_contact {
+    
+    
+    my $request = shift @_;
+    
+    # Only ever a post, but check anyway
+    if ($request->type eq "POST") {
+        
+        # We have a contact ID, ie, something we made up.
+        my $c_id = $request->{contact_id};
+        my $u_id = $request->{user_id};
+        my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
+        $user->get($u_id);
+        
+        # so we have a user object.
+        # ->{contacts} is an arrayref to the list of contacts this user has
+        # $request->{contact_id} is a reference to this structure.
+        
+        $user->delete_contact($c_id);
+        # Boom. Done.
+        # Now, just call the main edit user page.
+        edit_user($request);
+    }
+}
+
+sub new_contact {
+    
+    my $request = shift @_;
+    
+    
+}
+
+sub save_location {
+    
+    my $request = shift @_;
+    
+    # Only ever a post, but check anyway
+    if ($request->type eq "POST") {
+        
+        my $u_id = $request->{user_id}; # this is an entity_id
+        
+        my $location = LedgerSMB::DBObject::Location->new(base=>$request, copy=>'all');
+        
+        # So there's a pile of stuff we need.
+        # lineone
+        # linetwo
+        # linethree
+        # city
+        # state
+        # zipcode
+        # country
+        print STDERR "Attempting to save location...\n";
+        my $id = $location->save("person");
+        # Done and done.
+        
+        my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
+        my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
+        
+        $user->get($request->{user_id});
+
+        my @all_roles = $admin->get_roles();
+
+        my $template = LedgerSMB::Template->new( 
+            user => $user, 
+            template => 'Admin/edit_user', 
+            language => $user->{language}, 
+            format => 'HTML', 
+            path=>'UI'
+        );
+        $template->render(
+            {
+                user=>$user, 
+                roles=>@all_roles,
+                user_roles=>$user->{roles},
+                salutations=>$admin->get_salutations(),
+                locations=>$location->get_all($u_id,"person"),
+                location=>$location->get($id),
+                countries=>$admin->get_countries(),
+            }
+        );
+    }
+}
+
+
+sub delete_location {
+    
+    my $request = shift @_;
+    
+    # Only ever a post, but check anyway
+    if ($request->type eq "POST") {
+        
+        my $l_id = $request->{location_id};
+        my $u_id = $request->{user_id};
+        
+        my $location = LedgerSMB::DBObject::Location->new(base=>$request, copy=>"location_id");
+        
+        $location->person_delete($l_id,$u_id);
+        # Boom. Done.
+        # Now, just call the main edit user page.
+        edit_user($request);
+    }
 }
 
 #eval { do "scripts/custom/admin.pl"};

@@ -9,9 +9,18 @@
         </strong>
     </font>
     
-    <form method="POST" action="admin.pl?action=new_user">
-        
+    <form method="POST" action="admin.pl">
+        <input type="hidden" name="action" value="<?lsmb IF user.user.username?>edit_user<?lsmb ELSE?>new_user<?lsmb END?>"/>
         <table>
+
+            <?lsmb UNLESS user.user.username?>
+            <tr>
+                <td>Username</td>
+                <td>
+                    <input type="textarea" name="username" value="<?lsmb user.user.username?>"/>
+                </td>
+            </tr>
+            <?lsmb END?>
             
             <tr>
                 <td>
@@ -42,91 +51,170 @@
                     <input type="textarea" name="employeenumber" value="<?lsmb user.employee.employeenumber?>"/>
                 </td>
             </tr>
-            <hr/>
-            <?lsmb UNLESS user.user.username?>
-            <tr>
-                <td>Username</td>
-                <td>
-                    <input type="textarea" name="username" value="<?lsmb user.user.username?>"/>
-                </td>
-            </tr>
+        </table>
+        <input type="submit" value="Save User" />
+    </form>
+    <?lsmb IF user.user.username?>
+        <form name="location" method="POST" action="admin.pl">
+            <?lsmb IF location?>
+            <input type="hidden" name="location_id" value="<?lsmb location.id?>"/>
             <?lsmb END?>
-            
-            <tr>
-                <td><br/></td>
-                <td>
-                    <hr/>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>Company Name</td>
-                <td>
-                    <input type="textarea" name="companyname" value="<?lsmb user.companyname?>"/>
-                </td>
-            </tr>
-            
-            
-            <tr>
-                <td>
-                    Address
-                </td>
-                <td>
-                    City
-                </td>
-                <td>
-                    State/Province
-                </td>
-                <td>
-                    Zip/Postal Code
-                </td>
-                <td>
-                    Country
-                </td>
-            </tr>
-            
-            <?lsmb FOR location IN user.locations ?>
-                
+            <input type="hidden" name="action" value="save_location"/>
+            <input type="hidden" name="user_id" value="<?lsmb user.user.entity_id?>"/>
+            <table>
+
                 <tr>
+                    <td colspan="8">
+                        <hr/>
+                        Location
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td></td>
                     <td>
-                        <input type="textarea" name="address1" value="<?lsmb location.lineone?>"/>    
-                        <input type="textarea" name="address2" value="<?lsmb location.linetwo?>"/>
-                        <input type="textarea" name="address3" value="<?lsmb location.linethree?>"/>
+                        Address
                     </td>
                     <td>
+                        City
+                    </td>
+                    <td>
+                        State/Province
+                    </td>
+                    <td>
+                        Zip/Postal Code
+                    </td>
+                    <td>
+                        Country
+                    </td>
+                </tr>
+            
+            
+                <?lsmb FOR location IN user.locations ?>
+                
+                    <tr>
+                        <td>
+                            <a href="admin.pl?action=edit_location&amp;id=<?lsmb location.id?>">Edit</a>
+                            <a href="admin.pl?action=delete_location&amp;id=<?lsmb location.id?>">Delete</a>
+                        <td>
+                        
+                            <?lsmb location.line_one?>
+                            <?lsmb location.line_two?>
+                            <?lsmb location.line_three?>
+                            </a>
+                        </td>
+                        <td>
+                            <?lsmb location.city?>
+                        </td>
+                        <td>
+                            <?lsmb location.state?>
+                        </td>
+                        <td>
+                            <?lsmb location.zipcode?>
+                        </td>
+                         <td>
+                            <?lsmb location.country?>
+                         </td>
+                    </tr>
+                
+                <?lsmb END?>
+                <!-- The editable one. -->
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="textarea" name="address1" value="<?lsmb location.line_one?>"/>
+                        <input type="textarea" name="address2" value="<?lsmb location.line_two?>"/>
+                        <input type="textarea" name="address3" value="<?lsmb location.line_three?>" />
+                    </td>
+                    <td valign="top">
                         <input type="textarea" name="city" value="<?lsmb location.city?>"/>
                     </td>
-                    <td>
+                    <td valign="top">
                         <input type="textarea" name="state" value="<?lsmb location.state?>"/>
                     </td>
-                    <td>
+                    <td valign="top"> 
                         <input type="textarea" name="zipcode" value="<?lsmb location.zipcode?>"/>
                     </td>
-                     <td>
-                         <input type="textarea" name="country" value="<?lsmb location.country?>"/>
-                     </td>
+                    <td valign="top">
+                        <select name="country">
+                        <?lsmb FOREACH country IN countries?>
+                            <option value="<?lsmb country.id?>"><?lsmb country.name?></option>
+                        <?lsmb END?>
+                        </select>
+                    </td>
                 </tr>
-                
-            <?lsmb END?>
-            
-              
+                <tr>
+                    <td>
+                    <?lsmb IF location?>
+                    <input type="submit" value="Edit Location">
+                    <input type="hidden" name="location_id" value="<?lsmb location.id?>"/>
+                    <?lsmb ELSE?>
+                    <input type="submit" value="Save Location">    
+                    <?lsmb END?>
+                    </td>
+                </tr>
+            </form>
+        </table>
+
+        
+        
+        <table>
+            <form name="contacts" method="POST" action="admin.pl">
+            <input type="hidden" name="action" value="save_contact"/>
+            <input type="hidden" name="user_id" value="<?lsmb user.user.id?>"/>
             <tr>
-                <td><br/></td>
-                <td><hr/></td>
+                <td colspan="8"><hr/></td>
             </tr>
             
-            <?lsmb FOR contact IN user.contacts?>
+            <tr>
+                <td></td>
+                
+                <td>
+                    Contact type
+                </td>
+                <td>
+                    Contact
+                </td>
+            </tr>
+            
+            <?lsmb FOR l_contact IN user.contacts?>
                 
                 <tr>
-                    <td><?lsmb contact.class?></td>
-                    <td><?lsmb contact.contact?></td>
+                    <td>
+                        <a href="admin.pl?edit_contact&contact_id=<?lsmb l_contact.id?>&user_id=<?lsmb user.user.id?>">Edit</a>
+                        <a href="admin.pl?delete_contact&contact_id=<?lsmb l_contact.id?>&user_id=<?lsmb user.user.id?>">Delete</a>
+                    </td>
+                    <td><?lsmb l_contact.class?></td>
+                    <td><?lsmb l_contact.contact?></td>
                 </tr>
             <?lsmb END?>
-            
+            <tr>
+                <td></td>
+                <td>
+                    <select name="class">
+                        <?lsmb FOREACH class IN contact_classes?>
+                            <option name="<?lsmb class.id?>" <?lsmb IF contact.contact_class_id == class.id?>selected<?lsmb END?>><?lsmb class.contact?></option>
+                        <?lsmb END?>
+                    </select>
+                </td>
+                <td>
+                    <input type="textarea" name="contact" value="<?lsmb contact.contact?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?lsmb IF contact?>
+                    <input type="submit" value="Edit Contact">
+                    <input type="hidden" name="contact_id" value="<?lsmb contact.id?>"/>
+                    <?lsmb ELSE?>
+                    <input type="submit" value="Save Contact">
+                    <?lsmb END?>
+                </td>
+            </tr>
+            </form>
         </table>
         
         <table>
-            
             <!-- Groups section -->
             <tr>
             <?lsmb FOREACH role IN roles ?>
@@ -134,7 +222,15 @@
             </tr>
             <tr>
             <?lsmb END?>
-                <td><input type="checkbox" name="<?lsmb loop.index?>" value="1"/><?lsmb role?></td>
+                <td>
+                    <input type="checkbox" name="<?lsmb loop.index?>" value="1" 
+                        <?lsmb FOREACH rolname IN user.roles ?>
+                            <?lsmb IF role == rolname?>
+                                checked
+                            <?lsmb END?>
+                        <?lsmb END?> />
+                    <?lsmb role?>
+                </td>
             <?lsmb END?>
             </tr>
         </table>
@@ -145,5 +241,5 @@
                 <td><button name="method" value="cancel">Cancel</td>
             </tr>
         </table>
-    </form>
+    <?lsmb END?>
 </div>

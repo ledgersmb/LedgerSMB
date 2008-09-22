@@ -23,7 +23,7 @@ returns int AS $$
         select * into p from person where id = in_person;
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'No person found for ID %', in_person;
+            RAISE EXCEPTION 'No person found for ID %', in_perso;
         END IF;
         
         -- Okay, we're good. Check to see if we update or insert.
