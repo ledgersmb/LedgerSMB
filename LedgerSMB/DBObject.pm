@@ -131,7 +131,7 @@ sub exec_method {
     }
     $ref->{pronargs} = 0 unless defined $ref->{pronargs};
     # If the user provided args..
-    if (!defined  @in_args) {
+    if (!defined  $args{args}) {
         @proc_args = $self->_parse_array($args);
         if (@proc_args) {
             for my $arg (@proc_args) {
