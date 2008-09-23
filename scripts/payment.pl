@@ -380,7 +380,6 @@ sub display_payments {
         }
         $_->{contact_total} = $contact_total;
     }
-    $payment->debug({file => '/tmp/payment'});
 
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'), 
