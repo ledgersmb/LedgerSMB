@@ -195,11 +195,13 @@
             <tr>
                 <td></td>
                 <td>
-                    <select name="class">
-                        <?lsmb FOREACH class IN contact_classes?>
-                            <option name="<?lsmb class.id?>" <?lsmb IF contact.contact_class_id == class.id?>selected<?lsmb END?>><?lsmb class.contact?></option>
-                        <?lsmb END?>
-                    </select>
+                    <?lsmb PROCESS select element_data = {
+        				name = "contact_class"
+        				options = contact_classes
+        				default_values = [contact.contact_class_id]
+        				value_attr = "id"
+        				text_attr = "classname"
+        			} ?>
                 </td>
                 <td>
                     <input type="textarea" name="contact" value="<?lsmb contact.contact?>"/>

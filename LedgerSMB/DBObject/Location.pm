@@ -69,5 +69,6 @@ sub get_all {
     my $type = shift @_;
     
     my @locations = $self->exec_method(funcname=>$type."__all_locations", args=>[$user_id]);
+    return \@locations;
 }
 1;

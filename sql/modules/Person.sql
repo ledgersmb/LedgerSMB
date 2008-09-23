@@ -117,32 +117,49 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+--
+
 CREATE OR REPLACE FUNCTION person__save_contact
-(in_entity_id int, in_contact_class int, in_contact text)
+(in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT)
 RETURNS INT AS
 $$
-DECLARE out_id int;
+DECLARE 
+    out_id int;
+    v_orig person_to_contact;
 BEGIN
-	INSERT INTO person_to_contact(person_id, contact_class_id, contact)
-	SELECT id, in_contact_class, in_contact FROM person
-	WHERE entity_id = in_entity_id;
-
-	RETURN 1;
+    
+    SELECT cc.* into v_orig 
+    FROM contact_class cc, person p
+    WHERE p.entity_id = in_entity_id 
+    and contact_class = in_contact_class
+    AND contact = in_contact_orig
+    AND cc.person_id = p.id;
+    IF NOT FOUND THEN
+    
+        -- create
+        INSERT INTO person_to_contact(person_id, contact_class_id, contact)
+        VALUES (
+            (SELECT id FROM person WHERE entity_id = in_entity_id),
+            in_contact_class,
+            in_contact_new
+        );
+        return 1;
+    ELSE
+        -- edit.
+        UPDATE person_to_contact
+        SET contact = in_contact_new
+        WHERE 
+        contact = in_contact_orig
+        AND person_id = v_orig.person_id
+        AND contact_class = in_contact_class;
+        return 0;
+    END IF;
+    
 END;
 $$ LANGUAGE PLPGSQL;
 
+--
 
-/*(
-    unknown, 
-    unknown, 
-    unknown, 
-    unknown, 
-    unknown, 
-    unknown, 
-    unknown, 
-    unknown)
-    
-*/
 create or replace function person__save_location(
     in_entity_id int, 
     in_location_id int,

@@ -141,4 +141,20 @@ sub roles {
     
 }
 
+sub save_contact {
+    
+    my $self = shift @_;
+    my $id = shift @_;
+    my $contact = shift @_;
+    
+    my @ret = $self->exec_method(funcname=>"person__save_contact", 
+        args=>[
+            $self->{entity_id},
+            $self->{contacts}->[$id]->{contact_class},
+            $self->{contacts}->[$id]->{contact},
+            $contact
+        ]
+    );
+}
+
 1;

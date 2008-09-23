@@ -62,9 +62,9 @@ sub edit_user {
     # uses the same page as create_user, only pre-populated.
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
-    my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
-    
-    $user->get($request->{user_id});
+    my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
+    $user_obj->{company} = $request->{company};
+    $user_obj->get($request->{user_id});
 
     my @all_roles = $admin->get_roles();
     
@@ -75,16 +75,19 @@ sub edit_user {
         format => 'HTML', 
         path=>'UI'
     );
-    
+    my $location = LedgerSMB::DBObject::Location->new(base=>$request);
     my $template_data = 
             {
-                user=>$user, 
+                user=>$user_obj, 
                 roles=>@all_roles,
                 countries=>$admin->get_countries(),
-                user_roles=>$user->{roles},
+                user_roles=>$user_obj->{roles},
                 salutations=>$admin->get_salutations(),
-                locations=>$location->get_all($u_id,"person"),
+                contact_classes=>$admin->get_contact_classes(),
+                locations=>$location->get_all($user_obj->{entity_id},"person"),
             };
+    print STDERR Dumper($template_data->{contact_classes});
+    print STDERR Dumper($template_data->{user_roles});
     if ($request->type() eq 'POST') {
         
         $admin->save_user();
@@ -94,10 +97,8 @@ sub edit_user {
     else {
 #        print STDERR Dumper($user);
 #        print STDERR Dumper(@all_roles);
-        my $loc;
-        my $location = LedgerSMB::DBObject::Location->new(base=>$request);
         if ($request->{location_id}) {
-            $loc = $location->get($request->{location_id});
+            $template_data->{location} = $location->get($request->{location_id});
         }
         $template->render($template_data);
     }
@@ -248,7 +249,7 @@ sub main {
     $template->render( { users=>$user->{users} } );
 }
 
-sub edit_contact {
+sub save_contact {
     
     my $request = shift @_;
     
@@ -258,13 +259,39 @@ sub edit_contact {
         # We have a contact ID, ie, something we made up.
         my $c_id = $request->{contact_id};
         my $u_id = $request->{user_id};
-        my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
-        $user->get($u_id);
+        my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
+        $user_obj->get($u_id);
         
         # so we have a user object.
         # ->{contacts} is an arrayref to the list of contacts this user has
         # $request->{contact_id} is a reference to this structure.
         
+        $user_obj->save_contact($c_id);
+        
+        my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
+        
+        $user_obj->get($request->{user_id});
+
+        my @all_roles = $admin->get_roles();
+
+        my $template = LedgerSMB::Template->new( 
+            user => $user, 
+            template => 'Admin/edit_user', 
+            language => $user->{language}, 
+            format => 'HTML', 
+            path=>'UI'
+        );
+        my $template_data = 
+                {
+                    user=>$user_obj, 
+                    roles=>@all_roles,
+                    countries=>$admin->get_countries(),
+                    user_roles=>$user_obj->{roles},
+                    salutations=>$admin->get_salutations(),
+                    contact_classes=>$admin->get_contact_classes(),
+                    locations=>$location->get_all($user_obj->{entity_id},"person"),
+                };
+        $template->render($template_data);
     }
 }
 
@@ -291,13 +318,6 @@ sub delete_contact {
         # Now, just call the main edit user page.
         edit_user($request);
     }
-}
-
-sub new_contact {
-    
-    my $request = shift @_;
-    
-    
 }
 
 sub save_location {

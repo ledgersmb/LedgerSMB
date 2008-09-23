@@ -264,4 +264,11 @@ sub get_countries {
     $self->debug({file => '/tmp/user'});
     return $self->{countries};
 }
+sub get_contact_classes {
+    
+    my $self = shift @_;
+    my $sth = $self->{dbh}->prepare("select id, class as classname from contact_class");
+    my $code = $sth->execute();
+    return $sth->fetchall_arrayref({});
+}
 1;
