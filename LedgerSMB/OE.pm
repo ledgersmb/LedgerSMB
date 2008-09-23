@@ -2609,7 +2609,7 @@ sub consolidate_orders {
 					project_id, ship, serialnumber, notes)
 				SELECT ?, parts_id, description, qty, 
 				       sellprice, discount, unit, reqdate, 
-				       project_id, 0, serialnumber, qty
+				       project_id, 0, serialnumber, notes
                                   FROM orderitems 
 				 WHERE trans_id IN ($orderid_str)|;
 
