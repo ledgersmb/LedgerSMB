@@ -5,8 +5,8 @@
 			'UI/payments/payments.css'
 		]
 ?>
-<?lsmb BLOCK format_money ?><?lsmb FILTER format('%15.2f') ?><?lsmb number 
-?><?lsmb END # filter ?><?lsmb END # block ?>
+<?lsmb BLOCK format_money ?><?lsmb number 
+?><?lsmb END # block ?>
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
 <?lsmb contact_type = (account_class == 1) ? text('Vendor') : text('Customer') 
 ?>
@@ -198,7 +198,7 @@
 		ELSE ; 'name_has_no_vouchers' ; 
 		END
 		?>"><?lsmb r.contact_name ?></span></td>
-	<td class="invoice"><?lsmb INCLUDE format_money number=r.total_due ?> 
+	<td class="invoice"><?lsmb r.total_due ?> 
 		<?lsmb currency ?></td>
         <td class="payment" class="details_select">
 		<?lsmb INCLUDE input element_data = {
@@ -243,47 +243,42 @@
 		<?lsmb icount = icount + 1 ?>
 		<tr>
 			<td class="invoice_date_list">&nbsp;<?lsmb i.2 ?></td>
-			<?lsmb PROCESS input element_data = {
-				name = "invdate_$i.0"
+			<input
+				name = "<?lsmb "invdate_$i.0" ?>"
 				type = "hidden"
 				value = i.2
-			} ?>
+			/>
 			<td class="invoice_list">&nbsp;<?lsmb i.1 ?></td>
-			<?lsmb PROCESS input element_data = {
-				name = "invnumber_$i.0"
+			<input
+				name = "<?lsmb "invnumber_$i.0" ?>"
 				type = "hidden"
-				value = i.1
+				value = "<?lsmb i.1 ?>"
 			} ?>
 		        <td class="total_due_list">&nbsp;
-				<?lsmb INCLUDE format_money number=i.3 ?></td>
+				<?lsmb i.3 ?></td>
 			<td class="paid_list">&nbsp;
-				<?lsmb INCLUDE format_money number=i.4 ?></td>
+				<?lsmb i.4 ?></td>
 			<td class="net_due_list">&nbsp;
-				<?lsmb INCLUDE format_money number= i.6 ?>
+				<?lsmb i.6 ?>
 				<?lsmb currency ?></td>
 			<td class="to_pay_list">
-			<?lsmb IF ! ${"payment_$r.contact_id_$i.0"} ?>
-				
-			<?lsmb ${"payment_$r.contact_id_$i.0"} = 
-				INCLUDE format_money number= i.6  ?>
-			<?lsmb END # if ?>
-			<?lsmb INCLUDE input element_data = {
-				name = "payment_$r.contact_id_$i.0"
-				value = ${"payment_$r.contact_id_$i.0"}
+			<input 
+				name = "<?lsmb "payment_$i.0" ?>"
+				value = "<?lsmb ${"payment_$i.0"} ?>"
 				size = 20
 				type = "text"
 				class = "monetary"
-			} ?>
-			<?lsmb INCLUDE input element_data = {
+			/>
+			<input 
 				type = "hidden"
-				name = "invoice_${r.contact_id}_$icount"
-				value = i.0
-			} ?>
-			<?lsmb INCLUDE input element_data = {
+				name = "<?lsmb "invoice_${r.contact_id}_$icount" ?>"
+				value = "<?lsmb i.0 ?>"
+			/>
+			<input 
 				type = "hidden"
-				name = "net_$i.0"
-				value = ${"payment_$r.contact_id_$i.0"}
-			} ?>
+				name = "<?lsmb "net_$i.0" ?>"
+				value = "<?lsmb ${"payment_$r.contact_id_$i.0"} ?>"
+			/>
 			</td>
 		</tr>
 		<?lsmb END # foreach i ?>
@@ -297,7 +292,7 @@
 				<?lsmb text('Contact Total (if paying "some")') ?>
 			</td>
 			<td><span id='<?lsmb ${"contact_total_$r.id"} ?>'>
-			<?lsmb INCLUDE format_money number= r.contact_total ?>
+			<?lsmb r.contact_total ?>
 			</span><span class="currency">
 				<?lsmb currency ?></span>
 			</td>
@@ -310,7 +305,7 @@
         <td class="total_label"><?lsmb text('Grand Total') ?></td>
 	<td>
 		<span id="grand_total">
-			<?lsmb INCLUDE format_money number = grand_total ?>
+			<?lsmb grand_total ?>
 		</span>
 		<span class="currency">
 			<?lsmb currency ?>

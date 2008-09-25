@@ -380,6 +380,9 @@ sub format_amount {
     if (!defined $format){
        $format = $myconfig->{numberformat}
     }
+    if (!defined $args{precision} and defined $args{money}){
+       $places = $LedgerSMB::Sysconfig::decimal_places;
+    }
 
     my $negative;
     if ($amount) {

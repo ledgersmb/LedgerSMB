@@ -363,24 +363,40 @@ sub display_payments {
     $payment->{grand_total} = 0;
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
-        $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due});
-
-        if (($payment->{action} ne 'update_payments') 
+        $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due},
+                                                  money  => 1);
+        for my $invoice (@{$_->{invoices}}){
+            if (($payment->{action} ne 'update_payments') 
                   or (defined $payment->{"id_$_->{contact_id}"})){
-            if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
-                  for my $invoice (@{$_->{invoices}}){
+
+                   if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
                       my $i_id = $invoice->[0];
                       $contact_total 
                               += $payment->{"paid_$_->{contact_id}_$i_id"};
-                  } 
-            } else {
-                  $contact_total = $_->{total_due};
+                   } 
             }
+            $invoice->[3] = $payment->format_amount(amount => $invoice->[3], 
+                                                    money  => 1);
+            $invoice->[4] = $payment->format_amount(amount => $invoice->[4],
+                                                    money  => 1);
+            $invoice->[5] = $payment->format_amount(amount => $invoice->[5],
+                                                    money  => 1);
+            $invoice->[6] = $payment->format_amount(amount => $invoice->[6],
+                                                    money  => 1);
+            if (!$payment->{action} ne 'update_payments'){
+                my $fld = "payment_" . $invoice->[0];
+                $payment->{"$fld"} = $invoice->[6];
+            }
+        }
+        if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
+                  $contact_total = $_->{total_due};
+        }
+        if (($payment->{action} ne 'update_payments') 
+                  or (defined $payment->{"id_$_->{contact_id}"})){
+            $_->{contact_total} = $contact_total;
             $payment->{grand_total} += $contact_total;
         }
-        $_->{contact_total} = $contact_total;
     }
-
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'), 
              value => 'screen'});

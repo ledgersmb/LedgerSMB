@@ -459,10 +459,14 @@ sub get_payment_detail_data {
 	    my $tmp_invoices = $inv->{invoices};
         $inv->{invoices} = [];
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
-#        $self->error(Dumper($inv->{invoices}));
         @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
+        for my $invoice (@{$inv->{invoices}}){
+            $invoice->[6] = Math::BigFloat->new($invoice->[6]);
+            $invoice->[3] = Math::BigFloat->new($invoice->[3]);
+            $invoice->[4] = Math::BigFloat->new($invoice->[4]);
+        }
     }
-    
+ 
     $self->{dbh}->commit; # Commit locks
 }    
 
