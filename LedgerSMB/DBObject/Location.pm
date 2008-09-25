@@ -17,6 +17,7 @@ sub save {
     my ($ret) = $self->exec_method(funcname=>$type."__save_location", args=>[
         $self->{user_id}, # entity_id           
         $self->{location_id}, # location_id
+        3, # location_class, currently being set to "shipping"
         $self->{address1},
         $self->{address2},
         $self->{address3}, # address info
@@ -25,7 +26,8 @@ sub save {
         $self->{zipcode},
         $self->{country} # obviously, country.
     ]);
-    $self->{id} = $ret->[0];
+    $self->{id} = $ret->{$type."__save_location"};
+    $self->{dbh}->commit();
     return $self->{id};
 }
 
@@ -59,7 +61,7 @@ sub get {
     
     my ($ret) = $self->exec_method(funcname=>"location__get", args=>[$id]);
     
-    return $ret->[0];
+    return $ret->{location__get};
 }
 
 sub get_all {

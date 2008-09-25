@@ -9,6 +9,56 @@ use LedgerSMB::DBObject::User;
 use LedgerSMB::DBObject::Location;
 use Data::Dumper;
 
+sub __edit_page {
+    
+    
+    my ($request, $otd) = @_;
+    
+    # otd stands for Other Template Data.
+    
+    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
+    my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
+    $user_obj->{company} = $request->{company};
+    $user_obj->get($request->{user_id});
+
+    my @all_roles = $admin->get_roles();
+    
+    my $template = LedgerSMB::Template->new( 
+        user => $user, 
+        template => 'Admin/edit_user', 
+        language => $user->{language}, 
+        format => 'HTML', 
+        path=>'UI'
+    );
+    my $location = LedgerSMB::DBObject::Location->new(base=>$request);
+    my $template_data = 
+            {
+                user=>$user_obj, 
+                roles=>@all_roles,
+                countries=>$admin->get_countries(),
+                user_roles=>$user_obj->{roles},
+                salutations=>$admin->get_salutations(),
+                contact_classes=>$admin->get_contact_classes(),
+                locations=>$location->get_all($user_obj->{entity_id},"person"),
+            };
+    open (FOO,">/tmp/dump.txt");
+    print STDERR Dumper($template_data->{contact_classes});
+    print FOO Dumper($template_data);
+    
+    for my $key (keys(%{$otd})) {
+        
+        $template_data->{$key} = $otd->{$key};
+    }
+    my $template = LedgerSMB::Template->new( 
+        user => $user, 
+        template => 'Admin/edit_user', 
+        language => $user->{language}, 
+        format => 'HTML', 
+        path=>'UI'
+    );
+    $template->render($template_data);
+}
+
 sub new_user {
     
     # uses the same page as create_user, only pre-populated.
@@ -62,7 +112,7 @@ sub edit_user {
     # uses the same page as create_user, only pre-populated.
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
-    my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
+    my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
     $user_obj->{company} = $request->{company};
     $user_obj->get($request->{user_id});
 
@@ -86,13 +136,14 @@ sub edit_user {
                 contact_classes=>$admin->get_contact_classes(),
                 locations=>$location->get_all($user_obj->{entity_id},"person"),
             };
+    open (FOO,">/tmp/dump.txt");
     print STDERR Dumper($template_data->{contact_classes});
-    print STDERR Dumper($template_data->{user_roles});
+    print FOO Dumper($template_data);
     if ($request->type() eq 'POST') {
         
         $admin->save_user();
         $admin->save_roles();
-        $template->render($test_data);
+        $template->render($template_data);
     }
     else {
 #        print STDERR Dumper($user);
@@ -266,32 +317,9 @@ sub save_contact {
         # ->{contacts} is an arrayref to the list of contacts this user has
         # $request->{contact_id} is a reference to this structure.
         
-        $user_obj->save_contact($c_id);
+        $user_obj->save_contact($c_id, $request->{contact_class}, $request->{contact});
         
-        my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
-        
-        $user_obj->get($request->{user_id});
-
-        my @all_roles = $admin->get_roles();
-
-        my $template = LedgerSMB::Template->new( 
-            user => $user, 
-            template => 'Admin/edit_user', 
-            language => $user->{language}, 
-            format => 'HTML', 
-            path=>'UI'
-        );
-        my $template_data = 
-                {
-                    user=>$user_obj, 
-                    roles=>@all_roles,
-                    countries=>$admin->get_countries(),
-                    user_roles=>$user_obj->{roles},
-                    salutations=>$admin->get_salutations(),
-                    contact_classes=>$admin->get_contact_classes(),
-                    locations=>$location->get_all($user_obj->{entity_id},"person"),
-                };
-        $template->render($template_data);
+        __edit_page($request,{});
     }
 }
 
@@ -316,7 +344,8 @@ sub delete_contact {
         $user->delete_contact($c_id);
         # Boom. Done.
         # Now, just call the main edit user page.
-        edit_user($request);
+        
+        __edit_page($request,undef,);
     }
 }
 
@@ -328,9 +357,9 @@ sub save_location {
     if ($request->type eq "POST") {
         
         my $u_id = $request->{user_id}; # this is an entity_id
-        
+        my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
         my $location = LedgerSMB::DBObject::Location->new(base=>$request, copy=>'all');
-        
+        $user_obj->get($request->{user_id});
         # So there's a pile of stuff we need.
         # lineone
         # linetwo
@@ -339,14 +368,16 @@ sub save_location {
         # state
         # zipcode
         # country
+        # u_id isn't an entity_it, though.
         print STDERR "Attempting to save location...\n";
+        $location->{user_id} = $user_obj->{user}->{entity_id};
+        print STDERR $location->{user_id}."\n";
         my $id = $location->save("person");
         # Done and done.
         
         my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
-        my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
         
-        $user->get($request->{user_id});
+        
 
         my @all_roles = $admin->get_roles();
 
@@ -359,9 +390,9 @@ sub save_location {
         );
         $template->render(
             {
-                user=>$user, 
+                user=>$user_obj, 
                 roles=>@all_roles,
-                user_roles=>$user->{roles},
+                user_roles=>$user_obj->{roles},
                 salutations=>$admin->get_salutations(),
                 locations=>$location->get_all($u_id,"person"),
                 location=>$location->get($id),

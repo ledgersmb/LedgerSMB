@@ -129,11 +129,12 @@ DECLARE
 BEGIN
     
     SELECT cc.* into v_orig 
-    FROM contact_class cc, person p
+    FROM person_to_contact cc, person p
     WHERE p.entity_id = in_entity_id 
-    and contact_class = in_contact_class
-    AND contact = in_contact_orig
+    and cc.contact_class_id = in_contact_class
+    AND cc.contact = in_contact_orig
     AND cc.person_id = p.id;
+    
     IF NOT FOUND THEN
     
         -- create
@@ -163,6 +164,7 @@ $$ LANGUAGE PLPGSQL;
 create or replace function person__save_location(
     in_entity_id int, 
     in_location_id int,
+    in_location_class int,
     in_line_one text, 
     in_line_two text, 
     in_line_three text,
@@ -197,8 +199,8 @@ create or replace function person__save_location(
     		in_country_code);
     	
         INSERT INTO person_to_location 
-    		(person_id, location_id)
-    	VALUES  (t_person_id, l_id);
+    		(person_id, location_id, location_class)
+    	VALUES  (t_person_id, l_id, in_location_class);
     ELSE
         l_id := location_save(
             in_location_id, 

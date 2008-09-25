@@ -62,7 +62,7 @@
             <input type="hidden" name="location_id" value="<?lsmb location.id?>"/>
             <?lsmb END?>
             <input type="hidden" name="action" value="save_location"/>
-            <input type="hidden" name="user_id" value="<?lsmb user.user.entity_id?>"/>
+            <input type="hidden" name="user_id" value="<?lsmb user.user.id?>"/>
             <table>
 
                 <tr>
@@ -90,8 +90,7 @@
                         Country
                     </td>
                 </tr>
-            
-            
+                
                 <?lsmb FOR location IN user.locations ?>
                 
                     <tr>
@@ -200,7 +199,7 @@
         				options = contact_classes
         				default_values = [contact.contact_class_id]
         				value_attr = "id"
-        				text_attr = "classname"
+        				text_attr = "name"
         			} ?>
                 </td>
                 <td>
@@ -219,33 +218,35 @@
             </tr>
             </form>
         </table>
+        <form name="groups" method="POST" action="admin.pl">
+            <input type="hidden" name="action" value="save_groups"/>
+            <table>
+                <!-- Groups section -->
+                <tr>
+                <?lsmb FOREACH role IN roles ?>
+                <?lsmb IF loop.count % 2 == 0?>
+                </tr>
+                <tr>
+                <?lsmb END?>
+                    <td>
+                        <input type="checkbox" name="<?lsmb loop.index?>" value="1" 
+                            <?lsmb FOREACH rolname IN user.roles ?>
+                                <?lsmb IF role == rolname?>
+                                    checked
+                                <?lsmb END?>
+                            <?lsmb END?> />
+                        <?lsmb role?>
+                    </td>
+                <?lsmb END?>
+                </tr>
+            </table>
         
-        <table>
-            <!-- Groups section -->
-            <tr>
-            <?lsmb FOREACH role IN roles ?>
-            <?lsmb IF loop.count % 2 == 0?>
-            </tr>
-            <tr>
-            <?lsmb END?>
-                <td>
-                    <input type="checkbox" name="<?lsmb loop.index?>" value="1" 
-                        <?lsmb FOREACH rolname IN user.roles ?>
-                            <?lsmb IF role == rolname?>
-                                checked
-                            <?lsmb END?>
-                        <?lsmb END?> />
-                    <?lsmb role?>
-                </td>
-            <?lsmb END?>
-            </tr>
-        </table>
-        
-        <table>
-            <tr>
-                <td><button value="new_user">Submit</button></td>
-                <td><button name="method" value="cancel">Cancel</td>
-            </tr>
-        </table>
-    <?lsmb END?>
+            <table>
+                <tr>
+                    <td><button value="groups">Save Groups</button></td>
+                    <td><button name="method" value="cancel">Cancel</td>
+                </tr>
+            </table>
+        </form>   
+<?lsmb END?>
 </div>

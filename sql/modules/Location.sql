@@ -46,8 +46,8 @@ BEGIN
 	        line_three,
 	        city,
 	        state,
-	        zipcode,
-	        country)
+	        mail_code,
+	        country_id)
 	    VALUES (
 	        location_id,
 	        in_address1,
@@ -64,7 +64,7 @@ BEGIN
 	    SELECT * INTO location_row WHERE id = in_location_id;
 	    IF NOT FOUND THEN
 	        -- Tricky users are lying to us.
-	        RAISE EXCEPTION "location_save called with nonexistant location ID %", in_location_id;
+	        RAISE EXCEPTION 'location_save called with nonexistant location ID %', in_location_id;
 	    ELSE
 	        -- Okay, we're good.
 	        
@@ -74,8 +74,8 @@ BEGIN
 	            line_three = in_address3,
 	            city = in_city, 
 	            state = in_state,
-	            zipcode = in_zipcode,
-	            country = in_country
+	            mail_code = in_zipcode,
+	            country_id = in_country
 	        WHERE id = in_location_id;
 	        return in_location_id;
 	    END IF;
@@ -156,8 +156,32 @@ CREATE TYPE location_result AS (
 	line_three text,
 	city text,
 	state text,
-        mail_code text,
+    mail_code text,
 	country text,
-	class text
 );
 
+CREATE OR REPLACE FUNCTION location__get(in_id int) returns location_result AS $$
+
+declare
+    l_row location_result;
+begin
+    FOR l_row IN 
+        SELECT 
+            l.id,                   
+            l.line_one,             
+            l.line_two,             
+            l.line_three,           
+            l.city,                 
+            l.state,                
+            l.mail_code,            
+            c.name as country,      
+            NULL
+        FROM location l
+        JOIN country c on l.country_id = c.id
+        WHERE l.id = in_id
+    LOOP
+    
+        return l_row;
+    END LOOP;
+END;
+$$ language plpgsql ;

@@ -90,6 +90,7 @@ sub get {
     }
     $self->{roles} = \@rolstore;
     
+    $self->{entity_id} = $self->{entity}->{id};
     print STDERR "Got all user information";
     
     #$user->{user} = $u->get($id);
@@ -145,16 +146,56 @@ sub save_contact {
     
     my $self = shift @_;
     my $id = shift @_;
+    my $class = shift @_;
     my $contact = shift @_;
+    my @ret;
     
-    my @ret = $self->exec_method(funcname=>"person__save_contact", 
-        args=>[
-            $self->{entity_id},
-            $self->{contacts}->[$id]->{contact_class},
-            $self->{contacts}->[$id]->{contact},
-            $contact
-        ]
-    );
+    print STDERR Dumper($self->{entity}->{id});
+    if ($id) {
+        print STDERR "Found ID..";
+        @ret = $self->exec_method(funcname=>"person__save_contact", 
+            args=>[
+                $self->{entity}->{id},
+                $self->{contacts}->[$id]->{contact_class},
+                $self->{contacts}->[$id]->{contact},
+                $contact
+            ]
+        );
+    } 
+    else{
+        print STDERR "Did not find an ID, attempting to save a new contact..\n";
+        print STDERR ($class."\n");
+        print STDERR ($contact."\n");
+        print STDERR ($self->{entity_id}."\n");
+        @ret = $self->exec_method(funcname=>"person__save_contact",
+            args=>[
+                $self->{entity_id},
+                $class,
+                undef,
+                $contact
+            ]
+        );
+    }
+    print STDERR Dumper(\@ret);
+    if ($ret[0]->{person__save_contact} == 1){
+        $self->{dbh}->commit();
+    }
+    else{
+        $self->error("Couldn't save contact...");
+    }
+    return 1;
+}
+
+sub delete_contact {
+    
+    my $self = shift @_;
+    my $id = shift @_;
+    
+    # Okay
+    # ID doesn't actually conform to any database entry
+    # We're basically cheating outrageously here.
+    
+    
 }
 
 1;
