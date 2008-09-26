@@ -72,3 +72,24 @@ $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION session_check(int, text) IS 
 $$ Return code is 0 for failure, 1 for success. $$;
+
+CREATE OR REPLACE FUNCTION unlock_all() RETURNS BOOL AS
+$$
+BEGIN
+    UPDATE transactions SET locked_by = NULL 
+    where locked_by IN 
+          (select session_id from session WHERE users_id = 
+                  (SELECT id FROM users WHERE username = SESSION_USER));
+
+    RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION unlock(in_id int) RETURNS BOOL AS $$
+BEGIN
+    UPDATE transactions SET locked_by = NULL WHERE id = in_id 
+           AND locked_by IN (SELECT session_id FROM session WHERE users_id =
+		(SELECT id FROM users WHERE username = SESSION_USER));
+    RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;

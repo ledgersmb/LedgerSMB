@@ -29,6 +29,28 @@ select * from session_check(currval('session_session_id_seq')::int, md5('test1')
 INSERT INTO session (users_id, last_used, token, transaction_id)
 SELECT currval('users_id_seq'), now(), md5('test1'), 1;
 
+INSERT INTO test_result (test_name, success)
+SELECT 'records exist in transactions table', count(*) > 0 FROM transactions;
+
+INSERT INTO test_result (test_name, success)
+SELECT 'unlock record fails when record is not locked', unlock(max(id)) IS FALSE
+FROM transactions;
+
+INSERT INTO test_result (test_name, success)
+SELECT 'lock record', lock_record(max(id), currval('session_session_id_seq')::int)
+
+FROM transactions WHERE locked_by IS NULL;
+
+INSERT INTO test_result (test_name, success)
+SELECT 'unlock record', unlock(max(id))
+FROM transactions WHERE locked_by = currval('session_session_id_seq')::int;
+
+INSERT INTO test_result (test_name, success)
+SELECT 'lock all record', bool_and(lock_record(id, currval('session_session_id_seq')::int))
+FROM transactions WHERE locked_by IS NULL;
+
+INSERT INTO test_result (test_name, success)
+SELECT 'unlock all records', unlock_all();
 
 INSERT INTO test_result (test_name, success)
 values ('session1 retrieved', 
@@ -43,9 +65,6 @@ INSERT INTO test_result (test_name, success)
 VALUES ('session 2 removed', 
 (select count(*) from session where token = md5('test2') AND users_id = currval('users_id_seq')) = 0);
 
-DELETE FROM session WHERE users_id = currval('users_id_seq');
-DELETE FROM entity WHERE control_code = '_TESTING.....';
-
 SELECT * FROM test_result;
 
 SELECT (select count(*) from test_result where success is true) 
@@ -53,5 +72,4 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
 
-DROP TABLE test_result;
 ROLLBACK;

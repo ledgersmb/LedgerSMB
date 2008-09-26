@@ -460,6 +460,7 @@ BEGIN
 		set paid = paid +in_transactions[out_count][2]
 		where id =in_transactions[out_count][1];
 	END LOOP;
+	perform unlock_all();
 	return out_count;
 END;
 $$ language plpgsql;
