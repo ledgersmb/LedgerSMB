@@ -420,6 +420,8 @@ BEGIN
 		t_voucher_id := currval('voucher_id_seq');
 	END IF;
 
+	CREATE TEMPORARY TABLE bulk_payments_in (id int, amount numeric);
+
 	select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
 	select id into t_cash_id from chart where accno = in_cash_accno;
 
@@ -427,39 +429,54 @@ BEGIN
 			array_lower(in_transactions, 1) ..
 			array_upper(in_transactions, 1)
 	LOOP
-		INSERT INTO acc_trans 
-			(trans_id, chart_id, amount, approved, voucher_id,
-			transdate, source)
-		VALUES
-			(in_transactions[out_count][1], 
-				case when in_account_class = 1 THEN t_cash_id
-				WHEN in_account_class = 2 THEN t_ar_ap_id
-				ELSE -1 END,
-
-				in_transactions[out_count][2],
-	
-				CASE WHEN t_voucher_id IS NULL THEN true
-				ELSE false END,
-				t_voucher_id, in_payment_date, in_source);
-
-		INSERT INTO acc_trans 
-			(trans_id, chart_id, amount, approved, voucher_id,
-			transdate, source)
-		VALUES
-			(in_transactions[out_count][1], 
-				case when in_account_class = 1 THEN t_ar_ap_id
-				WHEN in_account_class = 2 THEN t_cash_id
-				ELSE -1 END,
-
-				in_transactions[out_count][2]* -1,
-
-				CASE WHEN t_voucher_id IS NULL THEN true
-				ELSE false END,
-				t_voucher_id, in_payment_date, in_source);
-		UPDATE ap 
-		set paid = paid +in_transactions[out_count][2]
-		where id =in_transactions[out_count][1];
+		EXECUTE $E$
+			INSERT INTO bulk_payments_in(id, amount)
+			VALUES ($E$ || quote_literal(in_transactions[out_count][1])
+				|| $E$, $E$ ||
+				quote_literal(in_transactions[out_count][2])
+				|| $E$)$E$;
 	END LOOP;
+	EXECUTE $E$ 
+		INSERT INTO acc_trans 
+			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
+			source)
+		SELECT id, 
+		case when $E$ || quote_literal(in_account_class) || $E$ = 1
+			THEN $E$ || t_cash_id || $E$
+			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
+			THEN $E$ || t_ar_ap_id || $E$
+			ELSE -1 END, 
+		amount,
+		CASE 
+			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
+			ELSE false END,
+		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
+		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') ||$E$
+		FROM bulk_payments_in $E$;
+
+	EXECUTE $E$ 
+		INSERT INTO acc_trans 
+			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
+			source)
+		SELECT id, 
+		case when $E$ || quote_literal(in_account_class) || $E$ = 1 
+			THEN $E$ || t_ar_ap_id || $E$
+			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
+			THEN $E$ || t_cash_id || $E$
+			ELSE -1 END, 
+		amount * -1,
+		CASE 
+			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
+			ELSE false END,
+		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
+		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'null') ||$E$
+		FROM bulk_payments_in $E$;
+
+	EXECUTE $E$
+		UPDATE ap 
+		set paid = paid + (select amount from bulk_payments_in b 
+			where b.id = ap.id)
+		where id in (select id from bulk_payments_in) $E$;
 	perform unlock_all();
 	return out_count;
 END;
@@ -472,8 +489,7 @@ COMMENT ON FUNCTION payment_bulk_post
 IS
 $$ Note that in_transactions is a two-dimensional numeric array.  Of each 
 sub-array, the first element is the (integer) transaction id, and the second
-is the amount for that transaction.  If the total of the amounts do not add up 
-to in_total, then an error is generated. $$;
+is the amount for that transaction.  $$;
 
 --
 -- WE NEED A PAYMENT TABLE 

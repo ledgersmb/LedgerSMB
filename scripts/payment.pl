@@ -368,11 +368,10 @@ sub display_payments {
         for my $invoice (@{$_->{invoices}}){
             if (($payment->{action} ne 'update_payments') 
                   or (defined $payment->{"id_$_->{contact_id}"})){
-
                    if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
                       my $i_id = $invoice->[0];
                       $contact_total 
-                              += $payment->{"paid_$_->{contact_id}_$i_id"};
+                              += $payment->{"payment_$i_id"};
                    } 
             }
             $invoice->[3] = $payment->format_amount(amount => $invoice->[3], 
@@ -383,8 +382,8 @@ sub display_payments {
                                                     money  => 1);
             $invoice->[6] = $payment->format_amount(amount => $invoice->[6],
                                                     money  => 1);
-            if (!$payment->{action} ne 'update_payments'){
-                my $fld = "payment_" . $invoice->[0];
+            my $fld = "payment_" . $invoice->[0];
+            if (!defined $payment->{"$fld"} ){
                 $payment->{"$fld"} = $invoice->[6];
             }
         }
