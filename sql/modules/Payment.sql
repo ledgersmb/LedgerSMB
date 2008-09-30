@@ -477,6 +477,7 @@ BEGIN
 		set paid = paid + (select amount from bulk_payments_in b 
 			where b.id = ap.id)
 		where id in (select id from bulk_payments_in) $E$;
+	EXECUTE $E$ DROP TABLE bulk_payments_in $E$;
 	perform unlock_all();
 	return out_count;
 END;
