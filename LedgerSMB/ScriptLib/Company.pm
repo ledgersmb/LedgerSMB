@@ -507,7 +507,7 @@ sub save_bank_account {
 
 sub save_notes {
     my ($request) = @_;
-    my $company = new_company($company);
+    my $company = new_company($request);
     $company->save_notes();
     $company->get();
     _render_main_screen($company );
