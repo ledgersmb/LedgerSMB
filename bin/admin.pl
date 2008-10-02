@@ -938,15 +938,19 @@ sub delete {
     }
 
     #users_conf
-    my $deleteUser =
-      $dbh->prepare(
-"DELETE FROM users_conf USING users WHERE users.username = ? and users.id = users_conf.id;"
-      );
+ 
+    my $deleteUser = $dbh->prepare("select id FROM users WHERE username = ?;");
+
     $deleteUser->execute( $form->{login} );
 
-    #and now users
-    $deleteUser = $dbh->prepare("DELETE FROM users WHERE username = ?;");
-    $deleteUser->execute( $form->{login} );
+    my $id1=$deleteUser->fetchrow();
+
+    $dbh->do("DELETE FROM users_conf WHERE id=$id1;") or print "error";
+    $dbh->do("DELETE FROM users WHERE id=$id1;") or print "Error";
+    
+    $form->{login}="admin";
+
+
 
     $form->redirect( $locale->text('User deleted!') );
 }
@@ -971,7 +975,7 @@ sub change_admin_password {
 
     print qq|
 	<body class="admin">
-		<form method="post" action="$form->{script}">
+		<form method="get" action="$form->{script}">
 		<table>
 			<tr class="listheading">
 				<th>| . $locale->text('Change Password') . qq|</th>

@@ -69,6 +69,9 @@ Donna Robinson [email omitted] contributed some fixes to the HTML code.
 Victor Sterpu <victor @ ambra.ro> has contributed several bug fixes to COGS 
 handling.
 
+Sadashiva [email omitted] has committed a fix to the admin screen regarding access 
+errors when deleting a user.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
