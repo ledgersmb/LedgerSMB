@@ -221,7 +221,8 @@ BEGIN
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
 		    JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id, 
 				 paid, curr, 1 as invoice_class, 
-		                 entity_credit_account, on_hold, v.batch_id
+		                 entity_credit_account, on_hold, v.batch_id,
+				 approved
 		            FROM ap
 		       LEFT JOIN (select * from voucher where batch_class = 1) v 
 			         ON (ap.id = v.trans_id)
@@ -230,7 +231,8 @@ BEGIN
 		           UNION
 		          SELECT ar.id, invnumber, transdate, amount, entity_id,
 		                 paid, curr, 2 as invoice_class, 
-		                 entity_credit_account, on_hold, v.batch_id
+		                 entity_credit_account, on_hold, v.batch_id,
+				 approved
 		            FROM ar
 		       LEFT JOIN (select * from voucher where batch_class = 2) v 
 			         ON (ar.id = v.trans_id)
@@ -251,6 +253,7 @@ BEGIN
 		        GROUP BY trans_id) p ON (a.id = p.trans_id)
 		   WHERE a.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
+		             AND a.approved
 			 AND c.business_id = 
 				coalesce(in_business_id, c.business_id)
 		         AND ((a.transdate >= COALESCE(in_date_from, a.transdate)
