@@ -233,7 +233,7 @@ BEGIN
     AND loc.id = in_location_id;
     
     IF NOT FOUND THEN
-        RAISE EXCEPTION "Cannot find records to delete for entity % and location %", in_entity_id, in_location_id;
+       RAISE EXCEPTION 'Cannot find records to delete for entity % and location %', in_entity_id, in_location_id;
     ELSE
         DELETE FROM people_to_location WHERE location_id = in_location_id;
         DELETE FROM location WHERE location_id = in_location_id;
