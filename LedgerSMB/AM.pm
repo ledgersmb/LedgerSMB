@@ -1415,8 +1415,28 @@ sub save_defaults {
               || $form->dberror("Saving $_");
         }
         else {
-            $sth_plain->execute( $val, $_ )
-              || $form->dberror("Saving $_");
+				    my $found=0;
+				    my $sth_defcheck=$dbh->prepare("select count(*) from defaults where setting_key='$_';") || $form->dberror("Select defaults $_");
+				    $sth_defcheck->execute() || $form->dberror("execute defaults $_");
+			            while(my $found1=$sth_defcheck->fetchrow()){$found=$found1;}
+				    
+				    if($val ne '') 
+				    {
+					  if($found)
+					  {
+						$dbh->do("update defaults set value='$val' where setting_key='$_';");
+					  }
+					  else
+					  {
+						$dbh->do("insert into defaults(value,setting_key) values('$val','$_');"); 
+					  }
+				    }
+				    else
+				    {
+					  if($found){$dbh->do("delete from defaults where setting_key='$_';")};      	
+
+				    }
+
         }
 
     }
