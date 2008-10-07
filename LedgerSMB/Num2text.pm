@@ -44,7 +44,7 @@ use utf8;
 
 sub init {
     my $self    = shift;
-    my $locale  = $self->{'locale'};
+    my $locale  = $self->{'locale'} || $self->{'_locale'};
     my $langtag = substr( $locale->language_tag, 0, 2 );
     $self->{'numrules'} = 'en';
     $self->{'numrules'} = $langtag
