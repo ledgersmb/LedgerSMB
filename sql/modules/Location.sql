@@ -157,7 +157,8 @@ CREATE TYPE location_result AS (
 	city text,
 	state text,
         mail_code text,
-	country text
+	country text,
+	location_class int
 );
 
 CREATE OR REPLACE FUNCTION location__get(in_id int) returns location_result AS $$
