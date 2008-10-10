@@ -2891,8 +2891,8 @@ sub generate_sales_orders {
     }
 
     $order = new Form;
-    $order->{dbh} = $form->{dbh};
     for ( keys %{ $form->{order} } ) {
+        $order->{dbh} = $form->{dbh};
 
         for (qw(type vc defaultcurrency login)) { $order->{$_} = $form->{$_} }
         for (qw(currency))                      { $order->{$_} = $form->{$_} }
