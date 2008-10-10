@@ -34,6 +34,7 @@ BEGIN
         END LOOP;
 END;
 $$ language plpgsql;
+
 COMMENT ON FUNCTION chart_list_cash(in_account_class int) IS
 $$ This function returns the cash account acording with in_account_class which must be 1 or 2 $$;
 
@@ -80,5 +81,6 @@ BEGIN
         END LOOP;
 END;
 $$ language plpgsql;
+
 COMMENT ON FUNCTION chart_list_cash(in_account_class int) IS
 $$ This function returns the overpayment accounts acording with in_account_class which must be 1 or 2 $$;

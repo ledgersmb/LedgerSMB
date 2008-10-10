@@ -8,6 +8,10 @@ VALUES ('TEST testing 1', 'A', 'A', '00001');
 INSERT INTO chart (description, charttype, category, accno)
 VALUES ('TEST testing 2', 'A', 'A', '00002');
 
+INSERT INTO ap (invnumber, netamount, amount) VALUES ('TEST', '0', '0');
+INSERT INTO acc_trans (trans_id, chart_id, amount)
+VALUES (currval('id')::int, currval('chart_id_seq')::int, '0');
+
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP 1', 'A', 'L', '00003', 'AP');
 
@@ -71,15 +75,11 @@ VALUES ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00022', 'AR_overp');
 INSERT INTO test_result(test_name, success)
 VALUES ('Accounts created', currval('chart_id_seq') is not null);
 
-INSERT INTO ap (invnumber, netamount, amount) VALUES ('TEST', '0', '0');
-INSERT INTO acc_trans (trans_id, chart_id, amount)
-VALUES (currval('id')::int, currval('chart_id_seq')::int, '0');
+INSERT INTO test_result(test_name, success)
+VALUES ('Chart 1 is orphaned', account_has_transactions((select id from chart where description = 'TEST testing 1')) is false);
 
 INSERT INTO test_result(test_name, success)
-VALUES ('Chart 1 is orphaned', account_is_orphaned((select id from chart where description = 'TEST testing 1')));
-
-INSERT INTO test_result(test_name, success)
-VALUES ('Chart 2 is not orphaned', account_is_orphaned(currval('chart_id_seq')::int) is false);
+VALUES ('Chart 2 is not orphaned', account_has_transactions((select id from chart where accno = '00002')) is true);
 
 INSERT INTO test_result(test_name, success)
 SELECT 'All Test Accounts Exist', count(*) = 22 FROM chart_list_all() 
@@ -115,8 +115,5 @@ SELECT (select count(*) from test_result where success is true)
 || ' tests passed and ' 
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
-
-\echo This currently fails 2 tests due to some confusion as to
-\echo account_is_orphaned is supposed to do.
 
 ROLLBACK;

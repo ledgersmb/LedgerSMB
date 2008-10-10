@@ -10,7 +10,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION account_is_orphaned (in_id int) RETURNS bool AS
+CREATE OR REPLACE FUNCTION account_has_transactions (in_id int) RETURNS bool AS
 $$
 BEGIN
 	PERFORM trans_id FROM acc_trans WHERE chart_id = in_id LIMIT 1;
