@@ -1779,6 +1779,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 192	New Window	0	19
 193	Logout	0	20
 206	Batches	205	1
+207	Drafts	205	2
 46	HR	0	6
 50	Order Entry	0	7
 63	Shipping	0	8
@@ -2028,6 +2029,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 205	menu	1	574
 206	module	vouchers.pl	575
 206	action	search_batch	576
+207	module	drafts.pl	577
+207	action	search	578
 1	menu	1	1
 2	module	ar.pl	2
 2	action	add	3
