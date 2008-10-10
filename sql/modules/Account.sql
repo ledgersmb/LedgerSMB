@@ -13,7 +13,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION account_is_orphaned (in_id int) RETURNS bool AS
 $$
 BEGIN
-	SELECT trans_id FROM acc_trans WHERE chart_id = in_id LIMIT 1;
+	PERFORM trans_id FROM acc_trans WHERE chart_id = in_id LIMIT 1;
 	IF FOUND THEN
 		RETURN true;
 	ELSE
