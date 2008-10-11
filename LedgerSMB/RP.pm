@@ -1078,8 +1078,13 @@ sub get_accounts {
 				    FROM acc_trans ac
 				    JOIN chart c ON (c.id = ac.chart_id)
 				    JOIN gifi g ON (c.gifi_accno = g.accno)
+				    JOIN (SELECT id, approved FROM gl UNION
+				          SELECT id, approved FROM ar UNION
+				          SELECT id, approved FROM ap) gl
+				         ON (ac.trans_id = gl.id)
 				         $dpt_join
 				   WHERE $where $ywhere $dpt_where $category
+				         AND gl.approved AND ac.approved
 				         $project
 				GROUP BY g.accno, g.description, c.category
 	      
@@ -1361,9 +1366,14 @@ sub trial_balance {
 				    JOIN chart c ON (ac.chart_id = c.id)
 				    JOIN gifi g ON (c.gifi_accno = g.accno)
 				         $dpt_join
+				    JOIN (SELECT id, approved FROM gl UNION
+				          SELECT id, approved FROM ar UNION
+				          SELECT id, approved FROM ap) gl
+				         ON (ac.trans_id = gl.id)
 				   WHERE ac.transdate < '$form->{fromdate}'
 				         $dpt_where $project
 				         AND ($approved OR ac.approved)
+				         AND ($approved OR gl.approved)
 				GROUP BY g.accno, c.category, g.description, 
 				         c.contra|;
 
@@ -1377,9 +1387,14 @@ sub trial_balance {
 				    FROM acc_trans ac
 				    JOIN chart c ON (ac.chart_id = c.id)
 				         $dpt_join
+				    JOIN (SELECT id, approved FROM gl UNION
+				          SELECT id, approved FROM ar UNION
+				          SELECT id, approved FROM ap) gl
+				         ON (ac.trans_id = gl.id)
 				   WHERE ac.transdate < '$form->{fromdate}'
 				         $dpt_where $project
 				         AND ($approved OR ac.approved)
+				         AND ($approved OR gl.approved)
 				GROUP BY c.accno, c.category, c.description, 
 				         c.contra|;
 
@@ -1458,8 +1473,13 @@ sub trial_balance {
 			    JOIN chart c ON (c.id = ac.chart_id)
 			    JOIN gifi g ON (c.gifi_accno = g.accno)
 			         $dpt_join
+			    JOIN (SELECT id, approved FROM gl UNION
+			          SELECT id, approved FROM ar UNION
+			          SELECT id, approved FROM ap) gl
+			         ON (ac.trans_id = gl.id)
 			   WHERE $where $dpt_where $project
-				         AND ($approved OR ac.approved)
+			         AND ($approved OR ac.approved)
+			         AND ($approved OR gl.approved)
 			GROUP BY g.accno, g.description, c.category, c.contra
 			ORDER BY accno|;
 
@@ -1472,8 +1492,13 @@ sub trial_balance {
 			    FROM acc_trans ac
 			    JOIN chart c ON (c.id = ac.chart_id)
 			         $dpt_join
+			    JOIN (SELECT id, approved FROM gl UNION
+			          SELECT id, approved FROM ar UNION
+			          SELECT id, approved FROM ap) gl
+			         ON (ac.trans_id = gl.id)
 			   WHERE $where $dpt_where $project
-				         AND ($approved OR ac.approved)
+			         AND ($approved OR ac.approved)
+			         AND ($approved OR gl.approved)
 			GROUP BY c.accno, c.description, c.category, c.contra
 			ORDER BY accno|;
 
@@ -1487,14 +1512,24 @@ sub trial_balance {
 		SELECT (SELECT SUM(ac.amount) * -1 FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
+			  JOIN (SELECT id, approved FROM gl UNION
+			        SELECT id, approved FROM ar UNION
+			        SELECT id, approved FROM ap) gl
+			       ON (ac.trans_id = gl.id)
 		          WHERE $where $dpt_where $project AND ac.amount < 0
-				         AND ($approved OR ac.approved)
+				 AND ($approved OR ac.approved)
+			         AND ($approved OR gl.approved)
 		                 AND c.accno = ?) AS debit,
 		       (SELECT SUM(ac.amount) FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
+			  JOIN (SELECT id, approved FROM gl UNION
+			        SELECT id, approved FROM ar UNION
+			        SELECT id, approved FROM ap) gl
+			       ON (ac.trans_id = gl.id)
 		         WHERE $where $dpt_where $project AND ac.amount > 0
-				         AND ($approved OR ac.approved)
+			       AND ($approved OR ac.approved)
+			       AND ($approved OR gl.approved)
 		               AND c.accno = ?) AS credit |;
 
     if ( $form->{accounttype} eq 'gifi' ) {
