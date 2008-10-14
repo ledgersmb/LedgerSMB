@@ -1318,7 +1318,7 @@ sub trial_balance {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
-    my $approved = ($form->{approved})? 'TRUE' : 'FALSE';
+    my $approved = 'FALSE';
 
     my ( $query, $sth, $ref );
     my %balance = ();
@@ -1343,7 +1343,6 @@ sub trial_balance {
         $dpt_where = qq|
 			AND t.department_id = | . $dbh->quote($department_id);
     }
-
     if ($project_id) {
         $project = qq|
 			AND ac.project_id = | . $dbh->quote($project_id);
@@ -1354,8 +1353,7 @@ sub trial_balance {
       if $form->{year} && $form->{month};
 
     # get beginning balances
-    if ( $form->{fromdate} ) {
-
+    if ( ($department_id or $form->{accounttype} eq 'gifi') and $form->{fromdate}) {
         if ( $form->{accounttype} eq 'gifi' ) {
 
             $query = qq|
@@ -1443,6 +1441,7 @@ sub trial_balance {
         $trb{ $ref->{accno} }{description} = $ref->{description};
         $trb{ $ref->{accno} }{charttype}   = 'H';
         $trb{ $ref->{accno} }{category}    = $ref->{category};
+        $trb{ $ref->{accno} }{accno}       = $ref->{accno};
         $trb{ $ref->{accno} }{contra}      = $ref->{contra};
 
         push @headingaccounts, $ref->{accno};
@@ -1450,23 +1449,85 @@ sub trial_balance {
 
     $sth->finish;
 
-    if ( $form->{fromdate} || $form->{todate} ) {
-        if ( $form->{fromdate} ) {
-            $where .=
-              " AND ac.transdate >= " . $dbh->quote( $form->{fromdate} );
-            $invwhere .=
-              " AND a.transdate >= " . $dbh->quote( $form->{fromdate} );
+    if (!$department_id and !$form->{gifi}){
+        my $datefrom = $dbh->quote($form->{fromdate});
+        my $dateto = $dbh->quote($form->{todate});
+	my $safe_project_id = $dbh->quote($project_id);
+        $query = "SELECT c.id AS chart_id, c.accno, c.description, c.contra, 
+                                c.category,
+                                SUM(CASE WHEN ac.transdate < $datefrom
+                                    THEN ac.amount
+                                    ELSE 0 END) AS balance,
+                                SUM(CASE WHEN ac.transdate >= 
+                                              coalesce($datefrom, ac.transdate)
+                                              AND ac.amount > 0
+                                    THEN ac.amount
+                                    ELSE 0 END) AS credit,
+                                SUM(CASE WHEN ac.transdate >= 
+                                              coalesce($datefrom, ac.transdate)
+                                              AND ac.amount < 0
+                                    THEN ac.amount
+                                    ELSE 0 END) * -1 AS debit,
+                                SUM(CASE WHEN ac.transdate >=
+                                              coalesce($datefrom, ac.transdate)
+                                         THEN ac.amount
+                                         ELSE 0
+                                    END) as amount
+                                FROM acc_trans ac
+                                JOIN (select id, approved FROM ap
+                                        UNION ALL
+                                        select id, approved FROM gl
+                                        UNION ALL
+                                        select id, approved FROM ar) g
+                                        ON (g.id = ac.trans_id)
+                                JOIN chart c ON (c.id = ac.chart_id)
+                                WHERE ac.transdate <= $dateto OR $dateto IS NULL
+                                        AND ac.approved AND g.approved
+                                        AND ($safe_project_id IS NULL
+                                                OR $safe_project_id = ac.project_id)
+                                GROUP BY c.id, c.accno, c.description, c.contra,
+                                         c.category
+				ORDER BY c.accno";
+        my $sth = $dbh->prepare($query);
+        $sth->execute();
+        while ($ref = $sth->fetchrow_hashref('NAME_lc')){
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+            $ref->{debit}   = $form->round_amount($ref->{debit}, 2);
+            $ref->{credit}  = $form->round_amount($ref->{credit}, 2);
+            $ref->{balance} = $form->round_amount($ref->{balance}, 2);
+            $trb{ $ref->{accno} }{accno}       = $ref->{accno};
+            $trb{ $ref->{accno} }{description} = $ref->{description};
+            $trb{ $ref->{accno} }{charttype}   = 'A';
+            $trb{ $ref->{accno} }{amount}      = $ref->{amount};
+            $trb{ $ref->{accno} }{debit}       = $ref->{debit};
+            $trb{ $ref->{accno} }{credit}      = $ref->{credit};
+            $trb{ $ref->{accno} }{category}    = $ref->{category};
+            $trb{ $ref->{accno} }{contra}      = $ref->{contra};
+            $trb{ $ref->{accno} }{balance}     = $ref->{balance};
         }
-        if ( $form->{todate} ) {
-            $where .= " AND ac.transdate <= " . $dbh->quote( $form->{todate} );
-            $invwhere .=
-              " AND a.transdate <= " . $dbh->quote( $form->{todate} );
+        $form->{TB} = [];
+        foreach my $accno ( sort keys %trb ) {
+           push @{$form->{TB}}, $trb{$accno};
         }
-    }
+        return;
+    } else {
+        if ( $form->{fromdate} || $form->{todate} ) {
+            if ( $form->{fromdate} ) {
+                $where .=
+                  " AND ac.transdate >= " . $dbh->quote( $form->{fromdate} );
+                $invwhere .=
+                  " AND a.transdate >= " . $dbh->quote( $form->{fromdate} );
+            }
+            if ( $form->{todate} ) {
+                $where .= " AND ac.transdate <= " . $dbh->quote( $form->{todate} );
+                $invwhere .=
+                  " AND a.transdate <= " . $dbh->quote( $form->{todate} );
+            }
+        }
 
-    if ( $form->{accounttype} eq 'gifi' ) {
+        if ( $form->{accounttype} eq 'gifi' ) {
 
-        $query = qq|
+            $query = qq|
 			  SELECT g.accno, g.description, c.category,
 			         SUM(ac.amount) AS amount, c.contra
 			    FROM acc_trans ac
@@ -1483,10 +1544,10 @@ sub trial_balance {
 			GROUP BY g.accno, g.description, c.category, c.contra
 			ORDER BY accno|;
 
-    }
-    else {
+        }
+        else {
 
-        $query = qq|
+            $query = qq|
 			  SELECT c.accno, c.description, c.category,
 			         SUM(ac.amount) AS amount, c.contra
 			    FROM acc_trans ac
@@ -1502,13 +1563,13 @@ sub trial_balance {
 			GROUP BY c.accno, c.description, c.category, c.contra
 			ORDER BY accno|;
 
-    }
+        }
 
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
+        $sth = $dbh->prepare($query);
+        $sth->execute || $form->dberror($query);
 
-    # prepare query for each account
-    $query = qq|
+        # prepare query for each account
+        $query = qq|
 		SELECT (SELECT SUM(ac.amount) * -1 FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
@@ -1532,9 +1593,9 @@ sub trial_balance {
 			       AND ($approved OR gl.approved)
 		               AND c.accno = ?) AS credit |;
 
-    if ( $form->{accounttype} eq 'gifi' ) {
+        if ( $form->{accounttype} eq 'gifi' ) {
 
-        $query = qq|
+            $query = qq|
 		SELECT (SELECT SUM(ac.amount) * -1
 		          FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
@@ -1551,21 +1612,21 @@ sub trial_balance {
 				         AND ($approved OR ac.approved)
 		               AND c.gifi_accno = ?) AS credit|;
 
+        }
+
+        $drcr = $dbh->prepare($query);
+
+        # calculate debit and credit for the period
+        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+            $trb{ $ref->{accno} }{description} = $ref->{description};
+            $trb{ $ref->{accno} }{charttype}   = 'A';
+            $trb{ $ref->{accno} }{category}    = $ref->{category};
+            $trb{ $ref->{accno} }{contra}      = $ref->{contra};
+            $trb{ $ref->{accno} }{amount} += $ref->{amount};
+        }
+        $sth->finish;
     }
-
-    $drcr = $dbh->prepare($query);
-
-    # calculate debit and credit for the period
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-        $trb{ $ref->{accno} }{description} = $ref->{description};
-        $trb{ $ref->{accno} }{charttype}   = 'A';
-        $trb{ $ref->{accno} }{category}    = $ref->{category};
-        $trb{ $ref->{accno} }{contra}      = $ref->{contra};
-        $trb{ $ref->{accno} }{amount} += $ref->{amount};
-    }
-    $sth->finish;
-
     my ( $debit, $credit );
 
     foreach my $accno ( sort keys %trb ) {
