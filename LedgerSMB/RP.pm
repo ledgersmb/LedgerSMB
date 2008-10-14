@@ -1453,6 +1453,12 @@ sub trial_balance {
         my $datefrom = $dbh->quote($form->{fromdate});
         my $dateto = $dbh->quote($form->{todate});
 	my $safe_project_id = $dbh->quote($project_id);
+        if ($datefrom eq "''") {
+            $datefrom = "NULL";
+        }
+        if ($dateto eq "''") {
+            $dateto = "NULL";
+        }
         $query = "SELECT c.id AS chart_id, c.accno, c.description, c.contra, 
                                 c.category,
                                 SUM(CASE WHEN ac.transdate < $datefrom
