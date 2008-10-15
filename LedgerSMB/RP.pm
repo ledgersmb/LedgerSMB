@@ -1487,7 +1487,7 @@ sub trial_balance {
                                         select id, approved FROM ar) g
                                         ON (g.id = ac.trans_id)
                                 JOIN chart c ON (c.id = ac.chart_id)
-                                WHERE ac.transdate <= $dateto OR $dateto IS NULL
+                                WHERE (ac.transdate <= $dateto OR $dateto IS NULL)
                                         AND ac.approved AND g.approved
                                         AND ($safe_project_id IS NULL
                                                 OR $safe_project_id = ac.project_id)
