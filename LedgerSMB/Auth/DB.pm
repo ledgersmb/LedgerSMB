@@ -112,6 +112,7 @@ sub session_check {
         print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;\n|;
         return 0;
     }
+    $dbh->commit;
 }
 
 sub session_create {
