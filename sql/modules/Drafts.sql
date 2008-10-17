@@ -15,28 +15,28 @@ BEGIN
 	FOR out_row IN
 		SELECT trans.id, trans.transdate, trans.reference, 
 			trans.description, 
-			sum(case when in_type = 'ap' AND chart.link = 'AP'
+			sum(case when lower(in_type) = 'ap' AND chart.link = 'AP'
 				 THEN line.amount
-				 WHEN in_type = 'ar' AND chart.link = 'AR'
+				 WHEN lower(in_type) = 'ar' AND chart.link = 'AR'
 				 THEN line.amount * -1
-				 WHEN in_type = 'gl' AND line.amount > 0
+				 WHEN lower(in_type) = 'gl' AND line.amount > 0
 				 THEN line.amount
 			 	 ELSE 0
 			    END) as amount
 		FROM (
 			SELECT id, transdate, reference, description, 
 				approved from gl
-			WHERE in_type = 'gl'
+			WHERE lower(in_type) = 'gl'
 			UNION
 			SELECT id, transdate, invnumber as reference, 
 				description::text,
 				approved from ap
-			WHERE in_type = 'ap'
+			WHERE lower(in_type) = 'ap'
 			UNION
 			SELECT id, transdate, invnumber as reference,
 				description, 
 				approved from ar
-			WHERE in_type = 'ar'
+			WHERE lower(in_type) = 'ar'
 			) trans
 		JOIN acc_trans line ON (trans.id = line.trans_id)
 		JOIN chart ON (line.chart_id = chart.id)
