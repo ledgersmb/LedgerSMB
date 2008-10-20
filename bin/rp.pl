@@ -715,8 +715,10 @@ sub list_accounts {
         my %column_data;
         my $description = $form->escape( $ref->{description} );
 
+	# gl.pl requires datefrom instead of fromdate, etc.  We will get this
+	# consistent.... eventually....  --CT
         my $href =
-qq|ca.pl?path=$form->{path}&action=list_transactions&accounttype=$form->{accounttype}&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&sort=transdate&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&department=$department&projectnumber=$projectnumber&project_id=$form->{project_id}&title=$title&nextsub=$form->{nextsub}&prevreport=$form->{callback}|;
+qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accounttype}&datefrom=$form->{fromdate}&dateto=$form->{todate}&sort=transdate&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&l_balance=Y&department=$department&projectnumber=$projectnumber&project_id=$form->{project_id}&title=$title&nextsub=$form->{nextsub}&prevreport=$form->{callback}&category=X&l_reference=Y&l_transdate=Y&l_description=Y&l_debit=Y&l_credit=Y|;
 
         if ( $form->{accounttype} eq 'gifi' ) {
             $href .= "&gifi_accno=$ref->{accno}&gifi_description=$description";
@@ -726,7 +728,7 @@ qq|ca.pl?path=$form->{path}&action=list_transactions&accounttype=$form->{account
             }
         }
         else {
-            $href .= "&accno=$ref->{accno}&description=$description";
+            $href .= "&accno=$ref->{accno}";
         }
 
         $ml = ( $ref->{category} =~ /(A|E)/ ) ? -1 : 1;

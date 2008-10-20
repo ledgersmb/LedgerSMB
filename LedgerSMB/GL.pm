@@ -234,6 +234,12 @@ sub all_transactions {
     my $sth;
     my $var;
     my $null;
+    if ($form->{accno} and !$form->{chart_id}){
+       my $sth = $dbh->prepare('SELECT id FROM chart WHERE accno = ?');
+       $sth->execute($form->{accno});
+       ($form->{chart_id}) = $sth->fetchrow_array();
+       delete $form->{accno};
+    }
 
     my ( $glwhere, $arwhere, $apwhere ) = ( "1 = 1", "1 = 1", "1 = 1" );
 
@@ -304,13 +310,13 @@ sub all_transactions {
 
         $var = $dbh->quote( $form->like( lc $form->{description} ) );
         $glwhere .= " AND lower(g.description) LIKE $var";
-        $arwhere .= " AND (lower(ct.name) LIKE $var
+        $arwhere .= " AND (lower(e.name) LIKE $var
 					   OR lower(ac.memo) LIKE $var
 					   OR a.id IN (SELECT DISTINCT trans_id
 					 FROM invoice
 					WHERE lower(description) LIKE $var))";
 
-        $apwhere .= " AND (lower(ct.name) LIKE $var
+        $apwhere .= " AND (lower(e.name) LIKE $var
 					   OR lower(ac.memo) LIKE $var
 					   OR a.id IN (SELECT DISTINCT trans_id
 					 FROM invoice
@@ -485,7 +491,6 @@ sub all_transactions {
 						$approved = 
 					        (ac.approved AND a.approved))
 				 ORDER BY $sortorder|;
-
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 

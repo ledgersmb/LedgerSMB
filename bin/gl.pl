@@ -403,6 +403,11 @@ qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
       . $locale->text('Subtotal')
       . qq|</td>
 		  </tr>
+		  <tr>
+		    <td nowrap><input name="l_balance" class=checkbox type=checkbox value=Y> |
+      . $locale->text('Balance')
+      . qq|</td>
+		  </tr>
 		</table>
 	      </tr>
 	    </table>
@@ -478,7 +483,7 @@ sub generate_report {
 
     $ml = ( $form->{category} =~ /(A|E)/ ) ? -1 : 1;
 
-    unless ( $form->{category} eq 'X' ) {
+    if (defined $form->{category} and $form->{category} ne 'X' ) {
         $form->{title} .=
           " : " . $locale->text( $acctype{ $form->{category} } );
     }
@@ -590,7 +595,7 @@ sub generate_report {
         $form->{l_cleared} = "Y";
     }
 
-    if ( $form->{accno} || $form->{gifi_accno} ) {
+    if ( $form->{chart_id} || $form->{gifi_accno} ) {
         @columns = grep !/(accno|gifi_accno)/, @columns;
         push @columns, "balance";
         $form->{l_balance} = "Y";

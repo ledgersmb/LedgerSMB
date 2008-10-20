@@ -16,9 +16,9 @@
 <?lsmb PROCESS elements.html ?> 
 <body>
 
-<form method="post" action="ca.pl">
-
-<?lsmb FOREACH hidden IN ['accno', 'description', 'sort', 'oldsort', 'accounttype', 'gifi_accno', 'gifi_description'];
+<form method="post" action="gl.pl">
+<?lsmb IF form.accounttype == '' ; form.accounttype = 'standard'; END ?>
+<?lsmb FOREACH hidden IN ['accno', 'sort', 'oldsort', 'accounttype', 'gifi_accno', 'gifi_description'];
     PROCESS input element_data={type => 'hidden', name => hidden, value => form.item(hidden)}; END ?>
 <table border="0" width="100%">
   <tr><th class="listtop"><?lsmb form.title ?></th></tr>
@@ -29,9 +29,9 @@
         
 	<tr>
 	  <th align="right"><?lsmb text('From') ?></th>
-	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'fromdate' size => '11', title="yyyy-mm-dd"} ?></td>
+	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'datefrom' size => '11', title="yyyy-mm-dd"} ?></td>
 	  <th align="right"><?lsmb text('To') ?></th>
-	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'todate' size => '11', title="yyyy-mm-dd"} ?></td>
+	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'dateto' size => '11', title="yyyy-mm-dd"} ?></td>
 	</tr>
 
 <?lsmb IF form.all_department ?>
@@ -69,9 +69,20 @@
 
 <?lsmb FOREACH hidden IN ['login', 'path', 'sessionid'];
     PROCESS input element_data={type => 'hidden', name => hidden, value => form.$hidden}; END ?>
+<?lsmb FOREACH hidden IN ['l_transdate', 'l_reference', 'l_description', 'l_debit', 'l_credit', 'l_balance'];
+	PROCESS input element_data = {
+		type = 'hidden'
+		name = hidden
+		value = 'Y'
+	}; END ?>
 
+	<?lsmb PROCESS input element_data = {
+		type = 'hidden'
+		name = 'category'
+		value = 'X'
+	};?>
 <br />
-<?lsmb PROCESS button element_data={class => "submit", name => "action", value => "list_transactions", text => text('List Transactions')} ?>
+<?lsmb PROCESS button element_data={class => "submit", name => "action", value => "generate_report", text => text('List Transactions')} ?>
 </form>
 
 </body>

@@ -70,6 +70,7 @@ sub session_check {
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
     my $sessionValid = $checkQuery->rows;
+    $dbh->commit;
 
     if ($sessionValid) {
 
@@ -112,7 +113,6 @@ sub session_check {
         print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;\n|;
         return 0;
     }
-    $dbh->commit;
 }
 
 sub session_create {
