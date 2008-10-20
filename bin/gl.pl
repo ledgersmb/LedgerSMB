@@ -451,6 +451,7 @@ sub generate_report {
     $form->{sort} = "transdate" unless $form->{sort};
     $form->{amountfrom} = $form->parse_amount(\%myconfig, $form->{amountfrom});
     $form->{amountto} = $form->parse_amount(\%myconfig, $form->{amountto});
+    my ($totaldebit, $totalcredit) = (0, 0);
 
     GL->all_transactions( \%myconfig, \%$form );
 
@@ -698,9 +699,9 @@ sub generate_report {
         $totalcredit += $ref->{credit};
 
         $ref->{debit} =
-          $form->format_amount( \%myconfig, $ref->{debit}, 2, " " );
+          $form->format_amount( \%myconfig, $ref->{debit}, 2);
         $ref->{credit} =
-          $form->format_amount( \%myconfig, $ref->{credit}, 2, " " );
+          $form->format_amount( \%myconfig, $ref->{credit}, 2);
 
         for (qw(id transdate)) { $column_data{$_} = "$ref->{$_}" }
 
@@ -740,7 +741,6 @@ sub generate_report {
     push @rows, &gl_subtotal_tt() if ( $form->{l_subtotal} eq 'Y' );
 
     for (@column_index) { $column_data{$_} = " " }
-
     $column_data{debit} = $form->format_amount( \%myconfig, $totaldebit, 2, " " );
     $column_data{credit} = $form->format_amount( \%myconfig, $totalcredit, 2, " " );
     $column_data{balance} = $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml, 2, 0 );

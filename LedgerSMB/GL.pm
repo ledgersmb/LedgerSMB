@@ -538,7 +538,6 @@ sub all_transactions {
     }
 
     $sth->finish;
-    $dbh->commit;
 }
 
 sub transaction {
