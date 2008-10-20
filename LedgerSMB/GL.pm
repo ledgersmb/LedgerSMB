@@ -272,9 +272,11 @@ sub all_transactions {
         $apwhere .= " AND lower(ac.memo) LIKE $var";
     }
 
-    ( $form->{datefrom}, $form->{dateto} ) =
-      $form->from_to( $form->{year}, $form->{month}, $form->{interval} )
-      if $form->{year} && $form->{month};
+    if (!form->{datefrom} && !$form->{dateto} 
+		&& form->{year} && $form->{month}){
+        ( $form->{datefrom}, $form->{dateto} ) =
+          $form->from_to( $form->{year}, $form->{month}, $form->{interval} );
+    }
 
     if ( $form->{datefrom} ) {
         $glwhere .= " AND ac.transdate >= " . $dbh->quote( $form->{datefrom} );
