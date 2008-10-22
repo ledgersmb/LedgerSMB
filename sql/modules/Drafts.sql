@@ -91,7 +91,9 @@ $$
 declare 
 	t_table text;
 begin
-	SELECT table_name into t_table FROM transactions where id = in_id;
+        DELETE FROM acc_trans WHERE trans_id = in_id;
+	SELECT lower(table_name) into t_table FROM transactions where id = in_id;
+
         IF t_table = 'ar' THEN
 		DELETE FROM ar WHERE id = in_id AND approved IS FALSE;
 	ELSIF t_table = 'ap' THEN
@@ -101,7 +103,10 @@ begin
 	ELSE
 		raise exception 'Invalid table % in draft_delete for transaction %', t_table, in_id;
 	END IF;
-	RETURN FOUND;
+	IF NOT FOUND THEN
+		RAISE EXCEPTION 'Invalid transaction id %', in_id;
+	END IF;
+	RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 

@@ -63,8 +63,6 @@ SELECT '"AR" search successful', count(*) = 1
 FROM draft__search('AR',  NULL, NULL, NULL, NULL, NULL)
 WHERE reference = '_TEST AR';
 
-SELECT *
-FROM draft__search('gl',  NULL, NULL, NULL, NULL, NULL);
 INSERT INTO test_result(test_name, success)
 SELECT '"gl" search successful', count(*) = 1
 FROM draft__search('gl',  NULL, NULL, NULL, NULL, NULL)
@@ -74,6 +72,15 @@ INSERT INTO test_result(test_name, success)
 SELECT '"GL" search successful', count(*) = 1
 FROM draft__search('GL',  NULL, NULL, NULL, NULL, NULL)
 WHERE reference = '_TEST GL';
+
+INSERT INTO test_result(test_name, success)
+SELECT 'gl draft deletion', draft_delete(currval('id')::int);
+
+INSERT INTO test_result(test_name, success)
+SELECT 'gl table cleanup', count(*) = 0 from gl where id = currval('id');
+
+INSERT INTO test_result(test_name, success)
+SELECT 'acc_trans table cleanup', count(*) = 0 from acc_trans where trans_id = currval('id');
 
 SELECT * FROM test_result;
 

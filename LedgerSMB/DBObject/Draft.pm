@@ -24,6 +24,7 @@ sub delete {
        $self->error($self->{_locale}->text('No ID Set'));
    }
    ($self->{deleted}) = $self->exec_method(funcname => 'draft_delete');
+   $self->{dbh}->commit;
    return $self->{deleted};
 }
 
