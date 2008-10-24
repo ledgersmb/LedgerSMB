@@ -31,3 +31,29 @@ div.note_contents {
 div label {
 	margin-left: 1em;
 }
+
+/* This shouldnot go in SVN trunk */
+#company_div .note_contents {
+	display: none;
+}
+
+table {
+	width: 100%;
+}
+
+#credit-row { 
+	display: none;
+}
+
+#discount-gifi-row {
+	display: none;
+}
+
+#line-two {
+	display: none;
+}
+
+#line-three {
+	display: none;
+}
+
