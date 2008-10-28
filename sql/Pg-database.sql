@@ -491,12 +491,14 @@ CREATE TABLE batch (
 COMMENT ON COLUMN batch.batch_class_id IS
 $$ Note that this field is largely used for sorting the vouchers.  A given batch is NOT restricted to this type.$$;
 
+
+-- Although I am moving the primary key to voucher.id for now, as of 1.4, I 
+-- would expect trans_id to be primary key
 CREATE TABLE voucher (
   trans_id int REFERENCES transactions(id) NOT NULL,
   batch_id int references batch(id) not null,
-  id serial NOT NULL unique,
-  batch_class int references batch_class(id) not null,
-  PRIMARY KEY (batch_class, batch_id, trans_id)
+  id serial PRIMARY KEY,
+  batch_class int references batch_class(id) not null
 );
 
 COMMENT ON COLUMN voucher.batch_class IS $$ This is the authoritative class of the 
