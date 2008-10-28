@@ -23,7 +23,7 @@ package LedgerSMB::Scripts::vendor;
 use LedgerSMB::DBObject::Vendor;
 use base qw(LedgerSMB::ScriptLib::Company);
 
-require 'lsmb-request.pl';
+# require 'lsmb-request.pl';
 
 sub set_entity_class {
     my ($null, $request) = @_;
