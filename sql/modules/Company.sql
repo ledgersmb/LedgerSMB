@@ -463,6 +463,7 @@ $$ LANGUAGE PLPGSQL;
 CREATE TYPE contact_list AS (
 	class text,
 	class_id int,
+	description text,
 	contact text
 );
 
@@ -633,7 +634,7 @@ create or replace function _entity_location_save(
 		AND location_class = in_location_class
 		AND location_id = in_location_id;
 
-	SELECT location_save(in_line_one, in_line_two, in_line_three, in_city,
+	SELECT location_save(NULL, in_line_one, in_line_two, in_line_three, in_city,
 		in_state, in_mail_code, in_country_code) 
 	INTO l_id;
 
@@ -664,9 +665,11 @@ create or replace function eca__location_save(
 		AND location_class = in_location_class
 		AND location_id = in_location_id;
 
-	SELECT location_save(in_location_id, in_line_one, in_line_two, in_line_three, in_city,
+	-- don't pass the in_location_id through because that is not safe.
+	SELECT location_save(NULL, in_line_one, in_line_two, in_line_three, 
+		in_city,
 		in_state, in_mail_code, in_country_code) 
-	INTO l_id;
+	INTO l_id; 
 
 	INSERT INTO eca_to_location 
 		(credit_id, location_class, location_id)

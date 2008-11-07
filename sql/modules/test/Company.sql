@@ -21,9 +21,25 @@ SELECT 'eca_location_save',
 	IS NOT NULL;
 
 INSERT INTO test_result (test_name, success)
-SELECT 'list_locations', count(*) > 0 
+SELECT 'eca_location_save returns same id with same args and no in_location_id',
+	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 1, 'Test2', 'Test',
+                '', 'Test', 'Test', '12345', 25) =
+	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 2, 'Test2', 'Test',
+                '', 'Test', 'Test', '12345', 25);
+
+INSERT INTO test_result (test_name, success)
+SELECT 'list_locations', count(*) = 3
 	FROM eca__list_locations(currval('entity_credit_account_id_seq')::int);
 
+INSERT INTO test_result(test_name, success)
+SELECT 'saving eca contact', 
+	eca__save_contact(currval('entity_credit_account_id_seq')::int, 
+		1, 'test_d', 'test_c', NULL, NULL) IS NOT NULL;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'Contact found correctly', count(*) = 1
+FROM eca__list_contacts(currval('entity_credit_account_id_seq')::int) 
+WHERE contact = 'test_c';
 
 SELECT * FROM test_result;
 

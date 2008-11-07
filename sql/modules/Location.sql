@@ -37,6 +37,14 @@ DECLARE
 BEGIN
 	
 	IF in_location_id IS NULL THEN
+	    SELECT id INTO location_id FROM location
+	    WHERE line_one = in_address1 AND line_two = in_address2
+	          AND line_three = in_address3 AND in_city = city 
+	          AND in_state = state AND in_zipcode = mail_code
+	          AND in_country = country_id 
+	    LIMIT 1;
+
+	    IF NOT FOUND THEN
 	    -- Straight insert.
 	    location_id = nextval('location_id_seq');
 	    INSERT INTO location (
@@ -58,10 +66,12 @@ BEGIN
 	        in_zipcode,
 	        in_country
 	        );
+	    END IF;
 	    return location_id;
 	ELSE
+	    RAISE NOTICE 'Overwriting location id %', in_location_id;
 	    -- Test it.
-	    SELECT * INTO location_row WHERE id = in_location_id;
+	    SELECT * INTO location_row FROM location WHERE id = in_location_id;
 	    IF NOT FOUND THEN
 	        -- Tricky users are lying to us.
 	        RAISE EXCEPTION 'location_save called with nonexistant location ID %', in_location_id;
@@ -87,7 +97,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON function location_save
 (in_location_id int, in_address1 text, in_address2 text, in_address3 text,
 	in_city text, in_state text, in_zipcode text, in_country int) IS
-$$ Note that this does NOT override the data in the database.
+$$ Note that this does NOT override the data in the database unless in_location_id is specified.
 Instead we search for locations matching the desired specifications and if none 
 are found, we insert one.  Either way, the return value of the location can be
 used for mapping to other things.  This is necessary because locations are 

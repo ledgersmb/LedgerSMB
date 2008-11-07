@@ -1400,6 +1400,8 @@ GRANT ALL ON transactions, entity_employee, customer, vendor TO public;
 GRANT ALL ON pending_job, payments_queue TO PUBLIC;
 GRANT ALL ON pending_job_id_seq TO public;
 --TODO, lock recurring, pending_job, payment_queue down more
+-- Roles with no db permissions:
+CREATE ROLE "lsmb_<?lsmb dbname ?>__draft_edit" WITH INHERIT NOLOGIN;
 
 -- CT:  The following grant is required for now, but will hopefully become less 
 -- important when we get to 1.4 and can more sensibly lock things down.
