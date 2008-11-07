@@ -175,7 +175,7 @@ CREATE TABLE company_to_location (
   location_id integer references location(id) not null,
   location_class integer not null references location_class(id),
   company_id integer not null references company(id) ON DELETE CASCADE,
-  PRIMARY KEY(location_id,company_id));
+  PRIMARY KEY(location_id,company_id, location_class));
 
 COMMENT ON TABLE company_to_location IS
 $$ This table is used for locations generic to companies.  For contract-bound
