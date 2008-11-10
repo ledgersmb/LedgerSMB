@@ -67,7 +67,7 @@ sub process {
 	} else {
 		$output = \$parent->{output};
 	}
-	if (ref $parent->{template} eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
+	if (ref $parent->{template} eq 'SCALAR') {
 		$source = $parent->{template};
 	} elsif (ref $parent->{template} eq 'ARRAY') {
 		$source = join "\n", @{$parent->{template}};

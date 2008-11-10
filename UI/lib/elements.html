@@ -157,7 +157,7 @@
 	option_data.text = option_data.$text_attr;
     END ?>
   <?lsmb  # Selected is a special case -- no attribute key, so it is handled here by looking for the option value in the default_values list.
-    IF element_data.defined('default_values') AND element_data.default_values.grep("^${option_data.value}$").size;
+    IF element_data.defined('default_values') AND element_data.default_values.grep("^${option_data.value}\$").size;
     option_data.selected = ' selected="selected"';
     ELSE;
       option_data.selected = "";
