@@ -121,7 +121,7 @@ sub exec_method {
 
     $ref = $sth->fetchrow_hashref('NAME_lc');
     
-    my $pargs = $ref->{proargnames};
+    my $args = $ref->{proargnames};
     my @proc_args;
 
     if ( !$ref->{proname} ) {    # no such function
@@ -132,7 +132,7 @@ sub exec_method {
     $ref->{pronargs} = 0 unless defined $ref->{pronargs};
     # If the user provided args..
     if (!defined  $args{args}) {
-        @proc_args = $self->_parse_array($pargs);
+        @proc_args = $self->_parse_array($args);
         if (@proc_args) {
             for my $arg (@proc_args) {
                 if ( $arg =~ s/^in_// ) {
