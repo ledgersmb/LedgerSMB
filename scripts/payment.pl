@@ -272,7 +272,7 @@ sub print {
                          {base => $payment,
                          copy  => 'base' }
         );
-        $batch->{id} = $payment->{batch_id};
+        $batch->{batch_id} = $payment->{batch_id};
         $batch->get;
         $payment->{batch_description} = $batch->{description};
         $payment->{batch_control_code} = $batch->{control_code};
