@@ -41,6 +41,12 @@ SELECT 'Contact found correctly', count(*) = 1
 FROM eca__list_contacts(currval('entity_credit_account_id_seq')::int) 
 WHERE contact = 'test_c';
 
+INSERT INTO test_result(test_name, success)
+SELECT 'Company_get_billing_info working', count(*) = 1
+FROM company_get_billing_info((select max(id) from entity_credit_account))
+WHERE control_code is not null;
+
+
 SELECT * FROM test_result;
 
 
