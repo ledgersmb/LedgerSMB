@@ -393,10 +393,14 @@ my $contact_request = {
         entity_id    => 1,
         control_code => 'test1',
         meta_number  => 'test1',
+	credit_id    => '1',
         entity_class => 1,
         credit_list  => [{ entity_class => 1,
                            meta_number => 'test1',
                         }],
+	contacts     => [{contact     => 'ctest1', 
+			description   => 'dtest1', 
+			contact_class => '1'}],
         business_id  => 1000,
         business_types => [{ id => 1,    description => 'test1' },
                            { id => 1000, description => 'test2' }],
@@ -415,6 +419,7 @@ $contact_template->render($contact_request);
 my @output =  get_output_line_array($contact_template);
 is(grep (/value="1" selected/, @output), 0, 'Select box Value 1 unselected');
 is(grep (/value="1000" selected/, @output), 1, 'Select box Value 1000 selected');
+is(grep (/<td class="description">dtest1/, @output), 1, 'Contact description shows');
 
 
 # Functions

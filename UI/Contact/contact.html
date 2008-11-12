@@ -616,12 +616,14 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<table width="100%">
 	<tr class="listheading">
 		<th class="contact_class"><?lsmb text('Type:') ?></th>
+		<th class="description"><?lsmb text('Description:') ?></th>
 		<th class="contact"><?lsmb text('Contact Info:') ?></th>
 		<th class="contact_actions"><?lsmb text('Actions:') ?></th>
 	</tr>
 	<?lsmb FOREACH ct = contacts ?>
 	<tr>
 		<td class="contact_class"><?lsmb ct.class ?></td>
+		<td class="description"><?lsmb ct.description ?></td>
 		<td class="contact"><?lsmb ct.contact ?></td>
 		<td class="contact_actions">
 			<a href="<?lsmb tt_url(script) 
