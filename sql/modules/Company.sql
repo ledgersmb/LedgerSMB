@@ -257,6 +257,7 @@ $$ language plpgsql;
 CREATE TYPE company_billing_info AS (
 legal_name text,
 meta_number text,
+control_code text,
 tax_id text,
 street1 text,
 street2 text,
@@ -273,15 +274,16 @@ $$
 DECLARE out_var company_billing_info;
 	t_id INT;
 BEGIN
-	select c.legal_name, eca.meta_number, c.tax_id, a.line_one, a.line_two, a.line_three, 
+	select c.legal_name, eca.meta_number, e.control_code, c.tax_id, a.line_one, a.line_two, a.line_three, 
 		a.city, a.state, a.mail_code, cc.name
 	into out_var
 	FROM company c
-	JOIN entity_credit_account eca ON (eca.entity_id = c.entity_id)
-	JOIN eca_to_location cl ON (eca.id = cl.credit_id)
-	JOIN location a ON (a.id = cl.location_id)
-	JOIN country cc ON (cc.id = a.country_id)
-	WHERE eca.id = in_id AND location_class = 1;
+	JOIN entity e ON (c.entity_id = e.id)
+	JOIN entity_credit_account eca ON (eca.entity_id = e.id)
+	LEFT JOIN eca_to_location cl ON (eca.id = cl.credit_id)
+	LEFT JOIN location a ON (a.id = cl.location_id)
+	LEFT JOIN country cc ON (cc.id = a.country_id)
+	WHERE eca.id = in_id AND (location_class = 1 or location_class is null);
 
 	RETURN out_var;
 END;
@@ -680,26 +682,6 @@ create or replace function eca__location_save(
 
 $$ language 'plpgsql';
 
-
-CREATE OR REPLACE FUNCTION company_get_billing_info (in_id int) 
-returns company_billing_info as
-$$
-DECLARE out_var company_billing_info;
-	t_id INT;
-BEGIN
-	select c.legal_name, c.tax_id, a.line_one, a.line_two, a.line_three, 
-		a.city, a.state, a.mail_code, cc.name
-	into out_var
-	FROM company c
-	JOIN entity_credit_account eca ON (eca.entity_id = c.entity_id)
-	JOIN eca_to_location cl ON (eca.id = cl.credit_id)
-	JOIN location a ON (a.id = cl.location_id)
-	JOIN country cc ON (cc.id = a.country_id)
-	WHERE eca.id = in_id AND location_class = 1;
-
-	RETURN out_var;
-END;
-$$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION eca__list_locations(in_credit_id int)
 RETURNS SETOF location_result AS
