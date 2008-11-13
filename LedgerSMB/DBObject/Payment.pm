@@ -274,6 +274,7 @@ sub list_open_projects {
 }
 
 =over
+
 =item list_departments
 
 This method gets the type of document as a parameter, and provides a list of departments
@@ -281,6 +282,7 @@ of the required type.
 The list is attached to $self->{departments} and returned.
 
 =back
+
 =cut
 
 sub list_departments {
@@ -293,6 +295,8 @@ sub list_departments {
   return @{$self->{departments}};
 }
 
+=over
+
 =item list_open_vc
 
 This method gets the type of vc (vendor or customer) as a parameter, and provides a list of departments
@@ -300,6 +304,7 @@ of the required type.
 The list is attached to $self->{departments} and returned.
 
 =back
+
 =cut
 
 sub list_departments {
@@ -311,6 +316,8 @@ sub list_departments {
    );
   return @{$self->{departments}};
 }
+
+=over
                       
 =item get_open_currencies
 
@@ -325,6 +332,8 @@ sub get_open_currencies {
   @{$self->{openCurrencies}} = $self->exec_method( funcname => 'payments_get_open_currencies');
   return @{$self->{openCurrencies}};
 }
+
+=over
 
 =item list_accounting
 
