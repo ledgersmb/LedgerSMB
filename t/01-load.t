@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 35;
+use Test::More tests => 34;
 
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');

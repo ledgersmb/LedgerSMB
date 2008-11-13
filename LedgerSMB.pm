@@ -533,7 +533,7 @@ sub round_amount {
     #
     # We will grab the default value, if it isnt defined
     #
-    if (!$places){
+    if (!defined $places){
     $places = ${LedgerSMB::Sysconfig::decimal_places};
     }
     
