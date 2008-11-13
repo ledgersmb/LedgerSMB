@@ -260,14 +260,10 @@ sub _parse_array {
         $next = "";
         $separator = "";
         if ($value =~ /^\{"/){
-            while ($next eq "" or ($next =~ /\\".$/)){
-                $value =~ s/^\{("[^"]*".)/\{/;
-                $next .= $1;
-                $next =~ /(.)$/;
-                $separator = $1;
-               $next .= "quoted";
-            }
-            $next =~ s/"(.*)"$separator$/$1/;
+            $value =~ s/^\{"(([^"]|\\")*[^\\])"/\{/;
+            $next = $1;
+            $next =~ /(.)$/;
+            $value =~ s/^{,/{/;
 
         } elsif ($value =~ /^{({+)/){
             my $open_braces = $1;
@@ -277,7 +273,6 @@ sub _parse_array {
             $value =~ /^{($open_braces[^}]*$close_braces)/;
             my $parse_next = $1;
             $value =~ s/^{$parse_next/{/;
-           $value =~ s/^{,/{/;
             @$next = $self->_parse_array($parse_next);
             
         } else {
