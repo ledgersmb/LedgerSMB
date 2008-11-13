@@ -92,6 +92,39 @@ sub pos_adjust {
     $form->{accno_3} = $pos_config{'coa_prefix'};
 }
 
+sub edit_and_approve {
+    use LedgerSMB::DBObject::Draft;
+    use LedgerSMB;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    $draft->delete();
+    GL->post_transaction( \%myconfig, \%$form );
+    approve();
+}
+
+sub approve {
+    use LedgerSMB::DBObject::Draft;
+    use LedgerSMB;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+
+    $draft->approve();
+    if ($form->{callback}){
+        print "Location: $form->{callback}\n";
+        print "Status: 302 Found\n\n";
+        print "<html><body>";
+        my $url = $form->{callback};
+        print qq|If you are not redirected automatically, click <a href="$url">|
+                . qq|here</a>.</body></html>|;
+
+    } else {
+        $form->info($locale->text('Draft Posted'));
+    }
+}
+
 sub add_pos_adjust {
     $form->{pos_adjust} = 1;
     $form->{reference} =
@@ -1282,6 +1315,22 @@ sub form_footer {
             if ( $transdate > $closedto ) {
                 for ( "update", "post", "schedule" ) { $a{$_} = 1 }
             }
+        }
+        if (!$form->{approved} && !$form->{batch_id}){
+           $button{approve} = { 
+                   ndx   => 3, 
+                   key   => 'S', 
+                   value => $locale->text('Post as Saved') };
+	   $a{approve} = 1;
+	   $a{edit_and_approve} = 1;
+           if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+               $button{edit_and_approve} = { 
+                   ndx   => 4, 
+                   key   => 'O', 
+                   value => $locale->text('Post as Shown') };
+          }
+           delete $button{post_as_new};
+           delete $button{post};
         }
 
         for ( keys %button ) { delete $button{$_} if !$a{$_} }

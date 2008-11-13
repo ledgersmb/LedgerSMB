@@ -1185,7 +1185,7 @@ values (148, 'allow', 'lsmb_<?lsmb dbname ?>__create_business_type');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__edit_business_type"
 WITH INHERIT NOLOGIN;
 
-GRANT UPDATE ON business TO "lsmb_<?lsmb dbname ?>__edit_business_type";
+GRANT UPDATE, DELETE ON business TO "lsmb_<?lsmb dbname ?>__edit_business_type";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (128, 'allow', 'lsmb_<?lsmb dbname ?>__edit_business_type');

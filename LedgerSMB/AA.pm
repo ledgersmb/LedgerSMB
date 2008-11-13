@@ -59,8 +59,15 @@ Post transaction uses the following variables in the $form variable:
 =cut
 
 sub post_transaction {
+	use strict;
 
     my ( $self, $myconfig, $form ) = @_;
+
+    my $exchangerate;
+    my $batch_class;
+    my %paid;
+    my $paidamount;
+    my @queries;
     if ($form->{separate_duties}){
         $form->{approved} = '0';
     }
@@ -404,7 +411,6 @@ sub post_transaction {
 
     # add individual transactions
     foreach $ref ( @{ $form->{acc_trans}{lineitems} } ) {
-
         # insert detail records in acc_trans
         if ( $ref->{amount} ) {
             $query = qq|

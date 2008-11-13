@@ -166,7 +166,6 @@ sub post_transaction {
 
         # extract accno
         ($accno) = split( /--/, $form->{"accno_$i"} );
-
         if ($credit) {
             $amount = $credit;
             $posted = 0;
@@ -564,6 +563,7 @@ sub transaction {
         my $results = $sth->fetchall_hashref('setting_key');
         $form->{closedto} = $results->{'closedto'}->{'value'};
         $form->{revtrans} = $results->{'revtrans'}->{'value'};
+        #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $sth->finish;
 
         $query = qq|SELECT g.*, d.description AS department

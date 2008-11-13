@@ -536,7 +536,7 @@ sub redirect {
     my ( $self, $msg ) = @_;
 
     if ( $self->{callback} || !$msg ) {
-
+	print STDERR "Full redirect\n";
         main::redirect();
 	exit;
     }
@@ -1189,6 +1189,16 @@ sub db_init {
         push @{ $self->{custom_db_fields}{ $ref->{extends} } },
           $ref->{field_def};
     }
+    # Roles tracking
+    $self->{_roles} = [];
+    $query = "select rolname from pg_roles 
+               where pg_has_role(SESSION_USER, 'USAGE')";
+    $sth = $dbh->prepare($query);
+    $sth->execute();
+    while (my @roles = $sth->fetchrow_array){
+        push @{$self->{_roles}}, $roles[0];
+    }
+    $sth->finish();
 }
 
 =item $form->run_custom_queries($tablename, $query_type[, $linenum]);

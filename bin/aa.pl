@@ -883,7 +883,16 @@ sub form_footer {
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
         );
         if (!$form->{approved} && !$form->{batch_id}){
-           $button{approve} = { ndx => 3, key => 'O', value => $locale->text('Post') };
+           $button{approve} = { 
+                   ndx   => 3, 
+                   key   => 'O', 
+                   value => $locale->text('Post as Saved') };
+           if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+               $button{edit_and_approve} = { 
+                   ndx   => 4, 
+                   key   => 'O', 
+                   value => $locale->text('Post as Shown') };
+          }
            delete $button{post_as_new};
            delete $button{print_and_post_as_new};
            delete $button{post};
@@ -940,6 +949,18 @@ sub form_footer {
 </html>
 |;
 
+}
+
+sub edit_and_approve {
+    use LedgerSMB::DBObject::Draft;
+    use LedgerSMB;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    $draft->delete();
+    delete $form->{id};
+    AA->post_transaction( \%myconfig, \%$form );
+    approve();
 }
 
 sub approve {
@@ -1150,6 +1171,7 @@ sub post {
         if ( $form->{printandpost} ) {
             &{"print_$form->{formname}"}( $old_form, 1 );
         }
+	print STDERR "Redirecting\n";
         $form->redirect( $locale->text('Transaction posted!') );
     }
     else {

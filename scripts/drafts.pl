@@ -11,7 +11,7 @@ sub search {
     $request->{class_types} = [
 	{text => $request->{_locale}->text('AR'),  value => 'ar'},
 	{text => $request->{_locale}->text('AP'),  value => 'ap'},
-	{text => $request->{_locale}->text('GL'),  value => 'GL'},
+	{text => $request->{_locale}->text('GL'),  value => 'gl'},
     ];
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
