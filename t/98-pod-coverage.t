@@ -8,11 +8,13 @@
 use strict;
 use warnings;
 
-use Test::More tests => 15;
 use Test::More;
 eval "use Test::Pod::Coverage";
-plan skip_all => "Test::Pod::Coverage required for testing POD coverage" if $@;
-
+if ($@){
+    plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
+} else {
+    plan tests => 15;
+}
 pod_coverage_ok("LedgerSMB");
 pod_coverage_ok("LedgerSMB::Form");
 pod_coverage_ok("LedgerSMB::AM");
