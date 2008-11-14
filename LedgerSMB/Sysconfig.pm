@@ -81,10 +81,7 @@ $gzip = "gzip -S .gz";
 $localepath = 'locale/po';
 
 # available printers
-%printer = (
-    Laser => 'lpr -Plaser',
-    Epson => 'lpr -PEpson',
-);
+%printer;
 
 my %config;
 read_config( 'ledgersmb.conf' => %config ) or die;

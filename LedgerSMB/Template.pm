@@ -290,7 +290,7 @@ sub output {
 		$self->_email_output;
 	} elsif ('print' eq lc $method) {
 		$self->_lpr_output;
-	} elsif (defined $self->{output} or $method = 'Screen') {
+	} elsif (defined $self->{output} or lc $method eq 'screen') {
 		$self->_http_output;
 		exit;
 	} elsif (defined $method) {
@@ -401,7 +401,7 @@ sub _lpr_output {
 	}
 	my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
 
-	open(LPR, '|-', $lpr);
+	open (LPR, '|-', $lpr);
 
 	# Output is not defined here.  In the future we should consider
 	# changing this to use the system command and hit the file as an arg.

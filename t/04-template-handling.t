@@ -421,6 +421,20 @@ is(grep (/value="1" selected/, @output), 0, 'Select box Value 1 unselected');
 is(grep (/value="1000" selected/, @output), 1, 'Select box Value 1000 selected');
 is(grep (/<td class="description">dtest1/, @output), 1, 'Contact description shows');
 
+# LPR PRinting Tests
+use LedgerSMB::Sysconfig;
+%LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');
+
+$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
+	'template' => '04-template', 'locale' => $locale, no_auto_output => 1);
+$template->render({media => 'test'});
+$template->output(media => 'test');
+
+ok (open (LPR_TEST, '<', 't/var/04-lpr-test'), 'LedgerSMB::Template::_output_lpr output file opened successfully');
+
+my $line1 = <LPR_TEST>;
+
+like($line1, qr/^%PDF/, 'output file is pdf');
 
 # Functions
 sub get_output_line_array {

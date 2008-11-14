@@ -64,7 +64,6 @@ sub __validate__ {
 
 sub text_amount {
     use LedgerSMB::Num2text;
-    print STDERR "num2text\n";
     my ($self, $value) = @_;
     $self->{locale} = $self->{_locale};
     $self->init();

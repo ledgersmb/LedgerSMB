@@ -282,7 +282,6 @@ sub print {
 
     if ($payment->{multiple}){
         $payment->{checks} = [];
-        print "Multiple checks printing";
         for my $line (1 .. $payment->{contact_count}){
             my $id = $payment->{"contact_$line"};
             next if !defined $payment->{"id_$id"};
@@ -337,14 +336,15 @@ sub print {
 	    no_auto_output => 1,
             output_args => $payment,
         );
-        try {
+        #try {
             $template->render($payment);
             $template->output(%$payment);
-        }
-        catch Error::Simple with {
-            my $E = shift;
-            $payment->error( $E->stacktrace );
-        };
+        #}
+        #catch Error::Simple with {
+        #    my $E = shift;
+        #    $payment->error( $E->stacktrace );
+        #};
+        display_payments(@_);
 
     } else {
 
@@ -402,7 +402,7 @@ sub display_payments {
     for (keys %LedgerSMB::Sysconfig::printer){
          push @{$payment->{media_options}}, 
               {text  => $_,
-               value => $LedgerSMB::Sysconfig::printer{$_}};
+               value => $_};
     }
     if ($LedgerSMB::Sysconfig::latex){
         @{$payment->{format_options}} = (
