@@ -272,7 +272,7 @@ sub _parse_array {
             $close_braces =~ s/{/}/g;
             $value =~ /^{($open_braces[^}]*$close_braces)/;
             my $parse_next = $1;
-            $value =~ s/^{$parse_next/{/;
+            $value =~ s/^{$parse_next,?/{/;
             @$next = $self->_parse_array($parse_next);
             
         } else {
