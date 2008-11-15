@@ -1,65 +1,80 @@
+\usepackage{textpos}
+
+\setlength{\TPHorizModule}{1in}
+\setlength{\TPVertModule}{1in}
 <?lsmb BLOCK check_single ?>
-\parbox[t]{12cm}{
-  <?lsmb company ?>
+%\parbox[t]{12cm}{
+%  <?lsmb company ?>
+%
+%  <?lsmb address ?>}
+%\hfill
+%\parbox[t]{6cm}{\hfill <?lsmb source ?>}
+%
+%\vspace*{0.6cm}
 
-  <?lsmb address ?>}
-\hfill
-\parbox[t]{6cm}{\hfill <?lsmb source ?>}
+\begin{textblock}{2}(6.75, 0.75)
+<?lsmb datepaid ?>
+\end{textblock}
+\begin{textblock}{5.5}(0.75, 1.12)
+<?lsmb legal_name ?>
+\end{textblock}
 
-\vspace*{0.6cm}
+%\hfill <?lsmb datepaid ?> \makebox[2cm]{\hfill} <?lsmb amount ?>
 
+\begin{textblock}{2}(6.6, 1.15)
+<?lsmb format_amount({amount = amount, format = '1,000.00'}) ?>
+\end{textblock}
+\begin{textblock}{7.25}(0, 1.5)
 <?lsmb text_amount ?> \dotfill <?lsmb decimal ?>/100 \makebox[0.5cm]{\hfill}
-
+\end{textblock}
 \vspace{0.5cm}
 
-\hfill <?lsmb datepaid ?> \makebox[2cm]{\hfill} <?lsmb amount ?>
-
+%
 % different date format for datepaid
 % <?lsmb DD ?><?lsmb MM ?><?lsmb YYYY ?>
+%
+%\vspace{0.5cm}
+%
+%<?lsmb legal_name ?>
+%
+%<?lsmb street1 ?>
+%
+%<?lsmb street2 ?>
+%
+%<?lsmb city ?>
+%<?lsmb IF state ?>
+%\hspace{-0.1cm}, <?lsmb state ?>
+%<?lsmb END # state ?>
+%
+%<?lsmb mail_code ?>
+%
+%<?lsmb country ?>
+%
+%\vspace{1.8cm}
+%
+%<?lsmb memo ?>
+%
+%\vspace{0.8cm}
+%
+%<?lsmb company ?>
+%
 
+
+\begin{textblock}{7}(0, 3.75)
 \vspace{0.5cm}
+\noindent Master Code: <?lsmb control_code ?> \\
+Date:  <?lsmb datepaid ?>\\
+Description: <?lsmb batch_description ?>\\
+Total Amount: <?lsmb amount ?>\\
+\end{textblock}
 
-<?lsmb legal_name ?>
-
-<?lsmb street1 ?>
-
-<?lsmb street2 ?>
-
-<?lsmb city ?>
-<?lsmb IF state ?>
-\hspace{-0.1cm}, <?lsmb state ?>
-<?lsmb END # state ?>
-
-<?lsmb mail_code ?>
-
-<?lsmb country ?>
-
-\vspace{1.8cm}
-
-<?lsmb memo ?>
-
-\vspace{0.8cm}
-
-<?lsmb company ?>
-
+\begin{textblock}{7}(0, 6.75)
 \vspace{0.5cm}
-
-<?lsmb name ?> \hfill <?lsmb datepaid ?> \hfill <?lsmb source ?>
-
-\vspace{0.5cm}
-\begin{tabularx}{\textwidth}{lXrr@{}}
-\textbf{Invoice \#} & \textbf{Invoice Date}
-  & \textbf{Amount Due} & \textbf{Applied} \\
-<?lsmb FOR inv = invoices ?>
-<?lsmb inv.invnumber ?> & <?lsmb inv.invdate ?> \dotfill
-  & <?lsmb inv.due ?> & <?lsmb inv.paid ?> \\
-<?lsmb END # FOREACH inv ?>
-\end{tabularx}
-
-\vspace{1cm}
-
-<?lsmb memo ?>
+\noindent Master Code: <?lsmb control_code ?> \\
+Date:  <?lsmb datepaid ?>\\
+Description: <?lsmb batch_description ?>\\
+Total Amount: <?lsmb amount ?>\\
+\end{textblock}
 
 \vfill
-<?lsmb message ?>
 <?lsmb END # BLOCK ?>
