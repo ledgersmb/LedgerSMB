@@ -19,6 +19,6 @@ for my $testscript (@testscripts){
 	cmp_ok(scalar @testlines, '>', 0, "$testscript.sql returned test results");
 	for my $test (@testlines){
 		my @parts = split /\|/, $test;
-		like($parts[1], qr/t/, $parts[0]);
+		like($parts[1], qr/t\s?$/, $parts[0]);
 	}
 }
