@@ -6,30 +6,30 @@ SELECT 'Batch Created',
 	batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
 
 INSERT INTO entity (id, name, entity_class, control_code) 
-values (-2, 'Test', 1, 'test');
+values (-3, 'Test', 1, 'test');
 INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class) 
-values (-2, -1, 'Test', 1);
+values (-3, -1, 'Test', 1);
 
 INSERT INTO chart (id, accno, description, link)
-VALUES ('-1', '-21111', 'Testing AP', 'AP');
+VALUES ('-5', '-21111', 'Testing AP', 'AP');
 
 INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
-VALUES (-1, 'test1', '1000', 'USD', false, -1);
+VALUES (-5, 'test1', '1000', 'USD', false, -1);
 
 INSERT INTO acc_trans(trans_id, chart_id, amount, approved)
-values (-1, -1, 1000, true);
+values (-5, -5, 1000, true);
 
 INSERT INTO voucher (trans_id, batch_id, batch_class)
-values (-1, currval('batch_id_seq'), 1);
+values (-5, currval('batch_id_seq'), 1);
 INSERT INTO voucher (trans_id, batch_id, batch_class)
-values (-1, currval('batch_id_seq'), 3);
+values (-5, currval('batch_id_seq'), 3);
 INSERT INTO voucher (trans_id, batch_id, batch_class)
-values (-1, currval('batch_id_seq'), 3);
+values (-5, currval('batch_id_seq'), 3);
 
 
 INSERT INTO test_result (test_name, success)
 SELECT 'partial payment support', count(*) > 1 
-FROM voucher where trans_id = -1 and batch_class = 3;
+FROM voucher where trans_id = -5 and batch_class = 3;
 
 SELECT * FROM test_result;
 
