@@ -5,7 +5,7 @@ BEGIN {
 	use LedgerSMB::DBTest;
 }
 
-our $test_case_defs = {
+our $api_test_cases = {
 };
 
 if (defined $ENV{LSMB_TEST_DB}){
@@ -50,7 +50,7 @@ for my $test (@$test_request_data){
 		$script =~ s/\.pl$//;
 		ok(eval "LedgerSMB::Scripts::$script::$request->{action}(\$request)");
 	}
-	for (@{$test_case_defs->{"$test->{_test_id}"}}){
+	for (@{$api_test_cases->{"$test->{_test_id}"}}){
 		&$_;
 	}
 	ok($dbh->rollback, "$test->{_test_id}: rollback");
