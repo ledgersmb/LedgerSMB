@@ -1,11 +1,17 @@
 use Test::More;
 use strict;
 
-if (!defined $ENV{PGDATABASE}){
-	plan skip_all => 'PGDATABASE Environment Variable not set up';
+if (!defined $ENV{LSMB_TEST_DB}){
+	plan skip_all => 'Skipping all.  Told not to test db.';
 }
 else {
 	plan tests => 50;
+	if (defined $ENV{LSMB_NEW_DB}){
+		$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+	}
+	if (!defined $ENV{PGDATABASE}){
+		die "We were told to run tests, but no database specified!";
+        }
 }
 
 my @testscripts = qw(Account Business_type Company Draft Payment 

@@ -1,0 +1,58 @@
+
+our $test_request_data = [
+	# AR/AP Transaction Screen Tests
+	{
+		'_test_id'  => 'AR Transaction Screen',
+		'_codebase' => 'old',
+		'module'    => 'ar.pl',
+		'action'    => 'add'
+	},
+	{
+		'_test_id'  => 'AP Transaction Screen',
+		'_codebase' => 'old',
+		'module'    => 'ap.pl',
+		'action'    => 'add'
+	},
+	# Create Batch Screens
+	{
+		'_test_id'   => 'AR Transaction Voucher Screen',
+		'_codebase'  => 'new',
+		'action'     => 'create_batch',
+		'batch_type' => 'recievable',
+		'module'     => 'vouchers.pl',
+	},
+	{
+		'_test_id'   => 'AP Transaction Voucher Screen',
+		'_codebase'  => 'new',
+		'action'     => 'create_batch',
+		'batch_type' => 'payable',
+		'module'     => 'vouchers.pl',
+	},
+	{
+		'_test_id'   => 'Payment Transaction Voucher Screen',
+		'_codebase'  => 'new',
+		'action'     => 'create_batch',
+		'batch_type' => 'payment',
+		'module'     => 'vouchers.pl',
+	},
+	{
+		'_test_id'   => 'Payment Reversal Transaction Voucher Screen',
+		'_codebase'  => 'new',
+		'action'     => 'create_batch',
+		'batch_type' => 'payment_reversal',
+		'module'     => 'vouchers.pl',
+	},
+	{
+		'_test_id'   => 'GL Transaction Voucher Screen',
+		'_codebase'  => 'new',
+		'action'     => 'create_batch',
+		'batch_type' => 'gl',
+		'module'     => 'vouchers.pl',
+	},
+];
+
+
+opendir (D62, 't/data/62.d');
+for my $testfile (readdir(D62)){
+	do "t/data/62.d/$testfile";
+};
