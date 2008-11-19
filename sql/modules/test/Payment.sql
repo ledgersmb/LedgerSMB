@@ -1,19 +1,19 @@
 BEGIN;
 \i Base.sql
 
-INSERT INTO entity (name, entity_class, control_code)
-VALUES ('Testing.....', 3, '_TESTING.....');
+INSERT INTO entity (id, name, entity_class, control_code)
+VALUES (-100, 'Testing.....', 3, '_TESTING.....');
 
 DELETE FROM users WHERE username = CURRENT_USER;
 
 INSERT INTO users (entity_id, username)
-SELECT currval('entity_id_seq'), CURRENT_USER;
+SELECT -100, CURRENT_USER;
 
-INSERT INTO person(first_name, last_name, entity_id)
-VALUES ('test', 'test', currval('entity_id_seq'));
+INSERT INTO person(first_name, last_name, entity_id, id)
+VALUES ('test', 'test', -100, -100);
 
 INSERT INTO entity_employee(entity_id, person_id)
-VALUES (currval('entity_id_seq'), currval('person_id_seq'));
+VALUES (-100, -100);
 
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00001', 'testing', 'A', 'L', 'AP');
@@ -26,8 +26,17 @@ values (currval('users_id_seq'),  now(), md5('test2'), 2);
 INSERT INTO test_result(test_name, success)
 SELECT 'AP Batch created', (SELECT batch_create('test', 'test', 'ap', now()::date)) IS NOT NULL;
 
+INSERT INTO entity (id, entity_class, name, control_code)
+VALUES (-101, 1, 'TEST VENDOR', 'TEST 2');
+
+INSERT INTO company (id, legal_name, entity_id)
+VALUES (-101, 'TEST', -101);
+
+INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class)
+values (-101, 'TEST1', 100000, -101, 1); 
+
 INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr)
-values ('test_hide', (select min(id) from entity_credit_account where entity_class = 1), false, '100000', '100000', 'USD');
+values ('test_hide', -101, false, '100000', '100000', 'USD');
 
 INSERT INTO voucher (trans_id, batch_class, batch_id) 
 VALUES (currval('id'), 1, currval('batch_id_seq'));
@@ -36,7 +45,7 @@ INSERT INTO test_result(test_name, success)
 SELECT 'Payment Batch created', (SELECT batch_create('test', 'test', 'ap', now()::date)) IS NOT NULL;
 
 INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate)
-values ('test_show', (select min(id) from entity_credit_account where entity_class = 1), false, '100000', '100000', 'USD', now()::date);
+values ('test_show', -101, false, '100000', '100000', 'USD', now()::date);
 
 INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
 VALUES (true, now()::date, '100000', currval('id'), (select id from chart where accno = '00001'));
@@ -59,6 +68,8 @@ VALUES ('Batch Voucher In Payment Selection',
 				(
 SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', (select meta_number from entity_credit_account order by id asc limit 1))
 )p));
+
+SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', (select meta_number from entity_credit_account order by id asc limit 1));
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Non-Batch Voucher Not In Payment Selection', 
