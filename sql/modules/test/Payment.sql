@@ -85,9 +85,9 @@ VALUES ('Threshold met',
 	(SELECT test_convert_array(invoices) LIKE '%::test_show2::%'
 			FROM 
 				(
-SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
+SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, NULL, '00001', 'TEST1')
 )p));
-SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL,  currval('batch_id_seq')::int, '00001', 'TEST1');
+SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, NULL, '00002', 'TEST1');
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Non-Batch Voucher Not In Payment Selection', 
@@ -102,4 +102,4 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
 
--- ROLLBACK;
+ ROLLBACK;
