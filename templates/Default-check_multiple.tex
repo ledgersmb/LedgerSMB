@@ -2,8 +2,8 @@
 \documentclass{scrartcl}
 \usepackage[latin1]{inputenc}
 \usepackage{tabularx}
-\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
+\usepackage{textpos}
 
 <?lsmb PROCESS check_base.tex ?>
 
@@ -16,6 +16,7 @@
 <?lsmb FOR check = checks ?>
 <?lsmb INCLUDE check_single 
 	source = check.source
+	control_code = check.control_code
 	text_amount = check.text_amount
 	decimal = check.decimal
 	amount = check.amount
