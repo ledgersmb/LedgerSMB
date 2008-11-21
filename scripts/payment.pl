@@ -305,7 +305,7 @@ sub print {
                 $inv_count = $LedgerSMB::Sysconfig::check_max_invoices;
             }
 
-            for my $inv (1 .. $inv_count){
+            for my $inv (1 .. $payment->{"invoice_count_$id"}){
                 my $invhash = {};
                 my $inv_id = $payment->{"invoice_${id}_$inv"};
                 for (qw(invnumber invdate)){
@@ -320,7 +320,7 @@ sub print {
                 }
                 $check->{amount} += $invhash->{paid};
                 $invhash->{paid} = $check->format_amount(amount => $invhash->{paid});
-                push @{$check->{invoices}}, $invhash;
+                push @{$check->{invoices}}, $invhash if $inv <= $inv_count;
             }
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
