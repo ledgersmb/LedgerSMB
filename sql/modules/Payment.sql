@@ -89,8 +89,12 @@ CREATE TYPE payment_invoice AS (
 	invnumber text,
 	invoice_date date,
 	amount numeric,
+	amount_fx numeric,
 	discount numeric,
-	due numeric
+	discount_fx numeric,
+	due numeric,
+	due_fx numeric,
+	exchangerate numeric
 );
 
 CREATE OR REPLACE FUNCTION payment_get_open_invoices
@@ -109,10 +113,51 @@ BEGIN
 	FOR payment_inv IN
 		SELECT a.id AS invoice_id, a.invnumber AS invnumber, 
 		       a.transdate AS invoice_date, a.amount AS amount, 
+		       a.amount/
+		       (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
+                         THEN 1
+		        ELSE
+		        (CASE WHEN in_account_class =1
+		              THEN ex.buy
+		              ELSE ex.sell END)
+		        END) as amount_fx, 
 		       (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
 		        THEN 0
 		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
-		        END) AS discount, ac.due 
+		        END) AS discount,
+		        (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+		        THEN 0
+		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
+		        END)/
+		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
+                         THEN 1
+		        ELSE
+		        (CASE WHEN in_account_class =1
+		              THEN ex.buy
+		              ELSE ex.sell END)
+		        END) as discount_fx,		        
+		        ac.due - (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+		        THEN 0
+		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
+		        END) AS due,
+		        (ac.due - (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+		        THEN 0 
+		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
+		        END))/
+		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
+                         THEN 1
+		         ELSE
+		         (CASE WHEN in_account_class =1
+		              THEN ex.buy
+		              ELSE ex.sell END)
+		         END) AS due_fx,
+		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
+		         THEN 1
+		         ELSE
+		        (CASE WHEN in_account_class =1
+		         THEN ex.buy
+		         ELSE ex.sell END)
+		         END) AS exchangerate
                 FROM  (SELECT id, invnumber, transdate, amount, entity_id,
 		               1 as invoice_class, paid, curr, 
 		               entity_credit_account, department_id
@@ -131,6 +176,7 @@ BEGIN
 		        FROM acc_trans 
 		        GROUP BY trans_id, chart_id) ac ON (ac.trans_id = a.id)
 		        JOIN chart ON (chart.id = ac.chart_id)
+		        LEFT JOIN exchangerate ex ON ( ex.transdate = a.transdate AND ex.curr = a.curr )         
 		        JOIN entity_credit_account c ON (c.id = a.entity_credit_account
                         OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
 	 	        WHERE ((chart.link = 'AP' AND in_account_class = 1)
@@ -151,7 +197,7 @@ BEGIN
 		        AND (a.department_id = in_department_id
 		             OR in_department_id IS NULL)
 		        AND due <> 0          
-		        GROUP BY a.invnumber, a.transdate, a.amount, discount, ac.due, a.id, c.discount_terms
+		        GROUP BY a.invnumber, a.transdate, a.amount, amount_fx, discount, discount_fx, ac.due, a.id, c.discount_terms, ex.buy, ex.sell, a.curr
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
@@ -506,7 +552,7 @@ CREATE TABLE payment (
   payment_class integer NOT NULL,
   payment_date date default current_date,
   closed bool default FALSE,
-  entity_id   integer references entity(id),
+  entity_credit_id   integer references entity_credit_account(id),
   employee_id integer references entity_employee(entity_id),
   currency char(3),
   notes text,
@@ -540,11 +586,10 @@ COMMENT ON TABLE payment_links IS $$
  This reasoning is hacky and i hope it can dissapear when we get to 1.4 - D.M.
 $$;
  
-  
 CREATE OR REPLACE FUNCTION payment_post 
 (in_datepaid      		  date,
  in_account_class 		  int,
- in_entity_id                     int,
+ in_entity_credit_id                     int,
  in_curr        		  char(3),
  in_notes                         text,
  in_department_id                 int,
@@ -553,6 +598,7 @@ CREATE OR REPLACE FUNCTION payment_post
  in_amount                        numeric[],
  in_cash_approved                 bool[],
  in_source                        text[],
+ in_memo                          text[], 
  in_transaction_id                int[],
  in_op_amount                     numeric[],
  in_op_cash_account_id            int[],
@@ -570,21 +616,30 @@ DECLARE out_count int;
 DECLARE coa_id record;
 DECLARE var_employee int;
 DECLARE var_account_id int;
+DECLARE default_currency char(3);
+DECLARE current_exchangerate numeric;
+DECLARE old_exchangerate numeric;
+DECLARE tmp_amount numeric;
 BEGIN
+        
+        SELECT * INTO default_currency  FROM defaults_get_defaultcurrency(); 
+        SELECT * INTO current_exchangerate FROM currency_get_exchangerate(in_curr, in_datepaid, in_account_class);
+
+
         SELECT INTO var_employee entity_id FROM users WHERE username = SESSION_USER LIMIT 1;
         -- 
-        -- SECOND WE HAVE TO INSERT THE PAYMENT, USING THE GL INFORMATION
+        -- WE HAVE TO INSERT THE PAYMENT, USING THE GL INFORMATION
         -- THE ID IS GENERATED BY payment_id_seq
         --
    	INSERT INTO payment (reference, payment_class, payment_date,
-	                      employee_id, currency, notes, department_id, entity_id) 
+	                      employee_id, currency, notes, department_id, entity_credit_id) 
 	VALUES ((CASE WHEN in_account_class = 1 THEN
 	                                setting_increment('rcptnumber') -- I FOUND THIS ON sql/modules/Settings.sql 
 			             ELSE 						-- and it is very usefull				
 			                setting_increment('paynumber') 
 			             END),
 	         in_account_class, in_datepaid, var_employee,
-                 in_curr, in_notes, in_department_id, in_entity_id);
+                 in_curr, in_notes, in_department_id, in_entity_credit_id);
         SELECT currval('payment_id_seq') INTO var_payment_id; -- WE'LL NEED THIS VALUE TO USE payment_link table
         -- WE'LL NEED THIS VALUE TO JOIN WITH PAYMENT
         -- NOW COMES THE HEAVY PART, STORING ALL THE POSSIBLE TRANSACTIONS... 
@@ -597,39 +652,85 @@ BEGIN
 			array_upper(in_cash_account_id, 1)
 	LOOP
 	        INSERT INTO acc_trans (chart_id, amount,
-		                       trans_id, transdate, approved, source)
+		                       trans_id, transdate, approved, source, memo)
 		VALUES (in_cash_account_id[out_count], 
-		        CASE WHEN in_account_class = 1 THEN in_amount[out_count]  
-		        ELSE in_amount[out_count]* - 1
+		        CASE WHEN in_account_class = 1 THEN in_amount[out_count]*current_exchangerate  
+		        ELSE (in_amount[out_count]*current_exchangerate)* - 1
 		        END,
 		        in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true), 
-		        in_source[out_count]);
+		        in_source[out_count], in_memo[out_count]);
                 INSERT INTO payment_links 
 		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+		
 	END LOOP;
 	-- NOW LETS HANDLE THE AR/AP ACCOUNTS
 	-- WE RECEIVED THE TRANSACTIONS_ID AND WE CAN OBTAIN THE ACCOUNT FROM THERE
 	FOR out_count IN
 		     array_lower(in_transaction_id, 1) ..
 		     array_upper(in_transaction_id, 1)
-	LOOP
-        SELECT INTO var_account_id chart_id FROM acc_trans as ac
+       LOOP
+               SELECT INTO var_account_id chart_id FROM acc_trans as ac
 	        JOIN chart as c ON (c.id = ac.chart_id) 
        	        WHERE 
        	        trans_id = in_transaction_id[out_count] AND
        	        ( c.link = 'AP' OR c.link = 'AR' );
-         INSERT INTO acc_trans (chart_id, amount,
-                                trans_id, transdate, approved, source)
+        -- We need to know the exchangerate of this transaction
+        IF (current_exchangerate = 1 ) THEN 
+           old_exchangerate := 1;
+        ELSIF (in_account_class = 1) THEN
+           SELECT buy INTO old_exchangerate 
+           FROM exchangerate e
+           JOIN ap a on (a.transdate = e.transdate )
+           WHERE a.id = in_transaction_id[out_count];
+        ELSE 
+           SELECT sell INTO old_exchangerate 
+           FROM exchangerate e
+           JOIN ar a on (a.transdate = e.transdate )
+           WHERE a.id = in_transaction_id[out_count];
+        END IF;
+        -- Now we post the AP/AR transaction
+        INSERT INTO acc_trans (chart_id, amount,
+                                trans_id, transdate, approved, source, memo)
 		VALUES (var_account_id, 
-		        CASE WHEN in_account_class = 1 THEN in_amount[out_count] * -1 
-		        ELSE in_amount[out_count]
+		        CASE WHEN in_account_class = 1 THEN 
+		        
+		        (in_amount[out_count]*old_exchangerate) * -1 
+		        ELSE in_amount[out_count]*old_exchangerate
 		        END,
 		        in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true), 
-		        in_source[out_count]);
+		        in_source[out_count], in_memo[out_count]);
+        -- Lets set the gain/loss, if tmp_amount equals zero then we dont need to post
+        -- any transaction
+        tmp_amount := in_amount[out_count]*current_exchangerate - in_amount[out_count]*old_exchangerate;
+       IF (tmp_amount < 0) THEN
+          IF (in_account_class  = 1) THEN
+           INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
+            VALUES (CAST((select value from defaults where setting_key like 'fxloss_accno_id') AS INT),
+                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    in_source[out_count]);
+           ELSE
+            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
+            VALUES (CAST((select value from defaults where setting_key like 'fxgain_accno_id') AS INT),
+                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    in_source[out_count]);
+          END IF;
+        ELSIF (tmp_amount > 0) THEN
+          IF (in_account_class  = 1) THEN
+            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
+            VALUES (CAST((select value from defaults where setting_key like 'fxgain_accno_id') AS INT),
+                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    in_source[out_count]);
+           ELSE
+            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
+            VALUES (CAST((select value from defaults where setting_key like 'fxloss_accno_id') AS INT),
+                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    in_source[out_count]);
+          END IF; 
+        END IF; 
+        -- Now we set the links
          INSERT INTO payment_links 
 		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
-
-	END LOOP;
+      END LOOP;
 --
 -- WE NEED TO HANDLE THE OVERPAYMENTS NOW
 --
@@ -637,6 +738,7 @@ BEGIN
        -- FIRST WE HAVE TO MAKE THE GL TO HOLD THE OVERPAYMENT TRANSACTIONS
        -- THE ID IS GENERATED BY gl_id_seq
        --
+       
   IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
        INSERT INTO gl (reference, description, transdate,
                        person_id, notes, approved, department_id) 
@@ -658,13 +760,13 @@ BEGIN
 			array_upper(in_op_cash_account_id, 1)
 	LOOP
 	        INSERT INTO acc_trans (chart_id, amount,
-		                       trans_id, transdate, approved, source)
+		                       trans_id, transdate, approved, source, memo)
 		VALUES (in_op_cash_account_id[out_count], 
 		        CASE WHEN in_account_class = 2 THEN in_op_amount[out_count]  
 		        ELSE in_op_amount[out_count] * - 1
 		        END,
 		        var_gl_id, in_datepaid, coalesce(in_approved, true), 
-		        in_op_source[out_count]);
+		        in_op_source[out_count], in_op_memo[out_count]);
 	        INSERT INTO payment_links 
 		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
 	END LOOP;
@@ -685,7 +787,7 @@ BEGIN
 		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
 	END LOOP;	        
  END IF;  
- return 0;     
+ return var_payment_id;
 END;
 $$ LANGUAGE PLPGSQL;
 -- I HAVE TO MAKE A COMMENT ON THIS FUNCTION
@@ -752,8 +854,13 @@ RETURNS NUMERIC AS
 $$
 DECLARE 
     out_exrate exchangerate.buy%TYPE;
-
+    default_currency char(3);
+    
     BEGIN 
+        SELECT * INTO default_currency  FROM defaults_get_defaultcurrency();
+        IF default_currency = in_currency THEN
+           RETURN 1;
+        END IF; 
         IF in_account_class = 1 THEN
           SELECT buy INTO out_exrate 
           FROM exchangerate
@@ -953,3 +1060,129 @@ BEGIN
 	RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
+
+
+CREATE OR REPLACE FUNCTION payments_set_exchangerate(in_account_class int,
+ in_exchangerate numeric, in_curr char(3), in_datepaid date )
+RETURNS INT
+AS $$
+DECLARE current_exrate  exchangerate%ROWTYPE;
+BEGIN
+select  * INTO current_exrate
+        FROM  exchangerate 
+        WHERE transdate = in_date;
+IF current_exrate.transdate = in_date THEN
+   IF in_account_class = 1 THEN 
+      UPDATE exchangerate set buy = in_exchangerate  where transdate = in_date;
+   ELSE
+      UPDATE exchangerate set sell = in_exchangerate where transdate = in_date;
+   END IF;
+   RETURN 0; 
+ELSE
+    IF in_account_class = 1 THEN
+     INSERT INTO exchangerate (curr, transdate, buy) values (in_currency, in_date, in_exchangerate);
+  ELSE   
+     INSERT INTO exchangerate (curr, transdate, sell) values (in_currency, in_date, in_exchangerate);
+  END IF;                                       
+RETURN 0;
+END IF;
+END;
+$$ language plpgsql;
+
+
+CREATE TYPE payment_header_item AS (
+payment_id int,
+payment_reference int,
+payment_date date,
+legal_name text,
+amount numeric,
+employee_first_name text,
+employee_last_name  text,
+currency char(3),
+notes text
+);
+-- I NEED TO PLACE THE COMPANY TELEPHONE AND ALL THAT STUFF
+CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_payment_id int)
+ RETURNS SETOF payment_header_item AS
+ $$
+ DECLARE out_payment payment_header_item;
+ BEGIN
+ FOR out_payment IN 
+   SELECT p.id as payment_id, p.reference as payment_reference, p.payment_date,  
+          c.legal_name as legal_name, am.amount as amount, em.first_name, em.last_name, p.currency, p.notes
+   FROM payment p
+   JOIN employee em ON (em.entity_id = p.employee_id)
+   JOIN company c ON   (c.entity_id  = p.entity_id)
+   JOIN (  SELECT sum(a.amount) as amount
+		FROM acc_trans a
+		JOIN chart c ON (a.chart_id = c.id)
+		JOIN payment_links pl ON (pl.entry_id=a.entry_id)
+		WHERE 
+		(   ((c.link like '%AP_paid%' OR c.link like '%AP_discount%') AND in_account_class = 1)
+		 OR ((c.link like '%AR_paid%' OR c.link like '%AR_discount%') AND in_account_class = 2))
+                 AND pl.payment_id = in_payment_id ) am ON (1=1)
+   WHERE p.id = in_payment_id
+ LOOP
+     RETURN NEXT out_payment;
+ END LOOP;
+
+ END;
+ $$ language plpgsql;
+                            
+
+COMMENT ON FUNCTION payment_gather_header_info(int,int) IS
+$$ This function finds a payment based on the id and retrieves the record, 
+it is usefull for printing payments :) $$;
+
+CREATE TYPE payment_line_item AS (
+  payment_id int,
+  entry_id int,
+  link_type int,
+  trans_id int,
+  invoice_number int,
+  chart_id int,
+  chart_accno int,
+  chart_description text,
+  chart_link text,
+  amount int,
+  trans_date date,	
+  source text,
+  cleared bool,
+  fx_transaction bool,
+  project_id int,
+  memo text,
+  invoice_id int,
+  approved bool,
+  cleared_on date,
+  reconciled_on date
+);
+   
+CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_payment_id int)
+ RETURNS SETOF payment_line_item AS
+ $$
+ DECLARE out_payment_line payment_line_item;
+ BEGIN
+   FOR out_payment_line IN 
+     SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
+     ac.chart_id, ch.accno as chart_accno, ch.description as chart_description, ch.link as chart_link,
+     ac.amount,  ac.transdate as trans_date, ac.source, ac.cleared_on, ac.fx_transaction, ac.project_id,
+     ac.memo, ac.invoice_id, ac.approved, ac.cleared_on, ac.reconciled_on
+     FROM acc_trans ac
+     JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
+     JOIN chart         ch ON (ch.id = ac.chart_id)
+     LEFT JOIN (SELECT id,invnumber
+                 FROM ar WHERE in_account_class = 2
+                 UNION
+                 SELECT id,invnumber
+                 FROM ap WHERE in_account_class = 1
+                ) a ON (ac.trans_id = a.id)
+     WHERE pl.payment_id = in_payment_id
+   LOOP
+      RETURN NEXT out_payment_line;
+   END LOOP;  
+ END;
+ $$ language plpgsql;
+
+COMMENT ON FUNCTION payment_gather_line_info(int,int) IS
+$$ This function finds a payment based on the id and retrieves all the line records, 
+it is usefull for printing payments and build reports :) $$;

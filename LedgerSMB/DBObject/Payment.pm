@@ -19,6 +19,7 @@ included COPYRIGHT and LICENSE files for more information.
 =cut
 
 package LedgerSMB::DBObject::Payment;
+use LedgerSMB::Num2text;
 use base qw(LedgerSMB::DBObject);
 use strict;
 use Math::BigFloat lib => 'GMP';
@@ -547,7 +548,46 @@ This method uses payment_post to store a payment (not a bulk payment) on the dat
 
 sub post_payment {
  my ($self) = @_;
- $self->exec_method(funcname => 'payment_post');
+ # We have to check if it was a fx_payment
+ $self->{currency} = $self->{curr};
+
+
+ if ("$self->{currency}" ne $self->get_default_currency()) {
+   # First we have to check for an exchangerate on this date
+   my $db_exchangerate = $self->get_exchange_rate($self->{curr},$self->{datepaid});
+   if (!$db_exchangerate) {
+   # We have to set the exchangerate
+  
+
+   $self->call_procedure(procname => 'payments_set_exchangerate',  args => ["$self->{account_class}", "$self->{exchangerate}" ,"$self->{curr}", "$self->{datepaid}"]);
+
+
+
+   }
+   elsif ($db_exchangerate != $self->{exchangerate} )
+   {
+   # Something went wrong
+   $self->error("Exchange rate inconsistency with database, please try again")
+   }
+ }
+ my @TMParray = $self->exec_method(funcname => 'payment_post');
  $self->{dbh}->commit();
+ $self->{payment_id} = $TMParray[0]->{payment_post};
+ return $self->{payment_id};
 }
+
+=item gather_printable_info 
+
+This method retrieves all the payment related info needed to build a
+document and print it. IT IS NECESSARY TO ALREADY HAVE payment_id on $self
+
+=cut
+
+
+sub gather_printable_info {
+my ($self) = @_;
+@{$self->{header_info}} = $self->exec_method(funcname => 'payment_gather_header_info');
+@{$self->{line_info}}   = $self->exec_method(funcname => 'payment_gather_line_info');
+}
+
 1;

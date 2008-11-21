@@ -121,7 +121,7 @@ sub num2text {
 
 sub num2text_en {
     my ( $self, $amount ) = @_;
-
+      
     return $self->{numbername}{0} unless $amount;
 
     my @textnumber = ();

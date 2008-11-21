@@ -151,25 +151,24 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
   <?lsmb FOREACH row IN rows ?>
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
   <tr class="<?lsmb alterning_style ?>"=>
-    <td><a href="<?lsmb row.invoice.href ?>"><?lsmb row.invoice.number ?></a>
+    <td><a href="<?lsmb row.invoice.href ?>" target="_new"><?lsmb row.invoice.number ?></a>
         <input type="hidden" value="<?lsmb row.invoice.id ?>" />                 </td>
     <?lsmb # we can use an href to link this invoice number to the invoice ?>
     <td><?lsmb row.invoice_date ?></td>
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
-
     <td><?lsmb row.discount ?></td>
     <td align="center"><input  name="<?lsmb "optional_discount_$row.invoice.id" -?>"  id="<?lsmb
        "optional_discount_$row.invoice.id" -?>" type="checkbox"  class="checkbox"<?lsmb IF
        row.optional_discount OR first_load -?> checked <?lsmb END -?> ></td>
-    <td><?lsmb row.due ?></td>
-    <?lsmb IF defaultcurrency.text != curr.value ?>
+    <td align="center"><?lsmb row.memo.id=row.memo.name ; INCLUDE input element_data=row.memo; -?></td>
+   <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><?lsmb row.exchange_rate ?></td>
     <td><?lsmb row.due ?></td>
     <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div></td>
-    <?lsmb END ?> 
+   <?lsmb END ?> 
     <?lsmb #This should be computed and updated to the div using  ?> 
-    <td><?lsmb  row.topay_fx.id = row.topay_fx.name ;INCLUDE input element_data=row.topay_fx;
+    <td align="center"><?lsmb  row.topay_fx.id = row.topay_fx.name ;INCLUDE input element_data=row.topay_fx;
     	       topay_subtotal = topay_subtotal + row.topay_fx.value -?>
     <?lsmb # A DEGRADABLE JAVASCRIPT IS USED, BECAUSE OF THE VISUAL IMPACT
     	   # THAT CAUSES THE SIZE OF THIS DIV -?>

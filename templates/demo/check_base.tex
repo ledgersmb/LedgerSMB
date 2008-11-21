@@ -1,5 +1,6 @@
 \usepackage{textpos}
 
+\usepackage[top=1.5in, bottom=.25in, left=.25in, right=.25in]{geometry}
 \setlength{\TPHorizModule}{1in}
 \setlength{\TPVertModule}{1in}
 <?lsmb BLOCK check_single ?>
@@ -12,19 +13,19 @@
 %
 %\vspace*{0.6cm}
 
-\begin{textblock}{2}(6.75, 0.75)
+\begin{textblock}{2}[0,1](6.75, 0.00)
 <?lsmb datepaid ?>
 \end{textblock}
-\begin{textblock}{5.5}(0.75, 1.12)
+\begin{textblock}{5.5}[0,1](0.75, 0.5)
 <?lsmb legal_name ?>
 \end{textblock}
 
 %\hfill <?lsmb datepaid ?> \makebox[2cm]{\hfill} <?lsmb amount ?>
 
-\begin{textblock}{2}(6.6, 1.15)
-<?lsmb format_amount({amount = amount, format = '1,000.00'}) ?>
+\begin{textblock}{2}[0,1](6.6, 0.5)
+<?lsmb format_amount({amount = amount, format = '1,000.00', money = 1}) ?>
 \end{textblock}
-\begin{textblock}{7.25}(0, 1.5)
+\begin{textblock}{7.25}[0,1](0, 0.75)
 <?lsmb text_amount ?> \dotfill <?lsmb decimal ?>/100 \makebox[0.5cm]{\hfill}
 \end{textblock}
 \vspace{0.5cm}
@@ -60,7 +61,7 @@
 %
 
 
-\begin{textblock}{7}(0, 3.75)
+\begin{textblock}{7}(0, 4)
 \vspace{0.5cm}
 \noindent Master Code: <?lsmb control_code ?> \\
 Date:  <?lsmb datepaid ?>\\
@@ -68,7 +69,7 @@ Description: <?lsmb batch_description ?>\\
 Total Amount: <?lsmb amount ?>\\
 \end{textblock}
 
-\begin{textblock}{7}(0, 6.75)
+\begin{textblock}{7}(0, 7)
 \vspace{0.5cm}
 \noindent Master Code: <?lsmb control_code ?> \\
 Date:  <?lsmb datepaid ?>\\

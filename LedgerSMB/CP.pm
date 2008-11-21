@@ -37,6 +37,7 @@
 package CP;
 use LedgerSMB::Sysconfig;
 
+
 sub new {
 
     my ( $type, $countrycode ) = @_;
