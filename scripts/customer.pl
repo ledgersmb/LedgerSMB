@@ -23,7 +23,7 @@ package LedgerSMB::Scripts::customer;
 use LedgerSMB::DBObject::Customer;
 use base qw(LedgerSMB::ScriptLib::Company);
 
-require 'lsmb-request.pl';
+#require 'lsmb-request.pl';
 
 sub set_entity_class {
     my ($null, $request) = @_;
@@ -35,3 +35,5 @@ sub new_company {
     my ($null, $request) = @_;
     return LedgerSMB::DBObject::Customer->new(base=> $request, copy => 'all');
 }
+
+1;

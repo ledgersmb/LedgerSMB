@@ -22,33 +22,45 @@ if (defined $ENV{LSMB_TEST_DB}){
 
 do 't/data/62-request-data'; # Import test case hashes
 
-for (qw(	admin.pl     drafts.pl     login.pl      payment.pl      
+for (qw(	drafts.pl     login.pl      payment.pl      
 		report.pl    employee.pl   menu.pl       vendor.pl
-		customer.pl  inventory.pl  migration.pl  recon.pl        
-		vouchers.pl)){
-
-	do "$_";
+		customer.pl  inventory.pl  vouchers.pl)
+    ){
+	ok(eval { require "scripts/$_" }, "Importing $_");
+	if ($@){
+		print STDERR "Error:  $@\n";
+	}
 } # Import new code namespaces
 
 my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, undef);
 
-print scalar @$test_request_data ." test case scenarios defined";
-
 for my $test (@$test_request_data){
 	if (lc $test->{_codebase} eq 'old'){
+		next; # skip old codebase tests for now
 		old_code_test::_load_script($test->{module});
-		$old_code_test::form = new Form();
+		my $qtring = "$test->{module}?";
+		for $key (keys(%$test)){
+			if ($key !~ /^_/){
+				$qstring .= qq|$key=$test->{"$key"}&|;
+			}	
+		}
+		$qstring =~ s/&$//;
+		$old_code_test::form = Form->new($qstring);
 		for (keys (%$test)){
 			$form->{$_} = $test->{$_};
 		}
-		ok(eval ("old_code_test::$test->{action}()"), 
+		is('old_code_test'->can($test->{action}), 0,
 			"$test->{_test_id}: Action Successful");
 	} else {
 		my $request = LedgerSMB->new();
 		$request->merge($test);
 		my $script = $test->{module};
+		$request->{dbh} = $dbh;
 		$script =~ s/\.pl$//;
-		ok(eval "LedgerSMB::Scripts::$script::$request->{action}(\$request)");
+		is(ref "LedgerSMB::Scripts::$script"->can($request->{action}), 
+			'CODE',
+			"$test->{_test_id}: Action ($request->{action}) Defined");
+		ok("LedgerSMB::Scripts::$script"->can($request->{action})->($request), "$test->{_test_id}: Action Successful");
 	}
 	for (@{$api_test_cases->{"$test->{_test_id}"}}){
 		&$_;

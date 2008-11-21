@@ -62,6 +62,14 @@ passes this call on to the private database handle
 
 passes this call on to the private database handle
 
+=item quote()
+
+passes this call on to the private database handle
+
+=item quote_identifier()
+
+passes this call on to the private database handle
+
 =item rollback()
 
 passes this call on to the private database handle.  Note that this will roll
@@ -106,6 +114,16 @@ sub err{
 sub errstr{
     my ($self) = @_;
     return $self->{_dbh}->errstr;
+}
+
+sub quote{
+    my $self = shift @_;
+    return $self->{_dbh}->quote(@_);
+}
+
+sub quote_identifier{
+    my $self = shift @_;
+    return $self->{_dbh}->quote_identifier(@_);
 }
 
 sub prepare{

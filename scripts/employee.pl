@@ -23,7 +23,7 @@ package LedgerSMB::Scripts::employee;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Employee;
 
-require 'lsmb-request.pl';
+#require 'lsmb-request.pl';
 
 =pod
 

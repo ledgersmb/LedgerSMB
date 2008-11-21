@@ -112,7 +112,7 @@ sub add {
 
     $form->{focus} = "amount_1";
     &display_form;
-
+    return 1;
 }
 
 sub edit {
@@ -948,7 +948,6 @@ sub form_footer {
 </body>
 </html>
 |;
-
 }
 
 sub edit_and_approve {

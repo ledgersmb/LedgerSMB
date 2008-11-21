@@ -15,13 +15,12 @@ Save customer will update or create as needed.
 =head1 METHODS
 
 =cut
-
 package LedgerSMB::Scripts::customer;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 
-require 'lsmb-request.pl';
+#require 'lsmb-request.pl';
 
 =over
 
@@ -90,7 +89,7 @@ sub adjustment_next {
 		$adjustment->{"partnumber_new_$i"});
             $adjustment->{"row_$i"} = $item->{id};
             $adjustment->{"description_$i"} = $item->{description};
-            $adjustment->{"onhand_$i"} = $item->{onhand}};
+            $adjustment->{"onhand_$i"} = $item->{onhand};
         }
         $adjustment->{"qty_$i"} = $adjustment->{"onhand_$i"} 
 		- $adjustment->{"counted_$i"}; 
@@ -116,5 +115,4 @@ sub adjustment_save {
     $adjustment->save;
     begin_adjust($request);
 } 
-
 1;
