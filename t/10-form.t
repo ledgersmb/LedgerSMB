@@ -65,7 +65,7 @@ $ENV{TMPDIR} = 't/var';
 use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
-use IO::String;
+#use IO::String;
 
 use LedgerSMB::Form;
 
