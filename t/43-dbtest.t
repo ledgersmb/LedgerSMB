@@ -5,7 +5,7 @@ if (!defined $ENV{LSMB_TEST_DB}){
 	plan skip_all => 'Skipping all.  Told not to test db.';
 }
 else {
-	plan tests => 51;
+	plan tests => 52;
 	if (defined $ENV{LSMB_NEW_DB}){
 		$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 	}
