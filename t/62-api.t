@@ -5,8 +5,6 @@ BEGIN {
 	use LedgerSMB::DBTest;
 }
 
-our $api_test_cases = {
-};
 
 if (defined $ENV{LSMB_TEST_DB}){
 	if (defined $ENV{LSMB_NEW_DB}){
@@ -56,14 +54,20 @@ for my $test (@$test_request_data){
 		$request->merge($test);
 		my $script = $test->{module};
 		$request->{dbh} = $dbh;
+		if (ref $api_test_cases->{"$test->{_test_id}"} eq 'CODE'){
+			$request->{_test_cases} = 
+				$api_test_cases->{"$test->{_test_id}"};
+		}
+		delete $api_test_cases->{"$test->{_test_id}"};
 		$script =~ s/\.pl$//;
 		is(ref "LedgerSMB::Scripts::$script"->can($request->{action}), 
 			'CODE',
 			"$test->{_test_id}: Action ($request->{action}) Defined");
 		ok("LedgerSMB::Scripts::$script"->can($request->{action})->($request), "$test->{_test_id}: Action Successful");
 	}
-	for (@{$api_test_cases->{"$test->{_test_id}"}}){
-		&$_;
+	if (ref $api_test_cases->{"$test->{_test_id}"} eq 'CODE'){
+		$request->{_test_cases} = 
+			$api_test_cases->{"$test->{_test_id}"};
 	}
 	ok($dbh->rollback, "$test->{_test_id}: rollback");
 }
@@ -72,6 +76,10 @@ package LedgerSMB::Template;
 
 # Don't render templates.  Just return so we can run tests on data structures.
 sub render {
+	my ($self, $data) = @_;
+	if (ref $data->{_test_cases} eq 'CODE'){
+		$data->{_test_cases}($data);
+	}
 	return 1;
 }
 

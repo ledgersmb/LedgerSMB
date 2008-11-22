@@ -23,8 +23,6 @@ The following methods are passed through to stored procedures:
 
 =item get ($self->{key})
 
-=item get_default_accounts() (via AUTOLOAD) returns a list of accounts.
-
 =item set ($self->{key}, $self->{value})
 
 =item parse_increment ($self->{key})
@@ -58,7 +56,7 @@ sub get {
     $self->merge( $hashref, 'value' );
 }
 
-sub parse_increment {
+sub increment {
 
     my $self     = shift;
     my $myconfig = shift;
@@ -68,26 +66,26 @@ sub parse_increment {
 
     # Replaces Form::UpdateDefaults
 
-    $_ = $self->incriment;
-
+    my ($retval) = $self->exec_method('funcname' => 'setting_increment');
+    my $value = $retval->{setting_increment};
 # check for and replace
 # <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
 # <?lsmb NAME 1 1 3 ?>, <?lsmb BUSINESS ?>, <?lsmb BUSINESS 10 ?>, <?lsmb CURR... ?>
 # <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
 # <?lsmb PHONE ?> for customer and vendors
 
-    my $dbvar = $_;
-    my $var   = $_;
+    my $dbvar = $value;
+    my $var   = $value;
     my $str;
     my $param;
 
-    if (/<\?lsmb /) {
+    if ($value =~ /<\?lsmb /) {
 
-        while (/<\?lsmb /) {
+        while ($value =~ /<\?lsmb /) {
 
-            s/<\?lsmb .*? \?>//;
+            $value =~ s/(<\?lsmb .*? \?>)//;
             last unless $&;
-            $param = $&;
+            $param = $1;
             $str   = "";
 
             if ( $param =~ /<\?lsmb date \?>/i ) {

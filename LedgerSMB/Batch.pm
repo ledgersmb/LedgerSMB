@@ -1,7 +1,16 @@
 
 
 package LedgerSMB::Batch;
+use LedgerSMB::Setting;
 use base qw(LedgerSMB::DBObject);
+
+sub get_new_info {
+    $self = shift @_;
+    my $cc_object = LedgerSMB::Setting->new({base => $self});
+    $cc_object->{key} = 'batch_cc';
+    $self->{batch_number} = $cc_object->increment;
+    $self->{dbh}->commit;
+}
 
 sub create {
     $self = shift @_;

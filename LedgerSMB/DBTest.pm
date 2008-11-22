@@ -95,6 +95,19 @@ sub connect{
     return $self;
 }
 
+sub commit {
+    my ($self) = shift;
+    my $sth = $self->{_dbh}->prepare('SELECT 1');
+    $sth->execute;
+    my ($retval) = $sth->fetchrow_array;
+    return $retval;
+}
+
+sub selectrow_array {
+    my ($self) = shift;
+    return $self->{_dbh}->selectrow_array(@_);
+}
+
 sub disconnect {
     my ($self) = @_;
     $self->rollback;

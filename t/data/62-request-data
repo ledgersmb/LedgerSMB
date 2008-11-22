@@ -1,4 +1,4 @@
-
+use Test::More;
 our $test_request_data = [
 	# AR/AP Transaction Screen Tests
 	{
@@ -49,8 +49,42 @@ our $test_request_data = [
 		'batch_type' => 'gl',
 		'module'     => 'vouchers.pl',
 	},
+#	{
+#		'_test_id'      => 'Payment print total',
+#		'_codebase'     => 'new',
+#		'action'        => 'print',
+#		'module'        => 'payment.pl',
+#		'account_class' => 1,
+#		'currency'      => 'USD',
+#		'multiple'      => 1,
+#		'format'	=> 
+#                
+#	},
 ];
 
+our $pre_test_subs = {};
+our $api_test_cases = {
+	'AR Transaction Voucher Screen' => sub {
+		my $request = shift;
+		ok($request->{batch_number}, 'Batch Number is Defined');
+	},
+	'AP Transaction Voucher Screen' => sub {
+		my $request = shift;
+		ok($request->{batch_number}, 'Batch Number is Defined');
+	},
+	'Payment Transaction Voucher Screen' => sub {
+		my $request = shift;
+		ok($request->{batch_number}, 'Batch Number is Defined');
+	},
+	'Payment Reversal Transaction Voucher Screen' => sub {
+		my $request = shift;
+		ok($request->{batch_number}, 'Batch Number is Defined');
+	},
+	'GL Transaction Voucher Screen' => sub {
+		my $request = shift;
+		ok($request->{batch_number}, 'Batch Number is Defined');
+	},
+};
 
 opendir (D62, 't/data/62.d');
 for my $testfile (readdir(D62)){
