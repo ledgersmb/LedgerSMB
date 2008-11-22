@@ -26,6 +26,9 @@ values (-5, currval('batch_id_seq'), 3);
 INSERT INTO voucher (trans_id, batch_id, batch_class)
 values (-5, currval('batch_id_seq'), 3);
 
+INSERT INTO test_result(test_name, success)
+select 'Voucher Seach finds Payable Vouchers',  count(*)=1 
+from voucher_list( currval('batch_id_seq')::int);
 
 INSERT INTO test_result (test_name, success)
 SELECT 'partial payment support', count(*) > 1 

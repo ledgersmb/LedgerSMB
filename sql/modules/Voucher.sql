@@ -57,7 +57,9 @@ BEGIN
 			a.amount, a.transdate, 'Payable'
 		FROM voucher v
 		JOIN ap a ON (v.trans_id = a.id)
-		JOIN entity e ON (a.entity_id = e.id)
+		JOIN entity_credit_account eca 
+			ON (eca.id = a.entity_credit_account)
+		JOIN entity e ON (eca.entity_id = e.id)
 		WHERE v.batch_id = in_batch_id 
 			AND v.batch_class = (select id from batch_class 
 					WHERE class = 'ap')
@@ -67,7 +69,9 @@ BEGIN
 			a.amount, a.transdate, 'Receivable'
 		FROM voucher v
 		JOIN ar a ON (v.trans_id = a.id)
-		JOIN entity e ON (a.entity_id = e.id)
+		JOIN entity_credit_account eca 
+			ON (eca.id = a.entity_credit_account)
+		JOIN entity e ON (eca.entity_id = e.id)
 		WHERE v.batch_id = in_batch_id 
 			AND v.batch_class = (select id from batch_class 
 					WHERE class = 'ar')
