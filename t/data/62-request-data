@@ -95,7 +95,11 @@ our $test_request_data = [
 	},
 ];
 
-our $pre_test_subs = {};
+our $pre_test_subs = {
+	'Payment print total' => sub {
+		$LedgerSMB::Sysconfig::check_max_invoices = 1;
+	},
+};
 our $api_test_cases = {
 	'AR Transaction Voucher Screen' => sub {
 		my $request = shift;
@@ -121,6 +125,7 @@ our $api_test_cases = {
 		use strict;
 		my $request = shift;
 		$request->debug({file => '/tmp/check' });
+		cmp_ok($request->{invoice_count_25}, '>', $LedgerSMB::Sysconfig::check_max_invoices, 'Test is valid under current config');
 		cmp_ok(scalar @{$request->{checks}}, '==', 
 			$request->{contact_count}, 
 			'Correct number of checks printed');

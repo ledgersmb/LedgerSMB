@@ -35,6 +35,9 @@ my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, un
 my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} );
 
 for my $test (@$test_request_data){
+        if (ref $pre_test_subs->{"$test->{_test_id}"} eq 'CODE'){
+		$pre_test_subs->{"$test->{_test_id}"}();
+	}
 	if (lc $test->{_codebase} eq 'old'){
 		next; # skip old codebase tests for now
 		old_code_test::_load_script($test->{module});
