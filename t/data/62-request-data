@@ -49,17 +49,50 @@ our $test_request_data = [
 		'batch_type' => 'gl',
 		'module'     => 'vouchers.pl',
 	},
-#	{
-#		'_test_id'      => 'Payment print total',
-#		'_codebase'     => 'new',
-#		'action'        => 'print',
-#		'module'        => 'payment.pl',
-#		'account_class' => 1,
-#		'currency'      => 'USD',
-#		'multiple'      => 1,
-#		'format'	=> 
-#                
-#	},
+	{
+		'_test_id'      => 'Payment print total',
+		'_codebase'     => 'new',
+		'action'        => 'print',
+		'approved'      => 0,		
+		'currency'      => 'USD',				
+		'datepaid'      => '2008-07-22',	
+		'contact_1'	=> '25',				
+		'id_25'         => '25',				
+		'paid_25'       => 'all',		
+                'payment_209'   => '1000.00',	
+		'invoice_25_1'  => 209,
+		'net_209'	=> '1000.00',				
+		'payment_210'	=> '-100.00',
+		'invoice_25_2'	=> '210',
+		'net_210'	=> '-100.00',
+		'payment_344'	=> '100000.00',
+		'invoice_25_3'	=> '344',
+		'net_344'	=> '100000.00',
+		'payment_352'	=> '1000.00',
+		'invoice_25_4'	=> '352',
+		'net_352'	=> '1000.00',
+		'payment_353'	=> '1000.00',
+		'invoice_25_5'	=> '353',
+		'net_353'	=> '1000.00',
+		'payment_354'	=> '1000.00',
+		'invoice_25_6'	=> '354',
+		'net_354'	=> '1000.00',
+		'payment_355'	=> '1000.00',
+		'invoice_25_7'	=> '355',
+		'net_355'	=> '1000.00',
+		'payment_356'	=> '1000.00',
+		'invoice_25_8'	=> '356',
+		'net_356'	=> '1000.00',
+		'invoice_count_25' => 8,				
+		'contact_count'	=> 1,				
+		'media'		=> 'screen',	
+		'format'	=> 'PDF',			
+		'module'        => 'payment.pl',
+		'account_class' => 1,
+		'currency'      => 'USD',
+		'multiple'      => 1,
+               
+	},
 ];
 
 our $pre_test_subs = {};
@@ -84,6 +117,23 @@ our $api_test_cases = {
 		my $request = shift;
 		ok($request->{batch_number}, 'Batch Number is Defined');
 	},
+	'Payment print total' => sub {
+		use strict;
+		my $request = shift;
+		$request->debug({file => '/tmp/check' });
+		cmp_ok(scalar @{$request->{checks}}, '==', 
+			$request->{contact_count}, 
+			'Correct number of checks printed');
+		my $check = shift @{$request->{checks}};
+		cmp_ok(
+			$request->format_amount({
+				amount => $check->{amount}, 
+				format => '1000.00',
+				precision => 2
+			}), 'eq', '105900.00', 
+			'Printed amount is correct'
+		);
+	}
 };
 
 opendir (D62, 't/data/62.d');

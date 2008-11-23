@@ -2,6 +2,7 @@ BEGIN {
 	use LedgerSMB;
 	use Test::More;
 	use LedgerSMB::Template;
+	use LedgerSMB::Sysconfig;
 	use LedgerSMB::DBTest;
 }
 
@@ -31,6 +32,7 @@ for (qw(	drafts.pl     login.pl      payment.pl
 } # Import new code namespaces
 
 my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, undef);
+my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} );
 
 for my $test (@$test_request_data){
 	if (lc $test->{_codebase} eq 'old'){
@@ -52,6 +54,7 @@ for my $test (@$test_request_data){
 	} else {
 		my $request = LedgerSMB->new();
 		$request->merge($test);
+		$request->{_locale} = $locale;
 		my $script = $test->{module};
 		$request->{dbh} = $dbh;
 		if (ref $api_test_cases->{"$test->{_test_id}"} eq 'CODE'){
@@ -83,6 +86,9 @@ sub render {
 	return 1;
 }
 
+sub _http_output {
+	return 1;
+}
 package old_code_test;
 # Keeps old code isolated in a different namespace, and provides for reasonable 
 # reload facilities.
