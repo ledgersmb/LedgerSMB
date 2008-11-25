@@ -421,6 +421,29 @@ is(grep (/value="1" selected/, @output), 0, 'Select box Value 1 unselected');
 is(grep (/value="1000" selected/, @output), 1, 'Select box Value 1000 selected');
 is(grep (/<td class="description">dtest1/, @output), 1, 'Contact description shows');
 
+# bulk payment template tests
+my $payment = LedgerSMB->new();
+$payment->merge({
+	contact_1 => 1, source_1 => 1, action=>'dispay_payments', id_1 => 1,
+	id_1_1    => 1, 
+	contact_invoices => [{contact_id => 1, invoices =>[[101, 101, "2009-01-01", 1000, 0, 0, 1000, 0, 
+				'test']]}]});
+
+my $payment_template =  LedgerSMB::Template->new(
+        path            => 'UI/payments',
+        template        => 'payments_detail',
+        format          => 'HTML',
+        no_auto_output  => 1,
+        output_file     => 'payment_test1'
+);
+
+$payment_template->render($payment);
+my @output =  get_output_line_array($payment_template);
+cmp_ok(grep(/101<\/td>/, @output), '>', 0, 'Invoice row exists');
+is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
+is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
+
+
 # LPR PRinting Tests
 use LedgerSMB::Sysconfig;
 %LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');

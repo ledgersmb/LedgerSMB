@@ -9,6 +9,15 @@ DELETE FROM users WHERE username = CURRENT_USER;
 INSERT INTO users (entity_id, username)
 SELECT -100, CURRENT_USER;
 
+INSERT INTO entity(name, id, entity_class, control_code)
+values ('test user 1', -200, 3, 'Test User 1');
+
+insert into users (entity_id, username, id)
+values (-200, '_test1', -200);
+
+insert into session (session_id, users_id, token, last_used, transaction_id)
+values (-200, -200, md5(random()::text), now(), 0);
+
 INSERT INTO person(first_name, last_name, entity_id, id)
 VALUES ('test', 'test', -100, -100);
 
@@ -55,6 +64,17 @@ VALUES (true, now()::date, '100000', currval('id'), (select id from chart where 
 INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
 VALUES (true, now()::date, '-100000', currval('id'), (select id from chart where accno = '00002'));
 
+INSERT INTO ap (id, invnumber, entity_credit_account, approved, amount, netamount, curr, transdate, paid)
+VALUES (-300, 'test_show3', -101, true, 1000000, 1000000, 'USD', now()::date, 0);
+
+INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+VALUES (true, now()::date, '1000000', -300, (select id from chart where accno = '00001'));
+
+INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+VALUES (true, now()::date, '-1000000', -300, (select id from chart where accno = '00002'));
+
+update transactions set locked_by = -200 where id = -300;
+
 INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate, paid)
 values ('test_show', -101, false, '1', '1', 'USD', now()::date, 0);
 
@@ -81,6 +101,14 @@ SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL
 )p));
 
 INSERT INTO test_result(test_name, success)
+VALUES ('Locked Invoice In Payment Selection', 
+	(SELECT test_convert_array(invoices) LIKE '%::test_show3::%'
+			FROM 
+				(
+SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
+)p));
+
+INSERT INTO test_result(test_name, success)
 VALUES ('Threshold met', 
 	(SELECT test_convert_array(invoices) LIKE '%::test_show2::%'
 			FROM 
@@ -94,6 +122,11 @@ VALUES ('Non-Batch Voucher Not In Payment Selection',
 		(SELECT test_convert_array(invoices) NOT LIKE '%::test_hide::%'
 			FROM 
 				(SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1'))p ));
+
+INSERT INTO test_result(test_name, success)
+VALUES ('Locked Invoice not in total', 
+		(SELECT total_due < 1000000
+			FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')) );
 
 SELECT * FROM TEST_RESULT;
 

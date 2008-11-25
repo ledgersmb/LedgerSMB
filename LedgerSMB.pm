@@ -599,7 +599,7 @@ sub call_procedure {
         }
         push @results, $ref;
     }
-    @results;
+    return @results;
 }
 
 # Keeping this here due to common requirements

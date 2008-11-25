@@ -237,12 +237,18 @@ BEGIN
 			c.description as eca_description, 
 			e.name AS contact_name,
 		         c.meta_number AS account_number,
-		              sum (coalesce(p.due, 0) -
+			 sum( case when u.username IS NULL or 
+				       u.username = SESSION_USER 
+			     THEN 
+		              coalesce(p.due::numeric, 0) -
 		              CASE WHEN c.discount_terms 
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
-		                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
-		              END) AS total_due,
+		                   ELSE (coalesce(p.due::numeric, 0)) * 
+					coalesce(c.discount::numeric, 0) / 100
+		              END
+			     ELSE 0::numeric
+			     END) AS total_due,
 		         compound_array(ARRAY[[
 		              a.id::text, a.invnumber, a.transdate::text, 
 		              a.amount::text, (a.amount - p.due)::text,
@@ -256,7 +262,14 @@ BEGIN
 		                        > extract('days' FROM age(a.transdate))
 		                   THEN 0
 		                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
-		              END))::text]]),
+		              END))::text,
+			 	case when u.username IS NOT NULL 
+				          and u.username <> SESSION_USER 
+				     THEN 0::text
+				     ELSE 1::text
+				END,
+				COALESCE(u.username, 0::text)
+				]]),
                               sum(case when a.batch_id = in_batch_id then 1
 		                  else 0 END),
 		              bool_and(lock_record(a.id, (select max(session_id) 				FROM "session" where users_id = (
@@ -297,6 +310,8 @@ BEGIN
 		           WHERE ((chart.link = 'AP' AND in_account_class = 1)
 		                 OR (chart.link = 'AR' AND in_account_class = 2))
 		        GROUP BY trans_id) p ON (a.id = p.trans_id)
+		LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
+		LEFT JOIN users u ON (u.id = s.users_id)
 		   WHERE a.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
 		             AND a.approved
@@ -307,14 +322,11 @@ BEGIN
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
 		         AND a.entity_credit_account = c.id
+		         AND (in_meta_number IS NULL OR 
+                             in_meta_number = c.meta_number)
 			 AND p.due <> 0
 		         AND a.amount <> a.paid 
 			 AND NOT a.on_hold
-			 AND NOT (t.locked_by IS NOT NULL AND t.locked_by IN 
-				(select "session_id" FROM "session"
-				WHERE users_id IN 
-					(select id from users 
-					where username <> SESSION_USER)))
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
 		                            chart_id = (SELECT id frOM chart
@@ -323,9 +335,7 @@ BEGIN
 		                    ))
 		GROUP BY c.id, e.name, c.meta_number, c.threshold, 
 			e.control_code, c.description
-		  HAVING (in_meta_number IS NULL 
-				OR in_meta_number = c.meta_number) AND 
-			(sum(p.due) >= c.threshold
+		  HAVING  (sum(p.due) >= c.threshold
 			OR sum(case when a.batch_id = in_batch_id then 1
                                   else 0 END) > 0)
         ORDER BY c.meta_number ASC

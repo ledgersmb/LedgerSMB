@@ -240,6 +240,7 @@
 		</tr>
 		<?lsmb icount = 0 ?>
 		<?lsmb FOREACH i = r.invoices ?>
+		<?lsmb IF i.7 ?>
 		<?lsmb icount = icount + 1 ?>
 		<tr>
 			<td class="invoice_date_list">&nbsp;<?lsmb i.2 ?></td>
@@ -271,6 +272,22 @@
 			/>
 			</td>
 		</tr>
+		<?lsmb ELSE #not $i.7 ?>
+		<tr>
+			<td class="invoice_date_list">&nbsp;<?lsmb i.2 ?></td>
+			<td class="invoice_list">&nbsp;<?lsmb i.1 ?></td>
+		        <td class="total_due_list">&nbsp;
+				<?lsmb i.3 ?></td>
+			<td class="paid_list">&nbsp;
+				<?lsmb i.4 ?></td>
+			<td class="net_due_list">&nbsp;
+				<?lsmb i.6 ?>
+				<?lsmb currency ?></td>
+			<td class="to_pay_list">
+				<?lsmb text("Locked by [_1]", i.8) ?>
+			</td>
+		</tr>
+		<?lsmb END # if i.8 ?>
 		<?lsmb END # foreach i ?>
 		<?lsmb INCLUDE input element_data = {
 			type = "hidden"

@@ -439,24 +439,27 @@ This method sets appropriate project, department, etc. fields.
 sub get_payment_detail_data {
     my ($self) = @_;
     $self->get_metadata();
+    if (!defined $self->{source_start}){
+        $self->error('No source start defined!');
+    }
 
     my $source_inc;
     my $source_src;
-    if (defined ($self->{source_start})) {
-        $self->{source_start} =~ /(\d*)\D*$/;
-	    $source_src = $1;
-    	if ($source_src) {
-    		$source_inc = $source_src;
-    	} else {
-    		$source_inc = 0;
-    	}
+    $self->{source_start} =~ /(\d*)\D*$/;
+    $source_src = $1;
+    if ($source_src) {
+        $source_inc = $source_src;
+    } else {
+        $source_inc = 0;
     }
     my $source_length = length($source_inc);
    
     @{$self->{contact_invoices}} = $self->exec_method(
 		funcname => 'payment_get_all_contact_invoices');
     for my $inv (@{$self->{contact_invoices}}) {
-        if (defined $self->{source_start}) {
+        if (($self->{action} ne 'update_payments') or 
+		(defined $self->{"id_$inv->{contact_id}"})
+        ) {
 		    my $source = $self->{source_start};
     		if (length($source_inc) < $source_length) {
                 $source_inc = sprintf('%0*s', $source_length, $source_inc);
@@ -464,8 +467,13 @@ sub get_payment_detail_data {
     		$source =~ s/$source_src(\D*)$/$source_inc$1/;
     		++ $source_inc;
     		$inv->{source} = $source;
-    	}
-	    my $tmp_invoices = $inv->{invoices};
+		$self->{"source_$inv->{contact_id}"} = $source;
+    	} else {
+		# Clear source numbers every time.
+		$inv->{source} = "";
+		$self->{"source_$inv->{contact_id}"} = "";
+        }
+	my $tmp_invoices = $inv->{invoices};
         $inv->{invoices} = [];
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
         @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };

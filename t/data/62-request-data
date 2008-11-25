@@ -50,10 +50,72 @@ our $test_request_data = [
 		'module'     => 'vouchers.pl',
 	},
 	{
+		'_test_id'      => 'Payment source start error',
+		'_codebase'     => 'new',
+		'_error_test'   => 1,
+		'account_class' => 1,
+		'module'	=> 'payment.pl',
+		'action'        => 'display_payments',
+		'approved'      => 0,
+		'currency'      => 'USD',				
+		'datepaid'      => '2008-07-22',
+	},
+	{
+		'_test_id'      => 'Payment source numbering',
+		'_codebase'     => 'new',
+		'_error_test'   => 1,
+		'account_class' => 1,
+		'start_source'  => 1,
+		'module'	=> 'payment.pl',
+		'action'        => 'update_payments',
+		'approved'      => 0,
+		'currency'      => 'USD',				
+		'datepaid'      => '2008-07-22',
+		'id_1'		=> 1,
+		'id_3'		=> 3,
+		'_exec_override' => {
+			'payment_get_all_contact_invoices' => sub {
+				my $self = shift;
+				$retval = [ { contact_id => 1,
+					total_due => Math::BigFloat->new(1000),
+					econtrol_code => 'TEST1',
+					eca_description => 'test',
+					contact_name => 'test',
+					account_number => 'test',
+					invoices => '{{"100","101","2009-01-01",1000,1000}}',
+					has_vouchers => 0, 
+				} ,
+				{
+					contact_id => 2,
+					total_due => Math::BigFloat->new(1000),
+					econtrol_code => 'TEST1',
+					eca_description => 'test',
+					contact_name => 'test',
+					account_number => 'test',
+					invoices => '{{101,101,2009-01-01,1000,1000}}',
+					has_vouchers => 0, 
+				} ,
+				{
+					contact_id => 3,
+					total_due => Math::BigFloat->new(1000),
+					econtrol_code => 'TEST1',
+					eca_description => 'test',
+					contact_name => 'test',
+					account_number => 'test',
+					invoices => '{{102,101,2009-01-01,1000,1000}}',
+					has_vouchers => 0, 
+				} ];
+				$self->{contact_invoices} = $retval;
+				$self->debug({'file' => '/tmp/test2'});
+				return @$retval;
+			}
+		}
+	},
+	{
 		'_test_id'      => 'Payment print total',
 		'_codebase'     => 'new',
 		'action'        => 'print',
-		'approved'      => 0,		
+		'approved'      => 0,
 		'currency'      => 'USD',				
 		'datepaid'      => '2008-07-22',	
 		'contact_1'	=> '25',				
@@ -93,6 +155,7 @@ our $test_request_data = [
 		'multiple'      => 1,
                
 	},
+	
 ];
 
 our $pre_test_subs = {
@@ -138,6 +201,21 @@ our $api_test_cases = {
 			}), 'eq', '105900.00', 
 			'Printed amount is correct'
 		);
+	},
+	'Payment source start error' => sub {
+		my $self = shift;
+		cmp_ok($self->{_error}, 'eq', 'No source start defined!', 
+			"Payment source start error: error correct");
+	},
+	'Payment source numbering' => sub {
+		my $self = shift;
+		$self->debug({file => '/tmp/test'});
+		ok(defined $self->{source_1}, 
+			"$self->{_test_id} source 1 defined");
+		cmp_ok($self->{source_2}, 'eq', '',
+			"$self->{_test_id} source 2 not found");
+		ok(defined $self->{source_3}, 
+			"$self->{_test_id} source 3 defined");
 	}
 };
 
@@ -145,3 +223,18 @@ opendir (D62, 't/data/62.d');
 for my $testfile (readdir(D62)){
 	do "t/data/62.d/$testfile";
 };
+
+# Overridden methods in classes for tests.
+
+package LedgerSMB::DBObject::Payment;
+sub exec_method {
+    my $self = shift;
+    my %args = @_;
+    my $funcname = $args{funcname};
+    if (ref $self->{_exec_override} eq 'HASH'){
+       if ($self->{_exec_override}->{"$funcname"}){
+           return $self->{_exec_override}->{"$args{funcname}"}($self);
+        }
+    }
+    LedgerSMB::DBObject::exec_method($self, @_);
+}

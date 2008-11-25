@@ -79,12 +79,19 @@ for my $test (@$test_request_data){
 }
 
 package LedgerSMB::Template;
-
+use Test::More;
 # Don't render templates.  Just return so we can run tests on data structures.
 sub render {
 	my ($self, $data) = @_;
 	if (ref $data->{_test_cases} eq 'CODE'){
 		$data->{_test_cases}($data);
+	}
+	if ($data->{_error_test}){
+		cmp_ok($data->{_died}, '==', '1', 
+			"$data->{_test_id} died as expected");
+	} else {
+		ok(!defined $data->{_died}, 
+			"$data->{_test_id} did not error");
 	}
 	return 1;
 }
@@ -102,4 +109,12 @@ sub _load_script {
 	do "bin/arap.pl";
 	do "bin/io.pl";
 	do "bin/$1[0]";
+}
+
+package LedgerSMB;
+
+sub error {
+    my $self = shift;
+    $self->{_error} = shift;
+    $self->{_died} = 1;
 }
