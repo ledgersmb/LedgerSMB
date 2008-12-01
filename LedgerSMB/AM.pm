@@ -1815,7 +1815,7 @@ sub save_defaults {
         fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
         sonumber ponumber sqnumber rfqnumber partnumber employeenumber
         customernumber vendornumber projectnumber yearend curr
-        weightunit businessnumber)
+        weightunit businessnumber default_country)
       )
     {
         my $val = $form->{$_};
@@ -2416,7 +2416,15 @@ sub get_all_defaults {
     while ( ( $skey, $value ) = $sth->fetchrow_array() ) {
         $form->{$skey} = $value;
     }
-
+    $sth->finish;
+    $query = "select id, name from country order by name";
+    $sth = $dbh->prepare($query);
+    $sth->execute;
+    $form->{countries} = [];
+    while ($ref = $sth->fetchrow_hashref('NAME_lc')) {
+        push @{$form->{countries}}, $ref;
+    }
+    $sth->finish;
     $self->defaultaccounts( undef, $form );
     $dbh->commit;
 }

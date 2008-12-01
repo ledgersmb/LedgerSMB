@@ -1471,6 +1471,12 @@ sub defaults {
         'IC_income' => {name => 'IC_income', options => []},
         'IC_inventory' => {name => 'IC_inventory', options => []},
         'IC' => {name => 'IC', options => []},
+	'default_country' => {name   => 'default_country', 
+			     options => $form->{countries},
+			     default_values => [$form->{'default_country'}],
+			     text_attr => 'name',
+			     value_attr => 'id',
+		},
         );
     foreach $key ( keys %{ $form->{accno} } ) {
         foreach $accno ( sort keys %{ $form->{accno}{$key} } ) {

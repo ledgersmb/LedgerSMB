@@ -52,8 +52,8 @@ our $VERSION = '1.0.0';
 
 sub get {
     my $self = shift;
-    my $hashref = shift @{ $self->exec_method( funcname => 'setting_get' ) };
-    $self->merge( $hashref, 'value' );
+    my ($hashref) = $self->exec_method( funcname => 'setting_get' ) ;
+    $self->{value} = $hashref->{setting_get};
 }
 
 sub increment {

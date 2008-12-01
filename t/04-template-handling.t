@@ -395,6 +395,7 @@ my $contact_request = {
         meta_number  => 'test1',
 	credit_id    => '1',
         entity_class => 1,
+        default_country => 4,
         credit_list  => [{ entity_class => 1,
                            meta_number => 'test1',
                         }],
@@ -404,6 +405,13 @@ my $contact_request = {
         business_id  => 1000,
         business_types => [{ id => 1,    description => 'test1' },
                            { id => 1000, description => 'test2' }],
+	country_list => [{id => 1, name => 'country1'},
+		{id => 2, name => 'country2'},
+		{id => 3, name => 'country3'},
+		{id => 4, name => 'country4'},
+		{id => 5, name => 'country5'},
+		{id => 6, name => 'country6'},
+		]
 }; # Company with Credit Accounts and business types.
 
 my $contact_template = LedgerSMB::Template->new(
@@ -417,10 +425,10 @@ my $contact_template = LedgerSMB::Template->new(
 $contact_template->render($contact_request);
 
 my @output =  get_output_line_array($contact_template);
-is(grep (/value="1" selected/, @output), 0, 'Select box Value 1 unselected');
-is(grep (/value="1000" selected/, @output), 1, 'Select box Value 1000 selected');
+is(grep (/value="1" selected="selected">test1/, @output), 0, 'Select box Value 1 unselected');
+is(grep (/value="1000" selected="selected">test2/, @output), 1, 'Select box Value 1000 selected');
 is(grep (/<td class="description">dtest1/, @output), 1, 'Contact description shows');
-
+is(grep (/value="4" selected="selected">country4/, @output), 1, 'Default Country Set');
 # bulk payment template tests
 my $payment = LedgerSMB->new();
 $payment->merge({
@@ -438,7 +446,7 @@ my $payment_template =  LedgerSMB::Template->new(
 );
 
 $payment_template->render($payment);
-my @output =  get_output_line_array($payment_template);
+@output =  get_output_line_array($payment_template);
 cmp_ok(grep(/101<\/td>/, @output), '>', 0, 'Invoice row exists');
 is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
 is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');

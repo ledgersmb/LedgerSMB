@@ -11,6 +11,7 @@ retrieving customers and vendors.
 
 package LedgerSMB::DBObject::Company;
 
+use LedgerSMB::Setting;
 use base qw(LedgerSMB::DBObject);
 use strict;
 
@@ -165,7 +166,10 @@ sub get_metadata {
 
     @{$self->{contact_class_list}} = 
          $self->exec_method(funcname => 'entity_list_contact_class');
-
+    my $country_setting = LedgerSMB::Setting->new({base => $self, copy => 'base'});
+    $country_setting->{key} = 'default_country';
+    $country_setting->get;
+    $self->{default_country} = $country_setting->{value};
 }
 
 sub save_contact {

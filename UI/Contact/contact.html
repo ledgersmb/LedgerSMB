@@ -592,6 +592,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} #' ?>
 	</div>
 	<div> <!-- TODO:  Move to elements.html -CT -->
+		<?lsmb IF !country; country = default_country; END -?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
