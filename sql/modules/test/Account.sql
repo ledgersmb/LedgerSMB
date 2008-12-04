@@ -8,9 +8,15 @@ VALUES ('TEST testing 1', 'A', 'A', '00001');
 INSERT INTO chart (description, charttype, category, accno)
 VALUES ('TEST testing 2', 'A', 'A', '00002');
 
-INSERT INTO ap (invnumber, netamount, amount) VALUES ('TEST', '0', '0');
+INSERT INTO entity (id, control_code, name, entity_class) 
+values (-100, 'test1', 'test', 3);
+INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class) 
+values (-100, 'test1', -100, 1);
+
+INSERT INTO ap (invnumber, netamount, amount, entity_credit_account, id) 
+VALUES ('TEST', '0', '0', -100, -100);
 INSERT INTO acc_trans (trans_id, chart_id, amount)
-VALUES (currval('id')::int, currval('chart_id_seq')::int, '0');
+VALUES (-100, currval('chart_id_seq')::int, '0');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP 1', 'A', 'L', '00003', 'AP');
