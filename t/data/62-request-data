@@ -1,4 +1,5 @@
 use Test::More;
+our $lwp_tests = {};
 our $test_request_data = [
 	# AR/AP Transaction Screen Tests
 	{
