@@ -4,7 +4,7 @@ use LedgerSMB::Sysconfig;
 use HTTP::Cookies;
 
 if (!$ENV{'LSMB_TEST_LWP'}){
-	plan skipall => 'LWP Test not enabled!'
+	plan 'skip_all' => 'LWP Test not enabled!';
 } else {
 	plan 'no_plan';
 }
