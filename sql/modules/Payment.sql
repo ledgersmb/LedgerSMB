@@ -939,6 +939,8 @@ CREATE TYPE payment_record AS (
 	company_paid text,
 	accounts text[],
         source text,
+	batch_control text,
+	batch_description text,
         date_paid date
 );
 
@@ -955,7 +957,8 @@ BEGIN
 				ELSE a.amount * -1 END), c.meta_number, 
 			c.id, co.legal_name,
 			compound_array(ARRAY[ARRAY[ch.id::text, ch.accno, 
-				ch.description]]), a.source, a.transdate
+				ch.description]]), a.source, 
+			b.control_code, b.description, a.transdate
 		FROM entity_credit_account c
 		JOIN ( select entity_credit_account, id
 			FROM ar WHERE in_account_class = 2
@@ -966,6 +969,8 @@ BEGIN
 		JOIN acc_trans a ON (arap.id = a.trans_id)
 		JOIN chart ch ON (ch.id = a.chart_id)
 		JOIN company co ON (c.entity_id = co.entity_id)
+		LEFT JOIN voucher v ON (v.id = a.voucher_id)
+		LEFT JOIN batch b ON (b.id = v.batch_id)
 		WHERE (ch.accno = in_cash_accno)
 			AND (c.id = in_credit_id OR in_credit_id IS NULL)
 			AND (a.transdate >= in_date_from 
@@ -973,7 +978,7 @@ BEGIN
 			AND (a.transdate <= in_date_to OR in_date_to IS NULL)
 			AND (source = in_source OR in_source IS NULL)
 		GROUP BY c.meta_number, c.id, co.legal_name, a.transdate, 
-			a.source
+			a.source, a.memo, b.id, b.control_code, b.description
 		ORDER BY a.transdate, c.meta_number, a.source
 	LOOP
 		RETURN NEXT out_row;

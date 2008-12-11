@@ -113,6 +113,23 @@ our $test_request_data = [
 		}
 	},
 	{
+		'_test_id'     => 'Payment search (OLD)',
+		'_codebase'    => 'old',
+		'account'      => '1060--Checking Account',
+		'module'       => 'rp.pl',
+		'action'       => 'list_payments',
+	},
+	{
+		'_test_id'	=> 'Payment Search (NEW)',
+		'_codebase'	=> 'new',
+		module		=> 'payment.pl',
+		account_class	=> 1,				
+		meta_number     => 'TEST_VENDOR',	
+		cash_accno	=> '-111',
+		date_reversed	=> '2009-12-01',
+		action 		=> 'get_search_results',
+	},
+	{
 		'_test_id'      => 'Payment print total',
 		'_codebase'     => 'new',
 		'action'        => 'print',

@@ -1925,7 +1925,7 @@ sub list_payments {
     RP->payments( \%myconfig, \%$form );
 
     my @columns = $form->sort_columns(qw(meta_number transdate name paid source 
-memo));
+					memo batch_control batch_description));
 
     if ( $form->{till} ) {
         @columns =
@@ -2000,7 +2000,10 @@ memo));
         text => $locale->text('Date'),
         };
     $column_header{paid} = $locale->text('Amount');
+    $column_header{batch_control} = $locale->text('Batch');
+    $column_header{batch_description} = $locale->text('Batch Description');
     $column_header{curr} = $locale->text('Curr');
+    $column_header{memo} = $locale->text('Memo');
     $column_header{source} = {
         href => "$href&sort=source",
         text => $locale->text('Source'),
@@ -2049,6 +2052,8 @@ memo));
             $column_data{meta_number} = $payment->{meta_number};
             $column_data{name}      = $payment->{name};
             $column_data{transdate} = $payment->{transdate};
+            $column_data{batch_control} = $payment->{batch_control};
+            $column_data{batch_description} = $payment->{batch_description};
             $column_data{paid} =
                 $form->format_amount(\%myconfig, $payment->{paid}, 2, ' ');
             $column_data{curr}     = $payment->{curr};

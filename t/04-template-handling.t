@@ -467,6 +467,20 @@ my $line1 = <LPR_TEST>;
 
 like($line1, qr/^%PDF/, 'output file is pdf');
 
+$template =  LedgerSMB::Template->new(
+        path            => 'UI',
+        template        => 'rp-payments',
+        format          => 'HTML',
+        no_auto_output  => 1,
+        output_file     => 'rp_payment_test1'
+);
+
+$lsmb = {columns => ['test']};
+$template->render($lsmb);
+@output =  get_output_line_array($template);
+cmp_ok(grep(/^\s*<\s*th\s+class="listtop"\s*>\s*$/, @output), '>', 0, 
+	'th tags properly finish');
+
 # Functions
 sub get_output_line_array {
         my $FH;

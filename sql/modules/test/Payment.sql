@@ -28,6 +28,8 @@ INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00001', 'testing', 'A', 'L', 'AP');
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00002', 'testing2', 'A', 'E', 'AP_expense');
+INSERT INTO chart (accno, description, charttype, category, link)
+VALUES ('00003', 'testing2', 'A', 'A', 'AP_paid');
 
 INSERT INTO session (users_id, last_used, token, transaction_id)
 values (currval('users_id_seq'),  now(), md5('test2'), 2);
@@ -127,6 +129,23 @@ INSERT INTO test_result(test_name, success)
 VALUES ('Locked Invoice not in total', 
 		(SELECT total_due < 1000000
 			FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')) );
+
+INSERT INTO voucher(batch_id, batch_class, id, trans_id)
+values (currval('batch_id_seq')::int, 4, -100, currval('id')::int);
+INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
+	transdate, source)
+values (currval('id')::int, 
+	(select id from chart where accno = '00003'), -100, true, '1', now(),
+	'_test_src1');
+INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount, 
+	transdate, source)
+values (currval('id')::int, 
+	(select id from chart where accno = '00001'), -100, true, '-1', now(),
+	'_test_src1');
+
+INSERT INTO test_result(test_name, success)
+SELECT 'batch_description exists', count(batch_description) = 1 
+FROM payment__search('_test_src1', NULL, NULL, -101, '00003', 1);
 
 SELECT * FROM TEST_RESULT;
 

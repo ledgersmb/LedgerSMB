@@ -31,7 +31,7 @@
   <tr class="listheading">
 <?lsmb FOREACH column IN columns ?>
     <th class="listtop">
-	<?lsmb IF heading.$column.href ?><a class="listtop" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a>
+	<?lsmb IF heading.$column.href.defined ?><a class="listtop" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a>
 	<?lsmb ELSE; heading.$column; END ?>
     </th>
 <?lsmb END ?>

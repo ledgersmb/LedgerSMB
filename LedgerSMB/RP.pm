@@ -2399,7 +2399,9 @@ sub payments {
 			   SELECT ce.name, ac.transdate, 
 			          sum(ac.amount) * $ml AS paid, ac.source, 
 			          ac.memo, ee.name AS employee, a.till, a.curr,
-			          c.meta_number
+			          c.meta_number, 
+			          b.control_code as batch_control,
+			          b.description AS batch_description
 			     FROM acc_trans ac
 			     JOIN $form->{db} a ON (ac.trans_id = a.id)
 			     JOIN entity_credit_account c ON 
@@ -2408,6 +2410,8 @@ sub payments {
 			LEFT JOIN entity_employee e ON 
 					(a.person_id = e.entity_id)
 			LEFT JOIN entity ee ON (e.entity_id = ee.id)
+			LEFT JOIN voucher v ON (ac.voucher_id = v.id)
+			LEFT JOIN batch b ON (b.id = v.batch_id)
 			          $dpt_join
 			    WHERE ac.chart_id = $ref->{id} 
 			          AND ac.approved AND a.approved
@@ -2423,7 +2427,8 @@ sub payments {
 
         $query .= qq|
 			GROUP BY ce.name, ac.transdate, ac.source, ac.memo,
-			         ee.name, a.till, a.curr, c.meta_number|;
+			         ee.name, a.till, a.curr, c.meta_number, 
+			         b.control_code, b.description|;
 
         if ( $form->{till} eq "" && !$form->{meta_number}) {
 
@@ -2432,19 +2437,24 @@ sub payments {
 				SELECT g.description, ac.transdate, 
 				       sum(ac.amount) * $ml AS paid, ac.source,
 				       ac.memo, ee.name AS employee, '' AS till,
-				       '' AS curr, '' AS meta_number
+				       '' AS curr, '' AS meta_number, 
+			               b.control_code as batch_control,
+			               b.description AS batch_description
 				  FROM acc_trans ac
 				  JOIN gl g ON (g.id = ac.trans_id)
 				  LEFT 
 				  JOIN entity_employee e ON 
 					(g.person_id = e.entity_id)
 				  JOIN entity ee ON (e.entity_id = ee.id)
+				LEFT JOIN voucher v ON (ac.voucher_id = v.id)
+				LEFT JOIN batch b ON (b.id = v.batch_id)
 				       $dpt_join
 				 WHERE ac.chart_id = $ref->{id} $glwhere
 			               AND ac.approved AND g.approved
 				       AND (ac.amount * $ml) > 0
 				 GROUP BY g.description, ac.transdate, 
-			               ac.source, ac.memo, ee.name|;
+			               ac.source, ac.memo, ee.name, 
+				       b.control_code, b.description|;
 
         }
 

@@ -127,7 +127,8 @@ sub get_search_results {
         }
     }
 
-    my @columns = qw(selected meta_number date_paid amount source company_paid);
+    my @columns = qw(selected meta_number date_paid amount source 
+		company_paid batch_description batch_control);
     my $contact_type = ($payment->{account_class} == 1) ? 'Vendor' : 'Customer';
 
     # CT:  Locale strings for gettext:
@@ -158,6 +159,14 @@ sub get_search_results {
                           text => $request->{_locale}->text('Source'),
                           href => "$search_url&orderby=source",
                          },
+	 batch_control => {
+                          text => $request->{_locale}->text('Batch'),
+                          href => "$search_url&orderby=batch_control",
+			},
+	 batch_description => {
+                          text => $request->{_locale}->text('Batch Description'),
+                          href => "$search_url&orderby=batch_description",
+			},
     };
 
 
@@ -175,6 +184,8 @@ sub get_search_results {
           date_paid    => $line->{date_paid},
           source       => $line->{source},
           meta_number  => $line->{meta_number},
+          batch_control => $line->{batch_control},
+          batch_description => $line->{batch_description},
           selected     => {
                           input => {
                                     type  => "checkbox",
