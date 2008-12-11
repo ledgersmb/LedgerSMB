@@ -21,6 +21,7 @@ do 't/data/62-request-data'; # Import test case oashes
 my $browser = LWP::UserAgent->new( );
 $browser->credentials("$hostname:80", 'LedgerSMB', $ENV{LSMB_USER} => $ENV{LSMB_PASS});
 
+$browser->credentials("$hostname:443", 'LedgerSMB', $ENV{LSMB_USER} => $ENV{LSMB_PASS});
 # cookie setup
 my $cookie = HTTP::Cookies->new(
 	"$LedgerSMB::Sysconfig::cookie_name" => "1:1:$db"
