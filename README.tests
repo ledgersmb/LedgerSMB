@@ -32,3 +32,16 @@ safe to run on existing databases.
 It does NOT employ a commit filter, so is NOT safe to run against production
 data.  It will only run if the environment variable LSMB_TEST_LWN is set to true.
 
+ENVIRONMENT VARIABLES USED:
+
+Environment Variables which control which tests are run (set to true to enable):
+LSMB_TEST_DB runs database tests
+LSMB_TEST_LWP runs LWP tests
+
+Variables to set credentials:
+PGUSER and PGPASSWORD for db tests
+LSMB_USER and LSMB_PASS for LWP tests
+
+Variables to configure test suites:
+PGDATABASE directs to the database (or company element in LWP tests)
+LSMB_BASE_URL directs LWP tests to the main LSMB instance being tested. 
