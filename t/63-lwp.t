@@ -13,15 +13,23 @@ my $host = $ENV{LSMB_BASE_URL} || 'http://localhost/ledger-smb/';
 if ($host !~ /\/$/){
 	$host .= "/";
 };
-$host =~ /http:\/\/([^\/]*)\//;
+$host =~ /https?:\/\/([^\/]+)\//;
 $hostname = $1;
-print STDERR "hostname $hostname\n";
 my $db = $ENV{LSMB_TEST_NEW_DB} || $ENV{PGDATABASE};
 do 't/data/62-request-data'; # Import test case oashes
 my $browser = LWP::UserAgent->new( );
-$browser->credentials("$hostname:80", 'LedgerSMB', $ENV{LSMB_USER} => $ENV{LSMB_PASS});
+if ($host !~ /https?:.+:/){
+	if ($host =~ /http:/){
+		$hport = 80;
+	} elsif ($host =~ /https:/){
+		$hport = 443;
+	}
+	$hostport = "$hostname:$hport";
+} else {
+	$hostport = "$hostname";
+}
+$browser->credentials("$hostport", 'LedgerSMB', $ENV{LSMB_USER} => $ENV{LSMB_PASS});
 
-$browser->credentials("$hostname:443", 'LedgerSMB', $ENV{LSMB_USER} => $ENV{LSMB_PASS});
 # cookie setup
 my $cookie = HTTP::Cookies->new(
 	"$LedgerSMB::Sysconfig::cookie_name" => "1:1:$db"
