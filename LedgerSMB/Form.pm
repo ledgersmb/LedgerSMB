@@ -1263,7 +1263,6 @@ sub format_line {
 
 sub cleanup {
 
-	return;
     my $self = shift;
     chdir("$self->{tmpdir}");
 
@@ -1283,7 +1282,7 @@ sub cleanup {
         unlink(<$tmpfile.*>);
     }
 
-    chdir("$self->{cwd}");
+    chdir("$self->{cwd}") if defined $self->{cwd};
 
     "@err";
 }
