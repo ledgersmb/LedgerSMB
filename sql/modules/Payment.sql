@@ -312,7 +312,7 @@ BEGIN
 		        GROUP BY trans_id) p ON (a.id = p.trans_id)
 		LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
 		LEFT JOIN users u ON (u.id = s.users_id)
-		   WHERE a.batch_id = in_batch_id
+		   WHERE (a.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
 		             AND a.approved
 			 AND c.business_id = 
@@ -322,8 +322,6 @@ BEGIN
 		         AND c.entity_class = in_account_class
 		         AND a.curr = in_currency
 		         AND a.entity_credit_account = c.id
-		         AND (in_meta_number IS NULL OR 
-                             in_meta_number = c.meta_number)
 			 AND p.due <> 0
 		         AND a.amount <> a.paid 
 			 AND NOT a.on_hold
@@ -332,7 +330,9 @@ BEGIN
 		                            chart_id = (SELECT id frOM chart
 		                                         WHERE accno
 		                                               = in_ar_ap_accno)
-		                    ))
+		                    )))
+		         AND (in_meta_number IS NULL OR 
+                             in_meta_number = c.meta_number)
 		GROUP BY c.id, e.name, c.meta_number, c.threshold, 
 			e.control_code, c.description
 		  HAVING  (sum(p.due) >= c.threshold
