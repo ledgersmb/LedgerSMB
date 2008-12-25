@@ -1342,6 +1342,15 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
 	      </tr>
 |;
 
+    if ( $form->{outstanding} ) {
+        $form->{title} =
+          ( $form->{ARAP} eq 'AR' )
+          ? $locale->text('AR Outstanding')
+          : $locale->text('AP Outstanding');
+        $invnumber  = "";
+        $openclosed = "";
+        $summary    = "";
+    }
     $summary = qq|
               <tr>
 		<td><input name=summary type=radio class=radio value=1 checked> |
@@ -1353,15 +1362,6 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
 	      </tr>
 |;
 
-    if ( $form->{outstanding} ) {
-        $form->{title} =
-          ( $form->{ARAP} eq 'AR' )
-          ? $locale->text('AR Outstanding')
-          : $locale->text('AP Outstanding');
-        $invnumber  = "";
-        $openclosed = "";
-        $summary    = "";
-    }
 
     if ( @{ $form->{all_years} } ) {
 
@@ -1742,7 +1742,7 @@ sub transactions {
             $href     .= "&l_$item=Y";
         }
     }
-    if ( !$form->{summary} ) {
+    if ( !$form->{summary} and !$form->{outstanding}) {
         foreach $item (qw(source debit credit accno description projectnumber))
         {
             push @column_index, $item;
@@ -1983,10 +1983,12 @@ sub transactions {
           ? ( $form->{ARAP} eq 'AR' ) ? "is.pl" : "ir.pl"
           :   $form->{script};
         $module = ( $ref->{till} ) ? "ps.pl" : $module;
-
-        $column_data{invnumber} =
+        if ($form->{outstanding} and $form->{summary}){
+            $column_data{invnumber} = "<td>$ref->{invnumber}</td>";
+	} else {
+            $column_data{invnumber} =
 "<td><a href=$module?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{invnumber}&nbsp;</a></td>";
-
+        }
         for (qw(notes description)) { $ref->{$_} =~ s/\r?\n/<br>/g }
         for (
             qw(transdate datepaid duedate department ordnumber ponumber notes shippingpoint shipvia employee manager till source description projectnumber)

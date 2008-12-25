@@ -774,10 +774,9 @@ sub transactions {
 			       AND ac.transdate <= ?|;
        #     push @paidargs, $form->{transdateto};
         }
-        $form->{summary} = 1;
     }
 
-    if ( !$form->{summary} ) {
+    if ( !$form->{summary} and !$form->{outstanding} ) {
         $acc_trans_flds = qq|
 			, c.accno, ac.source,
 			pr.projectnumber, ac.memo AS description,
@@ -796,7 +795,37 @@ sub transactions {
         if ($form->{transdateto} eq ''){
             delete $form->{transdateto};
         }
-        $query = qq|
+        if ($form->{summary}){
+            $query = qq|
+		   SELECT count(a.id) as invnumber, min(a.transdate) as transdate,
+		          min(a.duedate) as duedate, 
+		          sum(a.netamount) as netamount, 
+		          sum(a.amount) as amount, 
+		          sum(a.amount) - sum(acs.amount) AS paid,
+		          vce.name, vc.meta_number,
+		          a.entity_id, 
+		          d.description AS department, 
+		          a.ponumber
+		     FROM $table a
+		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
+		     JOIN acc_trans acs ON (acs.trans_id = a.id)
+		     JOIN entity vce ON (vc.entity_id = vce.id)
+		     JOIN chart c ON (acs.chart_id = c.id)
+		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
+		          AND ex.transdate = a.transdate)
+		LEFT JOIN department d ON (a.department_id = d.id)
+		$acc_trans_join
+		    WHERE c.link = '$form->{ARAP}' AND 
+		          (|.$dbh->quote($form->{transdateto}) . qq| IS NULL OR 
+		           |.$dbh->quote($form->{transdateto}) . qq| >= acs.transdate)
+			AND a.approved IS TRUE AND acs.approved IS TRUE
+			AND a.force_closed IS NOT TRUE
+		 GROUP BY 
+		          vc.meta_number, a.entity_id, vce.name, d.description,
+		          a.ponumber, a.invoice, a.datepaid 
+		   HAVING abs(sum(a.amount) - (sum(a.amount) - sum(acs.amount))) > 0.005 |;
+        } else {
+            $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount, a.amount - sum(acs.amount) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
@@ -822,10 +851,10 @@ sub transactions {
 			AND a.force_closed IS NOT TRUE
 		 GROUP BY a.id, a.invnumber, a.ordnumber, a.transdate, a.duedate, a.netamount,
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
-		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description,
+		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description, vce.name,
 		          a.ponumber, a.invoice, a.datepaid $acc_trans_fields
 		   HAVING abs(a.amount - (a.amount - sum(acs.amount))) > 0.005 |;
-    
+       } 
     } else {
         $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
@@ -1015,6 +1044,9 @@ sub transactions {
         if ($where ne ""){
             $query =~ s/GROUP BY / $where \n GROUP BY /;
         }
+	if ($form->{summary}){
+		$sortorder = "vc.meta_number";
+	}
         $query .= "\n ORDER BY $sortorder";
     } else {
         $query .= "WHERE ($approved OR a.approved) AND $where
