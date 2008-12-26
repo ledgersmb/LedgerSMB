@@ -1692,7 +1692,7 @@ sub get_name {
     
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
-		SELECT c.*, e.name FROM entity_credit_account c
+		SELECT c.*, e.name, e.control_code FROM entity_credit_account c
 		JOIN entity e ON (c.entity_id = e.id)
 		WHERE (lower(e.name) LIKE ?
 		OR c.meta_number LIKE ?)

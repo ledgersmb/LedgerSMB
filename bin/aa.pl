@@ -137,7 +137,6 @@ sub edit {
 }
 
 sub display_form {
-
     &form_header;
     &form_footer;
 
@@ -544,7 +543,8 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
     }
     $form->hide_form(
         qw(batch_id approved id printed emailed sort closedto locked 
-           oldtransdate audittrail recurring checktax reverse batch_id subtype)
+           oldtransdate audittrail recurring checktax reverse batch_id subtype
+           entity_control_code meta_number)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -596,6 +596,22 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 		  </table>
 		</td>
 	      </tr>
+|;
+		if ($form->{entity_control_code}){
+			print qq|
+	        <tr>
+		<th align="right" nowrap>| . 
+			$locale->text('Control Code') . qq|</th>
+		<td colspan=3>$form->{entity_control_code}</td>
+	      </tr>
+	        <tr>
+		<th align="right" nowrap>| . 
+			$locale->text('Account') . qq|</th>
+		<td colspan=3>$form->{meta_number}</td>
+	      </tr>
+		|;
+	       }
+	print qq|
 	      $exchangerate
 	      $department
 	      $taxincluded
@@ -1051,7 +1067,7 @@ sub update {
             }
         }
     }
-
+    $form->debug('/tmp/aa.debug2');
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {

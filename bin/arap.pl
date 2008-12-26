@@ -148,12 +148,12 @@ sub check_name {
 sub select_name {
     my ($table) = @_;
 
-    @column_index = qw(ndx name address);
+    @column_index = qw(ndx name control_code address);
 
     $label = ucfirst $table;
     $column_data{ndx} = qq|<th>&nbsp;</th>|;
     $column_data{name} =
-      qq|<th class=listheading>| . $locale->text($label) . qq|</th>|;
+      qq|<th class=listheading colspan=3>| . $locale->text($label) . qq|</th>|;
     $column_data{address} =
         qq|<th class=listheading colspan=5>|
       . $locale->text('Address')
@@ -185,7 +185,7 @@ sub select_name {
 	</tr>
 |;
 
-    @column_index = qw(ndx name address city state zipcode country);
+    @column_index = qw(ndx name control_code meta_number address city state zipcode country);
 
     my $i = 0;
     foreach $ref ( @{ $form->{name_list} } ) {
@@ -197,6 +197,11 @@ sub select_name {
 qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
         $column_data{name} =
 qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</td>|;
+        $column_data{control_code} =
+qq|<td><input name="new_control_code_$i" type=hidden value="$ref->{control_code}">$ref->{control_code}</td>|;
+        $column_data{meta_number} =
+qq|<td><input name="new_meta_number_$i" type=hidden value="$ref->{meta_number}">$ref->{meta_number}</td>|;
+        $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}</td>|;
         $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}</td>|;
         for (qw(city state zipcode country)) {
             $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
@@ -259,7 +264,6 @@ sub name_selected {
 
     # index for new item
     $i = $form->{ndx};
-
     $form->{ $form->{vc} } = $form->{"new_name_$i"};
     $form->{"$form->{vc}_id"} = $form->{"new_id_$i"};
     $form->{"old$form->{vc}"} =
@@ -277,6 +281,8 @@ sub name_selected {
     # put employee together if there is a new employee_id
     $form->{employee} = "$form->{employee}--$form->{employee_id}"
       if $form->{employee_id};
+    $form->{entity_control_code} = $form->{"new_control_code_$i"};
+    $form->{meta_number} = $form->{"new_meta_number_$i"};
 
     &update(1);
 
