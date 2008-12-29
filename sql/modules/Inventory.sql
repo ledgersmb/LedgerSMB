@@ -7,7 +7,8 @@ DECLARE out_row parts%ROWTYPE;
 BEGIN
 	SELECT id INTO t_parts_id 
 	FROM parts 
-	WHERE partnumber = in_partnumber
+	WHERE (partnumber like in_partnumber|| ' %'
+		or partnumber = in_partnumber)
 		and obsolete is not true
 		and assembly is not true;
 
@@ -17,7 +18,7 @@ BEGIN
                 AS onhand, p.notes, p.makemodel, p.assembly, p.alternate, 
 		p.rop, p.inventory_accno_id, p.income_accno_id, p.expense_accno_id,
 		p.bin, p.obsolete, p.bom, p.image, p.microfiche, p.partsgroup_id, 
-		p.project_id, p.avgcost
+		p.project_id
 	INTO out_row
         FROM parts p
 	LEFT JOIN (  SELECT product(qty) as multiplier, t_parts_id  as part_used
@@ -35,7 +36,8 @@ BEGIN
 	JOIN (select id, transdate from ar
 		UNION select id, transdate from ap) a ON (i.trans_id = a.id)
 
-        WHERE p.partnumber = in_partnumber
+        WHERE (p.partnumber = in_partnumber 
+		or p.partnumber like in_partnumber || ' %')
 		AND a.transdate <= in_transdate
                 AND assembly IS FALSE AND obsolete IS NOT TRUE
         GROUP BY p.id, p.partnumber, p.description, p.unit, p.listprice,

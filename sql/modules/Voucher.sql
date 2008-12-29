@@ -80,8 +80,8 @@ BEGIN
 		SELECT v.id, a.source, 
 			cr.meta_number || '--'  || co.legal_name , 
 			v.batch_id, v.trans_id, 
-			CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
-			     ELSE a.amount  END, a.transdate, 
+			sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
+			     ELSE a.amount  END), a.transdate, 
 			CASE WHEN bc.class = 'payment' THEN 'Payment'
 			     WHEN bc.class = 'payment_reversal' 
 			     THEN 'Payment Reversal'
@@ -97,6 +97,9 @@ BEGIN
 		WHERE v.batch_id = in_batch_id 
 			AND a.voucher_id = v.id
 			AND (bc.class like 'payment%' AND c.link = 'AP')
+		GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
+                        v.batch_id, v.trans_id, a.transdate, bc.class
+
 		UNION ALL
 		SELECT v.id, a.source, a.memo, 
 			v.batch_id, v.trans_id, 
@@ -394,7 +397,7 @@ BEGIN
 		DELETE FROM ap WHERE id = voucher_row.trans_id;
 		DELETE FROM gl WHERE id = voucher_row.trans_id;
 		DELETE FROM voucher WHERE id = voucher_row.id;
-		DELETE FROM transactions WHERE id = voucher_row.trans_id;
+		-- DELETE FROM transactions WHERE id = voucher_row.trans_id;
 	ELSE 
 		update ar set paid = amount + 
 			(select sum(amount) from acc_trans 
