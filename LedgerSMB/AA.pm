@@ -822,7 +822,7 @@ sub transactions {
 			AND a.force_closed IS NOT TRUE
 		 GROUP BY 
 		          vc.meta_number, a.entity_id, vce.name, d.description,
-		          a.ponumber, a.invoice, a.datepaid 
+		          a.ponumber, a.invoice 
 		   HAVING abs(sum(a.amount) - (sum(a.amount) - sum(acs.amount))) > 0.005 |;
         } else {
             $query = qq|
