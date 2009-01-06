@@ -1126,7 +1126,9 @@ sub get_name {
 		          c.curr AS currency, 
 		          c.language_code, $duedate AS duedate, 
 			  b.discount AS tradediscount, 
-		          b.description AS business
+		          b.description AS business, 
+			  entity.control_code as entity_control_code,
+			  c.meta_number
 		     FROM entity_credit_account c
 		     JOIN entity ON (entity.id = c.entity_id)
 		LEFT JOIN business b ON (b.id = c.business_id)
