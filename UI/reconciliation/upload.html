@@ -10,11 +10,35 @@
             Please check your CSV file and try again.
         </div>
     <?lsmb END?>
-    <form name="csv_upload" method="POST" action="/reconciliation.pl">
+    <form name="csv_upload" method="POST" action="recon.pl">
         
-        <input type="hidden" name="action" value="new_report" />
+	<div id="csv-file">
         <label for="file_upload">CSV File:</label>
-        <input type="file" name="csv_file" id="file_upload" />
-        <input type="submit" action="submit" value="Create New Report">
+        <input type="file" name="csv_file" id="file_upload" /></div>
+	<div id="acc-date-row">
+	<?lsmb INCLUDE select element_data = {
+		name = "chart_id",
+		options = accounts,
+		text_attr = "name",
+		value_attr = "id",
+		label = "Account"
+	} ?>
+	<?lsmb INCLUDE input element_data = {
+		name = "end_date",
+		label = text('To Date'), #'
+		class = "date",
+		type = 'text',
+		size = 14
+	} ?>
+	</div>
+	<div id="button-row">
+	<?lsmb INCLUDE button element_data = {
+		type = "submit",
+		name = "action",
+		value = "new_report",
+		class = "submit",
+		text = text('Create New Report'), #'
+	} ?>
+	</div>
     </form>
 </div>

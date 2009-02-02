@@ -235,19 +235,20 @@ sub new_report {
     
     my $template;
     my $return;
-    
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all'); 
     if ($request->type() eq "POST") {
         
         # We can assume that we're doing something useful with new data.
         # We can also assume that we've got a file.
-        my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
         
         # $self is expected to have both the file handling logic, as well as 
         # the logic to load the processing module.
         
         # Why isn't this testing for errors?
         my ($report_id, $entries) = $recon->new_report($recon->import_file());
-        if ($recon->is_error()) {
+        $recon->{dbh}->commit;
+        if ($recon->{error}) {
+            $recon->{error};
             
             $template = LedgerSMB::Template->new(
                 user=>$user,
@@ -256,26 +257,22 @@ sub new_report {
                 format=>'HTML',
                 path=>"UI"
             );
-            return $template->render({error=>$recon->error()});
+            return $template->render($recon);
         }
         
         $template = LedgerSMB::Template->new( 
             user=> $user,
-            template => 'reconciliation/new_report', 
+            template => 'reconciliation/report', 
             language => $user->{language},
             format=>'HTML',
             path=>"UI"
         );
-        return $template->render(
-            {
-                entries=>$entries,
-                report_id=>$report_id
-            }
-        );
+        return $template->render($recon);
     }
     else {
         
         # we can assume we're to generate the "Make a happy new report!" page.
+        @{$recon->{accounts}} = $recon->get_accounts;
         $template = LedgerSMB::Template->new( 
             user => $user, 
             template => 'reconciliation/upload', 
@@ -283,7 +280,7 @@ sub new_report {
             format => 'HTML',
             path=>"UI"
         );
-        return $template->render();
+        return $template->render($recon);
     }
     return undef;
     

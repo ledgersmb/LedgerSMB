@@ -12,6 +12,7 @@ perl_version '5.8.1';
 
 requires 'Data::Dumper';
 requires 'Locale::Maketext';
+requires 'DateTime';
 requires 'Locale::Maketext::Lexicon' => '0.56';
 requires 'DBI' => '1.00';
 requires 'MIME::Base64';

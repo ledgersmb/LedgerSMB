@@ -234,6 +234,9 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <?lsmb END ?>
 </div>
+<?lsmb IF entity_id;
+INCLUDE 'rates_div.html';
+END -?>
 <?lsmb IF entity_id ?>
 <div id="credit_div">
 <div class="listtop"><strong>Accounts</strong></div>
@@ -545,6 +548,24 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			type = "text",
 			size = "20"
 		} ?>
+		<!-- 
+			if the following button and script show up in svn 
+			/trunk, please remove them.  -CT -->
+		<script type="text/javascript">
+			function show_lines(){
+				var e;
+				e = document.getElementById('line-two');
+				e.style.display = 'inline';
+				e = document.getElementById('line-three');
+				e.style.display = 'inline';
+				e = document.getElementById('show-lines-button');
+				e.style.display = 'none';
+				return false;
+			}
+		</script>
+		<button onclick="javascript: return show_lines()" 
+			id="show-lines-button" type="button"><?lsmb text('Show More Lines') ?>
+		</button> <!-- end custom section -->
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {

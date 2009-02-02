@@ -145,15 +145,10 @@ sub new_report {
     
     # gives us a report ID to insert with.
     my $report_id = $self->exec_method(funcname=>'reconciliation__new_report_id');
+    $self->{report_id} = $report_id;
     
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
-    unshift @{$entries}, {
-        scn => -1,
-        balance=> $total, 
-        old_balance=> $self->exec_method(funcname=>'reconciliation__current_balance'), 
-        date=>$month
-    };
     for my $entry ( @{$entries} ) {
         
         # Codes:
@@ -171,16 +166,17 @@ sub new_report {
             args=>[
                 $report_id,
                 $entry->{scn},
-                $entry->{amount}, # needs leading 0's trimmed.
-                $entry->{account},
+                $entry->{chart_id},
                 $self->{user},
-                $self->{date}
+                $self->{date},
+                $entry->{amount}, # needs leading 0's trimmed.
             ]
         );
         $entry{report_id} = $report_id;        
     }
-    
-    $self->exec_method(funcname=>'reconciliation__pending_transactions', args=>[$report_id, $date]);
+   
+    $self->exec_method(funcname=>'reconciliation__pending_transactions');
+    $self->{dbh}->commit;
     
     return ($report_id, $entries); # returns the report ID.
 }

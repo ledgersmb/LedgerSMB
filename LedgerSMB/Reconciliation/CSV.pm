@@ -6,6 +6,11 @@ package LedgerSMB::Reconciliation::CSV;
 use base qw/LedgerSMB/;
 use DateTime;
 
+opendir (DCSV, 'LedgerSMB/Reconciliation/CSV/Formats');
+for my $format (readdir(DCSV)){
+	do "LedgerSMB/Reconciliation/CSV/Formats/$format";
+};
+
 sub load_file {
     
     my $self = shift @_;
@@ -22,48 +27,23 @@ sub load_file {
 
 sub process {
     
-    # thoroughly implementation-dependent.
+    # thoroughly implementation-dependent, so depends on helper-functions
     my $self = shift @_;
     my $contents = $self->load_file($self->{csv_filename});
-    
-    foreach my $line (split /\n/,$contents) {
-        # Unpack for the format it is inexplicably in
-        ($accno,
-         $checkno,
-         $issuedate,
-         $amount,
-         $cleared,
-         $last_three) = unpack("A10A10A6A10A6A3",$line);
-         
-        push @{ $self->{entries} }, { 
-            account_num     => $accno, 
-            scn             => $checkno,
-            issue_date      => $issuedate,
-            amount          => $amount,
-            cleared_date    => $cleared
-        };
-    }
-    # Okay, now how do I test to see if this is actually, y'know, bad data.
-    
-    for my $line (@{ $self->{entries} }) {
-        
-        # First check the account number.
-        # According to the docs I have, it's all numbers.
-        
-       ; 
-    }
-   
-    return;
+    my $func = "process_$self->{accno}";
+    @entries = eval{&$func($self, $contents)};
+    if (!$!){
+       @{$self->{recon_entries}} = @entries;
+       $self->{file_upload} = 1;
+   }
+   else {
+       $self->{file_upload} = 0;
+   }
 }
 
 sub is_error {
-    
-    
-}
-
-sub error {
-    
-    
+   my $self = shift @_;    
+   return $self->{invalid_format};
 }
 
 1;
