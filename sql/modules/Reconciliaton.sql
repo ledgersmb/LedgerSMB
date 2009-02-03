@@ -9,13 +9,13 @@ CREATE TABLE cr_report (
 CREATE TABLE cr_report_line (
     id bigserial primary key not null,
     report_id int NOT NULL references cr_report(id),
-    scn text not null, -- SCN is the check #
+    scn text, -- SCN is the check #
     their_balance numeric,
     our_balance numeric,
     errorcode INT,
     "user" int references entity(id) not null, -- why ois this not an entity reference?
     corrections INT NOT NULL DEFAULT 0,
-    clear_time TIMESTAMP NOT NULL,
+    clear_time date,
     insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
     ledger_id int REFERENCES acc_trans(entry_id),
     voucher_id int REFERENCES voucher(id),
