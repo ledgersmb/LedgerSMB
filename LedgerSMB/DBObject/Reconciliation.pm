@@ -91,6 +91,7 @@ use base qw(LedgerSMB::DBObject);
 use LedgerSMB::DBObject;
 use LedgerSMB::Reconciliation::CSV;
 
+
 # don't need new
 
 sub import_file {
@@ -144,8 +145,10 @@ sub new_report {
     # Total is in here somewhere, too
     
     # gives us a report ID to insert with.
-    my $report_id = $self->exec_method(funcname=>'reconciliation__new_report_id');
+    my @reports = $self->exec_method(funcname=>'reconciliation__new_report_id');
+    my $report_id = $reports[0]->{reconciliation__new_report_id};
     $self->{report_id} = $report_id;
+    $self->exec_method(funcname=>'reconciliation__pending_transactions');
     
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
@@ -166,16 +169,14 @@ sub new_report {
             args=>[
                 $report_id,
                 $entry->{scn},
-                $entry->{chart_id},
                 $self->{user},
-                $self->{date},
+                $entry->{cleared_date},
                 $entry->{amount}, # needs leading 0's trimmed.
             ]
         );
         $entry{report_id} = $report_id;        
     }
    
-    $self->exec_method(funcname=>'reconciliation__pending_transactions');
     $self->{dbh}->commit;
     
     return ($report_id, $entries); # returns the report ID.
@@ -237,8 +238,7 @@ sub get_pending {
     
     my $self = shift @_;
     return $self->exec_method(
-        funcname=>'reconciliation__pending',
-        args=>[$self->{month}]
+        funcname=>'reconciliation__pending'
     );
 }
 
@@ -250,6 +250,25 @@ sub get_report_list {
         funcname=>'reconciliation__report_list',
         args=>[$self->{account},$self->{report}]
     );
+}
+
+sub get {
+    my ($self) = shift @_;
+    my ($ref) = $self->exec_method(funcname=>'reconciliation__report_summary');
+    $self->merge($ref);
+    @{$self->{report_lines}} = $self->exec_method(
+		funcname=>'reconciliation__report_details'
+    );
+    my ($ref) = $self->exec_method(
+                funcname=>'reconciliation__get_cleared_balance'
+    );
+
+    $our_balance = $ref->{reconciliation__get_cleared_balance};
+    for my $line (@{$self->{report_lines}}){
+        $our_balance += $line->{our_balance}
+    } 
+    $self->{our_total} = $our_balance;
+    $self->{format_amount} = sub { return $self->format_amount(@_); }
 }
 
 sub get_accounts {

@@ -1,14 +1,14 @@
 CREATE TABLE cr_report (
     id bigserial primary key not null,
     chart_id int not null references chart(id),
-    our_total numeric default 0,
+    their_total numeric not null,
     approved boolean not null default 'f',
     end_date date not null default now()
 );
 
 CREATE TABLE cr_report_line (
     id bigserial primary key not null,
-    report_id int NOT NULL,
+    report_id int NOT NULL references cr_report(id),
     scn text not null, -- SCN is the check #
     their_balance numeric,
     our_balance numeric,
@@ -37,6 +37,17 @@ CREATE TABLE cr_report_corrections (
     reason text not null,
     insert_time timestamptz not null default now()
 );
+
+CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
+RETURNS numeric AS
+$$
+	select CASE WHEN c.category = 'A' THEN sum(ac.amount) * -1 ELSE
+		sum(ac.amount) END
+	FROM chart c
+	JOIN acc_trans ac ON (ac.chart_id = c.id)
+	WHERE c.id = $1 AND ac.cleared is true
+		GROUP BY c.id, c.category;
+$$ LANGUAGE sql;
 
 -- to correct OUR wrong amount.
 CREATE OR REPLACE FUNCTION reconciliation__correct_ledger (in_report_id INT, in_id int, in_new_amount NUMERIC, reason TEXT) returns INT AS $$
@@ -266,7 +277,7 @@ CREATE OR REPLACE FUNCTION reconciliation__new_report_id (in_chart_id int,
 
 in_total numeric, in_end_date date) returns INT as $$
 
-    INSERT INTO cr_report(chart_id, our_total, end_date) values ($1, $2, $3);
+    INSERT INTO cr_report(chart_id, their_total, end_date) values ($1, $2, $3);
     SELECT currval('cr_report_id_seq')::int;
 
 $$ language 'sql';
@@ -274,7 +285,6 @@ $$ language 'sql';
 create or replace function reconciliation__add_entry(
     in_report_id INT, 
     in_scn TEXT, 
-    in_chart_id int, 
     in_user TEXT, 
     in_date TIMESTAMP,
     in_amount numeric
@@ -286,80 +296,100 @@ create or replace function reconciliation__add_entry(
         t_errorcode INT;
         our_value NUMERIC;
         lid INT;
+	in_count int;
+	t_scn TEXT;
     BEGIN
-	in_account := in_chart_id;
-    
-        SELECT * INTO la FROM acc_trans gl 
-        JOIN chart c on gl.chart_id = c.id
-        JOIN ap ON gl.trans_id = ap.id
-        JOIN coa_to_account cta on cta.chart_id = gl.chart_id
-        WHERE gl.source ~ in_scn -- does it look like it?
-        and cta.account = in_account 
-        and gl.amount = in_amount
-        AND gl.transdate = in_date;
-        
-        lid := NULL;
-        IF NOT FOUND THEN
-            -- they have it, we don't. This is Bad, and implies either a bank
-            -- charge or an unaccounted cheque.
-            
-            if in_scn <> '' and in_scn IS NOT NULL THEN
-            
-                -- It's a bank charge. Approval action will probably be 
-                -- adding it as an entry to the general ledger.
-                t_errorcode := 2; 
-                our_value := 0;
-            ELSE
-                -- Okay, now this is bad.
-                -- They have a cheque/sourced charge that we don't. 
-                -- REsolution action is going to be
-                t_errorcode := 3;
-                our_value := 0;
-            END IF;
-            
-        ELSif la.amount <> in_amount THEN
-        
-            t_errorcode := 1;
-            our_value := la.amount;
-            lid := la.entry_id;
-            
-        ELSE
-            -- it reconciles. No problem.
-            
-            t_errorcode := 0;
-            our_value := la.amount;
-            lid := la.entry_id;
-            
-        END IF;
-        
-        INSERT INTO cr_report_line (
-                report_id,
-                scn,
-                their_balance,
-                our_balance,
-                errorcode, 
-                "user",
-                clear_time,
-                ledger_id
-            ) 
-            VALUES (
-                in_report_id,
-                in_scn,
-                in_amount,
-                la.amount,
-                t_errorcode,
-                (select id from users where username = in_user),
-                in_date,
-                lid
-            );
-            
-        -- success, basically. This could very likely be collapsed to
-        -- do the compare check here, instead of in the Perl app. Save us a DB
-        -- call.
+	IF in_scn = '' THEN 
+		t_scn := NULL;
+	ELSE 
+		t_scn := in_scn;
+	END IF;
+	IF t_scn IS NOT NULL THEN
+		SELECT count(*) INTO in_count FROM cr_report_line
+		WHERE in_scn = scn AND report_id = in_report_id 
+			AND their_balance = 0;
+
+		IF in_count = 0 THEN
+			INSERT INTO cr_report_line
+			(report_id, scn, their_balance, our_balance)
+			VALUES 
+			(in_report_id, t_scn, in_amount, 0);
+		ELSIF in_count = 1 THEN
+			UPDATE cr_report_line
+			SET their_balance = in_amount
+			WHERE n_scn = scn AND report_id = in_report_id
+				AND their_balance = 0;
+		ELSE 
+			SELECT count(*) INTO in_count FROM cr_report_line
+			WHERE in_scn = scn AND report_id = in_report_id
+				AND our_value = in_amount and their_balance = 0;
+
+			IF in_count = 0 THEN -- no match among many of values
+				SELECT id INTO lid FROM cr_report_line
+                        	WHERE in_scn = scn AND report_id = in_report_id
+				ORDER BY our_balance ASC limit 1;
+
+				UPDATE cr_report_line
+                                SET their_balance = in_amount
+                                WHERE id = lid;
+
+			ELSIF in_count = 1 THEN -- EXECT MATCH
+				UPDATE cr_report_line
+				SET their_balance = in_amount
+				WHERE in_scn = scn AND report_id = in_report_id
+                                	AND our_value = in_amount 
+					AND their_balance = 0;
+			ELSE -- More than one match
+				SELECT id INTO lid FROM cr_report_line
+                        	WHERE in_scn = scn AND report_id = in_report_id
+                                	AND our_value = in_amount
+				ORDER BY id ASC limit 1;
+
+				UPDATE cr_report_line
+                                SET their_balance = in_amount
+                                WHERE id = lid;
+				
+			END IF;
+		END IF;
+	ELSE -- scn IS NULL, check on amount instead
+		SELECT count(*) INTO in_count FROM cr_report_line
+		WHERE report_id = in_report_id AND amount = in_amount
+			AND their_balance = 0;
+
+		IF in_count = 0 THEN -- no match
+			INSERT INTO cr_report_line
+			(report_id, scn, their_balance, our_balance)
+			VALUES 
+			(in_report_id, t_scn, in_amount, 0);
+		ELSIF in_count = 1 THEN -- perfect match
+			UPDATE cr_report_line SET their_balance = in_amount
+			WHERE report_id = in_report_id AND amount = in_amount
+                        	AND their_balance = 0;
+		ELSE -- more than one match
+			SELECT min(id) INTO lid FROM cr_report_line
+			WHERE report_id = in_report_id AND amount = in_amount
+                        	AND their_balance = 0;
+
+			UPDATE cr_report_line SET their_balance = in_amount
+			WHERE id = lid;
+			
+		END IF;
+	END IF;
         return 1; 
         
     END;    
 $$ language 'plpgsql';
+
+comment on function reconciliation__add_entry(
+    in_report_id INT,
+    in_scn TEXT,
+    in_user TEXT,
+    in_date TIMESTAMP,
+    in_amount numeric
+)  IS
+$$ This function is very sensitive to ordering of inputs.  NULL or empty in_scn values MUST be submitted after meaningful scns.  It is also highly recommended 
+that within each category, one submits in order of amount.  We should therefore
+wrap it in another function which can operate on a set.  Implementation TODO.$$;
 
 -- this needs help.....
 create or replace function reconciliation__pending_transactions (in_end_date DATE, in_chart_id int, in_report_id int) RETURNS int as $$
@@ -381,28 +411,38 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
 			UNION
 		      select id, NULL, 'gl' as table FROM gl) gl
 			ON (gl.table = t.table_name AND gl.id = t.id)
-		LEFT JOIN cr_report_line rl 
-			ON (rl.ledger_id = ac.entry_id)
 		WHERE ac.cleared IS FALSE
 			AND ac.chart_id = in_chart_id
 			AND ac.transdate <= in_end_date
 		GROUP BY gl.entity_credit_account, ac.source, ac.transdate,
-			ac.memo, ac.voucher_id
-		HAVING count(rl.ledger_id) = 0;
+			ac.memo, ac.voucher_id;
     RETURN in_report_id;
     END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION reconciliation__report (in_report_id INT) RETURNS setof cr_report as $$
+CREATE OR REPLACE FUNCTION reconciliation__report_details (in_report_id INT) RETURNS setof cr_report_line as $$
 
     DECLARE
-        row cr_report;
+        row cr_report_line;
     BEGIN    
-        FOR row IN select * from cr_report where id = in_report_id LOOP
+        FOR row IN select * from cr_report_line where report_id = in_report_id LOOP
         
             RETURN NEXT row;
         
         END LOOP;    
+    END;
+
+$$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION reconciliation__report_summary (in_report_id INT) RETURNS cr_report as $$
+
+    DECLARE
+        row cr_report;
+    BEGIN    
+        select * into row from cr_report where id = in_report_id;
+        
+        RETURN row;
+        
     END;
 
 $$ language 'plpgsql';

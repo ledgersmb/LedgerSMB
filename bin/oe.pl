@@ -1084,9 +1084,7 @@ sub update {
                     $form->{"${_}_base"} += $amount;
                 }
                 if ( !$form->{taxincluded} ) {
-                    my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-                    $amount +=
-                      Tax::calculate_taxes( \@taxes, $form, $amount, 0 );
+                    _calc_taxes();
                 }
 
                 $form->{creditremaining} -= $amount;

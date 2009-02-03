@@ -259,7 +259,7 @@ sub new_report {
             );
             return $template->render($recon);
         }
-        
+        $recon->get();
         $template = LedgerSMB::Template->new( 
             user=> $user,
             template => 'reconciliation/report', 
@@ -267,6 +267,15 @@ sub new_report {
             format=>'HTML',
             path=>"UI"
         );
+        for my $l (@{$recon->{report_lines}}){
+            $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}});
+            $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}});
+        }
+	$recon->{their_total} = $recon->format_amount(
+		{amount => $recon->{their_total}});
+	$recon->{our_total} = $recon->format_amount(
+		{amount => $recon->{our_total}});
+
         return $template->render($recon);
     }
     else {

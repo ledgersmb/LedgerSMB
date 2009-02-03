@@ -202,13 +202,6 @@ sub _preprocess {
 	my ($self, $vars) = @_;
 	return unless $self->{myconfig};
 	use LedgerSMB;
-	if (UNIVERSAL::isa($vars, 'Math::BigFloat')){
-		$vars = 
-			LedgerSMB::format_amount('LedgerSMB', 
-				amount => $vars,
-				user => $self->{myconfig},
-				precision => 2);
-	}
 	my $type = ref($vars);
 
 	if ($type eq 'SCALAR' || !$type){

@@ -68,6 +68,8 @@ sub preprocess {
         return escapeHTML($rawvars);
     } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
         return escapeHTML($$rawvars);
+    } elsif ($type eq 'CODE'){
+        return $rawvars;
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );

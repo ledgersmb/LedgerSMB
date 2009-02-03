@@ -31,6 +31,7 @@ sub process {
     my $self = shift @_;
     my $contents = $self->load_file($self->{csv_filename});
     my $func = "process_$self->{accno}";
+    my $func =~ s/-/_/g;
     @entries = eval{&$func($self, $contents)};
     if (!$!){
        @{$self->{recon_entries}} = @entries;

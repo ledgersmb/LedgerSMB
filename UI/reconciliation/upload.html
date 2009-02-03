@@ -24,6 +24,13 @@
 		label = "Account"
 	} ?>
 	<?lsmb INCLUDE input element_data = {
+		name = "total",
+		class = "numeric",
+		label = text('Statement Balance'), #'
+		type = "text",
+		size = 12
+	} ?>
+	<?lsmb INCLUDE input element_data = {
 		name = "end_date",
 		label = text('To Date'), #'
 		class = "date",

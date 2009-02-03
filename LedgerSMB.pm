@@ -650,6 +650,26 @@ sub date_to_number {
     $date;
 }
 
+sub sanitize_for_display {
+    my $self = shift;
+    my $var = shift;
+    $self->error('Untested API');
+    if (!$var){ 
+	$var = $self;
+    }
+    for my $k (keys %$var){
+	my $type = ref($var);
+	if (UNIVERSAL::isa($var->{$k}, 'Math::BigFloat')){
+              $var->{$k} = 
+                  $self->format_amount({amount => $var->{$k}});
+	}
+	elsif ($type == 'HASH'){
+               $self->sanitize_for_display($var->{$k});
+        }
+    }
+    
+}
+
 # To be replaced with a generic interface to an Error class
 sub error {
 
