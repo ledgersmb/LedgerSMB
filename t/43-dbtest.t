@@ -5,7 +5,7 @@ if (!defined $ENV{LSMB_TEST_DB}){
 	plan skip_all => 'Skipping all.  Told not to test db.';
 }
 else {
-	plan tests => 55;
+	plan tests => 56;
 	if (defined $ENV{LSMB_NEW_DB}){
 		$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 	}
@@ -14,7 +14,7 @@ else {
         }
 }
 
-my @testscripts = qw(Account Business_type Company Draft Payment 
+my @testscripts = qw(Account Reconciliation Business_type Company Draft Payment 
 			Session Voucher);
 
 chdir 'sql/modules/test/';

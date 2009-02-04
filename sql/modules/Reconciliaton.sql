@@ -311,12 +311,12 @@ create or replace function reconciliation__add_entry(
 
 		IF in_count = 0 THEN
 			INSERT INTO cr_report_line
-			(report_id, scn, their_balance, our_balance)
+			(report_id, scn, their_balance, our_balance, clear_time)
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0);
+			(in_report_id, t_scn, in_amount, 0, in_date);
 		ELSIF in_count = 1 THEN
 			UPDATE cr_report_line
-			SET their_balance = in_amount
+			SET their_balance = in_amount, clear_time = in_date
 			WHERE n_scn = scn AND report_id = in_report_id
 				AND their_balance = 0;
 		ELSE 
@@ -335,7 +335,8 @@ create or replace function reconciliation__add_entry(
 
 			ELSIF in_count = 1 THEN -- EXECT MATCH
 				UPDATE cr_report_line
-				SET their_balance = in_amount
+				SET their_balance = in_amount, 
+					clear_time = in_date
 				WHERE in_scn = scn AND report_id = in_report_id
                                 	AND our_value = in_amount 
 					AND their_balance = 0;
@@ -347,6 +348,7 @@ create or replace function reconciliation__add_entry(
 
 				UPDATE cr_report_line
                                 SET their_balance = in_amount
+					clear_time = in_date
                                 WHERE id = lid;
 				
 			END IF;
@@ -358,11 +360,12 @@ create or replace function reconciliation__add_entry(
 
 		IF in_count = 0 THEN -- no match
 			INSERT INTO cr_report_line
-			(report_id, scn, their_balance, our_balance)
+			(report_id, scn, their_balance, our_balance, clear_time)
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0);
+			(in_report_id, t_scn, in_amount, 0, in_date);
 		ELSIF in_count = 1 THEN -- perfect match
 			UPDATE cr_report_line SET their_balance = in_amount
+					clear_time = in_date
 			WHERE report_id = in_report_id AND amount = in_amount
                         	AND their_balance = 0;
 		ELSE -- more than one match
@@ -371,6 +374,7 @@ create or replace function reconciliation__add_entry(
                         	AND their_balance = 0;
 
 			UPDATE cr_report_line SET their_balance = in_amount
+					clear_time = in_date
 			WHERE id = lid;
 			
 		END IF;
