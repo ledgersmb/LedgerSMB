@@ -347,7 +347,7 @@ create or replace function reconciliation__add_entry(
 				ORDER BY id ASC limit 1;
 
 				UPDATE cr_report_line
-                                SET their_balance = in_amount
+                                SET their_balance = in_amount,
 					clear_time = in_date
                                 WHERE id = lid;
 				
@@ -364,7 +364,7 @@ create or replace function reconciliation__add_entry(
 			VALUES 
 			(in_report_id, t_scn, in_amount, 0, in_date);
 		ELSIF in_count = 1 THEN -- perfect match
-			UPDATE cr_report_line SET their_balance = in_amount
+			UPDATE cr_report_line SET their_balance = in_amount,
 					clear_time = in_date
 			WHERE report_id = in_report_id AND amount = in_amount
                         	AND their_balance = 0;
@@ -373,7 +373,7 @@ create or replace function reconciliation__add_entry(
 			WHERE report_id = in_report_id AND amount = in_amount
                         	AND their_balance = 0;
 
-			UPDATE cr_report_line SET their_balance = in_amount
+			UPDATE cr_report_line SET their_balance = in_amount,
 					clear_time = in_date
 			WHERE id = lid;
 			
