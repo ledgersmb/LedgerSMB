@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 34;
+use Test::More tests => 35;
 
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
@@ -28,6 +28,7 @@ use_ok('LedgerSMB::PriceMatrix');
 use_ok('LedgerSMB::RC');
 use_ok('LedgerSMB::RP');
 use_ok('LedgerSMB::Auth');
+use_ok('LedgerSMB::DBObject::Reconciliation');
 use_ok('LedgerSMB::Sysconfig');
 use_ok('LedgerSMB::Tax');
 use_ok('LedgerSMB::Template');
