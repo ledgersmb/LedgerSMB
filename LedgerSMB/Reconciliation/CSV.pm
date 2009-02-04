@@ -4,7 +4,6 @@
 package LedgerSMB::Reconciliation::CSV;
 
 use base qw/LedgerSMB/;
-use DateTime;
 
 opendir (DCSV, 'LedgerSMB/Reconciliation/CSV/Formats');
 for my $format (readdir(DCSV)){
