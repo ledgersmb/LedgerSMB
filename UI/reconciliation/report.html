@@ -1,5 +1,5 @@
 <?lsmb PROCESS 'ui-header.html' ?>
-<?lsmb INCLUDE 'elements.html' ?>
+<?lsmb PROCESS 'elements.html' ?>
 
 <div class="listtop" id="title"><?lsmb text('Reconciliation Report') ?></div>
 <div class="info">
@@ -15,20 +15,25 @@
 	<?lsmb error ?>	
 </div>
 <?lsmb END ?>
-
+<?lsmb line = 0 ?>
+<form action="recon.pl" method="post">
 <table border=0>
-	
 	<tr class="listheading">
-		<th><?lsmb text('Clear date') ?></th>
+		<th><?lsmb text('Cleared') ?></th>
 		<th><?lsmb text('Transaction Type') ?></th>
+		<th><?lsmb text('Clear date') ?></th>
+		<th><?lsmb text('Posted Date') ?></th>
 		<th><?lsmb text('Our Balance') ?></th>
 		<th><?lsmb text('Their Balance') ?></th>
-		<th><?lsmb text('Error Corrections') ?></th>
-		<th><?lsmb text('Error Code') ?></th>
 		<th></th>
 	</tr>
 	
 	<?lsmb FOREACH row = report_lines ?>
+	<?lsmb INCLUDE input element_data = {
+		type = "hidden",
+		name = "id_$i",
+		value = "row.id"
+	} ?>
 		<?lsmb IF row.errorcode != 0 ?>
 		<tr style="background-color:pink;">
 		<?lsmb ELSIF row.id == corrected ?>
@@ -36,18 +41,41 @@
 		<?lsmb ELSE ?>
 		<tr>
 		<?lsmb END ?>
-			<td><?lsmb row.clear_time ?></td>
+			<?lsmb IF (row.our_balance == row.their_balance)
+				-?>
+				<?lsmb row.approved = 1 ?>
+				<?lsmb ELSE ?> <?lsmb row.approved = undef -?> 
+				<?lsmb END -?>
+			<td><?lsmb INCLUDE input element_data = {
+			type = "checkbox"
+			name = "approved_$row.id"
+			value = row.id
+			checked = row.approved
+			}
+			?></td>
 			<td><?lsmb row.transaction_type ?> </td>
+			<td><?lsmb row.clear_time ?></td>
+			<td><?lsmb row.post_date ?></td>
 			<td><?lsmb row.our_balance ?></td>
 			<td><?lsmb row.their_balance ?></td>
-			<td><?lsmb row.corrections  ?></td>
-			<?lsmb IF row.errorcode > 0 ?>
-			<td><?lsmb row.errorcode ?> <a href="/reconciliation.pl?action=corrections&amp;entry=<?lsmbrow.entry_id?>">View Corrections</a> </td>		
-			<?lsmb ELSE ?>
-			<td>0</td>
-			<?lsmb END ?>
-			<td><a href="/reconciliation.pl?action=correct&amp;report_id=<?lsmbrow.report_id?>&amp;entry_id=<?lsmbrow.entry_id?>">Correct</a></td>
 		</tr>
 	<?lsmb END ?>
 </table>
-
+<?lsmb INCLUDE input element_data = {
+	name = "report_id",
+	type = "hidden",
+	value = report_id,
+} ?>
+<?lsmb INCLUDE button element_data = {
+	name = "action",
+	text = text('Update'),
+	value = 'update_recon_set',
+	class = "submit"
+} ?>
+<?lsmb INCLUDE button element_data = {
+	name = "action",
+	text = text('Submit'),
+	value = 'submit_recon_set',
+	class = "submit"
+} ?>
+</body></html>

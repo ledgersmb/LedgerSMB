@@ -94,6 +94,11 @@ use LedgerSMB::Reconciliation::CSV;
 
 # don't need new
 
+sub update {
+    my $self = shift @_;
+    $self->exec_method(funcname=>'reconciliation__pending_transactions');
+}
+
 sub import_file {
     
     my $self = shift @_;
