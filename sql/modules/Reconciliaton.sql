@@ -385,7 +385,6 @@ BEGIN
 	SELECT CASE WHEN (select category FROM chart WHERE id = in_account_id)
 			IN ('A', 'E') THEN sum(a.amount) * -1
 		ELSE sum(a.amount) END
-	INTO out_val
 	FROM acc_trans a
 	JOIN (
 		SELECT id FROM ar
