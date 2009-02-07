@@ -7,6 +7,12 @@ CREATE TABLE cr_report (
     end_date date not null default now()
 );
 
+create table cr_approval (
+    report_id bigint references cr_report(id) primary key,
+    approved_by int references entity(id) not null,
+    approved_at timestamptz default now() not null
+);
+
 CREATE TABLE cr_report_line (
     id bigserial primary key not null,
     report_id int NOT NULL references cr_report(id),
@@ -21,6 +27,7 @@ CREATE TABLE cr_report_line (
     ledger_id int REFERENCES acc_trans(entry_id),
     voucher_id int REFERENCES voucher(id),
     overlook boolean not null default 'f',
+    cleared boolean not null default 'f',
     check (ledger_id is not null or voucher_id is not null)
 );
 
@@ -29,7 +36,18 @@ CREATE TABLE cr_coa_to_account (
     account text not null
 );
 
+CREATE OR REPLACE FUNCTION reconciliation__submit_set(
+	in_report_id int, in_line_ids int[]) RETURNS bool AS
+$$
+BEGIN
+	UPDATE cr_report set submitted = true where id = in_report_id;
 
+	UPDATE cr_report_line SET cleared = true
+	WHERE report_id = in_report_id AND id = ANY(in_line_ids);
+
+	RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
@@ -57,23 +75,6 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         in_user TEXT;
     BEGIN
         in_user := current_user;
-        select * into current_row from cr_report_line 
-        where report_id = in_report_id;
-
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'Fatal Error: Pending report % not found', in_report_id;
-        END IF;
-        
-        IF current_row.user = in_user THEN
-            RAISE EXCEPTION 'Fatal Error: User % cannot self-approve report!', in_user;
-        END IF;
-        
-        SELECT INTO total_errors count(*) from cr_report_line 
-        where report_id = in_report_id and errorcode <> 0;
-        
-        IF total_errors <> 0 THEN
-            RAISE EXCEPTION 'Fatal Error: Cannot approve while % uncorrected errors remain.', total_errors;
-        END IF;
         
         -- so far, so good. Different user, and no errors remain. Therefore, 
         -- we can move it to completed reports.
@@ -83,8 +84,10 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         -- filed it. This may require clunkier syntax..
         
         -- 
-        
-        update cr_report set approved = 't', clear_time = now() 
+        insert into cr_report_approval (report_id, approved_by) 
+	values (in_report_id, 
+		(select entity_id from users where username = SESSION_USER));
+        update cr_report set approved = 't'
 	where id = in_report_id;
         
         return 1;        
@@ -296,73 +299,33 @@ CREATE OR REPLACE FUNCTION reconciliation__get_total (in_report_id INT) returns 
 
 $$ language 'plpgsql';
 
---CREATE OR REPLACE FUNCTION reconciliation__search (
---    in_date_begin DATE, 
---    in_date_end DATE, 
---    in_account TEXT,
---    in_status TEXT
---) RETURNS setof cr_report AS $$
+CREATE OR REPLACE FUNCTION reconciliation__search
+(in_date_from date, in_date_to date, 
+	in_balance_from numeric, in_balance_to numeric, 
+	in_chart_id int, in_submitted bool, in_approved bool) 
+returns setof cr_report AS
+$$
+DECLARE report cr_report;
+BEGIN
+	FOR report IN
+		SELECT * FROM cr_report
+		WHERE 
+			(in_date_from IS NULL OR in_date_from <= end_date) and
+			(in_date_to IS NULL OR in_date_to >= end_date) AND
+			(in_balance_from IS NULL 
+				or in_balance_from <= their_total ) AND
+			(in_balance_to IS NULL 
+				OR in_balance_to >= their_total) AND
+			(in_chart_id IS NULL OR in_chart_id = chart_id) AND
+			(in_submitted IS NULL or in_submitted = submitted) AND
+			(in_approved IS NULL OR in_approved = approved)
+		ORDER BY end_date, their_total
+	LOOP
+		RETURN NEXT report;
+	END LOOP; 
+END;
+$$ language plpgsql;
 
---    DECLARE
---        row reports;
-----        statement text;
---        where_stmt text;
---        v_status BOOLEAN;
---        v_accum NUMERIC;
---    BEGIN
---        
---        if in_status = "pending" then
---            v_status = 'f'::bool;
---        ELSIF in_status = "approved" THEN
---        
---            v_status = 't'::bool;
---        END IF;
---        
---        IF in_date_begin IS NOT NULL
---            or in_date_end IS NOT NULL
---            or in_account IS NOT NULL
---            or v_status IS NOT NULL
---        THEN
---            statement = 'select pr.* from reports pr ';
-----            statement = statement || $s$join acc_trans at on pr.ledger_id = at.entry_id $s$;
---            
---            IF in_account IS NOT NULL THEN
---                
---                statement = statement || $s$join chart c on at.chart_id = c.id $s$;
---                where_stmt = $s$c.accno =~ $s$ || quote_literal(in_account) || $s$ AND $s$;
---            END IF;
---            
---            IF in_date_begin IS NOT NULL THEN
---                where_stmt = where_stmt || $s$insert_time >= $s$ || quote_literal(in_date_begin) || $s$ AND $s$;
---            END IF;
---            
---            IF in_date_end IS NOT NULL THEN
---                where_stmt = where_stmt || $s$insert_time <= $s$ || quote_literal(in_date_end) || $s$ AND $s$;
---            END IF;
---            
---            IF in_status IS NOT NULL THEN
---                
---                if v_status == 't'::bool THEN
-----                    where_stmt = where_stmt || $s$ approved = 't'::bool AND $s$;
---                ELSIF v_status == 'f'::bool THEN
---                    where_stmt = where_stmt || $s$ approved = 'f'::bool AND $s$;
---                END IF;
---            
---            END IF;
---            
---            FOR row in EXECUTE statement LOOP
---                RETURN NEXT row;
---            END LOOP;
---        ELSE
---        
---            FOR row IN SELECT * FROM reports LOOP
---                RETURN NEXT row;
---            END LOOP;
---        
---        END IF;
---    END;
---$$ language 'plpgsql';
---
 create type recon_accounts as (
     name text,
     accno text,

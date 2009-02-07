@@ -5,21 +5,70 @@
         
 <div class="body">
         <form name="reconciliation__search" method="post" action="recon.pl" id="reconciliation__search">
-            <input type="hidden" name="action" value="<?lsmb mode?>_search">
             <div>
-                Date:<br>
-                <input type="input" size="15" name="date_begin" alt="&lt;?lsmb date_format ?&gt;"> to <input type="input" size="15" name="date_end" alt="&lt;?lsmb date_format ?&gt;"><br>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Date From'), #'
+			type = 'text',
+			class = 'date',
+			size = 12,
+			value = date_from,
+			name = 'date_from'
+		} ?>
+		<?lsmb INCLUDE input element_data = {
+			label = text('To:'), 
+			type = 'text',
+			class = 'date',
+			size = 12,
+			value = date_to,
+			name = 'date_to'
+		} ?>
             </div>
             <div>
-                Account:<br>
-                <select name="account">
-                <?lsmb FOR account IN accounts?>
-                    <option value="<?lsmb account.id?>"><?lsmb account.name?></option>
-                <?lsmb END?>
-                </select>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Amount From'), #'
+			type = 'text',
+			class = 'money',
+			size = 12,
+			value = amount_from,
+			name = 'amount_from'
+		} ?>
+		<?lsmb INCLUDE input element_data = {
+			label = text('To:'), 
+			type = 'text',
+			class = 'money',
+			size = 12,
+			value = amount_to,
+			name = 'amount_to'
+		} ?>
             </div>
             <div>
-                <input type="submit" value="Search!">
+            <div>
+		<?lsmb INCLUDE select element_data = {
+			label = text('Account:'),
+			class = "coa-list",
+			options = account_list,
+			text_attr = 'account',
+			value_attr = 'id'
+		} ?>
             </div>
+            <div>
+		<?lsmb INCLUDE input element_data = {
+			type = "hidden",
+			name = "approved",
+			value = approved
+		} ?>
+		<?lsmb INCLUDE input element_data = {
+			type = "hidden",
+			name = "submitted",
+			value = submitted
+		} ?>
+            </div>
+		<?lsmb INCLUDE button element_data = {
+			type = "submit",
+			name = "action",
+			text = text('Search'),
+			value = 'get_results'
+		} ?>
         </form>
+
 </div>

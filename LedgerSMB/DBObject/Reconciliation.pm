@@ -99,6 +99,23 @@ sub update {
     $self->exec_method(funcname=>'reconciliation__pending_transactions');
 }
 
+sub submit {
+    my $self = shift @_;
+    $i = 1;
+    my $ids = ();
+    $self->{line_ids} = '{';
+    while (my $id = $self->{"id_$i"}){
+        if ($self->{"cleared_$id"}){
+            push @$ids, $id;
+            $self->{line_ids} =~ s/$/$id,/;
+        }
+        ++ $i;
+    }
+    $self->{line_ids} =~ s/,$/}/; 
+    $self->exec_method(funcname=>'reconciliation__submit_set');
+    $self->{dbh}->commit; 
+}
+
 sub import_file {
     
     my $self = shift @_;
@@ -235,7 +252,6 @@ sub search {
     my $type = shift;
     return $self->exec_method(
         funcname=>'reconciliation__search',
-        args=>[$self->{date_begin}, $self->{date_end}, $self->{account}, $self->{status}]
     );
 }
 
@@ -269,8 +285,9 @@ sub get {
     );
 
     $our_balance = $ref->{reconciliation__get_cleared_balance};
+    $self->{beginning_balance} = $our_balance;
     for my $line (@{$self->{report_lines}}){
-        $our_balance += $line->{our_balance}
+        $our_balance += $line->{our_balance} if $self->{"cleared_$line->{id}"};
     } 
     $self->{our_total} = $our_balance;
     $self->{format_amount} = sub { return $self->format_amount(@_); }

@@ -39,4 +39,5 @@ sub select_criteria {
     $template->render($report);
 }    
 
+
 1;

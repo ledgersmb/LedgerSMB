@@ -78,52 +78,84 @@ sub update_recon_set {
     _display_report($recon);
 }
 
-sub pending_search {
-    
-    &search(shift @_,"pending");
-}
-
-sub approved_search {
-    
-    &search(shift @_,"approved");
-}
-
-sub search {
-    my ($request,$type) = @_;
-    
-    if ($request->type() eq "POST") {
-        # WE HAS DATUMS
-        # INTENTIONAL BAD PLURALIZATION OF LATIN
-
-        my $search = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
-        my $results = $search->search($type);
-        my $total = $search->total();
-    
-    
-        my $template = LedgerSMB::Template->new( 
+sub submit_recon_set {
+    my ($request) = shift;
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
+    $recon->submit();
+    my $template = LedgerSMB::Template->new( 
             user => $user, 
-    	    template => 'reconciliation/report', 
+    	    template => 'reconciliation/submitted', 
     	    language => $user->{language}, 
             format => 'HTML',
             path=>"UI");
-        return $template->render({report => $results, total => $total});
+    return $template->render($recon);
+    
+}
+sub get_results {
+    my ($request) = @_;
+        my $search = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
+        my @results = $search->search();
+        my @accounts = $search->get_accounts();
+        my $act_hash = {};
+        for my $act (@accounts){
+            $act_hash->{"$act->{id}"} = $act->{account};
+        }
+        for my $row (@results){
+            $row->{account} = $act_hash->{"$row->{chart_id}"};
+        }
+        my $base_url = "recon.pl?action=update_recon_set";
+        $columns = {
+            account     => $request->{_locale}->text('Account'),	
+            their_total => $request->{_locale}->text('Balance'),
+            end_date    => $request->{_locale}->text('Statement Date'),
+            submitted   => $request->{_locale}->text('Submitted'),
+            approved    => $request->{_locale}->text('Approved'), 
+        };
+	my $cols = [];
+	@$cols = qw(account end_date their_total approved submitted);
+	my $recon =$search;
+	for my $row(@results){
+            $row->{their_total} = $recon->format_amount(
+		{amount => $row->{their_total}, money => 1}); 
+            $row->{end_date} = {
+                text => $row->{end_date}, 
+                href => "$base_url&report_id=$row->{id}"
+            };
+        }
+	$recon->{_results} = \@results;
+        $recon->debug({file => '/tmp/recon'});
+        $recon->{title} = $request->{_locale}->text('Reconciliation Sets');
+        my $template = LedgerSMB::Template->new( 
+            user => $user, 
+    	    template => 'form-dynatable', 
+    	    language => $user->{language}, 
+            format => 'HTML',
+            path=>"UI");
+        return $template->render({
+		form     => $recon,
+		heading  => $columns,
+        	hiddens  => $recon,
+		columns  => $cols,
+		rows     => \@results
+	});
         
+}
+sub search {
+    my ($request,$type) = @_;
+    
+
         
-    } else {
         my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
         
-        
+        @{$recon->{account_list}} = $recon->get_accounts();
         my $template = LedgerSMB::Template->new(
             user => $user,
-            template=>'reconciliation/search',
+            template=>'search',
             language=>$user->{language},
             format=>'HTML',
-            path=>"UI",
-            mode=>$type,
-            accounts=>$recon->get_accounts()
+            path=>"UI/reconciliation",
         );
         return $template->render();
-    }
 }
 
 =pod
@@ -233,8 +265,9 @@ it has been created.
 =cut
 
 sub _display_report {
-   my $recon = shift;
+        my $recon = shift;
         $recon->get();
+        $recon->{can_approve} = $recon->is_allowed_role('recon_supervisor');
         $template = LedgerSMB::Template->new( 
             user=> $user,
             template => 'reconciliation/report', 
@@ -243,13 +276,15 @@ sub _display_report {
             path=>"UI"
         );
         for my $l (@{$recon->{report_lines}}){
-            $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}});
-            $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}});
+            $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}, money => 1});
+            $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}, money => 1});
         }
 	$recon->{their_total} = $recon->format_amount(
-		{amount => $recon->{their_total}});
+		{amount => $recon->{their_total}, money => 1});
 	$recon->{our_total} = $recon->format_amount(
-		{amount => $recon->{our_total}});
+		{amount => $recon->{our_total}, money => 1});
+	$recon->{beginning_balance} = $recon->format_amount(
+		{amount => $recon->{beginning_balance}, money => 1});
 
         return $template->render($recon);
 }
