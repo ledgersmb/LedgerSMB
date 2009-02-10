@@ -267,7 +267,7 @@ it has been created.
 sub _display_report {
         my $recon = shift;
         $recon->get();
-        $recon->{can_approve} = $recon->is_allowed_role('recon_supervisor');
+        $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['recon_supervisor']});
         $template = LedgerSMB::Template->new( 
             user=> $user,
             template => 'reconciliation/report', 
