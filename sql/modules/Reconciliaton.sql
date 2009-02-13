@@ -224,17 +224,17 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
     BEGIN
 		INSERT INTO cr_report_line (report_id, scn, their_balance, 
 			our_balance, "user", voucher_id, ledger_id, post_date)
-		SELECT in_report_id, ac.source, 0, sum(amount) * -1 AS amount,
+		SELECT in_report_id, case when gl.table = 'gl' then gl.ref else ac.source end, 0, sum(amount) * -1 AS amount,
 				(select entity_id from users 
 				where username = CURRENT_USER),
 			ac.voucher_id, min(ac.entry_id), ac.transdate
 		FROM acc_trans ac
 		JOIN transactions t on (ac.trans_id = t.id)
-		JOIN (select id, entity_credit_account, 'ar' as table FROM ar
+		JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar
 			UNION
-		      select id, entity_credit_account, 'ap' as table FROM ap
+		      select id, entity_credit_account::text, 'ap' as table FROM ap
 			UNION
-		      select id, NULL, 'gl' as table FROM gl) gl
+		      select id, reference, 'gl' as table FROM gl) gl
 			ON (gl.table = t.table_name AND gl.id = t.id)
 		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
 			AND ((rl.ledger_id = ac.trans_id 
@@ -243,8 +243,8 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
 		WHERE ac.cleared IS FALSE
 			AND ac.chart_id = in_chart_id
 			AND ac.transdate <= in_end_date
-		GROUP BY gl.entity_credit_account, ac.source, ac.transdate,
-			ac.memo, ac.voucher_id
+		GROUP BY gl.ref, ac.source, ac.transdate,
+			ac.memo, ac.voucher_id, gl.table
 		HAVING count(rl.id) = 0;
     RETURN in_report_id;
     END;

@@ -286,11 +286,28 @@ sub get {
 
     $our_balance = $ref->{reconciliation__get_cleared_balance};
     $self->{beginning_balance} = $our_balance;
+    $self->{cleared_total} = 0;
+    $self->{outstanding_total} = 0;
+
     for my $line (@{$self->{report_lines}}){
-        $our_balance += $line->{our_balance} if $self->{"cleared_$line->{id}"};
+        if ($self->{"cleared_$line->{id}"}){
+            $our_balance += $line->{our_balance};
+            $self->{cleared_total} += $line->{our_balance};
+		print STDERR "$self->{cleared_total}\n"
+        } else {
+            $self->{outstanding_total} += $line->{our_balance};
+		print STDERR "$self->{outstanding_total}\n"
+        } 
     } 
     $self->{our_total} = $our_balance;
-    $self->{format_amount} = sub { return $self->format_amount(@_); }
+    @{$self->{accounts}} = $self->get_accounts;
+    for (@{$self->{accounts}}){
+       if ($_->{id} == $self->{chart_id}){
+           $self->{account} = $_->{name};
+       }
+    }
+    $self->debug({file => '/tmp/recon'});
+    $self->{format_amount} = sub { return $self->format_amount(@_); };
 }
 
 sub get_accounts {

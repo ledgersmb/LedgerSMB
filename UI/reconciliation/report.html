@@ -26,10 +26,14 @@
 <?lsmb END ?>
 <?lsmb i = 0 ?>
 <table border=0>
+	<tr class="listtop">
+		<th colspan=7><?lsmb text('Cleared Transactions') ?></th>
+	</tr>
 	<tr class="listheading">
 		<th><?lsmb text('Cleared') ?></th>
 		<th><?lsmb text('Transaction Type') ?></th>
 		<th><?lsmb text('Clear date') ?></th>
+		<th><?lsmb text('Source') ?></th>
 		<th><?lsmb text('Posted Date') ?></th>
 		<th><?lsmb text('Our Balance') ?></th>
 		<th><?lsmb text('Their Balance') ?></th>
@@ -37,6 +41,13 @@
 	</tr>
 	
 	<?lsmb FOREACH row = report_lines ?>
+			<?lsmb IF (row.our_balance == row.their_balance) or
+				row.cleared or ${"cleared_$row.id"}
+				-?>
+				<?lsmb row.cleared = 'checked' ?>
+				<?lsmb ELSE ?> <?lsmb row.cleared = undef -?> 
+				<?lsmb END -?>
+	<?lsmb IF row.cleared == 'checked' ?>
 	<?lsmb INCLUDE input element_data = {
 		type = "hidden",
 		name = "id_$i",
@@ -49,12 +60,6 @@
 		<?lsmb ELSE ?>
 		<tr>
 		<?lsmb END ?>
-			<?lsmb IF (row.our_balance == row.their_balance) or
-				row.cleared or ${"cleared_$row.id"}
-				-?>
-				<?lsmb row.cleared = 'checked' ?>
-				<?lsmb ELSE ?> <?lsmb row.cleared = undef -?> 
-				<?lsmb END -?>
 			<td><?lsmb INCLUDE input element_data = {
 			type = "checkbox"
 			name = "cleared_$row.id"
@@ -64,24 +69,76 @@
 			?></td>
 			<td><?lsmb row.transaction_type ?> </td>
 			<td><?lsmb row.clear_time ?></td>
+			<td><?lsmb row.scn ?> </td>
 			<td><?lsmb row.post_date ?></td>
 			<td><?lsmb row.our_balance ?></td>
 			<td><?lsmb row.their_balance ?></td>
 		</tr>
 	<?lsmb i = i + 1 -?>
+	<?lsmb END ?>
 	<?lsmb END -?>
+	<tr class="subtital">
+		<th colspan=5><?lsmb text('Total') ?></th><td><?lsmb cleared_total ?></td>
+	</tr>
+	<tr class="listheading">
+		<th colspan=7><?lsmb text('Outstanding Transactions') ?></th>
+	</tr>
+	<tr class="listheading">
+		<th><?lsmb text('Cleared') ?></th>
+		<th><?lsmb text('Transaction Type') ?></th>
+		<th><?lsmb text('Clear date') ?></th>
+		<th><?lsmb text('Source') ?></th>
+		<th><?lsmb text('Posted Date') ?></th>
+		<th><?lsmb text('Our Balance') ?></th>
+		<th><?lsmb text('Their Balance') ?></th>
+		<th></th>
+	</tr>
+	<?lsmb FOREACH row = report_lines ?>
+	<?lsmb IF row.cleared != 'checked' ?>
+	<?lsmb INCLUDE input element_data = {
+		type = "hidden",
+		name = "id_$i",
+		value = row.id
+	} ?>
+		<?lsmb IF row.errorcode != 0 ?>
+		<tr style="background-color:pink;">
+		<?lsmb ELSIF row.id == corrected ?>
+		<tr style="background-color:yellow;">		
+		<?lsmb ELSE ?>
+		<tr>
+		<?lsmb END ?>
+			<td><?lsmb INCLUDE input element_data = {
+			type = "checkbox"
+			name = "cleared_$row.id"
+			value = row.id
+			checked = row.cleared
+			}
+			?></td>
+			<td><?lsmb row.transaction_type ?> </td>
+			<td><?lsmb row.clear_time ?></td>
+			<td><?lsmb row.scn ?> </td>
+			<td><?lsmb row.post_date ?></td>
+			<td><?lsmb row.our_balance ?></td>
+			<td><?lsmb row.their_balance ?></td>
+		</tr>
+	<?lsmb i = i + 1 -?>
+	<?lsmb END ?>
+	<?lsmb END -?>
+	<tr class="subtital">
+		<th colspan=5><?lsmb text('Total') ?></th><td><?lsmb outstanding_total ?></td>
+	</tr>
 </table>
 <?lsmb INCLUDE input element_data = {
 	name = "report_id",
 	type = "hidden",
 	value = report_id,
-} ?>
+} ?><?lsmb IF NOT submitted ?>
 <?lsmb INCLUDE button element_data = {
 	name = "action",
 	text = text('Update'),
 	value = 'update_recon_set',
 	class = "submit"
-} ?><?lsmb IF NOT submitted ?>
+} ?>
 <?lsmb INCLUDE button element_data = {
 	name = "action",
 	text = text('Submit'),
