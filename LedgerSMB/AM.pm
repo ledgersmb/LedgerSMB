@@ -2308,11 +2308,10 @@ sub post_yearend {
     $uid .= "$$";
 
     $query = qq|
-		INSERT INTO gl (reference, employee_id)
-		     VALUES (?, (SELECT id FROM employee
-		                  WHERE login = ?))|;
+		INSERT INTO gl (reference, person_id)
+		     VALUES (?, (SELECT id FROM person WHERE entity_id = (select entity_id from users where username = current_user)))|;
 
-    $dbh->prepare($query)->execute( $uid, $form->{login} )
+    $dbh->prepare($query)->execute( $uid)
       || $form->dberror($query);
 
     $query = qq|
