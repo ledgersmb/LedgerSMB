@@ -174,6 +174,16 @@ sub new_report {
     
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
+    $self->add_entries($entries);
+   
+    $self->{dbh}->commit;
+    
+    return ($report_id, $entries); # returns the report ID.
+}
+
+sub add_entries {
+    my $self = shift;
+    my ($entries) = @_;
     for my $entry ( @{$entries} ) {
         
         # Codes:
@@ -198,10 +208,6 @@ sub new_report {
         );
         $entry{report_id} = $report_id;        
     }
-   
-    $self->{dbh}->commit;
-    
-    return ($report_id, $entries); # returns the report ID.
 }
 
 sub correct_entry {

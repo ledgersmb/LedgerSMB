@@ -74,6 +74,8 @@ status
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
+    $recon->add_entries($recon->import_file());
+    $recon->{dbh}->commit;
     $recon->update();
     _display_report($recon);
 }
@@ -279,8 +281,11 @@ sub _display_report {
             $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}, money => 1});
             $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}, money => 1});
         }
+	$recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
         $recon->{cleared_total} = $recon->format_amount({amount => $recon->{cleared_total}, money => 1});
         $recon->{outstanding_total} = $recon->format_amount({amount => $recon->{outstanding_total}, money => 1});
+	$recon->{out_of_balance} = $recon->format_amount(
+		{amount => $recon->{out_of_balance}, money => 1});
 	$recon->{their_total} = $recon->format_amount(
 		{amount => $recon->{their_total}, money => 1});
 	$recon->{our_total} = $recon->format_amount(
