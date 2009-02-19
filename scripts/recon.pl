@@ -119,6 +119,7 @@ sub get_results {
 	@$cols = qw(select account end_date their_total approved submitted);
 	my $recon =$search;
 	for my $row(@results){
+            
             my $act = undef;
             for (@acts){
                 if ($_->{id} == $row->{chart_id}){
@@ -390,19 +391,19 @@ sub approve {
         
         # we need a report_id for this.
         
-        my $recon = LedgerSMB::DBObject::Reconciliation->new(base => request, copy=> 'all');
+        my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy=> 'all');
 
         my $template;
         my $code = $recon->approve($request->{report_id});
         if ($code == 0) {
 
             $template = LedgerSMB::Template->new( user => $user, 
-        	template => 'reconciliation/approve', language => $user->{language}, 
+        	template => 'reconciliation/approved', language => $user->{language}, 
                 format => 'HTML',
                 path=>"UI"
                 );
                 
-            return $template->render();
+            return $template->render($recon);
         }
         else {
             
@@ -415,12 +416,7 @@ sub approve {
                 format => 'HTML',
                 path=>"UI"
                 );
-            return $template->render(
-                {
-                    entries=>$recon->get_report($request->{report_id}),
-                    total=>$recon->get_total($request->{report_id}),
-                    error_code => $code
-                }
+            return $template->render($recon
             );
         }
     }

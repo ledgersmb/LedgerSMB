@@ -145,7 +145,7 @@ sub approve {
     # the user should be embedded into the $self object.
     my $report_id = shift @_;
     
-    my $code = $self->exec_method(funcname=>'report_approve', args=>[$report_id]); # user 
+    my $code = $self->exec_method(funcname=>'reconciliation__report_approve', args=>[$report_id]); # user 
     
     if ($code == 0) {  # no problem.
         return $code;
@@ -155,6 +155,7 @@ sub approve {
         
         $self->error("User $self->{user}->{name} cannot approve report, must be a different user.");
     }
+    $self->{dbh}->commit;
 }
 
 sub new_report {
@@ -223,13 +224,6 @@ sub correct_entry {
         args=>[$report_id, $scn, $new_amount]
     );
     return $code[0]->{'correct'}; 
-}
-
-sub get_report {
-    
-    my $self = shift @_;
-    
-    return $self->exec_method(funcname=>'reconciliation__report', args=>[$self->{report_id}]);    
 }
 
 sub get_corrections {

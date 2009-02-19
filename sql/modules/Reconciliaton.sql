@@ -73,6 +73,7 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         completed cr_report_line;
         total_errors INT;
         in_user TEXT;
+	ac_entries int[];
     BEGIN
         in_user := current_user;
         
@@ -84,16 +85,40 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         -- filed it. This may require clunkier syntax..
         
         -- 
-        insert into cr_report_approval (report_id, approved_by) 
-	values (in_report_id, 
-		(select entity_id from users where username = SESSION_USER));
+	ac_entries := '{}';
         update cr_report set approved = 't'
 	where id = in_report_id;
+
+	FOR current_row IN 
+		select as_array(ac.entry_id) as entries
+		FROM acc_trans ac
+		JOIN transactions t on (ac.trans_id = t.id)
+		JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar
+			UNION
+		      select id, entity_credit_account::text, 'ap' as table FROM ap
+			UNION
+		      select id, reference, 'gl' as table FROM gl) gl
+			ON (gl.table = t.table_name AND gl.id = t.id)
+		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
+			AND ((rl.ledger_id = ac.trans_id 
+				AND ac.voucher_id IS NULL) 
+				OR (rl.voucher_id = ac.voucher_id)))
+		WHERE ac.cleared IS FALSE
+			AND ac.chart_id = (select chart_id from cr_report where id = in_report_id)
+		GROUP BY gl.ref, ac.source, ac.transdate,
+			ac.memo, ac.voucher_id, gl.table
+		HAVING count(rl.report_id) > 0
+	LOOP
+		ac_entries := ac_entries || current_row.entries;
+	END LOOP;
+
+	UPDATE acc_trans SET cleared = TRUE 
+	where entry_id = any(ac_entries);
         
         return 1;        
     END;
 
-$$ language 'plpgsql';
+$$ language 'plpgsql' security definer;
 
 CREATE OR REPLACE FUNCTION reconciliation__new_report_id (in_chart_id int, 
 
