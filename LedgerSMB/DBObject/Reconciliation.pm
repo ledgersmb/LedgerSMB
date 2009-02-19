@@ -296,13 +296,11 @@ sub get {
     $self->{outstanding_total} = 0;
 
     for my $line (@{$self->{report_lines}}){
-        if ($self->{"cleared_$line->{id}"}){
+        if ($self->{"cleared_$line->{id}"} or $line->{cleared}){
             $our_balance += $line->{our_balance};
             $self->{cleared_total} += $line->{our_balance};
-		print STDERR "$self->{cleared_total}\n"
         } else {
             $self->{outstanding_total} += $line->{our_balance};
-		print STDERR "$self->{outstanding_total}\n"
         } 
     } 
     $self->{our_total} = $our_balance;

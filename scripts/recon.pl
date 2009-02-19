@@ -74,7 +74,7 @@ status
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
-    $recon->add_entries($recon->import_file());
+    $recon->add_entries($recon->import_file()) if !$recon->{submitted};
     $recon->{dbh}->commit;
     $recon->update();
     _display_report($recon);
@@ -107,6 +107,7 @@ sub get_results {
         }
         my $base_url = "recon.pl?action=update_recon_set";
         $columns = {
+            "select" => $request->{_locale}->text('Select'),	
             account     => $request->{_locale}->text('Account'),	
             their_total => $request->{_locale}->text('Balance'),
             end_date    => $request->{_locale}->text('Statement Date'),
@@ -114,9 +115,18 @@ sub get_results {
             approved    => $request->{_locale}->text('Approved'), 
         };
 	my $cols = [];
-	@$cols = qw(account end_date their_total approved submitted);
+	my @acts = $search->get_accounts;
+	@$cols = qw(select account end_date their_total approved submitted);
 	my $recon =$search;
 	for my $row(@results){
+            my $act = undef;
+            for (@acts){
+                if ($_->{id} == $row->{chart_id}){
+                    $act = $_->{name};
+                }
+                last if $act;
+            }
+            $row->{account} = $act;
             $row->{their_total} = $recon->format_amount(
 		{amount => $row->{their_total}, money => 1}); 
             $row->{end_date} = {
@@ -150,6 +160,7 @@ sub search {
         my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
         
         @{$recon->{account_list}} = $recon->get_accounts();
+	unshift @{$recon->{account_list}}, {id => '', name => '' };
         my $template = LedgerSMB::Template->new(
             user => $user,
             template=>'search',
@@ -157,7 +168,7 @@ sub search {
             format=>'HTML',
             path=>"UI/reconciliation",
         );
-        return $template->render();
+        return $template->render($recon);
 }
 
 =pod
