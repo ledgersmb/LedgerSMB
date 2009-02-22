@@ -139,11 +139,11 @@ sub post_invoice {
     if ( !$form->{id} ) {
 
         $query = qq|
-			INSERT INTO ap (invnumber, employee_id)
-			VALUES ('$uid', (SELECT id FROM employee
-			                  WHERE login = ?))|;
+			INSERT INTO ap (invnumber, person_id, entity_credit_account)
+			VALUES ('$uid', (SELECT entity_id FROM users
+			                  WHERE username = ?), ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{login} ) || $form->dberror($query);
+        $sth->execute( $form->{login}, $form->{vendor_id} ) || $form->dberror($query);
 
         $query = qq|SELECT id FROM ap WHERE invnumber = '$uid'|;
         $sth   = $dbh->prepare($query);
@@ -760,7 +760,6 @@ sub post_invoice {
 		       ordnumber = ?,
 		       quonumber = ?,
 		       transdate = ?,
-		       entity_credit_account = ?,
 		       amount = ?,
 		       netamount = ?,
 		       paid = ?,
@@ -774,7 +773,6 @@ sub post_invoice {
 		       intnotes = ?,
 		       curr = ?,
 		       department_id = ?,
-		       employee_id = ?,
 		       language_code = ?,
 		       ponumber = ?
 		 WHERE id = ?|;
@@ -782,11 +780,11 @@ sub post_invoice {
     $sth = $dbh->prepare($query);
     $sth->execute(
         $form->{invnumber},     $form->{ordnumber},     $form->{quonumber},
-        $form->{transdate},     $form->{vendor_id},     $invamount,
+        $form->{transdate},     $invamount,
         $invnetamount,          $form->{paid},          $form->{datepaid},
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
-        $form->{currency},      $form->{department_id}, $form->{employee_id},
+        $form->{currency},      $form->{department_id}, 
         $form->{language_code}, $form->{ponumber},      $form->{id}
     ) || $form->dberror($query);
 

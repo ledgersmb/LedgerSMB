@@ -41,6 +41,7 @@ sub price_matrix_query {
     my $sth;
 
     my @queryargs;
+    my $transdate = $form->{dbh}->quote( $form->{transdate} );
     my $entity_id     = $form->{dbh}->quote( $form->{entity_id} );
 
     if ( $form->{customer_id} ) {

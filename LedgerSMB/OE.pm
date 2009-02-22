@@ -263,14 +263,17 @@ sub save {
     my $quotation;
     my $ordnumber;
     my $numberfld;
+    my $class_id;
     $form->{vc} = ( $form->{vc} eq 'customer' ) ? 'customer' : 'vendor';
     if ( $form->{type} =~ /_order$/ ) {
         $quotation = "0";
         $ordnumber = "ordnumber";
-        $numberfld =
-          ( $form->{vc} eq 'customer' )
-          ? "sonumber"
-          : "ponumber";
+	if ($form->{vc} eq 'customer'){
+             $numberfld = "sonumber";
+             $class_id = 1;
+        } else {
+             $numberfld = "ponumber";
+        }
     }
     else {
         $quotation = "1";
@@ -354,12 +357,12 @@ sub save {
 				entity_id, reqdate, shippingpoint, shipvia,
 				notes, intnotes, curr, closed, department_id,
 				person_id, language_code, ponumber, terms,
-				quotation)
+				quotation, oe_class_id)
 			VALUES 
 				($form->{id}, ?, ?, ?, ?,
 				?, ?, ?, ?,
 				?, ?, ?, ?, ?,
-				?, ?, ?, ?)|;
+				?, ?, ?, ?, ?)|;
         @queryargs = (
             $form->{ordnumber},     $form->{quonumber},
             $form->{transdate},     $form->{entity_id}, $form->{reqdate},
@@ -368,7 +371,7 @@ sub save {
             $form->{currency},      $form->{closed},
             $form->{department_id}, $form->{person_id},
             $form->{language_code}, $form->{ponumber},
-            $form->{terms},         $quotation
+            $form->{terms},         $quotation, $class_id
         );
         $sth = $dbh->prepare($query);
         $sth->execute(@queryargs) || $form->dberror($query);
@@ -569,7 +572,7 @@ sub save {
 				closed = ?, 
 				quotation = ?, 
 				department_id = ?, 
-				employee_id = ?, 
+				person_id = ?, 
 				language_code = ?, 
 				ponumber = ?, 
 				terms = ?

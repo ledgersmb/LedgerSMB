@@ -864,9 +864,9 @@ sub post_invoice {
             &reverse_invoice( $dbh, $form );
         }
         else {
-            $query = qq|INSERT INTO ar (id) VALUES (?)|;
+            $query = qq|INSERT INTO ar (id, entity_credit_account) VALUES (?, ?)|;
             $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
+            $sth->execute( $form->{id}, $form->{customer_id}) || $form->dberror($query);
         }
 
     }
@@ -877,10 +877,10 @@ sub post_invoice {
     if ( !$form->{id} ) {
 
         $query = qq|
-			INSERT INTO ar (invnumber, person_id) 
-			     VALUES ('$uid', ?)|;
+			INSERT INTO ar (invnumber, person_id, entity_credit_account) 
+			     VALUES ('$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{employee_id} ) || $form->dberror($query);
+        $sth->execute( $form->{employee_id}, $form->{customer_id}) || $form->dberror($query);
 
         $query = qq|SELECT id FROM ar WHERE invnumber = '$uid'|;
         $sth   = $dbh->prepare($query);
