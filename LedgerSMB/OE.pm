@@ -77,18 +77,18 @@ sub transactions {
     }
     my $query = qq|
 		SELECT o.id, o.ordnumber, o.transdate, o.reqdate,
-			o.amount, c.legal_name AS name, o.netamount, o.entity_id AS $form->{vc}_id,
+			o.amount, c.legal_name AS name, o.netamount, o.entity_credit_account AS $form->{vc}_id,
 			ex.$rate AS exchangerate, o.closed, o.quonumber, 
 			o.shippingpoint, o.shipvia,
 			pe.first_name \|\| ' ' \|\| pe.last_name AS employee, 
 			pm.first_name \|\| ' ' \|\| pm.last_name AS manager, 
 			o.curr, o.ponumber
 		FROM oe o
-		JOIN $form->{vc} ct ON (o.entity_id = ct.id)
+		JOIN entity_credit_account ct ON (o.entity_credit_account = ct.id)
 		JOIN company c ON (c.entity_id = ct.entity_id)
 		LEFT JOIN person pe ON (o.person_id = pe.id)
 		LEFT JOIN employee e ON (pe.entity_id = e.entity_id)
-		LEFT JOIN person pm ON (e.managerid = pm.id)
+		LEFT JOIN person pm ON (e.manager_id = pm.id)
 		LEFT JOIN employee m ON (pm.entity_id = m.entity_id)
 		LEFT JOIN exchangerate ex 
 			ON (ex.curr = o.curr AND ex.transdate = o.transdate)
@@ -129,7 +129,7 @@ sub transactions {
 				o.reqdate, o.amount, ct.name, o.netamount, 
 				o.$form->{vc}_id, ex.$rate AS exchangerate,
 		 		o.closed, o.quonumber, o.shippingpoint, 
-				o.shipvia, e.name AS employee, o.curr, 
+				o.shipvia, ee.name AS employee, o.curr, 
 				o.ponumber
 			FROM oe o
 			JOIN $form->{vc} ct ON (o.$form->{vc}_id = ct.id)
@@ -143,7 +143,8 @@ sub transactions {
         }
 
         $query .= qq|
-			LEFT JOIN employee e ON (o.employee_id = e.id)
+			LEFT JOIN entity_employee e ON (o.employee_id = e.id)
+			LEFT JOIN entity ee ON (e.entity_id = ee.id)
 			LEFT JOIN exchangerate ex 
 				ON (ex.curr = o.curr 
 					AND ex.transdate = o.transdate)
@@ -354,24 +355,25 @@ sub save {
         $query = qq|
 			INSERT INTO oe 
 				(id, ordnumber, quonumber, transdate, 
-				entity_id, reqdate, shippingpoint, shipvia,
+				reqdate, shippingpoint, shipvia,
 				notes, intnotes, curr, closed, department_id,
 				person_id, language_code, ponumber, terms,
-				quotation, oe_class_id)
+				quotation, oe_class_id, entity_credit_account)
 			VALUES 
-				($form->{id}, ?, ?, ?, ?,
-				?, ?, ?, ?,
+				($form->{id}, ?, ?, ?,
+				?, ?, ?,
 				?, ?, ?, ?, ?,
-				?, ?, ?, ?, ?)|;
+				?, ?, ?, ?,
+				?, ?, ?)|;
         @queryargs = (
             $form->{ordnumber},     $form->{quonumber},
-            $form->{transdate},     $form->{entity_id}, $form->{reqdate},
+            $form->{transdate},     $form->{reqdate},
             $form->{shippingpoint}, $form->{shipvia},
             $form->{notes},         $form->{intnotes},
             $form->{currency},      $form->{closed},
             $form->{department_id}, $form->{person_id},
             $form->{language_code}, $form->{ponumber},
-            $form->{terms},         $quotation, $class_id
+            $form->{terms},         $quotation, $class_id, $form->{"$form->{vc}_id"}
         );
         $sth = $dbh->prepare($query);
         $sth->execute(@queryargs) || $form->dberror($query);
@@ -559,7 +561,6 @@ sub save {
 				ordnumber = ?, 
 				quonumber = ?,
 				transdate = ?,
-				entity_id = ?, 
 				amount = ?, 
 				netamount = ?,
 				reqdate = ?,
@@ -584,7 +585,7 @@ sub save {
 
         @queryargs = (
             $form->{ordnumber},     $form->{quonumber},
-            $form->{transdate},     $form->{entity_id},   $amount,
+            $form->{transdate},     $amount,
             $netamount,             $form->{reqdate},
             $form->{taxincluded},   $form->{shippingpoint},
             $form->{shipvia},       $form->{notes},
@@ -766,14 +767,15 @@ sub retrieve {
 				o.notes, o.intnotes, o.curr AS currency, 
 				pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
 				o.person_id AS employee_id,
-				o.entity_id AS $form->{vc}_id, c.legal_name AS $form->{vc}, 
+				o.entity_credit_account AS $form->{vc}_id, c.legal_name AS $form->{vc}, 
 				o.amount AS invtotal, o.closed, o.reqdate, 
 				o.quonumber, o.department_id, 
 				d.description AS department, o.language_code, 
 				o.ponumber
 			FROM oe o
-			JOIN company c ON (c.entity_id = o.entity_id)
-			JOIN $form->{vc} vc ON (c.entity_id = vc.entity_id)
+			JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
+			JOIN company c ON (cr.entity_id = c.entity_id)
+			JOIN entity vc ON (c.entity_id = vc.id)
 			LEFT JOIN person pe ON (o.person_id = pe.id)
 			LEFT JOIN employee e ON (pe.entity_id = e.entity_id)
 			LEFT JOIN department d ON (o.department_id = d.id)

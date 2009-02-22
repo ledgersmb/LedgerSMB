@@ -1202,8 +1202,7 @@ sub get_name {
 		                   WHERE e.curr = o.curr
 		                         AND e.transdate = o.transdate)
 		  FROM oe o
-		 WHERE o.entity_id = 
-		       (select entity_id from $form->{vc} WHERE id = ?)
+		 WHERE o.entity_credit_account = ?
 		       AND o.quotation = '0' AND o.closed = '0'|;
 
     $sth = $dbh->prepare($query);
