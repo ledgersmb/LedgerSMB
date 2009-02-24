@@ -307,6 +307,11 @@ sub report {
 
     $form->{login} = 'test';
     $hiddens{$_} = $form->{$_} foreach qw(path login sessionid);
+    $form->{yearend_options} = [
+         {'last' => $locale->text('Last Only') }, 
+         {'all' => $locale->text('All') }, 
+         {'none' => $locale->text('None') }, 
+    ];
 
 ##SC: Temporary commenting
 ##    if ( $form->{lynx} ) {
