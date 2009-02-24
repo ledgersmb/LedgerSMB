@@ -35,6 +35,16 @@
           </td>
         </tr>
 <?lsmb END ?>
+<?lsmb form.report == 'trial_balance' ?>
+	<tr>
+	  <th align="right"><?lsmb text('Ignore Year-ends'); ?></th>
+	  <td><?lsmb PROCESS select element_data = {
+		options = form.yearend_options,
+		name = 'ignore_yearend',
+		text_attr = 'label',
+		value_attr = 'id',
+              } ?></td>
+	</tr>
       </table>
     </td>
   </tr>

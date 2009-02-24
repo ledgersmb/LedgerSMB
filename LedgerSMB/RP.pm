@@ -119,20 +119,6 @@ sub yearend_statement {
     }
     $sth->finish;
 
-    $query = qq|DELETE FROM gl WHERE id = ?|;
-    $sth = $dbh->prepare($query) || $form->dberror($query);
-
-    $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
-    my $ath = $dbh->prepare($query) || $form->dberror($query);
-
-    foreach $id (@trans_id) {
-        $sth->execute($id);
-        $ath->execute($id);
-
-        $sth->finish;
-        $ath->finish;
-    }
-
     my $last_period = 0;
     my @categories  = qw(I E);
     my $category;
@@ -1316,7 +1302,7 @@ sub get_accounts {
 
 sub trial_balance {
     my ( $self, $myconfig, $form ) = @_;
-
+    my $year_end = $form->{ignore_yearend};
     my $dbh = $form->{dbh};
     my $approved = 'FALSE';
 
@@ -1448,7 +1434,7 @@ sub trial_balance {
     }
 
     $sth->finish;
-
+    my $yearend_filter;
     if (!$department_id and !$form->{gifi}){
         my $datefrom = $dbh->quote($form->{fromdate});
         my $dateto = $dbh->quote($form->{todate});
@@ -1458,6 +1444,16 @@ sub trial_balance {
         }
         if ($dateto eq "''") {
             $dateto = "NULL";
+        }
+        if ($year_end ne 'none'){
+             if ($year_end eq 'last'){
+                  $yearend_filter = "AND (ac.transdate < coalesce($datefrom, ac.transdate)  OR 
+			ac.trans_id <> (select max(trans_id) FROM yearend WHERE transdate <= coalesce($dateto, 'infinity'::timestamp)))";
+             } elsif ($year_end eq 'all'){
+                  $yearend_filter = "AND (y.trans_id is null or ac.transdate < coalesce($datefrom, ac.transdate))";
+             } else {
+                 $form->error($locale->text('Invalid Year-end filter request!'));
+             }
         }
         $query = "SELECT c.id AS chart_id, c.accno, c.description, c.contra, 
                                 c.category,
@@ -1487,10 +1483,12 @@ sub trial_balance {
                                         select id, approved FROM ar) g
                                         ON (g.id = ac.trans_id)
                                 JOIN chart c ON (c.id = ac.chart_id)
+				LEFT JOIN yearend y ON (ac.trans_id = y.trans_id)
                                 WHERE (ac.transdate <= $dateto OR $dateto IS NULL)
                                         AND ac.approved AND g.approved
                                         AND ($safe_project_id IS NULL
                                                 OR $safe_project_id = ac.project_id)
+				      $yearend_filter
                                 GROUP BY c.id, c.accno, c.description, c.contra,
                                          c.category
 				ORDER BY c.accno";
