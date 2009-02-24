@@ -90,7 +90,8 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
 	where id = in_report_id;
 
 	FOR current_row IN 
-		select as_array(ac.entry_id) as entries
+		SELECT compound_array(entries) AS entries FROM (
+			select as_array(ac.entry_id) as entries
 		FROM acc_trans ac
 		JOIN transactions t on (ac.trans_id = t.id)
 		JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar
@@ -100,14 +101,14 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
 		      select id, reference, 'gl' as table FROM gl) gl
 			ON (gl.table = t.table_name AND gl.id = t.id)
 		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-			AND ((rl.ledger_id = ac.trans_id 
+			AND ((rl.ledger_id = ac.entry_id 
 				AND ac.voucher_id IS NULL) 
 				OR (rl.voucher_id = ac.voucher_id)))
 		WHERE ac.cleared IS FALSE
 			AND ac.chart_id = (select chart_id from cr_report where id = in_report_id)
 		GROUP BY gl.ref, ac.source, ac.transdate,
 			ac.memo, ac.voucher_id, gl.table
-		HAVING count(rl.report_id) > 0
+		HAVING count(rl.report_id) > 0) a
 	LOOP
 		ac_entries := ac_entries || current_row.entries;
 	END LOOP;
