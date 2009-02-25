@@ -363,7 +363,8 @@ create or replace function reconciliation__account_list () returns setof recon_a
         coa.accno || ' ' || coa.description as name,
         coa.accno, coa.id as id
     FROM chart coa, cr_coa_to_account cta
-    WHERE cta.chart_id = coa.id;
+    WHERE cta.chart_id = coa.id
+    ORDER BY coa.accno;
 $$ language sql;
 
 CREATE OR REPLACE FUNCTION reconciliation__get_current_balance

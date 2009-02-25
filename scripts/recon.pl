@@ -95,6 +95,12 @@ sub submit_recon_set {
 }
 sub get_results {
     my ($request) = @_;
+        if ($request->{approved} ne '1' and $request->{approved} ne '0'){
+		$request->{approved} = undef;
+        }
+        if ($request->{submitted} ne '1' and $request->{submitted} ne '0'){
+		$request->{submitted} = undef;
+        }
         my $search = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
         my @results = $search->search();
         my @accounts = $search->get_accounts();
@@ -159,7 +165,10 @@ sub search {
 
         
         my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
-        
+	if (!$recon->{hide_status}){
+            $recon->{show_approved} = 1;        
+            $recon->{show_submitted} = 1;        
+        }
         @{$recon->{account_list}} = $recon->get_accounts();
 	unshift @{$recon->{account_list}}, {id => '', name => '' };
         my $template = LedgerSMB::Template->new(

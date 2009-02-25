@@ -52,16 +52,48 @@
 		} ?>
             </div>
             <div>
+		<?lsmb IF show_approved ?>
+			<?lsmb- approved_options = [
+				{id = undef, label = undef },
+				{id = '1', label = text('Approved') },
+				{id = '0', label = text('Not Approved') } #'
+			];
+			PROCESS select element_data = {
+				name = 'approved',
+				label = text('Approval Status'), #'
+				options = approved_options
+				text_attr = 'label',
+				value_attr = 'id',
+				class = 'status'
+			} -?>
+		<?lsmb ELSE ?>
 		<?lsmb INCLUDE input element_data = {
 			type = "hidden",
 			name = "approved",
 			value = approved
 		} ?>
+		<?lsmb END ?>
+		<?lsmb IF show_submitted ?>
+			<?lsmb- submitted_options = [
+				{id = undef, label = undef },
+				{id = '1', label = text('Submitted') },
+				{id = '0', label = text('Not Submitted') } #'
+			];
+			PROCESS select element_data = {
+				name = 'submitted',
+				label = text('Submission Status'), #'
+				options = submitted_options
+				text_attr = 'label',
+				value_attr = 'id',
+				class = 'status'
+			} -?>
+		<?lsmb ELSE ?>
 		<?lsmb INCLUDE input element_data = {
 			type = "hidden",
 			name = "submitted",
 			value = submitted
 		} ?>
+		<?lsmb END ?>
             </div>
 		<?lsmb INCLUDE button element_data = {
 			type = "submit",

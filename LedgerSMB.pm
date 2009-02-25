@@ -376,7 +376,6 @@ sub format_amount {
     my $places   = $args{precision};
     my $dash     = $args{neg_format};
     my $format   = $args{format};
-
     if (!defined $format){
        $format = $myconfig->{numberformat}
     }
@@ -385,11 +384,11 @@ sub format_amount {
     }
 
     my $negative;
-    if ($amount) {
+    if (defined $amount and ! UNIVERSAL::isa($amount, 'Math::BigFloat' )) {
         $amount = $self->parse_amount( 'user' => $myconfig, 'amount' => $amount );
-        $negative = ( $amount < 0 );
-        $amount =~ s/-//;
     }
+    $negative = ( $amount < 0 );
+    $amount->babs();
 
     if ( $places =~ /\d+/ ) {
 
@@ -403,7 +402,7 @@ sub format_amount {
 
     my ( $ts, $ds ) = ( $1, $2 );
 
-    if ($amount) {
+    if (defined $amount) {
 
         if ( $format ) {
 
@@ -492,7 +491,7 @@ sub parse_amount {
     }
 
     if ( UNIVERSAL::isa( $amount, 'Math::BigFloat' ) )
-    {    # Amount may not be an object
+    {   #Avoiding double-parse issues 
         return $amount;
     }
     my $numberformat = $myconfig->{numberformat};
@@ -583,7 +582,7 @@ sub call_procedure {
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
     if (scalar @call_args){
-        $sth->execute(@call_args) || $self->dberror($self->{dbh}->errstr);
+        $sth->execute(@call_args) || $self->dberror($self->{dbh}->errstr . ": " . $query);
     } else {
         $sth->execute() || $self->dberror($self->{dbh}->errstr . ':' . $query);
     }
