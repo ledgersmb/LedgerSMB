@@ -89,7 +89,8 @@ sub new {
 
 sub set_ordering {
     my ($self, $args) = @_;
-    $self->{_order_method}->{$args->{method}} = $args->{column};
+    $self->{_order_method}->{$args->{method}} = 
+		$self->{dbh}->quote_identifier($args->{column});
 }
 
 sub exec_method {
