@@ -312,6 +312,9 @@ sub _display_report {
 		{id => 'our_balance', label => $recon->{_locale}->text('Our Balance')},
 		{id => 'their_balance', label => $recon->{_locale}->text('Their Balance')},
         ];
+        if (!$recon->{line_order}){
+           $recon->{line_order} = 'scn';
+        }
         for my $l (@{$recon->{report_lines}}){
             $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}, money => 1});
             $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}, money => 1});
