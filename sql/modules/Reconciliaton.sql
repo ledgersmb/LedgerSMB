@@ -41,11 +41,19 @@ CREATE OR REPLACE FUNCTION reconciliation__submit_set(
 $$
 BEGIN
 	UPDATE cr_report set submitted = true where id = in_report_id;
-
-	UPDATE cr_report_line SET cleared = true
-	WHERE report_id = in_report_id AND id = ANY(in_line_ids);
+	PERFORM reconciliation__save_set(in_report_id, in_line_ids);
 
 	RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION reconciliation__save_set(
+	in_report_id int, in_line_ids int[]) RETURNS bool AS
+$$
+BEGIN
+	UPDATE cr_report_line SET cleared = true
+	WHERE report_id = in_report_id AND id = ANY(in_line_ids);
+	RETURN found;
 END;
 $$ LANGUAGE PLPGSQL;
 

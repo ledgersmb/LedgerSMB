@@ -100,6 +100,20 @@ sub submit_recon_set {
     return $template->render($recon);
     
 }
+sub save_recon_set {
+    my ($request) = shift;
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
+    $recon->save();
+    my $template = LedgerSMB::Template->new( 
+            user => $user, 
+    	    template => 'reconciliation/search', 
+    	    language => $user->{language}, 
+            format => 'HTML',
+            path=>"UI");
+    return $template->render($recon);
+    
+}
+
 sub get_results {
     my ($request) = @_;
         if ($request->{approved} ne '1' and $request->{approved} ne '0'){

@@ -99,7 +99,7 @@ sub update {
     $self->exec_method(funcname=>'reconciliation__pending_transactions');
 }
 
-sub submit {
+sub _pre_save {
     my $self = shift @_;
     $i = 1;
     my $ids = ();
@@ -112,7 +112,19 @@ sub submit {
         ++ $i;
     }
     $self->{line_ids} =~ s/,$/}/; 
+}
+
+sub submit {
+    my $self = shift @_;
+    $self->_pre_save;
     $self->exec_method(funcname=>'reconciliation__submit_set');
+    $self->{dbh}->commit; 
+}
+
+sub save {
+    my $self = shift @_;
+    $self->_pre_save;
+    $self->exec_method(funcname=>'reconciliation__save_set');
     $self->{dbh}->commit; 
 }
 
