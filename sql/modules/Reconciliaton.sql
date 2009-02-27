@@ -283,7 +283,7 @@ CREATE OR REPLACE FUNCTION reconciliation__report_details (in_report_id INT) RET
     BEGIN    
         FOR row IN 
 		select * from cr_report_line where report_id = in_report_id 
-		order by post_date
+		order by scn, post_date
 	LOOP
         
             RETURN NEXT row;
