@@ -159,23 +159,23 @@ foreach my $format (0 .. $#formats) {
 }
 
 $expected = $form->parse_amount({'numberformat' => '1000.00'}, '0.00');
-#is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, 'x'), 'x',
-#	"form: 0.00 with dash x");
-#is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-#	'amount' => $expected, 'precision' => 2, 
-#	'neg_format' => 'x'), 'x',
-#	"lsmb: 0.00 with dash x");
-#is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, ''), '',
-#	"form: 0.00 with dash ''");
-#is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-#	'amount' => $expected, 'precision' => 2, 
-#	'neg_format' => ''), '',
-#	"lsmb: 0.00 with dash ''");
-#is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2), '',
-#	"form: 0.00 with undef dash");
-#is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-#	'amount' => $expected, 'precision' => 2), '',
-#	"lsmb: 0.00 with undef dash");
+is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, 'x'), 'x',
+	"form: 0.00 with dash x");
+is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
+	'amount' => $expected, 'precision' => 2, 
+	'neg_format' => 'x'), '0.00',
+	"lsmb: 0.00 with dash x");
+is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, ''), '',
+	"form: 0.00 with dash ''");
+is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
+	'amount' => $expected, 'precision' => 2, 
+	'neg_format' => ''), '0.00',
+	"lsmb: 0.00 with dash ''");
+is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2), '',
+	"form: 0.00 with undef dash");
+is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
+	'amount' => $expected, 'precision' => 2), '0.00',
+	"lsmb: 0.00 with undef dash");
 $ENV{GATEWAY_INTERFACE} = 'yes';
 $form->{pre} = 'Blah';
 $form->{header} = 'Blah';

@@ -76,7 +76,14 @@ sub update_recon_set {
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
     $recon->add_entries($recon->import_file()) if !$recon->{submitted};
     $recon->{dbh}->commit;
+    if ($recon->{line_order}){
+       $recon->set_ordering(
+		{method => 'reconciliation__report_details', 
+		column  => $recon->{line_order}}
+       );
+    }
     $recon->update();
+    $recon->debug({file => '/tmp/recon'});
     _display_report($recon);
 }
 
@@ -298,6 +305,13 @@ sub _display_report {
             format=>'HTML',
             path=>"UI"
         );
+        $recon->{sort_options} = [
+		{id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
+		{id => 'scn', label => $recon->{_locale}->text('Source')},
+		{id => 'post_date', label => $recon->{_locale}->text('Post Date')},
+		{id => 'our_balance', label => $recon->{_locale}->text('Our Balance')},
+		{id => 'their_balance', label => $recon->{_locale}->text('Their Balance')},
+        ];
         for my $l (@{$recon->{report_lines}}){
             $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}, money => 1});
             $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}, money => 1});

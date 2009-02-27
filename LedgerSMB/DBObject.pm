@@ -83,18 +83,13 @@ sub new {
         $self->merge($base);
     }
     $self->__validate__();
+    $self->{_order_method} = {};
     return $self;
 }
 
 sub set_ordering {
-    my $self = shift  @_;
-    my %args = @_;
-
-    if (not defined $self->{_order_method}){
-        $self->{_order_method} = {};
-    }   
-
-    $self->{_order_method}->{$args{method}} = $args{column};
+    my ($self, $args) = @_;
+    $self->{_order_method}->{$args->{method}} = $args->{column};
 }
 
 sub exec_method {
@@ -142,10 +137,10 @@ sub exec_method {
         }
         for (@in_args) { push @call_args, $_ } ;
         $self->{call_args} = \@call_args;
-        return $self->call_procedure( procname => $funcname, args => \@call_args );
+        return $self->call_procedure( procname => $funcname, args => \@call_args, order_by => $self->{_order_method}->{"$funcname"} );
     }
     else {
-        return $self->call_procedure( procname => $funcname, args => \@in_args );
+        return $self->call_procedure( procname => $funcname, args => \@in_args, order_by => $self->{_order_method}->{"$funcname"} );
     }
 }
 

@@ -137,6 +137,14 @@
 	type = "hidden",
 	value = report_id,
 } ?><?lsmb IF NOT submitted ?>
+<?lsmb INCLUDE select element_data = {
+	name = "line_order",
+	label = text('Order By'), #'
+	options = sort_options,
+	text_attr = 'label',
+	value_attr = 'id',
+	class = 'sort'
+} ?>
 <?lsmb INCLUDE button element_data = {
 	name = "action",
 	text = text('Update'),
