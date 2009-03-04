@@ -614,7 +614,7 @@ sub is_allowed_role {
             return 1;
         }
     }
-    return 0; # TODO change to 0 when the role system is implmented
+    return 0; 
 }
 
 # This should probably be moved to User too...

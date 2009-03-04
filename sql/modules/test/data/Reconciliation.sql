@@ -23,6 +23,7 @@ INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000
 INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');
 INSERT INTO gl (id, reference, transdate) values (-210, 'Recon gl test 3', '1000-01-03');
 INSERT INTO gl (id, reference, transdate) values (-211, 'Recon gl test 4', '1000-01-03');
+INSERT INTO gl (id, reference, transdate) values (-212, 'Cleared gl trans', '1000-01-03');
 
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-200, -200, '1000-01-01', -10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-200, -201, '1000-01-01', 10, '1');
@@ -48,3 +49,5 @@ INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-2
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-210, -201, '1000-01-03', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-211, -200, '1000-01-03', -10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-211, -201, '1000-01-03', 10, '1');
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared) values (-212, -200, '1000-01-03', -10, '1', true);
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared) values (-212, -201, '1000-01-03', 10, '1', true);

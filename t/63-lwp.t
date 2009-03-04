@@ -63,4 +63,8 @@ for my $test (@$test_request_data){
 	if (ref($lwp_tests->{"$test->{_test_id}"}) eq 'CODE'){
 		&$lwp_tests->{"$test->{_test_id}"};
 	}
+	#cmp_ok(($response->content =~ /Error/), 'eq', "$test->{_lwp_error}", "No Error on Request $test->{_test_id}");
+	#if ($response->content =~ /Error/){
+	#	print STDERR $response->content;
+	#}
 }

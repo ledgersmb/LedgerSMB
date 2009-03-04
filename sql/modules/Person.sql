@@ -1,5 +1,10 @@
 begin;
 
+CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
+$$
+	SELECT entity_id from users where username = SESSION_USER;
+$$ LANGUAGE SQL;
+
 CREATE OR REPLACE FUNCTION person__save
 (in_entity_id integer, in_salutation_id int, 
 in_first_name text, in_middle_name text, in_last_name text    

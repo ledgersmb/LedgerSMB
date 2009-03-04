@@ -4,7 +4,10 @@ CREATE TABLE cr_report (
     their_total numeric not null,
     approved boolean not null default 'f',
     submitted boolean not null default 'f',
-    end_date date not null default now()
+    end_date date not null default now(),
+    updated timestamp not null default now(),
+    entered_by int not null default person__get_my_entity_id() references entity(id),
+    entered_username text not null default SESSION_USER
 );
 
 create table cr_approval (
@@ -280,6 +283,8 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
 		GROUP BY gl.ref, ac.source, ac.transdate,
 			ac.memo, ac.voucher_id, gl.table
 		HAVING count(rl.id) = 0;
+
+		UPDATE cr_report set updated = now() where id = in_report_id;
     RETURN in_report_id;
     END;
 $$ LANGUAGE plpgsql;

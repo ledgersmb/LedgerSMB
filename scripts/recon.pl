@@ -134,19 +134,20 @@ sub get_results {
         }
         my $base_url = "recon.pl?action=update_recon_set";
         $columns = {
-            "select" => $request->{_locale}->text('Select'),	
-            account     => $request->{_locale}->text('Account'),	
-            their_total => $request->{_locale}->text('Balance'),
-            end_date    => $request->{_locale}->text('Statement Date'),
-            submitted   => $request->{_locale}->text('Submitted'),
-            approved    => $request->{_locale}->text('Approved'), 
+            "select"         => $request->{_locale}->text('Select'),	
+            account          => $request->{_locale}->text('Account'),	
+            their_total      => $request->{_locale}->text('Balance'),
+            end_date         => $request->{_locale}->text('Statement Date'),
+            submitted        => $request->{_locale}->text('Submitted'),
+            approved         => $request->{_locale}->text('Approved'), 
+            updated          => $request->{_locale}->text('Last Updated'), 
+            entered_username => $request->{_locale}->text('Username'), 
         };
 	my $cols = [];
 	my @acts = $search->get_accounts;
-	@$cols = qw(select account end_date their_total approved submitted);
+	@$cols = qw(select account end_date their_total approved submitted updated entered_username);
 	my $recon =$search;
 	for my $row(@results){
-            
             my $act = undef;
             for (@acts){
                 if ($_->{id} == $row->{chart_id}){
