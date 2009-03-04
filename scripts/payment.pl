@@ -374,8 +374,6 @@ sub display_payments {
     $payment->{grand_total} = 0;
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
-        $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due},
-                                                  money  => 1);
         for my $invoice (@{$_->{invoices}}){
             if (($payment->{action} ne 'update_payments') 
                   or (defined $payment->{"id_$_->{contact_id}"})){
@@ -406,7 +404,14 @@ sub display_payments {
             $_->{contact_total} = $contact_total;
             $payment->{grand_total} += $contact_total;
         }
+        $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due},
+                                                  money  => 1);
+        $_->{contact_total} = $payment->format_amount(amount =>  $_->{contact_total},
+                                                  money  => 1);
     }
+    $payment->{grand_total} = $payment->format_amount(
+			amount =>  $payment->{grand_total},
+			money  => 1);
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'), 
              value => 'screen'});
