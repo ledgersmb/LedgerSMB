@@ -379,8 +379,10 @@ sub display_payments {
                   or (defined $payment->{"id_$_->{contact_id}"})){
                    if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
                       my $i_id = $invoice->[0];
+                      my $payment_amt = $payment->parse_amount(
+				amount => $payment->{"payment_$i_id"});
                       $contact_total 
-                              += $payment->{"payment_$i_id"};
+                              += $payment_amt;
                    } 
             }
             $invoice->[3] = $payment->format_amount(amount => $invoice->[3], 
