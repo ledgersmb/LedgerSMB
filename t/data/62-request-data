@@ -110,7 +110,8 @@ our $test_request_data = [
 				$self->debug({'file' => '/tmp/test2'});
 				return @$retval;
 			}
-		}
+		},
+                '_user'         =>  { numberformat => '1,000.00', dateformat => 'yyyy-mm-dd' },
 	},
 	{
 		'_test_id'     => 'Payment search (OLD)',
@@ -171,7 +172,6 @@ our $test_request_data = [
 		'account_class' => 1,
 		'currency'      => 'USD',
 		'multiple'      => 1,
-               
 	},
 	
 ];
@@ -234,6 +234,8 @@ our $api_test_cases = {
 			"$self->{_test_id} source 2 not found");
 		ok(defined $self->{source_3}, 
 			"$self->{_test_id} source 3 defined");
+		cmp_ok($self->{grand_total}, 'eq', '2,000.00',
+			"Grand total formatting works");
 	}
 };
 
