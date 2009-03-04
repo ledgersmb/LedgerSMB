@@ -67,7 +67,12 @@ $$
 		sum(ac.amount) END
 	FROM chart c
 	JOIN acc_trans ac ON (ac.chart_id = c.id)
-	WHERE c.id = $1 AND ac.cleared is true
+	JOIN (select id from ar where approved
+		union
+		select id from ap where approved
+		union
+		select id from gl where approved) g on (g.id = ac.trans_id)
+	WHERE c.id = $1 AND ac.cleared is true and ac.approved is true
 		GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
 

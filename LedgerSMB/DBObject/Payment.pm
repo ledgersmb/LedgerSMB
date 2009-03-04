@@ -516,7 +516,8 @@ sub post_bulk {
 			? $self->{"net_$invoice_id"} 
 			: $self->{"payment_$invoice_id"};
             next if ! $pay_amount;
-            $pay_amount = $pay_amount * 1;
+            $pay_amount = $self->parse_amount(amount => $pay_amount);
+            $pay_amount = $self->format_amount({amount => $pay_amount, format => '1000.00'});
             my $invoice_subarray = "{$invoice_id,$pay_amount}";
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
                 $self->error("Invalid subarray: $invoice_subarray");
