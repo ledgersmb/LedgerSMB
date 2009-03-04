@@ -5,7 +5,7 @@ use warnings;
 
 $ENV{TMPDIR} = 't/var';
 
-use Test::More 'no_plan';
+use Test::More tests => 92;
 use Test::Exception;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
@@ -246,7 +246,7 @@ is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
 like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: Index 1, left existing key');
 
-# $lsmb->is_allowed_role checks
+# $lsmb->is_allowed_role checks, no prefix
 $lsmb = LedgerSMB->new();
 $lsmb->{_roles} = ['apple', 'pear'];
 is($lsmb->is_allowed_role({allowed_roles => ['pear']}), 1, 
@@ -260,3 +260,11 @@ is($lsmb->is_allowed_role({'allowed_roles' => []}), 0,
 delete $lsmb->{_roles};
 is($lsmb->is_allowed_role({'allowed_roles' => ['apple']}), 0, 
 		'is_allowed_role: no roles for user');
+
+# $lsmb->is_allowed_role checks, prefix
+$lsmb = LedgerSMB->new();
+$lsmb->{_role_prefix} = 'test__';
+
+$lsmb->{_roles} = ['test__apple', 'test__pear'];
+is($lsmb->is_allowed_role({allowed_roles => ['pear']}), 1, 
+	'is_allowed_role: allowed role with prefix');

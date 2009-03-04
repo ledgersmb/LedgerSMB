@@ -609,7 +609,7 @@ sub is_allowed_role {
     my ($self, $args) = @_;
     my @roles = @{$args->{allowed_roles}};
     for my $role (@roles){
-        my @roleset = grep m/^$role$/, @{$self->{_roles}};
+        my @roleset = grep m/^$self->{_role_prefix}$role$/, @{$self->{_roles}};
         if (scalar @roleset){
             return 1;
         }
@@ -742,6 +742,11 @@ sub _db_init {
              WHERE setting_key = 'version'");
     $sth->execute;
     my ($dbversion) = $sth->fetchrow_array;
+    $sth = $dbh->prepare("
+            SELECT value FROM defaults 
+             WHERE setting_key = 'role_prefix'");
+    $sth->execute;
+    ($self->{_role_prefix}) = $sth->fetchrow_array;
     if ($dbversion ne $self->{dbversion}){
         $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}");
     }
