@@ -5,7 +5,7 @@ use warnings;
 
 $ENV{TMPDIR} = 't/var';
 
-use Test::More tests => 92;
+use Test::More tests => 96;
 use Test::Exception;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
