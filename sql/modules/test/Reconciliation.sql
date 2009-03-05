@@ -54,10 +54,16 @@ INSERT INTO test_result(test_name, success)
 SELECT 'Report Submitted', reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int));
 
 INSERT INTO test_result(test_name, success)
+SELECT 'Cleared balance pre-approval is 10', reconciliation__get_cleared_balance(-201) = 10;
+
+INSERT INTO test_result(test_name, success)
 SELECT 'Report Approved', reconciliation__report_approve(currval('cr_report_id_seq')::int) > 0;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Transactions closed', count(*) = 0 FROM acc_trans where chart_id = -200 and cleared is false;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'Cleared balance post-approval is 130', reconciliation__get_cleared_balance(-201) = 130;
 
 
 SELECT * FROM test_result;
