@@ -111,7 +111,7 @@ sub _pre_save {
         }
         ++ $i;
     }
-    $self->{line_ids} =~ s/,$/}/; 
+    $self->{line_ids} =~ s/,?$/}/; 
 }
 
 sub submit {

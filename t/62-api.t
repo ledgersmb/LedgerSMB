@@ -23,7 +23,7 @@ do 't/data/62-request-data'; # Import test case hashes
 
 for (qw(	drafts.pl     login.pl      payment.pl      
 		report.pl    employee.pl   menu.pl       vendor.pl
-		customer.pl  inventory.pl  vouchers.pl)
+		customer.pl  inventory.pl  vouchers.pl recon.pl)
     ){
 	ok(eval { require "scripts/$_" }, "Importing $_");
 	if ($@){

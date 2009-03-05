@@ -114,6 +114,25 @@ our $test_request_data = [
                 '_user'         =>  { numberformat => '1,000.00', dateformat => 'yyyy-mm-dd' },
 	},
 	{
+		'_test_id'     => 'Empty Recon Submission',
+		'_codebase'    => 'new',
+		'action'       => 'submit_recon_set',
+		'module'       => 'recon.pl',
+		'report_id'    => '-100',
+		'their_total'  => '0',
+		'_exec_override' => {
+			'reconciliation__submit_set' => sub {
+					my ($self) = @_;
+					$self->_pre_save;
+					is($self->{line_ids}, '{}', 
+						'Empty recon set line ids ok');
+					is($self->{report_id}, -100, 
+						'Recon set report id correct');
+					},
+				
+				},
+	},
+	{
 		'_test_id'     => 'Payment search (OLD)',
 		'_codebase'    => 'old',
 		'account'      => '1060--Checking Account',
@@ -257,4 +276,10 @@ sub exec_method {
         }
     }
     LedgerSMB::DBObject::exec_method($self, @_);
+}
+
+package LedgerSMB::DBObject::Reconciliation;
+
+sub exec_method {
+    LedgerSMB::DBObject::Payment::exec_method(@_);
 }
