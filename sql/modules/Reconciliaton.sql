@@ -119,7 +119,7 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
 		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
 			AND ((rl.ledger_id = ac.entry_id 
 				AND ac.voucher_id IS NULL) 
-				OR (rl.voucher_id = ac.voucher_id)))
+				OR (rl.voucher_id = ac.voucher_id)) and rl.cleared is true)
 		WHERE ac.cleared IS FALSE
 			AND ac.chart_id = (select chart_id from cr_report where id = in_report_id)
 		GROUP BY gl.ref, ac.source, ac.transdate,
