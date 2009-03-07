@@ -79,7 +79,7 @@ Alias /ledgersmb/doc/LedgerSMB-manual.pdf %{_docdir}/%{name}-%{version}/LedgerSM
 
 TAK
 
-perl -p -e "s,/some/path/to/ledgersmb,%{_datadir}/%{name},g" ledgersmb-httpd.conf >> rpm-ledgersmb-httpd.conf
+perl -p -e "s,WORKING_DIR,%{_datadir}/%{name},g" ledgersmb-httpd.conf >> rpm-ledgersmb-httpd.conf
 
 
 %install
