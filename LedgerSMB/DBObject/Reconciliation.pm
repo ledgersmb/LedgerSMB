@@ -289,6 +289,12 @@ sub get {
     my ($self) = shift @_;
     my ($ref) = $self->exec_method(funcname=>'reconciliation__report_summary');
     $self->merge($ref);
+    if (!$self->{submitted}){
+        $self->exec_method(
+		funcname=>'reconciliation__pending_transactions'
+        );
+        $self->{dbh}->commit;
+    }
     @{$self->{report_lines}} = $self->exec_method(
 		funcname=>'reconciliation__report_details'
     );

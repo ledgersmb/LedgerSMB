@@ -780,12 +780,19 @@ sub _db_init {
 # Deprecated, only here for old code
 sub dberror{
    my $self = shift @_;
-   if ($self->{dbh}->state eq '42501'){
-      $_[0] = $self->{_locale}->text('Access Denied'); 
-   }
+   my $state_error = {
+	'42401' => $self->{_locale}->text('Access Denied'),
+	'22008' => $self->{_locale}->text('Invalid date/time entered'),
+	'22012' => $self->{_locale}->text('Division by 0 error'),
+	'22004' => $self->{_locale}->text('Required input not provided')
+	#'23502' => $self->{_locale}->text('Required input not provided')
+   };
    print STDERR "Logging SQL State ".$self->{dbh}->state.", error ".
            $self->{dbh}->err . ", string " .$self->{dbh}->errstr . "\n";
-   $self->error(@_);
+   if (scalar grep /^$self->{dbh}->state$/, keys %$state_error){
+       $self->error($state_error->{$self->{dbh}->state});
+   }
+   $self->error($self->{dbh}->state . ":" . $self->{dbh}->errstr);
 }
 
 sub redo_rows {
