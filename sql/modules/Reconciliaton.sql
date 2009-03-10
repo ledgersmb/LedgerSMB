@@ -272,17 +272,18 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
 			ac.voucher_id, min(ac.entry_id), ac.transdate
 		FROM acc_trans ac
 		JOIN transactions t on (ac.trans_id = t.id)
-		JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar
+		JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar where approved
 			UNION
-		      select id, entity_credit_account::text, 'ap' as table FROM ap
+		      select id, entity_credit_account::text, 'ap' as table FROM ap WHERE approved
 			UNION
-		      select id, reference, 'gl' as table FROM gl) gl
+		      select id, reference, 'gl' as table FROM gl WHERE approved) gl 
 			ON (gl.table = t.table_name AND gl.id = t.id)
 		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
 			AND ((rl.ledger_id = ac.trans_id 
 				AND ac.voucher_id IS NULL) 
 				OR (rl.voucher_id = ac.voucher_id)))
 		WHERE ac.cleared IS FALSE
+			AND ac.approved IS TRUE
 			AND ac.chart_id = in_chart_id
 			AND ac.transdate <= in_end_date
 		GROUP BY gl.ref, ac.source, ac.transdate,

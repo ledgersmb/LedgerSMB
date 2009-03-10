@@ -23,7 +23,9 @@ INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000
 INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');
 INSERT INTO gl (id, reference, transdate) values (-210, 'Recon gl test 3', '1000-01-03');
 INSERT INTO gl (id, reference, transdate) values (-211, 'Recon gl test 4', '1000-01-03');
-INSERT INTO gl (id, reference, transdate) values (-212, 'Cleared gl trans', '1000-01-03');
+INSERT INTO gl (id, reference, transdate, approved) values (-212, 'Cleared gl trans', '1000-01-03', true);
+INSERT INTO gl (id, reference, transdate, approved) values (-213, 'Unapproved gl trans', '1000-01-03', false);
+INSERT INTO gl (id, reference, transdate, approved) values (-214, 'gl trans, unapproved lines', '1000-01-03', false);
 
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-200, -200, '1000-01-01', -10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared, approved) values (-200, -200, '1000-01-01', -10, '1', true, false);
@@ -53,3 +55,7 @@ INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-2
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-211, -201, '1000-01-03', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared) values (-212, -200, '1000-01-03', -10, '1', true);
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared) values (-212, -201, '1000-01-03', 10, '1', true);
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared) values (-213, -200, '1000-01-03', -10, '1', false);
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared) values (-213, -201, '1000-01-03', 10, '1', false);
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, approved) values (-214, -200, '1000-01-03', -10, '1', false);
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, approved) values (-214, -201, '1000-01-03', 10, '1', false);
