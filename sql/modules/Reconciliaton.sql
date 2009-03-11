@@ -259,7 +259,7 @@ $$ This function is very sensitive to ordering of inputs.  NULL or empty in_scn 
 that within each category, one submits in order of amount.  We should therefore
 wrap it in another function which can operate on a set.  Implementation TODO.$$;
 
-create or replace function reconciliation__pending_transactions (in_end_date DATE, in_chart_id int, in_report_id int) RETURNS int as $$
+create or replace function reconciliation__pending_transactions (in_end_date DATE, in_chart_id int, in_report_id int, in_their_total numeric) RETURNS int as $$
     
     DECLARE
         gl_row RECORD;
@@ -290,7 +290,9 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
 			ac.memo, ac.voucher_id, gl.table
 		HAVING count(rl.id) = 0;
 
-		UPDATE cr_report set updated = now() where id = in_report_id;
+		UPDATE cr_report set updated = now(),
+			their_total = coalesce(in_their_total, their_total)
+		where id = in_report_id;
     RETURN in_report_id;
     END;
 $$ LANGUAGE plpgsql;
