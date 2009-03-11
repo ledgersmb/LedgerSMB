@@ -75,6 +75,7 @@ sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
     $recon->add_entries($recon->import_file()) if !$recon->{submitted};
+    $recon->{their_total} = $recon->parse_amount(amount => $recon->{their_total}); 
     $recon->{dbh}->commit;
     if ($recon->{line_order}){
        $recon->set_ordering(
@@ -83,7 +84,6 @@ sub update_recon_set {
        );
     }
     $recon->update();
-    $recon->debug({file => '/tmp/recon'});
     _display_report($recon);
 }
 
