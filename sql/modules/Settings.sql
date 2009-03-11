@@ -69,6 +69,12 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION setting__get_currencies() RETURNS text[]
+AS
+$$
+SELECT string_to_array(value, ':') from defaults where setting_key = 'curr';
+$$ LANGUAGE SQL;
 -- Table schema defaults
 
 ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
+
