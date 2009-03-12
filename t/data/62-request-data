@@ -44,6 +44,20 @@ our $test_request_data = [
 		'module'     => 'vouchers.pl',
 	},
 	{
+		'_test_id'   => 'Income Statement Search Screen',
+		'_codebase'  => 'old',
+		'action'     => 'report',
+		'report'     => 'income_statement',
+		'module'     => 'rp.pl',
+	},
+	{
+		'_test_id'   => 'Balance sheet search Screen',
+		'_codebase'  => 'old',
+		'action'     => 'report',
+		'report'     => 'balance_sheet',
+		'module'     => 'rp.pl',
+	},
+	{
 		'_test_id'   => 'GL Transaction Voucher Screen',
 		'_codebase'  => 'new',
 		'action'     => 'create_batch',
