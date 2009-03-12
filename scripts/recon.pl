@@ -330,15 +330,63 @@ sub _display_report {
         if (!$recon->{line_order}){
            $recon->{line_order} = 'scn';
         }
+        $recon->{total_cleared_credits} = $recon->parse_amount(amount => 0);
+        $recon->{total_cleared_debits} = $recon->parse_amount(amount => 0);
+        $recon->{total_uncleared_credits} = $recon->parse_amount(amount => 0);
+        $recon->{total_uncleared_debits} = $recon->parse_amount(amount => 0);
+
+        # Credit/Debit separation (useful for some)
         for my $l (@{$recon->{report_lines}}){
+            if ($l->{their_balance} < 0){
+               $l->{their_debits} = $recon->parse_amount(amount => 0);
+               $l->{their_credits} = $l->{their_balance}->bneg;
+            }
+            else {
+               $l->{their_credits} = $recon->parse_amount(amount => 0);
+               $l->{their_debits} = $l->{their_balance};
+            }
+            if ($l->{our_balance} < 0){
+               $l->{our_debits} = $recon->parse_amount(amount => 0);
+               $l->{our_credits} = $l->{our_balance}->bneg;
+            }
+            else {
+               $l->{our_credits} = $recon->parse_amount(amount => 0);
+               $l->{our_debits} = $l->{our_balance};
+            }
+
+            if ($l->{our_balance} != 0 and 
+                $l->{our_balance} == $l->{their_balance} or
+                defined $recon->{"cleared_$l->{id}"}
+            ){
+                 $recon->{total_cleared_credits}->badd($l->{our_credits});
+                 $recon->{total_cleared_debits}->badd($l->{our_debits});
+            } else {
+                 $recon->{total_uncleared_credits}->badd($l->{our_credits});
+                 $recon->{total_uncleared_debits}->badd($l->{our_debits});
+            }
+
             $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}, money => 1});
             $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}, money => 1});
+            $l->{their_debits} = $recon->format_amount({amount => $l->{their_debits}, money => 1});
+            $l->{their_credits} = $recon->format_amount({amount => $l->{their_credits}, money => 1});
+            $l->{our_debits} = $recon->format_amount({amount => $l->{our_debits}, money => 1});
+            $l->{our_credits} = $recon->format_amount({amount => $l->{our_credits}, money => 1});
         }
 	$recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
         $recon->{cleared_total} = $recon->format_amount({amount => $recon->{cleared_total}, money => 1});
         $recon->{outstanding_total} = $recon->format_amount({amount => $recon->{outstanding_total}, money => 1});
-	$recon->{out_of_balance} = $recon->format_amount(
-		{amount => $recon->{out_of_balance}, money => 1});
+        $recon->{total_cleared_debits} = $recon->format_amount(
+              {amount => $recon->{total_cleared_debits}, money => 1}
+        );
+        $recon->{total_cleared_credits} = $recon->format_amount(
+               {amount => $recon->{total_cleared_credits}, money => 1}
+        );
+        $recon->{total_uncleared_debits} = $recon->format_amount(
+              {amount => $recon->{total_uncleared_debits}, money => 1}
+        );
+        $recon->{total_uncleared_credits} = $recon->format_amount(
+               {amount => $recon->{total_uncleared_credits}, money => 1}
+        );
 	$recon->{their_total} = $recon->format_amount(
 		{amount => $recon->{their_total}, money => 1});
 	$recon->{our_total} = $recon->format_amount(

@@ -31,7 +31,7 @@
 <?lsmb i = 1 ?>
 <table border=0>
 	<tr class="listtop">
-		<th colspan=7><?lsmb text('Cleared Transactions') ?></th>
+		<th colspan=9><?lsmb text('Cleared Transactions') ?></th>
 	</tr>
 	<tr class="listheading">
 		<th><?lsmb text('Cleared') ?></th>
@@ -39,9 +39,10 @@
 		<th><?lsmb text('Clear date') ?></th>
 		<th><?lsmb text('Source') ?></th>
 		<th><?lsmb text('Posted Date') ?></th>
-		<th><?lsmb text('Our Balance') ?></th>
-		<th><?lsmb text('Their Balance') ?></th>
-		<th></th>
+		<th><?lsmb text('Our Debits') ?></th>
+		<th><?lsmb text('Our Credits') ?></th>
+		<th><?lsmb text('Their Debits') ?></th>
+		<th><?lsmb text('Their Credits') ?></th>
 	</tr>
 	
 	<?lsmb FOREACH row = report_lines ?>
@@ -75,17 +76,21 @@
 			<td><?lsmb row.clear_time ?></td>
 			<td><?lsmb row.scn ?> </td>
 			<td><?lsmb row.post_date ?></td>
-			<td><?lsmb row.our_balance ?></td>
-			<td><?lsmb row.their_balance ?></td>
+			<td><?lsmb row.our_debits ?></td>
+			<td><?lsmb row.our_credits ?></td>
+			<td><?lsmb row.their_debits ?></td>
+			<td><?lsmb row.their_credits ?></td>
 		</tr>
 	<?lsmb i = i + 1 -?>
 	<?lsmb END ?>
 	<?lsmb END -?>
-	<tr class="subtital">
-		<th colspan=5><?lsmb text('Total') ?></th><td><?lsmb cleared_total ?></td>
+	<tr class="subtotal">
+		<th colspan=5><?lsmb text('Total') ?></th>
+		<td><?lsmb total_cleared_debits ?></td>
+		<td><?lsmb total_cleared_credits ?></td>
 	</tr>
 	<tr class="listheading">
-		<th colspan=7><?lsmb text('Outstanding Transactions') ?></th>
+		<th colspan=9><?lsmb text('Outstanding Transactions') ?></th>
 	</tr>
 	<tr class="listheading">
 		<th><?lsmb text('Cleared') ?></th>
@@ -93,9 +98,10 @@
 		<th><?lsmb text('Clear date') ?></th>
 		<th><?lsmb text('Source') ?></th>
 		<th><?lsmb text('Posted Date') ?></th>
-		<th><?lsmb text('Our Balance') ?></th>
-		<th><?lsmb text('Their Balance') ?></th>
-		<th></th>
+		<th><?lsmb text('Our Debits') ?></th>
+		<th><?lsmb text('Our Credits') ?></th>
+		<th><?lsmb text('Their Debits') ?></th>
+		<th><?lsmb text('Their Credits') ?></th>
 	</tr>
 	<?lsmb FOREACH row = report_lines ?>
 	<?lsmb IF row.cleared != 'checked' ?>
@@ -122,14 +128,18 @@
 			<td><?lsmb row.clear_time ?></td>
 			<td><?lsmb row.scn ?> </td>
 			<td><?lsmb row.post_date ?></td>
-			<td><?lsmb row.our_balance ?></td>
-			<td><?lsmb row.their_balance ?></td>
+			<td><?lsmb row.our_debits ?></td>
+			<td><?lsmb row.our_credits ?></td>
+			<td><?lsmb row.their_debits ?></td>
+			<td><?lsmb row.their_credits ?></td>
 		</tr>
 	<?lsmb i = i + 1 -?>
 	<?lsmb END ?>
 	<?lsmb END -?>
-	<tr class="subtital">
-		<th colspan=5><?lsmb text('Total') ?></th><td><?lsmb outstanding_total ?></td>
+	<tr class="subtotal">
+		<th colspan=5><?lsmb text('Total') ?></th>
+		<td><?lsmb total_uncleared_debits ?></td>
+		<td><?lsmb total_uncleared_credits ?></td>
 	</tr>
 </table>
 <?lsmb INCLUDE input element_data = {
