@@ -123,6 +123,12 @@ sub get_results {
 		$request->{submitted} = undef;
         }
         my $search = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
+        if ($search->{order_by}){
+            $search->set_ordering({
+			method => 'reconciliation__search', 
+			column => $search->{order_by},
+            });
+        }
         my @results = $search->search();
         my @accounts = $search->get_accounts();
         my $act_hash = {};
@@ -133,15 +139,41 @@ sub get_results {
             $row->{account} = $act_hash->{"$row->{chart_id}"};
         }
         my $base_url = "recon.pl?action=update_recon_set";
+        my $search_url = "recon.pl?action=get_results".
+            "&date_from=$search->{date_from}&date_to=$search->{date_to}".
+             "&amount_from=$search->{amount_from}&".
+             "amount_to=$search->{amount_to}&chart_id=$search->{chart_id}".
+             "&approved=$search->{approved}&submitted=$search->{submitted}";
         $columns = {
             "select"         => $request->{_locale}->text('Select'),	
-            account          => $request->{_locale}->text('Account'),	
-            their_total      => $request->{_locale}->text('Balance'),
-            end_date         => $request->{_locale}->text('Statement Date'),
-            submitted        => $request->{_locale}->text('Submitted'),
-            approved         => $request->{_locale}->text('Approved'), 
-            updated          => $request->{_locale}->text('Last Updated'), 
-            entered_username => $request->{_locale}->text('Username'), 
+            account          => {
+		text => $request->{_locale}->text('Account'),	
+		href => $search_url,
+	    },
+            their_total      => {
+                text => $request->{_locale}->text('Balance'),
+                href => "$search_url&order_by=their_total",
+            },
+            end_date         => {
+                text => $request->{_locale}->text('Statement Date'),
+                href => "$search_url&order_by=end_date",
+            },
+            submitted        => {
+		text => $request->{_locale}->text('Submitted'),
+                href => "$search_url&order_by=submitted",
+            },
+            approved         => {
+		text => $request->{_locale}->text('Approved'), 
+		href => "$search_url&order_by=approved",
+            },
+            updated          => {
+		text => $request->{_locale}->text('Last Updated'), 
+		href => "$search_url&order_by=updated",
+            },
+            entered_username => {
+		text => $request->{_locale}->text('Username'), 
+		href => "$search_url&order_by=entered_username",
+            },
         };
 	my $cols = [];
 	my @acts = $search->get_accounts;

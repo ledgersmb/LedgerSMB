@@ -355,7 +355,8 @@ $$
 DECLARE report cr_report;
 BEGIN
 	FOR report IN
-		SELECT * FROM cr_report
+		SELECT r.* FROM cr_report r
+		JOIN chart c ON (r.chart_id = c.id)
 		WHERE 
 			(in_date_from IS NULL OR in_date_from <= end_date) and
 			(in_date_to IS NULL OR in_date_to >= end_date) AND
@@ -366,7 +367,7 @@ BEGIN
 			(in_chart_id IS NULL OR in_chart_id = chart_id) AND
 			(in_submitted IS NULL or in_submitted = submitted) AND
 			(in_approved IS NULL OR in_approved = approved)
-		ORDER BY end_date, their_total
+		ORDER BY c.accno, end_date, their_total
 	LOOP
 		RETURN NEXT report;
 	END LOOP; 
