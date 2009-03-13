@@ -233,10 +233,15 @@ sub all_transactions {
     my $sth;
     my $var;
     my $null;
+    if ($form->{chart_id}){
+       my $sth = $dbh->prepare('SELECT id, accno, description FROM chart WHERE id = ?');
+       $sth->execute($form->{chart_id});
+       ($form->{chart_id}, $form->{chart_accno}, $form->{chart_description}) = $sth->fetchrow_array();
+    }
     if ($form->{accno} and !$form->{chart_id}){
-       my $sth = $dbh->prepare('SELECT id FROM chart WHERE accno = ?');
+       my $sth = $dbh->prepare('SELECT id, accno, description FROM chart WHERE accno = ?');
        $sth->execute($form->{accno});
-       ($form->{chart_id}) = $sth->fetchrow_array();
+       ($form->{chart_id}, $form->{chart_accno}, $form->{chart_description}) = $sth->fetchrow_array();
        delete $form->{accno};
     }
 

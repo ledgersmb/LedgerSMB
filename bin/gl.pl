@@ -512,9 +512,11 @@ sub generate_report {
         'E' => $locale->text('Expense'),
     );
     my @options;
-
-    $form->{title} = $locale->text('General Ledger');
-
+    if ($form->{chart_accno}){
+        $form->{title} = $locale->text('General Ledger: [_1]', $form->{chart_accno});
+    } else {
+        $form->{title} = $locale->text('General Ledger');
+    }
     $ml = ( $form->{category} =~ /(A|E)/ ) ? -1 : 1;
 
     if (defined $form->{category} and $form->{category} ne 'X' ) {
