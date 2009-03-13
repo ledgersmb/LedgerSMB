@@ -5,7 +5,7 @@ use warnings;
 
 $ENV{TMPDIR} = 't/var';
 
-use Test::More tests => 92;
+use Test::More;
 use Test::Exception;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
@@ -13,6 +13,12 @@ use Math::BigFloat;
 use LedgerSMB::Sysconfig;
 use LedgerSMB;
 my $lsmb;
+if ($ENV{PGDATABASE}){
+    plan tests => 96;
+} else {
+    plan tests => 92;
+}
+
 sub redirect {
 	print "redirected\n";
 }
