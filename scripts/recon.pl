@@ -75,7 +75,7 @@ sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
     $recon->add_entries($recon->import_file()) if !$recon->{submitted};
-    $recon->{their_total} = $recon->parse_amount(amount => $recon->{their_total}); 
+    $recon->{their_total} = $recon->parse_amount(amount => $recon->{their_total}) if defined $recon->{their_total}; 
     $recon->{dbh}->commit;
     if ($recon->{line_order}){
        $recon->set_ordering(
@@ -425,6 +425,8 @@ sub _display_report {
 		{amount => $recon->{our_total}, money => 1});
 	$recon->{beginning_balance} = $recon->format_amount(
 		{amount => $recon->{beginning_balance}, money => 1});
+	$recon->{out_of_balance} = $recon->format_amount(
+		{amount => $recon->{out_of_balance}, money => 1});
 
         return $template->render($recon);
 }
