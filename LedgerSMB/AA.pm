@@ -923,11 +923,11 @@ sub transactions {
         }
     }
 
-    for (qw(department employee)) {
+    for (qw(department_id entity_credit_account)) {
         if ( $form->{$_} ) {
             ( $null, $var ) = split /--/, $form->{$_};
             $var = $dbh->quote($var);
-            $where .= " AND a.${_}_id = $var";
+            $where .= " AND a.$_ = $var";
         }
     }
 
