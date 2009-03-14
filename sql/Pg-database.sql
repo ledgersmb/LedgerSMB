@@ -2828,4 +2828,11 @@ COMMENT ON table payments_queue IS
 $$ This is a holding table and hence not a candidate for normalization.
 Jobs should be deleted from this table when they complete successfully.$$;
 
+CREATE TABLE new_shipto (
+	id serial primary key,
+	trans_id int references transactions(id),
+	oe_id int references oe(id),
+	location_id int references location(id)
+);
+
 commit;
