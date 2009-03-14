@@ -28,7 +28,7 @@ $force_username_case = undef; # don't force case
     'hr.pl', 'ic.pl',    'io.pl',      'ir.pl',
     'is.pl', 'jc.pl',    'login.pl',   'menu.pl',
     'oe.pl', 'pe.pl',    'pos.pl',     'ps.pl',
-    'pw.pl', 'rc.pl',    'rp.pl'
+    'pw.pl', 'rc.pl',    'rp.pl', 	'initiate.pl'
 );
 
 # if you have latex installed set to 1
