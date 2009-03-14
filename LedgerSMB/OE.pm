@@ -250,8 +250,10 @@ sub transactions {
 }
 
 sub save {
-    my ( $self, $myconfig, $form ) = @_;
+    
 
+    my ( $self, $myconfig, $form ) = @_;
+  
     $form->db_prepare_vars(
         "quonumber", "transdate",     "vendor_id",     "entity_id",
         "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
@@ -329,7 +331,7 @@ sub save {
         }
 
     }
-
+    $dbh->commit;
     my $did_insert = 0;
     if ( !$form->{id} ) {
         $query = qq|SELECT nextval('id')|;
@@ -509,10 +511,11 @@ sub save {
                 $project_id,                $form->{"ship_$i"},
                 $form->{"serialnumber_$i"}, $form->{"notes_$i"} );
             $sth->execute(@queryargs) || $form->dberror($query);
-
+	    $dbh->commit;
             $form->{"sellprice_$i"} = $fxsellprice;
         }
         $form->{"discount_$i"} *= 100;
+ 
     }
 
     # set values which could be empty
@@ -543,7 +546,9 @@ sub save {
       : $form->parse_amount( $myconfig, $form->{exchangerate} );
 
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
+
     for (qw(department_id terms)) { $form->{$_} *= 1 }
+
     if ($did_insert) {
         $query = qq|
 			UPDATE oe SET 
@@ -551,7 +556,7 @@ sub save {
 				netamount = ?,
 				taxincluded = ?
 			WHERE id = ?|;
-        @queryargs = ( $amount, $netamount, $form->{taxincluded}, $form->{id} );
+        @queryargs = ( $amount, $netamount, $form->{taxincluded}, $form->{id} ); 
     }
     else {
 
@@ -597,20 +602,24 @@ sub save {
         );
     }
     $sth = $dbh->prepare($query);
-    $sth->execute(@queryargs) || $form->dberror($query);
+
+    #$sth->execute(@queryargs) || $form->error($query);
 
     if ( !$did_insert ) {
         @queries = $form->run_custom_queries( 'oe', 'UPDATE' );
     }
+
 
     $form->{ordtotal} = $amount;
 
     # add shipto
     $form->{name} = $form->{ $form->{vc} };
     $form->{name} =~ s/--$form->{"$form->{vc}_id"}//;
-    $form->add_shipto( $dbh, $form->{id} );
+
+    $form->add_shipto( $dbh, $form->{id});
 
     # save printed, emailed, queued
+
     $form->save_status($dbh);
 
     if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
@@ -641,7 +650,7 @@ sub save {
         id       => $form->{id}
     );
 
-    $form->audittrail( $dbh, "", \%audittrail );
+   # $form->audittrail( $dbh, "", \%audittrail );
 
     $form->save_recurring( $dbh, $myconfig );
 
@@ -2629,6 +2638,7 @@ sub consolidate_orders {
     $rc;
 
 }
+
 
 1;
 

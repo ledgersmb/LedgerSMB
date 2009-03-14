@@ -1581,43 +1581,30 @@ $dbh is unused.
 =cut
 
 sub add_shipto {
-    my ( $self, $dbh, $id ) = @_;
-
-    my $shipto;
-
-    foreach my $item (
-        qw(name address1 address2 city state
-        zipcode country contact phone fax email)
-      )
-    {
-
-        if ( $self->{"shipto$item"} ne "" ) {
-            $shipto = 1 if ( $self->{$item} ne $self->{"shipto$item"} );
-        }
-    }
-
-    if ($shipto) {
-        my $query = qq|
-			INSERT INTO shipto 
-			(trans_id, shiptoname, shiptoaddress1,
-				shiptoaddress2, shiptocity, shiptostate,
-				shiptozipcode, shiptocountry, shiptocontact,
-				shiptophone, shiptofax, shiptoemail) 
-			VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  
+  	my ( $self,$dbh,$id ) = @_;
+	my $query = qq|
+			INSERT INTO new_shipto 
+			(trans_id, oe_id,location_id) 
+			VALUES ( ?, ?, ?)
 			|;
 
         my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
+
         $sth->execute(
-            $id,                     $self->{shiptoname},
-            $self->{shiptoaddress1}, $self->{shiptoaddress2},
-            $self->{shiptocity},     $self->{shiptostate},
-            $self->{shiptozipcode},  $self->{shiptocountry},
-            $self->{shiptocontact},  $self->{shiptophone},
-            $self->{shiptofax},      $self->{shiptoemail}
-        ) || $self->dberror($query);
-        $sth->finish;
-    }
+                        undef,                     
+			$self->{id},
+			$self->{locationid}
+             
+		      ) || $self->dberror($query);
+	
+	$sth->finish;
+	$dbh->commit;
+
+     
+    
 }
+
 
 =item $form->get_employee($dbh);
 
