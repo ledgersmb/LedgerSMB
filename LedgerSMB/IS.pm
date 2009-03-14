@@ -37,12 +37,14 @@ use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 
 sub invoice_details {
+
     use LedgerSMB::CP;
     my ( $self, $myconfig, $form ) = @_;
 
     $form->{duedate} = $form->{transdate} unless ( $form->{duedate} );
 
     # connect to database
+
     my $dbh = $form->{dbh};
 
     my $query = qq|
@@ -179,6 +181,7 @@ sub invoice_details {
     }
 
     # sort the whole thing by project and group
+
     @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
 
     my $runningnumber = 1;
@@ -792,18 +795,22 @@ sub customer_details {
 		       country.name as country,
 		       '' as contact, '' as customerphone, '' as customerfax,
 		       '' AS customertaxnumber, sic_code AS sic, iban, 
-		       bic, startdate, enddate
+		       bic,startdate,enddate
 		  FROM customer c
 		  JOIN company cm ON c.entity_id = cm.entity_id
 		  JOIN entity e ON (c.entity_id = e.id)
 		  JOIN company_to_location cl ON cm.id = cl.company_id
 		  JOIN location l ON cl.location_id = l.id
 		  JOIN country ON l.country_id = country.id
-		 WHERE e.id = ?|;
+		 WHERE e.id = ? limit 1|;
+
+
     my $sth = $dbh->prepare($query);
+
     $sth->execute( $form->{customer_id} ) || $form->dberror($query);
 
     $ref = $sth->fetchrow_hashref(NAME_lc);
+
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
 
     $sth->finish;
@@ -2248,6 +2255,222 @@ sub toggle_on_hold {
         return 0;
     }
 }
+
+
+sub list_locations_contacts
+{
+
+    my ( $self, $myconfig, $form ) = @_;
+
+    
+
+    my $dbh = $form->{dbh};
+
+    # get rest for the customer
+    my $query = qq|
+			select  id as locationid,line_one as shiptoaddress1,line_two as shiptoaddress2,line_three as shiptoaddress3,city as shiptocity,
+				state as shiptostate,mail_code as shiptozipcode,country as shiptocountry 
+			from eca__list_locations(?);
+		  |;
+
+
+
+    my $sth = $dbh->prepare($query);
+
+    $sth->execute( $form->{customer_id} ) || $form->dberror($query);
+
+    my $i=0;
+
+    while($ref = $sth->fetchrow_hashref(NAME_lc))
+    {
+           $i++;
+           for ( keys %$ref ) 
+	   {     
+		 $form->{"$_\_$i"} = $ref->{$_};
+	   }
+           
+    }
+
+    $form->{totallocations}=$i;
+
+    $sth->finish();
+
+	
+
+
+
+
+    $query = qq|
+			select c.class as shiptotype,ec.contact as shiptocontact,ec.description as shiptodescription
+			from eca_to_contact ec 
+			join contact_class c on(c.id=ec.contact_class_id) 
+			where ec.credit_id=?;
+		  |;
+
+
+
+    $sth = $dbh->prepare($query);
+
+    $sth->execute( $form->{customer_id} ) || $form->dberror($query);
+
+    $i=0;
+
+    while($ref = $sth->fetchrow_hashref(NAME_lc))
+    {
+           $i++;
+           for ( keys %$ref ) 
+	   {     
+		 $form->{"$_\_$i"} = $ref->{$_};
+	   }
+           
+    }
+
+    $form->{totalcontacts}=$i;
+
+    $sth->finish();
+
+
+
+
+
+
+
+
+
+
+
+
+    # for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+
+
+}
+
+
+sub construct_countrys
+{
+
+
+	my ( $self,$form ) = @_;
+
+	my $dbh = $form->{dbh};
+
+	
+	my $query = qq|
+			select id,short_name  from location_list_country();
+		  |;
+
+
+
+    my $sth = $dbh->prepare($query);
+
+    $sth->execute() || $form->dberror($query);
+
+    my $returnvalue=qq|<option value="">null</option>|;
+
+    while(my $ref = $sth->fetchrow_hashref(NAME_lc))
+    {
+           
+	  $returnvalue.=qq|<option value="$ref->{id} ">$ref->{short_name}</option>|;
+
+    }
+
+
+   $sth->finish();
+
+   return($returnvalue);
+
+}
+
+
+sub construct_types
+{
+
+
+	my ( $self,$form ) = @_;
+
+	my $dbh = $form->{dbh};
+
+	
+	my $query = qq|
+			select id,class from contact_class;
+		  |;
+
+
+
+    my $sth = $dbh->prepare($query);
+
+    $sth->execute() || $form->dberror($query);
+
+    my $returnvalue=qq|<option value="">null</option>|;
+
+    while(my $ref = $sth->fetchrow_hashref(NAME_lc))
+    {
+           
+	  $returnvalue.=qq|<option value="$ref->{id} ">|.substr($ref->{class},0,3).qq|</option>|;
+
+    }
+
+
+   $sth->finish();
+
+   return($returnvalue);
+
+}
+
+
+sub createlocation
+{
+
+
+  my ( $self,$form ) = @_;
+
+  my $dbh=$form->{dbh};
+
+  my $query="select * from eca__location_save(?,?,?,?,?,?,?,?,?,?);";
+
+  my $sth=$dbh->prepare("$query");
+
+   $sth->execute($form->{"customer_id"},
+		 undef,
+		 3,
+		 $form->{"shiptoaddress1_new"},
+		 $form->{"shiptoaddress2_new"},
+		 $form->{"shiptoaddress3_new"},
+		 $form->{"shiptocity_new"},
+		 $form->{"shiptostate_new"},
+		 $form->{"shiptozipcode_new"},
+		 $form->{"shiptocountry_new"}
+	        ) || $form->dberror($query);
+
+  $sth->finish();
+
+  $dbh->commit();
+
+}
+
+
+
+sub createcontact
+{
+
+  my ( $self,$form ) = @_;
+
+  my $dbh=$form->{dbh};
+
+  my $query="select * from eca__save_contact(?,?,?,?,?,?);";
+
+  my $sth=$dbh->prepare("$query");
+
+  $sth->execute($form->{"customer_id"},$form->{"shiptotype_new"},$form->{"shiptodescription_new"},$form->{"shiptocontact_new"},$form->{"shiptocontact_new"},$form->{"shiptotype_new"}) || $form->dberror($query);
+
+  $sth->finish();
+
+  $dbh->commit();
+
+}
+
+
+
 
 1;
 
