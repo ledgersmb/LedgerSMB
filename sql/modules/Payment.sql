@@ -10,7 +10,7 @@ CREATE TYPE payment_vc_info AS (
 CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 (in_account_class int,
  in_vc_name text,
- in_vc_idn  int)
+ in_vc_idn  text)
  returns SETOF payment_vc_info AS
  $$
  DECLARE out_entity payment_vc_info;
