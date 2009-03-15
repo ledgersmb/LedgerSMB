@@ -31,3 +31,10 @@ div.note_contents {
 div label {
 	margin-left: 1em;
 }
+
+div.container_hidden {
+	display: none;
+}
+div.container {
+	display: block;
+}

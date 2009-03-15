@@ -2,9 +2,13 @@
 	include_stylesheet = [
 		stylesheet
 		'UI/Contact/contact.css'
-	] ?>
+	] 
+	include_script = [
+		'UI/Contact/contact.js'
+	]
+?>
 <?lsmb PROCESS 'elements.html' ?>
-<body>
+<body onload="init()">
     <?lsmb IF name ?> 
     <div class="pageheading"><?lsmb name?></div>
     <?lsmb END ?>
@@ -22,16 +26,16 @@
 -->
 <ul class="navigation">
 	<?lsmb IF entity_class == 3 ?>
-	<li><a href="#hr_div"><?lsmb text('HR') ?></a></li>
+	<li class="nav"><a href="#hr_div"><?lsmb text('HR') ?></a></li>
 	<?lsmb ELSE ?>
-	<li><a href="#company_div"><?lsmb text('Company') ?></a></li>
-	<li><a href="#credit_div"><?lsmb text('Accounts') ?></a></li>
+	<li class="nav"><a href="#company_div"><?lsmb text('Company') ?></a></li>
+	<li class="nav"><a href="#credit_div"><?lsmb text('Accounts') ?></a></li>
 	<?lsmb END ?>
 	<?lsmb IF entity_id ?>
-	<li><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
-	<li><a href="#contact_div"><?lsmb text('Contact Info') ?></a></li>
-	<li><a href="#bank_div"><?lsmb text('Bank Accounts') ?></a></li>
-	<li><a href="#notes_div"><?lsmb text('Notes') ?></a></li>
+	<li class="nav"><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
+	<li class="nav"><a href="#contact_div"><?lsmb text('Contact Info') ?></a></li>
+	<li class="nav"><a href="#bank_div"><?lsmb text('Bank Accounts') ?></a></li>
+	<li class="nav"><a href="#notes_div"><?lsmb text('Notes') ?></a></li>
 	<!-- Commented out as not yet implemented -CT
 	<li><a href="#history_div"><?lsmb text('History') ?></a></li>
 	<li><a href="#user_div"><?lsmb text('User') ?></a></li>
@@ -235,7 +239,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <?lsmb END ?>
 </div>
 <?lsmb IF entity_id ?>
-<div id="credit_div">
+<div id="credit_div" class="container">
 <div class="listtop"><strong>Accounts</strong></div>
     <table width="100%">
     <tr class="listheading">
@@ -783,7 +787,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	</div>
 </form>
 </div>
-<div id="notes_div">
+<div id="notes_div" class="container">
 <div class="listtop"><?lsmb text('Notes') ?></div>
 <form action="<?lsmb script ?>" method="post">
 	<?lsmb PROCESS input element_data = {
