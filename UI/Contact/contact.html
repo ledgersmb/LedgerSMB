@@ -8,7 +8,33 @@
 	]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onload="init()">
+<?lsmb IF (!entity_id and account_class != 3); 
+	target_div = 'company_div';
+ELSIF (!entity_id and account_class == 3) or action == 'save_employee';
+		target_div = 'hr_div';
+ELSIF action == 'save_credit' or action == 'get' or action == 'save_credit_new'
+			or action=='save'; 
+		target_div = 'credit_div';
+ELSIF action== 'save_location' or action == 'get_location' 
+			or action == 'delete_location';
+		target_div = 'location_div';
+ELSIF action== 'save_location' or action == 'get_location' 
+			or action == 'delete_location';
+		target_div = 'location_div';
+ELSIF action== 'save_contact' or action == 'get_contact' 
+			or action == 'delete_contact';
+		target_div = 'contact_div';
+ELSIF action== 'save_bank_account' or action == 'get_bank_acct' 
+			or action == 'delete_bank_acct';
+		target_div = 'bank_div';
+ELSIF action== 'save_notes';
+		target_div = 'notes_div';
+ELSE;
+	target_div = '';
+END ?>
+<body onload="init('<?lsmb target_div ?>')">
+<body onload="init('<?lsmb target_div ?>')">
+<body onload="init('<?lsmb target_div ?>')">
     <?lsmb IF name ?> 
     <div class="pageheading"><?lsmb name?></div>
     <?lsmb END ?>

@@ -1,5 +1,5 @@
 
-function init() {
+function init(div_id) {
 	var lis = document.getElementsByTagName('li');
 	for (var e in lis){
 		if (e != e * 1){
@@ -21,6 +21,9 @@ function init() {
 				return false;
 			},false);
 		}
+	}
+	if (div_id != ''){
+		select_div(div_id);
 	}
 }
 
