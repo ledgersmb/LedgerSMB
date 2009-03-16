@@ -1036,10 +1036,16 @@ sub reprint {
 
 }
 
-sub continue        { &{ $form->{nextsub} } }
+
+
+sub continue        {&{ $form->{nextsub} }; }
+sub continuenew     {$form->{rowcount}--; &setlocation_id;  &{ $form->{nextsub} }; }
+sub updatenew       {&createlocations;}
 sub gl_transaction  { &add }
 sub ar_transaction  { &add_transaction(ar) }
 sub ap_transaction  { &add_transaction(ap) }
 sub sales_invoice_  { &add_transaction(is) }
 sub vendor_invoice_ { &add_transaction(ir) }
+
+
 

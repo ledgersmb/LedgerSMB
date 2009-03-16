@@ -1138,5 +1138,130 @@ my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
 &print_payment($Payment);
 }
 
+
+=pod
+
+=item use_overpayment
+
+This item will do the trick to use the overpayment information stored inside the payments,
+it should be powerful enough to link overpayment from one customer to other customers.
+
+=back
+
+=cut
+
+sub use_overpayment {
+my ($request) = @_;
+my $locale    = $request->{_locale};
+my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
+my @entities;
+
+#We will use $ui to handle all the data needed by the User Interface
+my $ui = { stylesheet => $request->{_user}->{stylesheet}};
+$ui->{accountclass} = {name => 'account_class', value => $request->{account_class}};
+#We want to get all the customer/vendor with unused overpayment
+my @data = $Payment->get_open_overpayment_entities();
+for my $ref (0 .. $#data) {
+       push @entities, { value => $data[$ref]->{id},
+                         name =>  $data[$ref]->{name}};
+   }
+$ui->{entities} =  \@entities;
+$ui->{action}   =  {name => 'action', value => 'use_overpayment2', text => $locale->text('Continue')};
+my $template = LedgerSMB::Template->new(
+  user     => $request->{_user},
+  locale   => $request->{_locale},
+  path     => 'UI/payments',
+  template => 'use_overpayment1',
+  format => 'HTML' );
+eval {$template->render($ui) };
+if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
+}
+
+
+=pod
+
+=item use_overpayment2
+
+This sub runs to allow the user to specify the invoices in which an overpayment should be used
+
+=back
+
+=cut
+
+
+sub use_overpayment2 {
+my ($request) = @_;
+my $locale    = $request->{_locale};
+my $Payment   = LedgerSMB::DBObject::Payment->new({'base' => $request});
+my @array_options;
+my @vc_options;
+my @overpayments;
+my $exchangerate;
+my @selected_checkboxes;
+my $availible_subtotal = 0;
+my  $touse_subtotal = 0;
+my @hiddens;
+
+
+# First we need to insert some hidden information
+
+push @hiddens, { id => 'entity_credit_id',
+                 name =>  'entity_credit_id',
+                 type => 'hidden',
+                 value => $request->{entity_credit_id}};
+push @hiddens, { id  => 'account_class',
+                 name => 'account_class',
+                 type => 'hidden',
+                 value =>  $request->{account_class} };
+push @hiddens, { id  => 'login',
+                 name => 'login',
+                 type => 'hidden',
+                 value => $request->{login}   };
+
+
+# need to get all the availible overpayments
+@array_options = $Payment->get_availible_overpayment_amount();
+for my $ref (0 .. $#array_options) {
+       push @overpayments, { id        =>  $array_options[$ref]->{payment_id},
+                                    accno          =>  $array_options[$ref]->{accno},
+                                    description    =>  $array_options[$ref]->{description},
+                                    amount         =>  "$array_options[$ref]->{movements}",
+                                    availible      =>  "$array_options[$ref]->{availible}",
+                                    touse          =>  $array_options[$ref]->{'ovp_'."$array_options[$ref]->{payment_id}"}
+                            };
+       $availible_subtotal += "$array_options[$ref]->{availible}";
+       $touse_subtotal     += $array_options[$ref]->{'ovp_'."$array_options[$ref]->{payment_id}"};
+}
+
+
+# We start with our data selection called ui
+
+my $ui = { overpayments => \@overpayments,
+           availible_subtotal => $availible_subtotal,
+           touse_subtotal   =>  $touse_subtotal,
+           stylesheet   => $request->{_user}->{stylesheet},
+           header  =>  { text => $locale->text('Use overpayment/prepayment')},
+          };
+
+
+# Lastly we include the hiddens on the UI
+
+$ui->{hiddens} = \@hiddens;
+
+my $template = LedgerSMB::Template->new(
+  user     => $request->{_user},
+  locale   => $request->{_locale},
+  path     => 'UI/payments',
+  template => 'use_overpayment2',
+  format => 'HTML' );
+eval {$template->render($ui) };
+if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
+
+}# End SUB
+
+
+
+
+
 eval { do "scripts/custom/payment.pl"};
 1;

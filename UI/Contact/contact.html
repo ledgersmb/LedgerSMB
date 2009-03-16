@@ -418,6 +418,15 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			value_attr = "id"
                 } ?>
            </td>
+           <td> <?lsmb INCLUDE select element_data = {
+                        name = "discount_account_id"
+                        default_values = [discount_account_id]
+                        options = discount_acc_list
+                        label = text('Discount')
+                        text_attr = "text"
+                        value_attr = "id"
+                } ?>
+           </td>
         </tr>
         <tr id="business-threshold-row">
            <td> <?lsmb INCLUDE select element_data = {

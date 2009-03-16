@@ -125,7 +125,6 @@ sub get_entity_credit_account{
   @{$self->{entity_accounts}} =
     $self->exec_method(funcname => 'payment_get_entity_accounts'); 
    return  @{$self->{entity_accounts}};
-
 }
 
 
@@ -333,7 +332,9 @@ sub get_open_currencies {
   return @{$self->{openCurrencies}};
 }
 
+
 =over
+
 
 =item list_accounting
 
@@ -598,5 +599,33 @@ my ($self) = @_;
 @{$self->{header_info}} = $self->exec_method(funcname => 'payment_gather_header_info');
 @{$self->{line_info}}   = $self->exec_method(funcname => 'payment_gather_line_info');
 }
+
+
+=item get_open_overpayment_entities
+
+This method retrieves all the entities with the specified
+account_class which have unused overpayments
+
+=cut
+
+sub get_open_overpayment_entities {
+my ($self) = @_;
+@{$self->{open_overpayment_entities}} = $self->exec_method(funcname => 'payment_get_open_overpayment_entities');
+return @{$self->{open_overpayment_entities}};
+}
+
+sub get_unused_overpayments {
+my ($self) = @_;
+@{$self->{unused_overpayment}} = $self->exec_method(funcname => 'payment_get_unused_overpayment');
+return @{$self->{unused_overpayment}};
+}
+
+sub get_availible_overpayment_amount {
+my ($self) = @_;
+@{$self->{availible_overpayment_amount}} = $self->exec_method(funcname => 'payment_get_availible_overpayment_amount');
+return @{$self->{availible_overpayment_amount}};
+}
+
+
 
 1;

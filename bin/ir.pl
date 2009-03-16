@@ -274,6 +274,7 @@ sub prepare_invoice {
 
 sub form_header {
 
+
     # set option selected
     for (qw(AP currency)) {
         $form->{"select$_"} =~ s/ selected//;
@@ -1142,3 +1143,9 @@ sub on_hold {
         &edit(); # it was already IN edit for this to be reached.
     }    
 }
+
+
+sub 
+
+
+

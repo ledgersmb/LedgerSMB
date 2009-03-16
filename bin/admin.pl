@@ -77,8 +77,6 @@ else {
           . $locale->text('No Database Drivers available!') )
       unless ( LedgerSMB::User->dbdrivers );
 
-    $root = LedgerSMB::User->new('admin');
-
     &adminlogin;
 }
 
@@ -201,7 +199,7 @@ sub form_footer {
           qq|<button type="submit" class="submit" name="action" value="delete">|
           . $locale->text('Delete')
           . qq|</button>
-					 <input type="hidden" name="edit" value="1" />|;
+	 <input type="hidden" name="edit" value="1" />|;
     }
 
     print qq|
@@ -220,6 +218,7 @@ sub form_footer {
 sub list_users {
 
     # use the central database handle
+
     my $dbh = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
     my $fetchMembers = $dbh->selectall_arrayref(

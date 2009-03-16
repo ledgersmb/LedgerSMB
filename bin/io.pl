@@ -39,7 +39,6 @@
 #######################################################################
 
 use Error qw(:try);
-
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
@@ -786,12 +785,15 @@ sub display_form {
 
     # if we have a display_form
     if ( $form->{display_form} ) {
-        &{"$form->{display_form}"};
+	
+	&{"$form->{display_form}"};
         exit;
     }
+    
+    
 
     &form_header;
-
+    
     $numrows    = ++$form->{rowcount};
     $subroutine = "display_row";
 
@@ -824,11 +826,18 @@ sub display_form {
     }
 
     # create rows
+
     &{$subroutine}($numrows) if $numrows;
+
+    $form->hide_form(qw|locationid|);
 
     &form_footer;
 
 }
+
+
+
+
 
 sub check_form {
 
@@ -1814,7 +1823,10 @@ sub vendor_details {
 
 }
 
+
+
 sub ship_to {
+
 
     $title = $form->{title};
     $form->{title} = $locale->text('Ship to');
@@ -1827,10 +1839,12 @@ sub ship_to {
           $form->parse_amount( \%myconfig, $form->{"paid_$_"} );
     }
 
-    # get details for name
-    &{"$form->{vc}_details"};
+    
+   &{"$form->{vc}_details"};
 
-    $number =
+   &list_locations_contacts();
+
+   $number =
       ( $form->{vc} eq 'customer' )
       ? $locale->text('Customer Number')
       : $locale->text('Vendor Number');
@@ -1838,120 +1852,381 @@ sub ship_to {
     $nextsub =
       ( $form->{display_form} ) ? $form->{display_form} : "display_form";
 
-    $form->{rowcount}--;
+    
 
     $form->header;
 
+
     print qq|
-<body>
+               <body>
 
-<form method=post action=$form->{script}>
+<form name="form" method=post action=$form->{script}>
 
-<table width=100%>
-  <tr>
-    <td>
-      <table>
-	<tr class=listheading>
-	  <th class=listheading colspan=2 width=50%>|
-      . $locale->text('Billing Address')
-      . qq|</th>
-	  <th class=listheading width=50%>|
-      . $locale->text('Shipping Address')
-      . qq|</th>
-	</tr>
-	<tr height="5"></tr>
-	<tr>
-	  <th align=right nowrap>$number</th>
-	  <td>$form->{"$form->{vc}number"}</td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Company Name') . qq|</th>
-	  <td>$form->{name}</td>
-	  <td><input name=shiptoname size=35 maxlength=64 value="$form->{shiptoname}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Address') . qq|</th>
-	  <td>$form->{address1}</td>
-	  <td><input name=shiptoaddress1 size=35 maxlength=32 value="$form->{shiptoaddress1}"></td>
-	</tr>
-	<tr>
-	  <th></th>
-	  <td>$form->{address2}</td>
-	  <td><input name=shiptoaddress2 size=35 maxlength=32 value="$form->{shiptoaddress2}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('City') . qq|</th>
-	  <td>$form->{city}</td>
-	  <td><input name=shiptocity size=35 maxlength=32 value="$form->{shiptocity}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('State/Province') . qq|</th>
-	  <td>$form->{state}</td>
-	  <td><input name=shiptostate size=35 maxlength=32 value="$form->{shiptostate}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Zip/Postal Code') . qq|</th>
-	  <td>$form->{zipcode}</td>
-	  <td><input name=shiptozipcode size=10 maxlength=10 value="$form->{shiptozipcode}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Country') . qq|</th>
-	  <td>$form->{country}</td>
-	  <td><input name=shiptocountry size=35 maxlength=32 value="$form->{shiptocountry}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Contact') . qq|</th>
-	  <td>$form->{contact}</td>
-	  <td><input name=shiptocontact size=35 maxlength=64 value="$form->{shiptocontact}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Phone') . qq|</th>
-	  <td>$form->{"$form->{vc}phone"}</td>
-	  <td><input name=shiptophone size=20 value="$form->{shiptophone}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('Fax') . qq|</th>
-	  <td>$form->{"$form->{vc}fax"}</td>
-	  <td><input name=shiptofax size=20 value="$form->{shiptofax}"></td>
-	</tr>
-	<tr>
-	  <th align=right nowrap>| . $locale->text('E-mail') . qq|</th>
-	  <td>$form->{email}</td>
-	  <td><input name=shiptoemail size=35 value="$form->{shiptoemail}"></td>
-	</tr>
-      </table>
-    </td>
-  </tr>
+<table width=100% cellspacing="0" cellpadding="0" border="0">
+    <tr>
+            <td>
+		       <table>
+				<tr >
+					  <th >
+					  $form->{vc} Number:<td>$form->{"$form->{vc}number"}</td>
+					  </th>
+					  <th>  </th>
+				 	  <th>
+				 	   $form->{vc} Name:<td>$form->{name}</td>
+					  </th>
+			        </tr>
+			</table>
+
+
+			<table  cellspacing="0" cellpadding="0" border="0">
+			      <tr>
+				  <td valign="top">
+ 			                <table width=70% >
+
+	  					   <tr class=listheading> |
+		   				              . qq|<th class=listheading width=1% >
+								  |		
+					      		      .    $locale->text(' ')
+					       		      . qq|</th>
+								   <th class=listheading width=5%>|
+							      .     $locale->text('Add line1')
+							      . qq|</th>
+								   <th class=listheading width=5%>|
+							      .    $locale->text('Add line2')
+							      . qq|</th>
+								   <th class=listheading width=1% >
+								  |		
+							      .     $locale->text('Add line3 ')	
+					      		      . qq|</th>
+								   <th class=listheading width=5%>|
+							      .     $locale->text('city')
+							      . qq|</th>
+								   <th class=listheading width=5%>|
+							      .    $locale->text('State')
+							      . qq|</th>
+								   <th class=listheading width=5%>|
+							      .     $locale->text('Zip Code')
+							      . qq|</th>
+								   <th class=listheading width=5%>|
+							      .     $locale->text('Country')
+							      . qq|
+						   </tr>
+						|;
+
+						   my $i;
+
+						   for($i=1;$i<=$form->{totallocations};$i++)
+						   {
+
+				  	   	   print qq|
+						   <tr>
+						  
+							  <td><input type=radio name=shiptoradio value="$i"  ondblclick="return uncheckRadio(this);"></td>
+							  <input name=shiptolocationid_$i type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
+							  <td><input name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
+							  <td><input name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
+							  <td><input name=shiptoaddress3_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress3_$i"}" readonly></td>
+							  <td><input name=shiptocity_$i size=8 maxlength=32 id="ci_$i" value="$form->{"shiptocity_$i"}" readonly></td>
+							  <td><input name=shiptostate_$i size=10 maxlength=32 id="st_$i" value="$form->{"shiptostate_$i"}" readonly></td>
+							  <td><input name=shiptozipcode_$i size=8 maxlength=10 id="zi_$i" value="$form->{"shiptozipcode_$i"}" readonly></td>
+							  <td><input name=shiptocountry_$i size=5 maxlength=32 id="co_$i" value="$form->{"shiptocountry_$i"}" readonly></td>	  
+
+				 		    <tr>
+					  
+						  	  |;
+
+						     }	
+						    my $deletelocations=$i;
+
+
+			 	 		    print qq|<input type=hidden name=nextsub value=$nextsub>|;
+
+				 		    # delete shipto
+				  		    for (qw(action nextsub)) { delete $form->{$_} }
+		   
+			          		    $form->{title} = $title;
+
+					    
+			        	            print qq|
+
+					</table>
+
+				</td>
+				<td background="new_images/line.gif"><IMG SRC="new_images/line.gif" WIDTH="2px"/> </td>
+				<td valign="top" >
+				      <table width=30%>	
+					         <tr class=listheading>
+								 <th>&nbsp</th>
+								 <th class=listheading width="20%">|
+						 	       . $locale->text('Type')
+							    . qq|</th>
+							  	 <th class=listheading width="35%">|
+							    . $locale->text('Contact')
+							    . qq|</th>
+							 	 <th class="listheading" width="35%">|
+							    . $locale->text('Description')
+							    . qq|</th>
+				 	   	</tr>	
+					   	<tr></tr>
+	   				   	|;
+
+					   	for($i=1;$i<=$form->{totalcontacts};$i++)
+					  	 {
+						print qq|
+			   		   	<tr>
+							      <td>&nbsp</td>
+							      <td><input name=shiptotype_$i size=5 maxlength=100 value="$form->{"shiptotype_$i"}" readonly></td>
+							      <td><input name=shiptocontact_$i size=11 maxlength=100 value="$form->{"shiptocontact_$i"}" readonly></td>
+							      <td><input name=shiptodescription_$i size=12 maxlength=100 value="$form->{"shiptodescription_$i"}" readonly></td>
+				  	  	 </tr>	|;
+					    
+					    	  }
+				           	  my $deletecontacts=$i;
+  
+				    		 print qq|   
+				      </table>
+				 </td>
+			   </tr>
+
+		        </table>
+		        |;
+
+ 		        my $country=&construct_countrys_types("country");
+  
+ 			my $contacttype=&construct_countrys_types("type");
+
+
+  			for(my $k=1;$k<$deletecontacts;$k++)
+			{
+			    for (qq| type_$k contact_$k description_$k |)
+			    {
+				delete $form->{"shipto$_"};
+			    }
+
+		       }	
+
+  		       delete $form->{shiptoradiocontact};
+		       delete $form->{shiptoradio};
+
+		       for (qq| address1_new address2_new address3_new city_new state_new zipcode_new country_new type_new contact_new description_new|)
+		       {
+				delete $form->{"shipto$_"};
+		       }
+
+
+
+		      for(my $k=1;$k<$deletelocations;$k++)
+		      {
+				    for (qq| locationid_$k address1_$k address2_$k address3_$k city_$k state_$k zipcode_$k country_$k|)
+				    {
+					delete $form->{"shipto$_"};
+				    }
+
+		      }
+		      
+		      $form->hide_form;
+		      print qq|
+
+		      <hr valign="type" size=1 noshade >
+
+		      <table valign="top">
+			    <tr>
+					 Others
+		  	    </tr>
+			    </tr>	
+					  <td><input type=radio name=shiptoradio value="new" ondblclick="return uncheckRadio(this);"></td>
+					  <td><input name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
+					  <td><input name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
+					  <td><input name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
+					  <td><input name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}" ></td>
+					  <td><input name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}" ></td>
+					  <td><input name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
+					  <td><select name="shiptocountry_new">$country</select></td>
+
+					  <td background="new_images/line.gif"><IMG SRC="new_images/line.gif" WIDTH="0px"/></td>
+					  <td><input type=radio name=shiptoradiocontact value="1" ondblclick="uncheckRadiocontact(this);" ></td>
+					  <td><select name="shiptotype_new">$contacttype</select></td>
+					  <td><input name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
+				 	  <td><input name=shiptodescription_new size=10 maxlength=100 value="$form->{shiptodescription_new}" ></td>
+
+		 	    </tr>
+
+
+		      </table>
+          </td>
+     </tr>
+
 </table>
 
-<input type=hidden name=nextsub value=$nextsub>
+<br>
+
 |;
 
-    # delete shipto
-    for (qw(action nextsub)) { delete $form->{$_} }
-    for (
-        qw(name address1 address2 city state zipcode country contact phone fax email)
-      )
-    {
-        delete $form->{"shipto$_"};
-    }
-    $form->{title} = $title;
 
-    $form->hide_form;
+ 
+print qq|
 
-    print qq|
+<button class="submit" type="submit" name="action" value="continuenew">|
+. $locale->text('Continue')
+. qq|
+</button>
+<button class="submit" type="submit" name="action" value="updatenew">|
+. $locale->text('Update')
+. qq|
+</button>
 
-<hr size=3 noshade>
-
-<br>
-<button class="submit" type="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
 </form>
 
 </body>
+
 </html>
 |;
 
 }
 
+
+
+=pod 
+
+Author...Sadashiva
+
+The list of functions would create the new location / uses existing locations , and sets the $form->{locationid}.
+
+list_locations_contacts() would extracts all locations and sets into form parameter... 
+
+$form->{id} used to extract all locations and contacts(eca_to_location and eca_to_contact) and location
+
+construct_countrys_types return the drop down list of the country/contact_class ; value= country_id/contract_class_id and display text= country name/contract class
+
+createlocations called by update action... calling eca__location_save and eca__save_contact
+
+setlocation_id called by continue action... just setting $form->{locationid} this is the final location id which is returned by shipto service
+
+
+
+=cut
+
+
+
+sub list_locations_contacts
+{
+
+
+        IS->list_locations_contacts( \%myconfig, \%$form );
+  
+
+}
+
+
+
+sub construct_countrys_types
+{
+
+	my $retvalue="";
+
+	if($_[0] eq "country")
+	{
+	
+        	$retvalue=IS->construct_countrys(\%$form);
+
+ 	}
+	elsif($_[0] eq "type")
+	{
+		
+        	$retvalue=IS->construct_types(\%$form);
+
+	}
+        return($retvalue);
+
+}
+
+
+
+
+
+sub createlocations
+{
+
+	my $loc_id_index=$form->{"shiptoradio"};
+
+	my $index="locationid_".$loc_id_index;
+
+	my $loc_id=$form->{$index};
+
+
+	if($form->{shiptoradio} eq "new")
+	{
+			
+	     # required to create the new locations
+
+	     &validatelocation;
+
+	     IS->createlocation($form);			
+					
+			
+	}
+
+	if($form->{shiptoradiocontact}==1)
+	{
+	     &validatecontact;
+   	     IS->createcontact($form);
+			
+	
+        }
+
+	&ship_to;
+
+	     
+	     
+}
+
+
+sub validatelocation
+{
+
+   	my @Newlocation=("shiptoaddress1_new","shiptoaddress2_new","shiptoaddress3_new","shiptocity_new","shiptostate_new","shiptozipcode_new","shiptocountry_new");
+        foreach(@Newlocation)
+	{
+		$form->error( " Don not keep field empty $_") unless($form->{"$_"});
+	}
+
+
+}
+
+
+sub validatecontact
+{
+
+   	my @Newcontact=("shiptotype_new","shiptodescription_new","shiptocontact_new");
+        foreach(@Newcontact)
+	{
+		$form->error( " Don not keep field empty $_") unless($form->{"$_"});
+	}
+
+
+}
+
+
+
+sub setlocation_id
+{
+
+       if(!$form->{"shiptoradio"})
+       {
+		$form->error("Please select the location");
+       }
+       if($form->{"shiptoradio"} eq "new")
+       {
+		$form->error("Please dont select from others");
+       }
+	
+
+
+       my $loc_id_index=$form->{"shiptoradio"};
+ 
+       my $index="locationid_".$loc_id_index;
+
+       $form->{"locationid"}=$form->{$index};
+   
+     
+}

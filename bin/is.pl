@@ -847,7 +847,8 @@ sub update {
             $form->{terms} * 1 )
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
-        &rebuild_vc( customer, AR, $form->{transdate}, 1 ) if !$newname;
+        
+	&rebuild_vc( customer, AR, $form->{transdate}, 1 ) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
@@ -855,7 +856,7 @@ sub update {
               if (
                 $form->{forex} = (
                     $exchangerate = $form->check_exchangerate(
-                        \%myconfig,         $form->{currency},
+                        \%myconfig,$form->{currency},
                         $form->{transdate}, 'buy'
                     )
                 )

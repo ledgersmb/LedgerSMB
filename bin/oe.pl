@@ -236,8 +236,8 @@ sub prepare_order {
 
     if ( $form->{id} ) {
 
-        for (
-            qw(ordnumber quonumber shippingpoint shipvia notes intnotes shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact)
+        for(
+          qw(ordnumber quonumber shippingpoint shipvia notes intnotes shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact)
           )
         {
             $form->{$_} = $form->quote( $form->{$_} );
@@ -349,6 +349,8 @@ sub prepare_order {
 
 sub form_header {
 
+
+   
     $checkedopen   = ( $form->{closed} ) ? ""        : "checked";
     $checkedclosed = ( $form->{closed} ) ? "checked" : "";
 
@@ -2110,6 +2112,7 @@ sub subtotal {
 
 sub save {
 
+     
     if ( $form->{type} =~ /_order$/ ) {
         $msg = $locale->text('Order Date missing!');
     }
@@ -2120,15 +2123,18 @@ sub save {
     $form->isblank( "transdate", $msg );
 
     $msg = ucfirst $form->{vc};
+
     $form->isblank( $form->{vc}, $locale->text( $msg . " missing!" ) );
 
     # $locale->text('Customer missing!');
+
     # $locale->text('Vendor missing!');
 
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
     &validate_items;
+
 
     # if the name changed get new values
     if ( &check_name( $form->{vc} ) ) {
@@ -2178,6 +2184,8 @@ sub save {
             exit;
         }
     }
+
+ 
 
     if ( OE->save( \%myconfig, \%$form ) ) {
         $form->redirect( $locale->text('Order saved!') );
