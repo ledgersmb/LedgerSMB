@@ -131,7 +131,7 @@ sub account_header {
     # type=submit $locale->text('Edit Account')
 
     $hiddens->{type} = 'account';
-    $hiddens->{$_} eq $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
+    $hiddens->{$_} = $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
 
     \%checked;
 }
