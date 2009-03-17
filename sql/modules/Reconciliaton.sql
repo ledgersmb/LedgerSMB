@@ -279,7 +279,7 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
 		      select id, reference, 'gl' as table FROM gl WHERE approved) gl 
 			ON (gl.table = t.table_name AND gl.id = t.id)
 		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-			AND ((rl.ledger_id = ac.trans_id 
+			AND ((rl.ledger_id = ac.entry_id 
 				AND ac.voucher_id IS NULL) 
 				OR (rl.voucher_id = ac.voucher_id)))
 		WHERE ac.cleared IS FALSE
