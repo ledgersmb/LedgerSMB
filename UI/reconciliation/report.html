@@ -1,34 +1,50 @@
-<?lsmb PROCESS 'ui-header.html' ?>
+<?lsmb PROCESS 'ui-header.html' 
+		include_stylesheet = ['UI/reconciliation/report.css']
+?>
 <?lsmb PROCESS 'elements.html' ?>
 
 <form action="recon.pl" method="post">
 <div class="listtop" id="title"><?lsmb text('Reconciliation Report') ?></div>
-<div class="info">
-<div><span class="heading"><?lsmb text('Account:') ?></span>
-<span class="data"><?lsmb account ?></span></div>
-<br />
-<div><span class="heading"><?lsmb text('Reconciliation Date:') ?></span>
-<span class="data"><?lsmb end_date ?></span></div>
-<div><span class="heading"><?lsmb text('Beginning Statement Balance:') ?></span>
-<span class="data"><?lsmb beginning_balance ?></span>
-<div><span class="heading"><?lsmb text('Ending Statement Balance:') ?></span>
-<span class="data"><?lsmb INCLUDE input element_data = {
+<table class="info">
+<tr>
+  <th><?lsmb text('Account:') ?></th><td><?lsmb account ?></td>
+</tr>
+<tr class="spacer">
+  <th>&nbsp;</th><td>&nbsp;</td>
+</tr>
+<tr>
+  <th><?lsmb text('Reconciliation Date:') ?></th><td><?lsmb end_date ?></td>
+</tr>
+<tr>
+ <th><?lsmb text('Beginning Statement Balance:') ?></th>
+ <td><?lsmb beginning_balance ?></td>
+</tr>
+<tr>
+ <th><?lsmb text('Ending Statement Balance:') ?></th>
+ <td><?lsmb INCLUDE input element_data = {
 	name = "their_total",
 	type = "text",
 	class = "money",
 	size = "15",
 	value = their_total
-	} ?></span>
-</div>
-<div><span class="heading"><?lsmb text('Variance:') ?></span>
-<span class="data"><?lsmb out_of_balance ?></span></div>
-<br />
-<div><span class="heading"><?lsmb text('Ending Statement Balance:') ?></span>
-<span class="data"><?lsmb their_total ?></span></div>
-<div><span class="heading"><?lsmb text('Less Outstanding Checks:') ?></span>
-<span class="data"><?lsmb outstanding_total ?></span></div>
-<div><span class="heading"><?lsmb text('Ending GL Balance:') ?></span>
-<span class="data"><?lsmb our_total ?></span></div>
+	} ?></td>
+</tr>
+<tr>
+  <th><?lsmb text('Variance:') ?></th>
+  <td><?lsmb out_of_balance ?></td>
+</tr>
+<tr class="spacer"><th>&nbsp;</th><td>&nbsp;</td></tr>
+  <th><?lsmb text('Ending Statement Balance:') ?></th>
+  <td><?lsmb their_total ?></td>
+</tr>
+<tr>
+  <th><?lsmb text('Less Outstanding Checks:') ?></th>
+  <td><?lsmb outstanding_total ?></td>
+</tr>
+<tr>
+  <th><?lsmb text('Ending GL Balance:') ?></th><td><?lsmb our_total ?></td>
+</tr>
+</table>
 <br />
 	<div id="csv-file">
         <label for="file_upload"><?lsmb text('CSV File:') ?></label>
@@ -42,7 +58,7 @@
 </div>
 <?lsmb END ?>
 <?lsmb i = 1 ?>
-<table border=0>
+<table border=0 id="cleared-table">
 	<tr class="listtop">
 		<th colspan=9><?lsmb text('Cleared Transactions') ?></th>
 	</tr>
@@ -102,19 +118,17 @@
 		<td><?lsmb total_cleared_debits ?></td>
 		<td><?lsmb total_cleared_credits ?></td>
 	</tr>
-	<tr class="listheading">
-		<th colspan=9><?lsmb text('Outstanding Transactions') ?></th>
+	</table>
+	<table id="outstanding-table">
+	<tr class="listtop">
+		<th colspan=5><?lsmb text('Outstanding Transactions') ?></th>
 	</tr>
 	<tr class="listheading">
 		<th><?lsmb text('Cleared') ?></th>
-		<th><?lsmb text('Transaction Type') ?></th>
-		<th><?lsmb text('Clear date') ?></th>
 		<th><?lsmb text('Source') ?></th>
 		<th><?lsmb text('Posted Date') ?></th>
 		<th><?lsmb text('Our Debits') ?></th>
 		<th><?lsmb text('Our Credits') ?></th>
-		<th><?lsmb text('Their Debits') ?></th>
-		<th><?lsmb text('Their Credits') ?></th>
 	</tr>
 	<?lsmb FOREACH row = report_lines ?>
 	<?lsmb IF row.cleared != 'checked' ?>
@@ -137,20 +151,16 @@
 			checked = row.cleared
 			}
 			?></td>
-			<td><?lsmb row.transaction_type ?> </td>
-			<td><?lsmb row.clear_time ?></td>
 			<td><?lsmb row.scn ?> </td>
 			<td><?lsmb row.post_date ?></td>
 			<td><?lsmb row.our_debits ?></td>
 			<td><?lsmb row.our_credits ?></td>
-			<td><?lsmb row.their_debits ?></td>
-			<td><?lsmb row.their_credits ?></td>
 		</tr>
 	<?lsmb i = i + 1 -?>
 	<?lsmb END ?>
 	<?lsmb END -?>
 	<tr class="subtotal">
-		<th colspan=5><?lsmb text('Total') ?></th>
+		<th colspan=3><?lsmb text('Total') ?></th>
 		<td><?lsmb total_uncleared_debits ?></td>
 		<td><?lsmb total_uncleared_credits ?></td>
 	</tr>

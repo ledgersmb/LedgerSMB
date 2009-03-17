@@ -1,0 +1,29 @@
+#cleared-table {
+	width: 800px;
+}
+
+#outstanding-table {
+	width: 800px;
+}
+
+span.heading {
+	font-weight: bold;
+}
+
+table.info tr th {
+	text-align: left;
+}
+
+tr.spacer {
+	margin-bottom: 100px;
+}
+
+span.data {
+}
+th {
+	font-weight: bold;
+}
+
+table {
+	border: 0;
+}
