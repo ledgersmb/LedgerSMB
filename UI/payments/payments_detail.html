@@ -4,6 +4,7 @@
 			'css/global.css' 
 			'UI/payments/payments.css'
 		]
+	include_script = ['UI/payments/payments_detail.js']
 ?>
 <?lsmb BLOCK format_money ?><?lsmb number 
 ?><?lsmb END # block ?>
@@ -12,7 +13,7 @@
 ?>
 <?lsmb payment_type = (account_class == 1) ? text('Payments') : text('Receipts') 
 ?>
-<body id="payment_2_body">
+<body id="payment_2_body" onLoad="init()">
 <!-- CT:  This template produces invalid XHTML due to the use of nested tables.
     Because nested tables are widely used (perhaps improperly) for layout,
     most browsers should have no issues with them.  Furthermore, I cannot find
@@ -200,10 +201,13 @@
 		?>"><?lsmb r.contact_name ?></span></td>
 	<td class="invoice"><?lsmb r.total_due ?> 
 		<?lsmb currency ?></td>
-        <td class="payment" class="details_select">
+        <td>
+		<span class="details_select">
 		<?lsmb INCLUDE input element_data = {
 		name = "paid_$r.contact_id"
 		value = "some"
+		class = "paid_some"
+		id = "paid_some_$r.contact_id"
 		label = text('Some')
 		checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
 		type = "radio"
@@ -211,10 +215,12 @@
 		<?lsmb INCLUDE input element_data = {
 		name = "paid_$r.contact_id"
 		value = "all"
+		class = "paid_all"
+		id = "paid_all_$r.contact_id"
 		label = text('All')
 		checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 		type = "radio"
-	 }	?>
+	 }	?></span>
 	</td>
 	<td rowspan = 2><?lsmb INCLUDE input element_data = {
 		name = "source_$r.contact_id"
