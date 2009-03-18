@@ -1670,7 +1670,7 @@ sub cogs {
 
                 $qty = ($qty < $totalqty) ? $totalqty : $qty;
 
-                my $inetotal = $qty*$ref->{sellprice} * -1;
+                my $linetotal = $qty*$ref->{sellprice} * -1;
                 push @{ $form->{acc_trans}{lineitems} },
                   {
                     chart_id   => $ref->{expense_accno_id},
