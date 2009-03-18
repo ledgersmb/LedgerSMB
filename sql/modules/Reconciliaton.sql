@@ -54,6 +54,9 @@ CREATE OR REPLACE FUNCTION reconciliation__save_set(
 	in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
 BEGIN
+	UPDATE cr_report_line SET cleared = false
+	WHERE report_id = in_report_id;
+
 	UPDATE cr_report_line SET cleared = true
 	WHERE report_id = in_report_id AND id = ANY(in_line_ids);
 	RETURN found;

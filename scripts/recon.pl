@@ -404,9 +404,12 @@ sub _display_report {
             $l->{our_debits} = $recon->format_amount({amount => $l->{our_debits}, money => 1});
             $l->{our_credits} = $recon->format_amount({amount => $l->{our_credits}, money => 1});
         }
+	$recon->{statement_gl_calc} = $recon->{their_total} 
+		- $recon->{outstanding_total};
 	$recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
         $recon->{cleared_total} = $recon->format_amount({amount => $recon->{cleared_total}, money => 1});
         $recon->{outstanding_total} = $recon->format_amount({amount => $recon->{outstanding_total}, money => 1});
+        $recon->{statement_gl_calc} = $recon->format_amount({amount => $recon->{statement_gl_calc}, money => 1});
         $recon->{total_cleared_debits} = $recon->format_amount(
               {amount => $recon->{total_cleared_debits}, money => 1}
         );
