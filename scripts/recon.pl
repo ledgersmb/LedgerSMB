@@ -41,15 +41,8 @@ report_id.
 
 sub display_report {
     my ($request) = @_;
-    my $recon = LedgerSMB::Employee->new(base => $request, copy => 'all'); 
-    my $template = LedgerSMB::Template->new( user=>$user, 
-        template => "reconciliation/report", language => $user->{language},
-            format=>'HTML',
-            path=>"UI"
-        );
-    my $report = $recon->get_report();
-    my $total = $recon->get_total();
-    $template->render({report=>$report, total=>$total, recon=>$recon});
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all'); 
+    _display_report($recon);
 }
 
 =pod
@@ -83,7 +76,6 @@ sub update_recon_set {
 		column  => $recon->{line_order}}
        );
     }
-    $recon->save();
     $recon->update();
     _display_report($recon);
 }
@@ -139,7 +131,7 @@ sub get_results {
         for my $row (@results){
             $row->{account} = $act_hash->{"$row->{chart_id}"};
         }
-        my $base_url = "recon.pl?action=update_recon_set";
+        my $base_url = "recon.pl?action=display_report";
         my $search_url = "recon.pl?action=get_results".
             "&date_from=$search->{date_from}&date_to=$search->{date_to}".
              "&amount_from=$search->{amount_from}&".
