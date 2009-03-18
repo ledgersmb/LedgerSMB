@@ -680,16 +680,33 @@ qq|<textarea name="intnotes" rows="$rows" cols="35" wrap="soft">$form->{intnotes
 |;
     }
 
+	# This function is used to sort taxes by pass value.
+	sub bypass {
+		$a->pass <=> $b->pass;
+	}
+
     if ( !$form->{taxincluded} ) {
 
-        my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
+        my @taxes = sort bypass Tax::init_taxes( $form, $form->{taxaccounts} );
+		my $passlvl = 0;
+		my $taxable_base = undef;
         foreach my $item (@taxes) {
             my $taccno = $item->account;
+
+			if ( $taxable_base eq undef ) {
+				$taxable_base = $form->{"${taccno}_base"};
+			}
+
+			if ( $item->pass gt $passlvl ) {
+				$taxable_base = $form->{invtotal};
+			}
+			$passlvl = $item->pass;
+
 	    $form->{invtotal} += $form->round_amount( 
-                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2);
+                $form->{"${taccno}_rate"} * $taxable_base, 2);
             $form->{"${taccno}_total"} =
-              $form->format_amount( \%myconfig,
-                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2 );
+        	  $form->format_amount( \%myconfig,
+                $form->{"${taccno}_rate"} * $taxable_base, 2 );
 
             $tax .= qq|
 	      <tr>
