@@ -76,6 +76,7 @@ sub update_recon_set {
 		column  => $recon->{line_order}}
        );
     }
+    $recon->save();
     $recon->update();
     _display_report($recon);
 }
@@ -381,7 +382,7 @@ sub _display_report {
 
             if ($l->{our_balance} != 0 and 
                 $l->{our_balance} == $l->{their_balance} or
-                defined $recon->{"cleared_$l->{id}"}
+                defined $recon->{"cleared_$l->{id}"} or $l->{cleared}
             ){
                  $recon->{total_cleared_credits}->badd($l->{our_credits});
                  $recon->{total_cleared_debits}->badd($l->{our_debits});
