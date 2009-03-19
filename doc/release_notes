@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.17
+LedgerSMB 1.2.18
 
 
 
@@ -198,16 +198,10 @@ Also the POS system requires some additional configuration both in the chart of
 accounts and in the system itself.  Please edit the pos.conf.pl and create 
 appropriate till accounts.
 
-Major Bugs Fixed in 1.2.17:
+Major Bugs Fixed in 1.2.18:
 ================================
-1)  Access denied! when deleting users.
-
-2)  Attempt to free unreferenced scalar on orders with taxes when using 
-Perl 5.10.0
-
-3)  "Cannot call method quote on undefined value" when generating project sales orders
-
-4) Item notes replaced with qty when consolidating sales orders.
+1) COGS handling for product returns has been corrected.  Previously under 
+certain circumstances the COGS posting was incorrect.
 
 Also, note that LedgerSMB 1.2.15 had a bunch of the pricematrix logic rewritten.
 If you are upgrading from an earlier version, please test before putting it into
