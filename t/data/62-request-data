@@ -164,6 +164,13 @@ our $test_request_data = [
 		action 		=> 'get_search_results',
 	},
 	{
+		'_test_id'  => 'Recon Search Screen',
+		'_codebase' => 'new',
+		'module'    => 'recon.pl',
+		'report'    => '1',
+		'action'    => 'search',
+	},	
+	{
 		'_test_id'      => 'Payment print total',
 		'_codebase'     => 'new',
 		'action'        => 'print',

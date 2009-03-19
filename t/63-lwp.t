@@ -9,6 +9,7 @@ if (!$ENV{'LSMB_TEST_LWP'}){
 	plan 'no_plan';
 }
 
+
 my $host = $ENV{LSMB_BASE_URL} || 'http://localhost/ledger-smb/';
 if ($host !~ /\/$/){
 	$host .= "/";
@@ -60,8 +61,8 @@ for my $test (@$test_request_data){
 		like($response->header('content-type'), qr/^text\/html/,
 			"$test->{_test_id} HTML sent");
 	}
-	if (ref($lwp_tests->{"$test->{_test_id}"}) eq 'CODE'){
-		&$lwp_tests->{"$test->{_test_id}"};
+	if (ref($test->{_lwp_tests}) eq 'CODE'){
+		$test->{_lwp_tests}($response);
 	}
 	#cmp_ok(($response->content =~ /Error/), 'eq', "$test->{_lwp_error}", "No Error on Request $test->{_test_id}");
 	#if ($response->content =~ /Error/){
