@@ -192,6 +192,9 @@ sub new {
 
     }
 
+    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
+    $self->{script} = $1;
+
     if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
         $self->error("Access Denied");
     }

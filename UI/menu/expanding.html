@@ -65,7 +65,7 @@
 					?>id=<?lsmb item.id
 					?>&amp;open=<?lsmb open 
 				?><?lsmb END ?>"
-				<?lsmb IF (item.module != 'menu.pl') &&
+				<?lsmb IF item.module && (item.module != 'menu.pl') &&
 					('login.pl' != item.module) ?> 
 					target = "main_window" 
 				<?lsmb ELSIF ('New Window' == item.label) ?>

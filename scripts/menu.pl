@@ -113,7 +113,6 @@ sub expanding_menu {
     $request->{'open'} =~ s/:+/:/g;
 
     
-
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
     for my $item (@{$menu->{menu_items}}){
