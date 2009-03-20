@@ -215,6 +215,13 @@ tr.active {
 	background-color: #ddd;
 }
 
+tr.record {
+	background-color: pink;
+}
+
+tr.warning {
+	background-color: yellow;
+}
 /* media stuff */
 
 @media screen {
@@ -228,4 +235,3 @@ tr.active {
     display: none;
   }
 }
-

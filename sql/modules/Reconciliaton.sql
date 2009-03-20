@@ -223,7 +223,7 @@ create or replace function reconciliation__add_entry(
 	ELSE -- scn IS NULL, check on amount instead
 		SELECT count(*) INTO in_count FROM cr_report_line
 		WHERE report_id = in_report_id AND amount = in_amount
-			AND their_balance = 0;
+			AND their_balance = 0 and posted_date = in_date;
 
 		IF in_count = 0 THEN -- no match
 			INSERT INTO cr_report_line
@@ -238,7 +238,7 @@ create or replace function reconciliation__add_entry(
 		ELSE -- more than one match
 			SELECT min(id) INTO lid FROM cr_report_line
 			WHERE report_id = in_report_id AND amount = in_amount
-                        	AND their_balance = 0;
+                        	AND their_balance = 0 and posted_date = in_date;
 
 			UPDATE cr_report_line SET their_balance = in_amount,
 					clear_time = in_date

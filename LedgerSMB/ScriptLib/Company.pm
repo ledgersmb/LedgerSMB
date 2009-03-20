@@ -250,6 +250,11 @@ sub get_results {
                 curr          => $ref->{curr},
                 };
     }
+    my $label = $ec_labels->{"$company->{account_class}"};
+# CT:  Labels for i18n:
+# text->{'Add Customer')
+# text->('Add Vendor')
+
 # CT:  The CSV Report is broken.  I get:
 # Not an ARRAY reference at 
 # /usr/lib/perl5/site_perl/5.8.8/CGI/Simple.pm line 423
@@ -263,7 +268,7 @@ sub get_results {
 #        },
 	{name => 'action',
         value => 'add',
-        text => $company->{_locale}->text('Add Vendor'),
+        text => $company->{_locale}->text("Add $label"),
         type => 'submit',
         class => 'submit',
 	}

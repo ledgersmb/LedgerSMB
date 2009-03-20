@@ -6,6 +6,10 @@
 	width: 800px;
 }
 
+#error-table {
+	width: 800px;
+}
+
 span.heading {
 	font-weight: bold;
 }

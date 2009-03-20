@@ -10,11 +10,4 @@ sub set_entity_class {
     $self->{entity_class} = $ENTITY_CLASS;
 }
     
-
-
-
-sub search {
-    
-    
-}
 1;

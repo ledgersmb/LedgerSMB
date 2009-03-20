@@ -171,6 +171,14 @@ our $test_request_data = [
 		'action'    => 'search',
 	},	
 	{
+		'_test_id'  => 'Menu round trip',
+		'_codebase' => 'new',
+		'module'    => 'menu.pl',
+		'menu'      => '1',
+		'id'        => '4',
+                'open'      => ':1:4:11',
+	},	
+	{
 		'_test_id'      => 'Payment print total',
 		'_codebase'     => 'new',
 		'action'        => 'print',

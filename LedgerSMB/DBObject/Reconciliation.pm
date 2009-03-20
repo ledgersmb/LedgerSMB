@@ -304,13 +304,37 @@ sub get {
 
     $our_balance = $ref->{reconciliation__get_cleared_balance};
     $self->{beginning_balance} = $our_balance;
-    $self->{cleared_total} = 0;
-    $self->{outstanding_total} = 0;
+    $self->{cleared_total} = $self->parse_amount(amount => 0);
+    $self->{outstanding_total} = $self->parse_amount(amount => 0);
+    $self->{mismatch_our_total} = $self->parse_amount(amount => 0);
+    $self->{mismatch_our_credits} = $self->parse_amount(amount => 0);
+    $self->{mismatch_our_debits} = $self->parse_amount(amount => 0);
+    $self->{mismatch_their_total} = $self->parse_amount(amount => 0);
+    $self->{mismatch_their_credits} = $self->parse_amount(amount => 0);
+    $self->{mismatch_their_debits} = $self->parse_amount(amount => 0);
+
 
     for my $line (@{$self->{report_lines}}){
         if ($self->{"cleared_$line->{id}"} or $line->{cleared}){
             $our_balance += $line->{our_balance};
             $self->{cleared_total} += $line->{our_balance};
+	}elsif ((($self->{their_balance} != '0')
+		and ($self->{their_balance} != $self->{our_balance}))
+		or $line->{our_balance} == 0){
+	
+            $line->{err} = 'mismatch';
+            $self->{mismatch_our_total} += $line->{our_balance};
+            $self->{mismatch_their_total} += $line->{their_balance};
+            if ($line->{our_balance} < 0){
+                $self->{mismatch_our_debits} += -$line->{our_balance}; 
+            } else {
+		$self->{mismatch_our_credits} += $line->{our_balance};
+            }
+            if ($line->{their_balance} < 0){
+                $self->{mismatch_their_debits} += -$line->{their_balance}; 
+            } else {
+		$self->{mismatch_their_credits} += $line->{their_balance};
+            }
         } else {
             $self->{outstanding_total} += $line->{our_balance};
         } 
