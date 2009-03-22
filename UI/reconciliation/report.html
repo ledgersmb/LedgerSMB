@@ -3,7 +3,7 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 
-<form action="recon.pl" method="post">
+<form action="recon.pl" method="post" enctype="multipart/form-data">
 <div class="listtop" id="title"><?lsmb text('Reconciliation Report') ?></div>
 <table class="info">
 <tr>
@@ -246,5 +246,5 @@
 	class = "submit"
 } ?>
 <?lsmb END ?>
-
+</form>
 </body></html>

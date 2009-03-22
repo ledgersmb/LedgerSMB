@@ -67,7 +67,6 @@ status
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
-    $recon->add_entries($recon->import_file()) if !$recon->{submitted};
     $recon->{their_total} = $recon->parse_amount(amount => $recon->{their_total}) if defined $recon->{their_total}; 
     $recon->{dbh}->commit;
     if ($recon->{line_order}){
@@ -76,7 +75,7 @@ sub update_recon_set {
 		column  => $recon->{line_order}}
        );
     }
-    $recon->save();
+    $recon->save() if !$recon->{submitted};
     $recon->update();
     _display_report($recon);
 }
@@ -338,6 +337,7 @@ it has been created.
 sub _display_report {
         my $recon = shift;
         $recon->get();
+        $recon->add_entries($recon->import_file()) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['recon_supervisor']});
         $template = LedgerSMB::Template->new( 
             user=> $user,
@@ -403,7 +403,7 @@ sub _display_report {
 	$recon->{zero_string} = $recon->format_amount({amount => 0, money => 1});
 
 	$recon->{statement_gl_calc} = $recon->{their_total} 
-		+ $recon->{outstanding_total};
+		+ $recon->{outstanding_total} + $recon->{mismatch_our_total};
 	$recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
         $recon->{cleared_total} = $recon->format_amount({amount => $recon->{cleared_total}, money => 1});
         $recon->{outstanding_total} = $recon->format_amount({amount => $recon->{outstanding_total}, money => 1});

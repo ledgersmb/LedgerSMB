@@ -155,6 +155,7 @@ sub new {
     my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
     my $params = $query->Vars;
     $self->{VERSION} = $VERSION;
+    $self->{_request} = $query;
 
     $self->merge($params);
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;

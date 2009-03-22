@@ -132,21 +132,8 @@ sub import_file {
     
     my $self = shift @_;
     
-    # We need to know what the format is, for the text file. We should have a set of formats
-    # for the given file, listed in the DB, or based on modules available.
-    # 
-    # Probably based on modules.
-    
-    # my $module = 'LedgerSMB/Reconciliaton/CSV/'.$self->{file_format};
-    # require $module."pm";
-    # my $obj_name = $module;
-    # $obj_name =~ s/\//::/g;
-    # my $parser = $obj_name::new(base=>$self);
-    
-    # $self->filename is currently a lie. There's no facility in the LSMB 
-    # design to accomadate an uploaded file.
     my $csv = LedgerSMB::Reconciliation::CSV->new(base=>$self);
-    $csv->process();
+    $csv->process($self, 'csv_file');
     
     return $self->{entries};
 }
@@ -346,7 +333,6 @@ sub get {
            $self->{account} = $_->{name};
        }
     }
-    $self->debug({file => '/tmp/recon'});
     $self->{format_amount} = sub { return $self->format_amount(@_); };
 }
 

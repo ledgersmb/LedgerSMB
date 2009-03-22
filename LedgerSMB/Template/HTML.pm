@@ -70,6 +70,8 @@ sub preprocess {
         return escapeHTML($$rawvars);
     } elsif ($type eq 'CODE'){
         return $rawvars;
+    } elsif ($type eq 'IO::File'){
+        return undef;
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
