@@ -199,7 +199,7 @@ sub add_entries {
             args=>[
                 $self->{report_id},
                 $entry->{scn},
-                $self->{user},
+                $entry->{type},
                 $entry->{cleared_date},
                 $entry->{amount}, # needs leading 0's trimmed.
             ]
