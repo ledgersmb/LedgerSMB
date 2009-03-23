@@ -56,6 +56,12 @@ sub list_drafts {
             $callback .= "&$_=$draft->{$_}";
         }
     }
+    if ($draft->{order_by}){
+        $draft->set_ordering(
+		{method => 'draft__search', 
+		 column => $draft->{order_by}}
+        );
+    }
     my @search_results = $draft->search;
     $draft->{script} = "drafts.pl";
     $draft->{callback} = $draft->escape(string => $callback);
@@ -63,20 +69,20 @@ sub list_drafts {
         qw(select id transdate reference description amount);
 
     my $base_href = "drafts.pl";
-    my $search_href = "$base_href?action=list_transactions";
+    my $search_href = "$base_href?action=list_drafts";
     my $draft_href= "$base_href?action=get_transaction";
 
     for my $key (
-       qw(class_id approved created_by description amount_gt amount_lt)
+       qw(type approved created_by description amount_gt amount_lt)
     ){
-       $search_href .= "&$key=$draft->{key}";
+       $search_href .= "&$key=$draft->{$key}";
     }
 
     my %column_heading = (
         'select'          => $draft->{_locale}->text('Select'),
         amount => {
              text => $draft->{_locale}->text('AR/AP/GL Total'),
-             href => "$search_href&order_by=transaction_total"
+             href => "$search_href&order_by=amount"
         },
         description       => {
              text => $draft->{_locale}->text('Description'),

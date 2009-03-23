@@ -213,6 +213,7 @@ BEGIN
 			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
 				al.amount))
 			<= in_amount_lt)
+		ORDER BY b.control_code, b.description
 		
 	LOOP
 		RETURN NEXT out_value;

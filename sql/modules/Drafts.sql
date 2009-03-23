@@ -48,6 +48,7 @@ BEGIN
 		GROUP BY trans.id, trans.transdate, trans.description, trans.reference
 		HAVING (in_with_accno IS NULL or in_with_accno = 
 			ANY(as_array(chart.accno)))
+		ORDER BY trans.reference
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;

@@ -162,6 +162,12 @@ sub search_batch {
 sub list_batches {
     my ($request) = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
+    if ($batch->{order_by}){
+        $batch->set_ordering(
+		{method => 'batch_search', 
+		 column => $batch->{order_by}}
+        );
+    }
     my @search_results = $batch->get_search_results({custom_types => $custom_batch_types});
     $batch->{script} = "vouchers.pl";
 
@@ -175,7 +181,7 @@ sub list_batches {
     for my $key (
        qw(class_id approved created_by description amount_gt amount_lt)
     ){
-       $search_href .= "&$key=$batch->{key}";
+       $search_href .= "&$key=$batch->{$key}";
     }
 
     my %column_heading = (
@@ -198,7 +204,7 @@ sub list_batches {
         },
         id                => {
              text => $batch->{_locale}->text('ID'),
-             href => "$search_href&order_by=control_code"
+             href => "$search_href&order_by=id"
         },
     );
     my $count = 0;
