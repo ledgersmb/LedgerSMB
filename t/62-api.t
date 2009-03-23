@@ -23,7 +23,7 @@ do 't/data/62-request-data'; # Import test case hashes
 
 for (qw(	drafts.pl     login.pl      payment.pl      
 		report.pl    employee.pl   menu.pl       vendor.pl
-		customer.pl  inventory.pl  vouchers.pl recon.pl)
+		customer.pl  inventory.pl  vouchers.pl recon.pl menu.pl)
     ){
 	ok(eval { require "scripts/$_" }, "Importing $_");
 	if ($@){
@@ -59,6 +59,9 @@ for my $test (@$test_request_data){
 		$request->merge($test);
 		$request->{_locale} = $locale;
 		my $script = $test->{module};
+		if (!$request->{action}){
+			$request->{action} = '__default';
+		}
 		$request->{dbh} = $dbh;
 		if (ref $api_test_cases->{"$test->{_test_id}"} eq 'CODE'){
 			$request->{_test_cases} = 
