@@ -1,0 +1,6 @@
+table.detail_table_visible {
+	display: block;
+}
+table.detail_table_hidden{
+	display: none;
+}

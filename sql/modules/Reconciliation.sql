@@ -167,16 +167,20 @@ create or replace function reconciliation__add_entry(
 	in_count int;
 	t_scn TEXT;
 	t_uid int;
+	t_prefix text;
     BEGIN
+
+	SELECT value into t_prefix FROM defaults WHERE setting_key = 'check_prefix';
+
 	t_uid := person__get_my_entity_id();
 	IF in_scn = '' THEN 
 		t_scn := NULL;
 	ELSE 
-		t_scn := in_scn;
+		t_scn := t_prefix || in_scn;
 	END IF;
 	IF t_scn IS NOT NULL THEN
 		SELECT count(*) INTO in_count FROM cr_report_line
-		WHERE in_scn = scn AND report_id = in_report_id 
+		WHERE in_scn ilike scn AND report_id = in_report_id 
 			AND their_balance = 0;
 
 		IF in_count = 0 THEN
@@ -193,12 +197,12 @@ create or replace function reconciliation__add_entry(
 				AND their_balance = 0;
 		ELSE 
 			SELECT count(*) INTO in_count FROM cr_report_line
-			WHERE in_scn = scn AND report_id = in_report_id
+			WHERE in_scn ilike scn AND report_id = in_report_id
 				AND our_value = in_amount and their_balance = 0;
 
 			IF in_count = 0 THEN -- no match among many of values
 				SELECT id INTO lid FROM cr_report_line
-                        	WHERE in_scn = scn AND report_id = in_report_id
+                        	WHERE in_scn ilike scn AND report_id = in_report_id
 				ORDER BY our_balance ASC limit 1;
 
 				UPDATE cr_report_line
@@ -217,7 +221,7 @@ create or replace function reconciliation__add_entry(
 					AND their_balance = 0;
 			ELSE -- More than one match
 				SELECT id INTO lid FROM cr_report_line
-                        	WHERE in_scn = scn AND report_id = in_report_id
+                        	WHERE in_scn ilike scn AND report_id = in_report_id
                                 	AND our_value = in_amount
 				ORDER BY id ASC limit 1;
 
