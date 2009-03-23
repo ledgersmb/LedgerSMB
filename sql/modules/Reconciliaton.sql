@@ -23,9 +23,10 @@ CREATE TABLE cr_report_line (
     their_balance numeric,
     our_balance numeric,
     errorcode INT,
-    "user" int references entity(id) not null, -- why ois this not an entity reference?
+    "user" int references entity(id) not null, 
     clear_time date,
     insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
+    trans_type text, 
     post_date date,
     ledger_id int REFERENCES acc_trans(entry_id),
     voucher_id int REFERENCES voucher(id),
@@ -152,7 +153,7 @@ $$ language 'sql';
 create or replace function reconciliation__add_entry(
     in_report_id INT, 
     in_scn TEXT, 
-    in_user TEXT, 
+    in_type TEXT, 
     in_date TIMESTAMP,
     in_amount numeric
 ) RETURNS INT AS $$
@@ -180,9 +181,11 @@ create or replace function reconciliation__add_entry(
 
 		IF in_count = 0 THEN
 			INSERT INTO cr_report_line
-			(report_id, scn, their_balance, our_balance, clear_time, "user")
+			(report_id, scn, their_balance, our_balance, clear_time,
+				"user", trans_type)
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0, in_date, t_uid);
+			(in_report_id, t_scn, in_amount, 0, in_date, t_uid,
+				in_type);
 		ELSIF in_count = 1 THEN
 			UPDATE cr_report_line
 			SET their_balance = in_amount, clear_time = in_date
@@ -199,12 +202,15 @@ create or replace function reconciliation__add_entry(
 				ORDER BY our_balance ASC limit 1;
 
 				UPDATE cr_report_line
-                                SET their_balance = in_amount
+                                SET their_balance = in_amount, 
+					clear_time = in_date,
+					trans_type = in_type
                                 WHERE id = lid;
 
 			ELSIF in_count = 1 THEN -- EXECT MATCH
 				UPDATE cr_report_line
 				SET their_balance = in_amount, 
+					trans_type = in_type,
 					clear_time = in_date
 				WHERE in_scn = scn AND report_id = in_report_id
                                 	AND our_value = in_amount 
@@ -217,6 +223,7 @@ create or replace function reconciliation__add_entry(
 
 				UPDATE cr_report_line
                                 SET their_balance = in_amount,
+					trans_type = in_type,
 					clear_time = in_date
                                 WHERE id = lid;
 				
@@ -230,11 +237,13 @@ create or replace function reconciliation__add_entry(
 		IF in_count = 0 THEN -- no match
 			INSERT INTO cr_report_line
 			(report_id, scn, their_balance, our_balance, clear_time,
-			"user")
+			"user", trans_type)
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0, in_date, t_uid);
+			(in_report_id, t_scn, in_amount, 0, in_date, t_uid,
+			in_type);
 		ELSIF in_count = 1 THEN -- perfect match
 			UPDATE cr_report_line SET their_balance = in_amount,
+					trans_type = in_type,
 					clear_time = in_date
 			WHERE report_id = in_report_id AND our_balance = in_amount
                         	AND their_balance = 0;
@@ -244,6 +253,7 @@ create or replace function reconciliation__add_entry(
                         	AND their_balance = 0 and post_date = in_date;
 
 			UPDATE cr_report_line SET their_balance = in_amount,
+					trans_type = in_type,
 					clear_time = in_date
 			WHERE id = lid;
 			
