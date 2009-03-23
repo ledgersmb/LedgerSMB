@@ -133,9 +133,9 @@ sub import_file {
     my $self = shift @_;
     
     my $csv = LedgerSMB::Reconciliation::CSV->new(base=>$self);
-    $csv->process($self, 'csv_file');
+    $self->{import_entries} = $csv->process($self, 'csv_file');
     
-    return $self->{entries};
+    return $self->{import_entries};
 }
 
 sub approve {
@@ -162,7 +162,6 @@ sub new_report {
     my $self = shift @_;
     my $total = shift @_;
     my $month = shift @_;
-    my $entries = shift @_; # expects an arrayref.
     
     # Total is in here somewhere, too
     
@@ -174,7 +173,6 @@ sub new_report {
     
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
-    $self->add_entries($entries);
    
     $self->{dbh}->commit;
     
@@ -183,7 +181,7 @@ sub new_report {
 
 sub add_entries {
     my $self = shift;
-    my ($entries) = @_;
+    my $entries = $self->{import_entries};
     for my $entry ( @{$entries} ) {
         
         # Codes:
@@ -199,7 +197,7 @@ sub add_entries {
         $code = $self->exec_method(
             funcname=>'reconciliation__add_entry', 
             args=>[
-                $report_id,
+                $self->{report_id},
                 $entry->{scn},
                 $self->{user},
                 $entry->{cleared_date},
@@ -208,6 +206,7 @@ sub add_entries {
         );
         $entry{report_id} = $report_id;        
     }
+    $self->{dbh}->commit;
 }
 
 sub correct_entry {

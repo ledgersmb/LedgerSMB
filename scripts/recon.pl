@@ -337,8 +337,9 @@ it has been created.
 sub _display_report {
         my $recon = shift;
         $recon->get();
-        $recon->add_entries($recon->import_file()) if !$recon->{submitted};
+        $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['recon_supervisor']});
+        $recon->get();
         $template = LedgerSMB::Template->new( 
             user=> $user,
             template => 'reconciliation/report', 

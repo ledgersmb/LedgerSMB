@@ -33,13 +33,14 @@ sub process {
     my $func = "parse_" . $recon->{chart_id};
     if ($self->can($func)){
        @entries = $self->can($func)->($self,$contents);
-       @{$self->{recon_entries}} = @entries;
+       @{$self->{entries}} = @entries;
+
        $self->{file_upload} = 1;
    }
    else {
        $self->{file_upload} = 0;
    }
-   return $self->{file_upload};
+   return $self->{entries};
 }
 
 sub is_error {

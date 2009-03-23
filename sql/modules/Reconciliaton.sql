@@ -165,7 +165,9 @@ create or replace function reconciliation__add_entry(
         lid INT;
 	in_count int;
 	t_scn TEXT;
+	t_uid int;
     BEGIN
+	t_uid := person__get_my_entity_id();
 	IF in_scn = '' THEN 
 		t_scn := NULL;
 	ELSE 
@@ -178,9 +180,9 @@ create or replace function reconciliation__add_entry(
 
 		IF in_count = 0 THEN
 			INSERT INTO cr_report_line
-			(report_id, scn, their_balance, our_balance, clear_time)
+			(report_id, scn, their_balance, our_balance, clear_time, "user")
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0, in_date);
+			(in_report_id, t_scn, in_amount, 0, in_date, t_uid);
 		ELSIF in_count = 1 THEN
 			UPDATE cr_report_line
 			SET their_balance = in_amount, clear_time = in_date
@@ -222,23 +224,24 @@ create or replace function reconciliation__add_entry(
 		END IF;
 	ELSE -- scn IS NULL, check on amount instead
 		SELECT count(*) INTO in_count FROM cr_report_line
-		WHERE report_id = in_report_id AND amount = in_amount
-			AND their_balance = 0 and posted_date = in_date;
+		WHERE report_id = in_report_id AND our_balance = in_amount
+			AND their_balance = 0 and post_date = in_date;
 
 		IF in_count = 0 THEN -- no match
 			INSERT INTO cr_report_line
-			(report_id, scn, their_balance, our_balance, clear_time)
+			(report_id, scn, their_balance, our_balance, clear_time,
+			"user")
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0, in_date);
+			(in_report_id, t_scn, in_amount, 0, in_date, t_uid);
 		ELSIF in_count = 1 THEN -- perfect match
 			UPDATE cr_report_line SET their_balance = in_amount,
 					clear_time = in_date
-			WHERE report_id = in_report_id AND amount = in_amount
+			WHERE report_id = in_report_id AND our_balance = in_amount
                         	AND their_balance = 0;
 		ELSE -- more than one match
 			SELECT min(id) INTO lid FROM cr_report_line
-			WHERE report_id = in_report_id AND amount = in_amount
-                        	AND their_balance = 0 and posted_date = in_date;
+			WHERE report_id = in_report_id AND our_balance = in_amount
+                        	AND their_balance = 0 and post_date = in_date;
 
 			UPDATE cr_report_line SET their_balance = in_amount,
 					clear_time = in_date
