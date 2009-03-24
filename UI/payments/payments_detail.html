@@ -207,7 +207,7 @@
 		name = "paid_$r.contact_id"
 		value = "some"
 		class = "paid_some"
-		id = "paid_some_$r.contact_id"
+		id = "paid-some-$r.contact_id"
 		label = text('Some')
 		checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
 		type = "radio"
@@ -216,7 +216,7 @@
 		name = "paid_$r.contact_id"
 		value = "all"
 		class = "paid_all"
-		id = "paid_all_$r.contact_id"
+		id = "paid-all-$r.contact_id"
 		label = text('All')
 		checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 		type = "radio"
@@ -232,7 +232,7 @@
     </tr>
     <tr class="listrow<?lsmb rc ?>">
 	<td class="invoice_detail_list" colspan="3">
-	<table id = "invoice_data_table_<?lsmb r.contact_id ?>" width="100%" class = "detail_table_visible">
+	<table id = "invoice-data-table-<?lsmb r.contact_id ?>" width="100%" class = "detail_table_visible">
 		<tr class="listheading">
 			<th class="invoice_date_list"><?lsmb text('Date') ?>
 			</th>
