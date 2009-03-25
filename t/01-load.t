@@ -26,7 +26,6 @@ use_ok('LedgerSMB::OP');
 use_ok('LedgerSMB::PE');
 use_ok('LedgerSMB::PriceMatrix');
 use_ok('LedgerSMB::RC');
-use_ok('LedgerSMB::RP');
 use_ok('LedgerSMB::Auth');
 use_ok('LedgerSMB::DBObject::Reconciliation');
 use_ok('LedgerSMB::Sysconfig');
