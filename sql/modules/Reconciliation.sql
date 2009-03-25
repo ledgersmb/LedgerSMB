@@ -68,7 +68,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION reconciliation__delete_report(in_report_id int)
-RETURN bool AS 
+RETURNS bool AS 
 $$
     DECLARE
     BEGIN
