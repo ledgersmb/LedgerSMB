@@ -9,7 +9,6 @@
 package LedgerSMB::Scripts::vouchers;
 our $VERSION = '0.1';
 
-$menufile = "menu.ini";
 use LedgerSMB::Batch;
 use LedgerSMB::Voucher;
 use LedgerSMB::Template;
