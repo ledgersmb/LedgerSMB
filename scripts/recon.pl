@@ -209,9 +209,7 @@ sub get_results {
 sub search {
     my ($request,$type) = @_;
     
-
-        
-        my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
 	if (!$recon->{hide_status}){
             $recon->{show_approved} = 1;        
             $recon->{show_submitted} = 1;        
@@ -317,6 +315,7 @@ sub correct {
     }
     
 }
+
 
 =pod
 
@@ -493,6 +492,55 @@ sub new_report {
     }
     return undef;
     
+}
+
+=pod
+
+=over
+
+=item delete_report ($request)
+
+Requires report_id
+
+Deletes the given report_id, and marks whom it was deleted by.
+Will fail if the report does not exist, or if the report has already been
+approved.
+
+TO BE DETERMINED:
+Whether or not a delete is permissable by the same user that created the 
+report.
+=back
+
+=cut
+
+sub delete_report {
+    
+    
+    my ($request) = @_;
+    
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
+    
+    # report_id should be set in the request object. It should be an int, and 
+    # it should correspond to one of the reports.
+    
+    if ($request->type() eq "POST") {
+        
+        $resp = $recon->delete_report($request->{report_id});
+        
+        if ($resp) {
+            
+            # This is good; we have a true-like response.
+            # Drop the report_id and send the request to search()
+            delete($request->{report_id});
+            return search($request);
+        }
+        return undef;
+    }
+    else {
+        # this is wrong - We should never get a GET request here. This should 
+        # throw an error? Or redirect back to the display page?
+        return undef;
+    }
 }
 
 =pod

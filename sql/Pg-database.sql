@@ -2131,10 +2131,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 43	module	rp.pl	103
 43	action	report	104
 43	report	payments	105
-45	module	rc.pl	106
-45	action	reconciliation	107
-44	module	rc.pl	108
-44	action	reconciliation	109
+45	module	recon.pl	106
+45	action	new_report	107
+44	module	recon.pl	108
+44	action	search	109
 44	report	1	110
 46	menu	1	111
 47	menu	1	112

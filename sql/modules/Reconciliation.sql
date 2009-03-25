@@ -7,7 +7,10 @@ CREATE TABLE cr_report (
     end_date date not null default now(),
     updated timestamp not null default now(),
     entered_by int not null default person__get_my_entity_id() references entity(id),
-    entered_username text not null default SESSION_USER
+    entered_username text not null default SESSION_USER,
+    deleted boolean not null default 'f'::boolean,
+    deleted_by int not null default person__get_my_entity_id() references entity(id),
+    CHECK (deleted is not true or approved is not true)
 );
 
 create table cr_approval (
@@ -63,6 +66,46 @@ BEGIN
 	RETURN found;
 END;
 $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION reconciliation__delete_report(in_report_id int)
+RETURN bool AS 
+$$
+    DECLARE
+    BEGIN
+        PERFORM id FROM cr_report WHERE id = in_report_id;
+        
+        IF NOT FOUND THEN
+            RAISE NOTICE 'reconciliation__delete_report(): Cannot find specified report.';
+            return FOUND;
+        END IF;
+        
+        -- We found the entry. Update it.
+        
+        PERFORM id FROM cr_report WHERE id = in_report_id AND approved = TRUE;
+        
+        IF FOUND THEN
+            RAISE EXCEPTION 'reconcilation__delete_report(): report % is approved; cannot delete.', in_report_id;
+        END IF;
+        
+        PERFORM id 
+           FROM cr_report 
+          WHERE id = in_report_id 
+            AND submitted = TRUE
+            AND entered_by = people__get_my_entity_id();
+        
+        IF FOUND THEN
+            -- Creators cannot delete their own reports if they've been submitted.
+            RAISE EXCEPTION 'reconciliation__delete_report(): creators cannot delete their own report after submission. %', in_report_id;
+        END IF;
+        
+        UPDATE cr_report
+           SET deleted = TRUE,
+               deleted_by = people__get_my_entity_id()
+         WHERE id = in_report_id;
+         
+        return TRUE;
+    END;
+$$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
@@ -386,7 +429,8 @@ BEGIN
 				OR in_balance_to >= their_total) AND
 			(in_chart_id IS NULL OR in_chart_id = chart_id) AND
 			(in_submitted IS NULL or in_submitted = submitted) AND
-			(in_approved IS NULL OR in_approved = approved)
+			(in_approved IS NULL OR in_approved = approved) AND
+			(r.deleted IS FALSE)
 		ORDER BY c.accno, end_date, their_total
 	LOOP
 		RETURN NEXT report;

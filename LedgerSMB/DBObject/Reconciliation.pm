@@ -179,6 +179,50 @@ sub new_report {
     return ($report_id, $entries); # returns the report ID.
 }
 
+=pod
+
+=over
+
+=item delete ($self, $report_id)
+
+Requires report_id
+
+Deletes a report based on the report id.
+Stored procedure returns true if deleted, false if not deleted/could not be 
+found, and raises EXCEPTION on report already approved.
+
+=back
+
+=cut
+
+sub delete_report {
+    
+    my $self = shift @_;
+    
+    my $report_id = shift @_;
+    
+    my $bool = $self->exec_method(funcname=>'reconciliation__delete_report',
+                                  args=>[$report_id]);
+                                  
+    if ($bool) {
+        $self->{dbh}->commit();
+    }
+    else{
+        $err = $self->{dbh}->errstr();
+        $self->{dbh}->rollback();
+        if ($err) {
+            # It's an exception.
+            $self->error("Report delete failed due to previous report submission or approval.");
+        }
+        else {
+            
+            # It's due to a non-existant report
+            $self->error("Cannot delete non-existant report.");
+        }
+    }
+    return $bool;
+}
+
 sub add_entries {
     my $self = shift;
     my $entries = $self->{import_entries};
