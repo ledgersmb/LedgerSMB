@@ -297,7 +297,8 @@ create or replace function reconciliation__add_entry(
 		ELSE -- more than one match
 			SELECT min(id) INTO lid FROM cr_report_line
 			WHERE report_id = in_report_id AND our_balance = in_amount
-                        	AND their_balance = 0 and post_date = in_date;
+                        	AND their_balance = 0 and post_date = in_date
+			LIMIT 1;
 
 			UPDATE cr_report_line SET their_balance = in_amount,
 					trans_type = in_type,

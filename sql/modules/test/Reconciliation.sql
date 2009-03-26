@@ -110,8 +110,6 @@ SELECT 'Transactions closed', count(*) = 2 FROM acc_trans where chart_id = -200 
 INSERT INTO test_result(test_name, success)
 SELECT 'Cleared balance post-approval is 130', reconciliation__get_cleared_balance(-201) = 130;
 
-
-
 SELECT * FROM test_result;
 
 SELECT (select count(*) from test_result where success is true) 
