@@ -236,7 +236,7 @@ create or replace function reconciliation__add_entry(
 		ELSIF in_count = 1 THEN
 			UPDATE cr_report_line
 			SET their_balance = in_amount, clear_time = in_date
-			WHERE n_scn = scn AND report_id = in_report_id
+			WHERE t_scn = scn AND report_id = in_report_id
 				AND their_balance = 0;
 		ELSE 
 			SELECT count(*) INTO in_count FROM cr_report_line
