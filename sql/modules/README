@@ -23,6 +23,7 @@ Payment.sql
 Person.sql
 Report.sql
 Voucher.sql
+Reconciliation.sql
 
 Note that the Roles.sql is special and must be preprocessed to get it to work.
 A command like:

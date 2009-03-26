@@ -223,7 +223,7 @@ create or replace function reconciliation__add_entry(
 	END IF;
 	IF t_scn IS NOT NULL THEN
 		SELECT count(*) INTO in_count FROM cr_report_line
-		WHERE in_scn ilike scn AND report_id = in_report_id 
+		WHERE scn ilike t_scn AND report_id = in_report_id 
 			AND their_balance = 0;
 
 		IF in_count = 0 THEN
@@ -240,12 +240,12 @@ create or replace function reconciliation__add_entry(
 				AND their_balance = 0;
 		ELSE 
 			SELECT count(*) INTO in_count FROM cr_report_line
-			WHERE in_scn ilike scn AND report_id = in_report_id
+			WHERE t_scn ilike scn AND report_id = in_report_id
 				AND our_value = in_amount and their_balance = 0;
 
 			IF in_count = 0 THEN -- no match among many of values
 				SELECT id INTO lid FROM cr_report_line
-                        	WHERE in_scn ilike scn AND report_id = in_report_id
+                        	WHERE t_scn ilike scn AND report_id = in_report_id
 				ORDER BY our_balance ASC limit 1;
 
 				UPDATE cr_report_line
@@ -259,12 +259,12 @@ create or replace function reconciliation__add_entry(
 				SET their_balance = in_amount, 
 					trans_type = in_type,
 					clear_time = in_date
-				WHERE in_scn = scn AND report_id = in_report_id
+				WHERE t_scn = scn AND report_id = in_report_id
                                 	AND our_value = in_amount 
 					AND their_balance = 0;
 			ELSE -- More than one match
 				SELECT id INTO lid FROM cr_report_line
-                        	WHERE in_scn ilike scn AND report_id = in_report_id
+                        	WHERE t_scn ilike scn AND report_id = in_report_id
                                 	AND our_value = in_amount
 				ORDER BY id ASC limit 1;
 
@@ -314,7 +314,7 @@ $$ language 'plpgsql';
 comment on function reconciliation__add_entry(
     in_report_id INT,
     in_scn TEXT,
-    in_user TEXT,
+    in_type TEXT,
     in_date TIMESTAMP,
     in_amount numeric
 )  IS
