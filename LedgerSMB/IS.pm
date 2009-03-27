@@ -1,4 +1,4 @@
-#=====================================================================
+#====================================================================
 # LedgerSMB
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/
@@ -913,6 +913,15 @@ sub post_invoice {
       ? $exchangerate
       : $form->parse_amount( $myconfig, $form->{exchangerate} );
 
+     my $return_cid = 0;
+     if ($LedgerSMB::Sysconfig::return_accno and !$form->{void}){
+         my $rquery = "SELECT id FROM chart WHERE accno = ?";
+         my $sth = $dbh->prepare($rquery);
+         $sth->execute($LedgerSMB::Sysconfig::return_accno);
+         ($return_cid) = $sth->fetchrow_array();
+         $sth->finish;
+     }
+ 
     my $i;
     my $item;
     my $taxrate;
@@ -947,6 +956,11 @@ sub post_invoice {
             for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
             $pth->finish;
 
+            if ($form->{"qty_$i"} < 0 and $return_cid){
+                $form->{"income_accno_id_$i"} = $return_cid;
+            }
+
+ 
             # project
             if ( $form->{"projectnumber_$i"} ) {
                 ( $null, $project_id ) = split /--/,

@@ -189,7 +189,6 @@ sub get_results {
             };
         }
 	$recon->{_results} = \@results;
-        $recon->debug({file => '/tmp/recon'});
         $recon->{title} = $request->{_locale}->text('Reconciliation Sets');
         my $template = LedgerSMB::Template->new( 
             user => $user, 

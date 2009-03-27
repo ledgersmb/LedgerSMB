@@ -518,6 +518,14 @@ sub form_header {
 
 }
 
+sub void {
+    for (1 .. $form->{rowcount}){
+        $form->{"qty_$i"} *= -1;
+    }
+    $form->{void} = 1;
+    &post_as_new;
+}
+
 sub form_footer {
     _calc_taxes();
     $form->{invtotal} = $form->{invsubtotal};
@@ -773,6 +781,8 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
               { ndx => 11, key => 'D', value => $locale->text('Delete') },
             'on_hold' =>
               { ndx => 12, key => 'O', value => $locale->text('On Hold') },
+             'void'  => 
+                { ndx => 12, key => 'V', value => $locale->text('Void') },
         );
 
         if ( $form->{id} ) {
