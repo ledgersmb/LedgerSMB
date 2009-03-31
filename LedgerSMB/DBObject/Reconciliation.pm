@@ -345,7 +345,7 @@ sub get {
 
 
     for my $line (@{$self->{report_lines}}){
-        if ($self->{"cleared_$line->{id}"} or $line->{cleared}){
+        if ($line->{cleared}){
             $our_balance += $line->{our_balance};
             $self->{cleared_total} += $line->{our_balance};
 	}elsif ((($self->{their_balance} != '0')

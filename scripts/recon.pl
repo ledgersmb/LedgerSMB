@@ -380,10 +380,7 @@ sub _display_report {
                $l->{our_debits} = $l->{our_balance};
             }
 
-            if ($l->{our_balance} != 0 and 
-                $l->{our_balance} == $l->{their_balance} or
-                defined $recon->{"cleared_$l->{id}"} or $l->{cleared}
-            ){
+            if ($l->{cleared}){
                  $recon->{total_cleared_credits}->badd($l->{our_credits});
                  $recon->{total_cleared_debits}->badd($l->{our_debits});
             } else {

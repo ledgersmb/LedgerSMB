@@ -75,11 +75,8 @@
 	</tr>
 	
 	<?lsmb FOREACH row = report_lines ?>
-			<?lsmb IF (row.our_balance == row.their_balance AND 
-				row.our_balance != zero_string) or
-				row.cleared or ${"cleared_$row.id"}
-				-?>
-				<?lsmb row.cleared = 'checked' ?>
+			<?lsmb IF (row.cleared) -?>
+				<?lsmb row.cleared = 'checked' -?>
 				<?lsmb ELSE ?> <?lsmb row.cleared = undef -?> 
 				<?lsmb END -?>
 	<?lsmb IF row.cleared == 'checked' ?>

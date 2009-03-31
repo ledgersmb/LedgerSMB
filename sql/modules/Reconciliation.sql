@@ -235,7 +235,8 @@ create or replace function reconciliation__add_entry(
 				in_type);
 		ELSIF in_count = 1 THEN
 			UPDATE cr_report_line
-			SET their_balance = in_amount, clear_time = in_date
+			SET their_balance = in_amount, clear_time = in_date,
+				cleared = true
 			WHERE t_scn = scn AND report_id = in_report_id
 				AND their_balance = 0;
 		ELSE 
@@ -251,14 +252,16 @@ create or replace function reconciliation__add_entry(
 				UPDATE cr_report_line
                                 SET their_balance = in_amount, 
 					clear_time = in_date,
-					trans_type = in_type
+					trans_type = in_type,
+					cleared = true
                                 WHERE id = lid;
 
 			ELSIF in_count = 1 THEN -- EXECT MATCH
 				UPDATE cr_report_line
 				SET their_balance = in_amount, 
 					trans_type = in_type,
-					clear_time = in_date
+					clear_time = in_date,
+					cleared = true
 				WHERE t_scn = scn AND report_id = in_report_id
                                 	AND our_value = in_amount 
 					AND their_balance = 0;
@@ -271,6 +274,7 @@ create or replace function reconciliation__add_entry(
 				UPDATE cr_report_line
                                 SET their_balance = in_amount,
 					trans_type = in_type,
+					cleared = true,
 					clear_time = in_date
                                 WHERE id = lid;
 				
@@ -280,7 +284,7 @@ create or replace function reconciliation__add_entry(
 		SELECT count(*) INTO in_count FROM cr_report_line
 		WHERE report_id = in_report_id AND our_balance = in_amount
 			AND their_balance = 0 and post_date = in_date
-			and in_scn NOT LIKE t_prefix || '%';
+			and scn NOT LIKE t_prefix || '%';
 
 		IF in_count = 0 THEN -- no match
 			INSERT INTO cr_report_line
@@ -292,7 +296,8 @@ create or replace function reconciliation__add_entry(
 		ELSIF in_count = 1 THEN -- perfect match
 			UPDATE cr_report_line SET their_balance = in_amount,
 					trans_type = in_type,
-					clear_time = in_date
+					clear_time = in_date,
+					cleared = true
 			WHERE report_id = in_report_id AND our_balance = in_amount
                         	AND their_balance = 0 and
 				in_scn NOT LIKE t_prefix || '%';
@@ -300,12 +305,13 @@ create or replace function reconciliation__add_entry(
 			SELECT min(id) INTO lid FROM cr_report_line
 			WHERE report_id = in_report_id AND our_balance = in_amount
                         	AND their_balance = 0 and post_date = in_date
-				AND in_scn NOT LIKE t_prefix || '%'
+				AND scn NOT LIKE t_prefix || '%'
 			LIMIT 1;
 
 			UPDATE cr_report_line SET their_balance = in_amount,
 					trans_type = in_type,
-					clear_time = in_date
+					clear_time = in_date,
+					cleared = true
 			WHERE id = lid;
 			
 		END IF;
