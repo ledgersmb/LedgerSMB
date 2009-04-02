@@ -59,6 +59,24 @@
 		type = "text"
 	} ?>
 	</div>
+<div class="input" id="date_row">
+	<?lsmb INCLUDE input element_data  = {
+		label = "Minimum Date"
+		name = "date_from"
+		value = date_from
+		size = 20
+		class = "date"
+		type  = "text"
+	} ?>
+	<?lsmb INCLUDE input element_data  = {
+		label = "Maximum Date"
+		name = "date_to"
+		value = date_to
+		size = 20
+		class = "date"
+		type  = "text"
+	} ?>
+</div>
 <div class="input" id="buttons_div">
 	<?lsmb INCLUDE button element_data = {
 		text = text('Search')

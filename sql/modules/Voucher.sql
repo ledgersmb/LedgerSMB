@@ -153,6 +153,7 @@ CREATE TYPE batch_list_item AS (
 
 CREATE OR REPLACE FUNCTION 
 batch_search(in_class_id int, in_description text, in_created_by_eid int, 
+	in_date_from date, in_date_to date,
 	in_amount_gt numeric, 
 	in_amount_lt numeric, in_approved bool) 
 RETURNS SETOF batch_list_item AS
@@ -200,7 +201,11 @@ BEGIN
 			((in_approved = false OR in_approved IS NULL AND
 				approved_on IS NULL) OR
 				(in_approved = true AND approved_on IS NOT NULL)
-			)
+			) 
+			and (in_date_from IS NULL 
+				or b.default_date >= in_date_from)
+			and (in_date_to IS NULL
+				or b.default_date <= in_date_to)
 		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
 			b.control_code
 		HAVING  
