@@ -9,7 +9,7 @@ Subsitute your own values for file paths and definitions shown in ALL_CAPS.
 
 
 Install LedgerSMB 1.3 Source
-------------------------------------
+----------------------------
 
 LedgerSMB 1.3 is still in pre-alpha, with no tarball release files. Check out
 LedgerSMB 1.3 from svn trunk:
@@ -17,18 +17,18 @@ LedgerSMB 1.3 from svn trunk:
 $ svn co https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/trunk /path/to/ledgersmb13
 
 
-Change working directory to WORKING_DIR:
-----------------------------------------
+Change working directory to /path/to/ledgersmb13
+-------------------------------------------------
 
-WORKING_DIR is the location where you have manually installed the LedgerSMB 1.3
-source or checkout. LedgerSMB 1.3 in pre-alpha form is not currently packaged
-for any distribution.
+For this INSTALL procedure /path/to/ledgersmb13 is the location where you have
+manually installed the LedgerSMB 1.3 source or checkout. LedgerSMB 1.3 in
+pre-alpha form is not currently packaged for any distribution.
 
 $ cd /path/to/ledgersmb13/
 /path/to/ledgersmb13 $
 
-All commands from this point forward are executed from WORKING_DIR unless
-otherwise noted.
+All commands from this point forward are executed from a working directory of
+/path/to/ledgersmb13 unless otherwise noted.
 
 
 Automating Installation
@@ -46,15 +46,15 @@ Apache Configuration
 LedgerSMB uses Apache-2.x, with mod_rewrite.
 
 
-Create up an Apache conf file for the WORKING_DIR location
+Create up an Apache conf file for the /path/to/ledgersmb13 location
 ----------------------------------------------------------
 
-Configure ledgersmb-httpd.conf for apache, subsituting WORKING_DIR with the
-absolute path of your LedgerSMB installation (e.g. /path/to/ledgersmb13):
+Configure ledgersmb-httpd.conf for apache, subsituting /path/to/ledgersmb13 with
+the absolute path of your LedgerSMB installation.
 
 The following sed command applies the repetitive substitution automatically.
 
-$ cat ledgersmb-httpd.conf | sed "s|WORKING_DIR|$(pwd)|" > ledgersmb-httpd-13.conf
+$ cat ledgersmb-httpd.conf | sed "s|/path/to/ledgersmb13|$(pwd)|" > ledgersmb-httpd-13.conf
 
 You can also apply the substitution manually in your preferred text editor.
 
@@ -93,10 +93,10 @@ temporary .htaccess file:
 $ rm .htaccess
 
 
-Apache must be able to read and write WORKING_DIR
+Apache must be able to read and write /path/to/ledgersmb13
 -------------------------------------------------
 
-Make sure the WORKING_DIR directory is read-writable by user:group
+Make sure the /path/to/ledgersmb13 directory is read-writable by user:group
 apache:apache, or as appropriate for your distribution's Apache conventions.
 
 
@@ -263,7 +263,7 @@ the company database:
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/Pg-database.sql
 
 
-Apply the in-development SQL statements in the files WORKING_DIR/sql/modules/ to
+Apply the in-development SQL statements in the files /path/to/ledgersmb13/sql/modules/ to
 the company database, in exactly the following order:
 
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Drafts.sql
@@ -296,7 +296,7 @@ Generate A Custom Roles SQL Statement File
 ------------------------------------------
 
 Preprocess the sql/modules/Roles.sql file with sed, generating a custom SQL file
-in WORKING_DIR:
+in /path/to/ledgersmb13:
 
 $ sed -e 's/<?lsmb dbname ?>/mycompany/g' /path/to/ledgersmb13/sql/modules/Roles.sql > /path/to/ledgersmb13/mycompany_roles.sql
 
