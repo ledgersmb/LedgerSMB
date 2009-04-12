@@ -63,7 +63,8 @@ Install the Apache conf file
 ----------------------------
 
 Move the apache conf file ledgersmb-httpd-13.conf to a location where it will be
-picked up on apache restart:
+picked up on apache restart. One way is to use an include statement in
+/etc/apache2/httpd.conf (e.g. Include /etc/apache2/app/*.conf).
 
 $ sudo mv ledgersmb-httpd-13.conf /etc/apache2/app/ledgersmb13.conf
 
@@ -72,6 +73,9 @@ Restart apache:
 $ sudo /etc/init.d/apache2 restart
  * Stopping apache2 ...              [ ok ]
  * Starting apache2 ...              [ ok ]
+
+The LedgerSMB-specific apache configuration can later be integrated into your
+virtual host configuration as needed.
 
 
 Verify that RewriteRule is working
