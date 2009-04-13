@@ -57,7 +57,7 @@ SELECT $1 * $2;
 $$ language sql;
 
 CREATE AGGREGATE product(
-	base_type = numeric,
+	basetype = numeric,
 	sfunc = product,
 	stype = numeric
 );
