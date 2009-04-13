@@ -291,7 +291,6 @@ $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Voucher.sql
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Reconciliation.sql
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Inventory.sql
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Vendor.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Menu.sql
 
 Note: The above files are manageable sections of the LedgerSMB database logic in
 active development for LedgerSMB-1.3. Later in the release cycle, their contents
