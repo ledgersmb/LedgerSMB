@@ -343,7 +343,7 @@ Insert myuser Entity
 Using the psql console, insert myuser to the entity table.
 
 $ psql -U postgres -d mycompany -t -c "INSERT INTO entity (name, entity_class, created) VALUES ('myuser', 3, NOW()) RETURNING name, entity_class, created;"
- myuser |            3 | 2008-08-08
+ myuser |            3 | 2009-04-13
 
 INSERT 0 1
 
@@ -354,7 +354,7 @@ Insert myuser Persion
 Insert the myuser entity into the person table:
 
 $ psql -U postgres -d mycompany -t -c "INSERT INTO person (entity_id, first_name, last_name, created) VALUES (2, 'Firstname', 'Lastname', NOW()) RETURNING entity_id, first_name, last_name, created;"
-         2 | Firstname  | Lastname  | 2008-08-08
+         2 | Firstname  | Lastname  | 2009-04-13
 
 INSERT 0 1
 
@@ -365,7 +365,7 @@ Insert myuser Employee
 Insert the myuser person into the entity_employee table:
 
 $ psql -U postgres -d mycompany -t -c "INSERT INTO entity_employee (person_id, entity_id, startdate, role) VALUES (1, 2, NOW(), 'myuser') RETURNING person_id, entity_id, startdate, role;"
-         1 |         2 | 2008-08-08 | myuser
+         1 |         2 | 2009-04-13 | myuser
 
 INSERT 0 1
 
@@ -403,7 +403,7 @@ CREATE FUNCTION
 And execute the function for myuser:
 
 $ psql -U postgres -d mycompany -t -c "SELECT grant_all_roles('myuser');"
-
+               1
 
 Login to LedgerSMB 1.3 Instance
 ===============================
