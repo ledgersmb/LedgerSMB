@@ -382,21 +382,19 @@ sub post_invoice {
 				            invoice_id,
 				            transdate) 
 				     VALUES (?, ?, ?, ?,
-				            ?, (SELECT CASE WHEN ? <= value::date
-				                            THEN value::date +
+				            ?, coalesce((SELECT value::date +
 				                               '1 day'::interval
-				                            ELSE ?
-				                        END AS value 
+				                        AS value 
 				                  FROM defaults
 				                  WHERE setting_key = 'closedto'
-				))|;
+				), ?))|;
 
                         my $sth = $dbh->prepare($query);
                         $sth->execute(
                             $ref->{trans_id},   $ref->{inventory_accno_id},
                             $linetotal, 
                             $ref->{project_id}, $invoice_id,
-                            $ref->{transdate}, $ref->{transdate},
+                            $ref->{transdate},
                         ) || $form->dberror($query);
 
                         # add expense
@@ -406,20 +404,18 @@ sub post_invoice {
 				            project_id, invoice_id,
 				            transdate) 
 				     VALUES (?, ?, ?, ?,
-				            ?, (SELECT CASE WHEN ? <= value::date
-				                            THEN value::date +
-				                               '1 day'::interval
-				                            ELSE ?
-				                        END AS value 
+				            ?, coalesce((SELECT value::date +
+				                       '1 day'::interval
+				                        AS value 
 				                  FROM defaults
 				                  WHERE setting_key = 'closedto'
-				))|;
+				), ?))|;
                         $sth = $dbh->prepare($query);
                         $sth->execute(
                             $ref->{trans_id},   $ref->{expense_accno_id},
                             $linetotal * -1,    
                             $ref->{project_id}, $invoice_id,
-                            $ref->{transdate}, $ref->{transdate},
+                            $ref->{transdate},
                         ) || $form->dberror($query);
                     }
 
