@@ -1277,7 +1277,7 @@ INSERT INTO country(short_name,name) VALUES ('CD','Congo, Democratic Republic');
 INSERT INTO country(short_name,name) VALUES ('CF','Central African Republic');
 INSERT INTO country(short_name,name) VALUES ('CG','Congo');
 INSERT INTO country(short_name,name) VALUES ('CH','Switzerland');
-INSERT INTO country(short_name,name) VALUES ('CI','Cote D\'Ivoire (Ivory Coast)');
+INSERT INTO country(short_name,name) VALUES ('CI','Cote D''Ivoire (Ivory Coast)');
 INSERT INTO country(short_name,name) VALUES ('CK','Cook Islands');
 INSERT INTO country(short_name,name) VALUES ('CL','Chile');
 INSERT INTO country(short_name,name) VALUES ('CM','Cameroon');
