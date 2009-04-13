@@ -303,6 +303,16 @@ admin.sql
 security.sql
 
 
+Load a template Chart of Accounts
+---------------------------------
+
+The user is encouraged to create a custom chart of accounts, but for the
+purposes of this INSTALL, load a template chart of accounts from the most
+appropriate SQL statement file under /path/to/ledgersmb13/sql/coa:
+
+$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/coa/us/chart/General.sql
+
+
 Generate A Custom Roles SQL Statement File
 ------------------------------------------
 
