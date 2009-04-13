@@ -382,10 +382,10 @@ sub post_invoice {
 				            invoice_id,
 				            transdate) 
 				     VALUES (?, ?, ?, ?,
-				            ?, (SELECT CASE WHEN ? > value::date
-				                            THEN ?
-				                            ELSE value::date +
+				            ?, (SELECT CASE WHEN ? <= value::date
+				                            THEN value::date +
 				                               '1 day'::interval
+				                            ELSE ?
 				                        END AS value 
 				                  FROM defaults
 				                  WHERE setting_key = 'closedto'
