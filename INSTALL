@@ -54,7 +54,7 @@ the absolute path of your LedgerSMB installation.
 
 The following sed command applies the repetitive substitution automatically.
 
-$ cat ledgersmb-httpd.conf | sed "s|/path/to/ledgersmb13|$(pwd)|" > ledgersmb-httpd-13.conf
+$ cat ledgersmb-httpd.conf | sed "s|WORKING_DIR|$(pwd)|" > ledgersmb-httpd-13.conf
 
 You can also apply the substitution manually in your preferred text editor.
 
