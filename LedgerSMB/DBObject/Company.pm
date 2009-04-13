@@ -261,6 +261,11 @@ sub get {
             if ($_->{id} = $self->{location_id}){
                 my $old_id = $self->{id};
                 $self->merge($_);
+                for my $c (@{$self->{country_list}}){
+                     if ($c->{name} eq $self->{country}){
+                         $self->{country_code} = $c->{id};
+                     }
+                }
                 $self->{id} = $old_id;
                 last;
             }

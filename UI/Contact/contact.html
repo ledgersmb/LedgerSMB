@@ -629,11 +629,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		} #' ?>
 	</div>
 	<div> <!-- TODO:  Move to elements.html -CT -->
-		<?lsmb IF !country; country = default_country; END -?>
+		<?lsmb IF !country_code; country_code = default_country; END -?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
-			default_values = [country]
+			default_values = [country_code]
 			options = country_list
 			name = "country_code"
 			label = text('Country:') 
