@@ -82,7 +82,7 @@ $script =~ s/\.pl//;
 use DBI qw(:sql_types);
 
 # send warnings to browser
-$SIG{__WARN__} = sub { $form->info( $_[0] ) };
+# $SIG{__WARN__} = sub { $form->info( $_[0] ) };
 
 # send errors to browser
 #$SIG{__DIE__} =

@@ -312,6 +312,7 @@ sub report {
          {id => 'last', label => $locale->text('Last Only') }, 
          {id => 'none', label => $locale->text('None') }, 
     ];
+    $form->{ignore_yearend} = 'none';
 
 ##SC: Temporary commenting
 ##    if ( $form->{lynx} ) {
