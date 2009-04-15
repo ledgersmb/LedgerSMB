@@ -8,6 +8,12 @@ INSERT INTO person (id, entity_id, first_name, last_name) values (-50, -50, 'Tes
 INSERT INTO users (id, entity_id, username) values (-50, -50, SESSION_USER);
 
 INSERT INTO test_result(test_name, success)
+SELECT 'check_prefix set', count(*) = 1 
+FROM defaults where setting_key = 'check_prefix';
+
+update defaults set value = 'Recon gl test ' where setting_key = 'check_prefix';
+
+INSERT INTO test_result(test_name, success)
 SELECT 'Create Recon Report', 
 	reconciliation__new_report_id(-200, 100, now()::date) > 0;
 
@@ -24,6 +30,12 @@ SELECT 'Correct number of GL groups', count(*) = 4 from cr_report_line where scn
 INSERT INTO test_result(test_name, success)
 SELECT 'Correct number of report lines', count(*) = 10 from cr_report_line where report_id = currval('cr_report_id_seq')::int;
 
+\echo matching tests
+select reconciliation__add_entry(currval('cr_report_id_seq')::int, '1', 'GL', '2001-01-01'::timestamp, '10');
+
+INSERT INTO test_result(test_name, success)
+select 'Match 1 is correct', their_balance = our_balance 
+from cr_report_line where scn = 'Recon gl test 1';
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Report Submitted', reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int));
@@ -109,6 +121,8 @@ SELECT 'Transactions closed', count(*) = 2 FROM acc_trans where chart_id = -200 
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Cleared balance post-approval is 130', reconciliation__get_cleared_balance(-201) = 130;
+
+select * from cr_report_line where report_id = currval('cr_report_id_seq')::int;
 
 SELECT * FROM test_result;
 
