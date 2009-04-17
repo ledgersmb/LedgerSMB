@@ -868,6 +868,7 @@ CREATE TABLE oe (
   language_code varchar(6),
   ponumber text,
   terms int2 DEFAULT 0,
+  entity_credit_account int references entity_credit_account(id) not null,
   oe_class_id int references oe_class(id) NOT NULL
 );
 

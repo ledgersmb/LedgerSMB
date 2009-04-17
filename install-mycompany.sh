@@ -3,7 +3,8 @@
 CWD=`pwd`
 
 # The following path can vary per distribution
-CONTRIB=/usr/share/postgresql-8.3/contrib
+#CONTRIB=/usr/share/postgresql-8.3/contrib
+CONTRIB=/usr/local/pgsql/share/contrib
 
 echo 'This script will create a mycompany dataset per INSTALL. Ctrl-C to cancel.'
 
