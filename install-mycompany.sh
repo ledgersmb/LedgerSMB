@@ -2,6 +2,9 @@
 
 CWD=`pwd`
 
+# The following path can vary per distribution
+CONTRIB=/usr/share/postgresql-8.3/contrib
+
 echo 'This script will create a mycompany dataset per INSTALL. Ctrl-C to cancel.'
 
 dropdb -i -U postgres mycompany ; 
@@ -9,8 +12,9 @@ for role in `psql -U postgres -t -c "SELECT rolname FROM pg_roles WHERE rolname 
 dropuser -U postgres myuser ; 
 createdb -U postgres -O ledgersmb mycompany ; 
 createlang plpgsql mycompany ; 
-#TODO:  Intall pgsql contrib scripts from a variable path:  tablefunc, pg_trgm, 
-#       tsearch2
+psql -U postgres -d mycompany -f $CONTRIB/tsearch2.sql
+psql -U postgres -d mycompany -f $CONTRIB/tablefunc.sql
+psql -U postgres -d mycompany -f $CONTRIB/pg_trgm.sql
 psql -U postgres -d mycompany -f $CWD/sql/Pg-database.sql ;
 psql -U postgres -d mycompany -f $CWD/sql/modules/Drafts.sql ; 
 psql -U postgres -d mycompany -f $CWD/sql/modules/chart.sql ; 
