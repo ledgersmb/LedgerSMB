@@ -88,6 +88,7 @@ sub _calc_taxes {
              * $form->parse_amount(\%myconfig, $form->{"qty_$i"}) 
              * (1 - $form->parse_amount(\%myconfig, $form->{"discount_$i"})
                     / 100);
+        $linetotal = $form->round_amount($linetotal, 2); 
         @taxaccounts = Tax::init_taxes(
             $form, $form->{"taxaccounts_$i"},
             $form->{'taxaccounts'}
