@@ -396,6 +396,13 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 sub form_header {
 
     $title = $form->{title};
+
+    if($form->{batch_id})
+    {
+		$form->{batch_control_code}=$form->get_batch_control_code($form->{dbh},$form->{batch_id});
+		$form->{batch_description}=$form->get_batch_description($form->{dbh},$form->{batch_id});
+    }
+	
     if ($form->{reverse} == 0){
        $form->{title} = $locale->text("$title $form->{ARAP} Transaction");
     }
@@ -597,11 +604,30 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 		</td>
 	      </tr>
 |;
+		if($form->{batch_id})
+		{
+		print qq|	<tr>
+		<th align="right" nowrap>| . 
+			$locale->text('Batch Control Code') . qq|</th>
+		<td>$form->{batch_control_code}</td>
+	      </tr>
+		<tr>
+		<th align="right" nowrap>| . 
+			$locale->text('Batch Name') . qq|</th>
+		<td>$form->{batch_description}</td>
+	      </tr>
+
+|;
+
+		}
+
+
+
 		if ($form->{entity_control_code}){
 			print qq|
 	        <tr>
 		<th align="right" nowrap>| . 
-			$locale->text('Control Code') . qq|</th>
+			$locale->text('Entity Control Code') . qq|</th>
 		<td colspan=3>$form->{entity_control_code}</td>
 	      </tr>
 	        <tr>
@@ -1181,12 +1207,20 @@ sub post {
         }
     }
 
+    
+    
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
         $form->update_status( \%myconfig );
         if ( $form->{printandpost} ) {
             &{"print_$form->{formname}"}( $old_form, 1 );
         }
 	print STDERR "Redirecting\n";
+
+        if(defined($form->{batch_id}) and $form->{batch_id})
+	{
+        	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
+	}
+
         $form->redirect( $locale->text('Transaction posted!') );
     }
     else {

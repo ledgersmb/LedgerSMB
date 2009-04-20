@@ -1675,8 +1675,11 @@ sub get_name {
     if ($self->{"${table}number"} eq ''){
         $self->{"${table}number"} = $self->{$table};
     }
+
     my $name = $self->like( lc $self->{$table} );
-    
+
+    $self->{"${table}number"}=$self->like(lc $self->{"${table}number"});#added % and % for searching key vendor/customer number.
+
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
 		SELECT c.*, e.name, e.control_code FROM entity_credit_account c
@@ -3587,8 +3590,80 @@ sub audittrail {
     $rv;
 }
 
+
+
+
+#dummy function used to see all the keys of form 
+
+sub testdisplayform
+{
+
+    my $self=shift;
+
+    foreach(keys(%$self))
+    {
+
+	 print STDERR "testdisplay $_  => $self->{$_}\n" if ($_ eq "customer_id");
+
+    }
+
+
+
+}
+
+# New block of code to get control code from batch table
+
+
+sub get_batch_control_code {
+
+    my ( $self, $dbh, $batch_id) = @_;
+
+    my ($query,$sth,$control);
+       
+
+    if ( !$dbh ) {
+        $dbh = $self->{dbh};
+    }
+
+    $query=qq|select control_code from batch where id=?|;
+    $sth=$dbh->prepare($query) || $self->dberror($query);
+    $sth->execute($batch_id) || $self->dberror($query);
+    $control=$sth->fetchrow();
+    $sth->finish();
+    return $control;   
+
+}
+
+
+#end get control code from batch table
+
+
+#start description
+
+sub get_batch_description {
+
+    my ( $self, $dbh, $batch_id) = @_;
+
+    my ($query,$sth,$desc);
+       
+
+    if ( !$dbh ) {
+        $dbh = $self->{dbh};
+    }
+
+    $query=qq|select description from batch where id=?|;
+    $sth=$dbh->prepare($query) || $self->dberror($query);
+    $sth->execute($batch_id) || $self->dberror($query);
+    $desc=$sth->fetchrow();
+    $sth->finish();
+    return $desc;   
+
+}
+
+#end decrysiption
+
 1;
 
-=back
 
+=back
 
