@@ -97,11 +97,15 @@ temporary .htaccess file:
 $ rm .htaccess
 
 
-Apache must be able to read and write /path/to/ledgersmb13
+Apache must be able to read and write /path/to/ledgersmb13/templates/
 -------------------------------------------------
 
-Make sure the /path/to/ledgersmb13 directory is read-writable by user:group
-apache:apache, or as appropriate for your distribution's Apache conventions.
+Make sure the /path/to/ledgersmb13/templates directory is read-writable by 
+user:group apache:apache, or as appropriate for your distribution's Apache 
+conventions.
+
+Apache must also be able to read (but not write) /path/to/ledgersmb13/ and its 
+subdirectories.
 
 
 Check And Satisfy Perl Dependencies
