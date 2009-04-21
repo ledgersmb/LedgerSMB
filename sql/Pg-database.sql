@@ -2551,7 +2551,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 204	batch_type	receipt_reversal	573
 200	menu	1	552
 198	action	create_batch	554
-198	batch_type	receivable	555
+198	batch_type	ar	555
 198	module	vouchers.pl	553
 199	module	vouchers.pl	559
 199	action	create_batch	560
