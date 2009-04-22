@@ -458,7 +458,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
 	in_ar_ap_accno text, in_cash_accno text, 
-	in_payment_date date, in_account_class int)
+	in_payment_date date, in_account_class int, in_payment_type int)
 RETURNS int AS
 $$
 DECLARE 
@@ -498,7 +498,7 @@ BEGIN
 	EXECUTE $E$ 
 		INSERT INTO acc_trans 
 			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
-			source)
+			source, payment_type)
 		SELECT id, 
 		case when $E$ || quote_literal(in_account_class) || $E$ = 1
 			THEN $E$ || t_cash_id || $E$
@@ -510,13 +510,14 @@ BEGIN
 			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
 			ELSE false END,
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
-		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') ||$E$
+		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') || , 
+		$E$ || quote_literal(in_payment_class) || $E$
 		FROM bulk_payments_in $E$;
 
 	EXECUTE $E$ 
 		INSERT INTO acc_trans 
 			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
-			source)
+			source, payment_type)
 		SELECT id, 
 		case when $E$ || quote_literal(in_account_class) || $E$ = 1 
 			THEN $E$ || t_ar_ap_id || $E$
@@ -528,7 +529,8 @@ BEGIN
 			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
 			ELSE false END,
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
-		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'null') ||$E$
+		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'null') 
+		||$E$ , $E$ || quote_literal(in_payment_class) || $E$ 
 		FROM bulk_payments_in $E$;
 
 	EXECUTE $E$
