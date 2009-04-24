@@ -1583,6 +1583,9 @@ $dbh is unused.
 sub add_shipto {
   
   	my ( $self,$dbh,$id ) = @_;
+        if (! $self->{locationid}) {
+		return;
+	}
 	my $query = qq|
 			INSERT INTO new_shipto 
 			(trans_id, oe_id,location_id) 
