@@ -1,14 +1,17 @@
 use LedgerSMB::DBObject;
-use Test::More tests => 20;
+use Test::More tests => 21;
 
 # Array parsing tests
 my $test = '{test,"test2\"\",",test3,"test4"}';
 my @vals = ('test', 'test2"",', 'test3', 'test4');
+my @vals2 = ('test', 'test2"",', 'test3', 'test4');
+
+is(LedgerSMB::DBObject->_db_array_scalars(@vals2), '{test,"test2\"\"\,",test3,test4}', '_db_array_scalars creates correct array');
+
 my $passes = 0;
 for (LedgerSMB::DBObject->_parse_array($test)){
   is($_, shift @vals, "pass $pass, array parse test");
 }
-
 my $test2 = '{{1,1,1,1},{1,2,2,2},{1,3,3,4}}';
 my @test_arry2_c = ( [1,1,1,1], [1,2,2,2], [1,3,3,4]);
 my @test_arry2 = LedgerSMB::DBObject->_parse_array($test2);
