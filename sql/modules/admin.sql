@@ -1,3 +1,12 @@
+-- README:  This module is unlike most others in that it requires most functions
+-- to run as superuser.  For this reason it is CRITICAL that the following
+-- practices are adhered to:
+-- 1:  When using EXECUTE, all user-supplied information MUST be passed through 
+--     quote_literal.
+-- 2:  This file MUST be frequently audited to ensure the above rule is followed
+--
+-- -CT
+
 begin;
 
 create table lsmb_roles (
@@ -248,6 +257,39 @@ create or replace function admin__get_roles_for_user(in_user_id INT) returns set
     
 $$ language 'plpgsql';
 
+CREATE OR REPLACE FUNCTION admin__check_my_expiration()
+returns interval as
+$$
+DECLARE
+    outval interval;
+BEGIN
+    SELECT CASE WHEN isfinite(rolvaliduntil) is not true THEN '1 year'::interval
+                ELSE rolvaliduntil - now() END AS expiration INTO outval 
+    FROM pg_authid WHERE rolname = SESSION_USER;
+    RETURN outval;
+end;
+$$ language plpgsql security definer;
+
+CREATE OR REPLACE FUNCTION admin__change_password(in_new_password text)
+returns int as
+$$
+DECLARE
+	t_expires timestamp without timezone;
+BEGIN
+    SELECT now() + (value::numeric::text || ' days')::interval INTO t_expires
+    FROM defaults WHERE setting_key = password_duration;
+
+
+    EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) || 
+            ' with ENCRYPTED password ' || quote_literal(in_new_password);
+
+    IF t_expires IS NOT NULL THEN
+         EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) ||
+                 ' VALID UNTIL '|| quote_literal(t_expires);
+    return 1;
+END;
+$$ language plpgsql security definer;
+
 CREATE OR REPLACE FUNCTION admin__save_user(
     in_id int, 
     in_entity_id INT,
@@ -262,6 +304,8 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         l_id int;
         stmt text;
     BEGIN
+        -- WARNING TO PROGRAMMERS:  This function runs as the definer.
+        -- PLEASE BE VERY CAREFUL ABOUT SQL-INJECTION INSIDE THIS FUNCTION.
     
         select * into a_user from users lu where lu.id = in_id;
         
@@ -272,7 +316,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
             
             if admin__is_user(in_username) then
                 
-                -- uhm, this is bad.
+                -- uhm, this is bad. -AS.  Not necessarily.  -CT 
                 RAISE EXCEPTION 'Fatal exception: Username already exists in Postgres; not
                     a valid lsmb user.';
             end if;         
@@ -289,7 +333,9 @@ CREATE OR REPLACE FUNCTION admin__save_user(
 
             -- Finally, issue the create user statement
             
-            stmt := 'CREATE USER ' || quote_ident( in_username ) || ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password);
+            stmt := 'CREATE USER ' || quote_ident( in_username ) || 
+                     ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
+                     'valid until now() + ''1 day''::interval';
             execute stmt;
             
             return v_user_id ;
@@ -298,7 +344,10 @@ CREATE OR REPLACE FUNCTION admin__save_user(
             
             -- update cycle
             
-            stmt := ' alter user '|| quote_ident(in_username) || ' with encrypted password ' || quote_literal(in_password);
+            stmt := ' alter user '|| quote_ident(in_username) || 
+                     ' with encrypted password ' 
+                             || quote_literal(in_password) || 
+                     'valid until now() + ''1 day''::interval';
             execute stmt;
                       
             return a_user.id;
@@ -306,7 +355,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         END IF;
     
     END;
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
 
 create view role_view as 
     select * from pg_auth_members m join pg_authid a ON (m.roleid = a.oid);
@@ -339,12 +388,12 @@ CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT, in_dbname TEX
         stmt text;
         
     BEGIN
-        stmt := 'create role lsmb_'|| quote_ident(quote_ident(in_dbname) || '__' || quote_ident(in_group_name) );
+        stmt := 'create role lsmb_'|| quote_ident(in_dbname || '__' || in_group_name);
         execute stmt;
         return 1;
     END;
     
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
 
 CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $$
     
@@ -370,30 +419,33 @@ CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $
         END IF;   
     END;
     
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
 
 comment on function admin__delete_user(text) is $$ 
     Drops the provided user, as well as deletes the entity and user configuration data.
 $$;
 
-CREATE OR REPLACE FUNCTION admin__delete_group (in_dbname TEXT, in_group_name TEXT) returns bool as $$
+CREATE OR REPLACE FUNCTION admin__delete_group (in_group_name TEXT) returns bool as $$
     
     DECLARE
         stmt text;
         a_role role_view;
+        t_dbname text;
     BEGIN
+        t_dbname := current_database();
         
+
         select * into a_role from role_view where rolname = in_group_name;
         
         if not found then
             return 'f'::bool;
         else
-            stmt := 'drop role lsmb_' || quote_ident(in_dbname || '__' || in_group_name);
+            stmt := 'drop role lsmb_' || quote_ident(t_dbname || '__' || in_group_name);
             execute stmt;
             return 't'::bool;
         end if;
     END;
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
 
 comment on function admin__delete_group(text,text) IS $$ 
     Deletes the input group from the database. Not designed to be used to 
@@ -418,7 +470,7 @@ BEGIN
 		RETURN NEXT out_rolename.rolname;
 	END LOOP;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
 -- TODO:  Add admin user
 
@@ -461,17 +513,19 @@ create or replace function user__get_all_users () returns setof user_listable as
     
 $$ language sql;
 
-create or replace function admin__get_roles (in_database text) returns setof text as $$
+create or replace function admin__get_roles () returns setof text as $$
 DECLARE
     v_rol record;
+    t_dbname text;
 BEGIN
+    t_dbname := current_database();
     FOR v_rol in 
         SELECT 
             rolname
         from 
             pg_roles
         where 
-            rolname ~ ('^lsmb_' || in_database)
+            rolname ~ ('^lsmb_' || t_dbname) -- TODO need to suffix with __ 
         order by rolname ASC
     LOOP
         RETURN NEXT v_rol.rolname;
