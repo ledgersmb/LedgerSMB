@@ -521,8 +521,8 @@ BEGIN
 			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
 			ELSE false END,
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
-		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') || , 
-		$E$ || quote_literal(in_payment_class) || $E$
+		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') || 
+		$E$ , $E$ || quote_literal(in_payment_class) || $E$
 		FROM bulk_payments_in $E$;
 
 	EXECUTE $E$ 
