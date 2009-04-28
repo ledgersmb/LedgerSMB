@@ -325,8 +325,9 @@ BEGIN
 		   WHERE (a.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
 		             AND a.approved
-			 AND c.business_id = 
+			 AND (c.business_id = 
 				coalesce(in_business_id, c.business_id)
+				OR in_business_id is null)
 		         AND ((a.transdate >= COALESCE(in_date_from, a.transdate)
 		               AND a.transdate <= COALESCE(in_date_to, a.transdate)))
 		         AND c.entity_class = in_account_class
