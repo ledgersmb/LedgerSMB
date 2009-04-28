@@ -83,6 +83,12 @@ sub get_metadata {
     @{$self->{businesses}} = $self->exec_method(
 		funcname => 'business_type__list'
     );
+
+   @{$self->{payment_types}} = $self->exec_method(
+		funcname => 'payment_type__list'
+    );
+
+
     @{$self->{debt_accounts}} = $self->exec_method(
 		funcname => 'chart_get_ar_ap');
     @{$self->{cash_accounts}} = $self->exec_method(
@@ -457,6 +463,7 @@ sub get_payment_detail_data {
    
     @{$self->{contact_invoices}} = $self->exec_method(
 		funcname => 'payment_get_all_contact_invoices');
+
     for my $inv (@{$self->{contact_invoices}}) {
         if (($self->{action} ne 'update_payments') or 
 		(defined $self->{"id_$inv->{contact_id}"})

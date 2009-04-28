@@ -120,7 +120,8 @@
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
-	<?lsmb INCLUDE select element_data = {
+	
+      <?lsmb INCLUDE select element_data = {
 		name = "cash_accno"
 		default_values = [cash_accno]
 		options = cash_accounts
@@ -128,6 +129,22 @@
 		text_attr = "text"
 		label = text('Pay From:') # '
 	} ?> 
+
+<?lsmb IF payment_types ?>
+<div id = "payments-filter-payment_types" class="inputpayment">
+  <label for="payment_types"><?lsmb text('Payment Type') ?></label>
+  <select name="payment_type_id" id="payment_types">
+  <?lsmb FOREACH p = payment_types ?>
+  <option value="<?lsmb p.id ?>"><?lsmb p.label ?></option>
+  <?lsmb END ?>
+  </select>
+</div>
+<?lsmb END ?>
+
+
+
+
+
 <div class = "input">
 <?lsmb INCLUDE input element_data = {
 	type = "text"

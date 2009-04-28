@@ -1,4 +1,14 @@
 
+CREATE OR REPLACE FUNCTION payment_type__list() RETURNS SETOF payment_types AS
+$$
+DECLARE out_row payment_types%ROWTYPE;
+BEGIN
+	FOR out_row IN SELECT * FROM payment_types LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
 CREATE TYPE payment_vc_info AS (
 	id int,
 	name text,
