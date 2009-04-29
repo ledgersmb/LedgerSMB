@@ -7,7 +7,6 @@
 --
 -- -CT
 
-begin;
 
 create table lsmb_roles (
     
@@ -110,7 +109,7 @@ CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TE
     
 $$ language 'plpgsql' SECURITY DEFINER;
 
-REVOKE EXECUTE ON admin__add_function_to_group(TEXT, TEXT) FROM PUBIC;
+REVOKE EXECUTE ON FUNCTION admin__add_function_to_group(TEXT, TEXT) FROM PUBLIC;
 
 CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_role TEXT) returns INT AS $$
     
@@ -285,11 +284,12 @@ CREATE OR REPLACE FUNCTION user__change_password(in_new_password text)
 returns int as
 $$
 DECLARE
-	t_expires timestamp without timezone;
+	t_expires timestamp;
 BEGIN
     SELECT now() + (value::numeric::text || ' days')::interval INTO t_expires
     FROM defaults WHERE setting_key = password_duration;
 
+    UPDATE users SET notify_password = DEFAULT where username = SESSION_USER;
 
     EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) || 
             ' with ENCRYPTED password ' || quote_literal(in_new_password);
@@ -297,6 +297,7 @@ BEGIN
     IF t_expires IS NOT NULL THEN
          EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) ||
                  ' VALID UNTIL '|| quote_literal(t_expires);
+    END IF;
     return 1;
 END;
 $$ language plpgsql security definer;
@@ -344,10 +345,9 @@ CREATE OR REPLACE FUNCTION admin__save_user(
 
             -- Finally, issue the create user statement
             
-            stmt := 'CREATE USER ' || quote_ident( in_username ) || 
+            execute 'CREATE USER ' || quote_ident( in_username ) || 
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
-                     'valid until now() + ''1 day''::interval';
-            execute stmt;
+                     || $e$ valid until now() + '1 day'::interval $e$;
             
             return v_user_id ;
 
@@ -355,11 +355,11 @@ CREATE OR REPLACE FUNCTION admin__save_user(
             
             -- update cycle
             
-            stmt := ' alter user '|| quote_ident(in_username) || 
+            execute ' alter user '|| quote_ident(in_username) || 
                      ' with encrypted password ' 
                              || quote_literal(in_password) || 
-                     'valid until now() + ''1 day''::interval';
-            execute stmt;
+                     $e$ valid until now()::timezone + '1 day'::interval $e$;
+            
                       
             return a_user.id;
         
@@ -541,7 +541,7 @@ create or replace function user__get_all_users () returns setof user_listable as
     
 $$ language sql;
 
-create or replace function admin__get_roles () returns setof text as $$
+create or replace function admin__get_roles () returns setof pg_roles as $$
 DECLARE
     v_rol record;
     t_dbname text;
@@ -554,10 +554,10 @@ BEGIN
             pg_roles
         where 
             rolname ~ ('^lsmb_' || t_dbname || '__') 
-            and rolcanlogin is false;
+            and rolcanlogin is false
         order by rolname ASC
     LOOP
-        RETURN NEXT v_rol.rolname;
+        RETURN NEXT v_rol;
     END LOOP;
 END;
 $$ language plpgsql;
@@ -578,4 +578,3 @@ BEGIN
 END;
 $$ language plpgsql;
 
-commit;

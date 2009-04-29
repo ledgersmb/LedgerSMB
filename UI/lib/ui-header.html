@@ -22,7 +22,11 @@
 	<script type="text/javascript" language="JavaScript" src="<?lsmb s ?>" ></script>
 	<?lsmb END ?>
 	
-
+	<?lsmb IF warn_expire ?>
+	<script type="text/javascript" language="JavaScript">
+	document.alert(<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires_in)?>);
+	</script>
+	<?lsmb END ?>
 
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<meta name="robots" content="noindex,nofollow" />

@@ -16,6 +16,32 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION check_expiration() RETURNS bool AS
+$$
+DECLARE test_result BOOL;
+	expires_in interval;
+	notify_again interval;
+BEGIN
+	expires_in := user__check_my_expiration();
+
+	SELECT expires_in < notify_password INTO test_result
+	FROM users WHERE username = SESSION_USER;
+
+	IF test_result THEN 
+		IF expires_in < '1 week' THEN
+			notify_again := '1 hour';
+		ELSE
+			notify_again := '1 day';
+		END IF;
+
+		UPDATE users 
+		SET notify_password = expires_in - notify_again
+		WHERE username = SESSION_USER;
+	END IF;
+	RETURN test_result;
+END;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER; -- run by public, but no input from user.
+
 CREATE OR REPLACE FUNCTION form_open(in_session_id int)
 RETURNS INT AS
 $$

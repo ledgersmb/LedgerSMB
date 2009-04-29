@@ -750,11 +750,22 @@ sub _db_init {
             SELECT value FROM defaults 
              WHERE setting_key = 'role_prefix'");
     $sth->execute;
+
+
     ($self->{_role_prefix}) = $sth->fetchrow_array;
     if ($dbversion ne $self->{dbversion}){
         $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}");
     }
 
+    $sth->prepare('SELECT check_expiration()');
+    $sth->execute;
+    ($self->{warn_expire}) = $sth->fetchrow_array;
+   
+    if ($self->{warn_expire}){
+        $sth->prepare('SELECT user__check_my_expiration()');
+        $sth->execute;
+        ($self->{pw_expires})  = $sth->fetchrow_array;
+    }
 
 
     my $query = "SELECT t.extends, 

@@ -500,6 +500,12 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
           ( $self->{title} )
           ? "$self->{title} - $self->{titlebar}"
           : $self->{titlebar};
+        if ($self->{warn_expire}){
+            $headeradd .= qq|
+		<script type="text/javascript" language="JavaScript">
+		document.alert('Warning:  Your password will expire in $self->{pw_expires_in});
+	</script>
+        }
 
         print qq|Content-Type: text/html; charset=utf-8\n\n
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -1198,6 +1204,16 @@ sub db_init {
     while (my @roles = $sth->fetchrow_array){
         push @{$self->{_roles}}, $roles[0];
     }
+
+    $sth->prepare('SELECT check_expiration()');
+    $sth->execute;
+    ($self->{warn_expire}) = $sth->fetchrow_array;
+    if ($self->{warn_expire}){
+        $sth->prepare('SELECT user__check_my_expiration()');
+        $sth->execute;
+        ($self->{pw_expires})  = $sth->fetchrow_array;
+    }
+
     $sth->finish();
 }
 
