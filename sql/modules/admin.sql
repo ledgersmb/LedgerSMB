@@ -44,7 +44,9 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_user TEXT, in_role TEXT) r
         return 1;
     END;
     
-$$ language 'plpgsql';
+$$ language 'plpgsql' security definer;
+
+REVOKE EXECUTE ON FUNCTION admin__add_user_to_role(TEXT, TEXT) FROM PUBLIC;
 
 CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_user TEXT, in_role TEXT) returns INT AS $$
     
@@ -74,7 +76,9 @@ CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_user TEXT, in_role TE
         return 1;    
     END;
     
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
+
+REVOKE EXECUTE ON FUNCTION admin__remove_user_from_role(TEXT, TEXT) FROM PUBLIC;
 
 CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TEXT) returns INT AS $$
     
@@ -104,7 +108,9 @@ CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TE
         return 1;
     END;
     
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
+
+REVOKE EXECUTE ON admin__add_function_to_group(TEXT, TEXT) FROM PUBIC;
 
 CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_role TEXT) returns INT AS $$
     
@@ -135,10 +141,13 @@ CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_ro
     END;
     
     
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
+
+REVOKE EXECUTE ON FUNCTION admin__remove_function_from_group(text, text) 
+FROM public;
 
 CREATE OR REPLACE FUNCTION admin__add_table_to_group(in_table TEXT, in_role TEXT, in_perm TEXT) returns INT AS $$
-    
+    -- Do we need this table stuff at the moment? CT 
     declare
         stmt TEXT;
         a_role name;
@@ -175,7 +184,7 @@ CREATE OR REPLACE FUNCTION admin__add_table_to_group(in_table TEXT, in_role TEXT
 $$ language 'plpgsql';
 
 CREATE OR REPLACE FUNCTION admin__remove_table_from_group(in_table TEXT, in_role TEXT) returns INT AS $$
-    
+    -- do we need this table stuff at the moment?  CT
     declare
         stmt TEXT;
         a_role name;
@@ -255,9 +264,11 @@ create or replace function admin__get_roles_for_user(in_user_id INT) returns set
         RETURN;
     end;
     
-$$ language 'plpgsql';
+$$ language 'plpgsql' SECURITY DEFINER;
 
-CREATE OR REPLACE FUNCTION admin__check_my_expiration()
+REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user(in_user_id INT) from PUBLIC;
+
+CREATE OR REPLACE FUNCTION user__check_my_expiration()
 returns interval as
 $$
 DECLARE
@@ -270,7 +281,7 @@ BEGIN
 end;
 $$ language plpgsql security definer;
 
-CREATE OR REPLACE FUNCTION admin__change_password(in_new_password text)
+CREATE OR REPLACE FUNCTION user__change_password(in_new_password text)
 returns int as
 $$
 DECLARE
@@ -357,19 +368,27 @@ CREATE OR REPLACE FUNCTION admin__save_user(
     END;
 $$ language 'plpgsql' SECURITY DEFINER;
 
+REVOKE EXECUTE ON FUNCTION admin__save_user(
+    in_id int,
+    in_entity_id INT,
+    in_username text,
+    in_password TEXT
+) FROM public; 
+
 create view role_view as 
     select * from pg_auth_members m join pg_authid a ON (m.roleid = a.oid);
         
 
-create or replace function admin__is_group(in_dbname TEXT, in_group_name text) returns bool as $$
-    
+create or replace function admin__is_group(in_group_name text) returns bool as $$
+    -- This needs some work.  CT 
     DECLARE
         
-        existant_role role_view;
+        existant_role pg_roles;
         stmt text;
         
     BEGIN
-        select * into role_view from role_view where rolname = in_group_name;
+        select * into existant_role from pg_roles 
+        where rolname = in_group_name AND rolcanlogin is false;
         
         if not found then
             return 'f'::bool;
@@ -381,19 +400,22 @@ create or replace function admin__is_group(in_dbname TEXT, in_group_name text) r
     
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT, in_dbname TEXT) RETURNS int as $$
+CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT) RETURNS int as $$
     
     DECLARE
         
         stmt text;
-        
+        t_dbname text;
     BEGIN
-        stmt := 'create role lsmb_'|| quote_ident(in_dbname || '__' || in_group_name);
+	t_dbname := current_database();
+        stmt := 'create role lsmb_'|| quote_ident(t_dbname || '__' || in_group_name);
         execute stmt;
         return 1;
     END;
     
 $$ language 'plpgsql' SECURITY DEFINER;
+
+REVOKE EXECUTE ON FUNCTION  admin__create_group(TEXT) FROM PUBLIC;
 
 CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $$
     
@@ -413,7 +435,6 @@ CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $
             execute stmt;
             
             -- also gets user_connection
-            delete from users where id = a_user.id; 
             delete from entity where id = a_user.entity_id;
                                         
         END IF;   
@@ -421,8 +442,11 @@ CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $
     
 $$ language 'plpgsql' SECURITY DEFINER;
 
+REVOKE EXECUTE ON FUNCTION admin__delete_user(in_username TEXT) from public;
+
 comment on function admin__delete_user(text) is $$ 
-    Drops the provided user, as well as deletes the entity and user configuration data.
+    Drops the provided user, as well as deletes the user configuration data.
+It leaves the entity and person references.
 $$;
 
 CREATE OR REPLACE FUNCTION admin__delete_group (in_group_name TEXT) returns bool as $$
@@ -447,7 +471,9 @@ CREATE OR REPLACE FUNCTION admin__delete_group (in_group_name TEXT) returns bool
     END;
 $$ language 'plpgsql' SECURITY DEFINER;
 
-comment on function admin__delete_group(text,text) IS $$ 
+REVOKE EXECUTE on function admin__delete_group(text) from public;
+
+comment on function admin__delete_group(text) IS $$ 
     Deletes the input group from the database. Not designed to be used to 
     remove a login-capable user.
 $$;
@@ -471,6 +497,8 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+REVOKE execute on function admin__list_roles(in_username text) from public;
 
 -- TODO:  Add admin user
 
@@ -525,7 +553,8 @@ BEGIN
         from 
             pg_roles
         where 
-            rolname ~ ('^lsmb_' || t_dbname) -- TODO need to suffix with __ 
+            rolname ~ ('^lsmb_' || t_dbname || '__') 
+            and rolcanlogin is false;
         order by rolname ASC
     LOOP
         RETURN NEXT v_rol.rolname;
@@ -533,7 +562,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-create or replace function admin__user_preferences (in_user int) returns setof user_preference as $$
+create or replace function user__get_preferences (in_user int) returns setof user_preference as $$
     
 declare
     v_row user_preference;

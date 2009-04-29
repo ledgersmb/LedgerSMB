@@ -1347,8 +1347,6 @@ values (152, 'allow', 'lsmb_<?lsmb dbname ?>__edit_language');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__create_part_translation"
 WITH INHERIT NOLOGIN;
 
--- TODO add db permissions
-
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__create_part_translation');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -1361,8 +1359,6 @@ values (97, 'allow', 'lsmb_<?lsmb dbname ?>__create_part_translation');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__create_project_translation"
 WITH INHERIT NOLOGIN;
-
--- TODO add db permissions
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (98, 'allow', 'lsmb_<?lsmb dbname ?>__create_project_translation');
@@ -1378,10 +1374,33 @@ IN ROLE "lsmb_<?lsmb dbname ?>__create_language",
 "lsmb_<?lsmb dbname ?>__create_part_translation",
 "lsmb_<?lsmb dbname ?>__create_project_translation";
 
-GRANT SELECT ON custom_field_catalog TO public;
-GRANT SELECT ON custom_table_catalog TO public;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__manage_users"
+WITH INHERIT NOLOGIN;
+
+GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__remove_user_from_role(TEXT, TEXT)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__add_function_to_group(TEXT, TEXT)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__remove_function_from_group(text, text)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__get_roles_for_user(INT)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__save_user(int, INT, text, TEXT) 
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__create_group(TEXT)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__delete_user(text)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__list_roles(text)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
+GRANT EXECUTE ON FUNCTION  admin__delete_group(text)
+TO "lsmb_<?lsmb dbname ?>__manage_users";
 
 -- Grants to all users;
+GRANT SELECT ON custom_field_catalog TO public;
+GRANT SELECT ON custom_table_catalog TO public;
 GRANT ALL ON defaults TO public;
 GRANT ALL ON "session" TO public;
 GRANT ALL ON session_session_id_seq TO PUBLIC;
