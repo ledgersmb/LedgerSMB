@@ -47,7 +47,9 @@ sub get_search_criteria {
 
 sub get_search_results {
     my ($self, $args) = @_;
-    if ($args->{mini}){
+    if ($self->{empty}){
+        $search_proc = "batch_search_empty";
+    } elsif ($args->{mini}){
         $search_proc = "batch_search_mini";
     } else {
         $search_proc = "batch_search";

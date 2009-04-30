@@ -39,6 +39,20 @@ INSERT INTO test_result (test_name, success)
 SELECT 'partial payment support', count(*) > 1 
 FROM voucher where trans_id = -5 and batch_class = 3;
 
+-- Adding the test for empty batch sproc
+
+insert into batch (batch_class_id, control_code, description, default_date, created_by) values (1, 'EMPTYBATCHTEST', 'EMPTY BATCH TEST', '2009-01-01', -3);
+
+INSERT INTO test_result (test_name, success)
+SELECT 'Empty Batch Detected', count(*) = 1
+  FROM batch_search_empty(1,                        -- Batch class ID
+                          'EMPTY BATCH TEST',       -- Batch description
+                          -3,                       -- Entity ID
+       	                  NULL::numeric,            -- Amount greater than
+       	                  NULL::numeric,            -- Amount less than
+       	                  'f'::bool                 -- Approved
+);
+
 SELECT * FROM test_result;
 
 SELECT (select count(*) from test_result where success is true) 

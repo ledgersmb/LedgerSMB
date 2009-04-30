@@ -246,6 +246,32 @@ sub list_batches {
     my $hiddens = $batch->take_top_level();
     $batch->{rowcount} = "$count";
     delete $batch->{search_results};
+    
+    my @buttons;
+    if ($batch->{empty})
+    {
+      @buttons = [{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Delete'),
+                    value => 'batch_delete',
+                    class => 'submit',
+               }];
+    } else {
+      @buttons = [{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Post'),
+                    value => 'batch_approve',
+                    class => 'submit',
+                 },{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Delete'),
+                    value => 'batch_delete',
+                    class => 'submit',
+                }];
+    }
 
     $template->render({ 
 	form    => $batch,
@@ -253,19 +279,7 @@ sub list_batches {
 	heading => \%column_heading,
         rows    => \@rows,
         hiddens => $hiddens,
-        buttons => [{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $request->{_locale}->text('Post'),
-                    value => 'batch_approve',
-                    class => 'submit',
-		},{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $request->{_locale}->text('Delete'),
-                    value => 'batch_delete',
-                    class => 'submit',
-               }]
+        buttons => @buttons
     });
         
 }
