@@ -2527,8 +2527,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 189	format	TEXT	525
 190	action	display_stylesheet	526
 190	module	am.pl	527
-191	module	am.pl	528
-191	action	config	529
+191	module	user.pl	528
+191	action	preference_screen	529
 193	module	login.pl	532
 193	action	logout	533
 193	target	_top	534

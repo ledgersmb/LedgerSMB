@@ -5,42 +5,12 @@
 
 <table width="100%">
   <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><th class="info">
+          <?lsmb text('Your password will expire in [_1]', password_expires) ?>
   <tr>
     <td>
       <table width="100%">
         <tr valign="top">
-	  <td>
-	    <table>
-	      <tr>
-		<th align="right"><?lsmb text('Name') ?></th>
-		<td><input name="name" size="20" value="<?lsmb user.name ?>" /></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('E-mail') ?></th>
-		<td><input name="email" size="35" value="<?lsmb user.email ?>" /></td>
-	      </tr>
-	      <tr valign="top">
-		<th align="right"><?lsmb text('Signature') ?></th>
-		<td><textarea name="signature" rows="3" cols="35"><?lsmb user.signature ?></textarea></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Phone') ?></th>
-		<td><input name="tel" size="14" value="<?lsmb user.tel ?>" /></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Fax') ?></th>
-		<td><input name="fax" size="14" value="<?lsmb user.fax ?>" /></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Company') ?></th>
-		<td><input name="company" size="35" value="<?lsmb user.company ?>" /></td>
-	      </tr>
-	      <tr valign="top">
-		<th align="right"><?lsmb text('Address') ?></th>
-		<td><textarea name="address" rows="4" cols="35"><?lsmb user.address ?></textarea></td>
-	      </tr>
-	    </table>
-	  </td>
 	  <td>
 	    <table>
 	      <tr>
@@ -60,20 +30,8 @@
 		<td><?lsmb PROCESS select element_data=selects.numberformat ?></td>
 	      </tr>
 	      <tr>
-		<th align="right"><?lsmb text('Dropdown Limit') ?></th>
-		<td><input name="vclimit" size="10" value="<?lsmb user.vclimit ?>" /></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Menu Width') ?></th>
-		<td><input name="menuwidth" size="10" value="<?lsmb user.menuwidth ?>" /></td>
-	      </tr>
-	      <tr>
 		<th align="right"><?lsmb text('Language') ?></th>
 		<td><?lsmb PROCESS select element_data=selects.countrycode?></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Session Timeout') ?></th>
-		<td><input name="timeout" size="10" value="<?lsmb user.timeout ?>" /></td>
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Stylesheet') ?></th>

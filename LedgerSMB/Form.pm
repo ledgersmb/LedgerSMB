@@ -503,8 +503,8 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
         if ($self->{warn_expire}){
             $headeradd .= qq|
 		<script type="text/javascript" language="JavaScript">
-		document.alert('Warning:  Your password will expire in $self->{pw_expires_in});
-	</script>
+		window.alert('Warning:  Your password will expire in $self->{pw_expires}');
+	</script>|;
         }
 
         print qq|Content-Type: text/html; charset=utf-8\n\n
@@ -1205,11 +1205,11 @@ sub db_init {
         push @{$self->{_roles}}, $roles[0];
     }
 
-    $sth->prepare('SELECT check_expiration()');
+    $sth = $dbh->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;
     if ($self->{warn_expire}){
-        $sth->prepare('SELECT user__check_my_expiration()');
+        $sth = $dbh->prepare('SELECT user__check_my_expiration()');
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }

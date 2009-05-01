@@ -75,9 +75,15 @@ sub root_doc {
         drilldown_menu($request);
         return;
     } else {
-        $request->{main} = "splash.html" if $request->{main} eq 'company_logo';
-        $request->{main} = "am.pl?action=recurring_transactions"
-            if $request->{main} eq 'recurring_transactions';
+        my $userpw = LedgerSMB::DBObject::Menu->new({base => $request});
+        if ($userpw->will_expire_soon){
+            $request->{main} = 'user.pl?action=preference_screen';
+        } else {
+            $request->{main} = "splash.html" 
+                if !$request->{main};
+            $request->{main} = "am.pl?action=recurring_transactions"
+                if $request->{main} eq 'recurring_transactions';
+        }
         $template = LedgerSMB::Template->new(
             user =>$request->{_user}, 
             locale => $request->{_locale},

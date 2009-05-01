@@ -218,6 +218,7 @@ sub new {
 
     $self->_db_init;
 
+
     if ($self->is_run_mode('cgi', 'mod_perl')) {
        #check for valid session unless this is an inital authentication
        #request -- CT
@@ -226,8 +227,8 @@ sub new {
             $self->_get_password("Session Expired");
             exit;
        }
-       $self->{_user} = LedgerSMB::User->fetch_config($self);
     }
+    $self->get_user_info;
     my %date_setting = (
         'mm/dd/yy' => "SQL, US",
         'mm-dd-yy' => "POSTGRES, US",
@@ -248,6 +249,10 @@ sub new {
 
 }
 
+sub get_user_info {
+    my ($self) = @_;
+    $self->{_user} = LedgerSMB::User->fetch_config($self);
+}
 #This function needs to be moved into the session handler.
 sub _get_password {
     my ($self) = shift @_;
@@ -757,12 +762,12 @@ sub _db_init {
         $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}");
     }
 
-    $sth->prepare('SELECT check_expiration()');
+    $sth = $dbh->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;
    
     if ($self->{warn_expire}){
-        $sth->prepare('SELECT user__check_my_expiration()');
+        $sth = $dbh->prepare('SELECT user__check_my_expiration()');
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }

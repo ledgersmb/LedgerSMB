@@ -280,6 +280,12 @@ BEGIN
 end;
 $$ language plpgsql security definer;
 
+CREATE OR REPLACE FUNCTION user__expires_soon()
+RETURNS BOOL AS
+$$
+   SELECT user__check_my_expiration() < '1 week';
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION user__change_password(in_new_password text)
 returns int as
 $$
@@ -287,7 +293,7 @@ DECLARE
 	t_expires timestamp;
 BEGIN
     SELECT now() + (value::numeric::text || ' days')::interval INTO t_expires
-    FROM defaults WHERE setting_key = password_duration;
+    FROM defaults WHERE setting_key = 'password_duration';
 
     UPDATE users SET notify_password = DEFAULT where username = SESSION_USER;
 
@@ -559,6 +565,26 @@ BEGIN
     LOOP
         RETURN NEXT v_rol;
     END LOOP;
+END;
+$$ language plpgsql;
+
+create or replace function user__save_preferences(
+	in_dateformat text,
+	in_numberformat text,
+	in_language text,
+	in_stylesheet text,
+	in_printer text
+) returns bool as 
+$$
+BEGIN
+    UPDATE user_preference
+    SET dateformat = in_dateformat,
+        numberformat = in_numberformat,
+        language = in_language,
+        stylesheet = in_stylesheet,
+        printer = in_printer
+    WHERE id = (select id from users where username = SESSION_USER);
+    RETURN FOUND;
 END;
 $$ language plpgsql;
 

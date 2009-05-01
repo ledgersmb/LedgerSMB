@@ -24,7 +24,7 @@
 	
 	<?lsmb IF warn_expire ?>
 	<script type="text/javascript" language="JavaScript">
-	document.alert(<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires_in)?>);
+	window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
 	</script>
 	<?lsmb END ?>
 

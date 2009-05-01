@@ -66,6 +66,24 @@ sub generate_section {
     return @{$self->{menu_items}};
 }
 
+=over
+
+=item Menu::will_expire_soon($object)
+
+This method returns true if the user's password will expire soon 
+(within the next week).
+
+=back
+
+=cut
+
+sub will_expire_soon {
+    my ($self) = @_;
+    my ($pw_expires) = $self->exec_method(
+          funcname => 'user__expires_soon');
+    $self->{expires_soon} = $pw_expires->{'user__expires_soon'};
+    return $self->{expires_soon};
+}
 
 # Private method which contains logic common to the full menu and section logic
 
@@ -88,3 +106,4 @@ sub __generate {
         }
     }
 }
+

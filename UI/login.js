@@ -22,7 +22,7 @@ function submit_form() {
 		return false;
 	}
 	document.location = document.login.action + "?action=login&company="+
-		documnet.login.company.value;
+		document.login.company.value;
 }
 
 function check_auth() {

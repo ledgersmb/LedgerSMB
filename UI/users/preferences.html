@@ -1,0 +1,98 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb script ?>">
+
+<table width="100%">
+  <tr><th class="listtop"><?lsmb text('Preferences for [_1]', login) ?></th></tr>
+  <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">
+          <?lsmb text('Preferences Saved') ?>
+  <tr><?lsmb END # if action ?>
+  <tr><th class="info">
+          <?lsmb text('Your password will expire in [_1]', password_expires) ?>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr valign="top">
+	  <td>
+	    <table>
+	      <tr>
+		<th align="right"><?lsmb text('Password') ?></th>
+		<td><input type="password" name="new_password" size="10" value="" /></td>
+	      </tr>
+	      <tr>
+		<th align="right"><?lsmb text('Confirm') ?></th>
+		<td><input type="password" name="confirm_password" size="10" /></td>
+	      </tr>
+	      <tr>
+		<th align="right"><?lsmb text('Date Format') ?></th>
+		<td><?lsmb PROCESS select element_data={
+                      name = 'dateformat'
+                      options = dateformats
+                      default_values = [dateformat]
+                      text_attr = 'format'
+                      value_attr = 'id'
+                    } ?></td>
+	      </tr>
+	      <tr>
+		<th align="right"><?lsmb text('Number Format') ?></th>
+		<td><?lsmb numberformat = user.numberformat -?>
+                    <?lsmb PROCESS select element_data={ 
+                      name = 'numberformat',
+                      options = numberformats,
+                      default_values = [numberformat],
+                      text_attr = 'format',
+                      value_attr = 'format',
+                    } ?></td>
+	      </tr>
+	      <tr>
+		<th align="right"><?lsmb text('Language') ?></th>
+		<td><?lsmb language = user.language -?>
+                    <?lsmb PROCESS select element_data={
+                     name = 'language',
+                     options = country_codes,
+                     default_values = [language],
+                     text_attr = 'label',
+                     value_attr = 'id',
+                   }?> </td>
+	      </tr>
+	      <tr>
+		<th align="right"><?lsmb text('Stylesheet') ?></th>
+		<td><?lsmb PROCESS select element_data={
+                      name = 'css'
+                      options = cssfiles
+                      default_values = [stylesheet]
+                      text_attr = 'file'
+                      value_attr = 'file'
+                     } ?></td>
+	      </tr>
+<?lsmb IF printers.defined ?> 
+	      <tr>
+		<th align="right"><?lsmb text('Printer') ?></th>
+		<td><?lsmb printer = user.printer -?>
+                   <?lsmb PROCESS select element_data={
+                     name = 'printer'
+                     options = printers
+                     default_values = [printer] 
+                     text_attr = 'printer'
+                     value_attr = 'printer'
+                     }?></td>
+	      </tr>
+<?lsmb END ?>
+
+	    </table>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size="3" noshade="noshade" /></td>
+  </tr>
+</table>
+
+<button type="submit" class="submit" name="action" value="save_preferences"><?lsmb text('Save') ?></button>
+  </form>
+
+</body>
+</html>
