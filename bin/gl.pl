@@ -253,229 +253,36 @@ sub search {
 
     # departments
     if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-
-        $l_department =
-          qq|<input name="l_department" class=checkbox type=checkbox value=Y> |
-          . $locale->text('Department');
-
-        $department = qq|
-  	<tr>
-	  <th align=right nowrap>| . $locale->text('Department') . qq|</th>
-	  <td colspan=$colspan><select name=department>$form->{selectdepartment}</select></td>
-	</tr>
-|;
+        unshift @{ $form->{all_department} }, {id => "", description => ""};
     }
 
-    my @accounts = $form->all_accounts;
-    my $account_select = qq|<select name="chart_id" class="account>|;
-    for my $act (@accounts){
-        $account_select .= qq|<option value="$act->{id}">$act->{accno}--| .
-            qq|$act->{description}</option>|;
-    }
+    @{$form->{all_accounts}} = $form->all_accounts;
+    unshift @{$form->{all_accounts}}, {id => "", accno => ""};
 
     if ( @{ $form->{all_years} } ) {
 
         # accounting years
-        $form->{selectaccountingyear} = "<option>\n";
         for ( @{ $form->{all_years} } ) {
-            $form->{selectaccountingyear} .= qq|<option>$_\n|;
+             $_ = {year => $_};
         }
-        $form->{selectaccountingmonth} = "<option>\n";
+        unshift @{ $form->{all_years} }, {};
+        $form->{accountingmonths} = [];
         for ( sort keys %{ $form->{all_month} } ) {
-            $form->{selectaccountingmonth} .=
-              qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|\n|;
+            push @{$form->{accountingmonths}}, 
+                {id     => $_,
+                 month  => $locale->text( $form->{all_month}{$_} )};
         }
 
-        $selectfrom = qq|
-        <tr>
-	<th align=right>| . $locale->text('Period') . qq|</th>
-	<td colspan=$colspan>
-	<select name=month>$form->{selectaccountingmonth}</select>
-	<select name=year>$form->{selectaccountingyear}</select>
-	<input name=interval class=radio type=radio value=0 checked>&nbsp;|
-          . $locale->text('Current') . qq|
-	<input name=interval class=radio type=radio value=1>&nbsp;|
-          . $locale->text('Month') . qq|
-	<input name=interval class=radio type=radio value=3>&nbsp;|
-          . $locale->text('Quarter') . qq|
-	<input name=interval class=radio type=radio value=12>&nbsp;|
-          . $locale->text('Year') . qq|
-	</td>
-      </tr>
-|;
     }
-
-    @a = ();
-    push @a, qq|<input name="l_id" class=checkbox type=checkbox value=Y> |
-      . $locale->text('ID');
-    push @a,
-qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
-      . $locale->text('Date');
-    push @a,
-qq|<input name="l_reference" class=checkbox type=checkbox value=Y checked> |
-      . $locale->text('Reference');
-    push @a,
-qq|<input name="l_description" class=checkbox type=checkbox value=Y checked> |
-      . $locale->text('Description');
-    push @a, qq|<input name="l_notes" class=checkbox type=checkbox value=Y> |
-      . $locale->text('Notes');
-    push @a, $l_department if $l_department;
-    push @a,
-      qq|<input name="l_debit" class=checkbox type=checkbox value=Y checked> |
-      . $locale->text('Debit');
-    push @a,
-      qq|<input name="l_credit" class=checkbox type=checkbox value=Y checked> |
-      . $locale->text('Credit');
-    push @a,
-      qq|<input name="l_source" class=checkbox type=checkbox value=Y checked> |
-      . $locale->text('Source');
-    push @a, qq|<input name="l_memo" class=checkbox type=checkbox value=Y> |
-      . $locale->text('Memo');
-    push @a,
-      qq|<input name="l_accno" class=checkbox type=checkbox value=Y checked> |
-      . $locale->text('Account');
-    push @a,
-      qq|<input name="l_gifi_accno" class=checkbox type=checkbox value=Y> |
-      . $locale->text('GIFI');
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-
-<input type=hidden name=sort value=transdate>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right>| . $locale->text('Reference') . qq|</th>
-	  <td><input name=reference size=20></td>
-        </tr>
-         <tr>
-          <th align="right">| . $locale->text('Account') . qq|</th>
-          <td>$account_select</td>
-	  </tr>
-	  <tr>
-	  <th align=right>| . $locale->text('Source') . qq|</th>
-	  <td><input name=source size=20></td>
-	  <th align=right>| . $locale->text('Memo') . qq|</th>
-	  <td><input name=memo size=20></td>
-	</tr>
-	$department
-	<tr>
-	  <th align=right>| . $locale->text('Description') . qq|</th>
-	  <td colspan=$colspan><input name=description size=60></td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('Notes') . qq|</th>
-	  <td colspan=$colspan><input name=notes size=60></td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=datefrom size=11 title="$myconfig{dateformat}"></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
-	  <td><input class="date" name=dateto size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
-	<tr>
-	  <th align=right>| . $locale->text('Amount') . qq| >=</th>
-	  <td><input name=amountfrom size=11></td>
-	  <th align=right>| . $locale->text('Amount') . qq| <=</th>
-	  <td><input name=amountto size=11></td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('Include in Report') . qq|</th>
-	  <td colspan=$colspan>
-	    <table>
-	      <tr>
-		<td>
-		  <input name="category" class=radio type=radio value=X checked>&nbsp;|
-      . $locale->text('All') . qq|
-		  <input name="category" class=radio type=radio value=A>&nbsp;|
-      . $locale->text('Asset') . qq|
-		  <input name="category" class=radio type=radio value=L>&nbsp;|
-      . $locale->text('Liability') . qq|
-		  <input name="category" class=radio type=radio value=Q>&nbsp;|
-      . $locale->text('Equity') . qq|
-		  <input name="category" class=radio type=radio value=I>&nbsp;|
-      . $locale->text('Income') . qq|
-		  <input name="category" class=radio type=radio value=E>&nbsp;|
-      . $locale->text('Expense') . qq|
-		</td>
-	      </tr>
-	      <tr>
-		<table>
-|;
-
-    while (@a) {
-        print qq|<tr>\n|;
-        for ( 1 .. 5 ) {
-            print qq|<td nowrap>| . shift @a;
-            print qq|</td>\n|;
-        }
-        print qq|</tr>\n|;
-    }
-
-    print qq|
-		  <tr>
-		    <td nowrap><input name="l_subtotal" class=checkbox type=checkbox value=Y> |
-      . $locale->text('Subtotal')
-      . qq|</td>
-		  </tr>
-		  <tr>
-		    <td nowrap><input name="l_balance" class=checkbox type=checkbox value=Y> |
-      . $locale->text('Balance')
-      . qq|</td>
-		  </tr>
-		</table>
-	      </tr>
-	    </table>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<input type=hidden name=nextsub value=generate_report>
-|;
-
-    $form->hide_form(qw(path login sessionid));
-
-    print qq|
-<br>
-<button class="submit" type="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-|;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-
-</body>
-</html>
-|;
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig,
+        locale => $locale,
+        path => 'UI/journal',
+        template => 'search',
+        format => 'HTML',
+        );
+    $template->render($form);
+    
 }
 
 sub generate_report {

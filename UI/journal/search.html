@@ -1,0 +1,335 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+
+<form method="post" action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+    type = "hidden"
+    name = "sort"
+    value = "transdate"
+} ?>
+
+<table width="100%">
+  <tr>
+    <th class="listtop"><?lsmb text('General Ledger Reports') ?></th>
+
+  </tr>
+  <tr height="5"></tr>
+  <tr>
+    <td>
+      <table>
+	<tr>
+	  <th align="right"><?lsmb text('Reference') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+                  name = "reference"
+                  size = "20"
+                  type = "text"
+                } ?></td>
+        </tr>
+         <tr>
+          <th align="right"><?lsmb text('Account') ?></th>
+          <td><?lsmb PROCESS select element_data = {
+                     name = "account"
+                     options = all_accounts 
+                     text_attr = 'accno'
+                     value_attr = 'id'
+              } ?> </td>
+	  </tr>
+	  <tr>
+	  <th align="right"><?lsmb text('Source') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+                     name = 'source'
+                     type = 'text'
+                     size = 20 } ?></td>
+	  <th align="right"><?lsmb text('Memo') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+                     name="memo" 
+                     size="20"
+                     type="text"
+              } ?></td>
+	</tr>
+	
+	<tr>
+
+	  <th align="right"><?lsmb text('Description') ?></th>
+	  <td colspan="5"><?lsmb PROCESS input element_data = {
+                                name='description' 
+                                size='60'
+                                type='text' } ?></td>
+	</tr>
+	<tr>
+	  <th align="right"><?lsmb text('Notes') ?></th>
+	  <td colspan="5"><?lsmb PROCESS input element_data = {
+                              name='notes' 
+                              size='60'
+                              type='text' } ?></td>
+	</tr>
+        <?lsmb IF all_departments.size -?>
+        <tr>
+          <th align="right"><?lsmb text('Department') ?></th>
+          <td colspan="5"><?lsmb PROCESS select element_data = {
+                                 name = 'department'
+                                 options = all_departments
+                                 value_attr = 'id'
+                                 text_attr = 'description'
+                              } ?></td>
+        </tr>
+        <?lsmb END -?>
+	<tr>
+
+	  <th align="right"><?lsmb text('From') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+               class="date" 
+               name="datefrom" 
+               size="11" 
+               title=datestyle } ?></td>
+	  <th align="right"><?lsmb text('To') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+                 class="date" 
+                 name="dateto" 
+                 size="11" 
+                 title=datestyle } ?></td>
+	</tr>
+	
+        <tr>
+	<th align="right"><?lsmb text('Period') ?></th>
+
+	<td colspan="5">
+        <?lsmb PROCESS select element_data = {
+               name = "month"
+               options = accountingmonths
+               text_attr = "month"
+               value_attr = "id"
+        } ?>
+
+	<?lsmb PROCESS select element_data = {
+               name="year"
+               options = all_years
+               text_attr = "year"
+               value_attr = "year"
+        } ?>
+	<?lsmb PROCESS input element_data = {
+               name="interval"
+               class="radio"
+               type="radio"
+               value="0" 
+               checked="checked" } ?>&nbsp;<?lsmb text('Current') ?>
+	<?lsmb PROCESS input element_data = { 
+               name="interval" 
+               class="radio" 
+               type="radio" 
+               value="1" } ?>&nbsp;<?lsmb text('Month') ?>
+	<?lsmb PROCESS input element_data = {
+               name="interval"
+               class="radio"
+               type="radio"
+               value="3" } ?>&nbsp;<?lsmb text('Quarter') ?>
+	<input name=interval class=radio type=radio value=12>&nbsp;Year
+	</td>
+      </tr>
+
+	<tr>
+
+	  <th align="right"><?lsmb text('Amount') ?> &gt;=</th>
+	  <td><?lsmb PROCESS input element_data = {
+                     name="amountfrom" 
+                     size="11"
+                     type="text"
+               } ?></td>
+	  <th align="right">Amount &lt;=</th>
+	  <td><?lsmb PROCESS input element_data = {
+                     name="amountto" 
+                     size="11"
+                     type="text" 
+              } ?></td>
+	</tr>
+	<tr>
+	  <th align="right"><?lsmb text('Include in Report') ?></th>
+
+	  <td colspan="5">
+	    <table>
+	      <tr>
+		<td>
+		  <?lsmb PROCESS input element_data = {
+                          name="category" 
+                          class="radio" 
+                          type="radio" 
+                          value="X" 
+                          checked = "checked"
+                   } ?>&nbsp;<?lsmb text('All') ?>
+		  <?lsmb PROCESS input element_data = {
+                          name="category" 
+                          class="radio"
+                          type="radio" 
+                          value="A"
+                   } ?>&nbsp;<?lsmb text('Asset') ?>
+		  <?lsmb PROCESS input element_data = { 
+                          name="category" 
+                          class="radio" 
+                          type="radio" 
+                          value="L"
+                   } ?>&nbsp;<?lsmb text('Liability') ?>
+		  <?lsmb PROCESS input element_data = {
+                         name="category" 
+                         class="radio"
+                         type="radio" 
+                         value="Q"
+                  } ?>&nbsp;<?lsmb text('Equity') ?>
+		  <?lsmb PROCESS input element_data = {
+                         name="category"
+                         class="radio" 
+                         type="radio" 
+                         value="I"
+                    } ?>&nbsp;<?lsmb text('Income') ?>
+		  <?lsmb PROCESS input element_data = {
+                         name="category" 
+                         class="radio" 
+                         type="radio" 
+                         value="E"
+                    } ?>&nbsp;<?lsmb text('Expense') ?>
+		</td>
+	      </tr>
+
+	      <tr>
+		<table>
+                    <tr>
+                      <td nowrap><?lsmb PROCESS input element_data = {
+                                        name="l_id" 
+                                        class="checkbox" 
+                                        type="checkbox" 
+                                        value="Y"
+                                 } ?> <?lsmb text('ID') ?></td>
+                      <td nowrap><?lsmb PROCESS input element_data = {
+                                        name="l_transdate" 
+                                        class="checkbox" 
+                                        type="checkbox" 
+                                        value="Y" 
+                                        checked="checked"
+                                  } ?> <?lsmb text('Date') ?></td>
+                     <td nowrap><?lsmb PROCESS input element_data = {
+                                       name="l_reference" 
+                                       class="checkbox" 
+                                       type="checkbox" 
+                                       value="Y" 
+                                       checked="checked"
+                                } ?> <?lsmb text('Reference') ?></td>
+                     <td nowrap><?lsmb PROCESS input element_data = {
+                                       name="l_description" 
+                                       class="checkbox" 
+                                       type="checkbox" 
+                                       value="Y" 
+                                       checked="checked"
+                                 } ?> <?lsmb text('Description') ?></td>
+
+                     <td nowrap><?lsmb PROCESS input element_data = {
+                                       name="l_notes" 
+                                       class="checkbox" 
+                                       type="checkbox" 
+                                       value="Y"
+                                } ?> <?lsmb text('Notes') ?></td>
+                  </tr>
+                  <tr>
+                    <td nowrap><?lsmb PROCESS input element_data = { 
+                                      name="l_debit" 
+                                      class="checkbox" 
+                                      type="checkbox" 
+                                      value="Y" 
+                                      checked="checked"
+                               } ?> <?lsmb text('Debit') ?></td>
+                    <td nowrap><?lsmb PROCESS input element_data = {
+                                      name="l_credit" 
+                                      class="checkbox" 
+                                      type="checkbox" 
+                                      value="Y" 
+                                      checked="checked" 
+                                } ?> <?lsmb text('Credit') ?></td>
+                   <td nowrap><?lsmb PROCESS input element_data = {
+                                     name="l_source" 
+                                     class="checkbox" 
+                                     type="checkbox" 
+                                     value="Y" 
+                                     checked="checked"
+                                } ?> <?lsmb text('Source') ?></td>
+                   <td nowrap><?lsmb PROCESS input element_data = {
+                                     name="l_memo" 
+                                     class="checkbox" 
+                                     type="checkbox" 
+                                     value="Y"
+                              } ?> <?lsmb text('Memo') ?></td>
+                   <td nowrap><?lsmb PROCESS input element_data = {
+                                     name="l_accno" 
+                                     class="checkbox" 
+                                     type="checkbox" 
+                                     value="Y" 
+                                     checked="checked"
+                             } ?> <?lsmb text('Account') ?></td>
+                  </tr>
+                  <tr>
+		    <td nowrap><?lsmb PROCESS input element_data = {
+                                      name="l_subtotal" 
+                                      class="checkbox" 
+                                      type="checkbox" 
+                                      value="Y"
+                                } ?> <?lsmb text('Subtotal') ?></td>
+		    <td nowrap><?lsmb PROCESS input element_data = {
+                                      name="l_balance" 
+                                      class="checkbox" 
+                                      type="checkbox" 
+                                      value="Y" 
+                                } ?> <?lsmb text('Balance') ?></td>
+                     <td nowrap><?lsmb PROCESS input element_data = {
+                                       name="l_gifi_accno" 
+                                       class="checkbox" 
+                                       type="checkbox" 
+                                       value="Y" 
+                                  } ?> <?lsmb text('GIFI') ?></td>
+                    <?lsmb IF all_departments.length -?>
+		    <td nowrap><?lsmb PROCESS input element_data = {
+                                      name="l_department" 
+                                      class="checkbox" 
+                                      type="checkbox" 
+                                      value="Y" 
+                                } ?> <?lsmb text('Department') ?></td>
+                    <?lsmb ELSE ?>
+                    <td nowrap></td>
+                    <?lsmb END # IF ?>
+                    <td nowrap></td>
+                  </tr>
+		</table>
+	      </tr>
+	    </table>
+	</tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size=3 noshade></td>
+  </tr>
+</table>
+
+<?lsmb PROCESS input element_data = {
+       type="hidden" 
+       name="path" 
+       value=path
+} ?>
+<?lsmb PROCESS input element_data = { 
+       type="hidden" 
+       name="login" 
+       value=login
+} ?>
+
+<br>
+<?lsmb PROCESS button element_data = {
+       text = text('Continue')
+       class="submit" 
+       type="submit" 
+       name="action" 
+       value="generate_report"
+} ?>
+</form>
+
+
+</body>
+</html>
+
