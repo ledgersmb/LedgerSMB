@@ -1815,7 +1815,7 @@ sub save_defaults {
         fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
         sonumber ponumber sqnumber rfqnumber partnumber employeenumber
         customernumber vendornumber projectnumber yearend curr
-        weightunit businessnumber default_country check_prefix)
+        weightunit businessnumber default_country check_prefix password_duration)
       )
     {
         my $val = $form->{$_};

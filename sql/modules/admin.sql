@@ -297,13 +297,13 @@ BEGIN
 
     UPDATE users SET notify_password = DEFAULT where username = SESSION_USER;
 
-    EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) || 
-            ' with ENCRYPTED password ' || quote_literal(in_new_password);
-
     IF t_expires IS NOT NULL THEN
-         EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) ||
-                 ' VALID UNTIL '|| quote_literal(t_expires);
+        t_expires := 'infinity';
     END IF;
+
+    EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) || 
+            ' with ENCRYPTED password ' || quote_literal(in_new_password) ||
+                 ' VALID UNTIL '|| quote_literal(t_expires);
     return 1;
 END;
 $$ language plpgsql security definer;
