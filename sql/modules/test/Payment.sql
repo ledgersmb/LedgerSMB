@@ -56,7 +56,7 @@ INSERT INTO voucher (trans_id, batch_class, batch_id)
 VALUES (currval('id'), 1, currval('batch_id_seq'));
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Payment Batch created', (SELECT batch_create('test', 'test', 'ap', now()::date)) IS NOT NULL;
+SELECT 'Payment Batch created', (SELECT batch_create('test2', 'test2', 'ap', now()::date)) IS NOT NULL;
 INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate, paid)
 VALUES ('test_show2', -101, true, 100000, 100000, 'USD', now()::date, 0);
 
