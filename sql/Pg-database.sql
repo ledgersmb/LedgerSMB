@@ -573,7 +573,7 @@ VALUES
 -- 
 -- The view below is broken.  Disabling for now.
 CREATE VIEW employee AS
- SELECT s.salutation, p.first_name, p.last_name, ee.person_id, ee.entity_id, ee.startdate, ee.enddate, ee."role", ee.ssn, ee.sales, ee.manager_id, ee.employeenumber, ee.dob
+ SELECT s.salutation, p.first_name, p.last_name, ee.entity_id, ee.startdate, ee.enddate, ee."role", ee.ssn, ee.sales, ee.manager_id, ee.employeenumber, ee.dob
    FROM person p
    JOIN entity_employee ee USING (entity_id)
    LEFT JOIN salutation s ON p.salutation_id = s.id;

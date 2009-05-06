@@ -17,12 +17,18 @@
 
             <?lsmb UNLESS user.user.username?>
             <tr>
-                <td>Username</td>
+                <td><?lsmb text('Username') ?></td>
                 <td>
-                    <input type="textarea" name="username" value="<?lsmb user.user.username?>"/>
+                    <input type="password" name="username" value="<?lsmb user.user.username ?>"/>
                 </td>
             </tr>
             <?lsmb END?>
+            <tr>
+                <td><?lsmb text('Password') ?></td>
+                <td>
+                    <input type="text" name="password" value="<?lsmb user.user.password ?>"/>
+                </td>
+            </tr>
             
             <tr>
                 <td>
@@ -35,26 +41,27 @@
             </tr>
             
             <tr>
-                <td>First Name</td>
+                <td><?lsmb ('First Name') ?></td>
                 <td>
-                    <input type="textarea" name="first_name" value="<?lsmb user.employee.first_name?>"/>
+                    <input type="text" name="first_name" value="<?lsmb user.employee.first_name?>"/>
                 </td>
             </tr>
             
             <tr>
-                <td>Last Name</td>
+                <td><?lsmb text('Last Name') ?></td>
                 <td>
                     <input type="textarea" name="last_name" value="<?lsmb user.employee.last_name?>"/>
                 </td>
             </tr>
             <tr>
-                <td>Employee #</td>
+                <td><?lsmb text('Employee No.') ?></td>
                 <td>
                     <input type="textarea" name="employeenumber" value="<?lsmb user.employee.employeenumber?>"/>
                 </td>
             </tr>
         </table>
-        <input type="submit" value="Save User" />
+        <button type="submit" value="save_user"><?lsmb text('Save User') ?>
+        </button>
     </form>
     <?lsmb IF user.user.username?>
         <form name="location" method="POST" action="admin.pl">

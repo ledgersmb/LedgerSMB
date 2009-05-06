@@ -353,7 +353,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
             
             execute 'CREATE USER ' || quote_ident( in_username ) || 
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
-                     || $e$ valid until now() + '1 day'::interval $e$;
+                     || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
             
             return v_user_id ;
 

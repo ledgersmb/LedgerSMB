@@ -44,6 +44,7 @@ RETURNS INT AS $$
         
         INSERT INTO person (salutation_id, first_name, last_name, entity_id)
 	VALUES (in_salutation_id, in_first_name, in_last_name, e_id);
+
         RETURN e_id;
     
     END IF;

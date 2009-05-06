@@ -1,9 +1,8 @@
 -- VERSION 1.3.0
-BEGIN;
 
 
 CREATE OR REPLACE FUNCTION employee__save(
-    in_person int, in_entity int, in_startdate date, in_enddate date,
+    in_entity int, in_startdate date, in_enddate date,
 	in_role text, in_sales boolean, in_dob date, 
     in_managerid integer, in_employeenumber text
 )
@@ -13,30 +12,37 @@ returns int AS $$
         e_ent entity_employee;
         e entity;
         p person;
+        t_startdate date;
     BEGIN
-        select * into e from entity where id = in_entity and entity_class = 3;
+        IF in_startdate IS NULL THEN
+             t_startdate := now()::date;
+        ELSE
+             t_startdate := in_startdate;
+        END IF;
+
+        select * into e from entity where id = in_entity;
         
         IF NOT FOUND THEN
             RAISE EXCEPTION 'No entity found for ID %', in_entity;
         END IF;
         
-        select * into p from person where id = in_person;
+        select * into p from person where entity_id = in_entity;
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'No person found for ID %', in_perso;
+            RAISE EXCEPTION 'No person found for ID %', in_entity;
         END IF;
         
         -- Okay, we're good. Check to see if we update or insert.
         
-        select * into e_ent from entity_employee where person_id = in_person 
-            and entity_id = in_entity;
+        select * into e_ent from entity_employee where 
+            entity_id = in_entity;
             
         IF NOT FOUND THEN
             -- insert.
             
-            INSERT INTO entity_employee (person_id, entity_id, startdate, 
+            INSERT INTO entity_employee (entity_id, startdate, 
                 enddate, role, sales, manager_id, employeenumber, dob)
-            VALUES (in_person, in_entity, in_startdate, in_enddate, in_role, 
+            VALUES (in_entity, t_startdate, in_enddate, in_role, 
                 in_sales, in_managerid, in_employeenumber, in_dob);
             
             return in_entity;
@@ -46,7 +52,7 @@ returns int AS $$
             
             UPDATE entity_employee
             SET
-                startdate = in_startdate,
+                startdate = t_startdate,
                 enddate = in_enddate,
                 role = in_role,
                 sales = in_sales,
@@ -54,9 +60,7 @@ returns int AS $$
                 employeenumber = in_employeenumber,
                 dob = in_dob
             WHERE
-                entity_id = in_entity
-            AND
-                person_id = in_person;
+                entity_id = in_entity;
                 
             return in_entity;
         END IF;
@@ -176,6 +180,4 @@ returns void as $$
         VALUES ($1, $2);
     
 $$ language 'sql';
-
-COMMIT;
 

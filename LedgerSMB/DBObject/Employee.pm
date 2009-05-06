@@ -13,7 +13,8 @@ sub set_entity_class {
 sub save {
    my ($self) = @_;
    $self->set_entity_class();
-   $self->{entity_id} = $self->exec_method(funcname => 'person_save');
+   my ($ref) = $self->exec_method(funcname => 'person__save');
+   $self->{entity} = $ref->{'person__save'};
    $self->exec_method(funcname => 'employee__save');
    $self->{dbh}->commit;
 }

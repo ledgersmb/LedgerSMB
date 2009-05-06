@@ -74,7 +74,7 @@ sub new_user {
         
         # do the save stuff
         
-        my $entity = $admin->save_new_user();
+        my $entity = $admin->save_user();
         
         my $template = LedgerSMB::Template->new( user => $user, 
     	template => 'Admin/edit_user', language => $user->{ language }, 
