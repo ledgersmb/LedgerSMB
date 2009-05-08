@@ -4,6 +4,8 @@ use base qw/LedgerSMB::DBObject/;
 use Data::Dumper;
 use strict;
 
+=over
+
 =item LedgerSMB::User->country_codes();
 
 Returns a hash where the keys are registered locales and the values are the
