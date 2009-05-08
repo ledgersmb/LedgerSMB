@@ -16,6 +16,16 @@ CREATE TYPE payment_vc_info AS (
 	discount int
 );
 
+CREATE OR REPLACE FUNCTION payment_type__get_label(in_payment_type_id int) RETURNS SETOF payment_types AS
+$$
+DECLARE out_row payment_types%ROWTYPE;
+BEGIN
+	FOR out_row IN SELECT * FROM payment_types where id=in_payment_type_id LOOP
+		RETURN NEXT out_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
 
 CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 (in_account_class int,

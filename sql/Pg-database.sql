@@ -1068,6 +1068,12 @@ CREATE TABLE recurring (
   howmany int,
   payment bool default 'f'
 );
+
+CREATE TABLE payment_type (
+  id serial not null unique,
+  label text primary key
+);
+
 --
 CREATE TABLE recurringemail (
   id int,
