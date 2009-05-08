@@ -10,6 +10,8 @@ values (-3, 'Test', 1, 'test');
 INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class) 
 values (-3, -1, 'Test', 1);
 
+INSERT INTO entity_employee(entity_id) values (-3);
+
 INSERT INTO chart (id, accno, description, link)
 VALUES ('-5', '-21111', 'Testing AP', 'AP');
 
@@ -41,7 +43,7 @@ FROM voucher where trans_id = -5 and batch_class = 3;
 
 -- Adding the test for empty batch sproc
 
-insert into batch (batch_class_id, control_code, description, default_date, created_by) values (1, 'EMPTYBATCHTEST', 'EMPTY BATCH TEST', '2009-01-01', -3);
+insert into batch (batch_class_id, control_code, description, default_date, created_by) values (1, 'EMPTYBATCHTEST1', 'EMPTY BATCH TEST', '2009-01-01', -3);
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Empty Batch Detected', count(*) = 1

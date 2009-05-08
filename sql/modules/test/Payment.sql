@@ -21,8 +21,8 @@ values (-200, -200, md5(random()::text), now(), 0);
 INSERT INTO person(first_name, last_name, entity_id, id)
 VALUES ('test', 'test', -100, -100);
 
-INSERT INTO entity_employee(entity_id, person_id)
-VALUES (-100, -100);
+INSERT INTO entity_employee(entity_id)
+VALUES (-100);
 
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00001', 'testing', 'A', 'L', 'AP');
