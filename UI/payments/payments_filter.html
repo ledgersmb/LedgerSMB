@@ -131,14 +131,21 @@
 	} ?> 
 
 <?lsmb IF payment_types ?>
+
 <div id = "payments-filter-payment_types" class="inputpayment">
-  <label for="payment_types"><?lsmb text('Payment Type') ?></label>
-  <select name="payment_type_id" id="payment_types">
-  <?lsmb FOREACH p = payment_types ?>
-  <option value="<?lsmb p.id ?>"><?lsmb p.label ?></option>
-  <?lsmb END ?>
-  </select>
+  
+ <?lsmb PROCESS select element_data = {
+		name = "payment_type_id"
+		default_values = []
+		options = payment_types
+		value_attr = "id"
+		text_attr = "label"
+		label = text('Payment Type:') 
+	} ?> 
+
+
 </div>
+
 <?lsmb END ?>
 
 

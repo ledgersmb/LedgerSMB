@@ -33,6 +33,21 @@
 	value = account_class
 
  } ?>
+
+
+
+
+<?lsmb INCLUDE input element_data = {
+	type = "hidden"
+	name = "payment_type_id"
+	value = payment_type_id
+
+ } ?>
+
+
+
+
+
  <?lsmb INCLUDE input element_data = {
 	type = "hidden"
 	name = "department_id"
@@ -148,6 +163,14 @@
 	<?lsmb END # foreach b ?></span>
     </div>
     <?lsmb END # if business ?>
+
+	<div class="payment_type" id="payment_type_label_div">        
+
+	<label for="filter_type_label"><?lsmb text('Payment Type :') ?></label>
+		<span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
+	</div>
+
+
     <div class="info" id="cash_account_div">
 	<?lsmb INCLUDE input element_data = {
 		type = "hidden"

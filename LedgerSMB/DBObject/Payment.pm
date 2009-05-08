@@ -87,6 +87,22 @@ sub get_metadata {
    @{$self->{payment_types}} = $self->exec_method(
 		funcname => 'payment_type__list'
     );
+    
+
+    if($self->{payment_type_id})
+    {
+       @{$self->{payment_type_label_id}} =$self->exec_method(
+		funcname => 'payment_type__get_label'  );
+       
+       $self->{payment_type_return_id}=$self->{payment_type_label_id}->[0]->{id};
+     
+       $self->{payment_type_return_label}=$self->{payment_type_label_id}->[0]->{label};
+
+       #print STDERR qq|______payment type id= $self->{payment_type_label_id}->[0]->{id} and label= $self->{payment_type_label_id}->[0]->{label}|;
+ 
+       #print STDERR qq|______actual payment type id= $self->{payment_type_return_id} and label= $self->{payment_type_return_label}|;
+
+    }
 
 
     @{$self->{debt_accounts}} = $self->exec_method(
