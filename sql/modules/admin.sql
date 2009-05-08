@@ -145,75 +145,75 @@ $$ language 'plpgsql' SECURITY DEFINER;
 REVOKE EXECUTE ON FUNCTION admin__remove_function_from_group(text, text) 
 FROM public;
 
-CREATE OR REPLACE FUNCTION admin__add_table_to_group(in_table TEXT, in_role TEXT, in_perm TEXT) returns INT AS $$
+--CREATE OR REPLACE FUNCTION admin__add_table_to_group(in_table TEXT, in_role TEXT, in_perm TEXT) returns INT AS $$
     -- Do we need this table stuff at the moment? CT 
-    declare
-        stmt TEXT;
-        a_role name;
-        a_user name;
-    BEGIN
+--    declare
+--        stmt TEXT;
+--        a_role name;
+--        a_user name;
+--    BEGIN
     
         -- Issue the grant
-        select rolname into a_role from pg_roles where rolname = in_role;
+--        select rolname into a_role from pg_roles where rolname = in_role;
         
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
-        END IF;
+--        IF NOT FOUND THEN
+--            RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
+--        END IF;
         
-        select table_name into a_table from information_schema.tables 
-        where table_schema NOT IN ('information_schema','pg_catalog','pg_toast') 
-        and table_type='BASE TABLE' 
-        and table_name = in_table;
+--        select table_name into a_table from information_schema.tables 
+--        where table_schema NOT IN ('information_schema','pg_catalog','pg_toast') 
+--        and table_type='BASE TABLE' 
+--        and table_name = in_table;
         
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'Cannot grant permissions to a non-existant table.';
-        END IF;
+--        IF NOT FOUND THEN
+--            RAISE EXCEPTION 'Cannot grant permissions to a non-existant table.';
+--        END IF;
         
-        if lower(in_perm) not in ('select','insert','update','delete') THEN
-            raise exception 'Cannot add unknown permission';
-        END IF;
+--        if lower(in_perm) not in ('select','insert','update','delete') THEN
+--            raise exception 'Cannot add unknown permission';
+--        END IF;
         
-        stmt := 'GRANT '|| quote_ident(in_perm) || 'ON TABLE '|| quote_ident(in_table) ||' to '|| quote_ident(in_role);
+ --       stmt := 'GRANT '|| quote_ident(in_perm) || 'ON TABLE '|| quote_ident(in_table) ||' to '|| quote_ident(in_role);
         
-        EXECUTE stmt;
+--        EXECUTE stmt;
         
-        return 1;
-    END;
+--        return 1;
+--    END;
     
-$$ language 'plpgsql';
+--$$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin__remove_table_from_group(in_table TEXT, in_role TEXT) returns INT AS $$
+--CREATE OR REPLACE FUNCTION admin__remove_table_from_group(in_table TEXT, in_role TEXT) returns INT AS $$
     -- do we need this table stuff at the moment?  CT
-    declare
-        stmt TEXT;
-        a_role name;
-        a_table text;
-    BEGIN
+--    declare
+--        stmt TEXT;
+--        a_role name;
+--        a_table text;
+--    BEGIN
     
         -- Issue the grant
-        select rolname into a_role from pg_roles where rolname = in_role;
+--        select rolname into a_role from pg_roles where rolname = in_role;
         
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
-        END IF;
+--        IF NOT FOUND THEN
+ --           RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
+--        END IF;
+--        
+--        select table_name into a_table from information_schema.tables 
+ --       where table_schema NOT IN ('information_schema','pg_catalog','pg_toast') 
+ --       and table_type='BASE TABLE' 
+ --       and table_name = in_table;
         
-        select table_name into a_table from information_schema.tables 
-        where table_schema NOT IN ('information_schema','pg_catalog','pg_toast') 
-        and table_type='BASE TABLE' 
-        and table_name = in_table;
+--        IF NOT FOUND THEN
+--            RAISE EXCEPTION 'Cannot revoke permissions from a non-existant table.';
+--        END IF;
         
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'Cannot revoke permissions from a non-existant table.';
-        END IF;
+--        stmt := 'REVOKE '|| quote_literal(in_role) ||' FROM '|| quote_literal(in_user);
         
-        stmt := 'REVOKE '|| quote_literal(in_role) ||' FROM '|| quote_literal(in_user);
+ --       EXECUTE stmt;
         
-        EXECUTE stmt;
+  --      return 1;    
+--    END;
         
-        return 1;    
-    END;
-        
-$$ language 'plpgsql';
+--$$ language 'plpgsql';
 
 create or replace function admin__get_user(in_user INT) returns setof users as $$
     
