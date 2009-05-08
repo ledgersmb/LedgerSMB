@@ -3,6 +3,8 @@ BEGIN;
 
 CREATE TABLE test_exempt_funcs (funcname text primary key);
 
+insert into test_exempt_funcs values ('rewrite');
+insert into test_exempt_funcs values ('plainto_tsquery');
 insert into test_exempt_funcs values ('headline');
 insert into test_exempt_funcs values ('rank');
 insert into test_exempt_funcs values ('to_tsquery');
