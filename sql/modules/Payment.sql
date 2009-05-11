@@ -403,47 +403,6 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION job__process_payment(in_job_id int)
-RETURNS bool AS $$
-DECLARE 
-	queue_record RECORD;
-	t_auth_name text;
-	t_counter int;
-BEGIN
-	-- TODO:  Move the set session authorization into a utility function
-	SELECT entered_by INTO t_auth_name FROM pending_job
-	WHERE id = in_job_id;
-
-	EXECUTE 'SET SESSION AUTHORIZATION ' || quote_ident(t_auth_name);
-
-	t_counter := 0;
-	
-	FOR queue_record IN 
-		SELECT * 
-		FROM payments_queue WHERE job_id = in_job_id
-	LOOP
-		PERFORM payment_bulk_post
-			(queue_record.transactions, queue_record.batch_id, 
-				queue_record.source, queue_record.total, 
-				queue_record.ar_ap_accno, 
-				queue_record.cash_accno, 
-				queue_record.payment_date, 
-				queue_record.account_class);
-
-		t_counter := t_counter + 1;
-		RAISE NOTICE 'Processed record %, starting transaction %', 
-			t_counter, queue_record.transactions[1][1];
-	END LOOP;	
-	DELETE FROM payments_queue WHERE job_id = in_job_id;
-
-	UPDATE pending_job
-	SET completed_at = timeofday()::timestamp,
-	    success = true
-	WHERE id = in_job_id;
-	RETURN TRUE;
-END;
-$$ language plpgsql;
-
 CREATE OR REPLACE FUNCTION job__create(in_batch_class int, in_batch_id int)
 RETURNS int AS
 $$
