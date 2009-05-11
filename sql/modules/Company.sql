@@ -499,7 +499,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION entity__save_bank_account
+CREATE OR REPLACE FUNCTION eca__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text)
 RETURNS int AS
 $$
