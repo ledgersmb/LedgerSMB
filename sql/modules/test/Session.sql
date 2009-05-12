@@ -24,8 +24,6 @@ now() - coalesce((select value from defaults where setting_key = 'timeout')::int
          '2 days'::interval), 
 md5('test3'), 3;
 
-select * from session_check(currval('session_session_id_seq')::int, md5('test1'));
-
 INSERT INTO session (users_id, last_used, token, transaction_id)
 SELECT currval('users_id_seq'), now(), md5('test1'), 1;
 
