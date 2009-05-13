@@ -14,7 +14,7 @@ SELECT currval('entity_id_seq'), CURRENT_USER;
 INSERT INTO session (users_id, last_used, token, transaction_id)
 SELECT 	currval('users_id_seq'), 
 now() - coalesce((select value from defaults where setting_key = 'timeout')::interval, 
-         '90 minutes'::interval), 
+         '90 minutes'::interval) - '1 minute'::interval, 
 md5('test2'), 2;
 
 
