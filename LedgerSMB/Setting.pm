@@ -100,7 +100,7 @@ sub increment {
 
             if ( $param =~
 /<\?lsmb (name|business|description|item|partsgroup|phone|custom)/i
-              )
+               )
             {
 
                 my $fld = lc $&;

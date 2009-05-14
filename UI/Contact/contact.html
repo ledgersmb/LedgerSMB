@@ -219,7 +219,17 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name = "name"
 		value = name
 		size = "20"
-	} ?><br/>
+	} ?>
+
+       <?lsmb IF !country_id_t; country_id_t = default_country_t; END -?>
+		<?lsmb INCLUDE select element_data = {
+			text_attr = "name"
+			value_attr = "id"
+			default_values = [country_id_t]
+			options = country_list
+			name = "country_id_t"
+			label = text('Country:') 
+	} ?> <br/>
         <table>
         <tr>
             
@@ -445,6 +455,21 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			class = "numeric"
                } ?>
 	</tr>
+
+	<tr id="taxform-threshold-row">
+	
+	 <td> <?lsmb INCLUDE select element_data = {
+			name = "taxform1_id"
+			options = taxform_list
+			default_values = [ ]
+			text_attr = "form_name"
+			value_attr = "id"
+			label = text('Taxforms:') #'
+			} ?> 
+	  </td>
+
+        </tr>
+
         </table>
 		<?lsmb IF credit_id;
 		INCLUDE button element_data = {

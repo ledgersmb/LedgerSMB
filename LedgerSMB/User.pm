@@ -112,6 +112,8 @@ sub new {
           . ';port='
           . $self->{dbport};
 
+	
+
         if ( $self->{username} ) {
             $self->{login} = $login;
         }

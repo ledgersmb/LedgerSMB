@@ -24,6 +24,7 @@ use LedgerSMB::Sysconfig;
 
 sub redirect {
     use List::Util qw(first);
+
     my ( $script, $argv ) = split( /\?/, $form->{callback} );
 
     my @common_attrs = qw(
@@ -53,6 +54,7 @@ sub redirect {
     for (@common_attrs) {
         $form->{$_} = $temphash{$_};
     }
+
     $form->{script} = $script;
 
     if ( !%myconfig ) {    # needed for login
@@ -63,7 +65,9 @@ sub redirect {
     }
 
     require "bin/$script";
+
     &{ $form->{action} };
+
 }
 
 1;

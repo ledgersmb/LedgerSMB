@@ -54,7 +54,7 @@ if ( -f "bin/custom/$form->{login}_arap.pl" ) {
 
 sub check_name {
     my ($name) = @_;
-
+    
     my ( $new_name, $new_id ) = split /--/, $form->{$name};
     my $rv = 0;
 

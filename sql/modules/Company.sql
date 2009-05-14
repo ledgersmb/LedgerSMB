@@ -245,6 +245,8 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+
+
 CREATE OR REPLACE FUNCTION company_retrieve (in_entity_id int) RETURNS company AS
 $$
 DECLARE t_company company;
@@ -253,6 +255,29 @@ BEGIN
 	RETURN t_company;
 END;
 $$ language plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION list_taxforms (in_entity_id int) RETURNS SETOF country_tax_form AS
+$$
+DECLARE t_country_tax_form country_tax_form;
+BEGIN
+
+	FOR t_country_tax_form IN 
+
+		      SELECT country_id as count_id,form_name as taxform_name,id as taxform_id 
+		            FROM country_tax_form where country_id in(SELECT country_id from entity where id=in_entity_id)
+        LOOP
+
+	RETURN NEXT t_country_tax_form;
+	
+	END LOOP;
+
+END;
+$$ language plpgsql;
+
+
+
 
 CREATE TYPE company_billing_info AS (
 legal_name text,
@@ -292,7 +317,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text
+    in_entity_id int, in_sic_code text,in_country_id_t int
 ) RETURNS INT AS $$
 DECLARE t_entity_id INT;
 	t_company_id INT;
@@ -308,7 +333,6 @@ BEGIN
 
 	IF in_entity_id IS NULL THEN
 		IF in_id IS NULL THEN
-			RAISE NOTICE 'in_id is null';
 			SELECT id INTO t_company_id FROM company
 			WHERE entity_id = (SELECT id FROM entity WHERE 
 				control_code = t_control_code);
@@ -322,16 +346,26 @@ BEGIN
 		t_entity_id := in_entity_id;
 	END IF;
 	IF t_entity_id IS NULL THEN
-		INSERT INTO entity (name, entity_class, control_code)
-		VALUES (in_name, in_entity_class, t_control_code);
+		INSERT INTO entity (name, entity_class, control_code,country_id)
+		VALUES (in_name, in_entity_class, t_control_code,in_country_id_t);
 		t_entity_id := currval('entity_id_seq');
+		END IF;
 	END IF;
+
+	UPDATE entity
+	SET name = in_name,
+            entity_class = in_entity_class,
+	    control_code = t_control_code,
+	    country_id = in_country_id_t
+	WHERE id = t_entity_id;
+
 
 	UPDATE company
 	SET legal_name = in_name,
 		tax_id = in_tax_id,
 		sic_code = in_sic_code
 	WHERE id = t_company_id;
+
 
 	IF NOT FOUND THEN
 		INSERT INTO company(entity_id, legal_name, tax_id, sic_code)
@@ -351,8 +385,9 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     in_language varchar(6), in_pricegroup_id int, 
     in_curr char, in_startdate date, in_enddate date, 
     in_threshold NUMERIC,
-    in_ar_ap_account_id int, 
+    in_ar_ap_account_id int,
     in_cash_account_id int
+    
     
 ) returns INT as $$
     
@@ -389,7 +424,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 startdate = in_startdate,
                 enddate = in_enddate,
                 threshold = in_threshold,
-                discount_terms = in_discount_terms
+		discount_terms = in_discount_terms
             where id = in_credit_id;
         
          IF FOUND THEN
@@ -414,6 +449,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 threshold,
 		ar_ap_account_id,
                 cash_account_id
+
             )
             VALUES (
                 in_entity_id,
@@ -433,7 +469,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_discount_terms,
                 in_threshold,
                 in_ar_ap_account_id,
-                in_cash_account_id
+		in_cash_account_id
             );
             RETURN currval('entity_credit_account_id_seq');
        END IF;

@@ -70,7 +70,7 @@ sub get_search_results {
 sub get_class_id {
     my ($self, $type) = @_;
     @results = $self->call_procedure(
-                                    procname => 'batch_get_class_id', 
+                                     procname => 'batch_get_class_id', 
                                      args     => [$type]
     );
     my $result = pop @results;

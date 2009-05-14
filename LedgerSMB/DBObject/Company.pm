@@ -69,11 +69,15 @@ This method saves the credit account for the company.
 =cut
 
 sub save_credit {
+
     my $self = shift @_;
     $self->set_entity_class();
     $self->{threshold} = $self->parse_amount(amount => $self->{threshold});
     my ($ref) = $self->exec_method(funcname => 'entity_credit_save');
     $self->{credit_id} = (values %$ref)[0];
+    my $dbh=$self->{dbh};
+    $dbh->do("update entity_credit_account set country_taxform_id=$self->{taxform1_id} where id=$self->{credit_id}") if($self->{taxform1_id});
+    $dbh->commit();
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
     $self->{dbh}->commit;
 }
@@ -216,6 +220,17 @@ sub get {
     my $self = shift @_;
 
     $self->set_entity_class();
+
+    if($self->{entity_id})
+    {
+	@{$self->{taxform_list}} = $self->exec_method(funcname => 'list_taxforms');
+
+	foreach my $ref1(@{$self->{taxform_list}})
+	{
+		print STDERR qq| ______ return value $ref1->{id} and $ref1->{country_id},$ref1->{form_name} ________|;	
+	}
+    }
+
     my ($ref) = $self->exec_method(funcname => 'company_retrieve');
     $self->merge($ref);
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
@@ -224,8 +239,7 @@ sub get {
          $self->exec_method(funcname => 'entity__list_credit');
 
     for (@{$self->{credit_list}}){
-	print STDERR "credit_id: $_->{credit_id}\n";
-        if (($_->{credit_id} eq $self->{credit_id}) 
+	if (($_->{credit_id} eq $self->{credit_id}) 
                    or ($_->{meta_number} eq $self->{meta_number})
                    or ($_->{id} eq $self->{credit_id})){
 		$self->merge($_);

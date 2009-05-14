@@ -1095,6 +1095,7 @@ sub add_language {
 
 }
 
+
 sub edit_language {
 
     $form->{title} = "Edit";
@@ -2876,6 +2877,37 @@ sub formnames {
     %f;
 
 }
+
+
+
+sub add_taxform {
+
+    $form->{title} = "Add";
+
+    $form->{callback} =
+"$form->{script}?action=add_taxform&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+      unless $form->{callback};
+
+    $form->info("Add Country Tax forms is Under Construction");
+
+}
+
+
+sub search_taxform {
+
+    $form->{title} = "Edit";
+
+    $form->{callback} =
+"$form->{script}?action=search_taxform&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+      unless $form->{callback};
+
+    $form->info("Search Country Tax forms is Under Construction");
+
+}
+
+
+
+
 
 sub continue { &{ $form->{nextsub} } }
 
