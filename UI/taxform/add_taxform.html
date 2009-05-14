@@ -1,0 +1,61 @@
+<?lsmb INCLUDE "ui-header.html"
+	titlebar = text('Add TaxForm') # '
+	include_stylesheet = [
+		"css/scriptsearch_resultss/create_batch.css"
+		stylesheet
+        ]
+?>
+<?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
+<body>
+<div class="listtop"><?lsmb text('Create New TaxForm') ?></div>
+<form name="add_taxform" method="post">
+
+<div class="labelledinput">
+<br>  
+<div id = "taxform-countries" class="inputcountry">
+
+<?lsmb IF countries ?>
+ <?lsmb PROCESS select element_data = {
+		name = "country_code"
+		default_values = []
+		options = countries
+		value_attr = "id"
+		text_attr = "name"
+		label = text('Country:') 
+	} ?> 
+
+<?lsmb END ?>
+
+</div>
+
+<div class="labelledinput">
+  
+     <?lsmb PROCESS input element_data = {
+	name = "taxform_name"
+	type = "text"
+	value = taxform_name
+	label = "Description"
+	size = '15'
+                                         } 
+     ?>
+</div>
+
+<div id="buttons">
+
+<?lsmb INCLUDE button element_data = {
+	type = "submit"
+	name = "action"
+	text = text('Save')
+	class = "submit"
+	value = "save"
+} ?>
+
+</div>
+
+<?lsmb FOREACH item = hidden ?>
+<input type=hidden name="<?lsmb item.name ?>" value="<?lsmb item.value ?>">
+<?lsmb END ?>
+
+</form>
+</body>
+</html>

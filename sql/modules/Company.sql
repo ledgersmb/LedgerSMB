@@ -256,7 +256,17 @@ BEGIN
 END;
 $$ language plpgsql;
 
+create or replace function save_taxform 
+(in_country_code int, in_taxform_name text)
+RETURNS bool AS
+$$
+BEGIN
+	INSERT INTO country_tax_form(country_id, form_name) 
+	values (in_country_code, in_taxform_name);
 
+	RETURN true;
+END;
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION list_taxforms (in_entity_id int) RETURNS SETOF country_tax_form AS
 $$
@@ -341,7 +351,6 @@ BEGIN
 			SELECT entity_id INTO t_entity_id FROM company
 			WHERE id = t_company_id;
 			
-		END IF;
 	ELSE
 		t_entity_id := in_entity_id;
 	END IF;

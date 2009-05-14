@@ -135,6 +135,13 @@ COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Se
 
 CREATE UNIQUE INDEX country_name_idx on country(lower(name));
 
+
+create table country_tax_form (                                                    country_id int references country(id) not null,
+   form_name text not null,
+   id serial not null unique,
+   primary key(country_id, form_name)
+);
+
 CREATE TABLE location_class (
   id serial UNIQUE,
   class text check (class ~ '[[:alnum:]_]') not null,

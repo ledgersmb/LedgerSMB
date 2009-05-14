@@ -99,6 +99,39 @@
   <?lsmb END ?>
 <?lsmb END ?>
 
+<?lsmb # AJAX SELECT ELEMENT PAIR ?>
+<?lsmb BLOCK ajaxselect ?>
+  <?lsmb IF element_data  # Only process element if one exists. ?>
+  	<?lsmb
+	    input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with.
+	    element_type = 'input';
+	    PROCESS auto_id;
+	  ?>
+	  <?lsmb PROCESS attributes  # Process regular attributes.
+	    attribute_data = element_data 
+	    attribute_defaults = input_defaults
+	    element_keys = input_type_keys 
+	  ?>
+	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
+	    custom_attribute_data=element_data.attributes 
+	  ?>
+	  <?lsmb PROCESS auto_label  # Process element label. ?>
+	  <input type="text" class="autocomplete" size="60" value="<?lsmb element_data.initial_value ?>" id="<?lsmb attribute_data.id ?>-ac-search" name="<?lsmb attribute_data.id ?>-ac-search" onclick="this.value='';" onblur="this.value = $('<?lsmb attribute_data.id ?>').value" />
+	  <input type="hidden"<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> value="<?lsmb element_data.initial_value ?>" />
+	  <span class="indicator" id="<?lsmb attribute_data.id ?>-ac-indicator" style="display: none">Working...</span>
+	  <div id="<?lsmb attribute_data.id ?>-ac-choices" class="autocomplete"></div>
+	  <script language="javascript" type="text/javascript"><!--
+	    function post_ajax_setter(text,li)
+	    {
+	      hidden_field_to_update = text.id.substring(0,text.id.length-10);
+	      $(hidden_field_to_update).value = li.id;
+	      text.blur();
+	    }
+	    new Ajax.Autocompleter('<?lsmb attribute_data.id ?>-ac-search', '<?lsmb attribute_data.id ?>-ac-choices', '<?lsmb element_data.ajax_target ?>', {afterUpdateElement:post_ajax_setter})
+	  //--></script>
+  <?lsmb END ?>
+<?lsmb END ?>
+
 <?lsmb # SELECT ELEMENT ?>
 <?lsmb BLOCK select ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>

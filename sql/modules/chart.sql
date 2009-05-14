@@ -35,6 +35,19 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION chart_list_search(search text)
+RETURNS SETOF chart AS
+$$
+DECLARE out_row chart%ROWTYPE;
+BEGIN
+	FOR out_row IN 
+		SELECT * FROM chart WHERE accno ~* ('^'||search) OR description ~* ('^'||search) ORDER BY accno
+	LOOP
+		RETURN next out_row;
+	END LOOP;
+END;$$
+LANGUAGE 'plpgsql';
+							
 COMMENT ON FUNCTION chart_list_cash(in_account_class int) IS
 $$ This function returns the cash account acording with in_account_class which must be 1 or 2 $$;
 

@@ -235,3 +235,19 @@ tr.warning {
     display: none;
   }
 }
+
+/* ajax-specific styling */
+
+div.autocomplete {
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+}
+div.autocomplete ul {
+  list-style-type:none; margin:0px; padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #ccc;}
+div.autocomplete ul li {
+  list-style-type:none; display:block; margin:0; padding:2px; height:16px; font-size: 10px; cursor:pointer;
+}
+span.indicator {
+  border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
+}
