@@ -9,7 +9,9 @@ CREATE TABLE cr_report (
     entered_by int not null default person__get_my_entity_id() references entity(id),
     entered_username text not null default SESSION_USER,
     deleted boolean not null default 'f'::boolean,
-    deleted_by int not null default person__get_my_entity_id() references entity(id),
+    deleted_by int references entity(id),
+    approved_by int references entity(id),
+    approved_username text,
     CHECK (deleted is not true or approved is not true)
 );
 
@@ -149,7 +151,9 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         
         -- 
 	ac_entries := '{}';
-        update cr_report set approved = 't'
+        update cr_report set approved = 't',
+		approved_by = person__get_my_entity_id(),
+		approved_username = SESSION_USER
 	where id = in_report_id;
 
 	FOR current_row IN 

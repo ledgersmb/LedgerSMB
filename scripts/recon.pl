@@ -164,13 +164,18 @@ sub get_results {
 		href => "$search_url&order_by=updated",
             },
             entered_username => {
-		text => $request->{_locale}->text('Username'), 
+		text => $request->{_locale}->text('Entered By'), 
 		href => "$search_url&order_by=entered_username",
+            },
+            approved_username => {
+		text => $request->{_locale}->text('Approved By'), 
+		href => "$search_url&order_by=approved_username",
             },
         };
 	my $cols = [];
 	my @acts = $search->get_accounts;
-	@$cols = qw(select account end_date their_total approved submitted updated entered_username);
+	@$cols = qw(select account end_date their_total approved submitted 
+                    updated entered_username approved_username);
 	my $recon =$search;
 	for my $row(@results){
             my $act = undef;
