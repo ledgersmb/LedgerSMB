@@ -320,16 +320,18 @@ BEGIN
 			ORDER BY transdate
 		         ) a ON (a.entity_credit_account = c.id)
 		    JOIN transactions t ON (a.id = t.id)
-		    JOIN (SELECT trans_id, 
+		    JOIN (SELECT acc_trans.trans_id, 
 		                 sum(CASE WHEN in_account_class = 1 THEN amount
 		                          WHEN in_account_class = 2 
 		                          THEN amount * -1
 		                     END) AS due 
 		            FROM acc_trans 
 		            JOIN chart ON (chart.id = acc_trans.chart_id)
+		       LEFT JOIN voucher v ON (acc_trans.voucher_id = v.id)
 		           WHERE ((chart.link = 'AP' AND in_account_class = 1)
 		                 OR (chart.link = 'AR' AND in_account_class = 2))
-		        GROUP BY trans_id) p ON (a.id = p.trans_id)
+			   AND (approved IS TRUE or v.batch_class = 3)
+		        GROUP BY acc_trans.trans_id) p ON (a.id = p.trans_id)
 		LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
 		LEFT JOIN users u ON (u.id = s.users_id)
 		   WHERE (a.batch_id = in_batch_id
