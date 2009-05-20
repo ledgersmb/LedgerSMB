@@ -205,6 +205,7 @@ sub post_transaction {
                 amount         => $amount{fxamount}{$i},
                 project_id     => $project_id,
                 description    => $form->{"description_$i"},
+		taxformcheck   => $form->{"taxformcheck_$i"},
                 cleared        => $cleared,
                 fx_transaction => 0
               };
@@ -217,6 +218,7 @@ sub post_transaction {
                     amount         => $amount,
                     project_id     => $project_id,
                     description    => $form->{"description_$i"},
+		    taxformcheck   => $form->{"taxformcheck_$i"},
                     cleared        => $cleared,
                     fx_transaction => 1
                   };
@@ -298,7 +300,10 @@ sub post_transaction {
 
         if ( $dbh->selectrow_array($query) ) {
 
-            # delete detail records
+           # delete detail records
+
+	    $dbh->do($query) || $form->dberror($query);
+
             $query = qq|
 				DELETE FROM acc_trans
 				 WHERE trans_id = $id|;
@@ -320,10 +325,9 @@ sub post_transaction {
         $query = qq|
 			INSERT INTO $table (invnumber, person_id, 
 				entity_credit_account)
-			     VALUES (?, (select e.id from person p, entity e, users u
-			                 where u.username = ?
-			                 AND e.id = u.entity_id
-			                 AND p.entity_id = e.id ), ?)|;
+			     VALUES (?,    (select  u.entity_id from users u
+                 join entity e on(e.id = u.entity_id)
+                 where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
 
         # the second param is undef, as the DBI api expects a hashref of
         # attributes to pass to $dbh->prepare. This is not used here.
@@ -410,6 +414,9 @@ sub post_transaction {
     my $ref;
 
     # add individual transactions
+
+    my $taxformfound=AA->taxform_exist($form,$form->{"$form->{vc}_id"});
+
     foreach $ref ( @{ $form->{acc_trans}{lineitems} } ) {
         # insert detail records in acc_trans
         if ( $ref->{amount} ) {
@@ -428,8 +435,20 @@ sub post_transaction {
                 $ref->{project_id},     $ref->{description},
                 $ref->{fx_transaction}, $ref->{cleared}
             );
-            $dbh->prepare($query)->execute(@queryargs)
+           $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
+
+	   $query="select max(entry_id) from acc_trans;";
+	   my $sth1=$dbh->prepare($query);
+
+	   $sth1->execute();
+
+	   my $entry_id=$sth1->fetchrow()  || $form->dberror($query);	  
+
+           my $report=($taxformfound and $ref->{taxformcheck})?"true":"false";
+
+	   AA->update_ac_tax_form($form,$dbh,$entry_id,$report);
+
         }
     }
 
@@ -661,7 +680,7 @@ sub post_transaction {
         id        => $form->{id}
     );
 
-    $form->audittrail( $dbh, "", \%audittrail );
+    #$form->audittrail( $dbh, "", \%audittrail );
 
     $form->save_recurring( $dbh, $myconfig );
 
@@ -1139,7 +1158,6 @@ sub get_name {
     my $sth = $dbh->prepare($query);
 
     $sth->execute(@queryargs) || $form->dberror($query);
-
     $ref = $sth->fetchrow_hashref(NAME_lc);
     $form->db_parse_numeric(sth => $sth, hashref => $ref);
     if ( $form->{id} ) {
@@ -1202,7 +1220,7 @@ sub get_name {
 		                   WHERE e.curr = o.curr
 		                         AND e.transdate = o.transdate)
 		  FROM oe o
-		 WHERE o.entity_credit_account = ?
+		 WHERE o.entity_id = ?
 		       AND o.quotation = '0' AND o.closed = '0'|;
 
     $sth = $dbh->prepare($query);
@@ -1298,9 +1316,10 @@ sub get_name {
     chop $form->{taxaccounts};
 
     # setup last accounts used for this customer/vendor
-    if ( !$form->{id} && $form->{type} !~ /_(order|quotation)/ ) {
 
-        $query = qq|
+   if ( !$form->{id} && $form->{type} !~ /_(order|quotation)/ ) {
+
+         $query = qq|
 			   SELECT c.accno, c.description, c.link, 
                                   c.category,
 			          ac.project_id,
@@ -1321,6 +1340,7 @@ sub get_name {
 
         my $i = 0;
 
+	
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
             $form->{department_id} = $ref->{department_id};
             if ( $ref->{link} =~ /_amount/ ) {
@@ -1349,6 +1369,88 @@ sub get_name {
     }
 
     $dbh->commit;
+}
+
+sub taxform_exist
+{
+
+   my ( $self,$form,$cv_id) = @_;
+
+   my $query = "select country_taxform_id from entity_credit_account where id=?";
+
+   my $sth = $form->{dbh}->prepare($query);
+
+   $sth->execute($cv_id) || $form->dberror($query);
+
+   my $retval=0;
+
+   while(my $val=$sth->fetchrow())
+   {
+        $retval=1;
+   }
+   
+   return $retval;
+
+
+}
+
+sub update_ac_tax_form
+{
+
+   my ( $self,$form,$dbh,$entry_id,$report) = @_;
+
+   my $query=qq|select count(*) from ac_tax_form where entry_id=?|;
+   my $sth=$dbh->prepare($query);
+   $sth->execute($entry_id) ||  $form->dberror($query);
+   
+   my $found=0;
+
+   while(my $ret1=$sth->fetchrow())
+   {
+      $found=1;  
+
+   }
+
+   if($found)
+   {
+	  my $query = qq|update ac_tax_form set reportable=? where entry_id=?|;
+          my $sth = $dbh->prepare($query);
+          $sth->execute($report,$entry_id) || $form->dberror($query);
+   }
+  else
+   {
+          my $query = qq|insert into ac_tax_form(entry_id,reportable) values(?,?)|;
+          my $sth = $dbh->prepare($query);
+          $sth->execute($entry_id,$report) || $form->dberror("Sada $query");
+   }
+
+   $dbh->commit();
+
+
+}
+
+
+sub get_taxcheck
+{
+
+   my ( $self,$form,$entry_id,$dbh) = @_;
+
+   my $query=qq|select reportable from ac_tax_form where entry_id=?|;
+   my $sth=$dbh->prepare($query);
+   $sth->execute($entry_id) ||  $form->dberror($query);
+   
+   my $found=0;
+
+   while(my $ret1=$sth->fetchrow())
+   {
+
+      if($ret1 eq "t" || $ret1)   # this if is not required because when reportable is false, control would not come inside while itself.
+      { $found=1;  }
+
+   }
+
+   return($found);
+
 }
 
 1;

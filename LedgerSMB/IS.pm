@@ -818,6 +818,7 @@ sub customer_details {
 }
 
 sub post_invoice {
+
     my ( $self, $myconfig, $form ) = @_;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
       unless $form->{invnumber};
@@ -941,6 +942,11 @@ sub post_invoice {
             $form->{$_} = $form->{$_}->bstr();
         }
     }
+
+
+
+    my $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
+
 
     foreach $i ( 1 .. $form->{rowcount} ) {
         my $allocated = 0;
@@ -1143,6 +1149,12 @@ sub post_invoice {
                 $form->{"notes_$i"},       
                 $invoice_id
             ) || $form->dberror($query);
+
+	   my $report=($taxformfound and $form->{"taxformcheck_$i"})?"true":"false";
+
+	   IS->update_invoice_tax_form($form,$dbh,$invoice_id,$report);
+
+
             if (defined $form->{approved}) {
 
                 $query = qq| UPDATE ar SET approved = ? WHERE id = ?|;
@@ -1974,7 +1986,7 @@ sub retrieve_invoice {
 
         # retrieve individual items
         $query = qq|
-			   SELECT i.description, i.qty, i.fxsellprice, 
+			   SELECT i.id as invoice_id,i.description, i.qty, i.fxsellprice, 
 			          i.sellprice, i.discount, i.parts_id AS id, 
 			          i.unit, i.deliverydate, i.project_id, 
 			          pr.projectnumber, i.serialnumber, i.notes,
@@ -2045,7 +2057,7 @@ sub retrieve_invoice {
             $ref->{partsgroup} = $ref->{partsgrouptranslation}
               if $ref->{partsgrouptranslation};
 
-            push @{ $form->{invoice_details} }, $ref;
+	    push @{ $form->{invoice_details} }, $ref;
         }
         $sth->finish;
 
@@ -2483,6 +2495,89 @@ sub createcontact
 
 }
 
+
+
+
+sub taxform_exist
+{
+
+   my ( $self,$form,$customer_id) = @_;
+
+   my $query = "select country_taxform_id from entity_credit_account where id=?";
+
+   my $sth = $form->{dbh}->prepare($query);
+
+   $sth->execute($customer_id) || $form->dberror($query);
+
+   my $retval=0;
+
+   while(my $val=$sth->fetchrow())
+   {
+        $retval=1;
+   }
+   
+   return $retval;
+
+
+}
+
+
+sub update_invoice_tax_form
+{
+
+   my ( $self,$form,$dbh,$invoice_id,$report) = @_;
+
+   my $query=qq|select count(*) from invoice_tax_form where invoice_id=?|;
+   my $sth=$dbh->prepare($query);
+   $sth->execute($invoice_id) ||  $form->dberror($query);
+   
+   my $found=0;
+
+   while(my $ret1=$sth->fetchrow())
+   {
+      $found=1;  
+
+   }
+
+   if($found)
+   {
+	  my $query = qq|update invoice_tax_form set reportable=? where invoice_id=?|;
+          my $sth = $dbh->prepare($query);
+          $sth->execute($report,$invoice_id) || $form->dberror($query);
+   }
+  else
+   {
+          my $query = qq|insert into invoice_tax_form(invoice_id,reportable) values(?,?)|;
+          my $sth = $dbh->prepare($query);
+          $sth->execute($invoice_id,$report) || $form->dberror("$query");
+   }
+
+   $dbh->commit();
+
+}
+
+sub get_taxcheck
+{
+
+   my ( $self,$form,$invoice_id,$dbh) = @_;
+
+   my $query=qq|select reportable from invoice_tax_form where invoice_id=?|;
+   my $sth=$dbh->prepare($query);
+   $sth->execute($invoice_id) ||  $form->dberror($query);
+   
+   my $found=0;
+
+   while(my $ret1=$sth->fetchrow())
+   {
+
+      if($ret1 eq "t" || $ret1)   # this if is not required because when reportable is false, control would not come inside while itself.
+      { $found=1;  }
+
+   }
+
+   return($found);
+
+}
 
 
 

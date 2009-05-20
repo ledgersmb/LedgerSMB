@@ -293,8 +293,11 @@ sub prepare_invoice {
             $form->{"qty_$i"} =
               $form->format_amount( \%myconfig, $form->{"qty_$i"} );
             $form->{"oldqty_$i"} = $form->{"qty_$i"};
+	    
+	    $form->{"taxformcheck_$i"}=1 if(IS->get_taxcheck($form,$form->{"invoice_id_$i"},$form->{dbh}));
 
-            for (qw(partnumber sku description unit)) {
+
+	    for (qw(partnumber sku description unit)) {
                 $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
             }
             $form->{rowcount} = $i;
@@ -783,7 +786,13 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
               { ndx => 12, key => 'O', value => $locale->text('On Hold') },
              'void'  => 
                 { ndx => 12, key => 'V', value => $locale->text('Void') },
+             'save_info'  => 
+                { ndx => 13, key => 'I', value => $locale->text('Save Info') },
+
         );
+
+
+
 
         if ( $form->{id} ) {
 
@@ -1215,3 +1224,50 @@ sub on_hold {
         &edit(); # it was already IN edit for this to be reached.
     }    
 }
+
+
+
+sub save_info {
+
+    
+	    my $taxformfound=0;
+
+	    $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
+	    
+	    print STDERR qq|___Rowcount=$form->{rowcount} _______|;
+
+	    foreach my $i(1..($form->{rowcount}))
+	    {
+		print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
+		
+		if($form->{"taxformcheck_$i"} and $taxformfound)
+		{
+			
+		  IS->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"true") if($form->{"invoice_id_$i"});
+
+		}
+		else
+		{
+
+		    IS->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"false") if($form->{"invoice_id_$i"});
+
+		}
+		
+	    }    
+
+	    if ($form->{callback}){
+		print "Location: $form->{callback}\n";
+		print "Status: 302 Found\n\n";
+		print "<html><body>";
+		my $url = $form->{callback};
+		print qq|If you are not redirected automatically, click <a href="$url">|
+			. qq|here</a>.</body></html>|;
+
+	    } else {
+		$form->info($locale->text('Draft Posted'));
+	    }
+
+}
+
+
+

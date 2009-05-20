@@ -2319,7 +2319,7 @@ sub create_links {
         # get amounts from individual entries
         $query = qq|
 			SELECT c.accno, c.description, a.source, a.amount,
-				a.memo, a.transdate, a.cleared, a.project_id,
+				a.memo,a.entry_id, a.transdate, a.cleared, a.project_id,
 				p.projectnumber
 			FROM acc_trans a
 			JOIN chart c ON (c.id = a.chart_id)

@@ -92,6 +92,7 @@ my $is_update;
 sub add {
 
     $form->{title} = "Add";
+	
     $form->{callback} =
 "$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
@@ -137,15 +138,17 @@ sub edit {
 }
 
 sub display_form {
+
     &form_header;
     &form_footer;
 
 }
 
 sub create_links {
+
     if ( $form->{script} eq 'ap.pl' ) {
         $form->{ARAP} = 'AP';
-        $form->{vc}   = 'vendor';
+        $form->{vc}   = 'vendor';	
     }
     elsif ( $form->{script} eq 'ar.pl' ) {
         $form->{ARAP} = 'AR';
@@ -256,6 +259,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
     foreach $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
+
         $form->{"select$key"} = "";
         foreach $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
             $form->{"select$key"} .=
@@ -264,7 +268,10 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
         # if there is a value we have an old entry
         for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
+
+
             if ( $key eq "$form->{ARAP}_paid" ) {
+
                 $form->{"$form->{ARAP}_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
                 $form->{"paid_$i"} =
@@ -300,13 +307,22 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
                 }
                 else {
+
+
+
                     $form->{"${akey}_$i"} =
                       $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml;
 
                     if ( $akey eq 'amount' ) {
                         $form->{"description_$i"} =
                           $form->{acc_trans}{$key}->[ $i - 1 ]->{memo};
-                        $form->{rowcount}++;
+
+ 			$form->{"entry_id_$i"} =
+                          $form->{acc_trans}{$key}->[ $i - 1 ]->{entry_id};
+
+			$form->{"taxformcheck_$i"}=1 if(AA->get_taxcheck($form,$form->{"entry_id_$i"},$form->{dbh}));
+
+                       $form->{rowcount}++;
                         $netamount += $form->{"${akey}_$i"};
 
                         $form->{"projectnumber_$i"} =
@@ -320,6 +336,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                     }
                     $form->{"${key}_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
+
+
+
                 }
             }
         }
@@ -537,8 +556,9 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 
     $form->header;
 
-    print qq|
+ print qq|
 <body onload="document.forms[0].${focus}.focus()" />
+
 
 <form method=post action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
@@ -689,6 +709,7 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
 	  <th></th>
 	  <th>| . $locale->text('Account') . qq|</th>
 	  <th>| . $locale->text('Description') . qq|</th>
+	  <th>| . $locale->text('Tax Form Applied') . qq|</th>
 	  $project
 	</tr>
 |;
@@ -705,7 +726,7 @@ s/option>\Q$form->{"$form->{ARAP}_amount_$i"}\E/option selected>$form->{"$form->
 
         # format amounts
         $form->{"amount_$i"} =
-          $form->format_amount( \%myconfig, $form->{"amount_$i"}, 2 );
+          $form->format_amount( \%myconfig,$form->{"amount_$i"}, 2 );
 
         $project = qq|
 	  <td align=right><select name="projectnumber_$i">$selectprojectnumber</select></td>
@@ -722,15 +743,27 @@ qq|<td><textarea name="description_$i" rows=$rows cols=40>$form->{"description_$
 qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></td>|;
         }
 
+	$taxchecked="";
+	if($form->{"taxformcheck_$i"})
+	{
+		$taxchecked="checked";
+
+	}
+
+	$taxformcheck=qq|<td><input type="checkbox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
 	<tr valign=top>
 	  <td><input name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
 	  <td></td>
 	  <td><select name="$form->{ARAP}_amount_$i">$selectamount</select></td>
 	  $description
+          $taxformcheck
 	  $project
 	</tr>
 |;
+
+    $form->hide_form( "entry_id_$i"); #New block of code to pass entry_id
+
     }
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
@@ -923,6 +956,9 @@ sub form_footer {
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
+
+            'save_info' => 
+              { ndx => 9, key => 'I', value => $locale->text('Save Info') },
         );
         if (!$form->{approved} && !$form->{batch_id}){
            $button{approve} = { 
@@ -962,13 +998,13 @@ sub form_footer {
         }
         else {
 
-            for ( "post_as_new", "print_and_post_as_new", "delete" ) {
+            for ( "post_as_new", "print_and_post_as_new", "delete","save_info" ) {
                 delete $button{$_};
             }
             delete $button{"print_and_post"} if !${LedgerSMB::Sysconfig::latex};
 
             if ( $transdate && ($transdate <= $closedto) ) {
-                for ( "post", "print_and_post" ) { delete $button{$_} }
+                for ( "post", "print_and_post","save_info" ) { delete $button{$_} }
             }
         }
 
@@ -1013,6 +1049,7 @@ sub approve {
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
 
     $draft->approve();
+
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
@@ -1037,7 +1074,7 @@ sub update {
           $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
         @flds =
-          ( "amount", "$form->{ARAP}_amount", "projectnumber", "description" );
+          ( "amount", "$form->{ARAP}_amount", "projectnumber", "description","taxformcheck" );
         $count = 0;
         @a     = ();
         for $i ( 1 .. $form->{rowcount} ) {
@@ -1210,11 +1247,17 @@ sub post {
     
     
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
-        $form->update_status( \%myconfig );
-        if ( $form->{printandpost} ) {
-            &{"print_$form->{formname}"}( $old_form, 1 );
+	  
+       $form->update_status( \%myconfig );
+       if ( $form->{printandpost} ) {
+           &{"print_$form->{formname}"}( $old_form, 1 );
         }
-	print STDERR "Redirecting\n";
+
+        if(defined($form->{batch_id}) and $form->{batch_id})
+	{
+        	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
+	}
+
 
         if(defined($form->{batch_id}) and $form->{batch_id})
 	{
@@ -1228,6 +1271,53 @@ sub post {
     }
 
 }
+
+# New Function Body starts Here
+
+
+
+sub save_info {
+
+    
+	    my $taxformfound=0;
+
+	    $taxformfound=AA->taxform_exist($form,$form->{"$form->{vc}_id"});
+	    
+	    foreach my $i(1..($form->{rowcount}))
+	    {
+		
+		if($form->{"taxformcheck_$i"} and $taxformfound)
+		{
+			
+		  AA->update_ac_tax_form($form,$form->{dbh},$form->{"entry_id_$i"},"true") if($form->{"entry_id_$i"});
+
+		}
+		else
+		{
+
+		    AA->update_ac_tax_form($form,$form->{dbh},$form->{"entry_id_$i"},"false") if($form->{"entry_id_$i"});
+
+		}
+		
+	    }    
+
+	    if ($form->{callback}){
+		print "Location: $form->{callback}\n";
+		print "Status: 302 Found\n\n";
+		print "<html><body>";
+		my $url = $form->{callback};
+		print qq|If you are not redirected automatically, click <a href="$url">|
+			. qq|here</a>.</body></html>|;
+
+	    } else {
+		$form->info($locale->text('Draft Posted'));
+	    }
+
+}
+
+
+#New function starts Here
+
 
 sub delete {
 
@@ -1953,6 +2043,7 @@ sub transactions {
     # sums and tax on reports by Antonio Gallardo
     #
     $i = 0;
+
     foreach $ref ( @{ $form->{transactions} } ) {
 
         $i++;
@@ -2135,7 +2226,7 @@ qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&act
           . "</th>";
     }
 
-    for (@column_index) { print "\n$column_data{$_}" }
+    for (@column_index) { print STDERR qq|______ $_ => $column_data{$_} ______________|; print "\n$column_data{$_}" }
 
     if ( $myconfig{acs} !~ /$form->{ARAP}--$form->{ARAP}/ ) {
         $i = 1;
@@ -2190,6 +2281,7 @@ qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
 
     if ( !$form->{till} ) {
         foreach $item ( sort { $a->{order} <=> $b->{order} } %button ) {
+          
             print $item->{code};
         }
     }

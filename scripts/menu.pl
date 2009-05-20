@@ -79,8 +79,6 @@ sub root_doc {
         if ($userpw->will_expire_soon){
             $request->{main} = 'user.pl?action=preference_screen';
         } else {
-            $request->{main} = "splash.html" 
-                if !$request->{main};
             $request->{main} = "am.pl?action=recurring_transactions"
                 if $request->{main} eq 'recurring_transactions';
         }

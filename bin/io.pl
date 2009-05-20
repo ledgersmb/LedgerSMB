@@ -167,6 +167,9 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
 
     push @column_index, @{LedgerSMB::Sysconfig::io_lineitem_columns};
 
+    push @column_index, "taxformcheck";#increase the number of elements by pushing into column_index.(Ex: NEw added element 
+				       # taxformcheck & check the screen AR->Sales Invoice) do everything before colspan ;
+
     my $colspan = $#column_index + 1;
 
     $form->{invsubtotal} = 0;
@@ -193,7 +196,8 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
       qq|<th class=listheading nowrap>| . $locale->text('Bin') . qq|</th>|;
     $column_data{onhand} =
       qq|<th class=listheading nowrap>| . $locale->text('OH') . qq|</th>|;
-
+    $column_data{taxformcheck} =
+      qq|<th class=listheading nowrap>| . $locale->text('TaxForm') . qq|</th>|;
     print qq|
   <tr>
     <td>
@@ -302,13 +306,26 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
             }
         }
 
+
+
+
+
         $delivery = qq|
           <td colspan=2 nowrap>
 	  <b>${$delvar}</b>
 	  <input name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}"></td>
 |;
 
-        $column_data{runningnumber} =
+        
+        $taxchecked="";
+	if($form->{"taxformcheck_$i"})
+	{
+		$taxchecked="checked";
+
+	}
+
+
+$column_data{runningnumber} =
           qq|<td><input name="runningnumber_$i" size=3 value=$i></td>|;
         $column_data{partnumber} =
 qq|<td><input name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
@@ -337,7 +354,7 @@ qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size=5 valu
           . qq|</td>|;
         $column_data{bin}    = qq|<td>$form->{"bin_$i"}</td>|;
         $column_data{onhand} = qq|<td>$form->{"onhand_$i"}</td>|;
-
+        $column_data{taxformcheck} = qq|<td><input type="checkbox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
         <tr valign=top>|;
 
@@ -351,7 +368,7 @@ qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size=5 valu
 |;
 
         for (
-            qw(orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id)
+            qw(orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id invoice_id)
           )
         {
             $form->hide_form("${_}_$i");
@@ -366,16 +383,16 @@ qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size=5 valu
 		<select name="projectnumber_$i">$form->{selectprojectnumber}</select>
 | if $form->{selectprojectnumber};
 
-        if ( ( $rows = $form->numtextrows( $form->{"notes_$i"}, 46, 6 ) ) > 1 )
+        if ( ( $rows = $form->numtextrows( $form->{"notes_$i"}, 36, 6 ) ) > 1 )
         {
             $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} );
             $notes =
-qq|<td><textarea name="notes_$i" rows=$rows cols=46 wrap=soft>$form->{"notes_$i"}</textarea></td>|;
+qq|<td><textarea name="notes_$i" rows=$rows cols=36 wrap=soft>$form->{"notes_$i"}</textarea></td>|;
         }
         else {
             $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} );
             $notes =
-qq|<td><input name="notes_$i" size=48 value="$form->{"notes_$i"}"></td>|;
+qq|<td><input name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
         }
 
         $serial = qq|
