@@ -493,7 +493,7 @@ BEGIN
 			ELSE false END,
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
 		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') || 
-		$E$ , $E$ || quote_literal(in_payment_class) || $E$
+		$E$ , $E$ || coalesce(quote_literal(in_payment_type), 'NULL') || $E$
 		FROM bulk_payments_in $E$;
 
 	EXECUTE $E$ 
@@ -512,7 +512,7 @@ BEGIN
 			ELSE false END,
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
 		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'null') 
-		||$E$ , $E$ || quote_literal(in_payment_class) || $E$ 
+		||$E$ , $E$ || coalesce(quote_literal(in_payment_type), 'NULL') || $E$ 
 		FROM bulk_payments_in $E$;
 
 	EXECUTE $E$
