@@ -275,7 +275,7 @@ BEGIN
 
 	FOR t_country_tax_form IN 
 
-		      SELECT country_id as count_id,form_name as taxform_name,id as taxform_id 
+		      SELECT * 
 		            FROM country_tax_form where country_id in(SELECT country_id from entity where id=in_entity_id)
         LOOP
 
@@ -395,8 +395,8 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     in_curr char, in_startdate date, in_enddate date, 
     in_threshold NUMERIC,
     in_ar_ap_account_id int,
-    in_cash_account_id int
-    
+    in_cash_account_id int,
+    in_taxform_id int
     
 ) returns INT as $$
     
@@ -433,7 +433,8 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 startdate = in_startdate,
                 enddate = in_enddate,
                 threshold = in_threshold,
-		discount_terms = in_discount_terms
+		discount_terms = in_discount_terms,
+		taxform_id = in_taxform_id
             where id = in_credit_id;
         
          IF FOUND THEN

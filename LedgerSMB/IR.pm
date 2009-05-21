@@ -174,6 +174,9 @@ sub post_invoice {
       ? $exchangerate
       : $form->parse_amount( $myconfig, $form->{exchangerate} );
 
+    
+    my $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});
+  
     for my $i ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
 
@@ -302,6 +305,11 @@ sub post_invoice {
                 $form->{"notes_$i"},       
                 $invoice_id
             ) || $form->dberror($query);
+
+            my $report=($taxformfound and $form->{"taxformcheck_$i"})?"true":"false";
+            IR->update_invoice_tax_form($form,$dbh,$invoice_id,$report);
+
+
             if (defined $form->{approved}) {
 
                 $query = qq| UPDATE ap SET approved = ? WHERE id = ?|;
@@ -1110,7 +1118,7 @@ sub retrieve_invoice {
 			SELECT a.invnumber, a.transdate, a.duedate,
 			       a.ordnumber, a.quonumber, a.paid, a.taxincluded,
 			       a.notes, a.intnotes, a.curr AS currency, 
-			       a.vendor_id, a.language_code, a.ponumber,
+			       a.entity_credit_account as vendor_id, a.language_code, a.ponumber,
 			       a.on_hold, a.reverse
 			  FROM ap a
 			 WHERE id = ?|;
@@ -1137,7 +1145,7 @@ sub retrieve_invoice {
 
         # retrieve individual items
         $query = qq|
-			   SELECT p.partnumber, i.description, i.qty, 
+			   SELECT i.id as invoice_id,p.partnumber, i.description, i.qty, 
 			          i.fxsellprice, i.sellprice,
 			          i.parts_id AS id, i.unit, p.bin, 
 			          i.deliverydate,
@@ -1442,6 +1450,8 @@ sub item_links {
     $sth->finish;
 }
 
+
+
 sub toggle_on_hold {
     
     my $self = shift @_;
@@ -1476,5 +1486,102 @@ sub toggle_on_hold {
         return 0;
     }
 }
+
+
+
+
+
+sub taxform_exist
+{
+
+   my ( $self,$form,$vendor_id) = @_;
+
+   my $query = "select country_taxform_id from entity_credit_account where id=?";
+
+   my $sth = $form->{dbh}->prepare($query);
+
+   $sth->execute($vendor_id) || $form->dberror($query);
+
+   my $retval=0;
+
+   while(my $val=$sth->fetchrow())
+   {
+        $retval=1;
+   }
+   
+   return $retval;
+
+
+}
+
+
+
+
+
+sub update_invoice_tax_form
+{
+
+   my ( $self,$form,$dbh,$invoice_id,$report) = @_;
+
+   my $query=qq|select count(*) from invoice_tax_form where invoice_id=?|;
+   my $sth=$dbh->prepare($query);
+   $sth->execute($invoice_id) ||  $form->dberror($query);
+   
+   my $found=0;
+
+   while(my $ret1=$sth->fetchrow())
+   {
+      $found=1;  
+
+   }
+
+   if($found)
+   {
+	  my $query = qq|update invoice_tax_form set reportable=? where invoice_id=?|;
+          my $sth = $dbh->prepare($query);
+          $sth->execute($report,$invoice_id) || $form->dberror($query);
+   }
+  else
+   {
+          my $query = qq|insert into invoice_tax_form(invoice_id,reportable) values(?,?)|;
+          my $sth = $dbh->prepare($query);
+          $sth->execute($invoice_id,$report) || $form->dberror("$query");
+   }
+
+   $dbh->commit();
+
+}
+
+
+
+
+
+
+sub get_taxcheck
+{
+
+   my ( $self,$form,$invoice_id,$dbh) = @_;
+
+   my $query=qq|select reportable from invoice_tax_form where invoice_id=?|;
+   my $sth=$dbh->prepare($query);
+   $sth->execute($invoice_id) ||  $form->dberror($query);
+   
+   my $found=0;
+
+   while(my $ret1=$sth->fetchrow())
+   {
+
+      if($ret1 eq "t" || $ret1)   # this if is not required because when reportable is false, control would not come inside while itself.
+      { $found=1;  }
+
+   }
+
+   return($found);
+
+}
+
+
+
+
 
 1;

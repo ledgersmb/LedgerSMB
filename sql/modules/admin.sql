@@ -257,7 +257,7 @@ create or replace function admin__get_roles_for_user(in_user_id INT) returns set
             r.oid = ar.roleid
          LOOP
         
-            RETURN NEXT u_role.rolname;
+            RETURN NEXT u_role.rolname::text;
         
         END LOOP;
         RETURN;
@@ -555,7 +555,7 @@ BEGIN
     t_dbname := current_database();
     FOR v_rol in 
         SELECT 
-            rolname
+            *
         from 
             pg_roles
         where 

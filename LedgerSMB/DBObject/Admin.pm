@@ -84,6 +84,9 @@ sub save_user {
     );
     $user->get();
     $user->save();
+    $self->{user} = $user;
+    $self->{employee} = $employee;
+    $user->debug({file => '/tmp/user11'});
 }
 
 sub save_roles {
@@ -240,7 +243,7 @@ sub get_roles {
     
     my $self = shift @_;
 #    print STDERR "attempting to get roles";
-    my @s_rows = $self->call_procedure(procname=>'admin__get_roles',args=>[$self->{company}]);
+    my @s_rows = $self->call_procedure(procname=>'admin__get_roles');
     my @rows;
     for my $role (@s_rows) {
         my $rolname = $role->{'admin__get_roles'};

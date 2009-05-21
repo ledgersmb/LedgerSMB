@@ -459,12 +459,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<tr id="taxform-threshold-row">
 	
 	 <td> <?lsmb INCLUDE select element_data = {
-			name = "taxform1_id"
+			name = "taxform_id"
 			options = taxform_list
-			default_values = [ ]
+			default_values = [taxform_id]
 			text_attr = "form_name"
 			value_attr = "id"
-			label = text('Taxforms:') #'
+			label = text('Taxforms:') 
 			} ?> 
 	  </td>
 
