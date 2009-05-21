@@ -429,7 +429,7 @@ my @output =  get_output_line_array($contact_template);
 is(grep (/value="1" selected="selected">test1/, @output), 0, 'Select box Value 1 unselected');
 is(grep (/value="1000" selected="selected">test2/, @output), 1, 'Select box Value 1000 selected');
 is(grep (/<td class="description">dtest1/, @output), 1, 'Contact description shows');
-is(grep (/value="4" selected="selected">country4/, @output), 1, 'Default Country Set');
+is(grep (/value="4" selected="selected">country4/, @output), 2, 'Default Country Set');
 # bulk payment template tests
 my $payment = LedgerSMB->new();
 $payment->merge({

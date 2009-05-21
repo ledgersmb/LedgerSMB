@@ -1,6 +1,4 @@
-<?lsmb INCLUDE 'ui-header.html' 
-       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
-?>
+<?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body>
 
@@ -30,13 +28,11 @@
         </tr>
          <tr>
           <th align="right"><?lsmb text('Account') ?></th>
-          <td colspan="3">
-              <?lsmb PROCESS ajaxselect element_data = {
+          <td><?lsmb PROCESS select element_data = {
                      name = "account"
-                     initial_value = all_accounts.1.values.1 _ '--' _ all_accounts.1.values.3
+                     options = all_accounts 
                      text_attr = 'accno'
                      value_attr = 'id'
-                     ajax_target = '/journal.pl'
               } ?> </td>
 	  </tr>
 	  <tr>
