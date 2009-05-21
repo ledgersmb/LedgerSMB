@@ -1496,7 +1496,7 @@ sub taxform_exist
 
    my ( $self,$form,$vendor_id) = @_;
 
-   my $query = "select country_taxform_id from entity_credit_account where id=?";
+   my $query = "select taxform_id from entity_credit_account where id=?";
 
    my $sth = $form->{dbh}->prepare($query);
 

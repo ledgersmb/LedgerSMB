@@ -2562,88 +2562,6 @@ sub update_invoice_tax_form
 
 }
 
-sub get_taxcheck
-{
-
-   my ( $self,$form,$invoice_id,$dbh) = @_;
-
-   my $query=qq|select reportable from invoice_tax_form where invoice_id=?|;
-   my $sth=$dbh->prepare($query);
-   $sth->execute($invoice_id) ||  $form->dberror($query);
-   
-   my $found=0;
-
-   while(my $ret1=$sth->fetchrow())
-   {
-
-      if($ret1 eq "t" || $ret1)   # this if is not required because when reportable is false, control would not come inside while itself.
-      { $found=1;  }
-
-   }
-
-   return($found);
-
-}
-
-
-
-sub taxform_exist
-{
-
-   my ( $self,$form,$customer_id) = @_;
-
-   my $query = "select country_taxform_id from entity_credit_account where id=?";
-
-   my $sth = $form->{dbh}->prepare($query);
-
-   $sth->execute($customer_id) || $form->dberror($query);
-
-   my $retval=0;
-
-   while(my $val=$sth->fetchrow())
-   {
-        $retval=1;
-   }
-   
-   return $retval;
-
-
-}
-
-
-sub update_invoice_tax_form
-{
-
-   my ( $self,$form,$dbh,$invoice_id,$report) = @_;
-
-   my $query=qq|select count(*) from invoice_tax_form where invoice_id=?|;
-   my $sth=$dbh->prepare($query);
-   $sth->execute($invoice_id) ||  $form->dberror($query);
-   
-   my $found=0;
-
-   while(my $ret1=$sth->fetchrow())
-   {
-      $found=1;  
-
-   }
-
-   if($found)
-   {
-	  my $query = qq|update invoice_tax_form set reportable=? where invoice_id=?|;
-          my $sth = $dbh->prepare($query);
-          $sth->execute($report,$invoice_id) || $form->dberror($query);
-   }
-  else
-   {
-          my $query = qq|insert into invoice_tax_form(invoice_id,reportable) values(?,?)|;
-          my $sth = $dbh->prepare($query);
-          $sth->execute($invoice_id,$report) || $form->dberror("$query");
-   }
-
-   $dbh->commit();
-
-}
 
 sub get_taxcheck
 {
@@ -2667,6 +2585,7 @@ sub get_taxcheck
    return($found);
 
 }
+
 
 
 

@@ -24,7 +24,18 @@ sub save
     
 }
 
+sub get_metadata
+{
+    my ($self) = @_;
 
+    @{$self->{countries}} = $self->exec_method(
+                funcname => 'location_list_country'
+    );
+
+}
+
+1;
+   
 
     
 1;
