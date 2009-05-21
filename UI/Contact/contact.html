@@ -221,7 +221,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		size = "20"
 	} ?>
 
-       <?lsmb IF !country_id_t; country_id_t = default_country_t; END -?>
+       <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
