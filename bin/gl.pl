@@ -274,6 +274,7 @@ sub search {
         }
 
     }
+    
     my $template = LedgerSMB::Template->new(
         user => \%myconfig,
         locale => $locale,

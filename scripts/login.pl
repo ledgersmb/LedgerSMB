@@ -61,7 +61,7 @@ sub authenticate {
             exit;
         }
     }
-    else {
+    else {	
         print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
         print "Status: 401 Unauthorized\n\n";
 	    print "Please enter your credentials.\n";

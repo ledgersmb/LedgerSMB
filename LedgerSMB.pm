@@ -797,11 +797,19 @@ sub _db_init {
     }
 }
 
+#private, for db connection errors
+sub _on_connection_error {
+    for (@_){
+        print STDERR "$_\n";
+    }
+}
+
 # Deprecated, only here for old code
 sub dberror{
    my $self = shift @_;
    my $state_error = {
 	'42401' => $self->{_locale}->text('Access Denied'),
+	'42501' => $self->{_locale}->text('Access Denied'),
 	'22008' => $self->{_locale}->text('Invalid date/time entered'),
 	'22012' => $self->{_locale}->text('Division by 0 error'),
 	'22004' => $self->{_locale}->text('Required input not provided')
