@@ -182,8 +182,7 @@ sub session_create {
 
     #create a new session
     $createNew->execute( $newSessionID, $newToken, $newTransactionID )
-      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ": Create new session: \n".
-		$lsmb->{dbh}->errstr() );
+      || http_error('403');
 
     #reseed the random number generator
     my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );
@@ -201,6 +200,44 @@ sub session_create {
     print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;\n|;
     $lsmb->{LedgerSMB} = $newCookieValue;
     $lsmb->{dbh}->commit;
+}
+
+sub http_error {
+    my ($errcode) = @_;
+
+    my $err = {
+	'500' => {status  => '500 Internal Server Error', 
+		  message => 'An error occurred. Information on this error has been logged.', 
+                  others  => {}},
+        '403' => {status  => '403 Forbidden', 
+                  message => 'You are not allowed to access the specified resource.', 
+                  others  => {}},
+        '401' => {status  => '401 Unauthorized', 
+                  message => 'Please enter your credentials', 
+                  others  => {'WWW-Authenticate' => "Basic realm=\"LedgerSMB\""}}
+    };
+    # Ordinarily I would use $cgi->header to generate the headers
+    # but this doesn't seem to be working.  Although it is generally desirable
+    # to create the headers using the package, I think we should print them
+    # manually.  -CT
+    my $status;
+    if ($err->{$errcode}->{status}){
+        $status = $err->{$errcode}->{status};
+    } elsif ($errcode) {
+        $status = $errcode;
+   } else {
+	print STDERR "Tried to generate http error without code!\n";
+        http_error('500');
+    }
+    print "Status: $status\n";
+    for my $h (keys %{$err->{$errcode}->{others}}){
+         print "$h: $err->{$errcode}->{others}->{$h}\n";
+    }
+    print "Content-Type: text/plain\n\n";
+    print "Status: $status\n$err->{$errcode}->{message}\n";
+    exit; 
+    
+
 }
 
 sub session_destroy {
@@ -247,10 +284,7 @@ sub get_credentials {
 }
 
 sub credential_prompt{
-    print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
-    print "Status: 401 Unauthorized\n\n";
-    print "Please enter your credentials.\n";
-    exit; 
+    http_error(401);
 }
 
 sub password_check {
