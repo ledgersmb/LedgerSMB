@@ -182,7 +182,7 @@ sub session_create {
 
     #create a new session
     $createNew->execute( $newSessionID, $newToken, $newTransactionID )
-      || http_error('403');
+      || http_error('401');
 
     #reseed the random number generator
     my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );
