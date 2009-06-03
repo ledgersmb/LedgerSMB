@@ -136,34 +136,37 @@ sub get {
     
     my $self = shift @_;
     my $id = shift;
-    my @users = $self->exec_method(
+    if ($id){
+        $self->{user_id} = $id;
+    }
+    my ($user) = $self->exec_method(
         funcname=>'admin__get_user',
-        args=>[$id]
         );
-    $self->{user} = $users[0];
-    my @prefs = $self->exec_method(
-        funcname=>'admin__user_preferences',
-        args=>[$id]
+    print STDERR "Point 1\n";
+    $self->{user} = $user;
+    my ($prefs) = $self->exec_method(
+        funcname=>'user__get_preferences',
         );
-    $self->{pref} = $prefs[0];
+    print STDERR "Point 1\n";
+    $self->{prefs} = $prefs;
+    print STDERR "Point 2\n";
 #    $self->{person} = @{ $self->exec_method(
 #        funcname=>'admin__user_preferences',
 #        args=>[$self->{user}->{entity_id}]
 #        )
 #    }[0];
-    my @emp = $self->exec_method(
+    my ($emp) = $self->exec_method(
         funcname=>'employee__get',
         args=>[$self->{user}->{entity_id}]
         );
-    $self->{employee} = $emp[0];
-    my @ent = $self->exec_method( 
+    $self->{employee} = $emp;
+    my ($ent) = $self->exec_method( 
         funcname=>'entity__get_entity',
         args=>[ $self->{user}->{entity_id} ] 
         );
-    $self->{entity} = $ent[0];
+    $self->{entity} = $ent;
     my @roles = $self->exec_method(
         funcname=>'admin__get_roles_for_user',
-        args=>[$id]
     );
     # Now, location and stuff.
     my @loc = $self->exec_method(

@@ -32,6 +32,8 @@ sub get_metadata
                 funcname => 'location_list_country'
     );
 
+    my ($ref) = $self->call_procedure(procname => 'setting_get', args => ['default_country']);
+    $self->{default_country} = $ref->{setting_get};
 }
 
 1;

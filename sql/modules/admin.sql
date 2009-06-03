@@ -15,7 +15,7 @@ create table lsmb_roles (
     
 );
 
-CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_user TEXT, in_role TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -30,16 +30,16 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_user TEXT, in_role TEXT) r
             RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
         END IF;
         
-        select rolname into a_user from pg_roles where rolname = in_user;
+        select rolname into a_user from pg_roles where rolname = in_username;
         
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions to a non-existant user.';
         END IF;
         
-        stmt := 'GRANT '|| quote_ident(in_role) ||' to '|| quote_ident(in_user);
+        stmt := 'GRANT '|| quote_ident(in_role) ||' to '|| quote_ident(in_username);
         
         EXECUTE stmt;
-        insert into lsmb_roles (user_id, role) values (in_user, in_role);
+        insert into lsmb_roles (user_id, role) values (in_username, in_role);
         return 1;
     END;
     
@@ -47,7 +47,7 @@ $$ language 'plpgsql' security definer;
 
 REVOKE EXECUTE ON FUNCTION admin__add_user_to_role(TEXT, TEXT) FROM PUBLIC;
 
-CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_user TEXT, in_role TEXT) returns INT AS $$
+CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_username TEXT, in_role TEXT) returns INT AS $$
     
     declare
         stmt TEXT;
@@ -62,13 +62,13 @@ CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_user TEXT, in_role TE
             RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
         END IF;
         
-        select rolname into a_user from pg_roles where rolname = in_user;
+        select rolname into a_user from pg_roles where rolname = in_username;
         
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot revoke permissions from a non-existant user.';
         END IF;
         
-        stmt := 'REVOKE '|| quote_ident(in_role) ||' FROM '|| quote_ident(in_user);
+        stmt := 'REVOKE '|| quote_ident(in_role) ||' FROM '|| quote_ident(in_username);
         
         EXECUTE stmt;
         
@@ -94,7 +94,7 @@ CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TE
             RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
         END IF;
         
-        select rolname into a_user from pg_roles where rolname = in_user;
+        select rolname into a_user from pg_roles where rolname = in_username;
         
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions to a non-existant user.';
@@ -126,7 +126,7 @@ CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_ro
             RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
         END IF;
         
-        select rolname into a_user from pg_roles where rolname = in_user;
+        select rolname into a_user from pg_roles where rolname = in_username;
         
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot revoke permissions from a non-existant function.';
@@ -215,15 +215,15 @@ FROM public;
         
 --$$ language 'plpgsql';
 
-create or replace function admin__get_user(in_user INT) returns setof users as $$
+create or replace function admin__get_user(in_user_id INT) returns setof users as $$
     
     DECLARE
         a_user users;
     BEGIN
         
-        select * into a_user from users where id = in_user;
+        select * into a_user from users where id = in_user_id;
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'cannot find user %', in_user;
+            RAISE EXCEPTION 'cannot find user %', in_user_id;
         END IF;
         
         return next a_user;
@@ -328,6 +328,9 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         select * into a_user from users lu where lu.id = in_id;
         
         IF NOT FOUND THEN 
+            if in_password IS NULL THEN
+                RAISE EXCEPTION 'Must create password when adding new users!';
+            end if;
             -- Insert cycle
             
             --- The entity is expected to already BE created. See admin.pm.
@@ -360,12 +363,13 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         ELSIF FOUND THEN
             
             -- update cycle
+            IF in_password IS NOT NULL THEN
             
-            execute ' alter user '|| quote_ident(in_username) || 
+                execute ' alter user '|| quote_ident(in_username) || 
                      ' with encrypted password ' 
                              || quote_literal(in_password) || 
                      $e$ valid until now()::timezone + '1 day'::interval $e$;
-            
+            end if;
                       
             return a_user.id;
         
@@ -588,16 +592,16 @@ BEGIN
 END;
 $$ language plpgsql;
 
-create or replace function user__get_preferences (in_user int) returns setof user_preference as $$
+create or replace function user__get_preferences (in_user_id int) returns setof user_preference as $$
     
 declare
     v_row user_preference;
 BEGIN
-    select * into v_row from user_preference where id = in_user;
+    select * into v_row from user_preference where id = in_user_id;
     
     IF NOT FOUND THEN
     
-        RAISE EXCEPTION 'Could not find user preferences for id %', in_user;
+        RAISE EXCEPTION 'Could not find user preferences for id %', in_user_id;
     ELSE
         return next v_row;
     END IF;

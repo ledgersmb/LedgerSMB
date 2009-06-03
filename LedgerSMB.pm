@@ -812,8 +812,10 @@ sub dberror{
 	'42501' => $self->{_locale}->text('Access Denied'),
 	'22008' => $self->{_locale}->text('Invalid date/time entered'),
 	'22012' => $self->{_locale}->text('Division by 0 error'),
-	'22004' => $self->{_locale}->text('Required input not provided')
-	#'23502' => $self->{_locale}->text('Required input not provided')
+	'22004' => $self->{_locale}->text('Required input not provided'),
+	'P0001' => $self->{_locale}->text('Error from Function:') . " " .
+                    $self->{dbh}->errstr,
+	'23502' => $self->{_locale}->text('Required input not provided'),
    };
    print STDERR "Logging SQL State ".$self->{dbh}->state.", error ".
            $self->{dbh}->err . ", string " .$self->{dbh}->errstr . "\n";

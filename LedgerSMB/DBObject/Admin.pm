@@ -27,8 +27,8 @@ sub save_user {
     $self->{entity_id} = $entity->{entity};
     
     
-    my $user_id = shift @{ $self->exec_method( funcname => "admin__save_user" ) };
-    $self->merge($user_id);
+    my ($user_id) = $self->exec_method( funcname => "admin__save_user" );
+    $self->{user_id} = $user_id->{admin__save_user};
     
     my $employee = LedgerSMB::DBObject::Employee->new( base=>$self, copy=>'list',
         merge=>[
@@ -41,6 +41,21 @@ sub save_user {
     
     $employee->{entity_id} = $entity_id->{id};    
     $employee->save();
+    # now, check for user-specific stuff. Is this person a user or not?
+    
+    my $user = LedgerSMB::DBObject::User->new(base=>$self, copy=>'list',
+        merge=>[
+            'username',
+            'password',
+            'is_a_user',
+            'user_id',
+        ]
+    );
+    $user->get();
+    $user->save();
+    $self->{user} = $user;
+    $self->{employee} = $employee;
+    $self->debug({file => '/tmp/user11'});
 
     if ($self->{password}){
        return;
@@ -73,20 +88,6 @@ sub save_user {
     $homephone->save();
     $email->save();
     
-    # now, check for user-specific stuff. Is this person a user or not?
-    
-    my $user = LedgerSMB::DBObject::User->new(base=>$self, copy=>'list',
-        merge=>[
-            'username',
-            'password',
-            'is_a_user'
-        ]
-    );
-    $user->get();
-    $user->save();
-    $self->{user} = $user;
-    $self->{employee} = $employee;
-    $user->debug({file => '/tmp/user11'});
 }
 
 sub save_roles {
