@@ -65,7 +65,7 @@ COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to en
 CREATE TABLE users (
     id serial UNIQUE, 
     username varchar(30) primary key,
-    notify_password interval not null default '7 days',
+    notify_password interval not null default '7 days'::interval,
     entity_id int not null references entity(id) on delete cascade
 );
 
@@ -81,7 +81,7 @@ last_used TIMESTAMP default now(),
 ttl int default 3600 not null,
 users_id INTEGER NOT NULL references users(id),
 transaction_id INTEGER NOT NULL,
-notify_pasword integer not null default false
+notify_pasword interval not null default '7 days'::interval
 );
 
 CREATE TABLE open_forms (
