@@ -16,7 +16,7 @@
 
 <?lsmb IF countries ?>
  <?lsmb PROCESS select element_data = {
-		name = "country_code"
+		name = "country_id"
 		default_values = [default_country]
 		options = countries
 		value_attr = "id"
@@ -31,10 +31,10 @@
 <div class="labelledinput">
   
      <?lsmb PROCESS input element_data = {
-	name = "taxform_name"
+	name = "form_name"
 	type = "text"
-	value = taxform_name
-	label = "Description"
+	value = form_name
+	label = text("Description:")
 	size = '15'
                                          } 
      ?>

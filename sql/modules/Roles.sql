@@ -1235,6 +1235,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__save_tax_form"
 WITH INHERIT NOLOGIN;
 
 GRANT ALL ON country_tax_form TO "lsmb_<?lsmb dbname ?>__save_tax_form";
+GRANT ALL ON country_tax_form_id_seq TO "lsmb_<?lsmb dbname ?>__save_tax_form";
+
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__edit_template"
 WITH INHERIT NOLOGIN;

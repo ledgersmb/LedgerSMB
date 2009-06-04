@@ -10,7 +10,7 @@ sub save
 {
   
     my ($self) = shift @_;
-    my ($ref) = $self->execute_method(funcname => 'tax_form__save');
+    my ($ref) = $self->exec_method(funcname => 'tax_form__save');
     $self->{taxform_id} = $ref->{'tax_form__save'};
   
     $self->{dbh}->commit();
