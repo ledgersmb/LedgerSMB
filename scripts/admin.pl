@@ -82,7 +82,7 @@ sub new_user {
     
         $template->render(
             {   
-                user=>$entity,
+                user=>$admin,
                 salutations=>$sal,
                 roles=>$groups
             }

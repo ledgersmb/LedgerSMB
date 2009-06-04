@@ -105,29 +105,14 @@ sub save {
     
     my $user = $self->get();
     
-    if ( $user->{id} && $self->{is_a_user} ) {
     
-        # doesn't check for the password - that's done in the sproc.
-        $self->{id} = shift @{ $self->exec_method(funcname=>'admin__save_user', 
-            args=>[$user->{id}, $self->{username}, $self->{password}] ) }; 
-        if (!$self->{id}) {
-            
-            return 0;
-        }
-    }
-    elsif ($user && !$self->{is_a_user}) {
+    # doesn't check for the password - that's done in the sproc.
+    my ($ref) = $self->exec_method(funcname=>'admin__save_user', 
+        args=>[$user->{id}, $self->{username}, $self->{password}] ); 
+    ($self->{id}) = values %$ref;
+    if (!$self->{id}) {
         
-        # there WAS a user, and we've decided we want that user to go away now.
-        
-        $self->{id} = $user->{id};
-        return $self->remove();
-        
-    }
-    elsif ($self->{is_a_user}) {
-        
-        # No user ID, meaning, creating a new one.        
-        $self->{id} = shift @{ $self->exec_method(funcname=>'admin__save_user', 
-            args=>[undef, $self->{username}, $self->{password}] ) };
+        return 0;
     }
     return 1;
 }
@@ -142,14 +127,11 @@ sub get {
     my ($user) = $self->exec_method(
         funcname=>'admin__get_user',
         );
-    print STDERR "Point 1\n";
     $self->{user} = $user;
     my ($prefs) = $self->exec_method(
         funcname=>'user__get_preferences',
         );
-    print STDERR "Point 1\n";
     $self->{prefs} = $prefs;
-    print STDERR "Point 2\n";
 #    $self->{person} = @{ $self->exec_method(
 #        funcname=>'admin__user_preferences',
 #        args=>[$self->{user}->{entity_id}]
@@ -190,7 +172,6 @@ sub get {
     $self->{roles} = \@rolstore;
     
     $self->{entity_id} = $self->{entity}->{id};
-    print STDERR "Got all user information";
     
     #$user->{user} = $u->get($id);
     #$user->{pref} = $u->preferences($id);
@@ -198,6 +179,7 @@ sub get {
     #$user->{person} = $u->person($user->{user}->{entity_id});
     #$user->{entity} = $u->entity($id);
     #$user->{roles} = $u->roles($id);
+    return $user;
 }
 
 sub remove {

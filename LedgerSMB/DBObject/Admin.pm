@@ -52,7 +52,6 @@ sub save_user {
         ]
     );
     $user->get();
-    $user->save();
     $self->{user} = $user;
     $self->{employee} = $employee;
     $self->debug({file => '/tmp/user11'});
