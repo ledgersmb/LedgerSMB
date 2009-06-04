@@ -1231,8 +1231,14 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__create_sic",
 "lsmb_<?lsmb dbname ?>__edit_sic";
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__save_tax_form"
+WITH INHERIT NOLOGIN;
+
+GRANT ALL ON country_tax_form TO "lsmb_<?lsmb dbname ?>__save_tax_form";
+
 CREATE ROLE "lsmb_<?lsmb dbname ?>__edit_template"
 WITH INHERIT NOLOGIN;
+
 
 -- TODO Add db permissions as templates get moved into db.
 
@@ -1315,7 +1321,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__change_system_settings",
 "lsmb_<?lsmb dbname ?>__all_department",
 "lsmb_<?lsmb dbname ?>__all_business_type",
 "lsmb_<?lsmb dbname ?>__all_sic",
-"lsmb_<?lsmb dbname ?>__edit_template";
+"lsmb_<?lsmb dbname ?>__edit_template",
+"lsmb_<?lsmb dbname ?>__save_tax_form";
 
 -- Manual Translation
 CREATE ROLE "lsmb_<?lsmb dbname ?>__create_language"
