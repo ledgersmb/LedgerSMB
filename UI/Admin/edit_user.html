@@ -144,10 +144,15 @@
                         <input type="textarea" name="zipcode" value="<?lsmb location.zipcode?>"/>
                     </td>
                     <td valign="top">
+			<?lsmb IF location.country_id; 
+				country_id = location.country_id;
+				ELSE; 
+				country_id = default_country;
+				END  -?>
 			<?lsmb PROCESS select element_data = {
 				name = "country"
 				options = countries
-				default_values = [location.country_id]
+				default_values = [country_id]
 				value_attr = "id"
 				text_attr = "name"
 			} ?>

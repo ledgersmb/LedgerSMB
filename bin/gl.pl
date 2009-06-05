@@ -153,102 +153,278 @@ sub add {
     }
     $form->{oldtransdate} = $form->{transdate};
     $form->{focus}        = "reference";
-
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-
-    display_form(1);
+    display_form(1);	
 
 }
 
-sub edit {
 
-    &create_links;
+sub display_form
+{
+    #Add General Ledger Transaction
+   
+    my ($init) = @_; 
+    # Form header part begins -------------------------------------------
 
-    $form->{locked} =
-      ( $form->{revtrans} )
-      ? '1'
-      : ( $form->datetonum( \%myconfig, $form->{transdate} ) <=
-          $form->datetonum( \%myconfig, $form->{closedto} ) );
-
-    # readonly
-    if ( !$form->{readonly} ) {
-        $form->{readonly} = 1
-          if $myconfig{acs} =~ /General Ledger--Add Transaction/;
+    $title = $form->{title};
+    if ( $form->{transfer} ) {
+        $form->{title} = $locale->text("$title Cash Transfer Transaction");
+    }
+    else {
+        $form->{title} = $locale->text("$title General Ledger Transaction");
     }
 
-    $form->{title} = "Edit";
-
-    $i = 1;
-    foreach $ref ( @{ $form->{GL} } ) {
-        $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
-
-        $form->{"projectnumber_$i"} =
-          "$ref->{projectnumber}--$ref->{project_id}";
-        for (qw(fx_transaction source memo)) { $form->{"${_}_$i"} = $ref->{$_} }
-
-        if ( $ref->{amount} < 0 ) {
-            $form->{totaldebit} -= $ref->{amount};
-            $form->{"debit_$i"} = $ref->{amount} * -1;
-        }
-        else {
-            $form->{totalcredit} += $ref->{amount};
-            $form->{"credit_$i"} = $ref->{amount};
-        }
-
-        $i++;
+    for (qw(reference description notes)) {
+        $form->{$_} = $form->quote( $form->{$_} );
     }
 
-    $form->{rowcount} = $i;
-    $form->{focus}    = "debit_$i";
+    if ( ( $rows = $form->numtextrows( $form->{description}, 50 ) ) > 1 ) {
+         $form->{rowsdesc}=$rows; $form->{colsdesc}=50;
+         $form->{colrowdesc}=1;
+    }
+    else {
+         $form->{colrowdesc}=0;
+     }
 
-    &form_header;
-    &display_rows;
-    &form_footer;
+    if ( ( $rows = $form->numtextrows( $form->{notes}, 50 ) ) > 1 ) {
+        $form->{rowsnotes}=$rows;$form->{colsnotes}=50;
+	$form->{colrownotes}=1;
+    }
+    else {
+               $form->{colrownotes}=0;
+    }
+
+    if (!defined $form->{approved}){
+        $form->{approved} = '1';
+    }
+
+    $focus = ( $form->{focus} ) ? $form->{focus} : "debit_$form->{rowcount}";
+    our %hiddens = (
+    'action' => $form->{action},
+    'direction' => $form->{direction},
+    'oldsort' => $form->{oldsort},
+    'path' => $form->{path},
+    'login' => $form->{login},
+    'sessionid' => $form->{sessionid},
+    'batch_id' => $form->{batch_id},
+    'id' => $form->{id},
+    'transfer' => $form->{transfer},
+    'closedto' => $form->{closedto},
+    'locked' => $form->{locked},
+    'oldtransdate' => $form->{oldtransdate},
+    'recurring' => $form->{recurring},
+    'title' => $title,
+    'approved' => $form->{approved}
+    );
+        
+   
+    #Disply_Row Part  Begins-------------------------------------
+
+    our @displayrows;
+    &display_row($init);
+   
+    #Form footer  Begins------------------------------------------
+
+  for (qw(totaldebit totalcredit)) {
+      $form->{$_} =
+	$form->format_amount( \%myconfig, $form->{$_}, 2, "&nbsp;" );
+  }
+
+  $hiddens{sessionid}=$form->{sessionid};
+  $hiddens{callback}=$form->{callback};
+  $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+  $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
+  my @buttons;
+  if ( !$form->{readonly} ) {
+	      my $i=1;
+	      %button = (
+		  'update' =>
+		    { ndx => 1, key => 'U', value => $locale->text('Update') },
+		  'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+		  'post_as_new' =>
+		    { ndx => 6, key => 'N', value => $locale->text('Post as new') },
+		  'schedule' =>
+		    { ndx => 7, key => 'H', value => $locale->text('Schedule') },
+		  'delete' =>
+		    { ndx => 8, key => 'D', value => $locale->text('Delete') },
+	      );
+
+	      if ($form->{separate_duties}){            
+		  $hiddens{separate_duties}=$form->{separate_duties};
+		  $button{post}->{value} = $locale->text('Save'); 
+	      }
+	      %a = ();
+	      if ( $form->{id} ) {
+
+		  for ( 'update', 'post_as_new', 'schedule' ) { $a{$_} = 1 }
+
+		  if ( !$form->{locked} ) {
+		      if ( $transdate > $closedto ) {
+			  for ( 'post', 'delete' ) { $a{$_} = 1 }
+		      }
+		  }
+
+	      }
+	      else {
+		  if ( $transdate > $closedto ) {
+		      for ( "update", "post", "schedule" ) { $a{$_} = 1 }
+		  }
+	      }
+
+	      if (!$form->{approved} && !$form->{batch_id}){
+		$button{approve} = { 
+			ndx   => 3, 
+			key   => 'S', 
+			value => $locale->text('Post as Saved') };
+		$a{approve} = 1;
+		$a{edit_and_approve} = 1;
+		if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+		    $button{edit_and_approve} = { 
+			ndx   => 4, 
+			key   => 'O', 
+			value => $locale->text('Post as Shown') };
+		}
+		delete $button{post_as_new};
+		delete $button{post};
+	      }
+
+	      for ( keys %button ) { delete $button{$_} if !$a{$_} }      
+	      my $i=1;
+	      for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+	      {
+				  push @buttons, {
+				  name => 'action',
+				  value => $_ ,
+				  text => $button{$_}->{value},
+				  type => 'submit',
+				  class => 'submit',
+				  accesskey => $button{$_}->{key},
+				  order => $i
+						};
+				  $i++;
+	      }
+
+  }
+
+  $form->{recurringset}=0;
+  if ( $form->{recurring} ) {
+      $form->{recurringset}=1;
+  }
+  my $template;
+  my $template = LedgerSMB::Template->new(
+			    user => \%myconfig,
+			    locale => $locale,
+			    path => 'UI/journal',
+			    template => 'journal_entry',
+			    format => 'HTML',
+					);
+
+  $template->render({
+			form => \%$form,
+			buttons => \@buttons,
+			hiddens => \%hiddens,
+			displayrows => \@displayrows        
+                   });
+
+  if ( $form->{lynx} ) {
+      require "bin/menu.pl";
+      &menubar;
+  }
+
+}
+ 
+
+
+sub display_row
+{
+ 
+  my ($init) = @_;  
+  $form->{totaldebit}  = 0;
+  $form->{totalcredit} = 0;
+
+  for $i ( 1 .. $form->{rowcount} ) 
+  {
+
+        my $temphash1;
+        $temphash1->{index}=$i;
+        $temphash1->{source}=$form->{"source_$i"};#input box
+	$temphash1->{memo}=$form->{"memo_$i"}; #input box;
+	$temphash1->{accnoset}=1;
+        $temphash1->{projectset}=1;
+        $temphash1->{fx_transactionset}=1;
+	if ($init)
+	{
+			      $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
+			      $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
+			      $temphash1->{fx_transactionset}=0;    #use checkbox and value=1 if transfer=1
+			      
+        }
+        else
+	{	    
+			      $form->{totaldebit}  += $form->{"debit_$i"};
+			      $form->{totalcredit} += $form->{"credit_$i"};			      
+			      for (qw(debit credit)) {
+				  $form->{"${_}_$i"} =
+				    ( $form->{"${_}_$i"} )
+				    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
+				    : "";
+			      }
+
+			      $temphash1->{debit}=$form->{"debit_$i"};
+			      $temphash1->{credit}=$form->{"credit_$i"};
+
+
+			      if ( $i < $form->{rowcount} )
+			      {					      
+						    $temphash1->{accno}=$form->{"accno_$i"};
+						    $temhash1->{fx_transaction}=$form->{"fx_transaction_$i"};
+
+						    if ( $form->{projectset} and $form->{"projectnumber_$i"} ) {
+							$temphash1->{projectnumber}=$form->{"projectnumber_$i"}; 
+							$temphash1->{projectnumber}=~ s/--.*//;
+								
+						    }
+						    
+						    if ( $form->{transfer} and $form->{"fx_transaction_$i"})
+						    {
+							  $hiddens{"fx_transaction_$i"}=1; 
+						    }
+						    else 
+						    {
+							
+							$temphash1->{fx_transactionset}=0;
+						    }
+						    $hiddens{"accno_$i"}=$form->{"accno_$i"};
+						    $hiddens{"projectnumber_$i"}=$form->{"projectnumber_$i"};
+						
+			      }
+			      else 
+			      {
+						    $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
+						    $temphash1->{projectset}=0;   #use  @{ $form->{all_accno} }
+						    $temphash1->{fx_transactionset}=0;
+						    
+			      }
+
+         }
+  
+         push @displayrows,$temphash1;
+
+ } 
+
+$hiddens{rowcount}=$form->{rowcount};
+$hiddens{pos_adjust}=$form->{pos_adjust};
 
 }
 
-sub create_links {
 
-    GL->transaction( \%myconfig, \%$form );
 
-    for ( @{ $form->{all_accno} } ) {
-        $form->{selectaccno} .= "<option>$_->{accno}--$_->{description}\n";
-    }
-
-    # projects
-    if ( @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option>\n";
-        for ( @{ $form->{all_project} } ) {
-            $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-        }
-    }
-
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{department} = "$form->{department}--$form->{department_id}";
-        $form->{selectdepartment} = "<option>\n";
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-
-}
 
 sub search {
 
     $form->{title} = $locale->text('General Ledger Reports');
 
     $colspan = 5;
+
     $form->all_departments( \%myconfig );
 
     # departments
@@ -260,7 +436,6 @@ sub search {
     unshift @{$form->{all_accounts}}, {id => "", accno => ""};
 
     if ( @{ $form->{all_years} } ) {
-
         # accounting years
         for ( @{ $form->{all_years} } ) {
              $_ = {year => $_};
@@ -677,7 +852,10 @@ sub generate_report {
         output_options => $output_options,
         );
     $template->{method} = 'email' if $output_options;
-    $template->render({
+ 
+
+
+   $template->render({
         form => \%$form,
         buttons => \@buttons,
         hiddens => \%hiddens,
@@ -688,7 +866,78 @@ sub generate_report {
         row_alignment => \%row_alignment,
         totals => \%column_data,
     });
+
+
     $form->info($locale->text('GL report sent to [_1]', $form->{login}));
+
+}
+
+
+
+sub edit {
+
+    &create_links;
+
+    $form->{locked} =
+      ( $form->{revtrans} )
+      ? '1'
+      : ( $form->datetonum( \%myconfig, $form->{transdate} ) <=
+          $form->datetonum( \%myconfig, $form->{closedto} ) );
+    # readonly
+    if ( !$form->{readonly} ) {
+        $form->{readonly} = 1
+          if $myconfig{acs} =~ /General Ledger--Add Transaction/;
+    }
+    $form->{title} = "Edit";
+    if($form->{department_id})
+    {
+         $form->{department}=$form->{departmentdesc}."--".$form->{department_id};
+    }
+    $i = 1;
+    foreach $ref ( @{ $form->{GL} } ) {
+        $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
+        $form->{"projectnumber_$i"} = "$ref->{projectnumber}--$ref->{project_id}";
+        for (qw(fx_transaction source memo)) { $form->{"${_}_$i"} = $ref->{$_} }
+        if ( $ref->{amount} < 0 ) {
+            $form->{totaldebit} -= $ref->{amount};
+            $form->{"debit_$i"} = $ref->{amount} * -1;
+        }
+        else {
+            $form->{totalcredit} += $ref->{amount};
+            $form->{"credit_$i"} = $ref->{amount};
+        }
+
+        $i++;
+    }
+
+   $form->{rowcount} = $i;
+   $form->{focus}    = "debit_$i";
+   &display_form;
+
+}
+
+sub create_links {
+
+    GL->transaction( \%myconfig, \%$form );
+
+
+    # departments
+    if ( @{ $form->{all_department} } ) {
+        $form->{departmentset} = 1;
+        for ( @{ $form->{all_department} } ) {
+            $_->{departmentstyle}=$_->{description}."--".$_->{id};
+        }
+    }
+
+    # projects
+    if ( @{ $form->{all_project} } ) {
+       $form->{projectset}=1; 
+       for ( @{ $form->{all_project} } ) {
+	  $_->{projectstyle}=$_->{projectnumber}."--".$_->{id};
+       }
+    }
+
+  
 
 }
 
@@ -751,21 +1000,9 @@ sub gl_subtotal {
 
 sub update {
 
-    if ( $form->{transdate} ne $form->{oldtransdate} ) {
-        if ( $form->{selectprojectnumber} ) {
-            $form->all_projects( \%myconfig, undef, $form->{transdate} );
-            if ( @{ $form->{all_project} } ) {
-                $form->{selectprojectnumber} = "<option>\n";
-                for ( @{ $form->{all_project} } ) {
-                    $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-                }
-                $form->{selectprojectnumber} =
-                  $form->escape( $form->{selectprojectnumber}, 1 );
-            }
-        }
-        $form->{oldtransdate} = $form->{transdate};
-    }
+     if ( $form->{transdate} ne $form->{oldtransdate} ) {
+         $form->{oldtransdate} = $form->{transdate};
+     }
 
     @a     = ();
     $count = 0;
@@ -798,376 +1035,15 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     }
 
     $form->{rowcount} = $count + 1;
-
-    display_form();
-
+ 
+    GL->get_all_acc_dep_pro( \%myconfig, \%$form );
+    
+    
+    &display_form;
 }
 
-sub display_form {
-    my ($init) = @_;
 
-    &form_header;
-    &display_rows($init);
-    &form_footer;
 
-}
-
-sub display_rows {
-    my ($init) = @_;
-
-    $form->{selectprojectnumber} =
-      $form->unescape( $form->{selectprojectnumber} )
-      if $form->{selectprojectnumber};
-
-    $form->{totaldebit}  = 0;
-    $form->{totalcredit} = 0;
-
-    for $i ( 1 .. $form->{rowcount} ) {
-
-        $source = qq|
-    <td><input name="source_$i" size=10 value="$form->{"source_$i"}"></td>|;
-        $memo = qq|
-    <td><input name="memo_$i" value="$form->{"memo_$i"}"></td>|;
-
-        if ($init) {
-            $accno = qq|
-      <td><select name="accno_$i">$form->{selectaccno}</select></td>|;
-
-            if ( $form->{selectprojectnumber} ) {
-                $project = qq|
-    <td><select name="projectnumber_$i">$form->{selectprojectnumber}</select></td>|;
-            }
-
-            if ( $form->{transfer} ) {
-                $fx_transaction = qq|
-        <td><input name="fx_transaction_$i" class=checkbox type=checkbox value=1></td>
-    |;
-            }
-
-        }
-        else {
-
-            $form->{totaldebit}  += $form->{"debit_$i"};
-            $form->{totalcredit} += $form->{"credit_$i"};
-
-            for (qw(debit credit)) {
-                $form->{"${_}_$i"} =
-                  ( $form->{"${_}_$i"} )
-                  ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
-                  : "";
-            }
-
-            if ( $i < $form->{rowcount} ) {
-
-                $accno = qq|<td>$form->{"accno_$i"}</td>|;
-
-                if ( $form->{selectprojectnumber} ) {
-                    $form->{"projectnumber_$i"} = ""
-                      if $form->{selectprojectnumber} !~
-                      /$form->{"projectnumber_$i"}/;
-
-                    $project = $form->{"projectnumber_$i"};
-                    $project =~ s/--.*//;
-                    $project = qq|<td>$project</td>|;
-                }
-
-                if ( $form->{transfer} ) {
-                    $checked = ( $form->{"fx_transaction_$i"} ) ? "1" : "";
-                    $x = ($checked) ? "x" : "";
-                    $fx_transaction = qq|
-      <td><input type=hidden name="fx_transaction_$i" value="$checked">$x</td>
-    |;
-                }
-
-                $form->hide_form( "accno_$i", "projectnumber_$i" );
-
-            }
-            else {
-
-                $accno = qq|
-      <td><select name="accno_$i">$form->{selectaccno}</select></td>|;
-
-                if ( $form->{selectprojectnumber} ) {
-                    $project = qq|
-      <td><select name="projectnumber_$i">$form->{selectprojectnumber}</select></td>|;
-                }
-
-                if ( $form->{transfer} ) {
-                    $fx_transaction = qq|
-      <td><input name="fx_transaction_$i" class=checkbox type=checkbox value=1></td>
-    |;
-                }
-            }
-        }
-
-        print qq|<tr valign=top>
-    $accno
-    $fx_transaction
-    <td><input name="debit_$i" size=12 value="$form->{"debit_$i"}" accesskey=$i></td>
-    <td><input name="credit_$i" size=12 value=$form->{"credit_$i"}></td>
-    $source
-    $memo
-    $project
-  </tr>
-
-  |;
-    }
-
-    $form->hide_form(qw(rowcount selectaccno pos_adjust));
-
-    print qq|
-<input type=hidden name=selectprojectnumber value="|
-      . $form->escape( $form->{selectprojectnumber}, 1 ) . qq|">|;
-
-}
-
-sub form_header {
-
-    $title = $form->{title};
-    if ( $form->{transfer} ) {
-        $form->{title} = $locale->text("$title Cash Transfer Transaction");
-    }
-    else {
-        $form->{title} = $locale->text("$title General Ledger Transaction");
-    }
-
-    # $locale->text('Add Cash Transfer Transaction')
-    # $locale->text('Edit Cash Transfer Transaction')
-    # $locale->text('Add General Ledger Transaction')
-    # $locale->text('Edit General Ledger Transaction')
-
-    $form->{selectdepartment} = $form->unescape( $form->{selectdepartment} );
-    $form->{selectdepartment} =~ s/ selected//;
-    $form->{selectdepartment} =~
-      s/(<option value="\Q$form->{department}\E")/$1 selected/;
-
-    for (qw(reference description notes)) {
-        $form->{$_} = $form->quote( $form->{$_} );
-    }
-
-    if ( ( $rows = $form->numtextrows( $form->{description}, 50 ) ) > 1 ) {
-        $description =
-qq|<textarea name=description rows=$rows cols=50 wrap=soft>$form->{description}</textarea>|;
-    }
-    else {
-        $description =
-          qq|<input name=description size=50 value="$form->{description}">|;
-    }
-
-    if ( ( $rows = $form->numtextrows( $form->{notes}, 50 ) ) > 1 ) {
-        $notes =
-qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
-    }
-    else {
-        $notes = qq|<input name=notes size=50 value="$form->{notes}">|;
-    }
-    if (!defined $form->{approved}){
-        $form->{approved} = '1';
-    }
-
-    $department = qq|
-        <tr>
-	  <th align=right nowrap>| . $locale->text('Department') . qq|</th>
-	  <td><select name=department>$form->{selectdepartment}</select></td>
-	  <input type=hidden name=selectdepartment value="|
-      . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
-	</tr>
-| if $form->{selectdepartment};
-
-    $project = qq| 
-	  <th class=listheading>| . $locale->text('Project') . qq|</th>
-| if $form->{selectprojectnumber};
-
-    if ( $form->{transfer} ) {
-        $fx_transaction = qq|
-	  <th class=listheading>| . $locale->text('FX') . qq|</th>
-|;
-    }
-
-    $focus = ( $form->{focus} ) ? $form->{focus} : "debit_$form->{rowcount}";
-
-    $form->header;
-
-    print qq|
-<body onload="document.forms[0].${focus}.focus()" />
-
-<form method=post action=$form->{script}>
-         <input type="hidden" name="approved" value="$form->{approved}" />
-|;
-
-    $form->hide_form(
-        qw(batch_id id transfer selectaccno closedto locked oldtransdate recurring));
-
-    print qq|
-<input type=hidden name=title value="$title">
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th align=right>| . $locale->text('Reference') . qq|</th>
-	  <td><input name=reference size=20 value="$form->{reference}"></td>
-	  <th align=right>| . $locale->text('Date') . qq|</th>
-	  <td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
-	</tr>
-	$department
-	<tr>
-	  <th align=right>| . $locale->text('Description') . qq|</th>
-	  <td colspan=3>$description</td>
-	</tr>
-	<tr>
-	  <th align=right>| . $locale->text('Notes') . qq|</th>
-	  <td colspan=3>$notes</td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-	<tr class=listheading>
-	  <th class=listheading>| . $locale->text('Account') . qq|</th>
-	  $fx_transaction
-	  <th class=listheading>| . $locale->text('Debit') . qq|</th>
-	  <th class=listheading>| . $locale->text('Credit') . qq|</th>
-	  <th class=listheading>| . $locale->text('Source') . qq|</th>
-	  <th class=listheading>| . $locale->text('Memo') . qq|</th>
-	  $project
-	</tr>
-|;
-
-}
-
-sub form_footer {
-
-    for (qw(totaldebit totalcredit)) {
-        $form->{$_} =
-          $form->format_amount( \%myconfig, $form->{$_}, 2, "&nbsp;" );
-    }
-
-    $project = qq|
-	  <th>&nbsp;</th>
-| if $form->{selectprojectnumber};
-
-    if ( $form->{transfer} ) {
-        $fx_transaction = qq|
-	  <th>&nbsp;</th>
-|;
-    }
-
-    print qq|
-        <tr class=listtotal>
-	  <th>&nbsp;</th>
-	  $fx_transaction
-	  <th class=listtotal align=right>$form->{totaldebit}</th>
-	  <th class=listtotal align=right>$form->{totalcredit}</th>
-	  <th>&nbsp;</th>
-	  <th>&nbsp;</th>
-	  $project
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
-    $form->hide_form(qw(path login sessionid callback));
-
-    $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
-    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
-
-    # type=submit $locale->text('Update')
-    # type=submit $locale->text('Post')
-    # type=submit $locale->text('Schedule')
-    # type=submit $locale->text('Post as new')
-    # type=submit $locale->text('Delete')
-
-    if ( !$form->{readonly} ) {
-
-        %button = (
-            'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
-            'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-            'post_as_new' =>
-              { ndx => 6, key => 'N', value => $locale->text('Post as new') },
-            'schedule' =>
-              { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-            'delete' =>
-              { ndx => 8, key => 'D', value => $locale->text('Delete') },
-        );
-
-        if ($form->{separate_duties}){
-            $form->hide_form('separate_duties');
-            $button{post}->{value} = $locale->text('Save');
-        }
-
-        %a = ();
-
-        if ( $form->{id} ) {
-            for ( 'update', 'post_as_new', 'schedule' ) { $a{$_} = 1 }
-
-            if ( !$form->{locked} ) {
-                if ( $transdate > $closedto ) {
-                    for ( 'post', 'delete' ) { $a{$_} = 1 }
-                }
-            }
-
-        }
-        else {
-            if ( $transdate > $closedto ) {
-                for ( "update", "post", "schedule" ) { $a{$_} = 1 }
-            }
-        }
-        if (!$form->{approved} && !$form->{batch_id}){
-           $button{approve} = { 
-                   ndx   => 3, 
-                   key   => 'S', 
-                   value => $locale->text('Post as Saved') };
-	   $a{approve} = 1;
-	   $a{edit_and_approve} = 1;
-           if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
-               $button{edit_and_approve} = { 
-                   ndx   => 4, 
-                   key   => 'O', 
-                   value => $locale->text('Post as Shown') };
-          }
-           delete $button{post_as_new};
-           delete $button{post};
-        }
-
-        for ( keys %button ) { delete $button{$_} if !$a{$_} }
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
-        {
-            $form->print_button( \%button, $_ );
-        }
-
-    }
-
-    if ( $form->{recurring} ) {
-        print qq|<div align=right>| . $locale->text('Scheduled') . qq|</div>|;
-    }
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
-    print qq|
-  </form>
-
-</body>
-</html>
-|;
-
-}
 
 sub delete {
 

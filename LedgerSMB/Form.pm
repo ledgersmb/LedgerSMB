@@ -2031,14 +2031,28 @@ sub all_projects {
     }
 
     $query .= qq| ORDER BY projectnumber|;
+ 
+    #my $sth = $dbh->prepare($query);
+    #$sth->execute(@queryargs) || $self->dberror($query);
+    
+     #temporary query
 
-    my $sth = $dbh->prepare($query);
-    $sth->execute(@queryargs) || $self->dberror($query);
+     $query=qq|SELECT pr.*, e.name AS customer
+               FROM project pr
+               LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id) 
+               left join entity e on(e.id=c.entity_id)
+              |;
+my $sth = $dbh->prepare($query);
+    $sth->execute() || $self->dberror($query);
+    #temparary query	
+
+    
 
     @{ $self->{all_project} } = ();
 
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         push @{ $self->{all_project} }, $ref;
+      
     }
 
     $sth->finish;
@@ -2074,7 +2088,13 @@ sub all_departments {
     my $query = qq|SELECT id, description
 					 FROM department
 					WHERE $where
-				 ORDER BY 2|;
+				 ORDER BY id|;
+
+#temporary
+ $query = qq|SELECT id, description
+					 FROM department
+				 ORDER BY id|;
+#end
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $self->dberror($query);

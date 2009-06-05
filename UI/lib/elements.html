@@ -227,6 +227,8 @@
   	<?lsmb
 	    element_type = 'select';
 	    PROCESS auto_id;
+	    parent_id = element_data.id;
+            optindex = 1;
 	  ?>
 	  <?lsmb PROCESS attributes  # Process regular attributes.
 	    attribute_data=element_data
@@ -240,7 +242,9 @@
 	  <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
 	    <?lsmb  # Build options.
 	      FOREACH option_data IN element_data.options;
-	        PROCESS option;
+	        PROCESS option 	parent_id = parent_id, optindex = optindex;
+                optindex=optindex+1;
+
 	      END;
 	    ?>
 	  </select>
@@ -255,6 +259,7 @@
   <?lsmb IF element_data.defined('text_attr');
 	option_data.text = option_data.$text_attr;
     END ?>
+  <?lsmb option_data.id = "${parent_id}-${optindex}" -?>
   <?lsmb  # Selected is a special case -- no attribute key, so it is handled here by looking for the option value in the default_values list.
     IF element_data.defined('default_values') AND element_data.default_values.grep("^${option_data.value}\$").size;
     option_data.selected = ' selected="selected"';
@@ -269,7 +274,7 @@
   <?lsmb PROCESS custom_attributes  # Process custom attributes.
     custom_attribute_data=option_data.attributes 
   ?>
-  <option<?lsmb all_attributes ?><?lsmb all_custom_attributes ?><?lsmb option_data.selected ?>><?lsmb option_data.text ?></option>
+  <option <?lsmb all_attributes ?> <?lsmb all_custom_attributes ?><?lsmb option_data.selected ?>><?lsmb option_data.text ?></option>
 <?lsmb END ?>
 
 <?lsmb # BUTTON ELEMENT ?>

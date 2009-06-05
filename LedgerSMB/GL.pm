@@ -630,7 +630,7 @@ sub transaction {
     $sth->finish;
 
     # get chart of accounts
-    $query = qq|SELECT accno,description
+    $query = qq|SELECT id,accno,description
 				  FROM chart
 				 WHERE charttype = 'A'
 			  ORDER BY accno|;
@@ -639,6 +639,7 @@ sub transaction {
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+	$ref->{accstyle}=$ref->{accno}."--".$ref->{description};
         push @{ $form->{all_accno} }, $ref;
     }
 
@@ -653,5 +654,60 @@ sub transaction {
     $dbh->commit;
 
 }
+
+
+sub get_all_acc_dep_pro
+{
+
+   my ( $self, $myconfig, $form ) = @_;
+ 
+   my ( $query, $sth, $ref );
+
+   # connect to database
+   my $dbh = $form->{dbh};
+
+    $query = qq|SELECT id,accno,description
+				  FROM chart
+				 WHERE charttype = 'A'
+			  ORDER BY accno|;
+
+    $sth = $dbh->prepare($query);
+    $sth->execute || $form->dberror($query);
+
+    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+	$ref->{accstyle}=$ref->{accno}."--".$ref->{description};
+        push @{ $form->{all_accno} }, $ref;
+    }
+
+    $sth->finish;
+   
+    
+    # get departments
+  
+    $form->all_departments( $myconfig, $dbh );
+
+    if ( @{ $form->{all_department} } ) {
+        $form->{departmentset} = 1;
+        for ( @{ $form->{all_department} } ) {
+            $_->{departmentstyle}=$_->{description}."--".$_->{id};
+        }
+    }
+
+
+    # get projects
+    $form->all_projects( $myconfig, $dbh, $form->{transdate} );
+
+    if ( @{ $form->{all_project} } ) {
+       $form->{projectset}=1; 
+       for ( @{ $form->{all_project} } ) {
+	  $_->{projectstyle}=$_->{projectnumber}."--".$_->{id};
+       }
+    }
+
+   
+
+}
+
+
 
 1;
