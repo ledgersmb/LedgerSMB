@@ -1,0 +1,313 @@
+<?lsmb INCLUDE 'ui-header.html' 
+	include_script = [
+		"UI/ajax/scriptaculous/lib/prototype.js",
+		"UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls",
+		"UI/ajax/helpers.js"]
+	stylesheet=form.stylesheet ?>
+<?lsmb PROCESS elements.html ?> 
+
+<body>
+
+<form method="post" action="<?lsmb form.script ?>">
+
+<table width="100%">
+<tr>
+    <th class="listtop" ><?lsmb form.title ?></th>
+</tr>
+
+<tr>
+    <td>
+      <table>
+	<tr>
+	  <th align="right"><?lsmb text('Reference') ?></th>
+	  <td>     
+               <?lsmb INCLUDE input element_data = {
+			name = "reference",
+			value = form.reference,
+			type = "text",
+			size = "20",
+			class = 'reference'
+			id = "ref_1"
+		} ?>
+
+         </td>          
+	  <th align="right"><?lsmb text('Date') ?></th>
+	  <td>
+              <?lsmb INCLUDE input element_data = {
+			name = "transdate"
+			value = form.transdate
+			type = "text"
+			size = "11"
+			class = 'date'
+			id = "tra_1"
+	      } ?>
+          </td>
+	</tr>
+	<?lsmb IF form.departmentset == 1 ?>
+         <tr>
+  	    <th align="right" ><?lsmb text('Department') ?></th>
+	    <td>
+		    <?lsmb INCLUDE select element_data = {
+			text_attr = "description"
+			value_attr = "departmentstyle"
+			default_values = [form.department]
+			options = form.all_department
+			name = "department"
+			id = "dep_1"
+		    } ?>
+
+            </td>
+	 </tr>
+        <?lsmb END ?>
+
+	<tr>
+          <th align="right"><?lsmb text('Description') ?></th>
+	  <td colspan="3">
+			<?lsmb IF form.colrowdesc ==1 ?>
+			      <?lsmb INCLUDE textarea element_data={
+							name = "description"
+							rows = form.rowsdesc
+							cols = form.colsdesc
+							value = form.description
+							id = "des_1"
+								    } 
+			       ?>
+			<?lsmb ELSE ?>
+				  <?lsmb INCLUDE input element_data = {
+						      name = "description",
+						      value = form.description,
+						      type = "text",
+						      size = "50",
+						      class = 'description'
+						      id = "des_1"
+								      } 
+				   ?>
+
+			<?lsmb END ?>
+	  </td>
+	</tr>
+	<tr>
+	  <th align="right"><?lsmb text('Notes') ?></th>
+	  <td colspan="3">
+			<?lsmb IF form.colrownotes ==1 ?>
+			      <?lsmb INCLUDE textarea element_data={
+							name = "notes"
+							rows = form.rowsnotes
+							cols = form.colsnotes
+							value = form.notes
+							id = "not_1"
+                                                 	    } 
+			       ?>
+			<?lsmb ELSE ?>
+				  <?lsmb INCLUDE input element_data = {
+						      name = "notes",
+						      value = form.notes,
+						      type = "text",
+						      size = "50",
+						      class = 'notes'
+						      id = "not_1"
+                                                          } 
+				   ?>
+
+			<?lsmb END ?>
+
+
+	  </td>
+	</tr>
+      </table>
+    </td>
+ </tr>
+
+<tr>
+    <td>
+      <table width="100%">
+	  <tr class="listheading">
+	  <th class="listheading"><?lsmb text('Account') ?></th>
+	  <?lsmb IF form.transfer == 1 ?>
+	     <th class="listheading"><?lsmb text('FX') ?></th>
+	  <?lsmb END ?>
+          <th class="listheading"><?lsmb text('Debit') ?></th>
+	  <th class="listheading"><?lsmb text('Credit') ?></th>
+	  <th class="listheading"><?lsmb text('Source') ?></th>
+	  <th class="listheading"><?lsmb text('Memo') ?></th>
+	  <?lsmb IF form.projectset == 1 ?>
+	  <th class="listheading"><?lsmb text('Project') ?></th>
+	  <?lsmb END ?>
+	</tr>
+	<?lsmb FOREACH displayrow IN displayrows ?> 
+	<tr>
+		<?lsmb INDEX=displayrow.index ?>
+		  <td>
+			<?lsmb IF displayrow.accnoset == 0 ?>
+              			<?lsmb PROCESS ajaxselect element_data = {
+		                     name = "accno_$INDEX"
+		                     initial_value = ${"accno_$INDEX"}
+		                     text_attr = 'accno'
+		                     value_attr = 'id'
+		                     ajax_target = 'journal.pl'
+		              } ?> 
+			   
+			  <?lsmb ELSE ?>
+			      
+				      <?lsmb PROCESS label element_data = {
+					text => displayrow.accno
+					align => 'right'
+					id = "acc_$INDEX"
+				      } ?>
+			      
+
+			<?lsmb END ?> 
+	  
+		 </td>
+	      
+		  <?lsmb IF form.transfer == 1 ?>
+		      <td>
+
+			    <?lsmb IF  displayrow.fx_transactionset == 1 ?>
+					    <?lsmb PROCESS label element_data = {
+					      text => text('x')
+					      align => 'right'
+				              id = "fxt_$INDEX"
+                                               } 
+					      ?>
+			   
+			    <?lsmb ELSE ?>
+			                   <?lsmb PROCESS input element_data = {
+					      value = 1
+					      type = "checkbox"
+					      checked = 1
+					      name = "fx_transaction_$INDEX"
+					      id = "fxt_$INDEX"
+                                              } ?>
+			    <?lsmb END ?>
+			    
+
+		      </td>
+		
+		  <?lsmb END ?>
+		  
+		  <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.debit
+				  name = "debit_$INDEX"
+				  type = "text"
+				  size = 12
+				  accesskey => displayrow.index
+			          id = "deb_$INDEX"
+                                              }  ?>
+		  
+		   </td>
+
+		  <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.credit
+				  name = "credit_$INDEX"
+				  type = "text"
+				  size = 12
+			          id = "cre_$INDEX"
+                                      }  ?>
+		  
+		   </td>
+
+		    <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.source
+				  name = "source_$INDEX"
+				  type = "text"
+				  size = 10
+				  id = "sou_$INDEX"
+                                     
+			   }  ?>
+		  
+		   </td>
+
+		    <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.memo
+				  name = "memo_$INDEX"
+				  type = "text"
+				  size = 30
+			          id = "mem_$INDEX"
+                                     }  ?>
+		  
+		   </td>
+		  <?lsmb IF form.projectset == 1 ?>
+		   <td>	
+
+			<?lsmb IF displayrow.projectset == 1 ?>
+					<?lsmb PROCESS label element_data = {
+					      text => displayrow.projectnumber
+					      align => 'right'
+					      id = "pro_$INDEX"
+                                     } ?>
+						
+
+			<?lsmb ELSE ?>
+				<?lsmb INCLUDE select element_data = {
+					text_attr = "projectnumber"
+					value_attr = "projectstyle"
+					default_values = []
+					options = form.all_project
+					name = "projectnumber_$INDEX"				  
+				        id = "pro_$INDEX"
+                                     } ?> 		
+
+			<?lsmb END ?>
+
+		   </td>
+		  <?lsmb END ?>
+
+        </tr>
+	<?lsmb END ?>
+        <tr class="listtotal">
+	  <th>&nbsp;</th>
+	  <?lsmb IF form.transfer == 1 ?>
+	     <th class="listheading">&nbsp;</th>
+	  <?lsmb END ?>
+	  <th class="listtotal" align="right">
+		    <?lsmb IF form.totaldebit == 0 ?>
+			0
+		    <?lsmb ELSE ?>
+			<?lsmb form.totaldebit ?>
+		    <?lsmb END ?>
+	  </th>
+	  
+	  <th class="listtotal" align="right">
+		    <?lsmb IF form.totalcredit == 0 ?>0
+		    <?lsmb ELSE ?>
+			<?lsmb form.totalcredit ?>
+		    <?lsmb END ?>
+	  </th>
+	  <th>&nbsp;</th>
+	  <th>&nbsp;</th>
+	  <?lsmb IF form.projectset == 1 ?>
+	  <th class="listheading">&nbsp;</th>
+	  <?lsmb END ?>
+        </tr>
+
+     </table>
+    </td>
+</tr>
+ <tr>
+    <td><hr size="3"></hr></td>
+  </tr>
+</table>
+
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+<?lsmb IF form.recurringset ==1 ?>
+          <?lsmb PROCESS label element_data = {
+		text => text('Scheduled')
+		align => 'right'
+           } ?>
+
+<?lsmb END ?>
+</form>
+</body>
+</html>
