@@ -2038,7 +2038,7 @@ sub all_projects {
 
      $query=qq|SELECT pr.*, e.name AS customer
                FROM project pr
-               LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id) 
+               LEFT JOIN entity_credit_account c ON (c.id = pr.customer_id) 
                left join entity e on(e.id=c.entity_id)
               |;
 my $sth = $dbh->prepare($query);
