@@ -1704,13 +1704,12 @@ sub get_name {
 		SELECT c.*, e.name, e.control_code FROM entity_credit_account c
 		JOIN entity e ON (c.entity_id = e.id)
 		WHERE (lower(e.name) LIKE ?
-		OR c.meta_number LIKE ?)
+		OR c.meta_number ILIKE ?)
 		$where
 		ORDER BY e.name/;
 
     unshift( @queryargs, $name, $self->{"${table}number"} );
     my $sth = $self->{dbh}->prepare($query);
-
     $sth->execute(@queryargs) || $self->dberror($query);
 
     my $i = 0;
