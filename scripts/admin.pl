@@ -59,6 +59,17 @@ sub __edit_page {
     $template->render($template_data);
 }
 
+sub save_user {
+    my ($request, $admin) = @_;
+    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
+    
+    my $sal = $admin->get_salutations();
+    
+    my $groups = $admin->get_roles();
+    my $entity = $admin->save_user();
+    __edit_page($admin);
+}
+
 sub new_user {
     
     # uses the same page as create_user, only pre-populated.
@@ -70,24 +81,6 @@ sub new_user {
     
     my $groups = $admin->get_roles();
     
-    if ($request->type() eq 'POST') {
-        
-        # do the save stuff
-        
-        my $entity = $admin->save_user();
-        
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Admin/edit_user', language => $user->{ language }, 
-            format => 'HTML', path=>'UI');
-    
-        $template->render(
-            {   
-                user=>$admin,
-                salutations=>$sal,
-                roles=>$groups
-            }
-        );
-    } else {
     
         my $template = LedgerSMB::Template->new( 
             user => $user, 
@@ -104,7 +97,6 @@ sub new_user {
                 countries=>$admin->get_countries(),
             }
         );
-    }
 }
 
 sub edit_user {

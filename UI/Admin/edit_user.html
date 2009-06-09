@@ -12,7 +12,7 @@
     </font>
     
     <form method="POST" action="admin.pl">
-        <input type="hidden" name="action" value="<?lsmb IF user.user.username?>edit_user<?lsmb ELSE?>new_user<?lsmb END?>"/>
+        <input type="hidden" name="action" value="<?lsmb IF user.user.username?>edit_user<?lsmb ELSE?>save_user<?lsmb END?>"/>
         <table>
 
             <?lsmb UNLESS user.user.username?>
