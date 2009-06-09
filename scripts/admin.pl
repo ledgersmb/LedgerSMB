@@ -41,9 +41,6 @@ sub __edit_page {
                 contact_classes=>$admin->get_contact_classes(),
                 locations=>$location->get_all($user_obj->{entity_id},"person"),
             };
-    open (FOO,">/tmp/dump.txt");
-    print STDERR Dumper($template_data->{contact_classes});
-    print FOO Dumper($template_data);
     
     for my $key (keys(%{$otd})) {
         
@@ -67,6 +64,7 @@ sub save_user {
     
     my $groups = $admin->get_roles();
     my $entity = $admin->save_user();
+    $admin->save_roles();
     __edit_page($admin);
 }
 
@@ -128,23 +126,10 @@ sub edit_user {
                 contact_classes=>$admin->get_contact_classes(),
                 locations=>$location->get_all($user_obj->{entity_id},"person"),
             };
-    open (FOO,">/tmp/dump.txt");
-    print STDERR Dumper($template_data->{contact_classes});
-    print FOO Dumper($template_data);
-    if ($request->type() eq 'POST') {
-        
-        $admin->save_user();
-        $admin->save_roles();
-        $template->render($template_data);
+    if ($request->{location_id}) {
+        $template_data->{location} = $location->get($request->{location_id});
     }
-    else {
-#        print STDERR Dumper($user);
-#        print STDERR Dumper(@all_roles);
-        if ($request->{location_id}) {
-            $template_data->{location} = $location->get($request->{location_id});
-        }
-        $template->render($template_data);
-    }
+    $template->render($template_data);
 }
 
 sub edit_group {
@@ -361,9 +346,7 @@ sub save_location {
         # zipcode
         # country
         # u_id isn't an entity_it, though.
-        print STDERR "Attempting to save location...\n";
         $location->{user_id} = $user_obj->{user}->{entity_id};
-        print STDERR $location->{user_id}."\n";
         my $id = $location->save("person");
         # Done and done.
         

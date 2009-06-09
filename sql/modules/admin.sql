@@ -10,7 +10,7 @@
 
 create table lsmb_roles (
     
-    user_id integer not null references users,
+    user_id integer not null references users(id),
     role text not null
     
 );
@@ -39,7 +39,8 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
         stmt := 'GRANT '|| quote_ident(in_role) ||' to '|| quote_ident(in_username);
         
         EXECUTE stmt;
-        insert into lsmb_roles (user_id, role) values (in_username, in_role);
+        insert into lsmb_roles (user_id, role) 
+        SELECT id, in_role from users where username = in_username;
         return 1;
     END;
     

@@ -40,6 +40,7 @@
 
 <?lsmb # INPUT ELEMENT ?>
 <?lsmb BLOCK input ?>
+  <?lsmb IF label_pos != 1 and label_pos != -1; label_pos = -1; END ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>
   	<?lsmb
 	    input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with.
@@ -74,8 +75,13 @@
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
 	    custom_attribute_data=element_data.attributes 
 	  ?>
+          <?lsmb IF label_pos == -1 ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
+          <?lsmb END ?>
 	  <input<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> />
+          <?lsmb IF label_pos == 1 ?>
+	  <?lsmb PROCESS auto_label  # Process element label. ?>
+          <?lsmb END ?>
   <?lsmb END ?>
 <?lsmb END ?>
 

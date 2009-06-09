@@ -289,6 +289,7 @@ CREATE TABLE person_to_contact (
   person_id integer not null references person(id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
+  description text,
   PRIMARY KEY (person_id,contact_class_id,contact));
   
 COMMENT ON TABLE person_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single individual $$;

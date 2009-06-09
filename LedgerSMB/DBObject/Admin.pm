@@ -22,6 +22,9 @@ sub save_user {
     my $entity = LedgerSMB::DBObject::Employee->new(base=>$self, copy=>'none');
     
     $entity->set(name=>$self->{first_name}." ".$self->{last_name});
+    if (!defined $self->{first_name} or !defined $self->{last_name}){
+       return;
+    }
     $entity->save();
     
     $self->{entity_id} = $entity->{entity};
@@ -94,57 +97,61 @@ sub save_roles {
     my $self = shift @_;
     
     my $user = LedgerSMB::DBObject::User->new( base=>$self, copy=>'all' );
-    
-    my $roles = $self->exec_method( procname => "admin__all_roles" );
-    my $user_roles = $self->exec_method(procname => "admin__get_user_roles", args=>[ $user->{id} ] );
-    
+    $user->get();
+    $self->{modifying_user} = $user->{user}->{username};
+    my @roles = $self->exec_method( funcname => "admin__get_roles" );
+    my @user_roles = $self->exec_method(funcname => "admin__get_roles_for_user");
     my %active_roles;
-    for my $role (@{ $user_roles }) {
+    for my $role (@user_roles) {
        
        # These are our user's roles.
+       print STDERR "Have $role->{rolname}\n";
         
-       $active_roles{$role} = 1;
+       $active_roles{"$role->{rolname}"} = 1;
     }
     
     my $status;
     
-    for my $role ( @{ $roles } ) {
-        
+    for my $r ( @roles) {
+        my $role = $r->{rolname};
+        my $reqrole = $role;
+        $reqrole =~ s/^lsmb_$self->{company}__//;
         # These roles are were ALL checked on the page, so they're the active ones.
         
-        if ( $active_roles{$role} && $self->{$role} ) {
+        if ( $active_roles{$role} && $self->{$reqrole} ) {
             
             # do nothing.
             ;
         }
-        elsif ($active_roles{$role} && !($self->{$role} )) {
+        elsif ($active_roles{$role} && !($self->{$reqrole} )) {
             
             # do remove function
-            $status = $self->exec_method(procname => "admin__remove_user_from_role",
+            $status = $self->call_procedure(procname => "admin__remove_user_from_role",
                 args=>[ $self->{ modifying_user }, $role ] );
         }
-        elsif ($self->{incoming_roles}->{$role} and !($active_roles{$role} )) {
+        elsif ($self->{$reqrole} and !($active_roles{$role} )) {
             
             # do add function
-            $status = $self->exec_method(procname => "admin__add_user_to_role",
+            $status = $self->call_procedure(procname => "admin__add_user_to_role",
                args=>[ $self->{ modifying_user }, $role ] 
             );
         }         
     }
+    $self->{dbh}->commit;
 }
 
 sub save_group {
     
      my $self = shift @_;
      
-     my $existant = shift @{ $self->exec_method (procname=> "is_group", args=>[$self->{modifying_group}]) };
+     my $existant = shift @{ $self->call_procedure (procname=> "is_group", args=>[$self->{modifying_group}]) };
      
-     my $group = shift @{ $self->exec_method (procname=> "save_group") };
+     my $group = shift @{ $self->exec_method (funcname=> "save_group") };
      
      # first we grab all roles
      
-     my $roles = $self->exec_method( procname => "admin__all_roles" );
-     my $user_roles = $self->exec_method(procname => "admin__get_user_roles", 
+     my $roles = $self->call_procedure( procname => "admin__all_roles" );
+     my $user_roles = $self->call_procedure(procname => "admin__get_user_roles", 
         args=>[ $self->{ group_name } ] 
     );
 
@@ -242,12 +249,11 @@ sub get_salutations {
 sub get_roles {
     
     my $self = shift @_;
-#    print STDERR "attempting to get roles";
     my @s_rows = $self->call_procedure(procname=>'admin__get_roles');
     my @rows;
+    my $company = $self->{company};
     for my $role (@s_rows) {
-        my $rolname = $role->{'admin__get_roles'};
-        my $company = $self->{company};
+        my $rolname = $role->{'rolname'};
         $rolname =~ s/lsmb_${company}__//gi;
         push @rows, $rolname;
     }

@@ -229,9 +229,13 @@
                 </td>
             </tr>
             </form>
-        </table>
+        </table> 
         <form name="groups" method="POST" action="admin.pl">
-            <input type="hidden" name="action" value="save_groups"/>
+            <?lsmb PROCESS input element_data = {
+               type="hidden"
+               name="user_id"
+               value= user.user.id 
+           } ?>
             <table>
                 <!-- Groups section -->
                 <tr>
@@ -241,13 +245,17 @@
                 <tr>
                 <?lsmb END?>
                     <td>
-                        <input type="checkbox" name="<?lsmb loop.index?>" value="1" 
-                            <?lsmb FOREACH rolname IN user.roles ?>
-                                <?lsmb IF role == rolname?>
-                                    checked
-                                <?lsmb END?>
-                            <?lsmb END?> />
-                        <?lsmb role?>
+                        <?lsmb rolcheck = undef; 
+                           IF user.roles.grep(role).size;
+                              rolcheck = "checked";
+                           END ?>
+                        <?lsmb PROCESS input element_data = {
+                               type = "checkbox"
+                               label = role
+                               value = 1
+                               name = role
+                               checked = rolcheck
+                         }, label_pos = 1 ?>
                     </td>
                 <?lsmb END?>
                 </tr>
@@ -255,8 +263,12 @@
         
             <table>
                 <tr>
-                    <td><button value="groups">Save Groups</button></td>
-                    <td><button name="method" value="cancel">Cancel</td>
+                    <td><?lsmb PROCESS button element_data = {
+                          text = text('Save Groups') #'
+                          class = "submit"
+                          name = "action"
+                          value = "save_user"
+                    } ?></td>
                 </tr>
             </table>
         </form>   

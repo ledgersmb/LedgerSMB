@@ -696,7 +696,7 @@ sub error {
         
         print qq|Content-Type: text/html; charset=utf-8\n\n|;
         print "<head></head>";
-
+        $self->{msg} =~ s/\n/<br \/>\n/;
         print
           qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
 
@@ -804,23 +804,24 @@ sub _on_connection_error {
     }
 }
 
-# Deprecated, only here for old code
 sub dberror{
    my $self = shift @_;
    my $state_error = {
-	'42401' => $self->{_locale}->text('Access Denied'),
+        '42883' => $self->{_locale}->text('Internal Database Error'),
 	'42501' => $self->{_locale}->text('Access Denied'),
+	'42401' => $self->{_locale}->text('Access Denied'),
 	'22008' => $self->{_locale}->text('Invalid date/time entered'),
 	'22012' => $self->{_locale}->text('Division by 0 error'),
 	'22004' => $self->{_locale}->text('Required input not provided'),
-	'P0001' => $self->{_locale}->text('Error from Function:') . " " .
-                    $self->{dbh}->errstr,
 	'23502' => $self->{_locale}->text('Required input not provided'),
+	'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
+                    $self->{dbh}->errstr,
    };
    print STDERR "Logging SQL State ".$self->{dbh}->state.", error ".
            $self->{dbh}->err . ", string " .$self->{dbh}->errstr . "\n";
-   if (scalar grep /^$self->{dbh}->state$/, keys %$state_error){
+   if (defined $state_error->{$self->{dbh}->state}){
        $self->error($state_error->{$self->{dbh}->state});
+       exit;
    }
    $self->error($self->{dbh}->state . ":" . $self->{dbh}->errstr);
 }
