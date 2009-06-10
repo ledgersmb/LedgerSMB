@@ -941,7 +941,7 @@ CREATE TABLE project (
   parts_id int,
   production numeric default 0,
   completed numeric default 0,
-  credit_id int references entity_credit_account(id),
+  credit_id int references entity_credit_account(id)
 );
 --
 CREATE TABLE partsgroup (
