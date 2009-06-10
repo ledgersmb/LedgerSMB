@@ -463,7 +463,9 @@ sub search {
 
 sub generate_report {
     my $output_options = shift;
-    ($form->{accno}) = split /--/, $form->{account};
+    if ($form->{account}){
+        ($form->{accno}) = split /--/, $form->{account};
+    }
     $form->{sort} = "transdate" unless $form->{sort};
     $form->{amountfrom} = $form->parse_amount(\%myconfig, $form->{amountfrom});
     $form->{amountto} = $form->parse_amount(\%myconfig, $form->{amountto});
