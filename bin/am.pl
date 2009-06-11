@@ -173,11 +173,6 @@ sub form_footer_buttons {
             };
     }
 
-##SC: Temporary removal
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
 }
 
 sub save_account {
@@ -272,7 +267,7 @@ sub list_account {
             $column_data{class} = 'heading';
             $column_data{accno} = {
               text => $ca->{accno},
-              href => "$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
+              href => "account.pl?action=edit&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&charttype=H&callback=$callback"};
             $column_data{gifi_accno} = {
               text => $ca->{gifi_accno},
               href => "$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
@@ -288,7 +283,7 @@ sub list_account {
             $column_data{i} = $i;
             $column_data{accno} = {
               text => $ca->{accno},
-              href => "$form->{script}?action=edit_account&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
+              href => "account.pl?action=edit&charttype=A&id=$ca->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};
             $column_data{gifi_accno} = {
               text => $ca->{gifi_accno},
               href => "$form->{script}?action=edit_gifi&accno=$gifi_accno&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback"};

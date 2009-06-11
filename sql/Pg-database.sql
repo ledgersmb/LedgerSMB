@@ -2,16 +2,44 @@ begin;
 CREATE SEQUENCE id;
 -- As of 1.3 there is no central db anymore. --CT
 
-CREATE TABLE chart (
-  id serial PRIMARY KEY,
-  accno text NOT NULL,
-  description text,
-  charttype char(1) DEFAULT 'A',
-  category char(1),
-  link text,
-  gifi_accno text,
-  contra bool DEFAULT 'f'
+CREATE OR REPLACE FUNCTION concat_colon(TEXT, TEXT) returns TEXT as
+$$
+select CASE WHEN $1 IS NULL THEN $2 ELSE $1 || ':' || $2 END;
+$$ language sql;
+
+CREATE AGGREGATE concat_colon (
+	BASETYPE = text,
+	STYPE = text,
+	SFUNC = concat_colon
 );
+
+CREATE TABLE account_heading (
+  id serial not null unique,
+  accno text primary key,
+  parent_id int references account_heading(id),
+  description text
+);
+
+CREATE TABLE account (
+  id serial not null unique,
+  accno text primary key,
+  description text,
+  category CHAR(1) NOT NULL,
+  gifi_accno text,
+  heading int not null references account_heading(id),
+  contra bool not null default false
+);
+
+CREATE TABLE account_link (
+   account_id int references account(id),
+   description text,
+   primary key (account_id, description)
+);
+
+CREATE VIEW chart AS
+SELECT id, accno, description, 'H' as charttype, NULL as category, NULL as link, NULL as account_heading, null as gifi_accno, false as contra from account_heading UNION
+select c.id, c.accno, c.description, 'A' as charttype, c.category, concat_colon(l.description) as link, heading, gifi_accno, contra from account c left join account_link l ON (c.id = l.account_id) group by c.id, c.accno, c.description, c.category, c.heading, c.gifi_accno, c.contra;
+
 --
 -- pricegroup added here due to references
 CREATE TABLE pricegroup (
@@ -83,6 +111,32 @@ users_id INTEGER NOT NULL references users(id),
 transaction_id INTEGER NOT NULL,
 notify_pasword interval not null default '7 days'::interval
 );
+
+CREATE TABLE open_forms (
+id SERIAL PRIMARY KEY,
+session_id int REFERENCES session(session_id) ON DELETE CASCADE
+);
+
+--
+CREATE TABLE transactions (
+  id int PRIMARY KEY,
+  table_name text,
+  locked_by int references "session" (session_id) ON DELETE SET NULL,
+  approved_by int references entity (id),
+  approved_at timestamp
+);
+
+COMMENT on TABLE transactions IS 
+$$ This table tracks basic transactions across AR, AP, and GL related tables.  
+It provies a referential integrity enforcement mechanism for the financial data
+and also some common features such as discretionary (and pessimistic) locking 
+for long batch workflows. $$;
+
+CREATE OR REPLACE FUNCTION lock_record (int, int) returns bool as 
+$$
+declare
+   locked int;
+begin
 
 CREATE TABLE open_forms (
 id SERIAL PRIMARY KEY,
@@ -319,7 +373,7 @@ CREATE TABLE entity_credit_account (
     discount numeric, 
     description text,
     discount_terms int default 0,
-    discount_account_id int references chart(id),
+    discount_account_id int references account(id),
     taxincluded bool default 'f',
     creditlimit NUMERIC default 0,
     terms int2 default 0,
@@ -335,8 +389,8 @@ CREATE TABLE entity_credit_account (
     threshold numeric default 0,
     employee_id int references entity_employee(entity_id),
     primary_contact int references person(id),
-    ar_ap_account_id int references chart(id),
-    cash_account_id int references chart(id),
+    ar_ap_account_id int references account(id),
+    cash_account_id int references account(id),
     bank_account int references entity_bank_account(id),
     PRIMARY KEY(entity_id, meta_number, entity_class)
 );
@@ -519,7 +573,7 @@ COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy refer
 
 CREATE TABLE acc_trans (
   trans_id int NOT NULL REFERENCES transactions(id),
-  chart_id int NOT NULL REFERENCES chart (id),
+  chart_id int NOT NULL REFERENCES  account(id),
   amount NUMERIC,
   transdate date DEFAULT current_date,
   source text,
@@ -815,7 +869,7 @@ CREATE TABLE partstax (
   taxcategory_id int,
   PRIMARY KEY (parts_id, chart_id),
   FOREIGN KEY (parts_id) REFERENCES parts (id) on delete cascade,
-  FOREIGN KEY (chart_id) REFERENCES chart (id),
+  FOREIGN KEY (chart_id) REFERENCES  account(id),
   FOREIGN KEY (taxcategory_id) REFERENCES taxcategory (taxcategory_id)
 );
 --
@@ -826,20 +880,20 @@ CREATE TABLE tax (
   validto timestamp default 'infinity',
   pass integer DEFAULT 0 NOT NULL,
   taxmodule_id int DEFAULT 1 NOT NULL,
-  FOREIGN KEY (chart_id) REFERENCES chart (id),
+  FOREIGN KEY (chart_id) REFERENCES  account(id),
   FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id),
   PRIMARY KEY (chart_id, validto)
 );
 --
 CREATE TABLE customertax (
   customer_id int references entity_credit_account(id) on delete cascade,
-  chart_id int,
+  chart_id int REFERENCES account(id),
   PRIMARY KEY (customer_id, chart_id)
 );
 --
 CREATE TABLE vendortax (
   vendor_id int references entity_credit_account(id) on delete cascade,
-  chart_id int,
+  chart_id int REFERENCES account(id),
   PRIMARY KEY (vendor_id, chart_id)
 );
 --
@@ -2381,11 +2435,11 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 135	action	backup	352
 134	media	file	353
 135	media	email	354
-137	module	am.pl	355
+137	module	account.pl	355
 138	module	am.pl	356
 139	module	am.pl	357
 140	module	am.pl	358
-137	action	add_account	359
+137	action	new	359
 138	action	list_account	360
 139	action	add_gifi	361
 140	action	list_gifi	362
@@ -2583,32 +2637,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 204	action	create_batch	572
 201	batch_type	payment	564
 \.
-
---
--- Name: menu_attribute_id_key; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
---
-
-ALTER TABLE ONLY menu_attribute
-    ADD CONSTRAINT menu_attribute_id_key UNIQUE (id);
-
-
---
--- Name: menu_attribute_pkey; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
---
-
-ALTER TABLE ONLY menu_attribute
-    ADD CONSTRAINT menu_attribute_pkey PRIMARY KEY (node_id, attribute);
-
-
---
--- Name: menu_attribute_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ledgersmb
---
-
-ALTER TABLE ONLY menu_attribute
-    ADD CONSTRAINT menu_attribute_node_id_fkey FOREIGN KEY (node_id) REFERENCES menu_node(id);
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -2743,6 +2771,7 @@ CREATE VIEW menu_friendly AS
 --
 -- PostgreSQL database dump complete
 --
+
 CREATE AGGREGATE as_array (
 	BASETYPE = ANYELEMENT,
 	STYPE = ANYARRAY,
