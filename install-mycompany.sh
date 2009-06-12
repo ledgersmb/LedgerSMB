@@ -17,28 +17,7 @@ psql -U postgres -d mycompany -f $CONTRIB/tsearch2.sql
 psql -U postgres -d mycompany -f $CONTRIB/tablefunc.sql
 psql -U postgres -d mycompany -f $CONTRIB/pg_trgm.sql
 psql -U postgres -d mycompany -f $CWD/sql/Pg-database.sql ;
-psql -U postgres -d mycompany -f $CWD/sql/modules/Drafts.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/chart.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Account.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Session.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Business_type.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Location.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Company.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Customer.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Date.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Defaults.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Settings.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Employee.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Entity.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Payment.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Person.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Report.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Voucher.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Reconciliation.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Inventory.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/Vendor.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/TaxForm.sql ; 
-psql -U postgres -d mycompany -f $CWD/sql/modules/admin.sql ; 
+psql -U postgres -d mycompany -f $CWD/sql/modules/install.sql ; 
 psql -U postgres -d mycompany -f $CWD/sql/coa/us/chart/General.sql
 sed -e "s/<?lsmb dbname ?>/mycompany/g" $CWD/sql/modules/Roles.sql > $CWD/mycompany_roles.sql ; 
 psql -U postgres -d mycompany -f $CWD/mycompany_roles.sql ; 
