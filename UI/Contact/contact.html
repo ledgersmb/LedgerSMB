@@ -859,6 +859,15 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		value=credit_id
 	} ?>
 <?lsmb IF credit_id -?>
+<div class="input">
+   <?lsmb PROCESS input element_data = {
+      label = text('Subject:'),
+      name = "subject"
+      value = subject
+      type = "text"
+      size = "20"
+	} ?>
+</div>
 <div class="input"><?lsmb PROCESS select element_data = {
 			name = "note_class"
 			default_values = [note_class]
@@ -884,9 +893,10 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </form>
 <?lsmb FOREACH n = notes ?>
 <div class="note">
-<div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
-<div class="author"><?lsmb text("Author: [_1]", n.created_by) ?></div>
-<div class="note_contents"><?lsmb n.note ?></div>
+    <div class="note_subject"><?lsmb text('Subject: [_1]', n.subject)?></div>
+    <div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
+    <div class="author"><?lsmb text("Author: [_1]", n.created_by) ?></div>
+    <div class="note_contents"><?lsmb n.note ?></div>
 </div>
 <?lsmb END ?>
 </div>

@@ -93,28 +93,28 @@ BEGIN
 END;
 $$ language plpgsql;	
 
-CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text)
+CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text, in_subject text)
 RETURNS INT AS
 $$
 DECLARE out_id int;
 BEGIN
 	-- TODO, change this to create vector too
-	INSERT INTO entity_note (ref_key, note_class, entity_id, note, vector)
-	VALUES (in_entity_id, 1, in_entity_id, in_note, '');
+	INSERT INTO entity_note (ref_key, note_class, entity_id, note, vector, subject)
+	VALUES (in_entity_id, 1, in_entity_id, in_note, '', in_subject);
 
 	SELECT currval('note_id_seq') INTO out_id;
 	RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text)
+CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text, in_subject text)
 RETURNS INT AS
 $$
 DECLARE out_id int;
 BEGIN
 	-- TODO, change this to create vector too
-	INSERT INTO eca_note (ref_key, note_class, note, vector)
-	VALUES (in_credit_id, 3, in_note, '');
+	INSERT INTO eca_note (ref_key, note_class, note, vector, subject)
+	VALUES (in_credit_id, 3, in_note, '', in_subject);
 
 	SELECT currval('note_id_seq') INTO out_id;
 	RETURN out_id;

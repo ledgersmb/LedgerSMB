@@ -412,11 +412,14 @@ INSERT INTO note_class(id,class) VALUES (2,'Invoice');
 INSERT INTO note_class(id,class) VALUES (3,'Entity Credit Account');
 CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 
-CREATE TABLE note (id serial primary key, note_class integer not null references note_class(id), 
-                   note text not null, vector tsvector not null, 
+CREATE TABLE note (id serial primary key, 
+                   note_class integer not null references note_class(id), 
+                   note text not null, 
+                   vector tsvector not null, 
                    created timestamp not null default now(),
                    created_by text DEFAULT SESSION_USER,
-                   ref_key integer not null);
+                   ref_key integer not null,
+                   subject text);
 
 CREATE TABLE entity_note(entity_id int references entity(id)) INHERITS (note);
 ALTER TABLE entity_note ADD CHECK (note_class = 1);
