@@ -368,7 +368,7 @@ CREATE TABLE entity_credit_account (
     ar_ap_account_id int references account(id),
     cash_account_id int references account(id),
     bank_account int references entity_bank_account(id),
-    taxform_id int references country_tax_form(id)
+    taxform_id int references country_tax_form(id),
     PRIMARY KEY(entity_id, meta_number, entity_class)
 );
 
