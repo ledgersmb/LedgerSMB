@@ -1,6 +1,6 @@
 CREATE TABLE cr_report (
     id bigserial primary key not null,
-    chart_id int not null references chart(id),
+    chart_id int not null references account(id),
     their_total numeric not null,
     approved boolean not null default 'f',
     submitted boolean not null default 'f',
