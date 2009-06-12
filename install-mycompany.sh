@@ -22,7 +22,7 @@ psql -U postgres -d mycompany -f $CWD/sql/coa/us/chart/General.sql
 sed -e "s/<?lsmb dbname ?>/mycompany/g" $CWD/sql/modules/Roles.sql > $CWD/mycompany_roles.sql ; 
 psql -U postgres -d mycompany -f $CWD/mycompany_roles.sql ; 
 createuser --no-superuser --createdb --no-createrole -U postgres --pwprompt --encrypted myuser ; 
-psql -U postgres -d mycompany -t -c "INSERT INTO entity (name, entity_class, created) VALUES ('myuser', 3, NOW()) RETURNING name, entity_class, created;" ; 
+psql -U postgres -d mycompany -t -c "INSERT INTO entity (name, entity_class, created, control_code) VALUES ('myuser', 3, NOW(), '123') RETURNING name, entity_class, created;" ; 
 psql -U postgres -d mycompany -t -c "INSERT INTO person (entity_id, first_name, last_name, created) VALUES (2, 'Firstname', 'Lastname', NOW()) RETURNING entity_id, first_name, last_name, created;" ; 
 psql -U postgres -d mycompany -t -c "INSERT INTO entity_employee (person_id, entity_id, startdate, role) VALUES (1, 2, NOW(), 'myuser') RETURNING person_id, entity_id, startdate, role;" ; 
 psql -U postgres -d mycompany -t -c "INSERT INTO users (username, entity_id) VALUES ('myuser', 2) RETURNING username, entity_id;" ; 
