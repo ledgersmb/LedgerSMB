@@ -6,6 +6,7 @@
 -- customized for http://www.ledgersmb.org/
 -- encoding UTF-8
 --
+-- Needs to be converted to use new framework.  Not working.
 
 INSERT INTO chart VALUES (10001, '1000', 'Dlouhodobý nehmotný majetek', 'A', 'A', 'AP_amount', '', false);
 INSERT INTO chart VALUES (10033, '3200', 'Umělecká díla a sbírky', 'A', 'A', 'AP_amount', '', false);
