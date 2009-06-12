@@ -46,10 +46,21 @@ CREATE TABLE pricegroup (
   pricegroup text
 );
 
+CREATE TABLE country (
+  id serial PRIMARY KEY,
+  name text check (name ~ '[[:alnum:]_]') NOT NULL,
+  short_name text check (short_name ~ '[[:alnum:]_]') NOT NULL,
+  itu text);
+  
+COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 $$;
+
+CREATE UNIQUE INDEX country_name_idx on country(lower(name));
+
 -- BEGIN new entity management
 CREATE TABLE entity_class (
   id serial primary key,
   class text check (class ~ '[[:alnum:]_]') NOT NULL,
+  country_id int references country(id),
   active boolean not null default TRUE);
   
 COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
@@ -152,16 +163,6 @@ $$ This should only be used in pessimistic locking measures as required by large
 batch work flows. $$;
 
 -- LOCATION AND COUNTRY
-CREATE TABLE country (
-  id serial PRIMARY KEY,
-  name text check (name ~ '[[:alnum:]_]') NOT NULL,
-  short_name text check (short_name ~ '[[:alnum:]_]') NOT NULL,
-  itu text);
-  
-COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 $$;
-
-CREATE UNIQUE INDEX country_name_idx on country(lower(name));
-
 
 create table country_tax_form (                                                    country_id int references country(id) not null,
    form_name text not null,
