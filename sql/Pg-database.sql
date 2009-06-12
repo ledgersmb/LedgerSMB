@@ -137,32 +137,6 @@ $$
 declare
    locked int;
 begin
-
-CREATE TABLE open_forms (
-id SERIAL PRIMARY KEY,
-session_id int REFERENCES session(session_id) ON DELETE CASCADE
-);
-
---
-CREATE TABLE transactions (
-  id int PRIMARY KEY,
-  table_name text,
-  locked_by int references "session" (session_id) ON DELETE SET NULL,
-  approved_by int references entity (id),
-  approved_at timestamp
-);
-
-COMMENT on TABLE transactions IS 
-$$ This table tracks basic transactions across AR, AP, and GL related tables.  
-It provies a referential integrity enforcement mechanism for the financial data
-and also some common features such as discretionary (and pessimistic) locking 
-for long batch workflows. $$;
-
-CREATE OR REPLACE FUNCTION lock_record (int, int) returns bool as 
-$$
-declare
-   locked int;
-begin
    SELECT locked_by into locked from transactions where id = $1;
    IF NOT FOUND THEN
 	RETURN FALSE;
@@ -1241,12 +1215,6 @@ create index ar_ordnumber_key on ar (ordnumber);
 create index ar_quonumber_key on ar (quonumber);
 --
 create index assembly_id_key on assembly (id);
---
-create index chart_id_key on chart (id);
-create unique index chart_accno_key on chart (accno);
-create index chart_category_key on chart (category);
-create index chart_link_key on chart (link);
-create index chart_gifi_accno_key on chart (gifi_accno);
 --
 create index customer_customer_id_key on customertax (customer_id);
 --
