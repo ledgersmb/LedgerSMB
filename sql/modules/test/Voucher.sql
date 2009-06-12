@@ -12,20 +12,20 @@ values (-3, -1, 'Test', 1);
 
 INSERT INTO entity_employee(entity_id) values (-3);
 
-INSERT INTO chart (id, accno, description, link)
-VALUES ('-5', '-21111', 'Testing AP', 'AP');
+INSERT INTO chart (id, accno, description, link, charttype, category)
+VALUES ('-5', '-21111', 'Testing AP', 'AP', 'A', 'A');
 
 INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
 VALUES (-5, 'test1', '1000', 'USD', false, -1);
 
 INSERT INTO acc_trans(trans_id, chart_id, amount, approved)
-values (-5, -5, 1000, true);
+values (-5, test_get_account_id('-21111'), 1000, true);
 
 INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
 VALUES (-6, 'test1', '1000', 'USD', false, -1);
 
 INSERT INTO acc_trans(trans_id, chart_id, amount, approved)
-values (-6, -5, 1000, true);
+values (-6, test_get_account_id('-21111'), 1000, true);
 INSERT INTO voucher (trans_id, batch_id, batch_class)
 values (-5, currval('batch_id_seq'), 1);
 INSERT INTO voucher (trans_id, batch_id, batch_class)

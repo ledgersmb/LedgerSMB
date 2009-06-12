@@ -16,7 +16,7 @@ values (-100, 'test1', -100, 1);
 INSERT INTO ap (invnumber, netamount, amount, entity_credit_account, id) 
 VALUES ('TEST', '0', '0', -100, -100);
 INSERT INTO acc_trans (trans_id, chart_id, amount)
-VALUES (-100, currval('chart_id_seq')::int, '0');
+VALUES (-100, currval('account_id_seq')::int, '0');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP 1', 'A', 'L', '00003', 'AP');
@@ -79,7 +79,7 @@ INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00022', 'AR_overp');
 
 INSERT INTO test_result(test_name, success)
-VALUES ('Accounts created', currval('chart_id_seq') is not null);
+VALUES ('Accounts created', currval('account_id_seq') is not null);
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Chart 1 is orphaned', account_has_transactions((select id from chart where description = 'TEST testing 1')) is false);
@@ -88,7 +88,7 @@ INSERT INTO test_result(test_name, success)
 VALUES ('Chart 2 is not orphaned', account_has_transactions((select id from chart where accno = '00002')) is true);
 
 INSERT INTO test_result(test_name, success)
-SELECT 'All Test Accounts Exist', count(*) = 22 FROM chart_list_all() 
+SELECT 'All Test Accounts Exist', count(*) = 23 FROM chart_list_all() 
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
