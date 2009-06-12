@@ -61,7 +61,7 @@ BEGIN
 		END LOOP;
 	ELSE 
 		FOR out_row IN
-			SELECT ....
+			SELECT 1
 		LOOP
 			RETURN NEXT out_row;
 		END LOOP;
