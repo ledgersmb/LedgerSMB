@@ -41,7 +41,7 @@ CREATE TABLE cr_report_line (
 );
 
 CREATE TABLE cr_coa_to_account (
-    chart_id int not null references chart(id),
+    chart_id int not null references account(id),
     account text not null
 );
 
