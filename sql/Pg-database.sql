@@ -46,6 +46,8 @@ CREATE TABLE pricegroup (
   pricegroup text
 );
 
+-- country and tax form
+
 CREATE TABLE country (
   id serial PRIMARY KEY,
   name text check (name ~ '[[:alnum:]_]') NOT NULL,
@@ -55,6 +57,12 @@ CREATE TABLE country (
 COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 $$;
 
 CREATE UNIQUE INDEX country_name_idx on country(lower(name));
+
+create table country_tax_form (                                                    country_id int references country(id) not null,
+   form_name text not null,
+   id serial not null unique,
+   primary key(country_id, form_name)
+);
 
 -- BEGIN new entity management
 CREATE TABLE entity_class (
@@ -163,12 +171,6 @@ $$ This should only be used in pessimistic locking measures as required by large
 batch work flows. $$;
 
 -- LOCATION AND COUNTRY
-
-create table country_tax_form (                                                    country_id int references country(id) not null,
-   form_name text not null,
-   id serial not null unique,
-   primary key(country_id, form_name)
-);
 
 CREATE TABLE location_class (
   id serial UNIQUE,
@@ -366,6 +368,7 @@ CREATE TABLE entity_credit_account (
     ar_ap_account_id int references account(id),
     cash_account_id int references account(id),
     bank_account int references entity_bank_account(id),
+    taxform_id int references country_tax_form(id)
     PRIMARY KEY(entity_id, meta_number, entity_class)
 );
 
@@ -1195,6 +1198,15 @@ INSERT INTO taxmodule (
   taxmodule_id, taxmodulename
   ) VALUES (
   1, 'Simple'
+);
+
+CREATE TABLE ac_tax_form (
+        entry_id int references acc_trans(entry_id) primary key,
+        reportable bool
+);
+CREATE TABLE invoice_tax_form (
+        invoice_id int references invoice(id) primary key,
+        reportable bool
 );
 
 create index acc_trans_trans_id_key on acc_trans (trans_id);
