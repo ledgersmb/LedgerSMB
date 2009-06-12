@@ -40,12 +40,6 @@ CREATE VIEW chart AS
 SELECT id, accno, description, 'H' as charttype, NULL as category, NULL as link, NULL as account_heading, null as gifi_accno, false as contra from account_heading UNION
 select c.id, c.accno, c.description, 'A' as charttype, c.category, concat_colon(l.description) as link, heading, gifi_accno, contra from account c left join account_link l ON (c.id = l.account_id) group by c.id, c.accno, c.description, c.category, c.heading, c.gifi_accno, c.contra;
 
-CREATE RULE chart_i AS ON INSERT TO chart
-DO INSTEAD
-SELECT CASE WHEN new.charttype='H' THEN account_heading_save(new.id, new.accno, new.description, NULL)
-ELSE account_save(new.id, new.accno, new.description, new.category, new.gifi_accno, NULL, CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END, string_to_array(new.link, ':'))
-END;
---
 -- pricegroup added here due to references
 CREATE TABLE pricegroup (
   id serial PRIMARY KEY,

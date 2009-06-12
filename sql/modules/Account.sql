@@ -105,3 +105,10 @@ BEGIN
 	RETURN currval('account_heading_id_seq');
 END;
 $$ LANGUAGE PLPGSQL;
+
+CREATE RULE chart_i AS ON INSERT TO chart
+DO INSTEAD
+SELECT CASE WHEN new.charttype='H' THEN account_heading_save(new.id, new.accno, new.description, NULL)
+ELSE account_save(new.id, new.accno, new.description, new.category, new.gifi_accno, NULL, CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END, string_to_array(new.link, ':'))
+END;
+--
