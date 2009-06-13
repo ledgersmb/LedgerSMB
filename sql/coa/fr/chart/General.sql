@@ -3,6 +3,7 @@ begin;
 -- From: Oscar Buijten <oscar@elbie.com>
 -- Mon, 6 Aug 2001
 --
+SELECT account_heading_save(NULL, '0000', '----', NULL);
 INSERT INTO chart (accno, description, charttype, gifi_accno, category, link) VALUES ('101000', 'CAPITAL', 'A', '', '', '');
 INSERT INTO chart (accno, description, charttype, gifi_accno, category, link) VALUES ('101100', 'CAPITAL SOUSCRIT NON APPELE', 'A', '', '', '');
 INSERT INTO chart (accno, description, charttype, gifi_accno, category, link) VALUES ('101200', 'CAPITAL SOUSCRIT APPELE NON VERSE', 'A', '', '', '');
@@ -905,7 +906,7 @@ SELECT account_save(NULL,'445713','TVA COLLECTEE 19.6%','I','', NULL, false,stri
 SELECT account_save(NULL,'512020','BANQUE DEBIT','E','', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'445711','TVA COLLECTEE  5.5%','I','', NULL, false,string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'445661','TVA DEDUCTIBLE  5.5%','E','', NULL, false,string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
-SELECT account_save(NULL,'512010','BANQUE CREDIT','I','', NULL, false,string_to_array('AR:AR_amount', ':'));
+SELECT account_save(NULL,'512010','BANQUE CREDIT','I','', NULL, false,string_to_array('AR_amount', ':'));
 SELECT account_save(NULL,'681730','STOCKS ET EN-COURS','A','', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'580010','VIREMENT INTERNE','E','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'580000','VIREMENT INTERNE','E','', NULL, false,string_to_array('AP_amount', ':'));

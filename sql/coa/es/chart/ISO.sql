@@ -77,7 +77,7 @@ SELECT account_save(NULL,'580000000','Ajustes por periodificación','Q','', NULL
 SELECT account_save(NULL,'590000000','Provisiones financieras','P','', NULL, false,string_to_array('', ':'));
 --
 SELECT account_heading_save(NULL, '599999999', 'Grupo 6: compras y gastos', NULL);
-SELECT account_save(NULL,'600000000','Compras','E','', NULL, false,string_to_array('AP:IC_cogs', ':'));
+SELECT account_save(NULL,'600000000','Compras','E','', NULL, false,string_to_array('AP_expense:IC_cogs', ':'));
 SELECT account_save(NULL,'608000000','Devoluciones de compras y operaciones similares','E','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'610000000','Variación de existencias','E','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'620000000','Servicios exteriores','E','', NULL, false,string_to_array('IC_expense', ':'));
@@ -92,7 +92,7 @@ SELECT account_save(NULL,'680000000','Dotaciones para amortizaciones','E','', NU
 SELECT account_save(NULL,'690000000','Dotaciones a las provisiones','E','', NULL, false,string_to_array('', ':'));
 --
 SELECT account_heading_save(NULL, '699999999', 'Grupo 7: ventas e ingresos', NULL);
-SELECT account_save(NULL,'700000000','Ventas de mercaderías, de producción propia, de servicios, etc.','I','', NULL, false,string_to_array('AR:IC_sale:IC_income', ':'));
+SELECT account_save(NULL,'700000000','Ventas de mercaderías, de producción propia, de servicios, etc.','I','', NULL, false,string_to_array('AR_income:IC_sale:IC_income', ':'));
 SELECT account_save(NULL,'708000000','Devoluciones de ventas y operaciones similares','I','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'710000000','Variación de existencias','I','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'730000000','Trabajos realizados para la empresa','I','', NULL, false,string_to_array('', ':'));
@@ -112,21 +112,12 @@ INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000001'), 0.04);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000002'), 0.07);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000003'), 0.16);
--- Recargo equivalente: 0.5, 1 or 4%
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000004'), 0.005);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000005'), 0.01);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '472000006'), 0.04);
---
 -- IVA repercutido
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000000'), 0.0);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000001'), 0.04);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000002'), 0.07);
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000003'), 0.16);
 -- Recargo equivalente: 0.5, 1 or 4%
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000004'), 0.005);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000005'), 0.01);
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno = '477000006'), 0.04);
---
 -- update defaults
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '300000000'));
