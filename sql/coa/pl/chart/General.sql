@@ -2,7 +2,7 @@ begin;
 -- Chart of Account for Poland
 -- From: Peter Dabrowski <meritage@mail.com>
 -- Sun, 23 March 2003
-SELECT account_heading_save(NULL,'000000000','Aktywa Trwa³e', NULL));
+SELECT account_heading_save(NULL,'000000000','Aktywa Trwa³e', NULL);
 SELECT account_save(NULL,'001000000','¦rodki Trwa³e','A','', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'001010000','Grunty w³asne i prawa wieczystego u¿ytkowania gruntów','A','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'001020000','Budynki, locale i obiekty in¿ynierii l±dowej i wodnej','A','', NULL, false,string_to_array('AP_amount', ':'));
@@ -54,11 +54,11 @@ SELECT account_save(NULL,'009010000','Odpisy aktualizuj±ce udzia³y i akcje w o
 SELECT account_save(NULL,'009020000','Odpisy aktualizuj±ce lokaty','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'009030000','Odpisy aktualizuj±ce udzielone porzyczki d³ugoterminowe','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'009090000','Odpisy aktualizuj±ce inne rodzaje d³ugoterminowych aktywów finansowych','A','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'100000000','¦rodki pieniê¿ne, rachunki bankowe oraz inne krótkoterminowe aktywa finansowe', NULL));
-SELECT account_save(NULL,'110000000','¦rodki pieniê¿ne w kasie','A','', NULL, false,string_to_array('AR:AP', ':'));
+SELECT account_heading_save(NULL,'100000000','¦rodki pieniê¿ne, rachunki bankowe oraz inne krótkoterminowe aktywa finansowe', NULL);
+SELECT account_save(NULL,'110000000','¦rodki pieniê¿ne w kasie','A','', NULL, false,string_to_array('AR', ':'));
 SELECT account_save(NULL,'110010000','Kasa krajowych ¶rodków pieniê¿nych','A','', NULL, false,string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'110020000','Kasa zagranicznych ¶rodków pieniê¿nych','A','', NULL, false,string_to_array('AR_paid:AP_paid', ':'));
-SELECT account_save(NULL,'113000000','Rachunki i kredyty bankowe','A','', NULL, false,string_to_array('AR:AP', ':'));
+SELECT account_save(NULL,'113000000','Rachunki i kredyty bankowe','A','', NULL, false,string_to_array('AR', ':'));
 SELECT account_save(NULL,'113010000','Rachunek bie¿±cy','A','', NULL, false,string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'113020000','Rachunek ¶rodków wyodrêbnionych i zablokowanych','A','', NULL, false,string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'113030000','Rachunki kredytów bankowych','A','', NULL, false,string_to_array('AR_paid:AP_amount:AP_paid', ':'));
@@ -77,7 +77,7 @@ SELECT account_save(NULL,'115000000','Inne ¶rodki pieniê¿ne','A','', NULL, fa
 SELECT account_save(NULL,'116000000','Inne aktywa pieniê¿ne','A','', NULL, false,string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'117000000','Inne inwestycje krótkoterminowe','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'118000000','Krótkoterminowe rozliczenia miêdzyokresowe','A','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'200000000','Rozrachunki i roszczenia', NULL));
+SELECT account_heading_save(NULL,'200000000','Rozrachunki i roszczenia', NULL);
 SELECT account_save(NULL,'220000000','Nale¿no¶ci krótkoterminowe','L','', NULL, false,string_to_array('AR', ':'));
 SELECT account_save(NULL,'220010000','Nale¿no¶ci od jednostek powi±zanych','L','', NULL, false,string_to_array('AR_amount', ':'));
 SELECT account_save(NULL,'220010100','Nale¿no¶ci z tytu³u dostaw i us³ug','L','', NULL, false,string_to_array('AR_amount', ':'));
@@ -151,7 +151,7 @@ SELECT account_save(NULL,'225070000','Rozrachunki z tytu³u dywident','L','', NU
 SELECT account_save(NULL,'225080000','Rozrachunki z tytu³u dop³at i zwrotu dop³at','L','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'225090000','Pozosta³e rozrachunki ze wspólnikami','L','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'229000000','Odpisy aktualizuj±ce rozrachunki','L','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'300000000','Materia³y i towary', NULL));
+SELECT account_heading_save(NULL,'300000000','Materia³y i towary', NULL);
 SELECT account_save(NULL,'330000000','Rozliczenie zakupu','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'330010000','Rozliczenie warto¶ci materia³ów i towarów w drodze','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'330020000','Warto¶ci dostaw niefakturowanych','A','', NULL, false,string_to_array('', ':'));
@@ -173,7 +173,7 @@ SELECT account_save(NULL,'333030000','Towary w detalu','A','', NULL, false,strin
 SELECT account_save(NULL,'334000000','Odchylenia od cen ewidencyjnych materia³ów i towarów','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'334010000','Odpisy aktualizuj±ce warto¶æ materia³ów','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'334020000','Odpisy aktualizuj±ce warto¶æ towarów','A','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'400000000','Koszty wed³ug rodzajów i ich rozliczeñ', NULL));
+SELECT account_heading_save(NULL,'400000000','Koszty wed³ug rodzajów i ich rozliczeñ', NULL);
 SELECT account_save(NULL,'440000000','Koszty wed³ug rodzajów','E','', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'440010000','Zu¿ycie materia³ów i energii','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'440010100','Zu¿ycie materia³ów biurowych','E','', NULL, false,string_to_array('AP_amount', ':'));
@@ -198,7 +198,7 @@ SELECT account_save(NULL,'449010000','Nie podlegaj±ce rozliczeniu w czasie','E'
 SELECT account_save(NULL,'449020000','Przypadaj±ce na przysz³e okresy','E','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'449030000','Koszty zgromadzone','E','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'449040000','Koszty nie wliczane do warto¶ci sprzeda¿y','E','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'500000000','Koszty wed³ug typów dzia³alno¶ci i ich rozliczenie', NULL));
+SELECT account_heading_save(NULL,'500000000','Koszty wed³ug typów dzia³alno¶ci i ich rozliczenie', NULL);
 SELECT account_save(NULL,'550000000','Koszty dzia³alno¶ci podstawowej-produkcyjnej','E','', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'550010000','Rozliczone koszta dzia³alno¶ci','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'550020000','Koszty nie zakoñczonych d³ugotrwa³ych us³ug','E','', NULL, false,string_to_array('AP_amount', ':'));
@@ -215,7 +215,7 @@ SELECT account_save(NULL,'555000000','Koszty zarz±du','E','', NULL, false,strin
 SELECT account_save(NULL,'555010000','Koszty zarz±dzania jednostk±','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'555020000','¦wiadczenia us³ug na potrzeby reprezentacji i reklamy','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'558000000','Rozliczenie kosztów dzia³alno¶ci','E','', NULL, false,string_to_array('AP_amount', ':'));
-SELECT account_heading_save(NULL,'600000000','Produkty i rozliczenia miêdzyokresowe', NULL));
+SELECT account_heading_save(NULL,'600000000','Produkty i rozliczenia miêdzyokresowe', NULL);
 SELECT account_save(NULL,'660000000','Pó³produkty i produkty w toku','A','', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'661000000','Produkty gotowe','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'661010000','Wyroby gotowe','A','', NULL, false,string_to_array('', ':'));
@@ -229,7 +229,7 @@ SELECT account_save(NULL,'664020000','Bierne rozliczenia miêdzyokresowe kosztó
 SELECT account_save(NULL,'665000000','Pozosta³e rozliczenia miêdzyokresowe','L','', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'665010000','Czynne rozliczenia przysz³ych okresów','L','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'665020000','Bierne rozliczenia przysz³ych okresów','L','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'700000000','Przychody i koszty zwi±zane z ich osi±gniêciem', NULL));
+SELECT account_heading_save(NULL,'700000000','Przychody i koszty zwi±zane z ich osi±gniêciem', NULL);
 SELECT account_save(NULL,'770000000','Sprzeda¿ produktów','I','', NULL, false,string_to_array('AR', ':'));
 SELECT account_save(NULL,'770010000','Sprzeda¿ produktów na kraj','I','', NULL, false,string_to_array('AR_amount:IC_sale', ':'));
 SELECT account_save(NULL,'770020000','Sprzeda¿ produktów na eksport','I','', NULL, false,string_to_array('AR_amount:IC_sale', ':'));
@@ -296,7 +296,7 @@ SELECT account_save(NULL,'779120000','Koszt wytworzenia ¶wiadczeñ na rzecz ¶r
 SELECT account_save(NULL,'779130000','Koszt wytworzenia zakoñczonych prac rozwojowych','E','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'779140000','Koszt wytworzenia produktów uznanych za niedobory','E','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'779150000','Koszt zaniechania okre¶lonego rodzaju dzia³alno¶ci','E','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'800000000','Kapita³y w³asne i wynik finansowy', NULL));
+SELECT account_heading_save(NULL,'800000000','Kapita³y w³asne i wynik finansowy', NULL);
 SELECT account_save(NULL,'880000000','Kapita³ podstawowy','Q','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'880010000','Kapita³ zak³adowy','Q','', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'881000000','Fundusze wydzielone jednostkom zale¿nym','Q','', NULL, false,string_to_array('', ':'));
