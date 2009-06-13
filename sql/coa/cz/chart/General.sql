@@ -1,3 +1,4 @@
+BEGIN;
 -- Czech chart of accounts
 -- Tomas.Fencl@centrum.cz
 --
@@ -332,6 +333,6 @@ INSERT INTO defaults (setting_key, value) VALUES ('curr', 'CZK');
 
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
-commit;
+rollback;
 
 --

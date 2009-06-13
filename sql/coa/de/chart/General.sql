@@ -28,7 +28,7 @@ begin;
 -- P4	= Passive Rechnungsabgrenzung	/ Closing Account results 
 --
 -- A0
-SELECT account_heading_save(NULL,'0000','ANLAGEVERMÖGEN', NULL));
+SELECT account_heading_save(NULL,'0000','ANLAGEVERMÖGEN', NULL);
 SELECT account_save(NULL,'0100','Konzessionen & Lizenzen','A','A0', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'0135','EDV-Programme','A','A0', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'0440','Maschinen','A','A0', NULL, false,string_to_array('', ':'));
@@ -37,10 +37,10 @@ SELECT account_save(NULL,'0520','PKW','A','A0', NULL, false,string_to_array('', 
 SELECT account_save(NULL,'0650','Büroeinrichtung','A','A0', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'0670','GWG','A','A0', NULL, false,string_to_array('', ':'));
 -- A1-1
-SELECT account_heading_save(NULL,'1100','WARENBESTAND', NULL));
+SELECT account_heading_save(NULL,'1100','WARENBESTAND', NULL);
 SELECT account_save(NULL,'1140','Warenbestand','A','A1-1', NULL, false,string_to_array('IC', ':'));
 -- A1-2
-SELECT account_heading_save(NULL,'1200','FORDERUNGEN', NULL));
+SELECT account_heading_save(NULL,'1200','FORDERUNGEN', NULL);
 SELECT account_save(NULL,'1201','Geleistete Anzahlungen','A','A1-2', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1210','Forderungen ohne Kontokorrent','A','A1-2', NULL, false,string_to_array('AR', ':'));
 SELECT account_save(NULL,'1300','Sonstige Forderungen','A','A1-2', NULL, false,string_to_array('', ':'));
@@ -53,7 +53,7 @@ SELECT account_save(NULL,'1406','Anrechenbare Vorsteuer 15%','A','A1-2', NULL, f
 SELECT account_save(NULL,'1433','bezahlte Einfuhrumsatzsteuer','A','A1-2', NULL, false,string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'1370','Ungeklärte Posten','A','A1-2', NULL, false,string_to_array('', ':'));
 -- A1-3
-SELECT account_heading_save(NULL,'1600','LIQUIDE MITTEL', NULL));
+SELECT account_heading_save(NULL,'1600','LIQUIDE MITTEL', NULL);
 SELECT account_save(NULL,'1601','Kasse','A','A1-3', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1700','Postgiro','A','A1-3', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1800','Bank','A','A1-3', NULL, false,string_to_array('', ':'));
@@ -63,7 +63,7 @@ SELECT account_save(NULL,'1890','Geldtransit','A','A1-3', NULL, false,string_to_
 -- A1-4
 SELECT account_save(NULL,'1900','Aktive Rechnungsabgrenzung','A','A1-4', NULL, false,string_to_array('', ':'));
 -- P0
-SELECT account_heading_save(NULL,'2000','EIGENKAPITAL', NULL));
+SELECT account_heading_save(NULL,'2000','EIGENKAPITAL', NULL);
 SELECT account_save(NULL,'2001','Eigenkapital','Q','P0', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'2100','Privatentnahmen','Q','P0', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'2150','Privatsteuern','Q','P0', NULL, false,string_to_array('', ':'));
@@ -74,15 +74,15 @@ SELECT account_save(NULL,'2910','Ausstehende Einlagen','Q','P0', NULL, false,str
 SELECT account_save(NULL,'2970','Gewinnvortrag vor Verwendung','Q','P0', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'2978','Verlustvortrag vor Verwendung','Q','P0', NULL, false,string_to_array('', ':'));
 -- P1
-SELECT account_heading_save(NULL,'3000','RÜCKSTELLUNGEN', NULL));
+SELECT account_heading_save(NULL,'3000','RÜCKSTELLUNGEN', NULL);
 SELECT account_save(NULL,'3030','Gewerbesteuerrückstellung','L','P1', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'3070','Sonstige Rückstellungen','L','P1', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'3095','Rückstellung für Abschlusskosten','L','P1', NULL, false,string_to_array('', ':'));
 -- P2
-SELECT account_heading_save(NULL,'3100','FREMDKAPITAL LANGFRISTIG', NULL));
+SELECT account_heading_save(NULL,'3100','FREMDKAPITAL LANGFRISTIG', NULL);
 SELECT account_save(NULL,'3160','Bankdarlehen','L','P2', NULL, false,string_to_array('', ':'));
 -- P3
-SELECT account_heading_save(NULL,'3200','FREMDKAPITAL KURZFRISTIG', NULL));
+SELECT account_heading_save(NULL,'3200','FREMDKAPITAL KURZFRISTIG', NULL);
 SELECT account_save(NULL,'3280','Erhaltene Anzahlungen','L','P3', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'3310','Kreditoren ohne Kontokorrent','L','P3', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'3500','Sonstige Verbindlichkeiten','L','P3', NULL, false,string_to_array('', ':'));
@@ -104,7 +104,7 @@ SELECT account_save(NULL,'3841','Umsatzsteuer Vorjahr','L','P3', NULL, false,str
 -- P4
 SELECT account_save(NULL,'3900','Aktive Rechnungsabgrenzung','L','P4', NULL, false,string_to_array('', ':'));
 -- K0
-SELECT account_heading_save(NULL,'5100','WARENEINGANG', NULL));
+SELECT account_heading_save(NULL,'5100','WARENEINGANG', NULL);
 SELECT account_save(NULL,'5200','Wareneingang ohne Vorsteuer','E','K0', NULL, false,string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 SELECT account_save(NULL,'5300','Wareneingang 7%','E','K0', NULL, false,string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 SELECT account_save(NULL,'5400','Wareneingang 15%','E','K0', NULL, false,string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
@@ -115,8 +115,8 @@ SELECT account_save(NULL,'5736','Erhaltene Skonti 15% Vorsteuer','E','K0', NULL,
 SELECT account_save(NULL,'5800','Anschaffungsnebenkosten','E','K0', NULL, false,string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 SELECT account_save(NULL,'5900','Fremdarbeiten','E','K0', NULL, false,string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 -- K1
-SELECT account_heading_save(NULL,'6000','PERSONALKOSTEN', NULL));
-SELECT account_heading_save(NULL,'6001','Personalkosten', NULL));
+SELECT account_heading_save(NULL,'6000','PERSONALKOSTEN', NULL);
+SELECT account_heading_save(NULL,'6001','Personalkosten', NULL);
 SELECT account_save(NULL,'6010','Löhne','E','K1', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6020','Gehälter','E','K1', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6030','Aushilfslöhne','E','K1', NULL, false,string_to_array('', ':'));
@@ -127,7 +127,7 @@ SELECT account_save(NULL,'6110','Sozialversicherung','E','K1', NULL, false,strin
 SELECT account_save(NULL,'6120','Berufsgenossenschaft','E','K1', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6130','Freiw. Soz. Aufw. LSt- u. Soz.Vers.frei','E','K1', NULL, false,string_to_array('', ':'));
 -- K2
-SELECT account_heading_save(NULL,'6300','RAUMKOSTEN', NULL));
+SELECT account_heading_save(NULL,'6300','RAUMKOSTEN', NULL);
 SELECT account_save(NULL,'6310','Miete','E','K2', NULL, false,string_to_array('AP_amount:IC_expense', ':'));
 SELECT account_save(NULL,'6315','Pacht','E','K2', NULL, false,string_to_array('AP_amount:IC_expense', ':'));
 SELECT account_save(NULL,'6320','Heizung','E','K2', NULL, false,string_to_array('AP_amount:IC_expense', ':'));
@@ -136,7 +136,7 @@ SELECT account_save(NULL,'6330','Reinigung','E','K2', NULL, false,string_to_arra
 SELECT account_save(NULL,'6335','Instandhaltung betriebliche Räume','E','K2', NULL, false,string_to_array('AP_amount:IC_expense', ':'));
 SELECT account_save(NULL,'6345','Sonstige Raumkosten','E','K2', NULL, false,string_to_array('AP_amount:IC_expense', ':'));
 -- K3
-SELECT account_heading_save(NULL,'6400','SONSTIGE KOSTEN', NULL));
+SELECT account_heading_save(NULL,'6400','SONSTIGE KOSTEN', NULL);
 SELECT account_save(NULL,'6402','Abschreibungen','E','K3', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6403','Kaufleasing','E','K3', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6404','Sofortabschreibung GWG','E','K3', NULL, false,string_to_array('', ':'));
@@ -198,14 +198,14 @@ SELECT account_save(NULL,'8840','Erträge aus Kursdifferenzen','I','E', NULL, fa
 SELECT account_save(NULL,'8845','Erlöse aus Anlageverk. (Buchgewinn)','I','E', NULL, false,string_to_array('AR_amount:IC_sale:IC_income', ':'));
 SELECT account_save(NULL,'8900','Erträge aus Abgang von Anlageverm.','I','E', NULL, false,string_to_array('AR_amount:IC_sale:IC_income', ':'));
 -- NA
-SELECT account_heading_save(NULL,'9300','NEUTRALE AUFWENDUNGEN', NULL));
+SELECT account_heading_save(NULL,'9300','NEUTRALE AUFWENDUNGEN', NULL);
 SELECT account_save(NULL,'9310','Zinsen kurzfr. Verbindlichkeiten','E','NA', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'9320','Zinsen langfr. Verbindlichkeiten','E','NA', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'9500','Ausserordentl.Aufwendungen','E','NA', NULL, false,string_to_array('', ':'));
 -- NE
-SELECT account_heading_save(NULL,'9600','NEUTRALE ERTRÄGE', NULL));
-SELECT account_heading_save(NULL,'9610','Guthabenzinsen', NULL));
-SELECT account_heading_save(NULL,'9700','Ausserordentl.Erträge', NULL));
+SELECT account_heading_save(NULL,'9600','NEUTRALE ERTRÄGE', NULL);
+SELECT account_heading_save(NULL,'9610','Guthabenzinsen', NULL);
+SELECT account_heading_save(NULL,'9700','Ausserordentl.Erträge', NULL);
 --
 -- Default settings
 --
