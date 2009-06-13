@@ -20,7 +20,7 @@ begin;
 -- operations is recorded (tax, donations, that kind of thing. Finally the 9999 account is used to kick the result to retained earnings and
 -- related accounts in the balance sheet, and we are ready for the next year
 --
-SELECT account_heading_save(NULL,'0000','Vaste Activa & Eigen Vermogen', NULL));
+SELECT account_heading_save(NULL,'0000','Vaste Activa & Eigen Vermogen', NULL);
 SELECT account_save(NULL,'0010','Terreinen','A','0010', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'0015','Afschrijving Terreinen','A','0015', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'0200','Gebouwen','A','0200', NULL, false,string_to_array('', ':'));
@@ -60,7 +60,7 @@ SELECT account_save(NULL,'0720','Converteerbare Obligatielening','Q','0720', NUL
 SELECT account_save(NULL,'0730','Agio op Obligaties','Q','0730', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'0740','Disagio op Obligaties','Q','0740', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'0800','Hypothecaire lening o/g','L','0800', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'1000','Financiele Rekeningen', NULL));
+SELECT account_heading_save(NULL,'1000','Financiele Rekeningen', NULL);
 SELECT account_save(NULL,'1001','Kas','A','1001', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1050','Contante Verkopen','A','1050', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1100','Interbank','A','1100', NULL, false,string_to_array('', ':'));
@@ -106,14 +106,14 @@ SELECT account_save(NULL,'1960','Vooruitbetaalde bedragen','A','1960', NULL, fal
 SELECT account_save(NULL,'1970','Vooruitontvangen bedragen','A','1970', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1980','Nog te ontvangen bedragen','A','1980', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1990','Nog te betalen bedragen','A','1990', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'2000','Tussenrekeningen', NULL));
+SELECT account_heading_save(NULL,'2000','Tussenrekeningen', NULL);
 SELECT account_save(NULL,'2100','Vraagposten','A','2100', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'2400','Onbekende betalingen','A','2400', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'2800','Tussenrekening Lonen','A','2800', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'2900','Tussenrekening Beginbalans','A','2900', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'3000','Voorraad Grond- en Hulpstoffen', NULL));
+SELECT account_heading_save(NULL,'3000','Voorraad Grond- en Hulpstoffen', NULL);
 SELECT account_save(NULL,'3010','Voorraad Grondstof A','A','3010', NULL, false,string_to_array('IC', ':'));
-SELECT account_heading_save(NULL,'4000','Kostenrekeningen', NULL));
+SELECT account_heading_save(NULL,'4000','Kostenrekeningen', NULL);
 SELECT account_save(NULL,'4001','Verbruik Grondstoffen','E','4001', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'4100','Directe Loonkosten','E','4100', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'4110','Indirecte Loonkosten','E','4110', NULL, false,string_to_array('', ':'));
@@ -158,13 +158,13 @@ SELECT account_save(NULL,'4981','Bankprovisie Effectenhandel','E','4981', NULL, 
 SELECT account_save(NULL,'4990','Overige Algemene Kosten','E','4990', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'4991','Bijzondere baten en lasten','E','4991', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'4999','Overboekingsrekening Rubriek 4','E','4999', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'5000','Verdeling Indirecte Kosten', NULL));
+SELECT account_heading_save(NULL,'5000','Verdeling Indirecte Kosten', NULL);
 SELECT account_save(NULL,'5400','Indirecte fabricagekosten','E','5400', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'5450','Opslag Indirecte fabricagekosten','I','5450', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'5500','Indirecte verkoopkosten','E','5500', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'5550','Opslag Indirecte verkoopkosten','I','5550', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'5999','Overboekingsrekening Rubriek 5','I','5999', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'6000','Fabricagerekeningen', NULL));
+SELECT account_heading_save(NULL,'6000','Fabricagerekeningen', NULL);
 SELECT account_save(NULL,'6001','Verbruik Grondstoffen','E','6001', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6010','Directe Lonen','E','6010', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6020','Toeslag Indirecte fabricagekosten','E','6020', NULL, false,string_to_array('', ':'));
@@ -172,7 +172,7 @@ SELECT account_save(NULL,'6101','Standaard Verbruik Grondstoffen','I','6101', NU
 SELECT account_save(NULL,'6110','Standaard Directe Lonen','I','6110', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6120','Standaard Toeslag Indirecte fabricagekosten','I','6120', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'6999','Overboekingsrekening Rubriek 6','I','6999', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'7000','Voorraden gereed product', NULL));
+SELECT account_heading_save(NULL,'7000','Voorraden gereed product', NULL);
 SELECT account_save(NULL,'7001','Voorraad A','A','7001', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'7002','Voorraad B','A','7002', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'7003','Voorraad C','A','7003', NULL, false,string_to_array('IC', ':'));
@@ -183,7 +183,7 @@ SELECT account_save(NULL,'7300','Nog te Ontvangen Goederen / NOG','A','7300', NU
 SELECT account_save(NULL,'7350','Nog af te leveren goederen','L','7350', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'7400','Prijsverschillen bij inkoop','I','7400', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'7999','Overboekingsrekening Rubriek 7','I','7999', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'8000','Rekeningen tbv Verkoopresultaat', NULL));
+SELECT account_heading_save(NULL,'8000','Rekeningen tbv Verkoopresultaat', NULL);
 SELECT account_save(NULL,'8010','Inkoopkosten algemeen','E','8010', NULL, false,string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 SELECT account_save(NULL,'8020','Kostprijs Verkopen A','E','8020', NULL, false,string_to_array('AP_amount:IC_cogs', ':'));
 SELECT account_save(NULL,'8030','Kostprijs Verkopen B','E','8030', NULL, false,string_to_array('AP_amount:IC_cogs', ':'));
@@ -195,7 +195,7 @@ SELECT account_save(NULL,'8520','Opbrengst Verkopen A','I','8520', NULL, false,s
 SELECT account_save(NULL,'8530','Opbrengst Verkopen B','I','8530', NULL, false,string_to_array('AR_amount:IC_sale', ':'));
 SELECT account_save(NULL,'8540','Opbrengst Verkopen C','I','8540', NULL, false,string_to_array('AR_amount:IC_sale', ':'));
 SELECT account_save(NULL,'8999','Overboekingsrekening Rubriek 8','E','8999', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'9000','Rekeningen tbv Resultatenrekening', NULL));
+SELECT account_heading_save(NULL,'9000','Rekeningen tbv Resultatenrekening', NULL);
 SELECT account_save(NULL,'9010','Resultaat Indirecte Kosten','E','9010', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'9011','Resultaat Fabricage','I','9011', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'9012','Resultaat Verkoop','I','9012', NULL, false,string_to_array('', ':'));
