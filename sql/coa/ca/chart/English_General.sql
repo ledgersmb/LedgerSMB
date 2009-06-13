@@ -12,9 +12,9 @@ SELECT account_save(NULL,'1530','Inventory / Aftermarket Parts','A','1122', NULL
 SELECT account_save(NULL,'1540','Inventory / Raw Materials','A','1122', NULL, false,string_to_array('IC', ':'));
 SELECT account_heading_save(NULL, '1800', 'CAPITAL ASSETS', NULL);
 SELECT account_save(NULL,'1820','Office Furniture & Equipment','A','1787', NULL, false,string_to_array('', ':'));
-SELECT account_save(NULL,'1825','Accum. Amort. -Furn. & Equip.','A','1788', NULL, true,string_to_array('','1', ':'));
+SELECT account_save(NULL,'1825','Accum. Amort. -Furn. & Equip.','A','1788', NULL, true,string_to_array('', ':'));
 SELECT account_save(NULL,'1840','Vehicle','A','1742', NULL, false,string_to_array('', ':'));
-SELECT account_save(NULL,'1845','Accum. Amort. -Vehicle','A','1743', NULL, true,string_to_array('','1', ':'));
+SELECT account_save(NULL,'1845','Accum. Amort. -Vehicle','A','1743', NULL, true,string_to_array('', ':'));
 SELECT account_heading_save(NULL, '2000', 'CURRENT LIABILITIES', NULL);
 SELECT account_save(NULL,'2100','Accounts Payable','L','2621', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'2160','Federal Taxes Payable','L','2683', NULL, false,string_to_array('', ':'));
