@@ -12,9 +12,9 @@ SELECT account_save(NULL,'1530','Inventário / Mercado Secundário','A','', NULL
 SELECT account_save(NULL,'1540','Inventário / Computer Parts','A','', NULL, false,string_to_array('IC', ':'));
 SELECT account_heading_save(NULL, '1800', 'CAPITAL ASSETS', NULL);
 SELECT account_save(NULL,'1820','Escritório Móvel & Equipamentos','A','', NULL, false,string_to_array('', ':'));
-SELECT account_save(NULL,'1825','Accum. Amort. -Móvel. & Equip.','A','', NULL, true,string_to_array('','1', ':'));
+SELECT account_save(NULL,'1825','Accum. Amort. -Móvel. & Equip.','A','', NULL, true,string_to_array('', ':'));
 SELECT account_save(NULL,'1840','Veículo','A','', NULL, false,string_to_array('', ':'));
-SELECT account_save(NULL,'1845','Accum. Amort. -Veículo','A','', NULL, true,string_to_array('','1', ':'));
+SELECT account_save(NULL,'1845','Accum. Amort. -Veículo','A','', NULL, true,string_to_array('', ':'));
 SELECT account_heading_save(NULL, '2000', 'BALANÇO ATUAL', NULL);
 SELECT account_save(NULL,'2100','Contas a Pagar','L','', NULL, false,string_to_array('AP', ':'));
 SELECT account_save(NULL,'2170','Taxas federais','L','', NULL, false,string_to_array('', ':'));
