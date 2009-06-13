@@ -2,41 +2,41 @@ begin;
 -- US_Manufacturing COA
 -- modify as needed
 --
-SELECT account_heading_save(NULL,'1000','CURRENT ASSETS', NULL));
+SELECT account_heading_save(NULL,'1000','CURRENT ASSETS', NULL);
 SELECT account_save(NULL,'1060','Checking Account','A','', NULL, false,string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1065','Petty Cash','A','', NULL, false,string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1200','Accounts Receivables','A','', NULL, false,string_to_array('AR', ':'));
 SELECT account_save(NULL,'1205','Allowance for doubtful accounts','A','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'1500','INVENTORY ASSETS', NULL));
+SELECT account_heading_save(NULL,'1500','INVENTORY ASSETS', NULL);
 
 SELECT account_save(NULL,'1520','Inventory / General','A','', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'1530','Inventory / Raw Materials','A','1126', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'1540','Inventory / Work in process','A','1125', NULL, false,string_to_array('IC', ':'));
 SELECT account_save(NULL,'1550','Inventory / Finished Goods','A','1121', NULL, false,string_to_array('IC', ':'));
 
-SELECT account_heading_save(NULL,'1800','CAPITAL ASSETS', NULL));
+SELECT account_heading_save(NULL,'1800','CAPITAL ASSETS', NULL);
 SELECT account_save(NULL,'1820','Office Furniture & Equipment','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1825','Accum. Amort. -Furn. & Equip.','A','', NULL, '1',string_to_array('', ':'));
 SELECT account_save(NULL,'1840','Vehicle','A','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'1845','Accum. Amort. -Vehicle','A','', NULL, '1',string_to_array('', ':'));
-SELECT account_heading_save(NULL,'2000','CURRENT LIABILITIES', NULL));
+SELECT account_heading_save(NULL,'2000','CURRENT LIABILITIES', NULL);
 SELECT account_save(NULL,'2100','Accounts Payable','L','', NULL, false,string_to_array('AP', ':'));
-SELECT account_heading_save(NULL,'2600','LONG TERM LIABILITIES', NULL));
+SELECT account_heading_save(NULL,'2600','LONG TERM LIABILITIES', NULL);
 SELECT account_save(NULL,'2620','Bank Loans','L','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'2680','Loans from Shareholders','L','', NULL, false,string_to_array('AP_paid', ':'));
-SELECT account_heading_save(NULL,'3300','SHARE CAPITAL', NULL));
+SELECT account_heading_save(NULL,'3300','SHARE CAPITAL', NULL);
 SELECT account_save(NULL,'3350','Common Shares','Q','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'3500','RETAINED EARNINGS', NULL));
+SELECT account_heading_save(NULL,'3500','RETAINED EARNINGS', NULL);
 SELECT account_save(NULL,'3590','Retained Earnings - prior years','Q','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'4000','SALES REVENUE', NULL));
+SELECT account_heading_save(NULL,'4000','SALES REVENUE', NULL);
 SELECT account_save(NULL,'4020','Sales / General','I','', NULL, false,string_to_array('AR_amount:IC_sale', ':'));
 SELECT account_save(NULL,'4030','Sales / Manufactured Goods','I','', NULL, false,string_to_array('AR_amount:IC_sale', ':'));
 SELECT account_save(NULL,'4040','Sales / Aftermarket Parts','I','', NULL, false,string_to_array('AR_amount:IC_sale', ':'));
-SELECT account_heading_save(NULL,'4400','OTHER REVENUE', NULL));
+SELECT account_heading_save(NULL,'4400','OTHER REVENUE', NULL);
 SELECT account_save(NULL,'4430','Shipping & Handling','I','', NULL, false,string_to_array('IC_income', ':'));
 SELECT account_save(NULL,'4440','Interest','I','', NULL, false,string_to_array('', ':'));
 SELECT account_save(NULL,'4450','Foreign Exchange Gain','I','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'5000','COST OF GOODS SOLD', NULL));
+SELECT account_heading_save(NULL,'5000','COST OF GOODS SOLD', NULL);
 SELECT account_save(NULL,'5010','Purchases','E','', NULL, false,string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 
 SELECT account_save(NULL,'5020','COGS / General','E','', NULL, false,string_to_array('AP_amount:IC_cogs', ':'));
@@ -45,9 +45,9 @@ SELECT account_save(NULL,'5040','COGS / Direct Labor','E','', NULL, false,string
 SELECT account_save(NULL,'5050','COGS / Overhead','E','', NULL, false,string_to_array('AP_amount:IC_cogs', ':'));
 
 SELECT account_save(NULL,'5100','Freight','E','', NULL, false,string_to_array('AP_amount:IC_expense', ':'));
-SELECT account_heading_save(NULL,'5400','PAYROLL EXPENSES', NULL));
+SELECT account_heading_save(NULL,'5400','PAYROLL EXPENSES', NULL);
 SELECT account_save(NULL,'5410','Wages & Salaries','E','', NULL, false,string_to_array('', ':'));
-SELECT account_heading_save(NULL,'5600','GENERAL & ADMINISTRATIVE EXPENSES', NULL));
+SELECT account_heading_save(NULL,'5600','GENERAL & ADMINISTRATIVE EXPENSES', NULL);
 SELECT account_save(NULL,'5610','Accounting & Legal','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'5615','Advertising & Promotions','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'5620','Bad Debts','E','', NULL, false,string_to_array('', ':'));
