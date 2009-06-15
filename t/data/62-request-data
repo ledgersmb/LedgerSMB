@@ -220,8 +220,7 @@ our $test_request_data = [
 		'account_class' => 1,
 		'currency'      => 'USD',
 		'multiple'      => 1,
-	},
-	
+	},	
 ];
 
 our $pre_test_subs = {

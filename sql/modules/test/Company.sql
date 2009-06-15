@@ -46,6 +46,30 @@ SELECT 'Company_get_billing_info working', count(*) = 1
 FROM company_get_billing_info((select max(id) from entity_credit_account))
 WHERE control_code is not null;
 
+-- Note tests --
+
+INSERT INTO test_result (test_name, success)
+SELECT 'entity__save_notes',
+       entity__save_notes ( currval('entity_id_seq'), 'Test note text', 'Test note subject' );
+       
+INSERT INTO test_result (test_name, success)
+SELECT 'entity__save_note subject record',
+       CASE WHEN subject = 'Test note subject' THEN 't'::bool ELSE 'f'::bool END
+       FROM entity_note
+       group by subject, id
+       having id = max(id);
+       
+INSERT INTO test_result(test_name, success)
+SELECT 'eca_save_notes',
+       eca__save_notes( currval('entity_credit_account_id_seq', 'Test note text', 'ECA test note subject') );
+
+INSERT INTO test_result (test_name, success)
+SELECT 'eca__save_notes subject record',
+       CASE WHEN subject = 'ECA test note subject' THEN 't'::bool ELSE 'f'::bool END
+       FROM eca_note
+       group by subject, id
+       HAVING id = max(id);
+
 
 SELECT * FROM test_result;
 
