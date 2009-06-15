@@ -8,6 +8,7 @@ use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::DBObject::Location;
 use Data::Dumper;
+use LedgerSMB::Setting;
 
 sub __edit_page {
     
@@ -15,8 +16,9 @@ sub __edit_page {
     my ($request, $otd) = @_;
     
     # otd stands for Other Template Data.
-    
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
+    my $dcsetting = LedgerSMB::Setting->new(base=>$request, copy=>'base');
+    my $default_country = $dcsetting->get('default_country'); 
+    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'list', merge =>['user_id']);
     my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
     $user_obj->{company} = $request->{company};
     $user_obj->get($request->{user_id});
@@ -24,7 +26,7 @@ sub __edit_page {
     my @all_roles = $admin->get_roles();
     
     my $template = LedgerSMB::Template->new( 
-        user => $user, 
+        user => $request->{_user}, 
         template => 'Admin/edit_user', 
         language => $user->{language}, 
         format => 'HTML', 
@@ -40,6 +42,9 @@ sub __edit_page {
                 salutations=>$admin->get_salutations(),
                 contact_classes=>$admin->get_contact_classes(),
                 locations=>$location->get_all($user_obj->{entity_id},"person"),
+                stylesheet => $request->{stylesheet},
+                default_country => $dcsetting->{value},
+                admin => $admin,
             };
     
     for my $key (keys(%{$otd})) {
@@ -65,6 +70,7 @@ sub save_user {
     my $groups = $admin->get_roles();
     my $entity = $admin->save_user();
     $admin->save_roles();
+    $admin->{stylesheet} = $request->{stylesheet};
     __edit_page($admin);
 }
 
@@ -93,6 +99,7 @@ sub new_user {
                 salutations=>$sal,
                 roles=>$groups,
                 countries=>$admin->get_countries(),
+                stylesheet => $request->{stylesheet},
             }
         );
 }
@@ -101,35 +108,7 @@ sub edit_user {
     
     # uses the same page as create_user, only pre-populated.
     my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
-    my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
-    $user_obj->{company} = $request->{company};
-    $user_obj->get($request->{user_id});
-
-    my @all_roles = $admin->get_roles();
-    
-    my $template = LedgerSMB::Template->new( 
-        user => $user, 
-        template => 'Admin/edit_user', 
-        language => $user->{language}, 
-        format => 'HTML', 
-        path=>'UI'
-    );
-    my $location = LedgerSMB::DBObject::Location->new(base=>$request);
-    my $template_data = 
-            {
-                user=>$user_obj, 
-                roles=>@all_roles,
-                countries=>$admin->get_countries(),
-                user_roles=>$user_obj->{roles},
-                salutations=>$admin->get_salutations(),
-                contact_classes=>$admin->get_contact_classes(),
-                locations=>$location->get_all($user_obj->{entity_id},"person"),
-            };
-    if ($request->{location_id}) {
-        $template_data->{location} = $location->get($request->{location_id});
-    }
-    $template->render($template_data);
+    __edit_page($request);
 }
 
 sub edit_group {

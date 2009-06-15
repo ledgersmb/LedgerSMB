@@ -52,8 +52,13 @@ our $VERSION = '1.0.0';
 
 sub get {
     my $self = shift;
+    my ($key) = @_;
+    if ($key){
+        $self->{key} = $key;
+    }
     my ($hashref) = $self->exec_method( funcname => 'setting_get' ) ;
     $self->{value} = $hashref->{setting_get};
+    return $self->{value};
 }
 
 sub increment {

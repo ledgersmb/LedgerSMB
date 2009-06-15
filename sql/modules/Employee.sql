@@ -76,7 +76,9 @@ create view employees as
         ee.*
     FROM person p
     JOIN entity_employee ee USING (entity_id)
-    JOIN salutation s ON (p.salutation_id = s.id);
+    LEFT JOIN salutation s ON (p.salutation_id = s.id);
+
+GRANT select ON employees TO public;
     
 
 CREATE OR REPLACE FUNCTION employee__get

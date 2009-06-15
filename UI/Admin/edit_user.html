@@ -1,15 +1,13 @@
-<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb INCLUDE 'ui-header.html' stylesheet = stylesheet ?>
 <?lsmb PROCESS 'elements.html' ?>
 <div id="modify_user">
-    <font size="15">
-        <strong>
+	<div class="listtop">
             <?lsmb IF user.user.username ?>
                 Editing User <?lsmb user.user.username ?>
             <?lsmb ELSE?>
                 New User
             <?lsmb END?>
-        </strong>
-    </font>
+        </div>
     
     <form method="POST" action="admin.pl">
         <input type="hidden" name="action" value="<?lsmb IF user.user.username?>edit_user<?lsmb ELSE?>save_user<?lsmb END?>"/>
@@ -50,7 +48,7 @@
             <tr>
                 <td><?lsmb text('Last Name') ?></td>
                 <td>
-                    <input type="textarea" name="last_name" value="<?lsmb user.employee.last_name?>"/>
+                    <input type="text" name="last_name" value="<?lsmb user.employee.last_name?>"/>
                 </td>
             </tr>
             <tr>
@@ -70,37 +68,37 @@
             <?lsmb END?>
             <input type="hidden" name="action" value="save_location"/>
             <input type="hidden" name="user_id" value="<?lsmb user.user.id?>"/>
+                        <hr/>
             <table>
 
-                <tr>
+                <tr class="listtop">
                     <td colspan="8">
-                        <hr/>
-                        Location
+                        <?lsmb text('Location') ?>
                     </td>
                 </tr>
             
-                <tr>
+                <tr class="listheading">
                     <td></td>
                     <td>
-                        Address
+                        <?lsmb text('Address') ?>
                     </td>
                     <td>
-                        City
+                        <?lsmb text('City') ?>
                     </td>
                     <td>
-                        State/Province
+                        <?lsmb text('State/Province') ?>
                     </td>
                     <td>
-                        Zip/Postal Code
+                        <?lsmb text('Zip/Postal Code') ?>
                     </td>
                     <td>
-                        Country
+                        <?lsmb text('Country') ?>
                     </td>
                 </tr>
-                
+                <?lsmb row = 0 ?>    
                 <?lsmb FOR location IN user.locations ?>
-                
-                    <tr>
+                <?lsmb row = (row + 1) % 2; class = "row$row" ?>
+                    <tr class = "<?lsmb class ?>">
                         <td>
                             <a href="admin.pl?action=edit_location&amp;id=<?lsmb location.id?>">Edit</a>
                             <a href="admin.pl?action=delete_location&amp;id=<?lsmb location.id?>">Delete</a>
@@ -126,29 +124,30 @@
                     </tr>
                 
                 <?lsmb END?>
+                
                 <!-- The editable one. -->
                 <tr>
                     <td></td>
                     <td>
-                        <input type="textarea" name="address1" value="<?lsmb location.line_one?>"/>
-                        <input type="textarea" name="address2" value="<?lsmb location.line_two?>"/>
-                        <input type="textarea" name="address3" value="<?lsmb location.line_three?>" />
+                        <input type="text" name="address1" value="<?lsmb edit_location.line_one?>"/>
+                        <input type="text" name="address2" value="<?lsmb edit_location.line_two?>"/>
+                        <input type="text" name="address3" value="<?lsmb edit_location.line_three?>" />
                     </td>
                     <td valign="top">
-                        <input type="textarea" name="city" value="<?lsmb location.city?>"/>
+                        <input type="text" name="city" value="<?lsmb edit_location.city?>"/>
                     </td>
                     <td valign="top">
-                        <input type="textarea" name="state" value="<?lsmb location.state?>"/>
+                        <input type="text" name="state" value="<?lsmb edit_location.state?>"/>
                     </td>
                     <td valign="top"> 
-                        <input type="textarea" name="zipcode" value="<?lsmb location.zipcode?>"/>
+                        <input type="text" name="zipcode" value="<?lsmb edit_location.zipcode?>"/>
                     </td>
                     <td valign="top">
-			<?lsmb IF location.country_id; 
-				country_id = location.country_id;
+			<?lsmb IF edit_location.country; 
+				country_id = edit_location.country_id;
 				ELSE; 
 				country_id = default_country;
-				END  -?>
+				END; -?>
 			<?lsmb PROCESS select element_data = {
 				name = "country"
 				options = countries
@@ -172,23 +171,23 @@
         </table>
 
         
-        
+        <hr/>
         <table>
             <form name="contacts" method="POST" action="admin.pl">
             <input type="hidden" name="action" value="save_contact"/>
             <input type="hidden" name="user_id" value="<?lsmb user.user.id?>"/>
-            <tr>
-                <td colspan="8"><hr/></td>
+            <tr class = "listtop">
+                <td colspan="8"><?lsmb text('Contact Information') ?></td>
             </tr>
             
-            <tr>
+            <tr class="listheading">
                 <td></td>
                 
                 <td>
-                    Contact type
+                    <?lsmb text('Contact Type') ?>
                 </td>
                 <td>
-                    Contact
+                    <?lsmb text('Contact Info') ?>
                 </td>
             </tr>
             
@@ -229,7 +228,7 @@
                 </td>
             </tr>
             </form>
-        </table> 
+        </table> <hr />
         <form name="groups" method="POST" action="admin.pl">
             <?lsmb PROCESS input element_data = {
                type="hidden"
