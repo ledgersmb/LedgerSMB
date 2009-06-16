@@ -623,6 +623,7 @@ WITH INHERIT NOLOGIN;
 
 GRANT INSERT ON parts TO "lsmb_<?lsmb dbname ?>__create_part";
 GRANT ALL ON parts_id_seq TO "lsmb_<?lsmb dbname ?>__create_part";
+GRANT INSERT ON partstax TO "lsmb_<?lsmb dbname ?>__create_part";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__create_part');
@@ -1430,6 +1431,9 @@ GRANT ALL ON pending_job_id_seq TO public;
 GRANT ALL ON invoice_tax_form TO public;
 GRANT ALL ON ac_tax_form to public;
 GRANT SELECT ON country_tax_form to public;
+GRANT SELECT ON translation TO public;
+GRANT SELECT ON pricegroup TO public;
+GRANT SELECT ON partstax TO public;
 --TODO, lock recurring, pending_job, payment_queue down more
 -- Roles with no db permissions:
 CREATE ROLE "lsmb_<?lsmb dbname ?>__draft_edit" WITH INHERIT NOLOGIN;
