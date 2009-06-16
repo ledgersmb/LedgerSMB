@@ -92,6 +92,13 @@ sub save_user {
     
 }
 
+sub search_users {
+   my $self = shift @_;
+   my @users = $self->exec_method(funcname => 'admin__search_users');
+   $self->{user_results} = \@users;
+   return @users;
+}
+
 sub save_roles {
     
     my $self = shift @_;

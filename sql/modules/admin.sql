@@ -110,6 +110,7 @@ CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TE
     
 $$ language 'plpgsql' SECURITY DEFINER;
 
+
 REVOKE EXECUTE ON FUNCTION admin__add_function_to_group(TEXT, TEXT) FROM PUBLIC;
 
 CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_role TEXT) returns INT AS $$
@@ -609,3 +610,57 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE TYPE user_result AS (
+	id int,
+	username text,
+	first_name text,
+	last_name text,
+	ssn text,
+	dob text
+);
+
+
+CREATE OR REPLACE FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob text) RETURNS SETOF user_result AS
+$$
+DECLARE t_return_row user_result;
+BEGIN
+	FOR t_return_row IN
+		SELECT u.id, u.username, p.first_name, p.last_name, e.ssn, e.dob
+		FROM users u
+		JOIN person p ON (u.entity_id = p.entity_id)
+		JOIN entity_employee e ON (e.entity_id = p.entity_id)
+		WHERE u.username LIKE '%' || coalesce(in_username,'') || '%' AND
+			(p.first_name = in_first_name or in_first_name is null)
+			AND (p.last_name = in_last_name or in_last_name is null)
+			AND (in_ssn is NULL or in_ssn = e.ssn) 
+			AND (e.dob = in_dob or in_dob is NULL)
+	LOOP
+		RETURN NEXT t_return_row;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TYPE session_result AS (
+	id int,
+	username text,
+	last_used timestamp,
+	locks_active bigint
+);
+
+CREATE OR REPLACE FUNCTION admin__list_sessions() RETURNS SETOF session_result
+AS $$
+SELECT s.session_id, u.username, s.last_used, count(t.id)
+FROM "session" s
+JOIN users u ON (s.users_id = u.id)
+LEFT JOIN transactions t ON (t.locked_by = s.session_id)
+GROUP BY s.session_id, u.username, s.last_used
+ORDER BY u.username;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION admin__drop_session(in_id) RETURNS bool AS
+$$
+BEGIN
+	DELETE FROM "session" WHERE session_id = in_id;
+	RETURN FOUND;
+END;
+$$ language plpgsql;

@@ -1,0 +1,66 @@
+<?lsmb INCLUDE 'ui-header.html' stylesheet = stylesheet ?>
+<?lsmb PROCESS 'elements.html' ?>
+<div class="listtop">
+<?lsmb text('Search for Users') ?>
+</div>
+<div class="input_row">
+<form action="admin.pl" method="post" name="user_search">
+<div class="input_row">
+<?lsmb PROCESS input element_data = {
+	label = text('Username:')
+	type = "text"
+	name = "username"
+	value = username
+	class = "username"
+	size = "20"
+} ?>
+</div>
+<div class="input_row">
+<?lsmb PROCESS input element_data = {
+	label = text('First Name') #'
+	type = "text"
+	name = "first_name"
+	value = first_name
+	class = "name"
+	size = "20"
+} ?>
+</div>
+<div class="input_row">
+<?lsmb PROCESS input element_data = {
+	label = text('Last Name') #'
+	type = "text"
+	name = "last_name"
+	value = last_name
+	class = "name"
+	size = "20"
+} ?>
+</div>
+<div class="input_row">
+<?lsmb PROCESS input element_data = {
+	label = text('Tax ID') #' 
+	type = "text"
+	name = "ssn"
+	value = ssn
+	class = "tax_id"
+	size = "20"
+} ?>
+</div>
+<div class="input_row">
+<?lsmb PROCESS input element_data = {
+	label = text('Date of Birth') #'
+	type = "text"
+	name = "dob"
+	value = dob
+	class = "date"
+	size = "12"
+} ?>
+</div>
+<?lsmb PROCESS button element_data = {
+	text = text('Search')
+	value = "get_user_results"
+	name = "action"
+	type = "submit"
+	class = "submit"
+} ?>
+</form>
+</body>

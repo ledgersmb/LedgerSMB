@@ -378,4 +378,66 @@ sub delete_location {
 
 #eval { do "scripts/custom/admin.pl"};
 
+sub search_users {
+    my ($request) = @_;
+    my $template = LedgerSMB::Template->new(
+            user => $request->{_user}, 
+            template => 'Admin/user_search', 
+            locale => $request->{_locale}, 
+            format => 'HTML', 
+            path=>'UI'
+    );
+    $template->render($request);
+}
+
+sub get_user_results {
+    my ($request) = @_;
+    my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
+    my @users = $admin->search_users;
+    my $template = LedgerSMB::Template->new(
+            user => $request->{_user}, 
+            template => 'form-dynatable', 
+            locale => $request->{_locale}, 
+            format => 'HTML', 
+            path=>'UI'
+    );
+    my $columns;
+    @$columns = qw(id username first_name last_name ssn dob edit);
+    $column_headers = {
+        id         => $request->{_locale}->text('ID'),
+        username   => $request->{_locale}->text('Username'),
+        first_name => $request->{_locale}->text('First Name'),
+        last_name  => $request->{_locale}->text('Last Name'),
+        ssn        => $request->{_locale}->text('Tax ID'),
+        dob         => $request->{_locale}->text('Date of Birth'),
+    };
+    my $rows = [];
+    my $rowcount = "0";
+    my $base_url = "admin.pl?action=edit_user";
+    for my $u (@users) {
+        $u->{i} = $rowcount % 2;
+        $u->{edit} = {
+            href =>"$base_url&user_id=$u->{id}", 
+            text => '[' . $request->{_locale}->text('edit') . ']',
+        };
+        push @$rows, $u;
+        ++$rowcount;
+    }
+    $admin->{title} = $request->{_locale}->text('Search Results');
+    $template->render({
+	form    => $admin,
+	columns => $columns,
+	heading => $column_headers,
+        rows    => $rows,
+	buttons => [],
+	hiddens => [],
+    }); 
+}
+
+sub list_sessions {
+}
+
+sub delete_session {
+}
+
 1;
