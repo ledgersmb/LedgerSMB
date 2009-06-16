@@ -2625,8 +2625,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 211	hide_status	1	589
 211	approved	0	590
 211	submitted	1	591
-212	action	search_batch	592
-212	module	epoch_payment_file.pl	593
 198	batch_type	ar	555
 191	module	user.pl	528
 191	action	preference_screen	529
