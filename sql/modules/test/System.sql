@@ -19,6 +19,7 @@ insert into test_exempt_funcs values ('set_curdict');
 insert into test_exempt_funcs values ('set_curcfg');
 insert into test_exempt_funcs values ('token_type');
 insert into test_exempt_funcs values ('crosstab');
+insert into test_exempt_funcs values ('concat_colon');
 
 INSERT INTO test_result(test_name, success)
 select 'No overloaded functions in current schema', count(*) = 0

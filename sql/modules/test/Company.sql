@@ -50,25 +50,23 @@ WHERE control_code is not null;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'entity__save_notes',
-       entity__save_notes ( currval('entity_id_seq'), 'Test note text', 'Test note subject' );
+       entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) > 0;
        
 INSERT INTO test_result (test_name, success)
 SELECT 'entity__save_note subject record',
        CASE WHEN subject = 'Test note subject' THEN 't'::bool ELSE 'f'::bool END
        FROM entity_note
-       group by subject, id
-       having id = max(id);
+       WHERE id = currval('note_id_seq');
        
 INSERT INTO test_result(test_name, success)
 SELECT 'eca_save_notes',
-       eca__save_notes( currval('entity_credit_account_id_seq', 'Test note text', 'ECA test note subject') );
+       eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) > 0;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'eca__save_notes subject record',
        CASE WHEN subject = 'ECA test note subject' THEN 't'::bool ELSE 'f'::bool END
        FROM eca_note
-       group by subject, id
-       HAVING id = max(id);
+       WHERE id = currval('note_id_seq');
 
 
 SELECT * FROM test_result;
