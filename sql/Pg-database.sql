@@ -1822,21 +1822,14 @@ CREATE TABLE menu_node (
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_node_id_seq', 209, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_node', 'id'), 222, true);
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
 --
-
 COPY menu_node (id, label, parent, "position") FROM stdin;
 205	Transaction Approval	0	5
-128	System	0	16
-190	Stylesheet	0	17
-191	Preferences	0	18
-192	New Window	0	19
-193	Logout	0	20
 206	Batches	205	1
-207	Drafts	205	2
 46	HR	0	6
 50	Order Entry	0	7
 63	Shipping	0	8
@@ -1846,7 +1839,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 0	Top-level	\N	0
 1	AR	0	1
 2	Add Transaction	1	1
-144	Departments	128	8
 5	Transactions	4	1
 6	Outstanding	4	2
 7	AR Aging	4	3
@@ -1881,7 +1873,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 42	Receipts	41	1
 43	Payments	41	2
 44	Reconciliation	41	3
-147	Type of Business	128	9
 47	Employees	46	1
 48	Add Employee	47	1
 49	Search	47	2
@@ -1957,26 +1948,20 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 130	Taxes	128	2
 131	Defaults	128	3
 132	Yearend	128	4
-133	Backup	128	5
 134	Send to File	133	1
 135	Send to Email	133	2
-136	Chart of Accounts	128	6
 137	Add Accounts	136	1
 138	List Accounts	136	2
 139	Add GIFI	136	3
 140	List GIFI	136	4
-141	Warehouses	128	7
 142	Add Warehouse	141	1
 143	List Warehouse	141	2
 148	Add Business	147	1
 149	List Businesses	147	2
-150	Language	128	10
 151	Add Language	150	1
 152	List Languages	150	2
-153	SIC	128	11
 154	Add SIC	153	1
 155	List SIC	153	2
-156	HTML Templates	128	12
 157	Income Statement	156	1
 158	Balance Sheet	156	2
 159	Invoice	156	3
@@ -1992,7 +1977,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 169	Quotation	156	13
 170	RFQ	156	14
 171	Timecard	156	15
-172	LaTeX Templates	128	13
 173	Invoice	172	1
 174	AR Transaction	172	2
 175	AP Transaction	172	3
@@ -2008,7 +1992,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 185	Quotation	172	13
 186	RFQ	172	14
 187	Timecard	172	15
-188	Text Templates	128	14
 189	POS Invoice	188	1
 198	AR Voucher	1	2
 3	Sales Invoice	1	3
@@ -2033,7 +2016,30 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 98	Projects	0	12
 109	Reports	0	13
 115	Recurring Transactions	0	14
-116	Batch Printing	0	15
+210	Drafts	205	2
+211	Reconciliation	205	3
+217	Tax Forms	0	15
+193	Logout	0	22
+192	New Window	0	21
+191	Preferences	0	20
+190	Stylesheet	0	19
+128	System	0	18
+116	Batch Printing	0	17
+218	Add Tax Form	217	1
+219	Admin Users	128	5
+188	Text Templates	128	15
+172	LaTeX Templates	128	14
+156	HTML Templates	128	13
+153	SIC	128	12
+150	Language	128	11
+147	Type of Business	128	10
+144	Departments	128	9
+141	Warehouses	128	8
+136	Chart of Accounts	128	7
+133	Backup	128	6
+220	Add User	219	1
+221	Search Users	219	2
+222	Sessions	219	3
 \.
 
 
@@ -2074,7 +2080,7 @@ CREATE TABLE menu_attribute (
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_attribute_id_seq', 584, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 606, true);
 
 
 --
@@ -2086,8 +2092,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 205	menu	1	574
 206	module	vouchers.pl	575
 206	action	search_batch	576
-207	module	drafts.pl	577
-207	action	search	578
 1	menu	1	1
 2	module	ar.pl	2
 2	action	add	3
@@ -2116,7 +2120,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 13	menu	1	31
 14	module	customer.pl	32
 14	action	search	36
-15	module	customer.pl	35
 15	db	customer	37
 15	action	history	33
 16	menu	1	38
@@ -2185,10 +2188,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 43	module	rp.pl	103
 43	action	report	104
 43	report	payments	105
-45	module	recon.pl	106
-45	action	new_report	107
-44	module	recon.pl	108
-44	action	search	109
 44	report	1	110
 46	menu	1	111
 47	menu	1	112
@@ -2418,11 +2417,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 135	action	backup	352
 134	media	file	353
 135	media	email	354
-137	module	account.pl	355
 138	module	am.pl	356
 139	module	am.pl	357
 140	module	am.pl	358
-137	action	new	359
 138	action	list_account	360
 139	action	add_gifi	361
 140	action	list_gifi	362
@@ -2579,8 +2576,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 189	format	TEXT	525
 190	action	display_stylesheet	526
 190	module	am.pl	527
-191	module	user.pl	528
-191	action	preference_screen	529
 193	module	login.pl	532
 193	action	logout	533
 193	target	_top	534
@@ -2604,11 +2599,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 204	batch_type	receipt_reversal	573
 200	menu	1	552
 198	action	create_batch	554
-198	batch_type	ar	555
 198	module	vouchers.pl	553
 199	module	vouchers.pl	559
 199	action	create_batch	560
-199	batch_type	ap	561
 201	module	vouchers.pl	562
 201	action	create_batch	563
 203	module	vouchers.pl	565
@@ -2619,9 +2612,38 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 204	module	vouchers.pl	571
 204	action	create_batch	572
 201	batch_type	payment	564
+210	action	search	585
+210	module	drafts.pl	586
+199	batch_type	ap	561
+15	module	customer.pl	35
+45	module	recon.pl	106
+45	action	new_report	107
+44	module	recon.pl	108
+44	action	search	109
+211	module	recon.pl	587
+211	action	search	588
+211	hide_status	1	589
+211	approved	0	590
+211	submitted	1	591
+212	action	search_batch	592
+212	module	epoch_payment_file.pl	593
+198	batch_type	ar	555
+191	module	user.pl	528
+191	action	preference_screen	529
+217	menu	1	597
+218	action	add_taxform	598
+218	module	taxform.pl	599
+137	module	account.pl	355
+137	action	new	359
+219	menu	1	600
+220	module	admin.pl	601
+220	action	new_user	602
+221	module	admin.pl	603
+221	action	search_users	604
+222	module	admin.pl	605
+222	action	list_sessions	606
 \.
--- PostgreSQL database dump complete
---
+
 
 --
 
