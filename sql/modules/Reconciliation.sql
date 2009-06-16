@@ -114,7 +114,7 @@ RETURNS numeric AS
 $$
 	select CASE WHEN c.category = 'A' THEN sum(ac.amount) * -1 ELSE
 		sum(ac.amount) END
-	FROM chart c
+	FROM account c
 	JOIN acc_trans ac ON (ac.chart_id = c.id)
 	JOIN (select id from ar where approved
 		union
@@ -433,7 +433,7 @@ DECLARE report cr_report;
 BEGIN
 	FOR report IN
 		SELECT r.* FROM cr_report r
-		JOIN chart c ON (r.chart_id = c.id)
+		JOIN account c ON (r.chart_id = c.id)
 		WHERE 
 			(in_date_from IS NULL OR in_date_from <= end_date) and
 			(in_date_to IS NULL OR in_date_to >= end_date) AND
@@ -462,7 +462,7 @@ create or replace function reconciliation__account_list () returns setof recon_a
     SELECT 
         coa.accno || ' ' || coa.description as name,
         coa.accno, coa.id as id
-    FROM chart coa, cr_coa_to_account cta
+    FROM account coa, cr_coa_to_account cta
     WHERE cta.chart_id = coa.id
     ORDER BY coa.accno;
 $$ language sql;
@@ -472,7 +472,7 @@ CREATE OR REPLACE FUNCTION reconciliation__get_current_balance
 $$
 DECLARE outval NUMERIC;
 BEGIN
-	SELECT CASE WHEN (select category FROM chart WHERE id = in_account_id)
+	SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
 			IN ('A', 'E') THEN sum(a.amount) * -1
 		ELSE sum(a.amount) END
 	FROM acc_trans a
