@@ -99,6 +99,18 @@ sub search_users {
    return @users;
 }
 
+sub list_sessions {
+   my $self = shift @_;
+   my @sessions = $self->exec_method(funcname => 'admin__list_sessions');
+   $self->{active_sessions} = \@sessions;
+   return @sessions;
+}
+
+sub delete_session {
+   my $self = shift @_;
+   my @sessions = $self->exec_method(funcname => 'admin__drop_session');
+   return $self->{dbh}->commit;
+}
 sub save_roles {
     
     my $self = shift @_;

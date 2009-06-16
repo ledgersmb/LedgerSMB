@@ -657,10 +657,10 @@ GROUP BY s.session_id, u.username, s.last_used
 ORDER BY u.username;
 $$ LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION admin__drop_session(in_id) RETURNS bool AS
+CREATE OR REPLACE FUNCTION admin__drop_session(in_session_id int) RETURNS bool AS
 $$
 BEGIN
-	DELETE FROM "session" WHERE session_id = in_id;
+	DELETE FROM "session" WHERE session_id = in_session_id;
 	RETURN FOUND;
 END;
 $$ language plpgsql;

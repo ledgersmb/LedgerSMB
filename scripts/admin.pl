@@ -435,9 +435,54 @@ sub get_user_results {
 }
 
 sub list_sessions {
+    my ($request) = @_;
+    my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
+    my @sessions = $admin->list_sessions();
+    my $template = LedgerSMB::Template->new(
+            user => $request->{_user}, 
+            template => 'form-dynatable', 
+            locale => $request->{_locale}, 
+            format => 'HTML', 
+            path=>'UI'
+    );
+    my $columns;
+    @$columns = qw(id username last_used locks_active drop);
+    $column_headers = {
+        id         => $request->{_locale}->text('ID'),
+        username   => $request->{_locale}->text('Username'),
+        last_used => $request->{_locale}->text('Last Used'),
+        locks_active  => $request->{_locale}->text('Transactions Locked'),
+
+    };
+    my $rows = [];
+    my $rowcount = "0";
+    my $base_url = "admin.pl?action=delete_session";
+    for my $s (@sessions) {
+        $s->{i} = $rowcount % 2;
+        $s->{drop} = {
+            href =>"$base_url&session_id=$s->{id}", 
+            text => '[' . $request->{_locale}->text('delete') . ']',
+        };
+        push @$rows, $s;
+        ++$rowcount;
+    }
+    $admin->{title} = $request->{_locale}->text('Active Sessions');
+    $template->render({
+	form    => $admin,
+	columns => $columns,
+	heading => $column_headers,
+        rows    => $rows,
+	buttons => [],
+	hiddens => [],
+    }); 
+    
 }
 
 sub delete_session {
+    my ($request) = @_;
+    my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
+    $admin->delete_session();
+    list_sessions($request);
 }
 
 1;
