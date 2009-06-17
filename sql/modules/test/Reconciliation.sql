@@ -47,7 +47,9 @@ INSERT INTO test_result(test_name, success)
 SELECT '1 Report Approved', reconciliation__report_approve(currval('cr_report_id_seq')::int) > 0;
 
 INSERT INTO test_result(test_name, success)
-SELECT '1 Transactions closed', count(*) = 2 FROM acc_trans where chart_id = test_get_account_id('-11111') and cleared is false;
+SELECT '1 Transactions closed', count(*) = 2 FROM acc_trans 
+JOIN account a ON (acc_trans.chart_id = a.id) 
+WHERE a.accno = '-11111' and cleared is false;
 
 INSERT INTO test_result(test_name, success)
 SELECT '1 Create Recon Report', 
@@ -85,7 +87,9 @@ INSERT INTO test_result(test_name, success)
 SELECT '1 Report Approved', reconciliation__report_approve(currval('cr_report_id_seq')::int) > 0;
 
 INSERT INTO test_result(test_name, success)
-SELECT '1 Transactions open', count(*) = 14 FROM acc_trans where chart_id = test_get_account_id('-11112') and cleared is false;
+SELECT '1 Transactions open', count(*) = 14 FROM acc_trans 
+JOIN account ON (acc_trans.chart_id = account.id)
+WHERE accno = '-11112'  and cleared is false;
 
 INSERT INTO test_result(test_name, success)
 SELECT '1 Cleared balance post-approval is 10', reconciliation__get_cleared_balance(test_get_account_id('-11112')) = -10;
@@ -117,7 +121,9 @@ INSERT INTO test_result(test_name, success)
 SELECT 'Report Approved', reconciliation__report_approve(currval('cr_report_id_seq')::int) > 0;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Transactions closed', count(*) = 2 FROM acc_trans where chart_id = test_get_account_id('-11111') and cleared is false;
+SELECT 'Transactions closed', count(*) = 2 FROM acc_trans 
+JOIN account a ON (acc_trans.chart_id = a.id)
+WHERE accno = '-11112' and cleared is false;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Cleared balance post-approval is 130', reconciliation__get_cleared_balance(test_get_account_id('-11112')) = -130;
