@@ -1416,6 +1416,7 @@ GRANT ALL ON "session" TO public;
 GRANT ALL ON session_session_id_seq TO PUBLIC;
 GRANT SELECT ON users TO public;
 GRANT ALL ON user_preference TO public;
+GRANT SELECT ON user_listable TO public;
 GRANT SELECT ON custom_table_catalog TO PUBLIC;
 GRANT SELECT ON custom_field_catalog TO PUBLIC;
 grant select on menu_node, menu_attribute, menu_acl to public;
@@ -1434,6 +1435,10 @@ GRANT SELECT ON country_tax_form to public;
 GRANT SELECT ON translation TO public;
 GRANT SELECT ON pricegroup TO public;
 GRANT SELECT ON partstax TO public;
+GRANT SELECT ON salutation TO public;
+
+GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
+
 --TODO, lock recurring, pending_job, payment_queue down more
 -- Roles with no db permissions:
 CREATE ROLE "lsmb_<?lsmb dbname ?>__draft_edit" WITH INHERIT NOLOGIN;
