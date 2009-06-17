@@ -327,7 +327,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id_t int
+    in_entity_id int, in_sic_code text
 ) RETURNS INT AS $$
 DECLARE t_entity_id INT;
 	t_company_id INT;
@@ -355,8 +355,8 @@ BEGIN
 		t_entity_id := in_entity_id;
 	END IF;
 	IF t_entity_id IS NULL THEN
-		INSERT INTO entity (name, entity_class, control_code,country_id)
-		VALUES (in_name, in_entity_class, t_control_code,in_country_id_t);
+		INSERT INTO entity (name, entity_class, control_code)
+		VALUES (in_name, in_entity_class, t_control_code);
 		t_entity_id := currval('entity_id_seq');
 		END IF;
 	END IF;
@@ -364,8 +364,7 @@ BEGIN
 	UPDATE entity
 	SET name = in_name,
             entity_class = in_entity_class,
-	    control_code = t_control_code,
-	    country_id = in_country_id_t
+	    control_code = t_control_code
 	WHERE id = t_entity_id;
 
 

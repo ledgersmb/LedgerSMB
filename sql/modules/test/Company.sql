@@ -3,7 +3,7 @@ BEGIN;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Saving Company', 
-	company_save (NULL, 'TESTING...', 1,'TESTING', 'TESTING', NULL, '1234', 100) 
+	company_save (NULL, 'TESTING...', 1,'TESTING', 'TESTING', NULL, '1234') 
 		IS NOT NULL;
 
 
