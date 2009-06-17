@@ -1437,6 +1437,8 @@ GRANT SELECT ON pricegroup TO public;
 GRANT SELECT ON partstax TO public;
 GRANT SELECT ON salutation TO public;
 GRANT SELECT ON partscustomer TO public;
+GRANT SELECT ON assembly TO public;
+GRANT SELECT ON jcitems TO public;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 
