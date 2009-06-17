@@ -18,6 +18,7 @@ BEGIN;
 \i sql/modules/Voucher.sql
 \i sql/modules/Reconciliation.sql
 \i sql/modules/admin.sql -- Adds the new user functionality.
+\i sql/modules/chart.sql
 
 
 COMMIT;
