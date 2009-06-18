@@ -326,10 +326,11 @@ BEGIN
 		                          THEN amount * -1
 		                     END) AS due 
 		            FROM acc_trans 
-		            JOIN chart ON (chart.id = acc_trans.chart_id)
+		            JOIN account coa ON (coa.id = acc_trans.chart_id)
+                            JOIN account_link al ON (al.account_id = coa.id)
 		       LEFT JOIN voucher v ON (acc_trans.voucher_id = v.id)
-		           WHERE ((chart.link = 'AP' AND in_account_class = 1)
-		                 OR (chart.link = 'AR' AND in_account_class = 2))
+		           WHERE ((al.description = 'AP' AND in_account_class = 1)
+		                 OR (al.description = 'AR' AND in_account_class = 2))
 			   AND (approved IS TRUE or v.batch_class = 3)
 		        GROUP BY acc_trans.trans_id) p ON (a.id = p.trans_id)
 		LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
@@ -350,7 +351,7 @@ BEGIN
 			 AND NOT a.on_hold
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
-		                            chart_id = (SELECT id frOM chart
+		                            chart_id = (SELECT id from account
 		                                         WHERE accno
 		                                               = in_ar_ap_accno)
 		                    )))

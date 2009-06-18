@@ -92,6 +92,10 @@ $$
 declare 
 	t_table text;
 begin
+	DELETE FROM ac_tax_form 
+	WHERE entry_id IN 
+		(SELECT entry_id FROM acc_trans WHERE trans_id = in_id);
+
         DELETE FROM acc_trans WHERE trans_id = in_id;
 	SELECT lower(table_name) into t_table FROM transactions where id = in_id;
 

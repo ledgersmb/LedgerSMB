@@ -1,20 +1,7 @@
 BEGIN;
 \i Base.sql
-
-INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number)
-SELECT '-1', min(id), 1, '_test vendor'
-FROM entity;
-
-INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number)
-SELECT '-2', min(id), 2, '_test customer'
-FROM entity;
-
-INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00001', 'AP Test', 'A', 'L', 'AP');
-
-INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00002', 'AR Test', 'A', 'A', 'AP');
-
+SELECT account_save(NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, '{}');
+SELECT account_save(NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, '{}');
 INSERT INTO ap (invnumber, entity_credit_account, amount, netamount, paid, 
 	approved, curr)
 select '_TEST AP', min(id), '100', '100', '0', FALSE, 'USD'
@@ -22,8 +9,12 @@ FROM entity_credit_account WHERE entity_class = 1;
 
 INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
 SELECT id, currval('id'), '100', TRUE FROM chart WHERE accno = '00001';
+INSERT INTO ac_tax_form (entry_id, reportable)
+VALUES (currval('acc_trans_entry_id_seq')::int, true);
 INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
 SELECT id, currval('id'), '-100', TRUE FROM chart WHERE accno = '00002';
+INSERT INTO ac_tax_form (entry_id, reportable)
+VALUES (currval('acc_trans_entry_id_seq')::int, false);
 
 INSERT INTO ar (invnumber, entity_credit_account, amount, netamount, paid, 
 	approved, curr)
@@ -50,6 +41,11 @@ WHERE reference = '_TEST AP';
 
 INSERT INTO test_result(test_name, success)
 SELECT '"AP" search successful', count(*) = 1
+FROM draft__search('AP',  NULL, NULL, NULL, NULL, NULL)
+WHERE reference = '_TEST AP';
+
+INSERT INTO test_result(test_name, success)
+SELECT '"AP" delete successful (w/1099)', draft_delete(id)
 FROM draft__search('AP',  NULL, NULL, NULL, NULL, NULL)
 WHERE reference = '_TEST AP';
 
