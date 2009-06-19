@@ -159,7 +159,7 @@ sub post_transaction {
     my $credit;
 
     # insert acc_trans transactions
-    for $i ( 1 .. $form->{rowcount} ) {
+    for $i ( 0 .. $form->{rowcount} ) {
 
         $debit  = $form->parse_amount( $myconfig, $form->{"debit_$i"} );
         $credit = $form->parse_amount( $myconfig, $form->{"credit_$i"} );

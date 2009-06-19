@@ -123,7 +123,7 @@
 	  ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
 	  <input type="text" class="autocomplete" size="60" value="<?lsmb element_data.initial_value ?>" id="<?lsmb attribute_data.id ?>-ac-search" name="<?lsmb attribute_data.id ?>-ac-search" onclick="this.value='';" onblur="this.value = $('<?lsmb attribute_data.id ?>').value" />
-	  <input type="hidden"<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> value="<?lsmb element_data.initial_value ?>" />
+	  <input type="hidden" id="<?lsmb attribute_data.id ?>" name="<?lsmb element_data.name ?>"  value="<?lsmb element_data.initial_value?>" />
 	  <span class="indicator" id="<?lsmb attribute_data.id ?>-ac-indicator" style="display: none">Working...</span>
 	  <div id="<?lsmb attribute_data.id ?>-ac-choices" class="autocomplete"></div>
 	  <script language="javascript" type="text/javascript"><!--

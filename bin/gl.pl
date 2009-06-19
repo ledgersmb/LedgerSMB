@@ -341,7 +341,7 @@ sub display_row
   $form->{totaldebit}  = 0;
   $form->{totalcredit} = 0;
 
-  for $i ( 1 .. $form->{rowcount} ) 
+  for $i ( 0 .. $form->{rowcount} ) 
   {
 
         my $temphash1;
@@ -1101,7 +1101,7 @@ sub post {
       if ( $transdate <= $closedto );
 
     # add up debits and credits
-    for $i ( 1 .. $form->{rowcount} ) {
+    for $i ( 0 .. $form->{rowcount} ) {
         $dr = $form->parse_amount( \%myconfig, $form->{"debit_$i"} );
         $cr = $form->parse_amount( \%myconfig, $form->{"credit_$i"} );
 
