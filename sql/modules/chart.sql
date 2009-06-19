@@ -95,6 +95,7 @@ BEGIN
                WHERE link = CASE WHEN in_account_class = 1 THEN 'AP'
                                WHEN in_account_class = 2 THEN 'AR'
                                END
+               ORDER BY accno
        LOOP
                RETURN NEXT out_row;
        END LOOP;
