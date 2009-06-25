@@ -9,10 +9,14 @@ use LedgerSMB::Locale;
 use Data::Dumper;
 use DBI;
 
+=over
+
 =item LedgerSMB::User->new($login);
 
 Create a LedgerSMB::User object.  If the user $login exists, set the fields
 with values retrieved from the database.
+
+=back
 
 =cut
 
@@ -487,15 +491,13 @@ sub check_sql_modules_valid_exist
 
        	my @dir=LedgerSMB::Initiate->read_directory($form,$dir);
 
-=pod 
-        now dilemma with search files($dest)
+        #now dilemma with search files($dest)
 	
-	1.List from README file 
-	2.Read all sql files from sql/modules/
+	#1.List from README file 
+	#2.Read all sql files from sql/modules/
 
-	Now implementing 2 one .Chris can you suggest me whether to go with 1 or 2
+	#Now implementing 2 one .Chris can you suggest me whether to go with 1 or 2
 
-=cut
 	my @dest = grep /\.sql$/,@dir;
 	
 	
