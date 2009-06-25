@@ -928,6 +928,9 @@ msgstr "Editar compuesto"
 msgid "Edit Preferences for"
 msgstr "Editar preferencias de"
 
+msgid "Preferences for %1"
+msgstr "Preferencias de %1"
+
 msgid "Edit Pricegroup"
 msgstr "Editar Precio de Grupo"
 
@@ -1135,11 +1138,17 @@ msgstr ""
 msgid "GL Reference Number"
 msgstr ""
 
-msgid "GL Transaction"
+msgid "Journal Entry"
 msgstr "Nota de Contabilidad"
 
-msgid "General Ledger"
+msgid "General Journal"
 msgstr "Notas de Contabilidad"
+
+msgid "Tax Forms"
+msgstr "Formas de Ivas"
+
+msgid "Taxes"
+msgstr "Ivas"
 
 msgid "Generate"
 msgstr ""

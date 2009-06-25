@@ -239,9 +239,11 @@ sub new {
 
     $self->{dbh}->do("set DateStyle to '" 
 		.$date_setting{$self->{_user}->{dateformat}}."'");
-    #my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{countrycode})
-    $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
+    my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{language})
+#    $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+    $self->{_locale} = $locale;
+    $self->debug({file => '/tmp/base.debug'});
 
     $self->{stylesheet} = $self->{_user}->{stylesheet};
 

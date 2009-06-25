@@ -30,16 +30,17 @@ use LedgerSMB::User;
 use LedgerSMB;
 use LedgerSMB::Locale;
 use Data::Dumper;
+use strict;
 
 # for custom preprocessing logic
 eval { require "custom.pl"; };
 
-$request = new LedgerSMB;
+my $request = new LedgerSMB;
 $request->{action} = '__default' if (!$request->{action});
 
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-$script = $1;
-$locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
+my $script = $1;
+my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
   or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 
 if (!$script){
