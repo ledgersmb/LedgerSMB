@@ -181,7 +181,11 @@
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
 	  <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
 	    <?lsmb  # Build options.
-	      FOREACH option_data IN element_data.options;
+	      FOREACH optionds IN element_data.options;
+                  option_data = {};
+                  FOREACH key IN optionds.keys;
+                      option_data.$key = optionds.$key;
+                  END; 
 	        PROCESS option 	parent_id = parent_id, optindex = optindex;
                 optindex=optindex+1;
 
