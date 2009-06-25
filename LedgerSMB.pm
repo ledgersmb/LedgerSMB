@@ -243,7 +243,6 @@ sub new {
 #    $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
     $self->{_locale} = $locale;
-    $self->debug({file => '/tmp/base.debug'});
 
     $self->{stylesheet} = $self->{_user}->{stylesheet};
 
