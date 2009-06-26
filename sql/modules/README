@@ -23,7 +23,8 @@ Payment.sql
 Person.sql
 Report.sql
 Voucher.sql
-Reconciliation.sql
+admin.sql
+Reconciliaton.sql
 
 Note that the Roles.sql is special and must be preprocessed to get it to work.
 A command like:
@@ -36,6 +37,4 @@ declarations in the other scripts.
 
 The following files are not ready to be loaded:
 
-admin.sql
 security.sql
-Reconciliaton.sql
