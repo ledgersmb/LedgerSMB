@@ -1,5 +1,7 @@
 package LedgerSMB::ScriptLib::Company;
 use LedgerSMB::Template;
+use LedgerSMB::DBObject::Customer;
+use LedgerSMB::DBObject::Vendor;
 
 my $ec_labels = {
       1 => 'Vendor',
