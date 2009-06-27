@@ -815,6 +815,7 @@ sub dberror{
 	'22012' => $self->{_locale}->text('Division by 0 error'),
 	'22004' => $self->{_locale}->text('Required input not provided'),
 	'23502' => $self->{_locale}->text('Required input not provided'),
+        '23505' => $self->{_locale}->text('Conflict with Existing Data'),
 	'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
                     $self->{dbh}->errstr,
    };
