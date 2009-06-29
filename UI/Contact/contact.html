@@ -664,12 +664,20 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			label = text('Country:') 
 		} ?>
 	</div>
-	<div><?lsmb PROCESS button element_data = {
+	<div>
+             <?lsmb PROCESS button element_data = {
 		class = "submit" 
 		name = "action" 
 		value = "add_location" 
 		id = "loc_save_location"
 		text = text('Save Location') 
+	} #' ?>
+             <?lsmb PROCESS button element_data = {
+		class = "submit" 
+		name = "action" 
+		value = "save_new_location" 
+		id = "loc_save_new_location"
+		text = text('Save New Location') 
 	} #' ?>
 	</div>
     </form>

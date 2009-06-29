@@ -123,6 +123,25 @@ sub add_location {
 
 =over
 
+=item save_new_location 
+
+Adds a location to the company as defined in the inherited object, not
+overwriting existing locations.
+
+=back
+
+=cut
+
+sub save_new_location {
+    my ($request) = @_;
+    delete $requet->{location_id};
+   add_location($request);
+}
+
+=pod
+
+=over
+
 =item generate_control_code 
 
 Sets $company->{control_code} equal to the next in the series of entity_control 
