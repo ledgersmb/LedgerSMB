@@ -272,7 +272,7 @@ sub get {
 
     if ($self->{location_id}){
         for (@{$self->{locations}}){
-            if ($_->{id} = $self->{location_id}){
+            if ($_->{id} == $self->{location_id}){
                 my $old_id = $self->{id};
                 $self->merge($_);
                 for my $c (@{$self->{country_list}}){
@@ -280,7 +280,6 @@ sub get {
                          $self->{country_code} = $c->{id};
                      }
                 }
-                $self->{id} = $old_id;
                 last;
             }
         }
