@@ -1,10 +1,17 @@
 BEGIN;
 \i Base.sql
+INSERT INTO entity (id, entity_class, name, country_id)
+VALUES (-1000, 1, '__TEST', 243);
+
+INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id)
+VALUES (-1000, '_testv', 1, -1000); 
+INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id)
+VALUES (-1001, '_testc', 2, -1000); 
 SELECT account_save(NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, '{}');
 SELECT account_save(NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, '{}');
 INSERT INTO ap (invnumber, entity_credit_account, amount, netamount, paid, 
 	approved, curr)
-select '_TEST AP', min(id), '100', '100', '0', FALSE, 'USD'
+select '_TEST AP', -1000, '100', '100', '0', FALSE, 'USD'
 FROM entity_credit_account WHERE entity_class = 1;
 
 INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
@@ -18,7 +25,7 @@ VALUES (currval('acc_trans_entry_id_seq')::int, false);
 
 INSERT INTO ar (invnumber, entity_credit_account, amount, netamount, paid, 
 	approved, curr)
-select '_TEST AR', min(id), '100', '100', '0', FALSE, 'USD'
+select '_TEST AR', -1001, '100', '100', '0', FALSE, 'USD'
 FROM entity_credit_account WHERE entity_class = 2;
 
 INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
