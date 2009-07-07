@@ -42,9 +42,23 @@ BEGIN
 	
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION asset_class__get (in_id int) RETURNS asset_class AS
+$$
+DECLARE ret_val asset_class;
+BEGIN 
+	SELECT * INTO ret_val FROM asset_class WHERE id = in_id;
+	RETURN ret_val;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION asset_class__list() RETURNS SETOF asset_class AS
+$$
+SELECT * FROM asset_class ORDER BY label;
+$$ LANGUAGE SQL;
+
 CREATE OR REPLACE FUNCTION asset_class__save
 (in_id int, in_asset_account_id int, in_dep_account_id int, 
-in_method int, in_life_unit int)
+in_method int, in_life_unit int, in_label text)
 RETURNS asset_class AS
 $$
 DECLARE ret_val asset_class;
@@ -53,6 +67,7 @@ BEGIN
 	SET asset_account_id = in_asset_account_id,
 		dep_account_id = in_dep_account_id,
 		method = in_method,
+		label = in_label,
 		life_unit = in_life_unit
 	WHERE id = in_id;
 
@@ -62,14 +77,24 @@ BEGIN
 	END IF;
 
 	INSERT INTO asset_class (asset_account_id, dep_account_id, method,
-		life_unit)
+		life_unit, label)
 	VALUES (in_asset_account_id, in_dep_account_id, in_method, 
-		in_life_unit);
+		in_life_unit, label);
 
 	SELECT * INTO ret_val FROM asset_class 
 	WHERE id = currval('asset_class_id_seq');
 
 	RETURN ret_val;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION asset__get (in_id int, in_tag text)
+RETURNS asset_item AS
+$$
+DECLARE ret_val asset_item;
+BEGIN
+	SELECT * into ret_val from asset_item WHERE id = in_id and in_tag = tag;
+	return ret_val;
 END;
 $$ language plpgsql;
 
@@ -151,7 +176,7 @@ BEGIN
 			quote_literal(item.id) ||$E$)
 		$E$; 
 	END LOOP;
-	-- TODO:  ADD GL ENTRIES
+	-- TODO:  ADD GL lines at this point
 	RETURN ret_val;
 END;
 $$ language plpgsql;

@@ -63,6 +63,17 @@ sub __validate__ {
   ($self->{current_date}) = $self->{dbh}->selectrow_array('select current_date');
 }
 
+=over
+
+=item text_amount($value)
+
+Returns the textual representation, as defined in localization rules, for the
+numeric value passed.
+
+=back
+
+=cut
+
 sub text_amount {
     use LedgerSMB::Num2text;
     my ($self, $value) = @_;
@@ -70,6 +81,17 @@ sub text_amount {
     $self->init();
     return $self->num2text($value);
 }
+
+=over
+
+=item get_metadata()
+
+Semi-private method for preparing the object for other tasks, such as displaying
+payment options.
+
+=back
+
+=cut
 
 sub get_metadata {
     my ($self) = @_;
@@ -98,10 +120,6 @@ sub get_metadata {
      
        $self->{payment_type_return_label}=$self->{payment_type_label_id}->[0]->{label};
 
-       #print STDERR qq|______payment type id= $self->{payment_type_label_id}->[0]->{id} and label= $self->{payment_type_label_id}->[0]->{label}|;
- 
-       #print STDERR qq|______actual payment type id= $self->{payment_type_return_id} and label= $self->{payment_type_return_label}|;
-
     }
 
 
@@ -117,6 +135,18 @@ sub get_metadata {
         $self->{batch_date} = $ref->{default_date};
     }
 }
+
+=over
+
+=item search()
+
+Seturns a series of payments matching the search criteria.
+
+Search results are also stored at $payment->{search_results}.
+
+=back
+
+=cut
 
 sub search {
     my ($self) = @_;
@@ -134,6 +164,18 @@ sub search {
     return @{$self->{search_results}};
 }
 
+=over
+
+=item get_open_accounts()
+
+Returns a list of open accounts for the payment operation.
+
+These are also stored on $payment->{accounts}
+
+=back
+
+=cut
+
 sub get_open_accounts {
     my ($self) = @_;
     @{$self->{accounts}} = 
@@ -141,6 +183,17 @@ sub get_open_accounts {
     return @{$self->{accounts}};
 }
 
+
+=over
+
+=item $payment->get_entity_credit_account()
+
+Returns billing information for the current account, and saves it to an arrayref
+at $payment->{entity_accounts}/
+
+=back
+
+=cut
 
 sub get_entity_credit_account{
   my ($self) = @_;

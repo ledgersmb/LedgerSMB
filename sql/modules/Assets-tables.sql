@@ -30,7 +30,8 @@ INSERT INTO asset_life_unit(unit, unit_class) values ('year', 1);
 -- year is only supported unit at present
 
 CREATE TABLE asset_class (
-	id serial primary key,
+	id serial not null unique,
+	label text primary key,
 	asset_account_id int references account(id),
 	dep_account_id int references account(id),
 	method int references asset_dep_method(id),
