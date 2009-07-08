@@ -349,7 +349,6 @@ sub save {
     my ($request) = @_;
 
     my $company = new_company($request);
-    $company->{country_id} ||= $company->{entity_country_id};
     $company->save();
     _render_main_screen($company);
 }
