@@ -60,7 +60,7 @@ INSERT INTO asset_report_class (id, class) values (1, 'depreciation');
 INSERT INTO asset_report_class (id, class) values (2, 'disposal');
 
 CREATE TABLE asset_report (
-	id bigint serial primary key,
+	id serial primary key,
 	report_date date,
 	gl_id bigint references gl(id) unique,
 	asset_class bigint references asset_class(id),
@@ -75,7 +75,7 @@ CREATE TABLE asset_report (
 
 CREATE TABLE asset_report_line(
 	asset_id bigint references asset_item(id),
-        report_id bigint rferences asset_report(id),
+        report_id bigint references asset_report(id),
 	amount numeric,
 	PRIMARY KEY(asset_id, report_id)
 );

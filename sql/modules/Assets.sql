@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION asset_dep__straight_line
-(in_report_id, in_asset_id)
+(in_report_id int, in_asset_id int)
 returns numeric as $$
 DECLARE 
 	annual_amount numeric;
@@ -7,6 +7,7 @@ DECLARE
 	depreciation_years numeric;
 	retval numeric;
 	value_left numeric;
+	depreciation_amount numeric;
 BEGIN
 	SELECT (purchase_amount - salvage_amount) / usable_life::numeric  
 	INTO annual_amount 
@@ -37,9 +38,10 @@ BEGIN
 
 	depreciation_amount := annual_amount * depreciation_years;
 
-	INSERT INTO asset_report_line (asset_id, report_id, amount
-	VALUES in_asst_id, in_report_id, depreciation_amount);
-	
+	INSERT INTO asset_report_line (asset_id, report_id, amount)
+	VALUES (in_asst_id, in_report_id, depreciation_amount);
+	RETURN NULL;
+end;	
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION asset_class__get (in_id int) RETURNS asset_class AS
@@ -120,7 +122,7 @@ BEGIN
 		return ret_val;
 	END IF;
 
-	INSERT INTO asset_item (asset_class_id, description, tag, purchase_date
+	INSERT INTO asset_item (asset_class_id, description, tag, purchase_date,
 		purchase_value, usable_life, salvage_value)
 	VALUES (in_asset_class, in_description, in_tag, in_purchase_date,
 		in_purchase_value, in_usable_life, in_salvage_value);
@@ -132,7 +134,7 @@ END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION asset_report__save
-(in_id int, in_asset_class int, in_report_date date, in_report_class int
+(in_id int, in_asset_class int, in_report_date date, in_report_class int,
 in_submit bool, in_asset_items int[])
 RETURNS asset_report AS
 $$
@@ -147,7 +149,7 @@ BEGIN
 	set asset_class = in_asset_class,
 		report_class = in_report_class,
 		report_date = in_report_date,
-		submitted = in_submitted or submitted;
+		submitted = (in_submitted or submitted)
 	WHERE id = in_id;
 
 	IF FOUND THEN
@@ -185,11 +187,17 @@ CREATE OR REPLACE FUNCTION asset_report__approve
 (in_id int)
 RETURNS asset_report AS
 $$
+DECLARE ret_val asset_report;
 BEGIN
 	UPDATE gl SET approved = true 
 	where id = (select gl_id from asset_report where id = in_id);
 
 	UPDATE asset_report SET approved = TRUE
 	where id = in_id;
+
+	SELECT * INTO ret_val FROM asset_report WHERE id = in_id;
+
+	RETURN ret_val;
+end;
 $$ language plpgsql;
-revoke execute on function asset_report__approve(int) from pubic;
+revoke execute on function asset_report__approve(int) from public;
