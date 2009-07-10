@@ -33,12 +33,15 @@ sub get_asset {
 }
 
 sub search_assets {
-    # TODO
+    my ($self) = @_;
+    my @results = $self->exec_method(funcname => 'asset__search');
+    $self->{search_results} = \@results;
+    return @results;
 }
 
 
 sub get_metadata {
-    # TODO
+    my ($self) = @_;
 }
 
 

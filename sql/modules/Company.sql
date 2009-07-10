@@ -341,33 +341,19 @@ BEGIN
 		t_control_code := in_control_code;
 	END IF;
 
-	IF in_entity_id IS NULL THEN
-		IF in_id IS NULL THEN
-			SELECT id INTO t_company_id FROM company
-			WHERE entity_id = (SELECT id FROM entity WHERE 
-				control_code = t_control_code);
-		END IF;
-		IF t_company_id IS NOT NULL THEN
-			SELECT entity_id INTO t_entity_id FROM company
-			WHERE id = t_company_id;
-			
+	UPDATE entity 
+	SET name = in_name, 
+		entity_class = in_entity_class,
+		control_code = in_control_code
+	WHERE id = in_entity_id;
+
+	IF FOUND THEN
+		t_entity_id = in_entity_id;
 	ELSE
-		t_entity_id := in_entity_id;
-	END IF;
-	IF t_entity_id IS NULL THEN
 		INSERT INTO entity (name, entity_class, control_code,country_id)
 		VALUES (in_name, in_entity_class, t_control_code,in_country_id_t);
 		t_entity_id := currval('entity_id_seq');
-		END IF;
 	END IF;
-
-	UPDATE entity
-	SET name = in_name,
-            entity_class = in_entity_class,
-	    control_code = t_control_code,
-	    country_id = in_country_id_t
-	WHERE id = t_entity_id;
-
 
 	UPDATE company
 	SET legal_name = in_name,
