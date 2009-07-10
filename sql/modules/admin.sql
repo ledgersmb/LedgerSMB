@@ -299,7 +299,7 @@ BEGIN
 
     UPDATE users SET notify_password = DEFAULT where username = SESSION_USER;
 
-    IF t_expires IS NOT NULL THEN
+    IF t_expires IS NULL THEN
         t_expires := 'infinity';
     END IF;
 
