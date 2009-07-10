@@ -150,8 +150,8 @@
 			  <?lsmb ELSE ?>
 			      
 				      <?lsmb PROCESS label element_data = {
-					text => displayrow.accno
-					align => 'right'
+					text = displayrow.accno
+					align = 'right'
 					id = "acc_$INDEX"
 				      } ?>
 			      
@@ -165,8 +165,8 @@
 
 			    <?lsmb IF  displayrow.fx_transactionset == 1 ?>
 					    <?lsmb PROCESS label element_data = {
-					      text => text('x')
-					      align => 'right'
+					      text = text('x')
+					      align = 'right'
 				              id = "fxt_$INDEX"
                                                } 
 					      ?>
@@ -192,7 +192,7 @@
 				  name = "debit_$INDEX"
 				  type = "text"
 				  size = 12
-				  accesskey => displayrow.index
+				  accesskey = displayrow.index
 			          id = "deb_$INDEX"
                                               }  ?>
 		  
@@ -236,8 +236,8 @@
 
 			<?lsmb IF displayrow.projectset == 1 ?>
 					<?lsmb PROCESS label element_data = {
-					      text => displayrow.projectnumber
-					      align => 'right'
+					      text = displayrow.projectnumber
+					      align = 'right'
 					      id = "pro_$INDEX"
                                      } ?>
 						
@@ -265,18 +265,11 @@
 	     <th class="listheading">&nbsp;</th>
 	  <?lsmb END ?>
 	  <th class="listtotal" align="right">
-		    <?lsmb IF form.totaldebit == 0 ?>
-			0
-		    <?lsmb ELSE ?>
 			<?lsmb form.totaldebit ?>
-		    <?lsmb END ?>
 	  </th>
 	  
 	  <th class="listtotal" align="right">
-		    <?lsmb IF form.totalcredit == 0 ?>0
-		    <?lsmb ELSE ?>
 			<?lsmb form.totalcredit ?>
-		    <?lsmb END ?>
 	  </th>
 	  <th>&nbsp;</th>
 	  <th>&nbsp;</th>

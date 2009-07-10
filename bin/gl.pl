@@ -226,7 +226,7 @@ sub display_form
 
   for (qw(totaldebit totalcredit)) {
       $form->{$_} =
-	$form->format_amount( \%myconfig, $form->{$_}, 2, "&nbsp;" );
+	$form->format_amount( \%myconfig, $form->{$_}, 2, "0" );
   }
 
   $hiddens{sessionid}=$form->{sessionid};
@@ -1010,7 +1010,7 @@ sub update {
     $count = 0;
     @flds  = qw(accno debit credit projectnumber fx_transaction source memo);
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    for $i ( 0 .. $form->{rowcount} ) {
         unless ( ( $form->{"debit_$i"} eq "" )
             && ( $form->{"credit_$i"} eq "" ) )
         {
@@ -1029,10 +1029,10 @@ sub update {
 
     for $i ( 1 .. $count ) {
         $j = $i - 1;
-        for (@flds) { $form->{"${_}_$i"} = $a[$j]->{$_} }
+        for (@flds) { $form->{"${_}_$j"} = $a[$j]->{$_} }
     }
 
-    for $i ( $count + 1 .. $form->{rowcount} ) {
+    for $i ( $count  .. $form->{rowcount} ) {
         for (@flds) { delete $form->{"${_}_$i"} }
     }
 
