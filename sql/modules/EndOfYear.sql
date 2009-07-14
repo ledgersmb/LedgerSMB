@@ -40,7 +40,8 @@ END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION eoy_zero_accounts
-(in_end_date date, in_reference text, in_description text)
+(in_end_date date, in_reference text, in_description text, 
+in_retention_acc_id int)
 RETURNS int AS
 $$
 DECLARE ret_val int;
@@ -49,8 +50,8 @@ BEGIN
 	VALUES (in_end_date, in_reference, in_description, true);
 
 	INSERT INTO yearend (id, transdate) values (currval('id'), in_end_date);
-	INSERT INTO acc_trans (trans_date, chart_id, amount)
-	SELECT in_end_date, a.chart_id, 
+	INSERT INTO acc_trans (transdate, chart_id, trans_id, amount)
+	SELECT in_end_date, a.chart_id, currval('id'),
 		(sum(a.amount) + coalesce(cp.amount, 0)) * -1
 	FROM acc_trans a
 	LEFT JOIN (
@@ -62,6 +63,11 @@ BEGIN
 	WHERE a.transdate <= in_end_date 
 		AND a.transdate > coalesce(cp.end_date, a.transdate)
 		AND acc.category IN ('I', 'E');
+
+	INSERT INTO acc_trans (transdate, trans_id, chart_id, amount)
+	SELECT in_end_date, currval('id'), in_retention_acc_id, 
+		sum(amount) * -1
+	FROM acc_trans WHERE trans_id = currval('id');
 
 
 	SELECT count(*) INTO ret_val from acc_trans 
