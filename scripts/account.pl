@@ -87,7 +87,7 @@ sub _display_account_screen {
     my $template = LedgerSMB::Template->new_UI(
         user => $form->{_user}, 
         locale => $locale,
-        template => 'am-account-form');
+        template => 'accounts/edit');
     $template->render({
         form => $form,
         checked => $checked,
@@ -97,6 +97,33 @@ sub _display_account_screen {
 
 }
 
+sub yearend_info {
+    use LedgerSMB::DBObject::EOY;
+    my ($request) = @_;
+    my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
+    $eoy->list_earnings_accounts;
+    $eoy->user = $request->{_user};    
+    my $template = LedgerSMB::Template->new_UI(
+        user => $form->{_user}, 
+        locale => $locale,
+        template => 'accounts/yearend'
+    );
+    $temlate->render($eoy);
+}
+
+sub post_yearend {
+    use LedgerSMB::DBObject::EOY;
+    my ($request) = @_;
+    my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
+    $eoy->close_books;
+    my $template = LedgerSMB::Template->new_UI(
+        user => $form->{_user}, 
+        locale => $locale,
+        template => 'accounts/yearend_complete'
+    );
+    $temlate->render($eoy);
+    
+}
 
 # From AM.pm, modified for better API.
 

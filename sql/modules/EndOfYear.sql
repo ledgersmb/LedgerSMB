@@ -154,3 +154,10 @@ BEGIN
 	RETURN balance
 END;
 $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION eoy_earnings_accounts() RETURNS setof account AS 
+$$
+SELECT id, accno, description from account 
+WHERE category = 'Q'
+ORDER BY accno;
+$$ language sql;

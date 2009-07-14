@@ -2417,8 +2417,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 130	taxes	audit_control	341
 131	action	defaults	342
 130	action	taxes	343
-132	module	am.pl	346
-132	action	yearend	347
+132	module	account.pl	346
+132	action	yearend_info	347
 133	menu	1	348
 134	module	am.pl	349
 135	module	am.pl	350
