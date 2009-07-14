@@ -95,7 +95,7 @@ CREATE OR REPLACE FUNCTION eoy_reopen_books(in_end_date date)
 RETURNS bool AS
 $$
 BEGIN
-	PROCESS * FROM account_checkpoint WHERE end_date = in_end_date;
+	SELECT count(*) FROM account_checkpoint WHERE end_date = in_end_date;
 
 	IF NOT FOUND THEN
 		RETURN FALSE;
@@ -103,8 +103,8 @@ BEGIN
 
 	DELETE FROM account_checkpoint WHERE end_date = in_end_date;
 
-	PROCESS * FROM yearend 
-	WHERE transdate = in_end_date and reversed is not true
+	SELECT count(*) FROM yearend 
+	WHERE transdate = in_end_date and reversed is not true;
 
 	IF FOUND THEN
 		INSERT INTO gl (reference, description, approved)
@@ -132,7 +132,7 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
 RETURNS numeric AS
 $$
-DECLARE balance numeric
+DECLARE balance numeric;
 BEGIN
 	SELECT amount INTO balance FROM account_checkpoint 
 	WHERE account_id = in_account_id AND end_date < in_trans_date
@@ -151,13 +151,13 @@ BEGIN
 	WHERE ac.chart_id = in_account_id AND acc_trans > cp.end_date
 		and ac.approved and a.approved;
 
-	RETURN balance
+	RETURN balance;
 END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION eoy_earnings_accounts() RETURNS setof account AS 
 $$
-SELECT id, accno, description from account 
+SELECT * FROM account
 WHERE category = 'Q'
 ORDER BY accno;
 $$ language sql;
