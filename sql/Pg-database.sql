@@ -1044,6 +1044,7 @@ CREATE TABLE inventory (
 --
 CREATE TABLE yearend (
   trans_id int PRIMARY KEY,
+  reversed bool default false,
   transdate date
 );
 --
