@@ -30,6 +30,14 @@ CREATE TABLE account (
   contra bool not null default false
 );
 
+CREATE TABLE account_checkpoint (
+  end_date date not null, 
+  account_id int not null references account(id), 
+  amount numeric not null,
+  id serial not null unique,
+  primary key (end_date, chart_id)
+);
+
 CREATE TABLE account_link (
    account_id int references account(id),
    description text,
