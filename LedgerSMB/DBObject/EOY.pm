@@ -69,7 +69,7 @@ for retained earnings.
 
 sub close_books {
     my ($self) = @_;
-   $self->exec_method(funcname => 'eoy_reopen_books');
+   $self->exec_method(funcname => 'eoy_close_books');
    $self->{dbh}->commit;
 }
 
@@ -83,7 +83,7 @@ closing books.
 
 sub list_earnings_accounts{
     my ($self) = @_;
-    my @results = $self->exec_method(funcname => 'earnings_accounts');
+    my @results = $self->exec_method(funcname => 'eoy_earnings_accounts');
     $self->{earnings_accounts} = \@results;
     return @results;
 }

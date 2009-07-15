@@ -35,7 +35,7 @@ CREATE TABLE account_checkpoint (
   account_id int not null references account(id), 
   amount numeric not null,
   id serial not null unique,
-  primary key (end_date, chart_id)
+  primary key (end_date, account_id)
 );
 
 CREATE TABLE account_link (

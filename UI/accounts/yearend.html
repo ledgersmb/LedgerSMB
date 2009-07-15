@@ -35,7 +35,14 @@
         </tr>
         <tr>
           <th align="right"><?lsmb text('Retained Earnings') ?></th>
-          <td><?lsmb PROCESS select element_data=accounts -?></td>
+          <?lsmb FOREACH opt = earnings_accounts; 
+                     opt.text = opt.accno _ '--' _ opt.description;
+		END -?>
+          <td><?lsmb PROCESS select element_data={
+                     name = "retention_acc_id"
+                     options = earnings_accounts
+                     value_attr = "id"
+                } -?></td>
         </tr>
       </table>
     </td>
@@ -48,7 +55,13 @@
 		name = hidden,
 		value = hiddens.item(hidden)
 		}; END ?>
-<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+<?lsmb PROCESS button element_data = {
+	name = "action"
+	type = "submit"
+	class = "submit"
+	value = "post_yearend"
+	text = text('Post Yearend') #'
+} ?>
 </form>
 </body>
 </html>

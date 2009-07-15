@@ -4,16 +4,17 @@ $$
 DECLARE ret_val int;
 	approval_check int;
 BEGIN
-	IF end_date > now()::date THEN
+	IF in_end_date > now()::date THEN
 		RAISE EXCEPTION 'Invalid date:  Must be earlier than present';
 	END IF;
 
 	SELECT count(*) into approval_check
 	FROM acc_trans ac
 	JOIN (
-		select id, approved FROM ar UNION
-		SELECT id, approved FROM gl UNION
-		SELECT id, approved FROM ap) gl ON (gl.id = ac.trans_id)
+		select id, approved, transdate FROM ar UNION
+		SELECT id, approved, transdate FROM gl UNION
+		SELECT id, approved, transdate FROM ap
+	) gl ON (gl.id = ac.trans_id)
 	WHERE (ac.approved IS NOT TRUE AND ac.transdate <= in_end_date) 
 		OR (gl.approved IS NOT TRUE AND gl.transdate <= in_end_date);
 
@@ -28,9 +29,10 @@ BEGIN
 		select account_id, end_date, amount from account_checkpoint
 		WHERE end_date = (select max(end_date) from account_checkpoint
 				where end_date < in_end_date)
-		) cp on (a.chrt_id = cp.account_id)
+		) cp on (a.chart_id = cp.account_id)
 	WHERE a.transdate <= in_end_date 
-		AND a.transdate > coalesce(cp.end_date, a.transdate);
+		AND a.transdate > coalesce(cp.end_date, a.transdate)
+	group by a.chart_id, cp.amount;
 
 	SELECT count(*) INTO ret_val FROM account_checkpoint 
 	where end_date = in_end_date;
@@ -49,7 +51,7 @@ BEGIN
 	INSERT INTO gl (transdate, reference, description, approved)
 	VALUES (in_end_date, in_reference, in_description, true);
 
-	INSERT INTO yearend (id, transdate) values (currval('id'), in_end_date);
+	INSERT INTO yearend (trans_id, transdate) values (currval('id'), in_end_date);
 	INSERT INTO acc_trans (transdate, chart_id, trans_id, amount)
 	SELECT in_end_date, a.chart_id, currval('id'),
 		(sum(a.amount) + coalesce(cp.amount, 0)) * -1
@@ -58,11 +60,12 @@ BEGIN
 		select account_id, end_date, amount from account_checkpoint
 		WHERE end_date = (select max(end_date) from account_checkpoint
 				where end_date < in_end_date)
-		) cp on (a.chrt_id = cp.account_id)
+		) cp on (a.chart_id = cp.account_id)
 	JOIN account acc ON (acc.id = a.chart_id)
 	WHERE a.transdate <= in_end_date 
 		AND a.transdate > coalesce(cp.end_date, a.transdate)
-		AND acc.category IN ('I', 'E');
+		AND acc.category IN ('I', 'E')
+	GROUP BY a.chart_id, cp.amount;
 
 	INSERT INTO acc_trans (transdate, trans_id, chart_id, amount)
 	SELECT in_end_date, currval('id'), in_retention_acc_id, 
@@ -78,12 +81,13 @@ end;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION eoy_close_books
-(in_end_date date, in_reference text, in_description text)
+(in_end_date date, in_reference text, in_description text, 
+in_retention_acc_id int)
 RETURNS bool AS
 $$
 BEGIN
-	IF eoy_zero_accounts(in_end_date, in_reference, in_description) > 0 THEN
-		select eoy_create_checkpoints(in_end_date);
+	IF eoy_zero_accounts(in_end_date, in_reference, in_description, in_retention_acc_id) > 0 THEN
+		PERFORM eoy_create_checkpoint(in_end_date);
 		RETURN TRUE;
 	ELSE
 		RETURN FALSE;
@@ -95,7 +99,7 @@ CREATE OR REPLACE FUNCTION eoy_reopen_books(in_end_date date)
 RETURNS bool AS
 $$
 BEGIN
-	SELECT count(*) FROM account_checkpoint WHERE end_date = in_end_date;
+	PERFORM count(*) FROM account_checkpoint WHERE end_date = in_end_date;
 
 	IF NOT FOUND THEN
 		RETURN FALSE;
@@ -103,20 +107,20 @@ BEGIN
 
 	DELETE FROM account_checkpoint WHERE end_date = in_end_date;
 
-	SELECT count(*) FROM yearend 
+	PERFORM count(*) FROM yearend 
 	WHERE transdate = in_end_date and reversed is not true;
 
 	IF FOUND THEN
 		INSERT INTO gl (reference, description, approved)
-		SELECT 'Reversing ' || reverence, 'Reversing ' || description,
+		SELECT 'Reversing ' || reference, 'Reversing ' || description,
 			true
-		FROM gl WHERE id = (select id from yearend 
+		FROM gl WHERE id = (select trans_id from yearend 
 			where transdate = in_end_date and reversed is not true);
 
 		INSERT INTO acc_trans (chart_id, amount, transdate, trans_id,
 			approved)
 		SELECT chart_id, amount * -1, currval('id'), true
-		FROM acc_trans where trans_id = (select id from yearend
+		FROM acc_trans where trans_id = (select trans_id from yearend
 			where transdate = in_end_date and reversed is not true);
 
 		UPDATE yearend SET reversed = true where transdate = in_end_date

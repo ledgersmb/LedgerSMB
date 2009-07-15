@@ -102,13 +102,13 @@ sub yearend_info {
     my ($request) = @_;
     my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
     $eoy->list_earnings_accounts;
-    $eoy->user = $request->{_user};    
+    $eoy->{user} = $request->{_user};    
     my $template = LedgerSMB::Template->new_UI(
-        user => $form->{_user}, 
-        locale => $locale,
+        user => $request->{_user}, 
+        locale => $request->{_locale},
         template => 'accounts/yearend'
     );
-    $temlate->render($eoy);
+    $template->render($eoy);
 }
 
 sub post_yearend {
@@ -117,11 +117,11 @@ sub post_yearend {
     my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
     $eoy->close_books;
     my $template = LedgerSMB::Template->new_UI(
-        user => $form->{_user}, 
-        locale => $locale,
+        user => $request->{_user},
+        locale => $request->{_locale},
         template => 'accounts/yearend_complete'
     );
-    $temlate->render($eoy);
+    $template->render($eoy);
     
 }
 
