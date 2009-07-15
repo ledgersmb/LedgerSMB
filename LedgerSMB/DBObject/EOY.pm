@@ -20,6 +20,8 @@ closure
 
 =item retention_acc_id specifies the account id used as a retaining account.
 
+=back
+
 =head1 METHODS
 
 =over

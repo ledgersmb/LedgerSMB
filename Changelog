@@ -1,14 +1,69 @@
 Changelog for LedgerSMB 1.3.0
-* Improved error handling/display (Jason)
-* Basic RESTful web services dispatcher (Jason)
-* Timecard lists project descriptions as well as numbers (Chris T)
-* Chart of Accounts files organized hierarchically by country code (Chris T)
-* Employee table is now Employees, no longer part of global sequence. (Chris T)
-* Stored procedure-based ORM for data model encapsulation in db (ChrisT)
+
+Security:
+* Security is now robustly enforced on the db level (Chris T and Josh D)
+* New user interface to manage users (Chris T and Aurynn)
+
+Separation of Duties:
+* Separate permissions for entry and posting to the books.
+* Voucher/Batch system (Chris T)
+* Draft system for unapproved transactions (Chris T)
+* Reconciliation is now subject to separation of duties (Chris T and Aurynn)
+
+End of Year:
+* Close books and end of year transactions at once (Chris T and Aurynn)
+* Cannot close books where unapproved transactions are before yearend(Chris T)
+* Yearend/closed books now creates balance checkpoints for better performance
+(Chris T and Aurynn)
+
+General Ledger/Journal:
+* GL reports filter by account (Chris T)
+* GL reports account is ajax-style autocomplete (John W)
+* Journal Entry screen now uses AJAX-style autocomplete for accounts (Chris T)
+* GL reference now populated by default in the initial screen (Chris T).
+
+Reconciliation:
+* Reconciliation is no new codebase!
+* Redesigned workflow (Chris T and Aurynn)
+* Optimized for high volumes (1000 transactions or more per run, Chris T)
+* Plug in model for bank import scripts (Chris T and Aurynn)
+
+Payments:
+* Payments are on new codebase!
+* Redesigned bulk payment workflow/UI (Chris T)
+* Bulk payment optimizations for high volumes (5000 invoices per run, Chris T)
+* Redesigned single payment workfow/UI (David M)
+
+Contact Handling:
+* Contacts are now on new code base!
+* Customers/Vendors Now Can Be Tracked Together (Josh D, Chris T, Aurynn)
+* Multiple addresses and contact info stored per account (Josh D and Chris T)
+* Multiple read-only notes per account (Josh D, Chris T, and Lacey P)
+* Multiple bank accounts per customer/vendor account (Josh D and Chris T)
+* Track 1099 or equiv. forms for customers/vendors (Chris T and John W)
+
+Development:
+* New API structure for new code (Entire Team)
+* Better error handling/display (Jason and Chris T)
+* Errors logged to httpd error log (Chris T)
+* Cleaned up file structure for charts of accounts (Chris T)
 * New UI and template system using TT (Seneca)
 * Form.pm deprecated.  New Object Oriented and data-driven model (Chris T)
 * Added ledgersmb-smallgray.css (Jeff K)
-* GL reference now populated by default in the initial screen (Chris T).
+* Stored procedure-based ORM for data model encapsulation in db (ChrisT)
+* Many small forms moved to templates (Seneca)
+
+Misc:
+* Timecard lists project descriptions as well as numbers (Chris T)
+* Invoices can now be put on hold (Aurynn)
+* New CLI database creation routines  (Jeff K)
+* New web-based db creation routines (Sadashiva A)
+
+Database:
+* Redesigned database schema for contacts (Josh D)
+* Redesigned database schema for chart of accounts (Chris T)
+* Redesigned database schema for reconciliation (Aurynn and Chris T)
+* Redesigned database schema for payments (David M)
 
 Changelog for LedgerSMB 1.2.0
 
