@@ -1036,7 +1036,7 @@ sub update {
         for (@flds) { delete $form->{"${_}_$i"} }
     }
 
-    $form->{rowcount} = $count + 1;
+    $form->{rowcount} = $count;
  
     GL->get_all_acc_dep_pro( \%myconfig, \%$form );
     
