@@ -531,14 +531,15 @@ SELECT SETVAL('batch_class_id_seq',6);
 CREATE TABLE batch (
   id serial primary key,
   batch_class_id integer references batch_class(id) not null,
-  control_code text,
+  control_code text NOT NULL,
   description text,
   default_date date not null,
   approved_on date default null,
   approved_by int references entity_employee(entity_id),
   created_by int references entity_employee(entity_id),
   locked_by int references session(session_id),
-  created_on date default now()
+  created_on date default now(),
+  CHECK length(control_code) > 0
 );
 
 COMMENT ON COLUMN batch.batch_class_id IS

@@ -357,8 +357,8 @@ sub all_transactions {
         $apwhere .= " AND c.category = $var";
     }
 
-    if ( $form->{accno} ) {
-        my $accno = $dbh->quote( $form->{accno} );
+    if ( $form->{chart_accno} ) {
+        my $accno = $dbh->quote( $form->{chart_accno} );
 
         # get category for account
         $query = qq|SELECT category, link, contra, description
@@ -375,7 +375,7 @@ sub all_transactions {
 			SELECT account__obtain_balance(?, id) from chart
 			WHERE accno = ? |;
             my $sth = $dbh->prepare($query);
-            $sth->execute($form->{datefrom}, $accno);
+            $sth->execute($form->{datefrom}, $form->{chart_accno});
 
             ( $form->{balance} ) = $sth->fetchrow_array;
             $sth->finish;
