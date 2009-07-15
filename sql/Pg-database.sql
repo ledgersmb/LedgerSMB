@@ -539,7 +539,7 @@ CREATE TABLE batch (
   created_by int references entity_employee(entity_id),
   locked_by int references session(session_id),
   created_on date default now(),
-  CHECK length(control_code) > 0
+  CHECK (length(control_code) > 0)
 );
 
 COMMENT ON COLUMN batch.batch_class_id IS
