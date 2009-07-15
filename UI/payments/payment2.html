@@ -164,7 +164,9 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
     <td align="center"><?lsmb row.memo.id=row.memo.name ; INCLUDE input element_data=row.memo; -?></td>
    <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><?lsmb row.exchange_rate ?></td>
+   <?lsmb END ?> 
     <td><?lsmb row.due ?></td>
+   <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div></td>
    <?lsmb END ?> 
     <?lsmb #This should be computed and updated to the div using  ?> 

@@ -269,6 +269,28 @@ sub get_open_invoices {
 
 =over
 
+=item $payment->get_open_invoice()
+
+This function is an especific case of get_open_invoices(), because get_open_invoice() 
+can search for a specific invoice, wich can be searched by the $payment->{invnumber} 
+variable 
+
+=back
+
+=cut
+
+sub get_open_invoice {
+    my ($self) = @_;
+    @{$self->{open_invoice}} = 
+        $self->exec_method(funcname => 'payment_get_open_invoice');
+    return @{$self->{open_invoice}};
+}
+
+
+
+
+=over
+
 =item $payment->get_all_contact_invoices()
 
 This function returns a list of open accounts depending on the 
@@ -396,7 +418,9 @@ sub list_departments {
 =item get_open_currencies
 
 This method gets a list of the open currencies inside the database, it requires that  
-$self->{account_class} (must be 1 or 2)  exist to work.
+$self->{account_class} (must be 1 or 2)  exist to work. 
+
+WARNING THIS IS NOT BEEING USED BY THE SINGLE PAYMENT SYSTEM.... 
 
 =back
 =cut
@@ -414,7 +438,7 @@ sub get_open_currencies {
 =item list_accounting
 
 This method lists all accounts that match the role specified in account_class property and
-are availible to store the payment or receipts. 
+are available to store the payment or receipts. 
 =back
 =cut
 
@@ -427,7 +451,7 @@ sub list_accounting {
 =item list_overpayment_accounting
 
 This method lists all accounts that match the role specified in account_class property and
-are availible to store an overpayment / advanced payment / pre-payment. 
+are available to store an overpayment / advanced payment / pre-payment. 
 =back
 =cut
 
@@ -501,9 +525,12 @@ $self->{account_class}
 =cut
 
 sub get_vc_info {
- my ($self) = @_; 
- @{$self->{vendor_customer_info}} = $self->exec_method(funcname => 'payment_get_vc_info');
- return @{$self->{vendor_customer_info}};
+ my ($self) = @_;
+ my $temp = $self->{"id"};
+ $self->{"id"} = $self->{"entity_credit_id"}; 
+ @{$self->{vendor_customer_info}} = $self->exec_method(funcname => 'company_get_billing_info');
+ $self->{"id"} = $temp;
+ return ${$self->{vendor_customer_info}}[0];
 }
 
 =item get_payment_detail_data
@@ -676,8 +703,7 @@ my ($self) = @_;
 @{$self->{line_info}}   = $self->exec_method(funcname => 'payment_gather_line_info');
 }
 
-
-=item get_open_overpayment_entities
+=item get_open_overpayment_entities 
 
 This method retrieves all the entities with the specified
 account_class which have unused overpayments
@@ -687,21 +713,19 @@ account_class which have unused overpayments
 sub get_open_overpayment_entities {
 my ($self) = @_;
 @{$self->{open_overpayment_entities}} = $self->exec_method(funcname => 'payment_get_open_overpayment_entities');
-return @{$self->{open_overpayment_entities}};
+return @{$self->{open_overpayment_entities}}; 
 }
 
 sub get_unused_overpayments {
 my ($self) = @_;
 @{$self->{unused_overpayment}} = $self->exec_method(funcname => 'payment_get_unused_overpayment');
-return @{$self->{unused_overpayment}};
+return @{$self->{unused_overpayment}}; 
 }
 
-sub get_availible_overpayment_amount {
+sub get_available_overpayment_amount {
 my ($self) = @_;
-@{$self->{availible_overpayment_amount}} = $self->exec_method(funcname => 'payment_get_availible_overpayment_amount');
-return @{$self->{availible_overpayment_amount}};
+@{$self->{available_overpayment_amount}} = $self->exec_method(funcname => 'payment_get_available_overpayment_amount');
+return @{$self->{available_overpayment_amount}};
 }
-
-
 
 1;

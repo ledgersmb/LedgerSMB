@@ -101,6 +101,7 @@ sub exec_method {
     my $funcname = $args{funcname};
     my @in_args;
     @in_args = @{ $args{args}} if $args{args};
+    
     my @call_args;
      
     my $query = "
@@ -130,6 +131,7 @@ sub exec_method {
     $ref->{pronargs} = 0 unless defined $ref->{pronargs};
     # If the user provided args..
     if (!defined  $args{args}) {
+    
         @proc_args = $self->_parse_array($pargs);
         if (@proc_args) {
             for my $arg (@proc_args) {

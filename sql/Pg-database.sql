@@ -2180,12 +2180,14 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 36	module	payment.pl	84
 36	action	payment	85
 36	type	receipt	86
+36	account_class	2	551
 37	module	cp.pl	87
-38	module	cp.pl	90
-38	action	payment	91
 37	type	receipt	89
 37	action	payments	88
+38	module	payment.pl	90
+38	action	payment	91
 38	type	check	92
+38	account_class	1	554
 194	module	ar.pl	538
 194	action	add	539
 40	module	gl.pl	96
@@ -2604,7 +2606,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 194	type	credit_note	548
 195	type	credit_invoice	542
 197	type	debit_invoice	546
-36	account_class	1	551
 202	batch_type	payment_reversal	570
 204	batch_type	receipt_reversal	573
 200	menu	1	552
@@ -2691,7 +2692,6 @@ $$
 DECLARE 
 	item menu_item;
 	arg menu_attribute%ROWTYPE;
-	
 BEGIN
 	FOR item IN 
 		SELECT n.position, n.id, c.level, n.label, c.path, '{}' 

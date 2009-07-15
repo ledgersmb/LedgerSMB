@@ -99,7 +99,13 @@ merging hashes into self.
 Removes all elements starting with a . because these elements conflict with the
 ability to hide the entire structure for things like CSV lookups.
 
+= item get_default_value_by_key($key)
+
+Retrieves a default value for the given key, it is just a wrapper on LedgerSMB::Setting;
+
 =back
+
+
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
@@ -135,6 +141,7 @@ use LedgerSMB::Auth;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
+use LedgerSMB::Setting;
 use strict;
 
 $CGI::Simple::POST_MAX = -1;
@@ -927,6 +934,16 @@ sub take_top_level {
    return $return_hash;
 }
 
+
+
+sub get_default_value_by_key 
+{
+    my ($self, $key) = @_;
+    my $Settings = LedgerSMB::Setting->new({base => $self, copy => 'base'});
+    $Settings->{key} = $key;
+    $Settings->get;    
+    $Settings->{value};    
+}
 1;
 
 

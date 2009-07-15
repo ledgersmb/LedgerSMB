@@ -166,8 +166,8 @@ sub increment {
 
 sub get_currencies {
     my $self = shift;
-    $self->{settig__get_currencies} = $self->exec_method(funcname => 'setting__get_currencies');
- #   @{$self->{currencies}} = $self->_parse_array($ref->{setting__get_currencies});
+    my @data = $self->exec_method(funcname => 'setting__get_currencies');
+    $self->{currencies} = $data[0]->{setting__get_currencies};
     return @{$self->{currencies}};
 }
-
+            

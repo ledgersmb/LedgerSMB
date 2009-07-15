@@ -10,7 +10,7 @@ sub save {
     
     # this is a fairly effective way of telling if we need to create a new
     # entity or not.
-    
+
     if (!$self->{entity_id}) {
         
         $entity = LedgerSMB::Entity->new(base=>$request);

@@ -85,11 +85,10 @@ sub get {
     
     my ($request) = @_;
     my $company = new_company($request);
-    
     set_entity_class($company);
     $company->get();
     $company->get_credit_id();
-    $company->get_metadata();
+#    $company->get_metadata(); It will be called from _render_main_screen
     _render_main_screen($company);
 }
 
@@ -410,6 +409,7 @@ entity_id, account_class, and meta_number.
 sub edit{
     my $request = shift @_;
     my $company = LedgerSMB::DBObject::Vendor->new({base => $request});
+
     $company->get();
     _render_main_screen($company);
 }

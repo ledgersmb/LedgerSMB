@@ -1377,10 +1377,8 @@ sub save_template {
 }
 
 sub defaults {
-
     # get defaults for account numbers and last numbers
     AM->get_all_defaults( \%$form );
-
     my %selects = (
         'FX_loss' => {name => 'FX_loss', options => []},
         'FX_gain' => {name => 'FX_gain', options => []},
@@ -1394,6 +1392,7 @@ sub defaults {
 			     text_attr => 'name',
 			     value_attr => 'id',
 		},
+	'templates'       => {name => 'templates', options => []}	
         );
     foreach $key ( keys %{ $form->{accno} } ) {
         foreach $accno ( sort keys %{ $form->{accno}{$key} } ) {
@@ -1405,15 +1404,18 @@ sub defaults {
                 ($form->{defaults}{$key} == $form->{accno}{$key}{$accno}{id});
         }
     }
-
     for (qw(accno defaults)) { delete $form->{$_} }
-
 ##SC: temporary commenting out
 ##    if ( $form->{lynx} ) {
 ##        require "bin/menu.pl";
 ##        &menubar;
 ##    }
-
+    # get_templates_directories the NON-UI templates options - David Mora
+    AM->get_templates_directories( \%$form );
+    foreach my $ref (@{$form->{templates_directories}}) {
+      push @{$selects{templates}{options}}, {text => $ref,value => $ref};
+    } 
+    $selects{templates}{default_values} = $form->{templates};
     my %hiddens = (
         path => $form->{path},
         login => $form->{login},

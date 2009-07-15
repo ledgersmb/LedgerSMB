@@ -158,6 +158,13 @@ sub get_metadata {
     for my $ref (@{$self->{cash_acc_list}}){
         $ref->{text} = "$ref->{accno}--$ref->{description}";
     }
+    
+    @{$self->{discount_acc_list}} =
+         $self->exec_method(funcname => 'chart_list_discount');
+
+    for my $ref (@{$self->{discount_acc_list}}){
+        $ref->{text} = "$ref->{accno}--$ref->{description}";
+    }
 
     @{$self->{location_class_list}} = 
          $self->exec_method(funcname => 'location_list_class');

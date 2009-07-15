@@ -13,7 +13,8 @@ CREATE TYPE payment_vc_info AS (
 	id int,
 	name text,
 	entity_class int,
-	discount int
+	discount int,
+	meta_number character varying(32)
 );
 
 CREATE OR REPLACE FUNCTION payment_type__get_label(in_payment_type_id int) RETURNS SETOF payment_types AS
@@ -38,9 +39,9 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 
  BEGIN
  	FOR out_entity IN
- 		SELECT ec.id, cp.legal_name as name, e.entity_class, ec.discount_account_id
- 		FROM entity e
- 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+ 		SELECT ec.id, cp.legal_name||': '||ec.description as name, e.entity_class, ec.discount_account_id, ec.meta_number
+ 		FROM entity_credit_account ec
+ 		JOIN entity e ON (ec.entity_id = e.id)
  		JOIN company cp ON (cp.entity_id = e.id)
 		WHERE ec.entity_class = in_account_class
 		AND (cp.legal_name ilike coalesce('%'||in_vc_name||'%','%%') OR cp.tax_id = in_vc_idn)
@@ -63,15 +64,15 @@ BEGIN
 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		JOIN company cp ON (cp.entity_id = e.id)
 			WHERE ec.entity_class = in_account_class
-                   --  AND CASE WHEN in_account_class = 1 THEN
-	           --		e.id IN (SELECT entity_id FROM ap 
-	           --			WHERE amount <> paid
-		   --			GROUP BY entity_id)
-		   -- 	       WHEN in_account_class = 2 THEN
-		   --		e.id IN (SELECT entity_id FROM ar
-		   --			WHERE amount <> paid
-		   --			GROUP BY entity_id)
-		   --	  END
+                        AND CASE WHEN in_account_class = 1 THEN
+	           		e.id IN (SELECT entity_id FROM ap 
+	           			WHERE amount <> paid
+		   			GROUP BY entity_id)
+		    	       WHEN in_account_class = 2 THEN
+		   		e.id IN (SELECT entity_id FROM ar
+		   			WHERE amount <> paid
+		   			GROUP BY entity_id)
+		   	  END
 	LOOP
 		RETURN NEXT out_entity;
 	END LOOP;
@@ -99,7 +100,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION payment_get_open_accounts(int) IS
+COMMENT ON FUNCTION payment_get_all_accounts(int) IS
 $$ This function takes a single argument (1 for vendor, 2 for customer as 
 always) and returns all entities with accounts of the appropriate type. $$;
 
@@ -178,14 +179,14 @@ BEGIN
 		         THEN ex.buy
 		         ELSE ex.sell END)
 		         END) AS exchangerate
-                FROM  (SELECT id, invnumber, transdate, amount, entity_id,
+                 FROM  (SELECT id, invnumber, transdate, amount, entity_id,
 		               1 as invoice_class, paid, curr, 
-		               entity_credit_account, department_id
+		               entity_credit_account, department_id, approved
 		          FROM ap
                          UNION
 		         SELECT id, invnumber, transdate, amount, entity_id,
 		               2 AS invoice_class, paid, curr,
-		               entity_credit_account, department_id
+		               entity_credit_account, department_id, approved
 
 		         FROM ar
 		         ) a 
@@ -216,7 +217,8 @@ BEGIN
 		             OR in_amountto IS NULL)
 		        AND (a.department_id = in_department_id
 		             OR in_department_id IS NULL)
-		        AND due <> 0          
+		        AND due <> 0 
+		        AND a.approved = true         
 		        GROUP BY a.invnumber, a.transdate, a.amount, amount_fx, discount, discount_fx, ac.due, a.id, c.discount_terms, ex.buy, ex.sell, a.curr
 	LOOP
 		RETURN NEXT payment_inv;
@@ -224,14 +226,41 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-
-
 COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3), date, date, numeric, numeric, int) IS
-$$ This function takes three arguments:
-Type: 1 for vendor, 2 for customer
-Entity_id:  The entity_id of the customer or vendor
-Currency:  3 characters for currency ('USD' for example).
-Returns all open invoices for the entity in question. $$;
+$$ This function is the base for get_open_invoice and returns all open invoices for the entity_credit_id
+it has a lot of options to enable filtering and use the same logic for entity_class_id and currency. $$;
+
+CREATE OR REPLACE FUNCTION payment_get_open_invoice
+(in_account_class int,
+ in_entity_credit_id int,
+ in_curr char(3),
+ in_datefrom date, 
+ in_dateto date,
+ in_amountfrom numeric,
+ in_amountto   numeric,
+ in_department_id int,
+ in_invnumber text)
+RETURNS SETOF payment_invoice AS
+$$
+DECLARE payment_inv payment_invoice;
+BEGIN
+	FOR payment_inv IN
+		SELECT * from payment_get_open_invoices(in_account_class, in_entity_credit_id, in_curr, in_datefrom, in_dateto, in_amountfrom,
+		in_amountto, in_department_id)
+		WHERE (invnumber like in_invnumber OR in_invnumber IS NULL)
+	LOOP
+		RETURN NEXT payment_inv;
+	END LOOP;
+END;
+
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION payment_get_open_invoice(int, int, char(3), date, date, numeric, numeric, int, text) IS
+$$ 
+This function is based on payment_get_open_invoices and returns only one invoice if the in_invnumber is set. 
+if no in_invnumber is passed this function behaves the same as payment_get_open_invoices
+$$;
+
 
 CREATE TYPE payment_contact_invoice AS (
 	contact_id int,
@@ -548,7 +577,7 @@ CREATE TABLE payment (
   payment_date date default current_date,
   closed bool default FALSE,
   entity_credit_id   integer references entity_credit_account(id),
-  employee_id integer references entity_employee(entity_id),
+  employee_id integer references person(id),
   currency char(3),
   notes text,
   department_id integer default 0);
@@ -599,7 +628,8 @@ CREATE OR REPLACE FUNCTION payment_post
  in_op_cash_account_id            int[],
  in_op_source                     text[], 
  in_op_memo                       text[],
- in_op_account_id                 int[],                   
+ in_op_account_id                 int[], 
+ in_ovp_payment_id		  int[],                  
  in_approved                      bool)
 RETURNS INT AS
 $$
@@ -621,7 +651,10 @@ BEGIN
         SELECT * INTO current_exchangerate FROM currency_get_exchangerate(in_curr, in_datepaid, in_account_class);
 
 
-        SELECT INTO var_employee entity_id FROM users WHERE username = SESSION_USER LIMIT 1;
+        SELECT INTO var_employee p.id 
+        FROM users u
+        JOIN person p ON (u.entity_id=p.entity_id)
+        WHERE username = SESSION_USER LIMIT 1;
         -- 
         -- WE HAVE TO INSERT THE PAYMENT, USING THE GL INFORMATION
         -- THE ID IS GENERATED BY payment_id_seq
@@ -642,6 +675,7 @@ BEGIN
         -- FIRST WE SHOULD INSERT THE CASH ACCOUNTS
         --
         -- WE SHOULD HAVE THE DATA STORED AS (ACCNO, AMOUNT), SO
+     IF (array_upper(in_cash_account_id, 1) > 0) THEN
 	FOR out_count IN 
 			array_lower(in_cash_account_id, 1) ..
 			array_upper(in_cash_account_id, 1)
@@ -656,6 +690,10 @@ BEGIN
 		        in_source[out_count], in_memo[out_count]);
                 INSERT INTO payment_links 
 		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+		IF (in_ovp_payment_id IS NOT NULL AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
+                	INSERT INTO payment_links
+                	VALUES (in_ovp_payment_id[out_count], currval('acc_trans_entry_id_seq'), 0);
+		END IF;
 		
 	END LOOP;
 	-- NOW LETS HANDLE THE AR/AP ACCOUNTS
@@ -726,6 +764,7 @@ BEGIN
          INSERT INTO payment_links 
 		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
       END LOOP;
+     END IF; -- END IF 
 --
 -- WE NEED TO HANDLE THE OVERPAYMENTS NOW
 --
@@ -757,13 +796,14 @@ BEGIN
 	        INSERT INTO acc_trans (chart_id, amount,
 		                       trans_id, transdate, approved, source, memo)
 		VALUES (in_op_cash_account_id[out_count], 
-		        CASE WHEN in_account_class = 2 THEN in_op_amount[out_count]  
+		        CASE WHEN in_account_class = 1 THEN in_op_amount[out_count]  
 		        ELSE in_op_amount[out_count] * - 1
 		        END,
 		        var_gl_id, in_datepaid, coalesce(in_approved, true), 
 		        in_op_source[out_count], in_op_memo[out_count]);
 	        INSERT INTO payment_links 
 		VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 2);
+		
 	END LOOP;
 	-- NOW LETS HANDLE THE OVERPAYMENT ACCOUNTS
 	FOR out_count IN
@@ -773,7 +813,7 @@ BEGIN
          INSERT INTO acc_trans (chart_id, amount,
                                 trans_id, transdate, approved, source, memo)
 		VALUES (in_op_account_id[out_count], 
-		        CASE WHEN in_account_class = 2 THEN in_op_amount[out_count] * -1 
+		        CASE WHEN in_account_class = 1 THEN in_op_amount[out_count] * -1 
 		        ELSE in_op_amount[out_count]
 		        END,
 		        var_gl_id, in_datepaid,  coalesce(in_approved, true), 
@@ -1112,15 +1152,16 @@ CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_p
           c.legal_name as legal_name, am.amount as amount, em.first_name, em.last_name, p.currency, p.notes
    FROM payment p
    JOIN employee em ON (em.entity_id = p.employee_id)
-   JOIN company c ON   (c.entity_id  = p.entity_id)
-   JOIN (  SELECT sum(a.amount) as amount
-		FROM acc_trans a
-		JOIN chart c ON (a.chart_id = c.id)
-		JOIN payment_links pl ON (pl.entry_id=a.entry_id)
-		WHERE 
-		(   ((c.link like '%AP_paid%' OR c.link like '%AP_discount%') AND in_account_class = 1)
-		 OR ((c.link like '%AR_paid%' OR c.link like '%AR_discount%') AND in_account_class = 2))
-                 AND pl.payment_id = in_payment_id ) am ON (1=1)
+   JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
+   JOIN company c ON   (c.entity_id  = eca.entity_id)
+   JOIN payment_links pl ON (p.id = pl.payment_id)
+ --  JOIN (  SELECT sum(a.amount) as amount
+ --		FROM acc_trans a
+ --		JOIN chart ch ON (a.chart_id = ch.id)
+ --		JOIN payment_links pl ON (pl.entry_id=a.entry_id)
+ --		WHERE 
+ --		 ((ch.link like '%AP_paid%' OR ch.link like '%AP_discount%') AND in_account_class = 1)
+ --		 OR ((ch.link like '%AR_paid%' OR ch.link like '%AR_discount%') AND in_account_class = 2)  )  am ON (1=1)
    WHERE p.id = in_payment_id
  LOOP
      RETURN NEXT out_payment;
@@ -1139,12 +1180,12 @@ CREATE TYPE payment_line_item AS (
   entry_id int,
   link_type int,
   trans_id int,
-  invoice_number int,
+  invoice_number text,
   chart_id int,
-  chart_accno int,
+  chart_accno text,
   chart_description text,
   chart_link text,
-  amount int,
+  amount numeric,
   trans_date date,	
   source text,
   cleared bool,
@@ -1186,3 +1227,88 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
 COMMENT ON FUNCTION payment_gather_line_info(int,int) IS
 $$ This function finds a payment based on the id and retrieves all the line records, 
 it is usefull for printing payments and build reports :) $$;
+
+-- We will use a view to handle all the overpayments
+DROP VIEW overpayments CASCADE;
+CREATE VIEW overpayments AS
+SELECT p.id as payment_id, p.reference as payment_reference, p.payment_class, p.closed as payment_closed,
+       p.payment_date, ac.chart_id, c.accno, c.description as chart_description,
+       p.department_id, abs(sum(ac.amount)) as available, cmp.legal_name, 
+       eca.id as entity_credit_id, eca.entity_id, eca.discount, eca.meta_number
+FROM payment p
+JOIN payment_links pl ON (pl.payment_id=p.id)
+JOIN acc_trans ac ON (ac.entry_id=pl.entry_id)
+JOIN chart c ON (c.id=ac.chart_id)
+JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
+JOIN company cmp ON (cmp.entity_id=eca.entity_id) 
+WHERE p.gl_id IS NOT NULL 
+      AND (pl.type = 2 OR pl.type = 0)
+      AND c.link LIKE '%overpayment%'
+GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
+      ac.chart_id, chart_description, p.department_id,  legal_name, eca.id,
+      eca.entity_id, eca.discount, eca.meta_number;
+
+CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_class int)
+ returns SETOF payment_vc_info AS
+ $$
+ DECLARE out_entity payment_vc_info;
+ BEGIN
+	FOR out_entity IN
+    		SELECT DISTINCT entity_credit_id, legal_name, e.entity_class, discount, o.meta_number
+    		FROM overpayments o
+    		JOIN entity e ON (e.id=o.entity_id)
+    		WHERE available <> 0 AND in_account_class = payment_class
+        LOOP
+                RETURN NEXT out_entity;
+        END LOOP;
+ END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION payment_get_unused_overpayment(
+in_account_class int, in_entity_credit_id int, in_chart_id int)
+returns SETOF overpayments AS
+$$
+DECLARE out_overpayment overpayments%ROWTYPE;
+BEGIN
+      FOR out_overpayment IN
+              SELECT DISTINCT * 
+              FROM overpayments
+              WHERE payment_class  = in_account_class 
+              AND entity_credit_id = in_entity_credit_id 
+              AND available <> 0
+              AND (in_chart_id IS NULL OR chart_id = in_chart_id )
+              ORDER BY payment_date
+            
+      LOOP
+           RETURN NEXT out_overpayment;
+      END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+CREATE TYPE payment_overpayments_available_amount AS (
+        chart_id int,
+        accno text,
+        description text,
+        available numeric 
+);
+
+CREATE OR REPLACE FUNCTION payment_get_available_overpayment_amount(
+in_account_class int, in_entity_credit_id int)
+returns SETOF payment_overpayments_available_amount AS
+$$
+DECLARE out_overpayment payment_overpayments_available_amount;
+BEGIN
+      FOR out_overpayment IN
+              SELECT chart_id, accno,   chart_description, abs(sum(available))
+              FROM overpayments
+              WHERE payment_class  = in_account_class 
+              AND entity_credit_id = in_entity_credit_id 
+              AND available <> 0
+              GROUP BY chart_id, accno, chart_description
+      LOOP
+           RETURN NEXT out_overpayment;
+      END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+

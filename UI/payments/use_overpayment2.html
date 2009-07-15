@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title><?lsmb titlebar ?></title>
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
+  <script language="JavaScript"  src="UI/payments/javascript/maximize_minimize.js"></script>
+  <meta http-equiv="content-type" content="text/html; charset=<?lsmb charset ?>" />  
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+<body id="payment_2_body" onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
+ <form name="pay_single_dues" method="post" action="payment.pl">
+
+ <?lsmb PROCESS elements.html  # Include form elements helper. ?>
+
+ <table width="100%" id="header_table">
+  <tr id="top_bar" class="listtop">
+    <th id="top_bar_header" class="listtop">
+    	<?lsmb header.text ?>
+    </th>
+    
+  </tr>
+ </table>
+ <table width="100%" id="info_table">
+  <tr valign="top" id="info_row">
+   <td width="50%" id="info_data">
+    <table id="cv_info_table">
+     <tr id="cv_row">
+      <th class="label_left" id="cv_label_column">
+       <?lsmb IF account_class == 1 -?>
+        <?lsmb text('Vendor') -?>
+       <?lsmb ELSE -?>
+        <?lsmb text('Customer') -?>
+       <?lsmb END -?>
+      </th>
+       <td id="vc_column">
+       	<?lsmb vc_entity_info.legal_name -?>       		
+       </td>
+     </tr>
+     <tr id="vc_location_row">
+      <th valign="top" id="cv_location_label_column">
+      <?lsmb text('Location') -?>
+      </th>
+       <td id="vc_location_column">
+        <table id="cv_location_table">
+        <?lsmb IF vc_entity_info.street1 -?>
+          <tr>       
+            <td><?lsmb vc_entity_info.street1 -?></td>
+          </tr>
+        <?lsmb END -?>
+        <?lsmb IF vc_entity_info.street2 -?>
+          <tr>
+            <td><?lsmb vc_entity_info.street2 -?></td>
+          </tr>
+        <?lsmb END -?>
+        <?lsmb IF vc_entity_info.street3 -?>
+          <tr>
+            <td><?lsmb vc_entity_info.street3 -?></td>
+          </tr> 
+        <?lsmb END -?>
+        <?lsmb IF vc_entity_info.city -?>
+          <tr>
+            <td><?lsmb vc_entity_info.city -?></td>
+          </tr> 
+        <?lsmb END -?>
+        <?lsmb IF vc_entity_info.state -?>
+          <tr>
+            <td><?lsmb vc_entity_info.state -?></td>
+          </tr> 
+        <?lsmb END -?>
+        <?lsmb IF vc_entity_info.country -?>
+          <tr>
+            <td><?lsmb vc_entity_info.country -?></td>
+          </tr> 
+        <?lsmb END -?>
+        </table>
+       </td>
+     </tr>
+     <tr align="right" id="notes_row">
+      <th valign="top" id="notes_column"><?lsmb text('Notes') ?></th>
+      <td id="text_notes_column"><textarea id="notes" name="notes" cols="35" rows="3"><?lsmb notes ?></textarea></td>
+     </tr>
+    </table>
+   </td>
+   <td align="right" id="curr_exrate_date_column">
+    <table id="curr_exrate_date_table">
+     <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date wich can be called with the onChange Method	  ?>
+      <th align="right" nowrap id="date_label_column"><?lsmb text('Date')?>:</th>
+      <td colspan="2" id="date_column"> <?lsmb INCLUDE input element_data=datepaid ?> </td>
+     </tr>
+     <tr id="curr_row">
+     <?lsmb #  here goes the selected currency in step 1 ?>
+      <th align="right" id="curr_label_column"><?lsmb text('Currency') -?>:</th>
+      <td id="curr_column">
+       <?lsmb curr -?>
+      </td>
+     </tr>
+     <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
+     <?lsmb  IF default_curr != curr # Only process element if one exists. ?>
+     <tr id="exrate_row">
+      <th valig="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
+      <td id="exrate_column">
+       <?lsmb  IF exrate.value -?>        
+       <?lsmb  exrate.text -?>
+       <?lsmb  exrate.type='hidden'; INCLUDE input element_data=exrate -?>
+       <?lsmb  END -?>
+       <?lsmb  IF !exrate.value -?>
+       <?lsmb  exrate.size = 4 -?>
+       <?lsmb  INCLUDE input element_data=exrate -?>
+       <?lsmb  END -?>
+      </td>
+     </tr>
+     <?lsmb ELSE -?>
+	<?lsmb  exrate.type='hidden'; INCLUDE input element_data=exrate -?>
+     <?lsmb END -?>
+    </table>
+   </td>
+  </tr>
+ </table>
+ <?lsmb # First we show the user how much overpayment is available for each account -?>
+ <table width="100%">
+  <tr><th class="listheading" colspan="4"> <?lsmb text('Available overpayments') -?></th></tr>
+  <tr class="listheading">
+   <th class="listheading"><?lsmb text('Account Number') -?></th>
+   <th class="listheading"><?lsmb text('Account Description') -?></th>
+   <th class="listheading"><?lsmb text('Available') -?></th>
+   <th class="listheading"><?lsmb text('To be used') -?></th>
+  </tr>
+  <?lsmb i = '0'; topay_subtotal = 0  -?>
+  <?lsmb FOREACH data IN overpayments  # Loop through columns ?>
+  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
+  <?lsmb accno = data.accno -?>
+  <tr class="<?lsmb alterning_style ?>">
+   <td><?lsmb data.accno  -?></td>
+   <td><?lsmb data.description  -?></td>
+   <td align="right"><?lsmb data.available  -?></td>
+   <td align="right"><?lsmb data.touse -?></td>
+  </tr>
+  <?lsmb END ?>
+  <tr class="listsubtotal">
+   <th colspan="2" align="right"><?lsmb text('Subtotal') -?></th>
+   <th><?lsmb avble_subtotal -?></th>
+   <th><?lsmb to_use_subtotal -?></th>
+  </tr>
+
+ </table>
+ <br />
+ <table id="invoices" width="100%">
+  <tr><th class="listheading" colspan="8"> <?lsmb text('Select invoices') -?></th></tr>
+  <tr class="listheading">
+   <th class="listheading"><?lsmb text('Invoice Number') -?></th>
+   <th class="listheading"><?lsmb text('Vendor') -?>/<?lsmb text('Customer') -?></th>
+   <th class="listheading"><?lsmb text('Invoice date') -?></th>
+   <th class="listheading"><?lsmb text('Invoice due') -?></th>
+   <th class="listheading"><?lsmb text('Apply Disc') -?></th>
+   <th class="listheading"><?lsmb text('Overpayment Account') ?>
+   <th class="listheading"><?lsmb text('Amount to be used') -?></th>
+   <th class="listheading">X</th>
+  </tr>
+  <!-- From here starts the selected invoices -->
+  <?lsmb i = 0 -?>
+  <?lsmb subtotal_inv = 0 -?>
+  <?lsmb FOREACH data IN selected_inv  # Loop through selected and found invoices -?>
+  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>
+  <tr class="<?lsmb alterning_style -?>">
+   <td align="center"> <a href="<?lsmb data.invoice.href ?>"><?lsmb data.invoice.number ?></a>
+    <input type="hidden" id="invnumber_<?lsmb i -?>" name="invnumber_<?lsmb i -?>" value="<?lsmb data.invoice.number -?>" />
+    <input type="hidden" id="invoice_id_<?lsmb i -?>" name="invoice_id_<?lsmb i -?>" value="<?lsmb data.invoice.id -?>" />
+   </td>
+   <td align="center"> <?lsmb data.entity_name ?>
+    <input type="hidden" id="entity_id_<?lsmb i -?>" name="entity_id_<?lsmb i -?>" value="<?lsmb data.entity_id -?>" />
+    <input type="hidden" id="vc_discount_accno_<?lsmb i -?>" name="vc_discount_accno_<?lsmb i -?>" value="<?lsmb data.vc_discount_accno -?>" />
+   </td>
+   <td align="center"> <?lsmb data.invoice_date ?>
+    <input type="hidden" id="invoice_date_<?lsmb i -?>" name="invoice_date_<?lsmb i -?>" value="<?lsmb data.invoice_date -?>" />
+   </td>
+   <td align="right"> <?lsmb data.applied_due -?>
+    <input type="hidden" id="due_<?lsmb i -?>" name="due_<?lsmb i -?>" value="<?lsmb data.due -?>" />
+    <input type="hidden" id="discount_<?lsmb i -?>" name="discount_<?lsmb i -?>" value="<?lsmb data.discount -?>" />
+   </td>
+   <?lsmb IF data.repeated_invoice == 'true' -?>
+    <td align="center"> &nbsp;
+    	<input type="hidden" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i -?>" value="<?lsmb data.optional_discount -?>"/> 
+    </td>
+   <?lsmb ELSE -?>
+      	<?lsmb IF data.optional_discount -?>
+    <td align="center"> <input type="checkbox" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i -?>" checked/> </td>
+   	<?lsmb ELSE -?>
+    <td align="center"> <input type="checkbox" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i -?>" /> </td>
+   	<?lsmb END -?>
+   <?lsmb END -?>
+   <td align="center"> <?lsmb data.selected_accno.ovp_accno ?>
+    <input type="hidden" id="selected_accno_<?lsmb i -?>" name="selected_accno_<?lsmb i -?>" value="<?lsmb data.selected_accno.id -?>--<?lsmb data.selected_accno.ovp_accno -?>" />
+   </td>
+   <td align="center">
+    <input name="amount_<?lsmb i -?>" id="amount_<?lsmb i -?>" value="<?lsmb data.amount -?>">
+    <?lsmb subtotal_inv = subtotal_inv + data.amount -?>
+   </td>
+   <td align="center"><input type="checkbox" name="checkbox_<?lsmb i -?>"></td>
+  </tr>
+  <?lsmb END -?>
+  <?lsmb FOREACH data IN avble_invoices  # Loop through selected entity invoices -?>
+  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>   
+  <tr class="<?lsmb alterning_style ?>">
+   <td align="center"> <a href="<?lsmb data.invoice.href ?>"><?lsmb data.invoice.number ?></a>
+    <input type="hidden" id="invnumber_<?lsmb i -?>" name="invnumber_<?lsmb i -?>" value="<?lsmb data.invoice.number -?>" />
+    <input type="hidden" id="invoice_id_<?lsmb i -?>" name="invoice_id_<?lsmb i -?>" value="<?lsmb data.invoice.id-?>" />
+   </td>
+   <td align="center"> <?lsmb data.entity_name ?>
+    <input type="hidden" id="entity_id_<?lsmb i -?>" name="entity_id_<?lsmb i -?>" value="<?lsmb data.entity_id -?>" />
+    <input type="hidden" id="vc_discount_accno_<?lsmb i -?>" name="vc_discount_accno_<?lsmb i -?>" value="<?lsmb data.vc_discount_accno -?>" />
+   </td>
+   <td align="center"> <?lsmb data.invoice_date ?>
+    <input type="hidden" id="invoice_date_<?lsmb i -?>" name="invoice_date_<?lsmb i -?>" value="<?lsmb data.invoice_date -?>" />
+   </td >
+   <td align="right"> <?lsmb data.due ?>
+    <input type="hidden" id="due_<?lsmb i -?>" name="due_<?lsmb i -?>" value="<?lsmb data.due -?>" />    
+    <input type="hidden" id="discount_<?lsmb i -?>" name="discount_<?lsmb i -?>" value="<?lsmb data.discount -?>" />
+   </td>
+   <?lsmb IF data.repeated_invoice == 'true' -?>
+    <td align="center"> &nbsp; </td>
+   <?lsmb ELSE -?>
+   <td align="center"> <input type="checkbox" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i ?>" checked/> </td>
+   <?lsmb END -?>
+   <td align="center"> <?lsmb data.selected_accno.ovp_accno ?>
+    <input type="hidden" id="selected_accno_<?lsmb i -?>" name="selected_accno_<?lsmb i -?>" value="<?lsmb data.selected_accno.id -?>--<?lsmb data.selected_accno.ovp_accno -?>" />
+   </td>
+   <td align="center">
+    <input name="amount_<?lsmb i -?>" id="amount_<?lsmb i -?>" value="<?lsmb data.amount -?>">
+    <?lsmb subtotal_inv = subtotal_inv + data.amount -?>
+   </td>
+   <td align="center"><input type="checkbox" name="checkbox_<?lsmb i ?>"></td>   
+  </tr>
+  <?lsmb END -?>
+  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>
+  <tr class="<?lsmb alterning_style ?>">
+   <td align="center"><input name="new_invoice" id="new_invoice" value=""></td>
+   <td align="center">
+    <select id="new_entity_id" name="new_entity_id">
+    <?lsmb FOREACH item IN vc_list -?>
+     <?lsmb  IF item.value == entity_credit_id #by default, select the entity wich was chosen in the previous screen -?>
+     <option value="<?lsmb item.value -?>--<?lsmb item.name -?>--<?lsmb item.vc_discount_accno -?>" selected><?lsmb item.name?></option>
+     <?lsmb ELSE -?>
+     <option value="<?lsmb item.value -?>--<?lsmb item.name -?>--<?lsmb item.vc_discount_accno -?>"><?lsmb item.name?></option>
+     <?lsmb END -?>
+    <?lsmb END -?>
+    </select>
+   </td>
+   <td align="center">N/A</td>
+   <td align="center">N/A</td>
+   <td align="center"> &nbsp; </td>
+   <td align="center">
+    <select id="new_accno" name="new_accno">
+     <?lsmb FOREACH item IN overpayments ?>
+     <option value="<?lsmb item.id -?>--<?lsmb item.accno -?>"><?lsmb item.accno -?></option>
+     <?lsmb END ?>
+    </select>
+   </td>	
+   <td align="center">
+    <input name="new_amount" id="new_amount" value="">
+   </td>
+   <td align="center">
+    <?lsmb IF dont_search_inv -?>
+    <input type="checkbox" name="new_checkbox" checked>
+    <?lsmb ELSE -?>
+    <input type="checkbox" name="new_checkbox"> 
+    <?lsmb END -?>
+   </td>
+  </tr>
+  <tr class="listsubtotal" >
+   <th class="listsubtotal" colspan="6" align="right">&nbsp;<?lsmb text('Subtotal') -?></th>
+   <th class="listsubtotal"> <?lsmb subtotal_inv -?>
+     <input type="hidden" id="subtotal_inv" name="subtotal_inv" value="<?lsmb subtotal_inv -?>" />  
+   </th>
+   <th class="listsubtotal" align="center">&nbsp;</th>
+  </tr> 
+ 
+ </table>   
+ <hr />
+ <table id="footer" width="100%">
+  <tr id="footer_row">
+   <td valing="top" id="button_column">
+   <?lsmb update.accesskey   = "U";
+        update.title       = "UPDATE ALT+U";
+        update.name        = "action";
+        update.value	    = "use_overpayment2";
+        update.text        = text("UPDATE");
+        INCLUDE button element_data=update -?>
+   <?lsmb post.accesskey   = "P";
+        post.title	  = "POST ALT+P";
+        post.name	  = "action";
+        post.value	  = "post_overpayment";
+        post.text	  = text("POST"); 
+        INCLUDE button element_data=post -?>
+   <?lsmb post_and_print.accesskey = "R";
+        post_and_print.title     = "POST AND PRINT ALT+R";
+        post_and_print.name = "action";
+        post_and_print.value = "";
+        post_and_print.text = text("POST AND PRINT");;
+        INCLUDE button element_data=post_and_print ?>
+   <?lsmb INCLUDE select element_data=format ?>
+   <?lsmb INCLUDE select element_data=media ?>
+   <?lsmb FOREACH element_data IN selectedcheckboxes  ?>
+   <?lsmb # We should use a cipher here, to avoid XSS
+           element_data.type  ='hidden';
+    	   element_data.value ='checked'; 
+           INCLUDE input element_data?>
+   <?lsmb END ?>
+   </td>
+   <td id="warning_column" align="right">
+   <?lsmb IF warning -?>
+     <textarea id="warning_text" name="warning_text" cols="35" readonly="true" style="transparent;"><?lsmb warning ?></textarea>
+   <?lsmb END -?>  
+   </td>
+  </tr>           
+ </table>
+ <?lsmb FOREACH item IN hiddens -?>
+   <?lsmb INCLUDE input element_data=item ?>
+ <?lsmb END -?>
+  </form>
+</body>
+</html>

@@ -1630,7 +1630,9 @@ weightunit, and businessnumber are taken directly from the $form value with
 the corresponding name.  inventory_accno_id is the id of the account with the
 number specified in $form->{IC}.  In a similar manner, income_accno_id and
 $form->{IC_income}, expense_accno_id and $form->{IC_expense}, fxgain_accno_id
-and $form->{FX_gain}, and fxloss_accno_id and $form->{FX_loss} are related.
+and $form->{FX_gain}, and fxloss_accno_id and $form->{FX_loss} are related. 
+
+Stores the templates directory for a specific company on defaults table.
 
 =cut
 
@@ -1646,13 +1648,11 @@ sub save_defaults {
     $form->{curr} =~ s/ //g;
     for ( split /:/, $form->{curr} ) { push( @a, uc pack "A3", $_ ) if $_ }
     $form->{curr} = join ':', @a;
-
     # connect to database
     my $dbh = $form->{dbh};
-
     # save defaults
-    $sth_plain = $dbh->prepare( "
-		UPDATE defaults SET value = ? WHERE setting_key = ?" );
+#    $sth_plain = $dbh->prepare( "
+#		UPDATE defaults SET value = ? WHERE setting_key = ?" );
     $sth_accno = $dbh->prepare(
         qq|
 		UPDATE defaults
@@ -1673,11 +1673,11 @@ sub save_defaults {
         fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
         sonumber ponumber sqnumber rfqnumber partnumber employeenumber
         customernumber vendornumber projectnumber yearend curr
-        weightunit businessnumber default_country check_prefix password_duration)
+        weightunit businessnumber default_country check_prefix password_duration templates)
+
       )
     {
         my $val = $form->{$_};
-
         if ( $translation{$_} ) {
             $val = $form->{ $translation{$_} };
         }
@@ -2284,7 +2284,31 @@ sub get_all_defaults {
     $sth->finish;
     $self->defaultaccounts( undef, $form );
     $dbh->commit;
+    my $dirname = "./templates";
+    my $subdircount = 0;
 }
+
+=item AM->get_templates_directories;
+
+This functions gets all the directories from $LedgerSMB::Sysconfig::templates to list all the possible
+non-Ui templates.
+
+=cut
+sub get_templates_directories {
+my ( $self, $form ) = @_;
+my $subdircount = 0;
+my @dirarray;
+opendir ( DIR, $LedgerSMB::Sysconfig::templates) || $form->error("Error while opening file: ./".$LedgerSMB::Sysconfig::templates);
+while( (my $name = readdir(DIR))){
+                 next if ($name =~ /\./);
+                 if (-d $LedgerSMB::Sysconfig::templates.'/'.$name) {
+                         $dirarray[$subdircount++] = $name;
+                 }
+}
+closedir(DIR);
+@{$form->{templates_directories}} = @dirarray;
+}
+
 
 1;
 

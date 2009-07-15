@@ -184,7 +184,6 @@ sub fetch_config {
     my $sth = $dbh->prepare($query);
     $sth->execute($lsmb->{login});
     $myconfig = $sth->fetchrow_hashref(NAME_lc);
-
     return $myconfig;
 }
 

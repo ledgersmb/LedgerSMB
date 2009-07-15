@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title><?lsmb titlebar -?></title>
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
+
+  <meta http-equiv="content-type" content="text/html; charset=<?lsmb charset ?>" />  
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+
+<body id="use_overpayment1">
+<form name="search" method="post" action="payment.pl">
+  <?lsmb PROCESS elements.html  # Include form elements helper. -?>
+  <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
+  <?lsmb account_class.type = 'hidden'; account_class.id =  account_class.name; INCLUDE input element_data=account_class-?>
+<table width="100%">
+  <tr id="top-bar" class="listtop">
+    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb text('Use Overpayment') ?></th>
+  </tr>
+</table>
+<br/>
+<?lsmb IF entities -?>
+  <span id="disclaimer">
+  <?lsmb IF account_class.value == 1 -?>
+    <?lsmb text('Please select a vendor with unused overpayments') ?>
+  <?lsmb ELSE -?>
+    <?lsmb text('Please select a customer with unused overpayments') ?>
+  <?lsmb END -?>
+  </span>
+  <br/>
+  <table >
+    <tr id="vc-row" class="label-left">
+      <td id="vc-label-column" class="label-left">
+        <span id="disclaimer">
+        <?lsmb IF account_class.value == 1 -?>
+          <?lsmb text('Vendor') -?>
+        <?lsmb ELSE -?>
+          <?lsmb text('Customer') -?>
+        <?lsmb END ?>
+        </span>
+      </td>
+      <td id="vc-column" class="label-left">
+        <select id="entity_credit_id" name="entity_credit_id">
+        <?lsmb FOREACH item IN entities -?>
+          <option value="<?lsmb item.value ?>"><?lsmb item.name?></option>
+        <?lsmb END ?>
+        </select>
+      </td>
+    </tr>
+    <tr id="curr-row" class="label-left">
+      <td id="curr-label-column" class="label-left">
+        <?lsmb text('Currency') ?>
+      </td>
+      <td id="curr-column" class="label-left">
+        <select id="curr" name="curr">
+        <?lsmb FOREACH item IN curr -?>
+          <option value="<?lsmb item.value ?>"><?lsmb item.text?></option>
+        <?lsmb END -?>
+        </select>
+      </td>
+    </tr>
+  </table>
+  <hr/>
+  <?lsmb PROCESS button element_data=action ?>
+<?lsmb ELSE -?>
+  <?lsmb IF account_class.value == 1 -?>
+    <?lsmb text('There is no vendor with overpayments') ?>
+  <?lsmb ELSE -?>
+    <?lsmb text('There is no customer with overpayments') ?>
+  <?lsmb END -?>
+<?lsmb END -?>
+</body>
+</html>
