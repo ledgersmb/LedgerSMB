@@ -371,15 +371,14 @@ sub all_transactions {
         ) = $dbh->selectrow_array($query);
 
         if ( $form->{datefrom} ) {
-
             $query = qq|
-				SELECT SUM(ac.amount)
-				  FROM acc_trans ac
-				  JOIN chart c ON (ac.chart_id = c.id)
-				 WHERE c.accno = $accno
-				       AND ac.transdate < date | . $dbh->quote( $form->{datefrom} );
+			SELECT account__obtain_balance(?, id) from chart
+			WHERE accno = ? |;
+            my $sth = $dbh->prepare($query);
+            $sth->execute($form->{datefrom}, $accno);
 
-            ( $form->{balance} ) = $dbh->selectrow_array($query);
+            ( $form->{balance} ) = $sth->fetchrow_array;
+            $sth->finish;
         }
     }
 

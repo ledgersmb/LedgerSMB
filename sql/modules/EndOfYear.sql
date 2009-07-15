@@ -138,11 +138,7 @@ RETURNS numeric AS
 $$
 DECLARE balance numeric;
 BEGIN
-	SELECT amount INTO balance FROM account_checkpoint 
-	WHERE account_id = in_account_id AND end_date < in_trans_date
-	ORDER BY end_date desc LIMIT 1;
-
-	SELECT sum(ac.amount) + coalesce(cp.balance, 0)
+	SELECT coalesce(sum(ac.amount) + cp.amount, sum(ac.amount))
 	INTO balance
 	FROM acc_trans ac
 	JOIN (select id, approved from ar union
@@ -152,8 +148,10 @@ BEGIN
 		WHERE account_id = in_account_id AND end_date < in_transdate
 		ORDER BY end_date desc limit 1
 	) cp ON (cp.account_id = ac.chart_id)
-	WHERE ac.chart_id = in_account_id AND acc_trans > cp.end_date
-		and ac.approved and a.approved;
+	WHERE ac.chart_id = in_account_id 
+		AND ac.transdate > coalesce(cp.end_date, ac.transdate - '1 day'::interval)
+		and ac.approved and a.approved
+	GROUP BY cp.amount, ac.chart_id;
 
 	RETURN balance;
 END;
