@@ -255,7 +255,6 @@ COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a comm
 
 create table entity_employee (
     
-    person_id integer references person(id) not null,
     entity_id integer references entity(id) not null unique,
     startdate date not null default current_date,
     enddate date,
