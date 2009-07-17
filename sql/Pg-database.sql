@@ -90,6 +90,7 @@ CREATE TABLE entity (
   entity_class integer references entity_class(id) not null ,
   created date not null default current_date,
   control_code text,
+  country_id int references country(id) not null,
   PRIMARY KEY(control_code, entity_class));
   
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
