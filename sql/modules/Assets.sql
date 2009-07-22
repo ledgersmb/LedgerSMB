@@ -58,6 +58,53 @@ $$
 SELECT * FROM asset_class ORDER BY label;
 $$ LANGUAGE SQL;
 
+CREATE TYPE asset_class_result AS (
+	id int,
+	asset_account_id int,
+	asset_accno text,
+	asset_description text,
+	dep_account_id int,
+	dep_accno text,
+	dep_description text,
+	method text, 
+	method_id int, 
+	life_unit text, 
+	life_unit_id int, 
+	label text
+);
+
+CREATE OR REPLACE FUNCTION asset_class__search
+(in_asset_account_id int, in_dep_account_id int, 
+in_method int, in_life_unit int, in_label text)
+RETURNS SETOF asset_class_result AS
+$$
+DECLARE out_var asset_class_result;
+BEGIN
+	FOR out_var IN
+		SELECT ac.id, ac.asset_account_id, aa.accno, aa.description, 
+			ad.accno, ad.description, m.label, ac.method_id,
+			lu.label, ac.life_unit_id, ac.label
+		FROM asset_class ac
+		JOIN account aa ON (aa.id = ac.asset_account_id)
+		JOIN account ad ON (ad.id = ac.dep_account_id)
+		JOIN asset_dep_method m ON (ac.method_id = m.id)
+		JOIN asset_life_unit lu ON (ac.life_unit_id = lu.id)
+		WHERE 
+			(in_asset_account_id is null 
+				or in_asset_account_id = ac.asset_account_id)
+			AND (in_dep_account_id is null OR
+				in_dep_account_id = ac.dep_account_id)
+			AND (in_method is null OR in_method = ac.method_id)
+			AND (in_life_unit is null 
+				OR in_life_unit = ac.life_unit_id)
+			AND (in_label IS NULL OR ac.label LIKE 
+				'%' || in_label || '%')
+	LOOP
+		RETURN NEXT out_var;
+	END LOOP;
+END;
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION asset_class__save
 (in_id int, in_asset_account_id int, in_dep_account_id int, 
 in_method int, in_life_unit int, in_label text)
@@ -99,6 +146,55 @@ BEGIN
 	return ret_val;
 END;
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION asset__search
+(in_asset_class int, in_description text, in_tag text, 
+in_purchase_date date, in_purchase_value numeric,
+in_usable_life numeric, in_salvage_value numeric)
+RETURNS SETOF asset_item AS $$
+DECLARE out_val asset_item;
+BEGIN
+	FOR out_val IN
+		SELECT * FROM asset_item
+		WHERE (in_asset_class is null 
+			or asset_class_id = in_asset_class)
+			AND (in_description is null or description 
+				LIKE '%' || in_description || '%')
+			and (in_tag is not null or tag like '%'||in_tag||'%')
+			AND (in_purchase_date is null 
+				or purchase_date = in_purchase_date)
+			AND (in_purchase_value is null
+				or in_purchase_value = purchase_value)
+			AND (in_usable_life is null
+				or in_usable_life = usable_life)
+			AND (in_salvage_value is null
+				OR in_salvage_value = salvage_value)
+	LOOP
+		RETURN NEXT out_val;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION asset_class__get_asset_accounts()
+RETURNS SETOF account AS $$
+SELECT * FROM account 
+WHERE id IN 
+	(select account_id from account_link where description = 'Fixed_Asset')
+ORDER BY accno;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION asset_class__get_dep_accounts()
+RETURNS SETOF account AS $$
+SELECT * FROM account 
+WHERE id IN 
+	(select account_id from account_link where description = 'Asset_Dep')
+ORDER BY accno;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION asset_class__get_life_units()
+RETURNS SETOF asset_life_unit AS $$
+	SELECT * FROM asset_life_unit;
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION asset__save
 (in_id int, in_asset_class int, in_description text, in_tag text, 

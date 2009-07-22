@@ -20,3 +20,5 @@ sub create_report {
 
 sub get_report {
 }
+
+1;

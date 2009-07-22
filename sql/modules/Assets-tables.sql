@@ -23,10 +23,11 @@ values ('Straight Line', 1, 'asset_dep_straight_line');
 CREATE TABLE asset_life_unit(
 	id serial unique not null,
 	unit text primary key,
-	unit_class int not null references asset_unit_class(id)
+	unit_class int not null references asset_unit_class(id),
+	div numeric not null
 );
 
-INSERT INTO asset_life_unit(unit, unit_class) values ('year', 1);
+INSERT INTO asset_life_unit(unit, unit_class, div) values ('year', 1, 1);
 -- year is only supported unit at present
 
 CREATE TABLE asset_class (

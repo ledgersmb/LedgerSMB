@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title><?lsmb titlebar -?></title>
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
+
+  <meta http-equiv="content-type" content="text/html; charset=<?lsmb charset ?>" />  
+  <meta name="robots" content="noindex,nofollow" />
+
+</head>
+
+<body id="payment-1-body">
+
+<form name="search" method="post" action="payment.pl">
+<?lsmb PROCESS elements.html  # Include form elements helper. -?>
+<?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
+<?lsmb department.type = 'hidden' ; INCLUDE input element_data=department -?>
+<?lsmb currency.type = 'hidden' ; INCLUDE input element_data=currency -?>
+<?lsmb datefrom.type = 'hidden' ; INCLUDE input element_data=datefrom -?>
+<?lsmb dateto.type = 'hidden' ; INCLUDE input element_data=dateto -?>
+<?lsmb amountfrom.type = 'hidden' ; INCLUDE input element_data=amountfrom -?>
+<?lsmb amountto.type = 'hidden' ; INCLUDE input element_data=amountto -?>
+<?lsmb accountclass.type = 'hidden'; INCLUDE input element_data=accountclass -?>
+<?lsmb # The first_load field is required on payment2.html to initialize discounts the first time, on each subsequent update it wont exist-?>
+<?lsmb INCLUDE input element_data={
+            name => 'first_load',
+            id   => 'first_load',
+            type => 'hidden',
+            value => 'on'} ?>
+<?lsmb type.type = "hidden"; INCLUDE input element_data=type -?>
+<table width="100%">
+  <tr id="top-bar" class="listtop">
+    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb  text('Choose a company') ?></th>
+  </tr>
+</table>
+<table width="100%">
+ <?lsmb i = 0; FOREACH item IN companies -?>
+ <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
+ 
+   <tr class="<?lsmb alterning_style -?>">
+     <td align="center"><?lsmb i -?> </td>
+     <td align="center"><?lsmb item.name -?>  </td>
+     <td align="center">
+     <input type="radio" name="vendor-customer" id="vendor-customer_id" value="<?lsmb  item.id -?>--<?lsmb item.name -?>" />
+     </td>
+  <?lsmb END -?>   
+</table>
+
+<?lsmb INCLUDE button element_data=action ?>
+
+</form>
+</body>
+</html>

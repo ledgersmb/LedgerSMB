@@ -19,8 +19,8 @@ sub save_asset {
     my ($ref) = $self->exec_method(funcname => 'asset__save');
     $self->merge($ref);
     $self->{dbh}->commit || $self->error(
-                  $locale->text("Unable to save [_1] object", 
-                          $locale->text('Asset'))
+                  $self->{_locale}->text("Unable to save [_1] object", 
+                          $self->{_locale}->text('Asset'))
     );
     return $ref if $self->{dbh}->commit;
 }
