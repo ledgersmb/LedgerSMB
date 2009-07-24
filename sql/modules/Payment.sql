@@ -1229,7 +1229,7 @@ $$ This function finds a payment based on the id and retrieves all the line reco
 it is usefull for printing payments and build reports :) $$;
 
 -- We will use a view to handle all the overpayments
-DROP VIEW overpayments CASCADE;
+DROP VIEW IF EXISTS overpayments CASCADE;
 CREATE VIEW overpayments AS
 SELECT p.id as payment_id, p.reference as payment_reference, p.payment_class, p.closed as payment_closed,
        p.payment_date, ac.chart_id, c.accno, c.description as chart_description,

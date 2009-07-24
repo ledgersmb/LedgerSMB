@@ -20,12 +20,6 @@ Contributed code fixes and support for advanced tax rules.  She has also
 re-engineered the localization framework.  She has also provided support for 
 Excel, ODS, and other formats for reports.
 
-Jason Rodrigues <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
-the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
-
-Josh Berkus <josh @ agliodbs.com> has helped provide assistance in promotion,
-advocacy, and other assistance.
-
 Other Contributors:
 ========================
 Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
@@ -34,6 +28,8 @@ the setup.diff.
 Angus Carr <apcarr @ users.sourceforge.net> Has provided some corrections to 
 the documentation.
 
+David Bandel <david.bandel @ gmail.com> Provided some bug fixes and 
+documentation corrections.
 
 Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
 documentation, the Pg-tables.sql, and a setup file for replication.
@@ -76,6 +72,12 @@ widget system for 1.3.
 David Mora contributed the new Payment template/system.
 
 Tony Brummett <tony @ blight.com> contributed a bug fix for avgcost and lastcost updates.
+
+Jason Rodrigues <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
+the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
+
+Josh Berkus <josh @ agliodbs.com> has helped provide assistance in promotion,
+advocacy, and other assistance.
 
 Original Authors of SQL-Ledger:
 ===================================

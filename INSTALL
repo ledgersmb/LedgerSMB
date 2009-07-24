@@ -362,12 +362,12 @@ $ psql -U postgres -d mycompany -t -c "INSERT INTO entity (name, entity_class, c
 INSERT 0 1
 
 
-Insert myuser Persion
+Insert myuser Person
 ---------------------
 
 Insert the myuser entity into the person table:
 
-$ psql -U postgres -d mycompany -t -c "INSERT INTO person (entity_id, first_name, last_name, created) VALUES (2, 'Firstname', 'Lastname', NOW()) RETURNING entity_id, first_name, last_name, created;"
+$ psql -U postgres -d mycompany -t -c "INSERT INTO person (entity_id, first_name, last_name, created,country_id) VALUES (2, 'Firstname', 'Lastname', NOW(),'232') RETURNING entity_id, first_name, last_name, created;"
          2 | Firstname  | Lastname  | 2009-04-13
 
 INSERT 0 1
@@ -378,7 +378,7 @@ Insert myuser Employee
 
 Insert the myuser person into the entity_employee table:
 
-$ psql -U postgres -d mycompany -t -c "INSERT INTO entity_employee (person_id, entity_id, startdate, role) VALUES (1, 2, NOW(), 'myuser') RETURNING person_id, entity_id, startdate, role;"
+$ psql -U postgres -d mycompany -t -c "INSERT INTO entity_employee (manager_id, entity_id, startdate, role) VALUES (1, 2, NOW(), 'myuser') RETURNING person_id, entity_id, startdate, role;"
          1 |         2 | 2009-04-13 | myuser
 
 INSERT 0 1
