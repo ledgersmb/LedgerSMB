@@ -265,7 +265,7 @@ create table entity_employee (
     manager_id integer references entity(id),
     employeenumber varchar(32),
     dob date,
-    PRIMARY KEY (person_id, entity_id)
+    PRIMARY KEY (entity_id)
 );
 
 CREATE TABLE person_to_location (
