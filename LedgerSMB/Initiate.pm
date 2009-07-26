@@ -485,28 +485,28 @@ sub check_sql_modules_valid_exist
         
 	my $dir=$ENV{SCRIPT_FILENAME};
 
-	my $location="/sql/modules/";
+	my $dir = "sql/modules/";
 
-	$dir =~s/\/[\w\d\.]*$/$location/;
-
-       	my @dir=LedgerSMB::Initiate->read_directory($form,$dir);
 
         #now dilemma with search files($dest)
 	
 	#1.List from README file 
-	#2.Read all sql files from sql/modules/
-
-	#Now implementing 2 one .Chris can you suggest me whether to go with 1 or 2
-
-	my @dest = grep /\.sql$/,@dir;
+	#2.Read all sql files from sql/modules/ -- Sadashiva
+	#
+	# I moved the info out of README into LOADORDER to be more friendly to
+	# programmers.  --Chris
 	
-	
-	for(my $i=0;$i<=$#dest;$i++)
-	{
-	  
-		$dest[$i]=$dir.$dest[$i];
-	
+	open(ORD, '<', $dir . "LOADORDER");
+	while (my $line = <ORD>){
+		$line =~ s/\#.*$//; # ignore comments
+		next if $line ~= /^\s*$/;
+		$line =~ s/^\s*//;
+		$line =~ s/\s*$//;
+		push @dest, $dir.$line;
 	}
+	
+	
+	
 	
 	return(@dest);
 	

@@ -6,25 +6,7 @@ For people trying to get 1.3 up and running manually, the following load order
 should work.  Note that many of these scripts declare types, so if you want to
 redefine functions, you will need to drop the types and reload the scripts.
 
-Drafts.sql
-chart.sql
-Account.sql
-Session.sql
-Business_type.sql
-Location.sql
-Company.sql
-Customer.sql 
-Date.sql
-Defaults.sql
-Settings.sql
-Employee.sql
-Entity.sql
-Payment.sql
-Person.sql
-Report.sql
-Voucher.sql
-admin.sql
-Reconciliaton.sql
+The load order for the files is documented in sql/modules/LOADORDER
 
 Note that the Roles.sql is special and must be preprocessed to get it to work.
 A command like:
@@ -35,6 +17,3 @@ installing into.
 Also Roles.sql MUST be run last because portions of it depend on function 
 declarations in the other scripts.
 
-The following files are not ready to be loaded:
-
-security.sql
