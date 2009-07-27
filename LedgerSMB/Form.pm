@@ -896,7 +896,8 @@ sub get_my_emp_num {
     # we got a connection, check the version
     my $query = qq|
 		SELECT employeenumber FROM employee 
-		 WHERE login = ?|;
+		 WHERE entity_id = 
+			(select entity_id from users where login = ?)|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $self->{login} ) || $self->dberror($query);
 

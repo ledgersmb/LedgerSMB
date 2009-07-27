@@ -138,7 +138,7 @@ sub jcitems_links {
         my $sth = $dbh->prepare($query);
         $sth->execute( $form->{project_id} );
 
-        ($parts_id, $form->{customer_id} ) = $sth->fetchrow_array ;
+        ($parts_id, $form->{credit_id} ) = $sth->fetchrow_array ;
         if ( $parts_id ) {
             $form->{project} = 'job';
             $query = qq|
@@ -226,9 +226,9 @@ sub jcparts {
     my ( $null, $project_id ) = split /--/, $form->{projectnumber};
     $project_id = $dbh->quote($project_id);
 
-    my $query = qq|SELECT customer_id FROM project WHERE id = $project_id|;
-    my ($customer_id) = $dbh->selectrow_array($query);
-    $customer_id = $dbh->quote($customer_id);
+    my $query = qq|SELECT credit_id FROM project WHERE id = $project_id|;
+    my ($credit_id) = $dbh->selectrow_array($query);
+    $credit_id = $dbh->quote($credit_id);
 
     my $where;
 
