@@ -151,6 +151,7 @@ BEGIN
 	WHERE ac.chart_id = in_account_id 
 		AND ac.transdate > coalesce(cp.end_date, ac.transdate - '1 day'::interval)
 		and ac.approved and a.approved
+		and ac.transdate <= in_transdate
 	GROUP BY cp.amount, ac.chart_id;
 
 	RETURN balance;

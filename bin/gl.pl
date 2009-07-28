@@ -498,7 +498,7 @@ sub generate_report {
     );
     my @options;
     if ($form->{chart_accno}){
-        $form->{title} = $locale->text('General Ledger: [_1]', $form->{chart_accno});
+        $form->{title} = $locale->text('General Ledger: [_1] [_2]', $form->{chart_accno}, $form->{chart_description});
     } else {
         $form->{title} = $locale->text('General Ledger');
     }

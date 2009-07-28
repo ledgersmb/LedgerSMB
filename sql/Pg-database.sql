@@ -878,37 +878,11 @@ VALUES
 -- notes are from entity_note
 -- ssn, iban and bic are from entity_credit_account
 -- 
--- The view below is broken.  Disabling for now.
 CREATE VIEW employee AS
  SELECT s.salutation, p.first_name, p.last_name, ee.entity_id, ee.startdate, ee.enddate, ee."role", ee.ssn, ee.sales, ee.manager_id, ee.employeenumber, ee.dob
    FROM person p
    JOIN entity_employee ee USING (entity_id)
    LEFT JOIN salutation s ON p.salutation_id = s.id;
-
-/*
-create view employee as
-    SELECT 
-        ente.entity_id,
-        3,
-        u.username,
-        ente.startdate,
-        ente.enddate,
-        en.note,
-        ente.ssn,
-        eca.iban,
-        eca.bic,
-        ente.manager_id,
-        ente.employeenumber,
-        ente.dob
-    FROM
-        entity_employee ente
-    JOIN 
-        entity_credit_account eca on (eca.entity_id = ente.entity_id)
-    JOIN
-        entity_note en on (en.entity_id = ente.entity_id)
-    JOIN
-        users u on (u.entity_id = ente.entity_id);
-*/
 
 
 CREATE VIEW customer AS 
