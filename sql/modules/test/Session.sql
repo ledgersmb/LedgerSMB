@@ -1,5 +1,6 @@
 BEGIN;
 \i Base.sql
+\i data/Reconciliation.sql
 
 INSERT INTO test_result (test_name, success)
 values ('timeout set', 
