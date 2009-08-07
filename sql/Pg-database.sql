@@ -632,7 +632,8 @@ CREATE TABLE entity_credit_account (
     cash_account_id int references account(id),
     bank_account int references entity_bank_account(id),
     taxform_id int references country_tax_form(id),
-    PRIMARY KEY(entity_id, meta_number, entity_class)
+    PRIMARY KEY(entity_id, meta_number, entity_class),
+    CHECK (ar_ap_account_id IS NOT NULL OR entity_id = 0)
 );
 
 CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u 
@@ -658,7 +659,7 @@ CREATE TABLE eca_to_location (
   location_class integer not null references location_class(id),
   credit_id integer not null references entity_credit_account(id) 
 	ON DELETE CASCADE,
-  PRIMARY KEY(location_id,credit_id));
+  PRIMARY KEY(location_id,credit_id, location_class));
 
 CREATE UNIQUE INDEX eca_to_location_billing_u ON eca_to_location(credit_id)
 	WHERE location_class = 1;
@@ -861,18 +862,18 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 --
 
 -- THe following credit accounts are used for inventory adjustments.
-INSERT INTO entity (name, entity_class, control_code,country_id) 
-values ('Inventory Entity', 1, 'AUTO-01','232');
+INSERT INTO entity (id, name, entity_class, control_code,country_id) 
+values (0, 'Inventory Entity', 1, 'AUTO-01','232');
 
 INSERT INTO company (legal_name, entity_id) 
-values ('Inventory Entity', currval('entity_id_seq'));
+values ('Inventory Entity', 0);
 
 INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
 VALUES 
-(currval('entity_id_seq'), '00000', 1);
+(0, '00000', 1);
 INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
 VALUES 
-(currval('entity_id_seq'), '00000', 2);
+(0, '00000', 2);
 
 
 -- notes are from entity_note

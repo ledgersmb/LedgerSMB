@@ -37,7 +37,6 @@ CREATE TABLE cr_report_line (
     voucher_id int REFERENCES voucher(id),
     overlook boolean not null default 'f',
     cleared boolean not null default 'f',
-    check (ledger_id is not null or voucher_id is not null)
 );
 
 CREATE TABLE cr_coa_to_account (
