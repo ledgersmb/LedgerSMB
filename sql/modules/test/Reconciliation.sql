@@ -2,7 +2,8 @@ BEGIN;
 \i Base.sql
 \i data/Reconciliation.sql
 
-INSERT INTO entity (id, control_code, name, entity_class) values (-50, 'Test User', 'Test User', 3);
+
+INSERT INTO entity (id, control_code, name, entity_class, country_id) values (-50, 'Test User', 'Test User', 3, 242);
 INSERT INTO person (id, entity_id, first_name, last_name) values (-50, -50, 'Test', 'Usr');
 
 INSERT INTO users (id, entity_id, username) values (-50, -50, SESSION_USER);

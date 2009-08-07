@@ -3,10 +3,10 @@ BEGIN;
 INSERT INTO entity (id, entity_class, name, country_id)
 VALUES (-1000, 1, '__TEST', 243);
 
-INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id)
-VALUES (-1000, '_testv', 1, -1000); 
-INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id)
-VALUES (-1001, '_testc', 2, -1000); 
+INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id)
+VALUES (-1000, '_testv', 1, -1000, -1000); 
+INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id)
+VALUES (-1001, '_testc', 2, -1000, -1000); 
 SELECT account_save(NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, '{}');
 SELECT account_save(NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, '{}');
 INSERT INTO ap (invnumber, entity_credit_account, amount, netamount, paid, 

@@ -5,10 +5,10 @@ INSERT INTO test_result (test_name, success)
 SELECT 'Batch Created', 
 	batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
 
-INSERT INTO entity (id, name, entity_class, control_code) 
-values (-3, 'Test', 1, 'test');
-INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class) 
-values (-3, -1, 'Test', 1);
+INSERT INTO entity (id, name, entity_class, control_code, country_id) 
+values (-3, 'Test', 1, 'test', 242);
+INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) 
+values (-3, -1, 'Test', 1, -1000);
 
 INSERT INTO entity_employee(entity_id) values (-3);
 

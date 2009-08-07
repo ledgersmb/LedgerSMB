@@ -5,8 +5,8 @@ INSERT INTO test_result (test_name, success)
 values ('timeout set', 
 (select count(*) from defaults where setting_key = 'timeout') = 1);
 
-INSERT INTO entity (name, entity_class, control_code)
-VALUES ('Testing.....', 3, '_TESTING.....');
+INSERT INTO entity (name, entity_class, control_code, country_id)
+VALUES ('Testing.....', 3, '_TESTING.....',242);
 
 INSERT INTO users (entity_id, username)
 SELECT currval('entity_id_seq'), CURRENT_USER;

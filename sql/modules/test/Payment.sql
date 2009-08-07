@@ -1,16 +1,16 @@
 BEGIN;
 \i Base.sql
 
-INSERT INTO entity (id, name, entity_class, control_code)
-VALUES (-100, 'Testing.....', 3, '_TESTING.....');
+INSERT INTO entity (id, name, entity_class, control_code, country_id)
+VALUES (-100, 'Testing.....', 3, '_TESTING.....', 242);
 
 DELETE FROM users WHERE username = CURRENT_USER;
 
 INSERT INTO users (entity_id, username)
 SELECT -100, CURRENT_USER;
 
-INSERT INTO entity(name, id, entity_class, control_code)
-values ('test user 1', -200, 3, 'Test User 1');
+INSERT INTO entity(name, id, entity_class, control_code, country_id)
+values ('test user 1', -200, 3, 'Test User 1', 242);
 
 insert into users (entity_id, username, id)
 values (-200, '_test1', -200);
@@ -37,8 +37,8 @@ values (currval('users_id_seq'),  now(), md5('test2'), 2);
 INSERT INTO test_result(test_name, success)
 SELECT 'AP Batch created', (SELECT batch_create('test', 'test', 'ap', now()::date)) IS NOT NULL;
 
-INSERT INTO entity (id, entity_class, name, control_code)
-VALUES (-101, 1, 'TEST VENDOR', 'TEST 2');
+INSERT INTO entity (id, entity_class, name, control_code, country_id)
+VALUES (-101, 1, 'TEST VENDOR', 'TEST 2', 242);
 
 INSERT INTO company (id, legal_name, entity_id)
 VALUES (-101, 'TEST', -101);
@@ -46,8 +46,8 @@ VALUES (-101, 'TEST', -101);
 INSERT INTO business (id, description)
 values (-101, 'test');
 
-INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id)
-values (-101, 'TEST1', 100000, -101, 1, -101); 
+INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id)
+values (-101, 'TEST1', 100000, -101, 1, -101, -1000); 
 
 INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr)
 values ('test_hide', -101, false, '1', '1', 'USD');
