@@ -4,7 +4,7 @@
 
 package LedgerSMB::Initiate;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Auth::DB;
+use LedgerSMB::Auth;
 use LedgerSMB::Locale;
 use Data::Dumper;
 use DBI;
@@ -73,26 +73,27 @@ sub getdbh
 
  if($form->{initiateon}==1)
  {
-   $database = $form->{company};
-   $host=$form->{host};
-   $port=$form->{port};
+   $ENV{PGDATABASE} = $form->{company};
+   $ENV{PGHOST}=$form->{host};
+   $ENV{PGPORT}=$form->{port};
    $username=$form->{username};
    $password=$form->{password};
+   $ENV{PGUSER} = $form->{username};
+   $ENV{PGPASSWORD} = $form->{password};
  }
  else
  {
 
-    $database=$form->{database};
-    $host=$form->{dbhost};
-    $port=$form->{dbport};
+    $ENV{PGDATABASE}=$form->{database};
+    $ENV{PGHOST}=$form->{dbhost};
+    $ENV{PGPORT}=$form->{dbport};
     $username=$form->{username};
     $password=$form->{password};
 
  }
   
 
-   my $dbconnect = "dbi:Pg:dbname=$database host=$host
-		port=$port user=$username password=$password";    # for easier debugging
+   my $dbconnect = "dbi:Pg:user=$username password=$password";    # for easier debugging
 
    my $dbh = DBI->connect($dbconnect) or return "no999";
 
@@ -137,7 +138,7 @@ sub get_countrys
        $dir =~s/\/[\w\d\.]*$/\/sql\/coa\//;   # 2nd way is store path of coa in sysconfig file
 
 
-	my @dir=LedgerSMB::Initiate->read_directory($form,$dir);
+	my @dir= sort LedgerSMB::Initiate->read_directory($form,$dir);
 
         my @allcodes = grep !/\.+/,@dir;
 
@@ -184,27 +185,6 @@ sub validateform
     $form->{dbhost}=~s/ //g;
 
    
-
-    $form->error( __FILE__ . ':' . __LINE__ . ': '
-          . $locale->text('Database Host Missing!') )
-
-      unless $form->{dbhost};
-
-    $form->{dbport}=~s/ //g;
-    $form->error( __FILE__ . ':' . __LINE__ . ': '
-          . $locale->text('Database Port Number Missing!') )
-      unless $form->{dbport};
-   
-
-   
-    $invalid=($form->{dbport}=~m/^\d{4}$/);
-
-   
-    $form->error( __FILE__ . ':' . __LINE__ . ': '
-          . $locale->text('Invalid Database Port Number!') )
-      unless $invalid;
-
-
 
     $form->{contribpath}=~s/ //g;
 
@@ -276,7 +256,6 @@ sub save_database
 
 		# Now all the files are found now start execution process(Stages)
 
-
 		#Stage 1 -   Create the databse $form->{database}
 
 		LedgerSMB::Initiate->create_database($form,$form->{dbh},$form->{database},$form->{username}); 
@@ -291,10 +270,6 @@ sub save_database
 
 		#Stage -  Wind up completed the task
 
-		$form->error( __FILE__ . ':' . __LINE__ . ': '
-				  . $locale->text("under construction database/language created successfully"));
-
-		exit;
 
 						
 
@@ -324,7 +299,7 @@ sub run_db_file
 	
 	my $newdbh=$form->{newdbh};
 
-         system("");
+         system("psql < $dbfile");
 }
 
 
@@ -410,6 +385,9 @@ sub check_contrib_valid_exist
 	#Check contrib files exist at particular directory else through an error
 
 	$dir = $form->{contribpath};
+        if ($dir !~ /\/$/){
+		$dir = "$dir/";
+	}
 
         $locale=$form->{locale};
  
@@ -499,7 +477,7 @@ sub check_sql_modules_valid_exist
 	open(ORD, '<', $dir . "LOADORDER");
 	while (my $line = <ORD>){
 		$line =~ s/\#.*$//; # ignore comments
-		next if $line ~= /^\s*$/;
+		next if $line =~ /^\s*$/;
 		$line =~ s/^\s*//;
 		$line =~ s/\s*$//;
 		push @dest, $dir.$line;

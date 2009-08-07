@@ -3,7 +3,7 @@ use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Initiate;
-use LedgerSMB::Auth::DB;
+use LedgerSMB::Auth;
 
 #use LedgerSMB::Session;
 
@@ -70,9 +70,9 @@ else {
 sub check_password {
 
 
-	my $auth_temp=LedgerSMB::Auth::DB->get_credentials();
+	my $auth_temp=LedgerSMB::Auth->get_credentials();
 
-        LedgerSMB::Auth::DB->credential_prompt unless($auth_temp);
+        LedgerSMB::Auth->credential_prompt unless($auth_temp);
 
         $form->{'login'}=$auth_temp->{'login'};
 
@@ -87,7 +87,7 @@ sub check_password {
 	$form->{dbh}=$root->getdbh($form);   # get the connection if user exist as superuser
 
 	if ( lc($form->{dbh}) eq "no999" or !$root->checksuperuser($form)) {
-            LedgerSMB::Auth::DB->credential_prompt;
+            LedgerSMB::Auth->credential_prompt;
             exit;
         }
     
@@ -166,7 +166,7 @@ sub logout {
    
    #$form->redirect( $locale->text('successfully logged Out') );
    
-   LedgerSMB::Auth::DB->credential_prompt;
+   LedgerSMB::Auth->credential_prompt;
 
 }
 
