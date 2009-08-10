@@ -1,9 +1,9 @@
 
-CREATE OR REPLACE FUNCTION payment_type__list() RETURNS SETOF payment_types AS
+CREATE OR REPLACE FUNCTION payment_type__list() RETURNS SETOF payment_type AS
 $$
-DECLARE out_row payment_types%ROWTYPE;
+DECLARE out_row payment_type%ROWTYPE;
 BEGIN
-	FOR out_row IN SELECT * FROM payment_types LOOP
+	FOR out_row IN SELECT * FROM payment_type LOOP
 		RETURN NEXT out_row;
 	END LOOP;
 END;
@@ -17,11 +17,11 @@ CREATE TYPE payment_vc_info AS (
 	meta_number character varying(32)
 );
 
-CREATE OR REPLACE FUNCTION payment_type__get_label(in_payment_type_id int) RETURNS SETOF payment_types AS
+CREATE OR REPLACE FUNCTION payment_type__get_label(in_payment_type_id int) RETURNS SETOF payment_type AS
 $$
-DECLARE out_row payment_types%ROWTYPE;
+DECLARE out_row payment_type%ROWTYPE;
 BEGIN
-	FOR out_row IN SELECT * FROM payment_types where id=in_payment_type_id LOOP
+	FOR out_row IN SELECT * FROM payment_type where id=in_payment_type_id LOOP
 		RETURN NEXT out_row;
 	END LOOP;
 END;

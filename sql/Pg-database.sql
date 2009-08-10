@@ -760,6 +760,7 @@ paynumber|1
 separate_duties|1
 entity_control|A-00001
 batch_cc|B-11111
+check_prefix|CK
 \.
 
 COMMENT ON TABLE defaults IS $$

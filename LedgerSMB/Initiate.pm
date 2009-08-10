@@ -177,11 +177,6 @@ sub validateform
       unless $form->{database};
 
      
-    $form->error( __FILE__ . ':' . __LINE__ . ': '
-          . $locale->text('Database Driver Missing!') )
-      unless $form->{driver};
-
-    
     $form->{dbhost}=~s/ //g;
 
    
@@ -226,55 +221,77 @@ sub validateform
         }
     }
 
-
-
-
 }
 
 
 sub save_database
 {
 
-		my($self,$form)=@_;
+	my($self,$form)=@_;
+	# check all files exist and valids (contrib files , pgdabase.sql and modules and chart accounts etc)
 
-		# check all files exist and valids (contrib files , pgdabase.sql and modules and chart accounts etc)
+	my @contrib=LedgerSMB::Initiate->check_contrib_valid_exist($form);   #check contrib files
 
-		my @contrib=LedgerSMB::Initiate->check_contrib_valid_exist($form);   #check contrib files
+	my @postsql=LedgerSMB::Initiate->check_Pg_database_valid_exist($form); #check sql/Pg-databse.sql files
 
-		my @postsql=LedgerSMB::Initiate->check_Pg_database_valid_exist($form); #check sql/Pg-databse.sql files
+	my @sqlmodules=LedgerSMB::Initiate->check_sql_modules_valid_exist($form);  #check sql/modules/readme file content exist or not
 
-		my @sqlmodules=LedgerSMB::Initiate->check_sql_modules_valid_exist($form);  #check sql/modules/readme file content exist or not
+	my @chartgififiles=LedgerSMB::Initiate->merge_chart_gifi_valid_exist($form);   # check sql/coa/charts and sql/coa/gifi files
 
-		my @chartgififiles=LedgerSMB::Initiate->merge_chart_gifi_valid_exist($form);   # check sql/coa/charts and sql/coa/gifi files
-
-		my @totalexecutable_files;
-
-		push(@totalexecutable_files,@contrib);
-		push(@totalexecutable_files,@postsql);
-		push(@totalexecutable_files,@sqlmodules);
-		push(@totalexecutable_files,@chartgififiles);
+	my @totalexecutable_files;
+	push(@totalexecutable_files,@contrib);
+	push(@totalexecutable_files,@postsql);
+	push(@totalexecutable_files,@sqlmodules);
+	push(@totalexecutable_files,@chartgififiles);
 
 		# Now all the files are found now start execution process(Stages)
 
 		#Stage 1 -   Create the databse $form->{database}
 
-		LedgerSMB::Initiate->create_database($form,$form->{dbh},$form->{database},$form->{username}); 
+	LedgerSMB::Initiate->create_database($form,$form->{dbh},$form->{database},$form->{username}); 
 		
 		#Stage 2 -  CReate the language plpgsql
 	
-		$form->{newdbh}=LedgerSMB::Initiate->handle_create_language($form);
+	$form->{newdbh}=LedgerSMB::Initiate->handle_create_language($form);
 		
 		#stage 3 -  Execute series of files which are located in array @totalexecutable_files in the database $form->{newdbh}
 
-		LedgerSMB::Initiate->run_all_sql_scripts($form,\@totalexecutable_files);
+	LedgerSMB::Initiate->run_all_sql_scripts($form,\@totalexecutable_files);
 
 		#Stage -  Wind up completed the task
-
-
-						
-
+	process_roles($form);
 }
 
+sub process_roles {
+	my ($form) = @_;
+	print STDERR "loading roles............\n";
+	LedgerSMB::Initiate->getdbh($form);
+	open (PSQL, '|-', 'psql') || $form->error($locale->text("Couldn't open psql"));
+	my $company = $form->{company};
+
+	open (ROLEFILE, '<', 'sql/modules/Roles.sql') || $form->error($locale->text("Couldn't open Roles.sql"));
+
+	while ($roleline = <ROLEFILE>){
+		$roleline =~ s/<\?lsmb dbname \?>/$company/;
+		print PSQL $roleline;
+	}
+	#create admin user 
+	my $query;
+	if ($form->{createuser}){
+		$query = qq| create user | . 
+			$form->{newdbh}->quote_identifier($form->{admin_username}) .
+			qq| WITH PASSWORD | .
+			$form->{newdbh}->quote($form->{admin_password}) .
+			qq| IN ROLE | .
+			$form->{newdbh}->quote_identifier("lsmb_${company}__users_manage");
+	} else {
+		$query = "GRANT " .
+			$form->{newdbh}->quote_identifier("lsmb_${company}__users_manage")  . 
+			" TO " .
+			$form->{newdbh}->quote_identifier($form->{admin_username});
+	}
+	print PSQL $query;
+}
 
 sub run_all_sql_scripts
 {
@@ -283,6 +300,7 @@ sub run_all_sql_scripts
 
 	foreach $dbfile(@$totalexcfiles)
 	{
+		print STDERR "Loading $dbfile\n";
 
 		LedgerSMB::Initiate->run_db_file($form,$dbfile);
 
@@ -296,10 +314,7 @@ sub run_db_file
 {
 
  	my($self,$form,$dbfile)=@_;
-	
-	my $newdbh=$form->{newdbh};
-
-         system("psql < $dbfile");
+	system("psql < $dbfile");
 }
 
 
@@ -460,7 +475,7 @@ sub check_sql_modules_valid_exist
 	my ($self,$form)=@_;
 
 	$locale=$form->{locale};
-        
+       	my @dest; 
 	my $dir=$ENV{SCRIPT_FILENAME};
 
 	my $dir = "sql/modules/";
@@ -485,7 +500,6 @@ sub check_sql_modules_valid_exist
 	
 	
 	
-	
 	return(@dest);
 	
 	
@@ -497,6 +511,8 @@ sub merge_chart_gifi_valid_exist
 {
 
 	my ($self,$form)=@_;
+	my $coa = $form->{coa} || 'General';
+	$coa = "$coa.sql" unless $coa =~ /\.sql$/;
         
 	$locale=$form->{locale};
 
@@ -509,39 +525,19 @@ sub merge_chart_gifi_valid_exist
 	my $chartdir=$dir."chart/";
 	
 	my $gifidir=$dir."gifi/";
-
-
-	my @chartdir=LedgerSMB::Initiate->read_directory($form,$chartdir);
-
-	@chartdir=grep /\.sql$/,@chartdir;
-	
-
-
-	my @gifidir;
-
-	if($form->{gifiaccount}==2)
-	{
-	    @gifidir=LedgerSMB::Initiate->read_directory($form,$gifidir);
-	    @gifidir=grep /\.sql$/,@gifidir;
-	   	
-        }   
-
+	@chartdir = LedgerSMB::Initiate->read_directory($form, $chartdir);
 
         my @dest;	
 
         my $i;
-
 	for($i=0;$i<=$#chartdir;$i++)
 	{
-	  
-		$dest[$i]=$chartdir.$chartdir[$i];
-	
+		$dest[$i]=$chartdir.$chartdir[$i] if $chartdir[$i] = $coa;
 	}
-
 	for(my $j=0;$j<=$#gifidir;$j++,$i++)
 	{
 	  
-		$dest[$i]=$gifidir.$gifidir[$j];
+		$dest[$i]=$chartdir.$gifidir[$i] if $gifidir[$i] = $coa;
 	
 	}
 

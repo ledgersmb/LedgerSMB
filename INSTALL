@@ -31,7 +31,7 @@ All commands from this point forward are executed from a working directory of
 /path/to/ledgersmb13 unless otherwise noted.
 
 
-Automating Installation
+Automated Installation
 -----------------------
 
 You can extract the commands in this document with:  $ grep -e '^\$' INSTALL
@@ -39,6 +39,7 @@ You can extract the commands in this document with:  $ grep -e '^\$' INSTALL
 This provides a decent approximation of what would be required for a scripted
 install as of this writing.
 
+Also some portions of the installation are also fairly automated already.
 
 Apache Configuration
 ====================
@@ -200,6 +201,14 @@ properly modify the typical default pg_hba.conf etc., such that LedgerSMB 1.3
 works, but without opening up the database to unneccessary network access.
 
 
+Automated PostgreSQL Database Setup
+===================================
+Point your browser to http://[yourhost]/path/to/ledgersmb/initiate.pl
+
+You will see an HTTP authentication prompt.  Enter credentials for the database 
+superuser (for example "postgres" user).  Then follow the prompts and fill in 
+the information.
+
 Installing PostgreSQL Contrib Function Libraries (Not Optional)
 ===============================================================
 
@@ -241,17 +250,6 @@ Create test functions for user to verify proper contrib library
 loading. Instruct the user how to run them.
 
 
-Configure a LedgerSMB PostgreSQL role
-=====================================
-
-Create the ledgersmb PostgreSQL role (optional):
-
-$ createuser --no-superuser --createdb --no-createrole -U postgres --pwprompt --encrypted ledgersmb
-
-
-Make a note of the password you enter, we'll refer to it as LSMB_PASSWORD.
-
-
 Configure a LedgerSMB Company Database
 ======================================
 
@@ -273,39 +271,12 @@ $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/Pg-database.sql
 
 
 Apply the in-development SQL statements in the files /path/to/ledgersmb13/sql/modules/ to
-the company database, in exactly the following order:
+the company database, in exactly the order specified in sql/modules/LOADORDER:
 
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Drafts.sql
 $ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/chart.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Account.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Session.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Business_type.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Location.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Company.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Customer.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Date.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Defaults.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Settings.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Employee.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Entity.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Payment.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Person.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Report.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Voucher.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Reconciliation.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Inventory.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Vendor.sql
 
-Note: The above files are manageable sections of the LedgerSMB database logic in
-active development for LedgerSMB-1.3. Later in the release cycle, their contents
-will move to the main Pg-database.sql.
-
-At the time of this writing, the following files are in an earlier state of
-development and not ready to be loaded as part of this INSTALL:
-
-admin.sql
-security.sql
-
+etc.
 
 Load a template Chart of Accounts
 ---------------------------------

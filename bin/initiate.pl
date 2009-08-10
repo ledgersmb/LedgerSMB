@@ -141,10 +141,6 @@ sub prepare_initiate {
 		<button type="submit" class="submit" name="action" value="initiate_database">|
       . $locale->text('Initiate Database')
       . qq|</button>
-		<button type="submit" class="submit" name="action" value="view_database">|
-      . $locale->text('View Initialized Databases')
-      . qq|</button>
-
 		<button type="submit" class="submit" name="action" value="logout">|
       . $locale->text('Logout')
       . qq|</button>
@@ -260,10 +256,6 @@ print qq|
 						<td><input name="database" value="$myconfig->{database}" /></td>
 					</tr>
 					<tr>
-						<th align="right">| . $locale->text('Driver - Pg') . qq|</th>
-						<td><input name="driver" class="checkbox" type="checkbox" value="1">$myconfig->{driver}</td>
-					</tr>
-					<tr>
 						<th align="right">| . $locale->text('Host') . qq|</th>
 						<td><input name="dbhost" value="$myconfig->{host}" /></td>
 					</tr>
@@ -318,8 +310,19 @@ print  qq|					</th>
 						<th align="right">| . $locale->text('Gifi Account') . qq|</th>
 						<td><input name="gifiaccount" class="checkbox" type="checkbox" value="2">$myconfig->{gifiaccount}</td>
 					</tr>
-
-
+					<tr><th align="right">|. $locale->text('Chart Name') .qq|</th>
+						<td><input name="coa" type="text" size="32"></td>
+				</table>
+					<tr class="listheading">
+						<th colspan="2">|.
+						$locale->text('Admin User').
+						qq|</th></tr><table>
+					<tr> <th aligh="right">|.$locale->text('Admin User') . qq| </th>
+						<td><input name="admin_username" type="text" size="32" /></td>
+					</tr>
+					<tr> <td colspan="2"> | . $locale->text('Create database user') . qq| <input name="createuser" class="checkbox" type="checkbox" value="1"></tr>
+					<tr> <th align="right"> | . $locale->text('Password') . qq| </th>
+						<td><input name="admin_password" type="password" size="32"></td>
 				</table>
 			</td>
 		</tr>
@@ -339,13 +342,14 @@ print  qq|					</th>
 sub save {
 
     $form->{callback} = "initiate.pl?action=login";
+    $form->header;
+    print "<pre>";
 
     LedgerSMB::Initiate->validateform($form,$locale);
 
     LedgerSMB::Initiate->save_database($form);
-
+    print "</pre>";
     # create user template directory and copy master files
    
-    #$form->redirect( $locale->text('User saved!') );
 }
 
