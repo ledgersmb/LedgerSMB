@@ -318,6 +318,17 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		value = account_class
 	} ?>	
         <table>
+	<tr class="pay_to_row">
+	<td colspan = "2">
+	<?lsmb PROCESS input element_data = {
+		label = text('Pay To') #'
+		type = "text"
+		sixe = "50"
+		name = "pay_to_name"
+		value = pay_to_name
+		class = "name"
+	} ?>
+	</td>
 	<tr class="eca_row">
 	<td>
  	<?lsmb PROCESS input element_data = {

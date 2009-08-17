@@ -309,7 +309,8 @@ $$
 DECLARE out_var company_billing_info;
 	t_id INT;
 BEGIN
-	select c.legal_name, eca.meta_number, e.control_code, c.tax_id, a.line_one, a.line_two, a.line_three, 
+	select coalesce(eca.pay_to_name, c.legal_name), eca.meta_number, 
+		e.control_code, c.tax_id, a.line_one, a.line_two, a.line_three, 
 		a.city, a.state, a.mail_code, cc.name
 	into out_var
 	FROM company c
@@ -382,6 +383,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     in_threshold NUMERIC,
     in_ar_ap_account_id int,
     in_cash_account_id int,
+    in_pay_to_name text,
     in_taxform_id int
     
 ) returns INT as $$
@@ -420,6 +422,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 enddate = in_enddate,
                 threshold = in_threshold,
 		discount_terms = in_discount_terms,
+		pay_to_name = in_pay_to_name,
 		taxform_id = in_taxform_id
             where id = in_credit_id;
         

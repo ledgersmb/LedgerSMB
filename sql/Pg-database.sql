@@ -609,6 +609,7 @@ CREATE TABLE entity_credit_account (
     id serial not null unique,
     entity_id int not null references entity(id) ON DELETE CASCADE,
     entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
+    pay_to_name text,
     discount numeric, 
     description text,
     discount_terms int default 0,
