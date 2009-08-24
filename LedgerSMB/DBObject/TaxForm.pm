@@ -14,8 +14,16 @@ sub save
     $self->{taxform_id} = $ref->{'tax_form__save'};
   
     $self->{dbh}->commit();
+}
 
+sub get_forms
+{
+    my ($self) = @_;
     
+    @{$self->{forms}} = $self->exec_method(
+                funcname => 'list_taxforms',
+                args => ['1'] # lx: Inquire as to the use of this argument in this sp; currently doesn't add up in the SQL for the SP.
+    );
 }
 
 sub get_metadata
@@ -30,8 +38,4 @@ sub get_metadata
     $self->{default_country} = $ref->{setting_get};
 }
 
-1;
-   
-
-    
 1;

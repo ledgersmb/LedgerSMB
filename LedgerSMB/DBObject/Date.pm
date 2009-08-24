@@ -40,9 +40,20 @@ so you just pass the hash to the template system. :)
 sub build_filter_by_period {
     my ($self, $locale) = @_; 
     my @all_years = $self->call_procedure(procname => 'date_get_all_years');
+    
+    for my $day (1 .. 31) {
+      push@{$self->{daysOptions}} , { value => $day, text => $day }
+    }
+    
     for my $ref (0 .. $#all_years) {
+      if ($all_years[$ref]{year})
+      {
         push @{$self->{yearsOptions}} , { value => $all_years[$ref]{year},
                                           text  => $all_years[$ref]{year}}
+      } else {
+        push @{$self->{yearsOptions}} , { value => $all_years[$ref]{date_get_all_years},
+                                          text  => $all_years[$ref]{date_get_all_years}}
+      }
     }
     @{$self->{monthsOptions}} = (
           { value => '01', text => $locale->text('January')},
