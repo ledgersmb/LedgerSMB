@@ -95,6 +95,7 @@ sub pos_adjust {
 sub edit_and_approve {
     use LedgerSMB::DBObject::Draft;
     use LedgerSMB;
+    check_balanced($form);
     my $lsmb = LedgerSMB->new();
     $lsmb->merge($form);
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
@@ -1100,6 +1101,25 @@ sub post {
         $locale->text('Cannot post transaction for a closed period!') )
       if ( $transdate <= $closedto );
 
+    check_balanced($form);
+    if ( !$form->{repost} ) {
+        if ( $form->{id} ) {
+            &repost;
+            exit;
+        }
+    }
+
+    if ( GL->post_transaction( \%myconfig, \%$form ) ) {
+        $form->redirect( $locale->text('Transaction posted!') );
+    }
+    else {
+        $form->error( $locale->text('Cannot post transaction!') );
+    }
+
+}
+
+sub check_balanced {
+    my ($form) = @_;
     # add up debits and credits
     for $i ( 0 .. $form->{rowcount} ) {
         $dr = $form->parse_amount( \%myconfig, $form->{"debit_$i"} );
@@ -1120,20 +1140,5 @@ sub post {
     {
         $form->error( $locale->text('Out of balance transaction!') );
     }
-
-    if ( !$form->{repost} ) {
-        if ( $form->{id} ) {
-            &repost;
-            exit;
-        }
-    }
-
-    if ( GL->post_transaction( \%myconfig, \%$form ) ) {
-        $form->redirect( $locale->text('Transaction posted!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot post transaction!') );
-    }
-
 }
 
