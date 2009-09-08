@@ -896,7 +896,7 @@ sub edit {
     {
          $form->{department}=$form->{departmentdesc}."--".$form->{department_id};
     }
-    $i = 1;
+    $i = 0;
     foreach $ref ( @{ $form->{GL} } ) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
         $form->{"projectnumber_$i"} = "$ref->{projectnumber}--$ref->{project_id}";
