@@ -399,7 +399,7 @@ sub list_batches_batch_approve {
     batch_approve(@_);
 }
 
-sub get_batch__batch_approve {
+sub get_batch_batch_approve {
     batch_approve(@_);
 }
 
