@@ -400,7 +400,10 @@ sub list_batches_batch_approve {
 }
 
 sub get_batch_batch_approve {
-    batch_approve(@_);
+    my ($request) = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    $batch->post;
+    search_batch($request);
 }
 
 sub get_batch_voucher_delete {
