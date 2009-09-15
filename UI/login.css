@@ -43,6 +43,10 @@ img.logo {
     height: 8em;
 }
 
+input {
+    width: 16em;
+}
+
 button {
     margin-top: 10px;
 }
