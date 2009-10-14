@@ -84,10 +84,10 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 sub _calc_taxes {
     for $i (1 .. $form->{rowcount}){
         my $linetotal = 
-             $form->parse_amount(\%myconfig, $form->{"sellprice_$i"}) 
-             * $form->parse_amount(\%myconfig, $form->{"qty_$i"}) 
+             $form->round_amount($form->parse_amount(\%myconfig, $form->{"sellprice_$i"}) 
              * (1 - $form->parse_amount(\%myconfig, $form->{"discount_$i"})
-                    / 100);
+                    / 100), 2)
+             * $form->parse_amount(\%myconfig, $form->{"qty_$i"});
         $linetotal = $form->round_amount($linetotal, 2); 
         @taxaccounts = Tax::init_taxes(
             $form, $form->{"taxaccounts_$i"},
