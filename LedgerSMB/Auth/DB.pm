@@ -243,6 +243,8 @@ sub http_error {
 sub session_destroy {
 
     my ($form) = @_;
+    my $path = ($ENV{SCRIPT_NAME});
+    $path =~ s|[^/]*$||;
 
     my $login = $form->{login};
     $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
@@ -260,7 +262,7 @@ sub session_destroy {
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
     #delete the cookie in the browser
-    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=/;\n|;
+    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;\n|;
 
 }
 

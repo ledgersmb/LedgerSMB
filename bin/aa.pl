@@ -959,6 +959,8 @@ sub form_footer {
 
             'save_info' => 
               { ndx => 9, key => 'I', value => $locale->text('Save Info') },
+            'save_temp' =>
+              { ndx => 10, key => 'T', value => $locale->text('Save Template')},
         );
         if (!$form->{approved} && !$form->{batch_id}){
            $button{approve} = { 
@@ -1026,6 +1028,21 @@ sub form_footer {
 </body>
 </html>
 |;
+}
+
+sub save_temp {
+    use LedgerSMB;
+    use LedgerSMB::DBObject::TransTemplate;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->{is_invoice} = 1;
+    if ($form->{arap} eq 'ar'){
+        $lsmb->{entity_class} = 2;
+    } else {
+        $lsmb->{entity_class} = 1;
+    }
+    $template = LedgerSMB::DBObject::TransTemplate->new(base => $lsmb);
+    $template->save;
+    $form->redirect( $locale->text('Template Saved!') );
 }
 
 sub edit_and_approve {
