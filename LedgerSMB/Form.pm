@@ -70,9 +70,11 @@ sub new {
         $_ = $ARGV[0];
     }
 
-    my $self = {};
-    %$self = split /[&=]/;
-    for ( keys %$self ) { $self->{$_} = unescape( "", $self->{$_} ) }
+    my $self = {}, $orig = {};
+    %$orig = split /[&=]/;
+    for ( keys %$orig ) { 
+        $self->{unescape( "", $_) } = unescape( "", $orig->{$_} );
+    }
 
     if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
         $self->{action} = lc $self->{action};
