@@ -69,7 +69,7 @@ sub root_doc {
     my $template;
 
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
-	"$request->{login} -- $request->{_user}->{dbname}";
+	"$request->{login} -- $request->{company}";
 
     if ($request->{menubar}){
         drilldown_menu($request);
