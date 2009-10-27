@@ -7,7 +7,7 @@ GRANT SELECT ON entity TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON company TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON location TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON person TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_craccount_edit TO "lsmb_<?lsmb dbname ?>__contact_read";
+GRANT SELECT ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON company_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON company_to_entity TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON company_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
@@ -56,8 +56,8 @@ GRANT INSERT ON location TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT ALL ON location_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON person TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT ALL ON person_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_craccount_edit TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON entity_craccount_edit_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
+GRANT INSERT ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_create";
+GRANT ALL ON entity_credit_account_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON company_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON company_to_entity TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT ALL ON SEQUENCE note_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
@@ -105,7 +105,7 @@ GRANT UPDATE ON entity TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT UPDATE ON company TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT UPDATE ON location TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT UPDATE ON person TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON entity_craccount_edit TO "lsmb_<?lsmb dbname ?>__contact_create";
+GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT UPDATE ON company_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT UPDATE ON company_to_entity TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT UPDATE ON company_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
@@ -689,7 +689,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
 GRANT INSERT ON pricegroup TO "lsmb_<?lsmb dbname ?>__pricegroup_create";
 GRANT ALL ON pricegroup_id_seq TO "lsmb_<?lsmb dbname ?>__pricegroup_create";
-GRANT UPDATE ON entity_craccount_edit TO "lsmb_<?lsmb dbname ?>__pricegroup_create";
+GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__pricegroup_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__pricegroup_create');
@@ -702,7 +702,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
 GRANT UPDATE ON pricegroup TO "lsmb_<?lsmb dbname ?>__pricegroup_edit";
-GRANT UPDATE ON entity_craccount_edit TO "lsmb_<?lsmb dbname ?>__pricegroup_edit";
+GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__pricegroup_edit";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__pricegroup_edit');
@@ -1080,7 +1080,18 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__account_create"
 WITH INHERIT NOLOGIN;
 
 GRANT INSERT ON chart TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT ALL ON chart_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT INSERT ON account TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT ALL ON account_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT INSERT ON account_heading TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT ALL ON acount_heading_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT INSERT ON account_link TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT ALL ON account_link_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+GRANT INSERT ON account_heading TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT ALL ON acount_heading_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT INSERT ON account_link TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT ALL ON account_link_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (128, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
