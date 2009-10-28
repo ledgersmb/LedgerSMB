@@ -247,10 +247,6 @@ sub display_form
 		    { ndx => 7, key => 'H', value => $locale->text('Schedule') },
 		  'delete' =>
 		    { ndx => 8, key => 'D', value => $locale->text('Delete') },
-                  'save_temp' =>
-                    { ndx   => 9, 
-                      key   => 'T', 
-                      value => $locale->text('Save Template') },
 	      );
 
 	      if ($form->{separate_duties}){            
@@ -337,16 +333,6 @@ sub display_form
 
 }
  
-
-sub save_temp {
-    use LedgerSMB;
-    use LedgerSMB::DBObject::TransTemplate;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->{type} = 'gl';
-    $template = LedgerSMB::DBObject::TransTemplate->new(base => $lsmb);
-    $template->save;
-    $form->redirect( $locale->text('Template Saved!') );
-}
 
 
 sub display_row
