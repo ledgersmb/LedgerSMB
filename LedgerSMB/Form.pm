@@ -65,7 +65,7 @@ use Time::Local;
 use Cwd;
 use File::Copy;
 
-use charnames ':full';
+use charnames qw(':full');
 use open ':utf8';
 package Form;
 
@@ -107,7 +107,8 @@ sub new {
         $_ = $ARGV[0];
     }
 
-    my $self = {}, $orig = {};
+    my $self = {};
+    my $orig = {};
     %$orig = split /[&=]/;
     for ( keys %$orig ) { 
         $self->{unescape( "", $_) } = unescape( "", $orig->{$_} );
