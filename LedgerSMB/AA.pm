@@ -205,7 +205,7 @@ sub post_transaction {
                 amount         => $amount{fxamount}{$i},
                 project_id     => $project_id,
                 description    => $form->{"description_$i"},
-		taxformcheck   => $form->{"taxformcheck_$i"},
+                taxformcheck   => $form->{"taxformcheck_$i"},
                 cleared        => $cleared,
                 fx_transaction => 0
               };
@@ -218,7 +218,7 @@ sub post_transaction {
                     amount         => $amount,
                     project_id     => $project_id,
                     description    => $form->{"description_$i"},
-		    taxformcheck   => $form->{"taxformcheck_$i"},
+                    taxformcheck   => $form->{"taxformcheck_$i"},
                     cleared        => $cleared,
                     fx_transaction => 1
                   };
@@ -842,7 +842,7 @@ sub transactions {
 		 GROUP BY 
 		          vc.meta_number, a.entity_id, vce.name, d.description,
 		          a.ponumber, a.invoice 
-		   HAVING abs(sum(a.amount) - (sum(a.amount) - sum(acs.amount))) > 0.005 |;
+		   HAVING abs(sum(a.amount) - (sum(a.amount) - sum(acs.amount))) > 0.000 |;
         } else {
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
@@ -872,7 +872,7 @@ sub transactions {
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
 		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description, vce.name,
 		          a.ponumber, a.invoice, a.datepaid $acc_trans_fields
-		   HAVING abs(a.amount - (a.amount - sum(acs.amount))) > 0.005 |;
+		   HAVING abs(a.amount - (a.amount - sum(acs.amount))) > 0.000 |;
        } 
     } else {
         $query = qq|
