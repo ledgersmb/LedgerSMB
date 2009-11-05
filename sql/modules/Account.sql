@@ -1,5 +1,11 @@
 -- VERSION 1.3.0
 
+CREATE OR REPLACE FUNCTION account__get_from_accno(in_accno text)
+returns account as
+$$
+     select * from account where accno = $1;
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS chart AS
 $$
 DECLARE
