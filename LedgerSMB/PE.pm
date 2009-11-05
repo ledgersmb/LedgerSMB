@@ -288,7 +288,7 @@ sub save_project {
 
         $query = qq|
 			INSERT INTO project (projectnumber, description, 
-			            startdate, enddate, customer_id)
+			            startdate, enddate, credit_id)
 			     VALUES (?, ?, ?, ?, ?)|;
     }
     $sth = $dbh->prepare($query);
@@ -296,7 +296,7 @@ sub save_project {
         $form->{description}, $startdate, $enddate, $form->{customer_id} )
       || $form->dberror($query);
     if (!$form->{id}){
-        $query = "SELECT currval('id')";
+        $query = "SELECT currval('project_id_seq')";
         ($form->{id}) = $dbh->selectrow_array($query) || $form->dberror($query);
     }
     $form->run_custom_queries( 'project', 'UPDATE' );
