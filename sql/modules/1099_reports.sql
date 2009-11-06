@@ -1,6 +1,12 @@
 CREATE TYPE tax_form_report_item AS (legal_name text, entity_id integer, entity_class integer, control_code text, meta_number character varying(32), acc_sum numeric, invoice_sum numeric, total_sum numeric);
 CREATE TYPE tax_form_report_detail_item AS (legal_name text, entity_id integer, entity_class integer, control_code text, meta_number character varying(32), acc_sum numeric, invoice_sum numeric, total_sum numeric, invnumber text, duedate text);
 
+CREATE OR REPLACE FUNCTION tax_form__list_all()
+RETURNS SETOF country_tax_form as
+$$
+select * from country_tax_form order by country_id;
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin date, in_end date) RETURNS setof tax_form_report_item AS $$
 DECLARE
 	out_row tax_form_report_item;
@@ -24,7 +30,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin date, in_end date, in_meta_number integer) RETURNS setof tax_form_report_detail_item AS $$
+CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) RETURNS setof tax_form_report_detail_item AS $$
 DECLARE
 	out_row tax_form_report_detail_item;
 BEGIN

@@ -105,6 +105,12 @@ sub generate_report
     {
       my @call_args = ($request->{'tax_form_id'}, $request->{begin_month}.' '.$request->{begin_day}.' '.$request->{begin_year}, $request->{end_month}.' '.$request->{end_day}.' '.$request->{end_year}, $request->{meta_number});
       my @results = $request->call_procedure(procname => 'tax_form_details_report', args => \@call_args, );
+      for my $r (@results){
+          $r->{acc_sum} = $request->format_amount({amount => $r->{acc_sum}});
+          $r->{invoice_sum} = 
+               $request->format_amount({amount => $r->{invoice_sum}});
+          $r->{total_sum} = $request->format_amount({amount => $r->{total_sum}});
+      }
       $request->{results} = \@results;
       
       my $template = LedgerSMB::Template->new(
@@ -118,6 +124,12 @@ sub generate_report
     } else {
       my @call_args = ($request->{'tax_form_id'}, $request->{begin_month}.' '.$request->{begin_day}.' '.$request->{begin_year}, $request->{end_month}.' '.$request->{end_day}.' '.$request->{end_year});
       my @results = $request->call_procedure(procname => 'tax_form_summary_report', args => \@call_args, );
+      for my $r (@results){
+          $r->{acc_sum} = $request->format_amount({amount => $r->{acc_sum}});
+          $r->{invoice_sum} = 
+               $request->format_amount({amount => $r->{invoice_sum}});
+          $r->{total_sum} = $request->format_amount({amount => $r->{total_sum}});
+      }
       $request->{results} = \@results;
       
       my $template = LedgerSMB::Template->new(

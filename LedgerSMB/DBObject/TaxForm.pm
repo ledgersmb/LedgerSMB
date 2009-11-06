@@ -21,8 +21,7 @@ sub get_forms
     my ($self) = @_;
     
     @{$self->{forms}} = $self->exec_method(
-                funcname => 'list_taxforms',
-                args => ['1'] # lx: Inquire as to the use of this argument in this sp; currently doesn't add up in the SQL for the SP.
+                funcname => 'tax_form__list_all',
     );
 }
 
