@@ -1,0 +1,39 @@
+<!--
+ * Occurs from filter screen if no vendor meta_number added
+ * vendor company.legal_name
+ * vendor entity_credit_account.meta_number (click through to edit vendor!)
+ * vendor entity.control_code
+ * sum of acc_trans reportable entries
+ * sum of invoice reportable entries
+ * total of sums above (click through to details report) 
+-->
+<?lsmb INCLUDE 'ui-header.html' 
+       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+
+<table width="100%">
+  <tr class="listtop">
+    <th>Company</th>
+    <th>Vendor Number</th>
+    <th>Control Code</th>
+    <th>acc_trans Sum</th>
+    <th>invoice Sum</th>
+    <th>Total</th>
+  </tr>
+  <tr height="5"><td></td></tr>
+<?lsmb FOREACH result IN results; i = loop.count ?>
+    <tr>
+      <td><?lsmb result.legal_name ?></td>
+      <td><a href="vendor.pl?action=get&account_class=<?lsmb result.entity_class ?>&entity_id=<?lsmb result.entity_id ?>&meta_number=<?lsmb result.meta_number ?>"><?lsmb result.meta_number ?></a></td>
+      <td><?lsmb result.control_code ?></td>
+      <td><?lsmb result.acc_sum ?></td>
+      <td><?lsmb result.invoice_sum ?></td>
+      <td><a href="taxform.pl?action=generate_report&tax_form_id=<?lsmb tax_form_id ?>&begin_day=<?lsmb begin_day ?>&begin_month=<?lsmb begin_month ?>&begin_year=<?lsmb begin_year ?>&end_day=<?lsmb end_day ?>&end_month=<?lsmb end_month ?>&end_year=<?lsmb end_year ?>&meta_number=<?lsmb result.meta_number ?>"><?lsmb result.total_sum ?></a></td>
+    </tr>
+<?lsmb END ?>
+</table>
+
+</body>
+</html>
