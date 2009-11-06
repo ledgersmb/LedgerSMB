@@ -935,6 +935,7 @@ sub create_links {
     # projects
     if ( @{ $form->{all_project} } ) {
        $form->{projectset}=1; 
+       unshift @{ $form->{all_project} }, {};
        for ( @{ $form->{all_project} } ) {
 	  $_->{projectstyle}=$_->{projectnumber}."--".$_->{id};
        }
