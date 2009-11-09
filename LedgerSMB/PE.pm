@@ -89,9 +89,10 @@ sub projects {
     my $where = "WHERE 1=1";
 
     $query = qq|
-		   SELECT pr.*, c.name 
+		   SELECT pr.*, e.name 
 		     FROM project pr
-		LEFT JOIN customer c ON (c.id = pr.customer_id)|;
+		LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id)
+		LEFT JOIN entity e ON (c.entity_id = e.id)|;
 
     if ( $form->{type} eq 'job' ) {
         $where .= qq| AND pr.id NOT IN (SELECT DISTINCT id
@@ -196,9 +197,11 @@ sub get_project {
     if ( $form->{id} ) {
 
         $query = qq|
-			   SELECT pr.*, c.name AS customer
+			   SELECT pr.*, e.name AS customer
 			     FROM project pr
-			LEFT JOIN customer c ON (c.id = pr.customer_id)
+			LEFT JOIN entity_credit_account c 
+                                  ON (c.id = pr.customer_id)
+			LEFT JOIN entity e ON (c.entity_id = e.id)
 			    WHERE pr.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -281,7 +284,7 @@ sub save_project {
 			       description = ?,
 			       startdate = ?,
 			       enddate = ?,
-			       customer_id = ?
+			       credit_id = ?
 			 WHERE id = | . $dbh->quote( $form->{id} );
     }
     else {
@@ -391,10 +394,11 @@ sub jobs {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $query = qq|
-		   SELECT pr.*, p.partnumber, p.onhand, c.name
+		   SELECT pr.*, p.partnumber, p.onhand, e.name
 		     FROM project pr
 		     JOIN parts p ON (p.id = pr.parts_id)
-		LEFT JOIN customer c ON (c.id = pr.customer_id)
+		LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id)
+		LEFT JOIN entity e ON (e.id = c.entity_id)
 		    WHERE 1=1|;
 
     if ( $form->{projectnumber} ne "" ) {
@@ -487,12 +491,14 @@ sub get_job {
 			          p.weight, p.notes, p.bin, p.partsgroup_id,
 			          ch.accno AS income_accno, 
 			          ch.description AS income_description, 
-			          pr.customer_id, c.name AS customer, 
+			          pr.credit_id, e.name AS customer, 
 			          pg.partsgroup
 			     FROM project pr
 			LEFT JOIN parts p ON (p.id = pr.parts_id)
 			LEFT JOIN chart ch ON (ch.id = p.income_accno_id)
-			LEFT JOIN customer c ON (c.id = pr.customer_id)
+			LEFT JOIN entity_credit_account c ON 
+                                                   (c.id = pr.credit_id)
+			LEFT JOIN entity e ON (e.id = c.entity_id
 			LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
 			    WHERE pr.id = | . $dbh->quote( $form->{id} );
     }
@@ -711,7 +717,7 @@ sub save_job {
 		       enddate = ?,
 		       parts_id = ?
 		       production = ?,
-		       customer_id = ?
+		       credit_id = ?
 		 WHERE id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute(
