@@ -108,6 +108,7 @@ sub add_vouchers {
     our $form = new Form;
     our %myconfig = ();
     %myconfig = %{$request->{_user}};
+    $form->{stylesheet} = $myconfig{stylesheet};
     our $locale = $request->{_locale};
 
     for (keys %$request){

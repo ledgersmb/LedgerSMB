@@ -136,6 +136,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION entity_credit__get(in_id int)
+RETURNS entity_credit_account AS
+$$
+SELECT * FROM entity_credit_account WHERE id = $1;
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION entity_list_contact_class() 
 RETURNS SETOF contact_class AS
 $$

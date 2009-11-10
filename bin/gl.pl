@@ -165,7 +165,12 @@ sub display_form
    
     my ($init) = @_; 
     # Form header part begins -------------------------------------------
-
+    if (@{$form->{all_department}}){
+        unshift @{ $form->{all_department} }, {};
+    }
+    if (@{$form->{all_project}}){
+       unshift @{ $form->{all_project} }, {};
+    }
     $title = $form->{title};
     if ( $form->{transfer} ) {
         $form->{title} = $locale->text("$title Cash Transfer Transaction");
@@ -935,7 +940,6 @@ sub create_links {
     # projects
     if ( @{ $form->{all_project} } ) {
        $form->{projectset}=1; 
-       unshift @{ $form->{all_project} }, {};
        for ( @{ $form->{all_project} } ) {
 	  $_->{projectstyle}=$_->{projectnumber}."--".$_->{id};
        }

@@ -489,7 +489,6 @@ sub header {
     my ( $stylesheet, $favicon, $charset );
 
     if ( $ENV{GATEWAY_INTERFACE} ) {
-
         if ( $self->{stylesheet} && ( -f "css/$self->{stylesheet}" ) ) {
             $stylesheet =
 qq|<link rel="stylesheet" href="css/$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
