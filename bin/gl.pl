@@ -272,9 +272,10 @@ sub display_form
 	      }
 	      else {
 		  if ( $transdate > $closedto ) {
-		      for ( "update", "post", "schedule" ) { $a{$_} = 1 }
+		      for ( "post", "schedule" ) { $a{$_} = 1 }
 		  }
 	      }
+              $a{update} = 1;
 
 	      if (!$form->{approved} && !$form->{batch_id}){
 		$button{approve} = { 
