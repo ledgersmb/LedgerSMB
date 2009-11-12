@@ -677,7 +677,7 @@ sub list_accounts {
         $department = $form->escape( $form->{department} );
     }
     if ( $form->{projectnumber} ) {
-        ($projectnumber) = split /--/, $form->{projectnumber};
+        ($projectnumber, $project_id) = split /--/, $form->{projectnumber};
         push @options, $locale->text('Project Number: [_1]', $projectnumber);
         $projectnumber = $form->escape( $form->{projectnumber} );
     }
@@ -724,7 +724,7 @@ sub list_accounts {
 	# gl.pl requires datefrom instead of fromdate, etc.  We will get this
 	# consistent.... eventually....  --CT
         my $href =
-qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accounttype}&datefrom=$form->{fromdate}&dateto=$form->{todate}&sort=transdate&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&l_balance=Y&department=$department&projectnumber=$projectnumber&project_id=$form->{project_id}&title=$title&nextsub=$form->{nextsub}&prevreport=$form->{callback}&category=X&l_reference=Y&l_transdate=Y&l_description=Y&l_debit=Y&l_credit=Y|;
+qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accounttype}&datefrom=$form->{fromdate}&dateto=$form->{todate}&sort=transdate&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&l_balance=Y&department=$department&projectnumber=$projectnumber&project_id=$project_id&title=$title&nextsub=$form->{nextsub}&prevreport=$form->{callback}&category=X&l_reference=Y&l_transdate=Y&l_description=Y&l_debit=Y&l_credit=Y|;
 
         if ( $form->{accounttype} eq 'gifi' ) {
             $href .= "&gifi_accno=$ref->{accno}&gifi_description=$description";

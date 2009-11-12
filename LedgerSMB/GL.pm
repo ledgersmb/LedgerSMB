@@ -262,6 +262,12 @@ sub all_transactions {
         $apwhere .= " AND a.department_id = $var";
     }
 
+    if ( $form->{project_id} ne "") {
+        $var = $dbh->quote($form->{project_id});
+        $glwhere .= " AND ac.project_id = $var";
+        $arwhere .= " AND ac.project_id = $var";
+        $apwhere .= " AND ac.project_id = $var";
+    }
     if ( $form->{source} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{source} ) );
         $glwhere .= " AND lower(ac.source) LIKE $var";
