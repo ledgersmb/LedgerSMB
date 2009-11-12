@@ -170,7 +170,7 @@ sub report {
     my $subform;
     if ( $form->{report} eq "projects" ) {
         $hiddens{nextsub} = 'generate_projects';
-        $subform = 'generate_projects';
+        $subform = 'projects';
     } elsif ( $form->{report} eq "inv_activity" ) {
         $gifi = 0;
         $hiddens{nextsub} = 'generate_inv_activity';
@@ -613,7 +613,7 @@ sub generate_projects {
     $form->{nextsub} = "generate_projects";
     $form->{title}   = $locale->text('Project Transactions');
 
-    RP->trial_balance( \%myconfig, \%$form );
+    RP->trial_balance( \%myconfig, $form );
 
     &list_accounts;
 

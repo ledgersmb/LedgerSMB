@@ -35,7 +35,7 @@
           </td>
         </tr>
 <?lsmb END ?>
-<?lsmb IF form.report == 'trial_balance' ?>
+<?lsmb IF form.report == 'trial_balance' or form.report == 'projects' ?>
 	<tr>
 	  <th align="right"><?lsmb text('Ignore Year-ends'); ?></th>
 	  <td><?lsmb PROCESS select element_data = {

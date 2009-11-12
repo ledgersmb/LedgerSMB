@@ -1452,7 +1452,7 @@ sub trial_balance {
              } elsif ($year_end eq 'all'){
                   $yearend_filter = "AND (y.trans_id is null or ac.transdate < coalesce($datefrom, ac.transdate))";
              } else {
-                 $form->error($locale->text('Invalid Year-end filter request!'));
+                 $form->error($main::locale->text('Invalid Year-end filter request!'));
              }
         }
         $query = "SELECT c.id AS chart_id, c.accno, c.description, c.contra, 
