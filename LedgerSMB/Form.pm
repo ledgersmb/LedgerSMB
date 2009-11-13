@@ -1820,7 +1820,7 @@ sub all_vc {
 
         $sth->finish;
 
-    } elsif ($self->{"${vc}_id"}) {
+    } elsif ($self->{id}) {
         $query = qq|
 		SELECT ec.id, e.name
 		  FROM entity e
@@ -1829,7 +1829,7 @@ sub all_vc {
 				WHERE id = ?)
 		ORDER BY name|;
         $sth = $self->{dbh}->prepare($query);
-        $sth->execute($self->{"${vc}_id"});
+        $sth->execute($self->{id});
         ($self->{"${vc}_id"}, $self->{$vc}) = $sth->fetchrow_array();
     }
     # get self
