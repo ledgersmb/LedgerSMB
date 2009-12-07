@@ -26,11 +26,13 @@ use base qw(LedgerSMB::ScriptLib::Company);
 sub set_entity_class {
     my ($null, $request) = @_;
     $request->{entity_class} = 2;
+    $request->{account_class} = $request->{entity_class};
     return 1;
 }
 
 sub new_company {
     my ($null, $request) = @_;
+    
     return LedgerSMB::DBObject::Customer->new(base=> $request, copy => 'all');
 }
 

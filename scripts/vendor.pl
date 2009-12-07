@@ -28,6 +28,7 @@ use base qw(LedgerSMB::ScriptLib::Company);
 sub set_entity_class {
     my ($null, $request) = @_;
     $request->{entity_class} = 1;
+    $request->{account_class} = $request->{entity_class};
     return 1;
 }
 
