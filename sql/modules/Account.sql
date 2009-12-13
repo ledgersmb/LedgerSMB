@@ -91,6 +91,12 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION account_heading_list()
+RETURNS SETOF account_heading AS
+$$
+SELECT * FROM account_heading order by accno;
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION account_heading_save 
 (in_id int, in_accno text, in_description text, in_parent int)
 RETURNS int AS

@@ -1,19 +1,7 @@
-Known issues in LedgerSMB 1.2, Beta 1:
+CURRENT KNOWN BUGS:
 
-Installation/upgrade is not automated yet.
+1)  Checks don't print from single check printing interface
 
-Changes since last Beta:
+BUGS FIXED SINCE LAST BETA:
 
-Currencies not showing up on orders and invoices
-
-Internal server error on login screen when can't connect to db.
-
-A couple of dataset creation issues.
-
-A few documentation fixes
-
-Updates RPM Spec file
-
-Better error handling in Admin.pl
-
-Database scripts now run as transactions.
+Not applicable
