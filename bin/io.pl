@@ -1401,6 +1401,22 @@ sub print_options {
     \%options;
 }
 
+sub print_select { # Needed to print new printoptions output from non-template
+                   # screens --CT
+    my ($form, $select) = @_;
+    my $name = $select->{name};
+    my $id = $name;
+    $id =~ s/\_/-/;
+    print qq|<select id="$id" name=$name" class="$select->{class}">\n|;
+    for my $opt (@{$select->{options}}){
+        print qq|<option value="$opt->{value}" |;
+        if ($form->{$select->{name}} eq $opt->{value}){
+            print qq|SELECTED="SELECTED"|;
+        }
+        print qq|>$opt->{text}</option>\n|;
+    }
+    print "</select>";
+}
 sub print {
 
     # if this goes to the printer pass through

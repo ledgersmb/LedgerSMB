@@ -415,7 +415,7 @@ sub form_header {
 |;
 
     $form->hide_form(
-        qw(id type media format printed emailed queued title vc terms discount 
+        qw(id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype)
     );
@@ -726,8 +726,15 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
     <td>
 |;
 
-    &print_options;
-
+    my $printops = &print_options;
+    my $formname = { name => 'formname',
+                     options => [
+                                  {text=> 'Sales Invoice', value => 'invoice'},
+                                ]
+                   };
+    print_select($form, $formname);
+    print_select($form, $printops->{format});
+    print_select($form, $printops->{media});
     print qq|
     </td>
   </tr>

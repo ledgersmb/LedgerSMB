@@ -758,8 +758,10 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     <td>
 |;
 
-    &print_options;
-
+    $printops = &print_options;
+    print_select($form, $printops->{formname});
+    print_select($form, $printops->{format});
+    print_select($form, $printops->{media});
     print qq|
     </td>
   </tr>
