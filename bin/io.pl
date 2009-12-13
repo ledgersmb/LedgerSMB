@@ -1407,7 +1407,7 @@ sub print_select { # Needed to print new printoptions output from non-template
     my $name = $select->{name};
     my $id = $name;
     $id =~ s/\_/-/;
-    print qq|<select id="$id" name=$name" class="$select->{class}">\n|;
+    print qq|<select id="$id" name="$name" class="$select->{class}">\n|;
     for my $opt (@{$select->{options}}){
         print qq|<option value="$opt->{value}" |;
         if ($form->{$select->{name}} eq $opt->{value}){
