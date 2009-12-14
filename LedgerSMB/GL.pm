@@ -425,7 +425,9 @@ sub all_transactions {
         source      => 7,
         accno       => 9,
         department  => 15,
-        memo        => 16
+        memo        => 16,
+        trans_id    => 18,
+        chart_id    => 19
     );
 
     my @a = ( id, transdate, reference, source, description, accno );
@@ -450,7 +452,7 @@ sub all_transactions {
 						  g.description, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, g.notes, c.link,
 						  '' AS till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname
+						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id
 					 FROM gl AS g
 					 JOIN acc_trans ac ON (g.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -468,7 +470,7 @@ sub all_transactions {
 						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname
+						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -488,7 +490,7 @@ sub all_transactions {
 						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname
+						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id
 					 FROM ap a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)

@@ -1,5 +1,4 @@
 --
-BEGIN;
 
 CREATE OR REPLACE FUNCTION entity_save(
     in_entity_id int, in_name text, in_entity_class INT
@@ -69,5 +68,3 @@ END;
 $$ language plpgsql;
 
 
-
-commit;

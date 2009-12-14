@@ -1,6 +1,5 @@
 BEGIN;
 \i sql/modules/Drafts.sql
-\i sql/modules/Chart.sql
 \i sql/modules/Account.sql
 \i sql/modules/Session.sql
 \i sql/modules/Business_type.sql
@@ -17,8 +16,7 @@ BEGIN;
 \i sql/modules/Report.sql
 \i sql/modules/Voucher.sql
 \i sql/modules/Reconciliation.sql
-\i sql/modules/admin.sql -- Adds the new user functionality.
+-- Adds the new user functionality. 
+\i sql/modules/admin.sql 
 \i sql/modules/chart.sql
-
-
 COMMIT;

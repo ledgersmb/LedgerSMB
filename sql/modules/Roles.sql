@@ -1083,15 +1083,10 @@ GRANT INSERT ON chart TO "lsmb_<?lsmb dbname ?>__account_create";
 GRANT INSERT ON account TO "lsmb_<?lsmb dbname ?>__account_create";
 GRANT ALL ON account_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
 GRANT INSERT ON account_heading TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT ALL ON acount_heading_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT ALL ON account_heading_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
 GRANT INSERT ON account_link TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT ALL ON account_link_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-GRANT INSERT ON account_heading TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT ALL ON acount_heading_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT INSERT ON account_link TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT ALL ON account_link_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
+-- account_link no longer appears to have a sequence and references account(id)
+--GRANT ALL ON account_link_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (128, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');

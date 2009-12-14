@@ -1,5 +1,3 @@
--- BEGIN;
-
 CREATE TYPE company_search_result AS (
 	entity_id int,
 	entity_control_code text,
@@ -780,4 +778,3 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
--- COMMIT;

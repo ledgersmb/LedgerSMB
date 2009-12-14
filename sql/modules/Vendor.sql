@@ -1,4 +1,3 @@
-BEGIN;
 
 -- TODO:  Move indexes to Pg-database
 /*  Disabling until we can do some more refactoring here.
@@ -41,4 +40,3 @@ CREATE OR REPLACE FUNCTION vendor_search(in_name TEXT, in_address TEXT,
     
 $$ language 'plpgsql';
 */
-COMMIT;

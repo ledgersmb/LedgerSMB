@@ -899,7 +899,7 @@ sub get_my_emp_num {
     my $query = qq|
 		SELECT employeenumber FROM employee 
 		 WHERE entity_id = 
-			(select entity_id from users where login = ?)|;
+			(SELECT entity_id FROM users WHERE username = ?)|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $self->{login} ) || $self->dberror($query);
 

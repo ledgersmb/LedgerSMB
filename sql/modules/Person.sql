@@ -1,5 +1,3 @@
-begin;
-
 CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
 $$
 	SELECT entity_id from users where username = SESSION_USER;
@@ -259,5 +257,3 @@ CREATE OR REPLACE FUNCTION person__all_locations (
     WHERE p.id = $1;
 
 $$ language sql;
-
-commit;

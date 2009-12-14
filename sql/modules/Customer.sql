@@ -1,6 +1,3 @@
-BEGIN;
-
-
 CREATE OR REPLACE FUNCTION customer_location_save (
     in_entity_id int,
     in_location_class int, in_line_one text, in_line_two text, 
@@ -51,5 +48,3 @@ CREATE OR REPLACE FUNCTION customer_search(in_pattern TEXT) returns setof custom
     
 $$ language 'plpgsql'; 
 */
-
-COMMIT;
