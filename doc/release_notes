@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2
+LedgerSMB 1.3
 
 
 
@@ -15,8 +15,7 @@ which it was derived, but the feature set is starting to diverge rapidly.
 
 * Perl 5.8.
 * Apache, IIS, or other web server that supports CGI.
-* PostgreSQL 8.0 or higher.  7.3 and 7.4 could be supported with some effort but
-will not work out of the box.
+* PostgreSQL 8.1 or higher.
 * Any operating system that supports the above environment.
 * The following CPAN modules:
 	* Data::Dumper
@@ -36,58 +35,48 @@ will not work out of the box.
 	* Cwd
 	* Config::Std
 	* MIME::Lite
-
+        * TemplateToolkit
 	
 
-2:  What's New in 1.2?
+2:  What's New in 1.3?
 
-2.1: Database changes:
+2.1:  Framework Changes
+All new code has been moved to a new MVC-like framework.  This means that Perl,
+SQL, HTML, CSS, and Javascript are also now largely in separate files.
 
-All core tables now have defined primary keys.  This allows Slony-I to be 
-supported out of the box.
-
-Chris Browne has contributed a setup script for Slony.  It is in the 
-utils/replication directory.
-
-Also all user information has been moved into the database and the password 
-algorythm has been changed from crypt to md5.  This means that users will need 
-to convert their accounts prior to first login on the new system (if this is an
-upgrade).
-
-Also now the defaults table has moved from a one column per value structure to a simple key->value structure.
-
+The new code is also far more modular (and hence manageable) than the old code, 
+though it is expected that further improvements will occur in the move from 1.3
+to 1.4.
 
 2.2:  Security
 
-LedgerSMB 1.2 has been through a detailed SQL injection audit of the codebase
-inherited from SQL-Ledger.  As a result several vulnerabilities which were known
-to be exploitable were corrected along with hundreds of places where
-vulnerabilities may have been exploitable but we didn't have time to verify the
-what was involved in exploiting it.  We believe though that many or most of the
-issues were exploitable given a little time and effort.
-
-Also, we discovered the template editor's security system was moved from
-blacklisting to whitelisting, eliminating a whole class of possible security
-issues.
+Prior to 1.3, security was not pervasively enforced in any real way through the
+database.  In 1.3, all user permissions are orchestrated via ROLES in the
+underlying database, and permissions are rigorously enforced in this way.
 
 2.3:  New Features
 
-Metatron Technology Consulting's SL-POS codebase was merged with this project,
-providing a framework for POS hardware support and more.
+LedgerSMB 1.3 now supports separation of duties for transaction entry and bank
+reconciliation.  This means that permissions for data entry and posting of
+transactions are now separate.  By default, this means that a transaction now is
+entered first and then approved, and it only posts to the books when it is
+approved.  Bank reconciliation works on a similar principle.
 
-Online credit card processing support has been added.
+Bank reconciliation also has been entirely redesigned to provide multi-user-safe
+workflows, and an ability to reasonably handle a much larger transaction load
+than was previously possible.  This includes a new user interface design, and a
+framework for building parsers for bank upload files.
 
-LSMB now supports an arbitrary number of defined currencies for a business and 
-is no longer limited to 3.
+The single payment interface has been fully redesigned to provide a number of 
+additional features including the use of prepayments which are properly tracked.
 
-2.4:  Localization Changes
+The multiple payment interface has been redesigned to handle a much larger 
+transaction load.
 
-Localization functions now use Gettext .po files on all platforms.  This means that standard translation management tools will work with LSMB translations.
+2.4:  Database Changes
 
-2.5:  Other changes
-
-The ledger-smb.conf is now an inifile which will reduce the level of expertise 
-necessary to configure it for non-Perl users.
+The contact management and reconciliation portions of the database have been
+fully redesigned to provide more flexibility for customization.
 
 3:  Known Issues
 Reposting invoices is known to cause inaccuracies cost of goods sold and
@@ -109,24 +98,20 @@ are based on the current timestamp and therefore insecure.  Furthermore, these
 tokens are not tracked on the server, so one can easily forge credentials for
 either the main application or the administrative interface.
 
-LedgerSMB stores the sessions in the database.  These are generated as md5 sums
-of random numbers and are believed to be reasonably secure.  The sessions time
-out after a period of inactivity.  As of the initial release both
-SQL-Ledger-style session ID's and the newer version are required to access the
-application.  In future versions, the SQL-Ledger style session ID's will 
-probably be removed.
+LedgerSMB 1.3 dispenses with sessions altogether except for handling
+discretionary locks (where they are stored in the db).  LedgerSMB uses http auth
+instead (preferably wrapped with Javascript to hide the credentials dialog from
+the end user).
 
-4.3: Database Changes
-Under certain circumstances where the Chart of Accounts is improperly modified,
-it is possible to post transactions such that a portion of the transaction is
-put into a NULL account.  LedgerSMB does not allow NULL values in the chart id
-field of the transaction.
+As of SQL-Ledger 2.8, the discretionary locking system can become stale,
+requiring manual cleaning.  In LedgerSMB 1.3, discretionary locks are tied to 
+active login sessions and cleared automatically after a period of inactivity.
 
-Also, the transaction amount has been changed from FLOAT to NUMERIC so that
-arbitrary precision mathematics can be used in third party reports.  This ought
-to also allow SQL-Ledger to properly scale up better as SUM operations on
-floating points are unsafe for large numbers of records where accounting data is
-involved.
+4.3: Template Changes
+
+SQL-Ledger uses custom routines for processing templates.  We use
+TemplateToolkit. As we move forward, the format of data sent to the templates
+will change accordingly.
 
 5:  Roadmap
 This project has no defined roadmap but rather a set of statements and 
