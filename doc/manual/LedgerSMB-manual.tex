@@ -6,7 +6,7 @@
 \IfFileExists{url.sty}{\usepackage{url}}
                       {\newcommand{\url}{\texttt}}
 
-\newcommand{\version}{1.2}
+\newcommand{\version}{1.3}
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
@@ -22,7 +22,7 @@
 \usepackage{metatron}
 
 \renewcommand{\abstractname}{Executive Summary}
-\title{Ledger-SMB Manual v. \version}
+\title{LedgerSMB Manual v. \version}
 \author{The LedgerSMB Core Team}
 \date{\today}
 
@@ -31,13 +31,35 @@
 \makeatother
 \begin{document}
 \maketitle
-Copyright \copyright 2006 The LedgerSMB Core Team. Permission
-is granted to copy, distribute and/or modify this document under the
-terms of the GNU Free Documentation License, Version 1.2 or any later
-version published by the Free Software Foundation; with no Invariant
-Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of
-the license is included in the section entitled \char`\"{}GNU Free
-Documentation License\char`\"{} (Appendix \ref{fdl}).
+
+Except for the included scripts (which are licensed under the GPL v2 or later),
+the following permissive license governs this work.
+
+Copyright 2005-2009 The LedgerSMB Project. All rights reserved.
+
+Redistribution and use in source (\LaTeX) and 'compiled' forms (SGML,
+HTML, PDF, PostScript, RTF and so forth) with or without modification, are
+permitted provided that the following conditions are met:
+
+\begin{enumerate}
+\item Redistributions of source code (\LaTeX) must retain the above
+copyright notice, this list of conditions and the following disclaimer as the
+first lines of this file unmodified.
+\item Redistributions in compiled form (converted to
+PDF, PostScript, RTF and other formats) must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+\end{enumerate}
+THIS DOCUMENTATION IS PROVIDED BY THE LEDGERSMB PROJECT "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE LEDGERSMB PROJECT BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 \tableofcontents{}
 
@@ -47,16 +69,16 @@ Documentation License\char`\"{} (Appendix \ref{fdl}).
 \clearpage
 
 
-\part{Ledger-SMB and Business Processes}
+\part{LedgerSMB and Business Processes}
 
 
-\section{Introduction to Ledger-SMB}
+\section{Introduction to LedgerSMB}
 
 
-\subsection{Why Ledger-SMB}
+\subsection{Why LedgerSMB}
 
 
-\subsubsection{Advantages of Ledger-SMB}
+\subsubsection{Advantages of LedgerSMB}
 
 \begin{itemize}
 \item Flexibility and Central Management 
@@ -132,7 +154,7 @@ your business.
 \item Point of Sale 
 
 \begin{itemize}
-\item Run multiple cash registers against main Ledger-SMB installation 
+\item Run multiple cash registers against main LedgerSMB installation 
 \item Suitable for retail stores and more
 \item Credit card processing via TrustCommerce 
 \item Supports some POS hardware out of the box including:
@@ -170,7 +192,7 @@ reporting framework to meet any local requirement.
 \end{itemize}
 \end{itemize}
 
-\subsection{Limitations of Ledger-SMB}
+\subsection{Limitations of LedgerSMB}
 
 \begin{itemize}
 \item No payroll module (Payroll must be done manually) 
@@ -179,7 +201,7 @@ reporting framework to meet any local requirement.
 broad range of technologies 
 \end{itemize}
 
-\subsection{System Requirements of Ledger-SMB}
+\subsection{System Requirements of LedgerSMB}
 
 \begin{itemize}
 \item PostgreSQL 
@@ -214,12 +236,12 @@ though Windows, MacOS X, etc. do work)
 \section{User Account and Database Administration Basics}
 
 These functions are accessed via the admin.pl script in the
-installed directory of Ledger-SMB.
+installed directory of LedgerSMB.
 
 
 \subsection{Companies and Datasets}
 
-Ledger-SMB stores its information in locale-specific data sets. When
+LedgerSMB stores its information in locale-specific data sets. When
 a dataset is created, it sets various defaults such as currency, a
 basic chart of accounts setup, and so forth. Note that the default
 setup is for Canada, where the author of the software resides.
@@ -229,49 +251,34 @@ is designed with the idea that each dataset will represent exactly
 one company. If a customer is working with multiple companies, he/she
 must create a dataset to for each.
 
-When creating a dataset, the application asks for both a username and a 
-superusername.  If the superuser's information is not filled in, Ledger-SMB will
-attempt to populate an existing dataset, but if this information is filled in,
-the program will log into the PostgreSQL cluster with the superusername and
-password, create the database, and attempt to add Plpgsql to it.
+The simplest way to create a database, once the system is installed, is to go to
+http://[your\_ledgersmb\_instance/initiate.pl.  In the http authentication
+dialog, provide your postgres superuser credentials and click ok.
+
+In the resulting screen, click "Initiate Database" and fill out appropriate
+information.  This will then create a basic database for use with LedgerSMB.
 
 \subsection{How to Create a User}
 
-Users are created by going to the admin.pl page and clicking on \char`\"{}Add
-User.\char`\"{} One then fills out the form and when it is saved,
-the user is created.
+In the database setup workflow, a simple application user will be created.  This
+user, by default, only has user management capabilities.  Ideally actual work 
+should be done with accounts which have fewer permissions.
 
+To set up a user, log in with you administrative credentials (created when
+initializing the database) and then go to System/Admin Users/Add User.  From
+here you can create a user and add appropriate permissions.
 
 \subsection{Permissions}
 
-The permissions system is not rigorously enforced within Ledger-SMB,
-in the sense that the permissions API is generally not used in the
-application itself. Instead permissions are used to enable/disable
-menu options. Setting an enforcement of such permissions would require
-some custom programming at the present time. Most organizations, however,
-find that the current system is adequate.
+Permissions in LedgerSMB 1.3 are enforced using database roles.  These are
+functional categories and represent permissions levels needed to do basic tasks.
+They are assigned when adding/editing users.
 
-The checkboxes which are marked enable menu entries. Those that are
-unchecked disable those entries on the menu.
-
-
-\subsection{User Account Types}
-
-\begin{itemize}
-\item User is a general user of the system 
-\item Managers often are able to see a larger amount of data 
-\item Administrators have full access to the system 
-\end{itemize}
-
-\subsection{Other Features}
-
-\begin{itemize}
-\item Lock System allows one to lock users out of the system while maintenance
-is performed. This is only necessary during upgrades or maintenance
-which results in the RDBMS being offline. 
-\item Change Admin Password changes the administrative password.
-\item Logout terminates the admin session. 
-\end{itemize}
+The roles follow a naming convention which allows several LSMB databases to
+exist on the same PostgreSQL instance.  Each role is named lsmb\_\lbrack
+dbname\rbrack\_\_ followed by the role name.  Note that two underscores separate
+the database and role names.  If these are followed then the interface will
+pick up on defined groups and display them along with other permissions.
 
 \section{Chart of Accounts}
 
@@ -397,6 +404,49 @@ after 30 days.  In a cash based system, you would post the income at the time
 when the customer pays, while in an accrual system, the income is posted at the
 time when the project is completed.
 
+\subsubsection{Separation of Duties}
+There are two important reasons not to trust accounting staff too much regarding
+the quality of data that is entered into the system.  Human error does occur,
+and a second set of eyes can help reduce that error considerably.
+
+A second important reason to avoid trusting accounting staff too much is that
+those with access to financial data are in a position to steal money from the
+business.  All too often, this actually happens.  Separation of duties is the 
+standard solution to this problem.
+
+Separation of duties then refers to the process of separating parts of the
+workflow such that one person's work must be reviewed and approved by someone
+else.  For example, a book keeper might enter transactions and these might later
+be reviewed by a company accountant or executive.  This thus cuts down both on
+errors (the transaction is not on the books until it is approved), and on the
+possibility of embezzlement.
+
+Typically, the way duties are likely to be separated will depend on the specific
+concerns of the company.  If fraud is the primary concern, all transactions will
+be required to go through approval and nobody will ever be allowed to approve
+their own transactions.  If fraud is not a concern, then typically transactions
+will be entered, stored, and later reviewed/approved by someone different, but
+allowances may be made allowing someone to review/approve the transactions
+he/she entered.  This latter example doesn't strictly enforce separation of
+duties, but encourages them nonetheless.
+
+By default, LedgerSMB is set up not to strictly enforce the separation of
+duties.  This can be changed by adding a database constraint to ensure that
+batches and drafts cannot be approved by the same user that enters them.
+
+In the age of computers, separation of duties finds one more important
+application:  it allows review and approval by a human being of automatically
+entered transactions.  This allows the accounting department to double-check
+numbers before they are posted to the books and thus avoid posting incorrect
+numbers (for example, due to a software bug in custom code).
+
+Unapproved transactions may be deleted as they are not full-fledged transactions
+yet.  Approved transactions should be reversed rather than deleted.
+
+Separation of duties is not available yet for sales/vendor invoice documents,
+but something similar can be handled by feeding them through the order entry
+workflow (see below).
+
 \subsubsection{References}
 
 \url{http://www.accounting-and-bookkeeping-tips.com/learning-accounting/accounting-basics-credit.htm}\\
@@ -431,7 +481,7 @@ of debits and credits and of double-entry.
 
 \subsection{General Guidelines on Numbering Accounts}
 
-In general, most drop-down boxes in Ledger-SMB order the accounts
+In general, most drop-down boxes in LedgerSMB order the accounts
 by account number. Therefore by setting appropriate account numbers,
 one can affect the default values.
 
@@ -466,7 +516,7 @@ ledger for that account.
 \section{Administration}
 
 This section covers other (non-Chart of Accounts) aspects to the
-setup of the Ledger-SMB accounting package. These are generally accessed
+setup of the LedgerSMB accounting package. These are generally accessed
 in the System submenu.
 
 
@@ -599,7 +649,7 @@ numbers. This was meant to ensure that one did not erase data from
 the accounting books (and as such that erasing data would be a sign
 of foul play).
 
-Ledger-SMB has a capability to require such reversals if the business
+LedgerSMB has a capability to require such reversals if the business
 deems this to be necessary. When this option is enabled, existing
 transactions cannot be modified and one will need to post reversing
 transactions to void existing transactions before posting corrected
@@ -630,7 +680,7 @@ action was. No direct financial information is included.
 
 Departments are logical divisions of a business. They allow for budgets
 to be prepared for the individual department as well as the business
-as a whole. This allows larger businesses to use Ledger-SMB to meet
+as a whole. This allows larger businesses to use LedgerSMB to meet
 their needs.
 
 
@@ -643,21 +693,21 @@ gain money. For example, the legal department in most companies is
 a cost center.
 
 One of the serious misunderstandings people run up against is that
-Ledger-SMB tends to more narrowly define cost and profit centers than
-most businesses do. In Ledger-SMB a cost center is any department
+LedgerSMB tends to more narrowly define cost and profit centers than
+most businesses do. In LedgerSMB a cost center is any department
 of the business that does not issue AR transactions. Although many
 businesses may have cost centers (like technical support) where customer
-fees may subsidize the cost of providing the service, in Ledger-SMB,
+fees may subsidize the cost of providing the service, in LedgerSMB,
 these are profit centers.
 
-Ledger-SMB will not allow cost centers to be associated with AR transactions.
+LedgerSMB will not allow cost centers to be associated with AR transactions.
 So if you want this functionality, you must create the department
 as a profit center.
 
 
 \subsection{Warehouses}
 
-Ledger-SMB has the ability to track inventory by warehouse. Inventory
+LedgerSMB has the ability to track inventory by warehouse. Inventory
 items can be moved between warehouses, and shipped from any warehouse
 where the item is in stock. We will explore this concept more later.
 
@@ -701,14 +751,14 @@ field for custom reporting and marketing purposes.
 \subsubsection{Overview of Template Editing}
 
 The templates for invoices, orders, and the like can be edited from
-within Ledger-SMB. The submenus within the System submenu such as
+within LedgerSMB. The submenus within the System submenu such as
 HTML Templates, Text Templates and \LaTeX{} templates provide access
 to this functionality.
 
 
 \subsubsection{Year-end}
 
-Although the Year-end functionality in Ledger-SMB is very useful,
+Although the Year-end functionality in LedgerSMB is very useful,
 it does not entirely make the process simple and painless. One must
 still manually enter adjustments prior to closing the books. The extent
 to which these adjustments are necessary for any given business is
@@ -726,7 +776,7 @@ of the amount invested in a business, but any dividends ought not
 to count against their recipients when new investors are brought on
 board.
 
-Ledger-SMB automatically moves all income and expense into the specified
+LedgerSMB automatically moves all income and expense into the specified
 year-end/retained earnings account. It does not move the drawing account,
 and this must be done manually, nor does it automate the process of
 making adjustments.
@@ -748,7 +798,7 @@ be changed, so all options are presented here for reference:
 email from standard input. 
 \item[language] allows one to set the language for the login screen and
 admin page. 
-\item[latex] tells Ledger-SMB whether \LaTeX{} is installed. \LaTeX{} is
+\item[latex] tells LedgerSMB whether \LaTeX{} is installed. \LaTeX{} is
 required for generating Postscript and PDF invoices and the like. 
 \item[Environmental variables] can be set here too. One
 can add paths for searching for \LaTeX{}, etc. 
@@ -836,7 +886,7 @@ associated with sales tax.
 \subsection{Assemblies and Manufacturing}
 
 Manufacturers order parts but they sell the products of their efforts.
-Ledger-SMB supports manufacturing using the concept of assemblies.
+LedgerSMB supports manufacturing using the concept of assemblies.
 An assembly is any product which is manufactured on site. It consists
 of a selection of parts, services, and/or labor and overhead. Assemblies
 are treated as parts in most other regards.
@@ -851,7 +901,7 @@ One stocks assemblies in the Stock Assembly entry on the Goods and
 Services submenu. When an assembly is stocked the inventory is adjusted
 properly.
 
-The Check Inventory option will cause Ledger-SMB to refuse to stock
+The Check Inventory option will cause LedgerSMB to refuse to stock
 an assembly if the inventory required to produce the assembly would
 drop the part below the reorder point.
 
@@ -932,6 +982,43 @@ of goods sold will also be \$0 when the item is sold. We will cover
 this entire process in more depth after we cover the AP and AR units
 below.
 
+\section{Transaction Approval}
+
+With the exception of Sales/Vendor Invoices (with inventory control), any
+financial transaction entered by default must be approved before it shows up in
+financial reports.  Because there are two ways these can be set up, there are
+two possibly relevant workflows.
+
+\subsection{Batches and Vouchers}
+Often larger businesses may need to enter batches of transactions which may need
+to be approved or rolled back as a batch.  Batches are thus a generic
+"container" for vouchers.  A given batch can have AR, AP, payment, receipt, and
+GL vouchers in it together.  That same batch, however, will be classified by its
+main purpose.
+
+For example, one may have a batch for processing payments.  That batch may
+include payment transactions, but also related ar/ap transactions (relating to
+specific charges relating to payment or receipt).  The batch would still be
+classified as a payment batch however.
+
+In the ``Transaction Approval/Batches'' screen, one can enter search criteria
+for batches. 
+
+The next screen shows a list of batches including control codes, amounts covered
+in the batch, and descriptions.  Clicking on the control code leads you to a
+details screen where specific vouchers can be dropped from the batch.
+
+When the batch is approved, all transactions in it are approved with it.
+
+\subsection{Drafts}
+
+Drafts are single transactions which have not yet been approved.   For example,
+a journal entry or AR Transaction would become a ``draft'' that would need to be
+approved after entry.
+
+As with batches, one searches for drafts on the first screen and then can
+approve either on the summary screen or the details screen (by clicking
+through).
 
 \section{AP}
 
@@ -1006,7 +1093,7 @@ The AP Invoice section has a capacity to separate internal notes from
 notes printed on the invoice. Note, however, that since these are
 received invoices, it is rare that one needs this ability.
 
-Note that Ledger-SMB can search for partial part numbers or descriptions.
+Note that LedgerSMB can search for partial part numbers or descriptions.
 
 Also if you have a group you can use this to select the part.
 
@@ -1224,7 +1311,7 @@ not discussed in these notes.
 
 A project is a logical collection of AR and AP transactions, orders,
 and the like that allow one to better manage specific service or product
-offerings. Ledger-SMB does not offer comprehensive project management
+offerings. LedgerSMB does not offer comprehensive project management
 capabilities, and projects are only used here as they relate to accounting.
 
 One can also add translated descriptions to the project names as well.
@@ -1284,7 +1371,7 @@ a variety of customers.
 
 \section{Quotations and Order Management}
 
-This unit will introduce the business processes that Ledger-SMB allows.
+This unit will introduce the business processes that LedgerSMB allows.
 These processes are designed to allow various types of businesses
 to manage their orders and allow for rudimentary customer relationship
 management processes to be built around this software. In this section,
@@ -1615,7 +1702,7 @@ All entries are grouped by date and source in this report.
 
 \subsection{GL Basics}
 
-The General Ledger is the heart of Ledger-SMB. Indeed, Ledger-SMB
+The General Ledger is the heart of LedgerSMB. Indeed, LedgerSMB
 is designed to be as close as possible to a software equivalent of
 a paper-based accounting program (but with no difference between the
 General Ledger and General Journal).
@@ -1743,7 +1830,7 @@ J1 &
 
 
 
-\subsubsection{The GL in Ledger-SMB}
+\subsubsection{The GL in LedgerSMB}
 
 The paper-based accounting procedure works well when one is stuck
 with paper recording requirements but it has one serious deficiency---
@@ -1755,18 +1842,18 @@ way a General Journal is used in the paper-based systems and then
 present the same information in ways which are more closely related
 to the General Ledger book.
 
-This is the exact way that the General Ledger is used in Ledger-SMB.
+This is the exact way that the General Ledger is used in LedgerSMB.
 The actual data is entered and stored as if it was a general journal,
 and then the data can be presented in any number of different ways.
 
-All modules of Ledger-SMB that involve COA accounts store their data
+All modules of LedgerSMB that involve COA accounts store their data
 in the General Ledger (it is a little more complex than this but this
 is very close to the actual mechanism).
 
 
 \subsection{Cash Transfer}
 
-The simplest form of GL entry in Ledger-SMB is the Cash-\textgreater
+The simplest form of GL entry in LedgerSMB is the Cash-\textgreater
 Transfer screen. This screen shows two transaction lines, and fields
 for reference, department, description, and notes.
 
@@ -1877,7 +1964,7 @@ stored for reconciliation purposes.%
 
 \subsection{Reports}
 
-The most flexible report in Ledger-SMB is the GL report because it
+The most flexible report in LedgerSMB is the GL report because it
 has access to the entire set of financial transactions of a business.
 Every invoice posted, payment made or received, etc. can be located
 here.
@@ -1920,7 +2007,7 @@ intervals. To schedule any GL, AR, or AP transaction or invoice, click
 the schedule button.
 
 In general the reference number should be left blank as this will
-force Ledger-SMB to create a new invoice or transaction number for
+force LedgerSMB to create a new invoice or transaction number for
 each iteration. The rest of the options are self-explanatory. Note
 that a blank number if iterations will result in no recurrences of
 the transaction.
@@ -1929,6 +2016,8 @@ To process the recurring transactions, click on the Recurring Transactions
 option on the main menu select the ones you want to process and click
 \char`\"{}Process Transactions.\char`\"{}
 
+An enhanced recurring transaction interface is forthcoming from the LedgerSMB
+project.
 
 \section{Financial Statements and Reports}
 
@@ -2006,7 +2095,7 @@ been reconciled.
 If the trial balance does not balance, get technical support immediately.
 This usually means that transactions were not entered properly. Some
 may have been out of balance, or some may have gone into non-existent
-accounts (believe it or not, Ledger-SMB does not check this latter
+accounts (believe it or not, LedgerSMB does not check this latter
 issue).
 
 
@@ -2078,7 +2167,7 @@ need to be addressed.
 \subsection{Balance Sheet}
 
 The balance sheet is the second major accounting statement supported
-by Ledger-SMB. The balance sheet provides a snapshot of the current
+by LedgerSMB. The balance sheet provides a snapshot of the current
 financial health of the business by comparing assets, liabilities,
 and equity.
 
@@ -2122,7 +2211,7 @@ transactions were entered or that transactions did not post properly.
 \subsection{No Statement of Owner Equity?}
 
 The Statement of Owner Equity is the one accounting statement that
-Ledger-SMB does not support. However, it can be simulated by running
+LedgerSMB does not support. However, it can be simulated by running
 a balance sheet at the end of the time frame in question and comparing
 it to the beginning. One can check this against an income statement
 for the period in question to verify its accuracy. The statement of
@@ -2131,7 +2220,7 @@ owner equity is not as commonly used now as it once was.
 
 \section{The Template System}
 
-Ledger-SMB allows most documents to be generated according to a template
+LedgerSMB allows most documents to be generated according to a template
 system. This allows financial statements, invoices, orders, and the
 like to be customized to meet the needs of most businesses. Company
 logos can be inserted, the format can be radically altered, one can
@@ -2155,7 +2244,7 @@ The first two lines are:\\
  \textless\%address align=center width=40\%\textgreater\\
 
 
-The first line tells Ledger-SMB to print the company name as passed
+The first line tells LedgerSMB to print the company name as passed
 to it via a variable, centered, with a page width of 40 characters.
 The second line does the same thing with the address.
 
@@ -2284,8 +2373,8 @@ the rest of the page format is not thrown off by it.
 \subsection{How are They Stored in the Filesystem?}
 
 The template directory (\char`\"{}templates\char`\"{} in the root
-Ledger-SMB install directory) contains all the root templates used
-by Ledger-SMB. These follow a naming convention of COAType-templatename.ext
+LedgerSMB install directory) contains all the root templates used
+by LedgerSMB. These follow a naming convention of COAType-templatename.ext
 where COAType is the type of dataset that was created when the user
 was created, templatename is the name of the template, and ext is
 either txt, html, or tex (for text, html, and \LaTeX{}\ respectively).
@@ -2293,13 +2382,13 @@ either txt, html, or tex (for text, html, and \LaTeX{}\ respectively).
 Inside this directory are one or more subdirectories where the relevant
 templates have been copied as default language templates for the user.
 Many users can use the same user directory (which bears the name of
-the Ledger-SMB username). Within this directory are more subdirectories
+the LedgerSMB username). Within this directory are more subdirectories
 for translated templates, one for each language created.
 
 
 \subsection{Upgrade Issues}
 
-When Ledger-SMB is upgraded, the templates are not replaced. This
+When LedgerSMB is upgraded, the templates are not replaced. This
 is designed to prevent the upgrade script from overwriting changes
 made during the course of customizing the templates.
 
@@ -2317,12 +2406,6 @@ The command-line API will be referred to as the API.
 
 \subsection{Preliminaries}
 
-Logging into Ledger-SMB (1.2+) updates a row in the users\_conf table
-containing your account configuration defaults and other information. 
-The implication for API users of LSMB is that you must login as part 
-of running API scripts. For security purposes, it is recommended that
-scripts prompt for a password rather than storing it.
-
 All scripts included in the documentation can also be found in the doc/samples
 directory.
 
@@ -2332,10 +2415,10 @@ Consider a simple example:
 ./ct.pl "login=name\&path=bin\&password=xxxxx\&action=search\&db=customer"
 
 The cd command moves your terminal session's current working directory into
-the main Ledger-SMB directory. Then the Ledger-SMB perl script ct.pl is called 
+the main LedgerSMB directory. Then the LedgerSMB perl script ct.pl is called 
 with one long line as an argument. The argument is really several variable=value pairs
 separated by ampersands (\&). The value for the login variable is the username
-that Ledger-SMB is to use, and the value for the password variable is the plaintext password.
+that LedgerSMB is to use, and the value for the password variable is the plaintext password.
 
 To build our examples we will use a username of "clarkkent" who has a password
 of "lOis,lAn3".
@@ -2356,8 +2439,8 @@ to do some useful work.
 This is a bash script which:
 
  1. sets NOW to the current working directory
- 2. prompts for and reads your Ledger-SMB login
- 3. prompts for and reads (non-echoing) your Ledger-SMB password
+ 2. prompts for and reads your LedgerSMB login
+ 3. prompts for and reads (non-echoing) your LedgerSMB password
  4. changes directory to /usr/local/ledger-smb
  5. constructs login and logout commands and a transaction command
  6. logins into ledger-smb (in a real program, output would be checked for
@@ -2371,9 +2454,9 @@ Running lsmb01-cli-example.sh produces:
 
 \$ lsmb01-cli-example.sh 
 
-Ledger-SMB login: clarkkent
+LedgerSMB login: clarkkent
 
-Ledger-SMB password: 
+LedgerSMB password: 
 
 \begin{verbatim}
 <body>
@@ -2460,7 +2543,7 @@ above, though it is still fairly limited. If your needs require, rather than hav
 the script build and then execute the commands it could be written to generate a 
 shell script which is executed by hand. 
 
-This script begins by prompting for your Ledger-SMB login and password. Using
+This script begins by prompting for your LedgerSMB login and password. Using
 the supplied values a login command is constructed and passed into the runLScmd
 subroutine. runLScmd changes directory to /usr/local/ledger-smb/ for the length 
 of the subroutine. It formats the command and executes it and returns both the 
@@ -2643,7 +2726,7 @@ save|vendor|Consolidated Spackle|1379|1010 Binary Lane|Dept 1101|Beverly Hills|C
 
 \section{Basic Architecture}
 
-Ledger-SMB is a web-based Perl program that interfaces with PostgreSQL
+LedgerSMB is a web-based Perl program that interfaces with PostgreSQL
 using the relevant Perl modules. The code is well partitioned, and
 the main operation modules are written in an object oriented way.
 
@@ -2655,29 +2738,29 @@ the main operation modules are written in an object oriented way.
  \label{fig-sl-stack} \input{sl-stack.tex} 
 
 
-\caption{The Ledger-SMB software stack in a Typical Implementation}
+\caption{The LedgerSMB software stack in a Typical Implementation}
 \end{figure}
 
 
-Ledger-SMB runs in a Perl interpreter. I do not currently know if
+LedgerSMB runs in a Perl interpreter. I do not currently know if
 it is possible to run it with Perl2C or other language converters
 to run in other environments. However, except for high-capacity environments,
 Perl is a good language choice for this sort of program.
 
-Ledger-SMB used to support DB2 and Oracle as well as PostgreSQL. However,
+LedgerSMB used to support DB2 and Oracle as well as PostgreSQL. However,
 currently some of the functionality is implemented using PostgreSQL
 user-defined functions. These would need to be ported to other database
 managers in order to make the software work on these. It should not
 be too hard, but the fact that it has not been done yet may mean that
 there is no real demand for running the software under other RDBMS's.
 
-One can substitute other web servers for Apache. Normally Ledger-SMB
+One can substitute other web servers for Apache. Normally LedgerSMB
 is run as a CGI program but it may be possible to run it in the web
 server process (note that this may not be entirely thread-safe).
 
 The operating system can be any that supports a web server and Perl
 (since PostgreSQL need not run on the same system). However, there
-are a few issues running Ledger-SMB on Windows (most notably in trying
+are a few issues running LedgerSMB on Windows (most notably in trying
 to get Postscript documents to print properly).
 
 On the client side, any web-browser will work. Currently, the layout
@@ -2689,29 +2772,29 @@ properly, though the application is usable without these features.
 
 \subsection{Capacity Planning}
 
-Some companies may ask how scalable Ledger-SMB is. In general, it
+Some companies may ask how scalable LedgerSMB is. In general, it
 is assumed that few companies are going to have a need for a high-concurrency
-accounting system. However, with all the features available in Ledger-SMB,
+accounting system. However, with all the features available in LedgerSMB,
 the staff that may have access to some of the application may be senior
 enough to make the question worthwhile.
 
 This question also becomes more important when companies might look
-at integrating Ledger-SMB with a CRM solution, online store, or other
+at integrating LedgerSMB with a CRM solution, online store, or other
 environment. This section looks at a number of the known issues and
 their solutions.
 
 
 \subsubsection{Scalability Strategies}
 
-Ledger-SMB is a fairly standard web-based application. However,
+LedgerSMB is a fairly standard web-based application. However,
 sometimes the database schema changes during upgrades. In these cases,
 it becomes impossible to use different versions of the software against
-the same database version safely. Ledger-SMB checks the version of
+the same database version safely. LedgerSMB checks the version of
 the database and if the version is higher than the version of the
 software that is running, will refuse to run.
 
 Therefore although one strategy might be to run several front-end
-web servers with Ledger-SMB, in reality this can be a bit of a problem.
+web servers with LedgerSMB, in reality this can be a bit of a problem.
 One solution is to take half of the front-end servers off-line while
 doing the initial upgrade, and then take the other offline to upgrade
 when these are brought back online.
@@ -2727,8 +2810,9 @@ be able to move staff who do not need real-time access to new entries
 onto a PG-Pool/Slony-I cluster where new transactions are entered
 on the master and other data is looked up on the replica. In certain
 circumstances, one can also offload a number of other queries from
-the master database in order to minimize the load. Ledger-SMB has
-very few issues in the scalability of the application.
+the master database in order to minimize the load. LedgerSMB has
+very few issues in the scalability of the application, and those we find, we
+correct as quickly as possible.
 
 
 \subsubsection{Database Maintenance}
@@ -2742,7 +2826,7 @@ those old rows are removed, performance can degrade as PostgreSQL
 has to search through all the old versions of the row in order to
 determine which one ought to be the current one.
 
-Due to the way the SQL statements are executed in Ledger-SMB, most
+Due to the way the SQL statements are executed in LedgerSMB, many
 inserts will also create a dead row.
 
 A second problem occurs in that each transaction is given a transaction
@@ -2799,20 +2883,20 @@ the source code and edit the database queries to omit unused tables.
 
 \section{Customization Possibilities}
 
-Ledger-SMB is designed to be customized relatively easily and rapidly.
+LedgerSMB is designed to be customized relatively easily and rapidly.
 In general, the source code is well written and compartmentalized.
 This section covers the basic possibilities involving customization.
 
 
 \subsection{Brief Guide to the Source Code}
 
-Ledger-SMB is an application with over 34000 lines of code. While
+LedgerSMB is an application with over 34000 lines of code. While
 it is not possible to cover the entire application here, a brief overview
 of the source code is in order.
 
 In the root of the install directory, one will find a setup.pl program,
 a number of other .pl programs, and a number of directories. The setup.pl
-program is used to update or install Ledger-SMB. The other .pl programs
+program is used to update or install LedgerSMB. The other .pl programs
 provide a basic set of services for the framework (including authentication)
 and then pass the work on to the data entry screen file in the bin
 directory.
@@ -2828,12 +2912,12 @@ The css directory in the root install directory contains CSS documents
 to provide various stylesheets one can select for changing various
 aspects of the look and feel of the application.
 
-The locale directory contains translation files that Ledger-SMB uses
+The locale directory contains translation files that LedgerSMB uses
 to translate between different languages. One could add translations
 to these files if necessary.
 
 The LSMB directory is where the Perl modules reside that provide the
-core business logic in Ledger-SMB. These modules provide functionality
+core business logic in LedgerSMB. These modules provide functionality
 such as form handling, email capabilities, and access to the database
 through its at least partially object oriented API.
 
@@ -2854,7 +2938,7 @@ on the last partnumber field, removed separate print and post buttons
 to ensure that invoices were always printed and posted together, and
 removed the ability to print to the screen, and even the ability to
 scan items in when an invoice was received (using a portable data
-terminal) and import this data into Ledger-SMB. Finally we added the
+terminal) and import this data into LedgerSMB. Finally we added the
 ability to reconcile the till online in a paperless manner.
 
 For another customer, we added the ability to print AR invoices in
@@ -2898,9 +2982,9 @@ on load.
 \subsection{Reports}
 
 The fact that all the data is available within the database manager
-is a huge advantage of Ledger-SMB over Quickbooks and the like. The
+is a huge advantage of LedgerSMB over Quickbooks and the like. The
 rapid development of reports allows for one to easily develop reports
-of any sort within Ledger-SMB.
+of any sort within LedgerSMB.
 
 
 \subsubsection{Examples}
@@ -2920,7 +3004,7 @@ integrate a large number of tools.
 \subsection{Reporting Tools}
 
 Any reporting tool which can access the PostgreSQL database can be
-used with Ledger-SMB for custom reporting. These can include programs
+used with LedgerSMB for custom reporting. These can include programs
 like Microsoft Access and Excel (using the ODBC drivers), PgAccess
 (A PostgreSQL front-end written in TCL/Tk with a similar feel to Access),
 Rekall, Crystal Reports, OpenOffice and more.
@@ -2933,7 +3017,7 @@ used the ODBC driver to import these into Excel. Excel can also read
 HTML tables, so one can use PostgreSQL to create an HTML table of
 the result and save it with a .xls extension so that Windows opens
 it with Excel. These could then be served via the same web server
-that serves Ledger-SMB.
+that serves LedgerSMB.
 
 
 \subsection{Line of Business Tools on PostgreSQL}
@@ -2941,14 +3025,14 @@ that serves Ledger-SMB.
 Various line of business tools have been written using PostgreSQL
 in large part due to the fact that it is far more mature than MySQL
 in areas relating to data integrity enforcement, transactional processing,
-and the like. These tools can be integrated with Ledger-SMB in various
+and the like. These tools can be integrated with LedgerSMB in various
 ways. One could integrate this program with the HERMES CRM framework,
 for example.
 
 
 \subsubsection{Known Issues}
 
-Ledger-SMB uses a single 'id' sequence across many tables. At the
+LedgerSMB uses a single 'id' sequence across many tables. At the
 same time it is expected that these tables do not have identical id
 values in their records as they are used as a sort of pseudo-foreign
 key by the acc\_trans table which stores the financial transaction
@@ -2967,13 +3051,13 @@ from integration in the same database but under different schemas.
 This allows PostgreSQL to become the main method of synchronizing
 the data in real time. However, sometimes this can require dumping
 the database, recreating the tables etc. in a different schema and
-importing the data back into Ledger-SMB.
+importing the data back into LedgerSMB.
 
 One possibility for this sort of integration is to use database triggers
 to replicate the data between the applications in real-time. This
 can avoid the main issue of duplicate id's. One issue that can occur
 however relates to updates. If one updates a customer record in HERMES,
-for example, how do we know which record to update in Ledger-SMB?
+for example, how do we know which record to update in LedgerSMB?
 There are solutions to this problem but they do require some forethought.
 
 A second possibility is to use views to allow one application to present
@@ -2984,15 +3068,15 @@ fields.
 
 \subsubsection{Examples}
 
-Others have integrated L'ane POS and Ledger-SMB in order to make it
+Others have integrated L'ane POS and LedgerSMB in order to make it
 work better with touch screen devices. Still others have successfully
-integrated Ledger-SMB and Interchange. In both cases, I believe that
+integrated LedgerSMB and Interchange. In both cases, I believe that
 triggers were used to perform the actual integration.
 
 
 \subsection{Line of Business Tools on other RDBMS's}
 
-Often there are requests to integrate Ledger-SMB with applications
+Often there are requests to integrate LedgerSMB with applications
 like SugarCRM, OSCommerce, and other applications running on MySQL
 or other database managers. This is a far more complex field and it
 requires a great deal more effort than integrating applications within
@@ -3013,7 +3097,7 @@ In general, it is usually advisable to add two fields to the record--
 one that shows the insert time and one that shows the last update.
 
 Additionally, I would suggest adding additional information to the
-Ledger-SMB tables so that you can track the source record from the
+LedgerSMB tables so that you can track the source record from the
 other application in the case of an update.
 
 In general, one must write replication scripts that dump the information
@@ -3051,7 +3135,7 @@ as instantiating the form object, ensuring that the user is logged
 in, and the like. They then pass the execution off to the user interface
 script (usually in the bin/mozilla directory).
 
-Ledger-SMB in many ways may look sort of object oriented in its design,
+LedgerSMB in many ways may look sort of object oriented in its design,
 but in reality, it is far more data-driven than object oriented. The
 Form object is used largely as a global symbol table and also as a
 collection of fundamental routines for things like database access.
@@ -3067,7 +3151,7 @@ object.
 \subsection{Customizing Templates}
 
 Templates are used to generate printed checks, invoices, receipts,
-and more in Ledger-SMB. Often the format of these items does not fit
+and more in LedgerSMB. Often the format of these items does not fit
 a specific set of requirements and needs to be changed. This document
 will not include \LaTeX{} or HTML instruction, but will include a
 general introduction to editing templates. Also, this is not intended
@@ -3143,7 +3227,7 @@ with two passes (if the inclusion of the cross-reference data moves
 the object to another page). In this case you will need to use three
 passes of \LaTeX{}\ in order to have accurate references.
 
-Ledger-SMB as of the time of this writing (2.6.8) only makes one pass
+LedgerSMB as of the time of this writing (2.6.8) only makes one pass
 at the \LaTeX{}\ file. To force it to make more than one pass, open
 Form.pm with your favorite text editor. Look for the line:
 
@@ -3175,7 +3259,7 @@ alignment).
 \subsection{Customizing Forms}
 
 Data entry forms and other user interface pieces are in the bin directory.
-In Ledger-SMB 1.0.0 and later, symlinks are not generally used.
+In LedgerSMB 1.0.0 and later, symlinks are not generally used.
 
 Each module is identified with a two letter combination: ar, ap, cp,
 etc. These combinations are generally explained in the comment headers
@@ -3241,7 +3325,7 @@ LedgerSMB.  You can find his page at \url{http://www.sql-ledger.org/cgi-bin/nav.
 
 \section{Where to Go for More Information}
 
-There are a couple of relevant sources of information on Ledger-SMB
+There are a couple of relevant sources of information on LedgerSMB
 in particular.
 
 The most important resources are the LedgerSMB web site 
@@ -3249,7 +3333,7 @@ The most important resources are the LedgerSMB web site
 site.
 
 In addition, it is generally recommended that the main bookkeeper
-of a company using Ledger-SMB work through at least one accounting
+of a company using LedgerSMB work through at least one accounting
 textbook. Which textbook is not as important as the fact that a textbook
 is used.
 
@@ -3287,7 +3371,7 @@ it is posted as an expense.
 \subsection{Common Installation Errors}
 
 \begin{itemize}
-\item Ledger-SMB is generally best installed in its own directory outside
+\item LedgerSMB is generally best installed in its own directory outside
 of the wwwroot directory. While it is possible to install it inside
 the wwwroot directory, the instructions and the faq don't cover the
 common problems here. 
@@ -3304,7 +3388,7 @@ For purposes of this example we will use a business that assembles
 computers and sells them on a retail store. 
 
 \begin{enumerate}
-\item Install Ledger-SMB.
+\item Install LedgerSMB.
 \item Set preferences, and customize chart of accounts.
 
 \begin{enumerate}
@@ -3371,14 +3455,14 @@ the record and optionally use it to create an invoice, etc.
 
 \begin{itemize}
 \item Saving a customer returns to the customer screen. After the appropriate
-invoice, transaction, etc. is entered and posted, Ledger-SMB will
+invoice, transaction, etc. is entered and posted, LedgerSMB will
 return to the add customer screen. 
 \end{itemize}
 \end{itemize}
 \item One can use the requirements report to help determine what parts need
 to be ordered though one cannot generate PO's directly from this report.
 \end{enumerate}
-Note, the needs of Ledger-SMB are mostly useful for light manufacturing
+Note, the needs of LedgerSMB are mostly useful for light manufacturing
 operations (assembling computers, for example). More manufacturing
 capabilities are expected to be released in the next version.
 
@@ -3450,5 +3534,4 @@ net due on an invoice before it is late and incurs late fees.  Sometimes
 you will see 2 10 net 30 or similar.  This means 2\% discount if paid within
 10 days but due within 30 days in any case.
 \end{description}
-\input{fdl.tex} 
 \end{document}
