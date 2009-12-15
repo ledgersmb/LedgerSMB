@@ -214,7 +214,10 @@ sub http_error {
                   others  => {}},
         '401' => {status  => '401 Unauthorized', 
                   message => 'Please enter your credentials', 
-                  others  => {'WWW-Authenticate' => "Basic realm=\"LedgerSMB\""}}
+                  others  => {'WWW-Authenticate' => "Basic realm=\"LedgerSMB\""}
+                 },
+        '454' => {status  => '454 Database Does Not Exist',
+                  message => 'Database Does Not Exist' },
     };
     # Ordinarily I would use $cgi->header to generate the headers
     # but this doesn't seem to be working.  Although it is generally desirable

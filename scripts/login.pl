@@ -53,7 +53,7 @@ sub authenticate {
 	    print "\n";
 	    exit;	    
     }
-    elsif ($request->{dbh} || $request->{log_out}){
+    elsif ($request->{dbh} and !$request->{log_out}){
         print "Content-Type: text/html\n";
         print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
 	    print "Status: 200 Success\n\n";
@@ -61,10 +61,15 @@ sub authenticate {
             exit;
         }
     }
-    else {	
-        print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
-        print "Status: 401 Unauthorized\n\n";
+    else {
+        if ($request->{_auth_error} =~/database/i){
+            print "Status: 454 Database Does Not Exist\n\n";
+            print "No message here";
+        } else {
+            print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
+            print "Status: 401 Unauthorized\n\n";
 	    print "Please enter your credentials.\n";
+        } 
         exit; 
     }
 }

@@ -744,6 +744,9 @@ sub _db_init {
 
     if (($self->{script} eq 'login.pl') && ($self->{action} eq 
         'authenticate')){
+        if (!$dbh){
+            $self->{_auth_error} = $DBI::errstr;
+        }
 
         return;
     }

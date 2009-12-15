@@ -18,7 +18,11 @@ function submit_form() {
 		username, password);
 	http.send("");
         if (http.status != 200){
-		alert("Access Denied:  Bad username/Password");
+                if (http.status != '454'){
+  		     alert("Access Denied:  Bad username/Password");
+                } else {
+                     alert('Company does not exist.');
+                }
 		return false;
 	}
 	document.location = document.login.action + "?action=login&company="+

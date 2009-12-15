@@ -118,6 +118,11 @@ be available as system packages for your linux distribution:
 $ perl -v | grep v5.
 This is perl, v5.8.8 built for i686-linux
 
+Using the Makefile.PL requires Module::Install. If you do not have 
+Module::Install loaded on your system, you can install it using:
+
+# cpan Module::Install
+
 Run Makefile.PL to check for LedgerSMB's Perl dependencies. The output should be
 similar to the following:
 
