@@ -1,5 +1,10 @@
 use Test::More;
 our $lwp_tests = {};
+
+# Added to support the entity ID test.
+our %GLOBAL;
+#
+
 our $test_request_data = [
 	# AR/AP Transaction Screen Tests
 	{
@@ -14,6 +19,58 @@ our $test_request_data = [
 		'module'    => 'ap.pl',
 		'action'    => 'add'
 	},
+	
+	# Tests adding a new customer/vendor.
+	
+	{
+	    "_test_id"      => "AP Add Vendor",
+	    "_codebase"     => "new",
+	    "action"        => "add",
+	    "module"        => "customer.pl",
+	    "control_code"  => "TestableEntityObject",
+	    "name"          => "TestObj",
+	    "_lwp_tests"    => sub {
+	        # Catch the entity ID, and pass it forwards.
+	        # Res is the full LWP response object.
+	        # ~A
+	        my $res = shift @_;
+	        ($GLOBAL{"entity_id"}) = \
+	            ($res->content =~ m/\<input id="entity-id" type="hidden" name="entity_id" value="(\d+)" \/\>/);
+	        return 1;
+	    },
+	},
+	
+	{
+	    "_test_id"          => "AP Save Vendor",
+	    "_codebase"         => "new",
+	    "module"            => "customer.pl",
+	    "action"            => "save",
+	    "pay_to_name"       => "TestEntity",
+	    "entity_id"         => $GLOBAL{"entity_id"},
+	    "control_code"      => "TestableEntityObject",
+	    "ar_ap_account_id"  => 10,
+	    "cash_account_id"   => 1,
+	    "_lwp_tests"        => sub {
+	        
+	        my $res = shift @_;
+	        ($GLOBAL{"vendor_id"}) = \
+	            ($res->content =~ m/\<input id="meta-number" type="text" name="meta_number" size="20" value="(\d+)" maxlength="255" \/\>/);
+	    },
+	},
+	{
+	    "_test_id"          => "AP Add Transaction",
+	    "_codebase"         => "old",
+	    "module"            => "ap.pl",
+	    "action"            => "post",
+	    "vendor"            => "TestObj",
+	    "currency"          => "USD",
+	    "amount_1"          => "5",
+	    "AP_amount_1"       => "5010--Purchases",
+	    "AP"                => "2100--Accounts Payable",
+	    "transdate"         => "2009-12-08",
+	    "AP_paid_1"         => "1060--Checking Account"
+	},
+	
 	# Create Batch Screens
 	{
 		'_test_id'   => 'AR Transaction Voucher Screen',
@@ -188,7 +245,7 @@ our $test_request_data = [
 		'contact_1'	=> '25',				
 		'id_25'         => '25',				
 		'paid_25'       => 'all',		
-                'payment_209'   => '1000.00',	
+        'payment_209'   => '1000.00',	
 		'invoice_25_1'  => 209,
 		'net_209'	=> '1000.00',				
 		'payment_210'	=> '-100.00',

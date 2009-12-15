@@ -1016,7 +1016,8 @@ CREATE TABLE ar (
   shippingpoint text,
   terms int2 DEFAULT 0,
   notes text,
-  curr char(3),
+  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
+      OR (amount IS NOT NULL AND curr IS NOT NULL)),
   ordnumber text,
   person_id integer references entity_employee(entity_id),
   till varchar(20),
@@ -1050,7 +1051,8 @@ CREATE TABLE ap (
   duedate date,
   invoice bool DEFAULT 'f',
   ordnumber text,
-  curr char(3),
+  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
+    OR (amount IS NOT NULL AND curr IS NOT NULL)) , -- This can be null, but shouldn't be.
   notes text,
   person_id integer references entity_employee(entity_id),
   till varchar(20),
