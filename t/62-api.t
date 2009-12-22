@@ -41,7 +41,7 @@ for my $test (@$test_request_data){
 	if (lc $test->{_codebase} eq 'old'){
 		next; # skip old codebase tests for now
 		old_code_test::_load_script($test->{module});
-		my $qtring = "$test->{module}?";
+		my $qstring = "$test->{module}?";
 		for $key (keys(%$test)){
 			if ($key !~ /^_/){
 				$qstring .= qq|$key=$test->{"$key"}&|;
