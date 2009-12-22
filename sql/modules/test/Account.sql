@@ -15,8 +15,8 @@ values (-100, 'test1', 'test', 3, 242);
 INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id) 
 values (-100, 'test1', -100, 1, -1000);
 
-INSERT INTO ap (invnumber, netamount, amount, entity_credit_account, id) 
-VALUES ('TEST', '0', '0', -100, -100);
+INSERT INTO ap (invnumber, netamount, amount, entity_credit_account, id, curr) 
+VALUES ('TEST', '0', '0', -100, -100, 'USD');
 INSERT INTO acc_trans (trans_id, chart_id, amount)
 VALUES (-100, currval('account_id_seq')::int, '0');
 
