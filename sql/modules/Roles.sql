@@ -549,11 +549,9 @@ IN ROLE "lsmb_<?lsmb dbname ?>__pos_cashier",
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter"
 WITH INHERIT NOLOGIN;
 
--- GRANT INSERT ON pending_reports TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
--- GRANT INSERT on report_corrections TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+ GRANT INSERT ON cr_reports TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
--- GRANT ALL ON pending_reports_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
--- GRANT ALL ON report_corrections_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+ GRANT ALL ON cr_reports_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
@@ -564,7 +562,7 @@ values (45, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_approve"
 WITH INHERIT NOLOGIN;
 
--- GRANT UPDATE ON pending_reports TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+GRANT UPDATE ON cr_reports TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -584,7 +582,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__payment_process"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__payment_process";
+GRANT SELECT, INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT UPDATE ON ap TO "lsmb_<?lsmb dbname ?>__payment_process";
 
@@ -1445,6 +1443,7 @@ GRANT SELECT ON salutation TO public;
 GRANT SELECT ON partscustomer TO public;
 GRANT SELECT ON assembly TO public;
 GRANT SELECT ON jcitems TO public;
+GRANT SELECT ON payment_type TO public;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 
