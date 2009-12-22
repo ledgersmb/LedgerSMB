@@ -549,7 +549,10 @@ IN ROLE "lsmb_<?lsmb dbname ?>__pos_cashier",
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter"
 WITH INHERIT NOLOGIN;
 
- GRANT INSERT ON cr_reports TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+ GRANT INSERT ON cr_report, cr_report_line 
+TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+GRANT DELETE ON cr_report_line
+TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
  GRANT ALL ON cr_reports_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
@@ -562,7 +565,7 @@ values (45, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_approve"
 WITH INHERIT NOLOGIN;
 
-GRANT UPDATE ON cr_reports TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
