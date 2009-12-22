@@ -22,13 +22,19 @@ our $test_request_data = [
 	
 	# Tests adding a new customer/vendor.
 	
+	#https://127.0.0.1/ledgersmb/vendor.pl?login=aurynn_lsmb&module=vendor.pl&action=add&db=vendor&
 	{
 	    "_test_id"      => "AP Add Vendor",
 	    "_codebase"     => "new",
-	    "action"        => "add",
-	    "module"        => "customer.pl",
-	    "control_code"  => "TestableEntityObject",
+	    "action"        => "save",
+	    "module"        => "vendor.pl",
+	    "control_code"  => "TestAddVendorObj",
 	    "name"          => "TestObj",
+	    "country_id_t"  => 232,
+	    "account_class" => 1,
+	    "created_as_class" => 1,
+	    "db"            => "vendor",
+	    "_script_handle" => "LedgerSMB::Scripts::vendor",
 	    "_lwp_tests"    => sub {
 	        # Catch the entity ID, and pass it forwards.
 	        # Res is the full LWP response object.
@@ -43,13 +49,19 @@ our $test_request_data = [
 	{
 	    "_test_id"          => "AP Save Vendor",
 	    "_codebase"         => "new",
-	    "module"            => "customer.pl",
+	    "module"            => "vendor.pl",
 	    "action"            => "save",
 	    "pay_to_name"       => "TestEntity",
 	    "entity_id"         => $GLOBAL{"entity_id"},
-	    "control_code"      => "TestableEntityObject",
+	    "control_code"      => "TestAddVendorObj",
 	    "ar_ap_account_id"  => 10,
 	    "cash_account_id"   => 1,
+	    "country_id_t"  => 232,
+	    "account_class" => 1,
+	    "created_as_class" => 1,
+	    "db"            => "vendor",
+	    "name"          => "TestObj",
+	    "_script_handle" => "LedgerSMB::Scripts::vendor",
 	    "_lwp_tests"        => sub {
 	        
 	        my $res = shift @_;
