@@ -256,10 +256,10 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 }
             }
         }
-
         $linetotal = $form->round_amount( $form->{"sellprice_$i"}
-                                          * (1 - ($form->{"discount_$i"} / 100),
+                                          * (1 - ($form->{"discount_$i"} / 100)),
                                           $decimalplaces);
+
         $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 2 );
 
         if (
