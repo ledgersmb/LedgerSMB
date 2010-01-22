@@ -2336,6 +2336,10 @@ sub config {
 	  <td>
 	    <table>
 	      <tr>
+		<th align="right">| . $locale->text('Old Password') . qq|</th>
+		<td><input type=password name=old_password size=10 value=""></td>
+	      </tr>
+	      <tr>
 		<th align="right">| . $locale->text('Password') . qq|</th>
 		<td><input type=password name=new_password size=10 value="$myconfig{password}"></td>
 	      </tr>

@@ -1354,9 +1354,13 @@ sub save_preferences {
       company menuwidth countrycode address timeout stylesheet
       printer password);
 
-    $myconfig->{password} = $form->{new_password}
-      if ( $form->{old_password} ne $form->{new_password} );
-
+    if ( $form->{old_password} && $form->{new_password}  
+           && $form->{new_password} eq $form->{confirm_password}
+    ){
+         $myconfig->{password} = $form->{new_password};
+         $myconfig->{if_old_password} = $form->{old_password};
+    }
+    $myconfig->{save_preferences} = '1';
     $myconfig->save_member();
 
     1;

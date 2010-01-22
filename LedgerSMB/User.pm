@@ -697,7 +697,19 @@ sub save_member {
         $userConfAdd->execute( $self->{login} );
         ($userID) = $userConfAdd->fetchrow_array;
     }
-
+    if ($self->{save_preferences}){
+        if (!$userConfExists){
+            $self->error("Access Denied");
+        }
+        if ($self->{if_old_password}){
+            my $sth = $dbh->prepare('SELECT CASE WHEN password = md5(?) THEN 1 ELSE 0 END FROM users_conf where id = ?');
+            $sth->execute($self->{if_old_password}, $userID);
+            my ($eval) = $sth->fetchrow_array();
+            if ($eval == 0){
+                $self->error("Access Denied");
+            }
+        }
+    }
     if ($userConfExists) {
 
         # for now, this is updating the table directly... ugly
