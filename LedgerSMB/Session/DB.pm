@@ -103,7 +103,10 @@ sub session_check {
               $sessionID . ':' . $newTransactionID . ':' . $token;
 
             #now update the cookie in the browser
-            print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
+            if ($ENV{SERVER_PORT} == 443){
+                $secure = ' Secure;';
+            }
+            print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;$secure\n|;
             return 1;
 
         }
@@ -202,7 +205,11 @@ sub session_create {
 
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
-    print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;\n|;
+    my $secure = '';
+    if ($ENV{SERVER_PORT} == 443){
+        $secure = ' Secure;';
+    }
+    print qq|Set-Cookie: LedgerSMB=$newCookieValue; path=/;$secure\n|;
     $form->{LedgerSMB} = $newCookieValue;
 }
 
@@ -226,7 +233,11 @@ sub session_destroy {
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
     #delete the cookie in the browser
-    print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
+    my $secure = '';
+    if ($ENV{SERVER_PORT} == 443){
+        $secure = ' Secure;';
+    }
+    print qq|Set-Cookie: LedgerSMB=; path=/;$secure\n|;
 
 }
 
