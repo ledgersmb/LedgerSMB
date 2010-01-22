@@ -46,7 +46,25 @@ sub save_preferences {
 }
 
 sub change_my_password {
+    use LedgerSMB::Auth;
     my ($self) = @_;
+    my $old_dbh = $self->{dbh};
+
+    my $creds = LedgerSMB::Auth::get_credentials();
+  
+    $self->{login} = $creds->{login};
+    my $dbname = $self->{company};
+
+    # Note that we have to request the login/password again if the db
+    # connection fails since this probably means bad credentials are entered.
+    # Just in case, however, I think it is a good idea to include the DBI
+    # error string.  CT
+    $self->{dbh} = DBI->connect(
+        "dbi:Pg:dbname=$dbname", "$self->{login}", "$self->{old_password}", { AutoCommit => 0 }
+    ); 
+    if (!$self->{dbh}){
+        $self->error($self->{_locale}->text('Incorrect Password'));
+    }
     if ($self->{new_password} ne $self->{confirm_password}){
         $self->error($self->{_locale}->text('Passwords must match.'));
         die;
@@ -54,6 +72,8 @@ sub change_my_password {
     $self->{password} = $self->{new_password};
     $self->exec_method(funcname => 'user__change_password');
     $self->{dbh}->commit;
+    $self->{dbh}->disconnect;
+    $self->{dbh} = $old_dbh;
 }
 
 

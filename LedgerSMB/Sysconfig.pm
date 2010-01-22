@@ -80,6 +80,8 @@ $gzip = "gzip -S .gz";
 # Path to the translation files
 $localepath = 'locale/po';
 
+$no_db_str = 'database';
+
 # available printers
 %printer;
 
@@ -90,7 +92,7 @@ read_config( 'ledgersmb.conf' => %config ) or die;
 for $var (
     qw(pathsep logging check_max_invoices language auth latex
     db_autoupdate force_username_case max_post_size decimal_places cookie_name
-    return_accno)
+    return_accno no_db_str)
   )
 {
     ${$var} = $config{''}{$var} if $config{''}{$var};
@@ -147,5 +149,5 @@ $ENV{PGHOST} = $config{database}{host};
 $ENV{PGPORT} = $config{database}{port};
 our $default_db = $config{database}{default_db};
 our $db_namespace = $config{database}{db_namespace};
-
+$ENV{PGSSLMODE} = $config{database}{sslmode} if $config{database}{sslmode};
 1;

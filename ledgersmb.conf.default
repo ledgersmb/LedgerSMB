@@ -4,6 +4,9 @@ logging  : 0
 # Set language for login and admin pages
 language : 
 
+# For Windows, uncomment the pathsep line:
+# pathsep : ;
+
 # If you have LaTeX installed, set to 1
 latex : 1
 
@@ -20,6 +23,14 @@ decimal_places : 2
 # Used to keep multiple instances and/or different versions
 # logged in at the same time
 cookie_name : LedgerSMB-1.3
+
+# This is the string we look for in the failed connection error to determine
+# if the database was not found.  For English-language locales, this can be
+# left in place.  If the database server is running a different locale, it may
+# need to be changed.  Any partial match on the connection error assumes that
+# the failure to connect was caused by an invalid database request.
+
+no_db_str : database
 
 [environment]
 # If the server can't find applications, append to the path
@@ -64,3 +75,5 @@ port = 5432
 default_db = lsmb13
 host = localhost
 db_namespace = public
+# sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
+sslmode = prefer

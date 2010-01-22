@@ -13,6 +13,7 @@ Requires: perl >= 5.8, httpd, postgresql >= 8.1, tetex-latex
 Requires: perl-DBD-Pg, perl-DBI >= 1.48, perl-version, perl-Smart-Comments
 Requires: perl-MIME-Lite, perl-Class-Std >= 0.0.8
 Requires: perl-Config-Std >= 0.0.4, perl-Locale-Maketext-Lexicon >= 0.62
+Requires: perl-IO-String
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no

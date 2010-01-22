@@ -5,6 +5,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Form; # Required for now to integrate with menu module.
 use LedgerSMB::User;
 use LedgerSMB::Auth;
+use LedgerSMB::Sysconfig;
 use strict;
 
 # this is kind of silly, as it doesn't check if someone IS trying to log in.
@@ -62,7 +63,7 @@ sub authenticate {
         }
     }
     else {
-        if ($request->{_auth_error} =~/database/i){
+        if ($request->{_auth_error} =~/$LedgerSMB::Sysconfig::no_db_str/i){
             print "Status: 454 Database Does Not Exist\n\n";
             print "No message here";
         } else {

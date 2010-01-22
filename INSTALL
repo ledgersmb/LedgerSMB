@@ -332,7 +332,7 @@ Insert myuser Entity
 
 Using the psql console, insert myuser to the entity table.
 
-$ psql -U postgres -d mycompany -t -c "INSERT INTO entity (name, entity_class, created) VALUES ('myuser', 3, NOW()) RETURNING name, entity_class, created;"
+$ psql -U postgres -d mycompany -t -c "INSERT INTO entity (name, entity_class, created, country_id) VALUES ('myuser', 3, NOW(), '232') RETURNING name, entity_class, created;"
  myuser |            3 | 2009-04-13
 
 INSERT 0 1
@@ -343,7 +343,7 @@ Insert myuser Person
 
 Insert the myuser entity into the person table:
 
-$ psql -U postgres -d mycompany -t -c "INSERT INTO person (entity_id, first_name, last_name, created,country_id) VALUES (2, 'Firstname', 'Lastname', NOW(),'232') RETURNING entity_id, first_name, last_name, created;"
+$ psql -U postgres -d mycompany -t -c "INSERT INTO person (entity_id, first_name, last_name, created) VALUES (2, 'Firstname', 'Lastname', NOW()) RETURNING entity_id, first_name, last_name, created;"
          2 | Firstname  | Lastname  | 2009-04-13
 
 INSERT 0 1
