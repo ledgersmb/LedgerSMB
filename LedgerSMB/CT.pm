@@ -43,6 +43,7 @@ sub create_links {
     my $sth;
     my $ref;
     my $arap = ( $form->{db} eq 'customer' ) ? "ar" : "ap";
+    $form->{db} = ( $form->{db} eq 'customer' ) ? "customer" : "vendor";
     my $ARAP = uc $arap;
 
     if ( $form->{id} ) {
@@ -563,6 +564,7 @@ sub delete {
     # connect to database
     my $dbh = $form->{dbh};
 
+    $form->{db} = ( $form->{db} eq 'customer' ) ? "customer" : "vendor";
     # delete customer/vendor
     my $query = qq|DELETE FROM $form->{db}
 					WHERE id = ?|;
@@ -580,6 +582,7 @@ sub search {
 
     # connect to database
     my $dbh = $form->{dbh};
+    $form->{db} = ( $form->{db} eq 'customer' ) ? "customer" : "vendor";
 
     my $where = "1 = 1";
     $form->{sort} = ( $form->{sort} ) ? $form->{sort} : "name";
@@ -875,6 +878,7 @@ sub get_history {
     my $where = "1 = 1";
     $form->{sort} = "partnumber" unless $form->{sort};
     my $sortorder = $form->{sort};
+    $form->{db} = ( $form->{db} eq 'customer' ) ? "customer" : "vendor";
     my %ordinal   = ();
     my $var;
     my $table;
@@ -1056,6 +1060,7 @@ sub pricelist {
     # connect to database
     my $dbh = $form->{dbh};
 
+    $form->{db} = ( $form->{db} eq 'customer' ) ? "customer" : "vendor";
     my $query;
 
     if ( $form->{db} eq 'customer' ) {
@@ -1122,6 +1127,7 @@ sub save_pricelist {
 
     my ( $self, $myconfig, $form ) = @_;
 
+    $form->{db} = ( $form->{db} eq 'customer' ) ? "customer" : "vendor";
     my $dbh = $form->{dbh};
     my $query = qq|
 		DELETE FROM parts$form->{db}
@@ -1189,6 +1195,7 @@ sub save_pricelist {
 sub retrieve_item {
 
     my ( $self, $myconfig, $form ) = @_;
+    $form->{db} = ( $form->{db} eq 'customer' ) ? "customer" : "vendor";
 
     # connect to database
     my $dbh = $form->{dbh};
