@@ -114,7 +114,13 @@ sub session_check {
 
 #something's wrong, they have the cookie, but wrong user or the wrong transaction id. Hijack attempt?
 #destroy the session
-            my $sessionDestroy = $dbh->prepare("");
+             my $deleteExisting = $dbh->prepare(
+                 "DELETE 
+		   FROM session
+		  WHERE session.users_id 
+                        = (select id from users where username = ?)"
+		        );
+             $deleteExisting->execute($myconfig->{login});
 
             #delete the cookie in the browser
             print qq|Set-Cookie: LedgerSMB=; path=/;\n|;
