@@ -42,7 +42,8 @@
 
 use LedgerSMB::Tax;
 
-$form->{currency} = 'USD';
+# If you need to set a currency to be hard-wired, you can do so in this way:
+#$form->{currency} = 'USD';
 1;
 
 # end
