@@ -2291,7 +2291,6 @@ sub config {
 
 <form method=post action=$form->{script}>
 
-<input type=hidden name=old_password value="$myconfig{password}">
 <input type=hidden name=type value=preferences>
 <input type=hidden name=role value="$myconfig{role}">
 
@@ -2434,7 +2433,7 @@ sub save_preferences {
 
     $form->{stylesheet} = $form->{usestylesheet};
 
-    if ( $form->{new_password} ne $form->{old_password} ) {
+    if ( defined $form->{confirm_password} and $form->{confirm_password} ne '') {
         $form->error( $locale->text('Password does not match!') )
           if $form->{new_password} ne $form->{confirm_password};
     }
