@@ -1,3 +1,13 @@
+Changelog for 1.2.19
+* Fixed short sales with never-closed books (Chris T)
+* Fixed erroneous tax rounding in POS screen (Chris T)
+* Fixed XSRF vulnerability that allows changing user's password (Chris T)
+* Corrected SQL Injection vulnerability in customer/vendor handling (Chris T)
+* Cookie now sets SECURE flag when on HTTPS (Chris T)
+* Corrected an issue with URL escaping (M Lubratt)
+* Corrected an issue with email id's (Michael Richardson)
+
+
 Changelog for 1.2.18
 * Corrected httpd configuration bit. (Roderick Anderson)
 * COGS fix for return handling (Sadashiva and Chris T)
