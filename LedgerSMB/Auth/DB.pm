@@ -38,6 +38,7 @@ sub session_check {
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
+    my $secure;
 
    if ($cookie eq 'Login'){
         return session_create($form);
@@ -127,6 +128,7 @@ sub session_check {
 sub session_create {
     my ($lsmb) = @_;
     my $path = ($ENV{SCRIPT_NAME});
+    my $secure;
     $path =~ s|[^/]*$||;
     use Time::HiRes qw(gettimeofday);
     my $dbh = $lsmb->{dbh};
@@ -259,6 +261,7 @@ sub session_destroy {
 
     my ($form) = @_;
     my $path = ($ENV{SCRIPT_NAME});
+    my $secure;
     $path =~ s|[^/]*$||;
 
     my $login = $form->{login};
