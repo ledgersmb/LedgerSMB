@@ -162,7 +162,8 @@ sub add {
 sub display_form
 {
     #Add General Ledger Transaction
-   
+    $form->close_form;
+    $form->open_form; 
     my ($init) = @_; 
     # Form header part begins -------------------------------------------
     if (@{$form->{all_department}}){
@@ -237,6 +238,7 @@ sub display_form
 
   $hiddens{sessionid}=$form->{sessionid};
   $hiddens{callback}=$form->{callback};
+  $hiddens{form_id}= $form->{form_id};
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
   $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
   my @buttons;
@@ -1097,7 +1099,10 @@ sub delete_transaction {
 }
 
 sub post {
-
+    if (!$form->close_form){
+        &update;
+        exit;
+    };
     $form->isblank( "transdate", $locale->text('Transaction Date missing!') );
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
