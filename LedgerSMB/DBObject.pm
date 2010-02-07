@@ -47,8 +47,11 @@ your software.
 package LedgerSMB::DBObject;
 use Scalar::Util;
 use base qw(LedgerSMB);
+use LedgerSMB::Log;
 use strict;
 use warnings;
+
+my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject');
 
 sub __validate__ {}
 
@@ -99,6 +102,7 @@ sub exec_method {
     my $self   = shift @_;
     my %args     = @_;
     my $funcname = $args{funcname};
+    $logger->debug("exec_method: \$funcname = $funcname");
     my @in_args;
     @in_args = @{ $args{args}} if $args{args};
     
@@ -131,17 +135,18 @@ sub exec_method {
     $ref->{pronargs} = 0 unless defined $ref->{pronargs};
     # If the user provided args..
     if (!defined  $args{args}) {
-    
         @proc_args = $self->_parse_array($pargs);
         if (@proc_args) {
             for my $arg (@proc_args) {
                 if ( $arg =~ s/^in_// ) {
+                    $logger->debug("exec_method pushing $arg = $self->{$arg}");
                      push @call_args, $self->{$arg};
                 }
             }
         }
         for (@in_args) { push @call_args, $_ } ;
         $self->{call_args} = \@call_args;
+        $logger->debug("exec_method: \$self = " . Data::Dumper::Dumper($self));
         return $self->call_procedure( procname => $funcname, args => \@call_args, order_by => $self->{_order_method}->{"$funcname"} );
     }
     else {

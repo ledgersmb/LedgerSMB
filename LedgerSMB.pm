@@ -142,6 +142,7 @@ use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
+use LedgerSMB::Log;
 use strict;
 
 $CGI::Simple::POST_MAX = -1;
@@ -149,22 +150,29 @@ $CGI::Simple::POST_MAX = -1;
 package LedgerSMB;
 our $VERSION = '1.2.99';
 
+my $logger = Log::Log4perl->get_logger('LedgerSMB');
+
 sub new {
     my $type   = shift @_;
     my $argstr = shift @_;
     my %cookie;
     my $self = {};
 
+    $logger->debug("Begin LedgerSMB.pm");
 
     $self->{version} = $VERSION;
     $self->{dbversion} = "1.2.0";
     bless $self, $type;
+    $logger->debug("LedgerSMB::new: \$argstr = $argstr");
     my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
-    my $params = $query->Vars;
+    # my $params = $query->Vars; returns a tied hash with keys that
+    # are not parameters of the CGI query.
+    my %params = $query->Vars;
+    $logger->debug("LedgerSMB::new: params = ", Data::Dumper::Dumper(\%params));
     $self->{VERSION} = $VERSION;
     $self->{_request} = $query;
 
-    $self->merge($params);
+    $self->merge(\%params);
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
 
     # Adding this so that empty values are stored in the db as NULL's.  If
@@ -209,6 +217,8 @@ sub new {
     if (!$self->{script}) {
         $self->{script} = 'login.pl';
     }
+    $logger->debug("LedgerSMB.pm: \$self->{script} = $self->{script}");
+    $logger->debug("LedgerSMB.pm: \$self->{action} = $self->{action}");
 #    if ($self->{action} eq 'migrate_user'){
 #        return $self;
 #    }
@@ -222,6 +232,7 @@ sub new {
          $ccookie =~ s/.*:([^:]*)$/$1/;
          $self->{company} = $ccookie;
     }
+    $logger->debug("LedgerSMB.pm: \$self->{company} = $self->{company}");
 
     $self->_db_init;
 
@@ -230,10 +241,11 @@ sub new {
        #check for valid session unless this is an inital authentication
        #request -- CT
        if (!LedgerSMB::Auth::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
-            print STDERR "Session did not check";
+            $logger->error("Session did not check");
             $self->_get_password("Session Expired");
             exit;
        }
+       $logger->debug("LedgerSMB::new: session_check completed OK");
     }
     $self->get_user_info;
     my %date_setting = (
@@ -252,6 +264,8 @@ sub new {
     $self->{_locale} = $locale;
 
     $self->{stylesheet} = $self->{_user}->{stylesheet};
+
+    $logger->debug("End LedgerSMB.pm");
 
     return $self;
 
@@ -725,6 +739,8 @@ sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
+
+    $logger->debug("LedgerSMB::_db_init: start");
   
     $self->{login} = $creds->{login};
     if (!$self->{company}){ 
@@ -811,7 +827,7 @@ sub _db_init {
 #private, for db connection errors
 sub _on_connection_error {
     for (@_){
-        print STDERR "$_\n";
+        $logger->error("$_");
     }
 }
 
@@ -829,8 +845,8 @@ sub dberror{
 	'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
                     $self->{dbh}->errstr,
    };
-   print STDERR "Logging SQL State ".$self->{dbh}->state.", error ".
-           $self->{dbh}->err . ", string " .$self->{dbh}->errstr . "\n";
+   $logger->error("Logging SQL State ".$self->{dbh}->state.", error ".
+           $self->{dbh}->err . ", string " .$self->{dbh}->errstr);
    if (defined $state_error->{$self->{dbh}->state}){
        $self->error($state_error->{$self->{dbh}->state});
        exit;
@@ -886,6 +902,7 @@ sub merge {
         else {
             $dst_arg = $arg;
         }
+        $logger->debug("LedgerSMB.pm: merge setting $dst_arg to $src->{$arg}");
         $self->{$dst_arg} = $src->{$arg};
     }
 }

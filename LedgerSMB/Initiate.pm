@@ -8,6 +8,9 @@ use LedgerSMB::Auth;
 use LedgerSMB::Locale;
 use Data::Dumper;
 use DBI;
+use LedgerSMB::Log;
+
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Initiate');
 
 =over
 
@@ -162,6 +165,7 @@ sub get_countrys
 
 sub validateform
 {
+    $logger->debug("Begin LedgerSMB::Initiate::validateform");
 
     ($self,$form,$locale)=@_;
 
@@ -220,12 +224,13 @@ sub validateform
             );
         }
     }
-
+    $logger->debug("End LedgerSMB::Initiate::validateform");
 }
 
 
 sub save_database
 {
+    $logger->debug("Begin LedgerSMB::Initiate::save_database");
 
 	my($self,$form)=@_;
 	# check all files exist and valids (contrib files , pgdabase.sql and modules and chart accounts etc)
@@ -260,14 +265,20 @@ sub save_database
 
 		#Stage -  Wind up completed the task
 	process_roles($form);
+
+    $logger->debug("End LedgerSMB::Initiate::save_database");
 }
 
+
+
 sub process_roles {
+    $logger->debug("Begin LedgerSMB::Initiate::process_roles");
 	my ($form) = @_;
 	print STDERR "loading roles............\n";
 	LedgerSMB::Initiate->getdbh($form);
 	open (PSQL, '|-', 'psql') || $form->error($locale->text("Couldn't open psql"));
 	my $company = $form->{company};
+    $logger->debug("LedgerSMB::Initiate::process_roles: company = $company");
 
 	open (ROLEFILE, '<', 'sql/modules/Roles.sql') || $form->error($locale->text("Couldn't open Roles.sql"));
 
@@ -290,7 +301,9 @@ sub process_roles {
 			" TO " .
 			$form->{newdbh}->quote_identifier($form->{admin_username});
 	}
-	print PSQL $query;
+	print PSQL "$query";
+
+    $logger->debug("End LedgerSMB::Initiate::process_roles");
 }
 
 sub run_all_sql_scripts

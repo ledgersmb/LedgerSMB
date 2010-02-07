@@ -73,10 +73,19 @@ sub save_credit {
     my $self = shift @_;
     $self->set_entity_class();
     $self->{threshold} = $self->parse_amount(amount => $self->{threshold});
+    $self->{tax_ids} = $self->_db_array_scalars(@{$self->{tax_ids}});
     my ($ref) = $self->exec_method(funcname => 'entity_credit_save');
     $self->{credit_id} = (values %$ref)[0];
     my $dbh=$self->{dbh};
-    $dbh->do("update entity_credit_account set country_taxform_id=$self->{taxform1_id} where id=$self->{credit_id}") if($self->{taxform1_id});
+    if ($self->{taxform1_id}) {
+       my $sth = $dbh->prepare(
+           "update entity_credit_account 
+                set country_taxform_id=? 
+              where id=?"
+       );
+       $sth->execute($self->{taxform1_id}, $self->{credit_id});
+    }
+    $self->exec_method(funcname => 'eca__set_taxes');
     $dbh->commit();
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
     $self->{dbh}->commit;
@@ -144,6 +153,9 @@ sub get_metadata {
 
     @{$self->{entity_classes}} = 
 		$self->exec_method(funcname => 'entity__list_classes');
+
+    @{$self->{all_taxes}} = 
+                $self->exec_method(funcname => 'account__get_taxes');
 
     @{$self->{ar_ap_acc_list}} = 
          $self->exec_method(funcname => 'chart_get_ar_ap');
@@ -244,13 +256,20 @@ sub get {
 
     @{$self->{credit_list}} = 
          $self->exec_method(funcname => 'entity__list_credit');
-
+    $self->{eca_tax} = [];
     for (@{$self->{credit_list}}){
 	if (($_->{credit_id} eq $self->{credit_id}) 
                    or ($_->{meta_number} eq $self->{meta_number})
                    or ($_->{id} eq $self->{credit_id})){
-		$self->merge($_);
-                last;
+            $self->merge($_);
+            if ($_->{entity_class} == 1 || $_->{entity_class} == 2){
+                my @taxes = $self->exec_method(funcname => 'eca__get_taxes');
+                
+                for my $tax (@taxes){
+                    push @{$self->{eca_tax}}, $tax->{chart_id};
+                }
+            }
+            last;
         }
     }
     $self->{name} = $self->{legal_name};

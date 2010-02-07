@@ -57,6 +57,23 @@
                     <input type="textarea" name="employeenumber" value="<?lsmb user.employee.employeenumber?>"/>
                 </td>
             </tr>
+            <tr>
+                <td><?lsmb text('Country') ?></td>
+                <td>
+                    <?lsmb IF edit_location.country; 
+                        country_id = edit_location.country_id;
+                        ELSE; 
+                        country_id = default_country;
+                        END; -?>
+                    <?lsmb PROCESS select element_data = {
+                        name = "country_id"
+                        options = countries
+                        default_values = [country_id]
+                        value_attr = "id"
+                        text_attr = "name"
+                    } ?>
+                </td>
+            </tr>
         </table>
         <button type="submit" value="save_user"><?lsmb text('Save User') ?>
         </button>

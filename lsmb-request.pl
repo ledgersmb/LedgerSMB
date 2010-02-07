@@ -30,12 +30,22 @@ use LedgerSMB::User;
 use LedgerSMB;
 use LedgerSMB::Locale;
 use Data::Dumper;
+use LedgerSMB::Log;
 use strict;
+
+my $logger = Log::Log4perl->get_logger('');
+
+$logger->debug("Begin lsmb-request.pl");
 
 # for custom preprocessing logic
 eval { require "custom.pl"; };
 
+$logger->debug("lsmb-request.pl: getting request");
+
 my $request = new LedgerSMB;
+
+$logger->debug("lsmb-request.pl: Got request");
+
 $request->{action} = '__default' if (!$request->{action});
 
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
@@ -47,7 +57,11 @@ if (!$script){
 	$request->error($locale->text('No workflow script specified'));
 }
 
+$logger->debug("calling $script");
+
 &call_script( $script, $request );
+
+$logger->debug("End lsmb-request.pl");
 
 sub call_script {
         

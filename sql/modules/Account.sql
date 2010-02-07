@@ -5,6 +5,14 @@ returns account as
 $$
      select * from account where accno = $1;
 $$ language sql;
+CREATE OR REPLACE FUNCTION account__get_taxes()
+RETURNS setof account AS
+$$
+SELECT * FROM account 
+ WHERE id IN (select account_id from account_link 
+               where description ilike '%tax%')
+ORDER BY accno;
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS chart AS
 $$

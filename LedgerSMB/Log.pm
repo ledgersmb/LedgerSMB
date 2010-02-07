@@ -52,6 +52,12 @@ use IO::File;
 use Data::Dumper;
 use LedgerSMB::Sysconfig;
 use Carp ();
+use Log::Log4perl;
+
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+my $logger = Log::Log4perl->get_logger('');
+$logger->debug('LedgerSMB::Log Log4perl config: ', $LedgerSMB::Sysconfig::log4perl_config);
 
 our $VERSION = '1.0.0';
 

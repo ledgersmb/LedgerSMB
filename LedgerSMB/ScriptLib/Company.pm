@@ -369,6 +369,14 @@ sub save_credit {
     my ($request) = @_;
 
     my $company = new_company($request);
+    my @taxes;
+    $company->{tax_ids} = [];
+    for my $key(keys %$company){
+        if ($key =~ /^taxact_(\d+)$/){
+           my $tax = $1;
+           push @{$company->{tax_ids}}, $tax;
+        }  
+    }
     $company->save_credit();
     $company->get();
     _render_main_screen($company);

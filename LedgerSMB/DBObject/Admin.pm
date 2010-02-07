@@ -39,6 +39,7 @@ sub save_user {
             'first_name',
             'last_name',
             'employeenumber',
+            'country_id',
         ]    
     );
     

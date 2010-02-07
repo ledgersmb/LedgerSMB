@@ -5,7 +5,8 @@ $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION person__save
 (in_entity_id integer, in_salutation_id int, 
-in_first_name text, in_middle_name text, in_last_name text    
+in_first_name text, in_middle_name text, in_last_name text,
+in_country_id integer
 )
 RETURNS INT AS $$
 
@@ -21,8 +22,8 @@ RETURNS INT AS $$
     e_id := in_entity_id; 
     
     IF NOT FOUND THEN
-        INSERT INTO entity (name, entity_class) 
-	values (in_first_name || ' ' || in_last_name, 3);
+        INSERT INTO entity (name, entity_class, country_id) 
+	values (in_first_name || ' ' || in_last_name, 3, in_country_id);
 	e_id := currval('entity_id_seq');
        
     END IF;

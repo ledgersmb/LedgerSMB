@@ -85,6 +85,13 @@ $no_db_str = 'database';
 # available printers
 %printer;
 
+# Log4perl configuration
+$log4perl_config = q(
+    log4perl.rootlogger = DEBUG, Screen
+    log4perl.appender.Screen = Log::Log4perl::Appender::Screen
+    log4perl.appender.Screen.layout = SimpleLayout
+);
+
 my %config;
 read_config( 'ledgersmb.conf' => %config ) or die;
 

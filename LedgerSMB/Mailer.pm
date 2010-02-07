@@ -113,7 +113,7 @@ sub prepare_message {
 	$domain =~ s/(.*?\@|>)//g;
 	my $boundary = time;
 	$boundary = "LSMB-$boundary";
-	my $msg_id = "$boundary\@$domain";
+	my $msg_id = "<$boundary\@$domain>";
 
 	$self->{contenttype} = "text/plain" unless $self->{contenttype};
 

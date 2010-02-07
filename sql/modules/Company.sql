@@ -89,7 +89,50 @@ BEGIN
 		RETURN NEXT out_row;
 	END LOOP;
 END;
-$$ language plpgsql;	
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION eca__get_taxes(in_credit_id int)
+returns setof customertax AS
+$$
+select * from customertax where customer_id = $1
+union
+select * from vendortax where vendor_id = $1;
+$$ language sql;
+
+CREATE OR REPLACE FUNCTION eca__set_taxes(in_credit_id int, in_tax_ids int[])
+RETURNS bool AS
+$$
+DECLARE 
+    eca entity_credit_account;
+    iter int;
+BEGIN
+     SELECT * FROM entity_credit_account into eca WHERE id = in_credit_id;
+
+     IF eca.entity_class = 1 then
+        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
+        LOOP
+             INSERT INTO customertax (customer_id, chart_id)
+             values (in_credit_id, in_tax_ids[iter]);
+        END LOOP;
+     ELSIF eca.entity_class = 2 then
+        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
+        LOOP
+             INSERT INTO vendortax (vendor_id, chart_id)
+             values (in_credit_id, in_tax_ids[iter]);
+        END LOOP;
+        
+     ELSE 
+        RAISE EXCEPTION 'Wrong entity class or credit account not found!';
+     END IF;
+     RETURN TRUE;
+end;
+$$ language plpgsql;
+
+comment on function eca__set_taxes(in_credit_id int, in_tax_ids int[]) is
+$$
+The entity credit account must exist before calling this function, and must
+have a type of either 1 or 2.
+$$;
 
 CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text, in_subject text)
 RETURNS INT AS

@@ -9,6 +9,9 @@ use LedgerSMB::DBObject::User;
 use LedgerSMB::DBObject::Location;
 use Data::Dumper;
 use LedgerSMB::Setting;
+use LedgerSMB::Log;
+
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::admin');
 
 sub __edit_page {
     
@@ -85,6 +88,7 @@ sub new_user {
     
     my $groups = $admin->get_roles();
     
+    $logger->debug("scripts/admin.pl new_user: \$user = " . Data::Dumper::Dumper($user));
     
         my $template = LedgerSMB::Template->new( 
             user => $user, 

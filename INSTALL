@@ -223,7 +223,9 @@ but typically not installed by default in most distributions.
 Identify the system package containing the files tsearch2.sql, tablefunc.sql,
 and pg_trgm.sql. Install that package, and locate the files on the filesystem.
 
-You only need to install these function libraries once per postgresql cluster.
+If you install these on template1 then you only need to install these function
+libraries once per postgresql cluster. They will be included in any new
+database created from template1.
 
 For the remainder of this INSTALL procedure, you will need to become user
 postgres, or have the ability to log in to psql as your current user, or issue

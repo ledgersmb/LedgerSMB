@@ -482,6 +482,25 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
         </tr>
 
         </table>
+        <div class="input_container" id="tax-credit-div">
+        <div class="listtop"><?lsmb text('Taxes') ?></div>
+        <?lsmb FOR tx = all_taxes ?> 
+        <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
+        <span class="lable" id="txlabel-<?lsmb tx.chart_id ?>">
+            <?lsmb tx.accno ?>--<?lsmb tx.description ?></span>
+        <span class="input" id="txinput-<?lsmb tx.id ?>">
+            <?lsmb checked = "";  
+                   IF eca_tax.grep(tx.chart_id);
+                       checked = "CHECKED";
+                   END;
+                   INCLUDE input element_data = {
+                           type = "checkbox"
+                           checked = checked
+                           name = "taxact_$tx.id"
+                           value = $tx.id
+                   } ?><span></div>
+        <?lsmb END # FOR tx ?>
+         </div>
 		<?lsmb IF credit_id;
 		INCLUDE button element_data = {
 			text = text('Save Changes'),

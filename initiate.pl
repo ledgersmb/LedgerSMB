@@ -53,6 +53,10 @@ require "common.pl";
 
 $| = 1;
 
+use LedgerSMB::Log;
+
+my $logger = Log::Log4perl->get_logger('initiate');
+
 if ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size ) {
     print "Status: 413\n Request entity too large\n\n";
     die "Error: Request entity too large\n";
@@ -62,13 +66,19 @@ if ( $ENV{CONTENT_LENGTH} > 0 ) {
     read( STDIN, $_, $ENV{CONTENT_LENGTH} );
 }
 
+$logger->debug("initiate.pl: \$_ = $_\n");
+
 if ( $ENV{QUERY_STRING} ) {
     $_ = $ENV{QUERY_STRING};
 }
 
+$logger->debug("initiate.pl: \$_ = $_\n");
+
 if ( $ARGV[0] ) {
     $_ = $ARGV[0];
 }
+
+$logger->debug("initiate.pl: \$_ = $_\n");
 
 %form = split /[&=]/;
 
@@ -79,6 +89,8 @@ map { $form{$_} =~ s/\\$// } keys %form;
 $0 =~ tr/\\/\//;
 $pos = rindex $0, '/';
 $script = substr( $0, $pos + 1 );
+
+$logger->debug("initiate.pl: \$script = $script\n");
 
 #this needs to be a db based function
 #if (-e "${LedgerSMB::Sysconfig::userspath}/nologin" && $script ne 'admin.pl') {

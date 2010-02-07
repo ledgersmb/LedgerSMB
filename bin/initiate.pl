@@ -4,6 +4,12 @@ use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Initiate;
 use LedgerSMB::Auth;
+use LedgerSMB::Log;
+use Data::Dumper;
+
+my $logger = Log::Log4perl->get_logger('initiate');
+
+$logger->debug('start bin/initiate.pl');
 
 #use LedgerSMB::Session;
 
@@ -42,7 +48,7 @@ if ( -f "bin/custom/$form->{script}" ) {
 if ( $form->{action} ) {
 
     &check_password unless $form->{action} eq 'logout';
-   
+
     &{ $form->{action} };
 
 }
