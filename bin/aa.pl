@@ -138,7 +138,8 @@ sub edit {
 }
 
 sub display_form {
-
+    $form->close_form;
+    $form->open_form;
     &form_header;
     &form_footer;
 
@@ -913,7 +914,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
 }
 
 sub form_footer {
-    $form->hide_form(qw(callback path login sessionid));
+    $form->hide_form(qw(callback path login sessionid form_id));
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
@@ -1189,7 +1190,13 @@ sub update {
 }
 
 sub post {
-
+    if (!$form->close_form){
+       $form->info(
+          $locale->text('Data not saved.  Please try again.')
+       );
+       &update;
+       exit;
+    }
     $label =
       ( $form->{vc} eq 'customer' )
       ? $locale->text('Customer missing!')
