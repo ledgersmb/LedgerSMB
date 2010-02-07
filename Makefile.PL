@@ -11,6 +11,7 @@ license 'GPL';
 perl_version '5.8.1';
 
 requires 'Data::Dumper';
+requires 'Log::Log4perl';
 requires 'Locale::Maketext';
 requires 'DateTime';
 requires 'Locale::Maketext::Lexicon' => '0.56';
