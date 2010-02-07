@@ -57,8 +57,14 @@ sub create_vouchers {
     my ($request) = shift @_;
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{batch_class} = $request->{batch_type};
-    $batch->create;
-    add_vouchers($batch);
+    if ($form->form_close){
+        $batch->create;
+        add_vouchers($batch);
+    } else {
+        $request->{notice} = 
+            $request->{_locale}->text("Error creating batch.  Please try again.");
+        create_batch($request);
+    }
 }
 
 sub add_vouchers {
@@ -162,6 +168,8 @@ sub search_batch {
 sub list_batches {
     my ($request) = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
+    $batch->close_form;
+    $batch->open_form;
     if ($batch->{order_by}){
         $batch->set_ordering(
 		{method => 'batch_search', 
@@ -288,6 +296,8 @@ sub list_batches {
 sub get_batch {
     my ($request)  = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
+    $batch->close_form;
+    $batch->open_form;
     $batch->{script} = 'vouchers.pl';
     my $rows = [];
 
@@ -397,19 +407,28 @@ sub list_batches_batch_delete {
 }
 
 sub list_batches_batch_approve {
-    batch_approve(@_);
+    get_batch_batch_approve(@_);
 }
 
 sub get_batch_batch_approve {
     my ($request) = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
-    $batch->post;
-    search_batch($request);
+    if ($batch->close_form){
+        $batch->post;
+        search_batch($request);
+    }
+    else {
+        get_batch($request);
+    }
 }
 
 sub get_batch_voucher_delete {
     my ($request) = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
+    if (!$batch->close_form){
+       get_batch($request); 
+       exit;
+    }
     for my $count (1 .. $batch->{rowcount}){
         my $voucher_id = $batch->{"row_$count"};
         next unless $batch->{"voucher_$voucher_id"};
@@ -421,6 +440,10 @@ sub get_batch_voucher_delete {
 sub batch_approve {
     my ($request) = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
+    if (!$batch->close_form){
+        list_batches($request);
+        exit;
+    }
     for my $count (1 .. $batch->{rowcount}){
         next unless $batch->{"batch_" . $batch->{"row_$count"}};
         $batch->{batch_id} = $batch->{"row_$count"};
@@ -432,6 +455,10 @@ sub batch_approve {
 sub batch_delete {
     my ($request)  = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
+    if (!$batch->close_form){
+        list_batches($request);
+        exit;
+    }
     for my $count (1 .. $batch->{rowcount}){
         next unless $batch->{"batch_" . $batch->{"row_$count"}};
         $batch->{batch_id} = $batch->{"row_$count"};
