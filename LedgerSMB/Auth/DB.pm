@@ -54,6 +54,7 @@ sub session_check {
     my ($sessionID, $token, $company) = split(/:/, $cookie);
 
     $form->{company} ||= $company;
+    $form->{session_id} = $sessionID;
 
     #must be an integer
     $sessionID =~ s/[^0-9]//g;
@@ -194,6 +195,7 @@ sub session_create {
     #create a new session
     $createNew->execute( $newSessionID, $newToken, $newTransactionID )
       || http_error('401');
+    $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator
     my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );

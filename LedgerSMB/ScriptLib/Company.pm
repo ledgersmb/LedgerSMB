@@ -348,7 +348,9 @@ sub save {
     my ($request) = @_;
 
     my $company = new_company($request);
-    $company->save();
+    if ($company->_close_form){
+        $company->save();
+    }
     _render_main_screen($company);
 }
 
@@ -377,7 +379,9 @@ sub save_credit {
            push @{$company->{tax_ids}}, $tax;
         }  
     }
-    $company->save_credit();
+    if ($company->_close_form){
+        $company->save_credit();
+    }
     $company->get();
     _render_main_screen($company);
 }
@@ -436,6 +440,9 @@ Pulls relevant data from db and renders the data entry screen for it.
 
 sub _render_main_screen{
     my $company = shift @_;
+    $company->close_form;
+    $company->open_form;
+    $company->{dbh}->commit;
     $company->get_metadata();
 
     $company->{creditlimit} = "$company->{creditlimit}"; 
@@ -497,7 +504,9 @@ Saves contact info as per LedgerSMB::DBObject::Company::save_contact.
 sub save_contact {
     my ($request) = @_;
     my $company = new_company($request);
-    $company->save_contact();
+    if ($company->_close_form){
+        $company->save_contact();
+    }
     $company->get;
     _render_main_screen($company );
 }
@@ -519,6 +528,16 @@ sub save_contact_new{
     save_contact($request);
 }
 
+# Private method.  Sets notice if form could not be closed.
+sub _close_form {
+    my ($company) = @_;
+    if (!$company->close_form()){
+        $company->{notice} = 
+               $company->{_locale}->text('Changes not saved.  Please try again.');
+        return 0;
+    }
+    return 1;
+}
 =pod
 
 =over
@@ -534,7 +553,9 @@ Adds a bank account to a company and, if defined, an entity credit account.
 sub save_bank_account {
     my ($request) = @_;
     my $company = new_company($request);
-    $company->save_bank_account();
+    if ($company->_close_form){
+        $company->save_bank_account();
+    }
     $company->get;
     _render_main_screen($company );
 }
@@ -542,7 +563,9 @@ sub save_bank_account {
 sub save_notes {
     my ($request) = @_;
     my $company = new_company($request);
-    $company->save_notes();
+    if ($company->_close_form){
+        $company->save_notes();
+    }
     $company->get();
     _render_main_screen($company );
 }

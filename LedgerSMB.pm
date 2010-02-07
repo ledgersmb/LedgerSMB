@@ -23,6 +23,21 @@ the database connections for the user.
 This function takes the date in the format provided and returns a numeric 
 string in YYMMDD format.  This may be moved to User in the future.
 
+=item open_form()
+
+This sets a $self->{form_id} to be used in later form validation (anti-XSRF 
+measure).
+
+=item check_form()
+
+This returns true if the form_id was associated with the session, and false if 
+not.  Use this if the form may be re-used (back-button actions are valid).
+
+=item close_form()
+
+Identical with check_form() above, but also removes the form_id from the 
+session.  This should be used when back-button actions are not valid.
+
 =item debug (file => $path);
 
 This dumps the current object to the file if that is defined and otherwise to 
@@ -269,6 +284,37 @@ sub new {
 
     return $self;
 
+}
+
+sub open_form {
+    my ($self) = @_;
+    my @vars = $self->call_procedure(procname => 'form_open', 
+                              args => [$self->{session_id}]
+    );
+    $self->{form_id} = $vars[0]->{form_open};
+}
+
+sub check_form {
+    my ($self) = @_;
+    if (!$ENV{GATEWAY_INTERFACE}){
+        return 1;
+    }
+    my @vars = $self->call_procedure(procname => 'form_check', 
+                              args => [$self->{session_id}, $self->{form_id}]
+    );
+    return $vars[0]->{form_check};
+}
+
+sub close_form {
+    my ($self) = @_;
+    if (!$ENV{GATEWAY_INTERFACE}){
+        return 1;
+    }
+    my @vars = $self->call_procedure(procname => 'form_close', 
+                              args => [$self->{session_id}, $self->{form_id}]
+    );
+    delete $self->{form_id};
+    return $vars[0]->{form_close};
 }
 
 sub get_user_info {

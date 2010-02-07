@@ -1,11 +1,18 @@
+CREATE OR REPLACE FUNCTION form_check(in_session_id int, in_form_id int)
+RETURNS BOOL AS
+$$
+SELECT count(*) = 1 FROM open_forms
+ WHERE session_id = $1 and id = $2;
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION form_close(in_session_id int, in_form_id int)
 RETURNS BOOL AS
 $$
+DECLARE form_test bool;
 BEGIN
-	SELECT * FROM open_forms 
-	WHERE session_id = in_session_id AND id = in_form_id;
+	form_test := form_check(in_session_id, in_form_id);
 
-	IF FOUND THEN 
+	IF form_test is true THEN 
 		DELETE FROM open_forms 
 		WHERE session_id = in_session_id AND id = in_form_id;
 
@@ -47,7 +54,7 @@ RETURNS INT AS
 $$
 BEGIN
 	INSERT INTO open_forms (session_id) VALUES (in_session_id);
-	RETURN currval('form_id_seq');
+	RETURN currval('open_forms_id_seq');
 END;
 $$ LANGUAGE PLPGSQL;
 

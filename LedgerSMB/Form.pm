@@ -167,6 +167,53 @@ sub new {
     $self;
 }
 
+
+sub open_form {
+    my ($self) = @_;
+    my $sth = $self->{dbh}->prepare('select form_open(?)');
+    $sth->execute($self->{session_id});
+    my @results = $sth->fetchrow_array();
+    $self->{form_id} = $results[0];
+    return $results[0];
+}
+
+sub check_form {
+    my ($self) = @_;
+    if (!$ENV{GATEWAY_INTERFACE}){
+        return 1;
+    }
+    my $sth = $self->{dbh}->prepare('select form_check(?, ?)');
+    $sth->execute($self->{session_id}, $self->{form_id});
+    my @results = $sth->fetchrow_array();
+    return $results[0];
+}
+
+sub close_form {
+    my ($self) = @_;
+    if (!$ENV{GATEWAY_INTERFACE}){
+        return 1;
+    }
+    my $sth = $self->{dbh}->prepare('select form_close(?, ?)');
+    $sth->execute($self->{session_id}, $self->{form_id});
+    my @results = $sth->fetchrow_array();
+    return $results[0];
+}
+
+=item open_form()
+
+This sets a $self->{form_id} to be used in later form validation (anti-XSRF 
+measure).
+
+=item check_form()
+
+This returns true if the form_id was associated with the session, and false if 
+not.  Use this if the form may be re-used (back-button actions are valid).
+
+=item close_form()
+
+Identical with check_form() above, but also removes the form_id from the 
+session.  This should be used when back-button actions are not valid.
+
 =item $form->debug([$file]);
 
 Outputs the sorted contents of $form.  If a filename is specified, log to it,

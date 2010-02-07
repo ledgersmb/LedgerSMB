@@ -36,6 +36,9 @@ END ?>
     <?lsmb IF name ?> 
     <div class="pageheading"><?lsmb name?></div>
     <?lsmb END ?>
+    <?lsmb IF notice ?>
+    <div class="notice"><?lsmb notice ?></div>
+    <?lsmb END ?>
 <div class="navigation" id="nav_div">
 <?lsmb IF entity_id ?><?lsmb operation = "Edit" ?><?lsmb ELSE
 ?><?lsmb operation = "Add"
@@ -75,6 +78,11 @@ END ?>
 		type = "hidden"
 		name = "entity_id"
 		value = entity_id
+	} ?>
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
 	} ?>
 
 <div class="input" id="person_name_div"><?lsmb text('Name:')?>&nbsp;
@@ -183,6 +191,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name = "id"
 		value = id
 	} ?>	
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "account_class"
@@ -302,6 +315,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
     </table>
     <form id="credit_form" name="credit_form" method="post" 
 	action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "entity_id"
@@ -576,6 +594,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<!-- This entire form should probably be optionaly automated with AJAX
 	in order to prevent user confusion -CT -->
     <form id="location_form" action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="entity_id" 
@@ -746,6 +769,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<?lsmb END ?>
 	</table>
 	<form action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="entity_id" 
@@ -841,6 +869,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <?lsmb END ?>
 </table>
 <form name="bank_acct" action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="entity_id" 
@@ -886,6 +919,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div id="notes_div" class="container">
 <div class="listtop"><?lsmb text('Notes') ?></div>
 <form action="<?lsmb script ?>" method="post">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="entity_id" 
