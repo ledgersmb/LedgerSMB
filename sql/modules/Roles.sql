@@ -1447,7 +1447,6 @@ GRANT SELECT ON partscustomer TO public;
 GRANT SELECT ON assembly TO public;
 GRANT SELECT ON jcitems TO public;
 GRANT SELECT ON payment_type TO public;
-GRANT ALL ON open_forms, open_forms_id_seq to public;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 

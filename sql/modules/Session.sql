@@ -1,9 +1,12 @@
 CREATE OR REPLACE FUNCTION form_check(in_session_id int, in_form_id int)
 RETURNS BOOL AS
 $$
-SELECT count(*) = 1 FROM open_forms
- WHERE session_id = $1 and id = $2;
-$$ language sql;
+SELECT count(*) = 1 
+  FROM open_forms f
+  JOIN "session" s USING (session_id)
+  JOIN users u ON (s.users_id = u.id)
+ WHERE f.session_id = $1 and f.id = $2 and u.username = SESSION_USER;
+$$ language sql SECURITY DEFINER;
 
 CREATE OR REPLACE FUNCTION form_close(in_session_id int, in_form_id int)
 RETURNS BOOL AS
@@ -21,7 +24,7 @@ BEGIN
 	ELSE RETURN FALSE;
 	END IF;
 END;
-$$ language plpgsql;
+$$ language plpgsql SECURITY DEFINER;
 
 CREATE OR REPLACE FUNCTION check_expiration() RETURNS bool AS
 $$
@@ -52,11 +55,21 @@ $$ LANGUAGE PLPGSQL SECURITY DEFINER; -- run by public, but no input from user.
 CREATE OR REPLACE FUNCTION form_open(in_session_id int)
 RETURNS INT AS
 $$
+DECLARE usertest bool;
 BEGIN
+        SELECT count(*) = 1 INTO usertest FROM session 
+         WHERE session_id = in_session_id 
+               AND users_id IN (select id from users 
+                                WHERE username = SESSION_USER);
+
+        IF usertest is not true THEN
+            RAISE EXCEPTION 'Invalid session';
+        END IF;
+      
 	INSERT INTO open_forms (session_id) VALUES (in_session_id);
 	RETURN currval('open_forms_id_seq');
 END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
 CREATE OR REPLACE FUNCTION session_check(in_session_id int, in_token text) 
 RETURNS session AS
