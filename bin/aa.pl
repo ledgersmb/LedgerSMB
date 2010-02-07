@@ -140,6 +140,7 @@ sub edit {
 sub display_form {
     $form->close_form;
     $form->open_form;
+    $form->{dbh}->commit;
     &form_header;
     &form_footer;
 
