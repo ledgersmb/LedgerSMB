@@ -96,7 +96,10 @@ sub submit_recon_set {
 sub save_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
-    $recon->save();
+    if ($recon->close_form){
+        $recon->save();
+    } else {
+        $recon->{notice} = $recon->{_locale}->text('Data not saved.  Please update again.');
     my $template = LedgerSMB::Template->new( 
             user => $user, 
     	    template => 'reconciliation/search', 
@@ -109,6 +112,8 @@ sub save_recon_set {
 
 sub get_results {
     my ($request) = @_;
+    $request->close_form;
+    $request->open_form;
         if ($request->{approved} ne '1' and $request->{approved} ne '0'){
 		$request->{approved} = undef;
         }
@@ -340,6 +345,8 @@ it has been created.
 sub _display_report {
         my $recon = shift;
         $recon->get();
+        $recon->close_form;
+        $recon->open_form;
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['recon_supervisor']});
         $recon->get();
@@ -564,6 +571,10 @@ the uncorrected entries.
 
 sub approve {
     my ($request) = @_;
+    if (!$request->close_form){
+        get_results($request);
+        exit;
+    }
     
     # Approve will also display the report in a blurred/opaqued out version,
     # with the controls removed/disabled, so that we know that it has in fact
