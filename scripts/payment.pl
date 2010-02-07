@@ -109,6 +109,8 @@ sub get_search_results {
     my $rows = [];
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     my @search_results = $payment->search;
+    $payment->close_form;
+    $payment->open_form;
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -234,37 +236,19 @@ sub get_search_results_reverse_payments {
     get_search_criteria($payment);
 }
 
-sub check_job {
-    my ($request) = @_;
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    $payment->check_job;
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'check_job',
-        format   => 'HTML', 
-    );
-    $template->render($payment);
-}
 
 sub post_payments_bulk {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    $payment->post_bulk();
-    my $template;
-    if ($payment->{queue_payments}){
-        $payment->{job_label} = 'Payments';
-        $template = LedgerSMB::Template->new(
-            user     => $request->{_user},
-            locale   => $request->{_locale},
-            path     => 'UI/payments',
-            template => 'check_job',
-            format   => 'HTML', 
-        );
+    if ($payment->close_form){
+        $payment->post_bulk();
     } else {
-        payments($request);
+        $payment->{notice} = 
+           $payment->{_locale}->text('Data not saved.  Please try again.');
+        display_payments($request);
     }
+    my $template;
+    payments($request);
     $template->render($payment);
 }
 
