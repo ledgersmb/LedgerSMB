@@ -25,6 +25,10 @@ sub search {
 
 sub list_drafts_draft_approve {
     my ($request) = @_;
+    if (!$request->close_form){
+        list_drafts($request);
+        exit;
+    }
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
     for my $row (1 .. $draft->{rowcount}){
         if ($draft->{"draft_" .$draft->{"row_$row"}}){
@@ -37,6 +41,10 @@ sub list_drafts_draft_approve {
 
 sub list_drafts_draft_delete {
     my ($request) = @_;
+    if (!$request->close_form){
+        list_drafts($request);
+        exit;
+    }
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
     for my $row (1 .. $draft->{rowcount}){
         if ($draft->{"draft_" .$draft->{"row_$row"}}){
@@ -50,6 +58,8 @@ sub list_drafts_draft_delete {
 sub list_drafts {
     my ($request) = @_;
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
+    $draft->close_form;
+    $draft->open_form;
     my $callback = 'drafts.pl?action=list_drafts';
     for (qw(type reference amount_gy amount_lt)){
         if (defined $draft->{$_}){
