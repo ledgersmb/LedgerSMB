@@ -2,8 +2,8 @@ LedgerSMB 1.3 (svn trunk) INSTALL
 =================================
 
 This document aims to provide a detailed step by step process to configure a
-working instance of LedgerSMB 1.3 from subversion repository or pre-alpha
-release tarball.
+working instance of LedgerSMB 1.3 from subversion repository or beta release 
+tarball.
 
 Subsitute your own values for file paths and definitions shown in ALL_CAPS.
 
@@ -192,10 +192,9 @@ shown above.
 PostgreSQL Configuration
 =========================
 
-LedgerSMB 1.3 is tightly integrated with PostgreSQL. In the current pre-alpha
+LedgerSMB 1.3 is tightly integrated with PostgreSQL. In the current beta 
 state, it is necessary to run several PostgreSQL commands and SQL statements
-exactly as shown below. Automated installers will ease this process in future
-releases.
+exactly as shown below. Automated installion is still somewhat shakey.
 
 
 TODO: Securing PostgreSQL with LedgerSMB
