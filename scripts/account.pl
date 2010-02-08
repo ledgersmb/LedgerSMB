@@ -16,7 +16,6 @@ sub edit {
     my $account = LedgerSMB::DBObject::Account->new(base => $request);
     my @accounts = $account->get();
     my $a = shift @accounts;
-    $a->debug({file => '/tmp/account'});
     $a->{title} = $request->{_locale}->text('Edit Account');
     _display_account_screen($a);
 }
