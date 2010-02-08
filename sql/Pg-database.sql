@@ -1812,7 +1812,7 @@ CREATE TABLE menu_node (
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_node', 'id'), 222, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_node', 'id'), 224, true);
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
@@ -1858,7 +1858,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 35	Cash	0	4
 36	Receipt	35	1
 38	Payment	35	3
-37	Receipts	35	2
+223	Use Overpayment	35	4
+37	Use AR Overpayment	35	2
 146	List Departments	144	2
 42	Receipts	41	1
 43	Payments	41	2
@@ -2070,7 +2071,7 @@ CREATE TABLE menu_attribute (
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 606, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 609, true);
 
 
 --
@@ -2161,9 +2162,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 36	action	payment	85
 36	type	receipt	86
 36	account_class	2	551
-37	module	cp.pl	87
-37	type	receipt	89
-37	action	payments	88
+37	module	payment.pl	87
+37	account_class	2	89
+37	action	use_overpayment	88
+223	module	payment.pl	607
+223	account_class	1	608
+223	action	use_overpayment	609
 38	module	payment.pl	90
 38	action	payment	91
 38	type	check	92
