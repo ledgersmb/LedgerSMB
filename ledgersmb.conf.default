@@ -4,6 +4,7 @@ logging  : 0
 # Set language for login and admin pages
 language : 
 
+log_level : ERROR;
 # For Windows, uncomment the pathsep line:
 # pathsep : ;
 

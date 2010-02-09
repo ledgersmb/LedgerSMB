@@ -81,23 +81,16 @@ $gzip = "gzip -S .gz";
 $localepath = 'locale/po';
 
 $no_db_str = 'database';
-
+$log_level = 'ERROR';
 # available printers
 %printer;
-
-# Log4perl configuration
-$log4perl_config = q(
-    log4perl.rootlogger = DEBUG, Screen
-    log4perl.appender.Screen = Log::Log4perl::Appender::Screen
-    log4perl.appender.Screen.layout = SimpleLayout
-);
 
 my %config;
 read_config( 'ledgersmb.conf' => %config ) or die;
 
 # Root variables
 for $var (
-    qw(pathsep logging check_max_invoices language auth latex
+    qw(pathsep logging log4perl_level check_max_invoices language auth latex
     db_autoupdate force_username_case max_post_size decimal_places cookie_name
     return_accno no_db_str)
   )
@@ -151,6 +144,13 @@ for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
 
 # These lines prevent other apps in mod_perl from seeing the global db
 # connection info
+
+# Log4perl configuration
+$log4perl_config = qq(
+    log4perl.rootlogger = $log_level, Screen
+    log4perl.appender.Screen = Log::Log4perl::Appender::Screen
+    log4perl.appender.Screen.layout = SimpleLayout
+);
 
 $ENV{PGHOST} = $config{database}{host};
 $ENV{PGPORT} = $config{database}{port};
