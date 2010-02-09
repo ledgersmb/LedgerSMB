@@ -348,7 +348,7 @@ sub save {
     my ($request) = @_;
 
     my $company = new_company($request);
-    if ($company->_close_form){
+    if (_close_form($company)){
         $company->save();
     }
     _render_main_screen($company);
@@ -379,7 +379,7 @@ sub save_credit {
            push @{$company->{tax_ids}}, $tax;
         }  
     }
-    if ($company->_close_form){
+    if (_close_form($company)){
         $company->save_credit();
     }
     $company->get();
@@ -504,7 +504,7 @@ Saves contact info as per LedgerSMB::DBObject::Company::save_contact.
 sub save_contact {
     my ($request) = @_;
     my $company = new_company($request);
-    if ($company->_close_form){
+    if (_close_form($company)){
         $company->save_contact();
     }
     $company->get;
@@ -553,7 +553,7 @@ Adds a bank account to a company and, if defined, an entity credit account.
 sub save_bank_account {
     my ($request) = @_;
     my $company = new_company($request);
-    if ($company->_close_form){
+    if (_close_form($company)){
         $company->save_bank_account();
     }
     $company->get;
@@ -563,7 +563,7 @@ sub save_bank_account {
 sub save_notes {
     my ($request) = @_;
     my $company = new_company($request);
-    if ($company->_close_form){
+    if (_close_form($company)){
         $company->save_notes();
     }
     $company->get();
