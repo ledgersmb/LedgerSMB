@@ -100,6 +100,7 @@ sub save_recon_set {
         $recon->save();
     } else {
         $recon->{notice} = $recon->{_locale}->text('Data not saved.  Please update again.');
+    }
     my $template = LedgerSMB::Template->new( 
             user => $user, 
     	    template => 'reconciliation/search', 

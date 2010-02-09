@@ -57,7 +57,7 @@ sub create_vouchers {
     my ($request) = shift @_;
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{batch_class} = $request->{batch_type};
-    if ($form->form_close){
+    if ($request->form_close){
         $batch->create;
         add_vouchers($batch);
     } else {
