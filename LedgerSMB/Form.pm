@@ -170,6 +170,9 @@ sub new {
 
 sub open_form {
     my ($self) = @_;
+    if (!$ENV{GATEWAY_INTERFACE}){
+        return 1;
+    }
     my $sth = $self->{dbh}->prepare('select form_open(?)');
     $sth->execute($self->{session_id});
     my @results = $sth->fetchrow_array();
