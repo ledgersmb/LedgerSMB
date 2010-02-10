@@ -88,7 +88,14 @@ sub login {
 
 sub logout {
     my ($request) = @_;
-    @{$request->{scripts}} = qw(ie_logout.js moz_logout.js);
+    @{$request->{scripts}} = 
+                  qw(UI/logout/iexplore.js 
+                     UI/logout/firefox.js
+                     UI/logout/opera.js
+                     UI/logout/safari.js
+                     UI/logout/konqueror.js
+                     UI/logout/epiphany.js
+                   );
     $request->{callback}   = "";
     $request->{endsession} = 1;
     LedgerSMB::Auth::session_destroy($request);
