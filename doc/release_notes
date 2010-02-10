@@ -101,9 +101,9 @@ reversal routines.  It will be corrected (by removing the ability to truly
 repost invoices) in an upcoming version as we continue to re-engineer the
 application.
 
-Additionally there is a known issue where reposting invoices more than once causes
-a primary key issue on the transactions table.  A fix for this is distributed in
-sql/fixes.
+Additionally there is a known issue (SourceForge ID: 2761045) where reposting
+invoices more than once causes a primary key issue on the transactions table.  A
+fix for this is distributed in sql/fixes/transactions_pkey_repost.sql.
 
 3.2: Tax rate changes
 LedgerSMB 1.2.x's database structure does not handle tax rate changes properly.  A 
