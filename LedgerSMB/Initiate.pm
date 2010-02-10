@@ -54,6 +54,9 @@ sub initialize
 
       if(scalar($self->{initiateon})==1)
       {
+          if (!$form->{company}){
+               $form->{company} = 'template1';
+          }
           $form->{company}=${LedgerSMB::Sysconfig::default_db};
 	  $form->{port}=${LedgerSMB::Sysconfig::port};
           $form->{host}=${LedgerSMB::Sysconfig::host};
@@ -327,6 +330,9 @@ sub run_db_file
 {
 
  	my($self,$form,$dbfile)=@_;
+        if ($ENV{PGDATABASE} eq 'template1'){
+           $form->error('No database specified!');
+        }
 	system("psql < $dbfile");
 }
 

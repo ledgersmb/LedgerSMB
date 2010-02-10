@@ -33,6 +33,10 @@
 
 package IC;
 
+use LedgerSMB::Log;
+
+my $logger = Log::Log4perl->get_logger('IC');
+
 sub get_part {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -94,6 +98,8 @@ sub get_part {
         $sth->finish;
 
     }
+
+    $logger->debug("item: $form->{item}");
 
     # setup accno hash for <option checked>
     # {amount} is used in create_links
@@ -162,11 +168,12 @@ sub get_part {
 
         # get vendors
         $query = qq|
-			  SELECT v.id, v.name, pv.partnumber,
+			  SELECT v.id, e.name, pv.partnumber,
 			         pv.lastcost, pv.leadtime, 
 			         pv.curr AS vendorcurr
 			    FROM partsvendor pv
-			    JOIN vendor v ON (v.id = pv.vendor_id)
+			    JOIN vendor v ON (v.id = pv.entity_id)
+                JOIN entity e ON (e.id = pv.entity_id)
 			   WHERE pv.parts_id = ?
 			ORDER BY 2|;
 
@@ -185,13 +192,14 @@ sub get_part {
         $query = qq|
 			   SELECT pc.pricebreak, pc.sellprice AS customerprice,
 			          pc.curr AS customercurr, pc.validfrom, 
-			          pc.validto, c.name, c.id AS cid, 
+			          pc.validto, e.name, c.id AS cid, 
 			          g.pricegroup, g.id AS gid
 			     FROM partscustomer pc
 			LEFT JOIN customer c ON (c.id = pc.customer_id)
 			LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
+                 JOIN entity e ON (e.id = c.entity_id)
 			    WHERE pc.parts_id = ?
-			 ORDER BY c.name, g.pricegroup, pc.pricebreak|;
+			 ORDER BY e.name, g.pricegroup, pc.pricebreak|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -1806,6 +1814,8 @@ sub requirements_assembly {
 
 sub create_links {
     my ( $self, $module, $myconfig, $form ) = @_;
+
+    $logger->debug('start');
 
     # connect to database
     my $dbh = $form->{dbh};

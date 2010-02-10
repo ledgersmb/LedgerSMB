@@ -133,8 +133,7 @@ sub prepare_initiate {
 			<tr class="listheading">
 				<th>$self->{title}</th>
 			</tr>
-			<tr size="5"></tr>
-			</tr>|;
+			<tr size="5"></tr>|;
     
 
     print qq|		
