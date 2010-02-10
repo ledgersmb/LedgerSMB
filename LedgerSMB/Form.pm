@@ -545,12 +545,15 @@ sub parse_amount {
     }
     my $numberformat = $myconfig->{numberformat};
 
-    if (   ( $numberformat eq '1.000,00' )
-        || ( $numberformat eq '1000,00' ) )
+    if   ( $numberformat eq '1.000,00' )
     {
 
         $amount =~ s/\.//g;
         $amount =~ s/,/./;
+    }
+    if ( $numberformat eq '1000,00' )
+    {
+    $amount =~ s/,/./;
     }
     if ( $numberformat eq '1 000.00' ) {
         $amount =~ s/\s//g;

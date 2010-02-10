@@ -2,7 +2,7 @@
 
 # One must run the source file build first.
 
-cp ../release/ledger-sm*.tar.gz /usr/src/redhat/SOURCES/
+cp ../release/ledgersm*.tar.gz /root/rpmbuild/SOURCES/
 
 rpmbuild -ba dists/rpm/ledgersmb.spec
 
