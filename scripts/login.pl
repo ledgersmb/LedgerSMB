@@ -88,12 +88,18 @@ sub login {
 
 sub logout {
     my ($request) = @_;
+    @{$request->{scripts}} = qw(ie_logout.js moz_logout.js);
     $request->{callback}   = "";
     $request->{endsession} = 1;
     LedgerSMB::Auth::session_destroy($request);
-    print "Location: login.pl\n";
-    print "Content-type: text/html\n\n";
-    exit;
+     my $template = LedgerSMB::Template->new(
+        user =>$request->{_user}, 
+        locale => $request->{_locale},
+        path => 'UI',
+        template => 'logout',
+        format => 'HTML'
+    );
+    $template->render($request);
 }
 
 sub continue {
