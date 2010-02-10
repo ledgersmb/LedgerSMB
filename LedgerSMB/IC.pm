@@ -41,16 +41,16 @@ sub get_part {
     my $i;
 
     my $query = qq|
-		   SELECT p.*, c1.accno AS inventory_accno, 
-		          c1.description AS inventory_description, 
-		          c2.accno AS income_accno, 
-		          c2.description AS income_description,
-		          c3.accno AS expense_accno, 
-		          c3.description AS expense_description, pg.partsgroup
+		   SELECT p.*, a1.accno AS inventory_accno, 
+		          a1.description AS inventory_description, 
+		          a2.accno AS income_accno, 
+		          a2.description AS income_description,
+		          a3.accno AS expense_accno, 
+		          a3.description AS expense_description, pg.partsgroup
 		     FROM parts p
-		LEFT JOIN chart c1 ON (p.inventory_accno_id = c1.id)
-		LEFT JOIN chart c2 ON (p.income_accno_id = c2.id)
-		LEFT JOIN chart c3 ON (p.expense_accno_id = c3.id)
+		LEFT JOIN account a1 ON (p.inventory_accno_id = a1.id)
+		LEFT JOIN account a2 ON (p.income_accno_id = a2.id)
+		LEFT JOIN account a3 ON (p.expense_accno_id = a3.id)
 		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 		    WHERE p.id = ?|;
     my $sth = $dbh->prepare($query);
@@ -1072,7 +1072,7 @@ sub all_parts {
 		p.avgcost,
 		p.weight, p.priceupdate, p.image, p.drawing, p.microfiche,
 		p.assembly, pg.partsgroup, $curr AS curr,
-		c1.accno AS inventory, c2.accno AS income, c3.accno AS expense,
+		a1.accno AS inventory, a2.accno AS income, a3.accno AS expense,
 		p.notes
 		$makemodelflds $assemblyflds
 		|;
@@ -1081,9 +1081,9 @@ sub all_parts {
 		   SELECT $flds
 		     FROM parts p
 		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		LEFT JOIN chart c1 ON (c1.id = p.inventory_accno_id)
-		LEFT JOIN chart c2 ON (c2.id = p.income_accno_id)
-		LEFT JOIN chart c3 ON (c3.id = p.expense_accno_id)
+		LEFT JOIN account a1 ON (a1.id = p.inventory_accno_id)
+		LEFT JOIN account a2 ON (a2.id = p.income_accno_id)
+		LEFT JOIN account a3 ON (a3.id = p.expense_accno_id)
 		$makemodeljoin
 		    WHERE $where
 		 ORDER BY $sortorder|;
@@ -1099,9 +1099,9 @@ sub all_parts {
 			     JOIN parts p ON (a.parts_id = p.id)
 			     JOIN parts p1 ON (a.id = p1.id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-			LEFT JOIN chart c1 ON (c1.id = p.inventory_accno_id)
-			LEFT JOIN chart c2 ON (c2.id = p.income_accno_id)
-			LEFT JOIN chart c3 ON (c3.id = p.expense_accno_id)
+			LEFT JOIN account a1 ON (a1.id = p.inventory_accno_id)
+			LEFT JOIN account a2 ON (a2.id = p.income_accno_id)
+			LEFT JOIN account a3 ON (a3.id = p.expense_accno_id)
 			$makemodeljoin
 			    WHERE $where
 			 ORDER BY $sortorder|;
@@ -1474,6 +1474,7 @@ sub all_parts {
 			ORDER BY $sortorder|;
 
     }
+    $logger->debug("query = \n$query");
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -1492,6 +1493,7 @@ sub all_parts {
             $ref->{tax} .= "$accno ";
         }
         $pth->finish;
+        $logger->debug("adding part $ref->{id}");
 
         push @{ $form->{parts} }, $ref;
     }
@@ -1615,9 +1617,9 @@ sub include_assembly {
 		     FROM parts p
 		     JOIN assembly a ON (a.parts_id = p.id)
 		LEFT JOIN partsgroup pg ON (pg.id = p.id)
- 		LEFT JOIN chart c1 ON (c1.id = p.inventory_accno_id)
-		LEFT JOIN chart c2 ON (c2.id = p.income_accno_id)
-		LEFT JOIN chart c3 ON (c3.id = p.expense_accno_id)
+ 		LEFT JOIN account a1 ON (a1.id = p.inventory_accno_id)
+		LEFT JOIN account a2 ON (a2.id = p.income_accno_id)
+		LEFT JOIN account a3 ON (a3.id = p.expense_accno_id)
 		 $makemodeljoin
 		    WHERE a.id = ?
 		 ORDER BY $sortorder|;
@@ -1897,18 +1899,18 @@ sub create_links {
 			       AS weightunit,  current_date AS priceupdate,
 			       (SELECT value FROM defaults 
 			         WHERE setting_key = 'curr') AS currencies,
-			       c1.accno AS inventory_accno, 
-			       c1.description AS inventory_description,
-			       c2.accno AS income_accno, 
-			       c2.description AS income_description,
-			       c3.accno AS expense_accno, 
-			       c3.description AS expense_description
-			  FROM chart c1, chart c2, chart c3 
-			 WHERE c1.id IN (SELECT value::int FROM defaults 
+			       a1.accno AS inventory_accno, 
+			       a1.description AS inventory_description,
+			       a2.accno AS income_accno, 
+			       a2.description AS income_description,
+			       a3.accno AS expense_accno, 
+			       a3.description AS expense_description
+			  FROM account a1, account a2, account a3 
+			 WHERE a1.id IN (SELECT value::int FROM defaults 
 			 WHERE setting_key = 'inventory_accno_id')
-			       AND c2.id IN (SELECT value::int FROM defaults
+			       AND a2.id IN (SELECT value::int FROM defaults
 			 WHERE setting_key = 'income_accno_id')
-			       AND c3.id IN (SELECT value::int FROM defaults
+			       AND a3.id IN (SELECT value::int FROM defaults
 			                      WHERE setting_key 
 			                            = 'expense_accno_id')|;
         $sth = $dbh->prepare($query);

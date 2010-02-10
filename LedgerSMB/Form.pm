@@ -65,7 +65,7 @@ use Time::Local;
 use Cwd;
 use File::Copy;
 
-use charnames qw(':full');
+use charnames qw(:full);
 use open ':utf8';
 package Form;
 

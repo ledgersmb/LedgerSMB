@@ -147,9 +147,31 @@ for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
 
 # Log4perl configuration
 $log4perl_config = qq(
-    log4perl.rootlogger = $log_level, Screen
+    log4perl.rootlogger = $log_level, Screen, Basic
     log4perl.appender.Screen = Log::Log4perl::Appender::Screen
     log4perl.appender.Screen.layout = SimpleLayout
+    # Filter for debug level
+    log4perl.filter.MatchDebug = Log::Log4perl::Filter::LevelMatch
+    log4perl.filter.MatchDebug.LevelToMatch = DEBUG
+    log4perl.filter.MatchDebug.AcceptOnMatch = true
+
+    # Filter for everything but debug level
+    log4perl.filter.MatchRest = Log::Log4perl::Filter::LevelMatch
+    log4perl.filter.MatchRest.LevelToMatch = DEBUG
+    log4perl.filter.MatchRest.AcceptOnMatch = false
+
+    # layout for DEBUG messages
+    log4perl.appender.Debug = Log::Log4perl::Appender::Screen
+    log4perl.appender.Debug.layout = PatternLayout
+    log4perl.appender.Debug.layout.ConversionPattern = %d - %p - %l -- %m%n
+    log4perl.appender.Debug.Filter = MatchDebug
+
+    # layout for non-DEBUG messages
+    log4perl.appender.Basic = Log::Log4perl::Appender::Screen
+    log4perl.appender.Basic.layout = PatternLayout
+    log4perl.appender.Basic.layout.ConversionPattern = %d - %p %m%n
+    log4perl.appender.Basic.Filter = MatchRest
+
 );
 
 $ENV{PGHOST} = $config{database}{host};
