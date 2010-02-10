@@ -360,50 +360,17 @@ sub handle_create_language
 
 	my($self,$form)=@_;
 
-	$form->{initiateon}=0;
-		
-	my $newdbh=LedgerSMB::Initiate->getdbh($form);	
-		
-	$form->{initiateon}=1;
-		
-
-	if(lc($newdbh) eq 'no999')
-	{
-		
- 		$form->{dbh}->do("drop database $form->{database}");
-
-		$form->error( __FILE__ . ':' . __LINE__ . ': '
-		        . $locale->text( 'connection failed to database [_1] might be port/localhost problem!', $form->{database} )
-		            );		
-
-	}
-
-	
-
-	if(!LedgerSMB::Initiate->create_language($newdbh))
-	{
-		$form->{dbh}->do("drop database $form->{database}");
-
-		$form->error( __FILE__ . ':' . __LINE__ . ': '
-	        . $locale->text( 'connection failed to database [_1] might be port/localhost problem!', $form->{database} )
-		            );		
-
-	}
-
-
-	return($newdbh);
-	
+    eval {
+        local $form->{dbh}->{RaiseError} = 1;
+        $form->{dbh}->do("create language plpgsql");
+    };
+    if($@) {
+        $form->error( __FILE__ . ':' . __LINE__ . ': '
+            . $locale->text( 'create language plpgsql failed on database [_1]!', $form->{database} )
+        );
+    }
 }
 
-
-sub create_language
-{
-
-	my ($self,$newdbh)=@_;
-	$newdbh->do("create language plpgsql") || return 0;
-	return 1;
-
-}
 
 
 
