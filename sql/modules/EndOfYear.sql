@@ -23,7 +23,7 @@ BEGIN
 	END IF;
 
 	INSERT INTO account_checkpoint (end_date, account_id, amount)
-	SELECT in_end_date, a.chart_id, sum(a.amount) + coalesce(cp.amount, 0)
+	SELECT in_end_date, a.chart_id, sum(a.amount) + coalesce(max(cp.amount), 0)
 	FROM acc_trans a
 	LEFT JOIN (
 		select account_id, end_date, amount from account_checkpoint
@@ -31,8 +31,8 @@ BEGIN
 				where end_date < in_end_date)
 		) cp on (a.chart_id = cp.account_id)
 	WHERE a.transdate <= in_end_date 
-		AND a.transdate > coalesce(cp.end_date, a.transdate)
-	group by a.chart_id, cp.amount;
+		AND a.transdate > coalesce(cp.end_date, a.transdate - 1)
+	group by a.chart_id;
 
 	SELECT count(*) INTO ret_val FROM account_checkpoint 
 	where end_date = in_end_date;
@@ -54,7 +54,7 @@ BEGIN
 	INSERT INTO yearend (trans_id, transdate) values (currval('id'), in_end_date);
 	INSERT INTO acc_trans (transdate, chart_id, trans_id, amount)
 	SELECT in_end_date, a.chart_id, currval('id'),
-		(sum(a.amount) + coalesce(cp.amount, 0)) * -1
+		(sum(a.amount) + coalesce(max(cp.amount), 0)) * -1
 	FROM acc_trans a
 	LEFT JOIN (
 		select account_id, end_date, amount from account_checkpoint
@@ -63,13 +63,13 @@ BEGIN
 		) cp on (a.chart_id = cp.account_id)
 	JOIN account acc ON (acc.id = a.chart_id)
 	WHERE a.transdate <= in_end_date 
-		AND a.transdate > coalesce(cp.end_date, a.transdate)
+		AND a.transdate > coalesce(cp.end_date, a.transdate - 1)
 		AND acc.category IN ('I', 'E')
-	GROUP BY a.chart_id, cp.amount;
+	GROUP BY a.chart_id;
 
 	INSERT INTO acc_trans (transdate, trans_id, chart_id, amount)
 	SELECT in_end_date, currval('id'), in_retention_acc_id, 
-		sum(amount) * -1
+		coalesce(sum(amount) * -1, 0)
 	FROM acc_trans WHERE trans_id = currval('id');
 
 
