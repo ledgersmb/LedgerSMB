@@ -85,8 +85,9 @@ sub save_credit {
        );
        $sth->execute($self->{taxform1_id}, $self->{credit_id});
     }
-    $self->exec_method(funcname => 'eca__set_taxes');
-    $dbh->commit();
+    if ($self->{tax_ids} ne '{}'){
+        $self->exec_method(funcname => 'eca__set_taxes');
+    }
     $self->{threshold} = $self->format_amount(amount => $self->{threshold});
     $self->{dbh}->commit;
 }
