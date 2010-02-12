@@ -54,10 +54,7 @@ sub initialize
 
       if(scalar($self->{initiateon})==1)
       {
-          if (!$form->{company}){
-               $form->{company} = 'template1';
-          }
-          $form->{company}=${LedgerSMB::Sysconfig::default_db};
+          $form->{company}= 'template1';
 	  $form->{port}=${LedgerSMB::Sysconfig::port};
           $form->{host}=${LedgerSMB::Sysconfig::host};
 

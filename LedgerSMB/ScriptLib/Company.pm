@@ -44,6 +44,92 @@ sub set_entity_class {
        "directly!");
 }
 
+sub dispatch_legacy {
+    our ($request) = shift @_;
+    use LedgerSMB::Form;
+    my $aa;
+    my $inv;
+    my $otype;
+    my $qtype;
+    my $cv;
+    if ($request->{account_class} == 1){
+       $aa = 'ap';
+       $inv = 'ir';
+       $otypr = 'purchase_order';
+       $qtype = 'request_quotation';
+       $cv = 'vendor';
+    } elsif ($request->{account_class} == 2){
+       $aa = 'ar';
+       $inv = 'is';
+       $otypr = 'sales_order';
+       $qtype = 'sales_quotation';
+       $cv = 'customer';
+    } else {
+       $request->error($request->{_locale}->text('Unsupport account type'));
+    }
+    our $dispatch = 
+    {
+        add_transaction  => {script => "bin/$aa.pl", 
+                               data => {"${cv}_id" => $request->{credit_id}},
+                            },
+        add_invoice      => {script => "bin/$inv.pl",
+                               data => {"${cv}_id" => $request->{credit_id}},
+                            },
+        add_order        => {script => 'bin/oe.pl', 
+                               data => {"${cv}_id" => $request->{credit_id},
+                                            type   => $otype,
+                                               vc  => $cv,
+                                       },
+                            },
+        rfq              => {script => 'bin/oe.pl', 
+                               data => {"${cv}_id" => $request->{credit_id},
+                                            type   => $qtype,
+                                               vc  => $cv,
+                                       },
+                            },
+ 
+    };
+
+    our $form = new Form;
+    our %myconfig = ();
+    %myconfig = %{$request->{_user}};
+    $form->{stylesheet} = $myconfig{stylesheet};
+    our $locale = $request->{_locale};
+
+    for (keys %{$dispatch->{$request->{action}}->{data}}){
+        $form->{$_} = $dispatch->{$request->{action}}->{data}->{$_};
+    }
+
+    my $script = $dispatch->{$request->{action}}{script};
+    $form->{script} = $script;
+    $form->{action} = 'add';
+    $form->{dbh} = $request->{dbh};
+    $form->{script} =~ s|.*/||;
+    { no strict; no warnings 'redefine'; do $script; }
+
+    $form->{action}();
+}
+
+sub add_transaction {
+    my $request = shift @_;
+    dispatch_legacy($request);
+}
+
+sub add_invoice {
+    my $request = shift @_;
+    dispatch_legacy($request);
+}
+
+sub add_order {
+    my $request = shift @_;
+    dispatch_legacy($request);
+}
+
+sub rfq {
+    my $request = shift @_;
+    dispatch_legacy($request);
+}
+
 =pod
 
 =over
