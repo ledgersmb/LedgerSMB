@@ -2266,8 +2266,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 80	action	add	190
 81	module	ic.pl	192
 81	action	add	193
-81	item	part	194
-80	item	labor	191
+81	item	labor	194
+80	item	assembly	191
 82	action	add	195
 82	module	pe.pl	196
 83	action	add	198
