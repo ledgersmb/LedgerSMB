@@ -12,6 +12,11 @@ non-standard environment.  Because we currently lack a Windows installer, users
 of that platform are likely to need to follow the instructions here and adapt
 as necessary (for example, if you are using IIS instead of Apache).
 
+Before we begin, you will want to cd to the directory of the LedgerSMB directory
+where the svn tree has been checked out or the tarball has been untarred into:
+
+$ cd /path/to/ledgersmb13
+
 
 Apache Configuration
 ====================
