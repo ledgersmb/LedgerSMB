@@ -1,20 +1,23 @@
 LedgerSMB 1.3 (svn trunk) INSTALL
 =================================
 
-This document aims to provide a detailed step by step process to configure a
-working instance of LedgerSMB 1.3 from subversion repository or beta release 
-tarball.
+This file documents automated installation methods for LedgerSMB 1.3.0.
 
-Subsitute your own values for file paths and definitions shown in ALL_CAPS.
+Manual installation instructions have been moved to INSTALL.manual, and it does 
+not cover checking out from svn or obtaining a tarball (we assume if you have 
+this file, you are already past that point). 
 
 
-Install LedgerSMB 1.3 Source
-----------------------------
+Requirements
+------------
 
-LedgerSMB 1.3 is still in pre-alpha, with no tarball release files. Check out
-LedgerSMB 1.3 from svn trunk:
+LedgerSMB 1.3 requires the following software before you begin.
+ * PostgreSQL 8.1 or higher
+ * Perl 5.8 or higher
+ * A web server (Apache 2.2, for example) which supports both executing CGI
+   scripts and passing authentication data to them.
 
-$ svn co https://ledger-smb.svn.sourceforge.net/svnroot/ledger-smb/trunk /path/to/ledgersmb13
+the instructions here assume Linux or UNIX.
 
 
 Change working directory to /path/to/ledgersmb13
@@ -31,71 +34,20 @@ All commands from this point forward are executed from a working directory of
 /path/to/ledgersmb13 unless otherwise noted.
 
 
-Automated Installation
+Application Installation
 -----------------------
 
-You can extract the commands in this document with:  $ grep -e '^\$' INSTALL
+An automated install script (minus the database installation) is found in 
+install.sh.  This script installs the necessary perl modules and configures 
+Apache using the ledgersmb-http.conf file as a template.
 
-This provides a decent approximation of what would be required for a scripted
-install as of this writing.
-
-Also some portions of the installation are also fairly automated already.
-
-Apache Configuration
-====================
-
-LedgerSMB uses Apache-2.x, with mod_rewrite.
-
-
-Create up an Apache conf file for the /path/to/ledgersmb13 location
-----------------------------------------------------------
-
-Configure ledgersmb-httpd.conf for apache, subsituting /path/to/ledgersmb13 with
-the absolute path of your LedgerSMB installation.
-
-The following sed command applies the repetitive substitution automatically.
-
-$ cat ledgersmb-httpd.conf | sed "s|WORKING_DIR|$(pwd)|" > ledgersmb-httpd-13.conf
-
-You can also apply the substitution manually in your preferred text editor.
-
-
-Install the Apache conf file
-----------------------------
-
-Move the apache conf file ledgersmb-httpd-13.conf to a location where it will be
-picked up on apache restart. One way is to use an include statement in
-/etc/apache2/httpd.conf (e.g. Include /etc/apache2/app/*.conf).
-
-$ sudo mv ledgersmb-httpd-13.conf /etc/apache2/app/ledgersmb13.conf
-
-Restart apache:
+After running this script, you will need to restart apache:
 
 $ sudo /etc/init.d/apache2 restart
  * Stopping apache2 ...              [ ok ]
  * Starting apache2 ...              [ ok ]
 
-The LedgerSMB-specific apache configuration can later be integrated into your
-virtual host configuration as needed.
-
-
-Verify that RewriteRule is working
-----------------------------------
-
-LedgerSMB 1.3 depends on mod_rewrite's ReWriteRule. Make sure that your Apache
-has module or built-in support for mod_rewrite. You can test this if you are
-unsure. Use an .htaccess file to check that mod_rewrite is working and that our
-directory alias has been loaded by apache:
-
-$ echo -e 'RewriteEngine on\nRewriteRule ^(.*)$ http://www.google.com [R]' > /path/to/ledgersmb13/.htaccess
-
-$ wget -qO /dev/stdout http://localhost/ledgersmb | grep -c '<title>Google</title>'
-1
-
-If you saw the grep output "1" above, RewriteRule is working. Remove your
-temporary .htaccess file:
-
-$ rm .htaccess
+(On other systems you may need to log in as root to do this.)
 
 
 Apache must be able to read and write /path/to/ledgersmb13/templates/
@@ -109,85 +61,6 @@ Apache must also be able to read (but not write) /path/to/ledgersmb13/ and its
 subdirectories.
 
 
-Check And Satisfy Perl Dependencies
-===================================
-
-LedgerSMB depends on Perl-5.8, and several CPAN packages, which may or may not
-be available as system packages for your linux distribution:
-
-$ perl -v | grep v5.
-This is perl, v5.8.8 built for i686-linux
-
-Using the Makefile.PL requires Module::Install. If you do not have 
-Module::Install loaded on your system, you can install it using:
-
-# cpan Module::Install
-
-Run Makefile.PL to check for LedgerSMB's Perl dependencies. The output should be
-similar to the following:
-
-$ perl Makefile.PL
-include /path/to/ledgersmb13/inc/Module/Install.pm
-include inc/Module/Install/Metadata.pm
-include inc/Module/Install/Base.pm
-include inc/Module/Install/AutoInstall.pm
-include inc/Module/Install/Include.pm
-include inc/Module/AutoInstall.pm
-*** Module::AutoInstall version 1.03
-*** Checking for Perl dependencies...
-[Core Features]
-- Test::More                ...loaded. (0.86)
-- Test::Trap                ...loaded. (0.0.23)
-- Test::Exception           ...loaded. (0.27)
-- Data::Dumper              ...loaded. (2.121)
-- Locale::Maketext          ...loaded. (1.13)
-- DateTime                  ...loaded. (0.47)
-- Locale::Maketext::Lexicon ...loaded. (0.77 >= 0.56)
-- DBI                       ...loaded. (1.607 >= 1.00)
-- MIME::Base64              ...loaded. (3.07)
-- Digest::MD5               ...loaded. (2.38)
-- HTML::Entities            ...loaded. (3.60)
-- DBD::Pg                   ...loaded. (2.11.8)
-- Math::BigFloat            ...loaded. (1.51)
-- IO::File                  ...loaded. (1.13)
-- Encode                    ...loaded. (2.12)
-- Locale::Country           ...loaded. (2.07)
-- Locale::Language          ...loaded. (2.07)
-- Time::Local               ...loaded. (1.1901)
-- Cwd                       ...loaded. (3.29)
-- Config::Std               ...loaded. (0.0.4)
-- MIME::Lite                ...loaded. (3.024)
-- Template                  ...loaded. (2.20 >= 2.14)
-- Error                     ...loaded. (0.17015)
-- CGI::Simple               ...loaded. (1.108)
-[POS module credit card processing support]
-- Net::TCLink               ...loaded. (3.4)
-[Experimental scripting engine]
-- Parse::RecDescent         ...loaded. (1.94)
-[Developer tool dependencies]
-- Getopt::Long              ...loaded. (2.38)
-- FileHandle                ...loaded. (2.01)
-[PDF and Postscript output]
-- Template::Plugin::Latex   ...loaded. (2.70)
-[OpenOffice.org output]
-- XML::Twig                 ...loaded. (3.32)
-- OpenOffice::OODoc         ...loaded. (2.035)
-[Excel output]
-- Excel::Template::Plus     ...loaded. (0.03)
-*** Module::AutoInstall configuration finished.
-include inc/Module/Install/Makefile.pm
-include inc/Module/Install/WriteAll.pm
-Writing META.yml
-include inc/Module/Install/Win32.pm
-include inc/Module/Install/Can.pm
-include inc/Module/Install/Fetch.pm
-include inc/Module/Install/Build.pm
-Writing Makefile for LedgerSMB
-
-Use your distribution's CPAN or packaging tools to satisfy the dependencies
-shown above.
-
-
 =========================
 PostgreSQL Configuration
 =========================
@@ -197,12 +70,28 @@ state, it is necessary to run several PostgreSQL commands and SQL statements
 exactly as shown below. Automated installion is still somewhat shakey.
 
 
-TODO: Securing PostgreSQL with LedgerSMB
+Securing PostgreSQL with LedgerSMB
 ========================================
 
-An experienced PostgreSQL expert should author a section which describes how to
-properly modify the typical default pg_hba.conf etc., such that LedgerSMB 1.3
-works, but without opening up the database to unneccessary network access.
+LedgerSMB 1.3.0 and higher use the database to enforce all permissions and 
+ensure that users are who they say they are.  For this reason, it is critical
+that PostgreSQL be properly secured.
+
+In the standard setup, LedgerSMB authenticates a user by logging into PostgreSQL
+with the username/password provided.  For this reason it is important that the
+authentication in PostgreSQL be properly configured.  This is handled in the
+pg_hba.conf file in the PostgreSQL data directory.  Each line ends in an
+authentication method.  Methods which can cause major problems include:
+ * trust (allows any user to authenticate merely by knowing the username)
+ * ident sameuser (which, in most cases, will just prevent anyone from logging
+   on)
+
+Most commonly you want to set the authentication for every user, database, etc.
+to md5, which uses a digest-type authentication which is reasonably secure.
+
+In this file you can also require SSL to be used to connect to the database.
+This is most helpful when the web server and database server are on different
+computers.
 
 
 Automated PostgreSQL Database Setup
@@ -213,188 +102,8 @@ You will see an HTTP authentication prompt.  Enter credentials for the database
 superuser (for example "postgres" user).  Then follow the prompts and fill in 
 the information.
 
-Installing PostgreSQL Contrib Function Libraries (Not Optional)
-===============================================================
-
-LedgerSMB 1.3 depends on several function libraries distributed with PostgreSQL,
-but typically not installed by default in most distributions.
-
-Identify the system package containing the files tsearch2.sql, tablefunc.sql,
-and pg_trgm.sql. Install that package, and locate the files on the filesystem.
-
-If you install these on template1 then you only need to install these function
-libraries once per postgresql cluster. They will be included in any new
-database created from template1.
-
-For the remainder of this INSTALL procedure, you will need to become user
-postgres, or have the ability to log in to psql as your current user, or issue
-the commands with: sudo -u postgres [cmd].
-
-
-Install Tsearch2 Full Text indexing engine for PostgreSQL
----------------------------------------------------------
-
-$ psql -U postgres -d template1 -f /usr/share/postgresql-8.3/contrib/tsearch2.sql
-
-
-Install tablefunc.sql for PostgreSQL
-------------------------------------
-
-$ psql -U postgres -d template1 -f /usr/share/postgresql-8.3/contrib/tablefunc.sql
-
-
-Install pg_trgm.sql for PostgreSQL
-----------------------------------
-
-$ psql -U postgres -d template1 -f /usr/share/postgresql-8.3/contrib/pg_trgm.sql
-
-
-TODO: Test install of tsearch2, tablefunc, pg_trgm
---------------------------------------------------
-
-Create test functions for user to verify proper contrib library
-loading. Instruct the user how to run them.
-
-
-Configure a LedgerSMB Company Database
-======================================
-
-Create a LedgerSMB company database. The user and configuration information
-are stored alongside the accounting data as of this writing:
-
-$ createdb -U postgres -O ledgersmb mycompany
-
-
-Install the plpgsql procedural language to the company database:
-
-$ createlang plpgsql mycompany
-
-
-Apply the SQL statements in /path/to/ledgersmb13/sql/Pg-database.sql to
-the company database:
-
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/Pg-database.sql
-
-
-Apply the in-development SQL statements in the files /path/to/ledgersmb13/sql/modules/ to
-the company database, in exactly the order specified in sql/modules/LOADORDER:
-
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Drafts.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/chart.sql
-
-etc.
-
-Load a template Chart of Accounts
----------------------------------
-
-The user is encouraged to create a custom chart of accounts, but for the
-purposes of this INSTALL, load a template chart of accounts from the most
-appropriate SQL statement file under /path/to/ledgersmb13/sql/coa:
-
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/coa/us/chart/General.sql
-
-
-Generate A Custom Roles SQL Statement File
-------------------------------------------
-
-Preprocess the sql/modules/Roles.sql file with sed, generating a custom SQL file
-in /path/to/ledgersmb13:
-
-$ sed -e 's/<?lsmb dbname ?>/mycompany/g' /path/to/ledgersmb13/sql/modules/Roles.sql > /path/to/ledgersmb13/mycompany_roles.sql
-
-
-Apply the SQL statements in the sed-generated file mycompany_roles.sql to the
-company database:
-
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/mycompany_roles.sql
-
-
-Create A PostgreSQL Role
-------------------------
-
-Create a postgresql role which you will use to log into the company
-database:
-
-$ createuser --no-superuser --createdb --no-createrole -U postgres --pwprompt --encrypted myuser
-
-Note the password entered at the prompt as MYUSER_PASSWORD. You will use this to login to the
-LedgerSMB 1.3 instance.
-
-
-Create A Company User
-=====================
-
-The following section creates a company user 'myuser' and configures that user
-for use with 'mycompany'.
-
-
-Insert myuser Entity
---------------------
-
-Using the psql console, insert myuser to the entity table.
-
-$ psql -U postgres -d mycompany -t -c "INSERT INTO entity (name, entity_class, created, country_id) VALUES ('myuser', 3, NOW(), '232') RETURNING name, entity_class, created;"
- myuser |            3 | 2009-04-13
-
-INSERT 0 1
-
-
-Insert myuser Person
----------------------
-
-Insert the myuser entity into the person table:
-
-$ psql -U postgres -d mycompany -t -c "INSERT INTO person (entity_id, first_name, last_name, created) VALUES (2, 'Firstname', 'Lastname', NOW()) RETURNING entity_id, first_name, last_name, created;"
-         2 | Firstname  | Lastname  | 2009-04-13
-
-INSERT 0 1
-
-
-Insert myuser Employee
-----------------------
-
-Insert the myuser person into the entity_employee table:
-
-$ psql -U postgres -d mycompany -t -c "INSERT INTO entity_employee (manager_id, entity_id, startdate, role) VALUES (1, 2, NOW(), 'myuser') RETURNING person_id, entity_id, startdate, role;"
-         1 |         2 | 2009-04-13 | myuser
-
-INSERT 0 1
-
-Insert myuser User
-------------------
-
-Insert the myuser username and its entity id into the users table:
-
-$ psql -U postgres -d mycompany -t -c "INSERT INTO users (username, entity_id) VALUES ('myuser', 2) RETURNING username, entity_id;"
- myuser   |         2
-
-INSERT 0 1
-
-
-Insert myuser Preferences
--------------------------
-
-Insert the myuser's person_id into user_preferences:
-
-$ psql -U postgres -d mycompany -t -c "INSERT INTO user_preference (id) VALUES (1) RETURNING id;"
-  1
-
-
-Temporary Workaround: Grant All Roles To myuser
------------------------------------------------
-
-As of this writing, the following workaround is recommended to apply all
-LedgerSMB 1.3 roles (i.e. rolname LIKE 'lsmb%') to a company user. Create the
-following function:
-
-$ psql -U postgres -d mycompany -t -c "CREATE OR REPLACE FUNCTION grant_all_roles(in_login varchar) RETURNS INT as \$\$ DECLARE role_info RECORD; BEGIN FOR role_info IN select * from pg_roles WHERE rolname LIKE 'lsmb%' LOOP EXECUTE 'GRANT ' || role_info.rolname || ' TO ' || in_login; END LOOP; RETURN 1; END; \$\$ language plpgsql;"
-CREATE FUNCTION
-
-
-And execute the function for myuser:
-
-$ psql -U postgres -d mycompany -t -c "SELECT grant_all_roles('myuser');"
-               1
+There is also a script provided called 'install-mycompany.sh' which can be used 
+to set up the database from the command line.
 
 Login to LedgerSMB 1.3 Instance
 ===============================
@@ -408,35 +117,6 @@ With cookies enabled for localhost.
 Name:     myuser
 Password: MYUSER_PASSWORD
 Company:  mycompany
-
-
-Workarounds
-===========
-
-In its pre-alpha state, when accessing certain parts of the LedgerSMB 1.3 system
-you may encounter permission errors. For example:
-
-DBD::Pg::st execute failed: ERROR: permission denied for relation warehouse
-Error!
-SELECT id, description
-FROM warehouse
-ORDER BY 2
-ERROR: permission denied for relation warehouse
-
-It is possible to grant the permissions directly, until a bug is filed, and the
-code and this INSTALL document is updated to fix the bug. As of this writing,
-the following SQL statements help avoid these types of errors:
-
-$ psql -U postgres -d mycompany -t -c "GRANT SELECT ON warehouse TO public;"
-GRANT
-$ psql -U postgres -d mycompany -t -c "GRANT SELECT ON translation TO public;"
-GRANT
-$ psql -U postgres -d mycompany -t -c "GRANT SELECT ON pricegroup TO public;"
-GRANT
-$ psql -U postgres -d mycompany -t -c "GRANT SELECT ON taxmodule TO public;"
-GRANT
-$ psql -U postgres -d mycompany -t -c "GRANT SELECT ON sic TO public;"
-GRANT
 
 
 How-To Section
@@ -453,13 +133,3 @@ After that, you must issue the droprole command for each rolname in the query
 embedded in the following command:
 
 $ for role in `psql -U postgres -t -c "SELECT rolname FROM pg_roles WHERE rolname LIKE 'lsmb_mycompany%';"`; do dropuser -U postgres $role; done
-
-
-Q: The Admin UI isn't functional yet, how to I set my preferred CSS stylesheet?
-
-A: You might find another CSS stylesheet to your liking, but there is currently
-no UI to set it. Run the following command. If you know your users.id, you can
-modify the query:
-
-$ psql -U postgres -d mycompany -c "UPDATE user_preference SET stylesheet='ledgersmb-smallgray.css';"
-UPDATE 1

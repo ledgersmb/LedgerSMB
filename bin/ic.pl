@@ -3200,7 +3200,6 @@ sub update {
                     for ( keys %{ $form->{item_list}[0] } ) {
                         $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
                     }
-
                     if ( $form->{item_list}[0]{partsgroup_id} ) {
                         $form->{"partsgroup_$i"} =
 qq|$form->{item_list}[0]{partsgroup}--$form->{item_list}[0]{partsgroup_id}|;

@@ -2,6 +2,16 @@
 
 CWD=`pwd`
 
+echo "Installing Perl Modules"
+
+cpan Module::Install
+
+perl Makefile.PL
+
+make
+
+echo "Configuring Apache"
+
 sed -i.orig "s|WORKING_DIR|$CWD|"
 
 echo "Which user does your web server run as?"
@@ -9,7 +19,7 @@ read username
 
 chown $username spool templates css
 
-echo "Where do we copy the ledger-smb-httpd.conf file to?"
+echo "Where do we copy the ledgersmb-httpd.conf file to?"
 read location
 cp ledgersmb-httpd.conf $location
 
