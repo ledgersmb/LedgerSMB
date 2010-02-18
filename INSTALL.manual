@@ -27,7 +27,7 @@ the absolute path of your LedgerSMB installation.
 
 The following sed command applies the repetitive substitution automatically.
 
-$ cat ledgersmb-httpd.conf | sed "s|WORKING_DIR|$(pwd)|" > ledgersmb-httpd-13.conf
+$ sed -e "s|WORKING_DIR|$(pwd)|" ledgersmb-httpd.conf > ledgersmb-httpd-13.conf
 
 You can also apply the substitution manually in your preferred text editor.
 
@@ -57,9 +57,10 @@ Verify that RewriteRule is working
 LedgerSMB 1.3 depends on mod_rewrite's ReWriteRule. Make sure that your Apache
 has module or built-in support for mod_rewrite. You can test this if you are
 unsure. Use an .htaccess file to check that mod_rewrite is working and that our
-directory alias has been loaded by apache:
+directory alias has been loaded by apache (this has to be done from the 
+LedgerSMB directory):
 
-$ echo -e 'RewriteEngine on\nRewriteRule ^(.*)$ http://www.google.com [R]' > /path/to/ledgersmb13/.htaccess
+$ echo -e 'RewriteEngine on\nRewriteRule ^(.*)$ http://www.google.com [R]' > .htaccess
 
 $ wget -qO /dev/stdout http://localhost/ledgersmb | grep -c '<title>Google</title>'
 1
@@ -70,14 +71,14 @@ temporary .htaccess file:
 $ rm .htaccess
 
 
-Apache must be able to read and write /path/to/ledgersmb13/templates/
--------------------------------------------------
+Apache must be able to read and write to the templates/ directory
+-------------------------------------------------------------------
 
-Make sure the /path/to/ledgersmb13/templates directory is read-writable by 
+Make sure the templates directory is read-writable by 
 user:group apache:apache, or as appropriate for your distribution's Apache 
 conventions.
 
-Apache must also be able to read (but not write) /path/to/ledgersmb13/ and its 
+Apache must also be able to read (but not write) ledgersmb13/ and its 
 subdirectories.
 
 
@@ -210,17 +211,17 @@ Install the plpgsql procedural language to the company database:
 $ createlang plpgsql mycompany
 
 
-Apply the SQL statements in /path/to/ledgersmb13/sql/Pg-database.sql to
+Apply the SQL statements in sql/Pg-database.sql to
 the company database:
 
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/Pg-database.sql
+$ psql -U postgres -d mycompany -f sql/Pg-database.sql
 
 
-Apply the in-development SQL statements in the files /path/to/ledgersmb13/sql/modules/ to
+Apply the in-development SQL statements in the files sql/modules/ to
 the company database, in exactly the order specified in sql/modules/LOADORDER:
 
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/Drafts.sql
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/modules/chart.sql
+$ psql -U postgres -d mycompany -f sql/modules/Drafts.sql
+$ psql -U postgres -d mycompany -f sql/modules/chart.sql
 
 etc.
 
@@ -229,24 +230,24 @@ Load a template Chart of Accounts
 
 The user is encouraged to create a custom chart of accounts, but for the
 purposes of this INSTALL, load a template chart of accounts from the most
-appropriate SQL statement file under /path/to/ledgersmb13/sql/coa:
+appropriate SQL statement file under sql/coa:
 
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/sql/coa/us/chart/General.sql
+$ psql -U postgres -d mycompany -f sql/coa/us/chart/General.sql
 
 
 Generate A Custom Roles SQL Statement File
 ------------------------------------------
 
-Preprocess the sql/modules/Roles.sql file with sed, generating a custom SQL file
-in /path/to/ledgersmb13:
+Preprocess the sql/modules/Roles.sql file with sed, generating a custom SQL 
+file:
 
-$ sed -e 's/<?lsmb dbname ?>/mycompany/g' /path/to/ledgersmb13/sql/modules/Roles.sql > /path/to/ledgersmb13/mycompany_roles.sql
+$ sed -e 's/<?lsmb dbname ?>/mycompany/g' sql/modules/Roles.sql > mycompany_roles.sql
 
 
 Apply the SQL statements in the sed-generated file mycompany_roles.sql to the
 company database:
 
-$ psql -U postgres -d mycompany -f /path/to/ledgersmb13/mycompany_roles.sql
+$ psql -U postgres -d mycompany -f mycompany_roles.sql
 
 
 Create A Company User
