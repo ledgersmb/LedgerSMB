@@ -1,3 +1,10 @@
+Changelog for 1.2.20
+* Commented out credits in ledgersmb-blue.css 
+* Corrected encoding in Latvian chart of accounts (Janeks)
+* Minor fixes to release notes (SF User akaihola)
+* Exchange rate fix (SF User Anarcat)
+* Fixed whitespace handling in admin.pl when saving permissions (Chris T)
+
 Changelog for 1.2.19
 * Fixed short sales with never-closed books (Chris T)
 * Fixed erroneous tax rounding in POS screen (Chris T)

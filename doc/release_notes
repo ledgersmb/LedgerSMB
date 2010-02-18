@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.19
+LedgerSMB 1.2.20
 
 
 
@@ -198,12 +198,13 @@ Also the POS system requires some additional configuration both in the chart of
 accounts and in the system itself.  Please edit the pos.conf.pl and create 
 appropriate till accounts.
 
-Major Bugs Fixed in 1.2.18:
+Major Bugs Fixed in 1.2.20:
 ================================
-1) COGS handling for product returns has been corrected.  Previously under 
-certain circumstances the COGS posting was incorrect.
+1) Whitespace handling in admin.pl was fixed that prevented some users from 
+granting certain permissions
 
-Also, note that LedgerSMB 1.2.15 had a bunch of the pricematrix logic rewritten.
-If you are upgrading from an earlier version, please test before putting it into
-production.
+2) Latvian CoA was converted to UTF-8 in order to provide proper consistency 
+with default db encodings.
+
+3) Credits and misc information not part of the stylesheet was commented out in ledgersmb-blue.css
 
