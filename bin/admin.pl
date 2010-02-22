@@ -823,14 +823,15 @@ sub save {
 
     $myconfig = LedgerSMB::User->new("$form->{login}");
 
-    # redo acs variable and delete all the acs codes
+   # redo acs variable and delete all the acs codes
     @acs = split /;/, $form->{acs};
     $form->{acs} = "";
 
     foreach $item (@acs) {
 
-        $item = $form->escape( $item, 1 );
-
+        if ($item =~ /\s/){
+            $item = $form->escape( $item, 1 );
+        }
         if ( !$form->{$item} ) {
             $form->{acs} .= $form->unescape( $form->unescape("$item") ) . ";";
         }
