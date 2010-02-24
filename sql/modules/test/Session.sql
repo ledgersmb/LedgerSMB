@@ -6,12 +6,6 @@ INSERT INTO test_result (test_name, success)
 values ('timeout set', 
 (select count(*) from defaults where setting_key = 'timeout') = 1);
 
-INSERT INTO entity (name, entity_class, control_code, country_id)
-VALUES ('Testing.....', 3, '_TESTING.....',242);
-
-INSERT INTO users (entity_id, username)
-SELECT currval('entity_id_seq'), CURRENT_USER;
-
 INSERT INTO session (users_id, last_used, token, transaction_id)
 SELECT 	currval('users_id_seq'), 
 now() - coalesce((select value from defaults where setting_key = 'timeout')::interval, 

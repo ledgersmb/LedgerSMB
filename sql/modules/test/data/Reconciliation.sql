@@ -3,10 +3,10 @@
 INSERT INTO chart (id, accno, description, category, charttype) values (-200, '-11111', 'Test Acct 1', 'A', 'A');
 INSERT INTO chart (id, accno, description, category, charttype) values (-201, '-11112', 'Test Acct 2', 'A', 'A');
 
-INSERT INTO entity (id, control_code, name, entity_class, country_id) values (-200, '-11111', 'Test 1', 1, 242);
+INSERT INTO entity (id, control_code, name, entity_class, country_id) values (-201, '-11111', 'Test 1', 1, 242);
 
-INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) values (-200, -200, 'T-11111', 1, -1000);
-INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) values (-200, -201, 'T-11112', 1, -1000);
+INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) values (-201, -200, 'T-11111', 1, -1000);
+INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) values (-201, -201, 'T-11112', 1, -1000);
 
 
 INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-200, '-2000', '10', '10', '0', -200, '1000-01-01', 'USD');

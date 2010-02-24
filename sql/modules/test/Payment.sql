@@ -1,16 +1,6 @@
 BEGIN;
 \i Base.sql
 
-INSERT INTO entity (id, name, entity_class, control_code, country_id)
-VALUES (-100, 'Testing.....', 3, '_TESTING.....', 242);
-
-DELETE FROM users WHERE username = CURRENT_USER;
-
-INSERT INTO users (entity_id, username)
-SELECT -100, CURRENT_USER;
-
-INSERT INTO entity(name, id, entity_class, control_code, country_id)
-values ('test user 1', -200, 3, 'Test User 1', 242);
 
 insert into users (entity_id, username, id)
 values (-200, '_test1', -200);
