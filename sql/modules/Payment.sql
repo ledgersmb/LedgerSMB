@@ -545,11 +545,19 @@ BEGIN
 		||$E$ , $E$ || coalesce(quote_literal(in_payment_type), 'NULL') || $E$ 
 		FROM bulk_payments_in $E$;
 
-	EXECUTE $E$
-		UPDATE ap 
-		set paid = paid + (select amount from bulk_payments_in b 
-			where b.id = ap.id)
-		where id in (select id from bulk_payments_in) $E$;
+        IF in_account_class = 1 THEN
+        	EXECUTE $E$
+	        	UPDATE ap 
+		        set paid = paid + (select amount from bulk_payments_in b 
+		         	where b.id = ap.id)
+		         where id in (select id from bulk_payments_in) $E$;
+        ELSE
+        	EXECUTE $E$
+	        	UPDATE ar 
+		        set paid = paid + (select amount from bulk_payments_in b 
+		         	where b.id = ar.id)
+		         where id in (select id from bulk_payments_in) $E$;
+        END IF;
 	EXECUTE $E$ DROP TABLE bulk_payments_in $E$;
 	perform unlock_all();
 	return out_count;
