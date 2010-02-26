@@ -17,6 +17,7 @@ sub edit {
     my @accounts = $account->get();
     my $a = shift @accounts;
     $a->{title} = $request->{_locale}->text('Edit Account');
+    $a->{_locale} = $request->{_locale};
     _display_account_screen($a);
 }
 
@@ -40,6 +41,8 @@ sub _display_account_screen {
     my $buttons = [];
     my $checked;
     my $hiddens;
+    my $logger = Log::Log4perl->get_logger('');
+    $logger->debug("scripts/account.pl Locale: $locale");
 
     foreach my $item ( split( /:/, $form->{link} ) ) {
         $form->{$item} = "checked";

@@ -8,11 +8,11 @@ PGVERSION=8.4
 
 # The following path can vary per distribution
 # Debian/Ubuntu
-CONTRIB=/usr/share/postgresql/8.3/contrib/
+CONTRIB=/usr/share/postgresql/$PGVERSION/contrib/
 # Compiled from source.
 #CONTRIB=/usr/local/pgsql/share/contrib
 
-echo 'This script will create a $MYCOMPANY dataset per INSTALL. Ctrl-C to cancel.'
+echo "This script will create a $MYCOMPANY dataset per INSTALL. Ctrl-C to cancel."
 
 dropdb -i -U postgres $MYCOMPANY 
 for role in `psql -U postgres -t -c "SELECT rolname FROM pg_roles WHERE rolname LIKE 'lsmb_${MYCOMPANY}%';"`; do dropuser -U postgres $role; done

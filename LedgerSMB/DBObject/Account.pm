@@ -30,6 +30,9 @@ sub save {
     }
     $self->generate_links;
     $self->exec_method(funcname => 'account_save');
+    if (defined $self->{recon}){
+        $self->call_procedure(procname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
+    }
     $self->{dbh}->commit;
 }
 

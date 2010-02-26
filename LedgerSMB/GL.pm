@@ -427,10 +427,11 @@ sub all_transactions {
         department  => 15,
         memo        => 16,
         trans_id    => 18,
-        chart_id    => 19
+        chart_id    => 19,
+        entry_id    => 20
     );
 
-    my @a = ( id, transdate, reference, source, description, accno );
+    my @a = ( entry_id, trans_id, chart_id, id, transdate, reference, source, description, accno);
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $chart_id;
@@ -448,11 +449,11 @@ sub all_transactions {
         $approved = $dbh->quote($form->{approved});
     }
 
-    my $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference,
+    my $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference::int,
 						  g.description, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, g.notes, c.link,
 						  '' AS till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id
+						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id, ac.entry_id
 					 FROM gl AS g
 					 JOIN acc_trans ac ON (g.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -466,11 +467,11 @@ sub all_transactions {
 
 					UNION ALL
 
-				   SELECT a.id, 'ar' AS type, a.invoice, a.invnumber,
+				   SELECT a.id, 'ar' AS type, a.invoice, a.invnumber::int,
 						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id
+						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id, ac.entry_id 
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -486,11 +487,11 @@ sub all_transactions {
 
 				UNION ALL
 
-				   SELECT a.id, 'ap' AS type, a.invoice, a.invnumber,
+				   SELECT a.id, 'ap' AS type, a.invoice, a.invnumber::int,
 						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id
+						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id, ac.entry_id 
 					 FROM ap a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -596,7 +597,7 @@ sub transaction {
 					  JOIN chart c ON (ac.chart_id = c.id)
 				 LEFT JOIN project p ON (p.id = ac.project_id)
 					 WHERE ac.trans_id = ?
-				  ORDER BY accno|;
+				  ORDER BY ac.entry_id|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);

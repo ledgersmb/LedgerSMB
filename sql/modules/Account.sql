@@ -5,6 +5,8 @@ returns account as
 $$
      select * from account where accno = $1;
 $$ language sql;
+
+
 CREATE OR REPLACE FUNCTION account__get_taxes()
 RETURNS setof account AS
 $$
@@ -13,6 +15,7 @@ SELECT * FROM account
                where description ilike '%tax%')
 ORDER BY accno;
 $$ language sql;
+
 
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS chart AS
 $$
@@ -23,6 +26,7 @@ BEGIN
 	RETURN account;
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION account_has_transactions (in_id int) RETURNS bool AS
 $$
@@ -36,6 +40,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
 CREATE OR REPLACE FUNCTION account_save 
 (in_id int, in_accno text, in_description text, in_category char(1), 
 in_gifi text, in_heading int, in_contra bool, in_link text[])
@@ -47,6 +52,7 @@ DECLARE
 	t_id int;
 BEGIN
 	-- check to ensure summary accounts are exclusive
+        -- necessary for proper handling by legacy code
 	FOR t_text IN 
 		select t_summary_links[generate_series] AS val 
 		FROM generate_series(array_lower(t_summary_links, 1), 
@@ -94,16 +100,19 @@ BEGIN
 		INSERT INTO account_link (account_id, description)
 		VALUES (t_id, t_text.val);
 	END LOOP;
+
 	
 	RETURN t_id;
 END;
 $$ language plpgsql;
+
 
 CREATE OR REPLACE FUNCTION account_heading_list()
 RETURNS SETOF account_heading AS
 $$
 SELECT * FROM account_heading order by accno;
 $$ language sql;
+
 
 CREATE OR REPLACE FUNCTION account_heading_save 
 (in_id int, in_accno text, in_description text, in_parent int)
@@ -126,9 +135,31 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+
 CREATE RULE chart_i AS ON INSERT TO chart
 DO INSTEAD
-SELECT CASE WHEN new.charttype='H' THEN account_heading_save(new.id, new.accno, new.description, NULL)
-ELSE account_save(new.id, new.accno, new.description, new.category, new.gifi_accno, NULL, CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END, string_to_array(new.link, ':'))
+SELECT CASE WHEN new.charttype='H' THEN account_heading_save(new.id, new.accno, 
+new.description, NULL)
+ELSE account_save(new.id, new.accno, new.description, new.category, 
+new.gifi_accno, NULL, 
+CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END, 
+string_to_array(new.link, ':'))
 END;
 --
+
+CREATE OR REPLACE FUNCTION cr_coa_to_account_save(in_accno text, in_description text)
+RETURNS void AS $BODY$
+    DECLARE
+       v_chart_id int;
+    BEGIN
+        -- Check for existence of the account already
+        PERFORM * FROM cr_coa_to_account WHERE in_accno = in_accno;
+
+        IF NOT FOUND THEN
+           -- This is a new account. Insert the relevant data.
+           SELECT chart_id INTO v_chart_id FROM charts WHERE accno = in_accno;
+           INSERT INTO cr_coa_to_account (chart_id, account) VALUES (v_chart_id, in_accno||'--'||in_description);
+        END IF;
+        -- Already found, no need to do anything. =) 
+    END;
+$BODY$ LANGUAGE PLPGSQL;
