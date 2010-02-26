@@ -60,12 +60,18 @@
                           ${checked.E_} => checked.E_,
                           value => 'E'} ?>
                 </td>
-                <td>
+                <td align="right">
                   <?lsmb INCLUDE input element_data={
                           name => 'contra',
                           type => 'checkbox',
                           label => text('Contra'),
                           ${checked.contra} => checked.contra,
+                          value => '1'} ?><br/>
+                  <?lsmb INCLUDE input element_data={
+                          name => 'recon',
+                          type => 'checkbox',
+                          label => text('Recon'),
+                          ${checked.recon} => checked.recon,
                           value => '1'} ?>
                 </td>
                 <td align="right">
