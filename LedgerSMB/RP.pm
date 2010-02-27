@@ -1760,7 +1760,12 @@ sub aging {
 
     $query = "";
     my $union = "";
-
+    my $aclass;
+    if ($form->{arap} eq 'ar') {
+        $aclass = 1;
+    } else {
+        $aclass = 2;
+    }
         $query .= qq|
 		SELECT c.entity_id AS ctid, 
 		       c.meta_number as $form->{ct}number, e.legal_name as name,
@@ -1776,19 +1781,19 @@ sub aging {
 		       CASE WHEN 
 		                 EXTRACT(days FROM age(a.transdate)/30) 
 		                 = 0
-		                 THEN (a.amount - a.paid) ELSE 0 END
+		                 THEN (sum(p.amount)) ELSE 0 END
 		            as c0, 
 		       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
 		                 = 1
-		                 THEN (a.amount - a.paid) ELSE 0 END
+		                 THEN (sum(p.amount)) ELSE 0 END
 		            as c30, 
 		       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
 		                 = 2
-		                 THEN (a.amount - a.paid) ELSE 0 END
+		                 THEN (sum(p.amount)) ELSE 0 END
 		            as c60, 
 		       CASE WHEN EXTRACT(days FROM age(a.transdate)/30)
 		                 > 2
-		                 THEN (a.amount - a.paid) ELSE 0 END
+		                 THEN (sum(p.amount)) ELSE 0 END
 		            as c90, 
 		       a.duedate, a.invoice, a.id, a.curr,
 		       (SELECT $buysell FROM exchangerate e
@@ -1796,6 +1801,17 @@ sub aging {
 		              AND e.transdate = a.transdate) 
 		       AS exchangerate
 		  FROM $form->{arap} a
+		  JOIN (SELECT acc_trans.trans_id, 
+		                 sum(CASE WHEN $aclass = 1 THEN amount
+		                          WHEN $aclass = 2 THEN amount * -1
+		                     END) AS due 
+		            FROM acc_trans 
+		            JOIN account coa ON (coa.id = acc_trans.chart_id)
+                            JOIN account_link al ON (al.account_id = coa.id)
+		           WHERE ((al.description = 'AP' AND in_account_class = 1)
+		                 OR (al.description = 'AR' AND in_account_class = 2))
+			   AND approved IS TRUE
+		        GROUP BY acc_trans.trans_id) p ON (a.id = p.trans_id)
 		  JOIN entity_credit_account c USING (entity_id)
 		  JOIN company e USING (entity_id)
 		  WHERE $where|;
