@@ -11,6 +11,8 @@ DELETE FROM users WHERE username = CURRENT_USER;
 INSERT INTO users (entity_id, username)
 SELECT -100, CURRENT_USER;
 
+INSERT INTO entity_employee(entity_id) values (-100);
+
 INSERT INTO entity(name, id, entity_class, control_code, country_id)
 values ('test user 1', -200, 3, 'Test User 1', 242);
 

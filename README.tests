@@ -2,7 +2,9 @@ Test file number allocation:
 00 - 09: General base checks
 10 - 39: Module checks, no LSMB database required
      40: Set up test LSMB database
-41 - 59: Operational checks, LSMB database required
+     41: Addons setup.  Addons should use 41.x notation where x is the run
+         needed to properly install.
+42 - 59: Operational checks, LSMB database required
 60 - 88: Interface checks
      89: Clean up test LSMB database
 90 - 99: Packaging checks
@@ -35,7 +37,7 @@ data.  It will only run if the environment variable LSMB_TEST_LWN is set to true
 ENVIRONMENT VARIABLES USED:
 
 Environment Variables which control which tests are run (set to true to enable):
-LSMB_TEST_DB runs database tests
+ LSMB_TEST_DB runs database tests
 LSMB_TEST_LWP runs LWP tests
 
 Variables to set credentials:
@@ -43,5 +45,18 @@ PGUSER and PGPASSWORD for db tests
 LSMB_USER and LSMB_PASS for LWP tests
 
 Variables to configure test suites:
-PGDATABASE directs to the database (or company element in LWP tests)
+   PGDATABASE directs to the database (or company element in LWP tests)
 LSMB_BASE_URL directs LWP tests to the main LSMB instance being tested. 
+
+If you wish to make a new db for tests, you must set the following environment 
+variables:
+
+   LSMB_NEW_DB is the name of the new db.  If this database cannot be created, 
+               the tests will bail out.
+PG_CONTRIB_DIR is the address of the directory where Pg contrib scripts are 
+               located.  You can find it by searching for tablefunc.sql.
+
+Additionally, if LSMB_INSTALL_DB is set, the database will NOT be removed after
+test cases are run.  This can be a useful way of installing the for production
+use, though currently an admin user is not created in this process and would
+need to be created manually.

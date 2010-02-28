@@ -1,3 +1,5 @@
+CREATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
+
 begin;
 CREATE SEQUENCE id;
 -- As of 1.3 there is no central db anymore. --CT
@@ -407,6 +409,8 @@ CREATE TABLE transactions (
   approved_by int references entity (id),
   approved_at timestamp
 );
+
+CREATE INDEX transactions_locked_by_i ON transactions(locked_by);
 
 COMMENT on TABLE transactions IS 
 $$ This table tracks basic transactions across AR, AP, and GL related tables.  

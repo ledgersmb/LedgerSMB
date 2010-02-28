@@ -1,72 +1,41 @@
 -- VERSION 1.3.0
 
 
-CREATE OR REPLACE FUNCTION employee__save(
-    in_entity int, in_startdate date, in_enddate date,
-	in_role text, in_sales boolean, in_dob date, 
-    in_managerid integer, in_employeenumber text
-)
-returns int AS $$
+CREATE OR REPLACE FUNCTION employee__save 
+(in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
+	in_role text, in_ssn text, in_sales bool, in_manager_id int, 
+        in_employee_number text)
+RETURNS int AS $$
+DECLARE out_id INT;
+BEGIN
+	UPDATE entity_employee 
+	SET startdate = coalesce(in_start_date, now()::date),
+		enddate = in_end_date,
+		dob = in_dob,
+		role = in_role,
+		ssn = in_ssn,
+		manager_id = in_manager_id,
+		employeenumber = in_employee_number,
+		person_id = (select id FROM person 
+			WHERE entity_id = in_entity_id)
+	WHERE entity_id = in_entity_id;
 
-    DECLARE
-        e_ent entity_employee;
-        e entity;
-        p person;
-        t_startdate date;
-    BEGIN
-        IF in_startdate IS NULL THEN
-             t_startdate := now()::date;
-        ELSE
-             t_startdate := in_startdate;
-        END IF;
+	out_id = in_entity_id;
 
-        select * into e from entity where id = in_entity;
-        
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'No entity found for ID %', in_entity;
-        END IF;
-        
-        select * into p from person where entity_id = in_entity;
-        
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'No person found for ID %', in_entity;
-        END IF;
-        
-        -- Okay, we're good. Check to see if we update or insert.
-        
-        select * into e_ent from entity_employee where 
-            entity_id = in_entity;
-            
-        IF NOT FOUND THEN
-            -- insert.
-            
-            INSERT INTO entity_employee (entity_id, startdate, 
-                enddate, role, sales, manager_id, employeenumber, dob)
-            VALUES (in_entity, t_startdate, in_enddate, in_role, 
-                in_sales, in_managerid, in_employeenumber, in_dob);
-            
-            return in_entity;
-        ELSE
-        
-            -- update
-            
-            UPDATE entity_employee
-            SET
-                startdate = t_startdate,
-                enddate = in_enddate,
-                role = in_role,
-                sales = in_sales,
-                manager_id = in_managerid,
-                employeenumber = in_employeenumber,
-                dob = in_dob
-            WHERE
-                entity_id = in_entity;
-                
-            return in_entity;
-        END IF;
-    END;
-
-$$ language 'plpgsql';
+	IF NOT FOUND THEN
+		INSERT INTO entity_employee 
+			(startdate, enddate, dob, role, ssn, manager_id, 
+				employeenumber, entity_id, person_id)
+		VALUES
+			(coalesce(in_start_date, now()::date), in_end_date, 
+                                in_dob, in_role, in_ssn,
+				in_manager_id, in_employee_number, in_entity_id,
+				(SELECT id FROM person 
+				WHERE entity_id = in_entity_id));
+		RETURN in_entity_id;
+	END IF;
+END;
+$$ LANGUAGE PLPGSQL;
 
 create view employees as
     select 

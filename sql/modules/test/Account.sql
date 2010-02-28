@@ -8,10 +8,6 @@ VALUES ('TEST testing 1', 'A', 'A', '00001');
 INSERT INTO chart (description, charttype, category, accno)
 VALUES ('TEST testing 2', 'A', 'A', '00002');
 
-INSERT INTO entity (id, control_code, name, entity_class, country_id) 
-values (-100, 'test1', 'test', 3, 242);
-
-
 INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id) 
 values (-100, 'test1', -100, 1, -1000);
 

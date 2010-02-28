@@ -50,40 +50,6 @@ RETURNS INT AS $$
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION employee__save 
-(in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
-	in_role text, in_ssn text, in_sales bool, in_manager_id int, in_employee_number text)
-RETURNS int AS $$
-DECLARE out_id INT;
-BEGIN
-	UPDATE entity_employee 
-	SET startdate = in_start_date,
-		enddate = in_end_date,
-		dob = in_dob,
-		role = in_role,
-		ssn = in_ssn,
-		manager_id = in_manager_id,
-		employeenumber = in_employee_number,
-		person_id = (select id FROM person 
-			WHERE entity_id = in_entity_id)
-	WHERE entity_id = in_entity_id;
-
-	out_id = in_entity_id;
-
-	IF NOT FOUND THEN
-		INSERT INTO entity_employee 
-			(startdate, enddate, dob, role, ssn, manager_id, 
-				employeenumber, entity_id, person_id)
-		VALUES
-			(in_start_date, in_end_date, in_dob, in_role, in_ssn,
-				in_manager_id, in_employee_number, in_entity_id,
-				(SELECT id FROM person 
-				WHERE entity_id = in_entity_id));
-		RETURN in_entity_id;
-	END IF;
-END;
-$$ LANGUAGE PLPGSQL;
-
 CREATE OR REPLACE FUNCTION person__list_locations(in_entity_id int)
 RETURNS SETOF location_result AS
 $$

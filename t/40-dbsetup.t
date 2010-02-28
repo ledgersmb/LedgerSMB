@@ -1,28 +1,20 @@
 # Database setup tests.
 
 use Test::More;
-use LedgerSMB::Form;
 use strict;
 
-#util functions
-
-# sub ok_or_die($name, $success)
-# if $success is true, then pass.
-# else bail out.
-
+my $temp = $ENV{TEMP} || '/tmp/';
 my $run_tests = 1;
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
   if (!defined $ENV{$evar}){
       $run_tests = 0;
+      plan skipall => "$evar not set";
   }
 }
 
 if ($run_tests){
-	plan tests => 5;
+	plan tests => 25;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-}
-else {
-	plan skip_all => 'Skipping all.  Told not to test db.';
 }
 
 # Manual tests
@@ -32,6 +24,12 @@ cmp_ok(<CREATEDB>, 'eq', "CREATE DATABASE\n", 'Database Created')
 || BAIL_OUT('Database could not be created!');
 
 close(CREATEDB);
+
+if (!$ENV{LSMB_INSTALL_DB}){
+    open (DBLOCK, '>', "$temp/LSMB_TEST_DB");
+    print DBLOCK $ENV{LSMB_NEW_DB};
+    close (DBLOCK);
+}
 
 my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
 
@@ -74,7 +72,8 @@ for my $mod (<LOADORDER>){
     $mod =~ s/\s*$//;
     next if $mod eq '';
 
-    open (PSQL, '-|', "psql -f sql/modules/$mod")&& pass("$mod loaded and committed");
+    (open (PSQL, '-|', "psql -f sql/modules/$mod")&& pass("$mod loaded"))
+      || fail("$mod loaded");
     my $test = 0;
     while (my $line = <PSQL>){
         chomp($line);
@@ -84,4 +83,17 @@ for my $mod (<LOADORDER>){
     }
     close(PSQL);
 }
-close (LOADORDER)
+close (LOADORDER);
+
+# Roles processing for later permission tests and db install.
+open (PSQL, '|-', "psql");
+
+(open (ROLES, '<', 'sql/modules/Roles.sql') && pass("Roles description found"))
+|| fail("Roles description found");
+
+print PSQL "BEGIN;\n";
+for my $roleline (<ROLES>){
+    $roleline =~ s/<?lsmb dbname ?>/$ENV{LSMB_NEW_DB}/;
+    print PSQL $roleline;
+}
+print PSQL "COMMIT;\n";
