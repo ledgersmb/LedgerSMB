@@ -6,7 +6,7 @@ use HTTP::Cookies;
 if (!$ENV{'LSMB_TEST_LWP'}){
 	plan 'skip_all' => 'LWP Test not enabled!';
 } elsif ($ENV{'LSMB_INSTALL_DB'}){
-        Plan 'skip_all' => 'Tests not save for production db';
+        plan 'skip_all' => 'Tests not save for production db';
 } else {
 	plan 'no_plan';
 }
