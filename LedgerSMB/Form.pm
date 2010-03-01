@@ -60,6 +60,7 @@ use strict;
 
 use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Auth;
 use List::Util qw(first);
 use Time::Local;
 use Cwd;
@@ -1199,7 +1200,9 @@ sub db_init {
 
     # Handling of HTTP Basic Auth headers
     my $auth = $ENV{'HTTP_AUTHORIZATION'};
-    $auth =~ s/Basic //i; # strip out basic authentication preface
+	# Send HTTP 401 if the authorization header is missing
+    LedgerSMB::Auth::credential_prompt unless ($auth);
+	$auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
     my ($login, $password) = split(/:/, $auth);
     $self->{login} = $login;

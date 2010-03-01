@@ -292,6 +292,8 @@ sub session_destroy {
 sub get_credentials {
     # Handling of HTTP Basic Auth headers
     my $auth = $ENV{'HTTP_AUTHORIZATION'};
+	# Send HTTP 401 if the authorization header is missing
+	credential_prompt unless ($auth);
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
     my $return_value = {};

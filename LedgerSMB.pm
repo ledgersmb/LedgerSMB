@@ -912,7 +912,7 @@ sub redo_rows {
     my $index = ( $args{index} ) ? $args{index} : 'runningnumber';
 
     my @rows;
-    my $i;    # incriment counter use only
+    my $i;    # increment counter use only
     for $i ( 1 .. $count ) {
         my $temphash = { _inc => $i };
         for my $fld (@flds) {
@@ -921,7 +921,7 @@ sub redo_rows {
         push @rows, $temphash;
     }
     $i = 1;
-    for my $row ( sort { $a->{index} <=> $b->{index} } @rows ) {
+    for my $row ( sort { $a->{$index} <=> $b->{$index} } @rows ) {
         for my $fld (@flds) {
             $self->{ "$fld" . "_$i" } = $row->{$fld};
         }
