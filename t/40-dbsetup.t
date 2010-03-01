@@ -76,18 +76,16 @@ open (PSQL, '|-', "psql");
 (open (ROLES, '<', 'sql/modules/Roles.sql') && pass("Roles description found"))
 || fail("Roles description found");
 
-print PSQL "BEGIN;\n";
 for my $roleline (<ROLES>){
     $roleline =~ s/<\?lsmb dbname \?>/$ENV{LSMB_NEW_DB}/;
     print PSQL $roleline;
 }
 
-print PSQL "COMMIT;\n";
 close (PSQL);
 SKIP: {
      skip 'No admin info', 4
-           if (!defined $ENV{LSMB_USERNAME} 
-                or !defined $ENV{LSMB_PASSWORD}
+           if (!defined $ENV{LSMB_ADMIN_USERNAME} 
+                or !defined $ENV{LSMB_ADMIN_PASSWORD}
                 or !defined $ENV{LSMB_COUNTRY_CODE}
                 or !defined $ENV{LSMB_ADMIN_FNAME}
                 or !defined $ENV{LSMB_ADMIN_LNAME});

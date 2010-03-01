@@ -5,18 +5,20 @@ use HTTP::Cookies;
 
 if (!$ENV{'LSMB_TEST_LWP'}){
 	plan 'skip_all' => 'LWP Test not enabled!';
+} elsif ($ENV{'LSMB_INSTALL_DB'}){
+        Plan 'skip_all' => 'Tests not save for production db';
 } else {
 	plan 'no_plan';
 }
 
 
-my $host = $ENV{LSMB_BASE_URL} || 'http://localhost/ledger-smb/';
+my $host = $ENV{LSMB_BASE_URL} || 'http://localhost/ledgersmb/';
 if ($host !~ /\/$/){
 	$host .= "/";
 };
 $host =~ /https?:\/\/([^\/]+)\//;
 $hostname = $1;
-my $db = $ENV{LSMB_TEST_NEW_DB} || $ENV{PGDATABASE};
+my $db = $ENV{LSMB_NEW_DB} || $ENV{PGDATABASE};
 do 't/data/62-request-data'; # Import test case oashes
 my $browser = LWP::UserAgent->new( );
 if ($host !~ /https?:.+:/){
