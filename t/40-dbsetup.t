@@ -14,15 +14,12 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
 }
 
 if ($run_tests){
-	plan tests => 29;
+	plan tests => 33;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
 # Manual tests
-open (CREATEDB, '-|', 'createdb');
-
-cmp_ok(<CREATEDB>, 'eq', "CREATE DATABASE\n", 'Database Created') 
-|| BAIL_OUT('Database could not be created!');
+ok(!system ('createdb -E UTF8'), 'Database Created 2') || BAIL_OUT('Database could not be created!');
 
 close(CREATEDB);
 
@@ -73,8 +70,7 @@ for my $mod (<LOADORDER>){
     $mod =~ s/\s*$//;
     next if $mod eq '';
 
-    (open (PSQL, '-|', "psql -f sql/modules/$mod")&& pass("$mod loaded"))
-      || fail("$mod loaded");
+    ok(open (PSQL, '-|', "psql -f sql/modules/$mod"), "$mod loaded");
     my $test = 0;
     while (my $line = <PSQL>){
         chomp($line);
@@ -139,7 +135,7 @@ SKIP: {
       $sth->finish;
 };
 
-SKIP {
+SKIP: {
      skip 'No COA specified', 2 if !defined $ENV{LSMB_LOAD_COA};
      ok(open (PSQL, '-|', "psql -f sql/coa/".lc($ENV{LSMB_COUNTRY_CODE})
                                 ."/chart/$ENV{LSMB_LOAD_COA}.sql"), 
@@ -156,7 +152,7 @@ SKIP {
      ok($return, 'Chart file committed');
 }
 
-SKIP {
+SKIP: {
      skip 'No GIFI specified', 2 if !defined $ENV{LSMB_LOAD_GIFI};
      ok(open (PSQL, '-|', "psql -f sql/coa/".lc($ENV{LSMB_COUNTRY_CODE})
                                 ."/gifi/$ENV{LSMB_LOAD_GIFI}.sql"), 
