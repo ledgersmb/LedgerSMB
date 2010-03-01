@@ -5,15 +5,44 @@ CWD=`pwd`
 MYCOMPANY='cmd'
 MYUSER='lacey_cmd'
 PGVERSION=8.4
-
+MYUSER_FIRSTNAME='Sample'
+MYUSER_LASTNAME='User'
+MYUSER_COUNTRYCODE='US'
+MYUSER_PASSWORD='gfewtrwiecngra'
 # The following path can vary per distribution
 # Debian/Ubuntu
 CONTRIB=/usr/share/postgresql/$PGVERSION/contrib/
 # Compiled from source.
 #CONTRIB=/usr/local/pgsql/share/contrib
 
-echo "This script will create a $MYCOMPANY dataset per INSTALL. Ctrl-C to cancel."
 
+echo \
+"This script will create a $MYCOMPANY dataset per INSTALL. Ctrl-C to cancel
+within 5 sec."
+
+sleep 5;
+
+export LSMB_USERNAME=$MYUSER
+export PG_CONTRIB_DIR=$CONTRIB
+export LSMB_NEW_DB=$MYCOMPANY
+export LSMB_INSTALL_DB=1
+export LSMB_TEST_DB=1
+export LSMB_PASSWORD=$MYUSER_PASSWORD
+export LSMB_LOAD_COA=General
+
+if test ! -f Makefile
+then 
+    perl Makefile.PL
+fi
+
+# Build and test the db.
+make test
+
+
+
+# ending here.  Preserving old code for now.
+
+exit
 dropdb -i -U postgres $MYCOMPANY 
 for role in `psql -U postgres -t -c "SELECT rolname FROM pg_roles WHERE rolname LIKE 'lsmb_${MYCOMPANY}%';"`; do dropuser -U postgres $role; done
 dropuser -U postgres $MYUSER 

@@ -126,7 +126,7 @@ SKIP: {
                        )");
       ok($sth->execute($ENV{LSMB_ADMIN_FNAME}, 
               $ENV{LSMB_ADMIN_LNAME}, 
-              $ENV{LSMB_COUNTRY_CODE},
+              uc($ENV{LSMB_COUNTRY_CODE}),
               $ENV{LSMB_USERNAME},
               $ENV{LSMB_PASSWORD}), 'Admin user creation query ran');
       my ($var) = $sth->fetchrow_array();
@@ -138,3 +138,38 @@ SKIP: {
             'Admin user assigned rights');
       $sth->finish;
 };
+
+SKIP {
+     skip 'No COA specified', 2 if !defined $ENV{LSMB_LOAD_COA};
+     ok(open (PSQL, '-|', "psql -f sql/coa/".lc($ENV{LSMB_COUNTRY_CODE})
+                                ."/chart/$ENV{LSMB_LOAD_COA}.sql"), 
+        'Ran Chart of Accounts Script');
+     my $return = 1;
+     for my $line (<PSQL>){
+         chomp $line;
+         if ($line eq 'COMMIT'){
+             $return = 1;
+         } elsif ($line eq 'ROLLBACK'){
+             $return = 0;
+         }
+     } 
+     ok($return, 'Chart file committed');
+}
+
+SKIP {
+     skip 'No GIFI specified', 2 if !defined $ENV{LSMB_LOAD_GIFI};
+     ok(open (PSQL, '-|', "psql -f sql/coa/".lc($ENV{LSMB_COUNTRY_CODE})
+                                ."/gifi/$ENV{LSMB_LOAD_GIFI}.sql"), 
+        'Ran GIFI Script');
+     my $return = 1;
+     for my $line (<PSQL>){
+         chomp $line;
+         if ($line eq 'COMMIT'){
+             $return = 1;
+         } elsif ($line eq 'ROLLBACK'){
+             $return = 0;
+         }
+     } 
+     ok($return, 'GIFI file committed');
+}
+

@@ -35,7 +35,11 @@ use_ok('LedgerSMB::Template::Elements');
 use_ok('LedgerSMB::Template::CSV');
 use_ok('LedgerSMB::Template::HTML');
 use_ok('LedgerSMB::Template::LaTeX');
-use_ok('LedgerSMB::Template::TXT');
+SKIP: {
+    eval{ require Template::Plugin::Latex};
+    skip 'Template::Plugin::Latex not installed', 1 if @_;
+    use_ok('LedgerSMB::Template::TXT');
+}
 use_ok('LedgerSMB::User');
 
 SKIP: {
