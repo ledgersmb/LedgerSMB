@@ -609,7 +609,7 @@ CREATE TYPE user_result AS (
 );
 
 
-CREATE OR REPLACE FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob text) RETURNS SETOF user_result AS
+CREATE OR REPLACE FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob date) RETURNS SETOF user_result AS
 $$
 DECLARE t_return_row user_result;
 BEGIN
