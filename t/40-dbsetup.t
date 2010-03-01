@@ -2,18 +2,19 @@
 
 use Test::More;
 use strict;
+use DBI;
 
 my $temp = $ENV{TEMP} || '/tmp/';
 my $run_tests = 1;
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
   if (!defined $ENV{$evar}){
       $run_tests = 0;
-      plan skipall => "$evar not set";
+      plan skip_all => "$evar not set";
   }
 }
 
 if ($run_tests){
-	plan tests => 25;
+	plan tests => 29;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
@@ -93,7 +94,47 @@ open (PSQL, '|-', "psql");
 
 print PSQL "BEGIN;\n";
 for my $roleline (<ROLES>){
-    $roleline =~ s/<?lsmb dbname ?>/$ENV{LSMB_NEW_DB}/;
+    $roleline =~ s/<\?lsmb dbname \?>/$ENV{LSMB_NEW_DB}/;
     print PSQL $roleline;
 }
+
 print PSQL "COMMIT;\n";
+close (PSQL);
+SKIP: {
+     skip 'No admin info', 4
+           if (!defined $ENV{LSMB_USERNAME} 
+                or !defined $ENV{LSMB_PASSWORD}
+                or !defined $ENV{LSMB_COUNTRY_CODE}
+                or !defined $ENV{LSMB_ADMIN_FNAME}
+                or !defined $ENV{LSMB_ADMIN_LNAME});
+     my $dbh = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
+                                       undef, undef);
+     ok($dbh, 'Connected to new database');
+     $dbh->{autocommit} = 1;
+     my $sth = $dbh->prepare(
+              "SELECT admin__save_user(NULL, -- no user id yet, create new user
+                                       person__save(NULL, -- create new person
+                                                    NULL,
+                                                    ?, -- First Name
+                                                    NULL,
+                                                    ?, -- Last Name
+                                                    (select id from country
+                                                    where short_name = ?) 
+                                       ),
+                                       ?, -- Username desired
+                                       ? -- password
+                       )");
+      ok($sth->execute($ENV{LSMB_ADMIN_FNAME}, 
+              $ENV{LSMB_ADMIN_LNAME}, 
+              $ENV{LSMB_COUNTRY_CODE},
+              $ENV{LSMB_USERNAME},
+              $ENV{LSMB_PASSWORD}), 'Admin user creation query ran');
+      my ($var) = $sth->fetchrow_array();
+      cmp_ok($var, '>', 0, 'User id retrieved');
+      $sth->finish;
+      $sth = $dbh->prepare("SELECT admin__add_user_to_role(?, ?)");
+      my $rolename = "lsmb_" . $ENV{PGDATABASE} . "__users_manage";
+      ok($sth->execute($ENV{LSMB_USERNAME}, $rolename), 
+            'Admin user assigned rights');
+      $sth->finish;
+};

@@ -60,7 +60,7 @@ GRANT INSERT ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_create"
 GRANT ALL ON entity_credit_account_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON company_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON company_to_entity TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON SEQUENCE note_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
+GRANT ALL ON note_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON company_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON customertax TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_create";
@@ -554,7 +554,7 @@ TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT DELETE ON cr_report_line
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
- GRANT ALL ON cr_reports_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+ GRANT ALL ON cr_report_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');

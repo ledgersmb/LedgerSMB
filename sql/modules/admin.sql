@@ -324,26 +324,34 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         l_id int;
         stmt text;
     BEGIN
-        -- WARNING TO PROGRAMMERS:  This function runs as the definer.
+        -- WARNING TO PROGRAMMERS:  This function runs as the definer and runs
+        -- utility statements via EXECUTE.
         -- PLEASE BE VERY CAREFUL ABOUT SQL-INJECTION INSIDE THIS FUNCTION.
     
-        select * into a_user from users lu where lu.id = in_id;
-        
-        IF NOT FOUND THEN 
+        if admin__is_user(in_username) then
+                
+                execute 'ALTER USER ' || quote_ident( in_username ) || 
+                     ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
+                     || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
+        else
             if in_password IS NULL THEN
                 RAISE EXCEPTION 'Must create password when adding new users!';
             end if;
+           
+            -- create an actual user
+                execute 'CREATE USER ' || quote_ident( in_username ) || 
+                     ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
+                     || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
+            end if;         
+        
+        select * into a_user from users lu where lu.id = in_id;
+        IF FOUND THEN 
+            return a_user.id;
+        ELSE
             -- Insert cycle
             
             --- The entity is expected to already BE created. See admin.pm.
             
-            if admin__is_user(in_username) then
-                
-                -- uhm, this is bad. -AS.  Not necessarily.  -CT 
-                RAISE EXCEPTION 'Fatal exception: Username already exists in Postgres; not
-                    a valid lsmb user.';
-            end if;         
-            -- create an actual user
             
             v_user_id := nextval('users_id_seq');
             insert into users (id, username, entity_id) VALUES (
@@ -356,24 +364,9 @@ CREATE OR REPLACE FUNCTION admin__save_user(
 
             -- Finally, issue the create user statement
             
-            execute 'CREATE USER ' || quote_ident( in_username ) || 
-                     ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
-                     || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
-            
             return v_user_id ;
 
-        ELSIF FOUND THEN
             
-            -- update cycle
-            IF in_password IS NOT NULL THEN
-            
-                execute ' alter user '|| quote_ident(in_username) || 
-                     ' with encrypted password ' 
-                             || quote_literal(in_password) || 
-                     $e$ valid until now()::timezone + '1 day'::interval $e$;
-            end if;
-                      
-            return a_user.id;
         
         END IF;
     
@@ -527,11 +520,7 @@ create or replace function admin__is_user (in_user text) returns bool as $$
     BEGIN
     
         select * into pg_user from pg_roles where rolname = in_user;
-        
-        IF NOT FOUND THEN
-            return 'f'::bool;
-        END IF;
-        return 't'::bool;
+        RETURN found;     
     
     END;
     
