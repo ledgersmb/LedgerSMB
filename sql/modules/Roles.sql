@@ -1437,6 +1437,7 @@ GRANT ALL ON transactions, entity_employee, customer, vendor TO public;
 GRANT ALL ON pending_job, payments_queue TO PUBLIC;
 GRANT ALL ON pending_job_id_seq TO public;
 GRANT ALL ON invoice_tax_form TO public;
+GRANT SELECT ON taxmodule TO public;
 GRANT ALL ON ac_tax_form to public;
 GRANT SELECT ON country_tax_form to public;
 GRANT SELECT ON translation TO public;

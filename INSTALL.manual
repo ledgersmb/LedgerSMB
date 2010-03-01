@@ -83,8 +83,8 @@ Make sure the templates directory is read-writable by
 user:group apache:apache, or as appropriate for your distribution's Apache 
 conventions.
 
-Apache must also be able to read (but not write) ledgersmb13/ and its 
-subdirectories.
+Apache must also be able to read (but not write) the LedgerSMB root directory 
+and its subdirectories.
 
 
 Check And Satisfy Perl Dependencies

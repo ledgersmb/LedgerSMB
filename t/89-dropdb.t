@@ -14,7 +14,7 @@ if ($ENV{LSMB_INSTALL_DB}){
 }
 
 if ($run_tests){
-	plan tests => 6;
+	plan tests => 5;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
@@ -23,8 +23,5 @@ my $db = <DBLOCK>;
 chomp($db);
 cmp_ok($db, 'eq', $ENV{LSMB_NEW_DB}, 'Got expected db name out');
 ok(close (DBLOCK), 'Closed db lock file');
-ok(open (DROPDB, '-|', "dropdb $db"), 'Opened drop db');
-my $dropvar = <DROPDB>;
-chomp($dropvar);
-cmp_ok($dropvar, 'eq', 'DROP DATABASE', 'Database dropped');
+ok(!system ("dropdb $ENV{LSMB_NEW_DB}"), 'dropped db');
 ok(unlink ("$temp/LSMB_TEST_DB"), 'Removed test db lockfile');

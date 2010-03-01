@@ -32,19 +32,7 @@ if (!$ENV{LSMB_INSTALL_DB}){
 my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
 
 for my $contrib (@contrib_scripts){
-    open (PSQL, '-|', "psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql");
-    my $test = 0;
-    while (my $line = <PSQL>){
-        chomp($line);
-        if ($line eq 'COMMIT'){
-            $test = 1;
-        }
-    }
-    if ($contrib eq 'tablefunc'){
-        $test = '1';
-    }
-    cmp_ok($test, 'eq', '1', "$contrib loaded and committed");
-    close(PSQL);
+    ok(!system "psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql");
 }
 
 
