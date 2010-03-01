@@ -1392,6 +1392,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__language_create",
 "lsmb_<?lsmb dbname ?>__project_translation_create";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read"
 WITH INHERIT NOLOGIN;
 
 GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 

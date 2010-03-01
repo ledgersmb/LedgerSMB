@@ -109,16 +109,17 @@ SKIP: {
       ok($sth->execute($ENV{LSMB_ADMIN_FNAME}, 
               $ENV{LSMB_ADMIN_LNAME}, 
               uc($ENV{LSMB_COUNTRY_CODE}),
-              $ENV{LSMB_USERNAME},
-              $ENV{LSMB_PASSWORD}), 'Admin user creation query ran');
+              $ENV{LSMB_ADMIN_USERNAME},
+              $ENV{LSMB_ADMIN_PASSWORD}), 'Admin user creation query ran');
       my ($var) = $sth->fetchrow_array();
       cmp_ok($var, '>', 0, 'User id retrieved');
       $sth->finish;
       $sth = $dbh->prepare("SELECT admin__add_user_to_role(?, ?)");
       my $rolename = "lsmb_" . $ENV{PGDATABASE} . "__users_manage";
-      ok($sth->execute($ENV{LSMB_USERNAME}, $rolename), 
+      ok($sth->execute($ENV{LSMB_ADMIN_USERNAME}, $rolename), 
             'Admin user assigned rights');
       $sth->finish;
+      $dbh->commit;
 };
 
 SKIP: {
