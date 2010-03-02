@@ -100,6 +100,9 @@ sub commit {
     my $sth = $self->{_dbh}->prepare('SELECT 1');
     $sth->execute;
     my ($retval) = $sth->fetchrow_array;
+    if (!$retval){
+       $self->{_dbh}->rollback;
+    }
     return $retval;
 }
 

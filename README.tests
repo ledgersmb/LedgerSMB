@@ -60,3 +60,22 @@ Additionally, if LSMB_INSTALL_DB is set, the database will NOT be removed after
 test cases are run.  This can be a useful way of installing the for production
 use, though currently an admin user is not created in this process and would
 need to be created manually.
+
+When a database is created, these environment variables are used to control 
+flow.  If these are not set, relevant portions are skipped.
+
+Admin user creation:
+----------------------
+LSMB_ADMIN_USERNAME username for admin user
+LSMB_ADMIN_PASSWORD password for admin user
+   LSMB_ADMIN_FNAME Admin's first name
+   LSMB_ADMIN_LNAME Admin's last name
+  LSMB_COUNTRY_CODE Country code for administrator and for loading chart of 
+                    accounts
+
+Chart of accounts loading
+-------------------------
+    LSMB_LOAD_COA name of the Chart of Accounts file (minus the extension)
+   LSMB_LOAD_GIFI name of the GIFI file (minus the extension)
+LSMB_COUNTRY_CODE Country code for administrator and for loading chart of 
+                  accounts
