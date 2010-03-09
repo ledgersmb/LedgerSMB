@@ -44,6 +44,6 @@ chomp ($ENV{LSMB_LOAD_COA}= <STDIN>);
 print "Gifi (optional): ";
 chomp ($ENV{LSMB_LOAD_GIFI}= <STDIN>);
 
-system('make dbinstall');
+system('make installdb');
 
 1;
