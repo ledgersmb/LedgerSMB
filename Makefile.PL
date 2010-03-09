@@ -33,9 +33,9 @@ requires 'Template' => '2.14';
 requires 'Error';
 requires 'CGI::Simple';
 
-build_requires 'Test::More';
-build_requires 'Test::Trap';
-build_requires 'Test::Exception';
+test_requires 'Test::More';
+test_requires 'Test::Trap';
+test_requires 'Test::Exception';
 
 feature 'POS module credit card processing support',
     -default => 0,
@@ -53,7 +53,7 @@ feature 'Developer tool dependencies',
 # Rendering options
 feature 'PDF and Postscript output',
     -default => 0,
-    'Template::Plugin::Latex' => 0;
+    'Template::Plugin::Latex' => 1;
 
 feature 'OpenOffice.org output',
     -default => 0,
@@ -64,5 +64,14 @@ feature 'Excel output',
     -default => 0,
     'Excel::Template::Plus' => 0;
 
-auto_install;
+Makefile->postamble(
+     qq{installdb :: \n\tLSMB_INSTALL_DB=1 LSMB_TEST_DB=1 make test\n}
+);
+
+Makefile->postamble(
+     qq{installdb_interactive :: \n\tperl install_interactive.pl\n}
+);
+
+
+auto_install; # remove this line for 2.0
 WriteAll;
