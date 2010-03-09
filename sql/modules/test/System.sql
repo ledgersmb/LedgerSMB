@@ -41,7 +41,27 @@ select proname FROM pg_proc WHERE pronamespace =
 group by proname
 having count(*) > 1;
 
+CREATE TEMPORARY VIEW permissionless_tables AS
+select t.table_catalog, t.table_schema, t.table_type, t.table_name
+from information_schema.tables t
+where t.table_catalog = current_database()
+  and t.table_schema = 'public'
+  and not exists (
+    select *
+    from information_schema.role_table_grants r
+    where r.table_catalog = t.table_catalog
+      and r.table_schema = t.table_schema
+      and r.table_name = t.table_name
+      )
+order by t.table_catalog, t.table_schema, t.table_type, t.table_name;
+
+select * from permissionless_tables;
+
+INSERT INTO test_result (test_name, success)
+select 'All tables in public have some permissions', count(*)=0 from 
+permissionless_tables;
 SELECT * FROM test_result;
+
 
 SELECT (select count(*) from test_result where success is true)
 || ' tests passed and '
