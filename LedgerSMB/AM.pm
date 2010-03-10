@@ -798,7 +798,7 @@ sub save_sic {
 			   SET code = ?,
 			       sictype = ?,
 			       description = ?
-			 WHERE code = ?)|;
+			 WHERE code = ?|;
         push @queryargs, $form->{id};
 
     }
