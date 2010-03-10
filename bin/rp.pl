@@ -1688,7 +1688,9 @@ sub aging {
         }
 
         $k++;
-
+        if ($ctid == 0){
+            $ctid = $ref->{ctid};
+        }
         if ( $ctid != $ref->{ctid} ) {
 
             $i++;
