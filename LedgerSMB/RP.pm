@@ -1585,12 +1585,12 @@ sub aging {
     my $transdate = ( $form->{overdue} ) ? "duedate" : "transdate";
 
     if ( $form->{"$form->{ct}_id"} ) {
-        $where .= qq| AND ct.id = | . $dbh->quote( $form->{"$form->{ct}_id"} );
+        $where .= qq| AND c.id = | . $dbh->quote( $form->{"$form->{ct}_id"} );
     }
     else {
         if ( $form->{ $form->{ct} } ne "" ) {
             $name = $dbh->quote( $form->like( lc $form->{ $form->{ct} } ) );
-            $where .= qq| AND lower(ct.name) LIKE $name|
+            $where .= qq| AND lower(c.name) LIKE $name|
               if $form->{ $form->{ct} };
         }
     }
@@ -1602,12 +1602,12 @@ sub aging {
 
     # select outstanding vendors or customers, depends on $ct
     $query = qq|
-		  SELECT DISTINCT ct.id, ct.name, ct.language_code
-		    FROM $form->{ct} ct
-		    JOIN $form->{arap} a ON (a.$form->{ct}_id = ct.id)
+		  SELECT DISTINCT c.id, c.name, c.language_code
+		    FROM $form->{ct} c
+		    JOIN $form->{arap} a ON (a.$form->{ct}_id = c.id)
 		   WHERE $where AND a.paid != a.amount 
 		         AND (a.$transdate <= ?)
-		ORDER BY ct.name|;
+		ORDER BY c.name|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{todate} ) || $form->dberror;
 
@@ -1694,7 +1694,7 @@ sub aging {
                      HAVING    sum(p.due) <> 0
 |;
 
-    $query .= qq| ORDER BY curr, $transdate, ctid, invnumber|;
+    $query .= qq| ORDER BY curr, ctid, $transdate, invnumber|;
     $sth = $dbh->prepare($query) || $form->dberror($query);
 
     my @var = ($form->{todate}, $form->{todate}, 
