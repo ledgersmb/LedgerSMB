@@ -1,5 +1,5 @@
                 LedgerSMB Small Medium Business Accounting
-                     Version 1.2.20
+                     Version 1.2.21
 
 
 DESCRIPTION:
@@ -7,7 +7,7 @@ DESCRIPTION:
 LedgerSMB is a double-entry accounting system written
 in perl. It has been tested with PostgreSQL, Apache,
 Netscape, Mozilla, Galeon, Explorer, Links, Lynx,
-Konqueror, Voyager, W3M and Opera clients on Linux,
+Konqueror, Voyager and Opera clients on Linux,
 FreeBSD, Solaris, Windows, Mac computers and PDA's.
 
 Data is stored in a PostgreSQL database server, either 

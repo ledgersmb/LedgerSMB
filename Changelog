@@ -1,3 +1,9 @@
+Changelog for 1.2.21
+* Corrected a number of templates with HTML issues (Luke)
+* AR/AP Aging Report fixed, ignores payment after report date (Chris T)
+* Minor documentation updates (Chris T)
+* Fixed bug saving SIC (Adam T)
+
 Changelog for 1.2.20
 * Commented out credits in ledgersmb-blue.css 
 * Corrected encoding in Latvian chart of accounts (Janeks)

@@ -19,9 +19,12 @@ Pocket Internet Explorer:
 Javascript menus do not work with Pocket IE (on Windows CE).  Use the Lynx 
 interface instead by appending ?path=/bin/lynx to the end of the login.pl url.
 
+Worse still, PIE does not support <button> elements.  Where necessary, one can
+slightly customize the system to provide PIE support.
+
 -------------------------------
 
-Internet Explorer < 7.0
+Internet Explorer < 8.0
 This browser submits incorrect data when using the <BUTTON> element and is not
-supported.  Users of Windows XP and Vista may try Internet Explorer 7 or 
+supported.  Users of Windows XP and Vista may try Internet Explorer 8 or 
 Firefox at their option. Users of older versions of WIndows should use Firefox.
