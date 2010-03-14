@@ -84,7 +84,7 @@ sub price_matrix_query {
 				p.validto, p.curr, g.pricegroup, 3 AS priority
 			FROM partscustomer p
 			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-			WHERE p.customer_id = 0
+			WHERE p.credit_id = 0
 				AND p.pricegroup_id = 0
 				AND coalesce(p.validfrom, $transdate) <= 
 					$transdate
@@ -103,7 +103,7 @@ sub price_matrix_query {
 			SELECT partnumber, lastcost
 			FROM partsvendor
 			WHERE parts_id = ?
-			AND entity_id = $entity_id|;
+			AND credit_id = $entity_id|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
 

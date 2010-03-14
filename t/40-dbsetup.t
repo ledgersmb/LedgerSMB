@@ -4,6 +4,12 @@ use Test::More;
 use strict;
 use DBI;
 
+if ($ENV{LSMB_INSTALL_DB} && !$ENV{LSMB_NEW_DB}){
+   BAIL_OUT('Told to install db, but no LSMB_NEW_DB set.
+
+HINT:  Set LSMB_NEW_DB environment variable and try running again.');
+}
+
 my $temp = $ENV{TEMP} || '/tmp/';
 my $run_tests = 1;
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
@@ -20,8 +26,6 @@ if ($run_tests){
 
 # Manual tests
 ok(!system ('createdb -E UTF8'), 'Database Created 2') || BAIL_OUT('Database could not be created!');
-
-close(CREATEDB);
 
 if (!$ENV{LSMB_INSTALL_DB}){
     open (DBLOCK, '>', "$temp/LSMB_TEST_DB");

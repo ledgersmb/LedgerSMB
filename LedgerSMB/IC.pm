@@ -172,7 +172,7 @@ sub get_part {
 			         pv.lastcost, pv.leadtime, 
 			         pv.curr AS vendorcurr
 			    FROM partsvendor pv
-			    JOIN vendor v ON (v.id = pv.entity_id)
+			    JOIN vendor v ON (v.id = pv.credit_id)
                 JOIN entity e ON (e.id = pv.entity_id)
 			   WHERE pv.parts_id = ?
 			ORDER BY 2|;
@@ -195,7 +195,7 @@ sub get_part {
 			          pc.validto, e.name, c.id AS cid, 
 			          g.pricegroup, g.id AS gid
 			     FROM partscustomer pc
-			LEFT JOIN customer c ON (c.id = pc.customer_id)
+			LEFT JOIN customer c ON (c.id = pc.credit_id)
 			LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
                  JOIN entity e ON (e.id = c.entity_id)
 			    WHERE pc.parts_id = ?
@@ -529,7 +529,7 @@ sub save {
 
                 $query = qq|
 					INSERT INTO partsvendor 
-					            (vendor_id, parts_id, 
+					            (credit_id, parts_id, 
 					            partnumber, lastcost, 
 					            leadtime, curr)
 					     VALUES (?, ?, ?, ?, ?, ?)|;
@@ -564,7 +564,7 @@ sub save {
             $validto   = $form->{"validto_$i"}   if $form->{"validto_$i"};
             $query     = qq|
 				INSERT INTO partscustomer 
-				            (parts_id, customer_id,
+				            (parts_id, credit_id,
 				            pricegroup_id, pricebreak, 
 				            sellprice, curr,
 				            validfrom, validto)

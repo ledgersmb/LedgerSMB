@@ -219,7 +219,7 @@ sub session_create {
 }
 
 sub http_error {
-    my ($errcode) = @_;
+    my ($errcode, $msg_plus) = @_;
 
     my $err = {
 	'500' => {status  => '500 Internal Server Error', 
@@ -231,6 +231,9 @@ sub http_error {
         '401' => {status  => '401 Unauthorized', 
                   message => 'Please enter your credentials', 
                   others  => {'WWW-Authenticate' => "Basic realm=\"LedgerSMB\""}
+                 },
+        '404' => {status  => '404 Resource not Found',
+                  message => "The following resource was not found, $msg_plus",
                  },
         '454' => {status  => '454 Database Does Not Exist',
                   message => 'Database Does Not Exist' },

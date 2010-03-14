@@ -100,12 +100,19 @@ sub process {
 	} else {
 		$source = get_template($parent->{template});
 	}
+        my $tempdir;
+        if ($LedgerSMB::Sysconfig::cache_templates){
+            $tempdir = $LedgerSMB::Sysconfig::cache_template_dir;
+        } else {
+            $tempdir = undef;
+        }
 	$template = Template->new({
 		INCLUDE_PATH => [$parent->{include_path}, 'UI/lib'],
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
 		TRIM => 1,
+                COMPILE_DIR=> $tempdir,
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template->error(); 

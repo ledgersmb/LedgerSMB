@@ -1288,7 +1288,7 @@ CREATE TABLE yearend (
 );
 --
 CREATE TABLE partsvendor (
-  entity_id int not null references entity_credit_account(id) on delete cascade,
+  credit_id int not null references entity_credit_account(id) on delete cascade,
   parts_id int,
   partnumber text,
   leadtime int2,
@@ -1299,7 +1299,7 @@ CREATE TABLE partsvendor (
 --
 CREATE TABLE partscustomer (
   parts_id int,
-  customer_id int not null references entity_credit_account(id) on delete cascade,
+  credit_id int not null references entity_credit_account(id) on delete cascade,
   pricegroup_id int,
   pricebreak numeric,
   sellprice NUMERIC,
@@ -1309,7 +1309,6 @@ CREATE TABLE partscustomer (
   entry_id SERIAL PRIMARY KEY
 );
 
--- How does partscustomer.customer_id relate here?
 
 --
 CREATE TABLE language (
