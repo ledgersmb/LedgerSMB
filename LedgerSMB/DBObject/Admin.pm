@@ -19,29 +19,9 @@ sub save_user {
     
     my $self = shift @_;
     
-    my $entity = LedgerSMB::DBObject::Employee->new(base=>$self, copy=>'none');
-    
-    $entity->set(name=>$self->{first_name}." ".$self->{last_name});
-    if (!defined $self->{first_name} or !defined $self->{last_name}){
-       return;
-    }
-    $entity->save();
-    
-    $self->{entity_id} = $entity->{entity};
-    
-    
-    my ($user_id) = $self->exec_method( funcname => "admin__save_user" );
     $self->{user_id} = $user_id->{admin__save_user};
     
-    my $employee = LedgerSMB::DBObject::Employee->new( base=>$self, copy=>'list',
-        merge=>[
-            'salutation',
-            'first_name',
-            'last_name',
-            'employeenumber',
-            'country_id',
-        ]    
-    );
+    my $employee = LedgerSMB::DBObject::Employee->new( base=>$self);
     
     $employee->{entity_id} = $entity_id->{id};    
     $employee->save();
@@ -55,10 +35,10 @@ sub save_user {
             'user_id',
         ]
     );
-    $user->get();
+    $user->{entity_id} = $employee->{entity_id};
+    $user->save();
     $self->{user} = $user;
     $self->{employee} = $employee;
-    $self->debug({file => '/tmp/user11'});
 
     if ($self->{password}){
        return;
@@ -75,7 +55,7 @@ sub save_user {
             'companyname',            
         ]
     );
-    
+     
     $loc->save();
     $employee->set_location($loc->{id});
     $loc->(person=>$employee);
@@ -135,11 +115,8 @@ sub save_roles {
     for my $r ( @roles) {
         my $role = $r->{rolname};
         my $reqrole = $role;
-        $reqrole =~ s/^lsmb_$self->{company}__//;
-        # These roles are were ALL checked on the page, so they're the active ones.
         
         if ( $active_roles{$role} && $self->{$reqrole} ) {
-            
             # do nothing.
             ;
         }
@@ -147,13 +124,13 @@ sub save_roles {
             
             # do remove function
             $status = $self->call_procedure(procname => "admin__remove_user_from_role",
-                args=>[ $self->{ modifying_user }, $role ] );
+                args=>[ $self->{modifying_user}, $role ] );
         }
         elsif ($self->{$reqrole} and !($active_roles{$role} )) {
             
             # do add function
             $status = $self->call_procedure(procname => "admin__add_user_to_role",
-               args=>[ $self->{ modifying_user }, $role ] 
+               args=>[ $self->{modifying_user}, $role ] 
             );
         }         
     }
@@ -274,7 +251,6 @@ sub get_roles {
     my $company = $self->{company};
     for my $role (@s_rows) {
         my $rolname = $role->{'rolname'};
-        $rolname =~ s/lsmb_${company}__//gi;
         push @rows, $rolname;
     }
     return \@rows;

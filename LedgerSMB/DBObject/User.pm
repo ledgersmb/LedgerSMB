@@ -122,13 +122,11 @@ sub get_option_data {
 sub save {
     
     my $self = shift @_;
-    
     my $user = $self->get();
     
     
     # doesn't check for the password - that's done in the sproc.
-    my ($ref) = $self->exec_method(funcname=>'admin__save_user', 
-        args=>[$user->{id}, $self->{username}, $self->{password}] ); 
+    my ($ref) = $self->exec_method(funcname=>'admin__save_user'); 
     ($self->{id}) = values %$ref;
     if (!$self->{id}) {
         
@@ -143,6 +141,9 @@ sub get {
     my $id = shift;
     if ($id){
         $self->{user_id} = $id;
+    }
+    if (!defined $self->{user_id}){
+       return;
     }
     my ($user) = $self->exec_method(
         funcname=>'admin__get_user',
@@ -186,7 +187,6 @@ sub get {
     for my $role (@roles) {
         my $rolname = $role->{'admin__get_roles_for_user'};
         my $company = $self->{company};
-        $rolname =~ s/lsmb_${company}__//gi;
         push @rolstore, $rolname; # Only one key=>value pair
     }
     $self->{roles} = \@rolstore;

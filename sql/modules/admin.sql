@@ -224,10 +224,6 @@ create or replace function admin__get_user(in_user_id INT) returns setof users a
     BEGIN
         
         select * into a_user from users where id = in_user_id;
-        IF NOT FOUND THEN
-            RAISE EXCEPTION 'cannot find user %', in_user_id;
-        END IF;
-        
         return next a_user;
         return;
     
@@ -549,8 +545,7 @@ DECLARE
 BEGIN
     t_dbname := current_database();
     FOR v_rol in 
-        SELECT 
-            *
+        SELECT *
         from 
             pg_roles
         where 

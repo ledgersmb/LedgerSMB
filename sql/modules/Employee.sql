@@ -15,9 +15,7 @@ BEGIN
 		role = in_role,
 		ssn = in_ssn,
 		manager_id = in_manager_id,
-		employeenumber = in_employee_number,
-		person_id = (select id FROM person 
-			WHERE entity_id = in_entity_id)
+		employeenumber = in_employee_number
 	WHERE entity_id = in_entity_id;
 
 	out_id = in_entity_id;
@@ -25,13 +23,12 @@ BEGIN
 	IF NOT FOUND THEN
 		INSERT INTO entity_employee 
 			(startdate, enddate, dob, role, ssn, manager_id, 
-				employeenumber, entity_id, person_id)
+				employeenumber, entity_id)
 		VALUES
 			(coalesce(in_start_date, now()::date), in_end_date, 
                                 in_dob, in_role, in_ssn,
-				in_manager_id, in_employee_number, in_entity_id,
-				(SELECT id FROM person 
-				WHERE entity_id = in_entity_id));
+				in_manager_id, in_employee_number, 
+                                in_entity_id);
 		RETURN in_entity_id;
 	END IF;
 END;

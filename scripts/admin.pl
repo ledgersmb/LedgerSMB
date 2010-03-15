@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 package LedgerSMB::Scripts::admin;
+use strict;
 
 require 'lsmb-request.pl';
 
@@ -17,17 +18,15 @@ sub __edit_page {
     
     
     my ($request, $otd) = @_;
-    
     # otd stands for Other Template Data.
     my $dcsetting = LedgerSMB::Setting->new(base=>$request, copy=>'base');
     my $default_country = $dcsetting->get('default_country'); 
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'list', merge =>['user_id']);
+    my @all_roles = $admin->get_roles();
     my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
     $user_obj->{company} = $request->{company};
     $user_obj->get($request->{user_id});
-
-    my @all_roles = $admin->get_roles();
-    
+    my $user = $request->{_user};
     my $template = LedgerSMB::Template->new( 
         user => $request->{_user}, 
         template => 'Admin/edit_user', 
@@ -45,9 +44,9 @@ sub __edit_page {
                 salutations=>$admin->get_salutations(),
                 contact_classes=>$admin->get_contact_classes(),
                 locations=>$location->get_all($user_obj->{entity_id},"person"),
-                stylesheet => $request->{stylesheet},
                 default_country => $dcsetting->{value},
                 admin => $admin,
+                stylesheet => $request->{stylesheet},
             };
     
     for my $key (keys(%{$otd})) {
@@ -55,7 +54,7 @@ sub __edit_page {
         $template_data->{$key} = $otd->{$key};
     }
     my $template = LedgerSMB::Template->new( 
-        user => $user, 
+        user => $request->{_user}, 
         template => 'Admin/edit_user', 
         language => $user->{language}, 
         format => 'HTML', 
@@ -70,12 +69,20 @@ sub save_user {
     
     my $sal = $admin->get_salutations();
     
-    my $groups = $admin->get_roles();
     my $entity = $admin->save_user();
-    $admin->save_roles();
+    my $groups = $admin->get_roles();
     $admin->{stylesheet} = $request->{stylesheet};
     __edit_page($admin);
 }
+
+sub save_roles {
+    my ($request, $admin) = @_;
+    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
+    $admin->{stylesheet} = $request->{stylesheet};
+    $admin->save_roles();
+    __edit_page($admin);
+}
+
 
 sub new_user {
     
@@ -87,6 +94,7 @@ sub new_user {
     my $sal = $admin->get_salutations();
     
     my $groups = $admin->get_roles();
+    my $user = $request->{_user};
     
     $logger->debug("scripts/admin.pl new_user: \$user = " . Data::Dumper::Dumper($user));
     
@@ -121,6 +129,7 @@ sub edit_group {
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
     my $all_roles = $admin->role_list();
+    my $user = $request->{_user};
     
     my $template = LedgerSMB::Template->new( 
         user => $user, 
@@ -154,6 +163,7 @@ sub create_group {
     
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
+    my $user = $request->{_user};
     
     my $all_roles = $admin->get_roles();
     my $template = LedgerSMB::Template->new( 
@@ -180,6 +190,7 @@ sub create_group {
 sub delete_group {
     
     my ($request) = @_;
+    my $user = $request->{_user};
     
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
@@ -201,6 +212,7 @@ sub delete_group {
 sub delete_user {
     
     my ($request) = @_;
+    my $user = $request->{_user};
     
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
@@ -222,6 +234,7 @@ sub delete_user {
 sub new_group {
     
     my ($request) = @_;
+    my $user = $request->{_user};
     
     my $template = LedgerSMB::Template->new( user=>$user, 
         template=>'Admin/new_group', language=>$user->{language},
@@ -243,6 +256,7 @@ sub __default {
 sub main {
     
     my ($request) = @_;
+    my $user = $request->{_user};
     
     my $template;
     
@@ -312,6 +326,7 @@ sub delete_contact {
 sub save_location {
     
     my $request = shift @_;
+    my $user = $request->{_user};
     
     # Only ever a post, but check anyway
     if ($request->type eq "POST") {
@@ -407,7 +422,7 @@ sub get_user_results {
     );
     my $columns;
     @$columns = qw(id username first_name last_name ssn dob edit);
-    $column_headers = {
+    my $column_headers = {
         id         => $request->{_locale}->text('ID'),
         username   => $request->{_locale}->text('Username'),
         first_name => $request->{_locale}->text('First Name'),
@@ -451,7 +466,7 @@ sub list_sessions {
     );
     my $columns;
     @$columns = qw(id username last_used locks_active drop);
-    $column_headers = {
+    my $column_headers = {
         id         => $request->{_locale}->text('ID'),
         username   => $request->{_locale}->text('Username'),
         last_used => $request->{_locale}->text('Last Used'),
