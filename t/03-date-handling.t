@@ -94,35 +94,6 @@ foreach my $format (0 .. $#formats) {
 		"2007-05-18", "date, 2007-05-18, $fmt: '', en");
 }
 
-# $form->current_date checks
-# Note that $form->current_date always uses the database
-# Note that $form->current_date can take four digit years with all formats
-# Note that $form->current_date will always accept a dateformat of 'yyyymmdd'
-#foreach my $format (0 .. $#formats) {
-#	%myconfig = (dateformat => $formats[$format][0]);
-#	my $fmt = $formats[$format][0];
-#	my $sep = $formats[$format][1];
-#	my $yearcount = $formats[$format][2];
-#	my $tv = $fmt;
-#	$tv =~ s/(yy)?yy/$today_parts{'yyyy'}/;
-#	$tv =~ s/mm/$today_parts{'mm'}/;
-#	$tv =~ s/dd/$today_parts{'dd'}/;
-#	is($form->current_date(\%myconfig), 
-#		$today, "current_date, $fmt: $today");
-#	is($form->current_date(\%myconfig, $formats[$format][3]), 
-#		'2000-02-29', "current_date, $fmt: 2000-02-29");
-#	is($form->current_date(\%myconfig, $formats[$format][3], 1), 
-#		'2000-03-01', "current_date, $fmt: 2000-03-01");
-#	is($form->current_date(\%myconfig, $tv), 
-#		$today, "current_date, $fmt: $tv");
-#	$tv = "$today_parts{'yyyy'}$today_parts{'mm'}$today_parts{'dd'}";
-#	is($form->current_date(\%myconfig, $tv), 
-#		$today, "current_date, $fmt: $tv");
-#}
-
-# $form->datetonum checks
-# Note that $form->datetonum assumes the year range 2000-2099
-# Note that $form->datetonum is identity if there is no date or non-digit
 foreach my $format (0 .. $#formats) {
 	%myconfig = (dateformat => $formats[$format][0]);
 	my $fmt = $formats[$format][0];
