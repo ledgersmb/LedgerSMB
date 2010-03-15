@@ -35,8 +35,8 @@ my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, un
 my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} );
 
 for my $test (@$test_request_data){
-        if (ref $pre_test_subs->{"$test->{_test_id}"} eq 'CODE'){
-		$pre_test_subs->{"$test->{_test_id}"}();
+        if (ref $test->{'_pre_test_sub'} eq 'CODE'){
+		$test->{'_pre_test_sub'}();
 	}
 	if (lc $test->{_codebase} eq 'old'){
 		next; # skip old codebase tests for now
@@ -63,20 +63,17 @@ for my $test (@$test_request_data){
 			$request->{action} = '__default';
 		}
 		$request->{dbh} = $dbh;
-		if (ref $api_test_cases->{"$test->{_test_id}"} eq 'CODE'){
-			$request->{_test_cases} = 
-				$api_test_cases->{"$test->{_test_id}"};
+		if (ref $test->{_api_test} eq 'CODE'){
+			$request->{_test_cases} = $test->{_api_test};
 		}
-		delete $api_test_cases->{"$test->{_test_id}"};
 		$script =~ s/\.pl$//;
 		is(ref "LedgerSMB::Scripts::$script"->can($request->{action}), 
 			'CODE',
 			"$test->{_test_id}: Action ($request->{action}) Defined");
 		ok("LedgerSMB::Scripts::$script"->can($request->{action})->($request), "$test->{_test_id}: Action Successful");
 	}
-	if (ref $api_test_cases->{"$test->{_test_id}"} eq 'CODE'){
-		$request->{_test_cases} = 
-			$api_test_cases->{"$test->{_test_id}"};
+        if (ref $test->{_api_test} eq 'CODE'){
+		$request->{_test_cases} = $test->{_api_test};
 	}
 	ok($dbh->rollback, "$test->{_test_id}: rollback");
 }
