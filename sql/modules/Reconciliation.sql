@@ -15,12 +15,6 @@ CREATE TABLE cr_report (
     CHECK (deleted is not true or approved is not true)
 );
 
-create table cr_approval (
-    report_id bigint references cr_report(id) primary key,
-    approved_by int references entity(id) not null,
-    approved_at timestamptz default now() not null
-);
-
 CREATE TABLE cr_report_line (
     id bigserial primary key not null,
     report_id int NOT NULL references cr_report(id),

@@ -6,6 +6,9 @@ CREATE TEMPORARY TABLE test_result (
 INSERT INTO entity (id, name, entity_class, control_code, country_id)
 VALUES (-100, 'Testing.....', 3, '_TESTING.....', 242);
 
+INSERT INTO person(id, entity_id, first_name, last_name)
+values (-100, -100, 'Test', 'User');
+
 DELETE FROM users WHERE username = CURRENT_USER;
 
 INSERT INTO users (entity_id, username)

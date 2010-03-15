@@ -8,9 +8,6 @@ values (-200, '_test1', -200);
 insert into session (session_id, users_id, token, last_used, transaction_id)
 values (-200, -200, md5(random()::text), now(), 0);
 
-INSERT INTO person(first_name, last_name, entity_id, id)
-VALUES ('test', 'test', -100, -100);
-
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00001', 'testing', 'A', 'L', 'AP');
 INSERT INTO chart (accno, description, charttype, category, link)

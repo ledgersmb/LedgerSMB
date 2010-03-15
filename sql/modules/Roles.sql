@@ -3,6 +3,8 @@ GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_read"
 WITH INHERIT NOLOGIN;
 
+GRANT SELECT ON partsvendor, partscustomer, taxcategory
+TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON entity TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON company TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON location TO "lsmb_<?lsmb dbname ?>__contact_read";
@@ -155,7 +157,9 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON ar TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
+GRANT INSERT ON ar, invoice_note 
+TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
+
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
@@ -184,10 +188,12 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
-GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
+GRANT INSERT ON invoice, new_shipto 
+TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
+
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (3, 'allow', 'lsmb_<?lsmb dbname ?>__ar_invoice_create');
@@ -323,7 +329,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON ap TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
+GRANT INSERT ON ap, invoice_note 
+TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
@@ -553,7 +560,9 @@ WITH INHERIT NOLOGIN;
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT DELETE ON cr_report_line
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+GRANT SELECT ON acc_trans, account_checkpoint 
+TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+
  GRANT ALL ON cr_report_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -565,15 +574,16 @@ values (45, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_approve"
 WITH INHERIT NOLOGIN;
 
-GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
+GRANT SELECT ON acc_trans, account_checkpoint TO 
+"lsmb_<?lsmb dbname ?>__reconciliation_approve";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_approve');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (41, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
+values (41, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_approve');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (44, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
+values (44, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_approve');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__all_reconciliation_enter"
@@ -584,6 +594,9 @@ IN ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter",
 CREATE ROLE "lsmb_<?lsmb dbname ?>__payment_process"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_list";
+
+GRANT INSERT, SELECT ON payment, payment_links, overpayments
+TO "lsmb_<?lsmb dbname ?>__payment_process";
 
 GRANT SELECT, INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
@@ -599,6 +612,9 @@ values (38, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__receipt_process"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_list";
+
+GRANT INSERT, SELECT ON payment, payment_links, overpayment
+TO "lsmb_<?lsmb dbname ?>__receipt_proces";
 
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__receipt_process";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__receipt_process";
@@ -620,9 +636,11 @@ IN ROLE "lsmb_<?lsmb dbname ?>__all_reconciliation_enter",
 
 -- Inventory Control
 CREATE ROLE "lsmb_<?lsmb dbname ?>__part_create"
-WITH INHERIT NOLOGIN;
+WITH INHERIT NOLOGIN
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON parts TO "lsmb_<?lsmb dbname ?>__part_create";
+GRANT ALL ON partsvendor, partscustomer TO "lsmb_<?lsmb dbname ?>__part_create";
+GRANT INSERT ON parts, makemodel TO "lsmb_<?lsmb dbname ?>__part_create";
 GRANT ALL ON parts_id_seq TO "lsmb_<?lsmb dbname ?>__part_create";
 GRANT INSERT ON partstax TO "lsmb_<?lsmb dbname ?>__part_create";
 
@@ -644,6 +662,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__part_edit"
 WITH INHERIT NOLOGIN;
 
 GRANT UPDATE ON parts TO "lsmb_<?lsmb dbname ?>__part_edit";
+GRANT ALL ON makemodel TO "lsmb_<?lsmb dbname ?>__part_edit";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
@@ -834,7 +853,8 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_list",
 "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 
-GRANT SELECT ON gl TO "lsmb_<?lsmb dbname ?>__gl_reports";
+GRANT SELECT ON gl, acc_trans, account_checkpoint 
+TO "lsmb_<?lsmb dbname ?>__gl_reports";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (73, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
@@ -845,7 +865,8 @@ values (76, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__yearend_run"
 WITH INHERIT NOLOGIN;
 
-GRANT INSERT, SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__yearend_run";
+GRANT INSERT, SELECT ON acc_trans, account_checkpoint, yearend
+TO "lsmb_<?lsmb dbname ?>__yearend_run";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (128, 'allow', 'lsmb_<?lsmb dbname ?>__yearend_run');
@@ -1000,6 +1021,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__financial_reports"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__gl_reports";
 
+GRANT select ON yearend TO "lsmb_<?lsmb dbname ?>__financial_reports";
+
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (109, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -1081,7 +1104,9 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__account_create"
 WITH INHERIT NOLOGIN;
 
 GRANT INSERT ON chart TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT INSERT ON account TO "lsmb_<?lsmb dbname ?>__account_create";
+GRANT INSERT ON account, cr_coa_to_account 
+TO "lsmb_<?lsmb dbname ?>__account_create";
+
 GRANT ALL ON account_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
 GRANT INSERT ON account_heading TO "lsmb_<?lsmb dbname ?>__account_create";
 GRANT ALL ON account_heading_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
@@ -1100,7 +1125,8 @@ values (137, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__account_edit"
 WITH INHERIT NOLOGIN;
 
-GRANT UPDATE ON chart TO "lsmb_<?lsmb dbname ?>__account_edit";
+GRANT ALL ON account, account_heading, account_link, cr_coa_to_account 
+TO "lsmb_<?lsmb dbname ?>__account_edit";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (128, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
@@ -1109,6 +1135,15 @@ values (136, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (138, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__auditor"
+WITH INHERIT NOLOGIN;
+
+GRANT SELECT ON audittrail TO "lsmb_<?lsmb dbname ?>__auditor";
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__audit_trail_maintenance"
+WITH INHERIT NOLOGIN;
+
+GRANT DELETE ON audittrail TO "lsmb_<?lsmb dbname ?>__audit_trail_maintenance";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__gifi_create"
 WITH INHERIT NOLOGIN;
@@ -1392,9 +1427,10 @@ IN ROLE "lsmb_<?lsmb dbname ?>__language_create",
 "lsmb_<?lsmb dbname ?>__project_translation_create";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
-WITH INHERIT NOLOGIN;
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read"
+WITH INHERIT NOLOGIN
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
+GRANT SELECT ON role_view TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 
 TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__remove_user_from_role(TEXT, TEXT)
@@ -1417,8 +1453,11 @@ GRANT EXECUTE ON FUNCTION  admin__delete_group(text)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
 
 -- Grants to all users;
+GRANT SELECT ON makemodel TO public;
 GRANT SELECT ON custom_field_catalog TO public;
 GRANT SELECT ON custom_table_catalog TO public;
+GRANT SELECT ON oe_class TO public;
+GRANT SELECT ON note_class TO public;
 GRANT ALL ON defaults TO public;
 GRANT ALL ON "session" TO public;
 GRANT ALL ON session_session_id_seq TO PUBLIC;
@@ -1432,7 +1471,7 @@ GRANT select on chart, gifi, country to public;
 grant select on employee to public;
 GRANT SELECT ON parts, partsgroup TO public;
 GRANT SELECT ON language, project TO public;
-GRANT SELECT ON business, exchangerate, department, shipto, tax TO public;
+GRANT SELECT ON business, exchangerate, department, new_shipto, tax TO public;
 GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
 GRANT ALL ON transactions, entity_employee, customer, vendor TO public;
 GRANT ALL ON pending_job, payments_queue TO PUBLIC;
@@ -1449,6 +1488,8 @@ GRANT SELECT ON partscustomer TO public;
 GRANT SELECT ON assembly TO public;
 GRANT SELECT ON jcitems TO public;
 GRANT SELECT ON payment_type TO public;
+GRANT SELECT ON lsmb_roles TO public;
+GRANT SELECT ON employee_search TO PUBLIC;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 

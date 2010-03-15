@@ -1190,29 +1190,6 @@ CREATE TABLE exchangerate (
   PRIMARY KEY (curr, transdate)
 );
 --
-
---
-create table shipto (
-  trans_id int,
-  shiptoname varchar(64),
-  shiptoaddress1 varchar(32),
-  shiptoaddress2 varchar(32),
-  shiptocity varchar(32),
-  shiptostate varchar(32),
-  shiptozipcode varchar(10),
-  shiptocountry varchar(32),
-  shiptocontact varchar(64),
-  shiptophone varchar(20),
-  shiptofax varchar(20),
-  shiptoemail text,
-  entry_id SERIAL PRIMARY KEY
-);
-
--- SHIPTO really needs to be pushed into entities too
-
---
-
---
 CREATE TABLE project (
   id serial PRIMARY KEY,
   projectnumber text,
@@ -1459,6 +1436,41 @@ CREATE TABLE invoice_tax_form (
         reportable bool
 );
 
+CREATE OR REPLACE FUNCTION gl_audit_trail_append()
+RETURNS TRIGGER AS
+$$
+DECLARE
+   t_reference text;
+   t_row RECORD;
+BEGIN
+
+IF TG_OP = 'INSERT' then
+   t_row := NEW;
+ELSE
+   t_row := OLD;
+END IF;
+
+IF TG_RELNAME IN ('ar', 'ap') THEN
+    t_reference := t_row.invnumber;
+ELSE 
+    t_reference := t_row.reference;
+END IF;
+
+INSERT INTO audittrail (trans_id, reference, action, person_id)
+values (t_row.id, t_reference, TG_OP, person__get_my_entity_id());
+
+return null; -- AFTER TRIGGER ONLY, SAFE
+END;
+$$ language plpgsql security definer;
+
+CREATE TRIGGER gl_audit_trail AFTER insert or update or delete ON gl
+FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
+
+CREATE TRIGGER ar_audit_trail AFTER insert or update or delete ON ar
+FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
+
+CREATE TRIGGER ap_audit_trail AFTER insert or update or delete ON ar
+FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 create index acc_trans_trans_id_key on acc_trans (trans_id);
 create index acc_trans_chart_id_key on acc_trans (chart_id);
 create index acc_trans_transdate_key on acc_trans (transdate);
@@ -1507,8 +1519,6 @@ create index parts_partnumber_key on parts (lower(partnumber));
 create index parts_description_key on parts (lower(description));
 create index partstax_parts_id_key on partstax (parts_id);
 --
---
-create index shipto_trans_id_key on shipto (trans_id);
 --
 create index project_id_key on project (id);
 create unique index projectnumber_key on project (projectnumber);
@@ -2784,31 +2794,6 @@ CREATE AGGREGATE compound_array (
 	STYPE = ANYARRAY,
 	SFUNC = ARRAY_CAT,
 	INITCOND = '{}'
-);
-
-CREATE TABLE pending_reports (
-    id bigserial primary key not null,
-    report_id int,
-    scn int,
-    their_balance INT,
-    our_balance INT,
-    errorcode INT,
-    entered_by int references entity(id) not null,
-    corrections INT NOT NULL DEFAULT 0,
-    clear_time TIMESTAMP NOT NULL,
-    insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
-    ledger_id int REFERENCES acc_trans(entry_id),
-    overlook boolean not null default 'f'
-);
-
-
-CREATE TABLE report_corrections (
-    id serial primary key not null,
-    correction_id int not null default 1,
-    entry_in int references pending_reports(id) not null,
-    entered_by int not null,
-    reason text not null,
-    insert_time timestamptz not null default now()
 );
 
 CREATE INDEX company_name_gist__idx ON company USING gist(legal_name gist_trgm_ops);
