@@ -1,7 +1,10 @@
 -- To run from other transaction test scripts!
 
-INSERT INTO chart (id, accno, description, category, charttype) values (-200, '-11111', 'Test Acct 1', 'A', 'A');
-INSERT INTO chart (id, accno, description, category, charttype) values (-201, '-11112', 'Test Acct 2', 'A', 'A');
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-200, '-11111', 'Test Act 1', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-201, '-11112', 'Test Act 1', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
 
 INSERT INTO entity (id, control_code, name, entity_class, country_id) values (-201, '-11111', 'Test 1', 1, 242);
 
