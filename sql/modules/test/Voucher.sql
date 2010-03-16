@@ -12,8 +12,10 @@ values (-3, -1, 'Test', 1, -1000);
 
 INSERT INTO entity_employee(entity_id) values (-3);
 
-INSERT INTO chart (id, accno, description, link, charttype, category)
-VALUES ('-5', '-21111', 'Testing AP', 'AP', 'A', 'A');
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-5, '-21111', 'Testing AP', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
+
+INSERT INTO account_link(account_id, description) values (-5, 'AP');
 
 INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
 VALUES (-5, 'test1', '1000', 'USD', false, -1);
