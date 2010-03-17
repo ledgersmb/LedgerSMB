@@ -34,10 +34,12 @@ eval { do "scripts/custom/vouchers.pl"};
 
 sub create_batch {
     my ($request) = @_;
-    $request->{hidden} = [
+	$request->open_form;
+	$request->{hidden} = [
         {name => "batch_type", value => $request->{batch_type}},
+		{name => "form_id",   value => $request->{form_id}},
     ];
-
+ 
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{class_id} = $batch->get_class_id($batch->{batch_type});
     $batch->get_new_info;
@@ -57,7 +59,7 @@ sub create_vouchers {
     my ($request) = shift @_;
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{batch_class} = $request->{batch_type};
-    if ($request->form_close){
+    if ($request->close_form){
         $batch->create;
         add_vouchers($batch);
     } else {
@@ -281,6 +283,9 @@ sub list_batches {
                     class => 'submit',
                 }];
     }
+       # save form_id into the DB before sending the form.
+       # TODO: need to find a better place for this.
+       $batch->{dbh}->commit();
 
     $template->render({ 
 	form    => $batch,
