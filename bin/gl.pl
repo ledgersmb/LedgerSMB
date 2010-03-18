@@ -1248,6 +1248,7 @@ sub form_footer {
                 for ( "update", "post", "schedule" ) { $a{$_} = 1 }
             }
         }
+        $a{"update"} = 1;
 
         for ( keys %button ) { delete $button{$_} if !$a{$_} }
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
