@@ -412,7 +412,7 @@ sub list_batches_batch_delete {
 }
 
 sub list_batches_batch_approve {
-    get_batch_batch_approve(@_);
+    batch_approve(@_);
 }
 
 sub get_batch_batch_approve {
