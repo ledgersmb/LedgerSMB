@@ -355,6 +355,8 @@ sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->get_payment_detail_data();
+    $payment->open_form();
+    $payment->{dbh}->commit;
     $payment->{grand_total} = 0;
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
