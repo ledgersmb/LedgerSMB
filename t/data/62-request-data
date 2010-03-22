@@ -11,11 +11,11 @@ our $test_request_data = [
 		'_test_id'  => 'AR Transaction Screen',
 		'_codebase' => 'old',
 		'module'    => 'ar.pl',
-		'action'    => 'add'
-	        '_api_test' => sub {
-		        my $request = shift;
-                        ok($request->{batch_number}, 'Batch Number is Defined');
-	        },
+		'action'    => 'add',
+	    '_api_test' => sub {
+			my $request = shift;
+			ok($request->{batch_number}, 'Batch Number is Defined');
+	     },
 	},
 	{
 		'_test_id'  => 'AP Transaction Screen',
@@ -43,8 +43,8 @@ our $test_request_data = [
 	        # Catch the entity ID, and pass it forwards.
 	        # Res is the full LWP response object.
 	        # ~A
-	        my $res = shift @_;
-	        ($GLOBAL{"entity_id"}) = \
+			my $res = shift @_;
+			($GLOBAL{"entity_id"}) = \
 	            ($res->content =~ m/\<input id="entity-id" type="hidden" name="entity_id" value="(\d+)" \/\>/);
 	        return 1;
 	    },
@@ -66,10 +66,9 @@ our $test_request_data = [
 	    "db"            => "vendor",
 	    "name"          => "TestObj",
 	    "_script_handle" => "LedgerSMB::Scripts::vendor",
-	    "_lwp_tests"        => sub {
-	        
-	        my $res = shift @_;
-	        ($GLOBAL{"vendor_id"}) = \
+	    "_lwp_tests"        => sub {	        
+			my $res = shift @_;
+			($GLOBAL{"vendor_id"}) = \
 	            ($res->content =~ m/\<input id="meta-number" type="text" name="meta_number" size="20" value="(\d+)" maxlength="255" \/\>/);
 	    },
 	},
@@ -102,9 +101,9 @@ our $test_request_data = [
 		'batch_type' => 'payable',
 		'module'     => 'vouchers.pl',
 		'_api_test'  => sub {
-                      my $request = shift;
-		      ok($request->{batch_number}, 'Batch Number is Defined');
-                };
+			my $request = shift;
+			ok($request->{batch_number}, 'Batch Number is Defined');
+		}
 	},
 	{
 		'_test_id'   => 'Payment Transaction Voucher Screen',
@@ -112,10 +111,10 @@ our $test_request_data = [
 		'action'     => 'create_batch',
 		'batch_type' => 'payment',
 		'module'     => 'vouchers.pl',
-                '_api_test'  => sub {
-		      my $request = shift;
-		      ok($request->{batch_number}, 'Batch Number is Defined');
-                },
+		'_api_test'  => sub {
+			my $request = shift;
+			ok($request->{batch_number}, 'Batch Number is Defined');
+         },
 	},
 	{
 		'_test_id'   => 'Payment Reversal Transaction Voucher Screen',
@@ -124,9 +123,9 @@ our $test_request_data = [
 		'batch_type' => 'payment_reversal',
 		'module'     => 'vouchers.pl',
 		'_api_test'  => sub { 
-                       my $request = shift;
-		       ok($request->{batch_number}, 'Batch Number is Defined');
-                },
+			my $request = shift;
+			ok($request->{batch_number}, 'Batch Number is Defined');
+		},
 	},
 	{
 		'_test_id'   => 'Income Statement Search Screen',
@@ -148,10 +147,10 @@ our $test_request_data = [
 		'action'     => 'create_batch',
 		'batch_type' => 'gl',
 		'module'     => 'vouchers.pl',
-                '_api_test'  => sub {
-		        my $request = shift;
-		        ok($request->{batch_number}, 'Batch Number is Defined');
-                },
+		'_api_test'  => sub {
+			my $request = shift;
+			ok($request->{batch_number}, 'Batch Number is Defined');
+		},
 	},
 	{
 		'_test_id'      => 'Payment source start error',
@@ -163,11 +162,10 @@ our $test_request_data = [
 		'approved'      => 0,
 		'currency'      => 'USD',				
 		'datepaid'      => '2008-07-22',
-                '_api_test'     => sub {
-		      my $self = shift;
-		      cmp_ok($self->{_error}, 'eq', 'No source start defined!', 
-			"Payment source start error: error correct");
-                };
+         '_api_test'     => sub {
+			my $self = shift;
+			cmp_ok($self->{_error}, 'eq', 'No source start defined!', "Payment source start error: error correct");
+		}
 	},
 	{
 		'_test_id'      => 'Payment source numbering',
@@ -219,19 +217,15 @@ our $test_request_data = [
 				return @$retval;
 			}
 		},
-                '_user'         =>  { numberformat => '1,000.00', dateformat => 'yyyy-mm-dd' },
+        '_user'         =>  { numberformat => '1,000.00', dateformat => 'yyyy-mm-dd' },
 		'_api_test'     => sub {
-                        my $self = shift;
-		        $self->debug({file => '/tmp/test'});
-		        ok(defined $self->{source_1}, 
-			   "$self->{_test_id} source 1 defined");
-		        cmp_ok($self->{source_2}, 'eq', '',
-			       "$self->{_test_id} source 2 not found");
-		        ok(defined $self->{source_3}, 
-			   "$self->{_test_id} source 3 defined");
-		        cmp_ok($self->{grand_total}, 'eq', '2,000.00',
-			       "Grand total formatting works");
-	        },
+			my $self = shift;
+			$self->debug({file => '/tmp/test'});
+			ok(defined $self->{source_1}, "$self->{_test_id} source 1 defined");
+	        cmp_ok($self->{source_2}, 'eq', '',"$self->{_test_id} source 2 not found");
+	        ok(defined $self->{source_3}, "$self->{_test_id} source 3 defined");
+	        cmp_ok($self->{grand_total}, 'eq', '2,000.00',"Grand total formatting works");
+	     },
 	},
 	{
 		'_test_id'     => 'Empty Recon Submission',
@@ -242,15 +236,12 @@ our $test_request_data = [
 		'their_total'  => '0',
 		'_exec_override' => {
 			'reconciliation__submit_set' => sub {
-					my ($self) = @_;
-					$self->_pre_save;
-					is($self->{line_ids}, '{}', 
-						'Empty recon set line ids ok');
-					is($self->{report_id}, -100, 
-						'Recon set report id correct');
-					},
-				
-				},
+		 		my ($self) = @_;
+		 		$self->_pre_save;
+		 		is($self->{line_ids}, '{}', 'Empty recon set line ids ok');
+				is($self->{report_id}, -100, 'Recon set report id correct');
+		 	},		
+		 },
 	},
 	{
 		'_test_id'     => 'Payment search (OLD)',
@@ -282,7 +273,7 @@ our $test_request_data = [
 		'module'    => 'menu.pl',
 		'menu'      => '1',
 		'id'        => '4',
-                'open'      => ':1:4:11',
+		'open'      => ':1:4:11',
 	},	
 	{
 		'_test_id'      => 'Payment print total',
@@ -326,30 +317,22 @@ our $test_request_data = [
 		'account_class' => 1,
 		'currency'      => 'USD',
 		'multiple'      => 1,
-                '_pre_test_sub' => sub {
-                                $LedgerSMB::Sysconfig::check_max_invoices = 1;
-                },
-		'_api_test'     => sub { use strict;
-		                my $request = shift;
-		                 cmp_ok($request->{invoice_count_25}, 
-                                      '>', 
-                                      $LedgerSMB::Sysconfig::check_max_invoices,
-                                      'Test is valid under current config');
-		                 cmp_ok(scalar @{$request->{checks}}, 
-                                        '==', 
-			                $request->{contact_count}, 
-			                'Correct number of checks printed');
-		                 my $check = shift @{$request->{checks}};
-		                cmp_ok(
-			                $request->format_amount({
+		'_pre_test_sub' => sub 
+		{
+			$LedgerSMB::Sysconfig::check_max_invoices = 1;
+		},
+		'_api_test'     => sub { 
+			use strict;
+		    my $request = shift;
+		    cmp_ok($request->{invoice_count_25}, '>', $LedgerSMB::Sysconfig::check_max_invoices, 'Test is valid under current config');
+			cmp_ok(scalar @{$request->{checks}}, '==', $request->{contact_count}, 'Correct number of checks printed');
+			my $check = shift @{$request->{checks}};
+			cmp_ok( $request->format_amount({
 				                   amount => $check->{amount}, 
 				                   format => '1000.00',
 				                   precision => 2
 			                 }), 
-                                         'eq', 
-                                         '105900.00', 
-			                 'Printed amount is correct'
-		                );
+					'eq', '105900.00', 'Printed amount is correct');
 	        },
 	},	
 ];
