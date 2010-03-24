@@ -169,6 +169,7 @@ sub search_batch {
 
 sub list_batches {
     my ($request) = @_;
+    $request->{action} = 'list_batches';
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->close_form;
     $batch->open_form;
@@ -300,6 +301,7 @@ sub list_batches {
 
 sub get_batch {
     my ($request)  = @_;
+    $request->{action} = 'get_batch';
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->close_form;
     $batch->open_form;

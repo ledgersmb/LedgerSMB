@@ -57,9 +57,10 @@ sub list_drafts_draft_delete {
 
 sub list_drafts {
     my ($request) = @_;
+    $request->{action} = 'list_drafts';
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
     $draft->close_form;
-    $draft->open_form;
+    $draft->open_form({commit => 1});
     my $callback = 'drafts.pl?action=list_drafts';
     for (qw(type reference amount_gy amount_lt)){
         if (defined $draft->{$_}){
