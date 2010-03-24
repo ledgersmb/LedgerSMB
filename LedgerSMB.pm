@@ -287,13 +287,16 @@ sub new {
 }
 
 sub open_form {
-    my ($self) = @_;
+    my ($self, $args) = @_;
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
     my @vars = $self->call_procedure(procname => 'form_open', 
                               args => [$self->{session_id}]
     );
+    if ($args->{commit}){
+       $self->{dbh}->commit;
+    }
     $self->{form_id} = $vars[0]->{form_open};
 }
 
