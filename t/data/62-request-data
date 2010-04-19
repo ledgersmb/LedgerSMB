@@ -56,7 +56,7 @@ our $test_request_data = [
 	    "module"            => "vendor.pl",
 	    "action"            => "save",
 	    "pay_to_name"       => "TestEntity",
-	    "entity_id"         => $GLOBAL{"entity_id"},
+	    "entity_id"         => '_$GLOBAL$:entity_id',
 	    "control_code"      => "TestAddVendorObj",
 	    "ar_ap_account_id"  => 10,
 	    "cash_account_id"   => 1,
@@ -335,6 +335,87 @@ our $test_request_data = [
 					'eq', '105900.00', 'Printed amount is correct');
 	        },
 	},	
+	# the following 4 tests check that it is possible to remove an empty batch
+	{
+		# access the batch creation screen
+		"_test_id"		=> "AP Voucher Screen",
+		"_codebase"		=> "new",
+		"action"		=> "create_batch",
+		"module"		=> "vouchers.pl",
+		"batch_type"	=> "ap",
+		"company"		=> "test",
+		"_lwp_tests" 	=> sub {
+			my $res = shift;
+			delete $GLOBAL{form_id};
+			delete $GLOBAL{batch_no};
+			# save form_id and batch number for additional requests
+			$GLOBAL{"form_id"} = $1 if ($res->content =~ m/input type=hidden name="form_id" value="(\d+)"/);
+			ok($GLOBAL{form_id}, "Received form ID: ".$GLOBAL{form_id});
+			$GLOBAL{batch_no} = $1 if ($res->content =~ m/input name="batch_number" type="text" value="([A-Z]-\d+)"/);
+
+			return 1;
+		}
+	},
+	{
+		# create an empty batch
+		"_test_id"		=> "Create Empty Batch",
+		"_codebase"		=> "new",
+		"action"		=> "create_vouchers",
+		"module"		=> "vouchers.pl",
+		"batch_type"	=> "ap",
+		"batch_date"	=> '2010-12-30',
+		"batch_number"	=> '_$GLOBAL$:batch_no',
+		"description"	=> "foo",
+		"form_id"	=> '_$GLOBAL$:form_id',
+		"_lwp_tests"	=> sub {
+			my $res = shift;
+			like($res->content, qr/\<title\>Add AP Transaction.*\<\/title\>/, 'Empty batch added');
+			return 1;
+		}	
+	},
+	{
+		# get the list of batches and save the first row of the list in GLOBAL
+		"_test_id"		=> "List Empty Batches",
+		"_codebase"		=> "new",
+		"action"		=> "list_batches",
+		"empty"			=> 1,
+		"class_id"		=> 1,
+		"created_by_eid"	=> 0,
+		"module"		=> "vouchers.pl",
+		"_lwp_tests"	=> sub {
+			my $res = shift;
+			my $batch_no = $GLOBAL{batch_no};
+			my $batch_id;
+
+			delete @GLOBAL{ qw( form_id row_1 )};
+			$GLOBAL{"form_id"} = $1 if ($res->content =~ m/input id="form-id" type="hidden" name="form_id" value="(\d+)"\s+\/\>/);
+			$batch_id = $1 if ($res->content =~ m/\<a href="vouchers.pl\?action=get_batch&amp;batch_id=(\d+)"\>$batch_no\<\/a\>/);			
+			$GLOBAL{"row_1"} = $batch_id if ($res->content =~ m/<input id="batch-${batch_id}" type="checkbox" name="batch_${batch_id}" value="\d"\s+\/\>/);
+			$GLOBAL{batch_id} = "batch_".$batch_id;
+
+			ok(exists $GLOBAL{"row_1"}, 'Received correct batch ID '.$GLOBAL{row_1});
+			return 1;
+		},
+	},
+	{
+		# remove first row of the list of empty batches (obtained from GLOBAL)
+		"_test_id"		=> "Remove Empty Batches",
+		"_codebase"		=> "new",
+		"module"		=> "vouchers.pl",
+		"form_id"		=> '_$GLOBAL$:form_id',
+		"rowcount"		=> 1,
+		"empty"			=> 1,
+		"class_id"		=> 1,
+		"row_1"			=> '_$GLOBAL$:row_1',
+		"action"		=> "list_batches_batch_delete",
+		'_$GLOBAL$:batch_id' => 1,
+		"_lwp_tests"	=> sub {
+			my $res = shift;
+			# check that we are at the 'batch selection' page,
+			like($res->content, qr/\<title\>Batch Selection\<\/title\>/, "Empty batch removed");
+			return 1;
+		}
+	},
 ];
 
 our $api_test_cases = {

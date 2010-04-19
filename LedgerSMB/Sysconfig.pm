@@ -179,6 +179,6 @@ $log4perl_config = qq(
 $ENV{PGHOST} = $config{database}{host};
 $ENV{PGPORT} = $config{database}{port};
 our $default_db = $config{database}{default_db};
-our $db_namespace = $config{database}{db_namespace};
+our $db_namespace = $config{database}{db_namespace} || 'public';
 $ENV{PGSSLMODE} = $config{database}{sslmode} if $config{database}{sslmode};
 1;

@@ -31,12 +31,16 @@ if ($host !~ /https?:.+:/){
 } else {
 	$hostport = "$hostname";
 }
+
+my $cookie = HTTP::Cookies->new;
 $browser->credentials("$hostport", 'LedgerSMB', $ENV{LSMB_USER} => $ENV{LSMB_PASS});
 
-# cookie setup
-my $cookie = HTTP::Cookies->new(
-	"$LedgerSMB::Sysconfig::cookie_name" => "1:1:$db"
-);
+my $login_url = "${host}login.pl?action=authenticate&company=$db";
+my $response = $browser->get($login_url);
+
+ok($response->is_success(), "Login cookie received");
+
+$cookie->extract_cookies($response);
 $browser->cookie_jar($cookie);
 
 for my $test (@$test_request_data){
@@ -44,6 +48,17 @@ for my $test (@$test_request_data){
 	my $argstr = "";
         my $module = "";
 	for $key (keys %$test){
+		# scan both key and value for _$GLOBAL$.
+		# replace _$GLOBAL$:varname with the value from the %GLOBAL{varname}
+		if ($key =~ /_\$GLOBAL\$:(.*)$/) {
+			my $newkey = $GLOBAL{$1};
+			$test->{$newkey} = $test->{$key};
+			$key = $newkey;
+		}
+		if ($test->{$key} =~ /_\$GLOBAL\$:(.*)$/) {
+			my $val = $GLOBAL{$1};
+			$test->{$key} = $val;
+		}
 		if ($key eq 'module'){
 			$module = $test->{"$key"}
 		}
