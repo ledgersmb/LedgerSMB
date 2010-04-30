@@ -20,24 +20,24 @@ BEGIN
                      sum(CASE WHEN relation = 'invoice' THEN ac.amount 
                               ELSE 0 END), 
                      sum(ac.amount)
-		FROM (select id, entity_credit_account FROM ar 
+		FROM (select id, transdate, entity_credit_account FROM ar 
                        UNION 
-                      select id, entity_credit_account from ap
+                      select id, transdate, entity_credit_account from ap
                      ) gl
-                JOIN (select 'acc_trans' as relation, amount as amount, 
+                JOIN (select trans_id, 'acc_trans' as relation, amount as amount, 
                              atf.reportable
                         FROM  acc_trans
                         JOIN ac_tax_form atf 
-                          ON (acc_trans.entry_id = ac_tax_form.entry_id 
-                             AND ac_tax_form.reportable)
+                          ON (acc_trans.entry_id = atf.entry_id 
+                             AND atf.reportable)
                        UNION
-                      select 'invoice' as relation, sellprice * qty as amount, 
+                      select trans_id, 'invoice' as relation, sellprice * qty as amount, 
                              reportable
                         FROM invoice 
                         JOIN invoice_tax_form 
                           ON (invoice.id = invoice_tax_form.invoice_id 
                              AND invoice_tax_form.reportable)
-                     ) ac
+                     ) ac ON (ac.trans_id = gl.id)
 		JOIN entity_credit_account 
                   ON (gl.entity_credit_account = entity_credit_account.id) 
 		JOIN entity ON (entity.id = entity_credit_account.entity_id) 
