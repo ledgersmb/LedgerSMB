@@ -11,19 +11,41 @@ CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin 
 DECLARE
 	out_row tax_form_report_item;
 BEGIN
-	FOR out_row IN SELECT company.legal_name, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.meta_number, sum(CASE WHEN ac_tax_form.reportable THEN acc_trans.amount ELSE 0 END), sum(CASE WHEN invoice_tax_form.reportable THEN invoice.sellprice * invoice.qty ELSE 0 END), sum(CASE WHEN ac_tax_form.reportable THEN acc_trans.amount ELSE 0 END) + sum(CASE WHEN invoice_tax_form.reportable THEN invoice.sellprice * invoice.qty ELSE 0 END)
-		FROM acc_trans
-		JOIN (select id, entity_credit_account FROM ar UNION select id, entity_credit_account from ap) gl ON (gl.id = acc_trans.trans_id)
-		LEFT JOIN ac_tax_form ON (acc_trans.entry_id = ac_tax_form.entry_id AND ac_tax_form.reportable)
-		LEFT JOIN invoice ON (invoice.id = acc_trans.invoice_id) 
-		LEFT JOIN invoice_tax_form ON (invoice.id = invoice_tax_form.invoice_id AND invoice_tax_form.reportable)  
-		JOIN entity_credit_account ON (gl.entity_credit_account = entity_credit_account.id) 
+	FOR out_row IN 
+              SELECT company.legal_name, company.entity_id, 
+                     entity_credit_account.entity_class, entity.control_code, 
+                     entity_credit_account.meta_number, 
+                     sum(CASE WHEN relation = 'acc_trans' THEN ac.amount 
+                              ELSE 0 END), 
+                     sum(CASE WHEN relation = 'invoice' THEN ac.amount 
+                              ELSE 0 END), 
+                     sum(ac.amount)
+		FROM (select id, entity_credit_account FROM ar 
+                       UNION 
+                      select id, entity_credit_account from ap
+                     ) gl
+                JOIN (select 'acc_trans' as relation, amount as amount, 
+                             atf.reportable
+                        FROM  acc_trans
+                        JOIN ac_tax_form atf 
+                          ON (acc_trans.entry_id = ac_tax_form.entry_id 
+                             AND ac_tax_form.reportable)
+                       UNION
+                      select 'invoice' as relation, sellprice * qty as amount, 
+                             reportable
+                        FROM invoice 
+                        JOIN invoice_tax_form 
+                          ON (invoice.id = invoice_tax_form.invoice_id 
+                             AND invoice_tax_form.reportable)
+                     ) ac
+		JOIN entity_credit_account 
+                  ON (gl.entity_credit_account = entity_credit_account.id) 
 		JOIN entity ON (entity.id = entity_credit_account.entity_id) 
 		JOIN company ON (entity.id = company.entity_id)
 		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
-		WHERE country_tax_form.id = in_tax_form_id
-		AND transdate BETWEEN in_begin AND in_end
-		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code
+               WHERE country_tax_form.id = in_tax_form_id
+		      AND transdate BETWEEN in_begin AND in_end
+             GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
