@@ -56,12 +56,36 @@ CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin 
 DECLARE
 	out_row tax_form_report_detail_item;
 BEGIN
-	FOR out_row IN SELECT company.legal_name, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.meta_number, sum(CASE WHEN ac_tax_form.reportable THEN acc_trans.amount ELSE 0 END), sum(CASE WHEN invoice_tax_form.reportable THEN invoice.sellprice * invoice.qty ELSE 0 END), sum(CASE WHEN ac_tax_form.reportable THEN acc_trans.amount ELSE 0 END) + sum(CASE WHEN invoice_tax_form.reportable THEN invoice.sellprice * invoice.qty ELSE 0 END), gl.invnumber, gl.duedate::text
-		FROM acc_trans
-                JOIN (select id, entity_credit_account, invnumber, duedate FROM ar UNION select id, entity_credit_account, invnumber, duedate FROM ap) gl ON (gl.id = acc_trans.trans_id)
-		LEFT JOIN ac_tax_form ON (acc_trans.entry_id = ac_tax_form.entry_id AND ac_tax_form.reportable)
-		LEFT JOIN invoice ON (invoice.id = acc_trans.invoice_id) 
-		LEFT JOIN invoice_tax_form ON (invoice.id = invoice_tax_form.invoice_id AND invoice_tax_form.reportable)  
+	FOR out_row IN 
+              SELECT company.legal_name, company.entity_id, 
+                     entity_credit_account.entity_class, entity.control_code, 
+                     entity_credit_account.meta_number, 
+                     sum(CASE WHEN relation = 'acc_trans' THEN ac.amount 
+                              ELSE 0 END), 
+                     sum(CASE WHEN relation = 'invoice' THEN ac.amount 
+                              ELSE 0 END), 
+                     sum(ac.amount),
+                     gl.invnumber, gl.duedate::text
+                FROM (select id, entity_credit_account, invnumber, duedate 
+                        FROM ar 
+                       UNION 
+                      select id, entity_credit_account, invnumber, duedate 
+                        FROM ap
+                     ) gl 
+                JOIN (select trans_id, 'acc_trans' as relation, amount as amount, 
+                             atf.reportable
+                        FROM  acc_trans
+                        JOIN ac_tax_form atf 
+                          ON (acc_trans.entry_id = atf.entry_id 
+                             AND atf.reportable)
+                       UNION
+                      select trans_id, 'invoice' as relation, sellprice * qty as amount, 
+                             reportable
+                        FROM invoice 
+                        JOIN invoice_tax_form 
+                          ON (invoice.id = invoice_tax_form.invoice_id 
+                             AND invoice_tax_form.reportable)
+                     ) ac ON (ac.trans_id = gl.id)
 		JOIN entity_credit_account ON (gl.entity_credit_account = entity_credit_account.id) 
 		JOIN entity ON (entity.id = entity_credit_account.entity_id) 
 		JOIN company ON (entity.id = company.entity_id)
