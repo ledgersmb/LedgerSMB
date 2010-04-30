@@ -66,10 +66,10 @@ BEGIN
                               ELSE 0 END), 
                      sum(ac.amount),
                      gl.invnumber, gl.duedate::text
-                FROM (select id, entity_credit_account, invnumber, duedate 
+                FROM (select id, entity_credit_account, invnumber, duedate, transdate
                         FROM ar 
                        UNION 
-                      select id, entity_credit_account, invnumber, duedate 
+                      select id, entity_credit_account, invnumber, duedate, transdate
                         FROM ap
                      ) gl 
                 JOIN (select trans_id, 'acc_trans' as relation, amount as amount, 
