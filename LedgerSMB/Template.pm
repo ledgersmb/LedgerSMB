@@ -406,4 +406,41 @@ sub _lpr_output {
 	close(LPR);
 }
 
+# apply locale settings to column headings and add sort urls if necessary.
+sub column_heading {
+	
+	my $self = shift;
+	my ($names, $sortby) = @_; 
+	my %sorturls;
+	
+	if ($sortby) {
+		%sorturls = map 
+		{ $_ => $sortby->{href}."=$_"} @{$sortby->{columns}};
+	}
+		
+	foreach my $attname (keys %$names) {
+		
+		# process 2 cases - simple name => value, and complex name => hash
+		# pairs. The latter is used to include urls in column headers.
+		
+		if (ref $names->{$attname} eq 'HASH') {
+			my $t = $self->{locale}->text($names->{$attname}{text});
+			$names->{$attname}{text} = $t;
+		} else {
+			my $t = $self->{locale}->text($names->{$attname});
+			if (defined $sorturls{$attname}) {
+				$names->{$attname} = 
+				{
+					text => $t,
+				 	href => $sorturls{$attname} 
+				};
+			} else {
+				$names->{$attname} = $t;
+			}
+		}
+	}
+	
+	return $names;
+}
+
 1;

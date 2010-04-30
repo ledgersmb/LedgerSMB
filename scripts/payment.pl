@@ -137,40 +137,23 @@ sub get_search_results {
     #  $request->{_locale}->text("Vendor Number");
     #  $request->{_locale}->text("Customer Number");
 
-    my $heading = {
-         selected     => $request->{_locale}->text('Selected'),
-         company_paid => {
-                          text => $request->{_locale}->text('Company Name'),
-                          href => "$search_url&orderby=company_paid",
-                         },
-         meta_number  => {
-                          text => $request->{_locale}->text(
-                                        "$contact_type Number"
-                                  ),
-                          href => "$search_url&orderby=meta_number",
-                         },
-         date_paid    => {
-                          text => $request->{_locale}->text('Date Paid'),
-                          href => "$search_url&orderby=date_paid",
-                         },
-         amount       => {
-                          text => $request->{_locale}->text('Total Paid'),
-                          href => "$search_url&orderby=amount",
-                         },
-         source       => {
-                          text => $request->{_locale}->text('Source'),
-                          href => "$search_url&orderby=source",
-                         },
-	 batch_control => {
-                          text => $request->{_locale}->text('Batch'),
-                          href => "$search_url&orderby=batch_control",
-			},
-	 batch_description => {
-                          text => $request->{_locale}->text('Batch Description'),
-                          href => "$search_url&orderby=batch_description",
-			},
+    my $column_names = {
+        selected => 'Selected',
+        company_paid => 'Company Name',
+        meta_number => "$contact_type Number",
+        date_paid => 'Date Paid',
+        amount => 'Total Paid',
+        source => 'Source',
+        batch_control => 'Batch',
+        batch_description => 'Batch Description'
     };
+    my $sort_href = "$search_url&orderby";
+    my @sort_columns = qw(meta_number date_paid amount source 
+		company_paid batch_description batch_control);
 
+	my $column_heading = $template->column_heading($column_names, 
+	    {href => $sort_href, columns => \@sort_columns}
+	);	
 
     my $classcount;
     $classcount = 0;
@@ -209,7 +192,7 @@ sub get_search_results {
     $template->render({
         form    => $payment,
         columns => \@columns,
-        heading => $heading,
+        heading => $column_heading,
         hiddens => $payment->take_top_level,
         rows    => $rows,
         buttons => [{

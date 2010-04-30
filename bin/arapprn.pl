@@ -618,13 +618,14 @@ sub select_payment {
     # list payments with radio button on a form
     $form->{title} = $locale->text('Select payment');
 
-    my %column_heading;
-    $column_heading{ndx}      = ' ';
-    $column_heading{datepaid} = $locale->text('Date');
-    $column_heading{source}   = $locale->text('Source');
-    $column_heading{memo}     = $locale->text('Memo');
-    $column_heading{paid}     = $locale->text('Amount');
-    $column_heading{"$form->{ARAP}_paid"} = $locale->text('Account');
+    my $column_names = {
+        ndx => ' ',
+        datepaid => 'Date',
+        source => 'Source',
+        memo => 'Memo',
+        paid => 'Amount',
+        "$form->{ARAP}_paid" => 'Account'
+    };
 
     my $checked = "checked";
     my @rows;
@@ -672,12 +673,15 @@ sub select_payment {
         locale => $locale,
         template => 'form-dynatable',
         );
+        
+    my $column_heading = $template->column_heading($column_names);
+    
     $template->render({
         form => $form,
         buttons => \@buttons,
         hiddens => \%hiddens,
         columns => \@column_index,
-        heading => \%column_heading,
+        heading => $column_heading,
         rows => \@rows,
         row_alignment => {'paid' => 'right'},
     });

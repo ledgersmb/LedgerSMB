@@ -385,31 +385,16 @@ sub generate_inv_activity {
     my $href =
 qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&login=$form->{login}&sessionid=$form->{sessionid}&fromdate=$form->{fromdate}&todate=$form->{todate}&l_heading=$form->{l_heading}&l_subtotal=$form->{l_subtotal}&department=$department&projectnumber=$projectnumber&project_id=$form->{project_id}&title=$title&nextsub=$form->{nextsub}|;
 
-    my %column_header;
-    $column_header{partnumber} = {
-        text => $locale->text('Part Number'),
-        href => "$href&sort_col=partnumber",
+    my $column_names = {
+        partnumber => 'Part Number',
+        description => 'Description',
+        sold => 'Sold',
+        revenue => 'Revenue',
+        received => 'Received',
+        expense => 'Expense'
         };
-    $column_header{description} = {
-        text => $locale->text('Description'),
-        href => "$href&sort_col=description",
-        };
-    $column_header{sold} = {
-        text => $locale->text('Sold'),
-        href => "$href&sort_col=sold",
-        };
-    $column_header{revenue} = {
-        text => $locale->text('Revenue'),
-        href => "$href&sort_col=revenue",
-        };
-    $column_header{received} = {
-        text => $locale->text('Received'),
-        href => "$href&sort_col=received",
-        };
-    $column_header{expense} = {
-        text => $locale->text('Expense'),
-        href => "$href&sort_col=expense",
-        };
+    my @sort_columns = @column_index;
+    my $sort_href = "$href&sort_col";
 
     if ( $form->{sort_col} eq 'qty' || $form->{sort_col} eq 'revenue' ) {
         $form->{sort_type} = 'numeric';
@@ -474,12 +459,17 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
         locale => $locale, 
         template => 'form-dynatable',
         );
+    
+    my $column_heading = $template->column_heading($column_names,
+        {href => $sort_href, columns => \@sort_columns}
+    );
+    
     $template->render({
         form => $form,
         hiddens => \%hiddens,
         options => \@options,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         rows => \@rows,
         row_alignment => {
             sold => 'right',
@@ -702,16 +692,17 @@ sub list_accounts {
 
     my @column_index = qw(accno description begbalance debit credit endbalance);
 
-    my %column_header;
-    $column_header{accno} = $locale->text('Account');
-    $column_header{description} = $locale->text('Description');
-    $column_header{debit} = $locale->text('Debit');
-    $column_header{credit} = $locale->text('Credit');
-    $column_header{begbalance} = $locale->text('Balance');
-    $column_header{endbalance} = $locale->text('Balance');
+    my $column_names = {
+        accno => 'Account',
+        description => 'Description',
+        debit => 'Debit',
+        credit => 'Credit',
+        begbalance => 'Balance',
+        endbalance => 'Balance'
+    };
 
     if ( $form->{accounttype} eq 'gifi' ) {
-        $column_header{accno} = $locale->text('GIFI');
+        $column_names->{accno} = 'GIFI';
     }
 
     # sort the whole thing by account numbers and display
@@ -904,13 +895,16 @@ qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accountty
         path => 'UI',
         format => $format,
         );
+    
+    my $column_heading = $template->column_heading($column_names);    
+    
     $template->render({
         form => $form,
         hiddens => \%hiddens,
         buttons => \@buttons,
         options => \@options,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         rows => \@rows,
         totals => \%column_data,
         row_alignment => {
@@ -1757,31 +1751,18 @@ sub generate_tax_report {
 
     push @options, $form->{period};
 
-    my %column_header;
-    $column_header{id} = {
-        href => "$href&sort=id",
-        text => $locale->text('ID'),
+    my $column_names = {
+        id => 'ID',
+        invnumber => 'Invoice',
+        transdate => 'Date',
+        netamount => 'Amount',
+        tax => 'Tax',
+        total => 'Total',
+        name => $name,
+        description => 'Description'
         };
-    $column_header{invnumber} = {
-        href => "$href&sort=invnumber",
-        text => $locale->text('Invoice')
-        };
-    $column_header{transdate} = {
-        href => "$href&sort=transdate",
-        text => $locale->text('Date'),
-        };
-    $column_header{netamount} = $locale->text('Amount');
-    $column_header{tax} = $locale->text('Tax');
-    $column_header{total} = $locale->text('Total');
-
-    $column_header{name} = {
-        href => "$href&sort=name",
-        text => $name,
-        };
-    $column_header{description} = {
-        href => "$href&sort=description",
-        text => $locale->text('Description'),
-        };
+    my @sort_columns = qw(id invnumber transdate name description);
+    my $sort_href = "$href&sort";
 
     # add sort and escape callback
     $callback = $form->escape( $callback . "&sort=$form->{sort}" );
@@ -1862,12 +1843,17 @@ sub generate_tax_report {
         locale => $locale, 
         template => 'form-dynatable',
         );
+    
+    my $column_heading = $template->column_heading($column_names,
+        {href => $sort_href, columns => \@sort_columns}
+    );
+    
     $template->render({
         form => $form,
         hiddens => \%hiddens,
         options => \@options,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         rows => \@rows,
         totals => \%column_data,
         row_alignment => {

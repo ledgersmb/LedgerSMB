@@ -88,11 +88,13 @@ sub chart_of_accounts {
 
     @column_index = qw(accno gifi_accno description debit credit);
 
-    $column_header{accno} = $locale->text('Account');
-    $column_header{gifi_accno} = $locale->text('GIFI');
-    $column_header{description} = $locale->text('Description');
-    $column_header{debit} = $locale->text('Debit');
-    $column_header{credit} = $locale->text('Credit');
+    my $column_names = {
+        accno => 'Account',
+        gifi_accno => 'GIFI',
+        description => 'Description',
+        debit => 'Debit',
+        credit => 'Credit'
+    };
 
     $form->{title} = $locale->text('Chart of Accounts');
     $form->{callback} = 
@@ -168,12 +170,15 @@ qq|$form->{script}?path=$form->{path}&action=list&accno=$ca->{accno}&login=$form
         path => 'UI',
         template => 'form-dynatable',
         format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
+        
+    my $column_heading = $template->column_heading($column_names);
+    
     $template->render({
         form => \%$form,
         buttons => \@buttons,
         hiddens => \%hiddens,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         totals => \%column_data,
         rows => \@rows,
         row_alignment => {'credit' => 'right', 'debit' => 'right'},

@@ -143,41 +143,22 @@ sub get_results {
              "&amount_from=$search->{amount_from}&".
              "amount_to=$search->{amount_to}&chart_id=$search->{chart_id}".
              "&approved=$search->{approved}&submitted=$search->{submitted}";
-        $columns = {
-            "select"         => $request->{_locale}->text('Select'),	
-            account          => {
-		text => $request->{_locale}->text('Account'),	
-		href => $search_url,
-	    },
-            their_total      => {
-                text => $request->{_locale}->text('Balance'),
-                href => "$search_url&order_by=their_total",
-            },
-            end_date         => {
-                text => $request->{_locale}->text('Statement Date'),
-                href => "$search_url&order_by=end_date",
-            },
-            submitted        => {
-		text => $request->{_locale}->text('Submitted'),
-                href => "$search_url&order_by=submitted",
-            },
-            approved         => {
-		text => $request->{_locale}->text('Approved'), 
-		href => "$search_url&order_by=approved",
-            },
-            updated          => {
-		text => $request->{_locale}->text('Last Updated'), 
-		href => "$search_url&order_by=updated",
-            },
-            entered_username => {
-		text => $request->{_locale}->text('Entered By'), 
-		href => "$search_url&order_by=entered_username",
-            },
-            approved_username => {
-		text => $request->{_locale}->text('Approved By'), 
-		href => "$search_url&order_by=approved_username",
-            },
+        
+        my $column_names = {
+            "select" => 'Select',
+            account => 'Account',
+            their_total => 'Balance',
+            end_date => 'Statement Date',
+            submitted => 'Submitted',
+            approved => 'Approved',
+            updated => 'Last Updated',
+            entered_username => 'Entered By',
+            approved_username => 'Approved By'
         };
+        my $sort_href = "$search_url&order_by";
+        my @sort_columns = qw(account their_total end_date submitted 
+            approved updated entered_username approved_username);
+        
 	my $cols = [];
 	my @acts = $search->get_accounts;
 	@$cols = qw(select account end_date their_total approved submitted 
@@ -207,9 +188,14 @@ sub get_results {
     	    language => $user->{language}, 
             format => 'HTML',
             path=>"UI");
+        
+        my $column_heading = $template->column_heading($column_names,
+            {href => $sort_href, columns => \@sort_columns}
+        );
+        
         return $template->render({
 		form     => $recon,
-		heading  => $columns,
+		heading  => $column_heading,
         	hiddens  => $recon,
 		columns  => $cols,
 		rows     => \@results

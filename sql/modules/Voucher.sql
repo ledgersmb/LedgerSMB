@@ -147,6 +147,7 @@ CREATE TYPE batch_list_item AS (
     description text,
     created_by text,
     created_on date,
+    default_date date,
     transaction_total numeric,
     payment_total numeric
 );
@@ -162,7 +163,7 @@ DECLARE out_value batch_list_item;
 BEGIN
 	FOR out_value IN
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on,
+			b.created_on, b.default_date,
 			sum(
 				CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
 				     THEN al.amount 
@@ -207,7 +208,7 @@ BEGIN
 			and (in_date_to IS NULL
 				or b.default_date <= in_date_to)
 		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
-			b.control_code
+			b.control_code, b.default_date
 		HAVING  
 			(in_amount_gt IS NULL OR
 			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 
@@ -240,7 +241,7 @@ DECLARE out_value batch_list_item;
 BEGIN
 	FOR out_value IN
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on, NULL
+			b.created_on, b.default_date, NULL
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		LEFT JOIN users u ON (u.entity_id = b.created_by)
@@ -255,7 +256,7 @@ BEGIN
 				(in_approved = true AND approved_on IS NOT NULL)
 			)
 		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
-			b.control_code
+			b.control_code, b.default_date
 	LOOP
 		RETURN NEXT out_value;
 	END LOOP;
@@ -273,7 +274,7 @@ DECLARE out_value batch_list_item;
 BEGIN
 	FOR out_value IN
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on,
+			b.created_on, b.default_date,
 			sum(
 				CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
 				     THEN al.amount 
@@ -314,7 +315,7 @@ BEGIN
 				(in_approved = true AND approved_on IS NOT NULL)
 			)
 		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
-			b.control_code
+			b.control_code, b.default_date
 		HAVING  
 			(in_amount_gt IS NULL OR
 			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid, 

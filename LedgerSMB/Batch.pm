@@ -45,17 +45,20 @@ sub get_search_criteria {
     unshift @{$self->{batch_users}}, {username => $self->{_locale}->text('Any'), id => '0', entity_id => '0'};
 }
 
-sub get_search_results {
-    my ($self, $args) = @_;
-    if ($self->{empty}){
+sub get_search_method {
+	my ($self, @args) = @_;
+	my $search_proc;
+	
+	if ($self->{empty}){
         $search_proc = "batch_search_empty";
     } elsif ($args->{mini}){
         $search_proc = "batch_search_mini";
     } else {
         $search_proc = "batch_search";
     }
-    if ($self->{created_by_eid} == 0){
-	delete $self->{created_by_eid};
+
+	if ($self->{created_by_eid} == 0){
+		delete $self->{created_by_eid};
     }
     if ($args->{custom_types}->{$self->{class_id}}->{select_method}){
         $search_proc 
@@ -63,6 +66,12 @@ sub get_search_results {
     } elsif ($self->{class_id} =~ /[\D]/){
           $self->error("Invalid Batch Type");
     }
+	return $search_proc;
+}
+
+sub get_search_results {
+    my ($self, $args) = @_;
+	my $search_proc = $self->get_search_method($args);
     @{$self->{search_results}} = $self->exec_method(funcname => $search_proc);
     return @{$self->{search_results}};
 }

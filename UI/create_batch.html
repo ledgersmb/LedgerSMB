@@ -20,7 +20,7 @@
     <?lsmb text("Description") ?>
   </div>
   <div class="input">
-    <input name="description" type="text" value="<?lsmb batchnumber ?>"/>
+    <input name="description" type="text" value="<?lsmb batch_number ?>"/>
   </div>
 </div>
 <div class="labelledinput">
@@ -43,11 +43,12 @@
 <div class="listtop"><?lsmb text('Or Add To Batch') ?></div>
 <table>
 <tr class="listheading">
-  <th><?lsmb text('Batch Type') ?></th>
-  <th><?lsmb text('Control Number') ?></th>
-  <th><?lsmb text('Description') ?></th>
-  <th><?lsmb text('Created By') ?></th>
-  <th><?lsmb text('Created On') ?></th>
+  <th class="listtop"><?lsmb text('Batch Type') ?></th>
+  <th class="listtop"><a class="listtop" href = "<?lsmb "vouchers.pl?action=create_batch&batch_type=$batch_type&order_by=control_code" ?>"><?lsmb text('Control Number') ?></th>
+  <th class="listtop"><a class="listtop" href = "<?lsmb "vouchers.pl?action=create_batch&batch_type=$batch_type&order_by=description" ?>"><?lsmb text('Description') ?></th>
+  <th class="listtop"><a class="listtop" href = "<?lsmb "vouchers.pl?action=create_batch&batch_type=$batch_type&order_by=created_by" ?>"><?lsmb text('Created By') ?></th>
+  <th class="listtop"><a class="listtop" href = "<?lsmb "vouchers.pl?action=create_batch&batch_type=$batch_type&order_by=created_on" ?>"><?lsmb text('Created On') ?></th>
+  <th class="listtop"><a class="listtop" href = "<?lsmb "vouchers.pl?action=create_batch&batch_type=$batch_type&order_by=default_date" ?>"><?lsmb text('Post Date') ?></th>
 </tr>
 <?lsmb FOR row = search_results ?>
 <tr>
@@ -56,6 +57,7 @@
   <td><?lsmb row.description ?></td>
   <td><?lsmb row.created_by ?></td>
   <td><?lsmb row.created_on ?></td>
+  <td><?lsmb row.default_date?></td>
 </tr>
 <?lsmb END ?>
 </table>

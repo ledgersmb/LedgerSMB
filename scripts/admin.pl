@@ -422,14 +422,17 @@ sub get_user_results {
     );
     my $columns;
     @$columns = qw(id username first_name last_name ssn dob edit);
-    my $column_headers = {
-        id         => $request->{_locale}->text('ID'),
-        username   => $request->{_locale}->text('Username'),
-        first_name => $request->{_locale}->text('First Name'),
-        last_name  => $request->{_locale}->text('Last Name'),
-        ssn        => $request->{_locale}->text('Tax ID'),
-        dob         => $request->{_locale}->text('Date of Birth'),
+    
+    my $column_names = {
+        id => 'ID',
+        username => 'Username',
+        first_name => 'First Name',
+        last_name => 'Last Name',
+        ssn => 'Tax ID',
+        dob => 'Date of Birth'
     };
+    my $column_heading = $template->column_heading($column_names);
+    
     my $rows = [];
     my $rowcount = "0";
     my $base_url = "admin.pl?action=edit_user";
@@ -446,7 +449,7 @@ sub get_user_results {
     $template->render({
 	form    => $admin,
 	columns => $columns,
-	heading => $column_headers,
+	heading => $column_heading,
         rows    => $rows,
 	buttons => [],
 	hiddens => [],
@@ -466,13 +469,13 @@ sub list_sessions {
     );
     my $columns;
     @$columns = qw(id username last_used locks_active drop);
-    my $column_headers = {
-        id         => $request->{_locale}->text('ID'),
-        username   => $request->{_locale}->text('Username'),
-        last_used => $request->{_locale}->text('Last Used'),
-        locks_active  => $request->{_locale}->text('Transactions Locked'),
-
+    my $column_names = {
+        id => 'ID',
+        username => 'Username',
+        last_used => 'Last Used',
+        locks_active => 'Transactions Locked'
     };
+    my $column_heading = $template->column_heading($column_names);
     my $rows = [];
     my $rowcount = "0";
     my $base_url = "admin.pl?action=delete_session";
@@ -489,7 +492,7 @@ sub list_sessions {
     $template->render({
 	form    => $admin,
 	columns => $columns,
-	heading => $column_headers,
+    heading => $column_heading,
         rows    => $rows,
 	buttons => [],
 	hiddens => [],

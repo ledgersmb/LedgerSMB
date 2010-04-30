@@ -311,37 +311,18 @@ sub get_results {
     }
 
     # Column definitions for dynatable
-    @columns = qw(legal_name entity_control_code meta_number credit_description 
-		business_type curr);
-    my %column_heading;
-    $column_heading{legal_name} = {
-        text => $request->{_locale}->text('Name'),
-	href => "$search_url&order_by=legal_name",
+    @columns = qw(legal_name entity_control_code meta_number credit_description business_type curr);
+		
+	my $column_names = {
+	    legal_name => 'Name',
+	    entity_control_code => 'Control Code',
+	    meta_number => 'Vendor Number',
+	    credit_description => 'Description',
+	    business_type => 'Business Type',
+	    curr => 'Currency'
     };
-    $column_heading{entity_control_code} = {
-        text => $request->{_locale}->text('Control Code'),
-	href => "$search_url&order_by=entity_control_code",
-    };
-    $column_heading{legal_name} = {
-        text => $request->{_locale}->text('Name'),
-	href => "$search_url&order_by=legal_name",
-    };
-    $column_heading{meta_number} = {
-        text => $request->{_locale}->text('Vendor Number'),
-	href => "$search_url&order_by=meta_number",
-    };
-    $column_heading{credit_description} = {
-        text => $request->{_locale}->text('Description'),
-	href => "$search_url&order_by=credit_description",
-    };
-    $column_heading{business_type} = {
-        text => $request->{_locale}->text('Business Type'),
-	href => "$search_url&order_by=business_type",
-    };
-    $column_heading{curr} = {
-        text => $request->{_locale}->text('Currency'),
-	href => "$search_url&order_by=curr",
-    };
+	my @sort_columns = @columns;
+	my $sort_href = "$search_url&order_by";
 
     my @rows;
     for $ref (@{$company->{search_results}}){
@@ -388,12 +369,16 @@ sub get_results {
 		format => ($request->{FORMAT}) ? $request->{FORMAT}  : 'HTML',
     );
             
+    my $column_heading = $template->column_heading($column_names,
+        {href => $sort_href, columns => \@sort_columns}
+    );
+            
     $template->render({
 	form    => $company,
 	columns => \@columns,
         hiddens => $company,
 	buttons => \@buttons,
-	heading => \%column_heading,
+	heading => $column_heading,
 	rows    => \@rows,
     });
 }

@@ -154,12 +154,14 @@ sub list_account {
     $form->{callback} = $callback;
     @column_index = qw(accno gifi_accno description debit credit link);
 
-    $column_header{accno} = $locale->text('Account');
-    $column_header{gifi_accno} = $locale->text('GIFI');
-    $column_header{description} = $locale->text('Description');
-    $column_header{debit} = $locale->text('Debit');
-    $column_header{credit} = $locale->text('Credit');
-    $column_header{link} = $locale->text('Link');
+    my $column_names = {
+        accno => 'Account',
+        gifi_accno => 'GIFI',
+        description => 'Description',
+        debit => 'Debit',
+        credit => 'Credit',
+        link => 'Link'
+    };
 
     # escape callback
     $callback = $form->escape($callback);
@@ -243,12 +245,15 @@ sub list_account {
         path => 'UI',
         template => 'form-dynatable',
         format => ($format ne 'LIS')? $format: 'HTML');
+    
+    my $column_heading = $template->column_heading($column_names);
+    
     $template->render({
         form => $form,
         buttons => \@buttons,
 	hiddens => \%hiddens,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         rows => \@rows,
 	row_alignment => \%row_alignment,
     });
@@ -301,11 +306,12 @@ sub list_gifi {
     $hiddens{sessionid} = $form->{sessionid};
 
     my @column_index = qw(accno description);
-    my %column_header;
     my @rows;
 
-    $column_header{accno} = $locale->text('GIFI');
-    $column_header{description} = $locale->text('Description');
+    my $column_names = {
+        accno => 'GIFI',
+        description => 'Description'
+    };
 
     my $i = 0;
     foreach $ca ( @{ $form->{ALL} } ) {
@@ -338,12 +344,15 @@ sub list_gifi {
         path => 'UI',
 	template => 'form-dynatable',
         format => ($form->{action} =~ /^csv/)? 'CSV': 'HTML');
+    
+    my $column_heading = $template->column_heading($column_names);
+        
     $template->render({
         form => \%$form,
         hiddens => \%hiddens,
         buttons => \@buttons,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         rows => \@rows,
     });
 }
@@ -1887,10 +1896,12 @@ sub list_warehouse {
     $form->{title} = $locale->text('Warehouses');
 
     my @column_index = qw(description);
-    my %column_header;
-    $column_header{description} = {
+    
+    my $column_names = {
+        description => {
         href => $href,
-        text => $locale->text('Description'),
+            text => 'Description'
+        }
         };
 
     my @rows;
@@ -1928,12 +1939,15 @@ sub list_warehouse {
         user => \%myconfig, 
         locale => $locale,
         template => 'form-dynatable');
+    
+    my $column_heading = $template->column_heading($column_names);
+    
     $template->render({
         form => $form,
         buttons => \@buttons,
 	hiddens => \%hiddens,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         rows => \@rows,
     });
 }

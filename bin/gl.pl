@@ -653,29 +653,24 @@ sub generate_report {
     $href     .= "&category=$form->{category}";
     $hiddens{category} = $form->{category};
 
-    $column_header{id} =
-        {text => $locale->text('ID'), href=> "$href&sort=id"};
-    $column_header{transdate} =
-        {text => $locale->text('Date'), href=> "$href&sort=transdate"};
-    $column_header{reference} =
-        {text => $locale->text('Reference'), href=> "$href&sort=reference"};
-    $column_header{source} =
-        {text => $locale->text('Source'), href=> "$href&sort=source"};
-    $column_header{memo} =
-        {text => $locale->text('Memo'), href=> "$href&sort=memo"};
-    $column_header{description} =
-        {text => $locale->text('Description'), href=> "$href&sort=description"};
-    $column_header{department} =
-        {text => $locale->text('Department'), href=> "$href&sort=department"};
-    $column_header{notes} = $locale->text('Notes');
-    $column_header{debit} = $locale->text('Debit');
-    $column_header{credit} = $locale->text('Credit');
-    $column_header{accno} =
-        {text => $locale->text('Account'), href=> "$href&sort=accno"};
-    $column_header{gifi_accno} =
-        {text => $locale->text('GIFI'), href=> "$href&sort=gifi_accno"};
-    $column_header{balance} = $locale->text('Balance');
-    $column_header{cleared} = $locale->text('R');
+    my $column_names = {
+        id => 'ID',
+        transdate => 'Date',
+        reference => 'Reference',
+        source => 'Source',
+        memo => 'Memo',
+        description => 'Description',
+        department => 'Department',
+        notes => 'Notes',
+        debit => 'Debit',
+        credit => 'Credit',
+        accno => 'Account',
+        gifi_accno => 'GIFI',
+        balance => 'Balance',
+        cleared => 'R'
+    };
+    my $sort_href = "$href&sort";
+    my @sort_columns = qw(id transdate reference source memo description department accno gifi_accno);
 
     # add sort to callback
     $form->{callback} = "$callback&sort=$form->{sort}";
@@ -705,6 +700,7 @@ sub generate_report {
     }
 
     # reverse href
+    # XXX: should we use the reversed href as the sort_href url above ?
     $direction = ( $form->{direction} eq 'ASC' ) ? "ASC" : "DESC";
     $form->sort_order();
     $href =~ s/direction=$form->{direction}/direction=$direction/;
@@ -865,7 +861,9 @@ sub generate_report {
         );
     $template->{method} = 'email' if $output_options;
  
-
+    my $column_heading = $template->column_heading($column_names,
+        {href => $sort_href, columns => \@sort_columns}
+    );
 
    $template->render({
         form => \%$form,
@@ -873,7 +871,7 @@ sub generate_report {
         hiddens => \%hiddens,
         options => \@options,
         columns => \@column_index,
-        heading => \%column_header,
+        heading => $column_heading,
         rows => \@rows,
         row_alignment => \%row_alignment,
         totals => \%column_data,

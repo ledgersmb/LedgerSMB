@@ -43,6 +43,14 @@ sub create_batch {
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{class_id} = $batch->get_class_id($batch->{batch_type});
     $batch->get_new_info;
+    
+    if ($batch->{order_by}) {
+        $batch->set_ordering({
+                method => $batch->get_search_method({mini => 1}),
+                column => $batch->{order_by}   
+        });
+    }
+    
     $batch->get_search_results({mini => 1});
 
     my $template = LedgerSMB::Template->new(
@@ -175,49 +183,39 @@ sub list_batches {
     $batch->open_form;
     if ($batch->{order_by}){
         $batch->set_ordering(
-		{method => 'batch_search', 
-		 column => $batch->{order_by}}
-        );
+		{method => $batch->get_search_method({custom_types => $custom_batch_types}), 
+		 column => $batch->{order_by}
+		});
     }
     my @search_results = $batch->get_search_results({custom_types => $custom_batch_types});
     $batch->{script} = "vouchers.pl";
 
     my @columns = 
-        qw(select id control_code description transaction_total payment_total);
+        qw(select id control_code description transaction_total payment_total default_date);
 
     my $base_href = "vouchers.pl";
     my $search_href = "$base_href?action=list_batches";
     my $batch_href = "$base_href?action=get_batch";
 
     for my $key (
-       qw(class_id approved created_by description amount_gt amount_lt)
+       qw(class_id approved created_by description empty amount_gt amount_lt)
     ){
        $search_href .= "&$key=$batch->{$key}";
     }
 
-    my %column_heading = (
-        'select'          => $batch->{_locale}->text('Select'),
-        transaction_total => {
-             text => $batch->{_locale}->text('AR/AP/GL Total'),
-             href => "$search_href&order_by=transaction_total"
-        },
-        payment_total     => { 
-             text => $batch->{_locale}->text('Paid/Received Total'),
-             href => "$search_href&order_by=payment_total"
-        },
-        description       => {
-             text => $batch->{_locale}->text('Description'),
-             href => "$search_href&order_by=description"
-        },
-        control_code      => {
-             text => $batch->{_locale}->text('Batch Number'),
-             href => "$search_href&order_by=control_code"
-        },
-        id                => {
-             text => $batch->{_locale}->text('ID'),
-             href => "$search_href&order_by=id"
-        },
-    );
+	my $sort_href = "$search_href&order_by";
+	
+    my $column_names = {
+        'select'          => 'Select',
+        transaction_total => 'AR/AP/GL Total',
+        payment_total => 'Paid/Received Total',
+        description => 'Description',
+        control_code => 'Batch Number',
+        id => 'ID',
+        default_date => 'Post Date'
+    };
+    my @sort_columns = qw(id control_code description transaction_total payment_total default_date);
+	
     my $count = 0;
     my @rows;
     for my $result (@search_results){
@@ -244,6 +242,7 @@ sub list_batches {
 
             },
             id => $result->{id},
+			default_date => $result->{default_date}
         };
     }
     $batch->{rowcount} = $count;
@@ -254,6 +253,10 @@ sub list_batches {
         template => 'form-dynatable',
         format   => ($batch->{format}) ? $batch->{format} : 'HTML', 
     );
+
+	my $column_heading = $template->column_heading($column_names, 
+		{href => $sort_href, columns => \@sort_columns}
+	);
 
     my $hiddens = $batch->take_top_level();
     $batch->{rowcount} = "$count";
@@ -291,7 +294,7 @@ sub list_batches {
     $template->render({ 
 	form    => $batch,
 	columns => \@columns,
-	heading => \%column_heading,
+    heading => $column_heading,
         rows    => \@rows,
         hiddens => $hiddens,
         buttons => @buttons
@@ -315,33 +318,17 @@ sub get_batch {
     my $base_href = "vouchers.pl?action=get_batch&batch_id=$batch->{batch_id}";
 
     my @columns = qw(selected id description batch_class reference amount date);
-    my $heading = {
-        selected    => $request->{_locale}->text('Selected'),
-        id          => {
-                        text => $request->{_locale}->text('ID'),
-                        href => "$base_href&order_by=id"
-        },
-        description => { 
-                        href => "$base_href&order_by=description",
-                        text => $request->{_locale}->text('Description'),
-        },
-        batch_class => {
-                        text => $request->{_locale}->text('Class'),
-                        href => "$base_href&order_by=class"
-        },
-        amount      => {
-                        text => $request->{_locale}->text('Amount'),
-                        href => "$base_href&order_by=amount"
-        }, 
-        reference   => {
-                        text => $request->{_locale}->text('Source/Reference'),
-                        href => "$base_href&order_by=reference"
-        },
-        date        => {
-                        text => $request->{_locale}->text('Date'),
-                        href => "$base_href&order_by=date"
-        }
+    my $column_names = {
+        selected => 'Selected',
+        id => 'ID',
+        description => 'Description',
+        batch_class => 'Class',
+        amount => 'Amount',
+        reference => 'Source/Reference',
+        date => 'Date'
     };
+    my $sort_href = "$base_href&order_by";
+    my @sort_columns = qw(id description batch_class reference amount date);
 
     my $classcount;
     my $count = 1;
@@ -379,10 +366,15 @@ sub get_batch {
         format   => ($batch->{format}) ? $batch->{format} : 'HTML', 
     );
     my $hiddens = $batch->take_top_level();
+    
+    my $column_heading = $template->column_heading($column_names,
+        {href => $sort_href, columns => \@sort_columns}
+    );
+    
     $template->render({ 
 	form    => $batch,
 	columns => \@columns,
-	heading => $heading,
+	heading => $column_heading,
         rows    => $rows,
         hiddens => $hiddens,
         buttons => [{

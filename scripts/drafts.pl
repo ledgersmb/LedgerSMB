@@ -89,29 +89,17 @@ sub list_drafts {
        $search_href .= "&$key=$draft->{$key}";
     }
 
-    my %column_heading = (
-        'select'          => $draft->{_locale}->text('Select'),
-        amount => {
-             text => $draft->{_locale}->text('AR/AP/GL Total'),
-             href => "$search_href&order_by=amount"
-        },
-        description       => {
-             text => $draft->{_locale}->text('Description'),
-             href => "$search_href&order_by=description"
-        },
-        id                => {
-             text => $draft->{_locale}->text('ID'),
-             href => "$search_href&order_by=id"
-        },
-        reference         => {
-             text => $draft->{_locale}->text('Reference'),
-             href => "$search_href&order_by=reference"
-        },
-        transdate          => {
-             text => $draft->{_locale}->text('Date'),
-             href => "$search_href&order_by=transdate"
-        },
-    );
+    my $column_names = {
+        'select' => 'Select',
+         amount =>  'AR/AP/GL Total',
+         description => 'Description',
+         id => 'ID',
+         reference => 'Reference',
+         transdate => 'Date'
+    };
+    my $sort_href = "$search_href&order_by";
+    my @sort_columns = qw(id transdate reference description amount);
+    
     my $count = 0;
     my @rows;
     for my $result (@search_results){
@@ -151,10 +139,14 @@ sub list_drafts {
     $draft->{rowcount} = "$count";
     delete $draft->{search_results};
 
+    my $column_heading = $template->column_heading($column_names,
+        {href => $sort_href, columns => \@sort_columns}
+    );
+
     $template->render({ 
 	form    => $draft,
 	columns => \@columns,
-	heading => \%column_heading,
+	heading => $column_heading,
         rows    => \@rows,
         hiddens => $hiddens,
         buttons => [{
