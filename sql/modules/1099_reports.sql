@@ -1,5 +1,24 @@
-CREATE TYPE tax_form_report_item AS (legal_name text, entity_id integer, entity_class integer, control_code text, meta_number character varying(32), acc_sum numeric, invoice_sum numeric, total_sum numeric);
-CREATE TYPE tax_form_report_detail_item AS (legal_name text, entity_id integer, entity_class integer, control_code text, meta_number character varying(32), acc_sum numeric, invoice_sum numeric, total_sum numeric, invnumber text, duedate text);
+CREATE TYPE tax_form_report_item AS (
+    legal_name text, 
+    entity_id integer, 
+    entity_class integer, 
+    control_code text, 
+    meta_number character varying(32), 
+    acc_sum numeric, 
+    invoice_sum numeric, 
+    total_sum numeric);
+
+CREATE TYPE tax_form_report_detail_item AS (
+    legal_name text, 
+    entity_id integer, 
+    entity_class integer, 
+    control_code text, 
+    meta_number character varying(32), 
+    acc_sum numeric, 
+    invoice_sum numeric, 
+    total_sum numeric, 
+    invnumber text, 
+    duedate text);
 
 CREATE OR REPLACE FUNCTION tax_form__list_all()
 RETURNS SETOF country_tax_form as
@@ -92,7 +111,7 @@ BEGIN
 		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
 		WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
 		AND transdate BETWEEN in_begin AND in_end
-		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate
+		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;

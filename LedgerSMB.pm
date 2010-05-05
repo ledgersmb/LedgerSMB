@@ -646,6 +646,7 @@ sub call_procedure {
     my $self     = shift @_;
     my %args     = @_;
     my $procname = $args{procname};
+    my $schema   = $args{schema};
     my @call_args;
     @call_args = @{ $args{args} } if defined $args{args};
     my $order_by = $args{order_by};
@@ -657,11 +658,17 @@ sub call_procedure {
     }
 
     $procname = $self->{dbh}->quote_identifier($procname);
+    # Add the test for whether the schema is something useful.
+    
+    $schema = $schema || $LedgerSMB::Sysconfig::db_namespace;
+    
+    $schema = $self->{dbh}->quote_identifier($schema);
+    
     for ( 1 .. scalar @call_args ) {
         $argstr .= "?, ";
     }
     $argstr =~ s/\, $//;
-    my $query = "SELECT * FROM $procname()";
+    my $query = "SELECT * FROM $schema.$procname()";
     if ($order_by){
         $query .= " ORDER BY $order_by";
     }

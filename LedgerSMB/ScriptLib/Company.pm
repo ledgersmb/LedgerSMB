@@ -3,6 +3,8 @@ use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 use LedgerSMB::DBObject::Vendor;
 
+use Data::Dumper;
+
 my $ec_labels = {
       1 => 'Vendor',
       2 => 'Customer',
@@ -579,7 +581,7 @@ sub save_contact {
         $company->save_contact();
     }
     $company->get;
-    _render_main_screen($company );
+    _render_main_screen( $company );
 }
 
 =pod

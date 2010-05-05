@@ -17,13 +17,13 @@ sub save {
     my ($ret) = $self->exec_method(funcname=>$type."__save_location", args=>[
         $self->{user_id}, # entity_id           
         $self->{location_id}, # location_id
-        3, # location_class, currently being set to "shipping"
-        $self->{address1},
-        $self->{address2},
-        $self->{address3}, # address info
+        $self->{location_class}, # location class, for _to_contact
+        $self->{line_one},
+        $self->{line_two},
+        $self->{line_three}, # address info
         $self->{city}, # city
         $self->{state}, # state/province
-        $self->{zipcode},
+        $self->{mail_code},
         $self->{country} # obviously, country.
     ]);
     $self->{id} = $ret->{$type."__save_location"};
@@ -34,12 +34,12 @@ sub save {
 sub delete {
     
     my $self = shift @_;
+    my $type = shift @_;
     my $id = shift @_;
     my $e_id = shift @_;
-    my $type = shift @_;
     
-    
-    # e_id is an entity of some variety
+    # e_id is an entity
+    # id is the location_id
     
     
     if (!$id && !$self->{location_id}) {

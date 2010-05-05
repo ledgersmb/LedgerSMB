@@ -160,7 +160,8 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION eoy_earnings_accounts() RETURNS setof account AS 
 $$
-SELECT * FROM account
-WHERE category = 'Q'
-ORDER BY accno;
+    SELECT * 
+      FROM account
+     WHERE category = 'Q'
+     ORDER BY accno;
 $$ language sql;

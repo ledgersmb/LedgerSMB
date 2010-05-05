@@ -82,6 +82,7 @@ GRANT INSERT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT DELETE ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT DELETE ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
+GRANT UPDATE ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON eca_note TO "lsmb_<?lsmb dbname ?>__contact_create";
 
 
@@ -1511,3 +1512,5 @@ TO "lsmb_<?lsmb dbname ?>__voucher_delete";
 
 GRANT EXECUTE ON FUNCTION batch_delete(int) 
 TO "lsmb_<?lsmb dbname ?>__voucher_delete";
+
+

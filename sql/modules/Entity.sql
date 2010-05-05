@@ -12,7 +12,6 @@ CREATE OR REPLACE FUNCTION entity_save(
     
         select * into e from entity where id = in_entity_id;
         
-            
         update 
             entity 
         SET

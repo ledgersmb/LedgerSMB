@@ -939,8 +939,7 @@ CREATE VIEW vendor AS
         emd.enddate,
         eba.bic, 
         eba.iban, 
-        ein.note as 
-        invoice_notes 
+        ein.note as invoice_notes 
     FROM entity_credit_account emd 
     LEFT join entity_bank_account eba on emd.entity_id = eba.entity_id
     left join entity_note ein on ein.ref_key = emd.entity_id

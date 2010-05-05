@@ -743,27 +743,70 @@ create or replace function eca__location_save(
     DECLARE
         l_row location;
         l_id INT;
+        l_orig_id INT;
     BEGIN
-
-	DELETE FROM eca_to_location
-	WHERE credit_id = in_credit_id
-		AND location_class = in_location_class
-		AND location_id = in_location_id;
-
-	-- don't pass the in_location_id through because that is not safe.
-	SELECT location_save(NULL, in_line_one, in_line_two, in_line_three, 
-		in_city,
-		in_state, in_mail_code, in_country_code) 
-	INTO l_id; 
-
-	INSERT INTO eca_to_location 
-		(credit_id, location_class, location_id)
-	VALUES  (in_credit_id, in_location_class, l_id);
+       PERFORM location_id 
+          FROM eca_to_location
+         WHERE credit_id = in_credit_id
+           AND location_class = in_location_class
+           AND location_id = in_location_id;
+           
+         IF FOUND THEN
+            SELECT location_save(
+                in_location_id, 
+                in_line_one, 
+                in_line_two, 
+                in_line_three, 
+                in_city,
+                in_state, 
+                in_mail_code, 
+                in_country_code
+            )
+        	INTO l_id; 
+        ELSE
+            SELECT location_save(
+                NULL, 
+                in_line_one, 
+                in_line_two, 
+                in_line_three, 
+                in_city,
+                in_state, 
+                in_mail_code, 
+                in_country_code
+            )
+        	INTO l_id; 
+            INSERT INTO eca_to_location 
+        		(credit_id, location_class, location_id)
+        	VALUES  (in_credit_id, in_location_class, l_id);
+        
+        END IF;
 
 	RETURN l_id;    
     END;
 
 $$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION eca__get_location(
+    in_credit_id int,
+    in_class text
+) RETURNS location_result AS
+$$
+        SELECT l.id,
+               l.line_one,
+               l.line_two,
+               l.line_three,
+               l.city,
+               l.state,
+               l.mail_code,
+               c.name,
+               lc.class
+          FROM location l
+          JOIN eca_to_location ctl ON (ctl.location_id = l.id)
+          JOIN location_class lc ON (ctl.location_class = lc.id)
+          JOIN country c ON (c.id = l.country_id)
+         WHERE ctl.credit_id = $1
+           AND lc.class = $2;
+$$ LANGUAGE SQL;
 
 
 CREATE OR REPLACE FUNCTION eca__list_locations(in_credit_id int)
@@ -808,16 +851,40 @@ RETURNS INT AS
 $$
 DECLARE out_id int;
 BEGIN
-	DELETE FROM eca_to_contact 
-	WHERE credit_id = in_credit_id
-		AND contact = in_old_contact
-		AND contact_class_id = in_old_contact_class;
-		
-	INSERT INTO eca_to_contact(credit_id, contact_class_id, 
-		description, contact)
-	VALUES (in_credit_id, in_contact_class, in_description, in_contact);
+
+    PERFORM *
+       FROM eca_to_contact
+      WHERE credit_id = in_credit_id
+        AND contact_class_id = in_old_contact_class
+        AND contact = in_old_contact;
+        
+    IF FOUND THEN
+        UPDATE eca_to_contact
+           SET contact = in_contact,
+               description = in_description,
+               contact_class_id = in_contact_class
+         WHERE credit_id = in_credit_id
+           AND contact_class_id = in_old_contact_class
+           AND contact = in_old_contact;
+    ELSE
+        INSERT INTO eca_to_contact(credit_id, contact_class_id, 
+                description, contact)
+        VALUES (in_credit_id, in_contact_class, in_description, in_contact);
+        
+    END IF;
 
 	RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION company__get_all_accounts (
+    in_entity_id int,
+    in_entity_class int
+) RETURNS SETOF entity_credit_account AS $body$
+    
+    SELECT * 
+      FROM entity_credit_account 
+     WHERE entity_id = $1
+       AND entity_class = $2;
+    
+$body$ language SQL;

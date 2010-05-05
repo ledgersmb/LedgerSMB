@@ -40,7 +40,7 @@ sub set_entity_class {
 
 =item save()
 
-This stores the company record including a credit accoun tin the database.
+This stores the company record including a credit account in the database.
 
 TODO:  Separate company from credit account storage.
 
@@ -234,6 +234,33 @@ sub get_billing_info {
     $self->set_entity_class();
     my ($ref) = $self->exec_method(funcname => 'company_get_billing_info');
     $self->merge($ref);
+}
+
+sub account {
+    
+    my ($self, $account) = @_;
+    
+    $self->set_entity_class();
+    my ($account) = $self->exec_method(funcname => 'company__get_account');
+}
+
+sub accounts {
+    
+    my ($self) = @_;
+    
+    $self->set_entity_class();
+    @{$self->{accounts}} = $self->exec_method(funcname => 'company__get_all_accounts');
+}
+
+sub address {
+    
+    my ($self, $id) = @_;
+    
+    for my $loc (@{ $self->{locations} }) {
+        if ($loc->{id} == $id) {
+            return $loc;
+        }
+    }
 }
 
 sub get {

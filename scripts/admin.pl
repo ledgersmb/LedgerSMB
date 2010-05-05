@@ -281,6 +281,12 @@ sub save_contact {
     # Only ever a post, but check anyway
     if ($request->type eq "POST") {
         
+        if ($request->{cancel}) {
+            
+            # If we have a cancel request, we just go back to edit_page.
+            return __edit_page($request);
+        }
+        
         # We have a contact ID, ie, something we made up.
         my $c_id = $request->{contact_id};
         my $u_id = $request->{user_id};
@@ -304,6 +310,12 @@ sub delete_contact {
     
     # Only ever a post, but check anyway
     if ($request->type eq "POST") {
+        
+        if ($request->{cancel}) {
+            
+            # If we have a cancel request, we just go back to edit_page.
+            return __edit_page($request);
+        }
         
         # We have a contact ID, ie, something we made up.
         my $c_id = $request->{contact_id};
@@ -331,6 +343,18 @@ sub save_location {
     # Only ever a post, but check anyway
     if ($request->type eq "POST") {
         
+        if ($request->{cancel}) {
+            
+            # If we have a cancel request, we just go back to edit_page.
+            return __edit_page($request);
+        }
+        
+        if ($request->{cancel}) {
+            
+            # If we have a cancel request, we just go back to edit_page.
+            return __edit_page($request);
+        }
+        
         my $u_id = $request->{user_id}; # this is an entity_id
         my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
         my $location = LedgerSMB::DBObject::Location->new(base=>$request, copy=>'all');
@@ -348,30 +372,7 @@ sub save_location {
         my $id = $location->save("person");
         # Done and done.
         
-        my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'user_id');
-        
-        
-
-        my @all_roles = $admin->get_roles();
-
-        my $template = LedgerSMB::Template->new( 
-            user => $user, 
-            template => 'Admin/edit_user', 
-            language => $user->{language}, 
-            format => 'HTML', 
-            path=>'UI'
-        );
-        $template->render(
-            {
-                user=>$user_obj, 
-                roles=>@all_roles,
-                user_roles=>$user_obj->{roles},
-                salutations=>$admin->get_salutations(),
-                locations=>$location->get_all($u_id,"person"),
-                location=>$location->get($id),
-                countries=>$admin->get_countries(),
-            }
-        );
+        __edit_page($request,{location=>$location});
     }
 }
 
@@ -380,18 +381,19 @@ sub delete_location {
     
     my $request = shift @_;
     
-    # Only ever a post, but check anyway
-    if ($request->type eq "POST") {
+    # Having delete come over GET perhaps isn't the best technique.
+    
+    if ($request->type eq "GET") {
         
         my $l_id = $request->{location_id};
         my $u_id = $request->{user_id};
-        
+        my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
         my $location = LedgerSMB::DBObject::Location->new(base=>$request, copy=>"location_id");
         
-        $location->person_delete($l_id,$u_id);
+        $location->delete("person",$l_id,$user_obj->{user}->{entity_id});
         # Boom. Done.
         # Now, just call the main edit user page.
-        edit_user($request);
+        __edit_page($request);
     }
 }
 

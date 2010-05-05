@@ -179,6 +179,7 @@
                     <?lsmb IF location?>
                     <input type="submit" value="Edit Location">
                     <input type="hidden" name="location_id" value="<?lsmb location.id?>"/>
+                    <input type="submit" value="Cancel" name="cancel"/>
                     <?lsmb ELSE?>
                     <input type="submit" value="Save Location">    
                     <?lsmb END?>
@@ -239,6 +240,7 @@
                     <?lsmb IF contact?>
                     <input type="submit" value="Edit Contact">
                     <input type="hidden" name="contact_id" value="<?lsmb contact.id?>"/>
+                    <input type="submit" value="Cancel" name="cancel"/>
                     <?lsmb ELSE?>
                     <input type="submit" value="Save Contact">
                     <?lsmb END?>

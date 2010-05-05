@@ -22,6 +22,7 @@ insert into test_exempt_funcs values ('token_type');
 insert into test_exempt_funcs values ('crosstab');
 insert into test_exempt_funcs values ('concat_colon');
 insert into test_exempt_funcs values ('to_args');
+insert into test_exempt_funcs values ('table_log_restore_table');
 
 create table test_exempt_tables (tablename text, reason text);
 insert into test_exempt_tables values ('note', 'abstract table, no data');
