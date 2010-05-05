@@ -102,6 +102,9 @@ sub exec_method {
     my $self   = shift @_;
     my %args     = @_;
     my $funcname = $args{funcname};
+    
+    my $schema   = $args{schema} || $LedgerSMB::Sysconfig::db_namespace;
+    
     $logger->debug("exec_method: \$funcname = $funcname");
     my @in_args;
     @in_args = @{ $args{args}} if $args{args};
@@ -118,7 +121,7 @@ sub exec_method {
     my $sth   = $self->{dbh}->prepare(
 		$query
     );
-    $sth->execute($funcname, $LedgerSMB::Sysconfig::db_namespace) 
+    $sth->execute($funcname, $schema) 
 	|| $self->error($DBI::errstr . "in exec_method");
     my $ref;
 
@@ -147,10 +150,10 @@ sub exec_method {
         for (@in_args) { push @call_args, $_ } ;
         $self->{call_args} = \@call_args;
         $logger->debug("exec_method: \$self = " . Data::Dumper::Dumper($self));
-        return $self->call_procedure( procname => $funcname, args => \@call_args, order_by => $self->{_order_method}->{"$funcname"} );
+        return $self->call_procedure( procname => $funcname, args => \@call_args, order_by => $self->{_order_method}->{"$funcname"}, schema=>$schema);
     }
     else {
-        return $self->call_procedure( procname => $funcname, args => \@in_args, order_by => $self->{_order_method}->{"$funcname"} );
+        return $self->call_procedure( procname => $funcname, args => \@in_args, order_by => $self->{_order_method}->{"$funcname"}, schema=>$schema);
     }
 }
 
