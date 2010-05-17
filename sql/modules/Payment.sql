@@ -470,7 +470,8 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
 	in_ar_ap_accno text, in_cash_accno text, 
-	in_payment_date date, in_account_class int, in_payment_type int)
+	in_payment_date date, in_account_class int, in_payment_type int,
+        in_exchangerate numeric, in_curr text)
 RETURNS int AS
 $$
 DECLARE 
@@ -480,6 +481,8 @@ DECLARE
 	t_amount numeric;
         t_ar_ap_id int;
 	t_cash_id int;
+        t_currs text[];
+        t_exchangerate numeric;
 BEGIN
 	IF in_batch_id IS NULL THEN
 		-- t_voucher_id := NULL;
@@ -490,6 +493,14 @@ BEGIN
 
 		t_voucher_id := currval('voucher_id_seq');
 	END IF;
+
+	SELECT string_to_array(value, ':') from defaults where setting_key = 'curr';
+
+        IF (in_curr IS NULL OR in_curr = t_currs[0]) THEN
+                t_exchangerate := 1;
+        ELSE 
+                t_exchangerate := in_exchangerate;
+        END IF;
 
 	CREATE TEMPORARY TABLE bulk_payments_in (id int, amount numeric);
 
@@ -517,7 +528,7 @@ BEGIN
 			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
 			THEN $E$ || t_ar_ap_id || $E$
 			ELSE -1 END, 
-		amount,
+		amount * t_exchangerate,
 		CASE 
 			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
 			ELSE false END,
@@ -536,7 +547,7 @@ BEGIN
 			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
 			THEN $E$ || t_cash_id || $E$
 			ELSE -1 END, 
-		amount * -1,
+		amount * -1 * t_exchangerate,
 		CASE 
 			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
 			ELSE false END,
@@ -567,7 +578,8 @@ $$ language plpgsql;
 COMMENT ON FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
         in_ar_ap_accno text, in_cash_accno text, 
-        in_payment_date date, in_account_class int, int)
+        in_payment_date date, in_account_class int, int,
+	in_exchangerate numeric, in_curr text)
 IS
 $$ Note that in_transactions is a two-dimensional numeric array.  Of each 
 sub-array, the first element is the (integer) transaction id, and the second
