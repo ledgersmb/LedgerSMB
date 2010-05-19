@@ -104,6 +104,84 @@ sub get_search_criteria {
     $template->render($payment);
 }
 
+sub pre_bulk_post_report {
+    my ($request) = @_;
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI',
+        template => 'form-dynatable',
+        format   => ($request->{format}) ? $request->{format} : 'HTML',
+    ); 
+    my $cols = qw(accno transdate source memo debit credit);
+    my $rows = [];
+    my $heading = {};
+    my $total = 0;
+    for my $crow (1 .. $request->{contact_count}){
+        my $ref;
+        my $cid = $request->{"contact_$crow"};
+        for my $invrow (1 .. $request->{"invoice_count_$cid"}){
+            my $inv_id = $request->{"invoice_${cid}_$invrow"};
+            $ref = {accno     => $request->{ar_ap_accno},
+                       transdate => $request->{date_paid}, 
+                       source    => $request->{"source_$cid"}, 
+                       memo      => $request->{"memo_$cid"},
+                      };
+            $ref->{amount} += $request->{"payment_$inv_id"};
+        }
+        # If vendor, this is debit-normal so multiply by -1
+        if ($request->{account_class} == 1){
+           $ref->{amount} *= -1;
+        } 
+        if ($ref->{amount} < 0) {
+            $ref->{debits} = $ref->{amount} * -1;
+            $ref->{credits} = 0;
+        } else {
+            $ref->{debits} = 0;
+            $ref->{credits} = $ref->{amount};
+        }
+        push @$rows, $ref;
+        $total += 0;
+    }
+
+    # Cash summary
+    my $ref = {
+       accno     => $request->{cash_accno},
+       transdate => $request->{date_paid},
+       source    => $request->{_locale}->text('Total'),
+       amount    => $total,
+    };
+
+    if ($ref->{amount} < 0) {
+        $ref->{debits} = $ref->{amount} * -1;
+        $ref->{credits} = 0;
+    } else {
+        $ref->{debits} = 0;
+        $ref->{credits} = $ref->{amount};
+    }
+    push @$rows, $ref;
+
+    my $buttons = [{
+        text  => $request->{_locale}->text('Post'),
+        name  => 'action',
+        value => 'payments_bulk_post',
+        class => 'submit',
+    }];
+    $request->{action} = "p";
+    $template->render({
+        form => $request,
+        hiddens => $request,
+        columns => $cols,
+        heading => $heading,
+        rows    => $rows, 
+        buttons => $buttons,
+    });
+}
+
+sub p_payments_bulk_post {
+    payments_bulk_post(@_);
+}
+
 sub get_search_results {
     my ($request) = @_;
     my $rows = [];
