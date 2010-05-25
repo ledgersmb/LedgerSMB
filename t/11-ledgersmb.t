@@ -213,19 +213,19 @@ SKIP: {
 	$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
 		undef, undef, {AutoCommit => 0 });
 	@r = $lsmb->call_procedure('procname' => 'character_length', 
-		'args' => ['month']);
+		'args' => ['month'], 'schema'=>"pg_catalog");
 	is($#r, 0, 'call_procedure: correct return length (one row)');
 	is($r[0]->{'character_length'}, 5, 
 		'call_procedure: single arg, non-numeric return');
 
-	@r = $lsmb->call_procedure('procname' => 'trunc', 'args' => [57.1, 0]);
+	@r = $lsmb->call_procedure('procname' => 'trunc', 'args' => [57.1, 0], 'schema' => 'pg_catalog');
 	is($r[0]->{'trunc'}, Math::BigFloat->new('57'), 
 		'call_procedure: two args, numeric return');
 
-	@r = $lsmb->call_procedure('procname' => 'pi', 'args' => []);
+	@r = $lsmb->call_procedure('procname' => 'pi', 'args' => [], 'schema'=>'pg_catalog');
 	like($r[0]->{'pi'}, qr/^3.14/, 
 		'call_procedure: empty arg list, non-numeric return');
-	@r = $lsmb->call_procedure('procname' => 'pi');
+	@r = $lsmb->call_procedure('procname' => 'pi', 'schema'=>'pg_catalog');
 	like($r[0]->{'pi'}, qr/^3.14/, 
 		'call_procedure: no args, non-numeric return');
 }
