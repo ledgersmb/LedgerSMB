@@ -449,11 +449,12 @@ sub all_transactions {
         $approved = $dbh->quote($form->{approved});
     }
 
-    my $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference::int,
+    my $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference,
 						  g.description, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, g.notes, c.link,
 						  '' AS till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id, ac.entry_id
+						  ac.memo, c.description AS accname, ac.trans_id, 
+						  ac.chart_id, ac.entry_id
 					 FROM gl AS g
 					 JOIN acc_trans ac ON (g.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
@@ -467,15 +468,17 @@ sub all_transactions {
 
 					UNION ALL
 
-				   SELECT a.id, 'ar' AS type, a.invoice, a.invnumber::int,
+				   SELECT a.id, 'ar' AS type, a.invoice, a.invnumber,
 						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id, ac.entry_id 
+						  ac.memo, c.description AS accname, ac.trans_id, 
+						  ac.chart_id, ac.entry_id 
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
-					JOIN entity_credit_account ec ON (a.entity_credit_account = ec.id)
+					JOIN entity_credit_account ec ON 
+					     (a.entity_credit_account = ec.id)
 					 JOIN entity e ON (ec.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $arwhere
@@ -487,15 +490,17 @@ sub all_transactions {
 
 				UNION ALL
 
-				   SELECT a.id, 'ap' AS type, a.invoice, a.invnumber::int,
+				   SELECT a.id, 'ap' AS type, a.invoice, a.invnumber,
 						  e.name, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, a.notes, c.link,
 						  a.till, ac.cleared, d.description AS department,
-						  ac.memo, c.description AS accname, ac.trans_id, ac.chart_id, ac.entry_id 
+						  ac.memo, c.description AS accname, ac.trans_id, 
+						  ac.chart_id, ac.entry_id 
 					 FROM ap a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
 					 JOIN chart c ON (ac.chart_id = c.id)
-					JOIN entity_credit_account ec ON (a.entity_credit_account = ec.id)
+					JOIN entity_credit_account ec ON 
+					     (a.entity_credit_account = ec.id)
 					 JOIN entity e ON (ec.entity_id = e.id)
 				LEFT JOIN department d ON (d.id = a.department_id)
 					WHERE $apwhere
