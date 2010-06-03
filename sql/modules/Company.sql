@@ -495,6 +495,8 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 discount_terms,
                 threshold,
 		ar_ap_account_id,
+                pay_to_name,
+                taxform_id,
                 cash_account_id
 
             )
@@ -516,6 +518,8 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_discount_terms,
                 in_threshold,
                 in_ar_ap_account_id,
+                in_pay_to_name,
+                in_taxform_id,
 		in_cash_account_id
             );
             RETURN currval('entity_credit_account_id_seq');
