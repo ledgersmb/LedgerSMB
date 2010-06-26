@@ -163,3 +163,9 @@ RETURNS void AS $BODY$
         -- Already found, no need to do anything. =) 
     END;
 $BODY$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION account__get_by_link_desc(in_description text)
+RETURNS SETOF account AS $$
+SELECT * FROM account
+WHERE id IN (SELECT account_id FROM account_link WHERE description = $1);
+$$ language sql;
