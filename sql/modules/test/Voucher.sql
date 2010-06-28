@@ -31,20 +31,30 @@ VALUES (-6, 'test1', '1000', 'USD', false, -1);
 INSERT INTO acc_trans(trans_id, chart_id, amount, approved, entry_id)
 values (-6, test_get_account_id('-21111'), 1000, true, -1);
 
-
+INSERT INTO voucher(id, trans_id, batch_id, batch_class)
+values (-6, -6, currval('batch_id_seq'), 1);
 
 INSERT INTO ac_tax_form (entry_id, reportable)
 values (-1, false);
 
-INSERT INTO voucher (trans_id, batch_id, batch_class)
-values (-5, currval('batch_id_seq'), 1);
-INSERT INTO voucher (trans_id, batch_id, batch_class)
-values (-5, currval('batch_id_seq'), 3);
-INSERT INTO voucher (trans_id, batch_id, batch_class)
-values (-5, currval('batch_id_seq'), 3);
+INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
+VALUES (-7, 'test1', '1000', 'USD', false, -1);
+
+INSERT INTO acc_trans(trans_id, chart_id, amount, approved, entry_id)
+values (-7, test_get_account_id('-21111'), 1000, true, -2);
+
+INSERT INTO ac_tax_form (entry_id, reportable)
+values (-2, false);
+
+INSERT INTO voucher (id, trans_id, batch_id, batch_class)
+values (-1, -5, currval('batch_id_seq'), 1);
+INSERT INTO voucher (id, trans_id, batch_id, batch_class)
+values (-2, -5, currval('batch_id_seq'), 3);
+INSERT INTO voucher (id, trans_id, batch_id, batch_class)
+values (-3, -5, currval('batch_id_seq'), 3);
 
 INSERT INTO test_result(test_name, success)
-select 'Voucher Seach finds Payable Vouchers',  count(*)=1 
+select 'Voucher Seach finds Payable Vouchers',  count(*)=2 
 from voucher_list( currval('batch_id_seq')::int);
 
 INSERT INTO test_result (test_name, success)
@@ -67,6 +77,21 @@ SELECT 'Empty Batch Detected', count(*) = 1
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Delete voucher with tax_form', voucher__delete(-6) = 1;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'not all tax form lines deleted', count(*) > 0
+FROM ac_tax_form;
+
+INSERT INTO test_result(test_name, success)
+select 'DELETED voucher does not exist', count(*) = 0
+FROM ap WHERE id = -6;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'Delete batch', batch_delete(currval('batch_id_seq')::int) = 1;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'Batch is deleted', count(*) = 0
+FROM batch where id = currval('batch_id_seq');
 
 SELECT * FROM test_result;
 

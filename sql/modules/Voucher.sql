@@ -434,7 +434,7 @@ BEGIN
 	SELECT as_array(trans_id) INTO t_transaction_ids
 	FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5);
 
-        DELETE FROM ac_tax_from WHERE entry_id in
+        DELETE FROM ac_tax_form WHERE entry_id in
                (select entry_id from acc_trans 
                  where trans_id = any(t_transaction_ids));
 
@@ -461,7 +461,7 @@ DECLARE
 BEGIN
 	SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
 	IF voucher_row.batch_class IN (1, 2, 5) THEN
-                DELETE FROM ac_tax_form WHERE trans_id IN (
+                DELETE FROM ac_tax_form WHERE entry_id IN (
                        SELECT entry_id
                         from acc_trans
                        WHERE trans_id = voucher_row.trans_id);
