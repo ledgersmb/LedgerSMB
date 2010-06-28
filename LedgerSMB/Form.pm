@@ -171,12 +171,16 @@ sub new {
 
 sub open_form {
     my ($self) = @_;
+    if ($self->{form_id} =~ '^\s*$'){
+        delete $self->{form_id};
+    }
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
     my $sth = $self->{dbh}->prepare('select form_open(?)');
     $sth->execute($self->{session_id});
     my @results = $sth->fetchrow_array();
+    print STDERR "Form id $results[0]\n";
     $self->{form_id} = $results[0];
     return $results[0];
 }
@@ -194,12 +198,16 @@ sub check_form {
 
 sub close_form {
     my ($self) = @_;
+    if ($self->{form_id} =~ '^\s*$'){
+        delete $self->{form_id};
+    }
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
     my $sth = $self->{dbh}->prepare('select form_close(?, ?)');
     $sth->execute($self->{session_id}, $self->{form_id});
     my @results = $sth->fetchrow_array();
+    delete $self->{close_form};
     return $results[0];
 }
 
