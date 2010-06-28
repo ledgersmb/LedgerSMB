@@ -181,6 +181,7 @@ sub list_batches {
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->close_form;
     $batch->open_form;
+    $batch->{dbh}->commit;
     if ($batch->{order_by}){
         $batch->set_ordering(
 		{method => $batch->get_search_method({custom_types => $custom_batch_types}), 
@@ -308,6 +309,7 @@ sub get_batch {
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->close_form;
     $batch->open_form;
+    $batch->{dbh}->commit;
     $batch->{script} = 'vouchers.pl';
     my $rows = [];
 
