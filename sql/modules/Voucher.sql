@@ -274,24 +274,7 @@ DECLARE out_value batch_list_item;
 BEGIN
 	FOR out_value IN
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on, b.default_date,
-			sum(
-				CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
-				     THEN al.amount 
-				     WHEN vc.id  = 1
-				     THEN ap.amount 
-				     WHEN vc.id = 2
-                                     THEN ap.amount
-				     ELSE 0
-                                END) AS transaction_total,
-			sum(
-				CASE WHEN alc.link = 'AR' AND vc.id IN (6, 7)
-				     THEN al.amount
-				     WHEN alc.link = 'AP' AND vc.id IN (3, 4)
-				     THEN al.amount * -1
-				     ELSE 0
-				END
-			   ) AS payment_total
+			b.created_on, b.default_date, 0, 0
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		LEFT JOIN users u ON (u.entity_id = b.created_by)
@@ -437,6 +420,11 @@ BEGIN
 	where id in (select trans_id from acc_trans where voucher_id IN 
 		(select id from voucher where batch_id = in_batch_id));
 
+        DELETE FROM ac_tax_form WHERE entry_id IN
+               (select entry_id from acc_trans where voucher_id in
+                       (select id from voucher where batch_id = in_batch_id)
+               );
+
 	DELETE FROM acc_trans WHERE voucher_id IN 
 		(select id FROM voucher where batch_id = in_batch_id);
 
@@ -445,6 +433,10 @@ BEGIN
 	-- -CT
 	SELECT as_array(trans_id) INTO t_transaction_ids
 	FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5);
+
+        DELETE FROM ac_tax_from WHERE entry_id in
+               (select entry_id from acc_trans 
+                 where trans_id = any(t_transaction_ids));
 
 	DELETE FROM acc_trans WHERE trans_id = ANY(t_transaction_ids);
 	DELETE FROM ap WHERE id = ANY(t_transaction_ids);
@@ -469,6 +461,11 @@ DECLARE
 BEGIN
 	SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
 	IF voucher_row.batch_class IN (1, 2, 5) THEN
+                DELETE FROM ac_tax_form WHERE trans_id IN (
+                       SELECT entry_id
+                        from acc_trans
+                       WHERE trans_id = voucher_row.trans_id);
+
 		DELETE from acc_trans WHERE trans_id = voucher_row.trans_id;
 		DELETE FROM ar WHERE id = voucher_row.trans_id;
 		DELETE FROM ap WHERE id = voucher_row.trans_id;
@@ -492,6 +489,9 @@ BEGIN
 				OR voucher_id <> voucher_row.id))
 		where id in (select trans_id from acc_trans 
 				where voucher_id = voucher_row.id);
+                DELETE FROM ac_tax_form WHERE entry_id IN
+                       (select entry_id from acc_trans 
+                         where voucher_id = voucher_row.id);
 
 		DELETE FROM acc_trans where voucher_id = voucher_row.id;
 	END IF;
