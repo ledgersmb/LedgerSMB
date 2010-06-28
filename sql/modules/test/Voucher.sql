@@ -15,6 +15,8 @@ INSERT INTO entity_employee(entity_id) values (-3);
 INSERT INTO account(id, accno, description, category, heading, contra)
 values (-5, '-21111', 'Testing AP', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
 
+INSERT INTO country_tax_form(country_id, form_name, id) values (232, 'TEST', '-101');
+
 INSERT INTO account_link(account_id, description) values (-5, 'AP');
 
 INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
@@ -26,8 +28,14 @@ values (-5, test_get_account_id('-21111'), 1000, true);
 INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
 VALUES (-6, 'test1', '1000', 'USD', false, -1);
 
-INSERT INTO acc_trans(trans_id, chart_id, amount, approved)
-values (-6, test_get_account_id('-21111'), 1000, true);
+INSERT INTO acc_trans(trans_id, chart_id, amount, approved, entry_id)
+values (-6, test_get_account_id('-21111'), 1000, true, -1);
+
+
+
+INSERT INTO ac_tax_form (entry_id, reportable)
+values (-1, false);
+
 INSERT INTO voucher (trans_id, batch_id, batch_class)
 values (-5, currval('batch_id_seq'), 1);
 INSERT INTO voucher (trans_id, batch_id, batch_class)
@@ -56,6 +64,9 @@ SELECT 'Empty Batch Detected', count(*) = 1
        	                  NULL::numeric,            -- Amount less than
        	                  'f'::bool                 -- Approved
 );
+
+INSERT INTO test_result(test_name, success)
+SELECT 'Delete voucher with tax_form', voucher__delete(-6) = 1;
 
 SELECT * FROM test_result;
 
