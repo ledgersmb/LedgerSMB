@@ -278,11 +278,9 @@ sub _parse_array {
             $next = [];
             my $close_braces = $open_braces;
             $close_braces =~ s/{/}/g;
-            $value =~ /^{($open_braces[^}]*$close_braces)/;
+            $value =~ s/^{($open_braces[^}]*$close_braces),?/{/;
             my $parse_next = $1;
-            $value =~ s/^{$parse_next,?/{/;
             @$next = $self->_parse_array($parse_next);
-            
         } else {
             $value =~ s/^\{([^,]*)(,|\})/\{/;
             $next = $1;
