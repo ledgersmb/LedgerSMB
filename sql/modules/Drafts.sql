@@ -40,11 +40,12 @@ BEGIN
 			) trans
 		JOIN acc_trans line ON (trans.id = line.trans_id)
 		JOIN chart ON (line.chart_id = chart.id)
+           LEFT JOIN voucher v ON (v.trans_id = trans.id)
 		WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
 			AND (in_to_date IS NULL 
 				or trans.transdate <= in_to_date)
 			AND trans.approved IS FALSE
-			AND trans.id NOT IN (select trans_id from voucher)
+			AND v.id IS NULL
 		GROUP BY trans.id, trans.transdate, trans.description, trans.reference
 		HAVING (in_with_accno IS NULL or in_with_accno = 
 			ANY(as_array(chart.accno)))
