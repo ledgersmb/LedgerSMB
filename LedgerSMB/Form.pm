@@ -2221,8 +2221,7 @@ sub all_years {
 
     # get years
     my $query = qq|
-	SELECT extract('YEARS' FROM transdate) FROM acc_trans 
-	GROUP BY extract('YEARS' FROM transdate) ORDER BY 1 DESC|;
+        SELECT * FROM date_get_all_years()|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute();
