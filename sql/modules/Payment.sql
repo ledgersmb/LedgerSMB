@@ -891,16 +891,25 @@ the argument.$$;
 CREATE OR REPLACE FUNCTION payments_get_open_currencies(in_account_class int)
 RETURNS SETOF char(3) AS
 $$
-DECLARE resultrow record;
+DECLARE result char(3);
 BEGIN
-        FOR resultrow IN
-          SELECT DISTINCT curr FROM ar
-          UNION
-          SELECT DISTINCT curr FROM ap 
-          ORDER BY curr
-          LOOP
-         return next resultrow.curr;
-        END LOOP;
+select min(curr) into result from ar WHERE in_account_class = 2
+union 
+select min(curr) from ap WHERE in_account_class = 1;
+
+
+LOOP
+   EXIT WHEN result IS NULL;
+   return next result;
+
+   SELECT min(curr) INTO result from ar 
+    where in_account_class = 2 and curr > result
+            union 
+   select min(curr) from ap 
+    WHERE in_account_class = 1 and curr > result
+    LIMIT 1;
+
+END LOOP;
 END;
 $$ language plpgsql;
 
