@@ -183,6 +183,7 @@ sub get_results {
 	$recon->{_results} = \@results;
         $recon->{title} = $request->{_locale}->text('Reconciliation Sets');
         my $template = LedgerSMB::Template->new( 
+            locale => $request->{_locale},
             user => $user, 
     	    template => 'form-dynatable', 
     	    language => $user->{language}, 
