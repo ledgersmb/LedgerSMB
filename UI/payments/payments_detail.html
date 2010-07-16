@@ -279,8 +279,18 @@
 		<tr>
 			<td class="invoice_date_list">&nbsp;<?lsmb i.2 ?></td>
 			<td class="invoice_list">&nbsp;<?lsmb i.1 ?></td>
+                        <input
+                               type = "hidden"
+                               name = "<?lsmb "invnumber_$i.0" ?>"
+                               value = "<?lsmb i.1 ?>"
+                        />
 		        <td class="total_due_list">&nbsp;
 				<?lsmb i.3 ?></td>
+                        <input
+                               type = "hidden"
+                               name = "<?lsmb "due_$i.0" ?>"
+                               value = "<?lsmb i.6 ?>"
+                        />
 			<td class="paid_list">&nbsp;
 				<?lsmb i.4 ?></td>
 			<td class="net_due_list">&nbsp;

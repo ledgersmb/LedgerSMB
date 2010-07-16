@@ -308,9 +308,8 @@ sub post_payments_bulk {
            $payment->{_locale}->text('Data not saved.  Please try again.');
         display_payments($request);
     }
-    my $template;
+    
     payments($request);
-    $template->render($payment);
 }
 
 sub print {
@@ -364,7 +363,7 @@ sub print {
             for my $inv (1 .. $payment->{"invoice_count_$id"}){
                 my $invhash = {};
                 my $inv_id = $payment->{"invoice_${id}_$inv"};
-                for (qw(invnumber invdate)){
+                for (qw(invnumber due)){
                     $invhash->{$_} = $payment->{"${_}_$inv_id"};
                 }
                 if ($payment->{"paid_$id"} eq 'some'){
