@@ -114,7 +114,7 @@ sub save_recon_set {
 sub get_results {
     my ($request) = @_;
     $request->close_form;
-    $request->open_form;
+    $request->open_form({commit =>1});
         if ($request->{approved} ne '1' and $request->{approved} ne '0'){
 		$request->{approved} = undef;
         }
