@@ -334,7 +334,7 @@ sub _display_report {
         my $recon = shift;
         $recon->get();
         $recon->close_form;
-        $recon->open_form;
+        $recon->open_form({commit => 1});
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['recon_supervisor']});
         $recon->get();
