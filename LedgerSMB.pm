@@ -292,7 +292,8 @@ sub open_form {
         return 1;
     }
     my @vars = $self->call_procedure(procname => 'form_open', 
-                              args => [$self->{session_id}]
+                              args => [$self->{session_id}],
+                              continue_on_error => 1
     );
     if ($args->{commit}){
        $self->{dbh}->commit;
@@ -650,6 +651,7 @@ sub call_procedure {
     my @call_args;
     @call_args = @{ $args{args} } if defined $args{args};
     my $order_by = $args{order_by};
+    my $query_rc;
     my $argstr   = "";
     my @results;
 
@@ -675,9 +677,15 @@ sub call_procedure {
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
     if (scalar @call_args){
-        $sth->execute(@call_args) || $self->dberror($self->{dbh}->errstr . ": " . $query);
+        $query_rc = $sth->execute(@call_args);
+        if (!$query_rc and !$args{continue_on_error}){
+              $self->dberror($self->{dbh}->errstr . ": " . $query);
+        }
     } else {
-        $sth->execute() || $self->dberror($self->{dbh}->errstr . ':' . $query);
+        $query_rc = $sth->execute();
+        if (!$query_rc and !$args{continue_on_error}){
+              $self->dberror($self->{dbh}->errstr . ':' . $query);
+        }
     }
    
     my @types = @{$sth->{TYPE}};
