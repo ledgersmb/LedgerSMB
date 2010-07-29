@@ -133,7 +133,19 @@
 	      $(hidden_field_to_update).value = li.id;
 	      text.blur();
 	    }
-	    new Ajax.Autocompleter('<?lsmb attribute_data.id ?>-ac-search', '<?lsmb attribute_data.id ?>-ac-choices', '<?lsmb element_data.ajax_target ?>', {afterUpdateElement:post_ajax_setter})
+	    new Ajax.Autocompleter('<?lsmb attribute_data.id ?>-ac-search', 
+                                   '<?lsmb attribute_data.id ?>-ac-choices', 
+                                   '<?lsmb element_data.ajax_target ?>', 
+                                   {"afterUpdateElement":"post_ajax_setter"
+                                   <?lsmb IF attribute_data.params ?>
+                                   'params' : {<?lsmb FOR k
+                                               IN attribute_data.params.keys();
+                                               ?>,
+                                               <?lsmb k ?> : <?lsmb
+                                                  attribute_data.params.keys()
+                                               -?>
+                                         <?lsmb END -?> } <?lsmb END -?>
+                                   })
 	  //--></script>
   <?lsmb END ?>
 <?lsmb END ?>

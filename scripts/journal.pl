@@ -54,7 +54,7 @@ sub __default {
        
       if ($r =~ m/-ac-search$/)
       {
-        my @call_args = ($request->{$r});
+        my @call_args = ($request->{$r}, $request->{link_desc});
         my @results = $request->call_procedure( procname => $funcname, args => \@call_args, order_by => 'accno' );
         foreach (@results) { $results_hash{$_->{'accno'}.'--'.$_->{'description'}} = $_->{'accno'}.'--'.$_->{'description'}; }
       }

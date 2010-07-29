@@ -1251,7 +1251,7 @@ sub get_name {
         ## needs fixing (SELECT *)
         $query = qq|
 			SELECT * 
-			  FROM shipto
+			  FROM new_shipto
 			 WHERE trans_id = $form->{"$form->{vc}_id"}|;
 
         $sth = $dbh->prepare($query);

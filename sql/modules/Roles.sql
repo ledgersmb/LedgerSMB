@@ -1492,6 +1492,7 @@ GRANT SELECT ON jcitems TO public;
 GRANT SELECT ON payment_type TO public;
 GRANT SELECT ON lsmb_roles TO public;
 GRANT SELECT ON employee_search TO PUBLIC;
+GRANT SELECT ON warehouse TO public;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 

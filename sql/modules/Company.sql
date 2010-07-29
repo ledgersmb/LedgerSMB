@@ -30,19 +30,25 @@ BEGIN
 		SELECT e.id, e.control_code, c.id, ec.id, ec.meta_number, 
 			ec.description, ec.entity_class, 
 			c.legal_name, c.sic_code, b.description , ec.curr::text
-		FROM entity e
-		JOIN company c ON (e.id = c.entity_id)
-		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+		FROM (select * from entity where in_control_code = control_code
+                      union
+                      select * from entity where in_control_code is null) e
+		JOIN (SELECT * FROM company 
+                       WHERE legal_name like  '%' || in_legal_name || '%'
+                      UNION ALL
+                      SELECT * FROM company
+                       WHERE in_legal_name IS NULL) c ON (e.id = c.entity_id)
+		JOIN (SELECT * FROM entity_credit_account 
+                       WHERE meta_number = in_meta_number
+                      UNION ALL
+                      SELECT * from entity_credit_account
+                       WHERE meta_number ec IS NULL) ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE ec.entity_class = in_account_class
-			AND (e.control_code = in_control_code 
-				or in_control_code IS NULL)
 			AND (c.id IN (select company_id FROM company_to_contact
 				WHERE contact LIKE ALL(t_contact_info))
 				OR '' LIKE ALL(t_contact_info))
 			
-			AND (ec.meta_number = in_meta_number 
-				OR in_meta_number IS NULL)
 			AND (c.legal_name like '%' || in_legal_name || '%'
 				OR in_legal_name IS NULL)
 			AND ((in_address IS NULL AND in_city IS NULL 

@@ -1480,12 +1480,14 @@ create index ap_transdate_key on ap (transdate);
 create index ap_invnumber_key on ap (invnumber);
 create index ap_ordnumber_key on ap (ordnumber);
 create index ap_quonumber_key on ap (quonumber);
+create index ap_curr_idz on ap(curr);
 --
 create index ar_id_key on ar (id);
 create index ar_transdate_key on ar (transdate);
 create index ar_invnumber_key on ar (invnumber);
 create index ar_ordnumber_key on ar (ordnumber);
 create index ar_quonumber_key on ar (quonumber);
+create index ar_curr_idz on ar(curr);
 --
 create index assembly_id_key on assembly (id);
 --
@@ -2802,6 +2804,9 @@ CREATE INDEX location_address_three_gist__idx ON location USING gist(line_three 
     
 CREATE INDEX location_city_prov_gist_idx ON location USING gist(city gist_trgm_ops);
 CREATE INDEX entity_name_gist_idx ON entity USING gist(name gist_trgm_ops);
+CREATE INDEX ap_approved_idx ON ap(approved);
+CREATE INDEX ar_approved_idx ON ar(approved);
+CREATE INDEX gl_approved_idx ON gl(approved);
 
 CREATE TABLE pending_job (
 	id serial not null unique,
