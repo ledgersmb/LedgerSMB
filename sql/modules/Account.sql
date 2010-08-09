@@ -46,19 +46,16 @@ CREATE OR REPLACE FUNCTION account_save
 in_gifi text, in_heading int, in_contra bool, in_link text[])
 RETURNS int AS $$
 DECLARE 
-	t_summary_links TEXT[] = '{AR,AP,IC}';
 	t_heading_id int;
-	t_text record;
+	t_link record;
 	t_id int;
 BEGIN
 	-- check to ensure summary accounts are exclusive
         -- necessary for proper handling by legacy code
-	FOR t_text IN 
-		select t_summary_links[generate_series] AS val 
-		FROM generate_series(array_lower(t_summary_links, 1), 
-			array_upper(t_summary_links, 1))
+    FOR t_link IN SELECT description FROM account_link_description 
+    WHERE summary='t'
 	LOOP
-		IF t_text.val = ANY (in_link) and array_upper(in_link, 1) > 1 THEN
+		IF t_link.description = ANY (in_link) and array_upper(in_link, 1) > 1 THEN
 			RAISE EXCEPTION 'Invalid link settings:  Summary';
 		END IF;
 	END LOOP;
@@ -70,7 +67,12 @@ BEGIN
 		t_heading_id := in_heading;
 	END IF;
 
-	DELETE FROM account_link WHERE account_id = in_id;
+    -- don't remove custom links.
+	DELETE FROM account_link 
+	WHERE account_id = in_id 
+              and description in ( select description 
+                                    from  account_link_description
+                                    where custom = 'f');
 
 	UPDATE account 
 	SET accno = in_accno,
@@ -92,13 +94,13 @@ BEGIN
 		t_id := currval('account_id_seq');
 	END IF;
 
-	FOR t_text IN 
+	FOR t_link IN 
 		select in_link[generate_series] AS val
 		FROM generate_series(array_lower(in_link, 1), 
 			array_upper(in_link, 1))
 	LOOP
 		INSERT INTO account_link (account_id, description)
-		VALUES (t_id, t_text.val);
+		VALUES (t_id, t_link.val);
 	END LOOP;
 
 	
@@ -169,3 +171,8 @@ RETURNS SETOF account AS $$
 SELECT * FROM account
 WHERE id IN (SELECT account_id FROM account_link WHERE description = $1);
 $$ language sql;
+
+CREATE OR REPLACE FUNCTION get_link_descriptions() RETURNS SETOF account_link_description AS
+$$
+    SELECT * FROM account_link_description;
+$$ LANGUAGE SQL;

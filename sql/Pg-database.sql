@@ -40,9 +40,40 @@ CREATE TABLE account_checkpoint (
   primary key (end_date, account_id)
 );
 
+CREATE TABLE account_link_description (
+    description text    primary key,
+    summary     boolean not null,
+    custom      boolean not null   
+);
+
+INSERT INTO account_link_description (description, summary, custom) 
+VALUES 
+--summary links
+('AR', TRUE, FALSE),
+('AP', TRUE, FALSE),
+('IC', TRUE, FALSE),
+--custom links NOT INCLUDED
+('AR_amount',      FALSE, FALSE),
+('AR_tax',         FALSE, FALSE),
+('AR_paid',        FALSE, FALSE),
+('AR_overpayment', FALSE, FALSE),
+('AR_discount',    FALSE, FALSE),
+('AP_amount',      FALSE, FALSE),
+('AP_tax',         FALSE, FALSE),
+('AP_paid',        FALSE, FALSE),
+('AP_overpayment', FALSE, FALSE),
+('AP_discount',    FALSE, FALSE),
+('IC_sale',        FALSE, FALSE),
+('IC_tax',        FALSE, FALSE),
+('IC_cogs',        FALSE, FALSE),
+('IC_taxpart',     FALSE, FALSE),
+('IC_taxservice',  FALSE, FALSE),
+('IC_income',      FALSE, FALSE),
+('IC_expense',     FALSE, FALSE);
+
 CREATE TABLE account_link (
    account_id int references account(id),
-   description text,
+   description text references account_link_description(description),
    primary key (account_id, description)
 );
 

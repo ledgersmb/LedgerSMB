@@ -31,48 +31,64 @@ VALUES ('TEST AR 2', 'A', 'A', '00006', 'AR');
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AR PAID 1', 'A', 'A', '00007', 'AR_paid');
 
+insert into account_link_description(description, summary, custom)
+values ('AR_paid1', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AR PAID 2', 'A', 'A', '00008', 'AR_paid1');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AR PAID 3', 'A', 'A', '00009', 'IC_tax:AR_paid');
 
+insert into account_link_description(description, summary, custom)
+values ('AR_p', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AR PAID 4 INVALID', 'A', 'A', '00010', 'AR_p');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP PAID 1', 'A', 'A', '00011', 'AP_paid');
 
+insert into account_link_description(description, summary, custom)
+values ('AP_paid1', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP PAID 2', 'A', 'A', '00012', 'AP_paid1');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP PAID 3', 'A', 'A', '00013', 'IC_tax:AP_paid');
 
+insert into account_link_description(description, summary, custom)
+values ('AP_p', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP PAID 4 INVALID', 'A', 'A', '00014', 'AP_p');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 1', 'A', 'A', '00015', 'AP_overpayment');
 
+insert into account_link_description(description, summary, custom)
+values ('AP_overpayment1', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 2', 'A', 'A', '00016', 'AP_overpayment1');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 3', 'A', 'A', '00017', 'IC_tax:AP_overpayment');
 
+insert into account_link_description(description, summary, custom)
+values ('AP_overp', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00018', 'AP_overp');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 1', 'A', 'A', '00019', 'AR_overpayment');
 
+insert into account_link_description(description, summary, custom)
+values ('AR_overpayment1', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 2', 'A', 'A', '00020', 'AR_overpayment1');
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 3', 'A', 'A', '00021', 'IC_tax:AR_overpayment');
 
+insert into account_link_description(description, summary, custom)
+values ('AR_overp', false, true);
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00022', 'AR_overp');
 
