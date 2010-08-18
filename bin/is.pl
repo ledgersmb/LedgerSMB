@@ -567,6 +567,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
             $form->{"${taccno}_total"} =
                   $form->format_amount( \%myconfig,
                     $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
+            next if !$form->{"${taccno}_total"};
             $tax .= qq|
         <tr>
       	<th align=right>$form->{"${taccno}_description"}</th>

@@ -111,31 +111,23 @@ to the database.
 
 sub generate_links {
     my $self= shift @_;
-    my @sum =  qw(AR AP IC);
     my $is_summary = 0;
+    my $is_custom = 0;
     my @links;
-    my @others = qw(AR_amount AR_tax AR_paid AR_overpayment AR_discount
-                    AP_amount AP_tax AP_paid AP_overpayment AP_discount
-                    IC_sale IC_cogs IC_taxpart IC_taxservice IC_income
-                    IC_expense);
-
-   for my $l (@sum){
-       if ($self->{$l}){
-           if ($is_summary){
-               $self->error($self->{_locale}->text('Too many links on summary account!'));
+    my @descriptions = $self->exec_method(funcname =>
+                                          'get_link_descriptions');
+   foreach my $d (@descriptions) {
+       my $l = $d->{description};
+       if ($self->{$l}) {
+           $is_summary++ if ($d->{summary} == 1);
+           $is_custom++ if ($d->{custom} == 1);       
+           if ($is_summary > 1 || ($is_summary == 1 && $is_custom >=1 )) {
+                $self->error($self->{_locale}->text("Too many links on summary account!"));
            }
            push (@links, $l);
-           $is_summary = 1;
        }
    }
-   for my $l (@others){
-       if ($self->{$l}){
-           if ($is_summary){
-               $self->error($self->{_locale}->text('Too many links on summary account!'));
-           }
-           push (@links, $l);
-       }
-    }
+ 
     $self->{link} = $self->_db_array_scalars(@links);
 }
 
