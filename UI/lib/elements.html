@@ -136,13 +136,13 @@
 	    new Ajax.Autocompleter('<?lsmb attribute_data.id ?>-ac-search', 
                                    '<?lsmb attribute_data.id ?>-ac-choices', 
                                    '<?lsmb element_data.ajax_target ?>', 
-                                   {"afterUpdateElement":"post_ajax_setter"
+                                   {"afterUpdateElement":post_ajax_setter,
                                    <?lsmb IF attribute_data.params ?>
                                    'params' : {<?lsmb FOR k
                                                IN attribute_data.params.keys();
-                                               ?>,
+                                               ?>
                                                <?lsmb k ?> : <?lsmb
-                                                  attribute_data.params.keys()
+                                                  attribute_data.params.$k
                                                -?>
                                          <?lsmb END -?> } <?lsmb END -?>
                                    })
