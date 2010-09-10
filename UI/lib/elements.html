@@ -138,13 +138,22 @@
                                    '<?lsmb element_data.ajax_target ?>', 
                                    {"afterUpdateElement":post_ajax_setter,
                                    <?lsmb IF attribute_data.params ?>
-                                   'params' : {<?lsmb FOR k
+                                   'parameters' : <?lsmb SET params=""; FOR k
                                                IN attribute_data.params.keys();
+                                                IF params == "";
+                                                    params = "$k=" _ attribute_data.params.$k;
+                                                ELSE;
+                                                    params = params _ "&$k=" _ attribute_data.params.$k;
+                                                END;
+                                                
+                                               END;
+                                               #"<?lsmb k >" : <?lsmb
+                                               #   attribute_data.params.$k
+                                               #->
                                                ?>
-                                               <?lsmb k ?> : <?lsmb
-                                                  attribute_data.params.$k
-                                               -?>
-                                         <?lsmb END -?> } <?lsmb END -?>
+                                               <?lsmb '"' _ params _ '"'?>
+                                               <?lsmb END -?>
+                                               
                                    })
 	  //--></script>
   <?lsmb END ?>
