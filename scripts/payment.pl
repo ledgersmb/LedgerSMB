@@ -260,6 +260,7 @@ sub get_search_results {
         $payment->{"credit_id_$rowcount"} = $line->{credit_id};
         $payment->{"date_paid_$rowcount"} = $line->{date_paid};
         $payment->{"source_$rowcount"} = $line->{source};
+        $payment->{"voucher_id_$rowcount"} = $line->{voucher_id};
         $classcount = ($classcount + 1) % 2;
         ++$rowcount;
     }
@@ -291,6 +292,7 @@ sub get_search_results_reverse_payments {
            $payment->{credit_id} = $payment->{"credit_id_$count"};
            $payment->{date_paid} = $payment->{"date_paid_$count"};
            $payment->{source} = $payment->{"source_$count"};
+           $payment->{voucher_id} = $payment->{"voucher_id_$count"};
            $payment->reverse;
         }
     }

@@ -995,6 +995,7 @@ CREATE TYPE payment_record AS (
         source text,
 	batch_control text,
 	batch_description text,
+        voucher_id int,
         date_paid date
 );
 
@@ -1012,7 +1013,7 @@ BEGIN
 			c.id, co.legal_name,
 			compound_array(ARRAY[ARRAY[ch.id::text, ch.accno, 
 				ch.description]]), a.source, 
-			b.control_code, b.description, a.transdate
+			b.control_code, b.description, a.voucher_id, a.transdate
 		FROM entity_credit_account c
 		JOIN ( select entity_credit_account, id
 			FROM ar WHERE in_account_class = 2
@@ -1032,7 +1033,8 @@ BEGIN
 			AND (a.transdate <= in_date_to OR in_date_to IS NULL)
 			AND (source = in_source OR in_source IS NULL)
 		GROUP BY c.meta_number, c.id, co.legal_name, a.transdate, 
-			a.source, a.memo, b.id, b.control_code, b.description
+			a.source, a.memo, b.id, b.control_code, b.description, 
+                        voucher_id
 		ORDER BY a.transdate, c.meta_number, a.source
 	LOOP
 		RETURN NEXT out_row;
@@ -1042,7 +1044,8 @@ $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text, 
-	in_date_reversed date, in_account_class int, in_batch_id int)
+	in_date_reversed date, in_account_class int, in_batch_id int, 
+        in_voucher_id int)
 RETURNS INT 
 AS $$
 DECLARE
@@ -1070,6 +1073,8 @@ BEGIN
 			AND transdate = in_date_paid
 			AND in_credit_id = c.id
 			AND in_cash_accno = ch.accno
+                        and coalesce (in_voucher_id, 0) 
+                             = coalesce(voucher_id, 0)
 	LOOP
 		IF in_batch_id IS NOT NULL 
 			AND t_voucher_inserted IS NOT TRUE
