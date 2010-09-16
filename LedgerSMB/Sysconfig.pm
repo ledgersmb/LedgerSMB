@@ -3,6 +3,10 @@
 # the ledgersmb.conf until 1.3, however.
 
 package LedgerSMB::Sysconfig;
+use strict;
+use warnings;
+no strict qw(refs);
+use Cwd;
 
 # use LedgerSMB::Form;
 use Config::Std;
@@ -11,17 +15,18 @@ binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
 # For Win32, change $pathsep to ';';
-$pathsep = ':';
+our $pathsep = ':';
 
-$auth = 'DB';
-$logging = 0;      # No logging on by default
+our $auth = 'DB';
+our $logging = 0;      # No logging on by default
+our $images = getcwd() . '/images'; 
 
-$force_username_case = undef; # don't force case
+our $force_username_case = undef; # don't force case
 
-@io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
+our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
 # Whitelist for redirect destination
-@scripts = (
+our @scripts = (
     'aa.pl', 'admin.pl', 'am.pl',      'ap.pl',
     'ar.pl', 'arap.pl',  'arapprn.pl', 'bp.pl',
     'ca.pl', 'cp.pl',    'ct.pl',      'gl.pl',
@@ -32,66 +37,65 @@ $force_username_case = undef; # don't force case
 );
 
 # if you have latex installed set to 1
-$latex = 1;
+our $latex = 1;
 
 # Defaults to 1 megabyte
-$max_post_size = 1024 * 1024;
+our $max_post_size = 1024 * 1024;
 
 # defaults to 2-- default number of places to round amounts to
-$decimal_places = 2;
+our $decimal_places = 2;
 
 # defaults to LedgerSMB-1.3 - default spelling of cookie
-$cookie_name = "LedgerSMB-1.3";
+our $cookie_name = "LedgerSMB-1.3";
 
 # spool directory for batch printing
-$spool = "spool";
+our $spool = "spool";
 
-$cache_templates = 0;
+our $cache_templates = 0;
 # path to user configuration files
-$userspath = "users";
+our $userspath = "users";
 
 # templates base directory
-$templates = "templates";
+our $templates = "templates";
 
 # Temporary files stored at"
-$tempdir = ( $ENV{TEMP} || '/tmp' );
+our $tempdir = ( $ENV{TEMP} || '/tmp' );
 
-$cache_template_dir = "$tempdir/lsmb_templates";
+our $cache_template_dir = "$tempdir/lsmb_templates";
 # Backup path
-$backuppath = $tempdir;
+our $backuppath = $tempdir;
 
 # member file
-$memberfile = "users/members";
+our $memberfile = "users/members";
 
 # location of sendmail
-$sendmail = "/usr/sbin/sendmail -t";
+our $sendmail = "/usr/sbin/sendmail -t";
 
 # SMTP settings
-$smtphost   = '';
-$smtptimout = 60;
+our $smtphost   = '';
+our $smtptimout = 60;
 
 # set language for login and admin
-$language = "";
+our $language = "";
 
 # Maximum number of invoices that can be printed on a check
-$check_max_invoices = 5;
+our $check_max_invoices = 5;
 
 # program to use for file compression
-$gzip = "gzip -S .gz";
+our $gzip = "gzip -S .gz";
 
 # Path to the translation files
-$localepath = 'locale/po';
+our $localepath = 'locale/po';
 
-$no_db_str = 'database';
-$log_level = 'ERROR';
+our $no_db_str = 'database';
+our $log_level = 'ERROR';
 # available printers
-%printer;
+our %printer;
 
-my %config;
+our %config;
 read_config( 'ledgersmb.conf' => %config ) or die;
-
 # Root variables
-for $var (
+for my $var (
     qw(pathsep logging log_level check_max_invoices language auth latex
     db_autoupdate force_username_case max_post_size decimal_places cookie_name
     return_accno no_db_str tempdir cache_templates)
@@ -103,7 +107,7 @@ for $var (
 %printer = %{ $config{printers} } if $config{printers};
 
 # ENV Paths
-for $var (qw(PATH PERL5LIB)) {
+for my $var (qw(PATH PERL5LIB)) {
     if (ref $config{environment}{$var} eq 'ARRAY') {
         $ENV{$var} .= $pathsep . ( join $pathsep, @{ $config{environment}{$var} } );
     } elsif ($config{environment}{$var}) {
@@ -112,22 +116,22 @@ for $var (qw(PATH PERL5LIB)) {
 }
 
 # Application-specific paths
-for $var (qw(localepath spool templates images)) {
+for my $var (qw(localepath spool templates images)) {
     ${$var} = $config{paths}{$var} if $config{paths}{$var};
 }
 
 # Programs
-for $var (qw(gzip)) {
+for my $var (qw(gzip)) {
     ${$var} = $config{programs}{$var} if $config{programs}{$var};
 }
 
 # mail configuration
-for $var (qw(sendmail smtphost smtptimeout)) {
+for my $var (qw(sendmail smtphost smtptimeout)) {
     ${$var} = $config{mail}{$var} if $config{mail}{$var};
 }
 
 # We used to have a global dbconnect but have moved to single entries
-for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
+for my $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
     ${ "global" . $var } = $config{globaldb}{$var} if $config{globaldb}{$var};
 }
 
@@ -148,7 +152,7 @@ for $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
 # connection info
 
 # Log4perl configuration
-$log4perl_config = qq(
+our $log4perl_config = qq(
     log4perl.rootlogger = $log_level, Screen, Basic
     log4perl.appender.Screen = Log::Log4perl::Appender::Screen
     log4perl.appender.Screen.layout = SimpleLayout
