@@ -3,6 +3,7 @@ RETURNS int AS
 $$
 DECLARE ret_val int;
 	approval_check int;
+	cp_date        date;
 BEGIN
 	IF in_end_date > now()::date THEN
 		RAISE EXCEPTION 'Invalid date:  Must be earlier than present';
@@ -21,18 +22,27 @@ BEGIN
 	if approval_check > 0 THEN
 		RAISE EXCEPTION 'Unapproved transactions in closed period';
 	END IF;
+	
+	SELECT max(end_date) INTO cp_date FROM account_checkpoint WHERE
+	end_date < in_end_date;
 
-	INSERT INTO account_checkpoint (end_date, account_id, amount)
-	SELECT in_end_date, a.chart_id, sum(a.amount) + coalesce(max(cp.amount), 0)
-	FROM acc_trans a
-	LEFT JOIN (
-		select account_id, end_date, amount from account_checkpoint
-		WHERE end_date = (select max(end_date) from account_checkpoint
-				where end_date < in_end_date)
+	INSERT INTO 
+	account_checkpoint (end_date, account_id, amount, debits, credits)
+    SELECT in_end_date, COALESCE(a.chart_id, cp.account_id),
+	    COALESCE(SUM (a.amount),0) + coalesce(MAX (cp.amount), 0),
+	    COALESCE(SUM (CASE WHEN (a.amount < 0) THEN a.amount ELSE 0 END), 0) +
+	     COALESCE( MIN (cp.debits), 0),
+	    COALESCE(SUM (CASE WHEN (a.amount > 0) THEN a.amount ELSE 0 END), 0) +
+	     COALESCE( MAX (cp.credits), 0)
+	FROM 
+	(SELECT * FROM acc_trans WHERE transdate <= in_end_date AND
+	 transdate > COALESCE(cp_date, '1900-01-01')) a
+	FULL OUTER JOIN (
+		select account_id, end_date, amount, debits, credits 
+		from account_checkpoint
+		WHERE end_date = cp_date
 		) cp on (a.chart_id = cp.account_id)
-	WHERE a.transdate <= in_end_date 
-		AND a.transdate > coalesce(cp.end_date, a.transdate - 1)
-	group by a.chart_id;
+	group by COALESCE(a.chart_id, cp.account_id);
 
 	SELECT count(*) INTO ret_val FROM account_checkpoint 
 	where end_date = in_end_date;

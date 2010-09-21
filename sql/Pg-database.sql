@@ -37,6 +37,8 @@ CREATE TABLE account_checkpoint (
   account_id int not null references account(id), 
   amount numeric not null,
   id serial not null unique,
+  debits NUMERIC;
+  credits NUMERIC;
   primary key (end_date, account_id)
 );
 
