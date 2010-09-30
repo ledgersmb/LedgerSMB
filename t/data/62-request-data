@@ -338,6 +338,7 @@ our $test_request_data = [
 	# the following 4 tests check that it is possible to remove an empty batch
 	{
 		# access the batch creation screen
+		"_skip_lwp"             => 1,
 		"_test_id"		=> "AP Voucher Screen",
 		"_codebase"		=> "new",
 		"action"		=> "create_batch",
@@ -359,6 +360,7 @@ our $test_request_data = [
 	{
 		# create an empty batch
 		"_test_id"		=> "Create Empty Batch",
+		"_skip_lwp"             => 1,
 		"_codebase"		=> "new",
 		"action"		=> "create_vouchers",
 		"module"		=> "vouchers.pl",
@@ -376,6 +378,7 @@ our $test_request_data = [
 	{
 		# get the list of batches and save the first row of the list in GLOBAL
 		"_test_id"		=> "List Empty Batches",
+		"_skip_lwp"             => 1,
 		"_codebase"		=> "new",
 		"action"		=> "list_batches",
 		"empty"			=> 1,
@@ -400,6 +403,7 @@ our $test_request_data = [
 	{
 		# remove first row of the list of empty batches (obtained from GLOBAL)
 		"_test_id"		=> "Remove Empty Batches",
+		"_skip_lwp"             => 1,
 		"_codebase"		=> "new",
 		"module"		=> "vouchers.pl",
 		"form_id"		=> '_$GLOBAL$:form_id',

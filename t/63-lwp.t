@@ -19,7 +19,8 @@ if ($host !~ /\/$/){
 $host =~ /https?:\/\/([^\/]+)\//;
 $hostname = $1;
 my $db = $ENV{LSMB_NEW_DB} || $ENV{PGDATABASE};
-my @test_request_data = do { 't/data/62-request-data' };
+#my $test_request_data = use { 't/data/62-request-data' };
+do 't/data/62-request-data';
 my $browser = LWP::UserAgent->new( );
 if ($host !~ /https?:.+:/){
 	if ($host =~ /http:/){
@@ -43,7 +44,7 @@ ok($response->is_success(), "Login cookie received");
 $cookie->extract_cookies($response);
 $browser->cookie_jar($cookie);
 
-for my $test (@test_request_data){
+for my $test (@$test_request_data){
 	next if $test->{_skip_lwp};
 	my $argstr = "";
     my $module = "";
@@ -80,7 +81,7 @@ for my $test (@test_request_data){
     }
 	ok($response->is_success(), $retstr)
 		|| print STDERR "# " .$response->status_line() . ":$url\n";
-	if ( ( defined $test->{format} ) && ($test->{format} eq 'PDF' ) ){
+	if ( ( defined $test->{format} ) && ($test->{format} eq 'PDF' and defined $test->{form_id}) ){
 		cmp_ok($response->header('content-type'), 'eq', 
 			'application/pdf', "$test->{_test_id} PDF sent");
 	} else {
