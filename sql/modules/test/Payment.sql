@@ -11,7 +11,7 @@ values (-200, -200, md5(random()::text), now(), 0);
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00001', 'testing', 'A', 'L', 'AP');
 INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00002', 'testing2', 'A', 'E', 'AP_expense');
+VALUES ('00002', 'testing2', 'A', 'E', 'AP_amount');
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00003', 'testing2', 'A', 'A', 'AP_paid');
 

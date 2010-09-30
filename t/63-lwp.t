@@ -19,7 +19,7 @@ if ($host !~ /\/$/){
 $host =~ /https?:\/\/([^\/]+)\//;
 $hostname = $1;
 my $db = $ENV{LSMB_NEW_DB} || $ENV{PGDATABASE};
-do 't/data/62-request-data'; # Import test case oashes
+my @test_request_data = do { 't/data/62-request-data' };
 my $browser = LWP::UserAgent->new( );
 if ($host !~ /https?:.+:/){
 	if ($host =~ /http:/){
@@ -43,40 +43,56 @@ ok($response->is_success(), "Login cookie received");
 $cookie->extract_cookies($response);
 $browser->cookie_jar($cookie);
 
-for my $test (@$test_request_data){
+for my $test (@test_request_data){
 	next if $test->{_skip_lwp};
 	my $argstr = "";
-        my $module = "";
+    my $module = "";
 	for $key (keys %$test){
 		# scan both key and value for _$GLOBAL$.
 		# replace _$GLOBAL$:varname with the value from the %GLOBAL{varname}
-		if ($key =~ /_\$GLOBAL\$:(.*)$/) {
+		if ( ( defined $key ) && $key =~ /_\$GLOBAL\$:(.*)$/) {
 			my $newkey = $GLOBAL{$1};
 			$test->{$newkey} = $test->{$key};
 			$key = $newkey;
 		}
-		if ($test->{$key} =~ /_\$GLOBAL\$:(.*)$/) {
+		if ( ( defined $key ) && ( defined $test->{$key} ) && ($test->{$key} =~ /_\$GLOBAL\$:(.*)$/ ) ) {
 			my $val = $GLOBAL{$1};
 			$test->{$key} = $val;
 		}
-		if ($key eq 'module'){
+		if ( ( defined $key ) && ( $key eq 'module' ) ){
 			$module = $test->{"$key"}
 		}
-		elsif ($key !~ /^\_/){
+		elsif ( ( defined $test->{"key"} ) && ( defined $key ) && ( $key !~ /^\_/ ) ){
 			$argstr .= "&" . "$key=".$test->{"$key"};
 		}
 	}
 	$argstr =~ s/^&//;
 	my $url="$host$module?$argstr&company=$db";
 	my $response = $browser->get($url);
-	ok($response->is_success(), "$test->{_test_id} RESPONSE 200")
+    my $retstr = "";
+    if ( defined $test->{_test_id} ) 
+    { 
+        $retstr = "$test->{_test_id} RESPONSE 200"  
+    } 
+    else 
+    { 
+        $retstr="\$test->{_test_id} is undefined. RESPONSE 200" 
+    }
+	ok($response->is_success(), $retstr)
 		|| print STDERR "# " .$response->status_line() . ":$url\n";
-	if ($test->{format} eq 'PDF'){
+	if ( ( defined $test->{format} ) && ($test->{format} eq 'PDF' ) ){
 		cmp_ok($response->header('content-type'), 'eq', 
 			'application/pdf', "$test->{_test_id} PDF sent");
 	} else {
-		like($response->header('content-type'), qr/^text\/html/,
-			"$test->{_test_id} HTML sent");
+        if ( defined $test->{_test_id} ) 
+        { 
+            $retstr = "$test->{_test_id} HTML sent"  
+        } 
+        else 
+        { 
+            $retstr="\$test->{_test_id} is undefined. HTML sent" 
+        }
+		like($response->header('content-type'), qr/^text\/html/, $retstr);
 	}
 	if (ref($test->{_lwp_tests}) eq 'CODE'){
 		$test->{_lwp_tests}($response);
