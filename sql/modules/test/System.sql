@@ -27,6 +27,10 @@ insert into test_exempt_funcs values ('table_log_restore_table');
 create table test_exempt_tables (tablename text, reason text);
 insert into test_exempt_tables values ('note', 'abstract table, no data');
 insert into test_exempt_tables values ('open_forms', 'security definer only');
+insert into test_exempt_tables values ('pg_ts_cfg', 'security definer only');
+insert into test_exempt_tables values ('pg_ts_cfgmap', 'security definer only');
+insert into test_exempt_tables values ('pg_ts_dict', 'security definer only');
+insert into test_exempt_tables values ('pg_ts_parser', 'security definer only');
 
 insert into test_exempt_tables 
 values ('person_to_company', 'Unused in core, for addons only');
