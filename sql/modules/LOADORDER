@@ -19,3 +19,5 @@ Report.sql
 Voucher.sql
 admin.sql
 Reconciliation.sql
+TaxForm.sql
+1099_reports.sql

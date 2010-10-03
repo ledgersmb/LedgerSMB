@@ -494,7 +494,9 @@ BEGIN
 		t_voucher_id := currval('voucher_id_seq');
 	END IF;
 
-	SELECT string_to_array(value, ':') from defaults where setting_key = 'curr';
+	SELECT string_to_array(value, ':') into t_currs 
+          from defaults 
+         where setting_key = 'curr';
 
         IF (in_curr IS NULL OR in_curr = t_currs[0]) THEN
                 t_exchangerate := 1;
@@ -528,7 +530,7 @@ BEGIN
 			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
 			THEN $E$ || t_ar_ap_id || $E$
 			ELSE -1 END, 
-		amount * t_exchangerate,
+		amount * $E$|| quote_literal(t_exchangerate) || $E$,
 		CASE 
 			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
 			ELSE false END,
@@ -547,7 +549,7 @@ BEGIN
 			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
 			THEN $E$ || t_cash_id || $E$
 			ELSE -1 END, 
-		amount * -1 * t_exchangerate,
+		amount * -1 * $E$|| quote_literal(t_exchangerate) || $E$,
 		CASE 
 			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
 			ELSE false END,
