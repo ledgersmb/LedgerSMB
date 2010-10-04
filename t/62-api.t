@@ -6,6 +6,17 @@ BEGIN {
 	use LedgerSMB::DBTest;
 }
 
+# TODO: FIXME
+# This is a hack, and it's very bad!
+# This is here because the subroutines _http_output,
+# render, and error are redefined in here.
+# This isn't ideal in the least. The subroutines should
+# be refactored to provide different renderings based on
+# whether or not they are being called in a test
+# or regularly in the code.
+# LedgerSMB::Template contains render and _http_output
+# LedgerSMB contains error
+no warnings 'redefine';
 
 if (defined $ENV{LSMB_TEST_DB}){
 	if (defined $ENV{LSMB_NEW_DB}){
@@ -19,7 +30,7 @@ if (defined $ENV{LSMB_TEST_DB}){
 	plan skip_all => 'Skipping, LSMB_TEST_DB environment variable not set.';
 }
 
-do 't/data/62-request-data'; # Import test case hashes
+@test_request_data = do { 't/data/62-request-data' } ; # Import test case hashes
 
 for (qw(	drafts.pl     login.pl      payment.pl      
 		report.pl    employee.pl   menu.pl       vendor.pl
@@ -35,27 +46,50 @@ my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, un
 my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} );
 
 for my $test (@$test_request_data){
+    my $argstr="";
+    my $module="";
+        for my $key (keys %$test)
+        {
+            # scan both key and value for _$GLOBAL$.
+            # replace _$GLOBAL$:varname with the value from the %GLOBAL{varname}
+            if ( ( defined $key ) && ( $key =~ /_\$GLOBAL\$:(.*)$/ ) ) {
+                my $newkey = $GLOBAL{$1};
+                $key = $newkey;
+            }   
+            if ( ( defined $key ) &&  ( defined $test->{$key} ) && ( $test->{$key} =~ /_\$GLOBAL\$:(.*)$/ ) ) {
+                my $val = $GLOBAL{$1};
+                $test->{$key} = $val;
+            }   
+            if ( ( defined $key ) && ( $key eq 'module' ) ){
+                $module = $test->{"$key"}
+            }   
+            elsif ( ( defined $test->{"$key"} ) && ( defined $key ) && ( $key !~ /^\_/ ) ){
+                $argstr .= "&" . "$key=".$test->{"$key"};
+
+            }   
+        }  
+
         if (ref $test->{'_pre_test_sub'} eq 'CODE'){
 		$test->{'_pre_test_sub'}();
 	}
+    my $request = LedgerSMB->new();
 	if (lc $test->{_codebase} eq 'old'){
 		next; # skip old codebase tests for now
-		old_code_test::_load_script($test->{module});
-		my $qstring = "$test->{module}?";
-		for $key (keys(%$test)){
-			if ($key !~ /^_/){
-				$qstring .= qq|$key=$test->{"$key"}&|;
-			}	
-		}
-		$qstring =~ s/&$//;
-		$old_code_test::form = Form->new($qstring);
-		for (keys (%$test)){
-			$form->{$_} = $test->{$_};
-		}
-		is('old_code_test'->can($test->{action}), 0,
-			"$test->{_test_id}: Action Successful");
+		#old_code_test::_load_script($test->{module});
+		#my $qstring = "$test->{module}?";
+		#for $key (keys(%$test)){
+			#if ($key !~ /^_/){
+				#$qstring .= qq|$key=$test->{"$key"}&|;
+			#}	
+		#}
+		#$qstring =~ s/&$//;
+		#$old_code_test::form = Form->new($qstring);
+		#for (keys (%$test)){
+			#$form->{$_} = $test->{$_};
+		#}
+		#is('old_code_test'->can($test->{action}), 0,
+			#"$test->{_test_id}: Action Successful");
 	} else {
-		my $request = LedgerSMB->new();
 		$request->merge($test);
 		$request->{_locale} = $locale;
 		my $script = $test->{module};
@@ -72,9 +106,11 @@ for my $test (@$test_request_data){
 			"$test->{_test_id}: Action ($request->{action}) Defined");
 		ok("LedgerSMB::Scripts::$script"->can($request->{action})->($request), "$test->{_test_id}: Action Successful");
 	}
-        if (ref $test->{_api_test} eq 'CODE'){
-		$request->{_test_cases} = $test->{_api_test};
-	}
+
+    if (ref $test->{_api_test} eq 'CODE'){
+        $request->{_test_cases} = $test->{_api_test};
+    }
+
 	ok($dbh->rollback, "$test->{_test_id}: rollback");
 }
 
@@ -83,6 +119,7 @@ use Test::More;
 # Don't render templates.  Just return so we can run tests on data structures.
 sub render {
 	my ($self, $data) = @_;
+
 	if (ref $data->{_test_cases} eq 'CODE'){
 		$data->{_test_cases}($data);
 	}
@@ -112,7 +149,6 @@ sub _load_script {
 }
 
 package LedgerSMB;
-
 sub error {
     my $self = shift;
     $self->{_error} = shift;
