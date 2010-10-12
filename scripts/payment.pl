@@ -422,6 +422,7 @@ sub display_payments {
     $payment->{grand_total} = 0;
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
+        my $contact_to_pay = 0;
         for my $invoice (@{$_->{invoices}}){
             if (($payment->{action} ne 'update_payments') 
                   or (defined $payment->{"id_$_->{contact_id}"})){
@@ -443,6 +444,7 @@ sub display_payments {
                     $payment->parse_amount(amount => $invoice->[3]) 
                     - $payment->parse_amount(amount => $invoice->[4])),
                                                     money  => 1);
+            $contact_to_pay +=  $payment->parse_amount(amount => $invoice[6]);
             my $fld = "payment_" . $invoice->[0];
             if (!defined $payment->{"$fld"} ){
                 $payment->{"$fld"} = $invoice->[6];
@@ -454,6 +456,7 @@ sub display_payments {
         if (($payment->{action} ne 'update_payments') 
                   or (defined $payment->{"id_$_->{contact_id}"})){
             $_->{contact_total} = $contact_total;
+            $_->{to_pay} = $contact_to_pay;
             $payment->{grand_total} += $contact_total;
         }
         $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due},
