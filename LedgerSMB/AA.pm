@@ -1433,7 +1433,7 @@ sub update_ac_tax_form
 sub get_taxcheck
 {
 
-   my ( $self,$form,$entry_id,$dbh) = @_;
+   my ( $self,$entry_id,$dbh) = @_;
 
    my $query=qq|select reportable from ac_tax_form where entry_id=?|;
    my $sth=$dbh->prepare($query);

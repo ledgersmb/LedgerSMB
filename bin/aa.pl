@@ -322,7 +322,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
  			$form->{"entry_id_$i"} =
                           $form->{acc_trans}{$key}->[ $i - 1 ]->{entry_id};
 
-			$form->{"taxformcheck_$i"}=1 if(AA->get_taxcheck($form,$form->{"entry_id_$i"},$form->{dbh}));
+			$form->{"taxformcheck_$i"}=1 if(AA->get_taxcheck($form->{"entry_id_$i"},$form->{dbh}));
 
                        $form->{rowcount}++;
                         $netamount += $form->{"${akey}_$i"};
