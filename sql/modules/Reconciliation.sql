@@ -336,7 +336,10 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
     BEGIN
 		INSERT INTO cr_report_line (report_id, scn, their_balance, 
 			our_balance, "user", voucher_id, ledger_id, post_date)
-		SELECT in_report_id, case when gl.table = 'gl' then gl.ref else ac.source end, 0, sum(amount) * -1 AS amount,
+		SELECT in_report_id, 
+		       COALESCE(ac.source, gl.ref),
+		       0, 
+		       sum(amount) * -1 AS amount,
 				(select entity_id from users 
 				where username = CURRENT_USER),
 			ac.voucher_id, min(ac.entry_id), ac.transdate
