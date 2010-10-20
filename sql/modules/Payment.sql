@@ -537,7 +537,7 @@ BEGIN
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
 		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') || 
 		$E$ , $E$ || coalesce(quote_literal(in_payment_type), 'NULL') || $E$
-		FROM bulk_payments_in $E$;
+		FROM bulk_payments_in  where amount <> 0 $E$;
 
 	EXECUTE $E$ 
 		INSERT INTO acc_trans 
@@ -556,7 +556,7 @@ BEGIN
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
 		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'null') 
 		||$E$ , $E$ || coalesce(quote_literal(in_payment_type), 'NULL') || $E$ 
-		FROM bulk_payments_in $E$;
+		FROM bulk_payments_in where amount <> 0 $E$;
 
         IF in_account_class = 1 THEN
         	EXECUTE $E$

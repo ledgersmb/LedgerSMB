@@ -34,14 +34,17 @@ BEGIN
               SELECT company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
                      entity_credit_account.meta_number, 
-                     sum(CASE WHEN relation = 'acc_trans' THEN ac.amount 
+                     sum(CASE WHEN relation = 'acc_trans' THEN 
+                                   CASE WHEN gl.class = 'ar' then ac.amount
+                                   ELSE ac.amount * -1
+                                   END
                               ELSE 0 END), 
                      sum(CASE WHEN relation = 'invoice' THEN ac.amount 
                               ELSE 0 END), 
                      sum(ac.amount)
-		FROM (select id, transdate, entity_credit_account FROM ar 
+		FROM (select id, transdate, entity_credit_account, 'ar' as class FROM ar 
                        UNION 
-                      select id, transdate, entity_credit_account from ap
+                      select id, transdate, entity_credit_account, 'ap' as class from ap
                      ) gl
                 JOIN (select trans_id, 'acc_trans' as relation, amount as amount, 
                              atf.reportable
