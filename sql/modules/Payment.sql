@@ -1191,13 +1191,14 @@ CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_p
    JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
    JOIN company c ON   (c.entity_id  = eca.entity_id)
    JOIN payment_links pl ON (p.id = pl.payment_id)
- --  JOIN (  SELECT sum(a.amount) as amount
- --		FROM acc_trans a
- --		JOIN chart ch ON (a.chart_id = ch.id)
- --		JOIN payment_links pl ON (pl.entry_id=a.entry_id)
- --		WHERE 
- --		 ((ch.link like '%AP_paid%' OR ch.link like '%AP_discount%') AND in_account_class = 1)
- --		 OR ((ch.link like '%AR_paid%' OR ch.link like '%AR_discount%') AND in_account_class = 2)  )  am ON (1=1)
+   LEFT JOIN (  SELECT sum(a.amount) as amount
+ 		FROM acc_trans a
+ 		JOIN account acc ON (a.chart_id = acc.id)
+                JOIN account_link al ON (acc.id =al.account_id)
+ 		JOIN payment_links pl ON (pl.entry_id=a.entry_id)
+ 		WHERE al.description in  
+                       ('AP_paid', 'AP_discount', 'AR_paid', 'AR_discount') 
+                       and ((in_account_class = 1 AND al.description like 'AP%') or (in_account_class = 2 AND al.description like 'AR%')) 
    WHERE p.id = in_payment_id
  LOOP
      RETURN NEXT out_payment;
