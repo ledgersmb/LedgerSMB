@@ -612,6 +612,8 @@ INSERT INTO contact_class (id,class) values (9,'Fax');
 INSERT INTO contact_class (id,class) values (10,'Generic Jabber');
 INSERT INTO contact_class (id,class) values (11,'Home Phone');
 INSERT INTO contact_class (id,class) values (12,'Email');
+INSERT INTO contact_class (id,class) values (13,'CC');
+INSERT INTO contact_class (id,class) values (14,'BCC');
 
 SELECT SETVAL('contact_class_id_seq',12);
 

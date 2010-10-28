@@ -41,7 +41,10 @@ BEGIN
                               ELSE 0 END), 
                      sum(CASE WHEN relation = 'invoice' THEN ac.amount 
                               ELSE 0 END), 
-                     sum(ac.amount)
+                     sum(CASE WHEN gl.class = 'ar' then ac.amount
+                                   ELSE ac.amount * -1
+                                   END
+                           )
 		FROM (select id, transdate, entity_credit_account, 'ar' as class FROM ar 
                        UNION 
                       select id, transdate, entity_credit_account, 'ap' as class from ap
@@ -82,16 +85,24 @@ BEGIN
               SELECT company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
                      entity_credit_account.meta_number, 
-                     sum(CASE WHEN relation = 'acc_trans' THEN ac.amount 
+                     sum(CASE WHEN relation = 'acc_trans' THEN 
+                                   CASE WHEN gl.class = 'ar' then ac.amount
+                                   ELSE ac.amount * -1
+                                   END
                               ELSE 0 END), 
-                     sum(CASE WHEN relation = 'invoice' THEN ac.amount 
+                     sum(CASE WHEN relation = 'invoice' THEN
+                              CASE WHEN gl.class = 'ar' then ac.amount
+                                   ELSE ac.amount * -1
+                              END
                               ELSE 0 END), 
-                     sum(ac.amount),
+                     sum(CASE WHEN gl.class = 'ar' then ac.amount
+                                   ELSE ac.amount * -1
+                                   END),
                      gl.invnumber, gl.duedate::text
-                FROM (select id, entity_credit_account, invnumber, duedate, transdate
+                FROM (select id, entity_credit_account, invnumber, duedate, transdate, 'ar' as class
                         FROM ar 
                        UNION 
-                      select id, entity_credit_account, invnumber, duedate, transdate
+                      select id, entity_credit_account, invnumber, duedate, transdate, 'ap' as class
                         FROM ap
                      ) gl 
                 JOIN (select trans_id, 'acc_trans' as relation, amount as amount, 
