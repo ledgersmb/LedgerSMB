@@ -522,10 +522,10 @@ sub form_header {
 }
 
 sub void {
-    for (1 .. $form->{rowcount}){
+    for my $i (1 .. $form->{rowcount}){
         $form->{"qty_$i"} *= -1;
     }
-    $form->{void} = 1;
+    $form->{reverse} = 1;
     &post_as_new;
 }
 
