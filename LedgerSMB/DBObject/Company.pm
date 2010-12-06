@@ -241,7 +241,7 @@ sub account {
     my ($self, $account) = @_;
     
     $self->set_entity_class();
-    my ($account) = $self->exec_method(funcname => 'company__get_account');
+    $account = $self->exec_method(funcname => 'company__get_account');
 }
 
 sub accounts {
@@ -270,12 +270,12 @@ sub get {
 
     if($self->{entity_id})
     {
-	@{$self->{taxform_list}} = $self->exec_method(funcname => 'list_taxforms');
+        @{$self->{taxform_list}} = $self->exec_method(funcname => 'list_taxforms');
 
-	foreach my $ref1(@{$self->{taxform_list}})
-	{
-		print STDERR qq| ______ return value $ref1->{id} and $ref1->{country_id},$ref1->{form_name} ________|;	
-	}
+        #foreach my $ref1(@{$self->{taxform_list}})
+        #{
+            #print STDERR qq| ______ return value $ref1->{id} and $ref1->{country_id},$ref1->{form_name} ________|;	
+        #}
     }
 
     my ($ref) = $self->exec_method(funcname => 'company_retrieve');

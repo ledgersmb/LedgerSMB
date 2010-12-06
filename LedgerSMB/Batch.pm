@@ -57,15 +57,22 @@ sub get_search_method {
         $search_proc = "batch_search";
     }
 
-	if ($self->{created_by_eid} == 0){
+    if ( !defined $self->{created_by_eid} || $self->{created_by_eid} == 0){
 		delete $self->{created_by_eid};
     }
-    if ($args->{custom_types}->{$self->{class_id}}->{select_method}){
+
+    if ( !defined $self->{class_id} )
+    {
+        delete $self->{class_id};
+    }
+
+    if ( ( defined $args->{custom_types} ) && ( defined $self->{class_id} ) && ( $args->{custom_types}->{$self->{class_id}}->{select_method} ) ){
         $search_proc 
              = $args->{custom_types}->{$self->{class_id}}->{select_method}; 
-    } elsif ($self->{class_id} =~ /[\D]/){
+    } elsif ( ( defined $self->{class_id} ) && ( $self->{class_id} =~ /[\D]/ ) ){
           $self->error("Invalid Batch Type");
     }
+
 	return $search_proc;
 }
 

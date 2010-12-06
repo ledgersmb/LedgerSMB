@@ -22,7 +22,7 @@ is(LedgerSMB::DBObject->_db_array_scalars(@vals2), '{test,"test2\"\"\,",test3,te
 
 my $passes = 0;
 for (LedgerSMB::DBObject->_parse_array($test)){
-  is($_, shift @vals, "pass $pass, array parse test");
+  is($_, shift @vals, "pass $passes, array parse test");
 }
 my $test2 = '{{1,1,1,1},{1,2,2,2},{1,3,3,4}}';
 my @test_arry2_c = ( [1,1,1,1], [1,2,2,2], [1,3,3,4]);

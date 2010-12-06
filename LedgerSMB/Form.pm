@@ -70,6 +70,9 @@ use charnames qw(:full);
 use open ':utf8';
 package Form;
 
+use LedgerSMB::Log;
+our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
+
 =item new Form([$argstr])
 
 Returns a reference to new Form object.  The initial set of attributes is
@@ -87,15 +90,16 @@ $form->error may be called to deny access on some attribute values.
 sub new {
 
     my $type = shift;
-
     my $argstr = shift;
 
-    if ($ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size) {
+    $ENV{CONTENT_LENGTH} = 0 unless defined $ENV{CONTENT_LENGTH};
+
+    if ( ( $ENV{CONTENT_LENGTH} != 0 ) && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size ) ) {
         print "Status: 413\n Request entity too large\n\n";
         die "Error: Request entity too large\n";
     }
 
-    read( STDIN, $_, $ENV{CONTENT_LENGTH} );
+    read( STDIN, $_, $ENV{CONTENT_LENGTH} ) unless $ENV{CONTENT_LENGTH} == 0;
 
     if ($argstr) {
         $_ = $argstr;
@@ -110,10 +114,12 @@ sub new {
 
     my $self = {};
     my $orig = {};
-    %$orig = split /[&=]/;
+    %$orig = split /[&=]/ unless !defined $_;
     for ( keys %$orig ) { 
         $self->{unescape( "", $_) } = unescape( "", $orig->{$_} );
     }
+
+    $self->{action} = "" unless defined $self->{action};
 
     if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
         $self->{action} = lc $self->{action};
@@ -121,6 +127,8 @@ sub new {
         $self->{nextsub} = lc $self->{nextsub};
         $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
     }
+
+    $self->{login} = "" unless defined $self->{login};
     $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
     if (!$self->{company} && $ENV{HTTP_COOKIE}){
@@ -136,17 +144,18 @@ sub new {
          $self->{company} = $ccookie;
     }
 
-    $self->{menubar} = 1 if $self->{path} =~ /lynx/i;
+    $self->{menubar} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
     #menubar will be deprecated, replaced with below
-    $self->{lynx} = 1 if $self->{path} =~ /lynx/i;
+    $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
     $self->{version}   = "1.2.99";
     $self->{dbversion} = "1.2.0";
 
     bless $self, $type;
 
-    if ( $self->{path} ne 'bin/lynx' ) { $self->{path} = 'bin/mozilla'; }
+    if ( !defined $self->{path} or $self->{path} ne 'bin/lynx' ) { $self->{path} = 'bin/mozilla'; }
+    #if ( $self->{path} ne 'bin/lynx' ) { $self->{path} = 'bin/mozilla'; }
 
     if ( ( $self->{script} )
         and not List::Util::first { $_ eq $self->{script} }
@@ -159,7 +168,8 @@ sub new {
         $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
-    for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
+    #for ( keys %$self ) { $self->{$_} =~ s/\N{NULL}//g }
+    for ( keys %$self ) { if ( defined $self->{$_} ) { $self->{$_}=~ s/\N{NULL}//g; } }
     
     if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
         $self->error( "Access Denied", __LINE__, __FILE__ );
@@ -239,7 +249,11 @@ sub debug {
 
     if ($file) {
         open( FH, '>', "$file" ) or die $!;
-        for ( sort keys %$self ) { print FH "$_ = $self->{$_}\n" }
+        for ( sort keys %$self ) 
+        {   
+            $self->{$_} = "" unless defined $self->{$_};
+            print FH "$_ = $self->{$_}\n";
+        }
         close(FH);
     }
     else {
@@ -311,7 +325,7 @@ sub unescape {
     $str =~ s/\\$//;
 
     utf8::encode($str) if utf8::is_utf8($str);
-    $str =~ s/%([0-9a-fA-Z]{2})/pack("c",hex($1))/eg;
+    $str =~ s/%([0-9a-fA-Z]{2})/pack("C",hex($1))/eg;
     utf8::decode($str);
     $str =~ s/\r?\n/\n/g;
 
@@ -663,6 +677,11 @@ sub sort_order {
 
     my ( $self, $columns, $ordinal ) = @_;
 
+    $self = "" unless defined $self;
+    $self->{sort} = "" unless defined $self->{sort};
+    $self->{oldsort} = "" unless defined $self->{oldsort};
+    $self->{direction} = "" unless defined $self->{direction};
+
     # setup direction
     if ( $self->{direction} ) {
 
@@ -687,10 +706,23 @@ sub sort_order {
     my @a = $self->sort_columns( @{$columns} );
 
     if (ref $ordinal eq 'HASH') {
-        $a[0] =
-          ( $ordinal->{ $a[$_] } )
-          ? "$ordinal->{$a[0]} $self->{direction}"
-          : "$a[0] $self->{direction}";
+        #$a[0] =
+          #( $ordinal->{ $a[$_] } )
+          #? "$ordinal->{$a[0]} $self->{direction}"; 
+          #: "$a[0] $self->{direction}";
+
+          if ( defined $_ && $ordinal->{ $a[$_] } )
+          {   
+              $a[0] = "$ordinal->{$a[0]} $self->{direction}"; 
+          }
+          elsif ( !defined $_ && $ordinal->{ $a[0] } )
+          {
+              $a[0] = "$ordinal->{$a[0]} $self->{direction}"; 
+          }
+          else
+          {
+              $a[0] = "$a[0] $self->{direction}";
+          }
 
         for ( 1 .. $#a ) {
             $a[$_] = $ordinal->{ $a[$_] } if $ordinal->{ $a[$_] };
@@ -730,6 +762,12 @@ sub format_amount {
 
     my ( $self, $myconfig, $amount, $places, $dash ) = @_;
 
+    $self = "" unless defined $self;
+    $myconfig = "" unless defined $myconfig;
+    $amount = "" unless defined $amount;
+    $places = "" unless defined $places;
+    $dash = "" unless defined $dash;
+
     my $negative;
     if ($amount) {
         $amount = $self->parse_amount( $myconfig, $amount );
@@ -754,6 +792,9 @@ sub format_amount {
         if ( $myconfig->{numberformat} ) {
 
             my ( $whole, $dec ) = split /\./, "$amount";
+
+            $dec = "" unless defined $dec;
+
             $amount = join '', reverse split //, $whole;
 
             if ($places) {
@@ -841,7 +882,8 @@ sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
 
-    if ( ( $amount eq '' ) or ( ! defined $amount ) ) {
+    #if ( ( $amount eq '' ) or ( ! defined $amount ) ) {
+    if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
         $amount = 0;
     }
 
@@ -850,6 +892,7 @@ sub parse_amount {
         return $amount;
     }
     my $numberformat = $myconfig->{numberformat};
+    $numberformat = "" unless defined $numberformat;
 
     if (   ( $numberformat eq '1.000,00' )
         || ( $numberformat eq '1000,00' ) )
@@ -876,7 +919,7 @@ sub parse_amount {
 
     $amount =~ /(\d*)\.(\d*)/;
 
-    my $decimalplaces = length $1 + length $2;
+    #my $decimalplaces = length $1 + length $2;
 
     $amount = new Math::BigFloat($amount);
     if ($amount->is_nan){
@@ -1043,6 +1086,8 @@ $picture is ignored.
 sub datetonum {
 
     my ( $self, $myconfig, $date, $picture ) = @_;
+
+    $date = "" unless defined $date;
 
     if ($date =~ /^\d{4}-\d{2}-\d{2}$/){
         $date =~ s/-//g;
@@ -1233,8 +1278,11 @@ sub db_init {
         'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
         'dd.mm.yy' => 'set DateStyle to \'GERMAN\''
     );
-
-    $self->{dbh}->do( $date_query{ $myconfig->{dateformat} } );
+    if ( !$myconfig->{dateformat}) {
+        $myconfig->{dateformat} = 'yyyy-mm-dd';
+    } else {
+        $self->{dbh}->do( $date_query{ $myconfig->{dateformat} } );
+    }
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
     # This is the general version check
@@ -1252,7 +1300,7 @@ sub db_init {
 			|| ':' || f.field_name as field_def
 		FROM custom_table_catalog t
 		JOIN custom_field_catalog f USING (table_id)";
-    my $sth = $self->{dbh}->prepare($query);
+    $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
@@ -2577,7 +2625,7 @@ sub current_date {
 
     my $sth = $dbh->prepare($query);
     $sth->execute(@queryargs);
-    my ($thisdate) = $sth->fetchrow_array;
+    $thisdate = $sth->fetchrow_array;
     $thisdate;
 }
 
@@ -3328,12 +3376,12 @@ sub update_defaults {
         }
     }
 
-    my $query = qq|
+    $query = qq|
 		UPDATE defaults
 		   SET value = ?
 		 WHERE setting_key = ?|;
 
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $dbvar, $fld ) || $self->dberror($query);
 
     $dbh->commit;
@@ -3481,7 +3529,7 @@ sub format_date {
     else {                          # return date
         $datestring = $date;
     }
-    $datestring;
+    return $datestring;
 }
 
 =item $form->from_to($yyyy, $mm[, $interval]);
@@ -3498,6 +3546,9 @@ This function dies horribly when $mm + $interval > 24
 sub from_to {
 
     my ( $self, $yyyy, $mm, $interval ) = @_;
+
+    $yyyy = 0 unless defined $yyyy;
+    $mm = 0 unless defined $mm;
 
     my @t;
     my $dd       = 1;
@@ -3541,7 +3592,7 @@ sub from_to {
     $t[4] = substr( "0$t[4]", -2 );
     $t[3] = substr( "0$t[3]", -2 );
     $t[5] += 1900;
-
+    
     return ( $self->format_date($fromdate), $self->format_date("$t[5]-$t[4]-$t[3]") );
 }
 
@@ -3584,7 +3635,6 @@ sub audittrail {
         $dbh = $self->{dbh};
     }
     my $sth;
-    my $query;
 
     # if we have an id add audittrail, otherwise get a new timestamp
 

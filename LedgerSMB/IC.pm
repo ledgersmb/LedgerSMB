@@ -1711,7 +1711,7 @@ sub requirements {
     }
     $sth->finish;
 
-    my %ofld = ( customer => so, vendor => po );
+    my %ofld = ( customer => 'so', vendor => 'po' );
 
     for (qw(customer vendor)) {
         $query = qq|

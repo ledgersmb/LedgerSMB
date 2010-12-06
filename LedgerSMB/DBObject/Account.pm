@@ -45,12 +45,13 @@ value must be properly set.
 
 sub get {
     my $self = shift @_;
-    my @accounts =  $self->exec_method(funcname => 'account_get');
+    my $func = 'account_get';
+    if ($self->{charttype} and $self->{charttype} eq 'H'){
+      $func = 'account_heading_get';
+    }
+    my @accounts =  $self->exec_method(funcname => $func);
     $self->{account_list} = [];
     for my $ref (@accounts){
-        if ($self->{charttype} and $self->{charttype} ne $ref->{charttype}){
-             next;
-        }
         bless $ref, 'LedgerSMB::DBObject::Account';
         $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', 'dbh', '_roles', '_request']);
         push (@{$self->{account_list}}, $ref);

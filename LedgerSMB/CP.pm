@@ -413,7 +413,7 @@ sub post_payment {
 				 WHERE $where
 				       AND a.trans_id = ?|;
 
-            my $sth = $dbh->prepare($query);
+            $sth = $dbh->prepare($query);
             $sth->execute( $form->{"id_$i"} );
             my ($id) = $sth->fetchrow_array;
 

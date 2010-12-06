@@ -59,7 +59,6 @@ sub get_vc {
     my $n;
     my $count;
     my $item;
-    my $sth;
 
     $item = $form->{dbh}->quote($item);
     foreach $item ( @{ $arap{ $form->{type} } } ) {
@@ -108,7 +107,7 @@ sub get_vc {
 
         $sth->finish;
     }
-    $dbh->{commit};
+    $dbh->commit();
 
     $form->all_years( $myconfig, $dbh );
 

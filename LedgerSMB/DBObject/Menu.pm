@@ -17,7 +17,6 @@ included COPYRIGHT and LICENSE files for more information.
 
 package LedgerSMB::DBObject::Menu;
 
-use Config::Std;
 use base(qw(LedgerSMB::DBObject));
 1;
 

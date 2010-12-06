@@ -67,3 +67,21 @@ END;
 $$ language plpgsql;
 
 
+CREATE OR REPLACE FUNCTION eca__get_entity (
+    in_credit_id int
+) RETURNS setof entity AS $$
+
+declare
+    v_row entity;
+BEGIN
+    SELECT entity.* INTO v_row FROM entity_credit_account JOIN entity ON entity_credit_account.entity_id = entity.id WHERE entity_credit_account.id = in_credit_id;
+    IF NOT FOUND THEN
+        raise exception 'Could not find entity with ID %', in_credit_id;
+    ELSE
+        return next v_row;
+    END IF;
+END;
+
+$$ language plpgsql;
+
+

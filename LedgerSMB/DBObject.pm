@@ -107,7 +107,7 @@ sub exec_method {
     
     $logger->debug("exec_method: \$funcname = $funcname");
     my @in_args;
-    @in_args = @{ $args{args}} if $args{args};
+    @in_args = @{ $args{args} } if $args{args};
     
     my @call_args;
      
@@ -141,9 +141,18 @@ sub exec_method {
         @proc_args = $self->_parse_array($pargs);
         if (@proc_args) {
             for my $arg (@proc_args) {
+                #print STDERR "User Provided Args: $arg\n";
                 if ( $arg =~ s/^in_// ) {
-                    $logger->debug("exec_method pushing $arg = $self->{$arg}");
-                     push @call_args, $self->{$arg};
+                     if ( defined $self->{$arg} )
+                     {
+                        $logger->debug("exec_method pushing $arg = $self->{$arg}");
+                     }
+                     else
+                     {
+                        $logger->debug("exec_method pushing \$arg defined $arg | \$self->{\$arg} is undefined");
+                        $self->{$arg} = undef;
+                     }
+                     push ( @call_args, $self->{$arg} );
                 }
             }
         }

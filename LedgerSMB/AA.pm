@@ -496,8 +496,6 @@ sub post_transaction {
         $arap = 1;
     }
 
-    my $exchangerate;
-
     # add paid transactions
     for $i ( 1 .. $form->{paidaccounts} ) {
 
@@ -919,7 +917,7 @@ sub transactions {
         description   => 28
     );
 
-    my @a = ( transdate, invnumber, name );
+    my @a = qw( transdate invnumber name );
     push @a, "employee" if $form->{l_employee};
     push @a, "manager"  if $form->{l_manager};
     my $sortorder = $form->sort_order( \@a, \%ordinal );

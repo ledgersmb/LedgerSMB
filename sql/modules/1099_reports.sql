@@ -21,12 +21,13 @@ CREATE TYPE tax_form_report_detail_item AS (
     duedate text);
 
 CREATE OR REPLACE FUNCTION tax_form__list_all()
-RETURNS SETOF country_tax_form as
-$$
-select * from country_tax_form order by country_id;
-$$ language sql;
+RETURNS SETOF country_tax_form AS
+$BODY$
+SELECT * FROM country_tax_form ORDER BY country_id;
+$BODY$ LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin date, in_end date) RETURNS setof tax_form_report_item AS $$
+CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin date, in_end date) 
+RETURNS SETOF tax_form_report_item AS $BODY$
 DECLARE
 	out_row tax_form_report_item;
 BEGIN
@@ -70,14 +71,15 @@ BEGIN
 		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
 		      AND transdate BETWEEN in_begin AND in_end
-             GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code
-	LOOP
+             GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code 
+    LOOP
 		RETURN NEXT out_row;
 	END LOOP;
 END;
-$$ LANGUAGE plpgsql;
+$BODY$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) RETURNS setof tax_form_report_detail_item AS $$
+CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) 
+RETURNS SETOF tax_form_report_detail_item AS $BODY$
 DECLARE
 	out_row tax_form_report_detail_item;
 BEGIN
@@ -130,4 +132,4 @@ BEGIN
 		RETURN NEXT out_row;
 	END LOOP;
 END;
-$$ LANGUAGE plpgsql;
+$BODY$ LANGUAGE PLPGSQL;

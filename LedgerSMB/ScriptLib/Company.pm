@@ -518,8 +518,8 @@ sub _render_main_screen{
     $company->{dbh}->commit;
     $company->get_metadata();
 
-    $company->{creditlimit} = "$company->{creditlimit}"; 
-    $company->{discount} = "$company->{discount}"; 
+    $company->{creditlimit} = $company->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
+    $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
     $company->{note_class_options} = [
         {label => 'Entity', value => 1},
         {label => $ec_labels->{"$company->{entity_class}"} . ' Account', 

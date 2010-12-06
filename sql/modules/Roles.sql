@@ -614,8 +614,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__receipt_process"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 
-GRANT INSERT, SELECT ON payment, payment_links, overpayment
-TO "lsmb_<?lsmb dbname ?>__receipt_proces";
+GRANT INSERT, SELECT ON payment, payment_links, overpayments
+TO "lsmb_<?lsmb dbname ?>__receipt_process";
 
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__receipt_process";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__receipt_process";

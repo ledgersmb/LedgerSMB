@@ -114,9 +114,47 @@ merging hashes into self.
 Removes all elements starting with a . because these elements conflict with the
 ability to hide the entire structure for things like CSV lookups.
 
-= item get_default_value_by_key($key)
+=item get_default_value_by_key($key)
 
 Retrieves a default value for the given key, it is just a wrapper on LedgerSMB::Setting;
+
+
+=item call_procedure( procname => $procname, args => $args )
+
+Function that allows you to call a stored procedure by name and map the appropriate argument to the function values
+
+=item dberror()
+
+Localizes and returns database errors and error codes within LedgerSMB
+
+=item error()
+
+Returns HTML errors in LedgerSMB. Needs refactored into a general Error class.
+
+=item get_user_info()
+
+Loads user configuration info from LedgerSMB::User
+
+=item round_amount() 
+
+Uses Math::Float with an amount and a set number of decimal places to round the amount and return it.
+
+Defaults to the default decimal places setting in the LedgerSMB configuration if there is no places argument passed in.
+
+They should be changed to allow different rules for different accounts.
+
+=item sanitize_for_display()
+
+Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
+
+=item take_top_level()
+
+Removes blank keys and non-reference keys from a hash and returns a hash with only non-blank and referenced keys.
+
+=item type()
+
+Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST".
+
 
 =back
 
@@ -168,15 +206,22 @@ our $VERSION = '1.2.99';
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
 sub new {
+    #my $type   = "" unless defined shift @_;
+    #my $argstr = "" unless defined shift @_;
     my $type   = shift @_;
     my $argstr = shift @_;
     my %cookie;
     my $self = {};
 
+    $type = "" unless defined $type;
+    $argstr = "" unless defined $argstr;
+
     $logger->debug("Begin LedgerSMB.pm");
 
     $self->{version} = $VERSION;
     $self->{dbversion} = "1.2.0";
+    #bless $self if defined $self;
+    #bless $type if defined $type;
     bless $self, $type;
     $logger->debug("LedgerSMB::new: \$argstr = $argstr");
     my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
@@ -207,9 +252,11 @@ sub new {
             $cookie{$name} = $value;
         }
     }
-
+    $self->{action} = "" unless defined $self->{action};
     $self->{action} =~ s/\W/_/g;
     $self->{action} = lc $self->{action};
+
+    $self->{path} = "" unless defined $self->{path};
 
     if ( $self->{path} eq "bin/lynx" ) {
         $self->{menubar} = 1;
@@ -223,8 +270,11 @@ sub new {
 
     }
 
+    $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
+
     $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    $self->{script} = $1;
+    $self->{script} = $1 unless !defined $1;
+    $self->{script} = "" unless defined $self->{script};
 
     if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
         $self->error("Access Denied");
@@ -362,6 +412,7 @@ sub escape {
     my $self = shift;
     my %args = @_;
     my $str  = $args{string};
+    $str = "" unless defined $str;
 
     my $regex = qr/([^a-zA-Z0-9_.-])/;
     $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
@@ -372,10 +423,13 @@ sub is_blank {
     my $self = shift @_;
     my %args = @_;
     my $name = $args{name};
-    if (not defined $name){
-        # TODO: Raise error 
-    }
     my $rc;
+
+    if (not defined $name){
+        $self->{_locale} = LedgerSMB::Locale->get_handle('en') unless defined $self->{_locale};
+        $self->error($self->{_locale}->text('Field \"Name\" Not Defined'));
+    }
+
     if ( $self->{$name} =~ /^\s*$/ ) {
         $rc = 1;
     }
@@ -460,6 +514,9 @@ sub format_amount {
     my $places   = $args{precision};
     my $dash     = $args{neg_format};
     my $format   = $args{format};
+
+    $dash = "" unless defined $dash;
+
     if (!defined $format){
        $format = $myconfig->{numberformat}
     }
@@ -477,6 +534,7 @@ sub format_amount {
     $negative = ( $amount < 0 );
     $amount->babs();
 
+    $places = "" unless defined $places;
     if ( $places =~ /\d+/ ) {
 
         #$places = 4 if $places == 2;
@@ -494,6 +552,7 @@ sub format_amount {
         if ( $format ) {
 
             my ( $whole, $dec ) = split /\./, "$amount";
+            $dec = "" unless defined $dec;
             $amount = join '', reverse split //, $whole;
 
             if ($places) {
@@ -573,7 +632,7 @@ sub parse_amount {
     my $myconfig = $args{user} || $self->{_user};
     my $amount   = $args{amount};
 
-    if ( $amount eq '' or ! defined $amount) {
+    if ( ! defined $amount or $amount eq '' ) {
         return 0;
     }
 
@@ -582,6 +641,7 @@ sub parse_amount {
         return $amount;
     }
     my $numberformat = $myconfig->{numberformat};
+    $numberformat = "" unless defined $numberformat;
 
     if (   ( $numberformat eq '1.000,00' )
         || ( $numberformat eq '1000,00' ) )
@@ -620,7 +680,7 @@ sub round_amount {
     # We will grab the default value, if it isnt defined
     #
     if (!defined $places){
-    $places = ${LedgerSMB::Sysconfig::decimal_places};
+       $places = ${LedgerSMB::Sysconfig::decimal_places};
     }
     
     # These rounding rules follow from the previous implementation.
@@ -707,6 +767,7 @@ sub is_allowed_role {
     my ($self, $args) = @_;
     my @roles = @{$args->{allowed_roles}};
     for my $role (@roles){
+        $self->{_role_prefix} = "" unless defined $self->{_role_prefix};
         my @roleset = grep m/^$self->{_role_prefix}$role$/, @{$self->{_roles}};
         if (scalar @roleset){
             return 1;
@@ -724,8 +785,10 @@ sub date_to_number {
     my $myconfig = $args{user};
     my $date     = $args{date};
 
+    $date = "" unless defined $date;
+
     my ( $yy, $mm, $dd );
-    if ( $date && $date =~ /\D/ ) {
+    if ( $date ne "" && $date && $date =~ /\D/ ) {
 
         if ( $date =~ /^\d{4}-\d\d-\d\d$/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
@@ -872,7 +935,7 @@ sub _db_init {
 			|| ':' || f.field_name as field_def
 		FROM custom_table_catalog t
 		JOIN custom_field_catalog f USING (table_id)";
-    my $sth = $self->{dbh}->prepare($query);
+    $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
@@ -908,7 +971,7 @@ sub dberror{
 	'22012' => $self->{_locale}->text('Division by 0 error'),
 	'22004' => $self->{_locale}->text('Required input not provided'),
 	'23502' => $self->{_locale}->text('Required input not provided'),
-        '23505' => $self->{_locale}->text('Conflict with Existing Data'),
+    '23505' => $self->{_locale}->text('Conflict with Existing Data'),
 	'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
                     $self->{dbh}->errstr,
    };
@@ -916,6 +979,7 @@ sub dberror{
            $self->{dbh}->err . ", string " .$self->{dbh}->errstr);
    if (defined $state_error->{$self->{dbh}->state}){
        $self->error($state_error->{$self->{dbh}->state});
+       $self->{dbh}->rollback;
        exit;
    }
    $self->error($self->{dbh}->state . ":" . $self->{dbh}->errstr);
@@ -969,7 +1033,22 @@ sub merge {
         else {
             $dst_arg = $arg;
         }
-        $logger->debug("LedgerSMB.pm: merge setting $dst_arg to $src->{$arg}");
+        if ( defined $dst_arg && defined $src->{$arg} )
+        {
+            $logger->debug("LedgerSMB.pm: merge setting $dst_arg to $src->{$arg}");
+        }
+        elsif ( !defined $dst_arg && defined $src->{$arg} )
+        {
+            $logger->debug("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is defined $src->{$arg}");
+        }
+        elsif ( defined $dst_arg && !defined $src->{$arg} )
+        {
+            $logger->debug("LedgerSMB.pm: merge setting \$dst_arg is defined $dst_arg \$src->{\$arg} is undefined");
+        }
+        elsif ( !defined $dst_arg && !defined $src->{$arg} )
+        {
+            $logger->debug("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is undefined");
+        }
         $self->{$dst_arg} = $src->{$arg};
     }
 }

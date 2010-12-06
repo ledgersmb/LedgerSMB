@@ -65,13 +65,13 @@ BEGIN
 		JOIN company cp ON (cp.entity_id = e.id)
 			WHERE ec.entity_class = in_account_class
                         AND CASE WHEN in_account_class = 1 THEN
-	           		e.id IN (SELECT entity_id FROM ap 
+	           		ec.id IN (SELECT entity_credit_account FROM ap 
 	           			WHERE amount <> paid
-		   			GROUP BY entity_id)
+		   			GROUP BY entity_credit_account)
 		    	       WHEN in_account_class = 2 THEN
-		   		e.id IN (SELECT entity_id FROM ar
+		   		ec.id IN (SELECT entity_credit_account FROM ar
 		   			WHERE amount <> paid
-		   			GROUP BY entity_id)
+		   			GROUP BY entity_credit_account)
 		   	  END
 	LOOP
 		RETURN NEXT out_entity;

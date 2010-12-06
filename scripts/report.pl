@@ -8,7 +8,7 @@ sub generate_report {
     my ($request) = @_;
     my $template = $request->{template};
     my $report = new LedgerSMB::DBObject::Report->new({base => $request });
-    my $template = LedgerSMB::Template->new(
+    $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $request->{_locale},
         path => 'UI/report',

@@ -351,6 +351,7 @@ our $test_request_data = [
 			delete $GLOBAL{batch_no};
 			# save form_id and batch number for additional requests
 			$GLOBAL{"form_id"} = $1 if ($res->content =~ m/input type=hidden name="form_id" value="(\d+)"/);
+            $GLOBAL{"form_id"} = "" unless defined $GLOBAL{"form_id"};
 			ok($GLOBAL{form_id}, "Received form ID: ".$GLOBAL{form_id});
 			$GLOBAL{batch_no} = $1 if ($res->content =~ m/input name="batch_number" type="text" value="([A-Z]-\d+)"/);
 
@@ -388,12 +389,14 @@ our $test_request_data = [
 		"_lwp_tests"	=> sub {
 			my $res = shift;
 			my $batch_no = $GLOBAL{batch_no};
-			my $batch_id;
+			my $batch_id = "";
+            $batch_no = "" unless defined $GLOBAL{batch_no};
 
 			delete @GLOBAL{ qw( form_id row_1 )};
 			$GLOBAL{"form_id"} = $1 if ($res->content =~ m/input id="form-id" type="hidden" name="form_id" value="(\d+)"\s+\/\>/);
 			$batch_id = $1 if ($res->content =~ m/\<a href="vouchers.pl\?action=get_batch&amp;batch_id=(\d+)"\>$batch_no\<\/a\>/);			
 			$GLOBAL{"row_1"} = $batch_id if ($res->content =~ m/<input id="batch-${batch_id}" type="checkbox" name="batch_${batch_id}" value="\d"\s+\/\>/);
+            $GLOBAL{"row_1"} = "" unless defined $GLOBAL{"row_1"};
 			$GLOBAL{batch_id} = "batch_".$batch_id;
 
 			ok(exists $GLOBAL{"row_1"}, 'Received correct batch ID '.$GLOBAL{row_1});

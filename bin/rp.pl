@@ -134,7 +134,7 @@ sub report {
 
         # accounting years
         $form->{selectaccountingyear} = {
-            name => 'year',
+            name => 'fromyear',
             options => [{text => '', value => ''}],
             };
         push @{$form->{selectaccountingyear}{options}}, {
@@ -143,7 +143,7 @@ sub report {
             } foreach ( @{ $form->{all_years} } );
 
         $form->{selectaccountingmonth} = {
-            name => 'month',
+            name => 'frommonth',
             options => [{text => '', value => ''}],
             };
         push @{$form->{selectaccountingmonth}{options}}, {

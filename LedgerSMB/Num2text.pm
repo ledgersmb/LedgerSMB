@@ -137,7 +137,8 @@ sub num2text_en {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     while (@numblock) {
@@ -229,7 +230,8 @@ sub num2text_de {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     my $belowhundred = !$#numblock;
@@ -354,7 +356,8 @@ sub num2text_et {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     while (@numblock) {
@@ -448,7 +451,8 @@ sub num2text_es {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     # special case for 1000
@@ -587,7 +591,8 @@ sub num2text_fr {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     my $cent = 0;
@@ -736,7 +741,8 @@ sub num2text_hu {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
     while (@numblock) {
         $i = $#numblock;
@@ -829,7 +835,8 @@ sub num2text_nl {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     while (@numblock) {
@@ -921,7 +928,8 @@ sub num2text_it {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     while (@numblock) {
@@ -1016,7 +1024,8 @@ sub num2text_da {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        #push @numblock, join / /, reverse @a;
+        push @numblock, join(" ", reverse @a);
     }
 
     my $i;
@@ -1130,7 +1139,8 @@ sub num2text_sl {
     for (1 .. 3) {
       push @a, shift @num;
     }
-    push @numblock, join / /, reverse @a;
+    #push @numblock, join / /, reverse @a;
+    push @numblock, join(" ", reverse @a);
   }
   
   my $belowhundred = !$#numblock;

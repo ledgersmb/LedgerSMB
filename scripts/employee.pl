@@ -67,7 +67,7 @@ sub add_location {
     $employee->get();
 
     
-    $employee->get_metadata();
+    #$employee->get_metadata();
 
     _render_main_screen($employee);
 	
@@ -170,7 +170,7 @@ sub edit{
 
 sub _render_main_screen{
     my $employee = shift @_;
-    $employee->get_metadata();
+    #$employee->get_metadata();
 
     $employee->{creditlimit} = "$employee->{creditlimit}"; 
     $employee->{discount} = "$employee->{discount}"; 

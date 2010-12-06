@@ -1158,11 +1158,11 @@ sub save_info {
 
 	    $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});
 	    
-	    print STDERR qq|___Rowcount=$form->{rowcount} _______|;
+        #print STDERR qq|___Rowcount=$form->{rowcount} _______|;
 
 	    foreach my $i(1..($form->{rowcount}))
 	    {
-		print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
+            #print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
 		
 		if($form->{"taxformcheck_$i"} and $taxformfound)
 		{

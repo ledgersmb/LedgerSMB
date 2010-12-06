@@ -22,7 +22,18 @@ $$
 DECLARE
 	account chart%ROWTYPE;
 BEGIN
-	SELECT * INTO account FROM chart WHERE id = in_id;
+	SELECT * INTO account FROM chart WHERE id = in_id AND charttype = 'A';
+	RETURN account;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS chart AS
+$$
+DECLARE
+	account chart%ROWTYPE;
+BEGIN
+	SELECT * INTO account FROM chart WHERE id = in_id AND charttype = 'H';
 	RETURN account;
 END;
 $$ LANGUAGE plpgsql;
@@ -155,11 +166,11 @@ RETURNS void AS $BODY$
        v_chart_id int;
     BEGIN
         -- Check for existence of the account already
-        PERFORM * FROM cr_coa_to_account WHERE in_accno = in_accno;
+        PERFORM * FROM cr_coa_to_account WHERE account = in_accno;
 
         IF NOT FOUND THEN
            -- This is a new account. Insert the relevant data.
-           SELECT chart_id INTO v_chart_id FROM charts WHERE accno = in_accno;
+           SELECT id INTO v_chart_id FROM chart WHERE accno = in_accno;
            INSERT INTO cr_coa_to_account (chart_id, account) VALUES (v_chart_id, in_accno||'--'||in_description);
         END IF;
         -- Already found, no need to do anything. =) 

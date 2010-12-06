@@ -47,7 +47,7 @@ sub price_matrix_query {
     if ( $form->{customer_id} ) {
         my $defaultcurrency = $form->{dbh}->quote( $form->{defaultcurrency} );
         $query = qq|
-    			SELECT p.parts_id, p.customer_id AS entity_id, 
+    			SELECT p.parts_id, p.credit_id AS entity_id, 
 				NULL AS pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, NULL AS pricegroup, 
@@ -58,11 +58,11 @@ sub price_matrix_query {
 					$transdate
 				AND coalesce(p.validto, $transdate) >= 
 					$transdate
-				AND p.customer_id = $entity_id
+				AND p.credit_id = $entity_id
 
 			UNION
 
-    			SELECT p.parts_id, p.customer_id AS entity_id, 
+    			SELECT p.parts_id, p.credit_id AS entity_id, 
 				p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup, 2 AS priority
@@ -78,7 +78,7 @@ sub price_matrix_query {
 
 			UNION
 
-    			SELECT p.parts_id, p.customer_id AS entity_id, 
+    			SELECT p.parts_id, p.credit_id AS entity_id, 
 				p.pricegroup_id, 
 				p.pricebreak, p.sellprice, p.validfrom,
 				p.validto, p.curr, g.pricegroup, 3 AS priority

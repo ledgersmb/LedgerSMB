@@ -61,12 +61,13 @@ VALUES
 ('AR_overpayment', FALSE, FALSE),
 ('AR_discount',    FALSE, FALSE),
 ('AP_amount',      FALSE, FALSE),
+('AP_expense',     FALSE, FALSE),
 ('AP_tax',         FALSE, FALSE),
 ('AP_paid',        FALSE, FALSE),
 ('AP_overpayment', FALSE, FALSE),
 ('AP_discount',    FALSE, FALSE),
 ('IC_sale',        FALSE, FALSE),
-('IC_tax',        FALSE, FALSE),
+('IC_tax',         FALSE, FALSE),
 ('IC_cogs',        FALSE, FALSE),
 ('IC_taxpart',     FALSE, FALSE),
 ('IC_taxservice',  FALSE, FALSE),
@@ -930,6 +931,7 @@ CREATE VIEW employee AS
 CREATE VIEW customer AS 
     SELECT 
         c.id,
+        e.name,
         emd.entity_id, 
         emd.entity_class, 
         emd.discount,
@@ -949,14 +951,16 @@ CREATE VIEW customer AS
         eba.iban, 
         ein.note as invoice_notes 
     FROM entity_credit_account emd 
-    join entity_bank_account eba on emd.entity_id = eba.entity_id
+    LEFT JOIN entity_bank_account eba on emd.entity_id = eba.entity_id
     Left join entity_note ein on ein.ref_key = emd.entity_id
     join company c on c.entity_id = emd.entity_id
+    join entity e on c.entity_id = e.id
     where emd.entity_class = 2;
     
 CREATE VIEW vendor AS 
     SELECT 
-        c.id, 
+        c.id,
+        e.name,
         emd.entity_id, 
         emd.entity_class, 
         emd.discount,
@@ -979,6 +983,7 @@ CREATE VIEW vendor AS
     LEFT join entity_bank_account eba on emd.entity_id = eba.entity_id
     left join entity_note ein on ein.ref_key = emd.entity_id
     join company c on c.entity_id = emd.entity_id
+    join entity e on c.entity_id = e.id
     where emd.entity_class = 1;
 
 COMMENT ON TABLE entity_credit_account IS $$ This is a metadata table for ALL entities in LSMB; it deprecates the use of customer and vendor specific tables (which were nearly identical and largely redundant), and replaces it with a single point of metadata. $$;

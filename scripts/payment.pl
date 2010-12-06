@@ -113,7 +113,7 @@ sub pre_bulk_post_report {
         template => 'form-dynatable',
         format   => ($request->{format}) ? $request->{format} : 'HTML',
     ); 
-    my $cols = qw(accno transdate source memo debit credit);
+    my $cols = "accno transdate source memo debit credit";
     my $rows = [];
     my $heading = {};
     my $total = 0;
@@ -201,9 +201,15 @@ sub get_search_results {
     my $search_url = "$base_url";
     for my $key (keys %{$request->take_top_level}){
         if ($base_url =~ /\?$/){
-            $base_url .= "$key=$request->{key}";
+            if ( defined $key && defined $request->{key} )
+            {
+               $base_url .= "$key=$request->{key}";
+            }
         } else {
-            $base_url .= "&$key=$request->{key}";
+            if ( defined $key && defined $request->{key} )
+            {
+               $base_url .= "&$key=$request->{key}";
+            }
         }
     }
 
@@ -426,6 +432,7 @@ sub display_payments {
         for my $invoice (@{$_->{invoices}}){
             if (($payment->{action} ne 'update_payments') 
                   or (defined $payment->{"id_$_->{contact_id}"})){
+                   $payment->{"paid_$_->{contact_id}"} = "" unless defined $payment->{"paid_$_->{contact_id}"};
                    if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
                       my $i_id = $invoice->[0];
                       my $payment_amt = $payment->parse_amount(
@@ -688,7 +695,6 @@ my @array_options;
 my @project;
 my @selected_checkboxes;
 my @department;
-my @array_options;
 my @currency_options;
 my $exchangerate;
 # LETS GET THE CUSTOMER/VENDOR INFORMATION	
@@ -864,7 +870,7 @@ $uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozi
 my @overpayment;
 my @overpayment_account;
 # Got to build the account selection box first.
-my @overpayment_account = $Payment->list_overpayment_accounting();
+@overpayment_account = $Payment->list_overpayment_accounting();
 # Now we build the structure for the UI
 for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
    if (!$request->{"overpayment_checkbox_$i"}) {  

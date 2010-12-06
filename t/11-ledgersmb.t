@@ -176,6 +176,8 @@ ok(defined $lsmb->{path}, 'new: blank, path defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 
 $lsmb = LedgerSMB->new('path=bin/lynx');
+#$lsmb = LedgerSMB->new();
+#$lsmb->{path} = "bin/lynx";
 ok(defined $lsmb, 'new: lynx, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: lynx, correct type');
 ok(defined $lsmb->{action}, 'new: lynx, action defined');
@@ -228,6 +230,8 @@ SKIP: {
 	@r = $lsmb->call_procedure('procname' => 'pi', 'schema'=>'pg_catalog');
 	like($r[0]->{'pi'}, qr/^3.14/, 
 		'call_procedure: no args, non-numeric return');
+    $lsmb->{dbh}->rollback();
+    $lsmb->{dbh}->disconnect;
 }
 
 # $lsmb->merge checks

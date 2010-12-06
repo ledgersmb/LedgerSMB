@@ -2234,7 +2234,7 @@ qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&act
           . "</th>";
     }
 
-    for (@column_index) { print STDERR qq|______ $_ => $column_data{$_} ______________|; print "\n$column_data{$_}" }
+    #for (@column_index) { print STDERR qq|______ $_ => $column_data{$_} ______________|; print "\n$column_data{$_}" }
 
     if ( $myconfig{acs} !~ /$form->{ARAP}--$form->{ARAP}/ ) {
         $i = 1;

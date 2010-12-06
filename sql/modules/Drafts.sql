@@ -24,12 +24,13 @@ BEGIN
 			 	 ELSE 0
 			    END) as amount
 		FROM (
-			SELECT id, transdate, reference, description, 
-				approved from gl
+			SELECT id, transdate, reference, 
+				(SELECT name FROM eca__get_entity(entity_credit_account)),
+                                approved from gl
 			WHERE lower(in_type) = 'gl'
 			UNION
 			SELECT id, transdate, invnumber as reference, 
-				description::text,
+				(SELECT name FROM eca__get_entity(entity_credit_account)),
 				approved from ap
 			WHERE lower(in_type) = 'ap'
 			UNION

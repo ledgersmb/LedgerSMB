@@ -538,7 +538,6 @@ sub get_job {
 
         my $count;
 
-        my $count;
         while ( ($count) = $sth->fetchrow_array ) {
             $form->{orphaned} += $count;
         }
@@ -1144,7 +1143,7 @@ sub partsgroups {
     my $dbh = $form->{dbh};
 
     $form->{sort} = "partsgroup" unless $form->{partsgroup};
-    my @a         = (partsgroup);
+    my @a         = qw(partsgroup);
     my $sortorder = $form->sort_order( \@a );
 
     my $query = qq|SELECT g.* FROM partsgroup g|;
@@ -1280,7 +1279,7 @@ sub pricegroups {
     my $dbh = $form->{dbh};
 
     $form->{sort} = "pricegroup" unless $form->{sort};
-    my @a         = (pricegroup);
+    my @a         = qw(pricegroup);
     my $sortorder = $form->sort_order( \@a );
 
     my $query = qq|SELECT g.* FROM pricegroup g|;

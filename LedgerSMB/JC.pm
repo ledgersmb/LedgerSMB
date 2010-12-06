@@ -341,7 +341,7 @@ sub delete_timecard {
 		 WHERE formname = ?
 		       AND trans_id = ?
 		       AND spoolfile IS NOT NULL|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{type}, $form->{id} ) || $form->dberror($query);
 
     my $spoolfile;
@@ -358,7 +358,7 @@ sub delete_timecard {
 		  FROM status
 		 WHERE formname = ?
 		       AND trans_id = ?|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{type}, $form->{id} ) || $form->dberror($query);
 
     my $rc = $dbh->commit;
@@ -370,7 +370,7 @@ sub delete_timecard {
         }
     }
 
-    $dbh->{commit};
+    $dbh->commit();
 
     $rc;
 
@@ -442,7 +442,7 @@ sub jcitems {
         projectdescription => 11,
     );
 
-    my @a = ( transdate, projectnumber );
+    my @a = qw( transdate projectnumber );
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $dateformat = $myconfig->{dateformat};

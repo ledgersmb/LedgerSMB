@@ -5,7 +5,8 @@ use warnings;
 
 $ENV{TMPDIR} = 't/var';
 
-use Test::More 'no_plan';
+#use Test::More 'no_plan';
+use Test::More tests => 1172;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
 

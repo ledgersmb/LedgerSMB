@@ -41,6 +41,10 @@ This uses Carp to make a debug message with the full stack backtrace, including 
 
 This uses Data::Dumper to dump the contents of a data structure as a debug message.
 
+=item print
+
+Uses sprintf to format a log line with a timestamp and a message.
+
 =back
 
 =cut

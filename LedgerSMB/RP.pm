@@ -32,6 +32,8 @@
 #======================================================================
 
 package RP;
+use LedgerSMB::Log;
+our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
 sub inventory_activity {
     my ( $self, $myconfig, $form ) = @_;
@@ -187,7 +189,7 @@ sub income_statement {
                 $form->{interval} );
         }
     }
-
+    
     &get_accounts( $dbh, $last_period, $form->{fromdate}, $form->{todate},
         $form, \@categories, 1 );
 
@@ -457,9 +459,9 @@ sub balance_sheet {
         }
     }
     else {
-        if ( $form->{asofyear} && $form->{asofmonth} ) {
+        if ( $form->{fromyear} && $form->{frommonth} ) {
             ( $null, $form->{asofdate} ) =
-              $form->from_to( $form->{asofyear}, $form->{asofmonth} );
+              $form->from_to( $form->{fromyear}, $form->{frommonth} );
         }
     }
 
@@ -1842,7 +1844,7 @@ sub aging {
     $sth->finish;
 
     # get language
-    my $query = qq|SELECT code, description FROM language ORDER BY 2|;
+    $query = qq|SELECT code, description FROM language ORDER BY 2|;
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
@@ -1895,14 +1897,14 @@ sub get_taxaccounts {
     $sth->finish;
 
     # get gifi tax accounts
-    my $query = qq|
+    $query = qq|
 		  SELECT DISTINCT g.accno, g.description
 		    FROM gifi g
 		    JOIN chart c ON (c.gifi_accno= g.accno)
 		    JOIN tax t ON (c.id = t.chart_id)
 		   WHERE c.link LIKE '%${ARAP}_tax%'
 		ORDER BY accno|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror;
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {

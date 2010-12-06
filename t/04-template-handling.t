@@ -38,6 +38,11 @@ $locale = LedgerSMB::Locale->get_handle('fr');
 ##############
 ## AM tests ##
 ##############
+my $expStackTrace = 0;
+if ( $ENV{PERL5OPT}=~/.*?Devel::SimpleTrace.*/ || $ENV{PERL5OPT}=~/.*?Carp::Always.*/ )
+{
+   $expStackTrace = 1;
+}
 
 # AM->check_template_name checks
 # check_template operates by calling $form->error if the checks fail
@@ -55,38 +60,129 @@ ok(!defined $trap->die,
 	'AM, check_template_name: CSS directory, txt');
 $form->{file} = 'test2/apples.txt';
 @r = trap{AM->check_template_name($myconfig, $form)};
-is($trap->die, "Error: Not in a whitelisted directory: test2/apples.txt\n",
-	'AM, check_template_name: Invalid directory, non-css denial');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: Not in a whitelisted directory: test2/apples.txt\n",
+        'AM, check_template_name: Invalid directory, non-css denial');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: Not in a whitelisted directory: test2\/apples.txt\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: Not in a whitelisted directory: test2/apples.txt\n",
+        'AM, check_template_name: Invalid directory, non-css denial');
+}
 $form->{file} = 'test/apples.exe';
 @r = trap{AM->check_template_name($myconfig, $form)};
-is($trap->die, "Error: Error:  File is of type that is not allowed.\n",
-	'AM, check_template_name: Disallowed type denial');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: Error:  File is of type that is not allowed.\n",
+        'AM, check_template_name: Disallowed type denial');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: Error:  File is of type that is not allowed.\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: Error:  File is of type that is not allowed.\n",
+        'AM, check_template_name: Disallowed type denial');
 
+}
 # adjusting backuppath to avoid triggering directory traversal detection
 $temp = ${LedgerSMB::Sysconfig::backuppath};
 ${LedgerSMB::Sysconfig::backuppath} = "foo";
 $form->{file} = "${LedgerSMB::Sysconfig::backuppath}/apples.txt";
 @r = trap{AM->check_template_name($myconfig, $form)};
-is($trap->die, "Error: Not allowed to access foo/ with this method\n",
-	'AM, check_template_name: Backup path denial');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: Not allowed to access foo/ with this method\n",
+        'AM, check_template_name: Backup path denial');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: Not allowed to access foo\/ with this method\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: Not allowed to access foo/ with this method\n",
+        'AM, check_template_name: Backup path denial');
+}
 ${LedgerSMB::Sysconfig::backuppath} = $temp;
 
 $form->{file} = "css/../apples.txt";
 @r = trap{AM->check_template_name($myconfig, $form)};
-is($trap->die, "Error: Directory transversal not allowed.\n",
-	'AM, check_template_name: Directory transversal denial 1');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 1');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: Directory transversal not allowed.\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 1');
+}
 $form->{file} = "/tmp/apples.txt";
 @r = trap{AM->check_template_name($myconfig, $form)};
-is($trap->die, "Error: Directory transversal not allowed.\n",
-	'AM, check_template_name: Directory transversal denial 2');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 2');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: Directory transversal not allowed.\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 2');
+}
 $form->{file} = "test/apples.txt:evil";
 @r = trap{AM->check_template_name($myconfig, $form)};
-is($trap->die, "Error: Directory transversal not allowed.\n",
-	'AM, check_template_name: Directory transversal denial 3');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 3');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: Directory transversal not allowed.\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 3');
+}
 $form->{file} = "c:\\evil.txt";
 @r = trap{AM->check_template_name($myconfig, $form)};
-is($trap->die, "Error: Directory transversal not allowed.\n",
-	'AM, check_template_name: Directory transversal denial 4');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 4');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: Directory transversal not allowed.\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: Directory transversal not allowed.\n",
+        'AM, check_template_name: Directory transversal denial 4');
+}
 
 # AM->load_template checks
 # load_template takes its file name from form
@@ -94,8 +190,21 @@ $form = new Form;
 $myconfig = {'templates' => 't/data'};
 $form->{file} = 't/data/04-not-there.txt';
 @r = trap{AM->load_template($myconfig, $form)};
-is($trap->die, "Error: t/data/04-not-there.txt : No such file or directory\n",
-	'AM, load_template: Die on non-existent file');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: t/data/04-not-there.txt : No such file or directory\n",
+        'AM, load_template: Die on non-existent file');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: t\/data\/04-not-there.txt : No such file or directory\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: t/data/04-not-there.txt : No such file or directory\n",
+        'AM, load_template: Die on non-existent file');
+}
 $form->{file} = 't/data/04-template.html';
 AM->load_template($myconfig, $form);
 is($form->{body}, "I am a template.\nLook at me <?lsmb login ?>.\n",
@@ -107,9 +216,23 @@ $myconfig = {'templates' => 't/var/not here'};
 $form->{body} = "I am a template.\nLook at me.\n";
 $form->{file} = "$myconfig->{templates}/test.txt";
 @r = trap{AM->save_template($myconfig, $form)};
-is($trap->die,
-	"Error: t/var/not here/test.txt : No such file or directory\n",
-	'AM, save_template: Die on unwritable file');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die,
+        "Error: t/var/not here/test.txt : No such file or directory\n",
+        'AM, save_template: Die on unwritable file');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: t\/var\/not here\/test.txt : No such file or directory\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg,
+        "Error: t/var/not here/test.txt : No such file or directory\n",
+        'AM, save_template: Die on unwritable file');
+}
 $myconfig = {'templates' => 't/var'};
 $form->{body} = "I am a template.\nLook at me.";
 $form->{file} = "$myconfig->{templates}/04-template-save-test-$$.txt";

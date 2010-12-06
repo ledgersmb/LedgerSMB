@@ -51,6 +51,7 @@
 <div id = "payments-filter-departments" class="input">
   <label for="department"><?lsmb text('Department') ?></label>
   <select name="department_id" id="department">
+		<option value=""></option>
   <?lsmb FOREACH d = departments ?>
   <option value="<?lsmb d.id ?>"><?lsmb d.description ?></option>
   <?lsmb END ?>
@@ -76,6 +77,7 @@
 <div id = "payments-filter-businesses" class="input">
   <label for="businesses"><?lsmb text('Business Class') ?></label>
   <select name="business_id" id="businesses">
+		<option value=""></option>
   <?lsmb FOREACH b = businesses ?>
   <option value="<?lsmb b.id ?>"><?lsmb b.description ?></option>
   <?lsmb END ?>

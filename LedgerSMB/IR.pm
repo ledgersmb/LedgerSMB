@@ -156,7 +156,6 @@ sub post_invoice {
 
     my $amount;
     my $grossamount;
-    my $allocated;
     my $invamount    = 0;
     my $invnetamount = 0;
 
@@ -979,7 +978,7 @@ sub delete_invoice {
 		SELECT spoolfile FROM status 
 		 WHERE trans_id = ?
 		       AND spoolfile IS NOT NULL|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     my $spoolfile;
@@ -992,7 +991,7 @@ sub delete_invoice {
 
     # delete status entries
     $query = qq|DELETE FROM status WHERE trans_id = ?|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     if ($rc) {
@@ -1016,7 +1015,7 @@ sub delete_invoice {
     $sth->execute($form->{id});
     # delete AP record
     $query = qq|DELETE FROM ap WHERE id = ?|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
     my $rc = $dbh->commit;
 
@@ -1463,7 +1462,6 @@ sub toggle_on_hold {
         my $sth = $dbh->prepare("SELECT on_hold from ar where ar.id = ?");
         $sth->execute($form->{id});
         my $state = $sth->fetchrow_array;
-        my $sth;
         my $n_s; # new state
         if ($state[0] == 't') {
             
@@ -1474,7 +1472,7 @@ sub toggle_on_hold {
             $n_s = 't';
         }
         
-        my $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
+        $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
         my $code = $dbh->execute($ns, $form->{id});
         
         return 1;

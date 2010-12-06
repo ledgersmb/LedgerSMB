@@ -546,7 +546,7 @@ sub dbneedsupdate {
               DBI->connect( $form->{dbconnect}, $form->{dbuser},
                 $form->{dbpasswd} )
               or $form->dberror( __FILE__ . ':' . __LINE__ );
-            $dbh->{pg_enable_utf8};
+            $dbh->{pg_enable_utf8} = 1;
 
             $query = qq|
                 SELECT tablename 
@@ -950,7 +950,7 @@ sub delete_login {
     my ($id) = $sth->fetchrow_array;
     $sth->finish;
 
-    my $query = qq|
+    $query = qq|
         UPDATE employee 
            SET login = NULL,
                enddate = current_date

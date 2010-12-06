@@ -90,6 +90,12 @@ my $aryref;
 ok(defined $form);
 isa_ok($form, 'Form');
 
+my $expStackTrace = 0;
+if ( $ENV{PERL5OPT}=~/.*?Devel::SimpleTrace.*/ || $ENV{PERL5OPT}=~/.*?Carp::Always.*/ )
+{
+   $expStackTrace = 1;
+}
+
 ## $form->escape checks
 $utfstr = "\xd8\xad";
 utf8::decode($utfstr);
@@ -120,10 +126,10 @@ cmp_ok($form->unescape('\\'), 'eq', '', 'unescape: \\');
 cmp_ok($form->unescape('%20'), 'eq', ' ', 'unescape: %20');
 cmp_ok($form->unescape("foo\r\n"), 'eq', "foo\n", 'unescape: foo\r\n');
 ok(utf8::is_utf8($form->unescape('foo%d8%ad')), 'unescape: (utf8 output)');
-cmp_ok(unpack("H*", $form->unescape('%d8%ad')), 'eq', 
-	unpack("H*", $utfstr), 'unescape: %d8%ad');
-cmp_ok(unpack("H*", $form->unescape($form->unescape('%d8%ad'))), 'eq', 
-	unpack("H*", $utfstr), '(2x) unescape: %d8%ad');
+cmp_ok(unpack("U", $form->unescape('%d8%ad')), 'eq', 
+	unpack("U", $utfstr), 'unescape: %d8%ad');
+cmp_ok(unpack("U", $form->unescape($form->unescape('%d8%ad'))), 'eq', 
+	unpack("U", $utfstr), '(2x) unescape: %d8%ad');
 
 ## $form->quote checks
 ok(!defined $form->quote(), 'quote: (undef)');
@@ -237,8 +243,21 @@ delete $ENV{error_function};
 $form->{pre} = 'Blah';
 $form->{header} = 'Blah';
 @r = trap{$form->error('hello world')};
-is($trap->die, "Error: hello world\n",
-	'error: CLI, content, terminated');
+if ( $expStackTrace == 0 )
+{
+    is($trap->die, "Error: hello world\n",
+	    'error: CLI, content, terminated');
+}
+else
+{   
+    my $trapmsg="";
+    if ($trap->die =~/(Error: hello world\n).*/)
+    {
+        $trapmsg = $1;
+    }
+    is($trapmsg, "Error: hello world\n",
+	    'error: CLI, content, terminated');
+}
 ok($form->{pre}, 'error: CLI, ignored $self->{pre}');
 
 $ENV{error_function} = 'main::form_error_func';
@@ -248,8 +267,21 @@ SKIP: {
 	@r = trap{$form->error('hello world')};
 	is($trap->stdout, 'hello world', 
 		'error: CLI, function call called');
+if ( $expStackTrace == 0 )
+{
 	is($trap->die, "Error: hello world\n",
 		'error: CLI, function call termination');
+}
+else
+{ 
+    my $trapmsg="";
+    if ($trap->die =~/(Error: hello world\n).*/)
+    {
+        $trapmsg = $1;
+    }  
+	is($trapmsg, "Error: hello world\n",
+		'error: CLI, function call termination');
+}
 };
 
 ## $form->isblank checks

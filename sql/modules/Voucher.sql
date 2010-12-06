@@ -184,8 +184,8 @@ BEGIN
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		LEFT JOIN users u ON (u.entity_id = b.created_by)
-		JOIN voucher v ON (v.batch_id = b.id)
-		JOIN batch_class vc ON (v.batch_class = vc.id)
+		LEFT JOIN voucher v ON (v.batch_id = b.id)
+		LEFT JOIN batch_class vc ON (v.batch_class = vc.id)
 		LEFT JOIN ar ON (vc.id = 2 AND v.trans_id = ar.id)
 		LEFT JOIN ap ON (vc.id = 1 AND v.trans_id = ap.id)
 		LEFT JOIN acc_trans al ON 
@@ -433,12 +433,12 @@ DECLARE
 BEGIN
 	SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
 	IF voucher_row.batch_class IN (1, 2, 5) THEN
-                DELETE FROM ac_tax_form WHERE entry_id IN (
-                       SELECT entry_id
-                        from acc_trans
-                       WHERE trans_id = voucher_row.trans_id);
-
-		DELETE from acc_trans WHERE trans_id = voucher_row.trans_id;
+        DELETE FROM ac_tax_form WHERE entry_id IN (
+               SELECT entry_id
+                 FROM acc_trans
+               WHERE trans_id = voucher_row.trans_id);
+ 
+		DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
 		DELETE FROM ar WHERE id = voucher_row.trans_id;
 		DELETE FROM ap WHERE id = voucher_row.trans_id;
 		DELETE FROM gl WHERE id = voucher_row.trans_id;

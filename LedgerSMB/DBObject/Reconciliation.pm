@@ -328,7 +328,7 @@ sub get {
     @{$self->{report_lines}} = $self->exec_method(
 		funcname=>'reconciliation__report_details'
     );
-    my ($ref) = $self->exec_method(
+    $ref = $self->exec_method(
                 funcname=>'reconciliation__get_cleared_balance'
     );
 

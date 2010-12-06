@@ -75,7 +75,7 @@ sub transactions {
     if ( $form->{vc} ne 'customer' ) {    # Sanitize $form->{vc}
         $form->{vc} = 'vendor';
     }
-    my $query = qq|
+    $query = qq|
 		SELECT o.id, o.ordnumber, o.transdate, o.reqdate,
 			o.amount, c.legal_name AS name, o.netamount, o.entity_credit_account AS $form->{vc}_id,
 			ex.$rate AS exchangerate, o.closed, o.quonumber, 
@@ -112,7 +112,7 @@ sub transactions {
         ponumber  => 17
     );
 
-    my @a = ( transdate, $ordnumber, name );
+    my @a = ( 'transdate', $ordnumber, 'name' );
     push @a, "employee" if $form->{l_employee};
     if ( $form->{type} !~ /(ship|receive)_order/ ) {
         push @a, "manager" if $form->{l_manager};
@@ -1098,7 +1098,7 @@ sub order_details {
                     $form->{projectnumber} .= $form->{partsgroup};
                 }
 
-                $form->format_string(projectnumber);
+                $form->format_string($form->{projectnumber});
 
             }
 
@@ -1773,8 +1773,9 @@ sub save_inventory {
     my $wth;
     my $serialnumber;
     my $ship;
+    my $employee_id;
 
-    my ( $null, $employee_id ) = split /--/, $form->{employee};
+    ( $null, $employee_id ) = split /--/, $form->{employee};
     ( $null, $employee_id ) = $form->get_employee($dbh) if !$employee_id;
 
     $query = qq|
@@ -2038,7 +2039,7 @@ sub get_inventory {
         warehouse   => 6,
     );
 
-    my @a = ( partnumber, warehouse );
+    my @a = qw( partnumber warehouse );
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     if ($fromwarehouse_id ne 'NULL') {

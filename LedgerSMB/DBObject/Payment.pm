@@ -344,7 +344,9 @@ sub get_all_contact_invoices {
             }
             push(@$processed_invoices, $new_invoice);
         }
-        $contact->{invoice} = sort { $a->{invoice_date} cmp $b->{invoice_date} } @{ $processed_invoices };
+        #$contact->{invoice} = sort { $a->{invoice_date} cmp $b->{invoice_date} } @{ $processed_invoices };
+        my @sorted = sort { $a->{invoice_date} cmp $b->{invoice_date} } @{ $processed_invoices };
+        $contact->{invoice} = $sorted[0]; 
         $contact->{invoice} = $processed_invoices;
     }
     return @{$self->{contacts}};
@@ -402,16 +404,6 @@ The list is attached to $self->{departments} and returned.
 =back
 
 =cut
-
-sub list_departments {
-  my ($self) = shift @_;
-  my @args = @_;
-  @{$self->{departments}} = $self->call_procedure(
-     procname => 'department_list',
-     args => \@args
-   );
-  return @{$self->{departments}};
-}
 
 =over
                       
@@ -542,12 +534,16 @@ This method sets appropriate project, department, etc. fields.
 sub get_payment_detail_data {
     my ($self) = @_;
     $self->get_metadata();
-    if (!defined $self->{source_start}){
+    if ( !defined $self->{source_start} ){
         $self->error('No source start defined!');
+        exit;
     }
+    #$self->error('No source start defined!') unless defined $self->{source_start}; 
 
     my $source_inc;
     my $source_src;
+    #print STDERR "Use of uninitialized value \$self->{source_start}: $self->{source_start} \n"; 
+    #if ( defined $self->{source_start} ) { print STDERR "Use of uninitialized value \$self->{source_start} is undefined"; } else { print STDERR "Use of uninitialized value \$self->{source_start} is undefined \n"; }
     $self->{source_start} =~ /(\d*)\D*$/;
     $source_src = $1;
     if ($source_src) {
@@ -565,6 +561,7 @@ sub get_payment_detail_data {
 		(defined $self->{"id_$inv->{contact_id}"})
         ) {
 		    my $source = $self->{source_start};
+            $source = "" unless defined $source;
     		if (length($source_inc) < $source_length) {
                 $source_inc = sprintf('%0*s', $source_length, $source_inc);
             }

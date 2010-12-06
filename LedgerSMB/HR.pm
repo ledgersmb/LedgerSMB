@@ -44,7 +44,7 @@ sub get_employee {
     my $notid = "";
 
     if ( $form->{id} ) {
-        $query = qq|SELECT e.* FROM employee e WHERE e.id = ?|;
+        $query = qq|SELECT e.* FROM employee e WHERE e.employeenumber = ?|;
         $sth   = $dbh->prepare($query);
         $sth->execute( $form->{id} )
           || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
@@ -61,10 +61,10 @@ sub get_employee {
         $sth->finish;
 
         # get manager
-        $form->{managerid} *= 1;
+        $form->{manager_id} *= 1;
 
-        $sth = $dbh->prepare("SELECT name FROM employee WHERE id = ?");
-        $sth->execute( $form->{managerid} );
+        $sth = $dbh->prepare("SELECT first_name FROM employee WHERE entity_id = ?");
+        $sth->execute( $form->{manager_id} );
         ( $form->{manager} ) = $sth->fetchrow_array;
 
         $notid = qq|AND id != | . $dbh->quote( $form->{id} );
@@ -78,7 +78,7 @@ sub get_employee {
 
     # get managers
     $query = qq|
-		  SELECT id, name
+		  SELECT entity_id, first_name
 		    FROM employee
 		   WHERE sales = '1'
 		         AND role = 'manager'
@@ -110,11 +110,11 @@ sub save_employee {
         my $uid = localtime;
         $uid .= "$$";
 
-        $query = qq|INSERT INTO employee (name) VALUES ('$uid')|;
+        $query = qq|INSERT INTO employee (first_name) VALUES ('$uid')|;
         $dbh->do($query)
           || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
-        $query = qq|SELECT id FROM employee WHERE name = '$uid'|;
+        $query = qq|SELECT entity_id FROM employee WHERE first_name = '$uid'|;
         $sth   = $dbh->prepare($query);
         $sth->execute
           || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
@@ -123,15 +123,15 @@ sub save_employee {
         $sth->finish;
     }
 
-    my ( $null, $managerid ) = split /--/, $form->{manager};
-    $managerid     *= 1;
+    my ( $null, $manager_id ) = split /--/, $form->{manager};
+    $manager_id     *= 1;
     $form->{sales} *= 1;
 
 
     $query = qq|
 		UPDATE employee 
 		   SET employeenumber = ?,
-		       name = ?,
+		       first_name = ?,
 		       address1 = ?,
 		       address2 = ?,
 		       city = ?,
@@ -150,20 +150,20 @@ sub save_employee {
 		       dob = ?,
 		       iban = ?,
 		       bic = ?,
-		       managerid = ?
+		       manager_id = ?
 		 WHERE id = ?|;
     $sth = $dbh->prepare($query);
     $form->{dob}       ||= undef;
     $form->{startdate} ||= undef;
     $form->{enddate}   ||= undef;
     $sth->execute(
-        $form->{employeenumber}, $form->{name},      $form->{address1},
+        $form->{employeenumber}, $form->{first_name},      $form->{address1},
         $form->{address2},       $form->{city},      $form->{state},
         $form->{zipcode},        $form->{country},   $form->{workphone},
         $form->{homephone},      $form->{startdate}, $form->{enddate},
         $form->{notes},          $form->{role},      $form->{sales},
         $form->{email},          $form->{ssn},       $form->{dob},
-        $form->{iban},           $form->{bic},       $managerid,
+        $form->{iban},           $form->{bic},       $manager_id,
         $form->{id}
     ) || $form->dberror( __FILE__ . ':' . __LINE__ . ':' . $query );
 
@@ -196,8 +196,8 @@ sub employees {
     my $dbh = $form->{dbh};
 
     my $where = "1 = 1";
-    $form->{sort} = ( $form->{sort} ) ? $form->{sort} : "name";
-    my @a         = qw(name);
+    $form->{sort} = ( $form->{sort} ) ? $form->{sort} : "first_name";
+    my @a         = qw(first_name);
     my $sortorder = $form->sort_order( \@a );
 
     my $var;
@@ -209,9 +209,9 @@ sub employees {
     if ( $form->{startdateto} ) {
         $where .= " AND e.startddate <= " . $dbh->quote( $form->{startdateto} );
     }
-    if ( $form->{name} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{name} ) );
-        $where .= " AND lower(e.name) LIKE $var";
+    if ( $form->{first_name} ne "" ) {
+        $var = $dbh->quote( $form->like( lc $form->{first_name} ) );
+        $where .= " AND lower(e.first_name) LIKE $var";
     }
     if ( $form->{notes} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{notes} ) );
@@ -231,9 +231,9 @@ sub employees {
     }
 
     my $query = qq|
-		   SELECT e.*, m.name AS manager
+		   SELECT e.*, m.first_name AS manager
 		     FROM employee e
-		LEFT JOIN employee m ON (m.id = e.managerid)
+		LEFT JOIN employee m ON (m.entity_id = e.manager_id)
 		    WHERE $where
 		 ORDER BY $sortorder|;
 

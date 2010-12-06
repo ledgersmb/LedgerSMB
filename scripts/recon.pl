@@ -460,7 +460,7 @@ sub new_report {
         my ($report_id, $entries) = $recon->new_report($recon->import_file());
         $recon->{dbh}->commit;
         if ($recon->{error}) {
-            $recon->{error};
+            #$recon->{error};
             
             $template = LedgerSMB::Template->new(
                 user=>$user,
@@ -627,7 +627,7 @@ sub corrections {
     # Load the corrections for a given report & entry id.
     # possibly should use a "micro" popup window?
     
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => request, copy=> 'all');
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => 'request', copy=> 'all');
     
     my $template;
         

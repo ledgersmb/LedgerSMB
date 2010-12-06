@@ -206,7 +206,11 @@ sub list {
     my $selectdepartment;
     if ( @{ $form->{all_department} } ) {
         $selectdepartment = {name => 'department', options => []};
-        for ( @{ $form->{all_department} } ) {
+        push @{$selectdepartment->{options}}, {
+	    value => '',
+	    text => ''
+	};
+	for ( @{ $form->{all_department} } ) {
             push @{$selectdepartment->{options}}, {
                 value => "$_->{description}--$_->{id}",
                 text => $_->{description}};

@@ -74,7 +74,6 @@ sub invoice_details {
 
     my @taxaccounts;
     my %taxaccounts;
-    my $tax;
     my $taxrate;
     my $taxamount;
 
@@ -156,7 +155,7 @@ sub invoice_details {
                 $form->{projectnumber} .= $form->{partsgroup};
             }
 
-            $form->format_string(projectnumber);
+            $form->format_string($form->{projectnumber});
 
         }
 
@@ -832,7 +831,7 @@ sub post_invoice {
     my $exchangerate = 0;
     my $keepcleared  = 0;
 
-    %$form->{acc_trans} = ();
+    $form->{acc_trans} = ();
 
     if ($form->{id}){
         delete_invoice($self, $myconfig, $form);
@@ -942,12 +941,6 @@ sub post_invoice {
             $form->{$_} = $form->{$_}->bstr();
         }
     }
-
-
-
-    my $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
-
-
 
 
     my $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
@@ -1785,13 +1778,13 @@ sub reverse_invoice {
     return unless $id;
 
     # reverse inventory items
-    my $query = qq|
+    $query = qq|
 		SELECT i.id, i.parts_id, i.qty, i.assemblyitem, p.assembly,
 		       p.inventory_accno_id
 		  FROM invoice i
 		  JOIN parts p ON (i.parts_id = p.id)
 		 WHERE i.trans_id = ?|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
@@ -1852,7 +1845,7 @@ sub reverse_invoice {
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    $query = qq|DELETE FROM shipto WHERE trans_id = ?|;
+    $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -1981,7 +1974,7 @@ sub retrieve_invoice {
         $sth->finish;
 
         # get shipto
-        $query = qq|SELECT * FROM shipto WHERE trans_id = ?|;
+        $query = qq|SELECT ns.*, l.* FROM new_shipto ns JOIN location l ON ns.location_id = l.id WHERE ns.trans_id = ?|;
         $sth   = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -2264,7 +2257,6 @@ sub toggle_on_hold {
         my $sth = $dbh->prepare("SELECT on_hold from ar where ar.id = ?");
         $sth->execute($form->{id});
         my $state = $sth->fetchrow_array;
-        my $sth;
         my $n_s; # new state
         if ($state[0] == 't') {
             
@@ -2275,7 +2267,7 @@ sub toggle_on_hold {
             $n_s = 't';
         }
         
-        my $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
+        $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
         my $code = $dbh->execute($ns, $form->{id});
         
         return 1;

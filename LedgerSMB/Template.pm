@@ -108,6 +108,10 @@ This function outputs the rendered file in an appropriate manner.
 This command checks for valid langages.  Returns 1 if the language is valid, 
 0 if it is not.
 
+=item column_heading() 
+
+Apply locale settings to column headings and add sort urls if necessary.
+
 =back
 
 =head1 Copyright 2007, The LedgerSMB Core Team

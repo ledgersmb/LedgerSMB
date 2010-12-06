@@ -1605,7 +1605,7 @@ sub save_preferences {
 
     $dbh->commit;
 
-    my $myconfig = LedgerSMB::User->new( $form->{login} );
+    $myconfig = LedgerSMB::User->new( $form->{login} );
 
     map { $myconfig->{$_} = $form->{$_} if exists $form->{$_} }
       qw(name email dateformat signature numberformat vclimit tel fax
@@ -2002,7 +2002,7 @@ LedgerSMB|,
 
     if ( $form->{media} eq 'file' ) {
 
-        open( IN, '<:raw', "$tmpfile" ) or $form->error("$tmpfile : $!");
+        #open( IN, '<:raw', "$tmpfile" ) or $form->error("$tmpfile : $!");
         open( OUT, ">-" ) or $form->error("STDOUT : $!");
         binmode( OUT, ':raw' );
 

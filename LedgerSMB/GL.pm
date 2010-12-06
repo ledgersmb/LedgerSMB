@@ -189,7 +189,7 @@ sub post_transaction {
 				            fx_transaction, memo, cleared)
 				    VALUES  (?, (SELECT id
 				                   FROM chart
-				                  WHERE accno = ?),
+				                  WHERE accno = ? AND charttype = 'A'),
 				           ?, ?, ?, ?, ?, ?, ?)|;
 
             $sth = $dbh->prepare($query);
@@ -234,7 +234,7 @@ sub all_transactions {
     my $var;
     my $null;
     if ($form->{chart_id}){
-       my $sth = $dbh->prepare('SELECT id, accno, description FROM chart WHERE id = ?');
+       my $sth = $dbh->prepare("SELECT id, accno, description FROM chart WHERE id = ? AND charttype = 'A'");
        $sth->execute($form->{chart_id});
        ($form->{chart_id}, $form->{chart_accno}, $form->{chart_description}) = $sth->fetchrow_array();
     }
@@ -282,8 +282,8 @@ sub all_transactions {
         $apwhere .= " AND lower(ac.memo) LIKE $var";
     }
 
-    if (!form->{datefrom} && !$form->{dateto} 
-		&& form->{year} && $form->{month}){
+    if (!$form->{datefrom} && !$form->{dateto} 
+		&& $form->{year} && $form->{month}){
         ( $form->{datefrom}, $form->{dateto} ) =
           $form->from_to( $form->{year}, $form->{month}, $form->{interval} );
     }
@@ -407,7 +407,7 @@ sub all_transactions {
             $query = qq|
 				SELECT SUM(ac.amount)
 				  FROM acc_trans ac
-				  JOIN chart c ON (ac.chart_id = c.id)
+				  JOIN chart c ON (ac.chart_id = c.id AND c.charttype = 'A')
 				 WHERE c.gifi_accno = $gifi
 				       AND ac.transdate < date | . $dbh->quote( $form->{datefrom} );
 
@@ -431,7 +431,7 @@ sub all_transactions {
         entry_id    => 20
     );
 
-    my @a = ( entry_id, trans_id, chart_id, id, transdate, reference, source, description, accno);
+    my @a = qw( entry_id trans_id chart_id id transdate reference source description accno);
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $chart_id;
@@ -449,7 +449,7 @@ sub all_transactions {
         $approved = $dbh->quote($form->{approved});
     }
 
-    my $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference,
+    $query = qq|SELECT g.id, 'gl' AS type, $false AS invoice, g.reference,
 						  g.description, ac.transdate, ac.source,
 						  ac.amount, c.accno, c.gifi_accno, g.notes, c.link,
 						  '' AS till, ac.cleared, d.description AS department,
@@ -457,7 +457,7 @@ sub all_transactions {
 						  ac.chart_id, ac.entry_id
 					 FROM gl AS g
 					 JOIN acc_trans ac ON (g.id = ac.trans_id)
-					 JOIN chart c ON (ac.chart_id = c.id)
+					 JOIN chart c ON (ac.chart_id = c.id AND c.charttype = 'A')
 				LEFT JOIN department d ON (d.id = g.department_id)
 					WHERE $glwhere 
 				              AND (ac.chart_id = $chart_id OR
@@ -476,7 +476,7 @@ sub all_transactions {
 						  ac.chart_id, ac.entry_id 
 					 FROM ar a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
-					 JOIN chart c ON (ac.chart_id = c.id)
+					 JOIN chart c ON (ac.chart_id = c.id AND c.charttype = 'A')
 					JOIN entity_credit_account ec ON 
 					     (a.entity_credit_account = ec.id)
 					 JOIN entity e ON (ec.entity_id = e.id)
@@ -498,7 +498,7 @@ sub all_transactions {
 						  ac.chart_id, ac.entry_id 
 					 FROM ap a
 					 JOIN acc_trans ac ON (a.id = ac.trans_id)
-					 JOIN chart c ON (ac.chart_id = c.id)
+					 JOIN chart c ON (ac.chart_id = c.id AND c.charttype = 'A')
 					JOIN entity_credit_account ec ON 
 					     (a.entity_credit_account = ec.id)
 					 JOIN entity e ON (ec.entity_id = e.id)
@@ -510,7 +510,7 @@ sub all_transactions {
 						$approved = 
 					        (ac.approved AND a.approved))
 				 ORDER BY $sortorder|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
@@ -599,7 +599,7 @@ sub transaction {
         # retrieve individual rows
         $query = qq|SELECT ac.*, c.accno, c.description, p.projectnumber
 					  FROM acc_trans ac
-					  JOIN chart c ON (ac.chart_id = c.id)
+					  JOIN chart c ON (ac.chart_id = c.id and c.charttype = 'A')
 				 LEFT JOIN project p ON (p.id = ac.project_id)
 					 WHERE ac.trans_id = ?
 				  ORDER BY ac.entry_id|;

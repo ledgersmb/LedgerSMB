@@ -84,7 +84,6 @@ sub preprocess {
 			$vars =~ s/"(.*)"/``$1''/gs;
 		}
 	} else {
-		print STDERR "Type: $type\n";
 		for ( keys %{$rawvars} ) {
 			$vars->{$_} = preprocess($rawvars->{$_});
 		}
