@@ -111,28 +111,44 @@ sub pre_bulk_post_report {
         locale   => $request->{_locale},
         path     => 'UI',
         template => 'form-dynatable',
-        format   => ($request->{format}) ? $request->{format} : 'HTML',
+        format   => ($request->{report_format}) ? $request->{report_format} : 'HTML',
     ); 
-    my $cols = "accno transdate source memo debit credit";
+    my $cols;
+    @$cols =  qw(accno source memo debits credits);
     my $rows = [];
-    my $heading = {};
+    my $total_debits = 0;
+    my $total_credits = 0;
+    my $heading = {
+        accno           => $request->{_locale}->text('Account Number'),
+        acc_description => $request->{_locale}->text('Account Title'),
+        transdate       => $request->{_locale}->text('Date'),
+        source          => $request->{_locale}->text('Source'),
+        memo            => $request->{_locale}->text('Memo'),
+        debits           => $request->{_locale}->text('Debits'),
+        credits          => $request->{_locale}->text('Credits')
+                  };
     my $total = 0;
     for my $crow (1 .. $request->{contact_count}){
         my $ref;
         my $cid = $request->{"contact_$crow"};
+        $ref = {accno     => $request->{ar_ap_accno},
+                transdate => $request->{date_paid}, 
+                source    => $request->{"source_$cid"}, 
+                memo      => $request->{"memo_$cid"},
+                amount    => 0
+               };
         for my $invrow (1 .. $request->{"invoice_count_$cid"}){
             my $inv_id = $request->{"invoice_${cid}_$invrow"};
-            $ref = {accno     => $request->{ar_ap_accno},
-                       transdate => $request->{date_paid}, 
-                       source    => $request->{"source_$cid"}, 
-                       memo      => $request->{"memo_$cid"},
-                      };
-            $ref->{amount} += $request->{"payment_$inv_id"};
+            if ($request->{"paid_$cid"} = 'all'){
+                $ref->{amount} += $request->{"payment_$inv_id"};
+            } else {
+               $ref->{amount} += $request->{"net_$inv_id"};
+            }
         }
         # If vendor, this is debit-normal so multiply by -1
         if ($request->{account_class} == 1){
            $ref->{amount} *= -1;
-        } 
+        }
         if ($ref->{amount} < 0) {
             $ref->{debits} = $ref->{amount} * -1;
             $ref->{credits} = 0;
@@ -140,9 +156,12 @@ sub pre_bulk_post_report {
             $ref->{debits} = 0;
             $ref->{credits} = $ref->{amount};
         }
+        $total_debits += $ref->{debits};
+        $total_credits += $ref->{credits};
         push @$rows, $ref;
-        $total += 0;
+        $total += $ref->{amount};
     }
+    
 
     # Cash summary
     my $ref = {
@@ -151,6 +170,9 @@ sub pre_bulk_post_report {
        source    => $request->{_locale}->text('Total'),
        amount    => $total,
     };
+    if ($request->{account_class} == 1){
+       $ref->{amount} *= -1;
+    } 
 
     if ($ref->{amount} < 0) {
         $ref->{debits} = $ref->{amount} * -1;
@@ -159,12 +181,18 @@ sub pre_bulk_post_report {
         $ref->{debits} = 0;
         $ref->{credits} = $ref->{amount};
     }
+    $total_debits += $ref->{debits};
+    $total_credits += $ref->{credits};
     push @$rows, $ref;
-
+    push @$rows,  
+       {class   => 'subtotal',
+        debits  => $total_debits,
+        credits => $total_credits};
+        
     my $buttons = [{
         text  => $request->{_locale}->text('Post'),
         name  => 'action',
-        value => 'payments_bulk_post',
+        value => 'post_payments_bulk',
         class => 'submit',
     }];
     $request->{action} = "p";
@@ -179,9 +207,13 @@ sub pre_bulk_post_report {
 }
 
 sub p_payments_bulk_post {
-    payments_bulk_post(@_);
+    my ($request) = @_;
+    pre_bulk_post_report(@_);
 }
 
+sub p_post_payments_bulk {
+    post_payments_bulk(@_);
+}
 sub get_search_results {
     my ($request) = @_;
     my $rows = [];
