@@ -818,7 +818,8 @@ sub transactions {
 		          min(a.duedate) as duedate, 
 		          sum(a.netamount) as netamount, 
 		          sum(a.amount) as amount, 
-		          sum(a.amount) - sum(acs.amount) AS paid,
+		          sum(a.amount::numeric(20,2)) 
+                             - sum(acs.amount::numeric(20,2)) AS paid,
 		          vce.name, vc.meta_number,
 		          a.entity_id, 
 		          d.description AS department, 
@@ -844,7 +845,9 @@ sub transactions {
         } else {
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
-		          a.duedate, a.netamount, a.amount, a.amount - sum(acs.amount) AS paid,
+		          a.duedate, a.netamount, a.amount, 
+                          a.amount::numeric(20,2) 
+                          - sum(acs.amount::numeric(20,2)) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, 
 		          vce.name, vc.meta_number,
