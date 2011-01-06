@@ -809,6 +809,7 @@ sub transactions {
     my $query;
     if ($form->{outstanding}){
         # $form->{ARAP} is safe since it is set in calling scripts and not passed from the UA
+        my $p = $LedgerSMB::Sysconfig::decimal_places;
         if ($form->{transdateto} eq ''){
             delete $form->{transdateto};
         }
@@ -818,8 +819,8 @@ sub transactions {
 		          min(a.duedate) as duedate, 
 		          sum(a.netamount) as netamount, 
 		          sum(a.amount) as amount, 
-		          sum(a.amount::numeric(20,2)) 
-                             - sum(acs.amount::numeric(20,2)) AS paid,
+		          sum(a.amount::numeric(20,$p)) 
+                             - sum(acs.amount::numeric(20,$p)) AS paid,
 		          vce.name, vc.meta_number,
 		          a.entity_id, 
 		          d.description AS department, 
@@ -846,8 +847,8 @@ sub transactions {
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount, 
-                          a.amount::numeric(20,2) 
-                          - sum(acs.amount::numeric(20,2)) AS paid,
+                          a.amount::numeric(20,$p) 
+                          - sum(acs.amount::numeric(20,$p)) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, 
 		          vce.name, vc.meta_number,
