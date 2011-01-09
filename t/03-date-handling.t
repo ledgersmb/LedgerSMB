@@ -274,9 +274,9 @@ foreach my $format (0 .. $#formats) {
 		cmp_ok($form->from_to('2000', '02', $_ + 12), 'eq',
 			$results, "from_to, $fmt, 2000-02, $_ + 12 interval");
 	}
-	$results =~ s/2001/$today_parts{'yyyy'}/;
 	$results =~ s/11/$today_parts{'mm'}/;
 	$results =~ s/30/$today_parts{'dd'}/;
+	$results =~ s/2001/$today_parts{'yyyy'}/;
 	cmp_ok($form->from_to('00', '02', '0'), 'eq',
 		$results, "from_to, $fmt, 00-02, 0 interval (today)");
 	cmp_ok($form->from_to('2000', '02', '0'), 'eq',
