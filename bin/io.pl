@@ -1680,7 +1680,7 @@ sub print_form {
             $form->update_status( \%myconfig );
         }
 
-        $old_form->{printed} = $form->{printed} if defined %$old_form;
+        $old_form->{printed} = $form->{printed} if %$old_form;
 
         %audittrail = (
             tablename => ($order) ? 'oe' : lc $ARAP,
@@ -1692,7 +1692,7 @@ sub print_form {
 
         $old_form->{audittrail} .=
           $form->audittrail( "", \%myconfig, \%audittrail )
-          if defined %$old_form;
+          if %$old_form;
 
     } elsif ( $form->{media} eq 'email' ) {
         $form->{subject} = qq|$form->{label} $form->{"${inv}number"}|
@@ -1721,7 +1721,7 @@ sub print_form {
         $output_options{from} = $myconfig{email};
         $output_options{notify} = 1 if $form->{read_receipt};
 
-        if ( defined %$old_form ) {
+        if ( %$old_form ) {
             $old_form->{intnotes} = qq|$old_form->{intnotes}\n\n|
               if $old_form->{intnotes};
             $old_form->{intnotes} .=
@@ -1754,7 +1754,7 @@ sub print_form {
 
         $old_form->{audittrail} .=
           $form->audittrail( "", \%myconfig, \%audittrail )
-          if defined %$old_form;
+          if %$old_form;
     } elsif ( $form->{media} eq 'queue' ) {
         %queued = split / /, $form->{queued};
 
@@ -1814,7 +1814,7 @@ sub print_form {
     };
 
     # if we got back here restore the previous form
-    if ( defined %$old_form ) {
+    if ( %$old_form ) {
 
         $old_form->{"${inv}number"} = $form->{"${inv}number"};
 

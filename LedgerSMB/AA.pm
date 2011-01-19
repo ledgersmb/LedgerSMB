@@ -361,7 +361,8 @@ sub post_transaction {
 			curr = ?,
 			notes = ?,
 			department_id = ?,
-			ponumber = ?
+			ponumber = ?,
+                        reverse = ?
 		WHERE id = ?
 	|;
     
@@ -373,7 +374,8 @@ sub post_transaction {
         $datepaid,              $invnetamount,
         $form->{currency},      $form->{notes},
         $form->{department_id},
-        $form->{ponumber},      $form->{id}
+        $form->{ponumber},      $form->{reverse},
+        $form->{id}
     );
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
