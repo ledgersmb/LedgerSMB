@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.21
+LedgerSMB 1.2.22
 
 
 
@@ -198,10 +198,8 @@ Also the POS system requires some additional configuration both in the chart of
 accounts and in the system itself.  Please edit the pos.conf.pl and create 
 appropriate till accounts.
 
-Major Bugs Fixed in 1.2.21:
+Major Bugs Fixed in 1.2.22:
 ================================
-1)  Fixes made to typos in localized templates.  Should have read "cellpadding" 
-and read instead "callpadding" (Luke).
+1)  Bug in date handling test cases corrected which began due to year change to 2011. (Chris T)
+2)  A number of warnings have been corrected in Perl 5.12.  Users of 5.12 should note that warnings reported will be corrected.
 
-2)  AR/AP aging reports now work correctly and ignore payments made after the 
-date of the report.  Minor display issues on the reports were also corrected.

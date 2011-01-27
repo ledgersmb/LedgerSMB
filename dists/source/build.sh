@@ -9,7 +9,7 @@ else
    pgdoc="true";
 fi
 
-version="1.2.21";
+version="1.2.22";
 #rpmversion="1.2.6";
 build_d="../release";
 

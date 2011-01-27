@@ -1,3 +1,11 @@
+Changelog for 1.2.22
+* Corrected error for cases where no buttons occur on GL Journal Entry screen
+(Chris T)
+* Corrected a number of warnings for Perl 5.12 (Chris T and Jeff K)
+* Corrected a number of UI issues with HST migtation (Chris T)
+* Corrected erroneous test case failures due to erroneous order of regexp's in
+test cases (Chris T)
+
 Changelog for 1.2.21
 * Corrected a number of templates with HTML issues (Luke)
 * AR/AP Aging Report fixed, ignores payment after report date (Chris T)

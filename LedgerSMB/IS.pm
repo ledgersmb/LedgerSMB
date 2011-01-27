@@ -817,7 +817,7 @@ sub post_invoice {
     my $exchangerate = 0;
     my $keepcleared  = 0;
 
-    $form->{acc_trans} = ();
+    $form->{acc_trans} = {};
 
     if ($form->{id}){
         delete_invoice($self, $myconfig, $form);
