@@ -769,11 +769,9 @@ sub format_amount {
     $dash = "" unless defined $dash;
 
     my $negative;
-    if ($amount) {
-        $amount = $self->parse_amount( $myconfig, $amount );
-        $negative = ( $amount < 0 );
-        $amount =~ s/-//;
-    }
+    $amount = $self->parse_amount( $myconfig, $amount );
+    $negative = ( $amount < 0 );
+    $amount =~ s/-//;
 
     if ( $places =~ /\d+/ ) {
 
@@ -884,7 +882,7 @@ sub parse_amount {
 
     #if ( ( $amount eq '' ) or ( ! defined $amount ) ) {
     if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
-        $amount = 0;
+        $amount = Math::BigFloat->bzero();
     }
 
     if ( UNIVERSAL::isa( $amount, 'Math::BigFloat' ) )
