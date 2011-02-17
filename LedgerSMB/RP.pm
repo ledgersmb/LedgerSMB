@@ -1339,6 +1339,12 @@ sub trial_balance {
     ( $form->{fromdate}, $form->{todate} ) =
       $form->from_to( $form->{year}, $form->{month}, $form->{interval} )
       if $form->{year} && $form->{month};
+    my $amount_cast; # Whitelisted, safe for interpolation
+    if ($form->{discrete_money}){
+        $amount_cast = "NUMERIC(30,$LedgerSMB::Sysconfig::decimal_places)";
+    } else {
+        $amount_cast = "NUMERIC";
+    };
 
     # get beginning balances
     if ( ($department_id or $form->{accounttype} eq 'gifi') and $form->{fromdate}) {
@@ -1346,7 +1352,7 @@ sub trial_balance {
 
             $query = qq|
 				  SELECT g.accno, c.category, 
-				         SUM(ac.amount) AS amount,
+				         SUM(ac.amount::$amount_cast) AS amount,
 				         g.description, c.contra
 				    FROM acc_trans ac
 				    JOIN chart c ON (ac.chart_id = c.id)
@@ -1368,7 +1374,7 @@ sub trial_balance {
 
             $query = qq|
 				  SELECT c.accno, c.category, 
-				         SUM(ac.amount) AS amount,
+				         SUM(ac.amount::$amount_cast) AS amount,
 				         c.description, c.contra
 				    FROM acc_trans ac
 				    JOIN chart c ON (ac.chart_id = c.id)
@@ -1460,17 +1466,17 @@ sub trial_balance {
         $query = "SELECT c.id AS chart_id, c.accno, c.description, c.contra, 
                                 c.category,
                                 SUM(CASE WHEN ac.transdate < $datefrom
-                                    THEN ac.amount
+                                    THEN ac.amount::$amount_cast
                                     ELSE 0 END) AS balance,
                                 SUM(CASE WHEN ac.transdate >= 
                                               coalesce($datefrom, ac.transdate)
                                               AND ac.amount > 0
-                                    THEN ac.amount
+                                    THEN ac.amount::$amount_cast
                                     ELSE 0 END) AS credit,
                                 SUM(CASE WHEN ac.transdate >= 
                                               coalesce($datefrom, ac.transdate)
                                               AND ac.amount < 0
-                                    THEN ac.amount
+                                    THEN ac.amount::$amount_cast
                                     ELSE 0 END) * -1 AS debit,
                                 SUM(CASE WHEN ac.transdate >=
                                               coalesce($datefrom, ac.transdate)
@@ -1535,7 +1541,7 @@ sub trial_balance {
 
             $query = qq|
 			  SELECT g.accno, g.description, c.category,
-			         SUM(ac.amount) AS amount, c.contra
+			         SUM(ac.amount::$amount_cast) AS amount, c.contra
 			    FROM acc_trans ac
 			    JOIN chart c ON (c.id = ac.chart_id)
 			    JOIN gifi g ON (c.gifi_accno = g.accno)
@@ -1555,7 +1561,7 @@ sub trial_balance {
 
             $query = qq|
 			  SELECT c.accno, c.description, c.category,
-			         SUM(ac.amount) AS amount, c.contra
+			         SUM(ac.amount::$amount_cast) AS amount, c.contra
 			    FROM acc_trans ac
 			    JOIN chart c ON (c.id = ac.chart_id)
 			         $dpt_join
@@ -1576,7 +1582,7 @@ sub trial_balance {
 
         # prepare query for each account
         $query = qq|
-		SELECT (SELECT SUM(ac.amount) * -1 FROM acc_trans ac
+		SELECT (SELECT SUM(ac.amount::$amount_cast) * -1 FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
 			  JOIN (SELECT id, approved FROM gl UNION
@@ -1587,7 +1593,7 @@ sub trial_balance {
 				 AND ($approved OR ac.approved)
 			         AND ($approved OR gl.approved)
 		                 AND c.accno = ?) AS debit,
-		       (SELECT SUM(ac.amount) FROM acc_trans ac
+		       (SELECT SUM(ac.amount::$amount_cast) FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
 			  JOIN (SELECT id, approved FROM gl UNION
@@ -1602,7 +1608,7 @@ sub trial_balance {
         if ( $form->{accounttype} eq 'gifi' ) {
 
             $query = qq|
-		SELECT (SELECT SUM(ac.amount) * -1
+		SELECT (SELECT SUM(ac.amount::$amount_cast) * -1
 		          FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
@@ -1610,7 +1616,7 @@ sub trial_balance {
 				         AND ($approved OR ac.approved)
 		               AND c.gifi_accno = ?) AS debit,
 		
-		       (SELECT SUM(ac.amount)
+		       (SELECT SUM(ac.amount::$amount_cast)
 		          FROM acc_trans ac
 		          JOIN chart c ON (c.id = ac.chart_id)
 		               $dpt_join
