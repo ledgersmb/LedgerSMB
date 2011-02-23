@@ -313,7 +313,7 @@ BEGIN
 	UPDATE acc_trans SET approved = true 
 	WHERE voucher_id IN (select id FROM voucher 
 		WHERE batch_id = in_batch_id
-		AND batch_class IN (3, 4, 7, 8));
+		AND batch_class IN (3, 4, 6, 7));
 
 	UPDATE batch 
 	SET approved_on = now(),
