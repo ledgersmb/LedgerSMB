@@ -2180,6 +2180,19 @@ qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&act
     # print totals
     print qq|
         <tr class=listtotal>
+        <td>&nbsp</td>|;
+    my $total_data;
+    for (@column_index){ $total_data->{$_} = "&nbsp;"; }
+    $total_data->{netamount} = $form->format_amount(\%myconfig, $totalnetamount, $LedgerSMB::Sysconfig::decimal_places);
+    $total_data->{amount} = $form->format_amount(\%myconfig, $totalamount, $LedgerSMB::Sysconfig::decimal_places);
+    $total_data->{paid} = $form->format_amount(\%myconfig, $totalpaid, $LedgerSMB::Sysconfig::decimal_places);
+    $total_data->{debit} = $form->format_amount(\%myconfig, $totaldebit, $LedgerSMB::Sysconfig::decimal_places);
+    $total_data->{credit} = $form->format_amount(\%myconfig, $totalcredit, $LedgerSMB::Sysconfig::decimal_places);
+    for (@column_index){
+        print "<td>$total_data->{$_}</td>";
+    }
+    print qq|
+        </tr>
 |;
 
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
@@ -2310,7 +2323,7 @@ qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
 
 sub subtotal {
 
-    for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+    for (@column_index) { $column_data{$_} = "<td test=$_>&nbsp;</td>" }
 
     $column_data{tax} = "<th class=listsubtotal align=right>"
       . $form->format_amount( \%myconfig, $subtotalamount - $subtotalnetamount,
