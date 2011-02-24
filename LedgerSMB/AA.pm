@@ -822,11 +822,13 @@ sub transactions {
 		          sum(a.netamount) as netamount, 
 		          sum(a.amount) as amount, 
 		          sum(a.amount::numeric(20,$p)) 
-                             - sum(acs.amount::numeric(20,$p)) AS paid,
+                             - (sum(acs.amount::numeric(20,$p)) 
+                                * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
+                          AS paid,
 		          vce.name, vc.meta_number,
 		          a.entity_id, 
-		          d.description AS department, 
-		          a.ponumber
+		          d.description AS department --, 
+		          --a.ponumber
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		     JOIN acc_trans acs ON (acs.trans_id = a.id)
@@ -842,8 +844,9 @@ sub transactions {
 			AND a.approved IS TRUE AND acs.approved IS TRUE
 			AND a.force_closed IS NOT TRUE
 		 GROUP BY 
-		          vc.meta_number, a.entity_id, vce.name, d.description,
-		          a.ponumber, a.invoice 
+		          vc.meta_number, a.entity_id, vce.name, 
+                          d.description --,
+		          --a.ponumber, a.invoice 
 		   HAVING abs(sum(a.amount) - (sum(a.amount) - sum(acs.amount))) > 0.000 |;
         } else {
             $query = qq|
@@ -1075,7 +1078,6 @@ sub transactions {
         $query .= "WHERE ($approved OR a.approved) AND $where
 			ORDER BY $sortorder";
     }
-
     my $sth = $dbh->prepare($query);
     $sth->execute(@paidargs) || $form->dberror($query);
 
