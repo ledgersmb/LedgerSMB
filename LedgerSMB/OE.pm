@@ -276,6 +276,7 @@ sub save {
              $class_id = 1;
         } else {
              $numberfld = "ponumber";
+             $class_id = 2;
         }
     }
     else {

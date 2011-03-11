@@ -295,7 +295,7 @@ sub list_batches {
     $template->render({ 
 	form    => $batch,
 	columns => \@columns,
-    heading => $column_heading,
+        heading => $column_heading,
         rows    => \@rows,
         hiddens => $hiddens,
         buttons => @buttons

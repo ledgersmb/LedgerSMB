@@ -1198,7 +1198,9 @@ CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_p
  		JOIN payment_links pl ON (pl.entry_id=a.entry_id)
  		WHERE al.description in  
                        ('AP_paid', 'AP_discount', 'AR_paid', 'AR_discount') 
-                       and ((in_account_class = 1 AND al.description like 'AP%') or (in_account_class = 2 AND al.description like 'AR%')) 
+                       and ((in_account_class = 1 AND al.description like 'AP%')
+                       or (in_account_class = 2 AND al.description like 'AR%'))
+             ) am ON (true)
    WHERE p.id = in_payment_id
  LOOP
      RETURN NEXT out_payment;

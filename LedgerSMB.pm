@@ -633,7 +633,7 @@ sub parse_amount {
     my $amount   = $args{amount};
 
     if ( ! defined $amount or $amount eq '' ) {
-        return 0;
+        return Math::BigFloat->bzero();
     }
 
     if ( UNIVERSAL::isa( $amount, 'Math::BigFloat' ) )
