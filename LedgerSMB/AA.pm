@@ -820,7 +820,7 @@ sub transactions {
 		   SELECT count(a.id) as invnumber, min(a.transdate) as transdate,
 		          min(a.duedate) as duedate, 
 		          sum(a.netamount) as netamount, 
-		          sum(a.amount) as amount, 
+		          sum(a.amount::numeric(20,$p)) as amount, 
 		          sum(a.amount::numeric(20,$p)) 
                              - (sum(acs.amount::numeric(20,$p)) 
                                 * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
@@ -851,7 +851,7 @@ sub transactions {
         } else {
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
-		          a.duedate, a.netamount, a.amount, 
+		          a.duedate, a.netamount, a.amount::numeric(20,$p), 
                           a.amount::numeric(20,$p) 
                           - sum(acs.amount::numeric(20,$p)) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,

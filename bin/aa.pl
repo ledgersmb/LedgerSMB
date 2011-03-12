@@ -1725,6 +1725,7 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
 sub transactions {
     # it shouldn't be putting it into vendor_id or customer_id, but into 
     # entity_id, conforming to the new entity tables.
+    my $total_due = 0;
     if ( $form->{ $form->{vc} } ) {
         $form->{ $form->{vc} } = $form->unescape( $form->{ $form->{vc} } );
         ( $form->{ $form->{vc} }, $form->{"$form->{vc}_id"} ) =
@@ -2110,6 +2111,7 @@ sub transactions {
             $ref->{amount} - $ref->{netamount},
             2, "&nbsp;" )
           . "</td>";
+        $total_due += $ref->{amount} - $ref->{paid};
         $column_data{due} = "<td align=right>"
           . $form->format_amount( \%myconfig, $ref->{amount} - $ref->{paid},
             2, "&nbsp;" )
@@ -2183,6 +2185,7 @@ qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&act
         <td>&nbsp</td>|;
     my $total_data;
     for (@column_index){ $total_data->{$_} = "&nbsp;"; }
+    $total_data->{due} = $form->format_amount(\%myconfig, $total_due, $LedgerSMB::Sysconfig::decimal_places);
     $total_data->{netamount} = $form->format_amount(\%myconfig, $totalnetamount, $LedgerSMB::Sysconfig::decimal_places);
     $total_data->{amount} = $form->format_amount(\%myconfig, $totalamount, $LedgerSMB::Sysconfig::decimal_places);
     $total_data->{paid} = $form->format_amount(\%myconfig, $totalpaid, $LedgerSMB::Sysconfig::decimal_places);
