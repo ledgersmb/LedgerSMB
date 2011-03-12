@@ -847,7 +847,7 @@ sub transactions {
 		          vc.meta_number, a.entity_id, vce.name, 
                           d.description --,
 		          --a.ponumber, a.invoice 
-		   HAVING abs(sum(a.amount) - (sum(a.amount) - sum(acs.amount))) > 0.000 |;
+		   HAVING abs(sum(acs.amount::numeric(20,2))) > 0.000 |;
         } else {
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
@@ -879,7 +879,7 @@ sub transactions {
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
 		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description, vce.name,
 		          a.ponumber, a.invoice, a.datepaid $acc_trans_fields
-		   HAVING abs(a.amount - (a.amount - sum(acs.amount))) > 0.000 |;
+		   HAVING abs(sum(acs.amount::numeric(20,$p))) > 0 |;
        } 
     } else {
         $query = qq|
