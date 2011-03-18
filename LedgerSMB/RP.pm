@@ -1304,6 +1304,7 @@ sub get_accounts {
 
 sub trial_balance {
     my ( $self, $myconfig, $form ) = @_;
+    my $p;
     my $year_end = $form->{ignore_yearend};
     my $dbh = $form->{dbh};
     my $approved = 'FALSE';
@@ -1480,7 +1481,7 @@ sub trial_balance {
                                     ELSE 0 END) * -1 AS debit,
                                 SUM(CASE WHEN ac.transdate >=
                                               coalesce($datefrom, ac.transdate)
-                                         THEN ac.amount
+                                         THEN ac.amount::$amount_cast
                                          ELSE 0
                                     END) as amount
                                 FROM acc_trans ac
