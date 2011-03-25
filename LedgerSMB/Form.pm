@@ -763,12 +763,14 @@ sub format_amount {
     my ( $self, $myconfig, $amount, $places, $dash ) = @_;
 
     $self = "" unless defined $self;
+    my $negative;
     $myconfig = "" unless defined $myconfig;
     $amount = "" unless defined $amount;
     $places = "" unless defined $places;
     $dash = "" unless defined $dash;
-
-    my $negative;
+    if ($self->{money_precision}){
+       $places= $self->{money_precision};
+    }
     $amount = $self->parse_amount( $myconfig, $amount );
     $negative = ( $amount < 0 );
     $amount =~ s/-//;

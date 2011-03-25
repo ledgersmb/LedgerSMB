@@ -49,6 +49,28 @@
     } -?>
         </td>
       </tr>
+      <tr>
+      <th align="right"><?lsmb text('Display Precision') ?></th>
+      <td><?lsmb PROCESS input element_data = {
+              name = 'display_precision'
+              value = display_precision
+              type = 'input'
+              size = 10
+              class = 'int'
+      } ?>
+      </td>
+      </tr>
+      <tr>
+      <th><?lsmb text('Calc. Precision') ?></th>
+      <td><?lsmb PROCESS input element_data = {
+              name = 'calc_precision'
+              value = calc_precision
+              type = 'input'
+              size = 10
+              class = 'int'
+      } ?>
+      </td>
+      </tr>
 <?lsmb END ?>
     </table>
   </td>

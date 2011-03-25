@@ -1342,10 +1342,16 @@ sub trial_balance {
       if $form->{year} && $form->{month};
     my $amount_cast; # Whitelisted, safe for interpolation
     if ($form->{discrete_money}){
-        $amount_cast = "NUMERIC(30,$LedgerSMB::Sysconfig::decimal_places)";
+        $form->{calc_precision} = $LedgerSMB::Sysconfig::precision;
+    }
+    if ($form->{calc_precision} =~ /\D/){
+        $form->error('Illegal calculation precision');
+    }
+    if ($form->{calc_precision} =~ /\d+/){
+        $amount_cast = "NUMERIC(30,$form->{calc_precision})";
     } else {
         $amount_cast = "NUMERIC";
-    };
+    }
 
     # get beginning balances
     if ( ($department_id or $form->{accounttype} eq 'gifi') and $form->{fromdate}) {
@@ -1398,7 +1404,6 @@ sub trial_balance {
 
         while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-            $ref->{amount} = $form->round_amount( $ref->{amount}, 2 );
             $balance{ $ref->{accno} } = $ref->{amount};
 
             if ( $form->{all_accounts} ) {
@@ -1505,9 +1510,6 @@ sub trial_balance {
         $sth->execute();
         while ($ref = $sth->fetchrow_hashref('NAME_lc')){
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-            $ref->{debit}   = $form->round_amount($ref->{debit}, 2);
-            $ref->{credit}  = $form->round_amount($ref->{credit}, 2);
-            $ref->{balance} = $form->round_amount($ref->{balance}, 2);
             $trb{ $ref->{accno} }{accno}       = $ref->{accno};
             $trb{ $ref->{accno} }{description} = $ref->{description};
             $trb{ $ref->{accno} }{charttype}   = 'A';
@@ -1681,8 +1683,6 @@ sub trial_balance {
 
             }
 
-            $ref->{debit}  = $form->round_amount( $ref->{debit},  2 );
-            $ref->{credit} = $form->round_amount( $ref->{credit}, 2 );
 
             if ( !$form->{all_accounts} ) {
                 next

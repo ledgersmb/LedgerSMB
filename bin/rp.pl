@@ -619,7 +619,7 @@ sub ods_generate_projects { &generate_projects }
 # added headers and subtotals
 #
 sub generate_trial_balance {
-
+    $form->{money_precision} = $form->{display_precision};
     # get for each account initial balance, debits and credits
     RP->trial_balance( \%myconfig, \%$form );
 
