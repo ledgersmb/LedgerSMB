@@ -101,6 +101,9 @@ sub generate_report {
     
     
     my ($request) = @_;
+    if (!$request->{format}){
+       $request->{format} = 'HTML';
+    }
     
     if ($request->{meta_number}) {
       my @call_args = ($request->{'tax_form_id'},
@@ -121,7 +124,7 @@ sub generate_report {
           locale => $request->{_locale},
           path => 'UI',
           template => 'taxform/details_report',
-          format => 'HTML'
+          format => $request->{format},
       );
       $template->render($request);
     } 
@@ -142,7 +145,7 @@ sub generate_report {
             locale => $request->{_locale},
             path => 'UI',
             template => 'taxform/summary_report',
-            format => 'HTML'
+            format => $request->{format},
         );
         $template->render($request);
     }
@@ -163,6 +166,15 @@ sub save
         format => 'HTML'
     );
     $template->render($taxform);
+}
+
+sub print {
+    my ($request) = @_;
+    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+    my $form_info = $taxform->get($request->{tax_form_id});
+    $request->{taxform_name} = $form_info->{description};
+    $request->{format} = 'PDF';
+    generate_report($request);    
 }
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team

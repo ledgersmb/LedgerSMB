@@ -360,6 +360,7 @@ INSERT INTO country(short_name,name) VALUES ('ZW','Zimbabwe');
 create table country_tax_form (                                                    country_id int references country(id) not null,
    form_name text not null,
    id serial not null unique,
+   default_reportable bool not null default false,
    primary key(country_id, form_name)
 );
 

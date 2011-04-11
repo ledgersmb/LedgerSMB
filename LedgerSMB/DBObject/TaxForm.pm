@@ -15,6 +15,15 @@ sub save
   
     $self->{dbh}->commit();
 }
+sub get 
+{
+    my ($self, $id) = @_;
+
+    my @results = $self->exec_method(
+                funcname => 'tax_form__get', args => [$id]
+    );
+    return $results[0];
+}
 
 sub get_forms
 {

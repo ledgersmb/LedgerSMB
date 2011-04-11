@@ -798,14 +798,15 @@ sub transactions {
     if ( !$form->{summary} and !$form->{outstanding} ) {
         $acc_trans_flds = qq|
 			, c.accno, ac.source,
-			pr.projectnumber, ac.memo AS description,
+			p.projectnumber, ac.memo AS description,
 			ac.amount AS linetotal,
 			i.description AS linedescription|;
+        $group_by_fields = qq|, c.accno, ac.source, p.projectnumber, ac.memo,
+                              ac.amount, i.description |;
 
         $acc_trans_join = qq| 
 			     JOIN acc_trans ac ON (a.id = ac.trans_id)
 			     JOIN chart c ON (c.id = ac.chart_id)
-			LEFT JOIN project pr ON (pr.id = ac.project_id)
 			LEFT JOIN invoice i ON (i.id = ac.invoice_id)|;
     }
     my $query;
@@ -891,9 +892,13 @@ sub transactions {
 		          vc.entity_id, a.till, me.name AS manager, a.curr,
 		          ex.$buysell AS exchangerate, 
 		          d.description AS department, 
-		          a.ponumber $acc_trans_flds
+		          a.ponumber, as_array(p.projectnumber) as ac_projects,
+                          as_array(ip.projectnumber) as inv_projects
+                          $acc_trans_flds
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
+                     JOIN acc_trans ac ON (a.id = ac.trans_id)
+                     JOIN chart c ON (c.id = ac.chart_id)
 		LEFT JOIN employee e ON (a.person_id = e.entity_id)
 		LEFT JOIN employee m ON (e.manager_id = m.entity_id)
 		LEFT JOIN entity ee ON (e.entity_id = ee.id)
@@ -902,7 +907,18 @@ sub transactions {
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
 		LEFT JOIN department d ON (a.department_id = d.id) 
-		$acc_trans_join|;
+                LEFT JOIN invoice i ON (i.trans_id = a.id)
+                LEFT JOIN project ip ON (i.project_id = ip.id)
+                LEFT JOIN project p ON ac.project_id = p.id |;
+        $group_by = qq| 
+                GROUP BY  a.id, a.invnumber, a.ordnumber, a.transdate,
+                          a.duedate, a.netamount, a.amount,
+                          a.invoice, a.datepaid, a.terms, a.notes,
+                          a.shipvia, a.shippingpoint, ee.name , 
+                          vce.name, vc.meta_number, ($paid),
+                          vc.entity_id, a.till, me.name, a.curr,
+                          ex.$buysell, a.ponumber,
+                          d.description $group_by_fields|;
     }
 
     my %ordinal = (
@@ -1076,6 +1092,7 @@ sub transactions {
         $query .= "\n ORDER BY $sortorder";
     } else {
         $query .= "WHERE ($approved OR a.approved) AND $where
+                   $group_by
 			ORDER BY $sortorder";
     }
     my $sth = $dbh->prepare($query);

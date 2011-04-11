@@ -117,6 +117,7 @@ sub check_name {
 
                 # we got one name
                 $form->{"${name}_id"} = $form->{name_list}[0]->{id};
+                $form->{default_reportable}= $form->{name_list}[0]->{default_reportable};
                 $form->{$name} = $form->{name_list}[0]->{name};
                 $form->{"old$name"} = qq|$form->{$name}--$form->{"${name}_id"}|;
 

@@ -573,7 +573,7 @@ qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
     $form->hide_form(
         qw(batch_id approved id printed emailed sort closedto locked 
            oldtransdate audittrail recurring checktax reverse batch_id subtype
-           entity_control_code meta_number)
+           entity_control_code meta_number default_reportable)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -746,9 +746,9 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
         }
 
 	$taxchecked="";
-	if($form->{"taxformcheck_$i"})
+	if($form->{"taxformcheck_$i"} or ($form->{default_reportable} and ($i == $form->{rowcount})))
 	{
-		$taxchecked="checked";
+		$taxchecked=qq|CHECKED="CHECKED"|;
 
 	}
 
@@ -1572,9 +1572,11 @@ qq|<input name="l_invnumber" class=checkbox type=checkbox value=Y checked> |
       . $locale->text('Order Number');
     push @a, qq|<input name="l_ponumber" class=checkbox type=checkbox value=Y> |
       . $locale->text('PO Number');
-    push @a,
-qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
+    push @a, qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
       . $locale->text('Invoice Date');
+    push @a,
+qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
+      . $locale->text('Project Numbers');
     push @a, $l_name;
     push @a, $l_employee if $l_employee;
     push @a, $l_manager if $l_employee;
@@ -1896,6 +1898,8 @@ sub transactions {
         {
             push @column_index, $item;
         }
+    } elsif ($form->{l_projectnumber} eq 'Y'){
+        push @column_index, 'projectnumber';
     }
 
     if ( $form->{l_subtotal} eq 'Y' ) {
@@ -2056,7 +2060,13 @@ sub transactions {
     foreach $ref ( @{ $form->{transactions} } ) {
 
         $i++;
-
+        if ($form->{l_projectnumber} eq 'Y' and ref($ref->{ac_projects}) eq 'ARRAY' and ref($ref->{inv_projects}) eq 'ARRAY'){
+            my @projects; 
+            push @projects, @{$ref->{ac_projects}};
+            push @projects, @{$ref->{inv_projects}};
+            $ref->{projectnumber} = join '<br />', @projects;
+            $ref->{projectnumber} =~ s/(<br \/>)+/<br \/>/;
+        } else { $form->error($ref->{ac_projects} . $ref->{inv_projects})}
         if ( $form->{l_subtotal} eq 'Y' ) {
             if ( $sameitem ne $ref->{ $form->{sort} } ) {
                 &subtotal;

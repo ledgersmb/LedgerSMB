@@ -1813,10 +1813,12 @@ sub get_name {
 
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
-		SELECT c.*, e.name, e.control_code FROM entity_credit_account c
-		JOIN entity e ON (c.entity_id = e.id)
-		WHERE (lower(e.name) LIKE ?
-		OR c.meta_number ILIKE ?)
+		SELECT c.*, e.name, e.control_code, ctf.default_reportable
+                  FROM entity_credit_account c
+		  JOIN entity e ON (c.entity_id = e.id)
+             LEFT JOIN country_tax_form ctf ON (c.taxform_id = ctf.id)
+		 WHERE (lower(e.name) LIKE ?
+		       OR c.meta_number ILIKE ?)
 		$where
 		ORDER BY e.name/;
 
@@ -2395,7 +2397,7 @@ sub create_links {
 				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
 				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse,
-                                a.approved
+                                a.approved, ctf.default_reportable
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
@@ -2403,6 +2405,8 @@ sub create_links {
 			LEFT JOIN employee er ON (er.entity_id = a.person_id)
 			LEFT JOIN entity e ON (er.entity_id = e.id)
 			LEFT JOIN department d ON (d.id = a.department_id)
+                        LEFT JOIN country_tax_form ctf 
+                                  ON (ctf.id = c.taxform_id)
 			WHERE a.id = ? AND c.entity_class = 
 				(select id FROM entity_class 
 				WHERE class ilike ?)|;

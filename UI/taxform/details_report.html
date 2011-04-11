@@ -1,3 +1,7 @@
+<?lsmb INCLUDE 'ui-header.html' 
+       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
+?>
+<?lsmb PROCESS 'elements.html' ?>
 <!--
  * Occurs from filter_screen if vendor meta_number added, or from summary report of total amount is clicked
  * vendor.meta_number (click through to edit vendor)
@@ -7,10 +11,6 @@
  * sum of invoice reportable entries
  * total of sums above 
 -->
-<?lsmb INCLUDE 'ui-header.html' 
-       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
-?>
-<?lsmb PROCESS 'elements.html' ?>
 <body>
 
 <table width="100%">
@@ -36,6 +36,20 @@
     </tr>
 <?lsmb END ?>
 </table>
-
+<form action="taxform.pl" method="POST">
+<?lsmb INCLUDE "taxform/report_hiddens.html" ?>
+<?lsmb PROCESS input element_data = {
+    name="print_all"
+    type="hidden"
+    value="0"
+} ?>
+<?lsmb PROCESS button = element_data {
+    name="action"
+    text="Print"
+    value="print"
+    class="submit"
+    type="submit"
+} ?>
+</form>
 </body>
 </html>
