@@ -359,25 +359,31 @@ sub _display_report {
         $recon->{total_cleared_debits} = $recon->parse_amount(amount => 0);
         $recon->{total_uncleared_credits} = $recon->parse_amount(amount => 0);
         $recon->{total_uncleared_debits} = $recon->parse_amount(amount => 0);
+        my $neg_factor = 1;
+        if ($recon->{account_info}->{category} =~ /(A|E)/){
+           $recon->{their_total} *= -1;
+           $neg_factor = -1;
+           
+        }
 
 
         # Credit/Debit separation (useful for some)
         for my $l (@{$recon->{report_lines}}){
-            if ($l->{their_balance} < 0){
+            if ($l->{their_balance} > 0){
                $l->{their_debits} = $recon->parse_amount(amount => 0);
-               $l->{their_credits} = $l->{their_balance}->bneg;
+               $l->{their_credits} = $l->{their_balance};
             }
             else {
                $l->{their_credits} = $recon->parse_amount(amount => 0);
-               $l->{their_debits} = $l->{their_balance};
+               $l->{their_debits} = $l->{their_balance}->bneg;
             }
-            if ($l->{our_balance} < 0){
+            if ($l->{our_balance} > 0){
                $l->{our_debits} = $recon->parse_amount(amount => 0);
-               $l->{our_credits} = $l->{our_balance}->bneg;
+               $l->{our_credits} = $l->{our_balance};
             }
             else {
                $l->{our_credits} = $recon->parse_amount(amount => 0);
-               $l->{our_debits} = $l->{our_balance};
+               $l->{our_debits} = $l->{our_balance}->bneg;
             }
 
             if ($l->{cleared}){
@@ -398,8 +404,11 @@ sub _display_report {
 
 	$recon->{zero_string} = $recon->format_amount({amount => 0, money => 1});
 
-	$recon->{statement_gl_calc} = $recon->{their_total} 
-		+ $recon->{outstanding_total} + $recon->{mismatch_our_total};
+	$recon->{statement_gl_calc} = $neg_factor * 
+                ($recon->{their_total}
+		+ $recon->{outstanding_total} 
+                + $recon->{mismatch_our_total});
+        print STDERR "debug: $recon->{their_total} - $recon->{our_total}\n";
 	$recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
         $recon->{cleared_total} = $recon->format_amount({amount => $recon->{cleared_total}, money => 1});
         $recon->{outstanding_total} = $recon->format_amount({amount => $recon->{outstanding_total}, money => 1});
@@ -433,6 +442,9 @@ sub _display_report {
 		{amount => $recon->{beginning_balance}, money => 1});
 	$recon->{out_of_balance} = $recon->format_amount(
 		{amount => $recon->{out_of_balance}, money => 1});
+        if ($recon->{account_info}->{category} =~ /(A|E)/){
+           $recon->{their_total} *= -1;
+        }
 
         return $template->render($recon);
 }

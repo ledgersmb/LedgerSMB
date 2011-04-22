@@ -264,7 +264,7 @@ sub display_form
 		  $button{post}->{value} = $locale->text('Save'); 
 	      }
 	      %a = ();
-	      if ( $form->{id} ) {
+	      if ( $form->{id} && ($form->{approved} || !$form->{batch_id})) {
 
 		  for ( 'update', 'post_as_new', 'schedule' ) { $a{$_} = 1 }
 
@@ -275,7 +275,7 @@ sub display_form
 		  }
 
 	      }
-	      else {
+	      elsif (!$form->{id}){
 		  if ( $transdate > $closedto ) {
 		      for ( "post", "schedule" ) { $a{$_} = 1 }
 		  }

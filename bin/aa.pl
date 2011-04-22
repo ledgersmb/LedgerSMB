@@ -981,9 +981,12 @@ sub form_footer {
 
         if ($form->{separate_duties} || $form->{batch_id}){
             $button{post}->{value} = $locale->text('Save');
+            $button{print_and_post}->{value} = $locale->text('Save and Post');
+            $button{post_as_new}->{value} = $locale->text('Save as New');
+            $button{print_and_post_as_new}->{value} = $locale->text('Save and Post as New');
             $form->hide_form('separate_duties');
         }
-        if ( $form->{id} ) {
+        if ( $form->{id} && ($form->{approved} || !$form->{batch_id})) {
             if ( $form->{locked} || ( $transdate && $transdate <= $closedto ) )
             {
                 for ( "post", "print_and_post", "delete" ) {
@@ -998,7 +1001,7 @@ sub form_footer {
             }
 
         }
-        else {
+        elsif (!$form->{id}) {
 
             for ( "post_as_new", "print_and_post_as_new", "delete","save_info" ) {
                 delete $button{$_};
@@ -2066,7 +2069,10 @@ sub transactions {
             push @projects, @{$ref->{inv_projects}};
             $ref->{projectnumber} = join '<br />', @projects;
             $ref->{projectnumber} =~ s/(<br \/>)+/<br \/>/;
-        } else { $form->error($ref->{ac_projects} . $ref->{inv_projects})}
+        } else { $form->error($locale->text('Invalid Project Data:'). 
+                              $ref->{ac_projects} . $ref->{inv_projects}
+                             )
+        }
         if ( $form->{l_subtotal} eq 'Y' ) {
             if ( $sameitem ne $ref->{ $form->{sort} } ) {
                 &subtotal;

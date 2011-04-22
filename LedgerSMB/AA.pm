@@ -303,6 +303,19 @@ sub post_transaction {
            # delete detail records
 
 	    $dbh->do($query) || $form->dberror($query);
+            $query = qq|
+				DELETE FROM ac_tax_form
+                                       WHERE entry_id IN 
+                                             (SELECT entry_id FROM acc_trans
+				              WHERE trans_id = $id)|;
+
+            $dbh->do($query) || $form->dberror($query);
+            $query = qq|
+				DELETE FROM voucher
+                                       WHERE trans_id = $id 
+                                             and batch_class in (1,2)|;
+
+            $dbh->do($query) || $form->dberror($query);
 
             $query = qq|
 				DELETE FROM acc_trans
@@ -707,9 +720,12 @@ sub delete_transaction {
     );
 
     $form->audittrail( $dbh, "", \%audittrail );
+    my $query = qq|DELETE FROM ac_tax_form WHERE entry_id IN
+                   SELECT entry_id FROM acc_trans WHERE trans_id = ?|;
+    $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
 
-    my $query = qq|DELETE FROM $table WHERE id = $form->{id}|;
-    $dbh->do($query) || $form->dberror($query);
+    $query = qq|DELETE FROM $table WHERE id = ?|;
+    $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
 
     $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
     $dbh->prepare($query)->execute( $form->{id} ) || $form->dberror($query);

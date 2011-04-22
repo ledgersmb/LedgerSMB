@@ -123,7 +123,7 @@ BEGIN
 		UNION ALL
 		SELECT v.id, g.reference, g.description, 
 			v.batch_id, v.trans_id,
-			sum(a.amount), g.transdate, 'gl'
+			sum(a.amount), g.transdate, 'GL'
 		FROM voucher v
 		JOIN gl g ON (g.id = v.trans_id)
 		JOIN acc_trans a ON (v.trans_id = a.trans_id)

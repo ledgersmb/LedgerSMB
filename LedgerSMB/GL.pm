@@ -94,6 +94,11 @@ sub post_transaction {
 				DELETE FROM acc_trans WHERE trans_id = $id|;
 
             $dbh->do($query) || $form->dberror($query);
+            $query = qq|
+				DELETE FROM voucher WHERE trans_id = $id
+                                            and batch_class = 5|;
+
+            $dbh->do($query) || $form->dberror($query);
         }
     }
 

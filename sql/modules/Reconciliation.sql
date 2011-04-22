@@ -105,7 +105,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
 $$
-	select CASE WHEN c.category = 'A' THEN sum(ac.amount) * -1 ELSE
+	select CASE WHEN c.category in('A', 'E') THEN sum(ac.amount) * -1 ELSE
 		sum(ac.amount) END
 	FROM account c
 	JOIN acc_trans ac ON (ac.chart_id = c.id)
@@ -339,7 +339,7 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
 		SELECT in_report_id, 
 		       COALESCE(ac.source, gl.ref),
 		       0, 
-		       sum(amount) * -1 AS amount,
+		       sum(amount) AS amount,
 				(select entity_id from users 
 				where username = CURRENT_USER),
 			ac.voucher_id, min(ac.entry_id), ac.transdate

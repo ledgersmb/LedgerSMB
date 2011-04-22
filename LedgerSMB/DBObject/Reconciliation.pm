@@ -328,6 +328,13 @@ sub get {
     @{$self->{report_lines}} = $self->exec_method(
 		funcname=>'reconciliation__report_details'
     );
+    ($ref) = $self->exec_method(funcname=>'account_get', 
+                                args => [$self->{chart_id}]);
+    my $neg = 1;
+    if ($self->{account_info}->{category} =~ /(A|E)/){
+        $neg = -1;
+    }
+    $self->{account_info} = $ref;
     ($ref) = $self->exec_method(
                 funcname=>'reconciliation__get_cleared_balance'
     );
@@ -346,8 +353,8 @@ sub get {
 
     for my $line (@{$self->{report_lines}}){
         if ($line->{cleared}){
-            $our_balance += $line->{our_balance};
-            $self->{cleared_total} += $line->{our_balance};
+            $our_balance += ($neg * $line->{our_balance});
+            $self->{cleared_total} += ($neg * $line->{our_balance});
 	}elsif ((($self->{their_balance} != '0')
 		and ($self->{their_balance} != $self->{our_balance}))
 		or $line->{our_balance} == 0){
@@ -377,6 +384,10 @@ sub get {
        }
     }
     $self->{format_amount} = sub { return $self->format_amount(@_); };
+    if ($self->{account_info}->{category} =~ /(A|E)/){
+       $self->{our_total} *= -1;
+       $self->{mismatch_their_total} *= -1;
+    }
 }
 
 sub get_accounts {

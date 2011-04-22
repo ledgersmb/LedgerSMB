@@ -776,6 +776,9 @@ sub save_business {
     }
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
+    my $sth = $dbh->prepare("SELECT currval('business_id_seq')");
+    $sth->execute();
+    ($form->{id}) = $sth->fetchrow_array;
     $dbh->commit;
 
 }

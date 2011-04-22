@@ -306,6 +306,8 @@ sub list_batches {
 sub get_batch {
     my ($request)  = @_;
     $request->{action} = 'get_batch';
+    my $callback = "vouchers.pl?action=get_batch&batch_id=$request->{batch_id}";
+    $callback = $request->escape(string => $callback);
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->close_form;
     $batch->open_form;
@@ -316,6 +318,7 @@ sub get_batch {
     $batch->{id} ||= $batch->{batch_id};
     # $batch->get;
     my @vouchers = $batch->list_vouchers;
+    my $edit_base= "batch_id=$batch->{batch_id}&action=edit&callback=$callback";
 
     my $base_href = "vouchers.pl?action=get_batch&batch_id=$batch->{batch_id}";
 
@@ -337,6 +340,21 @@ sub get_batch {
     for my $row (@vouchers) {
        $classcount = ($classcount + 1) % 2;
        $classcount ||= 0;
+       my $escript = undef;
+       if ($row->{batch_class} eq 'Receivable'){
+           $escript = 'ar.pl';
+       } elsif ($row->{batch_class} eq 'Payable'){
+           $escript = 'ap.pl';
+       } elsif ($row->{batch_class} eq 'GL'){
+           $escript = 'gl.pl';
+       } 
+       if (defined $escript){
+           $row->{reference} = { 
+                     text => $row->{reference},
+                     href => "$escript?id=$row->{transaction_id}&"
+                             . $edit_base
+                     };
+       }
        push @$rows, {
            description => $row->{description},
            id          => $row->{id},
