@@ -358,6 +358,10 @@ CREATE OR REPLACE FUNCTION admin__save_user(
             
             insert into user_preference (id) values (v_user_id);
 
+            select * from entity_employee where entity_id = in_entity_id;
+            IF NOT FOUND THEN
+                select into entity_employee (entity_id) values (in_entity_id);
+            END IF;
             -- Finally, issue the create user statement
             
             return v_user_id ;
