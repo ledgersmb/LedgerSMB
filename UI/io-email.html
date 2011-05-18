@@ -47,12 +47,22 @@
     <td>
       <table width="100%">
         <tr>
-          <td><?lsmb PROCESS select element_data=print.formname ?></td>
+          <!-- <td><?lsmb PROCESS select element_data=print.formname ?></td>
           <td><?lsmb IF print.lang.defined; 
-            PROCESS select element_data=print.lang; END ?>
-          </td>
+            PROCESS select element_data=print.lang; END ?> 
+          </td>-->
           <td><?lsmb PROCESS select element_data=print.format ?></td>
-          <td><?lsmb PROCESS select element_data=print.media ?></td>
+          <td><?lsmb PROCESS select element_data=print.media ?> </td> 
+          <?lsmb PROCESS input element_data = {
+                 name = "formname"
+                 type = "hidden"
+                 value = form.formname
+          } ?>
+      <!--    <?lsmb PROCESS input element_data = {
+                 name = "format"
+                 type = "hidden"
+                 value = format
+          } ?> -->
 <?lsmb IF print.copies ?>
           <td>
   <?lsmb PROCESS input element_data={name => 'copies', size => '2', value => form.copies, label => text('Copies') } ?>
@@ -67,12 +77,7 @@ PROCESS input element_data={
   label => text('Request read receipt'),
   }
             ?></div></td>
-          <td align="right" width="90%">
-<?lsmb FOREACH formname IN ['printed', 'emailed', 'queued', 'recurring'];
-  IF form.$formname.match(form.formname);
-            text(print.status.$formname); '<br />';
-  END;
-END ?>
+          <td align="right" width="90%">&nbsp;
           </td>
         </tr>
         <tr>
