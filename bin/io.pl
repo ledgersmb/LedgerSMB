@@ -1195,7 +1195,7 @@ sub e_mail {
     my $print_options = &print_options(\%hiddens);
 
     for (
-        qw(email cc bcc subject message formname sendmode format language_code action nextsub)
+        qw(email cc bcc subject message sendmode format language_code action nextsub)
       )
     {
         delete $form->{$_};
