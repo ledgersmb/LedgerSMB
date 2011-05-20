@@ -36,7 +36,11 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
    <td width="50%" id="info_data">
     <table id="cv_info_table">
      <tr id="cv_row">
-      <th class="label_left" id="cv_label_column"><?lsmb  text('Vendor') ?></th>
+      <th class="label_left" id="cv_label_column">
+                <?lsmb IF (type.value == 'receipt') -?>
+                  <?lsmb text('Customer Name') -?>
+                <?lsmb ELSE; text('Vendor Name') -?>
+                <?lsmb END -?></th>
        <td id="cv_column">
        		<?lsmb vc.name ?><?lsmb vendorcustomer.type = 'hidden'; INCLUDE input element_data=vendorcustomer?>       		
        </td>

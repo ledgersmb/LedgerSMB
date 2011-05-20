@@ -39,7 +39,9 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 
  BEGIN
  	FOR out_entity IN
- 		SELECT ec.id, cp.legal_name||': '||ec.description as name, e.entity_class, ec.discount_account_id, ec.meta_number
+              SELECT ec.id, cp.legal_name || 
+                     coalesce(':' || ec.description,'') as name, 
+                     e.entity_class, ec.discount_account_id, ec.meta_number
  		FROM entity_credit_account ec
  		JOIN entity e ON (ec.entity_id = e.id)
  		JOIN company cp ON (cp.entity_id = e.id)
