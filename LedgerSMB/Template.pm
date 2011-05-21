@@ -281,7 +281,9 @@ sub render {
 sub output {
 	my $self = shift;
 	my %args = @_;
-	$self->{output_args} = \%args;
+
+        for ( keys %args ) { $self->{output_args}->{$_} = $args{$_}; };
+
 	my $method = $self->{method} || $args{method} || $args{media};
 	if ('email' eq lc $method) {
 		$self->_email_output;
