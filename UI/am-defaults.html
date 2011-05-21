@@ -95,6 +95,14 @@
   <tr>
     <td>
       <table>
+      <?lsmb FOREACH textbox IN default_textboxes ?>
+      <tr><th align="right" nowrap="nowrap"><?lsmb textbox.label ?></th>
+          <td><input name="<?lsmb textbox.name ?>" size="40" 
+                     value="<?lsmb form.${textbox.name} ?>" />
+          </td>
+      </tr>
+      <?lsmb END # FOR textbox ?>
+        <!-- From here, defaults in list in am.pl
 	<tr>
           <th align="right" nowrap="nowrap"><?lsmb text('GL Reference Number') ?></th>
 	  <td><input name="glnumber" size="40" value="<?lsmb form.glnumber ?>" /></td>
@@ -150,7 +158,7 @@
 	<tr>
           <th align="right" nowrap="nowrap"><?lsmb text('Password Duration') ?></th>
 	  <td><input name="password_duration" size="40" value="<?lsmb form.password_duration ?>" /></td>
-	</tr>
+	</tr> -->
       </table>
     </td>
   </tr>

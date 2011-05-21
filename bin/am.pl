@@ -49,6 +49,31 @@ sub edit   { &{"edit_$form->{type}"} }
 sub save   { &{"save_$form->{type}"} }
 sub delete { &{"delete_$form->{type}"} }
 
+my @default_textboxes = (
+   { name => 'glnumber', label => $locale->text('GL Reference Number') },
+   { name => 'sinumber', 
+      label => $locale->text('Sales Invoice/AR Transaction Number'), },
+   { name => 'sonumber', label => $locale->text('Sales Order Number') },
+   { name => 'vinumber' , 
+    label => $locale->text('Vendor Invoice/AP Transaction Number')},
+   { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
+   { name => 'rfqnumber', label => $locale->text('RFQ Number') },
+   { name => 'partnumber', label => $locale->text('Part Number') },
+   { name => 'projectnumber', label => $locale->text('Job/Project Number') },
+   { name => 'employeenumber', label => $locale->text('Employee Number') },
+   { name => 'customernumber', label => $locale->text('Customer Number') },
+   { name => 'vendornumber', label => $locale->text('Vendor Number') },
+   { name => 'check_prefix', label => $locale->text('Check Prefix') },
+   { name => 'password_duration', label => $locale->text('Password Duration') },
+   { name => 'default_email_to', label => $locale->text('Default Email To') },
+   { name => 'default_email_cc', label => $locale->text('Default Email CC') },
+   { name => 'default_email_bcc', label => $locale->text('Default Email BCC') },
+);
+
+my @default_others = qq(businessnumber weightunit 
+                        IC IC_income IC_expense 
+                        FX_gain FX_loss default_country templates curr);
+
 sub save_as_new {
 
     delete $form->{id};
@@ -1439,6 +1464,7 @@ sub defaults {
         form => $form,
 	hiddens => \%hiddens,
 	selects => \%selects,
+        default_textboxes => \@default_textboxes,
     });
 }
 
@@ -1693,8 +1719,13 @@ sub config {
 }
 
 sub save_defaults {
-
-    if ( AM->save_defaults( \%myconfig, \%$form ) ) {
+    my @defaults;
+    for (@default_textboxes){
+       push @defaults, $_->{name};
+    } 
+    push @defaults, @default_others;
+    push @defaults;
+    if ( AM->save_defaults( \%myconfig, \%$form, \@defaults) ) {
         $form->redirect( $locale->text('Defaults saved!') );
     }
     else {

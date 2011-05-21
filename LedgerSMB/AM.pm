@@ -1624,7 +1624,7 @@ sub save_preferences {
 
 }
 
-=item AM->save_defaults($myconfig, $form);
+=item AM->save_defaults($myconfig, $form, \@defaults);
 
 Sets the values in the defaults table to values derived from $form.  glnumber,
 sinumber, vinumber, sonumber, ponumber, sqnumber, rfqnumber, partnumber,
@@ -1637,11 +1637,14 @@ and $form->{FX_gain}, and fxloss_accno_id and $form->{FX_loss} are related.
 
 Stores the templates directory for a specific company on defaults table.
 
+@defaults identifies the list of values to be stored in defaults.  If not 
+provided, a default list is used.
+
 =cut
 
 sub save_defaults {
 
-    my ( $self, $myconfig, $form ) = @_;
+    my ( $self, $myconfig, $form, $defaults) = @_;
 
     for (qw(IC IC_income IC_expense FX_gain FX_loss)) {
         ( $form->{$_} ) = split /--/, $form->{$_};
@@ -1671,14 +1674,15 @@ sub save_defaults {
         fxgain_accno_id    => 'FX_gain',
         fxloss_accno_id    => 'FX_loss'
     );
-    for (
-        qw(inventory_accno_id income_accno_id expense_accno_id
-        fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
-        sonumber ponumber sqnumber rfqnumber partnumber employeenumber
-        customernumber vendornumber projectnumber yearend curr
-        weightunit businessnumber default_country check_prefix password_duration templates)
-
-      )
+    if (!@{$defaults}){
+       $defaults = qw(inventory_accno_id income_accno_id expense_accno_id
+                      fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
+                      sonumber ponumber sqnumber rfqnumber partnumber 
+                      employeenumber customernumber vendornumber projectnumber 
+                      yearend curr weightunit businessnumber default_country 
+                      check_prefix password_duration templates)
+    }
+    for (@$defaults)
     {
         my $val = $form->{$_};
         if ( $translation{$_} ) {
