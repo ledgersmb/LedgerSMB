@@ -2176,7 +2176,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 18	module	ps.pl	43
 19	module	ps.pl	44
 19	action	receipts	46
-20	module	rc.pl	47
+20	module	ps.pl	47
 20	action	till_closing	48
 20	pos	true	49
 21	menu	1	50
