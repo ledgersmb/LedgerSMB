@@ -36,6 +36,64 @@ use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 
+sub getposlines {
+    my ( $self, $myconfig, $form ) = @_;
+    %pos_config  = %{ $form->{pos_config} };
+    %pos_sources = %{ $form->{pos_sources} };
+    my $sources = '';
+    foreach $key ( keys %pos_sources ) {
+        $sources .= ", '$key'";
+    }
+    $sources =~ s/^,\s*//;
+    my $dbh = $form->{dbh};
+
+    my $query = qq| 
+		  SELECT sum(amount) AS amount, memo FROM acc_trans
+		   WHERE chart_id = (SELECT id FROM chart 
+		                    WHERE accno = ?)
+		         AND transdate = date 'NOW' AND cleared IS NOT TRUE
+		GROUP BY memo|;
+    my $sth = $dbh->prepare($query);
+    $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
+    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+        push @{ $form->{TB} }, $ref;
+    }
+    $sth->finish;
+    my $query = qq| 
+		SELECT sum(amount) AS sum FROM acc_trans
+		 WHERE chart_id =  (SELECT id FROM chart WHERE accno = ?)
+	  AND transdate = date 'NOW'
+          AND cleared IS NOT TRUE|;
+    my $sth = $dbh->prepare($query);
+    $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
+    my $ref = $sth->fetchrow_hashref(NAME_lc);
+    $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+    $form->{sum} = $ref->{sum};
+    $sth->finish;
+}
+
+sub clear_till {
+    my ( $self, $myconfig, $form ) = @_;
+    %pos_config  = %{ $form->{pos_config} };
+    %pos_sources = %{ $form->{pos_sources} };
+    my $sources = '';
+    foreach $key ( keys %pos_sources ) {
+        $sources .= ", '$key'";
+    }
+    $sources =~ s/^,\s//;
+    my $dbh   = $form->{dbh};
+    my $query = qq| 
+		UPDATE acc_trans
+		SET cleared = TRUE
+		WHERE chart_id = 
+			(SELECT id FROM chart WHERE accno = ?)
+		  AND transdate = date 'NOW'|;
+
+    my $sth = $dbh->prepare($query);
+    $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
+}
+
 sub invoice_details {
 
     use LedgerSMB::CP;
