@@ -146,6 +146,12 @@ sub session_create {
         return 1;
     }
 
+    my $fetchUserID = $dbh->prepare(
+        "SELECT id
+            FROM users
+            WHERE username = ?;"
+    );
+
     # TODO Change this to use %myconfig
     my $deleteExisting = $dbh->prepare(
         "DELETE 
@@ -163,6 +169,15 @@ sub session_create {
                                                      FROM users
                                                     WHERE username = SESSION_USER), ?, ?);"
     );
+
+# Fail early if the user isn't in the users table
+    $fetchUserID->execute($login)
+      || $lsmb->dberror( __FILE__ . ':' . __LINE__ . ': Fetch login id: ' );
+    my ( $userID ) = $fetchUserID->fetchrow_array;
+    unless($userID) {
+        $logger->error(__FILE__ . ':' . __LINE__ . ": no such user: $login");
+        http_error('401');
+    }
 
 # this is assuming that the login is safe, which might be a bad assumption
 # so, I'm going to remove some chars, which might make previously valid 
