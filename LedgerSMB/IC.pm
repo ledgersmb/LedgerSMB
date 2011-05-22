@@ -172,9 +172,8 @@ sub get_part {
 			         pv.lastcost, pv.leadtime, 
 			         pv.curr AS vendorcurr
 			    FROM partsvendor pv
-			    JOIN entity_credit_account v 
-                                 ON (v.id = pv.credit_id)
-                            JOIN entity e ON (e.id = v.entity_id)
+			    JOIN vendor v ON (v.id = pv.credit_id)
+                JOIN entity e ON (e.id = pv.entity_id)
 			   WHERE pv.parts_id = ?
 			ORDER BY 2|;
 

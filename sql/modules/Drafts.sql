@@ -25,7 +25,7 @@ BEGIN
 			    END) as amount
 		FROM (
 			SELECT id, transdate, reference, 
-				description,
+				(SELECT name FROM eca__get_entity(entity_credit_account)),
                                 approved from gl
 			WHERE lower(in_type) = 'gl'
 			UNION

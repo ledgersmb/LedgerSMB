@@ -42,7 +42,7 @@ BEGIN
                        WHERE meta_number = in_meta_number
                       UNION ALL
                       SELECT * from entity_credit_account
-                       WHERE in_meta_number IS NULL) ec ON (ec.entity_id = e.id)
+                       WHERE meta_number IS NULL) ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE ec.entity_class = in_account_class
 			AND (c.id IN (select company_id FROM company_to_contact

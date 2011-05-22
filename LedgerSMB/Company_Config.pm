@@ -42,14 +42,16 @@ our $settings = {};
 
 sub initialize{
    my ($self) = @_;
-   $settings= {}; # In case code is cached
-   for my $key (@company_settings){
+   for my $k (keys %$settings){
+       delete $settings->{$k};
+   }
+   for my $setting (@company_settings){
        my ($ref) = LedgerSMB::call_procedure($self, procname => 'setting_get', 
-                  args => [$key ]);
+                  args => [$setting]);
        if ($ref->{setting_key} eq 'curr'){
-          $settings->{$key } = split /:/, $ref->{value};
+          $settings->{$setting} = split /:/, $ref->{value};
        } else {
-          $settings->{$key } = $ref->{value};
+          $settings->{$setting} = $ref->{value};
        }
    }
 }

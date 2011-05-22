@@ -602,8 +602,6 @@ TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT SELECT, INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT UPDATE ON ap TO "lsmb_<?lsmb dbname ?>__payment_process";
-GRANT ALL ON payment, payment_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
-
 
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
