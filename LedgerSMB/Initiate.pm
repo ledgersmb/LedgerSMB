@@ -210,15 +210,17 @@ sub validateform
 
     if ( !$form->{edit} ) {
 
-	$form->{initiateon}=0;	
+        # If we can connect to the database, then it already exists
+        my $tempdbh = DBI->connect(
+            "dbi:Pg:db=$form->{database};host=$form->{dbhost};port=$form->{dbport}",
+            $form->{username},
+            $form->{password},
+            { PrintError => 0 },
+        );
 
-        $tempdbh = LedgerSMB::Initiate->getdbh($form);
 
-	$form->{initiateon}=1;	
-
- 	$form->{tempdbh}=$tempdbh;        
-
-	if ( lc($tempdbh) ne "no999" ) {
+        if ( defined($tempdbh)) {
+            $tempdbh->disconnect;
             $form->error( __FILE__ . ':' . __LINE__ . ': '
                   . $locale->text( '[_1] is already a database!', $form->{database} )
             );
