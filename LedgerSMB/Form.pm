@@ -65,6 +65,7 @@ use List::Util qw(first);
 use Time::Local;
 use Cwd;
 use File::Copy;
+use LedgerSMB::Company_Config;
 
 use charnames qw(:full);
 use open ':utf8';
@@ -1325,7 +1326,7 @@ sub db_init {
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
-
+    LedgerSMB::Company_Config::initialize($self);
     $sth->finish();
 }
 

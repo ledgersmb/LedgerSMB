@@ -131,6 +131,7 @@ use Carp;
 use Error qw(:try);
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
+use LedgerSMB::Company_Config;
 
 sub new {
 	my $class = shift;
@@ -363,6 +364,14 @@ sub _email_output {
 		@mailmime = ('contenttype', $self->{mimeytype});
 	}
 
+        # Default addresses
+        my $csettings = $LedgerSMB::Company_Config::settings;
+        $args->{from} ||= $csettings->{default_email_from};
+        $args->{to} ||= $csettings->{default_email_to};
+        $args->{cc} ||= $csettings->{default_email_cc};
+        $args->{bcc} ||= $csettings->{default_email_bcc};
+
+        # Mailer stuff
 	my $mail = new LedgerSMB::Mailer(
 		from => $args->{from} || $self->{user}->{email},
 		to => $args->{to},

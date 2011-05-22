@@ -196,6 +196,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Log;
+use LedgerSMB::Company_Config;
 use strict;
 
 $CGI::Simple::POST_MAX = -1;
@@ -300,6 +301,8 @@ sub new {
     $logger->debug("LedgerSMB.pm: \$self->{company} = $self->{company}");
 
     $self->_db_init;
+
+    LedgerSMB::Company_Config::initialize($self);
 
 
     if ($self->is_run_mode('cgi', 'mod_perl')) {
