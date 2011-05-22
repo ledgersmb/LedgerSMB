@@ -532,40 +532,35 @@ sub merge_chart_gifi_valid_exist
 {
 
 	my ($self,$form)=@_;
-	my $coa = $form->{coa} || 'General';
-	$coa = "$coa.sql" unless $coa =~ /\.sql$/;
+
+    my @files;
+
+    my $coa = $form->{coa} || 'General';
+    $coa = "$coa.sql" unless $coa =~ /\.sql$/;
         
-	$locale=$form->{locale};
+    my $dir = ($ENV{SCRIPT_FILENAME} =~ m/^(.*\/)/) ? $1 : './';
 
-	my $dir=$ENV{SCRIPT_FILENAME};
+    $dir .= "/sql/coa/$form->{countrycode}/";
 
-	my $location="/sql/coa/$form->{countrycode}/";
+    if($form->{chartaccount}) {
+        my $file = $dir . 'chart/' . $coa;
+        if(-e $file) {
+            push(@files, $file);
+        } else {
+            $logger->error("$file: not found");
+        }
+    }
 
-	$dir =~s/\/[\w\d\.]*$/$location/;
+    if($form->{gifiaccount}) {
+        my $file = $dir . 'gifi/' . $coa;
+        if(-e $file) {
+            push(@files, $file);
+        } else {
+            $logger->error("$file: not found");
+        }
+    }
 
-	my $chartdir=$dir."chart/";
-	
-	my $gifidir=$dir."gifi/";
-	@chartdir = LedgerSMB::Initiate->read_directory($form, $chartdir);
-
-        my @dest;	
-
-        my $i;
-	for($i=0;$i<=$#chartdir;$i++)
-	{
-		$dest[$i]=$chartdir.$chartdir[$i] if $chartdir[$i] = $coa;
-	}
-	for(my $j=0;$j<=$#gifidir;$j++,$i++)
-	{
-	  
-		$dest[$i]=$chartdir.$gifidir[$i] if $gifidir[$i] = $coa;
-	
-	}
-
-	
-	return(@dest);
-
-
+    return(@files);
 }
 
 
