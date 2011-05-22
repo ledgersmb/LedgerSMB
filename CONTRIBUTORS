@@ -20,6 +20,10 @@ Contributed code fixes and support for advanced tax rules.  She has also
 re-engineered the localization framework.  She has also provided support for 
 Excel, ODS, and other formats for reports.
 
+Other Committers:
+==================
+Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css and has submitted numerous bug fixes.
+
 Other Contributors:
 ========================
 Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
@@ -50,7 +54,6 @@ documentation for Debian installations.
 
 Chifung Fan [email omitted] contributed bugfixes.
 
-Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css
 
 Matt S Trout, <mst @ shadowcatsystems.co.uk> CPAN: MSTROUT, 
 IRC: mst#irc.perl.org contributed the initial Makefile.PL
@@ -80,6 +83,8 @@ Josh Berkus <josh @ agliodbs.com> has helped provide assistance in promotion,
 advocacy, and other assistance.
 
 Ian Goodacre [email omitted] has provided numerous bugfixes.
+
+Erik Huelsmann <ehuels @ gmail.com> has provided bugfixes.
 
 Original Authors of SQL-Ledger:
 ===================================
