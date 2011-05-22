@@ -30,7 +30,10 @@
 package LedgerSMB::Auth;
 use MIME::Base64;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Log;
 use strict;
+
+my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
 sub session_check {
     use Time::HiRes qw(gettimeofday);
