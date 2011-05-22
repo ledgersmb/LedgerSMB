@@ -336,15 +336,6 @@ sub process_roles {
 	#create admin user 
 
     my $dbh = $form->{dbh}; # used only for quote and quote_identifier
-	if ($form->{createuser}){
-
-		print PSQL qq| create user | . 
-			$dbh->quote_identifier($form->{admin_username}) .
-            qq| WITH CREATEROLE | .
-			qq| WITH PASSWORD | .
-			$dbh->quote($form->{admin_password}) .
-            ";\n";
-    }
 
     print PSQL "GRANT " .
         $dbh->quote_identifier("lsmb_${company}__users_manage")  . 
@@ -422,16 +413,19 @@ sub create_database
 		$form->{dbh}->do(
             "CREATE ROLE " . 
 			$form->{dbh}->quote_identifier($form->{admin_username}) .
-            " WITH CREATEROLE " .
-			" WITH PASSWORD " .  $dbh->quote($form->{admin_password}) .
+            " CREATEROLE LOGIN" .
+			" PASSWORD " .  $form->{dbh}->quote($form->{admin_password}) .
             ";\n"
-        );
+        ) || $logger->error(__FILE__ . ':' . __LINE__ . ': ',
+            "create role $form->{admin_username} failed");
     }
 
     $form->{dbh}->do(
-        "create database $form->{database} with owner $form->{username}"
+        "create database $form->{database} " .
+        "  with owner $form->{admin_username}"
     ) || $form->error( __FILE__ . ':' . __LINE__ . ': '
             . $locale->text( 'database [_1] creation failed',$database));
+
 }
 
 sub handle_create_language
