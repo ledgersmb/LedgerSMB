@@ -69,43 +69,6 @@ sub initialize
 
 
 
-sub getdbh
-{
-
- my($self,$form)=@_;
-
- my($database,$host,$port,$username,$password);
-
- if($form->{initiateon}==1)
- {
-   $ENV{PGDATABASE} = $form->{company};
-   $ENV{PGHOST}=$form->{host};
-   $ENV{PGPORT}=$form->{port};
-   $username=$form->{username};
-   $password=$form->{password};
-   $ENV{PGUSER} = $form->{username};
-   $ENV{PGPASSWORD} = $form->{password};
- }
- else
- {
-
-    $ENV{PGDATABASE}=$form->{database};
-    $ENV{PGHOST}=$form->{dbhost};
-    $ENV{PGPORT}=$form->{dbport};
-    $username=$form->{username};
-    $password=$form->{password};
-
- }
-  
-
-   my $dbconnect = "dbi:Pg:user=$username password=$password";    # for easier debugging
-
-   my $dbh = DBI->connect($dbconnect) or return "no999";
-
-   return($dbh);
-
-}
-
 
 
 sub checksuperuser
@@ -299,7 +262,7 @@ sub save_database
 		
 		#stage 3 -  Execute series of files which are located in array @totalexecutable_files
 
-	LedgerSMB::Initiate->run_all_sql_scripts($form,\@totalexecutable_files);
+	LedgerSMB::Initiate->run_scripts_as_admin_user($form,\@totalexecutable_files);
 
 		#Stage -  Wind up completed the task
 	process_roles($form);
