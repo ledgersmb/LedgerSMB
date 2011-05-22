@@ -280,7 +280,17 @@ sub save_database
             $form->{dbhost},$form->{dbport}));
 
 	LedgerSMB::Initiate->create_database($form); 
-		
+
+    # Now connect to the newly created database as the admin user
+    # This connection is used for all subsequent operations
+    $form->{dbh} = DBI->connect(
+        "dbi:Pg:db=$form->{database};host=$form->{dbhost};port=$form->{dbport}",
+        $form->{admin_username},
+        $form->{admin_password},
+    ) or $form->error( __FILE__ . ':' . __LINE__ . ': ' .
+        $locale->text( 'unable to connect to postgres database on [_1]:[_2]',
+            $form->{dbhost},$form->{dbport}));
+
 		#Stage 2 -  CReate the language plpgsql
 	
 	$form->{newdbh}=LedgerSMB::Initiate->handle_create_language($form);
@@ -298,11 +308,20 @@ sub save_database
 
 
 sub process_roles {
+
     $logger->debug("Begin LedgerSMB::Initiate::process_roles");
+
 	my ($form) = @_;
-	print STDERR "loading roles............\n";
-	LedgerSMB::Initiate->getdbh($form);
-	open (PSQL, '|-', 'psql') || $form->error($locale->text("Couldn't open psql"));
+
+    $ENV{PGDATABASE} = $form->{database};
+    $ENV{PGHOST}     = $form->{dbhost};
+    $ENV{PGPORT}     = $form->{dbport};
+    $ENV{PGUSER}     = $form->{username};
+    $ENV{PGPASSWORD} = $form->{password};
+
+	open (PSQL, '|-', 'psql') ||
+        $form->error($locale->text("Couldn't open psql"));
+
 	my $company = $form->{company};
     $logger->debug("LedgerSMB::Initiate::process_roles: company = $company");
 
@@ -312,22 +331,47 @@ sub process_roles {
 		$roleline =~ s/<\?lsmb dbname \?>/$company/;
 		print PSQL $roleline;
 	}
+
+
 	#create admin user 
-	my $query;
+
+    my $dbh = $form->{dbh}; # used only for quote and quote_identifier
 	if ($form->{createuser}){
-		$query = qq| create user | . 
-			$form->{newdbh}->quote_identifier($form->{admin_username}) .
+
+		print PSQL qq| create user | . 
+			$dbh->quote_identifier($form->{admin_username}) .
+            qq| WITH CREATEROLE | .
 			qq| WITH PASSWORD | .
-			$form->{newdbh}->quote($form->{admin_password}) .
-			qq| IN ROLE | .
-			$form->{newdbh}->quote_identifier("lsmb_${company}__users_manage");
-	} else {
-		$query = "GRANT " .
-			$form->{newdbh}->quote_identifier("lsmb_${company}__users_manage")  . 
-			" TO " .
-			$form->{newdbh}->quote_identifier($form->{admin_username});
-	}
-	print PSQL "$query";
+			$dbh->quote($form->{admin_password}) .
+            ";\n";
+    }
+
+    print PSQL "GRANT " .
+        $dbh->quote_identifier("lsmb_${company}__users_manage")  . 
+        " TO " .
+        $dbh->quote_identifier($form->{admin_username}) . ";\n";
+
+    print PSQL "INSERT INTO entity " .
+        " (name, entity_class, created, country_id) " .
+        " VALUES ( '" . $form->{admin_username} . "', 3, NOW(), " .
+        " (SELECT id FROM country WHERE short_name = '" .
+        uc($form->{countrycode}) .  "' ));\n";
+
+    print PSQL "INSERT INTO person " .
+        " (entity_id, first_name, last_name, created)".
+        " VALUES ( (SELECT id FROM entity WHERE name = '" .
+        $form->{admin_username} . "'), 'database', 'creator', NOW());\n";
+
+    print PSQL "INSERT INTO users " .
+        " (username, entity_id) " .
+        " VALUES ( '" . $form->{admin_username} . "', " .
+        " (SELECT id FROM entity WHERE name = '" .
+        $form->{admin_username} . "'));\n";
+
+    print PSQL "INSERT INTO user_preference (id) " .
+        " VALUES ((SELECT id FROM users WHERE entity_id = " .
+        "   (SELECT id FROM entity " .
+        "     WHERE name = '" . $form->{admin_username} . "')));\n";
 
     $logger->debug("End LedgerSMB::Initiate::process_roles");
 }
