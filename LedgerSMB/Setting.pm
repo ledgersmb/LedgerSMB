@@ -57,7 +57,7 @@ sub get {
         $self->{key} = $key;
     }
     my ($hashref) = $self->exec_method( funcname => 'setting_get' ) ;
-    $self->{value} = $hashref->{setting_get};
+    $self->{value} = $hashref->{setting_key};
     return $self->{value};
 }
 

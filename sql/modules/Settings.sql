@@ -9,15 +9,10 @@ BEGIN
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION setting_get (in_key varchar) RETURNS varchar AS
+CREATE OR REPLACE FUNCTION setting_get (in_key varchar) RETURNS defaults AS
 $$
-DECLARE
-	out_value varchar;
-BEGIN
-	SELECT value INTO out_value FROM defaults WHERE setting_key = in_key;
-	RETURN out_value;
-END;
-$$ LANGUAGE plpgsql;
+SELECT * FROM defaults WHERE setting_key = $1;
+$$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION setting_get_default_accounts () 
 RETURNS SETOF defaults AS
