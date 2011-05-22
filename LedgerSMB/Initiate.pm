@@ -211,7 +211,7 @@ sub save_database
 	my @chartgififiles=LedgerSMB::Initiate->merge_chart_gifi_valid_exist($form);   # check sql/coa/charts and sql/coa/gifi files
 
 	my @totalexecutable_files;
-	push(@totalexecutable_files,@contrib);
+#	push(@totalexecutable_files,@contrib);
 	push(@totalexecutable_files,@postsql);
 	push(@totalexecutable_files,@sqlmodules);
 	push(@totalexecutable_files,@chartgififiles);
@@ -245,6 +245,7 @@ sub save_database
             $form->{dbhost},$form->{dbport}));
 
 	LedgerSMB::Initiate->create_database($form); 
+	LedgerSMB::Initiate->run_scripts_as_superuser($form,\@contrib);
 
     # Now connect to the newly created database as the admin user
     # This connection is used for all subsequent operations
@@ -592,7 +593,23 @@ sub merge_chart_gifi_valid_exist
 }
 
 
+sub run_scripts_as_superuser
+{
 
+	my ($self,$form,$files)=@_;
+
+    $ENV{PGDATABASE} = $form->{database};
+    $ENV{PGHOST}     = $form->{dbhost};
+    $ENV{PGPORT}     = $form->{dbport};
+    $ENV{PGUSER}     = $form->{username};
+    $ENV{PGPASSWORD} = $form->{password};
+
+	foreach $dbfile(@$files)
+	{
+		$logger->debug("Loading $dbfile");
+        system("psql < $dbfile");
+	}
+}
 
 
 
