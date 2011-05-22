@@ -293,9 +293,9 @@ sub save_database
 
 		#Stage 2 -  CReate the language plpgsql
 	
-	$form->{newdbh}=LedgerSMB::Initiate->handle_create_language($form);
+	LedgerSMB::Initiate->handle_create_language($form);
 		
-		#stage 3 -  Execute series of files which are located in array @totalexecutable_files in the database $form->{newdbh}
+		#stage 3 -  Execute series of files which are located in array @totalexecutable_files
 
 	LedgerSMB::Initiate->run_all_sql_scripts($form,\@totalexecutable_files);
 
