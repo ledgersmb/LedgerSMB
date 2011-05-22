@@ -253,9 +253,33 @@ sub save_database
 
 		# Now all the files are found now start execution process(Stages)
 
+    # Initial setup operations are performed while connected to the postgres
+    # database as the currently authenticated user. This database should be
+    # present even on a fresh install of PostgreSQL. The authenticated user
+    # must have superuser rights to complete this stage of the setup.
+    $form->{dbh} = DBI->connect(
+        "dbi:Pg:db=postgres;host=$form->{dbhost};port=$form->{dbport}",
+        $form->{username},
+        $form->{password},
+    ) or $form->error( __FILE__ . ':' . __LINE__ . ': ' .
+        $locale->text( 'unable to connect to postgres database on [_1]:[_2]',
+            $form->{dbhost},$form->{dbport}));
+
 		#Stage 1 -   Create the databse $form->{database}
 
-	LedgerSMB::Initiate->create_database($form,$form->{dbh},$form->{database},$form->{username}); 
+    # Initial setup operations are performed while connected to the postgres
+    # database as the currently authenticated user. This database should be
+    # present even on a fresh install of PostgreSQL. The authenticated user
+    # must have superuser rights to complete this stage of the setup.
+    $form->{dbh} = DBI->connect(
+        "dbi:Pg:db=postgres;host=$form->{dbhost};port=$form->{dbport}",
+        $form->{username},
+        $form->{password},
+    ) or $form->error( __FILE__ . ':' . __LINE__ . ': ' .
+        $locale->text( 'unable to connect to postgres database on [_1]:[_2]',
+            $form->{dbhost},$form->{dbport}));
+
+	LedgerSMB::Initiate->create_database($form); 
 		
 		#Stage 2 -  CReate the language plpgsql
 	
@@ -341,17 +365,24 @@ sub run_db_file
 
 sub create_database
 {
+    my ($self,$form)=@_;
 
+    # Create the admin user first, so it can be the owner of the new database
+	if ($form->{createuser}){
+        # Note: LedgerSMB setup for this user is done in process_roles()
+		$form->{dbh}->do(
+            "CREATE ROLE " . 
+			$form->{dbh}->quote_identifier($form->{admin_username}) .
+            " WITH CREATEROLE " .
+			" WITH PASSWORD " .  $dbh->quote($form->{admin_password}) .
+            ";\n"
+        );
+    }
 
-	my ($self,$form,$dbh,$database,$owner)=@_;
-
-	my $locale=$form->{locale};
-
-	$dbh->do("create database $database with owner $owner") || $form->error( __FILE__ . ':' . __LINE__ . ': '
-                  . $locale->text( 'database [_1] creation failed',$database));
-
-	
-
+    $form->{dbh}->do(
+        "create database $form->{database} with owner $form->{username}"
+    ) || $form->error( __FILE__ . ':' . __LINE__ . ': '
+            . $locale->text( 'database [_1] creation failed',$database));
 }
 
 sub handle_create_language
