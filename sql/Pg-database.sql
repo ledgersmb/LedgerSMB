@@ -775,7 +775,7 @@ CREATE TABLE defaults (
   value text
 );
 
-\COPY defaults FROM stdin WITH DELIMITER |
+\COPY defaults FROM stdin WITH DELIMITER '|'
 timeout|90 minutes
 sinumber|1
 sonumber|1
