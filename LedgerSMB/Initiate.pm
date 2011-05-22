@@ -356,6 +356,11 @@ sub run_db_file
         if ($ENV{PGDATABASE} eq 'template1'){
            $form->error('No database specified!');
         }
+        $ENV{PGDATABASE} = $form->{database};
+        $ENV{PGHOST}     = $form->{dbhost};
+        $ENV{PGPORT}     = $form->{dbport};
+        $ENV{PGUSER}     = $form->{username};
+        $ENV{PGPASSWORD} = $form->{password};
 	system("psql < $dbfile");
 }
 
