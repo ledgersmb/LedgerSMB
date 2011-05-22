@@ -8,6 +8,8 @@ use LedgerSMB::Auth;
 use LedgerSMB::Locale;
 use Data::Dumper;
 use DBI;
+use Locale::Language;
+use Locale::Country;
 use LedgerSMB::Log;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Initiate');
@@ -302,7 +304,32 @@ sub save_database
 		#Stage -  Wind up completed the task
 	process_roles($form);
 
+        #Stage 5 - Load languages
+    load_languages($form);
+
     $logger->debug("End LedgerSMB::Initiate::save_database");
+}
+
+sub load_languages {
+    $logger->debug("Beging LedgerSMB::Initiate::load_languages");
+    my ($form) = @_;
+
+    opendir DIR, $LedgerSMB::Sysconfig::localepath;
+    foreach my $dir (grep !/^\.\.?$/, readdir DIR) {
+        my $code = substr( $dir, 0, -3);
+        $logger->debug("add language $code");
+        my $description = code2language( substr( $code, 0, 2) );
+        $description .= '/' . code2country( substr( $code, 3, 2) ) if(length($code) > 4);
+        $description .= ' ' . substr( $code, 5 ) if(length($code) > 5);
+        $form->{dbh}->do("insert into language ( code, description ) values ( " .
+			$form->{dbh}->quote( $code ) . ', ' .
+            $form->{dbh}->quote( $description ) . ')'
+        ) || $form->error( __FILE__ . ':' . __LINE__ . ': '
+                  . $locale->text( 'language [_1]/[_2] creation failed',
+                      $code, $description));
+    }
+    closedir(DIR);
+    $logger->debug("End LedgerSMB::Initiate::load_languages");
 }
 
 
