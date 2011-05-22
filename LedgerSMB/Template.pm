@@ -364,6 +364,9 @@ sub _email_output {
 		@mailmime = ('contenttype', $self->{mimeytype});
 	}
 
+        # User default for email from
+        $args->{from} ||= $self->{user}->{email};
+
         # Default addresses
         my $csettings = $LedgerSMB::Company_Config::settings;
         $args->{from} ||= $csettings->{default_email_from};
@@ -371,9 +374,10 @@ sub _email_output {
         $args->{cc} ||= $csettings->{default_email_cc};
         $args->{bcc} ||= $csettings->{default_email_bcc};
 
+
         # Mailer stuff
 	my $mail = new LedgerSMB::Mailer(
-		from => $args->{from} || $self->{user}->{email},
+		from => $args->{from},
 		to => $args->{to},
 		cc => $args->{cc},
 		bcc => $args->{bcc},
