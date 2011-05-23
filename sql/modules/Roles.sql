@@ -602,6 +602,8 @@ TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT SELECT, INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
 GRANT UPDATE ON ap TO "lsmb_<?lsmb dbname ?>__payment_process";
+GRANT ALL ON payment, payment_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
+
 
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -1493,6 +1495,7 @@ GRANT SELECT ON payment_type TO public;
 GRANT SELECT ON lsmb_roles TO public;
 GRANT SELECT ON employee_search TO PUBLIC;
 GRANT SELECT ON warehouse TO public;
+GRANT select ON account_link_description TO PUBLIC;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 
