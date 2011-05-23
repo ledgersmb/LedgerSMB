@@ -273,7 +273,7 @@ DECLARE
 BEGIN
     SELECT CASE WHEN isfinite(rolvaliduntil) is not true THEN '1 year'::interval
                 ELSE rolvaliduntil - now() END AS expiration INTO outval 
-    FROM pg_authid WHERE rolname = SESSION_USER;
+    FROM pg_roles WHERE rolname = SESSION_USER;
     RETURN outval;
 end;
 $$ language plpgsql security definer;
@@ -381,7 +381,7 @@ REVOKE EXECUTE ON FUNCTION admin__save_user(
 ) FROM public; 
 
 create view role_view as 
-    select * from pg_auth_members m join pg_authid a ON (m.roleid = a.oid);
+    select * from pg_auth_members m join pg_roles a ON (m.roleid = a.oid);
         
 
 create or replace function admin__is_group(in_group_name text) returns bool as $$
@@ -489,9 +489,9 @@ $$
 DECLARE out_rolename RECORD;
 BEGIN
 	FOR out_rolename IN 
-		SELECT rolname FROM pg_authid 
+		SELECT rolname FROM pg_roles 
 		WHERE oid IN (SELECT id FROM connectby (
-			'(SELECT m.member, m.roleid, r.oid FROM pg_authid r 
+			'(SELECT m.member, m.roleid, r.oid FROM pg_roles r 
 			LEFT JOIN pg_auth_members m ON (r.oid = m.roleid)) a',
 			'oid', 'member', 'oid', '320461', '0', ','
 			) c(id integer, parent integer, "level" integer, 
