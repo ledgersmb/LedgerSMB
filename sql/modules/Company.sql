@@ -12,6 +12,45 @@ CREATE TYPE company_search_result AS (
 	curr text
 );
 
+/*
+CREATE OR REPLACE FUNCTION eca_history
+()
+RETURNS SETOF  eca_history_result AS
+$$
+     SELECT ct.id AS ctid, ct.name, ct.address1,
+                         ct.address2, ct.city, ct.state,
+                         p.id AS pid, p.partnumber, a.id AS invid,
+                         a.$invnumber, a.curr, i.description,
+                         i.qty, i.$sellprice AS sellprice, i.discount,
+                         i.$deldate, i.serialnumber, pr.projectnumber,
+                         e.name AS employee, ct.zipcode, ct.country, i.unit,
+                         (SELECT $buysell 
+                            FROM exchangerate ex
+                           WHERE a.curr = ex.curr
+                                 AND a.transdate = ex.transdate) AS exchangerate
+     FROM entity_credit_account eca
+     JOIN entity e ON (eca.entity_id = e.id)
+     JOIN (select ..., curr, transdate, entity_credit_account, id
+             FROM ar 
+            where ... 
+            UNION 
+           select ..., curr, transdate, entity_credit_account, id 
+             FROM ap 
+            where ....
+          ) a ON (a.entity_credit_account = eca.id)
+                          $invjoin
+     JOIN parts p ON (p.id = i.parts_id)
+LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
+LEFT JOIN eca_to_location e2l ON (e2l.credit_id = eca.id)
+LEFT JOIN location l ON (e2l.location_id = l.id)
+LEFT JOIN project pr ON (pr.id = i.project_id)
+LEFT JOIN employee e ON (e.id = a.employee_id)
+                                 WHERE $where;
+
+$$ LANGUAGE SQL;
+
+*/
+
 CREATE OR REPLACE FUNCTION company__search
 (in_account_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
@@ -42,7 +81,7 @@ BEGIN
                        WHERE meta_number = in_meta_number
                       UNION ALL
                       SELECT * from entity_credit_account
-                       WHERE meta_number IS NULL) ec ON (ec.entity_id = e.id)
+                       WHERE in_meta_number IS NULL) ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE ec.entity_class = in_account_class
 			AND (c.id IN (select company_id FROM company_to_contact
