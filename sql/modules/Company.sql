@@ -153,22 +153,20 @@ DECLARE
 BEGIN
      SELECT * FROM entity_credit_account into eca WHERE id = in_credit_id;
 
-
      IF eca.entity_class = 1 then
-        DELETE FROM customertax WHERE customer_id = in_credit_id;
-        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
-        LOOP
-             INSERT INTO customertax (customer_id, chart_id)
-             values (in_credit_id, in_tax_ids[iter]);
-        END LOOP;
-     ELSIF eca.entity_class = 2 then
         DELETE FROM vendortax WHERE vendor_id = in_credit_id;
         FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
         LOOP
              INSERT INTO vendortax (vendor_id, chart_id)
              values (in_credit_id, in_tax_ids[iter]);
         END LOOP;
-        
+     ELSIF eca.entity_class = 2 then
+        DELETE FROM customertax WHERE customer_id = in_credit_id;
+        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
+        LOOP
+             INSERT INTO customertax (customer_id, chart_id)
+             values (in_credit_id, in_tax_ids[iter]);
+        END LOOP;
      ELSE 
         RAISE EXCEPTION 'Wrong entity class or credit account not found!';
      END IF;
