@@ -29,6 +29,7 @@ requires 'Time::Local';
 requires 'Cwd';
 requires 'Config::Std';
 requires 'MIME::Lite';
+requires 'Net::SMTP_auth';
 requires 'Template' => '2.14';
 requires 'Error';
 requires 'CGI::Simple';

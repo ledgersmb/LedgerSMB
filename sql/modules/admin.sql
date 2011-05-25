@@ -621,7 +621,7 @@ BEGIN
 			(p.first_name = in_first_name or in_first_name is null)
 			AND (p.last_name = in_last_name or in_last_name is null)
 			AND (in_ssn is NULL or in_ssn = e.ssn) 
-			AND (e.dob = in_dob or in_dob is NULL)
+			AND (e.dob = in_dob::date or in_dob is NULL)
 	LOOP
 		RETURN NEXT t_return_row;
 	END LOOP;

@@ -74,6 +74,9 @@ our $sendmail = "/usr/sbin/sendmail -t";
 # SMTP settings
 our $smtphost   = '';
 our $smtptimout = 60;
+our $smtpuser   = '';
+our $smtppass   = '';
+our $smtpauthmethod = '';
 
 # set language for login and admin
 our $language = "";
@@ -126,7 +129,9 @@ for my $var (qw(gzip)) {
 }
 
 # mail configuration
-for my $var (qw(sendmail smtphost smtptimeout)) {
+for my $var (qw(sendmail smtphost smtptimeout smtpuser 
+             smtppass smtpauthmethod)) 
+{
     ${$var} = $config{mail}{$var} if $config{mail}{$var};
 }
 

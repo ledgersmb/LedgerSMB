@@ -6,6 +6,9 @@ use LedgerSMB::Location;
 use LedgerSMB::DBObject::Employee;
 use LedgerSMB::Contact;
 use LedgerSMB::DBObject::Employee;
+use LedgerSMB::Log;
+
+my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
 
 #[18:00:31] <aurynn> I'd like to split them employee/user and roles/prefs
 #[18:00:44] <aurynn> edit/create employee and add user features if needed.
@@ -105,13 +108,13 @@ sub save_roles {
     for my $role (@user_roles) {
        
        # These are our user's roles.
-       print STDERR "Have $role->{rolname}\n";
+       print STDERR "Have $role->{admin__get_roles_for_user}\n";
         
-       $active_roles{"$role->{rolname}"} = 1;
+       $active_roles{"$role->{admin__get_roles_for_user}"} = 1;
     }
     
     my $status;
-    
+
     for my $r ( @roles) {
         my $role = $r->{rolname};
         my $reqrole = $role;
@@ -249,6 +252,8 @@ sub get_roles {
     my @s_rows = $self->call_procedure(procname=>'admin__get_roles');
     my @rows;
     my $company = $self->{company};
+    $logger->debug("get_roles: company = $company");
+    $logger->debug("get_roles: self = " . Data::Dumper::Dumper($self));
     for my $role (@s_rows) {
         my $rolname = $role->{'rolname'};
         push @rows, $rolname;

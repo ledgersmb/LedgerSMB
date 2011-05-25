@@ -25,6 +25,7 @@ BEGIN;
 
 INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion');
 INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'T', -255);
+INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'T', -255);
 
 -- New account is created.
 
@@ -58,6 +59,24 @@ INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-
 INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-258, -2500, 't'::bool, -255, 'USD');
 INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-258, -255, -2500, 't'::bool, -1003);
 
+INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-259, 5000, 't'::bool, -255, 'USD');
+
+INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-259, -255, 5000, 't'::bool, -1004);
+
+-- Set up the paid transactions
+
+INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-260, -1000, 't'::bool, -255, 'USD');
+INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-260, -255, -1000, 't'::bool, -1005);
+INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-260, -256, 1000, 't'::bool, -1006);
+
+INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-261, -1500, 't'::bool, -255, 'USD');
+INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-261, -255, -1500, 't'::bool, -1007);
+INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-261, -256, 1500, 't'::bool, -1008);
+
+INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-262, -2500, 't'::bool, -255, 'USD');
+
+INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-262, -255, -2500, 't'::bool, -1009);
+INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-262, -256, 2500, 't'::bool, -1010);
 
 -- Now we set up the invoice entries themselves.
 
@@ -65,12 +84,20 @@ INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-
 INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1000, -256, 250, 4);
 INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1001, -257, 750, 2);
 INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1002, -258, 500, 5);
+INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1003, -260, 250, 4);
+INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1004, -261, 750, 2);
+INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1005, -262, 500, 5);
+
 
 -- And finally, the tax_form references
 
 INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1000, TRUE);
 INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1001, TRUE);
 INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1002, TRUE);
+INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1003, TRUE);
+INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1004, TRUE);
+INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1005, TRUE);
+
 
 --
 -- Finally, we test if the entries are showing up 
