@@ -51,6 +51,14 @@ TODO:  Separate company from credit account storage.
 sub save {
     my $self = shift @_;
     $self->set_entity_class();
+    unless($self->{control_code}) {
+        $self->{notice} = "You must set the Control Code";
+        return;
+    }
+    unless($self->{name}) {
+        $self->{notice} = "You must set the Name";
+        return;
+    }
     my ($ref) = $self->exec_method(funcname => 'company_save');
     $self->{entity_id} = (values %$ref)[0];
     $self->get;
