@@ -509,14 +509,14 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
             <?lsmb tx.accno ?>--<?lsmb tx.description ?></span>
         <span class="input" id="txinput-<?lsmb tx.id ?>">
             <?lsmb checked = "";  
-                   IF eca_tax.grep(tx.chart_id);
+                   IF eca_tax.grep(tx.id).size == 1;
                        checked = "CHECKED";
                    END;
                    INCLUDE input element_data = {
                            type = "checkbox"
                            checked = checked
                            name = "taxact_$tx.id"
-                           value = $tx.id
+                           value = tx.id
                    } ?><span></div>
         <?lsmb END # FOR tx ?>
          </div>
