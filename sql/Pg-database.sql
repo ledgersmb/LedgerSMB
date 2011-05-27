@@ -2154,6 +2154,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 7	module	rp.pl	15
 7	action	report	16
 7	report	ar_aging	17
+6   outstanding 1   18
 9	module	rp.pl	21
 9	action	report	22
 9	report	tax_collected	23
