@@ -2254,9 +2254,9 @@ sub add_items_required {
 
         $query = qq|
 			SELECT pv.partnumber, pv.leadtime, pv.lastcost, pv.curr,
-				pv.vendor_id, v.name
+				v.id as vendor_id, v.name
 			FROM partsvendor pv
-			JOIN vendor v ON (v.id = pv.vendor_id)
+			JOIN vendor v ON (v.id = pv.credit_id)
 			WHERE pv.parts_id = ?|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
 
