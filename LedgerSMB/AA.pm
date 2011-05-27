@@ -37,6 +37,9 @@
 
 package AA;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Log;
+
+my $logger = Log::Log4perl->get_logger("AA");
 
 =pod
 
@@ -736,6 +739,7 @@ sub delete_transaction {
 				 WHERE trans_id = ?
 				   AND spoolfile IS NOT NULL|;
 
+    $logger->debug("query: $query");
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -799,7 +803,7 @@ sub transactions {
         $paid = qq|
 			SELECT SUM(ac.amount) * -1 * $ml
 			  FROM acc_trans ac
-			  JOIN chart c ON (c.id = ac.chart_id)
+			  JOIN chart c ON (c.id = ac.chart_id AND charttype = 'A')
 			 WHERE ac.trans_id = a.id
 			       AND ($approved OR ac.approved)
 			       AND (c.link LIKE '%${ARAP}_paid%' 
@@ -822,7 +826,8 @@ sub transactions {
 
         $acc_trans_join = qq| 
 			     JOIN acc_trans ac ON (a.id = ac.trans_id)
-			     JOIN chart c ON (c.id = ac.chart_id)
+			     JOIN chart c ON (c.id = ac.chart_id 
+                                              AND charttype = 'A')
 			LEFT JOIN invoice i ON (i.id = ac.invoice_id)|;
     }
     my $query;
@@ -851,7 +856,8 @@ sub transactions {
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		     JOIN acc_trans acs ON (acs.trans_id = a.id)
 		     JOIN entity vce ON (vc.entity_id = vce.id)
-		     JOIN chart c ON (acs.chart_id = c.id)
+		     JOIN chart c ON (acs.chart_id = c.id 
+                                     AND charttype = 'A')
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
 		LEFT JOIN department d ON (a.department_id = d.id)
@@ -1070,7 +1076,7 @@ sub transactions {
         $where .= qq|
 			AND a.id IN (SELECT ac.trans_id
 			               FROM acc_trans ac
-			               JOIN chart c ON (c.id = ac.chart_id)
+			               JOIN chart c ON (c.id = ac.chart_id AND charttype = 'A')
 			              WHERE a.id = ac.trans_id
 			                    AND c.accno = $accno)|;
     }
@@ -1315,7 +1321,7 @@ sub get_name {
 		SELECT c.accno
 		  FROM chart c
 		  JOIN $form->{vc}tax ct ON (ct.chart_id = c.id)
-		 WHERE ct.$form->{vc}_id = ?|;
+		 WHERE c.charttype = 'A' AND ct.$form->{vc}_id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} ) || $form->dberror($query);
@@ -1375,7 +1381,7 @@ sub get_name {
 			     FROM chart c
 			     JOIN acc_trans ac ON (ac.chart_id = c.id)
 			     JOIN $arap a ON (a.id = ac.trans_id)
-			    WHERE a.entity_id = ?
+			    WHERE c.charttype = 'A' AND a.entity_id = ?
 			          AND a.id = (SELECT max(id) 
 			                         FROM $arap
 			                        WHERE entity_id = 
