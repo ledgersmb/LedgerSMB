@@ -2215,6 +2215,8 @@ qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&act
 |;
 
     for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
+    # See setting of $column_header{name} - it has two columns
+    $column_data{name} = "<td>&nbsp;</td><td>&nbsp;</td>";
 
     $column_data{netamount} =
         "<th class=listtotal align=right>"
