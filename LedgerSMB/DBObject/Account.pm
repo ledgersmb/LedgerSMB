@@ -29,7 +29,12 @@ sub save {
         $self->{contra} = '0';
     }
     $self->generate_links;
-    $self->exec_method(funcname => 'account_save');
+    my $func = 'account_save';
+    if ($self->{charttype} and $self->{charttype} eq 'H') {
+        $func = 'account_heading_save';
+    }
+    $self->exec_method(funcname => $func);
+
     if (defined $self->{recon}){
         $self->call_procedure(procname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
     }
