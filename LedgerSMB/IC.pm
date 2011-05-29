@@ -1713,6 +1713,7 @@ sub requirements {
     $sth->finish;
 
     my %ofld = ( customer => 'so', vendor => 'po' );
+    my %oe_class = ( customer => 1, vendor => 2 );
 
     for (qw(customer vendor)) {
         $query = qq|
@@ -1724,7 +1725,7 @@ sub requirements {
 			    JOIN oe a ON (a.id = i.trans_id)
 			   WHERE $where AND p.inventory_accno_id > 0
 			         AND p.assembly = '0' AND a.closed = '0'
-			         AND a.${_}_id > 0
+			         AND oe_class_id = $oe_class{$_}
 			GROUP BY p.id, p.partnumber, p.description, p.onhand,
 			         month|;
         $sth = $dbh->prepare($query);
