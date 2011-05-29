@@ -2201,7 +2201,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 27	report	tax_paid	65
 29	module	rp.pl	69
 29	action	report	70
-29	report	report	71
+29	report	nontaxable_purchases	71
 30	menu	1	72
 31	module	vendor.pl	73
 31	action	add	74
