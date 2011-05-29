@@ -1,7 +1,11 @@
 use Template;
 use LedgerSMB::DBObject::Account;
 package LedgerSMB::Scripts::account;
+use LedgerSMB::Log;
+use Data::Dumper;
 use strict;
+
+my $logger = Log::Log4perl::get_logger("LedgerSMB::DBObject::Account");
 
 sub new {
     my ($request) = @_;
@@ -28,7 +32,7 @@ sub save {
     edit($request); 
 }
 
-sub save_new {
+sub save_as_new {
     my ($request) = @_;
     delete $request->{id};
     save($request);
