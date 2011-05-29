@@ -17,15 +17,10 @@ ORDER BY accno;
 $$ language sql;
 
 
-CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS chart AS
+CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS setof chart AS
 $$
-DECLARE
-	account chart%ROWTYPE;
-BEGIN
-	SELECT * INTO account FROM chart WHERE id = in_id AND charttype = 'A';
-	RETURN account;
-END;
-$$ LANGUAGE plpgsql;
+SELECT * from chart where id = in_id and charttype = 'A';
+$$ LANGUAGE sql;
 
 
 CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS chart AS
@@ -54,7 +49,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION account_save 
 (in_id int, in_accno text, in_description text, in_category char(1), 
-in_gifi text, in_heading int, in_contra bool, in_link text[])
+in_gifi_accno text, in_heading int, in_contra bool, in_link text[])
 RETURNS int AS $$
 DECLARE 
 	t_heading_id int;
@@ -89,7 +84,7 @@ BEGIN
 	SET accno = in_accno,
 		description = in_description,
 		category = in_category,
-		gifi_accno = in_gifi,
+		gifi_accno = in_gifi_accno,
 		heading = t_heading_id,
 		contra = in_contra
 	WHERE id = in_id;
@@ -99,7 +94,7 @@ BEGIN
 	ELSE
 		INSERT INTO account (accno, description, category, gifi_accno,
 			heading, contra)
-		VALUES (in_accno, in_description, in_category, in_gifi,
+		VALUES (in_accno, in_description, in_category, in_gifi_accno,
 			t_heading_id, in_contra);
 
 		t_id := currval('account_id_seq');
