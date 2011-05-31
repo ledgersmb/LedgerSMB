@@ -19,7 +19,7 @@ $$ language sql;
 
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS setof chart AS
 $$
-SELECT * from chart where id = in_id and charttype = 'A';
+SELECT * from chart where id = $1 and charttype = 'A';
 $$ LANGUAGE sql;
 
 

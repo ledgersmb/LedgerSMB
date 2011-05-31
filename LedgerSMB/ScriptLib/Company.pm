@@ -2,6 +2,9 @@ package LedgerSMB::ScriptLib::Company;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 use LedgerSMB::DBObject::Vendor;
+use LedgerSMB::Log;
+
+my $logger = Log::Log4perl->get_logger("LedgerSMB::ScriptLib::Company");
 
 use Data::Dumper;
 
@@ -375,10 +378,11 @@ sub get_results {
         {href => $sort_href, columns => \@sort_columns}
     );
             
+    $logger->debug("\$company = " . Data::Dumper::Dumper($company));
     $template->render({
 	form    => $company,
 	columns => \@columns,
-        hiddens => $company,
+#        hiddens => $company,
 	buttons => \@buttons,
 	heading => $column_heading,
 	rows    => \@rows,
