@@ -20,11 +20,8 @@
 	<tr>
 	  <th align="right" nowrap="nowrap"><?lsmb text('Subject') ?></th>
 	  <td><?lsmb PROCESS input element_data={name => 'subject', size=> '30', value => form.subject} ?></td>
-<?lsmb IF user.role == 'admin' OR user.role == 'manager' ?>
 	  <th align="right" nowrap="nowrap"><?lsmb text('Bcc') ?></th>
-	  <td><?lsmb PROCESS input element_data={name => 'bcc', size=> '30', value => form.bcc} ?></td><?lsmb
-ELSE ?><th> </th><td> </td><?lsmb
-END ?>
+	  <td><?lsmb PROCESS input element_data={name => 'bcc', size=> '30', value => form.bcc} ?></td>
 	</tr>
       </table>
     </td>

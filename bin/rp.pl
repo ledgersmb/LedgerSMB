@@ -1413,7 +1413,7 @@ sub e_mail {
 
     &print_options;
 
-    for (qw(email cc bcc subject message type sendmode format action nextsub)) {
+    for (qw(subject message type sendmode format action nextsub)) {
         delete $form->{$_};
     }
 

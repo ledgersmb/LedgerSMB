@@ -940,8 +940,9 @@ CREATE VIEW customer AS
         emd.creditlimit,
         emd.terms,
         emd.meta_number as customernumber,
-        emd.cc,
-        emd.bcc,
+        ece.contact as email,
+        ecc.contact as cc,
+        ecb.contact as bcc,
         emd.business_id,
         emd.language_code,
         emd.pricegroup_id,
@@ -954,6 +955,9 @@ CREATE VIEW customer AS
     FROM entity_credit_account emd 
     LEFT JOIN entity_bank_account eba on emd.entity_id = eba.entity_id
     Left join entity_note ein on ein.ref_key = emd.entity_id
+    LEFT JOIN eca_to_contact ece ON emd.id = ece.credit_id AND ece.contact_class_id = 12
+    LEFT JOIN eca_to_contact ecc ON emd.id = ecc.credit_id AND ecc.contact_class_id = 13
+    LEFT JOIN eca_to_contact ecb ON emd.id = ecb.credit_id AND ecb.contact_class_id = 14
     join company c on c.entity_id = emd.entity_id
     join entity e on c.entity_id = e.id
     where emd.entity_class = 2;
