@@ -21,12 +21,8 @@
         <tr>
           <th align="right"><?lsmb text('Subject') ?></th>
           <td><?lsmb PROCESS input element_data={name => 'subject', size => 30, value => form.subject} ?></td>
-<?lsmb IF user.role == 'admin' OR user.role == 'manager' ?>
           <th align="right"><?lsmb text('Bcc') ?></th>
           <td><?lsmb PROCESS input element_data={name => 'bcc', size => 30, value => form.bcc} ?></td>
-<?lsmb ELSE ?>
-          <td colspan="2"> </td>
-<?lsmb END ?>
         </tr>
       </table>
     </td>

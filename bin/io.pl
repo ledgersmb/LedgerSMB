@@ -1181,7 +1181,7 @@ sub e_mail {
 
     my %hiddens;
     if ( $myconfig{role} !~ /(admin|manager)/ ) {
-        $hiddens{bcc} = $form->{bcc};
+      #  $hiddens{bcc} = $form->{bcc};
     }
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
@@ -1195,7 +1195,7 @@ sub e_mail {
     my $print_options = &print_options(\%hiddens);
 
     for (
-        qw(email cc bcc subject message sendmode format language_code action nextsub)
+        qw(subject message sendmode format language_code action nextsub)
       )
     {
         delete $form->{$_};
@@ -1266,6 +1266,12 @@ sub print_options {
         };
     
     # SC: Option values extracted from other bin/ scripts
+    if ($form->{type} eq 'invoice') {
+	push @{$options{formname}{options}}, {
+	    text => $locale->text('Invoice'),
+	    value => 'invoice',
+	    };
+    }
     if ($form->{type} eq 'sales_quotation') {
         push @{$options{formname}{options}}, {
             text => $locale->text('Quotation'),
@@ -1720,6 +1726,9 @@ sub print_form {
 	##SC: XXX the from address needs fixing
         $output_options{from} = $myconfig{email};
         $output_options{notify} = 1 if $form->{read_receipt};
+	$output_options{message} = $form->{message};
+	$output_options{filename} = $form->{formname} . '_'. $form->{"${inv}number"};
+	$output_options{filename} .= '.'. $form->{format}; # assuming pdf or html
 
         if ( %$old_form ) {
             $old_form->{intnotes} = qq|$old_form->{intnotes}\n\n|
@@ -1802,6 +1811,7 @@ sub print_form {
         user => \%myconfig, 
         template => $form->{'formname'},
         format => uc $form->{format},
+        no_escape => true,
         method => $form->{media},
         output_options => \%output_options,
         );
