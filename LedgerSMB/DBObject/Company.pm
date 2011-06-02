@@ -249,7 +249,7 @@ sub account {
     my ($self, $account) = @_;
     
     $self->set_entity_class();
-    $account = $self->exec_method(funcname => 'company__get_account');
+    ($account) = $self->exec_method(funcname => 'company__get_account');
 }
 
 sub accounts {
