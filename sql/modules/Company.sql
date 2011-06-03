@@ -288,7 +288,8 @@ CREATE TYPE entity_credit_retrieve AS (
         threshold numeric,
 	control_code text,
 	credit_id int,
-	pay_to_name text
+	pay_to_name text,
+        taxform_id int
 );
 
 COMMENT ON TYPE entity_credit_search_return IS
@@ -322,7 +323,8 @@ BEGIN
 			ec.language_code, 
 			ec.pricegroup_id, ec.curr, ec.startdate, 
 			ec.enddate, ec.ar_ap_account_id, ec.cash_account_id, 
-			ec.threshold, e.control_code, ec.id, ec.pay_to_name
+			ec.threshold, e.control_code, ec.id, ec.pay_to_name,
+                        ec.taxform_id
 		FROM company c
 		JOIN entity e ON (c.entity_id = e.id)
 		JOIN entity_credit_account ec ON (c.entity_id = ec.entity_id)
