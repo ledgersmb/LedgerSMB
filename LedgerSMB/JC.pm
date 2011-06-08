@@ -301,15 +301,21 @@ sub jcparts {
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
-    my $pmh = PriceMatrix::price_matrix_query( $dbh, $form );
-    IS::exchangerate_defaults( $dbh, $form );
+    if (defined $form->{vendor_id} or defined $form->{customer_id} ) {
+        my $pmh = PriceMatrix::price_matrix_query( $dbh, $form );
+        IS::exchangerate_defaults( $dbh, $form );
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        $ref->{description} = $ref->{translation}
-          if $ref->{translation};
-        PriceMatrix::price_matrix( $pmh, $ref, $form->{transdate}, 4, $form,
-            $myconfig );
-        push @{ $form->{all_parts} }, $ref;
+        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $ref->{description} = $ref->{translation}
+              if $ref->{translation};
+            PriceMatrix::price_matrix( $pmh, $ref, $form->{transdate}, 4, $form,
+                $myconfig );
+            push @{ $form->{all_parts} }, $ref;
+        }
+    } else {
+        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            push @{ $form->{all_parts} }, $ref;
+        }
     }
     $sth->finish;
 
@@ -481,7 +487,7 @@ sub jcitems {
 		  FROM jcitems j
 		  JOIN parts p ON (p.id = j.parts_id)
 		  JOIN project pr ON (pr.id = j.project_id)
-		  JOIN employee e ON (e.id = j.employee_id)
+		  JOIN employee e ON (e.entity_id = j.employee_id)
 		 WHERE $where
 		ORDER BY employee, employeenumber, $sortorder|;
 
