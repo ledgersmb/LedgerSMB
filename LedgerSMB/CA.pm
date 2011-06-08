@@ -90,7 +90,7 @@ sub all_accounts {
 		    SELECT c.id, c.accno, c.description, c.charttype, 
 		           c.gifi_accno, c.category, c.link
 		      FROM chart c
-		  ORDER BY accno|;
+		  ORDER BY accno, c.charttype DESC|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
