@@ -500,7 +500,7 @@ sub save {
             $query .= qq|
 				trans_id, parts_id, description, qty, sellprice,
 				discount, unit, reqdate, project_id, ship, 
-				serialnumber, notes)
+				serialnumber, notes, precision)
                    		VALUES (|;
             $query .= qq| ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
@@ -510,7 +510,9 @@ sub save {
                 $fxsellprice,               $form->{"discount_$i"},
                 $form->{"unit_$i"},         $form->{"reqdate_$i"},
                 $project_id,                $form->{"ship_$i"},
-                $form->{"serialnumber_$i"}, $form->{"notes_$i"} );
+                $form->{"serialnumber_$i"}, $form->{"notes_$i"},
+                $form->{"precision_$i"}
+            );
             $sth->execute(@queryargs) || $form->dberror($query);
 	    $dbh->commit;
             $form->{"sellprice_$i"} = $fxsellprice;
@@ -828,7 +830,7 @@ sub retrieve {
         # retrieve individual items
         $query = qq|
 			SELECT o.id AS orderitems_id, p.partnumber, p.assembly, 
-				o.description, o.qty, o.sellprice, 
+				o.description, o.qty, o.sellprice, o.precision, 
 				o.parts_id AS id, o.unit, o.discount, p.bin,
 				o.reqdate, o.project_id, o.ship, o.serialnumber,
 				o.notes, pr.projectnumber, pg.partsgroup, 
@@ -2621,10 +2623,12 @@ sub consolidate_orders {
 				INSERT INTO orderitems 
 					(trans_id, parts_id, description,
 					qty, sellprice, discount, unit, reqdate,
-					project_id, ship, serialnumber, notes)
+					project_id, ship, serialnumber, notes,
+                                        precision)
 				SELECT ?, parts_id, description,
 					qty, sellprice, discount, unit, reqdate,
-					project_id, ship, serialnumber, notes
+					project_id, ship, serialnumber, notes,
+                                        precision
 				  FROM orderitems
                                  WHERE trans_id IN ($orderid_str)|;
 
