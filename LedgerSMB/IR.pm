@@ -204,10 +204,11 @@ sub post_invoice {
               $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
 
             my ($dec) = ( $fxsellprice =~ /\.(\d+)/ );
-            $dec = length $dec;
-            my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
-
             # deduct discount
+            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+            $decimalplaces = ($form->{"precision_$i"} > $moneyplaces) 
+                             ? $form->{"precision_$i"}
+                             : $moneyplaces;
             $form->{"sellprice_$i"} = $fxsellprice -
               $form->round_amount( $fxsellprice * $form->{"discount_$i"},
                 $decimalplaces );
@@ -215,10 +216,10 @@ sub post_invoice {
             # linetotal
             my $fxlinetotal =
               $form->round_amount( $form->{"sellprice_$i"} * $form->{"qty_$i"},
-                2 );
+                $moneyplaces );
 
             $amount = $fxlinetotal * $form->{exchangerate};
-            my $linetotal = $form->round_amount( $amount, 2 );
+            my $linetotal = $form->round_amount( $amount, $moneyplaces );
             $fxdiff += $amount - $linetotal;
 
             @taxaccounts = Tax::init_taxes(
@@ -249,15 +250,15 @@ sub post_invoice {
                   $_->value;
             }
 
-            $grossamount = $form->round_amount( $linetotal, 2 );
+            $grossamount = $form->round_amount( $linetotal, $moneyplaces );
 
             if ( $form->{taxincluded} ) {
-                $amount = $form->round_amount( $tax, 2 );
-                $linetotal -= $form->round_amount( $tax - $diff, 2 );
+                $amount = $form->round_amount( $tax, $moneyplaces );
+                $linetotal -= $form->round_amount( $tax - $diff, $moneyplaces );
                 $diff = ( $amount - $tax );
             }
 
-            $amount = $form->round_amount( $linetotal, 2 );
+            $amount = $form->round_amount( $linetotal, $moneyplaces );
             $allocated = 0;
 
             # adjust and round sellprice
@@ -291,6 +292,7 @@ sub post_invoice {
 				       deliverydate = ?,
 				       project_id = ?,
 				       serialnumber = ?,
+                                       precision = ?,
 				       notes = ?
 				 WHERE id = ?|;
             $sth = $dbh->prepare($query);
@@ -301,7 +303,7 @@ sub post_invoice {
                 $form->{"discount_$i"},    $allocated,
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $project_id,               $form->{"serialnumber_$i"},
-                $form->{"notes_$i"},       
+                $form->{"precision_$i"},   $form->{"notes_$i"},       
                 $invoice_id
             ) || $form->dberror($query);
 
@@ -1132,7 +1134,7 @@ sub retrieve_invoice {
         $sth->finish;
 
         # get shipto
-        $query = qq|SELECT * FROM shipto WHERE trans_id = ?|;
+        $query = qq|SELECT ns.*, l.* FROM new_shipto ns JOIN location l ON ns.location_id = l.id WHERE ns.trans_id = ?|;
         $sth   = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -1145,7 +1147,7 @@ sub retrieve_invoice {
         # retrieve individual items
         $query = qq|
 			   SELECT i.id as invoice_id,p.partnumber, i.description, i.qty, 
-			          i.fxsellprice, i.sellprice,
+			          i.fxsellprice, i.sellprice, i.precision,
 			          i.parts_id AS id, i.unit, p.bin, 
 			          i.deliverydate,
 			          pr.projectnumber, i.project_id, 
@@ -1314,8 +1316,9 @@ sub retrieve_item {
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         my ($dec) = ( $ref->{sellprice} =~ /\.(\d+)/ );
+        my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
         $dec = length $dec;
-        my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+        my $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
 
         # get taxes for part
         $tth->execute( $ref->{id} );

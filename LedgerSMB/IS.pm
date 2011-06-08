@@ -1035,9 +1035,14 @@ sub post_invoice {
             my $fxsellprice =
               $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
 
-            my ($dec) = ( $fxsellprice =~ /\.(\d+)/ );
-            $dec = length $dec;
-            my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+            my $decimalplaces = ($form->{"precision_$i"} > $moneyplaces) 
+                             ? $form->{"precision_$i"}
+                             : $moneyplaces;
+            $form->{"sellprice_$i"} = $fxsellprice -
+              $form->round_amount( $fxsellprice * $form->{"discount_$i"},
+                $decimalplaces );
+
 
             # undo discount formatting
             $form->{"discount_$i"} =
@@ -1184,6 +1189,7 @@ sub post_invoice {
 				       description = ?,
 				       qty = ?,
 				       sellprice = ?,
+                                       precision = ?,
 				       fxsellprice = ?,
 				       discount = ?,
 				       allocated = ?,
@@ -1198,11 +1204,11 @@ sub post_invoice {
             $sth->execute(
                 $form->{id},               $form->{"id_$i"},
                 $form->{"description_$i"}, $form->{"qty_$i"},
-                $form->{"sellprice_$i"},   $fxsellprice,
-                $form->{"discount_$i"},    $allocated,
-                $form->{"unit_$i"},        $form->{"deliverydate_$i"},
-                $project_id,               $form->{"serialnumber_$i"},
-                $form->{"notes_$i"},       
+                $form->{"sellprice_$i"},   $form->{"precision_$i"},
+                $fxsellprice,              $form->{"discount_$i"},
+                $allocated,                $form->{"unit_$i"},        
+                $form->{"deliverydate_$i"}, $project_id,               
+                $form->{"serialnumber_$i"}, $form->{"notes_$i"},       
                 $invoice_id
             ) || $form->dberror($query);
 
@@ -1648,7 +1654,7 @@ sub cogs {
 
         my $query = qq|
 		   SELECT i.id, i.trans_id, i.qty, i.allocated, i.sellprice,
-		          i.fxsellprice, p.inventory_accno_id, 
+		          i.precision, i.fxsellprice, p.inventory_accno_id, 
 		          p.expense_accno_id, 
 		          (i.qty * -1) - i.allocated AS available
 		     FROM invoice i
@@ -2043,7 +2049,8 @@ sub retrieve_invoice {
         # retrieve individual items
         $query = qq|
 			   SELECT i.id as invoice_id,i.description, i.qty, i.fxsellprice, 
-			          i.sellprice, i.discount, i.parts_id AS id, 
+			          i.sellprice, i.precision, i.discount, 
+                                  i.parts_id AS id, 
 			          i.unit, i.deliverydate, i.project_id, 
 			          pr.projectnumber, i.serialnumber, i.notes,
 			          p.partnumber, p.assembly, p.bin,
@@ -2110,6 +2117,7 @@ sub retrieve_invoice {
             $ref->{sellprice} =
               ( $ref->{fxsellprice} * $form->{ $form->{currency} } );
             $ref->{sellprice} = $ref->{fxsellprice};
+            
 
             $ref->{partsgroup} = $ref->{partsgrouptranslation}
               if $ref->{partsgrouptranslation};

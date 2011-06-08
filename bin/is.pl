@@ -283,9 +283,11 @@ sub prepare_invoice {
             $form->{"discount_$i"} =
               $form->format_amount( \%myconfig, $form->{"discount_$i"} * 100 );
 
-            ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
+            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+            my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
             $dec = length $dec;
-            $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+            $form->{"precision_$i"} = $dec;
+            $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
 
             $form->{"sellprice_$i"} =
               $form->format_amount( \%myconfig, $form->{"sellprice_$i"},

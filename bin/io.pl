@@ -234,8 +234,11 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         else {
             ( $null, $dec ) = split /,/, $form->{"sellprice_$i"};
         }
+        my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
         $dec = length $dec;
-        $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+        $form->{"precision_$i"} ||= $dec;
+        $dec =  $form->{"precision_$i"};
+        $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
 
         # undo formatting
         for (qw(qty oldqty ship discount sellprice)) {
@@ -253,7 +256,9 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                     if ( ( $p * 1 ) && ( $form->{"qty_$i"} >= ( $q * 1 ) ) ) {
                         ($dec) = ( $p =~ /\.(\d+)/ );
                         $dec = length $dec;
-                        $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+                        $decimalplaces = ( $dec > $moneyplaces ) 
+                                        ? $dec 
+                                        : $moneyplaces;
                         $form->{"sellprice_$i"} =
                           $form->round_amount( $p / $exchangerate,
                             $decimalplaces );
@@ -265,7 +270,8 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         $linetotal = $form->round_amount( $form->{"sellprice_$i"}
                                           * (1 - ($form->{"discount_$i"} / 100)),
                                           $decimalplaces);
-        $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 2 );
+        $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 
+                                         $moneyplaces);
 
         if (
             ( $rows = $form->numtextrows( $form->{"description_$i"}, 46, 6 ) ) >
@@ -339,7 +345,7 @@ qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size=5 valu
         $column_data{sellprice} =
           qq|<td align=right><input name="sellprice_$i" size=9 value=|
           . $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
-            $decimalplaces )
+            $form->{"precision_$i"} )
           . qq|></td>|;
         $column_data{discount} =
             qq|<td align=right><input name="discount_$i" size=3 value=|
@@ -365,7 +371,7 @@ qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size=5 valu
 |;
 
         for (
-            qw(orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id invoice_id)
+            qw(orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id invoice_id precision)
           )
         {
             $form->hide_form("${_}_$i");
@@ -553,7 +559,10 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
 |;
 
         for (
-            qw(partnumber sku description partsgroup partsgroup_id bin weight sellprice listprice lastcost onhand unit assembly taxaccounts inventory_accno_id income_accno_id expense_accno_id pricematrix id notes)
+            qw(partnumber sku description partsgroup partsgroup_id bin weight 
+               sellprice listprice lastcost onhand unit assembly 
+               taxaccounts inventory_accno_id income_accno_id expense_accno_id 
+               pricematrix id notes)
           )
         {
             print
@@ -617,7 +626,9 @@ sub item_selected {
               if $form->{type} !~ /_quotation/;
 
             for (
-                qw(id partnumber sku description listprice lastcost bin unit weight assembly taxaccounts pricematrix onhand notes inventory_accno_id income_accno_id expense_accno_id)
+                qw(id partnumber sku description listprice lastcost
+                  bin unit weight assembly taxaccounts pricematrix onhand notes 
+                  inventory_accno_id income_accno_id expense_accno_id)
               )
             {
                 $form->{"${_}_$i"} = $form->{"new_${_}_$j"};
@@ -703,7 +714,9 @@ sub item_selected {
     # delete all the new_ variables
     for $i ( 1 .. $form->{lastndx} ) {
         for (
-            qw(id partnumber sku description sellprice listprice lastcost bin unit weight assembly taxaccounts pricematrix onhand notes inventory_accno_id income_accno_id expense_accno_id)
+            qw(id partnumber sku description sellprice listprice lastcost 
+               bin unit weight assembly taxaccounts pricematrix onhand
+               notes inventory_accno_id income_accno_id expense_accno_id)
           )
         {
             delete $form->{"new_${_}_$i"};
@@ -804,7 +817,6 @@ sub display_form {
         exit;
     }
     
-    
 
     &form_header;
     
@@ -860,7 +872,11 @@ sub check_form {
     my $i;
     my $j;
     my @flds =
-      qw(id runningnumber partnumber description partsgroup qty ship unit sellprice discount oldqty orderitems_id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id notes reqdate deliverydate serialnumber projectnumber);
+      qw(id runningnumber partnumber description partsgroup qty ship unit 
+         sellprice discount oldqty orderitems_id bin weight listprice 
+         lastcost taxaccounts pricematrix sku onhand assembly 
+         inventory_accno_id income_accno_id expense_accno_id notes reqdate 
+         deliverydate serialnumber projectnumber);
 
     # remove any makes or model rows
     if ( $form->{item} eq 'part' ) {
