@@ -2130,7 +2130,7 @@ CREATE TABLE menu_attribute (
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 611, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 612, true);
 
 
 --
@@ -2340,13 +2340,14 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 86	module	ic.pl	205
 86	action	search	610
 86	searchitems	all	611
+87	module	ic.pl	612
 87	action	search	206
+87	searchitems	part	210
 88	module	ic.pl	211
 88	action	requirements	212
 89	action	search	213
 89	module	ic.pl	214
 89	searchitems	service	215
-87	searchitems	part	210
 90	action	search	216
 90	module	ic.pl	217
 90	searchitems	labor	218
