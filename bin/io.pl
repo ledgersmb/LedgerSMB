@@ -1814,6 +1814,7 @@ sub print_form {
         no_escape => true,
         method => $form->{media},
         output_options => \%output_options,
+	output_file => $form->{formname} . "-" . $form->{"${inv}number"},
         );
     try {
         $template->render($form);
