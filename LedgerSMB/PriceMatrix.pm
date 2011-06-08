@@ -124,7 +124,7 @@ sub price_matrix {
     } elsif ( $form->{vendor_id} ) {
         $pmh->execute( $ref->{id} );
     } else {
-        $form->error('Invalid Form');
+        $form->error('Missing counter-party (customer or vendor)');
         return;
     }
     if ( $mref = $pmh->fetchrow_hashref(NAME_lc) ) {
