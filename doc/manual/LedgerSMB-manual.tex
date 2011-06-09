@@ -150,6 +150,8 @@ your business.
 \begin{itemize}
 \item One isolated database per company 
 \item Users can have localized systems independent of company data set 
+\item Depending on configuration, users may be granted permission to different
+      companies separately.
 \end{itemize}
 \item Point of Sale 
 
@@ -204,59 +206,56 @@ broad range of technologies
 \subsection{System Requirements of LedgerSMB}
 
 \begin{itemize}
-\item PostgreSQL 
+\item PostgreSQL 8.1 or higher
 \item A CGI-enabled Web Server (for example, Apache) 
-\item Perl 5.8.x
+\item Perl 5.8.x or higher
 \item An operating system which supports the above software (usually Linux,
 though Windows, MacOS X, etc. do work) 
 \item \LaTeX{}\ (optional) is required to create PDF or Postscript invoices 
 \item The following CPAN modules:
 
 \begin{itemize}
-\item Data::Dumper
-\item Locale::Maketext
-\item Locale::Maketext::Lexicon
-\item MIME::Base64
-\item Digest::MD5
-\item HTML::Entities
-\item DBI
-\item DBD::Pg
-\item Math::BigFloat
-\item IO::File
-\item Encode
-\item Locale::Country
-\item Locale::Language
-\item Time::Local
 \item Cwd
 \item Config::Std
+\item Data::Dumper
+\item DateTime
+\item DBD::Pg
+\item DBI
+\item Digest::MD5
+\item Encode
+\item IO::File
+\item HTML::Entities
+\item Locale::Country
+\item Locale::Language
+\item Locale::Maketext
+\item Locale::Maketext::Lexicon
+\item Log::Log4perl
+\item Math::BigFloat
+\item MIME::Base64
 \item MIME::Lite
+\item Time::Local
 \end{itemize}
 \end{itemize}
 
 \section{User Account and Database Administration Basics}
 
-These functions are accessed via the admin.pl script in the
-installed directory of LedgerSMB.
-
+LedgerSMB 1.3 offers a variety of tools for setting up new databases, and most
+functionality (aside from creating new databases) is now offered dirctly within
+the main applications.  LedgerSMB 1.2 users will note that the admin.pl script
+is no longer included.
 
 \subsection{Companies and Datasets}
 
 LedgerSMB stores its information in locale-specific data sets. When
 a dataset is created, it sets various defaults such as currency, a
-basic chart of accounts setup, and so forth. Note that the default
-setup is for Canada, where the author of the software resides.
+basic chart of accounts setup, and so forth.
 
 Datasets are stored as PostgreSQL databases. The application
 is designed with the idea that each dataset will represent exactly
 one company. If a customer is working with multiple companies, he/she
 must create a dataset to for each.
 
-The simplest way to create a database, once the system is installed, is to go to
-http://[your\_ledgersmb\_instance/initiate.pl.  In the http authentication
-dialog, provide your postgres superuser credentials and click ok.
-
-In the resulting screen, click "Initiate Database" and fill out appropriate
-information.  This will then create a basic database for use with LedgerSMB.
+TODO:  Document preferred methods for creating databases!
 
 \subsection{How to Create a User}
 
@@ -280,12 +279,16 @@ dbname\rbrack\_\_ followed by the role name.  Note that two underscores separate
 the database and role names.  If these are followed then the interface will
 pick up on defined groups and display them along with other permissions.
 
+TODO:  Add list of predefined roles and what they can do!
+
 \section{Chart of Accounts}
 
 The Chart of Accounts provides a basic overview of the logical structure
 of the accounting program. One can customize this chart to allow for
 tracking of different sorts of information.
 
+TODO:  Add and document the ability to load chart of accounts sql scripts after
+db creation.
 
 \subsection{Introduction to Double Entry Bookkeeping}
 In order to set up your chart of accounts in LedgerSMB you will need to
@@ -445,7 +448,7 @@ yet.  Approved transactions should be reversed rather than deleted.
 
 Separation of duties is not available yet for sales/vendor invoice documents,
 but something similar can be handled by feeding them through the order entry
-workflow (see below).
+workflow (see \ref{oe}).
 
 \subsubsection{References}
 
@@ -528,7 +531,7 @@ module has access to everything on the submitted form so it is able to make
 complex determinations on what is taxable based on arbitrary criteria.
 
 The tax rules drop-down box allows one to select any installed tax module 
-(LedgerSMB 1.2 ships only with the simple module), while the ordering is an
+(LedgerSMB 1.3 ships only with the simple module), while the ordering is an
 integer which allows one to specify a tax run which occurs on the form after
 any rules with lower entries in this box.  This allows for compounding of sales tax (for example, when PST applies to the total and GST as well).
 
@@ -590,7 +593,7 @@ ventor.
 \item[DESCRIPTION] expands to the description of the part.  Valid only for parts.
 \item[ITEM] expands to the item field.  Valid only for parts.
 \item[PERISCOPE] expands to the partsgroup.  Valid only for parts.
-\item[PHONE] expands to the telephoen number for customers and vendors.
+\item[PHONE] expands to the telephone number for customers and vendors.
 \end{description}
 
 \subsection{Audit Control}
@@ -768,8 +771,8 @@ The standard way books are normally closed at the end of the year
 is by moving all adjusted%
 \footnote{Adjustments would be entered via the General Ledger. The exact process
 is beyond the scope of this document, however.%
-} income and expenses to an equity account usually called \char`\"{}Retained
-Earnings.\char`\"{} Assets and liabilities are not moved. Equity drawing/dividend
+} income and expenses to an equity account usually called `Retained
+Earnings.' Assets and liabilities are not moved. Equity drawing/dividend
 accounts are also moved, but the investment accounts are not. The
 reasoning behind this process is that one wants a permanent record
 of the amount invested in a business, but any dividends ought not
@@ -784,6 +787,9 @@ making adjustments.
 Contrary to its name, this function can close the books at any time,
 though this would likely be of limited use.
 
+Once the books are closed, no transactions can be entered into the closed
+period.  Additionally the year end routines cannot be run if there are
+unapproved transactions in a period to be closed.
 
 \subsection{Options in the ledger-smb.conf}
 
@@ -811,6 +817,7 @@ Color = lpr -PEpson \\%
 (in Postscript) from standard input, so there are many more possibilities. 
 \end{description}
 
+TODO:  Review this and document any other options!
 
 \section{Goods and Services}
 
@@ -1366,10 +1373,11 @@ This provides a simple way of searching for projects to edit or modify.
 \begin{itemize}
 \item One can use them similar to departments for tracking work done for
 a variety of customers. 
-\item One can use them for customer-specific projects, such as this training. 
+\item One can use them for customer-specific projects. 
 \end{itemize}
 
 \section{Quotations and Order Management}
+\label{oe}
 
 This unit will introduce the business processes that LedgerSMB allows.
 These processes are designed to allow various types of businesses
@@ -1959,6 +1967,8 @@ This can be done for other accounts too, such as petty cash.%
 \footnote{Petty cash denotes a drawer of cash that is used to pay small expenses.
 When an expense is paid, it is recorded on a slip of paper that is
 stored for reconciliation purposes.%
+
+TODO:  Document new reconciliation workflow
 }
 
 
