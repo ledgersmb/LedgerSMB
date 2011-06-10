@@ -279,7 +279,413 @@ dbname\rbrack\_\_ followed by the role name.  Note that two underscores separate
 the database and role names.  If these are followed then the interface will
 pick up on defined groups and display them along with other permissions.
 
-TODO:  Add list of predefined roles and what they can do!
+\subsubsection{List of Roles}
+
+Roles here are listed minus their prefix (lsmb\_$[$database name$]$\_\_, note 
+the double underscore at the end of the prefix).
+
+\begin{itemize}
+\item Contact Management:  Customers and Vendors
+      \begin{description}
+      \item[contact\_read] Allows the user to read contact information
+      \item[contact\_create] Allows the user to enter new contact information
+      \item[contact\_edit] Allows the user to update the contact information
+      \item[contact\_all] provides permission for all of the above.  Member of:
+          \begin{itemize}
+          \item contact\_read
+          \item contact\_create
+          \item contact\_edit
+          \end{itemize}
+      \end{description}
+\item Batch Creation and Approval
+      \begin{description}
+      \item[batch\_create] Allows the user to create batches
+      \item[batch\_post] Allows the user to take existing batches and post them
+                         to the books
+      \item[batch\_list] Allows the user to list batches and vouchers within
+                         a batch.  Member of:
+            \begin{itemize}
+            \item ar\_transaction\_list
+            \item ap\_transaction\_list
+            \end{itemize}
+      \end{description}
+\item AR:  Accounts Receivable
+      \begin{description}
+      \item[ar\_transaction\_create] Allows user to create transctions.  Member 
+            of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[ar\_transaction\_create\_voucher].  Allows a user to create AR 
+            transaction vouchers.  Member of:
+            \begin{itemize}
+            \item contact\_read
+            \item batch\_create
+            \end{itemize}
+      \item[ar\_invoice\_create] Allows user to create sales invoices.  Member
+            of:
+            \begin{itemize}
+            \item ar\_transaction\_create
+            \end{itemize}
+      \item[ar\_transaction\_list] Allows user to view transactions.  Member Of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[ar\_transaction\_all], all non-voucher permissions above, member of:
+             \begin{itemize}
+             \item ar\_transaction\_create
+             \item ar\_transaction\_list
+             \end{itemize}
+      \item[sales\_order\_create] Allows user to create sales order.  Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[sales\_quotation\_create] Allows user to create sales quotations.
+            Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item [sales\_order\_list] Allows user to list sales orders. Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[sales\_quotation\_list] Allows a user to list sales quotations.
+            Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[ar\_all]:  All AR permissions, member of:
+             \begin{itemize}
+             \item ar\_voucher\_all
+             \item ar\_transaction\_all
+             \item sales\_order\_create
+             \item sales\_quotation\_create
+             \item sales\_order\_list
+             \item sales\_quotation\_list
+             \end{itemize}
+      \end{description}
+\item AP:  Accounts Payable
+      \begin{description}
+      \item[ap\_transaction\_create] Allows user to create transctions.  Member 
+            of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[ap\_transaction\_create\_voucher].  Allows a user to create AP
+            transaction vouchers.  Member of:
+            \begin{itemize}
+            \item contact\_read
+            \item batch\_create
+            \end{itemize}
+      \item[ap\_invoice\_create] Allows user to create vendor invoices.  Member
+            of:
+            \begin{itemize}
+            \item ap\_transaction\_create
+            \end{itemize}
+      \item[ap\_transaction\_list] Allows user to view transactions.  Member Of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[ap\_transaction\_all], all non-voucher permissions above, member of:
+             \begin{itemize}
+             \item ap\_transaction\_create
+             \item ap\_transaction\_list
+             \end{itemize}
+      \item[purchase\_order\_create] Allows user to create purchase orders,  
+            Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[rfq\_create] Allows user to create requests for quotations.
+            Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item [purchase\_order\_list] Allows user to list purchase orders. 
+             Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[rfq\_list] Allows a user to list requests for quotations.
+            Member of:
+             \begin{itemize}
+             \item contact\_read
+             \end{itemize}
+      \item[ap\_all]:  All AP permissions, member of:
+             \begin{itemize}
+             \item ap\_voucher\_all
+             \item ap\_transaction\_all
+             \item purchase\_order\_create
+             \item rfq\_create
+             \item purchase\_order\_list
+             \item rfq\_list
+             \end{itemize}
+      \end{description}
+\item Point of Sale
+      \begin{description}
+      \item[pos\_enter] Allows user to enter point of sale transactions
+          Member of:
+         \begin{itemize}
+         \item contact\_read
+         \end{itemize}
+      \item[close\_till] Allows a user to close his/her till
+      \item[list\_all\_open] Allows the user to enter all open transactions
+      \item[pos\_cashier] Standard Cashier Permissions.  Member of:
+         \begin{itemize}
+         \item pos\_enter
+         \item close\_till
+         \end{itemize}
+      \item[pos\_all] Full POS permissions.  Member of:
+         \begin{itemize}
+         \item pos\_enter
+         \item close\_till
+         \item list\_all\_open
+         \end{itemize}
+      \end{description}
+\item Cash Handling
+      \begin{description}
+      \item[reconciliation\_enter]  Allows the user to enter reconciliation 
+             reports.
+      \item[reconciliation\_approve] Allows the user to approve/commit
+             reconciliation reports to the books.
+      \item[reconciliation\_all]  Allows a user to enter and approve 
+           reconciliation reports.  Don't use if separation of duties is 
+           required.  Member of:
+             \begin{itemize}
+             \item reconciliation\_enter
+             \item reconciliation\_approve
+             \end{itemize}
+      \item[payment\_process] Allows a user to enter payments.  Member of:
+            \begin{itemize}
+            \item ap\_transaction\_list
+            \end{itemize}
+      \item[receipt\_process] Allows a user to enter receipts.  Member of:
+            \begin{itemize}
+            \item ar\_transaction\_list
+            \end{itemize}
+      \item[cash\_all] All above cash roles.  Member of:
+           \begin{itemize}
+           \item reconciliation\_all
+           \item payment\_process
+           \item receipt\_process
+           \end{itemize}
+      \end{description}
+\item Inventory Control
+      \begin{description}
+      \item[part\_create] Allows user to create new parts.
+      \item[part\_edit] Allows user to edit parts
+      \item[inventory\_reports] Allows user to run inventory reports
+      \item[pricegroup\_create] Allows user to create pricegroups.
+           Member of:
+           \begin{itemize}
+           \item contact\_read
+           \end{itemize}
+      \item[pricegroup\_edit]  Allows user to edit pricegroups
+           Member of:
+           \begin{itemize}
+           \item contact\_read
+           \end{itemize}
+      \item[assembly\_stock]  Allows user to stock assemblies
+      \item[inventory\_ship]  Allows user to ship inventory.  Member of:
+           \begin{itemize}
+           \item sales\_order\_list
+           \end{itemize}
+      \item[inventory\_receive] Allows user to receive inventory.  Member of:
+           \begin{itemize}
+           \item purchase\_order\_list
+           \end{itemize}
+      \item[inventory\_transfer] Allows user to transfer inventory between
+           warehouses.
+      \item[warehouse\_create] Allows user to create warehouses.
+      \item[warehouse\_edit] Allows user to edit warehouses.
+      \item[inventory\_all]  All permissions groups in this section.  
+            Member of:
+            \begin{itemize}
+            \item part\_create
+            \item part\_edit
+            \item inventory\_reports
+            \item pricegroup\_create
+            \item pricegroup\_edit
+            \item assembly\_stock
+            \item inventory\_ship
+            \item inventory\_transfer
+            \item warehouse\_create
+            \item warehouse\_edit
+            \end{itemize} 
+      \end{description}
+\item GL:  General Ledger and General Journal 
+      \begin{description}     
+      \item[gl\_transaction\_create] Allows a user to create journal entries
+           or drafts.
+      \item[gl\_voucher\_create] Allows a user to create GL vouchers and 
+           batches.
+      \item[gl\_reports] Allows a user to run GL reports, listing all financial
+           transactions in the database.  Member of:
+           \begin{itemize}
+           \item ar\_list\_transactions
+           \item ap\_list\_transactions
+           \end{itemize}
+      \item[yearend\_run] Allows a user to run the year-end processes
+      \item[gl\_all] All GL permissions.  Member of:
+           \begin{itemize}
+           \item gl\_transaction\_create
+           \item gl\_voucher\_create
+           \item gl\_reports
+           \item yearend\_run
+           \end{itemize} 
+      \end{description}
+\item Project Accounting
+      \begin{description}
+      \item[project\_create] Allows a user to create project entries.  User must
+           have contact\_read permission to assing them to customers however.
+      \item[project\_edit] Allows a user to edit a project.  User must
+           have contact\_read permission to assing them to customers however.
+      \item[project\_timecard\_add] Allows user to add time card.  Member of:
+           \begin{itemize}
+           \item contact\_read
+           \end{itemize}
+      \item[project\_timecard\_list] Allows a user to list timecards.  Necessary
+            for order generation. Member of:
+           \begin{itemize}
+           \item contact\_read
+           \end{itemize}
+      \item[project\_order\_generate] Allows a user to generate orders from
+           time cards.   Member of:
+           \begin{itemize}
+           \item project\_timecard\_list
+           \item orders\_generate
+           \end{itemize}
+      \end{description}
+\item Order Generation, Consolidation, and Management
+      \begin{description}
+      \item[orders\_generate] Allows a user to generate orders.  Member of:
+           \begin{itemize}
+           \item contact\_read
+           \end{itemize}
+      \item[orders\_sales\_to\_purchase]  Allows creation of purchase orders
+           from sales orders.  Member of:
+           \begin{itemize}
+           \item orders\_generate
+           \end{itemize}
+      \item[orders\_purchase\_consolidate] Allows the user to consolidate 
+           purchase orders.  Member of:
+           \begin{itemize}
+           \item orders\_generate
+           \end{itemize}
+      \item[orders\_sales\_consolidate]  Allows user to consolidate sales
+           orders.  Member of:
+           \begin{itemize}
+           \item orders\_generate
+           \end{itemize}
+      \item[orders\_manage] Allows full management of orders.  Member of:
+           \begin{itemize}
+           \item project\_order\_generate
+           \item orders\_sales\_to\_purchase
+           \item orders\_purchase\_consolidate
+           \item orders\_sales\_consolidate
+           \end{itemize}
+     \end{description}
+\item Financial Reports
+      \begin{description}
+      \item[financial\_reports] Allows a user to run financial reports. 
+           Member of:
+           \begin{itemize}
+           \item gl\_reports
+           \end{itemize}
+      \end{description}
+\item  Batch Printing
+      \begin{description}
+      \item[print\_jobs\_list]  Allows the user to list print jobs.
+      \item[print\_jobs] Allows user to print the jobs
+           Member of: 
+           \begin{itemize}
+           \item print\_jobs\_list
+           \end{itemize}
+      \end{description}
+\item System Administration
+      \begin{description}
+      \item[system\_settings\_list] Allows the user to list system settings.
+      \item[system\_settings\_change] Allows user to change system settings.
+           Member of:
+           \begin{itemize}
+           \item system\_settings\_list
+           \end{itemize}
+      \item[taxes\_set] Allows setting of tax rates and order.
+      \item[account\_create]  Allows creation of accounts.
+      \item[account\_edit]  Allows one to edit accounts.
+      \item[auditor] Allows one to access audit trails.
+      \item[audit\_trail\_maintenance] Allows one to truncate audit trails.
+      \item[gifi\_create] Allows one to add GIFI entries.
+      \item[gifi\_edit] Allows one to edit GIFI entries.
+      \item[account\_all] A general group for accounts management.  Member of:
+           \begin{itemize}
+           \item account\_create
+           \item account\_edit
+           \item taxes\_set
+           \item gifi\_create
+           \item gifi\_edit
+           \end{itemize}
+      \item[department\_create] Allow the user to create departments.
+      \item[department\_edit] Allows user to edit departments.
+      \item[department\_all] Create/Edit departments.  Member of:
+          \begin{itemize}
+            \item department\_create
+            \item department\_edit
+          \end{itemize}
+      \item[business\_type\_create] Allow the user to create business types.
+      \item[business\_type\_edit] Allows user to edit business types.
+      \item[business\_type\_all] Create/Edit business types.  Member of:
+          \begin{itemize}
+            \item business\_type\_create
+            \item business\_type\_edit
+          \end{itemize}
+      \item[sic\_create] Allow the user to create SIC entries.
+      \item[sic\_edit] Allows user to edit business types.
+      \item[sic\_all] Create/Edit business types.  Member of:
+          \begin{itemize}
+            \item sic\_create
+            \item sic\_edit
+          \end{itemize}
+      \item[tax\_form\_save] Allow the user to save the tax form entries.
+      \item[template\_edit]  Allow the user to save new templates.  This 
+            requires sufficient file system permissions.
+      \item[users\_manage] Allows an admin to create, edit, or remove users.
+            Member of:
+            \begin{itemize}
+            \item contact\_create
+            \item contact\_edit
+            \end{itemize}
+      \item[system\_admin]  General role for accounting system administrators.
+            Member of:
+            \begin{itemize}
+            \item system\_setting\_change
+            \item account\_all
+            \item department\_all
+            \item business\_type\_all
+            \item sic\_all
+            \item tax\_form\_save
+            \item template\_edit
+            \item users\_manage
+            \end{itemize}
+      \end{description}
+\item Manual Translation
+      \begin{description}
+      \item[language\_create] Allow user to create languages
+      \item[language\_edit]  Allow user to update language entries
+      \item[part\_translation\_create] Allow user to create translations of 
+                                       parts to other languages.
+      \item[project\_translation\_create] Allow user to create translations of
+              project descriptions.
+      \item[manual\_translation\_all] Full management of manual translations.
+            Member of:
+            \begin{itemize}
+            \item language\_create
+            \item language\_edit
+            \item part\_translation\_create
+            \item project\_translation\_create
+            \end{itemize}
+      \end{description}
+\end{itemize}
 
 \section{Chart of Accounts}
 
@@ -2900,6 +3306,8 @@ This section covers the basic possibilities involving customization.
 
 \subsection{Brief Guide to the Source Code}
 
+TODO: Check lines of code again, update this section
+
 LedgerSMB is an application with over 34000 lines of code. While
 it is not possible to cover the entire application here, a brief overview
 of the source code is in order.
@@ -3185,44 +3593,25 @@ The pagebreak block is terminated by \textless?lsmb end pagebreak ?\textgreater.
 Any text within the pagebreak block is ignored by the template.
 
 
-\subsubsection{Conditionals}
+\subsubsection{Other Template Control Structures}
 
-\begin{itemize}
-\item \textless?lsmb if not varname ?\textgreater tells the parser to
-include the next block only if varname was posted by the submitting
-form (or set via the form hash elsewhere in the scripts). The block
-ends with \textless?lsmb end varname ?\textgreater 
-\item \textless?lsmb if varname ?\textgreater tells the parser to include the
-block if varname was posted in the submitting form (or set via
-the form hash elsewhere in the scripts). The block ends with \textless?lsmb end
-varname ?\textgreater 
-\item Lines conditionals are otherwise ignored by the parser. 
-\item Conditionals cannot be nested, but IF's can be nested inside loops.
-\end{itemize}
+As of 1.3, all templates use the Template Toolkit syntax for generating LaTeX,
+text, and html output.  The LaTeX can then be processed to create postscript or
+pdf files, and could be trivially extended to allow for DVI output as well.
 
-\subsubsection{Loops}
-
-\textless?lsmb foreach varname ?\textgreater is used to iterate through
-a list of vars set by the user interface system (usually one of the
-files under bin/mozilla (or otherwise). The block is repeated for
-each varname in a list. Block ends with \textless?lsmb end varname ?\textgreater
-
+Template Toolkit provides a rich set of structures for controlling flow which
+are well beyond what was available in previous versions of LedgerSMB.  The only
+difference is in the start and end tag sequences, where we use <?lsmb and ?> in
+order to avoid problems with rendering LaTeX templates for testing purposes.
 
 \subsubsection{File Inclusion}
 
-\begin{itemize}
-\item Files may be included with the syntax \textless?lsmb include template\_name
-?\textgreater
+Files may be included with the syntax \textless?lsmb INCLUDE 
+template\_name ?\textgreater
 where templatename is the name of the template within the current
-template directory (usually templates/\$username/).  Note that for \LaTeX\ 
-templates, the input or include functionalities might be better suited for many
-many things.
-\item Cannot be used with conditionals 
-\item Filenames cannot use slashes (/) or .. due to directory transversal
-considerations. 
-\item Files can force other files to be included, but the same file cannot
-be included more than once. 
-\end{itemize}
+template directory (set in the defaults table and the System/Defaults screen).  
+Note that for \LaTeX\ templates, the input or include functionalities might be 
+better suited for many things.
 
 \subsubsection{Cross-referencing and multiple passes of \LaTeX{}}
 
@@ -3268,6 +3657,8 @@ alignment).
 
 \subsection{Customizing Forms}
 
+TODO:  Documnet new forms interface
+
 Data entry forms and other user interface pieces are in the bin directory.
 In LedgerSMB 1.0.0 and later, symlinks are not generally used.
 
@@ -3311,6 +3702,8 @@ other existing modules.
 
 
 \subsubsection{Database Access}
+
+TODO:  Document changes
 
 The \$form object provides two methods for accessing the database.
 The \$form-\textgreater dbconnect(\%myconfig) method commits each

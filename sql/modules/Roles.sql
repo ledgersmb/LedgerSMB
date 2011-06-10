@@ -104,25 +104,25 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_edit"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT UPDATE ON entity TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON company TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON person TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON company_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON company_to_entity TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON company_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON customertax TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON entity_note TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON entity_class_to_entity TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON entity_other_name TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON person_to_company TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON person_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON person_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT DELETE, INSERT  ON vendortax TO "lsmb_<?lsmb dbname ?>__contact_create";
+GRANT UPDATE ON entity TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON company TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON location TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON person TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON company_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON company_to_entity TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON company_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON customertax TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON entity_note TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON entity_class_to_entity TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON entity_other_name TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON person_to_company TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON person_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON person_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT DELETE, INSERT  ON vendortax TO "lsmb_<?lsmb dbname ?>__contact_edit";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_all_rights"
 WITH INHERIT NOLOGIN 
@@ -186,8 +186,7 @@ GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_cr
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__ar_transaction_create";
+IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
 GRANT INSERT ON invoice, new_shipto 
 TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
@@ -202,16 +201,16 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (195, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
 
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__batch_create",
-"lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
+--CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher"
+--WITH INHERIT NOLOGIN
+--IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+--"lsmb_<?lsmb dbname ?>__batch_create",
+--"lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
 
-GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
-GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
+--GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
+--GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
+--GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
+--GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
 
 -- TODO add Menu ACLs
 
@@ -245,10 +244,10 @@ values (13, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (15, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_voucher_all"
-WITH INHERIT NOLOGIN 
-IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher",
-"lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
+--CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_voucher_all"
+--WITH INHERIT NOLOGIN 
+--IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher",
+--"lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_all"
 WITH INHERIT NOLOGIN
@@ -357,8 +356,7 @@ GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_cr
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_invoice_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__ap_transaction_create";
+IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
 GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
@@ -587,7 +585,7 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (44, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_approve');
 
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__all_reconciliation_enter"
+CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_all"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter",
 "lsmb_<?lsmb dbname ?>__reconciliation_approve";
@@ -633,7 +631,7 @@ values (47, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__cash_all"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__all_reconciliation_enter",
+IN ROLE "lsmb_<?lsmb dbname ?>__reconciliation_all",
 "lsmb_<?lsmb dbname ?>__payment_process",
 "lsmb_<?lsmb dbname ?>__receipt_process";
 
@@ -888,7 +886,7 @@ GRANT SELECT ON voucher TO "lsmb_<?lsmb dbname ?>__batch_list";
 -- TODO:  Add menu items
 
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__all_gl"
+CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_all"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__gl_transaction_create",
 "lsmb_<?lsmb dbname ?>__gl_voucher_create",
@@ -941,14 +939,14 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__project_timecard_list"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT UPDATE ON project TO "lsmb_<?lsmb dbname ?>__project_edit";
+GRANT SELECT ON jcitems TO "lsmb_<?lsmb dbname ?>__project_timecard_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_edit');
+values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (103, 'allow', 'lsmb_<?lsmb dbname ?>__project_edit');
+values (103, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (106, 'allow', 'lsmb_<?lsmb dbname ?>__project_edit');
+values (106, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_list');
 
 
 
@@ -964,7 +962,8 @@ GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__orders_generate";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__project_order_generate"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate";
+IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate",
+"lsmb_<?lsmb dbname ?>__project_timecard_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_order_generate');
@@ -1361,6 +1360,33 @@ values (188, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (189, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
+WITH INHERIT NOLOGIN
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_edit",
+"lsmb_<?lsmb dbname ?>__contact_create";
+
+GRANT SELECT ON role_view TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__remove_user_from_role(TEXT, TEXT)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__add_function_to_group(TEXT, TEXT)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__remove_function_from_group(text, text)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__get_roles_for_user(INT)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__save_user(int, INT, text, TEXT) 
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__create_group(TEXT)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__delete_user(text)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__list_roles(text)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+GRANT EXECUTE ON FUNCTION  admin__delete_group(text)
+TO "lsmb_<?lsmb dbname ?>__users_manage";
+
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__system_admin"
 WITH INHERIT NOLOGIN
@@ -1370,6 +1396,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__system_settings_change",
 "lsmb_<?lsmb dbname ?>__business_type_all",
 "lsmb_<?lsmb dbname ?>__sic_all",
 "lsmb_<?lsmb dbname ?>__template_edit",
+"lsmb_<?lsmb dbname ?>__users_manage",
 "lsmb_<?lsmb dbname ?>__tax_form_save";
 
 -- Manual Translation
@@ -1423,38 +1450,11 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (108, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
 
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__all_manual_translation"
+CREATE ROLE "lsmb_<?lsmb dbname ?>__manual_translation_all"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__language_create",
 "lsmb_<?lsmb dbname ?>__part_translation_create",
 "lsmb_<?lsmb dbname ?>__project_translation_create";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_edit",
-"lsmb_<?lsmb dbname ?>__contact_create";
-
-GRANT SELECT ON role_view TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__remove_user_from_role(TEXT, TEXT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__add_function_to_group(TEXT, TEXT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__remove_function_from_group(text, text)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__get_roles_for_user(INT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__save_user(int, INT, text, TEXT) 
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__create_group(TEXT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__delete_user(text)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__list_roles(text)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__delete_group(text)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
 
 -- Grants to all users;
 GRANT SELECT ON makemodel TO public;
