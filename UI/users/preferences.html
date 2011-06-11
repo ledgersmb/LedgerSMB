@@ -52,6 +52,7 @@
 	      <tr>
 		<th align="right"><?lsmb text('Language') ?></th>
 		<td><?lsmb language = user.language -?>
+		    <?lsmb country_codes.unshift({}) ?>
                     <?lsmb PROCESS select element_data={
                      name = 'language',
                      options = country_codes,
