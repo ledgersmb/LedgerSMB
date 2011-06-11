@@ -3055,7 +3055,7 @@ qq|<td><select name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></
         else {
 
             $column_data{partnumber} =
-qq|<td><button class="submit" type="submit" name="action" value="$spc$form->{"partnumber_$i"}">$spc$form->{"partnumber_$i"}</button></td>
+qq|<td><a href="ic.pl?action=edit&id=$form->{"id_$i"}" target="new">$form->{"partnumber_$i"}</a></td>
       <input type=hidden name="partnumber_$i" value="$form->{"partnumber_$i"}">|;
 
             $column_data{runningnumber} =
