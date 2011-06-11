@@ -7,6 +7,13 @@ Alias /ledgersmb WORKING_DIR/
   # Rewrite rule to allow HTTP Authorization information to the scripts only
   # from this directory.
   RewriteEngine On
+
+  # Redirect the /ledgersmb and /ledgersmb/ URL paths to
+  # the true login script: /ledgersmb/login.pl
+  RewriteRule ^/ledgersmb/?$ /ledgersmb/login.pl [R]
+
+  # Indicate that the HTTP Authorization data should be passed
+  # to the CGI scripts running from this directory
   RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 
   AllowOverride All
