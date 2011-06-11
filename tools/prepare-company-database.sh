@@ -74,6 +74,13 @@ USAGE
 
 }
 
+# Am I root?
+if ! test `whoami` = "root"
+then
+  echo "WARNING: you're not running as 'root';"
+  echo "you will need the 'postgres' user's password!"
+fi
+
 # Extract options and setup variables
 if ! options=$( getopt -u -l company:,coa:,gifi:,srcdir:,dstdir:,password:,host:,port:,help,progress,pgsql-contrib: '' "$@" )
 then
