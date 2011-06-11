@@ -37,6 +37,7 @@
 package AM;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
+use open ':utf8';
 
 sub get_account {
 
@@ -1321,6 +1322,7 @@ sub save_preferences {
     my $sth = $dbh->prepare($query);
     $sth->execute(@queryargs) || $form->dberror($query);
     my ($dbusername) = $sth->fetchrow_array;
+    $form->error($query . $form->{login} . $dbusername);
     $sth->finish;
 
     return 0 if ( $dbusername ne $form->{login} );
