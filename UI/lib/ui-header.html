@@ -27,8 +27,12 @@
 	window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
 	</script>
 	<?lsmb END ?>
-
+        <?lsmb IF html_charset ?>
+        <meta http-equiv="content-type" content="text/html; charset=<?lsmb
+                                                           html_charset ?>">
+        <?lsmb ELSE ?>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <?lsmb END # if html_charset ?>
 	<meta name="robots" content="noindex,nofollow" />
         
 </head>
