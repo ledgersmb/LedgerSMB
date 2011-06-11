@@ -651,6 +651,7 @@ sub form_header {
 }
 
 sub form_footer {
+    _calc_taxes();
 
     $form->{invtotal} = $form->{invsubtotal};
 
@@ -686,34 +687,18 @@ qq|<textarea name="intnotes" rows="$rows" cols="35" wrap="soft">$form->{intnotes
 	}
 
     if ( !$form->{taxincluded} ) {
-
-        my @taxes = sort bypass Tax::init_taxes( $form, $form->{taxaccounts} );
-		my $passlvl = 0;
-		my $taxable_base = undef;
-        foreach my $item (@taxes) {
-            my $taccno = $item->account;
-
-			if ( $taxable_base eq undef ) {
-				$taxable_base = $form->{"${taccno}_base"};
-			}
-
-			if ( $item->pass gt $passlvl ) {
-				$taxable_base = $form->{invtotal};
-			}
-			$passlvl = $item->pass;
-
-	    $form->{invtotal} += $form->round_amount( 
-                $form->{"${taccno}_rate"} * $taxable_base, 2);
+        foreach $item (keys %{$form->{taxes}}) {
+            my $taccno = $item;
+	    $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
             $form->{"${taccno}_total"} =
-        	  $form->format_amount( \%myconfig,
-                $form->{"${taccno}_rate"} * $taxable_base, 2 );
-
+                  $form->format_amount( \%myconfig,
+                    $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
+            next if !$form->{"${taccno}_total"};
             $tax .= qq|
-	      <tr>
-		<th align="right">$form->{"${taccno}_description"}</th>
-		<td align="right">$form->{"${taccno}_total"}</td>
-	      </tr>
-	      | if $form->{"${taccno}_base"};
+        <tr>
+      	<th align="right">$form->{"${taccno}_description"}</th>
+      	<td align="right">$form->{"${taccno}_total"}</td>
+        </tr>|;
         }
 
         $form->{invsubtotal} =
@@ -1091,20 +1076,20 @@ sub update {
                     $form->{"${_}_$i"} /= $exchangerate;
                 }
 
-                $amount =
-                  $form->{"sellprice_$i"} * $form->{"qty_$i"} *
-                  ( 1 - $form->{"discount_$i"} / 100 );
-                for ( split / /, $form->{taxaccounts} ) {
-                    $form->{"${_}_base"} = 0;
-                }
-                for ( split / /, $form->{"taxaccounts_$i"} ) {
-                    $form->{"${_}_base"} += $amount;
-                }
-                if ( !$form->{taxincluded} ) {
-                    my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-                    $amount +=
-                      Tax::calculate_taxes( \@taxes, $form, $amount, 0 );
-                }
+#                $amount =
+#                  $form->{"sellprice_$i"} * $form->{"qty_$i"} *
+#                  ( 1 - $form->{"discount_$i"} / 100 );
+#                for ( split / /, $form->{taxaccounts} ) {
+#                    $form->{"${_}_base"} = 0;
+#                }
+#                for ( split / /, $form->{"taxaccounts_$i"} ) {
+#                    $form->{"${_}_base"} += $amount;
+#                }
+#                if ( !$form->{taxincluded} ) {
+#                    my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
+#                    $amount +=
+#                      Tax::calculate_taxes( \@taxes, $form, $amount, 0 );
+#                }
 
                 $form->{creditremaining} -= $amount;
 
