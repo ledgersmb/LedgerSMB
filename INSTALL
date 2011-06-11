@@ -1,135 +1,299 @@
-LedgerSMB 1.3 (svn trunk) INSTALL
-=================================
-
-This file documents automated installation methods for LedgerSMB 1.3.0.
-
-Manual installation instructions have been moved to INSTALL.manual, and it does 
-not cover checking out from svn or obtaining a tarball (we assume if you have 
-this file, you are already past that point). 
 
 
-Requirements
-------------
+Contents
+--------
 
-LedgerSMB 1.3 requires the following software before you begin.
- * PostgreSQL 8.1 or higher
- * Perl 5.8 or higher
- * A web server (Apache 2.2, for example) which supports both executing CGI
-   scripts and passing authentication data to them.
-
-the instructions here assume Linux or UNIX.
-
-
-Change working directory to /path/to/ledgersmb13
--------------------------------------------------
-
-For this INSTALL procedure /path/to/ledgersmb13 is the location where you have
-manually installed the LedgerSMB 1.3 source or checkout. LedgerSMB 1.3 in
-pre-alpha form is not currently packaged for any distribution.
-
-$ cd /path/to/ledgersmb13/
-/path/to/ledgersmb13 $
-
-All commands from this point forward are executed from a working directory of
-/path/to/ledgersmb13 unless otherwise noted.
+ * System requirements
+ * Installing Perl module dependencies
+   * for Debian
+   * for Fedora
+   * for <your system>
+ * Adding configuration to Apache 2.x
+ * Initializing a company database
 
 
-Application Installation
------------------------
+System requirements
+===================
 
-An automated install script (minus the database installation) is found in 
-install.sh.  This script installs the necessary perl modules and configures 
-Apache using the ledgersmb-http.conf file as a template.
+LedgerSMB depends on the following software:
 
-After running this script, you will need to restart apache:
-
-$ sudo /etc/init.d/apache2 restart
- * Stopping apache2 ...              [ ok ]
- * Starting apache2 ...              [ ok ]
-
-(On other systems you may need to log in as root to do this.)
+ * a web server (Apache v2.x or MS IIS)
+ * PostgreSQL 8.1+
+ * Perl 5.8+
 
 
-Apache must be able to read and write /path/to/ledgersmb13/templates/
--------------------------------------------------
 
-Make sure the /path/to/ledgersmb13/templates directory is read-writable by 
-user:group apache:apache, or as appropriate for your distribution's Apache 
-conventions.
+Installing Apache 2
+===================
 
-Apache must also be able to read (but not write) /path/to/ledgersmb13/ and its 
-subdirectories.
+On Debian and its derivatives - like Ubuntu - Apache installation
+is as simple as running:
 
+ $ apt-get install apache2
 
-=========================
-PostgreSQL Configuration
-=========================
+On Fedora systems the following command does the same:
 
-LedgerSMB 1.3 is tightly integrated with PostgreSQL. In the current beta 
-state, it is necessary to run several PostgreSQL commands and SQL statements
-exactly as shown below. Automated installion is still somewhat shakey.
+ $ yum install httpd
+
+On other systems, the steps to follow may differ.  Please submit
+instructions for your system for inclusion here.
 
 
-Securing PostgreSQL with LedgerSMB
-========================================
+Installing PostgreSQL
+=====================
 
-LedgerSMB 1.3.0 and higher use the database to enforce all permissions and 
-ensure that users are who they say they are.  For this reason, it is critical
-that PostgreSQL be properly secured.
+On Debian and its derivatives installing PostgreSQL works with:
 
-In the standard setup, LedgerSMB authenticates a user by logging into PostgreSQL
-with the username/password provided.  For this reason it is important that the
-authentication in PostgreSQL be properly configured.  This is handled in the
-pg_hba.conf file in the PostgreSQL data directory.  Each line ends in an
-authentication method.  Methods which can cause major problems include:
- * trust (allows any user to authenticate merely by knowing the username)
- * ident sameuser (which, in most cases, will just prevent anyone from logging
-   on)
+ $ apt-get install postgresql-server postgresql-client postgresql-contrib
 
-Most commonly you want to set the authentication for every user, database, etc.
-to md5, which uses a digest-type authentication which is reasonably secure.
+On Fedora systems this command does the same:
 
-In this file you can also require SSL to be used to connect to the database.
-This is most helpful when the web server and database server are on different
-computers.
+ $ yum install postgresql postgresql-server
+
+On other systems, the steps to follow may differ.  Please submit
+instructions for your system for inclusion here.
 
 
-Automated PostgreSQL Database Setup
+Installing Perl module dependencies
 ===================================
-Point your browser to http://[yourhost]/path/to/ledgersmb/initiate.pl
 
-You will see an HTTP authentication prompt.  Enter credentials for the database 
-superuser (for example "postgres" user).  Then follow the prompts and fill in 
-the information.
+LedgerSMB depends on these required modules:
 
-There is also a script provided called 'install-mycompany.sh' which can be used 
-to set up the database from the command line.
+  Data::Dumper
+  Log::Log4perl
+  Locale::Maketext
+  DateTime
+  Locale::Maketext::Lexicon
+  DBI
+  MIME::Base64
+  Digest::MD5
+  HTML::Entities
+  DBD::Pg
+  Math::BigFloat
+  IO::File
+  Encode
+  Locale::Country
+  Locale::Language
+  Time::Local
+  Cwd
+  Config::Std
+  MIME::Lite
+  Template
+  Error
+  CGI::Simple
 
-Login to LedgerSMB 1.3 Instance
+and these optional ones:
+
+  Net::TCLink        [Support for TrustCommerce credit card processing]
+  Parse::RecDescent  [Support for the *experimental* scripting engine]
+  Template::Plugin::Latex [Support for Postscript and PDF output]
+  XML::Twig               [Support for OpenOffice output]
+  Excel::Template::Plus   [Support for Excel output]
+
+
+All these modules can be downloaded from CPAN, the modules distribution
+archive for Perl. However our experience has been that if your distribution
+provides a module via its package manager (apt, rpm, etc.), you will have
+fewer difficulties if you use that instead.
+
+The sections below list specific instructions for the different OSes and
+distributions. If you plan to depend as much as possible - as recommended -
+on your distribution, you should follow the instructions in those sections
+before proceeding here.
+
+When you have completed the distribution specific steps described below,
+you should proceed to run:
+
+ $ perl Makefile.PL
+ $ make install
+
+which will ask you which modules it should download, if you didn't install
+- using your package manager - all of the required and optional modules
+listed above. If you don't want support for a specific module, simply
+answer 'no' in response to the download question.
+
+Remark: If you've never downloaded packages from CPAN, Perl is likely
+to ask you a number of questions regarding the configuration of the
+CPAN module (the Perl module downloader) as well.
+
+
+
+
+>>> Perl module dependencies for Debian
+
+[For a list of actions to take on Lenny, see below]
+
+---- Actions for Debian Squeeze
+
+To install all the required packages which Squeeze supports, execute the
+following command:
+
+ $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
+   libcgi-simple-perl libtemplate-perl libconfig-std-perl libmime-lite-perl \
+   liberror-perl liblocale-maketext-lexicon-perl libtest-exception-perl \
+   libtest-trap-perl liblog-log4perl-perl
+
+This installs the modules available from the Squeeze repository.
+
+As far as the optional packages are concerned on Squeeze, the Excel and
+PDF/Postscript output options are not directly available. If you want
+these output options, you'll need to download them from CPAN.
+
+Please note that the PDF/Postscript module depends on the TeX/LaTeX
+package which *is* in the Squeeze package repository:
+
+ $ aptitude install texlive-latex-recommended
+
+The credit card processing support for TrustCommerce is available
+from the Squeeze repository through:
+
+ $ aptitude install libnet-tclink-perl
+
+The Open Office output option is available from the Squeeze repository
+as well through the command:
+
+ $ aptitude install libxml-twig-perl
+
+
+---- Actions for Debian Lenny
+
+To install all the required packages which Lenny supports, execute the
+following command:
+
+ $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
+   libcgi-simple-perl libtemplate-perl libconfig-std-perl libmime-lite-perl \
+   liberror-perl liblocale-maketext-lexicon-perl libtest-exception-perl \
+   liblog-log4perl-perl
+
+The required module Test::Trap isn't available as a Lenny package. In order
+to install that component, execute the following commands:
+
+ $ aptitude install libmodule-install-perl
+ $ cpan 'Test::Trap'
+
+
+As far as the optional packages are concerned on Lenny, the Excel and
+PDF/Postscript output options are not directly available. If you want
+these output options, you'll need to download them from CPAN.
+
+Please note that the PDF/Postscript module depends on the TeX/LaTeX
+package which *is* in the Lenny package repository:
+
+ $ aptitude install texlive-latex-recommended
+
+The credit card processing support for TrustCommerce is available
+from the Lenny repository through:
+
+ $ aptitude install libnet-tclink-perl
+
+The Open Office output option is available from the Lenny repository
+as well through the command:
+
+ $ aptitude install libxml-twig-perl
+
+
+Initializing a company database
 ===============================
 
-It should now be possible to log into your LedgerSMB 1.3 instance at:
+LedgerSMB 1.3 stores data for each company in a separate "database".  A
+database is a PostgreSQL concept for grouping tables, indexes, etc.
 
-http://localhost/ledgersmb
+Each company database must be named.  This name is essentially the system
+identifier within PostgreSQL for the company's dataset.  The name for the
+company database can only contain letters, digits and underscores.
+Additionally, it must start with a letter.  Company database names are
+case insensitive, meaning you can't create two separate company databases
+called 'Ledgersmb' and 'ledgersmb'.
 
-With cookies enabled for localhost.
+The 'prepare-company-database.sh' script in the tools/ directory will set
+up databases to be used for LedgerSMB. The script should be run as 'root'
+because it wants to 'su' to the postgres user.  Alternatively, if you
+know the password of the postgres user, you can run the script as any other
+user.  You'll be prompted for the password.
 
-Name:     myuser
-Password: MYUSER_PASSWORD
-Company:  mycompany
+
+The following invocation of the script sets up your first test company,
+when invoked as the root user and from the root directory of the LedgerSMB
+sources:
+
+ $ ./prepare-company-database.sh --company testinc
+
+The script assumes your PostgreSQL server runs on 'localhost' with
+PostgreSQL's default port (5432).
+
+Upon completion, it'll have created a company database with the name
+'testinc', a user called 'ledgersmb' (password: 'LEDGERSMBINITIALPASSWORD'),
+a single user called 'admin' (password: 'admin') and the roles required to
+manage authorizations.
+
+Additionally, it'll have loaded a minimal list of languages required
+to succesfully navigate the various screens.
+
+All these can be adjusted using arguments provided to the setup script. See
+the output generated by the --help option for a full list of options.
 
 
-How-To Section
-==============
+Adding configuration to Apache 2.x
+==================================
 
-Q: How do I remove the 90+ roles for mycompany created by the INSTALL process?
+LedgerSMB requires a webserver which passes authentication information
+through to the LedgerSMB application. Currently, Apache (with mod_rewrite
+support) and IIS are known to support this requirement. The section below
+details the Apache setup process.
 
-A: First, since most objects in the mycompany database depend on these roles,
-you must drop the mycompany database first, obviously with loss of data.
+If your Apache has been built with module support, your configuration files
+should include the following line somewhere:
 
-$ dropdb -U postgres mycompany
+LoadModule rewrite_module <path-to-apache-modules-directory>/mod_rewrite.so
 
-After that, you must issue the droprole command for each rolname in the query
-embedded in the following command:
+[On Debian and its derivatives, mod_rewrite can be enabled using the command
 
-$ for role in `psql -U postgres -t -c "SELECT rolname FROM pg_roles WHERE rolname LIKE 'lsmb_mycompany%';"`; do dropuser -U postgres $role; done
+ $ a2enmod rewrite
+
+executed as the root user.]
+
+A default configuration file to be used with Apache2 comes with LedgerSMB in
+its root project directory: ledgersmb-httpd.conf.template.  If you ran the
+'prepare-company-database.sh' script from the last section, the template
+has been filled out for you and stored as ledgersmb-httpd.conf.
+
+You need to add a commmand to your Apache configuration to load the
+configuration in that file by including the following line:
+
+Include /path/to/ledgersmb/ledgersmb-httpd.conf
+
+[On Debian and derivatives, you can store the resulting
+configuration file directly in the /etc/apache2/conf.d directory.  From
+that location, it'll be automatically included upon the next server (re)start.]
+
+
+In order for the changes to take effect, you should run
+
+ $ apachectl restart
+
+On some systems apachectl might be called apache2ctl.
+
+On systems without apachectl support, you will need to run either:
+
+ $ service apache2 restart
+
+or
+
+ $ /etc/init.d/apache2 restart
+
+
+Manual configuration
+====================
+
+If you want to perform the installation of the company database completely
+manually, you should consult the 'tools/prepare-company-database.sh' script
+as the authorative documentation of the steps to perform.
+
+
+Company database removal
+========================
+
+In the tools/ directory, there's a script which will remove a company
+database and all the standard authorization data that's created by
+the 'prepare-company-database.sh' script.  Said script is called
+'delete-company-database.sh'.
