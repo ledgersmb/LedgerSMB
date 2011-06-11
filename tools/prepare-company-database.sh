@@ -208,6 +208,12 @@ if test -n "$coa" ; then
   fi
 fi
 
+cat <<EOF | $psql_cmd
+\\COPY language FROM stdin WITH DELIMITER '|'
+`$srcdir/tools/generate-language-table-contents.pl $srcdir/locale/po`
+EOF
+
+
 cat <<CREATE_USER | $psql_cmd
 SELECT admin__save_user(NULL,
                          person__save(NULL,
