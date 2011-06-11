@@ -282,10 +282,13 @@ sub save {
     else {
         $quotation = "1";
         $ordnumber = "quonumber";
-        $numberfld =
-          ( $form->{vc} eq 'customer' )
-          ? "sqnumber"
-          : "rfqnumber";
+        if ( $form->{vc} eq 'customer' ) {
+	    $numberfld = "sqnumber";
+	    $class_id = 3;
+	} else {
+	    $numberfld = "rfqnumber";
+	    $class_id = 4;
+	}
     }
     $form->{"$ordnumber"} =
       $form->update_defaults( $myconfig, $numberfld, $dbh )
