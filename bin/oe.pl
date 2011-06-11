@@ -653,6 +653,7 @@ sub form_header {
 }
 
 sub form_footer {
+    _calc_taxes();
 
     $form->{invtotal} = $form->{invsubtotal};
 
@@ -683,22 +684,18 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     }
 
     if ( !$form->{taxincluded} ) {
-
-        my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-        foreach my $item (@taxes) {
-            my $taccno = $item->account;
-	    $form->{invtotal} += $form->round_amount( 
-                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2);
+        foreach $item (keys %{$form->{taxes}}) {
+            my $taccno = $item;
+	    $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
             $form->{"${taccno}_total"} =
-              $form->format_amount( \%myconfig,
-                $form->{"${taccno}_rate"} * $form->{"${taccno}_base"}, 2 );
-
+                  $form->format_amount( \%myconfig,
+                    $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
+            next if !$form->{"${taccno}_total"};
             $tax .= qq|
-	      <tr>
-		<th align=right>$form->{"${taccno}_description"}</th>
-		<td align=right>$form->{"${taccno}_total"}</td>
-	      </tr>
-	      | if $form->{"${taccno}_base"};
+        <tr>
+      	<th align="right">$form->{"${taccno}_description"}</th>
+      	<td align="right">$form->{"${taccno}_total"}</td>
+        </tr>|;
         }
 
         $form->{invsubtotal} =
@@ -706,13 +703,12 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
         $subtotal = qq|
 	      <tr>
-		<th align=right>| . $locale->text('Subtotal') . qq|</th>
-		<td align=right>$form->{invsubtotal}</td>
+		<th align="right">| . $locale->text('Subtotal') . qq|</th>
+		<td align="right">$form->{invsubtotal}</td>
 	      </tr>
 |;
 
     }
-
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
       $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
