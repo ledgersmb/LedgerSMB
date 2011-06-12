@@ -14,38 +14,67 @@ CREATE TYPE company_search_result AS (
 
 /*
 CREATE OR REPLACE FUNCTION eca_history
-()
+(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+ in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
+ in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
+ in_start_from date, in_start_to date, in_account_class)
 RETURNS SETOF  eca_history_result AS
 $$
-     SELECT ct.id AS ctid, ct.name, ct.address1,
-                         ct.address2, ct.city, ct.state,
+     SELECT eca.id AS id, e.name, l.line_one, l.line_two, l.city, l.state,
                          p.id AS pid, p.partnumber, a.id AS invid,
-                         a.$invnumber, a.curr, i.description,
-                         i.qty, i.$sellprice AS sellprice, i.discount,
-                         i.$deldate, i.serialnumber, pr.projectnumber,
+                         a.invnumber, a.curr, i.description,
+                         i.qty, i.sellprice, i.discount,
+                         i.delivery_date, i.serialnumber, pr.projectnumber,
                          e.name AS employee, ct.zipcode, ct.country, i.unit,
                          (SELECT $buysell 
                             FROM exchangerate ex
                            WHERE a.curr = ex.curr
                                  AND a.transdate = ex.transdate) AS exchangerate
-     FROM entity_credit_account eca
-     JOIN entity e ON (eca.entity_id = e.id)
-     JOIN (select ..., curr, transdate, entity_credit_account, id
+     FROM (select * from entity_credit_account 
+            where meta_number = in_meta_number
+           UNION 
+          select * from entity_credit_account WHERE in_meta_number is null
+          ) eca
+     join entity e on eca.entity_id = e.id
+     JOIN (select  invnumber, curr, transdate, entity_credit_account, id
              FROM ar 
-            where ... 
+            where in_account_class = 2 and in_type = 'i'
             UNION 
-           select ..., curr, transdate, entity_credit_account, id 
+           select invnumber, curr, transdate, entity_credit_account, id 
              FROM ap 
-            where ....
+            where in_account_class = 1 and in_type = 'i'
+           union 
+           select curr, transdate, entity_credit_account, id
+           from oe 
+           where (in_account_class = 1 and oe.oe_class_id = 2 and in_type = 'o')
+           union 
+           select curr, transdate, entity_credit_account, id
+           from oe 
+           where (in_account_class = 2 and oe.oe_class_id = 1 and in_type = 'o')
+           union 
+           select curr, transdate, entity_credit_account, id
+           from oe 
+           where(in_account_class = 1 and oe.oe_class_id = 4 and in_type = 'q')
+           union 
+           select curr, transdate, entity_credit_account, id
+           from oe 
+           where(in_account_class = 2 and oe.oe_class_id = 4 and in_type = 'q')
           ) a ON (a.entity_credit_account = eca.id)
-                          $invjoin
+     JOIN ( select trans_id, parts_id, qty, description, unit, discount,
+                   delivery_date, serialnumber, project_id
+             FROM  invoice where in_type = 'i';
+            union 
+            select trans_id, parts_id, qty, description, unit, discount
+                   reqdate, serialnumber, project_id
+             FROM orderitems where in_type <> 'i'
+          ) i on i.trans_id = a.id
      JOIN parts p ON (p.id = i.parts_id)
 LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN eca_to_location e2l ON (e2l.credit_id = eca.id)
 LEFT JOIN location l ON (e2l.location_id = l.id)
 LEFT JOIN project pr ON (pr.id = i.project_id)
 LEFT JOIN employee e ON (e.id = a.employee_id)
-                                 WHERE $where;
+    WHERE 
 
 $$ LANGUAGE SQL;
 
