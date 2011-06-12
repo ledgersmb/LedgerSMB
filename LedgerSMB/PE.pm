@@ -778,7 +778,7 @@ sub save_job {
     ) || $form->dberror($query);
 
     $query =
-      qq|DELETE FROM partstax WHERE parts_id = | . $dbh->qupte( $form->{id} );
+      qq|DELETE FROM partstax WHERE parts_id = | . $dbh->quote( $form->{id} );
     $dbh->do($query) || $form->dberror($query);
 
     $query = qq|
