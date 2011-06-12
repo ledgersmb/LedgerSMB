@@ -1952,12 +1952,6 @@ sub all_vc {
           unless $self->{employee_id};
     }
 
-    $self->all_employees( $myconfig, $dbh, $transdate, 1 );
-
-    $self->all_departments( $myconfig, $dbh, $vc );
-
-    $self->all_projects( $myconfig, $dbh, $transdate, $job );
-
     # get language codes
     $query = qq|SELECT *
 				  FROM language
@@ -1973,6 +1967,38 @@ sub all_vc {
     }
 
     $sth->finish;
+    $self->get_regular_metadata($myconfig,$vc, $module, $dbh, $transdate, $job);
+}
+
+=item $form->get_regular_metadata($myconfig, $vc, $module, $dbh, $transdate, 
+                                 $job)
+
+This is API-compatible with all_vc.  It is a handy wrapper function that calls
+the following functions:
+all_employees
+all_departments
+all_projects
+all_taxaccounts
+
+It is preferable to using all_vc where the latter does not work properly due to
+variable collisions, etc.
+
+$form->{employee_id} is looked up if not already set, the list
+$form->{all_language} is populated using the language table and is sorted by the
+description, and $form->all_employees, $form->all_departments,
+$form->all_projects, and $form->all_taxaccounts are all run.
+
+$module and $dbh are unused.
+
+=cut
+
+sub get_regular_metadata {
+    my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
+    $dbh = $self->{dbh};
+
+    $self->all_employees( $myconfig, $dbh, $transdate, 1 );
+    $self->all_departments( $myconfig, $dbh, $vc );
+    $self->all_projects( $myconfig, $dbh, $transdate, $job );
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
 }
 
