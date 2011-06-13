@@ -249,24 +249,8 @@ sub report {
             $form->{uvc} = 'Vendor';
         }
 
-        # setup vc selection
-        $form->all_vc( \%myconfig, $form->{vc},
-            ( $form->{vc} eq 'customer' ) ? "AR" : "AP" );
-
-        my $vc;
-        if (ref $form->{"all_$form->{vc}"} eq 'ARRAY') {
-            $vc = {name => $form->{vc}, options => [{text => '', value => ''}]};
-            for ( @{ $form->{"all_$form->{vc}"} } ) {
-                push @{$vc->{options}}, {
-                    text => "$_->{name}",
-                    value => "$_->{name}--$_->{id}",
-                    };
-            }
-            $form->{vci} = {type => 'select', input => $vc};
-        } else {
-            $vc = {name => $form->{vc}, size => 35};
-            $form->{vci} = {type => 'input', input => $vc};
-        }
+	$vc = {name => $form->{vc}, size => 35};
+	$form->{vci} = {type => 'input', input => $vc};
 
         $hiddens{type} = 'statement';
         $hiddens{format} = 'ps' if $myconfig{printer};
