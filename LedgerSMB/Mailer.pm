@@ -183,7 +183,7 @@ sub attach {
 	if (defined $args{data}) {
 		@data = ('Data', $args{data});
 	} else {
-		@data = ('Path', $args{filename});
+		@data = ('Path', $args{file});
 	}
 
 	$self->{_message}->attach(
