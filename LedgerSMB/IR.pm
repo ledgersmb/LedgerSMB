@@ -936,7 +936,7 @@ sub reverse_invoice {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    $query = qq|DELETE FROM shipto WHERE trans_id = ?|;
+    $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
