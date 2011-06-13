@@ -489,7 +489,8 @@ sub save_credit_new {
 =item edit($request)
 
 Displays a company for editing.  Needs the following to be set:
-entity_id, account_class, and meta_number.
+entity_id, account_class, and meta_number.  The account_class requireent is 
+typically set during the construction of scripts which inherit this library.
 
 =back
 
