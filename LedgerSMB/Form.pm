@@ -1905,34 +1905,10 @@ sub all_vc {
 
     $sth->finish;
 
-    # build selection list
-    if ( $count < $myconfig->{vclimit} ) {
-
-        $self->{"${vc}_id"} *= 1;
-
-	# TODO:  Alter this so that it pulls up the entity_credit_account 
-	# instead of the entity_id.  --CT
-        $query = qq|
-		SELECT ec.id, e.name
-		  FROM entity e
-		  JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-		 WHERE ec.id = ? OR $where
-		ORDER BY name|;
-
-        push( @queryargs, $self->{"${vc}_id"} );
-
-        $sth = $dbh->prepare($query);
-        $sth->execute(@queryargs) || $self->dberror($query);
-
-        @{ $self->{"all_$vc"} } = ();
-
-        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-            push @{ $self->{"all_$vc"} }, $ref;
-        }
-
-        $sth->finish;
-
-    } elsif ($self->{id}) {
+    if ($self->{id}) {
+	### fixme: the segment below assumes that the form ID is a
+	# credit account id, which it isn't necessarily (maybe never?)
+	# when called from bin/oe.pl, it's an order id.
         $query = qq|
 		SELECT ec.id, e.name
 		  FROM entity e
