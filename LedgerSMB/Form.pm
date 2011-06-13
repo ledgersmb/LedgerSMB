@@ -1952,21 +1952,6 @@ sub all_vc {
           unless $self->{employee_id};
     }
 
-    # get language codes
-    $query = qq|SELECT *
-				  FROM language
-			  ORDER BY 2|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $self->dberror($query);
-
-    $self->{all_language} = ();
-
-    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{all_language} }, $ref;
-    }
-
-    $sth->finish;
     $self->get_regular_metadata($myconfig,$vc, $module, $dbh, $transdate, $job);
 }
 
@@ -2000,6 +1985,7 @@ sub get_regular_metadata {
     $self->all_departments( $myconfig, $dbh, $vc );
     $self->all_projects( $myconfig, $dbh, $transdate, $job );
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
+    $self->all_languages();
 }
 
 =item $form->all_accounts()
