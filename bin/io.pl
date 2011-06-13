@@ -1218,6 +1218,12 @@ sub e_mail {
     }
 
     $hiddens{$_} = $form->{$_} for keys %$form;
+
+    delete $hiddens{email};
+    delete $hiddens{cc};
+    delete $hiddens{bcc};
+    delete $hiddens{message};
+    
     $hiddens{nextsub} = 'send_email';
 
     my @buttons = ({
