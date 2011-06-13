@@ -12,73 +12,119 @@ CREATE TYPE company_search_result AS (
 	curr text
 );
 
-/*
+create type eca_history_result as (
+   id int,
+   name text,
+   meta_number text,
+   inv_id int,
+   invnumber text,
+   curr text,
+   parts_id int,
+   partnumber text,
+   description text,
+   qty numeric,
+   unit text,
+   sellprice numeric,
+   discount numeric,
+   delivery_date date,
+   project_id int,
+   projectnumber text,
+   serialnumber text,
+   exchngerate numeric,
+   salesperson_id int,
+   salesperson_name text
+);
+
+
 CREATE OR REPLACE FUNCTION eca_history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
- in_start_from date, in_start_to date, in_account_class)
+ in_start_from date, in_start_to date, in_account_class int)
 RETURNS SETOF  eca_history_result AS
 $$
-     SELECT eca.id AS id, e.name, l.line_one, l.line_two, l.city, l.state,
-                         p.id AS pid, p.partnumber, a.id AS invid,
-                         a.invnumber, a.curr, i.description,
-                         i.qty, i.sellprice, i.discount,
-                         i.delivery_date, i.serialnumber, pr.projectnumber,
-                         e.name AS employee, ct.zipcode, ct.country, i.unit,
-                         (SELECT $buysell 
-                            FROM exchangerate ex
-                           WHERE a.curr = ex.curr
-                                 AND a.transdate = ex.transdate) AS exchangerate
+     SELECT eca.id, e.name, eca.meta_number, 
+            a.id as invoice_id, a.invnumber, a.curr::text, 
+            p.id AS parts_id, p.partnumber, 
+            i.description, i.qty, i.unit::text, i.sellprice, i.discount, 
+            i.deliverydate, pr.id as projectnumber, pr.projectnumber,
+            i.serialnumber, 
+            case when $16 = 1 then xr.buy else xr.sell end as exchange_rate,
+            ee.id as salesperson_id, 
+            ep.last_name || ', ' || ep.first_name as salesperson_name
      FROM (select * from entity_credit_account 
-            where meta_number = in_meta_number
+            where meta_number = $2
            UNION 
-          select * from entity_credit_account WHERE in_meta_number is null
-          ) eca
+          select * from entity_credit_account WHERE $2 is null
+          ) eca  -- broken into unions for performance
      join entity e on eca.entity_id = e.id
-     JOIN (select  invnumber, curr, transdate, entity_credit_account, id
+     JOIN (select  invnumber, curr, transdate, entity_credit_account, id,
+                   person_id
              FROM ar 
-            where in_account_class = 2 and in_type = 'i'
+            where $16 = 2 and $13 = 'i'
             UNION 
-           select invnumber, curr, transdate, entity_credit_account, id 
+           select invnumber, curr, transdate, entity_credit_account, id,
+                  person_id
              FROM ap 
-            where in_account_class = 1 and in_type = 'i'
+            where $16 = 1 and $13 = 'i'
            union 
-           select curr, transdate, entity_credit_account, id
+           select ordnumber, curr, transdate, entity_credit_account, id,
+                  person_id
            from oe 
-           where (in_account_class = 1 and oe.oe_class_id = 2 and in_type = 'o')
+           where ($16= 1 and oe.oe_class_id = 2 and $13 = 'o' 
+                  and quotation is not true)
            union 
-           select curr, transdate, entity_credit_account, id
+           select ordnumber, curr, transdate, entity_credit_account, id,
+                  person_id
            from oe 
-           where (in_account_class = 2 and oe.oe_class_id = 1 and in_type = 'o')
+           where ($16= 2 and oe.oe_class_id = 1 and $13 = 'o'
+                  and quotation is not true)
            union 
-           select curr, transdate, entity_credit_account, id
+           select quonumber, curr, transdate, entity_credit_account, id,
+                  person_id
            from oe 
-           where(in_account_class = 1 and oe.oe_class_id = 4 and in_type = 'q')
+           where($16= 1 and oe.oe_class_id = 4 and $13 = 'q'
+                and quotation is true)
            union 
-           select curr, transdate, entity_credit_account, id
+           select quonumber, curr, transdate, entity_credit_account, id,
+                  person_id
            from oe 
-           where(in_account_class = 2 and oe.oe_class_id = 4 and in_type = 'q')
-          ) a ON (a.entity_credit_account = eca.id)
+           where($16= 2 and oe.oe_class_id = 4 and $13 = 'q'
+                 and quotation is true)
+          ) a ON (a.entity_credit_account = eca.id) -- broken into unions 
+                                                    -- for performance
      JOIN ( select trans_id, parts_id, qty, description, unit, discount,
-                   delivery_date, serialnumber, project_id
-             FROM  invoice where in_type = 'i';
+                   deliverydate, serialnumber, project_id, sellprice
+             FROM  invoice where $13 = 'i'
             union 
-            select trans_id, parts_id, qty, description, unit, discount
-                   reqdate, serialnumber, project_id
-             FROM orderitems where in_type <> 'i'
+            select trans_id, parts_id, qty, description, unit, discount,
+                   reqdate, serialnumber, project_id, sellprice
+             FROM orderitems where $13 <> 'i'
           ) i on i.trans_id = a.id
      JOIN parts p ON (p.id = i.parts_id)
 LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN eca_to_location e2l ON (e2l.credit_id = eca.id)
+LEFT JOIN eca_to_contact e2c ON (e2c.credit_id = eca.id)
 LEFT JOIN location l ON (e2l.location_id = l.id)
+LEFT JOIN country c ON l.country_id = c.id
 LEFT JOIN project pr ON (pr.id = i.project_id)
-LEFT JOIN employee e ON (e.id = a.employee_id)
-    WHERE 
-
+LEFT JOIN entity ee ON (a.person_id = ee.id)
+LEFT JOIN person ep ON (ep.entity_id = ee.id)
+     JOIN exchangerate xr ON a.transdate = xr.transdate
+    -- these filters don't perform as well on large databases
+    WHERE (e.name ilike '%' || $1 || '%' or $1 is null)
+          and (e2c.contact ilike '%' || $3 || '%' or $3 is null)
+          and (l.line_one ilike '$' || $4 || '%' 
+               or l.line_two ilike '$' || $4 || '%' or $4 is null)
+          and (l.city ilike '%' || $5 || '%' or $5 is null)
+          and (l.mail_code ilike '%' || $7 || '%' or $7 is null)
+          and (c.id = $10 or $10 is null)
+          and (a.transdate >= $11 or $11 is null)
+          and (a.transdate <= $12 or $12 is null)
+          and (eca.startdate >= $14 or $14 is null)
+          and (eca.startdate <= $15 or $15 is null);
 $$ LANGUAGE SQL;
 
-*/
 
 CREATE OR REPLACE FUNCTION company__search
 (in_account_class int, in_contact text, in_contact_info text[], 
