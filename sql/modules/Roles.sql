@@ -188,7 +188,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
-GRANT INSERT ON invoice, new_shipto 
+--### oldcode: UPDATE granted because old code wants it
+GRANT INSERT, UPDATE ON invoice, new_shipto 
 TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
