@@ -497,7 +497,7 @@ entity_id, account_class, and meta_number.
 
 sub edit{
     my $request = shift @_;
-    my $company = LedgerSMB::DBObject::Vendor->new({base => $request});
+    my $company = new_company($request);
 
     $company->get();
     _render_main_screen($company);
