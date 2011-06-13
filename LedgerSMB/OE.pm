@@ -2481,6 +2481,7 @@ sub consolidate_orders {
     my $query = qq|SELECT * FROM oe WHERE id = ?|;
     my $sth = $dbh->prepare($query) || $form->dberror($query);
 
+    my $credit_account;
     for ( $i = 1 ; $i <= $form->{rowcount} ; $i++ ) {
 
         # retrieve order
@@ -2488,6 +2489,13 @@ sub consolidate_orders {
             $sth->execute( $form->{"ndx_$i"} );
 
             $ref = $sth->fetchrow_hashref(NAME_lc);
+
+	    $form->error( "Can't consolidate orders from different accounts" )
+		if (defined( $credit_account )
+     		    && ($credit_account != $ref->{entity_credit_account}));
+	    $credit_account = $ref->{entity_credit_account};
+	    print STDERR "ca: $credit_account\n";
+
             $ref->{ndx} = $i;
             $oe{oe}{ $ref->{curr} }{ $ref->{id} } = $ref;
 
