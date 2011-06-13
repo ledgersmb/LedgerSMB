@@ -82,7 +82,7 @@ sub transactions {
 			o.shippingpoint, o.shipvia,
 			pe.first_name \|\| ' ' \|\| pe.last_name AS employee, 
 			pm.first_name \|\| ' ' \|\| pm.last_name AS manager, 
-			o.curr, o.ponumber
+			o.curr, o.ponumber, ct.meta_number, c.entity_id
 		FROM oe o
 		JOIN entity_credit_account ct ON (o.entity_credit_account = ct.id)
 		JOIN company c ON (c.entity_id = ct.entity_id)

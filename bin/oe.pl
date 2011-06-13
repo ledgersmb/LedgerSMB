@@ -1367,6 +1367,8 @@ qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
 qq|<input name="l_reqdate" class=checkbox type=checkbox value=Y checked> $requiredby|;
     push @a,
 qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $vclabel|;
+    push @a,
+    qq|<input name="l_meta_number" class=checkbox type=checkbox value=Y checked>| . $locale->text('Number');
     push @a, $l_employee if $l_employee;
     push @a, $l_manager  if $l_manager;
     push @a, qq|<input name="l_shipvia" class=checkbox type=checkbox value=Y> |
@@ -1494,6 +1496,14 @@ sub transactions {
     $name = $form->escape( $form->{ $form->{vc} } );
     $name .= qq|--$form->{"$form->{vc}_id"}| if $form->{"$form->{vc}_id"};
 
+    if ($form->{vc} eq 'customer') {
+	$account_class = 2;
+    } elsif ($form->{vc} eq 'vendor') {
+	$account_class = 1;
+    } else {
+	### fixme: invalid VC type
+    }
+
     # construct href
     $href = qq|$form->{script}?action=transactions|;
     for (
@@ -1540,7 +1550,7 @@ sub transactions {
 
     @columns = $form->sort_columns(
         "transdate", "reqdate", "id",        "$ordnumber",
-        "ponumber",  "name",    "netamount", "tax",
+        "ponumber",  "name",    "meta_number", "netamount", "tax",
         "amount",    "curr",    "employee",  "manager",
         "shipvia",   "open",    "closed"
     );
@@ -1714,6 +1724,9 @@ qq|<button class="submit" type="submit" name="action" value="add">|
 qq|<th><a class=listheading href=$href&sort=quonumber>$quotation</a></th>|;
     $column_header{name} =
       qq|<th><a class=listheading href=$href&sort=name>$name</a></th>|;
+    $column_header{meta_number} =
+      qq|<th><a class=listheading href=$href&sort=meta_number>|
+      . $locale->text('Number') . qq|</a></th>|;
     $column_header{netamount} =
       qq|<th class=listheading>| . $locale->text('Amount') . qq|</th>|;
     $column_header{tax} =
@@ -1917,8 +1930,12 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$oe->{id} checked
 "<td><a href=$form->{script}?path=$form->{path}&action=$action&type=$form->{type}&id=$oe->{id}&warehouse=$warehouse&vc=$form->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$oe->{$ordnumber}</a></td>";
 
         $name = $form->escape( $oe->{name} );
+	$meta_number = $form->escape( $oe->{meta_number} );
         $column_data{name} =
-qq|<td><a href=ct.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=edit&id=$oe->{"$form->{vc}_id"}&db=$form->{vc}&callback=$callback>$oe->{name}</a></td>|;
+qq|<td><a href=$form->{vc}.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=get&entity_id=$oe->{entity_id}&meta_number=$meta_number&account_class=$account_class&callback=$callback>$name</a></td>|;
+        $column_data{meta_number} =
+qq|<td><a href=$form->{vc}.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=get&entity_id=$oe->{entity_id}&meta_number=$meta_number&account_class=$account_class&callback=$callback>$meta_number</a></td>|;
+
 
         for (qw(employee manager shipvia curr ponumber)) {
             $column_data{$_} = "<td>$oe->{$_}&nbsp;</td>";
