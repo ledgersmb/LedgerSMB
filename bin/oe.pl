@@ -116,10 +116,10 @@ sub order_links {
     # retrieve order/quotation
     OE->retrieve( \%myconfig, \%$form );
 
-    # get customer/vendor
-    $form->all_vc( \%myconfig, $form->{vc},
-        ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
-        undef, $form->{transdate}, 1 );
+    # get projects, departments, languages
+    $form->get_regular_metadata( \%myconfig, $form->{vc},
+				 ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
+				 undef, $form->{transdate}, 1 );
 
     # currencies
     @curr = split /:/, $form->{currencies};
@@ -158,12 +158,6 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         }
     }
 
-    if ( @{ $form->{"all_$form->{vc}"} } ) {
-        unless ( $form->{"$form->{vc}_id"} ) {
-            $form->{"$form->{vc}_id"} = $form->{"all_$form->{vc}"}->[0]->{id};
-        }
-    }
-
     for (qw(terms taxincluded)) { $temp{$_} = $form->{$_} }
     $form->{shipto} = 1 if $form->{id};
 
@@ -177,17 +171,6 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     ( $form->{ $form->{vc} } ) = split /--/, $form->{ $form->{vc} };
     $form->{"old$form->{vc}"} =
       qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
-
-    # build selection list
-    $form->{"select$form->{vc}"} = "";
-    if ( @{ $form->{"all_$form->{vc}"} } ) {
-        $form->{ $form->{vc} } =
-          qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
-        for ( @{ $form->{"all_$form->{vc}"} } ) {
-            $form->{"select$form->{vc}"} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-        }
-    }
 
     # departments
     if ( @{ $form->{all_department} } ) {
@@ -1253,14 +1236,6 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         }
     }
 
-    # setup vendor / customer selection
-    $form->all_vc( \%myconfig, $form->{vc},
-        ( $form->{vc} eq 'customer' ) ? "AR" : "AP" );
-
-    for ( @{ $form->{"all_$form->{vc}"} } ) {
-        $vc .= qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-    }
-
     $selectemployee = "";
     if ( @{ $form->{all_employee} } ) {
         $selectemployee = "<option>\n";
@@ -1292,6 +1267,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
       : qq|<input name=$form->{vc} size=35>|;
 
     # departments
+    $form->all_departments();
     if ( @{ $form->{all_department} } ) {
         $form->{selectdepartment} = "<option>\n";
 
