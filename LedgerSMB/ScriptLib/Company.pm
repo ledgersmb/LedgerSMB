@@ -393,6 +393,122 @@ sub get_results {
 
 =over
 
+=item history($request)
+
+Generates the filter screen for the customer/vendor history report.
+
+=back
+
+=cut
+
+sub history {
+    my ($request) = @_;
+    set_entity_class($request);
+    my $template = LedgerSMB::Template->new( 
+	user => $request->{_user}, 
+    	template => 'history_filter', 
+	locale => $request->{_locale},
+	path => 'UI/Contact',
+        format => 'HTML'
+    );
+    $template->render($request);
+
+} 
+
+=pod
+
+=over display_history($request)
+
+Displays the customer/vendor history based on criteria from the history filter
+screen.
+
+The following request variables are optionally set in the HTTP query string
+or request object.
+
+Search Criteria
+name:  search string for company name
+contact_info:  Search string for contact info, can match phone, fax, or email.
+salesperson:  Search string for employee name in the salesperson field
+notes: Notes search.  Not currently implemented
+meta_number:  Exact match for customer/vendor number
+address_line:  Search string for first or second line of address.
+city:  Search string for city name
+state:  Case insensitive, otherwise exact match for state or province
+zip:  leading match for zip/mail code
+country_id:  integer for country id.  Exact match
+tartdate_from:  Earliest date for startdate of entity credit account
+startdate_to:  Lates date for entity credit accounts' start date
+type:  either 'i' for invoice, 'o' for orders, 'q' for quotations
+from_date:  Earliest date for the invoice/order
+to_date:  Latest date for the invoice/order
+
+Unless otherwise noted, partial matches are sufficient.
+
+Control variables:
+inc_open:  Include open invoices/orders.  If not true, no open invoices are
+           displayed
+inc_closed: Include closed invoices/orders.  If not true, no closed invoices are
+            displayed
+report_type:  Either summary or detail
+
+Columns to display:
+l_partnumber:    parts.partnumber
+l_sellprice:     invoice/orderitems.sellprice
+l_curr:          ar/ap/oe.curr
+l_unit:          invoice/orderitems.unit
+l_deliverydate:  invoice.deliverydate or orderitems.reqdate
+l_projectnumber: project.projectnumber
+l_serialnumber:  invoice/orderitems.serialnumber
+
+
+=item 
+
+=back
+
+=cut
+
+sub display_history {
+    my ($request) = @_;
+    my $template = LedgerSMB::Template->new(
+        user => $request->{_user},
+        template => 'form-dynatable',
+        locale => $request->{_locale},
+        path => 'UI',
+        format => 'HTML'
+    );
+    my $company = LedgerSMB::DBObject::Company->new(base => $request);
+    $company->get_history();
+    my @columns = ();
+    for my $c (qw(l_curr l_partnumber l_unit l_sellprice l_serialnumber
+                  l_deliverydate l_projectnumber)){
+        if ($request->{$c}){
+           $c =~ s/l_//;
+           push @columns, $c;
+        }
+    }
+    my $column_header = {
+       invnumber     => $locale->text('Invoice Number'),
+       curr          => $locale->text('Currency'),
+       partnumber    => $locale->text('Part Number'), 
+       unit          => $locale->text('Unit'),
+       sellprice     => $locale->text('Sell Price'),
+       serialnumber  => $locale->text('Serial Number'),
+       deliverydate  => $locale->text('Delivery Date'),
+       projectnumber => $locale->text('Project Number')
+    };
+    my $rows = [];
+    for $ref(@{$company->{history_lines}}){
+       push @$rows, $ref
+
+    }
+
+
+}
+
+=pod
+
+=over
+
 =item csv_company_list($request)
 
 Generates CSV report (not working at present)

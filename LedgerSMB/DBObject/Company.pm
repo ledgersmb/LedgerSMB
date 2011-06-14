@@ -66,6 +66,12 @@ sub save {
     $self->{dbh}->commit;
 }
 
+=over 
+
+= item get_history 
+
+Retrieves customer/vendor purchase.
+
 =over
 
 =item save_credit 
