@@ -10,16 +10,16 @@
        type = "hidden",
        value = account_class
 } ?>
-<? IF account_class == 1; 
-      title = text('Vendor History'); #'
+<?lsmb IF account_class == 1; 
+      title = text('Vendor History');
    ELSE;
-      title = text('Customer History'); #'
+      title = text('Customer History');
    END
 ?>
     
 <table width=100%> 
   <tr> 
-   ><th class=listtop><?lsmb title ?></th> 
+   <th class=listtop><?lsmb title ?></th> 
   </tr> 
   <tr height="5"></tr> 
   <tr valign=top> 
@@ -30,26 +30,26 @@
 	    <table> 
 	      <tr> 
 		<th align=right nowrap><?lsmb text('Company Name') ?></th> 
-		<td><?lsmb include input element_data = {
+		<td><?lsmb INCLUDE input element_data = {
                            size = 32,
                            name = "name",
                            type = "text"
-                    ?></td> 
+                    } ?></td> 
 	      </tr> 
 	      <tr> 
-		<th align=right nowrap><?lsmb text('Contact Info'></th> 
-		<td><?lsmb include input element_data = {
+		<th align=right nowrap><?lsmb text('Contact Info') ?></th> 
+		<td><?lsmb INCLUDE input element_data = {
                            size = 32
                            name = "contact_info"
                            type = "text"
-                     ?></td> 
+                     } ?></td> 
 	      </tr> 
  	  <th align=right nowrap>Salesperson</th> 
-	  <td><?lsmb include input element_data = {
+	  <td><?lsmb INCLUDE input element_data = {
                            size = 32
                            name = "salesperson"
                            type = "text"
-              ?></td> 
+              } ?></td> 
  
 	      </tr> <!--
 	      <tr> 
@@ -244,7 +244,7 @@
  
 	
 	<tr> 
-	  <th align="right" nowrap><?lsmb text('Include in Report') ?></th> 
+	  <th align="right" nowrap><?lsmb Text('Include in Report') ?></th> 
 	  <td> 
 	    <table> 
 	      <tr> 
