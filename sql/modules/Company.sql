@@ -40,7 +40,8 @@ CREATE OR REPLACE FUNCTION eca_history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
- in_start_from date, in_start_to date, in_account_class int)
+ in_start_from date, in_start_to date, in_account_class int, 
+ inc_open bool, inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
      SELECT eca.id, e.name, eca.meta_number, 
@@ -62,35 +63,41 @@ $$
                    person_id
              FROM ar 
             where $16 = 2 and $13 = 'i'
+                  and (($17 and amount = paid) or ($18 and amount <> paid))
             UNION 
            select invnumber, curr, transdate, entity_credit_account, id,
                   person_id
              FROM ap 
             where $16 = 1 and $13 = 'i'
+                  and (($17 and amount = paid) or ($18 and amount <> paid))
            union 
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id
            from oe 
            where ($16= 1 and oe.oe_class_id = 2 and $13 = 'o' 
                   and quotation is not true)
+                  and (($17 and not closed) or ($18 and closed))
            union 
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id
            from oe 
            where ($16= 2 and oe.oe_class_id = 1 and $13 = 'o'
                   and quotation is not true)
+                  and (($17 and not closed) or ($18 and closed))
            union 
            select quonumber, curr, transdate, entity_credit_account, id,
                   person_id
            from oe 
            where($16= 1 and oe.oe_class_id = 4 and $13 = 'q'
                 and quotation is true)
+                  and (($17 and not closed) or ($18 and closed))
            union 
            select quonumber, curr, transdate, entity_credit_account, id,
                   person_id
            from oe 
            where($16= 2 and oe.oe_class_id = 4 and $13 = 'q'
                  and quotation is true)
+                  and (($17 and not closed) or ($18 and closed))
           ) a ON (a.entity_credit_account = eca.id) -- broken into unions 
                                                     -- for performance
      JOIN ( select trans_id, parts_id, qty, description, unit, discount,
