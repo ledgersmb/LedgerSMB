@@ -51,11 +51,11 @@
                            type = "text"
               ?></td> 
  
-	      </tr> 
+	      </tr> <!--
 	      <tr> 
 		<th align=right nowrap>Notes</th> 
 		<td colspan=3><textarea name=notes rows=3 cols=32></textarea></td> 
-	      </tr> 
+	      </tr>  -->
 	    </table> 
 	  </td> 
  
@@ -111,7 +111,7 @@
 		<th align=right nowrap><?lsmb text('Country') ?></th> 
 		<td><?lsmb countries.push({});
                      INCLUDE select element_data = {
-                         name = "state",
+                         name = "country_id",
                          text_attr = 'name',
                          value_attr = 'id',
                          option = countries,
@@ -251,6 +251,7 @@
 		<td><?lsmb
                      INCLUDE input element_data= {
                              label = text('Summary'),
+                             name  = 'report_type'
                              type  = 'radio',
                              value = 'summary',
                              class = 'radio',
@@ -259,6 +260,7 @@
 		<td><?lsmb
                      INCLUDE input element_data= {
                              label = text('Detail'),
+                             name  = 'report_type',
                              type  = 'radio',
                              value = 'detail',
                              class = 'radio',

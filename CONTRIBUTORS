@@ -24,6 +24,8 @@ Other Committers:
 ==================
 Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css and has submitted numerous bug fixes.
 
+Erik Huelsmann <ehuels @ gmail.com> has provided bugfixes.
+
 Other Contributors:
 ========================
 Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
@@ -83,8 +85,6 @@ Josh Berkus <josh @ agliodbs.com> has helped provide assistance in promotion,
 advocacy, and other assistance.
 
 Ian Goodacre [email omitted] has provided numerous bugfixes.
-
-Erik Huelsmann <ehuels @ gmail.com> has provided bugfixes.
 
 Original Authors of SQL-Ledger:
 ===================================

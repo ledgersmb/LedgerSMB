@@ -1871,7 +1871,7 @@ sub get_customer {
 
     my $query = qq|
 		SELECT name, email, cc, bcc FROM $form->{ct} ct
-		 WHERE ct.id = ?|;
+		 WHERE ct.entity_id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{ct}_id"} );
     ( $form->{ $form->{ct} }, $form->{email}, $form->{cc}, $form->{bcc} ) =
