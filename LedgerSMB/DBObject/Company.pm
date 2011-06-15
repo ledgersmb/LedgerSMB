@@ -72,6 +72,57 @@ sub save {
 
 Retrieves customer/vendor purchase.
 
+Search Criteria
+name:  search string for company name
+contact_info:  Search string for contact info, can match phone, fax, or email.
+salesperson:  Search string for employee name in the salesperson field
+notes: Notes search.  Not currently implemented
+meta_number:  Exact match for customer/vendor number
+address_line:  Search string for first or second line of address.
+city:  Search string for city name
+state:  Case insensitive, otherwise exact match for state or province
+zip:  leading match for zip/mail code
+country_id:  integer for country id.  Exact match
+tartdate_from:  Earliest date for startdate of entity credit account
+startdate_to:  Lates date for entity credit accounts' start date
+type:  either 'i' for invoice, 'o' for orders, 'q' for quotations
+from_date:  Earliest date for the invoice/order
+to_date:  Latest date for the invoice/order
+
+Unless otherwise noted, partial matches are sufficient.
+
+Control variables:
+inc_open:  Include open invoices/orders.  If not true, no open invoices are
+           displayed
+inc_closed: Include closed invoices/orders.  If not true, no closed invoices are
+            displayed
+report_type:  Either summary or detail
+
+returns a list of rows of the summary report and sets these to 
+@{$self->{history_rows}}
+
+=back
+
+=cut
+
+
+
+sub get_history {
+    my ($self) = @_;
+    my @results;
+    if ($self->{report_type} eq 'summary') {
+        @results = $self->exec_method(funcname => 'eca_history_summary');
+    } elsif ($self->{report_type} eq 'detail'){
+        @results = $self->exec_method(funcname => 'eca_history');
+    } else {
+        $self->error('Invalid report type in history report');
+    }
+    $self->{history_rows} = \@results;
+    return @results;
+}
+
+=pod
+
 =over
 
 =item save_credit 

@@ -109,16 +109,16 @@
 	      </tr> 
 	      <tr> 
 		<th align=right nowrap><?lsmb text('Country') ?></th> 
-		<td><?lsmb countries.push({});
+		<td><?lsmb country_list.unshift({});
                      INCLUDE select element_data = {
                          name = "country_id",
                          text_attr = 'name',
                          value_attr = 'id',
-                         option = countries,
+                         options = country_list,
                     } ?></td>
 	      </tr> 
 	      <tr> 
-		<th align=right nowrap>i<?lsmb text('Startdate') ?></th> 
+		<th align=right nowrap><?lsmb text('Startdate') ?></th> 
 		<td><?lsmb INCLUDE input element_data = {
                          name = "startdate_from",
                          size = "11",

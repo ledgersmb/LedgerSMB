@@ -404,6 +404,8 @@ Generates the filter screen for the customer/vendor history report.
 sub history {
     my ($request) = @_;
     set_entity_class($request);
+    my $company = LedgerSMB::DBObject::Company->new(base => $request);
+    $company->get_metadata;
     my $template = LedgerSMB::Template->new( 
 	user => $request->{_user}, 
     	template => 'history_filter', 
@@ -411,7 +413,7 @@ sub history {
 	path => 'UI/Contact',
         format => 'HTML'
     );
-    $template->render($request);
+    $template->render($company);
 
 } 
 

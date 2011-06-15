@@ -35,7 +35,6 @@ create type eca_history_result as (
    salesperson_name text
 );
 
-
 CREATE OR REPLACE FUNCTION eca_history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
@@ -48,7 +47,7 @@ $$
             a.id as invoice_id, a.invnumber, a.curr::text, 
             p.id AS parts_id, p.partnumber, 
             i.description, i.qty, i.unit::text, i.sellprice, i.discount, 
-            i.deliverydate, pr.id as projectnumber, pr.projectnumber,
+            i.deliverydate, pr.id as project_id, pr.projectnumber,
             i.serialnumber, 
             case when $16 = 1 then xr.buy else xr.sell end as exchange_rate,
             ee.id as salesperson_id, 
@@ -129,9 +128,28 @@ LEFT JOIN person ep ON (ep.entity_id = ee.id)
           and (a.transdate >= $11 or $11 is null)
           and (a.transdate <= $12 or $12 is null)
           and (eca.startdate >= $14 or $14 is null)
-          and (eca.startdate <= $15 or $15 is null);
+          and (eca.startdate <= $15 or $15 is null)
+ ORDER BY eca.meta_number;
 $$ LANGUAGE SQL;
 
+
+CREATE OR REPLACE FUNCTION eca_history_summary
+(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+ in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
+ in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
+ in_start_from date, in_start_to date, in_account_class int, 
+ inc_open bool, inc_closed bool)
+RETURNS SETOF  eca_history_result AS
+$$
+SELECT id, name, meta_number, null::int, null::text, curr, parts_id, partnumber,
+       description, sum(qty), unit, null::numeric, null::numeric, null::date, 
+       null::int, null::text, null::text, null::numeric,
+       null::int, null::text
+  FROM eca_history($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
+                   $15, $16, $17, $18)
+ group by id, name, meta_number, curr, parts_id, partnumber, description, unit
+ order by meta_number;
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION company__search
 (in_account_class int, in_contact text, in_contact_info text[], 
