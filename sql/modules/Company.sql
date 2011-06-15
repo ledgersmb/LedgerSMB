@@ -40,7 +40,7 @@ CREATE OR REPLACE FUNCTION eca_history
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
  in_start_from date, in_start_to date, in_account_class int, 
- inc_open bool, inc_closed bool)
+ in_inc_open bool, in_inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
      SELECT eca.id, e.name, eca.meta_number, 
@@ -109,22 +109,31 @@ $$
           ) i on i.trans_id = a.id
      JOIN parts p ON (p.id = i.parts_id)
 LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
-LEFT JOIN eca_to_location e2l ON (e2l.credit_id = eca.id)
-LEFT JOIN eca_to_contact e2c ON (e2c.credit_id = eca.id)
-LEFT JOIN location l ON (e2l.location_id = l.id)
-LEFT JOIN country c ON l.country_id = c.id
 LEFT JOIN project pr ON (pr.id = i.project_id)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
      JOIN exchangerate xr ON a.transdate = xr.transdate
     -- these filters don't perform as well on large databases
     WHERE (e.name ilike '%' || $1 || '%' or $1 is null)
-          and (e2c.contact ilike '%' || $3 || '%' or $3 is null)
-          and (l.line_one ilike '$' || $4 || '%' 
-               or l.line_two ilike '$' || $4 || '%' or $4 is null)
-          and (l.city ilike '%' || $5 || '%' or $5 is null)
-          and (l.mail_code ilike '%' || $7 || '%' or $7 is null)
-          and (c.id = $10 or $10 is null)
+          and ($3 is null or eca.id in 
+                 (select credit_id from eca_to_contact
+                   where contact ilike '%' || $3 || '%'))
+          and (($4 is null and $5 is null and $6 is null and $7 is null)
+               or eca.id in
+                  (select credit_id from eca_to_location 
+                    where location_id in
+                          (select id from location
+                            where ($4 is null or line_one ilike '%' || $4 || '%'
+                                   or line_two ilike '%' || $4 || '%') 
+                                  and ($5 is null or city 
+                                                     ilike '%' || $5 || '%')
+                                  and ($6 is null or state 
+                                                    ilike '%' || $6 || '%')
+                                  and ($7 is null or mail_code 
+                                                    ilike '%' || $7 || '%')
+                                  and ($10 is null or country_id = $10))
+                   )
+              )
           and (a.transdate >= $11 or $11 is null)
           and (a.transdate <= $12 or $12 is null)
           and (eca.startdate >= $14 or $14 is null)
@@ -138,15 +147,15 @@ CREATE OR REPLACE FUNCTION eca_history_summary
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
  in_start_from date, in_start_to date, in_account_class int, 
- inc_open bool, inc_closed bool)
+ in_inc_open bool, in_inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
 SELECT id, name, meta_number, null::int, null::text, curr, parts_id, partnumber,
        description, sum(qty), unit, null::numeric, null::numeric, null::date, 
        null::int, null::text, null::text, null::numeric,
        null::int, null::text
-  FROM eca_history($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
-                   $15, $16, $17, $18)
+FROM   eca_history($1, $2, $3, $4, $5, $6, $7, $8, $9,
+                   $10, $11, $12, $13, $14, $15, $16, $17, $18)
  group by id, name, meta_number, curr, parts_id, partnumber, description, unit
  order by meta_number;
 $$ LANGUAGE SQL;

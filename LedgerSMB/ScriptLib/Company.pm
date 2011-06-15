@@ -480,9 +480,9 @@ sub display_history {
     );
     my $company = LedgerSMB::DBObject::Company->new(base => $request);
     $company->get_history();
-    my @columns = ();
-    for my $col (qw(l_curr l_partnumber l_unit l_sellprice l_serialnumber
-                  l_deliverydate l_projectnumber)){
+    my @columns = qw(invnumber);
+    for my $col (qw(l_curr l_partnumber l_description l_unit l_qty l_sellprice 
+                  l_discount l_serialnumber l_deliverydate l_projectnumber)){
         if ($request->{$col}){
            my $column = $col;
            $column =~ s/l_//;
@@ -493,15 +493,49 @@ sub display_history {
     my $column_header = {
        invnumber     => $locale->text('Invoice Number'),
        curr          => $locale->text('Currency'),
+       qty           => $locale->text('Qty'),
        partnumber    => $locale->text('Part Number'), 
+       description   => $locale->text('Description'), 
        unit          => $locale->text('Unit'),
        sellprice     => $locale->text('Sell Price'),
+       discount      => $locale->text('Disc.'),
        serialnumber  => $locale->text('Serial Number'),
        deliverydate  => $locale->text('Delivery Date'),
        projectnumber => $locale->text('Project Number')
     };
     my $rows = [];
-    for $ref(@{$company->{history_lines}}){
+    my $last_id = 0;
+    my ($eca_url, $invurl, $parturl);
+    if ($company->{account_class} == 1){
+       $eca_url='vendor.pl?action=edit&';
+       $inv_url='ir.pl?action=edit&';
+    } elsif ($company->{account_class} == 2) {
+       $eca_url='customer.pl?action=edit&';
+       $inv_url='is.pl?action=edit&';
+    }
+    if ($company->{type} ne 'i'){
+       $inv_url='oe.pl?action=edit&';
+    }
+    for $ref(@{$company->{history_rows}}){
+       my $heading;
+       if ($ref->{id} != $last_id){
+          $last_id = $ref->{id};
+          $heading = "$ref->{meta_number} -- $ref->{name}";
+          # Not implementing links to entity credit account editing because
+          # not 100% sure if it is information-complete at this time --CT
+          push @$rows, {class => 'divider', 
+                         text => $heading,
+                       };
+       }
+       if ($company->{account_class} == 1){
+           $ref->{qty} *= -1;
+       }
+       $ref->{invnumber} = {text => $ref->{invnumber},
+                            href => $inv_url . "id=$ref->{inv_id}",
+                           };
+       $ref->{qty} = $company->format_amount({amount => $ref->{qty}});
+       $ref->{discount} = $company->format_amount({amount => $ref->{discount}});
+       $ref->{sellprice}=$company->format_amount({amount => $ref->{sellprice}});
        push @$rows, $ref
 
     }

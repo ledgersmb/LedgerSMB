@@ -53,7 +53,7 @@
 	PROCESS input element_data=row.input ?>
     <?lsmb ELSIF row.select.defined;
 	PROCESS select element_data=row.select ?>
-    <?lsmb ELSE; row; END ?>
+    <?lsmb ELSE; row.text; END ?>
   </th>
 </tr>
   <?lsmb NEXT; END ?>
