@@ -543,7 +543,8 @@ CREATE TABLE person (
     first_name text check (first_name ~ '[[:alnum:]_]') NOT NULL,
     middle_name text,
     last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
-    created date not null default current_date
+    created date not null default current_date,
+    unique(entity_id) -- needed due to entity_emplyee assumptions --CT
  );
  
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
@@ -1081,7 +1082,8 @@ CREATE TABLE ar (
   approved bool default true,
   entity_credit_account int references entity_credit_account(id) not null,
   force_closed bool,
-  description text
+  description text,
+  unique(invnumber) -- probably a good idea as per Erik's request --CT
 );
 
 COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
