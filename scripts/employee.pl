@@ -48,6 +48,7 @@ sub get {
     my $employee = LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
     
     $employee->set( entity_class=> '3' );
+    $employee->{target_div} = 'hr_div'; 
     my $result = $employee->get();
     
     my $template = LedgerSMB::Template->new( user => $user, 
@@ -89,6 +90,7 @@ sub add {
     my ($request) = @_;
     my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
     $employee->set( entity_class=> '3' );
+    $employee->{target_div} = 'hr_div'; 
     _render_main_screen($employee);
 }
 

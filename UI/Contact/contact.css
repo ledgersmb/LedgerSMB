@@ -38,3 +38,21 @@ div.container_hidden {
 div.container {
 	display: block;
 }
+
+div {
+        overflow: auto;
+}
+
+#hr_div div.input_group {
+        display: block;
+        float: left;
+        width: 23em;
+}
+
+#hr_div label {
+        float: left;
+        display: block;
+        width: 9em;
+        text-align: right;
+        margin-right: 1em
+}

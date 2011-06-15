@@ -84,8 +84,8 @@ END ?>
 		name = "form_id"
 		value = form_id
 	} ?>
-
-<div class="input" id="person_name_div"><?lsmb text('Name:')?>&nbsp;
+<div class="input" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
+<div class="input_group">
 <!-- TODO:  Add Saluatation -->
 <?lsmb PROCESS input element_data = {
 	label = text('First')
@@ -94,6 +94,8 @@ END ?>
 	type = "text"
 	size = 20
 } ?>
+</div>
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Middle')
 	name = "middle_name"
@@ -101,6 +103,8 @@ END ?>
 	type = "text"
 	size = 20
 } ?>
+</div>
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Last')
 	name = "last_name"
@@ -109,9 +113,11 @@ END ?>
 	size = 20
 } ?>
 </div>
+</div>
 <div id="job_title_div">
 <!-- Note that the strange # ' constructs are only necessary to help VIM avoid
 problems with multi-word single-quoted constructs in PI tags. -CT  -->
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Job Title:')
 	name = "role"
@@ -119,6 +125,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	type = "text"
 	size = 20
 } # ' ?>
+</div>
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Sales:')
 	value = 1
@@ -126,6 +134,10 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	checked = sales
 	name = "sales"
 } ?>
+</div>
+</div>
+<div id="employee_div">
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Employee Number')
 	value = employee_number
@@ -133,13 +145,18 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	type = "text"
 	size = 20
 } # ' ?>
+</div>
+<div class="input_group">
 <label for="manager_select"><?lsmb text('Manager:') ?></label>
 <select id="manager_select" name="manager_id">
 <?lsmb FOREACH e = employee ?>
 <option value = e.entity_id <?lsmb (manager_id == e.entity_id) ? "SELECTED" : ""?><?lsmb e.name ?></option>
 <?lsmb END ?>
 </select>
-<div>
+</div>
+</div>
+<div id="hr_dates_div">
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('DOB:')
 	name = "dob"
@@ -148,6 +165,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	class = "date"
 	size = 10
 }  ?>
+</div>
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Start Date:')
 	name = "start_date"
@@ -156,6 +175,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	class = "date"
 	size = 10
 } # '  ?>
+</div>
+<div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('End Date:')
 	name = "end_date"
@@ -164,12 +185,15 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	type = "text"
 	size = 10
 } # ' ?>
+</div>
+</div>
 <div>
 <?lsmb PROCESS button element_data = {
 	text = text('Save')
 	class = "submit"
 	type = "submit"
-	value = "save_employee"
+        name = 'action'
+	value = "save"
 } ?>
 </div>
 </form>

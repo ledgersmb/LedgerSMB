@@ -22,7 +22,7 @@ function init(div_id) {
 			},false);
 		}
 	}
-	if (div_id != ''){
+	if (div_id != '' && document.getElementById(div_id)){
 		select_div(div_id);
 	}
 }
