@@ -527,6 +527,7 @@ sub void {
     for my $i (1 .. $form->{rowcount}){
         $form->{"qty_$_"} *= -1;
     }
+    $form->{invnumber} .= '-VOID';
     $form->{reverse} = 1;
     &post_as_new;
 }
