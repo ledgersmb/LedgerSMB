@@ -264,6 +264,7 @@ GRANT INSERT ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT INSERT ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (50, 'allow', 'lsmb_<?lsmb dbname ?>__sales_order_create');
@@ -433,6 +434,7 @@ GRANT INSERT ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT INSERT ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
+GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (50, 'allow', 'lsmb_<?lsmb dbname ?>__purchase_order_create');
