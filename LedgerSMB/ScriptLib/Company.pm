@@ -481,13 +481,15 @@ sub display_history {
     my $company = LedgerSMB::DBObject::Company->new(base => $request);
     $company->get_history();
     my @columns = ();
-    for my $c (qw(l_curr l_partnumber l_unit l_sellprice l_serialnumber
+    for my $col (qw(l_curr l_partnumber l_unit l_sellprice l_serialnumber
                   l_deliverydate l_projectnumber)){
-        if ($request->{$c}){
-           $c =~ s/l_//;
-           push @columns, $c;
+        if ($request->{$col}){
+           my $column = $col;
+           $column =~ s/l_//;
+           push @columns, $column;
         }
     }
+    $locale = $request->{_locale};
     my $column_header = {
        invnumber     => $locale->text('Invoice Number'),
        curr          => $locale->text('Currency'),
@@ -503,6 +505,12 @@ sub display_history {
        push @$rows, $ref
 
     }
+    $template->render({
+        form    => $company,
+        columns => \@columns,
+        heading => $column_header,
+        rows    => $rows,
+    });
 
 
 }
