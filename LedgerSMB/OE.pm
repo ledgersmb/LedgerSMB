@@ -2482,6 +2482,7 @@ sub consolidate_orders {
     my $sth = $dbh->prepare($query) || $form->dberror($query);
 
     my $credit_account;
+    my $oe_class_id;
     for ( $i = 1 ; $i <= $form->{rowcount} ; $i++ ) {
 
         # retrieve order
@@ -2494,7 +2495,7 @@ sub consolidate_orders {
 		if (defined( $credit_account )
      		    && ($credit_account != $ref->{entity_credit_account}));
 	    $credit_account = $ref->{entity_credit_account};
-	    print STDERR "ca: $credit_account\n";
+            $oe_class_id = $ref->{oe_class_id};
 
             $ref->{ndx} = $i;
             $oe{oe}{ $ref->{curr} }{ $ref->{id} } = $ref;
@@ -2590,8 +2591,11 @@ sub consolidate_orders {
               $form->update_defaults( $myconfig, $numberfld, $dbh );
 
             #fixme:  Change this
+            #also $credit_account is safe since it is local to this function
+            #and pulled from the db. Same with oe_class_id.  --CT
             $query = qq|
-				INSERT INTO oe (ordnumber) VALUES ('$uid')|;
+		INSERT INTO oe (ordnumber, entity_credit_account, oe_class_id) 
+		        VALUES ('$uid', $credit_account, $oe_class_id)|;
             $dbh->do($query) || $form->dberror($query);
 
             $query = qq|
@@ -2606,16 +2610,14 @@ sub consolidate_orders {
 				UPDATE oe SET
 					ordnumber = | . $dbh->quote($ordnumber) . qq|,
 					transdate = current_date,
-					entity_id = | . 
-				            $dbh->quote($form->{entity_id}).qq|,
 					amount = $amount,
 					netamount = $netamount,
 					reqdate = | . $form->dbquote( $ref->{reqdate}, SQL_DATE ) . qq|,
-					taxincluded = '$ref->{taxincluded}',
+					taxincluded = |. $form->dbquote($ref->{taxincluded}) . qq|,
 					shippingpoint = | . $dbh->quote( $ref->{shippingpoint} ) . qq|,
 					notes = | . $dbh->quote( $ref->{notes} ) . qq|,
 					curr = '$curr',
-					employee_id = $ref->{employee_id},
+					person_id = | . $dbh->quote($ref->{person_id}) . qq|,
 					intnotes = | . $dbh->quote( $ref->{intnotes} ) . qq|,
 					shipvia = | . $dbh->quote( $ref->{shipvia} ) . qq|,
 					language_code = '$ref->{language_code}',
