@@ -2711,14 +2711,10 @@ CREATE TABLE menu_acl (
     role_name character varying,
     acl_type character varying,
     node_id integer,
-    CONSTRAINT menu_acl_acl_type_check CHECK ((((acl_type)::text = 'allow'::text) OR ((acl_type)::text = 'deny'::text)))
+    CONSTRAINT menu_acl_acl_type_check CHECK ((((acl_type)::text = 'allow'::text) OR ((acl_type)::text = 'deny'::text))),
     PRIMARY KEY (node_id, role_name)
 );
 
-
-
-ALTER TABLE ONLY menu_acl
-    ADD CONSTRAINT menu_acl_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY menu_acl
