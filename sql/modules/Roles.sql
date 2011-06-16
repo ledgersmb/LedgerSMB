@@ -44,6 +44,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (30, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (33, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (49, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_create"
@@ -98,6 +100,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (30, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (31, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (48, 'lsmb_<?lsmb dbname ?>__contact_create');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_edit"
@@ -140,7 +144,7 @@ GRANT SELECT ON batch_class TO "lsmb_<?lsmb dbname ?>__batch_create";
 GRANT INSERT ON voucher TO "lsmb_<?lsmb dbname ?>__batch_create";
 GRANT ALL ON voucher_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
 
--- TODO add Menu ACLs
+-- No menu acls
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__batch_post"
 WITH INHERIT NOLOGIN;
@@ -151,7 +155,10 @@ GRANT UPDATE ON acc_trans TO "lsmb_<?lsmb dbname ?>__batch_post";
 GRANT UPDATE ON batch TO "lsmb_<?lsmb dbname ?>__batch_post";
 GRANT UPDATE ON gl TO "lsmb_<?lsmb dbname ?>__batch_post";
 
--- TODO add Menu ACLs
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (206, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (210, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 
 -- AR
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create"
@@ -182,7 +189,8 @@ GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
 
--- TODO add Menu ACLs
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (4, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create"
 WITH INHERIT NOLOGIN
@@ -536,7 +544,7 @@ GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__close_till";
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (16, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (19, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
+values (20, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__list_all_open"
@@ -575,9 +583,9 @@ TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
  GRANT ALL ON cr_report_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_enter');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (45, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_enter');
+values (45, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_enter');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_approve"
@@ -588,11 +596,14 @@ GRANT SELECT ON acc_trans, account_checkpoint TO
 "lsmb_<?lsmb dbname ?>__reconciliation_approve";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (35, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_approve');
+values (35, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_approve');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (41, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_approve');
+values (41, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_approve');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (44, 'allow', 'lsmb_<?lsmb dbname ?>_reconciliation_approve');
+values (44, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_approve');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (211, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_approve');
+
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_all"
@@ -618,6 +629,14 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (35, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (38, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (43, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (201, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (202, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (223, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__receipt_process"
@@ -636,7 +655,15 @@ values (35, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (36, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (37, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (42, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (47, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (203, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (204, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__cash_all"
@@ -871,6 +898,10 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (73, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (76, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (105, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (114, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__yearend_run"
@@ -892,9 +923,6 @@ IN ROLE "lsmb_<?lsmb dbname ?>__gl_reports";
 GRANT SELECT ON batch TO "lsmb_<?lsmb dbname ?>__batch_list";
 GRANT SELECT ON batch_class TO "lsmb_<?lsmb dbname ?>__batch_list";
 GRANT SELECT ON voucher TO "lsmb_<?lsmb dbname ?>__batch_list";
-
--- TODO:  Add menu items
-
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_all"
 WITH INHERIT NOLOGIN
@@ -1045,10 +1073,17 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (112, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (113, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (114, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
 
 
 -- RECURRING TRANSACTIONS
--- TO ADD WHEN THIS IS REDESIGNED
+CREATE ROLE "lsmb_<?lsmb dbname ?>__recurring"
+WITH INHERIT NOLOGIN;
+
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (115, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
 
 -- BATCH PRINTING
 CREATE ROLE "lsmb_<?lsmb dbname ?>__print_jobs_list"
@@ -1084,6 +1119,19 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__print_jobs"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__print_jobs_list";
 
+
+--Tax Forms
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__tax_form_save"
+WITH INHERIT NOLOGIN;
+
+GRANT INSERT,  UPDATE ON country_tax_form  
+TO "lsmb_<?lsmb dbname ?>__tax_form_save"; 
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (218, 'allow', 'lsmb_<?lsmb dbname ?>__tax_form_save');
+
+--
 
 -- SYSTEM SETTINGS	
 CREATE ROLE "lsmb_<?lsmb dbname ?>__system_settings_list"
@@ -1369,6 +1417,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (188, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (189, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (190, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
 WITH INHERIT NOLOGIN
@@ -1397,6 +1447,23 @@ TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__delete_group(text)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
 
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (220, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (221, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (222, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__backup"
+WITH INHERIT NOLOGIN;
+
+-- TODO GRANT SELECT ON ALL TABLES
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (134, 'allow', 'lsmb_<?lsmb dbname ?>__backup');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (135, 'allow', 'lsmb_<?lsmb dbname ?>__backup');
+
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__system_admin"
 WITH INHERIT NOLOGIN
@@ -1407,6 +1474,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__system_settings_change",
 "lsmb_<?lsmb dbname ?>__sic_all",
 "lsmb_<?lsmb dbname ?>__template_edit",
 "lsmb_<?lsmb dbname ?>__users_manage",
+"lsmb_<?lsmb dbname ?>__backup",
 "lsmb_<?lsmb dbname ?>__tax_form_save";
 
 -- Manual Translation
@@ -1529,3 +1597,9 @@ GRANT EXECUTE ON FUNCTION batch_delete(int)
 TO "lsmb_<?lsmb dbname ?>__voucher_delete";
 
 
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (191, 'allow', 'public');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (192, 'allow', 'public');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (193, 'allow', 'public');

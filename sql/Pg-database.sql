@@ -1533,7 +1533,6 @@ create index ap_curr_idz on ap(curr);
 --
 create index ar_id_key on ar (id);
 create index ar_transdate_key on ar (transdate);
-create index ar_invnumber_key on ar (invnumber);
 create index ar_ordnumber_key on ar (ordnumber);
 create index ar_quonumber_key on ar (quonumber);
 create index ar_curr_idz on ar(curr);
@@ -2713,6 +2712,7 @@ CREATE TABLE menu_acl (
     acl_type character varying,
     node_id integer,
     CONSTRAINT menu_acl_acl_type_check CHECK ((((acl_type)::text = 'allow'::text) OR ((acl_type)::text = 'deny'::text)))
+    PRIMARY KEY (node_id, role_name)
 );
 
 
@@ -2729,6 +2729,21 @@ ALTER TABLE ONLY menu_acl
 -- PostgreSQL database dump complete
 --
 
+CREATE OR REPLACE FUNCTION to_args (in_base text[], in_args text[])
+RETURNS text[] AS
+$$
+SELECT CASE WHEN $2[1] IS NULL OR $2[2] IS NULL THEN $1 
+            ELSE $1 || ($2[1]::text || '=' || $2[2]::text)
+       END;
+$$ language sql;
+
+CREATE AGGREGATE to_args (
+     basetype = text[],
+     sfunc = to_args,
+     stype = text[],
+     INITCOND = '{}'
+);
+
 CREATE TYPE menu_item AS (
    position int,
    id int,
@@ -2738,6 +2753,7 @@ CREATE TYPE menu_item AS (
    args varchar[]
 );
 
+
 CREATE OR REPLACE FUNCTION menu_generate() RETURNS SETOF menu_item AS 
 $$
 DECLARE 
@@ -2745,21 +2761,53 @@ DECLARE
 	arg menu_attribute%ROWTYPE;
 BEGIN
 	FOR item IN 
-		SELECT n.position, n.id, c.level, n.label, c.path, '{}' 
+		SELECT n.position, n.id, c.level, n.label, c.path, 
+                       to_args(array[ma.attribute, ma.value])
 		FROM connectby('menu_node', 'id', 'parent', 'position', '0', 
 				0, ',') 
 			c(id integer, parent integer, "level" integer, 
 				path text, list_order integer)
 		JOIN menu_node n USING(id)
+                JOIN menu_attribute ma ON (n.id = ma.node_id)
+               WHERE n.id IN (select node_id FROM menu_acl
+                               WHERE pg_has_role(CASE WHEN role_name 
+                                                           ilike 'public'
+                                                      THEN current_user
+                                                      ELSE role_name
+                                                   END, 'USAGE')
+                            GROUP BY node_id
+                              HAVING bool_and(CASE WHEN acl_type ilike 'DENY'
+                                                   THEN FALSE
+                                                   WHEN acl_type ilike 'ALLOW'
+                                                   THEN TRUE
+                                                END))
+                    or exists (select cn.id, cc.path
+                                 FROM connectby('menu_node', 'id', 'parent', 
+                                                'position', '0', 0, ',')
+                                      cc(id integer, parent integer, 
+                                         "level" integer, path text,
+                                         list_order integer)
+                                 JOIN menu_node cn USING(id)
+                                WHERE cn.id IN 
+                                      (select node_id FROM menu_acl
+                                        WHERE pg_has_role(CASE WHEN role_name 
+                                                           ilike 'public'
+                                                      THEN current_user
+                                                      ELSE role_name
+                                                   END, 'USAGE')
+                                     GROUP BY node_id
+                                       HAVING bool_and(CASE WHEN acl_type 
+                                                                 ilike 'DENY'
+                                                            THEN false
+                                                            WHEN acl_type 
+                                                                 ilike 'ALLOW'
+                                                            THEN TRUE
+                                                         END))
+                                       and cc.path like c.path || '%')
+            GROUP BY n.position, n.id, c.level, n.label, c.path, c.list_order
+            ORDER BY c.list_order
+                             
 	LOOP
-		FOR arg IN 
-			SELECT *
-			FROM menu_attribute
-			WHERE node_id = item.id
-		LOOP
-			item.args := item.args || 
-				(arg.attribute || '=' || arg.value)::varchar;
-		END LOOP;
 		RETURN NEXT item;
 	END LOOP;
 END;
@@ -2772,21 +2820,52 @@ declare
 	arg menu_attribute%ROWTYPE;
 begin
         FOR item IN
-		SELECT n.position, n.id, c.level, n.label, c.path, '{}' 
+		SELECT n.position, n.id, c.level, n.label, c.path, 
+                       to_args(array[ma.attribute, ma.value])
 		FROM connectby('menu_node', 'id', 'parent', 'position', 
 				in_parent_id, 1, ',') 
 			c(id integer, parent integer, "level" integer, 
 				path text, list_order integer)
 		JOIN menu_node n USING(id)
+                JOIN menu_attribute ma ON (n.id = ma.node_id)
+               WHERE n.id IN (select node_id FROM menu_acl
+                               WHERE pg_has_role(CASE WHEN role_name 
+                                                           ilike 'public'
+                                                      THEN current_user
+                                                      ELSE role_name
+                                                   END, 'USAGE')
+                            GROUP BY node_id
+                              HAVING bool_and(CASE WHEN acl_type ilike 'DENY'
+                                                   THEN FALSE
+                                                   WHEN acl_type ilike 'ALLOW'
+                                                   THEN TRUE
+                                                END))
+                    or exists (select cn.id, cc.path
+                                 FROM connectby('menu_node', 'id', 'parent', 
+                                                'position', '0', 0, ',')
+                                      cc(id integer, parent integer, 
+                                         "level" integer, path text,
+                                         list_order integer)
+                                 JOIN menu_node cn USING(id)
+                                WHERE cn.id IN 
+                                      (select node_id FROM menu_acl
+                                        WHERE pg_has_role(CASE WHEN role_name 
+                                                           ilike 'public'
+                                                      THEN current_user
+                                                      ELSE role_name
+                                                   END, 'USAGE')
+                                     GROUP BY node_id
+                                       HAVING bool_and(CASE WHEN acl_type 
+                                                                 ilike 'DENY'
+                                                            THEN false
+                                                            WHEN acl_type 
+                                                                 ilike 'ALLOW'
+                                                            THEN TRUE
+                                                         END))
+                                       and cc.path like c.path || '%')
+            GROUP BY n.position, n.id, c.level, n.label, c.path, c.list_order
+            ORDER BY c.list_order
         LOOP
-		FOR arg IN 
-			SELECT *
-			FROM menu_attribute
-			WHERE node_id = item.id
-		LOOP
-			item.args := item.args || 
-				(arg.attribute || '=' || arg.value)::varchar;
-		END LOOP;
                 return next item;
         end loop;
 end;
