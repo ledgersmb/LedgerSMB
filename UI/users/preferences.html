@@ -1,8 +1,13 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb INCLUDE 'ui-header.html' include_javascript=['UI/users/preferences.js'] 
+?> 
 <?lsmb PROCESS elements.html ?> 
 <body>
-<form method="post" action="<?lsmb script ?>">
-
+<form method="post" name = 'prefs' action="<?lsmb script ?>">
+<?lsmb INCLUDE input element_data = {
+               name = "username"
+               type = "hidden"
+               value = login
+} ?>
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Preferences for [_1]', login) ?></th></tr>
   <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">
