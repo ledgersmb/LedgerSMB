@@ -3199,7 +3199,7 @@ sub save_intnotes {
     $dbh->commit;
 }
 
-=item $form->update_defaults($myconfig, $fld[, $dbh]);
+=item $form->update_defaults($myconfig, $fld[, $dbh [, $nocommit]);
 
 Updates the defaults entry for the setting $fld following rules specified by
 the existing value and returns the processed value that results.  If $form is
@@ -3208,6 +3208,8 @@ used as the handle.  When $form is set, it uses $form->{dbh}, initialising the
 connection if it does not yet exist.  The entry $fld must exist prior to
 executing this function and this update function does not handle the general
 case of updating the defaults table.
+
+Note that nocommit prevents the db from committing in this function.
 
 B<NOTE>: rules handling is currently broken.
 
@@ -3235,7 +3237,7 @@ Replace <?lsmb curr ?> with the value of $form->{currency}
 
 sub update_defaults {
 
-    my ( $self, $myconfig, $fld ) = @_;
+    my ( $self, $myconfig, $fld, $nocommit) = @_;
 
     if ( !$self->{dbh} && $self ) {
         $self->db_init($myconfig);
@@ -3377,7 +3379,7 @@ sub update_defaults {
     $sth = $dbh->prepare($query);
     $sth->execute( $dbvar, $fld ) || $self->dberror($query);
 
-    $dbh->commit;
+    $dbh->commit if !defined $nocommit;
 
     $var;
 }

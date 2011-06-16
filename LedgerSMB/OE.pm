@@ -2588,7 +2588,7 @@ sub consolidate_orders {
             }
 
             $ordnumber ||=
-              $form->update_defaults( $myconfig, $numberfld, $dbh );
+              $form->update_defaults( $myconfig, $numberfld, $dbh, 1);
 
             #fixme:  Change this
             #also $credit_account is safe since it is local to this function
