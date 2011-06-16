@@ -86,6 +86,8 @@ GRANT INSERT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT DELETE ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT UPDATE ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
 GRANT INSERT ON eca_note TO "lsmb_<?lsmb dbname ?>__contact_create";
+GRANT ALL ON customertax TO"lsmb_<?lsmb dbname ?>__contact_create";
+GRANT ALL ON vendortax TO"lsmb_<?lsmb dbname ?>__contact_create";
 
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
@@ -127,6 +129,8 @@ GRANT UPDATE ON person_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT DELETE, INSERT  ON vendortax TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT ALL ON customertax TO"lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT ALL ON vendortax TO"lsmb_<?lsmb dbname ?>__contact_edit";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_all_rights"
 WITH INHERIT NOLOGIN 
