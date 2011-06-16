@@ -1003,13 +1003,16 @@ sub form_footer {
         }
         elsif (!$form->{id}) {
 
-            for ( "post_as_new", "print_and_post_as_new", "delete","save_info" ) {
+            for ( "post_as_new", "print_and_post_as_new", "delete","save_info",
+                  "print") {
                 delete $button{$_};
             }
             delete $button{"print_and_post"} if !${LedgerSMB::Sysconfig::latex};
 
             if ( $transdate && ($transdate <= $closedto) ) {
-                for ( "post", "print_and_post","save_info" ) { delete $button{$_} }
+                for ( "post", "print_and_post","save_info") { 
+                    delete $button{$_};
+                }
             }
         }
 

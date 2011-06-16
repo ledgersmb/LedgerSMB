@@ -813,7 +813,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
         );
 
         %a = ();
-        for ( "update", "ship_to", "print", "e_mail", "save" ) { $a{$_} = 1 }
+        for ( "update", "ship_to", "save" ) { $a{$_} = 1 }
         $a{'print_and_save'} = 1 if ${LedgerSMB::Sysconfig::latex};
 
         if ( $form->{id} ) {
