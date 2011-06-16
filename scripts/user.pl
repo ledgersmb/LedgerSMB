@@ -50,3 +50,13 @@ sub save_preferences {
     $user->save_preferences;
     preference_screen($user);
 }
+
+sub change_password {
+    my ($request) = @_;
+    my $user = LedgerSMB::DBObject::User->new({base => $request});
+    $user->{dateformat} =~ s/$slash/\//g;
+    if ($user->{confirm_password}){
+        $user->change_my_password;
+    }
+    preference_screen($user);
+}
