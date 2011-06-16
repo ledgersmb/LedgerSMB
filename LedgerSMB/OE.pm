@@ -250,8 +250,6 @@ sub transactions {
 }
 
 sub save {
-    
-
     my ( $self, $myconfig, $form ) = @_;
   
     $form->db_prepare_vars(
@@ -315,6 +313,7 @@ sub save {
     my $pth = $dbh->prepare($query) || $form->dberror($query);
 
     if ( $form->{id} ) {
+        
         $query = qq|SELECT id FROM oe WHERE id = $form->{id}|;
 
         if ( $dbh->selectrow_array($query) ) {
@@ -335,7 +334,6 @@ sub save {
         }
 
     }
-    $dbh->commit;
     my $did_insert = 0;
     if ( !$form->{id} ) {
         $query = qq|SELECT nextval('id')|;
@@ -607,7 +605,6 @@ sub save {
     }
     $sth = $dbh->prepare($query);
 
-    #$sth->execute(@queryargs) || $form->error($query);
 
     if ( !$did_insert ) {
         @queries = $form->run_custom_queries( 'oe', 'UPDATE' );
@@ -615,6 +612,7 @@ sub save {
 
 
     $form->{ordtotal} = $amount;
+    $sth->execute(@queryargs) || $form->error($query);
 
     # add shipto
     $form->{name} = $form->{ $form->{vc} };
