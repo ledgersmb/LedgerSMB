@@ -1129,8 +1129,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__print_jobs_list";
 CREATE ROLE "lsmb_<?lsmb dbname ?>__tax_form_save"
 WITH INHERIT NOLOGIN;
 
-GRANT INSERT,  UPDATE ON country_tax_form  
-TO "lsmb_<?lsmb dbname ?>__tax_form_save"; 
+GRANT ALL ON country_tax_form  TO "lsmb_<?lsmb dbname ?>__tax_form_save"; 
+GRANT ALL ON country_tax_form_id_seq TO "lsmb_<?lsmb dbname ?>__tax_form_save";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (218, 'allow', 'lsmb_<?lsmb dbname ?>__tax_form_save');
@@ -1337,12 +1337,6 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__sic_all"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__sic_create",
 "lsmb_<?lsmb dbname ?>__sic_edit";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__tax_form_save"
-WITH INHERIT NOLOGIN;
-
-GRANT ALL ON country_tax_form TO "lsmb_<?lsmb dbname ?>__tax_form_save";
-GRANT ALL ON country_tax_form_id_seq TO "lsmb_<?lsmb dbname ?>__tax_form_save";
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__template_edit"
