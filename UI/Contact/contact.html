@@ -259,6 +259,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	} ?>
 
        <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
+       <?lsmb country_list.unshift({}) ?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
