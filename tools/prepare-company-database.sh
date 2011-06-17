@@ -72,6 +72,25 @@ USAGE
 
 }
 
+# Function to remove unnecessary chatter from PSQL, as well as
+# some notices and errors that the user doesn't need to worry about
+unchatter () {
+sed -re "/^[[:space:]]*(\
+CREATE (TABLE|FUNCTION|TYPE|DOMAIN|OPERATOR|ROLE|SEQUENCE|INDEX|AGGREGATE|\
+DATABASE|VIEW|TRIGGER|RULE|LANGUAGE)|\
+COMMENT|GRANT|REVOKE|SET|setval|ALTER TABLE|COMMIT|BEGIN|INSERT 0|\
+account_(heading_)?save|\
+admin__(save_user|add_user_to_role)|\
+You are now connected to database|\
+NOTICE:.*will create implicit|\
+NOTICE:.*type.*gtrgm|\
+DETAIL: *Creating a shell type definition|\
+ERROR:  language \"plpgsql\" already exists|\
+[[:space:]0-9-]*$|\
+\([0-9[:space:]]+rows?\)\
+)/d" -
+}
+
 # Am I root?
 if ! test `whoami` = "root"
 then
@@ -168,7 +187,7 @@ fi
 
 sed -e "s|WORKING_DIR|$dstdir|g" \
    $srcdir/ledgersmb-httpd.conf.template >$dstdir/ledgersmb-httpd.conf
-cat <<EOF | su -c "psql -U postgres -d postgres "  postgres
+cat <<EOF | su -c "psql -U postgres -d postgres "  postgres 2>&1 | unchatter
 CREATE ROLE $owner WITH SUPERUSER LOGIN NOINHERIT ENCRYPTED PASSWORD '$pass';
 CREATE DATABASE $company_name WITH ENCODING = 'UNICODE' OWNER = $owner TEMPLATE = template0;
 \\c $company_name
@@ -188,38 +207,38 @@ if ! test "x$pgsql_contrib_dir" = "xignored"
 then
   for contrib in tsearch2.sql pg_trgm.sql tablefunc.sql
   do
-    cat $pgsql_contrib_dir/$contrib | $psql_cmd
+    cat $pgsql_contrib_dir/$contrib | $psql_cmd 2>&1 | unchatter
   done
 fi
 
 # Load the base file(s)
 # -- Basic database structure
-cat $srcdir/sql/Pg-database.sql | $psql_cmd
+cat $srcdir/sql/Pg-database.sql | $psql_cmd 2>&1 | unchatter
 # -- Additional database structure
 for module in `grep -v -E '^[[:space:]]*#' sql/modules/LOADORDER`
 do
-  cat $srcdir/sql/modules/$module | $psql_cmd
+  cat $srcdir/sql/modules/$module | $psql_cmd 2>&1 | unchatter
 done
 # -- Authorizations
 sed -e "s/<?lsmb dbname ?>/$company_name/g" \
-  $srcdir/sql/modules/Roles.sql | $psql_cmd
+  $srcdir/sql/modules/Roles.sql | $psql_cmd 2>&1 | unchatter
 
 
 if test -n "$coa" ; then
   # Load a chart of accounts
-  cat $coa | $psql_cmd
+  cat $coa | $psql_cmd 2>&1 | unchatter
   if test -n "$gifi" ; then
-    cat $gifi | $psql_cmd
+    cat $gifi | $psql_cmd 2>&1 | unchatter
   fi
 fi
 
-cat <<EOF | $psql_cmd
+cat <<EOF | $psql_cmd 2>&1 | unchatter
 \\COPY language FROM stdin WITH DELIMITER '|'
 `$srcdir/tools/generate-language-table-contents.pl $srcdir/locale/po`
 EOF
 
 
-cat <<CREATE_USER | $psql_cmd
+cat <<CREATE_USER | $psql_cmd 2>&1 | unchatter
 SELECT admin__save_user(NULL,
                          person__save(NULL,
                                       3,
