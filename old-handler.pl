@@ -156,6 +156,9 @@ else {
 
 1;
 
+$form->{dbh}->disconnect()
+    if defined $form->{dbh};
+
 # end
 
 sub check_password {

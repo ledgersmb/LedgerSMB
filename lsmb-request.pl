@@ -61,7 +61,11 @@ $logger->debug("calling $script");
 
 &call_script( $script, $request );
 
+# Prevent flooding the error logs with undestroyed connection warnings
+$request->{dbh}->disconnect()
+    if defined $request->{dbh};
 $logger->debug("End lsmb-request.pl");
+
 
 sub call_script {
         
