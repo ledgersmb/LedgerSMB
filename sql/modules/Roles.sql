@@ -103,7 +103,7 @@ values (30, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (31, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (48, 'lsmb_<?lsmb dbname ?>__contact_create');
+values (48, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_edit"
