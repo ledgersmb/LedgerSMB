@@ -334,7 +334,8 @@ values (71, 'allow', 'lsmb_<?lsmb dbname ?>__sales_quotation_list');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_all"
 WITH INHERIT NOLOGIN 
-IN ROLE "lsmb_<?lsmb dbname ?>__ar_voucher_all",
+IN ROLE
+--### "lsmb_<?lsmb dbname ?>__ar_voucher_all",
 "lsmb_<?lsmb dbname ?>__ar_transaction_all",
 "lsmb_<?lsmb dbname ?>__sales_order_create",
 "lsmb_<?lsmb dbname ?>__sales_quotation_create",
