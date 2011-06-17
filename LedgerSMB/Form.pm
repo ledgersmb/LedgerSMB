@@ -191,7 +191,7 @@ sub open_form {
     my $sth = $self->{dbh}->prepare('select form_open(?)');
     $sth->execute($self->{session_id});
     my @results = $sth->fetchrow_array();
-    print STDERR "Form id $results[0]\n";
+
     $self->{form_id} = $results[0];
     return $results[0];
 }
