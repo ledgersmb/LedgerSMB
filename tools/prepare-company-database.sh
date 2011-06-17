@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 # Script to explain the steps to take when installing LedgerSMB
 
 # Default variable values section
@@ -28,10 +26,10 @@ ADMIN_PASSWORD='admin'
 usage () {
 script_name=`basename $0`
 cat <<USAGE
-usage: $script_name [option1 .. optionN]
+usage: $script_name --company COMPANY --psql-contrib DIR [option1 .. optionN]
 
 This script wants to be run as the root user. If you don't, you'll be
-asked to enter the password of the 'postres' user
+asked to enter the password of the 'postgres' user
 
 This script creates a 'ledgersmb' user on the specified PostgreSQL host,
 if it does not exist.  Then it proceeds to load the LedgerSMB database
@@ -39,14 +37,14 @@ structure and content, loading Chart of Accounts data and GIFI data
 as specified in the argument list.
 
 After the database has been created, the script inserts a default user
-'$ADMIN_USER' (password: '$ADMIN_PASSWORD'), with these initial values:
+'$ADMIN_USERNAME' (password: '$ADMIN_PASSWORD'), with these initial values:
 
 First name:  $ADMIN_FIRSTNAME  (NULL == none)
 Middle name: $ADMIN_MIDDLENAME (NULL == none)
 Last name:   $ADMIN_LASTNAME   (NULL == none)
 Country:     'US'
 
-This default user will be assigned all priviledges within the application.
+This default user will be assigned all privileges within the application.
 
 Available options:
  --srcdir	The path where the sources for LedgerSMB are located
@@ -56,7 +54,7 @@ Available options:
  --host		The PostgreSQL host to connect to (see 'man psql') [$host]
  --port		The PostgreSQL port to connect to (see 'man psql') [$port]
  --pgsql-contrib The directory where the tsearch2.sql, pg_trgm.sql and
-                tablefunc.sql PostgeSQL are located [$pgslq_contrib_dir]
+                tablefunc.sql PostgeSQL are located [$pgslq_contrib_dir] [*]
  --company	The name of the database to be created for the company [*]
  --owner	The name of the superuser which is to become owner of the
 		company's database [$owner]
