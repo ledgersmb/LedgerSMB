@@ -8,7 +8,7 @@ function submit_form() {
 	http.open("get", 'user.pl?action=change_password' +
                           '&old_password='+old_password+
                           '&new_password='+new_password+
-                          '&confirm_password='+ confirm_pass 
+                          '&confirm_password='+ confirm_pass,
                           false, login, old_password);
 	http.send("");
         if (http.status != 200){
