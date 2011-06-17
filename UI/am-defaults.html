@@ -72,6 +72,7 @@
 	<tr>
           <th align="right" nowrap="nowrap"><?lsmb text('Default Country') ?></th>
 	  <td>
+<?lsmb selects.default_country.options.unshift({}) ?>
 <?lsmb PROCESS select element_data=selects.default_country ?>
          </td>
 	</tr>
