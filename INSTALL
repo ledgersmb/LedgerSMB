@@ -131,7 +131,7 @@ following command:
  $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
    libcgi-simple-perl libtemplate-perl libconfig-std-perl libmime-lite-perl \
    liberror-perl liblocale-maketext-lexicon-perl libtest-exception-perl \
-   libtest-trap-perl liblog-log4perl-perl
+   libtest-trap-perl liblog-log4perl-perl libmath-bigint-gmp-perl
 
 This installs the modules available from the Squeeze repository.
 
@@ -163,7 +163,7 @@ following command:
  $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
    libcgi-simple-perl libtemplate-perl libconfig-std-perl libmime-lite-perl \
    liberror-perl liblocale-maketext-lexicon-perl libtest-exception-perl \
-   liblog-log4perl-perl
+   liblog-log4perl-perl libmath-bigint-gmp-perl
 
 The required module Test::Trap isn't available as a Lenny package. In order
 to install that component, execute the following commands:
