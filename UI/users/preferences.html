@@ -1,8 +1,8 @@
-<?lsmb INCLUDE 'ui-header.html' include_script=['UI/users/preferences.js'] 
+<?lsmb INCLUDE 'ui-header.html' include_script=['UI/util.js', 'UI/users/preferences.js'] 
 ?> 
 <?lsmb PROCESS elements.html ?> 
 <body>
-<form method="post" name = 'prefs' action="<?lsmb script ?>">
+<form method="post" name = 'prefs' action="<?lsmb script ?>" onsubmit="return submit_form()">
 <?lsmb INCLUDE input element_data = {
                name = "username"
                type = "hidden"
