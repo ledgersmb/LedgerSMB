@@ -31,6 +31,7 @@ BEGIN
                                 in_entity_id);
 		RETURN in_entity_id;
 	END IF;
+        RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
 

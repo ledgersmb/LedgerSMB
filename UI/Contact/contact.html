@@ -626,7 +626,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <?lsmb END ?>
 <?lsmb END ?>
-<?lsmb IF entity_id && credit_id ?>
+<?lsmb IF entity_id && (credit_id || account_class == 3) ?>
 <div id="location_div" class="container">
     <div class="listtop"><?lsmb text('Locations') ?></div>
 	<!-- This entire form should probably be optionaly automated with AJAX
