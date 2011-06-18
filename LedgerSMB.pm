@@ -190,7 +190,9 @@ $CGI::Simple::DISABLE_UPLOADS = 0;
 use Math::BigFloat;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
+use Error;
 use LedgerSMB::Auth;
+use LedgerSMB::CancelFurtherProcessing;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
@@ -834,6 +836,21 @@ sub sanitize_for_display {
         }
     }
     
+}
+
+=item finalize_request()
+
+This function throws a CancelFurtherProcessing exception to be caught
+by the outermost processing script.  This construct allows the outer
+script and intermediate levels to clean up, if required.
+
+This construct replaces 'exit;' calls randomly scattered
+around the code everywhere.
+
+=cut
+
+sub finalize_request {
+    throw CancelFurtherProcessing();
 }
 
 # To be replaced with a generic interface to an Error class

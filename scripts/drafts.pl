@@ -27,7 +27,7 @@ sub list_drafts_draft_approve {
     my ($request) = @_;
     if (!$request->close_form){
         list_drafts($request);
-        exit;
+        $request->finalize_request();
     }
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
     for my $row (1 .. $draft->{rowcount}){
@@ -43,7 +43,7 @@ sub list_drafts_draft_delete {
     my ($request) = @_;
     if (!$request->close_form){
         list_drafts($request);
-        exit;
+        $request->finalize_request();
     }
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
     for my $row (1 .. $draft->{rowcount}){

@@ -1003,7 +1003,7 @@ sub check_password {
 
         if ( $root->{password} ne ( Digest::MD5::md5_hex $form->{password} ) ) {
             &adminlogin( $locale->text('Access Denied!') );
-            exit;
+            $form->finalize_request();
         }
         else {
             $form->{login} = 'admin';
@@ -1021,7 +1021,7 @@ sub check_password {
 
         if ( !Session::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $root ) ) {
             &adminlogin( $locale->text('Session expired!') );
-            exit;
+            $form->finalize_request();
         }
     }
 }

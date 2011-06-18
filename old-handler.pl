@@ -56,6 +56,7 @@ use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Auth;
+use LedgerSMB::CancelFurtherProcessing;
 use Data::Dumper;
 require "common.pl";
 
@@ -126,7 +127,9 @@ map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
 $locale   = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 # pull in the main code
-require "bin/$form->{script}";
+
+try {
+  require "bin/$form->{script}";
 
 # customized scripts
 if ( -f "bin/custom/$form->{script}" ) {
@@ -153,6 +156,12 @@ else {
     $form->error( __FILE__ . ':' . __LINE__ . ': '
           . $locale->text('action= not defined!') );
 }
+
+}
+catch CancelFurtherProcessing with {
+  my $ex = shift;
+};
+
 
 1;
 

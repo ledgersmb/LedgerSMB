@@ -701,7 +701,7 @@ sub post {
     $customer .= "--$form->{customer_id}";
     if ( $customer ne $form->{oldcustomer} ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     &validate_items;
@@ -909,14 +909,14 @@ sub print {
         || $form->{"paid_$pc"} )
     {
         &update;
-        exit;
+        $form->finalize_request();
     }
     open_drawer();
     sleep 1;
     for $i ( 1 .. $rc - 1 ) {
         if ( $form->{"qty_$i"} != $form->{"oldqty_$i"} ) {
             &update;
-            exit;
+            $form->finalize_request();
         }
     }
 
@@ -924,7 +924,7 @@ sub print {
         $form->{invnumber} = $form->update_defaults( \%myconfig, "sinumber" );
         if ( $form->{media} eq 'screen' ) {
             &update;
-            exit;
+            $form->finalize_request();
         }
     }
 
@@ -949,7 +949,7 @@ sub print_form {
     $customer .= "--$form->{customer_id}";
     if ( $customer ne $form->{oldcustomer} ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     &validate_items;

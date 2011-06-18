@@ -77,7 +77,7 @@ sub print {
         if ( $form->{media} eq 'screen' ) {
             if ( $form->{media} eq 'screen' ) {
                 &update;
-                exit;
+                $form->finalize_request();
             }
         }
     }
@@ -98,13 +98,13 @@ sub print {
         if ( $form->{paidaccounts} > 1 ) {
             if ( $form->{"paid_$form->{paidaccounts}"} ) {
                 &update;
-                exit;
+                $form->finalize_request();
             }
             elsif ( $form->{paidaccounts} > 2 ) {
 
                 # select payment
                 &select_payment;
-                exit;
+                $form->finalize_request();
             }
         }
         else {

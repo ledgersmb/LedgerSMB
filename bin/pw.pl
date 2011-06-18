@@ -59,6 +59,6 @@ sub getpassword {
     );
     $template->render($form);
     $template->output('http');
-    exit;
+    $form->finalize_request();
 }
 

@@ -1202,7 +1202,7 @@ sub post {
           $locale->text('Data not saved.  Please try again.')
        );
        &update;
-       exit;
+       $form->finalize_request();
     }
     $label =
       ( $form->{vc} eq 'customer' )
@@ -1248,13 +1248,13 @@ sub post {
     ($name) = split /--/, $form->{ $form->{vc} };
     if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}| ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     if ( !$form->{repost} ) {
         if ( $form->{id} ) {
             &repost;
-            exit;
+            $form->finalize_request();
         }
     }
 

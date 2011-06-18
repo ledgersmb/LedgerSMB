@@ -1266,7 +1266,7 @@ sub list_templates {
 
     if ( !@{ $form->{ALL} } ) {
         &display_form;
-        exit;
+        $form->finalize_request();
     }
 
     unshift @{ $form->{ALL} },

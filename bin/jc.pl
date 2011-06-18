@@ -1161,7 +1161,7 @@ sub save {
     if ( !$form->{resave} ) {
         if ( $form->{id} ) {
             &resave;
-            exit;
+            $form->finalize_request();
         }
     }
 
@@ -1266,7 +1266,7 @@ sub print_and_save {
         if ( $form->{id} ) {
             $form->{print_and_save} = 1;
             &resave;
-            exit;
+            $form->finalize_request();
         }
     }
 

@@ -987,7 +987,7 @@ sub update {
             if ( $rows > 1 ) {
 
                 &select_item;
-                exit;
+                $form->finalize_request();
 
             }
             else {
@@ -1098,7 +1098,7 @@ sub post {
     # if oldcustomer ne customer redo form
     if ( &check_name(customer) ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     &validate_items;
@@ -1137,7 +1137,7 @@ sub post {
     if ( !$form->{repost} ) {
         if ( $form->{id} ) {
             &repost;
-            exit;
+            $form->finalize_request();
         }
     }
 
@@ -1165,7 +1165,7 @@ sub print_and_post {
         if ( $form->{id} ) {
             $form->{print_and_post} = 1;
             &repost;
-            exit;
+            $form->finalize_request();
         }
     }
 

@@ -536,7 +536,7 @@ sub get_payment_detail_data {
     $self->get_metadata();
     if ( !defined $self->{source_start} ){
         $self->error('No source start defined!');
-        exit;
+        $self->finalize_request();
     }
     #$self->error('No source start defined!') unless defined $self->{source_start}; 
 

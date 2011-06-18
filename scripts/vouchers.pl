@@ -446,7 +446,7 @@ sub get_batch_voucher_delete {
     my $batch = LedgerSMB::Batch->new(base => $request);
     if (!$batch->close_form){
        get_batch($request); 
-       exit;
+       $request->finalize_request();
     }
     for my $count (1 .. $batch->{rowcount}){
         my $voucher_id = $batch->{"row_$count"};
@@ -461,7 +461,7 @@ sub batch_approve {
     my $batch = LedgerSMB::Batch->new(base => $request);
     if (!$batch->close_form){
         list_batches($request);
-        exit;
+        $request->finalize_request();
     }
     for my $count (1 .. $batch->{rowcount}){
         next unless $batch->{"batch_" . $batch->{"row_$count"}};
@@ -476,7 +476,7 @@ sub batch_delete {
     my $batch = LedgerSMB::Batch->new(base => $request);
     if (!$batch->close_form){
         list_batches($request);
-        exit;
+        $request->finalize_request();
     }
     for my $count (1 .. $batch->{rowcount}){
         next unless $batch->{"batch_" . $batch->{"row_$count"}};

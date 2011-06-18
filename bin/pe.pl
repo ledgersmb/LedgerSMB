@@ -1271,7 +1271,7 @@ sub save {
     if ( $form->{translation} ) {
         PE->save_translation( \%myconfig, \%$form );
         $form->redirect( $locale->text('Translations saved!') );
-        exit;
+        $form->finalize_request();
     }
 
     if ( $form->{type} eq 'project' ) {
@@ -1293,7 +1293,7 @@ sub save {
                   )
                 {
                     &select_name;
-                    exit;
+                    $form->finalize_request();
                 }
 
                 if ( $rv == 1 ) {
@@ -1340,7 +1340,7 @@ sub save {
                   )
                 {
                     &select_name;
-                    exit;
+                    $form->finalize_request();
                 }
 
                 if ( $rv == 1 ) {
@@ -2197,7 +2197,7 @@ sub update {
         &translation_header;
         &translation_footer;
 
-        exit;
+        $form->finalize_request();
 
     }
 
@@ -2250,7 +2250,7 @@ sub update {
                   )
                 {
                     &select_name;
-                    exit;
+                    $form->finalize_request();
                 }
 
                 if ( $rv == 1 ) {
@@ -2833,7 +2833,7 @@ sub customer_selected {
       )
     {
         &select_name( $form->{vc} );
-        exit;
+        $form->finalize_request();
     }
 
     if ( $rv == 1 ) {

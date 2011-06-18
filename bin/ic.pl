@@ -3188,7 +3188,7 @@ sub update {
                     $form->{makemodel_rows}--;
                     $form->{customer_rows}--;
                     &select_item;
-                    exit;
+                    $form->finalize_request();
                 }
                 else {
                     $form->{"qty_$i"} = 1;
@@ -3269,7 +3269,7 @@ sub check_vendor {
             ( $form->{vendor} ) = split /--/, $form->{"vendor_$i"};
             if ( ( $j = $form->get_name( \%myconfig, vendor ) ) > 1 ) {
                 &select_name( vendor, $i );
-                exit;
+                $form->finalize_request();
             }
 
             if ( $j == 1 ) {
@@ -3347,7 +3347,7 @@ sub check_customer {
 
             if ( ( $j = $form->get_name( \%myconfig, customer ) ) > 1 ) {
                 &select_name( customer, $i );
-                exit;
+                $form->finalize_request();
             }
 
             if ( $j == 1 ) {
@@ -3566,7 +3566,7 @@ sub save {
                 $form->{callback} = $form->unescape( $form->{old_callback} );
 
                 &edit;
-                exit;
+                $form->finalize_request();
             }
 
             # undo number formatting

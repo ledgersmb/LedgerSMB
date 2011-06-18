@@ -1529,7 +1529,7 @@ sub check_form {
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     $form->error( $locale->text('Date missing!') ) unless $form->{datepaid};
@@ -1625,7 +1625,7 @@ sub check_openvc {
                 if ( ( $rv = CP->get_openvc( \%myconfig, \%$form ) ) > 1 ) {
                     $form->{redo} = 1;
                     &select_name($name);
-                    exit;
+                    $form->finalize_request();
                 }
 
                 if ( $rv == 1 ) {

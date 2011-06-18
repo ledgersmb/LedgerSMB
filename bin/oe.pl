@@ -898,7 +898,7 @@ sub update {
         }
 
         &po_orderitems;
-        exit;
+        $form->finalize_request();
     }
 
     $form->{exchangerate} =
@@ -1012,7 +1012,7 @@ sub update {
             if ( $rows > 1 ) {
 
                 &select_item;
-                exit;
+                $form->finalize_request();
 
             }
             else {
@@ -2130,7 +2130,7 @@ sub save {
     # if the name changed get new values
     if ( &check_name( $form->{vc} ) ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     # this is for the internal notes section for the [email] Subject
@@ -2172,7 +2172,7 @@ sub save {
     if ( !$form->{repost} ) {
         if ( $form->{id} ) {
             &repost("Save");
-            exit;
+            $form->finalize_request();
         }
     }
 
@@ -2282,7 +2282,7 @@ sub invoice {
     # if the name changed get new values
     if ( &check_name( $form->{vc} ) ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     if (   $form->{type} =~ /_order/
@@ -2299,7 +2299,7 @@ sub invoice {
 
         if ( !$exchangerate ) {
             &backorder_exchangerate( $orddate, $buysell );
-            exit;
+            $form->finalize_request();
         }
     }
 
@@ -3590,7 +3590,7 @@ sub vendor_selected {
       )
     {
         &select_name( $form->{vc} );
-        exit;
+        $form->finalize_request();
     }
 
     if ( $rv == 1 ) {

@@ -1460,7 +1460,7 @@ sub send_email {
     $form->redirect(
         $locale->text( 'Statement sent to [_1]', $form->{ $form->{ct} } ) );
 
-    exit;
+    $form->finalize_request();
 }
 
 sub print {

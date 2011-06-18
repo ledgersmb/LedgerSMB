@@ -222,6 +222,7 @@ sub close_form {
     return $results[0];
 }
 
+
 =item open_form()
 
 This sets a $self->{form_id} to be used in later form validation (anti-XSRF 
@@ -439,7 +440,7 @@ sub error {
         print
           qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
 
-        exit;
+        $self->finalize_request();
 
     }
     else {
@@ -620,7 +621,7 @@ sub redirect {
     if ( $self->{callback} || !$msg ) {
 	print STDERR "Full redirect\n";
         main::redirect();
-	exit;
+	$self->finalize_request();
     }
     else {
 

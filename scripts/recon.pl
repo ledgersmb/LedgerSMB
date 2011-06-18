@@ -573,7 +573,7 @@ sub approve {
     my ($request) = @_;
     if (!$request->close_form){
         get_results($request);
-        exit;
+        $request->finalize_request();
     }
     
     # Approve will also display the report in a blurred/opaqued out version,

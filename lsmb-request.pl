@@ -1,5 +1,5 @@
-#!/usr/bin/perl
 =head1 NAME
+#!/usr/bin/perl
 The LedgerSMB Request Handler
 
 =head1 SYNOPSYS
@@ -31,6 +31,7 @@ use LedgerSMB;
 use LedgerSMB::Locale;
 use Data::Dumper;
 use LedgerSMB::Log;
+use LedgerSMB::CancelFurtherProcessing;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('');
@@ -68,9 +69,10 @@ $logger->debug("End lsmb-request.pl");
 
 
 sub call_script {
-        
-    my $script = shift @_;
-    my $request = shift @_;
+  my $script = shift @_;
+  my $request = shift @_;
+
+  try {        
     $request->{script} = $script;
     eval { require "scripts/$script" } 
       || $request->error($locale->text('Unable to open script') . ": scripts/$script : $!");
@@ -80,5 +82,9 @@ sub call_script {
     $script->can($request->{action}) 
       || $request->error($locale->text("Action Not Defined: ") . $request->{action});
     $script->can( $request->{action} )->($request);
+  }
+  catch CancelFurtherProcessing with {
+    my $ex = shift;
+  };
 }
 1;

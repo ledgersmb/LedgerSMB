@@ -779,7 +779,7 @@ sub import_text {
         }
         elsif ( $rows > 1 ) {
             &select_item;
-            exit;
+            $form->finalize_request();
         }
         else {
             map {
@@ -941,7 +941,7 @@ sub update {
             if ( $rows > 1 ) {
 
                 &select_item;
-                exit;
+                $form->finalize_request();
 
             }
             else {
@@ -1046,7 +1046,7 @@ sub post {
     # if the vendor changed get new values
     if ( &check_name(vendor) ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     &validate_items;
@@ -1083,7 +1083,7 @@ sub post {
     if ( !$form->{repost} ) {
         if ( $form->{id} ) {
             &repost;
-            exit;
+            $form->finalize_request();
         }
     }
 

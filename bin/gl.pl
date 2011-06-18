@@ -1102,7 +1102,7 @@ sub delete_transaction {
 sub post {
     if (!$form->close_form){
         &update;
-        exit;
+        $form->finalize_request();
     };
     $form->isblank( "transdate", $locale->text('Transaction Date missing!') );
 
@@ -1117,7 +1117,7 @@ sub post {
     if ( !$form->{repost} ) {
         if ( $form->{id} ) {
             &repost;
-            exit;
+            $form->finalize_request();
         }
     }
 

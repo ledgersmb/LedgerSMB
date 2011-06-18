@@ -110,7 +110,7 @@ sub check_name {
               )
             {
                 &select_name($name);
-                exit;
+                $form->finalize_request();
             }
 
             if ( $rv == 1 ) {
@@ -343,7 +343,7 @@ sub check_project {
                     # check form->{project_list} how many there are
                     $form->{rownumber} = $i;
                     &select_project;
-                    exit;
+                    $form->finalize_request();
                 }
 
                 if ( $rows == 1 ) {

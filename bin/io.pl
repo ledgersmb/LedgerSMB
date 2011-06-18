@@ -814,7 +814,7 @@ sub display_form {
     if ( $form->{display_form} ) {
 	
 	&{"$form->{display_form}"};
-        exit;
+        $form->finalize_request();
     }
     
 
@@ -1093,7 +1093,7 @@ sub validate_items {
     # check if items are valid
     if ( $form->{rowcount} == 1 ) {
         &update;
-        exit;
+        $form->finalize_request();
     }
 
     for $i ( 1 .. $form->{rowcount} - 1 ) {
@@ -1563,7 +1563,7 @@ sub print_form {
           $form->update_defaults( \%myconfig, $numberfld );
         if ( $form->{media} eq 'screen' ) {
             &update;
-            exit;
+            $form->finalize_request();
         }
     }
 

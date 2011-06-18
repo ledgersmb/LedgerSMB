@@ -260,7 +260,7 @@ sub print {
                 print $locale->text('done');
                 $form->redirect( $locale->text('Marked entries printed!') );
             }
-            exit;
+            $form->finalize_request();
         }
     }
 
