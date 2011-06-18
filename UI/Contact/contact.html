@@ -135,6 +135,18 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	name = "sales"
 } ?>
 </div>
+<div class="input_group">
+       <?lsmb IF !country_id; country_id = default_country; END -?>
+       <?lsmb country_list.unshift({}) ?>
+		<?lsmb INCLUDE select element_data = {
+			text_attr = "name"
+			value_attr = "id"
+			default_values = [country_id_t]
+			options = country_list
+			name = "country_id"
+			label = text('Country:') 
+	} ?> 
+</div>
 </div>
 <div id="employee_div">
 <div class="input_group">
