@@ -362,7 +362,7 @@ BEGIN
 		       LEFT JOIN voucher v ON (acc_trans.voucher_id = v.id)
 		           WHERE ((al.description = 'AP' AND in_account_class = 1)
 		                 OR (al.description = 'AR' AND in_account_class = 2))
-			   AND (approved IS TRUE or v.batch_class = 3)
+			   AND (approved IS TRUE or v.batch_class IN (3, 6))
 		        GROUP BY acc_trans.trans_id) p ON (a.id = p.trans_id)
 		LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
 		LEFT JOIN users u ON (u.id = s.users_id)
@@ -491,7 +491,9 @@ BEGIN
 		RAISE EXCEPTION 'Bulk Post Must be from Batch!';
 	ELSE
 		INSERT INTO voucher (batch_id, batch_class, trans_id)
-		values (in_batch_id, 3, in_transactions[1][1]);
+		values (in_batch_id,
+                (SELECT batch_class_id FROM batch WHERE id = in_batch_id),
+                in_transactions[1][1]);
 
 		t_voucher_id := currval('voucher_id_seq');
 	END IF;
