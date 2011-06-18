@@ -182,7 +182,7 @@ BEGIN
                       union
                       select * from entity where in_control_code is null) e
 		JOIN (SELECT * FROM company 
-                       WHERE legal_name like  '%' || in_legal_name || '%'
+                       WHERE legal_name ilike  '%' || in_legal_name || '%'
                       UNION ALL
                       SELECT * FROM company
                        WHERE in_legal_name IS NULL) c ON (e.id = c.entity_id)
@@ -194,10 +194,10 @@ BEGIN
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE ec.entity_class = in_account_class
 			AND (c.id IN (select company_id FROM company_to_contact
-				WHERE contact LIKE ALL(t_contact_info))
-				OR '' LIKE ALL(t_contact_info))
+				WHERE contact ILIKE ALL(t_contact_info))
+				OR '' ILIKE ALL(t_contact_info))
 			
-			AND (c.legal_name like '%' || in_legal_name || '%'
+			AND (c.legal_name ilike '%' || in_legal_name || '%'
 				OR in_legal_name IS NULL)
 			AND ((in_address IS NULL AND in_city IS NULL 
 					AND in_state IS NULL 
@@ -225,7 +225,7 @@ BEGIN
 							|| '%'
 						AND country_id IN 
 							(SELECT id FROM country
-							WHERE name LIKE '%' ||
+							WHERE name ILIKE '%' ||
 								in_country ||'%'
 								OR short_name
 								ilike 
