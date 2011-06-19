@@ -706,6 +706,8 @@ WITH INHERIT NOLOGIN;
 
 GRANT UPDATE ON parts TO "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT ALL ON makemodel TO "lsmb_<?lsmb dbname ?>__part_edit";
+--###oldcode: Should have been UPDATE
+GRANT ALL ON partstax TO "lsmb_<?lsmb dbname ?>__part_edit";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
