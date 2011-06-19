@@ -534,7 +534,7 @@ This method sets appropriate project, department, etc. fields.
 sub get_payment_detail_data {
     my ($self) = @_;
     $self->get_metadata();
-    if ( !defined $self->{source_start} ){
+    if ( $self->{account_class} != 2 && !defined $self->{source_start} ){
         $self->error('No source start defined!');
         $self->finalize_request();
     }
@@ -567,8 +567,10 @@ sub get_payment_detail_data {
             }
     		$source =~ s/$source_src(\D*)$/$source_inc$1/;
     		++ $source_inc;
-    		$inv->{source} = $source;
-		$self->{"source_$inv->{contact_id}"} = $source;
+		if ($self->{account_class} == 1) { # skip for AR Receipts 
+		  $inv->{source} = $source;
+		  $self->{"source_$inv->{contact_id}"} = $source;
+		}
     	} else {
 		# Clear source numbers every time.
 		$inv->{source} = "";

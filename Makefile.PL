@@ -33,6 +33,8 @@ requires 'Template' => '2.14';
 requires 'Error';
 requires 'CGI::Simple';
 
+recommends 'perl-Math-BigInt-GMP';
+
 test_requires 'Test::More';
 test_requires 'Test::Trap';
 test_requires 'Test::Exception';
