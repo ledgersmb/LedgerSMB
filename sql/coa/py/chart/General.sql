@@ -266,3 +266,10 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
 commit;
+UPDATE account
+   SET tax = true
+WHERE id
+   IN (SELECT account_id
+       FROM account_link
+       WHERE description LIKE '%_tax');
+

@@ -28,6 +28,9 @@ sub save {
     if (!defined $self->{contra}){
         $self->{contra} = '0';
     }
+    if (!defined $self->{tax}) {
+	$self->{tax} = '0';
+    }
     $self->generate_links;
     my $func = 'account_save';
     if ($self->{charttype} and $self->{charttype} eq 'H') {

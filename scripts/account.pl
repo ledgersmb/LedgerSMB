@@ -60,7 +60,7 @@ sub _display_account_screen {
         $checked->{"${ct}_"} = "checked" if $form->{category} eq $ct;
     } 
 
-    for my $cb (qw(contra)){
+    for my $cb (qw(contra tax)){
         $checked->{$cb} = "checked" if $form->{$cb};
     }
     my %button = ();

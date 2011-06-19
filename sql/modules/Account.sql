@@ -49,7 +49,8 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION account_save 
 (in_id int, in_accno text, in_description text, in_category char(1), 
-in_gifi_accno text, in_heading int, in_contra bool, in_link text[])
+in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
+in_link text[])
 RETURNS int AS $$
 DECLARE 
 	t_heading_id int;
@@ -86,16 +87,17 @@ BEGIN
 		category = in_category,
 		gifi_accno = in_gifi_accno,
 		heading = t_heading_id,
-		contra = in_contra
+		contra = in_contra,
+                tax = in_tax
 	WHERE id = in_id;
 
 	IF FOUND THEN
 		t_id := in_id;
 	ELSE
 		INSERT INTO account (accno, description, category, gifi_accno,
-			heading, contra)
+			heading, contra, tax)
 		VALUES (in_accno, in_description, in_category, in_gifi_accno,
-			t_heading_id, in_contra);
+			t_heading_id, in_contra, in_tax);
 
 		t_id := currval('account_id_seq');
 	END IF;
@@ -150,7 +152,8 @@ SELECT CASE WHEN new.charttype='H' THEN account_heading_save(new.id, new.accno,
 new.description, NULL)
 ELSE account_save(new.id, new.accno, new.description, new.category, 
 new.gifi_accno, NULL, 
-CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END, 
+CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END,
+CASE WHEN new.tax IS NULL THEN FALSE ELSE new.tax END, 
 string_to_array(new.link, ':'))
 END;
 --

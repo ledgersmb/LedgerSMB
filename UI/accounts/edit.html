@@ -72,6 +72,12 @@
                           type => 'checkbox',
                           label => text('Recon'),
                           ${checked.recon} => checked.recon,
+                          value => '1'} ?><br />
+                  <?lsmb INCLUDE input element_data={
+                          name => 'tax',
+                          type => 'checkbox',
+                          label => text('Tax'),
+                          ${checked.tax} => checked.tax,
                           value => '1'} ?>
                 </td>
                 <td align="right">

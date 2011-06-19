@@ -29,7 +29,8 @@ CREATE TABLE account (
   category CHAR(1) NOT NULL,
   gifi_accno text,
   heading int not null references account_heading(id),
-  contra bool not null default false
+  contra bool not null default false,
+  tax bool not null default false
 );
 
 CREATE TABLE account_checkpoint (
@@ -81,8 +82,8 @@ CREATE TABLE account_link (
 );
 
 CREATE VIEW chart AS
-SELECT id, accno, description, 'H' as charttype, NULL as category, NULL as link, NULL as account_heading, null as gifi_accno, false as contra from account_heading UNION
-select c.id, c.accno, c.description, 'A' as charttype, c.category, concat_colon(l.description) as link, heading, gifi_accno, contra from account c left join account_link l ON (c.id = l.account_id) group by c.id, c.accno, c.description, c.category, c.heading, c.gifi_accno, c.contra;
+SELECT id, accno, description, 'H' as charttype, NULL as category, NULL as link, NULL as account_heading, null as gifi_accno, false as contra, false as tax from account_heading UNION
+select c.id, c.accno, c.description, 'A' as charttype, c.category, concat_colon(l.description) as link, heading, gifi_accno, contra, tax from account c left join account_link l ON (c.id = l.account_id) group by c.id, c.accno, c.description, c.category, c.heading, c.gifi_accno, c.contra, c.tax;
 
 -- pricegroup added here due to references
 CREATE TABLE pricegroup (

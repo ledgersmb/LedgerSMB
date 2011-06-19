@@ -447,3 +447,10 @@ id FROM chart WHERE accno = '340'));
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR:USD');
 
 commit;
+UPDATE account
+   SET tax = true
+WHERE id
+   IN (SELECT account_id
+       FROM account_link
+       WHERE description LIKE '%_tax');
+
