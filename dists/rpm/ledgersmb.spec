@@ -1,4 +1,4 @@
-# RPM spec written for and tested on Fedora Core 6
+# RPM spec written for and tested on Fedora Core 13
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
 Version: 1.2.22
@@ -7,14 +7,13 @@ License: GPLv2+
 URL: http://www.ledgersmb.org/
 Group: Applications/Productivity
 Source0: %{name}-%{version}.tar.gz
-Source1: Class-Std-v0.0.8.tar.gz
-Source2: Config-Std-v0.0.4.tar.gz
-Source3: Locale-Maketext-Lexicon-0.62.tar.gz
+Source1: Config-Std-0.007.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
 Requires: perl >= 5.8, httpd, postgresql >= 8.1, tetex-latex
 Requires: perl-DBD-Pg, perl-DBI >= 1.48, perl-version, perl-Smart-Comments
-Requires: perl-MIME-Lite
+Requires: perl-MIME-Lite, perl-Class-Std, perl-Locale-Maketext-Lexicon
+Requires: perl-Math-BigInt-GMP
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no
@@ -58,8 +57,6 @@ application database and users.
 mkdir .tmperl
 cd .tmperl
 tar xzf %SOURCE1
-tar xzf %SOURCE2
-tar xzf %SOURCE3
 mv */lib/* ..
 cd ..
 
@@ -98,7 +95,7 @@ ln -s ../../..%{_sysconfdir}/ledgersmb/ledgersmb.conf \
 # install relevant parts in data/cgi directory
 cp -rp *.pl favicon.ico index.html ledger-smb.eps ledger-smb.gif ledger-smb.png ledger-smb_small.png menu.ini \
   bin LedgerSMB sql utils locale drivers \
-  Config Class Locale \
+  Config\
   $RPM_BUILD_ROOT%{_datadir}/%{name}/
 rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}/locale/legacy
 

@@ -28,6 +28,8 @@ requires 'Cwd';
 requires 'Config::Std';
 requires 'MIME::Lite';
 
+recommends 'perl-Math-BigInt-GMP';
+
 build_requires 'Test::More';
 
 feature 'POS module credit card processing support',

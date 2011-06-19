@@ -6,4 +6,4 @@ cp ../release/ledgersm*.tar.gz /root/rpmbuild/SOURCES/
 
 rpmbuild -ba dists/rpm/ledgersmb.spec
 
-mv /usr/src/redhat/RPMS/noarch/ledgersmb* ../release
+mv /root/rpmbuild/SOURCES/ledgersmb* ../release

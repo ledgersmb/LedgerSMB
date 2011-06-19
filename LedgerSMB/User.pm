@@ -817,7 +817,7 @@ sub save_member {
 
         # add login to employee table if it does not exist
         my $login = $self->{login};
-        $login =~ s/@.*//;
+        #$login =~ s/@.*//;
         my $sth = $dbh->prepare("SELECT id FROM employee WHERE login = ?;");
         $sth->execute($login);
 
