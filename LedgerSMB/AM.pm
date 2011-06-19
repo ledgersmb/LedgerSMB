@@ -1849,8 +1849,11 @@ sub taxes {
 		         t.rate * 100 AS rate, t.taxnumber, t.validto,
 			 t.pass, m.taxmodulename
 		    FROM chart c
-		    JOIN tax t ON (c.id = t.chart_id)
-		    JOIN taxmodule m ON (t.taxmodule_id = m.taxmodule_id)
+		    LEFT JOIN
+                     (tax t JOIN taxmodule m 
+                            ON (t.taxmodule_id = m.taxmodule_id))
+                    ON (c.id = t.chart_id)
+                    WHERE c.tax
 		ORDER BY 3, 6|;
 
     my $sth = $dbh->prepare($query);
