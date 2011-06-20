@@ -1962,9 +1962,10 @@ sub backup {
     $t[3] = substr( "0$t[3]", -2 );
     $t[4] = substr( "0$t[4]", -2 );
 
+    my $globalDBname = $myconfig->{dbname};
     my $boundary = time;
     my $tmpfile =
-"${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
+"${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sqlc";
     $form->{OUT} = "$tmpfile";
 
     open( OUT, '>:raw', "$form->{OUT}" ) or $form->error("$form->{OUT} : $!");
@@ -1973,8 +1974,6 @@ sub backup {
 
     my $today = scalar localtime;
 
-    # compress backup if gzip defined
-    my $suffix = "c";
 
 	##SC: START Testing changes
 	$myconfig->{name} = "test";
@@ -1992,7 +1991,7 @@ qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfi
         $mail = new LedgerSMB::Mailer(
             to => qq|"$myconfig->{name}" <$myconfig->{email}>|,
             from => qq|"$myconfig->{name}" <$myconfig->{email}>|,
-            subject => "LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix",
+            subject => "LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sqlc",
             message => qq|
 This PostgreSQL backup can be restored using the pg_restore command.
 
@@ -2017,7 +2016,7 @@ LedgerSMB|,
         binmode( OUT, ':raw' );
 
         print OUT qq|Content-Type: application/file;\n|
-          . qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
+          . qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sqlc"\n\n|;
         print OUT
 qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc -p $myconfig->{dbport} $myconfig->{dbname});
     }
