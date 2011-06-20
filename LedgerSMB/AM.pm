@@ -1627,9 +1627,10 @@ sub backup {
     $t[3] = substr( "0$t[3]", -2 );
     $t[4] = substr( "0$t[4]", -2 );
 
+    my $globalDBname = $myconfig->{dbname};
     my $boundary = time;
     my $tmpfile =
-"${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql";
+"${LedgerSMB::Sysconfig::backuppath}/$boundary.$globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sqlc";
     $form->{OUT} = "$tmpfile";
 
     open( OUT, '>:raw', "$form->{OUT}" ) or $form->error("$form->{OUT} : $!");
@@ -1638,8 +1639,6 @@ sub backup {
 
     my $today = scalar localtime;
 
-    # compress backup if gzip defined
-    my $suffix = "c";
 
     if ( $form->{media} eq 'email' ) {
         print OUT
@@ -1651,7 +1650,7 @@ qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfi
         $mail->{to}   = qq|"$myconfig->{name}" <$myconfig->{email}>|;
         $mail->{from} = qq|"$myconfig->{name}" <$myconfig->{email}>|;
         $mail->{subject} =
-"LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix";
+"LedgerSMB Backup / $globalDBname-$form->{dbversion}-$t[5]$t[4]$t[3].sqlc";
         @{ $mail->{attachments} } = ($tmpfile);
         $mail->{version} = $form->{version};
         $mail->{fileid}  = "$boundary.";
@@ -1671,7 +1670,7 @@ qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfi
         binmode( OUT, ':raw' );
 
         print OUT qq|Content-Type: application/file;\n|
-          . qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sql$suffix"\n\n|;
+          . qq|Content-Disposition: attachment; filename="$myconfig->{dbname}-$form->{dbversion}-$t[5]$t[4]$t[3].sqlc"\n\n|;
         print OUT
 qx(PGPASSWORD="$myconfig->{dbpasswd}" pg_dump -U $myconfig->{dbuser} -h $myconfig->{dbhost} -Fc -p $myconfig->{dbport} $myconfig->{dbname});
     }
