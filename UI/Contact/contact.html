@@ -712,6 +712,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
+                        label = "&nbsp;"
 			name = "line_two"
 			class = "addl-address"
 			value = line_two
@@ -721,6 +722,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
+                        label = "&nbsp;"
 			name = "line_three"
 			class = "addl-address"
 			value = line_three
@@ -938,7 +940,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name="bank_account_id" 
 		value=bank_account_id
 	} ?>
-	<div><label for="bic">
+	<div>
 	<?lsmb INCLUDE input element_data = {
 		type="text" 
 		label = text('BIC/SWIFT Code:')
@@ -947,7 +949,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		size=20
 	} #' ?>
 	</div>
-	<div><label for="iban">
+	<div>
 	<?lsmb PROCESS input element_data = {
 		type="text" 
 		label = text('Bank Account:')

@@ -23,12 +23,11 @@ div.note_contents {
 	white-space:pre
 }
 
-.addl-address {
-	position: relative;
-	left: 12ex;
-}
 
 div label {
+	float: left;
+	display: block;
+	text-align: right;
 	margin-left: 1em;
 }
 
@@ -65,10 +64,7 @@ div.input_group3 {
 }
 
 #hr_div label {
-        float: left;
-        display: block;
         width: 9em;
-        text-align: right;
 }
 
 #company_div div.input_group1 {
@@ -80,10 +76,7 @@ div.input_group3 {
 }
 
 #company_div label {
-	float: left;
-	display: block;
 	width: 8em;
-	text-align: right;
 }
 
 #company_div div.input_group2 label {
@@ -91,8 +84,23 @@ div.input_group3 {
 }
 
 #credit_div label {
-	float: left;
-	display: block;
 	width: 9em;
-	text-align: right;
 }
+
+#location_div label {
+	width: 6em;
+}
+
+#contact_div label {
+	width: 6em;
+}
+
+#bank_div label {
+	width: 9em;
+}
+
+#notes_div label {
+	width: 6em;
+}
+
+
