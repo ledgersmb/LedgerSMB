@@ -182,6 +182,68 @@ sub search {
     $template->render($request);
 }
 
+sub search_results {
+    my $request = shift @_;
+    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
+    my @rows = $employee->search();
+    my $template = LedgerSMB::Template->new(
+        user => $employee->{_user},
+        template => 'form-dynatable',
+        locale => $employee->{_locale},
+        path => 'UI',
+        format => 'HTML'
+    );
+    my @columns;
+    my $locale = $request->{_locale};
+    $request->{title} = $locale->text('Search Results');
+    for my $col (qw(l_position l_id l_employeenumber l_salutation 
+                    l_first_name l_middle_name l_last_name l_dob 
+                    l_startdate l_enddate l_role l_ssn l_sales l_manager_id
+                    l_manager_first_name l_manager_last_name)){
+        if ($request->{$col}){
+           my $pcol = $col;
+           $pcol =~ s/^l_//;
+           push @columns, $pcol;
+        }
+    }
+    # Omitting headers for the running number and salutation fields --CT
+    my $header = { 
+           id => $locale->text('ID'),
+employeenumber=> $locale->text('Employee Number'),
+   first_name => $locale->text('First Name'),
+  middle_name => $locale->text('Middle Name'),
+    last_name => $locale->text('Last Name'),
+          dob => $locale->text('DOB'),
+    startdate => $locale->text('Start Date'),
+      enddate => $locale->text('End Date'),
+         role => $locale->text('Role'),
+          ssn => $locale->text('SSN'),
+        sales => $locale->text('Sales'),
+   manager_id => $locale->text('Manager ID'),
+
+
+   manager_first_name => $locale->text('Manager First Name'),
+    manager_last_name => $locale->text('Manager Last Name'),
+    };
+
+    my $pos = 1;
+    for my $ref(@rows){
+        $ref->{position} = $pos;
+        my $href = "employee.pl?action=edit&entity_id=$ref->{entity_id}";
+        $ref->{id} = {href => $href,
+                      text => $ref->{entity_id}};
+        $ref->{employeenumber} = { href => $href,
+                                   text => $ref->{employeenumber} };
+        ++$pos;
+    } 
+    $template->render({
+          form => $request,
+       columns => \@columns,
+       heading => $header,
+          rows => \@rows,
+    });
+}
+
 sub edit{
     my $request = shift @_;
     my $employee = LedgerSMB::DBObject::Employee->new({base => $request});

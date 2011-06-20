@@ -111,4 +111,11 @@ sub save_notes {
     $self->{dbh}->commit;
 }
 
+sub search {
+    my $self = shift @_;
+    my @results = $self->exec_method(funcname => 'employee__search');
+    @{$self->{search_results}} = @results;
+    return @results;
+}
+
 1;
