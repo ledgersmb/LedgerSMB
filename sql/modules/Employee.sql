@@ -81,6 +81,30 @@ LEFT JOIN person mp ON ee.manager_id = p.entity_id
     WHERE p.entity_id = $1;
 $$ language sql;
 
+CREATE OR REPLACE FUNCTION employee__search
+(in_employeenumber text, in_startdate_from date, in_startdate_to date,
+in_first_name text, in_middle_name text, in_last_name text,
+in_notes text)
+RETURNS SETOF employee_result as
+$$
+SELECT p.entity_id, p.id, s.salutation,
+          p.first_name, p.middle_name, p.last_name,
+          ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
+          mp.first_name, mp.last_name, ee.employeenumber, ee.dob
+     FROM person p
+     JOIN entity_employee ee on (ee.entity_id = p.entity_id)
+LEFT JOIN salutation s on (p.salutation_id = s.id)
+LEFT JOIN person mp ON ee.manager_id = p.entity_id
+    WHERE ($7 is null or p.entity_id in (select ref_key from entity_note
+                                          WHERE note ilike '%' || $7 || '%'))
+          and ($1 is null or $1 = ee.employeenumber)
+          and ($2 is null or $2 <= ee.startdate)
+          and ($3 is null or $3 >= ee.startdate)
+          and ($4 is null or p.first_name ilike '%' || $4 || '%')
+          and ($5 is null or p.middle_name ilike '%' || $5 || '%')
+          and ($6 is null or p.last_name ilike '%' || $6 || '%');
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION employee__list_managers
 (in_id integer)
 RETURNS SETOF employees as

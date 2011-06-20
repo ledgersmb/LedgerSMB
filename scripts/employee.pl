@@ -170,6 +170,18 @@ sub save {
     _render_main_screen($employee);
 }
 
+sub search {
+    my $request = shift @_;
+    my $template = LedgerSMB::Template->new(
+        user => $employee->{_user},
+        template => 'filter',
+        locale => $employee->{_locale},
+        path => 'UI/employee',
+        format => 'HTML'
+    );
+    $template->render($request);
+}
+
 sub edit{
     my $request = shift @_;
     my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
