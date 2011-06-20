@@ -33,6 +33,7 @@ sub save_location {
 
 sub save_contact {
     my ($self) = @_;
+    $self->{contact_new} = $self->{contact};
     $self->exec_method(funcname => 'person__save_contact');
     $self->{dbh}->commit;
 }
@@ -85,6 +86,19 @@ sub get_metadata {
     $country_setting->{key} = 'default_country';
     $country_setting->get;
     $self->{default_country} = $country_setting->{value};
+}
+
+sub get {
+    my $self = shift @_;
+    my ($ref) = $self->exec_method(funcname => 'employee__get');
+    $self->merge($ref);
+     
+}    
+
+sub save_notes {
+    my $self = shift @_;
+    $self->exec_method(funcname => 'entity__save_notes');
+    $self->{dbh}->commit;
 }
 
 1;

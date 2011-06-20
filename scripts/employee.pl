@@ -173,7 +173,7 @@ sub edit{
 sub _render_main_screen{
     my $employee = shift @_;
     $employee->get_metadata();
-
+    $employee->{entity_class} = 3;
     $employee->{creditlimit} = "$employee->{creditlimit}"; 
     $employee->{discount} = "$employee->{discount}"; 
     $employee->{script} = "employee.pl";
