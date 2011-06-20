@@ -848,18 +848,19 @@ sub customer_details {
     my $query = qq|
 		SELECT c.customernumber, e.name, l.line_one as address1, 
 		       l.line_two as address2, l.city AS city,
-		       '' as state, l.mail_code AS zipcode, 
+		       l.state as state, l.mail_code AS zipcode, 
 		       country.name as country,
 		       '' as contact, '' as customerphone, '' as customerfax,
 		       '' AS customertaxnumber, sic_code AS sic, iban, 
-		       bic,startdate,enddate
+ 		       bic,eca.startdate,eca.enddate
 		  FROM customer c
 		  JOIN company cm ON c.entity_id = cm.entity_id
 		  JOIN entity e ON (c.entity_id = e.id)
-		  JOIN company_to_location cl ON cm.id = cl.company_id
-		  JOIN location l ON cl.location_id = l.id
-		  JOIN country ON l.country_id = country.id
-		 WHERE e.id = ? limit 1|;
+                    JOIN entity_credit_account eca ON e.id = eca.entity_id
+		  LEFT JOIN eca_to_location el ON eca.id = el.credit_id
+		  LEFT JOIN location l ON el.location_id = l.id
+		  LEFT JOIN country ON l.country_id = country.id
+		 WHERE eca.id = ? limit 1|;
 
 
     my $sth = $dbh->prepare($query);

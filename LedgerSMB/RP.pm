@@ -1362,7 +1362,7 @@ sub trial_balance {
 				         SUM(ac.amount::$amount_cast) AS amount,
 				         g.description, c.contra
 				    FROM acc_trans ac
-				    JOIN chart c ON (ac.chart_id = c.id)
+				    JOIN chart c ON (ac.chart_id = c.id AND c.charttype = 'A')
 				    JOIN gifi g ON (c.gifi_accno = g.accno)
 				         $dpt_join
 				    JOIN (SELECT id, approved FROM gl UNION
@@ -1384,7 +1384,7 @@ sub trial_balance {
 				         SUM(ac.amount::$amount_cast) AS amount,
 				         c.description, c.contra
 				    FROM acc_trans ac
-				    JOIN chart c ON (ac.chart_id = c.id)
+				    JOIN chart c ON (ac.chart_id = c.id AND c.charttype = 'A')
 				         $dpt_join
 				    JOIN (SELECT id, approved FROM gl UNION
 				          SELECT id, approved FROM ar UNION
@@ -1496,7 +1496,7 @@ sub trial_balance {
                                         UNION ALL
                                         select id, approved FROM ar) g
                                         ON (g.id = ac.trans_id)
-                                JOIN chart c ON (c.id = ac.chart_id)
+                                JOIN chart c ON (c.id = ac.chart_id AND c.charttype = 'A')
 				LEFT JOIN yearend y ON (ac.trans_id = y.trans_id)
                                 WHERE (ac.transdate <= $dateto OR $dateto IS NULL)
                                         AND ac.approved AND g.approved
@@ -1546,7 +1546,7 @@ sub trial_balance {
 			  SELECT g.accno, g.description, c.category,
 			         SUM(ac.amount::$amount_cast) AS amount, c.contra
 			    FROM acc_trans ac
-			    JOIN chart c ON (c.id = ac.chart_id)
+			    JOIN chart c ON (c.id = ac.chart_id AND c.charttype = 'A')
 			    JOIN gifi g ON (c.gifi_accno = g.accno)
 			         $dpt_join
 			    JOIN (SELECT id, approved FROM gl UNION
@@ -1566,7 +1566,7 @@ sub trial_balance {
 			  SELECT c.accno, c.description, c.category,
 			         SUM(ac.amount::$amount_cast) AS amount, c.contra
 			    FROM acc_trans ac
-			    JOIN chart c ON (c.id = ac.chart_id)
+			    JOIN chart c ON (c.id = ac.chart_id AND c.charttype = 'A')
 			         $dpt_join
 			    JOIN (SELECT id, approved FROM gl UNION
 			          SELECT id, approved FROM ar UNION
@@ -1597,7 +1597,7 @@ sub trial_balance {
 			         AND ($approved OR gl.approved)
 		                 AND c.accno = ?) AS debit,
 		       (SELECT SUM(ac.amount::$amount_cast) FROM acc_trans ac
-		          JOIN chart c ON (c.id = ac.chart_id)
+		          JOIN chart c ON (c.id = ac.chart_id AND c.charttype = 'A')
 		               $dpt_join
 			  JOIN (SELECT id, approved FROM gl UNION
 			        SELECT id, approved FROM ar UNION
@@ -1613,7 +1613,7 @@ sub trial_balance {
             $query = qq|
 		SELECT (SELECT SUM(ac.amount::$amount_cast) * -1
 		          FROM acc_trans ac
-		          JOIN chart c ON (c.id = ac.chart_id)
+		          JOIN chart c ON (c.id = ac.chart_id AND c.charttype = 'A')
 		               $dpt_join
 		         WHERE $where $dpt_where $project AND ac.amount < 0
 				         AND ($approved OR ac.approved)
@@ -1621,7 +1621,7 @@ sub trial_balance {
 		
 		       (SELECT SUM(ac.amount::$amount_cast)
 		          FROM acc_trans ac
-		          JOIN chart c ON (c.id = ac.chart_id)
+		          JOIN chart c ON (c.id = ac.chart_id AND c.charttype = 'A')
 		               $dpt_join
 		         WHERE $where $dpt_where $project AND ac.amount > 0
 				         AND ($approved OR ac.approved)
@@ -1790,19 +1790,19 @@ sub aging {
 		       CASE WHEN 
 		                 EXTRACT(days FROM age(?, a.transdate)/30) 
 		                 = 0
-		                 THEN (sum(p.due)) ELSE 0 END
+		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c0, 
 		       CASE WHEN EXTRACT(days FROM age(?, a.transdate)/30)
 		                 = 1
-		                 THEN (sum(p.due)) ELSE 0 END
+		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c30, 
 		       CASE WHEN EXTRACT(days FROM age(?, a.transdate)/30)
 		                 = 2
-		                 THEN (sum(p.due)) ELSE 0 END
+		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c60, 
 		       CASE WHEN EXTRACT(days FROM age(?, a.transdate)/30)
 		                 > 2
-		                 THEN (sum(p.due)) ELSE 0 END
+		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c90, 
 		       a.duedate, a.invoice, a.id, a.curr,
 		       (SELECT $buysell FROM exchangerate e
@@ -1828,7 +1828,8 @@ sub aging {
 		 WHERE $where
               GROUP BY c.entity_id, c.meta_number, e.legal_name, a.invnumber,
                        a.transdate, a.ordnumber, a.duedate, a.invoice, a.id,
-                       a.curr, a.ponumber, a.notes, c.language_code|;
+                       a.curr, a.ponumber, a.notes, c.language_code
+		HAVING sum(p.due) <> 0|;
 
     $query .= qq| ORDER BY ctid, curr, $transdate, invnumber|;
     $sth = $dbh->prepare($query) || $form->dberror($query);

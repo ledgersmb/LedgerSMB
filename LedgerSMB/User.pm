@@ -184,6 +184,10 @@ sub fetch_config {
     my $sth = $dbh->prepare($query);
     $sth->execute($lsmb->{login});
     $myconfig = $sth->fetchrow_hashref(NAME_lc);
+    $sth = $dbh->prepare("SELECT value FROM defaults WHERE setting_key = 'templates'");
+    $sth->execute();
+    ($templates) = $sth->fetchrow_array() || 'demo';
+    $myconfig->{templates} = "templates/$templates";
     return $myconfig;
 }
 

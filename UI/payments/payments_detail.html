@@ -208,15 +208,15 @@
 			value = r.contact_id
 		} ?>
 		<?lsmb IF action == "update_payments" -?>
-			<?lsmb IF !${"id_$r.contact_id"} -?>
-				<?lsmb r.unselected = 1 -?>
+			<?lsmb IF ${"id_$r.contact_id"} -?>
+				<?lsmb r.selected = 1 -?>
 			<?lsmb END # IF !${"id_$r.contact_id"} -?>
 		<?lsmb END # IF action ... -?>
 		<?lsmb INCLUDE input element_data = {
 			type = "checkbox"
 			name = "id_$r.contact_id"
 			value = r.contact_id
-			checked = (r.unselected) ? undef : "checked" 
+			checked = (r.selected) ? "checked" : undef 
 			
 		} ?>
 		<?lsmb r.econtrol_code ?> -- 
