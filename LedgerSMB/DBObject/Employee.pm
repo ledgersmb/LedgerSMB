@@ -92,6 +92,16 @@ sub get {
     my $self = shift @_;
     my ($ref) = $self->exec_method(funcname => 'employee__get');
     $self->merge($ref);
+    @{$self->{locations}} = $self->exec_method(
+		funcname => 'person__list_locations');
+    @{$self->{contacts}} = $self->exec_method(
+		funcname => 'person__list_contacts');
+    @{$self->{notes}} = $self->exec_method(
+		funcname => 'person__list_notes');
+    @{$self->{bank_account}} = $self->exec_method(
+		funcname => 'person__list_bank_account');
+
+    
      
 }    
 
