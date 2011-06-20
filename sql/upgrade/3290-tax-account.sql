@@ -10,6 +10,9 @@ UPDATE account
               SELECT chart_id
               FROM tax);
 
+DROP FUNCTION account_save
+(in_id int, in_accno text, in_description text, in_category char(1),
+in_gifi_accno text, in_heading int, in_contra bool, in_link text[]);
 
 CREATE OR REPLACE FUNCTION account_save
 (in_id int, in_accno text, in_description text, in_category char(1),

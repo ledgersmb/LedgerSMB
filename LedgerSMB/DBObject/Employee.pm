@@ -24,7 +24,7 @@ sub save_location {
 
     $self->{country_id} = $self->{country_code};
 
-    my ($ref) = $self->exec_method(funcname => 'person__location_save');
+    my ($ref) = $self->exec_method(funcname => 'person__save_location');
     my @vals = values %$ref;
     $self->{location_id} = $vals[0];
 

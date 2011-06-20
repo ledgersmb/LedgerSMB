@@ -132,7 +132,7 @@ sub get_results {
         my @accounts = $search->get_accounts();
         my $act_hash = {};
         for my $act (@accounts){
-            $act_hash->{"$act->{id}"} = $act->{account};
+            $act_hash->{"$act->{id}"} = $act->{name};
         }
         for my $row (@results){
             $row->{account} = $act_hash->{"$row->{chart_id}"};
@@ -336,7 +336,7 @@ sub _display_report {
         $recon->close_form;
         $recon->open_form({commit => 1});
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
-        $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['recon_supervisor']});
+        $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['reconciliation_approve']});
         $recon->get();
         $template = LedgerSMB::Template->new( 
             user=> $user,

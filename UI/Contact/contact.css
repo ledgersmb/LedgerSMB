@@ -1,7 +1,7 @@
 label {
 	text-align: right;
 	margin-left: auto;
-	margin-right: 0em;
+        margin-right: 1em
 }
 
 input { margin-left: 0em;
@@ -43,10 +43,25 @@ div {
         overflow: auto;
 }
 
-#hr_div div.input_group {
+div.input_group {
         display: block;
         float: left;
-        width: 25em;
+}
+div.input_group1 {
+        display: block;
+        float: left;
+}
+div.input_group2 {
+        display: block;
+        float: left;
+}
+div.input_group3 {
+        display: block;
+        float: left;
+}
+
+#hr_div div.input_group {
+        width: 28em;
 }
 
 #hr_div label {
@@ -54,5 +69,24 @@ div {
         display: block;
         width: 9em;
         text-align: right;
-        margin-right: 1em
 }
+
+#company_div div.input_group1 {
+        width: 25em;
+}
+
+#company_div div.input_group2 {
+        width: 28em;
+}
+
+#company_div label {
+	float: left;
+	display: block;
+	width: 8em;
+	text-align: right;
+}
+
+#company_div div.input_group2 label {
+	width: 6em;
+}
+

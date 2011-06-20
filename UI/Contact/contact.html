@@ -238,6 +238,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name = "account_class"
 		value = account_class
 	} ?>	
+<div class="input_line">
+<div class="input_group1">
 	<?lsmb PROCESS input element_data = {
 		label = text('Control Code:') #'
 		type= "text"
@@ -248,6 +250,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<?lsmb IF !created_as_class;
 		created_as_class = entity_class;
 	END; # IF !created_as_class ?> 
+</div>
+<div class="input_group2">
 	<?lsmb PROCESS select element_data = {
 		name = "created_as_class"
 		options = entity_classes
@@ -257,12 +261,16 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		label = text('Class:')
 	} ?>
 	<?lsmb PROCESS button element_data = {
-		text = text('Generate Control Code')
+		text = text('Generate Control Code') #'
 		type = "submit"
 		name = "action"
 		value = "generate_control_code"
 		class = "submit"
-        } ?><br/>
+        } ?>
+</div>
+</div>
+<div class="input_line">
+<div class="input_group1">
 	<?lsmb PROCESS input element_data = {
 		label = text('Name:')
 		type= "text"
@@ -270,7 +278,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		value = name
 		size = "20"
 	} ?>
-
+</div>
+<div class="input_group2">
        <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
        <?lsmb country_list.unshift({}) ?>
 		<?lsmb INCLUDE select element_data = {
@@ -280,11 +289,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			options = country_list
 			name = "country_id_t"
 			label = text('Country:') 
-	} ?> <br/>
-        <table>
-        <tr>
-            
-            <td>
+	} ?> 
+</div>
+</div>
+<div class="input_line">
+<div class="input_group1">
 		<?lsmb INCLUDE input element_data = {
 			label = text('Tax Number/SSN:'),
 			name = "tax_id",
@@ -292,8 +301,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			type = "text",
 			size = "19"
 		} #' ?>
-            </td>
-            <td>
+</div>
+<div class="input_group2">
 		<?lsmb INCLUDE input element_data = {
 			label = text('SIC:'),
 			name = "sic_code",
@@ -302,11 +311,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "19",
 			class = 'sic'
 		} ?>
-            </td>
-        </tr>
-    </table>
-
+</div>
+</div>
+<div class="input_line">
             <hr/>
+<div class="input_group1">
 		<?lsmb INCLUDE button element_data = {
 			text = text('Save'),
 			class="submit" 
@@ -316,7 +325,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			accesskey="S" 
 			title="Save [Alt-S]"
 		} ?>
-    </form>
+</div>
+</div>
 <?lsmb FOREACH n = notes ?>
 <div class="note">
 <div class="note_contents"><?lsmb n.note ?></div>

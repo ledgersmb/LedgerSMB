@@ -326,7 +326,7 @@ sub get {
         $self->{dbh}->commit;
     }
     @{$self->{report_lines}} = $self->exec_method(
-		funcname=>'reconciliation__report_details'
+		funcname=>'reconciliation__report_details_payee'
     );
     ($ref) = $self->exec_method(funcname=>'account_get', 
                                 args => [$self->{chart_id}]);
