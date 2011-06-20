@@ -159,6 +159,13 @@ sub save {
     my ($request) = @_;
 
     my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
+    if (!$employee->{employeenumber}){
+        my ($ref) = $employee->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['employeenumber']
+                           );
+        ($employee->{employee_number}) = values %$ref;
+    }
     $employee->save();
     _render_main_screen($employee);
 }
