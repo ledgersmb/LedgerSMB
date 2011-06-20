@@ -90,3 +90,9 @@ div.input_group3 {
 	width: 6em;
 }
 
+#credit_div label {
+	float: left;
+	display: block;
+	width: 9em;
+	text-align: right;
+}
