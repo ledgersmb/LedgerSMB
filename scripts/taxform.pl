@@ -177,6 +177,40 @@ sub print {
     generate_report($request);    
 }
 
+
+sub list_all {
+    my ($request) = @_;
+
+    my $locale = $request->{_locale};
+    $request->{title} = $locale->text('Tax Form List');
+
+    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+    my @rows = $taxform->get_forms;
+    my $template = LedgerSMB::Template->new(
+        user => $request->{_user},
+        template => 'form-dynatable',
+        locale => $request->{_locale},
+        path => 'UI',
+        format => 'HTML'
+    );
+    
+    my @columns = qw(form_name);
+    my $heading = {form_name => $locale->text('Tax Form Name')};
+    for my $r (@rows){
+        $r->{form_name} = { text => $r->{form_name},
+                            href => "taxform.pl?action=add&id=$r->{id}".
+                                    "&country_id=$r->{country_id}".
+                                    "&form_name=$r->{form_name}",
+                          };
+    }
+    $template->render({
+        form => $request,
+     columns => \@columns,
+     heading => $heading,
+        rows => \@rows,
+    });
+}
+
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 
 Licensed under the GNU General Public License version 2 or later (at your 

@@ -15,9 +15,10 @@
 <div id = "taxform-countries" class="inputcountry">
 
 <?lsmb IF countries ?>
+<?lsmb IF !country_id; country_id = default_country; END ?>
  <?lsmb PROCESS select element_data = {
 		name = "country_id"
-		default_values = [default_country]
+		default_values = [country_id]
 		options = countries
 		value_attr = "id"
 		text_attr = "name"

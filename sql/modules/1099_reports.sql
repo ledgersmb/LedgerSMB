@@ -20,12 +20,6 @@ CREATE TYPE tax_form_report_detail_item AS (
     invnumber text, 
     duedate text);
 
-CREATE OR REPLACE FUNCTION tax_form__list_all()
-RETURNS SETOF country_tax_form AS
-$BODY$
-SELECT * FROM country_tax_form ORDER BY country_id;
-$BODY$ LANGUAGE SQL;
-
 CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin date, in_end date) 
 RETURNS SETOF tax_form_report_item AS $BODY$
 DECLARE
