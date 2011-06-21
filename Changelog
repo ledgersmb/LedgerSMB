@@ -1,3 +1,8 @@
+Changelog for 1.2.23
+* Fix for sales tax incorrect on sales/purchase order screen
+* fix for unreadable characters in HTML templates in some charsets.
+* Correcting backup name on backup by email
+
 Changelog for 1.2.22
 * Corrected error for cases where no buttons occur on GL Journal Entry screen
 (Chris T)

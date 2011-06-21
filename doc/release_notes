@@ -1,5 +1,5 @@
 RELEASE NOTES
-LedgerSMB 1.2.22
+LedgerSMB 1.2.23
 
 
 
@@ -200,6 +200,6 @@ appropriate till accounts.
 
 Major Bugs Fixed in 1.2.22:
 ================================
-1)  Bug in date handling test cases corrected which began due to year change to 2011. (Chris T)
-2)  A number of warnings have been corrected in Perl 5.12.  Users of 5.12 should note that warnings reported will be corrected.
-
+1)  Non-Latin characters do not display properly in html templates
+2)  Sales tax displayed incorrectly on sales order screen
+3)  Erroneous name of file attached to email by backup,
