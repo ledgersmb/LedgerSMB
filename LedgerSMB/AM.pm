@@ -37,7 +37,6 @@
 package AM;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
-use open ':utf8';
 
 sub get_account {
 
@@ -1274,6 +1273,7 @@ sub check_template_name {
 }
 
 sub load_template {
+    use open ':utf8';
 
     my ( $self, $myconfig, $form ) = @_;
 
@@ -1290,6 +1290,7 @@ sub load_template {
 }
 
 sub save_template {
+    use open ':utf8';
 
     my ( $self, $myconfig, $form ) = @_;
 
@@ -1615,7 +1616,6 @@ sub save_taxes {
 }
 
 sub backup {
-
     my ( $self, $myconfig, $form ) = @_;
 
     my $mail;
