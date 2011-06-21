@@ -2138,7 +2138,7 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id
 
 
 --
--- Data for Name: menu_attribute; Type: TABLE DATA; Schema: public; Owner: ledgersmb
+-- Data for Name: menu_attribute; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
@@ -2253,9 +2253,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 47	menu	1	112
 48	module	employee.pl	113
 48	action	add	114
-49	l_first_name	1	115
-49	module	employee.pl	116
-49	l_employeenumber	1	118
 49	action	search	117
 50	menu	1	119
 51	module	oe.pl	120
@@ -2299,6 +2296,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 68	action	add	157
 69	module	oe.pl	159
 69	action	add	160
+49	module	employee.pl	118
 68	type	sales_quotation	158
 69	type	request_quotation	161
 70	menu	1	162
@@ -2702,8 +2700,13 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 221	action	search_users	604
 222	module	admin.pl	605
 222	action	list_sessions	606
+49	l_last_name	1	115
+49	l_employeenumber	1	116
+49	l_first_name	1	613
+49	l_id	1	614
+49	l_startdate	1	615
+49	l_enddate	1	616
 \.
-
 
 --
 
