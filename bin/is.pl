@@ -1239,13 +1239,14 @@ sub on_hold {
 
 
 sub save_info {
-
     
 	    my $taxformfound=0;
 
 	    $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
 	    
         #print STDERR qq|___Rowcount=$form->{rowcount} _______|;
+            $form->{arap} = 'ar';
+            AA->save_intnotes($form);
 
 	    foreach my $i(1..($form->{rowcount}))
 	    {

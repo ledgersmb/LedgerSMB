@@ -1154,11 +1154,12 @@ sub on_hold {
 
 
 sub save_info {
-
     
 	    my $taxformfound=0;
 
 	    $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});
+            $form->{arap} = 'ap';
+            AA->save_intnotes($form);
 	    
         #print STDERR qq|___Rowcount=$form->{rowcount} _______|;
 

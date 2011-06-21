@@ -516,6 +516,8 @@ sub form_header {
     }
     $notes =
 qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
+    $intnotes =
+qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
 
     $department = qq|
 	      <tr>
@@ -805,10 +807,17 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	  <td></td>
 	  <td><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
         </tr>
+        <tr>
+           <td>&nbsp;</td>
+           <td>&nbsp;</td>
+           <th align=left>| . $locale->text('Notes') . qq|</th>
+           <th align=left>| . $locale->text('Internal Notes') . qq|</th>
+        </tr>
 	<tr>
-	  <th align=right>| . $locale->text('Notes') . qq|</th>
-	  <td></td>
-	  <td colspan=3>$notes</td>
+           <td>&nbsp;</td>
+           <td>&nbsp;</td>
+	  <td>$notes</td>
+          <td>$intnotes</td>
 	</tr>
       </table>
     </td>
@@ -1292,10 +1301,11 @@ sub post {
 
 sub save_info {
 
-    
 	    my $taxformfound=0;
 
 	    $taxformfound=AA->taxform_exist($form,$form->{"$form->{vc}_id"});
+            $form->{arap} = lc($form->{ARAP});
+            AA->save_intnotes($form);
 	    
 	    foreach my $i(1..($form->{rowcount}))
 	    {

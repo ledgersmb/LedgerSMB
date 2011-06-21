@@ -376,6 +376,7 @@ sub post_transaction {
 			netamount = ?,
 			curr = ?,
 			notes = ?,
+			intnotes = ?,
 			department_id = ?,
 			ponumber = ?,
                         reverse = ?
@@ -389,7 +390,7 @@ sub post_transaction {
         $form->{duedate},       $paid,
         $datepaid,              $invnetamount,
         $form->{currency},      $form->{notes},
-        $form->{department_id},
+        $form->{intnotes},      $form->{department_id},
         $form->{ponumber},      $form->{reverse},
         $form->{id}
     );
@@ -1505,6 +1506,22 @@ sub get_taxcheck
 
    return($found);
 
+}
+
+sub save_intnotes {
+    my ($self,$form) = @_;
+    my $table;
+    if ($form->{arap} eq 'ar') {
+        $table = 'ar';
+    } elsif ($form->{arap} eq 'ap') {
+        $table = 'ap';
+    } else {
+        $form->error('Bad arap in save_intnotes');
+    }
+    my $sth = $form->{dbh}->prepare("UPDATE $table SET intnotes = ? " .
+                                      "where id = ?");
+    $sth->execute($form->{intnotes}, $form->{id});
+    $form->{dbh}->commit;
 }
 
 1;
