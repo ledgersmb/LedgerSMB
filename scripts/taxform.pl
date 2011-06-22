@@ -185,7 +185,7 @@ sub list_all {
     $request->{title} = $locale->text('Tax Form List');
 
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
-    my @rows = $taxform->get_forms;
+    my @rows = $taxform->get_full_list;
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         template => 'form-dynatable',
@@ -194,14 +194,22 @@ sub list_all {
         format => 'HTML'
     );
     
-    my @columns = qw(form_name);
-    my $heading = {form_name => $locale->text('Tax Form Name')};
+    my @columns = qw(form_name country_name default_reportable);
+    my $heading = {form_name => $locale->text('Tax Form Name'),
+                country_name => $locale->text('Country'),
+          default_reportable => $locale->text('Default Reportable')};
     for my $r (@rows){
         $r->{form_name} = { text => $r->{form_name},
-                            href => "taxform.pl?action=add&id=$r->{id}".
+                            href => "taxform.pl?action=add_taxform&id=$r->{id}".
                                     "&country_id=$r->{country_id}".
-                                    "&form_name=$r->{form_name}",
+                                    "&form_name=$r->{form_name}".
+                                 "&default_reportable=$r->{default_reportable}",
                           };
+        if ($r->{default_reportable}){
+            $r->{default_reportable} = $locale->text('Yes');
+        } else {
+            $r->{default_reportable} = $locale->text('No');
+        }
     }
     $template->render({
         form => $request,

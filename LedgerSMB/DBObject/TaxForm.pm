@@ -25,6 +25,16 @@ sub get
     return $results[0];
 }
 
+sub get_full_list
+{
+    my ($self) = @_;
+    
+    @{$self->{forms}} = $self->exec_method(
+                funcname => 'tax_form__list_ext',
+    );
+    return @{$self->{forms}};
+}
+
 sub get_forms
 {
     my ($self) = @_;
@@ -46,6 +56,7 @@ sub get_metadata
     my ($ref) = $self->call_procedure(procname => 'setting_get', args => ['default_country']);
     $self->{default_country} = $ref->{setting_get};
 }
+
 
 
 1;

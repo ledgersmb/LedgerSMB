@@ -7,9 +7,18 @@
 ?>
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
 <body>
-<div class="listtop"><?lsmb text('Create New TaxForm') ?></div>
+<?lsmb IF id; 
+          title = text('Edit Taxform'); #'
+       ELSE;
+          title = text('Create New TaxForm'); #'
+       END ?> 
+<div class="listtop"><?lsmb title ?></div>
 <form name="add_taxform" method="post">
-
+<?lsmb PROCESS input element_data = {
+    type = "hidden"
+    name = "id"
+   value = id
+}; ?>
 <div class="labelledinput">
 <br>  
 <div id = "taxform-countries" class="inputcountry">
