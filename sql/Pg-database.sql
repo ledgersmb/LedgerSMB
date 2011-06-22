@@ -1875,11 +1875,12 @@ CREATE TABLE menu_node (
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_node', 'id'), 224, true);
+SELECT pg_catalog.setval('menu_node_id_seq', 226, true);
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
 --
+
 COPY menu_node (id, label, parent, "position") FROM stdin;
 205	Transaction Approval	0	5
 206	Batches	205	1
@@ -2094,8 +2095,9 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 220	Add User	219	1
 221	Search Users	219	2
 222	Sessions	219	3
+225	List Tax Forms	217	2
+226	Reports	217	3
 \.
-
 
 --
 -- Name: menu_node_parent_key; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
@@ -2123,10 +2125,11 @@ ALTER TABLE ONLY menu_node
 
 
 CREATE TABLE menu_attribute (
-    node_id integer NOT NULL,
+    node_id integer NOT NULL references menu_node(id),
     attribute character varying NOT NULL,
     value character varying NOT NULL,
-    id serial NOT NULL
+    id serial NOT NULL,
+    primary key(node_id, attribute)
 );
 
 
@@ -2134,12 +2137,13 @@ CREATE TABLE menu_attribute (
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('menu_attribute', 'id'), 612, true);
+SELECT pg_catalog.setval('menu_attribute_id_seq', 615, true);
 
 
 --
 -- Data for Name: menu_attribute; Type: TABLE DATA; Schema: public; Owner: postgres
 --
+
 
 COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 26	outstanding	1	584
@@ -2706,7 +2710,11 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 49	l_id	1	614
 49	l_startdate	1	615
 49	l_enddate	1	616
+225	module	taxform.pl	613
+225	action	list_all	614
+226	module	taxform.pl	615
 \.
+
 
 --
 

@@ -1138,6 +1138,9 @@ GRANT ALL ON country_tax_form_id_seq TO "lsmb_<?lsmb dbname ?>__tax_form_save";
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (218, 'allow', 'lsmb_<?lsmb dbname ?>__tax_form_save');
 
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+SELECT id, 'allow', 'lsmb_<?lsmb dbname ?>__tax_form_save'
+  FROM menu_node WHERE parent_id = 217 and position in (2,3);
 --
 
 -- SYSTEM SETTINGS	
