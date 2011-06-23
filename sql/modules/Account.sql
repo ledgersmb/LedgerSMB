@@ -146,17 +146,17 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 
-CREATE RULE chart_i AS ON INSERT TO chart
+CREATE OR REPLACE RULE chart_i AS ON INSERT TO chart
 DO INSTEAD
-SELECT CASE WHEN new.charttype='H' THEN account_heading_save(new.id, new.accno, 
-new.description, NULL)
-ELSE account_save(new.id, new.accno, new.description, new.category, 
-new.gifi_accno, NULL, 
-CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END,
-CASE WHEN new.tax IS NULL THEN FALSE ELSE new.tax END, 
-string_to_array(new.link, ':'))
+SELECT CASE WHEN new.charttype='H' THEN 
+ account_heading_save(new.id, new.accno, new.description, NULL)
+ELSE
+ account_save(new.id, new.accno, new.description, new.category,
+  new.gifi_accno, NULL,
+  CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END,
+  CASE WHEN new.tax IS NULL THEN FALSE ELSE new.tax END,
+  string_to_array(new.link, ':'))
 END;
---
 
 CREATE OR REPLACE FUNCTION cr_coa_to_account_save(in_accno text, in_description text)
 RETURNS void AS $BODY$
