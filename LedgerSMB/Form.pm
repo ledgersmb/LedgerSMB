@@ -2421,10 +2421,8 @@ sub create_links {
         $query = qq|
 			SELECT s.printed, s.emailed, s.spoolfile, s.formname
 			FROM status s WHERE s.trans_id = ?|;
-
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id} ) || $self->dberror($query);
-
         while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $self->{printed} .= "$ref->{formname} "
               if $ref->{printed};
@@ -2433,9 +2431,20 @@ sub create_links {
             $self->{queued} .= "$ref->{formname} " . "$ref->{spoolfile} "
               if $ref->{spoolfile};
         }
-
         $sth->finish;
         for (qw(printed emailed queued)) { $self->{$_} =~ s/ +$//g }
+
+	# get customer e-mail accounts
+	$query = qq|SELECT * FROM eca__list_contacts(?);|;
+	$sth = $dbh->prepare($query);
+	$sth->execute( $self->{entity_id} ) || $self->dberror( $query );
+
+	my $ctype;
+	while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+	    $ctype = lc $ref->{class};
+	    $self->{$ctype} .= "$ref->{contact} ";
+	}
+	$sth->finish;
 
         # get recurring
         $self->get_recurring($dbh);

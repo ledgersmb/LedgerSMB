@@ -271,7 +271,7 @@ sub render {
 	my $post = $format->can('postprocess')->($self);
 	if (!$self->{'noauto'}) {
 		# Clean up
-		$self->output;
+		$self->output(%$vars);
 		if ($self->{rendered}) {
 			unlink($self->{rendered}) or
 				throw Error::Simple 'Unable to delete output file';
