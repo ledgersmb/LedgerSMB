@@ -1904,32 +1904,25 @@ sub save_taxes {
     # connect to database
     my $dbh = $form->{dbh};
 
-    my $query = qq|
-		UPDATE tax 
-		   SET validto = (now())::date 
-		 WHERE chart_id = ?|;
-    my $update_sth = $dbh->prepare($query) || $form->dberror($query);
-
-    $query = qq|
-		INSERT INTO tax (chart_id, rate, taxnumber, validto, 
-			pass, taxmodule_id)
-			VALUES (?, ?, ?, ?, ?, ?)|;
-
-    my $sth = $dbh->prepare($query);
     foreach my $item ( split / /, $form->{taxaccounts} ) {
         my ( $chart_id, $i ) = split /_/, $item;
         my $rate =
           $form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
         my $validto = $form->{"validto_$i"};
-        $validto = undef if not $validto;
-        
-        my @queryargs = (
-            $chart_id, $rate, $form->{"taxnumber_$i"}, $validto,
-            $form->{"pass_$i"}, $form->{"taxmodule_id_$i"}
-        );
+        $validto = 'infinity' if not $validto;
+        $form->{"pass_$i"} = 0 if not $form->{"pass_$i"};
+        delete $form->{"old_validto_$i"} if ! $form->{"old_validto_$i"};
 
-        $update_sth->execute($chart_id) || $form->dberror($query);
-        $sth->execute(@queryargs) || $form->dberror($query);
+        $sth = $dbh->prepare('select account__save_tax(?,?,?,?,?,?,?)');         
+        my @queryargs = (
+            $chart_id, $validto, $rate, $form->{"taxnumber_$i"},
+            $form->{"pass_$i"}, $form->{"taxmodule_id_$i"},
+            $form->{"old_validto_$i"}
+        );
+       $sth->execute(@queryargs) ||$form->dberror($query);
+
+        
+
     }
 
     my $rc = $dbh->commit;

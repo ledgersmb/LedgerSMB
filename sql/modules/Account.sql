@@ -185,3 +185,30 @@ CREATE OR REPLACE FUNCTION get_link_descriptions() RETURNS SETOF account_link_de
 $$
     SELECT * FROM account_link_description;
 $$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION account__save_tax
+(in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text, 
+in_pass int, in_taxmodule_id int, in_old_validto date)
+returns bool as
+$$
+BEGIN
+	UPDATE tax SET validto = in_validto,
+               rate = in_rate,
+               taxnumber = in_taxnumber,
+               pass = in_pass,
+               taxmodule_id = in_taxmodule_id
+         WHERE chart_id = in_chart_id and validto = in_old_validto;
+
+         IF FOUND THEN
+             return true;
+         END IF;
+
+         INSERT INTO tax(chart_id, validto, rate, taxnumber, pass, taxmodule_id)
+         VALUES (in_chart_id, in_validto, in_rate, in_taxnumber, in_pass,
+                 in_taxmodule_id);
+
+         RETURN TRUE;
+
+END;
+$$ language plpgsql;
+     

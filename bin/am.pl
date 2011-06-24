@@ -1485,6 +1485,7 @@ sub taxes {
         for (qw(taxnumber validto pass taxmodulename)) {
             $form->{"${_}_$i"} = $ref->{$_};
         }
+        $form->{"old_validto_$i"} = $ref->{validto};
         $form->{taxaccounts} .= "$ref->{id}_$i ";
     }
     chop $form->{taxaccounts};
@@ -1512,6 +1513,7 @@ sub display_taxes {
           $form->format_amount( \%myconfig, $form->{"taxrate_$i"} );
 
         $hiddens{"taxdescription_$i"} = $form->{"taxdescription_$i"};
+        $hiddens{"old_validto_$i"} = $form->{"old_validto_$i"};
 
         my %select = (name => "taxmodule_id_$i", options => []);
         foreach my $taxmodule ( sort keys %$form ) {
@@ -1563,6 +1565,7 @@ sub update {
 
     @a = split / /, $form->{taxaccounts};
     $ndx = $#a + 1;
+    AM->taxes( \%myconfig, \%$form );
 
     foreach $item (@a) {
         ( $accno, $i ) = split /_/, $item;
