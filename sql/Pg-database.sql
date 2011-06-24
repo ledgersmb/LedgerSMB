@@ -1152,7 +1152,7 @@ CREATE TABLE tax (
   chart_id int,
   rate numeric,
   taxnumber text,
-  validto timestamp default 'infinity',
+  validto timestamp not null default 'infinity',
   pass integer DEFAULT 0 NOT NULL,
   taxmodule_id int DEFAULT 1 NOT NULL,
   FOREIGN KEY (chart_id) REFERENCES  account(id),
