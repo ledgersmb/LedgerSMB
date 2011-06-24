@@ -2803,7 +2803,7 @@ sub update_status {
 
     $sth = $dbh->prepare($query);
     $sth->execute( $self->{id}, $printed, $emailed, $spoolfile,
-        $self->{formname} );
+        $self->{formname} ) || $self->dberror($query);
     $sth->finish;
 
 }
@@ -2830,7 +2830,7 @@ sub save_status {
 					WHERE trans_id = ?|;
 
     my $sth = $dbh->prepare($query);
-    $sth->execute( $self->{id} );
+    $sth->execute( $self->{id} ) || $self->dberror($query);
     $sth->finish;
 
     my %queued;
