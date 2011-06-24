@@ -143,12 +143,13 @@ sub prepare_message {
 	$self->{_message}->binmode(':utf8');
 }
 
-=head2 $mail->attach(data => $data, filename => $name, strip => $strip)
+=head2 $mail->attach(data => $data, file => $file,
+                     filename => $name, strip => $strip)
 
 Add an attachment to the prepared message.  If $data is specified, use the
 value of that variable as the attachment value, otherwise attach the file
-given by $name.  If both a filename and data are given, the data is attached
-and given the name from filename.
+given by $file.  If both a file and data are given, the data is attached.
+filename must be given and is used to name the attachment.
 
 $strip is an optional string to remove from the filename send with the
 attachment.
@@ -160,22 +161,23 @@ sub attach {
 	my %args = @_;
 
 	carp "Message not prepared" unless ref $self->{_message};
-	if (defined $args{filename}) {
-		if (!$args{filename}){
+	if (defined $args{file}) {
+		if (!$args{file}){
 			carp "Invalid filename provided";
-		} elsif (!defined $args{data} and !(-f $args{filename} and -r $args{filename})){
-			carp "Cannot access file: $args{filename}";
+		} elsif (!defined $args{data}
+			 and !(-f $args{file} and -r $args{file})){
+			carp "Cannot access file: $args{file}";
 		}
 	} else {
 		carp "No attachement supplied" unless defined $args{data};
 	}
 
 	# strip path from output name
-	my $file;
+	my $filename;
 	if ($args{filename}) {
 		my $strip = quotemeta $args{strip};
-		$file = $args{filename};
-		$file =~ s/(.*\/|$strip)//g;
+		$filename = $args{filename};
+		$filename =~ s/(.*\/|$strip)//g;
         }
 
 	# handle both string and file types of input
@@ -188,7 +190,7 @@ sub attach {
 
 	$self->{_message}->attach(
 		'Type' => $args{mimetype},
-		'Filename' => $file,
+		'Filename' => $filename,
 		'Disposition' => 'attachment',
 		@data,
 		);
