@@ -362,7 +362,7 @@ sub _email_output {
 	my @mailmime;
 	if (!$self->{rendered} and !$args->{attach}) {
 		$args->{message} .= $self->{output};
-		@mailmime = ('contenttype', $self->{mimeytype});
+		@mailmime = ('contenttype', $self->{mimetype});
 	}
 
         # User default for email from
