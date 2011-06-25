@@ -156,7 +156,7 @@ END ?></td>
   checked => 'checked',
   } -?>
         </td><td><?lsmb text('Amount') ?></td>
-<?lsmb IF form.report.matches('^tax_') ?>
+<?lsmb IF form.report.match('^tax_') ?>
         <td>
   <?lsmb PROCESS input element_data={
     name => 'l_tax',
