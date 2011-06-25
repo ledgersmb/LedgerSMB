@@ -943,7 +943,7 @@ create or replace function eca__location_save(
     in_credit_id int, in_location_id int,
     in_location_class int, in_line_one text, in_line_two text, 
     in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
-    in_country_code int
+    in_country_code int, in_old_location_class int
 ) returns int AS $$
 
     DECLARE
@@ -951,10 +951,11 @@ create or replace function eca__location_save(
         l_id INT;
         l_orig_id INT;
     BEGIN
-       PERFORM location_id 
-          FROM eca_to_location
+       
+        UPDATE eca_to_location
+           SET location_class = in_location_class
          WHERE credit_id = in_credit_id
-           AND location_class = in_location_class
+           AND location_class = in_old_location_class
            AND location_id = in_location_id;
            
          IF FOUND THEN

@@ -201,7 +201,8 @@ create or replace function person__save_location(
     in_city TEXT, 
     in_state TEXT, 
     in_mail_code text, 
-    in_country_code int
+    in_country_code int,
+    in_old_location_class int
 ) returns int AS $$
 
     DECLARE
@@ -211,10 +212,13 @@ create or replace function person__save_location(
     BEGIN
 	SELECT id INTO t_person_id
 	FROM person WHERE entity_id = in_entity_id;
-    -- why does it delete?
+
+    UPDATE person_to_location
+       SET location_class = in_location_class
+     WHERE person_id = t_person_id 
+           AND location_class = in_old_location_class
+           AND location_id = in_location_id;
     
-    select * into l_row FROM location
-    WHERE id = in_location_id;
     
     IF NOT FOUND THEN
         -- Create a new one.
