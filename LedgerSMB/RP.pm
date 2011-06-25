@@ -2505,5 +2505,82 @@ sub payments {
 
 }
 
-1;
+sub inventory_accounts {
+    my ( $self, $myconfig, $form ) = @_;
+    my $dbh = $form->{dbh};
+    my $query = qq|
+		SELECT id, accno, description FROM chart
+		 WHERE link = 'IC'
+		 ORDER BY accno|;
+    my $sth = $dbh->prepare($query);
+    $sth->execute || $form->dberror($query);
+    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        push @{ $form->{selectIC} }, $ref;
+    }
+    $sth->finish;
+    $dbh->{dbh};
+}
 
+sub inventory {
+    my ( $self, $myconfig, $form ) = @_;
+    my $dbh = $form->{dbh};
+    my $where_date = '';
+    my $where_date = '';
+    my $where_date_acc = '';
+    my $where_product = '';
+    my $where_chart = '';
+    if($form->{fromdate}) {
+	$where_date.=" AND a.transdate>='".$form->{fromdate}."' ";
+	$where_date_acc.=" AND acc.transdate>='".$form->{fromdate}."' ";
+    }
+    if($form->{todate}) {
+	$where_date.=" AND a.transdate<='".$form->{todate}."' ";
+	$where_date_acc.=" AND acc.transdate<='".$form->{todate}."' ";
+    }
+
+    if($form->{partnumber}) {
+	$where_product.= " AND partnumber LIKE '%".$form->{partnumber}."%' ";
+    } 
+    if($form->{description}) {
+	$where_product.= " AND description LIKE '%".$form->{description}."%' ";
+    } 
+    if($form->{inventory_account}) {
+	$where_chart .= " AND p.inventory_accno_id = ".$form->{inventory_account}." ";
+    }
+
+    my $query = qq|
+	SELECT id, description, partnumber, sum(qty) as qty, sum(exited) as exited, sum(entered) as entered, sum(entered)-sum(exited) as value FROM 
+	(
+	    SELECT p.id, p.description, p.partnumber, -sum(i.qty) as qty, 0 as exited, 0 as entered
+	    FROM invoice i 
+	    JOIN ar a ON (a.id=i.trans_id $where_date) 
+	    JOIN parts p ON (i.parts_id=p.id AND p.inventory_accno_id>0 $where_chart) 
+	    GROUP BY p.id, p.description, p.partnumber 
+	    
+	    UNION ALL 
+	    
+	    SELECT p.id, p.description, p.partnumber, 0, sum(acc.amount) as exited, 0 as entered
+	    FROM acc_trans acc 
+	    JOIN parts p ON (p.inventory_accno_id=acc.chart_id AND p.inventory_accno_id>0 $where_chart) 
+	    JOIN invoice i ON (i.id=acc.invoice_id AND i.parts_id=p.id) 
+	    WHERE acc.trans_id NOT IN (SELECT id FROM ap) $where_date_acc  
+	    GROUP BY p.id, p.description, p.partnumber 
+	    
+	    UNION ALL 
+	    
+	    SELECT p.id, p.description, p.partnumber, -sum(i.qty) as qty, 0 as exited, -sum(i.qty*i.sellprice) as entered
+	    FROM invoice i 
+	    JOIN ap a ON (a.id=i.trans_id $where_date) 
+	    JOIN parts p ON (i.parts_id=p.id AND p.inventory_accno_id>0 $where_chart) 
+	    GROUP BY p.id, p.description, p.partnumber
+	) AS temp WHERE 1=1 $where_product GROUP BY id, description, partnumber HAVING sum(entered)-sum(exited)!=0 OR sum(qty)!=0 ORDER BY description;|;
+
+    my $sth = $dbh->prepare($query);
+    $sth->execute || $form->dberror($query);
+    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        push @{ $form->{inventory} }, $ref;
+    }
+    $sth->finish;
+    $dbh->{dbh};
+}
+1;

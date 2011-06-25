@@ -29,8 +29,6 @@ ELSIF action== 'save_bank_account' or action == 'get_bank_acct'
 		target_div = 'bank_div';
 ELSIF action== 'save_notes';
 		target_div = 'notes_div';
-ELSE;
-	target_div = '';
 END ?>
 <body onload="init('<?lsmb target_div ?>')">
     <?lsmb IF name ?> 
@@ -76,8 +74,8 @@ END ?>
 <form name="hr" action="<?lsmb script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
-		name = "entity_id"
-		value = entity_id
+		name = "target_div"
+		value = 'hr_div'
 	} ?>
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
@@ -218,6 +216,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
 <form name="customer" method="post" action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'company_div'
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "entity_id"
@@ -648,6 +651,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		name = "form_id"
 		value = form_id
 	} ?>
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'location_div'
+	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="entity_id" 
@@ -685,10 +693,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<!--  TODO:  Automate links with AJAX -->
 		<a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb entity_id 
 			?>&location_id=<?lsmb loc.id ?>&credit_id=<?lsmb 
-			credit_id ?>">[edit]</a> 
+			credit_id ?>&target_div=location_div">[edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_location&entity_id=<?lsmb
 			entity_id ?>&location_id=<?lsmb loc.id 
-			?>&credit_id = <?lsmb credit_id ?>">[delete]</a>
+			?>&credit_id = <?lsmb credit_id 
+                        ?>&target_div=location_div">[delete]</a>
 	</td>
     </tr>
 	<?lsmb END ?>
@@ -807,13 +816,13 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 				?>&contact_class=<?lsmb tt_url(ct.class_id)
 				?>&description=<?lsmb tt_url(ct.description)
 				?>&action=edit&credit_id=<?lsmb 
-				tt_url(credit_id) ?>"
+				tt_url(credit_id) ?>&target_div=contact_div"
 			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
 			<a href="<?lsmb tt_url(script) 
 				?>?entity_id=<?lsmb tt_url(entity_id) 
 				?>&contact_id=<?lsmb tt_url(ct.id)
 				?>&action=delete_contact&credit_id=<?lsmb 
-				tt_url(credit_id) ?>"
+				tt_url(credit_id) ?>&target_div=contact_div"
 			>[<?lsmb text('Delete'); ?>]</a>
 		</td>
 	</tr>
@@ -824,6 +833,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		type = "hidden"
 		name = "form_id"
 		value = form_id
+	} ?>
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'contact_div'
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
@@ -910,10 +924,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<td class="iban"><?lsmb ba.iban ?></td>
 	<td class="actions">
 		<a href="<?lsmb script ?>?action=edit_bank_acct&entity_id=<?lsmb
-			entity_id ?>&bank_account_id=<?lsmb ba.id ?>"
+			entity_id ?>&bank_account_id=<?lsmb ba.id 
+                        ?>&target_div=bank_div"
 			>[Edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
-			entity_id ?>&bank_account_id=<?lsmb ba.id ?>"
+			entity_id ?>&bank_account_id=<?lsmb ba.id 
+                        ?>&target_div=bank_div"
 			>[Delete]</a> 
 	</td>
 </tr>
@@ -924,6 +940,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		type = "hidden"
 		name = "form_id"
 		value = form_id
+	} ?>
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'bank_div'
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
@@ -970,6 +991,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div id="notes_div" class="container">
 <div class="listtop"><?lsmb text('Notes') ?></div>
 <form action="<?lsmb script ?>" method="post">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'notes_div'
+	} ?>
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"
