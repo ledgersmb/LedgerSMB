@@ -744,15 +744,24 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION eca__save_bank_account
-(in_entity_id int, in_credit_id int, in_bic text, in_iban text)
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text,
+in_bank_account_id int)
 RETURNS int AS
 $$
 DECLARE out_id int;
 BEGIN
-	INSERT INTO entity_bank_account(entity_id, bic, iban)
-	VALUES(in_entity_id, in_bic, in_iban);
+        UPDATE entity_bank_account
+           SET bic = in_bic,
+               iban = in_iban
+         WHERE id = in_bank_account_id;
 
-	SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+        IF FOUND THEN
+                out_id = in_bank_account_id;
+        ELSE
+	  	INSERT INTO entity_bank_account(entity_id, bic, iban)
+		VALUES(in_entity_id, in_bic, in_iban);
+	        SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+	END IF;
 
 	IF in_credit_id IS NOT NULL THEN
 		UPDATE entity_credit_account SET bank_account = out_id
@@ -764,15 +773,23 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION entity__save_bank_account
-(in_entity_id int, in_bic text, in_iban text)
+(in_entity_id int, in_bic text, in_iban text, in_bank_account_id int)
 RETURNS int AS
 $$
 DECLARE out_id int;
 BEGIN
-	INSERT INTO entity_bank_account(entity_id, bic, iban)
-	VALUES(in_entity_id, in_bic, in_iban);
+        UPDATE entity_bank_account
+           SET bic = in_bic,
+               iban = in_iban
+         WHERE id = in_bank_account_id;
 
-	SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+        IF FOUND THEN
+                out_id = in_bank_account_id;
+        ELSE
+	  	INSERT INTO entity_bank_account(entity_id, bic, iban)
+		VALUES(in_entity_id, in_bic, in_iban);
+	        SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+	END IF;
 
 	RETURN out_id;
 END;
