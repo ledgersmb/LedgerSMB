@@ -32,7 +32,10 @@ ELSIF action== 'save_notes';
 END ?>
 <body onload="init('<?lsmb target_div ?>')">
     <?lsmb IF name ?> 
-    <div class="pageheading"><?lsmb name?></div>
+<div class="pageheading"><?lsmb text('Company:') ?> <?lsmb name ?></div>
+    <?lsmb END ?>
+    <?lsmb IF meta_number ?> 
+<div class="pageheading"><?lsmb text('Account:') ?> <?lsmb meta_number ?></div>
     <?lsmb END ?>
     <?lsmb IF notice ?>
     <div class="notice"><?lsmb notice ?></div>
@@ -929,7 +932,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<td class="actions">
 		<a href="<?lsmb script ?>?action=edit_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id 
-                        ?>&target_div=bank_div"
+                        ?>&bic=<?lsmb tt_url(ba.bic)
+                        ?>&iban=<?lsmb tt_url(ba.iban) ?>&target_div=bank_div"
 			>[Edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id 
