@@ -696,22 +696,28 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<!--  TODO:  Automate links with AJAX -->
 		<a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb entity_id 
 			?>&location_id=<?lsmb loc.id ?>&credit_id=<?lsmb 
-			credit_id ?>&target_div=location_div">[edit]</a> 
+			credit_id ?>&country_code=<?lsmb loc.country_id
+                        ?>&target_div=location_div&location_class=<?lsmb
+                        loc.class_id ?>">[edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_location&entity_id=<?lsmb
 			entity_id ?>&location_id=<?lsmb loc.id 
 			?>&credit_id=<?lsmb credit_id 
-                        ?>&form_id=<?lsmb form_id 
+                        ?>&form_id=<?lsmb form_id
+                        ?>&location_class_id=<?lsmb loc.class_id 
                         ?>&target_div=location_div">[delete]</a>
 	</td>
     </tr>
 	<?lsmb END ?>
     </table>
 	<div> <!-- TODO:  Move to elements.html -CT -->
-		<label for="loc_type"><?lsmb text('Type:') ?></label>
-		<select id='loc_type' name="location_class">
-		<?lsmb FOREACH lc = location_class_list ?>
-		<option value="<?lsmb lc.id ?>"><?lsmb lc.class ?></option>
-		<?lsmb END ?>
+                <?lsmb INCLUDE select element_data = {
+                       name           = "location_class"
+                       default_values = [location_class]
+                       options        = location_class_list
+                       text_attr      = "class"
+                       value_attr     = "id"
+                       label          = text('Type:')
+                } ?>
 		</select>
 	</div>
 	<div> 
@@ -770,7 +776,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			size = "20"
 		} #' ?>
 	</div>
-	<div> <!-- TODO:  Move to elements.html -CT -->
+	<div> 
 		<?lsmb IF !country_code; country_code = default_country; END -?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
@@ -933,11 +939,14 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<a href="<?lsmb script ?>?action=edit_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id 
                         ?>&bic=<?lsmb tt_url(ba.bic)
-                        ?>&iban=<?lsmb tt_url(ba.iban) ?>&target_div=bank_div"
+                        ?>&iban=<?lsmb tt_url(ba.iban) 
+                        ?>&credit_id=<?lsmb tt_url(credit_id) 
+                        ?>&target_div=bank_div"
 			>[Edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id 
-                        ?>&target_div=bank_div&form_id=<?lsmb form_id ?>"
+                        ?>&target_div=bank_div&form_id=<?lsmb form_id 
+                        ?>&credit_id=<?lsmb tt_url(credit_id) ?>"
 			>[Delete]</a> 
 	</td>
 </tr>

@@ -783,6 +783,33 @@ sub delete_contact {
 
 =over
 
+=item delete_bank_acct
+
+Deletes the selected bank account record
+
+Required request variables:
+* bank_account_id
+* entity_id
+* form_id
+
+=back
+
+=cut
+
+sub delete_bank_acct{
+    my ($request) = @_;
+    my $company = new_company($request);
+    if (_close_form($company)){
+        $company->delete_bank_account();
+    }
+    $company->get;
+    _render_main_screen( $company );
+}
+
+=pod
+
+=over
+
 =item delete_location
 
 Deletes the selected contact info record
@@ -797,7 +824,7 @@ Must include company_id or credit_id (credit_id used if both are provided) plus:
 
 =cut
 
-sub delete_location {
+sub delete_location{
     my ($request) = @_;
     my $company = new_company($request);
     if (_close_form($company)){
@@ -806,6 +833,31 @@ sub delete_location {
     $company->get;
     _render_main_screen( $company );
 }
+
+=pod
+
+=over
+
+=item edit_bank_account($request)
+
+displays screen to a bank account
+
+Required data:
+bank_account_id
+bic
+iban
+
+=back
+
+=cut
+
+sub edit_bank_acct {
+    my ($request) = @_;
+    my $company = new_company($request);
+    $company->get;
+    _render_main_screen( $company );
+}
+
 
 
 =pod

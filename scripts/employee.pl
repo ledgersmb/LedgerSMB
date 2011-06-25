@@ -154,6 +154,57 @@ sub delete_location {
 
 =over
 
+=item edit_bank_account($request)
+
+displays screen to a bank account
+
+Required data:
+bank_account_id
+bic
+iban
+
+=back
+
+=cut
+
+sub edit_bank_acct {
+    my ($request) = @_;
+    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
+    $employee->get;
+    _render_main_screen( $employee);
+}
+
+=pod
+
+=over
+
+=item delete_bank_acct
+
+Deletes the selected bank account record
+
+Required request variables:
+* bank_account_id
+* entity_id
+* form_id
+
+=back
+
+=cut
+
+sub delete_bank_acct{
+    my ($request) = @_;
+    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
+    if (_close_form($employee)){
+        $employee->delete_bank_account();
+    }
+    $employee->get;
+    _render_main_screen( $employee);
+}
+
+=pod
+
+=over
+
 =item search($self, $request, $user)
 
 Requires form var: search_pattern
