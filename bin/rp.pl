@@ -210,7 +210,6 @@ sub report {
             $hiddens{"$ref->{accno}_rate"} = $ref->{rate};
             $checked = undef;
         }
-
         if (ref $form->{gifi_taxaccounts} eq 'ARRAY') {
             $form->{gifitaxaccountlist} = [];
             foreach $ref ( @{ $form->{gifi_taxaccounts} } ) {
@@ -303,7 +302,6 @@ sub report {
 ##        require "bin/menu.pl";
 ##        &menubar;
 ##    }
-
     my @buttons = ({
         name => 'action',
         value => 'continue',
@@ -1632,8 +1630,7 @@ sub statement_details {
 }
 
 sub generate_tax_report {
-
-    RP->tax_report( \%myconfig, \%$form );
+    RP->tax_report( \%myconfig, $form );
 
     my %hiddens;
     my @options;

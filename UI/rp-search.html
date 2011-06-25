@@ -14,7 +14,11 @@
           <td colspan="3"><?lsmb PROCESS select element_data=form.selectdepartment ?></td>
         </tr>
 <?lsmb END ?>
-<?lsmb INCLUDE "rp-search-generate_trial_balance.html" ?>
+<?lsmb IF subform;
+   PROCESS "rp-search-${subform}.html" ;
+ELSE;
+   PROCESS "rp-search-generate_trial_balance.html";
+END  ?>
 <?lsmb IF gifi ?>
         <tr>
           <th align="right"><?lsmb text('Accounts') ?></th>

@@ -59,16 +59,10 @@
   value => '1',
   label => text('Summary'),
   checked => 'checked',
-  } -?>
-<?lsmb PROCESS input element_data={
-  type => 'radio',
-  name => 'summary',
-  value => '0',
-  label => text('Detail'),
-  } -?>
+  } -?> 
         </td>
       </tr>
-<?lsmb IF form.report.matches('^tax_') ?>
+<?lsmb IF form.report.match('^tax_') ?>
       <tr>
         <th align="right"><?lsmb text('Report for') ?></th>
         <td colspan="3">
@@ -97,12 +91,6 @@
   value => 'accrual',
   label => text('Accrual'),
   checked => 'checked',
-  } -?>
-<?lsmb PROCESS input element_data={
-  name => 'method',
-  type => 'radio',
-  value => 'cash',
-  label => text('Cash'),
   } -?>
         </td>
       </tr>
