@@ -278,6 +278,8 @@ sub add {
     _render_main_screen($company);
 }
 
+
+
 =pod
 
 =over
@@ -748,6 +750,63 @@ sub save_contact {
     $company->get;
     _render_main_screen( $company );
 }
+
+=pod
+
+=over
+
+=item delete_contact
+
+Deletes the selected contact info record
+
+Must include company_id or credit_id (credit_id used if both are provided) plus:
+
+* contact_class_id
+* contact
+* form_id
+
+=back
+
+=cut
+
+sub delete_contact {
+    my ($request) = @_;
+    my $company = new_company($request);
+    if (_close_form($company)){
+        $company->delete_contact();
+    }
+    $company->get;
+    _render_main_screen( $company );
+}
+
+=pod
+
+=over
+
+=item delete_location
+
+Deletes the selected contact info record
+
+Must include company_id or credit_id (credit_id used if both are provided) plus:
+
+* location_class_id
+* location_id 
+* form_id
+
+=back
+
+=cut
+
+sub delete_location {
+    my ($request) = @_;
+    my $company = new_company($request);
+    if (_close_form($company)){
+        $company->delete_location();
+    }
+    $company->get;
+    _render_main_screen( $company );
+}
+
 
 =pod
 

@@ -167,12 +167,13 @@ CREATE TYPE location_result AS (
 	city text,
 	state text,
         mail_code text,
+        country_id int,
 	country text,
+        class_id int,
 	class text
 );
 
 CREATE OR REPLACE FUNCTION location__get(in_id int) returns location_result AS $$
-
 declare
     l_row location_result;
 begin
@@ -184,8 +185,10 @@ begin
             l.line_three,           
             l.city,                 
             l.state,                
-            l.mail_code,            
-            c.name as country,      
+            l.mail_code,
+            c.id,
+            c.name as country,
+            NULL,
             NULL
         FROM location l
         JOIN country c on l.country_id = c.id

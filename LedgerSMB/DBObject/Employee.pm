@@ -136,6 +136,7 @@ person_id: int of entity_credit_account.id, preferred value
 sub delete_contact {
     my ($self) = @_;
     $self->exec_method(funcname => 'person__delete_contact');
+    $self->{dbh}->commit;
 }
 
 =over
@@ -160,6 +161,7 @@ sub delete_location {
     my ($self) = @_;
     my $rv;
     ($rv) = $self->exec_method(funcname => 'person__delete_location');
+    $self->{dbh}->commit;
     return $rv;
 }
 
@@ -186,6 +188,7 @@ sub delete_bank_account {
     ($rv) = $self->exec_method(funcname => 'entity__delete_bank_account',
                                args => [$self->{entity_id}, 
                                         $self->{bank_account_id}]);
+    $self->{dbh}->commit;
     return $rv;
 }
 

@@ -98,6 +98,62 @@ sub add {
 
 =over
 
+=item delete_contact
+
+Deletes the selected contact info record
+
+Must include company_id or credit_id (credit_id used if both are provided) plus:
+
+* contact_class_id
+* contact
+* form_id
+
+=back
+
+=cut
+
+sub delete_contact {
+    my ($request) = @_;
+    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
+    if (_close_form($company)){
+        $employee->delete_contact();
+    }
+    $employee->get;
+    _render_main_screen( $employee);
+}
+
+=pod
+
+=over
+
+=item delete_location
+
+Deletes the selected contact info record
+
+Must include company_id or credit_id (credit_id used if both are provided) plus:
+
+* location_class_id
+* location_id 
+* form_id
+
+=back
+
+=cut
+
+sub delete_location {
+    my ($request) = @_;
+    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
+    if (_close_form($employee)){
+        $employee->delete_location();
+    }
+    $employee->get;
+    _render_main_screen( $employee);
+}
+
+=pod
+
+=over
+
 =item search($self, $request, $user)
 
 Requires form var: search_pattern

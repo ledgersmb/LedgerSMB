@@ -693,7 +693,7 @@ DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
-			l.state, l.mail_code, c.name, lc.class
+			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
 		JOIN company_to_location ctl ON (ctl.location_id = l.id)
 		JOIN location_class lc ON (ctl.location_class = lc.id)
@@ -1018,7 +1018,9 @@ $$
                l.city,
                l.state,
                l.mail_code,
+               c.id,
                c.name,
+               lc.id,
                lc.class
           FROM location l
           JOIN eca_to_location ctl ON (ctl.location_id = l.id)
@@ -1036,7 +1038,7 @@ DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
-			l.state, l.mail_code, c.name, lc.class
+			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
 		JOIN eca_to_location ctl ON (ctl.location_id = l.id)
 		JOIN location_class lc ON (ctl.location_class = lc.id)

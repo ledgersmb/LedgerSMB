@@ -99,6 +99,7 @@ sub delete_contact {
           'No company or credit id in LedgerSMB::DBObject::delete_contact'
        ));
     }
+    $self->{dbh}->commit;
     return $rv;
 }
 
@@ -136,6 +137,7 @@ sub delete_location {
           'No company or credit id in LedgerSMB::DBObject::delete_location'
        ));
     }
+    $self->{dbh}->commit;
     return $rv;
 }
 
@@ -163,6 +165,7 @@ sub delete_bank_account {
     ($rv) = $self->exec_method(funcname => 'entity__delete_bank_account',
                                args => [$self->{entity_id}, 
                                         $self->{bank_account_id}]);
+    $self->{dbh}->commit;
     return $rv;
 }
 

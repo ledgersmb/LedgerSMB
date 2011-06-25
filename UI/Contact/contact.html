@@ -696,7 +696,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			credit_id ?>&target_div=location_div">[edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_location&entity_id=<?lsmb
 			entity_id ?>&location_id=<?lsmb loc.id 
-			?>&credit_id = <?lsmb credit_id 
+			?>&credit_id=<?lsmb credit_id 
+                        ?>&form_id=<?lsmb form_id 
                         ?>&target_div=location_div">[delete]</a>
 	</td>
     </tr>
@@ -820,9 +821,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
 			<a href="<?lsmb tt_url(script) 
 				?>?entity_id=<?lsmb tt_url(entity_id) 
-				?>&contact_id=<?lsmb tt_url(ct.id)
+				?>&contact_class_id=<?lsmb 
+                                tt_url(ct.class_id)
 				?>&action=delete_contact&credit_id=<?lsmb 
-				tt_url(credit_id) ?>&target_div=contact_div"
+				tt_url(credit_id) ?>&form_id=<?lsmb form_id 
+                                ?>&contact=<?lsmb tt_url(ct.contact)
+                                ?>&target_div=contact_div"
 			>[<?lsmb text('Delete'); ?>]</a>
 		</td>
 	</tr>
@@ -929,7 +933,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			>[Edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id 
-                        ?>&target_div=bank_div"
+                        ?>&target_div=bank_div&form_id=<?lsmb form_id ?>"
 			>[Delete]</a> 
 	</td>
 </tr>

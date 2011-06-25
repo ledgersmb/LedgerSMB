@@ -57,7 +57,7 @@ DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
-			l.state, l.mail_code, c.name, lc.class
+			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
 		JOIN person_to_location ctl ON (ctl.location_id = l.id)
 		JOIN person p ON (ctl.person_id = p.id)
