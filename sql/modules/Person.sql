@@ -90,6 +90,20 @@ $$ LANGUAGE plpgsql;
 
 --
 
+CREATE OR REPLACE FUNCTION person__delete_contact
+(in_person_id int, in_contact_class_id int, in_contact text)
+returns bool as $$
+BEGIN
+
+DELETE FROM person_to_contact
+ WHERE person_id = in_person_id and contact_class_id = in_contact_class_id
+       and contact= in_contact;
+RETURN FOUND;
+
+END;
+
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION person__save_contact
 (in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT)
 RETURNS INT AS
@@ -161,6 +175,21 @@ END;
 $$ LANGUAGE PLPGSQL;
 		
 --
+CREATE OR REPLACE FUNCTION person__delete_location
+(in_person_id int, in_location_id int, in_location_class int)
+RETURNS BOOL AS
+$$
+BEGIN
+
+DELETE FROM eca_to_location
+ WHERE person_id = in_person_id AND location_id = in_location_id 
+       AND location_class = in_location_class;
+
+RETURN FOUND;
+
+END;
+$$ language plpgsql;
+
 
 create or replace function person__save_location(
     in_entity_id int, 

@@ -778,6 +778,34 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION company__delete_contact
+(in_company_id int, in_contact_class_id int, in_contact text)
+returns bool as $$
+BEGIN
+
+DELETE FROM company_to_contact
+ WHERE company_id = in_company_id and contact_class_id = in_contact_class_id
+       and contact= in_contact;
+RETURN FOUND;
+
+END;
+
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION eca__delete_contact
+(in_credit_id int, in_contact_class_id int, in_contact text)
+returns bool as $$
+BEGIN
+
+DELETE FROM eca_to_contact
+ WHERE credit_id = in_credit_id and contact_class_id = in_contact_class_id
+       and contact= in_contact;
+RETURN FOUND;
+
+END;
+
+$$ language plpgsql;
+
 CREATE OR REPLACE FUNCTION company__save_contact
 (in_entity_id int, in_contact_class int, in_description text, in_contact text)
 RETURNS INT AS
@@ -946,6 +974,37 @@ create or replace function eca__location_save(
     END;
 
 $$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION eca__delete_location
+(in_credit_id int, in_location_id int, in_location_class int)
+RETURNS BOOL AS
+$$
+BEGIN
+
+DELETE FROM eca_to_location
+ WHERE credit_id = in_credit_id AND location_id = in_location_id 
+       AND location_class = in_location_class;
+
+RETURN FOUND;
+
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION company__delete_location
+(in_company_id int, in_location_id int, in_location_class int)
+RETURNS BOOL AS
+$$
+BEGIN
+
+DELETE FROM eca_to_location
+ WHERE company_id = in_company_id AND location_id = in_location_id 
+       AND location_class = in_location_class;
+
+RETURN FOUND;
+
+END;
+$$ language plpgsql;
+
 
 CREATE OR REPLACE FUNCTION eca__get_location(
     in_credit_id int,

@@ -66,6 +66,106 @@ sub save {
     $self->{dbh}->commit;
 }
 
+
+=over 
+
+=item delete_contact
+
+required request variables:
+
+contact_class_id:  int id of contact class
+contact: text of contact information
+
+Must include at least one of:
+
+credit_id: int of entity_credit_account.id, preferred value
+company_id:  int of company.id, only used if credit_id not set.
+
+returns true of a record was deleted.
+
+=back
+
+=cut
+
+sub delete_contact {
+    my ($self) = @_;
+    my $rv;
+    if ($self->{credit_id}){
+        ($rv) = $self->exec_method(funcname => 'eca__delete_contact');
+    } elsif ($self->{company_id}){
+        ($rv) = $self->exec_method(funcname => 'company__delete_contact');
+    } else {
+       $self->error($self->{_locale}->text(
+          'No company or credit id in LedgerSMB::DBObject::delete_contact'
+       ));
+    }
+    return $rv;
+}
+
+=over
+
+=item delete_location
+
+Deletes a record from the location side.
+
+Required request variables:
+
+location_id
+location_class_id
+
+One of:
+
+credit_id (preferred)
+company_id (as fallback)
+
+Returns true if a record was deleted.  False otherwise.
+
+=back
+
+=cut
+
+sub delete_location {
+    my ($self) = @_;
+    my $rv;
+    if ($self->{credit_id}){
+        ($rv) = $self->exec_method(funcname => 'eca__delete_location');
+    } elsif ($self->{company_id}){
+        ($rv) = $self->exec_method(funcname => 'company__delete_location');
+    } else {
+       $self->error($self->{_locale}->text(
+          'No company or credit id in LedgerSMB::DBObject::delete_location'
+       ));
+    }
+    return $rv;
+}
+
+
+=over 
+
+=item delete_bank_account
+
+Deletes a bank account
+
+Requires:
+
+entity_id
+bank_account_id
+
+Returns true if a record was deleted, false otherwise.
+
+=back
+
+=cut
+
+sub delete_bank_account {
+    my ($self) = @_;
+    my $rv;
+    ($rv) = $self->exec_method(funcname => 'entity__delete_bank_account',
+                               args => [$self->{entity_id}, 
+                                        $self->{bank_account_id}]);
+    return $rv;
+}
+
 =over 
 
 = item get_history 

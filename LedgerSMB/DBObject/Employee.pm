@@ -118,4 +118,75 @@ sub search {
     return @results;
 }
 
+=over 
+
+=item delete_contact
+
+required request variables:
+
+contact_class_id:  int id of contact class
+contact: text of contact information
+person_id: int of entity_credit_account.id, preferred value
+
+
+=back
+
+=cut
+
+sub delete_contact {
+    my ($self) = @_;
+    $self->exec_method(funcname => 'person__delete_contact');
+}
+
+=over
+
+=item delete_location
+
+Deletes a record from the location side.
+
+Required request variables:
+
+location_id
+location_class_id
+person_id
+
+Returns true if a record was deleted.  False otherwise.
+
+=back
+
+=cut
+
+sub delete_location {
+    my ($self) = @_;
+    my $rv;
+    ($rv) = $self->exec_method(funcname => 'person__delete_location');
+    return $rv;
+}
+
+=over 
+
+=item delete_bank_account
+
+Deletes a bank account
+
+Requires:
+
+entity_id
+bank_account_id
+
+Returns true if a record was deleted, false otherwise.
+
+=back
+
+=cut
+
+sub delete_bank_account {
+    my ($self) = @_;
+    my $rv;
+    ($rv) = $self->exec_method(funcname => 'entity__delete_bank_account',
+                               args => [$self->{entity_id}, 
+                                        $self->{bank_account_id}]);
+    return $rv;
+}
+
 1;

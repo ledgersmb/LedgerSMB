@@ -85,3 +85,20 @@ END;
 $$ language plpgsql;
 
 
+CREATE OR REPLACE FUNCTION entity__delete_bank_account
+(in_entity_id int, in_id int)
+RETURNS bool AS
+$$
+BEGIN
+
+UPDATE entity_credit_account SET bank_account = NULL
+ WHERE entity_id = in_entity_id AND bank_account = in_id;
+
+DELETE FROM entity_bank_account
+ WHERE id = in_id AND entity_id = in_entity_id;
+
+RETURN FOUND;
+
+END;
+$$ LANGUAGE plpgsql;
+
