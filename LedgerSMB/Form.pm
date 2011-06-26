@@ -2287,7 +2287,8 @@ sub all_years {
 
 }
 
-=item $form->create_links($module, $myconfig, $vc[, $job]);
+=item $form->create_links( { module => $module,
+    myconfig => $myconfig, vc => $vc, [, job => $job ] });
 
 Populates the hash referred to as $form->{${module}_links} details about
 accounts that have $module in their link field.  The hash is keyed upon link
@@ -2321,7 +2322,12 @@ After all this, it calls $form->all_vc to conclude.
 
 sub create_links {
 
-    my ( $self, $module, $myconfig, $vc, $job ) = @_;
+    my $self = shift;
+    my %args = @_;
+    my $module = $args{module};
+    my $myconfig = $args{myconfig};
+    my $vc = $args{vc};
+    my $job = $args{job};
 
     # get last customers or vendors
     my ( $query, $sth );

@@ -89,7 +89,10 @@ sub invoice_links {
     $form->{type} = "invoice";
 
     # create links
-    $form->create_links( "AP", \%myconfig, "vendor", 1 );
+    $form->create_links( { module => "AP",
+			   myconfig => \%myconfig,
+			   vc => "vendor",
+			   job => 1 } );
 
     # currencies
     @curr = split /:/, $form->{currencies};
