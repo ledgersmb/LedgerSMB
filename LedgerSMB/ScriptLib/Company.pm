@@ -585,7 +585,11 @@ company as needed, and will generate a new Company ID for the company if needed.
 sub save {
     
     my ($request) = @_;
-
+    if (!$request->{ar_ap_accno_id}){
+          $request->error(
+              $request->{_locale}->text('No AR or AP Account Selected')
+          );
+    }
     my $company = new_company($request);
     if (_close_form($company)){
         $company->save();
