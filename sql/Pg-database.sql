@@ -689,11 +689,16 @@ INSERT INTO contact_class (id,class) values (8,'IRC');
 INSERT INTO contact_class (id,class) values (9,'Fax');
 INSERT INTO contact_class (id,class) values (10,'Generic Jabber');
 INSERT INTO contact_class (id,class) values (11,'Home Phone');
+-- The e-mail classes are hard-coded into LedgerSMB/Form.pm by class_id
+-- i.e. 'class_id's 12 - 17
 INSERT INTO contact_class (id,class) values (12,'Email');
 INSERT INTO contact_class (id,class) values (13,'CC');
 INSERT INTO contact_class (id,class) values (14,'BCC');
+INSERT INTO contact_class (id,class) values (15,'Billing Email');
+INSERT INTO contact_class (id,class) values (16,'Billing CC');
+INSERT INTO contact_class (id,class) values (17,'Billing BCC');
 
-SELECT SETVAL('contact_class_id_seq',12);
+SELECT SETVAL('contact_class_id_seq',17);
 
 CREATE TABLE person_to_contact (
   person_id integer not null references person(id) ON DELETE CASCADE,

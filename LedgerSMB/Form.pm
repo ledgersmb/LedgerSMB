@@ -2288,7 +2288,7 @@ sub all_years {
 }
 
 =item $form->create_links( { module => $module,
-    myconfig => $myconfig, vc => $vc, [, job => $job ] });
+    myconfig => $myconfig, vc => $vc, billing => $billing [, job => $job ] });
 
 Populates the hash referred to as $form->{${module}_links} details about
 accounts that have $module in their link field.  The hash is keyed upon link
@@ -2315,6 +2315,10 @@ The closedto, separate_duties, revtrans, and currencies $form attributes are fil
 from the defaults table, while $form->{current_date} is populated with the
 current date.  If $form->{id} is not set, then $form->{transdate} also takes on
 the current date.
+
+When $billing is provided and true, the email addresses are selected
+from the billing contact classes, when available, falling back to the
+normal email classes when not.
 
 After all this, it calls $form->all_vc to conclude.
 
@@ -2441,14 +2445,32 @@ sub create_links {
         for (qw(printed emailed queued)) { $self->{$_} =~ s/ +$//g }
 
 	# get customer e-mail accounts
-	$query = qq|SELECT * FROM eca__list_contacts(?);|;
+	$query = qq|SELECT * FROM eca__list_contacts(?)
+                      WHERE class_id BETWEEN 12 AND ?
+                      ORDER BY class_id DESC;|;
+	my %id_map = ( 12 => 'email',
+		       13 => 'cc',
+		       14 => 'bcc',
+		       15 => 'email',
+		       16 => 'cc',
+		       17 => 'bcc' );
 	$sth = $dbh->prepare($query);
-	$sth->execute( $self->{entity_id} ) || $self->dberror( $query );
+	$sth->execute( $self->{entity_id},
+	               $billing ? 17 : 14) || $self->dberror( $query );
 
 	my $ctype;
+	my $billing_email = 0;
 	while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-	    $ctype = lc $ref->{class};
-	    $self->{$ctype} .= "$ref->{contact} ";
+	    $ctype = $ref->{class_id};
+	    $ctype = $id_map{$ctype};
+	    $billing_email = 1
+		if $ref->{class_id} == 15;
+
+	    # If there's an explicit billing email, don't use
+	    # the standard email addresses; otherwise fall back to standard
+	    $self->{$ctype} .= "$ref->{contact} "
+		if (($ref->{class_id} < 15 && ! $billing_email)
+		    || $ref->{class_id} >= 15);
 	}
 	$sth->finish;
 

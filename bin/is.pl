@@ -97,6 +97,7 @@ sub invoice_links {
     $form->create_links( module => "AR",
 			 myconfig => \%myconfig,
 			 vc => "customer",
+			 billing => 1,
 			 job => 1 );
 
     # currencies

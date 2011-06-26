@@ -92,6 +92,7 @@ sub invoice_links {
     $form->create_links( module => "AP",
 			 myconfig => \%myconfig,
 			 vc => "vendor",
+			 billing => 0,
 			 job => 1 );
 
     # currencies

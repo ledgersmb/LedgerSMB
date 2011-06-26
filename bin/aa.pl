@@ -159,7 +159,9 @@ sub create_links {
 
     $form->create_links( module => $form->{ARAP},
 			 myconfig => \%myconfig,
-			 vc => $form->{vc} );
+			 vc => $form->{vc},
+			 billing => $form->{vc} eq 'customer'
+			            && $form->{type} eq 'invoice');
 
     $duedate     = $form->{duedate};
     $taxincluded = $form->{taxincluded};
@@ -1398,7 +1400,8 @@ sub search {
 
     $form->create_links( module => $form->{ARAP},
 			 myconfig => \%myconfig,
-			 vc => $form->{vc} );
+			 vc => $form->{vc},
+			 billing => 0);
 
     $form->{"select$form->{ARAP}"} = "<option>\n";
     for ( @{ $form->{"$form->{ARAP}_links"}{ $form->{ARAP} } } ) {
