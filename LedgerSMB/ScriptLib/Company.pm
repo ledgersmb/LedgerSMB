@@ -176,7 +176,6 @@ sub get {
     
     my ($request) = @_;
     my $company = new_company($request);
-    set_entity_class($company);
     $company->get();
     $company->get_credit_id();
 #    $company->get_metadata(); It will be called from _render_main_screen
@@ -688,6 +687,7 @@ sub _render_main_screen{
     $company->open_form;
     $company->{dbh}->commit;
     $company->get_metadata();
+    set_entity_class($company);
 
     $company->{creditlimit} = $company->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
