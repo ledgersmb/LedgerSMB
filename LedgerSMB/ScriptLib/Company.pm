@@ -607,7 +607,7 @@ This inserts or updates a credit account of the sort listed here.
 sub save_credit {
     
     my ($request) = @_;
-    if (!$request->{ar_ap_accno_id}){
+    if (!$request->{ar_ap_account_id}){
           $request->error(
               $request->{_locale}->text('No AR or AP Account Selected')
           );
