@@ -656,6 +656,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	} ?>
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
+		name = "old_location_class"
+		value = location_class
+	} ?>
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
 		name = "target_div"
 		value = 'location_div'
 	} ?>
@@ -703,7 +708,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			entity_id ?>&location_id=<?lsmb loc.id 
 			?>&credit_id=<?lsmb credit_id 
                         ?>&form_id=<?lsmb form_id
-                        ?>&location_class_id=<?lsmb loc.class_id 
+                        ?>&location_class=<?lsmb loc.class_id 
                         ?>&target_div=location_div">[delete]</a>
 	</td>
     </tr>
