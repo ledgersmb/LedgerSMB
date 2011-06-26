@@ -115,7 +115,7 @@ Must include company_id or credit_id (credit_id used if both are provided) plus:
 sub delete_contact {
     my ($request) = @_;
     my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    if (_close_form($company)){
+    if (_close_form($employee)){
         $employee->delete_contact();
     }
     $employee->get;
@@ -201,6 +201,16 @@ sub delete_bank_acct{
     _render_main_screen( $employee);
 }
 
+# Private method.  Sets notice if form could not be closed.
+sub _close_form {
+    my ($employee) = @_;
+    if (!$employee->close_form()){
+        $employee->{notice} = 
+               $employee->{_locale}->text('Changes not saved.  Please try again.');
+        return 0;
+    }
+    return 1;
+}
 =pod
 
 =over
@@ -361,6 +371,9 @@ sub edit{
 sub _render_main_screen{
     my $employee = shift @_;
     $employee->get_metadata();
+    $employee->close_form;
+    $employee->open_form;
+    $employee->{dbh}->commit;
     $employee->{entity_class} = 3;
     $employee->{creditlimit} = "$employee->{creditlimit}"; 
     $employee->{discount} = "$employee->{discount}"; 
