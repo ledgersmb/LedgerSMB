@@ -122,6 +122,10 @@ CREATE TABLE pricegroup (
   pricegroup text
 );
 
+
+COMMENT ON TABLE pricegroup IS
+$$ Pricegroups are groups of customers who are assigned prices and discounts
+together.$$;
 -- country and tax form
 
 CREATE TABLE country (
@@ -129,7 +133,7 @@ CREATE TABLE country (
   name text check (name ~ '[[:alnum:]_]') NOT NULL,
   short_name text check (short_name ~ '[[:alnum:]_]') NOT NULL,
   itu text);
-  
+
 COMMENT ON COLUMN country.itu IS $$ The ITU Telecommunication Standardization Sector code for calling internationally. For example, the US is 1, Great Britain is 44 $$;
 
 CREATE UNIQUE INDEX country_name_idx on country(lower(name));
@@ -396,6 +400,10 @@ create table country_tax_form (                                                 
    primary key(country_id, form_name)
 );
 
+COMMENT ON TABLE country_tax_form IS 
+$$ This table was designed for holding information relating to reportable
+sales or purchases, such as IRS 1099 forms and international equivalents.$$;
+
 -- BEGIN new entity management
 CREATE TABLE entity_class (
   id serial primary key,
@@ -404,7 +412,9 @@ CREATE TABLE entity_class (
   active boolean not null default TRUE);
   
 COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
-COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and permanent $$;  
+COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and 
+permanent.  Individuals who create new classes, however, should coordinate 
+with others for ranges to use.$$;  
 
 CREATE index entity_class_idx ON entity_class(lower(class));
 
@@ -448,7 +458,8 @@ CREATE TABLE users (
     entity_id int not null references entity(id) on delete cascade
 );
 
-COMMENT ON TABLE users IS $$username is the actual primary key here because we do not want duplicate users$$;
+COMMENT ON TABLE users IS $$username is the actual primary key here because we 
+do not want duplicate users$$;
 
 -- Session tracking table
 
@@ -463,11 +474,20 @@ transaction_id INTEGER NOT NULL,
 notify_pasword interval not null default '7 days'::interval
 );
 
+COMMENT ON TABLE session IS
+$$ This table is used to track sessions on a database level across page 
+requests.  Because of the way LedgerSMB authentication works currently we do 
+not time out authentication when the session times out.  We do time out 
+highly pessimistic locks used for large batch payment workflows.$$;
+
 CREATE TABLE open_forms (
 id SERIAL PRIMARY KEY,
 session_id int REFERENCES session(session_id) ON DELETE CASCADE
 );
 
+COMMENT ON TABLE open_forms IS
+$$ This is our primary anti-xsrf measure, as this allows us to require a full
+round trip to the web server in order to save data.$$;
 --
 CREATE TABLE transactions (
   id int PRIMARY KEY,
@@ -480,12 +500,13 @@ CREATE TABLE transactions (
 CREATE INDEX transactions_locked_by_i ON transactions(locked_by);
 
 COMMENT on TABLE transactions IS 
-$$ This table tracks basic transactions across AR, AP, and GL related tables.  
-It provies a referential integrity enforcement mechanism for the financial data
-and also some common features such as discretionary (and pessimistic) locking 
-for long batch workflows. $$;
+$$ This table provides referential integrity between AR, AP, GL tables on one
+hand and acc_trans on the other, pending the refactoring of those tables.  It
+also is used to provide discretionary locking of financial transactions across 
+database connections, for example in batch payment workflows.$$;
 
-CREATE OR REPLACE FUNCTION lock_record (int, int) returns bool as 
+CREATE OR REPLACE FUNCTION lock_record (in_id int, in_session_id int) 
+returns bool as 
 $$
 declare
    locked int;
@@ -500,6 +521,13 @@ begin
    RETURN TRUE;
 end;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION lock_record(int, int) is $$
+This function seeks to lock a record with an id of in_id to a session with an
+id of in_session_id.  If possible, it returns true.  If it is already locked,
+false.  These are not hard locks and the application is free to disregard or 
+not even ask.  They time out when the session is destroyed.
+$$;
 
 COMMENT ON column transactions.locked_by IS
 $$ This should only be used in pessimistic locking measures as required by large
