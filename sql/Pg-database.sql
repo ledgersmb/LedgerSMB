@@ -540,7 +540,11 @@ CREATE TABLE location_class (
   class text check (class ~ '[[:alnum:]_]') not null,
   authoritative boolean not null,
   PRIMARY KEY (class,authoritative));
-  
+
+COMMENT ON TABLE location_class is $$
+Individuals seeking to add new location classes should coordinate with others.
+$$;
+
 CREATE UNIQUE INDEX lower_class_unique ON location_class(lower(class));
 
 INSERT INTO location_class(id,class,authoritative) VALUES ('1','Billing',TRUE);
@@ -562,6 +566,10 @@ CREATE TABLE location (
   inactive_date timestamp default null,
   active boolean not null default TRUE
 );
+
+COMMENT ON TABLE location IS $$
+This table stores addresses, such as shipto and bill to addresses.
+$$;
   
 CREATE TABLE company (
   id serial UNIQUE,
@@ -623,6 +631,9 @@ create table entity_employee (
     PRIMARY KEY (entity_id)
 );
 
+COMMENT ON TABLE entity_employee IS 
+$$ This contains employee-specific extensions to person/entity. $$;
+
 CREATE TABLE person_to_location (
   location_id integer not null references location(id),
   location_class integer not null references location_class(id),
@@ -634,6 +645,10 @@ CREATE TABLE person_to_company (
   person_id integer not null references person(id) ON DELETE CASCADE,
   company_id integer not null references company(id) ON DELETE CASCADE,
   PRIMARY KEY (location_id,person_id)); 
+
+COMMENT ON TABLE person_to_company IS
+$$ currently unused in the front-end, but can be used to map persons
+to companies.$$;
 
 CREATE TABLE entity_other_name (
  entity_id integer not null references entity(id) ON DELETE CASCADE,
