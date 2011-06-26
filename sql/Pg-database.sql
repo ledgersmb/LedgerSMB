@@ -9,11 +9,21 @@ $$
 select CASE WHEN $1 IS NULL THEN $2 ELSE $1 || ':' || $2 END;
 $$ language sql;
 
+COMMENT ON FUNCTION concat_colon(TEXT, TEXT) IS $$
+This function takes two arguments and creates a list out  of them.  It's useful 
+as an aggregate base (see aggregate concat_colon).  However this is a temporary
+function only and should not be relied upon.$$; --'
+
 CREATE AGGREGATE concat_colon (
 	BASETYPE = text,
 	STYPE = text,
 	SFUNC = concat_colon
 );
+
+COMMENT ON AGGREGATE concat_colon(text) IS 
+$$ This is a sumple aggregate to return values from the database in a 
+colon-separated list.  Other programs probably should not rely on this since 
+it is primarily included for the chart view.$$;
 
 CREATE TABLE account_heading (
   id serial not null unique,
@@ -21,6 +31,11 @@ CREATE TABLE account_heading (
   parent_id int references account_heading(id),
   description text
 );
+
+COMMENT ON TABLE account_heading IS $$
+This table holds the account headings in the system.  Each account must belong 
+to a heading, and a heading can belong to another heading.  In this way it is 
+possible to nest accounts for reporting purposes.$$;
 
 CREATE TABLE account (
   id serial not null unique,
@@ -33,6 +48,9 @@ CREATE TABLE account (
   tax bool not null default false
 );
 
+COMMENT ON TABLE  account IS
+$$ This table stores the main account info.$$;
+
 CREATE TABLE account_checkpoint (
   end_date date not null, 
   account_id int not null references account(id), 
@@ -43,11 +61,23 @@ CREATE TABLE account_checkpoint (
   primary key (end_date, account_id)
 );
 
+COMMENT ON TABLE account_checkpoint IS
+$$ This table holds account balances at various dates.  Transactions MUST NOT
+be posted prior to the latest end_date in this table, and no unapproved 
+transactions (vouchers or drafts) can remain in the closed period.$$;
+
 CREATE TABLE account_link_description (
     description text    primary key,
     summary     boolean not null,
     custom      boolean not null   
 );
+
+COMMENT ON TABLE account_link_description IS 
+$$ This is a lookup table which provide basic information as to categories and
+dropdowns of accounts.  In general summary accounts cannot belong to more than 
+one category (an AR summary account cannot appear in other dropdowns for 
+example).  Custom fields are not overwritten when the account is edited from
+the front-end.$$;
 
 INSERT INTO account_link_description (description, summary, custom) 
 VALUES 
@@ -85,6 +115,7 @@ CREATE VIEW chart AS
 SELECT id, accno, description, 'H' as charttype, NULL as category, NULL as link, NULL as account_heading, null as gifi_accno, false as contra, false as tax from account_heading UNION
 select c.id, c.accno, c.description, 'A' as charttype, c.category, concat_colon(l.description) as link, heading, gifi_accno, contra, tax from account c left join account_link l ON (c.id = l.account_id) group by c.id, c.accno, c.description, c.category, c.heading, c.gifi_accno, c.contra, c.tax;
 
+COMMENT ON VIEW chart IS $$Compatibility chart for 1.2 and earlier.$$;
 -- pricegroup added here due to references
 CREATE TABLE pricegroup (
   id serial PRIMARY KEY,
