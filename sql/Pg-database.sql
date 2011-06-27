@@ -901,16 +901,33 @@ CREATE TABLE gl (
   approved bool default true,
   department_id int default 0
 );
+
+COMMENT ON TABLE gl IS
+$$ This table holds summary information for entries in the general journal.
+Does not hold summary information in 1.3 for AR or AP entries.$$;
+
+COMMENT ON COLUMN gl.person_id is $$ the person_id of the employee who created
+the entry.$$;
 --
 CREATE TABLE gifi (
   accno text PRIMARY KEY,
   description text
 );
+
+COMMENT ON TABLE gifi IS 
+$$ GIFI labels for accounts, used in Canada and some EU countries for tax 
+reporting$$;
 --
 CREATE TABLE defaults (
   setting_key text primary key,
   value text
 );
+
+COMMENT ON TABLE defaults IS 
+$$  This is a free-form table for managing application settings per company
+database.  We use key-value modelling here because this most accurately maps 
+the actual semantics of the data.
+$$ ;
 
 \COPY defaults FROM stdin WITH DELIMITER '|'
 timeout|90 minutes
@@ -942,11 +959,6 @@ batch_cc|B-11111
 check_prefix|CK
 \.
 
-COMMENT ON TABLE defaults IS $$
-Note that poll_frequency is in seconds.  poll_frequency and queue_payments 
-are not exposed via the admin interface as they are advanced features best
-handled via DBAs.  Also, separate_duties is not yet included in the admin 
-interface.$$;
 -- */
 -- batch stuff
 
@@ -954,6 +966,10 @@ CREATE TABLE batch_class (
   id serial unique,
   class varchar primary key
 );
+
+COMMENT ON TABLE batch_class IS 
+$$ These values are hard-coded.  Please coordinate before adding standard
+values.$$;
 
 insert into batch_class (id,class) values (1,'ap');
 insert into batch_class (id,class) values (2,'ar');
@@ -978,6 +994,10 @@ CREATE TABLE batch (
   CHECK (length(control_code) > 0)
 );
 
+COMMENT ON TABLE batch IS
+$$ Stores batch header info.  Batches are groups of vouchers that are posted
+together.$$;
+
 COMMENT ON COLUMN batch.batch_class_id IS
 $$ Note that this field is largely used for sorting the vouchers.  A given batch is NOT restricted to this type.$$;
 
@@ -990,6 +1010,9 @@ CREATE TABLE voucher (
   id serial PRIMARY KEY,
   batch_class int references batch_class(id) not null
 );
+
+COMMENT ON TABLE voucher IS 
+$$Mapping transactions to batches for batch approval.$$;
 
 COMMENT ON COLUMN voucher.batch_class IS $$ This is the authoritative class of the 
 voucher. $$;
