@@ -1037,6 +1037,14 @@ CREATE TABLE acc_trans (
   entry_id SERIAL PRIMARY KEY
 );
 
+COMMENT ON TABLE acc_trans IS
+$$This table stores line items for financial transactions.  Please note that
+payments in 1.3 are not full-fledged transactions.$$;
+
+COMMENT ON COLUMN acc_trans.source IS
+$$Document Source identifier for individual line items, usually used 
+for payments.$$;
+
 CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
 --
 CREATE TABLE invoice (
@@ -1057,6 +1065,17 @@ CREATE TABLE invoice (
   serialnumber text,
   notes text
 );
+
+COMMENT ON TABLE invoice IS
+$$Line items of invoices with goods/services attached.$$;
+
+COMMENT ON COLUMN invoice.allocated IS
+$$Number of allocated items, negative relative to qty.
+When qty + allocated = 0, then the item is fully used for purposes of COGS 
+calculations.$$;
+
+COMMENT ON COLUMN invoice.qty IS
+$$Positive is normal for sales invoices, negative for vendor invoices.$$;
 
 -- Added for Entity but can't be added due to order
 ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
@@ -1080,32 +1099,6 @@ VALUES
 (0, '00000', 2);
 
 
--- notes are from entity_note
--- ssn, iban and bic are from entity_credit_account
--- 
-CREATE VIEW employee AS
- SELECT s.salutation, p.first_name, p.last_name, ee.entity_id, ee.startdate, ee.enddate, ee."role", ee.ssn, ee.sales, ee.manager_id, ee.employeenumber, ee.dob
-   FROM person p
-   JOIN entity_employee ee USING (entity_id)
-   LEFT JOIN salutation s ON p.salutation_id = s.id;
-
-
-COMMENT ON TABLE entity_credit_account IS $$ This is a metadata table for ALL entities in LSMB; it deprecates the use of customer and vendor specific tables (which were nearly identical and largely redundant), and replaces it with a single point of metadata. $$;
-
-COMMENT ON COLUMN entity_credit_account.entity_id IS $$ This is the relationship between entities and their metadata. $$;
-COMMENT ON COLUMN entity_credit_account.entity_class IS $$ A reference to entity_class, requiring that entity_credit_account only apply to vendors and customers, using the entity_class table as the Point Of Truth. $$;
-
-ALTER TABLE company ADD COLUMN sic_code varchar;
-
---
---
-
-
-
-
-
--- COMMENT ON TABLE employee IS $$ Is a metadata table specific to employee $$;
-
 CREATE TABLE parts (
   id serial PRIMARY KEY,
   partnumber text,
@@ -1121,7 +1114,7 @@ CREATE TABLE parts (
   makemodel bool DEFAULT 'f',
   assembly bool DEFAULT 'f',
   alternate bool DEFAULT 'f',
-  rop numeric, -- SC: ReOrder Point
+  rop numeric, 
   inventory_accno_id int,
   income_accno_id int,
   expense_accno_id int,
@@ -1136,17 +1129,50 @@ CREATE TABLE parts (
   avgcost NUMERIC
 );
 
+COMMENT ON TABLE parts IS
+$$This stores detail information about goods and services.  The type of part
+is currently defined according to the following rules:
+* If assembly is true, then an assembly
+* If inventory_accno_id, income_accno_id, and expense_accno_id are not null then
+  a part.
+* If inventory_accno_id is null but the other two are not, then a service.
+* Otherwise, a labor/overhead entry.
+$$;
+
+COMMENT ON COLUMN parts.rop IS
+$$Re-order point.  Used to select parts for short inventory report.$$;
+
+COMMENT ON COLUMN parts.bin IS
+$$Text identifier for where a part is stored.$$;
+
+COMMENT ON COLUMN parts.bom is
+$$Show on Bill of Materials.$$;
+
+COMMENT ON COLUMN parts.image IS
+$$Hyperlink to product image.$$;
+	
 CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber) 
 WHERE obsolete is false;
 --
 CREATE TABLE assembly (
-  id int,
-  parts_id int,
+  id int REFERENCES parts(id),
+  parts_id int REFERENCES parts(id),
   qty numeric,
   bom bool,
   adj bool,
   PRIMARY KEY (id, parts_id)
 );
+
+COMMENT ON TABLE assembly IS
+$$Holds mapping for parts that are members of assemblies.$$;
+
+COMMENT ON COLUMN assembly.id IS
+$$This is the id of the assembly the part is being mapped to.$$;
+
+COMMENT ON COLUMN assembly.parts_id IS
+$$ID of part that is a member of the assembly.$$;
+
+
 --
 CREATE TABLE ar (
   id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
@@ -1183,7 +1209,53 @@ CREATE TABLE ar (
   unique(invnumber) -- probably a good idea as per Erik's request --CT
 );
 
-COMMENT ON COLUMN ar.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
+COMMENT ON TABLE ar IS
+$$ Summary/header information for AR transactions and sales invoices.
+Note that some constraints here are hard to enforce because we haven not gotten 
+to rewriting the relevant code here.$$;
+
+COMMENT ON COLUMN ar.invnumber IS
+$$ Text identifier for the invoice.  Must be unique.$$;
+
+COMMENT ON COLUMN ar.invoice IS
+$$ True if the transaction tracks goods/services purchase using the invoice
+table.  False otherwise.$$;
+
+COMMENT ON COLUMN ar.amount IS
+$$ This stores the total amount (including taxes) for the transaction.$$;
+
+COMMENT ON COLUMN ar.netamount IS
+$$ Total amount excluding taxes for the transaction.$$;
+
+COMMENT ON COLUMN ar.curr IS $$ 3 letters to identify the currency.$$;
+
+COMMENT ON COLUMN ar.ordnumber IS $$ Order Number$$;
+
+COMMENT ON COLUMN ar.ponumber is $$Purchase Order Number$$; 
+
+COMMENT ON COLUMN ar.person_id IS $$Person who created the transaction$$;
+
+COMMENT ON COLUMN ar.quonumber IS $$Quotation Number$$;
+
+COMMENT ON COLUMN ar.notes IS 
+$$These notes are displayed on the invoice when printed or emailed$$;
+
+COMMENT ON COLUMN ar.intnotes IS
+$$These notes are not displayed when the invoice is printed or emailed and
+may be updated without reposting hte invocie.$$;
+
+COMMENT ON COLUMN ar.reverse IS
+$$If true numbers are displayed after multiplying by -1$$;
+
+COMMENT ON COLUMN ar.approved IS
+$$Only show in financial reports if true.$$;
+
+COMMENT ON COLUMN ar.entity_credit_account IS
+$$ reference for the customer account used.$$;
+
+COMMENT ON COLUMN ar.force_closed IS
+$$ Not exposed to the UI, but can be set to prevent an invoice from showing up
+for payment or in outstanding reports.$$;
 
 --
 CREATE TABLE ap (
@@ -1220,7 +1292,54 @@ CREATE TABLE ap (
   entity_credit_account int references entity_credit_account(id) NOT NULL
 );
 
-COMMENT ON COLUMN ap.entity_id IS $$ Used to be customer_id, but customer is now metadata. You need to push to entity $$;
+COMMENT ON TABLE ap IS
+$$ Summary/header information for AP transactions and vendor invoices.
+Note that some constraints here are hard to enforce because we haven not gotten 
+to rewriting the relevant code here.$$;
+
+COMMENT ON COLUMN ap.invnumber IS
+$$ Text identifier for the invoice.  Must be unique.$$;
+
+COMMENT ON COLUMN ap.invoice IS
+$$ True if the transaction tracks goods/services purchase using the invoice
+table.  False otherwise.$$;
+
+COMMENT ON COLUMN ap.amount IS
+$$ This stores the total amount (including taxes) for the transaction.$$;
+
+COMMENT ON COLUMN ap.netamount IS
+$$ Total amount excluding taxes for the transaction.$$;
+
+COMMENT ON COLUMN ap.curr IS $$ 3 letters to identify the currency.$$;
+
+COMMENT ON COLUMN ap.ordnumber IS $$ Order Number$$;
+
+COMMENT ON COLUMN ap.ponumber is $$Purchase Order Number$$; 
+
+COMMENT ON COLUMN ap.person_id IS $$Person who created the transaction$$;
+
+COMMENT ON COLUMN ap.quonumber IS $$Quotation Number$$;
+
+COMMENT ON COLUMN ap.notes IS 
+$$These notes are displayed on the invoice when printed or emailed$$;
+
+COMMENT ON COLUMN ap.intnotes IS
+$$These notes are not displayed when the invoice is printed or emailed and
+may be updated without reposting hte invocie.$$;
+
+COMMENT ON COLUMN ap.reverse IS
+$$If true numbers are displayed after multiplying by -1$$;
+
+COMMENT ON COLUMN ap.approved IS
+$$Only show in financial reports if true.$$;
+
+COMMENT ON COLUMN ap.entity_credit_account IS
+$$ reference for the vendor account used.$$;
+
+COMMENT ON COLUMN ap.force_closed IS
+$$ Not exposed to the UI, but can be set to prevent an invoice from showing up
+for payment or in outstanding reports.$$;
+
 --
 CREATE TABLE taxmodule (
   taxmodule_id serial PRIMARY KEY,
