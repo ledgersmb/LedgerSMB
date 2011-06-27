@@ -886,6 +886,10 @@ CREATE TABLE makemodel (
   make text,
   model text
 );
+
+COMMENT ON TABLE makemodel IS
+$$ A single parts entry can have multiple make/model entries.  These
+store manufacturer/model number info.$$;
 --
 CREATE TABLE gl (
   id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),

@@ -2057,7 +2057,7 @@ sub all_employees {
     my $query = qq|
 		SELECT id, name
 		FROM entity
-		WHERE id IN (SELECT entity_id FROM employee
+		WHERE id IN (SELECT entity_id FROM entity_employee
 					WHERE|;
 
     if ($transdate) {
@@ -2594,13 +2594,14 @@ sub lastname_used {
     }
     $where = "AND $where " if $where;
     my $inv_notes;
-    $inv_notes = "ct.invoice_notes," if $vc eq 'customer';
+    # $inv_notes = "ct.invoice_notes," if $vc eq 'customer'; 
+    # $inv_notes apparently not implemented at present.  --CT
     my $query = qq|
 		SELECT entity.name, ct.curr AS currency, entity_id AS ${vc}_id,
 			current_date + ct.terms AS duedate, 
 			$inv_notes 
 			ct.curr AS currency
-		FROM $vc ct
+		FROM entity_credit_account ct
 		JOIN entity ON (ct.entity_id = entity.id)
 		WHERE entity.id = (select entity_id from $arap 
 		                    where entity_id IS NOT NULL $where 
