@@ -3106,12 +3106,29 @@ SELECT CASE WHEN $2[1] IS NULL OR $2[2] IS NULL THEN $1
        END;
 $$ language sql;
 
+COMMENT ON FUNCTION to_args(text[], text[]) IS
+$$
+This function takes two arguments.  The first is a one-dimensional array 
+representing the  base state of the argument array.  The second is a two 
+element array of {key, value}.
+
+If either of the args is null, it returns the first argument.  Otherwise it 
+returns the first initial array, concatenated with key || '=' || value.
+
+It primarily exists for the to_args aggregate.
+$$;
+
 CREATE AGGREGATE to_args (
      basetype = text[],
      sfunc = to_args,
      stype = text[],
      INITCOND = '{}'
 );
+
+COMMENT ON AGGREGATE to_args(text[]) IS
+$$ Turns a setof ARRAY[key,value] into an 
+ARRAY[key||'='||value, key||'='||value,...]
+$$;
 
 CREATE TYPE menu_item AS (
    position int,
@@ -3182,6 +3199,12 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION menu_generate() IS
+$$
+This function returns the complete menu tree.  It is used to generate nested
+menus for the web interface.
+$$;
+
 CREATE OR REPLACE FUNCTION menu_children(in_parent_id int) RETURNS SETOF menu_item
 AS $$
 declare 
@@ -3240,7 +3263,13 @@ begin
 end;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION menu_children(int) IS $$ This function returns all menu items which are children of in_parent_id (the only input parameter. $$;
+COMMENT ON FUNCTION menu_children(int) IS 
+$$ This function returns all menu  items which are children of in_parent_id 
+(the only input parameter). 
+
+It is thus similar to menu_generate() but it only returns the menu items 
+associated with nodes directly descendant from the parent.  It is used for
+menues for frameless browsers.$$;
 
 CREATE OR REPLACE FUNCTION 
 menu_insert(in_parent_id int, in_position int, in_label text)
@@ -3275,7 +3304,18 @@ item created. $$;
 
 
 CREATE VIEW menu_friendly AS
-    SELECT t."level", t.path, t.list_order, (repeat(' '::text, (2 * t."level")) || (n.label)::text) AS label, n.id, n."position" FROM (connectby('menu_node'::text, 'id'::text, 'parent'::text, 'position'::text, '0'::text, 0, ','::text) t(id integer, parent integer, "level" integer, path text, list_order integer) JOIN menu_node n USING (id));
+SELECT t."level", t.path, t.list_order, 
+       (repeat(' '::text, (2 * t."level")) || (n.label)::text) AS label, 
+        n.id, n."position" 
+  FROM (connectby('menu_node'::text, 'id'::text, 'parent'::text, 
+                  'position'::text, '0'::text, 0, ','::text
+        ) t(id integer, parent integer, "level" integer, path text, 
+        list_order integer) 
+   JOIN menu_node n USING (id));
+
+COMMENT ON VIEW menu_friendly IS
+$$ A nice human-readable view for investigating the menu tree.  Does not
+show menu attributes or acls.$$;
 
 
 --ALTER TABLE public.menu_friendly OWNER TO ledgersmb;
@@ -3291,12 +3331,24 @@ CREATE AGGREGATE as_array (
 	INITCOND = '{}'
 );
 
+COMMENT ON AGGREGATE as_array(ANYELEMENT) IS
+$$ A basic array aggregate to take elements and return a one-dimensional array.
+
+Example:  SELECT as_array(id) from entity_class;
+$$;
+
 CREATE AGGREGATE compound_array (
 	BASETYPE = ANYARRAY,
 	STYPE = ANYARRAY,
 	SFUNC = ARRAY_CAT,
 	INITCOND = '{}'
 );
+
+COMMENT ON AGGREGATE compound_array(ANYARRAY) is
+$$ Returns an n dimensional array.
+
+Example: SELECT as_array(ARRAY[id::text, class]) from contact_class
+$$;
 
 CREATE INDEX company_name_gist__idx ON company USING gist(legal_name gist_trgm_ops);
 CREATE INDEX location_address_one_gist__idx ON location USING gist(line_one gist_trgm_ops);
@@ -3370,5 +3422,8 @@ CREATE TABLE new_shipto (
 	oe_id int references oe(id),
 	location_id int references location(id)
 );
+
+COMMENT ON TABLE new_shipto IS
+$$ Tracks ship_to information for orders and invoices.$$;
 
 commit;
