@@ -1345,6 +1345,10 @@ CREATE TABLE taxmodule (
   taxmodule_id serial PRIMARY KEY,
   taxmodulename text NOT NULL
 );
+
+COMMENT ON TABLE taxmodule IS
+$$This is used to store information on tax modules.  the module name is used
+to determine the Perl class for the taxes.$$;
 --
 CREATE TABLE taxcategory (
   taxcategory_id serial PRIMARY KEY,
@@ -1362,6 +1366,8 @@ CREATE TABLE partstax (
   FOREIGN KEY (chart_id) REFERENCES  account(id),
   FOREIGN KEY (taxcategory_id) REFERENCES taxcategory (taxcategory_id)
 );
+
+COMMENT ON TABLE partstax IS $$ Mapping of parts to taxes.$$;
 --
 CREATE TABLE tax (
   chart_id int,
@@ -1374,12 +1380,22 @@ CREATE TABLE tax (
   FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id),
   PRIMARY KEY (chart_id, validto)
 );
+
+COMMENT ON TABLE tax IS
+$$Information on tax rates.$$;
+
+COMMENT ON COLUMN tax.pass IS
+$$This is an integer indicating the pass of the tax. This is to support 
+cumultative sales tax rules (for example, Quebec charging taxes on the federal
+taxes collected).$$;
 --
 CREATE TABLE customertax (
   customer_id int references entity_credit_account(id) on delete cascade,
   chart_id int REFERENCES account(id),
   PRIMARY KEY (customer_id, chart_id)
 );
+
+COMMENT ON TABLE customertax IS $$ Mapping customer to taxes.$$;
 --
 CREATE TABLE vendortax (
   vendor_id int references entity_credit_account(id) on delete cascade,
@@ -1387,6 +1403,7 @@ CREATE TABLE vendortax (
   PRIMARY KEY (vendor_id, chart_id)
 );
 --
+COMMENT ON TABLE vendortax IS $$ Mapping vendor to taxes.$$;
 
 CREATE TABLE oe_class (
   id smallint unique check(id IN (1,2,3,4)),
@@ -1397,8 +1414,15 @@ INSERT INTO oe_class(id,oe_class) values (2,'Purchase Order');
 INSERT INTO oe_class(id,oe_class) values (3,'Quotation');
 INSERT INTO oe_class(id,oe_class) values (4,'RFQ');
 
-COMMENT ON TABLE oe_class IS $$ This could probably be done better. But I need to remove the customer_id/vendor_id relationship and instead rely on a classification $$;
+-- Moving this comment to SQL comments because it is about this code rather than
+-- the database structure as API. --CT
+-- This could probably be done better. But I need to remove the 
+-- customer_id/vendor_id relationship and instead rely on a classification;
+-- JD
 
+COMMENT ON TABLE oe_class IS 
+$$ Hardwired classifications for orders and quotations. 
+Coordinate before adding.$$;
 
 CREATE TABLE oe (
   id serial PRIMARY KEY,
@@ -1426,8 +1450,12 @@ CREATE TABLE oe (
   oe_class_id int references oe_class(id) NOT NULL
 );
 
-
-
+COMMENT ON TABLE oe IS $$ Header information for:
+* Sales orders
+* Purchase Orders
+* Quotations
+* Requests for Quotation
+$$;
 --
 CREATE TABLE orderitems (
   id serial PRIMARY KEY,
@@ -1445,6 +1473,9 @@ CREATE TABLE orderitems (
   serialnumber text,
   notes text
 );
+
+COMMENT ON TABLE orderitems IS
+$$ Line items for sales/purchase orders and quotations.$$;
 --
 CREATE TABLE exchangerate (
   curr char(3),
@@ -1465,11 +1496,16 @@ CREATE TABLE project (
   completed numeric default 0,
   credit_id int references entity_credit_account(id)
 );
+
+COMMENT ON COLUMN project.parts_id IS
+$$ Job costing/manufacturing here not implemented.$$;
 --
 CREATE TABLE partsgroup (
   id serial PRIMARY KEY,
   partsgroup text
 );
+
+COMMENT ON TABLE partsgroup is $$ Groups of parts for Point of Sale screen.$$;
 --
 CREATE TABLE status (
   trans_id int,
@@ -1479,18 +1515,26 @@ CREATE TABLE status (
   spoolfile text,
   PRIMARY KEY (trans_id, formname)
 );
+
+COMMENT ON TABLE status IS
+$$ Whether AR/AP transactions and invoices have been emailed and/or printed $$;
+
 --
 CREATE TABLE department (
   id serial PRIMARY KEY,
   description text,
   role char(1) default 'P'
 );
+
+COMMENT ON COLUMN department.role IS $$P for Profit Center, C for Cost Center$$;
 --
 -- department transaction table
 CREATE TABLE dpt_trans (
   trans_id int PRIMARY KEY,
   department_id int
 );
+
+COMMENT ON TABLE dpt_trans IS $$Department to Transaction Map$$;
 --
 -- business table
 CREATE TABLE business (
@@ -1498,6 +1542,8 @@ CREATE TABLE business (
   description text,
   discount numeric
 );
+
+COMMENT ON TABLE business IS $$Groups of Customers assigned joint discounts.$$;
 --
 -- SIC
 CREATE TABLE sic (
@@ -1505,6 +1551,11 @@ CREATE TABLE sic (
   sictype char(1),
   description text
 );
+
+COMMENT ON TABLE sic IS $$
+This can be used SIC codes or any equivalent, such as ISIC, NAICS, etc.
+$$;
+
 --
 CREATE TABLE warehouse (
   id serial PRIMARY KEY,
@@ -1521,12 +1572,20 @@ CREATE TABLE inventory (
   shippingdate date,
   entry_id SERIAL PRIMARY KEY
 );
+
+COMMENT ON TABLE inventory IS
+$$ This table contains inventory mappings to warehouses, not general inventory
+management data.$$;
 --
 CREATE TABLE yearend (
-  trans_id int PRIMARY KEY,
+  trans_id int PRIMARY KEY REFERENCES gl(id),
   reversed bool default false,
   transdate date
 );
+
+COMMENT ON TABLE yearend IS
+$$ An extension to the gl table to track transactionsactions which close out 
+the books at yearend.$$;
 --
 CREATE TABLE partsvendor (
   credit_id int not null references entity_credit_account(id) on delete cascade,
@@ -1638,12 +1697,6 @@ CREATE TABLE jcitems (
   notes text
 );
 
-
-INSERT INTO transactions (id, table_name) SELECT id, 'ap' FROM ap;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'ar' FROM ap;
-
-INSERT INTO transactions (id, table_name) SELECT id, 'gl' FROM gl;
 
 CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
 $$
