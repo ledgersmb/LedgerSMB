@@ -2330,6 +2330,7 @@ sub create_links {
     my %args = @_;
     my $module = $args{module};
     my $myconfig = $args{myconfig};
+    my $billing = $args{billing};
     my $vc = $args{vc};
     my $job = $args{job};
 
