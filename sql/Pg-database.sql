@@ -655,7 +655,9 @@ CREATE TABLE entity_other_name (
  other_name text check (other_name ~ '[[:alnum:]_]'),
  PRIMARY KEY (other_name, entity_id));
  
-COMMENT ON TABLE entity_other_name IS $$ Similar to company_other_name, a person may be jd, Joshua Drake, linuxpoet... all are the same person. $$;
+COMMENT ON TABLE entity_other_name IS $$ Similar to company_other_name, a person
+may be jd, Joshua Drake, linuxpoet... all are the same person.  Currently
+unused in the front-end but will likely be added in future versions.$$;
 
 CREATE TABLE person_to_entity (
  person_id integer not null references person(id) ON DELETE CASCADE,
@@ -663,6 +665,9 @@ CREATE TABLE person_to_entity (
  related_how text,
  created date not null default current_date,
  PRIMARY KEY (person_id,entity_id));
+
+COMMENT ON TABLE person_to_entity IS
+$$ This provides a map so that entities can also be used like groups.$$;
  
 CREATE TABLE company_to_entity (
  company_id integer not null references company(id) ON DELETE CASCADE,
@@ -671,11 +676,18 @@ CREATE TABLE company_to_entity (
  created date not null default current_date,
  PRIMARY KEY (company_id,entity_id));
  
+COMMENT ON TABLE company_to_entity IS
+$$ This provides a map so that entities can also be used like groups.$$;
+
 CREATE TABLE contact_class (
   id serial UNIQUE,
   class text check (class ~ '[[:alnum:]_]') NOT NULL, 
   PRIMARY KEY (class));
-  
+
+COMMENT ON TABLE contact_class IS 
+$$ Stores type of contact information attached to companies and persons.
+Please coordinate with others before adding new types.$$;
+ 
 CREATE UNIQUE INDEX contact_class_class_idx ON contact_class(lower(class));
 
 INSERT INTO contact_class (id,class) values (1,'Primary Phone');
@@ -707,7 +719,8 @@ CREATE TABLE person_to_contact (
   description text,
   PRIMARY KEY (person_id,contact_class_id,contact));
   
-COMMENT ON TABLE person_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single individual $$;
+COMMENT ON TABLE person_to_contact IS 
+$$ This table stores contact information for persons$$;
   
 CREATE TABLE company_to_contact (
   company_id integer not null references company(id) ON DELETE CASCADE,
@@ -716,8 +729,9 @@ CREATE TABLE company_to_contact (
   description text,
   PRIMARY KEY (company_id, contact_class_id,  contact));  
 
-COMMENT ON TABLE company_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single company $$;
-  
+COMMENT ON TABLE person_to_contact IS 
+$$ This table stores contact information for companies$$;
+
 CREATE TABLE entity_bank_account (
     id serial not null,
     entity_id int not null references entity(id) ON DELETE CASCADE,
@@ -726,6 +740,16 @@ CREATE TABLE entity_bank_account (
     UNIQUE (id),
     PRIMARY KEY (entity_id, bic, iban)
 );
+
+COMMENT ON TABLE entity_bank_account IS 
+$$This stores bank account information for both companies and persons.$$;
+
+COMMENT ON COLUMN entity_bank_account.bic IS
+$$ Banking Institution Code, such as routing number of SWIFT code.$$;
+
+COMMENT ON COLUMN entity_bank_account.iban IS
+$$ International Bank Account Number.  used to store the actual account number
+for the banking institution.$$;
 
 CREATE TABLE entity_credit_account (
     id serial not null unique,
@@ -740,8 +764,6 @@ CREATE TABLE entity_credit_account (
     creditlimit NUMERIC default 0,
     terms int2 default 0,
     meta_number varchar(32),
-    cc text,
-    bcc text,
     business_id int,
     language_code varchar(6),
     pricegroup_id int references pricegroup(id),
@@ -758,6 +780,15 @@ CREATE TABLE entity_credit_account (
     PRIMARY KEY(entity_id, meta_number, entity_class),
     CHECK (ar_ap_account_id IS NOT NULL OR entity_id = 0)
 );
+
+COMMENT ON TABLE entity_credit_account IS
+$$This table stores informmation relating to general relationships regarding 
+moneys owed on invoice.  Invoices, whether AR or AP, must be attached to 
+a record in this table.$$;
+
+COMMENT ON COLUMN entity_credit_account.meta_number IS
+$$ This stores the human readable control code for the customer/vendor record.
+This is typically called the customer/vendor "account" in the application.$$;
 
 CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u 
 ON entity_credit_account(meta_number)
@@ -799,6 +830,9 @@ INSERT INTO note_class(id,class) VALUES (2,'Invoice');
 INSERT INTO note_class(id,class) VALUES (3,'Entity Credit Account');
 CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 
+COMMENT ON TABLE note_class IS 
+$$ Coordinate with others before adding entries. $$;
+
 CREATE TABLE note (id serial primary key, 
                    note_class integer not null references note_class(id), 
                    note text not null, 
@@ -807,6 +841,18 @@ CREATE TABLE note (id serial primary key,
                    created_by text DEFAULT SESSION_USER,
                    ref_key integer not null,
                    subject text);
+
+COMMENT ON TABLE note IS 
+$$ This is an abstract table which should have zero rows.  It is inherited by
+other tables for specific notes.$$;
+
+COMMENT ON COLUMN note.ref_key IS
+$$ Subclassed tables use this column as a foreign key against the table storing
+the record a note is attached to.$$;
+
+COMMENT ON COLUMN note.note IS $$Body of note.$$;
+COMMENT ON COLUMN note.vector IS $$tsvector for full text indexing, requires 
+both setting up tsearch dictionaries and adding triggers to use at present.$$;
 
 CREATE TABLE entity_note(entity_id int references entity(id)) INHERITS (note);
 ALTER TABLE entity_note ADD CHECK (note_class = 1);
@@ -825,6 +871,12 @@ ALTER TABLE eca_note ADD CHECK (note_class = 3);
 ALTER TABLE eca_note ADD FOREIGN KEY (ref_key) 
 	REFERENCES entity_credit_account(id) 
 	ON DELETE CASCADE;
+
+COMMENT ON TABLE eca_note IS
+$$ Notes for entity_credit_account entries.$$;
+
+COMMENT ON COLUMN eca_note.ref_key IS
+$$ references entity_credit_account.id$$;
 
 -- END entity   
 
@@ -1010,68 +1062,6 @@ CREATE VIEW employee AS
    JOIN entity_employee ee USING (entity_id)
    LEFT JOIN salutation s ON p.salutation_id = s.id;
 
-
-CREATE VIEW customer AS 
-    SELECT 
-        c.id,
-        e.name,
-        emd.entity_id, 
-        emd.entity_class, 
-        emd.discount,
-        emd.taxincluded,
-        emd.creditlimit,
-        emd.terms,
-        emd.meta_number as customernumber,
-        ece.contact as email,
-        ecc.contact as cc,
-        ecb.contact as bcc,
-        emd.business_id,
-        emd.language_code,
-        emd.pricegroup_id,
-        emd.curr,
-        emd.startdate,
-        emd.enddate,
-        eba.bic, 
-        eba.iban, 
-        ein.note as invoice_notes 
-    FROM entity_credit_account emd 
-    LEFT JOIN entity_bank_account eba on emd.entity_id = eba.entity_id
-    Left join entity_note ein on ein.ref_key = emd.entity_id
-    LEFT JOIN eca_to_contact ece ON emd.id = ece.credit_id AND ece.contact_class_id = 12
-    LEFT JOIN eca_to_contact ecc ON emd.id = ecc.credit_id AND ecc.contact_class_id = 13
-    LEFT JOIN eca_to_contact ecb ON emd.id = ecb.credit_id AND ecb.contact_class_id = 14
-    join company c on c.entity_id = emd.entity_id
-    join entity e on c.entity_id = e.id
-    where emd.entity_class = 2;
-    
-CREATE VIEW vendor AS 
-    SELECT 
-        c.id,
-        e.name,
-        emd.entity_id, 
-        emd.entity_class, 
-        emd.discount,
-        emd.taxincluded,
-        emd.creditlimit,
-        emd.terms,
-        emd.meta_number as vendornumber,
-        emd.cc,
-        emd.bcc,
-        emd.business_id,
-        emd.language_code,
-        emd.pricegroup_id,
-        emd.curr,
-        emd.startdate,
-        emd.enddate,
-        eba.bic, 
-        eba.iban, 
-        ein.note as invoice_notes 
-    FROM entity_credit_account emd 
-    LEFT join entity_bank_account eba on emd.entity_id = eba.entity_id
-    left join entity_note ein on ein.ref_key = emd.entity_id
-    join company c on c.entity_id = emd.entity_id
-    join entity e on c.entity_id = e.id
-    where emd.entity_class = 1;
 
 COMMENT ON TABLE entity_credit_account IS $$ This is a metadata table for ALL entities in LSMB; it deprecates the use of customer and vendor specific tables (which were nearly identical and largely redundant), and replaces it with a single point of metadata. $$;
 
