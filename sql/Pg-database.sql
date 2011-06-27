@@ -1596,11 +1596,15 @@ CREATE TABLE partsvendor (
   curr char(3),
   entry_id SERIAL PRIMARY KEY
 );
+
+COMMENT ON TABLE partsvendor IS
+$$ Tracks vendor's pricing, as well as vendor's part number, lead time 
+required and currency.$$;
 --
 CREATE TABLE partscustomer (
   parts_id int,
-  credit_id int not null references entity_credit_account(id) on delete cascade,
-  pricegroup_id int,
+  credit_id int references entity_credit_account(id) on delete cascade,
+  pricegroup_id int references pricegroup(id),
   pricebreak numeric,
   sellprice NUMERIC,
   validfrom date,
@@ -1609,12 +1613,17 @@ CREATE TABLE partscustomer (
   entry_id SERIAL PRIMARY KEY
 );
 
-
+COMMENT ON TABLE partscustomer IS
+$$ Tracks per-customer pricing.  Discounts can be offered for periods of time
+and for pricegroups as well as per customer$$;
 --
 CREATE TABLE language (
   code varchar(6) PRIMARY KEY,
   description text
 );
+
+COMMENT ON TABLE language IS
+$$ Languages for manual translations and so forth.$$;
 --
 CREATE TABLE audittrail (
   trans_id int,
@@ -1626,13 +1635,34 @@ CREATE TABLE audittrail (
   person_id integer references person(id) not null,
   entry_id BIGSERIAL PRIMARY KEY
 );
+
+COMMENT ON TABLE audittrail IS
+$$ This stores information on who entered or updated rows in the ar, ap, or gl
+tables.$$;
 --
+
 CREATE TABLE translation (
   trans_id int,
   language_code varchar(6),
   description text,
   PRIMARY KEY (trans_id, language_code)
 );
+
+COMMENT ON TABLE translation IS 
+$$abstract table for manual translation data. Should have zero rows.$$;
+
+CREATE TABLE parts_translation () INHERITS (translation);
+ALTER TABLE parts_translation ADD foreign key (trans_id) REFERENCES parts(id);
+
+COMMENT ON TABLE parts_translation IS
+$$ Translation information for parts.$$;
+
+CREATE TABLE project_translation () INHERITS (translation);
+ALTER TABLE project_translation 
+ADD foreign key (trans_id) REFERENCES project(id);
+
+COMMENT ON TABLE project_translation IS
+$$ Translation information for projects.$$;
 --
 CREATE TABLE user_preference (
     id int PRIMARY KEY REFERENCES users(id),
@@ -1659,6 +1689,12 @@ CREATE TABLE recurring (
   payment bool default 'f'
 );
 
+COMMENT ON TABLE recurring IS
+$$ Stores recurring information on transactions which will recur in the future.
+Note that this means that only fully posted transactions can recur. 
+I would highly recommend depricating this table and working instead on extending
+the template transaction addon to handle recurring information.$$;
+
 CREATE TABLE payment_type (
   id serial not null unique,
   label text primary key
@@ -1672,6 +1708,9 @@ CREATE TABLE recurringemail (
   message text,
   PRIMARY KEY (id, formname)
 );
+
+COMMENT ON TABLE recurringemail IS 
+$$Email  to be sent out when recurring transaction is posted.$$;
 --
 CREATE TABLE recurringprint (
   id int,
@@ -1680,6 +1719,9 @@ CREATE TABLE recurringprint (
   printer text,
   PRIMARY KEY (id, formname)
 );
+
+COMMENT ON TABLE recurringprint IS
+$$ Template, printer etc. to print to when recurring transaction posts.$$;
 --
 CREATE TABLE jcitems (
   id serial PRIMARY KEY,
@@ -1697,6 +1739,8 @@ CREATE TABLE jcitems (
   notes text
 );
 
+COMMENT ON TABLE jcitems IS $$ Time and materials cards. 
+Materials cards not implemented.$$;
 
 CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
 $$
@@ -1717,6 +1761,12 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION track_global_sequence() is
+$$ This trigger is used to track the id sequence entries across the 
+transactions table, and with the ar, ap, and gl tables.  This is necessary 
+because these have not been properly refactored yet.
+$$;
+
 CREATE TRIGGER ap_track_global_sequence BEFORE INSERT OR UPDATE ON ap
 FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
@@ -1732,11 +1782,17 @@ extends TEXT,
 table_name TEXT
 );
 
+COMMENT ON TABLE custom_table_catalog IS
+$$ Deprecated, use only with old code.$$;
+
 CREATE TABLE custom_field_catalog (
 field_id SERIAL PRIMARY KEY,
 table_id INT REFERENCES custom_table_catalog,
 field_name TEXT
 );
+
+COMMENT ON TABLE custom_field_catalog IS
+$$ Deprecated, use only with old code.$$;
 
 INSERT INTO taxmodule (
   taxmodule_id, taxmodulename
@@ -1748,10 +1804,17 @@ CREATE TABLE ac_tax_form (
         entry_id int references acc_trans(entry_id) primary key,
         reportable bool
 );
+
+COMMENT ON TABLE ac_tax_form IS
+$$ Mapping acc_trans to country_tax_form for reporting purposes.$$;
+
 CREATE TABLE invoice_tax_form (
         invoice_id int references invoice(id) primary key,
         reportable bool
 );
+
+COMMENT ON TABLE invoice_tax_form IS
+$$ Maping invoice to country_tax_form.$$;
 
 CREATE OR REPLACE FUNCTION gl_audit_trail_append()
 RETURNS TRIGGER AS
@@ -1779,6 +1842,11 @@ values (t_row.id, t_reference, TG_OP, person__get_my_entity_id());
 return null; -- AFTER TRIGGER ONLY, SAFE
 END;
 $$ language plpgsql security definer;
+
+
+COMMENT ON FUNCTION gl_audit_trail_append() IS
+$$ This provides centralized support for insertions into audittrail.
+$$;
 
 CREATE TRIGGER gl_audit_trail AFTER insert or update or delete ON gl
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
@@ -2139,7 +2207,8 @@ CREATE TABLE menu_node (
     "position" integer NOT NULL
 );
 
-
+COMMENT ON TABLE menu_node IS
+$$This table stores the tree structure of the menu.$$;
 --ALTER TABLE public.menu_node OWNER TO ledgersmb;
 
 --
@@ -2403,6 +2472,18 @@ CREATE TABLE menu_attribute (
     primary key(node_id, attribute)
 );
 
+COMMENT ON TABLE menu_attribute IS
+$$ This table stores the callback information for each menu item.  The 
+attributes are stored in key/value modelling because of the fact that this
+best matches the semantic structure of the information.
+
+Each node should have EITHER a menu or a module attribute, menu for a menu with 
+sub-items, module for an executiable script.  The module attribute identifies
+the perl script to be run.  The action attribute identifies the entry point.
+
+Beyond this, any other attributes that should be passed in can be done as other
+attributes.
+$$;
 
 --
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
@@ -2997,6 +3078,15 @@ CREATE TABLE menu_acl (
     CONSTRAINT menu_acl_acl_type_check CHECK ((((acl_type)::text = 'allow'::text) OR ((acl_type)::text = 'deny'::text))),
     PRIMARY KEY (node_id, role_name)
 );
+
+COMMENT ON TABLE menu_acl IS
+$$Provides access control list entries for menu nodes.$$;
+
+COMMENT ON COLUMN menu_acl.acl_type IS 
+$$ Nodes are hidden unless a role is found of which the user is a member, and
+where the acl_type for that role type and node is set to 'allow' and no acl is 
+found for any role of which the user is a member, where the acl_type is set to
+'deny'.$$;
 
 
 
