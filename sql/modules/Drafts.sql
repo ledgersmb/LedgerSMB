@@ -57,6 +57,10 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION draft__search(in_type text, in_with_accno text,
+in_from_date date, in_to_date date, in_amount_le numeric, in_amount_ge numeric)
+IS $$ Searches for drafts.  in_type may be any of 'ar', 'ap', or 'gl'.$$;
+
 CREATE OR REPLACE FUNCTION draft_approve(in_id int) returns bool as
 $$
 declare 
@@ -89,6 +93,9 @@ begin
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
+COMMENT ON FUNCTION draft_approve(in_id int) IS
+$$ Posts draft to the books.  in_id is the id from the ar, ap, or gl table.$$;
+
 CREATE OR REPLACE FUNCTION draft_delete(in_id int) returns bool as
 $$
 declare 
@@ -117,3 +124,6 @@ begin
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
+COMMENT ON FUNCTION draft_approve(in_id int) is
+$$ Deletes the draft from the book.  Only will delete unapproved transactions.
+Otherwise an exception is raised and the transaction terminated.$$;
