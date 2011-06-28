@@ -1,14 +1,36 @@
 
+=pod
+
+=head1 NAME
+
+LedgerSMB:Scripts::login, LedgerSMB workflow scripts for managing drafts
+
+=head1 SYNOPSIS
+
+This script contains the request handlers for logging in and out of LedgerSMB.
+    
+=head1 METHODS
+        
+=over   
+        
+=cut
+
 
 package LedgerSMB::Scripts::login;
 our $VERSION = 1.0;
 
 use LedgerSMB::Locale;
-use LedgerSMB; # Required for now to integrate with menu module.
+use LedgerSMB; 
 use LedgerSMB::User;
 use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use strict;
+
+=item __default (no action specified, do this)
+
+Displays the login screen.
+
+=cut
 
 sub __default {
    my ($request) = @_;
@@ -29,7 +51,15 @@ sub __default {
     $template->render($request);
 }
 
-# Directly printing like this is made of fail.
+=item authenticate
+
+This routine checks for the authentication information and if successful
+sends either a 302 redirect or a 200 successful response.
+
+If unsuccessful sends a 401 if the username/password is bad, or a 454 error
+if the database does not exist.
+
+=cut
 
 sub authenticate {
     my ($request) = @_;
@@ -72,6 +102,12 @@ sub authenticate {
     }
 }
 
+=item login
+
+Logs in the user and displays the root document.
+
+=cut
+
 sub login {
     my ($request) = @_;
     
@@ -82,6 +118,14 @@ sub login {
     LedgerSMB::Scripts::menu::root_doc($request);
 
 }
+
+=item logout
+
+Logs the user out.  Handling of HTTP browser credentials is browser-specific.
+
+Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
+
+=cut
 
 sub logout {
     my ($request) = @_;
@@ -106,23 +150,17 @@ sub logout {
     $template->render($request);
 }
 
-sub continue {
-    
-    my ($request) = @_;
-    
-    if ($request->{next} && $request->{password}) {
-                
-        $request->{user} = "admin";
-        
-        if (&authenticate($request)) {
-#            LedgerSMB::Handler::call_script();
-        }
-    }
-    else {
-        # well, wtf? This is kind of useless.
-        $request->error("Cannot continue to a Nonexistent page.");
-    }
-}
-    
 eval { do "scripts/custom/login.pl"};
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+=cut
+
+
 1;
