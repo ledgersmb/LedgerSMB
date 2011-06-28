@@ -32,6 +32,7 @@ GRANT SELECT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT EXECUTE ON FUNCTION eca__list_notes(int)  TO "lsmb_<?lsmb dbname ?>__contact_read";
 
+
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
@@ -579,6 +580,9 @@ IN ROLE "lsmb_<?lsmb dbname ?>__pos_cashier",
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter"
 WITH INHERIT NOLOGIN;
 
+GRANT SELECT ON recon_payee 
+TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+
  GRANT INSERT ON cr_report, cr_report_line 
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT DELETE ON cr_report_line
@@ -596,6 +600,9 @@ values (45, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_enter');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_approve"
 WITH INHERIT NOLOGIN;
+
+GRANT SELECT ON recon_payee 
+TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
 
 GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
 GRANT SELECT ON acc_trans, account_checkpoint TO 
@@ -1512,6 +1519,9 @@ values (152, 'allow', 'lsmb_<?lsmb dbname ?>__language_edit');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__part_translation_create"
 WITH INHERIT NOLOGIN;
 
+GRANT ALL ON parts_translation 
+TO "lsmb_<?lsmb dbname ?>__part_translation_create";
+
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__part_translation_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -1524,6 +1534,9 @@ values (97, 'allow', 'lsmb_<?lsmb dbname ?>__part_translation_create');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__project_translation_create"
 WITH INHERIT NOLOGIN;
+
+GRANT ALL ON project_translation 
+TO "lsmb_<?lsmb dbname ?>__part_translation_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
@@ -1579,6 +1592,7 @@ GRANT SELECT ON employee_search TO PUBLIC;
 GRANT SELECT ON warehouse TO public;
 GRANT select ON account_link_description TO PUBLIC;
 GRANT select ON sic TO public;
+GRANT SELECT ON parts_translation,  project_translation TO public;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 

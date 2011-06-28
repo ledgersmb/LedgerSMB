@@ -251,32 +251,6 @@ create or replace function person__save_location(
     END;
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION person__delete_location (
-    in_entity_id INT, in_location_id INT
-) returns int AS $$
-
-DECLARE
-    v_loc location;
-    
-BEGIN
-    
-    select loc.* into v_loc FROM location loc
-    JOIN person_to_location ptl ON loc.id = ptl.location_id
-    JOIN person p ON p.id = ptl.person_id
-    WHERE p.entity_id = in_entity_id 
-    AND loc.id = in_location_id;
-    
-    IF NOT FOUND THEN
-       RAISE EXCEPTION 'Cannot find records to delete for entity % and location %', in_entity_id, in_location_id;
-    ELSE
-        DELETE FROM people_to_location WHERE location_id = in_location_id;
-        DELETE FROM location WHERE location_id = in_location_id;
-    END IF;
-
-END;
-
-$$ language plpgsql;
-
 CREATE OR REPLACE FUNCTION person__all_locations (
     in_entity_id int
 ) returns setof location AS $$
