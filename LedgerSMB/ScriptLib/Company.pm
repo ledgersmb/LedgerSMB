@@ -420,7 +420,9 @@ sub history {
 
 =pod
 
-=over display_history($request)
+=over 
+
+=item display_history($request)
 
 Displays the customer/vendor history based on criteria from the history filter
 screen.
