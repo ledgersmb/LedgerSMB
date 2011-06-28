@@ -17,15 +17,15 @@ SELECT 'Saving Credit Acct',
 INSERT INTO test_result (test_name, success)
 SELECT 'eca_location_save', 
 	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 2, 'Test', 'Test', 
-		NULL, 'Test', 'Test', '12345', 25)
+		NULL, 'Test', 'Test', '12345', 25, NULL)
 	IS NOT NULL;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'eca_location_save returns same id with same args and no in_location_id',
 	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 1, 'Test2', 'Test',
-                '', 'Test', 'Test123', '12345', 25) =
+                '', 'Test', 'Test123', '12345', 25, NULL) =
 	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 3, 'Test2', 'Test',
-                '', 'Test', 'Test123', '12345', 25);
+                '', 'Test', 'Test123', '12345', 25, NULL);
 
 INSERT INTO test_result (test_name, success)
 SELECT 'list_locations', count(*) = 3
