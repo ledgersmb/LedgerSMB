@@ -12,7 +12,7 @@
 	target_div = 'company_div';
 ELSIF ((!entity_id or action == 'save') and entity_class == 3);
 		target_div = 'hr_div';
-ELSIF action == 'save_credit' or action == 'get' or action == 'save_credit_new'
+ELSIF action == 'save_credit' or action == 'get' or action == 'edit'
 			or action=='save'; 
 		target_div = 'credit_div';
 ELSIF action== 'save_location' or action == 'get_location' 
