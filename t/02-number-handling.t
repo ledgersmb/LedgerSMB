@@ -181,7 +181,7 @@ $ENV{GATEWAY_INTERFACE} = 'yes';
 $form->{pre} = 'Blah';
 $form->{header} = 'Blah';
 @r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
-is($trap->exit, 0,
+is($trap->exit, undef,
 	'form: No numberformat set, invalid amount (NaN check)');
 is($trap->stdout, $form_nan_message,
 	'form: No numberformat set, invalid amount message (NaN check)');
@@ -340,8 +340,8 @@ foreach my $format (0 .. $#formats) {
 	cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
 		"form: Empty string returns 0");
 	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
-	is($trap->exit, 0,
-		'form: Invalid string gives NaN exit');
+	is($trap->exit, undef,
+		'form: Invalid string does not exit');
 	is($trap->stdout, $form_nan_message,
 		'form: Invalid string gives NaN message');
 	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
@@ -408,7 +408,7 @@ foreach my $format (0 .. $#formats) {
 	cmp_ok($form->parse_amount(\%myconfig), '==', 0,
 		"form: undef string returns 0");
 	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
-	is($trap->exit, 0,
+	is($trap->exit, undef,
 		'form: Invalid string gives NaN exit');
 	is($trap->stdout, $form_nan_message,
 		'form: Invalid string gives NaN message');
