@@ -1,32 +1,21 @@
-#=====================================================================
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-#
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.  It is released under the GNU General Public License
-# Version 2 or, at your option, any later version.  See COPYRIGHT file for
-# details.
-#
-#
-#======================================================================
-#
-# This file has undergone whitespace cleanup.
-#
-#======================================================================
-# This package contains session related functions:
-#
-# check - checks validity of session based on the user's cookie and login
-#
-# create - creates a new session, writes cookie upon success
-#
-# destroy - destroys session
-#
-# password_check - compares the password with the stored cryted password
-#                  (ver. < 1.2) and the md5 one (ver. >= 1.2)
-#====================================================================
+
+=pod
+
+=head1 NAME
+
+LedgerSMB::Auth.pm, Standard DB module.
+
+=head1 SYNOPSIS
+
+This is the standard DB-based module for authentication.  Uses HTTP basic 
+authentication.
+
+=head1 METHODS
+
+=over
+
+=cut
+
 package LedgerSMB::Auth;
 use MIME::Base64;
 use LedgerSMB::Sysconfig;
@@ -34,6 +23,14 @@ use LedgerSMB::Log;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
+
+=item session_check
+
+Checks to see if a session exists based on current logged in credentials. 
+
+Handles failure by creating a new session, since credentials are now separate.
+
+=cut
 
 sub session_check {
     use Time::HiRes qw(gettimeofday);
@@ -128,6 +125,13 @@ sub session_check {
         return 0;
     }
 }
+
+=item session_create
+
+Creates a new session, sets $lsmb->{session_id} to that session, sets cookies, 
+etc.
+
+=cut
 
 sub session_create {
     my ($lsmb) = @_;
@@ -236,49 +240,11 @@ sub session_create {
     $lsmb->{dbh}->commit;
 }
 
-sub http_error {
-    my ($errcode, $msg_plus) = @_;
+=item session_destry
 
-    my $err = {
-	'500' => {status  => '500 Internal Server Error', 
-		  message => 'An error occurred. Information on this error has been logged.', 
-                  others  => {}},
-        '403' => {status  => '403 Forbidden', 
-                  message => 'You are not allowed to access the specified resource.', 
-                  others  => {}},
-        '401' => {status  => '401 Unauthorized', 
-                  message => 'Please enter your credentials', 
-                  others  => {'WWW-Authenticate' => "Basic realm=\"LedgerSMB\""}
-                 },
-        '404' => {status  => '404 Resource not Found',
-                  message => "The following resource was not found, $msg_plus",
-                 },
-        '454' => {status  => '454 Database Does Not Exist',
-                  message => 'Database Does Not Exist' },
-    };
-    # Ordinarily I would use $cgi->header to generate the headers
-    # but this doesn't seem to be working.  Although it is generally desirable
-    # to create the headers using the package, I think we should print them
-    # manually.  -CT
-    my $status;
-    if ($err->{$errcode}->{status}){
-        $status = $err->{$errcode}->{status};
-    } elsif ($errcode) {
-        $status = $errcode;
-   } else {
-	print STDERR "Tried to generate http error without code!\n";
-        http_error('500');
-    }
-    print "Status: $status\n";
-    for my $h (keys %{$err->{$errcode}->{others}}){
-         print "$h: $err->{$errcode}->{others}->{$h}\n";
-    }
-    print "Content-Type: text/plain\n\n";
-    print "Status: $status\n$err->{$errcode}->{message}\n";
-    exit; 
-    
+Destroys a session and removes it from the db.
 
-}
+=cut
 
 sub session_destroy {
 
@@ -310,6 +276,15 @@ sub session_destroy {
 
 }
 
+=item get_credentials
+
+Gets credentials from the 'HTTP_AUTHORIZATION' environment variable which must
+be passed in as per the standards of HTTP basic authentication.
+
+Returns a hashref with the keys of login and password.
+
+=cut
+
 sub get_credentials {
     # Handling of HTTP Basic Auth headers
     my $auth = $ENV{'HTTP_AUTHORIZATION'};
@@ -331,11 +306,19 @@ sub get_credentials {
     
 }
 
+=item credential_prompt
+
+Sends a 401 error to the browser popping up browser credential prompt.
+
+=cut
+
 sub credential_prompt{
     http_error(401);
 }
 
-sub password_check {
+sub password_check { # Old routine, leaving in at the moment
+                     # As a reference regarding checking passwords
+                     # for a password migration app. --CT
 
     use Digest::MD5;
 
@@ -408,5 +391,21 @@ sub password_check {
         return 0;
     }
 }
+
+=back
+
+=head1 COPYRIGHT
+
+# Small Medium Business Accounting software
+# http://www.ledgersmb.org/
+#
+#
+# Copyright (C) 2006-2011
+# This work contains copyrighted information from a number of sources all used
+# with permission.  It is released under the GNU General Public License
+# Version 2 or, at your option, any later version.  See COPYRIGHT file for
+# details.
+
+=cut
 
 1;
