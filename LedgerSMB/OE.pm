@@ -87,9 +87,9 @@ sub transactions {
 		JOIN entity_credit_account ct ON (o.entity_credit_account = ct.id)
 		JOIN company c ON (c.entity_id = ct.entity_id)
 		LEFT JOIN person pe ON (o.person_id = pe.id)
-		LEFT JOIN employee e ON (pe.entity_id = e.entity_id)
+		LEFT JOIN entity_employee e ON (pe.entity_id = e.entity_id)
 		LEFT JOIN person pm ON (e.manager_id = pm.id)
-		LEFT JOIN employee m ON (pm.entity_id = m.entity_id)
+		LEFT JOIN entity_employee m ON (pm.entity_id = m.entity_id)
 		LEFT JOIN exchangerate ex 
 			ON (ex.curr = o.curr AND ex.transdate = o.transdate)
 		WHERE o.quotation = ?
@@ -788,7 +788,8 @@ sub retrieve {
 			JOIN company c ON (cr.entity_id = c.entity_id)
 			JOIN entity vc ON (c.entity_id = vc.id)
 			LEFT JOIN person pe ON (o.person_id = pe.id)
-			LEFT JOIN employee e ON (pe.entity_id = e.entity_id)
+			LEFT JOIN entity_employee e 
+                                  ON (pe.entity_id = e.entity_id)
 			LEFT JOIN department d ON (o.department_id = d.id)
 			WHERE o.id = ?|;
         $sth = $dbh->prepare($query);
