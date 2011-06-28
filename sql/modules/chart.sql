@@ -69,6 +69,12 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION report_trial_balance 
+(in_datefrom date, in_dateto date, in_department_id int, in_project_id int,
+in_gifi bool) IS
+$$ This is a simple routine to generate trial balances for the full
+company, for a project, or for a department.$$;
+
 CREATE OR REPLACE FUNCTION chart_list_all()
 RETURNS SETOF chart AS
 $$
@@ -81,6 +87,9 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION chart_list_all() IS
+$$ Generates a list of chart view entries.$$;
 
 CREATE OR REPLACE FUNCTION chart_get_ar_ap(in_account_class int)
 RETURNS SETOF chart AS
@@ -101,29 +110,40 @@ BEGIN
        END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
-COMMENT ON FUNCTION chart_get_ar_ap(in_account_class int) IS
-$$ This function returns the cash account acording with in_account_class which must be 1 or 2 $$;
 
-CREATE OR REPLACE FUNCTION chart_list_search(search text, link_desc text)
+COMMENT ON FUNCTION chart_get_ar_ap(in_account_class int) IS
+$$ This function returns the cash account acording with in_account_class which 
+must be 1 or 2.
+
+If in_account_class is 1 then it returns a list of AP accounts, and if 
+in_account_class is 2, then a list of AR accounts.$$;
+
+CREATE OR REPLACE FUNCTION chart_list_search(in_search text, in_link_desc text)
 RETURNS SETOF account AS
 $$
 DECLARE out_row account%ROWTYPE;
 BEGIN
 	FOR out_row IN 
 		SELECT * FROM account 
-                 WHERE (accno ~* ('^'||search) 
-                       OR description ~* ('^'||search))
+                 WHERE (accno ~* ('^'||in_search) 
+                       OR description ~* ('^'||in_search))
                        AND (link_desc IS NULL 
                            or id in 
                           (select account_id from account_link 
-                            where description = link_desc))
+                            where description = in_link_desc))
               ORDER BY accno
 	LOOP
 		RETURN next out_row;
 	END LOOP;
 END;$$
 LANGUAGE 'plpgsql';
-							
+
+COMMENT ON FUNCTION chart_list_search(in_search text, in_link_desc text) IS
+$$ This returns a list of account entries where the description or account 
+number begins with in_search.
+
+If in_link_desc is provided, the list is further filtered by which accounts are 
+set to an account_link.description equal to that provided.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_overpayment(in_account_class int)
 RETURNS SETOF chart AS
@@ -147,6 +167,10 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION chart_list_overpayment(in_account_class int) is
+$$ Returns a list of AP_overpayment accounts if in_account_class is 1
+Otherwise it returns a list of AR_overpayment accounts.$$;
+
 CREATE OR REPLACE FUNCTION chart_list_cash(in_account_class int)
 returns setof chart
 as $$
@@ -169,7 +193,11 @@ as $$
  END;
 $$ language plpgsql;
 COMMENT ON FUNCTION chart_list_cash(in_account_class int) IS
-$$ This function returns the overpayment accounts acording with in_account_class which must be 1 or 2 $$;
+$$ This function returns the overpayment accounts acording with 
+in_account_class which must be 1 or 2.
+
+If in_account_class is 1 it returns a list of AP cash accounts and 
+if 2, AR cash accounts.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_discount(in_account_class int)
 RETURNS SETOF chart AS
@@ -194,4 +222,8 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION chart_list_discount(in_account_class int) IS
-$$ This function returns the discount accounts acording with in_account_class which must be 1 or 2 $$;
+$$ This function returns the discount accounts acording with in_account_class 
+which must be 1 or 2.
+
+If in_account_class is 1, returns AP discount accounts, if 2, AR discount 
+accounts.$$;

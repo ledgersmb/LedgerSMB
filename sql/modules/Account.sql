@@ -6,22 +6,29 @@ $$
      select * from account where accno = $1;
 $$ language sql;
 
+COMMENT ON FUNCTION account__get_from_accno(in_accno text) IS
+$$ Returns the account where the accno field matches (excatly) the 
+in_accno provided.$$;
 
 CREATE OR REPLACE FUNCTION account__get_taxes()
 RETURNS setof account AS
 $$
 SELECT * FROM account 
- WHERE id IN (select account_id from account_link 
-               where description ilike '%tax%')
+ WHERE tax is true
 ORDER BY accno;
 $$ language sql;
 
+COMMENT ON FUNCTION account__get_taxes() IS
+$$ Returns set of accounts where the tax attribute is true.$$;
 
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS setof chart AS
 $$
 SELECT * from chart where id = $1 and charttype = 'A';
 $$ LANGUAGE sql;
 
+COMMENT ON FUNCTION account_get(in_id int) IS
+$$Returns an entry from the chart view which matches the id requested, and which
+is an account, not a heading.$$;
 
 CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS chart AS
 $$
@@ -33,6 +40,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+COMMENT ON FUNCTION account_heading_get(in_id int) IS
+$$Returns an entry from the chart view which matches the id requested, and which
+is a heading, not an account.$$;
 
 CREATE OR REPLACE FUNCTION account_has_transactions (in_id int) RETURNS bool AS
 $$
@@ -46,6 +56,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+COMMENT ON FUNCTION account_has_transactions (in_id int) IS
+$$ Checks to see if any transactions use this account.  If so, returns true.
+If not, returns false.$$;
 
 CREATE OR REPLACE FUNCTION account_save 
 (in_id int, in_accno text, in_description text, in_category char(1), 
@@ -116,6 +129,20 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION account_save
+(in_id int, in_accno text, in_description text, in_category char(1),
+in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
+in_link text[]) IS
+$$ This deletes existing account_link entries, where the 
+account_link.description is not designated as a custom one in the 
+account_link_description table.
+
+If no account heading is provided, the account heading which has an accno field
+closest to but prior (by collation order) is used.
+
+Then it saves the account information, and rebuilds the account_link records 
+based on the in_link array.
+$$;
 
 CREATE OR REPLACE FUNCTION account_heading_list()
 RETURNS SETOF account_heading AS
@@ -123,6 +150,8 @@ $$
 SELECT * FROM account_heading order by accno;
 $$ language sql;
 
+COMMENT ON FUNCTION account_heading_list() IS
+$$ Lists all existing account headings.$$;
 
 CREATE OR REPLACE FUNCTION account_heading_save 
 (in_id int, in_accno text, in_description text, in_parent int)
@@ -145,6 +174,9 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION account_heading_save
+(in_id int, in_accno text, in_description text, in_parent int) IS
+$$ Saves an account heading. $$;
 
 CREATE OR REPLACE RULE chart_i AS ON INSERT TO chart
 DO INSTEAD
@@ -175,16 +207,28 @@ RETURNS void AS $BODY$
     END;
 $BODY$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION cr_coa_to_account_save(in_accno text, in_description text)
+IS $$ Provides default rules for setting reconciliation labels.  Currently 
+saves a label of accno ||'--' || description.$$;
+
 CREATE OR REPLACE FUNCTION account__get_by_link_desc(in_description text)
 RETURNS SETOF account AS $$
 SELECT * FROM account
 WHERE id IN (SELECT account_id FROM account_link WHERE description = $1);
 $$ language sql;
 
-CREATE OR REPLACE FUNCTION get_link_descriptions() RETURNS SETOF account_link_description AS
+COMMENT ON FUNCTION account__get_by_link_desc(in_description text) IS
+$$ Gets a list of accounts with a specific link description set.  For example,
+for a dropdown list.$$;
+
+CREATE OR REPLACE FUNCTION get_link_descriptions() 
+RETURNS SETOF account_link_description AS
 $$
     SELECT * FROM account_link_description;
 $$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION get_link_descriptions() IS
+$$ Gets a set of all valid account_link descriptions.$$;
 
 CREATE OR REPLACE FUNCTION account__save_tax
 (in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text, 
@@ -211,4 +255,8 @@ BEGIN
 
 END;
 $$ language plpgsql;
-     
+
+COMMENT ON FUNCTION account__save_tax
+(in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text,
+in_pass int, in_taxmodule_id int, in_old_validto date) IS
+$$ This saves tax rates.$$; 

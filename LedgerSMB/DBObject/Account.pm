@@ -7,6 +7,14 @@ LedgerSMB::DBObject::Account: Base class for chart of accounts entries
 This class contains methods for managing chart of accounts entries (headings 
 and accounts).
 
+=head1 INERITS
+
+=over
+
+=item LedgerSMB::DBObject
+
+=back
+
 =head1 METHODS
 
 =cut
@@ -20,6 +28,21 @@ use base qw(LedgerSMB::DBObject);
 =item save()
 
 This method saves the chart of accounts entry.
+
+The hash component of the object may contain an id attribute, used to overwrite
+an account if that one exists.
+
+Hash entries Used:
+
+id: (optional):  If set, overwrite existing account.
+accno: the text used to specify the account number
+description:  Text to describe the account
+category: A = asset, L = liability, Q = Equity, I = Income, E = expense
+gifi_accno:  The GIFI account entry control code
+heading: (Optional) The integer representing the heading.id desired 
+contra:  If true, the account balances on the opposite side.
+tax:  If true, is a tax account
+link:  a list of strings representing text box identifier.
 
 =cut
 

@@ -5,7 +5,34 @@ use LedgerSMB::Log;
 use Data::Dumper;
 use strict;
 
+=pod
+
+=head1 NAME
+
+LedgerSMB:Scripts::account, LedgerSMB workflow scripts for managing accounts
+
+=head1 SYNOPSIS
+
+This module contains the workflows for managing chart of accounts entries.
+
+In prior versions of LedgerSMB, these were found in the AM.pm.  In the current 
+version, these have been broken out and given their own API which is more 
+maintainable.
+    
+=head1 METHODS
+        
+=over   
+        
+=cut
+
+
 my $logger = Log::Log4perl::get_logger("LedgerSMB::DBObject::Account");
+
+=item new
+
+Displays a screen to create a new account.
+
+=cut
 
 sub new {
     my ($request) = @_;
@@ -13,6 +40,14 @@ sub new {
     $request->{charttype} = 'A';
     _display_account_screen($request);     
 }
+
+=edit
+
+Retrieves account information and then displays the screen.  
+
+Requires the id variable in the request to be set.
+
+=cut
 
 sub edit {
     my ($request) = @_;
@@ -25,12 +60,35 @@ sub edit {
     _display_account_screen($a);
 }
 
+=item save
+
+Saves the account.
+
+Request variables
+id: (optional):  If set, overwrite existing account.
+accno: the text used to specify the account number
+description:  Text to describe the account
+category: A = asset, L = liability, Q = Equity, I = Income, E = expense
+gifi_accno:  The GIFI account entry control code
+heading: (Optional) The integer representing the heading.id desired 
+contra:  If true, the account balances on the opposite side.
+tax:  If true, is a tax account
+link:  a list of strings representing text box identifier.
+
+=cut
+
 sub save {
     my ($request) = @_;
     my $account = LedgerSMB::DBObject::Account->new(base => $request);
     $account->save;
     edit($request); 
 }
+
+=item save_as_new
+
+Saves as a new account.  Deletes the id field and then calls save()
+
+=cut
 
 sub save_as_new {
     my ($request) = @_;
@@ -103,6 +161,12 @@ sub _display_account_screen {
 
 }
 
+=item yearend_info
+
+Shows the yearend screen.  No expected inputs.
+
+=cut
+
 sub yearend_info {
     use LedgerSMB::DBObject::EOY;
     my ($request) = @_;
@@ -116,6 +180,18 @@ sub yearend_info {
     );
     $template->render($eoy);
 }
+
+=item post_yearend
+
+Posts a year-end closing transaction.
+
+Request variables expected:
+end_date: Date for the yearend transaction.  
+reference: GL Source identifier.
+description: Description of transaction
+in_retention_acc_id: Account id to post retained earnings into
+
+=cut
 
 sub post_yearend {
     use LedgerSMB::DBObject::EOY;
@@ -131,6 +207,15 @@ sub post_yearend {
     
 }
 
-# From AM.pm, modified for better API.
+=back
+
+=head1 COPYRIGHT
+
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+=cut
+
 
 1;
