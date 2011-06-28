@@ -58,6 +58,8 @@ Send an http error to the browser.
 
 =cut
 
+package LedgerSMB::Auth;
+
 use LedgerSMB::Sysconfig;
 
 if ( !${LedgerSMB::Sysconfig::auth} ) {

@@ -1,17 +1,14 @@
+
+
 package LedgerSMB::Scripts::login;
 our $VERSION = 1.0;
 
 use LedgerSMB::Locale;
-use LedgerSMB::Form; # Required for now to integrate with menu module.
+use LedgerSMB; # Required for now to integrate with menu module.
 use LedgerSMB::User;
 use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use strict;
-
-# this is kind of silly, as it doesn't check if someone IS trying to log in.
-# If one looks at the login template (get_password.html), it does not post
-# to any action, so this code will always get called, thereby preventing
-# anyone from actually logging in.
 
 sub __default {
    my ($request) = @_;
