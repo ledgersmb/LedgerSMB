@@ -36,7 +36,7 @@ BEGIN
 	     COALESCE( MAX (cp.credits), 0)
 	FROM 
 	(SELECT * FROM acc_trans WHERE transdate <= in_end_date AND
-	 transdate > COALESCE(cp_date, '1900-01-01')) a
+	 transdate > COALESCE(cp_date, '1200-01-01')) a
 	FULL OUTER JOIN (
 		select account_id, end_date, amount, debits, credits 
 		from account_checkpoint
