@@ -42,7 +42,7 @@ sub price_matrix_query {
 
     my @queryargs;
     my $transdate = $form->{dbh}->quote( $form->{transdate} );
-    my $entity_id     = $form->{dbh}->quote( $form->{entity_id} );
+    my $credit_id     = $form->{dbh}->quote( $form->{credit_id} );
 
     if ( $form->{customer_id} ) {
         my $defaultcurrency = $form->{dbh}->quote( $form->{defaultcurrency} );
@@ -58,7 +58,7 @@ sub price_matrix_query {
 					$transdate
 				AND coalesce(p.validto, $transdate) >= 
 					$transdate
-				AND p.credit_id = $entity_id
+				AND p.credit_id = $credit_id
 
 			UNION
 
@@ -68,13 +68,13 @@ sub price_matrix_query {
 				p.validto, p.curr, g.pricegroup, 2 AS priority
 			FROM partscustomer p
 			JOIN pricegroup g ON (g.id = p.pricegroup_id)
-			JOIN customer c ON (c.pricegroup_id = g.id)
+			JOIN entity_credit_account c ON (c.pricegroup_id = g.id)
 			WHERE p.parts_id = ?
 				AND coalesce(p.validfrom, $transdate) <= 
 					$transdate
 				AND coalesce(p.validto, $transdate) >= 
 					$transdate
-				AND c.id = $entity_id
+				AND c.id = $credit_id
 
 			UNION
 
@@ -103,7 +103,7 @@ sub price_matrix_query {
 			SELECT partnumber, lastcost
 			FROM partsvendor
 			WHERE parts_id = ?
-			AND credit_id = $entity_id|;
+			AND credit_id = $credit_id|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
 
