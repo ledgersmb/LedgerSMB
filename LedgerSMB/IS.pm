@@ -2026,7 +2026,7 @@ sub retrieve_invoice {
 			          a.language_code, a.ponumber,
 			          a.on_hold
 			     FROM ar a
-			LEFT JOIN employee em ON (em.entity_id = a.person_id)
+			LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
 			INNER JOIN entity e ON e.id = em.entity_id
 			    WHERE a.id = ?|;
 

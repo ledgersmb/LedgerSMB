@@ -1001,7 +1001,7 @@ sub get_my_emp_num {
 
     # we got a connection, check the version
     my $query = qq|
-		SELECT employeenumber FROM employee 
+		SELECT employeenumber FROM entity_employee 
 		 WHERE entity_id = 
 			(SELECT entity_id FROM users WHERE username = ?)|;
     my $sth = $dbh->prepare($query);
@@ -2403,7 +2403,8 @@ sub create_links {
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
 			JOIN entity ce ON (ce.id = c.entity_id)
-			LEFT JOIN employee er ON (er.entity_id = a.person_id)
+			LEFT JOIN entity_employee er 
+                                   ON (er.entity_id = a.person_id)
 			LEFT JOIN entity e ON (er.entity_id = e.id)
 			LEFT JOIN department d ON (d.id = a.department_id)
                         LEFT JOIN country_tax_form ctf 
