@@ -63,7 +63,10 @@ FROM voucher where trans_id = -5 and batch_class = 3;
 
 -- Adding the test for empty batch sproc
 
-insert into batch (batch_class_id, control_code, description, default_date, created_by) values (1, 'EMPTYBATCHTEST1', 'EMPTY BATCH TEST', '2009-01-01', -3);
+INSERT INTO test_result(test_name, success)
+SELECT 'creating batch 2', 
+batch_create('EMPTYBATCHTEST1', 'EMPTY BATCH TEST', 'ap', '2008-01-01') 
+IS NOT NULL;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Empty Batch Detected', count(*) = 1
@@ -100,4 +103,4 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
 
-ROLLBACK;
+--ROLLBACK;
