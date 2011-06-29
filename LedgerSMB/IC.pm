@@ -196,7 +196,8 @@ sub get_part {
 			          pc.validto, e.name, c.id AS cid, 
 			          g.pricegroup, g.id AS gid
 			     FROM partscustomer pc
-			LEFT JOIN customer c ON (c.id = pc.credit_id)
+			LEFT JOIN entity_credit_account c 
+                                  ON (c.id = pc.credit_id)
 			LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
                  JOIN entity e ON (e.id = c.entity_id)
 			    WHERE pc.parts_id = ?
@@ -1227,8 +1228,9 @@ sub all_parts {
 					     JOIN parts p 
 					          ON (p.id = i.parts_id)
 					     JOIN ap a ON (a.id = i.trans_id)
-					     JOIN vendor ct 
-					          ON (a.vendor_id = ct.id)
+					     JOIN entity_credit_account ct 
+					          ON (a.entity_credit_account 
+                                                      = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employee e 
@@ -1254,8 +1256,9 @@ sub all_parts {
 					     JOIN parts p 
 					          ON (p.id = i.parts_id)
 					     JOIN ar a ON (a.id = i.trans_id)
-					     JOIN customer ct 
-					          USING (entity_id)
+					     JOIN entity_credit_account ct 
+					          ON ar.entity_credit_account
+                                                     = ct.id
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employee e 
@@ -1320,15 +1323,17 @@ sub all_parts {
 					     FROM orderitems i
 					     JOIN parts p ON (i.parts_id = p.id)
 					     JOIN oe a ON (i.trans_id = a.id)
-					     JOIN customer ct 
-					          USING (entity_id)
+					     JOIN entity_credit_account ct 
+					          ON a.entity_credit_account
+                                                     = ct.id
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $ordwhere 
-					          AND a.entity_id IS NOT NULL|;
+					          AND a.entity_credit_id 
+                                                      IS NOT NULL|;
                 $union = "
 					UNION ALL";
             }
@@ -1360,15 +1365,17 @@ sub all_parts {
 					     FROM orderitems i
 					     JOIN parts p ON (i.parts_id = p.id)
 					     JOIN oe a ON (i.trans_id = a.id)
-					     JOIN vendor ct 
-					          ON (a.vendor_id = ct.id)
+					     JOIN entity_credit_account ct 
+					          ON (a.entity_credit_account 
+                                                      = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $ordwhere
-					          AND a.vendor_id > 0|;
+					          AND a.entity_credit_account 
+                                                        > 0|;
             }
 
         }
@@ -1426,15 +1433,17 @@ sub all_parts {
 					     FROM orderitems i
 					     JOIN parts p ON (i.parts_id = p.id)
 					     JOIN oe a ON (i.trans_id = a.id)
-					     JOIN customer ct 
-					          USING (entity_id)
+					     JOIN entity_credit_account ct 
+					          ON a.entity_credit_account
+                                                     = ct.id
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $quowhere
-					          AND a.entity_id IS NOT NULL|;
+					          AND a.entity_credit_account 
+                                                      IS NOT NULL|;
                 $union = "
 					UNION ALL";
             }
@@ -1466,15 +1475,17 @@ sub all_parts {
 					     FROM orderitems i
 					     JOIN parts p ON (i.parts_id = p.id)
 					     JOIN oe a ON (i.trans_id = a.id)
-					     JOIN vendor ct 
-					          ON (a.vendor_id = ct.id)
+					     JOIN entity_credit_account ct 
+					          ON (a.entity_credit_account 
+                                                      = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
 					LEFT JOIN employee e 
 					          ON (a.employee_id = e.id)
 					$makemodeljoin
 					    WHERE $quowhere
-					          AND a.vendor_id > 0|;
+					          AND a.entity_credit_account 
+                                                      > 0|;
             }
 
         }
@@ -1846,13 +1857,15 @@ sub create_links {
     $sth->finish;
 
     if ( $form->{item} ne 'assembly' ) {
-        $query = qq|SELECT count(*) FROM vendor|;
+        $query = qq|SELECT count(*) FROM entity_credit_account
+                     WHERE entity_class = 1|;
         my ($count) = $dbh->selectrow_array($query);
 
         if ( $count < $myconfig->{vclimit} ) {
             $query = qq|SELECT v.id, e.name 
-                FROM vendor v 
+                FROM entitiy_credit_account v 
                 join entity e on e.id = v.entity_id 
+               WHERE entity_class = 1
                 ORDER BY e.name|;
             $sth   = $dbh->prepare($query);
             $sth->execute || $form->dberror($query);
@@ -1865,13 +1878,15 @@ sub create_links {
     }
 
     # pricegroups, customers
-    $query = qq|SELECT count(*) FROM customer|;
+    $query = qq|SELECT count(*) FROM entity_credit_account 
+                where entity_class = 2|;
     ($count) = $dbh->selectrow_array($query);
 
     if ( $count < $myconfig->{vclimit} ) {
         $query = qq|SELECT c.id, e.name 
-            FROM customer c 
+            FROM entity_credit_account c 
             join entity e on e.id = c.entity_id 
+           WHERE entity_class = 2
             ORDER BY e.name|;
         $sth   = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
