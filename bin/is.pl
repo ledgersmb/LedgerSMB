@@ -1149,6 +1149,8 @@ sub post {
     ( $form->{AR_paid} ) = split /--/, $form->{AR_paid};
 
     if ( IS->post_invoice( \%myconfig, \%$form ) ) {
+	$form->{callback} =
+	    "$form->{script}?action=edit&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}";
         $form->redirect(
             $locale->text( 'Invoice [_1] posted!', $form->{invnumber} ) );
     }

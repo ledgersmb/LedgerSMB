@@ -18,7 +18,7 @@ System requirements
 LedgerSMB depends on the following software:
 
  * a web server (Apache v2.x or MS IIS)
- * PostgreSQL 8.1+
+ * PostgreSQL 8.2+
  * Perl 5.8+
 
 
@@ -48,7 +48,7 @@ On Debian and its derivatives installing PostgreSQL works with:
 
 On Fedora systems this command does the same:
 
- $ yum install postgresql postgresql-server
+ $ yum install postgresql postgresql-server postgresql-contrib
 
 On other systems, the steps to follow may differ.  Please submit
 instructions for your system for inclusion here.

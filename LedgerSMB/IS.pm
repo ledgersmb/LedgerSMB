@@ -846,17 +846,18 @@ sub customer_details {
 
     # get rest for the customer
     my $query = qq|
-		SELECT c.customernumber, e.name, l.line_one as address1, 
+		SELECT meta_number as customernumber,
+                       e.name, l.line_one as address1, 
 		       l.line_two as address2, l.city AS city,
 		       l.state as state, l.mail_code AS zipcode, 
 		       country.name as country,
 		       '' as contact, '' as customerphone, '' as customerfax,
 		       '' AS customertaxnumber, sic_code AS sic, iban, 
  		       bic,eca.startdate,eca.enddate
-		  FROM customer c
-		  JOIN company cm ON c.entity_id = cm.entity_id
-		  JOIN entity e ON (c.entity_id = e.id)
-                    JOIN entity_credit_account eca ON e.id = eca.entity_id
+		  FROM company cm
+		  JOIN entity e ON (cm.entity_id = e.id)
+                  JOIN entity_credit_account eca ON e.id = eca.entity_id
+                  LEFT JOIN entity_bank_account eba ON eca.entity_id = eba.entity_id
 		  LEFT JOIN eca_to_location el ON eca.id = el.credit_id
 		  LEFT JOIN location l ON el.location_id = l.id
 		  LEFT JOIN country ON l.country_id = country.id
