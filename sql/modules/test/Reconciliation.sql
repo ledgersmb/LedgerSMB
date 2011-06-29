@@ -21,17 +21,11 @@ select 'Correct number of transactions 1', count(*) = 10
 from cr_report_line where report_id = currval('cr_report_id_seq')::int;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Correct number of GL groups', count(*) = 4 from cr_report_line where scn like '% gl %' and report_id = currval('cr_report_id_seq')::int;
+SELECT 'Correct number of GL groups', count(*) = 3 from cr_report_line where scn like '% gl %' and report_id = currval('cr_report_id_seq')::int;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Correct number of report lines', count(*) = 10 from cr_report_line where report_id = currval('cr_report_id_seq')::int;
 
-\echo matching tests
-select reconciliation__add_entry(currval('cr_report_id_seq')::int, '1', 'GL', '2001-01-01'::timestamp, '10');
-
-INSERT INTO test_result(test_name, success)
-select 'Match 1 is correct', their_balance = our_balance 
-from cr_report_line where scn = 'Recon gl test 1';
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Report Submitted', reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int));
@@ -66,7 +60,8 @@ select 'Correct number of transactions 3', count(*) = 10
 from cr_report_line where report_id = currval('cr_report_id_seq')::int;
 
 INSERT INTO test_result(test_name, success)
-SELECT '1 Correct number of GL groups', count(*) = 4 from cr_report_line where scn like '% gl %' and report_id = currval('cr_report_id_seq')::int;
+SELECT '1 Correct number of GL groups', count(*) = 3 from cr_report_line where scn like '% gl %' and report_id = currval('cr_report_id_seq')::int;
+
 
 INSERT INTO test_result(test_name, success)
 SELECT '1 Correct number of report lines', count(*) = 10 from cr_report_line where report_id = currval('cr_report_id_seq')::int;
@@ -132,4 +127,4 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
 
-ROLLBACK;
+--ROLLBACK;
