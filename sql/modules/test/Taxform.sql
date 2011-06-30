@@ -1,259 +1,467 @@
 /* 
 
-This tests the new taxform functions in 1099_reports.sql
 
-Per discussion with Chris, test cases function in the form of:
+*igning tests. Thinking:
 
-AP, acc_trans, invoice (on some items), ac_taxform (some items), invoice_taxform (some items)
+1) Correct number of lines on summary report
+2) Correct total on summary report
+3) Correct number of lines on detail report
+4) Correct totals on detail report
+5) Correct total summary report for future year
+6) Correct number of lines for report on future year
+7) Correct number of lines on detail report for futture year
+8) Correct totals on lines of details report for future year
 
-Invoice tests:
-* Create a new account, for testing
-* Insert a record into transactions
-* Insert a record into AP
-* Insert a record into transactions
-* Insert a record into acc_trans
-* Associate acc_trans with 2nd transaction
+Invoices 8:
 
+1) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
+in full in current year.
+2) AP transaction: Reportable amount $1000, non-reportable amount $10,
+partially paid ($500) in current year
+3) AP Transaction: Reportable amount $1000, non-reportable amount $10,
+paid $500 currnet year, $500 in future year
 
-*/ 
+4) AP invoice: Reportable amount 1000, non-reportable amount $10, paid in
+full in current year.
+5) AP invoice: Reportable amount $1000, non-reportable amount $10,
+partially paid ($500) in current year
+6) AP invice: Reportable amount $1000, non-reportable amount $10, paid
+$500 currnet year, $500 in future year
+
+7 like 1 but different vendor
+8 like 4 but different vendor
+
+--CT 
+
+*/
 
 BEGIN;
 
 \i Base.sql
 
-/* First, we do the invoice testing */
 
+-- Basic setup
 INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion');
 INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'T', -255);
 INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'T', -255);
 
--- New account is created.
-
-
--- Set up a tax form.
 
 INSERT INTO country_tax_form (country_id, form_name, id) VALUES (232, 'Testing Form', -511);
 
--- Set up an ECA, for AP.
+INSERT INTO parts (id, partnumber, description) values (-255, 'test1', 'test 1');
+INSERT INTO parts (id, partnumber, description) values (-256, 'test2', 'test 2');
 
+-- Set up an ECAs, for AP.
 
-INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id) VALUES (-255, -100, 1, 'Test account', -511, -255);
+INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id) VALUES (-255, -100, 1, 'Test account 1', -511, -255);
 
 INSERT INTO company (id, entity_id, legal_name) VALUES (-1024, -100, 'Testing Tax Form');
 
--- Set up the Transaction
---INSERT INTO transactions (id) VALUES (-255);
+INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id) VALUES (-256, -101, 1, 'Test account 2', -511, -255);
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-255, 5000, 't'::bool, -255, 'USD');
+INSERT INTO company (id, entity_id, legal_name) VALUES (-1025, -101, 'Testing Tax Form');
 
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-255, -255, 5000, 't'::bool, -1000);
+CREATE OR REPLACE FUNCTION date1() RETURNS date AS
+$$
+SELECT (extract('YEAR' from now())|| '-12-01')::date;
+$$ language sql;
 
--- Set up the second transaction
+CREATE OR REPLACE FUNCTION date2() RETURNS date AS
+$$
+SELECT ((extract('YEAR' from now())|| '-12-01')::date
+        + '1 year'::interval)::date;
+$$ language sql;
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-256, -1000, 't'::bool, -255, 'USD');
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-256, -255, -1000, 't'::bool, -1001);
+INSERT INTO account_link (account_id, description)
+values (-1000, 'AP');
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-257, -1500, 't'::bool, -255, 'USD');
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-257, -255, -1500, 't'::bool, -1002);
+INSERT INTO account_link (account_id, description)
+values (-1001, 'AP_expense');
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-258, -2500, 't'::bool, -255, 'USD');
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-258, -255, -2500, 't'::bool, -1003);
+INSERT INTO account_link (account_id, description)
+values (-1002, 'AP_paid');
+--AP transactions.
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-259, 5000, 't'::bool, -255, 'USD');
+--1) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
+-- in full in current year. id -1024
 
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-259, -255, 5000, 't'::bool, -1004);
+INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
+                approved)
+values(-1024, date1(), 1010, 1010, 'USD', -255, true);
 
--- Set up the paid transactions
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1024, -1000, date1(), 1010, true, -111);
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-260, -1000, 't'::bool, -255, 'USD');
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-260, -255, -1000, 't'::bool, -1005);
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-260, -256, 1000, 't'::bool, -1006);
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1024, -1001, date1(), -1000, true, -112);
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-261, -1500, 't'::bool, -255, 'USD');
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-261, -255, -1500, 't'::bool, -1007);
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-261, -256, 1500, 't'::bool, -1008);
+INSERT INTO ac_tax_form(entry_id, reportable) values (-112, true);
 
-INSERT INTO ap (id, amount, approved, entity_credit_account, curr) VALUES (-262, -2500, 't'::bool, -255, 'USD');
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1024, -1001, date1(), -10, true, -113);
 
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-262, -255, -2500, 't'::bool, -1009);
-INSERT INTO acc_trans (trans_id, chart_id, amount, approved, entry_id) VALUES (-262, -256, 2500, 't'::bool, -1010);
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1024, -1002, date1(), 1010, true, -114);
 
--- Now we set up the invoice entries themselves.
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1024, -1000, date1(), -1010, true, -115);
+
+-- 2) AP transaction: Reportable amount $1000, non-reportable amount $10,
+-- partially paid ($500) in current year -1025
+
+INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
+            approved)
+values(-1025, date1(), 1010, 1010, 'USD', -255, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1025, -1000, date1(), 1010, true, -121);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1025, -1001, date1(), -1000, true, -122);
+
+INSERT INTO ac_tax_form(entry_id, reportable) values (-122, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1025, -1001, date1(), -10, true, -123);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1025, -1002, date1(), 505, true, -124);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1025, -1000, date1(), -505, true, -125);
+
+-- 3)_AP Transaction: Reportable amount $1000, non-reportable amount $10,
+-- paid $500 currnet year, $500 in future year -1026
 
 
-INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1000, -256, 250, 4);
-INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1001, -257, 750, 2);
-INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1002, -258, 500, 5);
-INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1003, -260, 250, 4);
-INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1004, -261, 750, 2);
-INSERT INTO invoice (id, trans_id, sellprice, qty) VALUES (-1005, -262, 500, 5);
+INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
+            approved)
+      values(-1026, date1(), 1010, 1010, 'USD', -255, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1026, -1000, date1(), 1010, true, -131);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1026, -1001, date1(), -1000, true, -132);
+
+INSERT INTO ac_tax_form(entry_id, reportable) values (-132, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1026, -1001, date1(), -10, true, -133);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1026, -1002, date1(), 505, true, -134);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1026, -1000, date1(), -505, true, -135);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1026, -1002, date2(), 505, true, -136);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1026, -1000, date2(), -505, true, -137);
+
+-- 4) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
+-- $500 currnet year, $500 in future year -1027, to second vendor
+-- Vendor Invoices.
+
+INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
+            approved)
+values(-1027, date1(), 1010, 1010, 'USD', -256, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1027, -1000, date1(), 1010, true, -141);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1027, -1001, date1(), -1000, true, -142);
+
+INSERT INTO ac_tax_form(entry_id, reportable) values (-142, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1027, -1001, date1(), -10, true, -143);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1027, -1002, date1(), 1010, true, -144);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1027, -1000, date1(), -1010, true, -145);
+
+--1) AP invoice: Reportable amount 1000, non-reportable amount $10, paid
+-- in full in current year. id -1034
+
+INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
+                approved)
+      values(-1034, date1(), 1010, 1010, 'USD', -255, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1034, -1000, date1(), 1010, true, -211);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1034, -1001, date1(), -1000, true, -212);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1034, -1001, date1(), -10, true, -213);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1034, -1002, date1(), 1010, true, -214);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1034, -1000, date1(), -1010, true, -215);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1034, -201, -255, 'test 1', 1, 1000);
+
+INSERT INTO invoice_tax_form(invoice_id, reportable)
+     VALUES (-201, true);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1034, -202, -256, 'test 1', 1, 10);
 
 
--- And finally, the tax_form references
 
-INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1000, TRUE);
-INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1001, TRUE);
-INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1002, TRUE);
-INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1003, TRUE);
-INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1004, TRUE);
-INSERT INTO invoice_tax_form (invoice_id, reportable) VALUES (-1005, TRUE);
+-- 2) AP invoice: Reportable amount $1000, non-reportable amount $10,
+-- partially paid ($500) in current year -1035
+
+INSERT INTO ar (id, transdate, amount, netamount, curr, entity_credit_account,
+                approved)
+      values(-1035, date1(), 1010, 1010, 'USD', -255, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1035, -1000, date1(), 1010, true, -221);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1035, -1001, date1(), -1000, true, -222);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1035, -1001, date1(), -10, true, -223);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1035, -1002, date1(), 505, true, -224);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1035, -1000, date1(), -505, true, -225);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1035, -211, -255, 'test 1', 1, 1000);
+
+INSERT INTO invoice_tax_form(invoice_id, reportable)
+     VALUES (-211, true);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1035, -212, -256, 'test 1', 1, 10);
+
+-- 3)_AP invoice: Reportable amount $1000, non-reportable amount $10,
+-- paid $500 currnet year, $500 in future year -1036
+
+INSERT INTO ar (id, transdate, amount, netamount, curr, entity_credit_account,
+                approved)
+      values(-1036, date1(), 1010, 1010, 'USD', -255, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1036, -1000, date1(), 1010, true, -231);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1036, -1001, date1(), -1000, true, -232);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1036, -1001, date1(), -10, true, -233);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1036, -1002, date1(), 505, true, -234);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1036, -1000, date1(), -505, true, -235);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1036, -1002, date2(), 505, true, -236);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1036, -1000, date2(), -505, true, -237);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1036, -221, -255, 'test 1', 1, 1000);
+
+INSERT INTO invoice_tax_form(invoice_id, reportable)
+     VALUES (-221, true);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1036, -222, -256, 'test 1', 1, 10);
+
+-- 4) AP invoice: Reportable amount 1000, non-reportable amount $10, paid
+-- $500 currnet year, $500 in future year -1037, to second vendor
 
 
---
--- Finally, we test if the entries are showing up 
---
+INSERT INTO ar (id, transdate, amount, netamount, curr, entity_credit_account,
+                approved)
+      values(-1037, date1(), 1010, 1010, 'USD', -256, true);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1037, -1000, date1(), 1010, true, -241);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1037, -1001, date1(), -1000, true, -242);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1037, -1001, date1(), -10, true, -243);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1037, -1002, date1(), 505, true, -244);
+
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
+     VALUES (-1037, -1000, date1(), -505, true, -245);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1037, -231, -255, 'test 1', 1, 1000);
+
+INSERT INTO invoice_tax_form(invoice_id, reportable)
+     VALUES (-231, true);
+
+insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
+     VALUES (-1037, -232, -256, 'test 1', 1, 10);
 
 
--- There should be three entries.
+-- Tests
 
 INSERT INTO test_result(test_name, success)
-VALUES ('3 Reportable Invoices, sum of 5000', (
-    SELECT
-        CASE WHEN invoice_sum <> 5000 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_summary_report(-511, (now()::date- '1 day'::interval)::date, now()::date)
-));
+SELECT '2 rows on current summary report', count(*) = 2
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date);
 
---select * from tax_form_details_report(-511, (now() - '1 day'::interval)::date, now()::date, 'Test account');
+INSERT INTO test_result(test_name, success)
+SELECT '1 row on future summary report', count(*) = 1
+  FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date, 
+                                  (date2() + '1 day'::interval)::date);
 
--- Test reportable-only
+INSERT INTO test_result(test_name, success)
+SELECT 'ac_sum for test vendor 1, current report is $2000', acc_sum = 2000
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date)
+ where meta_number = 'Test account 1';
 
-UPDATE invoice_tax_form SET reportable = FALSE where invoice_id = -1001;
+INSERT INTO test_result(test_name, success)
+SELECT 'ac_sum for test vendor 1, future report is $500', acc_sum = 500
+  FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date, 
+                                  (date2() + '1 day'::interval)::date)
+ where meta_number = 'Test account 1';
+
+INSERT INTO test_result(test_name, success)
+SELECT 'ac_sum for test vendor 1, current report is $1000', acc_sum = 1000
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date)
+ where meta_number = 'Test account 1';
+
+INSERT INTO test_result(test_name, success)
+    SELECT '6 in detail report for current report, vendor 1', count(*) = 6
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1');
+
+INSERT INTO test_result(test_name, success)
+    SELECT '2 in detail report for current report, vendor 2', count(*) = 2
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 2');
+
+INSERT INTO test_result(test_name, success)
+    SELECT '2 in detail report for future report, vendor 1', count(*) = 2
+    FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date, 
+                                  (date2() + '1 day'::interval)::date, 
+                                'Test account 1');
+
+INSERT INTO test_result(test_name, success)
+    SELECT '0 in detail report for future report, vendor 2', count(*) = 0
+    FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date, 
+                                  (date2() + '1 day'::interval)::date, 
+                                'Test account 2');
+
+INSERT INTO test_result(test_name, success)
+   SELECT 'current report, invoice -1024, acc $1000', acc_sum= 1000
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1024;
+
+INSERT INTO test_result(test_name, success)
+   SELECT 'current report, invoice -1025, acc $500', acc_sum= 500
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1025;
+
+INSERT INTO test_result(test_name, success)
+   SELECT 'current report, invoice -1026, acc $500', acc_sum= 500
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1026;
+
+INSERT INTO test_result(test_name, success)
+   SELECT 'current report, invoice -1027, acc $1000', acc_sum= 1000
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 2')
+    WHERE invoice_id = -1027;
 
 
 INSERT INTO test_result(test_name, success)
-VALUES ('2 Reportable invoices, 1 disabled, sum of 1000', (
-    SELECT
-        CASE WHEN total_sum <> 3500 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_summary_report(-511, (now()::date- '1 day'::interval)::date, now()::date)
-));
-
--- Clean up all the invoices and test the AP form instead.
-
-DELETE FROM invoice_tax_form WHERE invoice_id < 0 AND reportable is TRUE;
-DELETE FROM invoice WHERE id < 0 AND id NOT IN (select invoice_id from invoice_tax_form);
-
-
--- AC tax form stuff
-
-
-INSERT INTO ac_tax_form (entry_id, reportable) VALUES (-1001, 't'::bool);
-INSERT INTO ac_tax_form (entry_id, reportable) VALUES (-1002, 't'::bool);
-INSERT INTO ac_tax_form (entry_id, reportable) VALUES (-1003, 't'::bool);
-
---select * from tax_form_details_report(-511, (now() - '1 day'::interval)::date, now()::date, 'Test account');
-
--- And now, test the AC tax form
+   SELECT 'current report, invoice -1024, total $1000', total_sum= 1000
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1024;
 
 INSERT INTO test_result(test_name, success)
-VALUES ('3 Reportable AC tax forms', (
-    SELECT
-        CASE WHEN total_sum <> -5000 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_summary_report(-511, (now()::date- '1 day'::interval)::date, now()::date)
-));
-
-UPDATE ac_tax_form SET reportable = FALSE where entry_id = -1002;
-
+   SELECT 'current report, invoice -1025, total $500', total_sum= 500
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1025;
 
 INSERT INTO test_result(test_name, success)
-VALUES ('Detail test, 2 records', (
-    SELECT
-        CASE WHEN count(*) <> 2 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_details_report(-511, (now() - '1 day'::interval)::date, now()::date, 'Test account')
-));
+   SELECT 'current report, invoice -1026, total $500', total_sum= 500
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1026;
 
 INSERT INTO test_result(test_name, success)
-VALUES ('Detail test, 2 records sum of acc_sum is -3500 ', (
-    SELECT
-        CASE WHEN sum(acc_sum) <> -3500 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_details_report(-511, (now() - '1 day'::interval)::date, now()::date, 'Test account')
-));
+   SELECT 'current report, invoice -1027, total $1000', total_sum= 500
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 2')
+    WHERE invoice_id = -1027;
 
-
+   
 
 INSERT INTO test_result(test_name, success)
-VALUES ('2 Reportable invoices, 1 disabled', (
-    SELECT
-        CASE WHEN total_sum <> -3500 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_summary_report(-511, (now()::date- '1 day'::interval)::date, now()::date)
-));
-
-UPDATE invoice_tax_form SET reportable = TRUE;
-
+   SELECT 'current report, invoice -1024, inv_total 0', invoice_sum= 0
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1024;
 
 INSERT INTO test_result(test_name, success)
-VALUES ('2 Reportable invoices, 1 disabled, 1 invoice', (
-    SELECT
-        CASE WHEN total_sum <> -2000 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_summary_report(-511, (now()::date- '1 day'::interval)::date, now()::date)
-));
+   SELECT 'current report, invoice -1025, inv 0', invoice_sum= 0
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1025;
 
 INSERT INTO test_result(test_name, success)
-VALUES ('2 Reportable invoices, 1 disabled, 1 invoice, acc_sum is -3500', (
-    SELECT
-        CASE WHEN acc_sum <> -3500 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_summary_report(-511, (now()::date- '1 day'::interval)::date, now()::date)
-));
+   SELECT 'current report, invoice -1026, inv 0', invoice_sum = 0
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 1')
+    WHERE invoice_id = -1026;
 
 INSERT INTO test_result(test_name, success)
-VALUES ('2 Reportable invoices, 1 disabled, 1 invoice, invoice_total is 1500', (
-    SELECT
-        CASE WHEN invoice_sum <> 1500 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_summary_report(-511, (now()::date- '1 day'::interval)::date, now()::date)
-));
+   SELECT 'current report, invoice -1027, inv 0', invoice_sum= 0
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 2')
+    WHERE invoice_id = -1027;
 
-
--- Now, do the detail testing.
--- At this point, there ought to be 3 records.
-
-
-INSERT INTO test_result(test_name, success)
-VALUES ('Detail test, 3 records', (
-    SELECT
-        CASE WHEN count(*) <> 3 THEN
-            FALSE
-        ELSE
-            TRUE
-        END as success
-    FROM tax_form_details_report(-511, (now() - '1 day'::interval)::date, now()::date, 'Test account')
-));
-
-
+   
 
 SELECT * FROM test_result;
 

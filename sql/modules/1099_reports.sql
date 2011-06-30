@@ -18,7 +18,8 @@ CREATE TYPE tax_form_report_detail_item AS (
     invoice_sum numeric, 
     total_sum numeric, 
     invnumber text, 
-    duedate text);
+    duedate text,
+    invoice_id int);
 
 CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin date, in_end date) 
 RETURNS SETOF tax_form_report_item AS $BODY$
@@ -107,7 +108,9 @@ BEGIN
                                / ac.amount
                           ELSE 0
                       END * CASE WHEN gl.class = 'ar' THEN -1 else 1 end),
-                     gl.invnumber, gl.duedate::text
+                     SUM(ac.reportable_amount * pmt.amount
+                               / ac.amount),
+                     gl.invnumber, gl.duedate::text, gl.id
                 FROM (select id, entity_credit_account, invnumber, duedate, transdate, 'ar' as class
                         FROM ar 
                        UNION 
