@@ -333,6 +333,44 @@ SELECT '1 row on future summary report', count(*) = 1
                                   (date2() + '1 day'::interval)::date);
 
 INSERT INTO test_result(test_name, success)
+SELECT 'inv_sum for test vendor 1, current report is $2000', invoice_sum = 2000
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date)
+ where meta_number = 'Test account 1';
+
+INSERT INTO test_result(test_name, success)
+SELECT 'inv_sum for test vendor 1, future report is $500', invoice_sum = 500
+  FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date, 
+                                  (date2() + '1 day'::interval)::date)
+ where meta_number = 'Test account 1';
+
+INSERT INTO test_result(test_name, success)
+SELECT 'inv_sum for test vendor 2, current report is $1000', acc_sum = 1000
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date)
+ where meta_number = 'Test account 2';
+
+
+INSERT INTO test_result(test_name, success)
+SELECT 'total_sum for test vendor 1, current report is $4000', total_sum = 4000
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date)
+ where meta_number = 'Test account 1';
+
+INSERT INTO test_result(test_name, success)
+SELECT 'total_sum for test vendor 1, future report is $1000', total_sum = 1000
+  FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date, 
+                                  (date2() + '1 day'::interval)::date)
+ where meta_number = 'Test account 1';
+
+INSERT INTO test_result(test_name, success)
+SELECT 'total_sum for test vendor 2, current report is $2000', total_sum = 2000
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date)
+ where meta_number = 'Test account 2';
+
+
+INSERT INTO test_result(test_name, success)
 SELECT 'ac_sum for test vendor 1, current report is $2000', acc_sum = 2000
   FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
                                   (date1() + '1 day'::interval)::date)
