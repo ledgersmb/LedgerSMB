@@ -30,27 +30,35 @@ BEGIN
               SELECT company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
                      entity_credit_account.meta_number, 
-                     sum(CASE WHEN relation = 'acc_trans' 
+                     sum(CASE WHEN gl.amount = 0 THEN 0
+                              WHEN relation = 'acc_trans' 
                           THEN ac.reportable_amount * pmt.amount
-                                / ac.amount
+                                / gl.amount
                           ELSE 0
-                      END * CASE WHEN gl.class = 'ar' THEN -1 else 1 end),
-                     sum(CASE WHEN relation = 'invoice'
+                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
+                     sum(CASE WHEN gl.amount = 0 THEN 0
+                              WHEN relation = 'invoice'
                           THEN ac.reportable_amount * pmt.amount
-                               / ac.amount
+                               / gl.amount
                           ELSE 0
-                      END * CASE WHEN gl.class = 'ar' THEN -1 else 1 end)
+                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
+                     sum(CASE WHEN gl.amount = 0 THEN 0
+                          ELSE ac.reportable_amount * pmt.amount
+                                / gl.amount
+                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end)
                          
-		FROM (select id, transdate, entity_credit_account, 'ar' as class FROM ar 
+		FROM (select id, transdate, entity_credit_account, invoice, 
+                             amount, 'ar' as class FROM ar 
                        UNION 
-                      select id, transdate, entity_credit_account, 'ap' as class from ap
+                      select id, transdate, entity_credit_account, invoice, 
+                              amount, 'ap' as class from ap
                      ) gl
                JOIN (select trans_id, 'acc_trans' as relation, 
                              sum(amount) as amount,
                              sum(case when atf.reportable then amount else 0
                                  end) as reportable_amount
                         FROM  acc_trans
-                        JOIN ac_tax_form atf
+                    LEFT JOIN ac_tax_form atf
                           ON (acc_trans.entry_id = atf.entry_id)
                        GROUP BY trans_id
                        UNION
@@ -61,10 +69,13 @@ BEGIN
                                       else 0
                                  end) as reportable_amount
                         FROM invoice
-                        JOIN invoice_tax_form itf
+                    LEFT JOIN invoice_tax_form itf
                           ON (invoice.id = itf.invoice_id)
                        GROUP BY trans_id
-                     ) ac ON (ac.trans_id = gl.id)
+                     ) ac ON (ac.trans_id = gl.id 
+                             AND ((gl.invoice is true and ac.relation='invoice')
+                                  OR (gl.invoice is false 
+                                     and ac.relation='acc_trans')))
                 JOIN (SELECT ac.trans_id, sum(ac.amount) as amount,
                              as_array(entry_id) as entry_ids, 
                              as_array(chart_id) as chart_ids,
@@ -98,23 +109,30 @@ BEGIN
               SELECT company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
                      entity_credit_account.meta_number, 
-                     sum(CASE WHEN relation = 'acc_trans'
+                     sum(CASE WHEN gl.amount = 0 then 0 
+                              when relation = 'acc_trans'
                           THEN ac.reportable_amount * pmt.amount
-                                / ac.amount
+                                / gl.amount
                           ELSE 0
-                      END * CASE WHEN gl.class = 'ar' THEN -1 else 1 end),
-                     sum(CASE WHEN relation = 'invoice'
+                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
+                     sum(CASE WHEN gl.amount = 0 then 0
+                              WHEN relation = 'invoice'
                           THEN ac.reportable_amount * pmt.amount
-                               / ac.amount
+                               / gl.amount
                           ELSE 0
-                      END * CASE WHEN gl.class = 'ar' THEN -1 else 1 end),
-                     SUM(ac.reportable_amount * pmt.amount
-                               / ac.amount),
+                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
+                     SUM(CASE WHEN gl.amount = 0 THEN 0 
+                              ELSE ac.reportable_amount * pmt.amount
+                               / gl.amount 
+                              END
+                         * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
                      gl.invnumber, gl.duedate::text, gl.id
-                FROM (select id, entity_credit_account, invnumber, duedate, transdate, 'ar' as class
+                FROM (select id, entity_credit_account, invnumber, duedate, 
+                             amount, transdate, 'ar' as class
                         FROM ar 
                        UNION 
-                      select id, entity_credit_account, invnumber, duedate, transdate, 'ap' as class
+                      select id, entity_credit_account, invnumber, duedate, 
+                             amount, transdate, 'ap' as class
                         FROM ap
                      ) gl 
                 JOIN (select trans_id, 'acc_trans' as relation, 
@@ -122,7 +140,7 @@ BEGIN
                              sum(case when atf.reportable then amount else 0
                                  end) as reportable_amount
                         FROM  acc_trans
-                        JOIN ac_tax_form atf
+                   LEFT JOIN ac_tax_form atf
                           ON (acc_trans.entry_id = atf.entry_id)
                        GROUP BY trans_id
                        UNION
@@ -133,7 +151,7 @@ BEGIN
                                       else 0
                                  end) as reportable_amount
                         FROM invoice
-                        JOIN invoice_tax_form itf
+                   LEFT JOIN invoice_tax_form itf
                           ON (invoice.id = itf.invoice_id)
                        GROUP BY trans_id
                      ) ac ON (ac.trans_id = gl.id)

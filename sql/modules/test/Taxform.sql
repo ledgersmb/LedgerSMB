@@ -345,10 +345,10 @@ SELECT 'ac_sum for test vendor 1, future report is $500', acc_sum = 500
  where meta_number = 'Test account 1';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'ac_sum for test vendor 1, current report is $1000', acc_sum = 1000
+SELECT 'ac_sum for test vendor 2, current report is $1000', acc_sum = 1000
   FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
                                   (date1() + '1 day'::interval)::date)
- where meta_number = 'Test account 1';
+ where meta_number = 'Test account 2';
 
 INSERT INTO test_result(test_name, success)
     SELECT '6 in detail report for current report, vendor 1', count(*) = 6
@@ -602,4 +602,13 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
 
+
+SELECT *
+    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date, 
+                                'Test account 2')
+    WHERE invoice_id = -1034;
+SELECT *
+  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
+                                  (date1() + '1 day'::interval)::date);
 ROLLBACK;

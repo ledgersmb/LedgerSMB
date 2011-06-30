@@ -367,7 +367,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__batch_create";
 
-GRANT INSERT ON ar TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
+GRANT SELECT,INSERT, UPDATE ON ap TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
