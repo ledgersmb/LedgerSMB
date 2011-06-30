@@ -27,6 +27,9 @@ our $VERSION = '0';
 
 use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
+use strict;
+
+my $temp = $LedgerSMB::Sysconfig::temp_dir;
 
 =item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
 
@@ -48,13 +51,17 @@ sub new {
     my ($class, $args) = @_;
 
     my $self = {};
-    for (qw(dbname countrycode chart_name company_name username password)){
+    for (qw(countrycode chart_name chart_gifi company_name username password
+            contrib_dir source_dir)){
         $self->{$_} = $args->{$_};
+    }
+    if ($self->{source_dir}){
+        $self->{source_dir} =~ s/\/*$/\//;
     }
     if (isa($args, 'LedgerSMB')){
         for (keys %$args){
             if ($_ =~ /^_/){
-                $self->{$_} = $arg->{$_};
+                $self->{$_} = $args->{$_};
             }
         }
     }
@@ -64,63 +71,127 @@ sub new {
 
 =item $db->create();
 
-Creates a database with the characteristics in the object
+Creates a database and loads the contrib files.
+
+Returns true if successful, false of not.  Creates a log called dblog in the 
+temporary directory with all the output from the psql files.  
+
+In DEBUG mode, will show all lines to STDERR.  In ERROR logging mode, will 
+display only those lines containing the word ERROR.
 
 =cut
 
 sub create {
-    my $self = (@_);
-    $self->_init_environment();
-    system('createdb $self->{dbname}');
-    my $error = $!;
-    if ($error){
-        $self->error($!);
+    my ($self) = @_;
+    
+    my $rc = system("createdb -E UTF8 > $temp/dblog");
+
+     my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
+
+     for my $contrib (@contrib_scripts){
+         my $rc2;
+         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >>$temp/dblog");
+         $rc ||= $rc2
+     }
+     if (!system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog"
+     )){
+         $rc = 1;
+     }
+     # TODO Add logging of errors/notices
+
+     return !$rc;
+}
+
+=item $db->load_modules($loadorder)
+
+Loads or reloads sql modules from $loadorder
+
+=cut
+
+sub load_modules {
+    my ($self, $loadorder) = @_;
+    open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
+    for my $mod (<LOADORDER>){
+        chomp($mod);
+        $mod =~ s/#.*//;
+        $mod =~ s/^\s*//;
+        $mod =~ s/\s*$//;
+        next if $mod eq '';
+        $self->exec_script({script => "$self->{source_dir}sql/modules/$mod",
+                            log    => "$temp/dblog"});
+
     }
-    for (qw(Database Central)){
-        $self->_execute_script("Pg-$_.sql");
-    }
-    my $chart_path = "sql/$self->{country_code}/";
-    $self->_execute_script(
-        "coa/$self->{country_code}/chart/$self->{chart_name}"
-    );
-    my @gifis = glob('sql/$self->{country_code}/gifi/*.sql');
-    my @gifi_search;
-    my $search_string = $self->{chart_name};
-    while ($search_string and (scalar @gifi_search == 0)){
-        @gifi_search = grep /^$search_string.sql$/, @gifis;
-        if (scalar @gifi_search == 0){
-            if ($search_string !~ /[_-]/){
-                $search_string = "";
+    close (LOADORDER);
+}
+
+=item $db->exec_script({script => 'path/to/file', logfile => 'path/to/log'})
+
+Executes the script.  Returns 0 if successful, 1 if there are errors suggesting
+that types are already created, and 2 if there are other errors.
+
+=cut
+
+sub exec_script {
+    my ($self, $args) = @_;
+    open (LOG, '>>', $args->{log});
+    open (PSQL, '-|', "psql -f $args->{script}");
+    my $test = 0;
+    while (my $line = <PSQL>){
+        if ($line =~ /ERROR/){
+            if (($test < 2) and ($line =~ /relation .* exists/)){
+                $test = 1;
             } else {
-                $search_string =~ s/(.*)[_-].*$/$1/;
+                $test  =2;
             }
         }
+        print LOG $line;
     }
-    if (! scalar @gifi_search){
-        push @gifi_search, 'Default';
-    }
-    my $gifi = $gifi_search[0];
-    $gifi =~ s/\.sql$//;
-    $self->_execute_script("coa/$self->{country_code}/gifi/$gifi");
-    $self->_create_roles();
+    close(PSQL);
+    close(LOG);
+    return $test;
 }
 
-# Private method.  Executes the sql script in psql.
-sub _execute_script {
-    my ($self, $script) = @_;
-    # Note that this needs to be changed so that it works with Win32!
-    system('psql $self->{dbname} < "sql/$script.sql"');
-    return $!;
+=item $db->create_and_load();
+
+Creates a database and then loads it.
+
+=cut
+
+sub create_and_load(){
+    my ($self) = @_;
+    $self->create();
+    $self->load_modules('LOADORDER');
 }
 
-sub _create_roles {
-    
+
+=item $db->process_roles($rolefile);
+
+Loads database Roles templates.
+
+=cut
+
+sub process_roles {
+    my ($self, $rolefile) = @_;
+
+    open (ROLES, '<', "sql/modules/$rolefile");
+    open (TROLES, '>', "$temp/lsmb_roles.sql");
+
+    for my $line (<ROLES>){
+        $line =~ s/<\?lsmb dbname \?>/$self->{company_name}/;
+        print TROLES $line;
+    }
+
+    close ROLES;
+    close TROLES;
+
+    $self->exec_script({script => "sql/modules/$rolefile", 
+                        log    => "$temp/dblog"});
+}
+
+=item $db->log_from_logfile();
+
+Process log file and log relevant pieces via the log classes.
+
+=cut
+
 #TODO
-
-}
-
-sub update {
-    # TODO
-}
-
-=back

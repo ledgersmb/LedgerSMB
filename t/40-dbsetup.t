@@ -1,6 +1,7 @@
 # Database setup tests.
 
 use Test::More;
+use LedgerSMB::Database;
 use strict;
 use DBI;
 
@@ -24,68 +25,35 @@ if ($run_tests){
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
-# Manual tests
-ok(!system ('createdb -E UTF8'), 'Database Created 2') || BAIL_OUT('Database could not be created!');
+my $db = LedgerSMB::Database->new({
+         countrycode  => $ENV{LSMB_COUNTRY_CODE},
+         chart_name   => $ENV{LSMB_LOAD_COA},
+         chart_gifi   => $ENV{LSMB_LOAD_GIFI},
+         company_name => $ENV{LSMB_NEW_DB},
+         username     => $ENV{PGUSER},
+         password     => $ENV{PGPASSWORD},
+         contrib_dir  => $ENV{PG_CONTRIB_DIR},
+         source_dir   => $ENV{LSMB_SOURCE_DIR}
+});
 
+# Manual tests
+ok($db->create, 'Database Created') 
+  || BAIL_OUT('Database could not be created!');
+
+ok($db->load_modules('LOADORDER'), 'Modules loaded');
 if (!$ENV{LSMB_INSTALL_DB}){
     open (DBLOCK, '>', "$temp/LSMB_TEST_DB");
     print DBLOCK $ENV{LSMB_NEW_DB};
     close (DBLOCK);
 }
 
-my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
+ok($db->process_roles('Roles.sql');
 
-for my $contrib (@contrib_scripts){
-    ok(!system "psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql");
-}
-
-
-open (PSQL, '-|', "psql -f sql/Pg-database.sql");
-my $test = 0;
-while (my $line = <PSQL>){
-    chomp($line);
-    if ($line eq 'COMMIT'){
-        $test = 1;
-    }
-    if ($line =~ /error/i){
-        $test = 0;
-    }
-}
-cmp_ok($test, 'eq', '1', "DB Schema loaded and committed");
+#TODO:  Change the COA and GIFI loading to use this, and move admin user to 
+#Database.pm --CT
 close(PSQL);
 
-open (LOADORDER, '<', 'sql/modules/LOADORDER');
-for my $mod (<LOADORDER>){
-    chomp($mod);
-    $mod =~ s/#.*//;
-    $mod =~ s/^\s*//;
-    $mod =~ s/\s*$//;
-    next if $mod eq '';
 
-    ok(open (PSQL, '-|', "psql -f sql/modules/$mod"), "$mod loaded");
-    my $test = 0;
-    while (my $line = <PSQL>){
-        chomp($line);
-        if ($line eq 'COMMIT'){
-            $test = 1;
-        }
-    }
-    close(PSQL);
-}
-close (LOADORDER);
-
-# Roles processing for later permission tests and db install.
-open (PSQL, '|-', "psql");
-
-(open (ROLES, '<', 'sql/modules/Roles.sql') && pass("Roles description found"))
-|| fail("Roles description found");
-
-for my $roleline (<ROLES>){
-    $roleline =~ s/<\?lsmb dbname \?>/$ENV{LSMB_NEW_DB}/;
-    print PSQL $roleline;
-}
-
-close (PSQL);
 SKIP: {
      skip 'No admin info', 4
            if (!defined $ENV{LSMB_ADMIN_USERNAME} 
