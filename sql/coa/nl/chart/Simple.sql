@@ -14,9 +14,9 @@ SELECT account_save(NULL,'1530','Voorraad / Software','A','', NULL, false, false
 SELECT account_save(NULL,'1540','Voorraad / Aftermarket Parts','A','', NULL, false, false, string_to_array('IC', ':'));
 SELECT account_heading_save(NULL,'1800','LANGE TERMIJN ACTIVA', NULL);
 SELECT account_save(NULL,'1820','Inventaris','A','', NULL, false, false, string_to_array('AP_amount', ':'));
-SELECT account_save(NULL,'1825','Afschrijving inventaris','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1825','Afschrijving inventaris','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1840','Auto','A','', NULL, false, false, string_to_array('AP_amount', ':'));
-SELECT account_save(NULL,'1845','Afschrijving auto','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1845','Afschrijving auto','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL,'2000','HUIDIGE PASSIVA', NULL);
 SELECT account_save(NULL,'2100','Crediteuren','L','', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_save(NULL,'2160','Niet-rijks Belastingen','L','', NULL, false, false, string_to_array('', ':'));

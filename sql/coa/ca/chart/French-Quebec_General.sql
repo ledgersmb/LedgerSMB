@@ -20,9 +20,9 @@ SELECT account_save(NULL,'1530','Inventaire / Pièces de rechange','A','1122', N
 SELECT account_save(NULL,'1540','Inventaire / Matières premières','A','1122', NULL, false, false, string_to_array('IC', ':'));
 SELECT account_heading_save(NULL, '1800', 'AUTRES IMMOBILISATIONS', NULL);
 SELECT account_save(NULL,'1820','Meubles et accessoires','A','1787', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'1825','Amortissement cumulé des meubles et des accessoires','A','1788', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1825','Amortissement cumulé des meubles et des accessoires','A','1788', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1840','Véhicules automobiles','A','1742', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'1845','Amortissement cumulé des véhicules automobiles','A','1743', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1845','Amortissement cumulé des véhicules automobiles','A','1743', NULL, true, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL, '2000', 'PASSIF COURANT', NULL);
 SELECT account_save(NULL,'2100','Comptes fournisseurs','L','2621', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_save(NULL,'2160','Taxes fédérales à payer','L','2683', NULL, false, false, string_to_array('', ':'));

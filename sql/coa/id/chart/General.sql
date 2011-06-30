@@ -10,9 +10,9 @@ SELECT account_save(NULL,'1520','Inventory / Umum','A','', NULL, false, false, s
 SELECT account_save(NULL,'1530','Inventory / Aftermarket Parts','A','', NULL, false, false, string_to_array('IC', ':'));
 SELECT account_heading_save(NULL,'1800','AKTIVA TETAP', NULL);
 SELECT account_save(NULL,'1820','Perabot Kantor & Peralatan','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'1825','Akumulasi Amort. Perabot & Peralatan','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1825','Akumulasi Amort. Perabot & Peralatan','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1840','Kendaraan','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'1845','Akumulasi Amort. Kendaraan','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1845','Akumulasi Amort. Kendaraan','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL,'2000','HUTANG LANCAR', NULL);
 SELECT account_save(NULL,'2100','Hutang Dagang','L','', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_save(NULL,'2160','Hutang Pajak','L','', NULL, false, false, string_to_array('', ':'));

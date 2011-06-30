@@ -6,13 +6,13 @@ SELECT account_save(NULL,'0010','Freehold Property','A','', NULL, false, false, 
 SELECT account_save(NULL,'0011','Goodwill','A','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'0012','Goodwill Amortisation','A','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'0020','Plant and Machinery','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'0021','Plant/Machinery Depreciation','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'0021','Plant/Machinery Depreciation','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'0030','Office Equipment','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'0031','Office Equipment Depreciation','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'0031','Office Equipment Depreciation','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'0040','Furniture and Fixtures','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'0041','Furniture/Fixture Depreciation','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'0041','Furniture/Fixture Depreciation','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'0050','Motor Vehicles','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'0051','Motor Vehicles Depreciation','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'0051','Motor Vehicles Depreciation','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1001','Stock','A','', NULL, false, false, string_to_array('IC', ':'));
 SELECT account_save(NULL,'1002','Work in Progress','A','', NULL, false, false, string_to_array('IC', ':'));
 SELECT account_save(NULL,'1100','Debtors Control Account','A','', NULL, false, false, string_to_array('AR', ':'));
