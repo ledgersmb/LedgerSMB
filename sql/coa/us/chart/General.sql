@@ -12,9 +12,9 @@ SELECT account_save(NULL,'1510','Inventory','A','', NULL, false, false, string_t
 
 SELECT account_heading_save(NULL,'1800','CAPITAL ASSETS', NULL);
 SELECT account_save(NULL,'1820','Office Furniture & Equipment','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'1825','Accum. Amort. -Furn. & Equip.','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1825','Accum. Amort. -Furn. & Equip.','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1840','Vehicle','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'1845','Accum. Amort. -Vehicle','A','', NULL, '1',string_to_array('', ':'));
+SELECT account_save(NULL,'1845','Accum. Amort. -Vehicle','A','', NULL, true, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL,'2000','CURRENT LIABILITIES', NULL);
 SELECT account_save(NULL,'2100','Accounts Payable','L','', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_heading_save(NULL,'2600','LONG TERM LIABILITIES', NULL);
