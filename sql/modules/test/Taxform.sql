@@ -209,7 +209,7 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1034, -1000, date1(), -1010, true, -215);
 
 insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-     VALUES (-1034, -201, -255, 'test 1', 1, 1000);
+     VALUES (-1034, -201, -255, 'test 1', -1, 1000);
 
 INSERT INTO invoice_tax_form(invoice_id, reportable)
      VALUES (-201, true);
@@ -242,7 +242,7 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1035, -1000, date1(), -505, true, -225);
 
 insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-     VALUES (-1035, -211, -255, 'test 1', 1, 1000);
+     VALUES (-1035, -211, -255, 'test 1', -1, 1000);
 
 INSERT INTO invoice_tax_form(invoice_id, reportable)
      VALUES (-211, true);
@@ -279,7 +279,7 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1036, -1000, date2(), -505, true, -237);
 
 insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-     VALUES (-1036, -221, -255, 'test 1', 1, 1000);
+     VALUES (-1036, -221, -255, 'test 1', -1, 1000);
 
 INSERT INTO invoice_tax_form(invoice_id, reportable)
      VALUES (-221, true);
@@ -305,13 +305,13 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1037, -1001, date1(), -10, true, -243);
 
 INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-     VALUES (-1037, -1002, date1(), 505, true, -244);
+     VALUES (-1037, -1002, date1(), 1010, true, -244);
 
 INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-     VALUES (-1037, -1000, date1(), -505, true, -245);
+     VALUES (-1037, -1000, date1(), -1010, true, -245);
 
 insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-     VALUES (-1037, -231, -255, 'test 1', 1, 1000);
+     VALUES (-1037, -231, -255, 'test 1', -1, 1000);
 
 INSERT INTO invoice_tax_form(invoice_id, reportable)
      VALUES (-231, true);
@@ -606,8 +606,7 @@ SELECT (select count(*) from test_result where success is true)
 SELECT *
     FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
                                   (date1() + '1 day'::interval)::date, 
-                                'Test account 2')
-    WHERE invoice_id = -1034;
+                                'Test account 2');
 SELECT *
   FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
                                   (date1() + '1 day'::interval)::date);
