@@ -91,7 +91,7 @@ INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10421, '52700', 'Zákonné sociální náklady', 'A', 'E', 'AP_amount', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10423, '52800', 'Ostatní sociální náklady', 'A', 'E', 'AP_amount', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10433, '54000', 'Jiné provozní náklady', 'A', 'E', 'AP_amount:IC_expense', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10437, '54200', 'Prodaný materiál', 'A', 'E', 'IC_COGS', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10437, '54200', 'Prodaný materiál', 'A', 'E', 'IC_expense', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10439, '54300', 'Dary', 'A', 'E', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10441, '54400', 'Smluvní pokuty a úroky z prodlení', 'A', 'E', 'AP_amount', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10443, '54500', 'Ostatní pokuty a penále', 'A', 'E', 'AP_amount', '', false);
@@ -107,9 +107,9 @@ INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10487, '58400', 'Tvorba rezerv', 'A', 'E', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10529, '62000', 'Aktivace', 'A', 'I', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10537, '62400', 'Aktivace dlouhodobého hmotného majetku', 'A', 'I', '', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10539, '64000', 'Jiné provozní výnosy.', 'A', 'I', 'AR_amount:IC_sale:IC_Income', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10539, '64000', 'Jiné provozní výnosy.', 'A', 'I', 'AR_amount:IC_sale:IC_income', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10547, '64600', 'Výnosy z odepsaných pohledávek', 'A', 'I', 'AR_amount', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10549, '64800', 'Jiné provozní výnosy', 'A', 'I', 'AR_amount:IC_sale:IC_Income', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10549, '64800', 'Jiné provozní výnosy', 'A', 'I', 'AR_amount:IC_sale:IC_income', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10569, '66200', 'Úroky', 'A', 'I', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10571, '66300', 'Kursové zisky', 'A', 'I', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10243, '34311', 'DPH snížená vstup', 'A', 'L', 'AP_tax:IC_taxpart:IC_taxservice', '', false);
@@ -231,11 +231,11 @@ INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10377, '47500', 'Dlouhodobé přijaté zálohy', 'A', 'L', 'AP', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10379, '47800', 'Dlouhodobé směnky k úhradě', 'A', 'L', 'AP', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10385, '49100', 'Účet individuálního podnikatele', 'A', 'Q', '', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10387, '50000', 'Spotřebované nákupy', 'A', 'E', 'AP_amount:IC_COGS', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10389, '50100', 'Spotřeba materiálu', 'A', 'E', 'AP_amount:IC_COGS', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10387, '50000', 'Spotřebované nákupy', 'A', 'E', 'AP_amount:IC_expense', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10389, '50100', 'Spotřeba materiálu', 'A', 'E', 'AP_amount:IC_expense', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10391, '50200', 'Spotřeba energie', 'A', 'E', 'AP_amount', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10393, '50300', 'Spotřeba ostatních neskladovatelných dodávek', 'A', 'E', 'AP_amount:IC_COGS', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10395, '50400', 'Prodané zboží', 'A', 'E', 'AP_amount:IC_COGS', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10393, '50300', 'Spotřeba ostatních neskladovatelných dodávek', 'A', 'E', 'AP_amount:IC_expense', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10395, '50400', 'Prodané zboží', 'A', 'E', 'AP_amount:IC_expense', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10397, '51000', 'Služby', 'A', 'E', 'AP_amount:IC_expense', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10399, '51100', 'Opravy a udržování', 'A', 'E', 'AP_amount:IC_expense', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10405, '51800', 'Ostatní služby', 'A', 'E', 'AP_amount:IC_expense', '', false);
@@ -271,7 +271,7 @@ INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10505, '59600', 'Převod podílu na hospodářském výsledku společníkùm', 'A', 'E', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10507, '59700', 'Převod provozních nákladů', 'A', 'E', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10509, '59800', 'Převod finančních nákladù', 'A', 'E', '', '', false);
-INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10511, '60000', 'Tržby za vlastní výkony a zboží', 'A', 'I', 'AR_amount:IC_sale:IC_Income', '', false);
+INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10511, '60000', 'Tržby za vlastní výkony a zboží', 'A', 'I', 'AR_amount:IC_sale:IC_income', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10513, '60100', 'Tržby za vlastní výrobky', 'A', 'I', 'AR_amount:IC_sale', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10515, '60200', 'Tržby z prodeje služeb', 'A', 'I', 'AR_amount:IC_income', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10517, '60400', 'Tržby za zboží', 'A', 'I', 'AR_amount:IC_sale', '', false);

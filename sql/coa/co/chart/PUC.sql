@@ -647,7 +647,7 @@ SELECT account_save(NULL,'5235350001','Telefono','E','5235350001', NULL, false, 
 SELECT account_save(NULL,'1355150003','Retefuente 7% Rendimientos Finan','A','1355150003', NULL, false, false, string_to_array('IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'1355150001','Retefuente 2% Factor multiplicad','A','1355150001', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1355170001','Iva Retenido 75% de 16%','A','1355170001', NULL, false, false, string_to_array('IC_taxpart:IC_taxservice', ':'));
-SELECT account_save(NULL,'2365150004','Honorarios Persona Juridica 11%','L','2365150004', NULL, false, false, string_to_array('CT_tax', ':'));
+SELECT account_save(NULL,'2365150004','Honorarios Persona Juridica 11%','L','2365150004', NULL, false, false, string_to_array('AR_tax:AP_tax', ':'));
 SELECT account_save(NULL,'2367050001','Iva retenido reg simplif 12% ','L','236705', NULL, false, false, string_to_array('AP_tax', ':'));
 SELECT account_heading_save(NULL, '236710', 'IVA RETENIDO AL REGIMEN COMUN ', NULL);
 SELECT account_heading_save(NULL, '236705', 'IVA RETENIDO AL REGIMEN SIMPLIF. ', NULL);
@@ -673,7 +673,7 @@ SELECT account_save(NULL,'2610050001','Cesantias','L','2610050001', NULL, false,
 SELECT account_save(NULL,'2610100001','Intereses Sobre Cesantias','L','2610100001', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2610150001','Vacaciones','L','2610150001', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2610200001','Prima de Servicios','L','2610200001', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'2367100001','Iva retenido al reg comun 16% ','L','236710', NULL, false, false, string_to_array('CT_tax', ':'));
+SELECT account_save(NULL,'2367100001','Iva retenido al reg comun 16% ','L','236710', NULL, false, false, string_to_array('AR_tax:AP_tax', ':'));
 SELECT account_save(NULL,'2367050002','Iva retenido Reg Simp.del 7% ','L','236705', NULL, false, false, string_to_array('IC_taxservice', ':'));
 SELECT account_save(NULL,'2367100002','Iva retenido al reg comun 20% ','L','236710', NULL, false, false, string_to_array('IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'2367100003','Iva retenido al reg comun del 7% ','L','236710', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
