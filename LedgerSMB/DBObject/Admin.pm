@@ -249,14 +249,23 @@ sub get_salutations {
 sub get_roles {
     
     my $self = shift @_;
+    my $company = shift; # optional
     my @s_rows = $self->call_procedure(procname=>'admin__get_roles');
     my @rows;
-    my $company = $self->{company};
+
+    $company = $self->{company} if ! defined $company;
     $logger->debug("get_roles: company = $company");
     $logger->debug("get_roles: self = " . Data::Dumper::Dumper($self));
     for my $role (@s_rows) {
         my $rolname = $role->{'rolname'};
-        push @rows, $rolname;
+	my $description = $rolname;
+	$description =~ s/lsmb_//;
+	$description =~ s/${company}__//
+	    if defined $company;
+	$description =~ s/_/ /g;
+        push @rows, { name => $rolname, description => #"lsmb_$company\_"  #
+			  $description
+	};
     }
     return \@rows;
 }

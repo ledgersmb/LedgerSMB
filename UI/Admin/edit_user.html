@@ -264,14 +264,14 @@
                 <?lsmb END?>
                     <td>
                         <?lsmb rolcheck = undef; 
-                           IF user.roles.grep(role).size;
+                           IF user.roles.grep(role.name).size;
                               rolcheck = "checked";
                            END ?>
                         <?lsmb PROCESS input element_data = {
                                type = "checkbox"
-                               label = role
+                               label = role.description
                                value = 1
-                               name = role
+                               name = role.name
                                checked = rolcheck
                          }, label_pos = 1 ?>
                     </td>

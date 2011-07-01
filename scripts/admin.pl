@@ -22,7 +22,7 @@ sub __edit_page {
     my $dcsetting = LedgerSMB::Setting->new(base=>$request, copy=>'base');
     my $default_country = $dcsetting->get('default_country'); 
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'list', merge =>['user_id']);
-    my @all_roles = $admin->get_roles();
+    my @all_roles = $admin->get_roles($request->{company});
     my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
     $user_obj->{company} = $request->{company};
     $user_obj->get($request->{user_id});
