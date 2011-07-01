@@ -103,7 +103,7 @@ SELECT account_save(NULL,'222010400','Inne zobowi±zania','L','', NULL, false, f
 SELECT account_save(NULL,'222020000','Zobowi±zania wobec pozosta³ych jednostek','L','', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_save(NULL,'222020100','Kredyty i po¿yczki','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'222020200','Zobowi±zania z tytu³u emisji d³u¿nych papierów warto¶ciowych','L','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'222020300','Inne zobowi±zania finasowe','L','', NULL, false, false, string_to_array('AP_Amount', ':'));
+SELECT account_save(NULL,'222020300','Inne zobowi±zania finasowe','L','', NULL, false, false, string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'222020400','Zobowiazania z tytu³u dostaw i us³ug','L','', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_save(NULL,'222020500','Zobowi±zania o okresie wymagalno¶ci do 12 miesiêcy ','L','', NULL, false, false, string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'222020600','Zobowi±zania o okresie wymagalno¶ci powy¿ej 12 miesiêy','L','', NULL, false, false, string_to_array('AP_amount', ':'));
@@ -143,7 +143,7 @@ SELECT account_save(NULL,'225020200','Kredyty i po¿yczki udzielone','L','', NUL
 SELECT account_save(NULL,'225020300','Zobowi±zania z tytu³u emisji d³u¿nych papierów warto¶ciowych','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'225020400','Inne zobowi±zania kredytowe','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'225020500','Inne zobowi±zania','L','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'225030000','Rozrachunki z tytu³u wp³at na kapita³ zak³adowy','L','', NULL, false, false, string_to_array('AR_amount:APamount', ':'));
+SELECT account_save(NULL,'225030000','Rozrachunki z tytu³u wp³at na kapita³ zak³adowy','L','', NULL, false, false, string_to_array('AR_amount:AP_amount', ':'));
 SELECT account_save(NULL,'225040000','Rozrachunki z tytu³u wk³adów niepieniê¿nych na kapita³ zak³adowy','L','', NULL, false, false, string_to_array('AR_amount:AP_amount', ':'));
 SELECT account_save(NULL,'225050000','Rozrachunki z tytu³u podwy¿szenia kapita³u ze ¶rodków w³asnych spó³ki','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'225060000','Rozrachunki z tytu³u umorzenia udzia³ów w³asnych','L','', NULL, false, false, string_to_array('', ':'));
