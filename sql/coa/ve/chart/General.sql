@@ -53,16 +53,16 @@ SELECT account_save(NULL,'5020','COSTO DE VENTA: Autopartes','E','', NULL, false
 SELECT account_save(NULL,'5100','Flete','E','', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'));
 -- HR
 SELECT account_heading_save(NULL,'5400','GASTO DE PERSONAL', NULL);
-SELECT account_save(NULL,'5405','Sueldos Directivo y Administradores','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5410','Sueldos Empleados','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5415','Comisiones Vendedores','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5420','Vacaciones','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5425','Bono Vacacional','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5430','Utilidades','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5435','Indemnizaciones','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5440','Movilizaciones y Traslados','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5445','Gastos de Representación','E','', NULL, false, false, string_to_array('HR_expense', ':'));
-SELECT account_save(NULL,'5450','Instrucción y Mejoramiento','E','', NULL, false, false, string_to_array('HR_expense', ':'));
+SELECT account_save(NULL,'5405','Sueldos Directivo y Administradores','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5410','Sueldos Empleados','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5415','Comisiones Vendedores','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5420','Vacaciones','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5425','Bono Vacacional','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5430','Utilidades','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5435','Indemnizaciones','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5440','Movilizaciones y Traslados','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5445','Gastos de Representación','E','', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL,'5450','Instrucción y Mejoramiento','E','', NULL, false, false, string_to_array('', ':'));
 
 SELECT account_heading_save(NULL,'5600','GASTOS GENERALES', NULL);
 SELECT account_save(NULL,'5610','Honorarios Profesionales','E','', NULL, false, false, string_to_array('AP_amount', ':'));

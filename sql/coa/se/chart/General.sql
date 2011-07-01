@@ -683,7 +683,7 @@ SELECT account_save(NULL,'5680','Flygplans- och helikopterkostnader ','E','538',
 SELECT account_save(NULL,'5690','Övriga kostnader för transportmedel ','E','538', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL,'57','Frakter och transporter ', NULL);
 SELECT account_save(NULL,'5700','Frakter och transporter (gruppkonto) ','E','538', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'5710','Frakter, transporter och försäkringar vid varudistribution ','E','538', NULL, false, false, string_to_array('AP_amount:IC_expence', ':'));
+SELECT account_save(NULL,'5710','Frakter, transporter och försäkringar vid varudistribution ','E','538', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'));
 SELECT account_save(NULL,'5720','Tull- och speditionskostnader ','E','538', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'5730','Arbetstransporter ','E','538', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL,'58','Resekostnader ', NULL);
