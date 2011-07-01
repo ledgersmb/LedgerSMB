@@ -289,15 +289,19 @@ returns int as
 $$
 DECLARE
 	t_expires timestamp;
+        t_password_duration text;
 BEGIN
-    SELECT now() + (value::numeric::text || ' days')::interval INTO t_expires
-    FROM defaults WHERE setting_key = 'password_duration';
+    SELECT value INTO t_password_duration FROM defaults 
+     WHERE setting_key = 'password_duration';
+    IF t_password_duration IS NULL or t_password_duration='' THEN
+        t_expires := 'infinity';
+    ELSE
+        t_expires := now() 
+                     + (t_password_duration::numeric::text || ' days')::interval;
+    END IF;
+
 
     UPDATE users SET notify_password = DEFAULT where username = SESSION_USER;
-
-    IF t_expires IS NULL THEN
-        t_expires := 'infinity';
-    END IF;
 
     EXECUTE 'ALTER USER ' || quote_ident(SESSION_USER) || 
             ' with ENCRYPTED password ' || quote_literal(in_new_password) ||

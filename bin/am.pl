@@ -1725,6 +1725,11 @@ sub config {
 
 sub save_defaults {
     my @defaults;
+    if ($form->{password_duration} =~ /\D/){
+        $form->error(
+           $locale->text('Password duration must be an integer')
+        );
+    }
     for (@default_textboxes){
        push @defaults, $_->{name};
     } 
