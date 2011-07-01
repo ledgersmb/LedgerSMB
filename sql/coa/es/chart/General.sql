@@ -92,14 +92,14 @@ SELECT account_save(NULL,'680000000','Dotaciones para amortizaciones','E','', NU
 SELECT account_save(NULL,'690000000','Dotaciones a las provisiones','E','', NULL, false, false, string_to_array('', ':'));
 --
 SELECT account_heading_save(NULL, '699999999','Grupo 7: ventas e ingresos', NULL);
-SELECT account_save(NULL,'700000000','Ventas de servicios y productos','I','', NULL, false, false, string_to_array('AR_income:IC_sale:IC_income', ':'));
+SELECT account_save(NULL,'700000000','Ventas de servicios y productos','I','', NULL, false, false, string_to_array('AR_amount:IC_income', ':'));
 SELECT account_save(NULL,'708000000','Devoluciones de ventas y operaciones similares','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'710000000','Variación de existencias','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'730000000','Trabajos realizados para la empresa','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'740000000','Subvenciones a la explotación','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'750000000','Otros ingresos de gestión','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'760000000','Ingresos financieros','I','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'765000000','Descuentos sobre compras por pronto pago','I','', NULL, false, false, string_to_array('IC_sale:IC_income', ':'));
+SELECT account_save(NULL,'765000000','Descuentos sobre compras por pronto pago','I','', NULL, false, false, string_to_array('IC_income', ':'));
 SELECT account_save(NULL,'768000000','Diferencias positivas de cambio','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'770000000','Beneficios procedentes de inmovilizados e ingresos excepcionales','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'790000000','Excesos y aplicaciones de provisiones','I','', NULL, false, false, string_to_array('', ':'));

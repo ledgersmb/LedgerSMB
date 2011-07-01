@@ -20,9 +20,9 @@ SELECT account_save(NULL,'1520','مخزون - قطع غيار كمبيوتر','A
 SELECT account_save(NULL,'1530','مخزون - برامج','A','', NULL, false, false, string_to_array('IC', ':'));
 SELECT account_save(NULL,'1540','مخزون - قطع اخرى','A','', NULL, false, false, string_to_array('IC', ':'));
 SELECT account_save(NULL,'1840','سيارات','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL, '1845','مخصص اهلاك سيارات','A','',NULL,'1', '{}');
+SELECT account_save(NULL, '1845','مخصص اهلاك سيارات','A','',NULL, true, false, '{}');
 SELECT account_save(NULL,'1820','اثاث مكتبى و معدات','A','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL, '1825','مخصص اهلاك اثاث مكتبى و معدات','A','',NULL,'1','{}');
+SELECT account_save(NULL, '1825','مخصص اهلاك اثاث مكتبى و معدات','A','',NULL, true, false, '{}');
 SELECT account_save(NULL,'2310','ضريبة مبيعات (10%)','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'2320','ضريبة مبيعات (14%)','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'2330','ضريبة مبيعات (30%)','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
