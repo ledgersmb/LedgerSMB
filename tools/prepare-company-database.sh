@@ -224,7 +224,7 @@ sed -e "s/<?lsmb dbname ?>/$company_name/g" \
   $srcdir/sql/modules/Roles.sql | $psql_cmd 2>&1 | unchatter
 
 
-if test -n "$coa" ; then
+if ! test "$coa" = "none" ; then
   # Load a chart of accounts
   cat $coa | $psql_cmd 2>&1 | unchatter
   if test -n "$gifi" ; then
