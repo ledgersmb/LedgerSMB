@@ -590,16 +590,4 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
 
-SELECT *
-    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
-                                  (date1() + '1 day'::interval)::date, 
-                                'Test account 1');
-
-SELECT *
-    FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date, 
-                                  (date1() + '1 day'::interval)::date, 
-                                'Test account 2');
-SELECT *
-  FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date, 
-                                  (date1() + '1 day'::interval)::date);
 ROLLBACK;
