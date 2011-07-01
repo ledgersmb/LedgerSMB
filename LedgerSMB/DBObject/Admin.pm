@@ -21,7 +21,6 @@ sub save {
 sub save_user {
     
     my $self = shift @_;
-    
     $self->{user_id} = $user_id->{admin__save_user};
     
     my $employee = LedgerSMB::DBObject::Employee->new( base=>$self);
@@ -44,7 +43,7 @@ sub save_user {
     $self->{employee} = $employee;
 
     if ($self->{password}){
-       return;
+       return $self->{dbh}->commit;
     }
  
     my $loc = LedgerSMB::DBObject::Location->new(base=>$self, copy=>'list', 
@@ -73,6 +72,7 @@ sub save_user {
     $workphone->save();
     $homephone->save();
     $email->save();
+    $self->{dbh}->commit;
     
 }
 
