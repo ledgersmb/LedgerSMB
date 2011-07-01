@@ -1730,7 +1730,7 @@ sub save_defaults {
     } 
     push @defaults, @default_others;
     push @defaults;
-    if ( AM->save_defaults( \%myconfig, \%$form, \@defaults) ) {
+    if ( AM->save_defaults( \%myconfig, $form, \@defaults) ) {
         $form->redirect( $locale->text('Defaults saved!') );
     }
     else {

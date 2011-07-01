@@ -41,11 +41,12 @@ BEGIN
                           THEN ac.reportable_amount * pmt.amount
                                / gl.amount
                           ELSE 0
-                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
+                      END * CASE WHEN gl.class = 'ar' THEN -1 else 1 end),
                      sum(CASE WHEN gl.amount = 0 THEN 0
                           ELSE ac.reportable_amount * pmt.amount
                                 / gl.amount
-                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end)
+                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end
+                      * CASE WHEN ac.relation = 'invoice' then -1 else 1 end)
                          
 		FROM (select id, transdate, entity_credit_account, invoice, 
                              amount, 'ar' as class FROM ar 
@@ -120,12 +121,13 @@ BEGIN
                           THEN ac.reportable_amount * pmt.amount
                                / gl.amount
                           ELSE 0
-                      END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
+                      END * CASE WHEN gl.class = 'ar' THEN -1 else 1 end),
                      SUM(CASE WHEN gl.amount = 0 THEN 0 
                               ELSE ac.reportable_amount * pmt.amount
                                / gl.amount 
                               END
-                         * CASE WHEN gl.class = 'ap' THEN -1 else 1 end),
+                         * CASE WHEN gl.class = 'ap' THEN -1 else 1 end 
+                         * CASE WHEN relation = 'invoice' THEN -1 ELSE 1 END),
                      gl.invnumber, gl.duedate::text, gl.id
                 FROM (select id, entity_credit_account, invnumber, duedate, 
                              amount, transdate, 'ar' as class
