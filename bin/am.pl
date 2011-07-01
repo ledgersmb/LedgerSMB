@@ -72,7 +72,7 @@ my @default_textboxes = (
      label => $locale->text('Default Email From') },
 );
 
-my @default_others = qq(businessnumber weightunit 
+my @default_others = qw(businessnumber weightunit 
                         IC IC_income IC_expense 
                         FX_gain FX_loss default_country templates curr);
 
@@ -1729,7 +1729,6 @@ sub save_defaults {
        push @defaults, $_->{name};
     } 
     push @defaults, @default_others;
-    push @defaults;
     if ( AM->save_defaults( \%myconfig, $form, \@defaults) ) {
         $form->redirect( $locale->text('Defaults saved!') );
     }
