@@ -204,7 +204,7 @@ sub print_check {
     $form->{decimal}        = substr( $form->{decimal}, 0, 2 );
     $form->{text_decimal}   = $c->num2text( $form->{decimal} * 1 );
     $form->{text_amount}    = $c->num2text($whole);
-    $form->{integer_amount} = $form->format_amount( $myconfig, $whole );
+    $form->{integer_amount} = $form->format_amount( \%myconfig, $whole );
 
     ( $form->{employee} ) = split /--/, $form->{employee};
 
@@ -395,7 +395,7 @@ sub print_transaction {
             );
 
             $form->{"${accno}_taxrate"} =
-              $form->format_amount( $myconfig, $form->{"${accno}_rate"} * 100 );
+              $form->format_amount( \%myconfig, $form->{"${accno}_rate"} * 100 );
             push( @{ $form->{taxrate} }, $form->{"${accno}_taxrate"} );
 
             push( @{ $form->{taxnumber} }, $form->{"${accno}_taxnumber"} );
@@ -450,7 +450,7 @@ sub print_transaction {
     $form->{decimal}        = substr( $form->{decimal}, 0, 2 );
     $form->{text_decimal}   = $c->num2text( $form->{decimal} * 1 );
     $form->{text_amount}    = $c->num2text($whole);
-    $form->{integer_amount} = $form->format_amount( $myconfig, $whole );
+    $form->{integer_amount} = $form->format_amount( \%myconfig, $whole );
 
     for (qw(invtotal subtotal paid total)) {
         $form->{$_} = $form->format_amount( \%myconfig, $form->{$_}, 2 );
@@ -482,11 +482,12 @@ sub print_transaction {
     $form->{invdate} = $form->{transdate};
 
     $form->{templates} = "$myconfig{templates}";
-    $form->{IN} =
-      ( $form->{formname} eq 'transaction' )
-      ? lc $form->{ARAP} . "_$form->{formname}.html"
-      : "$form->{formname}.html";
-
+    if ($form->{formname} eq 'transaction' ){
+        $form->{IN} = lc $form->{ARAP} . "_$form->{formname}.html";
+        $form->{formname} = lc $form->{ARAP} . "_$form->{formname}";
+    } else {
+        $form->{IN} ="$form->{formname}.html";
+    }
     if ( $form->{format} =~ /(postscript|pdf)/ ) {
         $form->{IN} =~ s/html$/tex/;
     }
