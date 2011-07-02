@@ -2,6 +2,8 @@
 
 use Test::More;
 use LedgerSMB::Database;
+use LedgerSMB;
+use LedgerSMB::DBObject::Admin;
 use strict;
 use DBI;
 
@@ -47,12 +49,10 @@ if (!$ENV{LSMB_INSTALL_DB}){
     close (DBLOCK);
 }
 
-ok($db->process_roles('Roles.sql');
+ok($db->process_roles('Roles.sql'), 'Roles processed');
 
-#TODO:  Change the COA and GIFI loading to use this, and move admin user to 
+#Changed the COA and GIFI loading to use this, and move admin user to 
 #Database.pm --CT
-close(PSQL);
-
 
 SKIP: {
      skip 'No admin info', 4
@@ -61,28 +61,23 @@ SKIP: {
                 or !defined $ENV{LSMB_COUNTRY_CODE}
                 or !defined $ENV{LSMB_ADMIN_FNAME}
                 or !defined $ENV{LSMB_ADMIN_LNAME});
-     my $dbh = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
-                                       undef, undef);
+     # Move to LedgerSMB::DBObject::Admin calls.
+     my $lsmb = new LedgerSMB;
+     ok(defined $lsmb);
+     isa_ok($lsmb, 'LedgerSMB');
+     $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
+                                       undef, undef, { AutoCommit => 0 });
+     my $dbh = $lsmb->{dbh};
      ok($dbh, 'Connected to new database');
-     $dbh->{autocommit} = 1;
-     my $sth = $dbh->prepare(
-              "SELECT admin__save_user(NULL, -- no user id yet, create new user
-                                       person__save(NULL, -- create new person
-                                                    NULL,
-                                                    ?, -- First Name
-                                                    NULL,
-                                                    ?, -- Last Name
-                                                    (select id from country
-                                                    where short_name = ?) 
-                                       ),
-                                       ?, -- Username desired
-                                       ? -- password
-                       )");
-      ok($sth->execute($ENV{LSMB_ADMIN_FNAME}, 
-              $ENV{LSMB_ADMIN_LNAME}, 
-              uc($ENV{LSMB_COUNTRY_CODE}),
-              $ENV{LSMB_ADMIN_USERNAME},
-              $ENV{LSMB_ADMIN_PASSWORD}), 'Admin user creation query ran');
+     my $sth = $dbh->prepare("select id from country where short_name = ?");
+     $sth->execute($ENV{LSMB_COUNTRY_CODE});
+     my $ref = $sth->fetchrow_array('name_LC');
+     $sth->finish;
+     $lsmb->merge({username   => $ENV{LSMB_ADMIN_USERNAME},
+                   first_name => $ENV{LSMB_ADMIN_FNAME},
+                   last_name  => $ENV{LSMB_ADMIN_LNAME},
+                   country_id => $ref->{id},
+                 });
       my ($var) = $sth->fetchrow_array();
       cmp_ok($var, '>', 0, 'User id retrieved');
       $sth->finish;
@@ -96,35 +91,17 @@ SKIP: {
 
 SKIP: {
      skip 'No COA specified', 2 if !defined $ENV{LSMB_LOAD_COA};
-     ok(open (PSQL, '-|', "psql -f sql/coa/".lc($ENV{LSMB_COUNTRY_CODE})
-                                ."/chart/$ENV{LSMB_LOAD_COA}.sql"), 
+     ok($db->exec_script('sql/coa/' 
+                         . lc($ENV{LSMB_COUNTRY_CODE}) 
+                         ."/chart/$ENV{LSMB_LOAD_COA}.sql"),
         'Ran Chart of Accounts Script');
-     my $return = 1;
-     for my $line (<PSQL>){
-         chomp $line;
-         if ($line eq 'COMMIT'){
-             $return = 1;
-         } elsif ($line eq 'ROLLBACK'){
-             $return = 0;
-         }
-     } 
-     ok($return, 'Chart file committed');
 }
 
 SKIP: {
      skip 'No GIFI specified', 2 if !defined $ENV{LSMB_LOAD_GIFI};
-     ok(open (PSQL, '-|', "psql -f sql/coa/".lc($ENV{LSMB_COUNTRY_CODE})
-                                ."/gifi/$ENV{LSMB_LOAD_GIFI}.sql"), 
+     ok($db->exec_script('sql/coa/' 
+                         . lc($ENV{LSMB_COUNTRY_CODE}) 
+                         ."/chart/$ENV{LSMB_LOAD_GIFI}.sql"),
         'Ran GIFI Script');
-     my $return = 1;
-     for my $line (<PSQL>){
-         chomp $line;
-         if ($line eq 'COMMIT'){
-             $return = 1;
-         } elsif ($line eq 'ROLLBACK'){
-             $return = 0;
-         }
-     } 
-     ok($return, 'GIFI file committed');
 }
 

@@ -23,7 +23,7 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 
 package LedgerSMB::Database;
 
-our $VERSION = '0';
+our $VERSION = '1';
 
 use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
@@ -195,3 +195,5 @@ Process log file and log relevant pieces via the log classes.
 =cut
 
 #TODO
+#
+1;
