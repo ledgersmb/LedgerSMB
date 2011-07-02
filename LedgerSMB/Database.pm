@@ -83,10 +83,10 @@ sub create {
 
      for my $contrib (@contrib_scripts){
          my $rc2;
-         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql 2>>$temp/dblog");
+         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
          $rc ||= $rc2
      }
-     if (!system("psql -f $self->{source_dir}sql/Pg-database.sql 2>>$temp/dblog"
+     if (!system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr"
      )){
          $rc = 1;
      }
@@ -127,7 +127,7 @@ that types are already created, and 2 if there are other errors.
 sub exec_script {
     my ($self, $args) = @_;
     open (LOG, '>>', $args->{log});
-    open (PSQL, '-|', "psql -f $args->{script}");
+    open (PSQL, '-|', "psql -f $args->{script} 2>&1");
     my $test = 0;
     while (my $line = <PSQL>){
         if ($line =~ /ERROR/){

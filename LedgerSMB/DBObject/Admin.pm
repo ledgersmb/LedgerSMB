@@ -1,11 +1,11 @@
 package LedgerSMB::DBObject::Admin;
 
-use base LedgerSMB::DBObject;
+use base qw(LedgerSMB::DBObject);
 
 use LedgerSMB::Location;
-use LedgerSMB::DBObject::Employee;
 use LedgerSMB::Contact;
 use LedgerSMB::DBObject::Employee;
+use LedgerSMB::DBObject::User;
 use LedgerSMB::Log;
 
 my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
@@ -14,6 +14,7 @@ my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
 #[18:00:44] <aurynn> edit/create employee and add user features if needed.
 
 sub save {
+    my $self = shift @_;
     
     $self->error("Cannot save an Adminstrator object.");
 }

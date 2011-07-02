@@ -69,17 +69,18 @@ SKIP: {
                                        undef, undef, { AutoCommit => 0 });
      my $dbh = $lsmb->{dbh};
      ok($dbh, 'Connected to new database');
-     my $sth = $dbh->prepare("select id from country where short_name = ?");
+     my $sth = $dbh->prepare("select id from country where short_name ilike ?");
      $sth->execute($ENV{LSMB_COUNTRY_CODE});
-     my $ref = $sth->fetchrow_array('name_LC');
+     my ($id) = $sth->fetchrow_array();
      $sth->finish;
      $lsmb->merge({username   => $ENV{LSMB_ADMIN_USERNAME},
+                   password   => $ENV{LSMB_ADMIN_PASSWORD},
                    first_name => $ENV{LSMB_ADMIN_FNAME},
                    last_name  => $ENV{LSMB_ADMIN_LNAME},
-                   country_id => $ref->{id},
+                   country_id => $id,
                  });
       my $user = LedgerSMB::DBObject::Admin->new({base => $lsmb});
-      ok($user->save);
+      ok($user->save_user);
       $sth = $dbh->prepare("SELECT admin__add_user_to_role(?, ?)");
       my $rolename = "lsmb_" . $ENV{PGDATABASE} . "__users_manage";
       ok($sth->execute($ENV{LSMB_ADMIN_USERNAME}, $rolename), 
