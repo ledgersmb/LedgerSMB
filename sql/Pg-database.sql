@@ -3190,7 +3190,7 @@ BEGIN
                                                                  ilike 'ALLOW'
                                                             THEN TRUE
                                                          END))
-                                       and cc.path like c.path || '%')
+                                       and cc.path like c.path || ',%')
             GROUP BY n.position, n.id, c.level, n.label, c.path, c.list_order
             ORDER BY c.list_order
                              
@@ -3255,7 +3255,7 @@ begin
                                                                  ilike 'ALLOW'
                                                             THEN TRUE
                                                          END))
-                                       and cc.path like c.path || '%')
+                                       and cc.path like c.path || ',%')
             GROUP BY n.position, n.id, c.level, n.label, c.path, c.list_order
             ORDER BY c.list_order
         LOOP
