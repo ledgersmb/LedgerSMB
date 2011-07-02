@@ -63,22 +63,11 @@ group by proname
 having count(*) > 1;
 
 CREATE TEMPORARY table permissionless_tables AS
-select t.table_catalog, t.table_schema, t.table_type, t.table_name
-from information_schema.tables t
-where t.table_catalog = current_database()
-  and t.table_schema = 'public'
-  and not exists (
-    select *
-    from information_schema.role_table_grants r
-    where r.table_catalog = t.table_catalog
-      and r.table_schema = t.table_schema
-      and r.table_name = t.table_name
-      )
-  and not exists (
-     select *
-     from test_exempt_tables x
-     where x.tablename = t.table_name)
-order by t.table_catalog, t.table_schema, t.table_type, t.table_name;
+SELECT nspname, relname
+  FROM pg_namespace nsp
+  JOIN pg_class rel ON (relkind = 'r' and nsp.oid = rel.relnamespace)
+ WHERE nspname = 'public' AND relacl IS NULL and relname NOT IN 
+       (select tablename from test_exempt_tables);
 
 select * from permissionless_tables;
 

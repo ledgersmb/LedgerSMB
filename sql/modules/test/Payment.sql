@@ -21,9 +21,6 @@ values (currval('users_id_seq'),  now(), md5('test2'), 2);
 INSERT INTO test_result(test_name, success)
 SELECT 'AP Batch created', (SELECT batch_create('test', 'test', 'ap', now()::date)) IS NOT NULL;
 
-INSERT INTO entity (id, entity_class, name, control_code, country_id)
-VALUES (-101, 1, 'TEST VENDOR', 'TEST 2', 242);
-
 INSERT INTO company (id, legal_name, entity_id)
 VALUES (-101, 'TEST', -101);
 
