@@ -58,13 +58,6 @@ sub new {
     if ($self->{source_dir}){
         $self->{source_dir} =~ s/\/*$/\//;
     }
-    if (isa($args, 'LedgerSMB')){
-        for (keys %$args){
-            if ($_ =~ /^_/){
-                $self->{$_} = $args->{$_};
-            }
-        }
-    }
     bless $self, $class;
     return $self;
 }
@@ -90,16 +83,16 @@ sub create {
 
      for my $contrib (@contrib_scripts){
          my $rc2;
-         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >>$temp/dblog");
+         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql 2>>$temp/dblog");
          $rc ||= $rc2
      }
-     if (!system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog"
+     if (!system("psql -f $self->{source_dir}sql/Pg-database.sql 2>>$temp/dblog"
      )){
          $rc = 1;
      }
      # TODO Add logging of errors/notices
 
-     return !$rc;
+     return $rc;
 }
 
 =item $db->load_modules($loadorder)
@@ -184,7 +177,7 @@ sub process_roles {
     close ROLES;
     close TROLES;
 
-    $self->exec_script({script => "sql/modules/$rolefile", 
+    $self->exec_script({script => "$temp/lsmb_roles.sql", 
                         log    => "$temp/dblog"});
 }
 

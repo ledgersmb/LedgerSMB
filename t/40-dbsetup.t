@@ -23,7 +23,7 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
 }
 
 if ($run_tests){
-	plan tests => 35;
+	plan tests => 10;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
@@ -49,13 +49,13 @@ if (!$ENV{LSMB_INSTALL_DB}){
     close (DBLOCK);
 }
 
-ok($db->process_roles('Roles.sql'), 'Roles processed');
+is($db->process_roles('Roles.sql'), 0, 'Roles processed');
 
 #Changed the COA and GIFI loading to use this, and move admin user to 
 #Database.pm --CT
 
 SKIP: {
-     skip 'No admin info', 4
+     skip 'No admin info', 5
            if (!defined $ENV{LSMB_ADMIN_USERNAME} 
                 or !defined $ENV{LSMB_ADMIN_PASSWORD}
                 or !defined $ENV{LSMB_COUNTRY_CODE}
@@ -78,9 +78,8 @@ SKIP: {
                    last_name  => $ENV{LSMB_ADMIN_LNAME},
                    country_id => $ref->{id},
                  });
-      my ($var) = $sth->fetchrow_array();
-      cmp_ok($var, '>', 0, 'User id retrieved');
-      $sth->finish;
+      my $user = LedgerSMB::DBObject::Admin->new({base => $lsmb});
+      ok($user->save);
       $sth = $dbh->prepare("SELECT admin__add_user_to_role(?, ?)");
       my $rolename = "lsmb_" . $ENV{PGDATABASE} . "__users_manage";
       ok($sth->execute($ENV{LSMB_ADMIN_USERNAME}, $rolename), 
@@ -90,18 +89,20 @@ SKIP: {
 };
 
 SKIP: {
-     skip 'No COA specified', 2 if !defined $ENV{LSMB_LOAD_COA};
-     ok($db->exec_script('sql/coa/' 
-                         . lc($ENV{LSMB_COUNTRY_CODE}) 
-                         ."/chart/$ENV{LSMB_LOAD_COA}.sql"),
+     skip 'No COA specified', 1 if !defined $ENV{LSMB_LOAD_COA};
+     is($db->exec_script({script => 'sql/coa/' 
+                                     . lc($ENV{LSMB_COUNTRY_CODE}) 
+                                     ."/chart/$ENV{LSMB_LOAD_COA}.sql"
+                         }), 0,
         'Ran Chart of Accounts Script');
 }
 
 SKIP: {
-     skip 'No GIFI specified', 2 if !defined $ENV{LSMB_LOAD_GIFI};
-     ok($db->exec_script('sql/coa/' 
-                         . lc($ENV{LSMB_COUNTRY_CODE}) 
-                         ."/chart/$ENV{LSMB_LOAD_GIFI}.sql"),
+     skip 'No GIFI specified', 1 if !defined $ENV{LSMB_LOAD_GIFI};
+     is($db->exec_script({script => 'sql/coa/' 
+                                   . lc($ENV{LSMB_COUNTRY_CODE}) 
+                                    ."/gifi/$ENV{LSMB_LOAD_GIFI}.sql"
+                         }), 0,
         'Ran GIFI Script');
 }
 

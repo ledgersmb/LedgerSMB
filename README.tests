@@ -13,10 +13,10 @@ Environment variables can be used as flags to disable/enable tests >= 40
 
 LSMB_TEST_DB must be set to a defined value if databases are going to be tested.
 
-if LSMB_NEW_DB is set, test 40 (when it is complete) will create a database with
-the name from this environment variable, and subsequent database tests will run
-against that database.  If this is not set, and PGDATABASE is set, tests will 
-run on that database. If neither are set, the tests will bail out.
+if LSMB_NEW_DB is set, test 40 will create a database with the name from this 
+environment variable, and subsequent database tests will run against that 
+database.  If this is not set, and PGDATABASE is set, tests will run on that 
+database. If neither are set, the tests will bail out.
 
 Special notes on specific test cases:
 
@@ -75,7 +75,7 @@ LSMB_ADMIN_PASSWORD password for admin user
 
 Chart of accounts loading
 -------------------------
-    LSMB_LOAD_COA name of the Chart of Accounts file (minus the extension)
-   LSMB_LOAD_GIFI name of the GIFI file (minus the extension)
+    LSMB_LOAD_COA name of the Chart of Accounts file, not including extension
+   LSMB_LOAD_GIFI name of the GIFI file, not including extension
 LSMB_COUNTRY_CODE Country code for administrator and for loading chart of 
                   accounts
