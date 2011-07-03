@@ -15,6 +15,8 @@ End of Year:
 * Cannot close books where unapproved transactions are before yearend(Chris T)
 * Yearend/closed books now creates balance checkpoints for better performance
 (Chris T and Aurynn)
+* The prohibition against entering transactions into closed period enforced
+on a database level.
 
 General Ledger/Journal:
 * GL reports filter by account (Chris T)
@@ -50,8 +52,10 @@ Development:
 * New UI and template system using TT (Seneca)
 * Form.pm deprecated.  New Object Oriented and data-driven model (Chris T)
 * Added ledgersmb-smallgray.css (Jeff K)
-* Stored procedure-based ORM for data model encapsulation in db (ChrisT)
+* Stored procedure-based ORM for data model encapsulation in db (Chris T)
 * Many small forms moved to templates (Seneca)
+* Greatly expanded test cases (Chris T and Seneca)
+
 
 Misc:
 * Timecard lists project descriptions as well as numbers (Chris T)
