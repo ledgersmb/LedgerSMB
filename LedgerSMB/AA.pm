@@ -1,32 +1,23 @@
+=pod
+
+=head1 NAME
+
+LedgerSMB::AA
+
+=head1 SYNPOSIS
+
+This module contains the routines for managing AR and AP transactions and 
+many of the reorts (a few others are found in LedgerSMB::RP.pm).
+
+All routines require $form->{dbh} to be set so that database actions can
+be performed.
+
+This module is due to be deprecated for active development as soon as a 
+replacement is available.
+
+=cut
+
 #=====================================================================
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.
-#
-# This file contains source code included with or based on SQL-Ledger which
-# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
-# under the GNU General Public License version 2 or, at your option, any later
-# version.  For a full list including contact information of contributors,
-# maintainers, and copyright holders, see the CONTRIBUTORS file.
-#
-# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2006
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.sql-ledger.org
-#
-#  Contributors:
-#
-#
-# See COPYRIGHT file for copyright information
-#======================================================================
-#
-# This file has undergone whitespace cleanup.
-#
-#======================================================================
 #
 # AR/AP backend routines
 # common routines
@@ -43,7 +34,9 @@ my $logger = Log::Log4perl->get_logger("AA");
 
 =pod
 
-=head1 post_transaction()
+=over
+
+=item post_transaction()
 Post transaction uses the following variables in the $form variable:
  * dbh - the database connection handle
  * currency - The current users' currency
@@ -707,6 +700,14 @@ sub post_transaction {
 
 }
 
+=item delete_transaction(\%myconfig, $form)
+
+Deletes a transaction identified by $form->{id}, whether it is an ar or ap
+transaction is identified by $form->{vc}.  $form->{invnumber} used for the 
+audittrail routine.
+
+=cut
+
 sub delete_transaction {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -767,6 +768,39 @@ sub delete_transaction {
 
     $rc;
 }
+
+=item transactions(\%myconfig, $form)
+
+Generates the transaction and outstanding reports.  Form variables used in this
+function are:
+
+approved: whether or not transactions must be approved to show up
+
+transdatefrom: Earliest day of transactions
+
+transdateto:  Latest day of transactions
+
+month, year, interval:  Used in palce of transdatefrom and transdate to
+
+vc:  'customer' for ar, 'vendor' for ap.
+
+meta_number:  customer/vendor number
+
+entity_id:  A specific entity id
+
+parts_id:  Show transactions including a specific part
+
+department_id:  Transactions for a department
+
+entity_credit_account: As an alternate for meta_number to identify a customer
+of vendor credit account
+
+invoice_type:  3 for on-hold, 2 for active
+
+The transaction list is stored at:
+@{$form->{transactions}}
+
+=cut
 
 # This is going to get a little awkward because it involves delving into the 
 # acc_trans table in order to avoid catching unapproved payment vouchers.
@@ -1155,6 +1189,26 @@ sub transactions {
 }
 
 # this is used in IS, IR to retrieve the name
+
+=item get_name(\%myconfig, $form)
+
+Retrieves the last account used.  Also retrieves tax accounts,
+departments, and a few other things.
+
+Form variables used:
+vc: customer or vendor
+${vc}_id:  id of vendor/customemr
+transdate:  Transaction date desired
+
+Sets the following form variables
+currency
+exchangerate
+forex
+taxaccounts
+
+
+=cut
+
 sub get_name {
 
     my ( $self, $myconfig, $form ) = @_;
@@ -1167,7 +1221,7 @@ sub get_name {
         $form->{vc} = 'customer';
     }
 
-    # connect to database
+    # grab the db connection
     my $dbh = $form->{dbh};
 
     my $dateformat = $myconfig->{dateformat};
@@ -1426,6 +1480,16 @@ sub get_name {
     $dbh->commit;
 }
 
+=item taxform_exist($form, $cv_id)
+
+Determines if a taxform attached to the entity_credit_account record (where
+the id field is the same as $cv_id) exists. Returns true if it exists, false
+if not.
+
+=cut
+
+
+
 sub taxform_exist
 {
 
@@ -1448,6 +1512,15 @@ sub taxform_exist
 
 
 }
+
+=item update_ac_tax_form($form,$dbh,$entry_id,$report)
+
+Updates the ac_tax_form checkbox for the acc_trans.entry_id (where it is the 
+same as $entry_id).  If $report is true, sets it to true, if false, sets it to
+false.  $report must be a valid *postgresql* bool value (0/1, t/f, 
+'true'/'false').
+
+=cut
 
 sub update_ac_tax_form
 {
@@ -1484,6 +1557,12 @@ sub update_ac_tax_form
 
 }
 
+=item get_taxchech($entry_id,$dbh)
+
+Returns true if the acc_trans record has been set to reportable in the past
+false otherwise.
+
+=cut
 
 sub get_taxcheck
 {
@@ -1508,6 +1587,12 @@ sub get_taxcheck
 
 }
 
+=item save_intnotes($form)
+
+Saves the $form->{intnotes} into the ar/ap.intnotes field.
+
+=cut
+
 sub save_intnotes {
     my ($self,$form) = @_;
     my $table;
@@ -1523,5 +1608,35 @@ sub save_intnotes {
     $sth->execute($form->{intnotes}, $form->{id});
     $form->{dbh}->commit;
 }
+
+=back
+
+=head1 COPTYRIGHT
+
+# LedgerSMB
+# Small Medium Business Accounting software
+# http://www.ledgersmb.org/
+# Copyright (C) 2006-2010
+# This work contains copyrighted information from a number of sources all used
+# with permission.
+#
+# This file contains source code included with or based on SQL-Ledger which
+# is Copyright Dieter Simader and DWS Systems Inc. 2000-2005 and licensed
+# under the GNU General Public License version 2 or, at your option, any later
+# version.  For a full list including contact information of contributors,
+# maintainers, and copyright holders, see the CONTRIBUTORS file.
+#
+# Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
+# Copyright (C) 2006
+#
+#  Author: DWS Systems Inc.
+#     Web: http://www.sql-ledger.org
+#
+#  Contributors:
+#
+#
+# See COPYRIGHT file for copyright information
+
+=cut
 
 1;

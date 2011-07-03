@@ -76,7 +76,7 @@ INSERT INTO account_link (account_id, description)
 values (-1000, 'AP');
 
 INSERT INTO account_link (account_id, description)
-values (-1001, 'AP_expense');
+values (-1001, 'AP_amount');
 
 INSERT INTO account_link (account_id, description)
 values (-1002, 'AP_paid');
