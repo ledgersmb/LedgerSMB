@@ -20,7 +20,6 @@ if ($run_tests){
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
-print STDERR "tests to run: $run_tests\n";
 ok(open (DBLOCK, '<', "$temp/LSMB_TEST_DB"), 'Opened db lock file');
 my $db = <DBLOCK>;
 chomp($db);
@@ -42,7 +41,6 @@ $sth_getroles->execute("lsmb_$ENV{LSMB_NEW_DB}__%");
 
 my $rc = 0;
 while (my $ref = $sth_getroles->fetchrow_hashref('NAME_lc')){
-    print STDERR "Dropping role $ref->{role}\n";
     $dbh->do("drop role ".$ref->{role}) || ++$rc;
 }
 
