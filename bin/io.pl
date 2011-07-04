@@ -111,8 +111,12 @@ sub _calc_taxes {
               if $fxlinetotal;
         }        
         for (@taxaccounts) {
+            $form->{tax_obj}{$_->account} = $_;
             $form->{taxes}{$_->account} = 0 if ! $form->{taxes}{$_->account};
             $form->{taxes}{$_->account} += $_->value;
+            if ($_->value){
+               $form->{taxbasis}{$_->account} += $linetotal;
+            }
         }
     }
 }

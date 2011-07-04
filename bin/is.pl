@@ -582,16 +582,16 @@ sub form_footer {
     $form->{invtotal} = $form->{invsubtotal};
 
     if ( ( $rows = $form->numtextrows( $form->{notes}, 35, 8 ) ) < 2 ) {
-        $rows = 2;
+        $rows = 5;
     }
     if ( ( $introws = $form->numtextrows( $form->{intnotes}, 35, 8 ) ) < 2 ) {
-        $introws = 2;
+        $introws = 5;
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $notes =
-qq|<textarea name=notes rows=$rows cols=35 wrap=soft>$form->{notes}</textarea>|;
+qq|<textarea name=notes rows=$rows cols=40 wrap=soft>$form->{notes}</textarea>|;
     $intnotes =
-qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
+qq|<textarea name=intnotes rows=$rows cols=40 wrap=soft>$form->{intnotes}</textarea>|;
 
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
@@ -617,14 +617,33 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                       <th align="center">|.$locale->text('Basis').qq|</th>
                       <th align="center">|.$locale->text('Tax Code').qq|</th>
                       <th align="center">|.$locale->text('Memo').qq|</th>
-                      <td>&nbsp</td>
                     </tr>|;
         }
         foreach $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
             if ($form->{manual_tax}){
+               # Setting defaults from tax calculations
+               # These are set in io.pl sub _calc_taxes --CT
+               if ($form->{"mt_rate_$item"} eq '' or 
+                   !defined $form->{"mt_rate_$item"}){
+                   $form->{"mt_rate_$item"} = $form->{tax_obj}{$item}->rate;
+               }
+               if ($form->{"mt_basis_$item"} eq '' or
+                   !defined $form->{"mt_basis_$item"}){
+                   $form->{"mt_basis_$item"} = $form->{taxbasis}{$item};
+               }
+               if ($form->{"mt_amount_$item"} eq '' or
+                   !defined $form->{"mt_amount_$item"}){
+                   $form->{"mt_amount_$item"} = 
+                           $form->{"mt_rate_$item"}
+                           * $form->{"mt_basis_$item"};
+               }
                $form->{invtotal} += $form->round_amount(
                                          $form->{"mt_amount_$item"}, 2);
+               # Setting this up as a table
+               # Note that the screens may be not wide enough to display
+               # this in the normal way so we have to change the layout of the
+               # notes fields. --CT 
                $tax .= qq|<tr>
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
@@ -642,8 +661,6 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                 <td><input type="text" name="mt_memo_$item"
                          id="mt-memo-$item" value="|
                         .$form->{"mt_memo_$item"} .qq|" size="10"/></td>
-                <td><button id="mt-calc-$item name="mt_calc_$item"
-                    >|.$locale->text('Calc').qq|</button></td>
                </tr>|;
             }  else {
 	       $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
@@ -690,12 +707,28 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	  <td>
 	    <table>
 	      <tr>
-		<th align=left>| . $locale->text('Notes') . qq|</th>
-		<th align=left>| . $locale->text('Internal Notes') . qq|</th>
+		<th align=left>| . $locale->text('Notes') . qq|</th>|;
+     # Redesigning layout as per notes above.  When this is redesigned
+     # we really should use floats and CSS instead. --CT
+     if (!$form->{manual_tax}){
+           print qq|
+		<th align=left>| . $locale->text('Internal Notes') . qq|</th>|;
+     }
+     print qq|
 	      </tr>
-	      <tr valign=top>
+	      <tr valign=top>|;
+     if ($form->{manual_tax}){
+         print qq|<td>$notes</td>
+              </tr><tr>
+               <th align=left>| . $locale->text('Internal Notes') . qq|</th>
+              </tr><tr>
+              <td>$intnotes</td>|;
+     } else {
+         print qq|
 		<td>$notes</td>
-		<td>$intnotes</td>
+		<td>$intnotes</td>|;
+    }
+    print qq|
 	      </tr>
 	    </table>
 	  </td>

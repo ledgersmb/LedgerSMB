@@ -485,15 +485,24 @@ sub form_footer {
             qq|<input type="hidden" name="manual_tax" value="|
                . $form->{manual_tax} . qq|" />|;
     } else {
+        my $checked0;
+        my $checked1;
+        if ($form->{manual_tax}){
+           $checked1=qq|checked="CHECKED"|;
+           $checked0="";
+        } else {
+           $checked0=qq|checked="CHECKED"|;
+           $checked1="";
+        }
         $manual_tax = 
                     qq|<label for="manual-tax-0">|.
                        $locale->text("Automatic"). qq|</label>
                        <input type="radio" name="manual_tax" value="0"
-                              id="manual-tax-0">
+                              id="manual-tax-0" $checked0 />
                         <label for="manual-tax-1">|.
                         $locale->text("Manual"). qq|</label>
                       <input type="radio" name="manual_tax" value="1"
-                              id="manual-tax-1">|;
+                              id="manual-tax-1" $checked1 />|;
     }
     _calc_taxes();
     $form->{invtotal} = $form->{invsubtotal};
@@ -522,7 +531,8 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     if ( !$form->{taxincluded} ) {
         if ($form->{manual_tax}){
-             $tax .= qq|<tr class="listtop">
+             $tax .= qq|
+                 <table><tr class="listtop">
                       <td>&nbsp</td>
                       <th align="center">|.$locale->text('Amount').qq|</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
@@ -535,8 +545,28 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
         foreach $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
             if ($form->{manual_tax}){
+               # Setting defaults from tax calculations
+               # These are set in io.pl sub _calc_taxes --CT
+               if ($form->{"mt_rate_$item"} eq '' or 
+                   !defined $form->{"mt_rate_$item"}){
+                   $form->{"mt_rate_$item"} = $form->{tax_obj}{$item}->rate;
+               }
+               if ($form->{"mt_basis_$item"} eq '' or
+                   !defined $form->{"mt_basis_$item"}){
+                   $form->{"mt_basis_$item"} = $form->{taxbasis}{$item};
+               }
+               if ($form->{"mt_amount_$item"} eq '' or
+                   !defined $form->{"mt_amount_$item"}){
+                   $form->{"mt_amount_$item"} = 
+                           $form->{"mt_rate_$item"}
+                           * $form->{"mt_basis_$item"};
+               }
                $form->{invtotal} += $form->round_amount(
                                          $form->{"mt_amount_$item"}, 2);
+               # Setting this up as a table
+               # Note that the screens may be not wide enough to display
+               # this in the normal way so we have to change the layout of the
+               # notes fields. --CT 
                $tax .= qq|<tr>
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
@@ -568,6 +598,9 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	    	    </tr>
 |;
             }
+        }
+        if ($form->{manual_tax}){
+            $tax .= "</table>";
         }
 
         $form->{invsubtotal} =
@@ -603,18 +636,36 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	  <td>
 	    <table>
 	      <tr>
-		<th align=left>| . $locale->text('Notes') . qq|</th>
+		<th align=left>| . $locale->text('Notes') . qq|</th>|;
+    if (!$form->{manual_tax}){
+        print qq|
 		<th align=left>| . $locale->text('Internal Notes') . qq|</th>
                 <th align=left>| . $locale->text('Import Text') . qq|</th>
 	      </tr>
-	      <tr valign=top>
+	      <tr valign=top>|;
+     }
+     # Redesigning layout as per notes above.  When this is redesigned
+     # we really should use floats and CSS instead. --CT
+     if ($form->{manual_tax}){
+         print qq|</tr><tr><td>$notes</td></tr>
+                 <tr><th align=left>| . $locale->text('Internal Notes').qq|</th>
+                 </tr>
+                 <tr><td>$intnotes</td></tr>
+                 <tr><th align=left>| . $locale->text('Import Text') . qq|</th>
+                 </tr>
+                 <tr>
+                <td><textarea name=import_text rows=$rows cols=25></textarea>|;
+     } else {
+         print qq|
 		<td>$notes</td>
 		<td>$intnotes</td>
-                <td><textarea name=import_text rows=$rows cols=25></textarea>
+                <td><textarea name=import_text rows=$rows cols=25></textarea>|;
+    }
+    print qq|
 	      </tr>
 	    </table>
 	  </td>
-	  <td align=right>
+	  <td align=right valign="top">
 	    $taxincluded <br/>
 	    <table>
               <tr><th align="center" colspan="2">|.
