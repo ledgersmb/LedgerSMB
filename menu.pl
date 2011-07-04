@@ -46,6 +46,10 @@
 #
 #######################################################################
 
+use FindBin;
+BEGIN {
+  lib->import($FindBin::Bin) unless $ENV{mod_perl}
+}
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
 
