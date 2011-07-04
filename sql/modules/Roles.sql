@@ -177,7 +177,6 @@ TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -208,12 +207,13 @@ TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
+GRANT INSERT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (3, 'allow', 'lsmb_<?lsmb dbname ?>__ar_invoice_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (195, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
+values (195, 'allow', 'lsmb_<?lsmb dbname ?>__ar_invoice_create');
 
 
 --CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher"
@@ -237,6 +237,7 @@ GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 GRANT SELECT ON invoice TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 GRANT SELECT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
+GRANT SELECT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
@@ -382,6 +383,7 @@ GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
+GRANT INSERT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (23, 'allow', 'lsmb_<?lsmb dbname ?>__ap_invoice_create');
@@ -410,6 +412,7 @@ GRANT SELECT ON ap TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 GRANT SELECT ON invoice TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 GRANT SELECT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
+GRANT SELECT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (21, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
