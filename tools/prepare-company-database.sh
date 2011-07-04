@@ -84,6 +84,7 @@ admin__(save_user|add_user_to_role)|\
 You are now connected to database|\
 NOTICE:.*will create implicit|\
 NOTICE:.*type.*gtrgm|\
+NOTICE:.*type.*tsvector|\
 DETAIL: *Creating a shell type definition|\
 ERROR:  language \"plpgsql\" already exists|\
 [[:space:]0-9-]*$|\
