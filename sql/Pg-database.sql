@@ -3428,13 +3428,10 @@ COMMENT ON TABLE new_shipto IS
 $$ Tracks ship_to information for orders and invoices.$$;
 
 CREATE TABLE tax_extended (
-    account_id int references account(id),
-    tx_id int references transactions(id),
-    reference text not null,
     tax_basis numeric,
     rate numeric,
-    tax_amount numeric,
-    check (tax_amount = rate*tax_basis/100)
+    entry_id int primary key,
+    foreign key entry_id references acc_trans(entry_id)
 );
 
 COMMENT ON TABLE tax_extended IS 

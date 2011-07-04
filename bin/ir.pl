@@ -479,6 +479,22 @@ sub form_header {
 }
 
 sub form_footer {
+    my $manual_tax;
+    if ($form->{id}){
+        $manual_tax = 
+            qq|<input type="hidden" name="manual_tax" value="|
+               . $form->{manual_tax} . qq|" />|;
+    } else {
+        $manual_tax = 
+                    qq|<label for="manual-tax-0">|.
+                       $locale->text("Automatic"). qq|</label>
+                       <input type="radio" name="manual_tax" value="0"
+                              id="manual-tax-0">
+                        <label for="manual-tax-1">|.
+                        $locale->text("Manual"). qq|</label>
+                      <input type="radio" name="manual_tax" value="1"
+                              id="manual-tax-1">|;
+    }
     _calc_taxes();
     $form->{invtotal} = $form->{invsubtotal};
 
@@ -505,17 +521,53 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     }
 
     if ( !$form->{taxincluded} ) {
+        if ($form->{manual_tax}){
+             $tax .= qq|<tr class="listtop">
+                      <td>&nbsp</td>
+                      <th align="center">|.$locale->text('Amount').qq|</th>
+                      <th align="center">|.$locale->text('Rate').qq|</th>
+                      <th align="center">|.$locale->text('Basis').qq|</th>
+                      <th align="center">|.$locale->text('Reference').qq|</th>
+                      <th align="center">|.$locale->text('Memo').qq|</th>
+                      <td>&nbsp</td>
+                    </tr>|;
+        }
         foreach $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
-	    $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
-            $form->{"${taccno}_total"} =
-                $form->round_amount($form->{taxes}{$item}, 2);
-                $tax .= qq|
-		<tr>
-		  <th align=right>$form->{"${item}_description"}</th>
-		  <td align=right>$form->{"${item}_total"}</td>
-		</tr>
+            if ($form->{manual_tax}){
+               $form->{invtotal} += $form->round_amount(
+                                         $form->{"mt_amount_$item"}, 2);
+               $tax .= qq|<tr>
+                <th align=right>$form->{"${taccno}_description"}</th>
+                <td><input type="text" name="mt_amount_$item"
+                        id="mt-amount-$item" value="|
+                        .$form->{"mt_amount_$item"} .qq|" /><td>
+                <td><input type="text" name="mt_rate_$item"
+                         id="mt-rate-$item" value="|
+                        .$form->{"mt_rate_$item"} .qq|" /></td>
+                <td><input type="text" name="mt_basis_$item"
+                         id="mt-basis-$item" value="|
+                        .$form->{"mt_basis_$item"} .qq|" /></td>
+                <td><input type="text" name="mt_ref_$item"
+                         id="mt-ref-$item" value="|
+                        .$form->{"mt_ref_$item"} .qq|" /></td>
+                <td><input type="text" name="mt_memo_$item"
+                         id="mt-memo-$item" value="|
+                        .$form->{"mt_memo_$item"} .qq|" /></td>
+                <td><button id="mt-calc-$item name="mt_calc_$item"
+                    >|.$locale->text('Calc').qq|</button></td>
+               </tr>|;
+            }  else {
+    	        $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
+                $form->{"${taccno}_total"} =
+                    $form->round_amount($form->{taxes}{$item}, 2);
+                    $tax .= qq|
+	    	    <tr>
+		      <th align=right>$form->{"${item}_description"}</th>
+		      <td align=right>$form->{"${item}_total"}</td>
+	    	    </tr>
 |;
+            }
         }
 
         $form->{invsubtotal} =
@@ -563,9 +615,14 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	    </table>
 	  </td>
 	  <td align=right>
-	    $taxincluded
-	    <br>
+	    $taxincluded <br/>
 	    <table>
+              <tr><th align="center" colspan="2">|.
+                   $locale->text('Calculate Taxes').qq|</th>
+              </tr>
+              <tr>
+                   <td colspan=2>$manual_tax</td>
+               </tr>
 	      $subtotal
 	      $tax
 	      <tr>
