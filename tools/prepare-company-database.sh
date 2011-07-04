@@ -175,6 +175,13 @@ then
   exit 1
 fi
 
+if ! test -f $srcdir/sql/modules/LOADORDER
+then
+  echo "missing file $srcdir/sql/modules/LOADORDER! (use --srcdir argument)"
+  usage
+  exit 1
+fi
+
 psql_args="-h $host -p $port -U $owner"
 psql_cmd="psql $psql_args -d $company_name"
 
@@ -215,7 +222,7 @@ fi
 # -- Basic database structure
 cat $srcdir/sql/Pg-database.sql | $psql_cmd 2>&1 | unchatter
 # -- Additional database structure
-for module in `grep -v -E '^[[:space:]]*#' sql/modules/LOADORDER`
+for module in `grep -v -E '^[[:space:]]*#' $srcdir/sql/modules/LOADORDER`
 do
   cat $srcdir/sql/modules/$module | $psql_cmd 2>&1 | unchatter
 done
