@@ -1,4 +1,0 @@
-Installation Notes Appendix for Ubuntu
-
-Execute dists/deb/ubuntu/ubuntu.sh as root.
-Run perl Makefile.PL follow instructions.
