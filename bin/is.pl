@@ -559,15 +559,24 @@ sub form_footer {
             qq|<input type="hidden" name="manual_tax" value="|
                . $form->{manual_tax} . qq|" />|;
     } else {
+        my $checked0;
+        my $checked1;
+        if ($form->{manual_tax}){
+           $checked1=qq|checked="CHECKED"|;
+           $checked0="";
+        } else {
+           $checked0=qq|checked="CHECKED"|;
+           $checked1="";
+        }
         $manual_tax = 
                     qq|<label for="manual-tax-0">|.
                        $locale->text("Automatic"). qq|</label>
                        <input type="radio" name="manual_tax" value="0"
-                              id="manual-tax-0">
+                              id="manual-tax-0" $checked0 />
                         <label for="manual-tax-1">|.
                         $locale->text("Manual"). qq|</label>
                       <input type="radio" name="manual_tax" value="1"
-                              id="manual-tax-1">|;
+                              id="manual-tax-1" $checked1 >|;
     }
     _calc_taxes();
     $form->{invtotal} = $form->{invsubtotal};
@@ -587,7 +596,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
     $taxincluded = "";
-    if ( $form->{taxaccounts} ) {
+    if ($form->{taxaccounts} ) {
         $taxincluded = qq|
               <tr height="5"></tr>
               <tr>
@@ -606,7 +615,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                       <th align="center">|.$locale->text('Amount').qq|</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
                       <th align="center">|.$locale->text('Basis').qq|</th>
-                      <th align="center">|.$locale->text('Reference').qq|</th>
+                      <th align="center">|.$locale->text('Tax Code').qq|</th>
                       <th align="center">|.$locale->text('Memo').qq|</th>
                       <td>&nbsp</td>
                     </tr>|;
@@ -620,19 +629,19 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->{"mt_amount_$item"} .qq|" /><td>
+                        .$form->{"mt_amount_$item"} .qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
-                        .$form->{"mt_rate_$item"} .qq|" /></td>
+                        .$form->{"mt_rate_$item"} .qq|" size="4"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->{"mt_basis_$item"} .qq|" /></td>
+                        .$form->{"mt_basis_$item"} .qq|" size="10"/></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
-                        .$form->{"mt_ref_$item"} .qq|" /></td>
+                        .$form->{"mt_ref_$item"} .qq|" size="10"/></td>
                 <td><input type="text" name="mt_memo_$item"
                          id="mt-memo-$item" value="|
-                        .$form->{"mt_memo_$item"} .qq|" /></td>
+                        .$form->{"mt_memo_$item"} .qq|" size="10"/></td>
                 <td><button id="mt-calc-$item name="mt_calc_$item"
                     >|.$locale->text('Calc').qq|</button></td>
                </tr>|;
@@ -696,7 +705,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                       colspan="2">|.$locale->text('Calculate Taxes').qq|</th>
               </tr>
               <tr>
-                   <td colspan="2">$manual_tax</td>
+                   <td colspan="3">$manual_tax</td>
                </tr>
 	      $subtotal
 	      $tax

@@ -513,7 +513,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
     $taxincluded = "";
-    if ( $form->{taxaccounts} ) {
+    if ($form->{taxaccounts} ) {
         $taxincluded = qq|
 		<input name=taxincluded class=checkbox type=checkbox value=1 $form->{taxincluded}> <b>|
           . $locale->text('Tax Included') . qq|</b>
@@ -527,7 +527,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                       <th align="center">|.$locale->text('Amount').qq|</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
                       <th align="center">|.$locale->text('Basis').qq|</th>
-                      <th align="center">|.$locale->text('Reference').qq|</th>
+                      <th align="center">|.$locale->text('Tax Code').qq|</th>
                       <th align="center">|.$locale->text('Memo').qq|</th>
                       <td>&nbsp</td>
                     </tr>|;
@@ -541,7 +541,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->{"mt_amount_$item"} .qq|" /><td>
+                        .$form->{"mt_amount_$item"} .qq|" /></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
                         .$form->{"mt_rate_$item"} .qq|" /></td>
