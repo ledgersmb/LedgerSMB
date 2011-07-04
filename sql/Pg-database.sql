@@ -3430,8 +3430,7 @@ $$ Tracks ship_to information for orders and invoices.$$;
 CREATE TABLE tax_extended (
     tax_basis numeric,
     rate numeric,
-    entry_id int primary key,
-    foreign key entry_id references acc_trans(entry_id)
+    entry_id int primary key references acc_trans(entry_id)
 );
 
 COMMENT ON TABLE tax_extended IS 
