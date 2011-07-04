@@ -1,12 +1,12 @@
 Known versions of software incompatible with LedgerSMB:
 -------------------------------
-The following PostgreSQL versions suffer from a bug which causes problems with 
-LedgerSMB:  8.2.2, 8.1.7, and 8.0.11
+Versions prior to PostgreSQL 8.2 do not support some features required by
+LedgerSMB 1.3 and higher - support for these PostgreSQL versions has been
+dropped.
 
-These versions produce an error concerning wrong data types but the error shows 
-that the data types are indeed correct.
+PostgreSQL version 8.2.2 is known to cause problems with LedgerSMB.
 
-PostgreSQL 8.3 will be supported on a best effort basis.  You will need the 
+PostgreSQL 8.2 will be supported on a best effort basis.  You will need the 
 tsearch2 compatibility libraries.  Additionally, due to the changes in implicit 
 casts, bugs may exist which cause database operations to abort.  We do accept 
 bug reports and will address them, however.
