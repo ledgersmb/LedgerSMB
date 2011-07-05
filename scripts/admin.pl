@@ -65,11 +65,19 @@ sub __edit_page {
 
 sub save_user {
     my ($request, $admin) = @_;
+    if ($request->{import}){
+         delete $request->{password};
+    }
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
     my $sal = $admin->get_salutations();
     
     my $entity = $admin->save_user();
+    if ($entity == 8){ # Duplicate user
+          $request->{import} = 1;
+          __edit_page($request);
+          return;
+    }
     my $groups = $admin->get_roles();
     $admin->{stylesheet} = $request->{stylesheet};
     __edit_page($admin);

@@ -324,33 +324,34 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         p_id int;
         l_id int;
         stmt text;
+        t_is_role bool;
+        t_is_user bool;
     BEGIN
         -- WARNING TO PROGRAMMERS:  This function runs as the definer and runs
         -- utility statements via EXECUTE.
         -- PLEASE BE VERY CAREFUL ABOUT SQL-INJECTION INSIDE THIS FUNCTION.
 
-        IF in_import IS NOT TRUE THEN
-             PERFORM rolname FROM pg_roles WHERE rolname = in_username;
-             IF FOUND THEN
-                 RAISE EXCEPTION 'Duplicate user';
-             END IF;
+       PERFORM rolname FROM pg_roles WHERE rolname = in_username;
+       t_is_role := found;
+       t_is_user := admin__is_user(in_username);
+
+       IF t_is_role and t_is_user is false and in_import is false THEN
+          RAISE EXCEPTION 'Duplicate user';
         END IF;
-    
-        if admin__is_user(in_username) then
-                
+
+        if t_is_role and in_password is not null then
                 execute 'ALTER USER ' || quote_ident( in_username ) || 
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
-                     || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
-        else
-            if in_password IS NULL THEN
+                     || $e$ valid until $e$ || 
+                      quote_literal(now() + '1 day'::interval);
+        elsif in_password IS NULL and t_is_role is false THEN
                 RAISE EXCEPTION 'No password';
-            end if;
-           
+        elsif  t_is_role is false THEN
             -- create an actual user
                 execute 'CREATE USER ' || quote_ident( in_username ) || 
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
                      || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
-            end if;         
+       END IF;         
         
         select * into a_user from users lu where lu.id = in_id;
         IF FOUND THEN 

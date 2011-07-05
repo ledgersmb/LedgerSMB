@@ -754,8 +754,13 @@ sub call_procedure {
     my $sth = $self->{dbh}->prepare($query);
     if (scalar @call_args){
         $query_rc = $sth->execute(@call_args);
-        if (!$query_rc and !$args{continue_on_error}){
-              $self->dberror($self->{dbh}->errstr . ": " . $query);
+        if (!$query_rc){
+              if ($args{continue_on_error} and  #  only for plpgsql exceptions
+                              ($self->{dbh}->errstr =~ /^P/)){
+                    $@ = $self->{dbh}->errstr;
+              } else {
+                    $self->dberror($self->{dbh}->errstr . ": " . $query);
+              }
         }
     } else {
         $query_rc = $sth->execute();

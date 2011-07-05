@@ -40,14 +40,16 @@ sub save_user {
         ]
     );
     $user->{entity_id} = $employee->{entity_id};
-    $user->save();
+    if ($user->save() == 8){ # Duplicate User exception
+        return 8;
+    }
     $self->{user} = $user;
     $self->{employee} = $employee;
 
-    if ($self->{password}){
+    if ($self->{password} or $self->{import}){
        return $self->{dbh}->commit;
     }
- 
+
     my $loc = LedgerSMB::DBObject::Location->new(base=>$self, copy=>'list', 
         merge=>[
             'address1',
@@ -60,10 +62,10 @@ sub save_user {
         ]
     );
      
+    $loc->{type} = 'person';
     $loc->save();
     $employee->set_location($loc->{id});
     $loc->(person=>$employee);
-        
     my $workphone = LedgerSMB::Contact->new(base=>$self);
     my $homephone = LedgerSMB::Contact->new(base=>$self);
     my $email = LedgerSMB::Contact->new(base=>$self);

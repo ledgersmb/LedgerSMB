@@ -119,14 +119,30 @@ sub get_option_data {
     $self->{password_expires} = $pw_expiration->{user__check_my_expiration};
 }
 
+
+# Return codes:  0 as success, 8 as duplicate user, and 1 as general failure
 sub save {
     
     my $self = shift @_;
     my $user = $self->get();
     
     
-    # doesn't check for the password - that's done in the sproc.
-    my ($ref) = $self->exec_method(funcname=>'admin__save_user'); 
+    # doesn't check for the password - that's done in the sproc. --Aurynn
+    # Note here that we pass continue_on_error to the sproc and handle
+    # any exceptions ourselves --CT
+    my ($ref) = $self->exec_method(funcname=>'admin__save_user',
+                          continue_on_error=> 1);
+
+    # Handling exceptions here
+    if (!$ref) { # Unsuccessful
+        if ($@ =~ /No password/){
+              $self->error($self->{_locale}->text('Password required'));
+        } elsif ($@ eq 'Duplicate User'){
+              $self->{dbh}->rollback;
+              return 8;
+        }
+
+    } 
     ($self->{id}) = values %$ref;
     if (!$self->{id}) {
         

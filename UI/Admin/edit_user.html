@@ -27,7 +27,30 @@
                     <input type="password" name="password" value="<?lsmb user.user.password ?>"/>
                 </td>
             </tr>
-            
+            <tr>
+                <td><?lsmb text('Import') ?></td>
+                <?lsmb 
+                  IF import;
+                      importc1 = 'CHECKED';
+                      importc0 = '';
+                  ELSE;
+                      importc1 = '';
+                      importc0 = 'CHECKED';
+                  END; ?> 
+                <td><?lsmb INCLUDE input element_data = {
+                           label   = 'Yes'
+                           value   = '1'
+                           checked = importc1
+                           name    = 'import'
+                           type    = 'radio'
+                   };
+                   INCLUDE input element_data = {
+                           label   = 'No'
+                           value   = '0'
+                           checked = importc0
+                           name    = 'import'
+                           type    = 'radio'
+                   } ?>
             <tr>
                 <td>
                     <select name="salutation">
