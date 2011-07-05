@@ -314,7 +314,8 @@ CREATE OR REPLACE FUNCTION admin__save_user(
     in_id int, 
     in_entity_id INT,
     in_username text, 
-    in_password TEXT
+    in_password TEXT,
+    in_import BOOL
 ) returns int AS $$
     DECLARE
     
@@ -327,6 +328,13 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         -- WARNING TO PROGRAMMERS:  This function runs as the definer and runs
         -- utility statements via EXECUTE.
         -- PLEASE BE VERY CAREFUL ABOUT SQL-INJECTION INSIDE THIS FUNCTION.
+
+        IF in_import IS NOT TRUE THEN
+             PERFORM rolname FROM pg_roles WHERE rolname = in_username;
+             IF FOUND THEN
+                 RAISE EXCEPTION 'Duplicate user';
+             END IF;
+        END IF;
     
         if admin__is_user(in_username) then
                 
@@ -335,7 +343,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
                      || $e$ valid until $e$ || quote_literal(now() + '1 day'::interval);
         else
             if in_password IS NULL THEN
-                RAISE EXCEPTION 'Must create password when adding new users!';
+                RAISE EXCEPTION 'No password';
             end if;
            
             -- create an actual user
@@ -380,7 +388,8 @@ REVOKE EXECUTE ON FUNCTION admin__save_user(
     in_id int,
     in_entity_id INT,
     in_username text,
-    in_password TEXT
+    in_password TEXT,
+    in_import bool
 ) FROM public; 
 
 create view role_view as 

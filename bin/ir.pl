@@ -532,7 +532,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     if ( !$form->{taxincluded} ) {
         if ($form->{manual_tax}){
              $tax .= qq|
-                 <table><tr class="listtop">
+                 <tr class="listtop">
                       <td>&nbsp</td>
                       <th align="center">|.$locale->text('Amount').qq|</th>
                       <th align="center">|.$locale->text('Rate').qq|</th>
@@ -596,9 +596,6 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	    	    </tr>
 |;
             }
-        }
-        if ($form->{manual_tax}){
-            $tax .= "</table>";
         }
 
         $form->{invsubtotal} =

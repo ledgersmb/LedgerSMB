@@ -256,7 +256,8 @@ SELECT admin__save_user(NULL,
                                       (SELECT id FROM country
                                        WHERE short_name = 'US')),
                          '$ADMIN_USERNAME',
-                         '$ADMIN_PASSWORD');
+                         '$ADMIN_PASSWORD',
+                         TRUE);
 
 SELECT admin__add_user_to_role('$ADMIN_USERNAME', rolname)
 FROM pg_roles

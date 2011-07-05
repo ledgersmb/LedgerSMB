@@ -36,6 +36,7 @@ sub save_user {
             'password',
             'is_a_user',
             'user_id',
+            'import',
         ]
     );
     $user->{entity_id} = $employee->{entity_id};

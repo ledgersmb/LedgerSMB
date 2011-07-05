@@ -595,8 +595,6 @@ sub post_invoice {
                     VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
         );
         for $taccno (split / /, $form->{taxaccounts}){
-            $form->error('Must enter tax amount') 
-                        unless $form->{"mt_amount_$taccno"};
             my $taxamount;
             my $taxbasis;
             my $fx = $form->{exchangerate} || 1;

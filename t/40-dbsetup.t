@@ -78,6 +78,7 @@ SKIP: {
                    first_name => $ENV{LSMB_ADMIN_FNAME},
                    last_name  => $ENV{LSMB_ADMIN_LNAME},
                    country_id => $id,
+                   import     => 't',
                  });
       my $user = LedgerSMB::DBObject::Admin->new({base => $lsmb});
       ok($user->save_user, 'User saved');

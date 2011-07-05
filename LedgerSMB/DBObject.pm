@@ -21,10 +21,19 @@ Of course the base object can be any object that inherits LedgerSMB, so you can
 use any subclass of that.  The per-session dbh is passed between the objects 
 this way as is any information that is needed.
 
-=item exec_method ($self, procname => $function_name, args => \@args)
+=item exec_method 
+
+($self, procname => $function_name, [args => \@args, schema => $schema,
+continue_on_error=>$continue_on_error])
 
 Provides the basic mapping of parameters to the SQL stored procedure function 
 arguments.
+
+If \@args is not defined, args are mapped from the object's properties, 
+stripping them of their in_ prefix.  If schema is provided, that is used 
+instead of PostgreSQL's search path.  If continue_on_error is provided and true,
+the operation will not raise an exception in the event of a database error, and 
+it will be up to the application to handle any exceptions.
 
 =item __validate__ is called on every new() invocation.  It is blank in this 
 module but can be overridden in decendant modules.
@@ -159,10 +168,18 @@ sub exec_method {
         for (@in_args) { push @call_args, $_ } ;
         $self->{call_args} = \@call_args;
         $logger->debug("exec_method: \$self = " . Data::Dumper::Dumper($self));
-        return $self->call_procedure( procname => $funcname, args => \@call_args, order_by => $self->{_order_method}->{"$funcname"}, schema=>$schema);
+        return $self->call_procedure( procname => $funcname, 
+                                          args => \@call_args, 
+                                      order_by => $self->{_order_method}->{"$funcname"}, 
+                                         schema=>$schema,
+                             continue_on_error => $args{continue_on_error});
     }
     else {
-        return $self->call_procedure( procname => $funcname, args => \@in_args, order_by => $self->{_order_method}->{"$funcname"}, schema=>$schema);
+        return $self->call_procedure( procname => $funcname, 
+                                          args => \@in_args, 
+                                      order_by => $self->{_order_method}->{"$funcname"}, 
+                                         schema=>$schema,
+                             continue_on_error => $args{continue_on_error});
     }
 }
 
