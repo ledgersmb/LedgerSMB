@@ -29,7 +29,7 @@ use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
 use strict;
 
-my $temp = $LedgerSMB::Sysconfig::temp_dir;
+my $temp = $LedgerSMB::Sysconfig::tempdir;
 
 =item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
 
@@ -57,6 +57,8 @@ sub new {
     }
     if ($self->{source_dir}){
         $self->{source_dir} =~ s/\/*$/\//;
+    } else {
+        $self->{source_dir} = '';
     }
     bless $self, $class;
     return $self;
