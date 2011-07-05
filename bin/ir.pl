@@ -571,21 +571,19 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->{"mt_amount_$item"} .qq|" /></td>
+                        .$form->{"mt_amount_$item"} .qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
-                        .$form->{"mt_rate_$item"} .qq|" /></td>
+                        .$form->{"mt_rate_$item"} .qq|" size="6"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->{"mt_basis_$item"} .qq|" /></td>
+                        .$form->{"mt_basis_$item"} .qq|" size="10" /></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
-                        .$form->{"mt_ref_$item"} .qq|" /></td>
+                        .$form->{"mt_ref_$item"} .qq|" size="10"/></td>
                 <td><input type="text" name="mt_memo_$item"
                          id="mt-memo-$item" value="|
-                        .$form->{"mt_memo_$item"} .qq|" /></td>
-                <td><button id="mt-calc-$item name="mt_calc_$item"
-                    >|.$locale->text('Calc').qq|</button></td>
+                        .$form->{"mt_memo_$item"} .qq|" size="10"/></td>
                </tr>|;
             }  else {
     	        $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);

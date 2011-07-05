@@ -153,6 +153,7 @@ sub invoice_details {
     my $pth = $dbh->prepare($query) || $form->dberror($query);
 
     my $sortby;
+                        
 
     # sort items by project and partsgroup
     for $i ( 1 .. $form->{rowcount} - 1 ) {
@@ -1063,42 +1064,45 @@ sub post_invoice {
             $amount = $fxlinetotal * $form->{exchangerate};
             my $linetotal = $form->round_amount( $amount, 2 );
             $fxdiff += $amount - $linetotal;
-            @taxaccounts = Tax::init_taxes(
-                $form,
-                $form->{"taxaccounts_$i"},
-                $form->{"taxaccounts"}
-            );
-            $ml    = 1;
-            $tax   = Math::BigFloat->bzero();
-            $fxtax = Math::BigFloat->bzero();
+            if (!$form->{manual_tax}){
+                @taxaccounts = Tax::init_taxes(
+                    $form,
+                    $form->{"taxaccounts_$i"},
+                    $form->{"taxaccounts"}
+                );
+                $ml    = 1;
+                $tax   = Math::BigFloat->bzero();
+                $fxtax = Math::BigFloat->bzero();
 
-            if ( $form->{taxincluded} ) {
-                $tax += $amount =
-                  Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
-                $form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
+                if ( $form->{taxincluded} ) {
+                    $tax += $amount =
+                      Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
+                    $form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
+    
+                    $fxtax +=
+                      Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
+                }
+                else {
+                    $tax += $amount =
+                      Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
+                    $fxtax +=
+                      Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
+                }
+                for (@taxaccounts) {
+                    $form->{acc_trans}{ $form->{id} }{ $_->account }{amount} +=
+                      $_->value;
+                }
 
-                $fxtax +=
-                  Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
-            }
-            else {
-                $tax += $amount =
-                  Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
-                $fxtax +=
-                  Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
-            }
-            for (@taxaccounts) {
-                $form->{acc_trans}{ $form->{id} }{ $_->account }{amount} +=
-                  $_->value;
-            }
+                $grossamount = $form->round_amount( $linetotal, 2 );
 
-            $grossamount = $form->round_amount( $linetotal, 2 );
-
-            if ( $form->{taxincluded} ) {
-                $amount = $form->round_amount( $tax, 2 );
-                $linetotal -= $form->round_amount( $tax - $diff, 2 );
-                $diff = ( $amount - $tax );
-            }
-
+                if ( $form->{taxincluded} ) {
+                    $amount = $form->round_amount( $tax, 2 );
+                    $linetotal -= $form->round_amount( $tax - $diff, 2 );
+                    $diff = ( $amount - $tax );
+                }
+            } 
+            $grossamount ||= $form->round_amount( $linetotal, 2 ); 
+            $fxtax ||=0;
             # add linetotal to income
             $amount = $form->round_amount( $linetotal, 2 );
 
@@ -1310,6 +1314,39 @@ sub post_invoice {
     $form->{receivables} = $invamount * -1;
 
     delete $form->{acc_trans}{lineitems};
+
+    if ($form->{manual_tax}){
+        my $ac_sth = $dbh->prepare(
+              "INSERT INTO acc_trans (chart_id, trans_id, amount, source, memo)
+                    VALUES ((select id from account where accno = ?), 
+                            ?, ?, ?, ?)"
+        );
+        my $tax_sth = $dbh->prepare(
+              "INSERT INTO tax_extended (entry_id, tax_basis, rate)
+                    VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
+        );
+        for $taccno (split / /, $form->{taxaccounts}){
+            $form->error('Must enter tax amount') 
+                        unless $form->{"mt_amount_$taccno"};
+            my $taxamount;
+            my $taxbasis;
+            my $fx = $form->{exchangerate} || 1;
+            $taxamount = $form->parse_amount($myconfig, 
+                                             $form->{"mt_amount_$taccno"});
+            $taxbasis = $form->parse_amount($myconfig,
+                                           $form->{"mt_basis_$taccno"});
+            my $fx_taxamount = $taxamount * $fx;
+            my $fx_taxbasis = $taxbasis * $fx;
+            $form->{receivables} -= $fx_taxamount;
+            $invamount += $fx_taxamount;
+            $ac_sth->execute($taccno, $form->{id}, $fx_taxamount, 
+                             $form->{"mt_ref_$taccno"}, 
+                             $form->{"mt_desc_$taccno"});
+            $tax_sth->execute($fx_taxbasis, $form->{"mt_rate_$taccno"});
+        }
+        $ac_sth->finish;
+        $tax_sth->finish;
+    }
 
     # update exchangerate
     if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
@@ -2038,6 +2075,24 @@ sub retrieve_invoice {
         $form->db_parse_numeric(sth=> $sth, hashref=>$ref_);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
+
+        my $tax_sth = $dbh->prepare(
+                  qq| SELECT amount, source, memo, tax_basis, rate, accno
+                        FROM acc_trans ac
+                        JOIN tax_extended t USING(entry_id)
+                        JOIN account c ON c.id = ac.chart_id
+                       WHERE ac.trans_id = ?|);
+        $tax_sth->execute($form->{id});
+        while (my $taxref = $tax_sth->fetchrow_hashref('NAME_lc')){
+              $form->{manual_tax} = 1;
+              my $taccno = $taxref->{accno};
+              $form->{"mt_amount_$taccno"} = $taxref->{amount};
+              $form->{"mt_rate_$taccno"}  = $taxref->{rate};
+              $form->{"mt_basis_$taccno"} = $taxref->{tax_basis};
+              $form->{"mt_memo_$taccno"}  = $taxref->{memo};
+              $form->{"mt_ref_$taccno"}  = $taxref->{source};
+        }
+
 
         # get shipto
         $query = qq|SELECT ns.*, l.* FROM new_shipto ns JOIN location l ON ns.location_id = l.id WHERE ns.trans_id = ?|;

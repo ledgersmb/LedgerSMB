@@ -1210,7 +1210,6 @@ sub update {
 }
 
 sub post {
-
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "customer",  $locale->text('Customer missing!') );
 
