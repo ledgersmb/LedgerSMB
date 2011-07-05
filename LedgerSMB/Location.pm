@@ -66,7 +66,7 @@ sub save {
 
 sub get {
     my $self = shift;
-    my $ref = shift @{ $self->exec_method( procname => 'location_get' ) };
+    my $ref = shift @{ $self->exec_method( procname => 'location__get' ) };
     $self->merge( $ref, keys %{$ref} );
 }
 

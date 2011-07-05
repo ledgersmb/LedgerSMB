@@ -13,6 +13,9 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON location_list_class() IS
+$$ Lists location classes, by default in order entered.$$;
+
 CREATE OR REPLACE FUNCTION location_list_country()
 RETURNS SETOF country AS
 $$
@@ -25,6 +28,9 @@ BEGIN
 	END LOOP;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION location_list_country() IS
+$$ Lists countries, by default in alphabetical order.$$;
 
 CREATE OR REPLACE FUNCTION location_save
 (in_location_id int, in_address1 text, in_address2 text, in_address3 text,
@@ -103,7 +109,7 @@ are found, we insert one.  Either way, the return value of the location can be
 used for mapping to other things.  This is necessary because locations are 
 only loosly coupled with entities, etc.$$;
 
-CREATE OR REPLACE FUNCTION location_get (in_id integer) returns location AS
+CREATE OR REPLACE FUNCTION location__get (in_id integer) returns location AS
 $$
 DECLARE
 	out_location location%ROWTYPE;
@@ -113,8 +119,11 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON location__get (in_id integer) IS
+$$ Returns the location specified by in_id.$$;
+
 CREATE OR REPLACE FUNCTION location_search 
-(in_companyname varchar, in_address1 varchar, in_address2 varchar, 
+(in_address1 varchar, in_address2 varchar, 
 	in_city varchar, in_state varchar, in_zipcode varchar, 
 	in_country varchar)
 RETURNS SETOF location
@@ -125,8 +134,7 @@ DECLARE
 BEGIN
 	FOR out_location IN
 		SELECT * FROM location 
-		WHERE companyname ilike '%' || in_companyname || '%'
-			AND address1 ilike '%' || in_address1 || '%'
+		WHERE address1 ilike '%' || in_address1 || '%'
 			AND address2 ilike '%' || in_address2 || '%'
 			AND in_city ilike '%' || in_city || '%'
 			AND in_state ilike '%' || in_state || '%'
@@ -138,6 +146,13 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION location_search
+(in_companyname varchar, in_address1 varchar, in_address2 varchar,
+        in_city varchar, in_state varchar, in_zipcode varchar,
+        in_country varchar) IS
+$$ Returns matching locations.  All matches may be partial.$$;
+
+
 CREATE OR REPLACE FUNCTION location_list_all () RETURNS SETOF location AS
 $$
 DECLARE 
@@ -145,12 +160,15 @@ DECLARE
 BEGIN
 	FOR out_location IN
 		SELECT * FROM location 
-		ORDER BY company_name, city, state, country
+		ORDER BY city, state, country
 	LOOP
 		RETURN NEXT out_location;
 	END LOOP;
 END;
 $$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION location_list_all () is
+$$ Returns all locations, ordered by city, state, and country. $$;
 
 CREATE OR REPLACE FUNCTION location_delete (in_id integer) RETURNS VOID AS
 $$
@@ -159,43 +177,6 @@ BEGIN
 END;
 $$ language plpgsql;
 
-CREATE TYPE location_result AS (
-	id int,
-	line_one text,
-	line_two text,
-	line_three text,
-	city text,
-	state text,
-        mail_code text,
-        country_id int,
-	country text,
-        class_id int,
-	class text
-);
+COMMENT ON FUNCTION location_delete (in_id integer)
+IS $$ DELETES the location specified by in_id.  Does not return a value.$$;
 
-CREATE OR REPLACE FUNCTION location__get(in_id int) returns location_result AS $$
-declare
-    l_row location_result;
-begin
-    FOR l_row IN 
-        SELECT 
-            l.id,                   
-            l.line_one,             
-            l.line_two,             
-            l.line_three,           
-            l.city,                 
-            l.state,                
-            l.mail_code,
-            c.id,
-            c.name as country,
-            NULL,
-            NULL
-        FROM location l
-        JOIN country c on l.country_id = c.id
-        WHERE l.id = in_id
-    LOOP
-    
-        return l_row;
-    END LOOP;
-END;
-$$ language plpgsql ;
