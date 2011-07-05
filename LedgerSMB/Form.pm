@@ -2821,8 +2821,8 @@ sub update_status {
     my %queued = split / +/, $self->{queued};
     my $spoolfile =
       ( $queued{ $self->{formname} } )
-      ? "'$queued{$self->{formname}}'"
-      : 'NULL';
+      ? $queued{ $self->{formname} }
+      : undef;
 
     my $query = qq|DELETE FROM status
 					WHERE formname = ?
@@ -2862,6 +2862,7 @@ sub save_status {
     my ($self) = @_;
 
     my $dbh = $self->{dbh};
+
 
     my $formnames  = $self->{printed};
     my $emailforms = $self->{emailed};
