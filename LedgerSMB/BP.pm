@@ -334,6 +334,7 @@ sub print_spool {
 
     # connect to database
     my $dbh = $form->{dbh};
+    $spool = $LedgerSMB::Sysconfig::spool;
 
     my %audittrail;
 
@@ -346,6 +347,7 @@ sub print_spool {
     foreach my $i ( 1 .. $form->{rowcount} ) {
 
         if ( $form->{"checked_$i"} ) {
+
             open( OUT, '>', $form->{OUT} ) or $form->error("$form->{OUT} : $!");
             binmode(OUT);
 

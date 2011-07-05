@@ -485,8 +485,8 @@ sub list_spool {
         $module = "$ref->{module}.pl";
 
         $column_data{transdate} = "<td>$ref->{transdate}&nbsp;</td>";
-
-        if ( ${LedgerSMB::Sysconfig::spool} eq $ref->{spoolfile} ) {
+ 
+        if ( $lastfile eq $ref->{spoolfile} ) {
             $column_data{checked} = qq|<td></td>|;
         }
         else {
@@ -526,7 +526,8 @@ qq|<td><a href=${LedgerSMB::Sysconfig::spool}/$ref->{spoolfile}>$ref->{spoolfile
 
 |;
 
-        ${LedgerSMB::Sysconfig::spool} = $ref->{spoolfile};
+        
+        $lastfile = $ref->{spoolfile};
 
         $j++;
         $j %= 2;
