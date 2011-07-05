@@ -30,6 +30,11 @@ th {
   font-size: 10pt;
 }
 
+#company_info {
+   font-weight: bold;
+   font-size: 9pt;
+}
+
 /* login and admin */
 .login {
   font-family: Verdana, Arial, Helvetica, sans-serif;
