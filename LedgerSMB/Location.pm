@@ -10,10 +10,9 @@ arguments and the like.
 
 =head1 METHODS
 
+=over
 
 =item delete 
-
-
 
 =cut
 
@@ -100,7 +99,7 @@ Deletes the location identified by id
 sub delete {
     my $self = shift;
     $self->exec_method( procname => 'location_delete' );
-    $sehf->{dbh}->commit;
+    $self->{dbh}->commit;
 }
 
 =back

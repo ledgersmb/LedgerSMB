@@ -180,3 +180,17 @@ $$ language plpgsql;
 COMMENT ON FUNCTION location_delete (in_id integer)
 IS $$ DELETES the location specified by in_id.  Does not return a value.$$;
 
+CREATE TYPE location_result AS (
+        id int,
+        line_one text,
+        line_two text,
+        line_three text,
+        city text,
+        state text,
+        mail_code text,
+        country_id int,
+        country text,
+        class_id int,
+        class text
+);
+
