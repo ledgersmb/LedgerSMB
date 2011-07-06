@@ -2,18 +2,37 @@
 <?lsmb PROCESS 'elements.html' ?>
 <div id="modify_user">
 	<div class="listtop">
-            <?lsmb IF user.user.username ?>
-                Editing User <?lsmb user.user.username ?>
-            <?lsmb ELSE?>
-                New User
-            <?lsmb END?>
+            <?lsmb 
+               IF user.user.import;
+                       text('Importing User');
+                       action = 'save_user';
+                ELSIF user.user.username;
+                      text('Editing User');
+                      action = 'edit_user';
+                ELSE;
+                      text('New User');
+                      action = 'save_user';
+                END ?>
         </div>
     
     <form method="POST" action="admin.pl">
-        <input type="hidden" name="action" value="<?lsmb IF user.user.username?>edit_user<?lsmb ELSE?>save_user<?lsmb END?>"/>
+        <input type="hidden" name="action" value="<?lsmb action ?>"/>
         <table>
 
-            <?lsmb UNLESS user.user.username?>
+            <?lsmb IF user.user.username?>
+            <tr>
+                <td><?lsmb text('Username') ?></td>
+                <td>
+                    <?lsmb user.user.username;
+                    INCLUDE input element_data = {
+                            name  = 'username'
+                            type  = 'hidden'
+                            value = user.user.username
+                    } ?>
+                </td>
+            </tr>
+            
+            <?lsmb ELSE ?>
             <tr>
                 <td><?lsmb text('Username') ?></td>
                 <td>
@@ -21,16 +40,18 @@
                 </td>
             </tr>
             <?lsmb END?>
+            <?lsmb UNLESS user.user.import ?>
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
                     <input type="password" name="password" value="<?lsmb user.user.password ?>"/>
                 </td>
             </tr>
+            <?lsmb END ?>
             <tr>
                 <td><?lsmb text('Import') ?></td>
                 <?lsmb 
-                  IF import;
+                  IF user.user.import;
                       importc1 = 'CHECKED';
                       importc0 = '';
                   ELSE;
@@ -101,7 +122,7 @@
         <button type="submit" value="save_user"><?lsmb text('Save User') ?>
         </button>
     </form>
-    <?lsmb IF user.user.username?>
+    <?lsmb IF user.user.username AND user.user.import != 1 ?>
         <form name="location" method="POST" action="admin.pl">
             <?lsmb IF location?>
             <input type="hidden" name="location_id" value="<?lsmb location.id?>"/>

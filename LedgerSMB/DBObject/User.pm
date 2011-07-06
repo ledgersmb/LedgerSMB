@@ -137,7 +137,7 @@ sub save {
     if (!$ref) { # Unsuccessful
         if ($@ =~ /No password/){
               $self->error($self->{_locale}->text('Password required'));
-        } elsif ($@ eq 'Duplicate User'){
+        } elsif ($@ =~/Duplicate user/){
               $self->{dbh}->rollback;
               return 8;
         }

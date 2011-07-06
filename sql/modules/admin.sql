@@ -335,7 +335,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
        t_is_role := found;
        t_is_user := admin__is_user(in_username);
 
-       IF t_is_role and t_is_user is false and in_import is false THEN
+       IF t_is_role is true and t_is_user is false and in_import is false THEN
           RAISE EXCEPTION 'Duplicate user';
         END IF;
 
@@ -344,7 +344,8 @@ CREATE OR REPLACE FUNCTION admin__save_user(
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
                      || $e$ valid until $e$ || 
                       quote_literal(now() + '1 day'::interval);
-        elsif in_password IS NULL and t_is_role is false THEN
+        elsif in_import is false AND t_is_user is false 
+              AND in_password IS NULL THEN
                 RAISE EXCEPTION 'No password';
         elsif  t_is_role is false THEN
             -- create an actual user
@@ -435,7 +436,8 @@ $$ language 'plpgsql' SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION  admin__create_group(TEXT) FROM PUBLIC;
 
-CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $$
+CREATE OR REPLACE FUNCTION admin__delete_user
+(in_username TEXT, in_drop_role bool) returns INT as $$
     
     DECLARE
         stmt text;
@@ -448,13 +450,18 @@ CREATE OR REPLACE FUNCTION admin__delete_user(in_username TEXT) returns INT as $
         
             raise exception 'User not found.';
         ELSIF FOUND THEN
-    
-            stmt := ' drop user ' || quote_ident(a_user.username);
-            execute stmt;
-            
+            IF in_drop_role IS TRUE then 
+                stmt := ' drop user ' || quote_ident(a_user.username);
+                execute stmt;
+            END IF;    
             -- also gets user_connection
+            delete from user_preference where id = (
+                   select id from users where entity_id = a_user.entity_id);
+            delete from users where entity_id = a_user.entity_id;
+            delete from person where entity_id = a_user.entity_id;
+            delete from entity_employee where entity_id = a_user.entity_id;
             delete from entity where id = a_user.entity_id;
-                                        
+            return 1;
         END IF;   
     END;
     
@@ -462,9 +469,11 @@ $$ language 'plpgsql' SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION admin__delete_user(in_username TEXT) from public;
 
-comment on function admin__delete_user(text) is $$ 
+comment on function admin__delete_user(text, bool) is $$ 
     Drops the provided user, as well as deletes the user configuration data.
 It leaves the entity and person references.
+
+If in_drop_role is set, it drops the role too.
 $$;
 
 CREATE OR REPLACE FUNCTION admin__delete_group (in_group_name TEXT) returns bool as $$
@@ -527,12 +536,9 @@ REVOKE execute on function admin__list_roles(in_username text) from public;
 --$$ language plpgsql;
 
 create or replace function admin__is_user (in_user text) returns bool as $$
-    DECLARE
-        pg_user pg_roles;
-    
     BEGIN
     
-        select * into pg_user from pg_roles where rolname = in_user;
+        PERFORM * from users where username = in_user;
         RETURN found;     
     
     END;

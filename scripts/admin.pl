@@ -75,7 +75,27 @@ sub save_user {
     my $entity = $admin->save_user();
     if ($entity == 8){ # Duplicate user
           $request->{import} = 1;
-          __edit_page($request);
+          $request->{reimport} = 1;
+          my $template = LedgerSMB::Template->new( 
+                  user => $request->{_user}, 
+              template => 'Admin/edit_user', 
+              language => $request->{_user}->{language}, 
+                format => 'HTML', 
+                   path=>'UI'
+          );
+          my $dcsetting = LedgerSMB::Setting->new(base=>$request, copy=>'base');
+          my $default_country = $dcsetting->get('default_country'); 
+          $template->render(
+            {
+                user=>{user => $request, employee => $request}, 
+                countries=>$admin->get_countries(),
+                salutations=>$admin->get_salutations(),
+                contact_classes=>$admin->get_contact_classes(),
+                default_country => $dcsetting->{value},
+                admin => $admin,
+                stylesheet => $request->{stylesheet},
+            }
+          );
           return;
     }
     my $groups = $admin->get_roles();
