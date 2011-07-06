@@ -1555,6 +1555,36 @@ IN ROLE "lsmb_<?lsmb dbname ?>__language_create",
 "lsmb_<?lsmb dbname ?>__part_translation_create",
 "lsmb_<?lsmb dbname ?>__project_translation_create";
 
+-- Fixed Assets
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_administer" NOLOGIN INHERIT;
+
+GRANT INSERT, UPDATE, SELECT, DELETE ON asset_class 
+TO "lsmb_<?lsmb dbname ?>__assets_administer";
+GRANT SELECT, UPDATE ON asset_class_id_seq
+TO "lsmb_<?lsmb dbname ?>__assets_administer";
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_enter" NOLOGIN INHERIT;
+
+GRANT ALL ON asset_item_id_seq TO "lsmb_<?lsmb dbname ?>__assets_enter";
+GRANT INSERT, UPDATE ON asset_item
+TO "lsmb_<?lsmb dbname ?>__assets_enter";
+
+GRANT INSERT, SELECT ON asset_note TO "lsmb_<?lsmb dbname ?>__assets_enter";
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_depreciate" NOLOGIN INHERIT;
+GRANT SELECT, INSERT ON asset_report, asset_report_line, asset_item, asset_class
+TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_approve" NOLOGIN INHERIT;
+GRANT SELECT ON asset_report, asset_report_line, asset_item, asset_class
+TO "lsmb_<?lsmb dbname ?>__assets_approve";
+GRANT EXECUTE ON FUNCTION  asset_report__approve(int, int, int, int)
+TO "lsmb_<?lsmb dbname ?>__assets_approve";
+GRANT SELECT ON asset_class, asset_item to public;
+GRANT SELECT ON asset_unit_class TO public;
+GRANT SELECT ON asset_dep_method TO public;
+
 -- Grants to all users;
 GRANT SELECT ON makemodel TO public;
 GRANT SELECT ON custom_field_catalog TO public;
