@@ -72,6 +72,43 @@ Database:
 * Redesigned database schema for reconciliation (Aurynn and Chris T)
 * Redesigned database schema for payments (David M)
 
+------------
+
+Changelog for 1.2.23
+* Fix for sales tax incorrect on sales/purchase order screen
+* fix for unreadable characters in HTML templates in some charsets.
+* Correcting backup name on backup by email
+
+Changelog for 1.2.22
+* Corrected error for cases where no buttons occur on GL Journal Entry screen
+(Chris T)
+* Corrected a number of warnings for Perl 5.12 (Chris T and Jeff K)
+* Corrected a number of UI issues with HST migtation (Chris T)
+* Corrected erroneous test case failures due to erroneous order of regexp's in
+test cases (Chris T)
+
+Changelog for 1.2.21
+* Corrected a number of templates with HTML issues (Luke)
+* AR/AP Aging Report fixed, ignores payment after report date (Chris T)
+* Minor documentation updates (Chris T)
+* Fixed bug saving SIC (Adam T)
+
+Changelog for 1.2.20
+* Commented out credits in ledgersmb-blue.css 
+* Corrected encoding in Latvian chart of accounts (Janeks)
+* Minor fixes to release notes (SF User akaihola)
+* Exchange rate fix (SF User Anarcat)
+* Fixed whitespace handling in admin.pl when saving permissions (Chris T)
+
+Changelog for 1.2.19
+* Fixed short sales with never-closed books (Chris T)
+* Fixed erroneous tax rounding in POS screen (Chris T)
+* Fixed XSRF vulnerability that allows changing user's password (Chris T)
+* Corrected SQL Injection vulnerability in customer/vendor handling (Chris T)
+* Cookie now sets SECURE flag when on HTTPS (Chris T)
+* Corrected an issue with URL escaping (M Lubratt)
+* Corrected an issue with email id's (Michael Richardson)
+
 Changelog for 1.2.18
 * Corrected httpd configuration bit. (Roderick Anderson)
 * COGS fix for return handling (Sadashiva and Chris T)
