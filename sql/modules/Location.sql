@@ -160,7 +160,7 @@ DECLARE
 BEGIN
 	FOR out_location IN
 		SELECT * FROM location 
-		ORDER BY city, state, country
+		ORDER BY country, state, city
 	LOOP
 		RETURN NEXT out_location;
 	END LOOP;
@@ -168,7 +168,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION location_list_all () is
-$$ Returns all locations, ordered by city, state, and country. $$;
+$$ Returns all locations, ordered by country, state, and city. $$;
 
 CREATE OR REPLACE FUNCTION location_delete (in_id integer) RETURNS VOID AS
 $$

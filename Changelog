@@ -44,6 +44,9 @@ Contact Handling:
 * Multiple bank accounts per customer/vendor account (Josh D and Chris T)
 * Track 1099 or equiv. forms for customers/vendors (Chris T and John W)
 
+Invoicing:
+* Can now set sales tax amounts and rates per invoice if necessary (Chris T).
+
 Development:
 * New API structure for new code (Entire Team)
 * Better error handling/display (Jason and Chris T)
