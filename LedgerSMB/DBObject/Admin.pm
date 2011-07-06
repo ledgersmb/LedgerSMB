@@ -7,6 +7,7 @@ use LedgerSMB::Contact;
 use LedgerSMB::DBObject::Employee;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Log;
+use strict;
 
 my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
 
@@ -22,11 +23,12 @@ sub save {
 sub save_user {
     
     my $self = shift @_;
-    $self->{user_id} = $user_id->{admin__save_user};
-    
+
+    # I deleted some assignments which didn't play well with strict mode
+    # and by my reading probably broke things. --CT
+
     my $employee = LedgerSMB::DBObject::Employee->new( base=>$self);
     
-    $employee->{entity_id} = $entity_id->{id};    
     $employee->save();
     # now, check for user-specific stuff. Is this person a user or not?
     

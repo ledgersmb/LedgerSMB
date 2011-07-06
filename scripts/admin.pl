@@ -100,6 +100,7 @@ sub save_user {
     }
     my $groups = $admin->get_roles();
     $admin->{stylesheet} = $request->{stylesheet};
+    $admin->{user_id} = $admin->{user}->{id};
     __edit_page($admin);
 }
 
