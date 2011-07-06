@@ -138,11 +138,3 @@ $$ language sql;
 COMMENT ON FUNCTION periods_get() IS
 $$ Returns dates for year to date, and last year.$$;
 
-CREATE OR REPLACE FUNCTION all_years() returns setof int AS
-$$
-SELECT DISTINCT EXTRACT ('YEAR' FROM transdate)::int
-FROM acc_trans;
-$$ language sql;
-
-COMMENT ON FUNCTION all_years() IS
-$$ Returns all years currently found in the database.$$;
