@@ -120,4 +120,15 @@ sub list_asset_classes {
     return @refs;
 }
 
+=back
+
+=head1 Copyright (C) 2010, The LedgerSMB core team.
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
+
 1;

@@ -1217,7 +1217,6 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION asset_disposal__approve
 (in_id int, in_gain_acct int, in_loss_acct int, in_asset_acct int)
-returns asset_report)
 IS $$ This approves the asset_report for disposals, creating relevant GL drafts.
 
 If the report is a partial disposal report, imports remaining percentages as new

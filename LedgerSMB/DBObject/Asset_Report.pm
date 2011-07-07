@@ -10,10 +10,77 @@ LedgerSMB::DBObject::Asset_Report.pm, LedgerSMB Base Class for Asset Reports
 This library contains the base utility functions for creating, saving, and
 retrieving depreciation categories of asset depreciation and disposal reports.
 
+=head1 STANDARD PROPERTIES
+
+=over
+
+=item id int
+
+Integer id of asset report
+
+=item report_date date
+
+Effective date of report
+
+=item gl_id bigint
+
+ID of GL transaction if applicable and approved.
+
+=item asset_class bigint 
+
+ID of asset class for the report the assets are 
+
+=item report_class int
+
+Integer of the report class desired.
+
+=item entered_by bigint
+
+Integer id of the individual who entered the report
+
+=item approved_by bigint
+
+Integer id of the individual who approved the report
+
+=item entered_at timestamp
+
+Timestamp the report was created
+
+=item approved_at timestamp
+
+Timestamp the report was approved
+
+=item depreciated_qty 
+
+Number of units (production or time) depreciated
+
+=item dont_approve bool
+
+If true, do not approve, ever.
+
+=item submitted bool
+
+If true, submitted for approval
+
+
+=back
+
+=head1 METHODS
+
+=over
+
 =cut
 
 use base qw(LedgerSMB::DBObject);
 use strict;
+
+=item save
+
+Uses standard properties
+
+Saves report to the database.  Sets ID.
+
+=cut
 
 sub save {
     my ($self) = @_;
@@ -39,6 +106,12 @@ sub save {
     }
     $self->{dbh}->commit;
 }
+
+=item get
+
+Gets report from the database.
+
+=cut
 
 sub get {
     my ($self) = @_;
@@ -113,5 +186,16 @@ sub get_metadata {
         }
     }
 }
+
+=back
+
+=head1 Copyright (C) 2010, The LedgerSMB core team.
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;

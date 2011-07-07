@@ -1455,7 +1455,7 @@ GRANT EXECUTE ON FUNCTION  admin__save_user(int, INT, text, TEXT, BOOL)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__create_group(TEXT)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__delete_user(text)
+GRANT EXECUTE ON FUNCTION  admin__delete_user(text, bool)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__list_roles(text)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
@@ -1626,6 +1626,8 @@ GRANT SELECT ON warehouse TO public;
 GRANT select ON account_link_description TO PUBLIC;
 GRANT select ON sic TO public;
 GRANT SELECT ON parts_translation,  project_translation TO public;
+GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
+                asset_disposal_method TO PUBLIC;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 

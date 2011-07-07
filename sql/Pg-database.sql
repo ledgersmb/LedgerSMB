@@ -3477,7 +3477,7 @@ values ('Whole Month Straight Line', 1, 'asset_dep_straight_line_whl_m',
 'in months', 'SLMM');
 
 INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name) 
-values ('Annual Straight Line Daily', 1, 'asset_dep_straight_line_yr_m', 'in years', 'SLYM');
+values ('Annual Straight Line Monthly', 1, 'asset_dep_straight_line_yr_m', 'in years', 'SLYM');
 
 CREATE TABLE asset_class (
 	id serial not null unique,
@@ -3487,7 +3487,7 @@ CREATE TABLE asset_class (
 	method int references asset_dep_method(id)
 );
 
-COMMENT ON asset_class IS $$
+COMMENT ON TABLE asset_class IS $$
 The account fields here set the defaults for the individual asset items.  They
 are non-authoritative.
 $$;
@@ -3503,14 +3503,6 @@ INSERT INTO asset_disposal_method (label, multiple, short_label)
 values ('Abandonment', '0', 'A');
 INSERT INTO asset_disposal_method (label, multiple, short_label)
 values ('Sale', '1', 'S');
-
-CREATE TABLE asset_rl_to_disposal_method (
-       report_id int references asset_report(id),
-       asset_id int references asset_item(id),
-       disposal_method_id int references asset_disposal_method(id),
-       percent_disposed numeric,
-       primary key (report_id, asset_id, disposal_method_id)
-);
 
 CREATE TABLE asset_item (
 	id serial primary key, -- needed due to possible null in natural key
@@ -3544,6 +3536,7 @@ CREATE TABLE asset_note (
 
 INSERT INTO note_class (id, class) values (4, 'Asset');
 ALTER TABLE asset_note alter column note_class set default 4;
+
 
 CREATE TABLE asset_report_class (
 	id int not null unique,
@@ -3579,6 +3572,17 @@ CREATE TABLE asset_report_line(
 	PRIMARY KEY(asset_id, report_id)
 );
 
-COMMENT ON asset_report_line.department_id IS
+COMMENT ON column asset_report_line.department_id IS
 $$ In case assets are moved between departments, we have to store this here.$$;
+
+CREATE TABLE asset_rl_to_disposal_method (
+       report_id int references asset_report(id),
+       asset_id int references asset_item(id),
+       disposal_method_id int references asset_disposal_method(id),
+       percent_disposed numeric,
+       primary key (report_id, asset_id, disposal_method_id)
+);
+
+COMMENT ON TABLE asset_rl_to_disposal_method IS
+$$ Maps disposal method to line items in the asset disposal report.$$;
 commit;

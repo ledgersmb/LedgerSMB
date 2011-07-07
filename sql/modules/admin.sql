@@ -467,7 +467,8 @@ CREATE OR REPLACE FUNCTION admin__delete_user
     
 $$ language 'plpgsql' SECURITY DEFINER;
 
-REVOKE EXECUTE ON FUNCTION admin__delete_user(in_username TEXT) from public;
+REVOKE EXECUTE ON FUNCTION admin__delete_user(in_username TEXT, 
+in_drop_role bool) from public;
 
 comment on function admin__delete_user(text, bool) is $$ 
     Drops the provided user, as well as deletes the user configuration data.

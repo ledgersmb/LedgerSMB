@@ -13,7 +13,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON location_list_class() IS
+COMMENT ON FUNCTION location_list_class() IS
 $$ Lists location classes, by default in order entered.$$;
 
 CREATE OR REPLACE FUNCTION location_list_country()
@@ -119,7 +119,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON location__get (in_id integer) IS
+COMMENT ON FUNCTION location__get (in_id integer) IS
 $$ Returns the location specified by in_id.$$;
 
 CREATE OR REPLACE FUNCTION location_search 
@@ -147,7 +147,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION location_search
-(in_companyname varchar, in_address1 varchar, in_address2 varchar,
+(in_address1 varchar, in_address2 varchar,
         in_city varchar, in_state varchar, in_zipcode varchar,
         in_country varchar) IS
 $$ Returns matching locations.  All matches may be partial.$$;
