@@ -7,6 +7,12 @@ SELECT CASE WHEN $3/$1 * $4 < $4 - $5 THEN $3/$1 * $4
             END;
 $$ language sql;
 
+COMMENT ON FUNCTION asset_dep__straight_line_base
+(in_base_life numeric, in_life numeric, in_used numeric, in_basis numeric,
+in_dep_to_date numeric) IS
+$$ This function is a basic function which does the actual calculation for 
+straight line depreciation.$$;
+
 CREATE OR REPLACE FUNCTION asset_dep__used_months
 (in_last_dep date, in_dep_date date, in_usable_life numeric)
 RETURNS numeric AS
@@ -17,6 +23,13 @@ select CASE WHEN extract('MONTHS' FROM (date_trunc('day', $2) - date_trunc('day'
             ELSE extract('MONTHS' FROM (date_trunc('day', $2) - date_trunc('day', $1)))::numeric
             END;
 $$ language sql;
+
+COMMENT ON FUNCTION asset_dep__used_months
+(in_last_dep date, in_dep_date date, in_usable_life numeric) IS
+$$ This checks the interval between the two dates, and if longer than the 
+usable life, returns the months in that interval.  Otherwise returns the 
+usable life.$$;
+
 
 CREATE OR REPLACE FUNCTION asset_dep_get_usable_life_yr
 (in_usable_life numeric, in_start_date date, in_dep_date date)
@@ -30,6 +43,12 @@ $$
           END;
 $$ language sql;
 
+COMMENT ON FUNCTION asset_dep_get_usable_life_yr
+(in_usable_life numeric, in_start_date date, in_dep_date date) IS
+$$If the interval is less than 0 then 0.  If the interval is greater than the 
+usable life, then the usable life.  Otherwise, return the interval as a 
+fractional year.$$;
+
 CREATE OR REPLACE FUNCTION months_passed (in_start timestamp, in_end timestamp)
 returns int as
 $$
@@ -40,6 +59,9 @@ $$
 select (extract (months from age($2 + '1 day', $1 + '1 day'))
        + extract (years from age($2, $1)) * 12)::int;
 $$ language sql;
+
+COMMENT ON FUNCTION months_passed (in_start timestamp, in_end timestamp) IS
+$$ Returns the number of months between in_start and in_end.$$;
 
 CREATE OR REPLACE FUNCTION asset_dep_straight_line_yr_m
 (in_asset_ids int[],  in_report_date date, in_report_id int)
@@ -74,6 +96,14 @@ $$
     select true;
 $$ language sql;
 
+COMMENT ON FUNCTION asset_dep_straight_line_yr_m
+(in_asset_ids int[],  in_report_date date, in_report_id int) is
+$$ Performs straight line depreciation on a set of selected assets, selecting
+the depreciation values into a report.
+
+Assumes the usable life is measured in years, and is depreciated eavenly every
+month.$$;
+
 CREATE OR REPLACE FUNCTION asset_dep_straight_line_month
 (in_asset_ids int[],  in_report_date date, in_report_id int)
 RETURNS bool AS
@@ -106,6 +136,12 @@ $$
 
     select true;
 $$ language sql;
+
+COMMENT ON FUNCTION asset_dep_straight_line_month
+(in_asset_ids int[],  in_report_date date, in_report_id int) IS
+$$ Performs straight line depreciation, selecting depreciation amounts, etc. 
+into a report for further review and approval.  Usable life is in months, and
+depreciation is an equal amount every month.$$;
 
 CREATE OR REPLACE FUNCTION asset_report__generate_gl(in_report_id int, in_accum_account_id int)
 RETURNS INT AS
@@ -148,6 +184,13 @@ Begin
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset_report__generate_gl
+(in_report_id int, in_accum_account_id int) IS
+$$ Generates a GL transaction when the Asset report is approved.
+
+Currently this creates GL drafts, not approved transctions
+$$;
+
 CREATE OR REPLACE FUNCTION asset_class__get (in_id int) RETURNS asset_class AS
 $$
 DECLARE ret_val asset_class;
@@ -157,10 +200,16 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset_class__get (in_id int) IS
+$$ returns the row from asset_class identified by in_id.$$;
+
 CREATE OR REPLACE FUNCTION asset_class__list() RETURNS SETOF asset_class AS
 $$
 SELECT * FROM asset_class ORDER BY label;
 $$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION asset_class__list() is
+$$ Returns an alphabetical list of asset classes.$$;
 
 CREATE TYPE asset_class_result AS (
 	id int,
@@ -198,16 +247,27 @@ BEGIN
 			AND (in_method is null OR in_method = ac.method)
 			AND (in_label IS NULL OR ac.label LIKE 
 				'%' || in_label || '%')
+               ORDER BY label
 	LOOP
 		RETURN NEXT out_var;
 	END LOOP;
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset_class__search
+(in_asset_account_id int, in_dep_account_id int,
+in_method int, in_label text) IS
+$$ Returns a list of matching asset classes.  The account id's are exact matches
+as is the method, but the label is a partial match.  NULL's match all.$$;
+
+
 CREATE OR REPLACE FUNCTION asset_class__get_dep_methods() 
 RETURNS SETOF asset_dep_method as $$
 SELECT * FROM asset_dep_method ORDER BY method;
 $$ LANGUAGE sql;
+
+COMMENT ON FUNCTION asset_class__get_dep_methods() IS
+$$ Returns a set of asset_dep_methods ordered by the method label.$$;
 
 CREATE OR REPLACE FUNCTION asset_class__save
 (in_id int, in_asset_account_id int, in_dep_account_id int, 
@@ -240,6 +300,12 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset_class__save
+(in_id int, in_asset_account_id int, in_dep_account_id int,
+in_method int, in_label text, in_unit_label text) IS
+$$ Saves this data as an asset_class record.  If in_id is NULL or is not found
+in the table, inserts a new row.  Returns the row saved.$$;
+
 CREATE OR REPLACE FUNCTION asset__get (in_id int, in_tag text)
 RETURNS asset_item AS
 $$
@@ -250,6 +316,11 @@ BEGIN
 	return ret_val;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION asset__get (in_id int, in_tag text) IS
+$$ Retrieves a given asset either by id or tag.  Both are complete matches.
+
+Note that the behavior is undefined if both id and tag are provided.$$;
 
 CREATE OR REPLACE FUNCTION asset__search
 (in_asset_class int, in_description text, in_tag text, 
@@ -279,6 +350,15 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION asset__search
+(in_asset_class int, in_description text, in_tag text,
+in_purchase_date date, in_purchase_value numeric,
+in_usable_life numeric, in_salvage_value numeric) IS
+$$Searches for assets.  Nulls match all records.  Asset class is exact,
+as is purchase date, purchase value, and salvage value. Tag and description
+are partial matches.$$;
+
+
 CREATE OR REPLACE FUNCTION asset_class__get_asset_accounts()
 RETURNS SETOF account AS $$
 SELECT * FROM account 
@@ -287,6 +367,10 @@ WHERE id IN
 ORDER BY accno;
 $$ LANGUAGE SQL;
 
+COMMENT ON FUNCTION asset_class__get_asset_accounts()
+IS
+$$ Returns a list of fixed asset accounts, ordered by account number$$;
+
 CREATE OR REPLACE FUNCTION asset_class__get_dep_accounts()
 RETURNS SETOF account AS $$
 SELECT * FROM account 
@@ -294,6 +378,10 @@ WHERE id IN
 	(select account_id from account_link where description = 'Asset_Dep')
 ORDER BY accno;
 $$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION asset_class__get_dep_accounts() IS
+$$ Returns a list of asset depreciation accounts, ordered by account number$$;
+
 
 
 CREATE OR REPLACE FUNCTION asset__save
@@ -346,6 +434,18 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset__save
+(in_id int, in_asset_class int, in_description text, in_tag text,
+in_purchase_date date, in_purchase_value numeric,
+in_usable_life numeric, in_salvage_value numeric,
+in_start_depreciation date, in_warehouse_id int,
+in_department_id int, in_invoice_id int,
+in_asset_account_id int, in_dep_account_id int, in_exp_account_id int) IS
+$$ Saves the asset with the information provided.  If the id is provided, 
+overwrites the record with the id.  Otherwise, or if that record is not found,
+inserts.  Returns the row inserted or updated.
+$$;
+
 CREATE OR REPLACE FUNCTION asset_item__search
 (in_id int, in_asset_class int, in_description text, in_tag text, 
 in_purchase_date date, in_purchase_value numeric,
@@ -384,11 +484,24 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset_item__search
+(in_id int, in_asset_class int, in_description text, in_tag text,
+in_purchase_date date, in_purchase_value numeric,
+in_usable_life numeric, in_salvage_value numeric,
+in_start_depreciation date, in_warehouse_id int,
+in_department_id int, in_invoice_id int,
+in_asset_account_id int, in_dep_account_id int) IS
+$$ Returns a list of matching asset items.  Nulls match all records.
+Tag and description allow for partial match.  All other matches are exact.$$;
+
 CREATE OR REPLACE FUNCTION asset_class__get_dep_method (in_asset_class int) 
 RETURNS asset_dep_method AS $$
 SELECT * from asset_dep_method 
 WHERE id = (select method from asset_class where id = $1);
 $$ language sql;
+
+COMMENT ON FUNCTION asset_class__get_dep_method (in_asset_class int) IS
+$$Returns the depreciation method associated with the asset class.$$;
 
 CREATE OR REPLACE FUNCTION asset_report__save
 (in_id int, in_report_date date, in_report_class int, in_asset_class int,
@@ -425,6 +538,14 @@ BEGIN
 
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION asset_report__save
+(in_id int, in_report_date date, in_report_class int, in_asset_class int,
+in_submit bool) IS
+$$ Creates or updates an asset report with the information presented.  Note that
+approval values are not set here, and that one cannot unsubmit a report though
+this function.$$;
+
 CREATE OR REPLACE FUNCTION asset_report__dispose
 (in_id int, in_asset_id int, in_amount numeric, in_dm int, 
 in_percent_disposed numeric)
@@ -443,6 +564,11 @@ BEGIN
     RETURN TRUE;
     END;
 $$ language PLPGSQL;
+
+COMMENT ON FUNCTION asset_report__dispose
+(in_id int, in_asset_id int, in_amount numeric, in_dm int,
+in_percent_disposed numeric) IS
+$$ Disposes of an asset.  in_dm is the disposal method id.$$;
 
 CREATE TYPE asset_disposal_report_line 
 AS (
@@ -490,6 +616,10 @@ LEFT JOIN asset_report pr       ON (prl.report_id = pr.id)
  ORDER BY ai.id, ai.tag;
 $$ language sql;
 
+COMMENT ON FUNCTION asset_report__get_disposal (in_id int) IS
+$$ Returns a set of lines of disposed assets in a disposal report, specified
+by the report id.$$;
+
 CREATE TYPE asset_nbv_line AS (
     id int, 
     tag text,
@@ -506,7 +636,7 @@ CREATE TYPE asset_nbv_line AS (
 );
 
 
-create  function asset_nbv_report () 
+CREATE OR REPLACE FUNCTION asset_nbv_report () 
 returns setof asset_nbv_line AS
 $$
    SELECT ai.id, ai.tag, ai.description, coalesce(ai.start_depreciation, ai.purchase_date),
@@ -533,6 +663,9 @@ LEFT JOIN asset_report r on (rl.report_id = r.id)
           OR max(r.report_class) IS NULL
  ORDER BY ai.id, ai.tag, ai.description;
 $$ language sql;
+
+COMMENT ON FUNCTION asset_nbv_report () IS
+$$ Returns the current net book value report.$$;
       
 CREATE TYPE partial_disposal_line AS (
 id int,
@@ -563,6 +696,9 @@ SELECT ai.id, ai.tag, ai.start_depreciation, ai.purchase_value, ai.description,
  WHERE ar.id = $1;
 $$ LANGUAGE SQL;
 
+COMMENT ON FUNCTION asset_report_partial_disposal_details(in_id int) IS
+$$ Returns the partial disposal details for a partial disposal report.$$;
+
 CREATE OR REPLACE FUNCTION asset_report__approve
 (in_id int, in_expense_acct int, in_gain_acct int, in_loss_acct int)
 RETURNS asset_report AS
@@ -592,6 +728,10 @@ BEGIN
 end;
 $$ language plpgsql;
 revoke execute on function asset_report__approve(int, int, int, int) from public;
+
+COMMENT ON function asset_report__approve(int, int, int, int) is
+$$ This function approves an asset report (whether depreciation or disposal).
+Also generates relevant GL drafts for review and posting.$$;
 
 CREATE OR REPLACE FUNCTION asset_report__disposal_gl
 (in_id int, in_gain_acct int, in_loss_acct int)
@@ -637,6 +777,11 @@ GROUP BY a.asset_account_id, r.disposed_on;
   SELECT TRUE;
 $$ language sql;
 
+COMMENT ON  FUNCTION asset_report__disposal_gl
+(in_id int, in_gain_acct int, in_loss_acct int) IS
+$$ Generates GL transactions for ful disposal reports.$$;
+
+
 CREATE OR REPLACE FUNCTION asset_item__add_note(in_id int, in_subject text, in_note text)
 RETURNS asset_note AS
 $$
@@ -644,11 +789,17 @@ INSERT INTO asset_note (ref_key, subject, note) values ($1, $2, $3);
 SELECT * FROM asset_note WHERE id = currval('note_id_seq');
 $$ language sql;
 
+COMMENT ON FUNCTION asset_item__add_note(in_id int, in_subject text, 
+in_note text) IS $$ Adds a note to an asset item$$;
+
 CREATE OR REPLACE FUNCTION asset_report__get_expense_accts()
 RETURNS SETOF account
 AS $$
     SELECT * FROM account__get_by_link_desc('asset_expense');
 $$ language sql;
+
+COMMENT ON FUNCTION asset_report__get_expense_accts() IS
+$$ Lists all asset expense reports.$$; 
 
 CREATE OR REPLACE FUNCTION asset_report__get_gain_accts()
 RETURNS SETOF account
@@ -656,11 +807,19 @@ AS $$
     SELECT * FROM account__get_by_link_desc('asset_gain');
 $$ language sql;
 
+COMMENT ON FUNCTION asset_report__get_gain_accts() IS
+$$ Returns a list of gain accounts for asset depreciation and disposal reports.
+$$;
+
 CREATE OR REPLACE FUNCTION asset_report__get_loss_accts()
 RETURNS SETOF account
 AS $$
     SELECT * FROM account__get_by_link_desc('asset_loss');
 $$ language sql;
+
+COMMENT ON FUNCTION asset_report__get_loss_accts() IS
+$$ Returns a list of loss accounts for asset depreciation and disposal reports.
+$$;
 
 CREATE OR REPLACE FUNCTION asset_report__get(in_id int)
 RETURNS asset_report
@@ -668,6 +827,9 @@ AS
 $$
 select * from asset_report where id = $1;
 $$ language sql;
+
+COMMENT ON FUNCTION asset_report__get(in_id int) IS
+$$ Returns the asset_report line identified by id.$$;
 
 CREATE TYPE asset_report_line_result AS(
      tag text,
@@ -716,6 +878,9 @@ LEFT JOIN asset_report pr ON (prl.report_id = pr.id)
           ai.description, ai.purchase_date;
 $$ language sql;
 
+COMMENT ON FUNCTION asset_report__get_lines(in_id int) IS
+$$ Returns the lines of an asset depreciation report.$$;
+
 CREATE TYPE asset_report_result AS (
         id int,
         report_date date,
@@ -754,6 +919,13 @@ GROUP BY r.id, r.report_date, r.gl_id, r.asset_class, r.report_class,
          r.depreciated_qty, r.dont_approve, r.submitted;
 $$ language sql;
 
+COMMENT ON FUNCTION asset_report__search
+(in_start_date date, in_end_date date, in_asset_class int, in_approved bool,
+ in_entered_by int) IS
+$$ Searches for asset reports.  Nulls match all rows.  Approved, asset class, 
+and entered_by are exact matches.  Start_date and end_date define the beginning
+and end of the search date. $$;
+
 CREATE OR REPLACE FUNCTION asset_report__generate
 (in_depreciation bool, in_asset_class int, in_report_date date) 
 RETURNS SETOF asset_item AS
@@ -776,6 +948,11 @@ LEFT JOIN asset_report ar ON (arl.report_id = ar.id)
                OR $1 is not true
 $$ language sql;
 
+COMMENT ON FUNCTION asset_report__generate
+(in_depreciation bool, in_asset_class int, in_report_date date) IS
+$$ Generates lines to select/deselect for the asset report (depreciation or
+disposal).$$;
+
 CREATE OR REPLACE FUNCTION asset_report__begin_import 
 (in_asset_class int, in_report_date date)
 returns asset_report as
@@ -788,6 +965,10 @@ INSERT INTO asset_report (asset_class, report_date, entered_at, entered_by,
 SELECT * FROM asset_report where id = currval('asset_report_id_seq');
 
 $$ language sql;
+
+COMMENT ON FUNCTION asset_report__begin_import
+(in_asset_class int, in_report_date date) IS
+$$Creates the outline of an asset import report$$;
 
 CREATE OR REPLACE FUNCTION asset_report__import(
 	in_description text,
@@ -836,6 +1017,30 @@ SET CONSTRAINTS asset_item_obsolete_by_fkey IMMEDIATE;
 SELECT true;
 $$ language sql;
 
+COMMENT ON FUNCTION asset_report__import(
+        in_description text,
+        in_tag text,
+        in_purchase_value numeric,
+        in_salvage_value numeric,
+        in_usable_life numeric,
+        in_purchase_date date,
+        in_start_depreciation date,
+        in_location_id int,
+        in_department_id int,
+        in_asset_account_id int,
+        in_dep_account_id int,
+        in_exp_account_id int,
+        in_asset_class_id int,
+        in_invoice_id int,
+        in_dep_report_id int,
+        in_accum_dep numeric,
+        in_obsolete_other bool
+) IS
+$$ Imports an asset with the supplied information.  If in_obsolete_other is
+false, this creates a new depreciable asset.  If it is true, it sets up the 
+other asset as obsolete.  This is the way partial disposal reports are handled.
+$$;
+
 CREATE OR REPLACE FUNCTION asset_report__begin_disposal
 (in_asset_class int, in_report_date date, in_report_class int)
 returns asset_report as $$
@@ -856,6 +1061,10 @@ end;
 
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset_report__begin_disposal
+(in_asset_class int, in_report_date date, in_report_class int) IS 
+$$ Creates the asset report recofd for the asset disposal report.$$;
+
 create or replace function asset_report__record_approve(in_id int)
 returns asset_report
 as $$
@@ -867,6 +1076,10 @@ UPDATE asset_report
 select * from asset_report where id = $1;
 
 $$ language sql;
+
+COMMENT ON FUNCTION asset_report__record_approve(in_id int) IS
+$$Marks the asset_report record approved.  Not generally recommended to call
+directly.$$;
 
 create or replace function asset_depreciation__approve(in_report_id int, in_expense_acct int)
 returns asset_report
@@ -903,11 +1116,18 @@ return retval;
 end;
 $$ language plpgsql;
 
+COMMENT ON function asset_depreciation__approve
+(in_report_id int, in_expense_acct int) IS
+$$Approves an asset depreciation report and creats the GL draft.$$;
+
 CREATE OR REPLACE FUNCTION asset_report__get_disposal_methods()
 RETURNS SETOF asset_disposal_method as
 $$
 SELECT * FROM asset_disposal_method order by label;
 $$ language sql;
+
+COMMENT ON FUNCTION asset_report__get_disposal_methods() IS
+$$ Returns a list of asset_disposal_method items ordered by label.$$;
 
 CREATE OR REPLACE FUNCTION asset_disposal__approve
 (in_id int, in_gain_acct int, in_loss_acct int, in_asset_acct int)
@@ -995,6 +1215,14 @@ return retval;
 end;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION asset_disposal__approve
+(in_id int, in_gain_acct int, in_loss_acct int, in_asset_acct int)
+returns asset_report)
+IS $$ This approves the asset_report for disposals, creating relevant GL drafts.
+
+If the report is a partial disposal report, imports remaining percentages as new
+asset items.$$;
+
 CREATE OR REPLACE FUNCTION asset__import_from_disposal(in_id int)
 RETURNS BOOL AS
 $$
@@ -1039,3 +1267,8 @@ BEGIN
    RETURN TRUE;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION asset__import_from_disposal(in_id int) IS
+$$ Imports items from partial disposal reports. This function should not be
+called dirctly by programmers but rather through the other disposal approval
+api's.$$; --'
