@@ -3465,6 +3465,20 @@ CREATE TABLE asset_dep_method(
 	unit_class int not null references asset_unit_class(id) 
 );
 
+COMMENT ON TABLE asset_dep_method IS
+$$ Stores asset depreciation methods, and their relevant stored procedures.
+
+The fixed asset system is such depreciation methods can be plugged in via this
+table.$$;
+
+COMMENT ON COLUMN asset_dep_method.sproc IS
+$$The sproc mentioned here is a stored procedure which must have the following
+arguments: (in_asset_ids int[],  in_report_date date, in_report_id int).
+
+Here in_asset_ids are the assets to be depreciated, in_report_date is the date
+of the report, and in_report_id is the id of the report.  The sproc MUST
+insert the relevant lines into asset_report_line. $$;
+
 comment on column asset_dep_method.method IS 
 $$ These are keyed to specific stored procedures.  Currently only "straight_line" is supported$$;
 
@@ -3527,6 +3541,10 @@ CREATE TABLE asset_item (
 CREATE UNIQUE INDEX asset_item_active_tag_u ON asset_item(tag) 
               WHERE obsolete_by is null; -- part 2 of natural key enforcement
 
+COMMENT ON TABLE asset_item IS 
+$$ Stores details of asset items.  The account fields here are authoritative,
+while the ones in the asset_class table are defaults.$$;
+
 COMMENT ON column asset_item.tag IS $$ This can be plugged into other routines to generate it automatically via ALTER TABLE .... SET DEFAULT.....$$;
 
 CREATE TABLE asset_note (
@@ -3548,6 +3566,10 @@ INSERT INTO asset_report_class (id, class) values (2, 'disposal');
 INSERT INTO asset_report_class (id, class) values (3, 'import');
 INSERT INTO asset_report_class (id, class) values (4, 'partial disposal');
 
+COMMENT ON TABLE asset_report_class IS 
+$$  By default only four types of asset reports are supported.  In the future
+others may be added.  Please correspond on the list before adding more types.$$;
+
 CREATE TABLE asset_report (
 	id serial primary key,
 	report_date date,
@@ -3562,6 +3584,10 @@ CREATE TABLE asset_report (
         dont_approve bool default false,
 	submitted bool not null default false
 );
+
+COMMENT ON TABLE asset_report IS
+$$ Asset reports are discrete sets of depreciation or disposal transctions,
+and each one may be turned into no more than one GL transaction.$$;
 
 CREATE TABLE asset_report_line(
 	asset_id bigint references asset_item(id),

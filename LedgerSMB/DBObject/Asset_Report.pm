@@ -80,6 +80,15 @@ Uses standard properties
 
 Saves report to the database.  Sets ID.
 
+For each asset to be added to the report, we see:
+
+for each row, id_$row contains the asset id for that row.  Let this be $id
+
+if asset_$id, the asset is added.  Each asset also has:
+amount_$id
+dm_$id
+percent_$id
+
 =cut
 
 sub save {
@@ -134,11 +143,25 @@ sub get {
     return;
 }
 
+=item get_nbv
+
+Returns line items for the Net Book Value report.
+
+=cut
+
 sub get_nbv {
     my ($self) = @_;
     return $self->exec_method(funcname => 'asset_nbv_report');
 }
 
+=item generate
+
+Properties used:
+
+* report_id int:  Report to enter the transactions into, 
+* accum_account_id int:  ID for accumulated depreciation.
+
+=cut
 
 sub generate {
     my ($self) = @_;
@@ -152,16 +175,56 @@ sub generate {
     }
 }
 
+=item approve
+
+Properties used:
+
+id
+
+Approves the referenced transaction and creates a GL draft (which must then be 
+approved.
+
+=cut
+
 sub approve {
     my ($self) = @_;
     $self->exec_method(funcname => 'asset_report__approve');
     $self->{dbh}->commit;
 }
 
+=item search
+
+Searches for matching asset reports for review and approval.
+
+Search criteria in properties:
+
+* start_date date
+* end_date date
+* asset_class int
+* approved bool
+* entered_by int
+
+Start and end dates specify the date range (inclusive) and all other matches
+are exact. Undefs match all records.
+
+=cut
+
 sub search {
     my ($self) = @_;
     return $self->exec_method(funcname => 'asset_report__search');
 }
+
+=item get_metadata
+
+Sets the following properties:
+
+* asset_classes:  List of asset classes
+* exp_accounts:  List of expense accounts
+* gain_accounts:  List of gain accounts
+* loss_accounts:  list of loss accounts
+* disp_methods:  List of disposal methods
+
+=cut
 
 sub get_metadata {
     my ($self) = @_;
