@@ -9,10 +9,54 @@ LedgerSMB::DBObject::Asset_Class.pm, LedgerSMB Base Class for Asset Classes
 This library contains the base utility functions for creating, saving, and
 retrieving depreciation categories of assets.
 
+=head1 STANDARD PROPERTIES
+
+=over
+
+=item id
+
+Integer ID of record.
+
+=item lable
+
+Text description of asset class
+
+=item asset_account_id 
+
+Integer id of asset account.
+
+=item dep_account_id 
+
+Integer id of depreciation account.
+
+=item method 
+
+Integer id of depreciation method.
+
+=back
+
+=head1 METHODS
+
+=over
+
 =cut
 
 use base qw(LedgerSMB::DBObject);
 use strict;
+
+=item save
+
+Properties used:
+id:  (Optional) ID of existing class to overwrite. 
+asset_account_id: Account id to store asset values
+dep_account_id: Account id for depreciation information 
+method:  ID of depreciation method
+label:  Name of the asset class
+unit_label:  Label of the depreciation unit
+
+Typically sets ID if no match found or if ID not provided.
+
+=cut
 
 sub save {
     my ($self) = @_;
@@ -24,6 +68,16 @@ sub save {
     );
     return $ref if $self->{dbh}->commit;
 }
+
+=item get_metadata 
+
+sets:
+
+asset_accounts to arrayref of asset accounts
+dep_accounts to arrayref of depreciation accounts
+dep_methods to arrayrefo of depreciation methods
+
+=cut
 
 sub get_metadata {
     my ($self) = @_;
@@ -38,12 +92,26 @@ sub get_metadata {
     }
 }
 
+=item get_asset_class()
+
+Requires id to be set.
+
+Sets all other standard properties if the record is found.
+
+=cut
+
 sub get_asset_class {
     my ($self) = @_;
     my ($ref) = $self->exec_method(funcname => 'asset_class__get');
     $self->merge($ref);
     return $ref;
 }
+
+=item list_asset_classes
+
+Sets classes to a list of all asset classes, ordered as per db.
+
+=cut
 
 sub list_asset_classes {
     my ($self) = @_;
