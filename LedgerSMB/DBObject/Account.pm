@@ -163,6 +163,17 @@ sub generate_links {
     $self->{link} = $self->_db_array_scalars(@links);
 }
 
+=item list_headings
+
+Returns a list of account_heading's.  No inputs required.
+
+=cut
+
+sub list_headings {
+   my ($self) = shift @_;
+   return $self->exec_method(funcname => 'account_heading__list');
+}
+
 =back
 
 =head1 SEE ALSO

@@ -1,275 +1,374 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb 
+INCLUDE 'ui-header.html' 
+    include_stylesheet =  [stylesheet, 'UI/accounts/edit.css']
+    include_script = ['UI/account/edit.js']
+?> 
 <?lsmb PROCESS elements.html ?> 
-<body>
+<body onload="init()">
 <form method="post" action="<?lsmb form.script ?>">
-<table border="0" width="100%">
-  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
-  <tr><td> </td></tr>
-  <tr valign="top">
-    <td>
-      <table>
-        <tr>
-          <th align="right"><?lsmb text('Account Number') ?></th>
-          <td><?lsmb INCLUDE input element_data={
-            name => 'accno',
-            size => '20',
-            value => form.accno} ?></td>
-        </tr>
-        <tr>
-          <th align="right"><?lsmb text('Description') ?></th>
-          <td><?lsmb INCLUDE input element_data={
-            name => 'description',
-            size => '40',
-            value => form.description} ?></td>
-        </tr>
-        <tr>
-          <th align="right"><?lsmb text('Account Type') ?></th>
-          <td>
-            <table>
-              <tr valign="top">
-                <td align="right">
-                  <?lsmb INCLUDE input element_data={
-                          name => 'category',
-                          type => 'radio',
-                          label => text('Asset'),
-                          value => 'A',
-                          ${checked.A_} => checked.A_,
-                          } ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'category',
-                          type => 'radio',
-                          label => text('Liability'),
-                          ${checked.L_} => checked.L_,
-                          value => 'L'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'category',
-                          type => 'radio',
-                          label => text('Equity'),
-                          ${checked.Q_} => checked.Q_,
-                          value => 'Q'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'category',
-                          type => 'radio',
-                          label => text('Income'),
-                          ${checked.I_} => checked.I_,
-                          value => 'I'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'category',
-                          type => 'radio',
-                          label => text('Expense'),
-                          ${checked.E_} => checked.E_,
-                          value => 'E'} ?>
-                </td>
-                <td align="right">
-                  <?lsmb INCLUDE input element_data={
-                          name => 'contra',
-                          type => 'checkbox',
-                          label => text('Contra'),
-                          ${checked.contra} => checked.contra,
-                          value => '1'} ?><br/>
-                  <?lsmb INCLUDE input element_data={
-                          name => 'recon',
-                          type => 'checkbox',
-                          label => text('Recon'),
-                          ${checked.recon} => checked.recon,
-                          value => '1'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'tax',
-                          type => 'checkbox',
-                          label => text('Tax'),
-                          ${checked.tax} => checked.tax,
-                          value => '1'} ?>
-                </td>
-                <td align="right">
-                  <?lsmb INCLUDE input element_data={
-                          name => 'charttype',
-                          type => 'radio',
-                          label => text('Heading'),
-                          ${checked.H} => checked.H,
-                          value => 'H'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'charttype',
-                          type => 'radio',
-                          label => text('Account'),
-                          ${checked.A} => checked.A,
-                          value => 'A'} ?>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-<?lsmb IF form.charttype == 'A' ?>
-        <tr>
-          <td colspan="2">
-            <table>
-              <tr>
-                <th align="left"><?lsmb text('Is this a summary account to record') ?></th>
-                <td>
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AR',
-                          type => 'checkbox',
-                          label => text('AR'),
-                          ${form.AR} => form.AR,
-                          value => 'AR'} ?> 
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AP',
-                          type => 'checkbox',
-                          label => text('AP'),
-                          ${form.AP} => form.AP,
-                          value => 'AP'} ?> 
-                  <?lsmb INCLUDE input element_data={
-                          name => 'IC',
-                          type => 'checkbox',
-                          label => text('Inventory'),
-                          ${form.IC} => form.IC,
-                          value => 'IC'} ?> 
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <th colspan="2" align="left"><?lsmb text('Include in drop-down menus') ?></th>
-        </tr>
-        <tr valign="top">
-          <td colspan="2">
-            <table width="100%">
-              <tr>
-                <th align="left"><?lsmb text('Receivables') ?></th>
-                <th align="left"><?lsmb text('Payables') ?></th>
-                <th align="left"><?lsmb text('Tracking Items') ?></th>
-                <th align="left"><?lsmb text('Non-tracking Items') ?></th>
-              </tr>
-              <tr>
-                <td align="right">
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AR_amount',
-                          type => 'checkbox',
-                          label => text('Income'),
-                          ${form.AR_amount} => form.AR_amount,
-                          value => 'AR_amount'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AR_paid',
-                          type => 'checkbox',
-                          label => text('Payment'),
-                          ${form.AR_paid} => form.AR_paid,
-                          value => 'AR_paid'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AR_tax',
-                          type => 'checkbox',
-                          label => text('Tax'),
-                          ${form.AR_tax} => form.AR_tax,
-                          value => 'AR_tax'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AR_overpayment',
-                          type => 'checkbox',
-                          label => text('Overpayment'),
-                          ${form.AR_overpayment} => form.AR_overpayment,
-                          value => 'AR_overpayment'} ?><br />        
-                   <?lsmb INCLUDE input element_data={
-                          name => 'AR_discount',
-                          type => 'checkbox',
-                          label => text('Discount'),
-                          ${form.AR_discount} => form.AR_discount,
-                          value => 'AR_discount'} ?>
-                          
-                </td>
-                <td align="right">
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AP_amount',
-                          type => 'checkbox',
-                          label => text('Expense/Asset'),
-                          ${form.AP_amount} => form.AP_amount,
-                          value => 'AP_amount'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AP_paid',
-                          type => 'checkbox',
-                          label => text('Payment'),
-                          ${form.AP_paid} => form.AP_paid,
-                          value => 'AP_paid'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AP_tax',
-                          type => 'checkbox',
-                          label => text('Tax'),
-                          ${form.AP_tax} => form.AP_tax,
-                          value => 'AP_tax'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AP_overpayment',
-                          type => 'checkbox',
-                          label => text('Overpayment'),
-                          ${form.AP_overpayment} => form.AP_overpayment,
-                          value => 'AP_overpayment'} ?><br /> 
-                  <?lsmb INCLUDE input element_data={
-                          name => 'AP_discount',
-                          type => 'checkbox',
-                          label => text('Discount'),
-                          ${form.AP_overpayment} => form.AP_discount,
-                          value => 'AP_discount'} ?>       
-                </td>
-                <td align="right" valign="top">
-                  <?lsmb INCLUDE input element_data={
-                          name => 'IC_sale',
-                          type => 'checkbox',
-                          label => text('Income'),
-                          ${form.IC_sale} => form.IC_sale,
-                          value => 'IC_sale'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'IC_cogs',
-                          type => 'checkbox',
-                          label => text('COGS'),
-                          ${form.IC_cogs} => form.IC_cogs,
-                          value => 'IC_cogs'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'IC_taxpart',
-                          type => 'checkbox',
-                          label => text('Tax'),
-                          ${form.IC_taxpart} => form.IC_taxpart,
-                          value => 'IC_taxpart'} ?>
-                </td>
-                <td align="right" valign="top">
-                  <?lsmb INCLUDE input element_data={
-                          name => 'IC_income',
-                          type => 'checkbox',
-                          label => text('Income'),
-                          ${form.IC_income} => form.IC_income,
-                          value => 'IC_income'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'IC_expense',
-                          type => 'checkbox',
-                          label => text('Expense'),
-                          ${form.IC_expense} => form.IC_expense,
-                          value => 'IC_expense'} ?><br />
-                  <?lsmb INCLUDE input element_data={
-                          name => 'IC_taxservice',
-                          type => 'checkbox',
-                          label => text('Tax'),
-                          ${form.IC_taxservice} => form.IC_taxservice,
-                          value => 'IC_taxservice'} ?>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-<?lsmb END ?>
-        <tr><td> </td></tr>
-        <tr>
-          <th align="right"><?lsmb text('GIFI') ?></th>
-          <td><?lsmb INCLUDE input element_data={
-            name => 'gifi_accno',
-            size => '9',
-            value => form.gifi_accno} ?></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr><td><hr size="3" noshade="noshade" /></td></tr>
-</table>
+<div class="listtop"><?lsmb form.title ?></div>
+<div class="inputline" id="accno-line">
+  <label class="line"><?lsmb text('Account Number') ?></label>
+  <div class="inputgroup">
+    <?lsmb 
+    INCLUDE input element_data = {
+      name = 'accno'
+      size = '20'
+     value = form.accno
+      type = 'text'
+     class = 'control-code'
+    } ?>
+  </div>
+</div>
+<div class="inputline" id="desc-line">
+   <label class="line"><?lsmb text('Description') ?></label>
+   <div class="inputgroup">
+      <?lsmb 
+    INCLUDE input element_data = {
+      name = 'description'
+      size = '40'
+     value = form.description
+      type = 'text'
+     class = 'description'
+    } ?>
+   </div>
+</div>
+<div class="inputline" id="heading-line">
+   <label class="line"><?lsmb text('Heading') ?></label>
+   <div class="inputgroup">
+      <?lsmb 
+    INCLUDE select element_data = {
+                  name = 'heading'
+               options = form.all_headings
+       default_options = [form.heading]
+             text_attr = 'text'
+            value_attr = 'id'
+                 class = 'account'
+    } ?>
+   </div>
+</div>
+<div class="inputline" id="charttype-line">
+   <label class="line"><?lsmb text('GIFI') ?></label>
+   <div class="inputgroup">
+       <?lsmb INCLUDE input element_data={
+            name = 'gifi_accno',
+            size = '9',
+           value = form.gifi_accno} ?>
+   </div>
+</div>
+<div class="inputline" id="charttype-line">
+   <label class="line">&nbsp;</label>
+   <div class="inputgroup">
+    <?lsmb 
+     ctypes = [
+                { text = 'Account', value = 'A'}
+                { text = 'Heading', value = 'H'}
+              ];
+    INCLUDE select element_data = {
+                  name = 'charttype'
+               options = ctypes
+        default_values = [form.charttype]
+    };?>
+  </div>
+</div>
+<div class="inputline" id="acctype-line">
+   <label class="line"><?lsmb text('Account Type') ?></label>
+   <div class="inputgroup">
+      <?lsmb
+        a_types = [
+              { value = 'A', text = text('Asset') }
+              { value = 'L', text = text('Liability') }
+              { value = 'Q', text = text('Equity') }
+              { value = 'I', text = text('Income') }
+              { value = 'E', text = text('Expense') }
+        ];  
+    INCLUDE select element_data = {
+                  name = 'category'
+               options = a_types
+        default_values = [form.category]
+    }; ?>
+  </div>
+</div>
+<div class="inputline" id="acc-options-line">
+   <label class="line"><?lsmb text('Options') ?></label>
+   <div class="inputgroup">
+       <?lsmb 
+       IF form.contra;
+          contra = 'CHECKED';
+       END;
+       INCLUDE input element_data = {
+               type = 'checkbox'
+               name = 'contra'
+              label = text('Contra')
+              value = '1'
+            checked = contra
+       } ?>
+   </div>
+   <div class="inputgroup">
+     <?lsmb 
+        IF form.recon; 
+           recon = 'CHECKED';
+        END; 
+        INCLUDE input element_data={
+               name = 'recon'
+               type = 'checkbox',
+              label = text('Recon')
+            checked = recon
+              value = '1'
+        } ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb 
+        IF form.tax; tax = 'CHECKED'; END;
+        INCLUDE input element_data={
+               name = 'tax',
+               type = 'checkbox',
+              label = text('Tax'),
+            checked = checked.tax,
+              value = '1'} ?>
+   </div>
+</div>
+<div class="inputline" id="summary-line">
+   <label class="line"><?lsmb text('Summary account for') ?></label>
+   <div class="inputgroup">
+   <?lsmb # fixed_asset may eventually go in here too depending on future
+          # directions in development.
+      summary = [];
+      IF form.AR; summary = 'AR'; END;
+      IF form.AP; summary = 'AP'; END;
+      IF form.IC; summary = 'IC'; END;
+      s_accts = [ 
+        {}
+        {text = 'AR',        value = 'AR'}
+        {text = 'AP',        value = 'AP'}
+        {text = 'Inventory', value = 'IC'}
+      ];
+      INCLUDE select element_data = {
+               name = "summary"
+            options = s_accts
+     default_values = [summary]
+      }; ?>    
+   </div>
+</div>
+<div class="subsectionhead">
+   <?lsmb text('Include in drop-down menus') ?>
+</div>
+<div class="inputline" id="ar-line">
+   <label class="line"><?lsmb text('Receivables') ?></label>
+   <div class="inputgroup">
+      <?lsmb IF form.AR_amount; AR_amount = 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AR_amount',
+              type = 'checkbox',
+             label = text('Income'),
+           checked = AR_amount,
+             value = 'AR_amount'
+         } ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.AR_paid; AR_paid = 'CHECKED'; END;
+          INCLUDE input element_data={
+              name = 'AR_paid',
+              type = 'checkbox',
+             label = text('Payment'),
+           checked = AR_paid,
+             value = 'AR_paid'
+     } ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.AR_tax; AR_tax = 'CHECKED'; END;
+          INCLUDE input element_data={
+              name = 'AR_tax',
+              type = 'checkbox',
+             label = text('Tax'),
+           checked = AR_tax,
+             value = 'AR_tax'
+      } ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.AR_overpayment; AR_overpayment = 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AR_overpayment',
+              type = 'checkbox',
+             label = text('Overpayment'),
+           checked = AR_overpayment,
+             value = 'AR_overpayment'
+       } ?>    
+   </div>
+   <div class="inputgroup">
+       <?lsmb IF form.AR_overpayment; AR_overpayment = 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AR_discount',
+              type = 'checkbox',
+             label = text('Discount'),
+           checked = AR_discount,
+             value = 'AR_discount'
+        } ?>
+   </div>
+</div>
+<div class="inputline" id="ap-line">
+   <label class="line"><?lsmb text('Payables') ?></label>
+   <div class="inputgroup">
+      <?lsmb IF form.AP_amount; AP_amount= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AP_amount',
+              type = 'checkbox',
+             label = text('Expense/Asset'),
+           checked = AP_amount,
+             value = 'AP_amount'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.AP_paid; AP_paid= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AP_paid',
+              type = 'checkbox',
+             label = text('Payment'),
+           checked = AP_paid,
+             value = 'AP_paid'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.AP_tax; AP_tax= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AP_tax',
+              type = 'checkbox',
+             label = text('Tax'),
+           checked = AP_tax,
+             value = 'AP_tax'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.AP_overpayment; AP_overpayment= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AP_overpayment',
+              type = 'checkbox',
+             label = text('Overpayment'),
+           checked = AP_overpayment,
+             value = 'AP_overpayment'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.AP_discount; AP_discount= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'AP_discount',
+              type = 'checkbox',
+             label = text('Discount'),
+           checked = AP_discount,
+             value = 'AP_discount'} ?>       
+   </div>
+</div>
+<div class="inputline" id="goods-line">
+   <label class="line"><?lsmb text('Tracking Items') ?></label>
+   <div class="inputgroup">
+      <?lsmb IF form.IC_sale; IC_sale= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_sale',
+              type = 'checkbox',
+             label = text('Income'),
+           checked = IC_sale,
+             value = 'IC_sale'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_cogs',
+              type = 'checkbox',
+             label = text('COGS'),
+           checked = IC_cogs,
+             value = 'IC_cogs'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_taxpart',
+              type = 'checkbox',
+             label = text('Tax'),
+           checked = IC_taxpart,
+             value = 'IC_taxpart'} ?>
+   </div>
+</div>
+<div class="inputline" id="services-line">
+   <label class="line"><?lsmb text('Non-tracking Items') ?></label>
+   <div class="inputgroup">
+      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_income',
+              type = 'checkbox',
+             label = text('Income'),
+           checked = IC_income,
+             value = 'IC_income'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_expense',
+              type = 'checkbox',
+             label = text('Expense'),
+           checked = IC_expense,
+             value = 'IC_expense'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.IC_taxservice; IC_taxservice= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_taxservice',
+              type = 'checkbox',
+             label = text('Tax'),
+           checked = IC_taxservice,
+             value = 'IC_taxservice'} ?>
+   </div>
+</div>
+<div class="inputline" id="assets-line">
+   <label class="line"><?lsmb text('Fixed Assets') ?></label>
+   <div class="inputgroup">
+      <?lsmb IF form.fixed_asset;fixed_asset= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'fixed_asset',
+              type = 'checkbox',
+             label = text('Fixed Asset'), #'
+           checked = fixed_asset,
+             value = 'fixed_asset'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.accum_dep;accum_dep = 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'accum_dep',
+              type = 'checkbox',
+             label = text('Depreciation'), 
+           checked = accum_dep,
+             value = 'accum_dep'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.asset_expense;asset_expense = 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'asset_expense',
+              type = 'checkbox',
+             label = text('Expense'), 
+           checked = asset_expense,
+             value = 'asset_expense'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.asset_gain;asset_gain = 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'asset_gain',
+              type = 'checkbox',
+             label = text('Gain'), 
+           checked = asset_gain,
+             value = 'asset_gain'} ?>
+   </div>
+   <div class="inputgroup">
+      <?lsmb IF form.asset_loss;asset_loss = 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'asset_loss',
+              type = 'checkbox',
+             label = text('Loss'), 
+           checked = asset_loss,
+             value = 'asset_loss'} ?>
+   </div>
+</div>
 <?lsmb FOREACH hidden IN hiddens.keys;
 	INCLUDE input element_data={
-		type => 'hidden',
-		name => hidden,
-		value => hiddens.item(hidden)
+		type = 'hidden',
+		name = hidden,
+		value = hiddens.item(hidden)
 		}; END ?>
+<hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
 </form>
 </body>

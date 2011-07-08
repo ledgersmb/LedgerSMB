@@ -99,6 +99,9 @@ sub save_as_new {
 # copied from AM.pm.  To be refactored.
 sub _display_account_screen {
     my ($form) = @_;
+    my $account = LedgerSMB::DBObject::Account->new({base => $form});
+    @{$form->{all_headings}} = $account->list_headings();
+    $form->error(scalar@{$form->{all_headings}});
     my $locale = $form->{_locale};
     my $buttons = [];
     my $checked;
@@ -114,13 +117,6 @@ sub _display_account_screen {
     $hiddens->{$_} = $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
     $checked->{ $form->{charttype} } = "checked";
 
-    for my $ct (qw(A E I Q L)){
-        $checked->{"${ct}_"} = "checked" if $form->{category} eq $ct;
-    } 
-
-    for my $cb (qw(contra tax)){
-        $checked->{$cb} = "checked" if $form->{$cb};
-    }
     my %button = ();
 
     if ( $form->{id} ) {

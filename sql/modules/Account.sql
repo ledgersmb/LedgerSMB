@@ -185,6 +185,7 @@ SELECT CASE WHEN new.charttype='H' THEN
 ELSE
  account_save(new.id, new.accno, new.description, new.category,
   new.gifi_accno, NULL,
+  -- should these be rewritten as coalesces? --CT
   CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END,
   CASE WHEN new.tax IS NULL THEN FALSE ELSE new.tax END,
   string_to_array(new.link, ':'))
@@ -229,6 +230,14 @@ $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION get_link_descriptions() IS
 $$ Gets a set of all valid account_link descriptions.$$;
+
+CREATE OR REPLACE FUNCTION account_heading__list()
+RETURNS SETOF account_heading AS
+$$ SELECT * FROM account_heading order by accno; $$ language sql;
+
+COMMENT ON FUNCTION account_heading__list() IS
+$$ Returns a list of all account headings, currently ordered by account number.
+$$;
 
 CREATE OR REPLACE FUNCTION account__save_tax
 (in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text, 

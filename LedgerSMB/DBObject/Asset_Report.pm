@@ -181,6 +181,10 @@ Properties used:
 
 id
 
+For depreciation accounts, expense_acct must be set.
+
+For disposal accounts, gain_acct and loss_acct must be set.
+
 Approves the referenced transaction and creates a GL draft (which must then be 
 approved.
 

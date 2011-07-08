@@ -467,19 +467,11 @@ sub report_save{
     new_report($request);
 }
 
-sub search_reports {
-    my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Report->new(base => $request);
-    $report->get_metadata;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'report_criteria',
-        format => 'HTML'
-    );
-    $template->render($report);
-}
+=item report_get
+
+Retrieves the report identified by the id input and displays it.
+
+=cut
 
 sub report_get {
     my ($request) = @_;
@@ -487,6 +479,17 @@ sub report_get {
     $report->get;
     display_report($report);
 }
+
+=item display_report
+
+Not directly called.  This routine displays a report that is set up.
+
+Assumes that all standard properties of LedgerSMB::DBObject::Asset_Report are 
+set, and also requires $request->{assets} is an array ref to the report line
+items.  Each has the standard properties of the LedgerSMB::DBObject::Asset plus
+dm (disposal method id) and amount (amount to depreciate).
+
+=cut
 
 sub display_report {
     my ($request) = @_;
@@ -587,6 +590,14 @@ sub display_report {
     });
 }
 
+=item search_reports
+
+Displays search report filter.  No inputs required,  Any inputs required by
+report_results can be used here to set defaults.  See the required inputs for
+LedgerSMB::DBObject::Asset_Report->search() for a list of such inputs.
+
+=cut
+
 sub search_reports {
     my ($request) = @_;
     $request->{title} = $request->{_locale}->text('Search reports');
@@ -601,6 +612,14 @@ sub search_reports {
     );
     $template->render($ar);
 }
+
+=item report_results
+
+Executes the search for asset reports and displays the results.  See the 
+required inputs for LedgerSMB::DBObject::Asset_Report->search() for a list of 
+inputs.
+
+=cut
 
 sub report_results {
     my ($request) = @_;
@@ -691,6 +710,13 @@ sub report_results {
    });
 }
 
+=item report_details
+
+Displays the details of an existing report.  Requires that the id request arg is
+set which represents the id of the report.
+
+=cut
+
 sub report_details {
     my ($request) = @_;
     my $locale = $request->{_locale};
@@ -754,6 +780,13 @@ sub report_details {
                     buttons => $buttons
     });
 }
+
+=item partial_disposal_details 
+
+Displays the results of a partial disposal report.  The id must be set to the 
+id of the report desired.
+
+=cut
 
 sub partial_disposal_details {
     my ($request) = @_;
@@ -819,6 +852,14 @@ sub partial_disposal_details {
     });
 }
 
+=item disposal_details
+
+Displays the details of a disposal report.
+
+id must be set to the id of the report to be displayed.
+
+=cut
+
 sub disposal_details {
     my ($request) = @_;
     my $locale = $request->{_locale};
@@ -878,9 +919,27 @@ sub disposal_details {
     });
 }
 
+=sub disposal_details_approve
+
+Pass through function for form-dynatable's action munging.  An lias for 
+report_details_approve.
+
+=cut
+
 sub disposal_details_approve {
     report_details_approve(@_);
 }
+
+=iten report_details_approve
+
+Approves disposal details.  id must be set,
+
+For disposal reports, gain_acct and loss_acct must be set to appropriate 
+account id's.
+
+For depreciation reports, expense_acct must be set to an appropriate accont id.
+
+=cut
 
 sub report_details_approve {
     my ($request) = @_;
@@ -888,6 +947,20 @@ sub report_details_approve {
     $report->approve;
     search_reports($request);
 }
+
+=item report_results_approve
+
+Loops through the input and approves all selected reports.
+
+For disposal reports, gain_acct and loss_acct must be set to appropriate 
+account id's.
+
+For depreciation reports, expense_acct must be set to an appropriate accont id.
+
+For each row, there is  report_$id field which if set to a true value, indicates
+a report to be approved.
+
+=cut
 
 sub report_results_approve {
     my ($request) = @_;
@@ -902,6 +975,8 @@ sub report_results_approve {
 
 }
 
+# I don't believe this is used,  Not documenting for now. --CT
+
 sub begin_nbv {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new(
@@ -913,6 +988,15 @@ sub begin_nbv {
     );
     $template->render($request);
 }
+
+=item display_nbv
+
+Displays the net book value report, namely the current net value of all active
+active assets.
+
+No inputs required or used.
+
+=cut
 
 sub display_nbv {
     my ($request) = @_;
@@ -959,6 +1043,14 @@ sub display_nbv {
     });
 }
 
+=item begin_import 
+
+Displays the initial screen for asset import routines.
+
+No inputs required.
+
+=cut
+
 sub begin_import {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new(
@@ -970,6 +1062,18 @@ sub begin_import {
     );
     $template->render($request);
 }
+
+=item run_import
+
+Runs the actual import based on a CSV file.  This is tested primarily against
+Excel for the Mac which has known CSV generation problems, and Gnumeric which 
+produces very good CSV.  It should work on most CSV files if the format is 
+consistent.
+
+See the Customization Notes section below for more info on how to set up 
+CSV formats.
+
+=cut
 
 sub run_import {
 
@@ -1060,8 +1164,14 @@ eval { do "scripts/custom/asset.pl"};
 
 =head1 CUSTOMIZATION NOTES
 
-The handling of CSV imports of fixed assets is handled by 
+The handling of CSV imports of fixed assets is handled by @file_columns.  This
+can be set in a custom/ file.
 
+=head1 Copyright (C) 2010, The LedgerSMB core team.
 
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
 
-1;
+=cut
+;
