@@ -1,6 +1,16 @@
 =pod 
 
-=head1 LedgerSMB Asset Management workflow script
+=head1 NAME 
+
+LedgerSMB::Scripts::asset
+
+=head1 SYNPOSIS
+
+Asset Management workflow script
+
+=head1 METHODS
+
+=over
 
 =cut
 
@@ -19,6 +29,14 @@ our @file_columns = qw(tag purchase_date description asset_class location vendor
 our $default_dep_account = '5010'; # Override in custom/asset.pl
 our $default_asset_account = '1300'; # Override in custom/asset.pl
 
+=item begin_depreciation_all
+
+Displays the depreciation screen for all asset classes.
+
+No inputs required.  Those inputs expected for depreciate_all can be used to
+set defaults here.
+
+=cut
 
 sub begin_depreciation_all {
     my ($request) = @_;
@@ -31,6 +49,14 @@ sub begin_depreciation_all {
     );
     $template->render($request);
 }
+
+=item depreciate_all
+
+Creates a depreciation report for each asset class.  Depreciates all assets 
+
+Expects report_date to be set.
+
+=cut
 
 sub depreciate_all {
     my ($request) = @_;
@@ -57,6 +83,15 @@ sub depreciate_all {
     
 }
 
+=item asset_category_screen
+
+Asset class (edit create class)
+
+No inputs required.  Standard properties for asset_class used to populate form
+if they are provided.
+
+=cut
+
 sub asset_category_screen {
     my ($request) = @_;
     if ($request->{id}){
@@ -76,6 +111,14 @@ sub asset_category_screen {
     $template->render($ac);
 }
 
+=item asset_category_save
+
+Saves the asset class information provided.  
+See LedgerSMB::DBObject::Asset_report for standard properties.  ID is optional.
+Others are required.
+
+=cut
+
 sub asset_category_save {
     my ($request) = @_;
     my $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
@@ -90,6 +133,8 @@ sub asset_category_save {
     $template->render($ac);
 }
 
+# Is this even working at the moment?  Not documenting unil I know.
+
 sub asset_category_search {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new(
@@ -102,12 +147,11 @@ sub asset_category_search {
     $template->render($request);
 }
 
-sub edit_asset_class {
-   my ($request) = @_;
-   my $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
-   $ac->get_asset_class;
-   asset_category_screen($ac);
-}
+=item asset_category_results
+
+Displays a list of all asset classes.  No inputs required.
+
+=cut
 
 sub asset_category_results {
     my ($request) = @_;
@@ -167,6 +211,25 @@ sub asset_category_results {
    });
 }
 
+=item edit_asset_class
+
+Edits an asset class.  Expects id to be set.
+
+=cut
+
+sub edit_asset_class {
+   my ($request) = @_;
+   my $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
+   $ac->get_asset_class;
+   asset_category_screen($ac);
+}
+
+=item asset_edit
+
+Displats the edit screen for an asset item.  Tag or id must be set.
+
+=cut
+
 sub asset_edit {
     my ($request) = @_;
     my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
@@ -177,7 +240,15 @@ sub asset_edit {
     }
     asset_screen($asset);
 }
-   
+
+=item
+
+Screen to create a new asset.
+
+No inputs required, any standard properties from LedgerSMB::DBObject::Asset
+can be used to set defaults.
+
+=cut
 
 sub asset_screen {
     my ($request) = @_;
@@ -186,7 +257,6 @@ sub asset_screen {
     if (!$asset->{tag}){
         $asset->get_next_tag;
     }
-    $asset->debug({file => '/tmp/asset'});
     $asset->{title} = $request->{_locale}->text('Add Asset') 
                  unless $asset->{title};
     my $template = LedgerSMB::Template->new(
@@ -198,6 +268,42 @@ sub asset_screen {
     );
     $template->render($asset);
 }
+
+=item asset_search
+
+Displays the search screen for asset items.  No inputs required.
+
+Any inputs for asset_results can be used here to set defaults.
+
+=cut
+
+sub asset_search {
+    my ($request) = @_;
+    my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
+    $asset->get_metadata;
+    unshift @{$asset->{asset_classes}}, {}; 
+    unshift @{$asset->{locations}}, {}; 
+    unshift @{$asset->{departments}}, {}; 
+    unshift @{$asset->{asset_accounts}}, {}; 
+    unshift @{$asset->{dep_accounts}}, {}; 
+    my $template = LedgerSMB::Template->new(
+        user =>$request->{_user}, 
+        locale => $request->{_locale},
+        path => 'UI/asset',
+        template => 'search_asset',
+        format => 'HTML'
+    );
+    $template->render($asset);
+}
+
+=item asset_results
+
+Searches for asset items and displays them
+
+See LedgerSMB::DBObject::Asset->search() for a list of search criteria that can
+be set.
+
+=cut
 
 sub asset_results { 
     my ($request) = @_;
@@ -264,6 +370,17 @@ sub asset_results {
          columns => $columns,
    });
 }
+
+=item asset_save
+
+Saves the asset.  See LedgerSMB::DBObject::Asset->save() for more info.
+
+Additionally this also creates a note with the vendor number and invoice number
+for future reference, since this may not have been entered specifically as a
+vendor transaction in LedgerSMB.
+
+=cut
+
 sub asset_save {
     my ($request) = @_;
     my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
@@ -285,24 +402,13 @@ sub asset_save {
     asset_screen($newasset);
 }
 
-sub asset_search {
-    my ($request) = @_;
-    my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
-    $asset->get_metadata;
-    unshift @{$asset->{asset_classes}}, {}; 
-    unshift @{$asset->{locations}}, {}; 
-    unshift @{$asset->{departments}}, {}; 
-    unshift @{$asset->{asset_accounts}}, {}; 
-    unshift @{$asset->{dep_accounts}}, {}; 
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'search_asset',
-        format => 'HTML'
-    );
-    $template->render($asset);
-}
+=item new_report
+
+Starts the new report workflow.  No inputs required.
+
+report_init inputs can be used to set defaults.
+
+=cut
 
 sub new_report {
     my ($request) = @_;
@@ -318,6 +424,16 @@ sub new_report {
     $template->render($report);
 }
 
+=item report_init
+
+Creates a report and populates the screen with possible report lines.
+
+Inputs expected:
+* report_id int:  Report to enter the transactions into, 
+* accum_account_id int:  ID for accumulated depreciation.
+
+=cut
+
 sub report_init {
     my ($request) = @_;
     my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
@@ -325,13 +441,20 @@ sub report_init {
     display_report($report);
 }
 
+=item report_save
+
+Saves the report.
+
+see LedgerSMB::DBObject::Asset_Report->save() for expected inputs.
+
+=cut
+
 sub report_save{
     my ($request) = @_;
     my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
     $report->{asset_ids} = [];
     for my $count (0 .. $request->{rowcount}){
         my $id = $request->{"id_$count"};
-        print STDERR "$count, $id, ".$request->{"asset_$count"}."\n";
         if ($request->{"asset_$count"}){
            push @{$report->{asset_ids}}, $id;
         }
@@ -932,5 +1055,13 @@ sub run_import {
 }
 
 eval { do "scripts/custom/asset.pl"};
+
+=back
+
+=head1 CUSTOMIZATION NOTES
+
+The handling of CSV imports of fixed assets is handled by 
+
+
 
 1;

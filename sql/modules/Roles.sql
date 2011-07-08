@@ -1623,7 +1623,7 @@ GRANT SELECT ON payment_type TO public;
 GRANT SELECT ON lsmb_roles TO public;
 GRANT SELECT ON employee_search TO PUBLIC;
 GRANT SELECT ON warehouse TO public;
-GRANT select ON account_link_description TO PUBLIC;
+GRANT select ON account, account_link, account_link_description TO PUBLIC;
 GRANT select ON sic TO public;
 GRANT SELECT ON parts_translation,  project_translation TO public;
 GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
