@@ -37,14 +37,18 @@ INCLUDE 'ui-header.html'
    <label class="line"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
       <?lsmb 
+    FOREACH h IN form.all_headings;
+        h.text = h.accno _ '--' _ h.description;
+    END;
+    form.all_headings.push({});
     INCLUDE select element_data = {
                   name = 'heading'
                options = form.all_headings
-       default_options = [form.heading]
+        default_values = [form.heading]
              text_attr = 'text'
             value_attr = 'id'
                  class = 'account'
-    } ?>
+    }; ?>
    </div>
 </div>
 <div class="inputline" id="charttype-line">
@@ -319,20 +323,20 @@ INCLUDE 'ui-header.html'
    <div class="inputgroup">
       <?lsmb IF form.fixed_asset;fixed_asset= 'CHECKED'; END;
          INCLUDE input element_data={
-              name = 'fixed_asset',
+              name = 'Fixed_Asset',
               type = 'checkbox',
              label = text('Fixed Asset'), #'
            checked = fixed_asset,
-             value = 'fixed_asset'} ?>
+             value = 'Fixed_Asset'} ?>
    </div>
    <div class="inputgroup">
       <?lsmb IF form.accum_dep;accum_dep = 'CHECKED'; END;
          INCLUDE input element_data={
-              name = 'accum_dep',
+              name = 'Asset_Dep',
               type = 'checkbox',
              label = text('Depreciation'), 
-           checked = accum_dep,
-             value = 'accum_dep'} ?>
+           checked = asset_dep,
+             value = 'Asset_Dep'} ?>
    </div>
    <div class="inputgroup">
       <?lsmb IF form.asset_expense;asset_expense = 'CHECKED'; END;

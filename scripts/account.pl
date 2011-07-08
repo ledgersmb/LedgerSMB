@@ -80,6 +80,7 @@ link:  a list of strings representing text box identifier.
 sub save {
     my ($request) = @_;
     my $account = LedgerSMB::DBObject::Account->new(base => $request);
+    $account->{$account->{summary}}=$account->{summary};
     $account->save;
     edit($request); 
 }
@@ -101,7 +102,6 @@ sub _display_account_screen {
     my ($form) = @_;
     my $account = LedgerSMB::DBObject::Account->new({base => $form});
     @{$form->{all_headings}} = $account->list_headings();
-    $form->error(scalar@{$form->{all_headings}});
     my $locale = $form->{_locale};
     my $buttons = [];
     my $checked;
