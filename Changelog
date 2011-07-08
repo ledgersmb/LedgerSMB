@@ -2,6 +2,7 @@ Changelog for 1.2.24
 * Corrected (non-exploitable) SQL injection issue in custom field management
 stored procs.  Chris T
 * Corrected issues running LedgerSMB with SuExec.  (Matt S Trout)
+* Corrected filenamme bug in batch printing module (Chris T)
 
 Changelog for 1.2.23
 * Fix for sales tax incorrect on sales/purchase order screen
