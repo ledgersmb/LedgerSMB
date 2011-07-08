@@ -47,7 +47,7 @@ sub initialize{
        my ($ref) = LedgerSMB::call_procedure($self, procname => 'setting_get', 
                   args => [$key ]);
        if ($ref->{setting_key} eq 'curr'){
-          $settings->{$key } = split /:/, $ref->{value};
+          $settings->{$key} = split(/:/, $ref->{value});
        } else {
           $settings->{$key } = $ref->{value};
        }

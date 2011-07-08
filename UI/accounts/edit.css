@@ -1,0 +1,31 @@
+
+div {
+   overflow: auto;
+}
+
+label {
+   display: block;
+   float: left;
+   text-align: right;
+}
+div.inputgroup {
+   float: left;
+   display: block;
+}
+
+label.line {
+   font-weight: bold; 
+   width: 12em;
+   margin-right: 0.5em;
+   vertical-align: center;
+   height: 100%
+}
+
+div.inputgroup label {
+   width: 6em; 
+}
+
+div.subsectionhead {
+   font-weight: bold;
+   margin: 1em;
+}
