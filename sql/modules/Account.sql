@@ -69,7 +69,11 @@ DECLARE
 	t_heading_id int;
 	t_link record;
 	t_id int;
+        t_tax bool;
 BEGIN
+
+    SELECT count(*) > 0 INTO t_tax FROM tax WHERE in_id = chart_id;
+    t_tax := t_tax OR in_tax;
 	-- check to ensure summary accounts are exclusive
         -- necessary for proper handling by legacy code
     FOR t_link IN SELECT description FROM account_link_description 
@@ -101,7 +105,7 @@ BEGIN
 		gifi_accno = in_gifi_accno,
 		heading = t_heading_id,
 		contra = in_contra,
-                tax = in_tax
+                tax = t_tax
 	WHERE id = in_id;
 
 	IF FOUND THEN
