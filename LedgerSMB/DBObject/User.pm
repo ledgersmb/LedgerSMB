@@ -89,7 +89,6 @@ sub get_option_data {
     }
 
     my %country_codes = country_codes();
-    $self->{country_codes};
 
     foreach my $key ( sort { $country_codes{$a} cmp $country_codes{$b} }
         keys %country_codes )

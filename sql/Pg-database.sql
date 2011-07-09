@@ -2421,12 +2421,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 210	Drafts	205	2
 211	Reconciliation	205	3
 217	Tax Forms	0	15
-193	Logout	0	22
-192	New Window	0	21
-191	Preferences	0	20
-190	Stylesheet	0	19
-128	System	0	18
-116	Batch Printing	0	17
 218	Add Tax Form	217	1
 219	Admin Users	128	5
 188	Text Templates	128	15
@@ -2444,6 +2438,23 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 222	Sessions	219	3
 225	List Tax Forms	217	2
 226	Reports	217	3
+227	Fixed Assets	0	17
+193	Logout	0	23
+192	New Window	0	22
+191	Preferences	0	21
+190	Stylesheet	0	20
+128	System	0	19
+116	Batch Printing	0	18
+228	Asset Classes	227	1
+229	Assets	227	2
+230	Add Class	228	1
+231	List Classes	228	2
+232	Add Assets	229	1
+233	Search Assets	\N	2
+235	Import	229	2
+234	Depreciate	229	4
+236	Reports	229	10
+237	Net Book Value	236	1
 \.
 
 --
@@ -3072,8 +3083,26 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 225	module	taxform.pl	613
 225	action	list_all	614
 226	module	taxform.pl	615
+227	menu	1	616
+228	menu	1	617
+229	menu	1	618
+230	module	assets.pl	619
+230	action	asset_category_screen	620
+231	module	assets.pl	621
+231	action	asset_category_search	622
+232	module	assets.pl	623
+232	action	asset_screen	624
+233	module	assets.pl	625
+233	action	asset_search	626
+234	module	asset.pl	627
+234	action	new_report	628
+234	depreciate	1	629
+235	module	asset.pl	630
+235	action	import	631
+236	menu	1	632
+237	module	asset.pl	633
+237	action	display_nbv	634
 \.
-
 
 --
 
