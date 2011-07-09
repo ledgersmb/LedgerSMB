@@ -103,7 +103,13 @@ VALUES
 ('IC_taxpart',     FALSE, FALSE),
 ('IC_taxservice',  FALSE, FALSE),
 ('IC_income',      FALSE, FALSE),
-('IC_expense',     FALSE, FALSE);
+('IC_expense',     FALSE, FALSE),
+('Asset_Dep',      FALSE, FALSE),
+('Fixed_Asset',    FALSE, FALSE),
+('asset_expense',  FALSE, FALSE),
+('asset_gain',     FALSE, FALSE),
+('asset_loss',     FALSE, FALSE);
+
 
 CREATE TABLE account_link (
    account_id int references account(id),

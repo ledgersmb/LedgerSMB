@@ -148,7 +148,7 @@ sub generate_links {
     my @links;
     my @descriptions = $self->exec_method(funcname =>
                                           'get_link_descriptions');
-   foreach my $d (@descriptions) {
+    foreach my $d (@descriptions) {
        my $l = $d->{description};
        if ($self->{$l}) {
            $is_summary++ if ($d->{summary} == 1);
@@ -157,10 +157,10 @@ sub generate_links {
                 $self->error($self->{_locale}->text("Too many links on summary account!"));
            }
            push (@links, $l);
-       }
-   }
+        }
+     }
  
-    $self->{link} = $self->_db_array_scalars(@links);
+     $self->{link} = $self->_db_array_scalars(@links);
 }
 
 =item list_headings

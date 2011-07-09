@@ -321,7 +321,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="assets-line">
    <label class="line"><?lsmb text('Fixed Assets') ?></label>
    <div class="inputgroup">
-      <?lsmb IF form.fixed_asset;fixed_asset= 'CHECKED'; END;
+      <?lsmb IF form.Fixed_Asset;fixed_asset= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'Fixed_Asset',
               type = 'checkbox',
@@ -330,7 +330,7 @@ INCLUDE 'ui-header.html'
              value = 'Fixed_Asset'} ?>
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.accum_dep;accum_dep = 'CHECKED'; END;
+      <?lsmb IF form.Asset_Dep;asset_dep = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'Asset_Dep',
               type = 'checkbox',

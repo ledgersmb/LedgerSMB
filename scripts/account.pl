@@ -110,7 +110,7 @@ sub _display_account_screen {
     $logger->debug("scripts/account.pl Locale: $locale");
 
     foreach my $item ( split( /:/, $form->{link} ) ) {
-        $form->{$item} = "checked";
+        $form->{$item} = 1;
     }
  
     $hiddens->{type} = 'account';
