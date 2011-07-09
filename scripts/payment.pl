@@ -106,6 +106,9 @@ sub get_search_criteria {
 
 sub pre_bulk_post_report {
     my ($request) = @_;
+    if ($request->{account_class}  == 2){ # Not so helpful for receipts --CT
+       post_payments_bulk($request); 
+    }
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
