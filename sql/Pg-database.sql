@@ -861,18 +861,20 @@ COMMENT ON COLUMN note.note IS $$Body of note.$$;
 COMMENT ON COLUMN note.vector IS $$tsvector for full text indexing, requires 
 both setting up tsearch dictionaries and adding triggers to use at present.$$;
 
-CREATE TABLE entity_note(entity_id int references entity(id)) INHERITS (note);
+CREATE TABLE entity_note(
+      entity_id int references entity(id), 
+      primary key(id)) INHERITS (note);
 ALTER TABLE entity_note ADD CHECK (note_class = 1);
 ALTER TABLE entity_note ADD FOREIGN KEY (ref_key) REFERENCES entity(id) ON DELETE CASCADE;
 CREATE INDEX entity_note_id_idx ON entity_note(id);
 CREATE UNIQUE INDEX entity_note_class_idx ON note_class(lower(class));
 CREATE INDEX entity_note_vectors_idx ON entity_note USING gist(vector);
-CREATE TABLE invoice_note() INHERITS (note);
+CREATE TABLE invoice_note(primary key(id)) INHERITS (note);
 CREATE INDEX invoice_note_id_idx ON invoice_note(id);
 CREATE UNIQUE INDEX invoice_note_class_idx ON note_class(lower(class));
 CREATE INDEX invoice_note_vectors_idx ON invoice_note USING gist(vector);
 
-CREATE TABLE eca_note() 
+CREATE TABLE eca_note(primary key(id)) 
 	INHERITS (note);
 ALTER TABLE eca_note ADD CHECK (note_class = 3);
 ALTER TABLE eca_note ADD FOREIGN KEY (ref_key) 
@@ -1658,13 +1660,15 @@ CREATE TABLE translation (
 COMMENT ON TABLE translation IS 
 $$abstract table for manual translation data. Should have zero rows.$$;
 
-CREATE TABLE parts_translation () INHERITS (translation);
+CREATE TABLE parts_translation 
+(PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
 ALTER TABLE parts_translation ADD foreign key (trans_id) REFERENCES parts(id);
 
 COMMENT ON TABLE parts_translation IS
 $$ Translation information for parts.$$;
 
-CREATE TABLE project_translation () INHERITS (translation);
+CREATE TABLE project_translation 
+(PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
 ALTER TABLE project_translation 
 ADD foreign key (trans_id) REFERENCES project(id);
 
@@ -3720,7 +3724,8 @@ CREATE TABLE file_secondary_attachment (
        ref_key int not null,
        dest_class int references file_class(id),
        attached_by int not null references entity(id),
-       attached_at timestamp not null default now()
+       attached_at timestamp not null default now(),
+       PRIMARY KEY(file_id, source_class, dest_class, ref_key)
 );
 
 COMMENT ON TABLE file_secondary_attachment IS
@@ -3732,6 +3737,7 @@ Due to the nature of database inheritance and unique constraints
 in PostgreSQL, this must be partitioned in a star format.$$;
 
 CREATE TABLE file_tx_to_order (
+       PRIMARY KEY(file_id, source_class, dest_class, ref_key),
        foreign key (file_id) references file_transaction(id),
        foreign key (ref_key) references oe(id),
        check (source_class = 1),
@@ -3751,6 +3757,7 @@ COMMENT ON TABLE file_tx_to_order IS
 $$ Secondary links from transactions to orders.$$;
 
 CREATE TABLE file_order_to_order (
+       PRIMARY KEY(file_id, source_class, dest_class, ref_key),
        foreign key (file_id) references file_order(id),
        foreign key (ref_key) references oe(id),
        check (source_class = 2),
@@ -3771,6 +3778,7 @@ VALUES (new.file_id, 2, new.ref_key, 2,
        coalesce(new.attached_at, now()));
 
 CREATE TABLE file_order_to_tx (
+       PRIMARY KEY(file_id, source_class, dest_class, ref_key),
        foreign key (file_id) references file_order(id),
        foreign key (ref_key) references transactions(id),
        check (source_class = 2),
