@@ -81,6 +81,9 @@ sub save {
     my ($request) = @_;
     my $account = LedgerSMB::DBObject::Account->new(base => $request);
     $account->{$account->{summary}}=$account->{summary};
+    if ($account->{charttype} eq 'A'){
+            delete $account->{heading};
+    }
     $account->save;
     edit($request); 
 }

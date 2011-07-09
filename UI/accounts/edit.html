@@ -1,12 +1,27 @@
 <?lsmb 
 INCLUDE 'ui-header.html' 
-    include_stylesheet =  [stylesheet, 'UI/accounts/edit.css']
-    include_script = ['UI/account/edit.js']
+    include_stylesheet =  ['UI/accounts/edit.css']
+    include_script = ['UI/accounts/edit.js']
 ?> 
 <?lsmb PROCESS elements.html ?> 
 <body onload="init()">
 <form method="post" action="<?lsmb form.script ?>">
 <div class="listtop"><?lsmb form.title ?></div>
+<div class="inputline" id="charttype-line">
+   <label class="line">&nbsp;</label>
+   <div class="inputgroup">
+    <?lsmb 
+     ctypes = [
+                { text = 'Account', value = 'A'}
+                { text = 'Heading', value = 'H'}
+              ];
+    INCLUDE select element_data = {
+                  name = 'charttype'
+               options = ctypes
+        default_values = [form.charttype]
+    };?>
+  </div>
+</div>
 <div class="inputline" id="accno-line">
   <label class="line"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
@@ -51,7 +66,8 @@ INCLUDE 'ui-header.html'
     }; ?>
    </div>
 </div>
-<div class="inputline" id="charttype-line">
+<div id="accdetails">
+<div class="inputline" id="gifi-line">
    <label class="line"><?lsmb text('GIFI') ?></label>
    <div class="inputgroup">
        <?lsmb INCLUDE input element_data={
@@ -59,21 +75,6 @@ INCLUDE 'ui-header.html'
             size = '9',
            value = form.gifi_accno} ?>
    </div>
-</div>
-<div class="inputline" id="charttype-line">
-   <label class="line">&nbsp;</label>
-   <div class="inputgroup">
-    <?lsmb 
-     ctypes = [
-                { text = 'Account', value = 'A'}
-                { text = 'Heading', value = 'H'}
-              ];
-    INCLUDE select element_data = {
-                  name = 'charttype'
-               options = ctypes
-        default_values = [form.charttype]
-    };?>
-  </div>
 </div>
 <div class="inputline" id="acctype-line">
    <label class="line"><?lsmb text('Account Type') ?></label>
@@ -154,6 +155,8 @@ INCLUDE 'ui-header.html'
       }; ?>    
    </div>
 </div>
+</div> <!-- account details div -->
+<div id="dropdowns">
 <div class="subsectionhead">
    <?lsmb text('Include in drop-down menus') ?>
 </div>
@@ -366,12 +369,14 @@ INCLUDE 'ui-header.html'
              value = 'asset_loss'} ?>
    </div>
 </div>
+</div> <!-- dropdown div -->
 <?lsmb FOREACH hidden IN hiddens.keys;
 	INCLUDE input element_data={
 		type = 'hidden',
 		name = hidden,
 		value = hiddens.item(hidden)
 		}; END ?>
+
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
 </form>
