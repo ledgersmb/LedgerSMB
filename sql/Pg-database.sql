@@ -3798,4 +3798,9 @@ VALUES (new.file_id, 2, new.ref_key, 1,
        new.attached_by,
        coalesce(new.attached_at, now()));
 
+CREATE TABLE file_view_catalog (
+       file_class int references file_class(id) primary key,
+       view_name text not null unique
+);
+
 commit;

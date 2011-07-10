@@ -31,6 +31,7 @@ insert into test_exempt_tables values ('pg_ts_cfg', 'security definer only');
 insert into test_exempt_tables values ('pg_ts_cfgmap', 'security definer only');
 insert into test_exempt_tables values ('pg_ts_dict', 'security definer only');
 insert into test_exempt_tables values ('pg_ts_parser', 'security definer only');
+insert into test_exempt_tables values ('file_view_catalog', 'addon installaiton only');
 
 insert into test_exempt_tables 
 values ('person_to_company', 'Unused in core, for addons only');
