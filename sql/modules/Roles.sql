@@ -1,5 +1,31 @@
 GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
+
+-- Basic file attachments
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__file_read"
+WITH INHERIT NOLOGIN;
+
+GRANT SELECT ON file_base, file_secondary_attachment 
+      TO "lsmb_<?lsmb dbname ?>__file_read";
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_tx"
+WITH INHERIT NOLOGIN;
+
+GRANT INSERT, UPDATE ON file_transaction, file_order_to_tx TO
+ "lsmb_<?lsmb dbname ?>__file_attach_tx";
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_order"
+WITH INHERIT NOLOGIN;
+
+GRANT INSERT, UPDATE 
+      ON file_order, 
+         file_order_to_order,
+         file_tx_to_order
+      TO "lsmb_<?lsmb dbname ?>__file_attach_tx";
+
+
 -- Contacts
+
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_read"
 WITH INHERIT NOLOGIN;
 
@@ -196,6 +222,9 @@ GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_cr
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (4, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (198, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
+
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create"
 WITH INHERIT NOLOGIN
@@ -231,7 +260,8 @@ values (195, 'allow', 'lsmb_<?lsmb dbname ?>__ar_invoice_create');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_list"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
@@ -269,7 +299,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_all"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create",
 "lsmb_<?lsmb dbname ?>__ar_invoice_create",
-"lsmb_<?lsmb dbname ?>__ar_transaction_list";
+"lsmb_<?lsmb dbname ?>__ar_transaction_list",
+"lsmb_<?lsmb dbname ?>__file_attach_tx";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_create"
 WITH INHERIT NOLOGIN
@@ -307,7 +338,8 @@ values (68, 'allow', 'lsmb_<?lsmb dbname ?>__sales_quotation_create');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_list"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_list";
 GRANT SELECT ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_list";
@@ -322,7 +354,8 @@ values (54, 'allow', 'lsmb_<?lsmb dbname ?>__sales_order_list');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_quotation_list"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_list";
 GRANT SELECT ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_quotation_list";
@@ -343,7 +376,8 @@ IN ROLE
 "lsmb_<?lsmb dbname ?>__sales_order_create",
 "lsmb_<?lsmb dbname ?>__sales_quotation_create",
 "lsmb_<?lsmb dbname ?>__sales_order_list",
-"lsmb_<?lsmb dbname ?>__sales_quotation_list";
+"lsmb_<?lsmb dbname ?>__sales_quotation_list",
+"lsmb_<?lsmb dbname ?>__file_attach_tx";
 
 -- AP
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create"
@@ -373,7 +407,8 @@ GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 
--- TODO add Menu ACLs
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (199, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_invoice_create"
 WITH INHERIT NOLOGIN
@@ -406,7 +441,8 @@ GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_list"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON ap TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
@@ -1628,6 +1664,7 @@ GRANT select ON sic TO public;
 GRANT SELECT ON parts_translation,  project_translation TO public;
 GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
                 asset_disposal_method TO PUBLIC;
+GRANT SELECT ON mime_type, file_class TO PUBLIC;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 
