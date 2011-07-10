@@ -110,14 +110,63 @@ DROP VIEW IF EXISTS file_tx_links;
 DROP VIEW IF EXISTS file_order_links;
 DELETE FROM file_view_catalog WHERE file_class in (1, 2);
 
-CREATE OR REPLACE view file_tx_links
+CREATE OR REPLACE view file_tx_links AS
+SELECT file_id, ref_key, gl.reference, gl.type, dest_class, src_class
+       sl.refkey as dest_ref
+  FROM file_secondary_attachment sl
+  JOIN (select id, reference, 'gl' as type
+          FROM gl
+         UNION
+        SELECT id, invnumber, case when invoice then 'is' else 'ar' end as type
+          FROM ar
+         UNION
+        SELECT id, invnumber, case when invoice then 'ir' else 'ap' end as type
+          FROM ap) gl ON sl.ref_key = gl.id and sl.src_class = 1;
 -- view of links FROM transactions
 
-CREATE OR REPLACE view file_order_links
+INSERT INTO file_view_catalog (file_class, view_name) 
+     VALUES (1, 'file_tx_links');
+
+CREATE OR REPLACE view file_order_links AS
+SELECT file_id, ref_key, oe.ornumber as reference, oc.oe_class, dest_class, 
+       src_class, sl.refkey as dest_ref
+  FROM file_secondary_attachment sl   
+  JOIN oe ON sl.ref_key = oe.id
+  JOIN order_class oc ON oe.oe_class_id = oc.id
+ WHERE sl.src_class = 2;
+       
+
 -- view of links FROM orders
 
-CREATE OR REPLACE VIEW file_links
-AS
-select * from  file_tx_links
-UNION
-select * from file_order_links;
+INSERT INTO file_view_catalog (file_class, view_name) 
+     VALUES (2, 'file_order_links');
+
+
+CREATE OR REPLACE FUNCTION file_links_vrebuild()
+RETURNS bool AS
+$$
+DECLARE 
+   viewline file_catalog%rowtype;
+   stmt text;
+BEGIN
+   stmt := '';
+   FOR viewline IN
+       select * from view_catalog
+   LOOP
+       IF stmt = '' THEN
+           stmt := 'SELECT * FROM ' || quote_ident(viewline.view_name) || '
+';
+       ELSE
+           stmt := 'UNION
+SELECT * FROM '|| quote_ident(viewline.view_name) || '
+';
+       END IF; 
+   END LOOP;
+   EXECUTE 'CREATE OR REPLACE VIEW file_links AS
+' || stmt;
+   RETURN TRUE;
+END;
+$$ LANGUAGE PLPGSQL;
+
+select * from file_links_vrebuild();
+
