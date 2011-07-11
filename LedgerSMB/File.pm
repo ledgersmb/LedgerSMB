@@ -252,6 +252,17 @@ sub merge {
     $self->x_info         ($ref->{dbobject}       || $self->x_info);
 }
 
+=item commit()
+
+Returns the value of DBI->commit
+
+=cut
+
+sub commit{
+    my ($self) = @_;
+    return $self->dbobject->{dbh}->commit;
+}
+
 =back
 
 =head1 COPYRIGHT
