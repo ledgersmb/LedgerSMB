@@ -1,4 +1,13 @@
-create or replace function file__attach_to_tx,
+CREATE OR REPLACE FUNCTION file__get_mime_type(in_mime_type_id int)
+RETURNS mime_type AS
+$$
+select * from mime_type where id = $1;
+$$ language sql;
+
+COMMENT ON FUNCTION file__get_mime_type(in_mime_type_id int) IS
+$$Retrieves mime type information associated with a file object.$$;
+
+CREATE OR REPLACE FUNCTION file__attach_to_tx
 (in_content bytea, in_mime_type_id int, in_file_name text,
 in_description text, in_id int, in_ref_key int, in_file_class int)
 RETURNS file_base
@@ -32,7 +41,14 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-create or replace function file__attach_to_order
+COMMENT ON FUNCTION file__attach_to_tx
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text, in_id int, in_ref_key int, in_file_class int) IS
+$$ Attaches or links a file to a transaction.  in_content OR id can be set.
+Setting both raises an exception.$$;
+
+
+CREATE OR REPLACE FUNCTION file__attach_to_order
 (in_content bytea, in_mime_type_id int, in_file_name text,
 in_description text, in_id int, ref_key int, file_class int)
 RETURNS file_base
@@ -74,6 +90,13 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION file__attach_to_order
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text, in_id int, in_ref_key int, in_file_class int) IS
+$$ Attaches or links a file to an order.  in_content OR id can be set.
+Setting both raises an exception.$$;
+
+
 CREATE TYPE file_list_item AS
        mime_type text,
        file_name text,
@@ -85,7 +108,8 @@ CREATE TYPE file_list_item AS
        ref_key int,
        file_class int
 );
-create or replace function file__list_by(in_ref_key int, in_file_class int)
+
+CREATE OR REPLACE FUNCTION file__list_by(in_ref_key int, in_file_class int)
 RETURNS SETOF file_base AS
 $$
 
@@ -98,12 +122,18 @@ SELECT m.mime_type, f.file_name, f.description, f.uploaded_by, e.name,
 
 $$ language sql;
 
-create or replace function file__get(in_id int, in_file_class int)
+COMMENT ON FUNCTION file__list_by(in_ref_key int, in_file_class int) IS
+$$ Returns a list of files attached to a database object.  No content is 
+retrieved.$$;
+
+CREATE OR REPLACE FUNCTION file__get(in_id int, in_file_class int)
 RETURNS file_base AS
 $$
 SELECT * FROM file_base where id = $1 and file_class = $2;
 $$ language sql;
 
+COMMENT ON FUNCTION file__get(in_id int, in_file_class int) IS
+$$ Retrieves the file information specified including content.$$;
 
 DROP VIEW IF EXISTS file_links;
 DROP VIEW IF EXISTS file_tx_links;
@@ -170,3 +200,11 @@ $$ LANGUAGE PLPGSQL;
 
 select * from file_links_vrebuild();
 
+
+CREATE OR REPLACE FUNCTION file__list_links(in_ref_key int, in_file_class int)
+RETURNS setof file_links AS
+$$ select * from file_links where ref_key = $1 and file_class = $2;
+$$ language sql;
+
+COMMENT ON FUNCTION file__list_links(in_ref_key int, in_file_class int) IS
+$$ This function retrieves a list of file attachments on a specified object.$$;

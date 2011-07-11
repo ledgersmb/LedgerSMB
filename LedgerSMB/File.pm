@@ -154,6 +154,23 @@ sub new_dbobject{
     }
 }
 
+=item get_mime_type
+
+Sends the textual representation of the MIME type.  If not set, retrieves and
+sets it.
+
+=cut
+
+sub get_mime_type {
+    my ($self) = @_;
+    if ($self->mime_type_text){
+       return $self->mime_type_text;
+    } else {
+       my ($ref) = $self->exec_method({funcname => 'file__mime_type_text'});
+       $self->mime_type_text($ref->{mime_type});
+       return $self->mime_type_text;
+    }
+}
 =item get
 
 Retrives a file.  ID and file_class properties must be set.
