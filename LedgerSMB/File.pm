@@ -19,6 +19,7 @@ to provide functionality for specific types of file attachments.
 package LedgerSMB::File;
 use Class::Struct;
 use LedgerSMB::DBObject;
+use strict;
 
 =item  attached_by_id
 
@@ -79,7 +80,7 @@ DBObject, namely dbh, _roles, and _locale.
 
 =cut
 
-struct LedgerSMB::DBObject::File => {
+struct 'LedgerSMB::File' => {
    attached_by_id =>  '$',
    attached_by    =>  '$',
    attached_at    =>  '$',
@@ -185,8 +186,6 @@ sub list{
 
 Lists the links directly attached to the object.
 
-=back
-
 =cut
 
 sub list_links{
@@ -227,6 +226,33 @@ sub exec_method{
     $self->dbobject->exec_method($args);
 
 }
+
+=item merge(hashref)
+
+Merges in specific attributes from the ref.
+
+=cut
+
+sub merge {
+    my ($self, $ref) = @_;
+    $self->attached_by_id ($ref->{attached_by_id} || $self->attached_by_id);
+    $self->attached_by    ($ref->{attached_by}    || $self->attached_by);
+    $self->attached_at    ($ref->{attached_at}    || $self->attached_at);
+    $self->reference      ($ref->{reference}      || $self->reference);
+    $self->content        ($ref->{content}        || $self->content);
+    $self->mime_type_id   ($ref->{mime_type_id}   || $self->mime_type_id);
+    $self->mime_type_text ($ref->{mime_type_text} || $self->mime_type_text);
+    $self->file_name      ($ref->{file_name}      || $self->file_name);
+    $self->description    ($ref->{description}    || $self->description);
+    $self->id             ($ref->{id}             || $self->id);
+    $self->ref_key        ($ref->{ref_key}        || $self->ref_key);
+    $self->file_class     ($ref->{file_class}     || $self->file_class);
+    $self->src_class      ($ref->{src_class}      || $self->src_class);
+    $self->dbobject       ($ref->{dbobject}       || $self->dbobject);
+    $self->x_info         ($ref->{dbobject}       || $self->x_info);
+}
+
+=back
 
 =head1 COPYRIGHT
 
