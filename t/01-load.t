@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 51;
+use Test::More tests => 54;
 
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
@@ -51,6 +51,9 @@ use_ok('LedgerSMB::Template');
 use_ok('LedgerSMB::Template::Elements');
 use_ok('LedgerSMB::Template::CSV');
 use_ok('LedgerSMB::Template::HTML');
+use_ok('LedgerSMB::File');
+use_ok('LedgerSMB::File::Transaction');
+use_ok('LedgerSMB::File::Order');
 SKIP: {
     eval{ require Template::Plugin::Latex};
     skip 'Template::Plugin::Latex not installed', 1 if @_;

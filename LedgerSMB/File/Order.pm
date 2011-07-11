@@ -24,7 +24,7 @@ methods only
 
 package LedgerSMB::File::Order;
 use strict;
-use base(LedgerSMB::File);
+use base qw(LedgerSMB::File);
 
 =head1 METHODS
 
@@ -51,13 +51,13 @@ only handles files that were attached to orders and transactions to start with.
 
 sub attach_all_from_order {
     my ($self, $args) = @_;
-    for $attach ($self->list({ref_key => $args->{int}, file_class => 2}){
+    for my $attach ($self->list({ref_key => $args->{int}, file_class => 2})){
         my $new_link = LedgerSMB::File::Transaction->new();
         $new_link->merge($attach);
         $new_link->dbobject($self->dbobject);
         $new_link->attach({no_commit => 1});
     }
-    for $link ($self->list_links({ref_key => $args->{int}, file_class => 2}){
+    for my $link ($self->list_links({ref_key => $args->{int}, file_class => 2})){
         next if !($link->{src_class} == 2 || $link->{src_class} == 1);
         my $new_link = LedgerSMB::File::Transaction->new();
         $new_link->merge($link);
@@ -77,13 +77,13 @@ with.
 
 sub attach_all_from_transaction {
     my ($self, $args) = @_;
-    for $attach ($self->list({ref_key => $args->{int}, file_class => 1}){
+    for my $attach ($self->list({ref_key => $args->{int}, file_class => 1})){
         my $new_link = LedgerSMB::File::Transaction->new();
         $new_link->merge($attach);
         $new_link->dbobject($self->dbobject);
         $new_link->attach({no_commit => 1});
     }
-    for $link ($self->list_links({ref_key => $args->{int}, file_class => 1}){
+    for my $link ($self->list_links({ref_key => $args->{int}, file_class => 1})){
         next if !($link->{src_class} == 2 || $link->{src_class} == 1);
         my $new_link = LedgerSMB::File::Transaction->new();
         $new_link->merge($link);
