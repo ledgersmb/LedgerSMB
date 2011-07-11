@@ -17,8 +17,8 @@ to provide functionality for specific types of file attachments.
 
 
 package LedgerSMB::DBOBject::File;
-use base qw(LedgerSMB::DBObject);
 use Class::Struct;
+use LedgerSMB::DBObject;
 
 =item  attached_by_id
 
@@ -70,7 +70,10 @@ ID of class of the original attachment point (for a link)
 
 =item x-info
 
-A hash for extended information 
+A hash for extended information
+
+Note additionally the $self hashref contains the basic required attributes for
+DBObject, namely dbh, _roles, and _locale. 
 
 =back
 
@@ -90,12 +93,65 @@ struct LedgerSMB::DBObject::File => {
    ref_key        =>  '$',
    file_class     =>  '$',
    src_class      =>  '$',
+   dbobject       =>  'LedgerSMB::DBObject',
    x_info         =>  '%'
 };
 
 =head1 METHODS
 
 =over
+
+=item new_dbobject
+
+$file->new_dbobject({base => (LedgerSMB | LedgerSMB::Form), 
+locale => LedgerSMB::Locale}); 
+
+Creates a new file object.  Locale only needs to be specified when using
+LedgerSMB::Form objects since these are not included.
+
+Returns 0 on success.
+
+Error codes on exit (OR'd):
+
+1:  No database handle included
+2:  No locale handle included
+4:  Invalid base.
+
+
+=cut
+
+sub new_dbobject{
+    use LedgerSMB;
+    my ($self, $args)  = @_;
+    my $dbobject;
+    my $rc = 0; # Success
+    if (LedgerSMB::Form->isa($args->{base})){
+         use LedgerSMB::Locale;
+         my $lsmb = LedgerSMB->new();
+         $lsmb->merge($args->{base});
+         if (LedgerSMB::Locale->isa($args->{locale})){
+             $lsmb->{_locale} = $args->{locale};
+             my $dbobject = LedgerSMB::DBObject({base => $lsmb});
+         } else {
+             $rc | 2; # No locale
+         }
+    }
+    elsif (LedgerSMB->isa($args->{base})){
+         my $dbobject = LedgerSMB::DBObject({base => $args->{base}});
+    }
+    else {
+        $rc | 4; # Incorrect base type
+    }
+    if (!$dbobject->{dbh}){
+        $rc | 1; # No database handle
+    }
+    if ($rc){
+        return $rc;  # Return error.
+    } else {
+        $self->dbobject($dbobject);
+        return 0;
+    }
+}
 
 =item get
 
@@ -143,6 +199,34 @@ sub list_links{
     return @results;
 }
 
+=item exec_method
+
+Provides a compatible interface to LedgerSMB::DBObject::exec_method
+
+=cut
+
+sub exec_method{
+    my ($self, $args) = @_;
+    if (!scalar @{$args->{args}}){
+          $self->dbobject->{attached_by_id} = $self->attached_by_id;
+          $self->dbobject->{attached_by}    = $self->attached_by;
+          $self->dbobject->{attached_at}    = $self->attached_at;
+          $self->dbobject->{reference}      = $self->reference;
+          $self->dbobject->{content}        = $self->content;
+          $self->dbobject->{mime_type_id}   = $self->mime_type_id;
+          $self->dbobject->{mime_type_text} = $self->mime_type_text;
+          $self->dbobject->{file_name}      = $self->file_name;
+          $self->dbobject->{description}    = $self->description;
+          $self->dbobject->{id}             = $self->id;
+          $self->dbobject->{ref_key}        = $self->ref_key;
+          $self->dbobject->{file_class}     = $self->file_class;
+          $self->dbobject->{src_class}      = $self->src_class;
+          $self->dbobject->{dbobject}       = $self->dbobject;
+          $self->dbobject->{x_info}         = $self->x_info;
+    }
+    $self->dbobject->exec_method($args);
+
+}
 
 =head1 COPYRIGHT
 
