@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::DBOBject::File
+LedgerSMB::File
 
 =head1 SYNPSIS
 
