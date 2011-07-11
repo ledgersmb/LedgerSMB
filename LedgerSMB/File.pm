@@ -16,7 +16,7 @@ to provide functionality for specific types of file attachments.
 =cut
 
 
-package LedgerSMB::DBOBject::File;
+package LedgerSMB::File;
 use Class::Struct;
 use LedgerSMB::DBObject;
 
