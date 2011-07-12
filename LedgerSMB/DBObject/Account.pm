@@ -59,8 +59,8 @@ sub save {
     if ($self->{charttype} and $self->{charttype} eq 'H') {
         $func = 'account_heading_save';
     }
-    $self->exec_method(funcname => $func);
-
+    my ($id_ref) = $self->exec_method(funcname => $func);
+    $self->{id} = $id_ref->{$func};
     if (defined $self->{recon}){
         $self->call_procedure(procname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
     }
@@ -87,7 +87,7 @@ sub get {
         $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', 'dbh', '_roles', '_request']);
         push (@{$self->{account_list}}, $ref);
     }
-    return @accounts;
+    return @{$self->{account_list}};
 }
 
 =item check_transactions()

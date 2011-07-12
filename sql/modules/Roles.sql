@@ -154,7 +154,7 @@ GRANT UPDATE ON person_to_company TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT UPDATE ON person_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT UPDATE ON person_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON person_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
+GRANT UPDATE ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT DELETE, INSERT  ON vendortax TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT DELETE, INSERT  ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_edit";
 GRANT ALL ON customertax TO"lsmb_<?lsmb dbname ?>__contact_edit";

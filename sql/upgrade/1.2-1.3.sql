@@ -1,3 +1,10 @@
+/*
+ALTER SCHEMA PUBLIC RENAME TO lsmb12;
+CREATE SCHEMA PUBLIC;
+
+\i sql/Pg-database.sql
+
+
 BEGIN;
 
 ALTER TABLE employee RENAME TO employees;
@@ -24,3 +31,4 @@ ALTER TABLE employees ALTER COLUMN id SET DEFAULT  nextval('employees_id_seq');
 DROP RULE employee_id_track_i ON employees; -- no longer needed
 
 COMMIT;
+*/

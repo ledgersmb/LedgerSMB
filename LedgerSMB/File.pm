@@ -19,6 +19,8 @@ to provide functionality for specific types of file attachments.
 package LedgerSMB::File;
 use Class::Struct;
 use LedgerSMB::DBObject;
+use File::MimeInfo;
+use IO::Scalar;
 use strict;
 
 =item  attached_by_id
@@ -118,6 +120,9 @@ Error codes on exit (OR'd):
 2:  No locale handle included
 4:  Invalid base.
 
+In most cases when working with new code it is simpler to just
+
+$file->dbobject(LedgerSMB::DBObject->new({base => $request});
 
 =cut
 
@@ -166,11 +171,24 @@ sub get_mime_type {
     if ($self->mime_type_text){
        return $self->mime_type_text;
     } else {
-       my ($ref) = $self->exec_method({funcname => 'file__mime_type_text'});
+       my ($ref) = $self->exec_method(
+                      {funcname => 'file__mime_type_text',
+                       args     => [$self->mime_type_id, undef]},
+       );
        $self->mime_type_text($ref->{mime_type});
        return $self->mime_type_text;
     }
 }
+
+sub set_mime_type {
+    my ($self, $mime_type) = @_;
+    $self->mime_type_text($mime_type);
+    my ($ref) = $self->exec_method({funcname => 'file__mime_type_text', 
+         args => [undef, $self->mime_type_text]});
+    $self->mime_type_id($ref->{id});
+
+}
+
 =item get
 
 Retrives a file.  ID and file_class properties must be set.

@@ -1,7 +1,9 @@
-CREATE OR REPLACE FUNCTION file__get_mime_type(in_mime_type_id int)
+CREATE OR REPLACE FUNCTION file__get_mime_type
+ (in_mime_type_id int, in_mime_type text)
 RETURNS mime_type AS
 $$
-select * from mime_type where id = $1;
+select * from mime_type 
+ where ($1 IS NULL OR id = $1) AND ($2 IS NULL OR mime_type = $2);
 $$ language sql;
 
 COMMENT ON FUNCTION file__get_mime_type(in_mime_type_id int) IS

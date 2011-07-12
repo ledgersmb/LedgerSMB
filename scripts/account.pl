@@ -45,19 +45,27 @@ sub new {
 
 Retrieves account information and then displays the screen.  
 
-Requires the id variable in the request to be set.
+Requires the id and charttype variables in the request to be set.
 
 =cut
 
 sub edit {
     my ($request) = @_;
+    if (!defined $request->{id}){
+        $request->error('No ID provided');
+    } elsif (!defined $request->{charttype}){
+        $request->error('No Chart Type Provided');
+    }
     $request->{chart_id} = $request->{id};
     my $account = LedgerSMB::DBObject::Account->new(base => $request);
     my @accounts = $account->get();
-    my $a = shift @accounts;
-    $a->{title} = $request->{_locale}->text('Edit Account');
-    $a->{_locale} = $request->{_locale};
-    _display_account_screen($a);
+    my $acc = shift @accounts;
+    if (!$acc){  # This should never happen.  Any occurance of this is a bug.
+         $request->error($request->{_locale}->text('Bug: No such account'));
+    }
+    $acc->{title} = $request->{_locale}->text('Edit Account');
+    $acc->{_locale} = $request->{_locale};
+    _display_account_screen($acc);
 }
 
 =item save
@@ -85,7 +93,7 @@ sub save {
             delete $account->{heading};
     }
     $account->save;
-    edit($request); 
+    edit($account); 
 }
 
 =item save_as_new
@@ -96,7 +104,7 @@ Saves as a new account.  Deletes the id field and then calls save()
 
 sub save_as_new {
     my ($request) = @_;
-    delete $request->{id};
+    $request->{id} = undef;
     save($request);
 }
 

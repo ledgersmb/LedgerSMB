@@ -22,6 +22,7 @@ requires 'HTML::Entities';
 requires 'DBD::Pg';
 requires 'Math::BigFloat';
 requires 'IO::File';
+requires 'IO::Scalar';
 requires 'Encode';
 requires 'Locale::Country';
 requires 'Locale::Language';
@@ -32,6 +33,7 @@ requires 'MIME::Lite';
 requires 'Template' => '2.14';
 requires 'Error';
 requires 'CGI::Simple';
+requires 'File::MimeInfo';
 
 recommends 'perl-Math-BigInt-GMP';
 
