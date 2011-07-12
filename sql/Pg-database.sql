@@ -1058,8 +1058,8 @@ CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
 --
 CREATE TABLE invoice (
   id serial PRIMARY KEY,
-  trans_id int,
-  parts_id int,
+  trans_id int REFERENCES transactions(id),
+  parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,
   allocated integer,
@@ -1379,7 +1379,7 @@ CREATE TABLE partstax (
 COMMENT ON TABLE partstax IS $$ Mapping of parts to taxes.$$;
 --
 CREATE TABLE tax (
-  chart_id int,
+  chart_id int REFERENCES account(id),
   rate numeric,
   taxnumber text,
   validto timestamp not null default 'infinity',
@@ -1865,7 +1865,7 @@ FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 CREATE TRIGGER ar_audit_trail AFTER insert or update or delete ON ar
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 
-CREATE TRIGGER ap_audit_trail AFTER insert or update or delete ON ar
+CREATE TRIGGER ap_audit_trail AFTER insert or update or delete ON ap
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 create index acc_trans_trans_id_key on acc_trans (trans_id);
 create index acc_trans_chart_id_key on acc_trans (chart_id);

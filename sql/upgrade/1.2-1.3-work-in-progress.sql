@@ -379,13 +379,107 @@ SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
 INSERT INTO makemodel
 SELECT * FROM lsmb12.makemodel;
 
+INSERT INTO gifi
+SELECT * FROM lsmb12.gifi;
+
+UPDATE defaults 
+   SET value = (select value from lsmb12.defaults src 
+                 WHERE src.setting_key = defaults.setting_key)
+ WHERE setting_key IN (select setting_key FROM lsmb12.defaults);
+
+
+INSERT INTO parts SELECT * FROM lsmb12.parts;
+
+INSERT INTO assembly SELECT * FROM lsmb12.assembly;
+
+ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
+
 INSERT INTO gl(id, reference, description, transdate, person_id, notes, 
                department_id)
-    SELECT gl.id, reference, description, transdate, entity_id, gl.notes, 
+    SELECT gl.id, reference, description, transdate, p.id, gl.notes, 
            department_id
       FROM lsmb12.gl 
- LEFT JOIN lsmb12.employee em ON gl.employee_id = em.id;
+ LEFT JOIN lsmb12.employee em ON gl.employee_id = em.id
+ LEFT JOIN person p ON em.entity_id = p.id;
 
+ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
+
+ALTER TABLE ar DISABLE TRIGGER ap_audit_trail;
+
+INSERT INTO ar(id, invnumber, transdate, taxincluded, amount, 
+            netamount, paid, datepaid, duedate, invoice, shippingpoint, terms,
+            notes, curr, ordnumber, person_id, till, quonumber, intnotes, 
+            department_id, shipvia, language_code, ponumber, 
+            entity_credit_account)
+     SELECT ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, 
+            paid, datepaid, duedate, invoice, shippingpoint, ar.terms, ar.notes,
+            ar.curr, ordnumber, em.entity_id, till, quonumber, intnotes, 
+            department_id, shipvia, ar.language_code, ponumber, credit_id
+       FROM lsmb12.ar
+       JOIN lsmb12.customer c ON c.id = ar.customer_id
+  LEFT JOIN lsmb12.employee em ON em.id = ar.employee_id;
+
+ALTER TABLE ar ENABLE TRIGGER ap_audit_trail;
+
+ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
+
+INSERT INTO ap(id, invnumber, transdate, taxincluded, amount, 
+            netamount, paid, datepaid, duedate, invoice, shippingpoint, terms,
+            notes, curr, ordnumber, person_id, till, quonumber, intnotes, 
+            department_id, shipvia, language_code, ponumber, 
+            entity_credit_account)
+     SELECT ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, 
+            paid, datepaid, duedate, invoice, shippingpoint, ap.terms, ap.notes,
+            ap.curr, ordnumber, em.entity_id, till, quonumber, intnotes, 
+            department_id, shipvia, ap.language_code, ponumber, credit_id
+       FROM lsmb12.ap
+       JOIN lsmb12.vendor c ON c.id = ap.vendor_id
+  LEFT JOIN lsmb12.employee em ON em.id = ap.employee_id;
+
+ALTER TABLE ar ENABLE TRIGGER ap_audit_trail;
+
+INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, cleared,
+            fx_transaction, project_id, memo, invoice_id, entry_id)
+     SELECT trans_id, a.id, amount, transdate, source, cleared,
+            fx_transaction, project_id, memo, invoice_id, entry_id
+       FROM lsmb12.acc_trans
+       JOIN lsmb12.chart ON acc_trans.chart_id = chart.id
+       JOIN account a ON chart.accno = a.accno; 
+
+INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+            deliverydate, serialnumber, notes)
+    SELECT  id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+            deliverydate, serialnumber, notes
+       FROM lsmb12.invoice;
+
+INSERT INTO partstax (parts_id, chart_id)
+     SELECT parts_id, a.id
+       FROM lsmb12.partstax pt
+       JOIN lsmb12.chart ON chart.id = pt.chart_id
+       JOIN account a ON chart.accno = a.accno;
+
+INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
+     SELECT a.id, t.rate, t.taxnumber, 
+            coalesce(t.validto::timestamp, 'infinity'), pass, taxmodule_id
+       FROM lsmb12.tax t
+       JOIN lsmb12.chart c ON (t.chart_id = c.id)
+       JOIN account a ON (a.accno = c.accno);
+
+INSERT INTO customertax (customer_id, chart_id)
+     SELECT c.credit_id,  a.id
+       FROM lsmb12.customertax pt
+       JOIN lsmb12.customer c ON (pt.customer_id = c.id)
+       JOIN lsmb12.chart ON chart.id = pt.chart_id
+       JOIN account a ON chart.accno = a.accno; 
+
+INSERT INTO vendortax (vendor_id, chart_id)
+     SELECT c.credit_id,  a.id
+       FROM lsmb12.vendortax pt       
+       JOIN lsmb12.vendor c ON (pt.vendor_id = c.id)
+       JOIN lsmb12.chart ON chart.id = pt.chart_id
+       JOIN account a ON chart.accno = a.accno;
 
 COMMIT;
 -- TODO:  User/password Migration
