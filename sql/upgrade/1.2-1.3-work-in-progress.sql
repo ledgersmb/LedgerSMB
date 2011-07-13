@@ -1,12 +1,13 @@
 --Setup
 
+-- When moved to an interface, these will all be specified and preprocessed.
 \set lsmbdir `pwd`
 \set contribdir '/usr/share/pgsql/contrib'
 \set default_country '''us'''
 \set ar '''1200'''
 \set ap '''2100'''
 
-
+-- This will be moved out of this part.
 ALTER SCHEMA public RENAME TO lsmb12;
 CREATE SCHEMA public;
 
@@ -17,6 +18,7 @@ CREATE SCHEMA public;
 
 \cd :lsmbdir
 
+-- Full module load should be part of upgrade wizard, at this stage.
 \i sql/Pg-database.sql
 \i sql/modules/Setting.sql
 \i sql/modules/Location.sql
