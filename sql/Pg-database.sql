@@ -1056,58 +1056,6 @@ for payments.$$;
 
 CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
 --
-CREATE TABLE invoice (
-  id serial PRIMARY KEY,
-  trans_id int REFERENCES transactions(id),
-  parts_id int REFERENCES parts(id),
-  description text,
-  qty NUMERIC,
-  allocated integer,
-  sellprice NUMERIC,
-  precision int,
-  fxsellprice NUMERIC,
-  discount numeric,
-  assemblyitem bool DEFAULT 'f',
-  unit varchar(5),
-  project_id int,
-  deliverydate date,
-  serialnumber text,
-  notes text
-);
-
-COMMENT ON TABLE invoice IS
-$$Line items of invoices with goods/services attached.$$;
-
-COMMENT ON COLUMN invoice.allocated IS
-$$Number of allocated items, negative relative to qty.
-When qty + allocated = 0, then the item is fully used for purposes of COGS 
-calculations.$$;
-
-COMMENT ON COLUMN invoice.qty IS
-$$Positive is normal for sales invoices, negative for vendor invoices.$$;
-
--- Added for Entity but can't be added due to order
-ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
-
---
-
---
-
--- THe following credit accounts are used for inventory adjustments.
-INSERT INTO entity (id, name, entity_class, control_code,country_id) 
-values (0, 'Inventory Entity', 1, 'AUTO-01','232');
-
-INSERT INTO company (legal_name, entity_id) 
-values ('Inventory Entity', 0);
-
-INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
-VALUES 
-(0, '00000', 1);
-INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
-VALUES 
-(0, '00000', 2);
-
-
 CREATE TABLE parts (
   id serial PRIMARY KEY,
   partnumber text,
@@ -1162,6 +1110,58 @@ $$Hyperlink to product image.$$;
 	
 CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber) 
 WHERE obsolete is false;
+CREATE TABLE invoice (
+  id serial PRIMARY KEY,
+  trans_id int REFERENCES transactions(id),
+  parts_id int REFERENCES parts(id),
+  description text,
+  qty NUMERIC,
+  allocated integer,
+  sellprice NUMERIC,
+  precision int,
+  fxsellprice NUMERIC,
+  discount numeric,
+  assemblyitem bool DEFAULT 'f',
+  unit varchar(5),
+  project_id int,
+  deliverydate date,
+  serialnumber text,
+  notes text
+);
+
+COMMENT ON TABLE invoice IS
+$$Line items of invoices with goods/services attached.$$;
+
+COMMENT ON COLUMN invoice.allocated IS
+$$Number of allocated items, negative relative to qty.
+When qty + allocated = 0, then the item is fully used for purposes of COGS 
+calculations.$$;
+
+COMMENT ON COLUMN invoice.qty IS
+$$Positive is normal for sales invoices, negative for vendor invoices.$$;
+
+-- Added for Entity but can't be added due to order
+ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
+
+--
+
+--
+
+-- THe following credit accounts are used for inventory adjustments.
+INSERT INTO entity (id, name, entity_class, control_code,country_id) 
+values (0, 'Inventory Entity', 1, 'AUTO-01','232');
+
+INSERT INTO company (legal_name, entity_id) 
+values ('Inventory Entity', 0);
+
+INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
+VALUES 
+(0, '00000', 1);
+INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
+VALUES 
+(0, '00000', 2);
+
+
 --
 CREATE TABLE assembly (
   id int REFERENCES parts(id),
