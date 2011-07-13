@@ -1,18 +1,18 @@
-SELECT count(*), customernumber from lsmb12.customer
+SELECT count(*), customernumber from customer
 GROUP BY customernumber
 HAVING count(*) > 1;
 
-SELECT count(*), vendornumber from lsmb12.vendor
+SELECT count(*), vendornumber from vendor
 GROUP BY vendornumber
 HAVING count(*) > 1;
 
-SELECT * FROM lsmb12.chart where link LIKE '%CT_tax%';
+SELECT * FROM chart where link LIKE '%CT_tax%';
 
-SELECT * FROM lsmb12.employee where employeenumber IS NULL;
+SELECT * FROM employee where employeenumber IS NULL;
 
-select partnumber, count(*) from lsmb12.parts 
+select partnumber, count(*) from parts 
 group by partnumber having count(*) > 1;
 
-SELECT invnumber, count(*) from lsmb12.ar
+SELECT invnumber, count(*) from ar
 group by invnumber having count(*) > 1;
 

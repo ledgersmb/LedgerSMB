@@ -481,5 +481,113 @@ INSERT INTO vendortax (vendor_id, chart_id)
        JOIN lsmb12.chart ON chart.id = pt.chart_id
        JOIN account a ON chart.accno = a.accno;
 
+INSERT 
+  INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
+       shippingpoint, notes, curr, person_id, closed, quotation, quonumber,
+       intnotes, department_id, shipvia, language_code, ponumber, terms,
+       entity_credit_account, oe_class_id)
+SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
+       shippingpoint, oe.notes, oe.curr, p.id, closed, quotation, quonumber,
+       intnotes, department_id, shipvia, oe.language_code, ponumber, oe.terms,
+       coalesce(c.credit_id, v.credit_id),
+       case 
+           when c.id is not null and quotation is not true THEN 1
+           WHEN v.id is not null and quotation is not true THEN 2
+           when c.id is not null and quotation is true THEN 3
+           WHEN v.id is not null and quotation is true THEN 4
+       end
+  FROM lsmb12.oe
+  LEFT JOIN lsmb12.customer c ON c.id = oe.customer_id
+  LEFT JOIN lsmb12.vendor v ON v.id = oe.vendor_id
+  LEFT JOIN lsmb12.employee e ON oe.employee_id = e.id
+  LEFT JOIN person p ON e.entity_id = p.id;
+
+INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
+            discount, unit, project_id, reqdate, ship, serialnumber, notes)
+     SELECT id, trans_id, parts_id, description, qty, sellprice,
+            discount, unit, project_id, reqdate, ship, serialnumber, notes
+       FROM lsmb12.orderitems;
+
+INSERT INTO exchangerate select * from lsmb12.exchangerate;
+
+INSERT INTO project (id, projectnumber, description, startdate, enddate,
+            parts_id, production, completed, credit_id)
+     SELECT p.id, projectnumber, description, p.startdate, p.enddate,
+            parts_id, production, completed, c.credit_id
+       FROM lsmb12.project p
+       JOIN lsmb12.customer c ON p.customer_id = c.id;
+
+INSERT INTO partsgroup SELECT * FROM lsmb12.partsgroup;
+
+INSERT INTO status SELECT * FROM lsmb12.status;
+
+INSERT INTO department SELECT * FROM lsmb12.department;
+
+INSERT INTO dpt_trans SELECT * FROM lsmb12.dpt_trans;
+
+INSERT INTO business SELECT * FROM lsmb12.business;
+
+INSERT INTO sic SELECT * FROM lsmb12.sic;
+
+INSERT INTO warehouse SELECT * FROM lsmb12.warehouse;
+
+INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
+            orderitems_id, qty, shippingdate, entry_id)
+     SELECT e.entity_id, warehouse_id, parts_id, trans_id,
+            orderitems_id, qty, shippingdate, i.entry_id
+       FROM lsmb12.inventory i
+       JOIN lsmb12.employee e ON i.employee_id = e.id;
+
+INSERT INTO yearend (trans_id, transdate) SELECT * FROM lsmb12.yearend;
+
+INSERT INTO partsvendor(credit_id, parts_id, partnumber, leadtime, lastcost,
+            curr, entry_id)
+     SELECT v.credit_id, parts_id, partnumber, leadtime, lastcost,
+            pv.curr, entry_id
+       FROM lsmb12.partsvendor pv
+       JOIN lsmb12.vendor v ON v.id = pv.vendor_id;
+
+INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
+            sellprice, validfrom, validto, curr, entry_id)
+     SELECT parts_id, credit_id, pv.pricegroup_id, pricebreak,
+            sellprice, validfrom, validto, pv.curr, entry_id
+       FROM lsmb12.partscustomer pv
+       JOIN lsmb12.customer v ON v.id = pv.customer_id;
+
+INSERT INTO language SELECT * FROM lsmb12.language;
+
+INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
+            transdate, person_id, entry_id)
+     SELECT trans_id, tablename, reference, formname, action,
+            transdate, p.id, entry_id
+       FROM lsmb12.audittrail a
+       JOIN lsmb12.employee e ON a.employee_id = e.id
+       JOIN person p on e.entity_id = p.entity_id;
+
+INSERT INTO user_preference(id)
+     SELECT id from users;
+
+INSERT INTO recurring SELECT * FROM lsmb12.recurring;
+
+INSERT INTO recurringemail SELECT * FROM lsmb12.recurringemail;
+
+INSERT INTO recurringprint SELECT * FROM lsmb12.recurringprint;
+
+INSERT INTO jcitems(id, project_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, serialnumber, checkedin, checkedout,
+            person_id, notes)
+     SELECT j.id,  project_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, serialnumber, checkedin, checkedout,
+            p.id, j.notes
+       FROM lsmb12.jcitems j
+       JOIN lsmb12.employee e ON j.employee_id = e.id
+       JOIN person p ON e.entity_id = p.entity_id;
+
+INSERT INTO  custom_table_catalog  SELECT * FROM lsmb12. custom_table_catalog;
+
+INSERT INTO  custom_field_catalog  SELECT * FROM lsmb12. custom_field_catalog;
+
+
 COMMIT;
+--TODO:  Translation migratiion.  Partsgroups?
 -- TODO:  User/password Migration
