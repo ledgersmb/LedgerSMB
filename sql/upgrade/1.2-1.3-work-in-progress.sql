@@ -21,7 +21,9 @@ CREATE SCHEMA public;
 \i sql/modules/Setting.sql
 \i sql/modules/Location.sql
 \i sql/modules/Account.sql
-
+\i sql/modules/Payment.sql
+\i sql/modules/Person.sql
+\i sql/modules/Reconciliation.sql
 BEGIN;
 
 -- adding mapping info for import.
@@ -632,14 +634,13 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('entity_bank_account_id_seq', max(id)) FROM entity_bank_account;
  SELECT setval('note_class_id_seq', max(id)) FROM note_class;
  SELECT setval('note_id_seq', max(id)) FROM note;
- SELECT setval('trial_balance_id_seq', max(id)) FROM trial_balance;
  SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
  SELECT setval('batch_id_seq', max(id)) FROM batch;
  SELECT setval('invoice_id_seq', max(id)) FROM invoice;
  SELECT setval('voucher_id_seq', max(id)) FROM voucher;
  SELECT setval('parts_id_seq', max(id)) FROM parts;
- SELECT setval('taxmodule_taxmodule_id_seq', max(id)) FROM taxmodule_taxmodule;
- SELECT setval('taxcategory_taxcategory_id_seq', max(id)) FROM taxcategory_taxcategory;
+ SELECT setval('taxmodule_taxmodule_id_seq', max(taxmodule_id)) FROM taxmodule;
+ SELECT setval('taxcategory_taxcategory_id_seq', max(taxcategory_id)) FROM taxcategory;
  SELECT setval('oe_id_seq', max(id)) FROM oe;
  SELECT setval('orderitems_id_seq', max(id)) FROM orderitems;
  SELECT setval('business_id_seq', max(id)) FROM business;
@@ -649,8 +650,8 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('department_id_seq', max(id)) FROM department;
  SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
  SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
- SELECT setval('custom_table_catalog_table_id_seq', max(id)) FROM custom_table_catalog_table;
- SELECT setval('custom_field_catalog_field_id_seq', max(id)) FROM custom_field_catalog_field;
+ SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
+ SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
  SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
  SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
  SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
