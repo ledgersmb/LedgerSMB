@@ -1,5 +1,6 @@
 --Setup
 
+\set lsmbdir `pwd`
 \set contribdir '/usr/share/pgsql/contrib'
 \set default_country '''us'''
 \set ar '''1200'''
@@ -9,9 +10,12 @@
 ALTER SCHEMA public RENAME TO lsmb12;
 CREATE SCHEMA public;
 
-\i :contribdir/pg_trgm.sql
-\i :contribdir/tsearch2.sql
-\i :contribdir/tablefunc.sql
+\cd :contribdir
+\i pg_trgm.sql
+\i tsearch2.sql
+\i tablefunc.sql
+
+\cd :lsmbdir
 
 \i sql/Pg-database.sql
 \i sql/modules/Setting.sql
@@ -30,6 +34,17 @@ ALTER TABLE lsmb12.customer ADD COLUMN entity_id int;
 ALTER TABLE lsmb12.customer ADD COLUMN company_id int;
 ALTER TABLE lsmb12.customer ADD COLUMN credit_id int;
 
+
+--Accounts
+INSERT INTO account_heading(id, accno, description)
+SELECT id, accno, description
+  FROM lsmb12.chart WHERE charttype = 'H';
+
+SELECT account_save(id, accno, description, category, gifi_accno, NULL, contra, 
+                    CASE WHEN link like '%tax%' THEN true ELSE false END, 
+                    string_to_array(link,':'))
+  FROM lsmb12.chart 
+ WHERE charttype = 'A';
 --Entity
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
@@ -346,16 +361,6 @@ WHERE id IN
   WHERE eca.entity_id = entity_id
        aND l.country_id > -1);
 
-INSERT INTO account_heading(id, accno, description)
-SELECT id, accno, description
-  FROM lsmb12.chart WHERE charttype = 'H';
-
-SELECT account_save(id, accno, description, category, gifi_accno, NULL, contra, 
-                    CASE WHEN link like '%tax%' THEN true ELSE false END, 
-                    string_to_array(link,':'))
-  FROM chart 
- WHERE charttype = 'A';
-
 INSERT INTO pricegroup
 SELECT * FROM lsmb12.pricegroup;
 
@@ -414,7 +419,7 @@ INSERT INTO gl(id, reference, description, transdate, person_id, notes,
 
 ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 
-ALTER TABLE ar DISABLE TRIGGER ap_audit_trail;
+ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
 INSERT INTO ar(id, invnumber, transdate, taxincluded, amount, 
             netamount, paid, datepaid, duedate, invoice, shippingpoint, terms,
@@ -429,7 +434,7 @@ INSERT INTO ar(id, invnumber, transdate, taxincluded, amount,
        JOIN lsmb12.customer c ON c.id = ar.customer_id
   LEFT JOIN lsmb12.employee em ON em.id = ar.employee_id;
 
-ALTER TABLE ar ENABLE TRIGGER ap_audit_trail;
+ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
 ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
@@ -446,7 +451,7 @@ INSERT INTO ap(id, invnumber, transdate, taxincluded, amount,
        JOIN lsmb12.vendor c ON c.id = ap.vendor_id
   LEFT JOIN lsmb12.employee em ON em.id = ap.employee_id;
 
-ALTER TABLE ar ENABLE TRIGGER ap_audit_trail;
+ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, cleared,
             fx_transaction, project_id, memo, invoice_id, entry_id)
@@ -533,8 +538,6 @@ INSERT INTO status SELECT * FROM lsmb12.status;
 
 INSERT INTO department SELECT * FROM lsmb12.department;
 
-INSERT INTO dpt_trans SELECT * FROM lsmb12.dpt_trans;
-
 INSERT INTO business SELECT * FROM lsmb12.business;
 
 INSERT INTO sic SELECT * FROM lsmb12.sic;
@@ -597,7 +600,7 @@ INSERT INTO  custom_table_catalog  SELECT * FROM lsmb12. custom_table_catalog;
 
 INSERT INTO  custom_field_catalog  SELECT * FROM lsmb12. custom_field_catalog;
 
-SELECT setval('id', max(id))) FROM transactions;
+SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
  SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
@@ -613,7 +616,6 @@ SELECT setval('id', max(id))) FROM transactions;
  SELECT setval('asset_dep_method_id_seq', max(id)) FROM asset_dep_method;
  SELECT setval('asset_class_id_seq', max(id)) FROM asset_class;
  SELECT setval('entity_class_id_seq', max(id)) FROM entity_class;
- SELECT setval('session_session_id_seq', max(id)) FROM session_session;
  SELECT setval('asset_item_id_seq', max(id)) FROM asset_item;
  SELECT setval('asset_disposal_method_id_seq', max(id)) FROM asset_disposal_method;
  SELECT setval('users_id_seq', max(id)) FROM users;
