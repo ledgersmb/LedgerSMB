@@ -1,9 +1,19 @@
 --Setup
 
+\set contribdir '/usr/share/pgsql/contrib'
 \set default_country '''us'''
 \set ar '''1200'''
 \set ap '''2100'''
 
+
+ALTER SCHEMA public RENAME TO lsmb12;
+CREATE SCHEMA public;
+
+\i :contribdir/pg_trgm.sql
+\i :contribdir/tsearch2.sql
+\i :contribdir/tablefunc.sql
+
+\i sql/Pg-database.sql
 \i sql/modules/Setting.sql
 \i sql/modules/Location.sql
 \i sql/modules/Account.sql
