@@ -232,6 +232,29 @@ sub get_history {
 
 This method saves the credit account for the company.
 
+Expected inputs:
+credit_id (int): (Optional) Id for the account
+entity_class (int):  Class of the account, required (1 = vendor, 2 = customer)
+entity_id (int):  ID of entity to attach to. 
+description (text):  Description of account
+discount (numeric):  Early payment discount 
+taxincluded (bool):  Whether prices include tax. 
+creditlimit (numeric):  Credit limit
+discount_terms (int):  How many days can elapse before the discount lapses too.
+terms (int):  How many days can lapse before the invoice is overdue. 
+meta_number (varchar):  Account string identifier for the account.
+business_id (int):  ID for business type.
+language (varchar): Language code for invoices.
+pricegroup_id (int): Price group
+curr (char):  Currency  identifier, three characters long.
+startdate (date):  Date of the start of the relationship. 
+enddate (date):  Date of the end of the relationship.
+threshold (NUMERIC):  How much must be owed before the invoices can be paid.
+ar_ap_account_id (int):  ID of ar/ap account.  REQUIRED
+cash_account_id (int):  ID of cash account (Optional)
+pay_to_name (text):  Name to pay to or receive from.
+taxform_id (int);  ID of tax form
+
 =back
 
 =cut
@@ -266,6 +289,18 @@ sub save_credit {
 
 This method saves an address for a company.
 
+Requires the following variables on the object:
+credit_id
+location_id 
+location_class (1 = billing, 2 = shipping, 3 = sales)
+line_one
+line_two
+city
+state (can hold province info)  
+mail_code (zip or postal code) 
+country_code (ID of country)
+
+
 =back
 
 =cut
@@ -292,6 +327,8 @@ sub save_location {
 
 This method returns the current credit id from the screen.
 
+Requires entity_id, meta_number, and entity_class be set.
+
 =back
 
 =cut
@@ -312,8 +349,8 @@ This retrieves various information vor building the user interface.  Among other
 things, it sets the following properties:
 $self->{ar_ap_acc_list} = qw(list of ar or ap accounts)
 $self->{cash_acc_list} = qw(list of cash accounts)
-
-=back
+$self->{entity_classes} = qw(list of entity classes)
+$self->{all_taxes}  =qw(list of taxes)
 
 =cut
 
@@ -364,6 +401,21 @@ sub get_metadata {
     $self->{default_country} = $country_setting->{value};
 }
 
+=item save_contact
+
+Saves a contact.  Requires credit_id, contact_class, description, and contact to 
+be set.
+
+Requires the following be set:
+credit_id or entity_id
+contact_class
+description
+contact
+old_contact
+old_contact_class
+
+=cut
+
 sub save_contact {
     my ($self) = @_;
     if ($self->{credit_id}){
@@ -374,11 +426,31 @@ sub save_contact {
     $self->{dbh}->commit;
 }
 
+=item save_bank_account
+
+Saves a bank account.  Requires the following be set:
+entity_id 
+bic (bank id)
+iban (account number)
+bank_account_id (id for record, optional)
+
+=cut
+
 sub save_bank_account {
     my $self = shift @_;
     $self->exec_method(funcname => 'entity__save_bank_account');
     $self->{dbh}->commit;
 }
+
+=item save_notes
+
+Saves notes. The following must be set:
+credit_id:  credit account to annotate.  Must be set to annotate credit account
+entity_id:  entitity to annotate.
+note:  Note contents
+subject:  Note subject
+
+=cut
 
 sub save_notes {
     my $self = shift @_;
@@ -390,12 +462,56 @@ sub save_notes {
     $self->{dbh}->commit;
 }
 
+=item search
+
+Searches for matching company records.  Populates $self->{search_results} with 
+records found.  
+
+Search criteria and inputs:
+account_class:  required (1 for vendor, 2 for customer, etc)
+contact
+contact_info
+meta_number
+address
+city
+state
+mail_code
+country
+date_from
+date_to
+business_id
+legal_name
+control_code
+
+Account class may not be undef.  meta_number is an exact match, as is 
+control_code.  All others specify ranges or partial matches.
+
+=cut
+
 sub search {
     my ($self) = @_;
     @{$self->{search_results}} = 
 	$self->exec_method(funcname => 'company__search');
     return @{$self->{search_results}};
 }
+
+=item get_billing_info
+
+Requires that the id field is set.  Sets the following:
+
+legal_name
+meta_number
+control_code
+tax_id
+street1
+street2
+street3
+city
+state
+mail_code
+country 
+
+=cut
 
 sub get_billing_info {
     my $self = shift @_;
@@ -404,13 +520,19 @@ sub get_billing_info {
     $self->merge($ref);
 }
 
-sub account {
-    
-    my ($self, $account) = @_;
-    
-    $self->set_entity_class();
-    ($account) = $self->exec_method(funcname => 'company__get_account');
-}
+
+
+# I don't believe account() is used.  At any rate the stored proc called 
+# doesn't exist and therefore it can't work.  Therefore deleting the account() 
+# function. Not the same as the accounts() function which is used. --CT 
+
+=item accounts
+
+Returns all accounts, and sets these to $self->{accounts}.
+
+id and entity_class must be set.
+
+=cut
 
 sub accounts {
     
@@ -419,6 +541,12 @@ sub accounts {
     $self->set_entity_class();
     @{$self->{accounts}} = $self->exec_method(funcname => 'company__get_all_accounts');
 }
+
+=item address($id)
+
+Returns the location if it is specified by the $id argument.
+
+=cut 
 
 sub address {
     
@@ -431,6 +559,19 @@ sub address {
     }
 }
 
+=item get
+
+Retrieves a company record and all info.
+
+taxform_list is set to a list of tax forms for the entity's country
+credit_list is set to a list of credit accounts
+locations is set to a list of locations
+contacts to a list of contacts
+notes to a list of notes
+bank_account to a list of bank accounts
+
+=cut
+
 sub get {
     my $self = shift @_;
 
@@ -439,11 +580,6 @@ sub get {
     if($self->{entity_id})
     {
         @{$self->{taxform_list}} = $self->exec_method(funcname => 'list_taxforms');
-
-        #foreach my $ref1(@{$self->{taxform_list}})
-        #{
-            #print STDERR qq| ______ return value $ref1->{id} and $ref1->{country_id},$ref1->{form_name} ________|;	
-        #}
     }
 
     my ($ref) = $self->exec_method(funcname => 'company_retrieve');
@@ -521,5 +657,15 @@ sub get {
     @{$self->{bank_account}} = $self->exec_method(
 		funcname => 'company__list_bank_account');
 };
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+=cut
 
 1;
