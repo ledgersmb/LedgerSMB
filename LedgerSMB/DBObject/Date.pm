@@ -94,5 +94,15 @@ sub build_filter_by_period {
 		value => '4',
 	      });
 }
+
+=head1 COPYRIGHT
+
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+=cut
+
+
 1;
  
