@@ -1,3 +1,9 @@
+
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
 CREATE OR REPLACE FUNCTION date_get_all_years() returns setof INT AS
 $$
 DECLARE next_record int;
@@ -22,7 +28,9 @@ END LOOP;
 END;
 $$ language plpgsql;                                                                  
 COMMENT ON FUNCTION date_get_all_years() IS
-$$ This function return each year inside transdate in transactions. $$;
+$$ This function return each year inside transdate in transactions. 
+Currently it uses a sparse index scan because the number of rows returned is 
+very small and the table can be very large.$$;
 
 CREATE OR REPLACE FUNCTION is_leapyear(in_date date) returns bool as
 $$
