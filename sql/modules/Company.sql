@@ -1,3 +1,9 @@
+
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
 CREATE TYPE company_search_result AS (
 	entity_id int,
 	entity_control_code text,
@@ -141,6 +147,18 @@ LEFT JOIN person ep ON (ep.entity_id = ee.id)
  ORDER BY eca.meta_number;
 $$ LANGUAGE SQL;
 
+COMMENT ON FUNCTION eca_history
+(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+ in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
+ in_country_id int, in_from_date date, in_to_date date, in_type char(1),
+ in_start_from date, in_start_to date, in_account_class int,
+ in_inc_open bool, in_inc_closed bool) IS
+$$This produces a history detail report, i.e. a list of all products purchased by
+a customer over a specific date range.  
+
+meta_number is an exact match, as are in_open and inc_closed.  All other fields
+allow for partial matches.  NULL matches all values.$$;
+
 
 CREATE OR REPLACE FUNCTION eca_history_summary
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
@@ -245,6 +263,17 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION eca_history_summary
+(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+ in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
+ in_country_id int, in_from_date date, in_to_date date, in_type char(1),
+ in_start_from date, in_start_to date, in_account_class int,
+ in_inc_open bool, in_inc_closed bool) IS
+$$Creates a summary account (no quantities, just parts group by invoice).
+
+meta_number must match exactly or be NULL.  inc_open and inc_closed are exact
+matches too.  All other values specify ranges or may match partially.$$;
+
 CREATE OR REPLACE FUNCTION eca__get_taxes(in_credit_id int)
 returns setof customertax AS
 $$
@@ -252,6 +281,9 @@ select * from customertax where customer_id = $1
 union
 select * from vendortax where vendor_id = $1;
 $$ language sql;
+
+COMMENT ON FUNCTION eca__get_taxes(in_credit_id int) IS
+$$ Returns a set of taxable account id's.$$; --'
 
 CREATE OR REPLACE FUNCTION eca__set_taxes(in_credit_id int, in_tax_ids int[])
 RETURNS bool AS
@@ -284,7 +316,8 @@ end;
 $$ language plpgsql;
 
 comment on function eca__set_taxes(in_credit_id int, in_tax_ids int[]) is
-$$
+$$Sets the tax values for the customer or vendor.
+
 The entity credit account must exist before calling this function, and must
 have a type of either 1 or 2.
 $$;
@@ -303,6 +336,11 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION entity__save_notes
+(in_entity_id int, in_note text, in_subject text) IS
+$$ Saves an entity-level note.  Such a note is valid for all credit accounts 
+attached to that entity.  Returns the id of the note.  $$;
+
 CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text, in_subject text)
 RETURNS INT AS
 $$
@@ -316,6 +354,12 @@ BEGIN
 	RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION eca__save_notes
+(in_entity_id int, in_note text, in_subject text) IS
+$$ Saves an entity credit account-level note.  Such a note is valid for only one
+credit account. Returns the id of the note.  $$;
+
 
 CREATE OR REPLACE FUNCTION entity_credit_get_id_by_meta_number
 (in_meta_number text, in_account_class int) 
@@ -332,11 +376,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+COMMENT ON FUNCTION entity_credit_get_id_by_meta_number
+(in_meta_number text, in_account_class int) is
+$$ Returns the credit id from the meta_number and entity_class.$$;
+
 CREATE OR REPLACE FUNCTION entity_credit__get(in_id int)
 RETURNS entity_credit_account AS
 $$
 SELECT * FROM entity_credit_account WHERE id = $1;
 $$ language sql;
+
+COMMENT ON FUNCTION entity_credit__get(in_id int) IS
+$$ Returns the entity credit account info.$$;
 
 CREATE OR REPLACE FUNCTION entity_list_contact_class() 
 RETURNS SETOF contact_class AS
@@ -350,6 +401,9 @@ BEGIN
 	END LOOP;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION entity_list_contact_class() IS
+$$ Returns a list of contact classes ordered by ID.$$;
 
 
 CREATE TYPE entity_credit_search_return AS (
@@ -418,6 +472,12 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION entity_credit_get_id
+(in_entity_id int, in_entity_class int, in_meta_number text) IS
+$$ Returns an entity credit id, based on entity_id, entity_class, 
+and meta_number.  This is the preferred way to locate an account if all three of 
+these are known$$;
+
 CREATE OR REPLACE FUNCTION entity__list_credit
 (in_entity_id int, in_entity_class int) 
 RETURNS SETOF entity_credit_retrieve AS
@@ -450,7 +510,9 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-
+COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int) 
+IS $$ Returns a list of entity credit account entries for the entity and of the
+entity class.$$;
 
 CREATE OR REPLACE FUNCTION company_retrieve (in_entity_id int) RETURNS company AS
 $$
@@ -460,6 +522,9 @@ BEGIN
 	RETURN t_company;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION company_retrieve (in_entity_id int) IS
+$$ Returns all attributes for the company attached to the entity.$$;
 
 create or replace function save_taxform 
 (in_country_code int, in_taxform_name text)
@@ -472,6 +537,9 @@ BEGIN
 	RETURN true;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON function save_taxform (in_country_code int, in_taxform_name text) IS
+$$ Saves tax form information. Returns true or raises exception.$$;
 
 CREATE OR REPLACE FUNCTION list_taxforms (in_entity_id int) RETURNS SETOF country_tax_form AS
 $$
@@ -491,7 +559,8 @@ BEGIN
 END;
 $$ language plpgsql;
 
-
+COMMENT ON FUNCTION list_taxforms (in_entity_id int) IS
+$$Returns a list of tax forms for the entity's country.$$; --'
 
 
 CREATE TYPE company_billing_info AS (
@@ -529,6 +598,11 @@ BEGIN
 	RETURN out_var;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION company_get_billing_info (in_id int) IS
+$$ Returns billing information (billing name and address) for a given credit 
+account.$$;
+
 
 CREATE OR REPLACE FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
@@ -576,6 +650,13 @@ BEGIN
 	RETURN t_entity_id;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON  FUNCTION company_save (
+    in_id int, in_control_code text, in_entity_class int,
+    in_name text, in_tax_id TEXT,
+    in_entity_id int, in_sic_code text,in_country_id_t int
+ ) is
+$$ Saves a company.  Returns the id number of the record stored.$$;
 
 CREATE OR REPLACE FUNCTION entity_credit_save (
     in_credit_id int, in_entity_class int,
@@ -686,6 +767,23 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     
 $$ language 'plpgsql';
 
+COMMENT ON  FUNCTION entity_credit_save (
+    in_credit_id int, in_entity_class int,
+    in_entity_id int, in_description text,
+    in_discount numeric, in_taxincluded bool, in_creditlimit numeric,
+    in_discount_terms int,
+    in_terms int, in_meta_number varchar(32), in_business_id int,
+    in_language varchar(6), in_pricegroup_id int,
+    in_curr char, in_startdate date, in_enddate date,
+    in_threshold NUMERIC,
+    in_ar_ap_account_id int,
+    in_cash_account_id int,
+    in_pay_to_name text,
+    in_taxform_id int
+
+) IS
+$$ Saves an entity credit account.  Returns the id of the record saved.  $$;
+
 CREATE OR REPLACE FUNCTION company__list_locations(in_entity_id int)
 RETURNS SETOF location_result AS
 $$
@@ -705,6 +803,9 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION company__list_locations(in_entity_id int) IS
+$$ Lists all locations for an entity.$$;
 
 CREATE TYPE contact_list AS (
 	class text,
@@ -730,6 +831,9 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION company__list_contacts(in_entity_id int) IS
+$$ Lists all contact info for the entity.$$;
+
 CREATE OR REPLACE FUNCTION company__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
 $$
@@ -742,6 +846,9 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION company__list_bank_account(in_entity_id int) IS
+$$ Lists all bank accounts for the entity.$$;
 
 CREATE OR REPLACE FUNCTION eca__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text,
@@ -772,6 +879,11 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON  FUNCTION eca__save_bank_account
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text,
+in_bank_account_id int) IS
+$$ Saves bank account to the credit account.$$;
+
 CREATE OR REPLACE FUNCTION entity__save_bank_account
 (in_entity_id int, in_bic text, in_iban text, in_bank_account_id int)
 RETURNS int AS
@@ -795,6 +907,10 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION entity__save_bank_account
+(in_entity_id int, in_bic text, in_iban text, in_bank_account_id int) IS
+$$Saves a bank account to the entity.$$;
+
 CREATE OR REPLACE FUNCTION company__delete_contact
 (in_company_id int, in_contact_class_id int, in_contact text)
 returns bool as $$
@@ -808,6 +924,11 @@ RETURN FOUND;
 END;
 
 $$ language plpgsql;
+
+COMMENT ON FUNCTION company__delete_contact
+(in_company_id int, in_contact_class_id int, in_contact text) IS
+$$ Returns true if at least one record was deleted.  False if no records were 
+affected.$$;
 
 CREATE OR REPLACE FUNCTION eca__delete_contact
 (in_credit_id int, in_contact_class_id int, in_contact text)
@@ -823,6 +944,11 @@ END;
 
 $$ language plpgsql;
 
+COMMENT ON FUNCTION eca__delete_contact
+(in_credit_id int, in_contact_class_id int, in_contact text) IS
+$$ Returns true if at least one record was deleted.  False if no records were
+affected.$$;
+
 CREATE OR REPLACE FUNCTION company__save_contact
 (in_entity_id int, in_contact_class int, in_description text, in_contact text)
 RETURNS INT AS
@@ -837,6 +963,10 @@ BEGIN
 	RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION company__save_contact
+(in_entity_id int, in_contact_class int, in_description text, in_contact text) IS
+$$ Saves company contact information.  The return value is meaningless. $$;
 
 CREATE TYPE entity_note_list AS (
 	id int,
@@ -859,6 +989,9 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION company__list_notes(in_entity_id int) IS
+$$ Returns a set of notes (including content) attached to the entity.$$;
 		
 CREATE OR REPLACE FUNCTION eca__list_notes(in_credit_id int) 
 RETURNS SETOF note AS 
@@ -866,6 +999,8 @@ $$
 DECLARE out_row record;
 	t_entity_id int;
 BEGIN
+        -- ALERT: security definer function.  Be extra careful about EXECUTE
+        -- in here. --CT
 	SELECT entity_id INTO t_entity_id
 	FROM entity_credit_account
 	WHERE id = in_credit_id;
@@ -881,6 +1016,9 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+COMMENT ON FUNCTION eca__list_notes(in_credit_id int) IS
+$$Returns a list of notes attached to the entity credit account.$$;
 
 REVOKE EXECUTE ON FUNCTION eca__list_notes(INT) FROM public;
 
@@ -904,6 +1042,14 @@ CREATE OR REPLACE FUNCTION company__location_save (
     END;
 
 $$ language 'plpgsql';
+
+COMMENT ON FUNCTION company__location_save (
+    in_entity_id int, in_location_id int,
+    in_location_class int, in_line_one text, in_line_two text,
+    in_city TEXT, in_state TEXT, in_mail_code text, in_country_code int,
+    in_created date
+) IS
+$$ Saves a location to a company.  Returns the location id.$$;
 
 create or replace function _entity_location_save(
     in_entity_id int, in_location_id int,
@@ -938,6 +1084,15 @@ create or replace function _entity_location_save(
 
 $$ language 'plpgsql';
 
+
+COMMENT ON FUNCTION _entity_location_save(
+    in_entity_id int, in_location_id int,
+    in_location_class int, in_line_one text, in_line_two text,
+    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text,
+    in_country_code int
+) IS
+$$ Private method for storing locations to an entity.  Do not call directly.
+Returns the location id that was inserted or updated.$$;
 
 create or replace function eca__location_save(
     in_credit_id int, in_location_id int,
@@ -993,6 +1148,14 @@ create or replace function eca__location_save(
 
 $$ language 'plpgsql';
 
+COMMENT ON function eca__location_save(
+    in_credit_id int, in_location_id int,
+    in_location_class int, in_line_one text, in_line_two text,
+    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text,
+    in_country_code int, in_old_location_class int
+) IS
+$$ Saves a location to an entity credit account. Returns id of saved record.$$;
+
 CREATE OR REPLACE FUNCTION eca__delete_location
 (in_credit_id int, in_location_id int, in_location_class int)
 RETURNS BOOL AS
@@ -1007,6 +1170,11 @@ RETURN FOUND;
 
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION eca__delete_location
+(in_credit_id int, in_location_id int, in_location_class int) IS
+$$ Deletes the record identified.  Returns true if successful, false if no record
+found.$$;
 
 CREATE OR REPLACE FUNCTION company__delete_location
 (in_company_id int, in_location_id int, in_location_class int)
@@ -1023,31 +1191,10 @@ RETURN FOUND;
 END;
 $$ language plpgsql;
 
-
-CREATE OR REPLACE FUNCTION eca__get_location(
-    in_credit_id int,
-    in_class text
-) RETURNS location_result AS
-$$
-        SELECT l.id,
-               l.line_one,
-               l.line_two,
-               l.line_three,
-               l.city,
-               l.state,
-               l.mail_code,
-               c.id,
-               c.name,
-               lc.id,
-               lc.class
-          FROM location l
-          JOIN eca_to_location ctl ON (ctl.location_id = l.id)
-          JOIN location_class lc ON (ctl.location_class = lc.id)
-          JOIN country c ON (c.id = l.country_id)
-         WHERE ctl.credit_id = $1
-           AND lc.class = $2;
-$$ LANGUAGE SQL;
-
+COMMENT ON FUNCTION company__delete_location
+(in_company_id int, in_location_id int, in_location_class int) IS
+$$ Deletes the record identified.  Returns true if successful, false if no record
+found.$$;
 
 CREATE OR REPLACE FUNCTION eca__list_locations(in_credit_id int)
 RETURNS SETOF location_result AS
@@ -1069,6 +1216,9 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION eca__list_locations(in_credit_id int) IS
+$$ Returns a list of locations attached to the credit account.$$;
+
 CREATE OR REPLACE FUNCTION eca__list_contacts(in_credit_id int) 
 RETURNS SETOF contact_list AS $$
 DECLARE out_row contact_list;
@@ -1083,6 +1233,9 @@ BEGIN
 	END LOOP;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION eca__list_contacts(in_credit_id int) IS
+$$ Returns a list of contact info attached to the entity credit account.$$;
 
 CREATE OR REPLACE FUNCTION eca__save_contact
 (in_credit_id int, in_contact_class int, in_description text, in_contact text,
@@ -1117,6 +1270,11 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION eca__save_contact
+(in_credit_id int, in_contact_class int, in_description text, in_contact text,
+in_old_contact text, in_old_contact_class int) IS
+$$ Saves the contact record at the entity credit account level.  Returns 1.$$;
+
 CREATE OR REPLACE FUNCTION company__get_all_accounts (
     in_entity_id int,
     in_entity_class int
@@ -1128,3 +1286,9 @@ CREATE OR REPLACE FUNCTION company__get_all_accounts (
        AND entity_class = $2;
     
 $body$ language SQL;
+
+COMMENT ON FUNCTION company__get_all_accounts (
+    in_entity_id int,
+    in_entity_class int
+) IS 
+$$ Returns a list of all entity credit accounts attached to that entity.$$;
