@@ -79,16 +79,25 @@ sub preprocess {
 			$vars = $rawvars;
 		}
 		#XXX Fix escaping
-		if (defined $vars){
-			$vars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
-			$vars =~ s/"(.*)"/``$1''/gs;
-		}
+		$vars = escape($vars);
 	} else {
 		for ( keys %{$rawvars} ) {
 			$vars->{$_} = preprocess($rawvars->{$_});
 		}
 	}
 	return $vars;
+}
+
+
+# Breaking this off to be used separately.
+sub escape {
+    my ($vars) = shift @_;
+
+    if (defined $vars){
+            $vars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
+            $vars =~ s/"(.*)"/``$1''/gs;
+    }
+    return $vars;
 }
 
 sub process {

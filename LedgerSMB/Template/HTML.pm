@@ -77,8 +77,16 @@ sub preprocess {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }
     }
-    
+     
     return $vars;
+}
+
+sub escape {
+    my $vars = shift @_;
+    if (defined $vars){
+        return escapeHTML($vars);
+    }
+    return undef;
 }
 
 sub process {

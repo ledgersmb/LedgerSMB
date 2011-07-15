@@ -256,7 +256,7 @@ sub render {
 	}
 
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
-		$cleanvars->{text} = sub { return $self->{locale}->text(@_)};
+		$cleanvars->{text} = sub { return $self->escape($self->{locale}->text(@_))};
 	} 
 	else {
             $cleanvars->{text} = sub { return shift @_ };
@@ -283,6 +283,12 @@ sub render {
 	}
 	return $post;
 }
+
+sub escape {
+    my ($self, $vars) = @_;
+    my $format = "LedgerSMB::Template::$self->{format}";
+    return $format->can('escape')->($vars) || $vars;
+} 
 
 sub output {
 	my $self = shift;
