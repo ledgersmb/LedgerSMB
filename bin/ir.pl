@@ -48,6 +48,24 @@ require "bin/arap.pl";
 1;
 
 # end of main
+sub copy_to_new{
+    delete $form->{id};
+    delete $form->{invnumber};
+    update();
+}
+
+sub new_screen {
+    use LedgerSMB::Form;
+    my @reqprops = qw(ARAP vc dbh stylesheet type);
+    $oldform = $form;
+    $form = {};
+    bless $form, Form;
+    for (@reqprops){
+        $form->{$_} = $oldform->{$_};
+    }
+    &add();
+}
+
 
 sub add {
     if ($form->{type} eq 'debit_invoice'){
@@ -794,6 +812,10 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
         %button = (
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
+            'copy_to_new' => # Shares an index with copy because one or the other
+                             # must be deleted.  One can only either copy or 
+                             # update, not both. --CT
+              { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
             'post_as_new' =>
               { ndx => 5, key => 'N', value => $locale->text('Post as new') },
@@ -810,12 +832,17 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
               { ndx => 9, key=> 'O', value => $locale->text('On Hold') },
 	    'save_info'  => 
                 { ndx => 10, key => 'I', value => $locale->text('Save Info') },
+            'new_screen' => # Create a blank ar/ap invoice.
+             { ndx => 11, key=> 'N', value => $locale->text('New') }
         );
 
         if ( $form->{id} ) {
 
             if ( $form->{locked} ) {
                 for ( "post", "delete", 'on_hold' ) { delete $button{$_} }
+            }
+            for ( 'post_as_new', 'print_and_post_as_new', "update") {
+                delete $button{$_};
             }
 
         }

@@ -55,6 +55,26 @@ require "bin/io.pl";
 # end of main
 sub on_update{}
 
+sub copy_to_new{
+    delete $form->{id};
+    delete $form->{invnumber};
+    update();
+}
+
+sub new_screen {
+    use LedgerSMB::Form;
+    my @reqprops = qw(ARAP vc dbh stylesheet type);
+    $oldform = $form;
+    $form = {};
+    bless $form, Form;
+    for (@reqprops){
+        $form->{$_} = $oldform->{$_};
+    }
+    &add();
+}
+
+
+
 sub add {
     if ($form->{type} eq 'credit_invoice'){
         $form->{title} = $locale->text('Add Credit Invoice');
@@ -887,6 +907,10 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
         %button = (
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
+            'copy_to_new' => # Shares an index with copy because one or the other
+                             # must be deleted.  One can only either copy or 
+                             # update, not both. --CT
+              { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
             'print' =>
               { ndx => 2, key => 'P', value => $locale->text('Print') },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
@@ -918,6 +942,8 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
                 { ndx => 12, key => 'V', value => $locale->text('Void') },
              'save_info'  => 
                 { ndx => 13, key => 'I', value => $locale->text('Save Info') },
+            'new_screen' => # Create a blank ar/ap invoice.
+             { ndx => 14, key=> 'N', value => $locale->text('New') }
 
         );
 
@@ -937,6 +963,9 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
                     delete $button{$_};
                 }
             }
+            for ("update", "post", "post_as_new", "print_and_post_as_new"){
+                delete $button{$_};
+            } 
 
         }
         else {
