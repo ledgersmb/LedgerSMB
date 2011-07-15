@@ -10,13 +10,16 @@
             <?lsmb address ?>
             </h4>
           </td>
-
-          <th><img src=<?lsmb images ?>/logo.png border=0 height=58></th>
+          <!-- Commenting out the image tag for now.  In general, folks can
+               customize this to their servers, but if the server is behind a 
+               firewall, then this won't work.  Recommend that if people do this,
+               they hardwire in a link to a publically accessible image. - CT -->
+          <th><!-- <img src=<?lsmb images ?>/logo.png border=0 height=58> --></th>
 
           <td align=right>
             <h4>
-            Tel: <?lsmb tel ?><br>
-            Fax: <?lsmb fax ?>
+            <?lsmb text('Tel: [_1]', tel) ?><br>
+            <?lsmb text('Fax: [_1]', fax) ?>
             </h4>
           </td>
         </tr>

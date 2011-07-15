@@ -23,13 +23,13 @@
       <th id="top_bar_header" colspan="2" width="30%" align="left">
 		<h5>
 		LOGO AREA
-		<br/>Adress: <?lsmb company.address ?>
-		<br/>Tel:    <?lsmb company.telephone ?>
+		<br/><?lsmb text('Address: [_1]', company.address) ?>
+		<br/><?lsmb text('Tel: [_1]', company.telephone) ?>
 		</h5>
       </th>
       <th align="left">
-     		 <h1>
-     		 PAYMENT ORDER NUMBER <?lsmb header.payment_reference ?>
+     		 <h1 style="text-transform:uppercase">
+     		 <?lsmb text('Payment Order Number [_1]', header.payment_reference) ?>
      		 </h1>
       </th>
    </tr>
@@ -63,7 +63,7 @@
            </tr>
       <?lsmb END -?>
 	  <tr valign="top">
-          	<th align="right" colspan="4"> &nbsp; TOTAL</th>
+          	<th align="right" colspan="4"> &nbsp; <?lsmb text('TOTAL' ?></th>
           	<td align="center"> <?lsmb header.amount ?>     </td>
           </tr>
  </table>
@@ -78,13 +78,13 @@
        		<font  color=000000><?lsmb text('Date') ?>: <?lsmb header.payment_date ?></font>
        </th>
        <th rowspan="5" width="30%" align="left">
-       <font size=3>
-              SIGNATURE 
+       <font size=3 style="text-transform:uppercase">
+              <?lsmb text('Signature') ?>
               <br></br>
               <br></br>
               <br></br>
               <br>___________________________________________</br>
-                  IDENTIFICATION.
+                  <?lsmb text('Identification') ?>
 
        </font>
        </th>
