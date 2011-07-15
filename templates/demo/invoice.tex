@@ -87,7 +87,7 @@ Fax: <?lsmb customerfax ?>
 <?lsmb email ?>
 }
 \parbox[t]{.5\textwidth}{
-\textbf{Ship To}
+\textbf{<?lsmb text('Ship To') ?>}
 \vspace{0.3cm}
 
 <?lsmb shiptoname ?>
@@ -135,7 +135,7 @@ Fax: <?lsmb shiptofax ?>
       & \textbf{<?lsmb text('Due') ?>} & \textbf{<?lsmb text('Order #') ?>}
       & \textbf{<?lsmb text('Salesperson') ?>} 
       & \textbf{<?lsmb text('Shipping Point') ?>} 
-      & \textbf{<?lsmb text('Ship via'}) ?> \\ [0.5em]
+      & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
   \hline
   <?lsmb invnumber ?> & <?lsmb invdate ?> & <?lsmb duedate ?> & <?lsmb ordnumber ?> & <?lsmb employee ?>
   & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\

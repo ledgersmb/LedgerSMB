@@ -1749,7 +1749,6 @@ sub print_form {
         $output_options{to} = $form->{email};
         $output_options{cc} = $form->{cc};
         $output_options{bcc} = $form->{bcc};
-	##SC: XXX the from address needs fixing
         $output_options{from} = $myconfig{email};
         $output_options{notify} = 1 if $form->{read_receipt};
 	$output_options{message} = $form->{message};
@@ -1835,6 +1834,7 @@ sub print_form {
 
     my $template = LedgerSMB::Template->new(
         user => \%myconfig, 
+        locale => $locale,
         template => $form->{'formname'},
         format => uc $form->{format},
         no_escape => true,
