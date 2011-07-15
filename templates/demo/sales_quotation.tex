@@ -17,7 +17,7 @@
   \parbox{\textwidth}{
   \tiny
   \rule[1.5em]{\textwidth}{0.5pt}
-Special order items are subject to a 10\% cancellation fee.
+<?lsmb text('Special order items are subject to a 10\% cancellation fee.') ?>
   }
 }
 
@@ -72,11 +72,11 @@ Special order items are subject to a 10\% cancellation fee.
 <?lsmb END ?>
 
 <?lsmb IF customerphone ?>
-Tel: <?lsmb customerphone ?>
+<?lsmb text('Tel: [_1]', customerphone) ?> ?>
 <?lsmb END ?>
 
 <?lsmb IF customerfax ?>
-Fax: <?lsmb customerfax ?>
+<?lsmb text('Fax: [_1]', customerfax) ?>
 <?lsmb END ?>
 
 <?lsmb email ?>
@@ -84,13 +84,16 @@ Fax: <?lsmb customerfax ?>
 
 \vspace{1cm}
 
-\textbf{Q U O T A T I O N}
+\textbf{<?lsmb text('Quotation') ?>}
 \hfill
 
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
-  \textbf{Quotation \#} & \textbf{Date} & \textbf{Valid until} & \textbf{Contact} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5ex]
+  \textbf{<?lsmb text('Quotation #') ?>} & \textbf{<?lsmb text('Date') ?>} 
+  & \textbf{<?lsmb text('Valid until') ?>} & \textbf{<?lsmb text('Contact') ?>} 
+  & \textbf{<?lsmb text('Shipping Point') ?>} 
+  & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5ex]
   \hline
   <?lsmb quonumber ?> & <?lsmb quodate ?> & <?lsmb reqdate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
@@ -99,8 +102,10 @@ Fax: <?lsmb customerfax ?>
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{@{}lXrlrrr@{}}
-  \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
-    \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\
+  \textbf{<?lsmb text('Number') ?>} & \textbf{<?lsmb text('Description') ?>} 
+   & \textbf{<?lsmb text('Qty') ?>} & \textbf{<?lsmb text('Unit') ?>} 
+   & \textbf{<?lsmb text('Price') ?>} & \textbf{<?lsmb text('Disc %') ?>} 
+   & \textbf{<?lsmb text('Amount') ?>} \\
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb number.${lc} ?> &
@@ -133,10 +138,10 @@ Fax: <?lsmb customerfax ?>
 \vspace{0.3cm}
 
 \hfill
-All prices in \textbf{<?lsmb currency ?>}.
+<?lsmb text('All prices in [_1].', currency) ?>
 
 <?lsmb IF terms ?>
-Terms: <?lsmb terms ?> days
+<?lsmb text('Terms: [_1] days', terms) ?>
 <?lsmb END ?>
 
 \vspace{12pt}

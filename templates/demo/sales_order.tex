@@ -66,11 +66,11 @@
 <?lsmb END ?>
 
 <?lsmb IF customerphone ?>
-Tel: <?lsmb customerphone ?>
+<?lsmb text('Tel: [_1]', customerphone) ?>
 <?lsmb END ?>
 
 <?lsmb IF customerfax ?>
-Fax: <?lsmb customerfax ?>
+<?lsmb text('Fax: [_1]', customerfax) ?>
 <?lsmb END ?>
 
 <?lsmb email ?>
@@ -101,11 +101,11 @@ Fax: <?lsmb customerfax ?>
 <?lsmb END ?>
 
 <?lsmb IF shiptophone ?>
-Tel: <?lsmb shiptophone ?>
+<?lsmb text('Tel: [_1]', shiptophone) ?>
 <?lsmb END ?>
 
 <?lsmb IF shiptofax ?>
-Fax: <?lsmb shiptofax ?>
+<lsmb text('Fax: [_1] shiptofax) ?>
 <?lsmb END ?>
 
 <?lsmb shiptoemail ?>
@@ -114,13 +114,17 @@ Fax: <?lsmb shiptofax ?>
 
 \vspace{1cm}
 
-\textbf{S A L E S} \parbox{0.3cm}{\hfill} \textbf{O R D E R}
+\textbf{<?lsmb text('Sales Order') ?>}
 \hfill
 
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
-  \textbf{Order \#} & \textbf{Order Date} & \textbf{Required by} & \textbf{Salesperson} & \textbf{Shipping Point} & \textbf{Ship Via} \\ [0.5em]
+  \textbf{<?lsmb text('Order #') ?>} & \textbf{<?lsmb text('Order Date') ?>} 
+  & \textbf{<?lsmb text('Required by') ?>} 
+  & \textbf{<?lsmb text('Salesperson') ?>} 
+  & \textbf{<?lsmb text('Shipping Point') ?>} 
+  & \textbf{<?lsmb text('Ship Via') ?>} \\ [0.5em]
   \hline
   <?lsmb ordnumber ?> & <?lsmb orddate ?> & <?lsmb reqdate ?> & <?lsmb employee ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
   \hline
@@ -129,8 +133,11 @@ Fax: <?lsmb shiptofax ?>
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{@{}rlXrlrrr@{}}
-  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
-  \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\
+  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
+   & \textbf{<?lsmb text('Description') ?>} & \textbf{<?lsmb text('Qty') ?>} &
+  \textbf{<?lsmb text('Unit') ?>} & \textbf{<?lsmb text('Price') ?>} 
+  & \textbf{<?lsmb text('Disc %') ?>} 
+  & \textbf{<?lsmb text('Amount') ?>} \\
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb runningnumber.${lc} ?> &
@@ -165,10 +172,10 @@ Fax: <?lsmb shiptofax ?>
 
 <?lsmb text_amount ?> ***** <?lsmb decimal ?>/100
 \hfill
-All prices in \textbf{<?lsmb currency ?>}.
+<lsmb text('All prices in [_1].', currency) ?>
 
 <?lsmb IF terms ?>
-Terms: <?lsmb terms ?> days
+<?lsmb text('Terms: Net [_1]  days', terms) ?>
 <?lsmb END ?>
 
 \vspace{12pt}
@@ -179,7 +186,7 @@ Terms: <?lsmb terms ?> days
 
 \vfill
 
-\centerline{\textbf{Thank You for your valued business!}}
+\centerline{\textbf{<?lsmb text('Thank You for your valued business!') ?>}}
 
 \rule{\textwidth}{0.5pt}
 

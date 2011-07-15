@@ -33,11 +33,11 @@
 }
 \parbox[t]{.5\textwidth}{
 <?lsmb IF customerphone ?>
-Tel: <?lsmb customerphone ?>
+<?lsmb text('Tel: [_1]', customerphone) ?>
 <?lsmb END ?>
 
 <?lsmb IF customerfax ?>
-Fax: <?lsmb customerfax ?>
+<?lsmb text('Fax: [_1]', customerfax) ?>
 <?lsmb END ?>
 
 <?lsmb email ?>
@@ -46,14 +46,15 @@ Fax: <?lsmb customerfax ?>
 
 \vspace{1cm}
 
-\textbf{S T A T E M E N T} \hfill \textbf{<?lsmb statementdate ?>}
+\textbf{<?lsmb text('Statement') ?>} \hfill \textbf{<?lsmb statementdate ?>}
 
 \vspace{2cm}
 
 \begin{tabular*}{\textwidth}{|ll@{\extracolsep\fill}ccrrrr|}
   \hline
-  \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Due} &
-  \textbf{Current} & \textbf{30} & \textbf{60} & \textbf{90} \\
+  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>} 
+  & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Due') ?>} &
+  \textbf<?lsmb text('Current') ?>} & \textbf{30} & \textbf{60} & \textbf{90} \\
   \hline
 <?lsmb FOREACH invnumber ?>
 <?lsmb lc = loop.count - 1 ?>
@@ -68,7 +69,7 @@ Fax: <?lsmb customerfax ?>
 <?lsmb END ?>
   \multicolumn{8}{|l|}{\mbox{}} \\
   \hline
-  \textbf{Subtotal} & & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?> \\
+  \textbf{<?lsmb text('Subtotal') ?>} & & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?> \\
   \hline
 \end{tabular*}
 
@@ -76,13 +77,13 @@ Fax: <?lsmb customerfax ?>
 
 \hfill
 \begin{tabularx}{\textwidth}{Xr@{\hspace{1cm}}r@{}}
-  & \textbf{Total outstanding} & \textbf{<?lsmb total ?>}
+  & \textbf{<?lsmb text('Total outstanding') ?>} & \textbf{<?lsmb total ?>}
 \end{tabularx}
 
 \vfill
-All amounts in \textbf{<?lsmb currency ?>} funds.
+<lsmb text('All amounts in [_1] funds.', currency) ?>
 
-Please make check payable to \textbf{<?lsmb company ?>}
+<?lsmb text('Please make check payable to [_1]', company) ?>
 
 <?lsmb IF NOT loop.last ?>
 \pagebreak

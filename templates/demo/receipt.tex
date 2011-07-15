@@ -60,8 +60,8 @@
 
 \vspace{0.5cm}
 \begin{tabularx}{\textwidth}{lXrr@{}}
-\textbf{Invoice No.} & \textbf{Invoice Date}
-  & \textbf{Due} & \textbf{Applied} \\
+\textbf{<?lsmb text('Invoice No.') ?>} & \textbf{<?lsmb text('Invoice Date') ?>}
+  & \textbf{<?lsmb text('Due') ?>} & \textbf{<?lsmb text('Applied') ?>} \\
 <?lsmb FOREACH invnumber ?>
 <?lsmb lc = loop.count - 1 ?>
 <?lsmb invnumber.${lc} ?> & <?lsmb invdate.${lc} ?> \dotfill

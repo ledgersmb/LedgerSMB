@@ -14,35 +14,35 @@
 
 <?lsmb INCLUDE letterhead.tex ?>
 
-\centerline{\textbf{T I M E}\hspace{0.5cm}\textbf{C A R D}}
+\centerline{\textbf{<?lsmb text('Time Card') ?>}}
 
 \vspace*{0.5cm}
 
 \begin{tabular}[t]{ll}
-  \textbf{Employee} & <?lsmb employee ?> \\
-  \textbf{ID} & <?lsmb employee_id ?> \\
+  \textbf<?lsmb text('Employee') ?>} & <?lsmb employee ?> \\
+  \textbf{<?lsmb text('ID') ?>} & <?lsmb employee_id ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[t]{ll}
-  \textbf{Card ID} & <?lsmb id ?> \\
-  \textbf{Date} & <?lsmb transdate ?> \\
-  \textbf{In} & <?lsmb checkedin ?> \\
-  \textbf{Out} & <?lsmb checkedout ?> \\
-  \textbf{Hours} & <?lsmb qty ?> \\
+  \textbf{<?lsmb text('Card ID') ?>} & <?lsmb id ?> \\
+  \textbf{<?lsmb text('Date') ?>} & <?lsmb transdate ?> \\
+  \textbf{<?lsmb text('In') ?>} & <?lsmb checkedin ?> \\
+  \textbf{<?lsmb text('Out') ?>} & <?lsmb checkedout ?> \\
+  \textbf{<?lsmb text('Hours') ?>} & <?lsmb qty ?> \\
 \end{tabular}
 
 \vspace{1cm}
 
 \begin{tabular}[b]{ll}
-  \textbf{Job/Project \#} & <?lsmb projectnumber ?> \\
-  \textbf{Description} & <?lsmb projectdescription ?> \\
-  \textbf{Labor/Service Code} & <?lsmb partnumber ?> \\
-  \textbf{Description} & <?lsmb description ?> \\
+  \textbf{<?lsmb text('Job/Project #') ?>} & <?lsmb projectnumber ?> \\
+  \textbf{<?lsmb text('Description') ?>} & <?lsmb projectdescription ?> \\
+  \textbf{<?lsmb text('Labor/Service Code') ?>} & <?lsmb partnumber ?> \\
+  \textbf{<?lsmb text('Description') ?>} & <?lsmb description ?> \\
 \end{tabular}
 \hfill
 \begin{tabular}[b]{lr}
-  \textbf{Rate} & <?lsmb sellprice ?> \\
-  \textbf{Total} & <?lsmb total ?> \\
+  \textbf{<?lsmb text('Rate') ?>} & <?lsmb sellprice ?> \\
+  \textbf{<?lsmb text('Total') ?>} & <?lsmb total ?> \\
 \end{tabular}
   
 \vspace{0.3cm}

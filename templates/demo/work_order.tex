@@ -57,11 +57,11 @@
 <?lsmb END ?>
 
 <?lsmb IF customerphone ?>
-Tel: <?lsmb customerphone ?>
+<lsmb text('Tel: [_1]', customerphone) ?>
 <?lsmb END ?>
 
 <?lsmb IF customerfax ?>
-Fax: <?lsmb customerfax ?>
+<?lsmb text('Fax: [_1]', customerfax) ?>
 <?lsmb END ?>
 
 <?lsmb email ?>
@@ -92,11 +92,11 @@ Fax: <?lsmb customerfax ?>
 <?lsmb END ?>
 
 <?lsmb IF shiptophone ?>
-Tel: <?lsmb shiptophone ?>
+<lsmb text('Tel: [_1]', shiptophone) ?>
 <?lsmb END ?>
 
 <?lsmb IF shiptofax ?>
-Fax: <?lsmb shiptofax ?>
+<?lsmb text('Fax:[_1]', shiptofax) ?>
 <?lsmb END ?>
 
 <?lsmb shiptoemail ?>
@@ -105,7 +105,7 @@ Fax: <?lsmb shiptofax ?>
 
 \vspace{1cm}
 
-\textbf{W O R K} \parbox{0.3cm}{\hfill} \textbf{O R D E R}
+\textbf{<?lsmb text('Work Order') ?>}
 \hfill
 
 \vspace{1cm}
@@ -120,8 +120,9 @@ Fax: <?lsmb shiptofax ?>
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{@{}rlXrll@{}}
-  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
-  & \textbf{Serial Number} \\
+  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
+  & \textbf{<?lsmb text('Description') ?>} & \textbf{<?lsmb text('Qty') ?>} &
+  & \textbf{<?lsmb text('Serial Number')} \\
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb runningnumber.${lc} ?> &
