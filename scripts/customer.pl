@@ -36,4 +36,19 @@ sub new_company {
     return LedgerSMB::DBObject::Customer->new(base=> $request, copy => 'all');
 }
 
+
+=back
+
+=head1 INHERITS
+
+LedgerSMB::ScriptLib::Company
+
+=head1 COPYRIGHT
+
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+=cut
+
 1;

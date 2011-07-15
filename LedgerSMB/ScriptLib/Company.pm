@@ -915,6 +915,13 @@ sub save_bank_account {
     _render_main_screen($company );
 }
 
+=item save_notes($request)
+
+Saves notes.  entity_id or credit_id must be set, as must note_class, note, and 
+subject.
+
+=cut
+
 sub save_notes {
     my ($request) = @_;
     my $company = new_company($request);
@@ -924,4 +931,15 @@ sub save_notes {
     $company->get();
     _render_main_screen($company );
 }
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+=cut
+
 1;
