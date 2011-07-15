@@ -361,7 +361,7 @@ sub get_results {
 #        },
 	{name => 'action',
         value => 'add',
-        text => $company->{_locale}->text("Add $label"),
+        text => $company->{_locale}->text("Add [_1]", $label),
         type => 'submit',
         class => 'submit',
 	}

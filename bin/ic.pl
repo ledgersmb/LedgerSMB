@@ -3519,7 +3519,7 @@ sub save {
     if ( $form->{obsolete} ) {
         $form->error(
             $locale->text(
-"Inventory quantity must be zero before you can set this $form->{item} obsolete!"
+"Inventory quantity must be zero before you can set this [_1] obsolete!", $form->{item}
             )
         ) if ( $form->{onhand} );
     }

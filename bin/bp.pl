@@ -119,7 +119,7 @@ sub search {
     $label{request_quotation}{quonumber} = $label{sales_quotation}{quonumber};
 
     # do one call to text
-    $form->{title} = $locale->text("Print $label{$form->{type}}{title}");
+    $form->{title} = $locale->text("Print [_1]", $label{$form->{type}}{title});
 
     # accounting years
     if ( @{ $form->{all_years} } ) {

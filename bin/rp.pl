@@ -857,7 +857,7 @@ qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accountty
         push @buttons, {
             name => 'action',
             value => lc "${type}_$form->{nextsub}",
-            text => $locale->text("$type Report"),
+            text => $locale->text("[_1] Report", $type),
             type => 'submit',
             class => 'submit',
         };
@@ -1268,7 +1268,7 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
         push @buttons, {
             name => 'action',
             value => lc "${type}_$form->{nextsub}",
-            text => $locale->text("$type Report"),
+            text => $locale->text("[_1] Report", $type),
             type => 'submit',
             class => 'submit',
         };
@@ -1983,7 +1983,7 @@ sub list_payments {
         };
     $column_header{meta_number} = {
         href => "$href&sort=meta_number",
-        text => $locale->text("$vc Number"),
+        text => $locale->text("[_1] Number", $vc),
         };
     $column_header{employee} = {
         href => "$href&sort=employee",

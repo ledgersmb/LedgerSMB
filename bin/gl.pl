@@ -177,10 +177,10 @@ sub display_form
     }
     $title = $form->{title};
     if ( $form->{transfer} ) {
-        $form->{title} = $locale->text("$title Cash Transfer Transaction");
+        $form->{title} = $locale->text("[_1] Cash Transfer Transaction", $title);
     }
     else {
-        $form->{title} = $locale->text("$title General Ledger Transaction");
+        $form->{title} = $locale->text("[_1] General Ledger Transaction", $title);
     }
 
     for (qw(reference description notes)) {

@@ -251,7 +251,7 @@ sub list_account {
         push @buttons, {
             name => 'action',
             value => lc "${type}_list_account",
-            text => $locale->text("$type Report"),
+            text => $locale->text("[_1] Report", $type),
             type => 'submit',
             class => 'submit',
         };
@@ -441,7 +441,7 @@ sub edit_gifi {
 sub gifi_header {
     my $hiddens = shift;
 
-    $form->{title} = $locale->text("$form->{title} GIFI");
+    $form->{title} = $locale->text("[_1] GIFI", $form->{title});
 
     # $locale->text('Add GIFI')
     # $locale->text('Edit GIFI')
@@ -669,7 +669,7 @@ sub list_department {
 sub department_header {
     my $hiddens = shift;
 
-    $form->{title} = $locale->text("$form->{title} Department");
+    $form->{title} = $locale->text("[_1] Department", $form->{title});
 
     # $locale->text('Add Department')
     # $locale->text('Edit Department')
@@ -824,7 +824,7 @@ sub list_business {
 sub business_header {
     my $hiddens = shift;
 
-    $form->{title} = $locale->text("$form->{title} Business");
+    $form->{title} = $locale->text("[_1] Business", $form->{title});
 
     # $locale->text('Add Business')
     # $locale->text('Edit Business')
@@ -991,7 +991,7 @@ sub list_sic {
 sub sic_header {
     my $hiddens = shift;
 
-    $form->{title} = $locale->text("$form->{title} SIC");
+    $form->{title} = $locale->text("[_1] SIC", $form->{title});
 
     # $locale->text('Add SIC')
     # $locale->text('Edit SIC')
@@ -1154,7 +1154,7 @@ sub list_language {
 sub language_header {
     my $hiddens = shift;
 
-    $form->{title} = $locale->text("$form->{title} Language");
+    $form->{title} = $locale->text("[_1] Language", $form->{title});
 
     # $locale->text('Add Language')
     # $locale->text('Edit Language')
@@ -1995,7 +1995,7 @@ sub list_warehouse {
 sub warehouse_header {
     my $hiddens = shift;
 
-    $form->{title} = $locale->text("$form->{title} Warehouse");
+    $form->{title} = $locale->text("[_1] Warehouse", $form->{title});
 
     # $locale->text('Add Warehouse')
     # $locale->text('Edit Warehouse')

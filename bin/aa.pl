@@ -427,15 +427,18 @@ sub form_header {
 		$form->{batch_control_code}=$form->get_batch_control_code($form->{dbh},$form->{batch_id});
 		$form->{batch_description}=$form->get_batch_description($form->{dbh},$form->{batch_id});
     }
-	
+    # 	$locale->text('Add AR Transaction');
+    # 	$locale->text('Add AP Transaction');
+    #   $locale->text('Edit AR Transaction');
+    #   $locale->text('Edit AP Transaction');
     if ($form->{reverse} == 0){
-       $form->{title} = $locale->text("$title $form->{ARAP} Transaction");
+       $form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
     }
     elsif($form->{reverse} == 1) {
        if ($form->{subtype} eq 'credit_note'){
-           $form->{title} = $locale->text("$title Credit Note");
+           $form->{title} = $locale->text("[_1] Credit Note", $title);
        } elsif ($form->{subtype} eq 'debit_note'){
-           $form->{title} = $locale->text("$title Debit Note");
+           $form->{title} = $locale->text("[_1] Debit Note", $title);
        } else {
            $form->error("Unknown subtype $form->{subtype} in $form->{ARAP} "
               . "transaction.");
@@ -1653,7 +1656,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
 	  <th align=right>$name</th>
 	  <td colspan=3>$selectname</td>
 	</tr>
-	<tr><th align="right">|.$locale->text("$name Number").qq|</th>
+	<tr><th align="right">|.$locale->text("[_1] Number", $name).qq|</th>
 	    <td colspan="3"><input name="meta_number" size="36">
         </tr>
 	$employee
