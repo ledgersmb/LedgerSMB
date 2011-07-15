@@ -8,7 +8,8 @@
     <td width=10>&nbsp;</td>
 
     <th colspan=3>
-      <h4>T I M E &nbsp;&nbsp; C A R D</h4>
+      <h4 style="text-transform:uppercase; letter-spacing:0.5em">
+        <?lsmb text('Time Card') ?></h4>
     </th>
   </tr>
 
@@ -21,11 +22,11 @@
 	  <td>
 	    <table>
 	      <tr>
-		<th align=left>Employee</th>
+		<th align=left><?lsmb text('Employee') ?></th>
 		<td><?lsmb employee ?></td>
 	      </tr>
 	      <tr>
-		<th align=left>ID</th>
+		<th align=left><?lsmb text('ID') ?></th>
 		<td><?lsmb employee_id ?></td>
 	      </tr>
 	    </table>
@@ -34,23 +35,23 @@
 	  <td align=right>
 	    <table>
 	      <tr>
-		<th align=left nowrap>Card ID</th>
+		<th align=left nowrap><?lsmb text('Card ID') ?></th>
 		<td><?lsmb id ?></td>
 	      </tr>
 	      <tr>
-		<th align=left nowrap>Date</th>
+		<th align=left nowrap><?lsmb text('Date') ?></th>
 		<td><?lsmb transdate ?></td>
 	      </tr>
 	      <tr>
-		<th align=left nowrap>In</th>
+		<th align=left nowrap><?lsmb text('In') ?></th>
 		<td><?lsmb checkedin ?></td>
 	      </tr>
               <tr>
-                <th align=left>Out</th>
+                <th align=left><?lsmb text('Out') ?></th>
 		<td><?lsmb checkedout ?></td>
 	      </tr>
 	      <tr>
-		<th align=left nowrap>Hours</th>
+		<th align=left nowrap><?lsmb text('Hours') ?></th>
 		<td><?lsmb qty ?></td>
 	      </tr>
 	    </table>
@@ -71,19 +72,19 @@
 	  <td>
 	    <table>
 	      <tr valign=top>
-	        <th align=left>Job/Project #</th>
+	        <th align=left><?lsmb text('Job/Project #') ?></th>
 		<td><?lsmb projectnumber ?></td>
 	      </tr>
 	      <tr>
-	        <th align=left>Description</th>
+	        <th align=left><?lsmb text('Description') ?></th>
 		<td><?lsmb projectdescription ?></td>
 	      </tr>
 	      <tr valign=top>
-	        <th align=left>Labor/Service Code</th>
+	        <th align=left><?lsmb text('Labor/Service Code') ?></th>
 		<td><?lsmb partnumber ?></td>
 	      </tr>
 	      <tr>
-	        <th align=left>Description</th>
+	        <th align=left><?lsmb text('Description') ?></th>
 		<td><?lsmb description ?></td>
 	      </tr>
 	    </table>
@@ -91,11 +92,11 @@
 	  <td align=right>
 	    <table>
 	      <tr>
-	        <th align=right>Rate</th>
+	        <th align=right><?lsmb text('Rate') ?></th>
 		<td><?lsmb sellprice ?></td>
 	      </tr>
 	      <tr>
-		<th align=right>Total</th>
+		<th align=right><?lsmb text('Total') ?></th>
 		<td><?lsmb total ?></td>
 	      </tr>
 	    </table>

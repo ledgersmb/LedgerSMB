@@ -11,7 +11,8 @@
   <tr>
     <td width=10>&nbsp;</td>
     
-    <th colspan=3><h4>S T A T E M E N T</h4></th>
+    <th colspan=3><h4 style="text-transform:uppercase; letter-spacing:0.5em">
+         <?lsmb text('Statement') ?></h4></th>
     
   </tr>
 
@@ -42,10 +43,10 @@
 	  <?lsmb END ?>
 	  <br>
           <?lsmb IF customerphone ?>
-	  <br>Tel: <?lsmb customerphone ?>
+	  <br><?lsmb text('Tel: [_1],' customerphone) ?>
           <?lsmb END ?>
           <?lsmb IF customerfax ?>
-	  <br>Fax: <?lsmb customerfax ?>
+	  <br><?lsmb text('Fax: [_1]', customerfax) ?>
           <?lsmb END ?>
           <?lsmb IF email ?>
 	  <br><?lsmb email ?>
@@ -64,14 +65,14 @@
     <td>
       <table width="100%">
         <tr>
-	  <th align=left>Invoice #</th>
-          <th align=left>Order#</th>
-	  <th width="10%">Date</th>
-	  <th width="10%">Due</th>
-	  <th width="10%">Current</th>
-	  <th width="10%">30</th>
-	  <th width="10%">60</th>
-	  <th width="10%">90</th>
+	  <th align=left><?lsmb text('Invoice #') ?></th>
+          <th align=left><?lsmb text('Order#') ?></th>
+	  <th width="10%"><?lsmb text('Date') ?></th>
+	  <th width="10%"><?lsmb text('Due') ?></th>
+	  <th width="10%"><?lsmb text('Current') ?></th>
+	  <th width="10%"><?lsmb text('30') ?></th>
+	  <th width="10%"><?lsmb text('60') ?></th>
+	  <th width="10%"><?lsmb text('90') ?></th>
 	</tr>
         
 	<?lsmb FOREACH invnumber ?>
@@ -114,7 +115,7 @@
     <td align=right>
       <table width="50%">
         <tr>
-	  <th>Total Outstanding</th>
+	  <th><?lsmb text('Total Outstanding') ?></th>
           <th align=right><?lsmb total ?></th>
 	</tr>
       </table>
@@ -129,8 +130,8 @@
   
   <tr>
     <td>&nbsp;</td>
-    <td>All amounts in <b><?lsmb currency ?></b> funds.
-    <br>Please make check payable to <b><?lsmb company ?></b>.
+    <td><?lsmb text('All amounts in [_1] Funds', currency) ?>
+    <br><?lsmb text('Please make check payable to [_1].', company) ?>
     </td>
   </tr>
 

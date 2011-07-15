@@ -8,8 +8,8 @@
   <tr>
     <td width=10>&nbsp;</td>
   
-    <th colspan=3>
-      <h4>Q U O T A T I O N</h4>
+    <th colspan=3 style="text-transform:uppercase; letter-spacing:0.5em">
+      <h4><?lsmb text('Quotation') ?></h4>
     </th>
   </tr>
 
@@ -36,15 +36,15 @@
 
 	  <br>
 	  <?lsmb IF contact ?>
-	  <br>Attn: <?lsmb contact ?>
+	  <br><?lsmb text('Attn: [_1]', contact) ?>
 	  <?lsmb END ?>
 
 	  <?lsmb IF customerphone ?>
-	  <br>Tel: <?lsmb customerphone ?>
+	  <br><?lsmb text('Tel: [_1]', customerphone) ?>
 	  <?lsmb END ?>
 
 	  <?lsmb IF customerfax ?>
-	  <br>Fax: <?lsmb customerfax ?>
+	  <br><?lsmb text('Fax: [_1]', customerfax) ?>
 	  <?lsmb END ?>
 
 	  <?lsmb IF email ?>
@@ -63,12 +63,12 @@
     <td>
       <table width=100% border=1>
 	<tr>
-	  <th width=17% align=left nowrap>Number</th>
-	  <th width=17% align=left>Date</th>
-	  <th width=17% align=left>Valid until</th>
-	  <th width=17% align=left nowrap>Contact</th>
-	  <th width=17% align=left nowrap>Shipping Point</th>
-	  <th width=15% align=left nowrap>Ship via</th>
+	  <th width=17% align=left nowrap><?lsmb text('Number') ?></th>
+	  <th width=17% align=left><?lsmb text('Date') ?></th>
+	  <th width=17% align=left><?lsmb text('Valid until') ?></th>
+	  <th width=17% align=left nowrap><?lsmb text('Contact') ?></th>
+	  <th width=17% align=left nowrap><?lsmb text('Shipping Point') ?></th>
+	  <th width=15% align=left nowrap><?lsmb text('Ship via') ?></th>
 	</tr>
 
 	<tr>
@@ -89,14 +89,14 @@
     <td>
       <table width="100%">
 	<tr bgcolor=000000>
-	  <th align=right><font color=ffffff>Item</th>
-	  <th align=left><font color=ffffff>Number</th>
-	  <th align=left><font color=ffffff>Description</th>
-	  <th><font color=ffffff>Qt'y</th>
+	  <th align=right><font color=ffffff><?lsmb text('Item') ?></th>
+	  <th align=left><font color=ffffff><?lsmb text('Number') ?></th>
+	  <th align=left><font color=ffffff><?lsmb text('Description') ?></th>
+	  <th><font color=ffffff><?lsmb text('Qty') ?></th>
 	  <th>&nbsp;</th>
-	  <th><font color=ffffff>Price</th>
-	  <th><font color=ffffff>Disc %</th>
-	  <th><font color=ffffff>Amount</th>
+	  <th><font color=ffffff><?lsmb text('Price') ?></th>
+	  <th><font color=ffffff><?lsmb text('Disc %') ?></th>
+	  <th><font color=ffffff><?lsmb text('Amount') ?></th>
 	</tr>
 
         <?lsmb FOREACH number ?>
@@ -119,10 +119,10 @@
 	
 	<tr>
 	  <?lsmb IF taxincluded ?>
-	  <th colspan=6 align=right>Total</th>
+	  <th colspan=6 align=right><?lsmb text('Total') ?></th>
 	  <td colspan=2 align=right><?lsmb invtotal ?></td>
 	  <?lsmb ELSE ?>
-	  <th colspan=6 align=right>Subtotal</th>
+	  <th colspan=6 align=right><?lsmb text('Subtotal') ?></th>
 	  <td colspan=2 align=right><?lsmb subtotal ?></td>
 	  <?lsmb END ?>
 	</tr>
@@ -143,10 +143,10 @@
 	<tr>
 	  <td colspan=4>&nbsp;
 	  <?lsmb IF terms ?>
-	  Terms Net <b><?lsmb terms ?></b> days
+	  <?lsmb text('Terms Net [_1] days', terms) ?>
 	  <?lsmb END ?>
 	  </td>
-	  <th colspan=2 align=right>Total</th>
+	  <th colspan=2 align=right><?lsmb text('Total') ?></th>
 	  <th colspan=2 align=right><?lsmb quototal ?></th>
 	</tr>
 	
@@ -165,11 +165,11 @@
       <table width="100%">
 	<tr valign=top>
           <?lsmb IF notes ?>
-	  <td>Notes</td>
+	  <td><?lsmb text('Notes') ?></td>
 	  <td><?lsmb notes ?></td>
           <?lsmb END ?>
 	  <td align=right>
-	  All prices in <b><?lsmb currency ?></b> Funds
+	  <?lsmb text('All prices in [_1] Funds', currency) ?>
 	  </td>
 	</tr>
       </table>
@@ -183,7 +183,9 @@
       <table width="100%">
 	<tr valign=top>
 	  <td width="60%"><font size=-3>
-	  Special order items are subject to a 10% cancellation fee.
+	  <?lsmb 
+             text('Special order items are subject to a 10% cancellation fee.')
+           ?>
 	  </font>
 	  </td>
 	  <td width="40%">
