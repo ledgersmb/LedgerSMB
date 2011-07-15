@@ -289,6 +289,7 @@ sub print_check {
 
     my $template = LedgerSMB::Template->new( 
         user => \%myconfig, template => $form->{'formname'}, 
+        locale => $locale,
         format => uc $form->{'format'},
 	no_auto_output => 1,
         output_args => $form,
@@ -561,6 +562,7 @@ sub print_transaction {
 
     my $template = LedgerSMB::Template->new(
         user => \%myconfig, template => $form->{'formname'}, 
+        locale => $locale,
 	no_auto_output => 1,
         format => uc $form->{format} );
     try {

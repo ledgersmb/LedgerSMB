@@ -1453,13 +1453,30 @@ sub vendor_details {
 
     # get rest for the vendor
     my $query = qq|
-		SELECT vendornumber, name, address1, address2, city, state,
-		       zipcode, country, contact, phone as vendorphone, 
-		       fax as vendorfax, vendornumber, 
-		       taxnumber AS vendortaxnumber, sic_code AS sic, iban, bic,
-		       gifi_accno AS gifi, startdate, enddate
-		  FROM vendor
-		 WHERE id = ?|;
+		SELECT meta_number as vendornumber, e.name, 
+                       line_one as address1, line_two as address2, city, state,
+		       mail_code as zipcode, c.name as country, 
+                       pay_to_name as contact, 
+                       phone as vendorphone, fax as vendorfax, 
+		       tax_id AS vendortaxnumber, sic_code AS sic, iban, bic,
+		       -- gifi_accno AS gifi, 
+                       startdate, enddate
+		  FROM entity_credit_account eca
+                  JOIN entity e ON eca.entity_id = e.id
+                  JOIN company co ON co.entity_id = e.id
+             LEFT JOIN eca_to_location e2l ON eca.id = e2l.credit_id
+             LEFT JOIN location l ON l.id = e2l.location_id
+             LEFT JOIN country c ON l.country_id = c.id
+             LEFT JOIN (select max(phone) as phone, max(fax) as fax, credit_id
+                          FROM (SELECT CASE WHEN contact_class_id =1 THEN contact
+                                       END as phone, 
+                                       CASE WHEN contact_class_id =9 THEN contact
+                                       END as fax,
+                                       credit_id 
+                                  FROM eca_to_contact) ct_base
+                        GROUP BY credit_id) ct ON ct.credit_id = eca.id
+             LEFT JOIN entity_bank_account ba ON ba.id = eca.bank_account
+		 WHERE eca.id = ? and location_class = 1|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{vendor_id} ) || $form->dberror($query);
 

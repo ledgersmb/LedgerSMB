@@ -133,6 +133,7 @@ use LedgerSMB::CancelFurtherProcessing;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Locale;
 
 sub new {
 	my $class = shift;
@@ -155,6 +156,9 @@ sub new {
 	$self->{method} ||= $args{media};
 	$self->{format_args} = $args{format_options};
 	$self->{output_args} = $args{output_options};
+        if ($self->{language}){ # Language takes precedence over locale
+             $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
+        }
 
 	# SC: Muxing pre-format_args LaTeX format specifications.  Now with
 	#     DVI support.

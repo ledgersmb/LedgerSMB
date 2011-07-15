@@ -9,7 +9,9 @@
     <td width=10>&nbsp;</td>
 
     <th colspan=3>
-      <h4>A P - T R A N S A C T I O N</h4>
+      <h4 style="text-transform:uppercase; letter-spacing:0.5em">
+             <?lsmb text('AP Transaction') ?>
+      </h4>
     </th>
   </tr>
 
@@ -40,11 +42,11 @@
           <?lsmb END ?>
 
           <?lsmb IF vendorphone ?>
-          <br>Tel: <?lsmb vendorphone ?>
+          <br><?lsmb text('Tel: [_1]', vendorphone) ?>
           <?lsmb END ?>
 
           <?lsmb IF vendorfax ?>
-          <br>Fax: <?lsmb vendorfax ?>
+          <br><?lsmb text('Fax: [_1]', vendorfax) ?>
           <?lsmb END ?>
 
           <?lsmb IF email ?>
@@ -52,38 +54,38 @@
           <?lsmb END ?>
 
           <?lsmb IF vendortaxnumber ?>
-          <p>Taxnumber: <?lsmb vendortaxnumber ?>
+          <p><?lsmb text('Taxnumber: [_1]', vendortaxnumber) ?>
           <?lsmb END ?>
           </td>
    
 	  <td align=right>
 	    <table>
 	      <tr>
-		<th align=left nowrap>Invoice #</th>
+		<th align=left nowrap><?lsmb text('Invoice #') ?></th>
 		<td><?lsmb invnumber ?></td>
 	      </tr>
 	      <tr>
-		<th align=left nowrap>Date</th>
+		<th align=left nowrap><?lsmb text('Date') ?></th>
 		<td><?lsmb invdate ?></td>
 	      </tr>
 	      <tr>
-		<th align=left nowrap>Due</th>
+		<th align=left nowrap><?lsmb text('Due') ?></th>
 		<td><?lsmb duedate ?></td>
 	      </tr>
 	      <?lsmb IF ponumber ?>
               <tr>
-                <th align=left>PO #</th>
+                <th align=left><?lsmb text('PO #') ?></th>
 		<td><?lsmb ponumber ?>&nbsp;</td>
 	      </tr>
 	      <?lsmb END ?>
 	      <?lsmb IF ordnumber ?>
 	      <tr>
-		<th align=left>Order #</th>
+		<th align=left><?lsmb text('Order #') ?></th>
 		<td><?lsmb ordnumber ?>&nbsp;</td>
 	      </tr>
 	      <?lsmb END ?>
 	      <tr>
-		<th align=left nowrap>Employee</th>
+		<th align=left nowrap><?lsmb text('Employee') ?></th>
 		<td><?lsmb employee ?>&nbsp;</td>
 	      </tr>
 	    </table>
@@ -116,11 +118,11 @@
 
 	<tr>
 	  <?lsmb IF taxincluded ?>
-	  <th colspan=2 align=right>Total</th>
+	  <th colspan=2 align=right><?lsmb text('Total') ?></th>
 	  <td width=10> </td>
 	  <td align=right><?lsmb invtotal ?></td>
 	  <?lsmb ELSE ?>
-	  <th colspan=2 align=right>Subtotal</th>
+	  <th colspan=2 align=right><?lsmb text('Subtotal') ?></th>
 	  <td width=10> </td>
 	  <td align=right><?lsmb subtotal ?></td>
 	  <?lsmb END ?>
@@ -137,7 +139,7 @@
 	
 	<?lsmb IF NOT taxincluded ?>
 	<tr>
-	  <th colspan=2 align=right>Total</th>
+	  <th colspan=2 align=right><?lsmb text('Total') ?></th>
 	  <td width=10> </td>
 	  <td align=right><?lsmb invtotal ?></td>
 	</tr>
@@ -169,7 +171,7 @@
     <td>
       <table>
         <tr>
-          <th>Payments</th>
+          <th><?lsmb text('Payments') ?></th>
         </tr>
 
         <tr>
@@ -182,11 +184,11 @@
 	  <td>
 	    <table>
 	      <tr>
-		<th>Date</th>
+		<th><?lsmb text('Date') ?></th>
 		<th>&nbsp;</th>
-		<th>Source</th>
-		<th>Memo</th>
-		<th>Amount</th>
+		<th><?lsmb text('Source') ?></th>
+		<th><?lsmb text('Memo') ?></th>
+		<th><?lsmb text('Amount') ?></th>
 	      </tr>
   <?lsmb END ?>
 
@@ -218,7 +220,8 @@
   </tr>
 
   <tr>
-    <th colspan=3 align=left><font size=-2>Taxes shown are included in price.</th>
+    <th colspan=3 align=left><font size=-2>
+          <?lsmb text('Taxes shown are included in price.') ?></th>
   </tr>
   <?lsmb END ?>
 

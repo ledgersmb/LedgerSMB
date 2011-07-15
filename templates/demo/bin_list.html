@@ -9,7 +9,8 @@
     <td width=10>&nbsp;</td>
     
     <th colspan=3>
-      <h4>B I N &nbsp;&nbsp; L I S T</h4>
+      <h4 style="text-transform:uppercase; letter-spacing:0.5em">
+         <?lsmb text('Bin List') ?></h4>
     </th>
   </tr>
 
@@ -19,8 +20,10 @@
     <td>
       <table width=100% cellspacing=0 cellpadding=0>
 	<tr bgcolor=000000>
-	  <th align=left width="50%"><font color=ffffff>From</th>
-	  <th align=left width="50%"><font color=ffffff>Ship To</th>
+	  <th align=left width="50%"><font color=ffffff><?lsmb text('From') ?>
+          </th>
+	  <th align=left width="50%"><font color=ffffff><?lsmb text('Ship To') ?>
+          </th>
 	</tr>
 
 	<tr valign=top>
@@ -40,15 +43,15 @@
 	  <br>
 
 	  <?lsmb IF contact ?>
-	  <br>Attn: <?lsmb contact ?>
+	  <br><?lsmb text('Attn: [_1]', contact) ?>
 	  <?lsmb END ?>
 
 	  <?lsmb IF vendorphone ?>
-	  <br>Tel: <?lsmb vendorphone ?>
+	  <br><?lsmb text('Tel: [_1]', vendorphone) ?>
 	  <?lsmb END ?>
 
 	  <?lsmb IF vendorfax ?>
-	  <br>Fax: <?lsmb vendorfax ?>
+	  <br><?lsmb text('Fax: [_1]', vendorfax) ?>
 	  <?lsmb END ?>
 
 	  <?lsmb IF email ?>
@@ -73,15 +76,15 @@
 
 	  <br>
 	  <?lsmb IF shiptocontact ?>
-	  <br>Attn: <?lsmb shiptocontact ?>
+	  <br><?lsmb text('Attn: [_1]', shiptocontact) ?>
 	  <?lsmb END ?>
 	  
 	  <?lsmb IF shiptophone ?>
-	  <br>Tel: <?lsmb shiptophone ?>
+	  <br><?lsmb text('Tel: [_1]', shiptophone) ?>
 	  <?lsmb END ?>
 
 	  <?lsmb IF shiptofax ?>
-	  <br>Fax: <?lsmb shiptofax ?>
+	  <br><?lsmb text('Fax: [_1]', shiptofax) ?>
 	  <?lsmb END ?>
 	  </td>
 	</tr>
@@ -97,14 +100,14 @@
     <td>
       <table width=100% border=1>
 	<tr>
-	  <th width=17% align=left nowrap>Order #</th>
-	  <th width=17% align=left nowrap>Date</th>
-	  <th width=17% align=left nowrap>Contact</th>
+	  <th width=17% align=left nowrap><?lsmb text('Order #') ?></th>
+	  <th width=17% align=left nowrap><?lsmb text('Date') ?></th>
+	  <th width=17% align=left nowrap><?lsmb text('Contact') ?></th>
 	  <?lsmb IF warehouse ?>
-	  <th width=17% align=left nowrap>Warehouse</th>
+	  <th width=17% align=left nowrap><?lsmb text('Warehouse') ?></th>
 	  <?lsmb END ?>
-	  <th width=17% align=left>Shipping Point</th>
-	  <th width=15% align=left>Ship via</th>
+	  <th width=17% align=left><?lsmb text('Shipping Point') ?></th>
+	  <th width=15% align=left><?lsmb text('Ship via') ?></th>
 	</tr>
 
 	<tr>
@@ -135,15 +138,15 @@
     <td>
       <table width="100%">
 	<tr bgcolor=000000>
-	  <th align=left><font color=ffffff>Item</th>
-	  <th align=left><font color=ffffff>Number</th>
-	  <th align=left><font color=ffffff>Description</th>
-	  <th><font color=ffffff>Serialnumber</th>
+	  <th align=left><font color=ffffff><?lsmb text('Item') ?></th>
+	  <th align=left><font color=ffffff><?lsmb text('Number') ?></th>
+	  <th align=left><font color=ffffff><?lsmb text('Description') ?></th>
+	  <th><font color=ffffff><?lsmb text('Serialnumber') ?></th>
 	  <th>&nbsp;</th>
-	  <th><font color=ffffff>Qty</th>
-	  <th><font color=ffffff>Recd</th>
+	  <th><font color=ffffff><?lsmb text('Qty') ?></th>
+	  <th><font color=ffffff><?lsmb text('Recd') ?></th>
 	  <th>&nbsp;</th>
-	  <th><font color=ffffff>Bin</th>
+	  <th><font color=ffffff><?lsmb text('Bin') ?></th>
 	</tr>
 
 	<?lsmb FOREACH number ?>
