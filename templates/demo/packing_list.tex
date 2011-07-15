@@ -17,10 +17,8 @@
   \parbox{\textwidth}{
   \tiny
    \rule[1.5em]{\textwidth}{0.5pt}
-Items returned are subject to a 10\% restocking charge.
-A return authorization must be obtained from <?lsmb company ?> before goods are
-returned. Returns must be shipped prepaid and properly insured.
-<?lsmb company ?> will not be responsible for damages during transit.
+<?lsmb text('Items returned are subject to a 10% restocking charge.') ?>
+<?lsmb text('A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.', company) ?>
   }
 }
 
@@ -79,17 +77,19 @@ returned. Returns must be shipped prepaid and properly insured.
 
 \vspace{1cm}
 
-\textbf{P A C K I N G} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\textbf{<?lsmb text('Packing List') ?>}
 \hfill
 
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
-  \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
+  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>} 
+  & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Contact') ?>}
   <?lsmb IF warehouse ?>
-  & \textbf{Warehouse}
+  & \textbf{<?lsmb text('Warehouse') ?>}
   <?lsmb END ?>
-  & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  & \textbf{<?lsmb text('Shipping Point') ?>} 
+  & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
   \hline
   
   <?lsmb invnumber ?> & <?lsmb ordnumber ?>
@@ -109,7 +109,10 @@ returned. Returns must be shipped prepaid and properly insured.
 \vspace{1cm}
   
 \begin{tabularx}{\textwidth}{@{}rlXllrrl@{}}
-  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Ship} & \\
+  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
+  & \textbf{<?lsmb text('Description') ?>} 
+  & \textbf{<?lsmb text('Serial Number') ?>} & 
+  & \textbf{<?lsmb text('Qty') ?>} & \textbf{<?lsmb text('Ship') ?>} & \\
 
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>

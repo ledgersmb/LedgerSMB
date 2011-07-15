@@ -70,14 +70,17 @@
 
 \vspace{1cm}
 
-\textbf{P I C K} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\textbf{<?lsmb text('Pick List') ?>}
 \hfill
 
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
-  \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
-  & \textbf{Warehouse} & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>} 
+   & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Contact') ?>}
+  & \textbf{<?lsmb text('Warehouse') ?>} 
+  & \textbf{<?lsmb text('Shipping Point') ?>} 
+  & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
   \hline
   <?lsmb invnumber ?> & <?lsmb ordnumber ?>
   <?lsmb IF shippingdate ?>
@@ -92,8 +95,10 @@
 \vspace{1cm}
 
 \begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
-  \textbf{Item} & \textbf{Number} & \textbf{Description} &
-  \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
+  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
+   & \textbf{<?lsmb text('Description') ?>} &
+  \textbf{<?lsmb text('Qty') ?>} & \textbf{<?lsmb text('Ship') ?>} & 
+  & \textbf{<?lsmb text('Bin') ?>} \\
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb runningnumber.${lc} ?> &

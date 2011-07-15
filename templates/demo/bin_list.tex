@@ -31,7 +31,7 @@
 \vspace*{0.5cm}
 
 \parbox[t]{.5\textwidth}{
-\textbf{From}
+\textbf{<?lsmb text('From') ?>}
 \vspace{0.3cm}
 
 <?lsmb name ?>
@@ -49,7 +49,7 @@
 <?lsmb country ?>
 }
 \parbox[t]{.5\textwidth}{
-\textbf{Ship To}
+\textbf{<?lsmb text('Ship To') ?>}
 \vspace{0.3cm}
 
 <?lsmb shiptoname ?>
@@ -70,7 +70,7 @@
 
 \vspace{1cm}
 
-\textbf{B I N} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\textbf{<?lsmb text('Bin List') ?>}
 \hfill
 
 \vspace{1cm}
@@ -78,9 +78,9 @@
 \begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
   \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
   <?lsmb IF warehouse ?>
-  & \textbf{Warehouse}
+  & \textbf{<?lsmb text('Warehouse') ?>}
   <?lsmb END ?>
-  & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  & \textbf{<?lsmb text('Shipping Point') ?>} & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
   \hline
   
   <?lsmb ordnumber ?>
@@ -101,7 +101,11 @@
 \vspace{1cm}
   
 \begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
-  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
+  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
+     & \textbf{<?lsmb text('Description') ?>} & 
+     \textbf{<?lsmb text('Serial Number') ?>} & 
+    & \textbf{<?lsmb text('Qty'} ?>& \textbf{<?lsmb text('Recd') ?>} & 
+    & \textbf{<?lsmb text('Bin') ?>} \\
 
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>

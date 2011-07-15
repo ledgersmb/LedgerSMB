@@ -23,14 +23,14 @@
   %}
   \hfill
   \begin{tabular}[b]{rr@{}}
-  Tel: & <?lsmb tel ?>\\
-  Fax: & <?lsmb fax ?>
+  <?lsmb text('Tel:') ?> & <?lsmb tel ?>\\
+  <?lsmb text('Fax:') ?> & <?lsmb fax ?>
   \end{tabular}
 
   \rule[1.5em]{\textwidth}{0.5pt}
 }
 
-\centerline{\textbf{A R} \hspace{0.3cm} \textbf{T R A N S A C T I O N}}
+\centerline{\textbf{A R} \hspace{0.3cm} \textbf{<?lsmb text('Transaction') ?>}}
 
 \vspace*{0.5cm}
 
@@ -58,31 +58,31 @@
 \vspace{0.2cm}
 
 <?lsmb IF customerphone ?>
-Tel: <?lsmb customerphone ?>
+<?lsmb text('Tel: [_1]', customerphone) ?>
 <?lsmb END ?>
 
 <?lsmb IF customerfax ?>
-Fax: <?lsmb customerfax ?>
+<?lsmb text('Fax: [_1]', customerfax) ?>
 <?lsmb END ?>
 
 <?lsmb email ?>
 
 <?lsmb IF customertaxnumber ?>
-Tax Number: <?lsmb customertaxnumber ?>
+<?lsmb text('Tax Number: [_1]', customertaxnumber) ?>
 <?lsmb END ?>
 }
 \hfill
 \begin{tabular}[t]{ll}
-  \textbf{Invoice \#} & <?lsmb invnumber ?> \\
-  \textbf{Date} & <?lsmb invdate ?> \\
-  \textbf{Due} & <?lsmb duedate ?> \\
+  \textbf{<?lsmb text('Invoice #') ?>} & <?lsmb invnumber ?> \\
+  \textbf{<?lsmb text('Date') ?>} & <?lsmb invdate ?> \\
+  \textbf{<?lsmb text('Due') ?>} & <?lsmb duedate ?> \\
   <?lsmb IF ponumber ?>
     \textbf{PO \#} & <?lsmb ponumber ?> \\
   <?lsmb END ?>
   <?lsmb IF ordnumber ?>
-    \textbf{Order \#} & <?lsmb ordnumber ?> \\
+    \textbf{<?lsmb text('Order #') ?>} & <?lsmb ordnumber ?> \\
   <?lsmb END ?>
-  \textbf{Employee} & <?lsmb employee ?> \\
+  \textbf{<?lsmb text('Employee') ?>} & <?lsmb employee ?> \\
 \end{tabular}
 
 \vspace{1cm}
@@ -120,9 +120,10 @@ Tax Number: <?lsmb customertaxnumber ?>
 
 <?lsmb IF paid_1 ?>
 \begin{tabular}{@{}lllr@{}}
-  \multicolumn{5}{c}{\textbf{Payments}} \\
+  \multicolumn{5}{c}{\textbf{<?lsmb text('Payments') ?>}} \\
   \hline
-  \textbf{Date} & & \textbf{Source} & \textbf{Amount} \\
+  \textbf{<?lsmb text('Date') ?>} & & \textbf{<?lsmb text('Source') ?>} & 
+        \textbf{<?lsmb text('Amount') ?>} \\
 <?lsmb END ?>
 <?lsmb FOREACH payment ?>
 <?lsmb lc = loop.count - 1 ?>
@@ -136,7 +137,7 @@ Tax Number: <?lsmb customertaxnumber ?>
 
 <?lsmb FOREACH tax ?>
 <?lsmb lc = loop.count - 1 ?>
-\textbf{\scriptsize <?lsmb taxdescription.${lc} ?> Registration <?lsmb taxnumber.${lc} ?>} \\
+\textbf{\scriptsize <?lsmb taxdescription.${lc} _ ' ' _ text('Registration') _ ' ' _  taxnumber.${lc} ?>} \\
 <?lsmb END ?>
   
 \end{document}
