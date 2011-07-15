@@ -32,6 +32,10 @@ Processes the template for the appropriate output format.
 
 Currently does nothing.
 
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.

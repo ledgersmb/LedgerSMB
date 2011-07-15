@@ -112,6 +112,11 @@ This command checks for valid langages.  Returns 1 if the language is valid,
 
 Apply locale settings to column headings and add sort urls if necessary.
 
+=item escape($string)
+
+Escapes a scalar string if the format supports such escaping and returns the
+sanitized version.
+
 =back
 
 =head1 Copyright 2007, The LedgerSMB Core Team
