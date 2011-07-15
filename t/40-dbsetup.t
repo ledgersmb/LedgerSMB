@@ -39,8 +39,9 @@ my $db = LedgerSMB::Database->new({
 });
 
 # Manual tests
-ok($db->create, 'Database Created') 
-  || BAIL_OUT('Database could not be created!');
+my $rc = $db->create;
+ok(!$rc, 'Database Created') 
+  || BAIL_OUT('Database could not be created! ' . $rc);
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
 if (!$ENV{LSMB_INSTALL_DB}){

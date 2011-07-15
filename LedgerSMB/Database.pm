@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-=head1 NAMR
+=head1 NAME
 
 LedgerSMB::Database
 
@@ -80,6 +80,9 @@ sub create {
     my ($self) = @_;
     
     my $rc = system("createdb -E UTF8 > $temp/dblog");
+    if ($rc) {
+        return $rc;
+    }
 
      my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
 
@@ -88,10 +91,10 @@ sub create {
          $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
          $rc ||= $rc2
      }
-     if (!system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr"
-     )){
-         $rc = 1;
-     }
+     my $rc2 = system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+     
+     $rc ||= $rc2;
+
      # TODO Add logging of errors/notices
 
      return $rc;
