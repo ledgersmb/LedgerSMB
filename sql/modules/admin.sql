@@ -1,3 +1,9 @@
+
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
 -- README:  This module is unlike most others in that it requires most functions
 -- to run as superuser.  For this reason it is CRITICAL that the following
 -- practices are adhered to:
@@ -7,7 +13,6 @@
 --
 -- -CT
 
-
 create table lsmb_roles (
     
     user_id integer not null references users(id),
@@ -15,6 +20,12 @@ create table lsmb_roles (
     
 );
 
+COMMENT ON TABLE lsmb_roles IS 
+$$A beginning of a group tracking system.  Not exposed through the front end yet.
+$$;
+
+
+-- work in progress, not documenting yet.
 CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEXT) returns INT AS $$
     
     declare
@@ -48,6 +59,7 @@ $$ language 'plpgsql' security definer;
 
 REVOKE EXECUTE ON FUNCTION admin__add_user_to_role(TEXT, TEXT) FROM PUBLIC;
 
+-- work in progress.  Not documenting yet.
 CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_username TEXT, in_role TEXT) returns INT AS $$
     
     declare
@@ -80,6 +92,7 @@ $$ language 'plpgsql' SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION admin__remove_user_from_role(TEXT, TEXT) FROM PUBLIC;
 
+-- work in progress. Not documenting yet.
 CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TEXT) returns INT AS $$
     
     declare
@@ -113,6 +126,7 @@ $$ language 'plpgsql' SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION admin__add_function_to_group(TEXT, TEXT) FROM PUBLIC;
 
+-- work in progress, not documenting yet.
 CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_role TEXT) returns INT AS $$
     
     declare
@@ -147,6 +161,7 @@ $$ language 'plpgsql' SECURITY DEFINER;
 REVOKE EXECUTE ON FUNCTION admin__remove_function_from_group(text, text) 
 FROM public;
 
+-- not even sure if these should be here --CT
 --CREATE OR REPLACE FUNCTION admin__add_table_to_group(in_table TEXT, in_role TEXT, in_perm TEXT) returns INT AS $$
     -- Do we need this table stuff at the moment? CT 
 --    declare
@@ -217,7 +232,7 @@ FROM public;
         
 --$$ language 'plpgsql';
 
-create or replace function admin__get_user(in_user_id INT) returns setof users as $$
+CREATE OR REPLACE FUNCTION admin__get_user(in_user_id INT) returns setof users as $$
     
     DECLARE
         a_user users;
@@ -230,7 +245,10 @@ create or replace function admin__get_user(in_user_id INT) returns setof users a
     END;    
 $$ language plpgsql;
 
-create or replace function admin__get_roles_for_user(in_user_id INT) returns setof text as $$
+COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
+$$ Returns a set of (only one) user specified by the id.$$;
+
+CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns setof text as $$
     
     declare
         u_role record;
@@ -265,6 +283,9 @@ $$ language 'plpgsql' SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user(in_user_id INT) from PUBLIC;
 
+COMMENT ON FUNCTION admin__get_roles_for_user(in_user_id INT) IS
+$$ Returns a set of roles that  a user is a part of.$$;
+
 CREATE OR REPLACE FUNCTION user__check_my_expiration()
 returns interval as
 $$
@@ -278,11 +299,19 @@ BEGIN
 end;
 $$ language plpgsql security definer;
 
+COMMENT ON FUNCTION user__check_my_expiration() IS
+$$ Returns the time when password of the current logged in user is set to 
+expire.$$; 
+
 CREATE OR REPLACE FUNCTION user__expires_soon()
 RETURNS BOOL AS
 $$
    SELECT user__check_my_expiration() < '1 week';
 $$ language sql;
+
+COMMENT ON FUNCTION user__expires_soon() IS
+$$ Returns true if the password of the current logged in user is set to expire 
+within on week.$$;
 
 CREATE OR REPLACE FUNCTION user__change_password(in_new_password text)
 returns int as
@@ -309,6 +338,10 @@ BEGIN
     return 1;
 END;
 $$ language plpgsql security definer;
+
+COMMENT ON FUNCTION user__change_password(in_new_password text) IS
+$$ Alloes a user to change his or her own password.  The password is set to 
+expire setting_get('password_duration') days after the password change.$$;
 
 CREATE OR REPLACE FUNCTION admin__save_user(
     in_id int, 
@@ -386,6 +419,15 @@ CREATE OR REPLACE FUNCTION admin__save_user(
     END;
 $$ language 'plpgsql' SECURITY DEFINER;
 
+COMMENT ON FUNCTION admin__save_user(
+    in_id int,
+    in_entity_id INT,
+    in_username text,
+    in_password TEXT,
+    in_import BOOL
+)  IS
+$$ Creates a user and relevant records in LedgerSMB and PostgreSQL.$$;
+
 REVOKE EXECUTE ON FUNCTION admin__save_user(
     in_id int,
     in_entity_id INT,
@@ -397,7 +439,7 @@ REVOKE EXECUTE ON FUNCTION admin__save_user(
 create view role_view as 
     select * from pg_auth_members m join pg_roles a ON (m.roleid = a.oid);
         
-
+-- work in progress, not for public docs yet
 create or replace function admin__is_group(in_group_name text) returns bool as $$
     -- This needs some work.  CT 
     DECLARE
@@ -419,6 +461,7 @@ create or replace function admin__is_group(in_group_name text) returns bool as $
     
 $$ language 'plpgsql';
 
+-- work in progress, not for public docs yet
 CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT) RETURNS int as $$
     
     DECLARE
@@ -436,6 +479,7 @@ $$ language 'plpgsql' SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION  admin__create_group(TEXT) FROM PUBLIC;
 
+-- not sure if this is exposed to the front end yet. --CT
 CREATE OR REPLACE FUNCTION admin__delete_user
 (in_username TEXT, in_drop_role bool) returns INT as $$
     
@@ -477,6 +521,7 @@ It leaves the entity and person references.
 If in_drop_role is set, it drops the role too.
 $$;
 
+-- Work oin progress, not for ducmenting yet.
 CREATE OR REPLACE FUNCTION admin__delete_group (in_group_name TEXT) returns bool as $$
     
     DECLARE
@@ -546,6 +591,8 @@ create or replace function admin__is_user (in_user text) returns bool as $$
     
 $$ language plpgsql;
 
+COMMENT ON function admin__is_user (in_user text) IS
+$$ Returns true if user is set up in LedgerSMB.  False otherwise.$$;
 
 create or replace view user_listable as 
     select 
@@ -602,6 +649,16 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON function user__save_preferences(
+        in_dateformat text,
+        in_numberformat text,
+        in_language text,
+        in_stylesheet text,
+        in_printer text
+) IS
+$$ Saves user preferences.  Returns true if successful, false if no preferences
+were found to update.$$;
+
 create or replace function user__get_preferences (in_user_id int) returns setof user_preference as $$
     
 declare
@@ -617,6 +674,9 @@ BEGIN
     END IF;
 END;
 $$ language plpgsql;
+
+COMMENT ON function user__get_preferences (in_user_id int) IS
+$$ Returns the preferences row for the user.$$;
 
 CREATE TYPE user_result AS (
 	id int,
@@ -648,6 +708,10 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob date) IS
+$$ Returns a list of users matching search criteria.  Nulls match all values.
+only username is not an exact match.$$;
+
 CREATE TYPE session_result AS (
 	id int,
 	username text,
@@ -665,6 +729,9 @@ GROUP BY s.session_id, u.username, s.last_used
 ORDER BY u.username;
 $$ LANGUAGE SQL;
 
+COMMENT ON FUNCTION admin__list_sessions() IS 
+$$ Lists all active sessions.$$;
+
 CREATE OR REPLACE FUNCTION admin__drop_session(in_session_id int) RETURNS bool AS
 $$
 BEGIN
@@ -672,3 +739,6 @@ BEGIN
 	RETURN FOUND;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION admin__drop_session(in_session_id int) IS
+$$ Drops the session identified, releasing all locks held.$$;
