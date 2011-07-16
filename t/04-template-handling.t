@@ -192,8 +192,9 @@ $form->{file} = 't/data/04-not-there.txt';
 @r = trap{AM->load_template($myconfig, $form)};
 if ( $expStackTrace == 0 )
 {
-    is($trap->die, "Error: t/data/04-not-there.txt : No such file or directory\n",
-        'AM, load_template: Die on non-existent file');
+    is($trap->die, 'Error: Template not found.  
+         Perhaps you meant to edit the default template instead?
+');
 }
 else
 {   

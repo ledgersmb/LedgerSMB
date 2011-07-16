@@ -30,3 +30,5 @@ pod_coverage_ok("LedgerSMB::Template::ODS");
 pod_coverage_ok("LedgerSMB::Template::TXT");
 pod_coverage_ok("LedgerSMB::Template::XLS");
 pod_coverage_ok("LedgerSMB::User");
+pod_coverage_ok("LedgerSMB::DBObject::Company");
+pod_coverage_ok("LedgerSMB::Date");
