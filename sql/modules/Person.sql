@@ -1,7 +1,16 @@
+
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
 CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
 $$
 	SELECT entity_id from users where username = SESSION_USER;
 $$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION person__get_my_entity_id() IS
+$$ Returns the entity_id of the current, logged in user.$$;
 
 CREATE OR REPLACE FUNCTION person__save
 (in_entity_id integer, in_salutation_id int, 
@@ -50,6 +59,14 @@ RETURNS INT AS $$
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION person__save
+(in_entity_id integer, in_salutation_id int, 
+in_first_name text, in_middle_name text, in_last_name text,
+in_country_id integer
+) IS
+$$ Saves the person with the information specified.  Returns the entity_id
+of the record saved.$$;
+
 CREATE OR REPLACE FUNCTION person__list_locations(in_entity_id int)
 RETURNS SETOF location_result AS
 $$
@@ -71,6 +88,9 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION person__list_locations(in_entity_id int) IS
+$$ Returns a list of locations specified attached to the person.$$;
+
 CREATE OR REPLACE FUNCTION person__list_contacts(in_entity_id int)
 RETURNS SETOF contact_list AS 
 $$
@@ -88,6 +108,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+COMMENT ON FUNCTION person__list_contacts(in_entity_id int) IS
+$$ Returns a list of contacts attached to the function.$$;
 --
 
 CREATE OR REPLACE FUNCTION person__delete_contact
@@ -103,6 +125,11 @@ RETURN FOUND;
 END;
 
 $$ language plpgsql;
+
+COMMENT ON FUNCTION person__delete_contact
+(in_person_id int, in_contact_class_id int, in_contact text) IS
+$$ Deletes a contact record specified for the person.  Returns true if a record
+was found and deleted, false if not.$$;
 
 CREATE OR REPLACE FUNCTION person__save_contact
 (in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT)
@@ -144,6 +171,11 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION person__save_contact
+(in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT) IS
+$$ Saves saves contact info.  Returns 1 if a row was inserted, 0 if it was 
+updated. $$;
+
 CREATE OR REPLACE FUNCTION person__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
 $$
@@ -157,6 +189,8 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION person__list_bank_account(in_entity_id int) IS
+$$ Lists bank accounts for a person$$;
 
 CREATE OR REPLACE FUNCTION person__list_notes(in_entity_id int) 
 RETURNS SETOF entity_note AS 
@@ -174,6 +208,8 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 		
+COMMENT ON FUNCTION person__list_notes(in_entity_id int) IS
+$$ Returns a list of notes attached to a person.$$;
 --
 CREATE OR REPLACE FUNCTION person__delete_location
 (in_person_id int, in_location_id int, in_location_class int)
@@ -190,8 +226,12 @@ RETURN FOUND;
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION person__delete_location
+(in_person_id int, in_location_id int, in_location_class int) IS
+$$Deletes a location mapping to a person.  Returns true if found, false if no
+data deleted.$$;
 
-create or replace function person__save_location(
+CREATE OR REPLACE FUNCTION person__save_location(
     in_entity_id int, 
     in_location_id int,
     in_location_class int,
@@ -251,13 +291,19 @@ create or replace function person__save_location(
     END;
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION person__all_locations (
-    in_entity_id int
-) returns setof location AS $$
+COMMENT ON FUNCTION person__save_location(
+    in_entity_id int,
+    in_location_id int,
+    in_location_class int,
+    in_line_one text,
+    in_line_two text,
+    in_line_three text,
+    in_city TEXT,
+    in_state TEXT,
+    in_mail_code text,
+    in_country_code int,
+    in_old_location_class int
+) IS
+$$ Saves a location mapped to the person with the specified information.
+Returns the location id saved.$$;
 
-    SELECT l.* FROM location l
-    JOIN person_to_location ptl ON ptl.location_id = l.id
-    JOIN person p on ptl.person_id = p.id
-    WHERE p.id = $1;
-
-$$ language sql;

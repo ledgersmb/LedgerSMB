@@ -1,5 +1,11 @@
 -- VERSION 1.3.0
 
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
+
 CREATE OR REPLACE FUNCTION setting_set (in_key varchar, in_value varchar) 
 RETURNS BOOL AS
 $$

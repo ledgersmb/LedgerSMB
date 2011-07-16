@@ -1,3 +1,9 @@
+
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
 -- Probably want to move this to the Settings module -CT
 
 CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency() 
