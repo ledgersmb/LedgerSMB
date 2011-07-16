@@ -38,8 +38,6 @@ Save vendor/customer will update or create as needed.
 Errors if not inherited.  Inheriting classes MUST define this to set
 $entity_class appropriately.
 
-=back
-
 =cut
 
 sub set_entity_class {
@@ -48,6 +46,16 @@ sub set_entity_class {
        "Error:  Cannot call LedgerSMB::ScriptLib::Company::set_entity_class " .
        "directly!");
 }
+
+=item dispatch_legacy
+
+This is a semi-private method which interfaces with the old code.  Note that
+as long as any other functions use this, the contact interface cannot be said to 
+be safe for code caching.
+
+Not fully documented because this will go away as soon as possible.
+
+=cut
 
 sub dispatch_legacy {
     our ($request) = shift @_;
@@ -115,29 +123,50 @@ sub dispatch_legacy {
     $form->{action}();
 }
 
+=item add_transaction
+
+Dispatches to the Add (AR or AP as appropriate) transaction screen.
+
+=cut
+
 sub add_transaction {
     my $request = shift @_;
     dispatch_legacy($request);
 }
+
+=item add_invoice
+
+Dispatches to the (sales or vendor, as appropriate) invoice screen.
+
+=cut
 
 sub add_invoice {
     my $request = shift @_;
     dispatch_legacy($request);
 }
 
+=item add_order
+
+Dispatches to the sales/purchase order screen.
+
+=cut
+
 sub add_order {
     my $request = shift @_;
     dispatch_legacy($request);
 }
+
+=item rfq
+
+Dispatches to the quotation/rfq screen
+
+=cut
 
 sub rfq {
     my $request = shift @_;
     dispatch_legacy($request);
 }
 
-=pod
-
-=over
 
 =item new_company($request) 
 
@@ -283,7 +312,7 @@ sub add {
 
 =over
 
-=item get_result($self, $request, $user)
+=item get_results($self, $request, $user)
 
 Requires form var: search_pattern
 
@@ -844,7 +873,7 @@ sub delete_location{
 
 =over
 
-=item edit_bank_account($request)
+=item edit_bank_acct($request)
 
 displays screen to a bank account
 

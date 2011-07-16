@@ -1,5 +1,32 @@
 package LedgerSMB::DBObject::Admin;
 
+=head1 NAME
+
+LedgerSMB::DBObject::Admin 
+
+=head1 SYNOPSIS
+
+User/group management for LedgerSMB
+
+=head1 INHERITS
+
+=over
+
+=item Universal
+
+=item LedgerSMB
+
+=item LedgerSMB::DBObject
+
+=back
+
+=head1 METHODS
+
+=over
+
+=cut
+
+
 use base qw(LedgerSMB::DBObject);
 
 use LedgerSMB::Location;
@@ -14,13 +41,30 @@ my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
 #[18:00:31] <aurynn> I'd like to split them employee/user and roles/prefs
 #[18:00:44] <aurynn> edit/create employee and add user features if needed.
 
-sub save {
-    my $self = shift @_;
-    
-    $self->error("Cannot save an Adminstrator object.");
-}
+# Deleting "save" method.  There is no point to a routine that only raises
+# an error given that it is not inherited.  An error will be raised in a way
+# which is more developer-friendly.   --CT
+
+
+=item save_user
+
+Saves a user optionally with location and contact data.
+
+If the password or import hash values is set, will not save contact or address
+information.
+
+This API is not fully documented at this time because it is expected that it will
+be broken down into more manageable chunks in future versions.  Please do not 
+count on the behavior.
+
+=cut
 
 sub save_user {
+
+    # This really should be split out into multiple routines for saving
+    # addresses, contact info, and the like.  It's hard to follow and document
+    # a long function like this.  Oh well, to be part of the next version 
+    # refactoring.  --CT
     
     my $self = shift @_;
 
@@ -30,7 +74,6 @@ sub save_user {
     my $employee = LedgerSMB::DBObject::Employee->new( base=>$self);
     
     $employee->save();
-    # now, check for user-specific stuff. Is this person a user or not?
     
     my $user = LedgerSMB::DBObject::User->new(base=>$self, copy=>'list',
         merge=>[
@@ -42,7 +85,7 @@ sub save_user {
         ]
     );
     $user->{entity_id} = $employee->{entity_id};
-    if ($user->save() == 8){ # Duplicate User exception
+    if ($user->save() == 8){ # Duplicate User exception --CT
         return 8;
     }
     $self->{user} = $user;
@@ -82,12 +125,46 @@ sub save_user {
     
 }
 
+=item search_users
+
+Returns a list of users matching search criteria, and attaches that list to the 
+user_results hash value.
+
+Search criteria:
+
+=over
+
+=item username
+
+=item first_name
+
+=item last_name
+
+=item ssn
+
+=item dob
+
+=back
+
+Undef matches all values.  All matches exact except username which allows for
+partial matches.
+
+=cut
+
 sub search_users {
    my $self = shift @_;
    my @users = $self->exec_method(funcname => 'admin__search_users');
    $self->{user_results} = \@users;
    return @users;
 }
+
+=item list_sessions
+
+returns a list of active sessions, when they were last used, and how many 
+discretionary locks they hold.  The list is also attached to the
+active_sessions hash value.  No inputs required or used.
+
+=cut
 
 sub list_sessions {
    my $self = shift @_;
@@ -96,11 +173,26 @@ sub list_sessions {
    return @sessions;
 }
 
+=item delete_session 
+
+Deletes a session identified by the session_id hashref.
+
+=cut
+
 sub delete_session {
    my $self = shift @_;
    my @sessions = $self->exec_method(funcname => 'admin__drop_session');
    return $self->{dbh}->commit;
 }
+
+=item save_roles 
+
+Saves the roles assigned to a user.
+Each role is specified as a hashref true value, where the key is the full name
+of the role (i.e. starting with lsmb_[dbname]__).
+
+=cut
+
 sub save_roles {
     
     my $self = shift @_;
@@ -146,103 +238,17 @@ sub save_roles {
     $self->{dbh}->commit;
 }
 
-sub save_group {
-    
-     my $self = shift @_;
-     
-     my $existant = shift @{ $self->call_procedure (procname=> "is_group", args=>[$self->{modifying_group}]) };
-     
-     my $group = shift @{ $self->exec_method (funcname=> "save_group") };
-     
-     # first we grab all roles
-     
-     my $roles = $self->call_procedure( procname => "admin__all_roles" );
-     my $user_roles = $self->call_procedure(procname => "admin__get_user_roles", 
-        args=>[ $self->{ group_name } ] 
-    );
+=item get_salutations
 
-     my %active_roles;
-     for my $role (@{$user_roles}) {
+Returns a list of salutation records from the db for the dropdowns.
 
-        # These are our user's roles.
-
-        $active_roles{$role} = 1;
-     }
-
-     my $status;
-
-     for my $role ( @{ $roles } ) {
-
-         # These roles are were ALL checked on the page, so they're the active ones.
-
-         if ($active_roles{$role} && $self->{incoming_roles}->{$role}) {
-
-             # we don't need to do anything.
-         }
-         elsif ($active_roles{$role} && !($self->{incoming_roles}->{$role} )) {
-
-             # do remove function
-             $status = $self->exec_method(
-                 procname => "admin__remove_group_from_role",
-                 args=>[ $self->{ modifying_user }, $role ] 
-             );
-         }
-         elsif ($self->{incoming_roles}->{$role} and !($active_roles{$role} )) {
-
-             # do add function
-             $status = $self->exec_method(
-                 procname => "admin__add_group_to_role",
-                 args=>[ $self->{ modifying_user }, $role ] 
-             );
-         }         
-     }     
-}
-
-
-sub delete_user {
-    
-    my $self = shift @_;
-    
-    my $status = shift @{ $self->exec_method(procname=>'admin__delete_user', 
-        args=>[$self->{modifying_user}]) 
-    };
-    
-    if ($status) {
-        
-        return 1;
-    } else {
-        
-        $self->error('Delete user failed.');
-        #my $error = LedgerSMB::Error->new("Delete user failed.");
-        #$error->set_status($status);
-        #return $error;
-    }
-}
-
-sub delete_group {
-    
-    my $self = shift @_;
-    
-    my $status = shift @{ $self->exec_method(procname=>'admin__delete_group', 
-        args=>[$self->{groupname}]) }
-    ;
-    
-    if ($status) {
-        
-        return 1;
-    } else {
-        
-        $self->error('Delete group failed.');
-        #my $error = LedgerSMB::Error->new("Delete group failed.");
-        #$error->set_status($status);
-        #return $error;
-    }
-}
+=cut
 
 sub get_salutations {
     
     my $self = shift;
-    
+
+    # Adding SQL queries like this into the code directly is bad practice. --CT
     my $sth = $self->{dbh}->prepare("SELECT * FROM salutation ORDER BY id ASC");
     
     $sth->execute();
@@ -251,6 +257,17 @@ sub get_salutations {
     return $sth->fetchall_arrayref( {} );
 }
 
+
+=item get_roles 
+
+Returns a list of role names with the following format:
+
+{role => $full_role_name, description => $short_role_name}
+
+The short role name is the full role name with the prefix removed (i.e. without
+the lsmb_[dbname]__ prefix).
+
+=cut
 
 sub get_roles {
     
@@ -276,6 +293,14 @@ sub get_roles {
     return \@rows;
 }
 
+=item get_countries
+
+Returns a reference to an array of hashrefs including the country data in the db.
+
+Sets the same reference to the countries hash value.
+
+=cut
+
 sub get_countries {
     
     my $self = shift @_;
@@ -283,14 +308,40 @@ sub get_countries {
     @{$self->{countries}} 
           =$self->exec_method(funcname => 'location_list_country'); 
 	# returns an array of hashrefs.
-    $self->debug({file => '/tmp/user'});
     return $self->{countries};
 }
+
+=item get_contact_classes
+
+Returns a list of hashrefs ({id =>, class =>}) relating to the contact classes.
+
+=cut
+
 sub get_contact_classes {
     
     my $self = shift @_;
+
+    # There are a couple problems here:
+    # 1)  It's best to mix Perl and SQL as little as possible.  Mixing gets 
+    # around our centralized sql injection prevention measures.  While this 
+    # query poses no direct risk there, it's a bad habit to be in.
+    # 
+    # 2)  Lack of ordering means drop down list orders could change in the future
+    # which is nprobably not very good.
+    # --CT
     my $sth = $self->{dbh}->prepare("select id, class as name from contact_class");
     my $code = $sth->execute();
     return $sth->fetchall_arrayref({});
 }
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+=cut
+
 1;
