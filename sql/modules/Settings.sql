@@ -1,18 +1,28 @@
 -- VERSION 1.3.0
 
 CREATE OR REPLACE FUNCTION setting_set (in_key varchar, in_value varchar) 
-RETURNS VOID AS
+RETURNS BOOL AS
 $$
 BEGIN
 	UPDATE defaults SET value = in_value WHERE setting_key = in_key;
-	RETURN;
+        IF NOT FOUND THEN
+             INSERT INTO defaults (setting_key, value) 
+                  VALUES (in_setting_key, in_value);
+        END IF;
+	RETURNS TRUE;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION setting_set (in_key varchar, in_value varchar) IS
+$$ sets a value in the defaults thable and returns true if successful.$$;
 
 CREATE OR REPLACE FUNCTION setting_get (in_key varchar) RETURNS defaults AS
 $$
 SELECT * FROM defaults WHERE setting_key = $1;
 $$ LANGUAGE sql;
+
+COMMENT ON FUNCTION setting_get (in_key varchar) IS
+$$ Returns the value of the setting in the defaults table.$$;
 
 CREATE OR REPLACE FUNCTION setting_get_default_accounts () 
 RETURNS SETOF defaults AS
@@ -23,11 +33,15 @@ BEGIN
 	FOR account IN 
 		SELECT * FROM defaults 
 		WHERE setting_key like '%accno_id'
+                ORDER BY setting_key
 	LOOP
 		RETURN NEXT account;
 	END LOOP;
 END;
 $$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION setting_get_default_accounts () IS
+$$ Returns a set of settings for default accounts.$$; 
 
 CREATE OR REPLACE FUNCTION setting_increment (in_key varchar) returns varchar
 AS
@@ -64,12 +78,21 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION setting_increment (in_key varchar) IS
+$$This function takes a value for a sequence in the defaults table and increments
+it.  Leading zeroes and spaces are preserved as placeholders.  Currently <?lsmb
+parsing is not supported in this routine though it may be added at a later date.
+$$;
+
 CREATE OR REPLACE FUNCTION setting__get_currencies() RETURNS text[]
 AS
 $$
 SELECT string_to_array(value, ':') from defaults where setting_key = 'curr';
 $$ LANGUAGE SQL;
 -- Table schema defaults
+
+COMMENT ON FUNCTION setting__get_currencies() is
+$$ Returns an array of currencies from the defaults table.$$;
 
 ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
 
