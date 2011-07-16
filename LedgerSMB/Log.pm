@@ -72,10 +72,11 @@ sub print {
         return 0;
     }
     shift;
+    my $level = shift;
     $log_line = sprintf( '[%s] [%s] %i %s',
         scalar(localtime), +shift, $$, join( ' ', @_ ) )
       . "\n";
-    print STDERR $log_line;
+    $logger->$level($log_line);
 
 }
 

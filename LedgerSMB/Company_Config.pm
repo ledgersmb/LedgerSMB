@@ -35,9 +35,10 @@ use LedgerSMB::Setting;
 my @company_settings = qw(templates businessnumber weightunit curr
                           default_email_from default_email_to
                           default_email_bcc  default_email_cc
-                          separate_duties);
+                          separate_duties company_name company_email
+                          company_phone company_fax);
 
-our $VERSION = 0.1;
+our $VERSION = 1.0;
 our $settings = {};
 
 sub initialize{

@@ -70,6 +70,10 @@ my @default_textboxes = (
    { name => 'default_email_bcc', label => $locale->text('Default Email BCC') },
    { name => 'default_email_from', 
      label => $locale->text('Default Email From') },
+   { name => 'company_name', label => $locale->text('Company Name') },
+   { name => 'company_email', label => $locale->text('Company Email') },
+   { name => 'company_phone', label => $locale->text('Company Phone') },
+   { name => 'company_fax', label => $locale->text('Company Fax') },
 );
 
 my @default_others = qw(businessnumber weightunit 
