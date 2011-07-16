@@ -1,5 +1,11 @@
 -- VERSION 1.3.0
 
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
+
 
 CREATE OR REPLACE FUNCTION employee__save 
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
@@ -34,6 +40,12 @@ BEGIN
         RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION employee__save
+(in_entity_id int, in_start_date date, in_end_date date, in_dob date,
+        in_role text, in_ssn text, in_sales bool, in_manager_id int,
+        in_employee_number text) IS
+$$ Saves an employeerecord with the specified information.$$;
 
 create view employees as
     select 
@@ -81,6 +93,10 @@ LEFT JOIN person mp ON ee.manager_id = p.entity_id
     WHERE p.entity_id = $1;
 $$ language sql;
 
+COMMENT ON FUNCTION employee__get (in_entity_id integer) IS
+$$ Returns an employee_result tuple with information specified by the entity_id.
+$$;
+
 CREATE OR REPLACE FUNCTION employee__search
 (in_employeenumber text, in_startdate_from date, in_startdate_to date,
 in_first_name text, in_middle_name text, in_last_name text,
@@ -104,6 +120,18 @@ LEFT JOIN person mp ON ee.manager_id = p.entity_id
           and ($5 is null or p.middle_name ilike '%' || $5 || '%')
           and ($6 is null or p.last_name ilike '%' || $6 || '%');
 $$ language sql;
+
+COMMENT ON FUNCTION employee__search
+(in_employeenumber text, in_startdate_from date, in_startdate_to date,
+in_first_name text, in_middle_name text, in_last_name text,
+in_notes text) IS
+$$ Returns a list of employee_result records matching the search criteria.
+
+employeenumber is an exact match.  
+stardate_from and startdate_to specify the start dates for employee searches
+All others are partial matches.
+
+NULLs match all values.$$;
 
 CREATE OR REPLACE FUNCTION employee__list_managers
 (in_id integer)
@@ -129,20 +157,18 @@ BEGIN
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION employee_delete
-(in_id integer) returns void as
-$$
-BEGIN
-	DELETE FROM employee WHERE entity_id = in_id;
-	RETURN;
-END;
-$$ language plpgsql;
+COMMENT ON FUNCTION employee__list_managers
+(in_id integer) IS
+$$ Returns a list of managers, that is employees with the 'manager' role set.$$;
 
 -- as long as we need the datatype, might as well get some other use out of it!
 --
 -- % type is pg_trgm comparison.
 
 CREATE INDEX notes_idx ON entity_note USING gist(note gist_trgm_ops);
+
+--Testing this more before replacing employee__search with it.
+-- Consequently not to be publically documented yet, --CT
 
 CREATE OR REPLACE VIEW employee_search AS
 SELECT e.*, em.name AS manager, emn.note, en.name as name
@@ -181,6 +207,10 @@ BEGIN
 END;
 $$ language plpgsql;
 
+
+-- I don't like this.  Wondering if we should unify this to another function.
+-- person__location_save should be cleaner.  Not documenting yet, but not 
+-- removing because user management code uses it.  --CT
 create or replace function employee_set_location 
     (in_employee int, in_location int) 
 returns void as $$
