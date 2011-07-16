@@ -2457,8 +2457,9 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 233	Search Assets	\N	2
 235	Import	229	2
 234	Depreciate	229	4
-236	Reports	229	10
 237	Net Book Value	236	1
+238	Disposal	229	5
+236	Reports	229	11
 \.
 
 --
@@ -3090,22 +3091,24 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 227	menu	1	616
 228	menu	1	617
 229	menu	1	618
-230	module	asset.pl	619
 230	action	asset_category_screen	620
-231	module	asset.pl	621
 231	action	asset_category_search	622
-232	module	asset.pl	623
 232	action	asset_screen	624
-233	module	asset.pl	625
 233	action	asset_search	626
 234	module	asset.pl	627
 234	action	new_report	628
-234	depreciate	1	629
 235	module	asset.pl	630
 235	action	import	631
 236	menu	1	632
 237	module	asset.pl	633
 237	action	display_nbv	634
+232	module	asset.pl	623
+230	module	asset.pl	619
+231	module	asset.pl	621
+233	module	asset.pl	625
+234	depreciation	1	629
+238	action	new_report	636
+238	module	asset.pl	635
 \.
 
 --

@@ -1600,6 +1600,10 @@ TO "lsmb_<?lsmb dbname ?>__assets_administer";
 GRANT SELECT, UPDATE ON asset_class_id_seq
 TO "lsmb_<?lsmb dbname ?>__assets_administer";
 
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 237);
+
+
 CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_enter" NOLOGIN INHERIT;
 
 GRANT ALL ON asset_item_id_seq TO "lsmb_<?lsmb dbname ?>__assets_enter";
@@ -1608,9 +1612,25 @@ TO "lsmb_<?lsmb dbname ?>__assets_enter";
 
 GRANT INSERT, SELECT ON asset_note TO "lsmb_<?lsmb dbname ?>__assets_enter";
 
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 230);
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 231);
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 232);
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 233);
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 235);
+
 CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_depreciate" NOLOGIN INHERIT;
 GRANT SELECT, INSERT ON asset_report, asset_report_line, asset_item, asset_class
 TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
+
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_depreciate', 'allow', 238);
+INSERT INTO menu_acl(role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_depreciate', 'allow', 234);
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_approve" NOLOGIN INHERIT;
 GRANT SELECT ON asset_report, asset_report_line, asset_item, asset_class

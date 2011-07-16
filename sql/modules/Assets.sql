@@ -941,11 +941,12 @@ LEFT JOIN asset_report ar ON (arl.report_id = ar.id)
           ai.purchase_date, ai.location_id, ai.invoice_id, ai.asset_account_id,
           ai.dep_account_id, ai.asset_class_id, ai.start_depreciation,
           ai.salvage_value, ai.department_id, ai.exp_account_id, ai.obsolete_by
-   HAVING     2 <> ALL(as_array(ar.report_class)) 
-          and 4 <> ALL(as_array(ar.report_class))
+   HAVING (count(ar.report_class) = 0 OR    
+          (2 <> ALL(as_array(ar.report_class)) 
+          and 4 <> ALL(as_array(ar.report_class))))
           AND ((ai.purchase_value - coalesce(sum(arl.amount), 0) 
                > ai.salvage_value) and ai.obsolete_by is null)
-               OR $1 is not true
+               OR $1 is not true;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_report__generate
