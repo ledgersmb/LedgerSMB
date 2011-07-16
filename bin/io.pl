@@ -42,6 +42,7 @@ use Error qw(:try);
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Company_Config;
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
@@ -1448,6 +1449,15 @@ sub print_select { # Needed to print new printoptions output from non-template
 }
 sub print {
 
+    my $csettings = $LedgerSMB::Company_Config::settings;
+    $form->{company} = $csettings->{company_name};
+    $form->{businessnumber} = $csettings->{businessnumber};
+    $form->{email} = $csettings->{company_email};
+    $form->{address} = $csettings->{company_address};
+    $form->{tel} = $csettings->{company_phone};
+    $form->{fax} = $csettings->{company_fax};
+
+
     # if this goes to the printer pass through
     if ( $form->{media} !~ /(screen|email)/ ) {
         $form->error( $locale->text('Select txt, postscript or PDF!') )
@@ -1653,9 +1663,8 @@ sub print_form {
         if (   $form->{formname} eq 'purchase_order'
             || $form->{formname} eq 'request_quotation' )
         {
-            $form->{shiptoname}     = $myconfig{company};
-            $form->{shiptoaddress1} = $myconfig{address};
-            $form->{shiptoaddress1} =~ s/\\n/\n/g;
+            $form->{shiptoname}     = $form->{company};
+            $form->{shiptoaddress1} = $form->{address};
         }
         else {
             if ( $form->{formname} !~ /bin_list/ ) {
@@ -1670,14 +1679,9 @@ sub print_form {
 
     push @vars, ( "${inv}number", "${inv}date", "${due}date" );
 
-    for (qw(company address tel fax businessnumber)) {
-        $form->{$_} = $myconfig{$_};
-    }
     $form->{address} =~ s/\\n/\n/g;
 
     for (qw(name email)) { $form->{"user$_"} = $myconfig{$_} }
-
-    push @vars, qw(company address tel fax businessnumber username useremail);
 
     for (qw(notes intnotes)) { $form->{$_} =~ s/^\s+//g }
 
@@ -1686,7 +1690,6 @@ sub print_form {
         $form->{$_} =~ s/<%(.*?)%>/$form->{$1}/g;
     }
 
-    $form->format_string(@vars);
 
     $form->{templates} = "$myconfig{templates}";
     $form->{IN}        = "$form->{formname}.$form->{format}";

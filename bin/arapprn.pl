@@ -41,6 +41,7 @@
 
 use Error qw(:try);
 use LedgerSMB::Template;
+use LedgerSMB::Company_Config;
 
 # any custom scripts for this one
 if ( -f "bin/custom/arapprn.pl" ) {
@@ -55,6 +56,15 @@ if ( -f "bin/custom/$form->{login}_arapprn.pl" ) {
 # end of main
 
 sub print {
+
+    my $csettings = $LedgerSMB::Company_Config::settings;
+    $form->{company} = $csettings->{company_name};
+    $form->{businessnumber} = $csettings->{businessnumber};
+    $form->{email} = $csettings->{company_email};
+    $form->{address} = $csettings->{company_address};
+    $form->{tel} = $csettings->{company_phone};
+    $form->{fax} = $csettings->{company_fax};
+
 
     if ( $form->{media} !~ /screen/ ) {
         $form->error( $locale->text('Select postscript or PDF!') )
@@ -210,16 +220,6 @@ sub print_check {
 
     $form->{notes} =~ s/^\s+//g;
     push @a, "notes";
-
-    for (qw(company address tel fax businessnumber)) {
-        $form->{$_} = $myconfig{$_};
-    }
-    $form->{address} =~ s/\\n/\n/g;
-
-    push @a,
-      qw(company address tel fax businessnumber text_amount text_decimal);
-
-    $form->format_string(@a);
 
     $form->{templates} = "$myconfig{templates}";
     $form->{IN} =
@@ -470,15 +470,8 @@ sub print_transaction {
 
     @a = ( "invnumber", "transdate", "duedate", "notes" );
 
-    for (qw(company address tel fax businessnumber)) {
-        $form->{$_} = $myconfig{$_};
-    }
-    $form->{address} =~ s/\\n/\n/g;
-
     push @a,
       qw(company address tel fax businessnumber text_amount text_decimal);
-
-    $form->format_string(@a);
 
     $form->{invdate} = $form->{transdate};
 
