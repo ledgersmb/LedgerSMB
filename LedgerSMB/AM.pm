@@ -1517,12 +1517,17 @@ Populates $form->{body} with the contents of the file $form->{file}.
 sub load_template {
 
     my ( $self, $myconfig, $form ) = @_;
+    my $testval = 0;
 
     $form->{file} ||= lc "$myconfig->{templates}/$form->{template}.$form->{format}";
     $self->check_template_name( \%$myconfig, \%$form );
-    open( TEMPLATE, '<', "$form->{file}" )
-      or $form->error("$form->{file} : $!");
-
+    open( TEMPLATE, '<', "$form->{file}" ) || ($testval = 1);
+    if ($testval == 1 && ($! eq 'No such file or directory')){
+      $form->error('Template not found.  
+         Perhaps you meant to edit the default template instead?');
+    } elsif ($testval == 1){
+       $form->error("$form->{file} : $!");
+    }
     while (<TEMPLATE>) {
         $form->{body} .= $_;
     }

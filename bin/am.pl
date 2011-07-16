@@ -1314,7 +1314,9 @@ sub list_templates {
         $column_data{code} = { text => $ref->{code}, href =>
             qq|$form->{script}?action=display_form&file=$myconfig{templates}/$ref->{code}/$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&code=$ref->{code}&callback=$callback|};
         $column_data{description} = $ref->{description};
-
+        if ($ref->{code} eq '.'){
+            $column_data{code}->{text} = $locale->text('Default');
+        }
 	push @rows, \%column_data;
     
     }
