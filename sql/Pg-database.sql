@@ -3090,13 +3090,13 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 227	menu	1	616
 228	menu	1	617
 229	menu	1	618
-230	module	assets.pl	619
+230	module	asset.pl	619
 230	action	asset_category_screen	620
-231	module	assets.pl	621
+231	module	asset.pl	621
 231	action	asset_category_search	622
-232	module	assets.pl	623
+232	module	asset.pl	623
 232	action	asset_screen	624
-233	module	assets.pl	625
+233	module	asset.pl	625
 233	action	asset_search	626
 234	module	asset.pl	627
 234	action	new_report	628
