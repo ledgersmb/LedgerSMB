@@ -171,7 +171,7 @@ sub delete_bank_account {
 
 =over 
 
-= item get_history 
+=item get_history 
 
 Retrieves customer/vendor purchase.
 
