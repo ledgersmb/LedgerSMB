@@ -843,7 +843,7 @@ $$ Coordinate with others before adding entries. $$;
 CREATE TABLE note (id serial primary key, 
                    note_class integer not null references note_class(id), 
                    note text not null, 
-                   vector tsvector not null, 
+                   vector tsvector not null default '', 
                    created timestamp not null default now(),
                    created_by text DEFAULT SESSION_USER,
                    ref_key integer not null,
