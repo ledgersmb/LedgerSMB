@@ -1,5 +1,11 @@
 --
 
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Public License v 2 or at your option any later version.
+
+-- Docstrings already added to this file.
+
+
 CREATE OR REPLACE FUNCTION entity_save(
     in_entity_id int, in_name text, in_entity_class INT
 ) RETURNS INT AS $$
@@ -35,6 +41,14 @@ CREATE OR REPLACE FUNCTION entity_save(
 
 $$ language 'plpgsql';
 
+COMMENT ON FUNCTION entity_save(
+    in_entity_id int, in_name text, in_entity_class INT
+)  IS
+$$ Currently unused.  Left in because it is believed it may be helpful.
+
+This saves an entity, with the control code being the next available via the 
+defaults table.$$;
+
 CREATE OR REPLACE FUNCTION entity__list_classes ()
 RETURNS SETOF entity_class AS $$
 DECLARE out_row entity_class;
@@ -49,6 +63,9 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION entity__list_classes () IS
+$$ Returns a list of entity classes, ordered by assigned ids$$;
+
 CREATE OR REPLACE FUNCTION entity__get_entity (
     in_entity_id int
 ) RETURNS setof entity AS $$
@@ -56,15 +73,21 @@ CREATE OR REPLACE FUNCTION entity__get_entity (
 declare
     v_row entity;
 BEGIN
+    -- Removing the exception when not found handling.  Applications are
+    -- perfectly capable of handling whether an entity was not found.  No need
+    -- for a database-level exception here. Moreover such results may be useful
+    -- --CT
+
     SELECT * INTO v_row FROM entity WHERE id = in_entity_id;
-    IF NOT FOUND THEN
-        raise exception 'Could not find entity with ID %', in_entity_id;
-    ELSE
-        return next v_row;
-    END IF;
+    return next v_row;
 END;
 
 $$ language plpgsql;
+
+COMMENT ON FUNCTION entity__get_entity (
+    in_entity_id int
+) IS
+$$ Returns a set of (only one) entity record with the entity id.$$;
 
 
 CREATE OR REPLACE FUNCTION eca__get_entity (
@@ -84,6 +107,11 @@ END;
 
 $$ language plpgsql;
 
+COMMENT ON FUNCTION eca__get_entity (
+    in_credit_id int
+)  IS
+$$ Returns a set of (only one) entity to which the entity credit account is
+attached.$$; 
 
 CREATE OR REPLACE FUNCTION entity__delete_bank_account
 (in_entity_id int, in_id int)
@@ -102,3 +130,6 @@ RETURN FOUND;
 END;
 $$ LANGUAGE plpgsql;
 
+COMMENT ON FUNCTION entity__delete_bank_account(in_entity_id int, in_id int) IS
+$$ Deletes the bank account identitied by in_id if it is attached to the entity
+identified by entity_id.  Returns true if a record is deleted, false if not.$$;
