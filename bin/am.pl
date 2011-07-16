@@ -1264,6 +1264,14 @@ sub list_templates {
 
     AM->language( \%myconfig, \%$form );
 
+    if (uc($form->{format}) eq 'LATEX') {
+        $form->{file} = "$form->{template}.tex";
+    } elsif (uc($form->{format}) eq 'HTML') {
+        $form->{file} = "$form->{template}.html";
+    } elsif (uc($form->{format}) eq 'TXT'){
+        $form->{file} = "$form->{template}.txt";
+    }
+
     if ( !@{ $form->{ALL} } ) {
         &display_form;
         $form->finalize_request();
