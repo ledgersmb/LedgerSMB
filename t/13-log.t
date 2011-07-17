@@ -5,7 +5,10 @@ use warnings;
 
 $ENV{TMPDIR} = 't/var';
 
-use Test::More tests => 13;
+#use Test::More tests => 13;
+use Test::More;
+plan skip_all => 'Disabled because we have moved to Log4perl and the predefined
+methods in the LedgerSMB::Log package nto currently recommended';
 use Test::Trap qw(trap $trap);
 
 use Data::Dumper;
