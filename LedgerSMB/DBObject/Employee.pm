@@ -1,9 +1,90 @@
 package LedgerSMB::DBObject::Employee;
 
+=head1 NAME
+
+LedgerSMB::DBObject::Employee - LedgerSMB class for managing Employees 
+
+=head1 SYOPSIS
+
+This module creates object instances based on LedgerSMB's in-database ORM.  
+
+=head1 METHODS
+
+The following method is static:
+
+=over
+
+=item new ($LedgerSMB object);
+
+
+=item save
+
+Saves an employee.  Inputs required
+
+=over
+
+=item entity_id
+
+May not be undef
+
+=item start_date
+
+=item end_date
+
+=item dob date
+
+may not be undef
+
+=item role
+
+Not the database role.  Either manager or user 
+
+=item ssn
+
+=item sales
+
+=item manager_id
+
+=item employee_number
+
+=back
+
+=item search
+
+Returns a list of employees matching set criteria:
+
+=over
+
+=item employeenumber (exact match)
+
+=item startdate_from (start of date range)
+
+=item startdate_to (end of date range)
+
+=item first_name (partial match)
+
+=item middle_name (partial match)
+
+=item last_name (partial match)
+
+=item notes (partial match)
+
+=back
+
+Undef values match all values.
+
+=cut
+
 use base qw(LedgerSMB::DBObject);
 use strict;
 
 my $ENTITY_CLASS = 3;
+
+=item set_entity_class
+
+Sets the entity class to 3.
+
+=cut
 
 sub set_entity_class {
     my $self = shift @_;
@@ -19,6 +100,14 @@ sub save {
    $self->{dbh}->commit;
 }
 
+=item save_location
+
+Saves the location data for the contact.
+
+Inputs are standard location inputs (line_one, line_two, etc)
+
+=cut
+
 sub save_location {
     my $self = shift @_;
 
@@ -31,6 +120,22 @@ sub save_location {
     $self->{dbh}->commit;
 }
 
+=item save_contact
+
+Saves contact information.  Inputs are standard contact inputs:
+
+=over
+
+=item entity_id
+
+=item contact_class
+
+=item contact
+
+=item description
+
+=cut
+
 sub save_contact {
     my ($self) = @_;
     $self->{contact_new} = $self->{contact};
@@ -38,24 +143,19 @@ sub save_contact {
     $self->{dbh}->commit;
 }
 
+=item save_bank_account
+
+Saves a bank account to an employee.
+
+Standard inputs (entity_id, iban, bic)
+
+=cut
+
 sub save_bank_account {
     my $self = shift @_;
     $self->exec_method(funcname => 'entity__save_bank_account');
     $self->{dbh}->commit;
 }
-
-sub save_note {
-    my $self = shift @_;
-    if ($self->{credit_id} && $self->{note_class} eq '3'){
-        $self->exec_method(funcname => 'eca__save_notes');
-    } else {
-        $self->exec_method(funcname => 'entity__save_notes');
-    }
-    $self->{dbh}->commit;
-}
-    
-
-=over
 
 =item get_metadata()
 
@@ -63,8 +163,6 @@ This retrieves various information vor building the user interface.  Among other
 things, it sets the following properties:
 $self->{ar_ap_acc_list} = qw(list of ar or ap accounts)
 $self->{cash_acc_list} = qw(list of cash accounts)
-
-=back
 
 =cut
 
@@ -88,6 +186,34 @@ sub get_metadata {
     $self->{default_country} = $country_setting->{value};
 }
 
+=item get
+
+Returns the employee record with all the inputs required for "save" populated.
+
+Also populates:
+
+=over
+
+=item locations
+
+List of location info
+
+=item contacts
+
+List of contact info
+
+=item notes
+
+List of notes
+
+=item bank account
+
+List of bank accounts
+
+=back
+
+=cut
+
 sub get {
     my $self = shift @_;
     my ($ref) = $self->exec_method(funcname => 'employee__get');
@@ -103,7 +229,15 @@ sub get {
 
     
      
-}    
+}   
+
+=item save_notes
+
+Saves a note to an employee entity.
+
+Standard inputs (note, subject, entity_id)
+
+=cut 
 
 sub save_notes {
     my $self = shift @_;
@@ -118,8 +252,6 @@ sub search {
     return @results;
 }
 
-=over 
-
 =item delete_contact
 
 required request variables:
@@ -129,8 +261,6 @@ contact: text of contact information
 person_id: int of entity_credit_account.id, preferred value
 
 
-=back
-
 =cut
 
 sub delete_contact {
@@ -138,8 +268,6 @@ sub delete_contact {
     $self->exec_method(funcname => 'person__delete_contact');
     $self->{dbh}->commit;
 }
-
-=over
 
 =item delete_location
 
@@ -153,8 +281,6 @@ person_id
 
 Returns true if a record was deleted.  False otherwise.
 
-=back
-
 =cut
 
 sub delete_location {
@@ -164,8 +290,6 @@ sub delete_location {
     $self->{dbh}->commit;
     return $rv;
 }
-
-=over 
 
 =item delete_bank_account
 
@@ -191,5 +315,16 @@ sub delete_bank_account {
     $self->{dbh}->commit;
     return $rv;
 }
+
+=back
+
+=head1 Copyright (C) 2007, The LedgerSMB core team.
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 
 1;
