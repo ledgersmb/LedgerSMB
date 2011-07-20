@@ -68,6 +68,11 @@ sub save_user {
     
     my $self = shift @_;
 
+    if ($self->{username} =~ /[A-Z]/){ 
+        # Caps interfere with Pg permissions --CT
+        $self->error($self->{_locale}->text('Caps not allowed in usernames.'));
+    }
+
     # I deleted some assignments which didn't play well with strict mode
     # and by my reading probably broke things. --CT
 
