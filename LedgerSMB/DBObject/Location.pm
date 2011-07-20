@@ -26,14 +26,6 @@ sub save {
     my $type = shift @_;
     
     # assumes all the parameters are present...
-            'address1',
-            'address2',
-            'city',
-            'state',
-            'zipcode',
-            'country',
-            'companyname',            
-    
     my ($ret) = $self->exec_method(funcname=>$type."__save_location", args=>[
         $self->{user_id}, # entity_id           
         $self->{location_id}, # location_id
