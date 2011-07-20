@@ -64,13 +64,4 @@ sub get {
     return $ret->{location__get};
 }
 
-sub get_all {
-    
-    my $self = shift @_;
-    my $user_id = shift @_;
-    my $type = shift @_;
-    
-    my @locations = $self->exec_method(funcname=>$type."__all_locations", args=>[$user_id]);
-    return \@locations;
-}
 1;

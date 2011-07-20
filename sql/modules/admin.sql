@@ -13,18 +13,6 @@
 --
 -- -CT
 
-create table lsmb_roles (
-    
-    user_id integer not null references users(id),
-    role text not null
-    
-);
-
-COMMENT ON TABLE lsmb_roles IS 
-$$A beginning of a group tracking system.  Not exposed through the front end yet.
-$$;
-
-
 -- work in progress, not documenting yet.
 CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEXT) returns INT AS $$
     

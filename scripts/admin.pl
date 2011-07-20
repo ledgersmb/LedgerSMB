@@ -43,7 +43,7 @@ sub __edit_page {
                 user_roles=>$user_obj->{roles},
                 salutations=>$admin->get_salutations(),
                 contact_classes=>$admin->get_contact_classes(),
-                locations=>$location->get_all($user_obj->{entity_id},"person"),
+                locations=>$user->{employee}->{locations},
                 default_country => $dcsetting->{value},
                 admin => $admin,
                 stylesheet => $request->{stylesheet},

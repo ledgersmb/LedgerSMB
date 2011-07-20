@@ -94,7 +94,10 @@ sub save_user {
     if ($self->{password} or $self->{import}){
        return $self->{dbh}->commit;
     }
-
+    # The location handling here is really brittle.....
+    # In the future, we need to have a coding standard that says that for
+    # objects, the parent is responsible for the child, and accept a data tree
+    # instead of a sort of ravioli architecture.  --CT.
     my $loc = LedgerSMB::DBObject::Location->new(base=>$self, copy=>'list', 
         merge=>[
             'address1',

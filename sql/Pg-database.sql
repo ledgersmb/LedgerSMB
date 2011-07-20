@@ -467,6 +467,19 @@ CREATE TABLE users (
 COMMENT ON TABLE users IS $$username is the actual primary key here because we 
 do not want duplicate users$$;
 
+create table lsmb_roles (
+    
+    user_id integer not null references users(id) ON DELETE CASCADE,
+    role text not null
+    
+);
+
+COMMENT ON TABLE lsmb_roles IS 
+$$ Tracks role assignments in the front end.  Not sure why we need this.  Will
+rethink for 1.4.
+$$;
+
+
 -- Session tracking table
 
 
@@ -1641,7 +1654,7 @@ CREATE TABLE audittrail (
   formname text,
   action text,
   transdate timestamp default current_timestamp,
-  person_id integer references person(id) not null,
+  person_id integer references person(entity_id) not null,
   entry_id BIGSERIAL PRIMARY KEY
 );
 
