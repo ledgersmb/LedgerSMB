@@ -2239,7 +2239,8 @@ $$This table stores the tree structure of the menu.$$;
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_node_id_seq', 226, true);
+SELECT pg_catalog.setval('menu_node_id_seq', 240, true);
+
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
@@ -2473,6 +2474,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 237	Net Book Value	236	1
 238	Disposal	229	5
 236	Reports	229	11
+239	Depreciation	236	2
+240	Disposal	236	3
 \.
 
 --
@@ -2525,13 +2528,12 @@ $$;
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_attribute_id_seq', 615, true);
+SELECT pg_catalog.setval('menu_attribute_id_seq', 641, true);
 
 
 --
 -- Data for Name: menu_attribute; Type: TABLE DATA; Schema: public; Owner: postgres
 --
-
 
 COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 26	outstanding	1	584
@@ -3122,7 +3124,17 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 234	depreciation	1	629
 238	action	new_report	636
 238	module	asset.pl	635
+239	module	asset.pl	637
+239	action	search_reports	638
+239	depreciation	1	639
+240	module	asset.pl	640
+240	action	search_reports	641
 \.
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 --
 
