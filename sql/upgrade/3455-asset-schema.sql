@@ -39,7 +39,7 @@ CREATE TABLE asset_class (
 	method int references asset_dep_method(id)
 );
 
-COMMENT ON asset_class IS $$
+COMMENT ON TABLE asset_class IS $$
 The account fields here set the defaults for the individual asset items.  They
 are non-authoritative.
 $$;
@@ -131,5 +131,5 @@ CREATE TABLE asset_report_line(
 	PRIMARY KEY(asset_id, report_id)
 );
 
-COMMENT ON asset_report_line.department_id IS
+COMMENT ON COLUMN asset_report_line.department_id IS
 $$ In case assets are moved between departments, we have to store this here.$$;
