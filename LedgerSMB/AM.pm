@@ -1161,7 +1161,9 @@ sub recurring_transactions {
                           AS expired
 		     FROM recurring s
 		     JOIN ar a ON (a.id = s.id)
-		     JOIN entity e ON (a.entity_id = e.id)
+                     JOIN entity_credit_account eca 
+                          ON a.entity_credit_account = eca.id
+		     JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex 
@@ -1179,7 +1181,9 @@ sub recurring_transactions {
 		          AS expired
 		     FROM recurring s
 		     JOIN ap a ON (a.id = s.id)
-		     JOIN entity e ON (a.entity_id = e.id)
+                     JOIN entity_credit_account eca 
+                          ON a.entity_credit_account = eca.id
+		     JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
 		LEFT JOIN exchangerate ex ON 
