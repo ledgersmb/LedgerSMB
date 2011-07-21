@@ -15,7 +15,7 @@ BEGIN
              INSERT INTO defaults (setting_key, value) 
                   VALUES (in_setting_key, in_value);
         END IF;
-	RETURNS TRUE;
+	RETURN TRUE;
 END;
 $$ language plpgsql;
 
