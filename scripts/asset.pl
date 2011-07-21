@@ -592,7 +592,10 @@ sub display_report {
 
 =item search_reports
 
-Displays search report filter.  No inputs required,  Any inputs required by
+Displays search report filter.  The only input expected is depreciation which if
+set and true makes this a depreciation report.
+
+Any other inputs required by
 report_results can be used here to set defaults.  See the required inputs for
 LedgerSMB::DBObject::Asset_Report->search() for a list of such inputs.
 
