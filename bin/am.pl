@@ -2302,20 +2302,22 @@ sub recurring_transactions {
             for ( 0 .. $#f ) {
                 push @temp_split, $f{$f[$_]};
             }
-            $column_data{recurringemail} = {
-                text => join ':', @temp_split,
-                delimeter => ':',
-                };
+#            $column_data{recurringemail} = {
+#                text => join ':', @temp_split,
+#                delimeter => ':',
+#                };
+            $column_data{recurringemail} = join ':', @temp_split;
 
             @temp_split = ();
             @f = split /:/, $ref->{recurringprint};
             for ( 0 .. $#f ) {
                 push @temp_split, $f{$f[$_]};
             }
-            $column_data{recurringprint} = {
-                text => join ':', @temp_split,
-                delimeter => ':',
-                };
+            $column_data{recurringprint} = join ':', @temp_split;
+#            $column_data{recurringprint} = {
+#                text => join ':', @temp_split,
+#                delimeter => ':',
+#                };
 
             $j++;
             $j %= 2;
