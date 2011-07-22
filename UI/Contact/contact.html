@@ -8,6 +8,7 @@
 	]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
+<?lsmb IF (! target_div); ?>
 <?lsmb IF (!entity_id and account_class != 3); 
 	target_div = 'company_div';
 ELSIF ((!entity_id or action == 'save') and entity_class == 3);
@@ -30,6 +31,7 @@ ELSIF action== 'save_bank_account' or action == 'get_bank_acct'
 ELSIF action== 'save_notes';
 		target_div = 'notes_div';
 END ?>
+<?lsmb END ?>
 <body onload="init('<?lsmb target_div ?>')">
     <?lsmb IF name ?> 
 <div class="pageheading"><?lsmb text('Company:') ?> <?lsmb name ?></div>
