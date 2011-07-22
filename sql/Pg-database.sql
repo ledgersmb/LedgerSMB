@@ -121,6 +121,8 @@ CREATE VIEW chart AS
 SELECT id, accno, description, 'H' as charttype, NULL as category, NULL as link, NULL as account_heading, null as gifi_accno, false as contra, false as tax from account_heading UNION
 select c.id, c.accno, c.description, 'A' as charttype, c.category, concat_colon(l.description) as link, heading, gifi_accno, contra, tax from account c left join account_link l ON (c.id = l.account_id) group by c.id, c.accno, c.description, c.category, c.heading, c.gifi_accno, c.contra, c.tax;
 
+GRANT SELECT ON chart TO public;
+
 COMMENT ON VIEW chart IS $$Compatibility chart for 1.2 and earlier.$$;
 -- pricegroup added here due to references
 CREATE TABLE pricegroup (
