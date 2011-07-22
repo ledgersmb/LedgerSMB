@@ -65,7 +65,7 @@ sub __edit_page {
 
 sub save_user {
     my ($request, $admin) = @_;
-    if ($request->{import}){
+    if ($request->{import} == "1"){
          delete $request->{password};
     }
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
