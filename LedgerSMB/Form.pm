@@ -3104,11 +3104,8 @@ sub save_recurring {
 
         # calculate enddate
         my $advance = $s{repeat} * ( $s{howmany} - 1 );
-        my %interval;
-        $interval{'Pg'} =
-          "(?::date + interval '$advance $s{unit}')";
 
-        $query = qq|SELECT $interval{$myconfig->{dbdriver}}|;
+        $query = qq|SELECT (?::date + interval '$advance $s{unit}')|;
 
         my ($enddate) = $dbh->selectrow_array($query, undef, $s{startdate});
 
@@ -3118,7 +3115,7 @@ sub save_recurring {
 				?::date - current_date AS b|;
 
         $sth = $dbh->prepare($query) || $self->dberror($query);
-        $sth->execute( $s{startdate}, $enddate );
+        $sth->execute( $s{startdate}, $enddate ) || $self->dberror($query);
         my ( $a, $b ) = $sth->fetchrow_array;
 
         if ( $a + $b ) {
