@@ -5,7 +5,8 @@ GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
 CREATE ROLE "lsmb_<?lsmb dbname ?>__file_read"
 WITH INHERIT NOLOGIN;
 
-GRANT SELECT ON file_base, file_secondary_attachment 
+GRANT SELECT ON file_base, file_secondary_attachment, file_transaction,
+file_order, file_links
       TO "lsmb_<?lsmb dbname ?>__file_read";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_tx"
@@ -1685,6 +1686,7 @@ GRANT SELECT ON parts_translation,  project_translation TO public;
 GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
                 asset_disposal_method TO PUBLIC;
 GRANT SELECT ON mime_type, file_class TO PUBLIC;
+
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 

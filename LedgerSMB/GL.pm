@@ -33,6 +33,30 @@
 
 package GL;
 
+use LedgerSMB::File;
+
+=over
+
+=item get_files
+
+Returns a list of files associated with the existing transaction.  This is 
+provisional, and wil change for 1.4 as the GL transaction functionality is 
+                  {ref_key => $self->{id}, file_class => 1}
+rewritten
+
+=cut
+
+sub get_files {
+     my ($self, $form, $locale) = @_;
+     my $file = LedgerSMB::File->new();
+     $file->new_dbobject({base => $form, locale => $locale});
+     @{$self->{files}} = $file->list({ref_key => $self->{id}, file_class => 1});
+     @{$self->{file_links}} = $file->list_links(
+                  {ref_key => $self->{id}, file_class => 1}
+     );
+
+}
+
 sub delete_transaction {
 
     my ( $self, $myconfig, $form ) = @_;

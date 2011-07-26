@@ -109,7 +109,7 @@ sub set_ordering {
 
 sub exec_method {
     my $self   = shift @_;
-    my %args     = @_;
+    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $funcname = $args{funcname};
     
     my $schema   = $args{schema} || $LedgerSMB::Sysconfig::db_namespace;

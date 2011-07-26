@@ -921,7 +921,9 @@ sub edit {
 
         $i++;
     }
-
+   if ($form->{id}){
+       GL->get_files($form, $locale);
+   }
    $form->{rowcount} = $i;
    $form->{focus}    = "debit_$i";
    &display_form;

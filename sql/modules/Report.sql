@@ -1,3 +1,7 @@
+-- Unused currently and untested.  This is expected to be a basis for 1.4 work
+-- not recommended for current usage.  Not documenting yet.  --CT
+
+
 CREATE TYPE report_aging_item AS (
 	entity_id int,
 	account_number varchar(24),
@@ -152,4 +156,5 @@ BEGIN
 	END IF;
 END;
 $$ language plpgsql;
+
 

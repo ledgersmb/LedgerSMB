@@ -131,19 +131,19 @@ sub new_dbobject{
     my ($self, $args)  = @_;
     my $dbobject;
     my $rc = 0; # Success
-    if (LedgerSMB::Form->isa($args->{base})){
+    if (ref $args->{base} eq 'Form'){
          use LedgerSMB::Locale;
          my $lsmb = LedgerSMB->new();
          $lsmb->merge($args->{base});
-         if (LedgerSMB::Locale->isa($args->{locale})){
+         if ((ref $args->{locale}) =~ /^LedgerSMB::Locale/){
              $lsmb->{_locale} = $args->{locale};
-             my $dbobject = LedgerSMB::DBObject({base => $lsmb});
+             $dbobject = LedgerSMB::DBObject->new({base => $lsmb});
          } else {
              $rc | 2; # No locale
          }
     }
     elsif (LedgerSMB->isa($args->{base})){
-         my $dbobject = LedgerSMB::DBObject({base => $args->{base}});
+         $dbobject = LedgerSMB::DBObject->new({base => $args->{base}});
     }
     else {
         $rc | 4; # Incorrect base type
@@ -154,6 +154,7 @@ sub new_dbobject{
     if ($rc){
         return $rc;  # Return error.
     } else {
+        
         $self->dbobject($dbobject);
         return 0;
     }
@@ -180,6 +181,12 @@ sub get_mime_type {
     }
 }
 
+=item set_mime_type
+
+Sets the mipe_type_id from the mime_type_text
+
+=cut
+
 sub set_mime_type {
     my ($self, $mime_type) = @_;
     $self->mime_type_text($mime_type);
@@ -188,6 +195,17 @@ sub set_mime_type {
     $self->mime_type_id($ref->{id});
 
 }
+
+=item detect_type
+
+Auto-detects the type of the file.  Not yet implemented
+
+=cut
+
+sub detect_type {
+    my ($self) = @_;
+    print STDERR "WARNING:  Stub LedgerSMB::File::detect_type\n";
+};
 
 =item get
 
@@ -210,7 +228,7 @@ Lists files directly attached to the object.
 sub list{
     my ($self, $args) = @_;
     my @results = $self->exec_method(
-                 {funcname => 'file__list', 
+                 {funcname => 'file__list_by', 
                       args => [$args->{ref_key}, $args->{file_class}]
                  }
      );
