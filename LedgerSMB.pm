@@ -1008,7 +1008,9 @@ sub dberror{
    $logger->error("Logging SQL State ".$self->{dbh}->state.", error ".
            $self->{dbh}->err . ", string " .$self->{dbh}->errstr);
    if (defined $state_error->{$self->{dbh}->state}){
-       $self->error($state_error->{$self->{dbh}->state});
+       $self->error($state_error->{$self->{dbh}->state}
+           . "\n" . 
+          $self->{_locale}->text('More information has been reported in the error logs'));
        $self->{dbh}->rollback;
        exit;
    }
