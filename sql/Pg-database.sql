@@ -2241,7 +2241,7 @@ $$This table stores the tree structure of the menu.$$;
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_node_id_seq', 240, true);
+SELECT pg_catalog.setval('menu_node_id_seq', 242, true);
 
 
 --
@@ -2399,6 +2399,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 169	Quotation	156	13
 170	RFQ	156	14
 171	Timecard	156	15
+241	Letterhead	156	16
 173	Invoice	172	1
 174	AR Transaction	172	2
 175	AP Transaction	172	3
@@ -2414,6 +2415,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 185	Quotation	172	13
 186	RFQ	172	14
 187	Timecard	172	15
+242	Letterhead	172	16
 189	POS Invoice	188	1
 198	AR Voucher	1	2
 3	Sales Invoice	1	3
@@ -2530,7 +2532,7 @@ $$;
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_attribute_id_seq', 641, true);
+SELECT pg_catalog.setval('menu_attribute_id_seq', 649, true);
 
 
 --
@@ -2920,6 +2922,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 169	module	am.pl	400
 170	module	am.pl	401
 171	module	am.pl	402
+241	module	am.pl	642
 157	action	list_templates	403
 158	action	list_templates	404
 159	action	list_templates	405
@@ -2935,6 +2938,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 169	action	list_templates	415
 170	action	list_templates	416
 171	action	list_templates	417
+241	action	list_templates	643
 157	template	income_statement	418
 158	template	balance_sheet	419
 159	template	invoice	420
@@ -2950,6 +2954,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 169	template	quotation	430
 170	template	rfq	431
 171	template	timecard	432
+241	template	letterhead	644
 157	format	HTML	433
 158	format	HTML	434
 159	format	HTML	435
@@ -2965,6 +2970,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 169	format	HTML	445
 170	format	HTML	446
 171	format	HTML	447
+241	format	HTML	645
 172	menu	1	448
 173	action	list_templates	449
 174	action	list_templates	450
@@ -2981,6 +2987,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 185	action	list_templates	461
 186	action	list_templates	462
 187	action	list_templates	463
+242	action	list_templates	646
 173	module	am.pl	464
 174	module	am.pl	465
 175	module	am.pl	466
@@ -2996,6 +3003,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 185	module	am.pl	476
 186	module	am.pl	477
 187	module	am.pl	478
+242	module	am.pl	647
 173	format	LATEX	479
 174	format	LATEX	480
 175	format	LATEX	481
@@ -3011,6 +3019,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 185	format	LATEX	491
 186	format	LATEX	492
 187	format	LATEX	493
+242	format	LATEX	648
 173	template	invoice	506
 174	template	ar_transaction	507
 175	template	ap_transaction	508
@@ -3026,6 +3035,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 187	template	timecard	520
 183	template	check	516
 184	template	receipt	517
+242	template	letterhead	649
 188	menu	1	521
 189	module	am.pl	522
 189	action	list_templates	523

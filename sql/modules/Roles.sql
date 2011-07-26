@@ -1471,6 +1471,10 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (189, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (190, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (241, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (242, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
 WITH INHERIT NOLOGIN
