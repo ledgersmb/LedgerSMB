@@ -452,6 +452,21 @@ sub error {
     }
 }
 
+=item $form->finalize_request();
+
+Stops further processing, allowing post-request cleanup on intermediate
+levels by throwing an exception.
+
+This function replaces explicit 'exit()' calls.
+
+=cut
+
+sub finalize_request {
+    LedgerSMB::finalize_request();
+}
+
+
+
 =item $form->info($msg);
 
 Output an informational message, $msg.  If a CGI environment is detected, this
