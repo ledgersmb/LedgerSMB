@@ -835,14 +835,6 @@ sub transactions {
 
     my @paidargs = ();
     if ( $form->{outstanding} ) {
-        $paid = qq|
-			SELECT SUM(ac.amount) * -1 * $ml
-			  FROM acc_trans ac
-			  JOIN chart c ON (c.id = ac.chart_id AND charttype = 'A')
-			 WHERE ac.trans_id = a.id
-			       AND ($approved OR ac.approved)
-			       AND (c.link LIKE '%${ARAP}_paid%' 
-			       OR c.link = '')|;
         if ( $form->{transdateto} ) {
             $paid .= qq|
 			       AND ac.transdate <= ?|;
@@ -951,7 +943,8 @@ sub transactions {
     } else {
         $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
-		          a.duedate, a.netamount, a.amount, ($paid) AS paid,
+		          a.duedate, a.netamount, a.amount, 
+                          (a.amount - pd.due) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, ee.name AS employee, 
 		          vce.name, vc.meta_number,
@@ -965,6 +958,18 @@ sub transactions {
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
                      JOIN acc_trans ac ON (a.id = ac.trans_id)
                      JOIN chart c ON (c.id = ac.chart_id)
+                     JOIN (SELECT acc_trans.trans_id,
+                                sum(CASE WHEN '$table' = 'ap' THEN amount
+                                         WHEN '$table' = 'ar'
+                                         THEN amount * -1
+                                    END) AS due
+                           FROM acc_trans
+                           JOIN account coa ON (coa.id = acc_trans.chart_id)
+                           JOIN account_link al ON (al.account_id = coa.id)
+                          WHERE ((al.description = 'AP' AND '$table' = 'ap')
+                                OR (al.description = 'AR' AND '$table' = 'ar'))
+                          AND (approved IS TRUE)
+                       GROUP BY acc_trans.trans_id) pd ON (a.id = pd.trans_id)
 		LEFT JOIN entity_employee e ON (a.person_id = e.entity_id)
 		LEFT JOIN entity_employee m ON (e.manager_id = m.entity_id)
 		LEFT JOIN entity ee ON (e.entity_id = ee.id)
@@ -981,7 +986,7 @@ sub transactions {
                           a.duedate, a.netamount, a.amount,
                           a.invoice, a.datepaid, a.terms, a.notes,
                           a.shipvia, a.shippingpoint, ee.name , 
-                          vce.name, vc.meta_number, ($paid),
+                          vce.name, vc.meta_number, a.amount, pd.due,
                           vc.entity_id, a.till, me.name, a.curr,
                           ex.$buysell, a.ponumber,
                           d.description $group_by_fields|;

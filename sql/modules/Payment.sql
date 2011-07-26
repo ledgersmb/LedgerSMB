@@ -410,12 +410,16 @@ account_class: 1 for vendor, 2 for customer
 business_type: integer of business.id.
 currency: char(3) of currency (for example 'USD')
 date_from, date_to:  These dates are inclusive.
-1;3B
 batch_id:  For payment batches, where fees are concerned.
 ar_ap_accno:  The AR/AP account number.
 
 This then returns a set of contact information with a 2 dimensional array 
 cnsisting of outstanding invoices.
+
+Note that the payment selection logic is that this returns all invoices which are
+either approved or in the batch_id specified.  It also locks the invoices using 
+the LedgerSMB discretionary locking framework, and if not possible, returns the 
+username of the individual who has the lock.
 $$;
 
 CREATE OR REPLACE FUNCTION payment_bulk_queue
