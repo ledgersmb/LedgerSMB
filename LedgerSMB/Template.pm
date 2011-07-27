@@ -247,10 +247,12 @@ sub render {
 #	if ($self->{myconfig}){
 #	        $self->_preprocess($vars);
 #	}
-	eval "require $format";
-	if ($@) {
-		throw Error::Simple $@;
+	try { require $format; }
+	catch CancelFurtherProcessing with {
+	    my $ex = shift;
+	    throw $ex;
 	}
+	otherwise { throw Error::Simple $@ };
 
 	my $cleanvars;
 	if ($self->{no_escape}) {
