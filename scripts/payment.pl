@@ -51,7 +51,9 @@ use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::CancelFurtherProcessing;
 use Error::Simple;
+use Error;
 use strict; 
 
 # CT:  A few notes for future refactoring of this code:
@@ -1017,8 +1019,16 @@ my $template = LedgerSMB::Template->new(
   path     => 'UI/payments',
   template => 'payment2',
   format => 'HTML' );
-eval {$template->render($select) };
- if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
+try {
+   $template->render($select);
+}
+catch CancelFurtherProcessing with {
+  my $ex = shift;
+  throw $ex;
+}
+otherwise {
+    $request->error("$@");
+  }; # PRINT ERRORS ON THE UI
 }
 
 =pod
