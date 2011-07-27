@@ -56,7 +56,7 @@ Show the attachment or upload screen.
 
 sub show_attachment_screen {
     my ($request) = @_;
-    my $template = LedgerSMB::Template(
+    my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/file',

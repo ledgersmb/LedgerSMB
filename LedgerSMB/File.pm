@@ -63,6 +63,10 @@ ID of file.  undef if unknown
 
 Referential key for the file to attach to.
 
+=item reference
+
+Reference control code (text string) for attached financial database object.
+
 =item file_class
 
 ID of the file class.
@@ -71,7 +75,11 @@ ID of the file class.
 
 ID of class of the original attachment point (for a link)
 
-=item x-info
+=item dbobject
+
+Object for db interface.
+
+=item x_info
 
 A hash for extended information
 
@@ -103,6 +111,38 @@ struct 'LedgerSMB::File' => {
 =head1 METHODS
 
 =over
+
+=item new
+
+Returns a blessed object
+
+=item to_hashref
+
+Returns a hashref of properties for the object.
+
+=cut
+
+sub to_hashref {
+    my $self = shift @_;
+    my $hashref = {    attached_by_id =>  $self->attached_by_id,
+                       attached_by    =>  $self->attached_by,
+                       attached_at    =>  $self->attached_at,
+                       reference      =>  $self->reference,
+                       content        =>  $self->content,
+                       mime_type_id   =>  $self->mime_type_id,
+                       mime_type_text =>  $self->mime_type_text,
+                       file_name      =>  $self->file_name,
+                       description    =>  $self->description,
+                       id             =>  $self->id,
+                       ref_key        =>  $self->ref_key,
+                       file_class     =>  $self->file_class,
+                       src_class      =>  $self->sec_class,
+                       dbobject       =>  $self->dbobject,
+                       x_info         =>  \{$self->x_info}
+    };
+    return $hashref;
+
+}
 
 =item new_dbobject
 

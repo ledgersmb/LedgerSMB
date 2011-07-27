@@ -301,6 +301,55 @@
            } ?>
 
 <?lsmb END ?>
+<?lsmb IF form.id ?>
+<table width="100%">
+<tr class="listtop">
+<th colspan="4"><?lsmb text('Attached and Linked Files') ?></th>
+<tr class="listheading">
+<th><?lsmb text('File name') ?></th>
+<th><?lsmb text('File type') ?></th>
+<th><?lsmb text('Attached at') ?></th>
+<th><?lsmb text('Attached by') ?></th>
+</tr>
+<?lsmb FOREACH file IN form.files ?>
+<tr>
+<td><?lsmb file.file_name() ?></td> 
+<td><?lsmb file.mime_type_text() ?></td> 
+<td><?lsmb file.attached_at() ?></td> 
+<td><?lsmb file.attached_by() ?></td> 
+</tr>
+<?lsmb END ?>
+</table>
+<table width="100%">
+<tr class="listheading">
+<th><?lsmb text('File name') ?></th>
+<th><?lsmb text('File type') ?></th>
+<th><?lsmb text('Attached To Type') ?></th>
+<th><?lsmb text('Attached To') ?></th>
+<th><?lsmb text('Attached at') ?></th>
+<th><?lsmb text('Attached by') ?></th>
+</tr>
+<?lsmb 
+FOREACH link IN form.file_links; 
+        aclass="&nbsp;";
+        IF link.src_class() == 1;
+            aclass="Transaction";
+        ELSIF link.src_class() == 2;
+            aclass="Order";
+        END; ?>
+<tr>
+<td><?lsmb file.file_name() ?></td> 
+<td><?lsmb file.mime_type_text() ?></td> 
+<td><?lsmb aclass ?></td> 
+<td><?lsmb file.reference() ?></td> 
+<td><?lsmb file.attached_at() ?></td> 
+<td><?lsmb file.attached_by() ?></td> 
+</tr>
+<?lsmb END # FOREACH ?>
+</table>
+<a href="file.pl?action=show_attachment_screen&attach_to=<?lsmb form.id 
+   ?>">[<?lsmb text('Attach') ?>]</a>
+<?lsmb END # IF form.id ?>
 </form>
 </body>
 </html>

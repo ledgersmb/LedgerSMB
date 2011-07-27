@@ -43,14 +43,6 @@ module but can be overridden in decendant modules.
 =item _db_array_literal(@elements) creates a multiple dimension db array from 
 	preparsed db arrays or other data which does not need to be escaped.
 
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This file is licensed under the Gnu General Public License version 2, or at your
-option any later version.  A copy of the license should have been included with
-your software.
-
 =cut
 
 package LedgerSMB::DBObject;
@@ -100,6 +92,12 @@ sub new {
     $self->{_order_method} = {};
     return $self;
 }
+
+=item set_ordering
+
+Sets the ordering used by default for specific functions called by exec_method
+
+=cut
 
 sub set_ordering {
     my ($self, $args) = @_;
@@ -182,6 +180,13 @@ sub exec_method {
                              continue_on_error => $args{continue_on_error});
     }
 }
+
+
+=item run_custom_queries
+
+Backward-compatible with 1.2 custom query system for moving forward.
+
+=cut
 
 sub run_custom_queries {
     my ( $self, $tablename, $query_type, $linenum ) = @_;
@@ -348,3 +353,13 @@ sub _db_array_literal {
 }
 
 1;
+
+=back
+
+=head1 Copyright (C) 2007, The LedgerSMB core team.
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
