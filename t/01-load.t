@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 54;
+use Test::More tests => 56;
 
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
@@ -39,7 +39,6 @@ use_ok('LedgerSMB::Log');
 use_ok('LedgerSMB::Mailer');
 use_ok('LedgerSMB::Num2text');
 use_ok('LedgerSMB::OE');
-use_ok('LedgerSMB::OP');
 use_ok('LedgerSMB::PE');
 use_ok('LedgerSMB::PriceMatrix');
 use_ok('LedgerSMB::RP');
@@ -54,6 +53,9 @@ use_ok('LedgerSMB::Template::HTML');
 use_ok('LedgerSMB::File');
 use_ok('LedgerSMB::File::Transaction');
 use_ok('LedgerSMB::File::Order');
+use_ok('LedgerSMB::DBObject::Asset');
+use_ok('LedgerSMB::DBObject::Asset_Report');
+use_ok('LedgerSMB::DBObject::Asset_Class');
 SKIP: {
     eval{ require Template::Plugin::Latex};
     skip 'Template::Plugin::Latex not installed', 1 if @_;
