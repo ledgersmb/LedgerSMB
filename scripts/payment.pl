@@ -705,8 +705,12 @@ if ($#array_options == -1) {
      path     => 'UI/payments',
      template => 'payment1_5',
      format   => 'HTML' );
-     eval {$template->render($select) };
-     if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
+     try {$template->render($select); }
+     catch CancelFurtherProcessing with {
+       my $ex = shift;
+       throw $ex;
+     }
+     otherwise { $request->error("$@"); }; # PRINT ERRORS ON THE UI
  }
 
 }
@@ -1225,8 +1229,12 @@ sub print_payment {
       path     => $Payment->{templates_path},
       template => 'printPayment',
       format => 'HTML' );
-  eval {$template->render($select) };
-  if ($@) { $Payment->error("$@");  } # PRINT ERRORS ON THE UI
+  try {$template->render($select) }
+  catch CancelFurtherProcessing with {
+    my $ex = shift;
+    throw $ex;
+  }
+  otherwise { $Payment->error("$@");  }; # PRINT ERRORS ON THE UI
 }
 
 =pod
@@ -1297,8 +1305,12 @@ my $template = LedgerSMB::Template->new(
   path     => 'UI/payments',
   template => 'use_overpayment1',
   format => 'HTML' );
-eval {$template->render($ui) };
-if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
+try {$template->render($ui) }
+catch CancelFurtherProcessing with {
+  my $ex = shift;
+  throw $ex;
+}
+otherwise { $request->error("$@");  }; # PRINT ERRORS ON THE UI
 }
 
 
@@ -1586,9 +1598,12 @@ my $template =	LedgerSMB::Template->new(
   		template => 'use_overpayment2',
   		format => 'HTML' );
 
-eval {$template->render($ui) };
-if ($@) { $request->error("$@");  } # PRINT ERRORS ON THE UI
-
+try {$template->render($ui) }
+catch CancelFurtherProcessing with {
+  my $ex = shift;
+  throw $ex;
+}
+otherwise { $request->error("$@");  }; # PRINT ERRORS ON THE UI
 }
 
 
