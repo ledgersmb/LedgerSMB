@@ -307,9 +307,9 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
-GRANT INSERT ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 
@@ -326,9 +326,9 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_quotation_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
+GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
-GRANT INSERT ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
+GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -488,8 +488,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__purchase_order_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-GRANT INSERT ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
+GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
+GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
@@ -508,8 +508,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__rfq_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON oe TO "lsmb_<?lsmb dbname ?>__rfq_create";
-GRANT INSERT ON orderitems TO "lsmb_<?lsmb dbname ?>__rfq_create";
+GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__rfq_create";
+GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__rfq_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
 
