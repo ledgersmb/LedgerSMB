@@ -1,0 +1,40 @@
+<?lsmb PROCESS 'ui-header.html' 
+		include_stylesheet = ['UI/file/attach.css']
+?>
+<?lsmb PROCESS 'elements.html' ?>
+
+<form action="recon.pl" method="post" enctype="multipart/form-data">
+<div class="listtop" id="title"><?lsmb text('Attach File') ?></div>
+<div class="inputline">
+    <div class="inputgroup">
+    <?lsmb INCLUDE input element_data = {
+           label = text('Url') 
+            type = "text"
+           value = url
+            name = "url"
+           class = "url"
+    } ?>
+    </div>
+</div>
+<div class="separator">
+<?lsmb text('Or') ?>
+<div class="inputline">
+    <div class="inputgroup">
+    <?lsmb INCLUDE input element_data = {
+          label = text("File") 
+           type = "file" 
+           name = "upload_data"
+    } ?> 
+    </div>
+</div>
+<div class="inputline">
+    <div class="inputgroup">
+    <?lsmb INCLUDE button element_data = {
+           text = text('Upload')
+          value = "attach_file"
+           name = "action"
+           type = "submit"
+          class = "submit"
+    } ?>
+    </div>
+</div>
