@@ -10,30 +10,8 @@ BEGIN
 END;
 $$ language plpgsql;
 
-
-CREATE OR REPLACE FUNCTION batch_update (in_batch text, in_login varchar, in_entered date,
-	in_batch_number text, in_description text, in_id integer) 
-RETURNS integer AS
-$$
-BEGIN
-	UPDATE batch
-	SET batch_number = in_batch_number,
-		description = in_description,
-		entered = in_entered
-	WHERE id = in_id;
-
-	IF FOUND THEN 
-		RETURN in_id;
-	END IF;
-
-	INSERT INTO batch (batch, employee_id, batch_number, description, 
-		entered)
-	VALUES (in_batch, (SELECT id FROM employees WHERE login = in_login),
-		in_batch_number, description);
-
-	RETURN currval('id');
-END;
-$$ LANGUAGE PLPGSQL;
+COMMENT ON FUNCTION voucher_get_batch (in_batch_id integer) is
+$$ Retrieves basic batch information based on batch_id.$$;
 
 CREATE TYPE voucher_list AS (
 	id int,
@@ -45,6 +23,8 @@ CREATE TYPE voucher_list AS (
 	transaction_date date,
         batch_class text
 );
+
+-- voucher_list could use refactoring
 
 CREATE OR REPLACE FUNCTION voucher_list (in_batch_id integer)
 RETURNS SETOF voucher_list AS
@@ -140,6 +120,9 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION voucher_list (in_batch_id integer) IS
+$$ Retrieves a list of vouchers and amounts attached to the batch.$$;
+
 CREATE TYPE batch_list_item AS (
     id integer,
     batch_class text,
@@ -227,10 +210,26 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION
+batch_search(in_class_id int, in_description text, in_created_by_eid int,
+        in_date_from date, in_date_to date,
+        in_amount_gt numeric,
+        in_amount_lt numeric, in_approved bool) IS
+$$Returns a list of batches and amounts processed on the batch.
+
+Nulls match all values.
+in_date_from and in_date_to specify date ranges.
+in_description is a partial match.
+All other criteria are exact matches.
+$$;
+
 CREATE OR REPLACE FUNCTION batch_get_class_id (in_type text) returns int AS
 $$
 SELECT id FROM batch_class WHERE class = $1;
 $$ language sql;
+
+COMMENT ON FUNCTION batch_get_class_id (in_type text) IS
+$$ returns the batch class id associated with the in_type label provided.$$;
 
 CREATE OR REPLACE FUNCTION 
 batch_search_mini
@@ -263,6 +262,16 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION batch_search_mini
+(in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
+IS $$ This performs a simple search of open batches created by the entity_id
+in question.  This is used to pull up batches that were currently used so that
+they can be picked up and more vouchers added.
+
+NULLs match all values.
+in_description is a partial match
+All other inouts are exact matches.
+$$;
 
 CREATE OR REPLACE FUNCTION 
 batch_search_empty(in_class_id int, in_description text, in_created_by_eid int, 
@@ -289,6 +298,18 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION
+batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
+        in_amount_gt numeric,
+        in_amount_lt numeric, in_approved bool) IS
+$$ This is a full search for the batches, listing them by amount processed.
+in_amount_gt and in_amount_lt provide a range to search for.
+in_description is a partial match field.
+Other fields are exact matches.
+
+NULLs match all values.
+$$;
 
 
 CREATE OR REPLACE FUNCTION batch_post(in_batch_id INTEGER)
@@ -325,17 +346,25 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION batch_post(in_batch_id INTEGER) is
+$$ Posts the specified batch to the books.  Only posted batches should show up
+on standard financial reports.$$;
+
 CREATE OR REPLACE FUNCTION batch_list_classes() RETURNS SETOF batch_class AS
 $$
 DECLARE out_val record;
 BEGIN
-	FOR out_val IN select * from batch_class
+	FOR out_val IN select * from batch_class order by id
  	LOOP
 		return next out_val;
 	END LOOP;
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION batch_list_classes() 
+IS $$ Returns a list of all batch classes.$$;
+
+-- Move to the admin module and call it from there.
 CREATE OR REPLACE FUNCTION batch_get_users() RETURNS SETOF users AS
 $$
 DECLARE out_record users%ROWTYPE;
@@ -347,6 +376,10 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION batch_get_users() IS
+$$ Returns a sim[ple set of user objects.  This should be renamed so that 
+it is more obvious it is a general purpose function.$$;
 
 CREATE OR REPLACE FUNCTION batch_create(
 in_batch_number text, in_description text, in_batch_class text, 
@@ -365,6 +398,11 @@ BEGIN
 END;	
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION batch_create(
+in_batch_number text, in_description text, in_batch_class text,
+in_batch_date date) IS
+$$ Inserts the batch into the table.$$;
+
 CREATE OR REPLACE FUNCTION batch_delete(in_batch_id int) RETURNS int AS
 $$
 DECLARE 
@@ -373,6 +411,10 @@ BEGIN
 	-- Adjust AR/AP tables for payment and payment reversal vouchers
 	-- voucher_id is only set in acc_trans on payment/receipt vouchers and
 	-- their reversals. -CT
+        perform * from batch where id = in_batch_id and approved_on IS NULL;
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'Batch not found';
+        END IF; 
 	update ar set paid = amount + 
 		(select sum(amount) from acc_trans 
 		join chart ON (acc_trans.chart_id = chart.id)
@@ -423,6 +465,10 @@ BEGIN
 END;
 $$ language plpgsql SECURITY DEFINER;
 
+COMMENT ON  FUNCTION batch_delete(in_batch_id int) IS
+$$ If the batch is found and unapproved, deletes it and returns 1.
+Otherwise raises an exception.$$;
+
 REVOKE ALL ON FUNCTION batch_delete(int) FROM PUBLIC;
 
 CREATE OR REPLACE FUNCTION voucher__delete(in_voucher_id int)
@@ -472,3 +518,6 @@ END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
 REVOKE ALL ON FUNCTION voucher__delete(int) FROM public;
+
+COMMENT ON FUNCTION voucher__delete(in_voucher_id int) IS
+$$ Deletes the specified voucher from the batch.$$;

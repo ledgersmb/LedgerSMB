@@ -1,0 +1,66 @@
+<?lsmb INCLUDE "ui-header.html"
+       include_stylesheet = ["UI/asset/asset.css"] -?>
+<?lsmb PROCESS "elements.html" -?>
+<body>
+<form action="asset.pl" method="post">
+<div class="listtop"><?lsmb text('New Asset Report') ?></div>
+<div class="inputrow" id="classrow"><div class="inputgroup" id="classgrp">
+<?lsmb PROCESS select element_data = {
+     name = "asset_class"
+     default_values = [asset_class]
+     options = asset_classes
+     text_attr = "label"
+     value_attr = "id"
+     label = text('Asset Class') #'
+} ?>
+</div></div>
+<div class="inputrow" id="daterow"><div class="inputgroup" id="dategroup">
+<?lsmb PROCESS input element_data = {
+     name = "report_date"
+     class = "date"
+     value = report_date
+     label = text("Date")
+} ?>
+</div></div>
+<div class="inputrow" id="disposaltyperow">
+<div class="inputgroup">
+<?lsmb IF !depreciation ?>
+<?lsmb PROCESS input element_data ={
+    name = 'report_class'
+    class = 'type'
+    label = text('Full')
+    value = 2
+    checked = 'CHECKED'
+    type  = 'radio'
+} ?>
+
+</div>
+<div class="inputgroup">
+<?lsmb PROCESS input element_data ={
+    name = 'report_class'
+    class = 'type'
+    label = text('Partial')
+    value = 4
+    type  = 'radio'
+} ?>
+<?lsmb END ?>
+</div></div>
+<?lsmb PROCESS input element_data = {
+     name = "depreciation"
+     type = "hidden"
+     value = depreciation
+} ?>
+<div class="inputrow" id="buttonrow">
+<div class="inputgroup" id="buttongroupnext">
+<label>&nbsp;</label>
+<?lsmb PROCESS button element_data = {
+     name = "action"
+     text = text("Continue")
+     value = "report_init"
+     type = "submit"
+     class = "submit"
+} ?>
+</div></div>
+</form>
+</body>
+</html>

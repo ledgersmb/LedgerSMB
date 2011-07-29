@@ -1,0 +1,215 @@
+<?lsmb INCLUDE 'ui-header.html' 
+      include_stylesheet = ["UI/asset/asset.css"] 
+      include_script = ["UI/asset/asset.js"] 
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body onLoad="init()">
+<div class="listtop"><?lsmb title ?></div>
+<form action="<?lsmb script ?>" method="post">
+<!-- These are for Javascript automation of defaults -CT -->
+<?lsmb PROCESS input element_data = {
+	type = "hidden"
+	name = "id"
+	value = id
+} ?>
+<?lsmb FOREACH a_class IN asset_classes -?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden",
+       name = "asset_account_default_$a_class.id",
+       value = a_class.asset_account_id,
+} ?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden",
+       name = "dep_account_default_$a_class.id",
+       value = a_class.dep_account_id,
+} ?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden",
+       name = "unit_label_$a_class.id",
+       value = dep_method.${a_class.id}.unit_label,
+} ?>
+<?lsmb- END # For a_class ?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden"
+       name = "last_class_id"
+       value = asset_class
+} ?>
+<!-- end set for javascript automation -CT -->
+<div class="inputrow" id="tagrow">
+<?lsmb PROCESS input element_data = {
+	type = "text"
+	class = "control_code"
+	name = "tag"
+	value = tag
+	label = text('Tag:')
+	size = 32
+} ?>
+</div>
+<div class="inputrow" id="classrow">
+<?lsmb PROCESS select element_data = {
+	name = "asset_class"
+	class = "class"
+	options = asset_classes
+	default_options = [asset_class]
+	text_attr = "label"
+	value_attr = "id"
+	label = text("Asset Class:") #"
+} ?>
+</div>
+<div class="inputrow" id="descrow">
+<?lsmb PROCESS input element_data = {
+	label = text("Description:")
+	name = "description"
+	class = "description"
+	value = description
+	type = "text"
+} ?>
+</div>
+<div class="inputrow" id="purchaserow">
+<span class="inputgroup" id="purchasedategroup">
+<?lsmb PROCESS input element_data = {
+	label = text("Purchase Date:") #"
+	name = "purchase_date"
+	class = "date"
+	value = purchase_date
+	type = "text"
+	size = 12
+} ?>
+</span>
+<span class="inputgroup" id="purchasevaluegroup">
+<?lsmb PROCESS input element_data = {
+	label = text("Purchase Value:") #"
+	name = "purchase_value"
+	class = "money"
+	value = purchase_value
+	type = "text"
+	size = 16
+} ?>
+</span>
+</div>
+<div class="inputrow" id="salvagerow">
+<span class="inputgroup" id="usablelifegroup">
+<?lsmb PROCESS input element_data = {
+	label = text("Usable Life") #"
+	name = "usable_life"
+	value = usable_life
+	type = "text"
+	size = 10
+} ?>
+<span class="caption" id="caption-usablelifegroup">
+(<?lsmb text('Method Default') ?>)
+</span>
+</span>
+<span class="inputgroup" id="salvagevaluegroup">
+<?lsmb PROCESS input element_data = {
+	label = text("Salvage Value:") #"
+	name = "salvage_value"
+	class = "money"
+	value = salvage_value
+	type = "text"
+	size = 16
+} ?>
+</span>
+</div>
+<div class="inputrow" id="startdeprow">
+<span class="inputgroup" id="startdepgroup">
+<?lsmb PROCESS input element_data = {
+	label = text("Depreciation Starts") #"
+	name = "start_depreciation"
+	value = start_depreciation
+	type = "text"
+	size = 12
+        class = "date"
+} ?>
+</span>
+</div>
+<div class="inputrow" id="business_row">
+<span class="inputgroup" id="locationgroup">
+<?lsmb PROCESS select element_data = {
+	name = "warehouse_id"
+	options = locations
+	value_attr = "id"
+	text_attr = "description"
+	default_values = [warehouse_id]
+	label = text('Location')
+} ?>
+</span>
+<span class="inputgroup" id="departmentgroup">
+<?lsmb PROCESS select element_data = {
+	name = "department_id"
+	options = departments
+	value_attr = "id"
+	text_attr = "description"
+	default_values = [department_id]
+	label = text('Department')
+} ?>
+</span>
+</div>
+<div class="inputrow" id="accountsrow">
+<span class="inputgroup" id="assetaccgroup">
+<?lsmb PROCESS select element_data = {
+	label = text('Asset Account') #'
+	options = asset_accounts
+	name = "asset_account_id"
+	default_values = [asset_account_id]
+	value_attr = 'id'
+	text_attr = 'text'
+} ?>
+</span>
+<span class="inputgroup" id="depaccgroup">
+<?lsmb PROCESS select element_data = {
+	label = text('Depreciation Account') #'
+	options = dep_accounts
+	name = "dep_account_id"
+	default_values = [dep_account_id]
+	value_attr = 'id'
+	text_attr = 'text'
+} ?>
+</span>
+</div>
+<div class="inputrow" id="exprow"
+<span class="inputgroup" id="expensegroup">
+<?lsmb PROCESS select element_data = {
+     name = "exp_account_id"
+     class = "account"
+     options = exp_accounts
+     text_attr = 'text'
+     value_attr = 'id'
+     default_values = [exp_account_id]
+     label = text('Expense Account') #'
+} ?>
+</span></div>
+<div class="inputrow" id="invoicerow">
+<span class="inputgroup" id="vendorgroup">
+<?lsmb PROCESS input element_data = {
+	label = text('Vendor Number') #'
+	type = "text"
+	class = "identifier"
+	size = 20
+	value = meta_number
+	name = "meta_number"
+} ?>
+</span>
+<span class="inputgroup" id="invgroup">
+<?lsmb PROCESS input element_data = {
+	label = text('Invoice Number') #'
+	type = "text"
+	class = "identifier"
+	size = 20
+	value = invnumber
+	name = "invnumber"
+} ?>
+</span>
+</div>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+	text = text("Save")
+	type = "submit"
+	class = "submit"
+	name = "action"
+	value = "asset_save"
+} ?>
+</div>
+</form>
+</body>
+</html>

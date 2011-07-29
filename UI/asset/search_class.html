@@ -1,0 +1,74 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS 'elements.html' ?>
+<div class="listtop"><?lsmb text('Search Asset Class') ?></div>
+<form action="<?lsmb script ?>" method="post">
+<div class="inputrow" id="labelrow">
+<?lsmb PROCESS input element_data = {
+	type = "text"
+	name = "label"
+	value = label
+	class = "control_code"
+	size = 32
+	label = text('Label:')
+} ?>
+</div>
+<div class="inputrow" id="methodrow">
+<span class="inputgroup" id="methodgroup">
+<?lsmb dep_methods.push({}); 
+	PROCESS select element_data = {
+	label = text('Depreciation Method') #'
+	options = dep_methods
+	value_attr = 'id'
+	text_attr = 'method'
+	default_values = [method_id]
+	name = 'method_id'	
+} ?>
+</span>
+<span class="inputgroup" id="Units">
+<?lsmb life_units.push({});
+	PROCESS select element_data = {
+	label = text('Lifetime Measured In') #'
+	options = life_units
+	name = "life_unit"
+	default_values = [life_unit]
+	text_attr = "unit"
+	value_atr = "id"
+} ?>
+</span>
+</div>
+<div class="inputrow" id="accountsrow">
+<span class="inputgroup" id="assetaccgroup">
+<?lsmb asset_accounts.push({});
+	PROCESS select element_data = {
+	label = text('Asset Account') #'
+	options = asset_accounts
+	name = "asset_account_id"
+	default_values = [asset_account_id]
+	value_attr = 'id'
+	text_attr = 'text'
+} ?>
+</span>
+<span class="inputgroup" id="depaccgroup">
+<?lsmb dep_accounts.push({});
+	PROCESS select element_data = {
+	label = text('Depreciation Account') #'
+	options = dep_accounts
+	name = "dep_account_id"
+	default_values = [dep_account_id]
+	value_attr = 'id'
+	text_attr = 'text'
+} ?>
+</span>
+</div>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+	text = text("Search")
+	type = "submit"
+	class = "submit"
+	name = "action"
+	value = "asset_category_results"
+} ?>
+</div>
+</form>
+</body>
+</html>

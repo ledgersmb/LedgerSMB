@@ -1,36 +1,45 @@
+=head1 NAME
+LedgerSMB::Scripts::vouchers
+
+=head1 SYNPOSIS
+Voucher workflow scripts.
+
+#      --CT
+=head1 METHODS
+
+=over
+
+=cut
+
 #!/usr/bin/perl
 
-# This file is copyright (C) 2007the LedgerSMB core team and licensed under 
-# the GNU General Public License.  For more information please see the included
-# LICENSE and COPYRIGHT files
-
-# THIS FILE NEEDS POD
 
 package LedgerSMB::Scripts::vouchers;
 our $VERSION = '0.1';
 
 use LedgerSMB::Batch;
-use LedgerSMB::Voucher;
 use LedgerSMB::Template;
 use strict;
 
-# custom_batch_types hash provides hooks for handling additional batch types
-# beyond the default types.  Entries can be added in a custom file.
-# Each entry is a hash, keyed by name, with the following keys:
-#  * map_to int (maps to another type, not needed for new types in batch_class 
-#                table)
-#  * select_method (maps to the selection stored proc)
-#
-#  for example:
-#  $custom_batch_types->{ap_sample} = 
-#      {map_to       => 1, 
-#      select_method => 'custom_sample_ap_select'};
-#
-#      --CT
 
 our $custom_batch_types = {};
 
 eval { do "scripts/custom/vouchers.pl"};
+
+=item create_batch
+
+Displays the new batch screen.  Required inputs are
+
+=over 
+
+=item batch_type
+
+=back
+
+Additionally order_by can be specified for the list of current batches for the
+current user.
+
+=cut
 
 sub create_batch {
     my ($request) = @_;
@@ -63,6 +72,15 @@ sub create_batch {
     $template->render($batch);
 }
 
+=item create-vouchers
+
+Closes the form in the db, and if unsuccessful displays the batch info again.
+
+If successful at closing the form, it saves the batch to the db and redirects to
+add_vouchers().
+
+=cut
+
 sub create_vouchers {
     my ($request) = shift @_;
     my $batch = LedgerSMB::Batch->new({base => $request});
@@ -76,6 +94,11 @@ sub create_vouchers {
         create_batch($request);
     }
 }
+=item add_vouchers
+
+Redirects to a script to add vouchers for the type.  batch_type must be set.
+
+=cut
 
 sub add_vouchers {
     #  This function is not safe for caching as long as the scripts are in bin.
@@ -161,6 +184,12 @@ sub add_vouchers {
     $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 }
 
+=item search_batch
+
+Displays the search criteria screen.  No inputs required.
+
+=cut
+
 sub search_batch {
     my ($request) = @_;
     my $batch_request = LedgerSMB::Batch->new(base => $request);
@@ -174,6 +203,21 @@ sub search_batch {
     );
     $template->render($batch_request);
 }
+
+=item list_batches
+
+This function displays the search results.
+
+No inputs are required, but amount_lt and amount_gt can specify range
+Also description can be a partial match.
+
+empty specifies only voucherless batches
+
+approved (true or false) specifies whether the batch has been approved
+
+class_id and created_by are exact matches
+
+=cut
 
 sub list_batches {
     my ($request) = @_;
@@ -303,6 +347,14 @@ sub list_batches {
         
 }
 
+=item get_batch
+
+Requires that batch_id is set.
+
+Displays all vouchers from the batch by type, and includes amount.
+
+=cut
+
 sub get_batch {
     my ($request)  = @_;
     $request->{action} = 'get_batch';
@@ -421,13 +473,21 @@ sub get_batch {
     
 }
 
+# alias for batch_delete, needed for form-dynatable
 sub list_batches_batch_delete {
     batch_delete(@_);
 }
 
+# alias for batch_post, needed for form-dynatable
 sub list_batches_batch_approve {
     batch_approve(@_);
 }
+
+=item get_batch_batch_approve
+
+Approves the single batch on the details screen.  Batch_id must be set.,
+
+=cut
 
 sub get_batch_batch_approve {
     my ($request) = @_;
@@ -440,6 +500,12 @@ sub get_batch_batch_approve {
         get_batch($request);
     }
 }
+
+=item get_batch_voucher_delete
+
+Deletes selected vouchers. 
+
+=cut
 
 sub get_batch_voucher_delete {
     my ($request) = @_;
@@ -456,6 +522,12 @@ sub get_batch_voucher_delete {
     search_batch($request);
 }
 
+=item batch_approve
+
+Approves all selected batches.
+
+=cut
+
 sub batch_approve {
     my ($request) = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
@@ -470,6 +542,12 @@ sub batch_approve {
     }
     search_batch($request);
 }
+
+=item batch_delete
+
+Deletes selected batches
+
+=cut
 
 sub batch_delete {
     my ($request)  = @_;
@@ -488,3 +566,35 @@ sub batch_delete {
 
 eval { do "scripts/custom/vouchers.pl"};
 1;
+
+=back
+
+=head1 CUSTOM BATCH TYPES
+ custom_batch_types hash provides hooks for handling additional batch types
+ beyond the default types.  Entries can be added in a custom file.
+ Each entry is a hash, keyed by name, with the following keys:
+
+=over
+
+=item map_to int 
+
+maps to another type, not needed for new types in batch_class table
+
+=item select_method 
+
+maps to the selection stored proc
+
+=back
+
+  for example:
+  $custom_batch_types->{ap_sample} = 
+      {map_to       => 1, 
+      select_method => 'custom_sample_ap_select'};
+
+=head1 Copyright (C) 2009, The LedgerSMB core team.
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut

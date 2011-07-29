@@ -1,0 +1,65 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS 'elements.html' ?>
+<div class="listtop"><?lsmb title ?></div>
+<form action="<?lsmb script ?>" method="post">
+<?lsmb PROCESS input element_data = {
+	type = "hidden"
+	name = "id"
+	value = id
+} ?>
+<div class="inputrow" id="labelrow">
+<?lsmb PROCESS input element_data = {
+	type = "text"
+	name = "label"
+	value = label
+	class = "control_code"
+	size = 32
+	label = text('Label:')
+} ?>
+</div>
+<div class="inputrow" id="methodrow">
+<span class="inputgroup" id="methodgroup">
+<?lsmb PROCESS select element_data = {
+	label = text('Depreciation Method') #'
+	options = dep_methods
+	value_attr = 'id'
+	text_attr = 'method'
+	default_values = [method_id]
+	name = 'method_id'
+} ?>
+</span>
+</div>
+<div class="inputrow" id="accountsrow">
+<span class="inputgroup" id="assetaccgroup">
+<?lsmb PROCESS select element_data = {
+	label = text('Asset Account') #'
+	options = asset_accounts
+	name = "asset_account_id"
+	default_values = [asset_account_id]
+	value_attr = 'id'
+	text_attr = 'text'
+} ?>
+</span>
+<span class="inputgroup" id="depaccgroup">
+<?lsmb PROCESS select element_data = {
+	label = text('Depreciation Account') #'
+	options = dep_accounts
+	name = "dep_account_id"
+	default_values = [dep_account_id]
+	value_attr = 'id'
+	text_attr = 'text'
+} ?>
+</span>
+</div>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+	text = text("Save")
+	type = "submit"
+	class = "submit"
+	name = "action"
+	value = "asset_category_save"
+} ?>
+</div>
+</form>
+</body>
+</html>

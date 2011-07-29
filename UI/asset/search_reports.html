@@ -1,0 +1,75 @@
+<?lsmb INCLUDE 'ui-header.html' 
+      include_stylesheet = ["UI/asset/asset.css"] 
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+<div class="listtop"><?lsmb title ?></div>
+<form action="<?lsmb script ?>" method="post">
+<div class="inputrow" id="classrow">
+<div class="inputgroup" id="classgroup">
+<?lsmb asset_classes.unshift({});
+PROCESS select element_data = {
+	 label = text('Asset Class') #'
+          name = asset_class
+default_values = [asset_class]
+         class = "class"
+       options = asset_classes
+    value_attr = 'id' 
+     text_attr = "label"
+} ?>
+</div>
+</div>
+<div class="inputrow" id="daterow">
+<div class="inputgroup" id="start-dategroup">
+<?lsmb PROCESS input element_data = {
+           label = text('From')
+           class = "date"
+            name = "start_date"
+           value = start_date
+            size = 12
+} ?>
+</div>
+<div class="inputgroup" id="end-dategroup">
+<?lsmb PROCESS input element_data = {
+           label = text('To')
+           class = "date"
+            name = "end_date"
+           value = end_date
+            size = 12
+} ?>
+</div>
+</div>
+<div class="inputrow" id="userrow">
+<!--
+<div class="inputgroup" id="createdbygrp">
+<?lsmb report_users.unshift({});
+PROCESS select element_data = {
+	 label = text('Created By') #'
+          name = "created_by"
+default_values = [created_by]
+         class = "users"
+       options = report_users
+    value_attr = 'entity_id' 
+     text_attr = "login"
+} ?>
+</div>
+-->
+<div class="inputgroup" id="approvedgroup">
+<?lsmb IF approved; approved = 'CHECKED'; END;
+PROCESS input element_data = {
+       label = text('Approved')
+        type = "checkbox"
+       value = approved
+} ?>
+</div>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+       name = "action"
+      value = "report_results"
+      text  = text('Search')
+      class = "submit"
+      type  = "submit"
+} ?>
+</form>
+</body>
+</html>
