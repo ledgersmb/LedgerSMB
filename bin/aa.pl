@@ -995,7 +995,9 @@ sub form_footer {
             'new_screen' => # Create a blank ar/ap invoice.
              { ndx => 10, key=> 'N', value => $locale->text('New') }
         );
+        my $is_draft = 0;
         if (!$form->{approved} && !$form->{batch_id}){
+           $is_draft = 1;
            $button{approve} = { 
                    ndx   => 3, 
                    key   => 'O', 
@@ -1049,9 +1051,10 @@ sub form_footer {
             }
         }
         if ($form->{id}){
-            for ( "update", "post_as_new", "print_and_post_as_new"){
+            for ( "post_as_new", "print_and_post_as_new"){
                delete $button{$_};
             }
+            delete $button{'update'} unless $is_draft;
         }
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )

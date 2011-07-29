@@ -1828,18 +1828,20 @@ sub get_jcitems {
 
     my $query;
     my $ref;
-
+# XXX Note that this is aimed at current customer functionality only.  In the 
+# future, this will be more generaly constructed.
     $query = qq|
 		   SELECT j.id, j.description, j.qty - j.allocated AS qty,
-		          j.sellprice, j.parts_id, pr.$form->{vc}_id, 
+		          j.sellprice, j.parts_id, pr.customer_id, 
 		          j.project_id, j.checkedin::date AS transdate, 
-		          j.notes, c.name AS $form->{vc}, pr.projectnumber, 
+		          j.notes, c.name AS customer, pr.projectnumber, 
 		          p.partnumber
 		     FROM jcitems j
 		     JOIN project pr ON (pr.id = j.project_id)
 		     JOIN employee e ON (e.id = j.employee_id)
 		     JOIN parts p ON (p.id = j.parts_id)
-		LEFT JOIN $form->{vc} c ON (c.id = pr.$form->{vc}_id)
+		LEFT JOIN entity_credit_account eca ON (c.id = pr.customer_id)
+                LEFT JOIN company c ON eca.entity_id = c.entity_id
 		    WHERE pr.parts_id IS NULL
 		          AND j.allocated != j.qty $where
 		 ORDER BY pr.projectnumber, c.name, j.checkedin::date|;

@@ -65,10 +65,10 @@ sub get_vc {
         $query = qq|
 			SELECT count(*)
 			  FROM (SELECT DISTINCT vc.id
-				  FROM $form->{vc} vc, $item a, status s
-				 WHERE a.entity_id = vc.entity_id
-			               AND s.trans_id = a.id
-			               AND s.formname = ?
+				  FROM entity_credit_account vc
+                                  JOIN $item a ON a.entity_credit_account = vc.id
+                                  JOIN status s ON s.trans_id = a.id
+				 WHERE s.formname = ?
 			               AND s.spoolfile IS NOT NULL) AS total|;
 
         $sth = $dbh->prepare($query);
@@ -87,10 +87,11 @@ sub get_vc {
         foreach $item ( @{ $arap{ $form->{type} } } ) {
             $query .= qq| 
 				$union
-				SELECT DISTINCT vc.id, vc.name
+				SELECT DISTINCT eca.id, e.name
 				  FROM $item a
-				  JOIN $form->{vc} vc 
-				       USING (entity_id)
+				  JOIN entity_credit_account eca
+                                       ON a.entity_credit_account = eca.id 
+                                  JOIN entity e ON eca.entity_id = e.id
 				  JOIN status s ON (s.trans_id = a.id)
 				 WHERE s.formname = ?
 				       AND s.spoolfile IS NOT NULL|;
@@ -202,12 +203,13 @@ sub get_spoolfiles {
 				SELECT a.id, c.legal_name AS name, a.$invnumber AS invnumber, a.transdate,
 				       a.ordnumber, a.quonumber, $invoice AS invoice,
 				       '$item' AS module, s.spoolfile
-				  FROM $item a, $form->{vc} vc, status s, company c
-				 WHERE s.trans_id = a.id
-				       AND s.spoolfile IS NOT NULL
-				       AND s.formname = ?
-				       AND c.entity_id = vc.entity_id
-				       AND a.entity_id = vc.entity_id|;
+				  FROM $item a, 
+                                  JOIN entity_credit_account vc
+                                       ON vc.id = a.entity_credit_account
+                                  JOIN status s ON s.trans_id = a.id
+                                  JOIN company c ON c.entity_id = vc.entity_id
+				 WHERE s.spoolfile IS NOT NULL
+				       AND s.formname = ?|;
 
             push( @queryargs, $form->{type} );
             if ( $form->{"$form->{vc}_id"} ) {

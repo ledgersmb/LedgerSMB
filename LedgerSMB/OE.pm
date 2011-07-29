@@ -132,7 +132,9 @@ sub transactions {
 				o.shipvia, ee.name AS employee, o.curr, 
 				o.ponumber
 			FROM oe o
-			JOIN $form->{vc} ct ON (o.$form->{vc}_id = ct.id)
+			JOIN entity_credit_account eca  
+                             ON (o.entity_credit_account = eca.id)
+                        JOIN company ct ON eca.entity_id = ct.entity_id
 			JOIN orderitems oi ON (oi.trans_id = o.id)
 			JOIN parts p ON (p.id = oi.parts_id)|;
 
