@@ -60,6 +60,13 @@ use strict;
 # 1:  I don't think it is a good idea to make the UI too dependant on internal
 #     code structures but I don't see a good alternative at the moment.
 # 2:  CamelCasing: -1
+# 3:  Not good to have this much duplication of code all the way down the stack.#     At the moment this is helpful because it gives us an opportunity to look 
+#     at various sets of requirements and workflows, but for future versions
+#     if we don't refactor, this will turn into a bug factory.
+# 4:  Both current interfaces have issues regarding separating layers of logic
+#     and concern properly.
+
+# CT:  Plans are to completely rewrite all payment logic for 1.4 anyway.
 
 =pod
 
@@ -89,6 +96,20 @@ sub payments {
     $template->render($payment);
 }
 
+=item get_search_criteria
+
+Displays the payment criteria screen.  Optional inputs are 
+
+=over
+
+=item batch_id 
+
+=item batch_date
+
+=back
+
+=cut
+
 sub get_search_criteria {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
@@ -105,6 +126,13 @@ sub get_search_criteria {
     );
     $template->render($payment);
 }
+
+=item pre_bulk_post_report 
+
+This displays a report of the expected GL activity of a payment batch before it
+is saved.  For receipts, this just redirects to bulk_post currently.
+
+=cut
 
 sub pre_bulk_post_report {
     my ($request) = @_;
@@ -211,14 +239,45 @@ sub pre_bulk_post_report {
     });
 }
 
+# Is this even used?  It would just redirect back to the report which is not
+# helpful.  --CT
+
 sub p_payments_bulk_post {
     my ($request) = @_;
     pre_bulk_post_report(@_);
 }
 
+# wrapper around post_payments_bulk munged for dynatable.
+
 sub p_post_payments_bulk {
     post_payments_bulk(@_);
 }
+
+=item get_search_results
+
+Displays the payment search results.
+
+inputs currently expected include
+
+=over
+
+=item credit_id
+
+=item date_from
+
+=item date_to
+
+=item source
+
+=item cash_accno
+
+=item account_class
+
+=back
+
+=cut
+
+
 sub get_search_results {
     my ($request) = @_;
     my $rows = [];
@@ -327,6 +386,12 @@ sub get_search_results {
     }); 
 }
 
+=item get_search_results_reverse_payments
+
+This reverses payments selected in the search results.
+
+=cut
+
 sub get_search_results_reverse_payments {
     my ($request) = @_;
     my $payment = LedgerSMB::DBObject::Payment->new({base => $request});
@@ -342,6 +407,17 @@ sub get_search_results_reverse_payments {
     get_search_criteria($payment);
 }
 
+=item post_payments_bulk
+
+This is a light-weight wrapper around LedgerSMB::DBObject::Payment->post_bulk.
+
+Please see the documentation of that function as to expected inouts.
+
+Additionally, this checks against the XSRF framework and  reloads the screen 
+with a notice to try again if the attempt to close out the form key is not 
+successful.
+
+=cut
 
 sub post_payments_bulk {
     my ($request) = @_;
@@ -356,6 +432,13 @@ sub post_payments_bulk {
     
     payments($request);
 }
+
+=item print
+
+Prints a stack of checks.  Currently the logic from the single payment interface
+is not merged in, meaning that $request->{multiple} must be set to a true value.
+
+=cut
 
 sub print {
     use LedgerSMB::DBObject::Company;
@@ -452,9 +535,21 @@ sub print {
 
 }
 
+=item update_payments
+
+Displays the bulk payment screen with current data
+
+=cut
+
 sub update_payments {
     display_payments(@_);
 }
+
+=item display_payments
+
+This displays the bulk payment screen with current data.
+
+=cut
 
 sub display_payments {
     my ($request) = @_;
@@ -537,8 +632,7 @@ sub display_payments {
         format   => 'HTML', 
     );
     $template->render($payment);
-}
-  
+} 
 
 =item payment
 

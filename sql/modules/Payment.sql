@@ -27,6 +27,10 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION payment_type__get_label(in_payment_type_id int) IS 
+$$ Returns all information on a payment type by the id.  This should be renamed
+to account for its behavior in future versions.$$;
+
 
 CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 (in_account_class int,
@@ -52,6 +56,13 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 	END LOOP;
  END;
  $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION payment_get_entity_accounts
+(in_account_class int,
+ in_vc_name text,
+ in_vc_idn  text) IS
+$$ Returns a minimal set of information about customer or vendor accounts
+as needed for discount calculations and the like.$$;
 
 -- payment_get_open_accounts and the option to get all accounts need to be
 -- refactored and redesigned.  -- CT
@@ -422,56 +433,6 @@ the LedgerSMB discretionary locking framework, and if not possible, returns the
 username of the individual who has the lock.
 $$;
 
-CREATE OR REPLACE FUNCTION payment_bulk_queue
-(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
-	in_ar_ap_accno text, in_cash_accno text, 
-	in_payment_date date, in_account_class int)
-returns int as
-$$
-BEGIN
-	INSERT INTO payments_queue
-	(transactions, batch_id, source, total, ar_ap_accno, cash_accno,
-		payment_date, account_class)
-	VALUES 
-	(in_transactions, in_batch_id, in_source, in_total, in_ar_ap_accno,
-		in_cash_accno, in_payment_date, in_account_class);
-
-	RETURN array_upper(in_transactions, 1) - 
-		array_lower(in_transactions, 1);
-END;
-$$ LANGUAGE PLPGSQL;
-
-CREATE OR REPLACE FUNCTION job__create(in_batch_class int, in_batch_id int)
-RETURNS int AS
-$$
-BEGIN
-	INSERT INTO pending_job (batch_class, batch_id)
-	VALUES (coalesce(in_batch_class, 3), in_batch_id);
-
-	RETURN currval('pending_job_id_seq');
-END;
-$$ LANGUAGE PLPGSQL;
-
-CREATE TYPE job__status AS (
-	completed int, -- 1 for completed, 0 for no
-	success int, -- 1 for success, 0 for no
-	completed_at timestamp,
-	error_condition text -- error if not successful
-);
-
-CREATE OR REPLACE FUNCTION job__status(in_job_id int) RETURNS job__status AS
-$$
-DECLARE out_row job__status;
-BEGIN
-	SELECT  (completed_at IS NULL)::INT, success::int, completed_at,
-		error_condition
-	INTO out_row 
-	FROM pending_job
-	WHERE id = in_job_id;
-
-	RETURN out_row;
-END;
-$$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
@@ -591,7 +552,9 @@ COMMENT ON FUNCTION payment_bulk_post
         in_payment_date date, in_account_class int, int,
 	in_exchangerate numeric, in_curr text)
 IS
-$$ Note that in_transactions is a two-dimensional numeric array.  Of each 
+$$ This posts the payments for large batch workflows.
+
+Note that in_transactions is a two-dimensional numeric array.  Of each 
 sub-array, the first element is the (integer) transaction id, and the second
 is the amount for that transaction.  $$;
 
@@ -856,6 +819,33 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 -- I HAVE TO MAKE A COMMENT ON THIS FUNCTION
+COMMENT ON FUNCTION payment_post
+(in_datepaid                      date,
+ in_account_class                 int,
+ in_entity_credit_id                     int,
+ in_curr                          char(3),
+ in_notes                         text,
+ in_department_id                 int,
+ in_gl_description                text,
+ in_cash_account_id               int[],
+ in_amount                        numeric[],
+ in_cash_approved                 bool[],
+ in_source                        text[],
+ in_memo                          text[],
+ in_transaction_id                int[],
+ in_op_amount                     numeric[],
+ in_op_cash_account_id            int[],
+ in_op_source                     text[],
+ in_op_memo                       text[],
+ in_op_account_id                 int[],
+ in_ovp_payment_id                int[],
+ in_approved                      bool) IS
+$$ Posts a payment.  in_op_* arrays are cross-indexed with eachother.
+Other arrays are cross-indexed with eachother.
+
+This API will probably change in 1.4 as we start looking at using more custom
+complex types and arrays of those (requires Pg 8.4 or higher).
+$$;
 
 -- Move this to the projects module when we start on that. CT
 CREATE OR REPLACE FUNCTION project_list_open(in_date date) 
@@ -922,6 +912,13 @@ LOOP
 END LOOP;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION payments_get_open_currencies(in_account_class int) IS
+$$ This does a sparse scan to find currencies attached to open invoices.
+
+It should scale per the number of currencies used rather than the size of the 
+ar or ap tables.
+$$;
 
 CREATE OR REPLACE FUNCTION currency_get_exchangerate(in_currency char(3), in_date date, in_account_class int) 
 RETURNS NUMERIC AS
@@ -1052,6 +1049,16 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION payment__search
+(in_source text, in_date_from date, in_date_to date, in_credit_id int,
+        in_cash_accno text, in_account_class int) IS
+$$This searches for payments.  in_date_to and _date_from specify the acceptable
+date range.  All other matches are exact except that null matches all values.
+
+Currently (and to support earlier data) we define a payment as a collection of
+acc_trans records against the same credit account and cash account, on the same
+day with the same source number, and optionally the same voucher id.$$;
+
 CREATE OR REPLACE FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text, 
 	in_date_reversed date, in_account_class int, in_batch_id int, 
@@ -1145,6 +1152,13 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION payment__reverse
+(in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
+        in_date_reversed date, in_account_class int, in_batch_id int,
+        in_voucher_id int) IS $$
+Reverses a payment.  All fields are mandatory except batch_id and voucher_id
+because they determine the identity of the payment to be reversed.
+$$;
 
 CREATE OR REPLACE FUNCTION payments_set_exchangerate(in_account_class int,
  in_exchangerate numeric, in_curr char(3), in_datepaid date )
@@ -1173,6 +1187,12 @@ END IF;
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION payments_set_exchangerate(in_account_class int,
+ in_exchangerate numeric, in_curr char(3), in_datepaid date ) IS
+$$ 1.3 only.  This will be replaced by a more generic function in 1.4.
+
+This sets the exchange rate for a class of transactions (payable, receivable) 
+to a certain rate for a specific date.$$;
 
 CREATE TYPE payment_header_item AS (
 payment_id int,
@@ -1331,6 +1351,9 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION payment_get_unused_overpayment(
+in_account_class int, in_entity_credit_id int, in_chart_id int) IS
+$$ Returns a list of available overpayments$$;
 
 CREATE TYPE payment_overpayments_available_amount AS (
         chart_id int,
@@ -1357,4 +1380,8 @@ BEGIN
       END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION payment_get_unused_overpayment(
+in_account_class int, in_entity_credit_id int, in_chart_id int) IS
+$$ Returns a list of available overpayments$$;
 

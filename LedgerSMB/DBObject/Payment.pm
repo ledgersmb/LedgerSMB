@@ -415,6 +415,7 @@ $self->{account_class} (must be 1 or 2)  exist to work.
 WARNING THIS IS NOT BEEING USED BY THE SINGLE PAYMENT SYSTEM.... 
 
 =back
+
 =cut
 
 sub get_open_currencies {
@@ -425,7 +426,6 @@ sub get_open_currencies {
 
 
 =over
-
 
 =item list_accounting
 
@@ -590,6 +590,65 @@ sub get_payment_detail_data {
     $self->{dbh}->commit; # Commit locks
 }    
 
+=item post_bulk
+
+This function posts the payments in bulk.  Note that queue_payments is not a 
+common setting and rather this provides a hook for an add-on.
+
+This API was developed early in 1.3 and is likely to change for better 
+encapsulation.  Currenty it uses the following structure:
+
+Within the main hashref:
+
+=over
+
+=item contact_count
+
+The number of payments.  One per contact.
+
+=item contact_$row
+
+for (1 .. contact_count), contact_$_ is the entity credit account's id 
+associated with the current contact.  We will call this $contact_id below.
+
+For each contact id, we have the following, suffixed with _$contact_id:
+
+=over
+
+=item source
+
+=item invoice_count
+
+Number of invoices to loop through
+
+=item invoice_${contact_id}_$row
+
+for $row in (1 .. invoice_count), each this provides the transaction id of the
+invoice.
+
+=back
+
+Each invoice has the following attributes, suffxed with 
+${invoice_id}
+
+=over
+
+=item amount
+
+=item paid
+
+=item net
+
+=back
+
+=back
+
+In the future the payment posting API will become more standardized and the 
+conversion between flat and hierarchical representation will be moved to the
+workflow scripts.
+
+=cut
+
 sub post_bulk {
     my ($self) = @_;
     my $total_count = 0;
@@ -646,6 +705,12 @@ sub post_bulk {
     $self->{queue_payments} = $queue_payments;
     return $self->{dbh}->commit;
 }
+
+=item check_job
+
+To be moved into payment_queue addon.
+
+=cut
 
 sub check_job {
     my ($self) = @_;
@@ -715,16 +780,38 @@ my ($self) = @_;
 return @{$self->{open_overpayment_entities}}; 
 }
 
+=item get_unused_overpayments
+
+This is a simple wrapper around payment_get_unused_overpayments sql function.
+
+=cut
+
 sub get_unused_overpayments {
 my ($self) = @_;
 @{$self->{unused_overpayment}} = $self->exec_method(funcname => 'payment_get_unused_overpayment');
 return @{$self->{unused_overpayment}}; 
 }
 
+=item get_available_overpayment_amount
+
+Simple wrapper around payment_get_available_overpayment_amount sql function.
+
+=cut
+
 sub get_available_overpayment_amount {
 my ($self) = @_;
 @{$self->{available_overpayment_amount}} = $self->exec_method(funcname => 'payment_get_available_overpayment_amount');
 return @{$self->{available_overpayment_amount}};
 }
+
+=item init
+
+Initializes the num2text system
+
+=item num2text
+
+Translates numbers into words.
+
+=cut
 
 1;

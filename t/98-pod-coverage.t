@@ -13,7 +13,7 @@ eval "use Test::Pod::Coverage";
 if ($@){
     plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
 } else {
-    plan tests => 24;
+    plan tests => 25;
 }
 pod_coverage_ok("LedgerSMB");
 pod_coverage_ok("LedgerSMB::Form");
@@ -39,3 +39,7 @@ pod_coverage_ok("LedgerSMB::ScriptLib::Company");
 pod_coverage_ok("LedgerSMB::DBObject::Employee");
 pod_coverage_ok("LedgerSMB::File");
 pod_coverage_ok("LedgerSMB::DBObject");
+pod_coverage_ok("LedgerSMB::DBObject::Payment", 
+               {also_private => [qr/^(format_ten_|num2text_)/]}
+);
+
