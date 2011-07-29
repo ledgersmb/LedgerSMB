@@ -1882,8 +1882,7 @@ sub get_customer {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{ct}_id"} );
     while (my $ref = $sth->fetchrow_hashref('NAME_lc')){
-        $form->{ $form->{ct} } .=
-	    ($form->{ $form{ct} } ? ", " : "") . $ref->{name};
+        $form->{ $form->{ct} } = $ref->{name}; # each 'name' row is the same
         $form->{ lc($ref->{class}) } .=
 	    ($form->{ lc($ref->{class}) } ? ", " : "") . $ref->{contact};
     }
