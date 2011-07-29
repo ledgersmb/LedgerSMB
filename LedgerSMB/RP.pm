@@ -1774,6 +1774,7 @@ sub aging {
         $aclass = 1;
     } else {
         $aclass = 2;
+        $form->{arap} = 'ap';
     }
         $query .= qq|
 		SELECT c.entity_id AS ctid, 
@@ -1871,12 +1872,19 @@ sub get_customer {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-		SELECT name, email, cc, bcc FROM $form->{ct} ct
-		 WHERE ct.entity_id = ?|;
+		SELECT e.name, c.contact, cc.class 
+                  FROM entity_credit_account eca
+                  JOIN entity USING (entity_id)
+                  JOIN eca_to_contact c ON (eca.credit_id = eca.id)
+                  JOIN contact_class cc ON (c.contact_class_id = cc.id)
+		 WHERE eca.id = ?
+                       AND cc.id BETWEEN 12 AND 17|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{ct}_id"} );
-    ( $form->{ $form->{ct} }, $form->{email}, $form->{cc}, $form->{bcc} ) =
-      $sth->fetchrow_array();
+    while (my $ref = $sth->fetchrow_hashref('NAME_lc')){
+        $form->{ $form->{ct} } = $ref->{name};
+        $form->{ lc($ref->{class}) } = $ref->{contact};
+    }
 
     $dbh->commit;
 
@@ -2030,10 +2038,10 @@ sub payments {
         $table = 'customer';
         $account_class = 2;
         $ml    = -1;
-    }
-    if ( $form->{db} eq 'ap' ) {
+    } else {
         $table = 'vendor';
         $account_class = 1;
+        $form->{db} = 'ap';
     }
 
     my $query;
