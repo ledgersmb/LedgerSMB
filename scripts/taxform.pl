@@ -75,7 +75,7 @@ sub __default {
 
 =item add_taxform
 
-Display the "add taxform" view.
+Display the "add taxform" screen.
 
 =back
 
@@ -97,6 +97,33 @@ sub add_taxform
     $template->render($taxform);
 }
 
+=item generate_report
+
+Generates the summary or detail report.   Query inputs (required unless
+otherwise specified:
+
+=over
+
+=item begin
+Begin date
+
+=item end
+End date
+
+=item taxform_id
+ID of tax form
+
+=item meta_number (optional)
+Vendor or customer account number.  If set, triggers detailed report instead
+of summary for all customers/vendors associated with the tax form.
+
+=back
+
+In the future the actual report routines will be wrapped in a taxform_report
+package.
+
+=cut
+
 sub generate_report {
     
     
@@ -104,7 +131,7 @@ sub generate_report {
     if (!$request->{format}){
        $request->{format} = 'HTML';
     }
-    
+    # TODO:  Eliminate duplicate code!
     if ($request->{meta_number}) {
       my @call_args = ($request->{'tax_form_id'},
                        $request->{begin_month}.' '.$request->{begin_day}.' '.$request->{begin_year}, $request->{end_month}.' '.$request->{end_day}.' '.$request->{end_year}, 
@@ -168,6 +195,12 @@ sub save
     $template->render($taxform);
 }
 
+=item print
+
+Prints the tax forms, using the 1099 templates.
+
+=cut
+
 sub print {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
@@ -177,6 +210,11 @@ sub print {
     generate_report($request);    
 }
 
+=item list_all
+
+Lists all tax forms.
+
+=cut
 
 sub list_all {
     my ($request) = @_;
@@ -219,7 +257,7 @@ sub list_all {
     });
 }
 
-=head1 Copyright (C) 2007 The LedgerSMB Core Team
+=head1 Copyright (C) 2010 The LedgerSMB Core Team
 
 Licensed under the GNU General Public License version 2 or later (at your 
 option).  For more information please see the included LICENSE and COPYRIGHT 
