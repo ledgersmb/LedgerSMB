@@ -16,6 +16,8 @@ Save employee will update or create as needed.
 
 =head1 METHODS
 
+=over 
+
 =cut
 
 package LedgerSMB::Scripts::employee;
@@ -25,10 +27,6 @@ use LedgerSMB::DBObject::Employee;
 
 #require 'lsmb-request.pl';
 
-=pod
-
-=over
-
 =item get($self, $request, $user)
 
 Requires form var: id
@@ -36,8 +34,6 @@ Requires form var: id
 Extracts a single employee from the database, using its company ID as the primary
 point of uniqueness. Shows (appropriate to user privileges) and allows editing
 of the employee informations.
-
-=back
 
 =cut
 
@@ -60,6 +56,12 @@ sub get {
         
 }
 
+=item add_location
+
+Adds a location to an employee and returns to the edit employee screen.
+Standard location inputs apply.
+
+=cut
 
 sub add_location {
     my ($request) = @_;
@@ -74,15 +76,9 @@ sub add_location {
 	
 }
 
-=pod
-
-=over
-
 =item add
 
 This method creates a blank screen for entering a employee's information.
-
-=back
 
 =cut 
 
@@ -94,19 +90,19 @@ sub add {
     _render_main_screen($employee);
 }
 
-=pod
-
-=over
-
 =item delete_contact
 
 Deletes the selected contact info record
 
 Must include company_id or credit_id (credit_id used if both are provided) plus:
 
-* contact_class_id
-* contact
-* form_id
+=over
+
+=item contact_class_id
+
+=item contact
+
+=item form_id
 
 =back
 
@@ -122,10 +118,6 @@ sub delete_contact {
     _render_main_screen( $employee);
 }
 
-=pod
-
-=over
-
 =item delete_location
 
 Deletes the selected contact info record
@@ -135,8 +127,6 @@ Must include company_id or credit_id (credit_id used if both are provided) plus:
 * location_class_id
 * location_id 
 * form_id
-
-=back
 
 =cut
 
@@ -150,18 +140,19 @@ sub delete_location {
     _render_main_screen( $employee);
 }
 
-=pod
-
-=over
-
 =item edit_bank_account($request)
 
 displays screen to a bank account
 
 Required data:
-bank_account_id
-bic
-iban
+
+=over 
+
+=item bank_account_id
+
+=item bic
+
+=item iban
 
 =back
 
@@ -174,18 +165,19 @@ sub edit_bank_acct {
     _render_main_screen( $employee);
 }
 
-=pod
-
-=over
-
 =item delete_bank_acct
 
 Deletes the selected bank account record
 
 Required request variables:
-* bank_account_id
-* entity_id
-* form_id
+
+=over
+
+=item bank_account_id
+
+=item entity_id
+
+=item form_id
 
 =back
 
@@ -211,63 +203,11 @@ sub _close_form {
     }
     return 1;
 }
-=pod
-
-=over
-
-=item search($self, $request, $user)
-
-Requires form var: search_pattern
-
-Directly calls the database function search, and returns a set of all employees
-found that match the search parameters. Search parameters search over address 
-as well as employee/Company name.
-
-=back
-
-=cut
-
-sub search {
-    my ($request) = @_;
-    
-    if ($request->type() eq 'POST') {
-        # assume it's asking us to do the search, now
-        
-        my $employee = LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-        $employee->set(entity_class=>3);
-        my $results = $employee->search($employee->{search_pattern});
-
-        my $template = LedgerSMB::Template->new( user => $user, 
-    	template => 'Contact/employee', language => $user->{language}, 
-            format => 'HTML');
-        $template->render($results);
-        
-    }
-    else {
-        
-        # grab the happy search page out.
-        
-        my $template = LedgerSMB::Template->new( 
-		user => $user,
-		path => 'UI/Contact' ,
-    		template => 'employee_search', 
-		locale => $request->{_locale}, 
-		format => 'HTML');
-            
-        $template->render();
-    }
-}
-
-=pod
-
-=over
 
 =item save($self, $request, $user)
 
 Saves a employee to the database. The function will update or insert a new 
 employee as needed, and will generate a new Company ID for the employee if needed.
-
-=back
 
 =cut
 
@@ -287,6 +227,12 @@ sub save {
     _render_main_screen($employee);
 }
 
+=item search
+
+Displays the search criteria screen
+
+=cut
+
 sub search {
     my $request = shift @_;
     my $template = LedgerSMB::Template->new(
@@ -298,6 +244,12 @@ sub search {
     );
     $template->render($request);
 }
+
+=item search_results
+
+Displays search results.
+
+=cut
 
 sub search_results {
     my $request = shift @_;
@@ -361,6 +313,12 @@ employeenumber=> $locale->text('Employee Number'),
     });
 }
 
+=item edit
+
+displays the edit employee screen. Requires id field to be set.
+
+=cut
+
 sub edit{
     my $request = shift @_;
     my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
@@ -389,6 +347,12 @@ sub _render_main_screen{
     $template->render($employee);
 }
 
+=item save_contact
+
+Saves contact info and returns to edit employee screen
+
+=cut
+
 sub save_contact {
     my ($request) = @_;
     my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
@@ -397,6 +361,13 @@ sub save_contact {
     _render_main_screen($employee );
 }
 
+=item save_bank_account
+
+Saves bank account information (bic, iban, id required) and returns to the 
+edit employee screen
+
+=cut
+
 sub save_bank_account {
     my ($request) = @_;
     my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
@@ -404,6 +375,13 @@ sub save_bank_account {
     $employee->get;
     _render_main_screen($employee);
 }
+
+=item save_notes
+
+Attaches note (subject, note, id required) and returns to the edit employee
+screen.
+
+=cut
 
 sub save_notes {
     my ($request) = @_;
@@ -414,4 +392,16 @@ sub save_notes {
 }
     
 eval { do "scripts/custom/employee.pl"};
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+=cut
+
+
 1;
