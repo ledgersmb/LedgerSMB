@@ -51,6 +51,13 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION eoy_create_checkpoint(in_end_date date) IS
+$$Creates checkpoints for each account at a specific date.  Books are considered
+closed when they occur before the latest checkpoint timewise.  This means that
+balances (and credit/debit amounts) can be calculated starting at a checkpoint
+and moving forward (thus providing a mechanism for expunging old data while 
+keeping balances correct at some future point).$$;
+
 CREATE OR REPLACE FUNCTION eoy_zero_accounts
 (in_end_date date, in_reference text, in_description text, 
 in_retention_acc_id int)
@@ -90,6 +97,13 @@ BEGIN
 end;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION eoy_zero_accounts
+(in_end_date date, in_reference text, in_description text,
+in_retention_acc_id int) IS
+$$ Posts a transaction which zeroes the income and expense accounts, moving the
+net balance there into a retained earnings account identified by 
+in_retention_acc_id.$$;
+
 CREATE OR REPLACE FUNCTION eoy_close_books
 (in_end_date date, in_reference text, in_description text, 
 in_retention_acc_id int)
@@ -104,6 +118,14 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION eoy_close_books
+(in_end_date date, in_reference text, in_description text,
+in_retention_acc_id int) IS
+$$ Zeroes accounts and then creates a checkpoint. in_end_date is the date when
+the books are to be closed, in_reference and in_description become the 
+reference and description of the gl transaction, and in_retention_acc_id is
+the retained earnings account id.$$;
 
 CREATE OR REPLACE FUNCTION eoy_reopen_books(in_end_date date)
 RETURNS bool AS
@@ -142,6 +164,10 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION eoy_reopen_books(in_end_date date) IS
+$$ Removes checkpoints and reverses yearend transactions starting on 
+in_end_date$$;
+
 CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
 RETURNS numeric AS
@@ -168,6 +194,11 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION account__obtain_balance 
+(in_transdate date, in_account_id int) is
+$$Returns the account balance at a given point in time, calculating forward 
+from most recent check point.$$;
+
 CREATE OR REPLACE FUNCTION eoy_earnings_accounts() RETURNS setof account AS 
 $$
     SELECT * 
@@ -175,3 +206,6 @@ $$
      WHERE category = 'Q'
      ORDER BY accno;
 $$ language sql;
+
+COMMENT ON FUNCTION eoy_earnings_accounts() IS
+$$ Lists equity accounts for the retained earnings dropdown.$$;
