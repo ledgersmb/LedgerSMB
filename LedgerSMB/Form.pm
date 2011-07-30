@@ -2485,7 +2485,7 @@ sub create_links {
 
 	    # If there's an explicit billing email, don't use
 	    # the standard email addresses; otherwise fall back to standard
-	    $self->{$ctype} .= "$ref->{contact} "
+	    $self->{$ctype} .= ($self->{$ctype} ? ", " : "") . $ref->{contact}
 		if (($ref->{class_id} < 15 && ! $billing_email)
 		    || $ref->{class_id} >= 15);
 	}
