@@ -80,6 +80,12 @@ sub update_recon_set {
     _display_report($recon);
 }
 
+=item submit_recon_set
+
+Submits the recon set to be approved.
+
+=cut
+
 sub submit_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
@@ -93,6 +99,13 @@ sub submit_recon_set {
     return $template->render($recon);
     
 }
+
+=item save_recon_set
+
+Saves the reconciliation set for later use.
+
+=cut
+
 sub save_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
@@ -110,6 +123,12 @@ sub save_recon_set {
     return $template->render($recon);
     
 }
+
+=item get_results
+
+Displays the search results
+
+=cut
 
 sub get_results {
     my ($request) = @_;
@@ -203,6 +222,13 @@ sub get_results {
 	});
         
 }
+
+=item 
+
+Displays search criteria screen
+
+=cut
+
 sub search {
     my ($request,$type) = @_;
     
@@ -222,97 +248,6 @@ sub search {
         );
         return $template->render($recon);
 }
-
-=pod
-
-=over
-
-=item correct ($self, $request, $user)
-
-Requires report_id, entry_id.
-
-Correct is a strange one. Based on the type of transaction listed in the
-report, it will run one of several correction functions in the database.
-This is to prevent arbitrary editing of the database by unscrupulous users.
-
-=back
-
-=cut
-
-sub correct {
-    my ($request) = @_;
-    
-    if ($request->type() eq "POST") {
-        
-        my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
-
-        $recon->correct_entry();
-        
-        #  Are we getting data?
-        if ($recon->{corrected_id}) {
-
-            my $template = LedgerSMB::Template->new( user => $user, 
-        	template => 'reconciliation/report', language => $user->{language}, 
-                format => 'HTML',
-                path=>"UI");
-
-            $template->render( { 
-                corrected=> $recon->{corrected_id}, 
-                report=> $recon->get_report(),
-                total=> $recon->get_total()
-            } );
-        } 
-        else {
-
-            # indicate we were unable to correct this entry, with the error code 
-            # spat back to us by the DB.
-            my $template = LedgerSMB::Template->new( user => $user, 
-        	template => 'reconciliation/report', language => $user->{language}, 
-                format => 'HTML',
-                path=>"UI");
-
-            $template->render( { 
-                recon   => $recon,
-                report  => $recon->get_report(),
-                total   => $recon->get_total()
-            } );
-        }
-    }
-    else {
-        
-        # We are not getting data sent
-        # ergo, we render out stuff.
-        
-        if ($request->{report_id} && $request->{entry_id}) {
-            
-            # draw the editor interface.
-            
-            my $template = LedgerSMB::Template->new(
-                user=>$user,
-                template=>"reconciliation/correct",
-                language=> $user->{language},
-                format=>'HTML',
-                path=>"UI"
-            );
-            my $recon = LedgerSMB::DBObject::Reconciliation->new(base=>$request, copy=>'all');
-            
-            $template->render($recon->details($request->{report_id}));
-        }
-        elsif ($request->{report_id}) {
-            
-            my $template = LedgerSMB::Template->new(
-                user=>$user,
-                template=>"reconciliation/correct",
-                language=> $user->{language},
-                format=>'HTML',
-                path=>"UI"
-            );
-            $class->display_report();
-        }
-    }
-    
-}
-
 
 =pod
 
@@ -449,13 +384,14 @@ sub _display_report {
         return $template->render($recon);
 }
 
+
+=item new_report
+
+Displays the new report screen.
+
+=cut
 sub new_report {
     my ($request) = @_;
-    # how are we going to allow this to be created? Grr.
-    # probably select a list of statements that are available to build 
-    # reconciliation reports with.
-    
-    # This should do some fun stuff.
     
     my $template;
     my $return;
@@ -617,42 +553,6 @@ sub approve {
     else {
         return $class->display_report($request);
     }
-}
-
-=pod
-
-=over
-
-=item corrections ($self, $request, $user)
-
-Requires report_id and entry_id.
-
-Loads the selected entry id and all corrections associated with it. If there
-aren't any corrections, it will display "no corrections found".
-=back
-
-=cut
-
-sub corrections {
-    my ($request) = @_;
-    
-    # Load the corrections for a given report & entry id.
-    # possibly should use a "micro" popup window?
-    
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => 'request', copy=> 'all');
-    
-    my $template;
-        
-    $template = LedgerSMB::Template->new( user => $user, 
-	template => 'reconciliation/corrected', language => $user->{language}, 
-        format => 'HTML', path=>"UI");
-    
-    return $template->render(
-        {
-            corrections=>$recon->get_corrections(), 
-            entry=>$recon->entry($self->{report_id}, $self->{entry_id})
-        }
-    );
 }
 
 =pod
