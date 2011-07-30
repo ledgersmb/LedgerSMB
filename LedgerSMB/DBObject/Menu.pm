@@ -24,11 +24,11 @@ use base(qw(LedgerSMB::DBObject));
 
 =over
 
-=item LedgerSMB::Menu->new()
+=item new()
 
 Inherited from LedgerSMB::DBObject.  Please see that documnetation for details.
 
-=item $menu->generate()
+=item generate()
 
 This function returns a list of menu items.  Each list item is a hashref:
 keys %menu_item would return the equivalent of qw(position id level label path 
@@ -46,9 +46,7 @@ sub generate {
     return @{$self->{menu_items}};
 }
 
-=over
-
-=item Menu::generate_secton($object)
+=item generate_section()
 
 This class acts like Menu::Generate except it returns only a cross-section of 
 the menu.  Basically it returns all nodes which are direct children below
@@ -65,14 +63,10 @@ sub generate_section {
     return @{$self->{menu_items}};
 }
 
-=over
-
-=item Menu::will_expire_soon($object)
+=item will_expire_soon()
 
 This method returns true if the user's password will expire soon 
 (within the next week).
-
-=back
 
 =cut
 
@@ -105,4 +99,14 @@ sub __generate {
         }
     }
 }
+
+=back
+
+=head1 Copyright (C) 2007 The LedgerSMB Core Team
+
+Licensed under the GNU General Public License version 2 or later (at your 
+option).  For more information please see the included LICENSE and COPYRIGHT 
+files.
+
+=cut
 
