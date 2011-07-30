@@ -1,3 +1,16 @@
+-- First a couple of notes about this file and what will probably change in the
+-- future.
+--
+-- The current generation here of reports assumes that we are providing 
+-- reporting of purchases or sales to one country only.  If this ever changes
+-- we will need an abstraction layer like we use with fixed assets.  I suspect
+-- we will go that way anyway since it will make some things easier. 
+--
+-- This file provides 1099 reporting (MISC and INT).  It does NOT provide 1099-K
+-- and we'd need an abstraction layer for that. --CT
+
+
+
 CREATE TYPE tax_form_report_item AS (
     legal_name text, 
     entity_id integer, 
@@ -101,6 +114,11 @@ BEGIN
 END;
 $BODY$ LANGUAGE PLPGSQL;
 
+COMMENT ON FUNCTION tax_form_summary_report
+(in_tax_form_id int, in_begin date, in_end date) IS
+$$This provides the total reportable value per vendor.  As per 1099 forms, these
+are cash-basis documents and show amounts paid.$$;
+
 CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) 
 RETURNS SETOF tax_form_report_detail_item AS $BODY$
 DECLARE
@@ -179,3 +197,9 @@ BEGIN
 	END LOOP;
 END;
 $BODY$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION tax_form_details_report
+(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) IS
+$$ This provides a list of invoices and transactions that a report hits.  This 
+is intended to allow an organization to adjust what is reported on the 1099 
+before printing them.$$;
