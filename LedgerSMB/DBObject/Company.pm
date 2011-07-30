@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Company.pm, LedgerSMB Base Class for Customers/Vendors
+LedgerSMB::DBObject::Company.pm
 
 =head1 SYNOPSIS
 
@@ -8,6 +8,16 @@ This library contains the base utility functions for creating, saving, and
 retrieving customers and vendors.
 
 =cut
+
+# This module has the following problems associated with it which need to be 
+# revised.
+#
+# 1)  The data in this module is too free-form.  There needs to be more 
+# structure, and that probably requires breaking it out into a Location.pm, 
+# Contact.pm, Notes.pm, etc.
+#
+# 2)  The current code ties the company to the credit account too much.  This
+# needs to be separated. --CT
 
 package LedgerSMB::DBObject::Company;
 

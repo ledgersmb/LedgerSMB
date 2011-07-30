@@ -2,6 +2,22 @@
 package LedgerSMB::Scripts::admin;
 use strict;
 
+=pod
+
+=head1 NAME
+
+LedgerSMB:Scripts::admin
+
+=head1 SYNOPSIS
+
+This module provides the workflow scripts for managing users and permissions.
+    
+=head1 METHODS
+        
+=over   
+        
+=cut
+
 require 'lsmb-request.pl';
 
 use LedgerSMB::Template;
@@ -12,7 +28,14 @@ use Data::Dumper;
 use LedgerSMB::Setting;
 use LedgerSMB::Log;
 
+# I don't really like the code in this module.  The callbacks are per form which
+# means there is no semantic difference between different buttons that can be 
+# clicked.  This results in a lot of code with a lot of conditionals which is
+# both difficult to read and maintain.  In the future, this should be revisited
+# and rewritten.  It makes the module too closely tied to the HTML.  --CT
+
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::admin');
+
 
 sub __edit_page {
     
@@ -63,6 +86,19 @@ sub __edit_page {
     $template->render($template_data);
 }
 
+=item save_user
+
+Saves the user information, including name, etc.
+
+This is also used to effect an administrative password reset or create new 
+users.  However, if the import value is set to 1, it will not set the password.
+
+The reasoning here is that we don't really want to set passwords when we are 
+importing db cluster users into LedgerSMB.  If that needs to be done it can be
+a separate stage.
+
+=cut
+
 sub save_user {
     my ($request, $admin) = @_;
     if ($request->{import} == "1"){
@@ -104,6 +140,12 @@ sub save_user {
     __edit_page($admin);
 }
 
+=item save_roles
+
+Saves the role assignments for a given user
+
+=cut
+
 sub save_roles {
     my ($request, $admin) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
@@ -112,6 +154,11 @@ sub save_roles {
     __edit_page($admin);
 }
 
+=item new_user 
+
+Displays a new user form.  No inputs used.
+
+=cut
 
 sub new_user {
     
@@ -145,6 +192,12 @@ sub new_user {
         );
 }
 
+=item edit_user
+
+Displays the screen for editing a user.  user_id must be set to prepopulate.
+
+=cut
+
 sub edit_user {
     
     # uses the same page as create_user, only pre-populated.
@@ -152,92 +205,13 @@ sub edit_user {
     __edit_page($request);
 }
 
-sub edit_group {
-    
-    my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
-    
-    my $all_roles = $admin->role_list();
-    my $user = $request->{_user};
-    
-    my $template = LedgerSMB::Template->new( 
-        user => $user, 
-        template => 'Admin/edit_group', 
-        language => $user->{language}, 
-        format => 'HTML', 
-        path=>'UI'
-    );
-        
-    if ($request->type() eq "POST") {
+=item delete_user
 
-        my $role = $admin->save_role();
-        return $template->render(
-            {
-                user=> $request->{role}, 
-                roles=>$all_roles,
-                user_roles=>$admin->get_user_roles($request->{role})
-            }
-        );
-    }
-    else {
-        return $template->render(
-            {
-            roles=>$all_roles
-            }
-        );
-    }    
-}
+Deletes a user and returns to search results.
 
-sub create_group {
-    
-    my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
-    my $user = $request->{_user};
-    
-    my $all_roles = $admin->get_roles();
-    my $template = LedgerSMB::Template->new( 
-        user => $user, 
-        template => 'Admin/edit_group', 
-        language => $user->{language}, 
-        format => 'HTML', 
-        path=>'UI'
-    );
-    if ($request->type() eq "POST") {
-        
-        my $role = $admin->save_role();
-        return $template->render(
-            {
-                user=> $role, roles=>$all_roles
-            }
-        );
-    }
-    else {
-        return $template->render({roles=>$all_roles});
-    }
-}
+=cut
 
-sub delete_group {
-    
-    my ($request) = @_;
-    my $user = $request->{_user};
-    
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
-    
-    # requires the field modifying_user to be set.
-    
-    my $status = $admin->delete_group($request->{modifying_user});
-    
-    # status can either be 1, or an error.
-    # if there's an error, $status->throw() is called by admin.pm. Or possibly
-    # in the template itself.
-    
-    my $template = LedgerSMB::Template->new ( user=>$user, 
-        template=>'Admin/delete_group', language=>$user->{language}, 
-        format=>'HTML', path=>'UI');    
-        
-    $template->render($status);    
-}
-
+# XXX Rewrite! --CT
 sub delete_user {
     
     my ($request) = @_;
@@ -260,48 +234,11 @@ sub delete_user {
     $template->render($status);
 }
 
-sub new_group {
-    
-    my ($request) = @_;
-    my $user = $request->{_user};
-    
-    my $template = LedgerSMB::Template->new( user=>$user, 
-        template=>'Admin/new_group', language=>$user->{language},
-        format=>'HTML', path=>'UI');
-    
-    $template->render();
-}
+=item save_contact
 
-sub cancel {
-        
-    &main(@_);
-}
+Saves contact information and returns to the edit user screen.
 
-sub __default {
-    
-    &main(@_);
-}
-
-sub main {
-    
-    my ($request) = @_;
-    my $user = $request->{_user};
-    
-    my $template;
-    
-    my $user = LedgerSMB::DBObject::User->new(base=>$request, copy=>'all');
-    
-    my $ret = $user->get_all_users();
-    
-    $template = LedgerSMB::Template->new( 
-        user=>$user, 
-        template=>'Admin/main', 
-        language=>$user->{language},
-        format=>'HTML', 
-        path=>'UI'
-    );
-    $template->render( { users=>$user->{users} } );
-}
+=cut
 
 sub save_contact {
     
@@ -331,6 +268,12 @@ sub save_contact {
         __edit_page($request,{});
     }
 }
+
+=item delete_contact 
+
+Deletes contact information and returns to edit user screen
+
+=cut
 
 sub delete_contact {
     
@@ -363,6 +306,12 @@ sub delete_contact {
         __edit_page($request,undef,);
     }
 }
+
+=item save_location
+
+Saves location information and returns to the edit user screen.
+
+=cut
 
 sub save_location {
     
@@ -405,6 +354,11 @@ sub save_location {
     }
 }
 
+=item delete_location
+
+Deletes a location and returns to edit user screen
+
+=cut
 
 sub delete_location {
     
@@ -426,7 +380,11 @@ sub delete_location {
     }
 }
 
-#eval { do "scripts/custom/admin.pl"};
+=item search_users
+
+Displays search criteria screen
+
+=cut
 
 sub search_users {
     my ($request) = @_;
@@ -440,6 +398,13 @@ sub search_users {
     $template->render($request);
 }
 
+=item get_user_results
+
+Displays user search results
+
+=cut
+
+#XXX Add delete link
 sub get_user_results {
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
@@ -487,6 +452,12 @@ sub get_user_results {
     }); 
 }
 
+=item list_sessions
+
+Displays a list of open sessions.  No inputs required or used.
+
+=cut
+
 sub list_sessions {
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
@@ -531,11 +502,30 @@ sub list_sessions {
     
 }
 
+=item delete_session
+
+Deletes the session specified by $request->{session_id}
+
+=cut
+
 sub delete_session {
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
     $admin->delete_session();
     list_sessions($request);
 }
+
+eval { do "scripts/custom/admin.pl"};
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+=cut
+
 
 1;
