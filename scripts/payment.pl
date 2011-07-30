@@ -172,7 +172,7 @@ sub pre_bulk_post_report {
                };
         for my $invrow (1 .. $request->{"invoice_count_$cid"}){
             my $inv_id = $request->{"invoice_${cid}_$invrow"};
-            if ($request->{"paid_$cid"} = 'all'){
+            if ($request->{"paid_$cid"} eq 'all'){
                 $ref->{amount} += $request->{"payment_$inv_id"};
             } else {
                $ref->{amount} += $request->{"net_$inv_id"};

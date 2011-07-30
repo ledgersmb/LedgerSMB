@@ -1,43 +1,3 @@
-CREATE TABLE cr_report (
-    id bigserial primary key not null,
-    chart_id int not null references account(id),
-    their_total numeric not null,
-    approved boolean not null default 'f',
-    submitted boolean not null default 'f',
-    end_date date not null default now(),
-    updated timestamp not null default now(),
-    entered_by int not null default person__get_my_entity_id() references entity(id),
-    entered_username text not null default SESSION_USER,
-    deleted boolean not null default 'f'::boolean,
-    deleted_by int references entity(id),
-    approved_by int references entity(id),
-    approved_username text,
-    CHECK (deleted is not true or approved is not true)
-);
-
-CREATE TABLE cr_report_line (
-    id bigserial primary key not null,
-    report_id int NOT NULL references cr_report(id),
-    scn text, -- SCN is the check #
-    their_balance numeric,
-    our_balance numeric,
-    errorcode INT,
-    "user" int references entity(id) not null, 
-    clear_time date,
-    insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
-    trans_type text, 
-    post_date date,
-    ledger_id int REFERENCES acc_trans(entry_id),
-    voucher_id int REFERENCES voucher(id),
-    overlook boolean not null default 'f',
-    cleared boolean not null default 'f'
-);
-
-CREATE TABLE cr_coa_to_account (
-    chart_id int not null references account(id),
-    account text not null
-);
-
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(
 	in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
@@ -48,6 +8,12 @@ BEGIN
 	RETURN FOUND;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION reconciliation__submit_set(
+        in_report_id int, in_line_ids int[]) IS
+$$Submits a reconciliation report for approval. 
+in_line_ids is used to specify which report lines are cleared, finalizing the
+report.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
 	in_report_id int, in_line_ids int[]) RETURNS bool AS
@@ -61,6 +27,10 @@ BEGIN
 	RETURN found;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION reconciliation__save_set(
+        in_report_id int, in_line_ids int[]) IS
+$$Sets which lines of the report are cleared.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__delete_report(in_report_id int)
 RETURNS bool AS 
@@ -78,8 +48,10 @@ $$
         
         PERFORM id FROM cr_report WHERE id = in_report_id AND approved = TRUE;
         
-        IF FOUND THEN
-            RAISE EXCEPTION 'reconcilation__delete_report(): report % is approved; cannot delete.', in_report_id;
+        IF FOUND THEN --changing the verbose message to a notice and adding a
+                      --program-helpful exception --CT
+            RAISE NOTICE 'reconcilation__delete_report(): report % is approved; cannot delete.', in_report_id;
+            RAISE EXCEPTION 'Cannot delete approved';
         END IF;
         
         PERFORM id 
@@ -88,10 +60,13 @@ $$
             AND submitted = TRUE
             AND entered_by = person__get_my_entity_id();
         
-        IF FOUND THEN
-            -- Creators cannot delete their own reports if they've been submitted.
-            RAISE EXCEPTION 'reconciliation__delete_report(): creators cannot delete their own report after submission. %', in_report_id;
-        END IF;
+        -- IF FOUND THEN
+            -- Creators cannot delete their own reports if they've been submitted. -AS
+            -- Why not?  If it hasn't been approved.....  
+            -- Also concerned about single-user setups here so commenting out
+            -- this block --CT
+            -- RAISE EXCEPTION 'reconciliation__delete_report(): creators cannot delete their own report after submission. %', in_report_id;
+        -- END IF;
         
         UPDATE cr_report
            SET deleted = TRUE,
@@ -101,6 +76,13 @@ $$
         return TRUE;
     END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION reconciliation__delete_report(in_report_id int) IS
+$$Deletes the report if the report exists and is unapproved.
+
+Note this does not actually delete anything from the database.  Deleted reports
+are kept around in case they need to be investigated.  It only marks them as 
+deleted so that they can never be approved.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
@@ -117,6 +99,13 @@ $$
 	WHERE c.id = $1 AND ac.cleared is true and ac.approved is true
 		GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
+
+COMMENT ON FUNCTION reconciliation__get_cleared_balance(in_chart_id int) IS
+$$ Gets the cleared balance of the account specified by chart_id.
+This is specified in normal format (i.e. positive numbers for debits for asset
+and espense accounts, and positive numbers for credits in other accounts 
+
+Note that currently contra accounts will show negative balances.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) returns INT as $$
     
@@ -181,14 +170,22 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
 
 $$ language 'plpgsql' security definer;
 
-CREATE OR REPLACE FUNCTION reconciliation__new_report_id (in_chart_id int, 
+COMMENT ON  FUNCTION reconciliation__report_approve (in_report_id INT) IS
+$$Marks the report approved and marks all cleared transactions in it cleared.$$;
 
-in_total numeric, in_end_date date) returns INT as $$
+
+-- XXX Badly named, rename for 1.4.  --CT
+CREATE OR REPLACE FUNCTION reconciliation__new_report_id 
+(in_chart_id int, in_total numeric, in_end_date date) returns INT as $$
 
     INSERT INTO cr_report(chart_id, their_total, end_date) values ($1, $2, $3);
     SELECT currval('cr_report_id_seq')::int;
 
 $$ language 'sql';
+
+COMMENT ON FUNCTION reconciliation__new_report_id 
+(in_chart_id int, in_total numeric, in_end_date date)  IS
+$$ Inserts creates a new report and returns the id.$$;
 
 create or replace function reconciliation__add_entry(
     in_report_id INT, 
@@ -325,11 +322,17 @@ comment on function reconciliation__add_entry(
     in_date TIMESTAMP,
     in_amount numeric
 )  IS
-$$ This function is very sensitive to ordering of inputs.  NULL or empty in_scn values MUST be submitted after meaningful scns.  It is also highly recommended 
-that within each category, one submits in order of amount.  We should therefore
-wrap it in another function which can operate on a set.  Implementation TODO.$$;
+$$ 
+This function is used for automatically matching entries from an external source
+like a bank-produced csv file.
 
-create or replace function reconciliation__pending_transactions (in_end_date DATE, in_chart_id int, in_report_id int, in_their_total numeric) RETURNS int as $$
+This function is very sensitive to ordering of inputs.  NULL or empty in_scn values MUST be submitted after meaningful scns.  It is also highly recommended 
+that within each category, one submits in order of amount.  We should therefore
+wrap it in another function which can operate on a set, perhaps in 1.4....$$;
+
+create or replace function reconciliation__pending_transactions 
+(in_end_date DATE, in_chart_id int, in_report_id int, in_their_total numeric) 
+RETURNS int as $$
     
     DECLARE
         gl_row RECORD;
@@ -370,6 +373,10 @@ create or replace function reconciliation__pending_transactions (in_end_date DAT
     END;
 $$ LANGUAGE plpgsql;
 
+COMMENT ON function reconciliation__pending_transactions
+(in_end_date DATE, in_chart_id int, in_report_id int, in_their_total numeric) IS
+$$Ensures that the list of pending transactions in the report is up to date. $$;
+
 CREATE OR REPLACE FUNCTION reconciliation__report_details (in_report_id INT) RETURNS setof cr_report_line as $$
 
     DECLARE
@@ -387,6 +394,9 @@ CREATE OR REPLACE FUNCTION reconciliation__report_details (in_report_id INT) RET
 
 $$ language 'plpgsql';
 
+COMMENT ON FUNCTION reconciliation__report_details (in_report_id INT) IS
+$$ Returns the details of the report. $$;
+
 CREATE OR REPLACE FUNCTION reconciliation__report_summary (in_report_id INT) RETURNS cr_report as $$
 
     DECLARE
@@ -400,6 +410,7 @@ CREATE OR REPLACE FUNCTION reconciliation__report_summary (in_report_id INT) RET
 
 $$ language 'plpgsql';
 
+-- why is this not called reconciliation__get_report or something? --CT
 CREATE OR REPLACE FUNCTION reconciliation__get_total (in_report_id INT) returns setof cr_report AS $$
 
     DECLARE
@@ -418,6 +429,9 @@ CREATE OR REPLACE FUNCTION reconciliation__get_total (in_report_id INT) returns 
     END;
 
 $$ language 'plpgsql';
+
+COMMENT ON FUNCTION reconciliation__get_total (in_report_id INT) IS
+$$ Retrieves all header info from the reconciliation report.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__search
 (in_date_from date, in_date_to date, 
@@ -448,6 +462,16 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION reconciliation__search
+(in_date_from date, in_date_to date,
+        in_balance_from numeric, in_balance_to numeric,
+        in_chart_id int, in_submitted bool, in_approved bool) IS
+$$ Searches for reconciliation reports.
+NULLs match all values.
+in_date_to and in_date_from give a range of reports.  All other inputs are
+exact matches.
+$$;
+
 create type recon_accounts as (
     name text,
     accno text,
@@ -455,13 +479,17 @@ create type recon_accounts as (
 );
 
 create or replace function reconciliation__account_list () returns setof recon_accounts as $$
-    SELECT 
+    SELECT
         coa.accno || ' ' || coa.description as name,
         coa.accno, coa.id as id
-    FROM account coa, cr_coa_to_account cta
-    WHERE cta.chart_id = coa.id
+    FROM account coa
+         JOIN cr_coa_to_account cta ON cta.chart_id = coa.id
     ORDER BY coa.accno;
 $$ language sql;
+
+COMMENT ON function reconciliation__account_list () IS
+$$ returns set of accounts set up for reconciliation.  Currently we pull the 
+account number and description from the account table.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__get_current_balance
 (in_account_id int, in_date date) returns numeric as
@@ -489,6 +517,12 @@ BEGIN
 	RETURN outval;
 END;
 $$ language plpgsql;
+
+COMMENT ON FUNCTION reconciliation__get_current_balance
+(in_account_id int, in_date date) IS
+$$ Gets the current balance of all approved transactions against a specific 
+account.  For asset and expense accounts this is the debit balance, for others
+this is the credit balance.$$;
 
 CREATE OR REPLACE VIEW recon_payee AS
  SELECT n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance, rr.our_balance, rr.errorcode, rr."user", rr.clear_time, rr.insert_time, rr.trans_type, rr.post_date, rr.ledger_id, rr.voucher_id, rr.overlook, rr.cleared
@@ -521,3 +555,6 @@ CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id IN
         END LOOP;    
     END;
 $$ language 'plpgsql';
+
+COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS
+$$ Pulls the payee information for the reconciliation report.$$;

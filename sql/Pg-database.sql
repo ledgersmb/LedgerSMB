@@ -469,6 +469,14 @@ CREATE TABLE users (
 COMMENT ON TABLE users IS $$username is the actual primary key here because we 
 do not want duplicate users$$;
 
+CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
+$$
+	SELECT entity_id from users where username = SESSION_USER;
+$$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION person__get_my_entity_id() IS
+$$ Returns the entity_id of the current, logged in user.$$;
+
 create table lsmb_roles (
     
     user_id integer not null references users(id) ON DELETE CASCADE,
@@ -4442,5 +4450,58 @@ CREATE TABLE file_view_catalog (
        file_class int references file_class(id) primary key,
        view_name text not null unique
 );
+
+CREATE TABLE cr_report (
+    id bigserial primary key not null,
+    chart_id int not null references account(id),
+    their_total numeric not null,
+    approved boolean not null default 'f',
+    submitted boolean not null default 'f',
+    end_date date not null default now(),
+    updated timestamp not null default now(),
+    entered_by int not null default person__get_my_entity_id() references entity(id),
+    entered_username text not null default SESSION_USER,
+    deleted boolean not null default 'f'::boolean,
+    deleted_by int references entity(id),
+    approved_by int references entity(id),
+    approved_username text,
+    CHECK (deleted is not true or approved is not true)
+);
+
+COMMENT ON TABLE cr_report IS
+$$This table holds header data for cash reports.$$;
+
+CREATE TABLE cr_report_line (
+    id bigserial primary key not null,
+    report_id int NOT NULL references cr_report(id),
+    scn text, -- SCN is the check #
+    their_balance numeric,
+    our_balance numeric,
+    errorcode INT,
+    "user" int references entity(id) not null, 
+    clear_time date,
+    insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
+    trans_type text, 
+    post_date date,
+    ledger_id int REFERENCES acc_trans(entry_id),
+    voucher_id int REFERENCES voucher(id),
+    overlook boolean not null default 'f',
+    cleared boolean not null default 'f'
+);
+
+COMMENT ON TABLE cr_report_line IS
+$$ This stores line item data on transaction lines and whether they are 
+cleared.$$;
+
+COMMENT ON COLUMN cr_report_line.scn IS
+$$ This is the check number.  Maps to acc_trans.source $$;
+
+CREATE TABLE cr_coa_to_account (
+    chart_id int not null references account(id),
+    account text not null
+);
+
+COMMENT ON TABLE cr_coa_to_account IS
+$$ Provides name mapping for the cash reconciliation screen.$$;
 
 commit;

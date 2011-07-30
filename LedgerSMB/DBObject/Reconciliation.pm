@@ -12,6 +12,8 @@ This module creates object instances based on LedgerSMB's in-database ORM.
 
 =head1 METHODS
 
+Please note, this module needs a lot of cleanup.
+
 =over
 
 =item new ($class, base => $LedgerSMB::hash)
@@ -23,41 +25,6 @@ Of course the base object can be any object that inherits LedgerSMB, so you can
 use any subclass of that.  The per-session dbh is passed between the objects 
 this way as is any information that is needed.
 
-=item reconcile($self, $total, $month, $entries)
-
-Accepts the total balance, as well as a list of all entries from the bank
-statement as an array reference, and generates the pending report from
-this list. 
-The first entry is always the total balance of the general ledger as 
-compared to the balance held by the bank.
-
-Month is taken to be the date that the statement as represented by Entries
-is applicable to.
-
-Returns the new report ID. || An arrayref of entries.
-
-=item approve($self,$reportid)
-
-Approves the pending report $reportid.
-Checks for error codes in the pending report, and approves the report if none
-are found.
-
-Limitations: The creating user may not approve the report.
-
-Returns 1 on success.
-
-=item correct_entry($self, $report_id, $source_control_number, $new_balance)
-
-If the given entry $source_control_number in the report $report_id has an error
-code, the entry will be updated with $new_balance, and the error code 
-recomputed.
-
-Returns the error code assigned to this entry. 
-
-    0 for success
-    1 for found in general ledger, but does not match $new_balance
-    2 $source_control_number cannot be found in the general ledger
-    
 =item get_report($self, $report_id)
 
 Collects all the rows from the database in the given report. Returns an 
@@ -75,14 +42,6 @@ Returns undef in the event of no corrections found.
 Returns a single entry from the pending reports table, either cleared or
 uncleared.
 
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This file is licensed under the Gnu General Public License version 2, or at your
-option any later version.  A copy of the license should have been included with
-your software.
-
 =cut
 
 package LedgerSMB::DBObject::Reconciliation;
@@ -93,6 +52,13 @@ use LedgerSMB::Reconciliation::CSV;
 
 
 # don't need new
+
+=item update 
+
+Updates the report, pulling in any new transactions in the date range into the 
+transaction list.
+
+=cut
 
 sub update {
     my $self = shift @_;
@@ -114,6 +80,12 @@ sub _pre_save {
     $self->{line_ids} =~ s/,?$/}/; 
 }
 
+=item submit
+
+Submits the reconciliation set for approval.
+
+=cut
+
 sub submit {
     my $self = shift @_;
     $self->_pre_save;
@@ -121,12 +93,26 @@ sub submit {
     $self->{dbh}->commit; 
 }
 
+=item save
+
+Saves the reconciliation set for later work
+
+=cut
+
 sub save {
     my $self = shift @_;
     $self->_pre_save;
     $self->exec_method(funcname=>'reconciliation__save_set');
     $self->{dbh}->commit; 
 }
+
+=item import_file
+
+Calls the file import function.  This is generally assumed to be a csv file
+although the plugin is very modular and plugins could be written for other 
+formats.  The format structure is per account id.
+
+=cut
 
 sub import_file {
     
@@ -137,6 +123,18 @@ sub import_file {
     
     return $self->{import_entries};
 }
+
+=item approve($self,$reportid)
+
+Approves the pending report $reportid.
+Checks for error codes in the pending report, and approves the report if none
+are found.
+
+Limitations: The creating user may not approve the report.
+
+Returns 1 on success.
+
+=cut
 
 sub approve {
     
@@ -156,6 +154,12 @@ sub approve {
     }
     $self->{dbh}->commit;
 }
+
+=item new_report
+
+Creates a new report with data entered.
+
+=cut
 
 sub new_report {
 
@@ -179,19 +183,14 @@ sub new_report {
     return ($report_id, $entries); # returns the report ID.
 }
 
-=pod
 
-=over
-
-=item delete ($self, $report_id)
+=item delete_report ($self, $report_id)
 
 Requires report_id
 
 Deletes a report based on the report id.
 Stored procedure returns true if deleted, false if not deleted/could not be 
 found, and raises EXCEPTION on report already approved.
-
-=back
 
 =cut
 
@@ -223,6 +222,15 @@ sub delete_report {
     return $bool;
 }
 
+=item add_entries
+
+Adds entries from the import file routine.
+
+This function is extremely order dependent.  Meaningful scn's must be submitted 
+first it is also recommended that amounts be ordered where scn's are not found.
+
+=cut
+
 sub add_entries {
     my $self = shift;
     my $entries = $self->{import_entries};
@@ -253,40 +261,16 @@ sub add_entries {
     $self->{dbh}->commit;
 }
 
-sub correct_entry {
-    
-    my $self = shift @_;
-    my $report_id = $self->{report_id}; # shift @_;
-    my $scn = $self->{id}; #shift @_;
-    my $new_amount = $self->{new_amount}; #shift @_;
-    
-    # correct should return the new code value - whether or not it actually "matches"
-    my $code = $self->exec_method(
-        funcname=>'reconciliation__correct',
-        args=>[$report_id, $scn, $new_amount]
-    );
-    return $code[0]->{'correct'}; 
-}
+=item search
 
-sub get_corrections {
-    
-    my $self = shift @_;
-    
-    return $self->exec_method(
-        funcname=>'reconciliation__corrections',
-        args=>[$self->{report_id}, $self->{entry_id}]
-    );
-}
+Searches for reconciliation reports.  No inputs mandatory.
 
-sub entry {
-    
-    my $self = shift @_;
-    
-    return $self->exec_method(
-        funcname=>'reconciliation__single_entry',
-        args=>[$self->{report_id}, $self->{entry_id}]
-    );
-}
+date_from and date_to specify ranges.
+balance_from and balance_to specify ranges
+chart_id specifies an account
+submitted and approved are exact matches to status.
+
+=cut
 
 sub search {
     
@@ -297,23 +281,47 @@ sub search {
     );
 }
 
-sub get_pending {
-    
-    my $self = shift @_;
-    return $self->exec_method(
-        funcname=>'reconciliation__pending'
-    );
-}
+=item get
 
-sub get_report_list {
-    
-    my $self = shift @_;
-    
-    return $self->exec_method(
-        funcname=>'reconciliation__report_list',
-        args=>[$self->{account},$self->{report}]
-    );
-}
+Gets all information relating to a reconciliation report.
+
+id must be set.
+
+Populates main hash with values from cr_report
+
+Also populates
+
+=over
+
+=item report_lines 
+
+a list of report lines
+
+=item account_info 
+
+a hashrefo of information from the account table.
+
+=item beginning_balance
+
+=item cleared_total
+
+=item outstanding_total
+
+=item mismatch_our_total
+
+=item mismatch_our_credits
+
+=item mismatch_our_debits
+
+=item mismatch_their_total
+
+=item mismatch_their_credits
+
+=item mismatch_their_debits
+
+=back
+
+=cut
 
 sub get {
     my ($self) = shift @_;
@@ -390,6 +398,12 @@ sub get {
     }
 }
 
+=item get_accounts
+
+This is a simple wrapper around reconciliation__account_list
+
+=cut
+
 sub get_accounts {
     
     my $self = shift @_;
@@ -397,4 +411,15 @@ sub get_accounts {
         funcname=>'reconciliation__account_list',
     );
 }
+
+=back
+
+=head1 Copyright (C) 2007, The LedgerSMB core team.
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+=cut
+
 1;
