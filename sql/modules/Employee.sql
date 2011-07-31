@@ -47,6 +47,13 @@ COMMENT ON FUNCTION employee__save
         in_employee_number text) IS
 $$ Saves an employeerecord with the specified information.$$;
 
+CREATE OR REPLACE FUNCTION employee__get_user(in_entity_id int)
+RETURNS SETOF users AS
+$$SELECT * FROM users WHERE entity_id = $1;$$ language sql;
+
+COMMENT ON FUNCTION employee__get_user(in_entity_id int) IS
+$$ Returns username, user_id, etc. information if the employee is a user.$$;
+
 create view employees as
     select 
         s.salutation,

@@ -23,7 +23,6 @@ require 'lsmb-request.pl';
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
-use LedgerSMB::DBObject::Location;
 use Data::Dumper;
 use LedgerSMB::Setting;
 use LedgerSMB::Log;
@@ -57,7 +56,6 @@ sub __edit_page {
         format => 'HTML', 
         path=>'UI'
     );
-    my $location = LedgerSMB::DBObject::Location->new(base=>$request);
     my $template_data = 
             {
                 user=>$user_obj, 
@@ -65,8 +63,6 @@ sub __edit_page {
                 countries=>$admin->get_countries(),
                 user_roles=>$user_obj->{roles},
                 salutations=>$admin->get_salutations(),
-                contact_classes=>$admin->get_contact_classes(),
-                locations=>$user->{employee}->{locations},
                 default_country => $dcsetting->{value},
                 admin => $admin,
                 stylesheet => $request->{stylesheet},
@@ -188,6 +184,7 @@ sub new_user {
                 roles=>$groups,
                 countries=>$admin->get_countries(),
                 stylesheet => $request->{stylesheet},
+                user => { user => $request, employee => $request },
             }
         );
 }
@@ -289,79 +286,6 @@ sub delete_contact {
         # Now, just call the main edit user page.
         
         __edit_page($request,undef,);
-    }
-}
-
-=item save_location
-
-Saves location information and returns to the edit user screen.
-
-=cut
-
-sub save_location {
-    
-    my $request = shift @_;
-    my $user = $request->{_user};
-    
-    # Only ever a post, but check anyway
-    if ($request->type eq "POST") {
-        
-        if ($request->{cancel}) {
-            
-            # If we have a cancel request, we just go back to edit_page.
-            return __edit_page($request);
-        }
-        
-        if ($request->{cancel}) {
-            
-            # If we have a cancel request, we just go back to edit_page.
-            return __edit_page($request);
-        }
-        
-        my $u_id = $request->{user_id}; # this is an entity_id
-        my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
-        my $location = LedgerSMB::DBObject::Location->new(base=>$request, copy=>'all');
-        $user_obj->get($request->{user_id});
-        # So there's a pile of stuff we need.
-        # lineone
-        # linetwo
-        # linethree
-        # city
-        # state
-        # zipcode
-        # country
-        # u_id isn't an entity_it, though.
-        $location->{user_id} = $user_obj->{user}->{entity_id};
-        my $id = $location->save("person");
-        # Done and done.
-        
-        __edit_page($request,{location=>$location});
-    }
-}
-
-=item delete_location
-
-Deletes a location and returns to edit user screen
-
-=cut
-
-sub delete_location {
-    
-    my $request = shift @_;
-    
-    # Having delete come over GET perhaps isn't the best technique.
-    
-    if ($request->type eq "GET") {
-        
-        my $l_id = $request->{location_id};
-        my $u_id = $request->{user_id};
-        my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'user_id');
-        my $location = LedgerSMB::DBObject::Location->new(base=>$request, copy=>"location_id");
-        
-        $location->delete("person",$l_id,$user_obj->{user}->{entity_id});
-        # Boom. Done.
-        # Now, just call the main edit user page.
-        __edit_page($request);
     }
 }
 

@@ -118,6 +118,19 @@ sub delete_contact {
     _render_main_screen( $employee);
 }
 
+=item save_contact_new($request)
+
+Saves contact info as a new line as per save_contact above.
+
+=cut
+
+sub save_contact_new{
+    my ($request) = @_;
+    delete $request->{old_contact};
+    delete $request->{old_contact_class};
+    save_contact($request);
+}
+
 =item delete_location
 
 Deletes the selected contact info record
@@ -336,7 +349,13 @@ sub _render_main_screen{
     $employee->{creditlimit} = "$employee->{creditlimit}"; 
     $employee->{discount} = "$employee->{discount}"; 
     $employee->{script} = "employee.pl";
-
+    if ($employee->is_allowed_role({allowed_roles => [
+                                 "lsmb_$employee->{company}__users_manage"]
+                                }
+    )){
+        $employee->{manage_users} = 1;
+    }
+    $employee->debug({file => '/tmp/emp'});
     my $template = LedgerSMB::Template->new( 
 	user => $employee->{_user}, 
     	template => 'contact', 

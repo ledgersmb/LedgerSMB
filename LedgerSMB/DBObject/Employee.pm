@@ -184,6 +184,7 @@ sub get_metadata {
     $country_setting->{key} = 'default_country';
     $country_setting->get;
     $self->{default_country} = $country_setting->{value};
+    $self->get_user_info();
 }
 
 =item get
@@ -314,6 +315,28 @@ sub delete_bank_account {
                                         $self->{bank_account_id}]);
     $self->{dbh}->commit;
     return $rv;
+}
+
+=item get_user_info
+
+Attaches the user_id and username to the employee object.
+
+If the user does not have manage_users powers, this will simply return false
+
+=cut
+
+sub get_user_info {
+    my $self = shift @_;
+    if (!$self->is_allowed_role({allowed_roles => [
+                                 "lsmb_$self->{company}__users_manage"]
+                                }
+    )){
+        return 0;
+    }
+    my ($ref) = $self->exec_method(funcname => 'employee__get_user');
+    $self->{user_id} = $ref->{id};
+    $self->{username} = $ref->{username};
+    return 1;
 }
 
 =back

@@ -8,7 +8,10 @@
 	]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<?lsmb IF (! target_div); ?>
+<?lsmb 
+# Adding the action requirement to the conditional because otherwise it still
+# breaks.  --CT
+IF (!(action == 'edit' and target_div)); ?>
 <?lsmb IF (!entity_id and account_class != 3); 
 	target_div = 'company_div';
 ELSIF ((!entity_id or action == 'save') and entity_class == 3);
@@ -210,6 +213,20 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
         name = 'action'
 	value = "save"
 } ?>
+<?lsmb 
+IF manage_users and entity_id;
+   IF user_id ?>
+       <a href="admin.pl?action=edit_user&user_id=<?lsmb user_id ?>"
+       >[<?lsmb text('Edit User') ?>]</a><?lsmb 
+   ELSE ?>
+       <a href="admin.pl?action=new_user&first_name=<?lsmb tt_url(first_name) 
+                ?>&last_name=<?lsmb tt_url(last_name) 
+                ?>&employeenumber=<?lsmb tt_url(employeenumber) 
+                ?>&country_id=<?lsmb tt_url(country_id) 
+                ?>&entity_id=<?lsmb tt_url(entity_id) ?>"
+       >[<?lsmb text('Add User') ?>]</a><?lsmb
+   END;
+END ?>
 </div>
 </form>
 </div>
@@ -693,6 +710,12 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	<th class="actions"><?lsmb text('Actions') ?></th>
     </tr>
 	<?lsmb FOREACH loc = locations ?>
+    <?lsmb IF location_id == loc.id;
+                 FOREACH key = loc.keys();
+                      $key = loc.$key;
+                 END;
+           END;
+    ?>
     <tr <?lsmb IF location_id == loc.id ?> class="active" <?lsmb END ?>>
 	<td class="type"><?lsmb loc.class ?></td>
 	<td class="line_one"><?lsmb loc.line_one ?></td>
@@ -741,7 +764,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-                        label = "&nbsp;"
+                        label = ":"
 			name = "line_two"
 			class = "addl-address"
 			value = line_two
@@ -751,7 +774,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-                        label = "&nbsp;"
+                        label = ":"
 			name = "line_three"
 			class = "addl-address"
 			value = line_three

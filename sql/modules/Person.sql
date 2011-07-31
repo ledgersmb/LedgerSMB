@@ -217,7 +217,7 @@ RETURNS BOOL AS
 $$
 BEGIN
 
-DELETE FROM eca_to_location
+DELETE FROM person_to_location
  WHERE person_id = in_person_id AND location_id = in_location_id 
        AND location_class = in_location_class;
 

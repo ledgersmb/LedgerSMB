@@ -75,8 +75,7 @@ returns 0.
 =item is_allowed_role({allowed_roles => @role_names})
 
 This function returns 1 if the user's roles include any of the roles in
-@role_names.  Currently it returns 1 when this is not found as well but when 
-role permissions are introduced, this will change to 0.
+@role_names.  
 
 =item num_text_rows (string => $string, cols => $number, max => $number);
 
