@@ -42,7 +42,7 @@ sub price_matrix_query {
 
     my @queryargs;
     my $transdate = $form->{dbh}->quote( $form->{transdate} );
-    my $credit_id     = $form->{dbh}->quote( $form->{credit_id} );
+    my $credit_id     = $form->{dbh}->quote( $form->{customer_id} );
 
     if ( $form->{customer_id} ) {
         my $defaultcurrency = $form->{dbh}->quote( $form->{defaultcurrency} );
@@ -117,7 +117,6 @@ sub price_matrix {
     my $sellprice;
     my $mref;
     my %p = ();
-
     # depends if this is a customer or vendor
     if ( $form->{customer_id} ) {
         $pmh->execute( $ref->{id}, $ref->{id}, $ref->{id} );
@@ -127,9 +126,9 @@ sub price_matrix {
         $form->error('Missing counter-party (customer or vendor)');
         return;
     }
-    if ( $mref = $pmh->fetchrow_hashref(NAME_lc) ) {
+    if ( $mref = $pmh->fetchrow_hashref('NAME_lc') ) {
        if ($form->{customer_id}){
-            $form->db_parse_numeric(sth=>$sth, hashref=>$mref);
+            $form->db_parse_numeric(sth=>$pmh, hashref=>$mref);
             $sellprice = $mref->{sellprice} || $ref->{sellprice};
             if ($mref->{pricebreak}){
 		$sellprice = $sellprice
