@@ -490,9 +490,6 @@ CREATE OR REPLACE FUNCTION admin__delete_user
             delete from user_preference where id = (
                    select id from users where entity_id = a_user.entity_id);
             delete from users where entity_id = a_user.entity_id;
-            delete from person where entity_id = a_user.entity_id;
-            delete from entity_employee where entity_id = a_user.entity_id;
-            delete from entity where id = a_user.entity_id;
             return 1;
         END IF;   
     END;

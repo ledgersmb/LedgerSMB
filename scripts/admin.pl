@@ -211,27 +211,12 @@ Deletes a user and returns to search results.
 
 =cut
 
-# XXX Rewrite! --CT
 sub delete_user {
-    
     my ($request) = @_;
-    my $user = $request->{_user};
-    
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
-    
-    # requires the field modifying_user to be set.
-    
-    my $status = $admin->delete_user($request->{modifying_user});
-    
-    # status can either be 1, or an error.
-    # if there's an error, $status->throw() is called by admin.pm. Or possibly
-    # in the template itself.
-    
-    my $template = LedgerSMB::Template->new ( user=>$user, 
-        template=>'Admin/delete_user', language=>$user->{language}, 
-        format=>'HTML', path=>'UI');
-        
-    $template->render($status);
+    my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
+    $admin->delete_user($request->{delete_user});
+    delete $request->{username};
+    search_users($request); 
 }
 
 =item save_contact
@@ -417,7 +402,7 @@ sub get_user_results {
             path=>'UI'
     );
     my $columns;
-    @$columns = qw(id username first_name last_name ssn dob edit);
+    @$columns = qw(id username first_name last_name ssn dob edit remove drop);
     
     my $column_names = {
         id => 'ID',
@@ -431,12 +416,20 @@ sub get_user_results {
     
     my $rows = [];
     my $rowcount = "0";
-    my $base_url = "admin.pl?action=edit_user";
+    my $base_url = "admin.pl";
     for my $u (@users) {
         $u->{i} = $rowcount % 2;
         $u->{edit} = {
-            href =>"$base_url&user_id=$u->{id}", 
+            href =>"$base_url?action=edit_user&user_id=$u->{id}", 
             text => '[' . $request->{_locale}->text('edit') . ']',
+        };
+        $u->{remove} = {
+            href => "$base_url?action=delete_user&username=$u->{username}",
+            text => '[' . $request->{_locale}->text('Delete') . ']',
+        };
+        $u->{drop} = {
+           href=>"$base_url?action=delete_user&username=$u->{username}&delete_role=1",
+           text=>'[' . $request->{_locale}->text('Drop from All') . ']',
         };
         push @$rows, $u;
         ++$rowcount;

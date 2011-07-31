@@ -133,6 +133,22 @@ sub save_user {
     
 }
 
+=item delete_user($delete_role)
+
+Deletes a user specified by $self->{user_id}.
+
+if $delete_role is true, deletes the role too.
+
+=cut
+
+sub delete_user {
+    my ($self, $delete_role) = @_;
+    $self->{drop_role} = $delete_role;
+    $self->exec_method({funcname => 'admin__delete_user'});
+    return $self->{dbh}->commit;
+
+}
+
 =item search_users
 
 Returns a list of users matching search criteria, and attaches that list to the 
