@@ -815,6 +815,10 @@ sub new_item {
 
 sub display_form {
 
+    $form->close_form();
+    $form->open_form();
+    $form->{dbh}->commit;
+
     # if we have a display_form
     if ( $form->{display_form} ) {
 	

@@ -441,11 +441,14 @@ sub form_header {
 |;
 
     $form->hide_form(
-        qw(id type printed emailed queued title vc terms discount 
+        qw(form_id id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype)
     );
 
+    if ($form->{notice}){
+         print qq|<th>$form->{notice}</th>|;
+    }
     my $manual_tax;
     if ($form->{id}){
         $manual_tax = 
@@ -1239,6 +1242,13 @@ sub update {
 }
 
 sub post {
+    if (!$form->close_form()){
+       $form->{notice} = $locale->text(
+                'Could not save the data.  Please try again'
+       );
+       &update;
+       $form->finalize_request();
+    }
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "customer",  $locale->text('Customer missing!') );
 

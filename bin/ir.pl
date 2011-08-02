@@ -403,11 +403,13 @@ sub form_header {
 
 <form method=post action="$form->{script}">
 |;
-
+    if ($form->{notice}){
+         print qq|$form->{notice}<br/>|;
+    }
     $form->{vc} = "vendor";
     $form->hide_form(
         qw(id title vc type terms creditlimit creditremaining closedto locked 
-           shipped oldtransdate recurring reverse batch_id subtype)
+           shipped oldtransdate recurring reverse batch_id subtype form_id)
     );
 
     print qq|
@@ -1173,6 +1175,13 @@ sub update {
 }
 
 sub post {
+    if (!$form->close_form()){
+       $form->{notice} = $locale->text(
+             'Could not save the data.  Please try again'
+       );
+       &update;
+       $form->finalize_request();
+    }
 
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "vendor",    $locale->text('Vendor missing!') );

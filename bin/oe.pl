@@ -571,8 +571,11 @@ sub form_header {
 <form method=post action="$form->{script}">
 |;
 
+    if ($form->{notice}){
+         print qq|$form->{notice}<br/>|;
+    }
     $form->hide_form(
-        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring)
+        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id)
     );
 
     print qq|
@@ -2102,6 +2105,13 @@ sub subtotal {
 }
 
 sub save {
+    if (!$form->close_form()){
+       $form->{notice} = $locale->text(
+                'Could not save the data.  Please try again'
+       );
+       &update;
+       $form->finalize_request();
+    }
 
      
     if ( $form->{type} =~ /_order$/ ) {
