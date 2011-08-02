@@ -21,6 +21,9 @@ Requires that id and file_class be set.
 =cut
 
 package LedgerSMB::Scripts::file;
+use LedgerSMB::File;
+use LedgerSMB::File::Transaction;
+use LedgerSMB::File::Order;
 use strict;
 use CGI::Simple;
 
@@ -66,16 +69,30 @@ sub show_attachment_screen {
     $template->render($request);
 }
 
-=item attach
+=item attach_file
 
 Attaches a file to an object
         
 =cut
 
-sub attach {
+sub attach_file {
     my ($request) = @_;
-    my $file = $fileclassmap->{$request->{file_class}}->new;
+    my $file = $fileclassmap->{$request->{file_class}}->new();
+    $file->dbobject(LedgerSMB::DBObject->new({base => $request}));
+    my @fnames =  $request->{_request}->upload_info;
+    $file->file_name($fnames[0]);
     $file->merge($request);
+    if ($request->{url}){
+	$file->mime_type_text('text/x-uri');
+        $file->content($request->{url});
+    } else {
+        use File::MimeInfo;
+        $file->file_name($fnames[0]);
+        $file->get_mime_type;
+        my $fh = $request->{_request}->upload('upload_data');
+        my $fdata = join ("\n", <$fh>);
+        $file->content($fdata);
+    }
     $file->attach;
     my $cgi = LedgerSMB::CGI->new;
     print $cgi->redirect($request->{callback});

@@ -144,7 +144,7 @@ sub exec_method {
     }
     $ref->{pronargs} = 0 unless defined $ref->{pronargs};
     # If the user provided args..
-    if (!defined  $args{args}) {
+    if (!defined $args{args}) {
         @proc_args = $self->_parse_array($pargs);
         if (@proc_args) {
             for my $arg (@proc_args) {
@@ -157,7 +157,7 @@ sub exec_method {
                      else
                      {
                         $logger->debug("exec_method pushing \$arg defined $arg | \$self->{\$arg} is undefined");
-                        $self->{$arg} = undef;
+                        #$self->{$arg} = undef; # Why was this being unset? --CT
                      }
                      push ( @call_args, $self->{$arg} );
                 }

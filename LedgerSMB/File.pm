@@ -20,7 +20,7 @@ package LedgerSMB::File;
 use Class::Struct;
 use LedgerSMB::DBObject;
 use File::MimeInfo;
-use IO::Scalar;
+#use IO::Scalar;
 use strict;
 
 =item  attached_by_id
@@ -209,16 +209,15 @@ sets it.
 
 sub get_mime_type {
     my ($self) = @_;
-    if ($self->mime_type_text){
-       return $self->mime_type_text;
-    } else {
-       my ($ref) = $self->exec_method(
-                      {funcname => 'file__mime_type_text',
-                       args     => [$self->mime_type_id, undef]},
-       );
+    if (!($self->mime_type_id || $self->mime_type_text)){
+       $self->mime_type_text(mimetype($self->file_name));
+    } 
+    if (!($self->mime_type_id && $self->mime_type_text)){
+       my ($ref) = $self->exec_method({funcname => 'file__get_mime_type'});
        $self->mime_type_text($ref->{mime_type});
-       return $self->mime_type_text;
-    }
+       $self->mime_type_id($ref->{id});
+    } 
+    return $self->mime_type_text;
 }
 
 =item set_mime_type
@@ -299,7 +298,7 @@ Provides a compatible interface to LedgerSMB::DBObject::exec_method
 
 sub exec_method{
     my ($self, $args) = @_;
-    if (!scalar @{$args->{args}}){
+    if (!$args->{args}){
           $self->dbobject->{attached_by_id} = $self->attached_by_id;
           $self->dbobject->{attached_by}    = $self->attached_by;
           $self->dbobject->{attached_at}    = $self->attached_at;

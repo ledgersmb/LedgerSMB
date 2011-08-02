@@ -347,8 +347,8 @@ FOREACH link IN form.file_links;
 </tr>
 <?lsmb END # FOREACH ?>
 </table>
-<a href="file.pl?action=show_attachment_screen&attach_to=<?lsmb form.id 
-   ?>">[<?lsmb text('Attach') ?>]</a>
+<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb form.id 
+   ?>&file_class=1">[<?lsmb text('Attach') ?>]</a>
 <?lsmb END # IF form.id ?>
 </form>
 </body>

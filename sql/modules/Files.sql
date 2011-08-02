@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION file__get_mime_type
- (in_mime_type_id int, in_mime_type text)
+ (in_mime_type_id int, in_mime_type_text text)
 RETURNS mime_type AS
 $$
 select * from mime_type 
@@ -32,7 +32,7 @@ BEGIN
        INSERT INTO file_transaction 
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
-            VALUES (in_content, in_mime_type_id, in_file_name, in_description.
+            VALUES (in_content, in_mime_type_id, in_file_name, in_description,
                    in_ref_key, in_file_class, person__get_my_entity_id(), 
                    now());
         SELECT * INTO retval FROM file_base 
@@ -81,7 +81,7 @@ BEGIN
        INSERT INTO file_transaction 
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
-            VALUES (in_content, in_mime_type_id, in_file_name, in_description.
+            VALUES (in_content, in_mime_type_id, in_file_name, in_description,
                    in_ref_key, in_file_class, person__get_my_entity_id(), 
                    now());
         SELECT * INTO retval FROM file_base 

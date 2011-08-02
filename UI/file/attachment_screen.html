@@ -3,7 +3,17 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 
-<form action="recon.pl" method="post" enctype="multipart/form-data">
+<form action="file.pl" method="post" enctype="multipart/form-data">
+    <?lsmb INCLUDE input element_data = {
+            type = "hidden"
+           value = file_class
+            name = "file_class"
+    } ?>
+    <?lsmb INCLUDE input element_data = {
+            type = "hidden"
+           value = ref_key
+            name = "ref_key"
+    } ?>
 <div class="listtop" id="title"><?lsmb text('Attach File') ?></div>
 <div class="inputline">
     <div class="inputgroup">
