@@ -297,13 +297,15 @@ Provides a compatible interface to LedgerSMB::DBObject::exec_method
 =cut
 
 sub exec_method{
+    use DBD::Pg qw(:pg_types);
     my ($self, $args) = @_;
     if (!$args->{args}){
           $self->dbobject->{attached_by_id} = $self->attached_by_id;
           $self->dbobject->{attached_by}    = $self->attached_by;
           $self->dbobject->{attached_at}    = $self->attached_at;
           $self->dbobject->{reference}      = $self->reference;
-          $self->dbobject->{content}        = $self->content;
+          $self->dbobject->{content}        = {value => $self->content,
+                                                type => DBD::Pg::PG_BYTEA};
           $self->dbobject->{mime_type_id}   = $self->mime_type_id;
           $self->dbobject->{mime_type_text} = $self->mime_type_text;
           $self->dbobject->{file_name}      = $self->file_name;

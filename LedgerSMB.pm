@@ -767,7 +767,8 @@ sub call_procedure {
     # that off for another day. --CT
     foreach my $carg (@call_args){
         if (ref($carg) eq 'HASH'){
-            $sth->bind_param($place, $carg->{value}, $carg->{type}); 
+            $sth->bind_param($place, $carg->{value}, 
+                       { pg_type => $carg->{type} });
         } else {
             $sth->bind_param($place, $carg);
         }
