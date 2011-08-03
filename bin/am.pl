@@ -2453,7 +2453,7 @@ sub process_transactions {
 
             # reset $form
             for ( keys %$form ) { delete $form->{$_}; }
-            for (qw(company dbh login path sessionid stylesheet timeout)) {
+            for (qw(dbversion company dbh login path sessionid stylesheet timeout)) {
                 $form->{$_} = $pt->{$_};
             }
             $form->{id}     = $id;
