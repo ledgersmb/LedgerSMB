@@ -29,6 +29,7 @@ replacement is available.
 package AA;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Log;
+use LedgerSMB::File;
 
 my $logger = Log::Log4perl->get_logger("AA");
 
@@ -700,6 +701,26 @@ sub post_transaction {
 
 }
 
+=item get_files
+
+Returns a list of files associated with the existing transaction.  This is 
+provisional, and will change for 1.4 as the GL transaction functionality is 
+                  {ref_key => $self->{id}, file_class => 1}
+rewritten
+
+=cut
+
+sub get_files {
+     my ($self, $form, $locale) = @_;
+     return if !$form->{id};
+     my $file = LedgerSMB::File->new();
+     $file->new_dbobject({base => $form, locale => $locale});
+     @{$form->{files}} = $file->list({ref_key => $form->{id}, file_class => 1});
+     @{$form->{file_links}} = $file->list_links(
+                  {ref_key => $form->{id}, file_class => 1}
+     );
+
+}
 =item delete_transaction(\%myconfig, $form)
 
 Deletes a transaction identified by $form->{id}, whether it is an ar or ap
