@@ -94,7 +94,7 @@ sub attach_file {
         $file->content($fdata);
     }
     $file->attach;
-    my $cgi = LedgerSMB::CGI->new;
+    my $cgi = CGI::Simple->new;
     print $cgi->redirect($request->{callback});
 }
 
