@@ -313,10 +313,12 @@
 </tr>
 <?lsmb FOREACH file IN form.files ?>
 <tr>
-<td><?lsmb file.file_name() ?></td> 
-<td><?lsmb file.mime_type_text() ?></td> 
-<td><?lsmb file.attached_at() ?></td> 
-<td><?lsmb file.attached_by() ?></td> 
+<td><a href="file.pl?action=get&file_class=1&ref_key=<?lsmb form.id 
+            ?>&id=<?lsmb file.id ?>"
+            ><?lsmb file.file_name ?></a></td> 
+<td><?lsmb file.mime_type ?></td> 
+<td><?lsmb file.uploaded_at ?></td> 
+<td><?lsmb file.uploaded_by_name ?></td> 
 </tr>
 <?lsmb END ?>
 </table>
@@ -338,8 +340,8 @@ FOREACH link IN form.file_links;
             aclass="Order";
         END; ?>
 <tr>
-<td><?lsmb file.file_name() ?></td> 
-<td><?lsmb file.mime_type_text() ?></td> 
+<td><?lsmb file.file_name ?></td> 
+<td><?lsmb file.mime_type ?></td> 
 <td><?lsmb aclass ?></td> 
 <td><?lsmb file.reference() ?></td> 
 <td><?lsmb file.attached_at() ?></td> 

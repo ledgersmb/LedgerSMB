@@ -50,7 +50,7 @@ sub get_files {
      my ($self, $form, $locale) = @_;
      my $file = LedgerSMB::File->new();
      $file->new_dbobject({base => $form, locale => $locale});
-     @{$form->{files}} = $file->list({ref_key => $self->{id}, file_class => 1});
+     @{$form->{files}} = $file->list({ref_key => $form->{id}, file_class => 1});
      @{$form->{file_links}} = $file->list_links(
                   {ref_key => $form->{id}, file_class => 1}
      );
