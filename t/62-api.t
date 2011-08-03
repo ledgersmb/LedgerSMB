@@ -33,7 +33,7 @@ if (defined $ENV{LSMB_TEST_DB}){
 @test_request_data = do { 't/data/62-request-data' } ; # Import test case hashes
 
 for (qw(	drafts.pl     login.pl      payment.pl      
-		report.pl    employee.pl   menu.pl       vendor.pl
+		employee.pl   menu.pl       vendor.pl
 		customer.pl  inventory.pl  vouchers.pl recon.pl menu.pl)
     ){
 	ok(eval { require "scripts/$_" }, "Importing $_");

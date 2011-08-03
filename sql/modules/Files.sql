@@ -108,7 +108,8 @@ CREATE TYPE file_list_item AS (
        uploaded_at timestamp,
        id int,
        ref_key int,
-       file_class int
+       file_class int,
+       content bytea
 );
 
 CREATE OR REPLACE FUNCTION file__list_by(in_ref_key int, in_file_class int)
@@ -116,7 +117,8 @@ RETURNS SETOF file_list_item AS
 $$
 
 SELECT m.mime_type, f.file_name, f.description, f.uploaded_by, e.name, 
-       f.uploaded_at, f.id, f.ref_key, f.file_class
+       f.uploaded_at, f.id, f.ref_key, f.file_class, 
+       case when m.mime_type = 'text/x-uri' THEN f.content ELSE NULL END
   FROM mime_type m
   JOIN file_base f ON f.mime_type_id = m.id
   JOIN entity e ON f.uploaded_by = e.id
@@ -137,9 +139,9 @@ $$ language sql;
 COMMENT ON FUNCTION file__get(in_id int, in_file_class int) IS
 $$ Retrieves the file information specified including content.$$;
 
-DROP VIEW IF EXISTS file_links;
-DROP VIEW IF EXISTS file_tx_links;
 DROP VIEW IF EXISTS file_order_links;
+DROP VIEW IF EXISTS file_tx_links;
+DROP VIEW IF EXISTS file_links;
 DELETE FROM file_view_catalog WHERE file_class in (1, 2);
 
 CREATE OR REPLACE view file_tx_links AS

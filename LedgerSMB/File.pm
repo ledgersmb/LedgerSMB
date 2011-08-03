@@ -315,8 +315,8 @@ sub exec_method{
           $self->dbobject->{dbobject}       = $self->dbobject;
           $self->dbobject->{x_info}         = $self->x_info;
     }
-    $self->dbobject->exec_method($args);
-
+    my @results = $self->dbobject->exec_method($args);
+    return @results;
 }
 
 =item merge(hashref)

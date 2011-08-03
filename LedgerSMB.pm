@@ -120,7 +120,13 @@ Retrieves a default value for the given key, it is just a wrapper on LedgerSMB::
 
 =item call_procedure( procname => $procname, args => $args )
 
-Function that allows you to call a stored procedure by name and map the appropriate argument to the function values
+Function that allows you to call a stored procedure by name and map the appropriate argument to the function values.
+
+Args is an arrayref.  The members of args can be scalars or arrayrefs in which 
+case they are just bound to the placeholders (arrayref to Pg array conversion
+occurs automatically in DBD::Pg 2.x), or they can be hashrefs of the following
+syntax: {value => $data, type=> $db_type}.  The type field is any SQL type 
+DBD::Pg supports (such as 'PG_BYTEA').
 
 =item dberror()
 
@@ -751,26 +757,30 @@ sub call_procedure {
     }
     $query =~ s/\(\)/($argstr)/;
     my $sth = $self->{dbh}->prepare($query);
-    if (scalar @call_args){
-        $query_rc = $sth->execute(@call_args);
-        if (!$query_rc){
-              if ($args{continue_on_error} and  #  only for plpgsql exceptions
-                              ($self->{dbh}->state =~ /^P/)){
-                    $@ = $self->{dbh}->errstr;
-              } else {
-                    $self->dberror($self->{dbh}->errstr . ": " . $query);
-              }
+    my $place = 1;
+    # API Change here to support byteas:  
+    # If the argument is a hashref, allow it to define it's SQL type
+    # for example PG_BYTEA, and use that to bind.  The API supports the old
+    # syntax (array of scalars and arrayrefs) but extends this so that hashrefs
+    # now have special meaning. I expect this to be somewhat recursive in the
+    # future if hashrefs to complex types are added, but we will have to put 
+    # that off for another day. --CT
+    foreach my $carg (@call_args){
+        if (ref($carg) eq 'HASH'){
+            $sth->bind_param($place, $carg->{value}, $carg->{type}); 
+        } else {
+            $sth->bind_param($place, $carg);
         }
-    } else {
-        $query_rc = $sth->execute();
-        if (!$query_rc){
-              if ($args{continue_on_error} and  #  only for plpgsql exceptions
-                              ($self->{dbh}->state =~ /^P/)){
-                    $@ = $self->{dbh}->errstr;
-              } else {
-                    $self->dberror($self->{dbh}->errstr . ": " . $query);
-              }
-        }
+        ++$place;
+    }
+    $query_rc = $sth->execute();
+    if (!$query_rc){
+          if ($args{continue_on_error} and  #  only for plpgsql exceptions
+                          ($self->{dbh}->state =~ /^P/)){
+                $@ = $self->{dbh}->errstr;
+          } else {
+                $self->dberror($self->{dbh}->errstr . ": " . $query);
+          }
     }
    
     my @types = @{$sth->{TYPE}};
