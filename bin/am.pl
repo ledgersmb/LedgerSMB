@@ -2452,6 +2452,13 @@ sub process_transactions {
             $header = $form->{header};
 
             # reset $form
+            # XXX THIS IS A BUG FACTORY. PLEASE READ:
+            # This is old code from SL, and it basically forces a reset of the
+            # LedgerSMB::Form object by deleting all keys and then copying a few
+            # back in.  This is error prone and buggy.  If you have issues with
+            # recurring transactions, the first thing to do is to see if 
+            # something is not being copied back that needs to be.  Looking 
+            # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
             for (qw(dbversion company dbh login path sessionid stylesheet timeout)) {
                 $form->{$_} = $pt->{$_};
