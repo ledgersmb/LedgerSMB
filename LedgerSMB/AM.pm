@@ -1362,7 +1362,15 @@ sub recurring_details {
 		          ar.duedate - ar.transdate AS overdue,
 		          ar.datepaid - ar.transdate AS paid,
 		          oe.reqdate - oe.transdate AS req,
-		          oe.id AS oeid, oe.customer_id, oe.vendor_id
+		          oe.id AS oeid,
+                          CASE oe.oe_class_id
+                             WHEN 1 THEN oe.entity_credit_account
+                             ELSE NULL
+                             END AS customer_id,
+                          CASE oe.oe_class_id
+                             WHEN 2 THEN oe.entity_credit_account
+                             ELSE NULL
+                             END AS vendor_id
 		     FROM recurring s
 		LEFT JOIN ar ON (ar.id = s.id)
 		LEFT JOIN ap ON (ap.id = s.id)
