@@ -36,6 +36,29 @@ package OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
 
+=over
+
+=item get_files
+
+Returns a list of files associated with the existing transaction.  This is 
+provisional, and will change for 1.4 as the GL transaction functionality is 
+                  {ref_key => $self->{id}, file_class => 2}
+rewritten
+
+=cut
+
+sub get_files {
+     my ($self, $form, $locale) = @_;
+     return if !$form->{id};
+     my $file = LedgerSMB::File->new();
+     $file->new_dbobject({base => $form, locale => $locale});
+     @{$form->{files}} = $file->list({ref_key => $form->{id}, file_class => 2});
+     @{$form->{file_links}} = $file->list_links(
+                  {ref_key => $form->{id}, file_class => 2}
+     );
+
+}
+
 sub transactions {
     my ( $self, $myconfig, $form ) = @_;
 

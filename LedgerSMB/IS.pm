@@ -73,6 +73,29 @@ sub getposlines {
     $sth->finish;
 }
 
+=over
+
+=item get_files
+
+Returns a list of files associated with the existing transaction.  This is 
+provisional, and will change for 1.4 as the GL transaction functionality is 
+                  {ref_key => $self->{id}, file_class => 1}
+rewritten
+
+=cut
+
+sub get_files {
+     my ($self, $form, $locale) = @_;
+     return if !$form->{id};
+     my $file = LedgerSMB::File->new();
+     $file->new_dbobject({base => $form, locale => $locale});
+     @{$form->{files}} = $file->list({ref_key => $form->{id}, file_class => 1});
+     @{$form->{file_links}} = $file->list_links(
+                  {ref_key => $form->{id}, file_class => 1}
+     );
+
+}
+
 sub clear_till {
     my ( $self, $myconfig, $form ) = @_;
     %pos_config  = %{ $form->{pos_config} };
@@ -2703,4 +2726,5 @@ sub get_taxcheck
 
 
 1;
+
 

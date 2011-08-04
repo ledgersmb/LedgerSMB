@@ -93,6 +93,8 @@ sub attach_file {
         my $fdata = join ("\n", <$fh>);
         $file->content($fdata);
     }
+    $request->{content} = $file->content;
+    $request->debug({file => '/tmp/file'});
     $file->attach;
     my $cgi = CGI::Simple->new;
     print $cgi->redirect($request->{callback});

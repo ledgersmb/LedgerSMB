@@ -871,6 +871,63 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
         $form->print_button( \%button, $_ );
     }
+    if ($form->{id}){
+        OE->get_files($form, $locale);
+        print qq|
+<table width="100%">
+<tr class="listtop">
+<th colspan="4">| . $locale->text('Attached and Linked Files') . qq|</th>
+<tr class="listheading">
+<th>| . $locale->text('File name') . qq|</th>
+<th>| . $locale->text('File type') . qq|</th>
+<th>| . $locale->text('Attached at') . qq|</th>
+<th>| . $locale->text('Attached by') . qq|</th>
+</tr> |;
+        foreach my $file (@{$form->{files}}){
+              print qq|
+<tr>
+<td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
+            >$file->{file_name}</a></td> 
+<td>$file->{mime_type}</td> 
+<td>$file->{uploaded_at}</td> 
+<td>$file->{uploaded_by_name}</td> 
+</tr>
+              |;
+        }
+        print qq|
+<table width="100%">
+<tr class="listheading">
+<th>| . $locale->text('File name') . qq|</th>
+<th>| . $locale->text('File type') . qq|</th>
+<th>| . $locale->text('Attached To Type') . qq|</th>
+<th>| . $locale->text('Attached To') . qq|</th>
+<th>| . $locale->text('Attached at') . qq|</th>
+<th>| . $locale->text('Attached by') . qq|</th>
+</tr>|;
+       foreach my $link (@{$form->{file_links}}){
+            $aclass="&nbsp;";
+            if ($link.src_class == 1){
+                $aclass="Transaction";
+            } elsif ($link.src_class == 2){
+                $aclass="Order";
+            }
+            print qq|
+<tr>
+<td> $file->{file_name} </td> 
+<td> $file->{mime_type} </td> 
+<td> $aclass </td> 
+<td> $file->{reference} </td> 
+<td> $file->{attached_at} </td> 
+<td> $file->{attached_by} </td> 
+</tr>|;
+       }
+       print qq|
+</table>|;
+       $callback = $form->escape("oe.pl?action=edit&id=".$form->{id});
+       print qq|
+<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
+   >[| . $locale->text('Attach') . qq|]</a>|;
+    }
 
     if ( $form->{lynx} ) {
         require "bin/menu.pl";

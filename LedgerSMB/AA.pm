@@ -721,6 +721,7 @@ sub get_files {
      );
 
 }
+
 =item delete_transaction(\%myconfig, $form)
 
 Deletes a transaction identified by $form->{id}, whether it is an ar or ap
