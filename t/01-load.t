@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 56;
+use Test::More tests => 55;
 
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
@@ -24,7 +24,6 @@ use_ok('LedgerSMB::DBObject::Location');
 use_ok('LedgerSMB::DBObject::Menu');
 use_ok('LedgerSMB::DBObject::Payment');
 use_ok('LedgerSMB::DBObject::Reconciliation');
-use_ok('LedgerSMB::DBObject::Report');
 use_ok('LedgerSMB::DBObject::TaxForm');
 use_ok('LedgerSMB::DBObject::User');
 use_ok('LedgerSMB::DBObject::Vendor');
