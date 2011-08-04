@@ -90,7 +90,7 @@ sub attach_file {
         $file->file_name($fnames[0]);
         $file->get_mime_type;
         my $fh = $request->{_request}->upload('upload_data');
-        my $fdata = join ("\n", <$fh>);
+        my $fdata = join ("", <$fh>);
         $file->content($fdata);
     }
     $request->{content} = $file->content;
