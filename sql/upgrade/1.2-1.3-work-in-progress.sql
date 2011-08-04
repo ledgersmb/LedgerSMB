@@ -663,6 +663,8 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
 
+UPDATE defaults SET value = '1.2.99' WHERE setting_key = 'version';
+
 
 COMMIT;
 --TODO:  Translation migratiion.  Partsgroups?
