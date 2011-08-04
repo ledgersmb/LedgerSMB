@@ -11,6 +11,5 @@
 find /usr/share/mime -name '*.xml' \
    | grep -v packages \
    | grep -v template \
-   | grep -v 'vnd.'   \
    | grep -v 'inode'  \
    | sed -e "s#/usr/share/mime/\(.*\).xml#INSERT INTO mime_type (mime_type) VALUES(\'\1\')\;#"
