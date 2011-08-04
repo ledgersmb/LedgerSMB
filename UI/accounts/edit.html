@@ -203,7 +203,7 @@ INCLUDE 'ui-header.html'
        } ?>    
    </div>
    <div class="inputgroup">
-       <?lsmb IF form.AR_overpayment; AR_overpayment = 'CHECKED'; END;
+       <?lsmb IF form.AR_discount; AR_discount = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AR_discount',
               type = 'checkbox',
@@ -282,7 +282,7 @@ INCLUDE 'ui-header.html'
              value = 'IC_cogs'} ?>
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+      <?lsmb IF form.IC_taxpart; IC_taxpart= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_taxpart',
               type = 'checkbox',
@@ -294,7 +294,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="services-line">
    <label class="line"><?lsmb text('Non-tracking Items') ?></label>
    <div class="inputgroup">
-      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+      <?lsmb IF form.IC_income;IC_income= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_income',
               type = 'checkbox',
@@ -303,7 +303,7 @@ INCLUDE 'ui-header.html'
              value = 'IC_income'} ?>
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.IC_cogs; IC_cogs= 'CHECKED'; END;
+      <?lsmb IF form.IC_expense;IC_expense= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_expense',
               type = 'checkbox',
