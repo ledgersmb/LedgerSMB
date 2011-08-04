@@ -11,6 +11,7 @@ insert into test_exempt_funcs values ('rank');
 insert into test_exempt_funcs values ('to_tsquery');
 insert into test_exempt_funcs values ('to_tsvector');
 insert into test_exempt_funcs values ('stat');
+insert into test_exempt_funcs values ('product');
 insert into test_exempt_funcs values ('lexize');
 insert into test_exempt_funcs values ('connectby');
 insert into test_exempt_funcs values ('parse');
