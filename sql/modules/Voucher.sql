@@ -287,10 +287,16 @@ BEGIN
                 FROM batch b
                 JOIN batch_class c ON (b.batch_class_id = c.id)
                 JOIN users u ON (u.entity_id = b.created_by)
-                LEFT JOIN voucher v ON (v.batch_id = b.id) where v.id is null
-                GROUP BY b.id, c.class, b.description, u.username, b.created_on, 
-                        b.control_code, b.default_date
-                ORDER BY b.control_code, b.description
+                LEFT JOIN voucher v ON (v.batch_id = b.id) 
+               where v.id is null
+                     and(u.entity_id = in_created_by_eid 
+                     or in_created_by_eid is null) and
+                     (in_description is null or b.description 
+                     like '%'  || in_description || '%') and
+                     (in_class_id is null or c.id = in_class_id)
+            GROUP BY b.id, c.class, b.description, u.username, b.created_on, 
+                     b.control_code, b.default_date
+            ORDER BY b.control_code, b.description
 
 		
 	LOOP

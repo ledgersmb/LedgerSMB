@@ -72,7 +72,7 @@ INSERT INTO test_result (test_name, success)
 SELECT 'Empty Batch Detected', count(*) = 1
   FROM batch_search_empty(1,                        -- Batch class ID
                           'EMPTY BATCH TEST',       -- Batch description
-                          -3,                       -- Entity ID
+                          -100,                       -- Entity ID
        	                  NULL::numeric,            -- Amount greater than
        	                  NULL::numeric,            -- Amount less than
        	                  'f'::bool                 -- Approved
