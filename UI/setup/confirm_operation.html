@@ -1,0 +1,41 @@
+<?lsmb INCLUDE "ui-header.html" stylesheet="UI/setup/stylesheet.css" ?>
+<?lsmb PROCESS elements.html ?>
+<body>
+<div class="listtop"><?lsmb text('Confirm Operation') ?></div>
+<div id="notice"><?lsmb notice ?></div>
+<div id="operation"><?lsmb operation ?></div>
+<form action="setup.pl" method="POST" name="confirm_operation">
+<?lsmb INCLUDE input element_data = {
+    name = 'database'
+    type = 'hidden'
+   value = database
+} ?>
+<div class="inputrow">
+<?lsmb 
+INCLUDE input element_data = {
+    name = 'confirm'
+   value = '1'
+    type = 'radio'
+   class = 'confirm'
+   label = text('Yes')
+} ;
+INCLUDE input element_data = {
+    name = 'confirm'
+   value = '0'
+    type = 'radio'
+   class = 'confirm'
+   label = text('No')
+} ?>
+</div>
+<div class="inputrow">
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = next_action
+    type = 'submit'
+   class = 'next'
+    text = text('Next') 
+} ?>
+</div>
+</form>
+</body>
+</html>

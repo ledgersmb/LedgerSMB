@@ -1,0 +1,68 @@
+<?lsmb INCLUDE "ui-header.html" stylesheet="UI/setup/stylesheet.css" ?>
+<?lsmb PROCESS elements.html ?>
+<body>
+<div class="listtop"><?lsmb title ?></div>
+<div 
+<form action="setup.pl" method="POST" name="credentials">
+<?lsmb INCLUDE input element_data = {
+    name = 'database'
+    type = 'hidden'
+   value = database
+} ?>
+<?lsmb IF coa_lc;
+   INCLUDE input element_data = {
+        name = 'coa_lc'
+        type = 'hidden'
+       value = coa_lc
+   } ;
+END ?>
+<div class="inputrow">
+<?lsmb IF coa_lc; 
+    INCLUDE select element_data = {
+         options = charts
+            name = 'coa'
+       text_attr = 'name'
+      value_attr = 'name'
+    }; 
+ELSE;
+    INCLUDE select element_data = {
+         options = coa_lcs
+            name = 'coa_lc'
+       text_attr = 'country'
+      value_attr = 'name'
+    };
+END ?>
+</div>
+<div class="inputrow">
+<?lsmb INCLUDE input element_data = {
+    name = 's_password'
+   value = s_password
+    type = 'password'
+    size = '15'
+   class = 'password'
+   label = text('Password') 
+} ?>
+</div>
+<div class="inputrow">
+<?lsmb INCLUDE input element_data = {
+    name = 'database'
+   value = database
+    type = 'text'
+    size = '15'
+   class = 'database'
+   label = text('Database') 
+} ?>
+</div>
+<div class="inputrow">
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'select_coa'
+    type = 'submit'
+   class = 'database'
+    text = text('Next') 
+} ?>
+</div>
+</div>
+</form>
+</body>
+</html>

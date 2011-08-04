@@ -1,0 +1,105 @@
+<?lsmb INCLUDE "ui-header.html" stylesheet="UI/setup/stylesheet.css" ?>
+<?lsmb PROCESS elements.html ?>
+<body>
+<div class="listtop"><?lsmb text('Enter User') ?>
+<form action="setup.pl" method="POST" name="new_user">
+<?lsmb INCLUDE input element_data = {
+    name = 'database'
+    type = 'hidden'
+   value = database
+} ?>
+<div class="form">
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+                            name  = 'username'
+                            type  = 'text'
+                           label  = text('Username')
+                            class = 'username'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+                            name  = 'password'
+                            type  = 'password'
+                           label  = text('Password')
+                            class = 'password'
+} ?>
+</div>
+<div class="input_row">
+<label><?lsmb text('Import') ?></label>
+                <?lsmb INCLUDE input element_data = {
+                           label   = 'Yes'
+                           value   = '1'
+                           checked = ''
+                           name    = 'import'
+                           type    = 'radio'
+                   };
+                   INCLUDE input element_data = {
+                           label   = 'No'
+                           value   = '0'
+                           checked = 'CHECKED'
+                           name    = 'import'
+                           type    = 'radio'
+                   } ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE select element_data = {
+          options = salutations
+        text_attr = 'salutation'
+       value_attr = 'id'
+            label = 'Salutation'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+    name = 'first_name'
+   class = 'name'
+    type = 'text'
+    size = '15'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+    name = 'last_name'
+   class = 'name'
+    type = 'text'
+    size = '15'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+    name = 'employeenumber'
+   class = 'control_code'
+    type = 'text'
+    size = '15'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb  countries.shift({});
+INCLUDE select element_data = {
+          options = countries
+        text_attr = 'name'
+       value_attr = 'id'
+            label = 'Country'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE select element_data = {
+          options = perm_sets
+        text_attr = 'label'
+       value_attr = 'id'
+            label = 'Assign Permissions'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE button element_data = {
+    text = text('Create User') #';
+    name = 'action'
+   value = 'save_user'
+    type = 'submit'
+   class = 'submit'
+} ?>
+</div>
+</form>
+</body>
+</html>
