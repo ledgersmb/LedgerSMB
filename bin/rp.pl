@@ -1852,6 +1852,7 @@ sub tax_subtotal {
     for (@{$column_index}) { $column_data{$_} = ' ' }
 
 
+    $column_data{'class'} = 'subtotal';
     #SC: Yes, right now these are global, inherited from generate_tax_report
     $subtotal =
       $form->format_amount( \%myconfig, $subtotalnetamount + $subtotaltax,
@@ -1861,18 +1862,9 @@ sub tax_subtotal {
     $subtotaltax =
       $form->format_amount( \%myconfig, $subtotaltax, 2, ' ' );
 
-    $column_data{netamount} = {
-        class => 'subtotal',
-        text => $subtotalnetamount,
-        };
-    $column_data{tax} = {
-        class => 'subtotal',
-        text => $subtotaltax,
-        };
-    $column_data{total} = {
-        class => 'subtotal',
-        text => $subtotal,
-        };
+    $column_data{netamount} = $subtotalnetamount;
+    $column_data{tax} = $subtotaltax;
+    $column_data{total} = $subtotal;
 
     $subtotalnetamount = 0;
     $subtotaltax       = 0;
