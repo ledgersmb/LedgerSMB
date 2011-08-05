@@ -24,12 +24,14 @@ package LedgerSMB::Scripts::file;
 use LedgerSMB::File;
 use LedgerSMB::File::Transaction;
 use LedgerSMB::File::Order;
+use LedgerSMB::File::Part;
 use strict;
 use CGI::Simple;
 
 our $fileclassmap = {
    1   => 'LedgerSMB::File::Transaction',
    2   => 'LedgerSMB::File::Order',
+   3   => 'LedgerSMB::File::Part',
 };
 
 sub get {

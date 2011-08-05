@@ -4399,6 +4399,7 @@ CREATE TABLE file_class (
 
 insert into file_class values (1, 'transaction');
 insert into file_class values (2, 'order');
+insert into file_class values (3, 'part');
 
 COMMENT ON TABLE file_class IS
 $$ File classes are collections of files attached against rows in specific 
@@ -4448,8 +4449,18 @@ CREATE TABLE file_order (
        foreign key (ref_key) references oe(id)
 ) inherits (file_base);
 
-COMMENT ON TABLE file_transaction IS
-$$ File attachments primarily attached to orders and quotatoins.$$;
+COMMENT ON TABLE file_order IS
+$$ File attachments primarily attached to orders and quotations.$$;
+
+CREATE TABLE file_part (
+       check (file_class=3),
+       unique(id),
+       primary key (ref_key, file_name, file_class),
+       foreign key (ref_key) references parts(id)
+) inherits (file_base);
+
+COMMENT ON TABLE file_part IS
+$$ File attachments primarily attached to orders and quotations.$$;
 
 CREATE TABLE file_secondary_attachment (
        file_id int not null,
