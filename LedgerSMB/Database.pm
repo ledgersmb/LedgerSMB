@@ -29,6 +29,12 @@ use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
 use strict;
 
+my $dbversions = {
+    '1.2' => '1.2.0',
+    '1.3dev' => '1.2.99',
+    '1.3' => '1.3.0'
+};
+
 my $temp = $LedgerSMB::Sysconfig::tempdir;
 
 =item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
@@ -62,6 +68,175 @@ sub new {
     }
     bless $self, $class;
     return $self;
+}
+
+=item get_info()
+
+This routine connects to the database using DBI and attempts to determine if a 
+related application is running in that database and if so what version.  
+It returns a hashref with the following keys set:
+
+=over
+
+=item appname
+Set to the current application name, one of:
+
+=over
+
+=item ledgersmb
+
+=item sql-ledger
+
+=item undef
+
+=back
+
+=item version
+The current version of the application.  One of:
+
+=over
+
+=item legacy
+SQL-Ledger 2.6 and below, and LedgerSMB 1.1 and below
+
+=item 1.2 (LedgerSMB only)
+
+=item 1.3 (LedgerSMB only)
+
+=item 1.3dev (LedgerSMB only)
+
+=item 2.7 (SQL-Ledger only)
+
+=item 2.8 (SQL-Ledger only)
+
+=back
+
+=over
+
+=item full_version
+The full version number of the database version
+
+=item status
+Current status of the db.  One of:
+
+=item exists
+The database was confirmed to exist
+
+=item does not exist
+The database was confirmed to not exist
+
+=item undef
+The database could not be confirmed to exist, or not
+
+=back
+
+=back
+
+It is worth noting that this is designed to be informative and helpful in 
+determining whether automatic upgrades can in fact occur or other 
+administrative tasks can be run.  Sample output might be:
+
+{    appname => undef, 
+     version => undef, 
+full_version => undef,
+      status => 'does not exist'}
+
+or
+
+{    appname => 'sql-ledger',
+     version => '2.8',
+full_version => '2.8.33',
+      status => 'exists'}
+
+or
+
+{   appname => 'ledgersmb',
+    version => '1.2'
+fullversion => '1.2.0',
+     status => 'exists' }
+
+It goes without saying that status will always equal 'exists' if appname is set.
+However the converse is not true.  If the status is 'exists' and appname is not
+set, this merely means that the database exists but is not used by a recognized
+application.  So administrative functions are advised to check both the appname
+and status values.
+
+Finally, it is important to note that LedgerSMB 1.1 and prior, and SQL-Ledger 
+2.6.x and prior are lumped under appname => 'ledgersmb' and version => 'legacy',
+though the fullversion may give you an idea of what the actual version is run.
+
+=cut 
+
+sub get_info {
+    use DBI;
+    use LedgerSMB::Auth;
+    my $self = shift @_;
+    my $retval = { # defaults
+         appname => undef,
+         version => undef,
+    full_version => undef,
+          status => undef,
+    };
+    my $creds = LedgerSMB::Auth->get_credentials();
+    my $dbh = DBI->connect(
+        "dbi:Pg:dbname=$self->{company_name}", 
+         "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+    );
+    if (!$dbh){ # Could not connect, try to validate existance by connecting
+                # to template1 and checking
+           $dbh = DBI->connect(
+                   "dbi:Pg:dbname=template1", 
+                   "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+            );
+           return $retval unless $dbh;
+           my $sth = $dbh->prepare(
+                 "select count(*) = 1 from pg_database where datname = ?"
+           );
+           $sth->execute($self->{company_name});
+           my ($exists) = $sth->fetchrow_array();
+           if ($exists){
+                $retval->{status} = 'exists';
+           } else {
+                $retval->{status} = 'does not exist';
+           }
+           return $retval;
+   } else { # Got a db handle... try to find the version and app by a few
+            # different means
+       my $sth;
+       # Legacy SL and LSMB
+       $sth = $dbh->prepare('SELECT version FROM defaults');
+       if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
+           $retval->{appname} = 'ledgersmb';
+           $retval->{version} = 'legacy';
+           $retval->{full_version} = $ref->{version};
+           return $retval;
+       }
+       # LedgerSMB 1.2 and above
+       $sth = $dbh->prepare('SELECT value FROM defaults WHERE setting_key = ?');
+       $sth->execute('version');
+       if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
+           $retval->{full_version} = $ref->{value};
+           $retval->{appname} = 'ledgersmb';
+           if ($ref->{value} eq '1.2.0') {
+                $retval->{version} = '1.2';
+           } elsif ($ref->{value} eq '1.2.99'){
+                $retval->{version} = '1.3dev';
+           } elsif ($ref->{value} =~ /^1.3/){
+                $retval->{version} = '1.3';
+           }
+           return $retval;
+       }
+       # SQL-Ledger 2.7-2.8 (fldname, fldvalue)
+       $sth = $dbh->prepare('SELECT fldvalue FROM defaults WHERE fldname = ?');
+       $sth->execute('version');
+       if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
+            $retval->{appname} = 'sql-ledger';
+            $retval->{full_version} = $ref->{fldname};
+            $retval->{version} = $ref->{fldname};
+            $retval->{version} =~ s/(\d+\.\d+).*/$1/g;
+       }
+   }
+   return $retval;
 }
 
 =item $db->create();
