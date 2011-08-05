@@ -238,9 +238,8 @@ sub new {
     $logger->debug("Begin LedgerSMB.pm");
 
     $self->{version} = $VERSION;
-    $self->{dbversion} = "1.2.0";
-    #bless $self if defined $self;
-    #bless $type if defined $type;
+    $self->{dbversion} = "1.2.99";
+    
     bless $self, $type;
     $logger->debug("LedgerSMB::new: \$argstr = $argstr");
     my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
@@ -306,9 +305,14 @@ sub new {
 #    if ($self->{action} eq 'migrate_user'){
 #        return $self;
 #    }
+
+    # This is suboptimal.  We need to have a better way for 1.4
     if ($self->{script} eq 'login.pl' &&
         ($self->{action} eq 'authenticate'  || $self->{action} eq '__default' 
 		|| !$self->{action})){
+        return $self;
+    }
+    if ($self->{script} eq 'setup.pl'){
         return $self;
     }
     if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
