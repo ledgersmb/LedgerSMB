@@ -540,7 +540,8 @@ END ?>
            </td>
         </tr>
         <tr id="business-threshold-row">
-           <td> <?lsmb INCLUDE select element_data = {
+           <td> <?lsmb business_types.unshift({});
+                       INCLUDE select element_data = {
 			name = "business_id"
 			options = business_types
 			default_values = [business_id]
