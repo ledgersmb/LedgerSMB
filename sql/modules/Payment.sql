@@ -1215,7 +1215,8 @@ CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_p
    SELECT p.id as payment_id, p.reference as payment_reference, p.payment_date,  
           c.legal_name as legal_name, am.amount as amount, em.first_name, em.last_name, p.currency, p.notes
    FROM payment p
-   JOIN employee em ON (em.entity_id = p.employee_id)
+   JOIN entity_employee ent_em ON (ent_em.entity_id = p.employee_id)
+   JOIN person em ON (ent_em.entity_id = em.entity_id)
    JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
    JOIN company c ON   (c.entity_id  = eca.entity_id)
    JOIN payment_links pl ON (p.id = pl.payment_id)
