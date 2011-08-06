@@ -2100,7 +2100,7 @@ sub payments {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $glwhere = $where;
-    $glwhere =~ s/\(c.name\)/\(g.description\)/;
+    $glwhere =~ s/\(ce.name\)/\(g.description\)/;
 
     # cycle through each id
     foreach my $accno ( split( / /, $form->{paymentaccounts} ) ) {
