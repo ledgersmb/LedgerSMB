@@ -1739,7 +1739,6 @@ sub aging {
     }
 
     my $transdate = ( $form->{overdue} ) ? "duedate" : "transdate";
-
     if ( $form->{department} ) {
         ( $null, $department_id ) = split /--/, $form->{department};
     }
@@ -1759,13 +1758,19 @@ sub aging {
 
     $where = qq|true|;
     
-    if ( $form->{"$form->{ct}_id"} ) {
-        $where .= qq| AND c.entity_id = | . $dbh->quote( $form->{"$form->{ct}_id"} );
-    }
-
     if ($department_id) {
         $where .= qq| AND a.department_id = | . $dbh->quote($department_id);
     }
+
+    if ($form->{meta_number}){
+        $where .= qq| AND c.meta_number = | . $dbh->quote($form->{meta_number});
+    }
+
+    if ($form->{name}){
+       $where .= qq| AND e.legal_name ilike | .
+            $dbh->quote($form->like($form->{name}));
+    }
+
 
     $query = "";
     my $union = "";
