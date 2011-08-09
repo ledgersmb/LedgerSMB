@@ -1462,7 +1462,7 @@ sub trial_balance {
         if ($year_end ne 'none'){
              if ($year_end eq 'last'){
                   $yearend_filter = "AND (ac.transdate < coalesce($datefrom, ac.transdate)  OR 
-			ac.trans_id <> (select max(trans_id) FROM yearend WHERE transdate <= coalesce($dateto, 'infinity'::timestamp)))";
+			ac.trans_id <> (select coalesce(max(trans_id), -1000) FROM yearend WHERE transdate <= coalesce($dateto, 'infinity'::timestamp)))";
              } elsif ($year_end eq 'all'){
                   $yearend_filter = "AND (y.trans_id is null or ac.transdate < coalesce($datefrom, ac.transdate))";
              } else {
