@@ -1461,6 +1461,10 @@ sub trial_balance {
         }
         if ($year_end ne 'none'){
              if ($year_end eq 'last'){
+                   # CT:  The coalesce below uses magic values but this should
+                   # be safe because all automatically assigned transactions 
+                   # should be positive integers.  In the long run though this
+                   # is being moved into stored procedures.
                   $yearend_filter = "AND (ac.transdate < coalesce($datefrom, ac.transdate)  OR 
 			ac.trans_id <> (select coalesce(max(trans_id), -1000) FROM yearend WHERE transdate <= coalesce($dateto, 'infinity'::timestamp)))";
              } elsif ($year_end eq 'all'){
