@@ -949,6 +949,8 @@ for my $ref (0 .. $#array_options) {
 # We need to compute the unhandled_overpayment, notice that all the values inside the if already have 
 # the exchangerate applied
        
+# XXX:  This causes issues currently, so display of unhandled overpayment has
+# disabled.  Was getting numbers that didn't make a lot of sense to me. --CT
       if ( $due_fx <  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) {
          # We need to store all the overpayments so we can use it on the screen
          $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} - $due_fx );
