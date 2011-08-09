@@ -3,8 +3,7 @@
 
 =head1 NAME
 
-LedgerSMB::Scripts::Reconciliation - LedgerSMB class defining the Controller
-functions, template instantiation and rendering.
+LedgerSMB::Scripts::recon
 
 =head1 SYOPSIS
 
@@ -620,7 +619,7 @@ sub __default {
     );
 }
 
-# eval { do "scripts/custom/Reconciliation.pl" };
+ eval { do "scripts/custom/recon.pl" };
 1;
 
 =pod

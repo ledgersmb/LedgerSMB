@@ -192,17 +192,6 @@ sub create_links {
     $form->{selectformname} =
       qq|<option value="transaction">| . $locale->text('Transaction');
 
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
-        if ( $form->{ARAP} eq 'AR' ) {
-            $form->{selectformname} .= qq|
-  <option value="receipt">| . $locale->text('Receipt');
-        }
-        else {
-            $form->{selectformname} .= qq|
-  <option value="check">| . $locale->text('Check');
-        }
-    }
-
     # currencies
     @curr = split /:/, $form->{currencies};
     $form->{defaultcurrency} = $curr[0];
