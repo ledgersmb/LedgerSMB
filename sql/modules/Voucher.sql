@@ -83,14 +83,14 @@ BEGIN
 		UNION ALL
 		SELECT v.id, a.source, a.memo, 
 			v.batch_id, v.trans_id, 
-			CASE WHEN bc.class LIKE 'receipt%' THEN a.amount * -1
-			     ELSE a.amount  END, a.transdate, 
+			CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount) * -1
+			     ELSE sum(a.amount)  END, a.transdate, 
 			CASE WHEN bc.class = 'receipt' THEN 'Receipt'
 			     WHEN bc.class = 'receipt_reversal' 
 			     THEN 'Receipt Reversal'
 			END
 		FROM voucher v
-		JOIN acc_trans a ON (v.trans_id = a.trans_id)
+		JOIN acc_trans a ON (v.id = a.voucher_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
 		JOIN chart c ON (a.chart_id = c.id)
 		JOIN ar ON (ar.id = a.trans_id)
@@ -100,6 +100,8 @@ BEGIN
 		WHERE v.batch_id = in_batch_id 
 			AND a.voucher_id = v.id
 			AND (bc.class like 'receipt%' AND c.link = 'AR')
+		GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
+                        v.batch_id, v.trans_id, a.transdate, bc.class
 		UNION ALL
 		SELECT v.id, g.reference, g.description, 
 			v.batch_id, v.trans_id,

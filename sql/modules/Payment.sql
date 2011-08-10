@@ -530,14 +530,16 @@ BEGIN
         IF in_account_class = 1 THEN
         	EXECUTE $E$
 	        	UPDATE ap 
-		        set paid = paid + (select amount from bulk_payments_in b 
-		         	where b.id = ap.id)
+		        set paid = paid + (select amount from bulk_payments_in b
+		         	where b.id = ap.id),
+                            datepaid = $E$ || quote_literal(in_payment_date) || $E$
 		         where id in (select id from bulk_payments_in) $E$;
         ELSE
         	EXECUTE $E$
 	        	UPDATE ar 
 		        set paid = paid + (select amount from bulk_payments_in b 
-		         	where b.id = ar.id)
+		         	where b.id = ar.id),
+                            datepaid = $E$ || quote_literal(in_payment_date) || $E$
 		         where id in (select id from bulk_payments_in) $E$;
         END IF;
 	EXECUTE $E$ DROP TABLE bulk_payments_in $E$;
