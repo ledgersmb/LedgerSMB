@@ -90,6 +90,11 @@ sub attach_file {
     } else {
         use File::MimeInfo;
         $file->file_name($fnames[0]);
+        if (!$file->file_name){
+             $request->error($request->{_locale}->text(
+                  'No file uploaded'
+             ));
+        }
         $file->get_mime_type;
         my $fh = $request->{_request}->upload('upload_data');
         my $fdata = join ("", <$fh>);
