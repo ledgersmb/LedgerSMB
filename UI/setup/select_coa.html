@@ -1,8 +1,10 @@
-<?lsmb INCLUDE "ui-header.html" stylesheet="UI/setup/stylesheet.css" ?>
+<?lsmb INCLUDE "ui-header.html" 
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body>
+<h2>Database Management Console</h2>
 <div class="listtop"><?lsmb title ?></div>
-<div 
 <form action="setup.pl" method="POST" name="credentials">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
@@ -30,27 +32,15 @@ ELSE;
             name = 'coa_lc'
        text_attr = 'code'
       value_attr = 'code'
+           label = text('Country Code') #'
     };
 END ?>
 </div>
 <div class="inputrow">
 <?lsmb INCLUDE input element_data = {
-    name = 's_password'
-   value = s_password
-    type = 'password'
-    size = '15'
-   class = 'password'
-   label = text('Password') 
-} ?>
-</div>
-<div class="inputrow">
-<?lsmb INCLUDE input element_data = {
     name = 'database'
    value = database
-    type = 'text'
-    size = '15'
-   class = 'database'
-   label = text('Database') 
+    type = 'hidden'
 } ?>
 </div>
 <div class="inputrow">
@@ -58,11 +48,12 @@ END ?>
     name = 'action'
    value = 'select_coa'
     type = 'submit'
-   class = 'database'
+   class = 'submit'
     text = text('Next') 
 } ?>
 </div>
 </div>
 </form>
+</div>
 </body>
 </html>

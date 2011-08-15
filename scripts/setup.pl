@@ -173,7 +173,7 @@ sub create_db{
 
     #COA Directories
     opendir(COA, 'sql/coa');
-    my @coa = !/^(\.\.?|[Ss]ample.*)$/, readdir(COA);
+    my @coa = grep !/^(\.|[Ss]ample.*)/, readdir(COA);
     closedir(COA); 
 
     $request->{coa_lcs} =[];
@@ -189,6 +189,8 @@ sub create_db{
     $template->render($request);
     
 }
+
+=item select_coa
 
 =item cancel
 
