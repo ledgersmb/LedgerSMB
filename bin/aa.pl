@@ -2031,6 +2031,13 @@ sub transactions {
         "<th><a class=listheading href=$href&sort=invnumber>"
       . $locale->text('Invoice')
       . "</a></th>";
+    if ($form->{summary}){
+        $column_header{invnumber} =
+            "<th><a class=listheading href=$href&sort=invnumber>"
+            . $locale->text('Invoices')
+            . "</a></th>";
+
+    }
     $column_header{ordnumber} =
         "<th><a class=listheading href=$href&sort=ordnumber>"
       . $locale->text('Order')
@@ -2266,7 +2273,7 @@ qq|<td><a href=ca.pl?path=$form->{path}&action=list_transactions&accounttype=sta
         $column_data{name} =
 qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&action=edit&entity_id=$ref->{entity_id}&meta_number=$ref->{meta_number}&db=$form->{vc}&callback=$callback>$ref->{name}</a></td>|;
 
-        if ( $ref->{id} != $sameid ) {
+        if ( $ref->{id} != $sameid or $form->{summary}) {
             $j++;
             $j %= 2;
         }
