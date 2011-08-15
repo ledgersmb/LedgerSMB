@@ -1,14 +1,28 @@
       <tr>
         <th align="right"><?lsmb text(form.uvc) ?></th>
-        <td><?lsmb PROCESS $form.vci.type element_data=form.vci.input ?></td>
+        <td><?lsmb PROCESS input element_data={
+              name  = 'name'
+              type  = 'text'
+              class = 'name'
+              value = name
+         } ?></td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('Account') ?></th>
+        <td><?lsmb PROCESS input element_data={
+              name  = 'meta_number'
+              type  = 'text'
+              class = 'control_code'
+              value = meta_number
+         } ?></td>
       </tr>
       <tr>
         <th align="right"><?lsmb text('To') ?></th>
         <td><?lsmb PROCESS input element_data={
-        class => 'date',
-        name => 'todate',
-        size => '11',
-        title => user.dateformat,
+        class = 'date',
+        name = 'todate',
+        size = '11',
+        title = user.dateformat,
         } ?></td>
       </tr>
       <tr>
@@ -24,17 +38,17 @@
         <th></th>
         <td>
 <?lsmb PROCESS input element_data={
-  type => 'radio',
-  name => 'summary',
-  value => '1',
-  label => text('Summary'),
-  checked => 'checked',
+  type = 'radio',
+  name = 'summary',
+  value = '1',
+  label = text('Summary'),
+  checked = 'checked',
   } -?>
 <?lsmb PROCESS input element_data={
-  type => 'radio',
-  name => 'summary',
-  value => '0',
-  label => text('Detail'),
+  type = 'radio',
+  name = 'summary',
+  value = '0',
+  label = text('Detail'),
   } -?>
         </td>
       </tr>
@@ -47,57 +61,57 @@
                 <tr>
                   <td>
 <?lsmb PROCESS input element_data={
-  name => 'overdue',
-  type => 'radio',
-  value => '0',
-  label => text('Aged'),
-  checked => 'checked',
+  name = 'overdue',
+  type = 'radio',
+  value = '0',
+  label = text('Aged'),
+  checked = 'checked',
   } -?>
                   </td>
                   <td>
 <?lsmb PROCESS input element_data={
-  name => 'overdue',
-  type => 'radio',
-  value => '1',
-  label => text('Overdue'),
+  name = 'overdue',
+  type = 'radio',
+  value = '1',
+  label = text('Overdue'),
   } -?>
                   </td>
                 </tr>
                 <tr>
                   <td width="70">
 <?lsmb PROCESS input element_data={
-  name => 'c0',
-  type => 'checkbox',
-  value => '1',
-  label => text('Current'),
-  checked => 'checked',
+  name = 'c0',
+  type = 'checkbox',
+  value = '1',
+  label = text('Current'),
+  checked = 'checked',
   } -?>
                   </td>
                   <td width="70">
 <?lsmb PROCESS input element_data={
-  name => 'c30',
-  type => 'checkbox',
-  value => '1',
-  label => '30',
-  checked => 'checked',
+  name = 'c30',
+  type = 'checkbox',
+  value = '1',
+  label = '30',
+  checked = 'checked',
   } -?>
                   </td>
                   <td width="70">
 <?lsmb PROCESS input element_data={
-  name => 'c60',
-  type => 'checkbox',
-  value => '1',
-  label => '60',
-  checked => 'checked',
+  name = 'c60',
+  type = 'checkbox',
+  value = '1',
+  label = '60',
+  checked = 'checked',
   } -?>
                   </td>
                   <td width="70">
 <?lsmb PROCESS input element_data={
-  name => 'c90',
-  type => 'checkbox',
-  value => '1',
-  label => '90',
-  checked => 'checked',
+  name = 'c90',
+  type = 'checkbox',
+  value = '1',
+  label = '90',
+  checked = 'checked',
   } -?>
                   </td>
                 </tr>
