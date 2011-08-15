@@ -101,7 +101,7 @@ BEGIN
 			AND a.voucher_id = v.id
 			AND (bc.class like 'receipt%' AND c.link = 'AR')
 		GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
-                        v.batch_id, v.trans_id, a.transdate, bc.class
+                        a.memo, v.batch_id, v.trans_id, a.transdate, bc.class
 		UNION ALL
 		SELECT v.id, g.reference, g.description, 
 			v.batch_id, v.trans_id,

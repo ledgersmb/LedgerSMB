@@ -6,7 +6,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__file_read"
 WITH INHERIT NOLOGIN;
 
 GRANT SELECT ON file_base, file_secondary_attachment, file_transaction,
-file_order, file_links
+file_order, file_links, file_part
       TO "lsmb_<?lsmb dbname ?>__file_read";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_tx"
@@ -15,6 +15,7 @@ WITH INHERIT NOLOGIN;
 GRANT INSERT, UPDATE ON file_transaction, file_order_to_tx TO
  "lsmb_<?lsmb dbname ?>__file_attach_tx";
 
+
 CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_order"
 WITH INHERIT NOLOGIN;
 
@@ -22,9 +23,23 @@ GRANT INSERT, UPDATE
       ON file_order, 
          file_order_to_order,
          file_tx_to_order
-      TO "lsmb_<?lsmb dbname ?>__file_attach_tx";
+      TO "lsmb_<?lsmb dbname ?>__file_attach_order";
+
+GRANT INSERT, UPDATE ON file_transaction, file_order_to_tx TO
+ "lsmb_<?lsmb dbname ?>__file_attach_tx";
 
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_part"
+WITH INHERIT NOLOGIN;
+
+GRANT INSERT, UPDATE 
+      ON file_part
+      TO "lsmb_<?lsmb dbname ?>__file_attach_part";
+
+
+GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_tx";
+GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_part";
+GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_order";
 -- Contacts
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_read"
