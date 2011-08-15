@@ -156,9 +156,13 @@ sub create_db{
     use LedgerSMB::Sysconfig;
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
+
+
+    # ENVIRONMENT NECESSARY
     $ENV{PGUSER} = $creds->{login};
     $ENV{PGPASSWORD} = $creds->{password};
     $ENV{PGDATABASE} = $request->{database};
+
     my $database = LedgerSMB::Database->new(
                {username => $creds->{login},
             company_name => $request->{database},
@@ -166,6 +170,17 @@ sub create_db{
     );
     $database->create_and_load();
     $database->process_roles('Roles.sql');
+
+    #COA Directories
+    opendir(COA, 'sql/coa');
+    my @coa = !/^(\.\.?|[Ss]ample.*)$/, readdir(COA);
+    closedir(COA); 
+
+    $request->{coa_lcs} =[];
+    foreach my $lcs (@coa){
+         push @{$request->{coa_lcs}}, {code => $lcs};
+    } 
+
     $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'select_coa',
