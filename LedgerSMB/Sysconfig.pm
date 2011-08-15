@@ -135,27 +135,6 @@ for my $var (qw(sendmail smtphost smtptimeout smtpuser
     ${$var} = $config{mail}{$var} if $config{mail}{$var};
 }
 
-# We used to have a global dbconnect but have moved to single entries
-for my $var (qw(DBhost DBport DBname DBUserName DBPassword)) {
-    ${ "global" . $var } = $config{globaldb}{$var} if $config{globaldb}{$var};
-}
-
-#putting this in an if clause for now so not to break other devel users
-#if ( $config{globaldb}{DBname} ) {
-#    my $dbconnect = "dbi:Pg:dbname=$globalDBname host=$globalDBhost
-#		port=$globalDBport user=$globalDBUserName
-#		password=$globalDBPassword";    # for easier debugging
-#    $GLOBALDBH = DBI->connect($dbconnect);
-#    if ( !$GLOBALDBH ) {
-#        $form = new Form;
-#        $form->error("No GlobalDBH Configured or Could not Connect");
-#    }
-#    $GLOBALDBH->{pg_enable_utf8} = 1;
-#}
-
-# These lines prevent other apps in mod_perl from seeing the global db
-# connection info
-
 # Log4perl configuration
 our $log4perl_config = qq(
     log4perl.rootlogger = $log_level, Screen, Basic
@@ -190,4 +169,6 @@ $ENV{PGPORT} = $config{database}{port};
 our $default_db = $config{database}{default_db};
 our $db_namespace = $config{database}{db_namespace} || 'public';
 $ENV{PGSSLMODE} = $config{database}{sslmode} if $config{database}{sslmode};
+$ENV{PG_CONTRIB_DIR} = $config{database}{contrib_dir};
+
 1;

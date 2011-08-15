@@ -76,5 +76,6 @@ port = 5432
 default_db = lsmb13
 host = localhost
 db_namespace = public
+contrib_dir = /usr/share/pgsql/contrib/
 # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
 sslmode = prefer

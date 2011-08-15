@@ -1,8 +1,11 @@
-<?lsmb INCLUDE "ui-header.html" stylesheet="UI/setup/stylesheet.css" ?>
+<?lsmb INCLUDE "ui-header.html" 
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body>
 <div class="listtop"><?lsmb text('Confirm Operation') ?></div>
 <div id="notice"><?lsmb notice ?></div>
+<div id="message"><?lsmb message ?></div>
 <div id="operation"><?lsmb operation ?></div>
 <form action="setup.pl" method="POST" name="confirm_operation">
 <?lsmb INCLUDE input element_data = {
@@ -10,7 +13,7 @@
     type = 'hidden'
    value = database
 } ?>
-<div class="inputrow">
+<div class="inputrow" id="yesno">
 <?lsmb 
 INCLUDE input element_data = {
     name = 'confirm'

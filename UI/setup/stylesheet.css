@@ -1,0 +1,56 @@
+div.login {
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    width: 25em;
+    padding: 2em;
+    padding-bottom: 2em;
+    border-style: outset;
+}
+
+div {
+    overflow: auto;
+}
+
+#yesno label {
+    width: 2em
+}
+
+#userpass {
+    display: none
+}
+
+
+label {
+    width: 10em;
+    text-align: right;
+    float: left;
+    border-width: 1px;
+    margin: 0em;
+    padding-right: 0.5em;
+    margin-top: 0.5em;
+}
+input {
+    width: 14em;
+    margin: 0px;
+    text-align: left;
+    float: left;
+    border-width: 3px;
+    margin: 0em;
+    margin-top: 0.5em;
+}
+
+#yesno input {
+    width: 1em;
+    margin-right: 3em;
+}
+
+img.logo {
+    border-style: none;
+    width: 16em;
+    height: 8em;
+}
+
+button {
+    margin-top: 10px;
+}

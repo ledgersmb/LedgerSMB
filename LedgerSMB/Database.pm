@@ -205,6 +205,7 @@ sub get_info {
        my $sth;
        # Legacy SL and LSMB
        $sth = $dbh->prepare('SELECT version FROM defaults');
+       $sth->execute();
        if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
            $retval->{appname} = 'ledgersmb';
            $retval->{version} = 'legacy';

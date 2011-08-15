@@ -41,11 +41,13 @@ take.
 =cut
 
 sub login {
+    use LedgerSMB::Locale;
     my ($request) = @_;
+    $request->{_locale}->new('en');
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username}
-            company_name => $request->{company_name}
+               {username => $creds->{username},
+            company_name => $request->{database},
                 password => $creds->{password}}
     );
     my $version_info = $database->get_info();
@@ -93,7 +95,7 @@ sub login {
          }
     } elsif (!$version_info->{exists}){
         $request->{message} = $request->{_locale}->text(
-             'Database does not exist.'
+             'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
     } else {
@@ -122,8 +124,8 @@ sub migrate_sl{
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username}
-            company_name => $request->{company_name}
+               {username => $creds->{username},
+            company_name => $request->{database},
                 password => $creds->{password}}
     );
 }
@@ -138,8 +140,8 @@ sub upgrade{
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username}
-            company_name => $request->{company_name}
+               {username => $creds->{username},
+            company_name => $request->{database},
                 password => $creds->{password}}
     );
 }
@@ -151,11 +153,15 @@ sub upgrade{
 =cut
 
 sub create_db{
+    use LedgerSMB::Sysconfig;
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username}
-            company_name => $request->{company_name}
+               {username => $creds->{login},
+            company_name => $request->{database},
                 password => $creds->{password}}
     );
     $database->create_and_load();

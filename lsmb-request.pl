@@ -58,6 +58,8 @@ if (!$script){
 	$request->error($locale->text('No workflow script specified'));
 }
 
+$request->{_locale} = $locale;
+
 $logger->debug("calling $script");
 
 &call_script( $script, $request );
