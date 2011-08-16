@@ -75,10 +75,10 @@ sub save_user {
 
     # I deleted some assignments which didn't play well with strict mode
     # and by my reading probably broke things. --CT
-
     my $employee = LedgerSMB::DBObject::Employee->new( base=>$self);
-    
-    $employee->save();
+    if (!$employee->{entity_id}){
+         $employee->save();
+    }
     
     my $user = LedgerSMB::DBObject::User->new(base=>$self, copy=>'list',
         merge=>[
@@ -91,6 +91,7 @@ sub save_user {
     );
     $user->{entity_id} = $employee->{entity_id};
     if ($user->save() == 8){ # Duplicate User exception --CT
+        $user->{dbh}->rollback;
         return 8;
     }
     $self->{user} = $user;
@@ -271,14 +272,7 @@ Returns a list of salutation records from the db for the dropdowns.
 sub get_salutations {
     
     my $self = shift;
-
-    # Adding SQL queries like this into the code directly is bad practice. --CT
-    my $sth = $self->{dbh}->prepare("SELECT * FROM salutation ORDER BY id ASC");
-    
-    $sth->execute();
-    
-    # Returns a list of hashrefs
-    return $sth->fetchall_arrayref( {} );
+    return $self->exec_method({funcname => 'person__list_salutations' });
 }
 
 

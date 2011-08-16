@@ -1,7 +1,9 @@
-<?lsmb INCLUDE "ui-header.html" stylesheet="UI/setup/stylesheet.css" ?>
+<?lsmb INCLUDE "ui-header.html" 
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body>
-<div class="listtop"><?lsmb text('Enter User') ?>
+<div class="listtop"><?lsmb text('Enter User') ?></div>
 <form action="setup.pl" method="POST" name="new_user">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
@@ -27,6 +29,7 @@
 </div>
 <div class="input_row">
 <label><?lsmb text('Import') ?></label>
+<div id="yesno">
                 <?lsmb INCLUDE input element_data = {
                            label   = 'Yes'
                            value   = '1'
@@ -42,11 +45,13 @@
                            type    = 'radio'
                    } ?>
 </div>
+</div>
 <div class="input_row">
 <?lsmb INCLUDE select element_data = {
           options = salutations
         text_attr = 'salutation'
        value_attr = 'id'
+             name = 'salutation_id'
             label = 'Salutation'
 } ?>
 </div>
@@ -56,6 +61,7 @@
    class = 'name'
     type = 'text'
     size = '15'
+   label = text('First Name') #'
 } ?>
 </div>
 <div class="input_row">
@@ -64,6 +70,7 @@
    class = 'name'
     type = 'text'
     size = '15'
+   label = text('Last name') #'
 } ?>
 </div>
 <div class="input_row">
@@ -72,14 +79,16 @@
    class = 'control_code'
     type = 'text'
     size = '15'
+   label = text('Employee Number') #'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb  countries.shift({});
+<?lsmb  countries.unshift({});
 INCLUDE select element_data = {
           options = countries
         text_attr = 'name'
        value_attr = 'id'
+             name = 'country_id'
             label = 'Country'
 } ?>
 </div>
@@ -88,6 +97,7 @@ INCLUDE select element_data = {
           options = perm_sets
         text_attr = 'label'
        value_attr = 'id'
+             name = 'perms'
             label = 'Assign Permissions'
 } ?>
 </div>

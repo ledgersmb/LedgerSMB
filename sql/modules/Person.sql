@@ -12,6 +12,14 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION person__get_my_entity_id() IS
 $$ Returns the entity_id of the current, logged in user.$$;
 
+
+CREATE OR REPLACE FUNCTION person__list_salutations() 
+RETURNS SETOF salutation AS
+$$ SELECT * FROM salutation ORDER BY id ASC $$ language sql;
+
+COMMENT ON FUNCTION person__list_salutations() IS
+$$ Returns a list of salutations ordered by id.$$; 
+
 CREATE OR REPLACE FUNCTION person__save
 (in_entity_id integer, in_salutation_id int, 
 in_first_name text, in_middle_name text, in_last_name text,

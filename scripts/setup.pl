@@ -203,6 +203,8 @@ coa_lc not set:  Select the coa location code
 =cut
 
 sub select_coa {
+    use LedgerSMB::Sysconfig;
+    use DBI;
     my ($request) = @_;
 
     if ($request->{coa_lc} =~ /\.\./){
@@ -210,9 +212,65 @@ sub select_coa {
     }
     if ($request->{coa_lc}){
         if ($request->{chart}){
-            # new db instance
-            # load file
-            # render admin user template
+           my $creds = LedgerSMB::Auth::get_credentials();
+       
+           # ENVIRONMENT NECESSARY
+           $ENV{PGUSER} = $creds->{login};
+           $ENV{PGPASSWORD} = $creds->{password};
+           $ENV{PGDATABASE} = $request->{database};
+
+           my $database = LedgerSMB::Database->new(
+                      {username => $creds->{login},
+                   company_name => $request->{database},
+                       password => $creds->{password}}
+           );
+           my $logfile = $LedgerSMB::tempdir . "/dblog";
+
+           $database->exec_script(
+                    {script => "sql/coa/$request->{coa_lc}/chart/$request->{chart}", 
+                    logfile => $logfile}
+           );
+           if (-f "sql/coa/$request->{coa_lc}/gifi/$request->{chart}"){
+                 $database->exec_script(
+                    {script => "sql/coa/$request->{coa_lc}/gifi/$request->{chart}",
+                    logfile => $logfile}
+                );
+            }
+
+
+            # One thing to remember here is that the setup.pl does not get the
+            # benefit of the automatic db connection.  So in order to build this
+            # form, we have to manage that ourselves. 
+            #
+            # However we get the benefit of having had to set the environment
+            # variables for the Pg connection above, so don't need to pass much
+            # info. 
+            #
+            # Also I am opting to use the lower-level call_procedure interface
+            # here in order to avoid creating objects just to get argument
+            # mapping going. --CT
+
+            $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+
+           @{$request->{salutations}} 
+            = $request->call_procedure(procname => 'person__list_salutations' ); 
+          
+           @{$request->{countries}} 
+            = $request->call_procedure(procname => 'location_list_country' ); 
+
+           $locale = $request->{_locale};
+
+           @{$request->{perm_sets}} = (
+               {id => '0', label => $locale->text('Manage Users')},
+               {id => '1', label => $locale->text('Full Permissions')},
+           );
+
+           $template = LedgerSMB::Template->new(
+                   path => 'UI/setup',
+                   template => 'new_user',
+	           format => 'HTML',
+           );
+           $template->render($request);
         } else {
             opendir(COA, "sql/coa/$request->{coa_lc}/chart");
             my @coa = grep !/^(\.|[Ss]ample.*)/, readdir(COA);
@@ -235,6 +293,50 @@ sub select_coa {
     $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'select_coa',
+	    format => 'HTML',
+    );
+    $template->render($request);
+}
+
+=item save_user
+
+Saves the administrative user, and then directs to the login page.
+
+=cut
+
+sub save_user {
+    use LedgerSMB::DBObject::Admin;
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials();
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
+                                   $creds->{login},
+                                   $creds->{password});
+    my $user = LedgerSMB::DBObject::Admin->new({base => $request});
+    $user->save_user;
+    if ($request->{perms} == 1){
+         for my $role (
+                $request->call_procedure(procname => 'admin__get_roles')
+         ){
+             $request->call_procedure(procname => 'admin__add_user_to_role',
+                                      args => [ $request->{username}, 
+                                                $role->{rolname}
+                                              ]);
+         }
+    } elsif ($request->{perms} == 0) {
+        $request->call_procedure(procname => 'admin__add_user_to_role',
+                                 args => [ $request->{username},
+                                           "lsmb_$request->{database}__".
+                                            "manage_users",
+                                         ]
+        );
+    } else {
+        $request->error($request->{_locale}->text('No Permissions Assigned'));
+   }
+   $request->{dbh}->commit;
+   
+    $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'complete',
 	    format => 'HTML',
     );
     $template->render($request);

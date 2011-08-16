@@ -6,11 +6,6 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <h2>Database Management Console</h2>
 <div class="listtop"><?lsmb title ?></div>
 <form action="setup.pl" method="POST" name="credentials">
-<?lsmb INCLUDE input element_data = {
-    name = 'database'
-    type = 'hidden'
-   value = database
-} ?>
 <?lsmb IF coa_lc;
    INCLUDE input element_data = {
         name = 'coa_lc'
@@ -22,7 +17,7 @@ END ?>
 <?lsmb IF coa_lc; 
     INCLUDE select element_data = {
          options = charts
-            name = 'coa'
+            name = 'chart'
        text_attr = 'name'
       value_attr = 'name'
     }; 
