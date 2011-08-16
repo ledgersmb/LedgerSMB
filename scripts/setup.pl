@@ -192,6 +192,54 @@ sub create_db{
 
 =item select_coa
 
+Selects and loads the COA.
+
+There are three distinct input scenarios here:
+
+coa_lc and chart are set:  load the coa file specified (sql/coa/$coa_lc/$chart)
+coa_lc set, chart not set:  select the chart
+coa_lc not set:  Select the coa location code
+
+=cut
+
+sub select_coa {
+    my ($request) = @_;
+
+    if ($request->{coa_lc} =~ /\.\./){
+       $request->error($request->{_locale}->text('Access Denied'));
+    }
+    if ($request->{coa_lc}){
+        if ($request->{chart}){
+            # new db instance
+            # load file
+            # render admin user template
+        } else {
+            opendir(COA, "sql/coa/$request->{coa_lc}/chart");
+            my @coa = grep !/^(\.|[Ss]ample.*)/, readdir(COA);
+            $request->{charts} = [];
+            for my $chart (@coa){
+                push @{$request->{charts}}, {name => $chart};
+            }
+       }
+    } else {
+        #COA Directories
+        opendir(COA, 'sql/coa');
+        my @coa = grep !/^(\.|[Ss]ample.*)/, readdir(COA);
+        closedir(COA); 
+
+        $request->{coa_lcs} =[];
+        foreach my $lcs (@coa){
+             push @{$request->{coa_lcs}}, {code => $lcs};
+        } 
+    }
+    $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'select_coa',
+	    format => 'HTML',
+    );
+    $template->render($request);
+}
+
 =item cancel
 
 Cancels work.  If the confirm is set to no, returns to the credential screen
