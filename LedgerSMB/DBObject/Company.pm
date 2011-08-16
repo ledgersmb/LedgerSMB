@@ -48,6 +48,30 @@ sub set_entity_class {
 
 =over
 
+=item get_by_cc
+
+This retrieves the company header information by control code.  Leaves the 
+overall account class untouched.
+
+=back
+
+=cut
+
+sub get_by_cc {
+    my $self = shift @_;
+    my $entity_class = $self->{entity_class};
+    my ($ref) = $self->exec_method({funcname => 'entity__get_by_cc'});
+    $self->merge($ref);
+    $self->{entity_id} = $self->{id};
+    delete $self->{id};
+    $self->get;
+    $self->get_metadata;
+    $self->{entity_class} = $entity_class;
+}
+
+
+=over
+
 =item save()
 
 This stores the company record including a credit account in the database.

@@ -526,6 +526,13 @@ $$ language plpgsql;
 COMMENT ON FUNCTION company_retrieve (in_entity_id int) IS
 $$ Returns all attributes for the company attached to the entity.$$;
 
+CREATE OR REPLACE FUNCTION entity__get_by_cc (in_control_code text)
+RETURNS SETOF entity AS $$
+SELECT * FROM entity WHERE control_code = $1 $$ language sql;
+
+COMMENT ON entity__get_by_cc (in_control_code text) IS
+$$ Returns the entity row attached to the control code. $$;
+
 create or replace function save_taxform 
 (in_country_code int, in_taxform_name text)
 RETURNS bool AS
@@ -1292,3 +1299,4 @@ COMMENT ON FUNCTION company__get_all_accounts (
     in_entity_class int
 ) IS 
 $$ Returns a list of all entity credit accounts attached to that entity.$$;
+

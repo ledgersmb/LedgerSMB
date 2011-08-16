@@ -47,6 +47,21 @@ sub set_entity_class {
        "directly!");
 }
 
+
+=item get_by_cc 
+
+Populates the company area with info on the company, pulled up through the 
+control code
+
+=cut
+
+sub get_by_cc {
+   my ($request) = @_;
+   my $company = new_company($request);
+   $company->get_by_cc();   
+   _render_main_screen($company);
+}
+
 =item dispatch_legacy
 
 This is a semi-private method which interfaces with the old code.  Note that

@@ -52,7 +52,7 @@ div.input_group1 {
 }
 div.input_group2 {
         display: block;
-        float: left;
+        float: left; 
 }
 div.input_group3 {
         display: block;
@@ -72,7 +72,6 @@ div.input_group3 {
 }
 
 #company_div div.input_group2 {
-        width: 28em;
 }
 
 #company_div label {
