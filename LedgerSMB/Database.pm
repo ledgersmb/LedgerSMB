@@ -207,11 +207,14 @@ sub get_info {
        $sth = $dbh->prepare('SELECT version FROM defaults');
        $sth->execute();
        if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
-           $retval->{appname} = 'ledgersmb';
-           $retval->{version} = 'legacy';
-           $retval->{full_version} = $ref->{version};
-           return $retval;
+           if ($ref->{version}){
+               $retval->{appname} = 'ledgersmb';
+               $retval->{version} = 'legacy';
+               $retval->{full_version} = $ref->{version};
+               return $retval;
+           }
        }
+       $dbh->rollback;
        # LedgerSMB 1.2 and above
        $sth = $dbh->prepare('SELECT value FROM defaults WHERE setting_key = ?');
        $sth->execute('version');
@@ -225,8 +228,11 @@ sub get_info {
            } elsif ($ref->{value} =~ /^1.3/){
                 $retval->{version} = '1.3';
            }
-           return $retval;
+           if ($retval->{version}){
+              return $retval;
+           }
        }
+       $dbh->rollback;
        # SQL-Ledger 2.7-2.8 (fldname, fldvalue)
        $sth = $dbh->prepare('SELECT fldvalue FROM defaults WHERE fldname = ?');
        $sth->execute('version');
@@ -236,6 +242,7 @@ sub get_info {
             $retval->{version} = $ref->{fldname};
             $retval->{version} =~ s/(\d+\.\d+).*/$1/g;
        }
+       $dbh->rollback;
    }
    return $retval;
 }

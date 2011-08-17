@@ -21,11 +21,12 @@ package LedgerSMB::Scripts::setup;
 
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
+use strict;
 
 sub __default {
 
     my ($request) = @_;
-    $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'credentials',
 	    format => 'HTML',
@@ -105,7 +106,7 @@ sub login {
         $request->{operation} = $request->{_locale}->text('Cancel?');
         $request->{next_action} = 'cancel';
     }
-    $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'confirm_operation',
 	    format => 'HTML',
@@ -144,6 +145,73 @@ sub upgrade{
             company_name => $request->{database},
                 password => $creds->{password}}
     );
+
+    # ENVIRONMENT NECESSARY
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
+
+    # Credentials set above via environment variables --CT
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    my $locale = $request->{_locale};
+
+    my @pre_upgrade_checks = (
+       {query => "SELECT count(*), customernumber from customer
+                   GROUP BY customernumber
+                   HAVING count(*) > 1",
+         name => $locale->text('Unique Customernumber'),
+         cols => ['customernumber', 'name', 'address1', 'city', 'state', 'zip'],
+         edit => 'customernumber'},
+
+       {query => "SELECT count(*), vendornumber from vendor
+                   GROUP BY vendornumber
+                   HAVING count(*) > 1",
+         name => $locale->text('Unique Vendornumber'),
+         cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
+         edit => 'vendornumber'},
+
+       {query => 'SELECT * FROM employee where employeenumber IS NULL',
+         name => $locale->text('No null employeenumber'),
+         cols => ['login', 'name', 'employeenumber'],
+         edit => 'employeenumber'},
+
+       {query => "select partnumber, count(*) from parts 
+                  WHERE obsolete is not true
+                  group by partnumber having count(*) > 1",
+         name => $locale->text('Unique nonobsolete partnumbers'),
+         cols => ['partnumber', 'description', 'sellprice'],
+         edit => 'partnumber'},
+
+       {query => 'SELECT invnumber, count(*) from ar
+                   group by invnumber having count(*) > 1',
+         name => $locale->text('Unique AR Invoice numbers'),
+         cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
+         edit =>  'invnumber'},
+    );
+    for my $check (@pre_upgrade_checks){
+        my $sth = $request->{dbh}->prepare($check->{query});
+        $sth->execute();
+        if ($sth->rows > 0){ # Check failed --CT
+             _failed_check($request, $check, $sth);
+        }
+    }
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'upgrade_info',
+            format => 'HTML',
+    );
+    $template->render($request);
+    
+
+}
+
+sub _failed_check{
+    my ($request, $check, $sth) = @_;
+    my $template = LedgerSMB::Template->new(
+            path => 'UI',
+            template => 'form_dynatable',
+            format => 'HTML',
+    );
 }
 
 =item create_db
@@ -181,7 +249,7 @@ sub create_db{
          push @{$request->{coa_lcs}}, {code => $lcs};
     } 
 
-    $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'select_coa',
 	    format => 'HTML',
@@ -258,14 +326,14 @@ sub select_coa {
            @{$request->{countries}} 
             = $request->call_procedure(procname => 'location_list_country' ); 
 
-           $locale = $request->{_locale};
+           my $locale = $request->{_locale};
 
            @{$request->{perm_sets}} = (
                {id => '0', label => $locale->text('Manage Users')},
                {id => '1', label => $locale->text('Full Permissions')},
            );
 
-           $template = LedgerSMB::Template->new(
+           my $template = LedgerSMB::Template->new(
                    path => 'UI/setup',
                    template => 'new_user',
 	           format => 'HTML',
@@ -290,7 +358,7 @@ sub select_coa {
              push @{$request->{coa_lcs}}, {code => $lcs};
         } 
     }
-    $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'select_coa',
 	    format => 'HTML',
@@ -334,7 +402,7 @@ sub save_user {
    }
    $request->{dbh}->commit;
    
-    $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'complete',
 	    format => 'HTML',
