@@ -1,3 +1,6 @@
+Changelog for 1.2.25
+* Corrected sql injection issue (Chris T)
+
 Changelog for 1.2.24
 * Corrected (non-exploitable) SQL injection issue in custom field management
 stored procs.  Chris T
