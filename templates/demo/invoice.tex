@@ -2,9 +2,11 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
-
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
 \begin{document}
 
 \pagestyle{myheadings}
@@ -25,29 +27,7 @@
 
 <?lsmb INCLUDE letterhead.tex ?>
 
-% Disable old pagebreak handling
-%<?xlsmb pagebreak 65 27 37 ?>
-%\end{tabularx}
-%
-%  \rule{\textwidth}{2pt}
-%  
-%  \vspace{0.2cm}
-%
-%  \hfill
-%  \begin{tabularx}{\textwidth}{Xr@{\hspace{1cm}}r@{}}
-%  & Subtotal & <?xlsmb sumcarriedforward ?> \\
-%  \end{tabularx}
-%
-%\newpage
-%
-%\markboth{<?xlsmb company ?>\hfill <?xlsmb invnumber ?>}{<?xlsmb company ?>\hfill <?xlsmb invnumber ?>}
-%
-%\begin{tabularx}{\textwidth}{@{}rlXlrlrrr@{}}
-%  \textbf{Pos} & \textbf{Number} & \textbf{Description} & & \textbf{Qt'y} &
-%    \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\ [0.5em]
-%  & carried forward from page <?xlsmb lastpage ?> & & & & & & & <?xlsmb sumcarriedforward ?> \\ [0.5em]
-%<?xlsmb end pagebreak ?>
-
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
 \vspace*{0.5cm}
 
@@ -144,12 +124,18 @@ Fax: <?lsmb shiptofax ?>
 
 \vspace{1cm}
 
-\begin{tabularx}{\textwidth}{@{}rlXlrlrrr@{}}
-  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>}
-  & \textbf{<?lsmb text('Description') ?>} & & \textbf{<?lsmb text('Qty') ?>} &
-    \textbf{<?lsmb text('Unit') ?>} & \textbf{<?lsmb text('Price') ?>} & 
-    \textbf{<?lsmb text('Disc %') ?>} 
-    & \textbf{<?lsmb text('Amount') ?>} \\ [0.5em]
+\begin{longtable}{@{\extracolsep{\fill}}r|llcrlrr|r}
+
+  \textbf{<?lsmb text('Item') ?>} 
+  & \textbf{<?lsmb text('Number') ?>}
+  & \textbf{<?lsmb text('Description') ?>} 
+  & \textbf{<?lsmb text('Delivery') ?>} 
+  & \textbf{<?lsmb text('Qty') ?>} 
+  & \textbf{<?lsmb text('Unit') ?>} 
+  & \textbf{<?lsmb text('Price') ?>} 
+  &  \textbf{<?lsmb text('Disc %') ?>} 
+  & \textbf{<?lsmb text('Amount') ?>} 
+\endhead
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb runningnumber.${lc} ?> & 
@@ -162,7 +148,7 @@ Fax: <?lsmb shiptofax ?>
   <?lsmb discountrate.${lc} ?> &
   <?lsmb linetotal.${lc} ?> \\
 <?lsmb END ?>
-\end{tabularx}
+\end{longtable}
 
 
 \parbox{\textwidth}{
