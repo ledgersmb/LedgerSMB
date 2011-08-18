@@ -2,6 +2,9 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx}
+\usepackage{longtable}
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
 
@@ -15,26 +18,7 @@
 <?lsmb INCLUDE letterhead.tex ?>
 
 
-% Breaking old pagebreak directive
-%<?xlsmb pagebreak 65 27 48 ?>
-%\end{tabularx}
-%
-%  \rule{\textwidth}{2pt}
-%  
-%  \hfill
-%  \begin{tabularx}{7cm}{Xr@{\hspace{1cm}}r@{}}
-%  & \textbf{Subtotal} & \textbf{<?xlsmb sumcarriedforward ?>} \\
-%  \end{tabularx}
-%
-%\newpage
-%
-%\markboth{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}
-%
-%\begin{tabularx}{\textwidth}{@{}lXrlrr@{}}
-%  \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
-%    \textbf{Unit} & \textbf{Price} & \textbf{Extended} \\
-%  & carried forward from <?xlsmb lastpage ?> & & & & <?xlsmb sumcarriedforward ?> \\
-%<?xlsmb end pagebreak ?>
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 
 \vspace*{0.5cm}
@@ -100,7 +84,7 @@
 <?lsmb END ?>
 
 <?lsmb IF shiptophone ?>
-<?lsmb text(Tel: [_1]', shiptophone) ?>
+<?lsmb text('Tel: [_1]', shiptophone) ?>
 <?lsmb END ?>
 
 <?lsmb IF shiptofax ?>
@@ -113,7 +97,7 @@
 
 \vspace{1cm}
 
-\textbf{\MakeUppercase{<?lsmb text('Request for Quotation')}}
+\textbf{\MakeUppercase{<?lsmb text('Request for Quotation') ?>}}
 \hfill
 
 \vspace{1cm}
@@ -134,10 +118,11 @@
 
 \vspace{1cm}
 
-\begin{tabularx}{\textwidth}{@{}lXrllrr@{}}
+\begin{longtable}{@{\extracolsep{\fill}}lcrllrr@{\extracolsep{\fill}}}
   \textbf{<?lsmb text('Number') ?>} & \textbf{<?lsmb text('Description') ?>} 
   & \textbf{<?lsmb text('Qty') ?>} & & \textbf{<?lsmb text('Delivery') ?>} 
-  & \textbf{<?lsmb text('Unit Price') ?>} & \textbf{<?lsmb text('Extended') ?>} \\
+  & \textbf{<?lsmb text('Unit Price') ?>} & \textbf{<?lsmb text('Extended') ?>} 
+\endhead
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb number.${lc} ?> &
@@ -145,7 +130,7 @@
   <?lsmb qty.${lc} ?> &
   <?lsmb unit.${lc} ?> \\
 <?lsmb END ?>
-\end{tabularx}
+\end{longtable}
 
 
 \parbox{\textwidth}{
