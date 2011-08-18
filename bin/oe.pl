@@ -822,6 +822,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
         if ( $form->{id} ) {
 
             $a{'delete'}                = 1;
+            $a{'print'}                = 1;
             $a{'save_as_new'}           = 1;
             $a{'print_and_save_as_new'} = 1 if ${LedgerSMB::Sysconfig::latex};
 

@@ -2,7 +2,10 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
 \usepackage{graphicx}
 
 \begin{document}
@@ -15,28 +18,7 @@
 <?lsmb INCLUDE letterhead.tex ?>
 
 
-% Breaking old pagebreak directive
-%<?xlsmb pagebreak 65 27 48 ?>
-%\end{tabularx}
-%
-%  \rule{\textwidth}{2pt}
-%  
-%  \hfill
-%  \begin{tabularx}{7cm}{Xr@{\hspace{1cm}}r@{}}
-%  & \textbf{Subtotal} & \textbf{<?xlsmb sumcarriedforward ?>} \\
-%  \end{tabularx}
-%
-%\newpage
-%
-%\markboth{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}
-%
-%
-%\begin{tabularx}{\textwidth}{@{}rlXrlrrr@{}}
-%  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Qt'y} &
-%  \textbf{Unit} & \textbf{Price} & \textbf{Disc \%} & \textbf{Amount} \\
-%  & carried forward from <?xlsmb lastpage ?> & & & & & <?xlsmb sumcarriedforward ?> \\
-%<?xlsmb end pagebreak ?>
-
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
 
 \vspace*{0.5cm}
 
@@ -105,7 +87,7 @@
 <?lsmb END ?>
 
 <?lsmb IF shiptofax ?>
-<lsmb text('Fax: [_1] shiptofax) ?>
+<?lsmb text('Fax: [_1]', shiptofax) ?>
 <?lsmb END ?>
 
 <?lsmb shiptoemail ?>
@@ -132,12 +114,13 @@
   
 \vspace{1cm}
 
-\begin{tabularx}{\textwidth}{@{}rlXrlrrr@{}}
+\begin{longtable}{@{\extracolsep{\fill}}rlcrlrrr@{\extracolsep{0pt}}}
   \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
    & \textbf{<?lsmb text('Description') ?>} & \textbf{<?lsmb text('Qty') ?>} &
   \textbf{<?lsmb text('Unit') ?>} & \textbf{<?lsmb text('Price') ?>} 
   & \textbf{<?lsmb text('Disc %') ?>} 
-  & \textbf{<?lsmb text('Amount') ?>} \\
+  & \textbf{<?lsmb text('Amount') ?>} 
+\endhead
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb runningnumber.${lc} ?> &
@@ -149,7 +132,7 @@
   <?lsmb discountrate.${lc} ?> &
   <?lsmb linetotal.${lc} ?> \\
 <?lsmb END ?>
-\end{tabularx}
+\end{longtable}
 
 
 \parbox{\textwidth}{
@@ -172,7 +155,7 @@
 
 <?lsmb text_amount ?> ***** <?lsmb decimal ?>/100
 \hfill
-<lsmb text('All prices in [_1].', currency) ?>
+<?lsmb text('All prices in [_1].', currency) ?>
 
 <?lsmb IF terms ?>
 <?lsmb text('Terms: Net [_1]  days', terms) ?>
@@ -191,4 +174,4 @@
 \rule{\textwidth}{0.5pt}
 
 \end{document}
-<?lsmb END ?>
+<?lsmb END -?>
