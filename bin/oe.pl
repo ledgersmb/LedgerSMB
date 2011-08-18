@@ -2247,7 +2247,7 @@ sub save {
  
 
     if ( OE->save( \%myconfig, \%$form ) ) {
-        $form->redirect( $locale->text('Order saved!') );
+       edit(); 
     }
     else {
         $form->error($err);
