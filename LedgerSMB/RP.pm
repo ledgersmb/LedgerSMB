@@ -1566,6 +1566,8 @@ sub aging {
 
     my $dbh = $form->{dbh};
     my $invoice = ( $form->{arap} eq 'ar' ) ? 'is' : 'ir';
+    $form->{ct} = ($form->{ct} eq 'customer') ? 'customer' : 'vendor';
+    $form->{arap} = ( $form->{arap} eq 'ar' ) ? 'ar' : 'ap';
 
     my $query = qq|SELECT value FROM defaults WHERE setting_key = 'curr'|;
     ( $form->{currencies} ) = $dbh->selectrow_array($query);
@@ -1736,6 +1738,7 @@ sub aging {
 sub get_customer {
     my ( $self, $myconfig, $form ) = @_;
 
+    $form->{ct} = ($form->{ct} eq 'customer') ? 'customer' : 'vendor';
     my $dbh = $form->{dbh};
 
     my $query = qq|
@@ -1826,11 +1829,12 @@ sub tax_report {
     my $table;
     my $ARAP;
 
+    $form->{db} = ($form->{db} eq 'ar') ? 'ar' : 'ap';
+
     if ( $form->{db} eq 'ar' ) {
         $table = "customer";
         $ARAP  = "AR";
-    }
-    if ( $form->{db} eq 'ap' ) {
+    } elsif ( $form->{db} eq 'ap' ) {
         $table = "vendor";
         $ARAP  = "AP";
     }
@@ -2189,6 +2193,7 @@ sub payments {
     my $dbh = $form->{dbh};
 
     my $ml = 1;
+    $form->{db} = ($form->{db} eq 'ar') ? 'ar' : 'ap';
     if ( $form->{db} eq 'ar' ) {
         $table = 'customer';
         $ml    = -1;

@@ -60,6 +60,7 @@ sub get_vc {
     my $count;
     my $item;
     my $sth;
+    $form->{vc} = ($form->{vc} eq 'customer') ? 'customer' : 'vendor';
 
     $item = $form->{dbh}->quote($item);
     foreach $item ( @{ $arap{ $form->{type} } } ) {
@@ -124,6 +125,7 @@ sub get_spoolfiles {
     my $query;
     my $invnumber = "invnumber";
     my $item;
+    $form->{vc} = ($form->{vc} eq 'customer') ? 'customer' : 'vendor';
 
     my %arap = (
         invoice           => ['ar'],

@@ -202,6 +202,8 @@ sub get_openinvoices {
 
     my ( $self, $myconfig, $form ) = @_;
 
+    $form->{arap} = ($form->{arap} eq 'ar') ? 'ar' : 'ap';
+    $form->{vc} = ( $form->{vc} eq 'customer') ? 'customer' : 'vendor';
     my $null;
     my $department_id;
 
@@ -299,6 +301,8 @@ sub post_payment {
 
     my ( $self, $myconfig, $form ) = @_;
 
+    $form->{arap} = ($form->{arap} eq 'ar') ? 'ar' : 'ap';
+    $form->{vc} = ( $form->{vc} eq 'customer') ? 'customer' : 'vendor';
     # connect to database, turn AutoCommit off
     my $dbh = $form->{dbh};
 

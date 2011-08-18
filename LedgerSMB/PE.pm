@@ -1453,6 +1453,7 @@ sub get_jcitems {
     my $null;
     my $var;
     my $where;
+    $form->{vc} = ($form->{vc} eq 'customer') ? 'customer' : 'vendor';
 
     if ( $form->{projectnumber} ) {
         ( $null, $var ) = split /--/, $form->{projectnumber};

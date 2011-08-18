@@ -623,8 +623,8 @@ sub delete_transaction {
 
     $form->audittrail( $dbh, "", \%audittrail );
 
-    my $query = qq|DELETE FROM $table WHERE id = $form->{id}|;
-    $dbh->do($query) || $form->dberror($query);
+    my $query = qq|DELETE FROM $table WHERE id = ?|;
+    $dbh->prepare($query)->execute( $form->{id} ) || $form->dberror($query);
 
     $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
     $dbh->prepare($query)->execute( $form->{id} ) || $form->dberror($query);
@@ -682,6 +682,9 @@ sub transactions {
         $ARAP    = 'AP';
         $table   = 'ap';
         $buysell = 'sell';
+        $form->{vc} = 'vendor';
+    } else {
+        $form->{vc} = 'customer';
     }
 
     ( $form->{transdatefrom}, $form->{transdateto} ) =

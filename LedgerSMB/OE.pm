@@ -756,6 +756,9 @@ sub retrieve {
 		SELECT value, current_date FROM defaults
 		 WHERE setting_key = 'curr'|;
     ( $form->{currencies}, $form->{transdate} ) = $dbh->selectrow_array($query);
+    if ( $form->{vc} ne 'customer' ) {    # Sanitize $form->{vc}
+        $form->{vc} = 'vendor';
+    }
 
     if ( $form->{id} ) {
 

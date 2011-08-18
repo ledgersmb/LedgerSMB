@@ -38,6 +38,7 @@ sub overpayment {
     my ( $self, $myconfig, $form, $dbh, $amount, $ml ) = @_;
     my $invnumber = $form->{invnumber};
 
+    $form->{arap} = ( $form->{arap} eq 'ar' ) ? 'ar' : 'ap';
     $invnumber =
       $form->update_defaults( $myconfig, ( $form->{arap} eq 'ar' )
         ? "sinumber"
