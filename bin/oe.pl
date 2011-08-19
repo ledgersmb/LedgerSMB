@@ -1182,11 +1182,12 @@ sub search {
     $requiredby = $locale->text('Required by');
 
     if ( $form->{type} eq 'purchase_order' ) {
-        $form->{title} = $locale->text('Purchase Orders');
-        $form->{vc}    = 'vendor';
-        $ordlabel      = $locale->text('Order Number');
-        $ordnumber     = 'ordnumber';
-        $employee      = $locale->text('Employee');
+        $form->{title}       = $locale->text('Purchase Orders');
+        $form->{vc}          = 'vendor';
+        $ordlabel            = $locale->text('Order Number');
+        $ordnumber           = 'ordnumber';
+        $employee            = $locale->text('Employee');
+        $form->{oe_class_id} = 2;
     }
 
     if ( $form->{type} eq 'receive_order' ) {
@@ -1198,36 +1199,40 @@ sub search {
     }
 
     if ( $form->{type} eq 'generate_sales_order' ) {
-        $form->{title} =
+        $form->{title}       =
           $locale->text('Generate Sales Order from Purchase Orders');
-        $form->{vc} = 'vendor';
-        $ordlabel   = $locale->text('Order Number');
-        $ordnumber  = 'ordnumber';
-        $employee   = $locale->text('Employee');
+        $form->{vc}          = 'vendor';
+        $ordlabel            = $locale->text('Order Number');
+        $ordnumber           = 'ordnumber';
+        $employee            = $locale->text('Employee');
+        $form->{oe_class_id} = 2;
     }
 
     if ( $form->{type} eq 'consolidate_sales_order' ) {
-        $form->{title} = $locale->text('Consolidate Sales Orders');
-        $form->{vc}    = 'customer';
-        $ordlabel      = $locale->text('Order Number');
-        $ordnumber     = 'ordnumber';
-        $employee      = $locale->text('Salesperson');
+        $form->{title}       = $locale->text('Consolidate Sales Orders');
+        $form->{vc}          = 'customer';
+        $ordlabel            = $locale->text('Order Number');
+        $ordnumber           = 'ordnumber';
+        $employee            = $locale->text('Salesperson');
+        $form->{oe_class_id} = 1;
     }
 
     if ( $form->{type} eq 'request_quotation' ) {
-        $form->{title} = $locale->text('Request for Quotations');
-        $form->{vc}    = 'vendor';
-        $ordlabel      = $locale->text('RFQ Number');
-        $ordnumber     = 'quonumber';
-        $employee      = $locale->text('Employee');
+        $form->{title}       = $locale->text('Request for Quotations');
+        $form->{vc}          = 'vendor';
+        $ordlabel            = $locale->text('RFQ Number');
+        $ordnumber           = 'quonumber';
+        $employee            = $locale->text('Employee');
+        $form->{oe_class_id} = 4;
     }
 
     if ( $form->{type} eq 'sales_order' ) {
-        $form->{title} = $locale->text('Sales Orders');
-        $form->{vc}    = 'customer';
-        $ordlabel      = $locale->text('Order Number');
-        $ordnumber     = 'ordnumber';
-        $employee      = $locale->text('Salesperson');
+        $form->{title}       = $locale->text('Sales Orders');
+        $form->{vc}          = 'customer';
+        $ordlabel            = $locale->text('Order Number');
+        $ordnumber           = 'ordnumber';
+        $employee            = $locale->text('Salesperson');
+        $form->{oe_class_id} = 1;
     }
 
     if ( $form->{type} eq 'ship_order' ) {
@@ -1239,29 +1244,32 @@ sub search {
     }
 
     if ( $form->{type} eq 'sales_quotation' ) {
-        $form->{title} = $locale->text('Quotations');
-        $form->{vc}    = 'customer';
-        $ordlabel      = $locale->text('Quotation Number');
-        $ordnumber     = 'quonumber';
-        $employee      = $locale->text('Employee');
-        $requiredby    = $locale->text('Valid until');
+        $form->{title}       = $locale->text('Quotations');
+        $form->{vc}          = 'customer';
+        $ordlabel            = $locale->text('Quotation Number');
+        $ordnumber           = 'quonumber';
+        $employee            = $locale->text('Employee');
+        $requiredby          = $locale->text('Valid until');
+        $form->{oe_class_id} = 3;
     }
 
     if ( $form->{type} eq 'generate_purchase_order' ) {
-        $form->{title} =
+        $form->{title}       =
           $locale->text('Generate Purchase Orders from Sales Order');
-        $form->{vc} = 'customer';
-        $ordlabel   = $locale->text('Order Number');
-        $ordnumber  = 'ordnumber';
-        $employee   = $locale->text('Salesperson');
+        $form->{vc}          = 'customer';
+        $ordlabel            = $locale->text('Order Number');
+        $ordnumber           = 'ordnumber';
+        $employee            = $locale->text('Salesperson');
+        $form->{oe_class_id} = 1;
     }
 
     if ( $form->{type} eq 'consolidate_purchase_order' ) {
-        $form->{title} = $locale->text('Consolidate Purchase Orders');
-        $form->{vc}    = 'vendor';
-        $ordlabel      = $locale->text('Order Number');
-        $ordnumber     = 'ordnumber';
-        $employee      = $locale->text('Employee');
+        $form->{title}       = $locale->text('Consolidate Purchase Orders');
+        $form->{vc}          = 'vendor';
+        $ordlabel            = $locale->text('Order Number');
+        $ordnumber           = 'ordnumber';
+        $employee            = $locale->text('Employee');
+        $form->{oe_class_id} = 2;
     }
 
     $l_employee =
@@ -1523,7 +1531,7 @@ qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $vclabel|;
 <input type=hidden name=nextsub value=transactions>
 |;
 
-    $form->hide_form(qw(path login sessionid vc type));
+    $form->hide_form(qw(path login sessionid vc type oe_class_id));
 
     print qq|
 <button class="submit" type="submit" name="action" value="continue">|
@@ -1989,13 +1997,27 @@ qq|<th><a class=listheading href=$href&sort=quonumber>$quotation</a></th>|;
 qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$oe->{id} checked></td>|;
         $column_data{$ordnumber} =
 "<td><a href=$form->{script}?path=$form->{path}&action=$action&type=$form->{type}&id=$oe->{id}&warehouse=$warehouse&vc=$form->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$oe->{$ordnumber}</a></td>";
-
+        # $form->escape is the wrong method to choose here for the actual 
+        # display.  It does $hexhex 
+        # encoding. Long-run we need to move ths all to form-dynatable.  Until
+        # then, however, just going to do basic sanitation if <>&.... 
+        #
+        # Of course this has to be after the hexhex encoding for the URL. --CT
+        #
         $name = $form->escape( $oe->{name} );
 	$meta_number = $form->escape( $oe->{meta_number} );
+        $dispname = $oe->{name};
+        $dispmeta = $oe->{meta_number};
+        $dispname =~ s/&/&amp;/;
+        $dispname =~ s/>/&gt;/;
+        $dispname =~ s/</&lt;/;
+        $dispmeta=~ s/&/&amp;/;
+        $dispmeta=~ s/>/&gt;/;
+        $dispmeta=~ s/</&lt;/;
         $column_data{name} =
-qq|<td><a href=$form->{vc}.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=get&entity_id=$oe->{entity_id}&meta_number=$meta_number&account_class=$account_class&callback=$callback>$name</a></td>|;
+qq|<td><a href=$form->{vc}.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=get&entity_id=$oe->{entity_id}&meta_number=$meta_number&account_class=$account_class&callback=$callback>$dispname</a></td>|;
         $column_data{meta_number} =
-qq|<td><a href=$form->{vc}.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=get&entity_id=$oe->{entity_id}&meta_number=$meta_number&account_class=$account_class&callback=$callback>$meta_number</a></td>|;
+qq|<td><a href=$form->{vc}.pl?path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&action=get&entity_id=$oe->{entity_id}&meta_number=$meta_number&account_class=$account_class&callback=$callback>$dispmeta</a></td>|;
 
 
         for (qw(employee manager shipvia curr ponumber)) {

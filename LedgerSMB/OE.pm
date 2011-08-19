@@ -116,9 +116,11 @@ sub transactions {
 		LEFT JOIN exchangerate ex 
 			ON (ex.curr = o.curr AND ex.transdate = o.transdate)
 		WHERE o.quotation = ?
+                      AND o.oe_class_id = ?
 		$department|;
 
     my @queryargs = @dptargs;
+    unshift @queryargs, $form->{oe_class_id};
     unshift @queryargs, $quotation;
 
     my %ordinal = (
