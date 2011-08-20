@@ -574,8 +574,8 @@ sub header {
 
     my ( $self, $init, $headeradd ) = @_;
 
-    return if $self->{header};
-
+    return if $self->{header} or $ENV{LSMB_NOHEAD};
+    $ENV{LSMB_NOHEAD} = 1; # Only run once.
     my ( $stylesheet, $favicon, $charset );
 
     if ( $ENV{GATEWAY_INTERFACE} ) {

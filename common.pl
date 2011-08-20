@@ -28,7 +28,7 @@ sub redirect {
     my ( $script, $argv ) = split( /\?/, $form->{callback} );
 
     my @common_attrs = qw(
-      dbh login favicon stylesheet titlebar password custom_db_fields vc
+      dbh login favicon stylesheet titlebar password custom_db_fields vc header
     );
 
     if ( !$script ) {    # http redirect to login.pl if called w/no args

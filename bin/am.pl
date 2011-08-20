@@ -2449,7 +2449,6 @@ sub process_transactions {
             # process transaction
             AM->recurring_details( \%myconfig, \%$pt, $id );
 
-            $header = $form->{header};
 
             # reset $form
             # XXX THIS IS A BUG FACTORY. PLEASE READ:
@@ -2460,11 +2459,11 @@ sub process_transactions {
             # something is not being copied back that needs to be.  Looking 
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
-            for (qw(dbversion company dbh login path sessionid stylesheet timeout)) {
+            for (qw(header dbversion company dbh login path sessionid 
+                    stylesheet timeout id)
+            ) {
                 $form->{$_} = $pt->{$_};
             }
-            $form->{id}     = $id;
-            $form->{header} = $header;
             $form->db_init(\%myconfig);
 
             # post, print, email
@@ -2747,7 +2746,7 @@ sub process_transactions {
     }
 
     $form->{callback} =
-"am.pl?action=recurring_transactions&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&header=$form->{header}";
+"am.pl?action=recurring_transactions&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
     $form->redirect;
 
 }
