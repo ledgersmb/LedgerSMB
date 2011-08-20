@@ -212,6 +212,22 @@ sub _failed_check{
             template => 'form_dynatable',
             format => 'HTML',
     );
+    my $rows = [];
+    my $count = 1;
+    my $hiddens = {};
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')){
+          $row->{$check->{'edit'}} = 
+                    { input => {
+                                name => "$check->{edit}_$roe->{id}",
+                                value => $row->{$check->{'edit'}},
+                                type => 'text',
+                                size => 10,
+                    },
+          };
+          $hiddens->{"id_$count"} = $row->{id},
+    }
+    $hiddens->{count} = $count;
+     # TODO:  Add this template render stuff.
 }
 
 =item create_db

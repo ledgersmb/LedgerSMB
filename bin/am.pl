@@ -2746,7 +2746,7 @@ sub process_transactions {
     }
 
     $form->{callback} =
-"am.pl?action=recurring_transactions&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+"am.pl?action=recurring_transactions&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&header=1";
     $form->redirect;
 
 }
