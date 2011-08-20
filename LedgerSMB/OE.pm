@@ -625,7 +625,7 @@ sub save {
             $form->{shipvia},       $form->{notes},
             $form->{intnotes},      $form->{currency},
             $form->{closed},        $quotation,
-            $form->{department_id}, $form->{employee_id},
+            $form->{department_id}, $form->{person_id},
             $form->{language_code}, $form->{ponumber},
             $form->{terms},         $form->{id}
         );

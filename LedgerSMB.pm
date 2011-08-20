@@ -327,7 +327,7 @@ sub new {
     LedgerSMB::Company_Config::initialize($self);
 
 
-    if ($self->is_run_mode('cgi', 'mod_perl')) {
+    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
        #check for valid session unless this is an inital authentication
        #request -- CT
        if (!LedgerSMB::Auth::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
