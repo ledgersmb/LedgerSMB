@@ -227,6 +227,14 @@ sub _failed_check{
           $hiddens->{"id_$count"} = $row->{id},
     }
     $hiddens->{count} = $count;
+    $buttons = [
+           { type => 'submit',
+             name => 'action',
+            value => 'fix_tests',
+             text => $request->{_locale}->text('Save and Retry'),
+            class => 'submit' },
+    ];
+
      # TODO:  Add this template render stuff.
 }
 

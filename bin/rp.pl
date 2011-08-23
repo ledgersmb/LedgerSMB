@@ -1379,7 +1379,7 @@ sub e_mail {
     my %hiddens;
     # get name and email addresses
     for $i ( 1 .. $form->{rowcount} ) {
-        if ( $form->{"statement_$i"} ) {
+        if ( $form->{"statement_$i"} eq '1' ) {
             $form->{"$form->{ct}_id"}  = $form->{"$form->{ct}_id_$i"};
             $form->{"statement_1"}     = 1;
             $form->{"language_code_1"} = $form->{"language_code_$i"};
@@ -1473,7 +1473,7 @@ sub print {
     
     for $i ( 1 .. $form->{rowcount} ) {
 
-        if ( $form->{"statement_$i"} ) {
+        if ( $form->{"statement_$i"} eq '1' ) {
             $form->{"$form->{ct}_id"} = $form->{"$form->{ct}_id_$i"};
             $language_code            = $form->{"language_code_$i"};
             $curr                     = $form->{"curr_$i"};
@@ -1486,11 +1486,6 @@ sub print {
                 $form->{"$form->{ct}_id"} = "";
                 $SIG{INT} = 'IGNORE';
             }
-            else {
-                $form->{"statement_1"}     = 1;
-                $form->{"language_code_1"} = $language_code;
-                $form->{"curr_1"}          = $curr;
-            }
     
             RP->aging( \%myconfig, \%$form );
     
@@ -1501,7 +1496,7 @@ sub print {
     }
 
     $form->error( $locale->text('Nothing selected!') ) unless $selected;
-    
+   
     my $template = LedgerSMB::Template->new( 
       user => \%myconfig,
       template => $form->{'formname'} || $form->{'type'},
@@ -1546,11 +1541,11 @@ sub print_form {
             $ctid = $ref->{ctid};
             $i++;
 
-            if ( $form->{"statement_$i"} ) {
+            if ( $form->{"statement_$i"} eq '1' ) {
 
                 for (@vars) { $form->{$_} = $ref->{$_} }
 
-                $form->{ $form->{ct} }    = $form->{name};
+                $form->{ $form->{ct} }    = $ref->{name};
                 $form->{"$form->{ct}_id"} = $ref->{ctid};
                 $form->{language_code}    = $form->{"language_code_$i"};
                 $form->{currency}         = $form->{"curr_$i"};

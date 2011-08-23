@@ -264,7 +264,7 @@ sub render {
 		$cleanvars->{text} = sub { return $self->escape($self->{locale}->text(@_))};
 	} 
 	else {
-            $cleanvars->{text} = sub { return shift @_ };
+            $cleanvars->{text} = sub { return $self->escape(shift @_) };
 	
         }
         $cleanvars->{tt_url} = sub {
