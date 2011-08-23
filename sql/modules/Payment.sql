@@ -437,7 +437,7 @@ $$;
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
 	in_ar_ap_accno text, in_cash_accno text, 
-	in_payment_date date, in_account_class int, in_payment_type int,
+	in_payment_date date, in_account_class int,
         in_exchangerate numeric, in_curr text)
 RETURNS int AS
 $$
@@ -492,7 +492,7 @@ BEGIN
 	EXECUTE $E$ 
 		INSERT INTO acc_trans 
 			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
-			source, payment_type)
+			source)
 		SELECT id, 
 		case when $E$ || quote_literal(in_account_class) || $E$ = 1
 			THEN $E$ || t_cash_id || $E$
@@ -505,13 +505,13 @@ BEGIN
 			ELSE false END,
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
 		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') || 
-		$E$ , $E$ || coalesce(quote_literal(in_payment_type), 'NULL') || $E$
+		$E$ 
 		FROM bulk_payments_in  where amount <> 0 $E$;
 
 	EXECUTE $E$ 
 		INSERT INTO acc_trans 
 			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
-			source, payment_type)
+			source)
 		SELECT id, 
 		case when $E$ || quote_literal(in_account_class) || $E$ = 1 
 			THEN $E$ || t_ar_ap_id || $E$
@@ -524,7 +524,7 @@ BEGIN
 			ELSE false END,
 		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
 		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'null') 
-		||$E$ , $E$ || coalesce(quote_literal(in_payment_type), 'NULL') || $E$ 
+		||$E$ 
 		FROM bulk_payments_in where amount <> 0 $E$;
 
         IF in_account_class = 1 THEN
