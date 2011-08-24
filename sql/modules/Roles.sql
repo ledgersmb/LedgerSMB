@@ -931,7 +931,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__part_create",
 CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_transaction_create"
 WITH INHERIT NOLOGIN;
 
-GRANT INSERT ON gl TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
+GRANT SELECT, INSERT, UPDATe ON gl 
+TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
