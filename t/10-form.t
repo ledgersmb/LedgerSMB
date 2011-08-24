@@ -198,6 +198,7 @@ is($trap->stdout, '<b>hello world</b>',
 ok(!$form->{pre}, 'info: CGI, removed $self->{pre}');
 
 delete $form->{header};
+$ENV{LSMB_NOHEAD} = 0;
 @r = trap{$form->info('hello world')};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+<body><b>hello world</b>|, 
 	'info: CGI, header content');
@@ -231,6 +232,7 @@ is($trap->exit, undef,
 is($trap->stdout, '<body><h2 class="error">Error!</h2> <p><b>hello world</b></body>',
 	'error: CGI, pre-set header content');
 ok(!$form->{pre}, 'error: CGI, removed $self->{pre}');
+$ENV{LSMB_NOHEAD} = 0;
 delete $form->{header};
 @r = trap{$form->error('hello world')};
 is($trap->exit, undef, 
@@ -308,16 +310,19 @@ delete $form->{charset};
 delete $form->{titlebar};
 delete $form->{title};
 delete $form->{pre};
+$ENV{LSMB_NOHEAD} = 0;
 @r = trap{$form->header};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
 	'header: unset');
 
 delete $form->{header};
+$ENV{LSMB_NOHEAD} = 0;
 @r = trap{$form->header(1, 'hello world')};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+hello world[\n\s]+</head>[\n\s]+|, 
 	'header: headeradd');
 
 delete $form->{header};
+$ENV{LSMB_NOHEAD} = 0;
 $form->{pre} = 'hello world';
 @r = trap{$form->header};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+hello world \n|, 
@@ -326,11 +331,13 @@ delete $form->{pre};
 
 delete $form->{header};
 $form->{titlebar} = 'hello';
+$ENV{LSMB_NOHEAD} = 0;
 @r = trap{$form->header};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title>hello</title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
 	'header: titlebar => \'hello\'');
 
 delete $form->{header};
+$ENV{LSMB_NOHEAD} = 0;
 $form->{title} = 'world';
 @r = trap{$form->header};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title>world - hello</title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
@@ -340,6 +347,7 @@ delete $form->{titlebar};
 
 delete $form->{header};
 $form->{charset} = 'UTF-8';
+$ENV{LSMB_NOHEAD} = 0;
 @r = trap{$form->header};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
 	'header: charset => \'UTF-8\'');
@@ -347,19 +355,23 @@ delete $form->{charset};
 
 delete $form->{header};
 $form->{stylesheet} = "not a real file.$$";
+$ENV{LSMB_NOHEAD} = 0;
 @r = trap{$form->header};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
 	"header: stylesheet => 'not a real file.$$'");
 
 delete $form->{header};
 $form->{stylesheet} = 'ledgersmb.css';
+$ENV{LSMB_NOHEAD} = 0;
 @r = trap{$form->header};
 like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<link rel="stylesheet" href="css/ledgersmb.css" type="text/css" title="LedgerSMB stylesheet" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
 	'header: stylesheet => \'ledgersmb.css\'');
 
 delete $ENV{GATEWAY_INTERFACE};
 delete $form->{header};
+$ENV{LSMB_NOHEAD} = 0;
 is($form->header, 1, 'header: non-CGI');
+$ENV{LSMB_NOHEAD} = 0;
 is($form->{header}, 1, 'header: non-CGI header flag set');
 
 ## $form->sort_column checks

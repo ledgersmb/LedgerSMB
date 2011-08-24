@@ -172,7 +172,7 @@ sub new_dbobject{
     my $dbobject;
     my $rc = 0; # Success
     if (ref $args->{base} eq 'Form'){
-         $ENV{LSMB_NOHEAD} = 1;
+         #$ENV{LSMB_NOHEAD} = 1;
          use LedgerSMB::Locale;
          my $lsmb = LedgerSMB->new();
          $lsmb->merge($args->{base});
