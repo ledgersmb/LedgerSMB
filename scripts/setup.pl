@@ -209,7 +209,7 @@ sub _failed_check{
     my ($request, $check, $sth) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI',
-            template => 'form_dynatable',
+            template => 'form-dynatable',
             format => 'HTML',
     );
     my $rows = [];
@@ -234,8 +234,13 @@ sub _failed_check{
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
-
-     # TODO:  Add this template render stuff.
+    $template->render({
+           form     => $request,
+           columns  => $check->{cols},
+           rows     => $rows,
+           hiddens  => $hiddens,
+           buttons  => $buttons
+    });
 }
 
 =item create_db
