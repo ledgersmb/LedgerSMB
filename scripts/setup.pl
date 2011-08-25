@@ -218,7 +218,7 @@ sub _failed_check{
     while (my $row = $sth->fetchrow_hashref('NAME_lc')){
           $row->{$check->{'edit'}} = 
                     { input => {
-                                name => "$check->{edit}_$roe->{id}",
+                                name => "$check->{edit}_$row->{id}",
                                 value => $row->{$check->{'edit'}},
                                 type => 'text',
                                 size => 10,
@@ -227,7 +227,7 @@ sub _failed_check{
           $hiddens->{"id_$count"} = $row->{id},
     }
     $hiddens->{count} = $count;
-    $buttons = [
+    my $buttons = [
            { type => 'submit',
              name => 'action',
             value => 'fix_tests',
