@@ -352,7 +352,9 @@ BEGIN
 
 	RETURN now()::date;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+REVOKE EXECUTE ON FUNCTION batch_post(in_batch_id INTEGER) FROM public;
 
 COMMENT ON FUNCTION batch_post(in_batch_id INTEGER) is
 $$ Posts the specified batch to the books.  Only posted batches should show up

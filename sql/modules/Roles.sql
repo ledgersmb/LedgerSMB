@@ -197,11 +197,7 @@ GRANT ALL ON voucher_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
 CREATE ROLE "lsmb_<?lsmb dbname ?>__batch_post"
 WITH INHERIT NOLOGIN;
 
-GRANT UPDATE ON ar TO "lsmb_<?lsmb dbname ?>__batch_post";
-GRANT UPDATE ON ap TO "lsmb_<?lsmb dbname ?>__batch_post";
-GRANT UPDATE ON acc_trans TO "lsmb_<?lsmb dbname ?>__batch_post";
-GRANT UPDATE ON batch TO "lsmb_<?lsmb dbname ?>__batch_post";
-GRANT UPDATE ON gl TO "lsmb_<?lsmb dbname ?>__batch_post";
+GRANT EXECUTE ON FUNCTION batch_post(int) TO "lsmb_<?lsmb dbname ?>__batch_post";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (206, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
