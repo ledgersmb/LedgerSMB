@@ -1,0 +1,114 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+<?lsmb include letterhead.tex ?>
+
+ 
+<?lsmb pagebreak 65 27 37 ?>
+\end{tabularx}
+
+\newpage
+
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
+
+\begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
+  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
+<?lsmb end pagebreak ?>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+\textbf{From}
+\vspace{0.3cm}
+
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb address2 ?>
+
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
+
+<?lsmb country ?>
+}
+\parbox[t]{.5\textwidth}{
+\textbf{Ship To}
+\vspace{0.3cm}
+
+<?lsmb shiptoname ?>
+
+<?lsmb shiptoaddress1 ?>
+
+<?lsmb shiptoaddress2 ?>
+
+<?lsmb shiptocity ?>
+<?lsmb if shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?>
+<?lsmb end shiptostate ?>
+<?lsmb shiptozipcode ?>
+
+<?lsmb shiptocountry ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{B I N} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{6}{|X}|} \hline
+  \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
+  <?lsmb if warehouse ?>
+  & \textbf{Warehouse}
+  <?lsmb end warehouse ?>
+  & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  \hline
+  
+  <?lsmb ordnumber ?>
+  <?lsmb if shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb end shippingdate ?>
+  <?lsmb if not shippingdate ?>
+  & <?lsmb orddate ?>
+  <?lsmb end shippingdate ?>
+  & <?lsmb employee ?>
+  <?lsmb if warehouse ?>
+  & <?lsmb warehouse ?>
+  <?lsmb end warehouse ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+  
+\begin{tabularx}{\textwidth}{@{}rlXllrrll@{}}
+  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Recd} & & \textbf{Bin} \\
+
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb serialnumber ?> &
+  <?lsmb deliverydate ?> & <?lsmb qty ?> & <?lsmb ship ?> & <?lsmb unit ?> & <?lsmb bin ?> \\
+<?lsmb end number ?>
+\end{tabularx}
+
+
+\rule{\textwidth}{2pt}
+
+\end{document}
+

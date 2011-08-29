@@ -1,0 +1,50 @@
+$self{charset} = 'ISO-8859-5';
+
+$self{texts} = {
+  'Address'                     => 'Адреса',
+  'Bcc'                         => 'Приватна коп╕я до',
+  'Cc'                          => 'Коп╕я до',
+  'Continue'                    => 'Продовжити',
+  'Customer not on file!'       => 'Кл╕╓нта нема в списку!',
+  'Date'                        => 'Дата',
+  'Description'                 => 'Опис',
+  'E-mail'                      => 'Ел. пошта',
+  'Message'                     => 'Пов╕домлення',
+  'Number'                      => 'Номер',
+  'Print'                       => 'Надрукувати',
+  'Project not on file!'        => 'Проекту нема в списку!',
+  'Reference'                   => 'Зсилка',
+  'Select from one of the names below' => 'Вибер╕ть одну ╕з наступних назв',
+  'Select from one of the projects below' => 'Вибер╕ть один ╕з наступних проект╕в',
+  'Subject'                     => 'Тема',
+  'To'                          => 'До',
+  'Vendor not on file!'         => 'Потачальника нема у списку ',
+};
+
+$self{subs} = {
+  'add_transaction'             => 'add_transaction',
+  'ap_transaction'              => 'ap_transaction',
+  'ar_transaction'              => 'ar_transaction',
+  'check_name'                  => 'check_name',
+  'check_project'               => 'check_project',
+  'continue'                    => 'continue',
+  'delete_schedule'             => 'delete_schedule',
+  'gl_transaction'              => 'gl_transaction',
+  'name_selected'               => 'name_selected',
+  'post_as_new'                 => 'post_as_new',
+  'print_and_post_as_new'       => 'print_and_post_as_new',
+  'project_selected'            => 'project_selected',
+  'rebuild_vc'                  => 'rebuild_vc',
+  'repost'                      => 'repost',
+  'reprint'                     => 'reprint',
+  'sales_invoice_'              => 'sales_invoice_',
+  'save_schedule'               => 'save_schedule',
+  'schedule'                    => 'schedule',
+  'select_name'                 => 'select_name',
+  'select_project'              => 'select_project',
+  'vendor_invoice_'             => 'vendor_invoice_',
+  'Продовжити'                  => 'continue',
+};
+
+1;
+

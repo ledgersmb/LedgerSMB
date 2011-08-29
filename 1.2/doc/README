@@ -1,0 +1,125 @@
+                LedgerSMB Small Medium Business Accounting
+                     Version 1.2.23
+
+
+DESCRIPTION:
+------------
+LedgerSMB is a double-entry accounting system written
+in perl. It has been tested with PostgreSQL, Apache,
+Netscape, Mozilla, Galeon, Explorer, Links, Lynx,
+Konqueror, Voyager and Opera clients on Linux,
+FreeBSD, Solaris, Windows, Mac computers and PDA's.
+
+Data is stored in a PostgreSQL database server, either 
+locally or remote, the display is through a text or GUI web 
+browser. The system is linked by a chart of accounts.  All 
+transactions for AR, AP and GL are stored in a transaction 
+table. Hyper-links from the chart of accounts let you view 
+transactions posted through AR, AP and GL.
+
+Configuration files let you specify to which SQL database server
+to connect to, personal preferences such as company name,
+language, number and date format, etc.
+
+With the admin script you can create, edit or delete users,
+create and delete datasets and set up the Chart of Accounts
+and templates needed for the system.
+
+You can have a group of users using the same dataset and
+templates for generating Invoices, Income Statements and
+Balance Sheets or a different set altogether.
+
+Templates are supplied in html, text and tex format to
+generate most of the forms. Forms can be printed to screen,
+sent to a printer or e-mailed.
+
+
+COPYRIGHT:
+----------
+Licensed under the terms of the GPL.
+
+
+LATEST VERSION:
+---------------
+available from http://www.ledgersmb.org/
+
+
+PLATFORMS:
+----------
+Non specific, see requirements.
+
+
+REQUIREMENTS:
+-------------
+1 - Perl, 5.8.1+
+2 - http server (Apache, NCSA, httpi, thttpd, ...)
+3 - SQL Server (PostgreSQL 8.0+)
+4 - DBD (DBD-Pg)
+5 - DBI
+6 - Locale::Maketext::Lexicon 0.56+
+7 - LaTeX (optional)
+
+
+FOREIGN LANGUAGE SUPPORT:
+-------------------------
+28 languages are supported. Language files are
+ordinary text files, no special software is
+needed to change or add new translations.
+
+Some of the translation files are not 100% complete.
+If strings are missing, English is used instead.
+
+
+INSTALLATION INSTRUCTIONS:
+--------------------------
+Please see the INSTALL file in the root installation directory of LedgerSMB.
+
+SET UP A USER:
+-------------
+Load your web browser and connect to
+http://localhost/ledgersmb/admin.pl
+
+Click on "Add User". In the Database
+section select the driver and enter
+the user you used to create the dataset.
+
+
+LOAD THE ACCOUNTING PROGRAM:
+----------------------------
+Load your web browser and connect to
+http://localhost/ledgersmb/login.pl
+
+
+INSTALLATION CHECKLIST:
+-----------------------
+1. untar LedgerSMB somewhere (i.e /usr/local, /opt)
+2. change permission for the users, templates, css and spool directory
+3. edit httpd.conf
+4. edit ledgersmb.conf
+5. add the database user ledgersmb
+6. load admin.pl
+7. create datasets for companies
+8. add users
+
+   In the Database section enter
+   
+   a) PostgreSQL
+   
+      Host:     for local connections leave blank
+      Dataset:  the dataset created in step 7
+      Port:     for local connections leave blank
+      User:     ledgersmb
+      Password: password for ledgersmb
+
+
+IF SOMETHING DOESN'T WORK:
+--------------------------
+There is a FAQ in the doc directory.
+
+There are also several mailing lists at
+http://www.ledgersmb.org/
+where you can seek free help.
+
+For commercial support see http://www.ledgersmb.org/
+
+=====================================================================

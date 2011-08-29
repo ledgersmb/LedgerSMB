@@ -1,0 +1,30 @@
+Known versions of software incompatible with LedgerSMB:
+-------------------------------
+The following PostgreSQL versions suffer from a bug which causes problems with 
+LedgerSMB:  8.2.2, 8.1.7, and 8.0.11
+
+These versions produce an error concerning wrong data types but the error shows 
+that the data types are indeed correct.
+
+LedgerSMB 1.2.15 and higher are fully supported on PostgreSQL 8.3.x.  Earlier 
+versions had some issues.
+
+-------------------------------
+
+W3M does not handle the <BUTTON> element properly and does not work.
+
+-------------------------------
+
+Pocket Internet Explorer:
+Javascript menus do not work with Pocket IE (on Windows CE).  Use the Lynx 
+interface instead by appending ?path=/bin/lynx to the end of the login.pl url.
+
+Worse still, PIE does not support <button> elements.  Where necessary, one can
+slightly customize the system to provide PIE support.
+
+-------------------------------
+
+Internet Explorer < 8.0
+This browser submits incorrect data when using the <BUTTON> element and is not
+supported.  Users of Windows XP and Vista may try Internet Explorer 8 or 
+Firefox at their option. Users of older versions of WIndows should use Firefox.

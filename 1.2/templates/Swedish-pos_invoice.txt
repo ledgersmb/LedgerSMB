@@ -1,0 +1,50 @@
+<?lsmb company align=center width="40" ?>
+<?lsmb address align=center width="40" ?>
+
+Till: <?lsmb till align=left width="3" ?>         Phone#: <?lsmb tel ?>
+Cashier: <?lsmb employee ?>
+Inv Nr/Datum: <?lsmb invnumber ?> / <?lsmb invdate ?>
+Utskriven: <?lsmb dateprinted ?>
+
+  Antal Beskrivning                 Belopp
+<?lsmb foreach number ?>
+<?lsmb qty align=right width="5" ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width="9" ?>
+      <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
+<?lsmb end number ?>
+
+Antal Produkter: <?lsmb rowcount ?>
+<?lsmb if taxincluded ?>
+                         ---------------
+                   Belopp Från: <?lsmb invtotal align=right width="9" ?>
+<?lsmb end taxincluded ?>
+<?lsmb if not taxincluded ?>
+                            ------------
+                     Pris ex moms: <?lsmb subtotal align=right width="9" ?>
+<?lsmb end taxincluded ?>
+<?lsmb foreach tax ?>
+<?lsmb taxdescription align=right width="23" ?> @ <?lsmb taxrate align=right width="2" ?>%: <?lsmb tax align=right width="9" ?>
+<?lsmb end tax ?>
+                   Gällande Belopp: <?lsmb invtotal align=right width="9" ?>
+<?lsmb foreach payment ?>
+<?lsmb paymentaccount align=right width="29" ?>: <?lsmb payment align=right width="9" ?> <?lsmb currency ?>
+<?lsmb end payment ?>
+<?lsmb if change ?>
+                       Byte: <?lsmb change align=right width="9" ?>
+<?lsmb end change ?>
+<?lsmb if total ?>
+                  Aktuell Balans: <?lsmb total align=right width="9" ?>
+<?lsmb end total ?>
+<?lsmb if discount ?>
+
+<?lsmb discount ?> % Rabbat avdragen
+<?lsmb end discount ?>
+
+   Tack för att du handlar hos oss.
+
+<?lsmb if taxincluded ?>
+Momsen är inkluderad i priset.
+<?lsmb end taxincluded ?>
+
+
+
+

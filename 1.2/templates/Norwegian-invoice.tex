@@ -1,0 +1,237 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-2.0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+\begin{document}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+
+\newsavebox{\hdr}
+\sbox{\hdr}{
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+  \parbox{\textwidth}{
+    \parbox[b]{12cm}{
+      <?lsmb company ?>
+      
+      <?lsmb address ?>}\hfill
+    \begin{tabular}[b]{rr@{}}
+    Telefon & <?lsmb tel ?>\\
+    Telefaks & <?lsmb fax ?>
+    \end{tabular}
+
+    \rule[1.5ex]{\textwidth}{0.5pt}
+  }
+}
+    
+\fontfamily{cmss}\fontshape{n}\selectfont
+
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{\usebox{\hdr}}
+
+\pagestyle{myheadings}
+%\thispagestyle{empty}     use this with letterhead paper
+
+<?lsmb pagebreak 65 27 48 ?>
+\end{tabular*}
+
+  \rule{\textwidth}{2pt}
+  
+  \hfill
+  \begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<?lsmb sumcarriedforward ?>} \\
+  \end{tabularx}
+
+\newpage
+
+\markright{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
+
+\vspace*{-12pt}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Ant.} &
+    \textbf{Enhet} & \textbf{Pris} & \textbf{Rabatt} & \textbf{Sum} \\
+  & carried forward from page <?lsmb lastpage ?> & & & & & <?lsmb sumcarriedforward ?> \\
+<?lsmb end pagebreak ?>
+
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+  \parbox[t]{10.5cm}{
+  \textbf{Til}
+  \vspace{0.5cm}
+
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb if address2 ?>
+<?lsmb address2 ?>
+<?lsmb end address2 ?>
+
+<?lsmb city ?> <?lsmb state ?> <?lsmb zipcode ?>
+
+<?lsmb if country ?>
+<?lsmb country ?>
+<?lsmb end country ?>
+
+\vspace{0.3cm}
+
+%<?lsmb if contact ?>
+%Attn: <?lsmb contact ?>
+%\vspace{0.3cm}
+%<?lsmb end contact ?>
+\vspace{0.5cm}
+
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
+
+<?lsmb if customerfax ?>
+Faks: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
+
+<?lsmb email ?>
+}
+\parbox[t]{7.5cm}{
+\textbf{Leveringsadresse}
+\vspace{0.5cm}
+
+<?lsmb shiptoname ?>
+
+<?lsmb shiptoaddress1 ?>
+
+<?lsmb if shiptoaddress2 ?>
+<?lsmb shiptoaddress2 ?>
+<?lsmb end shiptoaddress2 ?>
+
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
+
+<?lsmb if shiptocountry ?>
+<?lsmb shiptocountry ?>
+<?lsmb end shiptocountry ?>
+
+\vspace{0.3cm}
+
+\vspace{0.3cm}
+
+<?lsmb if shiptocontact ?>
+Attn: <?lsmb shiptocontact ?>
+\vspace{0.3cm}
+<?lsmb end shiptocontact ?>
+
+<?lsmb if shiptophone ?>
+Tel.: <?lsmb shiptophone ?>
+<?lsmb end shiptophone ?>
+
+<?lsmb if shiptofax ?>
+Faks: <?lsmb shiptofax ?>
+<?lsmb end shiptofax ?>
+
+<?lsmb shiptoemail ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{F A K T U R A}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabular}[t]{l@{\hspace{0.3cm}}l}
+  \textbf{Dato} & <?lsmb invdate ?> \\
+  \textbf{Fakturanr.} & <?lsmb invnumber ?> \\
+  \textbf{Ordrenr.} & <?lsmb ordnumber ?> \\
+  \textbf{Kontakt} & <?lsmb employee ?>
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular*}{\textwidth}{@{}lp{\descrwidth}@{\extracolsep\fill}rlrrr@{}}
+  \textbf{Nummer} & \textbf{Beskrivelse} & \textbf{Ant.} &
+    \textbf{Enhet} & \textbf{Pris} & \textbf{Rabatt} & \textbf{Sum} \\
+<?lsmb foreach number ?>
+  <?lsmb number ?> & <?lsmb description ?> & <?lsmb qty ?> &
+    <?lsmb unit ?> & <?lsmb sellprice ?> & <?lsmb discount ?> & <?lsmb linetotal ?> \\
+<?lsmb end number ?>
+\end{tabular*}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{0.2cm}
+
+\hfill
+\begin{tabularx}{7cm}{Xr@{}}
+  \textbf{Subtotal} & \textbf{<?lsmb subtotal ?>} \\
+<?lsmb foreach tax ?>
+  <?lsmb taxdescription ?> on <?lsmb taxbase ?> & <?lsmb tax ?> \\
+<?lsmb end tax ?>
+<?lsmb if paid ?>
+  \textbf{Betalt} & - <?lsmb paid ?> \\
+<?lsmb end paid ?>
+  \hline
+  \textbf{Skyldig} & \textbf{<?lsmb total ?>} \\
+\end{tabularx}
+
+\vspace{0.3cm}
+
+\hfill
+  Alle priser i \textbf{<?lsmb currency ?>} valuta.
+
+\vspace{12pt}
+
+<?lsmb if notes ?>
+  <?lsmb notes ?>
+<?lsmb end if ?>
+
+}
+
+\vfill
+
+<?lsmb if paid ?>
+\begin{tabularx}{10cm}{@{}lXlr@{}}
+  \textbf{Innbetalinger} & & & \\
+  \hline
+  \textbf{Dato} & \textbf{Konto} & \textbf{Kilde} & \textbf{Sum} \\
+<?lsmb end paid ?>
+<?lsmb foreach payment ?>
+  <?lsmb paymentdate ?> & <?lsmb paymentaccount ?> & <?lsmb paymentsource ?> & <?lsmb payment ?> \\
+<?lsmb end payment ?>
+<?lsmb if paid ?>
+\end{tabularx}
+<?lsmb end paid ?>
+
+\vspace{1cm}
+
+\centerline{\textbf{Takk for handelen!}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+Betalingen må betales innen <?lsmb terms ?> dager fra fakturadato. Ved
+forsinket betaling belastes en månedlig rente på 1.5\% per måned,
+fra <?lsmb duedate ?> inntil betalingen er fullstendig. Varer som returneres
+belastes med 10\% returgebyr. Retur må forhåndsgodkjennes fra
+<?lsmb company ?> før varene returneres. Retur må sendes forhåndsbetalt og
+må være forsikret. <?lsmb company ?> er ikke ansvarlig for transportskader.
+}
+
+\end{document}

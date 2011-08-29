@@ -1,0 +1,137 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+<tr>
+  <td width=10>
+  </td> 
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
+      </h4>
+    </td>
+
+    <th colspan=2>
+            <h4 align=center>LISTA DE PRODUTOS</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% cellspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+                <th align=right>Data</th>
+                <td width=10> </td><td><?lsmb invdate ?></td>
+    </tr>
+  
+    <tr>
+                <th align=right>N&uacute;mero</th>
+                <td></td><td><?lsmb invnumber ?></td></tr>
+    </table></tr>
+  
+    <tr>
+      <td> 
+      </td>
+    </tr>
+    </table></td>
+    </table>
+  
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+        <th align=left><font color="ffffff">Para:</font></th>
+    </tr>
+
+    <tr>
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddress1 ?>
+      <br><?lsmb shiptoaddress2 ?>
+      <br><?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
+      <br><?lsmb shiptocountry ?>
+<?lsmb if shiptocontact ?>
+          <p>Obs.: 
+            <?lsmb shiptocontact ?>
+            <?lsmb end shiptocontact ?>
+        </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+        <th align=left><font color=ffffff>N&uacute;mero</font></th>
+        <th align=left><font color=ffffff>Descri&ccedil;&atilde;o</font></th>
+        <th><font color="ffffff">Quant.</font></th>
+      <th>&nbsp;</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=right><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
+    </tr>
+<?lsmb end number ?>
+
+    <tr>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<?lsmb if notes ?>
+        <td>Obs.:</td>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
+      <td align=right>
+      <?lsmb shippingpoint ?>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+        <td><font size=-3> </font> </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</body>
+</html>
+

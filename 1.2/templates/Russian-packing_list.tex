@@ -1,0 +1,161 @@
+\documentclass[twoside]{scrartcl}
+\usepackage[frame]{xy}
+\usepackage{tabularx}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\setlength{\voffset}{0.5cm}
+\setlength{\hoffset}{-1.9cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0pt}
+\setlength{\oddsidemargin}{1.0cm}
+\setlength{\evensidemargin}{1.0cm}
+\setlength{\textwidth}{19.2cm}
+\setlength{\textheight}{24.7cm}
+\setlength{\footskip}{1cm}
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\newlength{\descrwidth}\setlength{\descrwidth}{10cm}
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+\vspace*{-1.3cm}
+
+\parbox{\textwidth}{
+  \parbox[b]{.42\textwidth}{%
+    <?lsmb company ?>
+    
+    <?lsmb address ?>
+  }
+  \parbox[b]{.2\textwidth}{
+    \includegraphics[scale=0.3]{ledger-smb}
+  }\hfill
+  \begin{tabular}[b]{rr@{}}
+  Telephone & <?lsmb tel ?>\\
+  Facsimile & <?lsmb fax ?>
+  \end{tabular}
+
+  \rule[1.5ex]{\textwidth}{0.5pt}
+}
+
+ 
+<?lsmb pagebreak 65 27 37 ?>
+\end{tabularx}
+
+\newpage
+
+\markboth{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}{<?lsmb company ?>\hfill <?lsmb ordnumber ?>}
+
+\vspace*{-12pt}
+
+\begin{tabularx}{\textwidth}{@{}rlXllrrl@{}}
+  \textbf{Pos} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Ship} & \\
+<?lsmb end pagebreak ?>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.5\textwidth}{
+\textbf{Ship To}} \hfill
+
+\vspace{0.7cm}
+
+\parbox[t]{1cm}{\hfill}
+\parbox[t]{.5\textwidth}{
+  
+<?lsmb shiptoname ?>
+
+<?lsmb shiptoaddress1 ?>
+
+<?lsmb shiptoaddress2 ?>
+
+<?lsmb shiptocity ?> <?lsmb shiptostate ?> <?lsmb shiptozipcode ?>
+
+<?lsmb shiptocountry ?>
+}
+\parbox[t]{.4\textwidth}{
+  <?lsmb shiptocontact ?>
+  
+  <?lsmb if shiptophone ?>
+  Tel: <?lsmb shiptophone ?>
+  <?lsmb end shiptophone ?>
+  
+  <?lsmb if shiptofax ?>
+  Fax: <?lsmb shiptofax ?>
+  <?lsmb end shiptofax ?>
+  
+  <?lsmb shiptoemail ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{P A C K I N G} \parbox{0.3cm}{\hfill} \textbf{L I S T}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
+  \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Contact}
+  <?lsmb if warehouse ?>
+  & \textbf{Warehouse}
+  <?lsmb end warehouse ?>
+  & \textbf{Shipping Point} & \textbf{Ship via} \\ [0.5em]
+  \hline
+  
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?>
+  <?lsmb if shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb end shippingdate ?>
+  <?lsmb if not shippingdate ?>
+  & <?lsmb transdate ?>
+  <?lsmb end shippingdate ?>
+  & <?lsmb employee ?>
+  <?lsmb if warehouse ?>
+  & <?lsmb warehouse ?>
+  <?lsmb end warehouse ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+  
+\begin{tabularx}{\textwidth}{@{}rlXllrrl@{}}
+  \textbf{Pos} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Ship} & \\
+
+<?lsmb foreach number ?>
+  <?lsmb runningnumber ?> & <?lsmb number ?> & <?lsmb description ?> & <?lsmb serialnumber ?> &
+  <?lsmb deliverydate ?> & <?lsmb qty ?> & <?lsmb ship ?> & <?lsmb unit ?> \\
+<?lsmb end number ?>
+\end{tabularx}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{12pt}
+
+<?lsmb notes ?>
+
+}
+
+\vfill
+\centerline{\textbf{Thank You for your valued business!}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[1]{\tiny
+Items returned are subject to a 10\% restocking charge.
+A return authorization must be obtained from <?lsmb company ?> before goods are
+returned. Returns must be shipped prepaid and properly insured.
+<?lsmb company ?> will not be responsible for damages during transit.}
+
+\end{document}
+

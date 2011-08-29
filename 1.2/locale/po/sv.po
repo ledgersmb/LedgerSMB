@@ -1,0 +1,2855 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2003
+#
+# Swedish texts:
+#
+#  Author: Jonny Larsson <jonny@lernbo.com>
+#          Daniel Andersson <daniel@addelei.nu>
+#          Johan Hambraeus <nahoj1976@users.sourceforge.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr "Tillgångar"
+
+msgid "AP"
+msgstr "Utgifter"
+
+msgid "AP Aging"
+msgstr "Förfallna lev.fakturor"
+
+msgid "AP Outstanding"
+msgstr "Leverantörsskulder"
+
+msgid "AP Transaction"
+msgstr "Betald kostnad"
+
+msgid "AP Transactions"
+msgstr "Leverantörsfakturor"
+
+msgid "AR"
+msgstr "Intäkter"
+
+msgid "AR Aging"
+msgstr "Förfallna kundfordringar"
+
+msgid "AR Outstanding"
+msgstr "Kundfordringar"
+
+msgid "AR Transaction"
+msgstr "Betald fodran"
+
+msgid "AR Transactions"
+msgstr "Kundfakturor"
+
+msgid "AR/AP"
+msgstr "Intäkter/utgifter"
+
+msgid "About"
+msgstr "Om"
+
+msgid "Above"
+msgstr "Över"
+
+msgid "Access Control"
+msgstr "Accesskontroll"
+
+msgid "Access Denied!"
+msgstr "Fel kod eller användarnamn!"
+
+msgid "Account"
+msgstr "Konto"
+
+msgid "Account Number"
+msgstr "Kontonummer"
+
+msgid "Account Number missing!"
+msgstr "Kontonummer saknas"
+
+msgid "Account Type"
+msgstr "Kontotyp"
+
+msgid "Account Type missing!"
+msgstr "Kontotyp saknas!"
+
+msgid "Account deleted!"
+msgstr "Konto raderat!"
+
+msgid "Account does not exist!"
+msgstr "Kontot finns ej!"
+
+msgid "Account saved!"
+msgstr "Konto sparat!"
+
+msgid "Accounting"
+msgstr "Bokföring"
+
+msgid "Accounting Menu"
+msgstr "Bokförings-meny"
+
+msgid "Accounts"
+msgstr "Konton"
+
+msgid "Accrual"
+msgstr "Bokföringsmässig"
+
+msgid "Activate Audit trail"
+msgstr "Aktivera ändringskontroll"
+
+msgid "Activate Audit trails"
+msgstr "Aktivera ändringskontroll"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Add"
+msgstr "Lägg till"
+
+msgid "Add AP Transaction"
+msgstr "Lägg till utgift"
+
+msgid "Add AR Transaction"
+msgstr "Lägg till intäkt"
+
+msgid "Add Account"
+msgstr "Nytt konto"
+
+msgid "Add Assembly"
+msgstr "Ny produkt"
+
+msgid "Add Business"
+msgstr "Lägg till verksamhet"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Lägg till betalning"
+
+msgid "Add Customer"
+msgstr "Ny kund"
+
+msgid "Add Deduction"
+msgstr "Lägg till avdrag"
+
+msgid "Add Department"
+msgstr "Nytt kst/res.enh"
+
+msgid "Add Employee"
+msgstr "Ny anställd"
+
+msgid "Add Exchange Rate"
+msgstr "Ny växelkurs"
+
+msgid "Add GIFI"
+msgstr "Ny SRU-kod"
+
+msgid "Add General Ledger Transaction"
+msgstr "Nytt verifikat"
+
+msgid "Add Group"
+msgstr "Ny grupp"
+
+msgid "Add Job"
+msgstr "Lägg till jobb"
+
+msgid "Add Labor/Overhead"
+msgstr "Lägg till arbetskostnader"
+
+msgid "Add Language"
+msgstr "Lägg till språk"
+
+msgid "Add POS Invoice"
+msgstr "Ny försäljning"
+
+msgid "Add Part"
+msgstr "Ny vara"
+
+msgid "Add Pricegroup"
+msgstr "Ny prisgrupp"
+
+msgid "Add Project"
+msgstr "Nytt projekt"
+
+msgid "Add Purchase Order"
+msgstr "Ny inköpsorder"
+
+msgid "Add Quotation"
+msgstr "Ny offert"
+
+msgid "Add Request for Quotation"
+msgstr "Ny begäran om offert"
+
+msgid "Add SIC"
+msgstr "Ny sni-kod (industrikod)"
+
+msgid "Add Sales Invoice"
+msgstr "Ny kundfaktura"
+
+msgid "Add Sales Order"
+msgstr "Ny säljorder"
+
+msgid "Add Service"
+msgstr "Lägg till tjänst"
+
+msgid "Add Stores Card"
+msgstr "Lägg till butikskort"
+
+msgid "Add Time Card"
+msgstr "Lägg till tidkort"
+
+msgid "Add Transaction"
+msgstr "Ny faktura"
+
+msgid "Add User"
+msgstr "Ny användare"
+
+msgid "Add Vendor"
+msgstr "Ny leverantör"
+
+msgid "Add Vendor Invoice"
+msgstr "Ny leverantörsfaktura"
+
+msgid "Add Warehouse"
+msgstr "Lägg till lager"
+
+msgid "Address"
+msgstr "Adress"
+
+msgid "Administration"
+msgstr "Administration"
+
+msgid "Administrator"
+msgstr "Administratör"
+
+msgid "After Deduction"
+msgstr "Efter avdrag"
+
+msgid "Aged"
+msgstr "Utgången"
+
+msgid "Aged Overdue"
+msgstr "Utgångsdatum överskridit"
+
+msgid "All"
+msgstr "Alla"
+
+msgid "All Accounts"
+msgstr "Alla konton"
+
+msgid "All Datasets up to date!"
+msgstr "Alla dataset uppdaterade"
+
+msgid "All Items"
+msgstr "Alla varor"
+
+msgid "Allocated"
+msgstr "Kopplad"
+
+msgid "Allowances"
+msgstr "Bidrag/rabatt"
+
+msgid "Amount"
+msgstr "Belopp"
+
+msgid "Amount Due"
+msgstr "Förfallet belopp"
+
+msgid "Amount missing!"
+msgstr "Belopp saknas"
+
+msgid "Apr"
+msgstr "Apr"
+
+msgid "April"
+msgstr "April"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Är du säker på att du vill radera Faktura Nummer"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Är du säker på att du vill radera Order Nummer"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Är du säker på att du vill radera Offert Nummer"
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "Är du säker på att du vill radera Transaktionen"
+
+msgid "Are you sure you want to delete time card for"
+msgstr "Är du säker du vill ta bort tidkort för"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "Är du säker på att du vill radera markerade poster?"
+
+msgid "As of"
+msgstr "Som för"
+
+msgid "Assemblies"
+msgstr "Produkter"
+
+msgid "Assemblies restocked!"
+msgstr "Produkt åter i lager"
+
+msgid "Assembly"
+msgstr "Produkt"
+
+msgid "Assembly stocked!"
+msgstr "Produkt lagrad"
+
+msgid "Asset"
+msgstr "Tillgång"
+
+msgid "Attachment"
+msgstr "Bilaga"
+
+msgid "Audit Control"
+msgstr "Revisionskontroll"
+
+msgid "Audit trail disabled"
+msgstr "Ändringskontroll avstängd"
+
+msgid "Audit trail enabled"
+msgstr "Ändringskontroll påslagen"
+
+msgid "Audit trail removed up to"
+msgstr "Log för ändrings-kontroll borttaget fram till "
+
+msgid "Audit trails disabled"
+msgstr "Ändringskontroll avstängd"
+
+msgid "Audit trails enabled"
+msgstr "Ändringskontroll påslagen"
+
+msgid "Aug"
+msgstr "Aug"
+
+msgid "August"
+msgstr "Augusti"
+
+msgid "Average Cost"
+msgstr "Medelvärdeskostnad"
+
+msgid "Avg Cost"
+msgstr "Medel kostn"
+
+msgid "BIC"
+msgstr "Bank identitets kod"
+
+msgid "BOM"
+msgstr "Materialkostnad"
+
+msgid "Backup"
+msgstr "Säkerhetkopia"
+
+msgid "Backup sent to"
+msgstr "Säkerhetskopia har sänts till"
+
+msgid "Balance"
+msgstr "Balans"
+
+msgid "Balance Sheet"
+msgstr "Balansräkning"
+
+msgid "Bank Giro Number"
+msgstr "Bankgiro Nr "
+
+msgid "Bank Giro account"
+msgstr "Bankgiro nr"
+
+msgid "Bankgiro"
+msgstr "Bankgiro"
+
+msgid "Based on"
+msgstr "Baserad på"
+
+msgid "Batch Printing"
+msgstr "Utskrift av grupp"
+
+msgid "Bcc"
+msgstr "Dold kopia till"
+
+msgid "Before Deduction"
+msgstr "Före avdrag"
+
+msgid "Beginning Balance"
+msgstr "Ingående balans"
+
+msgid "Below"
+msgstr "Under"
+
+msgid "Billing Address"
+msgstr "Faktura adress"
+
+msgid "Bin"
+msgstr "Antal i lager"
+
+msgid "Bin List"
+msgstr "Lager lista"
+
+msgid "Bin Lists"
+msgstr "Lager listor"
+
+msgid "Books are open"
+msgstr "Bokföringen är öppen för rättning"
+
+msgid "Break"
+msgstr "Brytpunkt"
+
+msgid "Business"
+msgstr "Verksamhet"
+
+msgid "Business Number"
+msgstr "Organisationsnummer"
+
+msgid "Business deleted!"
+msgstr "Verksamhet borttaget"
+
+msgid "Business saved!"
+msgstr "Verksamhet sparad"
+
+msgid "C"
+msgstr "Avskrivningar"
+
+msgid "COGS"
+msgstr "Inköpskostnader"
+
+msgid "COGS account does not exist!"
+msgstr "Konto för inköpskostnader ej angivet"
+
+msgid "Cannot add stores card for a completed job!"
+msgstr "Kan inte lägga till butikskort för ett avslutat arbete!"
+
+msgid "Cannot add time card for a completed job!"
+msgstr "Kan inte lägga till tidkort för ett avslutat arbete!"
+
+msgid "Cannot change stores card for a completed job!"
+msgstr "Kan inte byta butikskort för ett avslutat arbete!"
+
+msgid "Cannot change time card for a completed job!"
+msgstr "Kan inte byta tidkort för ett avslutat arbete!"
+
+msgid "Cannot create Assembly"
+msgstr "Kan inte lagra produkt"
+
+msgid "Cannot create Labor"
+msgstr "Kan inte lagra arbetskostnad"
+
+msgid "Cannot create Lock!"
+msgstr "Kan inte låsa!"
+
+msgid "Cannot create Part"
+msgstr "Kan inte lagra vara"
+
+msgid "Cannot create Service"
+msgstr "Kan inte lagra tjänst"
+
+msgid "Cannot delete account!"
+msgstr "Kan inte radera konto"
+
+msgid "Cannot delete customer!"
+msgstr "Kan inte radera kund"
+
+msgid "Cannot delete default account!"
+msgstr "Kan inte radera standardkonto"
+
+msgid "Cannot delete invoice!"
+msgstr "Kan inte radera faktura"
+
+msgid "Cannot delete item!"
+msgstr "Kan inte radera vara"
+
+msgid "Cannot delete order!"
+msgstr "Kan inte radera order"
+
+msgid "Cannot delete quotation!"
+msgstr "Kan inte radera offert"
+
+msgid "Cannot delete time card!"
+msgstr "Kan inte ta bort tidkort!"
+
+msgid "Cannot delete transaction!"
+msgstr "Kan inte radera händelse"
+
+msgid "Cannot delete vendor!"
+msgstr "Kan inte radera Leverantör"
+
+msgid "Cannot post Payment!"
+msgstr "Kan inte bokföra betalning"
+
+msgid "Cannot post Receipt!"
+msgstr "Kan inte bokföra kvitto!"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "Kan inte bokföra en faktura för en avslutad period"
+
+msgid "Cannot post invoice!"
+msgstr "Kan inte bokföra fakturan!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "Kan inte bokföra en betalning för en stängd period"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "Kan inte bokföra under en stängd period"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr "Kan inte bokföra transaktion med debitering och kreditering på samma kontonummer!"
+
+msgid "Cannot post transaction!"
+msgstr "Kan inte bokföra transaktion"
+
+msgid "Cannot process payment for a closed period!"
+msgstr "Kan inte utföra betalning för en avslutad period"
+
+msgid "Cannot remove files!"
+msgstr "Kan inte ta bort filer!"
+
+msgid "Cannot save account!"
+msgstr "Kan inte spara konto"
+
+msgid "Cannot save defaults!"
+msgstr "Kan inte spara inställningar!"
+
+msgid "Cannot save order!"
+msgstr "Kan inte spara order"
+
+msgid "Cannot save preferences!"
+msgstr "Kan inte spara preferenser"
+
+msgid "Cannot save quotation!"
+msgstr "Kan inte spara offert!"
+
+msgid "Cannot save stores card for a closed period!"
+msgstr "Kan inte spara tidkort för en avslutad period!"
+
+msgid "Cannot save stores card!"
+msgstr "Kan inte spara tidkort!"
+
+msgid "Cannot save time card for a closed period!"
+msgstr "Kan inte spara tidkort för en avslutad periode!"
+
+msgid "Cannot save time card!"
+msgstr "Kan inte spara tidkort!"
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Måste välja om kontot används för leverantörsskulder, kundfordringar eller lager"
+
+msgid "Cannot set multiple options for"
+msgstr "Kan inte ange flera val för"
+
+msgid "Cannot set multiple options for Item"
+msgstr "Kan inte ange flera alternativ för varan"
+
+msgid "Cannot set multiple options for Parts Inventory"
+msgstr "Kan inte ange flera alternativ för varu-artiklar"
+
+msgid "Cannot set multiple options for Service Items"
+msgstr "Kan inte ange flera alternativ för tjänste-artiklar"
+
+msgid "Cannot stock Assembly!"
+msgstr "Kan inte lagra produkt"
+
+msgid "Cannot stock assemblies!"
+msgstr "Kan inte lagerföra produkter"
+
+msgid "Cash"
+msgstr "Betalningar"
+
+msgid "Cc"
+msgstr "Kopia"
+
+msgid "Change"
+msgstr "Ändra"
+
+msgid "Change Admin Password"
+msgstr "Ändra lösenord för admin"
+
+msgid "Change Password"
+msgstr "Ändra lösenord"
+
+msgid "Character Set"
+msgstr "Teckenuppsättning"
+
+msgid "Chargeable"
+msgstr "Debiterbar"
+
+msgid "Chart of Accounts"
+msgstr "Kontoplan"
+
+msgid "Check"
+msgstr "Kontroll"
+
+msgid "Check Inventory"
+msgstr "Inventarielista"
+
+msgid "Checks"
+msgstr "Checker"
+
+msgid "City"
+msgstr "Stad"
+
+msgid "Cleared"
+msgstr "Rensad"
+
+msgid "Click on login name to edit!"
+msgstr "Klicka på användarnamn för att redigera!"
+
+msgid "Clocked"
+msgstr "Tidmätt"
+
+msgid "Close Books up to"
+msgstr "Avsluta bokföring fram till och med"
+
+msgid "Closed"
+msgstr "Avslutad"
+
+msgid "Code"
+msgstr "Kod"
+
+msgid "Code missing!"
+msgstr "Kod saknas"
+
+msgid "Company"
+msgstr "Företag"
+
+msgid "Company Name"
+msgstr "Företags namn"
+
+msgid "Compare to"
+msgstr "Jämför med"
+
+msgid "Completed"
+msgstr "Utförd"
+
+msgid "Components"
+msgstr "Komponenter"
+
+msgid "Confirm"
+msgstr "Bekräfta"
+
+msgid "Confirm!"
+msgstr "Bekräfta!"
+
+msgid "Connect to"
+msgstr "Anslut till"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Continue"
+msgstr "Fortsätt"
+
+msgid "Contra"
+msgstr "Avdrag"
+
+msgid "Copies"
+msgstr "Kopior"
+
+msgid "Copy to COA"
+msgstr "Kopiera till kontoplanen"
+
+msgid "Cost"
+msgstr "Kostnader"
+
+msgid "Cost Center"
+msgstr "Kostnadsställe"
+
+msgid "Could not save pricelist!"
+msgstr "Kan inte spara prislista"
+
+msgid "Could not save!"
+msgstr "Kan inte spara"
+
+msgid "Could not transfer Inventory!"
+msgstr "Kan inte överföra inventarier!"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Create Chart of Accounts"
+msgstr "Skapa kontoplan"
+
+msgid "Create Dataset"
+msgstr "Skapa dataset"
+
+msgid "Credit"
+msgstr "Kredit"
+
+msgid "Credit Limit"
+msgstr "Kreditgräns"
+
+msgid "Curr"
+msgstr "Valuta"
+
+msgid "Currency"
+msgstr "Valuta"
+
+msgid "Current"
+msgstr "Nuvarande"
+
+msgid "Current Earnings"
+msgstr "Nuvarande inkomst"
+
+msgid "Customer"
+msgstr "Kund"
+
+msgid "Customer History"
+msgstr "Kund historik"
+
+msgid "Customer Number"
+msgstr "Kund nr"
+
+msgid "Customer deleted!"
+msgstr "Kund raderad"
+
+msgid "Customer missing!"
+msgstr "Kund saknas"
+
+msgid "Customer not on file!"
+msgstr "Kund finns ej"
+
+msgid "Customer saved!"
+msgstr "Kund sparad"
+
+msgid "Customers"
+msgstr "Kunder"
+
+msgid "DBA"
+msgstr "DBA"
+
+msgid "DBI not installed!"
+msgstr "DBI inte installerad"
+
+msgid "DOB"
+msgstr "Födelsedatum"
+
+msgid "Database"
+msgstr "Databas"
+
+msgid "Database Administration"
+msgstr "Administration av databas"
+
+msgid "Database Driver not checked!"
+msgstr "Databasedriver icke kontrollerad"
+
+msgid "Database Host"
+msgstr "Databasvärd"
+
+msgid "Database User missing!"
+msgstr "Databasanvändare saknas"
+
+msgid "Dataset"
+msgstr "Dataset"
+
+msgid "Dataset is newer than version!"
+msgstr "Dataset är nyare än programversionen"
+
+msgid "Dataset missing!"
+msgstr "Dataset saknas"
+
+msgid "Dataset updated!"
+msgstr "Dataset uppdaterat"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Date Format"
+msgstr "Datumformat"
+
+msgid "Date Paid"
+msgstr "Betalningsdatum"
+
+msgid "Date Received"
+msgstr "Datum mottaget"
+
+msgid "Date missing!"
+msgstr "Datum saknas"
+
+msgid "Date received missing!"
+msgstr "Mottagningsdatum saknas"
+
+msgid "Date worked"
+msgstr "Datum arbetat"
+
+msgid "Day"
+msgstr "Dag"
+
+msgid "Day(s)"
+msgstr "Dag(ar"
+
+msgid "Days"
+msgstr "Dagar"
+
+msgid "Debit"
+msgstr "Debet"
+
+msgid "Dec"
+msgstr "Dec"
+
+msgid "December"
+msgstr "December"
+
+msgid "Decimalplaces"
+msgstr "Decimaler"
+
+msgid "Decrease"
+msgstr "Minska"
+
+msgid "Deduct after"
+msgstr "Avdrag efter"
+
+msgid "Deduction deleted!"
+msgstr "Avdrag borttaget"
+
+msgid "Deduction saved!"
+msgstr "Avdrag sparat"
+
+msgid "Deductions"
+msgstr "Avdrag"
+
+msgid "Default Template"
+msgstr "Förvald mall"
+
+msgid "Defaults"
+msgstr "Standard inställningar"
+
+msgid "Defaults saved!"
+msgstr "Inställningar sparade"
+
+msgid "Delete"
+msgstr "Radera"
+
+msgid "Delete Account"
+msgstr "Radera konto"
+
+msgid "Delete Dataset"
+msgstr "Radera dataset"
+
+msgid "Delete Schedule"
+msgstr "Ta bort schemaläggning"
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr "Tar man bort ett språk kommer även mallarna för språket tas bort"
+
+msgid "Delivery Date"
+msgstr "Leveransdatum"
+
+msgid "Department"
+msgstr "Kostnadsställe/resultatenhet"
+
+msgid "Department deleted!"
+msgstr "Kst/res.enh. borttagen"
+
+msgid "Department saved!"
+msgstr "Kst/res.enh. sparad"
+
+msgid "Departments"
+msgstr "Kostnadsställen / Resultatenheter"
+
+msgid "Deposit"
+msgstr "Insättning"
+
+msgid "Description"
+msgstr "Beskrivning"
+
+msgid "Description Translations"
+msgstr "Beskrivning av översättningar"
+
+msgid "Description missing!"
+msgstr "Beskrivning saknas"
+
+msgid "Detail"
+msgstr "Detalj"
+
+msgid "Difference"
+msgstr "Differens"
+
+msgid "Directory"
+msgstr "Katalog"
+
+msgid "Discount"
+msgstr "Rabatt"
+
+msgid "Done"
+msgstr "Klart"
+
+msgid "Drawing"
+msgstr "Ritning"
+
+msgid "Driver"
+msgstr "Driver"
+
+msgid "Dropdown Limit"
+msgstr "Brytpunkt gräns"
+
+msgid "Due Date"
+msgstr "Förfallodatum"
+
+msgid "Due Date missing!"
+msgstr "Förfallodatum saknas"
+
+msgid "E-mail"
+msgstr "E-Post"
+
+msgid "E-mail Statement to"
+msgstr "E-Posta rapport till"
+
+msgid "E-mail address missing!"
+msgstr "E-Postadress saknas"
+
+msgid "E-mail message"
+msgstr "E-post meddelande"
+
+msgid "E-mailed"
+msgstr "Skickad med e-post"
+
+msgid "Edit"
+msgstr "Redigera"
+
+msgid "Edit AP Transaction"
+msgstr "Redigera utgifter"
+
+msgid "Edit AR Transaction"
+msgstr "Redigera intäkter"
+
+msgid "Edit Account"
+msgstr "Redigera konto"
+
+msgid "Edit Assembly"
+msgstr "Redigera produkt"
+
+msgid "Edit Business"
+msgstr "Redigera verksamhet"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "Redigera betalningar"
+
+msgid "Edit Customer"
+msgstr "Redigera kund"
+
+msgid "Edit Deduction"
+msgstr "Redigera avdrag"
+
+msgid "Edit Department"
+msgstr "Redigera avdelning"
+
+msgid "Edit Description Translations"
+msgstr "Redigera översättning av beskrivning"
+
+msgid "Edit Employee"
+msgstr "Redigera anställd"
+
+msgid "Edit GIFI"
+msgstr "Redigera SRU-koder"
+
+msgid "Edit General Ledger Transaction"
+msgstr "Redigera verifikat i huvudbok"
+
+msgid "Edit Group"
+msgstr "Redigera grupp"
+
+msgid "Edit Job"
+msgstr "Ändra jobb"
+
+msgid "Edit Labor/Overhead"
+msgstr "Redigera arbetskostnader"
+
+msgid "Edit Language"
+msgstr "Redigera språk"
+
+msgid "Edit POS Invoice"
+msgstr "Redigera försäljningsfakturor"
+
+msgid "Edit Part"
+msgstr "Redigera vara"
+
+msgid "Edit Preferences for"
+msgstr "Redigera inställningar för"
+
+msgid "Edit Pricegroup"
+msgstr "Redgigera prisgrupp"
+
+msgid "Edit Project"
+msgstr "Redigera projekt"
+
+msgid "Edit Purchase Order"
+msgstr "Redigera inköpsorder"
+
+msgid "Edit Quotation"
+msgstr "Redigera offert"
+
+msgid "Edit Request for Quotation"
+msgstr "Redigera begäran om offert"
+
+msgid "Edit SIC"
+msgstr "Redigera sni-koder"
+
+msgid "Edit Sales Invoice"
+msgstr "Redigera kundfakturor"
+
+msgid "Edit Sales Order"
+msgstr "Redigera säljorder"
+
+msgid "Edit Service"
+msgstr "Redigera tjänster"
+
+msgid "Edit Template"
+msgstr "Redigera utskriftsmall"
+
+msgid "Edit Time Card"
+msgstr "Ändra tidkort"
+
+msgid "Edit User"
+msgstr "Redigera användare"
+
+msgid "Edit Vendor"
+msgstr "Redigera Leverantör"
+
+msgid "Edit Vendor Invoice"
+msgstr "Redigera leverantörsfakturor"
+
+msgid "Edit Warehouse"
+msgstr "Redigera lager"
+
+msgid "Employee"
+msgstr "Anställd"
+
+msgid "Employee Name"
+msgstr "Anställd namn"
+
+msgid "Employee Number"
+msgstr "Anställd nr"
+
+msgid "Employee deleted!"
+msgstr "Anställd borttagen"
+
+msgid "Employee pays"
+msgstr "Anställd utbetalt"
+
+msgid "Employee saved!"
+msgstr "Anställd sparad"
+
+msgid "Employees"
+msgstr "Anställda"
+
+msgid "Employer"
+msgstr "Arbetsgivare"
+
+msgid "Employer pays"
+msgstr "Arbetsgivare utbetalt"
+
+msgid "Enddate"
+msgstr "Slut datum"
+
+msgid "Ends"
+msgstr "Slutdatum"
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "Kräv rättningsverifikat för alla datum"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Ange upp till 3 bokstäver (SEK:EUR:USD) för egen och utländsk valuta"
+
+msgid "Equity"
+msgstr "Eget kapital"
+
+msgid "Every"
+msgstr "Varje"
+
+msgid "Excempt age <"
+msgstr "Uteslut vid ålder <"
+
+msgid "Exch"
+msgstr "Vxl"
+
+msgid "Exchange Rate"
+msgstr "Växlingskurs"
+
+msgid "Exchange rate for payment missing!"
+msgstr "Växlingskurs för saknad betalning"
+
+msgid "Exchange rate missing!"
+msgstr "Växelkurs saknas"
+
+msgid "Exempt age <"
+msgstr "Utgångsdatum"
+
+msgid "Existing Datasets"
+msgstr "Existerande Dataset"
+
+msgid "Expense"
+msgstr "Utgift"
+
+msgid "Expense Account"
+msgstr "Utgiftskonto"
+
+msgid "Expense account does not exist!"
+msgstr "Konto för kostnader ej angivet"
+
+msgid "Expense/Asset"
+msgstr "Utgift/Tillgång"
+
+msgid "Extended"
+msgstr "Summa"
+
+msgid "FX"
+msgstr "Valutakurs"
+
+msgid "Failed to save order!"
+msgstr "Kunde ej spara order"
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "Feb"
+msgstr "Feb"
+
+msgid "February"
+msgstr "Februari"
+
+msgid "For"
+msgstr "under"
+
+msgid "Foreign Exchange Gain"
+msgstr "Växelkurs vinst"
+
+msgid "Foreign Exchange Loss"
+msgstr "Växelkurs förlust"
+
+msgid "Friday"
+msgstr "Fredag"
+
+msgid "From"
+msgstr "Från"
+
+msgid "From Warehouse"
+msgstr "Från lager"
+
+msgid "GIFI"
+msgstr "SRU-kod"
+
+msgid "GIFI deleted!"
+msgstr "SRU-kod raderad"
+
+msgid "GIFI missing!"
+msgstr "SRU-kod saknas"
+
+msgid "GIFI saved!"
+msgstr "SRU-kod sparad"
+
+msgid "GL"
+msgstr "Huvudbok"
+
+msgid "GL Reference Number"
+msgstr "Huvudboks verifikat nr"
+
+msgid "GL Transaction"
+msgstr "Verifikat"
+
+msgid "General Ledger"
+msgstr "Huvudbok"
+
+msgid "Generate"
+msgstr "Skapa"
+
+msgid "Generate Orders"
+msgstr "Skapa order"
+
+msgid "Generate Purchase Orders"
+msgstr "Skapa inköpsorder"
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr "Skapa inköpsorder från försäljningsorder"
+
+msgid "Generate Sales Order"
+msgstr "Skapa försäljningsorder"
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr "Skapa försäljningsorder från inköpsorder"
+
+msgid "Generate Sales Orders"
+msgstr "Skapa försäljningsorder"
+
+msgid "Goods & Services"
+msgstr "Varor och Tjänster"
+
+msgid "Group"
+msgstr "Grupp"
+
+msgid "Group Items"
+msgstr "Grupp varor"
+
+msgid "Group Translations"
+msgstr "Grupp översättningar"
+
+msgid "Group deleted!"
+msgstr "Grupp borttagen!"
+
+msgid "Group missing!"
+msgstr "Grupp saknas!"
+
+msgid "Group saved!"
+msgstr "Grupp sparad!"
+
+msgid "Groups"
+msgstr "Grupper"
+
+msgid "HR"
+msgstr "Mänskligt kapital"
+
+msgid "HTML Templates"
+msgstr "HTML mallar"
+
+msgid "Heading"
+msgstr "Överskrift"
+
+msgid "History"
+msgstr "Historik"
+
+msgid "Home Phone"
+msgstr "Hem telefon"
+
+msgid "Host"
+msgstr "Värd"
+
+msgid "Hostname missing!"
+msgstr "Värdnamn saknas"
+
+msgid "IBAN"
+msgstr "IBAN - bankkontonr"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "In-line"
+msgstr "På väg"
+
+msgid "Inactive"
+msgstr "Inaktiv"
+
+msgid "Include Exchange Rate Difference"
+msgstr "Inkludera växelkurs differens"
+
+msgid "Include Payment"
+msgstr "Inkudera betalning"
+
+msgid "Include in Report"
+msgstr "Inkludera i rapport"
+
+msgid "Include in drop-down menus"
+msgstr "Inkludera i rullgardinsmenyer"
+
+msgid "Include this account on the customer/vendor forms to flag customer/vendor as taxable?"
+msgstr "Inkludera det här kontot för kund/leverantör för att markera kund/leverantör som momspliktig"
+
+msgid "Income"
+msgstr "Vinst"
+
+msgid "Income Account"
+msgstr "Intäktskonto"
+
+msgid "Income Statement"
+msgstr "Resultaträkning"
+
+msgid "Income account does not exist!"
+msgstr "Intäktskonto ej angivet"
+
+msgid "Incorrect Dataset version!"
+msgstr "Felaktig databasversion"
+
+msgid "Incorrect Password!"
+msgstr "Felaktigt lösenord"
+
+msgid "Increase"
+msgstr "Öka"
+
+msgid "Individual Items"
+msgstr "Individuella varor"
+
+msgid "Internal Notes"
+msgstr "Egna anteckningar"
+
+msgid "Inventory"
+msgstr "Lager"
+
+msgid "Inventory Account"
+msgstr "Lagerkonto"
+
+msgid "Inventory account does not exist!"
+msgstr "Lagerkonto ej angivet"
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "Lagerkvantitet måste vara noll innan du kan sätta produkten som utgången!"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "Lagerkvantitet måste vara noll innan du kan sätta varan som utgången!"
+
+msgid "Inventory saved!"
+msgstr "Lager sparat"
+
+msgid "Inventory transferred!"
+msgstr "Lager överfört"
+
+msgid "Invoice"
+msgstr "Faktura"
+
+msgid "Invoice Date"
+msgstr "Fakturadatum"
+
+msgid "Invoice Date missing!"
+msgstr "Fakturadatum saknas"
+
+msgid "Invoice Number"
+msgstr "Fakturanummer"
+
+msgid "Invoice Number missing!"
+msgstr "Fakturanummer saknas"
+
+msgid "Invoice deleted!"
+msgstr "Faktura raderad"
+
+msgid "Invoice posted!"
+msgstr "Faktura bokförd"
+
+msgid "Invoice processed!"
+msgstr "Faktura behandlad"
+
+msgid "Invoices"
+msgstr "Fakturor"
+
+msgid "Is this a summary account to record"
+msgstr "Är detta ett samlingskonto för att lagra"
+
+msgid "Item already on pricelist!"
+msgstr "Varan redan i prislistan"
+
+msgid "Item deleted!"
+msgstr "Vara raderad"
+
+msgid "Item not on file!"
+msgstr "Varan finns inte i databasen"
+
+msgid "Items"
+msgstr "Varor"
+
+msgid "Jan"
+msgstr "Jan"
+
+msgid "January"
+msgstr "Januari"
+
+msgid "Job"
+msgstr "Jobb"
+
+msgid "Job Description"
+msgstr "Arbetsbeskrivning"
+
+msgid "Job Name"
+msgstr "Arbetsnamn"
+
+msgid "Job Number"
+msgstr "Jobb nr"
+
+msgid "Job Number missing!"
+msgstr "Jobb nr saknas"
+
+msgid "Job deleted!"
+msgstr "Jobb borttaget"
+
+msgid "Job saved!"
+msgstr "Jobb sparat!"
+
+msgid "Jobs"
+msgstr "Jobb"
+
+msgid "Jul"
+msgstr "Jul"
+
+msgid "July"
+msgstr "Juli"
+
+msgid "Jun"
+msgstr "Jun"
+
+msgid "June"
+msgstr "Juni"
+
+msgid "LaTeX Templates"
+msgstr "LaTeX Mallar"
+
+msgid "Labor Code"
+msgstr "Arbetarkod"
+
+msgid "Labor Code missing!"
+msgstr "Arbetarkod saknas"
+
+msgid "Labor/Overhead"
+msgstr "Arbetskostnader"
+
+msgid "Language"
+msgstr "Språk"
+
+msgid "Language deleted!"
+msgstr "Språk borttaget"
+
+msgid "Language saved!"
+msgstr "Språk sparat"
+
+msgid "Languages"
+msgstr "Språk"
+
+msgid "Languages not defined!"
+msgstr "Språk ej valt"
+
+msgid "Last Cost"
+msgstr "Senaste kostnad"
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Senaste nummer och standardkonto"
+
+msgid "Lead"
+msgstr "Leveranstid"
+
+msgid "Leadtime"
+msgstr "Leveranstid"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "Lämna värd och port fälten tomma om du inte vill göra en fjärranslutning"
+
+msgid "Liability"
+msgstr "Skulder"
+
+msgid "Licensed to"
+msgstr "Licensierad till"
+
+msgid "Line Total"
+msgstr "Antal rader"
+
+msgid "Link"
+msgstr "Referens"
+
+msgid "Link Accounts"
+msgstr "Koppla konton"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "List Accounts"
+msgstr "Lista konton"
+
+msgid "List Businesses"
+msgstr "Lista verksamheter"
+
+msgid "List Departments"
+msgstr "Lista avdelningar"
+
+msgid "List GIFI"
+msgstr "Lista SRU-koder"
+
+msgid "List Languages"
+msgstr "Lista språk"
+
+msgid "List Price"
+msgstr "Nettopris"
+
+msgid "List Projects"
+msgstr "Lista projekt"
+
+msgid "List SIC"
+msgstr "Lista SNI-koder"
+
+msgid "List Transactions"
+msgstr "Lista transaktioner"
+
+msgid "List Warehouses"
+msgstr "Lista lager"
+
+msgid "Lock System"
+msgstr "Lås Systemet"
+
+msgid "Lockfile created!"
+msgstr "Låsfil skapad!"
+
+msgid "Lockfile removed!"
+msgstr "Låsfil borttagen!"
+
+msgid "Login"
+msgstr "Logga in"
+
+msgid "Login name missing!"
+msgstr "inloggningsnamn saknas!"
+
+msgid "Logout"
+msgstr "Logga ut"
+
+msgid "Make"
+msgstr "Produkt"
+
+msgid "Manager"
+msgstr "Direktör"
+
+msgid "Mar"
+msgstr "Mar"
+
+msgid "March"
+msgstr "Mars"
+
+msgid "Marked entries printed!"
+msgstr "Markerade poster utskrivna!"
+
+msgid "Markup"
+msgstr "Prishöjning"
+
+msgid "Maximum"
+msgstr "Max"
+
+msgid "May"
+msgstr "Maj"
+
+msgid "May "
+msgstr "Maj"
+
+msgid "Memo"
+msgstr "Anteckning"
+
+msgid "Menu Width"
+msgstr "Meny vidd"
+
+msgid "Message"
+msgstr "Meddelande"
+
+msgid "Method"
+msgstr "Metod"
+
+msgid "Microfiche"
+msgstr "Microfiche"
+
+msgid "Mobile"
+msgstr "Mobiltelefon"
+
+msgid "Model"
+msgstr "Modell"
+
+msgid "Monday"
+msgstr "Måndag"
+
+msgid "Month"
+msgstr "Månad"
+
+msgid "Month(s)"
+msgstr "Månad(er)"
+
+msgid "Months"
+msgstr "Månader"
+
+msgid "Multibyte Encoding"
+msgstr "Multibytekodning"
+
+msgid "N/A"
+msgstr "ej aktuell"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Name missing!"
+msgstr "Namn saknas"
+
+msgid "New Templates"
+msgstr "Nya mallar"
+
+msgid "New Window"
+msgstr "Nytt fönster"
+
+msgid "Next"
+msgstr "Nästa"
+
+msgid "Next Date"
+msgstr "Nästa datum"
+
+msgid "Next Number"
+msgstr "Nästa nummer"
+
+msgid "No"
+msgstr "Inga"
+
+msgid "No Database Drivers available!"
+msgstr "Inga databasdrivers tillgängliga"
+
+msgid "No Dataset selected!"
+msgstr "Inget Dataset valt"
+
+msgid "No Employees on file!"
+msgstr "Inga anställda lagrade!"
+
+msgid "No Labor codes on file!"
+msgstr "Inen arbetarkod sparad!"
+
+msgid "No Parts on file!"
+msgstr "Inga delar sparade!"
+
+msgid "No email address for"
+msgstr "Ingen E-Postadress för"
+
+msgid "No open Jobs!"
+msgstr "Inga pågående arbeten!"
+
+msgid "No open Projects!"
+msgstr "Inga pågående projekt!"
+
+msgid "No."
+msgstr "Nr."
+
+msgid "Non-chargeable"
+msgstr "Icke debiterbar"
+
+msgid "Non-taxable"
+msgstr "Momsfri"
+
+msgid "Non-taxable Purchases"
+msgstr "Momsfria inköp"
+
+msgid "Non-taxable Sales"
+msgstr "Momsfria försäljningar"
+
+msgid "Non-tracking Items"
+msgstr "Icke-spårbara varor"
+
+msgid "Notes"
+msgstr "Anmärkningar"
+
+msgid "Nothing entered!"
+msgstr "Inget inskrivet"
+
+msgid "Nothing open!"
+msgstr "Ingenting öppnat"
+
+msgid "Nothing outstanding for "
+msgstr "Ingenting som väntar för "
+
+msgid "Nothing selected!"
+msgstr "Ingenting valt"
+
+msgid "Nothing to delete!"
+msgstr "Inget att radera"
+
+msgid "Nothing to print!"
+msgstr "Inget att skriva"
+
+msgid "Nothing to transfer!"
+msgstr "Inget att överföra"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "November"
+msgstr "November"
+
+msgid "Number"
+msgstr "Nummer"
+
+msgid "Number Format"
+msgstr "Nummerformat"
+
+msgid "Number missing in Row"
+msgstr "Nummer saknas i rad"
+
+msgid "O"
+msgstr "O"
+
+msgid "OH"
+msgstr "På lager"
+
+msgid "Obsolete"
+msgstr "Utgången"
+
+msgid "Oct"
+msgstr "Okt"
+
+msgid "October"
+msgstr "Oktober"
+
+msgid "On Hand"
+msgstr "I lager"
+
+msgid "Open"
+msgstr "Aktuell"
+
+msgid "Oracle Database Administration"
+msgstr "Oracle Databasadministration"
+
+msgid "Order"
+msgstr "Order"
+
+msgid "Order Date"
+msgstr "Orderdatum"
+
+msgid "Order Date missing!"
+msgstr "Orderdatum saknas"
+
+msgid "Order Entry"
+msgstr "Beställningar"
+
+msgid "Order Number"
+msgstr "Ordernummer"
+
+msgid "Order Number missing!"
+msgstr "Ordernummer saknas"
+
+msgid "Order deleted!"
+msgstr "Order raderad"
+
+msgid "Order generation failed!"
+msgstr "Skapande av order misslyckades!"
+
+msgid "Order processed!"
+msgstr "Order behandlad"
+
+msgid "Order saved!"
+msgstr "Order sparad"
+
+msgid "Orders generated!"
+msgstr "Order skapad!"
+
+msgid "Org.Number"
+msgstr "Organisationsnr"
+
+msgid "Org.no"
+msgstr "Org.nr"
+
+msgid "Org.nr"
+msgstr "Org.nr"
+
+msgid "Orphaned"
+msgstr "Fristående"
+
+msgid "Out of balance transaction!"
+msgstr "Transaktion ej i balans"
+
+msgid "Out of balance!"
+msgstr "Ej i balans"
+
+msgid "Outstanding"
+msgstr "Obetalda fakturor"
+
+msgid "Overdue"
+msgstr "Överskriden"
+
+msgid "PDF"
+msgstr "Förtryckt blankett"
+
+msgid "PO Number"
+msgstr "Inköps order nr"
+
+msgid "POS"
+msgstr "Försäljning"
+
+msgid "POS Invoice"
+msgstr "Kreditförsäljning"
+
+msgid "Packing List"
+msgstr "Packsedel"
+
+msgid "Packing List Date missing!"
+msgstr "Packsedelsdatum saknas"
+
+msgid "Packing List Number missing!"
+msgstr "Packsedelsnummer saknas"
+
+msgid "Packing Lists"
+msgstr "Packsedlar"
+
+msgid "Paid"
+msgstr "Betalt"
+
+msgid "Part"
+msgstr "Artikel"
+
+msgid "Part Number"
+msgstr "Artikel nr"
+
+msgid "Partnumber"
+msgstr "Artikel nr"
+
+msgid "Parts"
+msgstr "Artiklar"
+
+msgid "Parts Inventory"
+msgstr "Artikellista"
+
+msgid "Password"
+msgstr "Lösenord"
+
+msgid "Password changed!"
+msgstr "Lösenord ändrat"
+
+msgid "Password does not match!"
+msgstr "Felaktigt lösenord!"
+
+msgid "Passwords do not match!"
+msgstr "Lösenord skiljer sig"
+
+msgid "Payables"
+msgstr "Utbetalningar"
+
+msgid "Payment"
+msgstr "Bocka av utförd betalning"
+
+msgid "Payment date missing!"
+msgstr "Betalningsdatum saknas"
+
+msgid "Payment posted!"
+msgstr "Betalning bokförd"
+
+msgid "Payments"
+msgstr "Utbetalningar"
+
+msgid "Payments posted!"
+msgstr "Betalningar bokförda"
+
+msgid "Payroll Deduction"
+msgstr "Avdrag vid betalning"
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Pg Database Administration"
+msgstr "Administration av databas PG"
+
+msgid "PgPP Database Administration"
+msgstr "PgPP Database Administration"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Pick List"
+msgstr "Plocklista"
+
+msgid "Pick Lists"
+msgstr "Plocklistor"
+
+msgid "Plusgiro"
+msgstr "Plusgiro"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Port missing!"
+msgstr "Port saknas"
+
+msgid "Pos"
+msgstr "Kassa"
+
+msgid "Post"
+msgstr "Bokför"
+
+msgid "Post Giro Number"
+msgstr "Plusgiro nr"
+
+msgid "Post Giro account"
+msgstr "Plusgiro nr"
+
+msgid "Post as new"
+msgstr "Bokför som ny"
+
+msgid "Posted!"
+msgstr "Bokförd!"
+
+msgid "Postgiro"
+msgstr "Plusgiro"
+
+msgid "Posting"
+msgstr "Bokför"
+
+msgid "Posting failed!"
+msgstr "Bokföring misslyckats!"
+
+msgid "Postscript"
+msgstr "Blankt papper"
+
+msgid "Preferences"
+msgstr "Inställningar"
+
+msgid "Preferences saved!"
+msgstr "Inställningar sparade"
+
+msgid "Prepayment"
+msgstr "Förskottsbetald"
+
+msgid "Price"
+msgstr "Pris"
+
+msgid "Pricegroup"
+msgstr "Prisgrupp"
+
+msgid "Pricegroup deleted!"
+msgstr "Prisgrupp borttagen"
+
+msgid "Pricegroup missing!"
+msgstr "Prisgrupp saknas"
+
+msgid "Pricegroup saved!"
+msgstr "Prisgrupp sparad"
+
+msgid "Pricegroups"
+msgstr "Prisgrupper"
+
+msgid "Pricelist"
+msgstr "Prislista"
+
+msgid "Print"
+msgstr "Skriv ut"
+
+msgid "Print and Post"
+msgstr "Skriv och bokför"
+
+msgid "Print and Post as new"
+msgstr "Skriv ut och bokför som ny"
+
+msgid "Print and Save"
+msgstr "Skriv och spara"
+
+msgid "Print and Save as new"
+msgstr "Skriv ut och spara som ny"
+
+msgid "Printed"
+msgstr "Utskriven"
+
+msgid "Printer"
+msgstr "Skrivare"
+
+msgid "Printing"
+msgstr "Skriver ut"
+
+msgid "Printing ... "
+msgstr "Skriver . . ."
+
+msgid "Process Transactions"
+msgstr "Utför transaktion"
+
+msgid "Production"
+msgstr "Produktion"
+
+msgid "Profit Center"
+msgstr "Resultatenhet"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Project Description Translations"
+msgstr "Översättning av projekt beskrivning"
+
+msgid "Project Name"
+msgstr "Projekt namn"
+
+msgid "Project Number"
+msgstr "Projekt nr"
+
+msgid "Project Number missing!"
+msgstr "Projektnummer saknas"
+
+msgid "Project Transactions"
+msgstr "Projekt transaktioner"
+
+msgid "Project deleted!"
+msgstr "Projekt raderat"
+
+msgid "Project not on file!"
+msgstr "Projekt finns ej"
+
+msgid "Project saved!"
+msgstr "Projekt sparat"
+
+msgid "Project/Job Name"
+msgstr "Projekt/arbete namn"
+
+msgid "Project/Job Number"
+msgstr "Projekt/arbete nr"
+
+msgid "Projects"
+msgstr "Projekt"
+
+msgid "Purchase Order"
+msgstr "Inköpsorder"
+
+msgid "Purchase Order Number"
+msgstr "Inköpsorder nr"
+
+msgid "Purchase Orders"
+msgstr "Inköpsordrar"
+
+msgid "Qty"
+msgstr "Antal"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "Kvantitet överskrider tillgängliga enheter i lager"
+
+msgid "Quarter"
+msgstr "Kvartal"
+
+msgid "Queue"
+msgstr "Kö"
+
+msgid "Queued"
+msgstr "Köad"
+
+msgid "Quotation"
+msgstr "Offert"
+
+msgid "Quotation "
+msgstr "Offert "
+
+msgid "Quotation Date"
+msgstr "Offert datum"
+
+msgid "Quotation Date missing!"
+msgstr "Offert datum saknas"
+
+msgid "Quotation Number"
+msgstr "Offert  nummer"
+
+msgid "Quotation Number missing!"
+msgstr "Offert nummer saknas"
+
+msgid "Quotation deleted!"
+msgstr "Offert borttagen"
+
+msgid "Quotations"
+msgstr "Offerter"
+
+msgid "R"
+msgstr "Utförd"
+
+msgid "RFQ"
+msgstr "Begäran om offert"
+
+msgid "RFQ "
+msgstr "Begäran om offert"
+
+msgid "RFQ Number"
+msgstr "Begäran om offert nr"
+
+msgid "RFQs"
+msgstr "Begäran om offert"
+
+msgid "ROP"
+msgstr "Beställ vid"
+
+msgid "Rate"
+msgstr "Ränta"
+
+msgid "Rate missing!"
+msgstr "Ränta saknas"
+
+msgid "Recd"
+msgstr "Mottagen"
+
+msgid "Receipt"
+msgstr "Bocka av ink.betalning"
+
+msgid "Receipt posted!"
+msgstr "Kvitto bokfört!"
+
+msgid "Receipts"
+msgstr "Inbetalningar"
+
+msgid "Receivables"
+msgstr "Inbetalningar"
+
+msgid "Receive"
+msgstr "Ta emot"
+
+msgid "Receive Merchandise"
+msgstr "Varumottagning"
+
+msgid "Reconciliation"
+msgstr "In/ut betalningar"
+
+msgid "Reconciliation Report"
+msgstr "Kontoanalys"
+
+msgid "Record in"
+msgstr "Bokför på"
+
+msgid "Recurring Transaction"
+msgstr "Återkommande transaktioner"
+
+msgid "Recurring Transactions"
+msgstr "Återkommande transaktion"
+
+msgid "Reference"
+msgstr "Referens"
+
+msgid "Reference missing!"
+msgstr "Referens saknas"
+
+msgid "Remaining"
+msgstr "Resterar"
+
+msgid "Remove"
+msgstr "Ta bort"
+
+msgid "Remove Audit trail up to"
+msgstr "Ta bort log med förändringskontroll fram till"
+
+msgid "Remove Audit trails up to"
+msgstr "Ta bort log med förändringskontroll fram till"
+
+msgid "Removed spoolfiles!"
+msgstr "Spool-filer borttagna"
+
+msgid "Removing marked entries from queue ..."
+msgstr "Tar bort markerade poster från kön . . ."
+
+msgid "Repeat"
+msgstr "Upprepa"
+
+msgid "Report for"
+msgstr "Rapport för"
+
+msgid "Reports"
+msgstr "Rapporter"
+
+msgid "Req"
+msgstr "Best"
+
+msgid "Request for Quotation"
+msgstr "Begäran om offert"
+
+msgid "Request for Quotations"
+msgstr "Begäran om offerter"
+
+msgid "Required by"
+msgstr "Beställt den"
+
+msgid "Retained Earnings"
+msgstr "Realiserat överskott"
+
+msgid "Role"
+msgstr "Tjänst"
+
+msgid "S"
+msgstr "S"
+
+msgid "SIC"
+msgstr "SNI-kod"
+
+msgid "SIC deleted!"
+msgstr "SNI-kod borttagen"
+
+msgid "SIC saved!"
+msgstr "SNI-kod sparad"
+
+msgid "SKU"
+msgstr "Lagernr"
+
+msgid "SSN"
+msgstr "Personnr"
+
+msgid "Sale"
+msgstr "Försäljning"
+
+msgid "Sales"
+msgstr "Försäljning"
+
+msgid "Sales Invoice"
+msgstr "Kundfaktura"
+
+msgid "Sales Invoice "
+msgstr "Kundfaktura "
+
+msgid "Sales Invoice Number"
+msgstr "Kundfaktura nr"
+
+msgid "Sales Invoice."
+msgstr "Kundfaktura."
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr "Kundfaktura / Intäktsverifikat nr"
+
+msgid "Sales Invoices"
+msgstr "Kundfakturor"
+
+msgid "Sales Order"
+msgstr "Säljorder"
+
+msgid "Sales Order Number"
+msgstr "Säljorder nr"
+
+msgid "Sales Orders"
+msgstr "Säljordrar"
+
+msgid "Sales Quotation Number"
+msgstr "Säljoffert nr"
+
+msgid "Salesperson"
+msgstr "Försäljare"
+
+msgid "Saturday"
+msgstr "Lördag"
+
+msgid "Save"
+msgstr "Spara"
+
+msgid "Save Pricelist"
+msgstr "Spara prislista"
+
+msgid "Save Schedule"
+msgstr "Spara schemaläggning"
+
+msgid "Save as new"
+msgstr "Spara som ny"
+
+msgid "Save to File"
+msgstr "Spara till fil"
+
+msgid "Saving"
+msgstr "Sparar"
+
+msgid "Schedule"
+msgstr "Schemalägg"
+
+msgid "Scheduled"
+msgstr "Schemalagd"
+
+msgid "Screen"
+msgstr "Skärm"
+
+msgid "Search"
+msgstr "Sök"
+
+msgid "Select"
+msgstr "Välj"
+
+msgid "Select Customer"
+msgstr "Välj kund"
+
+msgid "Select Printer or Queue!"
+msgstr "Välj skrivare eller kö"
+
+msgid "Select Vendor"
+msgstr "Välj leverantör"
+
+msgid "Select a Printer!"
+msgstr "Välj skrivare"
+
+msgid "Select a printer!"
+msgstr "Välj skrivare"
+
+msgid "Select all"
+msgstr "Välj alla"
+
+msgid "Select from one of the items below"
+msgstr "Välj en artikel nedan"
+
+msgid "Select from one of the names below"
+msgstr "Välj ett av namnen nedan"
+
+msgid "Select from one of the projects below"
+msgstr "Välj ett av projekten nedan"
+
+msgid "Select items"
+msgstr "Välj vara"
+
+msgid "Select payment"
+msgstr "Välj betalningssätt"
+
+msgid "Select postscript or PDF!"
+msgstr "Välj Postscript eller PDF"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "Välj text, postsript eller PDF!"
+
+msgid "Sell"
+msgstr "Sälj"
+
+msgid "Sell Price"
+msgstr "Försäljningspris"
+
+msgid "Send by E-Mail"
+msgstr "Skicka via E-Post"
+
+msgid "Sending"
+msgstr "Skickar"
+
+msgid "Sep"
+msgstr "Sep"
+
+msgid "September"
+msgstr "September"
+
+msgid "Serial No."
+msgstr "Serie nr."
+
+msgid "Serial Number"
+msgstr "Serie nr."
+
+msgid "Service"
+msgstr "Tjänster"
+
+msgid "Service Code"
+msgstr "Servicekod"
+
+msgid "Service Code missing!"
+msgstr "Servicekod saknas"
+
+msgid "Service Items"
+msgstr "Tjänsteartiklar"
+
+msgid "Service/Labor Code"
+msgstr "Service/arbetarkod "
+
+msgid "Services"
+msgstr "Tjänster"
+
+msgid "Session Timeout"
+msgstr "Sessionen avslutad pga tid"
+
+msgid "Session expired!"
+msgstr "Sessionen avslutad"
+
+msgid "Setup Templates"
+msgstr "Sätt upp mallar"
+
+msgid "Ship"
+msgstr "Skicka"
+
+msgid "Ship Merchandise"
+msgstr "Skicka varor"
+
+msgid "Ship to"
+msgstr "Skicka till"
+
+msgid "Ship via"
+msgstr "Skicka med"
+
+msgid "Shipping"
+msgstr "Leveranser"
+
+msgid "Shipping Address"
+msgstr "Mottagar adress"
+
+msgid "Shipping Date"
+msgstr "Skickat datum"
+
+msgid "Shipping Date missing!"
+msgstr "Leveransdatum saknas"
+
+msgid "Shipping Point"
+msgstr "Skickad"
+
+msgid "Short"
+msgstr "Kort"
+
+msgid "Signature"
+msgstr "Signatur"
+
+msgid "Source"
+msgstr "Källa"
+
+msgid "Spoolfile"
+msgstr "Spoolfil"
+
+msgid "Standard"
+msgstr "Standard"
+
+msgid "Standard Industrial Codes"
+msgstr "Standard industrikoder"
+
+msgid "Startdate"
+msgstr "Startdatum"
+
+msgid "State"
+msgstr "Stat"
+
+msgid "State/Province"
+msgstr "Stat/provins"
+
+msgid "Statement"
+msgstr "Redovisning"
+
+msgid "Statement Balance"
+msgstr "Verkligt saldo"
+
+msgid "Statement sent to"
+msgstr "Redovisning skickad till"
+
+msgid "Statements sent to printer!"
+msgstr "Redovisning skickade till skrivare"
+
+msgid "Stock"
+msgstr "Lager"
+
+msgid "Stock Assembly"
+msgstr "Lager produkter"
+
+msgid "Stock Finished Goods"
+msgstr "Lagra färdiga varor"
+
+msgid "Stores Card"
+msgstr "Butikskort"
+
+msgid "Stores Card saved!"
+msgstr "Butikskort sparad"
+
+msgid "Stores Cards"
+msgstr "Butikskort"
+
+msgid "Stylesheet"
+msgstr "Stilmall"
+
+msgid "Sub-contract GIFI"
+msgstr "SRU-kod underrubrik"
+
+msgid "Subject"
+msgstr "Ämne"
+
+msgid "Subtotal"
+msgstr "Delsummera"
+
+msgid "Summary"
+msgstr "Summa"
+
+msgid "Sunday"
+msgstr "Söndag"
+
+msgid "Supervisor"
+msgstr "Ansvarig"
+
+msgid "System"
+msgstr "System"
+
+msgid "System Defaults"
+msgstr "Systeminställningar"
+
+msgid "Tax"
+msgstr "Moms"
+
+msgid "Tax Account"
+msgstr "Momskonto"
+
+msgid "Tax Accounts"
+msgstr "Momskonton"
+
+msgid "Tax Included"
+msgstr "Moms ingår"
+
+msgid "Tax Number"
+msgstr "Momsredovisnings nr"
+
+msgid "Tax Number / SSN"
+msgstr "Momsredovisningsnr / personnummer"
+
+msgid "Tax collected"
+msgstr "Ingående Moms"
+
+msgid "Tax paid"
+msgstr "Utgående Moms"
+
+msgid "Taxable"
+msgstr "Momspliktigt"
+
+msgid "Template saved!"
+msgstr "Mall sparad"
+
+msgid "Templates"
+msgstr "Mallar"
+
+msgid "Terms"
+msgstr "Netto"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Text Templates"
+msgstr "Text mallar"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "Följande Dataset är inte i bruk och kan raderas"
+
+msgid "The following Datasets need to be updated"
+msgstr "Följande Dataset behöver uppdateras"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "Det här är en preliminär kontroll av existerande källor. Ingenting kommer att sparas eller raderas vid detta tillfälle"
+
+msgid "Thursday"
+msgstr "Torsdag"
+
+msgid "Till"
+msgstr "Till"
+
+msgid "Time Card"
+msgstr "Tidkort"
+
+msgid "Time Card deleted!"
+msgstr "Tidkort borttaget"
+
+msgid "Time Card saved!"
+msgstr "Tidkort sparat"
+
+msgid "Time Cards"
+msgstr "Tidkort"
+
+msgid "Time In"
+msgstr "Tid in"
+
+msgid "Time Out"
+msgstr "Tid ut"
+
+msgid "Times"
+msgstr "Gånger"
+
+msgid "To"
+msgstr "Till"
+
+msgid "To Warehouse"
+msgstr "Till lager"
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "För att lägga till en användare till en grupp, editera namnet, ändra login namnet och spara. En ny användare med samma variabler sparas då under det nya namnet."
+
+msgid "Top Level"
+msgstr "Toppnivå"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Tracking Items"
+msgstr "Spårbara varor"
+
+msgid "Trade Discount"
+msgstr "Handelsrabatt"
+
+msgid "Transaction"
+msgstr "Transaktion"
+
+msgid "Transaction Date missing!"
+msgstr "Transaktionsdatum saknas"
+
+msgid "Transaction Dates"
+msgstr "Överföringsdatum"
+
+msgid "Transaction deleted!"
+msgstr "Transaktion raderad"
+
+msgid "Transaction posted!"
+msgstr "Transaktion bokförd"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "Ändringsverifikat krävs för alla datum"
+
+msgid "Transaction reversal enforced up to"
+msgstr "Ändringsverifikat krävs fram till"
+
+msgid "Transactions"
+msgstr "Samtliga"
+
+msgid "Transfer"
+msgstr "Överför"
+
+msgid "Transfer Inventory"
+msgstr "ÖVerför varor"
+
+msgid "Transfer from"
+msgstr "Överför från"
+
+msgid "Transfer to"
+msgstr "Överför till"
+
+msgid "Translation"
+msgstr "Översättning"
+
+msgid "Translation deleted!"
+msgstr "Översättning borttagen"
+
+msgid "Translation not on file!"
+msgstr "Översättning finns inte"
+
+msgid "Translations"
+msgstr "Översättningar"
+
+msgid "Translations saved!"
+msgstr "Översättning sparad"
+
+msgid "Trial Balance"
+msgstr "Saldo-beräkning"
+
+msgid "Tuesday"
+msgstr "Tisdag"
+
+msgid "Type of Business"
+msgstr "Typ av verksamhet"
+
+msgid "Unit"
+msgstr "Enhet"
+
+msgid "Unit Rate"
+msgstr "Kostnad/timme"
+
+msgid "Unit of measure"
+msgstr "Måttenhet"
+
+msgid "Unlock System"
+msgstr "Lås upp System"
+
+msgid "Update"
+msgstr "Uppdatera"
+
+msgid "Update Dataset"
+msgstr "Uppdatera dataset"
+
+msgid "Updated"
+msgstr "Uppdaterad"
+
+msgid "Upgrading to Version"
+msgstr "Uppgradera till version"
+
+msgid "Use Templates"
+msgstr "Använd mallar"
+
+msgid "User"
+msgstr "Användare"
+
+msgid "User deleted!"
+msgstr "Användare raderad"
+
+msgid "User saved!"
+msgstr "Användare sparad"
+
+msgid "Valid until"
+msgstr "Giltig till"
+
+msgid "Vendor"
+msgstr "Leverantör"
+
+msgid "Vendor History"
+msgstr "Leverantörshistorik"
+
+msgid "Vendor Invoice"
+msgstr "Kredit inköp"
+
+msgid "Vendor Invoice "
+msgstr "Leverantörsfaktura "
+
+msgid "Vendor Invoice Number"
+msgstr "Leverantörsfaktura nr"
+
+msgid "Vendor Invoice."
+msgstr "Leverantörsfaktura. "
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr "Leverantörsfaktura / Utgiftsverifikat nr"
+
+msgid "Vendor Invoices"
+msgstr "Leverantörsfakturor"
+
+msgid "Vendor Number"
+msgstr "Leverantör nr"
+
+msgid "Vendor deleted!"
+msgstr "Leverantör raderad"
+
+msgid "Vendor missing!"
+msgstr "Leverantör saknas"
+
+msgid "Vendor not on file!"
+msgstr "Leverantör finns ej"
+
+msgid "Vendor saved!"
+msgstr "Leverantör sparad"
+
+msgid "Vendors"
+msgstr "Leverantörer"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Warehouse"
+msgstr "Lager"
+
+msgid "Warehouse deleted!"
+msgstr "Lager borttaget"
+
+msgid "Warehouse saved!"
+msgstr "Lager sparat"
+
+msgid "Warehouses"
+msgstr "Lager"
+
+msgid "Warning!"
+msgstr "Varning!"
+
+msgid "Wednesday"
+msgstr "Onsdag"
+
+msgid "Week"
+msgstr "Vecka"
+
+msgid "Week(s)"
+msgstr "Vecka(or)"
+
+msgid "Weeks"
+msgstr "Veckor"
+
+msgid "Weight"
+msgstr "Vikt"
+
+msgid "Weight Unit"
+msgstr "Viktenhet"
+
+msgid "What type of item is this?"
+msgstr "Vilken typ av artikel är detta?"
+
+msgid "Work Order"
+msgstr "Arbetsorder"
+
+msgid "Work Orders"
+msgstr "Arbetsordrar"
+
+msgid "Work Phone"
+msgstr "Arbetstelefon"
+
+msgid "Year"
+msgstr "År"
+
+msgid "Year(s)"
+msgstr "År"
+
+msgid "Yearend"
+msgstr "Årsavslut"
+
+msgid "Yearend date missing!"
+msgstr "Datum för årsavslut saknas"
+
+msgid "Yearend posted!"
+msgstr "Årsavslut genomfört"
+
+msgid "Yearend posting failed!"
+msgstr "Årsavslut kunde ej genomföras"
+
+msgid "Years"
+msgstr "År"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "You are logged out"
+msgstr "Du är utloggad"
+
+msgid "You are posting an existing transaction!"
+msgstr "Du bokför en redan bokförd transaktion"
+
+msgid "You are printing and posting an existing transaction!"
+msgstr "Du skriver ut och bokför en redan bokförd transaktion"
+
+msgid "You are printing and saving an existing order"
+msgstr "Du skriver ut och sparar en redan sparad order"
+
+msgid "You are printing and saving an existing quotation"
+msgstr "Du skriver ut och sparar en redan sparad offert"
+
+msgid "You are printing and saving an existing transaction!"
+msgstr "Du skriver ut och sparar en redan lagrad transaktion!"
+
+msgid "You are saving an existing order"
+msgstr "Du sparar en redan sparad order"
+
+msgid "You are saving an existing quotation"
+msgstr "Du sparar en redan sparad offert"
+
+msgid "You are saving an existing transaction!"
+msgstr "Du sparar en redan lagrad transaktion!"
+
+msgid "You did not enter a name!"
+msgstr "Du skrev inte in något namn"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "Du måste ange en värd och en port för att göra en fjärrasnslutning"
+
+msgid "Zip/Postal Code"
+msgstr "Postnr"
+
+msgid "account cannot be set to any other type of account"
+msgstr "kontot kan ej ändras till någon annan typ av konto"
+
+msgid "as at"
+msgstr "som vid"
+
+msgid "days"
+msgstr "dagar"
+
+msgid "does not exist"
+msgstr "finns inte"
+
+msgid "done"
+msgstr "Färdigt"
+
+msgid "ea"
+msgstr "st"
+
+msgid "failed"
+msgstr "misslyckats"
+
+msgid "for"
+msgstr "under"
+
+msgid "for Period"
+msgstr "för perioden"
+
+msgid "is already a member!"
+msgstr "är redan medlem!"
+
+msgid "is not a member!"
+msgstr "är inte medlem!"
+
+msgid "localhost"
+msgstr "localhost"
+
+msgid "locked!"
+msgstr "Låst!"
+
+msgid "partsgroup"
+msgstr "artikelgrupp"
+
+msgid "posted!"
+msgstr "Bokförd!"
+
+msgid "sent"
+msgstr "Skickad"
+
+msgid "successfully created!"
+msgstr "skapades!"
+
+msgid "successfully deleted!"
+msgstr "raderades!"
+
+msgid "time(s)"
+msgstr "gång(er)"
+
+msgid "unexpected error!"
+msgstr "oförberett fel!"
+
+msgid "website"
+msgstr "websida"
+

@@ -1,0 +1,78 @@
+\documentclass{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+
+<?lsmb include letterhead.tex ?>
+
+\parbox[t]{.5\textwidth}{
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb address2 ?>
+
+<?lsmb city ?>
+<?lsmb if state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb end state ?>
+<?lsmb zipcode ?>
+
+<?lsmb country ?>
+}
+\parbox[t]{.5\textwidth}{
+<?lsmb if customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb end customerphone ?>
+
+<?lsmb if customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb end customerfax ?>
+
+<?lsmb email ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{S T A T E M E N T} \hfill \textbf{<?lsmb statementdate ?>}
+
+\vspace{2cm}
+
+\begin{tabular*}{\textwidth}{|ll@{\extracolsep\fill}ccrrrr|}
+  \hline
+  \textbf{Invoice \#} & \textbf{Order \#} & \textbf{Date} & \textbf{Due} &
+  \textbf{Current} & \textbf{30} & \textbf{60} & \textbf{90} \\
+  \hline
+<?lsmb foreach invnumber ?>
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?> & <?lsmb invdate ?> & <?lsmb duedate ?> &
+  <?lsmb c0 ?> & <?lsmb c30 ?> & <?lsmb c60 ?> & <?lsmb c90 ?> \\
+<?lsmb end invnumber ?>
+  \multicolumn{8}{|l|}{\mbox{}} \\
+  \hline
+  \textbf{Subtotal} & & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?> \\
+  \hline
+\end{tabular*}
+
+\vspace{0.5cm}
+
+\hfill
+\begin{tabularx}{\textwidth}{Xr@{\hspace{1cm}}r@{}}
+  & \textbf{Total outstanding} & \textbf{<?lsmb total ?>}
+\end{tabularx}
+
+\vfill
+All amounts in \textbf{<?lsmb currency ?>} funds.
+
+Please make check payable to \textbf{<?lsmb company ?>}
+
+\end{document}
+

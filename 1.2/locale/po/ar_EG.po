@@ -1,0 +1,2681 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2003
+#
+# Egypt Arabic texts:
+#
+#     Author: Omar BaheyEldin <o@ab2.com>
+#             Rania Tayel
+#---- Please Use UTF-8 encoding
+#---- For some web servers you have to enable UTF-8
+#---- For Knoquere you have to edit the  font and use an arabic font
+# --- Good Luck
+#--- Omar BaheyEldin
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr ""
+
+msgid "AP"
+msgstr "موردين"
+
+msgid "AP Aging"
+msgstr "كشف حساب موردين"
+
+msgid "AP Outstanding"
+msgstr "ارصدة موردين متبقية"
+
+msgid "AP Transaction"
+msgstr "حركة حساب مورد"
+
+msgid "AP Transactions"
+msgstr "حركات حساب الموردين"
+
+msgid "AR"
+msgstr "عملاء"
+
+msgid "AR Aging"
+msgstr "كشوفات حسابات العملاء"
+
+msgid "AR Outstanding"
+msgstr "ارصدة عملاء "
+
+msgid "AR Transaction"
+msgstr "حركة حساب عميل"
+
+msgid "AR Transactions"
+msgstr "حركات حساب العملاء"
+
+msgid "AR/AP"
+msgstr ""
+
+msgid "About"
+msgstr "عن"
+
+msgid "Above"
+msgstr ""
+
+msgid "Access Control"
+msgstr ""
+
+msgid "Access Denied!"
+msgstr ""
+
+msgid "Account"
+msgstr "حساب"
+
+msgid "Account Number"
+msgstr "رقم حساب"
+
+msgid "Account Number missing!"
+msgstr "رقم الحساب غير موجود"
+
+msgid "Account Type"
+msgstr "نوع الحساب"
+
+msgid "Account Type missing!"
+msgstr "نوع الحساب غير موجود"
+
+msgid "Account deleted!"
+msgstr "ألغي الحساب"
+
+msgid "Account does not exist!"
+msgstr "الحساب غير موجود"
+
+msgid "Account saved!"
+msgstr "خزن الحساب"
+
+msgid "Accounting"
+msgstr "الحسابات"
+
+msgid "Accounting Menu"
+msgstr "قائمة الحسابات"
+
+msgid "Accounts"
+msgstr "حسابات"
+
+msgid "Accrual"
+msgstr "المجمعة"
+
+msgid "Activate Audit trail"
+msgstr ""
+
+msgid "Active"
+msgstr "فعال"
+
+msgid "Add"
+msgstr "اضافة"
+
+msgid "Add AP Transaction"
+msgstr ""
+
+msgid "Add AR Transaction"
+msgstr ""
+
+msgid "Add Account"
+msgstr "اضافة حساب"
+
+msgid "Add Assembly"
+msgstr "اضافة تجميع"
+
+msgid "Add Business"
+msgstr "اضافة نوع عمل"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "اضافة حركة تحويل النقدية"
+
+msgid "Add Customer"
+msgstr "اضافة عميل"
+
+msgid "Add Deduction"
+msgstr ""
+
+msgid "Add Department"
+msgstr "اضافة قسم"
+
+msgid "Add Employee"
+msgstr "اضافة موظف"
+
+msgid "Add Exchange Rate"
+msgstr ""
+
+msgid "Add GIFI"
+msgstr ""
+
+msgid "Add General Ledger Transaction"
+msgstr "اضافة حركة الأستاذ العام"
+
+msgid "Add Group"
+msgstr "اضافة مجموعة"
+
+msgid "Add Job"
+msgstr ""
+
+msgid "Add Labor/Overhead"
+msgstr "اضافة تكلفة عمالة"
+
+msgid "Add Language"
+msgstr "اضافة لغة"
+
+msgid "Add POS Invoice"
+msgstr "اضافة فاتورة نقطة بيع"
+
+msgid "Add Part"
+msgstr "اضافة جزء"
+
+msgid "Add Pricegroup"
+msgstr ""
+
+msgid "Add Project"
+msgstr "اضافة مشروع"
+
+msgid "Add Purchase Order"
+msgstr "اضافة طلب شراء"
+
+msgid "Add Quotation"
+msgstr "اضافة عرض سعر "
+
+msgid "Add Request for Quotation"
+msgstr "اضافة عرض سعر مورد"
+
+msgid "Add SIC"
+msgstr "اضافة كود صناعى قياسى"
+
+msgid "Add Sales Invoice"
+msgstr "اضافة فاتورة بيع"
+
+msgid "Add Sales Order"
+msgstr "اضافة طلب بيع"
+
+msgid "Add Service"
+msgstr "اضافة خدمة"
+
+msgid "Add Timecard"
+msgstr ""
+
+msgid "Add Transaction"
+msgstr "اضافة حركة"
+
+msgid "Add User"
+msgstr "اضافة مستخدم"
+
+msgid "Add Vendor"
+msgstr "اضافة مورد"
+
+msgid "Add Vendor Invoice"
+msgstr "اضافة فاتورة المورد"
+
+msgid "Add Warehouse"
+msgstr "اضافة مخزن"
+
+msgid "Address"
+msgstr "العنوان"
+
+msgid "Administration"
+msgstr "الادارة"
+
+msgid "Administrator"
+msgstr "المدير"
+
+msgid "After Deduction"
+msgstr ""
+
+msgid "All"
+msgstr "الكل"
+
+msgid "All Accounts"
+msgstr "كل الحسابات"
+
+msgid "All Datasets up to date!"
+msgstr "كل البيانات حديثة"
+
+msgid "All Items"
+msgstr "الكل"
+
+msgid "Allowances"
+msgstr ""
+
+msgid "Amount"
+msgstr "الكمية"
+
+msgid "Amount Due"
+msgstr "الرصيد "
+
+msgid "Amount missing!"
+msgstr "الكمية غير موجودة"
+
+msgid "Apr"
+msgstr "ابريل"
+
+msgid "April"
+msgstr "ابريل"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "هل انت متأكد انك تريد الغاء رقم الفاتروة "
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "هل انت متأكد انك تريد الغاء رقم الطلب"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr ""
+
+msgid "Are you sure you want to delete Timecard for"
+msgstr ""
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "هل انت متأكد انك تريد الغاء الحركة"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr ""
+
+msgid "Assemblies"
+msgstr "مجمعات"
+
+msgid "Assemblies restocked!"
+msgstr ""
+
+msgid "Assembly"
+msgstr ""
+
+msgid "Assembly stocked!"
+msgstr ""
+
+msgid "Asset"
+msgstr "أصول"
+
+msgid "Attachment"
+msgstr "مرفقات"
+
+msgid "Audit Control"
+msgstr "التحكم في المراجعة"
+
+msgid "Audit trail disabled"
+msgstr ""
+
+msgid "Audit trail enabled"
+msgstr ""
+
+msgid "Audit trail removed up to"
+msgstr ""
+
+msgid "Aug"
+msgstr "اغسطس"
+
+msgid "August"
+msgstr "اغسطس"
+
+msgid "Average Cost"
+msgstr ""
+
+msgid "Avg Cost"
+msgstr ""
+
+msgid "BIC"
+msgstr ""
+
+msgid "BOM"
+msgstr ""
+
+msgid "Backup"
+msgstr "نسخة احتياطية "
+
+msgid "Backup sent to"
+msgstr "نسخة احتياطية ارسلت الى"
+
+msgid "Balance"
+msgstr "رصيد"
+
+msgid "Balance Sheet"
+msgstr "الميزانية"
+
+msgid "Based on"
+msgstr ""
+
+msgid "Bcc"
+msgstr "نسخة غير مرئية"
+
+msgid "Before Deduction"
+msgstr ""
+
+msgid "Beginning Balance"
+msgstr "بداية الميزانية"
+
+msgid "Below"
+msgstr ""
+
+msgid "Billing Address"
+msgstr "عنوان ارسال الفواتير"
+
+msgid "Bin"
+msgstr ""
+
+msgid "Bin List"
+msgstr ""
+
+msgid "Bin Lists"
+msgstr ""
+
+msgid "Books are open"
+msgstr ""
+
+msgid "Break"
+msgstr ""
+
+msgid "Business"
+msgstr ""
+
+msgid "Business Number"
+msgstr "الرقم الضريبى"
+
+msgid "Business deleted!"
+msgstr ""
+
+msgid "Business saved!"
+msgstr ""
+
+msgid "C"
+msgstr ""
+
+msgid "COGS"
+msgstr "تكلفة البضاعة المباعة"
+
+msgid "COGS account does not exist!"
+msgstr ""
+
+msgid "Cannot add timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot change timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot create Assembly"
+msgstr ""
+
+msgid "Cannot create Labor"
+msgstr ""
+
+msgid "Cannot create Lock!"
+msgstr ""
+
+msgid "Cannot create Part"
+msgstr ""
+
+msgid "Cannot create Service"
+msgstr ""
+
+msgid "Cannot delete Timecard!"
+msgstr ""
+
+msgid "Cannot delete account!"
+msgstr "لا يمكن الغاء الحساب "
+
+msgid "Cannot delete customer!"
+msgstr "لا يمكن الغاء العميل"
+
+msgid "Cannot delete default account!"
+msgstr "لا يمكن الغاء الحساب الاساسي"
+
+msgid "Cannot delete invoice!"
+msgstr "لا يمكن الغاء الفاتورة"
+
+msgid "Cannot delete item!"
+msgstr "لا يمكن الغاء الوحدة"
+
+msgid "Cannot delete order!"
+msgstr "لا يمكن الغاء الطلب"
+
+msgid "Cannot delete quotation!"
+msgstr ""
+
+msgid "Cannot delete transaction!"
+msgstr "لا يمكن الغاء الحركة"
+
+msgid "Cannot delete vendor!"
+msgstr "لا يمكن الغاء المورد"
+
+msgid "Cannot post Payment!"
+msgstr "لا يمكن تسجيل المدفوعات"
+
+msgid "Cannot post Receipt!"
+msgstr ""
+
+msgid "Cannot post invoice for a closed period!"
+msgstr ""
+
+msgid "Cannot post invoice!"
+msgstr "لا يمكن تسجيل الفاتورة"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "لا يمكن تسجيل المدفوعات لفترة مغلقة"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "لا يمكن تسجيل الحركة لفترة مغلقة"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr ""
+
+msgid "Cannot post transaction!"
+msgstr "لا يمكن تسجيل الحركة"
+
+msgid "Cannot remove files!"
+msgstr ""
+
+msgid "Cannot save account!"
+msgstr "لا يمكن تخزين الحساب"
+
+msgid "Cannot save defaults!"
+msgstr ""
+
+msgid "Cannot save order!"
+msgstr "لا يمكن تخزين الطلب"
+
+msgid "Cannot save preferences!"
+msgstr ""
+
+msgid "Cannot save quotation!"
+msgstr ""
+
+msgid "Cannot save timecard for a closed period!"
+msgstr ""
+
+msgid "Cannot save timecard!"
+msgstr ""
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr ""
+
+msgid "Cannot set multiple options for"
+msgstr ""
+
+msgid "Cannot set multiple options for Item"
+msgstr ""
+
+msgid "Cannot stock Assembly!"
+msgstr ""
+
+msgid "Cannot stock assemblies!"
+msgstr ""
+
+msgid "Cash"
+msgstr "النقدية"
+
+msgid "Cc"
+msgstr "نسخة اخرى"
+
+msgid "Change"
+msgstr "تغيير"
+
+msgid "Change Admin Password"
+msgstr ""
+
+msgid "Change Password"
+msgstr "تغيير كلمة السر"
+
+msgid "Charge"
+msgstr ""
+
+msgid "Chart of Accounts"
+msgstr "قائمة الحسابات"
+
+msgid "Check"
+msgstr "شيك"
+
+msgid "Check Inventory"
+msgstr "مراجعة مخزون"
+
+msgid "Checks"
+msgstr "الشيكات"
+
+msgid "City"
+msgstr "مدينة"
+
+msgid "Cleared"
+msgstr "مغلق"
+
+msgid "Click on login name to edit!"
+msgstr ""
+
+msgid "Clocked"
+msgstr ""
+
+msgid "Close Books up to"
+msgstr "اقفال الدفاتر حتى"
+
+msgid "Closed"
+msgstr "مغلق"
+
+msgid "Code"
+msgstr "كود"
+
+msgid "Code missing!"
+msgstr ""
+
+msgid "Company"
+msgstr "شركة"
+
+msgid "Company Name"
+msgstr "اسم  الشركة"
+
+msgid "Compare to"
+msgstr "مقارنة "
+
+msgid "Completed"
+msgstr ""
+
+msgid "Components"
+msgstr "مكونات"
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Confirm!"
+msgstr "تاكيد"
+
+msgid "Connect to"
+msgstr "صل"
+
+msgid "Contact"
+msgstr "شخص الاتصال"
+
+msgid "Continue"
+msgstr "تابع"
+
+msgid "Contra"
+msgstr ""
+
+msgid "Copies"
+msgstr "نسخ"
+
+msgid "Copy to COA"
+msgstr ""
+
+msgid "Cost"
+msgstr "تكلفة"
+
+msgid "Cost Center"
+msgstr "مركز تكلفة"
+
+msgid "Could not save pricelist!"
+msgstr ""
+
+msgid "Could not save!"
+msgstr ""
+
+msgid "Could not transfer Inventory!"
+msgstr ""
+
+msgid "Country"
+msgstr "دولة"
+
+msgid "Create Chart of Accounts"
+msgstr "انشاء قائمة حسابات"
+
+msgid "Create Dataset"
+msgstr "انشاء مجموعة بيانات"
+
+msgid "Credit"
+msgstr "دائن"
+
+msgid "Credit Limit"
+msgstr "حد الائتمان"
+
+msgid "Curr"
+msgstr "عملة"
+
+msgid "Currency"
+msgstr "عملة"
+
+msgid "Current"
+msgstr "الحالي"
+
+msgid "Current Earnings"
+msgstr ""
+
+msgid "Customer"
+msgstr "العميل"
+
+msgid "Customer History"
+msgstr "بيانات تاريخية للعميل"
+
+msgid "Customer Number"
+msgstr "رقم العميل"
+
+msgid "Customer deleted!"
+msgstr "الغي العميل"
+
+msgid "Customer missing!"
+msgstr "عميل غير موجود"
+
+msgid "Customer not on file!"
+msgstr " عميل غير موجود في الملف"
+
+msgid "Customer saved!"
+msgstr "خزن العميل"
+
+msgid "Customers"
+msgstr "العملاء"
+
+msgid "DBI not installed!"
+msgstr ""
+
+msgid "DOB"
+msgstr ""
+
+msgid "Database"
+msgstr "قواعد البيانات"
+
+msgid "Database Administration"
+msgstr "ادارة قواعد البيانات"
+
+msgid "Database Driver not checked!"
+msgstr ""
+
+msgid "Database Host"
+msgstr "مضيف قواعد البيانات"
+
+msgid "Database User missing!"
+msgstr " مستخدم قواعد البيانات غير موجود"
+
+msgid "Dataset"
+msgstr "مجموعة بيانات"
+
+msgid "Dataset is newer than version!"
+msgstr ""
+
+msgid "Dataset missing!"
+msgstr "مجموعة بيانات غير موجودة"
+
+msgid "Dataset updated!"
+msgstr "مجموعة بيانات معدلة"
+
+msgid "Date"
+msgstr "التاريخ"
+
+msgid "Date Format"
+msgstr "تنسيق البيانات"
+
+msgid "Date Paid"
+msgstr "تاريخ الدفع"
+
+msgid "Date Received"
+msgstr ""
+
+msgid "Date missing!"
+msgstr "التاريخ غير موجود"
+
+msgid "Date received missing!"
+msgstr ""
+
+msgid "Date worked"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Day(s)"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Debit"
+msgstr "مدين"
+
+msgid "Dec"
+msgstr "ديسمبر"
+
+msgid "December"
+msgstr "ديسمبر"
+
+msgid "Decimalplaces"
+msgstr "علامات عشرية"
+
+msgid "Decrease"
+msgstr "تناقص"
+
+msgid "Deduct after"
+msgstr ""
+
+msgid "Deduction deleted!"
+msgstr ""
+
+msgid "Deduction saved!"
+msgstr ""
+
+msgid "Deductions"
+msgstr ""
+
+msgid "Default Template"
+msgstr ""
+
+msgid "Defaults"
+msgstr "معطيات النظام"
+
+msgid "Defaults saved!"
+msgstr ""
+
+msgid "Delete"
+msgstr "الغاء"
+
+msgid "Delete Account"
+msgstr "الغاء الحساب"
+
+msgid "Delete Dataset"
+msgstr "الغاء مجموعة البيانات"
+
+msgid "Delete Schedule"
+msgstr ""
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr ""
+
+msgid "Delivery Date"
+msgstr "تاريخ الوصول"
+
+msgid "Department"
+msgstr "قسم"
+
+msgid "Department deleted!"
+msgstr ""
+
+msgid "Department saved!"
+msgstr ""
+
+msgid "Departments"
+msgstr "اقسام"
+
+msgid "Deposit"
+msgstr "إيداع"
+
+msgid "Description"
+msgstr "وصف"
+
+msgid "Description Translations"
+msgstr "ترجمة مواصفات"
+
+msgid "Description missing!"
+msgstr ""
+
+msgid "Detail"
+msgstr "تفصيلى"
+
+msgid "Difference"
+msgstr "اختلافات"
+
+msgid "Directory"
+msgstr ""
+
+msgid "Discount"
+msgstr "خصم"
+
+msgid "Done"
+msgstr "نفذ"
+
+msgid "Drawing"
+msgstr "رسم"
+
+msgid "Driver"
+msgstr ""
+
+msgid "Dropdown Limit"
+msgstr ""
+
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+msgid "Due Date missing!"
+msgstr "تاريخ الاستحقاق غير موجود"
+
+msgid "E-mail"
+msgstr "بريد الكتروني"
+
+msgid "E-mail Statement to"
+msgstr ""
+
+msgid "E-mail address missing!"
+msgstr "عنوان البريد الالكتروني غير موجود"
+
+msgid "E-mail message"
+msgstr ""
+
+msgid "E-mailed"
+msgstr ""
+
+msgid "Edit"
+msgstr "تعديل"
+
+msgid "Edit AP Transaction"
+msgstr ""
+
+msgid "Edit AR Transaction"
+msgstr ""
+
+msgid "Edit Account"
+msgstr "تعديل الحساب"
+
+msgid "Edit Assembly"
+msgstr ""
+
+msgid "Edit Business"
+msgstr ""
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "تعديل حركة تحويل النقدية"
+
+msgid "Edit Customer"
+msgstr "تعديل بيانات العميل"
+
+msgid "Edit Deduction"
+msgstr ""
+
+msgid "Edit Department"
+msgstr ""
+
+msgid "Edit Description Translations"
+msgstr ""
+
+msgid "Edit Employee"
+msgstr ""
+
+msgid "Edit GIFI"
+msgstr ""
+
+msgid "Edit General Ledger Transaction"
+msgstr "تعديل حركة الأستاذ العام"
+
+msgid "Edit Group"
+msgstr "تعديل مجموعة"
+
+msgid "Edit Job"
+msgstr ""
+
+msgid "Edit Labor/Overhead"
+msgstr ""
+
+msgid "Edit Language"
+msgstr ""
+
+msgid "Edit POS Invoice"
+msgstr "تعديل فاتورة أمر الشراء"
+
+msgid "Edit Part"
+msgstr "تعديل جزء"
+
+msgid "Edit Preferences for"
+msgstr ""
+
+msgid "Edit Pricegroup"
+msgstr ""
+
+msgid "Edit Project"
+msgstr "تعديل مشروع"
+
+msgid "Edit Purchase Order"
+msgstr "تعديل امر شراء"
+
+msgid "Edit Quotation"
+msgstr ""
+
+msgid "Edit Request for Quotation"
+msgstr ""
+
+msgid "Edit SIC"
+msgstr ""
+
+msgid "Edit Sales Invoice"
+msgstr "تعديل فاتورة مبيعات"
+
+msgid "Edit Sales Order"
+msgstr "تعديل امر مبيعات"
+
+msgid "Edit Service"
+msgstr "تعديل خدمة"
+
+msgid "Edit Template"
+msgstr "تعديل عينة"
+
+msgid "Edit Timecard"
+msgstr ""
+
+msgid "Edit User"
+msgstr "تعديل مستخدم "
+
+msgid "Edit Vendor"
+msgstr "تعديل مورد"
+
+msgid "Edit Vendor Invoice"
+msgstr "تعديل فاتورة مورد"
+
+msgid "Edit Warehouse"
+msgstr ""
+
+msgid "Employee"
+msgstr "الموظف"
+
+msgid "Employee Name"
+msgstr "اسم الموظف"
+
+msgid "Employee Number"
+msgstr ""
+
+msgid "Employee deleted!"
+msgstr ""
+
+msgid "Employee pays"
+msgstr ""
+
+msgid "Employee saved!"
+msgstr ""
+
+msgid "Employees"
+msgstr "العاملين"
+
+msgid "Employer"
+msgstr ""
+
+msgid "Employer pays"
+msgstr ""
+
+msgid "Enddate"
+msgstr "تاريخ نهاية العمل"
+
+msgid "Ends"
+msgstr ""
+
+msgid "Enforce transaction reversal for all dates"
+msgstr ""
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "ادخل  3 حروف للعملة مفصولة ":" )CAD:USD:EUR) للعملة المحلية و العملات الاجنبية"
+
+msgid "Equity"
+msgstr "رأس المال"
+
+msgid "Every"
+msgstr ""
+
+msgid "Excempt age <"
+msgstr ""
+
+msgid "Exch"
+msgstr "سعر  الصرف"
+
+msgid "Exchange Rate"
+msgstr "سعر الصرف"
+
+msgid "Exchange rate for payment missing!"
+msgstr "سعر الصرف للمدفوعات غير موجود"
+
+msgid "Exchange rate missing!"
+msgstr "سعر الصرف غير موجود"
+
+msgid "Existing Datasets"
+msgstr "قاعدةالبيانات الحالية"
+
+msgid "Expense"
+msgstr "المصروفات"
+
+msgid "Expense account does not exist!"
+msgstr ""
+
+msgid "Expense/Asset"
+msgstr "الخصوم/الأصول"
+
+msgid "Extended"
+msgstr "اجمالى"
+
+msgid "FX"
+msgstr ""
+
+msgid "Failed to save order!"
+msgstr ""
+
+msgid "Fax"
+msgstr "الفاكس"
+
+msgid "Feb"
+msgstr "فبراير"
+
+msgid "February"
+msgstr "فبراير"
+
+msgid "For"
+msgstr ""
+
+msgid "Foreign Exchange Gain"
+msgstr "ارباح التحويل الاجنبي"
+
+msgid "Foreign Exchange Loss"
+msgstr "خسائر التحويل الاجنبي"
+
+msgid "Friday"
+msgstr ""
+
+msgid "From"
+msgstr "من"
+
+msgid "From Warehouse"
+msgstr ""
+
+msgid "GIFI"
+msgstr ""
+
+msgid "GIFI deleted!"
+msgstr ""
+
+msgid "GIFI missing!"
+msgstr ""
+
+msgid "GIFI saved!"
+msgstr ""
+
+msgid "GL"
+msgstr ""
+
+msgid "GL Reference Number"
+msgstr ""
+
+msgid "GL Transaction"
+msgstr "حركات الاستاذ العام"
+
+msgid "General Ledger"
+msgstr "الاستاذ العام"
+
+msgid "Generate"
+msgstr ""
+
+msgid "Generate Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr ""
+
+msgid "Generate Sales Orders"
+msgstr ""
+
+msgid "Goods & Services"
+msgstr "البضاعة و الخدمات"
+
+msgid "Group"
+msgstr "مجموعة"
+
+msgid "Group Items"
+msgstr "مجموعة الوحدات"
+
+msgid "Group Translations"
+msgstr "ترجمة مجوعات"
+
+msgid "Group deleted!"
+msgstr "الغيت المجموعة"
+
+msgid "Group missing!"
+msgstr "مجموعة غير موجودة"
+
+msgid "Group saved!"
+msgstr "تخزين المجموعة"
+
+msgid "Groups"
+msgstr "مجموعات"
+
+msgid "HR"
+msgstr "موارد بشرية"
+
+msgid "HTML Templates"
+msgstr ""
+
+msgid "Heading"
+msgstr "عنوان"
+
+msgid "History"
+msgstr "تاريخى"
+
+msgid "Home Phone"
+msgstr "تلفون المنزل"
+
+msgid "Host"
+msgstr "المضيف"
+
+msgid "Hostname missing!"
+msgstr "اسم المضيف غير موجود"
+
+msgid "IBAN"
+msgstr ""
+
+msgid "ID"
+msgstr "البطاقة الشخصية"
+
+msgid "Image"
+msgstr "صورة"
+
+msgid "In-line"
+msgstr "في الصف"
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Include Exchange Rate Difference"
+msgstr "اظهار تغيير سعر العملة"
+
+msgid "Include Payment"
+msgstr ""
+
+msgid "Include in Report"
+msgstr "ارفق في التقرير ------"
+
+msgid "Include in drop-down menus"
+msgstr "ضع الحساب فى قائمة الخيارات ---"
+
+msgid "Income"
+msgstr "الربح"
+
+msgid "Income Statement"
+msgstr "قائمة الدخل"
+
+msgid "Income account does not exist!"
+msgstr ""
+
+msgid "Incorrect Dataset version!"
+msgstr "نسخة غير صحيحة من مجموعة البيانات"
+
+msgid "Increase"
+msgstr "زيادة"
+
+msgid "Individual Items"
+msgstr "وحدات فردية"
+
+msgid "Internal Notes"
+msgstr "ملاحظات داخلية"
+
+msgid "Inventory"
+msgstr "مخزون"
+
+msgid "Inventory account does not exist!"
+msgstr ""
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr ""
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr ""
+
+msgid "Inventory saved!"
+msgstr ""
+
+msgid "Inventory transferred!"
+msgstr ""
+
+msgid "Invoice"
+msgstr "فاتورة"
+
+msgid "Invoice Date"
+msgstr "تاريخ الفاتورة"
+
+msgid "Invoice Date missing!"
+msgstr "تاريخ الفاتورة غير موجود"
+
+msgid "Invoice Number"
+msgstr "رقم الفاتورة"
+
+msgid "Invoice Number missing!"
+msgstr "رقم الفاتورة غير موجود"
+
+msgid "Invoice deleted!"
+msgstr "الغيت القاتورة"
+
+msgid "Invoices"
+msgstr "فواتير"
+
+msgid "Is this a summary account to record"
+msgstr "هل هذا الحساب ملخص لحساب لكى يتم تسجيله ----"
+
+msgid "Item already on pricelist!"
+msgstr ""
+
+msgid "Item deleted!"
+msgstr "الغيت الوحدة"
+
+msgid "Item not on file!"
+msgstr "الوحدة غير موجودة في الملف"
+
+msgid "Items"
+msgstr ""
+
+msgid "Jan"
+msgstr "يناير"
+
+msgid "January"
+msgstr "يناير"
+
+msgid "Job"
+msgstr ""
+
+msgid "Job Name"
+msgstr ""
+
+msgid "Job Number"
+msgstr ""
+
+msgid "Job Number missing!"
+msgstr ""
+
+msgid "Job deleted!"
+msgstr ""
+
+msgid "Job saved!"
+msgstr ""
+
+msgid "Jobs"
+msgstr ""
+
+msgid "Jul"
+msgstr "يولية"
+
+msgid "July"
+msgstr "يولية"
+
+msgid "Jun"
+msgstr "يونية"
+
+msgid "June"
+msgstr "يونية"
+
+msgid "LaTeX Templates"
+msgstr ""
+
+msgid "Labor Code"
+msgstr ""
+
+msgid "Labor/Overhead"
+msgstr "تكلفة عمالة"
+
+msgid "Language"
+msgstr "اللغة"
+
+msgid "Language deleted!"
+msgstr ""
+
+msgid "Language saved!"
+msgstr ""
+
+msgid "Languages"
+msgstr "اللغات"
+
+msgid "Languages not defined!"
+msgstr ""
+
+msgid "Last Cost"
+msgstr ""
+
+msgid "Last Numbers & Default Accounts"
+msgstr "اخر رقم و الحساب الرئيسي"
+
+msgid "Lead"
+msgstr ""
+
+msgid "Leadtime"
+msgstr "مدة التسليم"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr ""
+
+msgid "Liability"
+msgstr "التزامات"
+
+msgid "Licensed to"
+msgstr "ترخيص"
+
+msgid "Line Total"
+msgstr "اجمالى السطر"
+
+msgid "Link"
+msgstr "ربط"
+
+msgid "Link Accounts"
+msgstr "ربط الحسابات"
+
+msgid "List"
+msgstr ""
+
+msgid "List Accounts"
+msgstr "قائمة الحسابات"
+
+msgid "List Businesses"
+msgstr "قائمةانواع  العمل"
+
+msgid "List Departments"
+msgstr "قائمة الاقسام"
+
+msgid "List GIFI"
+msgstr ""
+
+msgid "List Languages"
+msgstr "قائمة اللغات"
+
+msgid "List Price"
+msgstr "قائمة الاسعار"
+
+msgid "List Projects"
+msgstr "قائمة المشروعات"
+
+msgid "List SIC"
+msgstr "قائمة الاكواد الصناعية القياسية"
+
+msgid "List Transactions"
+msgstr "قائمة الحركات"
+
+msgid "List Warehouses"
+msgstr "قائمة المخازن"
+
+msgid "Lock System"
+msgstr ""
+
+msgid "Lockfile created!"
+msgstr ""
+
+msgid "Lockfile removed!"
+msgstr ""
+
+msgid "Login"
+msgstr "دخول"
+
+msgid "Login name missing!"
+msgstr "اسم مستخدم غير موجود "
+
+msgid "Logout"
+msgstr "خروج"
+
+msgid "Make"
+msgstr "افعل"
+
+msgid "Manager"
+msgstr "مدير"
+
+msgid "Mar"
+msgstr "مارس"
+
+msgid "March"
+msgstr "مارس"
+
+msgid "Marked entries printed!"
+msgstr ""
+
+msgid "Markup"
+msgstr "نسبة الربح"
+
+msgid "Maximum"
+msgstr ""
+
+msgid "May"
+msgstr "مايو"
+
+msgid "May "
+msgstr "مايو"
+
+msgid "Memo"
+msgstr "ملاحظات"
+
+msgid "Menu Width"
+msgstr ""
+
+msgid "Message"
+msgstr "رسالة"
+
+msgid "Method"
+msgstr "طريقة"
+
+msgid "Microfiche"
+msgstr ""
+
+msgid "Model"
+msgstr "موديل"
+
+msgid "Monday"
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "Month(s)"
+msgstr ""
+
+msgid "Months"
+msgstr ""
+
+msgid "Multibyte Encoding"
+msgstr ""
+
+msgid "N/A"
+msgstr "غير موجود"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "Name missing!"
+msgstr "اسم غير موجود"
+
+msgid "New Templates"
+msgstr "عينة جديدة"
+
+msgid "New Window"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Next Date"
+msgstr ""
+
+msgid "Next Number"
+msgstr ""
+
+msgid "No"
+msgstr "لا"
+
+msgid "No Database Drivers available!"
+msgstr ""
+
+msgid "No Dataset selected!"
+msgstr ""
+
+msgid "No Employees on file!"
+msgstr ""
+
+msgid "No Labor codes on file!"
+msgstr ""
+
+msgid "No email address for"
+msgstr ""
+
+msgid "No open Jobs!"
+msgstr ""
+
+msgid "No open Projects!"
+msgstr ""
+
+msgid "No."
+msgstr "رقم"
+
+msgid "Non-taxable"
+msgstr "غير خاضع  للضريبة"
+
+msgid "Non-taxable Purchases"
+msgstr "المبيعات المعفاة من الضرائب"
+
+msgid "Non-taxable Sales"
+msgstr "المبيعات المعفاة من الضرائب"
+
+msgid "Non-tracking Items"
+msgstr ""
+
+msgid "Notes"
+msgstr "ملاحظات"
+
+msgid "Nothing entered!"
+msgstr ""
+
+msgid "Nothing selected!"
+msgstr "لم يتم الاختيار"
+
+msgid "Nothing to delete!"
+msgstr "لم يتم الالغاء"
+
+msgid "Nothing to print!"
+msgstr ""
+
+msgid "Nothing to transfer!"
+msgstr ""
+
+msgid "Nov"
+msgstr "نوفمبر"
+
+msgid "November"
+msgstr "نوفمبر"
+
+msgid "Number"
+msgstr "الرقم"
+
+msgid "Number Format"
+msgstr ""
+
+msgid "Number missing in Row"
+msgstr "رقم غير موجود في الصف"
+
+msgid "O"
+msgstr ""
+
+msgid "OH"
+msgstr ""
+
+msgid "Obsolete"
+msgstr ""
+
+msgid "Oct"
+msgstr "اكتوبر"
+
+msgid "October"
+msgstr "اكتوبر"
+
+msgid "On Hand"
+msgstr "بالمخزن"
+
+msgid "Open"
+msgstr "فتح"
+
+msgid "Oracle Database Administration"
+msgstr ""
+
+msgid "Order"
+msgstr "امر"
+
+msgid "Order Date"
+msgstr "تاريخ الامر"
+
+msgid "Order Date missing!"
+msgstr "تاريخ الامر غير موجود"
+
+msgid "Order Entry"
+msgstr "ادخال الامر"
+
+msgid "Order Number"
+msgstr "رقم الامر"
+
+msgid "Order Number missing!"
+msgstr "رقم الامر غير موجود"
+
+msgid "Order deleted!"
+msgstr "الغي الامر"
+
+msgid "Order generation failed!"
+msgstr ""
+
+msgid "Order saved!"
+msgstr "خزن الامر"
+
+msgid "Orders generated!"
+msgstr ""
+
+msgid "Orphaned"
+msgstr ""
+
+msgid "Out of balance transaction!"
+msgstr ""
+
+msgid "Out of balance!"
+msgstr ""
+
+msgid "Outstanding"
+msgstr "ارصدة"
+
+msgid "PDF"
+msgstr ""
+
+msgid "PO Number"
+msgstr ""
+
+msgid "POS"
+msgstr "نقطة بيع"
+
+msgid "POS Invoice"
+msgstr "فاتورة امر الشراء"
+
+msgid "Packing List"
+msgstr "قائمة تعبئة"
+
+msgid "Packing List Date missing!"
+msgstr "تاريخ بوليصة الشحن غير موجود"
+
+msgid "Packing List Number missing!"
+msgstr "رقم بوليصة الشحن غير موجود"
+
+msgid "Packing Lists"
+msgstr "قوائم تعبئة"
+
+msgid "Paid"
+msgstr "المدفوع"
+
+msgid "Part"
+msgstr "جزء"
+
+msgid "Part Number"
+msgstr ""
+
+msgid "Partnumber"
+msgstr ""
+
+msgid "Parts"
+msgstr "الاجزاء"
+
+msgid "Password"
+msgstr "كلمة السر"
+
+msgid "Password changed!"
+msgstr "تغيير كلمة السر"
+
+msgid "Password does not match!"
+msgstr ""
+
+msgid "Passwords do not match!"
+msgstr ""
+
+msgid "Payables"
+msgstr "المدفوعات"
+
+msgid "Payment"
+msgstr "الدفع النقدى"
+
+msgid "Payment date missing!"
+msgstr "تاريخ الدفع غير موجود"
+
+msgid "Payment posted!"
+msgstr "تم ترحيل مدفوعات"
+
+msgid "Payments"
+msgstr "المدفوعات"
+
+msgid "Payments posted!"
+msgstr ""
+
+msgid "Payroll Deduction"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Pg Database Administration"
+msgstr ""
+
+msgid "PgPP Database Administration"
+msgstr ""
+
+msgid "Phone"
+msgstr "تليفون"
+
+msgid "Pick List"
+msgstr ""
+
+msgid "Pick Lists"
+msgstr ""
+
+msgid "Port"
+msgstr ""
+
+msgid "Port missing!"
+msgstr ""
+
+msgid "Pos"
+msgstr ""
+
+msgid "Post"
+msgstr "تسجيل"
+
+msgid "Post as new"
+msgstr "سجل كجديد"
+
+msgid "Posted!"
+msgstr "سجل"
+
+msgid "Posting"
+msgstr ""
+
+msgid "Posting failed!"
+msgstr ""
+
+msgid "Postscript"
+msgstr ""
+
+msgid "Preferences"
+msgstr ""
+
+msgid "Preferences saved!"
+msgstr ""
+
+msgid "Prepayment"
+msgstr ""
+
+msgid "Price"
+msgstr "سعر"
+
+msgid "Pricegroup"
+msgstr "مجموعة سعرية"
+
+msgid "Pricegroup deleted!"
+msgstr ""
+
+msgid "Pricegroup missing!"
+msgstr ""
+
+msgid "Pricegroup saved!"
+msgstr ""
+
+msgid "Pricegroups"
+msgstr "مجموعات سعرية"
+
+msgid "Pricelist"
+msgstr ""
+
+msgid "Print"
+msgstr "طباعة"
+
+msgid "Print and Post"
+msgstr ""
+
+msgid "Print and Post as new"
+msgstr ""
+
+msgid "Print and Save"
+msgstr ""
+
+msgid "Print and Save as new"
+msgstr ""
+
+msgid "Print and post as new"
+msgstr ""
+
+msgid "Print and save as new"
+msgstr ""
+
+msgid "Printed"
+msgstr ""
+
+msgid "Printer"
+msgstr "طابعة"
+
+msgid "Printing"
+msgstr ""
+
+msgid "Printing ... "
+msgstr ""
+
+msgid "Process Transactions"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Profit Center"
+msgstr "مركز ربح"
+
+msgid "Project"
+msgstr "مشروع"
+
+msgid "Project Description Translations"
+msgstr "ترجمة وصف المشروع"
+
+msgid "Project Name"
+msgstr ""
+
+msgid "Project Number"
+msgstr "رقم المشروع"
+
+msgid "Project Number missing!"
+msgstr "رقم المشروع غير موجود"
+
+msgid "Project Transactions"
+msgstr "حركات  المشروع"
+
+msgid "Project deleted!"
+msgstr "الغي المشروع"
+
+msgid "Project not on file!"
+msgstr "المشروع ليس فى الملفات"
+
+msgid "Project saved!"
+msgstr "خزن المشروع"
+
+msgid "Project/Job Name"
+msgstr ""
+
+msgid "Project/Job Number"
+msgstr ""
+
+msgid "Projects"
+msgstr "مشروعات"
+
+msgid "Purchase Order"
+msgstr "امر شراء"
+
+msgid "Purchase Order Number"
+msgstr ""
+
+msgid "Purchase Orders"
+msgstr "اوامر شراء"
+
+msgid "Qty"
+msgstr "الكمية"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr ""
+
+msgid "Quarter"
+msgstr ""
+
+msgid "Quotation"
+msgstr "عروض اسعار للعملاء"
+
+msgid "Quotation "
+msgstr ""
+
+msgid "Quotation Date"
+msgstr "تاريخ عرض السعر"
+
+msgid "Quotation Date missing!"
+msgstr ""
+
+msgid "Quotation Number"
+msgstr "رقم عرض السعر"
+
+msgid "Quotation Number missing!"
+msgstr ""
+
+msgid "Quotation deleted!"
+msgstr ""
+
+msgid "Quotations"
+msgstr "عروض اسعار"
+
+msgid "R"
+msgstr ""
+
+msgid "RFQ"
+msgstr ""
+
+msgid "RFQ "
+msgstr ""
+
+msgid "RFQ Number"
+msgstr "رقم  عرض السعر"
+
+msgid "RFQs"
+msgstr "عروض اسعار موردين"
+
+msgid "ROP"
+msgstr ""
+
+msgid "Rate"
+msgstr "النسبة"
+
+msgid "Rate missing!"
+msgstr ""
+
+msgid "Recd"
+msgstr ""
+
+msgid "Receipt"
+msgstr "الوارد"
+
+msgid "Receipt posted!"
+msgstr ""
+
+msgid "Receipts"
+msgstr "الواردات"
+
+msgid "Receivables"
+msgstr "المقبوضات"
+
+msgid "Receive"
+msgstr "شحن وارد"
+
+msgid "Receive Merchandise"
+msgstr "استلام بضاعة"
+
+msgid "Reconciliation"
+msgstr "تسويات"
+
+msgid "Reconciliation Report"
+msgstr "تقرير  التسويات"
+
+msgid "Record in"
+msgstr "في السجل"
+
+msgid "Recurring Transaction"
+msgstr ""
+
+msgid "Recurring Transactions"
+msgstr ""
+
+msgid "Reference"
+msgstr "مرجع"
+
+msgid "Remaining"
+msgstr "متبقى"
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove Audit trail up to"
+msgstr ""
+
+msgid "Removed spoolfiles!"
+msgstr ""
+
+msgid "Removing marked entries from queue ..."
+msgstr ""
+
+msgid "Repeat"
+msgstr ""
+
+msgid "Report for"
+msgstr "تقرير لاجل"
+
+msgid "Reports"
+msgstr "تقارير"
+
+msgid "Req"
+msgstr ""
+
+msgid "Request for Quotation"
+msgstr ""
+
+msgid "Request for Quotations"
+msgstr "عروض اسعار مطلوبة"
+
+msgid "Required by"
+msgstr "مطلوب من قبل"
+
+msgid "Retained Earnings"
+msgstr "ارباح محجوزة"
+
+msgid "Role"
+msgstr "الوظيفة"
+
+msgid "S"
+msgstr ""
+
+msgid "SIC"
+msgstr "الاكواد الصناعية القياسية"
+
+msgid "SIC deleted!"
+msgstr ""
+
+msgid "SIC saved!"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "SSN"
+msgstr ""
+
+msgid "Sale"
+msgstr "بيع"
+
+msgid "Sales"
+msgstr "مبيعات"
+
+msgid "Sales Invoice"
+msgstr "فاتورة المبيعات"
+
+msgid "Sales Invoice "
+msgstr ""
+
+msgid "Sales Invoice."
+msgstr ""
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr ""
+
+msgid "Sales Invoices"
+msgstr "فواتير المبيعات"
+
+msgid "Sales Order"
+msgstr "امر بيع"
+
+msgid "Sales Order Number"
+msgstr ""
+
+msgid "Sales Orders"
+msgstr "اوامر بيع"
+
+msgid "Sales Quotation Number"
+msgstr ""
+
+msgid "Salesperson"
+msgstr "مندوب مبيعات"
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save"
+msgstr "تخزين"
+
+msgid "Save Pricelist"
+msgstr ""
+
+msgid "Save Schedule"
+msgstr ""
+
+msgid "Save as new"
+msgstr "خزن كجديد"
+
+msgid "Save to File"
+msgstr "خزن كملف"
+
+msgid "Saving"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Scheduled"
+msgstr ""
+
+msgid "Screen"
+msgstr "الشاشة"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Select"
+msgstr ""
+
+msgid "Select Customer"
+msgstr ""
+
+msgid "Select Vendor"
+msgstr ""
+
+msgid "Select a Printer!"
+msgstr ""
+
+msgid "Select a printer!"
+msgstr ""
+
+msgid "Select all"
+msgstr "اختر الكل"
+
+msgid "Select from one of the items below"
+msgstr "اختر وحدة من الوحدات"
+
+msgid "Select from one of the names below"
+msgstr "اختر اسم من الاسماء"
+
+msgid "Select from one of the projects below"
+msgstr "اختر  مشروع من المشروعات التالية"
+
+msgid "Select items"
+msgstr ""
+
+msgid "Select payment"
+msgstr ""
+
+msgid "Select postscript or PDF!"
+msgstr ""
+
+msgid "Select txt, postscript or PDF!"
+msgstr ""
+
+msgid "Sell"
+msgstr ""
+
+msgid "Sell Price"
+msgstr "سعر البيع"
+
+msgid "Send by E-Mail"
+msgstr "ارسل بالبريد الالكتروني"
+
+msgid "Sending"
+msgstr ""
+
+msgid "Sep"
+msgstr "سبتمبر"
+
+msgid "September"
+msgstr "سبتمبر"
+
+msgid "Serial No."
+msgstr ""
+
+msgid "Serial Number"
+msgstr "رقم  مسلسل"
+
+msgid "Service"
+msgstr "خدمة"
+
+msgid "Service Code"
+msgstr ""
+
+msgid "Service/Labor Code"
+msgstr ""
+
+msgid "Services"
+msgstr "خدمات"
+
+msgid "Session Timeout"
+msgstr ""
+
+msgid "Session expired!"
+msgstr ""
+
+msgid "Setup Templates"
+msgstr ""
+
+msgid "Ship"
+msgstr "شحن صادر"
+
+msgid "Ship Merchandise"
+msgstr "شحن بضاعة للخارج"
+
+msgid "Ship to"
+msgstr "شحن الى"
+
+msgid "Ship via"
+msgstr "شحن من خلال"
+
+msgid "Shipping"
+msgstr "شحن"
+
+msgid "Shipping Address"
+msgstr "عنوان الشحن"
+
+msgid "Shipping Date"
+msgstr ""
+
+msgid "Shipping Date missing!"
+msgstr ""
+
+msgid "Shipping Point"
+msgstr "نقطة الشحن"
+
+msgid "Short"
+msgstr "قصير"
+
+msgid "Signature"
+msgstr "امضاء"
+
+msgid "Source"
+msgstr "مصدر"
+
+msgid "Spoolfile"
+msgstr ""
+
+msgid "Standard"
+msgstr "اساس"
+
+msgid "Standard Industrial Codes"
+msgstr "الاكواد الصناعية القياسية"
+
+msgid "Startdate"
+msgstr "تاريخ يدء العمل"
+
+msgid "State"
+msgstr ""
+
+msgid "State/Province"
+msgstr "محافظة"
+
+msgid "Statement"
+msgstr "كشف حساب"
+
+msgid "Statement Balance"
+msgstr "رصيد كشف حساب"
+
+msgid "Statement sent to"
+msgstr "كشف حساب مرسل الى"
+
+msgid "Statements sent to printer!"
+msgstr "كشف حساب مرسل الى الطابعة"
+
+msgid "Stock"
+msgstr "مخزون"
+
+msgid "Stock Assembly"
+msgstr "تجميع مخزون"
+
+msgid "Stocking Date"
+msgstr ""
+
+msgid "Stylesheet"
+msgstr ""
+
+msgid "Sub-contract GIFI"
+msgstr ""
+
+msgid "Subject"
+msgstr "موضوع"
+
+msgid "Subtotal"
+msgstr "اجمالى"
+
+msgid "Summary"
+msgstr "ملخص"
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Supervisor"
+msgstr ""
+
+msgid "System"
+msgstr "نظام"
+
+msgid "System Defaults"
+msgstr "معطيات النظام"
+
+msgid "Tax"
+msgstr "ضريبة"
+
+msgid "Tax Accounts"
+msgstr "الحسابات الضريبية"
+
+msgid "Tax Included"
+msgstr "الضريبة المضافة"
+
+msgid "Tax Number"
+msgstr "رقم ضريبى"
+
+msgid "Tax Number / SSN"
+msgstr ""
+
+msgid "Tax collected"
+msgstr "الضريبة المجمعة"
+
+msgid "Tax paid"
+msgstr "الضريبة المدفوعة"
+
+msgid "Taxable"
+msgstr "خاضع للضريبة"
+
+msgid "Template saved!"
+msgstr "خزنت العينة"
+
+msgid "Templates"
+msgstr "العينات"
+
+msgid "Terms"
+msgstr "شروط "
+
+msgid "Text"
+msgstr ""
+
+msgid "Text Templates"
+msgstr ""
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "هذة المجموعة من البيانات لا يتم استخدامها و يمكن الغائها"
+
+msgid "The following Datasets need to be updated"
+msgstr "هذة المجموعة من البيانات تحتاج إلى تحديث"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Till"
+msgstr "إلى"
+
+msgid "Time In"
+msgstr ""
+
+msgid "Time Out"
+msgstr ""
+
+msgid "Timecard"
+msgstr ""
+
+msgid "Timecard deleted!"
+msgstr ""
+
+msgid "Timecard saved!"
+msgstr ""
+
+msgid "Timecards"
+msgstr ""
+
+msgid "Times"
+msgstr ""
+
+msgid "To"
+msgstr "إلى"
+
+msgid "To Warehouse"
+msgstr ""
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr ""
+
+msgid "Top Level"
+msgstr "المستوى الاعلى"
+
+msgid "Total"
+msgstr "مجموع"
+
+msgid "Tracking Items"
+msgstr ""
+
+msgid "Trade Discount"
+msgstr ""
+
+msgid "Transaction"
+msgstr ""
+
+msgid "Transaction Date missing!"
+msgstr "تاريخ الحركة غير موجود"
+
+msgid "Transaction Dates"
+msgstr ""
+
+msgid "Transaction deleted!"
+msgstr "الغيت الحركة"
+
+msgid "Transaction posted!"
+msgstr "سجلت الحركة"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr ""
+
+msgid "Transaction reversal enforced up to"
+msgstr ""
+
+msgid "Transactions"
+msgstr "حركات"
+
+msgid "Transfer"
+msgstr "تحويل"
+
+msgid "Transfer Inventory"
+msgstr ""
+
+msgid "Transfer from"
+msgstr ""
+
+msgid "Transfer to"
+msgstr ""
+
+msgid "Translation"
+msgstr ""
+
+msgid "Translation deleted!"
+msgstr ""
+
+msgid "Translation not on file!"
+msgstr ""
+
+msgid "Translations"
+msgstr "ترجمات"
+
+msgid "Translations saved!"
+msgstr ""
+
+msgid "Trial Balance"
+msgstr "ميزان المراجعة"
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Type of Business"
+msgstr "نوع العمل"
+
+msgid "Unit"
+msgstr "وحدة"
+
+msgid "Unit of measure"
+msgstr "وحدة القياس"
+
+msgid "Unlock System"
+msgstr ""
+
+msgid "Update"
+msgstr "تعديل"
+
+msgid "Update Dataset"
+msgstr ""
+
+msgid "Updated"
+msgstr "معدل"
+
+msgid "Upgrading to Version"
+msgstr ""
+
+msgid "Use Templates"
+msgstr "استخدم العينات"
+
+msgid "User"
+msgstr "مستخدم"
+
+msgid "User deleted!"
+msgstr "الغي المستخدم"
+
+msgid "User saved!"
+msgstr "خزن المستخدم"
+
+msgid "Valid until"
+msgstr "سارى حتى"
+
+msgid "Vendor"
+msgstr "المورد"
+
+msgid "Vendor History"
+msgstr "بيانات تاريخية عن مورد"
+
+msgid "Vendor Invoice"
+msgstr "فاتورة المورد "
+
+msgid "Vendor Invoice "
+msgstr ""
+
+msgid "Vendor Invoice."
+msgstr ""
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr ""
+
+msgid "Vendor Invoices"
+msgstr "فواتير الموردين"
+
+msgid "Vendor Number"
+msgstr "رقم المورد"
+
+msgid "Vendor deleted!"
+msgstr "الغي المورد"
+
+msgid "Vendor missing!"
+msgstr "مورد غير موجود"
+
+msgid "Vendor not on file!"
+msgstr "مورد غير موجود في الملف"
+
+msgid "Vendor saved!"
+msgstr "خزن المورد"
+
+msgid "Vendors"
+msgstr "الموردين"
+
+msgid "Version"
+msgstr "نسخة"
+
+msgid "Warehouse"
+msgstr ""
+
+msgid "Warehouse deleted!"
+msgstr ""
+
+msgid "Warehouse saved!"
+msgstr ""
+
+msgid "Warehouses"
+msgstr "مخازن"
+
+msgid "Warning!"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Week"
+msgstr ""
+
+msgid "Week(s)"
+msgstr ""
+
+msgid "Weeks"
+msgstr ""
+
+msgid "Weight"
+msgstr "وزن"
+
+msgid "Weight Unit"
+msgstr "وزن الوحدة"
+
+msgid "What type of item is this?"
+msgstr "ما نوع هذة الوحدة؟"
+
+msgid "Work Order"
+msgstr "امر شغل"
+
+msgid "Work Orders"
+msgstr ""
+
+msgid "Work Phone"
+msgstr "تلفون العمل"
+
+msgid "Year"
+msgstr ""
+
+msgid "Year(s)"
+msgstr ""
+
+msgid "Yearend"
+msgstr "نهاية العام المالى"
+
+msgid "Yearend date missing!"
+msgstr ""
+
+msgid "Yearend posted!"
+msgstr ""
+
+msgid "Yearend posting failed!"
+msgstr ""
+
+msgid "Years"
+msgstr ""
+
+msgid "Yes"
+msgstr "نعم"
+
+msgid "You are logged out"
+msgstr ""
+
+msgid "You are posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and saving an existing order"
+msgstr ""
+
+msgid "You are printing and saving an existing quotation"
+msgstr ""
+
+msgid "You are printing and saving an existing transaction!"
+msgstr ""
+
+msgid "You are saving an existing order"
+msgstr ""
+
+msgid "You are saving an existing quotation"
+msgstr ""
+
+msgid "You are saving an existing transaction!"
+msgstr ""
+
+msgid "You did not enter a name!"
+msgstr "لم يتم ادخال الاسم"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr ""
+
+msgid "Zip/Postal Code"
+msgstr ""
+
+msgid "account cannot be set to any other type of account"
+msgstr ""
+
+msgid "as at"
+msgstr "من"
+
+msgid "days"
+msgstr "ايام"
+
+msgid "does not exist"
+msgstr "لا يوجد"
+
+msgid "done"
+msgstr "نفذ"
+
+msgid "ea"
+msgstr "قطعة"
+
+msgid "failed"
+msgstr ""
+
+msgid "for"
+msgstr ""
+
+msgid "for Period"
+msgstr "للفترة"
+
+msgid "is already a member!"
+msgstr "عضو موجود"
+
+msgid "localhost"
+msgstr ""
+
+msgid "locked!"
+msgstr ""
+
+msgid "partsgroup"
+msgstr ""
+
+msgid "posted!"
+msgstr ""
+
+msgid "sent"
+msgstr ""
+
+msgid "successfully created!"
+msgstr "انشأ بنجاح"
+
+msgid "successfully deleted!"
+msgstr "الغي بنجاح"
+
+msgid "time(s)"
+msgstr ""
+
+msgid "unexpected error!"
+msgstr ""
+
+msgid "website"
+msgstr "موقع انترنت"
+

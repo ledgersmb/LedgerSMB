@@ -1,0 +1,210 @@
+/*
+Below is the result of your feedback form.  It was submitted by
+Eduard Rozenberg (edrozenberg@pobox.com) on Thursday, August 18, 2005 at 15:41:32
+---------------------------------------------------------------------------
+
+message: Hello,
+
+I've created a new stylesheet more based on the color blue,
+and am pasting it below in case it's useful as a possible
+alternate (ledger-smb-blue.css)
+
+Regards,
+--Ed Rozenberg
+
+================
+*/
+
+/* stylesheet for ledger-smb */
+
+/* general stuff */
+A:link { color: #a0522d; text-decoration: none; }
+A:visited { color: #a0522d; text-decoration: none; }
+A:active { color: #a0522d; text-decoration: underline;    border: 1px #6495ED;   }
+/*A:hover { color: white;
+  background-color: #bbbbbb;
+  text-decoration: none;
+}*/
+
+body {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+  background-color: white;
+  color: black
+}
+
+td {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+th {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+/* login and admin */
+.login {
+  font-family: Verdana, Arial, Helvetica;
+}
+body.login {
+  background: #5a7d9b;
+  color: black;
+}
+h1.login {
+  font-size: 18pt;
+}
+table.login {
+  background-color: #FBFFE7;
+  padding: 20px;
+}
+td.login {
+  text-align: center;
+}
+th.login {
+  text-align: right;
+}
+
+body.admin {
+  background-color: #FBFFE7;
+  color: black;
+}
+
+body.menu {
+    font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+  color: black;
+    background: #F0F0F0;
+}
+
+.menuOut {
+  cursor: pointer;
+    font-size: 12px;
+  color: Black;
+  /* border: 1px solid #d8bfd8; */
+  padding: 2px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.menuOver {
+  cursor: pointer;
+    font-size: 12px;
+  color: #32CD32;
+  /* border: 1px solid #d8bfd8; */
+  padding: 2px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.submenu {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 12px;
+  padding-left: 5px;
+}
+
+.menuOut a {
+  cursor: pointer;
+  margin: 0px;
+    font-size: 12px;
+  color: #6495ED;
+  border: 0px solid #000000;
+  padding: 0px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.menuOver a {
+  cursor: pointer;
+  margin: 0px;
+    font-size: 12px;
+  color: #32CD32;
+  border: 0px solid #000000;
+  padding: 0px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.submenu a {
+  color: #6495ED;
+  text-decoration: none;
+}
+
+.submenu a:hover {
+  color: #32CD32;
+  text-decoration: none;
+}
+
+.listtop { font-size: 10pt; background-color: black; color: white; }
+.listheading { font-size: 10pt; background-color: #6495ED;; color: white; }
+A.listheading:link, A.listheading:active, A.listheading:visited {
+  color: white;
+  text-decoration: none; }
+.listrow1 { font-size: 10pt; background-color: #dedede; color: black; vertical-align: top; }
+.listrow0 { font-size: 10pt; background-color: #f5f5f5; color: black; vertical-align: top; }
+.listsubtotal { font-size: 10pt; background-color: #336666; color: white; }
+.listtotal { font-size: 10pt; background-color: black; color: white; }
+
+textarea {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+input {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+select {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+.submit {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+  color: Black;
+}
+
+.checkbox, .radio {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 10pt;
+}
+
+.plus0 {    /* font color for negative numbers */
+  color: red;
+}
+
+.plus1 {
+  color: green;
+}
+
+h2.confirm {
+  color: blue;
+  font-size: 14pt;
+}
+
+h2.error {
+  color: red;
+  font-size: 14pt;
+}
+
+
+/* media stuff */
+
+@media screen {
+  .noscreen {   /* items with this class won't display */
+    display: none;
+  }
+}
+
+@media print {
+  .noprint {   /* items with this class won't print */
+    display: none;
+  }
+}
+
+
+---------------------------------------------------------------------------
+
+ 	  	 

@@ -1,0 +1,152 @@
+CTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional">
+
+<html>
+
+<head>
+
+<title>A2A <?lsmb invnumber ?> <?lsmb name ?></title>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-15">
+
+</head>
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+<tr>
+  <td width=10>
+  </td> 
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
+      </h4>
+    </td>
+
+    <th colspan=2>
+      <h4 align=center>L I S T E&nbsp;&nbsp;D ' E N V O I</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% cellspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Date de facture&nbsp;:</th><td width=10> </td><td><?lsmb invdate ?></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Numéro de facture&nbsp;:</th><td></td><td><?lsmb invnumber ?></td></tr>
+    </tr>
+  
+    <tr>
+      <td> 
+      </td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Adresse d'envoi</th>
+    </tr>
+
+    <tr>
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddr1 ?>
+      <br><?lsmb shiptoaddr2 ?>
+      <br><?lsmb shiptoaddr3 ?>
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>N°</th>
+      <th align=left><font color=ffffff>Description</th>
+      <th><font color=ffffff>Qté</th>
+      <th>&nbsp;</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=center><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
+    </tr>
+<?lsmb end number ?>
+
+    <tr>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<?lsmb if notes ?>
+      <td>À noter&nbsp;:</td>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
+      <td align=right><b>EXPÉDIÉ PAR&nbsp;: 
+      <?lsmb shippingpoint ?></b>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+    <td><font size=-3><!--
+    Conditions d'envoi :
+    Items returned are subject to
+    a 10% restocking charge. A return authorization must be obtained
+    from <?lsmb company ?> before goods are returned. Returns must be shipped
+    prepaid and properly insured. <?lsmb company ?> will not be responsible
+    for damages during transit. -->
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>

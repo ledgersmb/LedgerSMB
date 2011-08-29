@@ -1,0 +1,27 @@
+$self{charset} = 'ISO-8859-15';
+
+$self{texts} = {
+  'Access Denied!'              => 'Ligipääs Keelatud!',
+  'Company'                     => 'Ettevõte',
+  'Continue'                    => 'Edasi',
+  'Dataset is newer than version!' => 'Andmekogu versioon, on uuem süsteemi omast!',
+  'Incorrect Dataset version!'  => 'Vale andmebaasi versioon',
+  'Login'                       => 'Login',
+  'Name'                        => 'Nimi',
+  'Password'                    => 'Parool',
+  'Upgrading to Version'        => 'Viin vastavusse Versiooniga',
+  'Version'                     => 'Versioon',
+  'You did not enter a name!'   => 'Nimi sisestamata!',
+  'done'                        => 'tehtud',
+};
+
+$self{subs} = {
+  'login'                       => 'login',
+  'login_screen'                => 'login_screen',
+  'logout'                      => 'logout',
+  'selectdataset'               => 'selectdataset',
+  'login'                       => 'login',
+};
+
+1;
+

@@ -1,0 +1,145 @@
+<body bgcolor=ffffff>
+
+<table width="100%">
+<tr>
+  <td width=10>
+  </td> 
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
+      </h4>
+    </td>
+
+    <th colspan=2>
+      <h4 align=center>F Ø L G E S E D D E L</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% cellspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Dato</th><td width=10> </td><td><?lsmb invdate ?></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Nummer</th><td></td><td><?lsmb invnumber ?></td></tr>
+    </tr>
+  
+    <tr>
+      <td> 
+      </td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Leveringsadresse:</th>
+    </tr>
+
+    <tr>
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddr1 ?>
+      <br><?lsmb shiptoaddr2 ?>
+      <br><?lsmb shiptoaddr3 ?>
+      <br><?lsmb shiptoaddr4 ?>
+<?lsmb if shiptocontact ?>
+      <p>Att.: <?lsmb shiptocontact ?>
+<?lsmb end shiptocontact ?>
+
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Varenummer</th>
+      <th align=left><font color=ffffff>Beskrivelse</th>
+      <th><font color=ffffff>Antal</th>
+      <th>&nbsp;</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=right><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
+    </tr>
+<?lsmb end number ?>
+
+    <tr>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<?lsmb if notes ?>
+      <td>Bemærkninger</td>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
+      <td align=right>
+      <?lsmb shippingpoint ?>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+    <td><font size=-3>
+    Returnerede varer modregnes 10% i ekspeditionsgebyr.
+    Et returnummer skal tildeles af <?lsmb company ?> før varer returneres.
+    Returvarer skal forsendes forudbetalt og forsvarligt forsikret.
+    <?lsmb company ?> kan ikke drages til ansvar for skade under transport.
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>

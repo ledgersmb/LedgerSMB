@@ -1,0 +1,234 @@
+\select@language {english}
+\contentsline {part}{I\hspace {1em}LedgerSMB and Business Processes}{7}{part.1}
+\contentsline {section}{\numberline {1}Introduction to LedgerSMB}{7}{section.1}
+\contentsline {subsection}{\numberline {1.1}Why LedgerSMB}{7}{subsection.1.1}
+\contentsline {subsubsection}{\numberline {1.1.1}Advantages of LedgerSMB}{7}{subsubsection.1.1.1}
+\contentsline {subsubsection}{\numberline {1.1.2}Key Features}{7}{subsubsection.1.1.2}
+\contentsline {subsection}{\numberline {1.2}Limitations of LedgerSMB}{9}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}System Requirements of LedgerSMB}{9}{subsection.1.3}
+\contentsline {section}{\numberline {2}User Account and Database Administration Basics}{9}{section.2}
+\contentsline {subsection}{\numberline {2.1}Companies and Datasets}{10}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}How to Create a User}{10}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Permissions}{10}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}User Account Types}{10}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Other Features}{10}{subsection.2.5}
+\contentsline {section}{\numberline {3}Chart of Accounts}{10}{section.3}
+\contentsline {subsection}{\numberline {3.1}Introduction to Double Entry Bookkeeping}{11}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Business Entity}{11}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Double Entry}{11}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}Accounts}{11}{subsubsection.3.1.3}
+\contentsline {subsubsection}{\numberline {3.1.4}Debits and Credits}{12}{subsubsection.3.1.4}
+\contentsline {subsubsection}{\numberline {3.1.5}Accrual}{12}{subsubsection.3.1.5}
+\contentsline {subsubsection}{\numberline {3.1.6}References}{12}{subsubsection.3.1.6}
+\contentsline {subsection}{\numberline {3.2}General Guidelines on Numbering Accounts}{13}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Adding/Modifying Accounts}{13}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Listing Account Balances and Transactions}{13}{subsection.3.4}
+\contentsline {section}{\numberline {4}Administration}{14}{section.4}
+\contentsline {subsection}{\numberline {4.1}Taxes, Defaults, and Preferences}{14}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Adding A Sales Tax Account}{14}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Setting a Sales Tax Amount}{14}{subsubsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.3}Default Account Setup}{14}{subsubsection.4.1.3}
+\contentsline {subsubsection}{\numberline {4.1.4}Currency Setup}{14}{subsubsection.4.1.4}
+\contentsline {subsubsection}{\numberline {4.1.5}Sequence Settings}{14}{subsubsection.4.1.5}
+\contentsline {subsection}{\numberline {4.2}Audit Control}{15}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}Explaining transaction reversal}{15}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Close books option}{15}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.3}Audit Trails}{15}{subsubsection.4.2.3}
+\contentsline {subsection}{\numberline {4.3}Departments}{16}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Cost v Profit Centers.}{16}{subsubsection.4.3.1}
+\contentsline {subsection}{\numberline {4.4}Warehouses}{16}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Languages}{16}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}Types of Businesses}{16}{subsection.4.6}
+\contentsline {subsection}{\numberline {4.7}Misc.}{16}{subsection.4.7}
+\contentsline {subsubsection}{\numberline {4.7.1}GIFI}{16}{subsubsection.4.7.1}
+\contentsline {subsubsection}{\numberline {4.7.2}SIC}{16}{subsubsection.4.7.2}
+\contentsline {subsubsection}{\numberline {4.7.3}Overview of Template Editing}{17}{subsubsection.4.7.3}
+\contentsline {subsubsection}{\numberline {4.7.4}Year-end}{17}{subsubsection.4.7.4}
+\contentsline {subsection}{\numberline {4.8}Options in the ledgersmb.conf}{17}{subsection.4.8}
+\contentsline {section}{\numberline {5}Goods and Services}{17}{section.5}
+\contentsline {subsection}{\numberline {5.1}Basic Terms}{18}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}The Price Matrix}{18}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Pricegroups}{18}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Groups}{18}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.5}Labor/Overhead}{18}{subsection.5.5}
+\contentsline {subsection}{\numberline {5.6}Services}{18}{subsection.5.6}
+\contentsline {subsubsection}{\numberline {5.6.1}Shipping and Handling as a Service}{18}{subsubsection.5.6.1}
+\contentsline {subsection}{\numberline {5.7}Parts}{18}{subsection.5.7}
+\contentsline {subsection}{\numberline {5.8}Assemblies and Manufacturing}{19}{subsection.5.8}
+\contentsline {subsubsection}{\numberline {5.8.1}Stocking Assemblies}{19}{subsubsection.5.8.1}
+\contentsline {subsection}{\numberline {5.9}Reporting}{19}{subsection.5.9}
+\contentsline {subsubsection}{\numberline {5.9.1}All Items and Parts Reports}{19}{subsubsection.5.9.1}
+\contentsline {subsubsection}{\numberline {5.9.2}Requirements}{19}{subsubsection.5.9.2}
+\contentsline {subsubsection}{\numberline {5.9.3}Services and Labor}{19}{subsubsection.5.9.3}
+\contentsline {subsubsection}{\numberline {5.9.4}Assemblies}{19}{subsubsection.5.9.4}
+\contentsline {subsubsection}{\numberline {5.9.5}Groups and Pricegroups}{20}{subsubsection.5.9.5}
+\contentsline {subsection}{\numberline {5.10}Translations}{20}{subsection.5.10}
+\contentsline {subsection}{\numberline {5.11}How Cost of Goods Sold is tracked}{20}{subsection.5.11}
+\contentsline {section}{\numberline {6}AP}{20}{section.6}
+\contentsline {subsection}{\numberline {6.1}Basic AP Concepts}{20}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Vendors}{20}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}AP Transactions}{20}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}AP Invoices}{21}{subsection.6.4}
+\contentsline {subsubsection}{\numberline {6.4.1}Correcting an AP Invoice}{21}{subsubsection.6.4.1}
+\contentsline {subsection}{\numberline {6.5}Cash payment And Check Printing}{21}{subsection.6.5}
+\contentsline {subsubsection}{\numberline {6.5.1}Rapid Payment Entry Screen}{21}{subsubsection.6.5.1}
+\contentsline {subsection}{\numberline {6.6}Transaction/Invoice Reporting}{22}{subsection.6.6}
+\contentsline {subsubsection}{\numberline {6.6.1}Transactions Report}{22}{subsubsection.6.6.1}
+\contentsline {subsubsection}{\numberline {6.6.2}Outstanding Report}{22}{subsubsection.6.6.2}
+\contentsline {subsubsection}{\numberline {6.6.3}AP Aging Report}{22}{subsubsection.6.6.3}
+\contentsline {subsubsection}{\numberline {6.6.4}Tax Paid and Non-taxable Report}{22}{subsubsection.6.6.4}
+\contentsline {subsection}{\numberline {6.7}Vendor Reporting}{22}{subsection.6.7}
+\contentsline {subsubsection}{\numberline {6.7.1}Vendor Search}{22}{subsubsection.6.7.1}
+\contentsline {subsubsection}{\numberline {6.7.2}Vendor History}{22}{subsubsection.6.7.2}
+\contentsline {section}{\numberline {7}AR}{23}{section.7}
+\contentsline {subsection}{\numberline {7.1}Customers}{23}{subsection.7.1}
+\contentsline {subsubsection}{\numberline {7.1.1}Customer Price Matrix}{23}{subsubsection.7.1.1}
+\contentsline {subsection}{\numberline {7.2}AR Transactions}{23}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}AR Invoices}{23}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Cash Receipt}{23}{subsection.7.4}
+\contentsline {subsubsection}{\numberline {7.4.1}Cash Receipts for multiple customers}{23}{subsubsection.7.4.1}
+\contentsline {subsection}{\numberline {7.5}AR Transaction Reporting}{23}{subsection.7.5}
+\contentsline {subsubsection}{\numberline {7.5.1}AR Transactions Report}{24}{subsubsection.7.5.1}
+\contentsline {subsubsection}{\numberline {7.5.2}AR Aging Report}{24}{subsubsection.7.5.2}
+\contentsline {subsection}{\numberline {7.6}Customer Reporting}{24}{subsection.7.6}
+\contentsline {section}{\numberline {8}Projects}{24}{section.8}
+\contentsline {subsection}{\numberline {8.1}Project Basics}{24}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Timecards}{24}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Projects and Invoices}{24}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}Reporting}{24}{subsection.8.4}
+\contentsline {subsubsection}{\numberline {8.4.1}Timecard Reporting}{24}{subsubsection.8.4.1}
+\contentsline {subsubsection}{\numberline {8.4.2}Project Transaction Reporting}{24}{subsubsection.8.4.2}
+\contentsline {subsubsection}{\numberline {8.4.3}List of Projects}{25}{subsubsection.8.4.3}
+\contentsline {subsection}{\numberline {8.5}Possibilities for Using Projects}{25}{subsection.8.5}
+\contentsline {section}{\numberline {9}Quotations and Order Management}{25}{section.9}
+\contentsline {subsection}{\numberline {9.1}Sales Orders}{25}{subsection.9.1}
+\contentsline {subsection}{\numberline {9.2}Quotations}{25}{subsection.9.2}
+\contentsline {subsection}{\numberline {9.3}Shipping}{25}{subsection.9.3}
+\contentsline {subsection}{\numberline {9.4}AR Work Flow}{25}{subsection.9.4}
+\contentsline {subsubsection}{\numberline {9.4.1}Service Example}{25}{subsubsection.9.4.1}
+\contentsline {subsubsection}{\numberline {9.4.2}Single Warehouse Example}{26}{subsubsection.9.4.2}
+\contentsline {subsubsection}{\numberline {9.4.3}Multiple Warehouse Example}{26}{subsubsection.9.4.3}
+\contentsline {subsection}{\numberline {9.5}Requests for Quotation (RFQ)}{26}{subsection.9.5}
+\contentsline {subsection}{\numberline {9.6}Purchase Orders}{29}{subsection.9.6}
+\contentsline {subsection}{\numberline {9.7}Receiving}{29}{subsection.9.7}
+\contentsline {subsection}{\numberline {9.8}AP Work Flow}{29}{subsection.9.8}
+\contentsline {subsubsection}{\numberline {9.8.1}Bookkeeper entering the received items, order completed in full}{29}{subsubsection.9.8.1}
+\contentsline {subsubsection}{\numberline {9.8.2}Bookkeeper entering received items, order completed in part}{29}{subsubsection.9.8.2}
+\contentsline {subsubsection}{\numberline {9.8.3}Receiving staff entering items}{31}{subsubsection.9.8.3}
+\contentsline {subsection}{\numberline {9.9}Generation and Consolidation}{31}{subsection.9.9}
+\contentsline {subsubsection}{\numberline {9.9.1}Generation}{31}{subsubsection.9.9.1}
+\contentsline {subsubsection}{\numberline {9.9.2}Consolidation}{32}{subsubsection.9.9.2}
+\contentsline {subsection}{\numberline {9.10}Reporting}{32}{subsection.9.10}
+\contentsline {subsection}{\numberline {9.11}Shipping Module: Transferring Inventory between Warehouses}{32}{subsection.9.11}
+\contentsline {section}{\numberline {10}HR}{32}{section.10}
+\contentsline {section}{\numberline {11}POS}{32}{section.11}
+\contentsline {subsection}{\numberline {11.1}Sales Screen}{32}{subsection.11.1}
+\contentsline {subsection}{\numberline {11.2}Possibilities for Data Entry}{32}{subsection.11.2}
+\contentsline {subsection}{\numberline {11.3}Hardware Support}{33}{subsection.11.3}
+\contentsline {subsection}{\numberline {11.4}Reports}{33}{subsection.11.4}
+\contentsline {subsubsection}{\numberline {11.4.1}Open Invoices}{33}{subsubsection.11.4.1}
+\contentsline {subsubsection}{\numberline {11.4.2}Receipts}{33}{subsubsection.11.4.2}
+\contentsline {section}{\numberline {12}General Ledger}{33}{section.12}
+\contentsline {subsection}{\numberline {12.1}GL Basics}{33}{subsection.12.1}
+\contentsline {subsubsection}{\numberline {12.1.1}Paper-based accounting systems and the GL}{33}{subsubsection.12.1.1}
+\contentsline {subsubsection}{\numberline {12.1.2}Double Entry Examples on Paper}{34}{subsubsection.12.1.2}
+\contentsline {subsubsection}{\numberline {12.1.3}The GL in LedgerSMB}{34}{subsubsection.12.1.3}
+\contentsline {subsection}{\numberline {12.2}Cash Transfer}{34}{subsection.12.2}
+\contentsline {subsection}{\numberline {12.3}GL Transactions}{35}{subsection.12.3}
+\contentsline {subsection}{\numberline {12.4}Payroll as a GL transaction}{35}{subsection.12.4}
+\contentsline {subsection}{\numberline {12.5}Reconciliation}{35}{subsection.12.5}
+\contentsline {subsection}{\numberline {12.6}Reports}{36}{subsection.12.6}
+\contentsline {subsubsection}{\numberline {12.6.1}GL as access to almost everything else}{36}{subsubsection.12.6.1}
+\contentsline {subsection}{\numberline {12.7}Using GL entries for Depreciation}{36}{subsection.12.7}
+\contentsline {section}{\numberline {13}Recurring Transactions}{37}{section.13}
+\contentsline {section}{\numberline {14}Financial Statements and Reports}{37}{section.14}
+\contentsline {subsection}{\numberline {14.1}Cash v. Accrual Basis}{37}{subsection.14.1}
+\contentsline {subsection}{\numberline {14.2}Viewing the Chart of Accounts and Transactions}{37}{subsection.14.2}
+\contentsline {subsection}{\numberline {14.3}Trial Balance}{37}{subsection.14.3}
+\contentsline {subsubsection}{\numberline {14.3.1}The Paper-based function of a Trial Balance}{37}{subsubsection.14.3.1}
+\contentsline {subsubsection}{\numberline {14.3.2}Running the Trial Balance Report}{38}{subsubsection.14.3.2}
+\contentsline {subsubsection}{\numberline {14.3.3}What if the Trial Balance doesn't Balance?}{38}{subsubsection.14.3.3}
+\contentsline {subsubsection}{\numberline {14.3.4}Trial Balance as a Summary of Account Activity}{38}{subsubsection.14.3.4}
+\contentsline {subsubsection}{\numberline {14.3.5}Trial Balance as a Budget Planning Tool}{38}{subsubsection.14.3.5}
+\contentsline {subsection}{\numberline {14.4}Income Statement}{38}{subsection.14.4}
+\contentsline {subsubsection}{\numberline {14.4.1}Uses of an Income Statement}{39}{subsubsection.14.4.1}
+\contentsline {subsection}{\numberline {14.5}Balance Sheet}{39}{subsection.14.5}
+\contentsline {subsection}{\numberline {14.6}What if the Balance Sheet doesn't balance?}{39}{subsection.14.6}
+\contentsline {subsection}{\numberline {14.7}No Statement of Owner Equity?}{39}{subsection.14.7}
+\contentsline {section}{\numberline {15}The Template System}{40}{section.15}
+\contentsline {subsection}{\numberline {15.1}Text Templates}{40}{subsection.15.1}
+\contentsline {subsection}{\numberline {15.2}HTML Templates}{40}{subsection.15.2}
+\contentsline {subsection}{\numberline {15.3}\LaTeX {}\ Templates}{41}{subsection.15.3}
+\contentsline {subsubsection}{\numberline {15.3.1}What is \LaTeX {}\ ?}{42}{subsubsection.15.3.1}
+\contentsline {subsubsection}{\numberline {15.3.2}Using L\kern -.1667em\lower .25em\hbox {Y}\kern -.125emX\spacefactor \@m {} to Edit \LaTeX {}\ Templates}{42}{subsubsection.15.3.2}
+\contentsline {subsection}{\numberline {15.4}Customizing Logos}{42}{subsection.15.4}
+\contentsline {subsection}{\numberline {15.5}How are They Stored in the Filesystem?}{42}{subsection.15.5}
+\contentsline {subsection}{\numberline {15.6}Upgrade Issues}{42}{subsection.15.6}
+\contentsline {section}{\numberline {16}An Introduction to the CLI}{43}{section.16}
+\contentsline {subsection}{\numberline {16.1}Conventions}{43}{subsection.16.1}
+\contentsline {subsection}{\numberline {16.2}Preliminaries}{43}{subsection.16.2}
+\contentsline {subsection}{\numberline {16.3}First Script: lsmb01-cli-example.sh}{43}{subsection.16.3}
+\contentsline {subsubsection}{\numberline {16.3.1}Script 1 (Bash)}{44}{subsubsection.16.3.1}
+\contentsline {subsection}{\numberline {16.4}Second Script: lsmb02-cli-example.pl}{45}{subsection.16.4}
+\contentsline {subsubsection}{\numberline {16.4.1}Script 2 (Perl)}{45}{subsubsection.16.4.1}
+\contentsline {part}{II\hspace {1em}Technical Overview}{49}{part.2}
+\contentsline {section}{\numberline {17}Basic Architecture}{49}{section.17}
+\contentsline {subsection}{\numberline {17.1}The Software Stack}{49}{subsection.17.1}
+\contentsline {subsection}{\numberline {17.2}Capacity Planning}{50}{subsection.17.2}
+\contentsline {subsubsection}{\numberline {17.2.1}Scalability Strategies}{50}{subsubsection.17.2.1}
+\contentsline {subsubsection}{\numberline {17.2.2}Database Maintenance}{50}{subsubsection.17.2.2}
+\contentsline {subsubsection}{\numberline {17.2.3}Known issues}{51}{subsubsection.17.2.3}
+\contentsline {section}{\numberline {18}Customization Possibilities}{51}{section.18}
+\contentsline {subsection}{\numberline {18.1}Brief Guide to the Source Code}{51}{subsection.18.1}
+\contentsline {subsection}{\numberline {18.2}Data Entry Screens}{52}{subsection.18.2}
+\contentsline {subsubsection}{\numberline {18.2.1}Examples}{52}{subsubsection.18.2.1}
+\contentsline {subsection}{\numberline {18.3}Extensions}{52}{subsection.18.3}
+\contentsline {subsubsection}{\numberline {18.3.1}Examples}{52}{subsubsection.18.3.1}
+\contentsline {subsection}{\numberline {18.4}Templates}{52}{subsection.18.4}
+\contentsline {subsubsection}{\numberline {18.4.1}Examples}{52}{subsubsection.18.4.1}
+\contentsline {subsection}{\numberline {18.5}Reports}{52}{subsection.18.5}
+\contentsline {subsubsection}{\numberline {18.5.1}Examples}{53}{subsubsection.18.5.1}
+\contentsline {section}{\numberline {19}Integration Possibilities}{53}{section.19}
+\contentsline {subsection}{\numberline {19.1}Reporting Tools}{53}{subsection.19.1}
+\contentsline {subsubsection}{\numberline {19.1.1}Examples}{53}{subsubsection.19.1.1}
+\contentsline {subsection}{\numberline {19.2}Line of Business Tools on PostgreSQL}{53}{subsection.19.2}
+\contentsline {subsubsection}{\numberline {19.2.1}Known Issues}{53}{subsubsection.19.2.1}
+\contentsline {subsubsection}{\numberline {19.2.2}Strategies}{53}{subsubsection.19.2.2}
+\contentsline {subsubsection}{\numberline {19.2.3}Examples}{54}{subsubsection.19.2.3}
+\contentsline {subsection}{\numberline {19.3}Line of Business Tools on other RDBMS's}{54}{subsection.19.3}
+\contentsline {subsubsection}{\numberline {19.3.1}Strategies}{54}{subsubsection.19.3.1}
+\contentsline {subsubsection}{\numberline {19.3.2}Integration Products and Open Source Projects}{54}{subsubsection.19.3.2}
+\contentsline {section}{\numberline {20}Customization Guide}{54}{section.20}
+\contentsline {subsection}{\numberline {20.1}General Information}{54}{subsection.20.1}
+\contentsline {subsection}{\numberline {20.2}Customizing Templates}{55}{subsection.20.2}
+\contentsline {subsubsection}{\numberline {20.2.1}Page Breaks in \LaTeX {}}{55}{subsubsection.20.2.1}
+\contentsline {subsubsection}{\numberline {20.2.2}Conditionals}{55}{subsubsection.20.2.2}
+\contentsline {subsubsection}{\numberline {20.2.3}Loops}{55}{subsubsection.20.2.3}
+\contentsline {subsubsection}{\numberline {20.2.4}File Inclusion}{56}{subsubsection.20.2.4}
+\contentsline {subsubsection}{\numberline {20.2.5}Cross-referencing and multiple passes of \LaTeX {}}{56}{subsubsection.20.2.5}
+\contentsline {subsubsection}{\numberline {20.2.6}Variable Substitution}{56}{subsubsection.20.2.6}
+\contentsline {subsection}{\numberline {20.3}Customizing Forms}{56}{subsection.20.3}
+\contentsline {subsection}{\numberline {20.4}Customizing Modules}{57}{subsection.20.4}
+\contentsline {subsubsection}{\numberline {20.4.1}Database Access}{57}{subsubsection.20.4.1}
+\contentsline {subsection}{\numberline {20.5}CLI Examples}{57}{subsection.20.5}
+\contentsline {part}{III\hspace {1em}Appendix}{58}{part.3}
+\contentsline {section}{\numberline {A}Where to Go for More Information}{58}{appendix.A}
+\contentsline {section}{\numberline {B}Quick Tips}{58}{appendix.B}
+\contentsline {subsection}{\numberline {B.1}Understanding Shipping Addresses and Carriers}{58}{subsection.B.1}
+\contentsline {subsection}{\numberline {B.2}Handling bad debts}{58}{subsection.B.2}
+\contentsline {section}{\numberline {C}Step by Steps for Vertical Markets}{58}{appendix.C}
+\contentsline {subsection}{\numberline {C.1}Common Installation Errors}{58}{subsection.C.1}
+\contentsline {subsection}{\numberline {C.2}Retail With Light Manufacturing}{58}{subsection.C.2}
+\contentsline {section}{\numberline {D}Glossary}{60}{appendix.D}
+\contentsline {section}{\numberline {E}GNU Free Documentation License}{61}{appendix.E}
+\contentsline {subsection}{1. APPLICABILITY AND DEFINITIONS}{61}{section*.3}
+\contentsline {subsection}{2. VERBATIM COPYING}{62}{section*.3}
+\contentsline {subsection}{3. COPYING IN QUANTITY}{62}{section*.3}
+\contentsline {subsection}{4. MODIFICATIONS}{63}{section*.3}
+\contentsline {subsection}{5. COMBINING DOCUMENTS}{64}{section*.3}
+\contentsline {subsection}{6. COLLECTIONS OF DOCUMENTS}{65}{section*.3}
+\contentsline {subsection}{7. AGGREGATION WITH INDEPENDENT WORKS}{65}{section*.3}
+\contentsline {subsection}{8. TRANSLATION}{65}{section*.3}
+\contentsline {subsection}{9. TERMINATION}{65}{section*.3}
+\contentsline {subsection}{10. FUTURE REVISIONS OF THIS LICENSE}{65}{section*.3}
+\contentsline {subsection}{ADDENDUM: How to use this License for your documents}{66}{section*.3}

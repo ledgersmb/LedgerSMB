@@ -1,0 +1,9 @@
+README for fixme.pgsql
+
+This utility attempts to move all damaged data into one location so that it 
+can be sorted out.  It creates an account with the number of 1000000000 that 
+stores the broken transactions.
+
+It can be run from psql.
+
+IMPORTANT:  BACK UP YOUR DATABASE BEFORE TRYING THIS SCRIPT

@@ -1,0 +1,142 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+<tr>
+  <td width=10>
+  </td> 
+  <td>
+  
+  <table width="100%">
+  <tr>
+    <td>
+      <h4>
+      <?lsmb company ?>
+      <br><?lsmb address ?>
+      </h4>
+    </td>
+
+    <th colspan=2>
+      <h4 align=center>F Ø L G E S E D D E L</h4>
+    </th>
+  </tr>
+
+  </table>
+
+
+  <table width=100% cellspacing=0 cellpadding=0>
+    
+  <tr>
+    <td align=right>
+    <table>
+    <tr>
+      <th align=right>Dato</th><td width=10> </td><td><?lsmb invdate ?></td>
+    </tr>
+  
+    <tr>
+      <th align=right>Nummer</th><td></td><td><?lsmb invnumber ?></td></tr>
+    </tr>
+  
+    <tr>
+      <td> 
+      </td>
+    </tr>
+    </td>
+    </table>
+  </tr>
+
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Leveringsadresse:</th>
+    </tr>
+
+    <tr>
+      <td><?lsmb shiptoname ?>
+      <br><?lsmb shiptoaddr1 ?>
+      <br><?lsmb shiptoaddr2 ?>
+      <br><?lsmb shiptoaddr3 ?>
+      </td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td> 
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <table width="100%">
+    <tr bgcolor=000000>
+      <th align=left><font color=ffffff>Nummer</th>
+      <th align=left><font color=ffffff>Beskrivelse</th>
+      <th><font color=ffffff>Antall</th>
+      <th>&nbsp;</th>
+    </tr>
+
+<?lsmb foreach number ?>
+    <tr valign=top>
+      <td><?lsmb number ?></td>
+      <td><?lsmb description ?></td>
+      <td align=right><?lsmb qty ?></td>
+      <td><?lsmb unit ?></td>
+    </tr>
+<?lsmb end number ?>
+
+    <tr>
+      <td colspan=4><hr noshade></td>
+    </tr>
+
+    </table>
+    </td>
+  </tr>
+
+<tr>
+  <td>
+  <table width="100%">
+    <tr valign=top>
+<?lsmb if notes ?>
+      <td>Note</td>
+      <td><pre><?lsmb notes ?></pre></td>
+<?lsmb end notes ?>
+      <td align=right>
+      <?lsmb shippingpoint ?>
+      </td>
+    </tr>
+
+  </table>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <table width="100%">
+  <tr valign=top>
+    <td><font size=-3>
+
+Retur skal sendes forskuddsbetalt og være forsvarlig pakket.
+<?lsmb company ?> er ikke være ansvarlig for skader under
+transport.
+
+    </font>
+    </td>
+    <td width=150>
+    X <hr noshade>
+    </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+
+

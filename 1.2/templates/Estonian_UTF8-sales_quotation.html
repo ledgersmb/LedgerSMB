@@ -1,0 +1,205 @@
+
+<body bgcolor=ffffff>
+
+<table width="100%">
+
+  <?lsmb include letterhead.html ?>
+  
+  <tr>
+    <td width=10>&nbsp;</td>
+  
+    <th colspan=3>
+      <h4>H I N N A P A K K U M U S</h4>
+    </th>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width="100%">
+
+	<tr valign=top>
+	  <td><?lsmb name ?>
+	  <br><?lsmb address1 ?>
+	  <?lsmb if address2 ?>
+	  <br><?lsmb address2 ?>
+	  <?lsmb end address2 ?>
+	  <br><?lsmb city ?>
+	  <?lsmb if state ?>
+	  , <?lsmb state ?>
+	  <?lsmb end state ?>
+	  <?lsmb zipcode ?>
+	  <?lsmb if country ?>
+	  <br><?lsmb country ?>
+	  <?lsmb end country ?>
+
+	  <br>
+	  <?lsmb if contact ?>
+	  <br>Kontaktisik: <?lsmb contact ?>
+	  <?lsmb end contact ?>
+
+	  <?lsmb if customerphone ?>
+	  <br>Tel: <?lsmb customerphone ?>
+	  <?lsmb end customerphone ?>
+
+	  <?lsmb if customerfax ?>
+	  <br>Faks: <?lsmb customerfax ?>
+	  <?lsmb end customerfax ?>
+
+	  <?lsmb if email ?>
+	  <br><?lsmb email ?>
+	  <?lsmb end email ?>
+	  </td>
+
+	</tr>
+      </table>
+    </td>
+  </tr>
+    
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width=100% border=1>
+	<tr>
+	  <th width=17% align=left nowrap>Number</th>
+	  <th width=17% align=left>Kuupäev</th>
+	  <th width=17% align=left>Kehtiv Kuni</th>
+	  <th width=17% align=left nowrap>Kontakt</th>
+	  <th width=17% align=left nowrap>Tarneaadress</th>
+	  <th width=15% align=left nowrap>Tarneviis</th>
+	</tr>
+
+	<tr>
+	  <td><?lsmb quonumber ?></td>
+	  <td><?lsmb quodate ?></td>
+	  <td><?lsmb reqdate ?></td>
+	  <td><?lsmb employee ?></td>
+	  <td><?lsmb shippingpoint ?>&nbsp;</td>
+	  <td><?lsmb shipvia ?>&nbsp;</td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+  
+    <td>
+      <table width="100%">
+	<tr bgcolor=000000>
+	  <th align=right><font color=ffffff>AR.</th>
+	  <th align=left><font color=ffffff>Number</th>
+	  <th align=left><font color=ffffff>Kirjeldus</th>
+	  <th><font color=ffffff>Kogus</th>
+	  <th>&nbsp;</th>
+	  <th><font color=ffffff>Hind</th>
+	  <th><font color=ffffff>Ale %</th>
+	  <th><font color=ffffff>Summa</th>
+	</tr>
+
+        <?lsmb foreach number ?>
+	<tr valign=top>
+	  <td align=right><?lsmb runningnumber ?></td>
+	  <td><?lsmb number ?></td>
+	  <td><?lsmb description ?></td>
+	  <td align=right><?lsmb qty ?></td>
+	  <td><?lsmb unit ?></td>
+	  <td align=right><?lsmb sellprice ?></td>
+	  <td align=right><?lsmb discountrate ?></td>
+	  <td align=right><?lsmb linetotal ?></td>
+	</tr>
+        <?lsmb end number ?>
+
+	<tr>
+	  <td colspan=8><hr noshade></td>
+	</tr>
+	
+	<tr>
+	  <?lsmb if taxincluded ?>
+	  <th colspan=6 align=right>Kokku</th>
+	  <td colspan=2 align=right><?lsmb invtotal ?></td>
+	  <?lsmb end taxincluded ?>
+
+	  <?lsmb if not taxincluded ?>
+	  <th colspan=6 align=right>Vahekokkuvõte</th>
+	  <td colspan=2 align=right><?lsmb subtotal ?></td>
+	  <?lsmb end taxincluded ?>
+	</tr>
+
+	<?lsmb foreach tax ?>
+	<tr>
+	  <th colspan=6 align=right><?lsmb taxdescription ?> on <?lsmb taxbase ?> @ <?lsmb taxrate ?> %</th>
+	  <td colspan=2 align=right><?lsmb tax ?></td>
+	</tr>
+	<?lsmb end tax ?>
+
+	<tr>
+	  <td colspan=4>&nbsp;</td>
+	  <td colspan=4><hr noshade></td>
+	</tr>
+
+	<tr>
+	  <td colspan=4>&nbsp;
+	  <?lsmb if terms ?>
+	  Maksetingimused <b><?lsmb terms ?></b> päeva
+	  <?lsmb end terms ?>
+	  </td>
+	  <th colspan=2 align=right>Kokku</th>
+	  <th colspan=2 align=right><?lsmb quototal ?></th>
+	</tr>
+	
+	<tr>
+	  <td>&nbsp;</td>
+	</tr>
+
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    
+    <td>
+      <table width="100%">
+	<tr valign=top>
+          <?lsmb if notes ?>
+	  <td>Notes</td>
+	  <td><?lsmb notes ?></td>
+          <?lsmb end notes ?>
+	  <td align=right>
+	  Kõik hinnad toodud <b><?lsmb currency ?></b> vääringus.
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+
+    <td>
+      <table width="100%">
+	<tr valign=top>
+	  <td width="60%"><font size=-3>
+	  Special order items are subject to a 10% cancellation fee.
+	  </font>
+	  </td>
+	  <td width="40%">
+	  X <hr noshade>
+	  </td>
+	</tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+
+</body>
+</html>
+
+
+
+
+

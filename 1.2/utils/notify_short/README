@@ -1,0 +1,14 @@
+Short Parts Notifier for LedgerSMB
+By Chris Travers, Metatron Technology Consulting
+
+To use this software, edit the config.pl so that you can connect to the 
+database.  Then you can run listener.pl and it will periodically check to see
+if new there are parts that have become short through transactions.
+
+At the moment, the report is triggered when an AR or AP invoice occurs and a 
+part affected by the transaction is lower than the ROP.  When this happens, a
+Notify is sent from the database, and the application prepares the report on its
+next cycle.  Note that although the creation of a new part will not cause it to
+trigger the report, the new part will appear on the report on the next run.
+
+Any feedback, improvements, etc. are welcome.
