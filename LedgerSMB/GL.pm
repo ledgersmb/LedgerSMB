@@ -88,7 +88,7 @@ sub delete_transaction {
 
 sub post_transaction {
 
-    my ( $self, $myconfig, $form ) = @_;
+    my ( $self, $myconfig, $form, $locale) = @_;
     $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
       unless $form->{reference};
     my $null;
@@ -210,6 +210,13 @@ sub post_transaction {
 
             ( $null, $project_id ) = split /--/, $form->{"projectnumber_$i"};
             $project_id ||= undef;
+            $query = qq|SELECT count(*) from account where accno = ?|;
+            $sth = $dbh->prepare($query);
+            $sth->execute($accno);
+            my ($count) = $sth->fetchrow_array();
+            if ($count == 0){
+                 $form->error($locale->text('Account [_1] not found', $accno));
+            }
 
             $query = qq|
 				INSERT INTO acc_trans 
@@ -220,7 +227,6 @@ sub post_transaction {
 				                   FROM chart
 				                  WHERE accno = ? AND charttype = 'A'),
 				           ?, ?, ?, ?, ?, ?, ?)|;
-
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $form->{id},                  $accno,

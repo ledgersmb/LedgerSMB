@@ -244,7 +244,7 @@ sub close_till {
         $form->{accno_2}   = $accno2;
         $form->{debit_2}   = $amount;
         $form->{transdate} = $form->current_date( \%myconfig );
-        GL->post_transaction( \%myconfig, \%$form );
+        GL->post_transaction( \%myconfig, \%$form, $locale);
         delete $form->{id};
         $error = $amount - $expected;
         $difference += $error;
@@ -259,7 +259,7 @@ sub close_till {
     $form->{accno_2}   = $pos_config{coa_prefix};
     $form->{debit_2}   = $amount;
     $form->{transdate} = $form->current_date( \%myconfig );
-    GL->post_transaction( \%myconfig, \%$form );
+    GL->post_transaction( \%myconfig, \%$form, $locale);
     delete $form->{id};
     $lines .= "Cumulative Error: $amount\n\n";
     $form->{accno} = $form->{accno_1};
@@ -272,7 +272,7 @@ sub close_till {
     $form->{accno_2}   = $pos_config{coa_prefix};
     $form->{debit_2}   = $amount;
     $form->{transdate} = $form->current_date( \%myconfig );
-    GL->post_transaction( \%myconfig, \%$form );
+    GL->post_transaction( \%myconfig, \%$form, $locale);
     delete $form->{id};
 
     $head =

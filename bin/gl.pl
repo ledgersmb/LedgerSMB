@@ -100,7 +100,7 @@ sub edit_and_approve {
     $lsmb->merge($form);
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
     $draft->delete();
-    GL->post_transaction( \%myconfig, \%$form );
+    GL->post_transaction( \%myconfig, \%$form, $locale);
     approve();
 }
 
@@ -1123,7 +1123,7 @@ sub post {
         }
     }
 
-    if ( GL->post_transaction( \%myconfig, \%$form ) ) {
+    if ( GL->post_transaction( \%myconfig, \%$form, $locale) ) {
         $form->redirect( $locale->text('Transaction posted!') );
     }
     else {
