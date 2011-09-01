@@ -2412,7 +2412,7 @@ sub toggle_on_hold {
         }
         
         $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
-        my $code = $dbh->execute($ns, $form->{id});
+        my $code = $sth->execute($ns, $form->{id});
         
         return 1;
         
