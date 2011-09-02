@@ -1116,8 +1116,8 @@ sub transactions {
 
     if ( $form->{open} || $form->{closed} ) {
         unless ( $form->{open} && $form->{closed} ) {
-            $where .= " AND a.amount != a.paid" if ( $form->{open} );
-            $where .= " AND a.amount = a.paid"  if ( $form->{closed} );
+            $where .= " AND pd.due <> 0" if ( $form->{open} );
+            $where .= " AND pd.due = 0"  if ( $form->{closed} );
         }
     }
 
