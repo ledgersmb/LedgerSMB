@@ -38,6 +38,8 @@ my @lparts;
 my $age;
 SKIP: {
 	skip 'LedgerSMB is trunk', 1 if $lsmb->{version} =~ /trunk$/i;
+        $lsmb->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
+        $lsmb->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
 	@dparts = split /\./, $lsmb->{dbversion};
 	@lparts = split /\./, $lsmb->{version};
 	$age = 0;
@@ -57,6 +59,8 @@ SKIP: {
 }
 SKIP: {
 	skip 'Form is trunk', 1 if $form->{version} =~ /trunk$/i;
+        $form->{version} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
+        $form->{dbversion} =~ s/(\d+\.\d+\.\d+)\D.*/$1/;
 	@dparts = split /\./, $form->{dbversion};
 	@lparts = split /\./, $form->{version};
 	$age = 0;

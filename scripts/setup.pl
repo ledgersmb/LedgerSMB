@@ -156,37 +156,48 @@ sub upgrade{
     my $locale = $request->{_locale};
 
     my @pre_upgrade_checks = (
-       {query => "SELECT count(*), customernumber from customer
+       {query => "select id, customernumber, name, address1, city, state, zipcode
+                   from customer where customernumber in (SELECT customernumber from customer
                    GROUP BY customernumber
-                   HAVING count(*) > 1",
+                   HAVING count(*) > 1)",
          name => $locale->text('Unique Customernumber'),
          cols => ['customernumber', 'name', 'address1', 'city', 'state', 'zip'],
-         edit => 'customernumber'},
+         edit => 'customernumber',
+        table => 'customer'},
 
-       {query => "SELECT count(*), vendornumber from vendor
+       {query => "SELECT id, vendornumber, name, address1, city, state, zipcode
+                   FROM vendor WHERE vendornumber IN 
+                   (SELECT vendornumber from vendor
                    GROUP BY vendornumber
-                   HAVING count(*) > 1",
+                   HAVING count(*) > 1)",
          name => $locale->text('Unique Vendornumber'),
          cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
-         edit => 'vendornumber'},
+         edit => 'vendornumber',
+        table => 'vendor'},
 
        {query => 'SELECT * FROM employee where employeenumber IS NULL',
          name => $locale->text('No null employeenumber'),
          cols => ['login', 'name', 'employeenumber'],
-         edit => 'employeenumber'},
+         edit => 'employeenumber',
+        table => 'employee'},
 
-       {query => "select partnumber, count(*) from parts 
+       {query => "select * from parts where obsolete is not true 
+                  and partnumber in 
+                  (select partnumber from parts 
                   WHERE obsolete is not true
-                  group by partnumber having count(*) > 1",
+                  group by partnumber having count(*) > 1)",
          name => $locale->text('Unique nonobsolete partnumbers'),
          cols => ['partnumber', 'description', 'sellprice'],
-         edit => 'partnumber'},
+         edit => 'partnumber',
+        table => 'parts'},
 
-       {query => 'SELECT invnumber, count(*) from ar
-                   group by invnumber having count(*) > 1',
+       {query => 'SELECT * from ar where invnumber in (
+                   select invnumber from ar
+                   group by invnumber having count(*) > 1)',
          name => $locale->text('Unique AR Invoice numbers'),
          cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
-         edit =>  'invnumber'},
+         edit =>  'invnumber',
+        table =>  'ar'},
     );
     for my $check (@pre_upgrade_checks){
         my $sth = $request->{dbh}->prepare($check->{query});
@@ -214,17 +225,25 @@ sub _failed_check{
     );
     my $rows = [];
     my $count = 1;
-    my $hiddens = {};
+    my $hiddens = {table => $check->{table},
+                    edit => $check->{edit},
+                database => $request->{database}};
+    my $header = {};
+    for (@{$check->{cols}}){
+        $header->{$_} = $_;
+    }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')){
           $row->{$check->{'edit'}} = 
                     { input => {
                                 name => "$check->{edit}_$row->{id}",
                                 value => $row->{$check->{'edit'}},
                                 type => 'text',
-                                size => 10,
+                                size => 15,
                     },
           };
+          push @$rows, $row;
           $hiddens->{"id_$count"} = $row->{id},
+          ++$count;
     }
     $hiddens->{count} = $count;
     my $buttons = [
@@ -236,11 +255,46 @@ sub _failed_check{
     ];
     $template->render({
            form     => $request,
+           heading  => $header,
            columns  => $check->{cols},
            rows     => $rows,
            hiddens  => $hiddens,
            buttons  => $buttons
     });
+}
+
+=item fix_tests
+
+Handles input from the failed test function and then re-runs the migrate db 
+script.
+
+=cut
+
+sub fix_tests{
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials();
+    # ENVIRONMENT NECESSARY
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
+
+    # Credentials set above via environment variables --CT
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    my $locale = $request->{_locale};
+
+    my $table = $request->{dbh}->quote_identifier($request->{table});
+    my $edit = $request->{dbh}->quote_identifier($request->{edit});
+    my $sth = $request->{dbh}->prepare(
+            "UPDATE $table SET $edit = ? where id = ?"
+    );
+    
+    for my $count (1 .. $request->{count}){
+        my $id = $request->{"id_$count"};
+        $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
+            $request->error($sth->errstr);
+    }
+    $request->{dbh}->commit;
+    upgrade($request);
 }
 
 =item create_db
@@ -437,6 +491,62 @@ sub save_user {
 	    format => 'HTML',
     );
     $template->render($request);
+}
+
+=item run_upgrade
+
+Runs the actual upgrade script.
+
+=cut
+
+sub run_upgrade {
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials();
+    my $database = LedgerSMB::Database->new(
+               {username => $creds->{username},
+            company_name => $request->{database},
+                password => $creds->{password}}
+    );
+
+    # ENVIRONMENT NECESSARY
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
+
+    # Credentials set above via environment variables --CT
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    my $dbh = $request->{dbh};
+    $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
+    $dbh->do('CREATE SCHEMA PUBLIC');
+    # Copying contrib script loading for now
+    my $rc = 0;
+    my $temp = $LedgerSMB::Sysconfig::temp;
+     my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
+
+     for my $contrib (@contrib_scripts){
+         my $rc2;
+         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+         $rc ||= $rc2
+     }
+     my $rc2 = system("psql -f sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+     
+     $rc ||= $rc2;
+
+    $database->load_modules('LOADORDER');
+    my $dbtemplate = LedgerSMB::Template->new(
+        user => {}, 
+        template => 'sql/upgrade/1.2-1.3.sql',
+        no_auto_output => 1,
+        format => 'text' );
+    $dbtemplate->render($request);
+    $rc2 = system("psql -f $dbtemplate->{rendered} >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+    $rc ||= $rc2;
+    my $template = LedgerSMB::Template->new(
+                   path => 'UI/setup',
+                   template => 'new_user',
+                   format => 'HTML',
+     );
+     $template->render($request);
 }
 
 =item cancel

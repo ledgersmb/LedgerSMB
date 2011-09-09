@@ -604,6 +604,14 @@ INSERT INTO  custom_table_catalog  SELECT * FROM lsmb12. custom_table_catalog;
 
 INSERT INTO  custom_field_catalog  SELECT * FROM lsmb12. custom_field_catalog;
 
+INSERT INTO parts_translation SELECT * FROM lsmb12.translation where trans_id in (select id from parts);
+
+INSERT INTO partsgroup_translation SELECT * FROM lsmb12.translation where trans_id in
+ (select id from partsgroup);
+
+INSERT INTO project_translation SELECT * FROM lsmb12.translation where trans_id in
+ (select id from project);
+
 SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;

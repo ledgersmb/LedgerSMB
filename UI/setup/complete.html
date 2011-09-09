@@ -1,0 +1,13 @@
+<?lsmb INCLUDE "ui-header.html" 
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"]
+include_script = ['UI/setup/login.js', 'UI/util.js'] ?>
+<?lsmb PROCESS elements.html ?>
+<body>
+<h2><?lsmb text('Database Management Console') ?></h2>
+<div class="listtop"><?lsmb text('Database Operation Complete') ?></div>
+<p><?lsmb text('This database operation has completed successfully.  LedgerSMB may now be used.'); ?></p>
+<p><a href="setup.pl"><?lsmb text('Return to setup') ?></a></p>
+<p><a href="login.pl"><?lsmb text('Start Using LedgerSMB') ?></a></p>
+</body>
+</html>

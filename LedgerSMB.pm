@@ -220,7 +220,7 @@ use strict;
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
-our $VERSION = '1.2.99';
+our $VERSION = '1.3.0 rc1';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -238,7 +238,7 @@ sub new {
     $logger->debug("Begin LedgerSMB.pm");
 
     $self->{version} = $VERSION;
-    $self->{dbversion} = "1.2.99";
+    $self->{dbversion} = "1.3.0";
     
     bless $self, $type;
     $logger->debug("LedgerSMB::new: \$argstr = $argstr");

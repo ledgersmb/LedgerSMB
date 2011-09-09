@@ -88,7 +88,9 @@ sub preprocess {
 sub escape {
     my $vars = shift @_;
     if (defined $vars){
-        return escapeHTML($vars);
+        $vars = escapeHTML($vars);
+        $vars =~ s|\n|<br />|gm;
+        return $vars;
     }
     return undef;
 }

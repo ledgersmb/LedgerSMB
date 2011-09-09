@@ -100,6 +100,7 @@ sub escape {
     if (defined $vars){
             $vars =~ s/([&\$\\_<>~^#\%\{\}])/\\$1/g;
             $vars =~ s/"(.*)"/``$1''/gs;
+            $vars =~ s/\n/\n\n/gm;
     }
     return $vars;
 }

@@ -1,0 +1,57 @@
+<?lsmb INCLUDE "ui-header.html" 
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"] ?>
+<?lsmb PROCESS elements.html ?>
+<body>
+<div class="listtop"><?lsmb text('Enter User') ?></div>
+<form action="setup.pl" method="POST" name="new_user">
+<?lsmb INCLUDE input element_data = {
+    name = 'database'
+    type = 'hidden'
+   value = database
+} ?>
+<div class="form">
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+                            name  = 'contribdir'
+                            type  = 'text'
+                           label  = text('Contrib Dir') #'
+                            class = 'directory'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+                            name  = 'default_country'
+                            type  = 'text'
+                           label  = text('Default Country') #'
+                            class = 'country'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+                            name  = 'default_ar'
+                            type  = 'text'
+                           label  = text('Default AR') #'
+                            class = 'accno'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+                            name  = 'default_ap'
+                            type  = 'text'
+                           label  = text('Default AP') #'
+                            class = 'accno'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE button element_data = {
+    text = text('Upgrade') 
+    name = 'action'
+   value = 'run_upgrade'
+    type = 'submit'
+   class = 'submit'
+} ?>
+</div>
+</form>
+</body>
+</html>
