@@ -2400,9 +2400,9 @@ sub toggle_on_hold {
         my $dbh = $form->{dbh};
         my $sth = $dbh->prepare("SELECT on_hold from ar where ar.id = ?");
         $sth->execute($form->{id});
-        my $state = $sth->fetchrow_array;
+        my ($state) = $sth->fetchrow_array;
         my $n_s; # new state
-        if ($state[0] == 't') {
+        if ($state) {
             
             # Turn it off
             $n_s = 'f';
@@ -2412,7 +2412,7 @@ sub toggle_on_hold {
         }
         
         $sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");
-        my $code = $sth->execute($ns, $form->{id});
+        my $code = $sth->execute($n_s, $form->{id});
         
         return 1;
         
