@@ -1594,7 +1594,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__project_translation_create"
 WITH INHERIT NOLOGIN;
 
 GRANT ALL ON project_translation 
-TO "lsmb_<?lsmb dbname ?>__part_translation_create";
+TO "lsmb_<?lsmb dbname ?>__project_translation_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
@@ -1603,11 +1603,24 @@ values (107, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (108, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__partsgroup_translation_create"
+WITH INHERIT NOLOGIN;
+
+GRANT ALL ON partsgroup_translation
+TO "lsmb_<?lsmb dbname ?>__partsgroup_translation_create";
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (98, 'allow', 'lsmb_<?lsmb dbname ?>__partsgroup_translation_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (107, 'allow', 'lsmb_<?lsmb dbname ?>__partsgroup_translation_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (108, 'allow', 'lsmb_<?lsmb dbname ?>__partsgroup_translation_create');
+
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__manual_translation_all"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__language_create",
 "lsmb_<?lsmb dbname ?>__part_translation_create",
+"lsmb_<?lsmb dbname ?>__partsgroup_translation_create",
 "lsmb_<?lsmb dbname ?>__project_translation_create";
 
 -- Fixed Assets
@@ -1701,11 +1714,11 @@ GRANT SELECT ON warehouse TO public;
 GRANT SELECT ON voucher TO public;
 GRANT select ON account, account_link, account_link_description TO PUBLIC;
 GRANT select ON sic TO public;
-GRANT SELECT ON parts_translation,  project_translation TO public;
+GRANT SELECT ON parts_translation,  partsgroup_translation, 
+                project_translation TO public;
 GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
                 asset_disposal_method TO PUBLIC;
 GRANT SELECT ON mime_type, file_class TO PUBLIC;
-
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 
