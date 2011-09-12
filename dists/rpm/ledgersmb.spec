@@ -1,19 +1,26 @@
 # RPM spec written for and tested on CentOS 4 and CentOS 5 
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
-Version: 1.3.0-beta4
+Version: 1.3.0-rc1
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
 Group: Applications/Productivity
 Source0: %{name}-%{version}.tar.gz
+Source1: Config-Std-0.007.tar.gz
+Source2: Template-Plugin-Latex-3.02.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
 Requires: perl >= 5.8, httpd, postgresql >= 8.1, tetex-latex
-Requires: perl-DBD-Pg, perl-DBI >= 1.48, perl-version, perl-Smart-Comments
+Requires: perl-DBD-Pg >= 2.0 , perl-DBI >= 1.48
+Requires: perl-version, perl-Smart-Comments
+Requires: perl-HTML-Parser, perl-Template-Toolkit, 
+Requires: perl-Error, perl-CGI-Simple
+Requires: perl-File-MimeInfo, perl-IO-stringy
 Requires: perl-MIME-Lite, perl-Class-Std >= 0.0.8
 Requires: perl-Config-Std >= 0.0.4, perl-Locale-Maketext-Lexicon >= 0.62
 Requires: perl-IO-String
+Requires: perl-Math-BigInt-GMP
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no
@@ -24,7 +31,9 @@ LedgerSMB is a double-entry accounting system written in perl.
 LedgerSMB is a fork of sql-ledger offering better security and data integrity,
 and many advanced features.
 
-This package does not work in SELinux restricted mode.
+This package does not work in SELinux restricted mode.  However audit2allow can
+be used to ensure that it will work.  Start with permissive mode, and then once
+issues are corrected, you can turn the mode back to restricted.
 
 To finalize the ledgersmb installation:
 

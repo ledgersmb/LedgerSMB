@@ -14,7 +14,7 @@ requires 'Data::Dumper';
 requires 'Log::Log4perl';
 requires 'Locale::Maketext';
 requires 'DateTime';
-requires 'Locale::Maketext::Lexicon' => '0.56';
+requires 'Locale::Maketext::Lexicon' => '0.62';
 requires 'DBI' => '1.00';
 requires 'MIME::Base64';
 requires 'Digest::MD5';
