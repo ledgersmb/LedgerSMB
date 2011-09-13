@@ -1,7 +1,7 @@
 # RPM spec written for and tested on CentOS 4 and CentOS 5 
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
-Version: 1.3.0-rc1
+Version: 1.3.0_rc1
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
@@ -95,9 +95,6 @@ ln -s ../../..%{_sysconfdir}/ledgersmb/ledgersmb.conf \
   $RPM_BUILD_ROOT%{_datadir}/%{name}/ledgersmb.conf
 
 # install relevant parts in data/cgi directory
-cp -rp *.pl favicon.ico index.html ledger-smb.eps ledger-smb.gif ledger-smb.png ledger-smb_small.png menu.ini \
-  bin LedgerSMB sql utils locale drivers \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/
 rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}/locale/legacy
 
 # css - written to by cgi
@@ -142,7 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
 %doc doc/{COPYRIGHT,faq.html,LedgerSMB-manual.pdf,README,release_notes}
-%doc BUGS Changelog CONTRIBUTORS INSTALL LICENSE README.translations TODO UPGRADE
+%doc BUGS Changelog CONTRIBUTORS INSTALL LICENSE README.translations UPGRADE
 
 
 %changelog

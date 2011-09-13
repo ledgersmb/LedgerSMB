@@ -1844,7 +1844,6 @@ sub print_form {
         locale => $locale,
         template => $form->{'formname'},
         format => uc $form->{format},
-        no_escape => true,
         method => $form->{media},
         output_options => \%output_options,
 	output_file => $form->{formname} . "-" . $form->{"${inv}number"},
