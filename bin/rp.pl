@@ -1083,10 +1083,9 @@ sub aging {
             $column_data{statement} = {
                 name => "statement_$i",
                 type => 'checkbox',
-                value => '1',
+                value => $ref->{ctid},
                 };
             $column_data{statement}{checked} = 'checked' if $ref->{checked};
-            $hiddens{"$form->{ct}_id_$i"} = $ref->{ctid};
             $hiddens{"curr_$i"} = $ref->{curr};
         }
 
@@ -1470,27 +1469,94 @@ sub print {
 
     my @batch_data = ();
     my $selected;
-    
+    RP->aging( \%myconfig, $form );
+    my $ag = {};
+    for my $ref(@{$form->{AG}}){
+        push @{$ag->{$ref->{ctid}}}, $ref;
+    }
+    $form->{statementdate} = $locale->date( \%myconfig, $form->{todate}, 1 );
+    $form->{templates} = "$myconfig{templates}";
+    # CT-- These aren't working right now, seeing if they are in fact necessary
+    # due to changes in structure.
+    #
+    #my @vars = qw(company address businessnumber tel fax);
+    #for (@vars) { $form->{$_} = $myconfig{$_} }
+    $form->{address} =~ s/\\n/\n/g;
+
+    @vars = qw(name address1 address2 city state zipcode country contact);
+    push @vars, "$form->{ct}phone", "$form->{ct}fax", "$form->{ct}taxnumber";
+    push @vars, 'email' if !$form->{media} eq 'email';
+    my $invoices = 0; 
     for $i ( 1 .. $form->{rowcount} ) {
 
-        if ( $form->{"statement_$i"} eq '1' ) {
+        if ( $form->{"statement_$i"}) {
+            for (qw(invnumber ordnumber ponumber notes invdate duedate)) {
+                $form->{$_} = ();
+            }
+            foreach $item (qw(c0 c30 c60 c90)) {
+                $form->{$item} = ();
+                $form->{"${item}total"} = 0;
+            }
+            $form->{total} = 0;
             $form->{"$form->{ct}_id"} = $form->{"$form->{ct}_id_$i"};
             $language_code            = $form->{"language_code_$i"};
             $curr                     = $form->{"curr_$i"};
             $selected                 = 1;
             
             if ( $form->{media} !~ /(screen|email)/ ) {
-                # SC: I may not need this anymore...
-                # But I'll wait until lpr output is working before deciding
-                $form->{OUT}       = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
-                $form->{"$form->{ct}_id"} = "";
                 $SIG{INT} = 'IGNORE';
             }
     
-            RP->aging( \%myconfig, \%$form );
-    
-            $printhash = &print_form;
+            @refs = @{$ag->{$form->{"statement_$i"}}};    
+
+
             
+            for $ref( @refs ) {
+                for (@vars) { $form->{$_} = $ref->{$_} }
+
+                $form->{ $form->{ct} }    = $ref->{name};
+                $form->{"$form->{ct}_id"} = $ref->{ctid};
+                $form->{language_code}    = $form->{"language_code_$i"};
+                $form->{currency}         = $form->{"curr_$i"};
+
+                if ($ref->{curr} eq $form->{currency}){
+                    ++$invoices;
+                    $ref->{invdate} = $ref->{transdate};
+                   my @a = qw(invnumber ordnumber ponumber notes invdate duedate);
+                  for (@a) { $form->{"${_}_1"} = $ref->{$_} }
+                      $form->format_string(qw(invnumber_1 ordnumber_1 ponumber_1 notes_1));
+                  for (@a) { push @{ $form->{$_} }, $form->{"${_}_1"} }
+
+                  foreach $item (qw(c0 c30 c60 c90)) {
+                      eval {
+                           $ref->{$item} =
+                                  $form->round_amount( 
+                                      $ref->{$item} / $ref->{exchangerate}, 2 );
+                       };
+                      $form->{"${item}total"} += $ref->{$item};
+                      $form->{total}          += $ref->{$item};
+                      push @{ $form->{$item} },
+                      $form->format_amount( \%myconfig, $ref->{$item}, 2 );
+                   }
+                }
+                
+            }
+            for ( "c0", "c30", "c60", "c90", "" ) {
+                $form->{"${_}total"} =
+                  $form->format_amount( \%myconfig, $form->{"${_}total"},
+                    2 );
+            }
+            
+            my $printhash = {};
+            my $csettings = $LedgerSMB::Company_Config::settings;
+            $form->{company} = $csettings->{company_name};
+            $form->{businessnumber} = $csettings->{businessnumber};
+            $form->{email} = $csettings->{company_email};
+            $form->{address} = $csettings->{company_address};
+            $form->{tel} = $csettings->{company_phone};
+            $form->{fax} = $csettings->{company_fax};
+
+            for (keys %$form) { $printhash->{$_} = $form->{$_}}
             push @batch_data, $printhash;
         }
     }
@@ -1500,10 +1566,12 @@ sub print {
     my $template = LedgerSMB::Template->new( 
       user => \%myconfig,
       template => $form->{'formname'} || $form->{'type'},
-      format => uc $form->{format}
+      format => uc $form->{format},
+      locale => $locale
     );
     try {
-        $template->render({data => \@batch_data});
+        $template->render({currency => $form->{currency}, 
+                            data => \@batch_data});
         $template->output($form);
     }
     catch Error::Simple with {
@@ -1516,113 +1584,6 @@ sub print {
 
 }
 
-sub print_form {
-
-    $form->{statementdate} = $locale->date( \%myconfig, $form->{todate}, 1 );
-
-    $form->{templates} = "$myconfig{templates}";
-
-    # setup variables for the form
-    my @vars = qw(company address businessnumber tel fax);
-    for (@vars) { $form->{$_} = $myconfig{$_} }
-    $form->{address} =~ s/\\n/\n/g;
-
-    @vars = qw(name address1 address2 city state zipcode country contact);
-    push @vars, "$form->{ct}phone", "$form->{ct}fax", "$form->{ct}taxnumber";
-    push @vars, 'email' if !$form->{media} eq 'email';
-
-    my $i = 0;
-    while ( @{ $form->{AG} } ) {
-
-        my $ref = shift @{ $form->{AG} };
-
-        if ( $ctid != $ref->{ctid} ) {
-
-            $ctid = $ref->{ctid};
-            $i++;
-
-            if ( $form->{"statement_$i"} eq '1' ) {
-
-                for (@vars) { $form->{$_} = $ref->{$_} }
-
-                $form->{ $form->{ct} }    = $ref->{name};
-                $form->{"$form->{ct}_id"} = $ref->{ctid};
-                $form->{language_code}    = $form->{"language_code_$i"};
-                $form->{currency}         = $form->{"curr_$i"};
-
-                for (qw(invnumber ordnumber ponumber notes invdate duedate)) {
-                    $form->{$_} = ();
-                }
-                $form->{total} = 0;
-                foreach $item (qw(c0 c30 c60 c90)) {
-                    $form->{$item} = ();
-                    $form->{"${item}total"} = 0;
-                }
-
-                &statement_details($ref) if $ref->{curr} eq $form->{currency};
-
-                while ($ref) {
-
-                    if ( scalar( @{ $form->{AG} } ) > 0 ) {
-
-                        # one or more left to go
-                        if ( $ctid == $form->{AG}->[0]->{ctid} ) {
-                            $ref = shift @{ $form->{AG} };
-                            &statement_details($ref)
-                              if $ref->{curr} eq $form->{currency};
-
-                            # any more?
-                            $ref = scalar( @{ $form->{AG} } );
-                        }
-                        else {
-                            $ref = 0;
-                        }
-                    }
-                    else {
-
-                        # set initial ref to 0
-                        $ref = 0;
-                    }
-
-                }
-
-                for ( "c0", "c30", "c60", "c90", "" ) {
-                    $form->{"${_}total"} =
-                      $form->format_amount( \%myconfig, $form->{"${_}total"},
-                        2 );
-                }
-                
-                my $printhash = {};
-                for (keys %$form) { $printhash->{$_} = $form->{$_}}
-
-                return $printhash;
-            }
-        }
-    }
-
-}
-
-sub statement_details {
-    my ($ref) = @_;
-
-    $ref->{invdate} = $ref->{transdate};
-    my @a = qw(invnumber ordnumber ponumber notes invdate duedate);
-    for (@a) { $form->{"${_}_1"} = $ref->{$_} }
-    $form->format_string(qw(invnumber_1 ordnumber_1 ponumber_1 notes_1));
-    for (@a) { push @{ $form->{$_} }, $form->{"${_}_1"} }
-
-    foreach $item (qw(c0 c30 c60 c90)) {
-        eval {
-            $ref->{$item} =
-              $form->round_amount( $ref->{$item} / $ref->{exchangerate}, 2 );
-        };
-        $form->{"${item}total"} += $ref->{$item};
-        $form->{total}          += $ref->{$item};
-        push @{ $form->{$item} },
-          $form->format_amount( \%myconfig, $ref->{$item}, 2 );
-    }
-
-}
 
 sub generate_tax_report {
     RP->tax_report( \%myconfig, $form );
