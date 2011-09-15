@@ -1378,7 +1378,7 @@ sub e_mail {
     my %hiddens;
     # get name and email addresses
     for $i ( 1 .. $form->{rowcount} ) {
-        if ( $form->{"statement_$i"} eq '1' ) {
+        if ( $form->{"statement_$i"} ) {
             $form->{"$form->{ct}_id"}  = $form->{"$form->{ct}_id_$i"};
             $form->{"statement_1"}     = 1;
             $form->{"language_code_1"} = $form->{"language_code_$i"};
