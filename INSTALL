@@ -227,6 +227,18 @@ Additionally, it must start with a letter.  Company database names are
 case insensitive, meaning you can't create two separate company databases
 called 'Ledgersmb' and 'ledgersmb'.
 
+One way you can create databases fairly easily is by directing your web browser
+to the setup.pl script at your installed ledgersmb directory.  So if the 
+base URL is http://localhost/ledgersmb/, you can access the database setup and 
+upgrade script at http://localhost/ledgersmb/setup.pl.  This is very different
+from the approaches taken by LedgerSMB 1.2.x and earlier and SQL-Ledger, but
+rather forms a wizard to walk you through the process.
+
+An alternative method is the 'prepare-company-database.sh' script contributed by
+Erik Huelsmann.  This script can be useful in creating and populating databases
+from the command line and it offers a reference implementation written in BASH
+for how this process is done.
+
 The 'prepare-company-database.sh' script in the tools/ directory will set
 up databases to be used for LedgerSMB. The script should be run as 'root'
 because it wants to 'su' to the postgres user.  Alternatively, if you
@@ -242,7 +254,7 @@ The following invocation of the script sets up your first test company,
 when invoked as the root user and from the root directory of the LedgerSMB
 sources:
 
- $ ./prepare-company-database.sh --company testinc
+ $ ./tools/prepare-company-database.sh --company testinc
 
 The script assumes your PostgreSQL server runs on 'localhost' with
 PostgreSQL's default port (5432).
