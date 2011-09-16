@@ -527,6 +527,7 @@ sub print {
         #    my $E = shift;
         #    $payment->error( $E->stacktrace );
         #};
+        $request->{action} = 'update_payments';
         display_payments(@_);
 
     } else {
