@@ -1428,7 +1428,99 @@ sub send_email {
 
     RP->aging( \%myconfig, $form );
 
-    my $data = &print_form;
+    my $selected = 0;
+    RP->aging( \%myconfig, $form );
+    my $ag = {};
+    for my $ref(@{$form->{AG}}){
+        push @{$ag->{$ref->{ctid}}}, $ref;
+    }
+    $form->{statementdate} = $locale->date( \%myconfig, $form->{todate}, 1 );
+    $form->{templates} = "$myconfig{templates}";
+    # CT-- These aren't working right now, seeing if they are in fact necessary
+    # due to changes in structure.
+    #
+    #my @vars = qw(company address businessnumber tel fax);
+    #for (@vars) { $form->{$_} = $myconfig{$_} }
+    $form->{address} =~ s/\\n/\n/g;
+
+    @vars = qw(name address1 address2 city state zipcode country contact);
+    push @vars, "$form->{ct}phone", "$form->{ct}fax", "$form->{ct}taxnumber";
+    push @vars, 'email' if !$form->{media} eq 'email';
+    my $invoices = 0; 
+    for $i ( 1 .. $form->{rowcount} ) {
+        last if $selected;
+        if ( $form->{"statement_$i"}) {
+            $selected = 1;
+            for (qw(invnumber ordnumber ponumber notes invdate duedate)) {
+                $form->{$_} = ();
+            }
+            foreach $item (qw(c0 c30 c60 c90)) {
+                $form->{$item} = ();
+                $form->{"${item}total"} = 0;
+            }
+            $form->{total} = 0;
+            $form->{"$form->{ct}_id"} = $form->{"$form->{ct}_id_$i"};
+            $language_code            = $form->{"language_code_$i"};
+            $curr                     = $form->{"curr_$i"};
+            $selected                 = 1;
+            
+            if ( $form->{media} !~ /(screen|email)/ ) {
+                $SIG{INT} = 'IGNORE';
+            }
+    
+            @refs = @{$ag->{$form->{"statement_$i"}}};    
+
+
+            
+            for $ref( @refs ) {
+                for (@vars) { $form->{$_} = $ref->{$_} }
+
+                $form->{ $form->{ct} }    = $ref->{name};
+                $form->{"$form->{ct}_id"} = $ref->{ctid};
+                $form->{language_code}    = $form->{"language_code_$i"};
+                $form->{currency}         = $form->{"curr_$i"};
+
+                if ($ref->{curr} eq $form->{currency}){
+                    ++$invoices;
+                    $ref->{invdate} = $ref->{transdate};
+                   my @a = qw(invnumber ordnumber ponumber notes invdate duedate);
+                  for (@a) { $form->{"${_}_1"} = $ref->{$_} }
+                      $form->format_string(qw(invnumber_1 ordnumber_1 ponumber_1 notes_1));
+                  for (@a) { push @{ $form->{$_} }, $form->{"${_}_1"} }
+
+                  foreach $item (qw(c0 c30 c60 c90)) {
+                      eval {
+                           $ref->{$item} =
+                                  $form->round_amount( 
+                                      $ref->{$item} / $ref->{exchangerate}, 2 );
+                       };
+                      $form->{"${item}total"} += $ref->{$item};
+                      $form->{total}          += $ref->{$item};
+                      push @{ $form->{$item} },
+                      $form->format_amount( \%myconfig, $ref->{$item}, 2 );
+                   }
+                }
+                
+            }
+            for ( "c0", "c30", "c60", "c90", "" ) {
+                $form->{"${_}total"} =
+                  $form->format_amount( \%myconfig, $form->{"${_}total"},
+                    2 );
+            }
+            
+            my $printhash = {};
+            my $csettings = $LedgerSMB::Company_Config::settings;
+            $form->{company} = $csettings->{company_name};
+            $form->{businessnumber} = $csettings->{businessnumber};
+            $form->{email} = $csettings->{company_email};
+            $form->{address} = $csettings->{company_address};
+            $form->{tel} = $csettings->{company_phone};
+            $form->{fax} = $csettings->{company_fax};
+
+            for (keys %$form) { $printhash->{$_} = $form->{$_}}
+        }
+    }
+    my $data = $printhash;
 
     delete $form->{header};
     my $template = LedgerSMB::Template->new( 
