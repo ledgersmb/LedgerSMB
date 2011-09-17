@@ -1533,12 +1533,12 @@ sub send_email {
         );
     try {
         my $csettings = $LedgerSMB::Company_Config::settings;
-        $form->{company} = $csettings->{company_name};
-        $form->{businessnumber} = $csettings->{businessnumber};
-        $form->{email} = $csettings->{company_email};
-        $form->{address} = $csettings->{company_address};
-        $form->{tel} = $csettings->{company_phone};
-        $form->{fax} = $csettings->{company_fax};
+        $data->{company} = $csettings->{company_name};
+        $data->{businessnumber} = $csettings->{businessnumber};
+        $data->{email} = $csettings->{company_email};
+        $data->{address} = $csettings->{company_address};
+        $data->{tel} = $csettings->{company_phone};
+        $data->{fax} = $csettings->{company_fax};
         $template->render({data => [$data]});
     }
     catch Error::Simple with {
