@@ -147,11 +147,12 @@ sub pre_bulk_post_report {
         format   => ($request->{report_format}) ? $request->{report_format} : 'HTML',
     ); 
     my $cols;
-    @$cols =  qw(accno source memo debits credits);
+    @$cols =  qw(pay_to accno source memo debits credits);
     my $rows = [];
     my $total_debits = 0;
     my $total_credits = 0;
     my $heading = {
+        pay_to          => $request->{_locale}->text('Pay To'),
         accno           => $request->{_locale}->text('Account Number'),
         acc_description => $request->{_locale}->text('Account Title'),
         transdate       => $request->{_locale}->text('Date'),
@@ -164,35 +165,38 @@ sub pre_bulk_post_report {
     for my $crow (1 .. $request->{contact_count}){
         my $ref;
         my $cid = $request->{"contact_$crow"};
-        $ref = {accno     => $request->{ar_ap_accno},
-                transdate => $request->{date_paid}, 
-                source    => $request->{"source_$cid"}, 
-                memo      => $request->{"memo_$cid"},
-                amount    => 0
-               };
-        for my $invrow (1 .. $request->{"invoice_count_$cid"}){
-            my $inv_id = $request->{"invoice_${cid}_$invrow"};
-            if ($request->{"paid_$cid"} eq 'all'){
-                $ref->{amount} += $request->{"payment_$inv_id"};
-            } else {
-               $ref->{amount} += $request->{"net_$inv_id"};
-            }
+        if ($request->{"id_$cid"}){
+            $ref = {pay_to    => $request->{"contact_label_$cid"},
+                    accno     => $request->{ar_ap_accno},
+                    transdate => $request->{date_paid}, 
+                    source    => $request->{"source_$cid"}, 
+                    memo      => $request->{"memo_$cid"},
+                    amount    => 0
+                   };
+            for my $invrow (1 .. $request->{"invoice_count_$cid"}){
+                 my $inv_id = $request->{"invoice_${cid}_$invrow"};
+                 if ($request->{"paid_$cid"} eq 'all'){
+                     $ref->{amount} += $request->{"payment_$inv_id"};
+                 } else {
+                     $ref->{amount} += $request->{"net_$inv_id"};
+                 }
+             }
+             # If vendor, this is debit-normal so multiply by -1
+             if ($request->{account_class} == 1){
+                 $ref->{amount} *= -1;
+              }
+              if ($ref->{amount} < 0) {
+                  $ref->{debits} = $ref->{amount} * -1;
+                  $ref->{credits} = 0;
+              } else {
+                  $ref->{debits} = 0;
+                  $ref->{credits} = $ref->{amount};
+              }
+              $total_debits += $ref->{debits};
+              $total_credits += $ref->{credits};
+              push @$rows, $ref;
+              $total += $ref->{amount};
         }
-        # If vendor, this is debit-normal so multiply by -1
-        if ($request->{account_class} == 1){
-           $ref->{amount} *= -1;
-        }
-        if ($ref->{amount} < 0) {
-            $ref->{debits} = $ref->{amount} * -1;
-            $ref->{credits} = 0;
-        } else {
-            $ref->{debits} = 0;
-            $ref->{credits} = $ref->{amount};
-        }
-        $total_debits += $ref->{debits};
-        $total_credits += $ref->{credits};
-        push @$rows, $ref;
-        $total += $ref->{amount};
     }
     
 
