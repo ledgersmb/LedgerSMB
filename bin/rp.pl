@@ -1380,7 +1380,7 @@ sub e_mail {
     for $i ( 1 .. $form->{rowcount} ) {
         if ( $form->{"statement_$i"} ) {
             $form->{"$form->{ct}_id"}  = $form->{"$form->{ct}_id_$i"};
-            $form->{"statement_1"}     = 1;
+            $form->{"statement_1"}     = $form->{"statement_$i"};
             $form->{"language_code_1"} = $form->{"language_code_$i"};
             $form->{"curr_1"}          = $form->{"curr_$i"};
             RP->get_customer( \%myconfig, \%$form );
@@ -1447,6 +1447,7 @@ sub send_email {
     push @vars, "$form->{ct}phone", "$form->{ct}fax", "$form->{ct}taxnumber";
     push @vars, 'email' if !$form->{media} eq 'email';
     my $invoices = 0; 
+    my $data= {};
     for $i ( 1 .. $form->{rowcount} ) {
         last if $selected;
         if ( $form->{"statement_$i"}) {
@@ -1485,7 +1486,7 @@ sub send_email {
                     $ref->{invdate} = $ref->{transdate};
                    my @a = qw(invnumber ordnumber ponumber notes invdate duedate);
                   for (@a) { $form->{"${_}_1"} = $ref->{$_} }
-                      $form->format_string(qw(invnumber_1 ordnumber_1 ponumber_1 notes_1));
+                  $form->format_string(qw(invnumber_1 ordnumber_1 ponumber_1 notes_1));
                   for (@a) { push @{ $form->{$_} }, $form->{"${_}_1"} }
 
                   foreach $item (qw(c0 c30 c60 c90)) {
@@ -1508,26 +1509,17 @@ sub send_email {
                     2 );
             }
             
-            my $printhash = {};
-            my $csettings = $LedgerSMB::Company_Config::settings;
-            $form->{company} = $csettings->{company_name};
-            $form->{businessnumber} = $csettings->{businessnumber};
-            $form->{email} = $csettings->{company_email};
-            $form->{address} = $csettings->{company_address};
-            $form->{tel} = $csettings->{company_phone};
-            $form->{fax} = $csettings->{company_fax};
 
-            for (keys %$form) { $printhash->{$_} = $form->{$_}}
+            for (keys %$form) { $data->{$_} = $form->{$_}}
         }
     }
-    my $data = $printhash;
-
     delete $form->{header};
     my $template = LedgerSMB::Template->new( 
         user => \%myconfig,
         template => $form->{'formname'} || $form->{'type'},
         format => uc $form->{format},
         method => 'email',
+        locale => $locale,
         output_options => {
             to => $form->{email},
             cc => $form->{cc},
@@ -1540,6 +1532,13 @@ sub send_email {
             },
         );
     try {
+        my $csettings = $LedgerSMB::Company_Config::settings;
+        $form->{company} = $csettings->{company_name};
+        $form->{businessnumber} = $csettings->{businessnumber};
+        $form->{email} = $csettings->{company_email};
+        $form->{address} = $csettings->{company_address};
+        $form->{tel} = $csettings->{company_phone};
+        $form->{fax} = $csettings->{company_fax};
         $template->render({data => [$data]});
     }
     catch Error::Simple with {
