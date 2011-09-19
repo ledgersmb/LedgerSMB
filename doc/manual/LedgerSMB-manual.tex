@@ -74,9 +74,13 @@ DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 \section{Introduction to LedgerSMB}
 
+\subsection{What is LedgerSMB}
+
+LedgerSMB is an open source financial accounting software program which is 
+rapidly developing additional business management features.  Our goal is to 
+provide a robust financial management suite for small to midsize busiensses.
 
 \subsection{Why LedgerSMB}
-
 
 \subsubsection{Advantages of LedgerSMB}
 
@@ -191,6 +195,17 @@ reports using third party reporting tools.
 \item Supports Retail Sales Tax and Value Added Tax type systems 
 \item Flexible framework allows one to customize reports to change the tax
 reporting framework to meet any local requirement. 
+\item Group customers and vendors by tax form for easy reporting (1099, EU VAT 
+reporting, and similar)
+\end{itemize}
+\item Fixed Assets
+
+\begin{itemize}
+\item Group fixed assets for easy depreciation and disposal
+\item Straight-line depreciation supported out of the box
+\item Framework allows for easy development of production-based and time-based 
+depreciation methods
+\item Track full or partial disposal of assets
 \end{itemize}
 \end{itemize}
 
@@ -206,7 +221,7 @@ broad range of technologies
 \subsection{System Requirements of LedgerSMB}
 
 \begin{itemize}
-\item PostgreSQL 8.1 or higher
+\item PostgreSQL 8.3 or higher
 \item A CGI-enabled Web Server (for example, Apache) 
 \item Perl 5.8.x or higher
 \item An operating system which supports the above software (usually Linux,
@@ -219,7 +234,7 @@ though Windows, MacOS X, etc. do work)
 \item Config::Std
 \item Data::Dumper
 \item DateTime
-\item DBD::Pg
+\item DBD::Pg 2.0 or later
 \item DBI
 \item Digest::MD5
 \item Encode
@@ -246,16 +261,63 @@ is no longer included.
 
 \subsection{Companies and Datasets}
 
-LedgerSMB stores its information in locale-specific data sets. When
-a dataset is created, it sets various defaults such as currency, a
-basic chart of accounts setup, and so forth.
+LedgerSMB 1.3 stores data for each company in a separate "database".  A
+database is a PostgreSQL concept for grouping tables, indexes, etc.
 
-Datasets are stored as PostgreSQL databases. The application
-is designed with the idea that each dataset will represent exactly
-one company. If a customer is working with multiple companies, he/she
-must create a dataset to for each.
+To create a database you will need to know a PostgreSQL superuser name and
+password.  If you do not know this information you can set authentication to
+"trust," then set the password, then set back to a more reasonable setting after
+this process.  Plese see the PostgreSQL documentation for details.
 
-TODO:  Document preferred methods for creating databases!
+Each company database must be named.  This name is essentially the system
+identifier within PostgreSQL for the company's dataset.  The name for the
+company database can only contain letters, digits and underscores.
+Additionally, it must start with a letter.  Company database names are
+case insensitive, meaning you can't create two separate company databases
+called 'Ledgersmb' and 'ledgersmb'.
+
+One way you can create databases fairly easily is by directing your web browser
+to the setup.pl script at your installed ledgersmb directory.  So if the 
+base URL is http://localhost/ledgersmb/, you can access the database setup and 
+upgrade script at http://localhost/ledgersmb/setup.pl.  This is very different
+from the approaches taken by LedgerSMB 1.2.x and earlier and SQL-Ledger, but
+rather forms a wizard to walk you through the process.
+
+An alternative method is the 'prepare-company-database.sh' script contributed by
+Erik Huelsmann.  This script can be useful in creating and populating databases
+from the command line and it offers a reference implementation written in BASH
+for how this process is done.
+
+The 'prepare-company-database.sh' script in the tools/ directory will set
+up databases to be used for LedgerSMB. The script should be run as 'root'
+because it wants to 'su' to the postgres user.  Alternatively, if you
+know the password of the postgres user, you can run the script as any other
+user.  You'll be prompted for the password.  Additionally, the script creates
+a superuser to assign ownership of the created company database to. By
+default this user is called 'ledgersmb'.  The reason for this choice is that
+when removing the ledgersmb user, you'll be told about any unremoved parts
+of the database, because the owner of an existing database can't be removed
+until that database is itself removed.
+
+The following invocation of the script sets up your first test company,
+when invoked as the root user and from the root directory of the LedgerSMB
+sources:
+
+ \$ ./tools/prepare-company-database.sh --company testinc
+
+The script assumes your PostgreSQL server runs on 'localhost' with
+PostgreSQL's default port (5432).
+
+Upon completion, it'll have created a company database with the name
+'testinc', a user called 'ledgersmb' (password: 'LEDGERSMBINITIALPASSWORD'),
+a single user called 'admin' (password: 'admin') and the roles required to
+manage authorizations.
+
+Additionally, it'll have loaded a minimal list of languages required
+to succesfully navigate the various screens.
+
+All these can be adjusted using arguments provided to the setup script. See
+the output generated by the --help option for a full list of options.
 
 \subsection{How to Create a User}
 
@@ -303,7 +365,9 @@ the double underscore at the end of the prefix).
       \item[batch\_post] Allows the user to take existing batches and post them
                          to the books
       \item[batch\_list] Allows the user to list batches and vouchers within
-                         a batch.  Member of:
+                         a batch.  This role also grants access to listing draft
+                         tansactions (i.e. non-approved transactions not a 
+                         part of a batch).  Member of:
             \begin{itemize}
             \item ar\_transaction\_list
             \item ap\_transaction\_list
@@ -693,9 +757,6 @@ The Chart of Accounts provides a basic overview of the logical structure
 of the accounting program. One can customize this chart to allow for
 tracking of different sorts of information.
 
-TODO:  Add and document the ability to load chart of accounts sql scripts after
-db creation.
-
 \subsection{Introduction to Double Entry Bookkeeping}
 In order to set up your chart of accounts in LedgerSMB you will need to
 understand a bit about double entry bookkeeping.  This section provides a
@@ -703,8 +764,8 @@ brief overview of the essential concepts.  There is a list of references
 for further reading at the end.
 
 \subsubsection{Business Entity}
-You don't want to mix your personal expenses and income with that of the
-business or you will not be able to tell how much money it is making (if
+You always want to keep your personal expenses and income separate from that of 
+the business or you will not be able to tell how much money it is making (if
 any).  For the same reason you will want to keep track of how much money
 you put into and take out of the business so you will want to set up a
 completely seperate set of records for it and treat it almost as if it had
@@ -732,10 +793,11 @@ program takes care of that.
 \subsubsection{Accounts}
 
 \begin{description}
-\item[Assets] Valuable stuff the business owns such as money and
-goods available for sale 
+\item[Assets] Money and anything that can be converted into money without 
+reducing the net equity of the business.  Assets include money owed, money held,
+goods available for sale, property, and the like.
 \item[Liabilities] Debts owned by the business such as bank loans and unpaid 
-bills
+bills. 
 \item[Equity or Capital] What would be left for the owner if all the assets were 
 converted to money and all the liabilities paid off ("Share Capital" on the
 LedgerSMB default chart of accounts: not to be confused with "Capital Assets".)
@@ -754,20 +816,29 @@ a useful tool for understanding how the system works.
 
 \subsubsection{Debits and Credits}
 
-Traditional paper accounting systems used a two-column form in which all
-increases went in one column and all deceases in the other.  For asset and
-expense accounts increases went in the left column and decreases in the
-right.  For liability and capital accounts decreases went in the left
-column and increases in the right.  Looking at the accounting equation we
-see that assets are on the left, so it is logical that asset increases
-would go on the left.  Libilities, capital, and revenue are on the right so
-it is logical that their increase would go on the right.  Expenses,
-however, are on the right, so why do their increases go on the left?
-Because expenses are subtracted from the right side of the equation and so
-expense increases decrease the right side of the equation.
+The words "Debit" and "Credit" come from Latin roots. Debit is related to our 
+word "debt" while credit can indicate a loan or something which edifies an 
+individual or business.  The same applies to double entry accounting as it
+involves equity accounts.  Debts debit equity, moneys owed to the business 
+credit the busines.  Credits to equity accounts make the business more valuable
+while debits make it less.  Thus when you invest money in your business you are 
+crediting that business (in terms of equity), and when you draw money, perhaps 
+to pay yourself, you are debiting that business. 
 
-Entries in the left column of the traditional form are called debits, while
-entries on the right are called credits.  Neither is "negative".
+Double entry accounting systems grew out of single entry ones.  The goal was to 
+create a system which had inherent checks against human error.  Consequently
+accounts and transactions are arranged such that debits across all accounts
+always equal credit accounts.
+
+If you invest money in your business that credits an equity account, but the 
+other side of the transaction must thus be a debit.  Because the other side of
+the transaction is an asset account (for example a bank account) it is debited.
+
+Similarly as liability accounts increase, the equity of the business decreases.
+Consequently, liabilities increase with credits.  Income and expense accounts
+are often the flip sides of transactions involving assets and liailities and 
+represent changes in equity.  Therefore they follow the same rules as equity 
+accounts.
 
 \begin{itemize}
 \item Debits increase assets

@@ -89,6 +89,9 @@ mkdir -p -m0750 $RPM_BUILD_ROOT%{_sysconfdir}/%{name} # /etc/ledgersmb - configs
 mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name} # /var/lib/ledgersmb - data files, modified by cgi
 mkdir -p -m0750 $RPM_BUILD_ROOT%{_localstatedir}/spool/%{name} # /var/spool/ledgersmb - spool files, modified by cgi
 
+cp -rp . $RPM_BUILD_ROOT%{_datadir}/%{name}/
+rm -rf  $RPM_BUILD_ROOT%{_datadir}/%{name}/css $RPM_BUILD_ROOT%{_datadir}/%{name}/ledgersmb.conf  $RPM_BUILD_ROOT%{_datadir}/%{name}/spool  $RPM_BUILD_ROOT%{_datadir}/%{name}/templates
+
 # the conf, placed in etc, symlinked back in place
 mv ledgersmb.conf.default $RPM_BUILD_ROOT%{_sysconfdir}/ledgersmb/ledgersmb.conf
 ln -s ../../..%{_sysconfdir}/ledgersmb/ledgersmb.conf \
