@@ -1355,13 +1355,8 @@ sub post {
            &{"print_$form->{formname}"}( $old_form, 1 );
         }
 
-        if(defined($form->{batch_id}) and $form->{batch_id})
-	{
-        	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
-	}
-
-
-        if(defined($form->{batch_id}) and $form->{batch_id})
+        if(defined($form->{batch_id}) and $form->{batch_id} 
+           and ($form->{callback} !~ /vouchers/))
 	{
         	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
 	}

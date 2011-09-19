@@ -294,8 +294,13 @@ sub post_transaction {
 			SELECT id
 			  FROM $table
 			 WHERE id = $id|;
-
-        if ( $dbh->selectrow_array($query) ) {
+        my ($exists) = $dbh->selectrow_array($query);
+        if ($exists and $form->{batch_id}) {
+           $query = "SELECT voucher__delete(id) 
+                       FROM voucher 
+                      where trans_id = ? and batch_class in (1, 2)";
+           $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);           
+        } elsif ($exists) {
 
            # delete detail records
 
@@ -307,21 +312,16 @@ sub post_transaction {
 				              WHERE trans_id = $id)|;
 
             $dbh->do($query) || $form->dberror($query);
-            $query = qq|
-				DELETE FROM voucher
-                                       WHERE trans_id = $id 
-                                             and batch_class in (1,2)|;
-
-            $dbh->do($query) || $form->dberror($query);
 
             $query = qq|
 				DELETE FROM acc_trans
 				 WHERE trans_id = $id|;
 
             $dbh->do($query) || $form->dberror($query);
+            $dbh->do("DELETE FROM $table where id = $id");
         }
+
     }
-    else {
 
         my $uid = localtime;
         $uid .= "$$";
@@ -332,7 +332,7 @@ sub post_transaction {
         # are using the current username as the "person" inserting the new 
         # AR/AP Transaction.
         # ~A
-        $query = qq|
+    $query = qq|
 			INSERT INTO $table (invnumber, person_id, 
 				entity_credit_account)
 			     VALUES (?,    (select  u.entity_id from users u
@@ -343,14 +343,13 @@ sub post_transaction {
         # attributes to pass to $dbh->prepare. This is not used here.
         # ~A
         
-        $dbh->do($query,undef,$uid,$form->{login}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
+    $dbh->do($query,undef,$uid,$form->{login}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
 
-        $query = qq|
+    $query = qq|
 			SELECT id FROM $table
 			 WHERE invnumber = ?|;
 
-        ( $form->{id} ) = $dbh->selectrow_array($query,undef,$uid);
-    }
+    ( $form->{id} ) = $dbh->selectrow_array($query,undef,$uid);
 
     # record last payment date in ar/ap table
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
