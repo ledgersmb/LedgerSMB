@@ -23,6 +23,7 @@ use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
 
 use Data::Dumper;
+use strict;
 
 =pod
 
@@ -79,6 +80,23 @@ sub update_recon_set {
     _display_report($recon);
 }
 
+=item select_all_recons
+
+Checks off all reconciliation items and updates recon set
+
+=cut
+
+sub select_all_recons {
+    my ($request) = @_;
+    my $i = 1;
+    while (my $id = $request->{"id_$i"}){
+        $request->{"cleared_$id"} = $id;
+        ++ $i;
+    }
+    update_recon_set($request);
+
+} 
+
 =item submit_recon_set
 
 Submits the recon set to be approved.
@@ -90,9 +108,9 @@ sub submit_recon_set {
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
     $recon->submit();
     my $template = LedgerSMB::Template->new( 
-            user => $user, 
+            user => $request->{_user}, 
     	    template => 'reconciliation/submitted', 
-    	    language => $user->{language}, 
+            locale => $request->{_locale},
             format => 'HTML',
             path=>"UI");
     return $template->render($recon);
@@ -114,9 +132,9 @@ sub save_recon_set {
         $recon->{notice} = $recon->{_locale}->text('Data not saved.  Please update again.');
     }
     my $template = LedgerSMB::Template->new( 
-            user => $user, 
+            user => $request->{_user}, 
     	    template => 'reconciliation/search', 
-    	    language => $user->{language}, 
+            locale => $request->{_locale},
             format => 'HTML',
             path=>"UI");
     return $template->render($recon);
@@ -202,9 +220,9 @@ sub get_results {
         $recon->{title} = $request->{_locale}->text('Reconciliation Sets');
         my $template = LedgerSMB::Template->new( 
             locale => $request->{_locale},
-            user => $user, 
+            user => $request->{_user}, 
     	    template => 'form-dynatable', 
-    	    language => $user->{language}, 
+            locale => $request->{_locale},
             format => 'HTML',
             path=>"UI");
         
@@ -239,9 +257,9 @@ sub search {
         @{$recon->{account_list}} = $recon->get_accounts();
 	unshift @{$recon->{account_list}}, {id => '', name => '' };
         my $template = LedgerSMB::Template->new(
-            user => $user,
+            user => $request->{_user},
             template=>'search',
-            language=>$user->{language},
+            locale => $request->{_locale},
             format=>'HTML',
             path=>"UI/reconciliation",
         );
@@ -272,10 +290,10 @@ sub _display_report {
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['reconciliation_approve']});
         $recon->get();
-        $template = LedgerSMB::Template->new( 
-            user=> $user,
+        my $template = LedgerSMB::Template->new( 
+            user=> $recon->{_user},
             template => 'reconciliation/report', 
-            language => $user->{language},
+            locale => $recon->{_locale},
             format=>'HTML',
             path=>"UI"
         );
@@ -410,9 +428,9 @@ sub new_report {
             #$recon->{error};
             
             $template = LedgerSMB::Template->new(
-                user=>$user,
+                user=>$recon->{_user},
                 template=> 'reconciliation/upload',
-                language=>$user->{language},
+                locale => $recon->{_locale},
                 format=>'HTML',
                 path=>"UI"
             );
@@ -425,9 +443,9 @@ sub new_report {
         # we can assume we're to generate the "Make a happy new report!" page.
         @{$recon->{accounts}} = $recon->get_accounts;
         $template = LedgerSMB::Template->new( 
-            user => $user, 
+            user => $recon->{_user}, 
             template => 'reconciliation/upload', 
-            language => $user->{language}, 
+            locale => $recon->{_locale},
             format => 'HTML',
             path=>"UI"
         );
@@ -468,7 +486,7 @@ sub delete_report {
     
     if ($request->type() eq "POST") {
         
-        $resp = $recon->delete_report($request->{report_id});
+        my $resp = $recon->delete_report($request->{report_id});
         
         if ($resp) {
             
@@ -526,8 +544,9 @@ sub approve {
         my $code = $recon->approve($request->{report_id});
         if ($code == 0) {
 
-            $template = LedgerSMB::Template->new( user => $user, 
-        	template => 'reconciliation/approved', language => $user->{language}, 
+            $template = LedgerSMB::Template->new( user => $recon->{_user}, 
+        	template => 'reconciliation/approved', 
+                locale => $recon->{_locale},
                 format => 'HTML',
                 path=>"UI"
                 );
@@ -539,9 +558,9 @@ sub approve {
             # failure case
             
             $template = LedgerSMB::Template->new( 
-                user => $user, 
+                user => $recon->{_user}, 
         	    template => 'reconciliation/report', 
-        	    language => $user->{language}, 
+        	locale => $recon->{_locale},
                 format => 'HTML',
                 path=>"UI"
                 );
@@ -550,7 +569,7 @@ sub approve {
         }
     }
     else {
-        return $class->display_report($request);
+        return _display_report($request);
     }
 }
 
@@ -577,9 +596,9 @@ sub pending {
     my $template;
     
     $template= LedgerSMB::Template->new(
-        user => $user,
+        user => $request->{_user},
         template=>'reconciliation/pending',
-        language=>$user->{language},
+        locale => $request->{_locale},
         format=>'HTML',
         path=>"UI"
     );
@@ -606,9 +625,9 @@ sub __default {
     my $template;
     
     $template = LedgerSMB::Template->new(
-        user => $user,
+        user => $request->{_user},
         template => 'reconciliation/list',
-        language => $user->{language},
+        locale => $request->{_locale},
         format=>'HTML',
         path=>"UI"
     );
