@@ -635,10 +635,11 @@ GRANT SELECT ON recon_payee
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
+GRANT ALL ON cr_report_line_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
  
  GRANT INSERT, SELECT ON cr_report, cr_report_line 
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-GRANT DELETE ON cr_report_line
+GRANT DELETE, UPDATE ON cr_report_line
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 GRANT SELECT ON acc_trans, account_checkpoint 
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
