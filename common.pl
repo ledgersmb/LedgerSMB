@@ -36,7 +36,11 @@ sub redirect {
         print "Content-type: text/html\n\n";
         exit;
     }
-
+    if (first { $_ eq $script } @{LedgerSMB::Sysconfig::newscripts}){
+        print "Location: $form->{callback}\n";
+        print "Content-type: text/html\n\n";
+        exit;
+    }
     $form->error(
         $locale->text(
             __FILE__ . ':' . __LINE__ . ':' . $script . ':' . "Invalid Redirect"

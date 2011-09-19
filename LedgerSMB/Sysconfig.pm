@@ -26,11 +26,18 @@ our $force_username_case = undef; # don't force case
 our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
 # Whitelist for redirect destination
+#
+our @newscripts = qw(
+     account.pl  customer.pl  inventory.pl  payment.pl  user.pl
+admin.pl    drafts.pl    journal.pl    recon.pl    vendor.pl
+asset.pl    employee.pl  login.pl      setup.pl    vouchers.pl
+file.pl      menu.pl       taxform.pl);
+
 our @scripts = (
-    'aa.pl', 'admin.pl', 'am.pl',      'ap.pl',
+    'aa.pl', 'am.pl',      'ap.pl',
     'ar.pl', 'arap.pl',  'arapprn.pl', 'bp.pl',
     'ca.pl', 'gl.pl',
-    'ic.pl',    'io.pl',      'ir.pl',
+    'ic.pl',  'ir.pl',
     'is.pl', 'jc.pl',    'login.pl',   'menu.pl',
     'oe.pl', 'pe.pl',    'pos.pl',     'ps.pl',
     'pw.pl', 'rc.pl',    'rp.pl', 	'initiate.pl'
