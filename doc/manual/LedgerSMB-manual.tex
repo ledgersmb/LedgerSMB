@@ -751,6 +751,60 @@ the double underscore at the end of the prefix).
       \end{description}
 \end{itemize}
 
+\section{Contact Management}
+
+Every business does business with other persons, corporate or natural.  They may
+sell goods and services to these persons or they may purchase goods and 
+services from these persons.  With a few exceptions those who are being sold
+goods and services are tracked as customers, and those from whom goods and
+services are being purchased from are vendors.  The actual formal distinction is
+that vendors are entities that the business pays while customers pay the 
+business.  Here are some key terms:
+
+\begin{description}
+\item[Credit Account] An agreement between your business and another person
+or business and your business about the payment for the delivery of goods and
+services on an ongoing basis.  These credit accounts define customer and vendor
+relationships.
+\item[Customer] Another person or business who pays your business money
+\item[Vendor] Another person or business you pay money to.
+\end{description}
+
+Prior versions of LedgerSMB required that customers and vendors be entirely
+separate.  In 1.3, however, a given entity can have multiple agreements with the
+business, some being as a customer, and some being as a vendor.
+
+All customers and vendors are currently tracked as companies, while employees 
+are tracked as natural persons but this will be
+changing in future versions so that natural persons can be tracked as customers
+and vendors too.
+
+Each contact must be attached to a country for tax reporting purposes.  Credit
+accounts can then be attached to a tax form for that country (for 1099 reporting
+in the US or EU VAT reporting).
+
+\subsection{Addresses}
+Each contact, whether an employee, customer, or vendor, can have one or more 
+addresses attached, but only one can be a billing address.
+
+\subsection{Contact Info}
+Each contact can have any number of contact info records attached.  These convey
+phone, email, instant messenger, etc. info for the individual.  New types of
+records can be generated easily by adding them to the contact\_class table.
+
+\subsection{Bank Accounts}
+Each contact can have any number of bank accounts attached, but only one can be
+the primary account for a given credit account.  There are only two fields here.
+The first (BIC, or Banking Institution Code) represents the bank's identifier,
+such as an ABA routing number, or a SWIFT code, while the second (IBAN)
+represents the individual's account number.
+
+\subsection{Notes}
+In 1.3, any number of read-only notes can be attached either to an entity (in
+which case they show up for all credit accounts for that entity), or a credit
+account, in which case they show up only when the relevant credit account is 
+selected.
+
 \section{Chart of Accounts}
 
 The Chart of Accounts provides a basic overview of the logical structure
@@ -820,7 +874,7 @@ The words "Debit" and "Credit" come from Latin roots. Debit is related to our
 word "debt" while credit can indicate a loan or something which edifies an 
 individual or business.  The same applies to double entry accounting as it
 involves equity accounts.  Debts debit equity, moneys owed to the business 
-credit the busines.  Credits to equity accounts make the business more valuable
+credit the business.  Credits to equity accounts make the business more valuable
 while debits make it less.  Thus when you invest money in your business you are 
 crediting that business (in terms of equity), and when you draw money, perhaps 
 to pay yourself, you are debiting that business. 
@@ -969,6 +1023,8 @@ A second consideration is to try to keep things under each heading
 appropriate to that heading. Thus setting an account number for a
 bank loan account in the assets category is not generally advisable.
 
+If in doubt, review a number of bundled chart of accounts templates to see what 
+sorts of numbering schemes are used.
 
 \subsection{Adding/Modifying Accounts}
 
@@ -1001,8 +1057,10 @@ in the System submenu.
 
 
 \subsection{Taxes, Defaults, and Preferences}
-One of the new features in 1.2 is the modular sales tax system and the simple
-sales tax module.  This allows one to install different tax modules and then 
+Since LedgerSMB 1.2, sales tax has been modular, allowing for different tax 
+accounts to be goverend by different rules for calculating taxes (although only 
+one such module is supplied with LedgerSMB to date).  This allows one to 
+install different tax modules and then 
 select which taxes are applied by which programming modules.  The sales tax 
 module has access to everything on the submitted form so it is able to make
 complex determinations on what is taxable based on arbitrary criteria.
@@ -1019,11 +1077,7 @@ by the individual store. Thus a sales tax account is a liability--
 it represents money owed by the business to the government.
 
 To add a sales tax account, create an account in the Chart of Accounts
-as a liability account, check all of the \char`\"{}tax\char`\"{} checkboxes,
-and answer the following question as \char`\"{}yes:\char`\"{}
-
-\char`\"{}Include this account on the customer/vendor forms to flag
-customer/vendor as taxable?\char`\"{}
+as a liability account, check all of the ``tax'' checkboxes.
 
 Once this account is created, one can set the tax amount.
 
@@ -1087,7 +1141,7 @@ is occurring.
 
 In paper accounting systems, it was necessary to have a means to authoritatively
 track corrections of mistakes. The means by which this was done was
-known as \char`\"{}transaction reversal.\char`\"{}
+known as ``transaction reversal.''
 
 When a mistake would be made, one would then reverse the transaction
 and then enter it in correctly. For example, let us say that an office
@@ -1245,10 +1299,9 @@ to which these adjustments are necessary for any given business is
 a matter best discussed with an accountant.
 
 The standard way books are normally closed at the end of the year
-is by moving all adjusted%
-\footnote{Adjustments would be entered via the General Ledger. The exact process
-is beyond the scope of this document, however.%
-} income and expenses to an equity account usually called `Retained
+is by moving all adjusted\footnote{Adjustments would be entered via the General 
+Ledger. The exact process is beyond the scope of this document, however.} income
+and expenses to an equity account usually called `Retained
 Earnings.' Assets and liabilities are not moved. Equity drawing/dividend
 accounts are also moved, but the investment accounts are not. The
 reasoning behind this process is that one wants a permanent record
@@ -1276,6 +1329,8 @@ one is doing. However, on some systems some options might need to
 be changed, so all options are presented here for reference:
 
 \begin{description}
+\item[auth] is the form of authenticaiton used.  If in doubt use `DB' auth.
+\item[decimal\_places] Number of decimal places for money.
 \item[templates] is the directory where the templates are stored. 
 \item[sendmail] is the command to use to send a message. It must read the
 email from standard input. 
@@ -1292,9 +1347,10 @@ Default = lpr\\
 Color = lpr -PEpson \\%
  However, this can use any program that can accept print documents
 (in Postscript) from standard input, so there are many more possibilities. 
+\item[database] provides connection parameters for the database, typically the
+host and port, but also the location of the contrib scripts (needed for the
+setup.pl), and the default namespace.
 \end{description}
-
-TODO:  Review this and document any other options!
 
 \section{Goods and Services}
 
@@ -1353,7 +1409,7 @@ Services can be associated with sales tax.
 \subsubsection{Shipping and Handling as a Service}
 
 One approach to dealing with shipping and handling is to add it as
-a service. Create a service called {}``Shipping and Handling'',
+a service. Create a service called ``Shipping and Handling,''
 with a sell price \$1 per unit, and a 0\% markup. Bill it as \$1 per
 unit. This allows one to add the exact amount of shipping and handling
 as necessary.
@@ -1522,21 +1578,7 @@ One can enter vendor information under AP-\textgreater Vendors-\textgreater
 Add Vendor. The vendor list can be searched under AP-\textgreater
 Vendors-\textgreater Reports-\textgreater Search.
 
-Enter start and end-dates for each vendor. This will make searches
-and drop-down boxes faster when some vendors are no longer actively
-supporting your company.
-
-A few fields that need explanation are: 
-
-\begin{description}
-\item [{BIC}] Bank Identifier Code is often the same as the S.W.I.F.T.
-code. This is a code for the bank a customer uses for automated money
-transfers. 
-\item [{IBAN}] International Bank Account Number is related to the BIC
-and is used for cross-border automated money transfers. 
-\item [{Terms}] is the number of days one has to pay the invoice. 
-\item [{Vendor}] Number is automatically generated. 
-\end{description}
+Please see the Contact Management section above for more on manageing vendors.
 
 \subsection{AP Transactions}
 
@@ -1615,13 +1657,13 @@ document, such as the check number. One must select the item to have
 it paid, and then enter the amount. One can then print a check.
 
 
-\subsubsection{Rapid Payment Entry Screen}
+\subsubsection{Batch Payment Entry Screen}
 
-One can also use the rapid payment entry screen to print multiple
-checks. However, this does not allow you to print the multiple checks
-to the screen as a separate document is created for each check. In
-this event, one must print directly to a printer as postscript.
-
+For bulk payment entry, we provide the batch payment workflow.  You can use this
+to pay any or all vendors filtered by business class or the like.  Each payment
+batch is saved, and hits the books after it is reviewed.  It is possible to pay
+over ten thousand invoices a week using this interface.  It is found under
+Cash/Vouchers/Payments.
 
 \subsection{Transaction/Invoice Reporting}
 
