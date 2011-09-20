@@ -807,7 +807,7 @@ sub is_allowed_role {
     my ($self, $args) = @_;
     my @roles = @{$args->{allowed_roles}};
     for my $role (@roles){
-        $self->{_role_prefix} = "" unless defined $self->{_role_prefix};
+        $self->{_role_prefix} = "lsmb_$self->{company}__" unless defined $self->{_role_prefix};
         my @roleset = grep m/^$self->{_role_prefix}$role$/, @{$self->{_roles}};
         if (scalar @roleset){
             return 1;

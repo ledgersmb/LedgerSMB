@@ -37,15 +37,6 @@ RETURNS bool AS
 $$
     DECLARE
     BEGIN
-        PERFORM id FROM cr_report WHERE id = in_report_id;
-        
-        IF NOT FOUND THEN
-            RAISE NOTICE 'reconciliation__delete_report(): Cannot find specified report.';
-            return FOUND;
-        END IF;
-        
-        -- We found the entry. Update it.
-        
         PERFORM id FROM cr_report WHERE id = in_report_id AND approved = TRUE;
         
         IF FOUND THEN --changing the verbose message to a notice and adding a
@@ -53,36 +44,16 @@ $$
             RAISE NOTICE 'reconcilation__delete_report(): report % is approved; cannot delete.', in_report_id;
             RAISE EXCEPTION 'Cannot delete approved';
         END IF;
-        
-        PERFORM id 
-           FROM cr_report 
-          WHERE id = in_report_id 
-            AND submitted = TRUE
-            AND entered_by = person__get_my_entity_id();
-        
-        -- IF FOUND THEN
-            -- Creators cannot delete their own reports if they've been submitted. -AS
-            -- Why not?  If it hasn't been approved.....  
-            -- Also concerned about single-user setups here so commenting out
-            -- this block --CT
-            -- RAISE EXCEPTION 'reconciliation__delete_report(): creators cannot delete their own report after submission. %', in_report_id;
-        -- END IF;
-        
-        UPDATE cr_report
-           SET deleted = TRUE,
-               deleted_by = person__get_my_entity_id()
-         WHERE id = in_report_id;
+
+        DELETE FROM cr_report_line WHERE report_id = in_report_id;
+        DELETE FROM cr_report WHERE id = in_report_id;
          
-        return TRUE;
+        return FOUND;
     END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION reconciliation__delete_report(in_report_id int) IS
-$$Deletes the report if the report exists and is unapproved.
-
-Note this does not actually delete anything from the database.  Deleted reports
-are kept around in case they need to be investigated.  It only marks them as 
-deleted so that they can never be approved.$$;
+$$Deletes the report if the report exists and is unapproved.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
