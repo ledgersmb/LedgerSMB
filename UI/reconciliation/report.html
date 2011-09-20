@@ -260,6 +260,7 @@
 	class = "submit"
 } ?>
 <?lsmb END ?>
+<?lsmb IF NOT approved ?>
 <?lsmb INCLUDE button element_data = {
         name = "action"
         text = text('Delete')
@@ -267,5 +268,6 @@
         type = 'submit'
        class = 'submit'
 } ?>
+<?lsmb END ?>
 </form>
 </body></html>
