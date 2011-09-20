@@ -1426,8 +1426,6 @@ sub send_email {
       unless $form->{subject};
     $form->isblank( "email", $locale->text('E-mail address missing!') );
 
-    RP->aging( \%myconfig, $form );
-
     my $selected = 0;
     RP->aging( \%myconfig, $form );
     my $ag = {};
