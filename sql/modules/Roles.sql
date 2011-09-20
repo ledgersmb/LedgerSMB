@@ -658,7 +658,8 @@ WITH INHERIT NOLOGIN;
 GRANT SELECT ON recon_payee 
 TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
 
-GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
+GRANT DELETE ON cr_report_line TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
+GRANT UPDATE, DELETE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
 GRANT SELECT ON acc_trans, account_checkpoint TO 
 "lsmb_<?lsmb dbname ?>__reconciliation_approve";
 

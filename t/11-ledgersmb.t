@@ -258,7 +258,8 @@ like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: Index 1, left existing key')
 
 # $lsmb->is_allowed_role checks, no prefix
 $lsmb = LedgerSMB->new();
-$lsmb->{_roles} = ['apple', 'pear'];
+$lsmb->{_role_prefix} = '1_';
+$lsmb->{_roles} = ['1_apple', '1_pear'];
 is($lsmb->is_allowed_role({allowed_roles => ['pear']}), 1, 
 	'is_allowed_role: allowed role');
 
