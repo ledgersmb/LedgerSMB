@@ -751,6 +751,60 @@ the double underscore at the end of the prefix).
       \end{description}
 \end{itemize}
 
+\section{Contact Management}
+
+Every business does business with other persons, corporate or natural.  They may
+sell goods and services to these persons or they may purchase goods and 
+services from these persons.  With a few exceptions those who are being sold
+goods and services are tracked as customers, and those from whom goods and
+services are being purchased from are vendors.  The actual formal distinction is
+that vendors are entities that the business pays while customers pay the 
+business.  Here are some key terms:
+
+\begin{description}
+\item[Credit Account] An agreement between your business and another person
+or business and your business about the payment for the delivery of goods and
+services on an ongoing basis.  These credit accounts define customer and vendor
+relationships.
+\item[Customer] Another person or business who pays your business money
+\item[Vendor] Another person or business you pay money to.
+\end{description}
+
+Prior versions of LedgerSMB required that customers and vendors be entirely
+separate.  In 1.3, however, a given entity can have multiple agreements with the
+business, some being as a customer, and some being as a vendor.
+
+All customers and vendors are currently tracked as companies, while employees 
+are tracked as natural persons but this will be
+changing in future versions so that natural persons can be tracked as customers
+and vendors too.
+
+Each contact must be attached to a country for tax reporting purposes.  Credit
+accounts can then be attached to a tax form for that country (for 1099 reporting
+in the US or EU VAT reporting).
+
+\subsection{Addresses}
+Each contact, whether an employee, customer, or vendor, can have one or more 
+addresses attached, but only one can be a billing address.
+
+\subsection{Contact Info}
+Each contact can have any number of contact info records attached.  These convey
+phone, email, instant messenger, etc. info for the individual.  New types of
+records can be generated easily by adding them to the contact\_class table.
+
+\subsection{Bank Accounts}
+Each contact can have any number of bank accounts attached, but only one can be
+the primary account for a given credit account.  There are only two fields here.
+The first (BIC, or Banking Institution Code) represents the bank's identifier,
+such as an ABA routing number, or a SWIFT code, while the second (IBAN)
+represents the individual's account number.
+
+\subsection{Notes}
+In 1.3, any number of read-only notes can be attached either to an entity (in
+which case they show up for all credit accounts for that entity), or a credit
+account, in which case they show up only when the relevant credit account is 
+selected.
+
 \section{Chart of Accounts}
 
 The Chart of Accounts provides a basic overview of the logical structure
@@ -1524,21 +1578,7 @@ One can enter vendor information under AP-\textgreater Vendors-\textgreater
 Add Vendor. The vendor list can be searched under AP-\textgreater
 Vendors-\textgreater Reports-\textgreater Search.
 
-Enter start and end-dates for each vendor. This will make searches
-and drop-down boxes faster when some vendors are no longer actively
-supporting your company.
-
-A few fields that need explanation are: 
-
-\begin{description}
-\item [{BIC}] Bank Identifier Code is often the same as the S.W.I.F.T.
-code. This is a code for the bank a customer uses for automated money
-transfers. 
-\item [{IBAN}] International Bank Account Number is related to the BIC
-and is used for cross-border automated money transfers. 
-\item [{Terms}] is the number of days one has to pay the invoice. 
-\item [{Vendor}] Number is automatically generated. 
-\end{description}
+Please see the Contact Management section above for more on manageing vendors.
 
 \subsection{AP Transactions}
 
@@ -1617,13 +1657,13 @@ document, such as the check number. One must select the item to have
 it paid, and then enter the amount. One can then print a check.
 
 
-\subsubsection{Rapid Payment Entry Screen}
+\subsubsection{Batch Payment Entry Screen}
 
-One can also use the rapid payment entry screen to print multiple
-checks. However, this does not allow you to print the multiple checks
-to the screen as a separate document is created for each check. In
-this event, one must print directly to a printer as postscript.
-
+For bulk payment entry, we provide the batch payment workflow.  You can use this
+to pay any or all vendors filtered by business class or the like.  Each payment
+batch is saved, and hits the books after it is reviewed.  It is possible to pay
+over ten thousand invoices a week using this interface.  It is found under
+Cash/Vouchers/Payments.
 
 \subsection{Transaction/Invoice Reporting}
 
