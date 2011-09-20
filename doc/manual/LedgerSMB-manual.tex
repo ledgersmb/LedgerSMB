@@ -1275,6 +1275,8 @@ one is doing. However, on some systems some options might need to
 be changed, so all options are presented here for reference:
 
 \begin{description}
+\item[auth] is the form of authenticaiton used.  If in doubt use `DB' auth.
+\item[decimal\_places] Number of decimal places for money.
 \item[templates] is the directory where the templates are stored. 
 \item[sendmail] is the command to use to send a message. It must read the
 email from standard input. 
@@ -1291,9 +1293,10 @@ Default = lpr\\
 Color = lpr -PEpson \\%
  However, this can use any program that can accept print documents
 (in Postscript) from standard input, so there are many more possibilities. 
+\item[database] provides connection parameters for the database, typically the
+host and port, but also the location of the contrib scripts (needed for the
+setup.pl), and the default namespace.
 \end{description}
-
-TODO:  Review this and document any other options!
 
 \section{Goods and Services}
 
@@ -1352,7 +1355,7 @@ Services can be associated with sales tax.
 \subsubsection{Shipping and Handling as a Service}
 
 One approach to dealing with shipping and handling is to add it as
-a service. Create a service called {}``Shipping and Handling'',
+a service. Create a service called ``Shipping and Handling,''
 with a sell price \$1 per unit, and a 0\% markup. Bill it as \$1 per
 unit. This allows one to add the exact amount of shipping and handling
 as necessary.
