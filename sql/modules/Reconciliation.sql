@@ -32,28 +32,81 @@ COMMENT ON FUNCTION reconciliation__save_set(
         in_report_id int, in_line_ids int[]) IS
 $$Sets which lines of the report are cleared.$$;
 
-CREATE OR REPLACE FUNCTION reconciliation__delete_report(in_report_id int)
-RETURNS bool AS 
+CREATE OR REPLACE FUNCTION reconciliation__delete_my_report(in_report_id int)
+RETURNS BOOL AS
 $$
-    DECLARE
-    BEGIN
-        PERFORM id FROM cr_report WHERE id = in_report_id AND approved = TRUE;
-        
-        IF FOUND THEN --changing the verbose message to a notice and adding a
-                      --program-helpful exception --CT
-            RAISE NOTICE 'reconcilation__delete_report(): report % is approved; cannot delete.', in_report_id;
-            RAISE EXCEPTION 'Cannot delete approved';
-        END IF;
+BEGIN
+    DELETE FROM cr_report_line
+     WHERE report_id = in_report_id
+           AND report_id IN (SELECT id FROM cr_report
+                              WHERE entered_username = SESSION_USER
+                                    AND submitted IS NOT TRUE
+                                    and approved IS NOT TRUE);
+    DELETE FROM cr_report
+     WHERE id = in_report_id AND entered_username = SESSION_USER
+           AND submitted IS NOT TRUE AND approved IS NOT TRUE;
+    RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
-        DELETE FROM cr_report_line WHERE report_id = in_report_id;
-        DELETE FROM cr_report WHERE id = in_report_id;
-         
-        return FOUND;
-    END;
-$$ language plpgsql;
+-- Granting execute permission to public because everyone has an ability to 
+-- delete their own reconciliation reports provided they have not been 
+-- submitted.  --CT
+GRANT EXECUTE ON FUNCTION reconciliation__delete_my_report(in_report_id int)
+TO PUBLIC;
 
-COMMENT ON FUNCTION reconciliation__delete_report(in_report_id int) IS
-$$Deletes the report if the report exists and is unapproved.$$;
+COMMENT ON FUNCTION reconciliation__delete_my_report(in_report_id int) IS
+$$This function allows a user to delete his or her own unsubmitted, unapproved
+reconciliation reports only.  This is designed to allow a user to back out of
+the reconciliation process without cluttering up the search results for others.
+$$;
+
+CREATE OR REPLACE FUNCTION reconciliation__delete_unapproved(in_report_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+    DELETE FROM cr_report_line
+     WHERE report_id = in_report_id
+           AND report_id IN (SELECT id FROM cr_report
+                              WHERE approved IS NOT TRUE);
+    DELETE FROM cr_report
+     WHERE id = in_report_id AND approved IS NOT TRUE;
+    RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+-- This function is a bit more dangerous and so it is not granted public
+-- permission.  Only those who have the permission to those with an ability to
+-- approve reports should have access to this.
+REVOKE EXECUTE ON FUNCTION reconciliation__delete_unapproved(in_report_id int)
+FROM PUBLIC;
+
+COMMENT ON FUNCTION reconciliation__delete_unapproved(in_report_id int) IS
+$$This function deletes any specified unapproved transaction.$$;
+
+CREATE OR REPLACE FUNCTION cr_report_block_changing_approved()
+RETURNS TRIGGER AS
+$$
+BEGIN
+   IF OLD.approved IS TRUE THEN
+       RAISE EXCEPTION 'Report is approved.  Cannot change!';
+   END IF;
+   IF TG_OP = 'DELETE' THEN
+       RETURN OLD;
+   ELSE
+      RETURN NEW;
+   END IF;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER block_change_when_approved BEFORE UPDATE OR DELETE ON cr_report
+FOR EACH ROW EXECUTE PROCEDURE cr_report_block_changing_approved();
+
+COMMENT ON FUNCTION cr_report_block_changing_approved() IS
+$$ This is a simple filter that prevents updating or deleting reconciliation
+reports that have already been approved.  To purge old reconciliations you must
+disable the block_change_when_approved trigger on cr_report.$$;
+
 
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
