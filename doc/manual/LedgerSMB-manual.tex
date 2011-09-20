@@ -820,7 +820,7 @@ The words "Debit" and "Credit" come from Latin roots. Debit is related to our
 word "debt" while credit can indicate a loan or something which edifies an 
 individual or business.  The same applies to double entry accounting as it
 involves equity accounts.  Debts debit equity, moneys owed to the business 
-credit the busines.  Credits to equity accounts make the business more valuable
+credit the business.  Credits to equity accounts make the business more valuable
 while debits make it less.  Thus when you invest money in your business you are 
 crediting that business (in terms of equity), and when you draw money, perhaps 
 to pay yourself, you are debiting that business. 
@@ -969,6 +969,8 @@ A second consideration is to try to keep things under each heading
 appropriate to that heading. Thus setting an account number for a
 bank loan account in the assets category is not generally advisable.
 
+If in doubt, review a number of bundled chart of accounts templates to see what 
+sorts of numbering schemes are used.
 
 \subsection{Adding/Modifying Accounts}
 
@@ -1001,8 +1003,10 @@ in the System submenu.
 
 
 \subsection{Taxes, Defaults, and Preferences}
-One of the new features in 1.2 is the modular sales tax system and the simple
-sales tax module.  This allows one to install different tax modules and then 
+Since LedgerSMB 1.2, sales tax has been modular, allowing for different tax 
+accounts to be goverend by different rules for calculating taxes (although only 
+one such module is supplied with LedgerSMB to date).  This allows one to 
+install different tax modules and then 
 select which taxes are applied by which programming modules.  The sales tax 
 module has access to everything on the submitted form so it is able to make
 complex determinations on what is taxable based on arbitrary criteria.
@@ -1019,11 +1023,7 @@ by the individual store. Thus a sales tax account is a liability--
 it represents money owed by the business to the government.
 
 To add a sales tax account, create an account in the Chart of Accounts
-as a liability account, check all of the \char`\"{}tax\char`\"{} checkboxes,
-and answer the following question as \char`\"{}yes:\char`\"{}
-
-\char`\"{}Include this account on the customer/vendor forms to flag
-customer/vendor as taxable?\char`\"{}
+as a liability account, check all of the ``tax'' checkboxes.
 
 Once this account is created, one can set the tax amount.
 
@@ -1087,7 +1087,7 @@ is occurring.
 
 In paper accounting systems, it was necessary to have a means to authoritatively
 track corrections of mistakes. The means by which this was done was
-known as \char`\"{}transaction reversal.\char`\"{}
+known as ``transaction reversal.''
 
 When a mistake would be made, one would then reverse the transaction
 and then enter it in correctly. For example, let us say that an office
@@ -1245,10 +1245,9 @@ to which these adjustments are necessary for any given business is
 a matter best discussed with an accountant.
 
 The standard way books are normally closed at the end of the year
-is by moving all adjusted%
-\footnote{Adjustments would be entered via the General Ledger. The exact process
-is beyond the scope of this document, however.%
-} income and expenses to an equity account usually called `Retained
+is by moving all adjusted\footnote{Adjustments would be entered via the General 
+Ledger. The exact process is beyond the scope of this document, however.} income
+and expenses to an equity account usually called `Retained
 Earnings.' Assets and liabilities are not moved. Equity drawing/dividend
 accounts are also moved, but the investment accounts are not. The
 reasoning behind this process is that one wants a permanent record
