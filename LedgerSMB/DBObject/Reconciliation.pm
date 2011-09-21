@@ -93,6 +93,8 @@ sub submit {
     $self->{dbh}->commit; 
 }
 
+
+
 =item save
 
 Saves the reconciliation set for later work
@@ -184,42 +186,42 @@ sub new_report {
 }
 
 
-=item delete_report ($self, $report_id)
+=item delete ($self, $report_id)
 
 Requires report_id
 
-Deletes a report based on the report id.
-Stored procedure returns true if deleted, false if not deleted/could not be 
-found, and raises EXCEPTION on report already approved.
+This will allow the deletion of a report if the report is not approved and 
+the user either owns the unsubmitted report, or the user has the right to 
+approve reports.
+
+Returns 0 if successful, or a true result if not.
 
 =cut
 
-sub delete_report {
+sub delete {
     
     my $self = shift @_;
     
-    my $report_id = shift @_;
-    
-    my $bool = $self->exec_method(funcname=>'reconciliation__delete_report',
-                                  args=>[$report_id]);
-                                  
-    if ($bool) {
-        $self->{dbh}->commit();
+    my ($report_id) = @_;
+    my $retval;
+    my $found;
+    if ($self->is_allowed_role({allowed_roles => ['reconciliation_approve']})){
+        ($found) = $self->exec_method(
+                           funcname => 'reconciliation__delete_unapproved', 
+                               args => [$report_id]);
+    } else {
+        ($found) = $self->exec_method(
+                           funcname => 'reconciliation__delete_my_report', 
+                               args => [$report_id]);
+        
     }
-    else{
-        $err = $self->{dbh}->errstr();
-        $self->{dbh}->rollback();
-        if ($err) {
-            # It's an exception.
-            $self->error("Report delete failed due to previous report submission or approval.");
-        }
-        else {
-            
-            # It's due to a non-existant report
-            $self->error("Cannot delete non-existant report.");
-        }
+    $self->{dbh}->commit;
+    if ($found){
+        $retval = '0';
+    } else {
+        $retval = '1';
     }
-    return $bool;
+    return $retval;
 }
 
 =item add_entries
@@ -275,7 +277,7 @@ submitted and approved are exact matches to status.
 sub search {
     
     my $self = shift @_;
-    my $type = shift;
+    my $type = shift @_;
     return $self->exec_method(
         funcname=>'reconciliation__search',
     );
@@ -405,8 +407,8 @@ This is a simple wrapper around reconciliation__account_list
 =cut
 
 sub get_accounts {
-    
     my $self = shift @_;
+
     return $self->exec_method(
         funcname=>'reconciliation__account_list',
     );
