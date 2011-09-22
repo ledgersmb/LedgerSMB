@@ -570,6 +570,7 @@ sub display_payments {
             if (($payment->{action} ne 'update_payments') 
                   or (defined $payment->{"id_$_->{contact_id}"})){
                    $payment->{"paid_$_->{contact_id}"} = "" unless defined $payment->{"paid_$_->{contact_id}"};
+
                    if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
                       my $i_id = $invoice->[0];
                       my $payment_amt = $payment->parse_amount(
@@ -602,6 +603,12 @@ sub display_payments {
             $_->{contact_total} = $contact_total;
             $_->{to_pay} = $contact_to_pay;
             $payment->{grand_total} += $contact_total;
+
+            my ($check_all) = $payment->get_default_value_by_key('check_payments');
+            if ($payment->{account_class} == 1 and $check_all){
+                 $payment->{"id_$_->{contact_id}"} = $_->{contact_id};
+            }
+                       
         }
         $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due},
                                                   money  => 1);
