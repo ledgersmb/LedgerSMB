@@ -21,6 +21,7 @@ Requires: perl-MIME-Lite, perl-Class-Std >= 0.0.8
 Requires: perl-Locale-Maketext-Lexicon >= 0.62
 Requires: perl-IO-String
 Requires: perl-Math-BigInt-GMP
+Requires: perl-Log-Log4perl perl-DateTime
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no

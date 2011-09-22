@@ -24,8 +24,6 @@ requires 'Math::BigFloat';
 requires 'IO::File';
 requires 'IO::Scalar';
 requires 'Encode';
-requires 'Locale::Country';
-requires 'Locale::Language';
 requires 'Time::Local';
 requires 'Cwd';
 requires 'Config::Std';
@@ -52,7 +50,9 @@ feature 'Experimental scripting engine',
 feature 'Developer tool dependencies',
     -default => 0,
     'Getopt::Long' => 0,
-    'FileHandle' => 0;
+    'FileHandle' => 0,
+    'Locale::Country' => 0,
+    'Locale::Language' => 0;
 
 # Rendering options
 feature 'PDF and Postscript output',

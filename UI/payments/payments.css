@@ -4,3 +4,7 @@ table.detail_table_visible {
 table.detail_table_hidden{
 	display: none;
 }
+
+div.selectall {
+       float: left;
+}

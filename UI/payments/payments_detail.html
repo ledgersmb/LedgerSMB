@@ -191,7 +191,14 @@
     </div>
     <table id="payments-table">
     <tr class="listheading">
-	<th class="account"><?lsmb text('Account') ?></th>
+	<th class="account"><div class="selectall">
+        <?lsmb INCLUDE input element_data = {
+               id = 'checkbox-selectall'
+             name = 'selectall'
+            class = 'selectall'
+            value = 0
+             type = 'checkbox'
+        } ?></div><?lsmb text('Account') ?></th>
 	<th class="entity_name"><?lsmb text('Name') ?></th>
 	<th class="invoice"><?lsmb text('Invoice Total') ?></th>
         <th class="payment"><?lsmb text('Payment') ?></th>
@@ -212,11 +219,11 @@
 			name = "contact_label_" _ r.contact_id
 			value = r.econtrol_code _ "--" _ r.account_number _ "--" _ r.contact_name
 		} ?>
-		<?lsmb IF action == "update_payments" -?>
+		<?lsmb # IF action == "update_payments" -?>
 			<?lsmb IF ${"id_$r.contact_id"} -?>
 				<?lsmb r.selected = 1 -?>
 			<?lsmb END # IF !${"id_$r.contact_id"} -?>
-		<?lsmb END # IF action ... -?>
+		<?lsmb # END # IF action ... -?>
 		<?lsmb INCLUDE input element_data = {
 			type = "checkbox"
 			name = "id_$r.contact_id"
