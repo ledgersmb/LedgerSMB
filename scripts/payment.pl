@@ -227,7 +227,7 @@ sub pre_bulk_post_report {
         credits => $total_credits};
         
     my $buttons = [{
-        text  => $request->{_locale}->text('Post'),
+        text  => $request->{_locale}->text('Save Batch'),
         name  => 'action',
         value => 'post_payments_bulk',
         class => 'submit',
