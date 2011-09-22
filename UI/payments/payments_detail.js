@@ -36,6 +36,16 @@ function init() {
 			table.className = 'detail_table_hidden';
 		}
 	}
+        var cb = document.getElementById('checkbox-selectall');
+        cb.addEventListener('click',
+                function(e){
+                    var cb = document.getElementById('checkbox-selectall');
+                    var cc = document.getElementById('contact-count').value;
+                    for (var i=1; i <= cc; i++){
+                        var cid = document.getElementById('contact-' + i).value;                        var rowcb = document.getElementById('id-' + cid);
+                        rowcb.checked = cb.checked;
+                    }
+                 }, false);
 }
 
 function show_details(contact_id){
