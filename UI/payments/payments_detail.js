@@ -42,7 +42,8 @@ function init() {
                     var cb = document.getElementById('checkbox-selectall');
                     var cc = document.getElementById('contact-count').value;
                     for (var i=1; i <= cc; i++){
-                        var cid = document.getElementById('contact-' + i).value;                        var rowcb = document.getElementById('id-' + cid);
+                        var cid = document.getElementById('contact-' + i).value;
+                        var rowcb = document.getElementById('id-' + cid);
                         rowcb.checked = cb.checked;
                     }
                  }, false);
