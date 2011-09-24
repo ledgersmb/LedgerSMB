@@ -1529,6 +1529,11 @@ financial transaction entered by default must be approved before it shows up in
 financial reports.  Because there are two ways these can be set up, there are
 two possibly relevant workflows.
 
+For sales/vendor invoices where goods and services are tracked (as distinct
+from AR/AP transactions which only track amounts), the separation of duties
+interface is not complete.  Here, you should use orders for initial entry, and
+convert these to invoices.
+
 \subsection{Batches and Vouchers}
 Often larger businesses may need to enter batches of transactions which may need
 to be approved or rolled back as a batch.  Batches are thus a generic
@@ -2135,6 +2140,52 @@ quotations.
 One can transfer inventory between warehouses if necessary by using
 the Shipping-\textgreater Transfer Inventory screen.
 
+\section{Fixed Assets}
+
+One of the new features in LedgerSMB 1.3.x is fixed asset management, which
+includes tracking, depreciation, and disposal.  In general, the LedgerSMB 
+approach to these topics is implemented in a streamlined fashion but with
+an ability to add advanced methods of depreciation later. 
+
+\subsection{Concepts and Workflows}
+
+Fixed asset management and accounting provides a better ability to track
+the distribution of expenses relative to income.  Many fixed assets may be
+depreciated so that the expense of obtaining the asset can be spread across
+the usable life of that asset.  This is done in accordance with the idea of
+attempting to match actual resource consumption (as expenses) with income 
+in order to better gauge the financial health of the business.
+
+\subsubsection{Fixed Assets and Capital Expenses}
+
+Fixed assets are pieces of property that a business may own which cannot be 
+easily converted into cash.  They are differentiated from liquid assets, which
+include inventory, cash, bank account balances, some securities, etc.  Fixed
+assets, by their nature are typically purchased and used for an extended period
+of time, called the estimated usable life.  During the estimated usable life,
+the fixed asset is being utilized by the business, and so we would want to 
+track the expense as gradually incurred relative to the income that the asset
+helps produce.  This expense is called a "capital expense" and refers to either
+a purchase of a fixed asset or an expense which improves it.
+
+Examples of capital expenses and fixed assets might include (using a pizza
+place as an example):
+
+\begin{itemize}
+\item  A company vehicle
+\item  Tables, chairs, ovens, etc.
+\item  Changes to the leased property needed for the business.
+\item  Major repairs to the company vehicle.
+\end{itemize}
+
+\subsubsection{Depreciation}
+
+Depreciation is a method for matching the portion of a capital expense to
+income related to it.
+
+\subsubsection{Disposal}
+
+\subsubsection{Asset Classes}
 
 \section{HR}
 
@@ -2242,7 +2293,7 @@ have a basic understanding of the general process of bookkeeping using
 double-entry paper-based accounting systems.
 
 Normally when a transaction would be recorded, it would first be recorded
-in the \char`\"{}General Journal\char`\"{} which would contain detailed
+in the ``General Journal'' which would contain detailed
 information about the transaction, notes, etc. Then the entries from
 the General Journal would be transcribed to the General Ledger, where
 one could keep closer tabs on what was going on in each account.
