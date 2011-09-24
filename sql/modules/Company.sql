@@ -530,7 +530,7 @@ CREATE OR REPLACE FUNCTION entity__get_by_cc (in_control_code text)
 RETURNS SETOF entity AS $$
 SELECT * FROM entity WHERE control_code = $1 $$ language sql;
 
-COMMENT ON entity__get_by_cc (in_control_code text) IS
+COMMENT ON FUNCTION entity__get_by_cc (in_control_code text) IS
 $$ Returns the entity row attached to the control code. $$;
 
 create or replace function save_taxform 
