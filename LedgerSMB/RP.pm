@@ -2190,7 +2190,6 @@ sub payments {
 
         $query .= qq| ORDER BY $sortorder|;
 
-        $form->error($query);
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 
