@@ -124,10 +124,9 @@ BEGIN
 			END IF;
 			
 		END IF;
-		INSERT INTO session(users_id, token, last_used, transaction_id)
-		SELECT id, md5(random()::text), now(), 0 
+		INSERT INTO session(users_id, token, last_used)
+		SELECT id, md5(random()::text), now()
 		  FROM users WHERE username = SESSION_USER;
-		-- TODO-- remove transaction_id field from session table
 
 		SELECT * INTO out_row FROM session 
 		 WHERE session_id = currval('session_session_id_seq');

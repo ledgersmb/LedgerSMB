@@ -23,6 +23,11 @@ General Ledger/Journal:
 * GL reports account is ajax-style autocomplete (John W)
 * Journal Entry screen now uses AJAX-style autocomplete for accounts (Chris T)
 * GL reference now populated by default in the initial screen (Chris T).
+* Files can be attached to financial transactions (Chris T)
+
+AR/AP:
+* Files can be attached to AR/AP transactions (Chris T)
+* Project numbers can be displayed on AR/AP transactions report (Chris T)
 
 Reconciliation:
 * Reconciliation is on new codebase!
@@ -46,6 +51,16 @@ Contact Handling:
 
 Invoicing:
 * Can now set sales tax amounts and rates per invoice if necessary (Chris T).
+* Files can be attached to invoices (Chris T)
+* Invoices can be placed on hold (Chris T)
+
+Fixed Assets:
+* New Feature!
+* Group assets into classes to depreciate together (Chris T)
+* Depreciate assets using straight-line depreciation (Chris T)
+* Plugin model for time- or production-based depreciation methods (Chris T)
+* Dispose of assets --- full and partial disposal supported (Chris T)
+* Net Book Value Report (Chris T)
 
 Development:
 * New API structure for new code (Entire Team)
@@ -177,9 +192,7 @@ Changelog for 1.2.11
 * Fixed encoding errors in numeral to text conversion (Seneca)
 * Fixed the displayed number format for AP invoice taxes (Seneca)
 * Fixed the selection of taxes when validto is involved (Seneca, anarcat's
-  addtion to 1818792) 
-
-
+addition to 1818792) 
 
 Changelog for 1.2.10
 * Fixed bug 1765161, post button duplicates invoices.(Chris T)

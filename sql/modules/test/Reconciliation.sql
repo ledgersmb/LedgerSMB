@@ -127,4 +127,4 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true) 
 || ' failed' as message;
 
---ROLLBACK;
+ROLLBACK;

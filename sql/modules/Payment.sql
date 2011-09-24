@@ -1134,7 +1134,8 @@ BEGIN
 				JOIN chart c ON (a.chart_id = c.id)
 				WHERE c.link = 'AP'
 					AND trans_id = pay_row.trans_id
-				) 
+				), 
+                                force_closed = false 
 			WHERE id = pay_row.trans_id;
 		ELSIF in_account_class = 2 THEN
 			update ar SET paid = amount - 
@@ -1143,7 +1144,8 @@ BEGIN
 				JOIN chart c ON (a.chart_id = c.id)
 				WHERE c.link = 'AR'
 					AND trans_id = pay_row.trans_id
-				) * -1
+				) * -1,
+                                force_closed = false
 			WHERE id = pay_row.trans_id;
 		ELSE
 			RAISE EXCEPTION 'Unknown account class for payments %',
