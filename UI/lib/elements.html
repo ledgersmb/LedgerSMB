@@ -11,7 +11,7 @@
 
   #file
   file_defaults = {
-    size => '60'
+    size = '60'
   }
 
   #password
@@ -59,6 +59,7 @@
 	      CASE ['radio'];
 	        input_type_keys = input_keys.merge(['checked']);
 	      CASE ['password'];
+                element_data.type = 'password';
 	        input_defaults = password_defaults;
 	      CASE 'text';
 	        input_type_keys = input_keys.merge(['maxlength', 'readonly']);

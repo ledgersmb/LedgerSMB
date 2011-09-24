@@ -656,6 +656,7 @@ $$
      JOIN asset_dep_method adm ON (adm.id = ac.method)
 LEFT JOIN asset_report_line rl ON (ai.id = rl.asset_id)
 LEFT JOIN asset_report r on (rl.report_id = r.id)
+    WHERE r.approved_at IS NOT NULL
  GROUP BY ai.id, ai.tag, ai.description, ai.start_depreciation, ai.purchase_date,
           adm.short_name, ai.usable_life, ai.purchase_value, salvage_value
    HAVING (NOT 2 = ANY(as_array(r.report_class))) 
