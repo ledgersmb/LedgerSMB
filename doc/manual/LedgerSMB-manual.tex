@@ -2178,14 +2178,71 @@ place as an example):
 \item  Major repairs to the company vehicle.
 \end{itemize}
 
+\subsubsection{Asset Classes}
+
+LedgerSMB allows assets and capital expenses to be grouped together in asset
+classes for easy management.  An asset class is a collection of assets which are
+depreciated together, and which are depreciated in the same way.  One cannot mix
+depreciation methods within a class.  Account links for the asset class are used
+as default links for fixed assets, but assets may be tied to different accounts
+within an asset class.
+
 \subsubsection{Depreciation}
 
 Depreciation is a method for matching the portion of a capital expense to
-income related to it.
+income related to it.  Expenses are depreciated so that they are spread out over
+the usable life of the asset or capital expense.  Depreciation may be linear or
+non-linear and maybe spread out over time or over units of production.  For
+example, one might wish to depreciate a car based on miles driven, over a usable
+life of, say, 100000 miles, or one might want to depreciate it based on a useful
+life of five years.
+
+LedgerSMB currently only supports variations on straight-line depreciation,
+either with an estimated life measured in months or in years.
+
+Depreciation is subject to separation of duties.  Permissions for entering and
+approving depreciation reports are separate, and the GL transactions created
+must currently be approved in order to show up on the books.
 
 \subsubsection{Disposal}
 
-\subsubsection{Asset Classes}
+Fixed assets may be disposed of through sale or abandonment.  Abandonment
+generally is a method of giving the asset away.  A sale involves getting
+something for the asset.
+
+The disposal workflow is conceptually similar to the depreciation workflow
+except that additionally one can track proceeds for sales, and tie in
+gains/losses to appropriate income or expense accounts.
+
+Gains are realized where the salvage value is greater than the undepreciated
+value of the asset, and losses where the salvage value is less.
+
+\subsubsection{Net Book Value}
+
+Net book value represents the value to depreciate of fixed assets.  It is
+defined as the basis value minus depreciation that has been recorded.  The basis
+is further defined as the purchase value minus the estimated salvage value for
+LedgerSMB purposes.  We track all capital expenses separately for depreciation
+purposes, and so capital expenses which adjust value of other fixed assets have
+their own net book value records.  This is separate from how capital gain and
+loss might need to be tracked for tax purposes in the US.
+
+\subsubsection{Supported Depreciation Methods}
+
+Currently we only ship with the following variations on the straight line
+depreciation method:
+
+\begin{description}
+\item[Annual Straight Line Daily]  Life is measured in years, depreciation is an
+equal amount per year, divided up into equal portions daily.
+\item[Annual Straight Line Monthly]  Life is measured in years, depreciation 
+is an equal amount per year, divided up into equal portions each month.  This
+differs from daily in that February would have less depreciation than August.
+This module is more commonly used than the daily depreciation because it is
+easier to calculate and thus more transparent.
+\item[Whole Month Straight Line] Life is measured in months, and depreciation
+occurs only per whole month.
+\end{description}
 
 \section{HR}
 
@@ -2534,13 +2591,44 @@ errors lie by comparing the total on the statement with the total
 that LSMB generates.
 
 This can be done for other accounts too, such as petty cash.%
-\footnote{Petty cash denotes a drawer of cash that is used to pay small expenses.
-When an expense is paid, it is recorded on a slip of paper that is
-stored for reconciliation purposes.%
+\footnote{Petty cash denotes a drawer of cash that is used to pay small
+expenses. When an expense is paid, it is recorded on a slip of paper that is
+stored for reconciliation purposes.}  Some users even reconcile liability
+accounts and the likes.
 
-TODO:  Document new reconciliation workflow
-}
+In LedgerSMB 1.3.x, the reconciliation framework has been completely rewritten
+to allow for easier reconciliation especially where there are large numbers of
+transactions.  It is now possible to reconcile accounts with thousands of
+transactions per month, and to track what was reconciled in each report.
+Reconciliation is now also subject to separation of duties, allowing a
+reconciliation report to be committed to the books only when approved.
 
+The reconciliation screen is now divided into four basic parts.  At the top is a
+header with information about which account is being reconcilied, ending
+balances, variances, etc.  Then comes a list of cleared transactions, as well
+as totals of debits and credits.
+
+After this comes a (usually empty) list of failed matches when the file import
+functionality is used.  These again list the source, then the debits/credits in
+LedgerSMB and the debits/credits in the bank import.
+
+Finally there is a list of uncleared transactions.  To move error a transaction
+from the error or uncleared section into the cleared section, check one or more
+off and click update.  Update also checks for new uncleared transactions in the
+reconciliation period, and it saves the current report so it can be continued
+later.
+
+\subsubsection{File Import Feature}
+
+1.3.x has a plugin model that allows one to write parsers against a variety of
+file formats, one or more per account.  The file can be placed in the
+LedgerSMB/Reconciliation/CSV/Formats directory, and the function must be called
+parse\_ followed by the account id.  The function must be in the
+LedgerSMB::Reconciliation::CSV namespace. 
+
+This obviously has a few limitations.  Hosting providers might want to start the
+account tables 10000 apart as far as the initial id's go or provide dedicated
+LedgerSMB instances per client. 
 
 \subsection{Reports}
 
@@ -2812,94 +2900,23 @@ with the template system.
 One can define different templates for different languages, so that
 a customer in Spain gets a different invoice than a customer in Canada.
 
-
-\subsection{Text Templates}
-
-The only template that uses a text-only format is the POS receipt.
-This example provides the simplest way to understand the template
-system.
-
-The first two lines are:\\
- \textless\%company align=center width=40\%\textgreater\\
- \textless\%address align=center width=40\%\textgreater\\
-
-
-The first line tells LedgerSMB to print the company name as passed
-to it via a variable, centered, with a page width of 40 characters.
-The second line does the same thing with the address.
-
-These variables are usually passed to the invoice using form fields
-(hidden or otherwise) in the submitting web page. The printing script,
-however, can disable some of these fields or add others via database
-lookups and the like.
-
-In all types of templates, variable substitution occurs between \textless\%
-and \%\textgreater. One can optionally specify an alignment or a
-width but these are really only useful in text templates.
-
-
-\subsection{HTML Templates}
-
-The following templates exist in HTML format:
+LedgerSMB provides templates in a variety of formats including text, html,
+LaTeX, Excel, and Open Document Spreadsheat.  Each of these is processed using
+TemplateToolkit\footnote{See \url{http://template-toolkit.org/} for more
+information and documentation.} with a few specific modifications:
 
 \begin{itemize}
-\item Income Statement 
-\item Balance Sheet 
-\item Invoice (AR) 
-\item AR Transaction 
-\item AP Transaction 
-\item Packing List 
-\item Pick List 
-\item Sales Order 
-\item Work Order 
-\item Purchase Order 
-\item Bin List 
-\item Statement 
-\item Quotation 
-\item RFQ 
-\item Time Card 
+\item start tag is \textless?lsmb and end tag is ?\textgreater
+\item text(string) is available as a function in the templates for localization
+purposes.
+\item gettext(string, language) can be used to translate a string into a
+specified language rather than the default language (useful for multi-lingual
+templates).
 \end{itemize}
-These templates can be edited by an HTML editor. However, it is generally
-recommended that one back up templates first. The reason is that some
-HTML editors will fully re-parse the HTML and save it back without
-what they see as invalid tags. Most editors, however, will save the
-variable substitution tags because similar tags are also used by Microsoft's
-active server pages.
 
-Finally, some editors are known to mangle formatting, so many problems
-can be avoided by ensuring that one has a backup of the templates,
-especially if they have already been customized.
-
-
-\subsection{\LaTeX{}\ Templates}
-
-The following templates, by default, are available in \LaTeX{}\ :
-
-\begin{itemize}
-\item Invoice 
-\item AR Transaction 
-\item AP Transaction 
-\item Packing List 
-\item Pick List 
-\item Sales Order 
-\item Work Order 
-\item Purchase Order 
-\item Bin List 
-\item Statement 
-\item Check 
-\item Receipt 
-\item Quotation 
-\item RFQ 
-\item Time Card 
-\end{itemize}
-\LaTeX{}\ templates allow one to generate PDF and postscript documents
-and print directly to a postscript-enabled printer or print software
-(like CUPS).
-
-\LaTeX{}\ templates can be edited using a standard text editor (like
-vim or emacs), or using a synchronous \LaTeX{}\ implementation such
-as \LyX{}.
-
+Additionally the UI/lib/ui-header.html can be used to provide standardized
+initial segments for HTML documents and inputs can be entered via interfaces in
+the UI/lib/elements.html template.
 
 \subsubsection{What is \LaTeX{}\ ?}
 
@@ -2952,7 +2969,7 @@ the rest of the page format is not thrown off by it.
 
 \subsection{How are They Stored in the Filesystem?}
 
-The template directory (\char`\"{}templates\char`\"{} in the root
+The template directory (``templates'' in the root
 LedgerSMB install directory) contains all the root templates used
 by LedgerSMB. These follow a naming convention of COAType-templatename.ext
 where COAType is the type of dataset that was created when the user
@@ -2978,7 +2995,27 @@ that was showing up before an upgrade stops showing up, one can either
 upgrade the templates by copying the source template over the existing
 one, or one can edit the template to make the change.
 
-\section{An Introduction to the CLI}
+\section{An Introduction to the CLI for Old Code}
+
+This section applies to the following Perl scripts:
+
+\begin{description}
+\item[am.pl]  System Management
+\item[ap.pl]  Accounts Payable Transactions and Reports 
+\item[ar.pl]  Accounts Receivable Transactions and Reports
+\item[bp.pl]  Batch Printing
+\item[ca.pl]  Chart of Accounts (some functions, others are in the accounts.pl
+script)
+\item[gl.pl]  General Ledger Reports and Journal Entry
+\item[ic.pl]  Inventory control
+\item[ir.pl]  Invoices Received (vendor invoices)
+\item[is.pl]  Invoices Shipped (sales invoices)
+\item[jc.pl]  Job costing (timecards)
+\item[oe.pl]  Order Entry
+\item[pe.pl]  Projects
+\item[ps.pl]  Point of Sale
+\item[rp.pl]  Reports
+\end{description}
 
 \subsection{Conventions}
 
@@ -3018,17 +3055,19 @@ to do some useful work.
 
 This is a bash script which:
 
- 1. sets NOW to the current working directory
- 2. prompts for and reads your LedgerSMB login
- 3. prompts for and reads (non-echoing) your LedgerSMB password
- 4. changes directory to /usr/local/ledger-smb
- 5. constructs login and logout commands and a transaction command
- 6. logins into ledger-smb (in a real program, output would be checked for
+\begin{enumerate}
+\item sets NOW to the current working directory
+\item prompts for and reads your LedgerSMB login
+\item prompts for and reads (non-echoing) your LedgerSMB password
+\item changes directory to /usr/local/ledger-smb
+\item constructs login and logout commands and a transaction command
+\item logins into ledger-smb (in a real program, output would be checked for
     success or failure)
- 7. executes the transaction
- 8. logs out of ledger-smb (although this is not necessary)
- 9. returns to the original working directory
-10. exits
+\item executes the transaction
+\item logs out of ledger-smb (although this is not necessary)
+\item returns to the original working directory
+\item exits
+\end{enumerate}
 
 Running lsmb01-cli-example.sh produces:
 
@@ -3358,11 +3397,15 @@ accounting system. However, with all the features available in LedgerSMB,
 the staff that may have access to some of the application may be senior
 enough to make the question worthwhile.
 
-This question also becomes more important when companies might look
-at integrating LedgerSMB with a CRM solution, online store, or other
-environment. This section looks at a number of the known issues and
-their solutions.
+As of 1.3, there are users with databases containing over a million financial
+transactions, thousands of customers and vendors, and a full bookkeeping
+department.  In general, 1.3 is considered scalable for midsize businesses.
 
+In general if you are going to have a large number of users for the software, or
+large databases, we'd generally suggest running the database on a separate
+server, since this makes it easier to isolate and address performance issues.
+Additionally, the database server is the hardest part to scale horizontally and
+so you want to put more hardware there than with the database server.
 
 \subsubsection{Scalability Strategies}
 
@@ -3383,7 +3426,8 @@ The database manager is less scalable in the sense that one cannot
 just add more database servers and expect to carry on as normal. However,
 aside from the known issues listed below, there are few performance
 issues with it. If complex reports are necessary, these can be moved
-to a replica database (perhaps using Slony-I).
+to a replica database (perhaps using Slony-I or the streaming repliaction of
+PostgreSQL 9.x).
 
 If this solution is insufficient for database scalability, one might
 be able to move staff who do not need real-time access to new entries
@@ -3436,30 +3480,8 @@ it.
 
 \subsubsection{Known issues}
 
-The PostgreSQL planner assumes a minimum page size of ten pages for
-a physically empty table. The reasoning behind this choice is that
-a table could grow rapidly and one could end up with bad database
-performance if the planner assumes a very small table.
-
-However, if you end up with joins between a very large table with
-millions of rows and a physically empty table, one can end up with
-a very bad query plan. In this case, the planner will choose a nested
-loop join and run through this loop for every row in the large table.
-As a result, performance will suddenly drop once the large table becomes
-too large to effectively do index scans of the join criteria on both
-tables. This problem most often occurs when people have no warehouses,
-departments, or projects defined and are running systems with a large
-number of transactions (such as a point of sale environment).
-
-Last time I saw this problem, the server would wait for thirty seconds
-to display a new point of sale screen while the server CPU activity
-would spike to 100\%.
-
-One solution is to define one warehouse, department, and project,
-and then run vacuumdb -z from the shell to force the planner to acknowledge
-these tables as single-row tables. The other option is to go into
-the source code and edit the database queries to omit unused tables.
-
+There are no known issues in PostgreSQL performance as relates to LedgerSMB
+performance in supported versions.
 
 \section{Customization Possibilities}
 
@@ -3470,9 +3492,10 @@ This section covers the basic possibilities involving customization.
 
 \subsection{Brief Guide to the Source Code}
 
-TODO: Check lines of code again, update this section 
-
-LedgerSMB is an application with over 34000 lines of code. While
+LedgerSMB is an application with over 120000 lines of code.\footnote{The line
+count provided by Ohloh.net is 216000 lines of code, but this includes database
+documentation, the source for this manual, and more.  The source code is
+certainly above 120000 lines by any metric though.} While
 it is not possible to cover the entire application here, a brief overview
 of the source code is in order.
 
@@ -3483,12 +3506,9 @@ provide a basic set of services for the framework (including authentication)
 and then pass the work on to the data entry screen file in the bin
 directory.
 
-The bin directory contains another directory for each terminal type.
-The main two offered are lynx and mozilla. Lynx would be used for
-web browsers that do not support frames and is ideal for a text-mode
-VGA terminal. Mozilla is the terminal type used for most other web
-browsers. The perl files within these directories provides the user
-interface of the software.
+The bin directory contains the workflow scripts inherited from SQL-Ledger.
+These do basic calculations and generate the user interface.  The scripts/
+directory does the same with new code.
 
 The css directory in the root install directory contains CSS documents
 to provide various stylesheets one can select for changing various
@@ -3498,17 +3518,17 @@ The locale directory contains translation files that LedgerSMB uses
 to translate between different languages. One could add translations
 to these files if necessary.
 
-The LSMB directory is where the Perl modules reside that provide the
+The UI directory contains user interface templates for old and new code.  These
+templates use TemplateToolkit to generate the basic HTML.  The directory also
+contains template-specific javascript and css files.
+
+The LedgerSMB directory is where the Perl modules reside that provide the
 core business logic in LedgerSMB. These modules provide functionality
 such as form handling, email capabilities, and access to the database
 through its at least partially object oriented API.
 
 Finally, the sql directory provides the database schemas and upgrade
 scripts.
-
-\subsection{Structure of Old and New Code}
-
-TODO:  Add this
 
 \subsection{Data Entry Screens}
 
@@ -3614,21 +3634,6 @@ and the like. These tools can be integrated with LedgerSMB in various
 ways. One could integrate this program with the HERMES CRM framework,
 for example.
 
-
-\subsubsection{Known Issues}
-
-LedgerSMB uses a single 'id' sequence across many tables. At the
-same time it is expected that these tables do not have identical id
-values in their records as they are used as a sort of pseudo-foreign
-key by the acc\_trans table which stores the financial transaction
-information.
-
-If the integration solution does not keep this in mind, it is possible
-to create a situation where the account transactions are ambiguously
-associated with a number of different types of financial transactions.
-This would lead to a large number of problems.
-
-
 \subsubsection{Strategies}
 
 In general, it is advisable to run all such programs that benefit
@@ -3732,7 +3737,6 @@ in the primary Form object. These can include almost anything. It
 is not uncommon to see lists of hashes stored as attributes to a Form
 object.
 
-
 \subsection{Customizing Templates}
 
 Templates are used to generate printed checks, invoices, receipts,
@@ -3746,21 +3750,7 @@ Template instructions are contained in tags \textless?lsmb and ?\textgreater.
 The actual parsing is done by the parse\_template function in LSMB/Form.pm.
 
 
-\subsubsection{Page Breaks in \LaTeX{}}
-
-The first tag one will see with \LaTeX{}\ templates is \textless?lsmb pagebreak
-num1 num2 num3 ?\textgreater
-
-\begin{itemize}
-\item num1 represents characters per line 
-\item num2 represents lines on first page 
-\item num3 represents lines on second page. 
-\end{itemize}
-The pagebreak block is terminated by \textless?lsmb end pagebreak ?\textgreater.
-Any text within the pagebreak block is ignored by the template.
-
-
-\subsubsection{Other Template Control Structures}
+\subsubsection{Template Control Structures}
 
 As of 1.3, all templates use the Template Toolkit syntax for generating LaTeX,
 text, and html output.  The LaTeX can then be processed to create postscript or
@@ -3771,60 +3761,7 @@ are well beyond what was available in previous versions of LedgerSMB.  The only
 difference is in the start and end tag sequences, where we use <?lsmb and ?> in
 order to avoid problems with rendering LaTeX templates for testing purposes.
 
-\subsubsection{File Inclusion}
-
-Files may be included with the syntax \textless?lsmb INCLUDE 
-template\_name ?\textgreater
-where templatename is the name of the template within the current
-template directory (set in the defaults table and the System/Defaults screen).  
-Note that for \LaTeX\ templates, the input or include functionalities might be 
-better suited for many things.
-
-\subsubsection{Cross-referencing and multiple passes of \LaTeX{}}
-
-In \LaTeX{}\ cross-references require two passes with latex to resolve.
-This is because the type is set page by page and the program really
-doesn't know on which page a given reference will fall. This becomes
-an even larger issue where floats are concerned as they can move between
-pages for formatting reasons.
-
-In rare cases, cross-references may point at incorrect pages even
-with two passes (if the inclusion of the cross-reference data moves
-the object to another page). In this case you will need to use three
-passes of \LaTeX{}\ in order to have accurate references.
-
-LedgerSMB as of the time of this writing (2.6.8) only makes one pass
-at the \LaTeX{}\ file. To force it to make more than one pass, open
-Form.pm with your favorite text editor. Look for the line:
-
-system(\char`\"{}latex --interaction=nonstopmode \$self-\textgreater$\lbrace$
-tmpfile$\rbrace$\
-\textgreater\ \$ self-\textgreater$\lbrace$ tmpfile$\rbrace$
-.err\char`\"{});
-
-Duplicate this line for two passes, or add two copies if you need
-three passes.
-
-
-\subsubsection{Variable Substitution}
-
-The following format is used for variable substitution: 
-
-\begin{itemize}
-\item \textless?lsmb varname options ?\textgreater Options are one or more
-(whitespace separated) of: 
-
-\begin{itemize}
-\item align=left/right/center 
-\item width=chars where chars is the width in characters before wrapping 
-\item offset=chars where chars is the number of spaces to (depending on
-alignment). 
-\end{itemize}
-\end{itemize}
-
 \subsection{Customizing Forms}
-
-TODO:  Documnet new forms interface
 
 Data entry forms and other user interface pieces are in the bin directory.
 In LedgerSMB 1.0.0 and later, symlinks are not generally used.
@@ -3848,6 +3785,9 @@ and all spaces are converted into underscores.
 In general there is no substitute for reading the code to understand
 how this can be customized and how one might go about doing this.
 
+In 1.3, all UI templates for new code (referenced in the scripts directory) and
+even some for the old code (from the bin directory) use TemplateToolkit and 
+follow the same rules as the other templates.
 
 \subsection{Customizing Modules}
 
@@ -3870,18 +3810,9 @@ other existing modules.
 
 \subsubsection{Database Access}
 
-TODO:  Document changes
-
-The \$form object provides two methods for accessing the database.
-The \$form-\textgreater dbconnect(\%myconfig) method commits each
-individual statement as its own transaction. The \$form-\textgreater
-dbconnect\_noauto(\%myconfig) method requires a manual commit. Both
-these functions are thin wrappers around the standard Perl DBI operations.
-
-
-\subsection{CLI Examples}
-Louis Moore contributed some SQL-Ledger CLI examples that still work for 
-LedgerSMB.  You can find his page at \url{http://www.sql-ledger.org/cgi-bin/nav.pl?page=contrib/moore.html&title=Louis\%20B.\%20Moore}.
+Both the Form (old code) and LedgerSMB (new code) objects have a dbh property
+which is a database handle to the PostgreSQL database.  This handle does not
+autocommit.
 
 \clearpage 
 
