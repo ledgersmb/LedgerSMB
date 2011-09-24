@@ -33,7 +33,6 @@ Handles failure by creating a new session, since credentials are now separate.
 =cut
 
 sub session_check {
-    use Time::HiRes qw(gettimeofday);
     my ( $cookie, $form ) = @_;
 
     my $path = ($ENV{SCRIPT_NAME});
@@ -101,8 +100,6 @@ sub session_check {
         }
         else {
 
-#something's wrong, they have the cookie, but wrong user or the wrong transaction id. Hijack attempt?
-#destroy the session
             my $sessionDestroy = $dbh->prepare("");
 
             #delete the cookie in the browser
@@ -138,13 +135,8 @@ sub session_create {
     my $path = ($ENV{SCRIPT_NAME});
     my $secure;
     $path =~ s|[^/]*$||;
-    use Time::HiRes qw(gettimeofday);
     my $dbh = $lsmb->{dbh};
     my $login = $lsmb->{login};
-
-    #microseconds are more than random enough for transaction_id
-    my ( $ignore, $newTransactionID ) = gettimeofday();
-    $newTransactionID = int $newTransactionID;
 
 
     if ( !$ENV{GATEWAY_INTERFACE} ) {
@@ -171,10 +163,10 @@ sub session_create {
       $dbh->prepare("SELECT nextval('session_session_id_seq'), md5(random()::text);");
 
     my $createNew = $dbh->prepare(
-        "INSERT INTO session (session_id, users_id, token, transaction_id) 
+        "INSERT INTO session (session_id, users_id, token) 
                                         VALUES(?, (SELECT id
                                                      FROM users
-                                                    WHERE username = SESSION_USER), ?, ?);"
+                                                    WHERE username = SESSION_USER), ?);"
     );
 
 # Fail early if the user isn't in the users table
@@ -215,7 +207,7 @@ sub session_create {
     my ( $newSessionID, $newToken ) = $fetchSequence->fetchrow_array;
 
     #create a new session
-    $createNew->execute( $newSessionID, $newToken, $newTransactionID )
+    $createNew->execute( $newSessionID, $newToken )
       || http_error('401');
     $lsmb->{session_id} = $newSessionID;
 
