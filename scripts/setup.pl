@@ -328,7 +328,7 @@ sub create_db{
     closedir(COA); 
 
     $request->{coa_lcs} =[];
-    foreach my $lcs (@coa){
+    foreach my $lcs (sort @coa){
          push @{$request->{coa_lcs}}, {code => $lcs};
     } 
 
@@ -424,20 +424,20 @@ sub select_coa {
            $template->render($request);
         } else {
             opendir(COA, "sql/coa/$request->{coa_lc}/chart");
-            my @coa = grep !/^(\.|[Ss]ample.*)/, readdir(COA);
+            my @coa = sort (grep !/^(\.|[Ss]ample.*)/, readdir(COA));
             $request->{charts} = [];
-            for my $chart (@coa){
+            for my $chart (sort @coa){
                 push @{$request->{charts}}, {name => $chart};
             }
        }
     } else {
         #COA Directories
         opendir(COA, 'sql/coa');
-        my @coa = grep !/^(\.|[Ss]ample.*)/, readdir(COA);
+        my @coa = sort(grep !/^(\.|[Ss]ample.*)/, readdir(COA));
         closedir(COA); 
 
         $request->{coa_lcs} =[];
-        foreach my $lcs (@coa){
+        foreach my $lcs (sort {$a cmp $b} @coa){
              push @{$request->{coa_lcs}}, {code => $lcs};
         } 
     }
