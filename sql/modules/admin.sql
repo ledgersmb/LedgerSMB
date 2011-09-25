@@ -24,7 +24,6 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
     
         -- Issue the grant
         select rolname into a_role from pg_roles where rolname = in_role;
-        
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
         END IF;
@@ -127,7 +126,7 @@ CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_ro
         select rolname into a_role from pg_roles where rolname = in_role;
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
+            RAISE EXCEPTION 'Cannot revoke permissions of non-existant role $.';
         END IF;
         
         select rolname into a_user from pg_roles where rolname = in_username;

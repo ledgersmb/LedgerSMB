@@ -46,6 +46,9 @@ sub login {
     my ($request) = @_;
     $request->{_locale}->new('en');
     my $creds = LedgerSMB::Auth::get_credentials();
+    if (!$request->{database}){
+        $request->error($request->{_locale}->text('No database specified'));
+    }
     my $database = LedgerSMB::Database->new(
                {username => $creds->{username},
             company_name => $request->{database},
@@ -477,7 +480,7 @@ sub save_user {
         $request->call_procedure(procname => 'admin__add_user_to_role',
                                  args => [ $request->{username},
                                            "lsmb_$request->{database}__".
-                                            "manage_users",
+                                            "users_manage",
                                          ]
         );
     } else {
