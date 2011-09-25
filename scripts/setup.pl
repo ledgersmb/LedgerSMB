@@ -46,6 +46,9 @@ sub login {
     my ($request) = @_;
     $request->{_locale}->new('en');
     my $creds = LedgerSMB::Auth::get_credentials();
+    if (!$request->{database}){
+        $request->error($request->{_locale}->text('No database specified'));
+    }
     my $database = LedgerSMB::Database->new(
                {username => $creds->{username},
             company_name => $request->{database},
@@ -153,6 +156,7 @@ sub upgrade{
 
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
     my @pre_upgrade_checks = (
@@ -280,6 +284,7 @@ sub fix_tests{
 
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
     my $table = $request->{dbh}->quote_identifier($request->{table});
@@ -402,6 +407,7 @@ sub select_coa {
             # mapping going. --CT
 
             $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+            $request->{dbh}->{AutoCommit} = 0;
 
            @{$request->{salutations}} 
             = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -462,6 +468,7 @@ sub save_user {
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
                                    $creds->{login},
                                    $creds->{password});
+    $request->{dbh}->{AutoCommit} = 0;
     my $user = LedgerSMB::DBObject::Admin->new({base => $request});
     $user->save_user;
     if ($request->{perms} == 1){
@@ -477,7 +484,7 @@ sub save_user {
         $request->call_procedure(procname => 'admin__add_user_to_role',
                                  args => [ $request->{username},
                                            "lsmb_$request->{database}__".
-                                            "manage_users",
+                                            "users_manage",
                                          ]
         );
     } else {
