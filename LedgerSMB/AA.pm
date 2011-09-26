@@ -927,8 +927,10 @@ sub transactions {
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount::numeric(20,$p), 
-                          a.amount::numeric(20,$p) 
-                          - sum(acs.amount::numeric(20,$p)) AS paid,
+		          sum(a.amount::numeric(20,$p)) 
+                             - (sum(acs.amount::numeric(20,$p)) 
+                                * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
+                          AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, 
 		          vce.name, vc.meta_number,
@@ -942,7 +944,8 @@ sub transactions {
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		     JOIN acc_trans acs ON (acs.trans_id = a.id)
 		     JOIN entity vce ON (vc.entity_id = vce.id)
-		     JOIN chart c ON (acs.chart_id = c.id)
+		     JOIN chart c ON (acs.chart_id = c.id
+                                      AND charttype='A')
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
 		LEFT JOIN department d ON (a.department_id = d.id)
