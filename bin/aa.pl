@@ -1360,8 +1360,7 @@ sub post {
 	{
         	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
 	}
-
-        $form->redirect( $locale->text('Transaction posted!') );
+        edit();
     }
     else {
         $form->error( $locale->text('Cannot post transaction!') );
