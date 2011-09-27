@@ -1889,6 +1889,10 @@ sub all_vc {
     $dbh = $self->{dbh};
 
     my $sth;
+    $sth = $dbh->prepare('SELECT value FROM defaults WHERE setting_key = ?');
+
+    $sth->execute('vclimit');
+    ($myconfig->{vclimit}) = $sth->fetchrow_array();
 
     if ($vc eq 'customer'){
         $self->{vc_class} = 1;
@@ -1936,6 +1940,38 @@ sub all_vc {
         $sth->execute($self->{id});
         ($self->{"${vc}_id"}, $self->{$vc}) = $sth->fetchrow_array();
     }
+
+    if ( $count < $myconfig->{vclimit} ) {
+
+        $self->{"${vc}_id"} *= 1;
+
+        $query = qq|SELECT ec.id, e.name
+                      FROM entity e
+                      JOIN entity_credit_account ec ON ec.entity_id = e.id
+                     WHERE 
+                           $where
+                     UNION 
+                    SELECT ec.id, e.name
+                      FROM entity e
+                      JOIN entity_credit_account ec ON ec.entity_id = e.id
+                     WHERE ec.id = ?
+                  ORDER BY name|;
+
+        push( @queryargs, $self->{"${vc}_id"} );
+
+        $sth = $dbh->prepare($query);
+        $sth->execute(@queryargs) || $self->dberror($query);
+
+        @{ $self->{"all_$vc"} } = ();
+
+        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+            push @{ $self->{"all_$vc"} }, $ref;
+        }
+
+        $sth->finish;
+
+    }
+
     # get self
     if ( !$self->{employee_id} ) {
         ( $self->{employee}, $self->{employee_id} ) = split /--/,

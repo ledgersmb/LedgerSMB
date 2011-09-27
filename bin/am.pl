@@ -53,6 +53,7 @@ my @default_textboxes = (
    { name => 'glnumber', label => $locale->text('GL Reference Number') },
    { name => 'sinumber', 
       label => $locale->text('Sales Invoice/AR Transaction Number'), },
+   { name => 'vclimit', label => $locale->text('Max per dropdown') },
    { name => 'sonumber', label => $locale->text('Sales Order Number') },
    { name => 'vinumber' , 
     label => $locale->text('Vendor Invoice/AP Transaction Number')},

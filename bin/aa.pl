@@ -1666,9 +1666,11 @@ qq|<input name="l_invnumber" class=checkbox type=checkbox value=Y checked> |
       . $locale->text('PO Number');
     push @a, qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
       . $locale->text('Invoice Date');
-    push @a,
+    if (!$form->{outstanding}){
+        push @a,
 qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
       . $locale->text('Project Numbers');
+    }
     push @a, $l_name;
     push @a, $l_employee if $l_employee;
     push @a, $l_manager if $l_employee;
