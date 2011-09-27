@@ -631,8 +631,7 @@ CREATE TYPE asset_nbv_line AS (
     salvage_value numeric,
     through_date date,
     accum_depreciation numeric,
-    net_book_value numeric,
-    percent_depreciated numeric
+    net_book_value numeric
 );
 
 
@@ -646,11 +645,7 @@ $$
                                            ai.start_depreciation,
                                            ai.purchase_date))/ 12,
           ai.purchase_value - ai.salvage_value, ai.salvage_value, max(r.report_date),
-          sum(rl.amount), ai.purchase_value - sum(rl.amount), (1 - (ai.usable_life 
-           - months_passed(coalesce(ai.start_depreciation, ai.purchase_date),
-                                  coalesce(max(r.report_date),
-                                           ai.start_depreciation,
-                                           ai.purchase_date))/ 12)/ai.usable_life) * 100
+          sum(rl.amount), ai.purchase_value - sum(rl.amount) 
      FROM asset_item ai
      JOIN asset_class ac ON (ai.asset_class_id = ac.id)
      JOIN asset_dep_method adm ON (adm.id = ac.method)
@@ -1273,3 +1268,7 @@ COMMENT ON FUNCTION asset__import_from_disposal(in_id int) IS
 $$ Imports items from partial disposal reports. This function should not be
 called dirctly by programmers but rather through the other disposal approval
 api's.$$; --'
+
+-- needed to go here because dependent on other functions in other modules. --CT
+alter table asset_report alter column entered_by 
+set default person__get_my_entity_id();
