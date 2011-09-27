@@ -1163,6 +1163,8 @@ sub run_import {
 
 eval { do "scripts/custom/asset.pl"};
 
+1;
+
 =back
 
 =head1 CUSTOMIZATION NOTES
@@ -1177,4 +1179,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-;
