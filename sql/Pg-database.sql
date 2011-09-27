@@ -3226,31 +3226,6 @@ $$ Turns a setof ARRAY[key,value] into an
 ARRAY[key||'='||value, key||'='||value,...]
 $$;
 
-CREATE TYPE menu_item AS (
-   position int,
-   id int,
-   level int,
-   label varchar,
-   path varchar,
-   args varchar[]
-);
-
-
-CREATE VIEW menu_friendly AS
-SELECT t."level", t.path, t.list_order, 
-       (repeat(' '::text, (2 * t."level")) || (n.label)::text) AS label, 
-        n.id, n."position" 
-  FROM (connectby('menu_node'::text, 'id'::text, 'parent'::text, 
-                  'position'::text, '0'::text, 0, ','::text
-        ) t(id integer, parent integer, "level" integer, path text, 
-        list_order integer) 
-   JOIN menu_node n USING (id));
-
-COMMENT ON VIEW menu_friendly IS
-$$ A nice human-readable view for investigating the menu tree.  Does not
-show menu attributes or acls.$$;
-
-
 --ALTER TABLE public.menu_friendly OWNER TO ledgersmb;
 
 --
@@ -3283,13 +3258,6 @@ $$ Returns an n dimensional array.
 Example: SELECT as_array(ARRAY[id::text, class]) from contact_class
 $$;
 
-CREATE INDEX company_name_gist__idx ON company USING gist(legal_name gist_trgm_ops);
-CREATE INDEX location_address_one_gist__idx ON location USING gist(line_one gist_trgm_ops);
-CREATE INDEX location_address_two_gist__idx ON location USING gist(line_two gist_trgm_ops);
-CREATE INDEX location_address_three_gist__idx ON location USING gist(line_three gist_trgm_ops);
-    
-CREATE INDEX location_city_prov_gist_idx ON location USING gist(city gist_trgm_ops);
-CREATE INDEX entity_name_gist_idx ON entity USING gist(name gist_trgm_ops);
 CREATE INDEX ap_approved_idx ON ap(approved);
 CREATE INDEX ar_approved_idx ON ar(approved);
 CREATE INDEX gl_approved_idx ON gl(approved);

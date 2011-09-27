@@ -525,19 +525,6 @@ sub run_upgrade {
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
     $dbh->do('CREATE SCHEMA PUBLIC');
-    # Copying contrib script loading for now
-    my $rc = 0;
-    my $temp = $LedgerSMB::Sysconfig::temp;
-     my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
-
-     for my $contrib (@contrib_scripts){
-         my $rc2;
-         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-         $rc ||= $rc2
-     }
-     my $rc2 = system("psql -f sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-     
-     $rc ||= $rc2;
 
     $database->load_modules('LOADORDER');
     my $dbtemplate = LedgerSMB::Template->new(

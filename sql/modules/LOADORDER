@@ -1,5 +1,6 @@
 # This is a simple list of files to be loaded from sql/modules in the order
 # they shall be loaded.
+Menu.sql
 Drafts.sql
 chart.sql
 Account.sql
