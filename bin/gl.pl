@@ -290,7 +290,7 @@ sub display_form
 		  for ( 'post_as_new', 'schedule' ) { $a{$_} = 1 }
 
 		  if ( !$form->{locked} ) {
-		      if ( $transdate ge $closedto  and defined $closedto) {
+		      if ( $transdate ge $closedto) {
 			  for ( 'post', 'delete' ) { $a{$_} = 1 }
 		      }
 		  }
