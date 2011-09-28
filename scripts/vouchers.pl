@@ -478,6 +478,10 @@ sub list_batches_batch_delete {
     batch_delete(@_);
 }
 
+sub get_batch_batch_delete {
+    batch_delete(@_);
+}
+
 # alias for batch_post, needed for form-dynatable
 sub list_batches_batch_approve {
     batch_approve(@_);
