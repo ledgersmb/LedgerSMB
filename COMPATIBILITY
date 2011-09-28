@@ -34,7 +34,7 @@ Files).
 
 -------------------------------
 
-Internet Explorer < 7.0
+Internet Explorer < 8.0
 This browser submits incorrect data when using the <BUTTON> element and is not
-supported.  Users of Windows XP and Vista may try Internet Explorer 7 or 
+supported.  Users of Windows XP and Vista may try Internet Explorer 8 or 
 Firefox at their option. Users of older versions of WIndows should use Firefox.
