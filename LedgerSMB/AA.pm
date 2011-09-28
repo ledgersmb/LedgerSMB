@@ -896,7 +896,7 @@ sub transactions {
                                 * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
                           AS paid,
 		          vce.name, vc.meta_number,
-		          a.entity_id, 
+		          a.entity_credit_account, 
 		          d.description AS department
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
@@ -914,7 +914,7 @@ sub transactions {
 			AND a.approved IS TRUE AND acs.approved IS TRUE
 			AND a.force_closed IS NOT TRUE
 		 GROUP BY 
-		          vc.meta_number, a.entity_id, vce.name, 
+		          vc.meta_number, a.entity_credit_account, vce.name, 
                           d.description --,
 		          --a.ponumber, a.invoice 
 		   HAVING abs(sum(acs.amount::numeric(20,2))) > 0.000 |;
@@ -929,7 +929,7 @@ sub transactions {
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, 
 		          vce.name, vc.meta_number,
-		          a.entity_id, a.till, 
+		          a.entity_credit_account, a.till, 
 		          ex.$buysell AS exchangerate, 
 		          d.description AS department, 
 		          as_array(p.projectnumber) as ac_projects,
@@ -952,7 +952,7 @@ sub transactions {
 			AND a.force_closed IS NOT TRUE
 		 GROUP BY a.id, a.invnumber, a.ordnumber, a.transdate, a.duedate, a.netamount,
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
-		          vc.meta_number, a.entity_id, a.till, ex.$buysell, d.description, vce.name,
+		          vc.meta_number, a.entity_credit_account, a.till, ex.$buysell, d.description, vce.name,
 		          a.ponumber, a.invoice, a.datepaid $acc_trans_fields
 		   HAVING abs(sum(acs.amount::numeric(20,$p))) > 0 |;
        } 
@@ -1457,10 +1457,10 @@ sub get_name {
 			     FROM chart c
 			     JOIN acc_trans ac ON (ac.chart_id = c.id)
 			     JOIN $arap a ON (a.id = ac.trans_id)
-			    WHERE c.charttype = 'A' AND a.entity_id = ?
+			    WHERE c.charttype = 'A' AND a.entity_credit_account = ?
 			          AND a.id = (SELECT max(id) 
 			                         FROM $arap
-			                        WHERE entity_id = 
+			                        WHERE entity_credit_account = 
 			                              ?)
 			|;
 

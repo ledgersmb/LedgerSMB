@@ -138,6 +138,19 @@ sub add_pos_adjust {
     &add;
 }
 
+sub new {
+     for my $row (1 .. $form->{rowcount}){
+         for my $fld(qw(accno projectnumber acc debit credit source memo)){
+            delete $form->{"${fld}_${row}"};
+         }
+     }
+     delete $form->{description};
+     delete $form->{reference};
+     delete $form->{rowcount};
+     delete $form->{id};
+     add();
+}
+
 sub add {
 
     $form->{title} = "Add";
@@ -257,6 +270,8 @@ sub display_form
 		    { ndx => 7, key => 'H', value => $locale->text('Schedule') },
 		  'delete' =>
 		    { ndx => 8, key => 'D', value => $locale->text('Delete') },
+                  'new' => 
+                    { ndx => 9, key => 'N', value => $locale->text('New') },
 	      );
 
 	      if ($form->{separate_duties}){            
@@ -264,9 +279,15 @@ sub display_form
 		  $button{post}->{value} = $locale->text('Save'); 
 	      }
 	      %a = ();
+              if ($form->{id}){
+                 $a{'new'} = 1;
+                 
+              } else {
+                 $a{'update'} = 1;
+              }
 	      if ( $form->{id} && ($form->{approved} || !$form->{batch_id})) {
 
-		  for ( 'update', 'post_as_new', 'schedule' ) { $a{$_} = 1 }
+		  for ( 'post_as_new', 'schedule' ) { $a{$_} = 1 }
 
 		  if ( !$form->{locked} ) {
 		      if ( $transdate > $closedto ) {
@@ -280,7 +301,6 @@ sub display_form
 		      for ( "post", "schedule" ) { $a{$_} = 1 }
 		  }
 	      }
-              $a{update} = 1;
 
 	      if (!$form->{approved} && !$form->{batch_id}){
 		$button{approve} = { 
@@ -1124,7 +1144,7 @@ sub post {
     }
 
     if ( GL->post_transaction( \%myconfig, \%$form, $locale) ) {
-        $form->redirect( $locale->text('Transaction posted!') );
+        edit();
     }
     else {
         $form->error( $locale->text('Cannot post transaction!') );
