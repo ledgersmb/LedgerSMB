@@ -290,7 +290,7 @@ sub display_form
 		  for ( 'post_as_new', 'schedule' ) { $a{$_} = 1 }
 
 		  if ( !$form->{locked} ) {
-		      if ( $transdate > $closedto ) {
+		      if ( $transdate ge $closedto) {
 			  for ( 'post', 'delete' ) { $a{$_} = 1 }
 		      }
 		  }
@@ -302,7 +302,7 @@ sub display_form
 		  }
 	      }
 
-	      if (!$form->{approved} && !$form->{batch_id}){
+	      if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
 		$button{approve} = { 
 			ndx   => 3, 
 			key   => 'S', 
