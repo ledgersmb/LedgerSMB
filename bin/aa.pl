@@ -97,7 +97,7 @@ sub copy_to_new{
 
 sub new_screen {
     use LedgerSMB::Form;
-    my @reqprops = qw(ARAP vc dbh stylesheet);
+    my @reqprops = qw(ARAP vc dbh stylesheet batch_id);
     $oldform = $form;
     $form = {};
     bless $form, Form;
