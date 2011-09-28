@@ -144,6 +144,8 @@ sub new {
             delete $form->{"${fld}_${row}"};
          }
      }
+     delete $form->{description};
+     delete $form->{reference};
      delete $form->{rowcount};
      delete $form->{id};
      add();
