@@ -43,7 +43,7 @@
 
 <?lsmb city ?>
 <?lsmb IF state -?>
-\hspace{-0.1cm}, <?lsmb state ?> <?lsmb END ?> %<?lsmb zipcode ?>
+\hspace{-0.1cm}, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>
 
 <?lsmb country ?>
 
@@ -76,9 +76,7 @@ Fax: <?lsmb customerfax ?>
 
 <?lsmb shiptocity ?>
 <?lsmb IF shiptostate -?>
-\hspace{-0.1cm}, <?lsmb shiptostate ?>
-<?lsmb END ?>
-%<?lsmb shiptozipcode ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?><?lsmb END ?> <?lsmb shiptozipcode ?>
 
 <?lsmb shiptocountry ?>
 
