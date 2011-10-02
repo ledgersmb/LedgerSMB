@@ -1,4 +1,5 @@
 CREATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
+CREATE EXTENSION tablefunc; -- Separate transaction, only needed for 9.1
 
 begin;
 CREATE SEQUENCE id;
@@ -3446,13 +3447,6 @@ $$ Returns an n dimensional array.
 Example: SELECT as_array(ARRAY[id::text, class]) from contact_class
 $$;
 
-CREATE INDEX company_name_gist__idx ON company USING gist(legal_name gist_trgm_ops);
-CREATE INDEX location_address_one_gist__idx ON location USING gist(line_one gist_trgm_ops);
-CREATE INDEX location_address_two_gist__idx ON location USING gist(line_two gist_trgm_ops);
-CREATE INDEX location_address_three_gist__idx ON location USING gist(line_three gist_trgm_ops);
-    
-CREATE INDEX location_city_prov_gist_idx ON location USING gist(city gist_trgm_ops);
-CREATE INDEX entity_name_gist_idx ON entity USING gist(name gist_trgm_ops);
 CREATE INDEX ap_approved_idx ON ap(approved);
 CREATE INDEX ar_approved_idx ON ar(approved);
 CREATE INDEX gl_approved_idx ON gl(approved);
