@@ -128,6 +128,7 @@ sub process {
 		TRIM => 1,
                 COMPILE_DIR=> $tempdir,
 		DEBUG => ($parent->{debug})? 'dirs': undef,
+                ENCODING => 'utf8',
 		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template->error(); 
 	if (not $template->process(
