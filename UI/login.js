@@ -39,7 +39,7 @@ function setup_page(login_label, password_label) {
 			'<div class="label">' +
 				'<label for="login">' +
 				login_label+
-				"</label>" +
+				":</label>" +
 			'</div>' +
 			'<div class="input">' +
 				'<input class="login" ' + 
@@ -52,7 +52,7 @@ function setup_page(login_label, password_label) {
 			'<div class="label">' +
 				'<label for="password">' +
 				password_label +
-				'</label>' +
+				':</label>' +
 			'</div>' +
 			'<div class="input">' +
 				'<input class="login" ' + 

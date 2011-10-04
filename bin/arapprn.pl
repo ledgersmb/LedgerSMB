@@ -65,7 +65,6 @@ sub print {
     $form->{tel} = $csettings->{company_phone};
     $form->{fax} = $csettings->{company_fax};
 
-
     if ( $form->{media} !~ /screen/ ) {
         $form->error( $locale->text('Select postscript or PDF!') )
           if $form->{format} !~ /(postscript|pdf)/;

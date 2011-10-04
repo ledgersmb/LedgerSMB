@@ -244,6 +244,7 @@ sub get_info {
        }
        $dbh->rollback;
    }
+   $dbh->disconnect;
    return $retval;
 }
 

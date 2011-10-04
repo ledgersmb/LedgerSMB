@@ -42,10 +42,8 @@
 <?lsmb address2 ?>
 
 <?lsmb city ?>
-<?lsmb IF state ?>
-\hspace{-0.1cm}, <?lsmb state ?>
-<?lsmb END ?>
-<?lsmb zipcode ?>
+<?lsmb IF state -?>
+\hspace{-0.1cm}, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>
 
 <?lsmb country ?>
 
@@ -77,10 +75,8 @@ Fax: <?lsmb customerfax ?>
 <?lsmb shiptoaddress2 ?>
 
 <?lsmb shiptocity ?>
-<?lsmb IF shiptostate ?>
-\hspace{-0.1cm}, <?lsmb shiptostate ?>
-<?lsmb END ?>
-<?lsmb shiptozipcode ?>
+<?lsmb IF shiptostate -?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?><?lsmb END ?> <?lsmb shiptozipcode ?>
 
 <?lsmb shiptocountry ?>
 

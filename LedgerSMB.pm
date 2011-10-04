@@ -1007,18 +1007,21 @@ sub _on_connection_error {
 
 sub dberror{
    my $self = shift @_;
-   my $state_error = {
-        '42883' => $self->{_locale}->text('Internal Database Error'),
-	'42501' => $self->{_locale}->text('Access Denied'),
-	'42401' => $self->{_locale}->text('Access Denied'),
-	'22008' => $self->{_locale}->text('Invalid date/time entered'),
-	'22012' => $self->{_locale}->text('Division by 0 error'),
-	'22004' => $self->{_locale}->text('Required input not provided'),
-	'23502' => $self->{_locale}->text('Required input not provided'),
-    '23505' => $self->{_locale}->text('Conflict with Existing Data'),
-	'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
+   my $state_error = {};
+   if ($self->{_locale}){
+       my $state_error = {
+            '42883' => $self->{_locale}->text('Internal Database Error'),
+            '42501' => $self->{_locale}->text('Access Denied'),
+            '42401' => $self->{_locale}->text('Access Denied'),
+            '22008' => $self->{_locale}->text('Invalid date/time entered'),
+            '22012' => $self->{_locale}->text('Division by 0 error'),
+            '22004' => $self->{_locale}->text('Required input not provided'),
+            '23502' => $self->{_locale}->text('Required input not provided'),
+            '23505' => $self->{_locale}->text('Conflict with Existing Data'),
+            'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
                     $self->{dbh}->errstr,
-   };
+       };
+   }
    $logger->error("Logging SQL State ".$self->{dbh}->state.", error ".
            $self->{dbh}->err . ", string " .$self->{dbh}->errstr);
    if (defined $state_error->{$self->{dbh}->state}){
