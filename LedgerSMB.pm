@@ -318,7 +318,7 @@ sub new {
     if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
          my $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
          $ccookie =~ s/.*:([^:]*)$/$1/;
-         $self->{company} = $ccookie;
+         if($ccookie ne 'Login') { $self->{company} = $ccookie; } 
     }
     $logger->debug("LedgerSMB.pm: \$self->{company} = $self->{company}");
 
