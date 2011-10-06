@@ -124,8 +124,10 @@ $form->db_init( \%myconfig );
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
   unless ( $form->{type} eq 'preferences' );
 
-$locale   = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
-  or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+if ($myconfig{language}){
+    $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
+      or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+}
 # pull in the main code
 
 try {
