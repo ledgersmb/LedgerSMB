@@ -51,6 +51,9 @@ use CGI::Simple::Standard qw(:html);
 use Template;
 use LedgerSMB::Template::TTI18N;
 
+binmode STDOUT, ':utf8';
+binmode STDERR, ':utf8';
+
 sub get_template {
     my $name = shift;
     return "${name}.html";
