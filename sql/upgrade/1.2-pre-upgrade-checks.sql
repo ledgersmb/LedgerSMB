@@ -10,6 +10,10 @@ SELECT * FROM chart where link LIKE '%CT_tax%';
 
 SELECT * FROM employee where employeenumber IS NULL;
 
+SELECT * FROM employee WHERE employeenumber IN 
+       (SELECT employeenumber FROM employee GROUP BY employeenumber
+        HAVING count(*) > 1);
+
 select partnumber, count(*) from parts 
  WHERE obsolete is not true
 group by partnumber having count(*) > 1;
