@@ -229,7 +229,13 @@ create or replace function reconciliation__add_entry(
 	t_scn TEXT;
 	t_uid int;
 	t_prefix text;
+        t_amount numeric;
     BEGIN
+        SELECT CASE WHEN a.category in ('A', 'E') THEN in_amount * -1
+                    ELSE in_amount
+               END into t_amount
+          FROM cr_report r JOIN account a ON r.chart_id = a.id
+         WHERE r.id = in_report_id; 
 
 	SELECT value into t_prefix FROM defaults WHERE setting_key = 'check_prefix';
 
@@ -240,6 +246,7 @@ create or replace function reconciliation__add_entry(
 		t_scn := t_prefix || in_scn;
 	END IF;
 	IF t_scn IS NOT NULL THEN
+                -- could this be changed to update, if not found insert?
 		SELECT count(*) INTO in_count FROM cr_report_line
 		WHERE scn ilike t_scn AND report_id = in_report_id 
 			AND their_balance = 0;
@@ -249,18 +256,18 @@ create or replace function reconciliation__add_entry(
 			(report_id, scn, their_balance, our_balance, clear_time,
 				"user", trans_type)
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0, in_date, t_uid,
+			(in_report_id, t_scn, t_amount, 0, in_date, t_uid,
 				in_type);
 		ELSIF in_count = 1 THEN
 			UPDATE cr_report_line
-			SET their_balance = in_amount, clear_time = in_date,
+			SET their_balance = t_amount, clear_time = in_date,
 				cleared = true
 			WHERE t_scn = scn AND report_id = in_report_id
 				AND their_balance = 0;
 		ELSE 
 			SELECT count(*) INTO in_count FROM cr_report_line
 			WHERE t_scn ilike scn AND report_id = in_report_id
-				AND our_value = in_amount and their_balance = 0;
+				AND our_value = t_amount and their_balance = 0;
 
 			IF in_count = 0 THEN -- no match among many of values
 				SELECT id INTO lid FROM cr_report_line
@@ -268,7 +275,7 @@ create or replace function reconciliation__add_entry(
 				ORDER BY our_balance ASC limit 1;
 
 				UPDATE cr_report_line
-                                SET their_balance = in_amount, 
+                                SET their_balance = t_amount, 
 					clear_time = in_date,
 					trans_type = in_type,
 					cleared = true
@@ -276,21 +283,21 @@ create or replace function reconciliation__add_entry(
 
 			ELSIF in_count = 1 THEN -- EXECT MATCH
 				UPDATE cr_report_line
-				SET their_balance = in_amount, 
+				SET their_balance = t_amount, 
 					trans_type = in_type,
 					clear_time = in_date,
 					cleared = true
 				WHERE t_scn = scn AND report_id = in_report_id
-                                	AND our_value = in_amount 
+                                	AND our_value = t_amount 
 					AND their_balance = 0;
 			ELSE -- More than one match
 				SELECT id INTO lid FROM cr_report_line
                         	WHERE t_scn ilike scn AND report_id = in_report_id
-                                	AND our_value = in_amount
+                                	AND our_value = t_amount
 				ORDER BY id ASC limit 1;
 
 				UPDATE cr_report_line
-                                SET their_balance = in_amount,
+                                SET their_balance = t_amount,
 					trans_type = in_type,
 					cleared = true,
 					clear_time = in_date
@@ -300,7 +307,7 @@ create or replace function reconciliation__add_entry(
 		END IF;
 	ELSE -- scn IS NULL, check on amount instead
 		SELECT count(*) INTO in_count FROM cr_report_line
-		WHERE report_id = in_report_id AND our_balance = in_amount
+		WHERE report_id = in_report_id AND our_balance = t_amount
 			AND their_balance = 0 and post_date = in_date
 			and scn NOT LIKE t_prefix || '%';
 
@@ -309,24 +316,24 @@ create or replace function reconciliation__add_entry(
 			(report_id, scn, their_balance, our_balance, clear_time,
 			"user", trans_type)
 			VALUES 
-			(in_report_id, t_scn, in_amount, 0, in_date, t_uid,
+			(in_report_id, t_scn, t_amount, 0, in_date, t_uid,
 			in_type);
 		ELSIF in_count = 1 THEN -- perfect match
-			UPDATE cr_report_line SET their_balance = in_amount,
+			UPDATE cr_report_line SET their_balance = t_amount,
 					trans_type = in_type,
 					clear_time = in_date,
 					cleared = true
-			WHERE report_id = in_report_id AND our_balance = in_amount
+			WHERE report_id = in_report_id AND our_balance = t_amount
                         	AND their_balance = 0 and
 				in_scn NOT LIKE t_prefix || '%';
 		ELSE -- more than one match
 			SELECT min(id) INTO lid FROM cr_report_line
-			WHERE report_id = in_report_id AND our_balance = in_amount
+			WHERE report_id = in_report_id AND our_balance = t_amount
                         	AND their_balance = 0 and post_date = in_date
 				AND scn NOT LIKE t_prefix || '%'
 			LIMIT 1;
 
-			UPDATE cr_report_line SET their_balance = in_amount,
+			UPDATE cr_report_line SET their_balance = t_amount,
 					trans_type = in_type,
 					clear_time = in_date,
 					cleared = true

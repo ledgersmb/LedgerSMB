@@ -51,8 +51,15 @@ $request->{action} = '__default' if (!$request->{action});
 
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
 my $script = $1;
-my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
-  or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+
+my $locale;
+
+if ($request->{_user}){
+    $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
+} else {
+    $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
+       or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+}
 
 if (!$script){
 	$request->error($locale->text('No workflow script specified'));

@@ -37,10 +37,10 @@ END ?>
 <?lsmb END ?>
 <body onload="init('<?lsmb target_div ?>')">
     <?lsmb IF name ?> 
-<div class="pageheading"><?lsmb text('Company:') ?> <?lsmb name ?></div>
+<div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
     <?lsmb END ?>
     <?lsmb IF meta_number ?> 
-<div class="pageheading"><?lsmb text('Account:') ?> <?lsmb meta_number ?></div>
+<div class="pageheading"><?lsmb text('Account') ?>: <?lsmb meta_number ?></div>
     <?lsmb END ?>
     <?lsmb IF notice ?>
     <div class="notice"><?lsmb notice ?></div>
@@ -125,7 +125,7 @@ END ?>
 problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
-	label = text('Job Title:')
+	label = text('Job Title')
 	name = "role"
 	value = role
 	type = "text"
@@ -134,7 +134,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
-	label = text('Sales:')
+	label = text('Sales')
 	value = 1
 	type = "checkbox"
 	checked = sales
@@ -150,7 +150,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			default_values = [country_id_t]
 			options = country_list
 			name = "country_id"
-			label = text('Country:') 
+			label = text('Country') 
 	} ?> 
 </div>
 </div>
@@ -165,7 +165,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 } # ' ?>
 </div>
 <div class="input_group">
-<label for="manager_select"><?lsmb text('Manager:') ?></label>
+<label for="manager_select"><?lsmb text('Manager') ?></label>
 <select id="manager_select" name="manager_id">
 <?lsmb FOREACH e = employee ?>
 <option value = e.entity_id <?lsmb (manager_id == e.entity_id) ? "SELECTED" : ""?><?lsmb e.name ?></option>
@@ -176,7 +176,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div id="hr_dates_div">
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
-	label = text('DOB:')
+	label = text('DOB')
 	name = "dob"
 	value = dob
 	type = "text"
@@ -186,7 +186,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
-	label = text('Start Date:')
+	label = text('Start Date')
 	name = "start_date"
 	value = start_date
 	type = "text"
@@ -196,7 +196,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
-	label = text('End Date:')
+	label = text('End Date')
 	name = "end_date"
 	value = end_date
 	class = "text"
@@ -266,7 +266,7 @@ END ?>
 <div class="input_line">
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
-		label = text('Control Code:') #'
+		label = text('Control Code') #'
 		type= "text"
 		name = "control_code"
 		value = control_code
@@ -283,7 +283,7 @@ END ?>
 		default_values = [created_as_class]
 		text_attr = 'class'
 		value_attr = 'id'
-		label = text('Class:')
+		label = text('Class')
 	} ?>
 	<?lsmb PROCESS button element_data = {
 		text = text('Generate Control Code') #'
@@ -304,7 +304,7 @@ END ?>
 <div class="input_line">
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
-		label = text('Name:')
+		label = text('Name')
 		type= "text"
 		name = "name"
 		value = name
@@ -320,14 +320,14 @@ END ?>
 			default_values = [country_id_t]
 			options = country_list
 			name = "country_id_t"
-			label = text('Country:') 
+			label = text('Country') 
 	} ?> 
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
 		<?lsmb INCLUDE input element_data = {
-			label = text('Tax Number/SSN:'),
+			label = text('Tax Number/SSN'),
 			name = "tax_id",
 			value = tax_id,
 			type = "text",
@@ -336,7 +336,7 @@ END ?>
 </div>
 <div class="input_group2">
 		<?lsmb INCLUDE input element_data = {
-			label = text('SIC:'),
+			label = text('SIC'),
 			name = "sic_code",
 			value = sic_code,
 			type = "text",
@@ -419,14 +419,14 @@ END ?>
 	<tr class="eca_row">
 	<td>
  	<?lsmb PROCESS input element_data = {
-		label = text("$entity_classname Number:"),
+		label = text("$entity_classname Number"),
 		type= "text",
 		name = "meta_number",
 		value = meta_number,
 		size = "20"
 	}  # " ?></td>
 	<td><?lsmb PROCESS input element_data = {
-		label = text("Description:"),
+		label = text("Description"),
 		type= "text",
 		name = "description",
 		value = description,
@@ -448,7 +448,7 @@ END ?>
         <tr id="date-row">
             <td>
 		<?lsmb PROCESS input element_data = {
-			label = text('Starting Date:'),
+			label = text('Starting Date'),
 			name = "startdate",
 			class = "date",
 			value = startdate,
@@ -459,7 +459,7 @@ END ?>
             </td>
             <td>
 		<?lsmb PROCESS input element_data = {
-			label = text('End Date:'),
+			label = text('End Date'),
 			name = "enddate",
 			class = "date",
 			value = enddate,
@@ -472,7 +472,7 @@ END ?>
         <tr id="credit-row">
             <td>
 		<?lsmb INCLUDE input element_data = {
-			label = text('Credit Limit:'),
+			label = text('Credit Limit'),
 			name = "creditlimit",
 			value = creditlimit,
 			type = "text",
@@ -481,7 +481,7 @@ END ?>
             </td>
             <td><span id="terms-span">
 		<?lsmb INCLUDE input element_data = {
-			label = text('Terms:'),
+			label = text('Terms'),
 			name = "terms",
 			value = terms,
 			type = "text",
@@ -492,7 +492,7 @@ END ?>
 	<tr id="discount-gifi-row">
             <td>
 		<?lsmb INCLUDE input element_data = {
-			label = text('Discount:'),
+			label = text('Discount'),
 			name = "discount",
 			value = discount,
 			type = "text",
@@ -509,7 +509,7 @@ END ?>
             </td>
             <td>
 		<?lsmb INCLUDE input element_data = {
-			label = text('Subcontract GIFI:'),
+			label = text('Subcontract GIFI'),
 			name = "gifi_accno",
 			value = gifi_accno,
 			type = "text",
@@ -554,7 +554,7 @@ END ?>
 			default_values = [business_id]
 			text_attr = "description"
 			value_attr = "id"
-			label = text('Business Type:') #'
+			label = text('Business Type') #'
 			} ?> 
 	  </td>
           <td> <?lsmb INCLUDE input element_data = {
@@ -576,7 +576,7 @@ END ?>
 			default_values = [taxform_id]
 			text_attr = "form_name"
 			value_attr = "id"
-			label = text('Taxforms:') 
+			label = text('Taxforms') 
 			} ?> 
 	  </td>
 
@@ -750,20 +750,20 @@ END ?>
     </tr>
 	<?lsmb END ?>
     </table>
-	<div> <!-- TODO:  Move to elements.html -CT -->
+	<div> 
                 <?lsmb INCLUDE select element_data = {
                        name           = "location_class"
                        default_values = [location_class]
                        options        = location_class_list
                        text_attr      = "class"
                        value_attr     = "id"
-                       label          = text('Type:')
+                       label          = text('Type')
                 } ?>
 		</select>
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-			label = text('Address:'),
+			label = text('Address'),
 			name = "line_one",
 			value = line_one,
 			type = "text",
@@ -792,7 +792,7 @@ END ?>
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-			label = text('City:'),
+			label = text('City'),
 			name = "city",
 			value = city,
 			type = "text",
@@ -801,7 +801,7 @@ END ?>
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-			label = text('State/Province:'),
+			label = text('State/Province'),
 			name = "state",
 			value = state,
 			type = "text",
@@ -810,7 +810,7 @@ END ?>
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-			label = text('Zip/Post Code:'),
+			label = text('Zip/Post Code'),
 			name = "mail_code",
 			value = mail_code,
 			type = "text",
@@ -825,7 +825,7 @@ END ?>
 			default_values = [country_code]
 			options = country_list
 			name = "country_code"
-			label = text('Country:') 
+			label = text('Country') 
 		} ?>
 	</div>
 	<div>
@@ -850,10 +850,10 @@ END ?>
 	<div class="listtop"><?lsmb text('Contact Information') ?></div>
 	<table width="100%">
 	<tr class="listheading">
-		<th class="contact_class"><?lsmb text('Type:') ?></th>
-		<th class="description"><?lsmb text('Description:') ?></th>
-		<th class="contact"><?lsmb text('Contact Info:') ?></th>
-		<th class="contact_actions"><?lsmb text('Actions:') ?></th>
+		<th class="contact_class"><?lsmb text('Type') ?></th>
+		<th class="description"><?lsmb text('Description') ?></th>
+		<th class="contact"><?lsmb text('Contact Info') ?></th>
+		<th class="contact_actions"><?lsmb text('Actions') ?></th>
 	</tr>
 	<?lsmb FOREACH ct = contacts ?>
 	<tr>
@@ -933,7 +933,7 @@ END ?>
 	</div>
 	<div>
 		<?lsmb PROCESS input element_data = {
-			label = text('Description:'),
+			label = text('Description'),
 			name = "description"
 			value = description
 			type = "text"
@@ -942,7 +942,7 @@ END ?>
 	</div>
 	<div>
 		<?lsmb PROCESS input element_data = {
-			label = text('Contact Info:'),
+			label = text('Contact Info'),
 			name = "contact"
 			value = contact
 			type = "text"
@@ -1025,7 +1025,7 @@ END ?>
 	<div>
 	<?lsmb INCLUDE input element_data = {
 		type="text" 
-		label = text('BIC/SWIFT Code:')
+		label = text('BIC/SWIFT Code')
 		name="bic" 
 		value=bic
 		size=20
@@ -1034,7 +1034,7 @@ END ?>
 	<div>
 	<?lsmb PROCESS input element_data = {
 		type="text" 
-		label = text('Bank Account:')
+		label = text('Bank Account')
 		name="iban" 
 		value=iban
 		size=20
@@ -1075,7 +1075,7 @@ END ?>
 <?lsmb IF credit_id -?>
 <div class="input">
    <?lsmb PROCESS input element_data = {
-      label = text('Subject:'),
+      label = text('Subject'),
       name = "subject"
       value = subject
       type = "text"
@@ -1093,7 +1093,7 @@ END ?>
 </div>
 <?lsmb END # IF credit_id -?>
 <div class="input"><?lsmb PROCESS textarea element_data = {
-	label = text('Notes:')
+	label = text('Notes')
 	name = 'note'
 } ?></div>
 <div class="input">
