@@ -185,6 +185,16 @@ sub upgrade{
          edit => 'employeenumber',
         table => 'employee'},
 
+       {query => 'SELECT * FROM employee 
+                   WHERE employeenumber IN 
+                         (SELECT employeenumber FROM employee 
+                        GROUP BY employeenumber
+                          HAVING count(*) > 1)',
+         name => $locale->text('Duplicte employee numbers'),
+         cols => ['login', 'name', 'employeenumber'],
+         edit => 'employeenumber',
+        table => 'employee'},
+
        {query => "select * from parts where obsolete is not true 
                   and partnumber in 
                   (select partnumber from parts 
@@ -545,10 +555,11 @@ sub run_upgrade {
 
 =item cancel
 
-Cancels work.  If the confirm is set to no, returns to the credential screen
+Cancels work.  Returns to login screen.
 
 =cut
 sub cancel{
+    __default(@_);
 }
 
 =back

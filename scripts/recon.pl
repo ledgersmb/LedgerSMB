@@ -381,16 +381,13 @@ sub _display_report {
                {amount => $recon->{total_uncleared_credits}, money => 1}
         );
 	$recon->{their_total} = $recon->format_amount(
-		{amount => $recon->{their_total}, money => 1});
+		{amount => $recon->{their_total} * $neg_factor, money => 1});
 	$recon->{our_total} = $recon->format_amount(
 		{amount => $recon->{our_total}, money => 1});
 	$recon->{beginning_balance} = $recon->format_amount(
 		{amount => $recon->{beginning_balance}, money => 1});
 	$recon->{out_of_balance} = $recon->format_amount(
 		{amount => $recon->{out_of_balance}, money => 1});
-        if ($recon->{account_info}->{category} =~ /(A|E)/){
-           $recon->{their_total} *= -1;
-        }
 
         return $template->render($recon);
 }
@@ -403,10 +400,14 @@ Displays the new report screen.
 =cut
 sub new_report {
     my ($request) = @_;
-    
+
+    $request->{total} = $request->parse_amount(amount => $request->{total});
     my $template;
     my $return;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all'); 
+    # This method detection makes debugging a bit harder.
+    # Not sure I like it but won't refactor until 1.4..... --CT
+    #
     if ($request->type() eq "POST") {
         
         # We can assume that we're doing something useful with new data.

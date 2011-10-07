@@ -145,6 +145,8 @@ if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
 
 if ( $form->{action} ) {
 
+    binmode STDOUT, ':utf8';
+    binmode STDERR, ':utf8';
     # window title bar, user info
     $form->{titlebar} =
         "LedgerSMB "

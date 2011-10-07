@@ -48,8 +48,8 @@ Tony Fraser <tony @ sybaspace.com> provided some database fixes.
 John Hasler <john @ dhh.gt.org> has provided some double-entry information for
 the manual and miscellaneous documentation corrections.
 
-Louis B. Moore has provided the documentation on the command-line API and helped
-with upgrade scripts.
+Louis B. Moore <lbmlist @ hethcote.com> has provided the documentation on the 
+command-line API and helped with upgrade scripts, both for 1.2 and 1.3.
 
 Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
 documentation for Debian installations.

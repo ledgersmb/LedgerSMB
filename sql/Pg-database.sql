@@ -1655,6 +1655,47 @@ CREATE TABLE language (
 
 COMMENT ON TABLE language IS
 $$ Languages for manual translations and so forth.$$;
+
+INSERT INTO language (code, description)
+VALUES ('ar_EG', 'Arabic (Egypt)'),
+       ('bg',    'Bulgarian'), 
+       ('ca',    'Catalan'),
+       ('cs',    'Czech'),
+       ('da',    'Danish'),
+       ('de',    'German'),
+       ('de_CH', 'German (Switzerland)'),
+       ('el',    'Greek'),
+       ('en',    'English'),
+       ('es',    'Spanish'),
+       ('es_CO', 'Spanish (Colombia)'),
+       ('es_EC', 'Spanish (Ecuador)'),
+       ('es_MX', 'Spanish (Mexico)'),
+       ('es_PA', 'Spanish (Panama)'),
+       ('es_PY', 'Spanish (Paraguay)'),
+       ('es_VE', 'Spanish (Venezuela)'),
+       ('et',    'Estonian'),
+       ('fi',    'Finnish'),
+       ('fr',    'French'),
+       ('fr_BE', 'French (Belgium)'),
+       ('fr_CA', 'French (Canada)'),
+       ('hu',    'Hungarian'),
+       ('id',    'Indonesian'),
+       ('is',    'Icelandic'),
+       ('it',    'Italian'),
+       ('lt',    'Latvian'),
+       ('nb',    'Norwegian'),
+       ('nl',    'Dutch'),
+       ('nl_BE', 'Dutch (Belgium)'),
+       ('pl',    'Polish'),
+       ('pt',    'Portuguese'),
+       ('pt_BR', 'Portuguese (Brazil)'),
+       ('ru',    'Russian'),
+       ('sv',    'Swedish'),
+       ('tr',    'Turkish'),
+       ('uk',    'Ukranian'),
+       ('zh_CN', 'Chinese (China)'),
+       ('zh_TW', 'Chinese (Taiwan)');
+
 --
 CREATE TABLE audittrail (
   trans_id int,
