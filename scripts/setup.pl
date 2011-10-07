@@ -476,7 +476,32 @@ sub save_user {
                                    $creds->{login},
                                    $creds->{password});
     my $user = LedgerSMB::DBObject::Admin->new({base => $request});
-    $user->save_user;
+    if (8 == $user->save_user){ # Told not to import but user exists in db
+        $request->{notice} = $request->{_locale}->text(
+                       'User already exists. Import?'
+        );
+
+
+       @{$request->{salutations}} 
+        = $request->call_procedure(procname => 'person__list_salutations' ); 
+          
+       @{$request->{countries}} 
+        = $request->call_procedure(procname => 'location_list_country' ); 
+
+       my $locale = $request->{_locale};
+
+       @{$request->{perm_sets}} = (
+           {id => '0', label => $locale->text('Manage Users')},
+           {id => '1', label => $locale->text('Full Permissions')},
+       );
+        my $template = LedgerSMB::Template->new(
+                path => 'UI/setup',
+                template => 'new_user',
+         format => 'HTML',
+        );
+        $template->render($request);
+        exit;        
+    }
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(procname => 'admin__get_roles')
@@ -533,8 +558,8 @@ sub run_upgrade {
     $dbh->do('CREATE SCHEMA PUBLIC');
     # Copying contrib script loading for now
     my $rc = 0;
-    my $temp = $LedgerSMB::Sysconfig::temp;
-     my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
+    my $temp = $LedgerSMB::Sysconfig::tempdir;
+     my @contrib_scripts = qw(tsearch2 tablefunc);
 
      for my $contrib (@contrib_scripts){
          my $rc2;
@@ -546,14 +571,33 @@ sub run_upgrade {
      $rc ||= $rc2;
 
     $database->load_modules('LOADORDER');
+    $database->process_roles('Roles.sql');
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
-        template => 'sql/upgrade/1.2-1.3.sql',
+        path => 'sql/upgrade',
+        template => '1.2-1.3',
         no_auto_output => 1,
-        format => 'text' );
+        format_options => {extension => 'sql'},
+        output_file => '1.2-1.3-upgrade',
+        format => 'TXT' );
     $dbtemplate->render($request);
-    $rc2 = system("psql -f $dbtemplate->{rendered} >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+    $rc2 = system("psql -f $temp/1.2-1.3-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
     $rc ||= $rc2;
+
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+
+   @{$request->{salutations}} 
+    = $request->call_procedure(procname => 'person__list_salutations' ); 
+          
+   @{$request->{countries}} 
+    = $request->call_procedure(procname => 'location_list_country' ); 
+
+   my $locale = $request->{_locale};
+
+   @{$request->{perm_sets}} = (
+       {id => '0', label => $locale->text('Manage Users')},
+       {id => '1', label => $locale->text('Full Permissions')},
+   );
     my $template = LedgerSMB::Template->new(
                    path => 'UI/setup',
                    template => 'new_user',
