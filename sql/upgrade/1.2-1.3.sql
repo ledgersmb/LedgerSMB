@@ -574,7 +574,7 @@ INSERT INTO language SELECT * FROM lsmb12.language;
 INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
             transdate, person_id, entry_id)
      SELECT trans_id, tablename, reference, formname, action,
-            transdate, p.id, entry_id
+            transdate, p.entity_id, entry_id
        FROM lsmb12.audittrail a
        JOIN lsmb12.employee e ON a.employee_id = e.id
        JOIN person p on e.entity_id = p.entity_id;
