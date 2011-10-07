@@ -45,9 +45,19 @@ use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
 
+sub get_extension {
+    my ($parent) = shift;
+    if ($parent->{format_args}->{extension}){
+        return $parent->{format_args}->{extension};
+    } else {
+        return 'txt';
+    }
+}
+
 sub get_template {
-    my $name = shift;
-    return "${name}.txt";
+    my ($name, $parent) = @_;
+    my $extension;
+    return "${name}.". get_extension($parent);
 }
 
 sub preprocess {
@@ -61,9 +71,8 @@ sub process {
 	my $template;
 	my $source;
 	my $output;
-
 	if ($parent->{outputfile}) {
-		$output = "$parent->{outputfile}.txt";
+		$output = "$parent->{outputfile}.". get_extension($parent);
 	} else {
 		$output = \$parent->{output};
 	}
@@ -72,7 +81,7 @@ sub process {
 	} elsif (ref $parent->{template} eq 'ARRAY') {
 		$source = join "\n", @{$parent->{template}};
 	} else {
-		$source = get_template($parent->{template});
+		$source = get_template($parent->{template}, $parent);
 	}
 	$template = Template->new({
 		INCLUDE_PATH => $parent->{include_path},
@@ -95,7 +104,7 @@ sub process {
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.txt" if $parent->{outputfile};
+    $parent->{rendered} = "$parent->{outputfile}.". get_extension($parent) if $parent->{outputfile};
     return $parent->{rendered};
 }
 
