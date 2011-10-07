@@ -302,6 +302,7 @@ sub output {
         for ( keys %args ) { $self->{output_args}->{$_} = $args{$_}; };
 
 	my $method = $self->{method} || $args{method} || $args{media};
+        $method = '' if !defined $method;
 	if ('email' eq lc $method) {
 		$self->_email_output;
 	} elsif ('print' eq lc $method) {
