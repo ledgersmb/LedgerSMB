@@ -564,10 +564,11 @@ sub run_upgrade {
 
 =item cancel
 
-Cancels work.  If the confirm is set to no, returns to the credential screen
+Cancels work.  Returns to login screen.
 
 =cut
 sub cancel{
+    __default(@_);
 }
 
 =back
