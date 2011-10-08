@@ -1,6 +1,10 @@
 CREATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
 
 begin;
+
+CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
+$$ SELECT -1;$$ LANGUAGE SQL;
+
 CREATE SEQUENCE id;
 -- As of 1.3 there is no central db anymore. --CT
 
@@ -466,16 +470,6 @@ CREATE TABLE users (
     entity_id int not null references entity(id) on delete cascade
 );
 
-COMMENT ON TABLE users IS $$username is the actual primary key here because we 
-do not want duplicate users$$;
-
-CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
-$$
-	SELECT entity_id from users where username = SESSION_USER;
-$$ LANGUAGE SQL;
-
-COMMENT ON FUNCTION person__get_my_entity_id() IS
-$$ Returns the entity_id of the current, logged in user.$$;
 
 create table lsmb_roles (
     
@@ -517,21 +511,6 @@ COMMENT ON TABLE open_forms IS
 $$ This is our primary anti-xsrf measure, as this allows us to require a full
 round trip to the web server in order to save data.$$;
 --
-CREATE TABLE transactions (
-  id int PRIMARY KEY,
-  table_name text,
-  locked_by int references "session" (session_id) ON DELETE SET NULL,
-  approved_by int references entity (id),
-  approved_at timestamp
-);
-
-CREATE INDEX transactions_locked_by_i ON transactions(locked_by);
-
-COMMENT on TABLE transactions IS 
-$$ This table provides referential integrity between AR, AP, GL tables on one
-hand and acc_trans on the other, pending the refactoring of those tables.  It
-also is used to provide discretionary locking of financial transactions across 
-database connections, for example in batch payment workflows.$$;
 
 CREATE OR REPLACE FUNCTION lock_record (in_id int, in_session_id int) 
 returns bool as 
@@ -539,13 +518,13 @@ $$
 declare
    locked int;
 begin
-   SELECT locked_by into locked from transactions where id = $1;
+   SELECT locked_by into locked from journal_entry where id = $1;
    IF NOT FOUND THEN
 	RETURN FALSE;
    ELSEIF locked is not null AND locked <> $2 THEN
         RETURN FALSE;
    END IF;
-   UPDATE transactions set locked_by = $2 where id = $1;
+   UPDATE journal_entry set locked_by = $2 where id = $1;
    RETURN TRUE;
 end;
 $$ language plpgsql;
@@ -556,10 +535,6 @@ id of in_session_id.  If possible, it returns true.  If it is already locked,
 false.  These are not hard locks and the application is free to disregard or 
 not even ask.  They time out when the session is destroyed.
 $$;
-
-COMMENT ON column transactions.locked_by IS
-$$ This should only be used in pessimistic locking measures as required by large
-batch work flows. $$;
 
 -- LOCATION AND COUNTRY
 
@@ -857,6 +832,7 @@ CREATE TABLE note_class(id serial primary key, class text not null check (class 
 INSERT INTO note_class(id,class) VALUES (1,'Entity');
 INSERT INTO note_class(id,class) VALUES (2,'Invoice');
 INSERT INTO note_class(id,class) VALUES (3,'Entity Credit Account');
+INSERT INTO note_class(id,class) VALUES (5,'Journal Entry');
 CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 
 COMMENT ON TABLE note_class IS 
@@ -922,23 +898,181 @@ COMMENT ON TABLE makemodel IS
 $$ A single parts entry can have multiple make/model entries.  These
 store manufacturer/model number info.$$;
 --
-CREATE TABLE gl (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
-  reference text,
-  description text,
-  transdate date DEFAULT current_date,
-  person_id integer references person(id),
-  notes text,
-  approved bool default true,
-  department_id int default 0
+CREATE TABLE journal_type (
+   id serial not null unique,
+   name text primary key
 );
 
-COMMENT ON TABLE gl IS
-$$ This table holds summary information for entries in the general journal.
-Does not hold summary information in 1.3 for AR or AP entries.$$;
+COMMENT ON TABLE journal_type IS
+$$ This table describes the journal entry type of the transaction.  The 
+following values are hard coded by default:
+1:  General journal
+2:  Sales (AR)
+3:  Purchases (AP)
+4:  Receipts
+5:  Payments
 
-COMMENT ON COLUMN gl.person_id is $$ the person_id of the employee who created
-the entry.$$;
+$$;
+
+CREATE TABLE cr_report (
+    id bigserial primary key not null,
+    chart_id int not null references account(id),
+    their_total numeric not null,
+    approved boolean not null default 'f',
+    submitted boolean not null default 'f',
+    end_date date not null default now(),
+    updated timestamp not null default now(),
+    entered_by int not null default person__get_my_entity_id() references entity(id),
+    entered_username text not null default SESSION_USER,
+    deleted boolean not null default 'f'::boolean,
+    deleted_by int references entity(id),
+    approved_by int references entity(id),
+    approved_username text,
+    CHECK (deleted is not true or approved is not true)
+);
+
+COMMENT ON TABLE cr_report IS
+$$This table holds header data for cash reports.$$;
+
+CREATE TABLE cr_report_line (
+    id bigserial primary key not null,
+    report_id int NOT NULL references cr_report(id),
+    scn text, -- SCN is the check #
+    their_balance numeric,
+    our_balance numeric,
+    errorcode INT,
+    "user" int references entity(id) not null, 
+    clear_time date,
+    insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
+    trans_type text, 
+    post_date date,
+    ledger_id int,
+    voucher_id int,
+    overlook boolean not null default 'f',
+    cleared boolean not null default 'f'
+);
+
+COMMENT ON TABLE cr_report_line IS
+$$ This stores line item data on transaction lines and whether they are 
+cleared.$$;
+
+COMMENT ON COLUMN cr_report_line.scn IS
+$$ This is the check number.  Maps to journal_entry.reference $$;
+
+CREATE TABLE cr_coa_to_account (
+    chart_id int not null references account(id),
+    account text not null
+);
+
+COMMENT ON TABLE cr_coa_to_account IS
+$$ Provides name mapping for the cash reconciliation screen.$$;
+
+INSERT INTO journal_type (id, name) 
+VALUES (1, 'General'), 
+       (2, 'Sales'),
+       (3, 'Purchases'),
+       (4, 'Receipts'),
+       (5, 'Payments');
+
+
+CREATE TABLE journal_entry (
+    id serial not null, 
+    reference text not null, 
+    description text, 
+    locked_by int references session(session_id) on delete set null,
+    journal int references journal_type(id),
+    post_date date not null default now(),
+    effective_start date not null, 
+    effective_end date not null,
+    currency char(3) not null,
+    approved bool default false,
+    is_template bool default false,
+    entered_by int not null references entity(id),
+    approved_by int references entity(id),
+    primary key (id),
+    check (is_template is false or approved is false)
+);
+
+COMMENT ON TABLE journal_entry IS $$
+This tale records the header information for each transaction.  It replaces 
+parts of the following tables:  acc_trans, ar, ap, gl, transactions.
+
+Note now all ar/ap transactions are also journal entries.$$;
+
+COMMENT ON COLUMN journal_entry.reference IS 
+$$ Invoice number or journal entry number.$$;
+
+COMMENT ON COLUMN journal_entry.effective_start IS
+$$ For transactions whose effects are spread out over a period of time, this is
+the effective start date for the transaction.  To be used by add-ons for 
+automating adjustments.$$;
+
+COMMENT ON COLUMN journal_entry.effective_end IS
+$$ For transactions whose effects are spread out over a period of time, this is
+the effective end date for the transaction.  To be used by add-ons for 
+automating adjustments.$$;
+
+COMMENT ON COLUMN journal_entry.is_template IS
+$$ Set true for template transactions.  Templates can never be approved but can
+be copied into new transactions and are useful for recurrances. $$;
+
+CREATE UNIQUE INDEX je_unique_source ON journal_entry (journal, reference) 
+WHERE journal IN (1, 2); -- cannot reuse GL source and AR invoice numbers
+
+CREATE TABLE journal_line (
+    account_id int references account(id)  not null,
+    journal_id int references journal_entry(id) not null,
+    amount numeric not null check (amount <> 'NaN'),
+    cleared bool not null default false,
+    reconciliation_report int references cr_report(id),
+    project_id int references project(id),
+    department_id int references department(id) not null,
+    line_type text references account_link_description,
+    id serial, 
+    primary key (id)
+);
+
+COMMENT ON TABLE journal_line IS
+$$ Replaces acc_trans as the main account transaction line table.$$;
+
+COMMENT ON COLUMN journal_line.cleared IS
+$$ Still needed both for legacy data and in case reconciliation data must 
+eventually be purged.$$;
+
+CREATE TABLE eca_invoice AS (
+    order_id int references orders(id),
+    journal_id int references journal(id),
+    on_hold bool default false,
+    reverse bool default false,
+    credit_id int references entity_credit_account(id) not null,
+    due date not null,
+    language_code char(6) references language(code), 
+    force_closed bool not null default false, 
+    PRIMARY KEY  (journal_id)
+);
+
+COMMENT ON TABLE eca_invoice IS 
+$$ Replaces the rest of the ar and ap tables.
+Also tracks payments and receipts. $$;
+
+COMMENT ON COLUMN eca_invoice.order_id IS 
+$$ Link to order it was created from$$;
+
+COMMENT ON COLUMN eca_invoice.on_hold IS 
+$$ On hold invoices can not be paid, and overpayments that are on hold cannot 
+be used to pay invoices.$$;
+
+COMMENT ON COLUMN eca_invoice.reverse IS
+$$ When this is set to true, the invoice is shown with opposite normal numbers,
+i.e. negatives appear as positives, and positives appear as negatives.$$;
+
+COMMENT ON COLUMN eca_invoice.force_closed IS
+$$ When this is set to true, the invoice does not show up on outstanding reports
+and cannot be paid.  Overpayments where this is set to true do not appear on 
+outstanding reports and cannot be paid.$$;
+
+
+
 --
 CREATE TABLE gifi (
   accno text PRIMARY KEY,
@@ -1036,7 +1170,7 @@ $$ Note that this field is largely used for sorting the vouchers.  A given batch
 -- Although I am moving the primary key to voucher.id for now, as of 1.4, I 
 -- would expect trans_id to be primary key
 CREATE TABLE voucher (
-  trans_id int REFERENCES transactions(id) NOT NULL,
+  trans_id int REFERENCES journal_entry(id) NOT NULL,
   batch_id int references batch(id) not null,
   id serial PRIMARY KEY,
   batch_class int references batch_class(id) not null
@@ -1050,33 +1184,6 @@ voucher. $$;
 
 COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
 
-CREATE TABLE acc_trans (
-  trans_id int NOT NULL REFERENCES transactions(id),
-  chart_id int NOT NULL REFERENCES  account(id),
-  amount NUMERIC,
-  transdate date DEFAULT current_date,
-  source text,
-  cleared bool DEFAULT 'f',
-  fx_transaction bool DEFAULT 'f',
-  project_id int,
-  memo text,
-  invoice_id int,
-  approved bool default true,
-  cleared_on date,
-  reconciled_on date,
-  voucher_id int references voucher(id),
-  entry_id SERIAL PRIMARY KEY
-);
-
-COMMENT ON TABLE acc_trans IS
-$$This table stores line items for financial transactions.  Please note that
-payments in 1.3 are not full-fledged transactions.$$;
-
-COMMENT ON COLUMN acc_trans.source IS
-$$Document Source identifier for individual line items, usually used 
-for payments.$$;
-
-CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
 --
 CREATE TABLE parts (
   id serial PRIMARY KEY,
@@ -1094,9 +1201,9 @@ CREATE TABLE parts (
   assembly bool DEFAULT 'f',
   alternate bool DEFAULT 'f',
   rop numeric, 
-  inventory_accno_id int,
-  income_accno_id int,
-  expense_accno_id int,
+  inventory_accno_id int references account(id),
+  income_accno_id int references account(id),
+  expense_accno_id int references account(id),
   bin text,
   obsolete bool DEFAULT 'f',
   bom bool DEFAULT 'f',
@@ -1134,7 +1241,7 @@ CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber)
 WHERE obsolete is false;
 CREATE TABLE invoice (
   id serial PRIMARY KEY,
-  trans_id int REFERENCES transactions(id),
+  trans_id int REFERENCES journal_entry(id),
   parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,
@@ -1167,8 +1274,34 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 
 --
 
+CREATE TABLE payment_map (
+    line_id int references journal_line(line_id),
+    pays int references invoice(journal_id) not null,
+    primary key(line_id)
+);
+
+COMMENT ON TABLE payment_map IS $$ This maps the payment journal entry to the
+invoices it pays.  A couple notes here:
+1)  There is no requirement tht the payment "invoice" be linked to the same
+entity_credit_account as the paid invoice.  People can pay eachothers invoices
+if LedgerSMB supports this at an app level.
+2)  This now means that payments are first class transactions.$$;
 --
 
+
+CREATE TABLE journal_note (
+   internal_only bool not null default false,
+   primary key (id),
+   check(note_class = 5),
+   foreign key(ref_key) references journal_entry(id)
+);
+
+COMMENT ON TABLE journal_note IS
+$$ This stores notes attached to journal entries, including payments and
+invoices.$$;
+
+COMMENT ON COLUMN journal_note.internal_only IS
+$$ When set to true, does not show up in notes list for invoice templates$$;
 -- THe following credit accounts are used for inventory adjustments.
 INSERT INTO entity (id, name, entity_class, control_code,country_id) 
 values (0, 'Inventory Entity', 1, 'AUTO-01','232');
@@ -1203,173 +1336,6 @@ $$This is the id of the assembly the part is being mapped to.$$;
 COMMENT ON COLUMN assembly.parts_id IS
 $$ID of part that is a member of the assembly.$$;
 
-
---
-CREATE TABLE ar (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
-  invnumber text,
-  transdate date DEFAULT current_date,
-  entity_id int REFERENCES entity(id),
-  taxincluded bool,
-  amount NUMERIC,
-  netamount NUMERIC,
-  paid NUMERIC,
-  datepaid date,
-  duedate date,
-  invoice bool DEFAULT 'f',
-  shippingpoint text,
-  terms int2 DEFAULT 0,
-  notes text,
-  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
-      OR (amount IS NOT NULL AND curr IS NOT NULL)),
-  ordnumber text,
-  person_id integer references entity_employee(entity_id),
-  till varchar(20),
-  quonumber text,
-  intnotes text,
-  department_id int default 0,
-  shipvia text,
-  language_code varchar(6),
-  ponumber text,
-  on_hold bool default false,
-  reverse bool default false,
-  approved bool default true,
-  entity_credit_account int references entity_credit_account(id) not null,
-  force_closed bool,
-  description text,
-  unique(invnumber) -- probably a good idea as per Erik's request --CT
-);
-
-COMMENT ON TABLE ar IS
-$$ Summary/header information for AR transactions and sales invoices.
-Note that some constraints here are hard to enforce because we haven not gotten 
-to rewriting the relevant code here.$$;
-
-COMMENT ON COLUMN ar.invnumber IS
-$$ Text identifier for the invoice.  Must be unique.$$;
-
-COMMENT ON COLUMN ar.invoice IS
-$$ True if the transaction tracks goods/services purchase using the invoice
-table.  False otherwise.$$;
-
-COMMENT ON COLUMN ar.amount IS
-$$ This stores the total amount (including taxes) for the transaction.$$;
-
-COMMENT ON COLUMN ar.netamount IS
-$$ Total amount excluding taxes for the transaction.$$;
-
-COMMENT ON COLUMN ar.curr IS $$ 3 letters to identify the currency.$$;
-
-COMMENT ON COLUMN ar.ordnumber IS $$ Order Number$$;
-
-COMMENT ON COLUMN ar.ponumber is $$Purchase Order Number$$; 
-
-COMMENT ON COLUMN ar.person_id IS $$Person who created the transaction$$;
-
-COMMENT ON COLUMN ar.quonumber IS $$Quotation Number$$;
-
-COMMENT ON COLUMN ar.notes IS 
-$$These notes are displayed on the invoice when printed or emailed$$;
-
-COMMENT ON COLUMN ar.intnotes IS
-$$These notes are not displayed when the invoice is printed or emailed and
-may be updated without reposting hte invocie.$$;
-
-COMMENT ON COLUMN ar.reverse IS
-$$If true numbers are displayed after multiplying by -1$$;
-
-COMMENT ON COLUMN ar.approved IS
-$$Only show in financial reports if true.$$;
-
-COMMENT ON COLUMN ar.entity_credit_account IS
-$$ reference for the customer account used.$$;
-
-COMMENT ON COLUMN ar.force_closed IS
-$$ Not exposed to the UI, but can be set to prevent an invoice from showing up
-for payment or in outstanding reports.$$;
-
---
-CREATE TABLE ap (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
-  invnumber text,
-  transdate date DEFAULT current_date,
-  entity_id int REFERENCES entity(id),
-  taxincluded bool DEFAULT 'f',
-  amount NUMERIC,
-  netamount NUMERIC,
-  paid NUMERIC,
-  datepaid date,
-  duedate date,
-  invoice bool DEFAULT 'f',
-  ordnumber text,
-  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
-    OR (amount IS NOT NULL AND curr IS NOT NULL)) , -- This can be null, but shouldn't be.
-  notes text,
-  person_id integer references entity_employee(entity_id),
-  till varchar(20),
-  quonumber text,
-  intnotes text,
-  department_id int DEFAULT 0,
-  shipvia text,
-  language_code varchar(6),
-  ponumber text,
-  shippingpoint text,
-  on_hold bool default false,
-  approved bool default true,
-  reverse bool default false,
-  terms int2 DEFAULT 0,
-  description text,
-  force_closed bool,
-  entity_credit_account int references entity_credit_account(id) NOT NULL
-);
-
-COMMENT ON TABLE ap IS
-$$ Summary/header information for AP transactions and vendor invoices.
-Note that some constraints here are hard to enforce because we haven not gotten 
-to rewriting the relevant code here.$$;
-
-COMMENT ON COLUMN ap.invnumber IS
-$$ Text identifier for the invoice.  Must be unique.$$;
-
-COMMENT ON COLUMN ap.invoice IS
-$$ True if the transaction tracks goods/services purchase using the invoice
-table.  False otherwise.$$;
-
-COMMENT ON COLUMN ap.amount IS
-$$ This stores the total amount (including taxes) for the transaction.$$;
-
-COMMENT ON COLUMN ap.netamount IS
-$$ Total amount excluding taxes for the transaction.$$;
-
-COMMENT ON COLUMN ap.curr IS $$ 3 letters to identify the currency.$$;
-
-COMMENT ON COLUMN ap.ordnumber IS $$ Order Number$$;
-
-COMMENT ON COLUMN ap.ponumber is $$Purchase Order Number$$; 
-
-COMMENT ON COLUMN ap.person_id IS $$Person who created the transaction$$;
-
-COMMENT ON COLUMN ap.quonumber IS $$Quotation Number$$;
-
-COMMENT ON COLUMN ap.notes IS 
-$$These notes are displayed on the invoice when printed or emailed$$;
-
-COMMENT ON COLUMN ap.intnotes IS
-$$These notes are not displayed when the invoice is printed or emailed and
-may be updated without reposting hte invocie.$$;
-
-COMMENT ON COLUMN ap.reverse IS
-$$If true numbers are displayed after multiplying by -1$$;
-
-COMMENT ON COLUMN ap.approved IS
-$$Only show in financial reports if true.$$;
-
-COMMENT ON COLUMN ap.entity_credit_account IS
-$$ reference for the vendor account used.$$;
-
-COMMENT ON COLUMN ap.force_closed IS
-$$ Not exposed to the UI, but can be set to prevent an invoice from showing up
-for payment or in outstanding reports.$$;
 
 --
 CREATE TABLE taxmodule (
@@ -1609,13 +1575,13 @@ $$ This table contains inventory mappings to warehouses, not general inventory
 management data.$$;
 --
 CREATE TABLE yearend (
-  trans_id int PRIMARY KEY REFERENCES gl(id),
+  trans_id int PRIMARY KEY REFERENCES journal_entry(id),
   reversed bool default false,
   transdate date
 );
 
 COMMENT ON TABLE yearend IS
-$$ An extension to the gl table to track transactionsactions which close out 
+$$ An extension to the journal_entry table to track transactionsactions which close out 
 the books at yearend.$$;
 --
 CREATE TABLE partsvendor (
@@ -1825,40 +1791,6 @@ CREATE TABLE jcitems (
 COMMENT ON TABLE jcitems IS $$ Time and materials cards. 
 Materials cards not implemented.$$;
 
-CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
-$$
-BEGIN
-	IF tg_op = 'INSERT' THEN
-		INSERT INTO transactions (id, table_name) 
-		VALUES (new.id, TG_RELNAME);
-	ELSEIF tg_op = 'UPDATE' THEN
-		IF new.id = old.id THEN
-			return new;
-		ELSE
-			UPDATE transactions SET id = new.id WHERE id = old.id;
-		END IF;
-	ELSE 
-		DELETE FROM transactions WHERE id = old.id;
-	END IF;
-	RETURN new;
-END;
-$$ LANGUAGE PLPGSQL;
-
-COMMENT ON FUNCTION track_global_sequence() is
-$$ This trigger is used to track the id sequence entries across the 
-transactions table, and with the ar, ap, and gl tables.  This is necessary 
-because these have not been properly refactored yet.
-$$;
-
-CREATE TRIGGER ap_track_global_sequence BEFORE INSERT OR UPDATE ON ap
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
-
-CREATE TRIGGER ar_track_global_sequence BEFORE INSERT OR UPDATE ON ar
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
-
-CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
-
 CREATE TABLE custom_table_catalog (
 table_id SERIAL PRIMARY KEY,
 extends TEXT,
@@ -1884,12 +1816,12 @@ INSERT INTO taxmodule (
 );
 
 CREATE TABLE ac_tax_form (
-        entry_id int references acc_trans(entry_id) primary key,
+        entry_id int references journal_line(id) primary key,
         reportable bool
 );
 
 COMMENT ON TABLE ac_tax_form IS
-$$ Mapping acc_trans to country_tax_form for reporting purposes.$$;
+$$ Mapping journal_line to country_tax_form for reporting purposes.$$;
 
 CREATE TABLE invoice_tax_form (
         invoice_id int references invoice(id) primary key,
@@ -1931,32 +1863,9 @@ COMMENT ON FUNCTION gl_audit_trail_append() IS
 $$ This provides centralized support for insertions into audittrail.
 $$;
 
-CREATE TRIGGER gl_audit_trail AFTER insert or update or delete ON gl
+CREATE TRIGGER je_audit_trail AFTER insert or update or delete ON journal_entry
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 
-CREATE TRIGGER ar_audit_trail AFTER insert or update or delete ON ar
-FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
-
-CREATE TRIGGER ap_audit_trail AFTER insert or update or delete ON ap
-FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
-create index acc_trans_trans_id_key on acc_trans (trans_id);
-create index acc_trans_chart_id_key on acc_trans (chart_id);
-create index acc_trans_transdate_key on acc_trans (transdate);
-create index acc_trans_source_key on acc_trans (lower(source));
---
-create index ap_id_key on ap (id);
-create index ap_transdate_key on ap (transdate);
-create index ap_invnumber_key on ap (invnumber);
-create index ap_ordnumber_key on ap (ordnumber);
-create index ap_quonumber_key on ap (quonumber);
-create index ap_curr_idz on ap(curr);
---
-create index ar_id_key on ar (id);
-create index ar_transdate_key on ar (transdate);
-create index ar_ordnumber_key on ar (ordnumber);
-create index ar_quonumber_key on ar (quonumber);
-create index ar_curr_idz on ar(curr);
---
 create index assembly_id_key on assembly (id);
 --
 create index customer_customer_id_key on customertax (customer_id);
@@ -1964,11 +1873,6 @@ create index customer_customer_id_key on customertax (customer_id);
 create index exchangerate_ct_key on exchangerate (curr, transdate);
 --
 create unique index gifi_accno_key on gifi (accno);
---
-create index gl_id_key on gl (id);
-create index gl_transdate_key on gl (transdate);
-create index gl_reference_key on gl (reference);
-create index gl_description_key on gl (lower(description));
 --
 create index invoice_id_key on invoice (id);
 create index invoice_trans_id_key on invoice (trans_id);
@@ -2022,93 +1926,6 @@ end;
 ' language 'plpgsql';
 -- end function
 --
-CREATE TRIGGER del_yearend AFTER DELETE ON gl FOR EACH ROW EXECUTE PROCEDURE del_yearend();
--- end trigger
---
-CREATE FUNCTION del_department() RETURNS TRIGGER AS '
-begin
-  delete from dpt_trans where trans_id = old.id;
-  return NULL;
-end;
-' language 'plpgsql';
--- end function
---
-CREATE TRIGGER del_department AFTER DELETE ON ar FOR EACH ROW EXECUTE PROCEDURE del_department();
--- end trigger
-CREATE TRIGGER del_department AFTER DELETE ON ap FOR EACH ROW EXECUTE PROCEDURE del_department();
--- end trigger
-CREATE TRIGGER del_department AFTER DELETE ON gl FOR EACH ROW EXECUTE PROCEDURE del_department();
--- end trigger
-CREATE TRIGGER del_department AFTER DELETE ON oe FOR EACH ROW EXECUTE PROCEDURE del_department();
--- end trigger
---
-CREATE FUNCTION del_exchangerate() RETURNS TRIGGER AS '
-
-declare
-  t_transdate date;
-  t_curr char(3);
-  t_id int;
-  d_curr text;
-
-begin
-
-  select into d_curr substr(value,1,3) from defaults where setting_key = ''curr'';
-  
-  if TG_RELNAME = ''ar'' then
-    select into t_curr, t_transdate curr, transdate from ar where id = old.id;
-  end if;
-  if TG_RELNAME = ''ap'' then
-    select into t_curr, t_transdate curr, transdate from ap where id = old.id;
-  end if;
-  if TG_RELNAME = ''oe'' then
-    select into t_curr, t_transdate curr, transdate from oe where id = old.id;
-  end if;
-
-  if d_curr != t_curr then
-
-    select into t_id a.id from acc_trans ac
-    join ar a on (a.id = ac.trans_id)
-    where a.curr = t_curr
-    and ac.transdate = t_transdate
-
-    except select a.id from ar a where a.id = old.id
-    
-    union
-    
-    select a.id from acc_trans ac
-    join ap a on (a.id = ac.trans_id)
-    where a.curr = t_curr
-    and ac.transdate = t_transdate
-    
-    except select a.id from ap a where a.id = old.id
-    
-    union
-    
-    select o.id from oe o
-    where o.curr = t_curr
-    and o.transdate = t_transdate
-    
-    except select o.id from oe o where o.id = old.id;
-
-    if not found then
-      delete from exchangerate where curr = t_curr and transdate = t_transdate;
-    end if;
-  end if;
-return old;
-
-end;
-' language 'plpgsql';
--- end function
---
-CREATE TRIGGER del_exchangerate BEFORE DELETE ON ar FOR EACH ROW EXECUTE PROCEDURE del_exchangerate();
--- end trigger
---
-CREATE TRIGGER del_exchangerate BEFORE DELETE ON ap FOR EACH ROW EXECUTE PROCEDURE del_exchangerate();
--- end trigger
---
-CREATE TRIGGER del_exchangerate BEFORE DELETE ON oe FOR EACH ROW EXECUTE PROCEDURE del_exchangerate();
--- end trigger
---
 CREATE FUNCTION check_department() RETURNS TRIGGER AS '
 
 declare
@@ -2133,13 +1950,6 @@ return NULL;
 end;
 ' language 'plpgsql';
 -- end function
---
-CREATE TRIGGER check_department AFTER INSERT OR UPDATE ON ar FOR EACH ROW EXECUTE PROCEDURE check_department();
--- end trigger
-CREATE TRIGGER check_department AFTER INSERT OR UPDATE ON ap FOR EACH ROW EXECUTE PROCEDURE check_department();
--- end trigger
-CREATE TRIGGER check_department AFTER INSERT OR UPDATE ON gl FOR EACH ROW EXECUTE PROCEDURE check_department();
--- end trigger
 CREATE TRIGGER check_department AFTER INSERT OR UPDATE ON oe FOR EACH ROW EXECUTE PROCEDURE check_department();
 -- end trigger
 --
@@ -2152,13 +1962,7 @@ BEGIN
 END;
 ' language 'plpgsql';
 --end function
-CREATE TRIGGER del_recurring AFTER DELETE ON ar FOR EACH ROW EXECUTE PROCEDURE del_recurring();
--- end trigger
-CREATE TRIGGER del_recurring AFTER DELETE ON ap FOR EACH ROW EXECUTE PROCEDURE del_recurring();
--- end trigger
-CREATE TRIGGER del_recurring AFTER DELETE ON gl FOR EACH ROW EXECUTE PROCEDURE del_recurring();
--- end trigger
---
+
 CREATE FUNCTION avgcost(int) RETURNS FLOAT AS '
 
 DECLARE
@@ -3299,68 +3103,9 @@ $$ Returns an n dimensional array.
 Example: SELECT as_array(ARRAY[id::text, class]) from contact_class
 $$;
 
-CREATE INDEX ap_approved_idx ON ap(approved);
-CREATE INDEX ar_approved_idx ON ar(approved);
-CREATE INDEX gl_approved_idx ON gl(approved);
-
-CREATE TABLE pending_job (
-	id serial not null unique,
-	batch_class int references batch_class(id),
-	entered_by text REFERENCES users(username)
-		not null default SESSION_USER,
-	entered_at timestamp default now(),
-	batch_id int references batch(id),
-	completed_at timestamp,
-	success bool,
-	error_condition text,
-	CHECK (completed_at IS NULL OR success IS NOT NULL),
-	CHECK (success IS NOT FALSE OR error_condition IS NOT NULL)
-);
-COMMENT ON table pending_job IS
-$$ Purpose:  This table stores pending/queued jobs to be processed async.
-Additionally, this functions as a log of all such processing for purposes of 
-internal audits, performance tuning, and the like. $$;
-
-CREATE INDEX pending_job_batch_id_pending ON pending_job(batch_id) where success IS NULL;
-
-CREATE INDEX pending_job_entered_by ON pending_job(entered_by);
-
-CREATE OR REPLACE FUNCTION trigger_pending_job() RETURNS TRIGGER
-AS
-$$
-BEGIN
-  IF NEW.success IS NULL THEN
-    NOTIFY job_entered;
-  END IF;
-  RETURN NEW;
-END;
-$$ LANGUAGE PLPGSQL;
-
-CREATE TRIGGER notify_pending_jobs BEFORE INSERT OR UPDATE ON pending_job
-FOR EACH ROW EXECUTE PROCEDURE trigger_pending_job();
-
-CREATE TABLE payments_queue (
-	transactions numeric[], 
-	batch_id int, 
-	source text, 
-	total numeric,
-	ar_ap_accno text, 
-	cash_accno text, 
-	payment_date date, 
-	account_class int,
-	job_id int references pending_job(id) 
-		DEFAULT currval('pending_job_id_seq')
-);
-
-CREATE INDEX payments_queue_job_id ON payments_queue(job_id);
-
-COMMENT ON table payments_queue IS 
-$$ This is a holding table and hence not a candidate for normalization.
-Jobs should be deleted from this table when they complete successfully.$$;
-
 CREATE TABLE new_shipto (
 	id serial primary key,
-	trans_id int references transactions(id),
+	trans_id int references journal_entry(id),
 	oe_id int references oe(id),
 	location_id int references location(id)
 );
@@ -3371,7 +3116,7 @@ $$ Tracks ship_to information for orders and invoices.$$;
 CREATE TABLE tax_extended (
     tax_basis numeric,
     rate numeric,
-    entry_id int primary key references acc_trans(entry_id)
+    entry_id int primary key references journal_line(id)
 );
 
 COMMENT ON TABLE tax_extended IS 
@@ -3470,7 +3215,7 @@ CREATE TABLE asset_item (
         start_depreciation date not null,
 	location_id int references warehouse(id),
 	department_id int references department(id),
-	invoice_id int references ap(id),
+	invoice_id int references invoice(journal_id),
 	asset_account_id int references account(id),
 	dep_account_id int references account(id),
 	exp_account_id int references account(id),
@@ -3514,7 +3259,7 @@ others may be added.  Please correspond on the list before adding more types.$$;
 CREATE TABLE asset_report (
 	id serial primary key,
 	report_date date,
-	gl_id bigint references gl(id) unique,
+	gl_id bigint references journal_entry(id) unique,
 	asset_class bigint references asset_class(id),
 	report_class int references asset_report_class(id),
 	entered_by bigint not null references entity(id),
@@ -4290,7 +4035,7 @@ CREATE TABLE file_transaction (
        check (file_class = 1),
        unique(id),
        primary key (ref_key, file_name, file_class),
-       foreign key (ref_key) REFERENCES transactions(id)
+       foreign key (ref_key) REFERENCES journal_entry(id)
 ) inherits (file_base);
 
 COMMENT ON TABLE file_transaction IS
@@ -4352,7 +4097,7 @@ VALUES (new.file_id, 1, new.ref_key, 2,
        coalesce(new.attached_at, now()));
 
 COMMENT ON TABLE file_tx_to_order IS 
-$$ Secondary links from transactions to orders.$$;
+$$ Secondary links from journal entries to orders.$$;
 
 CREATE TABLE file_order_to_order (
        PRIMARY KEY(file_id, source_class, dest_class, ref_key),
@@ -4378,7 +4123,7 @@ VALUES (new.file_id, 2, new.ref_key, 2,
 CREATE TABLE file_order_to_tx (
        PRIMARY KEY(file_id, source_class, dest_class, ref_key),
        foreign key (file_id) references file_order(id),
-       foreign key (ref_key) references transactions(id),
+       foreign key (ref_key) references journal_entry(id),
        check (source_class = 2),
        check (dest_class = 1)
 ) INHERITS (file_secondary_attachment);
@@ -4401,57 +4146,11 @@ CREATE TABLE file_view_catalog (
        view_name text not null unique
 );
 
-CREATE TABLE cr_report (
-    id bigserial primary key not null,
-    chart_id int not null references account(id),
-    their_total numeric not null,
-    approved boolean not null default 'f',
-    submitted boolean not null default 'f',
-    end_date date not null default now(),
-    updated timestamp not null default now(),
-    entered_by int not null default person__get_my_entity_id() references entity(id),
-    entered_username text not null default SESSION_USER,
-    deleted boolean not null default 'f'::boolean,
-    deleted_by int references entity(id),
-    approved_by int references entity(id),
-    approved_username text,
-    CHECK (deleted is not true or approved is not true)
-);
+CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
+$$
+	SELECT entity_id from users where username = SESSION_USER;
+$$ LANGUAGE SQL;
 
-COMMENT ON TABLE cr_report IS
-$$This table holds header data for cash reports.$$;
-
-CREATE TABLE cr_report_line (
-    id bigserial primary key not null,
-    report_id int NOT NULL references cr_report(id),
-    scn text, -- SCN is the check #
-    their_balance numeric,
-    our_balance numeric,
-    errorcode INT,
-    "user" int references entity(id) not null, 
-    clear_time date,
-    insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
-    trans_type text, 
-    post_date date,
-    ledger_id int REFERENCES acc_trans(entry_id),
-    voucher_id int REFERENCES voucher(id),
-    overlook boolean not null default 'f',
-    cleared boolean not null default 'f'
-);
-
-COMMENT ON TABLE cr_report_line IS
-$$ This stores line item data on transaction lines and whether they are 
-cleared.$$;
-
-COMMENT ON COLUMN cr_report_line.scn IS
-$$ This is the check number.  Maps to acc_trans.source $$;
-
-CREATE TABLE cr_coa_to_account (
-    chart_id int not null references account(id),
-    account text not null
-);
-
-COMMENT ON TABLE cr_coa_to_account IS
-$$ Provides name mapping for the cash reconciliation screen.$$;
-
+COMMENT ON FUNCTION person__get_my_entity_id() IS
+$$ Returns the entity_id of the current, logged in user.$$;
 commit;
