@@ -89,8 +89,17 @@ Ian Goodacre [email omitted] has provided numerous bugfixes.
 Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
 bugfixes.
 
-John Locke <john @ freelock.com> Contributed a number of bug fixes and provided
-extensive feedback and assistance.
+John Locke (Freelock Consulting) <john @ freelock.com> Contributed a number of 
+bug fixes and provided extensive feedback and assistance.
+
+Lacey Powers (Command Prompt) has contributed code, and helped reduce the number
+of warnings coming from the inherited codebase.
+
+Alexey Klyukin (Command Prompt) has contributed code particularly to end of 
+year routines, and helped address scalability issues.
+
+Andrew Sullivan (formerly with Command Prompt) has addressed scalability in the 
+batch payment system.
 
 Original Authors of SQL-Ledger:
 ===================================
