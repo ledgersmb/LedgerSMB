@@ -596,7 +596,7 @@ sub save {
 		       serialnumber = ?,
 		       checkedin = ?::timestamp,
 		       checkedout = ?::timestamp,
-		       employee_id = ?,
+		       person_id = ?,
 		       notes = ?
 		 WHERE id = ?|;
     $sth = $dbh->prepare($query);
