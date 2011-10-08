@@ -1065,6 +1065,7 @@ CREATE TABLE eca_invoice (
     due date not null,
     language_code char(6) references language(code), 
     force_closed bool not null default false, 
+    order_number text,
     PRIMARY KEY  (journal_id)
 );
 
@@ -1088,7 +1089,10 @@ $$ When this is set to true, the invoice does not show up on outstanding reports
 and cannot be paid.  Overpayments where this is set to true do not appear on 
 outstanding reports and cannot be paid.$$;
 
-
+COMMENT ON COLUMN eca_invoice.order_number IS
+$$ This is the order number of the other party.  So for a sales invoice, this 
+would be a purchase order, and for a vendor invoice, this would be a sales 
+order.$$;
 
 --
 CREATE TABLE gifi (
