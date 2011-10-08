@@ -113,6 +113,9 @@ SQL-Ledger uses custom routines for processing templates.  We use
 TemplateToolkit. As we move forward, the format of data sent to the templates
 will change accordingly.
 
+We have also dispensed with the old pagebreak functionality, moving instead to 
+the longtable package in LaTeX.
+
 5:  Roadmap
 This project has no defined roadmap but rather a set of statements and 
 objectives contained in the documentation manager and trackers of sourceforge.
@@ -126,6 +129,15 @@ they have outgrown the software.
 
 * Focus on Small to Midsize Businesses:  LSMB's core market will remain in the
 small to midsize market.
+
+The above being said, we have a set of targets for the next major release 
+(1.4.0).  There is no guarantee we will reach these targets but we have them
+anyway.  These include:
+
+* Integrated budgetting module
+* Rewritten AR/AP/GL handling
+* Rewritten reports
+* Rewritten invoices and orders
 
 6:  Get Involved
 Contributors should start by joining the LedgerSMB users and devel lists.  Code
