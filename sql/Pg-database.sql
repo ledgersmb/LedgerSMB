@@ -7,6 +7,21 @@ $$ SELECT -1;$$ LANGUAGE SQL;
 
 CREATE SEQUENCE id;
 -- As of 1.3 there is no central db anymore. --CT
+CREATE TABLE department (
+  id serial PRIMARY KEY,
+  description text,
+  role char(1) default 'P'
+);
+
+COMMENT ON COLUMN department.role IS $$P for Profit Center, C for Cost Center$$;
+--
+CREATE TABLE language (
+  code varchar(6) PRIMARY KEY,
+  description text
+);
+
+COMMENT ON TABLE language IS
+$$ Languages for manual translations and so forth.$$;
 
 CREATE OR REPLACE FUNCTION concat_colon(TEXT, TEXT) returns TEXT as
 $$
@@ -947,7 +962,6 @@ CREATE TABLE cr_report_line (
     trans_type text, 
     post_date date,
     ledger_id int,
-    voucher_id int,
     overlook boolean not null default 'f',
     cleared boolean not null default 'f'
 );
@@ -993,6 +1007,7 @@ CREATE TABLE journal_entry (
     check (is_template is false or approved is false)
 );
 
+
 COMMENT ON TABLE journal_entry IS $$
 This tale records the header information for each transaction.  It replaces 
 parts of the following tables:  acc_trans, ar, ap, gl, transactions.
@@ -1020,17 +1035,19 @@ CREATE UNIQUE INDEX je_unique_source ON journal_entry (journal, reference)
 WHERE journal IN (1, 2); -- cannot reuse GL source and AR invoice numbers
 
 CREATE TABLE journal_line (
+    id serial, 
     account_id int references account(id)  not null,
     journal_id int references journal_entry(id) not null,
     amount numeric not null check (amount <> 'NaN'),
     cleared bool not null default false,
     reconciliation_report int references cr_report(id),
-    project_id int references project(id),
+    project_id int,
     department_id int references department(id) not null,
     line_type text references account_link_description,
-    id serial, 
     primary key (id)
 );
+ALTER TABLE cr_report_line ADD FOREIGN KEY (ledger_id) 
+REFERENCES journal_line(id);
 
 COMMENT ON TABLE journal_line IS
 $$ Replaces acc_trans as the main account transaction line table.$$;
@@ -1039,9 +1056,9 @@ COMMENT ON COLUMN journal_line.cleared IS
 $$ Still needed both for legacy data and in case reconciliation data must 
 eventually be purged.$$;
 
-CREATE TABLE eca_invoice AS (
-    order_id int references orders(id),
-    journal_id int references journal(id),
+CREATE TABLE eca_invoice (
+     order_id int, -- TODO reference inventory_order when added
+    journal_id int references journal_entry(id),
     on_hold bool default false,
     reverse bool default false,
     credit_id int references entity_credit_account(id) not null,
@@ -1275,8 +1292,8 @@ ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
 --
 
 CREATE TABLE payment_map (
-    line_id int references journal_line(line_id),
-    pays int references invoice(journal_id) not null,
+    line_id int references journal_line(id),
+    pays int references eca_invoice(journal_id) not null,
     primary key(line_id)
 );
 
@@ -1294,7 +1311,7 @@ CREATE TABLE journal_note (
    primary key (id),
    check(note_class = 5),
    foreign key(ref_key) references journal_entry(id)
-);
+) INHERITS (note);
 
 COMMENT ON TABLE journal_note IS
 $$ This stores notes attached to journal entries, including payments and
@@ -1494,6 +1511,8 @@ CREATE TABLE project (
   credit_id int references entity_credit_account(id)
 );
 
+ALTER TABLE journal_line ADD FOREIGN KEY (project_id) REFERENCES project(id);
+
 COMMENT ON COLUMN project.parts_id IS
 $$ Job costing/manufacturing here not implemented.$$;
 --
@@ -1516,14 +1535,6 @@ CREATE TABLE status (
 COMMENT ON TABLE status IS
 $$ Whether AR/AP transactions and invoices have been emailed and/or printed $$;
 
---
-CREATE TABLE department (
-  id serial PRIMARY KEY,
-  description text,
-  role char(1) default 'P'
-);
-
-COMMENT ON COLUMN department.role IS $$P for Profit Center, C for Cost Center$$;
 --
 -- department transaction table
 CREATE TABLE dpt_trans (
@@ -1614,13 +1625,6 @@ COMMENT ON TABLE partscustomer IS
 $$ Tracks per-customer pricing.  Discounts can be offered for periods of time
 and for pricegroups as well as per customer$$;
 --
-CREATE TABLE language (
-  code varchar(6) PRIMARY KEY,
-  description text
-);
-
-COMMENT ON TABLE language IS
-$$ Languages for manual translations and so forth.$$;
 
 INSERT INTO language (code, description)
 VALUES ('ar_EG', 'Arabic (Egypt)'),
@@ -3215,7 +3219,7 @@ CREATE TABLE asset_item (
         start_depreciation date not null,
 	location_id int references warehouse(id),
 	department_id int references department(id),
-	invoice_id int references invoice(journal_id),
+	invoice_id int references eca_invoice(journal_id),
 	asset_account_id int references account(id),
 	dep_account_id int references account(id),
 	exp_account_id int references account(id),
