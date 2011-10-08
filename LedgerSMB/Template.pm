@@ -259,7 +259,7 @@ sub render {
 	} else {
 		$cleanvars = $format->can('preprocess')->($vars);
 	}
-
+        $cleanvars->{escape} = sub { return $format->escape(@_)};
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
 		$cleanvars->{text} = sub { return $self->escape($self->{locale}->text(@_))};
 	} 

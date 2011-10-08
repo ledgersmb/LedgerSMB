@@ -174,8 +174,6 @@ sub print_transaction {
           $form->{"projectnumber_$i"};
         $form->{tempdescription} = $form->{"description_$i"};
 
-        $form->format_string(
-            qw(tempaccno tempaccount tempprojectnumber tempdescription));
 
         push( @{ $form->{accno} },         $form->{tempaccno} );
         push( @{ $form->{account} },       $form->{tempaccount} );
