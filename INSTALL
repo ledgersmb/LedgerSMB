@@ -234,6 +234,11 @@ upgrade script at http://localhost/ledgersmb/setup.pl.  This is very different
 from the approaches taken by LedgerSMB 1.2.x and earlier and SQL-Ledger, but
 rather forms a wizard to walk you through the process.
 
+Please note that the setup.pl file assumes that LedgerSMB is already configured 
+to be able to access the database and locate the relevant PostgreSQL contrib 
+scripts.  In particular, you must have the  contrib_dir directive set to point
+to those scripts properly in your ledgersmb.conf before you begin.
+
 An alternative method is the 'prepare-company-database.sh' script contributed by
 Erik Huelsmann.  This script can be useful in creating and populating databases
 from the command line and it offers a reference implementation written in BASH
