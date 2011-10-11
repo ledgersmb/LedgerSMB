@@ -879,6 +879,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
                                 ]
                    };
     print_select($form, $formname);
+    print_select($form, $printops->{lang});
     print_select($form, $printops->{format});
     print_select($form, $printops->{media});
     print qq|

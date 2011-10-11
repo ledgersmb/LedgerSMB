@@ -183,7 +183,6 @@ sub new {
 		throw Error::Simple "Invalid format";
 	}
 	if (!$self->{include_path}){
-## SC: XXX hardcoding due to config migration, will need adjustment
 		$self->{include_path} = $self->{'myconfig'}->{'templates'};
 		$self->{include_path} ||= 'templates/demo';
 		if (defined $self->{language}){
@@ -193,7 +192,9 @@ sub new {
 			}
 			$self->{include_path} = "$self->{'include_path'}"
 					."/$self->{language}"
-					.";$self->{'include_path'}"
+					.";$self->{'include_path'}";
+                        $self->{locale} 
+                             = LedgerSMB::Locale->get_handle($self->{language});
 		}
 	}
 

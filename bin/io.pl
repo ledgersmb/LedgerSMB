@@ -1843,6 +1843,7 @@ sub print_form {
         user => \%myconfig, 
         locale => $locale,
         template => $form->{'formname'},
+        language => $form->{language_code},
         format => uc $form->{format},
         method => $form->{media},
         output_options => \%output_options,
