@@ -136,8 +136,7 @@ sub process {
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
-                DEBUG => 1,
-	#	DEBUG => ($parent->{debug})? 'dirs': undef,
+		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template::Latex->error(); 
 	if (not $template->process(
