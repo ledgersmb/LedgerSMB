@@ -83,8 +83,12 @@ sub call_script {
 
   try {        
     $request->{script} = $script;
-    eval { require "scripts/$script" } 
-      || $request->error($locale->text('Unable to open script') . ": scripts/$script : $!");
+    my $scriptmod = "LedgerSMB::Scripts::$script";
+    $scriptmod =~ s/\.pl$//;
+    eval { require $scriptmod; } 
+      || $request->error($locale->text('Unable to open script') . 
+                          ": $scriptmod : $!"
+          );
     $script =~ s/\.pl$//;
     $script = "LedgerSMB::Scripts::$script";
     $request->{_script_handle} = $script;
