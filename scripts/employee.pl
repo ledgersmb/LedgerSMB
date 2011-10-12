@@ -234,8 +234,9 @@ sub save {
                              procname => 'setting_increment', 
                              args     => ['employeenumber']
                            );
-        ($employee->{employee_number}) = values %$ref;
+        ($employee->{employeenumber}) = values %$ref;
     }
+    $employee->{employee_number}=$employee->{employeenumber};
     $employee->save();
     _render_main_screen($employee);
 }

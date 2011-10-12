@@ -90,6 +90,11 @@ END ?>
 		name = "form_id"
 		value = form_id
 	} ?>
+<?lsmb PROCESS input element_data = {
+                type = "hidden"
+                name = "entity_id"
+               value = entity_id
+} ?>	
 <div class="input" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
 <div class="input_group">
 <!-- TODO:  Add Saluatation -->
@@ -158,8 +163,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Employee Number')
-	value = employee_number
-	name = "employee_number"
+	value = employeenumber
+	name = "employeenumber"
 	type = "text"
 	size = 20
 } # ' ?>
