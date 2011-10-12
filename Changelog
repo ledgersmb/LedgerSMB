@@ -100,7 +100,18 @@ Database:
 * Redesigned database schema for reconciliation (Aurynn and Chris T)
 * Redesigned database schema for payments (David M)
 
-------------
+Changelog for 1.2 Series
+Released 2007-04-04
+Currently supported, through at least 2012-03-01
+
+Changelog for 1.2.25
+* Corrected sql injection issue (Chris T)
+
+Changelog for 1.2.24
+* Corrected (non-exploitable) SQL injection issue in custom field management
+stored procs.  Chris T
+* Corrected issues running LedgerSMB with SuExec.  (Matt S Trout)
+* Corrected filenamme bug in batch printing module (Chris T)
 
 Changelog for 1.2.23
 * Fix for sales tax incorrect on sales/purchase order screen
@@ -424,6 +435,11 @@ Other:
 * ledger-smb.conf is now an ini file (Seneca)
 * Experimental scripting wrapper in utils/cli (Chris T)
 
+Changelog for 1.1 Series
+Released 2006-09-20
+Unsupported due to major security oversights in inherited code corrected in
+1.2 series
+
 Changelog for LedgerSMB 1.1.1
 
 * Fixed problem with parts_short trigger not being created
@@ -463,6 +479,10 @@ Usability
 
 Changelog for LedgerSMB v 1.0.0p1
 * Fixed directory transversal/arbitrary code execution vulnerability.
+
+Changelog for LedgerSMB 1.0 series
+Released 2006-09-06
+Unsupported for reasons of age and security flaws in inherited code
 
 Changelog for LedgerSMB v 1.0.0
 
