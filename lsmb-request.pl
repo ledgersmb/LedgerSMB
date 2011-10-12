@@ -83,9 +83,11 @@ sub call_script {
 
   try {        
     $request->{script} = $script;
-    my $scriptmod = "LedgerSMB::Scripts::$script";
+    my $scriptmod = "$script";
     $scriptmod =~ s/\.pl$//;
-    eval { require $scriptmod; } 
+    my $eval_string = "require LedgerSMB::Scripts::$scriptmod;";
+    #eval { require LedgerSMB::Scripts::$scriptmod; } 
+    eval $eval_string
       || $request->error($locale->text('Unable to open script') . 
                           ": $scriptmod : $!"
           );
