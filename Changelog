@@ -1,3 +1,16 @@
+Changelog for 1.3 Series
+Initial Release:  Monday, Oct 12 2011
+Supported Presently
+
+Changelog for LedgerSMB 1.3.1
+* Language selection for invoice templates fixed (Chris T)
+* Fixed DB errors on project search (Chris T)
+* Fixed DB errors on timecard entry (Chris T)
+* Fixed DB errors on timecard searches (Chris T)
+* String standardization in employee/user management (Herman V)
+* Fixed Employee record duplicted on save (Herman V)
+* Fixed upgrade script not bringing in entity.name for employees (Chris T)
+
 Changelog for LedgerSMB 1.3.0
 
 Security:
