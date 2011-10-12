@@ -58,6 +58,19 @@ localepath = locale/po
 # program to use for file compression
 gzip       = gzip -S .gz
 
+# For latex and pdflatex, specify  full path.  These will be used to configure
+# Template::Latex so it can find them.  This can be used to specify programs
+# other than vanilla latex and pdflatex, such as the xe varieties of either one,
+# if unicode is required.
+#
+# If these are not set, the package defaults (set when you installed 
+# Template::Latex) will be used
+#
+# pdflatex = /usr/bin/pdflatex
+# latex    = /usr/bin/latex
+# dvips    = /usr/bin/dvips
+#
+
 [mail]
 ### How to send mail.  The sendmail command is used unless smtphost is set.
 sendmail   = /usr/bin/sendmail -t

@@ -368,8 +368,8 @@ SELECT * FROM lsmb12.pricegroup;
 
 ALTER TABLE lsmb12.employee ADD entity_id int;
 
-INSERT INTO entity(control_code, entity_class, country_id)
-select 'E-' || employeenumber, 3,
+INSERT INTO entity(control_code, entity_class, name, country_id)
+select 'E-' || employeenumber, 3, name,
         (select id from country where lower(short_name) = :default_country)
 FROM lsmb12.employee;
 

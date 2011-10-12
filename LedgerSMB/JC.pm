@@ -67,7 +67,8 @@ sub get_jcitems {
 			       pr.production, pr.completed, 
 			       pr.parts_id AS project
 			  FROM jcitems j
-			  JOIN employee e ON (e.id = j.employee_id)
+                          JOIN person ps ON (j.person_id = ps.id)
+			  JOIN entity e ON (e.id = ps.entity_id)
 			  JOIN parts p ON (p.id = j.parts_id)
 			  JOIN project pr ON (pr.id = j.project_id)
 			 WHERE j.id = ?|;
@@ -419,7 +420,7 @@ sub jcitems {
     if ( $form->{employee} ) {
         ( $null, $var ) = split /--/, $form->{employee};
         $var = $dbh->quote($var);
-        $where .= " AND j.employee_id = $var";
+        $where .= " AND j.person_id = (select id from person where entity_id = $var)";
     }
     if ( $form->{open} || $form->{closed} ) {
         unless ( $form->{open} && $form->{closed} ) {
@@ -481,13 +482,15 @@ sub jcitems {
 		       to_char(j.checkedin, 'D') AS weekday,
 		       p.partnumber,
 		       pr.projectnumber, pr.description AS projectdescription,
-		       e.employeenumber, e.name AS employee,
+		       ee.employeenumber, e.name AS employee,
 		       to_char(j.checkedin, 'WW') AS workweek, pr.parts_id,
 		       j.sellprice
 		  FROM jcitems j
+                  JOIN person pn ON pn.id = j.person_id
+                  JOIN entity e ON pn.entity_id = e.id
+                  JOIN entity_employee ee ON ee.entity_id = e.id
 		  JOIN parts p ON (p.id = j.parts_id)
 		  JOIN project pr ON (pr.id = j.project_id)
-		  JOIN employee e ON (e.entity_id = j.employee_id)
 		 WHERE $where
 		ORDER BY employee, employeenumber, $sortorder|;
 
@@ -554,7 +557,9 @@ sub save {
         my $uid = localtime;
         $uid .= "$$";
 
-        $query = qq|INSERT INTO jcitems (description) VALUES ('$uid')|;
+        $query = qq|INSERT INTO jcitems (description, person_id) 
+                    SELECT '$uid', id
+                      FROM person WHERE entity_id = person__get_my_entity_id()|;
         $dbh->do($query) || $form->dberror($query);
 
         $query = qq|SELECT id FROM jcitems WHERE description = '$uid'|;
@@ -596,7 +601,8 @@ sub save {
 		       serialnumber = ?,
 		       checkedin = ?::timestamp,
 		       checkedout = ?::timestamp,
-		       person_id = ?,
+		       person_id = (SELECT id FROM person 
+                                     WHERE entity_id = ?),
 		       notes = ?
 		 WHERE id = ?|;
     $sth = $dbh->prepare($query);

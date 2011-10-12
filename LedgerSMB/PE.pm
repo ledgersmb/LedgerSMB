@@ -200,7 +200,7 @@ sub get_project {
 			   SELECT pr.*, e.name AS customer
 			     FROM project pr
 			LEFT JOIN entity_credit_account c 
-                                  ON (c.id = pr.customer_id)
+                                  ON (c.id = pr.credit_id)
 			LEFT JOIN entity e ON (c.entity_id = e.id)
 			    WHERE pr.id = ?|;
         $sth = $dbh->prepare($query);
@@ -1832,7 +1832,7 @@ sub get_jcitems {
 # future, this will be more generaly constructed.
     $query = qq|
 		   SELECT j.id, j.description, j.qty - j.allocated AS qty,
-		          j.sellprice, j.parts_id, pr.customer_id, 
+		          j.sellprice, j.parts_id, pr.credit_id as customer_id, 
 		          j.project_id, j.checkedin::date AS transdate, 
 		          j.notes, c.name AS customer, pr.projectnumber, 
 		          p.partnumber
@@ -1840,7 +1840,7 @@ sub get_jcitems {
 		     JOIN project pr ON (pr.id = j.project_id)
 		     JOIN employee e ON (e.id = j.employee_id)
 		     JOIN parts p ON (p.id = j.parts_id)
-		LEFT JOIN entity_credit_account eca ON (c.id = pr.customer_id)
+		LEFT JOIN entity_credit_account eca ON (c.id = pr.credit_id)
                 LEFT JOIN company c ON eca.entity_id = c.entity_id
 		    WHERE pr.parts_id IS NULL
 		          AND j.allocated != j.qty $where
