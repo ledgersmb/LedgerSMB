@@ -67,8 +67,8 @@ sub get_jcitems {
 			       pr.production, pr.completed, 
 			       pr.parts_id AS project
 			  FROM jcitems j
-                          JOIN person ps ON (j.person_id = p.id)
-			  JOIN entity e ON (e.id = ps.employee_id)
+                          JOIN person ps ON (j.person_id = ps.id)
+			  JOIN entity e ON (e.id = ps.entity_id)
 			  JOIN parts p ON (p.id = j.parts_id)
 			  JOIN project pr ON (pr.id = j.project_id)
 			 WHERE j.id = ?|;
@@ -491,7 +491,6 @@ sub jcitems {
                   JOIN entity_employee ee ON ee.entity_id = e.id
 		  JOIN parts p ON (p.id = j.parts_id)
 		  JOIN project pr ON (pr.id = j.project_id)
-		  JOIN employee e ON (e.entity_id = j.employee_id)
 		 WHERE $where
 		ORDER BY employee, employeenumber, $sortorder|;
 
@@ -603,8 +602,7 @@ sub save {
 		       checkedin = ?::timestamp,
 		       checkedout = ?::timestamp,
 		       person_id = (SELECT id FROM person 
-                                     WHERE entity_id 
-                                           = person__get_my_entity_id()),
+                                     WHERE entity_id = ?),
 		       notes = ?
 		 WHERE id = ?|;
     $sth = $dbh->prepare($query);
