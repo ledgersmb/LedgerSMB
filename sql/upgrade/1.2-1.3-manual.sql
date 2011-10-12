@@ -26,6 +26,7 @@ CREATE SCHEMA public;
 \i sql/modules/Payment.sql
 \i sql/modules/Person.sql
 \i sql/modules/Reconciliation.sql
+
 BEGIN;
 
 -- adding mapping info for import.
@@ -81,7 +82,8 @@ FROM lsmb12.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.vendor SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
-	WHERE e.meta_number = vendornumber);
+	WHERE e.meta_number = vendornumber and entity_class = 1
+        and e.entity_id = vendor.entity_id);
 
 
 INSERT INTO entity_credit_account
@@ -94,7 +96,7 @@ FROM lsmb12.customer WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.customer SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
-	WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id);
+	WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id and entity_class = 2);
 
 --Company
 
