@@ -19,7 +19,7 @@ The textual representation of the format.  See supported formats below.
 
 =cut
 
-has format => (isa => 'Str', is => 'ro', required => '1');
+has format => (isa => 'Str', is => 'rw', required => '1');
 
 =item date
 A DateTime object for internal storage and processing.
@@ -200,7 +200,7 @@ around BUILDARGS => sub {
     my $class = shift;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     if ($args{string}){
-        return $formats->{$args{format}}->from_string(
+        return $formats->{$args{format}}->{from_string}(
                                                    $args{string}, $args{format}
         );
     } else {
@@ -212,13 +212,14 @@ around BUILDARGS => sub {
 
 =over
 
-=item to_string
+=item to_string(optional $format)
 This returns the human readable formatted date.
 
 =cut
 
 sub to_string {
-    my ($self) = @_;
+    my ($self, $format) = @_;
+    $format ||= $self->format;
     my $sep;
     if ($self->format =~ /[^YMD]/){
         $self->format =~ /MM(.)/;
@@ -226,7 +227,7 @@ sub to_string {
     } else {
         $sep = '';
     }
-    $formats->{"$self->format"}->to_string($self, $sep);
+    $formats->{$format}->{to_string}($self, $sep);
 }
 
 =item to_dbstring
@@ -236,7 +237,7 @@ This returns the preferred form for database queries.
 
 sub to_dbstring {
     my ($self) = @_;
-    $formats->{"YYYY-MM-DD"}->to_string($self, '-');
+    $formats->{"YYYY-MM-DD"}->{to_string}($self, '-');
 }
 
 1;
