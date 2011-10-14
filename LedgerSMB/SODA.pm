@@ -12,6 +12,7 @@ package LedgerSMB::SODA;
 
 use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Locale;
 
 our $VERSION = "1.0"
 
@@ -57,6 +58,28 @@ has username => (isa => 'Str', is=>'ro', required => 1);
 
 =item username
 Name of the current logged in user.
+
+=cut
+
+has locale => (isa => 'LedgerSMB::Locale', is => 'rw', required => 0);
+
+=item locale
+Locale object for translation.
+
+=cut
+
+has numberformat => (isa => 'Str', is => 'rw', required => 0);
+
+=item numberformat
+The users's numberformat.  This is set on LedgerSMB::PGNumber types when
+created.
+
+=cut
+
+has dateformat => (isa => 'Str', is => 'rw', required => 0);
+
+=item dateformat
+The user's dateformat.  This is set on LedgerSMB::PGDate types when created.
 
 =back
 
@@ -104,7 +127,37 @@ around BUILD => {
     $orig(@_);
     $self->_get_roles();
     $self->dbh->pg_learn_custom_types;
+    $self->_get_user_info;
 };
+
+# Private method _get_user_info
+# This retrieves localization info from the database.  It then initializes the
+# following properties:
+#
+# * locale
+# * dateformat
+# * numberformat
+#
+# Note that this takes the place of setting explicit datestyles with PostgreSQL
+# in previous versions of LedgerSMB.   All dates are presumed to be returned now
+# in YYYY-MM-DD format and are converted from there into an internal
+# representation.  
+
+sub _get_user_info {
+    my ($self) = @_;
+    my $dbh = $self->dbh;
+    $dbh->do ("SET datestyle = 'YMD'");
+    my $sth = $dbh->prepare("
+           SELECT locale, dateformat, numberformat
+             FROM user_preference
+            WHERE id IN (SELECT id FROM users WHERE username = SESSION_USER)
+    ");
+    $sth->execute;
+    my ($ref) = $sth->fetchrow_hashref('NAME_lc');
+    $self->locale( LedgerSMB::Locale->get_handle($ref->{language}) );
+    $self->dateformat( $ref->dateformat );
+    $self->numberformat( $ref->numberformat );
+}
 
 =head1 METHODS
 
@@ -572,10 +625,9 @@ here are:
 
 =cut
 # Private method, should throw exception but process the out put and log errors
-# before so doing.  TODO
+# before so doing.  Replaces LedgerSMB->dberror.
 
 sub _dberror {
-     # TODO handle localization for new modules.
        my $state_error = {
 
 =item Internal Database Error
@@ -583,39 +635,39 @@ SQL State 42883.  Undefined function.  This is always a bug or an issue with the
 database being out of sync with the application.
 
 =cut
-            '42883' => $self->{_locale}->text('Internal Database Error'),
+            '42883' => $self->locale->text('Internal Database Error'),
 =item Access Denied
 Insufficient permissions to perform the operation.  Corresponds to SQL States
 42501 and 42401.
 
 =cut
-            '42501' => $self->{_locale}->text('Access Denied'),
+            '42501' => $self->locale->text('Access Denied'),
 # Does 42401 actually exist? --CT
-            '42401' => $self->{_locale}->text('Access Denied'),
+            '42401' => $self->locale->text('Access Denied'),
 =item Invalid date/time entered
 SQL State 22008.  The date or time entered was not in a valid format.
 
 =cut
-            '22008' => $self->{_locale}->text('Invalid date/time entered'),
+            '22008' => $self->locale->text('Invalid date/time entered'),
 =item Division by 0 error
 =cut
-            '22012' => $self->{_locale}->text('Division by 0 error'),
+            '22012' => $self->locale->text('Division by 0 error'),
 =item Required input not provide
 This occurs when a NOT NULL constraint is violated.  SQL states 22004 and 23502
 
 =cut
-            '22004' => $self->{_locale}->text('Required input not provided'),
-            '23502' => $self->{_locale}->text('Required input not provided'),
+            '22004' => $self->locale->text('Required input not provided'),
+            '23502' => $self->locale->text('Required input not provided'),
 =item Conflict with Existing Data
 SQL State 23505, indivates that a unique constraint has been violated.
 
 =cut
-            '23505' => $self->{_locale}->text('Conflict with Existing Data'),
+            '23505' => $self->locale->text('Conflict with Existing Data'),
 =item Error from Function: $errstr
 P0001:  There was an unhandled exception in a function.
 
 =cut
-            'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
+            'P0001' => $self->locale->text('Error from Function') . ":\n" .
                     $self->{dbh}->errstr,
        };
 };
@@ -650,3 +702,8 @@ run during off-hours.
 1;
 
 =head1 COPYRIGHT
+
+This file is licensed under the Gnu General Public License (GPL) version 2, or 
+at your option any later version.  A copy of the license should have been 
+included with your software.
+
