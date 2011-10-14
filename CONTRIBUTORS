@@ -28,78 +28,78 @@ Erik Huelsmann <ehuels @ gmail.com> has provided bugfixes.
 
 Other Contributors:
 ========================
-Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
-the setup.diff.
-
-Angus Carr <apcarr @ users.sourceforge.net> Has provided some corrections to 
-the documentation.
-
 David Bandel <david.bandel @ gmail.com> Provided some bug fixes and 
 documentation corrections.
-
-Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
-documentation, the Pg-tables.sql, and a setup file for replication.
-
-Mads Kiilerich <mads @ kiilerich.com> has provided the RPM spec file and
-numerous bug fixes.
-
-Tony Fraser <tony @ sybaspace.com> provided some database fixes.
-
-John Hasler <john @ dhh.gt.org> has provided some double-entry information for
-the manual and miscellaneous documentation corrections.
-
-Louis B. Moore <lbmlist @ hethcote.com> has provided the documentation on the 
-command-line API and helped with upgrade scripts, both for 1.2 and 1.3.
-
-Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
-documentation for Debian installations.
-
-Chifung Fan [email omitted] contributed bugfixes.
-
-
-Matt S Trout, <mst @ shadowcatsystems.co.uk> CPAN: MSTROUT, 
-IRC: mst#irc.perl.org contributed the initial Makefile.PL
-
-Chris Nighswonger, <cnighswonger @ foundations.edu> contributed the
-shebang-strawberry.pl
-
-Ashley Gittins contributed <agittins @ purple.dropbear.id.au> has contributed 
-some performance fixes and has contributed a great deal of work to our web site.
-
-Donna Robinson [email omitted] contributed some fixes to the HTML code.
-
-Victor Sterpu <victor @ ambra.ro> has contributed some bug fixes to COGS 
-handling.
-
-Chad Phillips [email omitted]  Various bugfixes.  Also contributed a template
-widget system for 1.3.
-
-David Mora contributed the new Payment template/system.
-
-Tony Brummett <tony @ blight.com> contributed a bug fix for avgcost and lastcost updates.
-
-Jason Rodrigues <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
-the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
 
 Josh Berkus <josh @ agliodbs.com> has helped provide assistance in promotion,
 advocacy, and other assistance.
 
+Christopher Browne <cbrowne @ acm.org> provided some corrections to the 
+documentation, the Pg-tables.sql, and a setup file for replication.
+
+Tony Brummett <tony @ blight.com> contributed a bug fix for avgcost and lastcost
+updates.
+
+Angus Carr <apcarr @ users.sourceforge.net> Has provided some corrections to 
+the documentation.
+
+Chifung Fan [email omitted] contributed bugfixes.
+
+Tony Fraser <tony @ sybaspace.com> provided some database fixes.
+
+Dave van Ginneken <davevg @ gmail.com> fixed many HTML errors and has patched 
+the setup.diff.
+
+Ashley Gittins contributed <agittins @ purple.dropbear.id.au> has contributed 
+some performance fixes and has contributed a great deal of work to our web site.
+
 Ian Goodacre [email omitted] has provided numerous bugfixes.
 
-Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
-bugfixes.
+John Hasler <john @ dhh.gt.org> has provided some double-entry information for
+the manual and miscellaneous documentation corrections.
 
-John Locke (Freelock Consulting) <john @ freelock.com> Contributed a number of 
-bug fixes and provided extensive feedback and assistance.
-
-Lacey Powers (Command Prompt) has contributed code, and helped reduce the number
-of warnings coming from the inherited codebase.
+Mads Kiilerich <mads @ kiilerich.com> has provided the RPM spec file and
+numerous bug fixes.
 
 Alexey Klyukin (Command Prompt) has contributed code particularly to end of 
 year routines, and helped address scalability issues.
 
+John Locke (Freelock Consulting) <john @ freelock.com> Contributed a number of 
+bug fixes and provided extensive feedback and assistance.
+
+Louis B. Moore <lbmlist @ hethcote.com> has provided the documentation on the 
+command-line API and helped with upgrade scripts, both for 1.2 and 1.3.
+
+David Mora contributed the new Payment template/system.
+
+Chris Nighswonger, <cnighswonger @ foundations.edu> contributed the
+shebang-strawberry.pl
+
+Chad Phillips [email omitted]  Various bugfixes.  Also contributed a template
+widget system for 1.3.
+
+Lacey Powers (Command Prompt) has contributed code, and helped reduce the number
+of warnings coming from the inherited codebase.
+
+Donna Robinson [email omitted] contributed some fixes to the HTML code.
+
+Jason Rodrigues <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
+the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
+
+Victor Sterpu <victor @ ambra.ro> has contributed some bug fixes to COGS 
+handling.
+
 Andrew Sullivan (formerly with Command Prompt) has addressed scalability in the 
 batch payment system.
+
+Matt S Trout, <mst @ shadowcatsystems.co.uk> CPAN: MSTROUT, 
+IRC: mst#irc.perl.org contributed the initial Makefile.PL
+
+Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
+bugfixes.
+
+Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
+documentation for Debian installations.
 
 Original Authors of SQL-Ledger:
 ===================================
