@@ -6,9 +6,19 @@ LedgerSMB::PgDate
 use Moose;
 package LedgerSMB::PGDate;
 
+BEGIN {
+   use LedgerSMB::SODA;
+   LedgerSMB::SODA->register_type({sql_type => 'date', 
+                                 perl_class => 'LedgerSMB::PGDate',
+                                parse_input => 1, });
+   LedgerSMB::SODA->register_type({sql_type => 'timestamp', 
+                                 perl_class => 'LedgerSMB::PGDate',
+                                parse_input => 0, });
+}
+
 =head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and
-PostgreSQL.
+PostgreSQL. It provides a handler for date and timestamp datatypes.
 
 =head1 PROPERTIES
 
