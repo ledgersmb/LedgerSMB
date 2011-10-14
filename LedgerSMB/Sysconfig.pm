@@ -123,7 +123,7 @@ for my $var (
 #    eval { require Template::Latex }; # Trap errors loading this optional module
 #    if ($!) { # Couldn't load  Template::Latex
 #        print STDERR "WARNING: LedgerSMB configured to use LaTeX but module ";
-#        print STDERR "Template::Latex did not load: $!\n";
+#        print STDERR "Template::Latex did not load: $@\n";
 #        print STDERR "Disabling LaTeX support\n";
 #        $latex = 0;
 #    };
