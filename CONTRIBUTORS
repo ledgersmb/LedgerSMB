@@ -22,9 +22,12 @@ Excel, ODS, and other formats for reports.
 
 Other Committers:
 ==================
+Erik Huelsmann <ehuels @ gmail.com> has provided bugfixes.
+
 Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css and has submitted numerous bug fixes.
 
-Erik Huelsmann <ehuels @ gmail.com> has provided bugfixes.
+Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
+bugfixes.
 
 Other Contributors:
 ========================
@@ -94,9 +97,6 @@ batch payment system.
 
 Matt S Trout, <mst @ shadowcatsystems.co.uk> CPAN: MSTROUT, 
 IRC: mst#irc.perl.org contributed the initial Makefile.PL
-
-Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
-bugfixes.
 
 Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
 documentation for Debian installations.
