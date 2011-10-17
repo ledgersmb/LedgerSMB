@@ -7,6 +7,9 @@ LedgerSMB::Template::TXT  Template support module for LedgerSMB
 
 =over
 
+=item get_extension
+Private method to get extension.  Do not call directly.
+
 =item get_template ($name)
 
 Returns the appropriate template filename for this format.

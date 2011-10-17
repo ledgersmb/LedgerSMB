@@ -895,11 +895,9 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
     # type=submit $locale->text('Update')
     # type=submit $locale->text('Print')
     # type=submit $locale->text('Post')
-    # type=submit $locale->text('Print and Post')
     # type=submit $locale->text('Schedule')
     # type=submit $locale->text('Ship to')
     # type=submit $locale->text('Post as new')
-    # type=submit $locale->text('Print and Post as new')
     # type=submit $locale->text('E-mail')
     # type=submit $locale->text('Delete')
     # type=submit $locale->text('Sales Order')
@@ -922,18 +920,6 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
               { ndx => 4, key => 'T', value => $locale->text('Ship to') },
             'e_mail' =>
               { ndx => 5, key => 'E', value => $locale->text('E-mail') },
-            'print_and_post' => {
-                ndx   => 6,
-                key   => 'R',
-                value => $locale->text('Print and Post')
-            },
-            'post_as_new' =>
-              { ndx => 7, key => 'N', value => $locale->text('Post as new') },
-            'print_and_post_as_new' => {
-                ndx   => 8,
-                key   => 'W',
-                value => $locale->text('Print and Post as new')
-            },
             'sales_order' =>
               { ndx => 9, key => 'L', value => $locale->text('Sales Order') },
             'schedule' =>
