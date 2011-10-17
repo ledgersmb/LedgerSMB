@@ -947,11 +947,9 @@ sub form_footer {
     # type=submit $locale->text('Update')
     # type=submit $locale->text('Print')
     # type=submit $locale->text('Post')
-    # type=submit $locale->text('Print and Post')
     # type=submit $locale->text('Schedule')
     # type=submit $locale->text('Ship to')
     # type=submit $locale->text('Post as new')
-    # type=submit $locale->text('Print and Post as new')
     # type=submit $locale->text('Delete')
 
     if ( !$form->{readonly} ) {
@@ -970,11 +968,6 @@ sub form_footer {
             'print' =>
               { ndx => 2, key => 'P', value => $locale->text('Print') },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-            'print_and_post' => {
-                ndx   => 4,
-                key   => 'R',
-                value => $locale->text('Print and Post')
-            },
             'schedule' =>
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
