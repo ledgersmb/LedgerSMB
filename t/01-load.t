@@ -56,8 +56,11 @@ use_ok('LedgerSMB::DBObject::Asset');
 use_ok('LedgerSMB::DBObject::Asset_Report');
 use_ok('LedgerSMB::DBObject::Asset_Class');
 SKIP: {
-    eval{ require Template::Plugin::Latex};
-    skip 'Template::Plugin::Latex not installed', 1 if @_;
+    eval{ require Template::Plugin::Latex} ||
+    skip 'Template::Plugin::Latex not installed';
+    eval{ require Template::Latex} ||
+    skip 'Template::Latex not installed';
+
     use_ok('LedgerSMB::Template::LaTeX');
 }
 use_ok('LedgerSMB::Template::TXT');
