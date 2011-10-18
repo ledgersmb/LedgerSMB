@@ -114,20 +114,16 @@ for my $var (
     ${$var} = $config{''}{$var} if $config{''}{$var};
 }
 
-# Commenting out the block below due to Louis Moore's bug report on the email 
-# lists.  It isn't clear what's causing this, and I'd rather not push out 
-# something that cuases issues for others without getting to the bottom of the 
-# issue.  Will re-activate these lines after 1.3.1 is released.
 
-#if ($latex){
-#    eval { require Template::Latex }; # Trap errors loading this optional module
-#    if ($!) { # Couldn't load  Template::Latex
-#        print STDERR "WARNING: LedgerSMB configured to use LaTeX but module ";
-#        print STDERR "Template::Latex did not load: $@\n";
-#        print STDERR "Disabling LaTeX support\n";
-#        $latex = 0;
-#    };
-#}
+if ($latex){
+    eval { require Template::Latex }; # Trap errors loading this optional module
+    if ($!) { # Couldn't load  Template::Latex
+        print STDERR "WARNING: LedgerSMB configured to use LaTeX but module ";
+        print STDERR "Template::Latex did not load: $@\n";
+        print STDERR "Disabling LaTeX support\n";
+        $latex = 0;
+    };
+}
 
 %printer = %{ $config{printers} } if $config{printers};
 
@@ -152,15 +148,12 @@ for my $var (qw(gzip)) {
 
 # LaTeX and friends 
 #
-# Disabling these lines due to Louis Moore's bug report.  Will re-enable after
-# 1.3.1 is released so we have more time to check these out. --CT
-#
-#for my $var (qw(pdflatex latex dvips)){
-#    if ($latex and $config{programs}{$var}){
-#        my $funcname = "${var}_path";
-#        Template::Latex->$funcname( { $var => $config{programs}{$var} });
-#    }
-#}
+for my $var (qw(pdflatex latex dvips)){
+    if ($latex and $config{programs}{$var}){
+        my $funcname = "${var}_path";
+        Template::Latex->$funcname( { $var => $config{programs}{$var} });
+    }
+}
 
 # mail configuration
 for my $var (qw(sendmail smtphost smtptimeout smtpuser 
