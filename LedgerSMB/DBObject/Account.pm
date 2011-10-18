@@ -59,7 +59,21 @@ sub save {
     if ($self->{charttype} and $self->{charttype} eq 'H') {
         $func = 'account_heading_save';
     }
-    my ($id_ref) = $self->exec_method(funcname => $func);
+    my ($id_ref) = $self->exec_method(funcname => $func,
+                             continue_on_error => 1);
+    if (!$id_ref->{$func}){ # Didn't return anything.  Chances are this was an 
+                            # Error we trapped from the function.  Time to test
+                            # that error and display a more friendly error.
+       if ($@ =~ /Invalid link settings:\s*Summary/){
+           $self->error($self->{_locale}->text(
+               'Error: Cannot include summary account in other dropdown menus'
+           ));
+       } else {
+          $self->error($self->{_locale}->text(
+               'Internal Database Error.'
+          ) . " $@");
+       }
+    }
     $self->{id} = $id_ref->{$func};
     if (defined $self->{recon}){
         $self->call_procedure(procname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
