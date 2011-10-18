@@ -20,7 +20,11 @@ use LedgerSMB::Template;
 use LedgerSMB::Template::Elements;
 use LedgerSMB::Template::CSV;
 use LedgerSMB::Template::HTML;
-use LedgerSMB::Template::LaTeX;
+my $has_latex = 0;
+ (  eval {require LedgerSMB::Template::LaTeX } 
+&&  eval {require Template::Latex} 
+&&  eval {require Template::Plugins::Latex}
+) || ($has_latex = 1) ;
 use LedgerSMB::Template::TXT;
 
 $LedgerSMB::Sysconfig::tempdir = 't/var';
@@ -336,41 +340,45 @@ throws_ok{$template->render({'login' => 'foo'})} qr/Can't locate/,
 ## Rendering tests ##
 #####################
 
-$template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
+SKIP: {
+    skip "LaTeX modules not installed" unless $has_latex;
+    $template = undef;
+    $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
 	'template' => '04-template', 'no_auto_output' => 1);
-ok(defined $template, 
+    ok(defined $template, 
 	'Template, new (PDF): Object creation with format and template');
-isa_ok($template, 'LedgerSMB::Template', 
+    isa_ok($template, 'LedgerSMB::Template', 
 	'Template, new (PDF): Object creation with format and template');
-is($template->{include_path}, 't/data',
+    is($template->{include_path}, 't/data',
 	'Template, new (PDF): Object creation with format and template');
-is($template->render({'login' => 'foo&bar'}), "t/var/04-template-output-$$.pdf",
+    is($template->render({'login' => 'foo&bar'}), 
+        "t/var/04-template-output-$$.pdf",
 	'Template, render (PDF): Simple PDF template, default filename');
-ok(-e "t/var/04-template-output-$$.pdf",
+    ok(-e "t/var/04-template-output-$$.pdf",
 	'Template, render (PDF): File created');
-is(unlink("t/var/04-template-output-$$.pdf"), 1,
+    is(unlink("t/var/04-template-output-$$.pdf"), 1,
 	'Template, render (PDF): removing testfile');
-ok(!-e "t/var/04-template-output-$$.pdf",
+    ok(!-e "t/var/04-template-output-$$.pdf",
 	'Template, render (PDF): testfile removed');
 
-$template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PS', 
+    $template = undef;
+    $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PS', 
 	'template' => '04-template', 'no_auto_output' => 1);
-ok(defined $template, 
+    ok(defined $template, 
 	'Template, new (PS): Object creation with format and template');
-isa_ok($template, 'LedgerSMB::Template', 
+    isa_ok($template, 'LedgerSMB::Template', 
 	'Template, new (PS): Object creation with format and template');
-is($template->{include_path}, 't/data',
+    is($template->{include_path}, 't/data',
 	'Template, new (PS): Object creation with format and template');
-is($template->render({'login' => 'foo\&bar'}),
+    is($template->render({'login' => 'foo\&bar'}),
 	"t/var/04-template-output-$$.ps",
 	'Template, render (PS): Simple Postscript template, default filename');
-ok(-e "t/var/04-template-output-$$.ps", 'Template, render (PS): File created');
-is(unlink("t/var/04-template-output-$$.ps"), 1,
+    ok(-e "t/var/04-template-output-$$.ps", 'Template, render (PS): File created');
+    is(unlink("t/var/04-template-output-$$.ps"), 1,
 	'Template, render (PS): removing testfile');
-ok(!-e "t/var/04-template-output-$$.ps",
+    ok(!-e "t/var/04-template-output-$$.ps",
 	'Template, render (PS): testfile removed');
+}
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'TXT', 
