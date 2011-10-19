@@ -338,16 +338,7 @@ sub new {
        $logger->debug("LedgerSMB::new: session_check completed OK");
     }
     $self->get_user_info;
-    my %date_setting = (
-        'mm/dd/yy' => "SQL, US",
-        'mm-dd-yy' => "POSTGRES, US",
-        'dd/mm/yy' => "SQL, EUROPEAN",
-        'dd-mm-yy' => "POSTGRES, EUROPEAN",
-        'dd.mm.yy' => "GERMAN",
-    );
 
-    $self->{dbh}->do("set DateStyle to '" 
-		.$date_setting{$self->{_user}->{dateformat}}."'");
     my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{language})
 #    $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
@@ -795,6 +786,10 @@ sub call_procedure {
             #   numeric            float4/real
             if ($types[$_] == 3 or $types[$_] == 2) {
                 $ref->{$names[$_]} = Math::BigFloat->new($ref->{$names[$_]});
+            }
+            #    DATE                TIMESTAMP
+            if ($types[$_] == 91 or $types[$_] == 11){
+                $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]});
             }
         }
         push @results, $ref;

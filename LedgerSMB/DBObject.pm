@@ -291,65 +291,21 @@ sub _parse_array {
     my ($self, $value) = @_;
     return @$value if ref $value eq 'ARRAY';
     return if !defined $value;
-    my $next;
-    my $separator;
-    my @return_array;
-
-    while ($value ne '{}') {
-        $next = "";
-        $separator = "";
-        if ($value =~ /^\{"/){
-            $value =~ s/^\{"(([^"]|\\")*[^\\])"/\{/;
-            $next = $1;
-            $next =~ /(.)$/;
-            $value =~ s/^{,/{/;
-
-        } elsif ($value =~ /^{({+)/){
-            my $open_braces = $1;
-            $next = [];
-            my $close_braces = $open_braces;
-            $close_braces =~ s/{/}/g;
-            $value =~ s/^{($open_braces[^}]*$close_braces),?/{/;
-            my $parse_next = $1;
-            @$next = $self->_parse_array($parse_next);
-        } else {
-            $value =~ s/^\{([^,]*)(,|\})/\{/;
-            $next = $1;
-            $separator = $2;
-        }
-        $value .= '}' if $separator eq '}';
-        $next =~ s/\\\\/\\/g;
-        $next =~ s/\\"/"/g;
-        push @return_array, $next;
-    }
-    return @return_array;
+    # No longer needed since we require DBD::Pg 2.x 
 }
 
 sub _db_array_scalars {
     my $self = shift @_;
     my @args = @_;
-    for my $arg (@args){
-        $arg =~ s/(["{},])/\\$1/g;
-        if ($arg =~ /(\s|\\)/){
-           $arg = qq|"$arg"|;
-        }
-    }
-    return $self->_db_array_literal(@args);
+    return \@args; 
+    # No longer needed since we require DBD::Pg 2.x
 }
 
 sub _db_array_literal {
     my $self = shift @_;
     my @args = @_;
-    my $return_string = '{}';
-    for my $arg (@args){
-        if ($return_string eq '{}'){
-            $return_string = "{$arg}";
-        }
-        else {
-            $return_string =~ s/\}$/,$arg\}/
-        }
-    }
-    return $return_string;
+    return \@args;
+    # No longer needed since we require DBD::Pg 2.x
 }
 
 1;
