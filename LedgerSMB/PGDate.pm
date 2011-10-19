@@ -4,16 +4,15 @@ LedgerSMB::PgDate
 =cut
 
 use Moose;
+use DateTime::Format::Strptime;
 package LedgerSMB::PGDate;
 
 BEGIN {
    use LedgerSMB::SODA;
    LedgerSMB::SODA->register_type({sql_type => 'date', 
-                                 perl_class => 'LedgerSMB::PGDate',
-                                parse_input => 1, });
+                                 perl_class => 'LedgerSMB::PGDate');
    LedgerSMB::SODA->register_type({sql_type => 'timestamp', 
-                                 perl_class => 'LedgerSMB::PGDate',
-                                parse_input => 0, });
+                                 perl_class => 'LedgerSMB::PGDate');
 }
 
 =head1 SYNPOSIS
@@ -21,15 +20,6 @@ This class handles formatting and mapping between the DateTime module and
 PostgreSQL. It provides a handler for date and timestamp datatypes.
 
 =head1 PROPERTIES
-
-=over
-
-=item format
-The textual representation of the format.  See supported formats below.
-
-=cut
-
-has format => (isa => 'Str', is => 'rw', required => '1');
 
 =item date
 A DateTime object for internal storage and processing.
@@ -54,200 +44,194 @@ On the database side, these are all converted to YYYY-MM-DD format.
 
 =cut
 
-our $formats = { # Dispatch and metadata table for formats
-    'YYYY-MM-DD' => {
-d          to_string => sub { 
-                           my ($self, $sep) = @_;
-                           return $self->date->ymd($sep);
-                       },
-         from_string => sub {
-                           my ($string, $format) = @_;
-                           my ($year, $month, $day) = split /[^DMY]/, $string;
-                           return LedgerSMB::PgDate->new({
-                                 date => DateTime->new(
-                                                        year => $year, 
-                                                       month => $month, 
-                                                         day => $day,
-                               ),
-                               format => $format,
-                           });
-                       },
-    },
+our $formats = { 
+    'YYYY-MM-DD' => ['%F'],
 
 =item DD-MM-YYYY
 
 =cut
 
-    'DD-MM-YYYY' => {
-          to_string => sub {
-                           my ($self, $sep) = @_;
-                           return $self->date->dmy($sep);
-                       },
-         from_string => sub {
-                           my ($string, $format) = @_;
-                           my ($day, $month, $year) = split /[^DMY]/, $string;
-                           return LedgerSMB::PgDate->new({
-                                 date => DateTime->new(
-                                                        year => $year, 
-                                                       month => $month, 
-                                                         day => $day,
-                               ),
-                               format => $format,
-                           });
-                       },
-    },
+    'DD-MM-YYYY' => ['%d-%m-%Y', '%d-%m-%y'],
+
+=item DD/MM/YYYY
+
+=cut
+    'DD/MM/YYYY' > ['%d/%m/%Y', '%D'],
 
 =item MM-DD-YYYY
 
 =cut
 
-    'MM-DD-YYYY' => {
-          to_string => sub {
-                           my ($self, $sep) = @_;
-                           return $self->date->mdy($sep);
-                       },
-        from_string => sub {
-                           my ($string, $format) = @_;
-                           my ($month, $day, $year)  = split /[^DMY]/, $string;
-                           return LedgerSMB::PgDate->new({
-                                 date => DateTime->new(
-                                                        year => $year, 
-                                                       month => $month, 
-                                                         day => $day,
-                               ),
-                               format => $format,
-                           });
-                       },
-    },
+    'MM-DD-YYYY' => ['%m-%d-%Y', '%m-%d-%y'],
+
+=item MM/DD/YYYY 
+
+=cut
+    'MM/DD/YYYY' => ['%d/%m/%Y', '%d/%m/%y'],
 
 =item YYYYMMDD
 
 =cut
 
-      'YYYYMMDD' => {
-          to_string => sub { 
-                          return $_[0]->date->ymd('');
-                       },
-        from_string => sub {
-                           my ($string) = @_;
-                           $string =~ /(\d\d\d\d)(\d\d)(\d\d)/;
-                           return LedgerSMB::PgDate->new({
-                                 date => DateTime->new(
-                                                       year => $1,
-                                                      month => $2,
-                                                        day => $3,
-                                 ),
-                               format => 'YYYYMMDD',
-                           });
-                       },
-    },
+      'YYYYMMDD' => ['%Y%m%d'],
+
+=item YYMMDD
+
+=cut
+        'YYMMDD' => ['%y%m%d'],
 
 =item DDMMYYYY
 
 =cut
 
-      'DDMMYYYY' => {
-          to_string => sub {
-                          return $_[0]->date->dmy('');
-                       },
-        from_string => sub {
-                           my ($string) = @_;
-                           $string =~ /(\d\d)(\d\d)(\d\d\d\d)/;
-                           return LedgerSMB::PgDate->new({
-                                 date => DateTime->new(
-                                                       year => $3,
-                                                      month => $2,
-                                                        day => $1,
-                                 ),
-                               format => 'DDMMYYYY',
-                           });
-                       },
-    },
+      'DDMMYYYY' => ['%d%m%Y'],
+
+=item DDMMYY
+
+=cut
+        'DDMMYY' => ['%d%m%y'],
 
 =item MMDDYYYY
 
 =cut
 
-      'MMDDYYYY' => {
-          to_string => sub {
-                           return $_[0]->date->mdy('');
-                       },
-        from_string => sub {
-                           my ($string) = @_;
-                           $string =~ /(\d\d)(\d\d)(\d\d\d\d)/;
-                           return LedgerSMB::PgDate->new({
-                                 date => DateTime->new(
-                                                       year => $3,
-                                                      month => $1,
-                                                        day => $2,
-                                 ),
-                               format => 'MMDDYYYY',
-                           });
-                       },
-    },
+      'MMDDYYYY' => ['%m%d%Y'],
+
+=item MMDDYY
+
+=cut
+        'MMDDYY' => ['%m%d%y'],
+
+=item DDmonYYYY
+
+=cut
+     'DDmonYYYY' => ['%d%b%Y', '%d%b%y']
+
 }
 
 =back
 
 =head1 CONSTRUCTOR SYNTAX
 
-There are two ways of calling the constructor.  Both require a format argument
-to be passed in, and but one accepts a string and the other accepts a date.
-
-So you can:  
 LedgerSMB::PgDate->new({ date => DateTime->new(year => 2012, day => 31, month =>
-12), format => 'MM/DD/YYYY' });
-or
-LedgerSMB::PgDate->new({ string => '12/31/2012', format => 'MM/DD/YYYY' });
+12)});
 
-Note that strings are parsed such that any character other than D, M, and Y is
-a separator.
+Note the constructor here is private, and not intended to be called directly.
+
+Use from_db and from_input methods instead since these handle appropriately 
+different formats and handle construction differently.
 
 =cut
 
-around BUILDARGS => sub {
-    my $orig  = shift;
-    my $class = shift;
-    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
-    if ($args{string}){
-        return $formats->{$args{format}}->{from_string}(
-                                                   $args{string}, $args{format}
-        );
-    } else {
-        return $class->$orig(@_);
-    }
-};
 
 =head1 METHODS
 
 =over
 
-=item to_string(optional $format)
-This returns the human readable formatted date.
+=item from_input($string date, optional $has_time)
+
+Parses this from an input string according to the user's dateformat
+
+Input parsing iterates through formats specified for the format string.  If
+$has_time is set and true, or if it is not defined then ' %T' is added to the
+end of the format string.  Similarly, if $has_time is undef or set and false,
+the format is used as is.  This allows the calling scripts to specify either
+that the string includes a time portion or that it does not, and allows this
+module to handle the parsing.
 
 =cut
 
-sub to_string {
-    my ($self, $format) = @_;
-    $format ||= $self->format;
-    my $sep;
-    if ($self->format =~ /[^YMD]/){
-        $self->format =~ /MM(.)/;
-        $sep = $1; 
-    } else {
-        $sep = '';
+# Private method _parse_string($string, $format, $has_time)
+# Implements above parsing spec
+
+sub _parse_string {
+    my ($self, $string, $format, $has_time) = @_;
+    for my $fmt (@{$formats->{$format}}){
+        if ($has_time or ! defined $has_time){
+            my $parser = new DateTime::Format::Strptime(
+                     pattern => $fmt . ' %T',
+                      locale => $LedgerSMB::Web_App::Locale->{datetime},
+           }
+            if (my $dt = $parser->parse_datetime($string)){
+                return $dt;
+            } 
+        }
+        if (!$has_time or ! defined $has_time){
+            my $parser = new DateTime::Format::Strptime(
+                     pattern => $fmt,
+                      locale => $LedgerSMB::Web_App::Locale->{datetime},
+            }
+            if (my $dt = $parser->parse_datetime($string)){
+                return $dt;
+            }
+        }
     }
-    $formats->{$format}->{to_string}($self, $sep);
+    die 'LedgerSMB::PGDate Invalid Date';
 }
 
-=item to_dbstring
+sub from_input{
+    my ($self, $input, $has_date) = @_;
+    my $format = $LedgerSMB::Web_App::user->dateformat;
+    my $dt =  _parse_string($self, $input, $format, $has_time);
+    return $self->new({date => $dt});
+}
+
+
+=item to_output(optional string $format)
+
+This returns the human readable formatted date.  If $format is supplied, it is 
+used.  If $format is not supplied, the dateformat of the user is used.
+
+=cut
+
+sub to_output {
+    my ($self) = @_;
+    my $fmt = $formats->{$LedgerSMB::Web_App::user->dateformat}->[0];
+    my $formatter = new DateTime::Format::Strptime(
+             pattern => $fmt,
+              locale => $LedgerSMB::Web_App::Locale->{datetime},
+            on_error => 'croak',
+    }
+    return $formatter->format_datetime($self->date);
+}
+
+=item from_db (string $date, string $type)
+
+The $date is the date or datetime value from the db. The type is either 'date',
+'timestamp', or 'datetime'.
+
+=cut
+
+sub from_db {
+    my ($self, $input, $type) = @_;
+    my $format = 'YYYY-MM-DD';
+    my $has_timme;
+    if ((lc($type) eq 'datetime') or (lc($type) eq 'timestamp')) {
+        $has_time = 1;
+    } elsif(lc($type) eq 'date'){
+        $has_time = 0;
+    } else {
+       die 'LedgerSMB::PGDate Invalid DB Type';
+    }
+    my $dt =  _parse_string($self, $input, $format, $has_time);
+    return $self->new({date => $dt});
+}
+
+=item to_db
 This returns the preferred form for database queries.
 
 =cut
 
-sub to_dbstring {
+sub to_db {
     my ($self) = @_;
-    $formats->{"YYYY-MM-DD"}->{to_string}($self, '-');
+    my $fmt = $formats->{'YYYY-MM-DD'}->[0];
+    $fmt .= ' %T' if ($self->date->hour);
+    my $formatter = new DateTime::Format::Strptime(
+             pattern => $fmt,
+              locale => $LedgerSMB::Web_App::Locale->{datetime},
+            on_error => 'croak',
+    }
+    return $formatter->format_datetime($self->date);
 }
 
 1;

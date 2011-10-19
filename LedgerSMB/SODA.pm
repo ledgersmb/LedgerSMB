@@ -61,26 +61,6 @@ Name of the current logged in user.
 
 =cut
 
-has locale => (isa => 'LedgerSMB::Locale', is => 'rw', required => 0);
-
-=item locale
-Locale object for translation.
-
-=cut
-
-has numberformat => (isa => 'Str', is => 'rw', required => 0);
-
-=item numberformat
-The users's numberformat.  This is set on LedgerSMB::PGNumber types when
-created.
-
-=cut
-
-has dateformat => (isa => 'Str', is => 'rw', required => 0);
-
-=item dateformat
-The user's dateformat.  This is set on LedgerSMB::PGDate types when created.
-
 =back
 
 =head1 CONSTRUCTOR SYNTAX
@@ -127,37 +107,7 @@ around BUILD => {
     $orig(@_);
     $self->_get_roles();
     $self->dbh->pg_learn_custom_types;
-    $self->_get_user_info;
 };
-
-# Private method _get_user_info
-# This retrieves localization info from the database.  It then initializes the
-# following properties:
-#
-# * locale
-# * dateformat
-# * numberformat
-#
-# Note that this takes the place of setting explicit datestyles with PostgreSQL
-# in previous versions of LedgerSMB.   All dates are presumed to be returned now
-# in YYYY-MM-DD format and are converted from there into an internal
-# representation.  
-
-sub _get_user_info {
-    my ($self) = @_;
-    my $dbh = $self->dbh;
-    $dbh->do ("SET datestyle = 'YMD'");
-    my $sth = $dbh->prepare("
-           SELECT locale, dateformat, numberformat
-             FROM user_preference
-            WHERE id IN (SELECT id FROM users WHERE username = SESSION_USER)
-    ");
-    $sth->execute;
-    my ($ref) = $sth->fetchrow_hashref('NAME_lc');
-    $self->locale( LedgerSMB::Locale->get_handle($ref->{language}) );
-    $self->dateformat( $ref->dateformat );
-    $self->numberformat( $ref->numberformat );
-}
 
 =head1 METHODS
 
