@@ -12,7 +12,7 @@ make
 
 echo "Configuring Apache"
 
-sed -i.orig "s|WORKING_DIR|$CWD|" ledgersmb-httpd.conf.template
+sed "s|WORKING_DIR|$CWD|" ledgersmb-httpd.conf.template > ledgersmb-httpd.conf
 
 echo "Which user does your web server run as?"
 read username
