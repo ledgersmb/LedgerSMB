@@ -55,3 +55,12 @@ tw_utf	-> zh_TW
 ua	-> uk
 ua_utf	-> uk
 ve	-> es_VE
+
+
+Examples of translation-coding
+in source-file:
+ $locale->text( 'Edit Preferences for [_1]', $form->{login} );
+
+in locale/po/nl_BE:
+ msgid "Edit Preferences for %1"
+ msgstr "Instellingen aanpassen voor %1"

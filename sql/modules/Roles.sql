@@ -984,6 +984,8 @@ WITH INHERIT NOLOGIN;
 GRANT INSERT, SELECT ON acc_trans, account_checkpoint, yearend
 TO "lsmb_<?lsmb dbname ?>__yearend_run";
 
+GRANT ALL ON account_checkpoint_id_seq TO "lsmb_<?lsmb dbname ?>__yearend_run";
+
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (128, 'allow', 'lsmb_<?lsmb dbname ?>__yearend_run');
 INSERT INTO menu_acl (node_id, acl_type, role_name)

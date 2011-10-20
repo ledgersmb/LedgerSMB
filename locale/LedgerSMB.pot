@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-08 14:35-0700\n"
+"POT-Creation-Date: 2011-10-20 07:08-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,7 @@ msgid "account cannot be set to any other type of account"
 msgstr ""
 
 #: am.pl:163
-msgid "Cannot set multiple options for [_1]"
+msgid "Cannot set multiple options for %1"
 msgstr ""
 
 #: am.pl:168
@@ -188,7 +188,7 @@ msgid "Chart of Accounts"
 msgstr ""
 
 #: am.pl:259 rp.pl:860 rp.pl:1270
-msgid "[_1] Report"
+msgid "%1 Report"
 msgstr ""
 
 #: am.pl:300
@@ -220,7 +220,7 @@ msgid "Account does not exist!"
 msgstr ""
 
 #: am.pl:449
-msgid "[_1] GIFI"
+msgid "%1 GIFI"
 msgstr ""
 
 #: am.pl:483
@@ -268,7 +268,7 @@ msgid "Add Department"
 msgstr ""
 
 #: am.pl:677
-msgid "[_1] Department"
+msgid "%1 Department"
 msgstr ""
 
 #: am.pl:694 am.pl:848 am.pl:1017 am.pl:1176 am.pl:2029
@@ -296,7 +296,7 @@ msgid "Add Business"
 msgstr ""
 
 #: am.pl:832
-msgid "[_1] Business"
+msgid "%1 Business"
 msgstr ""
 
 #: am.pl:850
@@ -320,7 +320,7 @@ msgid "Add SIC"
 msgstr ""
 
 #: am.pl:999
-msgid "[_1] SIC"
+msgid "%1 SIC"
 msgstr ""
 
 #: am.pl:1016 am.pl:1175
@@ -344,7 +344,7 @@ msgid "Add Lanugage"
 msgstr ""
 
 #: am.pl:1162
-msgid "[_1] Language"
+msgid "%1 Language"
 msgstr ""
 
 #: am.pl:1217
@@ -360,8 +360,7 @@ msgid "Delete Language"
 msgstr ""
 
 #: am.pl:1242
-msgid ""
-"Deleting a language will also delete the templates for the language [_1]"
+msgid "Deleting a language will also delete the templates for the language %1"
 msgstr ""
 
 #: am.pl:1257
@@ -393,7 +392,7 @@ msgid "Taxes"
 msgstr ""
 
 #: am.pl:1713
-msgid "Edit Preferences for [_1]"
+msgid "Edit Preferences for %1"
 msgstr ""
 
 #: am.pl:1745
@@ -429,11 +428,11 @@ msgid "Cannot save preferences!"
 msgstr ""
 
 #: am.pl:1794
-msgid "No email address for [_1]"
+msgid "No email address for %1"
 msgstr ""
 
 #: am.pl:1807
-msgid "Backup sent to [_1]"
+msgid "Backup sent to %1"
 msgstr ""
 
 #: am.pl:1814
@@ -445,7 +444,7 @@ msgid "Transaction reversal enforced for all dates"
 msgstr ""
 
 #: am.pl:1859
-msgid "Transaction reversal enforced up to [_1]"
+msgid "Transaction reversal enforced up to %1"
 msgstr ""
 
 #: am.pl:1863
@@ -469,7 +468,7 @@ msgid "Add Warehouse"
 msgstr ""
 
 #: am.pl:2013
-msgid "[_1] Warehouse"
+msgid "%1 Warehouse"
 msgstr ""
 
 #: am.pl:2031
@@ -592,15 +591,15 @@ msgid "PDF"
 msgstr ""
 
 #: am.pl:2575
-msgid "Posting Sales Invoice [_1]"
+msgid "Posting Sales Invoice %1"
 msgstr ""
 
 #: am.pl:2585
-msgid "Posting Vendor Invoice [_1]"
+msgid "Posting Vendor Invoice %1"
 msgstr ""
 
 #: am.pl:2597 am.pl:2606
-msgid "Posting Transaction [_1]"
+msgid "Posting Transaction %1"
 msgstr ""
 
 #: am.pl:2615 am.pl:2686 am.pl:2740 am.pl:2783 am.pl:2830 bp.pl:260
@@ -618,7 +617,7 @@ msgid "Purchase Order"
 msgstr ""
 
 #: am.pl:2681
-msgid "Saving [_1] [_2]"
+msgid "Saving %1 %2"
 msgstr ""
 
 #: am.pl:2689 am.pl:2786 am.pl:2833
@@ -626,7 +625,7 @@ msgid "failed"
 msgstr ""
 
 #: am.pl:2735
-msgid "Posting GL Transaction [_1]"
+msgid "Posting GL Transaction %1"
 msgstr ""
 
 #: am.pl:2772 bp.pl:252
@@ -778,7 +777,7 @@ msgid "Approve"
 msgstr ""
 
 #: asset.pl:738
-msgid "Report [_1] on date [_2]"
+msgid "Report %1 on date %2"
 msgstr ""
 
 #: asset.pl:742 asset.pl:807 asset.pl:878
@@ -822,7 +821,7 @@ msgid "Total Accum. Dep."
 msgstr ""
 
 #: asset.pl:802
-msgid "Partial Disposal Report [_1] on date [_2]"
+msgid "Partial Disposal Report %1 on date %2"
 msgstr ""
 
 #: asset.pl:809
@@ -842,7 +841,7 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: asset.pl:873
-msgid "Disposal Report [_1] on date [_2]"
+msgid "Disposal Report %1 on date %2"
 msgstr ""
 
 #: asset.pl:879
@@ -920,7 +919,7 @@ msgid "Quotation Number"
 msgstr ""
 
 #: bp.pl:122
-msgid "Print [_1]"
+msgid "Print %1"
 msgstr ""
 
 #: bp.pl:191 oe.pl:3346 oe.pl:3612 oe.pl:3636 pe.pl:2788 rp.pl:1392 rp.pl:1653
@@ -952,35 +951,35 @@ msgid "Marked entries printed!"
 msgstr ""
 
 #: bp.pl:299
-msgid "Customer: [_1]"
+msgid "Customer: %1"
 msgstr ""
 
 #: bp.pl:300
-msgid "Vendor: [_1]"
+msgid "Vendor: %1"
 msgstr ""
 
 #: bp.pl:305 rp.pl:1968
-msgid "Account: [_1]"
+msgid "Account: %1"
 msgstr ""
 
 #: bp.pl:310
-msgid "Invoice Number: [_1]"
+msgid "Invoice Number: %1"
 msgstr ""
 
 #: bp.pl:315
-msgid "Order Number: [_1]"
+msgid "Order Number: %1"
 msgstr ""
 
 #: bp.pl:320
-msgid "Quotation Number: [_1]"
+msgid "Quotation Number: %1"
 msgstr ""
 
 #: bp.pl:326 rp.pl:1992
-msgid "From [_1]"
+msgid "From %1"
 msgstr ""
 
 #: bp.pl:332 rp.pl:1997
-msgid "To [_1]"
+msgid "To %1"
 msgstr ""
 
 #: bp.pl:367 is.pl:279 is.pl:1349 payment.pl:882 rp.pl:955
@@ -1114,11 +1113,11 @@ msgid "Adjusting till due to data entry error."
 msgstr ""
 
 #: gl.pl:193
-msgid "[_1] Cash Transfer Transaction"
+msgid "%1 Cash Transfer Transaction"
 msgstr ""
 
 #: gl.pl:196
-msgid "[_1] General Ledger Transaction"
+msgid "%1 General Ledger Transaction"
 msgstr ""
 
 #: gl.pl:265 ic.pl:859 ir.pl:816 is.pl:912 jc.pl:694 jc.pl:940 oe.pl:775
@@ -1171,7 +1170,7 @@ msgid "Expense"
 msgstr ""
 
 #: gl.pl:533
-msgid "General Ledger: [_1] [_2]"
+msgid "General Ledger: %1 %2"
 msgstr ""
 
 #: gl.pl:535
@@ -1229,11 +1228,11 @@ msgid "Email CSV Report"
 msgstr ""
 
 #: gl.pl:903
-msgid "GL report sent to [_1]"
+msgid "GL report sent to %1"
 msgstr ""
 
 #: gl.pl:1092
-msgid "Are you sure you want to delete Transaction [_1]"
+msgid "Are you sure you want to delete Transaction %1"
 msgstr ""
 
 #: gl.pl:1116
@@ -1661,11 +1660,11 @@ msgid "unexpected error!"
 msgstr ""
 
 #: ic.pl:3348
-msgid "[_1]: Vendor not on file!"
+msgid "%1: Vendor not on file!"
 msgstr ""
 
 #: ic.pl:3426
-msgid "[_1]: Customer not on file!"
+msgid "%1: Customer not on file!"
 msgstr ""
 
 #: ic.pl:3460 pe.pl:2284
@@ -1677,7 +1676,7 @@ msgid "Select from one of the names below"
 msgstr ""
 
 #: ic.pl:3584
-msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
+msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
 msgstr ""
 
 #: ic.pl:3761
@@ -1847,7 +1846,7 @@ msgid "Exchange rate for payment missing!"
 msgstr ""
 
 #: ir.pl:1295 is.pl:1365
-msgid "Invoice [_1] posted!"
+msgid "Invoice %1 posted!"
 msgstr ""
 
 #: ir.pl:1298 is.pl:1368
@@ -1855,7 +1854,7 @@ msgid "Cannot post invoice!"
 msgstr ""
 
 #: ir.pl:1320 is.pl:1414
-msgid "Are you sure you want to delete Invoice Number [_1]?"
+msgid "Are you sure you want to delete Invoice Number %1?"
 msgstr ""
 
 #: ir.pl:1335 is.pl:1436
@@ -2141,7 +2140,7 @@ msgid "Delete Timecard"
 msgstr ""
 
 #: jc.pl:1307
-msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
+msgid "Are you sure you want to delete time card for %1 %2 %3"
 msgstr ""
 
 #: jc.pl:1320
@@ -2865,7 +2864,7 @@ msgid "None"
 msgstr ""
 
 #: rp.pl:490 rp.pl:505
-msgid "[_1] To [_2]"
+msgid "%1 To %2"
 msgstr ""
 
 #: rp.pl:549
@@ -2881,11 +2880,11 @@ msgid "Trial Balance"
 msgstr ""
 
 #: rp.pl:648 rp.pl:1000 rp.pl:1743 rp.pl:1932 rp.pl:1973
-msgid "Department: [_1]"
+msgid "Department: %1"
 msgstr ""
 
 #: rp.pl:653
-msgid "Project Number: [_1]"
+msgid "Project Number: %1"
 msgstr ""
 
 #: rp.pl:704
@@ -2901,7 +2900,7 @@ msgid "Aged"
 msgstr ""
 
 #: rp.pl:1018
-msgid "for Period To [_1]"
+msgid "for Period To %1"
 msgstr ""
 
 #: rp.pl:1331
@@ -2921,11 +2920,11 @@ msgid "Copies"
 msgstr ""
 
 #: rp.pl:1425
-msgid "Statement - [_1]"
+msgid "Statement - %1"
 msgstr ""
 
 #: rp.pl:1547
-msgid "Statement sent to [_1]"
+msgid "Statement sent to %1"
 msgstr ""
 
 #: rp.pl:1671
@@ -2933,15 +2932,15 @@ msgid "Statements sent to printer!"
 msgstr ""
 
 #: rp.pl:1978
-msgid "Description: [_1]"
+msgid "Description: %1"
 msgstr ""
 
 #: rp.pl:1983
-msgid "Source: [_1]"
+msgid "Source: %1"
 msgstr ""
 
 #: rp.pl:1988
-msgid "Memo: [_1]"
+msgid "Memo: %1"
 msgstr ""
 
 #: rp.pl:2013
@@ -2953,7 +2952,7 @@ msgid "Batch Description"
 msgstr ""
 
 #: rp.pl:2023
-msgid "[_1] Number"
+msgid "%1 Number"
 msgstr ""
 
 #: rp.pl:2031
@@ -3097,7 +3096,7 @@ msgid "Delete Vouchers"
 msgstr ""
 
 #: sales_quotation.tex:62
-msgid "Fax: [_1]"
+msgid "Fax: %1"
 msgstr ""
 
 #: rc-reconciliation.html:71
@@ -3110,15 +3109,6 @@ msgstr ""
 
 #: rc-reconciliation.html:110 rp-search-payments.html:90
 msgid "Include Exchange Rate Difference"
-msgstr ""
-
-#: reconciliation/upload.html:30
-msgid ""
-",\n"
-"\t\tsize = 12\n"
-"\t} ?>\n"
-"\t<?lsmb INCLUDE input element_data = {\n"
-"\t\tname = "
 msgstr ""
 
 #: rc-display-form.html:78
@@ -3135,4 +3125,8 @@ msgstr ""
 
 #: Contact/contact.html:640
 msgid "Customer Invoice"
+msgstr ""
+
+#: UI/menu/expanding.html:43
+msgid "Logged into %1"
 msgstr ""

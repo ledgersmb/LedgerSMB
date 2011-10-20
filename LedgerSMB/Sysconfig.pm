@@ -114,16 +114,6 @@ for my $var (
     ${$var} = $config{''}{$var} if $config{''}{$var};
 }
 
-if ($latex){
-    eval { require Template::Latex }; # Trap errors loading this optional module
-    if ($!) { # Couldn't load  Template::Latex
-        print STDERR "WARNING: LedgerSMB configured to use LaTeX but module ";
-        print STDERR "Template::Latex did not load: $@\n";
-        print STDERR "Disabling LaTeX support\n";
-        $latex = 0;
-    };
-}
-
 %printer = %{ $config{printers} } if $config{printers};
 
 # ENV Paths
@@ -143,14 +133,6 @@ for my $var (qw(localepath spool templates images)) {
 # Programs
 for my $var (qw(gzip)) {
     ${$var} = $config{programs}{$var} if $config{programs}{$var};
-}
-
-# LaTeX and friends 
-for my $var (qw(pdflatex latex dvips)){
-    if ($latex and $config{programs}{$var}){
-        my $funcname = "${var}_path";
-        Template::Latex->$funcname( { $var => $config{programs}{$var} });
-    }
 }
 
 # mail configuration
