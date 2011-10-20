@@ -56,17 +56,20 @@ sub __edit_page {
         format => 'HTML', 
         path=>'UI'
     );
+    my @countries = $admin->get_countries();
+    my @salutations = $admin->get_salutations();
     my $template_data = 
             {
-                user=>$user_obj, 
-                roles=>@all_roles,
-                countries=>$admin->get_countries(),
-                user_roles=>$user_obj->{roles},
-                salutations=>$admin->get_salutations(),
+                           user => $user_obj, 
+                          roles => @all_roles,
+                      countries => $admin->get_countries(),
+                     user_roles => $user_obj->{roles},
                 default_country => $dcsetting->{value},
-                admin => $admin,
-                stylesheet => $request->{stylesheet},
+                          admin => $admin,
+                     stylesheet => $request->{stylesheet},
+                    salutations => \@salutations,
             };
+
     
     for my $key (keys(%{$otd})) {
         
@@ -121,11 +124,11 @@ sub save_user {
             {
                 user=>{user => $request, employee => $request}, 
                 countries=>$admin->get_countries(),
-                salutations=>$admin->get_salutations(),
+                stylesheet => $request->{stylesheet},
                 contact_classes=>$admin->get_contact_classes(),
                 default_country => $dcsetting->{value},
                 admin => $admin,
-                stylesheet => $request->{stylesheet},
+                salutations=>$admin->get_salutations(),
             }
           );
           return;

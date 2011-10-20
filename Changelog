@@ -9,6 +9,7 @@ Changelog for LedgerSMB 1.3.2
 * Made errors saving chart of accounts entry more friendly (Chris T)
 * Fixed permissions issue involving yearend (Chris T)
 * Fixed filename issue in install.sh (Chris T)
+* Fixed stylesheet/salutations display issue in user editing screen (Chris T)
 
 Changelog for LedgerSMB 1.3.1
 * Language selection for invoice templates fixed (Chris T)
