@@ -40,8 +40,6 @@ sub new_company {
 eval { do "scripts/custom/vendor.pl"};
     
 
-=back
-
 =head1 INHERITS
 
 LedgerSMB::ScriptLib::Company

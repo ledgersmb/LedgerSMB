@@ -37,8 +37,6 @@ sub new_company {
 }
 
 
-=back
-
 =head1 INHERITS
 
 LedgerSMB::ScriptLib::Company

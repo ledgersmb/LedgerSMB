@@ -11,6 +11,8 @@ BEGIN {
    use LedgerSMB::SODA;
    LedgerSMB::SODA->register_type({sql_type => 'date', 
                                  perl_class => 'LedgerSMB::PGDate');
+   LedgerSMB::SODA->register_type({sql_type => 'datetime', 
+                                 perl_class => 'LedgerSMB::PGDate');
    LedgerSMB::SODA->register_type({sql_type => 'timestamp', 
                                  perl_class => 'LedgerSMB::PGDate');
 }
@@ -150,7 +152,7 @@ sub _parse_string {
         if ($has_time or ! defined $has_time){
             my $parser = new DateTime::Format::Strptime(
                      pattern => $fmt . ' %T',
-                      locale => $LedgerSMB::Web_App::Locale->{datetime},
+                      locale => $LedgerSMB::App_State::Locale->{datetime},
            }
             if (my $dt = $parser->parse_datetime($string)){
                 return $dt;
@@ -159,7 +161,7 @@ sub _parse_string {
         if (!$has_time or ! defined $has_time){
             my $parser = new DateTime::Format::Strptime(
                      pattern => $fmt,
-                      locale => $LedgerSMB::Web_App::Locale->{datetime},
+                      locale => $LedgerSMB::App_State::Locale->{datetime},
             }
             if (my $dt = $parser->parse_datetime($string)){
                 return $dt;
@@ -171,7 +173,7 @@ sub _parse_string {
 
 sub from_input{
     my ($self, $input, $has_date) = @_;
-    my $format = $LedgerSMB::Web_App::user->dateformat;
+    my $format = $LedgerSMB::App_State::User->dateformat;
     my $dt =  _parse_string($self, $input, $format, $has_time);
     return $self->new({date => $dt});
 }
@@ -186,10 +188,10 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 sub to_output {
     my ($self) = @_;
-    my $fmt = $formats->{$LedgerSMB::Web_App::user->dateformat}->[0];
+    my $fmt = $formats->{$LedgerSMB::App_State::User->dateformat}->[0];
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
-              locale => $LedgerSMB::Web_App::Locale->{datetime},
+              locale => $LedgerSMB::App_State::Locale->{datetime},
             on_error => 'croak',
     }
     return $formatter->format_datetime($self->date);
@@ -228,7 +230,7 @@ sub to_db {
     $fmt .= ' %T' if ($self->date->hour);
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
-              locale => $LedgerSMB::Web_App::Locale->{datetime},
+              locale => $LedgerSMB::App_State::Locale->{datetime},
             on_error => 'croak',
     }
     return $formatter->format_datetime($self->date);

@@ -475,10 +475,6 @@ sub delete_report {
     return search($request);
 }
 
-=pod
-
-=over
-
 =item approve ($self, $request, $user)
 
 Requires report_id
@@ -488,8 +484,6 @@ configured so as to disallow the same user from approving, as created the report
 
 Returns a success page on success, returns a new report on failure, showing 
 the uncorrected entries.
-
-=back
 
 =cut
 
@@ -544,17 +538,11 @@ sub approve {
     }
 }
 
-=pod
-
-=over
-
 =item pending ($self, $request, $user)
 
 Requires {date} and {month}, to handle the month-to-month pending transactions
 in the database. No mechanism is provided to grab ALL pending transactions 
 from the acc_trans table.
-
-=back
 
 =cut
 
@@ -612,7 +600,7 @@ sub __default {
  eval { do "scripts/custom/recon.pl" };
 1;
 
-=pod
+=back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 

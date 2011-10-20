@@ -37,8 +37,6 @@ use LedgerSMB::Form;
 
 Display the filter screen by default.
 
-=back
-
 =cut
 
 sub __default {
@@ -71,13 +69,9 @@ sub __default {
 
 =pod
 
-=over
-
 =item add_taxform
 
 Display the "add taxform" screen.
-
-=back
 
 =cut
 
@@ -256,6 +250,8 @@ sub list_all {
         rows => \@rows,
     });
 }
+
+=back
 
 =head1 Copyright (C) 2010 The LedgerSMB Core Team
 

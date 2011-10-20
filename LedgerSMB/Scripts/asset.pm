@@ -922,7 +922,7 @@ sub disposal_details {
     });
 }
 
-=sub disposal_details_approve
+=item disposal_details_approve
 
 Pass through function for form-dynatable's action munging.  An lias for 
 report_details_approve.
@@ -933,7 +933,7 @@ sub disposal_details_approve {
     report_details_approve(@_);
 }
 
-=iten report_details_approve
+=item report_details_approve
 
 Approves disposal details.  id must be set,
 
