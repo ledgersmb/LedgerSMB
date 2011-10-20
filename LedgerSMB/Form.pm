@@ -789,99 +789,11 @@ sub format_amount {
        $places= $self->{money_precision};
     }
     $amount = $self->parse_amount( $myconfig, $amount );
-    $negative = ( $amount < 0 );
-    $amount =~ s/-//;
-
-    if ( $places =~ /\d+/ ) {
-
-        #$places = 4 if $places == 2;
-        $amount = $self->round_amount( $amount, $places );
-    }
-
-    # is the amount negative
-
-    # Parse $myconfig->{numberformat}
-
-    my ( $ts, $ds ) = ( $1, $2 );
-
-    if ($amount) {
-
-        if ( $myconfig->{numberformat} ) {
-
-            my ( $whole, $dec ) = split /\./, "$amount";
-
-            $dec = "" unless defined $dec;
-
-            $amount = join '', reverse split //, $whole;
-
-            if ($places) {
-                $dec .= "0" x $places;
-                $dec = substr( $dec, 0, $places );
-            }
-
-            if ( $myconfig->{numberformat} eq '1,000.00' ) {
-                $amount =~ s/\d{3,}?/$&,/g;
-                $amount =~ s/,$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= "\.$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $myconfig->{numberformat} eq '1 000.00' ) {
-                $amount =~ s/\d{3,}?/$& /g;
-                $amount =~ s/\s$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= "\.$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $myconfig->{numberformat} eq "1'000.00" ) {
-                $amount =~ s/\d{3,}?/$&'/g;
-                $amount =~ s/'$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= "\.$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $myconfig->{numberformat} eq '1.000,00' ) {
-                $amount =~ s/\d{3,}?/$&./g;
-                $amount =~ s/\.$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= ",$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $myconfig->{numberformat} eq '1000,00' ) {
-                $amount = "$whole";
-                $amount .= ",$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $myconfig->{numberformat} eq '1000.00' ) {
-                $amount = "$whole";
-                $amount .= ".$dec" if ( $dec ne "" );
-            }
-
-            if ( $dash =~ /-/ ) {
-                $amount = ($negative) ? "($amount)" : "$amount";
-            }
-            elsif ( $dash =~ /DRCR/ ) {
-                $amount = ($negative) ? "$amount DR" : "$amount CR";
-            }
-            else {
-                $amount = ($negative) ? "-$amount" : "$amount";
-            }
-        }
-
-    }
-    else {
-
-        if ( $dash eq "0" && $places ) {
-
-            if ( $myconfig->{numberformat} =~ /0,00$/ ) {
-                $amount = "0" . "," . "0" x $places;
-            }
-            else {
-                $amount = "0" . "." . "0" x $places;
-            }
-
-        }
-        else {
-            $amount = ( $dash ne "" ) ? "$dash" : "";
-        }
-    }
-
-    $amount;
+    return $amount->to_output({
+               places => $places,
+                money => $self->{money_precision},
+           neg_format => $dash,
+    });
 }
 
 =item $form->parse_amount($myconfig, $amount);
@@ -901,49 +813,14 @@ sub parse_amount {
 
     #if ( ( $amount eq '' ) or ( ! defined $amount ) ) {
     if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
-        $amount = Math::BigFloat->bzero();
+        $amount = '0';
     }
 
-    if ( UNIVERSAL::isa( $amount, 'Math::BigFloat' ) )
+    if ( UNIVERSAL::isa( $amount, 'LedgerSMB::PGNumeric' ) )
     {    # Amount may not be an object
         return $amount;
     }
-    my $numberformat = $myconfig->{numberformat};
-    $numberformat = "" unless defined $numberformat;
-
-    if (   ( $numberformat eq '1.000,00' )
-        || ( $numberformat eq '1000,00' ) )
-    {
-
-        $amount =~ s/\.//g;
-        $amount =~ s/,/./;
-    }
-    elsif ( $numberformat eq '1 000.00' ) {
-        $amount =~ s/\s//g;
-    }
-    elsif ( $numberformat eq "1'000.00" ) {
-        $amount =~ s/'//g;
-    }
-
-    $amount =~ s/,//g;
-    if ( $amount =~ s/\((\d*\.?\d*)\)/$1/ ) {
-        $amount = $1 * -1;
-    }
-    elsif ( $amount =~ s/(\d*\.?\d*)\s?DR/$1/ ) {
-        $amount = $1 * -1;
-    }
-    $amount =~ s/\s?CR//;
-
-    $amount =~ /(\d*)\.(\d*)/;
-
-    #my $decimalplaces = length $1 + length $2;
-
-    $amount = new Math::BigFloat($amount);
-    if ($amount->is_nan){
-        $self->error("Invalid number detected during parsing");
-    }
-
-    return ( $amount * 1 );
+    return LedgerSMB::PGNumeric->from_input($amount);
 }
 
 =item $form->round_amount($amount, $places);

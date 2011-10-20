@@ -128,11 +128,6 @@ sub from_input {
     $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
 
-    my $places = ($args{places}) ? $args{places} : undef;
-    $places = $LedgerSMB::Sysconfig::decimal_places if $args{money};
-
-    $DECIMAL_FILL    = 0;
-    $DECIMAL_DIGITS  = $places if defined $places;
     $THOUSANDS_SEP   = $lsmb_formats->{format}->{thousands_sep};
     $DECIMAL_POINT   = $lsmb_formats->{format}->{decimal_sep};
     my $pgnum = $self->new(unformat_number($string));
@@ -172,12 +167,17 @@ sub to_output {
     my ($self) = shift;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
     my $is_neg = $self->is_neg;
-    $self->bmul(-1) if $is_neg;
+    $self->babs;
 
     my $str = $self->bstr;
     $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
 
+    my $places = $LedgerSMB::Sysconfig::decimal_places if $args{money};
+    $places = ($args{places}) ? $args{places} : $places;
+
+    $DECIMAL_FILL    = 0;
+    $DECIMAL_DIGITS  = $places if defined $places;
     $THOUSANDS_SEP   = $lsmb_formats->{format}->{thousands_sep};
     $DECIMAL_POINT   = $lsmb_formats->{format}->{decimal_sep};
     $str = format_number($str);

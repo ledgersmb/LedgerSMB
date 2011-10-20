@@ -203,7 +203,7 @@ around the code everywhere.
 
 use CGI::Simple;
 $CGI::Simple::DISABLE_UPLOADS = 0;
-use Math::BigFloat;
+use LedgerSMB::PGNumeric;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use Error;
@@ -531,7 +531,10 @@ sub format_amount {
     my $dash     = $args{neg_format};
     my $format   = $args{format};
 
-    $dash = "" unless defined $dash;
+    if (defined $amount and ! UNIVERSAL::isa($amount, 'LedgerSMB::PGNumeric' )) {
+        $amount = $self->parse_amount('user' => $myconfig, 'amount' => $amount);
+    }
+    $dash = undef unless defined $dash;
 
     if (!defined $format){
        $format = $myconfig->{numberformat}
@@ -543,149 +546,22 @@ sub format_amount {
        $places = $LedgerSMB::Sysconfig::decimal_places;
     }
 
-    my $negative;
-    if (defined $amount and ! UNIVERSAL::isa($amount, 'Math::BigFloat' )) {
-        $amount = $self->parse_amount( 'user' => $myconfig, 'amount' => $amount );
-    }
-    $negative = ( $amount < 0 );
-    $amount->babs();
-
-    $places = "" unless defined $places;
-    if ( $places =~ /\d+/ ) {
-
-        #$places = 4 if $places == 2;
-        $amount = $self->round_amount( $amount, $places );
-    }
-
-    # is the amount negative
-
-    # Parse $myconfig->{numberformat}
-
-    my ( $ts, $ds ) = ( $1, $2 );
-
-    if (defined $amount) {
-
-        if ( $format ) {
-
-            my ( $whole, $dec ) = split /\./, "$amount";
-            $dec = "" unless defined $dec;
-            $amount = join '', reverse split //, $whole;
-
-            if ($places) {
-                $dec .= "0" x $places;
-                $dec = substr( $dec, 0, $places );
-            }
-
-            if ( $format eq '1,000.00' ) {
-                $amount =~ s/\d{3,}?/$&,/g;
-                $amount =~ s/,$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= "\.$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $format eq '1 000.00' ) {
-                $amount =~ s/\d{3,}?/$& /g;
-                $amount =~ s/\s$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= "\.$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $format eq "1'000.00" ) {
-                $amount =~ s/\d{3,}?/$&'/g;
-                $amount =~ s/'$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= "\.$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $format eq '1.000,00' ) {
-                $amount =~ s/\d{3,}?/$&./g;
-                $amount =~ s/\.$//;
-                $amount = join '', reverse split //, $amount;
-                $amount .= ",$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $format eq '1000,00' ) {
-                $amount = "$whole";
-                $amount .= ",$dec" if ( $dec ne "" );
-            } 
-	    elsif ( $format eq '1000.00' ) {
-                $amount = "$whole";
-                $amount .= ".$dec" if ( $dec ne "" );
-            }
-
-            if ( $dash =~ /-/ ) {
-                $amount = ($negative) ? "($amount)" : "$amount";
-            }
-            elsif ( $dash =~ /DRCR/ ) {
-                $amount = ($negative) ? "$amount DR" : "$amount CR";
-            }
-            else {
-                $amount = ($negative) ? "-$amount" : "$amount";
-            }
-        }
-
-    }
-    else {
-
-        if ( $dash eq "0" && $places ) {
-
-            if ( $format =~ /0,00$/ ) {
-                $amount = "0" . "," . "0" x $places;
-            }
-            else {
-                $amount = "0" . "." . "0" x $places;
-            }
-
-        }
-        else {
-            $amount = ( $dash ne "" ) ? "$dash" : "";
-        }
-    }
-
-    $amount;
+    return $amount->to_output({format => $format, 
+                           neg_format => $dash, 
+                               places => $precision,
+                                money => $args{money},
+           });
 }
 
-# This should probably go to the User object too.
+# For backwards compatibility only
 sub parse_amount {
     my $self     = shift @_;
     my %args     = @_;
-    my $myconfig = $args{user} || $self->{_user};
     my $amount   = $args{amount};
-
-    if ( ! defined $amount or $amount eq '' ) {
-        return Math::BigFloat->bzero();
-    }
-
-    if ( UNIVERSAL::isa( $amount, 'Math::BigFloat' ) )
-    {   #Avoiding double-parse issues 
+    if (UNIVERSAL::isa($amount, 'LedgerSMB::PGNumeric')){
         return $amount;
-    }
-    my $numberformat = $myconfig->{numberformat};
-    $numberformat = "" unless defined $numberformat;
-
-    if (   ( $numberformat eq '1.000,00' )
-        || ( $numberformat eq '1000,00' ) )
-    {
-
-        $amount =~ s/\.//g;
-        $amount =~ s/,/./;
-    }
-    elsif ( $numberformat eq '1 000.00' ) {
-        $amount =~ s/\s//g;
-    }
-    elsif ( $numberformat eq "1'000.00" ) {
-        $amount =~ s/'//g;
-    }
-
-    $amount =~ s/,//g;
-    if ( $amount =~ s/\((\d*\.?\d*)\)/$1/ ) {
-        $amount = $1 * -1;
-    }
-    elsif ( $amount =~ s/(\d*\.?\d*)\s?DR/$1/ ) {
-        $amount = $1 * -1;
-    }
-    $amount =~ s/\s?CR//;
-    $amount = new Math::BigFloat($amount);
-    if ($amount->is_nan){
-        $self->error("Invalid number detected during parsing");
-    }
-    return ( $amount * 1 );
+    } 
+    return LedgerSMB::PGNumeric->from_inout($amount); 
 }
 
 sub round_amount {
