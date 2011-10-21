@@ -49,6 +49,7 @@
                 </td>
             </tr>
             <?lsmb END ?>
+            <?lsmb UNLESS user.employee.entity_id ?>
             <tr>
                 <td><?lsmb text('Import') ?></td>
                 <?lsmb 
@@ -73,35 +74,53 @@
                            name    = 'import'
                            type    = 'radio'
                    } ?>
-            <tr>
+            </tr>
+            <?lsmb END # unless user.employee.entity_id ?>
+            <?lsmb UNLESS user.employee.entity_id ?>
+            <tr><td>&nbsp;</td>
                 <td>
                     <select name="salutation">
                         <?lsmb FOREACH sal = salutations ?>
                             <option value="<?lsmb sal.id?>"><?lsmb sal.salutation?></option>
                         <?lsmb END?>
                     </select>
+                       
                 </td>
             </tr>
+            <?lsmb END ?>
             
             <tr>
                 <td><?lsmb ('First Name') ?></td>
                 <td>
+                    <?lsmb IF user.employee.entity_id;
+                               user.employee.first_name;
+                           ELSE; ?>
                     <input type="text" name="first_name" value="<?lsmb user.employee.first_name?>"/>
+                   <?lsmb END ?>
                 </td>
             </tr>
             
             <tr>
                 <td><?lsmb text('Last Name') ?></td>
                 <td>
+                    <?lsmb IF user.employee.entity_id;
+                               user.employee.last_name;
+                           ELSE; ?>
                     <input type="text" name="last_name" value="<?lsmb user.employee.last_name?>"/>
+                   <?lsmb END ?>
                 </td>
             </tr>
             <tr>
                 <td><?lsmb text('Employee No.') ?></td>
                 <td>
+                    <?lsmb IF user.employee.entity_id;
+                               user.employee.employeenumber;
+                           ELSE; ?>
                     <input type="textarea" name="employeenumber" value="<?lsmb user.employee.employeenumber?>"/>
+                   <?lsmb END ?>
                 </td>
             </tr>
+           <?lsmb UNLESS user.employee.entity_id ?>
             <tr>
                 <td><?lsmb text('Country') ?></td>
                 <td>
@@ -119,8 +138,13 @@
                     } ?>
                 </td>
             </tr>
+            <?lsmb END ?>
         </table>
+           <?lsmb IF user.employee.entity_id ?>
+        <button type="submit" value="save_user"><?lsmb text('Set Password') ?>
+           <?lsmb ELSE ?>
         <button type="submit" value="save_user"><?lsmb text('Save User') ?>
+           <?lsmb END ?>
         </button>
     </form>
     <?lsmb IF user.user.username AND user.user.import != 1 ?>
