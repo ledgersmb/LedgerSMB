@@ -89,6 +89,9 @@ Donna Robinson [email omitted] contributed some fixes to the HTML code.
 Jason Rodrigues <jasonjayr+ledgersmb @ gmail.com> provided the logic to force 
 the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
 
+Frans van der Star <f.van.der.star @ gmail.com> provided additional 
+documentation regarding Ubuntu 11.10 installation.
+
 Victor Sterpu <victor @ ambra.ro> has contributed some bug fixes to COGS 
 handling.
 
