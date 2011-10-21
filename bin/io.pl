@@ -241,6 +241,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         }
         my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
         $dec = length $dec;
+        $dec ||= $moneyplaces;
         $form->{"precision_$i"} ||= $dec;
         $dec =  $form->{"precision_$i"};
         $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
@@ -261,6 +262,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                     if ( ( $p * 1 ) && ( $form->{"qty_$i"} >= ( $q * 1 ) ) ) {
                         ($dec) = ( $p =~ /\.(\d+)/ );
                         $dec = length $dec;
+                        $dec ||= $moneyplaces;
                         $decimalplaces = ( $dec > $moneyplaces ) 
                                         ? $dec 
                                         : $moneyplaces;
@@ -644,13 +646,16 @@ sub item_selected {
             $form->{"partsgroup_$i"} =
               qq|$form->{"new_partsgroup_$j"}--$form->{"new_partsgroup_id_$j"}|;
 
+            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
             ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
             $dec = length $dec;
-            $decimalplaces1 = ( $dec > 2 ) ? $dec : 2;
+            $dec ||=$moneyplaces;
+            $decimalplaces1 = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
 
             ($dec) = ( $form->{"lastcost_$i"} =~ /\.(\d+)/ );
             $dec = length $dec;
-            $decimalplaces2 = ( $dec > 2 ) ? $dec : 2;
+            $dec ||=$moneyplaces;
+            $decimalplaces2 = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
 
             # if there is an exchange rate adjust sellprice
             if ( ( $form->{exchangerate} * 1 ) ) {
