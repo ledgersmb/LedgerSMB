@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use Test::More tests => 55;
 
+use_ok('LedgerSMB::Sysconfig') 
+    || BAIL_OUT('System Configuration could be loaded!');
 use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
 use_ok('LedgerSMB::AM');
@@ -43,7 +45,6 @@ use_ok('LedgerSMB::PriceMatrix');
 use_ok('LedgerSMB::RP');
 use_ok('LedgerSMB::Auth');
 use_ok('LedgerSMB::DBObject::Reconciliation');
-use_ok('LedgerSMB::Sysconfig');
 use_ok('LedgerSMB::Tax');
 use_ok('LedgerSMB::Template');
 use_ok('LedgerSMB::Template::Elements');
