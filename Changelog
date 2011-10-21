@@ -20,6 +20,8 @@ Changelog for LedgerSMB 1.3.2
 * Correcting LedgerSMB.pot (bug reported by Herman V) (Chris T)
 * Documented parameterized translation syntax for .po files (Herman V)
 * Added en_GB and en_US to language table for new installations (Chris T)
+* Added check for system configuration before tests begin (Chris T)
+* Clarified password reset interface for user management (Chris T)
 
 Changelog for LedgerSMB 1.3.1
 * Language selection for invoice templates fixed (Chris T)

@@ -166,7 +166,7 @@ sub new_user {
     my $request = shift @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     
-    my $sal = $admin->get_salutations();
+    my @sal = $admin->get_salutations();
     
     my $groups = $admin->get_roles();
     my $user = $request->{_user};
@@ -183,7 +183,7 @@ sub new_user {
     
         $template->render(
             {
-                salutations=>$sal,
+                salutations=>\@sal,
                 roles=>$groups,
                 countries=>$admin->get_countries(),
                 stylesheet => $request->{stylesheet},
