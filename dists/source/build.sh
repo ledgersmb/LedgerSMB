@@ -2,7 +2,7 @@
 
 # Simple script to prepare for release
 
-version="1.3.1_snap";
+version="1.3.2";
 build_d="../release";
 
 if test -d $build_d/ledgersmb; then
