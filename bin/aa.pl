@@ -909,8 +909,11 @@ sub update {
         $count = 0;
         @a     = ();
         for $i ( 1 .. $form->{rowcount} ) {
+            if (!$form->{"amount_$i"}){
+               $form->{"amount_$i"} = "0.00";
+            }
             $form->{"amount_$i"} =
-              $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
+                 $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
             if ( $form->{"amount_$i"} ) {
                 push @a, {};
                 $j = $#a;
@@ -966,6 +969,9 @@ sub update {
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {
+        if (!$form->{"tax_$_"}){
+           $form->{"tax_$_"} = '0.00';
+        }
         $form->{"tax_$_"} =
           $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
     }
@@ -979,6 +985,9 @@ sub update {
                 $form->{"${_}_$j"} = $form->{"${_}_$i"};
             }
             for (qw(paid exchangerate)) {
+                if (!$form->{"${_}_$j"}){
+                   $form->{"${_}_$j"} = '0.00';
+                }
                 $form->{"${_}_$j"} =
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
             }
