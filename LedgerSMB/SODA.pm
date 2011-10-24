@@ -14,9 +14,10 @@ use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 
-our $VERSION = "1.0"
+our $VERSION = "1.0";
 
 =head1 SYNOPSIS
+
 This provides better database integration than LedgerSMB::DBObject, which has
 been left in place for backwards compatibility.  LedgerSMB::SODA provides
 services for loosely tying the application to the database through interface
@@ -30,16 +31,15 @@ In LedgerSMB 1.4 new code, all database access should go through here.
 
 =cut
 
-# Broken, fix --CT
 # also add inline constraint to ensure autocommit is off
-has dbh => (isa => 'DBI', is => 'rw', required => 1);
+has (dbh => (isa => 'DBI', is => 'rw', required => 1));
 
 =item dbh
 This is the database handle through which all access to the database goes.
 
 =cut
 
-has dbroles => (isa => 'Arrayref[Str]', is=> 'rw', required => 0);
+has (dbroles => (isa => 'Arrayref[Str]', is=> 'rw', required => 0));
 
 =item dbroles
 List of database roles for the current logged in user.  This can be specified
@@ -47,14 +47,14 @@ in the constructor or discovered later with LedgerSMB::SODA->get_roles
 
 =cut
 
-has db => (isa => 'Str', is=> 'ro', required => 1);
+has (db => (isa => 'Str', is=> 'ro', required => 1));
 
 =item db
 Name of the current database
 
 =cut
 
-has username => (isa => 'Str', is=>'ro', required => 1);
+has (username => (isa => 'Str', is=>'ro', required => 1));
 
 =item username
 Name of the current logged in user.
@@ -85,29 +85,35 @@ be supported with minimal effort.
 
 =cut
 
-around BUILDARGS => {
+around (BUILDARGS => sub {
     my $self = shift @_;
     my $orig = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     if ($args{username}){
        # TODO  Add DBI Connection
-       my $dbh = "...";
-       $orig({ db => $args{db}, dbh => $dbh, username => $args{username} });
+       my $dbh = DBI->connect("dbi:Pg:dbname=$args{db}", $args{username}, 
+                            $args{cred}, 
+                            { AutoCommit => 0 }
+       );
+       return $orig({ db => $args{db}, 
+                     dbh => $dbh, 
+                username => $args{username} });
     } else {
-       ($username, $cred) = LedgerSMB::Auth->get_credentials();
-       return BUILDARGS({ db => $args{db}, 
+       my ($username, $cred) = LedgerSMB::Auth->get_credentials();
+       return &BUILDARGS({ db => $args{db}, 
                     username => $username, 
                         cred => $cred });
     }
-};
+});
 
-around BUILD => {
+around (BUILD => sub {
     my $self = shift @_;
     my $orig = shift @_;
-    $orig(@_);
+    $self = &$orig($self, @_);
     $self->_get_roles();
     $self->dbh->pg_learn_custom_types;
-};
+    return $self;
+});
 
 =head1 METHODS
 
@@ -142,7 +148,8 @@ user, false otherwise.
 =cut
 
 sub is_allowed_role {
-    my $self = @_;
+    my $self = shift @_;
+    my ($rolename) = (@_);
     my $dbh = $self->dbh;
     
     my $prefix = $LedgerSMB::Sysconfig::role_prefix;
@@ -338,29 +345,30 @@ order follows same semantics as the argument to the main
 To these are added the following pre-defined windows:
 
 =over 
-=cut
-my @pre_defined_windows = (
-         { name => "rows_unbounded_pre"
-           spec => "ROWS UNBOUNDED PRECEDING" },
 
 =item rows_unbounded_pre
-ROWS UNBOUNDED PRECEDING
 
-=cut
-         { name => "rows_bw_unbounded_pre_and_current",
-           spec => "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW" },
+ROWS UNBOUNDED PRECEDING
 
 =item rows_bw_unbounded_pre_and_current
 ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
 
+=item rows_bw_unbounded_pre_and_following
+ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+
 =cut
+
+my @predef_windows = (
+         { name => "rows_unbounded_pre",
+           spec => "ROWS UNBOUNDED PRECEDING" },
+
+         { name => "rows_bw_unbounded_pre_and_current",
+           spec => "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW" },
+
          { name => "rows_bw_unbounded_pre_and_following",
            spec => "ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING"},
 );
 
-
-=item rows_bw_unbounded_pre_and_following
-ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
 
 =cut
 
@@ -436,7 +444,11 @@ However if we want to run this with a running total, we can:
 
 sub soda_method {
     my ($self) = shift @_;
+    my $dbh = $self->dbh;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
+    my $caller = $args{caller};
+    my $method = $args{method};
+
     my $schema   = $args{schema} || $LedgerSMB::Sysconfig::db_namespace;
     if (!keys %$sql_type_cache){
         $self->_learn_all_types;
@@ -448,7 +460,7 @@ sub soda_method {
     for my $agg ($args{aggs}){
         $col_list .= ", " . $dbh->quote_identifier($agg->{agg});
         $col_list .= '(' . $self->_ids_to_string($agg->{cols}) . ')';
-        $col_list .= " AS " $dbh->quote_identifier($agg->{alias});
+        $col_list .= " AS " . $dbh->quote_identifier($agg->{alias});
     } 
 
     my @sproc_arg_list = $self->_get_arg_list({schema => $schema, 
@@ -458,12 +470,12 @@ sub soda_method {
 
     for my $arg (@sproc_arg_list){
         if ($arg =~ s/^(in_|arg_)//){
-            push @arg_list, $args{$args}->{arg};
+            push @arg_list, $args{args}->{$arg};
         } elsif ($arg =~ s/^prop_//){
             push @arg_list, $args{$caller}->{arg};
         } else {
             warn "Bad argument name $arg in soda_method, method $method";
-            push @arg_list, $args{$args}->{arg};
+            push @arg_list, $args{args}->{$arg};
         }
         if ($arg_clause eq ''){
             $arg_clause = '?';
@@ -511,7 +523,9 @@ sub _quote_identifiers{
 # on name at present, so functions are guaranteed to be unique by name.
 
 sub _get_arg_list {
-    my ($self, $args} = @_;
+    my ($self, $args) = @_;
+    my $funcname = $args->{method};
+    my $schema   = $args->{schema};
     my $dbh = $self->dbh;
     my $query = "
         SELECT proname, pronargs, proargnames FROM pg_proc 
@@ -573,53 +587,52 @@ here are:
 
 =over
 
+=item Internal Database Error
+SQL State 42883.  Undefined function.  This is always a bug or an issue with the
+database being out of sync with the application.
+
+=item Access Denied
+Insufficient permissions to perform the operation.  Corresponds to SQL States
+42501 and 42401.
+
+=item Invalid date/time entered
+SQL State 22008.  The date or time entered was not in a valid format.
+
+=item Division by 0 error
+
+=item Required input not provide
+This occurs when a NOT NULL constraint is violated.  SQL states 22004 and 23502
+
+=item Conflict with Existing Data
+SQL State 23505, indivates that a unique constraint has been violated.
+
+=item Error from Function: $errstr
+P0001:  There was an unhandled exception in a function.
+
 =cut
 # Private method, should throw exception but process the out put and log errors
 # before so doing.  Replaces LedgerSMB->dberror.
 
 sub _dberror {
+    my ($self) = shift @_;
+    my $locale = $LedgerSMB::App_State::Locale;
+    my $sqlstate = $self->dbh->sqlstate;
+    #TODO Move these to registered error messages --CT
        my $state_error = {
-
-=item Internal Database Error
-SQL State 42883.  Undefined function.  This is always a bug or an issue with the
-database being out of sync with the application.
-
-=cut
-            '42883' => $self->locale->text('Internal Database Error'),
-=item Access Denied
-Insufficient permissions to perform the operation.  Corresponds to SQL States
-42501 and 42401.
-
-=cut
-            '42501' => $self->locale->text('Access Denied'),
+            '42883' => $locale->text('Internal Database Error'),
+            '42501' => $locale->text('Access Denied'),
 # Does 42401 actually exist? --CT
-            '42401' => $self->locale->text('Access Denied'),
-=item Invalid date/time entered
-SQL State 22008.  The date or time entered was not in a valid format.
-
-=cut
-            '22008' => $self->locale->text('Invalid date/time entered'),
-=item Division by 0 error
-=cut
-            '22012' => $self->locale->text('Division by 0 error'),
-=item Required input not provide
-This occurs when a NOT NULL constraint is violated.  SQL states 22004 and 23502
-
-=cut
-            '22004' => $self->locale->text('Required input not provided'),
-            '23502' => $self->locale->text('Required input not provided'),
-=item Conflict with Existing Data
-SQL State 23505, indivates that a unique constraint has been violated.
-
-=cut
-            '23505' => $self->locale->text('Conflict with Existing Data'),
-=item Error from Function: $errstr
-P0001:  There was an unhandled exception in a function.
-
-=cut
-            'P0001' => $self->locale->text('Error from Function') . ":\n" .
-                    $self->{dbh}->errstr,
+            '42401' => $locale->text('Access Denied'),
+            '22008' => $locale->text('Invalid date/time entered'),
+            '22012' => $locale->text('Division by 0 error'),
+            '22004' => $locale->text('Required input not provided'),
+            '23502' => $locale->text('Required input not provided'),
+            '23505' => $locale->text('Conflict with Existing Data'),
+            'P0001' => $locale->text('Error from Function') . ":\n" .
+                    $self->dbh->errstr,
        };
+    #TODO add logging before raising exception --CT
+    die "LedgerSMB::SODA $sqlstate";
 };
 
 

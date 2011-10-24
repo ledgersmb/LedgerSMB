@@ -208,6 +208,7 @@ use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use Error;
 use LedgerSMB::Auth;
+use LedgerSMB::Session;
 use LedgerSMB::CancelFurtherProcessing;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
@@ -330,7 +331,7 @@ sub new {
     if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
        #check for valid session unless this is an inital authentication
        #request -- CT
-       if (!LedgerSMB::Auth::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
+       if (!LedgerSMB::Session::check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
             $logger->error("Session did not check");
             $self->_get_password("Session Expired");
             exit;
