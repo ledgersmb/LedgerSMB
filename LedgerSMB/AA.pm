@@ -747,7 +747,7 @@ sub delete_transaction {
 
     $form->audittrail( $dbh, "", \%audittrail );
     my $query = qq|DELETE FROM ac_tax_form WHERE entry_id IN
-                   SELECT entry_id FROM acc_trans WHERE trans_id = ?|;
+                   (SELECT entry_id FROM acc_trans WHERE trans_id = ?)|;
     $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
 
     $query = qq|DELETE FROM $table WHERE id = ?|;
