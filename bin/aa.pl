@@ -1207,7 +1207,6 @@ sub update {
             }
         }
     }
-    ##to do,test for some debug_level,$form->debug('/tmp/aa.debug2');
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {

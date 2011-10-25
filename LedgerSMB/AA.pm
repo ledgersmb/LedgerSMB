@@ -30,6 +30,7 @@ package AA;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Log;
 use LedgerSMB::File;
+use Math::BigFloat;
 
 my $logger = Log::Log4perl->get_logger("AA");
 
@@ -1337,8 +1338,8 @@ sub get_name {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} )
       || $form->dberror($query);
-
-    ( $form->{creditremaining} ) -= $sth->fetchrow_array;
+    my ($credit_rem) = $sth->fetchrow_array;
+    ( $form->{creditremaining} ) -= Math::BigFloat->new($credit_rem);
 
     $sth->finish;
     if ( $form->{vc} ne "customer" ) {
