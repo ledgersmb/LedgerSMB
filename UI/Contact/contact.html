@@ -8,6 +8,7 @@
 	]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
+<?lsmb IF !country_id; country_id = default_country; END -?>
 <?lsmb 
 # Adding the action requirement to the conditional because otherwise it still
 # breaks.  --CT
@@ -147,12 +148,11 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 } ?>
 </div>
 <div class="input_group">
-       <?lsmb IF !country_id; country_id = default_country; END -?>
        <?lsmb country_list.unshift({}) ?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
-			default_values = [country_id_t]
+			default_values = [country_id]
 			options = country_list
 			name = "country_id"
 			label = text('Country') 
@@ -317,14 +317,13 @@ END ?>
 	} ?>
 </div>
 <div class="input_group2">
-       <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
        <?lsmb country_list.unshift({}) ?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
-			default_values = [country_id_t]
+			default_values = [country_id]
 			options = country_list
-			name = "country_id_t"
+			name = "country_id"
 			label = text('Country') 
 	} ?> 
 </div>

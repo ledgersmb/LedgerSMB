@@ -614,7 +614,7 @@ account.$$;
 CREATE OR REPLACE FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id_t int
+    in_entity_id int, in_sic_code text,in_country_id int
 ) RETURNS INT AS $$
 DECLARE t_entity_id INT;
 	t_company_id INT;
@@ -638,7 +638,7 @@ BEGIN
 		t_entity_id = in_entity_id;
 	ELSE
 		INSERT INTO entity (name, entity_class, control_code,country_id)
-		VALUES (in_name, in_entity_class, t_control_code,in_country_id_t);
+		VALUES (in_name, in_entity_class, t_control_code,in_country_id);
 		t_entity_id := currval('entity_id_seq');
 	END IF;
 
@@ -661,7 +661,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON  FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id_t int
+    in_entity_id int, in_sic_code text,in_country_id int
  ) is
 $$ Saves a company.  Returns the id number of the record stored.$$;
 
