@@ -32,6 +32,7 @@
 #======================================================================
 
 package IS;
+use Math::BigFloat;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
@@ -626,7 +627,7 @@ sub invoice_details {
     $form->format_string(qw(text_amount text_decimal));
 
     $form->{total} =
-      $form->format_amount( $myconfig, $form->{invtotal} - $form->{paid}, 2 );
+      $form->format_amount( $myconfig, $form->{invtotal} - Math::BigFloat->new($form->{paid}), 2 );
 
     $form->{invtotal} = $form->format_amount( $myconfig, $form->{invtotal}, 2 );
 

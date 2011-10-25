@@ -44,6 +44,7 @@
 #
 #======================================================================
 
+use Math::BigFloat;
 use LedgerSMB::Tax;
 
 # any custom scripts for this one
@@ -1009,9 +1010,8 @@ sub update {
         }
     }
     $form->{paidaccounts} = $j;
-
     $form->{creditremaining} -=
-      ( $form->{invtotal} - $totalpaid + $form->{oldtotalpaid} -
+      ( $form->{invtotal} - Math::BigFloat->new($totalpaid) + $form->{oldtotalpaid} -
           $form->{oldinvtotal} );
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;

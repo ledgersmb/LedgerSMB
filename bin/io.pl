@@ -1261,7 +1261,6 @@ sub send_email {
 }
 
 sub print_options {
-
     $form->{sendmode} = "attachment";
     $form->{copies} = 1 unless $form->{copies};
 
