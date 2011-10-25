@@ -83,11 +83,6 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 
 sub _calc_taxes {
     for $i (1 .. $form->{rowcount}){
-        for (qw(sellprice discount qty)){
-            if (!$form->{"${_}_$i"}){
-                $form->{"${_}_$i"} = '0.00';
-            }
-        }
         my $linetotal = 
              $form->round_amount($form->parse_amount(\%myconfig, $form->{"sellprice_$i"}) 
              * (1 - $form->parse_amount(\%myconfig, $form->{"discount_$i"})
@@ -239,7 +234,6 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
 
         # undo formatting
         for (qw(qty oldqty ship discount sellprice)) {
-            $form->{"${_}_$i"} = '0.00' if ! $form->{"${_}_$i"};
             $form->{"${_}_$i"} =
               $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
         }
@@ -641,7 +635,6 @@ sub item_selected {
                 $form->{"adj_$i"} = 1;
 
                 for (qw(sellprice listprice weight)) {
-                    $form->{$_} = '0.00' unless $form->{$_};
                     $form->{$_} =
                       $form->parse_amount( \%myconfig, $form->{$_} );
                 }
@@ -1024,10 +1017,6 @@ sub invoicetotal {
     my ( $amount, $sellprice, $discount, $qty );
 
     for $i ( 1 .. $form->{rowcount} ) {
-        $form->{"sellprice_$i"} = '0.00' unless $form->{"sellprice_$i"};
-        $form->{"discount_$i"}  = '0.00' unless $form->{"discount_$i"};
-        $form->{"qty_$i"}       = '0.00' unless $form->{"qty_$i"};
-
         $sellprice = $form->parse_amount( \%myconfig, $form->{"sellprice_$i"} );
         $discount  = $form->parse_amount( \%myconfig, $form->{"discount_$i"} );
         $qty       = $form->parse_amount( \%myconfig, $form->{"qty_$i"} );
@@ -1822,7 +1811,6 @@ sub print_form {
 
         for $i ( 1 .. $form->{paidaccounts} ) {
             for (qw(paid exchangerate)) {
-                $form->{"${_}_$i"} = '0.00' unless $form->{"${_}_$i"};
                 $form->{"${_}_$i"} =
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
             }
