@@ -9,6 +9,13 @@ Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
+Changelog for LedgerSMB 1.3.3
+* Fix for being unable to delete AR/AP drafts (Herman V)
+* Additional button cleanup (Herman V)
+* Fix for is_zero issue with latest Math::BigFloat in AR/AP trans (Chris T)
+* Fix for inability to save employee country (Chris T)
+* API inconsistency fixed (Chris T)
+
 Changelog for LedgerSMB 1.3.2
 * Fixed a few files where suExec fixes were not applied (Chris T)
 * Fixed erroneous buttons marked "Save and Post" showing up (Chris T)
@@ -23,6 +30,7 @@ Changelog for LedgerSMB 1.3.2
 * Added check for system configuration before tests begin (Chris T)
 * Clarified password reset interface for user management (Chris T)
 * Added notes on installing on Ubuntu 11.10 (Frans S)
+* Correcting some issues with Perl 5.12 and Math::BigInt (Herman V)
 
 Chris T is Chris Travers
 Herman V is Herman Vierendeels

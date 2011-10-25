@@ -992,49 +992,37 @@ sub form_footer {
                    value => $locale->text('Post as Shown') };
           }
            delete $button{post_as_new};
-           delete $button{print_and_post_as_new};
            delete $button{post};
-           delete $button{print_and_post};
         }
 
         if ($form->{separate_duties} || $form->{batch_id}){
             $button{post}->{value} = $locale->text('Save');
-            $button{print_and_post}->{value} = $locale->text('Save and Post');
             $button{post_as_new}->{value} = $locale->text('Save as New');
-            $button{print_and_post_as_new}->{value} = $locale->text('Save and Post as New');
             $form->hide_form('separate_duties');
         }
         if ( $form->{id} && ($form->{approved} || !$form->{batch_id})) {
             if ( $form->{locked} || ( $transdate && $transdate <= $closedto ) )
             {
-                for ( "post", "print_and_post", "delete" ) {
+                for ( "post","delete" ) {
                     delete $button{$_};
                 }
             }
-
-            if ( !${LedgerSMB::Sysconfig::latex} ) {
-                for ( "print_and_post", "print_and_post_as_new" ) {
-                    delete $button{$_};
-                }
-            }
-
         }
         elsif (!$form->{id}) {
 
-            for ( "post_as_new", "print_and_post_as_new", "delete","save_info",
+            for ( "post_as_new","delete","save_info",
                   "print", 'copy', 'new_screen') {
                 delete $button{$_};
             }
-            delete $button{"print_and_post"} if !${LedgerSMB::Sysconfig::latex};
 
             if ( $transdate && ($transdate <= $closedto) ) {
-                for ( "post", "print_and_post","save_info") { 
+                for ( "post","save_info") { 
                     delete $button{$_};
                 }
             }
         }
         if ($form->{id}){
-            for ( "post_as_new", "print_and_post_as_new"){
+            for ( "post_as_new"){
                delete $button{$_};
             }
             delete $button{'update'} unless $is_draft;
@@ -1219,7 +1207,6 @@ sub update {
             }
         }
     }
-    $form->debug('/tmp/aa.debug2');
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {
@@ -2383,7 +2370,7 @@ qq|<button class="submit" type="submit" name="action" value="ap_transaction">|
             $button{'AP--Add Transaction'}{order} = $i++;
             $button{'AP--Vendor Invoice'}{code} =
 qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
-              . $locale->text('Vendor Invoice.')
+              . $locale->text('Vendor Invoice')
               . qq|</button> |;
             $button{'AP--Vendor Invoice'}{order} = $i++;
         }

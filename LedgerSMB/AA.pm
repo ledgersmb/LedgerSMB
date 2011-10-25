@@ -30,6 +30,7 @@ package AA;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Log;
 use LedgerSMB::File;
+use Math::BigFloat;
 
 my $logger = Log::Log4perl->get_logger("AA");
 
@@ -747,7 +748,7 @@ sub delete_transaction {
 
     $form->audittrail( $dbh, "", \%audittrail );
     my $query = qq|DELETE FROM ac_tax_form WHERE entry_id IN
-                   SELECT entry_id FROM acc_trans WHERE trans_id = ?|;
+                   (SELECT entry_id FROM acc_trans WHERE trans_id = ?)|;
     $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
 
     $query = qq|DELETE FROM $table WHERE id = ?|;
@@ -1337,8 +1338,8 @@ sub get_name {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} )
       || $form->dberror($query);
-
-    ( $form->{creditremaining} ) -= $sth->fetchrow_array;
+    my ($credit_rem) = $sth->fetchrow_array;
+    ( $form->{creditremaining} ) -= Math::BigFloat->new($credit_rem);
 
     $sth->finish;
     if ( $form->{vc} ne "customer" ) {

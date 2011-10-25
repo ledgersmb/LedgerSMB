@@ -38,7 +38,12 @@ RETURNS INT AS $$
     select * into e from entity where id = in_entity_id and entity_class = 3;
     e_id := in_entity_id; 
     
-    IF NOT FOUND THEN
+    IF FOUND THEN
+        UPDATE entity 
+           SET name = in_first_name || ' ' || in_last_name,
+               country_id = in_country_id
+         WHERE id = in_entity_id; 
+    ELSE
         INSERT INTO entity (name, entity_class, country_id) 
 	values (in_first_name || ' ' || in_last_name, 3, in_country_id);
 	e_id := currval('entity_id_seq');
