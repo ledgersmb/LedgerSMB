@@ -10,6 +10,7 @@ Changelog for LedgerSMB 1.3.3
 * API inconsistency fixed (Chris T)
 * Fix for translation string standardization (Herman V)
 * Fix for AP posting issue with 1.000,00 number format (Herman V)
+* Database upgrade within 1.3 now possible from setup.pl (Chris T)
 
 Changelog for LedgerSMB 1.3.2
 * Fixed a few files where suExec fixes were not applied (Chris T)
