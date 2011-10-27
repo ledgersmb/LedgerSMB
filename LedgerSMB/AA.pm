@@ -127,6 +127,8 @@ sub post_transaction {
     my $accno;
     # add taxes
     foreach $accno (@taxaccounts) {
+        #tshvr HV parse first or problem at aa.pl create_links $form->{"${akey}_$form->{acc_trans}{$key}->[$i-1]->{accno}"}=$form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml; 123,45 * -1  gives 123 !!
+        $form->{"tax_$accno"}=$form->parse_amount($myconfig,$form->{"tax_$accno"});
         $form->{"tax_$accno"} *= -1 if $form->{reverse};
         $fxtax += $tax{fxamount}{$accno} = $form->{"tax_$accno"};
         $tax += $tax{fxamount}{$accno};

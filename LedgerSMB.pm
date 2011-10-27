@@ -239,7 +239,7 @@ sub new {
     $logger->debug("Begin LedgerSMB.pm");
 
     $self->{version} = $VERSION;
-    $self->{dbversion} = "1.3.0";
+    $self->{dbversion} = "1.3.3";
     
     bless $self, $type;
     $logger->debug("LedgerSMB::new: \$argstr = $argstr");

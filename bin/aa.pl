@@ -1255,8 +1255,10 @@ sub update {
     $form->{paidaccounts} = $j;
 
     $form->{creditremaining} -=
-      ( $form->{invtotal} - $totalpaid + $form->{oldtotalpaid} -
-          $form->{oldinvtotal} );
+      ( $form->parse_amount(\%myconfig, $form->{invtotal}) 
+        - $form->parse_amount(\%myconfig, $totalpaid) 
+        + $form->parse_amount(\%myconfig, $form->{oldtotalpaid}) 
+        - $form->parse_amount(\%myconfig, $form->{oldinvtotal}) );
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;
 

@@ -89,7 +89,15 @@ sub login {
             );
             $request->{operation} = $request->{_locale}->text('Cancel?');
             $request->{next_action} = 'cancel';
-            
+         
+         } elsif ($version_info->{version} eq '1.3') {
+             $request->{message} = $request->{_locale}->text(
+                 'LedgerSMB 1.3 found'   
+             );
+             $request->{operation} = $request->{_locale}->text(
+                    'Rebuild/Upgrade?'
+             );
+             $request->{next_action} = 'rebuild_modules';
          } else {
             $request->{message} = $request->{_locale}->text(
                  'Unknown version found.'
@@ -604,6 +612,48 @@ Cancels work.  Returns to login screen.
 =cut
 sub cancel{
     __default(@_);
+}
+
+=item rebuild_modules
+
+This method rebuilds the modules and sets the version setting in the defaults
+table to the version of the LedgerSMB request object.  This is used when moving
+between versions on a stable branch (typically upgrading)
+
+=cut
+
+sub rebuild_modules {
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials();
+    my $database = LedgerSMB::Database->new(
+               {username => $creds->{username},
+            company_name => $request->{database},
+                password => $creds->{password}}
+    );
+
+    # ENVIRONMENT NECESSARY
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
+    
+    $database->load_modules('LOADORDER');
+    # Credentials set above via environment variables --CT
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    my $dbh = $request->{dbh};
+    my $sth = $dbh->prepare(
+          'UPDATE defaults SET value = ? WHERE setting_key = ?'
+    );
+    $sth->execute($request->{dbversion}, 'version');
+    $sth->finish;
+    $dbh->commit;
+    $dbh->disconnect;
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'complete',
+            format => 'HTML',
+    );
+    $template->render($request);
+
 }
 
 =back
