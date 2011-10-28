@@ -220,7 +220,7 @@ use strict;
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
-our $VERSION = '1.3.2';
+our $VERSION = '1.3.3';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
