@@ -289,7 +289,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                 $form->{"$form->{ARAP}_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
                 $form->{"paid_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
+                  new Math::BigFloat($form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml);
                 $form->{"datepaid_$i"} =
                   $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
                 $form->{"source_$i"} =
@@ -311,7 +311,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                     $form->{"${key}_$form->{acc_trans}{$key}->[$i-1]->{accno}"}
                       = "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
                     $form->{"${akey}_$form->{acc_trans}{$key}->[$i-1]->{accno}"}
-                      = $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml;
+                      = new Math::BigFloat( $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml);
 
                     $tax +=
                       $form->{
@@ -325,7 +325,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
 
                     $form->{"${akey}_$i"} =
-                      $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml;
+                      new Math::BigFloat($form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml);
 
                     if ( $akey eq 'amount' ) {
                         $form->{"description_$i"} =
@@ -345,8 +345,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                     }
                     else {
                         $form->{invtotal} =
-                          $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 *
-                          $ml;
+                          new Math::BigFloat($form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml);
                     }
                     $form->{"${key}_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
