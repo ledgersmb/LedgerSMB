@@ -269,7 +269,8 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     $netamount = 0;
     $tax       = 0;
     $taxrate   = 0;
-    $ml        = ( $form->{ARAP} eq 'AR' ) ? 1 : -1;
+    #$ml        = ( $form->{ARAP} eq 'AR' ) ? 1 : -1;
+    $ml        = new Math::BigFloat( ( $form->{ARAP} eq 'AR' ) ? 1 : -1);
 
     foreach $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
@@ -289,7 +290,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                 $form->{"$form->{ARAP}_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
                 $form->{"paid_$i"} =
-                  new Math::BigFloat($form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml);
+                  $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
                 $form->{"datepaid_$i"} =
                   $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
                 $form->{"source_$i"} =
@@ -311,7 +312,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                     $form->{"${key}_$form->{acc_trans}{$key}->[$i-1]->{accno}"}
                       = "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
                     $form->{"${akey}_$form->{acc_trans}{$key}->[$i-1]->{accno}"}
-                      = new Math::BigFloat( $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml);
+                      = $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml;
 
                     $tax +=
                       $form->{
@@ -325,7 +326,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
 
                     $form->{"${akey}_$i"} =
-                      new Math::BigFloat($form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml);
+                      $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml;
 
                     if ( $akey eq 'amount' ) {
                         $form->{"description_$i"} =
@@ -345,7 +346,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                     }
                     else {
                         $form->{invtotal} =
-                          new Math::BigFloat($form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml);
+                          $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
                     }
                     $form->{"${key}_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
