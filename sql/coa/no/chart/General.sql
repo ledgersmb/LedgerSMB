@@ -1,8 +1,8 @@
 begin;
 -- Default chart of accounts
--- charset: ISO-8859-1
---   http://www.nif.idrett.no/ftp/Lover/doc/kontoplan.htm
---   http://www.legemiddelverket.no/rundskriv/frahtil/1999/ik-1499.htm
+-- charset: ISO-8859-1, see:
+--   http://www.idrett.no/TEMA/KLUBBGUIDEN/%C3%98KONOMI/Sider/regnskap.aspx
+--   http://www.idrett.no/tema/klubbguiden/%C3%B8konomi/Documents/Norskstandardkontoplan_ny.pdf
 -- sample only
 SELECT account_heading_save(NULL,'10','Immaterielle eiendeler', NULL);
 SELECT account_save(NULL,'1000','Forskning og utvikling','A','', NULL, false, false, string_to_array('', ':'));
