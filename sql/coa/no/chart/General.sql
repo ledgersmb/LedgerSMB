@@ -104,13 +104,11 @@ SELECT account_save(NULL,'2640','Trygdetrekk','L','', NULL, false, false, string
 SELECT account_save(NULL,'2650','Forsikringstrekk','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2660','Fagforeningstrekk','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2690','Andre trekk','L','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'2710','Utgående 25% mva','L','', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
-SELECT account_save(NULL,'2720','Utgående 14% mva','L','', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
-SELECT account_save(NULL,'2730','Utgående 8% mva','L','', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL,'2710','Utgående 24% mva','L','', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL,'2715','Utgående 12% mva','L','', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'2717','Beregnet avgift utlandet','L','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'2715','Inngående 25% mva','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
-SELECT account_save(NULL,'2725','Inngående 14% mva','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
-SELECT account_save(NULL,'2735','Inngående 25% mva','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL,'2720','Inngående 24% mva','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL,'2725','Inngående 12% mva','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'2745','Grunnlag 1 tjenester utlandet','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2746','Grunnlag 2 tjenester utlandet','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2750','Oppgjørskonto merverdiavgift','L','', NULL, false, false, string_to_array('', ':'));
@@ -289,12 +287,10 @@ SELECT account_save(NULL,'8960','Overføringer annen egenkapital','E','', NULL, 
 SELECT account_save(NULL,'8980','Avsatt til fri egenkapital','E','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'8990','Udekket tap','E','', NULL, false, false, string_to_array('', ':'));
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2710'),0.25);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2720'),0.14);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2730'),0.08);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2715'),0.25);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2725'),0.14);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2735'),0.08);
+insert into tax (chart_id,rate) values ((select id from chart where accno = '2710'),0.24);
+insert into tax (chart_id,rate) values ((select id from chart where accno = '2715'),0.12);
+insert into tax (chart_id,rate) values ((select id from chart where accno = '2720'),0.24);
+insert into tax (chart_id,rate) values ((select id from chart where accno = '2725'),0.12);
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1250'));
 
