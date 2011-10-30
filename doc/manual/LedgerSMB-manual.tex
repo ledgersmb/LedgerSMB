@@ -230,27 +230,58 @@ though Windows, MacOS X, etc. do work)
 \item The following CPAN modules:
 
 \begin{itemize}
-\item Cwd
-\item Config::Std
 \item Data::Dumper
+\item Log::Log4perl
+\item Locale::Maketext
 \item DateTime
-\item DBD::Pg 2.0 or later
+\item Locale::Maketext::Lexicon
 \item DBI
+\item MIME::Base64
 \item Digest::MD5
-\item Encode
-\item IO::File
 \item HTML::Entities
+\item DBD::Pg
+\item Math::BigFloat
+\item IO::File
+\item Encode
 \item Locale::Country
 \item Locale::Language
-\item Locale::Maketext
-\item Locale::Maketext::Lexicon
-\item Log::Log4perl
-\item Math::BigFloat
-\item MIME::Base64
-\item MIME::Lite
 \item Time::Local
+\item Cwd
+\item Config::Std
+\item MIME::Lite
+\item Template
+\item Error
+\item CGI::Simple
+\item File::MimeInfo
 \end{itemize}
+
+and these optional ones:
+\begin{itemize}
+\item Net::TCLink
+\item Parse::RecDescent
+\item Template::Plugin::Latex
+\item XML::Twig
+\item Excel::Template::Plus
 \end{itemize}
+
+\end{itemize}
+
+\section{Installing LedgerSMB}
+
+The process of installing LedgerSMB is described in detail
+in the INSTALL file which comes with the distribution archive.
+In the process is:
+\begin{enumerate}
+\item Install the base software: Web Server (Apache), Database server (PostgreSQL) and Perl
+ from your distribution and package manager or source. Read the INSTALL file for details
+\item Installing Perl module dependencies
+ from your distribution and package manager or CPAN. Read the INSTALL file for details
+\item Give the web server access to the ledgersmb directory
+\item Edit ./ledgersmb/ledgersmb.conf to be able to access the database and locate the relevant PostgreSQL contrib scripts
+\item Initializing a company database; database setup and upgrade script at http://localhost/ledgersmb/setup.pl
+\item Login with your name (database username), password (database user password), Company (databasename)
+\end{enumerate}
+
 
 \section{User Account and Database Administration Basics}
 

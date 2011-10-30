@@ -28,6 +28,22 @@ LedgerSMB depends on the following software:
  * Perl 5.8+
 
 
+Installation process overview
+=============================
+
+ 1) Install the base software: web server (Apache),
+    database server (PostgreSQL) and Perl from your distribution
+    and package manager or source. Read on for details
+ 2) Installing Perl module dependencies from your distribution and
+    package manager or CPAN.  Read on for details
+ 3) Give the web server access to the ledgersmb directory
+ 4) Edit ./ledgersmb/ledgersmb.conf to be able to access the database
+    and locate the relevant PostgreSQL contrib scripts
+ 5) Initializing a company database
+    Database setup and upgrade script at http://localhost/ledgersmb/setup.pl
+ 6) Login with your name (database username),
+    password (database user password), Company (databasename)
+
 
 Installing Apache 2
 ===================
