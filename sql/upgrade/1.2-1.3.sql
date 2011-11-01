@@ -5,26 +5,6 @@
 \set ar '''<?lsmb default_ar ?>'''
 \set ap '''<?lsmb default_ap ?>'''
 
--- This will be moved out of this part.
-ALTER SCHEMA public RENAME TO lsmb12;
-CREATE SCHEMA public;
-
-\cd :contribdir
-\i pg_trgm.sql
-\i tsearch2.sql
-\i tablefunc.sql
-
-\cd :lsmbdir
-
--- Full module load should be part of upgrade wizard, at this stage.
-\i sql/Pg-database.sql
-\i sql/modules/Settings.sql
-\i sql/modules/Location.sql
-\i sql/modules/Account.sql
-\i sql/modules/Payment.sql
-\i sql/modules/Company.sql
-\i sql/modules/Person.sql
-\i sql/modules/Reconciliation.sql
 BEGIN;
 
 -- adding mapping info for import.
@@ -382,7 +362,8 @@ INSERT INTO person (first_name, last_name, entity_id)
 select name, name, entity_id FROM lsmb12.employee;
 
 INSERT INTO users (entity_id, username)
-     SELECT entity_id, login FROM lsmb12.employee em;
+     SELECT entity_id, login FROM lsmb12.employee em
+      WHERE login IS NOT NULL;
 
 INSERT 
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
