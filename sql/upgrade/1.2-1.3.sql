@@ -52,14 +52,14 @@ SELECT account_save(id, accno, description, category, gifi_accno, NULL, contra,
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT name, 'V-' || vendornumber, 1, 
        (select id from country 
-         where lower(short_name)  = :default_country)
+         where lower(short_name)  = lower(:default_country))
 FROM lsmb12.vendor
 GROUP BY name, vendornumber;
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT name, 'C-' || customernumber, 2, 
        (select id from country 
-         where lower(short_name)  =  :default_country)
+         where lower(short_name)  =  lower(:default_country))
 FROM lsmb12.customer
 GROUP BY name, customernumber;
 
@@ -371,7 +371,7 @@ ALTER TABLE lsmb12.employee ADD entity_id int;
 
 INSERT INTO entity(control_code, entity_class, name, country_id)
 select 'E-' || employeenumber, 3, name,
-        (select id from country where lower(short_name) = :default_country)
+        (select id from country where lower(short_name) = lower(:default_country))
 FROM lsmb12.employee;
 
 UPDATE lsmb12.employee set entity_id = 
