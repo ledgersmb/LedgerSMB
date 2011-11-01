@@ -18,10 +18,11 @@ CREATE SCHEMA public;
 
 -- Full module load should be part of upgrade wizard, at this stage.
 \i sql/Pg-database.sql
-\i sql/modules/Setting.sql
+\i sql/modules/Settings.sql
 \i sql/modules/Location.sql
 \i sql/modules/Account.sql
 \i sql/modules/Payment.sql
+\i sql/modules/Company.sql
 \i sql/modules/Person.sql
 \i sql/modules/Reconciliation.sql
 BEGIN;
