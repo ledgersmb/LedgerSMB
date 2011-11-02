@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-
+Latest Revision:  1.3.3, October 28th.
 
 1:  Welcome to LedgerSMB
 
@@ -15,7 +15,7 @@ which it was derived, but the feature set is starting to diverge rapidly.
 
 * Perl 5.8.
 * Apache, IIS, or other web server that supports CGI.
-* PostgreSQL 8.1 or higher.
+* PostgreSQL 8.2 or higher.
 * Any operating system that supports the above environment.
 * The following CPAN modules:
 	* Data::Dumper

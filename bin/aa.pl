@@ -269,7 +269,8 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     $netamount = 0;
     $tax       = 0;
     $taxrate   = 0;
-    $ml        = ( $form->{ARAP} eq 'AR' ) ? 1 : -1;
+    #$ml        = ( $form->{ARAP} eq 'AR' ) ? 1 : -1;
+    $ml        = new Math::BigFloat( ( $form->{ARAP} eq 'AR' ) ? 1 : -1);
 
     foreach $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
@@ -345,8 +346,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                     }
                     else {
                         $form->{invtotal} =
-                          $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 *
-                          $ml;
+                          $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
                     }
                     $form->{"${key}_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
