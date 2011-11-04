@@ -1,5 +1,3 @@
-=pod
-
 =head1 NAME
 
 LedgerSMB::Scripts::payment - LedgerSMB class defining the Controller functions for payment handling.
@@ -68,14 +66,12 @@ use strict;
 
 # CT:  Plans are to completely rewrite all payment logic for 1.4 anyway.
 
-=pod
+=over
 
 =item payment
 
 This method is used to set the filter screen and prints it, using the 
 TT2 system.
-
-=back
 
 =cut
 
@@ -105,8 +101,6 @@ Displays the payment criteria screen.  Optional inputs are
 =item batch_id 
 
 =item batch_date
-
-=back
 
 =cut
 
@@ -651,8 +645,6 @@ sub display_payments {
 This method is used to set the filter screen and prints it, using the 
 TT2 system. 
 
-=back
-
 =cut
 
 sub payment {
@@ -748,16 +740,12 @@ my $select = {
 }
 
 
-=pod
-
 =item payment1_5
 
 This method is called between payment and payment2, it will search the database
 for entity_credit_accounts that match the parameter, if only one is found it will
 run unnoticed by the user, if more than one is found it will ask the user to pick 
 one to handle the payment against
-
-=back
 
 =cut
 
@@ -821,14 +809,10 @@ if ($#array_options == -1) {
 
 }
 
-=pod
-
 =item payment2
 
 This method is used  for the payment module, it is a consecuence of the payment sub,
 and its used for all the mechanics of an invoices payment module.
-
-=back
 
 =cut
 
@@ -952,12 +936,14 @@ for my $ref (0 .. $#array_options) {
    
 # We need to check for unhandled overpayment, see the post function for details
 # First we will see if the discount should apply?
-=i dont think this is working
-     my  $temporary_discount = 0;
-     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($due_fx <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $request->round_amount($array_options[$ref]->{discount}/"$exchangerate"))) {
-         $temporary_discount = $request->round_amount("$array_options[$ref]->{discount}"/$array_options[$ref]->{exchangerate});
-      } 
-=cut      
+
+
+#I dont think this is working
+#     my  $temporary_discount = 0;
+#     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($due_fx <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $request->round_amount($array_options[$ref]->{discount}/"$exchangerate"))) {
+#         $temporary_discount = $request->round_amount("$array_options[$ref]->{discount}"/$array_options[$ref]->{exchangerate});
+#      } 
+
 # We need to compute the unhandled_overpayment, notice that all the values inside the if already have 
 # the exchangerate applied
        
@@ -1143,14 +1129,10 @@ otherwise {
   }; # PRINT ERRORS ON THE UI
 }
 
-=pod
-
 =item post_payment
 
 This method is used  for the payment module (not the bulk payment),
 and its used for all the mechanics of storing a payment.
-
-=back
 
 =cut
 
@@ -1292,14 +1274,10 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
     }            
 }
 
-=pod
-
 =item print_payment
 
 This sub will print the payment on the selected media, it needs to
 receive the $Payment object with all this information.
-
-=back
 
 =cut
   
@@ -1345,14 +1323,10 @@ sub print_payment {
   otherwise { $Payment->error("$@");  }; # PRINT ERRORS ON THE UI
 }
 
-=pod
-
 =item post_and_print_payment
 
 This is simply a shortcut between post_payment and print_payment methods, please refer
 to these functions
-
-=back
 
 =cut
 
@@ -1365,14 +1339,10 @@ my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
 &print_payment($Payment);
 }
 
-=pod
-
 =item use_overpayment
 
 This item will do the trick to use the overpayment information stored inside the payments,
 it should be powerful enough to link overpayment from one customer to other customers.
-
-=back
 
 =cut
 
@@ -1422,13 +1392,9 @@ otherwise { $request->error("$@");  }; # PRINT ERRORS ON THE UI
 }
 
 
-=pod
-
 =item use_overpayment2
 
 This sub runs to allow the user to specify the invoices in which an overpayment should be used
-
-=back
 
 =cut
 
@@ -1715,8 +1681,6 @@ otherwise { $request->error("$@");  }; # PRINT ERRORS ON THE UI
 }
 
 
-=pod
-
 =item post_overpayment
 
 This method reorganize the selected invoices by customer/vendor and adapt them to make them fit with the post_payment sql method, calling it once by customer/vendor id
@@ -1958,3 +1922,5 @@ for my $key (keys %entity_list)
 
 eval { do "scripts/custom/payment.pl"};
 1;
+
+=back

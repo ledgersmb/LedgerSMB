@@ -65,6 +65,8 @@ Name of the current logged in user.
 
 =head1 CONSTRUCTOR SYNTAX
 
+=over
+
 =item Full syntax
 
 LedgerSMB::SODA->new({ db => $string, username => $string, cred => $string });
@@ -82,6 +84,8 @@ LedgerSMB::Auth
 
 Out of the box, LedgerSMB only supports HTTP basic credentials. Kerberos could
 be supported with minimal effort.
+
+=back
 
 =cut
 
@@ -299,9 +303,13 @@ codebase and addons).
 List of hashrefs for order by clause.  Each hashref contains:
 
 =over
+
 =item column (required)
+
 =item order (optional enum(asc, desc))
+
 =item null_order (optional enum(first, last))
+
 =back
 
 Expressions for ordering are not supported due to SQL injection concerns, but
@@ -368,7 +376,6 @@ my @predef_windows = (
 );
 
 
-=cut
 
 # Private method implements window clauses per above specs above
 # All identifiers are escaped, and all key words whitelisted.
@@ -403,20 +410,26 @@ sub _windows {
 }
 
 =back
+
 =item aggs 
 An array of hashrefs, each of which contains four elements:
 
 =over
+
 =item agg $string 
+
 Name of aggregate
 
 =item alias $string
+
 Column name to assign aggregate
 
 =item window $string
+
 Name of window
 
 =item cols $arrayref
+
 array ref of column names for the aggregate.
 
 =back
@@ -633,6 +646,7 @@ sub _dberror {
     die "LedgerSMB::SODA $sqlstate";
 };
 
+=back
 
 =head1 ENVIRONMENT VARIABLES
 

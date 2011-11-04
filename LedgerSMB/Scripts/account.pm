@@ -41,7 +41,7 @@ sub new {
     _display_account_screen($request);     
 }
 
-=edit
+=item edit
 
 Retrieves account information and then displays the screen.  
 

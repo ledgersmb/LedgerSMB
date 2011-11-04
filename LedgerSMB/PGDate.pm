@@ -23,6 +23,8 @@ PostgreSQL. It provides a handler for date and timestamp datatypes.
 
 =head1 PROPERTIES
 
+=over
+
 =item date
 A DateTime object for internal storage and processing.
 
@@ -237,6 +239,8 @@ sub to_db {
 }
 
 1;
+
+=back
 
 =head1 Copyright (C) 2011, The LedgerSMB core team.
 

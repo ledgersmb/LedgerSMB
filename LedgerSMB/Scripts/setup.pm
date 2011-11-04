@@ -34,6 +34,8 @@ sub __default {
     $template->render($request);
 }
 
+=over
+
 =item login
 
 Processes the login and examines the database to determine appropriate steps to
