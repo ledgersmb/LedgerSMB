@@ -382,7 +382,7 @@ my @predef_windows = (
 
 sub _windows {
     my ($self, $windows);
-    my @window_list = @pre_defined_windows;
+    my @window_list = @predef_windows;
     my $clauses = "";
     my $dbh = $self->dbh;
 
@@ -397,7 +397,7 @@ sub _windows {
            $spec .= $self->_order_by($win->{order});
         }
 
-        push @windows, 
+        push @window_list, 
           {name => $win->{name},
            spec => $spec } if $spec;
     }
