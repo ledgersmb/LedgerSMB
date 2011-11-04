@@ -14,10 +14,8 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
 
-my $lsmb_nan_message = "LedgerSMB::PGNumber No Format Set at LedgerSMB/PGNumber.pm line 137.
-";
-my $nan_message = "LedgerSMB::PGNumber Invalid Number at LedgerSMB/PGNumber.pm line 148.
-";
+my $no_format_message = qr/LedgerSMB::PGNumber No Format Set/;
+my $nan_message       = qr/LedgerSMB::PGNumber Invalid Number/;
 my @r;
 my $form = new Form;
 my %myconfig;
@@ -187,13 +185,13 @@ $form->{header} = 'Blah';
 @r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
 is($trap->exit, undef,
 	'form: No numberformat set, invalid amount (NaN check)');
-is($trap->die, $lsmb_nan_message,
+cmp_ok($trap->die, '=~', $no_format_message,
 	'form: No numberformat set, invalid amount message (NaN check)');
 @r = trap{$lsmb->format_amount('user' => {'apples' => '1000.00'},
 	'amount' => 'foo', 'precision' => 2)};
 is($trap->exit, undef,
 	'lsmb: No numberformat set, invalid amount (NaN check)');
-is($trap->die, $lsmb_nan_message,
+cmp_ok($trap->die, , '=~', $no_format_message,
 	'lsmb: No numberformat set, invalid amount message (NaN check)');
 is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'paren'), '(1.00)',
 	"form: -1.00 with dash '-'");
