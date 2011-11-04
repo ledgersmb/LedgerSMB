@@ -58,7 +58,6 @@ Deprecated
 #inline documentation
 use strict;
 
-use Math::BigFloat lib => 'GMP';
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Auth;
 use List::Util qw(first);
@@ -66,6 +65,7 @@ use Time::Local;
 use Cwd;
 use File::Copy;
 use LedgerSMB::Company_Config;
+use LedgerSMB::PGNumber;
 
 use charnames qw(:full);
 use open ':utf8';
@@ -783,7 +783,7 @@ sub format_amount {
     my $negative;
     $myconfig = "" unless defined $myconfig;
     $amount = "" unless defined $amount;
-    $places = "" unless defined $places;
+    $places = "0" unless defined $places;
     $dash = "" unless defined $dash;
     if ($self->{money_precision}){
        $places= $self->{money_precision};
@@ -793,6 +793,7 @@ sub format_amount {
                places => $places,
                 money => $self->{money_precision},
            neg_format => $dash,
+               format => $myconfig->{numberformat},
     });
 }
 
@@ -816,11 +817,9 @@ sub parse_amount {
         $amount = '0';
     }
 
-    if ( UNIVERSAL::isa( $amount, 'LedgerSMB::PGNumeric' ) )
-    {    # Amount may not be an object
-        return $amount;
-    }
-    return LedgerSMB::PGNumeric->from_input($amount);
+    return LedgerSMB::PGNumber->from_input($amount, 
+                                           {format => $myconfig->{numberformat}}
+    );
 }
 
 =item $form->round_amount($amount, $places);

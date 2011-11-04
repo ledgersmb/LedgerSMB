@@ -32,6 +32,7 @@ requires 'Template' => '2.14';
 requires 'Error';
 requires 'CGI::Simple';
 requires 'File::MimeInfo';
+requires 'Number::Format';
 
 recommends 'perl-Math-BigInt-GMP';
 

@@ -203,7 +203,7 @@ around the code everywhere.
 
 use CGI::Simple;
 $CGI::Simple::DISABLE_UPLOADS = 0;
-use LedgerSMB::PGNumeric;
+use LedgerSMB::PGNumber;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use Error;
@@ -532,7 +532,7 @@ sub format_amount {
     my $dash     = $args{neg_format};
     my $format   = $args{format};
 
-    if (defined $amount and ! UNIVERSAL::isa($amount, 'LedgerSMB::PGNumeric' )) {
+    if (defined $amount and ! UNIVERSAL::isa($amount, 'LedgerSMB::PGNumber' )) {
         $amount = $self->parse_amount('user' => $myconfig, 'amount' => $amount);
     }
     $dash = undef unless defined $dash;
@@ -548,8 +548,8 @@ sub format_amount {
     }
 
     return $amount->to_output({format => $format, 
-                           neg_format => $dash, 
-                               places => $precision,
+                           neg_format => $args{neg_format}, 
+                               places => $places,
                                 money => $args{money},
            });
 }
@@ -559,10 +559,13 @@ sub parse_amount {
     my $self     = shift @_;
     my %args     = @_;
     my $amount   = $args{amount};
-    if (UNIVERSAL::isa($amount, 'LedgerSMB::PGNumeric')){
+    my $user     = ($args{user})? ($args{user}) : $self->{_user};
+    if (UNIVERSAL::isa($amount, 'LedgerSMB::PGNumber')){
         return $amount;
     } 
-    return LedgerSMB::PGNumeric->from_inout($amount); 
+    return LedgerSMB::PGNumber->from_input($amount, 
+                                     {format => $user->{numberformat}}
+    ); 
 }
 
 sub round_amount {

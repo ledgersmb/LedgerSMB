@@ -8,16 +8,16 @@ use strict;
 use warnings;
 use Number::Format;
 
-package LedgerSMB::PGNumeric;
+package LedgerSMB::PGNumber;
 
 BEGIN {
    use LedgerSMB::SODA;
    LedgerSMB::SODA->register_type({sql_type => 'float', 
-                                 perl_class => 'LedgerSMB::PGNumeric');
+                                 perl_class => 'LedgerSMB::PGNumber'});
    LedgerSMB::SODA->register_type({sql_type => 'double', 
-                                 perl_class => 'LedgerSMB::PGNumeric');
+                                 perl_class => 'LedgerSMB::PGNumber'});
    LedgerSMB::SODA->register_type({sql_type => 'numeric', 
-                                 perl_class => 'LedgerSMB::PGNumeric');
+                                 perl_class => 'LedgerSMB::PGNumber'});
 }
 
 =head1 SYNPOSIS
@@ -43,37 +43,34 @@ use base qw(Math::BigFloat);
 
 =over
 
+=item 1000.00 (default)
+
+=item 1000,00
+
+=item 1 000.00
+
+=item 1 000,00
+
+=item 1,000.00
+
+=item 1.000,00
+
+=item 1'000,00
+
+=item 1'000.00
+
 =cut
 
 our $lsmb_formats = {
       "1000.00" => { thousands_sep => '',  decimal_sep => '.' },
-=item 1000.00 (default)
 
-=cut
       "1000,00" => { thousands_sep => '',  decimal_sep => ',' },
-=item 1000,00
-
-=cut
      "1 000.00" => { thousands_sep => ' ', decimal_sep => '.' },
-=item 1 000.00
-
-=cut
      "1 000,00" => { thousands_sep => ' ', decimal_sep => ',' },
-=item 1 000,00
-
-=cut
      "1,000.00" => { thousands_sep => ',', decimal_sep => '.' },
-=item 1,000.00
-
-=cut
      "1.000,00" => { thousands_sep => '.', decimal_sep => ',' },
-=item 1.000,00
-
-=cut
      "1'000,00" => { thousands_sep => "'", decimal_sep => ',' },
-=item 1'000,00
-
-=cut
+     "1'000.00" => { thousands_sep => "'", decimal_sep => '.' },
 
 };
 
@@ -85,53 +82,71 @@ All use 123.45 as an example.
 
 =over
 
-=cut
-
-my $lsmb_neg_formats = {
-  'def' => { pos => '%s',   neg => '-%s'   },
-
 =item def (DEFAULT)
 
 positive:  123.45
 negative: -123.45
 
-=cut
- 'DRCR' => { pos => '%s CR' neg => '%s DR' },
 =item DRCR
 
 positive:  123.45 CR
 negative:  123.45 DR
 
-=cut
-    'paren' => { pos => '%s',   neg => '(%s)'  },
 =item paren
 
 positive:  123.45
 negative: (123.45)
 
 =cut
-}
+
+my $lsmb_neg_formats = {
+  'def' => { pos => '%s',   neg => '-%s'   },
+ 'DRCR' => { pos => '%s CR', neg => '%s DR' },
+'paren' => { pos => '%s',   neg => '(%s)'  },
+};
 
 =back
 
-=head1 I/O METHODS
+=head1 IO METHODS
 
 =over
 
-=item from_input
+=item from_input(string $input, hashref %args);
+
+The input is formatted.
 
 =cut
 
 sub from_input {
-    use Number::Format qw(:subs :vars);
-    my ($self, $string) = @_; 
-    $format = ($args{format}) ? $args{format}
+    my $self   = shift @_;
+    my $string = shift @_;
+    my $negate;
+    my $pgnum;
+    my $newval;
+    $negate = 1 if $string =~ /(^\(|DR$)/;
+    if ( UNIVERSAL::isa( $string, 'LedgerSMB::PGNumber' ) )
+    {    
+        return $string;
+    }
+    if (UNIVERSAL::isa( $string, 'Math::BigFloat' ) ) {
+        $pgnum = $string; 
+    } else {
+        my %args   = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
+        my $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
-
-    $THOUSANDS_SEP   = $lsmb_formats->{format}->{thousands_sep};
-    $DECIMAL_POINT   = $lsmb_formats->{format}->{decimal_sep};
-    my $pgnum = $self->new(unformat_number($string));
-    die 'LedgerSMB::PGNumber Invalid Number' if $pgnum->isnan();
+        die 'LedgerSMB::PGNumber No Format Set' if !$format;
+        my $formatter = new Number::Format(
+                    -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+        );
+        $newval = $formatter->unformat_number($string);
+        $pgnum = Math::BigFloat->new($newval);
+        $self->round_mode('+inf');
+    } 
+    bless $pgnum, $self;
+    $pgnum->bmul(-1) if $negate;
+    die 'LedgerSMB::PGNumber Invalid Number' if $pgnum->is_nan() or (!defined $newval);
+    return $pgnum;
 }
 
 =item to_output($hashref or %hash);
@@ -163,24 +178,27 @@ Specifies the negative format
 =cut
 
 sub to_output {
-    use Number::Format qw(:subs :vars);
-    my ($self) = shift;
+    my $self = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
     my $is_neg = $self->is_neg;
-    $self->babs;
 
-    my $str = $self->bstr;
-    $format = ($args{format}) ? $args{format}
+    my $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
 
-    my $places = $LedgerSMB::Sysconfig::decimal_places if $args{money};
+    my $places = undef;
+    $places = $LedgerSMB::Sysconfig::decimal_places if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
-
-    $DECIMAL_FILL    = 0;
-    $DECIMAL_DIGITS  = $places if defined $places;
-    $THOUSANDS_SEP   = $lsmb_formats->{format}->{thousands_sep};
-    $DECIMAL_POINT   = $lsmb_formats->{format}->{decimal_sep};
-    $str = format_number($str);
+    my $str = $self->bstr;
+    my $dplaces = $places;
+    $places = 0 unless defined $places and ($places > 0);
+    my $zfill = ($places > 0) ? 1 : 0;
+    $dplaces = 10 unless defined $dplaces;
+    my $formatter = new Number::Format(
+                    -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+                     -decimal_fill => $zfill,
+                       -neg_format => 'x');   
+    $str = $formatter->format_number($str, $dplaces);
 
     my $neg_format = ($args{neg_format}) ? $args{neg_format} : 'def';
     my $fmt = ($is_neg) ? $lsmb_neg_formats->{$neg_format}->{neg}
@@ -208,6 +226,8 @@ sub to_db {
 }
 
 1;
+
+=back
 
 =head1 Copyright (C) 2011, The LedgerSMB core team.
 

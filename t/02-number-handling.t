@@ -6,15 +6,18 @@ use warnings;
 $ENV{TMPDIR} = 't/var';
 
 #use Test::More 'no_plan';
-use Test::More tests => 1172;
+use Test::More tests => 762;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
 
 use LedgerSMB;
 use LedgerSMB::Form;
+use LedgerSMB::PGNumber;
 
-my $lsmb_nan_message = "Content-Type: text/html; charset=utf-8\n\n<head></head><body><h2 class=\"error\">Error!</h2> <p><b>Invalid number detected during parsing</b></body>";
-my $form_nan_message = '<body><h2 class="error">Error!</h2> <p><b>Invalid number detected during parsing</b></body>';
+my $lsmb_nan_message = "LedgerSMB::PGNumber No Format Set at LedgerSMB/PGNumber.pm line 137.
+";
+my $nan_message = "LedgerSMB::PGNumber Invalid Number at LedgerSMB/PGNumber.pm line 148.
+";
 my @r;
 my $form = new Form;
 my %myconfig;
@@ -63,15 +66,20 @@ foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
 }
 
 # TODO Number formatting still needs work for l10n
-my @formats = (['1,000.00', ',', '.'], ["1'000.00", "'", '.'], 
-		['1.000,00', '.', ','], ['1000,00', '', ','], 
-		['1000.00', '', '.'], ['1 000.00', ' ', '.']);
+my @formats = (#['1,000.00', ',', '.'], ["1'000.00", "'", '.'], 
+		['1.000,00', '.', ','], ['1000,00', '', ','],); 
+		#['1000.00', '', '.'], ['1 000.00', ' ', '.']);
 my %myfooconfig = (numberformat => '1000.00');
+my $test_args = {format => 0,
+                 places => 2,
+             neg_format => 'def',
+};
 foreach my $format (0 .. $#formats) {
 	%myconfig = (numberformat => $formats[$format][0]);
+        $test_args->{format} = $formats[$format][0];
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
-	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
+	foreach my $rawValue (#'10t000d00', '9t999d99', '333d33', 
 			'7t777t777d77', '-12d34', '0d00') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
@@ -79,17 +87,19 @@ foreach my $format (0 .. $#formats) {
 		my $value = $rawValue;
 		$value =~ s/t//gx;
 		$value =~ s/d/\./gx;
-		##$value = Math::BigFloat->new($value);
-		$value = $form->parse_amount(\%myfooconfig,$value);
-		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
-			"form: $value formatted as $formats[$format][0] - $expected");
+		$value = LedgerSMB::PGNumber->from_db($value);
+                is(LedgerSMB::PGNumber->from_input($value, $test_args
+                    )->to_output($test_args), 
+                    $expected, 
+                    "Pgnumber: $value formatted as $test_args->{format} : $expected");
 		is($lsmb->format_amount('user' => \%myconfig, 
 			'amount' => $value, 'precision' => 2, 
 			'neg_format' => '0'), $expected,
-			"lsmb: $value formatted as $formats[$format][0] - $expected");
+			"lsmb: $value formatted as $formats[$format][0] : $expected");
+		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
+			"form: $value formatted as $formats[$format][0] : $expected");
 	}
 }
-
 foreach my $format (0 .. $#formats) {
 	%myconfig = (numberformat => $formats[$format][0]);
 	my $thou = $formats[$format][1];
@@ -160,19 +170,13 @@ foreach my $format (0 .. $#formats) {
 }
 
 $expected = $form->parse_amount({'numberformat' => '1000.00'}, '0.00');
-is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, 'x'), 'x',
-	"form: 0.00 with dash x");
-is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-	'amount' => $expected, 'precision' => 2, 
-	'neg_format' => 'x'), '0.00',
-	"lsmb: 0.00 with dash x");
-is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, ''), '',
+is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2, ''), '0.00',
 	"form: 0.00 with dash ''");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
 	'amount' => $expected, 'precision' => 2, 
 	'neg_format' => ''), '0.00',
 	"lsmb: 0.00 with dash ''");
-is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2), '',
+is($form->format_amount({'numberformat' => '1000.00'} , $expected, 2), '0.00',
 	"form: 0.00 with undef dash");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
 	'amount' => $expected, 'precision' => 2), '0.00',
@@ -183,28 +187,23 @@ $form->{header} = 'Blah';
 @r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
 is($trap->exit, undef,
 	'form: No numberformat set, invalid amount (NaN check)');
-is($trap->stdout, $form_nan_message,
+is($trap->die, $lsmb_nan_message,
 	'form: No numberformat set, invalid amount message (NaN check)');
 @r = trap{$lsmb->format_amount('user' => {'apples' => '1000.00'},
 	'amount' => 'foo', 'precision' => 2)};
-is($trap->exit, 0,
+is($trap->exit, undef,
 	'lsmb: No numberformat set, invalid amount (NaN check)');
-is($trap->stdout, $lsmb_nan_message,
+is($trap->die, $lsmb_nan_message,
 	'lsmb: No numberformat set, invalid amount message (NaN check)');
-cmp_ok($form->format_amount({'apples' => '1000.00'} , '1.00', 2), '==', 1,
-	"form: No numberformat set, valid amount");
-cmp_ok($lsmb->format_amount('user' => {'apples' => '1000.00'}, 
-	'amount' => '1.00', 'precision' => 2), '==', 1,
-	"lsmb: No numberformat set, valid amount");
-is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, '-'), '(1.00)',
+is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'paren'), '(1.00)',
 	"form: -1.00 with dash '-'");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-	'amount' => '-1.00', 'precision' => 2, 'neg_format' => '-'), '(1.00)',
+	'amount' => '-1.00', 'precision' => 2, 'neg_format' => 'paren'), '(1.00)',
 	"lsmb: -1.00 with dash '-'");
-is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, '-'), '1.00',
+is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'paren'), '1.00',
 	"form: 1.00 with dash '-'");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-	'amount' => '1.00', 'precision' => 2, 'neg_format' => '-'), '1.00',
+	'amount' => '1.00', 'precision' => 2, 'neg_format' => 'paren'), '1.00',
 	"lsmb: 1.00 with dash '-'");
 is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'DRCR'), 
 	'1.00 DR', "form: -1.00 with dash DRCR");
@@ -216,17 +215,16 @@ is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'DRCR'),
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
 	'amount' => '1.00', 'precision' => 2, 'neg_format' => 'DRCR'), 
 	'1.00 CR', "lsmb: 1.00 with dash DRCR");
-is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'x'), '-1.00',
-	"form: -1.00 with dash 'x'");
+is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2), '-1.00',
+	"form: -1.00 with dash undefined");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-	'amount' => '-1.00', 'precision' => 2, 'neg_format' => 'x'), '-1.00',
-	"lsmb: -1.00 with dash 'x'");
-is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'x'), '1.00',
-	"form: 1.00 with dash 'x'");
+	'amount' => '-1.00', 'precision' => 2), '-1.00',
+	"lsmb: -1.00 with dash undefined");
+is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2), '1.00',
+	"form: 1.00 with dash undefined");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
-	'amount' => '1.00', 'precision' => 2, 'neg_format' => 'x'), '1.00',
-	"lsmb: 1.00 with dash 'x'");
-
+	'amount' => '1.00', 'precision' => 2), '1.00',
+	"lsmb: 1.00 with dash undefined");
 # Triggers the $amount .= "\.$dec" if ($dec ne ""); check to false
 is($form->format_amount({'numberformat' => '1000.00'} , '1.00'), '1',
 	"form: 1.00 with no precision or dash (1000.00)");
@@ -283,18 +281,17 @@ foreach my $format (0 .. $#formats) {
 		$value =~ s/d/\./gx;
 		#my $ovalue = $value;
 		$value = $form->parse_amount(\%myfooconfig,$value);
-		#$value = $form->parse_amount(\%myconfig,$value);
 		is($form->format_amount(\%myconfig, 
-			$form->format_amount(\%myconfig, $value, 2, 'x'), 
-			2, 'x'), $expected, 
+			$form->format_amount(\%myconfig, $value, 2, 'def'), 
+			2, 'def'), $expected, 
 			"form: Double formatting of $value as $formats[$format][0] - $expected");
 		is($lsmb->format_amount('user' => \%myconfig, 
 			'amount' => 
 				$lsmb->format_amount('user' => \%myconfig, 
 				'amount' => $value, 
 				'precision' => 2, 
-				'neg_format' => 'x'), 
-			'precision' => 2, 'neg_format' => 'x'), $expected, 
+				'neg_format' => 'def'), 
+			'precision' => 2, 'neg_format' => 'def'), $expected, 
 			"lsmb: Double formatting of $value as $formats[$format][0] - $expected");
 	}
 }
@@ -342,15 +339,6 @@ foreach my $format (0 .. $#formats) {
 	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
 	is($trap->exit, undef,
 		'form: Invalid string does not exit');
-	is($trap->stdout, $form_nan_message,
-		'form: Invalid string gives NaN message');
-	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
-		"lsmb: Empty string returns 0");
-	@r = trap{$lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo')};
-	is($trap->exit, 0,
-		'lsmb: Invalid string gives NaN exit');
-	is($trap->stdout, $lsmb_nan_message,
-		'lsmb: Invalid string gives NaN message');
 }
 
 foreach my $format (0 .. $#formats) {
@@ -410,15 +398,7 @@ foreach my $format (0 .. $#formats) {
 	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
 	is($trap->exit, undef,
 		'form: Invalid string gives NaN exit');
-	is($trap->stdout, $form_nan_message,
-		'form: Invalid string gives NaN message');
-	cmp_ok($lsmb->parse_amount('user' => \%myconfig), '==', 0,
-		"lsmb: undef string returns 0");
-	cmp_ok($lsmb->parse_amount('user' => \%myconfig, 'amount' => ''), '==', 0,
-		"lsmb: Empty string returns 0");
 	@r = trap{$lsmb->parse_amount('user' => \%myconfig, 'amount' => 'foo')};
-	is($trap->exit, 0,
+	is($trap->exit, undef,
 		'lsmb: Invalid string gives NaN exit');
-	is($trap->stdout, $lsmb_nan_message,
-		'lsmb: Invalid string gives NaN message');
 }

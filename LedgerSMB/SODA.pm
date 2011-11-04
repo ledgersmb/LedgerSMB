@@ -6,9 +6,9 @@ LedgerSMB::SODA
 # TODO Type parsing still needs to be implemented.
 # Also should add signal handlers to clear cache. --CT
 
-use Moose;
 
 package LedgerSMB::SODA;
+use Moose;
 
 use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
@@ -32,14 +32,14 @@ In LedgerSMB 1.4 new code, all database access should go through here.
 =cut
 
 # also add inline constraint to ensure autocommit is off
-has (dbh => (isa => 'DBI', is => 'rw', required => 1));
+has 'dbh' => (isa => 'DBI', is => 'rw', required => 1);
 
 =item dbh
 This is the database handle through which all access to the database goes.
 
 =cut
 
-has (dbroles => (isa => 'Arrayref[Str]', is=> 'rw', required => 0));
+has 'dbroles' => (isa => 'ArrayRef[Str]', is=> 'rw', required => 0);
 
 =item dbroles
 List of database roles for the current logged in user.  This can be specified
@@ -47,14 +47,14 @@ in the constructor or discovered later with LedgerSMB::SODA->get_roles
 
 =cut
 
-has (db => (isa => 'Str', is=> 'ro', required => 1));
+has 'db' => (isa => 'Str', is=> 'ro', required => 1);
 
 =item db
 Name of the current database
 
 =cut
 
-has (username => (isa => 'Str', is=>'ro', required => 1));
+has 'username' => (isa => 'Str', is=>'ro', required => 1);
 
 =item username
 Name of the current logged in user.
@@ -85,7 +85,7 @@ be supported with minimal effort.
 
 =cut
 
-around (BUILDARGS => sub {
+around BUILDARGS => sub {
     my $self = shift @_;
     my $orig = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
@@ -104,16 +104,14 @@ around (BUILDARGS => sub {
                     username => $username, 
                         cred => $cred });
     }
-});
+};
 
-around (BUILD => sub {
+sub BUILD {
     my $self = shift @_;
-    my $orig = shift @_;
-    $self = &$orig($self, @_);
     $self->_get_roles();
     $self->dbh->pg_learn_custom_types;
     return $self;
-});
+};
 
 =head1 METHODS
 
