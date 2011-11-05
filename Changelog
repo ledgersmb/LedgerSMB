@@ -6,9 +6,14 @@ Changelog for LedgerSMB 1.3.4
 * Corrected case matching error in upgrade script (Chris T)
 * Corrected version number on new databases (Chris T)
 * Corrected multiple load errors on upgrade (David B)
+* Corrected problem creating UTF-8 database on Debian (David B)
+* Corrected display issues with numbers (Herman V)
+* Updated Ubuntu notes (Frans S)
+* Corrected a couple of menu items (David B)
 
 Chris T is Chris Travers
 David B is David Bandel
+Herman V is Herman Vierendeels
 
 Changelog for LedgerSMB 1.3.3
 * Fix for being unable to delete AR/AP drafts (Herman V)
@@ -25,6 +30,7 @@ Changelog for LedgerSMB 1.3.3
 Chris T is Chris Travers
 Herman V is Herman Vierendeels
 Erik H is Erik Huelsman
+Frans S is Frans van der Star
 
 Changelog for LedgerSMB 1.3.2
 * Fixed a few files where suExec fixes were not applied (Chris T)
