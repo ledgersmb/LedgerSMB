@@ -1,3 +1,9 @@
+-- SQL Fixes for upgrades.  These must be safe to run repeatedly, or they must 
+-- fail transactionally.  Please:  one transaction per fix.  
+--
+-- Chris Travers
+
+
 BEGIN; -- 1.3.4, fix for menu-- David Bandel
 update menu_attribute set value = 'receive_order' where value  =
 'consolidate_sales_order' and node_id = '65';
