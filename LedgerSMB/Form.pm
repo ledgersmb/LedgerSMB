@@ -2531,6 +2531,7 @@ sub create_links {
 
         # store amounts in {acc_trans}{$key} for multiple accounts
         while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+            $self->db_parse_numeric(sth=>$sth, hashref=>$ref);#tshvr
             $ref->{exchangerate} =
               $self->get_exchangerate( $dbh, $self->{currency},
                 $ref->{transdate}, $fld );
