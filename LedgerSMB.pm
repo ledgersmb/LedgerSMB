@@ -238,7 +238,7 @@ sub new {
     $logger->debug("Begin LedgerSMB.pm");
 
     $self->{version} = $VERSION;
-    $self->{dbversion} = "1.3.3";
+    $self->{dbversion} = "1.3.4";
     
     bless $self, $type;
     $logger->debug("LedgerSMB::new: \$argstr = $argstr");
@@ -960,7 +960,7 @@ sub _db_init {
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
     if ($dbversion ne $self->{dbversion}){
-        $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}");
+        $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}.  Please re-run setup.pl against this database to correct.");
     }
 
     $sth = $dbh->prepare('SELECT check_expiration()');

@@ -646,6 +646,7 @@ sub rebuild_modules {
     $ENV{PGDATABASE} = $request->{database};
     
     $database->load_modules('LOADORDER');
+    $database->process_roles('Roles.sql');
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
     my $dbh = $request->{dbh};

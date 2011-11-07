@@ -151,7 +151,7 @@ sub new {
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
     $self->{version}   = "1.3.4";
-    $self->{dbversion} = "1.3.3";
+    $self->{dbversion} = "1.3.4";
 
     bless $self, $type;
 
