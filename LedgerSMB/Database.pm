@@ -250,7 +250,9 @@ sub get_info {
 
 =item $db->create();
 
-Creates a database and loads the contrib files.
+Creates a database and loads the contrib files.  This is done from template0, 
+meaning nothing added to template1 will be found in this database.  This was 
+necessary as a workaround for issues on some Debian systems.
 
 Returns true if successful, false of not.  Creates a log called dblog in the 
 temporary directory with all the output from the psql files.  
@@ -263,7 +265,10 @@ display only those lines containing the word ERROR.
 sub create {
     my ($self) = @_;
     
-    my $rc = system("createdb -E UTF8 > $temp/dblog");
+    # We have to use template0 because of issues that Debian has with database 
+    # encoding.  Apparently that causes problems for us, so template0 must be
+    # used.
+    my $rc = system("createdb -t template0 -E UTF8 > $temp/dblog");
     if ($rc) {
         return $rc;
     }

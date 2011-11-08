@@ -152,7 +152,7 @@ sub transactions {
         $query = qq|
 			SELECT DISTINCT o.id, o.ordnumber, o.transdate,
 				o.reqdate, o.amount, ct.name, o.netamount, 
-				o.$form->{vc}_id, ex.$rate AS exchangerate,
+				o.entity_credit_account as $form->{vc}_id, ex.$rate AS exchangerate,
 		 		o.closed, o.quonumber, o.shippingpoint, 
 				o.shipvia, ee.name AS employee, o.curr, 
 				o.ponumber
@@ -170,7 +170,8 @@ sub transactions {
         }
 
         $query .= qq|
-			LEFT JOIN entity_employee e ON (o.employee_id = e.id)
+                        LEFT JOIN person per ON per.id = o.person_id
+			LEFT JOIN entity_employee e ON (per.entity_id = e.entity_id)
 			LEFT JOIN entity ee ON (e.entity_id = ee.id)
 			LEFT JOIN exchangerate ex 
 				ON (ex.curr = o.curr 

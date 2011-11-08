@@ -1037,7 +1037,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__project_timecard_add"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON jcitems TO "lsmb_<?lsmb dbname ?>__project_timecard_add";
+GRANT INSERT, UPDATE ON jcitems TO "lsmb_<?lsmb dbname ?>__project_timecard_add";
 GRANT ALL ON jcitems_id_seq TO "lsmb_<?lsmb dbname ?>__project_timecard_add";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)

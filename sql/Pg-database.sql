@@ -2556,8 +2556,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 64	action	search	148
 65	module	oe.pl	150
 65	action	search	151
-65	type	consolidate_sales_order	152
-64	type	receive_order	149
+65	type	receive_order	152
+64	type	consolidate_sales_order	149
 66	module	oe.pl	153
 66	action	search_transfer	154
 67	menu	1	155

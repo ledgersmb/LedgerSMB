@@ -3,7 +3,7 @@ UBUNTU ONERIC OCELOT UBUNTU 11.10
 
 by Frans van der Star (f.van.der.star@gmail.com)
 
-Date: 17-10-2011
+Date: 31-10-2011
 
 1. Preliminary Notes
 
@@ -91,8 +91,8 @@ sudo apt-get install build-essential
 As stated before this tutorial is only for the LedgerSMB-1.3-series. For the 1.2-series would like to refer to my preliminary notes in 1.
 
 cd /tmp
-wget http://switch.dl.sourceforge.net/sourceforge/ledger-smb/ledgersmb-1.3.0.tar.gz (At the moment, 17-10-2011, most recent version)
-tar xvfz ledgersmb-1.3.0.tar.gz
+wget http://switch.dl.sourceforge.net/sourceforge/ledger-smb/ledgersmb-1.3.2.tar.gz (At the moment, 17-10-2011, most recent version)
+tar xvfz ledgersmb-1.3.2.tar.gz
 sudo mv ledgersmb /usr/local/
 
 5. Configuration modifications and commands, which enable
@@ -105,8 +105,7 @@ sudo -i
 
 chown -R www-data:www-data /usr/local/ledgersmb/
 
-sed -e "s|WORKING_DIR|$PWD|g" /usr/local/ledgersmb/ledgersmb-httpd.conf.template > /etc/apache2/conf.d/ledgersmb-1.3.conf wondering last one is correct
-
+sed -e "s|WORKING_DIR|$PWD|g" /usr/local/ledgersmb/ledgersmb-httpd.conf.template > /etc/apache2/conf.d/ledgersmb-httpd.conf 
 
 mv /usr/local/ledgersmb/ledgersmb.conf.default /usr/local/ledgersmb/ledgersmb.conf
 
@@ -119,8 +118,6 @@ After this save this and close this file later changed this in ledgersmb-httpd.c
 a2enmod rewrite
 
 sudo chmod 777 -R /etc/apache2/conf.d
-
-sudo cp /usr/local/ledgersmb/ledgersmb-httpd.conf.template /etc/apache2/conf.d/ledgersmb-httpd.conf.template
 
 sudo chmod 777 -R /etc/apache2/conf.d/ledgersmb-httpd.conf.template
 
@@ -152,6 +149,9 @@ psql -U postgres
 ALTER USER postgres WITH PASSWORD 'postgres';
 
 \q
+
+Of course you should choose a different password for postgres than 'postgres.'  
+Just remember it for future steps!
 
 createuser --no-superuser --createdb --no-createrole -U postgres --pwprompt --encrypted ledgersmb
 
