@@ -199,8 +199,6 @@ to be parsed this way.
 
 my $sql_type_cache = {};
 
-my $type_tree = {};
-
 my $registered_types = {};
 
 sub register_type {
@@ -212,20 +210,6 @@ sub register_type {
                                        parse_input => $args{parse_input}, };
 }
 
-# Private method learn_all_types()
-# This is broken off for readability purposes from soda_method below as well.
-# This is only run once per Perl interpreter since it caches its results for
-# future use.
-# 
-# This method queries  the system catalogs for all defined types, and caches the
-# oid's and human readable names.  This is then used when parsing return values.
-#
-# This method sets $sql_type_cache and $type_tree entries.
-
-sub _learn_all_types {
-    my ($self) = @_;
-    #TODO
-}
 
 =item parse_input(class => $string, value => $string)
 This is a hook for parsing data via the database for registered types.
@@ -461,10 +445,7 @@ sub soda_method {
     my $method = $args{method};
 
     my $schema   = $args{schema} || $LedgerSMB::Sysconfig::db_namespace;
-    if (!keys %$sql_type_cache){
-        $self->_learn_all_types;
-    }
-    my @windows = @predef_windows;
+    my @windows  = @predef_windows;
     #Window specs
     my $col_list = "*";
 
@@ -645,6 +626,61 @@ sub _dberror {
     #TODO add logging before raising exception --CT
     die "LedgerSMB::SODA $sqlstate";
 };
+
+=item stringify(string $typename, @hashrefs)
+
+Stringify returns an arrayref of strings representing the hashes in the SQL
+complex type identified.
+
+=cut
+
+sub stringify {
+    my ($self) = shift @_;
+    my $typename = shift @_;
+    my @hashes = @_;
+    my $dbh = $self->dbh;
+    my $arglist_str = '';
+    my @arglist;
+
+    if ($sql_type_cache->{$typename}){
+       my @arglist = $sql_type_cache->{$typename};
+       if (!@arglist){
+           delete $sql_type_cache->{$typename};
+           return $self->stringify($typename, @hashes);
+       }
+    } else {
+        my $attquery = "
+            SELECT attname, attnum FROM pg_attribute 
+             WHERE attrelid = (SELECT oid FROM  pg_class WHERE relname = ?)
+        ";
+        my $attsth = $dbh->prepare($attquery);
+        $attsth->execute($typename) || $self->dberror();
+        while (my $attref = $attsth->fetchrow_hashref('NAME_lc')){
+             push @arglist, $attref->{attname};
+        }
+    }
+
+    my $retval = [];
+
+    for my $hash (@hashes) {
+        my $string  = '(';
+        for my $arg (@arglist){
+           $arg =~ s/"/""/; # double up double quotes -- CT
+           if ($arg =~ /\\/){ # Backshash escaping not supported
+               die 'LedgerSMB::SODA Backslash escaping not yet supported'
+           } elsif ($arg =~ /[(),"]/){ # Double quote escaping
+               $arg = '"' . $arg . '"';  
+           } elsif ($arg eq '' and defined $arg){
+               $arg = '""';
+           }
+           $string .= "$arg,";
+        }
+        $string =~ s/,$/\)/;
+        push @$retval, $string;
+    }
+
+    return $retval;
+}
 
 =back
 
