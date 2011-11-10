@@ -17,4 +17,11 @@ value  = 'receive_order' and node_id = '64';
 update menu_attribute set id = '152' where value  =
 'consolidate_sales_order' and node_id = '64';
 
+-- fix for bug 3430820
+update menu_attribute set value = 'pricegroup' where node_id = '83' and attribute = 'type';
+update menu_attribute set value = 'partsgroup' where node_id = '82' and attribute = 'type';
+
+UPDATE menu_attribute SET value = 'partsgroup' WHERE node_id = 91 and attribute = 'type';
+UPDATE menu_attribute SET value = 'pricegroup' WHERE node_id = 92 and attribute = 'type';
+
 COMMIT;

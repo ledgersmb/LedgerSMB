@@ -2792,8 +2792,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 82	module	pe.pl	196
 83	action	add	198
 83	module	pe.pl	199
-83	type	partsgroup	200
-82	type	pricegroup	197
+83	type	pricegroup	200
+82	type	partsgroup	197
 84	module	ic.pl	202
 84	action	stock_assembly	203
 85	menu	1	204
@@ -2812,10 +2812,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 90	module	ic.pl	217
 90	searchitems	labor	218
 91	module	pe.pl	221
-91	type	pricegroup	222
+91	type	partsgroup	222
 91	action	search	220
 92	module	pe.pl	224
-92	type	partsgroup	225
+92	type	pricegroup	225
 92	action	search	223
 93	action	search	226
 93	module	ic.pl	227
