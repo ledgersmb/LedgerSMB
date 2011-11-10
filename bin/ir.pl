@@ -571,15 +571,27 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                    !defined $form->{"mt_rate_$item"}){
                    $form->{"mt_rate_$item"} = $form->{tax_obj}{$item}->rate;
                }
+               else
+               {
+                $form->{"mt_rate_$item"}=$form->parse_amount(\%myconfig,$form->{"mt_rate_$item"});
+               }
                if ($form->{"mt_basis_$item"} eq '' or
                    !defined $form->{"mt_basis_$item"}){
                    $form->{"mt_basis_$item"} = $form->{taxbasis}{$item};
+               }
+               else
+               {
+                $form->{"mt_basis_$item"}=$form->parse_amount(\%myconfig,$form->{"mt_basis_$item"});
                }
                if ($form->{"mt_amount_$item"} eq '' or
                    !defined $form->{"mt_amount_$item"}){
                    $form->{"mt_amount_$item"} = 
                            $form->{"mt_rate_$item"}
                            * $form->{"mt_basis_$item"};
+               }
+               else
+               {
+                $form->{"mt_amount_$item"}=$form->parse_amount(\%myconfig,$form->{"mt_amount_$item"});
                }
                $form->{invtotal} += $form->round_amount(
                                          $form->{"mt_amount_$item"}, 2);
@@ -591,13 +603,13 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->{"mt_amount_$item"} .qq|" size="10"/></td>
+                        .$form->format_amount(\%myconfig,$form->{"mt_amount_$item"}).qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
-                        .$form->{"mt_rate_$item"} .qq|" size="6"/></td>
+                        .$form->format_amount(\%myconfig,$form->{"mt_rate_$item"}).qq|" size="6"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->{"mt_basis_$item"} .qq|" size="10" /></td>
+                        .$form->format_amount(\%myconfig,$form->{"mt_basis_$item"}).qq|" size="10" /></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
                         .$form->{"mt_ref_$item"} .qq|" size="10"/></td>
@@ -1372,12 +1384,14 @@ sub save_info {
 		{
 			
 		  IR->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"true") if($form->{"invoice_id_$i"});
+          $form->{$dbh}->commit();#highest-level sub should commit
 
 		}
 		else
 		{
 
 		    IR->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"false") if($form->{"invoice_id_$i"});
+            $form->{$dbh}->commit();#highest-level sub should commit
 
 		}
 		
