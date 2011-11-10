@@ -635,21 +635,21 @@ sub get_customer {
 
     $query = qq|
 		SELECT count(*)
-		  FROM customer
+		  FROM entity_credit_account
 		 WHERE $where|;
     my ($count) = $dbh->selectrow_array($query);
 
     if ( $count < $myconfig->{vclimit} ) {
         $query = qq|
 			SELECT id, name
-			  FROM customer
+			  FROM entity_credit_account
 			 WHERE $where|;
 
         if ( $form->{customer_id} ) {
             $query .= qq|
 				UNION 
 				SELECT id,name
-				  FROM customer
+				  FROM entity_credit_account
 				 WHERE id = | . $dbh->quote( $form->{customer_id} );
         }
 
@@ -1720,10 +1720,10 @@ sub timecard_get_currency {
     my $self  = shift @_;
     my $form  = shift @_;
     my $dbh   = $form->{dbh};
-    my $query = qq|SELECT curr FROM customer WHERE id = ?|;
-    my $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{customer_id} );
-    my ($curr) = $sth->fetchrow_array;
+    my $query = qq|SELECT curr FROM entity_credit_account WHERE id = ?|;
+    my $sth   = $dbh->prepare($query) || $form->dberror($query);
+    $sth->execute( $form->{customer_id} ) || $form->dberror($query);
+    my ($curr) = $sth->fetchrow_array || $form->dberror($query);
     $form->{currency} = $curr;
 }
 
@@ -1838,9 +1838,8 @@ sub get_jcitems {
 		          p.partnumber
 		     FROM jcitems j
 		     JOIN project pr ON (pr.id = j.project_id)
-		     JOIN employee e ON (e.id = j.employee_id)
 		     JOIN parts p ON (p.id = j.parts_id)
-		LEFT JOIN entity_credit_account eca ON (c.id = pr.credit_id)
+		LEFT JOIN entity_credit_account eca ON (eca.id = pr.credit_id)
                 LEFT JOIN company c ON eca.entity_id = c.entity_id
 		    WHERE pr.parts_id IS NULL
 		          AND j.allocated != j.qty $where

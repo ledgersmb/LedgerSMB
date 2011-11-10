@@ -6,6 +6,12 @@ Changelog for LedgerSMB 1.3.5
 * Fixing Menu and Permissions bug 3430820 (Chris T)
 * Fixing permissions bug 3433644 (Chris T)
 * Fixing file not found printing HTML invoice (Chris T)
+* Corrected join issues in generating sales orders (Erik H)
+* Removed commits in child subroutines (Herman V)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+Herman V is Herman Vierendeels
 
 Changelog for LedgerSMB 1.3.4
 * Corrected case matching error in upgrade script (Chris T)
