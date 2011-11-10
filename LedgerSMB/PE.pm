@@ -635,21 +635,21 @@ sub get_customer {
 
     $query = qq|
 		SELECT count(*)
-		  FROM customer
+		  FROM entity_credit_account
 		 WHERE $where|;
     my ($count) = $dbh->selectrow_array($query);
 
     if ( $count < $myconfig->{vclimit} ) {
         $query = qq|
 			SELECT id, name
-			  FROM customer
+			  FROM entity_credit_account
 			 WHERE $where|;
 
         if ( $form->{customer_id} ) {
             $query .= qq|
 				UNION 
 				SELECT id,name
-				  FROM customer
+				  FROM entity_credit_account
 				 WHERE id = | . $dbh->quote( $form->{customer_id} );
         }
 
