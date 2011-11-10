@@ -364,7 +364,7 @@ sub save {
     }
     my $did_insert = 0;
     if ( !$form->{id} ) {
-        $query = qq|SELECT nextval('id')|;
+        $query = qq|SELECT nextval('oe_id_seq')|;
         $sth   = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
         ( $form->{id} ) = $sth->fetchrow_array;
