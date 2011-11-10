@@ -190,9 +190,8 @@ sub new {
 				throw Error::Simple 'Invalid language';
 				return undef;
 			}
-			$self->{include_path} = "$self->{'include_path'}"
-					."/$self->{language}"
-					.";$self->{'include_path'}";
+			$self->{include_path_lang} = "$self->{'include_path'}"
+					."/$self->{language}";
                         $self->{locale} 
                              = LedgerSMB::Locale->get_handle($self->{language});
 		}
