@@ -1722,9 +1722,10 @@ sub timecard_get_currency {
     my $dbh   = $form->{dbh};
     my $query = qq|SELECT curr FROM entity_credit_account WHERE id = ?|;
     my $sth   = $dbh->prepare($query) || $form->dberror($query);
-    $sth->execute( $form->{customer_id} ) || $form->dberror($query);
-    my ($curr) = $sth->fetchrow_array || $form->dberror($query);
+    $sth->execute( $form->{customer_id} );# || $form->dberror($query);
+    my ($curr) = $sth->fetchrow_array;# || $form->dberror($query);
     $form->{currency} = $curr;
+    $curr || $form->error('No currency found');
 }
 
 =item PE::project_sales_order("", $myconfig, $form)

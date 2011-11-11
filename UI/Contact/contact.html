@@ -585,6 +585,15 @@ END ?>
 			label = text('Taxforms') 
 			} ?> 
 	  </td>
+          <td> <?lsmb INCLUDE select element_data = {
+                        name = 'curr'
+                        options = all_currencies
+                        text_attr = 'text'
+                        value_attr = 'text'
+                        default_values = [curr]
+                        label = text('Currency')
+               } ?>
+           </td>
 
         </tr>
 

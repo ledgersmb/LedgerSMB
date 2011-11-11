@@ -11,6 +11,8 @@ Changelog for LedgerSMB 1.3.5
 * Correcting warnings about HOME not set (Chris T)
 * Corrected debian-specific db creation issue (Pongracz I)
 * Corrected company name representation in timecard->sales order (Chris T)
+* Better error handling when currency not set (Chris T)
+* Exposed adding currency for customer/vendor to UI (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann

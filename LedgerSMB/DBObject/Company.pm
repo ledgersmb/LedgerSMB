@@ -427,6 +427,14 @@ sub get_metadata {
     @{$self->{country_list}} = 
          $self->exec_method(funcname => 'location_list_country');
 
+    ($self->{all_currencies}) =
+         $self->exec_method(funcname => 'setting__get_currencies');
+    $self->{all_currencies} = $self->{all_currencies}->{setting__get_currencies};
+
+    for my $curr (@{$self->{all_currencies}}){
+        $curr = { text => $curr };
+    }
+
     @{$self->{contact_class_list}} = 
          $self->exec_method(funcname => 'entity_list_contact_class');
     my $country_setting = LedgerSMB::Setting->new({base => $self, copy => 'base'});
