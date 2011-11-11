@@ -64,7 +64,6 @@ sub preprocess {
     my $vars;
     my $type = ref $rawvars;
 
-    #XXX fix escaping function
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
     return unless defined $rawvars;
     if ( $type eq 'ARRAY' ) {
@@ -124,14 +123,14 @@ sub process {
             $tempdir = undef;
         }
 	$template = Template->new({
-		INCLUDE_PATH => [$parent->{include_path}, 'UI/lib'],
+		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
+                ENCODING => 'utf8',
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
 		TRIM => 1,
                 COMPILE_DIR=> $tempdir,
 		DEBUG => ($parent->{debug})? 'dirs': undef,
-                ENCODING => 'utf8',
 		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template->error(); 
 	if (not $template->process(

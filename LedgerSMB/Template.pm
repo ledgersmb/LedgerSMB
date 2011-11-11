@@ -190,9 +190,8 @@ sub new {
 				throw Error::Simple 'Invalid language';
 				return undef;
 			}
-			$self->{include_path} = "$self->{'include_path'}"
-					."/$self->{language}"
-					.";$self->{'include_path'}";
+			$self->{include_path_lang} = "$self->{'include_path'}"
+					."/$self->{language}";
                         $self->{locale} 
                              = LedgerSMB::Locale->get_handle($self->{language});
 		}
@@ -343,13 +342,11 @@ sub _http_output {
 	}
 	if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
-		binmode STDOUT, ':utf8';
 	} else {
 		print "Content-Type: $self->{mimetype}$disposition\n\n";
-		binmode STDOUT, ':bytes';
 	}
-	print $data;
 	binmode STDOUT, ':utf8';
+	print $data;
 }
 
 sub _http_output_file {

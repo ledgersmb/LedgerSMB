@@ -77,7 +77,7 @@ my @default_textboxes = (
    { name => 'company_fax', label => $locale->text('Company Fax') },
 );
 
-my @default_others = qw(businessnumber weightunit 
+my @default_others = qw(businessnumber weightunit separate_duties
                         IC IC_income IC_expense 
                         FX_gain FX_loss default_country templates curr);
 

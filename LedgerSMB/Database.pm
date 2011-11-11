@@ -268,7 +268,7 @@ sub create {
     # We have to use template0 because of issues that Debian has with database 
     # encoding.  Apparently that causes problems for us, so template0 must be
     # used.
-    my $rc = system("createdb -t template0 -E UTF8 > $temp/dblog");
+    my $rc = system("createdb -T template0 -E UTF8 > $temp/dblog");
     if ($rc) {
         return $rc;
     }

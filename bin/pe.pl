@@ -2571,7 +2571,6 @@ sub project_jcitems_list {
     # flatten array
     $i = 1;
     foreach $ref ( @{ $form->{jcitems} } ) {
-
         if ( $form->{summary} ) {
 
             $thisitem =

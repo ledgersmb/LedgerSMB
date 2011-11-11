@@ -197,7 +197,7 @@ sub post_invoice {
       : $form->parse_amount( $myconfig, $form->{exchangerate} );
 
     
-    my $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});
+    my $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});#tshvr this always returns true!!
   
     for my $i ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
@@ -620,11 +620,13 @@ sub post_invoice {
         for $taccno (split / /, $form->{taxaccounts}){
             my $taxamount;
             my $taxbasis;
+            my $taxrate;
             my $fx = $form->{exchangerate} || 1;
             $taxamount = $form->parse_amount($myconfig, 
                                              $form->{"mt_amount_$taccno"});
             $taxbasis = $form->parse_amount($myconfig,
                                            $form->{"mt_basis_$taccno"});
+            $taxrate=$form->parse_amount($myconfig,$form->{"mt_rate_$taccno"});
             my $fx_taxamount = $taxamount * $fx;
             my $fx_taxbasis = $taxbasis * $fx;
             $form->{payables} += $fx_taxamount;
@@ -632,7 +634,7 @@ sub post_invoice {
             $ac_sth->execute($taccno, $form->{id}, $fx_taxamount * -1, 
                              $form->{"mt_ref_$taccno"}, 
                              $form->{"mt_desc_$taccno"});
-            $tax_sth->execute($fx_taxbasis * -1, $form->{"mt_rate_$taccno"});
+            $tax_sth->execute($fx_taxbasis * -1, $taxrate);
         }
         $ac_sth->finish;
         $tax_sth->finish;
@@ -981,6 +983,28 @@ sub reverse_invoice {
     }
     $sth->finish;
 
+    #tshvr delete tax_extended invoice_tax_form 
+    $query=qq|SELECT entry_id FROM acc_trans ac JOIN tax_extended t using(entry_id) WHERE ac.trans_id = ?|;
+    $sth   = $dbh->prepare($query);
+    $sth->execute($form->{id}) || $form->dberror($query);
+    while ( my $entry_id=$sth->fetchrow_array ) {
+     my $query1="DELETE FROM tax_extended WHERE entry_id=?";
+     my $sth1   = $dbh->prepare($query1);
+     $sth1->execute($entry_id) || $form->dberror($query);
+     $sth1->finish;
+    }#while entry_id
+    $sth->finish;
+    $query=qq|select id from invoice WHERE trans_id=?|;
+    $sth   = $dbh->prepare($query);
+    $sth->execute($form->{id}) || $form->dberror($query);
+    while(my $invoice_id=$sth->fetchrow()){
+     my $query1=qq|delete from invoice_tax_form where invoice_id=?|;
+     my $sth1   = $dbh->prepare($query1);
+     $sth1->execute($invoice_id) || $form->dberror($query);
+     $sth1->finish;
+    }#while invoice_id
+    $sth->finish;
+    #tshvr delete tax_extended invoice_tax_form end
     # delete acc_trans
     $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
     $sth = $dbh->prepare($query);
@@ -995,7 +1019,7 @@ sub reverse_invoice {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    $dbh->commit;
+    #$dbh->commit;#tshvr lower-level sub should not commit on behalf of higher-level sub
 
 }
 
@@ -1067,9 +1091,9 @@ sub delete_invoice {
               if $spoolfile;
         }
     }
-    $query = "DELETE FROM invoice WHERE trans_id = ?";
-    $sth = $dbh->prepare($query);
-    $sth->execute($form->{id});
+    #$query = "DELETE FROM invoice WHERE trans_id = ?";#tshvr already done in reverse_invoice
+    #$sth = $dbh->prepare($query);
+    #$sth->execute($form->{id});
     # delete AP record
     $query = qq|DELETE FROM ap WHERE id = ?|;
     $sth = $dbh->prepare($query);
@@ -1098,11 +1122,12 @@ sub retrieve_invoice {
                        WHERE ac.trans_id = ?|);
         $tax_sth->execute($form->{id});
         while (my $taxref = $tax_sth->fetchrow_hashref('NAME_lc')){
+              $form->db_parse_numeric(sth=>$tax_sth,hashref=>$taxref);
               $form->{manual_tax} = 1;
               my $taccno = $taxref->{accno};
-              $form->{"mt_amount_$taccno"} = $taxref->{amount} * -1;
+              $form->{"mt_amount_$taccno"} = Math::BigFloat->new($taxref->{amount} * -1);
               $form->{"mt_rate_$taccno"}  = $taxref->{rate};
-              $form->{"mt_basis_$taccno"} = $taxref->{tax_basis} * -1;
+              $form->{"mt_basis_$taccno"} = Math::BigFloat->new($taxref->{tax_basis} * -1);
               $form->{"mt_memo_$taccno"}  = $taxref->{memo};
               $form->{"mt_ref_$taccno"}  = $taxref->{source};
         }
@@ -1638,7 +1663,7 @@ sub update_invoice_tax_form
           $sth->execute($invoice_id,$report) || $form->dberror("$query");
    }
 
-   $dbh->commit();
+   #$dbh->commit();#tshvr lower-level sub should not commit on behalf of higher-level sub
 
 }
 

@@ -650,7 +650,8 @@ sub stringify {
        }
     } else {
         my $attquery = "
-            SELECT attname, attnum FROM pg_attribute 
+            SELECT attname, attnum 
+              FROM pg_attribute 
              WHERE attrelid = (SELECT oid FROM  pg_class WHERE relname = ?)
         ";
         my $attsth = $dbh->prepare($attquery);

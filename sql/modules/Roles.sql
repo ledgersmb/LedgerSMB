@@ -749,7 +749,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
 GRANT ALL ON partsvendor, partscustomer TO "lsmb_<?lsmb dbname ?>__part_create";
-GRANT INSERT ON parts, makemodel TO "lsmb_<?lsmb dbname ?>__part_create";
+GRANT INSERT ON parts, makemodel, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>__part_create";
 GRANT ALL ON parts_id_seq TO "lsmb_<?lsmb dbname ?>__part_create";
 GRANT INSERT ON partstax TO "lsmb_<?lsmb dbname ?>__part_create";
 
@@ -770,7 +770,7 @@ values (82, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__part_edit"
 WITH INHERIT NOLOGIN;
 
-GRANT UPDATE ON parts TO "lsmb_<?lsmb dbname ?>__part_edit";
+GRANT UPDATE ON parts, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT ALL ON makemodel TO "lsmb_<?lsmb dbname ?>__part_edit";
 --###oldcode: Should have been UPDATE
 GRANT ALL ON partstax TO "lsmb_<?lsmb dbname ?>__part_edit";
