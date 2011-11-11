@@ -212,6 +212,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT INSERT ON ar, invoice_note 
 TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
+GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
+
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
@@ -243,7 +245,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
 --### oldcode: UPDATE granted because old code wants it
-GRANT INSERT, UPDATE ON invoice, new_shipto 
+GRANT SELECT, INSERT, UPDATE ON invoice, new_shipto 
 TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
@@ -396,11 +398,13 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON ap, invoice_note 
+GRANT SELECT, INSERT ON ap, invoice_note 
 TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
+
+GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (21, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create');
@@ -414,10 +418,12 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__batch_create";
 
-GRANT SELECT,INSERT, UPDATE ON ap TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
+GRANT SELECT,INSERT, UPDATE ON ap, invoice TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
+
+GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (199, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
@@ -574,7 +580,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__pos_enter"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__pos_enter";
+GRANT SELECT, INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON ar TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__pos_enter";
@@ -582,6 +588,7 @@ GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
+GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__pos_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (16, 'allow', 'lsmb_<?lsmb dbname ?>__pos_enter');
