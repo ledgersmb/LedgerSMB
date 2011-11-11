@@ -67,6 +67,7 @@ our $templates = "templates";
 
 # Temporary files stored at"
 our $tempdir = ( $ENV{TEMP} || '/tmp' );
+$ENV{HOME} = $tempdir;
 
 our $cache_template_dir = "$tempdir/lsmb_templates";
 # Backup path
