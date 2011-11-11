@@ -1834,7 +1834,7 @@ sub get_jcitems {
 		   SELECT j.id, j.description, j.qty - j.allocated AS qty,
 		          j.sellprice, j.parts_id, pr.credit_id as customer_id, 
 		          j.project_id, j.checkedin::date AS transdate, 
-		          j.notes, c.name AS customer, pr.projectnumber, 
+		          j.notes, c.legal_name AS customer, pr.projectnumber, 
 		          p.partnumber
 		     FROM jcitems j
 		     JOIN project pr ON (pr.id = j.project_id)
@@ -1844,12 +1844,11 @@ sub get_jcitems {
 		    WHERE pr.parts_id IS NULL
 		          AND j.allocated != j.qty $where
 		 ORDER BY pr.projectnumber, c.name, j.checkedin::date|;
-
     if ( $form->{summary} ) {
         $query =~ s/j\.description/p\.description/;
         $query =~ s/c\.name,/c\.name, j\.parts_id, /;
     }
-
+    
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 

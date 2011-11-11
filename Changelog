@@ -10,6 +10,7 @@ Changelog for LedgerSMB 1.3.5
 * Removed commits in child subroutines (Herman V)
 * Correcting warnings about HOME not set (Chris T)
 * Corrected debian-specific db creation issue (Pongracz I)
+* Corrected company name representation in timecard->sales order (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
