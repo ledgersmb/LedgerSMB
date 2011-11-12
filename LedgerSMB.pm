@@ -216,6 +216,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Log;
 use LedgerSMB::Company_Config;
 use strict;
+use utf8;
 
 $CGI::Simple::POST_MAX = -1;
 
@@ -246,6 +247,10 @@ sub new {
     # my $params = $query->Vars; returns a tied hash with keys that
     # are not parameters of the CGI query.
     my %params = $query->Vars;
+    for my $p(keys %params){
+        utf8::decode($params{$p});
+        utf8::upgrade($params{$p});
+    }
     $logger->debug("LedgerSMB::new: params = ", Data::Dumper::Dumper(\%params));
     $self->{VERSION} = $VERSION;
     $self->{_request} = $query;
