@@ -15,6 +15,12 @@ Changelog for LedgerSMB 1.3.5
 * Exposed adding currency for customer/vendor to UI (Chris T)
 * Corrected POS roles as per bug 3434549 (Chris T)
 * Updated manual per ticket 3435124 (Chris T)
+* Removed intermediate LaTeX files (Erik H)
+* Fixed error: css/scripts/create_batch.css not found (Erik H)
+* Translation string updates Herman V)
+* Additional upgrade checks added (Herman V)
+* Better whitespace handling in upgrade scripts (from 1.2) (Herman V)
+
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
