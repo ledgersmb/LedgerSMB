@@ -1,37 +1,37 @@
-<?lsmb company align=center width="40" ?>
-<?lsmb address align=center width="40" ?>
+<?lsmb company FILTER format('%-40.40s') ?>
+<?lsmb address FILTER format('%-40.40s') ?>
 
-Till: <?lsmb till align=left width="3" ?>         Phone#: <?lsmb tel ?>
+Till: <?lsmb till FILTER format('%-3.3s') ?>         Phone#: <?lsmb tel ?>
 Cashier: <?lsmb employee ?>
 Inv #/Date: <?lsmb invnumber ?> / <?lsmb invdate ?>
 Printed: <?lsmb dateprinted ?>
 
   Qty Description                 Amount
 <?lsmb foreach number ?>
-<?lsmb qty align=right width="5" ?> <?lsmb description align=left width=24 offset=6 ?> <?lsmb linetotal align=right width="9" ?>
+<?lsmb qty FILTER format('%5.5s') ?>       <?lsmb description FILTER format('%-18.18s') ?> <?lsmb linetotal FILTER format('%9.9s') ?>
       <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
 <?lsmb end number ?>
 
 Number of items: <?lsmb totalqty ?>
 <?lsmb if taxincluded ?>
                          ---------------
-                        Total: <?lsmb invtotal align=right width="9" ?>
+                        Total: <?lsmb invtotal FILTER format('%9.9s') ?>
 <?lsmb end taxincluded ?>
 <?lsmb if not taxincluded ?>
                             ------------
-                     Subtotal: <?lsmb subtotal align=right width="9" ?>
+                     Subtotal: <?lsmb subtotal FILTER format('%9.9s') ?>
 <?lsmb end taxincluded ?>
 <?lsmb foreach tax ?>
-<?lsmb taxdescription align=right width="23" ?> @ <?lsmb taxrate align=right width="2" ?>%: <?lsmb tax align=right width="9" ?>
+<?lsmb taxdescription FILTER format('%-23.23s') ?> @ <?lsmb taxrate FILTER format('%2.2s') ?>%: <?lsmb tax FILTER format('%9.9s') ?>
 <?lsmb end tax ?>
 <?lsmb foreach payment ?>
-                         Paid: <?lsmb payment align=right width="9" ?> <?lsmb currency ?>
+                         Paid: <?lsmb payment FILTER format('%9.9s') ?> <?lsmb currency ?>
 <?lsmb end payment ?>
 <?lsmb if change ?>
-                       Change: <?lsmb change align=right width="9" ?>
+                       Change: <?lsmb change FILTER format('%9.9s') ?>
 <?lsmb end change ?>
 <?lsmb if total ?>
-                  Balance Due: <?lsmb total align=right width="9" ?>
+                  Balance Due: <?lsmb total FILTER format('%9.9s') ?>
 <?lsmb end total ?>
 <?lsmb if discount ?>
 
