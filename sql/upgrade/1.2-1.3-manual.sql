@@ -183,13 +183,15 @@ group by v.credit_id, v.fax;
 
 INSERT INTO public.country (id, name, short_name) VALUES (-1, 'Invalid Country', 'XX');
 
+--tshvr address1 constraint "location_line_one_check"
 INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 1,
     min(location_save(NULL,
 
     case 
-        when oa.address1 = '' then 'Null' 
         when oa.address1 is null then 'Null'
+        when trim(oa.address1) = '' then 'Null' 
+        when oa.address1 !~ '[[:alnum:]_]' then 'Invalid' 
         else oa.address1 
     end,
     oa.address2, 
@@ -226,9 +228,10 @@ INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 1,
     min(location_save(NULL,
 
-    case 
-        when oa.address1 = '' then 'Null' 
+    case
         when oa.address1 is null then 'Null'
+        when trim(oa.address1) = '' then 'Null' 
+        when oa.address1 !~ '[[:alnum:]_]' then 'Invalid' 
         else oa.address1 
     end,
     oa.address2, 
