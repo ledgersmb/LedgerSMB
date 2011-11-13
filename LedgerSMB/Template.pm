@@ -267,6 +267,11 @@ sub render {
             $cleanvars->{text} = sub { return $self->escape(shift @_) };
 	
         }
+        $cleanvars->{to_width} = sub {
+             my ($string, $width) = @_;
+             my $fmt = "A$width";
+             return pack($fmt, $string);
+        };
         $cleanvars->{tt_url} = sub {
                my $str  = shift @_;
 

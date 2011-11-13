@@ -1,4 +1,4 @@
-<html>
+<?lsmb INCLUDE 'ui-header.html' ?>
 <body>
 <table width="100%">
 
@@ -247,7 +247,6 @@
           <th align=left><?lsmb text('Source') ?></th>
           <th align=left><?lsmb text('Amount') ?></th>
         </tr>
-  <?lsmb END ?>
 
         <?lsmb FOREACH payment ?>
 	<?lsmb loop_count = loop.count - 1 ?>
@@ -259,7 +258,6 @@
         </tr>
         <?lsmb END ?>
 
-  <?lsmb IF paid_1 ?>
       </table>
     </td>
   </tr>
