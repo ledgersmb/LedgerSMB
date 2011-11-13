@@ -2971,16 +2971,16 @@ the rest of the page format is not thrown off by it.
 
 The template directory (``templates'' in the root
 LedgerSMB install directory) contains all the root templates used
-by LedgerSMB. These follow a naming convention of COAType-templatename.ext
-where COAType is the type of dataset that was created when the user
-was created, templatename is the name of the template, and ext is
-either txt, html, or tex (for text, html, and \LaTeX{}\ respectively).
+by LedgerSMB.  The default templates are stored in the demo folder.
 
-Inside this directory are one or more subdirectories where the relevant
+Inside the templates directory are one or more subdirectories where the 
+relevant
 templates have been copied as default language templates for the user.
 Many users can use the same user directory (which bears the name of
 the LedgerSMB username). Within this directory are more subdirectories
-for translated templates, one for each language created.
+for translated templates, one for each language created.  If the requested
+language template is not found, LedgerSMB will attempt to translate the one in
+the main folder.
 
 
 \subsection{Upgrade Issues}

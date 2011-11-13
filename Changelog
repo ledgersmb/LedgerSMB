@@ -14,6 +14,7 @@ Changelog for LedgerSMB 1.3.5
 * Better error handling when currency not set (Chris T)
 * Exposed adding currency for customer/vendor to UI (Chris T)
 * Corrected POS roles as per bug 3434549 (Chris T)
+* Updated manual per ticket 3435124 (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
