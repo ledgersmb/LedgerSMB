@@ -203,7 +203,7 @@ sub get_spoolfiles {
 				SELECT a.id, c.legal_name AS name, a.$invnumber AS invnumber, a.transdate,
 				       a.ordnumber, a.quonumber, $invoice AS invoice,
 				       '$item' AS module, s.spoolfile
-				  FROM $item a,
+				  FROM $item a
                                   JOIN entity_credit_account vc
                                        ON vc.id = a.entity_credit_account
                                   JOIN status s ON s.trans_id = a.id
