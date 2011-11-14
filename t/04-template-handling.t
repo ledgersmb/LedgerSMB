@@ -298,7 +298,7 @@ $template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de', 'fo
 ok(defined $template, 'Template, new: Object creation with valid language');
 isa_ok($template, 'LedgerSMB::Template', 
 	'Template, new: Object creation with valid language');
-is($template->{include_path}, 't/data/de;t/data',
+is($template->{include_path_lang}, 't/data/de',
 	'Template, new: Object creation with valid language has good include_path');
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de',
