@@ -28,7 +28,12 @@
 <?lsmb type.type = "hidden"; INCLUDE input element_data=type; -?>
 <table width="100%">
   <tr id="top-bar" class="listtop">
-    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb text('Receipts') ?></th>
+    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label">
+     <?lsmb IF (type.value == 'receipt') -?>
+      <?lsmb text('Receipts') ?>
+     <?lsmb ELSE; text('Payments') -?>
+     <?lsmb END -?>                     		 
+    </th>
   </tr>
 </table>
 
