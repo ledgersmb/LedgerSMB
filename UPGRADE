@@ -31,6 +31,7 @@ From LedgerSMB 1.2.x
    * perl Makefile.PL
    * make
    * make test
+      But run 'make test' under an english locale, because some tests check for english error messages.
 * run the install.sh script.
 * direct your browser to the setup.pl script in your ledgersmb directory (via
   http) and follow the prompts:
