@@ -934,6 +934,7 @@ my @topay_state; # WE WILL USE THIS TO HELP UI TO DETERMINE WHAT IS VISIBLE
 my $unhandled_overpayment;
 for my $ref (0 .. $#array_options) {
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
+   my $request_topay_fx_bigfloat=$Payment->parse_amount(amount=>$request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
 # SHOULD I APPLY DISCCOUNTS?   
       $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
 
@@ -963,10 +964,11 @@ for my $ref (0 .. $#array_options) {
        
 # XXX:  This causes issues currently, so display of unhandled overpayment has
 # disabled.  Was getting numbers that didn't make a lot of sense to me. --CT
-      if ( $due_fx <  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) {
+      if ( $due_fx <  $request_topay_fx_bigfloat) {
          # We need to store all the overpayments so we can use it on the screen
-         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} - $due_fx );
-         $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
+         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request_topay_fx_bigfloat - $due_fx );
+         #$request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
+         $request_topay_fx_bigfloat=$due_fx;
      } 
 #Now its time to build the link to the invoice :)
 
@@ -978,8 +980,8 @@ $uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozi
                                             href   => $uri
                                            },  
                                invoice_date      => "$array_options[$ref]->{invoice_date}",
-                               amount            => "$array_options[$ref]->{amount}",
-                               due               => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"}?  "$array_options[$ref]->{due}" : "$array_options[$ref]->{due}" + "$array_options[$ref]->{discount}",
+                               amount            => $Payment->format_amount(amount=>$array_options[$ref]->{amount}),
+                               due               => $Payment->format_amount(amount=>$request->{"optional_discount_$array_options[$ref]->{invoice_id}"}?  $array_options[$ref]->{due} : $array_options[$ref]->{due} + $array_options[$ref]->{discount}),
                                paid              => "$array_options[$ref]->{amount}" - "$array_options[$ref]->{due}"-"$array_options[$ref]->{discount}",
                                discount          => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? "$array_options[$ref]->{discount}" : 0 ,
                                optional_discount =>  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"},
@@ -994,10 +996,10 @@ $uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozi
                                                        value => $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"}      
                                                      },#END HASH
                                topay_fx          =>  { name  => "topay_fx_$array_options[$ref]->{invoice_id}",
-                                                       value => $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ? 
+                                                       value =>  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ? 
                                                            $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} eq 'N/A' ?
                                                            "$topay_fx_value" :
-                                                           $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} :
+                                                           "$request_topay_fx_bigfloat":
                                                            "$topay_fx_value"
                                                            # Ugly hack, but works ;) ... 
                                                  }#END HASH
@@ -1123,7 +1125,8 @@ my $select = {
  selectedcheckboxes => @selected_checkboxes  ? \@selected_checkboxes : '',
  notes => $request->{notes},
  overpayment         => \@overpayment,
- overpayment_account => \@overpayment_account
+ overpayment_account => \@overpayment_account,
+ format_amount => sub {return $Payment->format_amount(amount=>@_)}
 };
 my $template = LedgerSMB::Template->new(
   user     => $request->{_user},
@@ -1216,16 +1219,17 @@ for my $ref (0 .. $#array_options) {
          # we will assume that a discount should apply only
          # if this is the last payment of an invoice
      my  $temporary_discount = 0;
-     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&("$array_options[$ref]->{due_fx}" <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $array_options[$ref]->{discount_fx})) {
+     my  $request_topay_fx_bigfloat=$Payment->parse_amount(amount=>$request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&("$array_options[$ref]->{due_fx}" <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
          $temporary_discount = $array_options[$ref]->{discount_fx};
      }   
          #
          # The prefix cash is to set the movements of the cash accounts, 
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
-     if ( "$array_options[$ref]->{due_fx}" <  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ) {
+     if ( "$array_options[$ref]->{due_fx}" <  $request_topay_fx_bigfloat ) {
          # We need to store all the overpayments so we can use it on a new payment2 screen
-         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} + $temporary_discount - $array_options[$ref]->{amount}) ;
+         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount}) ;
 
      }
          if ($temporary_discount != 0) {
@@ -1234,7 +1238,7 @@ for my $ref (0 .. $#array_options) {
              push @source, $locale->text('Applied discount');
              push @transaction_id, $array_options[$ref]->{invoice_id};        
          } 
-         push @amount,   $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}; # We'll use this for both cash and ap/ar accounts
+         push @amount,   $request_topay_fx_bigfloat; # We'll use this for both cash and ap/ar accounts
          push @cash_account_id,  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"} ? $request->{"account_$array_options[$ref]->{invoice_id}"} : $request->{account};
          push @source, $request->{"optional_pay_$array_options[$ref]"} ?
                        $request->{"source_$array_options[$ref]->{invoice_id}"}.' '.$request->{"source_text_$array_options[$ref]->{invoice_id}"} 

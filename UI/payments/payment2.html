@@ -174,8 +174,8 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
     <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div></td>
    <?lsmb END ?> 
     <?lsmb #This should be computed and updated to the div using  ?> 
-    <td align="center"><?lsmb  row.topay_fx.id = row.topay_fx.name ;INCLUDE input element_data=row.topay_fx;
-    	       topay_subtotal = topay_subtotal + row.topay_fx.value -?>
+    <?lsmb topay_subtotal=topay_subtotal + row.topay_fx.value; -?>
+    <td align="center"><?lsmb  row.topay_fx.id=row.topay_fx.name;INCLUDE input element_data={id=>row.topay_fx.id,name=>row.topay_fx.name,value=>format_amount(row.topay_fx.value)}; -?>
     <?lsmb # A DEGRADABLE JAVASCRIPT IS USED, BECAUSE OF THE VISUAL IMPACT
     	   # THAT CAUSES THE SIZE OF THIS DIV -?>
     <img src="UI/payments/img/up.gif" id="button_topay_<?lsmb row.invoice.id ?>" name="<?lsmb "button_topay_$i" ?>"
@@ -222,7 +222,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
    <?lsmb  colspan = column_count - 2 # We will use this later on totals -?>
    <tr class="listsubtotal">
    <th colspan="<?lsmb colspan -?>" align="right"><?lsmb text('Subtotal') -?></th>
-   <th colspan="2"><?lsmb topay_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
+   <th colspan="2"><?lsmb format_amount(topay_subtotal) -?>&nbsp;<?lsmb curr.value -?></th>
    </tr>
    </table>
    <table width="100%">
@@ -321,7 +321,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
    <tr class="listtotal">
    <?lsmb payment_total = overpayment_subtotal + topay_subtotal -?>
    <th colspan="5" align="right"><?lsmb text('Total') -?></th>
-   <th colspan="2"><?lsmb payment_total -?>&nbsp;<?lsmb curr.value -?></th>
+   <th colspan="2"><?lsmb format_amount(payment_total) -?>&nbsp;<?lsmb curr.value -?></th>
    </tr>
    </table>
    
@@ -330,13 +330,13 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
          update.title       = "UPDATE ALT+U";
          update.name        = "action";
          update.value	    = "payment2";
-         update.text        = text("UPDATE");
+         update.text        = text("Update");
          INCLUDE button element_data=update -?>
   <?lsmb post.accesskey   = "P";
          post.title	  = "POST ALT+P";
          post.name	  = "action";
          post.value	  = "post_payment";
-         post.text	  = text("POST"); 
+         post.text	  = text("Post"); 
          INCLUDE button element_data=post -?>
   <?lsmb post_and_print.accesskey = "R";
          post_and_print.title     = "POST AND PRINT ALT+R";

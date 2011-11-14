@@ -559,7 +559,19 @@ sub format_amount {
 
     my $negative;
     if (defined $amount and ! UNIVERSAL::isa($amount, 'Math::BigFloat' )) {
-        $amount = $self->parse_amount( 'user' => $myconfig, 'amount' => $amount );
+        #tshvr many numbers which should really be BigFloat, are not! 
+        # e.g. calculations in the template system are not BigFloat. 
+        # so string,but virtual bigfloat '270.94', comes out as '27.094' when going through parse_amount with numberformat 1.000,00
+        # so if we have a virtual BigFloat, we might consider not going through parse_amount
+        my $test_bf=new Math::BigFloat($amount);
+        if($test_bf->is_nan())
+        {
+         $amount = $self->parse_amount( 'user' => $myconfig, 'amount' => $amount );
+        }
+        else
+        {
+         $amount = $test_bf;
+        }
     }
     $negative = ( $amount < 0 );
     $amount->babs();
