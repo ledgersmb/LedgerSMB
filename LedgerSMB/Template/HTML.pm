@@ -137,7 +137,7 @@ sub process {
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
-		$output, binmode => ':utf8')) {
+		$output, {binmode => ':utf8'})) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'text/html';
