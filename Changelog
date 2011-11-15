@@ -21,7 +21,7 @@ Changelog for LedgerSMB 1.3.5
 * Additional upgrade checks added (Herman V)
 * Better whitespace handling in upgrade scripts (from 1.2) (Herman V)
 * Translation string fixes for Payment workflow (Herman V)
-
+* Fixed UTF8 chars broken in printed HTML invoices (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
