@@ -132,7 +132,7 @@ sub process {
 	}
 	$template = Template::Latex->new({
 		LATEX_FORMAT => $format,
-		INCLUDE_PATH => $parent->{include_path},
+		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
