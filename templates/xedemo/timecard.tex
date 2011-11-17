@@ -1,0 +1,52 @@
+<?lsmb FILTER latex -?>
+\documentclass{scrartcl}
+ \usepackage{xltxtra}
+ \setmainfont{Verdana}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+<?lsmb INCLUDE letterhead.tex ?>
+
+\centerline{\textbf{\MakeUppercase{<?lsmb text('Time Card') ?>}}}
+
+\vspace*{0.5cm}
+
+\begin{tabular}[t]{ll}
+  \textbf<?lsmb text('Employee') ?>} & <?lsmb employee ?> \\
+  \textbf{<?lsmb text('ID') ?>} & <?lsmb employee_id ?> \\
+\end{tabular}
+\hfill
+\begin{tabular}[t]{ll}
+  \textbf{<?lsmb text('Card ID') ?>} & <?lsmb id ?> \\
+  \textbf{<?lsmb text('Date') ?>} & <?lsmb transdate ?> \\
+  \textbf{<?lsmb text('In') ?>} & <?lsmb checkedin ?> \\
+  \textbf{<?lsmb text('Out') ?>} & <?lsmb checkedout ?> \\
+  \textbf{<?lsmb text('Hours') ?>} & <?lsmb qty ?> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}[b]{ll}
+  \textbf{<?lsmb text('Job/Project #') ?>} & <?lsmb projectnumber ?> \\
+  \textbf{<?lsmb text('Description') ?>} & <?lsmb projectdescription ?> \\
+  \textbf{<?lsmb text('Labor/Service Code') ?>} & <?lsmb partnumber ?> \\
+  \textbf{<?lsmb text('Description') ?>} & <?lsmb description ?> \\
+\end{tabular}
+\hfill
+\begin{tabular}[b]{lr}
+  \textbf{<?lsmb text('Rate') ?>} & <?lsmb sellprice ?> \\
+  \textbf{<?lsmb text('Total') ?>} & <?lsmb total ?> \\
+\end{tabular}
+  
+\vspace{0.3cm}
+
+<?lsmb notes ?>
+ 
+\end{document}
+<?lsmb END ?>

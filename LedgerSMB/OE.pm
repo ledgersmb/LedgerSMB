@@ -151,7 +151,7 @@ sub transactions {
 
         $query = qq|
 			SELECT DISTINCT o.id, o.ordnumber, o.transdate,
-				o.reqdate, o.amount, ct.name, o.netamount, 
+				o.reqdate, o.amount, ct.legal_name, o.netamount, 
 				o.entity_credit_account as $form->{vc}_id, ex.$rate AS exchangerate,
 		 		o.closed, o.quonumber, o.shippingpoint, 
 				o.shipvia, ee.name AS employee, o.curr, 
@@ -200,7 +200,7 @@ sub transactions {
         $query .= qq| AND o.$form->{vc}_id = $form->{"$form->{vc}_id"}|;
     }
     elsif ( $form->{ $form->{vc} } ne "" ) {
-        $query .= " AND lower(ct.name) LIKE ?";
+        $query .= " AND lower(ct.legal_name) LIKE ?";
         push @queryargs, $name;
     }
 

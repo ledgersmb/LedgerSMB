@@ -1,0 +1,117 @@
+<?lsmb FILTER latex -?>
+\documentclass{scrartcl}
+ \usepackage{xltxtra}
+ \setmainfont{Verdana}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+<?lsmb INCLUDE letterhead.tex ?>
+
+
+% Breaking old pagebreak directive
+%<?xlsmb pagebreak 65 27 37 ?>
+%\end{tabularx}
+%
+%\newpage
+%
+%\markboth{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}
+%
+%\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
+%  \textbf{Item} & \textbf{Number} & \textbf{Description} &
+%  \textbf{Qty} & \textbf{Ship} & & \textbf{Bin} \\
+%
+%<?xlsmb end pagebreak ?>
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+  \textbf{Ship To}
+} \hfill
+
+\vspace{0.3cm}
+
+\parbox[t]{.5\textwidth}{
+  
+<?lsmb shiptoname ?>
+
+<?lsmb shiptoaddress1 ?>
+
+<?lsmb shiptoaddress2 ?>
+
+<?lsmb shiptocity ?>
+<?lsmb IF shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?>
+<?lsmb END ?>
+<?lsmb shiptozipcode ?>
+
+<?lsmb shiptocountry ?>
+}
+\parbox[t]{.5\textwidth}{
+  <?lsmb shiptocontact ?>
+
+  <?lsmb IF shiptophone ?>
+  Tel: <?lsmb shiptophone ?>
+  <?lsmb END ?>
+
+  <?lsmb IF shiptofax ?>
+  Fax: <?lsmb shiptofax ?>
+  <?lsmb END ?>
+
+  <?lsmb shiptoemail ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{\MakeUppercase{<?lsmb text('Pick List') ?>}}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
+  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>} 
+   & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Contact') ?>}
+  & \textbf{<?lsmb text('Warehouse') ?>} 
+  & \textbf{<?lsmb text('Shipping Point') ?>} 
+  & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
+  \hline
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?>
+  <?lsmb IF shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb ELSE ?>
+  & <?lsmb transdate ?>
+  <?lsmb END ?>
+  & <?lsmb employee ?> & <?lsmb warehouse ?> & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{@{}rlXrcll@{}}
+  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
+   & \textbf{<?lsmb text('Description') ?>} &
+  \textbf{<?lsmb text('Qty') ?>} & \textbf{<?lsmb text('Ship') ?>} & 
+  & \textbf{<?lsmb text('Bin') ?>} \\
+<?lsmb FOREACH number ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb runningnumber.${lc} ?> &
+  <?lsmb number.${lc} ?> &
+  <?lsmb description.${lc} ?> &
+  <?lsmb qty.${lc} ?> & [\hspace{1cm}] &
+  <?lsmb unit.${lc} ?> & <?lsmb bin.${lc} ?> \\
+<?lsmb END ?>
+\end{tabularx}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+}
+
+\end{document}
+<?lsmb END ?>

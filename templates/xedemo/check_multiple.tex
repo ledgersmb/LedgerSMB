@@ -1,0 +1,36 @@
+<?lsmb FILTER latex ?>
+\documentclass{scrartcl}
+ \usepackage{xltxtra}
+ \setmainfont{Verdana}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{textpos}
+
+<?lsmb PROCESS check_base.tex ?>
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+<?lsmb FOR check = checks ?>
+<?lsmb INCLUDE check_single 
+	source = check.source
+	control_code = check.control_code
+	text_amount = check.text_amount
+	decimal = check.decimal
+	amount = check.amount
+	legal_name = check.legal_name
+	street1 = check.street1 
+	street2 = check.street2 
+	city = check.city
+	state = check.state
+	mail_code = check.mail_code
+	country = check.country
+	memo = check.memo
+	invoices = check.invoices
+?>
+\clearpage
+<?lsmb END # FOR check ?>
+\end{document}
+<?lsmb END # FILTER latex ?>

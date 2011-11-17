@@ -1,0 +1,216 @@
+<?lsmb FILTER latex -?>
+\documentclass{scrartcl}
+\usepackage{tabularx}
+\usepackage{longtable}
+\setmainfont[]{Times}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+<?lsmb BLOCK multiline -?>
+\begin{minipage}{2in}
+\medskip
+\raggedright
+<?lsmb string ?>
+\end{minipage}
+<?lsmb- END -?>
+
+\newsavebox{\ftr}
+\sbox{\ftr}{
+  \parbox{\textwidth}{
+  \tiny
+  \rule[1.5em]{\textwidth}{0.5pt}
+<?lsmb text('Payment due NET [_1] Days from date of Invoice.', terms) ?>
+<?lsmb text('Interest on overdue amounts will acrue at the rate of 12% per annum starting from [_1] until paid in full. Items returned are subject to a 10% restocking charge.', duedate) ?>
+<?lsmb text('A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.', company) ?>
+  }
+}
+
+<?lsmb INCLUDE letterhead.tex ?>
+
+\markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+\textbf{To}
+\vspace{0.3cm}
+
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb address2 ?>
+
+<?lsmb city ?>
+<?lsmb IF state -?>
+\hspace{-0.1cm}, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>
+
+<?lsmb country ?>
+
+\vspace{0.3cm}
+
+<?lsmb IF contact ?>
+<?lsmb contact ?>
+\vspace{0.2cm}
+<?lsmb END ?>
+
+<?lsmb IF customerphone ?>
+Tel: <?lsmb customerphone ?>
+<?lsmb END ?>
+
+<?lsmb IF customerfax ?>
+Fax: <?lsmb customerfax ?>
+<?lsmb END ?>
+
+<?lsmb email ?>
+}
+\parbox[t]{.5\textwidth}{
+\textbf{<?lsmb text('Ship To') ?>}
+\vspace{0.3cm}
+
+<?lsmb shiptoname ?>
+
+<?lsmb shiptoaddress1 ?>
+
+<?lsmb shiptoaddress2 ?>
+
+<?lsmb shiptocity ?>
+<?lsmb IF shiptostate -?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?><?lsmb END ?> <?lsmb shiptozipcode ?>
+
+<?lsmb shiptocountry ?>
+
+\vspace{0.3cm}
+
+<?lsmb IF shiptocontact ?>
+<?lsmb shiptocontact ?>
+\vspace{0.2cm}
+<?lsmb END ?>
+
+<?lsmb IF shiptophone ?>
+Tel: <?lsmb shiptophone ?>
+<?lsmb END ?>
+
+<?lsmb IF shiptofax ?>
+Fax: <?lsmb shiptofax ?>
+<?lsmb END ?>
+
+<?lsmb shiptoemail ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{\MakeUppercase{<?lsmb text('Invoice') ?>}}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
+  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Date') ?>} 
+      & \textbf{<?lsmb text('Due') ?>} & \textbf{<?lsmb text('Order #') ?>}
+      & \textbf{<?lsmb text('Salesperson') ?>} 
+      & \textbf{<?lsmb text('Shipping Point') ?>} 
+      & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
+  \hline
+  <?lsmb invnumber ?> & <?lsmb invdate ?> & <?lsmb duedate ?> & <?lsmb ordnumber ?> & <?lsmb employee ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  \hline
+\end{tabularx}
+
+\vspace{1cm}
+
+\begin{longtable}{@{\extracolsep{\fill}}r|llcrlrr|r}
+
+  \textbf{<?lsmb text('Item') ?>} 
+  & \textbf{<?lsmb text('Number') ?>}
+  & \textbf{<?lsmb text('Description') ?>} 
+  & \textbf{<?lsmb text('Delivery') ?>} 
+  & \textbf{<?lsmb text('Qty') ?>} 
+  & \textbf{<?lsmb text('Unit') ?>} 
+  & \textbf{<?lsmb text('Price') ?>} 
+  &  \textbf{<?lsmb text('Disc %') ?>} 
+  & \textbf{<?lsmb text('Amount') ?>} 
+\endhead
+<?lsmb FOREACH number ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb runningnumber.${lc} ?> & 
+  <?lsmb number.${lc} ?> & 
+  <?lsmb INCLUDE multiline string = description.${lc} ?> & 
+  <?lsmb deliverydate.${lc} ?> &
+  <?lsmb qty.${lc} ?> & 
+  <?lsmb unit.${lc} ?> &
+  <?lsmb sellprice.${lc} ?> &
+  <?lsmb discountrate.${lc} ?> &
+  <?lsmb linetotal.${lc} ?> \\
+<?lsmb END ?>
+\hline \hline
+\multicolumn{8}{r|}{<?lsmb text('Subtotal') ?>} & <?lsmb subtotal ?> \\*
+<?lsmb FOREACH tax ?>
+<?lsmb lc = loop.count - 1 ?>
+\multicolumn{8}{r|}{<?lsmb taxdescription.${lc} 
+                    ?>  on <?lsmb taxbase.${lc} ?> }
+ & <?lsmb tax.${lc} ?> \\*
+<?lsmb END ?>
+<?lsmb IF paid ?>
+\multicolumn{8}{r|}{ <?lsmb text('Paid') ?> } & - <?lsmb paid ?> \\*
+<?lsmb END ?>
+<?lsmb IF total ?>
+  \hline
+  \hline
+\multicolumn{8}{r|}{<?lsmb text('Balance Due') ?>} & <?lsmb total ?>\\
+<?lsmb END ?>
+
+\end{longtable}
+
+
+\parbox{\textwidth}{
+
+\vspace{0.2cm}
+
+\hfill
+
+\vspace{0.3cm}
+
+<?lsmb text_amount ?> ***** <?lsmb decimal ?>/100
+\hfill
+<?lsmb text('All prices in [_1].', currency) ?>
+
+\vspace{12pt}
+
+<?lsmb notes ?>
+}
+
+\vfill
+
+<?lsmb IF paid_1 ?>
+\begin{tabularx}{10cm}{@{}lXlr@{}}
+  \textbf{<?lsmb text('Payments') ?>} & & & \\
+  \hline
+  \textbf{<?lsmb text('Date') ?>} & & \textbf{<?lsmb text('Source') ?>} 
+  & \textbf{<?lsmb text('Amount') ?>} \\
+<?lsmb END ?>
+<?lsmb FOREACH payment ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb paymentdate.${lc} ?> & <?lsmb paymentaccount.${lc} ?> & <?lsmb paymentsource.${lc} ?> & <?lsmb payment.${lc} ?> \\
+<?lsmb END ?>
+<?lsmb IF paid_1 ?>
+\end{tabularx}
+<?lsmb END ?>
+
+\vspace{1cm}
+
+\centerline{\textbf{<?lsmb text('Thank You for your valued business!') ?>}}
+
+\rule{\textwidth}{0.5pt}
+
+\usebox{\ftr}
+
+\end{document}
+<?lsmb END ?>

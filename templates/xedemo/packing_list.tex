@@ -1,0 +1,146 @@
+<?lsmb FILTER latex -?>
+\documentclass{scrartcl}
+ \usepackage{xltxtra}
+ \setmainfont{Verdana}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+\newsavebox{\ftr}
+\sbox{\ftr}{
+  \parbox{\textwidth}{
+  \tiny
+   \rule[1.5em]{\textwidth}{0.5pt}
+<?lsmb text('Items returned are subject to a 10% restocking charge.') ?>
+<?lsmb text('A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.', company) ?>
+  }
+}
+
+<?lsmb INCLUDE letterhead.tex ?>
+
+% Breaking old pagebreak directive
+%<?xlsmb pagebreak 65 27 37 ?>
+%\end{tabularx}
+%
+%\newpage
+%
+%\markboth{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}{<?xlsmb company ?>\hfill <?xlsmb ordnumber ?>}
+%
+%\begin{tabularx}{\textwidth}{@{}rlXllrrl@{}}
+%  \textbf{Item} & \textbf{Number} & \textbf{Description} & \textbf{Serial Number} & & \textbf{Qty} & \textbf{Ship} & \\
+%<?xlsmb end pagebreak ?>
+
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+\textbf{Ship To}} \hfill
+
+\vspace{0.3cm}
+
+\parbox[t]{.5\textwidth}{
+  
+<?lsmb shiptoname ?>
+
+<?lsmb shiptoaddress1 ?>
+
+<?lsmb shiptoaddress2 ?>
+
+<?lsmb shiptocity ?>
+<?lsmb IF shiptostate ?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?>
+<?lsmb END ?>
+<?lsmb shiptozipcode ?>
+
+<?lsmb shiptocountry ?>
+}
+\parbox[t]{.5\textwidth}{
+  <?lsmb shiptocontact ?>
+  
+  <?lsmb IF shiptophone ?>
+  Tel: <?lsmb shiptophone ?>
+  <?lsmb END ?>
+  
+  <?lsmb IF shiptofax ?>
+  Fax: <?lsmb shiptofax ?>
+  <?lsmb END ?>
+  
+  <?lsmb shiptoemail ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{\MakeUppercase{<?lsmb text('Packing List') ?>}}
+\hfill
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{*{7}{|X}|} \hline
+  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>} 
+  & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Contact') ?>}
+  <?lsmb IF warehouse ?>
+  & \textbf{<?lsmb text('Warehouse') ?>}
+  <?lsmb END ?>
+  & \textbf{<?lsmb text('Shipping Point') ?>} 
+  & \textbf{<?lsmb text('Ship via') ?>} \\ [0.5em]
+  \hline
+  
+  <?lsmb invnumber ?> & <?lsmb ordnumber ?>
+  <?lsmb IF shippingdate ?>
+  & <?lsmb shippingdate ?>
+  <?lsmb ELSE ?>
+  & <?lsmb transdate ?>
+  <?lsmb END shippingdate ?>
+  & <?lsmb employee ?>
+  <?lsmb IF warehouse ?>
+  & <?lsmb warehouse ?>
+  <?lsmb END ?>
+  & <?lsmb shippingpoint ?> & <?lsmb shipvia ?> \\
+  \hline
+\end{tabularx}
+  
+\vspace{1cm}
+  
+\begin{tabularx}{\textwidth}{@{}rlXllrrl@{}}
+  \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
+  & \textbf{<?lsmb text('Description') ?>} 
+  & \textbf{<?lsmb text('Serial Number') ?>} & 
+  & \textbf{<?lsmb text('Qty') ?>} & \textbf{<?lsmb text('Ship') ?>} & \\
+
+<?lsmb FOREACH number ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb runningnumber.${lc} ?> &
+  <?lsmb number.${lc} ?> &
+  <?lsmb description.${lc} ?> &
+  <?lsmb serialnumber.${lc} ?> &
+  <?lsmb deliverydate.${lc} ?> &
+  <?lsmb qty.${lc} ?> &
+  <?lsmb ship.${lc} ?> &
+  <?lsmb unit.${lc} ?> \\
+<?lsmb END ?>
+\end{tabularx}
+
+
+\parbox{\textwidth}{
+\rule{\textwidth}{2pt}
+
+\vspace{12pt}
+
+<?lsmb notes ?>
+
+}
+
+\vfill
+
+\rule{\textwidth}{0.5pt}
+
+\usebox{\ftr}
+
+\end{document}
+<?lsmb END ?>
