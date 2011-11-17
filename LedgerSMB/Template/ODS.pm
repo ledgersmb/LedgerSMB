@@ -835,7 +835,7 @@ sub process {
 		$source = get_template($parent->{template});
 	}
 	$template = Template->new({
-		INCLUDE_PATH => $parent->{include_path},
+		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',

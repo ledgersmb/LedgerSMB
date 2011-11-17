@@ -1,0 +1,93 @@
+<?lsmb FILTER latex -?>
+\documentclass{scrartcl}
+ \usepackage{xltxtra}
+ \setmainfont{Verdana}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+
+<?lsmb FOREACH customer IN data ?>
+<?lsmb import(customer) ?>
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+<?lsmb INCLUDE letterhead.tex ?>
+
+\parbox[t]{.5\textwidth}{
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb address2 ?>
+
+<?lsmb city ?>
+<?lsmb IF state ?>
+\hspace{-0.1cm}, <?lsmb state ?>
+<?lsmb END ?>
+<?lsmb zipcode ?>
+
+<?lsmb country ?>
+}
+\parbox[t]{.5\textwidth}{
+<?lsmb IF customerphone ?>
+<?lsmb text('Tel: [_1]', customerphone) ?>
+<?lsmb END ?>
+
+<?lsmb IF customerfax ?>
+<?lsmb text('Fax: [_1]', customerfax) ?>
+<?lsmb END ?>
+
+<?lsmb email ?>
+}
+\hfill
+
+\vspace{1cm}
+
+\textbf{\MakeUppercase{<?lsmb text('Statement') ?>}} \hfill 
+\textbf{<?lsmb statementdate ?>}
+
+\vspace{2cm}
+
+\begin{tabular*}{\textwidth}{|ll@{\extracolsep\fill}ccrrrr|}
+  \hline
+  \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>} 
+  & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Due') ?>} &
+  \textbf{<?lsmb text('Current') ?>} & \textbf{30} & \textbf{60} & \textbf{90} \\
+  \hline
+<?lsmb FOREACH invnumber ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb invnumber.${lc} ?> &
+  <?lsmb ordnumber.${lc} ?> &
+  <?lsmb invdate.${lc} ?> &
+  <?lsmb duedate.${lc} ?> &
+  <?lsmb c0.${lc} ?> &
+  <?lsmb c30.${lc} ?> &
+  <?lsmb c60.${lc} ?> &
+  <?lsmb c90.${lc} ?> \\
+<?lsmb END ?>
+  \multicolumn{8}{|l|}{\mbox{}} \\
+  \hline
+  \textbf{<?lsmb text('Subtotal') ?>} & & & & <?lsmb c0total ?> & <?lsmb c30total ?> & <?lsmb c60total ?> & <?lsmb c90total ?> \\
+  \hline
+\end{tabular*}
+
+\vspace{0.5cm}
+
+\hfill
+\begin{tabularx}{\textwidth}{Xr@{\hspace{1cm}}r@{}}
+  & \textbf{<?lsmb text('Total outstanding') ?>} & \textbf{<?lsmb total ?>}
+\end{tabularx}
+
+\vfill
+<?lsmb text('All amounts in [_1] funds.', currency) ?>
+
+<?lsmb text('Please make check payable to [_1]', company) ?>
+
+<?lsmb IF NOT loop.last ?>
+\pagebreak
+<?lsmb END ?>
+<?lsmb END ?>
+\end{document}
+<?lsmb END ?>

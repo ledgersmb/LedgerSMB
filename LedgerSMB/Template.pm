@@ -327,6 +327,7 @@ sub _http_output {
 	if (!defined $data and defined $self->{rendered}){
 		$data = "";
 		open (DATA, '<', $self->{rendered});
+                binmode DATA, ':utf8';
 		while (my $line = <DATA>){
 			$data .= $line;
 		}

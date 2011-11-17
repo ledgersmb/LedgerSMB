@@ -157,7 +157,7 @@ sub get_spoolfiles {
 			       '' AS ordnumber, '' AS quonumber, '0' AS invoice,
 			       '$arap{$form->{type}}[0]' AS module, s.spoolfile
 			  FROM jcitems j
-			  JOIN employees e ON (e.id = j.employee_id)
+			  JOIN employees e ON (e.entity_id = j.employee_id)
 			  JOIN status s ON (s.trans_id = j.id)
 			 WHERE s.formname = ?
 			       AND s.spoolfile IS NOT NULL|;
@@ -203,7 +203,7 @@ sub get_spoolfiles {
 				SELECT a.id, c.legal_name AS name, a.$invnumber AS invnumber, a.transdate,
 				       a.ordnumber, a.quonumber, $invoice AS invoice,
 				       '$item' AS module, s.spoolfile
-				  FROM $item a, 
+				  FROM $item a
                                   JOIN entity_credit_account vc
                                        ON vc.id = a.entity_credit_account
                                   JOIN status s ON s.trans_id = a.id

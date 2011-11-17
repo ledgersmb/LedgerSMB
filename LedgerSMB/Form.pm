@@ -70,6 +70,7 @@ use LedgerSMB::PGNumber;
 use charnames qw(:full);
 use open ':utf8';
 package Form;
+use utf8;
 
 use LedgerSMB::Log;
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
@@ -120,6 +121,10 @@ sub new {
         $self->{unescape( "", $_) } = unescape( "", $orig->{$_} );
     }
 
+    for my $p(keys %$self){
+        utf8::decode($self->{$p});
+        utf8::upgrade($self->{$p});
+    }
     $self->{action} = "" unless defined $self->{action};
 
     if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {

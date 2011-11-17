@@ -91,7 +91,7 @@ sub escape {
     my $vars = shift @_;
     if (defined $vars){
         $vars = escapeHTML($vars);
-        $vars =~ s|\n|<br />|gm;
+        $vars =~ s|\n|<br \/>|gm;#better syntax-look under gvim with escaped slash
         return $vars;
     }
     return undef;
@@ -137,7 +137,7 @@ sub process {
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
-		$output, binmode => ':utf8')) {
+		$output, {binmode => ':utf8'})) {
 		throw Error::Simple $template->error();
 	}
 	$parent->{mimetype} = 'text/html';

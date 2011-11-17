@@ -439,14 +439,18 @@ sub form_header {
     # 	$locale->text('Add AP Transaction');
     #   $locale->text('Edit AR Transaction');
     #   $locale->text('Edit AP Transaction');
+    my $title_msgid="$title $form->{ARAP} Transaction";
     if ($form->{reverse} == 0){
-       $form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
+       #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
+       $form->{title} = $locale->text($title_msgid);
     }
     elsif($form->{reverse} == 1) {
        if ($form->{subtype} eq 'credit_note'){
-           $form->{title} = $locale->text("[_1] Credit Note", $title);
+           $title_msgid="$title Credit Note";$form->{title}=$locale->text($title_msgid);
+           #$form->{title} = $locale->text("[_1] Credit Note", $title);
        } elsif ($form->{subtype} eq 'debit_note'){
-           $form->{title} = $locale->text("[_1] Debit Note", $title);
+           $title_msgid="$title Debit Note";$form->{title}=$locale->text($title_msgid);
+           #$form->{title} = $locale->text("[_1] Debit Note", $title);
        } else {
            $form->error("Unknown subtype $form->{subtype} in $form->{ARAP} "
               . "transaction.");

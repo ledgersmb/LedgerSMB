@@ -52,6 +52,8 @@ use Error qw(:try);
 
 $| = 1;
 
+binmode (STDIN, ':utf8');
+binmode (STDOUT, ':utf8');
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;

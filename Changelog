@@ -9,6 +9,13 @@ Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
+Changelog for LedgerSMB 1.3.6
+* Including xelatex templates under directory templates/xedemo (Chris T)
+* Fix for company name in order entry (David B)
+
+Chris T is Chris Travers
+David B is David Bandel
+
 Changelog for LedgerSMB 1.3.5
 * Fixing Menu and Permissions bug 3430820 (Chris T)
 * Fixing permissions bug 3433644 (Chris T)
@@ -20,6 +27,15 @@ Changelog for LedgerSMB 1.3.5
 * Corrected company name representation in timecard->sales order (Chris T)
 * Better error handling when currency not set (Chris T)
 * Exposed adding currency for customer/vendor to UI (Chris T)
+* Corrected POS roles as per bug 3434549 (Chris T)
+* Updated manual per ticket 3435124 (Chris T)
+* Removed intermediate LaTeX files (Erik H)
+* Fixed error: css/scripts/create_batch.css not found (Erik H)
+* Translation string updates Herman V)
+* Additional upgrade checks added (Herman V)
+* Better whitespace handling in upgrade scripts (from 1.2) (Herman V)
+* Translation string fixes for Payment workflow (Herman V)
+* Fixed UTF8 chars broken in printed HTML invoices (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
