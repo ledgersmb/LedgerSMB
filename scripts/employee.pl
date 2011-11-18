@@ -76,6 +76,19 @@ sub add_location {
 	
 }
 
+=item save_new_location 
+
+Adds a location to the company as defined in the inherited object, not
+overwriting existing locations.
+
+=cut
+
+sub save_new_location {
+    my ($request) = @_;
+    delete $request->{location_id};
+   add_location($request);
+}
+
 =item add
 
 This method creates a blank screen for entering a employee's information.
