@@ -7,6 +7,10 @@ Changelog for LedgerSMB 1.3.6
 * Fix for company name in order entry (David B)
 * Corrected UI dropdown box issue on ar/ap transaction screen (Herman V)
 * Corrected minor workflow issues on AR/AP transactions (Herman V)
+* Corrected permissions for users creating employee records (Chris T)
+* Corrected error when trying to save employee location as new (Chris T)
+* Corrected save as new overwriting existing for vendors/customers (Chris T)
+* Logging improvements (Herman V)
 
 Chris T is Chris Travers
 David B is David Bandel
