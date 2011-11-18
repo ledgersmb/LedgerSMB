@@ -146,7 +146,11 @@ for my $var (qw(sendmail smtphost smtptimeout smtpuser
 
 # Log4perl configuration
 our $log4perl_config = qq(
-    log4perl.rootlogger = $log_level, Screen, Basic
+    log4perl.rootlogger = $log_level, Basic, Debug
+    #some examples of loglevel setting for modules
+    log4perl.logger.LedgerSMB.DBObject = INFO
+    log4perl.logger.LedgerSMB.Handler = DEBUG
+
     log4perl.appender.Screen = Log::Log4perl::Appender::Screen
     log4perl.appender.Screen.layout = SimpleLayout
     # Filter for debug level
