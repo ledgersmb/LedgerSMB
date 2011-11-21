@@ -430,11 +430,14 @@ CREATE TYPE entity_credit_search_return AS (
         threshold numeric
 );
 
+DROP TYPE IF EXISTS entity_credit_retrieve CASCADE;
+
 CREATE TYPE entity_credit_retrieve AS (
         id int,
         entity_id int,
         entity_class int,
         discount numeric,
+        discount_terms int,
         taxincluded bool,
         creditlimit numeric,
         terms int2,
@@ -486,7 +489,8 @@ DECLARE out_row entity_credit_retrieve;
 BEGIN
 	
 	FOR out_row IN 
-		SELECT  c.id, e.id, ec.entity_class, ec.discount,
+		SELECT  c.id, e.id, ec.entity_class, ec.discount, 
+                        ec.discount_terms,
 			ec.taxincluded, ec.creditlimit, ec.terms, 
 			ec.meta_number, ec.description, ec.business_id, 
 			ec.language_code, 
