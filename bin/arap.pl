@@ -53,8 +53,7 @@ if ( -f "bin/custom/$form->{login}_arap.pl" ) {
 # end of main
 
 sub check_name {
-    my ($name) = @_;
-    
+    my ($name) = @_;#vendor|customer
     my ( $new_name, $new_id ) = split /--/, $form->{$name};
     my $rv = 0;
 
@@ -88,6 +87,8 @@ sub check_name {
     else {
 
         # check name, combine name and id
+        #HV $form->{$name} , form->vendor or form->customer , should be at least ' ' for comparison 'ne' to work.('' ne undef) returns undef.(' ' ne undef) returns 1
+        if(! $form->{$name}){$form->{$name}=' ';}
         if ( $form->{"old$name"} ne qq|$form->{$name}--$form->{"${name}_id"}| )
         {
 

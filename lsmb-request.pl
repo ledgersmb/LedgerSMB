@@ -36,7 +36,7 @@ use LedgerSMB::Log;
 use LedgerSMB::CancelFurtherProcessing;
 use strict;
 
-my $logger = Log::Log4perl->get_logger('');
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
 
 $logger->debug("Begin lsmb-request.pl");
 
@@ -53,6 +53,7 @@ $request->{action} = '__default' if (!$request->{action});
 
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
 my $script = $1;
+$logger->debug("\$ENV{SCRIPT_NAME}=$ENV{SCRIPT_NAME} \$request->{action}=$request->{action} \$script=$script");
 
 my $locale;
 
@@ -72,6 +73,7 @@ $request->{_locale} = $locale;
 $logger->debug("calling $script");
 
 &call_script( $script, $request );
+$logger->debug("after calling script=$script action=$request->{action}");
 
 # Prevent flooding the error logs with undestroyed connection warnings
 $request->{dbh}->disconnect()
@@ -102,6 +104,7 @@ sub call_script {
   }
   catch CancelFurtherProcessing with {
     my $ex = shift;
+    $logger->debug("CancelFurtherProcessing \$ex=$ex");
   };
 }
 1;

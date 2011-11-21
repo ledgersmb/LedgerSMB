@@ -267,7 +267,7 @@ overwriting existing locations.
 
 sub save_new_location {
     my ($request) = @_;
-    delete $requet->{location_id};
+    delete $request->{location_id};
    add_location($request);
 }
 

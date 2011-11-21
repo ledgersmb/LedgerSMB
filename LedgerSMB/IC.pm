@@ -1230,8 +1230,8 @@ sub all_parts {
 				p.weight, p.avgcost, p.priceupdate, p.image, 
 				p.drawing, p.microfiche, p.assembly, 
 				pg.partsgroup, a.invnumber, a.ordnumber, 
-				a.quonumber, i.trans_id, ct.name, 
-				e.name AS employee, a.curr, a.till, p.notes
+				a.quonumber, i.trans_id, ct.employee_id, 
+				CONCAT(e.first_name, ' ',e.last_name) AS employee, a.curr, a.till, p.notes
 				$makemodelfld|;
 
             if ( $form->{bought} ) {
@@ -1256,8 +1256,8 @@ sub all_parts {
                                                       = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
-					          ON (a.employee_id = e.id)
+					LEFT JOIN employees e 
+					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $invwhere|;
                 $union = "
@@ -1280,11 +1280,11 @@ sub all_parts {
 					          ON (p.id = i.parts_id)
 					     JOIN ar a ON (a.id = i.trans_id)
 					     JOIN entity_credit_account ct 
-					          ON ar.entity_credit_account
+					          ON a.entity_credit_account
                                                      = ct.id
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
+					LEFT JOIN employees e 
 					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $invwhere|;
@@ -1327,8 +1327,8 @@ sub all_parts {
 				p.weight, p.avgcost, p.priceupdate, p.image, 
 				p.drawing, p.microfiche, p.assembly,
 				pg.partsgroup, '' AS invnumber, a.ordnumber, 
-				a.quonumber, i.trans_id, ct.name, 
-				e.name AS employee, a.curr, '0' AS till, 
+				a.quonumber, i.trans_id, ct.employee_id, 
+				CONCAT(e.first_name, ' ',e.last_name) AS employee, a.curr, '0' AS till, 
 				p.notes
 				$makemodelfld|;
 
@@ -1351,11 +1351,11 @@ sub all_parts {
                                                      = ct.id
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
-					          ON (a.employee_id = e.id)
+					LEFT JOIN employees e 
+					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $ordwhere 
-					          AND a.entity_credit_id 
+					          AND a.entity_credit_account
                                                       IS NOT NULL|;
                 $union = "
 					UNION ALL";
@@ -1371,7 +1371,8 @@ sub all_parts {
 					p.microfiche, p.assembly,
 					pg.partsgroup, '' AS invnumber, 
 					a.ordnumber, a.quonumber,
-					i.trans_id, ct.name,e.name AS employee,
+					i.trans_id, ct.employee_id,
+					CONCAT(e.first_name,' ',e.last_name) AS employee,
 					a.curr, '0' AS till, p.notes
 					$makemodelfld|;
 
@@ -1393,8 +1394,8 @@ sub all_parts {
                                                       = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
-					          ON (a.employee_id = e.id)
+					LEFT JOIN employees e 
+					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $ordwhere
 					          AND a.entity_credit_account 
@@ -1437,8 +1438,8 @@ sub all_parts {
 				p.weight, p.avgcost, p.priceupdate, p.image, 
 				p.drawing, p.microfiche, p.assembly,
 				pg.partsgroup, '' AS invnumber, a.ordnumber, 
-				a.quonumber, i.trans_id, ct.name, 
-				e.name AS employee, a.curr, '0' AS till, p.notes
+				a.quonumber, i.trans_id, ct.employee_id, 
+				CONCAT(e.first_name,' ',e.last_name) AS employee, a.curr, '0' AS till, p.notes
 				$makemodelfld|;
 
             if ( $form->{quoted} ) {
@@ -1461,8 +1462,8 @@ sub all_parts {
                                                      = ct.id
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
-					          ON (a.employee_id = e.id)
+					LEFT JOIN employees e 
+					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $quowhere
 					          AND a.entity_credit_account 
@@ -1481,7 +1482,8 @@ sub all_parts {
 					p.microfiche, p.assembly,
 					pg.partsgroup, '' AS invnumber, 
 					a.ordnumber, a.quonumber,
-					i.trans_id, ct.name, e.name AS employee,
+					i.trans_id, ct.employee_id, 
+					CONCAT(e.first_name,' ',e.last_name) AS employee,
 					a.curr, '0' AS till, p.notes
 					$makemodelfld|;
 
@@ -1503,8 +1505,8 @@ sub all_parts {
                                                       = ct.id)
 					LEFT JOIN partsgroup pg 
 					          ON (p.partsgroup_id = pg.id)
-					LEFT JOIN employee e 
-					          ON (a.employee_id = e.id)
+					LEFT JOIN employees e 
+					          ON (a.person_id = e.entity_id)
 					$makemodeljoin
 					    WHERE $quowhere
 					          AND a.entity_credit_account 

@@ -1015,7 +1015,7 @@ sub form_footer {
         elsif (!$form->{id}) {
 
             for ( "post_as_new","delete","save_info",
-                  "print", 'copy', 'new_screen') {
+                  "print", 'copy_to_new', 'new_screen') {
                 delete $button{$_};
             }
 
@@ -1210,7 +1210,7 @@ sub update {
                 }
             }
         }
-    }
+    }#!$display
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {
@@ -1346,13 +1346,14 @@ sub post {
 	{
         	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
 	}
-        edit();
+        if($form->{separate_duties}){edit();}
+        else {$form->redirect( $locale->text('Transaction posted!') );}
     }
     else {
         $form->error( $locale->text('Cannot post transaction!') );
     }
 
-}
+}#post end
 
 # New Function Body starts Here
 
@@ -1623,6 +1624,7 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
     }
 
     $name = $locale->text('Customer');
+    my $msgid_vc_number="Customer Number";
     $l_name =
 qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
     $l_till =
@@ -1631,6 +1633,7 @@ qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
 
     if ( $form->{vc} eq 'vendor' ) {
         $name   = $locale->text('Vendor');
+        $msgid_vc_number="Vendor Number";
         $l_till = "";
         $l_name =
 qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
@@ -1710,7 +1713,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
 	  <th align=right>$name</th>
 	  <td colspan=3>$selectname</td>
 	</tr>
-	<tr><th align="right">|.$locale->text("[_1] Number", $name).qq|</th>
+	<tr><th align="right">|.$locale->text("$msgid_vc_number").qq|</th>
 	    <td colspan="3"><input name="meta_number" size="36">
         </tr>
 	$employee
