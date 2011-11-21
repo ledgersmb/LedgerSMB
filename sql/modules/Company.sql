@@ -6,6 +6,25 @@
 
 BEGIN;
 
+DROP TYPE IF EXISTS eca__pricematrix CASCADE;
+
+CREATE TYPE eca__pricematrix AS (
+  parts_id int,
+  int_partnumber text,
+  description text,
+  credit_id int,
+  pricebreak numeric,
+  sellprice numeric,
+  lastcost numeric,
+  leadtime int,
+  partnumber text,
+  validfrom date,
+  validto date,
+  curr char(3),
+  entry_id int
+);
+
+
 DROP TYPE IF EXISTS  company_search_result CASCADE;
 
 CREATE TYPE company_search_result AS (
@@ -1312,4 +1331,29 @@ COMMENT ON FUNCTION company__get_all_accounts (
     in_entity_class int
 ) IS 
 $$ Returns a list of all entity credit accounts attached to that entity.$$;
+
+
+CREATE OR REPLACE FUNCTION eca__get_pricematrix(in_id int) 
+RETURNS SETOF eca__pricematrix AS
+$$
+
+SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
+       pc.sellprice, NULL, NULL::int, NULL, pc.validfrom, pc.validto, pc.curr,
+       pc.entry_id
+  FROM partscustomer pc
+  JOIN parts p on pc.parts_id = p.id
+  JOIN entity_credit_account eca ON pc.credit_id = eca.id
+ WHERE pc.credit_id = $1 AND eca.entity_class = 2
+ UNION
+SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
+       pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr, 
+       pv.entry_id
+  FROM partsvendor pv
+  JOIN parts p on pv.parts_id = p.id
+  JOIN entity_credit_account eca ON pv.credit_id = eca.id
+ WHERE pv.credit_id = $1 and eca.entity_class = 1
+ ORDER BY partnumber, validfrom
+
+$$ language sql;
+
 COMMIT;
