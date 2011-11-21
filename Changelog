@@ -12,10 +12,12 @@ Changelog for LedgerSMB 1.3.6
 * Corrected save as new overwriting existing for vendors/customers (Chris T)
 * Logging improvements (Herman V)
 * Fixed SQL errors in Goods and Services/All Items report (David B)
+* Corrected issue saving country in contact.html (Pongracz I)
 
 Chris T is Chris Travers
 David B is David Bandel
 Herman V is Herman Vierendeels
+Pongracz I is Pongracz Istvan
 
 Changelog for LedgerSMB 1.3.5
 * Fixing Menu and Permissions bug 3430820 (Chris T)
