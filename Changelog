@@ -15,6 +15,7 @@ Changelog for LedgerSMB 1.3.6
 * Corrected issue saving country in contact.html (Pongracz I)
 * Corrected permission denied to partsgroup_id_seq (Chris T)
 * Corrected discount_terms not being displayed after saving (Chris T)
+* Corrected language drop-down missing from email form (Chris T)
 
 Chris T is Chris Travers
 David B is David Bandel
