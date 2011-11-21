@@ -13,6 +13,7 @@ Changelog for LedgerSMB 1.3.6
 * Logging improvements (Herman V)
 * Fixed SQL errors in Goods and Services/All Items report (David B)
 * Corrected issue saving country in contact.html (Pongracz I)
+* Corrected permission denied to partsgroup_id_seq (Chris T)
 
 Chris T is Chris Travers
 David B is David Bandel
