@@ -360,13 +360,17 @@ sub get_results {
         $search_url .= "&$_=$form->{$_}";
     }
 
+    my $meta_number_name;
+    if($company->{account_class}==1){$meta_number_name='Vendor Number';}
+    elsif($company->{account_class}==2){$meta_number_name='Customer Number';}
+    else{$meta_number_name='Unknown';}
     # Column definitions for dynatable
     @columns = qw(legal_name entity_control_code meta_number credit_description business_type curr);
 		
 	my $column_names = {
 	    legal_name => 'Name',
 	    entity_control_code => 'Control Code',
-	    meta_number => 'Vendor Number',
+	    meta_number => $meta_number_name,
 	    credit_description => 'Description',
 	    business_type => 'Business Type',
 	    curr => 'Currency'
@@ -387,7 +391,8 @@ sub get_results {
                 curr          => $ref->{curr},
                 };
     }
-    my $label = $ec_labels->{"$company->{account_class}"};
+    #my $label = $ec_labels->{"$company->{account_class}"};
+    my $label_text="Add ".$ec_labels->{"$company->{account_class}"};
 # CT:  Labels for i18n:
 # text->{'Add Customer')
 # text->('Add Vendor')
@@ -405,7 +410,7 @@ sub get_results {
 #        },
 	{name => 'action',
         value => 'add',
-        text => $company->{_locale}->text("Add [_1]", $label),
+        text => $company->{_locale}->text($label_text),
         type => 'submit',
         class => 'submit',
 	}
