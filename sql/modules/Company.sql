@@ -4,6 +4,10 @@
 
 -- Docstrings already added to this file.
 
+BEGIN;
+
+DROP TYPE IF EXISTS  company_search_result CASCADE;
+
 CREATE TYPE company_search_result AS (
 	entity_id int,
 	entity_control_code text,
@@ -17,6 +21,8 @@ CREATE TYPE company_search_result AS (
 	business_type text,
 	curr text
 );
+
+DROP TYPE IF EXISTS eca_history_result CASCADE;
 
 create type eca_history_result as (
    id int,
@@ -405,7 +411,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION entity_list_contact_class() IS
 $$ Returns a list of contact classes ordered by ID.$$;
 
-
+DROP TYPE IF EXISTS entity_credit_search_return CASCADE;
 CREATE TYPE entity_credit_search_return AS (
         legal_name text,
         id int,
@@ -573,7 +579,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION list_taxforms (in_entity_id int) IS
 $$Returns a list of tax forms for the entity's country.$$; --'
 
-
+DROP TYPE IF EXISTS company_billing_info CASCADE;
 CREATE TYPE company_billing_info AS (
 legal_name text,
 meta_number text,
@@ -615,6 +621,7 @@ $$ Returns billing information (billing name and address) for a given credit
 account.$$;
 
 
+DROP FUNCTION IF EXISTS company_save(int, text, int, text, text, int, text, int);
 CREATE OR REPLACE FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
@@ -818,6 +825,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION company__list_locations(in_entity_id int) IS
 $$ Lists all locations for an entity.$$;
 
+DROP TYPE IF EXISTS contact_list CASCADE;
 CREATE TYPE contact_list AS (
 	class text,
 	class_id int,
@@ -979,6 +987,7 @@ COMMENT ON FUNCTION company__save_contact
 (in_entity_id int, in_contact_class int, in_description text, in_contact text) IS
 $$ Saves company contact information.  The return value is meaningless. $$;
 
+DROP TYPE IF EXISTS entity_note_list CASCADE;
 CREATE TYPE entity_note_list AS (
 	id int,
 	note_class int,
@@ -1303,4 +1312,4 @@ COMMENT ON FUNCTION company__get_all_accounts (
     in_entity_class int
 ) IS 
 $$ Returns a list of all entity credit accounts attached to that entity.$$;
-
+COMMIT;
