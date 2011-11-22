@@ -4,6 +4,29 @@
 
 -- Docstrings already added to this file.
 
+BEGIN;
+
+DROP TYPE IF EXISTS eca__pricematrix CASCADE;
+
+CREATE TYPE eca__pricematrix AS (
+  parts_id int,
+  int_partnumber text,
+  description text,
+  credit_id int,
+  pricebreak numeric,
+  sellprice numeric,
+  lastcost numeric,
+  leadtime int,
+  partnumber text,
+  validfrom date,
+  validto date,
+  curr char(3),
+  entry_id int
+);
+
+
+DROP TYPE IF EXISTS  company_search_result CASCADE;
+
 CREATE TYPE company_search_result AS (
 	entity_id int,
 	entity_control_code text,
@@ -17,6 +40,8 @@ CREATE TYPE company_search_result AS (
 	business_type text,
 	curr text
 );
+
+DROP TYPE IF EXISTS eca_history_result CASCADE;
 
 create type eca_history_result as (
    id int,
@@ -405,7 +430,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION entity_list_contact_class() IS
 $$ Returns a list of contact classes ordered by ID.$$;
 
-
+DROP TYPE IF EXISTS entity_credit_search_return CASCADE;
 CREATE TYPE entity_credit_search_return AS (
         legal_name text,
         id int,
@@ -430,11 +455,14 @@ CREATE TYPE entity_credit_search_return AS (
         threshold numeric
 );
 
+DROP TYPE IF EXISTS entity_credit_retrieve CASCADE;
+
 CREATE TYPE entity_credit_retrieve AS (
         id int,
         entity_id int,
         entity_class int,
         discount numeric,
+        discount_terms int,
         taxincluded bool,
         creditlimit numeric,
         terms int2,
@@ -486,7 +514,8 @@ DECLARE out_row entity_credit_retrieve;
 BEGIN
 	
 	FOR out_row IN 
-		SELECT  c.id, e.id, ec.entity_class, ec.discount,
+		SELECT  c.id, e.id, ec.entity_class, ec.discount, 
+                        ec.discount_terms,
 			ec.taxincluded, ec.creditlimit, ec.terms, 
 			ec.meta_number, ec.description, ec.business_id, 
 			ec.language_code, 
@@ -569,7 +598,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION list_taxforms (in_entity_id int) IS
 $$Returns a list of tax forms for the entity's country.$$; --'
 
-
+DROP TYPE IF EXISTS company_billing_info CASCADE;
 CREATE TYPE company_billing_info AS (
 legal_name text,
 meta_number text,
@@ -611,6 +640,7 @@ $$ Returns billing information (billing name and address) for a given credit
 account.$$;
 
 
+DROP FUNCTION IF EXISTS company_save(int, text, int, text, text, int, text, int);
 CREATE OR REPLACE FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
@@ -814,6 +844,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION company__list_locations(in_entity_id int) IS
 $$ Lists all locations for an entity.$$;
 
+DROP TYPE IF EXISTS contact_list CASCADE;
 CREATE TYPE contact_list AS (
 	class text,
 	class_id int,
@@ -975,6 +1006,7 @@ COMMENT ON FUNCTION company__save_contact
 (in_entity_id int, in_contact_class int, in_description text, in_contact text) IS
 $$ Saves company contact information.  The return value is meaningless. $$;
 
+DROP TYPE IF EXISTS entity_note_list CASCADE;
 CREATE TYPE entity_note_list AS (
 	id int,
 	note_class int,
@@ -1300,3 +1332,28 @@ COMMENT ON FUNCTION company__get_all_accounts (
 ) IS 
 $$ Returns a list of all entity credit accounts attached to that entity.$$;
 
+
+CREATE OR REPLACE FUNCTION eca__get_pricematrix(in_id int) 
+RETURNS SETOF eca__pricematrix AS
+$$
+
+SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
+       pc.sellprice, NULL, NULL::int, NULL, pc.validfrom, pc.validto, pc.curr,
+       pc.entry_id
+  FROM partscustomer pc
+  JOIN parts p on pc.parts_id = p.id
+  JOIN entity_credit_account eca ON pc.credit_id = eca.id
+ WHERE pc.credit_id = $1 AND eca.entity_class = 2
+ UNION
+SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
+       pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr, 
+       pv.entry_id
+  FROM partsvendor pv
+  JOIN parts p on pv.parts_id = p.id
+  JOIN entity_credit_account eca ON pv.credit_id = eca.id
+ WHERE pv.credit_id = $1 and eca.entity_class = 1
+ ORDER BY partnumber, validfrom
+
+$$ language sql;
+
+COMMIT;
