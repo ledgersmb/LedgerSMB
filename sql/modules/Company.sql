@@ -1332,6 +1332,19 @@ COMMENT ON FUNCTION company__get_all_accounts (
 ) IS 
 $$ Returns a list of all entity credit accounts attached to that entity.$$;
 
+-- pricematrix
+
+CREATE OR REPLACE FUNCTION eca__get_pricematrix_by_pricegroup(in_id int)
+RETURNS SETOF eca__pricematrix AS
+$$
+SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
+       pc.sellprice, NULL::numeric, NULL::int, NULL::text, pc.validfrom, 
+       pc.validto, pc.curr, pc.entry_id
+  FROM partscustomer pc
+  JOIN parts p on pc.parts_id = p.id
+  JOIN entity_credit_account eca ON pc.pricegroup_id = eca.pricegroup_id
+ WHERE eca.id = $1 AND eca.entity_class = 2
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION eca__get_pricematrix(in_id int) 
 RETURNS SETOF eca__pricematrix AS
@@ -1355,5 +1368,233 @@ SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
  ORDER BY partnumber, validfrom
 
 $$ language sql;
+
+COMMENT ON FUNCTION eca__get_pricematrix(in_id int) IS
+$$ This returns the pricematrix for the customer or vendor 
+(entity_credit_account identified by in_id), orderd by partnumber, validfrom
+$$;
+
+CREATE OR REPLACE FUNCTION eca__delete_pricematrix 
+(in_credit_id int, in_entry_id int)
+RETURNS BOOL AS
+$$
+DECLARE retval bool;
+
+BEGIN
+
+retval := false;
+
+DELETE FROM partsvendor 
+ WHERE entry_id = in_entry_id 
+       AND credit_id = in_credit_id;
+
+retval := FOUND;
+
+DELETE FROM partscustomer
+ WHERE entry_id = in_entry_id
+       AND credit_id = in_credit_id;
+
+RETURN FOUND or retval;
+
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION eca__save_pricematrix
+(in_parts_id int, in_credit_id int, in_pricebreak numeric, in_price numeric, 
+ in_lead_time int2, in_partnumber text, in_validfrom date, in_validto date, 
+ in_curr char(3), in_entry_id int)
+RETURNS eca__pricematrix AS
+$$
+DECLARE 
+   retval eca__pricematrix;
+   t_insert bool;
+
+BEGIN
+
+t_insert := false;
+
+PERFORM * FROM entity_credit_account 
+  WHERE id = in_credit_id AND entity_class = 1;
+
+IF FOUND THEN -- VENDOR
+    UPDATE partsvendor
+       SET lastcost = in_price,
+           leadtime = in_lead_time,
+           partnumber = in_partnumber,
+           curr = in_curr
+     WHERE credit_id = in_credit_id AND entry_id = in_entry_id;
+
+    IF NOT FOUND THEN
+        INSERT INTO partsvendor
+               (parts_id, credit_id, lastcost, leadtime, partnumber, curr)
+        VALUES (in_parts_id, in_credit_id, in_price, in_leadtime::int2, 
+               in_partnumber, in_curr);
+    END IF;
+
+    SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
+           pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr, 
+           pv.entry_id
+      INTO retval
+      FROM partsvendor pv
+      JOIN parts p ON p.id = pv.parts_id
+     WHERE parts_id = in_parts_id and credit_id = in_credit_id;
+
+    RETURN retval;
+END IF;
+
+PERFORM * FROM entity_credit_account
+  WHERE id = in_credit_id AND entity_class = 2;
+
+IF FOUND THEN -- CUSTOMER
+    UPDATE partscustomer
+       SET pricebreak = in_pricebreak,
+           sellprice  = in_price,
+           validfrom  = in_validfrom,
+           validto    = in_validto,
+           curr       = in_curr
+     WHERE entry_id = in_entry_id and credit_id = in_credit_id;
+
+    IF NOT FOUND THEN
+        INSERT INTO partscustomer
+               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+        VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto, 
+                in_curr);
+
+        t_insert := true;
+    END IF;
+
+    SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, 
+           pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom, 
+           pc.validto, pc.curr, pc.entry_id
+      INTO retval
+      FROM partscustomer pc
+      JOIN parts p on pc.parts_id = p.id
+     WHERE entry_id = CASE WHEN t_insert 
+                           THEN currval('partscustomer_entry_id_seq') 
+                           ELSE in_entry_id 
+                      END;
+                           
+    RETURN retval;
+
+END IF;
+
+RAISE EXCEPTION 'No valid entity credit account found';
+   
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION eca__get_pricematrix(in_id int) IS
+$$ This returns the pricematrix for the customer or vendor 
+(entity_credit_account identified by in_id), orderd by partnumber, validfrom
+$$;
+
+CREATE OR REPLACE FUNCTION eca__delete_pricematrix 
+(in_credit_id int, in_entry_id int)
+RETURNS BOOL AS
+$$
+DECLARE retval bool;
+
+BEGIN
+
+retval := false;
+
+DELETE FROM partsvendor 
+ WHERE entry_id = in_entry_id 
+       AND credit_id = in_credit_id;
+
+retval := FOUND;
+
+DELETE FROM partscustomer
+ WHERE entry_id = in_entry_id
+       AND credit_id = in_credit_id;
+
+RETURN FOUND or retval;
+
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION eca__save_pricematrix
+(in_parts_id int, in_credit_id int, in_pricebreak numeric, in_price numeric, 
+ in_lead_time int2, in_partnumber text, in_validfrom date, in_validto date, 
+ in_curr char(3), in_entry_id int)
+RETURNS eca__pricematrix AS
+$$
+DECLARE 
+   retval eca__pricematrix;
+   t_insert bool;
+
+BEGIN
+
+t_insert := false;
+
+PERFORM * FROM entity_credit_account 
+  WHERE id = in_credit_id AND entity_class = 1;
+
+IF FOUND THEN -- VENDOR
+    UPDATE partsvendor
+       SET lastcost = in_price,
+           leadtime = in_lead_time,
+           partnumber = in_partnumber,
+           curr = in_curr
+     WHERE credit_id = in_credit_id AND entry_id = in_entry_id;
+
+    IF NOT FOUND THEN
+        INSERT INTO partsvendor
+               (parts_id, credit_id, lastcost, leadtime, partnumber, curr)
+        VALUES (in_parts_id, in_credit_id, in_price, in_leadtime::int2, 
+               in_partnumber, in_curr);
+    END IF;
+
+    SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
+           pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr, 
+           pv.entry_id
+      INTO retval
+      FROM partsvendor pv
+      JOIN parts p ON p.id = pv.parts_id
+     WHERE parts_id = in_parts_id and credit_id = in_credit_id;
+
+    RETURN retval;
+END IF;
+
+PERFORM * FROM entity_credit_account
+  WHERE id = in_credit_id AND entity_class = 2;
+
+IF FOUND THEN -- CUSTOMER
+    UPDATE partscustomer
+       SET pricebreak = in_pricebreak,
+           sellprice  = in_price,
+           validfrom  = in_validfrom,
+           validto    = in_validto,
+           curr       = in_curr
+     WHERE entry_id = in_entry_id and credit_id = in_credit_id;
+
+    IF NOT FOUND THEN
+        INSERT INTO partscustomer
+               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+        VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto, 
+                in_curr);
+
+        t_insert := true;
+    END IF;
+
+    SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, 
+           pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom, 
+           pc.validto, pc.curr, pc.entry_id
+      INTO retval
+      FROM partscustomer pc
+      JOIN parts p on pc.parts_id = p.id
+     WHERE entry_id = CASE WHEN t_insert 
+                           THEN currval('partscustomer_entry_id_seq') 
+                           ELSE in_entry_id 
+                      END;
+                           
+    RETURN retval;
+
+END IF;
+
+RAISE EXCEPTION 'No valid entity credit account found';
+   
+END;
+$$ LANGUAGE PLPGSQL;
 
 COMMIT;
