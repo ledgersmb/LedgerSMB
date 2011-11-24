@@ -82,3 +82,7 @@ db_namespace = public
 contrib_dir = /usr/share/pgsql/contrib/
 # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
 sslmode = prefer
+
+[log4perl_config_modules_loglevel]
+LedgerSMB : INFO
+LedgerSMB.DBObject = INFO

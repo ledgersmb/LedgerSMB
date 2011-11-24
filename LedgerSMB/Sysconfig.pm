@@ -144,13 +144,22 @@ for my $var (qw(sendmail smtphost smtptimeout smtpuser
     ${$var} = $config{mail}{$var} if $config{mail}{$var};
 }
 
+my $modules_loglevel_overrides='';
+my %tmp=%{$config{log4perl_config_modules_loglevel}} if $config{log4perl_config_modules_loglevel};
+for(sort keys %tmp)
+{
+ #print STDERR "Sysconfig key=$_ value=$tmp{$_}\n";
+ $modules_loglevel_overrides=$modules_loglevel_overrides.'log4perl.logger.'.$_.'='.$tmp{$_}."\n";
+}
+#print STDERR localtime()." Sysconfig \$modules_loglevel_overrides=$modules_loglevel_overrides\n";
 # Log4perl configuration
 our $log4perl_config = qq(
     log4perl.rootlogger = $log_level, Basic, Debug
-    #some examples of loglevel setting for modules
-    log4perl.logger.LedgerSMB.DBObject = INFO
-    log4perl.logger.LedgerSMB.Handler = DEBUG
-
+    )
+    .
+    $modules_loglevel_overrides
+    .
+    qq(
     log4perl.appender.Screen = Log::Log4perl::Appender::Screen
     log4perl.appender.Screen.layout = SimpleLayout
     # Filter for debug level
@@ -174,8 +183,16 @@ our $log4perl_config = qq(
     log4perl.appender.Basic.layout = PatternLayout
     log4perl.appender.Basic.layout.ConversionPattern = %d - %p %m%n
     log4perl.appender.Basic.Filter = MatchRest
-
 );
+#some examples of loglevel setting for modules
+#FATAL, ERROR, WARN, INFO, DEBUG, TRACE
+#log4perl.logger.LedgerSMB = DEBUG
+#log4perl.logger.LedgerSMB.DBObject = INFO
+#log4perl.logger.LedgerSMB.DBObject.Employee = FATAL
+#log4perl.logger.LedgerSMB.Handler = ERROR
+#log4perl.logger.LedgerSMB.User = WARN
+#log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
+#print STDERR localtime()." Sysconfig log4perl_config=$log4perl_config\n";
 
 $ENV{PGHOST} = $config{database}{host};
 $ENV{PGPORT} = $config{database}{port};
