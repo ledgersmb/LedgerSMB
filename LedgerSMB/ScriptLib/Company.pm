@@ -992,6 +992,19 @@ sub pricelist {
     my $company = new_company($request);
     $company->get();
     $company->get_pricematrix();
+    for my $l (qw(pricematrix pricematrix_pricegroup)){
+        for my $p (@{$company->{$l}}){
+            $p->{sellprice} = $company->format_amount(
+                     {amount => $p->{sellprice}, money => 1}
+            );
+            $p->{pricebreak} = $company->format_amount(
+                     {amount => $p->{sellprice}, money => 1}
+            );
+            $p->{lastcost} = $company->format_amount(
+                     {amount => $p->{sellprice}, money => 1}
+            );
+        } 
+    }
     my $template = LedgerSMB::Template->new(
                 user => $request->{_user},
                 path => 'UI/Contact' ,
@@ -1000,7 +1013,7 @@ sub pricelist {
                 locale => $company->{_locale},
     );
 
-    $template->render($request);
+    $template->render($company);
 }
 
 

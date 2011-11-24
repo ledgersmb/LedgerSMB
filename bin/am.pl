@@ -2522,12 +2522,13 @@ sub process_transactions {
                     }
 
                     $form->{invnumber} = $pt->{reference};
-                    $form->{transdate} = $pt->{nextdate};
 
                     # tax accounts
                     $form->all_taxaccounts( \%myconfig, undef,
                         $form->{transdate} );
-
+                    $form->{transdate} = $form->convert_date(
+                             $pt->{nextdate}, \%myconfig
+                    );
                     # calculate duedate
                     $form->{duedate} =
                       $form->add_date( \%myconfig, $form->{transdate},
