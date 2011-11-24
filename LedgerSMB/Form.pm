@@ -759,6 +759,29 @@ sub sort_order {
     $sortorder;
 }
 
+=item $form->convert_date($date, $myconfig)
+
+This takes a date in YYYY-MM-DD format and returns it in the format of the user.
+
+=cut
+
+sub convert_date {
+    my $self = shift @_;
+    my ($date, $myconfig) = @_;
+    my $newdate;
+    my $format = $myconfig->{dateformat};
+    my ($YYYY, $MM, $DD) = split /-/, $date; 
+    $format =~ /(\w+)(\W)(\w+)\W(\w+)/;
+    my $first  = $1;
+    my $sep    = $2;
+    my $second = $3;
+    my $third  = $4;
+
+    $newdate = "${$first}?${$second}?${$third}";
+    $newdate =~ s/\?/$sep/;
+    return $newdate;
+}
+
 =item $form->format_amount($myconfig, $amount, $places, $dash);
 
 Returns $amount as formatted in the form specified by $form->{numberformat}.
