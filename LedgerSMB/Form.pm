@@ -777,8 +777,14 @@ sub convert_date {
     my $second = $3;
     my $third  = $4;
 
-    $newdate = "${$first}?${$second}?${$third}";
-    $newdate =~ s/\?/$sep/;
+    my @elems;
+    for my $pos ($first, $second, $third){
+        push @elems, $YYYY if uc($pos) eq 'YYYY';
+        push @elems, $MM if uc($pos) eq 'MM';
+        push @elems, $DD if uc($pos) eq 'DD';
+    }
+    $newdate = "$elems[0]$sep$elems[1]$sep$elems[2]";
+
     return $newdate;
 }
 
