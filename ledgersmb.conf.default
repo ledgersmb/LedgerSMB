@@ -1,5 +1,7 @@
 auth : DB
 logging  : 0
+#Be aware of tempdir setting.If client_browser and server_apache on same machine, sharing tmp-dir , problems 'Permission denied' if server tries to write temp-file wich already exists as client-owned
+tempdir : /tmp/ledgersmb
 
 # Set language for login and admin pages
 language : 
