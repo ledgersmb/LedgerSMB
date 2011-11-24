@@ -981,6 +981,30 @@ sub save_notes {
     _render_main_screen($company );
 }
 
+=item pricelist
+
+This returns and displays the pricelist.  The id field is required.
+
+=cut
+
+sub pricelist {
+    my ($request) = @_;
+    my $company = new_company($request);
+    $company->get();
+    $company->get_pricematrix();
+    my $template = LedgerSMB::Template->new(
+                user => $request->{_user},
+                path => 'UI/Company' ,
+                template => 'pricelist',
+                locale => $company->{_locale},
+    );
+
+    $template->render($request);
+}
+
+
+=item delete_price
+
 =back
 
 =head1 COPYRIGHT

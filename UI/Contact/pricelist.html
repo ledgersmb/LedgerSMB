@@ -1,0 +1,87 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS 'elements.html' ?>
+<!-- 
+
+The overall structure here is imagined to be a list of individual price
+listings followed by the listings for the pricegroup.  The reason for including
+both is simply that it makes it easier for someone to see what's going on when
+checking a price deal for a customer.
+
+-CT
+
+-->
+<body>
+<div class="listtop"><?lsmb text('Pricelist') ?></div>
+<table>
+<tr class="listheading">
+<th class="listheading"><?lsmb text('Partnumber') ?></th>
+<th class="listheading"><?lsmb text('Description') ?></th>
+<th class="listheading"><?lsmb IF accont_class == 1; 
+                                   text('Last Cost');
+                               ELSE;
+                                   text('Sell Price') ?></th>
+<?lsmb IF account_class == 2 ?>
+<th class="listheading"><?lsmb text('Valid From') ?></th>
+<th class="listheading"><?lsmb text('Valid To') ?></th>
+<?lsmb ELSE ?>
+<th class="listheading"><?lsmb text('Vendor Partnumber') ?></th>
+<th class="listheading"><?lsmb text('Lead Time') ?></th>
+<?lsmb END ?>
+<th class="listheading"><?lsmb text('Currency') ?></th>
+<th class="listheading">&nbsp;</th>
+</tr>
+<?lsmb FOR pm IN pricematrix ?>
+<tr>
+<td><?lsmb pm.int_partnumber ?></td>
+<td><?lsmb pm.description ?></td>
+<td><?lsmb IF account_class == 1; pm.lastcost ELSE; pm.sellprice; END ?>
+</td>
+<?lsmb IF account_class == 2;
+<td><?lsmb pm.validfrom ?></td>
+<td><?lsmb pm.validto ?></td>
+<?lsmb ELSE ?>
+<td><?lsmb pm.partnumber ?></td>
+<td><?lsmb pm.leadtime ?></td>
+<?lsmb END  ?>
+<td><?lsmb pm.currency ?></td>
+<td><a href="<?lsmb script ?>?action=delete_pricematrix&credit_id=<?lsmb id ?>&entry_id=<?lsmb pm.entry_id ?>">[<?lsmb text('Delete') ?>]</a></td>
+</tr>
+<?lsmb END # FOR pricematrix ?>
+</table>
+
+<?lsmb IF pricematrix_pricegroup ?>
+<div class="listtop"><?lsmb text('Pricelist for Pricegroup') ?></div>
+<table>
+<tr class="listheading">
+<th class="listheading"><?lsmb text('Partnumber') ?></th>
+<th class="listheading"><?lsmb text('Description') ?></th>
+<th class="listheading"><?lsmb IF accont_class == 1; 
+                                   text('Last Cost');
+                               ELSE;
+                                   text('Sell Price') ?></th>
+<?lsmb IF account_class == 2 ?>
+<th class="listheading"><?lsmb text('Valid From') ?></th>
+<th class="listheading"><?lsmb text('Valid To') ?></th>
+<?lsmb ELSE ?>
+<th class="listheading"><?lsmb text('Vendor Partnumber') ?></th>
+<th class="listheading"><?lsmb text('Lead Time') ?></th>
+<?lsmb END ?>
+<th class="listheading"><?lsmb text('Currency') ?></th>
+<?lsmb FOR pm IN pricematrix_pricegroup ?>
+<tr>
+<td><?lsmb pm.int_partnumber ?></td>
+<td><?lsmb pm.description ?></td>
+<td><?lsmb IF account_class == 1; pm.lastcost ELSE; pm.sellprice; END ?>
+</td>
+<?lsmb IF account_class == 2;
+<td><?lsmb pm.validfrom ?></td>
+<td><?lsmb pm.validto ?></td>
+<?lsmb ELSE ?>
+<td><?lsmb pm.partnumber ?></td>
+<td><?lsmb pm.leadtime ?></td>
+<?lsmb END  ?>
+<td><?lsmb pm.currency ?></td>
+</table>
+<?lsmb END ?>
+</body>
+</html>
