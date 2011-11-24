@@ -153,6 +153,54 @@ CREATE TABLE pricegroup (
 COMMENT ON TABLE pricegroup IS
 $$ Pricegroups are groups of customers who are assigned prices and discounts
 together.$$;
+--TABLE language moved here because of later references
+CREATE TABLE language (
+  code varchar(6) PRIMARY KEY,
+  description text
+);
+COMMENT ON TABLE language IS
+$$ Languages for manual translations and so forth.$$;
+INSERT INTO language (code, description)
+VALUES ('ar_EG', 'Arabic (Egypt)'),
+       ('bg',    'Bulgarian'), 
+       ('ca',    'Catalan'),
+       ('cs',    'Czech'),
+       ('da',    'Danish'),
+       ('de',    'German'),
+       ('de_CH', 'German (Switzerland)'),
+       ('el',    'Greek'),
+       ('en',    'English'),
+       ('en_US', 'English (US)'),
+       ('en_GB', 'English (UK)'),
+       ('es',    'Spanish'),
+       ('es_CO', 'Spanish (Colombia)'),
+       ('es_EC', 'Spanish (Ecuador)'),
+       ('es_MX', 'Spanish (Mexico)'),
+       ('es_PA', 'Spanish (Panama)'),
+       ('es_PY', 'Spanish (Paraguay)'),
+       ('es_VE', 'Spanish (Venezuela)'),
+       ('et',    'Estonian'),
+       ('fi',    'Finnish'),
+       ('fr',    'French'),
+       ('fr_BE', 'French (Belgium)'),
+       ('fr_CA', 'French (Canada)'),
+       ('hu',    'Hungarian'),
+       ('id',    'Indonesian'),
+       ('is',    'Icelandic'),
+       ('it',    'Italian'),
+       ('lt',    'Latvian'),
+       ('nb',    'Norwegian'),
+       ('nl',    'Dutch'),
+       ('nl_BE', 'Dutch (Belgium)'),
+       ('pl',    'Polish'),
+       ('pt',    'Portuguese'),
+       ('pt_BR', 'Portuguese (Brazil)'),
+       ('ru',    'Russian'),
+       ('sv',    'Swedish'),
+       ('tr',    'Turkish'),
+       ('uk',    'Ukranian'),
+       ('zh_CN', 'Chinese (China)'),
+       ('zh_TW', 'Chinese (Taiwan)');
 -- country and tax form
 
 CREATE TABLE country (
@@ -420,7 +468,7 @@ INSERT INTO country(short_name,name) VALUES ('ZW','Zimbabwe');
 
 
 
-create table country_tax_form (                                                    country_id int references country(id) not null,
+create table country_tax_form (country_id int  references country(id) not null,
    form_name text not null,
    id serial not null unique,
    default_reportable bool not null default false,
@@ -784,7 +832,7 @@ CREATE TABLE entity_credit_account (
     terms int2 default 0,
     meta_number varchar(32),
     business_id int,
-    language_code varchar(6),
+    language_code varchar(6) DEFAULT 'en' references language(code) ON DELETE SET DEFAULT,
     pricegroup_id int references pricegroup(id),
     curr char(3),
     startdate date DEFAULT CURRENT_DATE,
@@ -801,7 +849,7 @@ CREATE TABLE entity_credit_account (
 );
 
 COMMENT ON TABLE entity_credit_account IS
-$$This table stores informmation relating to general relationships regarding 
+$$This table stores information relating to general relationships regarding 
 moneys owed on invoice.  Invoices, whether AR or AP, must be attached to 
 a record in this table.$$;
 
@@ -1628,50 +1676,6 @@ CREATE TABLE partscustomer (
 COMMENT ON TABLE partscustomer IS
 $$ Tracks per-customer pricing.  Discounts can be offered for periods of time
 and for pricegroups as well as per customer$$;
---
-
-INSERT INTO language (code, description)
-VALUES ('ar_EG', 'Arabic (Egypt)'),
-       ('bg',    'Bulgarian'), 
-       ('ca',    'Catalan'),
-       ('cs',    'Czech'),
-       ('da',    'Danish'),
-       ('de',    'German'),
-       ('de_CH', 'German (Switzerland)'),
-       ('el',    'Greek'),
-       ('en',    'English'),
-       ('en_US', 'English (US)'),
-       ('en_GB', 'English (UK)'),
-       ('es',    'Spanish'),
-       ('es_CO', 'Spanish (Colombia)'),
-       ('es_EC', 'Spanish (Ecuador)'),
-       ('es_MX', 'Spanish (Mexico)'),
-       ('es_PA', 'Spanish (Panama)'),
-       ('es_PY', 'Spanish (Paraguay)'),
-       ('es_VE', 'Spanish (Venezuela)'),
-       ('et',    'Estonian'),
-       ('fi',    'Finnish'),
-       ('fr',    'French'),
-       ('fr_BE', 'French (Belgium)'),
-       ('fr_CA', 'French (Canada)'),
-       ('hu',    'Hungarian'),
-       ('id',    'Indonesian'),
-       ('is',    'Icelandic'),
-       ('it',    'Italian'),
-       ('lt',    'Latvian'),
-       ('nb',    'Norwegian'),
-       ('nl',    'Dutch'),
-       ('nl_BE', 'Dutch (Belgium)'),
-       ('pl',    'Polish'),
-       ('pt',    'Portuguese'),
-       ('pt_BR', 'Portuguese (Brazil)'),
-       ('ru',    'Russian'),
-       ('sv',    'Swedish'),
-       ('tr',    'Turkish'),
-       ('uk',    'Ukranian'),
-       ('zh_CN', 'Chinese (China)'),
-       ('zh_TW', 'Chinese (Taiwan)');
-
 --
 CREATE TABLE audittrail (
   trans_id int,

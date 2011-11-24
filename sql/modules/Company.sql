@@ -1334,7 +1334,7 @@ $$ Returns a list of all entity credit accounts attached to that entity.$$;
 
 -- pricematrix
 
-CREATE OR REPLACE FUNCTION eca__get_pricematrix_by_pricegroup(in_id int)
+CREATE OR REPLACE FUNCTION eca__get_pricematrix_by_pricegroup(in_credit_id int)
 RETURNS SETOF eca__pricematrix AS
 $$
 SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
@@ -1346,7 +1346,7 @@ SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
  WHERE eca.id = $1 AND eca.entity_class = 2
 $$ LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION eca__get_pricematrix(in_id int) 
+CREATE OR REPLACE FUNCTION eca__get_pricematrix(in_credit_id int) 
 RETURNS SETOF eca__pricematrix AS
 $$
 
@@ -1369,7 +1369,7 @@ SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
 
 $$ language sql;
 
-COMMENT ON FUNCTION eca__get_pricematrix(in_id int) IS
+COMMENT ON FUNCTION eca__get_pricematrix(in_credit_id int) IS
 $$ This returns the pricematrix for the customer or vendor 
 (entity_credit_account identified by in_id), orderd by partnumber, validfrom
 $$;
