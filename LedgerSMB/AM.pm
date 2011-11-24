@@ -1428,7 +1428,8 @@ sub recurring_details {
     chop $form->{recurringemail};
     chop $form->{recurringprint};
 
-    for (qw(arinvoice apinvoice)) { delete $form->{$_} }
+    for (qw(arinvoice apinvoice invnumber)) { delete $form->{$_} }
+    
 
     $dbh->commit;
 
