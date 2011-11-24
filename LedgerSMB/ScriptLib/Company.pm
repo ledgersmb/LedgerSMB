@@ -994,8 +994,9 @@ sub pricelist {
     $company->get_pricematrix();
     my $template = LedgerSMB::Template->new(
                 user => $request->{_user},
-                path => 'UI/Company' ,
+                path => 'UI/Contact' ,
                 template => 'pricelist',
+                format => 'HTML',
                 locale => $company->{_locale},
     );
 

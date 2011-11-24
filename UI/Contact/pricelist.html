@@ -19,7 +19,8 @@ checking a price deal for a customer.
 <th class="listheading"><?lsmb IF accont_class == 1; 
                                    text('Last Cost');
                                ELSE;
-                                   text('Sell Price') ?></th>
+                                   text('Sell Price'); 
+                               END ?></th>
 <?lsmb IF account_class == 2 ?>
 <th class="listheading"><?lsmb text('Valid From') ?></th>
 <th class="listheading"><?lsmb text('Valid To') ?></th>
@@ -34,9 +35,9 @@ checking a price deal for a customer.
 <tr>
 <td><?lsmb pm.int_partnumber ?></td>
 <td><?lsmb pm.description ?></td>
-<td><?lsmb IF account_class == 1; pm.lastcost ELSE; pm.sellprice; END ?>
+<td><?lsmb IF account_class == 1; pm.lastcost; ELSE; pm.sellprice; END ?>
 </td>
-<?lsmb IF account_class == 2;
+<?lsmb IF account_class == 2; ?>
 <td><?lsmb pm.validfrom ?></td>
 <td><?lsmb pm.validto ?></td>
 <?lsmb ELSE ?>
@@ -58,7 +59,8 @@ checking a price deal for a customer.
 <th class="listheading"><?lsmb IF accont_class == 1; 
                                    text('Last Cost');
                                ELSE;
-                                   text('Sell Price') ?></th>
+                                   text('Sell Price');
+                               END ?></th>
 <?lsmb IF account_class == 2 ?>
 <th class="listheading"><?lsmb text('Valid From') ?></th>
 <th class="listheading"><?lsmb text('Valid To') ?></th>
@@ -71,9 +73,9 @@ checking a price deal for a customer.
 <tr>
 <td><?lsmb pm.int_partnumber ?></td>
 <td><?lsmb pm.description ?></td>
-<td><?lsmb IF account_class == 1; pm.lastcost ELSE; pm.sellprice; END ?>
+<td><?lsmb IF account_class == 1; pm.lastcost; ELSE; pm.sellprice; END ?>
 </td>
-<?lsmb IF account_class == 2;
+<?lsmb IF account_class == 2; ?>
 <td><?lsmb pm.validfrom ?></td>
 <td><?lsmb pm.validto ?></td>
 <?lsmb ELSE ?>
@@ -82,6 +84,7 @@ checking a price deal for a customer.
 <?lsmb END  ?>
 <td><?lsmb pm.currency ?></td>
 </table>
+<?lsmb END ?>
 <?lsmb END ?>
 </body>
 </html>
