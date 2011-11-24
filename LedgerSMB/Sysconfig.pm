@@ -67,11 +67,6 @@ our $templates = "templates";
 
 # Temporary files stored at"
 our $tempdir = ( $ENV{TEMP} || '/tmp' );
-$ENV{HOME} = $tempdir;
-
-our $cache_template_dir = "$tempdir/lsmb_templates";
-# Backup path
-our $backuppath = $tempdir;
 
 # member file
 our $memberfile = "users/members";
@@ -200,5 +195,11 @@ our $default_db = $config{database}{default_db};
 our $db_namespace = $config{database}{db_namespace} || 'public';
 $ENV{PGSSLMODE} = $config{database}{sslmode} if $config{database}{sslmode};
 $ENV{PG_CONTRIB_DIR} = $config{database}{contrib_dir};
+
+$ENV{HOME} = $tempdir;
+
+our $cache_template_dir = "$tempdir/lsmb_templates";
+# Backup path
+our $backuppath = $tempdir;
 
 1;

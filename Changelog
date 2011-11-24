@@ -6,6 +6,10 @@ Changelog for LedgerSMB 1.3.7
 * Added foreign key of entity_credit_account.language_code (Herman V)
 * Fixed pricelist button (customer/vendor) producing error (Chris T)
 * Fixed date error when processing recurring transactions (Chris T)
+* Exposed LedgerSMB::Sysconfig::tempdir to configuration file (Herman V)
+* Fixed invoice tempfiles never being cleaned up (Herman V)
+* Fixed LedgerSMB.pm warnings during tests (Herman V)
+* Allow log-level to be set from config file (Herman V)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
