@@ -25,3 +25,11 @@ UPDATE menu_attribute SET value = 'partsgroup' WHERE node_id = 91 and attribute 
 UPDATE menu_attribute SET value = 'pricegroup' WHERE node_id = 92 and attribute = 'type';
 
 COMMIT;
+
+BEGIN;
+ALTER TABLE entity_credit_account drop constraint "entity_credit_account_language_code_fkey";
+COMMIT;
+
+BEGIN;
+ALTER TABLE entity_credit_account ADD FOREIGN KEY (language_code) REFERENCES language(code);
+COMMIT;
