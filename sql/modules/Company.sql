@@ -695,13 +695,27 @@ COMMENT ON  FUNCTION company_save (
  ) is
 $$ Saves a company.  Returns the id number of the record stored.$$;
 
-CREATE OR REPLACE FUNCTION entity_credit_save (
+DROP FUNCTION IF EXISTS entity_credit_save (
     in_credit_id int, in_entity_class int,
     in_entity_id int, in_description text,
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
     in_discount_terms int,
     in_terms int, in_meta_number varchar(32), in_business_id int, 
     in_language varchar(6), in_pricegroup_id int, 
+    in_curr char, in_startdate date, in_enddate date, 
+    in_threshold NUMERIC,
+    in_ar_ap_account_id int,
+    in_cash_account_id int,
+    in_pay_to_name text,
+    in_taxform_id int);
+
+CREATE OR REPLACE FUNCTION entity_credit_save (
+    in_credit_id int, in_entity_class int,
+    in_entity_id int, in_description text,
+    in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
+    in_discount_terms int,
+    in_terms int, in_meta_number varchar(32), in_business_id int, 
+    in_language_code varchar(6), in_pricegroup_id int, 
     in_curr char, in_startdate date, in_enddate date, 
     in_threshold NUMERIC,
     in_ar_ap_account_id int,
@@ -738,7 +752,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 cash_account_id = in_cash_account_id,
                 meta_number = t_meta_number,
                 business_id = in_business_id,
-                language_code = in_language,
+                language_code = in_language_code,
                 pricegroup_id = in_pricegroup_id,
                 curr = in_curr,
                 startdate = in_startdate,
@@ -785,7 +799,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_terms,
                 t_meta_number,
                 in_business_id,
-                in_language,
+                in_language_code,
                 in_pricegroup_id,
                 in_curr,
                 in_startdate,
@@ -810,7 +824,7 @@ COMMENT ON  FUNCTION entity_credit_save (
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric,
     in_discount_terms int,
     in_terms int, in_meta_number varchar(32), in_business_id int,
-    in_language varchar(6), in_pricegroup_id int,
+    in_language_code varchar(6), in_pricegroup_id int,
     in_curr char, in_startdate date, in_enddate date,
     in_threshold NUMERIC,
     in_ar_ap_account_id int,
