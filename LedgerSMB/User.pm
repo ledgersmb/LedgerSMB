@@ -60,6 +60,8 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Auth;
 use Data::Dumper;
 
+my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
+
 =item LedgerSMB::User->new($login);
 
 Create a LedgerSMB::User object.  If the user $login exists, set the fields

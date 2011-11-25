@@ -1,6 +1,6 @@
 <?lsmb INCLUDE "ui-header.html" 
 stylesheet="ledgersmb.css"
-include_stylesheet=["UI/setup/stylesheet.css"] ?>
+#include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body>
 <h2><?lsmb text('Database Management Console') ?></h2>
@@ -25,12 +25,12 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
    label = text('To email') #'
    value = 'email'
 }, label_pos = 1 ?>
-<?lsmb INCLUDE inout element_data = {
+<?lsmb INCLUDE input element_data = {
     type = "text"
     name = "email"
    value = email
    class = "email"
-?>
+} ?>
 </div>
 <div class="inputrow" id="browseropt">
 <?lsmb INCLUDE input element_data = {

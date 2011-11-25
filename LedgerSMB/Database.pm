@@ -99,12 +99,12 @@ sub base_backup {
     $t[5] += 1900;
     $t[3] = substr( "0$t[3]", -2 );
     $t[4] = substr( "0$t[4]", -2 );
-    my $date = "$5-$4-$3";
+    my $date = "$t[5]-$t[4]-$t[3]";
 
     my $backupfile = $LedgerSMB::Sysconfig::backuppath .
                      "/roles_${date}.sql";
 
-    system("pgdumpall -r -f '$backupfile'") || $self->error('Backup failed');
+    system("pg_dumpall -r -f $backupfile");
 
     $ENV{PGUSER} = $old_pguser;
     $ENV{PGPASSWORD} = $old_pgpass;
@@ -138,13 +138,12 @@ sub db_backup {
     $t[5] += 1900;
     $t[3] = substr( "0$t[3]", -2 );
     $t[4] = substr( "0$t[4]", -2 );
-    my $date = "$5-$4-$3";
+    my $date = "$t[5]-$t[4]-$t[3]";
 
     my $backupfile = $LedgerSMB::Sysconfig::backuppath .
-                     "/backup_$self->{company_name}_${date}.sql";
+                     "/backup_$self->{company_name}_${date}.bak";
 
-    system("pgdump -d '$self->{company_name}' -F c -f '$backupfile'") 
-                  || $self->error('Backup failed');
+    system("pg_dump  -F c -f '$backupfile' '$self->{company_name}'");
 
     $ENV{PGUSER} = $old_pguser;
     $ENV{PGPASSWORD} = $old_pgpass;

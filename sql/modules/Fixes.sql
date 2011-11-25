@@ -29,6 +29,12 @@ UPDATE menu_attribute SET value = 'pricegroup' WHERE node_id = 92 and attribute 
 -- what is working! --CT
 UPDATE menu_attribute SET value = 'begin_import' WHERE id = 631 and value = 'import' and node_id = '235'; 
 
+-- Getting rid of System/Backup menu since this is broken
+
+DELETE FROM menu_acl       WHERE node_id BETWEEN 133 AND 135;
+DELETE FROM menu_attribute WHERE node_id BETWEEN 133 AND 135;
+DELETE FROM menu_node      WHERE id      BETWEEN 133 AND 135;
+
 COMMIT;
 
 BEGIN;

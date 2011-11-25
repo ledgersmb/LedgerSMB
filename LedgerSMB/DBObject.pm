@@ -61,6 +61,7 @@ sub new {
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $base  = $args{base};
     my $mode  = $args{copy};
+    $mode = '' if (!defined $mode);
     my $self  = bless {}, $class;
     my @mergelist;
     if ( defined $args{merge} ){

@@ -52,7 +52,7 @@ sub login {
         $request->error($request->{_locale}->text('No database specified'));
     }
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username},
+               {username => $creds->{login},
             company_name => $request->{database},
                 password => $creds->{password}}
     );
@@ -173,9 +173,11 @@ Runs the backup.  If backup_type is set to email, emails the
 sub run_backup {
     use LedgerSMB::Company_Config;
 
+    my $creds = LedgerSMB::Auth::get_credentials();
     my $request = shift @_;
+
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username},
+               {username => $creds->{login},
             company_name => $request->{database},
                 password => $creds->{password}}
     );
@@ -210,14 +212,20 @@ sub run_backup {
     } elsif ($request->{backup_type} eq 'browser'){
         open BAK, '<', $backupfile;
         my $cgi = CGI::Simple->new();
+        $backupfile =~ s/$LedgerSMB::Sysconfig::backuppath(\/)?//;
         print $cgi->header(
           -type       => $mimetype,
           -status     => '200',
           -charset    => 'utf-8',
           -attachment => $backupfile,
         );
+        my $data;
+        while (read(BAK, $data, 1024 * 1024)){ # Read 1MB at a time
+            print $data;
+        }
+        exit;
     } else {
-        $request->error($request->{_locale}->text("Don't know what to do with backup");
+        $request->error($request->{_locale}->text("Don't know what to do with backup"));
     }
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
@@ -239,7 +247,7 @@ sub migrate_sl{
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username},
+               {username => $creds->{login},
             company_name => $request->{database},
                 password => $creds->{password}}
     );
@@ -255,7 +263,7 @@ sub upgrade{
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username},
+               {username => $creds->{login},
             company_name => $request->{database},
                 password => $creds->{password}}
     );
@@ -656,7 +664,7 @@ sub run_upgrade {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username},
+               {username => $creds->{login},
             company_name => $request->{database},
                 password => $creds->{password}}
     );
@@ -729,7 +737,7 @@ sub rebuild_modules {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
-               {username => $creds->{username},
+               {username => $creds->{login},
             company_name => $request->{database},
                 password => $creds->{password}}
     );

@@ -25,6 +25,9 @@ Changelog for LedgerSMB 1.3.7
 * Corrected permissions issue for editing assembly (Chris T)
 * Database administration interface more consistent (Chris T)
 * Backup functionality moved to database administration interface (Chris T)
+* Default language handling for invoices (Herman V)
+* Fixed LaTeX errors in timecard templates (Chris T)
+* Reduced warnings in logs (Chris T)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
