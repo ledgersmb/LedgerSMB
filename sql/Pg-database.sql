@@ -2877,11 +2877,11 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 117	module	bp.pl	294
 117	action	search	295
 117	vc	customer	297
+117	type	invoice	296
 118	module	bp.pl	298
 118	action	search	299
 118	vc	customer	300
-118	type	invoice	301
-117	type	sales_order	296
+118	type	sales_order	301
 120	module	bp.pl	302
 120	action	search	303
 120	vc	customer	304
