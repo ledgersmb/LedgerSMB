@@ -171,6 +171,7 @@ Runs the backup.  If backup_type is set to email, emails the
 sub run_backup {
     use LedgerSMB::Company_Config;
 
+    my $creds = LedgerSMB::Auth::get_credentials();
     my $request = shift @_;
     my $database = LedgerSMB::Database->new(
                {username => $creds->{username},
@@ -215,7 +216,7 @@ sub run_backup {
           -attachment => $backupfile,
         );
     } else {
-        $request->error($request->{_locale}->text("Don't know what to do with backup");
+        $request->error($request->{_locale}->text("Don't know what to do with backup"));
     }
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
