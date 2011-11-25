@@ -280,7 +280,7 @@ sub render {
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);
 	my $post = $format->can('postprocess')->($self);
-        $logger->debug("\$format=$format \$self->{'noauto'}=$self->{'noauto'} \$self->{rendered}=$self->{rendered}");
+        #$logger->debug("\$format=$format \$self->{'noauto'}=$self->{'noauto'} \$self->{rendered}=$self->{rendered}");
 	if (!$self->{'noauto'}) {
 		# Clean up
                 $logger->debug("before self output");
