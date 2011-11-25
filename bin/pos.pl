@@ -1022,7 +1022,7 @@ sub print_form {
         $form->{printed} .= " $form->{formname}";
         $form->{printed} =~ s/^ //;
 
-        $form->update_status( \%myconfig );
+        $form->update_status( \%myconfig, 1);
     }
     $old_form->{printed} = $form->{printed};
 

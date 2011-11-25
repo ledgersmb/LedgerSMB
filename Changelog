@@ -21,6 +21,8 @@ Changelog for LedgerSMB 1.3.7
 * Default language handling for invoices (Herman V)
 * Fixed LaTeX errors in timecard templates (Chris T)
 * Reduced warnings in logs (Chris T)
+* Fixed error when batch printing timecards (Erik H)
+* Fixed menu reversal with batch printing (Erik H)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)

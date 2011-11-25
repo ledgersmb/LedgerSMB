@@ -311,7 +311,7 @@ sub print_transaction {
         $form->{queued} =~ s/^ //;
 
         # save status
-        $form->update_status( \%myconfig );
+        $form->update_status( \%myconfig, 1);
 
         $old_form->{queued} = $form->{queued};
 
@@ -336,7 +336,7 @@ sub print_transaction {
             $form->{printed} .= " $form->{formname}";
             $form->{printed} =~ s/^ //;
 
-            $form->update_status( \%myconfig );
+            $form->update_status( \%myconfig, 1);
         }
 
         $old_form->{printed} = $form->{printed} if %$old_form;

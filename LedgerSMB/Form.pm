@@ -2875,7 +2875,7 @@ $myconfig is unused.
 
 sub update_status {
 
-    my ( $self, $myconfig ) = @_;
+    my ( $self, $myconfig, $commit ) = @_;
 
     # no id return
     return unless $self->{id};
@@ -2909,6 +2909,9 @@ sub update_status {
     $sth->execute( $self->{id}, $printed, $emailed, $spoolfile,
         $self->{formname} ) || $self->dberror($query);
     $sth->finish;
+    if ($commit){
+        $dbh->commit;
+    }
 
 }
 

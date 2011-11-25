@@ -2144,7 +2144,7 @@ qq|$form->{"${item}hour"}:$form->{"${item}min"}:$form->{"${item}sec"}|;
             $form->{printed} .= " $form->{formname}";
             $form->{printed} =~ s/^ //;
 
-            $form->update_status( \%myconfig );
+            $form->update_status( \%myconfig, 1);
         }
 
         %audittrail = (
@@ -2181,7 +2181,7 @@ qq|$form->{"${item}hour"}:$form->{"${item}min"}:$form->{"${item}sec"}|;
         $form->{printmode} = '>';
 
         $form->{queued} = "$form->{formname} $filename";
-        $form->update_status( \%myconfig );
+        $form->update_status( \%myconfig, 1);
 
         %audittrail = (
             tablename => jcitems,
