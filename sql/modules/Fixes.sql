@@ -24,7 +24,10 @@ update menu_attribute set value = 'partsgroup' where node_id = '82' and attribut
 UPDATE menu_attribute SET value = 'partsgroup' WHERE node_id = 91 and attribute = 'type';
 UPDATE menu_attribute SET value = 'pricegroup' WHERE node_id = 92 and attribute = 'type';
 
-UPDATE menu_attribute SET value = 'begin_import' WHERE id = 631 and value = 'import' and node_id = '235';
+-- Very restrictive because some people still have Asset handling installed from
+-- Addons and so the node_id and id values may not match.  Don't want to break
+-- what is working! --CT
+UPDATE menu_attribute SET value = 'begin_import' WHERE id = 631 and value = 'import' and node_id = '235'; 
 
 COMMIT;
 
