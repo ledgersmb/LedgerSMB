@@ -80,6 +80,8 @@ use strict;
 
 my $ENTITY_CLASS = 3;
 
+my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject::Employee');
+
 =item set_entity_class
 
 Sets the entity class to 3.
