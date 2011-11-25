@@ -10,6 +10,7 @@ Changelog for LedgerSMB 1.3.7
 * Fixed invoice tempfiles never being cleaned up (Herman V)
 * Fixed LedgerSMB.pm warnings during tests (Herman V)
 * Allow log-level to be set from config file (Herman V)
+* Corrected 'Invalid Year-end filter' when exporting trial balance (Chris T)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)

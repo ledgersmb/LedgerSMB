@@ -43,6 +43,11 @@ sub get {
     $file->get();
 
     my $cgi = CGI::Simple->new();
+    $file->get_mime_type;
+    if ($file->mime_type_text eq 'text/x-uri'){
+        print $cgi->redirect($file->content);
+        return 0;
+    }
 
     print $cgi->header(
           -type       => $file->get_mime_type,
@@ -50,7 +55,6 @@ sub get {
           -charset    => 'utf-8',
           -attachment => $file->file_name,
     );
-    print $file->content;
 }
 
 =item show_attachment_screen
@@ -86,6 +90,8 @@ sub attach_file {
     $file->merge($request);
     if ($request->{url}){
 	$file->mime_type_text('text/x-uri');
+        $file->file_name($request->{url});
+        $file->get_mime_type;
         $file->content($request->{url});
     } else {
         use File::MimeInfo;
