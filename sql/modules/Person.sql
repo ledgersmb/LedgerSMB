@@ -12,6 +12,11 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION person__get_my_entity_id() IS
 $$ Returns the entity_id of the current, logged in user.$$;
 
+CREATE OR REPLACE FUNCTION person__list_languages() 
+RETURNS SETOF language AS
+$$ SELECT * FROM language ORDER BY code ASC $$ language sql;
+COMMENT ON FUNCTION person__list_languages() IS
+$$ Returns a list of languages ordered by code$$;
 
 CREATE OR REPLACE FUNCTION person__list_salutations() 
 RETURNS SETOF salutation AS

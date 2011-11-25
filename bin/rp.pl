@@ -610,7 +610,7 @@ sub generate_trial_balance {
 
     $form->{callback} = "$form->{script}?action=generate_trial_balance";
     for (
-        qw(login path sessionid nextsub fromdate todate month year interval l_heading l_subtotal all_accounts accounttype title)
+        qw(login path sessionid nextsub fromdate todate month year interval l_heading l_subtotal all_accounts accounttype title ignore_yearend)
       )
     {
         $form->{callback} .= "&$_=$form->{$_}";
@@ -640,6 +640,7 @@ sub list_accounts {
         department => $form->{department},
         projectnumber => $form->{projectnumber},
         project_id => $form->{project_id},
+        ignore_yearend => $form->{ignore_yearend},
     );
 
     my @options;

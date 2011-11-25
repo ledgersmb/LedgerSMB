@@ -1,5 +1,7 @@
 auth : DB
 logging  : 0
+#Be aware of tempdir setting.If client_browser and server_apache on same machine, sharing tmp-dir , problems 'Permission denied' if server tries to write temp-file wich already exists as client-owned
+tempdir : /tmp/ledgersmb
 
 # Set language for login and admin pages
 language : 
@@ -92,3 +94,7 @@ db_namespace = public
 contrib_dir = /usr/share/pgsql/contrib/
 # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
 sslmode = prefer
+
+[log4perl_config_modules_loglevel]
+LedgerSMB : INFO
+LedgerSMB.DBObject = INFO

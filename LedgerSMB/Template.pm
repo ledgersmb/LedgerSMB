@@ -140,6 +140,8 @@ use LedgerSMB::Mailer;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
 
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
+
 sub new {
 	my $class = shift;
 	my $self = {};
@@ -278,9 +280,12 @@ sub render {
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);
 	my $post = $format->can('postprocess')->($self);
+        $logger->debug("\$format=$format \$self->{'noauto'}=$self->{'noauto'} \$self->{rendered}=$self->{rendered}");
 	if (!$self->{'noauto'}) {
 		# Clean up
+                $logger->debug("before self output");
 		$self->output(%$vars);
+                $logger->debug("after self output,but does not seem to return here!");
 		if ($self->{rendered}) {
 			unlink($self->{rendered}) or
 				throw Error::Simple 'Unable to delete output file';
@@ -331,6 +336,7 @@ sub _http_output {
 		while (my $line = <DATA>){
 			$data .= $line;
 		}
+	        unlink($self->{rendered}) or throw Error::Simple 'Unable to delete output file';
 	}
 
 	my $format = "LedgerSMB::Template::$self->{format}";

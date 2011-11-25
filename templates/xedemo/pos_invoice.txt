@@ -7,39 +7,38 @@ Inv #/Date: <?lsmb invnumber ?> / <?lsmb invdate ?>
 Printed: <?lsmb dateprinted ?>
 
   Qty Description                 Amount
-<?lsmb foreach number ?>
-<?lsmb qty FILTER format('%5.5s') ?>       <?lsmb description FILTER format('%-18.18s') ?> <?lsmb linetotal FILTER format('%9.9s') ?>
-      <?lsmb number ?> @ <?lsmb sellprice ?>/<?lsmb unit ?>
-<?lsmb end number ?>
+<?lsmb FOREACH number ?><?lsmb loop_count = loop.count - 1 ?>
+<?lsmb qty FILTER format('%5.5s') ?>       <?lsmb description.loop_count FILTER format('%-18.18s') ?> <?lsmb linetotal.loop_count FILTER format('%9.9s') ?>
+      <?lsmb number.loop_count ?> @ <?lsmb sellprice.loop_count ?>/<?lsmb unit.loop_count ?>
+<?lsmb END # number ?>
 
 Number of items: <?lsmb totalqty ?>
-<?lsmb if taxincluded ?>
+<?lsmb IF taxincluded ?>
                          ---------------
                         Total: <?lsmb invtotal FILTER format('%9.9s') ?>
-<?lsmb end taxincluded ?>
-<?lsmb if not taxincluded ?>
+<?lsmb ELSE ?>
                             ------------
                      Subtotal: <?lsmb subtotal FILTER format('%9.9s') ?>
-<?lsmb end taxincluded ?>
-<?lsmb foreach tax ?>
-<?lsmb taxdescription FILTER format('%-23.23s') ?> @ <?lsmb taxrate FILTER format('%2.2s') ?>%: <?lsmb tax FILTER format('%9.9s') ?>
-<?lsmb end tax ?>
-<?lsmb foreach payment ?>
-                         Paid: <?lsmb payment FILTER format('%9.9s') ?> <?lsmb currency ?>
-<?lsmb end payment ?>
-<?lsmb if change ?>
+<?lsmb END # taxincluded ?>
+<?lsmb FOREACH tax ?><?lsmb loop_count = loop.count - 1 ?>
+<?lsmb taxdescription.loop_count FILTER format('%-23.23s') ?> @ <?lsmb taxrate.loop_count FILTER format('%2.2s') ?>%: <?lsmb tax.loop_count FILTER format('%9.9s') ?>
+<?lsmb END # tax ?>
+<?lsmb FOREACH payment ?><?lsmb loop_count = loop.count - 1 ?>
+                         Paid: <?lsmb payment.loop_count FILTER format('%9.9s') ?> <?lsmb currency.loop_count ?>
+<?lsmb END # payment ?>
+<?lsmb IF change ?>
                        Change: <?lsmb change FILTER format('%9.9s') ?>
-<?lsmb end change ?>
-<?lsmb if total ?>
+<?lsmb END # change ?>
+<?lsmb IF total ?>
                   Balance Due: <?lsmb total FILTER format('%9.9s') ?>
-<?lsmb end total ?>
-<?lsmb if discount ?>
+<?lsmb END # total ?>
+<?lsmb IF discount ?>
 
 <?lsmb discount ?> % Discount applied
-<?lsmb end discount ?>
+<?lsmb END # discount ?>
 
    Thank you for your valued business!
 
-<?lsmb if taxincluded ?>
+<?lsmb IF taxincluded ?>
 Taxes are included in price.
-<?lsmb end taxincluded ?>
+<?lsmb END # taxincluded ?>

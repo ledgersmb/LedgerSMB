@@ -463,8 +463,11 @@ sub is_blank {
 
 sub is_run_mode {
     my $self = shift @_;
-    my $mode = lc shift @_;
+    #avoid 'uninitialized' warnings in tests
+    my $mode = shift @_;
     my $rc   = 0;
+    if(! $mode){return $rc;}
+    $mode=lc $mode;
     if ( $mode eq 'cgi' && $ENV{GATEWAY_INTERFACE} ) {
         $rc = 1;
     }
@@ -754,6 +757,7 @@ sub sanitize_for_display {
 }
 
 sub finalize_request {
+    $logger->debug("throwing CancelFurtherProcessing()");#if trying to follow flow of request
     throw CancelFurtherProcessing();
 }
 
