@@ -55,6 +55,9 @@ sub get {
           -charset    => 'utf-8',
           -attachment => $file->file_name,
     );
+    print $file->content;
+
+    exit;
 }
 
 =item show_attachment_screen
