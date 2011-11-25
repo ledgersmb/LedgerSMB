@@ -24,6 +24,8 @@ update menu_attribute set value = 'partsgroup' where node_id = '82' and attribut
 UPDATE menu_attribute SET value = 'partsgroup' WHERE node_id = 91 and attribute = 'type';
 UPDATE menu_attribute SET value = 'pricegroup' WHERE node_id = 92 and attribute = 'type';
 
+UPDATE menu_attribute SET value = 'begin_import' WHERE id = 631 and value = 'import' and node_id = '235';
+
 COMMIT;
 
 BEGIN;
