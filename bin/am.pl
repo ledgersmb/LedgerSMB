@@ -77,7 +77,7 @@ my @default_textboxes = (
    { name => 'company_fax', label => $locale->text('Company Fax') },
 );
 
-my @default_others = qw(businessnumber weightunit separate_duties
+my @default_others = qw(businessnumber weightunit separate_duties default_language
                         IC IC_income IC_expense 
                         FX_gain FX_loss default_country templates curr);
 
@@ -1442,6 +1442,12 @@ sub defaults {
 			     default_values => [$form->{'default_country'}],
 			     text_attr => 'name',
 			     value_attr => 'id',
+		},
+	'default_language' => {name   => 'default_language', 
+			     options => $form->{languages},
+			     default_values => [$form->{'default_language'}],
+			     text_attr => 'description',
+			     value_attr => 'code',
 		},
 	'templates'       => {name => 'templates', options => []}	
         );

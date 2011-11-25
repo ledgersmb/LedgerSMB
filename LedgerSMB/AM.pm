@@ -2217,6 +2217,16 @@ sub get_all_defaults {
         push @{$form->{countries}}, $ref;
     }
     $sth->finish;
+    #HV do not know if i can use 'sub language' here which fills $form->{ALL}
+    $query = "select code,description from language order by code";
+    $sth = $dbh->prepare($query);
+    $sth->execute;
+    $form->{languages} = [];
+    while ($ref = $sth->fetchrow_hashref('NAME_lc')) {
+        push @{$form->{languages}}, $ref;
+    }
+    $sth->finish;
+
     $self->defaultaccounts( undef, $form );
     $dbh->commit;
     my $dirname = "./templates";

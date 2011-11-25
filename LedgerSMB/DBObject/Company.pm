@@ -410,6 +410,13 @@ sub get_metadata {
     for my $ref (@{$self->{cash_acc_list}}){
         $ref->{text} = "$ref->{accno}--$ref->{description}";
     }
+
+    @{$self->{language_code_list}} = 
+         $self->exec_method(funcname => 'person__list_languages');
+
+    for my $ref (@{$self->{language_code_list}}){
+        $ref->{text} = "$ref->{code}--$ref->{description}";
+    }
     
     @{$self->{discount_acc_list}} =
          $self->exec_method(funcname => 'chart_list_discount');
@@ -437,10 +444,14 @@ sub get_metadata {
 
     @{$self->{contact_class_list}} = 
          $self->exec_method(funcname => 'entity_list_contact_class');
-    my $country_setting = LedgerSMB::Setting->new({base => $self, copy => 'base'});
-    $country_setting->{key} = 'default_country';
-    $country_setting->get;
-    $self->{default_country} = $country_setting->{value};
+    #HV was $country_setting , given it a more general name, not only for country
+    my $setting_module = LedgerSMB::Setting->new({base => $self, copy => 'base'});
+    $setting_module->{key} = 'default_country';
+    $setting_module->get;
+    $self->{default_country} = $setting_module->{value};
+    $setting_module->{key} = 'default_language';
+    $setting_module->get;
+    $self->{default_language} = $setting_module->{value};
 }
 
 =item save_contact

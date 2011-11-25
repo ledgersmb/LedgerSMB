@@ -33,7 +33,13 @@
 	<tr>
 	  <th align="right"><?lsmb text('Separate Duties') ?></th>
 	  <td><input name="separate_duties" size="5" value="<?lsmb form.separate_duties ?>" /></td>
-	</tr
+	</tr>
+        <tr>
+         <th align="right"><?lsmb text('default_language') ?></th>
+	  <td>
+           <?lsmb PROCESS select element_data=selects.default_language ?>
+         </td>
+	</tr>
       </table>
     </td>
   </tr>

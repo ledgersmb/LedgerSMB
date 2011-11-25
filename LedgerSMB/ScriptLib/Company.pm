@@ -637,6 +637,7 @@ sub save {
     my ($request) = @_;
     my $company = new_company($request);
     if (_close_form($company)){
+        #$logger->debug("\$company = " . Data::Dumper::Dumper($company));
         $company->save();
     }
     _render_main_screen($company);
@@ -748,6 +749,12 @@ sub _render_main_screen{
          value => 3},
     ];
     $company->{threshold} = $company->format_amount(amount => $company->{threshold});
+    if(! $company->{language_code})
+    {
+     #$logger->debug("company->language code not set!");
+     $company->{language_code}=$company->{default_language}
+    }
+    #$logger->debug("\$company = " . Data::Dumper::Dumper($company));
 
     my $template = LedgerSMB::Template->new( 
 	user => $company->{_user}, 

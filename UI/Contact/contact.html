@@ -429,7 +429,7 @@ END ?>
 		type= "text",
 		name = "meta_number",
 		value = meta_number,
-		size = "20"
+		size = "10"
 	}  # " ?></td>
 	<td><?lsmb PROCESS input element_data = {
 		label = text("Description"),
@@ -438,13 +438,22 @@ END ?>
 		value = description,
 		size = "20"
 	} ?></td>
+        <td> <?lsmb INCLUDE select element_data = {
+		label = text("language_code")
+		name = "language_code"
+                default_values = [language_code],
+                options = language_code_list
+		text_attr = "text"
+		value_attr = "code"
+                } ?>
+        </td>
 	</tr>
 	<tr class="pay_to_row">
 	<td colspan = "2">
 	<?lsmb PROCESS input element_data = {
 		label = text('Pay To') #'
 		type = "text"
-		sixe = "50"
+		size = "50"
 		name = "pay_to_name"
 		value = pay_to_name
 		class = "name"
