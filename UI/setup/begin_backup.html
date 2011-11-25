@@ -1,0 +1,54 @@
+<?lsmb INCLUDE "ui-header.html" 
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"] ?>
+<?lsmb PROCESS elements.html ?>
+<body>
+<h2><?lsmb text('Database Management Console') ?></h2>
+<div class="listtop"><?lsmb text('Where shall we send the backup?') ?></div>
+<?lsmb # notice, message, and operation are all localized. ?>
+<div id="notice"><?lsmb notice ?></div>
+<form action="setup.pl" method="POST" name="confirm_operation">
+<?lsmb INCLUDE input element_data = {
+    name = 'database'
+    type = 'hidden'
+   value = database
+} ?>
+<?lsmb INCLUDE input element_data = {
+    name = 'backup'
+    type = 'hidden'
+   value = backup
+} ?>
+<div class="inputrow" id="emailopt">
+<?lsmb INCLUDE input element_data = {
+    type = 'radio'
+    name = 'backup_type'
+   label = text('To email') #'
+   value = 'email'
+}, label_pos = 1 ?>
+<?lsmb INCLUDE inout element_data = {
+    type = "text"
+    name = "email"
+   value = email
+   class = "email"
+?>
+</div>
+<div class="inputrow" id="browseropt">
+<?lsmb INCLUDE input element_data = {
+    type = 'radio'
+    name = 'backup_type'
+   label = text('To my browser') #'
+   value = 'browser'
+}, label_pos = 1 ?>
+</div>
+<div class="inputrow">
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'run_backup'
+    type = 'submit'
+   class = 'submit'
+    text = text('Run Backup') #'
+} ?>
+</div>
+</form>
+</body>
+</html>

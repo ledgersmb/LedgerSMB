@@ -128,6 +128,107 @@ sub login {
 
 }
 
+=item backup_db
+
+Backs up a full db
+
+=cut
+
+sub backup_db {
+    my $request = shift @_;
+    $request->{backup} = 'db';
+    _begin_backup($request);
+}
+
+=item backup_roles
+
+Backs up roles only (for all db's)
+
+=cut
+
+sub backup_roles {
+    my $request = shift @_;
+    $request->{backup} = 'roles';
+    _begin_backup($request);
+}
+
+# Private method, basically just passes the inputs on to the next screen.
+sub _begin_backup {
+    my $request = shift @_;
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'begin_backup',
+            format => 'HTML',
+    );
+    $template->render($request);
+};
+
+
+=item run_backup
+
+Runs the backup.  If backup_type is set to email, emails the 
+
+=cut
+
+sub run_backup {
+    use LedgerSMB::Company_Config;
+
+    my $request = shift @_;
+    my $database = LedgerSMB::Database->new(
+               {username => $creds->{username},
+            company_name => $request->{database},
+                password => $creds->{password}}
+    );
+
+    my $backupfile;
+    my $mimetype;
+
+    if ($request->{backup} eq 'roles'){
+       $backupfile = $database->base_backup; 
+       $mimetype   = 'text/x-sql';
+    } elsif ($request->{backup} eq 'db'){
+       $backupfile = $database->db_backup;
+       $mimetype   = 'application/octet-stream';
+    } else {
+        $request->error($request->{_locale}->text('Invalid backup request'));
+    }
+
+    if ($request->{backup_type} eq 'email'){
+        my $csettings = $LedgerSMB::Company_Config::settings;
+	my $mail = new LedgerSMB::Mailer(
+		from          => $csettings->{default_email_from},
+		to            => $request->{email},
+		subject       => "Email of Backup",
+		message       => 'The Backup is Attached',
+	);
+	$mail->attach(
+            mimetype => $mimetype,
+            filename => $backupfile,
+            file     => $backupfile,
+	);
+        $mail->send;
+    } elsif ($request->{backup_type} eq 'browser'){
+        open BAK, '<', $backupfile;
+        my $cgi = CGI::Simple->new();
+        print $cgi->header(
+          -type       => $mimetype,
+          -status     => '200',
+          -charset    => 'utf-8',
+          -attachment => $backupfile,
+        );
+    } else {
+        $request->error($request->{_locale}->text("Don't know what to do with backup");
+    }
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'complete',
+            format => 'HTML',
+    );
+    $template->render($request);
+ 
+}
+   
+
 =item migrate_sl
 
 Beginning of an SQL-Ledger 2.7/2.8 migration.

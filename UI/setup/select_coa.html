@@ -3,7 +3,7 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body>
-<h2>Database Management Console</h2>
+<h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb title ?></div>
 <form action="setup.pl" method="POST" name="credentials">
 <?lsmb IF coa_lc;

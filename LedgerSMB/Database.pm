@@ -66,8 +66,90 @@ sub new {
     } else {
         $self->{source_dir} = '';
     }
+
     bless $self, $class;
     return $self;
+}
+
+=item base_backup
+
+This routine connects to the database using pg_dumpall and returns a plain text,
+roles-only dump of the current database cluster.  This is left uncompressed for
+readability and ease of troubleshooting.  Base backups are advised to be taken
+frequently and in conjunction with single database backups.  The single database
+backups will backup all data but no roles.  Restoring a new database onto a new
+server post-crash with only the single-database backup thus means recreating all
+users.
+
+The file is named roles_[date].sql by default where the date is in
+yyyy-mm-dd format.
+
+=cut
+
+sub base_backup {
+    my $self = shift @_;
+
+    my $old_pguser = $ENV{PGUSER};
+    my $old_pgpass = $ENV{PGPASSWORD};
+    $ENV{PGUSER} = $self->{username};
+    $ENV{PGPASSWORD} = $self->{password};
+
+    my @t = localtime(time);
+    $t[4]++;
+    $t[5] += 1900;
+    $t[3] = substr( "0$t[3]", -2 );
+    $t[4] = substr( "0$t[4]", -2 );
+    my $date = "$5-$4-$3";
+
+    my $backupfile = $LedgerSMB::Sysconfig::backuppath .
+                     "/roles_${date}.sql";
+
+    system("pgdumpall -r -f '$backupfile'") || $self->error('Backup failed');
+
+    $ENV{PGUSER} = $old_pguser;
+    $ENV{PGPASSWORD} = $old_pgpass;
+
+    return $backupfile;
+}
+
+=item db_backup()
+
+This routine connects to the database using pg_dump and creates a Pg-native 
+database backup of the selected db only.  There is some redundancy with the base
+backup but the overlap is minimal.  You can restore your database and data with
+the db_bakup, but not the users and roles.  You can restore the users and roles
+with the base_backup but not your database.
+
+The resulting file is named backup_[dbname]_[date].bak with the date in
+yyyy-mm-dd format.
+
+=cut
+
+sub db_backup {
+    my $self = shift @_;
+
+    my $old_pguser = $ENV{PGUSER};
+    my $old_pgpass = $ENV{PGPASSWORD};
+    $ENV{PGUSER} = $self->{username};
+    $ENV{PGPASSWORD} = $self->{password};
+
+    my @t = localtime(time);
+    $t[4]++;
+    $t[5] += 1900;
+    $t[3] = substr( "0$t[3]", -2 );
+    $t[4] = substr( "0$t[4]", -2 );
+    my $date = "$5-$4-$3";
+
+    my $backupfile = $LedgerSMB::Sysconfig::backuppath .
+                     "/backup_$self->{company_name}_${date}.sql";
+
+    system("pgdump -d '$self->{company_name}' -F c -f '$backupfile'") 
+                  || $self->error('Backup failed');
+
+    $ENV{PGUSER} = $old_pguser;
+    $ENV{PGPASSWORD} = $old_pgpass;
+
+    return $backupfile;
 }
 
 =item get_info()

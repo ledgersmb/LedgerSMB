@@ -3,6 +3,7 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body>
+<h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Confirm Operation') ?></div>
 <?lsmb # notice, message, and operation are all localized. ?>
 <div id="notice"><?lsmb notice ?></div>
@@ -14,30 +15,30 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
     type = 'hidden'
    value = database
 } ?>
-<div class="inputrow" id="yesno">
-<?lsmb 
-INCLUDE input element_data = {
-    name = 'confirm'
-   value = '1'
-    type = 'radio'
-   class = 'confirm'
-   label = text('Yes')
-} ;
-INCLUDE input element_data = {
-    name = 'confirm'
-   value = '0'
-    type = 'radio'
-   class = 'confirm'
-   label = text('No')
-} ?>
-</div>
 <div class="inputrow">
 <?lsmb INCLUDE button element_data = {
     name = 'action'
    value = next_action
     type = 'submit'
+   class = 'submit'
+    text = text('Yes') 
+} ?>
+</div>
+<div id="others"><?lsmb text('Backup') ?></div>
+<div class="inputrow">
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'backup_db'
+    type = 'submit'
+   class = 'submit'
+    text = text('Backup DB') #'
+} ?>
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'backup_roles'
+    type = 'submit'
    class = 'next'
-    text = text('Next') 
+    text = text('Backup Roles') #' 
 } ?>
 </div>
 </form>
