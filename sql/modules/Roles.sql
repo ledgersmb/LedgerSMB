@@ -777,6 +777,7 @@ values (82, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__part_edit"
 WITH INHERIT NOLOGIN;
 
+GRANT DELETE ON assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT UPDATE ON parts, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT ALL ON makemodel TO "lsmb_<?lsmb dbname ?>__part_edit";
 --###oldcode: Should have been UPDATE
