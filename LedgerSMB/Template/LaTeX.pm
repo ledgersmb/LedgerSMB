@@ -58,6 +58,8 @@ use Error qw(:try);
 use Template::Latex;
 use LedgerSMB::Template::TTI18N;
 
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
+
 sub get_template {
 	my $name = shift;
 	return "${name}.tex";
@@ -132,7 +134,7 @@ sub process {
 	}
 	$template = Template::Latex->new({
 		LATEX_FORMAT => $format,
-		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
+		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path},'templates/demo','UI/lib'],
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
