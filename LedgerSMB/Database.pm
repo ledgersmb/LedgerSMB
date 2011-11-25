@@ -71,7 +71,7 @@ sub new {
     return $self;
 }
 
-=item base_backuo()
+=item base_backup
 
 This routine connects to the database using pg_dumpall and returns a plain text,
 roles-only dump of the current database cluster.  This is left uncompressed for

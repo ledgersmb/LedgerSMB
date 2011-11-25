@@ -16,7 +16,8 @@ Changelog for LedgerSMB 1.3.7
 * Correcting parse errors in pos_template.txt (Chris T)
 * Corrected Action not defined error on asset import (Chris T)
 * Corrected permissions issue for editing assembly (Chris T)
-
+* Database administration interface more consistent (Chris T)
+* Backup functionality moved to database administration interface (Chris T)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
