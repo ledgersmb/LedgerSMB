@@ -13,6 +13,7 @@ Changelog for LedgerSMB 1.3.7
 * Corrected 'Invalid Year-end filter' when exporting trial balance (Chris T)
 * Correcting errors attaching and retriving URL attachments (Chris T)
 * Correcting history.css not found (Chris T)
+* Correcting parse errors in pos_template.txt (Chris T)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
