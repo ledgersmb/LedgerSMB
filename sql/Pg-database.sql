@@ -2428,8 +2428,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 130	Taxes	128	2
 131	Defaults	128	3
 132	Yearend	128	4
-134	Send to File	133	1
-135	Send to Email	133	2
 137	Add Accounts	136	1
 138	List Accounts	136	2
 139	Add GIFI	136	3
@@ -2512,7 +2510,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 144	Departments	128	9
 141	Warehouses	128	8
 136	Chart of Accounts	128	7
-133	Backup	128	6
 220	Add User	219	1
 221	Search Users	219	2
 222	Sessions	219	3
@@ -2927,13 +2924,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 130	action	taxes	343
 132	module	account.pl	346
 132	action	yearend_info	347
-133	menu	1	348
-134	module	am.pl	349
-135	module	am.pl	350
-134	action	backup	351
-135	action	backup	352
-134	media	file	353
-135	media	email	354
 138	module	am.pl	356
 139	module	am.pl	357
 140	module	am.pl	358
