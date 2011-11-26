@@ -29,6 +29,8 @@ Changelog for LedgerSMB 1.3.7
 * Corrected UI glitch when processing recurring transactions (Chris T)
 * Corrected double escaping bug in balance sheet template (Erik H)
 * Corrected filtering of customers/vendors on AR/AP screens (Chris T)
+* Logging enhancements (Herman V)
+* Whitespace adjustment in Pg-database (Herman V)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
