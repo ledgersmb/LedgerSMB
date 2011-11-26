@@ -347,11 +347,13 @@ sub _http_output {
 		$name =~ s#^.*/##;
 		$disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
 	}
-	if ($self->{mimetype} =~ /^text/) {
+        if (!$ENV{LSMB_NOHEAD}){
+ 	    if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
-	} else {
+	    } else {
 		print "Content-Type: $self->{mimetype}$disposition\n\n";
-	}
+	    }
+        }
 	binmode STDOUT, ':utf8';
 	print $data;
 }

@@ -402,7 +402,7 @@ sub hide_form {
 
     }
     else {
-        delete $self->{header};
+        #delete $self->{header};
 
         for ( sort keys %$self ) {
             print qq|<input type="hidden" name="$_" value="|

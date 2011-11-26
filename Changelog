@@ -26,6 +26,7 @@ Changelog for LedgerSMB 1.3.7
 * Removed broken edit buttons on bank account tab of contacts form (Chris T)
 * Corrected UI glitches involving adding employee contact info (Chris T)
 * Corrected missing translation call in contact template (Chris T)
+* Corrected UI glitch when processing recurring transactions (Chris T)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
