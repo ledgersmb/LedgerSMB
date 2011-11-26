@@ -27,6 +27,7 @@ Changelog for LedgerSMB 1.3.7
 * Corrected UI glitches involving adding employee contact info (Chris T)
 * Corrected missing translation call in contact template (Chris T)
 * Corrected UI glitch when processing recurring transactions (Chris T)
+* Corrected double escaping bug in balance sheet template (Erik H)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
