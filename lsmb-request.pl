@@ -38,16 +38,17 @@ use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
 
-$logger->debug("Begin lsmb-request.pl");
+$logger->debug("Begin");
 
 # for custom preprocessing logic
 eval { require "custom.pl"; };
 
-$logger->debug("lsmb-request.pl: getting request");
+$logger->debug("getting request");
 
 my $request = new LedgerSMB;
 
-$logger->debug("lsmb-request.pl: Got request");
+$logger->debug("Got request");
+$logger->trace("\$request=".Data::Dumper::Dumper($request));
 
 $request->{action} = '__default' if (!$request->{action});
 
@@ -78,7 +79,7 @@ $logger->debug("after calling script=$script action=$request->{action}");
 # Prevent flooding the error logs with undestroyed connection warnings
 $request->{dbh}->disconnect()
     if defined $request->{dbh};
-$logger->debug("End lsmb-request.pl");
+$logger->debug("End");
 
 
 sub call_script {

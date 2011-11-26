@@ -159,15 +159,15 @@ our $log4perl_config = qq(
     log4perl.appender.Screen.layout = SimpleLayout
     # Filter for debug level
     log4perl.filter.MatchDebug = Log::Log4perl::Filter::LevelMatch
-    log4perl.filter.MatchDebug.LevelToMatch = DEBUG
-    log4perl.filter.MatchDebug.AcceptOnMatch = true
+    log4perl.filter.MatchDebug.LevelToMatch = INFO
+    log4perl.filter.MatchDebug.AcceptOnMatch = false
 
-    # Filter for everything but debug level
+    # Filter for everything but debug,trace level
     log4perl.filter.MatchRest = Log::Log4perl::Filter::LevelMatch
-    log4perl.filter.MatchRest.LevelToMatch = DEBUG
-    log4perl.filter.MatchRest.AcceptOnMatch = false
+    log4perl.filter.MatchRest.LevelToMatch = INFO
+    log4perl.filter.MatchRest.AcceptOnMatch = true
 
-    # layout for DEBUG messages
+    # layout for DEBUG,TRACE messages
     log4perl.appender.Debug = Log::Log4perl::Appender::Screen
     log4perl.appender.Debug.layout = PatternLayout
     log4perl.appender.Debug.layout.ConversionPattern = %d - %p - %l -- %m%n
@@ -176,7 +176,7 @@ our $log4perl_config = qq(
     # layout for non-DEBUG messages
     log4perl.appender.Basic = Log::Log4perl::Appender::Screen
     log4perl.appender.Basic.layout = PatternLayout
-    log4perl.appender.Basic.layout.ConversionPattern = %d - %p %m%n
+    log4perl.appender.Basic.layout.ConversionPattern = %d - %p - %C -- %m%n
     log4perl.appender.Basic.Filter = MatchRest
 );
 #some examples of loglevel setting for modules
