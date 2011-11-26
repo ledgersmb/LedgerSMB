@@ -1721,7 +1721,7 @@ sub print_form {
             $form->{printed} .= " $form->{formname}";
             $form->{printed} =~ s/^ //;
 
-            $form->update_status( \%myconfig );
+            $form->update_status( \%myconfig, 1);
         }
 
         $old_form->{printed} = $form->{printed} if %$old_form;
@@ -1749,7 +1749,7 @@ sub print_form {
             $form->{emailed} =~ s/^ //;
 
             # save status
-            $form->update_status( \%myconfig );
+            $form->update_status( \%myconfig, 1);
         }
 
         $now = scalar localtime;
@@ -1822,7 +1822,7 @@ sub print_form {
         $form->{queued} =~ s/^ //;
 
         # save status
-        $form->update_status( \%myconfig );
+        $form->update_status( \%myconfig, 1);
 
         $old_form->{queued} = $form->{queued};
 

@@ -44,3 +44,10 @@ COMMIT;
 BEGIN;
 ALTER TABLE entity_credit_account ADD FOREIGN KEY (language_code) REFERENCES language(code);
 COMMIT;
+
+BEGIN;
+UPDATE menu_attribute SET value = 'invoice'
+   WHERE node_id = 117 AND attribute = 'type';
+UPDATE menu_attribute SET value = 'sales_order'
+   WHERE node_id = 118 AND attribute = 'type';
+COMMIT;

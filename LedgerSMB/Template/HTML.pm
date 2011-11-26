@@ -123,7 +123,7 @@ sub process {
             $tempdir = undef;
         }
 	$template = Template->new({
-		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
+		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path},'templates/demo','UI/lib'],
                 ENCODING => 'utf8',
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),

@@ -1004,18 +1004,11 @@ END ?>
 	<td class="bic"><?lsmb ba.bic ?></td>
 	<td class="iban"><?lsmb ba.iban ?></td>
 	<td class="actions">
-		<a href="<?lsmb script ?>?action=edit_bank_acct&entity_id=<?lsmb
-			entity_id ?>&bank_account_id=<?lsmb ba.id 
-                        ?>&bic=<?lsmb tt_url(ba.bic)
-                        ?>&iban=<?lsmb tt_url(ba.iban) 
-                        ?>&credit_id=<?lsmb tt_url(credit_id) 
-                        ?>&target_div=bank_div"
-			>[Edit]</a> 
 		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id 
                         ?>&target_div=bank_div&form_id=<?lsmb form_id 
                         ?>&credit_id=<?lsmb tt_url(credit_id) ?>"
-			>[Delete]</a> 
+			>[<?lsmb text('Delete') ?>]</a> 
 	</td>
 </tr>
 <?lsmb END ?>
