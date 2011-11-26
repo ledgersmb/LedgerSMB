@@ -101,12 +101,18 @@ sub check_name {
             $form->{oldinvtotal}  = 0;
             $form->{oldtotalpaid} = 0;
             $form->{calctax}      = 1;
+            if ($form->{vc} eq 'customer'){
+                $form->{entity_class} = 2;
+            } elsif ($form->{vc} eq 'vendor'){
+                $form->{entity_class} = 1;
+            }
 
             # return one name or a list of names in $form->{name_list}
             if (
                 (
                     $rv =
-                    $form->get_name( \%myconfig, $name, $form->{transdate} )
+                    $form->get_name( \%myconfig, $name, $form->{transdate} ,
+                                     $form->{entity_class})
                 ) > 1
               )
             {

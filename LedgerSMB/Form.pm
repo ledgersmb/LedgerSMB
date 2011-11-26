@@ -1815,7 +1815,7 @@ $myconfig is unused.
 # this sub gets the id and name from $table
 sub get_name {
 
-    my ( $self, $myconfig, $table, $transdate ) = @_;
+    my ( $self, $myconfig, $table, $transdate, $entity_class) = @_;
 
     my @queryargs;
     my $where;
@@ -1848,10 +1848,11 @@ sub get_name {
              LEFT JOIN country_tax_form ctf ON (c.taxform_id = ctf.id)
 		 WHERE (lower(e.name) LIKE ?
 		       OR c.meta_number ILIKE ?)
+                       AND coalesce(?, c.entity_class) = c.entity_class
 		$where
 		ORDER BY e.name/;
 
-    unshift( @queryargs, $name, $self->{"${table}number"} );
+    unshift( @queryargs, $name, $self->{"${table}number"} , $entity_class);
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute(@queryargs) || $self->dberror($query);
 
