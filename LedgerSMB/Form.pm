@@ -127,6 +127,12 @@ sub new {
     }
     $self->{action} = "" unless defined $self->{action};
 
+    if($self->{header})
+    {
+     $logger->trace("self->{header}=$self->{header}");
+     delete $self->{header};
+     $logger->trace("self->{header} unset!!");
+    }
     if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
         $self->{action} = lc $self->{action};
         $self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
