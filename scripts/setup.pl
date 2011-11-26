@@ -55,6 +55,7 @@ sub login {
                 password => $creds->{password}}
     );
     my $version_info = $database->get_info();
+    $request->{login_name} = $version_info->{username};
     if ($version_info->{appname} eq 'sql-ledger'){
          $request->{message} = 
              $request->{_locale}->text("SQL-Ledger database detected.");

@@ -31,6 +31,7 @@ Changelog for LedgerSMB 1.3.7
 * Corrected filtering of customers/vendors on AR/AP screens (Chris T)
 * Logging enhancements (Herman V)
 * Whitespace adjustment in Pg-database (Herman V)
+* Added logged in username to setup utility confirm operation screen (Chris T)
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
