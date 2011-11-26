@@ -4,6 +4,8 @@
 
 -- Docstrings already added to this file.
 
+BEGIN;
+
 CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
 $$
 	SELECT entity_id from users where username = SESSION_USER;
@@ -149,8 +151,11 @@ COMMENT ON FUNCTION person__delete_contact
 $$ Deletes a contact record specified for the person.  Returns true if a record
 was found and deleted, false if not.$$;
 
+DROP FUNCTION IF EXISTS  person__save_contact
+(in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT);
+
 CREATE OR REPLACE FUNCTION person__save_contact
-(in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT)
+(in_entity_id int, in_contact_class int, in_old_contact text, in_contact_new TEXT, in_description text, in_old_contact_class int)
 RETURNS INT AS
 $$
 DECLARE 
@@ -161,28 +166,28 @@ BEGIN
     SELECT cc.* into v_orig 
     FROM person_to_contact cc, person p
     WHERE p.entity_id = in_entity_id 
-    and cc.contact_class_id = in_contact_class
-    AND cc.contact = in_contact_orig
+    and cc.contact_class_id = in_old_contact_class
+    AND cc.contact = in_old_contact
     AND cc.person_id = p.id;
     
     IF NOT FOUND THEN
     
         -- create
-        INSERT INTO person_to_contact(person_id, contact_class_id, contact)
+        INSERT INTO person_to_contact(person_id, contact_class_id, contact, description)
         VALUES (
             (SELECT id FROM person WHERE entity_id = in_entity_id),
             in_contact_class,
-            in_contact_new
+            in_contact_new,
+            in_description
         );
         return 1;
     ELSE
         -- edit.
         UPDATE person_to_contact
-        SET contact = in_contact_new
-        WHERE 
-        contact = in_contact_orig
-        AND person_id = v_orig.person_id
-        AND contact_class = in_contact_class;
+           SET contact = in_contact_new, description = in_description
+         WHERE contact = in_old_contact
+               AND person_id = v_orig.person_id
+               AND contact_class_id = in_old_contact_class;
         return 0;
     END IF;
     
@@ -190,7 +195,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION person__save_contact
-(in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT) IS
+(in_entity_id int, in_contact_class int, in_old_contact text, in_contact_new TEXT, in_description text, in_old_contact_class int) IS
 $$ Saves saves contact info.  Returns 1 if a row was inserted, 0 if it was 
 updated. $$;
 
@@ -324,4 +329,4 @@ COMMENT ON FUNCTION person__save_location(
 ) IS
 $$ Saves a location mapped to the person with the specified information.
 Returns the location id saved.$$;
-
+COMMIT;
