@@ -690,7 +690,7 @@ CREATE TABLE person (
     middle_name text,
     last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
     created date not null default current_date,
-    unique(entity_id) -- needed due to entity_emplyee assumptions --CT
+    unique(entity_id) -- needed due to entity_employee assumptions --CT
  );
  
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
