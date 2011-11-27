@@ -1444,6 +1444,7 @@ sub get_name {
             }
         }
     }
+    #$logger->trace("\$form->{taxaccounts}=$form->{taxaccounts}");
 
     $sth->finish;
     chop $form->{taxaccounts};
