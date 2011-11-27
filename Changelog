@@ -41,6 +41,7 @@ Logging
 * Reduced warnings in logs (Chris T)
 * Logging enhancements (Herman V)
 * Corrected error regarding css file not found (Erik H)
+* Corrected global.css not found error (Chris T)
 
 
 Changelog for LedgerSMB 1.3.6
