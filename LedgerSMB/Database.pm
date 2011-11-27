@@ -159,6 +159,9 @@ It returns a hashref with the following keys set:
 
 =over
 
+=item username
+Set to the user of the current connection
+
 =item appname
 Set to the current application name, one of:
 
@@ -280,10 +283,16 @@ sub get_info {
            } else {
                 $retval->{status} = 'does not exist';
            }
+           my $sth = $dbh->prepare("SELECT SESSION_USER");
+           $sth->execute;
+           $retval->{username} = $sth->fetchrow_array();
            return $retval;
    } else { # Got a db handle... try to find the version and app by a few
             # different means
        my $sth;
+       $sth = $dbh->prepare("SELECT SESSION_USER");
+       $sth->execute;
+       $retval->{username} = $sth->fetchrow_array();
        # Legacy SL and LSMB
        $sth = $dbh->prepare('SELECT version FROM defaults');
        $sth->execute();
