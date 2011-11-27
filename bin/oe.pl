@@ -639,6 +639,7 @@ sub form_header {
 }
 
 sub form_footer {
+     #print STDERR localtime()." oe.pl form_footer calling __calc_taxes\n";
     _calc_taxes();
 
     $form->{invtotal} = $form->{invsubtotal};
@@ -1129,7 +1130,8 @@ sub update {
                     $form->{"${_}_base"} += $amount;
                 }
                 if ( !$form->{taxincluded} ) {
-                    _calc_taxes();
+                    #print STDERR localtime()."HV oe.pl update after retrieve item,skipping __calc_taxes,because this will be done again in form_footer\n";
+                    #_calc_taxes();
                 }
 
                 $form->{creditremaining} -= $amount;
