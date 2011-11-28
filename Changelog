@@ -34,6 +34,7 @@ User Interface
 * Corrected double escaping bug in balance sheet template (Erik H)
 * Corrected filtering of customers/vendors on AR/AP screens (Chris T)
 * Added logged in username to setup utility confirm operation screen (Chris T)
+* Corrected sales tax issue for sales/purchase orders (Herman V)
 
 Logging
 * Allow log-level to be set from config file (Herman V)
