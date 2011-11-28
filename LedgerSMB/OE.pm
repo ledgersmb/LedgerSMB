@@ -36,6 +36,7 @@ package OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
 
+my $logger = Log::Log4perl->get_logger('OE');
 =over
 
 =item get_files
@@ -1352,7 +1353,8 @@ sub order_details {
               $form->format_amount( $myconfig, $linetotal, 2 );
             push( @{ $form->{linetotal} }, $form->{"linetotal_$i"} );
 
-            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} );
+            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"} , $form->{taxaccounts} );#limit to vendor/customer taxes, else invalid totals!!
+            #$logger->trace("linetotal=".$form->{"linetotal_$i"}." i=$i taxaccounts_i=".$form->{"taxaccounts_$i"}." taxaccounts size=".scalar @taxaccounts);
 
             my $ml       = 1;
             my @taxrates = ();
