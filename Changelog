@@ -44,6 +44,10 @@ Logging
 * Corrected error regarding css file not found (Erik H)
 * Corrected global.css not found error (Chris T)
 
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+Herman V is Herman Vierendeels
+
 
 Changelog for LedgerSMB 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
