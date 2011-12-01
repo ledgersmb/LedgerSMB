@@ -1931,6 +1931,7 @@ sub save_taxes {
 
         my $rate=$form->{"taxrate_$i"};
         $rate=~s/^\s+|\s+$//g;
+        $rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
         my $validto=$form->{"validto_$i"};
         $validto=~s/^\s+|\s+$//g;
         my $pass=$form->{"pass_$i"};
@@ -1940,7 +1941,7 @@ sub save_taxes {
         my $old_validto=$form->{"old_validto_$i"};
         $old_validto=~s/^\s+|\s+$//g;
         #print STDERR localtime()." AM save_taxes chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto\n";
-        if($rate eq '' && $validto eq '' && $pass eq '' && $taxnumber eq '')
+        if($rate==0  && $validto eq '' && $pass eq '' && $taxnumber eq '')
         {
          $logger->debug("skipping chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto skipping");
          next;
@@ -1950,8 +1951,7 @@ sub save_taxes {
          $logger->info("will insert new chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto");
         }        
 
-        $rate =
-          $form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
+        #$rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
         $validto = $form->{"validto_$i"};
         $validto = 'infinity' if not $validto;
         $form->{"pass_$i"} = 0 if not $form->{"pass_$i"};
