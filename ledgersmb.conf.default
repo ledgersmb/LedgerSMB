@@ -79,6 +79,8 @@ port = 5432
 default_db = lsmb13
 host = localhost
 db_namespace = public
+#contrib_dir PG_CONTRIB_DIR 
+#with postgresql-9.1 this stuff is in /usr/share/postgresql/9.1/extension and is injected in database with create extension pg_trgm,btree_gist...
 contrib_dir = /usr/share/pgsql/contrib/
 # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
 sslmode = prefer
