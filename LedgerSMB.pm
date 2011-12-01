@@ -763,9 +763,9 @@ sub call_procedure {
     if (!defined $procname){
         $self->error('Undefined function in call_procedure.');
     }
-
     $procname = $self->{dbh}->quote_identifier($procname);
     # Add the test for whether the schema is something useful.
+    $logger->trace("\$procname=$procname");
     
     $schema = $schema || $LedgerSMB::Sysconfig::db_namespace;
     
