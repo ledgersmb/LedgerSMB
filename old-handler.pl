@@ -131,7 +131,7 @@ if ($myconfig{language}){
       or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 }
 # pull in the main code
-
+#print STDERR localtime()." old-handler.pl trying "."bin/$form->{script}"." action=$form->{action}\n";#trace flow
 try {
   require "bin/$form->{script}";
 
