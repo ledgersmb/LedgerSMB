@@ -331,11 +331,21 @@ sub _http_output {
 
 	if (!defined $data and defined $self->{rendered}){
 		$data = "";
+                $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
 		open (DATA, '<', $self->{rendered});
-                binmode DATA, ':utf8';
+                #avoiding utf8 "\xCD" does not map to Unicode at LedgerSMB/Template.pm line 342, <DATA> line 155.
+                if($self->{format} eq 'LaTeX')
+                {
+                 binmode DATA, ':raw';
+                }
+                else
+                {
+                 binmode DATA, ':utf8';
+                }
 		while (my $line = <DATA>){
 			$data .= $line;
 		}
+                $logger->trace("end DATA < self->{rendered}");
 	        unlink($self->{rendered}) or throw Error::Simple 'Unable to delete output file';
 	}
 
@@ -354,8 +364,17 @@ sub _http_output {
 		print "Content-Type: $self->{mimetype}$disposition\n\n";
 	    }
         }
-	binmode STDOUT, ':utf8';
+        $logger->trace("begin print to STDOUT");
+        if($self->{format} eq 'LaTeX')
+        {
+         binmode STDOUT, ':raw';
+        }
+        else
+        {
+         binmode STDOUT, ':utf8';
+        }
 	print $data;
+        $logger->trace("end print to STDOUT");
 }
 
 sub _http_output_file {
