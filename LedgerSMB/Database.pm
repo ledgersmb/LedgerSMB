@@ -374,13 +374,13 @@ sub create {
          $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
          $rc ||= $rc2
      }
-     my $rc2 = system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
     }
     else
     {
      $logger->info("Skipping contrib_scripts @contrib_scripts");
     }     
-     $rc ||= $rc2;
+    $rc2 = system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+    $rc ||= $rc2;
 
      # TODO Add logging of errors/notices
 
