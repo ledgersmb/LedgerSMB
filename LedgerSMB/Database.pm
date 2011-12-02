@@ -36,6 +36,7 @@ my $dbversions = {
 };
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
+ (-d "$temp") ||  system("mkdir -p $temp");
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
