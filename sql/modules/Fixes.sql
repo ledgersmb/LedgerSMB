@@ -35,6 +35,9 @@ DELETE FROM menu_acl       WHERE node_id BETWEEN 133 AND 135;
 DELETE FROM menu_attribute WHERE node_id BETWEEN 133 AND 135;
 DELETE FROM menu_node      WHERE id      BETWEEN 133 AND 135;
 
+-- bad batch type for receipt batches
+update menu_attribute set value = 'receipt' where node_id = 203 and attribute='batch_type';
+
 COMMIT;
 
 BEGIN;

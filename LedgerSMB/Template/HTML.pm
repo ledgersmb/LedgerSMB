@@ -51,8 +51,9 @@ use CGI::Simple::Standard qw(:html);
 use Template;
 use LedgerSMB::Template::TTI18N;
 
-binmode STDOUT, ':utf8';
-binmode STDERR, ':utf8';
+my $binmode = ':utf8';
+binmode STDOUT, $binmode;
+binmode STDERR, $binmode;
 
 sub get_template {
     my $name = shift;
@@ -103,6 +104,8 @@ sub process {
 	my $template;
 	my $output;
 	my $source;
+        $parent->{binmode} = $binmode;
+         
 	
 	if ($parent->{outputfile}) {
 		$output = "$parent->{outputfile}.html";

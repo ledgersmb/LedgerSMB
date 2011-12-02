@@ -55,6 +55,10 @@ use XML::Twig;
 use OpenOffice::OODoc;
 use LedgerSMB::Template::TTI18N;
 
+my $binmode = undef;
+binmode STDOUT, $binmode;
+binmode STDERR, $binmode;
+
 # SC: The ODS handlers need these vars in common
 my $ods;
 my $rowcount;
@@ -825,6 +829,7 @@ sub process {
 	my $source;
 	my $tempdir = ${LedgerSMB::Sysconfig::tempdir};
 	my $output = '';
+        $parent->{binmode} = $binmode;
 	$parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
 
 	if (ref $parent->{template} eq 'SCALAR') {

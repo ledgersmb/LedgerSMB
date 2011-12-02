@@ -153,6 +153,7 @@ sub new {
 	$self->{language} = $args{language};
 	$self->{no_escape} = $args{no_escape};
 	$self->{debug} = $args{debug};
+        $self->{binmode} = undef;
 	$self->{outputfile} =
 		"${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
 		$args{output_file};
@@ -333,15 +334,7 @@ sub _http_output {
 		$data = "";
                 $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
 		open (DATA, '<', $self->{rendered});
-                #avoiding utf8 "\xCD" does not map to Unicode at LedgerSMB/Template.pm line 342, <DATA> line 155.
-                if($self->{format} eq 'LaTeX')
-                {
-                 binmode DATA, ':raw';
-                }
-                else
-                {
-                 binmode DATA, ':utf8';
-                }
+                binmode DATA, $self->{binmode};
 		while (my $line = <DATA>){
 			$data .= $line;
 		}
@@ -364,15 +357,7 @@ sub _http_output {
 		print "Content-Type: $self->{mimetype}$disposition\n\n";
 	    }
         }
-        $logger->trace("begin print to STDOUT");
-        if($self->{format} eq 'LaTeX')
-        {
-         binmode STDOUT, ':raw';
-        }
-        else
-        {
-         binmode STDOUT, ':utf8';
-        }
+	binmode STDOUT, $self->{binmode};
 	print $data;
         $logger->trace("end print to STDOUT");
 }
