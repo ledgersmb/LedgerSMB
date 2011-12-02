@@ -54,3 +54,7 @@ UPDATE menu_attribute SET value = 'invoice'
 UPDATE menu_attribute SET value = 'sales_order'
    WHERE node_id = 118 AND attribute = 'type';
 COMMIT;
+
+BEGIN;
+ALTER TABLE entity_bank_account ALTER COLUMN bic DROP NOT NULL;
+COMMIT;
