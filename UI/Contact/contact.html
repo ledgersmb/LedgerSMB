@@ -438,15 +438,6 @@ END ?>
 		value = description,
 		size = "20"
 	} ?></td>
-        <td> <?lsmb INCLUDE select element_data = {
-		label = text("language_code")
-		name = "language_code"
-                default_values = [language_code],
-                options = language_code_list
-		text_attr = "text"
-		value_attr = "code"
-                } ?>
-        </td>
 	</tr>
 	<tr class="pay_to_row">
 	<td colspan = "2">
@@ -594,6 +585,15 @@ END ?>
 			label = text('Taxforms') 
 			} ?> 
 	  </td>
+        <td> <?lsmb INCLUDE select element_data = {
+		label = text("Language")
+		name = "language_code"
+                default_values = [language_code],
+                options = language_code_list
+		text_attr = "text"
+		value_attr = "code"
+                } ?>
+        </td>
           <td> <?lsmb INCLUDE select element_data = {
                         name = 'curr'
                         options = all_currencies

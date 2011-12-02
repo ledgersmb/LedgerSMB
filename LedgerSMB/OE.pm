@@ -60,6 +60,24 @@ sub get_files {
 
 }
 
+=get_type 
+
+Sets the type field for an existing order or quotation
+
+=cut
+
+sub get_type {
+    my ($self, $form) = @_;
+    my $dbh = $form->{dbh};
+    my @types = qw(null sales_order purchase_order sales_quotation 
+                   request_quotation);
+    my $sth = $dbh->prepare('select oe_class_id from oe where id = ?');
+    $sth->execute($form->{id});
+    my ($class) = $sth->fetchrow_array;
+    $form->{type} = $types[$class];
+    $sth->finish;
+}
+
 sub transactions {
     my ( $self, $myconfig, $form ) = @_;
 

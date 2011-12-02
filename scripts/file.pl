@@ -68,6 +68,7 @@ Show the attachment or upload screen.
 
 sub show_attachment_screen {
     my ($request) = @_;
+    my @flds = split/\s/, $request->{additional};
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
