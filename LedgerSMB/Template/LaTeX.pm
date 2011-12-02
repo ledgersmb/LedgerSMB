@@ -58,7 +58,7 @@ use Error qw(:try);
 use Template::Latex;
 use LedgerSMB::Template::TTI18N;
 
-my $binmode = undef;
+my $binmode = ':utf8';
 binmode STDOUT, $binmode;
 binmode STDERR, $binmode;
 
