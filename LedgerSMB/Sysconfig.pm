@@ -202,4 +202,11 @@ our $cache_template_dir = "$tempdir/lsmb_templates";
 # Backup path
 our $backuppath = $tempdir;
 
+if(-d "$tempdir"){}
+else
+{
+ my $rc=system("mkdir -p $tempdir");#TODO what if error?
+ #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
+ print STDERR localtime()." Sysconfig.pm created tempdir $tempdir rc=$rc\n";
+}
 1;
