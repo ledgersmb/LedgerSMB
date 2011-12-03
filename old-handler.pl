@@ -61,7 +61,7 @@ use LedgerSMB::Auth;
 use LedgerSMB::CancelFurtherProcessing;
 use Data::Dumper;
 
-my $logger = Log::Log4perl->get_logger('old-handler-chain');
+our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
 
 require "common.pl";
 
