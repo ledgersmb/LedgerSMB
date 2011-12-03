@@ -56,5 +56,8 @@ UPDATE menu_attribute SET value = 'sales_order'
 COMMIT;
 
 BEGIN;
+ALTER TABLE entity_bank_account DROP CONSTRAINT entity_bank_account_pkey;
 ALTER TABLE entity_bank_account ALTER COLUMN bic DROP NOT NULL;
+ALTER TABLE entity_bank_account ADD UNIQUE(bic,iban);
+CREATE UNIQUE INDEX eba_iban_null_bic_u ON entity_bank_account(iban) WHERE bic IS NULL;
 COMMIT;
