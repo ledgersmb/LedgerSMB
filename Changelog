@@ -10,8 +10,10 @@ Changelog for 1.3.8:
 * Corrected binmode handling on templates (Herman V and Chris T)
 * File.sql now loads transactionally (Chris T)
 * OE no longer requires type input for editing orders/quotations (Chris T)
-* 
-
+* Fixed  "no such file or directory found" error when logging db tasks (David B)
+* Logging improvements (Herman V)
+* Fixed company fax being printed under shipto (Herman V)
+* Fixed "File does not exist... [object HTMLButtonElement]" js error (Herman V)
 
 Changelog for LedgerSMB 1.3.7 (Categorized due to length)
 Database
