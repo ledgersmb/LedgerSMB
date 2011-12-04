@@ -14,6 +14,7 @@ Changelog for 1.3.8:
 * Logging improvements (Herman V)
 * Fixed company fax being printed under shipto (Herman V)
 * Fixed "File does not exist... [object HTMLButtonElement]" js error (Herman V)
+* Fixed timecard template headers not showing company name, etc (Chris T)
 
 Changelog for LedgerSMB 1.3.7 (Categorized due to length)
 Database
