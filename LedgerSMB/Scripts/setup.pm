@@ -23,6 +23,8 @@ use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use strict;
 
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
+
 sub __default {
 
     my ($request) = @_;
@@ -442,6 +444,7 @@ sub create_db{
     use LedgerSMB::Sysconfig;
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
+    my $rc=0;
 
 
     # ENVIRONMENT NECESSARY
@@ -454,7 +457,8 @@ sub create_db{
             company_name => $request->{database},
                 password => $creds->{password}}
     );
-    $database->create_and_load();
+    $rc=$database->create_and_load();#TODO what if createdb fails?
+    $logger->info("create_and_load rc=$rc");
     $database->process_roles('Roles.sql');
 
     #COA Directories

@@ -153,6 +153,7 @@ sub new {
 	$self->{language} = $args{language};
 	$self->{no_escape} = $args{no_escape};
 	$self->{debug} = $args{debug};
+        $self->{binmode} = undef;
 	$self->{outputfile} =
 		"${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
 		$args{output_file};
@@ -331,11 +332,13 @@ sub _http_output {
 
 	if (!defined $data and defined $self->{rendered}){
 		$data = "";
+                $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
 		open (DATA, '<', $self->{rendered});
-                binmode DATA, ':utf8';
+                binmode DATA, $self->{binmode};
 		while (my $line = <DATA>){
 			$data .= $line;
 		}
+                $logger->trace("end DATA < self->{rendered}");
 	        unlink($self->{rendered}) or throw Error::Simple 'Unable to delete output file';
 	}
 
@@ -354,8 +357,9 @@ sub _http_output {
 		print "Content-Type: $self->{mimetype}$disposition\n\n";
 	    }
         }
-	binmode STDOUT, ':utf8';
+	binmode STDOUT, $self->{binmode};
 	print $data;
+        $logger->trace("end print to STDOUT");
 }
 
 sub _http_output_file {

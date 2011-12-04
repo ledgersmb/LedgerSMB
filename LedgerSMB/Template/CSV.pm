@@ -45,8 +45,9 @@ use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
 
-binmode STDOUT, ':utf8';
-binmode STDERR, ':utf8';
+my $binmode = ':utf8';
+binmode STDOUT, $binmode;
+binmode STDERR, $binmode;
 
 sub get_template {
 	my $name = shift;
@@ -89,6 +90,7 @@ sub process {
 	my $template;
 	my $source;
 	my $output;
+        $parent->{binmode} = $binmode;
 
 	if ($parent->{outputfile}) {
 		$output = "$parent->{outputfile}.csv";

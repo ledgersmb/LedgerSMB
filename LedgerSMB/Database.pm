@@ -36,6 +36,9 @@ my $dbversions = {
 };
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
+#(-d "$temp") ||  system("mkdir -p $temp"); moved to Sysconfig, so can be trapped earlier
+
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 =item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
 
@@ -354,25 +357,31 @@ display only those lines containing the word ERROR.
 
 sub create {
     my ($self) = @_;
-    
+    $logger->trace("trying to create db \$ENV{PG_CONTRIB_DIR}=$ENV{PG_CONTRIB_DIR}");
     # We have to use template0 because of issues that Debian has with database 
     # encoding.  Apparently that causes problems for us, so template0 must be
     # used.
     my $rc = system("createdb -T template0 -E UTF8 > $temp/dblog");
+    $logger->trace("after create db \$rc=$rc");
     if ($rc) {
         return $rc;
     }
-
-     my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
-
+    my $rc2=0;
+    my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
+    if($ENV{PG_CONTRIB_DIR})
+    { 
+     #postgres 9.1 this is done by create extension pg_trgm btree_gist ..
      for my $contrib (@contrib_scripts){
-         my $rc2;
          $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
          $rc ||= $rc2
      }
-     my $rc2 = system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-     
-     $rc ||= $rc2;
+    }
+    else
+    {
+     $logger->info("Skipping contrib_scripts @contrib_scripts");
+    }     
+    $rc2 = system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+    $rc ||= $rc2;
 
      # TODO Add logging of errors/notices
 

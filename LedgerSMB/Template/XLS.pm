@@ -55,6 +55,10 @@ use Error qw(:try);
 use CGI::Simple::Standard qw(:html);
 use Excel::Template::Plus;
 use LedgerSMB::Template::TTI18N;
+my $binmode = ':utf8';
+binmode STDOUT, $binmode;
+binmode STDERR, $binmode;
+
 
 sub get_template {
 	my $name = shift;
@@ -92,6 +96,7 @@ sub process {
 	my $template;
 	my $source;
 	my $tempdir = ${LedgerSMB::Sysconfig::tempdir};
+        $parent->{binmode} = $binmode;
 	$parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
 
 	if (ref $parent->{template} eq 'SCALAR') {

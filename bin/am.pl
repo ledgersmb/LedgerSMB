@@ -1531,7 +1531,7 @@ sub display_taxes {
         ( $null, $i ) = split /_/, $_;
 
         $form->{"taxrate_$i"} =
-          $form->format_amount( \%myconfig, $form->{"taxrate_$i"} );
+          $form->format_amount( \%myconfig, $form->{"taxrate_$i"},3,'0');
 
         $hiddens{"taxdescription_$i"} = $form->{"taxdescription_$i"};
         $hiddens{"old_validto_$i"} = $form->{"old_validto_$i"};
@@ -1586,11 +1586,16 @@ sub update {
 
     @a = split / /, $form->{taxaccounts};
     $ndx = $#a + 1;
+    my $inserted=0;
+
     AM->taxes( \%myconfig, \%$form );
 
     foreach $item (@a) {
         ( $accno, $i ) = split /_/, $item;
         push @t, $accno;
+
+	$i=$i+$inserted;
+
         $form->{"taxmodulename_$i"} =
           $form->{ "taxmodule_" . $form->{"taxmodule_id_$i"} };
 
@@ -1600,34 +1605,37 @@ sub update {
             {
 
                 #insert line
+                #print STDERR localtime()." am.pl update insert line\n";
                 for ( $j = $ndx + 1 ; $j > $i ; $j-- ) {
                     $k = $j - 1;
-                    for (qw(taxrate taxdescription taxnumber validto)) {
+                    for (qw(taxrate taxdescription taxnumber validto pass old_validto)) {
                         $form->{"${_}_$j"} = $form->{"${_}_$k"};
                     }
                 }
                 $ndx++;
+                $inserted++;
                 $k = $i + 1;
                 for (qw(taxdescription taxnumber)) {
                     $form->{"${_}_$k"} = $form->{"${_}_$i"};
                 }
-                for (qw(taxrate validto)) { $form->{"${_}_$k"} = "" }
+                for (qw(taxrate validto pass old_validto)) { $form->{"${_}_$k"} = "" }
                 push @t, $accno;
             }
         }
         else {
-
             # remove line
             $j = $i + 1;
             if ( $form->{"taxdescription_$i"} eq $form->{"taxdescription_$j"} )
             {
+             #print STDERR localtime()." am.pl update remove line\n";
                 for ( $j = $i + 1 ; $j <= $ndx ; $j++ ) {
                     $k = $j + 1;
-                    for (qw(taxrate taxdescription taxnumber validto)) {
+                    for (qw(taxrate taxdescription taxnumber validto pass old_validto)) {
                         $form->{"${_}_$j"} = $form->{"${_}_$k"};
                     }
                 }
                 $ndx--;
+                $inserted--;
                 splice @t, $i - 1, 1;
             }
         }

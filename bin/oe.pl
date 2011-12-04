@@ -85,7 +85,7 @@ sub add {
 }
 
 sub edit {
-
+    OE->get_type($form);
     if ( $form->{type} =~ /(purchase_order|bin_list)/ ) {
         $form->{title} = $locale->text('Edit Purchase Order');
         $form->{vc}    = 'vendor';
@@ -639,6 +639,7 @@ sub form_header {
 }
 
 sub form_footer {
+     #print STDERR localtime()." oe.pl form_footer calling __calc_taxes\n";
     _calc_taxes();
 
     $form->{invtotal} = $form->{invsubtotal};
@@ -888,7 +889,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
         foreach my $file (@{$form->{files}}){
               print qq|
 <tr>
-<td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
+<td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
             >$file->{file_name}</a></td> 
 <td>$file->{mime_type}</td> 
 <td>$file->{uploaded_at}</td> 
@@ -927,7 +928,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 </table>|;
        $callback = $form->escape("oe.pl?action=edit&id=".$form->{id});
        print qq|
-<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
+<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=2&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
@@ -1129,7 +1130,8 @@ sub update {
                     $form->{"${_}_base"} += $amount;
                 }
                 if ( !$form->{taxincluded} ) {
-                    _calc_taxes();
+                    #print STDERR localtime()."HV oe.pl update after retrieve item,skipping __calc_taxes,because this will be done again in form_footer\n";
+                    #_calc_taxes();
                 }
 
                 $form->{creditremaining} -= $amount;

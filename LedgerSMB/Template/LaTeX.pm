@@ -58,6 +58,11 @@ use Error qw(:try);
 use Template::Latex;
 use LedgerSMB::Template::TTI18N;
 
+#my $binmode = ':utf8';
+my $binmode = ':raw';
+binmode STDOUT, $binmode;
+binmode STDERR, $binmode;
+
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
 
 sub get_template {
@@ -118,6 +123,7 @@ sub process {
 	$parent->{outputfile} ||=
 		"${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
 
+        $parent->{binmode} = $binmode;
 	if (ref $parent->{template} eq 'SCALAR') {
 		$source = $parent->{template};
 	} elsif (ref $parent->{template} eq 'ARRAY') {

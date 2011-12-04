@@ -38,7 +38,7 @@ Attaches or links a specific file to the given transaction.
 
 sub attach {
     my ($self, $args) = @_;
-    $self->exec_method({funcname => 'file__attach_to_tx'});
+    $self->exec_method({funcname => 'file__attach_to_order'});
     $self->commit unless $args->{no_commit};
 }
 

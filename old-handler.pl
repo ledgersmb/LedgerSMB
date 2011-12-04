@@ -61,6 +61,9 @@ use LedgerSMB::Auth;
 use LedgerSMB::Session;
 use LedgerSMB::CancelFurtherProcessing;
 use Data::Dumper;
+
+our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
+
 require "common.pl";
 
 # for custom preprocessing logic
@@ -132,7 +135,7 @@ if ($myconfig{language}){
       or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 }
 # pull in the main code
-
+$logger->trace("trying script=bin/$form->{script} action=$form->{action}");#trace flow
 try {
   require "bin/$form->{script}";
 
@@ -169,6 +172,7 @@ catch CancelFurtherProcessing with {
   my $ex = shift;
 };
 
+$logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow
 
 1;
 

@@ -1464,7 +1464,9 @@ sub print {
     $form->{email} = $csettings->{company_email};
     $form->{address} = $csettings->{company_address};
     $form->{tel} = $csettings->{company_phone};
+    #$form->{myCompanyFax} = $csettings->{company_fax};#fax should be named myCompanyFax ?
     $form->{fax} = $csettings->{company_fax};
+    $logger->trace("setting fax from LedgerSMB::Company_Config::settings \$form->{formname}=$form->{formname} \$form->{fax}=$form->{fax}");
 
 
     # if this goes to the printer pass through
@@ -1668,6 +1670,7 @@ sub print_form {
         }
     }
 
+    $logger->trace("\$form->{formname}=$form->{formname} \$form->{fax}=$form->{fax} \$shipto=$shipto \$form->{shiptofax}=$form->{shiptofax}");
     if ($shipto) {
         if (   $form->{formname} eq 'purchase_order'
             || $form->{formname} eq 'request_quotation' )
@@ -1677,7 +1680,7 @@ sub print_form {
         }
         else {
             if ( $form->{formname} !~ /bin_list/ ) {
-                for (@vars) { $form->{"shipto$_"} = $form->{$_} }
+                for (@vars) {if($_ ne 'fax'){$form->{"shipto$_"}=$form->{$_}}} #fax contains myCompanyFax
             }
         }
     }

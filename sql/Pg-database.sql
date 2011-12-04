@@ -1,4 +1,6 @@
 999REATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
+CREATE EXTENSION pg_trgm; -- Separate transaction, only needed for 9.1
+CREATE EXTENSION btree_gist; -- Separate transaction, only needed for 9.1
 
 begin;
 

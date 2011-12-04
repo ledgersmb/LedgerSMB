@@ -48,6 +48,10 @@ use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
 
+my $binmode = ':utf8';
+binmode STDOUT, $binmode;
+binmode STDERR, $binmode;
+
 sub get_extension {
     my ($parent) = shift;
     if ($parent->{format_args}->{extension}){
@@ -74,6 +78,7 @@ sub process {
 	my $template;
 	my $source;
 	my $output;
+        $parent->{binmode} = $binmode;
 	if ($parent->{outputfile}) {
 		$output = "$parent->{outputfile}.". get_extension($parent);
 	} else {

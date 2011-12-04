@@ -29,20 +29,24 @@ package Tax;
 
 use Math::BigFloat;
 
+my $logger = Log::Log4perl->get_logger('Tax');
+
 sub init_taxes {
     my ( $form, $taxaccounts, $taxaccounts2 ) = @_;
     my $dbh = $form->{dbh};
     @taxes = ();
     my @accounts = split / /, $taxaccounts;
     if ( defined $taxaccounts2 ) {
-        my @tmpaccounts = @accounts;
-        $#accounts = -1;
+        #my @tmpaccounts = @accounts;#unused var
+        $#accounts = -1;# empty @accounts,@accounts=();
         for my $acct ( split / /, $taxaccounts2 ) {
             if ( $taxaccounts =~ /\b$acct\b/ ) {
                 push @accounts, $acct;
             }
         }
-
+    }
+    else{
+     $logger->trace("taxaccounts2 undefined");
     }
     my $query = qq|
 		SELECT t.taxnumber, c.description,
@@ -79,7 +83,7 @@ sub init_taxes {
         $tax->value( Math::BigFloat->bzero() );
 
         push @taxes, $tax;
-        $sth->finish;
+        $sth->finish;#should this not be out of foreach loop?, to examine
     }
     return @taxes;
 }

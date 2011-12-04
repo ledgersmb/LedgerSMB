@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION file__get_mime_type
  (in_mime_type_id int, in_mime_type_text text)
 RETURNS mime_type AS
@@ -116,7 +118,7 @@ BEGIN
        SELECT * INTO retval FROM file_base where id = in_id;
        RETURN retval;
    ELSE
-       INSERT INTO file_transaction 
+       INSERT INTO file_order
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
             VALUES (in_content, in_mime_type_id, in_file_name, in_description,
@@ -136,7 +138,7 @@ in_description text, in_id int, in_ref_key int, in_file_class int) IS
 $$ Attaches or links a file to an order.  in_content OR id can be set.
 Setting both raises an exception.$$;
 
-
+DROP TYPE IF EXISTS file_list_item CASCADE;
 CREATE TYPE file_list_item AS (
        mime_type text,
        file_name text,
@@ -177,9 +179,9 @@ $$ language sql;
 COMMENT ON FUNCTION file__get(in_id int, in_file_class int) IS
 $$ Retrieves the file information specified including content.$$;
 
-DROP VIEW IF EXISTS file_order_links;
-DROP VIEW IF EXISTS file_tx_links;
-DROP VIEW IF EXISTS file_links;
+DROP VIEW IF EXISTS file_order_links CASCADE;
+DROP VIEW IF EXISTS file_tx_links CASCADE;
+DROP VIEW IF EXISTS file_links CASCADE;
 DELETE FROM file_view_catalog WHERE file_class in (1, 2);
 
 CREATE OR REPLACE view file_tx_links AS
@@ -250,3 +252,5 @@ $$ language sql;
 
 COMMENT ON FUNCTION file__list_links(in_ref_key int, in_file_class int) IS
 $$ This function retrieves a list of file attachments on a specified object.$$;
+
+COMMIT;

@@ -2,9 +2,10 @@ function submit_form() {
 	var http = get_http_request_object();
     var username = document.login.login.value;
 	var password = document.login.password.value;
-	http.open("get", 'login.pl?action=authenticate&company='
-		+ document.login.company.value, false, 
-		username, password);
+	var company = document.login.company.value;
+	var action = document.login.action.value;
+        //alert('document.login.company.value='+document.login.company.value);
+	http.open("get", 'login.pl?action=authenticate&company='+company, false, username, password);
 	http.send("");
         if (http.status != 200){
                 if (http.status != '454'){
@@ -14,8 +15,7 @@ function submit_form() {
                 }
 		return false;
 	}
-	document.location = document.login.action + "?action=login&company="+
-		document.login.company.value;
+	document.location=document.login.action.value+".pl?action=login&company="+document.login.company.value;
 }
 
 function check_auth() {

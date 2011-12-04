@@ -35,6 +35,9 @@ DELETE FROM menu_acl       WHERE node_id BETWEEN 133 AND 135;
 DELETE FROM menu_attribute WHERE node_id BETWEEN 133 AND 135;
 DELETE FROM menu_node      WHERE id      BETWEEN 133 AND 135;
 
+-- bad batch type for receipt batches
+update menu_attribute set value = 'receipt' where node_id = 203 and attribute='batch_type';
+
 COMMIT;
 
 BEGIN;
@@ -50,4 +53,11 @@ UPDATE menu_attribute SET value = 'invoice'
    WHERE node_id = 117 AND attribute = 'type';
 UPDATE menu_attribute SET value = 'sales_order'
    WHERE node_id = 118 AND attribute = 'type';
+COMMIT;
+
+BEGIN;
+ALTER TABLE entity_bank_account DROP CONSTRAINT entity_bank_account_pkey;
+ALTER TABLE entity_bank_account ALTER COLUMN bic DROP NOT NULL;
+ALTER TABLE entity_bank_account ADD UNIQUE(bic,iban);
+CREATE UNIQUE INDEX eba_iban_null_bic_u ON entity_bank_account(iban) WHERE bic IS NULL;
 COMMIT;

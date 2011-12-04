@@ -56,6 +56,160 @@ package AM;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
 
+my $logger = Log::Log4perl->get_logger('AM');
+
+=item AM->get_account($myconfig, $form);
+
+Populates the $form attributes accno, description, charttype, gifi_accno,
+category, link, and contra with details about the account that has the id
+$form->{id}.  If there are no acc_trans entries that refer to that account,
+$form->{orphaned} is made true, otherwise $form->{orphaned} is set to false.
+
+Also populates 'inventory_accno_id', 'income_accno_id', 'expense_accno_id',
+'fxgain_accno_id', and 'fxloss_accno_id' with the values from defaults.
+
+$myconfig is unused.
+
+=cut
+
+sub get_account {
+
+    my ( $self, $myconfig, $form ) = @_;
+
+    my $dbh = $form->{dbh};
+
+    my $query = qq|
+		SELECT accno, description, charttype, gifi_accno,
+		       category, link, contra
+		  FROM chart
+		 WHERE id = ?|;
+
+    my $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
+
+    my $ref = $sth->fetchrow_hashref(NAME_lc);
+    for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+    $sth->finish;
+
+    # get default accounts
+    $query = qq|
+		SELECT (SELECT value FROM defaults
+		         WHERE setting_key = 'inventory_accno_id')
+		       AS inventory_accno_id,
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'income_accno_id')
+		       AS income_accno_id, 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'expense_accno_id')
+		       AS expense_accno_id,
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'fxgain_accno_id')
+		       AS fxgain_accno_id, 
+		       (SELECT value FROM defaults
+		         WHERE setting_key = 'fxloss_accno_id')
+		       AS fxloss_accno_id|;
+
+    $sth = $dbh->prepare($query);
+    $sth->execute || $form->dberror($query);
+
+    $ref = $sth->fetchrow_hashref(NAME_lc);
+    for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+    $sth->finish;
+
+    # check if we have any transactions
+    $query = qq|
+		SELECT trans_id 
+		  FROM acc_trans
+		 WHERE chart_id = ? 
+		 LIMIT 1|;
+    $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} );
+    ( $form->{orphaned} ) = $sth->fetchrow_array();
+    $form->{orphaned} = !$form->{orphaned};
+
+    $dbh->commit;
+}
+
+=item AM->delete_account($myconfig, $form);
+
+Deletes the account with the id $form->{id}.  Calls $form->error if there are
+any acc_trans entries that reference it.  If any parts have that account for
+an inventory, income, or COGS (expense) account, switch the part to using the
+default account for that type.  Also deletes all tax, partstax, customertax, and
+vendortax table entries for the account.
+
+$myconfig is unused.
+
+=cut
+
+sub delete_account {
+
+    my ( $self, $myconfig, $form ) = @_;
+
+    # connect to database, turn off AutoCommit
+    my $dbh = $form->{dbh};
+    my $sth;
+    my $query = qq|
+		SELECT count(*)
+		  FROM acc_trans
+		 WHERE chart_id = ?|;
+    $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} );
+    my ($rowcount) = $sth->fetchrow_array();
+
+    if ($rowcount) {
+        $form->error( "Cannot delete accounts with associated transactions!" );
+    }
+
+    # delete chart of account record
+    $query = qq|
+		DELETE FROM chart
+		      WHERE id = ?|;
+
+    $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
+
+    # set inventory_accno_id, income_accno_id, expense_accno_id to defaults
+    $query = qq|
+		UPDATE parts
+		   SET inventory_accno_id = (SELECT value::int
+		                               FROM defaults
+					      WHERE setting_key = 
+							'inventory_accno_id')
+		 WHERE inventory_accno_id = ?|;
+
+    $sth = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
+
+    for (qw(income_accno_id expense_accno_id)) {
+        $query = qq|
+			UPDATE parts
+			   SET $_ = (SELECT value::int
+			               FROM defaults
+			              WHERE setting_key = '$_')
+			 WHERE $_ = ?|;
+
+        $sth = $dbh->prepare($query);
+        $sth->execute( $form->{id} ) || $form->dberror($query);
+        $sth->finish;
+    }
+
+    foreach my $table (qw(partstax customertax vendortax tax)) {
+        $query = qq|
+			DELETE FROM $table
+			      WHERE chart_id = ?|;
+
+        $sth = $dbh->prepare($query);
+        $sth->execute( $form->{id} ) || $form->dberror($query);
+        $sth->finish;
+    }
+
+    # commit and redirect
+    my $rc = $dbh->commit;
+
+    $rc;
+}
+
 =item AM->gifi_accounts($myconfig, $form);
 
 Populates the list referred to as $form->{ALL} with hashes of gifi numbers and
@@ -1774,9 +1928,31 @@ sub save_taxes {
 
     foreach my $item ( split / /, $form->{taxaccounts} ) {
         my ( $chart_id, $i ) = split /_/, $item;
-        my $rate =
-          $form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
-        my $validto = $form->{"validto_$i"};
+
+        my $rate=$form->{"taxrate_$i"};
+        $rate=~s/^\s+|\s+$//g;
+        $rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
+        my $validto=$form->{"validto_$i"};
+        $validto=~s/^\s+|\s+$//g;
+        my $pass=$form->{"pass_$i"};
+        $pass=~s/^\s+|\s+$//g;
+        my $taxnumber=$form->{"taxnumber_$i"};
+        $taxnumber=~s/^\s+|\s+$//g;
+        my $old_validto=$form->{"old_validto_$i"};
+        $old_validto=~s/^\s+|\s+$//g;
+        #print STDERR localtime()." AM save_taxes chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto\n";
+        if($rate==0  && $validto eq '' && $pass eq '' && $taxnumber eq '')
+        {
+         $logger->debug("skipping chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto skipping");
+         next;
+        }
+        if($old_validto eq '')
+        {
+         $logger->info("will insert new chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto");
+        }        
+
+        #$rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
+        $validto = $form->{"validto_$i"};
         $validto = 'infinity' if not $validto;
         $form->{"pass_$i"} = 0 if not $form->{"pass_$i"};
         delete $form->{"old_validto_$i"} if ! $form->{"old_validto_$i"};
@@ -1788,9 +1964,7 @@ sub save_taxes {
             $form->{"old_validto_$i"}
         );
        $sth->execute(@queryargs) ||$form->dberror($query);
-
-        
-
+       $sth->finish;
     }
 
     my $rc = $dbh->commit;
