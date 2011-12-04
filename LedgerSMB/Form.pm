@@ -199,6 +199,7 @@ sub open_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
+    $logger->trace("\$self->{session_id}=$self->{session_id}");
     my $sth = $self->{dbh}->prepare('select form_open(?)');
     $sth->execute($self->{session_id});
     my @results = $sth->fetchrow_array();
@@ -645,7 +646,7 @@ sub redirect {
     my ( $self, $msg ) = @_;
 
     if ( $self->{callback} || !$msg ) {
-	print STDERR "Full redirect\n";
+	$logger->trace("Full redirect \$self->{callback}=$self->{callback} \$msg=$msg");
         main::redirect();
 	$self->finalize_request();
     }
