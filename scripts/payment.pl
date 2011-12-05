@@ -1271,6 +1271,9 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      push @op_cash_account_id, $cashid;
      push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
      push @op_memo, $request->{"overpayment_memo_$i"};
+     if (!$id and $id ne "0"){
+         $request->error($request->{_locale}->text('No overpayment account selected.  Was one set up?'));
+     }
      push @op_account_id, $id;        
      } 
    }  
