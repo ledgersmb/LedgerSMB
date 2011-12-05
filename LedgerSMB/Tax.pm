@@ -28,6 +28,7 @@
 package Tax;
 
 use Math::BigFloat;
+use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('Tax');
 

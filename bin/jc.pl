@@ -43,6 +43,7 @@ use Error qw(:try);
 
 use LedgerSMB::Template;
 use LedgerSMB::JC;
+use LedgerSMB::Company_Config;
 
 1;
 
@@ -2081,6 +2082,14 @@ sub print_options {
 
 sub print {
 
+    my $csettings = $LedgerSMB::Company_Config::settings;
+    $form->{company} = $csettings->{company_name};
+    $form->{businessnumber} = $csettings->{businessnumber};
+    $form->{email} = $csettings->{company_email};
+    $form->{address} = $csettings->{company_address};
+    $form->{tel} = $csettings->{company_phone};
+    $form->{fax} = $csettings->{company_fax};
+
     if ( $form->{media} !~ /screen/ ) {
         $form->error( $locale->text('Select postscript or PDF!') )
           if $form->{format} !~ /(postscript|pdf)/;
@@ -2110,9 +2119,6 @@ qq|$form->{"${item}hour"}:$form->{"${item}min"}:$form->{"${item}sec"}|;
     }
 
     @a = ();
-    for (qw(company address tel fax businessnumber)) {
-        $form->{$_} = $myconfig{$_};
-    }
     $form->{address} =~ s/\\n/\n/g;
 
     push @a, qw(partnumber description projectnumber projectdescription);
@@ -2198,8 +2204,12 @@ qq|$form->{"${item}hour"}:$form->{"${item}min"}:$form->{"${item}sec"}|;
           $form->audittrail( "", \%myconfig, \%audittrail );
     }
 
-    my $template = LedgerSMB::Template->new( user => \%myconfig, 
-      template => $form->{'formname'}, format => uc $form->{format} );
+    my $template = LedgerSMB::Template->new( 
+         user => \%myconfig, 
+     template => $form->{'formname'}, 
+     language => $form->{language_code},
+       locale => $locale,
+       format => uc $form->{format} );
     try {
         $template->render($form);
         $template->output(%{$form});

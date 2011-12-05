@@ -78,6 +78,7 @@ gzip       = gzip -S .gz
 sendmail   = /usr/bin/sendmail -t
 # smtphost = 127.0.0.1
 # smtptimeout = 60
+# backup_email_from = backups@lsmb_hosting.com
 
 [printers]
 # Available printers

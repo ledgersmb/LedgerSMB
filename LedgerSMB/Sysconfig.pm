@@ -133,7 +133,7 @@ for my $var (qw(gzip)) {
 
 # mail configuration
 for my $var (qw(sendmail smtphost smtptimeout smtpuser 
-             smtppass smtpauthmethod)) 
+             smtppass smtpauthmethod backup_email_from)) 
 {
     ${$var} = $config{mail}{$var} if $config{mail}{$var};
 }
@@ -201,11 +201,14 @@ our $cache_template_dir = "$tempdir/lsmb_templates";
 # Backup path
 our $backuppath = $tempdir;
 
-if(-d "$tempdir"){}
-else
-{
- my $rc=system("mkdir -p $tempdir");#TODO what if error?
- #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
+if(!(-d "$tempdir")){
+     my $rc;
+     if ($pathsep eq ';'){ # We need an actual platform configuration variable
+        $rc = system("mkdir $tempdir");
+     } else {
+         $rc=system("mkdir -p $tempdir");#TODO what if error?
+     #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
+     }
  print STDERR localtime()." Sysconfig.pm created tempdir $tempdir rc=$rc\n";
 }
 1;

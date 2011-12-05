@@ -201,7 +201,7 @@ sub run_backup {
     if ($request->{backup_type} eq 'email'){
         my $csettings = $LedgerSMB::Company_Config::settings;
 	my $mail = new LedgerSMB::Mailer(
-		from          => $csettings->{default_email_from},
+		from          => $LedgerSMB::Sysconfig::backup_email_from,
 		to            => $request->{email},
 		subject       => "Email of Backup",
 		message       => 'The Backup is Attached',

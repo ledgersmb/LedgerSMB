@@ -352,7 +352,7 @@ sub new {
 
     $self->{stylesheet} = $self->{_user}->{stylesheet};
 
-    $logger->debug("End LedgerSMB.pm");
+    $logger->debug("End");
 
     return $self;
 
@@ -798,7 +798,7 @@ sub _db_init {
     my %args     = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
 
-    $logger->debug("LedgerSMB::_db_init: start");
+    $logger->debug("start");
   
     $self->{login} = $creds->{login};
     if (!$self->{company}){ 
@@ -880,6 +880,7 @@ sub _db_init {
     while (my @roles = $sth->fetchrow_array){
         push @{$self->{_roles}}, $roles[0];
     }
+    $logger->debug("end");
 }
 
 #private, for db connection errors
@@ -945,7 +946,9 @@ sub redo_rows {
 }
 
 sub merge {
+    (my $package,my $filename,my $line)=caller;
     my ( $self, $src ) = @_;
+    $logger->debug("begin caller \$filename=$filename \$line=$line");
     for my $arg ( $self, $src ) {
         shift;
     }
@@ -968,22 +971,23 @@ sub merge {
         }
         if ( defined $dst_arg && defined $src->{$arg} )
         {
-            $logger->debug("LedgerSMB.pm: merge setting $dst_arg to $src->{$arg}");
+            $logger->trace("LedgerSMB.pm: merge setting $dst_arg to $src->{$arg}");
         }
         elsif ( !defined $dst_arg && defined $src->{$arg} )
         {
-            $logger->debug("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is defined $src->{$arg}");
+            $logger->trace("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is defined $src->{$arg}");
         }
         elsif ( defined $dst_arg && !defined $src->{$arg} )
         {
-            $logger->debug("LedgerSMB.pm: merge setting \$dst_arg is defined $dst_arg \$src->{\$arg} is undefined");
+            $logger->trace("LedgerSMB.pm: merge setting \$dst_arg is defined $dst_arg \$src->{\$arg} is undefined");
         }
         elsif ( !defined $dst_arg && !defined $src->{$arg} )
         {
-            $logger->debug("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is undefined");
+            $logger->trace("LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is undefined");
         }
         $self->{$dst_arg} = $src->{$arg};
     }
+    $logger->debug("end");
 }
 
 sub type {
