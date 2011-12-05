@@ -61,3 +61,21 @@ ALTER TABLE entity_bank_account ALTER COLUMN bic DROP NOT NULL;
 ALTER TABLE entity_bank_account ADD UNIQUE(bic,iban);
 CREATE UNIQUE INDEX eba_iban_null_bic_u ON entity_bank_account(iban) WHERE bic IS NULL;
 COMMIT;
+
+BEGIN; -- Data fixes for 1.2-1.3 upgrade.  Will fail otherwise --Chris T
+UPDATE parts 
+   SET income_accno_id = (SELECT account.id 
+                            FROM account JOIN lsmb12.chart USING (accno)
+                           WHERE chart.id = income_accno_id),
+       expense_accno_id = (SELECT account.id 
+                            FROM account JOIN lsmb12.chart USING (accno)
+                           WHERE chart.id = expense_accno_id),
+       inventory_accno_id = (SELECT account.id
+                            FROM account JOIN lsmb12.chart USING (accno)
+                           WHERE chart.id = inventory_accno_id)
+ WHERE id IN (SELECT id FROM lsmb12.parts op 
+               WHERE op.id = parts.id 
+                     AND (op.income_accno_id = parts.income_accno_id
+                          OR op.inventory_accno_id = parts.inventory_accno_id 
+                          or op.expense_accno_id = parts.expense_accno_id));
+COMMIT; 
