@@ -129,9 +129,8 @@ sub new {
 
     if($self->{header})
     {
-     $logger->trace("self->{header}=$self->{header}");
      delete $self->{header};
-     $logger->trace("self->{header} unset!!");
+     $logger->error("self->{header} unset!!");
     }
     if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
         $self->{action} = lc $self->{action};
@@ -1286,6 +1285,7 @@ autocommit disabled.
 
 sub db_init {
     my ( $self, $myconfig ) = @_;
+    $logger->trace("begin");
 
     # Handling of HTTP Basic Auth headers
     my $auth = $ENV{'HTTP_AUTHORIZATION'};
@@ -1305,6 +1305,7 @@ sub db_init {
     };
 
     $self->{dbh} = $self->dbconnect_noauto($dbconfig) || $self->dberror();
+    $logger->debug("acquired dbh \$self->{dbh}=$self->{dbh}");
     $self->{dbh}->{pg_server_prepare} = 0;
     my $dbh = $self->{dbh};
     my %date_query = (
@@ -1363,6 +1364,7 @@ sub db_init {
     }
     LedgerSMB::Company_Config::initialize($self);
     $sth->finish();
+    $logger->trace("end");
 }
 
 =item $form->run_custom_queries($tablename, $query_type[, $linenum]);

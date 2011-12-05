@@ -228,6 +228,8 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB');
 sub new {
     #my $type   = "" unless defined shift @_;
     #my $argstr = "" unless defined shift @_;
+    (my $package,my $filename,my $line)=caller;
+
     my $type   = shift @_;
     my $argstr = shift @_;
     my %cookie;
@@ -236,22 +238,32 @@ sub new {
     $type = "" unless defined $type;
     $argstr = "" unless defined $argstr;
 
-    $logger->debug("Begin LedgerSMB.pm");
+    $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
     $self->{version} = $VERSION;
     $self->{dbversion} = "1.3.8";
     
     bless $self, $type;
-    $logger->debug("LedgerSMB::new: \$argstr = $argstr");
-    my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
-    # my $params = $query->Vars; returns a tied hash with keys that
-    # are not parameters of the CGI query.
-    my %params = $query->Vars;
-    for my $p(keys %params){
-        utf8::decode($params{$p});
-        utf8::upgrade($params{$p});
+
+    my $query;
+    my %params=();
+    if(ref($argstr) eq 'DBI::db')
+    {
+     $self->{dbh}=$argstr;
+     $logger->info("setting dbh from argstr \$self->{dbh}=$self->{dbh}");
     }
-    $logger->debug("LedgerSMB::new: params = ", Data::Dumper::Dumper(\%params));
+    else
+    {
+     $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
+     # my $params = $query->Vars; returns a tied hash with keys that
+     # are not parameters of the CGI query.
+     %params = $query->Vars;
+     for my $p(keys %params){
+         utf8::decode($params{$p});
+         utf8::upgrade($params{$p});
+     }
+    }
+    $logger->debug("params=", Data::Dumper::Dumper(\%params));
     $self->{VERSION} = $VERSION;
     $self->{_request} = $query;
 
@@ -325,9 +337,9 @@ sub new {
          $ccookie =~ s/.*:([^:]*)$/$1/;
          if($ccookie ne 'Login') { $self->{company} = $ccookie; } 
     }
-    $logger->debug("LedgerSMB.pm: \$self->{company} = $self->{company}");
+    $logger->debug("\$self->{company} = $self->{company}");
 
-    $self->_db_init;
+    if(!$self->{dbh}){$self->_db_init;}
 
     LedgerSMB::Company_Config::initialize($self);
 
@@ -933,9 +945,9 @@ sub error {
 sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
+    $logger->debug("start");
     my $creds = LedgerSMB::Auth::get_credentials();
 
-    $logger->debug("start");
   
     $self->{login} = $creds->{login};
     if (!$self->{company}){ 
@@ -947,33 +959,35 @@ sub _db_init {
     # connection fails since this probably means bad credentials are entered.
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
+    $logger->debug("before DBI->connect dbh=$self->{dbh}");
     $self->{dbh} = DBI->connect(
         "dbi:Pg:dbname=$dbname", "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     ); 
-     my $dbh = $self->{dbh};
+    $logger->debug("after DBI->connect dbh=$self->{dbh}");
+     #my $dbh = $self->{dbh};
 
 
     if (($self->{script} eq 'login.pl') && ($self->{action} eq 
         'authenticate')){
-        if (!$dbh){
+        if (!$self->{dbh}){
             $self->{_auth_error} = $DBI::errstr;
         }
 
         return;
     }
-    elsif (!$dbh){
+    elsif (!$self->{dbh}){
         $self->_get_password;
     }
-    $dbh->{pg_server_prepare} = 0;
-    $dbh->{pg_enable_utf8} = 1;
+    $self->{dbh}->{pg_server_prepare} = 0;
+    $self->{dbh}->{pg_enable_utf8} = 1;
 
     # This is the general version check
-    my $sth = $dbh->prepare("
+    my $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults 
              WHERE setting_key = 'version'");
     $sth->execute;
     my ($dbversion) = $sth->fetchrow_array;
-    $sth = $dbh->prepare("
+    $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults 
              WHERE setting_key = 'role_prefix'");
     $sth->execute;
@@ -984,12 +998,12 @@ sub _db_init {
         $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}.  Please re-run setup.pl against this database to correct.");
     }
 
-    $sth = $dbh->prepare('SELECT check_expiration()');
+    $sth = $self->{dbh}->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;
    
     if ($self->{warn_expire}){
-        $sth = $dbh->prepare('SELECT user__check_my_expiration()');
+        $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()');
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
@@ -1012,11 +1026,12 @@ sub _db_init {
     $self->{_roles} = [];
     $query = "select rolname from pg_roles 
                where pg_has_role(SESSION_USER, 'USAGE')";
-    $sth = $dbh->prepare($query);
+    $sth = $self->{dbh}->prepare($query);
     $sth->execute();
     while (my @roles = $sth->fetchrow_array){
         push @{$self->{_roles}}, $roles[0];
     }
+    $sth->finish();
     $logger->debug("end");
 }
 
@@ -1085,7 +1100,7 @@ sub redo_rows {
 sub merge {
     (my $package,my $filename,my $line)=caller;
     my ( $self, $src ) = @_;
-    $logger->debug("begin caller \$filename=$filename \$line=$line");
+    $logger->debug("begin caller \$filename=$filename \$line=$line \$self->{dbh}=$self->{dbh}");
     for my $arg ( $self, $src ) {
         shift;
     }
@@ -1124,7 +1139,7 @@ sub merge {
         }
         $self->{$dst_arg} = $src->{$arg};
     }
-    $logger->debug("end");
+    $logger->debug("end caller \$filename=$filename \$line=$line \$self->{dbh}=$self->{dbh}");
 }
 
 sub type {
