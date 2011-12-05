@@ -1539,17 +1539,6 @@ values (221, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (222, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__backup"
-WITH INHERIT NOLOGIN;
-
--- TODO GRANT SELECT ON ALL TABLES
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (134, 'allow', 'lsmb_<?lsmb dbname ?>__backup');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (135, 'allow', 'lsmb_<?lsmb dbname ?>__backup');
-
-
 CREATE ROLE "lsmb_<?lsmb dbname ?>__system_admin"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__system_settings_change",
