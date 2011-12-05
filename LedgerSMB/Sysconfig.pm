@@ -134,7 +134,7 @@ for my $var (qw(gzip)) {
 
 # mail configuration
 for my $var (qw(sendmail smtphost smtptimeout smtpuser 
-             smtppass smtpauthmethod)) 
+             smtppass smtpauthmethod backup_email_from)) 
 {
     ${$var} = $config{mail}{$var} if $config{mail}{$var};
 }
