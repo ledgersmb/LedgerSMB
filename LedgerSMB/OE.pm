@@ -338,7 +338,7 @@ sub save {
     }
     $form->{"$ordnumber"} =
       $form->update_defaults( $myconfig, $numberfld, $dbh )
-      unless $form->{ordnumber};
+      unless $form->{"$ordnumber"};
 
 
 
