@@ -255,6 +255,10 @@ to be able to access the database and locate the relevant PostgreSQL contrib
 scripts.  In particular, you must have the  contrib_dir directive set to point
 to those scripts properly in your ledgersmb.conf before you begin.
 
+If you are upgrading from 1.2, your 1.2 tables will be moved to schema lsmb12.
+Please keep this schema for some months. Updates which need this schema may
+still be necessary.
+
 An alternative method is the 'prepare-company-database.sh' script contributed by
 Erik Huelsmann.  This script can be useful in creating and populating databases
 from the command line and it offers a reference implementation written in BASH

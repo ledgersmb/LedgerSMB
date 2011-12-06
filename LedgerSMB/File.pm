@@ -108,6 +108,8 @@ struct 'LedgerSMB::File' => {
    x_info         =>  '%'
 };
 
+my $logger = Log::Log4perl->get_logger('LedgerSMB::File');
+
 =head1 METHODS
 
 =over
@@ -171,14 +173,23 @@ sub new_dbobject{
     my ($self, $args)  = @_;
     my $dbobject;
     my $rc = 0; # Success
+    $logger->debug("begin");
+    $logger->trace("self=".Data::Dumper::Dumper(\$self)." args=".Data::Dumper::Dumper(\$args)." ref=".ref($args->{base}));
     if (ref $args->{base} eq 'Form'){
          #$ENV{LSMB_NOHEAD} = 1;
          use LedgerSMB::Locale;
-         my $lsmb = LedgerSMB->new();
+         #HV trying to avoid msg:Issuing rollback() due to DESTROY without explicit disconnect() of DBD::Pg::db handle
+         # new LedgerSMB will acquire dbh_handle.This newly created dbh_handle will be unset in merge() with dbh_handle from Form
+         $logger->debug("LedgerSMB->new begin");
+         my $lsmb = LedgerSMB->new($args->{base}->{dbh});
+         $logger->debug("LedgerSMB->new end");
+         $logger->debug("LedgerSMB->merge begin");
          $lsmb->merge($args->{base});
+         $logger->debug("LedgerSMB->merge end");
          if ((ref $args->{locale}) =~ /^LedgerSMB::Locale/){
              $lsmb->{_locale} = $args->{locale};
              $dbobject = LedgerSMB::DBObject->new({base => $lsmb});
+             $logger->debug("\$dbobject->{dbh}=$dbobject->{dbh}");
          } else {
              $rc | 2; # No locale
          }
@@ -189,6 +200,7 @@ sub new_dbobject{
     else {
         $rc | 4; # Incorrect base type
     }
+    $logger->debug("end");
     if (!$dbobject->{dbh}){
         $rc | 1; # No database handle
     }
