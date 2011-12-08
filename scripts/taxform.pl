@@ -205,7 +205,7 @@ sub print {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
     my $form_info = $taxform->get($request->{tax_form_id});
-    $request->{taxform_name} = $form_info->{description};
+    $request->{taxform_name} = $form_info->{form_name};
     $request->{format} = 'PDF';
     generate_report($request);    
 }
