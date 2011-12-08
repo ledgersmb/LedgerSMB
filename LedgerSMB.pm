@@ -262,8 +262,8 @@ sub new {
          utf8::decode($params{$p});
          utf8::upgrade($params{$p});
      }
+     $logger->debug("params=", Data::Dumper::Dumper(\%params));
     }
-    $logger->debug("params=", Data::Dumper::Dumper(\%params));
     $self->{VERSION} = $VERSION;
     $self->{_request} = $query;
 
@@ -287,6 +287,10 @@ sub new {
             $cookie{$name} = $value;
         }
     }
+    #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
+    $self->{_locale}=LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language})
+      or $self->error( __FILE__ . ':' . __LINE__ .": Locale not loaded: $!\n" );
+
     $self->{action} = "" unless defined $self->{action};
     $self->{action} =~ s/\W/_/g;
     $self->{action} = lc $self->{action};
@@ -317,13 +321,14 @@ sub new {
     if (!$self->{script}) {
         $self->{script} = 'login.pl';
     }
-    $logger->debug("LedgerSMB.pm: \$self->{script} = $self->{script}");
-    $logger->debug("LedgerSMB.pm: \$self->{action} = $self->{action}");
+    $logger->debug("\$self->{script} = $self->{script} \$self->{action} = $self->{action}");
 #    if ($self->{action} eq 'migrate_user'){
 #        return $self;
 #    }
 
     # This is suboptimal.  We need to have a better way for 1.4
+    #HV we should try to have DBI->connect in one place?
+    #HV  why not trying _db_init also in case of login authenticate? quid logout-function?
     if ($self->{script} eq 'login.pl' &&
         ($self->{action} eq 'authenticate'  || $self->{action} eq '__default' 
 		|| !$self->{action})){
@@ -332,18 +337,29 @@ sub new {
     if ($self->{script} eq 'setup.pl'){
         return $self;
     }
+    my $ccookie;
     if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
-         my $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
+         $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
          $ccookie =~ s/.*:([^:]*)$/$1/;
          if($ccookie ne 'Login') { $self->{company} = $ccookie; } 
     }
-    $logger->debug("\$self->{company} = $self->{company}");
+    $logger->debug("\$ccookie=$ccookie cookie.LedgerSMB::Sysconfig::cookie_name=".$cookie{${LedgerSMB::Sysconfig::cookie_name}}." \$self->{company}=$self->{company}");
 
-    if(!$self->{dbh}){$self->_db_init;}
+    if(! $cookie{${LedgerSMB::Sysconfig::cookie_name}} && $self->{action} eq 'logout')
+    {
+     $logger->debug("quitting because of logout and no cookie,avoid _db_init");
+     return $self;
+    }
+
+    #dbh may have been set elsewhere,by DBObject.pm?
+    if(!$self->{dbh})
+    {
+     $self->_db_init;
+    }
 
     LedgerSMB::Company_Config::initialize($self);
 
-
+    #TODO move before _db_init to avoid _db_init with invalid session?
     if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
        #check for valid session unless this is an inital authentication
        #request -- CT
@@ -352,7 +368,7 @@ sub new {
             $self->_get_password("Session Expired");
             exit;
        }
-       $logger->debug("LedgerSMB::new: session_check completed OK");
+       $logger->debug("session_check completed OK \$self->{session_id}=$self->{session_id} caller=\$filename=$filename \$line=$line");
     }
     $self->get_user_info;
     my %date_setting = (
@@ -363,12 +379,12 @@ sub new {
         'dd.mm.yy' => "GERMAN",
     );
 
-    $self->{dbh}->do("set DateStyle to '" 
-		.$date_setting{$self->{_user}->{dateformat}}."'");
-    my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{language})
-#    $self->{_locale} = LedgerSMB::Locale->get_handle('en') # temporary
+    $self->{dbh}->do("set DateStyle to '".$date_setting{$self->{_user}->{dateformat}}."'");
+    #my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{language})
+    # or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+    #$self->{_locale} = $locale;
+    $self->{_locale}=LedgerSMB::Locale->get_handle($self->{_user}->{language})
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-    $self->{_locale} = $locale;
 
     $self->{stylesheet} = $self->{_user}->{stylesheet};
 
@@ -945,9 +961,13 @@ sub error {
 sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
-    $logger->debug("start");
-    my $creds = LedgerSMB::Auth::get_credentials();
+    (my $package,my $filename,my $line)=caller;
+    if($self->{dbh})
+    {
+     $logger->error("dbh already set \$self->{dbh}=$self->{dbh},called from $filename");
+    }
 
+    my $creds = LedgerSMB::Auth::get_credentials();
   
     $self->{login} = $creds->{login};
     if (!$self->{company}){ 
@@ -959,11 +979,10 @@ sub _db_init {
     # connection fails since this probably means bad credentials are entered.
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
-    $logger->debug("before DBI->connect dbh=$self->{dbh}");
     $self->{dbh} = DBI->connect(
         "dbi:Pg:dbname=$dbname", "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     ); 
-    $logger->debug("after DBI->connect dbh=$self->{dbh}");
+    $logger->debug("DBI->connect dbh=$self->{dbh}");
      #my $dbh = $self->{dbh};
 
 
