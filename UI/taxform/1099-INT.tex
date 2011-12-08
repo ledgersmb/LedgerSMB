@@ -1,0 +1,15 @@
+\documentclass[usletter]{article}
+\usepackage{textpos}
+<?lsmb INCLUDE "${taxform}-base.tex" #$ ?>
+\begin{document}
+<?lsmb FOR tf in results ?>
+<?lsmb INCLUDE taxform 
+pay_to_name = tf.legal_name
+pay_to_line_one = tf.line_one
+pay_to_line_two = tf.line_two
+pay_to_line_three = tf.line_three
+my_tax_code = business_number
+taxnumber = tf.taxnumber
+total_sum = tf.total_sum
+<?lsmb END # FOR tf  ?>
+\end{document}
