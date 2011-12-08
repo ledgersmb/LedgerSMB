@@ -43,11 +43,11 @@ $logger->debug("Begin");
 # for custom preprocessing logic
 eval { require "custom.pl"; };
 
-$logger->debug("getting request");
+$logger->debug("getting new LedgerSMB");
 
 my $request = new LedgerSMB;
 
-$logger->debug("Got request");
+$logger->debug("Got \$request=$request");
 $logger->trace("\$request=".Data::Dumper::Dumper($request));
 
 $request->{action} = '__default' if (!$request->{action});
@@ -74,7 +74,7 @@ $request->{_locale} = $locale;
 $logger->debug("calling $script");
 
 &call_script( $script, $request );
-$logger->debug("after calling script=$script action=$request->{action}");
+$logger->debug("after calling script=$script action=$request->{action} \$request->{dbh}=$request->{dbh}");
 
 # Prevent flooding the error logs with undestroyed connection warnings
 $request->{dbh}->disconnect()
