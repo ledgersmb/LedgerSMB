@@ -22,7 +22,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Log;
 use strict;
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB');
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Auth');
 
 =item session_check
 
@@ -34,14 +34,17 @@ Handles failure by creating a new session, since credentials are now separate.
 
 sub session_check {
     my ( $cookie, $form ) = @_;
+    #(my $package,my $filename,my $line)=caller;
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
     my $secure;
 
+   $logger->debug("\$cookie=$cookie");
    if ($cookie eq 'Login'){
         return session_create($form);
     }
+    #TODO what if cookie '' ?
     my $timeout;
 
     
@@ -71,6 +74,7 @@ sub session_check {
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
     my $sessionValid = $checkQuery->rows;
+    $logger->debug("\$sessionID=$sessionID \$token=$token \$sessionValid=$sessionValid");
     $dbh->commit;
 
     if ($sessionValid) {
@@ -83,12 +87,9 @@ sub session_check {
         $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
         if (( $session_ref ))
         {
-
-
-
-
             my $newCookieValue =
               $session_ref->{session_id} . ':' . $session_ref->{token} . ':' . $form->{company};
+            $logger->debug("\$newCookieValue=$newCookieValue");
 
             #now update the cookie in the browser
             if ($ENV{SERVER_PORT} == 443){
@@ -99,8 +100,8 @@ sub session_check {
 
         }
         else {
-
-            my $sessionDestroy = $dbh->prepare("");
+            $logger->debug("no \$session_ref");
+            my $sessionDestroy = $dbh->prepare("");#TODO meaning of this statement?
 
             #delete the cookie in the browser
             if ($ENV{SERVER_PORT} == 443){
@@ -112,9 +113,7 @@ sub session_check {
 
     }
     else {
-
-        #cookie is not valid
-        #delete the cookie in the browser
+            $logger->debug("delete invalid cookie in the browser");
             if ($ENV{SERVER_PORT} == 443){
                  $secure = ' Secure;';
             }
@@ -191,9 +190,10 @@ sub session_create {
     if ( !$lsmb->{timeout} ) {
         $lsmb->{timeout} = 86400;
     }
-    $deleteExisting->execute( $login)
+    my $rc=$deleteExisting->execute( $login)
       || $lsmb->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' . $DBI::errstr);
+    $logger->debug("delete from session \$login=$login \$rc=$rc");
 
 #doing the random stuff in the db so that LedgerSMB won't
 #require a good random generator - maybe this should be reviewed, 
@@ -207,8 +207,9 @@ sub session_create {
     my ( $newSessionID, $newToken ) = $fetchSequence->fetchrow_array;
 
     #create a new session
-    $createNew->execute( $newSessionID, $newToken )
+    $rc=$createNew->execute( $newSessionID, $newToken )
       || http_error('401');
+    $logger->debug("createnew \$rc=$rc");
     $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator
@@ -256,9 +257,11 @@ sub session_destroy {
                WHERE users_id = (select id from users where username = ?)
     " );
 
-    $deleteExisting->execute($login)
+    my $rc=$deleteExisting->execute($login)
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
+    $logger->debug("delete from session \$login=$login \$rc=$rc");
+    $dbh->commit;
 
     #delete the cookie in the browser
     if ($ENV{SERVER_PORT} == 443){
@@ -285,6 +288,7 @@ sub get_credentials {
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
     my $return_value = {};
+    #$logger->debug("\$auth=$auth");#be aware of passwords in log!
     ($return_value->{login}, $return_value->{password}) = split(/:/, $auth);
     if (defined $LedgerSMB::Sysconfig::force_username_case){
         if (lc($LedgerSMB::Sysconfig::force_username_case) eq 'lower'){
