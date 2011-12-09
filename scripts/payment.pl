@@ -763,8 +763,9 @@ one to handle the payment against
 
 sub payment1_5 {
 my ($request)    = @_;  
-my $locale       = $request->{_locale};
+#my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
 my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+#print STDERR localtime()." payment.pl payment1_5 dbPayment=".Data::Dumper::Dumper(\$dbPayment)."\n";
 my @array_options = $dbPayment->get_entity_credit_account();
 if ($#array_options == -1) { 
    &payment($request);   
@@ -802,7 +803,7 @@ if ($#array_options == -1) {
                        value => $request->{type}},
     action       => {  name => 'action',
                        value => 'payment2', 
-                       text => $locale->text("Continue")}
+                       text =>  $request->{_locale}("Continue")}
     };
     my $template;
      $template = LedgerSMB::Template->new(
