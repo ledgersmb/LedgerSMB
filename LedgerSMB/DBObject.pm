@@ -329,10 +329,17 @@ sub _parse_array {
 sub _db_array_scalars {
     my $self = shift @_;
     my @args = @_;
+    #print STDERR localtime()." DBObject.pm _db_array_scalars @args=".Data::Dumper::Dumper(\@args)."\n";
     for my $arg (@args){
-        $arg =~ s/(["{},])/\\$1/g;
-        if ($arg =~ /(\s|\\)/){
-           $arg = qq|"$arg"|;
+        if(defined($arg))
+        {
+         $arg =~ s/(["{},])/\\$1/g;
+         if ($arg =~ /(\s|\\)/){$arg = qq|"$arg"|;}
+        }#defined
+        else
+        {
+         $arg='"dummy_to_avoid_msg_Use_of_uninitialized_value"';
+         #print STDERR localtime()." DBObject.pm _db_array_scalars setting dummy\n";
         }
     }
     return $self->_db_array_literal(@args);
@@ -350,6 +357,7 @@ sub _db_array_literal {
             $return_string =~ s/\}$/,$arg\}/
         }
     }
+    print STDERR localtime()." DBObject.pm _db_array_literal \$return_string=$return_string\n";
     return $return_string;
 }
 
