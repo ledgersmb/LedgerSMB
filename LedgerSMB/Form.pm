@@ -135,8 +135,12 @@ sub new {
     if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
         $self->{action} = lc $self->{action};
         $self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
-        $self->{nextsub} = lc $self->{nextsub};
-        $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
+        if (defined $self->{nextsub}){
+            $self->{nextsub} = lc $self->{nextsub};
+            $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
+        } else { 
+            $self->{nextsub} = '';
+        }
     }
 
     $self->{login} = "" unless defined $self->{login};

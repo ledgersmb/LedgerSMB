@@ -1119,7 +1119,9 @@ sub redo_rows {
 sub merge {
     (my $package,my $filename,my $line)=caller;
     my ( $self, $src ) = @_;
-    $logger->debug("begin caller \$filename=$filename \$line=$line \$self->{dbh}=$self->{dbh}");
+    $logger->debug("begin caller \$filename=$filename \$line=$line");
+       # Removed dbh from logging string since not used on this api call and
+       # not initialized in test cases -CT
     for my $arg ( $self, $src ) {
         shift;
     }
@@ -1158,7 +1160,7 @@ sub merge {
         }
         $self->{$dst_arg} = $src->{$arg};
     }
-    $logger->debug("end caller \$filename=$filename \$line=$line \$self->{dbh}=$self->{dbh}");
+    $logger->debug("end caller \$filename=$filename \$line=$line");
 }
 
 sub type {
