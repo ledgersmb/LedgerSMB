@@ -203,10 +203,11 @@ sub open_form {
         return 1;
     }
     my $sth = $self->{dbh}->prepare('select form_open(?)');
+    #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
     my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
     if(! $rc)
     {
-     $logger->error("select form_open \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
+     $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
      return undef;
     }
     my @results = $sth->fetchrow_array();
