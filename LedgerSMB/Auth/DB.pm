@@ -57,6 +57,7 @@ sub session_check {
 
     $form->{company} ||= $company;
     $form->{session_id} = $sessionID;
+    #print STDERR localtime()."DB.pm session_check form can be Form.pm|LedgerSMB.pm \$form=$form \$form->{session_id}=$form->{session_id}\n";
 
     #must be an integer
     $sessionID =~ s/[^0-9]//g;
