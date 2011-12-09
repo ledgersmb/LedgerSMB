@@ -1,15 +1,14 @@
-\documentclass[usletter]{article}
-\usepackage{textpos}
-<?lsmb INCLUDE "${taxform}-base.tex" #$ ?>
+<?lsmb FILTER latex ?>
+<?lsmb INCLUDE "taxform/1099-MISC-base.tex" ?>
 \begin{document}
-<?lsmb FOR tf in results ?>
-<?lsmb INCLUDE taxform 
-pay_to_name = tf.legal_name
-pay_to_line_one = tf.line_one
-pay_to_line_two = tf.line_two
-pay_to_line_three = tf.line_three
-my_tax_code = business_number
+<?lsmb FOREACH tf IN results;
+INCLUDE taxform 
+legal_name = tf.legal_name
+street1 = tf.street1
+street2 = tf.street2
+street3 = tf.street3
 taxnumber = tf.taxnumber
-total_sum = tf.total_sum
-<?lsmb END # FOR tf  ?>
+total_sum = tf.total_sum;
+END # FOR tf  ?>
 \end{document}
+<?lsmb END # FILTER latex ?>

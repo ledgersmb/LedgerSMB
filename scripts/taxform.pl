@@ -189,6 +189,14 @@ sub generate_report {
         my @call_args = ($request->{'tax_form_id'}, $request->{begin_month}.' '.$request->{begin_day}.' '.$request->{begin_year}, $request->{end_month}.' '.$request->{end_day}.' '.$request->{end_year});
         my @results = $request->call_procedure(procname => 'tax_form_summary_report', args => \@call_args);
         for my $r (@results){
+            my $company = LedgerSMB::DBObject::Vendor->new(base => $request);
+            $company->{id} = $r->{credit_id};
+            $company->get_billing_info;
+            delete $company->{id};
+            for my $k (keys %$company){
+                 $r->{$k} = $company->{$k};
+            }
+ 
             $r->{acc_sum} = $request->format_amount({amount => $r->{acc_sum}});
             $r->{invoice_sum} = 
                  $request->format_amount({amount => $r->{invoice_sum}});
@@ -200,6 +208,7 @@ sub generate_report {
             user => $request->{_user}, 
             locale => $request->{_locale},
             path => 'UI',
+            media => 'screen',
             template => 'taxform/summary_report',
             format => $request->{format},
         );
