@@ -7,6 +7,10 @@ Changelog for 1.3.9
 * Translation fixes in tax form reports (Chris T)
 * Added accidently omitted 1099 forms (Chris T)
 * Fixed formatting issue in sales_quotation.tex (Chris T)
+* Better localization handling on logout (Herman V)
+* Better handling of successive logouts (Herman V)
+* Correcting some erroneous errors on db setup (Herman V)
+* Corrected error message in old handler (Herman V)
 
 Changelog for 1.3.8:
 * Fixed duplicate key error saving taxes (Herman V)

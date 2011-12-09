@@ -1,3 +1,4 @@
+\setlength{\parindent}{0pt}
 <?lsmb BLOCK taxformpart ?>
 \begin{textblock}{4}[0,1](0.5, 1)
 <?lsmb company_name ?>
@@ -14,7 +15,10 @@ Tel: <?lsmb company_telephone ?>
 \end{textblock}
 
 \begin{textblock}{4}[0,1](0.5, 2.5)
-<?lsmb pay_to_name ?>\\
+<?lsmb legal_name ?>\\
+<?lsmb IF street1 ?><?lsmb street1 ?>\\ <?lsmb END ?>
+<?lsmb IF street2 ?><?lsmb street2 ?>\\ <?lsmb END ?>
+<?lsmb IF street3 ?><?lsmb street3 ?>\\ <?lsmb END ?>
 <?lsmb city ?>, <?lsmb state ?> <?lsmb mail_code ?>
 \end{textblock}
 
@@ -22,4 +26,13 @@ Tel: <?lsmb company_telephone ?>
 <?lsmb total_sum ?>
 \end{textblock}
 <?lsmb END # Block taxformpart ?>
-
+<?lsmb BLOCK taxform ?>
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb END #BLOCK taxform ?>
