@@ -555,7 +555,8 @@ notify_pasword interval not null default '7 days'::interval
 
 COMMENT ON TABLE session IS
 $$ This table is used to track sessions on a database level across page 
-requests.  Because of the way LedgerSMB authentication works currently we do 
+requests (discretionary locks,open forms for anti-xsrf measures).
+Because of the way LedgerSMB authentication works currently we do 
 not time out authentication when the session times out.  We do time out 
 highly pessimistic locks used for large batch payment workflows.$$;
 
