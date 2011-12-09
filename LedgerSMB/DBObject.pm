@@ -338,7 +338,7 @@ sub _db_array_scalars {
         }#defined
         else
         {
-         $arg='"dummy_to_avoid_msg_Use_of_uninitialized_value"';
+         $arg=''; #dummy_to_avoid_msg_Use_of_uninitialized_value
          #print STDERR localtime()." DBObject.pm _db_array_scalars setting dummy\n";
         }
     }
