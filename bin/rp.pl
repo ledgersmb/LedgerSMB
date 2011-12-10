@@ -95,7 +95,6 @@ use LedgerSMB::RP;
 # $locale->text('Non-taxable Purchases')
 
 sub report {
-
     my %hiddens;
     my %report = (
         balance_sheet    => { title => 'Balance Sheet' },
@@ -263,6 +262,8 @@ sub report {
         $subform = 'payments';
 
         $form->{db} = ( $form->{report} =~ /payments$/ ) ? "ap" : "ar";
+        if($form->{db} eq 'ar'){$form->{meta_number_text}='Customer Number';}
+        else {$form->{meta_number_text}='Vendor Number';}
 
         RP->paymentaccounts( \%myconfig, \%$form );
 
@@ -288,7 +289,7 @@ sub report {
 
     }
 
-    $form->{login} = 'test';
+    #$form->{login} = 'test';TODO meaning?
     $hiddens{$_} = $form->{$_} foreach qw(path login sessionid);
     $form->{yearend_options} = [
          {id => 'all',  label => $locale->text('All') }, 
@@ -1923,7 +1924,9 @@ sub list_payments {
 
     my %hiddens;
     my @options;
-    my $vc = ($form->{db} eq 'ar') ? 'Customer' : 'Vendor';
+    my $meta_number_text;
+    if($form->{db} eq 'ar'){$meta_number_text='Customer Number';}
+    else {$meta_number_text='Vendor Number';}
     if ( $form->{account} ) {
         ( $form->{paymentaccounts} ) = split /--/, $form->{account};
     }
@@ -2021,7 +2024,7 @@ sub list_payments {
         };
     $column_header{meta_number} = {
         href => "$href&sort=meta_number",
-        text => $locale->text("[_1] Number", $vc),
+        text => $locale->text($meta_number_text),
         };
     $column_header{employee} = {
         href => "$href&sort=employee",
