@@ -357,7 +357,6 @@ sub _db_array_literal {
             $return_string =~ s/\}$/,$arg\}/
         }
     }
-    print STDERR localtime()." DBObject.pm _db_array_literal \$return_string=$return_string\n";
     return $return_string;
 }
 
