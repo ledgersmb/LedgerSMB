@@ -264,6 +264,7 @@ sub get_info {
     full_version => undef,
           status => undef,
     };
+    $logger->debug("\$self->{dbh}=$self->{dbh}");
     my $creds = LedgerSMB::Auth->get_credentials();
     my $dbh = DBI->connect(
         "dbi:Pg:dbname=$self->{company_name}", 
@@ -276,6 +277,8 @@ sub get_info {
                    "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
             );
            return $retval unless $dbh;
+           $logger->debug("DBI->connect dbh=$dbh");
+           $self->{dbh}=$dbh;#make available to upper levels
            my $sth = $dbh->prepare(
                  "select count(*) = 1 from pg_database where datname = ?"
            );
@@ -292,20 +295,26 @@ sub get_info {
            return $retval;
    } else { # Got a db handle... try to find the version and app by a few
             # different means
+       $logger->debug("DBI->connect dbh=$dbh");
+       $self->{dbh}=$dbh;#make it available to upper levels
        my $sth;
        $sth = $dbh->prepare("SELECT SESSION_USER");
        $sth->execute;
        $retval->{username} = $sth->fetchrow_array();
        # Legacy SL and LSMB
        $sth = $dbh->prepare('SELECT version FROM defaults');
-       $sth->execute();
-       if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
+       #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
+       my $rv=$sth->execute();     
+       if(defined($rv))
+       {
+        if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
            if ($ref->{version}){
                $retval->{appname} = 'ledgersmb';
                $retval->{version} = 'legacy';
                $retval->{full_version} = $ref->{version};
                return $retval;
            }
+        }
        }
        $dbh->rollback;
        # LedgerSMB 1.2 and above
@@ -337,7 +346,8 @@ sub get_info {
        }
        $dbh->rollback;
    }
-   $dbh->disconnect;
+   #$logger->debug("DBI->disconnect dbh=$dbh");
+   #$dbh->disconnect;#leave disconnect to upper level
    return $retval;
 }
 

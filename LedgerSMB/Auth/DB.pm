@@ -22,7 +22,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Log;
 use strict;
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB');
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Auth');
 
 =item get_credentials
 
@@ -41,6 +41,7 @@ sub get_credentials {
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
     my $return_value = {};
+    #$logger->debug("\$auth=$auth");#be aware of passwords in log!
     ($return_value->{login}, $return_value->{password}) = split(/:/, $auth);
     if (defined $LedgerSMB::Sysconfig::force_username_case){
         if (lc($LedgerSMB::Sysconfig::force_username_case) eq 'lower'){

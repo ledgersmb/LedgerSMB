@@ -164,7 +164,7 @@ if ( $form->{action} ) {
 }
 else {
     $form->error( __FILE__ . ':' . __LINE__ . ': '
-          . $locale->text('action= not defined!') );
+          . $locale->text('action not defined!'));
 }
 
 }

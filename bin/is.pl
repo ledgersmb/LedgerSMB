@@ -875,7 +875,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
     my $printops = &print_options;
     my $formname = { name => 'formname',
                      options => [
-                                  {text=> 'Sales Invoice', value => 'invoice'},
+                                  {text=> $locale->text('Sales Invoice'), value => 'invoice'},
                                 ]
                    };
     print_select($form, $formname);
@@ -1057,7 +1057,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
 }
 
 sub update {
-    on_update();
+    on_update();#TODO meaning ?
     $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
@@ -1164,11 +1164,10 @@ sub update {
 
     }
     else {
-
         IS->retrieve_item( \%myconfig, \%$form );
 
         $rows = scalar @{ $form->{item_list} };
-
+        #TODO if language_code in select id="formname", see $printops &print_options $printops->{lang}, will do unnecessary lookup on new item
         if ( $form->{language_code} && $rows == 0 ) {
             $language_code = $form->{language_code};
             $form->{language_code} = "";

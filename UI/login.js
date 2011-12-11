@@ -16,6 +16,7 @@ function submit_form() {
 		return false;
 	}
 	document.location=document.login.action.value+".pl?action=login&company="+document.login.company.value;
+	return false;//otherwise 2 login's in parallell!
 }
 
 function check_auth() {

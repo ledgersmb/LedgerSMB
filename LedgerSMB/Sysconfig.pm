@@ -175,7 +175,7 @@ our $log4perl_config = qq(
     # layout for non-DEBUG messages
     log4perl.appender.Basic = Log::Log4perl::Appender::Screen
     log4perl.appender.Basic.layout = PatternLayout
-    log4perl.appender.Basic.layout.ConversionPattern = %d - %p - %C -- %m%n
+    log4perl.appender.Basic.layout.ConversionPattern = %d - %p - %M -- %m%n
     log4perl.appender.Basic.Filter = MatchRest
 );
 #some examples of loglevel setting for modules

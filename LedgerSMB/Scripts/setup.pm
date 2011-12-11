@@ -48,7 +48,8 @@ take.
 sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
-    $request->{_locale}->new('en');
+    $logger->trace("\$request=$request \$request->{dbh}=$request->{dbh} request=".Data::Dumper::Dumper(\$request));
+    #$request->{_locale}->new('en'); why not continue to use already set $request->{_locale}
     my $creds = LedgerSMB::Auth::get_credentials();
     if (!$request->{database}){
         $request->error($request->{_locale}->text('No database specified'));
@@ -59,6 +60,7 @@ sub login {
                 password => $creds->{password}}
     );
     my $version_info = $database->get_info();
+    if(!$request->{dbh}){$request->{dbh}=$database->{dbh};}#allow upper stack to disconnect dbh when leaving
     $request->{login_name} = $version_info->{username};
     if ($version_info->{appname} eq 'sql-ledger'){
          $request->{message} = 
@@ -755,7 +757,8 @@ sub rebuild_modules {
     $database->load_modules('LOADORDER');
     $database->process_roles('Roles.sql');
     # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    #avoid msg commit ineffective with AutoCommit enabled
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",{AutoCommit=>0});
     my $dbh = $request->{dbh};
     my $sth = $dbh->prepare(
           'UPDATE defaults SET value = ? WHERE setting_key = ?'
@@ -763,7 +766,7 @@ sub rebuild_modules {
     $sth->execute($request->{dbversion}, 'version');
     $sth->finish;
     $dbh->commit;
-    $dbh->disconnect;
+    #$dbh->disconnect;#upper stack will disconnect
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'complete',

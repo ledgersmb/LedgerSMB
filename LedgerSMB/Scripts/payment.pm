@@ -649,7 +649,7 @@ TT2 system.
 
 sub payment {
  my ($request)    = @_;  
- my $locale       = $request->{_locale};
+ #my $locale       = $request->{_locale};
  my $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
  my $Settings = LedgerSMB::Setting->new({'base' => $request});
 # Lets get the project data... 
@@ -681,7 +681,7 @@ sub payment {
  }
 # Lets build filter by period
 my $date = LedgerSMB::DBObject::Date->new({base => $request});
-   $date->build_filter_by_period($locale);
+   $date->build_filter_by_period($request->{_locale});
 # Lets set the data in a hash for the template system. :)    
 my $select = {
   stylesheet => $request->{_user}->{stylesheet},
@@ -725,7 +725,7 @@ my $select = {
   action => {
     name => 'action',
     value => 'payment1_5', 
-    text => $locale->text("Continue"),
+    text => $request->{_locale}->text("Continue"),
   }
 };
 
@@ -751,9 +751,11 @@ one to handle the payment against
 
 sub payment1_5 {
 my ($request)    = @_;  
-my $locale       = $request->{_locale};
+#my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
 my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+#print STDERR localtime()." payment.pl payment1_5 dbPayment=".Data::Dumper::Dumper(\$dbPayment)."\n";
 my @array_options = $dbPayment->get_entity_credit_account();
+#print STDERR localtime()." payment.pl payment1_5 \$\#array_options=".Data::Dumper::Dumper(\@array_options)."\n";
 if ($#array_options == -1) { 
    &payment($request);   
 } elsif ($#array_options == 0) {
@@ -790,7 +792,7 @@ if ($#array_options == -1) {
                        value => $request->{type}},
     action       => {  name => 'action',
                        value => 'payment2', 
-                       text => $locale->text("Continue")}
+                       text =>  $request->{_locale}->text("Continue")}
     };
     my $template;
      $template = LedgerSMB::Template->new(
@@ -802,9 +804,10 @@ if ($#array_options == -1) {
      try {$template->render($select); }
      catch CancelFurtherProcessing with {
        my $ex = shift;
+       print STDERR localtime()." payment.pl payment1_5 \$ex=".Data::Dumper::Dumper(\$ex)."\n";
        throw $ex;
      }
-     otherwise { $request->error("$@"); }; # PRINT ERRORS ON THE UI
+     otherwise {print STDERR localtime()." payment.pl payment1_5 \$@=".Data::Dumper::Dumper(\$@)."\n"; $request->error("$@"); }; # PRINT ERRORS ON THE UI
  }
 
 }

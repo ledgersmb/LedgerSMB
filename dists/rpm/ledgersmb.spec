@@ -7,7 +7,6 @@ License: GPL
 URL: http://www.ledgersmb.org/
 Group: Applications/Productivity
 Source0: %{name}-%{version}.tar.gz
-Source2: Template-Plugin-Latex-3.02.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildArch: noarch
 Requires: perl >= 5.8, httpd, postgresql >= 8.1, tetex-latex
@@ -21,6 +20,7 @@ Requires: perl-Locale-Maketext-Lexicon >= 0.62
 Requires: perl-IO-String perl-Config-Std >= 0.007
 Requires: perl-Math-BigInt-GMP
 Requires: perl-Log-Log4perl perl-DateTime
+Requires: perl-Config-Std
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no
@@ -58,6 +58,9 @@ su - postgres -c "psql ledgersmb -c \"update users_conf set password = md5('yada
 Visit http://localhost/ledgersmb/admin.pl with password "yada" and create an
 application database and users.
 
+Also note, this does NOT provide the LaTeX template extensions which are 
+technically optional but frequently used.  To use these you will need to install
+texlive packages from yum and Template::Latex from cpan.
 
 %prep
 %setup -q -n ledgersmb

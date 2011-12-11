@@ -135,8 +135,12 @@ sub new {
     if ( substr( $self->{action}, 0, 1 ) !~ /( |\.)/ ) {
         $self->{action} = lc $self->{action};
         $self->{action} =~ s/( |-|,|\#|\/|\.$)/_/g;
-        $self->{nextsub} = lc $self->{nextsub};
-        $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
+        if (defined $self->{nextsub}){
+            $self->{nextsub} = lc $self->{nextsub};
+            $self->{nextsub} =~ s/( |-|,|\#|\/|\.$)/_/g;
+        } else { 
+            $self->{nextsub} = '';
+        }
     }
 
     $self->{login} = "" unless defined $self->{login};
@@ -198,9 +202,14 @@ sub open_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    $logger->trace("\$self->{session_id}=$self->{session_id}");
     my $sth = $self->{dbh}->prepare('select form_open(?)');
-    $sth->execute($self->{session_id});
+    #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
+    my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
+    if(! $rc)
+    {
+     $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
+     return undef;
+    }
     my @results = $sth->fetchrow_array();
 
     $self->{form_id} = $results[0];
@@ -1391,6 +1400,8 @@ sub dbconnect_noauto {
         $myconfig->{dbconnect}, $myconfig->{dbuser},
         $myconfig->{dbpasswd}, { AutoCommit => 0 }
     ) or $self->dberror;
+    #HV trying to trace DBI->connect statements
+    $logger->debug("DBI->connect dbh=$dbh");
     $dbh->{pg_enable_utf8} = 1;
 
     # set db options

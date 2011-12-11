@@ -5,6 +5,8 @@ if (agt.indexOf("firefox") != -1) {
         xhre.open("GET",window.location,true,"logout","logout");
         xhre.send("");
         xhre.abort();
+        //be aware, sometimes get-request reaches server despite abort.
+        // LedgerSMB::Auth::DB::get_credentials can have $auth=logout:logout
 }
 }
 catch (e) {

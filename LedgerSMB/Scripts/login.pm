@@ -34,16 +34,17 @@ Displays the login screen.
 
 sub __default {
    my ($request) = @_;
-    my $locale;
-    $locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language})
-      or $request->error( __FILE__ . ':' . __LINE__ . 
-         ": Locale not loaded: $!\n" );         
+    #HV _locale from request
+    #my $locale;
+    #$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language})
+    #  or $request->error( __FILE__ . ':' . __LINE__ . 
+    #     ": Locale not loaded: $!\n" );         
 
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
      my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
-        locale => $locale,
+        locale => $request->{_locale},
         path => 'UI',
         template => 'login',
         format => 'HTML'
@@ -128,7 +129,7 @@ Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
 =cut
 
 sub logout {
-    my ($request) = @_;
+    my ($request) = @_;    
     @{$request->{scripts}} = 
                   qw(UI/logout/iexplore.js 
                      UI/logout/firefox.js
@@ -139,7 +140,7 @@ sub logout {
                    );
     $request->{callback}   = "";
     $request->{endsession} = 1;
-    LedgerSMB::Auth::session_destroy($request);
+    if($request->{dbh}){LedgerSMB::Auth::session_destroy($request);}#if logout on already logged out session
      my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $request->{_locale},

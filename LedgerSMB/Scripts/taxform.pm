@@ -23,11 +23,13 @@ our $VERSION = '1.0';
 
 use strict;
 use LedgerSMB;
+use LedgerSMB::Company_Config;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::TaxForm;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Template;
 use LedgerSMB::Form;
+use LedgerSMB::DBObject::Vendor;
 
 =pod
 
@@ -125,6 +127,14 @@ sub generate_report {
     if (!$request->{format}){
        $request->{format} = 'HTML';
     }
+
+    # Business settings for 1099
+    #
+    my $cc = $LedgerSMB::Company_Config::settings;
+    $request->{company_name}      = $cc->{company_name};
+    $request->{company_address}   = $cc->{company_address};
+    $request->{company_telephone} = $cc->{company_phone};
+    $request->{my_tax_code}       = $cc->{businessnumber};
     # TODO:  Eliminate duplicate code!
     if ($request->{meta_number}) {
       my @call_args = ($request->{'tax_form_id'},
@@ -132,18 +142,37 @@ sub generate_report {
                        $request->{meta_number});
                        
       my @results = $request->call_procedure(procname => 'tax_form_details_report', args => \@call_args);
+      my $credit_id;
       for my $r (@results){
           $r->{acc_sum} = $request->format_amount({amount => $r->{acc_sum}});
           $r->{invoice_sum} = 
                $request->format_amount({amount => $r->{invoice_sum}});
+          ($request->{total_sum}) ? $request->{total_sum} + $r->{total_sum}
+                                  : $r->{total_sum};
           $r->{total_sum} = $request->format_amount({amount => $r->{total_sum}});
+          $credit_id = $r->{credit_id};
       }
+      $request->{total_sum} = $request->format_amount(
+                                      {amount => $request->{total_sum}}
+      ) || '0';
+      #XXX Please note, the line below is a kludge because we don't support
+      # generic companies at present on instantiation.  This means I have to 
+      # specify that this is either a customer or vendor.  Right now I am 
+      # specifying as a vendor.  This should have no effect on subsequent code
+      # but if this is somethign we end up depending on, we need to fix it.
+      my $company = LedgerSMB::DBObject::Vendor->new(base => $request);
+      $company->{id} = $credit_id;
+      $company->get_billing_info;
+      delete $company->{id}; 
+      $request->merge($company);
       $request->{results} = \@results;
+      $request->debug({file=>'/tmp/taxformdebug'});
       
       my $template = LedgerSMB::Template->new(
           user => $request->{_user}, 
           locale => $request->{_locale},
           path => 'UI',
+          media => 'screen',
           template => 'taxform/details_report',
           format => $request->{format},
       );
@@ -154,6 +183,14 @@ sub generate_report {
         my @call_args = ($request->{'tax_form_id'}, $request->{begin_month}.' '.$request->{begin_day}.' '.$request->{begin_year}, $request->{end_month}.' '.$request->{end_day}.' '.$request->{end_year});
         my @results = $request->call_procedure(procname => 'tax_form_summary_report', args => \@call_args);
         for my $r (@results){
+            my $company = LedgerSMB::DBObject::Vendor->new(base => $request);
+            $company->{id} = $r->{credit_id};
+            $company->get_billing_info;
+            delete $company->{id};
+            for my $k (keys %$company){
+                 $r->{$k} = $company->{$k};
+            }
+ 
             $r->{acc_sum} = $request->format_amount({amount => $r->{acc_sum}});
             $r->{invoice_sum} = 
                  $request->format_amount({amount => $r->{invoice_sum}});
@@ -165,6 +202,7 @@ sub generate_report {
             user => $request->{_user}, 
             locale => $request->{_locale},
             path => 'UI',
+            media => 'screen',
             template => 'taxform/summary_report',
             format => $request->{format},
         );
@@ -199,7 +237,7 @@ sub print {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
     my $form_info = $taxform->get($request->{tax_form_id});
-    $request->{taxform_name} = $form_info->{description};
+    $request->{taxform_name} = $form_info->{form_name};
     $request->{format} = 'PDF';
     generate_report($request);    
 }

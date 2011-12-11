@@ -9,9 +9,10 @@
 -- This file provides 1099 reporting (MISC and INT).  It does NOT provide 1099-K
 -- and we'd need an abstraction layer for that. --CT
 
-
-
+BEGIN;
+DROP TYPE IF EXISTS tax_form_report_item CASCADE;
 CREATE TYPE tax_form_report_item AS (
+    credit_id integer,
     legal_name text, 
     entity_id integer, 
     entity_class integer, 
@@ -21,7 +22,9 @@ CREATE TYPE tax_form_report_item AS (
     invoice_sum numeric, 
     total_sum numeric);
 
+DROP TYPE IF EXISTS tax_form_report_detail_item CASCADE;
 CREATE TYPE tax_form_report_detail_item AS (
+    credit_id integer,
     legal_name text, 
     entity_id integer, 
     entity_class integer, 
@@ -40,7 +43,8 @@ DECLARE
 	out_row tax_form_report_item;
 BEGIN
 	FOR out_row IN 
-              SELECT company.legal_name, company.entity_id, 
+              SELECT entity_credit_account.id,
+                     company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
                      entity_credit_account.meta_number, 
                      sum(CASE WHEN gl.amount = 0 THEN 0
@@ -107,7 +111,7 @@ BEGIN
 		JOIN company ON (entity.id = company.entity_id)
 		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
-             GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code 
+             GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
     LOOP
 		RETURN NEXT out_row;
 	END LOOP;
@@ -125,7 +129,8 @@ DECLARE
 	out_row tax_form_report_detail_item;
 BEGIN
 	FOR out_row IN 
-              SELECT company.legal_name, company.entity_id, 
+              SELECT entity_credit_account.id,
+                     company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
                      entity_credit_account.meta_number, 
                      sum(CASE WHEN gl.amount = 0 then 0 
@@ -191,7 +196,7 @@ BEGIN
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
 		WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
-		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id
+		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
@@ -203,3 +208,4 @@ COMMENT ON FUNCTION tax_form_details_report
 $$ This provides a list of invoices and transactions that a report hits.  This 
 is intended to allow an organization to adjust what is reported on the 1099 
 before printing them.$$;
+COMMIT;
