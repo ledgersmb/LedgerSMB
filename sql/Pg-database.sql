@@ -577,6 +577,21 @@ COMMENT ON TABLE open_forms IS
 $$ This is our primary anti-xsrf measure, as this allows us to require a full
 round trip to the web server in order to save data.$$;
 --
+CREATE TABLE transactions (
+  id int PRIMARY KEY,
+  table_name text,
+  locked_by int references "session" (session_id) ON DELETE SET NULL,
+  approved_by int references entity (id),
+  approved_at timestamp
+);
+
+CREATE INDEX transactions_locked_by_i ON transactions(locked_by);
+
+COMMENT on TABLE transactions IS 
+$$ This table provides referential integrity between AR, AP, GL tables on one
+hand and acc_trans on the other, pending the refactoring of those tables.  It
+also is used to provide discretionary locking of financial transactions across 
+database connections, for example in batch payment workflows.$$;
 
 CREATE OR REPLACE FUNCTION lock_record (in_id int, in_session_id int) 
 returns bool as 
@@ -584,13 +599,13 @@ $$
 declare
    locked int;
 begin
-   SELECT locked_by into locked from journal_entry where id = $1;
+   SELECT locked_by into locked from transactions where id = $1;
    IF NOT FOUND THEN
 	RETURN FALSE;
    ELSEIF locked is not null AND locked <> $2 THEN
         RETURN FALSE;
    END IF;
-   UPDATE journal_entry set locked_by = $2 where id = $1;
+   UPDATE transactions set locked_by = $2 where id = $1;
    RETURN TRUE;
 end;
 $$ language plpgsql;
@@ -601,6 +616,11 @@ id of in_session_id.  If possible, it returns true.  If it is already locked,
 false.  These are not hard locks and the application is free to disregard or 
 not even ask.  They time out when the session is destroyed.
 $$;
+
+COMMENT ON column transactions.locked_by IS
+$$ This should only be used in pessimistic locking measures as required by large
+batch work flows. $$;
+
 
 -- LOCATION AND COUNTRY
 
@@ -1146,6 +1166,24 @@ would be a purchase order, and for a vendor invoice, this would be a sales
 order.$$;
 
 --
+CREATE TABLE gl (
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
+  reference text,
+  description text,
+  transdate date DEFAULT current_date,
+  person_id integer references person(id),
+  notes text,
+  approved bool default true,
+  department_id int default 0
+);
+
+COMMENT ON TABLE gl IS
+$$ This table holds summary information for entries in the general journal.
+Does not hold summary information in 1.3 for AR or AP entries.$$;
+
+COMMENT ON COLUMN gl.person_id is $$ the person_id of the employee who created
+the entry.$$;
+--
 CREATE TABLE gifi (
   accno text PRIMARY KEY,
   description text
@@ -1256,6 +1294,34 @@ voucher. $$;
 
 COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
 
+CREATE TABLE acc_trans (
+  trans_id int NOT NULL REFERENCES transactions(id),
+  chart_id int NOT NULL REFERENCES  account(id),
+  amount NUMERIC,
+  transdate date DEFAULT current_date,
+  source text,
+  cleared bool DEFAULT 'f',
+  fx_transaction bool DEFAULT 'f',
+  project_id int,
+  memo text,
+  invoice_id int,
+  approved bool default true,
+  cleared_on date,
+  reconciled_on date,
+  voucher_id int references voucher(id),
+  entry_id SERIAL PRIMARY KEY
+);
+
+COMMENT ON TABLE acc_trans IS
+$$This table stores line items for financial transactions.  Please note that
+payments in 1.3 are not full-fledged transactions.$$;
+
+COMMENT ON COLUMN acc_trans.source IS
+$$Document Source identifier for individual line items, usually used 
+for payments.$$;
+
+CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
+--
 --
 CREATE TABLE parts (
   id serial PRIMARY KEY,
@@ -1408,6 +1474,173 @@ $$This is the id of the assembly the part is being mapped to.$$;
 COMMENT ON COLUMN assembly.parts_id IS
 $$ID of part that is a member of the assembly.$$;
 
+
+--
+CREATE TABLE ar (
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
+  invnumber text,
+  transdate date DEFAULT current_date,
+  entity_id int REFERENCES entity(id),
+  taxincluded bool,
+  amount NUMERIC,
+  netamount NUMERIC,
+  paid NUMERIC,
+  datepaid date,
+  duedate date,
+  invoice bool DEFAULT 'f',
+  shippingpoint text,
+  terms int2 DEFAULT 0,
+  notes text,
+  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
+      OR (amount IS NOT NULL AND curr IS NOT NULL)),
+  ordnumber text,
+  person_id integer references entity_employee(entity_id),
+  till varchar(20),
+  quonumber text,
+  intnotes text,
+  department_id int default 0,
+  shipvia text,
+  language_code varchar(6),
+  ponumber text,
+  on_hold bool default false,
+  reverse bool default false,
+  approved bool default true,
+  entity_credit_account int references entity_credit_account(id) not null,
+  force_closed bool,
+  description text,
+  unique(invnumber) -- probably a good idea as per Erik's request --CT
+);
+
+COMMENT ON TABLE ar IS
+$$ Summary/header information for AR transactions and sales invoices.
+Note that some constraints here are hard to enforce because we haven not gotten 
+to rewriting the relevant code here.$$;
+
+COMMENT ON COLUMN ar.invnumber IS
+$$ Text identifier for the invoice.  Must be unique.$$;
+
+COMMENT ON COLUMN ar.invoice IS
+$$ True if the transaction tracks goods/services purchase using the invoice
+table.  False otherwise.$$;
+
+COMMENT ON COLUMN ar.amount IS
+$$ This stores the total amount (including taxes) for the transaction.$$;
+
+COMMENT ON COLUMN ar.netamount IS
+$$ Total amount excluding taxes for the transaction.$$;
+
+COMMENT ON COLUMN ar.curr IS $$ 3 letters to identify the currency.$$;
+
+COMMENT ON COLUMN ar.ordnumber IS $$ Order Number$$;
+
+COMMENT ON COLUMN ar.ponumber is $$Purchase Order Number$$; 
+
+COMMENT ON COLUMN ar.person_id IS $$Person who created the transaction$$;
+
+COMMENT ON COLUMN ar.quonumber IS $$Quotation Number$$;
+
+COMMENT ON COLUMN ar.notes IS 
+$$These notes are displayed on the invoice when printed or emailed$$;
+
+COMMENT ON COLUMN ar.intnotes IS
+$$These notes are not displayed when the invoice is printed or emailed and
+may be updated without reposting hte invocie.$$;
+
+COMMENT ON COLUMN ar.reverse IS
+$$If true numbers are displayed after multiplying by -1$$;
+
+COMMENT ON COLUMN ar.approved IS
+$$Only show in financial reports if true.$$;
+
+COMMENT ON COLUMN ar.entity_credit_account IS
+$$ reference for the customer account used.$$;
+
+COMMENT ON COLUMN ar.force_closed IS
+$$ Not exposed to the UI, but can be set to prevent an invoice from showing up
+for payment or in outstanding reports.$$;
+
+--
+CREATE TABLE ap (
+  id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
+  invnumber text,
+  transdate date DEFAULT current_date,
+  entity_id int REFERENCES entity(id),
+  taxincluded bool DEFAULT 'f',
+  amount NUMERIC,
+  netamount NUMERIC,
+  paid NUMERIC,
+  datepaid date,
+  duedate date,
+  invoice bool DEFAULT 'f',
+  ordnumber text,
+  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
+    OR (amount IS NOT NULL AND curr IS NOT NULL)) , -- This can be null, but shouldn't be.
+  notes text,
+  person_id integer references entity_employee(entity_id),
+  till varchar(20),
+  quonumber text,
+  intnotes text,
+  department_id int DEFAULT 0,
+  shipvia text,
+  language_code varchar(6),
+  ponumber text,
+  shippingpoint text,
+  on_hold bool default false,
+  approved bool default true,
+  reverse bool default false,
+  terms int2 DEFAULT 0,
+  description text,
+  force_closed bool,
+  entity_credit_account int references entity_credit_account(id) NOT NULL
+);
+
+COMMENT ON TABLE ap IS
+$$ Summary/header information for AP transactions and vendor invoices.
+Note that some constraints here are hard to enforce because we haven not gotten 
+to rewriting the relevant code here.$$;
+
+COMMENT ON COLUMN ap.invnumber IS
+$$ Text identifier for the invoice.  Must be unique.$$;
+
+COMMENT ON COLUMN ap.invoice IS
+$$ True if the transaction tracks goods/services purchase using the invoice
+table.  False otherwise.$$;
+
+COMMENT ON COLUMN ap.amount IS
+$$ This stores the total amount (including taxes) for the transaction.$$;
+
+COMMENT ON COLUMN ap.netamount IS
+$$ Total amount excluding taxes for the transaction.$$;
+
+COMMENT ON COLUMN ap.curr IS $$ 3 letters to identify the currency.$$;
+
+COMMENT ON COLUMN ap.ordnumber IS $$ Order Number$$;
+
+COMMENT ON COLUMN ap.ponumber is $$Purchase Order Number$$; 
+
+COMMENT ON COLUMN ap.person_id IS $$Person who created the transaction$$;
+
+COMMENT ON COLUMN ap.quonumber IS $$Quotation Number$$;
+
+COMMENT ON COLUMN ap.notes IS 
+$$These notes are displayed on the invoice when printed or emailed$$;
+
+COMMENT ON COLUMN ap.intnotes IS
+$$These notes are not displayed when the invoice is printed or emailed and
+may be updated without reposting hte invocie.$$;
+
+COMMENT ON COLUMN ap.reverse IS
+$$If true numbers are displayed after multiplying by -1$$;
+
+COMMENT ON COLUMN ap.approved IS
+$$Only show in financial reports if true.$$;
+
+COMMENT ON COLUMN ap.entity_credit_account IS
+$$ reference for the vendor account used.$$;
+
+COMMENT ON COLUMN ap.force_closed IS
+$$ Not exposed to the UI, but can be set to prevent an invoice from showing up
+for payment or in outstanding reports.$$;
 
 --
 CREATE TABLE taxmodule (
@@ -1807,6 +2040,40 @@ CREATE TABLE jcitems (
 
 COMMENT ON TABLE jcitems IS $$ Time and materials cards. 
 Materials cards not implemented.$$;
+
+CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
+$$
+BEGIN
+	IF tg_op = 'INSERT' THEN
+		INSERT INTO transactions (id, table_name) 
+		VALUES (new.id, TG_RELNAME);
+	ELSEIF tg_op = 'UPDATE' THEN
+		IF new.id = old.id THEN
+			return new;
+		ELSE
+			UPDATE transactions SET id = new.id WHERE id = old.id;
+		END IF;
+	ELSE 
+		DELETE FROM transactions WHERE id = old.id;
+	END IF;
+	RETURN new;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION track_global_sequence() is
+$$ This trigger is used to track the id sequence entries across the 
+transactions table, and with the ar, ap, and gl tables.  This is necessary 
+because these have not been properly refactored yet.
+$$;
+
+CREATE TRIGGER ap_track_global_sequence BEFORE INSERT OR UPDATE ON ap
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
+
+CREATE TRIGGER ar_track_global_sequence BEFORE INSERT OR UPDATE ON ar
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
+
+CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
 CREATE TABLE custom_table_catalog (
 table_id SERIAL PRIMARY KEY,
