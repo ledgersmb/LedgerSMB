@@ -1,6 +1,4 @@
-999REATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
-CREATE EXTENSION pg_trgm; -- Separate transaction, only needed for 9.1
-CREATE EXTENSION btree_gist; -- Separate transaction, only needed for 9.1
+CREATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
 
 begin;
 
@@ -156,12 +154,6 @@ COMMENT ON TABLE pricegroup IS
 $$ Pricegroups are groups of customers who are assigned prices and discounts
 together.$$;
 --TABLE language moved here because of later references
-CREATE TABLE language (
-  code varchar(6) PRIMARY KEY,
-  description text
-);
-COMMENT ON TABLE language IS
-$$ Languages for manual translations and so forth.$$;
 INSERT INTO language (code, description)
 VALUES ('ar_EG', 'Arabic (Egypt)'),
        ('bg',    'Bulgarian'), 
