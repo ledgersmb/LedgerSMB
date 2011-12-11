@@ -13,6 +13,7 @@ Changelog for 1.3.9
 * Corrected error message in old handler (Herman V)
 * Reduced warnings in logs (Herman V and Chris T)
 * Corrected "Not a CODE reference" in payment processing (Herman V)
+* Corrected year/month not working on payment dropdowns (Herman V)
 
 Changelog for 1.3.8:
 * Fixed duplicate key error saving taxes (Herman V)
