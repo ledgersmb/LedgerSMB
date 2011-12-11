@@ -196,21 +196,30 @@ sub new {
 
 sub open_form {
     my ($self) = @_;
+    my @results ;
     if ($self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my $sth = $self->{dbh}->prepare('select form_open(?)');
     #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
+    if($self->{session_id})
+    {
+    my $sth = $self->{dbh}->prepare('select form_open(?)');
     my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
     if(! $rc)
     {
      $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
      return undef;
     }
-    my @results = $sth->fetchrow_array();
+    @results = $sth->fetchrow_array();
+    }
+    else
+    {
+     $logger->debug("no \$self->{session_id}!");
+     return undef;
+    }
 
     $self->{form_id} = $results[0];
     return $results[0];
