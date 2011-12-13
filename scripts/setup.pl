@@ -765,7 +765,7 @@ sub rebuild_modules {
     $database->process_roles('Roles.sql');
     # Credentials set above via environment variables --CT
     #avoid msg commit ineffective with AutoCommit enabled
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",{AutoCommit=>0});
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",$creds->{login},$creds->{password},{AutoCommit=>0});
     my $dbh = $request->{dbh};
     my $sth = $dbh->prepare(
           'UPDATE defaults SET value = ? WHERE setting_key = ?'
