@@ -1,5 +1,13 @@
 GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
 
+-- Exchange rate creation (required insert and update on 'exchangerate' table)
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__exchangerate_edit"
+WITH INHERIT NOLOGIN;
+
+GRANT INSERT, UPDATE ON exchangerate
+TO "lsmb_<?lsmb dbname ?>__exchangerate_edit";
+
 -- Basic file attachments
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__file_read"
@@ -40,6 +48,7 @@ GRANT INSERT, UPDATE
 GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_tx";
 GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_part";
 GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_order";
+
 -- Contacts
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_read"
@@ -207,7 +216,8 @@ values (210, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 -- AR
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__exchangerate_edit";
 
 GRANT INSERT ON ar, invoice_note 
 TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
@@ -318,7 +328,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create",
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__exchangerate_edit";
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
@@ -337,7 +348,8 @@ GRANT DELETE ON new_shipto TO "lsmb_<?lsmb dbname ?>__sales_order_edit";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_quotation_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__exchangerate_edit";
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
@@ -396,7 +408,8 @@ IN ROLE
 -- AP
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__exchangerate_edit";
 
 GRANT SELECT, INSERT ON ap, invoice_note 
 TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
@@ -503,7 +516,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create",
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__purchase_order_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__exchangerate_edit";
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
@@ -523,7 +537,8 @@ values (52, 'allow', 'lsmb_<?lsmb dbname ?>__purchase_order_create');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__rfq_create"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
+"lsmb_<?lsmb dbname ?>__exchangerate_edit";
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__rfq_create";
 GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__rfq_create";
