@@ -351,6 +351,26 @@ sub get_info {
    return $retval;
 }
 
+=item $db->server_version();
+
+Connects to the server and returns the version number in x.y.z format.
+
+=cut
+
+sub server_version {
+    my $self = shift @_;
+    my $creds = LedgerSMB::Auth->get_credentials();
+    my $dbh = DBI->connect(
+        "dbi:Pg:dbname=template1", 
+         "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+    );
+    my ($version) = $dbh->selectrow_array('SELECT version()');
+    $version =~ /(\d+\.\d+\.\d+)/;
+    my $retval = $1;
+    $dbh->disconnect;
+    return $retval;
+}
+
 =item $db->create();
 
 Creates a database and loads the contrib files.  This is done from template0, 
