@@ -331,9 +331,11 @@ sub post_invoice {
                 $invoice_id
             ) || $form->dberror($query);
 
-            my $report=($taxformfound and $form->{"taxformcheck_$i"})?"true":"false";
-            IR->update_invoice_tax_form($form,$dbh,$invoice_id,$report);
-
+            if($taxformfound)
+            {
+             my $report=($taxformfound and $form->{"taxformcheck_$i"})?"true":"false";
+             IR->update_invoice_tax_form($form,$dbh,$invoice_id,$report);
+            }
 
             if (defined $form->{approved}) {
 
