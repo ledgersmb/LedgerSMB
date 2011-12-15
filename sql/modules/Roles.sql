@@ -595,6 +595,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__pos_enter"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
+GRANT "lsmb_<?lsmb dbname ?>__ar_transaction_create" TO "lsmb_<?lsmb dbname ?>__pos_enter";
+
 GRANT SELECT, INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON ar TO "lsmb_<?lsmb dbname ?>__pos_enter";
