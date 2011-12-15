@@ -95,6 +95,7 @@ our $localepath = 'locale/po';
 
 our $no_db_str = 'database';
 our $log_level = 'ERROR';
+our $DBI_TRACE=0;
 # available printers
 our %printer;
 
@@ -102,7 +103,7 @@ our %config;
 read_config( 'ledgersmb.conf' => %config ) or die;
 # Root variables
 for my $var (
-    qw(pathsep logging log_level check_max_invoices language auth latex
+    qw(pathsep logging log_level DBI_TRACE check_max_invoices language auth latex
     db_autoupdate force_username_case max_post_size decimal_places cookie_name
     return_accno no_db_str tempdir cache_templates)
   )

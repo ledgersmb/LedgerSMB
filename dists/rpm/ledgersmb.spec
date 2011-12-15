@@ -1,7 +1,7 @@
 # RPM spec written for and tested on CentOS 4 and CentOS 5 
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
-Version: 1.3.4
+Version: 1.3.9
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
@@ -144,8 +144,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 
-%doc doc/{COPYRIGHT,faq.html,LedgerSMB-manual.pdf,README,release_notes}
-%doc BUGS Changelog CONTRIBUTORS INSTALL LICENSE README.translations UPGRADE
+%doc doc/{COPYRIGHT,faq.html,LedgerSMB-manual.pdf,release_notes}
+%doc Changelog CONTRIBUTORS INSTALL LICENSE README.translations UPGRADE
 
 
 %changelog

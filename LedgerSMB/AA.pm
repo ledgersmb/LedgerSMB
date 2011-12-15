@@ -453,19 +453,21 @@ sub post_transaction {
            $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
 
-	   $query="select max(entry_id) from acc_trans;";
-	   my $sth1=$dbh->prepare($query);
-
-	   $sth1->execute();
-
-	   my $entry_id=$sth1->fetchrow()  || $form->dberror($query);	  
-
-           my $report=($taxformfound and $ref->{taxformcheck})?"true":"false";
-
-	   AA->update_ac_tax_form($form,$dbh,$entry_id,$report);
-
+           if($taxformfound)
+           {
+            $query="select max(entry_id) from acc_trans;";
+            my $sth1=$dbh->prepare($query);
+            $sth1->execute();
+            my $entry_id=$sth1->fetchrow()  || $form->dberror($query);
+            my $report=($taxformfound and $ref->{taxformcheck})?"true":"false";
+            AA->update_ac_tax_form($form,$dbh,$entry_id,$report);
+           }
+           else
+           {
+            $logger->debug("skipping ac_tax_form because no tax_form");
+           }
         }
-    }
+    }#foreach
 
     # save taxes
     foreach $ref ( @{ $form->{acc_trans}{taxes} } ) {
@@ -844,6 +846,8 @@ sub transactions {
     my $acc_trans_flds;
     my $approved = ($form->{approved}) ? 'TRUE' : 'FALSE';
 
+    #print STDERR localtime()." AA.pm transactions \$approved=$approved\n";
+
     if ( $form->{vc} eq 'vendor' ) {
         $ml      = -1;
         $ARAP    = 'AP';
@@ -1185,6 +1189,7 @@ sub transactions {
                    $group_by
 			ORDER BY $sortorder";
     }
+    #print STDERR localtime()." AA.pm transactions query=$query\n";
     my $sth = $dbh->prepare($query);
     $sth->execute(@paidargs) || $form->dberror($query);
 

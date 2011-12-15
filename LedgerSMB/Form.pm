@@ -196,21 +196,30 @@ sub new {
 
 sub open_form {
     my ($self) = @_;
+    my @results ;
     if ($self->{form_id} =~ '^\s*$'){
         delete $self->{form_id};
     }
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my $sth = $self->{dbh}->prepare('select form_open(?)');
     #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
+    if($self->{session_id})
+    {
+    my $sth = $self->{dbh}->prepare('select form_open(?)');
     my $rc=$sth->execute($self->{session_id});#HV ERROR:Invalid session,if count(*) FROM session!=1,multiple login
     if(! $rc)
     {
      $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
      return undef;
     }
-    my @results = $sth->fetchrow_array();
+    @results = $sth->fetchrow_array();
+    }
+    else
+    {
+     $logger->debug("no \$self->{session_id}!");
+     return undef;
+    }
 
     $self->{form_id} = $results[0];
     return $results[0];
@@ -1402,6 +1411,13 @@ sub dbconnect_noauto {
     ) or $self->dberror;
     #HV trying to trace DBI->connect statements
     $logger->debug("DBI->connect dbh=$dbh");
+    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
+    if($dbi_trace)
+    {
+     $logger->debug("\$dbi_trace=$dbi_trace");
+     $dbh->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
+    }
+
     $dbh->{pg_enable_utf8} = 1;
 
     # set db options
@@ -3240,22 +3256,22 @@ Replace <?lsmb curr ?> with the value of $form->{currency}
 
 sub update_defaults {
 
-    my ( $self, $myconfig, $fld, $nocommit) = @_;
+    my ( $self, $myconfig, $fld,$dbh_parm,$nocommit) = @_;
 
     if ( !$self->{dbh} && $self ) {
         $self->db_init($myconfig);
     }
 
-    my $dbh = $self->{dbh};
+    #my $dbh = $self->{dbh};
 
-    if ( !$self ) {
-        $dbh = $_[3];
-    }
+    #if ( !$self ) { #if !$self, previous statement would already have failed!
+    #    $dbh = $_[3];
+    #}
 
     my $query = qq|
 		SELECT value FROM defaults 
 		 WHERE setting_key = ? FOR UPDATE|;
-    my $sth = $dbh->prepare($query);
+    my $sth = $self->{dbh}->prepare($query);
     $sth->execute($fld);
     ($_) = $sth->fetchrow_array();
 
@@ -3379,10 +3395,10 @@ sub update_defaults {
 		   SET value = ?
 		 WHERE setting_key = ?|;
 
-    $sth = $dbh->prepare($query);
+    $sth = $self->{dbh}->prepare($query);
     $sth->execute( $dbvar, $fld ) || $self->dberror($query);
 
-    $dbh->commit if !defined $nocommit;
+    $self->{dbh}->commit if !defined $nocommit;
 
     $var;
 }

@@ -59,6 +59,25 @@ sub login {
             company_name => $request->{database},
                 password => $creds->{password}}
     );
+    my $server_info = $database->server_version;
+    my @sv_info = split '.', $server_info;
+    if (($sv_info[0] > 9)or ($sv_info[0]  == 9 and $sv_info[1] >= 1)){
+       if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.control"){
+            $request->error($request->{_locale}->text(
+                      'Cannot find Contrib scripts in [_1].',
+                      $ENV{PG_CONTRIB_DIR}
+            ));
+       }
+    } else {
+       if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.sql"){
+            $request->error($request->{_locale}->text(
+                      'Cannot find Contrib scripts in [_1].',
+                      $ENV{PG_CONTRIB_DIR}
+            ));
+      
+       }
+    }
+    
     my $version_info = $database->get_info();
     if(!$request->{dbh}){$request->{dbh}=$database->{dbh};}#allow upper stack to disconnect dbh when leaving
     $request->{login_name} = $version_info->{username};
@@ -758,7 +777,7 @@ sub rebuild_modules {
     $database->process_roles('Roles.sql');
     # Credentials set above via environment variables --CT
     #avoid msg commit ineffective with AutoCommit enabled
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",{AutoCommit=>0});
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",$creds->{login},$creds->{password},{AutoCommit=>0});
     my $dbh = $request->{dbh};
     my $sth = $dbh->prepare(
           'UPDATE defaults SET value = ? WHERE setting_key = ?'

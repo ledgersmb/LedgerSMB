@@ -67,6 +67,7 @@
 	PROCESS input element_data=row.$column.input ?>
     <?lsmb ELSIF row.$column.select.defined;
 	PROCESS select element_data=row.$column.select ?>
+    <?lsmb ELSIF row.$column.text.defined;row.$column.text ?>
     <?lsmb ELSE; row.$column; END ?>
   </<?lsmb s ?>>
   <?lsmb END ?>

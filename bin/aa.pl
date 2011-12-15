@@ -1726,7 +1726,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
 	<tr>
 	  <th align=right nowrap>| . $locale->text('From') . qq|</th>
 	  <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
-	  <th align=right>| . $locale->text('To') . qq|</th>
+	  <th align=right>| . $locale->text('Date to') . qq|</th>
 	  <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom

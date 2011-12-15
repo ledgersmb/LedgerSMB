@@ -241,8 +241,9 @@ sub get_part {
 
 sub save {
     my ( $self, $myconfig, $form ) = @_;
+    my $nocommit=1;
     $form->{partnumber} =
-      $form->update_defaults( $myconfig, "partnumber", $dbh )
+      $form->update_defaults( $myconfig, "partnumber", $dbh,$nocommit)
       if !$form->{partnumber};
 
     ( $form->{inventory_accno} ) = split( /--/, $form->{IC_inventory} );

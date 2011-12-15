@@ -1506,7 +1506,9 @@ CREATE TABLE ar (
 COMMENT ON TABLE ar IS
 $$ Summary/header information for AR transactions and sales invoices.
 Note that some constraints here are hard to enforce because we haven not gotten 
-to rewriting the relevant code here.$$;
+to rewriting the relevant code here.
+HV TODO drop entity_id
+$$;
 
 COMMENT ON COLUMN ar.invnumber IS
 $$ Text identifier for the invoice.  Must be unique.$$;
@@ -1589,7 +1591,9 @@ CREATE TABLE ap (
 COMMENT ON TABLE ap IS
 $$ Summary/header information for AP transactions and vendor invoices.
 Note that some constraints here are hard to enforce because we haven not gotten 
-to rewriting the relevant code here.$$;
+to rewriting the relevant code here.
+HV TODO drop entity_id
+$$;
 
 COMMENT ON COLUMN ap.invnumber IS
 $$ Text identifier for the invoice.  Must be unique.$$;
@@ -2127,8 +2131,8 @@ ELSE
     t_reference := t_row.reference;
 END IF;
 
-INSERT INTO audittrail (trans_id, reference, action, person_id)
-values (t_row.id, t_reference, TG_OP, person__get_my_entity_id());
+INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
+values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
 
 return null; -- AFTER TRIGGER ONLY, SAFE
 END;

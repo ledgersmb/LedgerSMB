@@ -2068,8 +2068,8 @@ sub payments {
     }
 
     ( $form->{fromdate}, $form->{todate} ) =
-      $form->from_to( $form->{year}, $form->{month}, $form->{interval} )
-      if $form->{year} && $form->{month};
+      $form->from_to( $form->{fromyear}, $form->{frommonth}, $form->{interval} )
+      if $form->{fromyear} && $form->{frommonth};
 
     if ( $form->{fromdate} ) {
         $where .= " AND ac.transdate >= " . $dbh->quote( $form->{fromdate} );

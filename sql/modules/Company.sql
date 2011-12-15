@@ -202,7 +202,7 @@ FROM   eca_history($1, $2, $3, $4, $5, $6, $7, $8, $9,
  group by id, name, meta_number, curr, parts_id, partnumber, description, unit
  order by meta_number;
 $$ LANGUAGE SQL;
-
+--HV coalesce(ec.entity_class,e.entity_class) in case entity but not yet entity_credit_account
 CREATE OR REPLACE FUNCTION company__search
 (in_account_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
@@ -235,7 +235,7 @@ BEGIN
                       SELECT * from entity_credit_account
                        WHERE in_meta_number IS NULL) ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
-		WHERE ec.entity_class = in_account_class
+		WHERE coalesce(ec.entity_class,e.entity_class) = in_account_class
 			AND (c.id IN (select company_id FROM company_to_contact
 				WHERE contact ILIKE ALL(t_contact_info))
 				OR '' ILIKE ALL(t_contact_info))

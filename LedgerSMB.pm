@@ -848,7 +848,12 @@ sub _db_init {
         "dbi:Pg:dbname=$dbname", "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     ); 
     $logger->debug("DBI->connect dbh=$self->{dbh}");
-     #my $dbh = $self->{dbh};
+    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
+    if($dbi_trace)
+    {
+     $logger->debug("\$dbi_trace=$dbi_trace");
+     $self->{dbh}->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
+    }
 
 
     if (($self->{script} eq 'login.pl') && ($self->{action} eq 
@@ -856,7 +861,6 @@ sub _db_init {
         if (!$self->{dbh}){
             $self->{_auth_error} = $DBI::errstr;
         }
-
         return;
     }
     elsif (!$self->{dbh}){
