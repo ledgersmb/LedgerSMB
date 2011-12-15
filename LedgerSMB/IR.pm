@@ -333,7 +333,7 @@ sub post_invoice {
 
             if($taxformfound)
             {
-             my $report=($taxformfound and $form->{"taxformcheck_$i"})?"true":"false";
+             my $report=$form->{"taxformcheck_$i"}?"true":"false";
              IR->update_invoice_tax_form($form,$dbh,$invoice_id,$report);
             }
 
