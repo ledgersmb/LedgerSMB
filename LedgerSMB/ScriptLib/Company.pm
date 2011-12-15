@@ -380,13 +380,13 @@ sub get_results {
 
     my @rows;
     for $ref (@{$company->{search_results}}){
+    if(!$ref->{meta_number}){$ref->{meta_number}='';}
+    my $http_href="$get_url&entity_id=$ref->{entity_id}"."&meta_number=$ref->{meta_number}";
 	push @rows, 
-                {legal_name   => $ref->{legal_name},
+                {legal_name   => {text=>$ref->{legal_name},href=>$http_href},
 		entity_control_code => $ref->{entity_control_code},
 		credit_description => $ref->{credit_description},
-                meta_number   => {text => $ref->{meta_number},
-                                  href => "$get_url&entity_id=$ref->{entity_id}"		                           . "&meta_number=$ref->{meta_number}"
-		                 },
+                meta_number   => {text=>$ref->{meta_number}},
 		business_type => $ref->{business_type},
                 curr          => $ref->{curr},
                 };
