@@ -13,7 +13,7 @@ $pos_config{'rem_host'} = $ENV{'REMOTE_ADDR'};
 
 $pos_config{'pd_host'}  = $pos_config{'rem_host'};
 $pos_config{'pd_port'}  = 6601;
-$pos_config{'pd_proto'} = 'tcp';
+$pos_config{'pd_proto'} = 'udp';
 
 require "drivers/pd3000.pl";    # Use the PD3000 driver
 

@@ -144,6 +144,7 @@ sub process {
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
+                ENCODING => 'utf8',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template::Latex->error(); 
@@ -151,7 +152,7 @@ sub process {
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
-		"$parent->{outputfile}.$format", binmode => 1)) {
+		"$parent->{outputfile}.$format", {binmode => 1})) {
 		throw Error::Simple $template->error();
 	}
 	if (lc $format eq 'dvi') {

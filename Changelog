@@ -5,6 +5,8 @@ Supported Presently
 Changelog for 1.3.10
 * Fixes for permissions for exchangerate table (Erik H)
 * Fixes for POS cashier permissions.  (Chris T)
+* More Localization Fixes (Herman V)
+* Customer/Vendor Search now shows records without credit accounts (Herman V)
 
 Changelog for 1.3.9
 * More logging enhancements (Herman V)
