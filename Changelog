@@ -8,6 +8,7 @@ Changelog for 1.3.10
 * More Localization Fixes (Herman V)
 * Customer/Vendor Search now shows records without credit accounts (Herman V)
 * Better error handling contrib modules not found (Chris T)
+* pos.conf.pl no longer overwritten on upgrade (Chris T)
 
 Changelog for 1.3.9
 * More logging enhancements (Herman V)
