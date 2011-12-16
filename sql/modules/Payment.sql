@@ -192,15 +192,17 @@ BEGIN
 		         THEN ex.buy
 		         ELSE ex.sell END)
 		         END) AS exchangerate
-                 FROM  (SELECT id, invnumber, transdate, amount, entity_id,
+                 --TODO HV prepare drop entity_id from ap,ar
+                 --FROM  (SELECT id, invnumber, transdate, amount, entity_id,
+                 FROM  (SELECT id, invnumber, transdate, amount,
 		               1 as invoice_class, paid, curr, 
 		               entity_credit_account, department_id, approved
 		          FROM ap
                          UNION
-		         SELECT id, invnumber, transdate, amount, entity_id,
+		         --SELECT id, invnumber, transdate, amount, entity_id,
+		         SELECT id, invnumber, transdate, amount,
 		               2 AS invoice_class, paid, curr,
 		               entity_credit_account, department_id, approved
-
 		         FROM ar
 		         ) a 
 		JOIN (SELECT trans_id, chart_id, sum(CASE WHEN in_account_class = 1 THEN amount
@@ -211,8 +213,8 @@ BEGIN
 		        GROUP BY trans_id, chart_id) ac ON (ac.trans_id = a.id)
 		        JOIN chart ON (chart.id = ac.chart_id)
 		        LEFT JOIN exchangerate ex ON ( ex.transdate = a.transdate AND ex.curr = a.curr )         
-		        JOIN entity_credit_account c ON (c.id = a.entity_credit_account
-                        OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
+		        JOIN entity_credit_account c ON (c.id = a.entity_credit_account)
+                --        OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
 	 	        WHERE ((chart.link = 'AP' AND in_account_class = 1)
 		              OR (chart.link = 'AR' AND in_account_class = 2))
               	        AND a.invoice_class = in_account_class
