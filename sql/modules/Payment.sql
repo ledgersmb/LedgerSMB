@@ -669,13 +669,13 @@ BEGIN
         ELSIF (in_account_class = 2) THEN
            SELECT buy INTO old_exchangerate 
            FROM exchangerate e
-           JOIN ap a ON (a.transdate = e.transdate)
+           JOIN ar a ON (a.transdate = e.transdate)
                         AND (a.curr = e.curr)
            WHERE a.id = in_transaction_id[out_count];
         ELSE 
            SELECT sell INTO old_exchangerate 
            FROM exchangerate e
-           JOIN ar a ON (a.transdate = e.transdate)
+           JOIN ap a ON (a.transdate = e.transdate)
                         AND (a.curr = e.curr)
            WHERE a.id = in_transaction_id[out_count];
         END IF;
