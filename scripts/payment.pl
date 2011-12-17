@@ -950,7 +950,7 @@ for my $ref (0 .. $#array_options) {
        $topay_fx_value = $due_fx = $due_fx + $request->round_amount($array_options[$ref]->{discount}/$array_options[$ref]->{exchangerate});
         }
    } else {
-       $topay_fx_value = "N/A";
+   #    $topay_fx_value = "N/A";
    }
 
    

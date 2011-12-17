@@ -1136,19 +1136,20 @@ DECLARE current_exrate  exchangerate%ROWTYPE;
 BEGIN
 select  * INTO current_exrate
         FROM  exchangerate 
-        WHERE transdate = in_date;
-IF current_exrate.transdate = in_date THEN
+        WHERE transdate = in_datepaid
+              AND curr = in_curr;
+IF current_exrate.transdate = in_datepaid THEN
    IF in_account_class = 2 THEN 
-      UPDATE exchangerate set buy = in_exchangerate  where transdate = in_date;
+      UPDATE exchangerate set buy = in_exchangerate  where transdate = in_datepaid;
    ELSE
-      UPDATE exchangerate set sell = in_exchangerate where transdate = in_date;
+      UPDATE exchangerate set sell = in_exchangerate where transdate = in_datepaid;
    END IF;
    RETURN 0; 
 ELSE
     IF in_account_class = 2 THEN
-     INSERT INTO exchangerate (curr, transdate, buy) values (in_currency, in_date, in_exchangerate);
+     INSERT INTO exchangerate (curr, transdate, buy) values (in_curr, in_datepaid, in_exchangerate);
   ELSE   
-     INSERT INTO exchangerate (curr, transdate, sell) values (in_currency, in_date, in_exchangerate);
+     INSERT INTO exchangerate (curr, transdate, sell) values (in_curr, in_datepaid, in_exchangerate);
   END IF;                                       
 RETURN 0;
 END IF;
