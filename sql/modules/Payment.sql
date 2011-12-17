@@ -1,3 +1,4 @@
+BEGIN;
 
 CREATE OR REPLACE FUNCTION payment_type__list() RETURNS SETOF payment_type AS
 $$
@@ -8,6 +9,8 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
+
+DROP TYPE IF EXISTS payment_vc_info CASCADE;
 
 CREATE TYPE payment_vc_info AS (
 	id int,
@@ -117,6 +120,7 @@ COMMENT ON FUNCTION payment_get_all_accounts(int) IS
 $$ This function takes a single argument (1 for vendor, 2 for customer as 
 always) and returns all entities with accounts of the appropriate type. $$;
 
+DROP TYPE IF EXISTS payment_invoice CASCADE;
 
 CREATE TYPE payment_invoice AS (
 	invoice_id int,
@@ -276,7 +280,7 @@ This function is based on payment_get_open_invoices and returns only one invoice
 if no in_invnumber is passed this function behaves the same as payment_get_open_invoices
 $$;
 
-
+DROP TYPE IF EXISTS payment_contact_invoice CASCADE;
 CREATE TYPE payment_contact_invoice AS (
 	contact_id int,
 	econtrol_code text,
@@ -562,51 +566,6 @@ Note that in_transactions is a two-dimensional numeric array.  Of each
 sub-array, the first element is the (integer) transaction id, and the second
 is the amount for that transaction.  $$;
 
---
--- WE NEED A PAYMENT TABLE 
---
-
-CREATE TABLE payment (
-  id serial primary key,
-  reference text NOT NULL,
-  gl_id     integer references gl(id),
-  payment_class integer NOT NULL,
-  payment_date date default current_date,
-  closed bool default FALSE,
-  entity_credit_id   integer references entity_credit_account(id),
-  employee_id integer references person(id),
-  currency char(3),
-  notes text,
-  department_id integer default 0);
-              
-COMMENT ON TABLE payment IS $$ This table will store the main data on a payment, prepayment, overpayment, et$$;
-COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment order  $$; 
-COMMENT ON COLUMN payment.closed IS $$ This will store the current state of a payment/receipt order $$;
-COMMENT ON COLUMN payment.gl_id IS $$ A payment should always be linked to a GL movement $$;
-CREATE  INDEX payment_id_idx ON payment(id);
-                  
-CREATE TABLE payment_links (
-  payment_id integer references Payment(id),
-  entry_id   integer references acc_trans(entry_id),
-  type       integer);
-COMMENT ON TABLE payment_links IS $$  
- An explanation to the type field.
- * A type 0 means the link is referencing an ar/ap  and was created
-   using an overpayment movement after the receipt was created 
- * A type 1 means the link is referencing an ar/ap and  was made 
-   on the payment creation, its not the product of an overpayment movement 
- * A type 2 means the link is not referencing an ar/ap and its the product
-   of the overpayment logic 
-
- With this ideas in order we can do the following
-
- To get the payment amount we will sum the entries with type > 0.
- To get the linked amount we will sum the entries with type < 2.
- The overpayment account can be obtained from the entries with type = 2.
-
- This reasoning is hacky and i hope it can dissapear when we get to 1.4 - D.M.
-$$;
- 
 CREATE OR REPLACE FUNCTION payment_post 
 (in_datepaid      		  date,
  in_account_class 		  int,
@@ -955,6 +914,8 @@ $$ This function return the exchange rate of a given currency, date and exchange
 --  payment_location_result has the same arch as location_result, except for one field 
 --  This should be unified on the API when we get things working - David Mora
 --
+
+DROP TYPE IF EXISTS payment_location_result CASCADE;
 CREATE TYPE payment_location_result AS (
         id int,
         line_one text,
@@ -997,6 +958,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION payment_get_vc_info(in_entity_id int, in_location_class_id int) IS
 $$ This function returns vendor or customer info $$;
 
+DROP TYPE IF EXISTS payment_record CASCADE;
 CREATE TYPE payment_record AS (
 	amount numeric,
 	meta_number text,
@@ -1200,6 +1162,7 @@ $$ 1.3 only.  This will be replaced by a more generic function in 1.4.
 This sets the exchange rate for a class of transactions (payable, receivable) 
 to a certain rate for a specific date.$$;
 
+DROP TYPE IF EXISTS payment_header_item CASCADE;
 CREATE TYPE payment_header_item AS (
 payment_id int,
 payment_reference int,
@@ -1249,6 +1212,7 @@ COMMENT ON FUNCTION payment_gather_header_info(int,int) IS
 $$ This function finds a payment based on the id and retrieves the record, 
 it is usefull for printing payments :) $$;
 
+DROP TYPE IF EXISTS payment_line_item CASCADE;
 CREATE TYPE payment_line_item AS (
   payment_id int,
   entry_id int,
@@ -1303,6 +1267,8 @@ $$ This function finds a payment based on the id and retrieves all the line reco
 it is usefull for printing payments and build reports :) $$;
 
 -- We will use a view to handle all the overpayments
+
+DROP VIEW IF EXISTS overpayments CASCADE;
 CREATE VIEW overpayments AS
 SELECT p.id as payment_id, p.reference as payment_reference, p.payment_class, p.closed as payment_closed,
        p.payment_date, ac.chart_id, c.accno, c.description as chart_description,
@@ -1362,6 +1328,7 @@ COMMENT ON FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int) IS
 $$ Returns a list of available overpayments$$;
 
+DROP TYPE IF EXISTS payment_overpayments_available_amount CASCADE;
 CREATE TYPE payment_overpayments_available_amount AS (
         chart_id int,
         accno text,
@@ -1392,3 +1359,4 @@ COMMENT ON FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int) IS
 $$ Returns a list of available overpayments$$;
 
+COMMIT;

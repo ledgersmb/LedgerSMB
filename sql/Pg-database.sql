@@ -4640,4 +4640,49 @@ CREATE TABLE cr_coa_to_account (
 COMMENT ON TABLE cr_coa_to_account IS
 $$ Provides name mapping for the cash reconciliation screen.$$;
 
+--
+-- WE NEED A PAYMENT TABLE 
+--
+
+CREATE TABLE payment (
+  id serial primary key,
+  reference text NOT NULL,
+  gl_id     integer references gl(id),
+  payment_class integer NOT NULL,
+  payment_date date default current_date,
+  closed bool default FALSE,
+  entity_credit_id   integer references entity_credit_account(id),
+  employee_id integer references person(id),
+  currency char(3),
+  notes text,
+  department_id integer default 0);
+              
+COMMENT ON TABLE payment IS $$ This table will store the main data on a payment, prepayment, overpayment, et$$;
+COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment order  $$; 
+COMMENT ON COLUMN payment.closed IS $$ This will store the current state of a payment/receipt order $$;
+COMMENT ON COLUMN payment.gl_id IS $$ A payment should always be linked to a GL movement $$;
+CREATE  INDEX payment_id_idx ON payment(id);
+                  
+CREATE TABLE payment_links (
+  payment_id integer references Payment(id),
+  entry_id   integer references acc_trans(entry_id),
+  type       integer);
+COMMENT ON TABLE payment_links IS $$  
+ An explanation to the type field.
+ * A type 0 means the link is referencing an ar/ap  and was created
+   using an overpayment movement after the receipt was created 
+ * A type 1 means the link is referencing an ar/ap and  was made 
+   on the payment creation, its not the product of an overpayment movement 
+ * A type 2 means the link is not referencing an ar/ap and its the product
+   of the overpayment logic 
+
+ With this ideas in order we can do the following
+
+ To get the payment amount we will sum the entries with type > 0.
+ To get the linked amount we will sum the entries with type < 2.
+ The overpayment account can be obtained from the entries with type = 2.
+
+ This reasoning is hacky and i hope it can dissapear when we get to 1.4 - D.M.
+$$;
+ 
 commit;
