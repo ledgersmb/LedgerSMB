@@ -707,7 +707,7 @@ BEGIN
         -- We need to know the exchangerate of this transaction
         IF (current_exchangerate = 1 ) THEN 
            old_exchangerate := 1;
-        ELSIF (in_account_class = 1) THEN
+        ELSIF (in_account_class = 2) THEN
            SELECT buy INTO old_exchangerate 
            FROM exchangerate e
            JOIN ap a on (a.transdate = e.transdate )
@@ -936,7 +936,7 @@ DECLARE
         IF default_currency = in_currency THEN
            RETURN 1;
         END IF; 
-        IF in_account_class = 1 THEN
+        IF in_account_class = 2 THEN
           SELECT buy INTO out_exrate 
           FROM exchangerate
           WHERE transdate = in_date AND curr = in_currency;
@@ -1176,14 +1176,14 @@ select  * INTO current_exrate
         FROM  exchangerate 
         WHERE transdate = in_date;
 IF current_exrate.transdate = in_date THEN
-   IF in_account_class = 1 THEN 
+   IF in_account_class = 2 THEN 
       UPDATE exchangerate set buy = in_exchangerate  where transdate = in_date;
    ELSE
       UPDATE exchangerate set sell = in_exchangerate where transdate = in_date;
    END IF;
    RETURN 0; 
 ELSE
-    IF in_account_class = 1 THEN
+    IF in_account_class = 2 THEN
      INSERT INTO exchangerate (curr, transdate, buy) values (in_currency, in_date, in_exchangerate);
   ELSE   
      INSERT INTO exchangerate (curr, transdate, sell) values (in_currency, in_date, in_exchangerate);
