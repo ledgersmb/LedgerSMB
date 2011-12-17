@@ -151,7 +151,7 @@ BEGIN
 		       (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
                          THEN 1
 		        ELSE
-		        (CASE WHEN in_account_class =1
+		        (CASE WHEN in_account_class = 2
 		              THEN ex.buy
 		              ELSE ex.sell END)
 		        END) as amount_fx, 
@@ -166,7 +166,7 @@ BEGIN
 		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
                          THEN 1
 		        ELSE
-		        (CASE WHEN in_account_class =1
+		        (CASE WHEN in_account_class = 2
 		              THEN ex.buy
 		              ELSE ex.sell END)
 		        END) as discount_fx,		        
@@ -181,14 +181,14 @@ BEGIN
 		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
                          THEN 1
 		         ELSE
-		         (CASE WHEN in_account_class =1
+		         (CASE WHEN in_account_class = 2
 		              THEN ex.buy
 		              ELSE ex.sell END)
 		         END) AS due_fx,
 		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
 		         THEN 1
 		         ELSE
-		        (CASE WHEN in_account_class =1
+		        (CASE WHEN in_account_class = 2
 		         THEN ex.buy
 		         ELSE ex.sell END)
 		         END) AS exchangerate
