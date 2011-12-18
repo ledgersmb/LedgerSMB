@@ -696,24 +696,28 @@ BEGIN
        IF (tmp_amount < 0) THEN
           IF (in_account_class  = 1) THEN
            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES (CAST((select value from defaults where setting_key like 'fxloss_accno_id') AS INT),
+            VALUES ((select id from account JOIN defaults ON accno = value
+                     WHERE setting_key = 'FX_loss'),
                     tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
            ELSE
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES (CAST((select value from defaults where setting_key like 'fxgain_accno_id') AS INT),
+            VALUES ((select id from account JOIN defaults ON accno = value
+                     WHERE setting_key = 'FX_gain'),
                     tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
           END IF;
         ELSIF (tmp_amount > 0) THEN
           IF (in_account_class  = 1) THEN
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES (CAST((select value from defaults where setting_key like 'fxgain_accno_id') AS INT),
+            VALUES ((select id from account JOIN defaults ON accno = value
+                     WHERE setting_key = 'FX_gain'),
                     tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
            ELSE
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES (CAST((select value from defaults where setting_key like 'fxloss_accno_id') AS INT),
+            VALUES ((select id from account JOIN defaults ON accno = value
+                     WHERE setting_key = 'FX_loss'),
                     tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
           END IF; 
