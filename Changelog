@@ -10,6 +10,8 @@ Changelog for 1.3.10
 * Better error handling contrib modules not found (Chris T)
 * pos.conf.pl no longer overwritten on upgrade (Chris T)
 * Fixed multi-currency single payment handling (Erik H / Chris T)
+* Fixed "New Window" not working (Erik H)
+* Fixed Pg 9.1 detection in setup.pl (Chris T and Pongracz I)
 
 Changelog for 1.3.9
 * More logging enhancements (Herman V)

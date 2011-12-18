@@ -58,7 +58,7 @@ sub login {
                 password => $creds->{password}}
     );
     my $server_info = $database->server_version;
-    my @sv_info = split '.', $server_info;
+    my @sv_info = split(/\./, $server_info);
     if (($sv_info[0] > 9)or ($sv_info[0]  == 9 and $sv_info[1] >= 1)){
        if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.control"){
             $request->error($request->{_locale}->text(
