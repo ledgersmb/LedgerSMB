@@ -1571,6 +1571,11 @@ CREATE TABLE exchangerate (
   sell numeric,
   PRIMARY KEY (curr, transdate)
 );
+COMMENT ON TABLE exchangerate IS
+$$ When you receive money in a foreign currency, it is worth to you in your local currency
+whatever you can get for it when you sell the acquired currency (sell rate).
+When you have to pay someone in a foreign currency, the equivalent amount is the amount
+you have to spend to acquire the foreign currency (buy rate).$$;
 --
 CREATE TABLE project (
   id serial PRIMARY KEY,
