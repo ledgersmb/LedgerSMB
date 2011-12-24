@@ -693,34 +693,23 @@ BEGIN
         -- Lets set the gain/loss, if  fx_gain_loss_amount equals zero then we dont need to post
         -- any transaction
        fx_gain_loss_amount := in_amount[out_count]*current_exchangerate - in_amount[out_count]*old_exchangerate;
+       IF (in_account_class = 1) THEN
+         -- in case of vendor invoices, the invoice amounts have been negated, do the same with the diff
+         fx_gain_loss_amount := fx_gain_loss_amount * -1;
+       END IF;
+
        IF (fx_gain_loss_amount < 0) THEN
-          IF (in_account_class  = 1) THEN
            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select id from account JOIN defaults ON accno = value
-                     WHERE setting_key = 'FX_loss'),
-                    fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
-                    in_source[out_count]);
-           ELSE
-            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES ((select id from account JOIN defaults ON accno = value
                      WHERE setting_key = 'FX_gain'),
                     fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
-          END IF;
         ELSIF (fx_gain_loss_amount > 0) THEN
-          IF (in_account_class  = 1) THEN
-            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES ((select id from account JOIN defaults ON accno = value
-                     WHERE setting_key = 'FX_gain'),
-                    fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
-                    in_source[out_count]);
-           ELSE
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select id from account JOIN defaults ON accno = value
                      WHERE setting_key = 'FX_loss'),
                     fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
-          END IF; 
         END IF; 
         -- Now we set the links
          INSERT INTO payment_links 
