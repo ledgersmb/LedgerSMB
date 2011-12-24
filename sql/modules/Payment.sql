@@ -600,7 +600,7 @@ DECLARE var_account_id int;
 DECLARE default_currency char(3);
 DECLARE current_exchangerate numeric;
 DECLARE old_exchangerate numeric;
-DECLARE tmp_amount numeric;
+DECLARE fx_gain_loss_amount numeric;
 BEGIN
         
         SELECT * INTO default_currency  FROM defaults_get_defaultcurrency(); 
@@ -690,35 +690,35 @@ BEGIN
 		        END,
 		        in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true), 
 		        in_source[out_count], in_memo[out_count]);
-        -- Lets set the gain/loss, if tmp_amount equals zero then we dont need to post
+        -- Lets set the gain/loss, if  fx_gain_loss_amount equals zero then we dont need to post
         -- any transaction
-        tmp_amount := in_amount[out_count]*current_exchangerate - in_amount[out_count]*old_exchangerate;
-       IF (tmp_amount < 0) THEN
+       fx_gain_loss_amount := in_amount[out_count]*current_exchangerate - in_amount[out_count]*old_exchangerate;
+       IF (fx_gain_loss_amount < 0) THEN
           IF (in_account_class  = 1) THEN
            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select id from account JOIN defaults ON accno = value
                      WHERE setting_key = 'FX_loss'),
-                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
            ELSE
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select id from account JOIN defaults ON accno = value
                      WHERE setting_key = 'FX_gain'),
-                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
           END IF;
-        ELSIF (tmp_amount > 0) THEN
+        ELSIF (fx_gain_loss_amount > 0) THEN
           IF (in_account_class  = 1) THEN
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select id from account JOIN defaults ON accno = value
                      WHERE setting_key = 'FX_gain'),
-                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
            ELSE
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select id from account JOIN defaults ON accno = value
                      WHERE setting_key = 'FX_loss'),
-                    tmp_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
+                    fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
           END IF; 
         END IF; 
