@@ -1668,8 +1668,8 @@ sub save_defaults {
 
     my ( $self, $myconfig, $form, $defaults) = @_;
 
-    for (qw(IC IC_income IC_expense FX_gain FX_loss)) {
-        ( $form->{$_} ) = split /--/, $form->{$_};
+    for (qw(inventory income expense fxgain fxloss)) {
+        ( $form->{$_ . "_accno_id"} ) = split /--/, $form->{$_ . "_accno_id"};
     }
 
     my @a;
@@ -1688,13 +1688,6 @@ sub save_defaults {
                                                FROM chart
                                               WHERE accno = ?)
 		 WHERE setting_key = ?|
-    );
-    my %translation = (
-        inventory_accno_id => 'IC',
-        income_accno_id    => 'IC_income',
-        expense_accno_id   => 'IC_expense',
-        fxgain_accno_id    => 'FX_gain',
-        fxloss_accno_id    => 'FX_loss'
     );
     if (!@{$defaults}){
        $defaults = qw(inventory_accno_id income_accno_id expense_accno_id
@@ -1772,16 +1765,8 @@ sub defaultaccounts {
 
     my $ref;
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        $form->{ $ref->{setting_key} } = $ref->{value};
+        $form->{defaults}{ $ref->{setting_key} } = $ref->{value};
     }
-
-    $form->{defaults}{IC}         = $form->{inventory_accno_id};
-    $form->{defaults}{IC_income}  = $form->{income_accno_id};
-    $form->{defaults}{IC_sale}    = $form->{income_accno_id};
-    $form->{defaults}{IC_expense} = $form->{expense_accno_id};
-    $form->{defaults}{IC_cogs}    = $form->{expense_accno_id};
-    $form->{defaults}{FX_gain}    = $form->{fxgain_accno_id};
-    $form->{defaults}{FX_loss}    = $form->{fxloss_accno_id};
 
     $sth->finish;
 
@@ -1794,21 +1779,18 @@ sub defaultaccounts {
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
-    my $nkey;
+    my %link_map = (
+        IC         => 'inventory',
+        IC_income  => 'income',
+        IC_sale    => 'income',
+        IC_expense => 'expense',
+        IC_cogs    => 'expense'
+    );
+
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         foreach my $key ( split( /:/, $ref->{link} ) ) {
-            if ( $key =~ /IC/ ) {
-                $nkey = $key;
-
-                if ( $key =~ /cogs/ ) {
-                    $nkey = "IC_expense";
-                }
-
-                if ( $key =~ /sale/ ) {
-                    $nkey = "IC_income";
-                }
-
-                %{ $form->{accno}{$nkey}{ $ref->{accno} } } = (
+            if ( exists $link_map{$key} ) {
+                %{ $form->{accno}{"$link_map{$key}_accno_id"}{ $ref->{accno} } } = (
                     id          => $ref->{id},
                     description => $ref->{description}
                 );
@@ -1829,12 +1811,12 @@ sub defaultaccounts {
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        %{ $form->{accno}{FX_gain}{ $ref->{accno} } } = (
+        %{ $form->{accno}{fxgain_accno_id}{ $ref->{accno} } } = (
             id          => $ref->{id},
             description => $ref->{description}
         );
 
-        %{ $form->{accno}{FX_loss}{ $ref->{accno} } } = (
+        %{ $form->{accno}{fxloss_accno_id}{ $ref->{accno} } } = (
             id          => $ref->{id},
             description => $ref->{description}
         );

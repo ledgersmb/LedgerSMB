@@ -78,7 +78,7 @@ my @default_textboxes = (
 );
 
 my @default_others = qw(businessnumber weightunit separate_duties default_language
-                        IC IC_income IC_expense 
+                        inventory_accno_id income_accno_id expense_accno_id 
                         fxgain_accno_id fxloss_accno_id default_country 
                         templates curr);
 
@@ -1432,12 +1432,11 @@ sub defaults {
     # get defaults for account numbers and last numbers
     AM->get_all_defaults( \%$form );
     my %selects = (
-        'FX_loss' => {name => 'FX_loss', options => []},
-        'FX_gain' => {name => 'FX_gain', options => []},
-        'IC_expense' => {name => 'IC_expense', options => []},
-        'IC_income' => {name => 'IC_income', options => []},
-        'IC_inventory' => {name => 'IC_inventory', options => []},
-        'IC' => {name => 'IC', options => []},
+        'fxloss_accno_id' => {name => 'fxloss_accno_id', options => []},
+        'fxgain_accno_id' => {name => 'fxgain_accno_id', options => []},
+        'expense_accno_id' => {name => 'expense_accno_id', options => []},
+        'income_accno_id' => {name => 'income_accno_id', options => []},
+        'inventory_accno_id' => {name => 'inventory_accno_id', options => []},
 	'default_country' => {name   => 'default_country', 
 			     options => $form->{countries},
 			     default_values => [$form->{'default_country'}],
@@ -1453,12 +1452,15 @@ sub defaults {
 	'templates'       => {name => 'templates', options => []}	
         );
     foreach $key ( keys %{ $form->{accno} } ) {
+	print STDERR "$key\n";
         foreach $accno ( sort keys %{ $form->{accno}{$key} } ) {
             push @{$selects{$key}{options}}, {
                 text => "$accno--$form->{accno}{$key}{$accno}{description}",
                 value => "$accno--$form->{accno}{$key}{$accno}{description}",
                 };
-            $selects{$key}{default_values} = "$accno--$form->{accno}{$key}{$accno}{description}" if
+            $selects{$key}{default_values} = ["$accno--$form->{accno}{$key}{$accno}{description}"] if
+                ($form->{defaults}{$key} == $form->{accno}{$key}{$accno}{id});
+            print STDERR "$key $accno--$form->{accno}{$key}{$accno}{description}\n" if
                 ($form->{defaults}{$key} == $form->{accno}{$key}{$accno}{id});
         }
     }
