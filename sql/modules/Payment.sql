@@ -700,14 +700,12 @@ BEGIN
 
        IF (fx_gain_loss_amount < 0) THEN
            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES ((select id from account JOIN defaults ON accno = value
-                     WHERE setting_key = 'FX_gain'),
+            VALUES ((select value::int from defaults WHERE setting_key = 'fxgain_accno_id'),
                     fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
         ELSIF (fx_gain_loss_amount > 0) THEN
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES ((select id from account JOIN defaults ON accno = value
-                     WHERE setting_key = 'FX_loss'),
+            VALUES ((select value::int from defaults WHERE setting_key = 'fxloss_accno_id'),
                     fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
         END IF; 
