@@ -1652,10 +1652,7 @@ Sets the values in the defaults table to values derived from $form.  glnumber,
 sinumber, vinumber, sonumber, ponumber, sqnumber, rfqnumber, partnumber,
 employeenumber, customernumber, vendornumber, projectnumber, yearend, curr,
 weightunit, and businessnumber are taken directly from the $form value with
-the corresponding name.  inventory_accno_id is the id of the account with the
-number specified in $form->{IC}.  In a similar manner, income_accno_id and
-$form->{IC_income}, expense_accno_id and $form->{IC_expense}, fxgain_accno_id
-and $form->{FX_gain}, and fxloss_accno_id and $form->{FX_loss} are related. 
+the corresponding name.
 
 Stores the templates directory for a specific company on defaults table.
 
@@ -1734,16 +1731,18 @@ sub save_defaults {
 =item AM->defaultaccounts($myconfig, $form);
 
 Retrieves the numbers of default accounts and sets $form->{defaults}{$key} to
-the appropriate account numbers, where $key can be 'IC', 'IC_income', 'IC_sale',
-'IC_expense', 'IC_cogs', 'FX_gain', and 'FX_loss'.
+the appropriate account numbers, where $key can be 'inventory_accno_id',
+'income_accno_id', 'income_accno_id', 'expense_accno_id', 'fxgain_accno_id'
+and 'fxloss_accno_id'.
 
-Sets the hashes refered to as $form->{accno}{IC_${type}}{$accno} to contain the
-id and description of all accounts with IC elements in their link fields.  The
-possible types are all the IC_* values with IC_cogs merged into IC_expense and
-IC_sale merged with IC_income.
+Sets the hashes refered to as $form->{accno}{${type}_accno_id}{$accno} -
+where $type one of 'inventory', 'income' and 'expense' - to contain the id
+and description of all accounts with IC elements in their link fields keyed
+on the account number.
 
-Fills the hashes referred to as $form->{accno}{FX_(gain|loss)} with the id and
-description of all income and expense accounts, keyed on the account number.
+Fills the hashes referred to as $form->{accno}{fx(gain|loss)_accno_id} with
+the id and description of all income and expense accounts, keyed on the
+account number.
 
 $myconfig is unused.
 
