@@ -664,7 +664,7 @@ BEGIN
        	        trans_id = in_transaction_id[out_count] AND
        	        ( c.link = 'AP' OR c.link = 'AR' );
         -- We need to know the exchangerate of this transaction
-        IF (current_exchangerate = 1 ) THEN 
+        IF (in_curr = default_currency) THEN 
            old_exchangerate := 1;
         ELSIF (in_account_class = 2) THEN
            SELECT buy INTO old_exchangerate 
