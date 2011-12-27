@@ -1678,7 +1678,7 @@ sub save_defaults {
     # save defaults
 #    $sth_plain = $dbh->prepare( "
 #		UPDATE defaults SET value = ? WHERE setting_key = ?" );
-    $sth_accno = $dbh->prepare(
+    my $sth_accno = $dbh->prepare(
         qq|
 		UPDATE defaults
                    SET value = (SELECT id
@@ -1686,6 +1686,14 @@ sub save_defaults {
                                               WHERE accno = ?)
 		 WHERE setting_key = ?|
     );
+    my $sth_insert_accno = $dbh->prepare(
+       " INSERT INTO defaults (setting_key, value)
+         SELECT ?, id
+           FROM account 
+          WHERE accno = ? AND 1 NOT IN (SELECT 1 FROM defaults
+                                           WHERE setting_key = ?)"
+    );
+             
     if (!@{$defaults}){
        $defaults = qw(inventory_accno_id income_accno_id expense_accno_id
                       fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
@@ -1703,21 +1711,19 @@ sub save_defaults {
         if ( $_ =~ /accno/ ) {
             $sth_accno->execute( $val, $_ )
               || $form->dberror("Saving $_");
+            $sth_insert_accno->execute($_, $val, $_);
         }
         else {
-				    my $found=0;
-				    my $sth_defcheck=$dbh->prepare("select count(*) from defaults where setting_key='$_';") || $form->dberror("Select defaults $_");
-				    $sth_defcheck->execute() || $form->dberror("execute defaults $_");
-			            while(my $found1=$sth_defcheck->fetchrow()){$found=$found1;}
-				    
-				  if($found)
-				  {
-					$dbh->do("update defaults set value=" . $dbh->quote($val) . " where setting_key='$_';");
-				  }
-				  else
-				  {
-					$dbh->do("insert into defaults(value,setting_key) values( " . $dbh->quote($val) . ",'$_');"); 
-				  }
+	    my $found=0;
+	    my $sth_defcheck=$dbh->prepare("select count(*) from defaults where setting_key='$_';") || $form->dberror("Select defaults $_");
+	    $sth_defcheck->execute() || $form->dberror("execute defaults $_");
+            while(my $found1=$sth_defcheck->fetchrow()){$found=$found1;}
+		    
+  	      if($found) {
+		  $dbh->do("update defaults set value=" . $dbh->quote($val) . " where setting_key='$_';");
+	       } else {
+	          $dbh->do("insert into defaults(value,setting_key) values( " . $dbh->quote($val) . ",'$_');"); 
+	       }
 
         }
 
