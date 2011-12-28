@@ -26,7 +26,7 @@ ADMIN_PASSWORD='admin'
 usage () {
 script_name=`basename $0`
 cat <<USAGE
-usage: $script_name --company COMPANY --psql-contrib DIR [option1 .. optionN]
+usage: $script_name --company COMPANY --pgsql-contrib DIR [option1 .. optionN]
 
 This script wants to be run as the root user. If you don't, you'll be
 asked to enter the password of the 'postgres' user
