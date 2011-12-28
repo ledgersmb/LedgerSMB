@@ -224,7 +224,8 @@ BEGIN
               	        AND a.invoice_class = in_account_class
 		        AND c.entity_class = in_account_class
 		        AND c.id = in_entity_credit_id
-		        AND a.amount - a.paid <> 0
+                        --### short term: ignore fractional cent differences
+		        AND ABS(a.amount - a.paid) > 0.005
 		        AND a.curr = in_curr
 		        AND (a.transdate >= in_datefrom 
 		             OR in_datefrom IS NULL)
@@ -395,7 +396,8 @@ BEGIN
 		         AND a.curr = in_currency
 		         AND a.entity_credit_account = c.id
 			 AND p.due <> 0
-		         AND a.amount <> a.paid 
+                         --### short term: ignore fractional differences
+		         AND ABS(a.amount - a.paid) > 0.005
 			 AND NOT a.on_hold
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
