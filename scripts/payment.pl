@@ -973,8 +973,9 @@ for my $ref (0 .. $#array_options) {
          #$request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
          $request_topay_fx_bigfloat=$due_fx;
      } 
+ #print STDERR localtime()." payment.pl array=".Data::Dumper::Dumper($array_options[$ref])."\n";
+ my $paid_formatted=$Payment->format_amount(amount=>($array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount}));
 #Now its time to build the link to the invoice :)
-
 my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
 $uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
 
@@ -985,7 +986,7 @@ $uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozi
                                invoice_date      => "$array_options[$ref]->{invoice_date}",
                                amount            => $Payment->format_amount(amount=>$array_options[$ref]->{amount}),
                                due               => $Payment->format_amount(amount=>$request->{"optional_discount_$array_options[$ref]->{invoice_id}"}?  $array_options[$ref]->{due} : $array_options[$ref]->{due} + $array_options[$ref]->{discount}),
-                               paid              => "$array_options[$ref]->{amount}" - "$array_options[$ref]->{due}"-"$array_options[$ref]->{discount}",
+                               paid              => $paid_formatted,
                                discount          => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? "$array_options[$ref]->{discount}" : 0 ,
                                optional_discount =>  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"},
                                exchange_rate     =>  "$array_options[$ref]->{exchangerate}",
