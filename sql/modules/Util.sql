@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION parse_date(in_date date) returns date AS
 $$ select $1; $$ language sql;
 
-COMMENT ON FUNCTION parse_date IS $$ Simple way to cast a Perl string to a
+COMMENT ON FUNCTION parse_date(in_date date) IS $$ Simple way to cast a Perl string to a
 date format of known type. $$;
 
 CREATE OR REPLACE FUNCTION je_set_default_lines(in_rowcount int) returns int
