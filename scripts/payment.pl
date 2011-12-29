@@ -51,6 +51,8 @@ use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::DBObject::Customer;
+use LedgerSMB::DBObject::Vendor;
 use LedgerSMB::CancelFurtherProcessing;
 use Error::Simple;
 use Error;
@@ -975,9 +977,38 @@ for my $ref (0 .. $#array_options) {
      } 
  #print STDERR localtime()." payment.pl array=".Data::Dumper::Dumper($array_options[$ref])."\n";
  my $paid_formatted=$Payment->format_amount(amount=>($array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount}));
-#Now its time to build the link to the invoice :)
-my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-$uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
+ #Now its time to build the link to the invoice :)
+ my $uri_module;
+ #TODO move following code to sub getModuleForUri() ?
+ if($Payment->{account_class} == $LedgerSMB::DBObject::Vendor::ENTITY_CLASS)
+ {
+  if($array_options[$ref]->{invoice})
+  {
+   $uri_module='ir';
+  }
+  else
+  {
+   $uri_module='ap';
+  }
+ }#account_class 1
+ elsif($Payment->{account_class} == $LedgerSMB::DBObject::Customer::ENTITY_CLASS)
+ {
+  if($array_options[$ref]->{invoice})
+  {
+   $uri_module='is';
+  }
+  else
+  {
+   $uri_module='ar';
+  }
+ }#account_class 2
+ else
+ {
+  #TODO
+  $uri_module='??';
+ }
+#my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
+ my $uri =$uri_module.'.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
 
    push @invoice_data, {       invoice => { number => $array_options[$ref]->{invnumber},
                                             id     =>  $array_options[$ref]->{invoice_id},

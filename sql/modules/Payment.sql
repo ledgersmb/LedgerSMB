@@ -125,6 +125,7 @@ DROP TYPE IF EXISTS payment_invoice CASCADE;
 CREATE TYPE payment_invoice AS (
 	invoice_id int,
 	invnumber text,
+    invoice bool,
 	invoice_date date,
 	amount numeric,
 	amount_fx numeric,
@@ -149,7 +150,7 @@ $$
 DECLARE payment_inv payment_invoice;
 BEGIN
 	FOR payment_inv IN
-		SELECT a.id AS invoice_id, a.invnumber AS invnumber, 
+		SELECT a.id AS invoice_id, a.invnumber AS invnumber,a.invoice AS invoice, 
 		       a.transdate AS invoice_date, a.amount AS amount, 
 		       a.amount/
 		       (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
@@ -198,13 +199,13 @@ BEGIN
 		         END) AS exchangerate
                  --TODO HV prepare drop entity_id from ap,ar
                  --FROM  (SELECT id, invnumber, transdate, amount, entity_id,
-                 FROM  (SELECT id, invnumber, transdate, amount,
+                 FROM  (SELECT id, invnumber, invoice, transdate, amount,
 		               1 as invoice_class, paid, curr, 
 		               entity_credit_account, department_id, approved
 		          FROM ap
                          UNION
 		         --SELECT id, invnumber, transdate, amount, entity_id,
-		         SELECT id, invnumber, transdate, amount,
+		         SELECT id, invnumber, invoice, transdate, amount,
 		               2 AS invoice_class, paid, curr,
 		               entity_credit_account, department_id, approved
 		         FROM ar
@@ -239,7 +240,7 @@ BEGIN
 		             OR in_department_id IS NULL)
 		        AND due <> 0 
 		        AND a.approved = true         
-		        GROUP BY a.invnumber, a.transdate, a.amount, amount_fx, discount, discount_fx, ac.due, a.id, c.discount_terms, ex.buy, ex.sell, a.curr
+		        GROUP BY a.invnumber, a.transdate, a.amount, amount_fx, discount, discount_fx, ac.due, a.id, c.discount_terms, ex.buy, ex.sell, a.curr, a.invoice
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
