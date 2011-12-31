@@ -1,0 +1,109 @@
+                                                -*- mode: text -*-
+
+A file to document our multi-currency handling, both actual as well
+as intended operation/design.
+
+
+Contents
+========
+
+ * AR/AP Transactions
+ * Invoices
+ * Payments to AR/AP items
+ * Taxation on AR/AP items
+ * Reversal of AR/AP items
+ * Reversal of payments to AR/AP items
+ * Closed periods
+
+
+AR/AP Transactions
+==================
+
+
+Invoices
+========
+
+When calculating the amounts on an invoice, special care needs to be
+taken to ensure no amounts on the invoice use fractional cents.  This
+can become tedious when considering FX and discount effects.
+
+During the calculation of invoices, two sets of amounts are being
+calculated: fx-amounts and regular amounts.  The fx-amounts end up on
+the invoice while the regular amounts end up in the ledger.  Note that
+this applies on local currency invoices as well, using an FX rate of 1.
+
+The procedure to calculate the total invoice amount is to sum up the
+amounts of the lines, where each line total is calculated as follows:
+
+ * Multiplication of amount and item cost
+ * Application of optional discounts
+ * Optionally factor out tax amounts,
+    if the sell price includes taxes
+ * Rounding of the line total to the nearest cent
+
+The procedure should continue to convert the FX amounts to regular
+amounts which then can be posted - unrounded.
+
+Payments to AR/AP items
+=======================
+
+Payments are rounded to 2-digit precision (cents) in the foreign currency
+in the same way AR/AP totals are.  Amounts are translated to local currency
+before posting (unrounded).  Differences in value of the foreign currency
+amount in the local currency between creation of the item and payment
+are posted to the FX Gain (gains) and FX Loss (losses) P&L accounts.
+
+Taxation on AR/AP items
+=======================
+
+Once the line totals in an AR/AP invoice or general transaction have been
+calculated, the taxes can be calculated.
+
+The most precise approach -also also in light of numerical stability
+(considering that floats represent numbers close to 1.0 the most exact)- would
+be to calculate the tax amount (unrounded) per line.
+
+Per tax type, the invoice should list the rounded (at 2 decimals) tax amount.
+
+This leaves a fractional-cent difference between the actual tax liability
+and the amount charged.  Although this fractional difference should be
+charged to the income accounts involved in the invoice, this difference
+can't be part of the invoice itself and hence of the open AR/AP transaction.
+
+The transaction should post charge the tax difference directly from the
+income accounts, posting to the tax liability, without going through AR/AP.
+
+(### What's the current method of allocating this tax difference? Is that
+ the most acceptable way??)
+
+
+Reversal of AR/AP items
+=======================
+
+
+Reversal of payments to AR/AP items
+===================================
+
+Reversal of a payment to an AR/AP item should include reversal of the
+posted gains/losses.  In order to calculate those correctly, the fx rate
+used in the posting of the payment should be used.  Unfortunately, in
+the exsiting structure, this is not possible - unless the item is posted on
+the same posting date - because the fx rate is dynamically looked up based
+on the posting date upon retrieval of the transaction.
+
+
+Closed periods
+==============
+
+Currently, AR/AP transactions are valued at the FX rate of the posting
+date of the document.  This means that there's no way to reverse an
+AR/AP transaction without side effects after the period in which the
+original posting was created -- assuming daily changing FX rates.
+
+Ideally, there should be a way for a (reversal) transaction to specify
+which exchange rate is to be used - or from which date to take it.
+
+The above issue is especially a problem when reversing payments, which
+cause FX gain/loss postings to the P&L.  In the scenario where it's impossible
+to use a specified date for the FX rate, it's impossible to completely
+reverse the P&L effect.
