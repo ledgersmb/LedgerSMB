@@ -26,8 +26,9 @@ SELECT account_save(NULL,'1240','Company Credit Card','L','', NULL, false, false
 SELECT account_save(NULL,'2100','Creditors Control Account','L','', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_save(NULL,'2102','Other Creditors','L','', NULL, false, false, string_to_array('AP', ':'));
 SELECT account_save(NULL,'2109','Accruals','L','', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL,'2200','VAT (17.5%)','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
-SELECT account_save(NULL,'2205','VAT (5%)','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL,'2200','VAT - Standard rate','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL,'2205','VAT - Reduced rate','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL,'2209','VAT - Zero rate','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'2210','P.A.Y.E. & National Insurance','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2220','Net Wages','L','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2250','Corporation Tax','L','', NULL, false, false, string_to_array('', ':'));
@@ -104,8 +105,9 @@ SELECT account_save(NULL,'8500','Dividends','E','', NULL, false, false, string_t
 SELECT account_save(NULL,'8600','Corporation Tax','E','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'9999','Suspense Account','E','', NULL, false, false, string_to_array('', ':'));
 --
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2200'),0.175);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2200'),0.20);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2205'),0.05);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2209'),0.00);
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',  (SELECT id FROM chart WHERE accno = '1001'));
 
