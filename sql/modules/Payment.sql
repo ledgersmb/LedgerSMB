@@ -81,13 +81,21 @@ BEGIN
 		JOIN company cp ON (cp.entity_id = e.id)
 			WHERE ec.entity_class = in_account_class
                         AND CASE WHEN in_account_class = 1 THEN
-	           		ec.id IN (SELECT entity_credit_account FROM ap 
-	           			WHERE amount <> paid
-		   			GROUP BY entity_credit_account)
+	           		ec.id IN (SELECT entity_credit_account
+                                            FROM ap
+                                            JOIN acc_trans ac ON ap.id = ac.trans_id
+                                            JOIN account_link al ON acc.chart_id = al.account_id
+                                           WHERE al.description = 'AP'
+                                           GROUP BY entity_credit_account
+                                           HAVING SUM(ac.amount) <> 0)
 		    	       WHEN in_account_class = 2 THEN
-		   		ec.id IN (SELECT entity_credit_account FROM ar
-		   			WHERE amount <> paid
-		   			GROUP BY entity_credit_account)
+		   		ec.id IN (SELECT entity_credit_account
+                                            FROM ar
+                                            JOIN acc_trans ac ON ar.id = ac.trans_id
+                                            JOIN account_link al ON acc.chart_id = al.account_id
+                                           WHERE al.description = 'AR'
+                                           GROUP BY entity_credit_account
+                                           HAVING SUM(ac.amount) <> 0)
 		   	  END
 	LOOP
 		RETURN NEXT out_entity;
@@ -200,13 +208,13 @@ BEGIN
                  --TODO HV prepare drop entity_id from ap,ar
                  --FROM  (SELECT id, invnumber, transdate, amount, entity_id,
                  FROM  (SELECT id, invnumber, invoice, transdate, amount,
-		               1 as invoice_class, paid, curr, 
+		               1 as invoice_class, curr,
 		               entity_credit_account, department_id, approved
 		          FROM ap
                          UNION
 		         --SELECT id, invnumber, transdate, amount, entity_id,
 		         SELECT id, invnumber, invoice, transdate, amount,
-		               2 AS invoice_class, paid, curr,
+		               2 AS invoice_class, curr,
 		               entity_credit_account, department_id, approved
 		         FROM ar
 		         ) a 
@@ -226,7 +234,6 @@ BEGIN
 		        AND c.entity_class = in_account_class
 		        AND c.id = in_entity_credit_id
                         --### short term: ignore fractional cent differences
-		        AND ABS(a.amount - a.paid) > 0.005
 		        AND a.curr = in_curr
 		        AND (a.transdate >= in_datefrom 
 		             OR in_datefrom IS NULL)
@@ -349,7 +356,7 @@ BEGIN
 		    FROM entity e
 		    JOIN entity_credit_account c ON (e.id = c.entity_id)
 		    JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id, 
-				 paid, curr, 1 as invoice_class, 
+				 curr, 1 as invoice_class,
 		                 entity_credit_account, on_hold, v.batch_id,
 				 approved
 		            FROM ap
@@ -359,7 +366,7 @@ BEGIN
 			         AND (v.batch_class = 1 or v.batch_id IS NULL)
 		           UNION
 		          SELECT ar.id, invnumber, transdate, amount, entity_id,
-		                 paid, curr, 2 as invoice_class, 
+		                 curr, 2 as invoice_class,
 		                 entity_credit_account, on_hold, v.batch_id,
 				 approved
 		            FROM ar
@@ -398,7 +405,6 @@ BEGIN
 		         AND a.entity_credit_account = c.id
 			 AND p.due <> 0
                          --### short term: ignore fractional differences
-		         AND ABS(a.amount - a.paid) > 0.005
 			 AND NOT a.on_hold
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
@@ -536,21 +542,6 @@ BEGIN
 		||$E$ 
 		FROM bulk_payments_in where amount <> 0 $E$;
 
-        IF in_account_class = 1 THEN
-        	EXECUTE $E$
-	        	UPDATE ap 
-		        set paid = paid + (select amount from bulk_payments_in b
-		         	where b.id = ap.id),
-                            datepaid = $E$ || quote_literal(in_payment_date) || $E$
-		         where id in (select id from bulk_payments_in) $E$;
-        ELSE
-        	EXECUTE $E$
-	        	UPDATE ar 
-		        set paid = paid + (select amount from bulk_payments_in b 
-		         	where b.id = ar.id),
-                            datepaid = $E$ || quote_literal(in_payment_date) || $E$
-		         where id in (select id from bulk_payments_in) $E$;
-        END IF;
 	EXECUTE $E$ DROP TABLE bulk_payments_in $E$;
 	perform unlock_all();
 	return out_count;
@@ -1087,30 +1078,6 @@ BEGIN
 			COALESCE(in_source, ''), 
 			case when in_batch_id is not null then false 
 			else true end, t_voucher_id);
-		IF in_account_class = 1 THEN
-			UPDATE ap SET paid = amount - 
-				(SELECT sum(a.amount) 
-				FROM acc_trans a
-				JOIN chart c ON (a.chart_id = c.id)
-				WHERE c.link = 'AP'
-					AND trans_id = pay_row.trans_id
-				), 
-                                force_closed = false 
-			WHERE id = pay_row.trans_id;
-		ELSIF in_account_class = 2 THEN
-			update ar SET paid = amount - 
-				(SELECT sum(a.amount) 
-				FROM acc_trans a
-				JOIN chart c ON (a.chart_id = c.id)
-				WHERE c.link = 'AR'
-					AND trans_id = pay_row.trans_id
-				) * -1,
-                                force_closed = false
-			WHERE id = pay_row.trans_id;
-		ELSE
-			RAISE EXCEPTION 'Unknown account class for payments %',
-				in_account_class;
-		END IF;
 	END LOOP;
 	RETURN 1;
 END;
