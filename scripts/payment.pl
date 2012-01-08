@@ -886,18 +886,18 @@ my $currency_text  =  $request->{curr} eq $default_currency ? '' : '('.$request-
 my $default_currency_text = $currency_text ? '('.$default_currency.')' : '';
 my @column_headers =  ({text => $locale->text('Invoice')},
                        {text => $locale->text('Date')},
-                       {text => $locale->text('Total ').$default_currency_text},
-                       {text => $locale->text('Paid ').$default_currency_text},
-                       {text => $locale->text('Discount ').$default_currency_text},
+                       {text => $locale->text('Total').$default_currency_text},
+                       {text => $locale->text('Paid').$default_currency_text},
+                       {text => $locale->text('Discount').$default_currency_text},
                        {text => $locale->text('Apply Disc')},
                        {text => $locale->text('Memo')},
-                       {text => $locale->text('Due ').$default_currency_text}         
+                       {text => $locale->text('Amount Due').$default_currency_text}         
                        );
  # WE NEED TO KNOW IF WE ARE USING A CURRENCY THAT NEEDS AN EXCHANGERATE
  if ($default_currency ne $request->{curr} ) {
  # FIRST WE PUSH THE OTHER COLUMN HEADERS WE NEED    
-     push @column_headers, {text => $locale->text('FX Rate')},
-                           {text => $locale->text('Due ').$currency_text};
+     push @column_headers, {text => $locale->text('Exchange Rate')},
+                           {text => $locale->text('Amount Due').$currency_text};
  # WE SET THEM IN THE RIGHT ORDER FOR THE TABLE INSIDE THE UI   
      @column_headers[7,8] = @column_headers[8,7];
 
