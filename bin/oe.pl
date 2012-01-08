@@ -2968,7 +2968,10 @@ qq|<td><input name="serialnumber_$i" size=15 value="$form->{"serialnumber_$i"}">
 
     $form->{copies} = 1;
 
-    &print_options;
+    $printops = &print_options;
+    print_select($form, $printops->{formname});
+    print_select($form, $printops->{format});
+    print_select($form, $printops->{media});
 
     print qq|
     </td>
