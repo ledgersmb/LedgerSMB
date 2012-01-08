@@ -199,8 +199,9 @@ sub transactions {
 			WHERE o.quotation = '0'
 			AND (p.inventory_accno_id > 0 OR p.assembly = '1')
 			AND oi.qty != oi.ship
+                        AND o.oe_class_id = ?
 			$department|;
-        @queryargs = @dptargs;    #reset @queryargs
+        @queryargs = ( $form->{oe_class_id} );
 
         if ( $warehouse_id && $form->{type} eq 'ship_order' ) {
             $query .= qq| 

@@ -1199,6 +1199,7 @@ sub search {
         $ordlabel      = $locale->text('Order Number');
         $ordnumber     = 'ordnumber';
         $employee      = $locale->text('Employee');
+        $form->{oe_class_id} = 2;
     }
 
     if ( $form->{type} eq 'generate_sales_order' ) {
@@ -1244,6 +1245,7 @@ sub search {
         $ordlabel      = $locale->text('Order Number');
         $ordnumber     = 'ordnumber';
         $employee      = $locale->text('Salesperson');
+        $form->{oe_class_id} = 1;
     }
 
     if ( $form->{type} eq 'sales_quotation' ) {
