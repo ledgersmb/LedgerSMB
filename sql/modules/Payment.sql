@@ -542,6 +542,8 @@ BEGIN
 		||$E$ 
 		FROM bulk_payments_in where amount <> 0 $E$;
 
+	-- ### BUG: Where's the FX gain/loss part for FX postings??
+
 	EXECUTE $E$ DROP TABLE bulk_payments_in $E$;
 	perform unlock_all();
 	return out_count;
@@ -658,6 +660,10 @@ BEGIN
        	        trans_id = in_transaction_id[out_count] AND
        	        ( c.link = 'AP' OR c.link = 'AR' );
         -- We need to know the exchangerate of this transaction
+	-- ### BUG: we don't have a guarantee that the transaction is
+	--          the same currency as in_curr, so, we can't use
+	--          current_exchangerate as the basis for fx gain/loss
+	--          calculations
         IF (in_curr = default_currency) THEN 
            old_exchangerate := 1;
         ELSIF (in_account_class = 2) THEN
