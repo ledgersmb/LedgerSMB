@@ -2934,9 +2934,9 @@ qq|<td>$description<input type=hidden name="description_$i" value="$form->{"desc
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
           . qq|<input type=hidden name="qty_$i" value="$form->{"qty_$i"}"></td>|;
         $column_data{ship} =
-            qq|<td align=right><input name="ship_$i" size=5 value=|
+            qq|<td align=right><input name="ship_$i" size=5 value="|
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
-          . qq|></td>|;
+          . qq|"></td>|;
         $column_data{unit} =
 qq|<td>$form->{"unit_$i"}<input type=hidden name="unit_$i" value="$form->{"unit_$i"}"></td>|;
         $column_data{bin} =
@@ -3270,10 +3270,10 @@ qq|<td><input type=hidden name="id_$i" value=$ref->{id}>$ref->{partnumber}</td>|
         $column_data{description} = "<td>$ref->{description}&nbsp;</td>";
         $column_data{partsgroup}  = "<td>$ref->{partsgroup}&nbsp;</td>";
         $column_data{fromwarehouse} =
-qq|<td><input type=hidden name="warehouse_id_$i" value=$ref->{warehouse_id}>$ref->{warehouse}&nbsp;</td>|;
+qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$ref->{warehouse}&nbsp;</td>|;
         $column_data{towarehouse} = qq|<td>$warehouse&nbsp;</td>|;
         $column_data{qty} =
-            qq|<td><input type=hidden name="qty_$i" value=$ref->{qty}>|
+            qq|<td><input type=hidden name="qty_$i" value="$ref->{qty}">|
           . $form->format_amount( \%myconfig, $ref->{qty} )
           . qq|</td>|;
         $column_data{transfer} = qq|<td><input name="transfer_$i" size=4></td>|;
@@ -3515,7 +3515,7 @@ sub po_orderitems {
         }
 
         $column_data{qty} =
-qq|<td align=right><input name="qty_$i" size=6 value=$form->{"qty_$i"}></td>|;
+qq|<td align=right><input name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>|;
 
         if ( $form->{"$form->{vc}_id_$i"} ) {
             $name = $form->{"$form->{vc}_$i"};
