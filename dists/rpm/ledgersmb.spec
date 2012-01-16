@@ -17,7 +17,7 @@ Requires: perl-Error, perl-CGI-Simple
 Requires: perl-File-MimeInfo, perl-IO-stringy
 Requires: perl-MIME-Lite, perl-Class-Std >= 0.0.8
 Requires: perl-Locale-Maketext-Lexicon >= 0.62
-Requires: perl-IO-String perl-Config-Std >= 0.007
+Requires: perl-IO-String 
 Requires: perl-Math-BigInt-GMP
 Requires: perl-Log-Log4perl perl-DateTime
 Requires: perl-Config-Std
@@ -68,7 +68,7 @@ texlive packages from yum and Template::Latex from cpan.
 chmod 0644 $(find . -type f)
 chmod 0755 $(find . -type d)
 chmod +x *.pl
-chmod -x pos.conf.pl custom.pl # FIXME: Config???
+chmod -x custom.pl # FIXME: Config???
 chmod +x utils/*/*.pl utils/devel/find-use utils/pos/pos-hardware-client-startup-script
 
 
