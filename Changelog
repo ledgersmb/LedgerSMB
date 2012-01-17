@@ -15,6 +15,30 @@ Changelog for 1.3.10
 * More Localization Fixes (Herman V)
 * Customer/Vendor Search now shows records without credit accounts (Herman V)
 * Better error handling contrib modules not found (Chris T)
+* pos.conf.pl no longer overwritten on upgrade (Chris T)
+* Fixed multi-currency single payment handling (Erik H / Chris T)
+* Fixed "New Window" not working (Erik H)
+* Fixed Pg 9.1 detection in setup.pl (Chris T and Pongracz I)
+* Fixed SQL error loading Utils.sql (Michael R)
+* Updated docs on foreign exchange settings (Erik H)
+* Fixed forex settings not saving on defaults screen (Chris T)
+* Formatted paid amount for payment screen (Herman V)
+* Fixed help message on prepare-database.sh (Michael R)
+* Fixed links on payment report (Erik H)
+* Added more forex documentation (Erik H)
+* Fixed UK chart of accounts VAT accounts (Erik H)
+* Fixed issues involving employee_id references (Erik H)
+* Fixed shipto menu (Erik H)
+* Fixed wrong orders showing up on ship/receive (Erik H)
+* Fixed Makefile.PL version info (Chris T)
+* Fixed HTML attribute quoting (John L and Erik H)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+Herman V is Herman Vierendeels
+John L is John Locke
+Michael R is Michael Richardson
+Pongracz I is Pongracz Istvan
 
 Changelog for 1.3.9
 * More logging enhancements (Herman V)

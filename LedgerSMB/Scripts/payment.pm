@@ -49,6 +49,8 @@ use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::DBObject::Customer;
+use LedgerSMB::DBObject::Vendor;
 use LedgerSMB::CancelFurtherProcessing;
 use Error::Simple;
 use Error;
@@ -882,12 +884,22 @@ my @column_headers =  ({text => $locale->text('Invoice')},
                            {text => $locale->text('Amount Due').$currency_text};
  # WE SET THEM IN THE RIGHT ORDER FOR THE TABLE INSIDE THE UI   
      @column_headers[7,8] = @column_headers[8,7];
- # DOES THE CURRENCY IN USE HAS AN EXCHANGE RATE?, IF SO 
- # WE MUST SET THE VALUE, OTHERWISE THE UI WILL HANDLE IT
-   $exchangerate = $request->{exrate} ? 
-                   $request->{exrate} :
-                   $Payment->get_exchange_rate($request->{curr}, 
-                   $request->{datepaid} ? $request->{datepaid} : $Payment->{current_date});
+
+     # select the exchange rate for the currency at the payment date
+     # this has preference over what comes from the request, because the payment date
+     # may have changed since the last request and the currency rate in the request
+     # can be associated with the old payment date -- for example when a rate has been
+     # entered for the current date and the user selects a different date after opening
+     # the screen: today's rate would be used with no way for the user to override, if
+     # we would simply take the exrate from the request.
+     $exchangerate = $Payment->get_exchange_rate($request->{curr},
+						 $request->{datepaid} ? $request->{datepaid}
+						 : $Payment->{current_date});
+     $exchangerate = $request->{exrate}
+        if ((! $exchangerate) &&
+	    $request->{datepaid} eq $request->{olddatepaid});
+
+
    if ($exchangerate) {
      @currency_options = {
           name => 'exrate',
@@ -934,7 +946,7 @@ for my $ref (0 .. $#array_options) {
        $topay_fx_value = $due_fx = $due_fx + $request->round_amount($array_options[$ref]->{discount}/$array_options[$ref]->{exchangerate});
         }
    } else {
-       $topay_fx_value = "N/A";
+   #    $topay_fx_value = "N/A";
    }
 
    
@@ -959,10 +971,40 @@ for my $ref (0 .. $#array_options) {
          #$request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
          $request_topay_fx_bigfloat=$due_fx;
      } 
-#Now its time to build the link to the invoice :)
-
-my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-$uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
+ #print STDERR localtime()." payment.pl array=".Data::Dumper::Dumper($array_options[$ref])."\n";
+ my $paid_formatted=$Payment->format_amount(amount=>($array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount}));
+ #Now its time to build the link to the invoice :)
+ my $uri_module;
+ #TODO move following code to sub getModuleForUri() ?
+ if($Payment->{account_class} == $LedgerSMB::DBObject::Vendor::ENTITY_CLASS)
+ {
+  if($array_options[$ref]->{invoice})
+  {
+   $uri_module='ir';
+  }
+  else
+  {
+   $uri_module='ap';
+  }
+ }#account_class 1
+ elsif($Payment->{account_class} == $LedgerSMB::DBObject::Customer::ENTITY_CLASS)
+ {
+  if($array_options[$ref]->{invoice})
+  {
+   $uri_module='is';
+  }
+  else
+  {
+   $uri_module='ar';
+  }
+ }#account_class 2
+ else
+ {
+  #TODO
+  $uri_module='??';
+ }
+#my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
+ my $uri =$uri_module.'.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
 
    push @invoice_data, {       invoice => { number => $array_options[$ref]->{invnumber},
                                             id     =>  $array_options[$ref]->{invoice_id},
@@ -971,7 +1013,7 @@ $uri .= '.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozi
                                invoice_date      => "$array_options[$ref]->{invoice_date}",
                                amount            => $Payment->format_amount(amount=>$array_options[$ref]->{amount}),
                                due               => $Payment->format_amount(amount=>$request->{"optional_discount_$array_options[$ref]->{invoice_id}"}?  $array_options[$ref]->{due} : $array_options[$ref]->{due} + $array_options[$ref]->{discount}),
-                               paid              => "$array_options[$ref]->{amount}" - "$array_options[$ref]->{due}"-"$array_options[$ref]->{discount}",
+                               paid              => $paid_formatted,
                                discount          => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? "$array_options[$ref]->{discount}" : 0 ,
                                optional_discount =>  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"},
                                exchange_rate     =>  "$array_options[$ref]->{exchangerate}",

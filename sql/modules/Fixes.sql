@@ -79,3 +79,12 @@ UPDATE parts
                           OR op.inventory_accno_id = parts.inventory_accno_id 
                           or op.expense_accno_id = parts.expense_accno_id));
 COMMIT; 
+
+BEGIN;
+-- Fix menu Shipping -> Ship to actually point to the shipping interface
+-- used to point to sales order consolidation
+UPDATE menu_attribute
+ SET value = 'ship_order'
+ WHERE attribute='type'
+       AND node_id = (SELECT id FROM menu_node WHERE label = 'Ship');
+COMMIT;

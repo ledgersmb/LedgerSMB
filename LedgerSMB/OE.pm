@@ -199,8 +199,9 @@ sub transactions {
 			WHERE o.quotation = '0'
 			AND (p.inventory_accno_id > 0 OR p.assembly = '1')
 			AND oi.qty != oi.ship
+                        AND o.oe_class_id = ?
 			$department|;
-        @queryargs = @dptargs;    #reset @queryargs
+        @queryargs = ( $form->{oe_class_id} );
 
         if ( $warehouse_id && $form->{type} eq 'ship_order' ) {
             $query .= qq| 
@@ -1879,7 +1880,7 @@ sub save_inventory {
 				INSERT INTO inventory 
 					(parts_id, warehouse_id, qty, trans_id, 
 					orderitems_id, shippingdate, 
-					employee_id)
+					entity_id)
 				VALUES 
 					(?, ?, ?, ?, ?, ?, ?)|;
             $sth2 = $dbh->prepare($query);
@@ -2180,7 +2181,7 @@ sub transfer {
 
     my $query = qq|
 		INSERT INTO inventory
-			(warehouse_id, parts_id, qty, shippingdate, employee_id)
+			(warehouse_id, parts_id, qty, shippingdate, entity_id)
 		VALUES (?, ?, ?, ?, ?)|;
     $sth = $dbh->prepare($query) || $form->dberror($query);
 
@@ -2486,6 +2487,7 @@ sub generate_orders {
         ( $null, $department_id ) = split /--/, $form->{department};
         $department_id *= 1;
 
+
         $query = qq|
 			UPDATE oe SET
 				ordnumber = ?,
@@ -2495,7 +2497,7 @@ sub generate_orders {
 				netamount = ?,
 				taxincluded = ?,
 				curr = ?,
-				employee_id = ?,
+				person_id = (select id from person where entity_id = ?),
 				department_id = ?,
 				ponumber = ?
 			WHERE id = ?|;

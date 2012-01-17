@@ -3934,15 +3934,15 @@ sub list_assemblies {
           . $form->format_amount( \%myconfig, $ref->{rop}, '', "&nbsp;" )
           . qq|</td>|;
         $column_data{stock} =
-            qq|<td width=10%><input name="qty_$i" size=10 value=|
+            qq|<td width=10%><input name="qty_$i" size="10" value="|
           . $form->format_amount( \%myconfig, $ref->{stock} )
-          . qq|></td>
-    <input type=hidden name="stock_$i" value=$ref->{stock}>|;
+          . qq|"></td>
+    <input type=hidden name="stock_$i" value="$ref->{stock}">|;
 
         $j++;
         $j %= 2;
         print
-qq|<tr class=listrow$j><input name="id_$i" type=hidden value=$ref->{id}>\n|;
+qq|<tr class=listrow$j><input name="id_$i" type=hidden value="$ref->{id}">\n|;
 
         for (@column_index) { print "\n$column_data{$_}" }
 

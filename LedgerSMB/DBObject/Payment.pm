@@ -735,16 +735,15 @@ sub post_payment {
    if (!$db_exchangerate) {
    # We have to set the exchangerate
   
-
-   $self->call_procedure(procname => 'payments_set_exchangerate',  args => ["$self->{account_class}", "$self->{exchangerate}" ,"$self->{curr}", "$self->{datepaid}"]);
+   $self->call_procedure(procname => 'payments_set_exchangerate',  args => ["$self->{account_class}", $self->{exrate} ,"$self->{curr}", "$self->{datepaid}"]);
 
 
 
    }
-   elsif ($db_exchangerate != $self->{exchangerate} )
+   elsif ($db_exchangerate != $self->{exrate} )
    {
    # Something went wrong
-   $self->error("Exchange rate inconsistency with database, please try again")
+   $self->error($self->{_locale}->text("Exchange rate inconsistency with database.  Got [_1], expected [_2]", $self->{exrate}, $db_exchangerate));
    }
  }
  my @TMParray = $self->exec_method(funcname => 'payment_post');

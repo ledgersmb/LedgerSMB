@@ -188,7 +188,12 @@ sub post_transaction {
 
             # multiply by exchangerate
             $amount = $amount{fxamount}{$i} * $form->{exchangerate};
-            $amount{amount}{$i} = $form->round_amount( $amount - $diff, 2 );
+
+	    # The following line used to be
+	    # $amount{amount}{$i} =  $form->round_amount( $amount - $diff, 2 );
+	    # but that causes problems when processing the payments
+	    # due to the fact that the payments are un-rounded
+            $amount{amount}{$i} = $amount;
             $diff = $amount{amount}{$i} - ( $amount - $diff );
 
             ( $null, $project_id ) = split /--/, $form->{"projectnumber_$i"};
@@ -267,9 +272,12 @@ sub post_transaction {
     }
 
     $fxinvamount += $fxtax unless $form->{taxincluded};
-    $fxinvamount = $form->round_amount( $fxinvamount, 2 );
-    $invamount   = $form->round_amount( $invamount,   2 );
-    $paid        = $form->round_amount( $paid,        2 );
+#   These lines are commented out because payments get posted without
+#   rounding. Having rounded amounts on the AR/AP creation side leads
+#   to unmatched payments
+#    $fxinvamount = $form->round_amount( $fxinvamount, 2 );
+#    $invamount   = $form->round_amount( $invamount,   2 );
+#    $paid        = $form->round_amount( $paid,        2 );
 
     $paid =
       ( $fxinvamount == $paid )

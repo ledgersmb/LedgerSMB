@@ -1380,22 +1380,20 @@ sub save_info {
 	    {
             #print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
 		
-		if($form->{"taxformcheck_$i"} and $taxformfound)
+                if($taxformfound)
+                {
+                if($form->{"taxformcheck_$i"})
 		{
-			
 		  IR->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"true") if($form->{"invoice_id_$i"});
           $form->{$dbh}->commit();#highest-level sub should commit
-
 		}
 		else
 		{
-
 		    IR->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"false") if($form->{"invoice_id_$i"});
             $form->{$dbh}->commit();#highest-level sub should commit
-
 		}
-		
-	    }    
+                }#taxformfound		
+	    }
 
 	    if ($form->{callback}){
 		print "Location: $form->{callback}\n";

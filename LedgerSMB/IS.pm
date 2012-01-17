@@ -2074,6 +2074,7 @@ sub retrieve_invoice {
     if ( $form->{id} ) {
 
         # retrieve invoice
+        #HV TODO drop entity_id from ar
         $query = qq|
 			   SELECT a.invnumber, a.ordnumber, a.quonumber,
 			          a.transdate, a.paid,
@@ -2081,7 +2082,7 @@ sub retrieve_invoice {
 			          a.intnotes,
 			          a.duedate, a.taxincluded, a.curr AS currency,
 			          a.person_id, e.name AS employee, a.till, 
-			          a.entity_id, a.reverse,
+			          a.reverse,
 			          a.language_code, a.ponumber,
 			          a.on_hold
 			     FROM ar a

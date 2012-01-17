@@ -1782,6 +1782,11 @@ CREATE TABLE exchangerate (
   sell numeric,
   PRIMARY KEY (curr, transdate)
 );
+COMMENT ON TABLE exchangerate IS
+$$ When you receive money in a foreign currency, it is worth to you in your local currency
+whatever you can get for it when you sell the acquired currency (sell rate).
+When you have to pay someone in a foreign currency, the equivalent amount is the amount
+you have to spend to acquire the foreign currency (buy rate).$$;
 --
 CREATE TABLE project (
   id serial PRIMARY KEY,
@@ -2821,10 +2826,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 63	menu	1	146
 64	module	oe.pl	147
 64	action	search	148
+64	type	ship_order	149
 65	module	oe.pl	150
 65	action	search	151
 65	type	receive_order	152
-64	type	consolidate_sales_order	149
 66	module	oe.pl	153
 66	action	search_transfer	154
 67	menu	1	155
@@ -4423,4 +4428,49 @@ $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION person__get_my_entity_id() IS
 $$ Returns the entity_id of the current, logged in user.$$;
+--
+-- WE NEED A PAYMENT TABLE 
+--
+
+CREATE TABLE payment (
+  id serial primary key,
+  reference text NOT NULL,
+  gl_id     integer references gl(id),
+  payment_class integer NOT NULL,
+  payment_date date default current_date,
+  closed bool default FALSE,
+  entity_credit_id   integer references entity_credit_account(id),
+  employee_id integer references person(id),
+  currency char(3),
+  notes text,
+  department_id integer default 0);
+              
+COMMENT ON TABLE payment IS $$ This table will store the main data on a payment, prepayment, overpayment, et$$;
+COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment order  $$; 
+COMMENT ON COLUMN payment.closed IS $$ This will store the current state of a payment/receipt order $$;
+COMMENT ON COLUMN payment.gl_id IS $$ A payment should always be linked to a GL movement $$;
+CREATE  INDEX payment_id_idx ON payment(id);
+                  
+CREATE TABLE payment_links (
+  payment_id integer references Payment(id),
+  entry_id   integer references acc_trans(entry_id),
+  type       integer);
+COMMENT ON TABLE payment_links IS $$  
+ An explanation to the type field.
+ * A type 0 means the link is referencing an ar/ap  and was created
+   using an overpayment movement after the receipt was created 
+ * A type 1 means the link is referencing an ar/ap and  was made 
+   on the payment creation, its not the product of an overpayment movement 
+ * A type 2 means the link is not referencing an ar/ap and its the product
+   of the overpayment logic 
+
+ With this ideas in order we can do the following
+
+ To get the payment amount we will sum the entries with type > 0.
+ To get the linked amount we will sum the entries with type < 2.
+ The overpayment account can be obtained from the entries with type = 2.
+
+ This reasoning is hacky and i hope it can dissapear when we get to 1.4 - D.M.
+$$;
+ 
 commit;

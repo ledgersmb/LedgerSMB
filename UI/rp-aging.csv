@@ -3,7 +3,7 @@
         heading.$column.text;
     ELSE;
         heading.$column;
-    END ?>,<?lsmb END; escape(text('Currency')) ?>
+    END ?>,<?lsmb END; text('Currency') ?>
 <?lsmb FOREACH currency IN currencies;
     FOREACH row IN currency.rows;
         FOREACH column IN columns;
