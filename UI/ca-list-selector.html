@@ -33,6 +33,17 @@
 	  <th align="right"><?lsmb text('To') ?></th>
 	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'dateto' size => '11', title="yyyy-mm-dd"} ?></td>
 	</tr>
+        <tr>
+           <th align="right" colspan="1"><?lsmb text('Bank Register Mode') ?>
+           </th>
+           <td colspan="1" align="left">
+             <select name="bank_register_mode">
+                  <option value="0"><?lsmb text('No') ?></option>
+                  <option value="1"><?lsmb text('Yes') ?></option>
+             </select>
+           </td>
+           <td colspan=2>(<?lsmb text('Swaps debits and credits to match bank statements') ?>)</td>
+        </tr>
 
 <?lsmb IF form.all_department ?>
         <tr>

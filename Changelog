@@ -7,6 +7,8 @@ Changelog for 1.3.11
 * Fixed handling of non-existing roles in menu grants (Chris T)
 * Added reverse_bank_recs setting for those that want to
   do recs from bank perspective (Chris T)
+* Added "bank register mode" for account transaction lists (Chris T)
+* Fixed join projection issue in draft search routine (Chris T)
 
 Changelog for 1.3.10
 * Fixes for permissions for exchangerate table (Erik H)
