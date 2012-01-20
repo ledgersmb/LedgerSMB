@@ -88,3 +88,153 @@ UPDATE menu_attribute
  WHERE attribute='type'
        AND node_id = (SELECT id FROM menu_node WHERE label = 'Ship');
 COMMIT;
+
+BEGIN;
+-- fix for non-existant role handling in menu_generate() and related
+
+
+CREATE OR REPLACE FUNCTION menu_generate() RETURNS SETOF menu_item AS 
+$$
+DECLARE 
+	item menu_item;
+	arg menu_attribute%ROWTYPE;
+BEGIN
+	FOR item IN 
+		SELECT n.position, n.id, c.level, n.label, c.path, 
+                       to_args(array[ma.attribute, ma.value])
+		FROM connectby('menu_node', 'id', 'parent', 'position', '0', 
+				0, ',') 
+			c(id integer, parent integer, "level" integer, 
+				path text, list_order integer)
+		JOIN menu_node n USING(id)
+                JOIN menu_attribute ma ON (n.id = ma.node_id)
+               WHERE n.id IN (select node_id 
+                                FROM menu_acl
+                                JOIN (select rolname FROM pg_roles
+                                      UNION 
+                                     select 'public') pgr 
+                                     ON pgr.rolname = role_name
+                               WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
+                                                      THEN current_user
+                                                      ELSE pgr.rolname
+                                                   END, 'USAGE')
+                            GROUP BY node_id
+                              HAVING bool_and(CASE WHEN acl_type ilike 'DENY'
+                                                   THEN FALSE
+                                                   WHEN acl_type ilike 'ALLOW'
+                                                   THEN TRUE
+                                                END))
+                    or exists (select cn.id, cc.path
+                                 FROM connectby('menu_node', 'id', 'parent', 
+                                                'position', '0', 0, ',')
+                                      cc(id integer, parent integer, 
+                                         "level" integer, path text,
+                                         list_order integer)
+                                 JOIN menu_node cn USING(id)
+                                WHERE cn.id IN 
+                                      (select node_id FROM menu_acl
+                                        JOIN (select rolname FROM pg_roles
+                                              UNION 
+                                              select 'public') pgr 
+                                              ON pgr.rolname = role_name
+                                        WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
+                                                      THEN current_user
+                                                      ELSE pgr.rolname
+                                                   END, 'USAGE')
+                                     GROUP BY node_id
+                                       HAVING bool_and(CASE WHEN acl_type 
+                                                                 ilike 'DENY'
+                                                            THEN false
+                                                            WHEN acl_type 
+                                                                 ilike 'ALLOW'
+                                                            THEN TRUE
+                                                         END))
+                                       and cc.path like c.path || ',%')
+            GROUP BY n.position, n.id, c.level, n.label, c.path, c.list_order
+            ORDER BY c.list_order
+                             
+	LOOP
+		RETURN NEXT item;
+	END LOOP;
+END;
+$$ language plpgsql;
+
+COMMENT ON FUNCTION menu_generate() IS
+$$
+This function returns the complete menu tree.  It is used to generate nested
+menus for the web interface.
+$$;
+
+CREATE OR REPLACE FUNCTION menu_children(in_parent_id int) RETURNS SETOF menu_item
+AS $$
+declare 
+	item menu_item;
+	arg menu_attribute%ROWTYPE;
+begin
+        FOR item IN
+		SELECT n.position, n.id, c.level, n.label, c.path, 
+                       to_args(array[ma.attribute, ma.value])
+		FROM connectby('menu_node', 'id', 'parent', 'position', 
+				in_parent_id, 1, ',') 
+			c(id integer, parent integer, "level" integer, 
+				path text, list_order integer)
+		JOIN menu_node n USING(id)
+                JOIN menu_attribute ma ON (n.id = ma.node_id)
+               WHERE n.id IN (select node_id 
+                                FROM menu_acl
+                                JOIN (select rolname FROM pg_roles
+                                      UNION 
+                                      select 'public') pgr 
+                                      ON pgr.rolname = role_name
+                                WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
+                                                               THEN current_user
+                                                               ELSE pgr.rolname
+                                                               END, 'USAGE')
+                            GROUP BY node_id
+                              HAVING bool_and(CASE WHEN acl_type ilike 'DENY'
+                                                   THEN FALSE
+                                                   WHEN acl_type ilike 'ALLOW'
+                                                   THEN TRUE
+                                                END))
+                    or exists (select cn.id, cc.path
+                                 FROM connectby('menu_node', 'id', 'parent', 
+                                                'position', '0', 0, ',')
+                                      cc(id integer, parent integer, 
+                                         "level" integer, path text,
+                                         list_order integer)
+                                 JOIN menu_node cn USING(id)
+                                WHERE cn.id IN 
+                                      (select node_id FROM menu_acl
+                                         JOIN (select rolname FROM pg_roles
+                                              UNION 
+                                              select 'public') pgr 
+                                              ON pgr.rolname = role_name
+                                        WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
+                                                               THEN current_user
+                                                               ELSE pgr.rolname
+                                                               END, 'USAGE')
+                                     GROUP BY node_id
+                                       HAVING bool_and(CASE WHEN acl_type 
+                                                                 ilike 'DENY'
+                                                            THEN false
+                                                            WHEN acl_type 
+                                                                 ilike 'ALLOW'
+                                                            THEN TRUE
+                                                         END))
+                                       and cc.path like c.path || ',%')
+            GROUP BY n.position, n.id, c.level, n.label, c.path, c.list_order
+            ORDER BY c.list_order
+        LOOP
+                return next item;
+        end loop;
+end;
+$$ language plpgsql;
+COMMIT;

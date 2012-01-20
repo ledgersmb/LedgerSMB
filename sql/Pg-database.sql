@@ -3295,11 +3295,17 @@ BEGIN
 				path text, list_order integer)
 		JOIN menu_node n USING(id)
                 JOIN menu_attribute ma ON (n.id = ma.node_id)
-               WHERE n.id IN (select node_id FROM menu_acl
-                               WHERE pg_has_role(CASE WHEN role_name 
-                                                           ilike 'public'
+               WHERE n.id IN (select node_id 
+                                FROM menu_acl
+                                JOIN (select rolname FROM pg_roles
+                                      UNION 
+                                     select 'public') pgr 
+                                     ON pgr.rolname = role_name
+                               WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
                                                       THEN current_user
-                                                      ELSE role_name
+                                                      ELSE pgr.rolname
                                                    END, 'USAGE')
                             GROUP BY node_id
                               HAVING bool_and(CASE WHEN acl_type ilike 'DENY'
@@ -3316,10 +3322,15 @@ BEGIN
                                  JOIN menu_node cn USING(id)
                                 WHERE cn.id IN 
                                       (select node_id FROM menu_acl
-                                        WHERE pg_has_role(CASE WHEN role_name 
-                                                           ilike 'public'
+                                        JOIN (select rolname FROM pg_roles
+                                              UNION 
+                                              select 'public') pgr 
+                                              ON pgr.rolname = role_name
+                                        WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
                                                       THEN current_user
-                                                      ELSE role_name
+                                                      ELSE pgr.rolname
                                                    END, 'USAGE')
                                      GROUP BY node_id
                                        HAVING bool_and(CASE WHEN acl_type 
@@ -3360,12 +3371,18 @@ begin
 				path text, list_order integer)
 		JOIN menu_node n USING(id)
                 JOIN menu_attribute ma ON (n.id = ma.node_id)
-               WHERE n.id IN (select node_id FROM menu_acl
-                               WHERE pg_has_role(CASE WHEN role_name 
-                                                           ilike 'public'
-                                                      THEN current_user
-                                                      ELSE role_name
-                                                   END, 'USAGE')
+               WHERE n.id IN (select node_id 
+                                FROM menu_acl
+                                JOIN (select rolname FROM pg_roles
+                                      UNION 
+                                      select 'public') pgr 
+                                      ON pgr.rolname = role_name
+                                WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
+                                                               THEN current_user
+                                                               ELSE pgr.rolname
+                                                               END, 'USAGE')
                             GROUP BY node_id
                               HAVING bool_and(CASE WHEN acl_type ilike 'DENY'
                                                    THEN FALSE
@@ -3381,11 +3398,16 @@ begin
                                  JOIN menu_node cn USING(id)
                                 WHERE cn.id IN 
                                       (select node_id FROM menu_acl
-                                        WHERE pg_has_role(CASE WHEN role_name 
-                                                           ilike 'public'
-                                                      THEN current_user
-                                                      ELSE role_name
-                                                   END, 'USAGE')
+                                         JOIN (select rolname FROM pg_roles
+                                              UNION 
+                                              select 'public') pgr 
+                                              ON pgr.rolname = role_name
+                                        WHERE pg_has_role(CASE WHEN coalesce(pgr.rolname,
+                                                                    'public') 
+                                                                    = 'public'
+                                                               THEN current_user
+                                                               ELSE pgr.rolname
+                                                               END, 'USAGE')
                                      GROUP BY node_id
                                        HAVING bool_and(CASE WHEN acl_type 
                                                                  ilike 'DENY'
