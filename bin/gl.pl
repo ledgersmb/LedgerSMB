@@ -633,11 +633,16 @@ sub generate_report {
             push @options, $locale->text('Amount') . " <= $option";
         }
     }
-
     @columns =
       $form->sort_columns(
         qw(transdate id reference description notes source memo debit credit accno gifi_accno department)
       );
+    if ($form->{bank_register_mode}){
+        @columns = $form->sort_columns(
+            qw(transdate id reference description notes source memo credit debit accno
+               gifi_accno department)
+        );
+    }
     pop @columns if $form->{department};
 
     if ( $form->{link} =~ /_paid/ ) {
@@ -645,6 +650,12 @@ sub generate_report {
           $form->sort_columns(
             qw(transdate id reference description notes source memo cleared debit credit accno gifi_accno)
           );
+        if ($form->{bank_register_mode}){
+            @columns = $form->sort_columns(
+                qw(transdate id reference description notes source memo cleared credit
+                   debit credit accno gifi_accno)
+            );
+        }
         $form->{l_cleared} = "Y";
     }
 
@@ -691,6 +702,10 @@ sub generate_report {
         balance => 'Balance',
         cleared => 'R'
     };
+    if ($form->{bank_register_mode}){
+        $column_names->{credit} = 'Debit';
+        $column_names->{debit} = 'Credit';
+    }
     my $sort_href = "$href&sort";
     my @sort_columns = qw(id transdate reference source memo description department accno gifi_accno);
 

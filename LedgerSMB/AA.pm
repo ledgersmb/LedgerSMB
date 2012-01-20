@@ -937,7 +937,7 @@ sub transactions {
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount::numeric(20,$p), 
-		          sum(a.amount::numeric(20,$p)) 
+		          a.amount::numeric(20,$p)
                              - (sum(acs.amount::numeric(20,$p)) 
                                 * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
                           AS paid,

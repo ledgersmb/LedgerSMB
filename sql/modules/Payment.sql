@@ -81,21 +81,13 @@ BEGIN
 		JOIN company cp ON (cp.entity_id = e.id)
 			WHERE ec.entity_class = in_account_class
                         AND CASE WHEN in_account_class = 1 THEN
-	           		ec.id IN (SELECT entity_credit_account
-                                            FROM ap
-                                            JOIN acc_trans ac ON ap.id = ac.trans_id
-                                            JOIN account_link al ON acc.chart_id = al.account_id
-                                           WHERE al.description = 'AP'
-                                           GROUP BY entity_credit_account
-                                           HAVING SUM(ac.amount) <> 0)
+	           		ec.id IN (SELECT entity_credit_account FROM ap 
+	           			WHERE amount <> paid
+		   			GROUP BY entity_credit_account)
 		    	       WHEN in_account_class = 2 THEN
-		   		ec.id IN (SELECT entity_credit_account
-                                            FROM ar
-                                            JOIN acc_trans ac ON ar.id = ac.trans_id
-                                            JOIN account_link al ON acc.chart_id = al.account_id
-                                           WHERE al.description = 'AR'
-                                           GROUP BY entity_credit_account
-                                           HAVING SUM(ac.amount) <> 0)
+		   		ec.id IN (SELECT entity_credit_account FROM ar
+		   			WHERE amount <> paid
+		   			GROUP BY entity_credit_account)
 		   	  END
 	LOOP
 		RETURN NEXT out_entity;
@@ -118,6 +110,14 @@ BEGIN
 		FROM entity e
 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 				WHERE e.entity_class = in_account_class
+	LOOP
+		RETURN NEXT out_entity;
+	END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION payment_get_all_accounts(int) IS
+$$ This function takes a single argument (1 for vendor, 2 for customer as 
 	LOOP
 		RETURN NEXT out_entity;
 	END LOOP;
@@ -395,16 +395,7 @@ BEGIN
 		   WHERE (a.batch_id = in_batch_id
 		          OR (a.invoice_class = in_account_class
 		             AND a.approved
-			 AND (c.business_id = 
-				coalesce(in_business_id, c.business_id)
-				OR in_business_id is null)
-		         AND ((a.transdate >= COALESCE(in_date_from, a.transdate)
-		               AND a.transdate <= COALESCE(in_date_to, a.transdate)))
-		         AND c.entity_class = in_account_class
-		         AND a.curr = in_currency
-		         AND a.entity_credit_account = c.id
-			 AND p.due <> 0
-                         --### short term: ignore fractional differences
+		         AND a.amount <> a.paid 
 			 AND NOT a.on_hold
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
@@ -501,6 +492,15 @@ BEGIN
 			INSERT INTO bulk_payments_in(id, amount)
 			VALUES ($E$ || quote_literal(in_transactions[out_count][1])
 				|| $E$, $E$ ||
+				quote_literal(in_transactions[out_count][2])
+				|| $E$)$E$;
+	END LOOP;
+	EXECUTE $E$ 
+		INSERT INTO acc_trans 
+			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
+			source)
+		SELECT id, 
+		case when $E$ || quote_literal(in_account_class) || $E$ = 1
 				quote_literal(in_transactions[out_count][2])
 				|| $E$)$E$;
 	END LOOP;
@@ -1266,6 +1266,30 @@ CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_clas
     		SELECT DISTINCT entity_credit_id, legal_name, e.entity_class, discount, o.meta_number
     		FROM overpayments o
     		JOIN entity e ON (e.id=o.entity_id)
+    		WHERE available <> 0 AND in_account_class = payment_class
+        LOOP
+                RETURN NEXT out_entity;
+        END LOOP;
+ END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION payment_get_unused_overpayment(
+in_account_class int, in_entity_credit_id int, in_chart_id int)
+returns SETOF overpayments AS
+$$
+DECLARE out_overpayment overpayments%ROWTYPE;
+BEGIN
+      FOR out_overpayment IN
+              SELECT DISTINCT * 
+              FROM overpayments
+              WHERE payment_class  = in_account_class 
+              AND entity_credit_id = in_entity_credit_id 
+              AND available <> 0
+              AND (in_chart_id IS NULL OR chart_id = in_chart_id )
+              ORDER BY payment_date
+            
+      LOOP
+           RETURN NEXT out_overpayment;
     		WHERE available <> 0 AND in_account_class = payment_class
         LOOP
                 RETURN NEXT out_entity;

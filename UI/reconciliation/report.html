@@ -99,10 +99,18 @@
 			<td><?lsmb row.scn ?> </td>
 			<td><?lsmb row.post_date ?></td>
 			<td><?lsmb row.payee ?></td>
-			<td><?lsmb row.our_debits ?></td>
-			<td><?lsmb row.our_credits ?></td>
-			<td><?lsmb row.their_debits ?></td>
-			<td><?lsmb row.their_credits ?></td>
+			<td><?lsmb IF reverse; row.our_credits;
+                                   ELSE; row.our_debits;
+                                   END; ?></td>
+			<td><?lsmb IF reverse; row.our_debits;
+                                   ELSE; row.our_credits;
+                                   END; ?></td>
+			<td><?lsmb IF reverse; row.their_credits;
+                                   ELSE; row.their_debits;
+                                   END; ?></td>
+			<td><?lsmb IF reverse; row.their_debits;
+                                   ELSE; row.their_credits;
+                                   END; ?></td>
 		</tr>
 	<?lsmb i = i + 1 -?>
 	<?lsmb END ?>
@@ -150,10 +158,18 @@
 			<td><?lsmb row.scn ?> </td>
 			<td><?lsmb row.post_date ?></td>
 			<td><?lsmb row.payee ?></td>
-			<td><?lsmb row.our_debits ?></td>
-			<td><?lsmb row.our_credits ?></td>
-			<td><?lsmb row.their_debits ?></td>
-			<td><?lsmb row.their_credits ?></td>
+			<td><?lsmb IF reverse; row.our_credits;
+                                   ELSE; row.our_debits;
+                                   END; ?></td>
+			<td><?lsmb IF reverse; row.our_debits;
+                                   ELSE; row.our_credits;
+                                   END; ?></td>
+			<td><?lsmb IF reverse; row.their_credits;
+                                   ELSE; row.their_debits;
+                                   END; ?></td>
+			<td><?lsmb IF reverse; row.their_debits;
+                                   ELSE; row.their_credits;
+                                   END; ?></td>
 		</tr>
 	<?lsmb i = i + 1 -?>
 	<?lsmb END -?>
@@ -196,8 +212,12 @@
 			<td><?lsmb row.scn ?> </td>
 			<td><?lsmb row.post_date ?></td>
 			<td><?lsmb row.payee ?></td>
-			<td><?lsmb row.our_debits ?></td>
-			<td><?lsmb row.our_credits ?></td>
+			<td><?lsmb IF reverse; row.our_credits;
+                                   ELSE; row.our_debits;
+                                   END; ?></td>
+			<td><?lsmb IF reverse; row.our_debits;
+                                   ELSE; row.our_credits;
+                                   END; ?></td>
 		</tr>
 	<?lsmb i = i + 1 -?>
 	<?lsmb END ?>

@@ -40,7 +40,7 @@ BEGIN
 			WHERE lower(in_type) = 'ar'
 			) trans
 		JOIN acc_trans line ON (trans.id = line.trans_id)
-		JOIN chart ON (line.chart_id = chart.id)
+		JOIN chart ON (line.chart_id = chart.id and charttype = 'A')
            LEFT JOIN voucher v ON (v.trans_id = trans.id)
 		WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
 			AND (in_to_date IS NULL 

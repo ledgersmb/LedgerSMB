@@ -21,6 +21,7 @@ package LedgerSMB::Scripts::recon;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
+use LedgerSMB::Setting;
 
 use Data::Dumper;
 use strict;
@@ -279,6 +280,10 @@ it has been created.
 sub _display_report {
         my $recon = shift;
         $recon->get();
+        my $setting_handle = LedgerSMB::Setting->new(base => $recon);
+        $recon->{reverse} = $setting_handle->get('reverse_bank_recs');
+        delete $recon->{reverse} unless $recon->{account_info}->{category}
+                                        eq 'A';
         $recon->close_form;
         $recon->open_form({commit => 1});
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
