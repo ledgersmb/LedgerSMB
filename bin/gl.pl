@@ -653,7 +653,7 @@ sub generate_report {
         if ($form->{bank_register_mode}){
             @columns = $form->sort_columns(
                 qw(transdate id reference description notes source memo cleared credit
-                   debit credit accno gifi_accno)
+                   debit accno gifi_accno)
             );
         }
         $form->{l_cleared} = "Y";
