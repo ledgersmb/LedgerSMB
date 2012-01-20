@@ -169,8 +169,11 @@ then
   exit 1
 fi
 
-if test "$pgsql_contrib_dir" = "ignore"
+is_v9_1plus=`su -c "psql -U postgres -d postgres -c 'SELECT version();'" | grep -E 'PostgreSQL 9.[1-9]'`
+
+if test "$pgsql_contrib_dir" = "ignore" -a -z "$is_v9_1plus"
 then
+  # --pgsql-contrib argument not required due to 9.1+ CREATE EXTENSION system
   echo "missing argument --pgsql-contrib!"
   usage
   exit 1
