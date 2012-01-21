@@ -11,6 +11,8 @@ Changelog for 1.3.11
 * Fixed join projection issue in draft search routine (Chris T)
 * Fixed prepare-database.sh for Pg 9.1 (Erik H)
 * Fixed Customer/vendor selection for dropdowns (Chris T)
+* Fixed some HASH() entries in CSV templates (Chris T)
+* Removed unnecessary shebang lines in scripts/* files (Chris T)
 
 Changelog for 1.3.10
 * Fixes for permissions for exchangerate table (Erik H)

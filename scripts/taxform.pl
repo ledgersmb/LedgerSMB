@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 =head1 NAME
 
 LedgerSMB::Scripts::taxform - LedgerSMB handler for reports on tax forms.

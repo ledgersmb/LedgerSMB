@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 =pod
 
 =head1 NAME
