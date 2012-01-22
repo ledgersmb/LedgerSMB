@@ -456,6 +456,7 @@ DECLARE
         t_cash_id int;
         t_currs text[];
         t_exchangerate numeric;
+        t_cash_sign int;
 BEGIN
         IF in_batch_id IS NULL THEN
                 -- t_voucher_id := NULL;
@@ -495,29 +496,28 @@ BEGIN
         END LOOP;
 
 
-        -- Insert credit side
-        INSERT INTO acc_trans 
+        IF in_account_class = 1 THEN
+            t_cash_sign := 1;
+        ELSE
+            t_cash_sign := -1;
+        END IF;
+
+        -- Insert cash side
+        INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
-           SELECT id,
-                  case when in_account_class = 1 THEN t_cash_id
-                       WHEN in_account_class = 2 THEN t_ar_ap_id
-                       ELSE -1 END,
-                  amount * t_exchangerate,
+           SELECT id, t_cash_id, amount * t_cash_sign * t_exchangerate,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
              FROM bulk_payments_in  where amount <> 0;
 
-        -- Insert debit side
-        INSERT INTO acc_trans 
+        -- Insert ar/ap side
+        INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
-           SELECT id,
-                  case when in_account_class = 1 THEN t_ar_ap_id
-                       WHEN in_account_class = 2 THEN t_cash_id
-                       ELSE -1 END,
-                  amount * -1 * t_exchangerate,
+           SELECT id, t_ar_ap_id,
+                  amount * -1 * t_cash_sign * t_exchangerate,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
