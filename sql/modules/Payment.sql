@@ -442,34 +442,34 @@ $$;
 
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
-	in_ar_ap_accno text, in_cash_accno text, 
-	in_payment_date date, in_account_class int,
+        in_ar_ap_accno text, in_cash_accno text, 
+        in_payment_date date, in_account_class int,
         in_exchangerate numeric, in_curr text)
 RETURNS int AS
 $$
 DECLARE 
-	out_count int;
-	t_voucher_id int;
-	t_trans_id int;
-	t_amount numeric;
+        out_count int;
+        t_voucher_id int;
+        t_trans_id int;
+        t_amount numeric;
         t_ar_ap_id int;
-	t_cash_id int;
+        t_cash_id int;
         t_currs text[];
         t_exchangerate numeric;
 BEGIN
-	IF in_batch_id IS NULL THEN
-		-- t_voucher_id := NULL;
-		RAISE EXCEPTION 'Bulk Post Must be from Batch!';
-	ELSE
-		INSERT INTO voucher (batch_id, batch_class, trans_id)
-		values (in_batch_id,
+        IF in_batch_id IS NULL THEN
+                -- t_voucher_id := NULL;
+                RAISE EXCEPTION 'Bulk Post Must be from Batch!';
+        ELSE
+                INSERT INTO voucher (batch_id, batch_class, trans_id)
+                values (in_batch_id,
                 (SELECT batch_class_id FROM batch WHERE id = in_batch_id),
                 in_transactions[1][1]);
 
-		t_voucher_id := currval('voucher_id_seq');
-	END IF;
+                t_voucher_id := currval('voucher_id_seq');
+        END IF;
 
-	SELECT string_to_array(value, ':') into t_currs 
+        SELECT string_to_array(value, ':') into t_currs 
           from defaults 
          where setting_key = 'curr';
 
@@ -479,74 +479,55 @@ BEGIN
                 t_exchangerate := in_exchangerate;
         END IF;
 
-	CREATE TEMPORARY TABLE bulk_payments_in (id int, amount numeric);
+        CREATE TEMPORARY TABLE bulk_payments_in (id int, amount numeric);
 
-	select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
-	select id into t_cash_id from chart where accno = in_cash_accno;
+        select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
+        select id into t_cash_id from chart where accno = in_cash_accno;
 
-	FOR out_count IN 
-			array_lower(in_transactions, 1) ..
-			array_upper(in_transactions, 1)
-	LOOP
-		EXECUTE $E$
-			INSERT INTO bulk_payments_in(id, amount)
-			VALUES ($E$ || quote_literal(in_transactions[out_count][1])
-				|| $E$, $E$ ||
-				quote_literal(in_transactions[out_count][2])
-				|| $E$)$E$;
-	END LOOP;
-	EXECUTE $E$ 
-		INSERT INTO acc_trans 
-			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
-			source)
-		SELECT id, 
-		case when $E$ || quote_literal(in_account_class) || $E$ = 1
-				quote_literal(in_transactions[out_count][2])
-				|| $E$)$E$;
-	END LOOP;
-	EXECUTE $E$ 
-		INSERT INTO acc_trans 
-			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
-			source)
-		SELECT id, 
-		case when $E$ || quote_literal(in_account_class) || $E$ = 1
-			THEN $E$ || t_cash_id || $E$
-			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
-			THEN $E$ || t_ar_ap_id || $E$
-			ELSE -1 END, 
-		amount * $E$|| quote_literal(t_exchangerate) || $E$,
-		CASE 
-			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
-			ELSE false END,
-		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
-		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'NULL') || 
-		$E$ 
-		FROM bulk_payments_in  where amount <> 0 $E$;
+        FOR out_count IN 
+                        array_lower(in_transactions, 1) ..
+                        array_upper(in_transactions, 1)
+        LOOP
+            -- Fill the bulk payments table
+            INSERT INTO bulk_payments_in(id, amount)
+            VALUES (in_transactions[out_count][1],
+                    in_transactions[out_count][2]);
+        END LOOP;
 
-	EXECUTE $E$ 
-		INSERT INTO acc_trans 
-			(trans_id, chart_id, amount, approved, voucher_id, transdate, 
-			source)
-		SELECT id, 
-		case when $E$ || quote_literal(in_account_class) || $E$ = 1 
-			THEN $E$ || t_ar_ap_id || $E$
-			WHEN $E$ || quote_literal(in_account_class) || $E$ = 2 
-			THEN $E$ || t_cash_id || $E$
-			ELSE -1 END, 
-		amount * -1 * $E$|| quote_literal(t_exchangerate) || $E$,
-		CASE 
-			WHEN $E$|| t_voucher_id || $E$ IS NULL THEN true
-			ELSE false END,
-		$E$ || t_voucher_id || $E$, $E$|| quote_literal(in_payment_date) 
-		||$E$ , $E$ ||COALESCE(quote_literal(in_source), 'null') 
-		||$E$ 
-		FROM bulk_payments_in where amount <> 0 $E$;
 
-	-- ### BUG: Where's the FX gain/loss part for FX postings??
+        -- Insert credit side
+        INSERT INTO acc_trans 
+             (trans_id, chart_id, amount, approved,
+              voucher_id, transdate, source)
+           SELECT id,
+                  case when in_account_class = 1 THEN t_cash_id
+                       WHEN in_account_class = 2 THEN t_ar_ap_id
+                       ELSE -1 END,
+                  amount * t_exchangerate,
+                  CASE WHEN t_voucher_id IS NULL THEN true
+                       ELSE false END,
+                  t_voucher_id, in_payment_date, in_source
+             FROM bulk_payments_in  where amount <> 0;
 
-	EXECUTE $E$ DROP TABLE bulk_payments_in $E$;
-	perform unlock_all();
-	return out_count;
+        -- Insert debit side
+        INSERT INTO acc_trans 
+             (trans_id, chart_id, amount, approved,
+              voucher_id, transdate, source)
+           SELECT id,
+                  case when in_account_class = 1 THEN t_ar_ap_id
+                       WHEN in_account_class = 2 THEN t_cash_id
+                       ELSE -1 END,
+                  amount * -1 * t_exchangerate,
+                  CASE WHEN t_voucher_id IS NULL THEN true
+                       ELSE false END,
+                  t_voucher_id, in_payment_date, in_source
+             FROM bulk_payments_in where amount <> 0;
+
+        -- ### BUG: Where's the FX gain/loss part for FX postings??
+
+        DROP TABLE bulk_payments_in;
+        perform unlock_all();
+        return out_count;
 END;
 $$ language plpgsql;
 
