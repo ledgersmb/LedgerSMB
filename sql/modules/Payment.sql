@@ -480,7 +480,8 @@ BEGIN
                 t_exchangerate := in_exchangerate;
         END IF;
 
-        CREATE TEMPORARY TABLE bulk_payments_in (id int, amount numeric);
+        CREATE TEMPORARY TABLE bulk_payments_in
+           (id int, amount numeric, fxrate numeric, gain_loss_accno int);
 
         select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
         select id into t_cash_id from chart where accno = in_cash_accno;
@@ -495,18 +496,46 @@ BEGIN
                     in_transactions[out_count][2]);
         END LOOP;
 
-
         IF in_account_class = 1 THEN
             t_cash_sign := 1;
         ELSE
             t_cash_sign := -1;
         END IF;
 
+        IF (in_curr IS NULL OR in_curr = t_currs[0]) THEN
+            UPDATE bulk_payments_in
+               SET fxrate = 1;
+        ELSE
+            UPDATE bulk_payments_in bpi
+               SET fxrate =
+                (SELECT CASE WHEN in_account_class = 1 THEN sell
+                             ELSE buy
+                        END
+                   FROM exchangerate e
+                   JOIN (SELECT * FROM ar
+                         UNION
+                         SELECT * FROM ap) a
+                     ON (e.transdate = a.transdate
+                         AND e.curr = a.curr)
+                   WHERE a.id = bpi.id);
+            UPDATE bulk_payments_in bpi
+               SET gain_loss_accno =
+                (SELECT value::int FROM defaults
+                  WHERE setting_key = 'fxgain_accno_id')
+             WHERE ((t_exchangerate - bpi.fxrate) * t_cash_sign) < 0;
+            UPDATE bulk_payments_in
+               SET gain_loss_accno = (SELECT value::int FROM defaults
+                  WHERE setting_key = 'fxloss_accno_id')
+             WHERE ((t_exchangerate - bpi.fxrate) * t_cash_sign) > 0;
+            -- explicitly leave zero gain/loss accno_id entries at NULL
+            -- so we have an easy check for which 
+        END IF;
+
         -- Insert cash side
         INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
-           SELECT id, t_cash_id, amount * t_cash_sign * t_exchangerate,
+           SELECT id, t_cash_id, amount * t_cash_sign * fxrate,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
@@ -517,13 +546,24 @@ BEGIN
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
            SELECT id, t_ar_ap_id,
-                  amount * -1 * t_cash_sign * t_exchangerate,
+                  amount * -1 * t_cash_sign * fxrate,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
              FROM bulk_payments_in where amount <> 0;
 
-        -- ### BUG: Where's the FX gain/loss part for FX postings??
+        -- Insert fx gain/loss effects, if applicable
+        INSERT INTO acc_trans
+             (trans_id, chart_id, amount, approved,
+              voucher_id, transdate, source)
+           SELECT id, gain_loss_accno,
+                  amount * -1 * t_cash_sign * (t_exchangerate - fxrate),
+                  CASE WHEN t_voucher_id IS NULL THEN true
+                       ELSE false END,
+                  t_voucher_id, in_payment_date, in_source
+             FROM bulk_payments_in
+            WHERE amount <> 0 AND gain_loss_accno IS NOT NULL;
+
 
         DROP TABLE bulk_payments_in;
         perform unlock_all();
