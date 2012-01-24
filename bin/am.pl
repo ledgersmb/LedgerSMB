@@ -2703,7 +2703,7 @@ sub process_transactions {
                 $form->{reference} = $pt->{reference};
                 $form->{transdate} = $pt->{nextdate};
 
-                $j = 1;
+                $j = 0;
                 foreach $ref ( @{ $form->{GL} } ) {
                     $form->{"accno_$j"} = "$ref->{accno}--$ref->{description}";
 
@@ -2732,7 +2732,7 @@ sub process_transactions {
                         $form->{reference}
                       )
                 );
-                $ok = GL->post_transaction( \%myconfig, \%$form );
+                $ok = GL->post_transaction( \%myconfig, \%$form, $locale );
                 $form->info( " ..... " . $locale->text('done') );
 
             }

@@ -13,6 +13,7 @@ Changelog for 1.3.11
 * Fixed Customer/vendor selection for dropdowns (Chris T)
 * Fixed some HASH() entries in CSV templates (Chris T)
 * Removed unnecessary shebang lines in scripts/* files (Robert C)
+* Fixed GL recurring transaction not posting (Chris T)
 
 Changelog for 1.3.10
 * Fixes for permissions for exchangerate table (Erik H)
