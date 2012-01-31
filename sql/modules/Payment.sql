@@ -444,7 +444,7 @@ CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
         in_ar_ap_accno text, in_cash_accno text, 
         in_payment_date date, in_account_class int,
-        in_exchangerate numeric, in_curr text)
+        in_exchangerate numeric, in_currency text)
 RETURNS int AS
 $$
 DECLARE 
@@ -474,7 +474,7 @@ BEGIN
           from defaults 
          where setting_key = 'curr';
 
-        IF (in_curr IS NULL OR in_curr = t_currs[0]) THEN
+        IF (in_currency IS NULL OR in_currency = t_currs[0]) THEN
                 t_exchangerate := 1;
         ELSE 
                 t_exchangerate := in_exchangerate;
@@ -502,7 +502,7 @@ BEGIN
             t_cash_sign := -1;
         END IF;
 
-        IF (in_curr IS NULL OR in_curr = t_currs[0]) THEN
+        IF (in_currency IS NULL OR in_currency = t_currs[0]) THEN
             UPDATE bulk_payments_in
                SET fxrate = 1;
         ELSE
@@ -575,7 +575,7 @@ COMMENT ON FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
         in_ar_ap_accno text, in_cash_accno text, 
         in_payment_date date, in_account_class int, 
-	in_exchangerate numeric, in_curr text)
+	in_exchangerate numeric, in_currency text)
 IS
 $$ This posts the payments for large batch workflows.
 
