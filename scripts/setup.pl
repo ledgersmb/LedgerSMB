@@ -62,15 +62,15 @@ sub login {
     if (($sv_info[0] > 9)or ($sv_info[0]  == 9 and $sv_info[1] >= 1)){
        if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.control"){
             $request->error($request->{_locale}->text(
-                      'Cannot find Contrib scripts in [_1].',
-                      $ENV{PG_CONTRIB_DIR}
+                      'Cannot find Contrib script [_1] in [_2].',
+                      "tablefunc.control", $ENV{PG_CONTRIB_DIR}
             ));
        }
     } else {
        if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.sql"){
             $request->error($request->{_locale}->text(
-                      'Cannot find Contrib scripts in [_1].',
-                      $ENV{PG_CONTRIB_DIR}
+                      'Cannot find Contrib script [_1] in [_2].',
+                      "tablefunc.sql", $ENV{PG_CONTRIB_DIR}
             ));
       
        }
