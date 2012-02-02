@@ -1,5 +1,5 @@
 <?lsmb FOREACH column IN columns;
-	IF heading.$column.text OR heading.$column.href;
+	IF heading.$column.exists('text');
 		heading.$column.text;
 	ELSE;
 		heading.$column;
@@ -10,7 +10,7 @@
 END ?>
 <?lsmb FOREACH row IN rows;
 	FOREACH column IN columns;
-		IF row.$column.text.defined OR row.$column.href.defined;
+		IF row.$column.exists('text');
 			row.$column.text;
 		ELSE;
 			row.$column;
